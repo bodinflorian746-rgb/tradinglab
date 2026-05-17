@@ -123,13 +123,13 @@ export function FOMCTimelineDiagram() {
         <circle cx={635} cy={330} r="3.5" fill="#34d399" />
 
         {/* Labels horaires */}
-        <rect x={152} y={340} width={96} height={15} rx="2" fill="#09090b" fillOpacity="0.85" />
+        <rect x={152} y={341} width={96} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
         <text x={200} y={352} fontSize="11" fill="#60a5fa" textAnchor="middle" fontWeight="600">20h00</text>
 
-        <rect x={452} y={340} width={96} height={15} rx="2" fill="#09090b" fillOpacity="0.85" />
+        <rect x={452} y={341} width={96} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
         <text x={500} y={352} fontSize="11" fill="#fbbf24" textAnchor="middle" fontWeight="600">20h30</text>
 
-        <rect x={587} y={340} width={96} height={15} rx="2" fill="#09090b" fillOpacity="0.85" />
+        <rect x={587} y={341} width={96} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
         <text x={635} y={352} fontSize="11" fill="#34d399" textAnchor="middle" fontWeight="600">21h00+</text>
 
         {/* Labels événements (haut) */}

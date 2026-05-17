@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { getStoredProgress, markLessonComplete, isLessonComplete } from "@/lib/progress";
+import { MultiTimeframeDiagram } from "@/app/components/charts/MultiTimeframeDiagram";
 import MultiTFEntryDiagram from "@/app/components/charts/MultiTFEntryDiagram";
+import { TradePlanDiagram } from "@/app/components/charts/TradePlanDiagram";
+import MultiTFAlignmentCheckDiagram from "@/app/components/charts/MultiTFAlignmentCheckDiagram";
+import MultiTFConflictDiagram from "@/app/components/charts/MultiTFConflictDiagram";
 import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
 import { LessonQuiz } from "@/app/components/LessonQuiz";
@@ -57,20 +61,12 @@ export default function SetupMTFPage() {
             Setup multi-timeframe : aligner 3 horizons
           </h1>
 
-          {/* ── Hero ── */}
           <div className="border-l-2 border-zinc-700 pl-4">
-            <p className="text-[15px] text-zinc-300 leading-relaxed">
-              Sans multi-timeframe, tu vois un pin bar ou un engulfing isolé sans savoir s&apos;il mérite d&apos;être tradé.
-            </p>
-            <p className="text-[15px] text-zinc-300 leading-relaxed mt-2">
-              Avec le multi-timeframe, tu lis le marché à 3 niveaux : un grand pour le biais, un moyen pour la zone, un petit pour l&apos;entrée. Selon ton style, ces 3 niveaux changent — on voit ça juste après.
-            </p>
-            <p className="text-[15px] text-zinc-300 leading-relaxed mt-2">
-              C&apos;est le passage du signal &quot;joli&quot; au setup structuré.
+            <p className="text-[15px] text-zinc-400 leading-relaxed">
+              Cette leçon enseigne à construire une entrée précise en alignant 3 timeframes : Daily (biais), H4 (zone), M15 (signal). Sans alignement, pas de setup.
             </p>
           </div>
 
-          {/* Indicateur de structure */}
           <div className="mt-5 flex items-center gap-2 text-xs text-zinc-600">
             {["Lecture", "À retenir", "Exercice", "Quiz"].map((step, i, arr) => (
               <span key={step} className="flex items-center gap-2">
@@ -84,7 +80,6 @@ export default function SetupMTFPage() {
             ))}
           </div>
 
-          {/* Pills des leçons */}
           <div className="mt-6 flex items-center gap-2 flex-wrap">
             {LESSONS.map((lesson) => {
               const isCurrent = lesson.id === "lecon4";
@@ -107,395 +102,188 @@ export default function SetupMTFPage() {
           </div>
         </header>
 
-        {/* ── Contenu ── */}
-        <div className="space-y-5">
+        <div className="space-y-8">
 
-          {/* Bloc 1 — Pourquoi le multi-timeframe change tout */}
+          {/* Bloc 1 — HERO QUOTE */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Pourquoi le multi-timeframe change tout</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu peux trouver le plus beau pin bar du monde sur H1.<br />
-              Si la Daily est baissière puissante, ton signal peut se faire écraser.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Un seul timeframe te montre le détail.<br />
-              Mais il peut te cacher la direction.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le multi-timeframe aligne 3 éléments : contexte, niveau, déclencheur.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              La 1.1 t&apos;a appris à lire une bougie.<br />
-              La 1.2 t&apos;a appris le pin bar : le rejet.<br />
-              La 1.3 t&apos;a appris l&apos;engulfing : la bascule.<br />
-              La 1.4 te montre comment assembler tout ça dans un process complet.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Daily : tu vois la route.<br />
-              H4 : tu repères la zone.<br />
-              H1 : tu cherches le signal.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Tu ne prends plus un setup parce qu&apos;il est beau.<br />
-              Tu le prends parce qu&apos;il est aligné.
-            </p>
-            <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded mt-5">
+            <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « Le multi-timeframe ne te donne pas plus de signaux. Il te donne les BONS signaux. »
+                « Une entrée propre se construit sur 3 niveaux : le contexte donne la direction, la zone donne le lieu, le signal donne le moment. »
               </p>
             </div>
           </section>
 
-          {/* Bloc 2 — La hiérarchie multi-timeframe selon ton style */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">La hiérarchie multi-timeframe selon ton style</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le multi-TF, c&apos;est 3 horizons : un grand pour le biais, un moyen pour la zone, un petit pour l&apos;entrée. Le choix de ces 3 horizons dépend de ton style.
-            </p>
-            <ul className="text-zinc-300 leading-relaxed text-sm mb-3 space-y-1 list-disc list-inside">
-              <li>Swing trader : Weekly (biais) → Daily (zone) → H4 (entrée)</li>
-              <li>Intraday calme : Daily → H4 → H1</li>
-              <li>INTRADAY ACTIF : H4 → H1 → M30</li>
-              <li>DAY TRADING ACTIF : H1 → M30 → M15</li>
+          {/* Bloc 2 — PRÉREQUIS */}
+          <div className="border border-zinc-800 rounded-xl p-4">
+            <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Lecture de bougie → cf. Stratégie PA L1</li>
+              <li>- Pin bar et engulfing → cf. Stratégie PA L2 et L3</li>
+              <li>- Concept de timeframes → cf. Formation Trading L1</li>
             </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Ces 4 hiérarchies sont valides. Les deux dernières — INTRADAY ACTIF et DAY TRADING ACTIF — correspondent à la majorité des retails. C&apos;est sans doute la tienne.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              M1/M5 sont déconseillés à ce stade — trop bruyant, demande de l&apos;expérience pour filtrer.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              Voyons ces 2 hiérarchies majoritaires sur un cas concret.
-            </p>
-          </section>
-
-          {/* Bloc 3 — Comment lire chaque timeframe étape par étape */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Comment lire chaque timeframe étape par étape</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Étape 1 — Ouvre le Daily.</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Pose une seule question : la tendance est haussière, baissière, ou en range ?
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Haussière → tu cherches uniquement des setups bullish.<br />
-              Baissière → tu cherches uniquement des setups bearish.<br />
-              Range → pas de setup multi-TF propre aujourd&apos;hui.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Étape 2 — Passe en H4.</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Cherche le prochain niveau logique dans le sens de la Daily.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              En tendance haussière : support, ancien high retesté, Fibonacci 0.5 ou 0.618.<br />
-              En tendance baissière : résistance, ancien low retesté, Fibonacci 0.5 ou 0.618.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Note le niveau. Pas une zone floue. Un vrai prix.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Étape 3 — Passe en H1.</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Attends que le prix touche ou approche le niveau H4.<br />
-              Puis cherche un pin bar ou un engulfing dans le sens de la tendance Daily.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Signal valide → tu prépares l&apos;entrée selon la règle du pattern.<br />
-              Pas de signal → pas de trade.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              Tu ne sautes pas d&apos;étape.<br />
-              Daily d&apos;abord. H4 ensuite. H1 seulement à la fin.
-            </p>
-          </section>
-
-          {/* Bloc 3bis — Exemple n°2 intraday actif */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Exemple n°2 — Style intraday actif (H4 → H1 → M30)</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Tu trades 3 à 5 fois par semaine, tu regardes ton chart 2-3 fois par jour. Voici comment tu utilises le multi-TF sur le même setup XAU/USD.
-            </p>
-            <h3 className="text-base font-semibold text-zinc-200 mb-2">H4 — Le biais</h3>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu regardes le H4 sur XAU/USD. Tu vois une structure haussière claire avec des sommets et creux ascendants sur les dernières semaines. Le marché reste au-dessus de ses derniers supports.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Conclusion : ton biais est haussier. Tu cherches uniquement des achats.
-            </p>
-            <h3 className="text-base font-semibold text-zinc-200 mb-2">H1 — La zone</h3>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu passes sur le H1. Le prix est en train de corriger à la baisse après une impulsion. Il revient vers une zone de demande récente autour des 4 580$.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu identifies une zone entre 4 575$ et 4 590$ où le prix a déjà rebondi par le passé.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Conclusion : ta zone d&apos;achat est entre 4 575$ et 4 590$. Tu attends un signal dans cette zone.
-            </p>
-            <h3 className="text-base font-semibold text-zinc-200 mb-2">M30 — L&apos;entrée</h3>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le prix arrive dans ta zone H1. Tu passes sur M30.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu vois une bougie avec une mèche basse marquée qui rejette les 4 580$, et un corps haussier qui clôture au-dessus de 4 590$. C&apos;est un signal clair.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Entrée : 4 590$<br />
-              SL : 4 565$ (sous la mèche, 25$ de risque)<br />
-              TP : 4 640$ (R/R 2:1, 50$ de gain)
-            </p>
-            <h3 className="text-base font-semibold text-zinc-200 mb-2">Calcul retail</h3>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu risques 1% de ton capital par trade.
-            </p>
-            <ul className="text-zinc-300 leading-relaxed text-sm mb-3 space-y-1 list-disc list-inside">
-              <li>Compte 500€ → tu risques 5€, gain potentiel 10€</li>
-              <li>Compte 1 000€ → tu risques 10€, gain potentiel 20€</li>
-              <li>Compte 2 500€ → tu risques 25€, gain potentiel 50€</li>
-            </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              Le calcul est universel : peu importe la taille de ton compte, le R/R reste 2:1. Ce qui change, c&apos;est la taille de lot.
-            </p>
-          </section>
-
-          {/* Bloc 4 — Setup d'entrée + SL + TP + R/R en multi-TF */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Setup d&apos;entrée + SL + TP + R/R en multi-TF</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              L&apos;entrée vient toujours du signal H1.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Si le déclencheur est une pin bar : entrée à la cassure du high en bullish, ou du low en bearish.<br />
-              Si le déclencheur est un engulfing : entrée à la cassure du high de la bougie engulfing en bullish, ou du low en bearish.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le SL reste celui du pattern.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Pin bar → SL sous le low de la mèche.<br />
-              Engulfing → SL sous le low de la bougie engulfing.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le multi-TF ne change pas l&apos;invalidation.<br />
-              Il change surtout la qualité de la cible.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              TP standard : prochain niveau H4.<br />
-              Résistance, ancien high, ancien low, zone de liquidité.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              TP étendu : prochain niveau Daily.<br />
-              Si la tendance Daily est saine, cette cible peut être beaucoup plus loin.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              C&apos;est là que le multi-timeframe devient puissant.<br />
-              En H1 seul, tu vois une petite cible.<br />
-              Avec la Daily, tu vois le potentiel complet.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              R/R standard : minimum 1:2.<br />
-              R/R étendu : peut atteindre 1:3 à 1:4 quand la tendance Daily est saine. Au-delà, c&apos;est rare et tu finis souvent par sortir avant la cible.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Ce qui rend une stratégie rentable, ce n&apos;est pas juste le R/R.<br />
-              C&apos;est R/R × win rate.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu peux gagner 7 trades sur 10 et finir perdant si ton R/R est trop faible.<br />
-              Tu peux gagner 4 trades sur 10 et finir gagnant si ton R/R est solide.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu risques 1% de ton capital par trade. Voici ce que ça donne sur 100 trades selon ton win rate et ton R/R.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Win rate 50%, R/R 1:1 → break-even.<br />
-              <br />
-              Win rate 50%, R/R 1:2 → +50% du capital.<br />
-              - Compte 500€ → +250€<br />
-              - Compte 1 000€ → +500€<br />
-              - Compte 2 500€ → +1 250€<br />
-              <br />
-              Win rate 40%, R/R 1:2 → +20% du capital.<br />
-              - Compte 500€ → +100€<br />
-              - Compte 1 000€ → +200€<br />
-              - Compte 2 500€ → +500€<br />
-              <br />
-              Win rate 60%, R/R 1:1 → +20% du capital.<br />
-              Win rate 30%, R/R 1:3 → +20% du capital.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              Tu vois la leçon : tu n&apos;as pas besoin d&apos;un win rate à 70% pour être rentable. Un R/R à 1:2 avec un win rate à 40% suffit. C&apos;est ça que le multi-TF te permet de viser : des entrées avec un R/R favorable, pas plus de signaux.
-            </p>
-          </section>
-
-          {/* Encadré ET TOI, RETAIL ? */}
-          <div className="border border-emerald-500/20 bg-emerald-500/5 rounded-xl p-6 my-8">
-            <p className="text-emerald-400 uppercase tracking-widest text-xs font-bold mb-4">ET TOI, RETAIL ?</p>
-            <div className="text-zinc-300 leading-relaxed space-y-3">
-              <p>
-                Tu as 800€ sur ton compte XTB. Il est 19h, tu rentres du boulot, tu as 30 minutes devant toi avant de dîner. Tu ouvres ton chart XAU/USD H4 d&apos;abord — biais haussier confirmé. Puis H1 — pullback en cours sur ta zone de demande à 4 580$. Puis M30 — tu attends.
-              </p>
-              <p>
-                Une bougie M30 arrive avec une grosse mèche basse qui rejette les 4 580$, et un corps vert au-dessus. C&apos;est ton signal.
-              </p>
-              <p>
-                Concrètement : entrée 4 590$, SL 4 565$, TP 4 640$. Tu risques 8€ (1% de 800€), tu peux gagner 16€. Tu coupes ton chart, tu vas dîner. Tu vérifieras dans 2-3 heures.
-              </p>
-            </div>
           </div>
 
-          {/* Intro visuel + MultiTFEntryDiagram */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Le schéma suivant montre le process complet sur XAU/USD : Daily pour la tendance, H4 pour le retracement Fibonacci 0.618, H1 pour l&apos;engulfing d&apos;entrée. Observe le zoom progressif. Tu pars du contexte, tu descends vers le niveau, puis tu termines par le déclencheur précis.
+          {/* Bloc 3 — LECTURE TOP-DOWN */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Lecture top-down Daily → H4 → M15</h2>
+
+            <div className="my-8">
+              <MultiTimeframeDiagram />
+            </div>
+
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              Chaque timeframe joue un rôle distinct et non interchangeable. La séquence top-down garantit que les entrées s&apos;alignent toujours sur le biais majeur.
             </p>
-            <div className="border border-zinc-800 rounded-xl overflow-hidden">
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- <span className="font-semibold text-zinc-100">Daily</span> = biais directionnel global (HH/HL haussier ou LH/LL baissier)</li>
+              <li>- <span className="font-semibold text-zinc-100">H4</span> = zones majeures de support / résistance, lieux potentiels d&apos;entrée</li>
+              <li>- <span className="font-semibold text-zinc-100">H1</span> = confirmation structurelle de l&apos;alignement avec le Daily</li>
+              <li>- <span className="font-semibold text-zinc-100">M15</span> = timing fin via signal de price action (pin bar, engulfing)</li>
+            </ul>
+          </section>
+
+          {/* Bloc 4 — VALIDER L'ALIGNEMENT */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Valider l&apos;alignement</h2>
+
+            <div className="my-8">
+              <MultiTFAlignmentCheckDiagram />
+            </div>
+
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              Un setup multi-timeframe est validé uniquement lorsque les 4 critères d&apos;alignement sont réunis. Un seul manquant invalide le setup.
+            </p>
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Tendance Daily clairement orientée (HH/HL ou LH/LL sur 30-50 dernières bougies)</li>
+              <li>- Zone H4 identifiée et tradable à proximité du prix (distance ≤ 100 pips/$ du prix actuel)</li>
+              <li>- Structure H1 alignée avec la tendance Daily (pas de correction temporaire en cours)</li>
+              <li>- Signal M15 explicite au contact de la zone H4 (pin bar, engulfing, réaction immédiate)</li>
+            </ul>
+          </section>
+
+          {/* Bloc 5 — CONFLIT MULTI-TF */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Conflit multi-TF (à ne pas trader)</h2>
+
+            <div className="my-8">
+              <MultiTFConflictDiagram />
+            </div>
+
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              Lorsque les timeframes affichent des biais conflictuels, aucun setup n&apos;est exploitable. La discipline consiste à ne pas trader tant que l&apos;alignement n&apos;est pas rétabli.
+            </p>
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Daily haussier + H4 baissier = correction en cours, attendre la reprise H4</li>
+              <li>- Daily ambigu (consolidation latérale) = pas de biais, pas de trade jusqu&apos;à clarification</li>
+              <li>- M15 contre Daily = bruit de court terme, ignorer le signal isolé</li>
+            </ul>
+          </section>
+
+          {/* Bloc 6 — PLAN DE TRADE CHIFFRÉ */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : setup MTF EUR/USD</h2>
+
+            <div className="my-8">
               <MultiTFEntryDiagram />
             </div>
-          </section>
 
-          {/* Bloc 6 — Filtres */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Filtres : quand NE PAS prendre le setup multi-TF</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">1. Daily en range, sans tendance claire.</span><br />
-              Pas de setup. Sans direction Daily, tu n&apos;as pas de boussole. Tu attends une tendance plus propre.
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              EUR/USD en tendance haussière confirmée sur Daily (HH/HL sur 6 semaines). Zone H4 support à 1.1750-1.1770 (3 touches, fraîche). H1 aligné haussier. Pin bar M15 imprimée au contact de la zone.
             </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">2. H4 sans niveau identifiable.</span><br />
-              Si le prix flotte au milieu de nulle part, tu n&apos;as pas de zone de réaction. Pas de support, pas de résistance, pas de Fibo propre = pas de plan.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">3. Signal H1 contre la tendance Daily.</span><br />
-              Piège classique. Un beau pin bar bearish H1 dans une Daily haussière reste un signal contre-tendance. Tu ignores.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              <span className="font-semibold text-zinc-200">4. News rouge majeure dans les prochaines heures.</span><br />
-              NFP, FOMC, CPI : la macro peut effacer le meilleur setup technique. Tu attends la news, puis tu réévalues.
-            </p>
+
+            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+              <p className="text-white font-semibold text-sm mb-2">Setup</p>
+              <ul className="space-y-1 text-sm text-zinc-300 mb-4">
+                <li>- Daily : dernier HH 1.1840, dernier HL 1.1720, biais long</li>
+                <li>- H4 : zone support 1.1750-1.1770, 3 touches en 5 semaines</li>
+                <li>- M15 : pin bar haussière, mèche basse 1.1762, clôture 1.1778</li>
+                <li>- Entrée long : 1.1778 (clôture de la pin bar M15)</li>
+                <li>- Stop loss : 1.1745 (5 pips sous la zone H4)</li>
+                <li>- Take profit niveau 1 : 1.1840 (HH Daily) — niveau 2 : 1.1900 (extension)</li>
+              </ul>
+
+              <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
+              <ul className="space-y-1 text-sm text-zinc-300">
+                <li>- Risque : 1.1778 - 1.1745 = 33 pips</li>
+                <li>- Gain niveau 1 : 1.1840 - 1.1778 = 62 pips → R/R 1,88</li>
+                <li>- Gain niveau 2 : 1.1900 - 1.1778 = 122 pips → R/R 3,70</li>
+                <li>- Le setup vise prioritairement le TP niveau 2 pour un R/R optimal</li>
+              </ul>
+            </div>
+
+            <div className="my-8">
+              <TradePlanDiagram />
+            </div>
+
+            <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
+            <ul className="space-y-1 text-sm text-zinc-300 mb-3">
+              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 56€</li>
+              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 56€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 74€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 185€</li>
+            </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
-              Le multi-TF filtre beaucoup de mauvais trades.<br />
-              Mais il ne remplace pas la discipline.
+              Le R/R reste 3,70:1 peu importe la taille du compte.
             </p>
           </section>
-
-          {/* Bloc 7 — Exemple n°1 swing/intraday calme */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Exemple n°1 — Style swing ou intraday calme (Daily → H4 → H1)</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu trades 1 à 3 fois par semaine, tu ne regardes ton chart que 2 fois par jour. Voici le détail step-by-step.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              On reprend le même XAU/USD que les leçons 1.2 et 1.3.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Étape 1 — Daily.</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              XAU/USD est haussier depuis le rebond sur 4 500$ vu en leçon 1.2.<br />
-              Le prix a marqué un higher high vers 4 720$.<br />
-              La structure Daily reste haussière.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Conclusion : tu cherches uniquement des setups bullish.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Étape 2 — H4.</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le prix corrige depuis 4 720$.<br />
-              Tu traces le Fibonacci de la jambe haussière récente.<br />
-              Le retracement 0.618 tombe autour de 4 600$, exactement la zone vue en leçon 1.3.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Conclusion : 4 600$ devient ta zone H4 à surveiller.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Étape 3 — H1.</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le prix arrive sur 4 600$.<br />
-              Un bullish engulfing apparaît.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              1ère bougie bearish : Open 4 615$, Close 4 600$.<br />
-              2ème bougie bullish : Open 4 595$, Close 4 625$.<br />
-              La 2ème englobe entièrement le corps de la 1ère.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Le signal est valide.<br />
-              Il est sur un niveau H4 propre.<br />
-              Il est dans le sens de la Daily.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Setup :</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Entrée : 4 630$.<br />
-              Stop Loss : 4 590$.<br />
-              Risque = 40$.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              TP standard H4 : 4 720$.<br />
-              Gain = 90$.<br />
-              R/R = 2,25.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              TP étendu Daily : 4 800$.<br />
-              Gain = 170$.<br />
-              R/R = 4,25.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Plan propre : prendre 50% à 4 720$, passer le reste à break-even, laisser courir vers 4 800$.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              Le même engulfing que la leçon 1.3 devient plus puissant avec la lecture multi-TF.<br />
-              Tu ne vois plus seulement une entrée. Tu vois tout le chemin possible.
-            </p>
-          </section>
-
-          {/* ── Séparateur révision ── */}
-          <div className="flex items-center gap-4 py-2">
-            <div className="flex-1 h-px bg-zinc-800" />
-            <span className="text-[11px] font-semibold text-zinc-700 uppercase tracking-widest">Révision</span>
-            <div className="flex-1 h-px bg-zinc-800" />
-          </div>
 
           <LessonKeyPoints
             points={[
-              "Daily = contexte de tendance, H4 = niveau d'entrée, H1 = déclencheur : chaque TF a un rôle précis",
-              "Tu entres uniquement en H1 sur un signal validé — jamais en Daily ou H4 directement",
-              "Le signal H1 doit aller dans le sens de la tendance Daily : contre la tendance = pas de trade",
-              "La tendance Daily permet de viser des TP étendus et d'obtenir de meilleurs R/R",
-              "Sans tendance Daily claire et sans niveau H4 identifiable, il n'y a pas de setup",
+              "Procédure top-down obligatoire : Daily → H4 → H1 → M15. Pas d’analyse directionnelle sur M15 isolé.",
+              "Daily = biais. H4 = zones. H1 = alignement structurel. M15 = timing d’entrée.",
+              "Les 4 critères d’alignement doivent tous être validés. Un seul manquant invalide le setup.",
+              "Stop loss au-delà de la zone H4 avec marge 5-10 pips. Take profit vers la prochaine zone H4 dans le sens du trade.",
             ]}
           />
 
           <LessonExercice
-            description="Applique le process MTF sur un graphique réel en suivant les étapes dans l'ordre."
+            description="Sur XAU/USD, le Daily est en tendance haussière avec dernier HH à 4 680$ et dernier HL à 4 520$. Une zone de support H4 est identifiée entre 4 560$ et 4 580$ (3 touches en 5 semaines). Le prix actuel est à 4 595$. La structure H1 est alignée haussière. Le prix descend toucher 4 575$ puis imprime une engulfing haussière M15 avec clôture à 4 595$. Comment se construit le plan de trade ?"
             steps={[
-              "Ouvrir un graphique XAU/USD en Daily et identifier clairement la tendance : haussière, baissière ou range",
-              "Descendre en H4 et repérer le prochain niveau clé dans la direction de la tendance : support, résistance ou Fibo 0.618",
-              "Descendre en H1 et surveiller la zone H4 jusqu'à l'apparition d'un signal valide : pin bar ou engulfing",
-              "Calculer l'entrée, le SL, le TP standard (niveau H4 suivant) et le TP étendu (niveau Daily suivant) avec le R/R de chaque option",
-              "Trouver dans l'historique 1 exemple de signal H1 propre contre la tendance Daily qui a échoué, et noter ce que tu aurais perdu en le prenant",
+              "Valider les 4 critères d’alignement : tendance Daily haussière confirmée, zone H4 4 560$-4 580$ tradable (3 touches, fraîche), structure H1 alignée haussière, signal M15 engulfing haussière au contact de la zone H4",
+              "Placer l’entrée long à 4 595$ (clôture de l’engulfing M15)",
+              "Placer le stop loss à 4 555$ (5$ sous le bas de la zone H4 à 4 560$)",
+              "Placer le take profit niveau 1 à 4 680$ (HH Daily précédent) ou niveau 2 à 4 750$ (projection extension Daily)",
+              "Calculer les R/R : Risque 40$, gain niveau 1 = 85$ → R/R 2,12 ; gain niveau 2 = 155$ → R/R 3,88. Taille de position selon le risque par trade adapté au capital",
             ]}
           />
 
           <LessonQuiz
-            question="Le Daily est clairement baissier sur XAU/USD. En H4, le prix remonte vers une résistance majeure à 4 720$. En H1, tu vois un bullish engulfing propre sur cette résistance. Que fais-tu ?"
+            question="Une bougie présente un corps réduit, une mèche basse longue (3 fois la taille du corps) et une clôture dans le tiers supérieur de la fourchette. Quel pattern et quel message du marché ?"
             options={[
-              "Tu prends le Long en H1 — le setup engulfing est techniquement parfait",
-              "Tu prends le Long mais avec une taille réduite car le Daily est contre toi",
-              "Tu ignores le Long — le signal H1 est contre la tendance Daily baissière. Tu surveilles plutôt un signal Short sur cette résistance",
-              "Tu attends que le Daily forme un signal de retournement avant d'agir en H1",
+              "Doji d’indécision, équilibre entre les camps",
+              "Pin bar haussière, rejet à la baisse confirmé",
+              "Marubozu baissier, domination totale des vendeurs",
+              "Engulfing baissier, bascule de pouvoir vers les vendeurs",
+            ]}
+            correctIndex={1}
+            explanation="Corps réduit + mèche basse 3 fois plus longue que le corps + clôture dans le tiers supérieur = signature exacte d’une pin bar haussière. Le message du marché : tentative d’extension baissière rapidement rejetée par les acheteurs, qui reprennent le contrôle avant la clôture. Signal de rejet à la baisse particulièrement opérationnel s’il apparaît au contact d’un niveau structurel."
+          />
+
+          <LessonQuiz
+            question="Quelle est la condition principale pour valider une bullish engulfing comme signal de retournement opérationnel ?"
+            options={[
+              "Le corps de la 2e bougie englobe entièrement le corps de la 1ère, dans le sens opposé, à un niveau structurel significatif",
+              "La 2e bougie a un volume supérieur de 200% à la moyenne",
+              "La 2e bougie clôture exactement au plus haut de la session",
+              "La 2e bougie est précédée d’un doji obligatoire",
+            ]}
+            correctIndex={0}
+            explanation="Une bullish engulfing valide exige 3 conditions : le corps de la 2e bougie englobe entièrement le corps de la 1ère (qui est baissière), la direction inverse de la 1ère, et l’apparition à un niveau structurel significatif (support, résistance, zone OB). Sans contexte structurel, l’engulfing perd sa puissance opérationnelle."
+          />
+
+          <LessonQuiz
+            question="Dans la procédure top-down multi-timeframe, quel est le rôle exclusif du M15 ?"
+            options={[
+              "Fournir le biais directionnel global",
+              "Identifier les zones majeures de support et résistance",
+              "Fournir le timing d’entrée précis via un signal de price action",
+              "Confirmer la tendance Daily",
             ]}
             correctIndex={2}
-            explanation="La hiérarchie MTF est claire : le Daily prime toujours. Un Daily baissier signifie que tu cherches uniquement des Shorts. Le bullish engulfing H1 est visuellement propre, mais il est contre la tendance de fond. Le prendre revient à aller à contre-courant sans raison valide. La résistance H4 est au contraire un excellent endroit pour chercher un signal bearish en H1."
+            explanation="Le M15 est exclusivement un outil de timing fin. Le biais directionnel vient du Daily. Les zones viennent du H4. L’alignement structurel vient du H1. Le M15 fournit uniquement le signal de price action (pin bar, engulfing, réaction nette) qui confirme l’entrée au contact de la zone H4."
           />
 
         </div>
@@ -532,7 +320,6 @@ export default function SetupMTFPage() {
               </div>
             )}
 
-            {/* Navigation */}
             <div className="mt-5 flex items-center justify-between">
               <Link
                 href="/strategies/price-action/lecon3"

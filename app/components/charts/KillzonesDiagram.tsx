@@ -77,14 +77,14 @@ export function KillzonesDiagram({ className = "" }: KillzonesDiagramProps) {
         {/* Annotation — London Open 08h */}
         <line x1={hx(8)} y1={42} x2={hx(8)} y2={215}
           stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.35" />
-        <rect x={hx(8) - 48} y={242} width={96} height={12} rx="2"
+        <rect x={hx(8) - 48} y={240} width={96} height={14} rx="2"
           fill="#09090b" fillOpacity="0.85" />
         <text x={hx(8)} y={251} fontSize="8.5" fill="#10b981" textAnchor="middle" fontWeight="600">London Open — 08h</text>
 
         {/* Annotation — NY Open 13h30 */}
         <line x1={hx(13.5)} y1={42} x2={hx(13.5)} y2={215}
           stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.35" />
-        <rect x={hx(13.5) - 48} y={242} width={96} height={12} rx="2"
+        <rect x={hx(13.5) - 48} y={240} width={96} height={14} rx="2"
           fill="#09090b" fillOpacity="0.85" />
         <text x={hx(13.5)} y={251} fontSize="8.5" fill="#10b981" textAnchor="middle" fontWeight="600">NY Open — 13h30</text>
       </svg>

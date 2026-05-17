@@ -88,17 +88,17 @@ export function FVGDiagram({ className = "" }: FVGDiagramProps) {
           stroke="#60a5fa" strokeWidth="0.8" opacity="0.5" strokeDasharray="2 2" />
 
         {/* B1 high marker */}
-        <rect x="82" y={fvgBullBot - 5} width="22" height="10" rx="2"
+        <rect x="82" y={fvgBullBot - 8} width="22" height="14" rx="2"
           fill="#09090b" fillOpacity="0.9" />
         <text x="93" y={fvgBullBot + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B1 haut</text>
 
         {/* B3 low marker */}
-        <rect x="82" y={fvgBullTop - 5} width="22" height="10" rx="2"
+        <rect x="82" y={fvgBullTop - 8} width="22" height="14" rx="2"
           fill="#09090b" fillOpacity="0.9" />
         <text x="93" y={fvgBullTop + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B3 bas</text>
 
         {/* Mitigation annotation */}
-        <rect x="100" y="26" width="30" height="10" rx="2"
+        <rect x="100" y="23" width="30" height="14" rx="2"
           fill="#09090b" fillOpacity="0.9" />
         <text x="115" y="34" fontSize="6.5" fill="#71717a" textAnchor="middle">retour ↓</text>
 
@@ -124,17 +124,17 @@ export function FVGDiagram({ className = "" }: FVGDiagramProps) {
           stroke="#60a5fa" strokeWidth="0.8" opacity="0.5" strokeDasharray="2 2" />
 
         {/* B1r low marker */}
-        <rect x="222" y={fvgBearTop - 5} width="24" height="10" rx="2"
+        <rect x="222" y={fvgBearTop - 8} width="24" height="14" rx="2"
           fill="#09090b" fillOpacity="0.9" />
         <text x="234" y={fvgBearTop + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B1 bas</text>
 
         {/* B3r high marker */}
-        <rect x="222" y={fvgBearBot - 5} width="24" height="10" rx="2"
+        <rect x="222" y={fvgBearBot - 8} width="24" height="14" rx="2"
           fill="#09090b" fillOpacity="0.9" />
         <text x="234" y={fvgBearBot + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B3 haut</text>
 
         {/* Mitigation annotation */}
-        <rect x="234" y="44" width="30" height="10" rx="2"
+        <rect x="234" y="41" width="30" height="14" rx="2"
           fill="#09090b" fillOpacity="0.9" />
         <text x="249" y="52" fontSize="6.5" fill="#71717a" textAnchor="middle">retour ↑</text>
       </svg>

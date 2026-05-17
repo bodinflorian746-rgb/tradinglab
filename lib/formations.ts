@@ -12,6 +12,7 @@ export interface Formation {
   badge: string;
   badgeStyle: string;
   premium: boolean;
+  disabled?: boolean;
   lessons: Lesson[];
 }
 
@@ -80,6 +81,7 @@ export const FORMATIONS: Formation[] = [
     badge: "Gratuit",
     badgeStyle: "bg-zinc-700 text-zinc-300",
     premium: false,
+    disabled: true,
     lessons: [
       { id: "lecon1", title: "Installer MetaTrader 5",            duration: "6 min",  href: "/formations/mt5/lecon1" },
       { id: "lecon2", title: "L'interface de MT5",                duration: "10 min", href: "/formations/mt5/lecon2" },

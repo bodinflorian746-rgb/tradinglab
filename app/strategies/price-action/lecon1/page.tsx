@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { getStoredProgress, markLessonComplete, isLessonComplete } from "@/lib/progress";
 import { CandleAnatomyDiagram } from "@/app/components/charts/CandleAnatomyDiagram";
+import CandleStrengthComparisonDiagram from "@/app/components/charts/CandleStrengthComparisonDiagram";
+import CandleContextReadingDiagram from "@/app/components/charts/CandleContextReadingDiagram";
 import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
 import { LessonQuiz } from "@/app/components/LessonQuiz";
@@ -59,14 +61,10 @@ export default function LireUneBougiePage() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              La bougie est l&apos;unité de base du trading. Tant que tu ne sais pas lire UNE bougie, tu ne sais rien lire.
-            </p>
-            <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
-              Mais une bougie ne dit pas juste &quot;le prix monte ou descend&quot;. Elle te montre qui a attaqué, qui a résisté, et qui a gagné.
+              Cette leçon enseigne à lire rapidement le rapport de force d&apos;une bougie et à reconnaître les 4 patterns clés (Marubozu, pin bar, doji, engulfing) qui structurent toute la price action.
             </p>
           </div>
 
-          {/* Indicateur de structure */}
           <div className="mt-5 flex items-center gap-2 text-xs text-zinc-600">
             {["Lecture", "À retenir", "Exercice", "Quiz"].map((step, i, arr) => (
               <span key={step} className="flex items-center gap-2">
@@ -80,7 +78,6 @@ export default function LireUneBougiePage() {
             ))}
           </div>
 
-          {/* Pills des leçons */}
           <div className="mt-6 flex items-center gap-2 flex-wrap">
             {LESSONS.map((lesson) => {
               const isCurrent = lesson.id === "lecon1";
@@ -103,235 +100,117 @@ export default function LireUneBougiePage() {
           </div>
         </header>
 
-        {/* ── Contenu ── */}
-        <div className="space-y-5">
+        <div className="space-y-8">
 
-          {/* Bloc 1 — Une bougie = une bataille en 4 chiffres */}
+          {/* Bloc 1 — HERO QUOTE */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Une bougie = une bataille en 4 chiffres</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Une bougie te raconte une bataille en 4 chiffres : Open, High, Low, Close.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Open = prix d&apos;ouverture de la période.<br />
-              Close = prix de fermeture.<br />
-              High = point le plus haut atteint.<br />
-              Low = point le plus bas atteint.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Peu importe le timeframe. 1 minute, 1 heure, 1 jour. La logique reste identique.<br />
-              Chaque bougie est un résumé complet de ce qui s&apos;est passé pendant cette période.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Entre l&apos;Open et le Close, le prix monte, descend, hésite. Les acheteurs poussent, les vendeurs répondent.<br />
-              Le High montre jusqu&apos;où les acheteurs ont réussi à aller.<br />
-              Le Low montre jusqu&apos;où les vendeurs ont réussi à pousser.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Tu ne regardes pas un point. Tu lis un combat entier.
-            </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « Une bougie n&apos;est pas un prix. C&apos;est l&apos;histoire de tous les prix pendant cette période. »
+                « Une bougie n&apos;est pas un dessin. C&apos;est le résumé chiffré d&apos;une bataille entre acheteurs et vendeurs sur une période donnée. »
               </p>
             </div>
           </section>
 
-          {/* Bloc 2 — L'anatomie : corps + mèches */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">L&apos;anatomie : corps + mèches</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Une bougie a 3 parties.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Le corps.</span><br />
-              C&apos;est le rectangle plein. Il représente la différence entre l&apos;Open et le Close.<br />
-              C&apos;est la zone où la bataille s&apos;est terminée. Celui qui contrôle le corps a gagné la période.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">La mèche haute (wick supérieur).</span><br />
-              C&apos;est le trait fin entre le sommet du corps et le High.<br />
-              Elle montre jusqu&apos;où les acheteurs ont poussé avant de se faire contrer.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              <span className="font-semibold text-zinc-200">La mèche basse (wick inférieur).</span><br />
-              C&apos;est le trait fin entre le bas du corps et le Low.<br />
-              Elle montre jusqu&apos;où les vendeurs ont poussé avant de se faire repousser.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Corps = résultat final.<br />
-              Mèches = tentatives et excès.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Regarde maintenant le schéma associé. Il découpe une bougie en Open, Close, High, Low, corps et mèches. L&apos;objectif n&apos;est pas de mémoriser un dessin, mais de comprendre ce que chaque partie signifie dans le combat acheteurs vs vendeurs.
-            </p>
-            <div className="border border-zinc-800 rounded-xl overflow-hidden">
+          {/* Bloc 2 — PRÉREQUIS */}
+          <div className="border border-zinc-800 rounded-xl p-4">
+            <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Notions de OHLC (open/high/low/close) → cf. Formation Trading L1</li>
+              <li>- Bougies japonaises → cf. Formation Trading L1</li>
+              <li>- Concept de swing high/low → cf. Formation Trading L2</li>
+            </ul>
+          </div>
+
+          {/* Bloc 3 — ANATOMIE D'UNE BOUGIE */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Anatomie d&apos;une bougie</h2>
+
+            <div className="my-8">
               <CandleAnatomyDiagram />
             </div>
+
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              Une bougie résume 4 valeurs (OHLC) sur une période donnée. La forme visible (corps + mèches) raconte le rapport de force final.
+            </p>
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Corps significatif (&gt; 50% moyenne des 20 dernières bougies) = direction claire</li>
+              <li>- Mèche longue d&apos;un côté (≥ corps) = rejet net dans cette direction</li>
+              <li>- Clôture dans le tiers haut ou bas = domination soutenue jusqu&apos;à la clôture</li>
+              <li>- Bougie en cours de formation = lecture provisoire, attendre la clôture</li>
+            </ul>
           </section>
 
-          {/* Bloc 3 — Bullish vs Bearish : qui a gagné cette période */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Bullish vs Bearish : qui a gagné cette période</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Bullish (haussière)</span> = Close &gt; Open.<br />
-              Les acheteurs ont gagné. Le prix a fini au-dessus de son point de départ.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Bearish (baissière)</span> = Close &lt; Open.<br />
-              Les vendeurs ont gagné. Le prix a fini en dessous.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              <span className="font-semibold text-zinc-200">Doji</span> = Close ≈ Open.<br />
-              Aucun camp n&apos;a pris le contrôle. Indécision totale.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Important : la direction du corps te donne le vainqueur.<br />
-              Mais elle ne te dit pas comment la bataille s&apos;est déroulée.<br />
-              C&apos;est là que les mèches deviennent essentielles.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Une bougie bullish peut cacher une forte pression vendeuse si la mèche haute est longue.<br />
-              Une bougie bearish peut cacher une défense acheteuse si la mèche basse est longue.
-            </p>
-            <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
-              <p className="text-base text-white font-semibold italic leading-relaxed">
-                « Le corps te dit qui a gagné. Les mèches te disent qui a essayé. »
-              </p>
+          {/* Bloc 4 — RECONNAÎTRE LES 4 TYPES CLÉS */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Reconnaître les 4 types clés</h2>
+
+            <div className="my-8">
+              <CandleStrengthComparisonDiagram />
             </div>
+
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              4 patterns reviennent en permanence sur les charts. Leur identification rapide oriente toute la lecture d&apos;ensemble.
+            </p>
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- <span className="font-semibold text-zinc-100">Marubozu</span> : grand corps, pas de mèche = conviction maximale, signal de continuation</li>
+              <li>- <span className="font-semibold text-zinc-100">Pin bar</span> : corps réduit + mèche longue d&apos;un côté = rejet de niveau, signal de retournement local</li>
+              <li>- <span className="font-semibold text-zinc-100">Doji</span> : corps quasi inexistant = indécision, signal d&apos;attente ou retournement potentiel en zone extrême</li>
+              <li>- <span className="font-semibold text-zinc-100">Engulfing</span> : corps qui englobe la bougie précédente dans le sens opposé = bascule de pouvoir nette</li>
+            </ul>
           </section>
 
-          {/* Bloc 4 — La taille du corps : la force de la conviction */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">La taille du corps : la force de la conviction</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              La taille du corps change tout.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Grand corps</span> = mouvement clair.<br />
-              Un camp a dominé presque toute la période. Peu d&apos;hésitation.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              <span className="font-semibold text-zinc-200">Petit corps</span> = équilibre.<br />
-              Acheteurs et vendeurs se neutralisent. Aucun contrôle net.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Une bougie bullish avec un grand corps montre une pression acheteuse forte.<br />
-              Une bougie bearish avec un grand corps montre une pression vendeuse forte.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              À l&apos;inverse, un petit corps signale un marché qui hésite.<br />
-              Le prix avance, mais sans conviction.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              En pratique :<br />
-              Grand corps → souvent continuation (le mouvement continue dans le même sens).<br />
-              Petit corps → souvent pause ou retournement possible.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              Tu ne regardes pas juste le sens. Tu mesures l&apos;intensité.
-            </p>
-          </section>
+          {/* Bloc 5 — LE CONTEXTE CHANGE LA LECTURE */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Le contexte change la lecture</h2>
 
-          {/* Bloc 5 — Les mèches : qui a essayé puis abandonné */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Les mèches : qui a essayé puis abandonné</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Les mèches racontent ce que le corps ne montre pas.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Mèche haute longue.</span><br />
-              Les acheteurs ont poussé le prix vers le haut, mais les vendeurs sont revenus et ont repris le contrôle avant la clôture.<br />
-              C&apos;est un rejet par le haut.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              <span className="font-semibold text-zinc-200">Mèche basse longue.</span><br />
-              Les vendeurs ont poussé vers le bas, mais les acheteurs ont absorbé et ont fait remonter le prix.<br />
-              C&apos;est un rejet par le bas.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              <span className="font-semibold text-zinc-200">Deux mèches longues avec un petit corps.</span><br />
-              Combat total. Personne ne gagne. Indécision forte (doji à longues mèches).
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Point clé :<br />
-              Les mèches longues sont souvent plus importantes que le corps.<br />
-              Elles montrent les zones où le marché a tenté et échoué.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              C&apos;est exactement ce que tu utiliseras plus tard dans des patterns comme la pin bar.
-            </p>
-          </section>
-
-          {/* Bloc 6 — Lire le signal selon le contexte */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Lire le signal selon le contexte</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une bougie seule ne suffit jamais. Le contexte change tout.
-            </p>
-            <div className="space-y-3 mb-5">
-              {[
-                { label: "Bougie bullish à grand corps en bas d'une chute.", body: "Les acheteurs reprennent le contrôle → possible retournement." },
-                { label: "Bougie bullish à grand corps en haut d'un range.", body: "Les acheteurs poussent encore → possible continuation." },
-                { label: "Mèche haute longue sur une résistance.", body: "Les vendeurs défendent la zone → rejet clair." },
-                { label: "Mèche basse longue sur un support.", body: "Les acheteurs défendent la zone → rejet clair." },
-              ].map((item, i) => (
-                <div key={i} className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                  <p className="text-sm font-semibold text-zinc-200 mb-1">{item.label}</p>
-                  <p className="text-sm text-zinc-400">→ {item.body}</p>
-                </div>
-              ))}
+            <div className="my-8">
+              <CandleContextReadingDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Même forme, sens différent.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              La vraie lecture = bougie + niveau + tendance.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              Les patterns comme la pin bar (1.2), l&apos;engulfing (1.3) et le multi-timeframe (1.4) vont te montrer comment exploiter ça.<br />
-              Ici, ton objectif est simple : voir ce que la bougie raconte.
-            </p>
-          </section>
 
-          {/* ── Séparateur révision ── */}
-          <div className="flex items-center gap-4 py-2">
-            <div className="flex-1 h-px bg-zinc-800" />
-            <span className="text-[11px] font-semibold text-zinc-700 uppercase tracking-widest">Révision</span>
-            <div className="flex-1 h-px bg-zinc-800" />
-          </div>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              Une même bougie n&apos;a pas la même valeur selon les bougies adjacentes et la position structurelle. La lecture isolée surestime systématiquement le signal.
+            </p>
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Bougie verte au sommet d&apos;une impulsion = essoufflement, retournement potentiel</li>
+              <li>- Bougie verte isolée au milieu d&apos;une chute = bruit, continuation baissière probable</li>
+              <li>- Bougie verte dans un range latéral = pas de signal, oscillation normale</li>
+              <li>- La bougie analysée doit être reliée à un niveau structurel pour devenir un signal opérationnel</li>
+            </ul>
+          </section>
 
           <LessonKeyPoints
             points={[
-              "Une bougie = 4 chiffres : Open, High, Low, Close",
-              "Le corps mesure qui a gagné, les mèches mesurent qui a essayé",
-              "Grand corps = conviction, petit corps = hésitation",
-              "Mèche longue à un niveau clé = signal de rejet fort",
-              "Une bougie ne se lit jamais seule — toujours dans son contexte",
+              "Une bougie se lit par 4 éléments : taille du corps, mèches, position de la clôture, contexte adjacent.",
+              "4 patterns clés : Marubozu (conviction), pin bar (rejet), doji (indécision), engulfing (bascule).",
+              "Lecture uniquement sur bougies entièrement clôturées. La bougie en cours reste provisoire.",
+              "Le contexte structurel détermine la valeur d’un signal : même pattern, valeur différente selon sa position.",
             ]}
           />
 
           <LessonExercice
-            description="Mets en pratique la lecture des bougies sur un graphique réel."
+            description="Sur XAU/USD H4, une bougie clôture avec ces caractéristiques : ouverture 4 580$, plus haut 4 595$, plus bas 4 530$, clôture 4 588$. Comment se lit cette bougie selon les 4 critères du rapport de force ?"
             steps={[
-              "Ouvrir un graphique sur ton actif préféré (EUR/USD, Nasdaq, BTC...) en timeframe 1h",
-              "Identifier 3 bougies bullish et 3 bougies bearish — repérer la couleur, le sens du corps",
-              "Repérer une bougie avec une mèche longue (plus longue que le corps) et noter à quel niveau elle est apparue",
-              "Trouver une bougie à grand corps et une bougie à petit corps — comparer ce qui s'est passé après chacune",
-              "Repérer un doji (corps minuscule, 2 mèches) et noter ce qui s'est passé dans les 3 bougies suivantes",
+              "Critère 1 — Taille du corps : ouverture 4 580$ à clôture 4 588$ = corps haussier de 8$ (à comparer à la moyenne des 20 bougies récentes)",
+              "Critère 2 — Mèches : mèche basse de 50$ (4 580$ - 4 530$), mèche haute de 7$ (4 595$ - 4 588$) — mèche basse 6 fois plus longue que le corps, signal de rejet haussier puissant en bas",
+              "Critère 3 — Position de la clôture : 4 588$ dans la fourchette 4 530$-4 595$ = 89% de la fourchette, dans le tiers supérieur, domination des acheteurs sur la fin de période",
+              "Critère 4 — Contexte adjacent : à mettre en relation avec les bougies précédentes et un niveau structurel proche",
+              "Synthèse : la bougie correspond au pattern pin bar haussier (corps réduit + mèche basse longue + clôture en haut), signal de rejet à la baisse particulièrement opérationnel s’il intervient au contact d’un support ou d’une zone Order Block",
             ]}
           />
 
           <LessonQuiz
-            question="Tu vois une bougie avec un petit corps bullish et une mèche basse très longue, qui se forme sur un niveau de support connu. Que te dit-elle ?"
+            question="Une bougie présente un corps réduit, une mèche basse longue (3 fois la taille du corps) et une clôture dans le tiers supérieur de la fourchette. Quel pattern et quel message du marché ?"
             options={[
-              "Les vendeurs ont gagné cette période, continuation baissière probable",
-              "Les acheteurs ont gagné massivement, signal d'achat clair",
-              "Les vendeurs ont essayé de casser le support mais les acheteurs sont revenus le défendre — signal de rejet par le bas",
-              "La bougie ne signifie rien sans regarder les bougies suivantes",
+              "Doji d’indécision, équilibre entre les camps",
+              "Pin bar haussière, rejet à la baisse confirmé",
+              "Marubozu baissier, domination totale des vendeurs",
+              "Engulfing baissier, bascule de pouvoir vers les vendeurs",
             ]}
-            correctIndex={2}
-            explanation="La mèche basse très longue montre que les vendeurs ont poussé le prix sous le support. Mais le corps bullish en haut de la mèche prouve que les acheteurs ont repris le contrôle avant la clôture. C'est un rejet clair par le bas. La réponse D rappelle que le contexte compte, mais cette bougie donne déjà une information forte à elle seule."
+            correctIndex={1}
+            explanation="Corps réduit + mèche basse 3 fois plus longue que le corps + clôture dans le tiers supérieur = signature exacte d’une pin bar haussière. Le message du marché : tentative d’extension baissière rapidement rejetée par les acheteurs, qui reprennent le contrôle avant la clôture. Signal de rejet à la baisse particulièrement opérationnel s’il apparaît au contact d’un niveau structurel."
           />
 
         </div>
@@ -368,7 +247,6 @@ export default function LireUneBougiePage() {
               </div>
             )}
 
-            {/* Navigation */}
             <div className="mt-5 flex items-center justify-between">
               <span />
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">

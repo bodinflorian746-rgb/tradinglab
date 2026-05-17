@@ -100,7 +100,7 @@ export default function FOMCLecon() {
         </header>
 
         {/* ── Contenu ── */}
-        <div className="space-y-5">
+        <div className="space-y-8">
 
           {/* Bloc 1 : Qu'est-ce que le FOMC ? */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -314,6 +314,22 @@ export default function FOMCLecon() {
               Sans confluence technique, tu trades juste la news. Avec, tu trades la news + la structure.
             </p>
           </section>
+
+          {/* ET TOI, RETAIL ? */}
+          <div className="border border-emerald-500/20 bg-emerald-500/5 rounded-xl p-6 my-8">
+            <p className="text-emerald-400 uppercase tracking-widest text-xs font-bold mb-4">ET TOI, RETAIL ?</p>
+            <div className="text-zinc-300 leading-relaxed space-y-3">
+              <p>
+                Mercredi soir 19h45. Capital 1 000€. Le FOMC tombe dans 15 minutes. Tu n&apos;as aucune position ouverte sur EUR/USD ni sur les indices US. Tout est plat. Hier, tu avais déjà identifié un Order Block H1 vers 1.1820 sur EUR/USD. C&apos;est ton niveau clé. Entre 20h00 et 20h30, tu sais que le marché peut partir dans les deux sens sans logique propre.
+              </p>
+              <p>
+                20h00 : la Fed laisse les taux inchangés. Première impulsion violente. 20h30 : Powell devient hawkish et insiste sur une inflation encore trop élevée. EUR/USD plonge, remonte brutalement, puis replonge encore. Le chaos classique du FOMC. Tu ne touches toujours à rien. À 21h05, une bougie M15 clôture sous ton Order Block 1.1820. Le dollar confirme sa force. La confluence macro + technique est là.
+              </p>
+              <p>
+                Concrètement : entrée short à 1.1820, SL à 1.1850, TP à 1.1760. Tu risques 20€ (2% de 1 000€), tu peux gagner environ 40€. Tu coupes ton chart, tu vas dormir. Tu vérifieras au réveil — les mouvements post-21h00 du FOMC continuent souvent pendant toute la session asiatique.
+              </p>
+            </div>
+          </div>
 
           {/* ── Séparateur révision ── */}
           <div className="flex items-center gap-4 py-2">

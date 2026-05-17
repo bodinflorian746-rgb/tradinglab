@@ -121,7 +121,9 @@ export default function FormationsPage() {
             return (
               <div
                 key={formation.id}
-                className="bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden"
+                className={`bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden ${
+                  formation.disabled ? "opacity-50 bg-zinc-900/40 border-zinc-800/60" : ""
+                }`}
               >
                 {/* En-tête de card */}
                 <div className="px-6 py-5 border-b border-zinc-800">
@@ -134,7 +136,12 @@ export default function FormationsPage() {
                         <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${formation.badgeStyle}`}>
                           {formation.badge}
                         </span>
-                        {allDone && (
+                        {formation.disabled && (
+                          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-zinc-800 text-zinc-500 border border-zinc-700">
+                            Bientôt
+                          </span>
+                        )}
+                        {allDone && !formation.disabled && (
                           <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                             Terminée
                           </span>
@@ -156,33 +163,38 @@ export default function FormationsPage() {
 
                     {/* Bouton Commencer / Continuer / Réviser */}
                     <div className="shrink-0 hidden md:flex flex-col items-end gap-1">
-                      {allDone ? (
-                        <Link
-                          href={formation.lessons[0].href}
-                          className="inline-flex items-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors"
-                        >
-                          Réviser
-                        </Link>
-                      ) : nextLesson ? (
-                        <Link
-                          href={nextLesson.href}
-                          className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors"
-                        >
-                          {stats.completed === 0 ? "Commencer" : "Continuer"}
-                          <ArrowIcon />
-                        </Link>
-                      ) : null}
-                      {nextLesson && stats.completed > 0 && (
-                        <span className="text-[11px] text-zinc-600 max-w-[140px] text-right leading-tight">
-                          {nextLesson.title.split(":")[0]}
-                        </span>
+                      {!formation.disabled && (
+                        <>
+                          {allDone ? (
+                            <Link
+                              href={formation.lessons[0].href}
+                              className="inline-flex items-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors"
+                            >
+                              Réviser
+                            </Link>
+                          ) : nextLesson ? (
+                            <Link
+                              href={nextLesson.href}
+                              className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors"
+                            >
+                              {stats.completed === 0 ? "Commencer" : "Continuer"}
+                              <ArrowIcon />
+                            </Link>
+                          ) : null}
+                          {nextLesson && stats.completed > 0 && (
+                            <span className="text-[11px] text-zinc-600 max-w-[140px] text-right leading-tight">
+                              {nextLesson.title.split(":")[0]}
+                            </span>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
                 </div>
 
                 {/* Liste des leçons */}
-                <div className="divide-y divide-zinc-800/60">
+                {!formation.disabled && (
+                  <div className="divide-y divide-zinc-800/60">
                   {formation.lessons.map((lesson, i) => {
                     const completed = mounted && isLessonComplete(progress, formation.id, lesson.id);
                     const isActive = mounted && activeLessonKey === `${formation.id}:${lesson.id}`;
@@ -240,9 +252,10 @@ export default function FormationsPage() {
                     );
                   })}
                 </div>
+                )}
 
                 {/* Bouton mobile */}
-                {!allDone && nextLesson && (
+                {!formation.disabled && !allDone && nextLesson && (
                   <div className="px-6 py-4 border-t border-zinc-800 md:hidden">
                     <Link
                       href={nextLesson.href}

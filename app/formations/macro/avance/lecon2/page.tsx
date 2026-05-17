@@ -105,7 +105,7 @@ export default function NFPLecon() {
         </header>
 
         {/* ── Contenu ── */}
-        <div className="space-y-5">
+        <div className="space-y-8">
 
           {/* Bloc 1 — Pourquoi le NFP est si violent */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -455,6 +455,22 @@ export default function NFPLecon() {
               </p>
             </div>
           </section>
+
+          {/* ET TOI, RETAIL ? */}
+          <div className="border border-emerald-500/20 bg-emerald-500/5 rounded-xl p-6 my-8">
+            <p className="text-emerald-400 uppercase tracking-widest text-xs font-bold mb-4">ET TOI, RETAIL ?</p>
+            <div className="text-zinc-300 leading-relaxed space-y-3">
+              <p>
+                Vendredi 14h25. Capital 1 500€. Le NFP tombe dans 5 minutes. Tu travailles depuis chez toi, ta matinée est terminée. Tu fermes tes positions fragiles sur EUR/USD et XAU/USD. Aucun intérêt de rester exposé pendant le choc. Tu ouvres tes quatre charts : EUR/USD, XAU/USD, Nasdaq et BTC/USD. Tu attends la réaction du marché, pas le chiffre seul.
+              </p>
+              <p>
+                14h30 : le NFP sort à 220k contre 180k attendu. Chômage stable. Salaires à +0,3%. Première lecture : dollar fort. Mais les révisions du mois précédent tombent à -50k. La lecture devient plus nuancée. DXY monte quand même, EUR/USD baisse et XAU/USD plonge. Tu ne trades pas la première bougie. À 14h45, le marché commence à ralentir. Puis à 15h00, XAU/USD casse le support des 4 580$ avant de le re-tester depuis dessous. Réaction hawkish confirmée + cassure technique validée. Le setup est propre.
+              </p>
+              <p>
+                Concrètement : entrée short XAU/USD à 4 575$, SL à 4 600$, TP à 4 525$. Tu risques 30€ (2% de 1 500€), tu peux gagner environ 60€. Tu coupes ton chart, tu prends ton vendredi soir. Tu vérifieras demain matin.
+              </p>
+            </div>
+          </div>
 
           {/* ── Séparateur révision ── */}
           <div className="flex items-center gap-4 py-2">

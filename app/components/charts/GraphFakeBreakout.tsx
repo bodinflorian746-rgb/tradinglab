@@ -77,7 +77,8 @@ export function GraphFakeBreakout({ className = '' }: GraphFakeBreakoutProps) {
         <line x1="118" y1="68" x2="138" y2="80" stroke="#ef4444" strokeWidth="1" opacity="0.45" strokeDasharray="2 2" />
         <text x="141" y="84" fontSize="9" fill="#ef4444" opacity="0.8">clôture ↓</text>
 
-        {/* Resistance label */}
+        {/* Resistance label avec halo */}
+        <rect x="182" y={rY - 19} width="87" height="14" rx="3" fill="#09090b" />
         <text x="188" y={rY - 8} fontSize="9" fill="#ef4444" opacity="0.75">Résistance</text>
       </svg>
 

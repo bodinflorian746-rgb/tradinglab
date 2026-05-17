@@ -82,13 +82,13 @@ export function TrendDiagram({ className = "" }: TrendDiagramProps) {
 
         {/* Bottom labels */}
         <text x="44" y="135" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">HAUSSIER</text>
-        <text x="44" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Achats uniquement</text>
+        <text x="44" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Tendance acheteuse</text>
 
         <text x="134" y="135" fontSize="9" fill="#71717a" textAnchor="middle" fontWeight="700">RANGE</text>
-        <text x="134" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Pas de trade</text>
+        <text x="134" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Marché en équilibre</text>
 
         <text x="224" y="135" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">BAISSIER</text>
-        <text x="224" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Ventes uniquement</text>
+        <text x="224" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Tendance vendeuse</text>
       </svg>
     </div>
   );

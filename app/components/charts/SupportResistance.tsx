@@ -60,25 +60,29 @@ export function SupportResistance({
           />
         ))}
 
-        {/* Resistance label + price */}
-        <text x="8" y={rY - 9} fontSize="10" fill="#ef4444" fontWeight="600" opacity="0.9">
-          Résistance
-        </text>
         {resistancePrice && (
           <text x="225" y={rY - 9} fontSize="9" fill="#ef4444" opacity="0.5">
             {resistancePrice}
           </text>
         )}
 
-        {/* Support label + price */}
-        <text x="8" y={sY + 18} fontSize="10" fill="#10b981" fontWeight="600" opacity="0.9">
-          Support
-        </text>
         {supportPrice && (
           <text x="233" y={sY + 18} fontSize="9" fill="#10b981" opacity="0.5">
             {supportPrice}
           </text>
         )}
+
+        {/* Resistance label avec halo */}
+        <rect x="2" y={rY - 20} width="92" height="14" rx="3" fill="#09090b" />
+        <text x="8" y={rY - 9} fontSize="10" fill="#ef4444" fontWeight="600" opacity="0.9">
+          Résistance
+        </text>
+
+        {/* Support label avec halo */}
+        <rect x="2" y={sY + 7} width="68" height="14" rx="3" fill="#09090b" />
+        <text x="8" y={sY + 18} fontSize="10" fill="#10b981" fontWeight="600" opacity="0.9">
+          Support
+        </text>
       </svg>
     </div>
   );

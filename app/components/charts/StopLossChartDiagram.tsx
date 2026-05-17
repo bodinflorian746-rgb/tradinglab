@@ -78,15 +78,15 @@ export function StopLossChartDiagram({ className = '' }: StopLossChartDiagramPro
         {LEFT.map((c, i) => <MiniCandle key={i} {...c} />)}
 
         {/* ENTRÉE badge — above C6 (cx=250, wt=148) */}
-        <rect x={218} y={132} width={64} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
+        <rect x={218} y={130} width={64} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
         <text x={250} y={141} textAnchor="middle" fontSize="9" fill="#34d399" fontWeight="700">ENTRÉE</text>
 
         {/* Support badge */}
-        <rect x={15} y={192} width={56} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
+        <rect x={15} y={190} width={56} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
         <text x={43} y={201} textAnchor="middle" fontSize="9" fill="#71717a" fontWeight="600">Support</text>
 
         {/* SL badge */}
-        <rect x={15} y={216} width={116} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
+        <rect x={15} y={214} width={116} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
         <text x={73} y={225} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="600">SL — sous support ✓</text>
 
         {/* −1R distance: entry (y=158) → SL (y=228) */}
@@ -114,15 +114,15 @@ export function StopLossChartDiagram({ className = '' }: StopLossChartDiagramPro
         <circle cx={688} cy={SL_R} r="4.5" fill="#ef4444" opacity="0.9" />
 
         {/* ENTRÉE badge — above C5 (cx=650, wt=148) */}
-        <rect x={618} y={132} width={64} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
+        <rect x={618} y={130} width={64} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
         <text x={650} y={141} textAnchor="middle" fontSize="9" fill="#34d399" fontWeight="700">ENTRÉE</text>
 
         {/* Support badge */}
-        <rect x={455} y={192} width={56} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
+        <rect x={455} y={190} width={56} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
         <text x={483} y={201} textAnchor="middle" fontSize="9" fill="#71717a" fontWeight="600">Support</text>
 
         {/* SL badge (too tight — ABOVE support) */}
-        <rect x={455} y={170} width={102} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
+        <rect x={455} y={168} width={102} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
         <text x={506} y={179} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="600">SL — trop serré ✗</text>
 
         {/* −1R distance: entry (y=158) → tight SL (y=183) — visibly shorter */}
@@ -130,7 +130,7 @@ export function StopLossChartDiagram({ className = '' }: StopLossChartDiagramPro
         <text x={842} y={174} fontSize="8" fill="#f87171" fontWeight="700">−1R</text>
 
         {/* "Le prix repart" badge — above bounce candles */}
-        <rect x={690} y={56} width={152} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
+        <rect x={690} y={54} width={152} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
         <text x={766} y={65} textAnchor="middle" fontSize="9" fill="#71717a" fontWeight="600">Le prix repart sans toi ↑</text>
 
         {/* Explanatory text */}

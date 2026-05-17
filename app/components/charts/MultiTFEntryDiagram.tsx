@@ -47,11 +47,11 @@ export default function MultiTFEntryDiagram() {
       <rect x="190" y="185" width="16" height="20" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.2" />
 
       {/* Annotation tendance ↑ */}
-      <rect x="70" y="128" width="120" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="70" y="129" width="120" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="130" y="140" textAnchor="middle" fontSize="10" fontWeight="600" fill="#10b981">Tendance haussière ↑</text>
 
       {/* Légende prix bas panel 1 */}
-      <rect x="48" y="323" width="164" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="48" y="324" width="164" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="130" y="335" textAnchor="middle" fontSize="9" fontStyle="italic" fill="#71717a">Support 4 500$ → high 4 720$</text>
 
       {/* ══════════════════════════════════════════
@@ -66,15 +66,11 @@ export default function MultiTFEntryDiagram() {
       <text x="360" y="104" textAnchor="middle" fontSize="10" fill="#a1a1aa">Le niveau</text>
 
       {/* Annotation "Retracement vers Fibo" */}
-      <rect x="297" y="118" width="126" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="297" y="119" width="126" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="360" y="130" textAnchor="middle" fontSize="10" fontWeight="500" fill="#a1a1aa">Retracement vers Fibo</text>
 
       {/* Ligne Fibo 0.618 */}
       <line x1="270" y1="235" x2="450" y2="235" stroke="#a1a1aa" strokeWidth="1.2" strokeDasharray="5 3" />
-
-      {/* Label Fibo H4 */}
-      <rect x="268" y="216" width="114" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="270" y="228" textAnchor="start" fontSize="9" fontStyle="italic" fill="#a1a1aa">Fibo 0.618 — 4 600$</text>
 
       {/* H4-1 bearish */}
       <line x1="292" y1="145" x2="292" y2="180" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round" />
@@ -99,6 +95,10 @@ export default function MultiTFEntryDiagram() {
       <line x1="433" y1="205" x2="433" y2="240" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" />
       <rect x="425" y="210" width="16" height="25" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.5" />
 
+      {/* Label Fibo H4 — déplacé après les candles pour rester au-dessus */}
+      <rect x="268" y="217" width="114" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <text x="270" y="228" textAnchor="start" fontSize="9" fontStyle="italic" fill="#a1a1aa">Fibo 0.618 — 4 600$</text>
+
       {/* Légende H4 */}
       <rect x="288" y="323" width="144" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="360" y="335" textAnchor="middle" fontSize="9" fontStyle="italic" fill="#71717a">Zone à surveiller : 4 600$</text>
@@ -118,21 +118,17 @@ export default function MultiTFEntryDiagram() {
       <line x1="500" y1="140" x2="680" y2="140" stroke="#10b981" strokeWidth="1.2" strokeDasharray="5 3" />
 
       {/* Label TP */}
-      <rect x="498" y="121" width="58" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="498" y="122" width="58" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="500" y="133" textAnchor="start" fontSize="9" fontWeight="600" fill="#10b981">TP 4 720$</text>
 
       {/* Ligne Fibo zinc */}
       <line x1="500" y1="235" x2="680" y2="235" stroke="#a1a1aa" strokeWidth="1.2" strokeDasharray="5 3" />
 
-      {/* Label Fibo H1 */}
-      <rect x="498" y="216" width="66" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="500" y="228" textAnchor="start" fontSize="9" fontStyle="italic" fill="#a1a1aa">Fibo 4 600$</text>
-
       {/* Ligne SL red */}
       <line x1="500" y1="290" x2="680" y2="290" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="5 3" />
 
       {/* Label SL */}
-      <rect x="498" y="271" width="58" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="498" y="272" width="58" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="500" y="283" textAnchor="start" fontSize="9" fontWeight="600" fill="#ef4444">SL 4 590$</text>
 
       {/* H1-1 bearish */}
@@ -158,12 +154,16 @@ export default function MultiTFEntryDiagram() {
       <rect x="615" y="215" width="16" height="25" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.5" />
 
       {/* Annotation Engulfing bullish */}
-      <rect x="573" y="193" width="94" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="573" y="194" width="94" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="620" y="205" textAnchor="middle" fontSize="9" fontWeight="600" fill="#10b981">Engulfing bullish</text>
 
       {/* Bougie de confirmation */}
       <line x1="656" y1="180" x2="656" y2="215" stroke="#059669" strokeWidth="1" strokeLinecap="round" />
       <rect x="650" y="185" width="12" height="30" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1" />
+
+      {/* Label Fibo H1 — déplacé après les candles pour rester au-dessus */}
+      <rect x="498" y="217" width="66" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <text x="500" y="228" textAnchor="start" fontSize="9" fontStyle="italic" fill="#a1a1aa">Fibo 4 600$</text>
 
       {/* ══════════════════════════════════════════
           ZONE 3 — Flèches de liaison
@@ -180,7 +180,7 @@ export default function MultiTFEntryDiagram() {
       {/* ══════════════════════════════════════════
           ZONE 4 — Légende en bas
       ══════════════════════════════════════════ */}
-      <rect x="145" y="403" width="430" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="145" y="404" width="430" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="360" y="415" textAnchor="middle" fontSize="11" fontWeight="500" fill="#d4d4d8">
         Setup engulfing — Entrée 4 630$ · SL 4 590$ · TP 4 720$ · R/R 2,25
       </text>

@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { TOTAL_FREE_LESSONS } from "@/lib/progress";
+import { FORMATIONS } from "@/lib/formations";
+import { STRATEGY_MODULES } from "@/lib/strategies";
 
 const stats = [
   { value: String(TOTAL_FREE_LESSONS), label: "Leçons gratuites" },
-  { value: "8", label: "Stratégies enseignées" },
+  { value: String(STRATEGY_MODULES.length), label: "Stratégies enseignées" },
   { value: "3 niveaux", label: "Débutant · Intermédiaire · Avancé" },
   { value: "100%", label: "En ligne, à ton rythme" },
 ];
@@ -16,9 +18,9 @@ const audiences = [
         <path d="M3 15c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
-    title: "Débutant complet",
+    title: "Tu débutes complètement",
     description:
-      "Tu découvres le trading et tu veux apprendre les bases de façon structurée, sans te perdre dans des heures de contenu désorganisé sur YouTube ou les réseaux sociaux.",
+      "Tu n'as jamais tradé. Tu ne sais pas ce qu'est un stop loss, comment lire un graphique ou pourquoi ça monte/ça descend. Commence par la formation Débutant : les fondamentaux d'abord, avant d'ouvrir un broker.",
   },
   {
     icon: (
@@ -27,9 +29,9 @@ const audiences = [
         <path d="M6 15h6M9 13v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
-    title: "Autodidacte en trading",
+    title: "Tu as 500€ et tu veux pas te planter",
     description:
-      "Tu apprends depuis quelques mois, en piochant ici et là. Il te manque une progression claire et cohérente pour consolider tes connaissances et combler tes lacunes.",
+      "Capital limité = chaque erreur compte. Tu as besoin de voir des cas réalistes sur des comptes de 300€, 500€ ou 1 000€ — pas des démos sur 50k€. Gestion du risque + stratégies Price Action : c'est fait pour toi.",
   },
   {
     icon: (
@@ -37,9 +39,9 @@ const audiences = [
         <path d="M9 2l1.8 3.6L15 6.4l-3 2.9.7 4.1L9 11.4l-3.7 2 .7-4.1-3-2.9 4.2-.8L9 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
       </svg>
     ),
-    title: "Trader intermédiaire",
+    title: "Tu as 30 min par jour après le boulot",
     description:
-      "Tu maîtrises les fondamentaux mais tu veux approfondir des stratégies précises comme le SMC ou l'ICT — apprises correctement, pas survolées en dix minutes.",
+      "Pas le temps de surveiller les marchés toute la journée. Tu cherches une méthode rapide : analyser le soir, trader les setups du lendemain, fermer et continuer ta journée. Intraday actif (H4/H1/M30) adapté à ça.",
   },
   {
     icon: (
@@ -47,9 +49,9 @@ const audiences = [
         <path d="M3 9h12M3 5h8M3 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
-    title: "Trader qui veut progresser",
+    title: "Tu as déjà perdu et tu veux recommencer proprement",
     description:
-      "Tu fais du trading depuis un moment mais tu veux un cadre sérieux pour valider tes acquis, identifier tes points faibles et progresser de façon méthodique.",
+      "T'as cramé un compte ou pris des trades au hasard. Tu veux repartir avec une méthode claire et des règles strictes, pas enchaîner les vidéos YouTube. Backtesting + Journaling te montrent ce qui marche réellement.",
   },
 ];
 
@@ -62,7 +64,7 @@ const memberContent = [
       </svg>
     ),
     title: "Formations par niveaux",
-    description: "Un parcours progressif du débutant à l'avancé — des modules courts, ciblés et actionnables, dans un ordre pédagogiquement cohérent.",
+    description: "Débutant, Intermédiaire, Avancé — progression logique et sans trous. Tu construis sur des fondations solides.",
   },
   {
     icon: (
@@ -71,7 +73,7 @@ const memberContent = [
       </svg>
     ),
     title: "Stratégies Price Action, SMC & ICT",
-    description: "Trois méthodes complémentaires enseignées avec rigueur : principes, conditions d'application et exemples sur graphiques réels.",
+    description: "Trois approches complémentaires enseignées rigoureusement : principes, quand les utiliser, exemples concrets sur vrais graphiques.",
   },
   {
     icon: (
@@ -81,7 +83,7 @@ const memberContent = [
       </svg>
     ),
     title: "Quiz et exercices pratiques",
-    description: "À la fin de chaque leçon, tu valides tes acquis avec des questions ciblées et des exercices appliqués directement sur des graphiques.",
+    description: "À la fin de chaque leçon : questions ciblées et cas appliqués directement sur des graphiques pour valider ta compréhension.",
   },
   {
     icon: (
@@ -92,7 +94,7 @@ const memberContent = [
       </svg>
     ),
     title: "Tableau de bord de progression",
-    description: "Visualise où tu en es dans ton parcours, les leçons complétées et ce qui t'attend — une progression claire, étape par étape.",
+    description: "Visualise exactement où tu en es : leçons complétées, ce qui reste à faire, progression étape par étape.",
   },
   {
     icon: (
@@ -101,7 +103,7 @@ const memberContent = [
       </svg>
     ),
     title: "Contenu mis à jour régulièrement",
-    description: "Les formations évoluent avec le marché. Tu accèdes toujours à des contenus à jour, sans payer de supplément.",
+    description: "Les formations évoluent avec le marché. Accès toujours à jour sans frais supplémentaires.",
   },
   {
     icon: (
@@ -113,7 +115,7 @@ const memberContent = [
       </svg>
     ),
     title: "Accès desktop et mobile",
-    description: "Apprends depuis ton ordinateur ou ton téléphone, quand tu veux et où tu veux — la plateforme est conçue pour les deux.",
+    description: "Apprends quand et où tu veux : ton ordinateur ou ton téléphone. Structuré pour les deux.",
   },
 ];
 
@@ -123,7 +125,7 @@ const tradingLevels = [
     label: "Débutant",
     badgeClass: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
     description: "Les fondamentaux du trading pour partir sur de bonnes bases. Aucun prérequis.",
-    count: "9 leçons",
+    count: `${FORMATIONS.find(f => f.id === "debutant")?.lessons.length ?? 0} leçons`,
     disabled: false,
   },
   {
@@ -131,7 +133,7 @@ const tradingLevels = [
     label: "Intermédiaire",
     badgeClass: "bg-blue-400/10 text-blue-400 border border-blue-400/20",
     description: "Structure de marché, zones institutionnelles et lecture avancée du prix.",
-    count: "9 leçons",
+    count: `${FORMATIONS.find(f => f.id === "intermediaire")?.lessons.length ?? 0} leçons`,
     disabled: false,
   },
   {
@@ -139,7 +141,7 @@ const tradingLevels = [
     label: "Avancé",
     badgeClass: "bg-amber-400/10 text-amber-400 border border-amber-400/20",
     description: "Liquidité institutionnelle, Smart Money et techniques de trading de précision.",
-    count: "9 leçons",
+    count: `${FORMATIONS.find(f => f.id === "avance")?.lessons.length ?? 0} leçons`,
     disabled: false,
   },
 ];
@@ -222,15 +224,13 @@ export default function Home() {
           </div>
 
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-[1.1]">
-            Apprends le trading
+            Trader avec ton capital,
             <br />
-            <span className="text-zinc-400">avec une vraie méthode.</span>
+            <span className="text-zinc-400">à ton rythme.</span>
           </h1>
 
           <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            TradingLab t'accompagne pas à pas — des fondamentaux du marché aux
-            stratégies avancées — avec un parcours structuré, des quiz de
-            validation et un suivi clair de ta progression.
+            Apprends le trading avec une méthode structurée et des cas pratiques calibrés pour les retails. Du débutant à l'avancé, à ton rythme.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -359,12 +359,10 @@ export default function Home() {
               Pour quel profil
             </p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 max-w-2xl">
-              Quel que soit ton niveau, il y a une place pour toi
+              Pour qui c'est ?
             </h2>
             <p className="text-zinc-400 max-w-xl leading-relaxed">
-              TradingLab s'adresse à tous ceux qui veulent apprendre
-              sérieusement — que tu partes de zéro ou que tu cherches à
-              structurer ce que tu sais déjà.
+              TradingLab est pour les retails. Capital 300€ à 2 000€, méthode adaptée à ton rythme.
             </p>
           </div>
 
@@ -396,8 +394,7 @@ export default function Home() {
               Un parcours complet, du premier graphique à la stratégie avancée
             </h2>
             <p className="text-zinc-400 max-w-xl leading-relaxed">
-              Un environnement d'apprentissage structuré, pensé pour que tu
-              avances à ton rythme avec des repères clairs à chaque étape.
+              Exemples et exercices calibrés pour 300€ à 2 500€. Leçons 15-25 min, structurées pour avancer à ton rythme sans être submergé.
             </p>
           </div>
 

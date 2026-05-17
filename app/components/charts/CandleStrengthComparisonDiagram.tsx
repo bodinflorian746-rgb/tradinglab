@@ -1,0 +1,62 @@
+export default function CandleStrengthComparisonDiagram({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 800 400"
+      className={`w-full h-auto ${className}`}
+    >
+      <text x="400" y="25" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
+        Lire la force d&apos;une bougie en 5 secondes
+      </text>
+
+      {/* Référence corps moyen */}
+      <line x1="20" y1="200" x2="780" y2="200" stroke="#a1a1aa" strokeWidth="0.8" strokeDasharray="4 3" opacity="0.5" />
+
+      {/* ═══ Bougie 1 — Marubozu vert (x=100) ═══ */}
+      <line x1="100" y1="138" x2="100" y2="272" stroke="#059669" strokeWidth="1.5" />
+      <rect x="75" y="140" width="50" height="130" fill="#10b981" stroke="#059669" strokeWidth="1.5" rx="2" />
+      <rect x="40" y="305" width="120" height="20" rx="4" fill="#27272a" stroke="#10b981" strokeWidth="0.8" />
+      <text x="100" y="319" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">Conviction forte</text>
+      <text x="100" y="345" fill="#d4d4d8" fontSize="9" textAnchor="middle">Marubozu</text>
+      <text x="100" y="362" fill="#10b981" fontSize="14" textAnchor="middle">↑</text>
+
+      {/* ═══ Bougie 2 — Pin bar (x=300) ═══ */}
+      <line x1="300" y1="150" x2="300" y2="160" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
+      <rect x="285" y="160" width="30" height="30" fill="#10b981" stroke="#059669" strokeWidth="1.5" rx="2" />
+      <line x1="300" y1="190" x2="300" y2="290" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
+      <rect x="240" y="305" width="120" height="20" rx="4" fill="#27272a" stroke="#10b981" strokeWidth="0.8" />
+      <text x="300" y="319" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">Rejet net</text>
+      <text x="300" y="345" fill="#d4d4d8" fontSize="9" textAnchor="middle">Pin bar</text>
+      <text x="300" y="362" fill="#10b981" fontSize="14" textAnchor="middle">↑</text>
+
+      {/* ═══ Bougie 3 — Doji (x=500) ═══ */}
+      <line x1="500" y1="140" x2="500" y2="199" stroke="#71717a" strokeWidth="2" strokeLinecap="round" />
+      <rect x="485" y="199" width="30" height="2" fill="#a1a1aa" stroke="#71717a" strokeWidth="1.5" />
+      <line x1="500" y1="201" x2="500" y2="260" stroke="#71717a" strokeWidth="2" strokeLinecap="round" />
+      <rect x="440" y="305" width="120" height="20" rx="4" fill="#27272a" stroke="#71717a" strokeWidth="0.8" />
+      <text x="500" y="319" fill="#a1a1aa" fontSize="9" fontWeight="600" textAnchor="middle">Indécision</text>
+      <text x="500" y="345" fill="#d4d4d8" fontSize="9" textAnchor="middle">Doji</text>
+      <text x="500" y="362" fill="#71717a" fontSize="14" textAnchor="middle">↔</text>
+
+      {/* ═══ Bougie 4 — Engulfing (paire à x=650 et x=720) ═══ */}
+      {/* Bougie A — rouge */}
+      <line x1="650" y1="160" x2="650" y2="210" stroke="#b91c1c" strokeWidth="1.5" />
+      <rect x="637" y="170" width="25" height="30" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.5" rx="2" />
+      {/* Bougie B — verte qui englobe */}
+      <line x1="720" y1="150" x2="720" y2="220" stroke="#059669" strokeWidth="2" />
+      <rect x="707" y="160" width="25" height="50" fill="#10b981" stroke="#059669" strokeWidth="1.5" rx="2" />
+      <rect x="625" y="305" width="120" height="20" rx="4" fill="#27272a" stroke="#10b981" strokeWidth="0.8" />
+      <text x="685" y="319" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">Bascule</text>
+      <text x="685" y="345" fill="#d4d4d8" fontSize="9" textAnchor="middle">Engulfing</text>
+      <text x="685" y="362" fill="#10b981" fontSize="14" textAnchor="middle">↑</text>
+
+      {/* Halo + label Référence corps moyen — déplacé après tous les paths pour rester au-dessus */}
+      <rect x="42" y="184" width="180" height="14" fill="#09090b" rx="3" />
+      <text x="48" y="195" fill="#71717a" fontSize="8" fontStyle="italic">Référence corps moyen</text>
+
+      <text x="400" y="390" fill="#71717a" fontSize="9" textAnchor="middle">
+        4 patterns clés à identifier visuellement
+      </text>
+    </svg>
+  );
+}

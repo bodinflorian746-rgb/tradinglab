@@ -18,34 +18,34 @@ export default function PinBarSetupDiagram() {
       {/* Labels prix axe gauche — pastilles + texte */}
 
       {/* 4 650$ — niveau TP */}
-      <rect x="22" y="68" width="56" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="22" y="69" width="56" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="72" y="80" textAnchor="end" fontSize="11" fill="#a1a1aa">4 650$</text>
 
       {/* 4 520$ — niveau entrée */}
-      <rect x="22" y="168" width="56" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="22" y="169" width="56" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="72" y="180" textAnchor="end" fontSize="11" fill="#a1a1aa">4 520$</text>
 
       {/* 4 500$ — niveau support */}
-      <rect x="22" y="198" width="56" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="22" y="199" width="56" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="72" y="210" textAnchor="end" fontSize="11" fill="#a1a1aa">4 500$</text>
 
       {/* 4 470$ — niveau SL */}
-      <rect x="22" y="308" width="56" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="22" y="309" width="56" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="72" y="320" textAnchor="end" fontSize="11" fill="#a1a1aa">4 470$</text>
 
       {/* ── 4. Ligne TP (emerald-500) ── */}
       <line x1="120" y1="80" x2="680" y2="80" stroke="#10b981" strokeWidth="1.5" strokeDasharray="6 4" />
-      <rect x="562" y="71" width="154" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="562" y="72" width="154" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="715" y="83" textAnchor="end" fontSize="11" fill="#10b981">TP — Résistance 4 650$</text>
 
       {/* ── 3. Ligne Support (zinc-400) ── */}
       <line x1="120" y1="210" x2="680" y2="210" stroke="#a1a1aa" strokeWidth="1.5" strokeDasharray="6 4" />
-      <rect x="613" y="201" width="104" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="613" y="202" width="104" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="715" y="213" textAnchor="end" fontSize="11" fill="#a1a1aa">Support 4 500$</text>
 
       {/* ── 5. Ligne SL (red-500) ── */}
       <line x1="120" y1="320" x2="680" y2="320" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="6 4" />
-      <rect x="649" y="311" width="68" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="649" y="312" width="68" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="715" y="323" textAnchor="end" fontSize="11" fill="#ef4444">SL 4 470$</text>
 
       {/* ── 6. Bougies bearish de contexte — approche du support ── */}
@@ -71,7 +71,7 @@ export default function PinBarSetupDiagram() {
       {/* Corps petit bullish */}
       <rect x="320" y="170" width="22" height="15" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.5" />
       {/* Annotation "Pin bar" */}
-      <rect x="299" y="148" width="64" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="299" y="149" width="64" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="331" y="160" textAnchor="middle" fontSize="11" fontWeight="600" fill="#10b981">Pin bar</text>
 
       {/* ── 8. Bougie de confirmation bullish ── */}
@@ -94,17 +94,17 @@ export default function PinBarSetupDiagram() {
         strokeLinejoin="round"
       />
       {/* Pastille + texte */}
-      <rect x="458" y="178" width="97" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="458" y="179" width="97" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="462" y="190" textAnchor="start" fontSize="11" fontWeight="600" fill="#10b981">Entrée 4 520$</text>
 
       {/* ── 11. Annotation mèche longue ── */}
-      <rect x="224" y="298" width="214" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="224" y="299" width="214" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="331" y="310" textAnchor="middle" fontSize="10" fontStyle="italic" fill="#71717a">
         Mèche longue = rejet vendeurs
       </text>
 
       {/* ── 12. Légende bas ── */}
-      <rect x="204" y="398" width="312" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <rect x="204" y="399" width="312" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="360" y="410" textAnchor="middle" fontSize="12" fontWeight="500" fill="#d4d4d8">
         Risque 50$ · Gain potentiel 130$ · R/R 2,6
       </text>

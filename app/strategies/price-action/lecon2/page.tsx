@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { getStoredProgress, markLessonComplete, isLessonComplete } from "@/lib/progress";
 import PinBarSetupDiagram from "@/app/components/charts/PinBarSetupDiagram";
+import PinBarValidationGridDiagram from "@/app/components/charts/PinBarValidationGridDiagram";
+import PinBarLocationDiagram from "@/app/components/charts/PinBarLocationDiagram";
+import PinBarFailureDiagram from "@/app/components/charts/PinBarFailureDiagram";
 import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
 import { LessonQuiz } from "@/app/components/LessonQuiz";
@@ -58,18 +61,11 @@ export default function PinBarPage() {
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
-            <p className="text-[15px] text-zinc-300 leading-relaxed">
-              Une pin bar = un rejet brutal d&apos;un niveau.
-            </p>
-            <p className="text-[15px] text-zinc-300 leading-relaxed mt-2">
-              Le marché a essayé de casser, il a échoué, puis il est revenu en force.
-            </p>
-            <p className="text-[15px] text-zinc-300 leading-relaxed mt-2">
-              Quand tu sais lire cette mèche au bon endroit, tu ne regardes plus une bougie : tu lis une défense de prix.
+            <p className="text-[15px] text-zinc-400 leading-relaxed">
+              Cette leçon enseigne à trader une pin bar de rejet à un niveau structurel : critères de validation, plan d&apos;exécution chiffré, et reconnaissance d&apos;un setup qui échoue.
             </p>
           </div>
 
-          {/* Indicateur de structure */}
           <div className="mt-5 flex items-center gap-2 text-xs text-zinc-600">
             {["Lecture", "À retenir", "Exercice", "Quiz"].map((step, i, arr) => (
               <span key={step} className="flex items-center gap-2">
@@ -83,7 +79,6 @@ export default function PinBarPage() {
             ))}
           </div>
 
-          {/* Pills des leçons */}
           <div className="mt-6 flex items-center gap-2 flex-wrap">
             {LESSONS.map((lesson) => {
               const isCurrent = lesson.id === "lecon2";
@@ -106,271 +101,156 @@ export default function PinBarPage() {
           </div>
         </header>
 
-        {/* ── Contenu ── */}
-        <div className="space-y-5">
+        <div className="space-y-8">
 
-          {/* Bloc 1 — Anatomie d'un pin bar valide */}
+          {/* Bloc 1 — HERO QUOTE */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Anatomie d&apos;un pin bar valide</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Une pin bar valide respecte 3 critères.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">1. Une mèche au moins 2x plus longue que le corps.</span><br />
-              La mèche doit dominer visuellement la bougie. Si elle est à peine plus grande que le corps, ce n&apos;est pas un vrai rejet.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">2. Un petit corps placé à l&apos;opposé de la mèche.</span><br />
-              Pour une pin bar bullish, la mèche basse est longue et le corps est en haut. Les vendeurs ont poussé, puis les acheteurs ont repris le contrôle.<br />
-              Pour une pin bar bearish, la mèche haute est longue et le corps est en bas. Les acheteurs ont poussé, puis les vendeurs ont rejeté le mouvement.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              <span className="font-semibold text-zinc-200">3. La mèche dépasse clairement du contexte.</span><br />
-              Elle doit sortir d&apos;un niveau, d&apos;un range, ou d&apos;une zone testée. Si elle reste noyée au milieu des bougies, le signal est faible.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Un pin bar n&apos;est pas juste une bougie avec une mèche. C&apos;est une tentative ratée de cassure.
-            </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « Le pin bar n&apos;est pas une bougie. C&apos;est l&apos;écho d&apos;un combat où un camp a perdu après avoir cru gagner. »
+                « Une pin bar isolée ne dit rien. Une pin bar au contact d&apos;un niveau dit tout. »
               </p>
             </div>
           </section>
 
-          {/* Bloc 2 — Conditions d'application */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Conditions d&apos;application : où chercher un pin bar valide</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Un pin bar ne se cherche pas partout. Il se cherche là où le marché a une raison de réagir.
+          {/* Bloc 2 — PRÉREQUIS */}
+          <div className="border border-zinc-800 rounded-xl p-4">
+            <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Anatomie d&apos;une bougie → cf. Stratégie PA L1</li>
+              <li>- Concept de rejet / mèche significative → cf. Formation Trading L2</li>
+              <li>- Niveaux support/résistance → cf. Formation Trading L3</li>
+            </ul>
+          </div>
+
+          {/* Bloc 3 — VALIDER UNE PIN BAR */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Valider une pin bar</h2>
+
+            <div className="my-8">
+              <PinBarValidationGridDiagram />
+            </div>
+
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              4 critères chiffrés qualifient une pin bar tradable. Sans validation des 4, la bougie reste informative mais ne déclenche pas de setup.
             </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">1. Sur un support clé pour une pin bar bullish.</span><br />
-              Le prix descend sur une zone défendue, casse brièvement, puis remonte. Les acheteurs absorbent la pression.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">2. Sur une résistance clé pour une pin bar bearish.</span><br />
-              Le prix pousse au-dessus d&apos;une zone importante, échoue, puis clôture plus bas. Les vendeurs reprennent la main.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">3. Sur un retracement Fibonacci 0.5 ou 0.618 dans une tendance saine.</span><br />
-              Le marché respire, revient sur une zone logique, puis rejette le niveau.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              <span className="font-semibold text-zinc-200">4. En timeframe (unité de temps du graphique) H1, H4 ou Daily.</span><br />
-              En M1 ou M5, le bruit domine. Beaucoup de mèches ne sont que des micro-chasses au stop. À éviter à ce stade. M15 et M30 sont OK pour de l&apos;intraday actif, mais demandent plus d&apos;expérience pour filtrer les faux signaux.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Un pin bar au milieu de nulle part ne vaut rien.<br />
-              Pas de niveau, pas de tendance, pas de contexte = pas de setup.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              Le pin bar est un signal de confirmation. Jamais un signal isolé.
-            </p>
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Ratio mèche / corps ≥ 2:1 (idéalement 3:1)</li>
+              <li>- Mèche directionnelle cohérente : longue en bas pour pin bar haussière, longue en haut pour baissière</li>
+              <li>- Clôture dans le tiers opposé à la mèche directionnelle</li>
+              <li>- Contact direct avec un niveau structurel qualifié (support, résistance, Fibonacci, OB)</li>
+            </ul>
           </section>
 
-          {/* Bloc 3 — Setup d'entrée + SL + TP + R/R */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Setup d&apos;entrée + SL + TP + R/R</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Pour une pin bar bullish, la logique est simple. L&apos;inverse s&apos;applique pour une pin bar bearish.
+          {/* Bloc 4 — LA PIN BAR A BESOIN D'UN NIVEAU */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">La pin bar a besoin d&apos;un niveau</h2>
+
+            <div className="my-8">
+              <PinBarLocationDiagram />
+            </div>
+
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              Le contact avec un niveau structurel est le critère le plus discriminant. Une pin bar parfaite en milieu de range ne vaut rien.
             </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Entry / Entrée = prix où tu rentres dans le trade.</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Méthode 1 : entrée agressive.<br />
-              Tu entres à la cassure du high de la pin bar. Le marché confirme qu&apos;il repart dans le sens du rejet.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Méthode 2 : entrée conservatrice.<br />
-              Tu attends le close de la bougie suivante. Si elle confirme le mouvement, tu entres avec plus de sécurité, mais souvent plus tard.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">SL (Stop Loss) = prix où tu coupes ta perte.</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Sur XAU/USD : SL 30 à 60$ sous le low de la mèche.<br />
-              Sur EUR/USD : SL 10 à 20 pips sous le low de la mèche.<br />
-              Sur indices ou crypto : SL 0,5 à 1% sous le low de la mèche.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Règle non négociable : le SL doit être sous la mèche. Jamais au milieu.<br />
-              Si ton SL est dans la mèche, tu te fais sortir par le bruit.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">TP (Take Profit) = prix où tu prends tes gains.</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu vises le prochain niveau clé : résistance, ancien high, zone de liquidité.<br />
-              R/R (Risk-Reward) = ratio entre ce que tu risques et ce que tu peux gagner.<br />
-              Minimum : 1:2. Tu risques 1 pour viser 2.<br />
-              Idéal : 1:3 si la structure le permet.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              Gestion : quand le prix atteint 1R, tu peux passer break-even (BE = SL déplacé au prix d&apos;entrée).<br />
-              À partir de là, tu ne risques plus rien sur le trade.
-            </p>
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Pin bar au support fort = tradable (rebond institutionnel attendu)</li>
+              <li>- Pin bar à la résistance forte = tradable (rejet institutionnel attendu)</li>
+              <li>- Pin bar en milieu de range = hors niveau, signal disqualifié</li>
+              <li>- Conditions externes : alignement TF supérieur, absence de news majeure dans les 60 min</li>
+            </ul>
           </section>
 
-          {/* Intro visuel + PinBarSetupDiagram */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Le schéma suivant montre une pin bar bullish sur support, avec une entrée, un SL et un TP. Ne mémorise pas les chiffres. Comprends la géométrie : la mèche rejette le niveau, l&apos;entrée se place après confirmation, le SL protège sous l&apos;excès, le TP vise le prochain niveau logique.
-            </p>
-            <div className="border border-zinc-800 rounded-xl overflow-hidden">
+          {/* Bloc 5 — PLAN DE TRADE CHIFFRÉ */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : pin bar haussière XAU/USD H4</h2>
+
+            <div className="my-8">
               <PinBarSetupDiagram />
             </div>
-          </section>
 
-          {/* Encadré ET TOI, RETAIL ? */}
-          <div className="border border-emerald-500/20 bg-emerald-500/5 rounded-xl p-6 my-8">
-            <p className="text-emerald-400 uppercase tracking-widest text-xs font-bold mb-4">ET TOI, RETAIL ?</p>
-            <div className="text-zinc-300 leading-relaxed space-y-3">
-              <p>
-                Tu as 600€ sur ton compte XTB. Samedi matin 10h, tu as une heure devant toi avant de sortir. Tu ouvres ton chart XAU/USD H1. Le prix descend depuis 2 jours et s&apos;approche du support psychologique 4 500$ — un niveau que le marché a déjà respecté plusieurs fois dans le passé.
-              </p>
-              <p>
-                Une bougie H1 arrive avec une grosse mèche basse qui pique sous les 4 500$ et un corps haussier qui clôture au-dessus. C&apos;est ton pin bar : le marché a testé le niveau, il l&apos;a refusé. Les vendeurs n&apos;ont pas tenu.
-              </p>
-              <p>
-                Concrètement : entrée 4 520$, SL 4 470$, TP 4 650$. Tu risques 6€ (1% de 600€), tu peux gagner 16€. Tu coupes ton chart, tu sors. Tu vérifieras dans la journée.
-              </p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              XAU/USD descend vers le support psychologique 4 500$ (déjà touché 3 fois en 6 semaines). Tendance H4 haussière. Pin bar bullish au contact du support.
+            </p>
+
+            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+              <p className="text-white font-semibold text-sm mb-2">Setup</p>
+              <ul className="space-y-1 text-sm text-zinc-300 mb-4">
+                <li>- Entrée long : 4 520$ (clôture de la pin bar)</li>
+                <li>- Stop loss : 4 470$ (sous la mèche basse, marge incluse)</li>
+                <li>- Take profit : 4 650$ (résistance H4 suivante)</li>
+              </ul>
+
+              <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
+              <ul className="space-y-1 text-sm text-zinc-300">
+                <li>- Risque : 4 520$ - 4 470$ = 50$</li>
+                <li>- Gain potentiel : 4 650$ - 4 520$ = 130$</li>
+                <li>- R/R : 130 / 50 = 2,6</li>
+              </ul>
             </div>
-          </div>
 
-          {/* Bloc 5 — Filtres */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Filtres : quand NE PAS prendre le setup</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">1. Pin bar au milieu d&apos;un range sans niveau clé.</span><br />
-              Pas valide. Dans un range (marché latéral, sans tendance claire), les mèches sont fréquentes. Sans support, résistance ou zone claire, tu lis du bruit.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">2. Pin bar avec une mèche trop courte.</span><br />
-              Si la mèche fait moins de 2x le corps, ce n&apos;est pas un vrai pin bar. C&apos;est une bougie normale avec une mèche visible. Pas assez de rejet.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">3. Pin bar contre une tendance forte.</span><br />
-              Très risqué. Si le marché chute violemment, prendre une pin bar bullish revient à attraper un couteau qui tombe. Privilégie les pin bars dans le sens de la tendance dominante.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              <span className="font-semibold text-zinc-200">4. Pin bar juste avant une news rouge majeure.</span><br />
-              NFP, FOMC, CPI : le signal technique devient secondaire. La macro peut balayer ton setup en quelques secondes. Ce filtre est détaillé dans le module 8 — Macro Trading.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Un setup propre peut devenir mauvais à cause du contexte.<br />
-              La qualité d&apos;un pin bar dépend autant de l&apos;endroit que de sa forme.
-            </p>
-          </section>
-
-          {/* Bloc 6 — Exemple chiffré */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Exemple chiffré sur XAU/USD H4</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Contexte : XAU/USD consolide après un repli depuis les sommets. Le prix teste pour la deuxième fois le support psychologique des 4 500$ sur H4.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Lecture de la pin bar :</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              La bougie pousse jusqu&apos;à 4 480$.<br />
-              C&apos;est le low de la mèche basse.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le corps clôture à 4 510$.<br />
-              Le corps est petit et bullish.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              La mèche basse fait environ 30$.<br />
-              Le corps fait environ 10$.<br />
-              La mèche est donc 3x plus longue que le corps. Critère validé.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              La bougie apparaît juste au-dessus d&apos;un support psychologique fort.<br />
-              Le contexte est propre. Le rejet a du sens.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Setup :</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Entrée : 4 520$, à la cassure du high de la pin bar.<br />
-              Stop Loss : 4 470$, soit 10$ sous le low de la mèche.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Ici on serre à 10$ car le support psychologique 4 500$ est très net — on accepte un SL plus tendu sur cette structure. La fourchette générale 30 à 60$ reste la référence, mais une zone très claire permet de réduire le risque.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Take Profit : 4 650$, prochaine résistance H4 identifiée.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Calcul du R/R :</span>
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Risque = 4 520$ - 4 470$ = 50$.<br />
-              Gain potentiel = 4 650$ - 4 520$ = 130$.<br />
-              R/R = 130 / 50 = 2,6.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu risques 50$ pour viser 130$.<br />
-              Si tu as tort, la perte est limitée.<br />
-              Si tu as raison, le gain est asymétrique.
-            </p>
-            <p className="text-zinc-300 leading-relaxed text-sm">
-              C&apos;est ça un setup propre : lecture claire, invalidation claire, objectif clair.
-            </p>
-            <h3 className="text-base font-semibold text-zinc-200 mb-2 mt-5">Calcul retail</h3>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu risques 1% de ton capital par trade.
-            </p>
-            <ul className="text-zinc-300 leading-relaxed text-sm mb-3 space-y-1 list-disc list-inside">
-              <li>Compte 500€ → tu risques 5€, gain potentiel 13€</li>
-              <li>Compte 1 000€ → tu risques 10€, gain potentiel 26€</li>
-              <li>Compte 2 500€ → tu risques 25€, gain potentiel 65€</li>
+            <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
+            <ul className="space-y-1 text-sm text-zinc-300 mb-3">
+              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 39€</li>
+              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 39€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 52€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 130€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
-              Le calcul est universel : peu importe la taille de ton compte, le R/R reste 2,6:1. Ce qui change, c&apos;est la taille de lot.
+              Le R/R reste 2,6:1 peu importe la taille du compte.
             </p>
           </section>
 
-          {/* ── Séparateur révision ── */}
-          <div className="flex items-center gap-4 py-2">
-            <div className="flex-1 h-px bg-zinc-800" />
-            <span className="text-[11px] font-semibold text-zinc-700 uppercase tracking-widest">Révision</span>
-            <div className="flex-1 h-px bg-zinc-800" />
-          </div>
+          {/* Bloc 6 — QUAND LE SETUP ÉCHOUE */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Quand le setup échoue</h2>
+
+            <div className="my-8">
+              <PinBarFailureDiagram />
+            </div>
+
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              Une pin bar parfaitement valide peut échouer. Le SL est là pour borner la perte quand le scénario s&apos;invalide.
+            </p>
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Le marché peut casser le niveau structurel = invalidation du rejet</li>
+              <li>- Le SL doit être placé au-delà de la mèche directionnelle, avec marge 5-10 pips / 5-10$</li>
+              <li>- Aucun déplacement du SL contre soi en cours de trade</li>
+            </ul>
+          </section>
 
           <LessonKeyPoints
             points={[
-              "Pin bar = mèche 2x plus longue que le corps + corps à l'opposé",
-              "Toujours sur un niveau clé ou un retracement, jamais au milieu de nulle part",
-              "SL sous la mèche, entrée au-dessus du corps, TP au prochain niveau",
-              "R/R minimum 1:2, idéalement 1:3",
-              "Filtres impératifs : pas en M5/M15, pas contre-tendance forte, pas avant une news rouge",
+              "Une pin bar tradable valide 4 critères : ratio mèche/corps ≥ 2:1, direction cohérente, clôture dans le tiers opposé, contact avec un niveau structurel.",
+              "Le contact avec un niveau structurel est le critère le plus discriminant. Pin bar isolée hors contexte = pas de setup.",
+              "Stop loss au-delà de la mèche avec marge 5-10 pips/$. Jamais à la clôture ou dans le corps.",
+              "Pas de trade dans les 60 minutes autour d’une news majeure (NFP, FOMC, CPI).",
             ]}
           />
 
           <LessonExercice
-            description="Mets en pratique la lecture des bougies sur un graphique réel."
+            description="Sur EUR/USD H1, le prix s’approche d’une résistance qualifiée à 1.1820 (3 touches dans les 5 dernières semaines, MM50 H4 à 1.1815 = confluence). Une bougie H1 imprime une mèche haute jusqu’à 1.1835 puis clôture à 1.1803. Ouverture à 1.1815. Quelle qualification pour ce signal et quel plan de trade ?"
             steps={[
-              "Ouvrir un graphique XAU/USD ou EUR/USD en timeframe H4",
-              "Identifier 2 pin bars sur l'historique des 30 derniers jours et noter à quel niveau elles sont apparues",
-              "Pour chaque pin bar trouvée, calculer le R/R potentiel si tu avais tradé le setup : entrée, SL sous la mèche, TP au prochain niveau",
-              "Repérer 1 pin bar invalide au milieu d'un range, contre-tendance ou avec une mèche trop courte, puis expliquer pourquoi tu ne la prendrais pas",
-              "Vérifier sur le calendrier économique si une de ces pin bars était proche d'une news rouge, puis observer ce qui s'est passé",
+              "Mesurer la pin bar : mèche haute 32 pips (de 1.1803 à 1.1835), corps 12 pips (de 1.1815 à 1.1803). Ratio mèche/corps = 32/12 = 2,67:1 — critère 1 validé",
+              "Vérifier la direction et le contact : mèche longue en haut, pin bar baissière au contact de la résistance 1.1820 — critères 2 et 4 validés",
+              "Position de la clôture : 1.1803 dans la fourchette 1.1803-1.1835, au plus bas absolu, clôture dans le tiers inférieur — critère 3 validé",
+              "Confluence : MM50 H4 à 1.1815 dans la zone = renforcement du signal",
+              "Plan : entrée short à 1.1803 (clôture pin bar), stop loss à 1.1843 (8 pips au-dessus du wick à 1.1835), take profit à 1.1720 (support H4 suivant). Risque 40 pips, gain 83 pips, R/R 2,07. Taille de position selon le risque par trade adapté au capital",
             ]}
           />
 
           <LessonQuiz
-            question="Tu vois sur ton chart H4 XAU/USD une pin bar bullish avec une mèche basse de 25$ et un corps bullish de 8$. Elle se forme à 4 510$, juste au-dessus d'un support psychologique connu à 4 500$. Le NFP sort dans 2 heures. Que fais-tu ?"
+            question="Une pin bar haussière imprime une mèche basse 3 fois plus grande que son corps et clôture dans le tiers supérieur, mais elle apparaît au milieu d’un range latéral sans niveau structurel proche. Quel est le verdict opérationnel ?"
             options={[
-              "Tu entres immédiatement avec un SL serré pour profiter du momentum",
-              "Tu prends le setup mais avec une size réduite à cause de la news",
-              "Tu attends que la news soit passée puis tu réévalues le setup",
-              "Tu ignores complètement le setup, le pin bar n'est pas valide à ce ratio mèche/corps",
+              "Setup exploitable, la qualité de la pin bar suffit",
+              "Setup invalide, l’absence de contact avec un niveau structurel disqualifie le signal",
+              "Setup exploitable à condition d’un volume élevé",
+              "Indéterminé sans confirmation Fibonacci",
             ]}
-            correctIndex={2}
-            explanation="Le pin bar est techniquement valide : mèche de 25$ contre corps de 8$, donc ratio supérieur à 3x. Il est aussi bien placé, juste au-dessus d'un support psychologique. Mais le NFP dans 2 heures invalide la prise immédiate, car la macro peut écraser le signal technique. La règle propre : tu attends la news, tu laisses le marché absorber le choc, puis tu réévalues le setup."
+            correctIndex={1}
+            explanation="Le contact avec un niveau structurel qualifié est le critère le plus discriminant d’une pin bar tradable. Sans ce contact, le rejet n’est pas ancré sur une zone de mémoire collective. Le mouvement post-pin bar manque de carburant structurel et le signal s’invalide fréquemment dans les bougies suivantes. Même un ratio 3:1 et une clôture parfaite ne compensent pas l’absence de niveau."
           />
 
         </div>
@@ -407,7 +287,6 @@ export default function PinBarPage() {
               </div>
             )}
 
-            {/* Navigation */}
             <div className="mt-5 flex items-center justify-between">
               <Link
                 href="/strategies/price-action/lecon1"

@@ -105,7 +105,7 @@ export default function CalendrierEconomiqueLecon() {
         </header>
 
         {/* ── Contenu ── */}
-        <div className="space-y-5">
+        <div className="space-y-8">
 
           {/* Bloc 1 — Ce que tu rates en lecture débutant */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

@@ -32,7 +32,7 @@ function FomoChart() {
       <text x={160} y={33} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="700">TU ACHÈTES ICI</text>
       <line x1={160} y1={37} x2={160} y2={42} stroke="#f87171" strokeWidth="1" />
       {reds.map((c, i) => <MC key={i} {...c} />)}
-      <rect x={264} y={122} width={46} height={13} rx="2" fill="#09090b" fillOpacity="0.85" />
+      <rect x={264} y={121} width={46} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
       <text x={287} y={132} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="700">−5%</text>
     </svg>
   );
@@ -78,14 +78,14 @@ function AncrageChart() {
       <line x1={10} y1={90}  x2={310} y2={90}  stroke="#ef4444" strokeWidth="1" strokeDasharray="4 4" opacity="0.7" />
       <line x1={10} y1={116} x2={310} y2={116} stroke="#ef4444" strokeWidth="1" strokeDasharray="4 4" opacity="0.4" />
       {candles.map((c, i) => <MC key={i} {...c} />)}
-      <rect x={8}   y={36}  width={48}  height={13} rx="2" fill="#09090b" fillOpacity="0.85" />
+      <rect x={8}   y={35}  width={48}  height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
       <text x={32}  y={46}  textAnchor="middle" fontSize="8.5" fill="#71717a" fontWeight="700">ENTRÉE</text>
       <line x1={32} y1={50} x2={32} y2={55} stroke="#71717a" strokeWidth="1" />
-      <rect x={220} y={82}  width={56}  height={13} rx="2" fill="#09090b" fillOpacity="0.85" />
+      <rect x={220} y={81}  width={56}  height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
       <text x={248} y={92}  textAnchor="middle" fontSize="8" fill="#f87171">SL initial ✓</text>
-      <rect x={82}  y={103} width={118} height={13} rx="2" fill="#09090b" fillOpacity="0.85" />
+      <rect x={82}  y={102} width={118} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
       <text x={141} y={113} textAnchor="middle" fontSize="8.5" fill="#60a5fa" fontWeight="700">Tu déplaces le SL ↓</text>
-      <rect x={148} y={128} width={160} height={13} rx="2" fill="#09090b" fillOpacity="0.85" />
+      <rect x={148} y={127} width={160} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
       <text x={228} y={138} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="700">−5R au lieu de −1R</text>
     </svg>
   );
@@ -103,14 +103,14 @@ function OverconfidenceChart() {
       {wins.map((c, i) => (
         <g key={i}>
           <MC {...c} />
-          <rect x={c.cx - 14} y={c.wt - 16} width={28} height={13} rx="2" fill="#09090b" fillOpacity="0.85" />
+          <rect x={c.cx - 14} y={c.wt - 17} width={28} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
           <text x={c.cx} y={c.wt - 6} textAnchor="middle" fontSize="8.5" fill="#34d399" fontWeight="700">+1R</text>
         </g>
       ))}
       <line x1={136} y1={80} x2={154} y2={80} stroke="#71717a" strokeWidth="1.2" />
       <path d="M150 76 L157 80 L150 84" stroke="#71717a" strokeWidth="1.2" fill="none" strokeLinejoin="round" />
       <MC cx={210} wt={24} bt={30} bb={120} wb={126} bull={false} />
-      <rect x={186} y={10} width={48} height={13} rx="2" fill="#09090b" fillOpacity="0.85" />
+      <rect x={186} y={10} width={48} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
       <text x={210} y={21} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="700">−5R</text>
       <line x1={210} y1={24} x2={210} y2={30} stroke="#f87171" strokeWidth="1" />
       <rect x={228} y={60} width={88} height={26} rx="2" fill="#09090b" fillOpacity="0.85" />

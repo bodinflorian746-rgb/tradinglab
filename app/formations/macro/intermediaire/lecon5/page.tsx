@@ -105,7 +105,7 @@ export default function CorrelationsLecon() {
         </header>
 
         {/* ── Contenu ── */}
-        <div className="space-y-5">
+        <div className="space-y-8">
 
           {/* Bloc 1 — C'est quoi une corrélation */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

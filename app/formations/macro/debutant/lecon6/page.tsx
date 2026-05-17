@@ -105,7 +105,7 @@ export default function MacroDebutantLecon6() {
         </header>
 
         {/* ── Contenu ── */}
-        <div className="space-y-5">
+        <div className="space-y-8">
 
           {/* Bloc 1 — Pourquoi la macro change ton risque */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

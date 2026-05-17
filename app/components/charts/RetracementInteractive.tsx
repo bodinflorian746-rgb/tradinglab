@@ -92,10 +92,14 @@ export function RetracementInteractive({ className = "" }: { className?: string 
 
         {/* HH dot */}
         <circle cx="118" cy="44" r="3" fill="#71717a" opacity="0.7" />
-        <text x="120" y="41" fontSize="7" fill="#71717a" fontWeight="600" opacity="0.8">HH</text>
 
-        {/* HL zone label */}
+        {/* HL zone label (halo + texte placés en fin pour rester au-dessus) */}
+        <rect x="146" y="79" width="26" height="14" rx="3" fill="#09090b" />
         <text x="152" y="90" fontSize="7" fill="#71717a" fontWeight="600" opacity="0.7">HL</text>
+
+        {/* HH label avec halo */}
+        <rect x="114" y="30" width="26" height="14" rx="3" fill="#09090b" />
+        <text x="120" y="41" fontSize="7" fill="#71717a" fontWeight="600" opacity="0.8">HH</text>
 
         {/* Decision point "?" — pulsing when no choice made */}
         {!choice && (

@@ -106,7 +106,7 @@ export function OTEDiagram({ className = "" }: OTEDiagramProps) {
           const y = fibY(lvl.pct);
           return (
             <g key={lvl.pct}>
-              <rect x={LABEL_X} y={y - 7} width={52} height={13} rx="2"
+              <rect x={LABEL_X} y={y - 8} width={52} height={14} rx="2"
                 fill="#09090b" fillOpacity="0.85" />
               <text x={LABEL_X + 26} y={y + 3} fontSize="7"
                 fill={lvl.color} textAnchor="middle" fontWeight="600">
@@ -124,12 +124,12 @@ export function OTEDiagram({ className = "" }: OTEDiagramProps) {
 
         {/* Swing High marker */}
         <circle cx={130} cy={swingHighY} r="3" fill="#71717a" opacity="0.8" />
-        <rect x={107} y={12} width={52} height={11} rx="2" fill="#09090b" fillOpacity="0.85" />
+        <rect x={107} y={10} width={52} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
         <text x={133} y={21} fontSize="7" fill="#71717a" textAnchor="middle" fontWeight="600">Swing High</text>
 
         {/* Swing Low marker */}
         <circle cx={22} cy={swingLowY} r="3" fill="#71717a" opacity="0.8" />
-        <rect x={26} y={186} width={52} height={11} rx="2" fill="#09090b" fillOpacity="0.85" />
+        <rect x={26} y={183} width={52} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
         <text x={52} y={194} fontSize="7" fill="#71717a" textAnchor="middle" fontWeight="600">Swing Low</text>
 
         {/* ENTRÉE badge above signal candle — opaque bg first to mask 50% Fib line beneath */}
@@ -143,7 +143,7 @@ export function OTEDiagram({ className = "" }: OTEDiagramProps) {
         {/* Signal annotation — connector + label below signal candle */}
         <line x1={252} y1={156} x2={252} y2={164}
           stroke="#71717a" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
-        <rect x={212} y={164} width={80} height={12} rx="2"
+        <rect x={212} y={162} width={80} height={14} rx="2"
           fill="#09090b" fillOpacity="0.85" />
         <text x={252} y={173} fontSize="7" fill="#a1a1aa"
           textAnchor="middle">signal de rejet ↑</text>

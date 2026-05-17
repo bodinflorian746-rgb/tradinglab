@@ -107,8 +107,7 @@ export function ConfluenceDiagram({ className = "" }: ConfluenceDiagramProps) {
         <rect x="8" y="33" width="56" height="13" rx="3" fill="#71717a14" stroke="#71717a38" strokeWidth="0.8" />
         <text x="36" y="43" fontSize="8" fill="#71717a" textAnchor="middle" fontWeight="700">Support S/R</text>
 
-        {/* Niveau psychologique — texte à droite de la ligne */}
-        <text x="99" y="77" fontSize="7.5" fill="#52525b" fontWeight="600">1.0800</text>
+        {/* Niveau psychologique — label déplacé en fin de svg pour rester au-dessus */}
 
         {/* Zone Demand badge — en dessous du rectangle */}
         <rect x="104" y="130" width="64" height="13" rx="3" fill="#10b98118" stroke="#10b98138" strokeWidth="0.8" />
@@ -117,6 +116,10 @@ export function ConfluenceDiagram({ className = "" }: ConfluenceDiagramProps) {
         {/* Compteur — haut droite, au-dessus de la courbe montante */}
         <rect x="186" y="8" width="76" height="16" rx="4" fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
         <text x="224" y="19" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">3 confluences ✓</text>
+
+        {/* Label "1.1800" du niveau psychologique avec halo opaque, placé en fin de svg */}
+        <rect x="95" y="66" width="38" height="14" fill="#09090b" rx="3" />
+        <text x="99" y="77" fontSize="7.5" fill="#52525b" fontWeight="600">1.1800</text>
       </svg>
 
       {/* Légende */}
