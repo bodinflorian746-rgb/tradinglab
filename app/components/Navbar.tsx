@@ -43,7 +43,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             href="/login"
-            className="bg-emerald-500 text-black px-4 py-2 rounded-lg"
+            className="hidden md:inline-flex bg-emerald-500 text-black px-4 py-2 rounded-lg"
           >
             Commencer
           </Link>
