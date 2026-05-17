@@ -91,7 +91,14 @@ export default function SupportResistanceLecon4Page() {
                       : "border-zinc-800 text-zinc-500"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : lesson.disabled ? "bg-zinc-700" : "bg-zinc-600"}`} />
-                    {lesson.title}
+                    {isCurrent ? (
+                      <>
+                        <span className="md:hidden">Leçon {lesson.id.replace("lecon", "")}</span>
+                        <span className="hidden md:inline">{lesson.title}</span>
+                      </>
+                    ) : (
+                      lesson.title
+                    )}
                   </span>
                 </div>
               );
@@ -189,7 +196,7 @@ export default function SupportResistanceLecon4Page() {
               Résistance 4 650$ touchée 3 fois en 2 mois (niveau psychologique fort). 4e approche provoque une cassure suspecte. Bougie 1 : mèche jusqu&apos;à 4 680$ + clôture à 4 655$. Bougie 2 : clôture à 4 640$.
             </p>
 
-            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade short sur fake breakout)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Bougie 1 : mèche 25$ au-dessus, corps 5$, clôture à la limite</li>
@@ -310,7 +317,7 @@ export default function SupportResistanceLecon4Page() {
             )}
 
             <div className="mt-5 flex items-center justify-between">
-              <Link href="/strategies/support-resistance/lecon3" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/support-resistance/lecon3" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

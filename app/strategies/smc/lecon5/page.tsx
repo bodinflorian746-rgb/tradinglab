@@ -92,7 +92,14 @@ export default function SmcLecon5Page() {
                       : "border-zinc-800 text-zinc-500"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : lesson.disabled ? "bg-zinc-700" : "bg-zinc-600"}`} />
-                    {lesson.title}
+                    {isCurrent ? (
+                      <>
+                        <span className="md:hidden">Leçon {lesson.id.replace("lecon", "")}</span>
+                        <span className="hidden md:inline">{lesson.title}</span>
+                      </>
+                    ) : (
+                      lesson.title
+                    )}
                   </span>
                 </div>
               );
@@ -178,7 +185,7 @@ export default function SmcLecon5Page() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade chiffré complet (EUR/USD H4)</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD H4. Biais HTF baissier avec structure en LH/LL. Equal highs à 1.1780 = BSL identifiée. Cible finale : SSL sous le creux 1.1690. Une bougie H4 sweep la BSL en imprimant une mèche à 1.1792 puis clôture à 1.1772. Le prix casse ensuite le dernier creux mineur à 1.1755 : CHoCH bearish confirmé. Le displacement laisse un FVG bearish entre 1.1758 et 1.1770 avec un Order Block juste au-dessus.</p>
 
-            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Déroulé des 7 étapes</p>
               <ol className="space-y-1 text-sm text-zinc-300 list-decimal pl-5 mb-4">
                 <li>Analyse HTF : Structure H4 en LH/LL · Biais directionnel bearish</li>
@@ -318,13 +325,13 @@ export default function SmcLecon5Page() {
             )}
 
             <div className="mt-5 flex items-center justify-between">
-              <Link href="/strategies/smc/lecon4" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/smc/lecon4" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 Leçon 4
               </Link>
-              <Link href="/strategies/smc" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/smc" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Retour au module
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />

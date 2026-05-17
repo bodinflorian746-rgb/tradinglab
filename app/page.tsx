@@ -212,7 +212,7 @@ export default function Home() {
     <main>
 
       {/* ── Hero ────────────────────────────────── */}
-      <section className="relative overflow-hidden py-24 md:py-36 px-6">
+      <section className="relative overflow-hidden py-14 md:py-36 px-6">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute top-[-80px] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-emerald-500/6 rounded-full blur-3xl" />
         </div>
@@ -223,7 +223,7 @@ export default function Home() {
             Formations structurées · Du débutant à l'avancé
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-[1.1]">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-[1.1]">
             Trader avec ton capital,
             <br />
             <span className="text-zinc-400">à ton rythme.</span>
@@ -263,7 +263,7 @@ export default function Home() {
       </section>
 
       {/* ── Formations ──────────────────────────── */}
-      <section className="py-24 px-6 border-t border-zinc-800/60">
+      <section className="py-14 md:py-24 px-6 border-t border-zinc-800/60">
         <div className="max-w-5xl mx-auto space-y-16">
 
           {/* Formation Trading */}
@@ -352,7 +352,7 @@ export default function Home() {
       </section>
 
       {/* ── Pour qui ────────────────────────────── */}
-      <section className="py-24 px-6">
+      <section className="py-14 md:py-24 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <p className="text-emerald-500 text-sm font-semibold uppercase tracking-widest mb-3">
@@ -384,7 +384,7 @@ export default function Home() {
       </section>
 
       {/* ── Ce que tu trouveras ─────────────────── */}
-      <section className="py-24 px-6 border-t border-zinc-800/60">
+      <section className="py-14 md:py-24 px-6 border-t border-zinc-800/60">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <p className="text-emerald-500 text-sm font-semibold uppercase tracking-widest mb-3">
@@ -416,7 +416,7 @@ export default function Home() {
       </section>
 
       {/* ── Approche pédagogique ────────────────── */}
-      <section className="py-24 px-6 border-t border-zinc-800/60">
+      <section className="py-14 md:py-24 px-6 border-t border-zinc-800/60">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-start">
             {/* Left */}

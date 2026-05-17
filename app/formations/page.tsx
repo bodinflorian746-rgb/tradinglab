@@ -78,7 +78,7 @@ export default function FormationsPage() {
   const activeLessonKey = mounted ? getActiveLessonKey(progress) : null;
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white px-6 py-20">
+    <main className="min-h-screen bg-zinc-950 text-white px-6 py-12 md:py-20">
       <div className="max-w-4xl mx-auto">
 
         {/* ── En-tête ── */}

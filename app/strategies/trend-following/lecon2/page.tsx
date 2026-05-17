@@ -91,7 +91,14 @@ export default function TrendFollowingLecon2Page() {
                       : "border-zinc-800 text-zinc-500"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : lesson.disabled ? "bg-zinc-700" : "bg-zinc-600"}`} />
-                    {lesson.title}
+                    {isCurrent ? (
+                      <>
+                        <span className="md:hidden">Leçon {lesson.id.replace("lecon", "")}</span>
+                        <span className="hidden md:inline">{lesson.title}</span>
+                      </>
+                    ) : (
+                      lesson.title
+                    )}
                   </span>
                 </div>
               );
@@ -188,7 +195,7 @@ export default function TrendFollowingLecon2Page() {
               EUR/USD en tendance haussière confirmée sur H4 et Daily (prix au-dessus de la MM200 H4 depuis 6 semaines). Trendline haussière sur 3 HL (1.1680, 1.1720, 1.1755), pente modérée 35°. MM50 H4 à 1.1770. Confluence trendline + MM50 dans la zone 1.1768-1.1775. Pin bar haussière au contact.
             </p>
 
-            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade long sur rebond confluence)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 1.1778 (clôture de la pin bar)</li>
@@ -284,7 +291,7 @@ export default function TrendFollowingLecon2Page() {
             )}
 
             <div className="mt-5 flex items-center justify-between">
-              <Link href="/strategies/trend-following/lecon1" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/trend-following/lecon1" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

@@ -91,7 +91,14 @@ export default function TrendFollowingLecon1Page() {
                       : "border-zinc-800 text-zinc-500"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : lesson.disabled ? "bg-zinc-700" : "bg-zinc-600"}`} />
-                    {lesson.title}
+                    {isCurrent ? (
+                      <>
+                        <span className="md:hidden">Leçon {lesson.id.replace("lecon", "")}</span>
+                        <span className="hidden md:inline">{lesson.title}</span>
+                      </>
+                    ) : (
+                      lesson.title
+                    )}
                   </span>
                 </div>
               );
@@ -188,7 +195,7 @@ export default function TrendFollowingLecon1Page() {
               EUR/USD en tendance haussière confirmée (2 HL à 1.1700 et 1.1730, 2 HH à 1.1780 et 1.1810). Le prix retrace vers 1.1760 (62% de l&apos;impulsion 80 pips) et imprime une pin bar haussière.
             </p>
 
-            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade long sur pullback)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 1.1765 (clôture de la pin bar)</li>

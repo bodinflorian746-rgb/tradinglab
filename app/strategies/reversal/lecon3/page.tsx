@@ -91,7 +91,14 @@ export default function ReversalLecon3Page() {
                       : "border-zinc-800 text-zinc-500"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : lesson.disabled ? "bg-zinc-700" : "bg-zinc-600"}`} />
-                    {lesson.title}
+                    {isCurrent ? (
+                      <>
+                        <span className="md:hidden">Leçon {lesson.id.replace("lecon", "")}</span>
+                        <span className="hidden md:inline">{lesson.title}</span>
+                      </>
+                    ) : (
+                      lesson.title
+                    )}
                   </span>
                 </div>
               );
@@ -199,7 +206,7 @@ export default function ReversalLecon3Page() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">La confirmation classique est la cassure du dernier creux ascendant. Le creux entre les deux sommets se situe à 4 570$. Si le prix clôture une bougie sous 4 570$, la divergence est confirmée par la structure du marché. Ce signal déclenche l&apos;entrée short.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée short se fait juste sous le creux cassé, à 4 565$. Le SL classique se placerait au-dessus du deuxième sommet à 4 650$, mais cela donne un R/R trop faible. Le SL tactique plus serré se place au-dessus de la mèche du deuxième sommet à 4 605$, soit 40$ de risque. Le TP suit la measured move : hauteur entre le deuxième sommet à 4 640$ et le creux à 4 570$, soit 70$, étendue légèrement à 80$ sous le creux cassé pour obtenir un R/R rond de 2:1.</p>
 
-            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée short : 4 565$ (sous le creux cassé)</li>
@@ -309,13 +316,13 @@ export default function ReversalLecon3Page() {
 
             {/* Navigation */}
             <div className="mt-5 flex items-center justify-between">
-              <Link href="/strategies/reversal/lecon2" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/reversal/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 Leçon 2
               </Link>
-              <Link href="/strategies/reversal/lecon4" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/reversal/lecon4" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Leçon 4
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />

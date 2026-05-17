@@ -91,7 +91,14 @@ export default function ReversalLecon1Page() {
                       : "border-zinc-800 text-zinc-500"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : lesson.disabled ? "bg-zinc-700" : "bg-zinc-600"}`} />
-                    {lesson.title}
+                    {isCurrent ? (
+                      <>
+                        <span className="md:hidden">Leçon {lesson.id.replace("lecon", "")}</span>
+                        <span className="hidden md:inline">{lesson.title}</span>
+                      </>
+                    ) : (
+                      lesson.title
+                    )}
                   </span>
                 </div>
               );
@@ -200,7 +207,7 @@ export default function ReversalLecon1Page() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée se fait short juste sous la neckline pour saisir le breakdown. Un prix qui plonge déjà ne se chasse pas. Une confirmation propre avec une clôture sous la neckline est requise. Le SL va au-dessus du dernier sommet pour invalider proprement le pattern. Le TP suit la measured move : la hauteur du pattern, du sommet à la neckline, se projette depuis la neckline vers le bas.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Hauteur du pattern : 1.1880 - 1.1800 = 80 pips. Projection théorique sous la neckline : 1.1720. Le TP est pris 5 pips plus bas à 1.1715 pour obtenir un R/R rond de 2:1 (40 pips de risque, 80 pips de gain).</p>
 
-            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée short : 1.1795 (clôture sous neckline)</li>
@@ -309,7 +316,7 @@ export default function ReversalLecon1Page() {
             )}
 
             <div className="mt-5 flex items-center justify-between">
-              <Link href="/strategies/reversal" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/reversal" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

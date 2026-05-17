@@ -34,7 +34,7 @@ function CheckIcon() {
 
 export default function PricingPage() {
   return (
-    <main className="min-h-screen bg-zinc-950 text-white px-6 py-20">
+    <main className="min-h-screen bg-zinc-950 text-white px-6 py-12 md:py-20">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-14">

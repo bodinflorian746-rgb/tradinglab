@@ -93,7 +93,14 @@ export default function SetupMTFPage() {
                       : "border-zinc-800 text-zinc-500"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : lesson.disabled ? "bg-zinc-700" : "bg-zinc-600"}`} />
-                    {lesson.title}
+                    {isCurrent ? (
+                      <>
+                        <span className="md:hidden">Leçon {lesson.id.replace("lecon", "")}</span>
+                        <span className="hidden md:inline">{lesson.title}</span>
+                      </>
+                    ) : (
+                      lesson.title
+                    )}
                   </span>
                 </div>
               );
@@ -194,7 +201,7 @@ export default function SetupMTFPage() {
               EUR/USD en tendance haussière confirmée sur Daily (HH/HL sur 6 semaines). Zone H4 support à 1.1750-1.1770 (3 touches, fraîche). H1 aligné haussier. Pin bar M15 imprimée au contact de la zone.
             </p>
 
-            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Daily : dernier HH 1.1840, dernier HL 1.1720, biais long</li>

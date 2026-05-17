@@ -91,7 +91,14 @@ export default function SupportResistanceLecon3Page() {
                       : "border-zinc-800 text-zinc-500"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : lesson.disabled ? "bg-zinc-700" : "bg-zinc-600"}`} />
-                    {lesson.title}
+                    {isCurrent ? (
+                      <>
+                        <span className="md:hidden">Leçon {lesson.id.replace("lecon", "")}</span>
+                        <span className="hidden md:inline">{lesson.title}</span>
+                      </>
+                    ) : (
+                      lesson.title
+                    )}
                   </span>
                 </div>
               );
@@ -169,7 +176,7 @@ export default function SupportResistanceLecon3Page() {
               EUR/USD en tendance haussière depuis 2 semaines. Résistance majeure 1.1850 touchée 3 fois en 3 semaines avant d&apos;être cassée. 4 bougies confirment la cassure sans réintégration. Pin bar de rejet au retest.
             </p>
 
-            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade long sur flip confirmé)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Cassure : clôture à 1.1878 (28 pips au-dessus de la zone)</li>
@@ -286,7 +293,7 @@ export default function SupportResistanceLecon3Page() {
             )}
 
             <div className="mt-5 flex items-center justify-between">
-              <Link href="/strategies/support-resistance/lecon2" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/support-resistance/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

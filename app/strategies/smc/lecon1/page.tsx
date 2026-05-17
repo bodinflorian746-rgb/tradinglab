@@ -94,7 +94,14 @@ export default function SmcLecon1Page() {
                       : "border-zinc-800 text-zinc-500"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : lesson.disabled ? "bg-zinc-700" : "bg-zinc-600"}`} />
-                    {lesson.title}
+                    {isCurrent ? (
+                      <>
+                        <span className="md:hidden">Leçon {lesson.id.replace("lecon", "")}</span>
+                        <span className="hidden md:inline">{lesson.title}</span>
+                      </>
+                    ) : (
+                      lesson.title
+                    )}
                   </span>
                 </div>
               );
@@ -239,7 +246,7 @@ export default function SmcLecon1Page() {
               XAU/USD en dynamique haussière depuis 8 semaines. Application de la méthode SMC pour cartographier le marché.
             </p>
 
-            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Swings Daily majeurs</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Swing low : 4 380$ (-5 sem.)</li>
@@ -355,13 +362,13 @@ export default function SmcLecon1Page() {
 
             {/* Navigation */}
             <div className="mt-5 flex items-center justify-between">
-              <Link href="/strategies/smc" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/smc" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 Module SMC — Vue d&apos;ensemble
               </Link>
-              <Link href="/strategies/smc/lecon2" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/smc/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Leçon 2
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />

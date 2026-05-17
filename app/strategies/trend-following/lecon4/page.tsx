@@ -92,7 +92,14 @@ export default function TrendFollowingLecon4Page() {
                       : "border-zinc-800 text-zinc-500"
                   }`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : lesson.disabled ? "bg-zinc-700" : "bg-zinc-600"}`} />
-                    {lesson.title}
+                    {isCurrent ? (
+                      <>
+                        <span className="md:hidden">Leçon {lesson.id.replace("lecon", "")}</span>
+                        <span className="hidden md:inline">{lesson.title}</span>
+                      </>
+                    ) : (
+                      lesson.title
+                    )}
                   </span>
                 </div>
               );
@@ -208,7 +215,7 @@ export default function TrendFollowingLecon4Page() {
               XAU/USD en tendance haussière H4 depuis 3 semaines (2 HL à 4 520$ et 4 580$, 2 HH à 4 620$ et 4 660$). BOS baissier : clôture à 4 555$ (25$ sous le HL 4 580$). Validation 4 bougies sans réintégration. Formation nouvelle structure : LH à 4 600$ puis LL à 4 530$ = CHoCH confirmé.
             </p>
 
-            <div className="border border-zinc-800 rounded-xl p-6 my-6 bg-zinc-950/60">
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade short sur inversion confirmée)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée short : 4 580$ (retracement vers ex-HL devenu résistance, signal de rejet attendu)</li>
@@ -327,13 +334,13 @@ export default function TrendFollowingLecon4Page() {
             )}
 
             <div className="mt-5 flex items-center justify-between">
-              <Link href="/strategies/trend-following/lecon3" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/trend-following/lecon3" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 Leçon 3
               </Link>
-              <Link href="/strategies/trend-following" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+              <Link href="/strategies/trend-following" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Retour au module
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
