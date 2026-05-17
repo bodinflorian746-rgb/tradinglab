@@ -30,6 +30,20 @@ function ArrowIcon() {
   );
 }
 
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+    >
+      <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 /* ── Barre de progression ────────────────────────────── */
 
 function ProgressBar({ pct, height = "h-1" }: { pct: number; height?: string }) {
@@ -42,6 +56,28 @@ function ProgressBar({ pct, height = "h-1" }: { pct: number; height?: string }) 
     </div>
   );
 }
+
+/* ── Couleurs d'accent par niveau ───────────────────── */
+
+type LevelColor = {
+  badge: string;
+  button: string;
+};
+
+const LEVEL_COLORS: Record<string, LevelColor> = {
+  debutant: {
+    badge: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+    button: "bg-emerald-500 hover:bg-emerald-400 text-zinc-950",
+  },
+  intermediaire: {
+    badge: "bg-blue-400/10 text-blue-400 border border-blue-400/20",
+    button: "bg-blue-400 hover:bg-blue-300 text-zinc-950",
+  },
+  avance: {
+    badge: "bg-amber-400/10 text-amber-400 border border-amber-400/20",
+    button: "bg-amber-400 hover:bg-amber-300 text-zinc-950",
+  },
+};
 
 /* ── Helpers ────────────────────────────────────────── */
 
@@ -65,11 +101,21 @@ function getActiveLessonKey(progress: ProgressData): string | null {
 export default function FormationsPage() {
   const [progress, setProgress] = useState<ProgressData>({});
   const [mounted, setMounted] = useState(false);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     setProgress(getStoredProgress());
     setMounted(true);
   }, []);
+
+  function toggleExpand(id: string) {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
   const global = mounted
     ? getGlobalStats(progress, FORMATIONS)
@@ -117,6 +163,8 @@ export default function FormationsPage() {
 
             const nextLesson = formation.lessons.find((l) => l.id === stats.nextLessonId) ?? null;
             const allDone = stats.completed === stats.total && mounted;
+            const isExpanded = expanded.has(formation.id);
+            const colors = LEVEL_COLORS[formation.id];
 
             return (
               <div
@@ -125,15 +173,20 @@ export default function FormationsPage() {
                   formation.disabled ? "opacity-50 bg-zinc-900/40 border-zinc-800/60" : ""
                 }`}
               >
-                {/* En-tête de card */}
-                <div className="px-6 py-5 border-b border-zinc-800">
+                {/* En-tête de card — cliquable pour déplier */}
+                <div
+                  className={`px-6 py-5 ${
+                    isExpanded && !formation.disabled ? "border-b border-zinc-800" : ""
+                  } ${!formation.disabled ? "cursor-pointer" : ""}`}
+                  onClick={() => !formation.disabled && toggleExpand(formation.id)}
+                >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
 
                       {/* Titre + badge */}
                       <div className="flex items-center gap-2.5 mb-1 flex-wrap">
                         <h2 className="text-xl font-semibold">{formation.title}</h2>
-                        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${formation.badgeStyle}`}>
+                        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${colors?.badge ?? formation.badgeStyle}`}>
                           {formation.badge}
                         </span>
                         {formation.disabled && (
@@ -162,7 +215,10 @@ export default function FormationsPage() {
                     </div>
 
                     {/* Bouton Commencer / Continuer / Réviser */}
-                    <div className="shrink-0 hidden md:flex flex-col items-end gap-1">
+                    <div
+                      className="shrink-0 hidden md:flex flex-col items-end gap-1"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       {!formation.disabled && (
                         <>
                           {allDone ? (
@@ -175,7 +231,7 @@ export default function FormationsPage() {
                           ) : nextLesson ? (
                             <Link
                               href={nextLesson.href}
-                              className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors"
+                              className={`inline-flex items-center gap-1.5 ${colors?.button ?? "bg-emerald-500 hover:bg-emerald-400 text-zinc-950"} text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors`}
                             >
                               {stats.completed === 0 ? "Commencer" : "Continuer"}
                               <ArrowIcon />
@@ -189,11 +245,27 @@ export default function FormationsPage() {
                         </>
                       )}
                     </div>
+
+                    {/* Chevron déplier / replier */}
+                    {!formation.disabled && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleExpand(formation.id);
+                        }}
+                        aria-label={isExpanded ? "Replier le module" : "Déplier le module"}
+                        aria-expanded={isExpanded}
+                        className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/60 transition-colors mt-1"
+                      >
+                        <ChevronIcon open={isExpanded} />
+                      </button>
+                    )}
                   </div>
                 </div>
 
                 {/* Liste des leçons */}
-                {!formation.disabled && (
+                {isExpanded && !formation.disabled && (
                   <div className="divide-y divide-zinc-800/60">
                   {formation.lessons.map((lesson, i) => {
                     const completed = mounted && isLessonComplete(progress, formation.id, lesson.id);
@@ -255,11 +327,11 @@ export default function FormationsPage() {
                 )}
 
                 {/* Bouton mobile */}
-                {!formation.disabled && !allDone && nextLesson && (
+                {isExpanded && !formation.disabled && !allDone && nextLesson && (
                   <div className="px-6 py-4 border-t border-zinc-800 md:hidden">
                     <Link
                       href={nextLesson.href}
-                      className="flex items-center justify-between bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-semibold px-4 py-3 rounded-xl transition-colors"
+                      className={`flex items-center justify-between ${colors?.button ?? "bg-emerald-500 hover:bg-emerald-400 text-zinc-950"} text-sm font-semibold px-4 py-3 rounded-xl transition-colors`}
                     >
                       <span>{stats.completed === 0 ? "Commencer" : "Continuer"}</span>
                       <span className="opacity-70 text-xs font-normal truncate max-w-[160px]">
