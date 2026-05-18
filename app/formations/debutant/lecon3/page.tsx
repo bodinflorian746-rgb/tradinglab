@@ -52,7 +52,7 @@ export default function Page() {
         },
         {
           title: "Exemple concret — une bougie verte, une bougie rouge",
-          content: "Bougie verte : Bitcoin ouvre à 20 000 €, monte à 20 800 €, descend à 19 700 €, clôture à 20 400 €. Close (20 400) > Open (20 000) → les acheteurs ont gagné. Bougie rouge : Bitcoin ouvre à 20 400 €, monte à 20 600 €, chute à 19 500 €, clôture à 19 800 €. Close (19 800) < Open (20 400) → les vendeurs ont gagné.",
+          content: "Bougie verte : Bitcoin ouvre à 78 000 $, monte à 79 000 $, descend à 77 500 $, clôture à 78 600 $. Le prix termine plus haut qu'à l'ouverture : Close (78 600) > Open (78 000). Les acheteurs gagnent donc la bataille. Bougie rouge : Bitcoin ouvre à 78 600 $, monte à 78 900 $, chute à 77 000 $, clôture à 77 400 $. Le prix termine plus bas qu'à l'ouverture : Close (77 400) < Open (78 600). Les vendeurs gagnent donc la bataille.",
           visual: <CandleExampleDiagram />,
           items: [
             "Corps vert = close > open — les acheteurs ont dominé la période",

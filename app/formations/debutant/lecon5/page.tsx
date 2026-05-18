@@ -13,11 +13,11 @@ function StopLossDiagram() {
         <div className="rounded-t-xl bg-emerald-500/10 border border-emerald-500/25 px-4 py-3.5 flex items-center justify-between">
           <div>
             <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wide mb-0.5">Take Profit</p>
-            <p className="text-lg font-mono font-bold text-emerald-400">33 000 €</p>
+            <p className="text-lg font-mono font-bold text-emerald-400">81 000 $</p>
           </div>
           <div className="text-right">
             <p className="text-[10px] text-zinc-500 mb-0.5">Si le prix monte jusqu'ici</p>
-            <p className="text-sm font-bold text-emerald-400">Gain +3 000 €</p>
+            <p className="text-sm font-bold text-emerald-400">Variation +3 000 $</p>
           </div>
         </div>
 
@@ -41,7 +41,7 @@ function StopLossDiagram() {
         <div className="bg-zinc-800 border-x border-zinc-700 px-4 py-3.5 flex items-center justify-between">
           <div>
             <p className="text-[10px] font-bold text-white uppercase tracking-wide mb-0.5">Entrée</p>
-            <p className="text-lg font-mono font-bold text-white">30 000 €</p>
+            <p className="text-lg font-mono font-bold text-white">78 000 $</p>
           </div>
           <div className="text-right">
             <p className="text-[10px] text-zinc-500 mb-0.5">Prix d'achat</p>
@@ -53,18 +53,18 @@ function StopLossDiagram() {
         <div className="rounded-b-xl bg-red-500/10 border border-red-500/25 px-4 py-3.5 flex items-center justify-between">
           <div>
             <p className="text-[10px] font-bold text-red-400 uppercase tracking-wide mb-0.5">Stop Loss</p>
-            <p className="text-lg font-mono font-bold text-red-400">28 500 €</p>
+            <p className="text-lg font-mono font-bold text-red-400">76 500 $</p>
           </div>
           <div className="text-right">
             <p className="text-[10px] text-zinc-500 mb-0.5">Si le prix descend ici</p>
-            <p className="text-sm font-bold text-red-400">Perte −1 500 €</p>
+            <p className="text-sm font-bold text-red-400">Variation −1 500 $</p>
           </div>
         </div>
 
         {/* Résumé */}
         <div className="mt-3 rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2 text-center">
           <p className="text-[10px] text-zinc-400">
-            Tu risques <strong className="text-red-400">1 500 €</strong> pour viser <strong className="text-emerald-400">3 000 €</strong>
+            Variation risquée <strong className="text-red-400">1 500 $</strong> · visée <strong className="text-emerald-400">3 000 $</strong>
             <span className="text-zinc-600 mx-1.5">·</span>
             Ratio <strong className="text-white">1:2</strong>
           </p>
@@ -83,18 +83,18 @@ function WithWithoutSLDiagram() {
         <div className="space-y-1 text-xs">
           <div className="flex justify-between">
             <span className="text-zinc-500">Achat</span>
-            <span className="text-white font-mono">30 000 €</span>
+            <span className="text-white font-mono">78 000 $</span>
           </div>
           <div className="flex justify-between">
             <span className="text-zinc-500">SL déclenché à</span>
-            <span className="text-white font-mono">28 500 €</span>
+            <span className="text-white font-mono">76 500 $</span>
           </div>
           <div className="h-px bg-zinc-700 my-1" />
           <div className="flex justify-between">
-            <span className="text-zinc-500">Perte</span>
-            <span className="text-red-400 font-bold">−1 500 €</span>
+            <span className="text-zinc-500">Variation</span>
+            <span className="text-red-400 font-bold">−1 500 $</span>
           </div>
-          <p className="text-[9px] text-emerald-400/80 mt-1">Capital restant : 98,5%</p>
+          <p className="text-[9px] text-emerald-400/80 mt-1">Risque limité et défini à l'avance</p>
         </div>
       </div>
       <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
@@ -102,18 +102,18 @@ function WithWithoutSLDiagram() {
         <div className="space-y-1 text-xs">
           <div className="flex justify-between">
             <span className="text-zinc-500">Achat</span>
-            <span className="text-white font-mono">30 000 €</span>
+            <span className="text-white font-mono">78 000 $</span>
           </div>
           <div className="flex justify-between">
             <span className="text-zinc-500">Chute nocturne à</span>
-            <span className="text-white font-mono">22 000 €</span>
+            <span className="text-white font-mono">70 000 $</span>
           </div>
           <div className="h-px bg-zinc-700 my-1" />
           <div className="flex justify-between">
-            <span className="text-zinc-500">Perte</span>
-            <span className="text-red-400 font-bold">−8 000 €</span>
+            <span className="text-zinc-500">Variation</span>
+            <span className="text-red-400 font-bold">−8 000 $</span>
           </div>
-          <p className="text-[9px] text-red-400/80 mt-1">Capital perdu : 27%</p>
+          <p className="text-[9px] text-red-400/80 mt-1">Risque non plafonné</p>
         </div>
       </div>
     </div>
@@ -140,12 +140,21 @@ export default function Page() {
             "Trade Long (achat) : ton SL se place EN DESSOUS de ton prix d'entrée",
             "Trade Short (vente) : ton SL se place AU DESSUS de ton prix d'entrée",
             "Quand le prix atteint le SL, le trade se ferme automatiquement",
-            "Tu perds exactement le montant prévu — pas un euro de plus",
+            "Ta perte reste plafonnée et connue à l'avance — son montant exact en argent dépend de la taille de ta position",
+          ],
+        },
+        {
+          title: "Variation de prix et taille de position",
+          content: "La variation de prix entre l'entrée et le Stop Loss est identique pour tous les traders sur ce trade. Dans cet exemple, le marché évolue de 1 500 $ entre 78 000 $ et 76 500 $. En revanche, le gain ou la perte en argent dépend de la taille de la position utilisée (le lot). Sur exactement le même mouvement de prix, un trader positionné avec 1 lot perdra 10× plus qu'un trader positionné avec 0,1 lot, et 100× plus qu'un trader positionné avec 0,01 lot. Deux traders peuvent donc prendre exactement le même trade, avec le même SL et le même TP, tout en gagnant ou perdant des montants totalement différents. Le calcul précis de la taille de position sera détaillé dans la Leçon 8 (Money Management).",
+          items: [
+            "La variation de prix jusqu'au SL est identique pour tous les traders sur le trade",
+            "Le gain ou la perte en argent dépend de la taille de ta position — ton lot",
+            "Même trade, même SL, même TP : avec des lots différents, les montants gagnés ou perdus sont totalement différents",
           ],
         },
         {
           title: "Exemple concret — avec et sans Stop Loss",
-          content: "Cas 1 — avec Stop Loss : Tu achètes Bitcoin à 30 000 €. Tu places un SL à 28 500 €. Le marché chute à 28 500 €. Le SL se déclenche. Tu perds 1 500 € par Bitcoin — contrôlé et prévu à l'avance. Cas 2 — sans Stop Loss : Même achat à 30 000 €. La nuit, une mauvaise nouvelle fait chuter le Bitcoin à 22 000 €. Tu te réveilles avec 8 000 € de perte — sans avoir pu réagir.",
+          content: "Cas 1 — avec Stop Loss : Entrée Bitcoin à 78 000 $, Stop Loss à 76 500 $. Pendant la nuit, le marché chute brutalement et le Stop Loss ferme automatiquement la position à proximité de 76 500 $. La variation de prix négative est limitée à environ 1 500 $ : un risque défini à l'avance et contrôlé. Cas 2 — sans Stop Loss : même entrée à 78 000 $, mais sans protection. La nuit, le marché s'effondre jusqu'à 70 000 $ : la variation de prix négative atteint 8 000 $, un risque non plafonné. Dans les deux cas, le montant réellement perdu en argent dépend de la taille de la position. Le Stop Loss ne garantit pas un trade gagnant — il garantit surtout qu'une mauvaise position ne se transforme pas en catastrophe.",
           visual: <WithWithoutSLDiagram />,
           items: [
             "Avec SL : la perte est limitée et connue à l'avance dès l'entrée",
@@ -160,18 +169,18 @@ export default function Page() {
           items: [
             "Long : SL juste en dessous du dernier point bas significatif (le support)",
             "Short : SL juste au-dessus du dernier point haut significatif (la résistance)",
-            "Exemple : tu achètes au rebond d'un support à 30 000 €. Le dernier point bas est à 29 200 €. Ton SL va à 29 100 €.",
+            "Exemple : tu achètes au rebond d'un support à 78 000 $. Le dernier point bas est à 77 200 $. Ton SL va à 77 000 $.",
             "Règle : si le prix atteint mon SL, mon analyse était fausse. La perte est normale.",
           ],
         },
       ]}
       errors={[
         "Ne pas mettre de SL 'pour laisser une chance au trade' — c'est la cause n°1 de comptes détruits chez les débutants",
-        "SL trop serré : 50 € de SL sur Bitcoin qui fluctue normalement de 500 € — tu seras sorti sans raison",
-        "SL placé au hasard ('1 500 € parce que ça me semble bien') — le SL doit correspondre à un niveau logique sur le graphique",
+        "SL trop serré : 100 $ de SL sur Bitcoin qui fluctue normalement de plus de 1 000 $ par heure — tu seras sorti sans raison",
+        "SL placé au hasard ('1 500 $ parce que ça me semble bien') — le SL doit correspondre à un niveau logique sur le graphique",
         "Oublier de placer le SL au moment d'entrer en pensant 'je le mets juste après' — et ne jamais le mettre",
       ]}
-      fatalError="Déplacer le Stop Loss dans le mauvais sens pour éviter d'être stoppé. Ton trade perd, tu es à −500 €. Tu éloignes le SL pour 'lui laisser une chance'. Le trade continue à perdre. Tu éloignes encore. Au final, tu perds 5 ou 10 fois plus que prévu. Cette erreur, commise sous l'émotion, est responsable de la destruction de milliers de comptes de traders débutants."
+      fatalError="Déplacer le Stop Loss dans le mauvais sens pour éviter d'être stoppé. Ton trade perd, tu es à −500 $. Tu éloignes le SL pour 'lui laisser une chance'. Le trade continue à perdre. Tu éloignes encore. Au final, tu perds 5 ou 10 fois plus que prévu. Cette erreur, commise sous l'émotion, est responsable de la destruction de milliers de comptes de traders débutants."
       keyPoints={[
         "Stop Loss = ordre automatique qui limite ta perte à un montant défini à l'avance",
         "Long : SL en dessous de l'entrée. Short : SL au-dessus de l'entrée.",
@@ -187,20 +196,20 @@ export default function Page() {
         "Calcule la différence en euros entre ce SL et le prix actuel. C'est le risque maximum de ce trade.",
       ]}
       quiz={{
-        question: "Tu achètes Bitcoin à 30 000 €. Le dernier point bas sur le graphique est à 29 000 €. Où places-tu ton Stop Loss ?",
+        question: "Une position acheteuse sur BTC/USD est ouverte à 78 000 $. Le dernier point bas significatif se situe à 77 000 $. Quel placement de Stop Loss respecte le mieux la logique technique ?",
         answers: [
-          "À 31 000 € — au-dessus de l'entrée pour ne pas perdre d'argent",
-          "À 29 950 € — juste 50 € sous l'entrée, pour minimiser la perte",
-          "À 28 900 € — juste sous le point bas logique, là où ton analyse serait fausse",
-          "Pas de Stop Loss — le Bitcoin finit toujours par remonter",
+          "77 900 $",
+          "77 500 $",
+          "76 900 $",
+          "78 200 $",
         ],
         correctIndex: 2,
-        explanation: "Le SL d'un Long va en dessous de l'entrée, à un niveau logique. Le dernier point bas à 29 000 € est le niveau qui invalide ton scénario haussier. En plaçant le SL à 28 900 € (juste en dessous), si le prix y arrive, ton analyse était fausse. La perte = 1 100 € par Bitcoin — connue et acceptée à l'avance.",
+        explanation: "Le Stop Loss doit être placé au-delà du niveau technique qui invalide le scénario. Le dernier point bas important se situe à 77 000 $. Un Stop Loss à 76 900 $ laisse une petite marge sous ce niveau tout en gardant un risque cohérent. La variation entre l'entrée (78 000 $) et le SL (76 900 $) représente une variation de prix de 1 100 $. La perte réellement subie en argent dépend ensuite de la taille de la position utilisée.",
         answerExplanations: [
-          "Faux. Un SL au-dessus de l'entrée sur un Long ferme la position quand le prix monte — quand tu gagnes. C'est complètement inversé. Le SL d'un Long va toujours EN DESSOUS de l'entrée pour te protéger d'une baisse.",
-          "Faux. 50 € de SL sur Bitcoin, c'est beaucoup trop serré. Bitcoin fluctue normalement de plusieurs centaines d'euros par heure. Tu seras sorti par le simple bruit du marché, avant même que le trade puisse se développer.",
-          "Correct. Le SL logique se place juste sous le niveau qui invalide ton analyse. Le point bas à 29 000 € est ce niveau. À 28 900 €, si le prix y arrive, la structure haussière est brisée — tu avais tort. Perte de 1 100 € : définie et acceptée dès le départ.",
-          "Faux. 'Le Bitcoin finit toujours par remonter' est vrai sur 10 ans — mais sur une position ouverte sans SL, une chute de 30% peut arriver en quelques jours. Un SL n'empêche pas le rebond — il limite la perte si le rebond tarde trop.",
+          "Incorrect. Le Stop Loss est placé trop proche de l'entrée. Une fluctuation normale de Bitcoin peut facilement toucher ce niveau sans invalider le scénario.",
+          "Incorrect. Le Stop Loss reste au-dessus du dernier point bas significatif. Le marché pourrait balayer ce niveau avant de repartir.",
+          "Correct. Le Stop Loss se situe juste sous le dernier point bas important à 77 000 $. Le niveau invalide réellement le scénario si le prix est cassé.",
+          "Incorrect. Le Stop Loss est placé au-dessus du prix d'entrée. Le trade serait clôturé immédiatement ou presque.",
         ],
       }}
     />
