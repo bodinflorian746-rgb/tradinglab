@@ -27,22 +27,22 @@ function LongShortDiagram() {
           <line x1="15" y1="10" x2="15" y2="150" stroke="#3f3f46" strokeWidth="1" />
           {/* Ligne de prix */}
           <polyline points={longPoints} fill="none" stroke="#059669" strokeWidth="2" strokeLinejoin="round" />
-          {/* Zone gain */}
+          {/* Zone favorable */}
           <polygon points={`20,70 ${longPoints.split(" ").slice(4).join(" ")} 200,70`} fill="#059669" fillOpacity="0.08" />
           {/* Entrée */}
           <circle cx="20" cy="140" r="4" fill="#34d399" />
           <line x1="20" y1="140" x2="200" y2="140" stroke="#34d399" strokeWidth="1" strokeDasharray="4,3" />
-          <text x="24" y="138" fontSize="9" fill="#34d399" fontFamily="monospace">Entrée : 20 000 €</text>
+          <text x="24" y="138" fontSize="9" fill="#34d399" fontFamily="monospace">Entrée : 78 000 $</text>
           {/* Sortie */}
           <circle cx="200" cy="38" r="4" fill="#34d399" />
-          <text x="110" y="30" fontSize="9" fill="#34d399" fontFamily="monospace">Sortie : 22 000 €</text>
+          <text x="110" y="30" fontSize="9" fill="#34d399" fontFamily="monospace">Sortie : 81 000 $</text>
           {/* Gain */}
           <line x1="205" y1="38" x2="205" y2="140" stroke="#34d399" strokeWidth="1.5" strokeDasharray="3,3" />
-          <text x="208" y="94" fontSize="10" fill="#34d399" fontFamily="sans-serif" fontWeight="700">+2 000 €</text>
+          <text x="208" y="94" fontSize="10" fill="#34d399" fontFamily="sans-serif" fontWeight="700">+3 000 $ de hausse</text>
           {/* Flèche hausse */}
           <path d="M105 80 L105 50 L100 56 M105 50 L110 56" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" fill="none" />
         </svg>
-        <p className="text-[10px] text-emerald-400/70 text-center mt-1">Prix monte → tu gagnes</p>
+        <p className="text-[10px] text-emerald-400/70 text-center mt-1">Prix monte → mouvement favorable</p>
       </div>
 
       {/* Short */}
@@ -54,84 +54,22 @@ function LongShortDiagram() {
           <line x1="15" y1="10" x2="15" y2="150" stroke="#3f3f46" strokeWidth="1" />
           {/* Ligne de prix */}
           <polyline points={shortPoints} fill="none" stroke="#dc2626" strokeWidth="2" strokeLinejoin="round" />
-          {/* Zone gain */}
+          {/* Zone favorable */}
           <polygon points={`20,88 ${shortPoints.split(" ").slice(3).join(" ")} 200,88`} fill="#dc2626" fillOpacity="0.08" />
           {/* Entrée */}
           <circle cx="20" cy="38" r="4" fill="#f87171" />
           <line x1="20" y1="38" x2="200" y2="38" stroke="#f87171" strokeWidth="1" strokeDasharray="4,3" />
-          <text x="24" y="34" fontSize="9" fill="#f87171" fontFamily="monospace">Entrée : 30 000 €</text>
+          <text x="24" y="34" fontSize="9" fill="#f87171" fontFamily="monospace">Entrée : 78 000 $</text>
           {/* Sortie */}
           <circle cx="200" cy="140" r="4" fill="#f87171" />
-          <text x="100" y="155" fontSize="9" fill="#f87171" fontFamily="monospace">Sortie : 27 000 €</text>
+          <text x="100" y="155" fontSize="9" fill="#f87171" fontFamily="monospace">Sortie : 75 000 $</text>
           {/* Gain */}
           <line x1="205" y1="38" x2="205" y2="140" stroke="#f87171" strokeWidth="1.5" strokeDasharray="3,3" />
-          <text x="208" y="94" fontSize="10" fill="#f87171" fontFamily="sans-serif" fontWeight="700">+3 000 €</text>
+          <text x="208" y="94" fontSize="10" fill="#f87171" fontFamily="sans-serif" fontWeight="700">−3 000 $ de baisse</text>
           {/* Flèche baisse */}
           <path d="M105 70 L105 100 L100 94 M105 100 L110 94" stroke="#f87171" strokeWidth="1.5" strokeLinecap="round" fill="none" />
         </svg>
-        <p className="text-[10px] text-red-400/70 text-center mt-1">Prix baisse → tu gagnes</p>
-      </div>
-    </div>
-  );
-}
-
-// ── Diagramme : Stop Loss + Take Profit ──────────────────────────────────────
-function StopLossDiagram() {
-  return (
-    <div className="mt-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
-      <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-4 text-center">
-        Bitcoin — trade avec Stop Loss et Take Profit
-      </p>
-      <div className="relative mx-auto max-w-xs">
-        {/* Zone TP */}
-        <div className="rounded-t-xl bg-emerald-500/10 border border-emerald-500/25 px-4 py-3 flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wide">Take Profit</p>
-            <p className="text-lg font-mono font-bold text-emerald-400">33 000 €</p>
-          </div>
-          <div className="text-right">
-            <p className="text-[10px] text-zinc-500">Si atteint</p>
-            <p className="text-sm font-bold text-emerald-400">+3 000 €</p>
-          </div>
-        </div>
-
-        {/* Zone Entrée */}
-        <div className="bg-zinc-800 border-x border-zinc-700 px-4 py-3 flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold text-white uppercase tracking-wide">Entrée</p>
-            <p className="text-lg font-mono font-bold text-white">30 000 €</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="flex flex-col gap-0.5 items-center">
-              <svg width="14" height="18" viewBox="0 0 14 18" fill="none">
-                <path d="M7 1v7M4 5l3-4 3 4" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <svg width="14" height="18" viewBox="0 0 14 18" fill="none">
-                <path d="M7 17v-7M4 13l3 4 3-4" stroke="#f87171" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <span className="text-[9px] text-zinc-500">R/R<br/>1:2</span>
-          </div>
-        </div>
-
-        {/* Zone SL */}
-        <div className="rounded-b-xl bg-red-500/10 border border-red-500/25 px-4 py-3 flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold text-red-400 uppercase tracking-wide">Stop Loss</p>
-            <p className="text-lg font-mono font-bold text-red-400">28 500 €</p>
-          </div>
-          <div className="text-right">
-            <p className="text-[10px] text-zinc-500">Si déclenché</p>
-            <p className="text-sm font-bold text-red-400">−1 500 €</p>
-          </div>
-        </div>
-
-        {/* Note */}
-        <div className="mt-3 rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2 text-center">
-          <span className="text-[10px] text-zinc-400">
-            Tu risques <strong className="text-red-400">1 500 €</strong> pour viser <strong className="text-emerald-400">3 000 €</strong> — ratio 1:2
-          </span>
-        </div>
+        <p className="text-[10px] text-red-400/70 text-center mt-1">Prix baisse → mouvement favorable</p>
       </div>
     </div>
   );
@@ -142,35 +80,35 @@ function TakeProfitDiagram() {
   return (
     <div className="mt-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
       <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-4 text-center">
-        Bitcoin — avec et sans Take Profit
+        Bitcoin — l'évolution du prix, avec et sans Take Profit
       </p>
       <div className="grid grid-cols-2 gap-3">
         <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
           <p className="text-[10px] font-bold text-emerald-400 text-center mb-2">AVEC Take Profit</p>
           <svg viewBox="0 0 130 145" className="w-full" fill="none">
             <line x1="8" y1="35" x2="122" y2="35" stroke="#10b981" strokeWidth="1.5" strokeDasharray="4 2" opacity="0.8" />
-            <text x="8" y="28" fontSize="8" fill="#10b981">TP — 33 000 €</text>
+            <text x="8" y="28" fontSize="8" fill="#10b981">TP — 84 000 $</text>
             <line x1="8" y1="108" x2="122" y2="108" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" />
-            <text x="8" y="119" fontSize="8" fill="#a1a1aa">Entrée — 30 000 €</text>
+            <text x="8" y="119" fontSize="8" fill="#a1a1aa">Entrée — 78 000 $</text>
             <polyline points="12,108 40,88 70,65 95,44 112,35" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" />
             <circle cx="12" cy="108" r="3.5" fill="#10b981" />
             <circle cx="112" cy="35" r="4" fill="#10b981" />
-            <text x="65" y="143" fontSize="10" fill="#10b981" textAnchor="middle" fontWeight="700">+3 000 € ✔</text>
+            <text x="65" y="143" fontSize="10" fill="#10b981" textAnchor="middle" fontWeight="700">+6 000 $ ✔</text>
           </svg>
         </div>
         <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
           <p className="text-[10px] font-bold text-red-400 text-center mb-2">SANS Take Profit</p>
           <svg viewBox="0 0 130 145" className="w-full" fill="none">
             <line x1="8" y1="35" x2="122" y2="35" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" opacity="0.5" />
-            <text x="8" y="28" fontSize="8" fill="#52525b">33 000 € ignoré</text>
+            <text x="8" y="28" fontSize="8" fill="#52525b">84 000 $ ignoré</text>
             <line x1="8" y1="108" x2="122" y2="108" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" />
-            <text x="8" y="119" fontSize="8" fill="#a1a1aa">Entrée — 30 000 €</text>
+            <text x="8" y="119" fontSize="8" fill="#a1a1aa">Entrée — 78 000 $</text>
             <polyline points="12,108 35,82 62,40 90,78 112,125" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" />
             <circle cx="12" cy="108" r="3.5" fill="#ef4444" />
             <circle cx="62" cy="40" r="3" fill="#f87171" opacity="0.85" />
-            <text x="64" y="36" fontSize="7" fill="#f87171">+3 000 €</text>
+            <text x="64" y="36" fontSize="7" fill="#f87171">+6 000 $</text>
             <circle cx="112" cy="125" r="4" fill="#ef4444" />
-            <text x="65" y="143" fontSize="10" fill="#ef4444" textAnchor="middle" fontWeight="700">−1 000 € ✖</text>
+            <text x="65" y="143" fontSize="10" fill="#ef4444" textAnchor="middle" fontWeight="700">−3 000 $ ✖</text>
           </svg>
         </div>
       </div>
@@ -189,19 +127,19 @@ function BreakEvenDiagram() {
         <div className="flex items-center gap-3 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3">
           <span className="text-xs font-bold text-zinc-500 w-4 shrink-0">1</span>
           <div className="flex-1">
-            <p className="text-xs font-semibold text-white">Entrée à 30 000 € — SL initial à 29 000 €</p>
-            <p className="text-[10px] text-zinc-500 mt-0.5">Tu risques 1 000 € si le SL se déclenche</p>
+            <p className="text-xs font-semibold text-white">Entrée à 78 000 $ — SL initial à 75 000 $</p>
+            <p className="text-[10px] text-zinc-500 mt-0.5">Distance entrée → SL : 3 000 $ — c'est ton risque (1R)</p>
           </div>
           <div className="bg-red-500/10 border border-red-500/20 rounded-lg px-2 py-1 text-center shrink-0">
-            <p className="text-[9px] text-red-400 font-mono">−1 000 €</p>
+            <p className="text-[9px] text-red-400 font-mono">−3 000 $</p>
             <p className="text-[8px] text-red-500/60">si stoppé</p>
           </div>
         </div>
-        <p className="text-center text-[10px] text-zinc-600">↓ le prix monte à 31 000 € (+1R)</p>
+        <p className="text-center text-[10px] text-zinc-600">↓ le prix monte à 81 000 $ (+1R)</p>
         <div className="flex items-center gap-3 bg-amber-400/5 border border-amber-400/20 rounded-xl px-4 py-3">
           <span className="text-xs font-bold text-amber-400 w-4 shrink-0">2</span>
           <div className="flex-1">
-            <p className="text-xs font-semibold text-white">Tu déplaces le SL de 29 000 € → 30 000 €</p>
+            <p className="text-xs font-semibold text-white">Tu déplaces le SL de 75 000 $ → 78 000 $</p>
             <p className="text-[10px] text-zinc-500 mt-0.5">SL = prix d'entrée = Break Even activé</p>
           </div>
           <div className="bg-amber-400/10 border border-amber-400/20 rounded-lg px-2 py-1 text-center shrink-0">
@@ -212,13 +150,13 @@ function BreakEvenDiagram() {
         <div className="grid grid-cols-2 gap-2">
           <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl px-3 py-2.5 text-center">
             <p className="text-[10px] font-bold text-emerald-400">Prix continue ↑</p>
-            <p className="text-[9px] text-zinc-400 mt-1">TP atteint à 33 000 €</p>
-            <p className="text-xs font-bold text-emerald-400 mt-1">+3 000 €</p>
+            <p className="text-[9px] text-zinc-400 mt-1">TP atteint à 84 000 $</p>
+            <p className="text-xs font-bold text-emerald-400 mt-1">+6 000 $</p>
           </div>
           <div className="bg-zinc-800/60 border border-zinc-700 rounded-xl px-3 py-2.5 text-center">
             <p className="text-[10px] font-bold text-zinc-300">Prix redescend ↓</p>
-            <p className="text-[9px] text-zinc-400 mt-1">BE déclenché à 30 000 €</p>
-            <p className="text-xs font-bold text-zinc-400 mt-1">0 € — zéro perte</p>
+            <p className="text-[9px] text-zinc-400 mt-1">BE déclenché à 78 000 $</p>
+            <p className="text-xs font-bold text-zinc-400 mt-1">0 $ — sortie à l'entrée</p>
           </div>
         </div>
       </div>
@@ -378,7 +316,6 @@ function Diagram({ id }: { id: string }) {
     case "candle":      return <CandleAnatomyDiagram />;
     case "long-short":  return <LongShortDiagram />;
     case "spread":      return <SpreadDiagram />;
-    case "stoploss":    return <StopLossDiagram />;
     case "takeprofit":  return <TakeProfitDiagram />;
     case "breakeven":   return <BreakEvenDiagram />;
     case "risk":        return <RiskDiagram />;

@@ -446,9 +446,9 @@ function TradeDiagram() {
           <polyline points="16,98 40,82 68,64 96,46 122,30" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" />
           <circle cx="16" cy="98" r="3.5" fill="#10b981" />
           <circle cx="122" cy="30" r="4" fill="#10b981" />
-          <text x="16" y="116" fontSize="8" fill="#a1a1aa">20 000 €</text>
-          <text x="69" y="24" fontSize="8" fill="#10b981" textAnchor="middle">22 000 €</text>
-          <text x="69" y="138" fontSize="10" fill="#10b981" textAnchor="middle" fontWeight="700">+2 000 € ✔</text>
+          <text x="16" y="116" fontSize="8" fill="#a1a1aa">78 000 $</text>
+          <text x="69" y="24" fontSize="8" fill="#10b981" textAnchor="middle">81 000 $</text>
+          <text x="69" y="138" fontSize="10" fill="#10b981" textAnchor="middle" fontWeight="700">+3 000 $ de hausse ✔</text>
         </svg>
       </div>
       <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
@@ -459,9 +459,9 @@ function TradeDiagram() {
           <polyline points="16,30 40,46 68,62 96,78 122,94" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" />
           <circle cx="16" cy="30" r="3.5" fill="#ef4444" />
           <circle cx="122" cy="94" r="4" fill="#ef4444" />
-          <text x="16" y="24" fontSize="8" fill="#a1a1aa">20 000 € (achat)</text>
-          <text x="69" y="102" fontSize="8" fill="#ef4444" textAnchor="middle">18 500 €</text>
-          <text x="69" y="138" fontSize="10" fill="#ef4444" textAnchor="middle" fontWeight="700">−1 500 € ✖</text>
+          <text x="16" y="24" fontSize="8" fill="#a1a1aa">78 000 $ (achat)</text>
+          <text x="69" y="102" fontSize="8" fill="#ef4444" textAnchor="middle">76 500 $</text>
+          <text x="69" y="138" fontSize="10" fill="#ef4444" textAnchor="middle" fontWeight="700">−1 500 $ de baisse ✖</text>
         </svg>
       </div>
     </div>
