@@ -13,10 +13,10 @@ import { LTFExecutionDiagram } from "@/app/components/charts/LTFExecutionDiagram
 
 const LESSONS = [
   { id: "lecon1", title: "Pourquoi analyser en multi-timeframe", disabled: false },
-  { id: "lecon2", title: "Le timeframe supérieur : le biais", disabled: true },
-  { id: "lecon3", title: "Le timeframe intermédiaire : la zone", disabled: true },
-  { id: "lecon4", title: "Le timeframe d’exécution : l’entrée", disabled: true },
-  { id: "lecon5", title: "Le process complet", disabled: true },
+  { id: "lecon2", title: "Le timeframe supérieur : le biais", disabled: false },
+  { id: "lecon3", title: "Le timeframe intermédiaire : la zone", disabled: false },
+  { id: "lecon4", title: "Le timeframe d’exécution : l’entrée", disabled: false },
+  { id: "lecon5", title: "Le process complet", disabled: false },
 ];
 
 export default function MultiTimeframeLecon1Page() {
@@ -394,13 +394,18 @@ export default function MultiTimeframeLecon1Page() {
               </div>
             )}
 
-            {/* Navigation — uniquement retour module (Leçon 2 pas encore créée) */}
-            <div className="mt-5 flex items-center">
+            <div className="mt-5 flex items-center justify-between gap-4">
               <Link href="/strategies/multi-timeframe" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 Module Multi-timeframe — Vue d&apos;ensemble
+              </Link>
+              <Link href="/strategies/multi-timeframe/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+                Leçon suivante
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </Link>
             </div>
 
