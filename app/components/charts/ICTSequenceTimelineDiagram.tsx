@@ -57,7 +57,7 @@ const STEPS = [
 export function ICTSequenceTimelineDiagram({ className = "" }: ICTSequenceTimelineDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         {/* Timeline horizontale */}
         <line x1="40" y1="58" x2="660" y2="58" stroke="#52525b" strokeWidth="1.5" strokeLinecap="round" />
@@ -104,7 +104,29 @@ export function ICTSequenceTimelineDiagram({ className = "" }: ICTSequenceTimeli
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : 7 étapes ICT ──────────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2">
+        <p className="text-[14px] font-bold text-white text-center">Séquence ICT complète — 7 étapes</p>
+        {[
+          { n: 1, t: "Liquidité HTF identifiée", c: "amber" },
+          { n: 2, t: "Sweep de la liquidité", c: "amber" },
+          { n: 3, t: "Réintégration / CHoCH", c: "red" },
+          { n: 4, t: "Displacement bearish", c: "red" },
+          { n: 5, t: "FVG créé", c: "blue" },
+          { n: 6, t: "Retour dans le FVG (mitigation)", c: "blue" },
+          { n: 7, t: "Rejet + reprise = exécution", c: "emerald" },
+        ].map((s) => (
+          <div key={s.n} className="flex items-center gap-2.5 text-[13px]">
+            <span className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold bg-${s.c}-500/20 border border-${s.c}-400 text-${s.c}-400`}>{s.n}</span>
+            <span className="text-zinc-300">{s.t}</span>
+          </div>
+        ))}
+        <p className="text-[12px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+          Chaque étape construit la suivante.
+        </p>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
           <span className="text-[10px] text-zinc-500">7 étapes — de la liquidité HTF à l&apos;exécution</span>

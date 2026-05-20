@@ -36,7 +36,7 @@ const BODY_W = 14;
 export function MacroFilterCalendarDiagram({ className = "" }: MacroFilterCalendarDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         {/* Checklist à gauche */}
         <rect x="20" y="40" width="240" height="200" rx="8" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
@@ -89,7 +89,20 @@ export function MacroFilterCalendarDiagram({ className = "" }: MacroFilterCalend
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : filtre macro calendrier ─────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Filtre macro calendrier</p>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">Setup technique propre</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le pattern technique est valide en soi.</p>
+        </div>
+        <div className="rounded-lg border-2 border-red-500 bg-red-500/10 p-3">
+          <p className="text-[13px] font-bold text-red-400">⚠ News imminente = filtre rouge</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">FOMC / NFP / CPI dans les 30 min → pas de trade, peu importe le setup.</p>
+        </div>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
           <span className="text-[10px] text-zinc-500">Setup technique propre</span>

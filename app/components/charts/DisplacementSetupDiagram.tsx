@@ -46,7 +46,7 @@ const BODY_W = 12;
 export function DisplacementSetupDiagram({ className = "" }: DisplacementSetupDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
@@ -94,7 +94,26 @@ export function DisplacementSetupDiagram({ className = "" }: DisplacementSetupDi
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : displacement setup ─────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Displacement setup · EUR/USD H1</p>
+        <ul className="space-y-2 text-[13px]">
+          <li className="flex items-start gap-2.5">
+            <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>
+            <span className="text-zinc-300">Displacement bearish franc crée le <span className="font-bold text-blue-400">FVG</span> dans la chute.</span>
+          </li>
+          <li className="flex items-start gap-2.5">
+            <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-[11px] font-bold text-blue-400 mt-0.5">2</span>
+            <span className="text-zinc-300">Retour du prix dans le FVG = mitigation.</span>
+          </li>
+          <li className="flex items-start gap-2.5">
+            <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
+            <span className="text-zinc-300"><span className="font-bold text-emerald-400">Rejet + reprise bearish</span> = zone d'exécution short.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">Displacement crée le FVG dans la chute</span>

@@ -45,7 +45,7 @@ const BODY_W = 12;
 export function FOMCImpulseExcessDiagram({ className = "" }: FOMCImpulseExcessDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · M15</text>
@@ -92,7 +92,20 @@ export function FOMCImpulseExcessDiagram({ className = "" }: FOMCImpulseExcessDi
         <line x1="458" y1="50" x2="458" y2="120" stroke="#f59e0b" strokeWidth="0.8" strokeDasharray="3 2" strokeOpacity="0.6" />
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : FOMC impulsion excessive ───────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">FOMC impulsion excessive · XAU/USD M15</p>
+        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+          <p className="text-[13px] font-bold text-red-400">Impulsion FOMC excessive</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Casse du support de manière violente sur l'annonce → mouvement trop loin trop vite.</p>
+        </div>
+        <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+          <p className="text-[13px] font-bold text-amber-400">Retour de balancier</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Marché corrige l'excès → potentielle opportunité de fade.</p>
+        </div>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">Impulsion FOMC excessive, casse du support</span>

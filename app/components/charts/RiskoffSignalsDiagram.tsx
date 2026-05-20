@@ -59,7 +59,7 @@ function ArrowUp({ x, y, color }: { x: number; y: number; color: string }) {
 export function RiskoffSignalsDiagram({ className = "" }: RiskoffSignalsDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         {/* 4 vignettes-signaux en haut */}
         <rect x="36" y="22" width="140" height="56" rx="6" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
@@ -117,7 +117,21 @@ export function RiskoffSignalsDiagram({ className = "" }: RiskoffSignalsDiagramP
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : Risk-off signaux ──────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Régime Risk-off — 4 signaux concordants</p>
+        <ul className="space-y-2 text-[13px]">
+          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-emerald-400" /><span className="text-zinc-300"><span className="font-bold text-emerald-400">Or ↑</span> · valeur refuge</span></li>
+          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-emerald-400" /><span className="text-zinc-300"><span className="font-bold text-emerald-400">DXY ↑</span> · dollar fort</span></li>
+          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-red-400" /><span className="text-zinc-300"><span className="font-bold text-red-400">Indices ↓</span> · actions sous pression</span></li>
+          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-red-400" /><span className="text-zinc-300"><span className="font-bold text-red-400">Yields ↓</span> · fuite vers obligations</span></li>
+        </ul>
+        <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+          4 signaux concordants = régime risk-off confirmé.
+        </p>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">4 signaux concordants = régime risk-off confirmé</span>

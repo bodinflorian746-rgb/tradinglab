@@ -50,7 +50,7 @@ const BODY_W = 12;
 export function DisplacementVsVolatilityDiagram({ className = "" }: DisplacementVsVolatilityDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · M15</text>
@@ -88,13 +88,26 @@ export function DisplacementVsVolatilityDiagram({ className = "" }: Displacement
         <text x="540" y="210" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Continuité</text>
       </svg>
 
-      <div className="px-4 pt-1">
+      <div className="hidden sm:block px-4 pt-1">
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-full px-3 py-1 inline-block">
           <span className="text-[10px] text-amber-400 font-bold">Volatilité ≠ displacement</span>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 mt-2 border-t border-zinc-800/50">
+      {/* MOBILE : displacement vs volatilité ─────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Displacement vs volatilité · EUR/USD M15</p>
+        <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+          <p className="text-[13px] font-bold text-amber-400">Volatilité isolée — pas displacement</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Grande bougie isolée + rejet immédiat = pas de continuité.</p>
+        </div>
+        <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">Displacement = vraie cassure</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Cassure de structure + continuation = vrai changement de contrôle institutionnel.</p>
+        </div>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 mt-2 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-500" />
           <span className="text-[10px] text-zinc-500">Grande bougie isolée + rejet = pas de continuité</span>

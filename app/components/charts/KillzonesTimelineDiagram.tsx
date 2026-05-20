@@ -50,7 +50,7 @@ const MINI_CANDLES: MiniCandle[] = [
 export function KillzonesTimelineDiagram({ className = "" }: KillzonesTimelineDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         {/* Timeline horizontale en haut */}
         {/* Asia — segment fin, calme */}
@@ -92,7 +92,24 @@ export function KillzonesTimelineDiagram({ className = "" }: KillzonesTimelineDi
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : killzones timeline ──────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Killzones — timeline 24h</p>
+        <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
+          <p className="text-[13px] font-bold text-zinc-300">Asia (00h–07h)</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Faible volatilité, range étroit. Accumulation.</p>
+        </div>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">London (08h–10h)</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Expansion + impulsions franches. Killzone majeure.</p>
+        </div>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">New York (13h30–15h30)</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">2e fenêtre — pic d'activité institutionnelle US.</p>
+        </div>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-600" />
           <span className="text-[10px] text-zinc-500">Asia Session = faible volatilité, range étroit</span>

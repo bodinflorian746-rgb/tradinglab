@@ -43,7 +43,7 @@ const BODY_W = 12;
 export function ICTTimingDiagram({ className = "" }: ICTTimingDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · M15</text>
@@ -101,7 +101,20 @@ export function ICTTimingDiagram({ className = "" }: ICTTimingDiagramProps) {
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : ICT timing ──────────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">ICT timing · XAU/USD M15</p>
+        <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
+          <p className="text-[13px] font-bold text-zinc-300">Range Asia — liquidité visible</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Stops accumulés des 2 côtés du range nocturne.</p>
+        </div>
+        <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">Sweep + displacement en London Open</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">London prend la liquidité d'Asia puis envoie un displacement franc = setup ICT classique.</p>
+        </div>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-500" />
           <span className="text-[10px] text-zinc-500">Range Asia = poche de liquidité visible</span>

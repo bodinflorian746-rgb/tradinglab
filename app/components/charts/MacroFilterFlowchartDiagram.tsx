@@ -8,7 +8,7 @@ interface MacroFilterFlowchartDiagramProps {
 export function MacroFilterFlowchartDiagram({ className = "" }: MacroFilterFlowchartDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         {/* Question 1 — News majeure imminente ? */}
         <rect x="240" y="22" width="220" height="34" rx="6" fill="#27272a" stroke="#3f3f46" strokeWidth="1" />
@@ -76,7 +76,28 @@ export function MacroFilterFlowchartDiagram({ className = "" }: MacroFilterFlowc
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : filtre macro flowchart ────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Flowchart filtre macro pré-trade</p>
+        <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+          <p className="text-[13px] font-bold text-amber-400">Q1 — News majeure imminente ?</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Si OUI → <span className="font-bold text-red-400">Pas de trade</span>.</p>
+        </div>
+        <p className="text-center text-zinc-600 text-[14px]">↓</p>
+        <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+          <p className="text-[13px] font-bold text-amber-400">Q2 — Régime macro aligné ?</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Si NON → <span className="font-bold text-red-400">Pas de trade</span>.</p>
+        </div>
+        <p className="text-center text-zinc-600 text-[14px]">↓</p>
+        <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/10 p-3 text-center">
+          <p className="text-[13px] font-bold text-emerald-400">Tous filtres verts = exécution autorisée ✓</p>
+        </div>
+        <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+          Un seul filtre rouge = pas de trade.
+        </p>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
           <span className="text-[10px] text-zinc-500">Chaque filtre franchi rapproche de l&apos;exécution</span>

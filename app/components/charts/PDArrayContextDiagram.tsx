@@ -42,7 +42,7 @@ const BODY_W = 12;
 export function PDArrayContextDiagram({ className = "" }: PDArrayContextDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
@@ -84,7 +84,20 @@ export function PDArrayContextDiagram({ className = "" }: PDArrayContextDiagramP
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : PD Array contexte ─────────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">PD Array — contexte FVG · EUR/USD H1</p>
+        <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
+          <p className="text-[13px] font-bold text-blue-400">FVG bearish créé par l'impulsion</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Une impulsion baissière forte laisse un gap (Fair Value Gap) à combler.</p>
+        </div>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">Retour + rejet = PD Array actif</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix revient dans la zone puis rejet bearish = PD Array opérationnel pour short.</p>
+        </div>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">FVG créé par l&apos;impulsion baissière</span>
