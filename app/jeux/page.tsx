@@ -141,47 +141,43 @@ function AvailableGameCard({ game }: { game: Game }) {
   return (
     <Link
       href={game.href!}
-      className="group relative block bg-gradient-to-br from-emerald-500/[0.08] to-zinc-900/60 border border-emerald-500/30 rounded-2xl p-5 sm:p-6 hover:border-emerald-500/60 hover:from-emerald-500/[0.12] transition-all"
+      className="group relative block bg-emerald-500/[0.06] border-2 border-emerald-500/40 rounded-2xl p-5 sm:p-7 hover:border-emerald-500/70 hover:bg-emerald-500/[0.10] transition-all"
     >
       {/* Disponible badge */}
-      <div className="absolute top-4 right-4 flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/30 rounded-full px-2.5 py-1">
+      <div className="absolute top-4 right-4 flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/15 border border-emerald-500/40 rounded-full px-2.5 py-1">
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" style={{ boxShadow: "0 0 6px rgba(16,185,129,0.9)" }} />
         Disponible
       </div>
 
       {/* Icon + level */}
-      <div className="flex items-start gap-3 mb-4">
-        <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
+      <div className="flex items-start gap-3 mb-4 sm:mb-5">
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center shrink-0">
           {game.icon}
         </div>
         <div className="flex-1 min-w-0 pt-1">
           <span className={`text-[10px] font-semibold uppercase tracking-wide border rounded-full px-2 py-0.5 ${game.levelColor}`}>
             {game.level}
           </span>
+          <p className="text-[11px] text-zinc-500 mt-1.5 flex items-center gap-1.5">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+              <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.2" />
+              <path d="M5.5 3v2.5l1.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            {game.duration}
+          </p>
         </div>
       </div>
 
       {/* Title + desc */}
-      <h3 className="text-lg sm:text-xl font-bold text-white mb-2 leading-tight">{game.title}</h3>
-      <p className="text-zinc-400 text-sm leading-relaxed mb-5">{game.description}</p>
+      <h3 className="text-xl sm:text-2xl font-black text-white mb-2 sm:mb-3 leading-tight tracking-tight">{game.title}</h3>
+      <p className="text-zinc-300 text-sm sm:text-base leading-relaxed mb-5 sm:mb-6">{game.description}</p>
 
-      {/* Bouton CTA Commencer (clairement visible) */}
-      <div
-        className="flex items-center justify-center gap-2 bg-emerald-500 text-zinc-950 font-bold text-sm px-4 py-3 rounded-xl group-hover:bg-emerald-400 transition-colors"
-      >
-        Commencer
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Bouton CTA Jouer maintenant — clairement visible */}
+      <div className="flex items-center justify-center gap-2 bg-emerald-500 text-zinc-950 font-bold text-base sm:text-lg px-5 py-3.5 sm:py-4 rounded-xl group-hover:bg-emerald-400 group-active:scale-[0.98] transition-all shadow-[0_0_30px_-5px_rgba(16,185,129,0.4)]">
+        Jouer maintenant
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 8h11M9 3l5 5-5 5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-      </div>
-
-      {/* Duration footer */}
-      <div className="flex items-center justify-center gap-1.5 text-[11px] text-zinc-500 mt-3">
-        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-          <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.2" />
-          <path d="M5.5 3v2.5l1.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-        {game.duration}
       </div>
     </Link>
   );

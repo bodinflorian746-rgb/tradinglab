@@ -39,12 +39,21 @@ for (const url of PAGES) {
   });
 }
 
+test("preuve visuelle — screenshot mobile de /jeux", async ({ page }) => {
+  await page.goto("/jeux", { waitUntil: "domcontentloaded" });
+  await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
+  await page.screenshot({ path: "test-results/jeux-mobile.png", fullPage: false });
+  // Card visible above the fold
+  const card = page.getByRole("link", { name: /BUY.*SELL.*NO TRADE|Jouer maintenant/ }).first();
+  await expect(card).toBeInViewport({ ratio: 0.5 });
+});
+
 test("navigation — clic sur 'Commencer' depuis /jeux ouvre le jeu", async ({ page }) => {
   await page.goto("/jeux", { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
 
-  // La card "BUY / SELL / NO TRADE" doit être visible avec un bouton "Commencer"
-  const card = page.getByRole("link", { name: /BUY.*SELL.*NO TRADE|Commencer/ }).first();
+  // La card "BUY / SELL / NO TRADE" doit être visible avec un bouton CTA
+  const card = page.getByRole("link", { name: /BUY.*SELL.*NO TRADE|Jouer maintenant|Commencer/ }).first();
   await expect(card).toBeVisible();
   await expect(card).toHaveAttribute("href", "/jeux/buy-sell-no-trade");
 
