@@ -44,13 +44,27 @@ export function PDArrayContextDiagram({ className = "" }: PDArrayContextDiagramP
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
 
+        <style dangerouslySetInnerHTML={{ __html: `
+          @media (max-width: 640px) {
+            .svg-mt-sm { font-size: 18px; }
+            .svg-mt-md { font-size: 18px; }
+            .svg-mt-lg { font-size: 20px; }
+            .svg-mh {
+              transform: scale(1.6);
+              transform-origin: center;
+              transform-box: fill-box;
+            }
+            .svg-annot-bg { x: 20px; width: 660px; }
+          }
+        ` }} />
+
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
-        <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
+        <text className="svg-mt-lg" x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
 
         {/* Ligne résistance / equal highs */}
         <line x1="40" y1="60" x2="620" y2="60" stroke="#ef4444" strokeWidth="1.3" strokeDasharray="5 3" strokeOpacity="0.85" />
-        <rect x="430" y="48" width="190" height="13" rx="3" fill="#09090b" />
-        <text x="525" y="58" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Equal highs / résistance 1.1780</text>
+        <rect className="svg-mh" x="430" y="48" width="190" height="13" rx="3" fill="#09090b" />
+        <text className="svg-mt-sm" x="525" y="58" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Equal highs / résistance 1.1780</text>
 
         {/* Bande FVG — y=85 à y=115 */}
         <rect x="40" y="85" width="600" height="30" fill="#ef444418" stroke="#ef4444" strokeWidth="1" strokeDasharray="4 3" strokeOpacity="0.7" />
@@ -69,17 +83,17 @@ export function PDArrayContextDiagram({ className = "" }: PDArrayContextDiagramP
 
         {/* Label Sweep */}
         <line x1="252" y1="44" x2="278" y2="40" stroke="#f59e0b" strokeWidth="1" strokeOpacity="0.7" />
-        <rect x="278" y="30" width="86" height="14" rx="3" fill="#09090b" />
-        <text x="321" y="40" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep 1.1792</text>
+        <rect className="svg-mh" x="278" y="30" width="86" height="14" rx="3" fill="#09090b" />
+        <text className="svg-mt-sm" x="321" y="40" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep 1.1792</text>
 
         {/* Label FVG (dans la bande à droite) */}
-        <rect x="492" y="92" width="128" height="14" rx="3" fill="#09090b" />
-        <text x="556" y="102" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">FVG 1.1758-1.1770</text>
+        <rect className="svg-mh" x="492" y="92" width="128" height="14" rx="3" fill="#09090b" />
+        <text className="svg-mt-sm" x="556" y="102" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">FVG 1.1758-1.1770</text>
 
         {/* Annotation */}
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-        <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
+        <rect className="svg-annot-bg" x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
+        <rect className="svg-annot-bg" x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
+        <text className="svg-mt-md" x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
           Le prix revient dans la zone créée par l&apos;impulsion
         </text>
       </svg>
@@ -87,11 +101,11 @@ export function PDArrayContextDiagram({ className = "" }: PDArrayContextDiagramP
       <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">FVG créé par l&apos;impulsion baissière</span>
+          <span className="text-xs sm:text-[10px] text-zinc-500">FVG créé par l&apos;impulsion baissière</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Retour dans la zone puis rejet = PD Array actif</span>
+          <span className="text-xs sm:text-[10px] text-zinc-500">Retour dans la zone puis rejet = PD Array actif</span>
         </div>
       </div>
     </div>
