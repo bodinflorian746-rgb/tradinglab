@@ -186,106 +186,113 @@ export function BacktestMetricsDiagram({ className = "" }: BacktestMetricsDiagra
         </text>
       </svg>
 
-      {/* ── MOBILE (HTML reconstruit) ───────────────────────────── */}
-      <div className="sm:hidden p-4 space-y-3">
-        {/* Hero metrics — 3 cartes */}
-        <div className="grid grid-cols-3 gap-1.5">
-          <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2 text-center">
-            <p className="text-[10px] text-zinc-500 uppercase tracking-wide font-bold">Win rate</p>
-            <p className="text-[20px] font-bold text-emerald-400 mt-0.5 leading-tight">55%</p>
-            <p className="text-[10px] text-zinc-600 mt-0.5">55/100</p>
+      {/* ── MOBILE (HTML reconstruit — tailles aggressives) ────────────────── */}
+      <div className="sm:hidden p-4 space-y-4">
+        {/* Hero metrics : 3 cartes plus aérées, chiffres XXL */}
+        <div className="grid grid-cols-3 gap-2">
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-center">
+            <p className="text-[11px] text-emerald-400/80 uppercase tracking-wider font-bold leading-tight">Win<br/>rate</p>
+            <p className="text-[28px] font-bold text-emerald-400 mt-1.5 leading-none">55%</p>
+            <p className="text-[12px] text-zinc-500 mt-1.5">55 / 100</p>
           </div>
-          <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2 text-center">
-            <p className="text-[10px] text-zinc-500 uppercase tracking-wide font-bold">Profit F.</p>
-            <p className="text-[20px] font-bold text-emerald-400 mt-0.5 leading-tight">1.8</p>
-            <p className="text-[10px] text-zinc-600 mt-0.5">gains/pertes</p>
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-center">
+            <p className="text-[11px] text-emerald-400/80 uppercase tracking-wider font-bold leading-tight">Profit<br/>factor</p>
+            <p className="text-[28px] font-bold text-emerald-400 mt-1.5 leading-none">1.8</p>
+            <p className="text-[12px] text-zinc-500 mt-1.5">gains/pertes</p>
           </div>
-          <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-2 text-center">
-            <p className="text-[10px] text-zinc-500 uppercase tracking-wide font-bold">Drawdown</p>
-            <p className="text-[20px] font-bold text-red-400 mt-0.5 leading-tight">−12%</p>
-            <p className="text-[10px] text-zinc-600 mt-0.5">pic perte</p>
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-2.5 text-center">
+            <p className="text-[11px] text-red-400/80 uppercase tracking-wider font-bold leading-tight">Max<br/>drawdown</p>
+            <p className="text-[28px] font-bold text-red-400 mt-1.5 leading-none">−12%</p>
+            <p className="text-[12px] text-zinc-500 mt-1.5">pic perte</p>
           </div>
         </div>
 
-        {/* Equity curve mini-SVG */}
-        <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
-          <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide text-center mb-2">
-            Equity sur 100 trades (en R)
+        {/* Equity simplifié — pleine largeur, plus haut, sans texte SVG */}
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3.5">
+          <p className="text-[13px] font-bold text-zinc-400 uppercase tracking-wider text-center mb-3">
+            Equity sur 100 trades
           </p>
-          <svg viewBox="0 0 320 130" width="100%" fill="none" aria-label="Equity curve 100 trades">
-            {/* Baseline 0R */}
-            <line x1={20} y1={118} x2={320} y2={118} stroke="#3f3f46" strokeWidth="1" strokeDasharray="4 3" opacity="0.7" />
-            <text x={6} y={122} fontSize="9" fill="#52525b">0</text>
-            <text x={2} y={20} fontSize="9" fill="#52525b">+22R</text>
-            {/* Rescale of EQ: x 36-888 → 20-320 (factor 0.352, offset +7.32) ; y 202-356 → 14-118 (factor 0.675, offset -122.4) */}
+          <svg viewBox="0 0 320 140" width="100%" fill="none" aria-label="Equity 100 trades">
+            {/* Grille discrète */}
+            <line x1={0} y1={128} x2={320} y2={128} stroke="#3f3f46" strokeWidth="1" strokeDasharray="4 3" opacity="0.8" />
+            <line x1={0} y1={70}  x2={320} y2={70}  stroke="#27272a" strokeWidth="0.8" strokeDasharray="3 4" opacity="0.6" />
+            {/* Fill */}
             <path
-              d="M20,118 L50,104 L80,95 L91,81 L106,109 L121,100 L136,87 L150,73 L165,87 L195,64 L210,73 L225,55 L255,37 L270,51 L285,33 L320,18"
-              stroke="#10b981" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"
+              d="M0,128 L24,114 L48,104 L66,88 L84,124 L102,110 L120,94 L138,78 L156,94 L192,62 L210,78 L228,52 L264,34 L282,50 L300,30 L320,16 L320,128 Z"
+              fill="#10b98115"
             />
-            {/* Drawdown segment T25-T30 (in red) */}
-            <path d="M80,95 L91,81 L106,109" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" opacity="0.7" />
-            {/* Markers */}
-            <circle cx={106} cy={109} r="4" fill="#ef4444" />
-            <circle cx={320} cy={18} r="4" fill="#10b981" />
+            {/* Curve épaisse */}
+            <path
+              d="M0,128 L24,114 L48,104 L66,88 L84,124 L102,110 L120,94 L138,78 L156,94 L192,62 L210,78 L228,52 L264,34 L282,50 L300,30 L320,16"
+              stroke="#10b981" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round"
+            />
+            {/* Drawdown segment */}
+            <path d="M66,88 L84,124" stroke="#ef4444" strokeWidth="2.8" strokeLinejoin="round" strokeLinecap="round" />
+            {/* Markers visibles */}
+            <circle cx={84} cy={124} r="7" fill="#ef4444" stroke="#09090b" strokeWidth="2" />
+            <circle cx={320} cy={16} r="7" fill="#10b981" stroke="#09090b" strokeWidth="2" />
           </svg>
-          <div className="grid grid-cols-2 gap-2 mt-2 text-[11px]">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-red-400" />
-              <span className="text-red-400 font-semibold">Drawdown max −6R</span>
+          {/* Legend hors SVG */}
+          <div className="grid grid-cols-2 gap-3 mt-3">
+            <div className="flex items-center gap-2">
+              <span className="shrink-0 w-3 h-3 rounded-full bg-red-400" />
+              <span className="text-[13px] text-red-400 font-bold">Drawdown −6R</span>
             </div>
-            <div className="flex items-center gap-1.5 justify-end">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span className="text-emerald-400 font-semibold">Equity final +22R</span>
+            <div className="flex items-center gap-2 justify-end">
+              <span className="shrink-0 w-3 h-3 rounded-full bg-emerald-400" />
+              <span className="text-[13px] text-emerald-400 font-bold">Final +22R</span>
             </div>
           </div>
         </div>
 
-        {/* Répartition gagnants / perdants */}
-        <div>
-          <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-2 text-center">
-            Répartition sur 100 trades
+        {/* Répartition gagnants / perdants — bar plus haute, gros chiffres */}
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3.5">
+          <p className="text-[13px] font-bold text-zinc-400 uppercase tracking-wider mb-3 text-center">
+            Répartition · 100 trades
           </p>
-          <div className="flex items-stretch h-8 rounded-md overflow-hidden border border-zinc-800">
-            <div className="flex items-center justify-center bg-emerald-500/30 border-r border-emerald-500/50" style={{ width: "55%" }}>
-              <span className="text-[12px] font-bold text-white">55 gagn.</span>
+          <div className="flex items-stretch h-12 rounded-lg overflow-hidden border border-zinc-800">
+            <div className="flex flex-col items-center justify-center bg-emerald-500/30 border-r border-emerald-500/50" style={{ width: "55%" }}>
+              <span className="text-[16px] font-bold text-white leading-none">55</span>
+              <span className="text-[11px] text-emerald-100/80 leading-tight mt-0.5">gagnants</span>
             </div>
-            <div className="flex items-center justify-center bg-red-500/30" style={{ width: "45%" }}>
-              <span className="text-[12px] font-bold text-white">45 perd.</span>
+            <div className="flex flex-col items-center justify-center bg-red-500/30" style={{ width: "45%" }}>
+              <span className="text-[16px] font-bold text-white leading-none">45</span>
+              <span className="text-[11px] text-red-100/80 leading-tight mt-0.5">perdants</span>
             </div>
           </div>
-          <p className="text-[11px] text-zinc-500 text-center mt-1.5">
-            Gain moy. <span className="text-emerald-400 font-semibold">+1.4R</span> · Perte moy. <span className="text-red-400 font-semibold">−1.0R</span>
+          <p className="text-[13px] text-zinc-300 text-center mt-2.5 leading-snug">
+            Gain moy. <span className="font-bold text-emerald-400">+1.4R</span> · Perte moy. <span className="font-bold text-red-400">−1.0R</span>
           </p>
         </div>
 
-        {/* Distribution des R — barres */}
-        <div>
-          <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-2 text-center">
+        {/* Distribution des R — barres plus hautes, chiffres lisibles */}
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3.5">
+          <p className="text-[13px] font-bold text-zinc-400 uppercase tracking-wider mb-3 text-center">
             Distribution des R
           </p>
-          <div className="grid grid-cols-5 gap-1 items-end h-24">
+          <div className="grid grid-cols-5 gap-1.5 items-end h-32">
             {HIST.map((h) => {
               const heightPct = (h.trades / 40) * 100;
               return (
                 <div key={h.r} className="flex flex-col items-center justify-end h-full">
-                  <span className={`text-[11px] font-bold ${h.win ? "text-emerald-400" : "text-red-400"}`}>{h.trades}</span>
+                  <span className={`text-[14px] font-bold ${h.win ? "text-emerald-400" : "text-red-400"}`}>{h.trades}</span>
                   <div
-                    className={`w-full rounded-t ${h.win ? "bg-emerald-500/30 border-x border-t border-emerald-500/50" : "bg-red-500/30 border-x border-t border-red-500/50"}`}
-                    style={{ height: `${heightPct}%`, minHeight: "4px" }}
+                    className={`w-full rounded-t-md mt-1 ${h.win ? "bg-emerald-500/40 border-x border-t border-emerald-500/60" : "bg-red-500/40 border-x border-t border-red-500/60"}`}
+                    style={{ height: `${heightPct}%`, minHeight: "6px" }}
                   />
-                  <span className={`text-[10px] mt-1 font-mono ${h.win ? "text-emerald-400" : "text-red-400"}`}>{h.r}</span>
+                  <span className={`text-[12px] mt-1.5 font-mono font-bold ${h.win ? "text-emerald-400" : "text-red-400"}`}>{h.r}</span>
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* Expectancy footer */}
-        <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2.5 text-center">
-          <p className="text-[12px] text-emerald-400 font-bold">
-            Expectancy : +0.22R / trade
+        {/* Expectancy footer — texte plus gros */}
+        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/8 p-3.5 text-center">
+          <p className="text-[15px] text-emerald-400 font-bold">
+            Expectancy : <span className="font-mono">+0.22R / trade</span>
           </p>
-          <p className="text-[11px] text-zinc-300 mt-0.5">
+          <p className="text-[13px] text-zinc-300 mt-1.5 leading-snug">
             Sur 1 000 trades : <span className="font-bold text-emerald-400">+220R</span> de gain attendu
           </p>
         </div>

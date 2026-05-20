@@ -177,39 +177,82 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
         <text x={614} y={450} fontSize="8.5" fill="#52525b">Revoir sizing et placement du SL</text>
       </svg>
 
-      {/* ── MOBILE (HTML reconstruit) ───────────────────────────── */}
-      <div className="sm:hidden p-4 space-y-3">
-        {/* Hero metrics */}
-        <div className="grid grid-cols-2 gap-2">
-          <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-center">
-            <p className="text-[10px] text-emerald-400/80 uppercase tracking-wide font-bold">Win rate</p>
-            <p className="text-[18px] font-bold text-emerald-400 mt-0.5">60%</p>
+      {/* ── MOBILE (HTML reconstruit — tailles aggressives) ────────────────── */}
+      <div className="sm:hidden p-4 space-y-4">
+        {/* Hero metrics : 2 chiffres XXL */}
+        <div className="grid grid-cols-2 gap-2.5">
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-center">
+            <p className="text-[12px] text-emerald-400/80 uppercase tracking-wider font-bold">Win rate</p>
+            <p className="text-[32px] font-bold text-emerald-400 mt-1 leading-none">60%</p>
+            <p className="text-[12px] text-zinc-500 mt-1">6 / 10 trades</p>
           </div>
-          <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-center">
-            <p className="text-[10px] text-emerald-400/80 uppercase tracking-wide font-bold">Net</p>
-            <p className="text-[18px] font-bold text-emerald-400 mt-0.5">+5.5R</p>
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-center">
+            <p className="text-[12px] text-emerald-400/80 uppercase tracking-wider font-bold">Net</p>
+            <p className="text-[32px] font-bold text-emerald-400 mt-1 leading-none">+5.5R</p>
+            <p className="text-[12px] text-zinc-500 mt-1">capital cumulé</p>
           </div>
         </div>
 
-        {/* Table 10 trades — compacte */}
-        <div className="rounded-lg border border-zinc-800 overflow-hidden">
-          <div className="grid grid-cols-[44px_1fr_42px_56px] gap-2 px-3 py-2 bg-zinc-900 border-b border-zinc-800 text-[10px] font-bold text-zinc-500 uppercase tracking-wide">
+        {/* Equity curve simplifié — pleine largeur, plus haut, sans texte SVG */}
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3.5">
+          <p className="text-[13px] font-bold text-zinc-400 uppercase tracking-wider text-center mb-3">
+            Equity cumulée (en R)
+          </p>
+          <svg viewBox="0 0 320 130" width="100%" fill="none" aria-label="Equity curve">
+            {/* Grille discrète */}
+            <line x1={0} y1={118} x2={320} y2={118} stroke="#3f3f46" strokeWidth="1" strokeDasharray="4 3" opacity="0.8" />
+            <line x1={0} y1={36}  x2={320} y2={36}  stroke="#27272a" strokeWidth="0.8" strokeDasharray="3 4" opacity="0.6" />
+            {/* Fill area */}
+            <path
+              d="M0,118 L32,90 L64,68 L96,46 L128,60 L160,74 L192,60 L224,74 L256,90 L288,74 L320,28 L320,118 Z"
+              fill="#10b98115"
+            />
+            {/* Curve épaisse */}
+            <path
+              d="M0,118 L32,90 L64,68 L96,46 L128,60 L160,74 L192,60 L224,74 L256,90 L288,74 L320,28"
+              stroke="#10b981" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round"
+            />
+            {/* Drawdown segment T3→T5 */}
+            <path d="M96,46 L128,60 L160,74"
+              stroke="#ef4444" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" opacity="0.85"
+            />
+            {/* Markers gros */}
+            <circle cx={96} cy={46} r="6" fill="#10b981" stroke="#09090b" strokeWidth="2" />
+            <circle cx={160} cy={74} r="6" fill="#ef4444" stroke="#09090b" strokeWidth="2" />
+            <circle cx={320} cy={28} r="6" fill="#10b981" stroke="#09090b" strokeWidth="2" />
+          </svg>
+          {/* Legend hors SVG, gros texte */}
+          <div className="grid grid-cols-2 gap-3 mt-3">
+            <div className="flex items-center gap-2">
+              <span className="shrink-0 w-3 h-3 rounded-full bg-emerald-400" />
+              <span className="text-[13px] text-emerald-400 font-bold">Best +5R</span>
+            </div>
+            <div className="flex items-center gap-2 justify-end">
+              <span className="shrink-0 w-3 h-3 rounded-full bg-red-400" />
+              <span className="text-[13px] text-red-400 font-bold">Drawdown −2R</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Table 10 trades — colonnes optimisées, noms complets */}
+        <div className="rounded-xl border border-zinc-800 overflow-hidden">
+          <div className="grid grid-cols-[48px_1fr_40px_56px] gap-1.5 px-2.5 py-2.5 bg-zinc-900 border-b border-zinc-800 text-[11px] font-bold text-zinc-500 uppercase tracking-wide">
             <span>Date</span>
             <span>Setup</span>
             <span className="text-center">R/R</span>
             <span className="text-right">Résult.</span>
           </div>
-          <div className="divide-y divide-zinc-800/60">
+          <div className="divide-y divide-zinc-800/70">
             {TRADES.map((t, i) => (
               <div
                 key={i}
-                className={`grid grid-cols-[44px_1fr_42px_56px] gap-2 px-3 py-2 text-[12px] ${
-                  t.win ? "bg-emerald-500/[0.04]" : "bg-red-500/[0.04]"
+                className={`grid grid-cols-[48px_1fr_40px_56px] gap-1.5 px-2.5 py-2.5 items-center text-[14px] ${
+                  t.win ? "bg-emerald-500/[0.05]" : "bg-red-500/[0.05]"
                 }`}
               >
-                <span className="text-zinc-500 font-mono">{t.date}</span>
-                <span className="text-zinc-300 truncate">{t.setup}</span>
-                <span className="text-center text-zinc-600 font-mono">{t.rr}</span>
+                <span className="text-zinc-400 font-mono text-[12px]">{t.date}</span>
+                <span className="text-white font-medium text-[13px] leading-tight">{t.setup}</span>
+                <span className="text-center text-zinc-500 font-mono text-[12px]">{t.rr}</span>
                 <span className={`text-right font-bold font-mono ${t.win ? "text-emerald-400" : "text-red-400"}`}>
                   {t.result}
                 </span>
@@ -218,51 +261,22 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
           </div>
         </div>
 
-        {/* Equity curve mini SVG */}
-        <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
-          <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide text-center mb-2">
-            Equity cumulée (R)
-          </p>
-          <svg viewBox="0 0 320 100" width="100%" fill="none" aria-label="Equity curve">
-            {/* Baseline 0R */}
-            <line x1={20} y1={88} x2={320} y2={88} stroke="#3f3f46" strokeWidth="1" strokeDasharray="4 3" opacity="0.7" />
-            <text x={6} y={92} fontSize="9" fill="#52525b">0R</text>
-            <text x={6} y={26} fontSize="9" fill="#52525b">+5R</text>
-            {/* Curve (rescaled from desktop EQ_PTS: x mapped 452-892 → 20-320, y mapped 120-340 → 12-88) */}
-            <path
-              d="M20,88 L50,68 L80,52 L110,36 L140,46 L170,56 L200,46 L230,56 L260,68 L290,56 L320,22"
-              stroke="#10b981" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"
-            />
-            {/* Best streak peak */}
-            <circle cx={110} cy={36} r="4" fill="#10b981" />
-            {/* Worst drawdown trough */}
-            <circle cx={170} cy={56} r="4" fill="#ef4444" />
-          </svg>
-          <div className="grid grid-cols-2 gap-2 mt-2 text-[11px]">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span className="text-emerald-400 font-semibold">Best streak +5R</span>
-            </div>
-            <div className="flex items-center gap-1.5 justify-end">
-              <span className="w-2 h-2 rounded-full bg-red-400" />
-              <span className="text-red-400 font-semibold">Drawdown −2R</span>
-            </div>
+        {/* Insights — 3 cartes, texte aggressif */}
+        <div className="space-y-2.5">
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/8 p-3">
+            <p className="text-[14px] font-bold text-emerald-400">✓ Setup le plus rentable</p>
+            <p className="text-[14px] text-white leading-snug mt-1">OB Bullish — <span className="font-bold text-emerald-400">3/3 gagnants</span></p>
+            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">Ratio moyen : +1.83R / trade</p>
           </div>
-        </div>
-
-        {/* Insights — 3 cartes empilées */}
-        <div className="space-y-2">
-          <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2.5">
-            <p className="text-[12px] font-bold text-emerald-400">✓ Setup le plus rentable</p>
-            <p className="text-[12px] text-zinc-300 mt-0.5">OB Bullish — 3/3 gagnants · ratio moyen +1.83R</p>
+          <div className="rounded-xl border border-red-500/30 bg-red-500/8 p-3">
+            <p className="text-[14px] font-bold text-red-400">✗ Setup à éviter</p>
+            <p className="text-[14px] text-white leading-snug mt-1">Range Break — <span className="font-bold text-red-400">0/2 gagnants</span></p>
+            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">À supprimer du plan de trading</p>
           </div>
-          <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-2.5">
-            <p className="text-[12px] font-bold text-red-400">✗ Setup à éviter</p>
-            <p className="text-[12px] text-zinc-300 mt-0.5">Range Break — 0/2 gagnants · à supprimer du plan</p>
-          </div>
-          <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-2.5">
-            <p className="text-[12px] font-bold text-blue-400">⚠ Erreur récurrente</p>
-            <p className="text-[12px] text-zinc-300 mt-0.5">SL trop serré sur 3 trades · revoir sizing et placement</p>
+          <div className="rounded-xl border border-blue-400/30 bg-blue-500/8 p-3">
+            <p className="text-[14px] font-bold text-blue-400">⚠ Erreur récurrente</p>
+            <p className="text-[14px] text-white leading-snug mt-1">SL trop serré — <span className="font-bold text-blue-400">3 trades</span> stoppés</p>
+            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">Revoir sizing et placement du SL</p>
           </div>
         </div>
       </div>

@@ -91,38 +91,46 @@ export function KillzonesDiagram({ className = "" }: KillzonesDiagramProps) {
         <text x={hx(13.5)} y={251} fontSize="8.5" fill="#10b981" textAnchor="middle" fontWeight="600">NY Open — 13h30</text>
       </svg>
 
-      {/* ── MOBILE (vraie timeline empilée) ────────────────────────── */}
-      <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[12px] font-semibold text-zinc-500 uppercase tracking-wide text-center mb-1">
-          Killzones — sessions à haute volatilité (heure de Paris)
+      {/* ── MOBILE (timeline empilée aggressive : gros chiffres horaires + sessions très lisibles) ── */}
+      <div className="sm:hidden p-4 space-y-3">
+        <p className="text-[13px] font-bold text-zinc-400 uppercase tracking-wider text-center">
+          Killzones · heure de Paris
         </p>
         {[
-          { range: "00h – 07h", title: "Asian Range", desc: "Accumulation nocturne", color: "zinc", accent: "#52525b", icon: "🌙" },
-          { range: "07h – 10h", title: "London Killzone", desc: "Open London à 08h — forte volatilité", color: "emerald", accent: "#10b981", icon: "🟢", highlight: true },
-          { range: "12h – 15h", title: "NY AM Killzone", desc: "Open NY à 13h30 — pic d'activité institutionnelle", color: "emerald", accent: "#10b981", icon: "🟢", highlight: true },
-          { range: "18h – 20h", title: "NY PM Killzone", desc: "Dernière fenêtre — clôture américaine", color: "blue", accent: "#60a5fa", icon: "🔵" },
+          { start: "00h", end: "07h", title: "Asian Range", desc: "Accumulation nocturne, faible volatilité.", accent: "#71717a", highlight: false },
+          { start: "07h", end: "10h", title: "London Killzone", desc: "Open London à 08h — première forte volatilité.", accent: "#10b981", highlight: true },
+          { start: "12h", end: "15h", title: "NY AM Killzone", desc: "Open NY à 13h30 — pic d'activité institutionnelle.", accent: "#10b981", highlight: true },
+          { start: "18h", end: "20h", title: "NY PM Killzone", desc: "Dernière fenêtre — clôture américaine.", accent: "#60a5fa", highlight: false },
         ].map((kz) => (
           <div
             key={kz.title}
-            className="flex items-stretch gap-2.5 rounded-lg border p-2.5"
+            className="rounded-xl border p-3.5"
             style={{
-              borderColor: `${kz.accent}40`,
-              background: `${kz.accent}0d`,
+              borderColor: `${kz.accent}55`,
+              background: `${kz.accent}12`,
             }}
           >
-            <div className="shrink-0 flex flex-col items-center justify-center min-w-[58px] border-r pr-2.5" style={{ borderColor: `${kz.accent}30` }}>
-              <p className="text-[11px] font-mono text-zinc-400 leading-tight">{kz.range.split(" – ")[0]}</p>
-              <p className="text-[9px] text-zinc-600 leading-tight">à</p>
-              <p className="text-[11px] font-mono text-zinc-400 leading-tight">{kz.range.split(" – ")[1]}</p>
+            {/* Pill horaire — gros chiffres */}
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg mb-2.5"
+              style={{ background: `${kz.accent}25` }}
+            >
+              <span className="text-[18px] font-bold font-mono leading-none" style={{ color: kz.accent }}>{kz.start}</span>
+              <span className="text-[14px] text-zinc-500 leading-none">→</span>
+              <span className="text-[18px] font-bold font-mono leading-none" style={{ color: kz.accent }}>{kz.end}</span>
+              {kz.highlight && (
+                <span className="ml-1 text-[11px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded" style={{ background: kz.accent, color: "#09090b" }}>
+                  HOT
+                </span>
+              )}
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[13px] font-bold" style={{ color: kz.accent }}>{kz.title}</p>
-              <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">{kz.desc}</p>
-            </div>
+            {/* Title + description */}
+            <p className="text-[17px] font-bold leading-tight" style={{ color: kz.accent }}>{kz.title}</p>
+            <p className="text-[14px] text-zinc-300 leading-snug mt-1">{kz.desc}</p>
           </div>
         ))}
-        <p className="text-[12px] text-zinc-400 leading-snug text-center pt-2 border-t border-zinc-800/50 italic">
-          Trader les killzones London + NY = activité institutionnelle maximum
+        <p className="text-[14px] text-zinc-300 leading-snug text-center pt-3 border-t border-zinc-800/60 italic">
+          Trader sur les killzones <span className="font-bold text-emerald-400">London + NY</span> = activité institutionnelle maximum
         </p>
       </div>
 
