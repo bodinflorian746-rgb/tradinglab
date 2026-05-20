@@ -1,7 +1,8 @@
 export const HawkishDovishScale = () => {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 400"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -76,5 +77,69 @@ export const HawkishDovishScale = () => {
       <text x={570} y={348} fill="#a1a1aa" fontSize="12" textAnchor="middle">Lutte contre l&apos;inflation</text>
       <text x={570} y={364} fill="#a1a1aa" fontSize="12" textAnchor="middle">Renforce la devise</text>
     </svg>
+
+    {/* ── MOBILE : échelle Dovish/Hawkish empilée ────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[13px] text-zinc-400 italic text-center leading-snug">
+        Le ton d'une banque centrale se lit sur un spectre — pas en binaire.
+      </p>
+
+      {/* Échelle visuelle horizontale simplifiée */}
+      <div className="relative">
+        <div className="flex h-3 rounded-full overflow-hidden">
+          <div className="flex-1 bg-blue-500" />
+          <div className="flex-1 bg-blue-500/70" />
+          <div className="flex-1 bg-zinc-500" />
+          <div className="flex-1 bg-amber-400/70" />
+          <div className="flex-1 bg-amber-400" />
+        </div>
+        <div className="flex justify-between text-[11px] mt-1.5">
+          <span className="text-blue-400 font-bold">← Dovish</span>
+          <span className="text-zinc-400 font-semibold">Neutre</span>
+          <span className="text-amber-400 font-bold">Hawkish →</span>
+        </div>
+      </div>
+
+      {/* Positionnement actuel des 3 banques */}
+      <div className="space-y-2 pt-2 border-t border-zinc-800">
+        <p className="text-[12px] font-bold text-zinc-500 uppercase tracking-wider text-center">Positionnement actuel</p>
+        {[
+          { name: "BoJ", pos: "Très Dovish", color: "#a1a1aa", desc: "Maintient les taux bas" },
+          { name: "BCE", pos: "Dovish", color: "#60a5fa", desc: "Baisses de taux récentes" },
+          { name: "Fed", pos: "Hawkish", color: "#fbbf24", desc: "Taux élevés contre l'inflation" },
+        ].map((bank) => (
+          <div key={bank.name} className="flex items-center gap-3 rounded-lg border border-zinc-700 bg-zinc-800/40 p-2.5">
+            <div className="shrink-0 w-14 h-12 rounded-lg flex items-center justify-center text-[18px] font-bold" style={{ background: `${bank.color}25`, color: bank.color }}>
+              {bank.name}
+            </div>
+            <div className="flex-1">
+              <p className="text-[13px] font-bold" style={{ color: bank.color }}>{bank.pos}</p>
+              <p className="text-[12px] text-zinc-300 leading-snug">{bank.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* 2 zones définitions */}
+      <div className="grid grid-cols-2 gap-2 pt-2">
+        <div className="rounded-lg border border-blue-400/30 bg-blue-500/5 p-2.5">
+          <p className="text-[13px] font-bold text-blue-400">DOVISH</p>
+          <ul className="text-[12px] text-zinc-300 mt-1 space-y-0.5 leading-snug">
+            <li>↓ Baisse les taux</li>
+            <li>Soutient l'économie</li>
+            <li>Affaiblit la devise</li>
+          </ul>
+        </div>
+        <div className="rounded-lg border border-amber-400/30 bg-amber-400/5 p-2.5">
+          <p className="text-[13px] font-bold text-amber-400">HAWKISH</p>
+          <ul className="text-[12px] text-zinc-300 mt-1 space-y-0.5 leading-snug">
+            <li>↑ Monte les taux</li>
+            <li>Lutte contre inflation</li>
+            <li>Renforce la devise</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
   );
 };

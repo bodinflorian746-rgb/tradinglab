@@ -1,7 +1,8 @@
 export const InflationIndicatorsChainDiagram = () => {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 450"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -87,5 +88,59 @@ export const InflationIndicatorsChainDiagram = () => {
         Le PPI prévient. Le CPI déclenche. Le Core confirme.
       </text>
     </svg>
+
+    {/* ── MOBILE : 4 indicateurs empilés + 2 scénarios ──────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        La chaîne d'inflation que les pros surveillent
+      </p>
+      <p className="text-[12px] text-zinc-400 italic text-center -mt-1">
+        Du producteur au consommateur — et ce que la Fed regarde vraiment
+      </p>
+
+      {/* 4 indicateurs empilés */}
+      <div className="space-y-2">
+        {[
+          { name: "PPI", color: "#60a5fa", title: "Prix producteurs", time: "J-12 jours", note: "Signal précoce" },
+          { name: "CPI HEADLINE", color: "#fbbf24", title: "Prix consommateurs", time: "Jour J — 14h30", note: "Choc médiatisé" },
+          { name: "CORE CPI", color: "#10b981", title: "Tendance de fond", time: "Même jour", note: "★ Ce que les pros regardent" },
+          { name: "CORE PCE", color: "#60a5fa", title: "Indicateur préféré de la Fed", time: "Fin de mois", note: "★ Référence officielle" },
+        ].map((ind, i) => (
+          <div key={ind.name}>
+            <div className="rounded-lg border-2 p-2.5" style={{ borderColor: ind.color }}>
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-[16px] font-bold" style={{ color: ind.color }}>{ind.name}</span>
+                <span className="text-[11px] text-zinc-500 italic font-mono">{ind.time}</span>
+              </div>
+              <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">{ind.title}</p>
+              <p className="text-[12px] leading-snug mt-0.5 italic" style={{ color: ind.note.startsWith("★") ? "#fbbf24" : "#a1a1aa" }}>{ind.note}</p>
+            </div>
+            {i < 3 && <p className="text-center text-zinc-600 text-[12px] my-0.5">↓</p>}
+          </div>
+        ))}
+      </div>
+
+      {/* 2 scénarios */}
+      <p className="text-[12px] font-bold text-amber-400 uppercase tracking-wider text-center pt-2 border-t border-zinc-800">
+        Réaction marché selon le Core CPI
+      </p>
+      <div className="space-y-2">
+        <div className="rounded-lg border border-red-500/40 bg-red-500/5 p-2.5">
+          <p className="text-[13px] font-bold text-red-400">Core CPI &gt; attentes</p>
+          <p className="text-[12px] text-zinc-300 mt-1 leading-snug">↑ DXY (dollar fort)</p>
+          <p className="text-[12px] text-zinc-300 leading-snug">↓ EUR/USD, Or, Crypto</p>
+        </div>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/5 p-2.5">
+          <p className="text-[13px] font-bold text-emerald-400">Core CPI &lt; attentes</p>
+          <p className="text-[12px] text-zinc-300 mt-1 leading-snug">↓ DXY (dollar faible)</p>
+          <p className="text-[12px] text-zinc-300 leading-snug">↑ EUR/USD, Or, Indices</p>
+        </div>
+      </div>
+
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
+        Le PPI prévient. Le CPI déclenche. Le Core confirme.
+      </p>
+    </div>
+    </div>
   );
 };

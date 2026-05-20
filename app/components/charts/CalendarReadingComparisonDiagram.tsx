@@ -1,7 +1,8 @@
 export const CalendarReadingComparisonDiagram = () => {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 450"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -89,5 +90,69 @@ export const CalendarReadingComparisonDiagram = () => {
         Le calendrier ne te donne pas une alerte. Il te donne une carte.
       </text>
     </svg>
+
+    {/* ── MOBILE : 2 lectures comparées empilées ────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        Lire un calendrier — débutant vs pro
+      </p>
+
+      {/* Lecture débutant */}
+      <div className="rounded-xl border-2 border-red-500/50 bg-red-500/5 p-3">
+        <p className="text-[12px] font-bold text-red-400 uppercase tracking-wider text-center">Lecture débutant</p>
+
+        <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-2.5 mt-2.5">
+          <div className="flex items-center gap-3 text-[13px]">
+            <span className="text-zinc-300 font-bold font-mono">14:30</span>
+            <span className="text-blue-400 font-bold">USD</span>
+            <span className="text-red-400 font-bold">★★★</span>
+            <span className="text-white font-bold">NFP</span>
+          </div>
+        </div>
+
+        <p className="text-[13px] text-zinc-300 text-center mt-2.5 leading-snug">
+          Je vois une news importante.
+        </p>
+        <p className="text-[12px] text-zinc-400 italic text-center mt-1">
+          → Je sais juste qu'il y a un risque.
+        </p>
+      </div>
+
+      {/* Flèche transition */}
+      <p className="text-center text-amber-400 font-bold text-[13px] leading-snug">
+        ↓ Passer de l'alerte au scénario complet ↓
+      </p>
+
+      {/* Lecture pro */}
+      <div className="rounded-xl border-2 border-blue-400/50 bg-blue-500/5 p-3">
+        <p className="text-[12px] font-bold text-blue-400 uppercase tracking-wider text-center">Lecture pro</p>
+
+        <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-2.5 mt-2.5 space-y-2">
+          <div className="flex items-center gap-3 text-[13px] pb-2 border-b border-zinc-700/60">
+            <span className="text-zinc-300 font-bold font-mono">14:30</span>
+            <span className="text-blue-400 font-bold">USD</span>
+            <span className="text-red-400 font-bold">★★★</span>
+            <span className="text-white font-bold">NFP</span>
+          </div>
+          <div className="space-y-1 text-[13px]">
+            <div className="flex justify-between"><span className="text-zinc-400">Consensus :</span><span className="text-blue-400 font-bold font-mono">200k</span></div>
+            <div className="flex justify-between"><span className="text-zinc-400">Précédent :</span><span className="text-blue-400 font-bold font-mono">250k</span></div>
+            <div className="flex justify-between"><span className="text-amber-400 font-bold">Révisé à :</span><span className="text-amber-400 font-bold font-mono">170k ⚠</span></div>
+          </div>
+        </div>
+
+        <p className="text-[13px] text-zinc-300 text-center mt-2.5 leading-snug">
+          Je lis le contexte complet.
+        </p>
+        <p className="text-[12px] text-emerald-400 italic text-center mt-1 font-semibold">
+          → Je sais que la révision change tout.
+        </p>
+      </div>
+
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
+        Le calendrier ne te donne pas une alerte. Il te donne une carte.
+      </p>
+    </div>
+    </div>
   );
 };

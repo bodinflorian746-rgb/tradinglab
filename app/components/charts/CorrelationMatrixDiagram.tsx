@@ -27,8 +27,9 @@ export const CorrelationMatrixDiagram = () => {
   const fmt = (v: number) => (v >= 0 ? `+${v.toFixed(2)}` : v.toFixed(2));
 
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 500"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -114,5 +115,59 @@ export const CorrelationMatrixDiagram = () => {
         La diversification réelle commence quand les risques ne tombent pas ensemble.
       </text>
     </svg>
+
+    {/* ── MOBILE : corrélations majeures en cartes (matrice non lisible mobile) ── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        Matrice des corrélations majeures
+      </p>
+      <p className="text-[12px] text-zinc-400 italic text-center -mt-1">
+        Qui bouge avec qui ? Qui bouge contre qui ?
+      </p>
+
+      {/* Corrélations fortes positives */}
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/5 p-3">
+        <p className="text-[12px] font-bold text-emerald-400 uppercase tracking-wider mb-2">Bougent ensemble ↑↑</p>
+        <ul className="space-y-1.5 text-[13px] text-zinc-200">
+          <li className="flex items-center justify-between"><span>EUR/USD ↔ GBP/USD</span><span className="font-mono font-bold text-emerald-400">+0.85</span></li>
+          <li className="flex items-center justify-between"><span>USD/CHF ↔ DXY</span><span className="font-mono font-bold text-emerald-400">+0.85</span></li>
+          <li className="flex items-center justify-between"><span>Nasdaq ↔ BTC/USD</span><span className="font-mono font-bold text-emerald-400">+0.75</span></li>
+        </ul>
+      </div>
+
+      {/* Corrélations fortes négatives */}
+      <div className="rounded-lg border border-red-500/40 bg-red-500/5 p-3">
+        <p className="text-[12px] font-bold text-red-400 uppercase tracking-wider mb-2">Bougent en sens inverse ↑↓</p>
+        <ul className="space-y-1.5 text-[13px] text-zinc-200">
+          <li className="flex items-center justify-between"><span>EUR/USD ↔ USD/CHF</span><span className="font-mono font-bold text-red-400">−0.95</span></li>
+          <li className="flex items-center justify-between"><span>EUR/USD ↔ DXY</span><span className="font-mono font-bold text-red-400">−0.90</span></li>
+          <li className="flex items-center justify-between"><span>GBP/USD ↔ DXY</span><span className="font-mono font-bold text-red-400">−0.85</span></li>
+          <li className="flex items-center justify-between"><span>XAU/USD ↔ DXY</span><span className="font-mono font-bold text-red-400">−0.80</span></li>
+          <li className="flex items-center justify-between"><span>USD/CHF ↔ GBP/USD</span><span className="font-mono font-bold text-red-400">−0.80</span></li>
+        </ul>
+      </div>
+
+      {/* Légende des seuils */}
+      <div className="rounded-lg border border-zinc-700 bg-zinc-800/40 p-2.5 space-y-1">
+        <p className="text-[12px] font-bold text-zinc-400 uppercase tracking-wider mb-1.5">Lecture</p>
+        <div className="flex items-center gap-2 text-[12px]">
+          <span className="shrink-0 w-3 h-3 rounded-sm bg-emerald-500" />
+          <span className="text-zinc-300"><span className="font-mono">≥ +0.70</span> · Bougent ensemble</span>
+        </div>
+        <div className="flex items-center gap-2 text-[12px]">
+          <span className="shrink-0 w-3 h-3 rounded-sm bg-red-500" />
+          <span className="text-zinc-300"><span className="font-mono">≤ −0.70</span> · Sens inverse</span>
+        </div>
+        <div className="flex items-center gap-2 text-[12px]">
+          <span className="shrink-0 w-3 h-3 rounded-sm bg-zinc-600" />
+          <span className="text-zinc-300"><span className="font-mono">−0.40 → +0.40</span> · Pas de lien</span>
+        </div>
+      </div>
+
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
+        Diversification réelle = quand les risques ne tombent pas ensemble.
+      </p>
+    </div>
+    </div>
   );
 };

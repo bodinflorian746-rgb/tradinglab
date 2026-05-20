@@ -1,7 +1,8 @@
 export const MacroDangerWindowsDiagram = () => {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 450"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -139,5 +140,75 @@ export const MacroDangerWindowsDiagram = () => {
         Le risque dépend de l&apos;heure. Apprends à lire la journée comme une météo macro.
       </text>
     </svg>
+
+    {/* ── MOBILE : fenêtres temporelles empilées ─────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        Fenêtres de danger macro — journée type
+      </p>
+
+      {/* Timeline verticale */}
+      <div className="space-y-2">
+        {[
+          { range: "08h – 12h30", session: "Session EU", danger: false, label: "Zone calme", events: null },
+          { range: "12h30 – 13h", session: null, danger: true, label: "⚠ BoE 13h", events: "Discours Banque d'Angleterre" },
+          { range: "14h15", session: null, danger: true, label: "⚠ BCE 14h15", events: "Décision BCE" },
+          { range: "14h30", session: null, danger: true, label: "🔴 NFP / CPI 14h30", events: "Plus grosse news US du jour" },
+          { range: "16h – 19h30", session: "Session US", danger: false, label: "Zone calme", events: null },
+          { range: "20h", session: null, danger: true, label: "🔴 FOMC 20h", events: "Décision Réserve fédérale" },
+          { range: "21h – 22h", session: null, danger: false, label: "Fin de journée", events: null },
+        ].map((w, i) => (
+          <div
+            key={i}
+            className={`rounded-lg border p-2.5 ${
+              w.danger ? "border-red-500/40 bg-red-500/8" : "border-emerald-500/30 bg-emerald-500/5"
+            }`}
+          >
+            <div className="flex items-baseline justify-between gap-2">
+              <span className={`text-[13px] font-bold font-mono ${w.danger ? "text-red-400" : "text-emerald-400"}`}>{w.range}</span>
+              <span className={`text-[12px] font-semibold ${w.danger ? "text-red-400" : "text-emerald-400"}`}>{w.session ?? w.label}</span>
+            </div>
+            {w.events && (
+              <p className="text-[12px] text-zinc-300 leading-snug mt-1">{w.events}</p>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Règle d'or */}
+      <div className="rounded-xl border-2 border-amber-400 bg-amber-400/5 p-3 mt-3">
+        <p className="text-[13px] font-bold text-amber-400 uppercase tracking-wider text-center mb-2.5">
+          ⚡ Règle d'or
+        </p>
+        <div className="space-y-2">
+          <div className="flex items-start gap-2.5">
+            <span className="shrink-0 w-3 h-3 rounded-full bg-red-400 mt-1" />
+            <div>
+              <p className="text-[13px] font-bold text-white">30 min AVANT</p>
+              <p className="text-[12px] text-zinc-300 leading-snug">Évite d'entrer en position</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2.5">
+            <span className="shrink-0 w-3 h-3 rounded-full bg-red-400 mt-1" />
+            <div>
+              <p className="text-[13px] font-bold text-white">PENDANT</p>
+              <p className="text-[12px] text-zinc-300 leading-snug">Ne trade pas — observe seulement</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2.5">
+            <span className="shrink-0 w-3 h-3 rounded-full bg-amber-400 mt-1" />
+            <div>
+              <p className="text-[13px] font-bold text-white">1H APRÈS</p>
+              <p className="text-[12px] text-zinc-300 leading-snug">Attends confirmation de direction</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
+        Le risque dépend de l'heure. Lis la journée comme une météo macro.
+      </p>
+    </div>
+    </div>
   );
 };

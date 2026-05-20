@@ -1,10 +1,8 @@
-import { ChartScroller } from "../ChartScroller";
-
 export const DollarHubDiagram = () => {
   return (
-    <ChartScroller width="md">
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 450"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -86,6 +84,58 @@ export const DollarHubDiagram = () => {
         Le dollar est au centre. Quand il bouge, tout réagit.
       </text>
     </svg>
-    </ChartScroller>
+
+    {/* ── MOBILE : hub DXY + 5 satellites empilés ────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        Le dollar au centre du système financier
+      </p>
+      <p className="text-[12px] text-zinc-400 italic text-center -mt-1">
+        5 marchés majeurs, 1 seule devise pivot
+      </p>
+
+      {/* Hub DXY */}
+      <div className="rounded-2xl border-2 border-blue-400 bg-zinc-800 p-4 text-center">
+        <p className="text-[11px] text-zinc-400 italic">Force du dollar</p>
+        <p className="text-[36px] font-bold text-blue-400 leading-none mt-1">DXY</p>
+        <p className="text-[14px] font-bold text-blue-400 mt-1">USD</p>
+      </div>
+
+      {/* 5 satellites en grille 2x2 + 1 */}
+      <div className="grid grid-cols-2 gap-2">
+        {[
+          { name: "FOREX", desc: "EUR/USD, GBP/USD" },
+          { name: "OR", desc: "XAU/USD" },
+          { name: "CRYPTO", desc: "BTC/USD" },
+          { name: "INDICES", desc: "NASDAQ, S&P500" },
+        ].map((sat) => (
+          <div key={sat.name} className="rounded-lg border border-zinc-700 bg-zinc-800/60 p-2.5 text-center">
+            <p className="text-[13px] font-bold text-zinc-200">{sat.name}</p>
+            <p className="text-[11px] text-zinc-400 mt-0.5 leading-tight">{sat.desc}</p>
+          </div>
+        ))}
+        <div className="col-span-2 rounded-lg border border-zinc-700 bg-zinc-800/60 p-2.5 text-center">
+          <p className="text-[13px] font-bold text-zinc-200">MATIÈRES PREMIÈRES</p>
+          <p className="text-[11px] text-zinc-400 mt-0.5">Pétrole, cuivre</p>
+        </div>
+      </div>
+
+      {/* Effet DXY */}
+      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-zinc-800">
+        <div className="rounded-lg bg-red-500/10 border border-red-500/30 p-2 text-center">
+          <p className="text-[13px] font-bold text-red-400">DXY ↑</p>
+          <p className="text-[12px] text-zinc-300 mt-0.5">= pression</p>
+        </div>
+        <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-2 text-center">
+          <p className="text-[13px] font-bold text-emerald-400">DXY ↓</p>
+          <p className="text-[12px] text-zinc-300 mt-0.5">= respiration</p>
+        </div>
+      </div>
+
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2">
+        Le dollar est au centre. Quand il bouge, tout réagit.
+      </p>
+    </div>
+    </div>
   );
 };

@@ -61,8 +61,9 @@ export const WeeklyBiasCalendarDiagram = () => {
   ];
 
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 450"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -170,5 +171,48 @@ export const WeeklyBiasCalendarDiagram = () => {
         Le retail découvre la semaine. Le pro l&apos;exécute.
       </text>
     </svg>
+
+    {/* ── MOBILE : 7 jours empilés ───────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-2">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        La semaine d'un trader macro préparé
+      </p>
+      <p className="text-[12px] text-zinc-400 italic text-center -mt-1 mb-2">
+        Plan → exécution → recalibrage
+      </p>
+
+      {days.map((day) => (
+        <div
+          key={day.label}
+          className="rounded-lg border overflow-hidden"
+          style={{ borderColor: day.bodyStroke }}
+        >
+          <div className="flex items-stretch">
+            {/* Jour pastille colorée */}
+            <div className="shrink-0 w-14 flex items-center justify-center font-bold text-[14px] tracking-wider" style={{ background: day.headerFill, color: day.labelFill }}>
+              {day.label}
+            </div>
+            <div className="flex-1 p-2.5 bg-zinc-900">
+              <p className="text-[14px] font-bold text-white">{day.title1} {day.title2 && `${day.title2}`}</p>
+              <p className="text-[12px] text-zinc-400 leading-snug mt-0.5">{day.lines.filter(Boolean).join(" · ")}</p>
+              <p className="text-[11px] italic mt-0.5" style={{ color: day.durationFill }}>{day.duration}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {/* Légende lecture */}
+      <div className="grid grid-cols-2 gap-1.5 pt-2 border-t border-zinc-800 mt-3">
+        <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-emerald-500" /><span className="text-[12px] text-zinc-300">Construction</span></div>
+        <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-emerald-400" /><span className="text-[12px] text-zinc-300">Exécution</span></div>
+        <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-amber-400" /><span className="text-[12px] text-zinc-300">Jour à risque</span></div>
+        <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-blue-400" /><span className="text-[12px] text-zinc-300">Recalibrage</span></div>
+      </div>
+
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
+        Le retail découvre la semaine. Le pro l'exécute.
+      </p>
+    </div>
+    </div>
   );
 };

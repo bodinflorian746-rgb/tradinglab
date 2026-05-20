@@ -1,7 +1,8 @@
 export const ConsensusVsRealDiagram = () => {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 450"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -126,5 +127,47 @@ export const ConsensusVsRealDiagram = () => {
       <text x="660" y="305" textAnchor="start" fill="#f87171" fontSize="13" fontWeight="700">-80 pips</text>
       <text x="660" y="320" textAnchor="start" fill="#a1a1aa" fontSize="9">/ 30 sec</text>
     </svg>
+
+    {/* ── MOBILE : 3 scénarios consensus empilés ─────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        Le marché réagit à la SURPRISE, pas au chiffre
+      </p>
+
+      {/* Scénario 1 — RÉEL = CONSENSUS */}
+      <div className="rounded-xl border border-zinc-700 bg-zinc-800/40 p-3">
+        <p className="text-[12px] text-zinc-400 font-bold uppercase tracking-wider">RÉEL = CONSENSUS</p>
+        <p className="text-[13px] text-zinc-300 mt-1">NFP 200k attendus · 200k réels</p>
+        <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t border-zinc-700/60">
+          <span className="text-[13px] text-zinc-300">Pas de surprise</span>
+          <span className="text-[13px] text-zinc-400 font-semibold">→ marché stable</span>
+        </div>
+      </div>
+
+      {/* Scénario 2 — RÉEL > CONSENSUS */}
+      <div className="rounded-xl border border-emerald-500/40 bg-emerald-500/5 p-3">
+        <p className="text-[12px] text-emerald-400 font-bold uppercase tracking-wider">RÉEL &gt; CONSENSUS</p>
+        <p className="text-[13px] text-zinc-300 mt-1">NFP 350k réels · 200k attendus</p>
+        <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t border-emerald-500/20">
+          <span className="text-[13px] text-emerald-400 font-bold">Surprise positive</span>
+          <span className="text-[13px] text-emerald-400 font-bold">+80 pips / 30 sec ↑</span>
+        </div>
+      </div>
+
+      {/* Scénario 3 — RÉEL < CONSENSUS */}
+      <div className="rounded-xl border border-red-500/40 bg-red-500/5 p-3">
+        <p className="text-[12px] text-red-400 font-bold uppercase tracking-wider">RÉEL &lt; CONSENSUS</p>
+        <p className="text-[13px] text-zinc-300 mt-1">NFP 100k réels · 200k attendus</p>
+        <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t border-red-500/20">
+          <span className="text-[13px] text-red-400 font-bold">Surprise négative</span>
+          <span className="text-[13px] text-red-400 font-bold">−80 pips / 30 sec ↓</span>
+        </div>
+      </div>
+
+      <p className="text-[12px] text-zinc-400 italic text-center leading-snug pt-2 border-t border-zinc-800">
+        Plus l'écart entre prévision et réalité est grand, plus le mouvement est violent.
+      </p>
+    </div>
+    </div>
   );
 };

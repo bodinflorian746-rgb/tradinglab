@@ -1,7 +1,8 @@
 export const CentralBanksHierarchy = () => {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 450"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -79,5 +80,47 @@ export const CentralBanksHierarchy = () => {
         Tous les actifs majeurs dépendent du dollar : forex, or, crypto, indices US.
       </text>
     </svg>
+
+    {/* ── MOBILE : hiérarchie des banques centrales ─────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[13px] text-zinc-400 italic text-center leading-snug">
+        Le marché est influencé par plusieurs banques — mais une domine.
+      </p>
+
+      {/* FED — boss du jeu */}
+      <div className="rounded-xl border-2 border-emerald-400 bg-emerald-500 p-4 text-center">
+        <p className="text-[28px] font-bold text-white leading-none">FED</p>
+        <p className="text-[12px] text-zinc-900 font-semibold mt-1">Réserve fédérale</p>
+        <p className="text-[20px] font-bold text-zinc-900 mt-1.5">USD</p>
+        <p className="text-[13px] text-zinc-900/80 italic font-semibold mt-1">★ Le boss du jeu</p>
+      </div>
+
+      {/* Flèche descendante */}
+      <p className="text-center text-zinc-600 text-[18px]">↓ influence ↓</p>
+
+      {/* 3 banques secondaires */}
+      <div className="grid grid-cols-3 gap-2">
+        <div className="rounded-lg border-2 border-blue-400 bg-zinc-800 p-2.5 text-center">
+          <p className="text-[18px] font-bold text-blue-400 leading-none">BCE</p>
+          <p className="text-[10px] text-zinc-400 mt-1.5 leading-tight">Banque centrale européenne</p>
+          <p className="text-[14px] font-bold text-white mt-1.5">EUR</p>
+        </div>
+        <div className="rounded-lg border-2 border-amber-400 bg-zinc-800 p-2.5 text-center">
+          <p className="text-[18px] font-bold text-amber-400 leading-none">BoE</p>
+          <p className="text-[10px] text-zinc-400 mt-1.5 leading-tight">Bank of England</p>
+          <p className="text-[14px] font-bold text-white mt-1.5">GBP</p>
+        </div>
+        <div className="rounded-lg border-2 border-dashed border-zinc-500 bg-zinc-800 p-2.5 text-center">
+          <p className="text-[18px] font-bold text-zinc-400 leading-none">BoJ</p>
+          <p className="text-[10px] text-zinc-500 mt-1.5 leading-tight">Banque du Japon</p>
+          <p className="text-[14px] font-bold text-white mt-1.5">JPY</p>
+        </div>
+      </div>
+
+      <p className="text-[12px] text-zinc-400 italic text-center leading-snug pt-2 border-t border-zinc-800">
+        Tous les actifs majeurs (forex, or, crypto, indices US) dépendent du dollar.
+      </p>
+    </div>
+    </div>
   );
 };

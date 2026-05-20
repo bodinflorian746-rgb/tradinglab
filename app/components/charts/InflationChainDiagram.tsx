@@ -1,7 +1,8 @@
 export const InflationChainDiagram = () => {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 450"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -97,5 +98,71 @@ export const InflationChainDiagram = () => {
         Suivre l&apos;inflation = comprendre 80% des mouvements macro
       </text>
     </svg>
+
+    {/* ── MOBILE : chaîne d'inflation en 4 étapes ───────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        La chaîne qui contrôle TOUT le marché
+      </p>
+      <p className="text-[12px] text-zinc-400 italic text-center -mt-1">
+        Apprends-la par cœur — c'est 80% de la macro
+      </p>
+
+      {/* 4 étapes empilées avec flèches */}
+      {[
+        { num: 1, label: "INFLATION", icon: "↑", desc: "Les prix montent", color: "#ef4444" },
+        { num: 2, label: "TAUX", icon: "%", desc: "La banque centrale monte les taux", color: "#fbbf24" },
+        { num: 3, label: "DEVISE", icon: "$", desc: "Devient plus attractive", color: "#60a5fa" },
+        { num: 4, label: "MARCHÉS", icon: "▲▼", desc: "Forex / Indices / Or / Crypto", color: "#10b981" },
+      ].map((step, i) => (
+        <div key={step.num}>
+          <div className="rounded-xl border-2 p-3" style={{ borderColor: step.color }}>
+            <div className="flex items-center gap-3">
+              <div className="shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-[24px] font-bold" style={{ background: `${step.color}25`, color: step.color }}>
+                {step.icon}
+              </div>
+              <div className="flex-1">
+                <p className="text-[15px] font-bold" style={{ color: step.color }}>{step.label}</p>
+                <p className="text-[13px] text-zinc-300 leading-snug mt-0.5">{step.desc}</p>
+              </div>
+            </div>
+          </div>
+          {i < 3 && <p className="text-center text-zinc-600 text-[14px] my-1">↓</p>}
+        </div>
+      ))}
+
+      {/* Exemple chiffré */}
+      <div className="rounded-xl border border-zinc-700 bg-zinc-800/40 p-3 space-y-2">
+        <p className="text-[12px] font-bold text-amber-400 uppercase tracking-wider text-center">
+          Exemple — la chaîne en action (2022-2023)
+        </p>
+        <div className="grid grid-cols-2 gap-2 text-[13px]">
+          <div className="rounded-lg bg-zinc-900 p-2 text-center">
+            <p className="text-[11px] text-zinc-400">Inflation US</p>
+            <p className="text-[14px] font-bold font-mono text-red-400 mt-0.5">1.4% → 9.1%</p>
+          </div>
+          <div className="rounded-lg bg-zinc-900 p-2 text-center">
+            <p className="text-[11px] text-zinc-400">Taux Fed</p>
+            <p className="text-[14px] font-bold font-mono text-amber-400 mt-0.5">0.25% → 5.5%</p>
+          </div>
+          <div className="rounded-lg bg-zinc-900 p-2 text-center">
+            <p className="text-[11px] text-zinc-400">Dollar (DXY)</p>
+            <p className="text-[14px] font-bold font-mono text-blue-400 mt-0.5">+20%</p>
+          </div>
+          <div className="rounded-lg bg-zinc-900 p-2 text-center">
+            <p className="text-[11px] text-zinc-400">Nasdaq</p>
+            <p className="text-[14px] font-bold font-mono text-red-400 mt-0.5">−33%</p>
+          </div>
+        </div>
+        <p className="text-[12px] text-zinc-400 italic text-center leading-snug">
+          Une seule cause macro a fait bouger TOUT le marché.
+        </p>
+      </div>
+
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug">
+        Suivre l'inflation = comprendre 80% des mouvements macro
+      </p>
+    </div>
+    </div>
   );
 };

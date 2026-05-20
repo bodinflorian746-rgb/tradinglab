@@ -1,7 +1,8 @@
 export const TradingSessionsLiquidityDiagram = () => {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 450"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -203,5 +204,45 @@ export const TradingSessionsLiquidityDiagram = () => {
         Toutes les heures ne se valent pas. L&apos;overlap concentre la vraie liquidité.
       </text>
     </svg>
+
+    {/* ── MOBILE : sessions empilées + paires ────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        Une journée forex — où se concentre la liquidité
+      </p>
+      <p className="text-[12px] text-zinc-400 italic text-center -mt-1">
+        Heure de Paris
+      </p>
+
+      {/* 3 sessions + overlap */}
+      <div className="space-y-2">
+        {[
+          { name: "ASIE", range: "00h – 09h", color: "#60a5fa", desc: "Liquidité faible · spreads larges + fakeouts", pairs: "USD/JPY, AUD/JPY, NZD/JPY" },
+          { name: "LONDRES", range: "08h – 17h", color: "#34d399", desc: "Vrai départ de la journée — bonne liquidité", pairs: "EUR/USD, GBP/USD, XAU/USD" },
+          { name: "OVERLAP LONDRES + NY", range: "14h – 17h", color: "#ef4444", desc: "🔴 KILLZONE — vraie liquidité institutionnelle", pairs: null, killzone: true },
+          { name: "NEW YORK", range: "14h – 22h", color: "#fbbf24", desc: "Pic d'activité — news US à 14h30", pairs: "Nasdaq, S&P500, BTC/USD, USD/CAD" },
+        ].map((s) => (
+          <div
+            key={s.name}
+            className={`rounded-lg border p-2.5 ${s.killzone ? "border-2" : ""}`}
+            style={{ borderColor: s.color, background: `${s.color}10` }}
+          >
+            <div className="flex items-baseline justify-between gap-2">
+              <span className="text-[14px] font-bold" style={{ color: s.color }}>{s.name}</span>
+              <span className="text-[12px] font-mono font-semibold" style={{ color: s.color }}>{s.range}</span>
+            </div>
+            <p className="text-[12px] text-zinc-300 leading-snug mt-1">{s.desc}</p>
+            {s.pairs && (
+              <p className="text-[12px] text-zinc-400 leading-snug mt-1 font-mono">{s.pairs}</p>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
+        L'overlap Londres + NY concentre la vraie liquidité.
+      </p>
+    </div>
+    </div>
   );
 };

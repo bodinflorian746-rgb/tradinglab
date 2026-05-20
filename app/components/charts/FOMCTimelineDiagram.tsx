@@ -28,6 +28,7 @@ export function FOMCTimelineDiagram() {
         fill="none"
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden sm:block"
       >
         {/* Background */}
         <rect width="800" height="400" fill="#18181b" rx="8" />
@@ -158,6 +159,54 @@ export function FOMCTimelineDiagram() {
         <rect x="560" y="218" width="70" height="22" rx="3" fill="#09090b" fillOpacity="0.95" />
         <text x="565" y="235" textAnchor="start" fontSize="16" fill="#f87171" fontWeight="700">-350 pips</text>
       </svg>
+
+      {/* ── MOBILE : 3 phases FOMC empilées ────────────────────────── */}
+      <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+        <p className="text-[14px] font-bold text-white text-center leading-snug">
+          Anatomie d'un FOMC (Décision Fed)
+        </p>
+
+        {/* Phase 1 — 20h00 Décision Fed */}
+        <div className="rounded-xl border-2 border-blue-400 bg-blue-500/8 p-3">
+          <div className="flex items-baseline justify-between gap-2 mb-2">
+            <span className="text-[15px] font-bold text-blue-400">20h00 — Décision Fed</span>
+            <span className="text-[11px] text-zinc-500 italic">Phase 1</span>
+          </div>
+          <p className="text-[13px] text-zinc-300 leading-snug">
+            Publication du communiqué. Faux spike haussier souvent observé en premier.
+          </p>
+          <p className="text-[13px] text-emerald-400 font-bold mt-1.5">+150 pips initial (piège fréquent)</p>
+        </div>
+
+        {/* Phase 2 — 20h30 Discours Powell */}
+        <div className="rounded-xl border-2 border-amber-400 bg-amber-400/8 p-3">
+          <div className="flex items-baseline justify-between gap-2 mb-2">
+            <span className="text-[15px] font-bold text-amber-400">20h30 — Discours Powell</span>
+            <span className="text-[11px] text-zinc-500 italic">Phase 2</span>
+          </div>
+          <p className="text-[13px] text-zinc-300 leading-snug">
+            Conférence de presse. <span className="font-bold text-red-400">Volatilité erratique</span> — le ton réel se révèle.
+          </p>
+          <p className="text-[13px] text-red-400 font-bold mt-1.5">Retournement violent : −350 pips</p>
+        </div>
+
+        {/* Phase 3 — 21h00+ Trade ici */}
+        <div className="rounded-xl border-2 border-emerald-400 bg-emerald-500/8 p-3">
+          <div className="flex items-baseline justify-between gap-2 mb-2">
+            <span className="text-[15px] font-bold text-emerald-400">21h00+ — Trade ici ✓</span>
+            <span className="text-[11px] text-zinc-500 italic">Phase 3</span>
+          </div>
+          <p className="text-[13px] text-zinc-300 leading-snug">
+            Direction confirmée. Tendance installée — moment où on peut <span className="font-bold text-emerald-400">enfin entrer</span>.
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-red-500/30 bg-red-500/5 p-2.5 mt-2">
+          <p className="text-[13px] text-red-400 font-bold text-center">
+            ⚠ Ne JAMAIS trader entre 20h00 et 21h00
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

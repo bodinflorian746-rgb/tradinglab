@@ -1,10 +1,34 @@
-import { ChartScroller } from "../ChartScroller";
+type CalendarRow = { time: string; ccy: string; event: string; impact: 1 | 2 | 3; highlight?: boolean };
+const ROWS: CalendarRow[] = [
+  { time: "08h00", ccy: "EUR", event: "PMI Manufacturier", impact: 2 },
+  { time: "10h00", ccy: "GBP", event: "Production industrielle", impact: 1 },
+  { time: "14h30", ccy: "USD", event: "CPI inflation", impact: 3, highlight: true },
+  { time: "16h00", ccy: "EUR", event: "Discours Lagarde", impact: 3 },
+  { time: "20h00", ccy: "USD", event: "Décision FOMC", impact: 3 },
+];
+
+function ImpactDots({ n }: { n: 1 | 2 | 3 }) {
+  return (
+    <span className="inline-flex gap-0.5">
+      {[1, 2, 3].map((i) => {
+        const filled = i <= n;
+        const color = n === 3 ? "bg-red-400" : n === 2 ? "bg-amber-400" : "bg-emerald-400";
+        return (
+          <span
+            key={i}
+            className={`w-2 h-2 rounded-full ${filled ? color : "bg-zinc-700 border border-zinc-600"}`}
+          />
+        );
+      })}
+    </span>
+  );
+}
 
 export const MacroCalendarDiagram = () => {
   return (
-    <ChartScroller width="md">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 510"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -184,6 +208,93 @@ export const MacroCalendarDiagram = () => {
       <rect x="290" y="345" width="110" height="22" rx="3" fill="#09090b" fillOpacity="0.95" />
       <text x="295" y="362" textAnchor="start" fill="#f87171" fontSize="14" fontWeight="700">-150 pips en 2 min</text>
     </svg>
-    </ChartScroller>
+
+    {/* ── MOBILE : tableau HTML + résumé bougies ─────────────────── */}
+    <div className="sm:hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center">Une journée type sur le calendrier économique</p>
+
+      {/* Tableau */}
+      <div className="rounded-lg border border-zinc-800 overflow-hidden">
+        <div className="grid grid-cols-[52px_44px_1fr_44px] gap-1.5 px-2.5 py-2 bg-zinc-900 border-b border-zinc-800 text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+          <span>Heure</span>
+          <span>Devise</span>
+          <span>Événement</span>
+          <span className="text-right">Impact</span>
+        </div>
+        <div className="divide-y divide-zinc-800/70">
+          {ROWS.map((r, i) => (
+            <div
+              key={i}
+              className={`grid grid-cols-[52px_44px_1fr_44px] gap-1.5 px-2.5 py-2.5 items-center text-[13px] ${
+                r.highlight ? "bg-red-500/[0.08]" : ""
+              }`}
+            >
+              <span className="text-white font-bold font-mono text-[13px]">{r.time}</span>
+              <span className="text-blue-400 font-bold text-[12px]">{r.ccy}</span>
+              <span className="text-zinc-300 leading-tight">{r.event}</span>
+              <span className="text-right"><ImpactDots n={r.impact} /></span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Résumé bougies */}
+      <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-3">
+        <p className="text-[12px] text-zinc-400 uppercase tracking-wider font-bold text-center mb-2">
+          Réaction EUR/USD à 14h30 (CPI)
+        </p>
+        <svg viewBox="0 0 280 60" width="100%" fill="none" aria-label="Bougies réaction CPI">
+          {[
+            { x: 14,  bull: true,  bt: 22, bb: 38 },
+            { x: 36,  bull: false, bt: 24, bb: 40 },
+            { x: 58,  bull: true,  bt: 22, bb: 36 },
+            { x: 80,  bull: false, bt: 26, bb: 42 },
+            { x: 102, bull: true,  bt: 22, bb: 38 },
+          ].map((c) => (
+            <g key={c.x}>
+              <line x1={c.x} y1={c.bt - 4} x2={c.x} y2={c.bb + 4} stroke={c.bull ? "#059669" : "#b91c1c"} strokeWidth="1.5" />
+              <rect x={c.x - 5} y={c.bt} width={10} height={c.bb - c.bt} fill={c.bull ? "#10b981" : "#ef4444"} rx="1" />
+            </g>
+          ))}
+          {/* Énorme bear panic */}
+          <line x1={130} y1={8} x2={130} y2={52} stroke="#b91c1c" strokeWidth="1.5" />
+          <rect x={124} y={12} width={12} height={36} fill="#ef4444" rx="1" />
+          {/* Continuation bear */}
+          {[
+            { x: 156, bt: 36, bb: 50 },
+            { x: 178, bt: 38, bb: 52 },
+            { x: 200, bt: 40, bb: 52 },
+            { x: 222, bt: 42, bb: 52 },
+            { x: 244, bt: 44, bb: 52 },
+          ].map((c) => (
+            <g key={c.x}>
+              <line x1={c.x} y1={c.bt - 2} x2={c.x} y2={c.bb + 2} stroke="#b91c1c" strokeWidth="1.5" />
+              <rect x={c.x - 5} y={c.bt} width={10} height={c.bb - c.bt} fill="#ef4444" rx="1" />
+            </g>
+          ))}
+          {/* Marker CPI vertical line */}
+          <line x1={117} y1={2} x2={117} y2={58} stroke="#ef4444" strokeWidth="1.5" strokeDasharray="3 3" />
+        </svg>
+        <p className="text-center text-[14px] font-bold text-red-400 mt-2">−150 pips en 2 min</p>
+      </div>
+
+      {/* Actifs impactés */}
+      <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
+        <p className="text-[12px] font-bold text-amber-400 uppercase tracking-wider text-center mb-2">
+          Actifs impactés par les news macro
+        </p>
+        <ul className="grid grid-cols-2 gap-1.5 text-[12px]">
+          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-blue-400" /><span className="text-zinc-300">Forex (EUR/USD)</span></li>
+          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-amber-400" /><span className="text-zinc-300">Or (XAU/USD)</span></li>
+          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-emerald-400" /><span className="text-zinc-300">Indices US</span></li>
+          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-red-400" /><span className="text-zinc-300">Crypto (BTC)</span></li>
+        </ul>
+      </div>
+
+      <p className="text-[12px] text-emerald-400 text-center italic font-bold leading-snug">
+        Une news macro ne touche jamais qu'un seul marché.
+      </p>
+    </div>
+    </div>
   );
 };

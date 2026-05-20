@@ -1,7 +1,8 @@
 export const US10YHubDiagram = () => {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 600"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -116,5 +117,74 @@ export const US10YHubDiagram = () => {
         L&apos;or, la tech et le Bitcoin réagissent souvent au même chiffre. Et ce chiffre, c&apos;est US10Y.
       </text>
     </svg>
+
+    {/* ── MOBILE : Hub US10Y + 4 satellites + seuils ────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        L'écosystème US10Y
+      </p>
+      <p className="text-[12px] text-zinc-400 italic text-center -mt-1">
+        Le rendement qui dirige tous les autres marchés
+      </p>
+
+      {/* Hub US10Y */}
+      <div className="rounded-2xl border-2 border-amber-400 bg-amber-400/8 p-4 text-center">
+        <p className="text-[28px] font-bold text-amber-400 leading-none">US10Y</p>
+        <p className="text-[12px] text-zinc-300 mt-1.5">Rendement 10 ans US</p>
+        <p className="text-[11px] text-zinc-400 italic mt-0.5">Taux sans risque mondial</p>
+        <p className="text-[12px] text-amber-400 font-semibold mt-1">↑ quand vendu</p>
+      </div>
+
+      <p className="text-center text-zinc-500 text-[12px] font-semibold mt-2">Quand US10Y monte ↑</p>
+
+      {/* 4 satellites */}
+      <div className="space-y-2">
+        {[
+          { name: "XAU/USD", desc: "Or", reaction: "↓ pression baissière", correl: "−0.80", color: "#f87171" },
+          { name: "NASDAQ", desc: "Tech / Croissance", reaction: "↓ valorisations", correl: "−0.65", color: "#f87171" },
+          { name: "BTC/USD", desc: "Actif risqué", reaction: "↓ risk-off possible", correl: "−0.45", color: "#f87171" },
+          { name: "DXY", desc: "Indice Dollar US", reaction: "↑ rendement attractif", correl: "+0.65", color: "#34d399" },
+        ].map((sat) => (
+          <div key={sat.name} className="rounded-lg border p-2.5" style={{ borderColor: sat.color }}>
+            <div className="flex items-baseline justify-between gap-2">
+              <span className="text-[14px] font-bold" style={{ color: sat.color }}>{sat.name}</span>
+              <span className="text-[11px] text-zinc-500 italic">{sat.desc}</span>
+            </div>
+            <div className="flex items-center justify-between mt-1">
+              <span className="text-[13px] text-zinc-200 font-semibold">{sat.reaction}</span>
+              <span className="text-[12px] text-zinc-400 font-mono">Corr {sat.correl}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Seuils psychologiques */}
+      <p className="text-[12px] font-bold text-amber-400 uppercase tracking-wider text-center pt-2 border-t border-zinc-800">
+        Seuils psychologiques US10Y
+      </p>
+      <div className="grid grid-cols-4 gap-1.5 text-center">
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2">
+          <p className="text-[14px] font-bold font-mono text-emerald-400">3.5%</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Calme</p>
+        </div>
+        <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-2">
+          <p className="text-[14px] font-bold font-mono text-zinc-300">4.0%</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Vigilance</p>
+        </div>
+        <div className="rounded-lg border border-amber-400/30 bg-amber-400/5 p-2">
+          <p className="text-[14px] font-bold font-mono text-amber-400">4.5%</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Stress</p>
+        </div>
+        <div className="rounded-lg border border-red-500/30 bg-red-500/5 p-2">
+          <p className="text-[14px] font-bold font-mono text-red-400">5.0%</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Panique</p>
+        </div>
+      </div>
+
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
+        L'or, la tech, le Bitcoin réagissent au même chiffre : US10Y.
+      </p>
+    </div>
+    </div>
   );
 };

@@ -1,7 +1,8 @@
 export const NFPReportAnatomyDiagram = () => {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 800 550"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -111,5 +112,80 @@ export const NFPReportAnatomyDiagram = () => {
         Le retail trade le headline. Le pro lit les 4 sous-données + les révisions.
       </text>
     </svg>
+
+    {/* ── MOBILE : anatomie NFP en 4 niveaux ─────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        Anatomie d'un rapport NFP
+      </p>
+      <p className="text-[12px] text-zinc-400 italic text-center -mt-1">
+        Ce que voit le retail vs ce que lit le pro
+      </p>
+
+      {/* Niveau 1 — Headline */}
+      <div className="rounded-xl border-2 border-amber-400 bg-amber-400/8 p-3">
+        <p className="text-[14px] font-bold text-amber-400 uppercase tracking-wider">Niveau 1 · HEADLINE NFP</p>
+        <p className="text-[13px] text-zinc-300 mt-1 leading-snug italic">
+          Le chiffre médiatisé que tout le monde regarde
+        </p>
+      </div>
+      <p className="text-center text-zinc-600 text-[14px]">↓</p>
+
+      {/* Niveau 2 — 4 sous-données en 2 colonnes */}
+      <p className="text-[12px] text-zinc-500 uppercase tracking-wider font-bold text-center -mb-1">
+        Niveau 2 · 4 sous-données détaillées
+      </p>
+      <div className="grid grid-cols-2 gap-2">
+        <div className="rounded-lg border border-blue-400/40 bg-blue-500/5 p-2.5">
+          <p className="text-[13px] font-bold text-blue-400">NFP</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Créations d'emplois (hors agri)</p>
+        </div>
+        <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-2.5">
+          <p className="text-[13px] font-bold text-zinc-200">UNEMPLOY.</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Taux de chômage</p>
+        </div>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/5 p-2.5">
+          <p className="text-[13px] font-bold text-emerald-400">AHE ★</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Salaires horaires (inflation future)</p>
+        </div>
+        <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-2.5">
+          <p className="text-[13px] font-bold text-zinc-200">PARTICIP.</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Qualité du marché du travail</p>
+        </div>
+      </div>
+      <p className="text-center text-zinc-600 text-[14px]">↓</p>
+
+      {/* Niveau 3 — Révisions */}
+      <div className="rounded-xl border-2 border-red-500/50 bg-red-500/5 p-3">
+        <p className="text-[14px] font-bold text-red-400">⚠ Niveau 3 · RÉVISIONS du mois précédent</p>
+        <p className="text-[13px] text-zinc-300 mt-1 leading-snug italic">
+          Peut annuler la surprise du chiffre actuel — souvent ignorée
+        </p>
+      </div>
+      <p className="text-center text-zinc-600 text-[14px]">↓</p>
+
+      {/* Niveau 4 — Réaction multi-actifs */}
+      <p className="text-[12px] font-bold text-amber-400 uppercase tracking-wider text-center">
+        Niveau 4 · Réaction multi-actifs (DXY fort)
+      </p>
+      <div className="grid grid-cols-2 gap-2">
+        {[
+          { name: "EUR/USD", desc: "↓ Dollar plus fort" },
+          { name: "XAU/USD", desc: "↓ Or pénalisé" },
+          { name: "NASDAQ", desc: "↓ Tech sous pression" },
+          { name: "BTC/USD", desc: "↓ Risk-off" },
+        ].map((a) => (
+          <div key={a.name} className="rounded-lg border border-red-500/30 bg-red-500/5 p-2 text-center">
+            <p className="text-[13px] font-bold text-red-400">{a.name}</p>
+            <p className="text-[11px] text-zinc-300 leading-tight mt-0.5">{a.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
+        Le retail trade le headline. Le pro lit les 4 sous-données + les révisions.
+      </p>
+    </div>
+    </div>
   );
 };

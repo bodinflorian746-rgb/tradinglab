@@ -1,7 +1,8 @@
 export default function RiskRegimesQuadrantDiagram() {
   return (
+    <div>
     <svg
-      className="w-full h-auto"
+      className="hidden sm:block w-full h-auto"
       viewBox="0 0 720 520"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -70,5 +71,58 @@ export default function RiskRegimesQuadrantDiagram() {
         ↑ haussier  •  ↓ baissier  •  ~ stable  •  * sauf tech longue duration
       </text>
     </svg>
+
+    {/* ── MOBILE : 4 régimes empilés ─────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
+      <p className="text-[14px] font-bold text-amber-400 text-center leading-snug">
+        Les 4 régimes de marché
+      </p>
+      <p className="text-[12px] text-zinc-400 italic text-center -mt-1">
+        Définis par croissance × inflation
+      </p>
+
+      {[
+        {
+          name: "Risk-on classique",
+          color: "#10b981",
+          context: "Croissance forte · Inflation faible",
+          assets: "DXY ↓  ·  Yields ~  ·  Or ~  ·  Indices ↑  ·  BTC ↑",
+          desc: "Croissance + liquidité, le capital cherche du rendement",
+        },
+        {
+          name: "Reflation trade",
+          color: "#fbbf24",
+          context: "Croissance forte · Inflation élevée",
+          assets: "DXY ~  ·  Yields ↑  ·  Or ↑  ·  Indices ↑*  ·  BTC ↑",
+          desc: "Croissance + inflation, rotation vers actifs réels",
+        },
+        {
+          name: "Flight to quality",
+          color: "#a1a1aa",
+          context: "Croissance faible · Inflation faible",
+          assets: "DXY ↑  ·  Yields ↓  ·  Or ↑  ·  Indices ↓  ·  BTC ↓",
+          desc: "Peur mesurée, repositionnement défensif sans panique",
+        },
+        {
+          name: "Risk-off panique",
+          color: "#ef4444",
+          context: "Croissance faible · Inflation élevée",
+          assets: "DXY ↑↑  ·  Yields ↓  ·  Or ↑  ·  Indices ↓↓  ·  BTC ↓↓",
+          desc: "Liquidation globale, recherche de cash et sécurité",
+        },
+      ].map((r) => (
+        <div key={r.name} className="rounded-xl border-2 p-3" style={{ borderColor: r.color }}>
+          <p className="text-[15px] font-bold leading-tight" style={{ color: r.color }}>{r.name}</p>
+          <p className="text-[12px] text-zinc-400 italic mt-0.5 leading-snug">{r.context}</p>
+          <p className="text-[12px] text-zinc-300 font-mono leading-snug mt-1.5">{r.assets}</p>
+          <p className="text-[12px] text-zinc-400 italic leading-snug mt-1.5">{r.desc}</p>
+        </div>
+      ))}
+
+      <p className="text-[11px] text-zinc-500 text-center leading-snug pt-2 border-t border-zinc-800">
+        ↑ haussier · ↓ baissier · ~ stable · * sauf tech longue duration
+      </p>
+    </div>
+    </div>
   );
 }
