@@ -46,22 +46,16 @@ export function PDArrayContextDiagram({ className = "" }: PDArrayContextDiagramP
 
         <style>{`
           @media (max-width: 640px) {
-            .responsive-svg-text text { font-size: 1.5em; }
-            .responsive-svg-text .svg-halo {
-              transform: scale(1.6);
-              transform-origin: center;
-              transform-box: fill-box;
-            }
-            .responsive-svg-text .svg-annot { x: 20px; width: 660px; height: 36px; }
+            .responsive-svg-text text { font-size: 1.2em; }
           }
         `}</style>
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
-        <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
+        <text x="79" y="33" fill="#ffffff" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
 
         {/* Ligne résistance / equal highs */}
         <line x1="40" y1="60" x2="620" y2="60" stroke="#ef4444" strokeWidth="1.3" strokeDasharray="5 3" strokeOpacity="0.85" />
-        <rect className="svg-halo" x="430" y="48" width="190" height="13" rx="3" fill="#09090b" />
+        <rect x="430" y="48" width="190" height="13" rx="3" fill="#09090b" />
         <text x="525" y="58" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Equal highs / résistance 1.1780</text>
 
         {/* Bande FVG — y=85 à y=115 */}
@@ -81,16 +75,16 @@ export function PDArrayContextDiagram({ className = "" }: PDArrayContextDiagramP
 
         {/* Label Sweep */}
         <line x1="252" y1="44" x2="278" y2="40" stroke="#f59e0b" strokeWidth="1" strokeOpacity="0.7" />
-        <rect className="svg-halo" x="278" y="30" width="86" height="14" rx="3" fill="#09090b" />
+        <rect x="278" y="30" width="86" height="14" rx="3" fill="#09090b" />
         <text x="321" y="40" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep 1.1792</text>
 
         {/* Label FVG (dans la bande à droite) */}
-        <rect className="svg-halo" x="492" y="92" width="128" height="14" rx="3" fill="#09090b" />
+        <rect x="492" y="92" width="128" height="14" rx="3" fill="#09090b" />
         <text x="556" y="102" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">FVG 1.1758-1.1770</text>
 
         {/* Annotation */}
-        <rect className="svg-annot" x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
-        <rect className="svg-annot" x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
+        <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
+        <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
           Le prix revient dans la zone créée par l&apos;impulsion
         </text>

@@ -44,18 +44,12 @@ export function PDArrayConfluenceDiagram({ className = "" }: PDArrayConfluenceDi
 
         <style>{`
           @media (max-width: 640px) {
-            .responsive-svg-text text { font-size: 1.5em; }
-            .responsive-svg-text .svg-halo {
-              transform: scale(1.6);
-              transform-origin: center;
-              transform-box: fill-box;
-            }
-            .responsive-svg-text .svg-annot { x: 20px; width: 660px; height: 36px; }
+            .responsive-svg-text text { font-size: 1.2em; }
           }
         `}</style>
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
-        <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
+        <text x="79" y="33" fill="#ffffff" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
 
         {/* Zone confluente — y=55 à y=95 */}
         <rect x="40" y="55" width="600" height="40" fill="#ef444422" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="5 3" strokeOpacity="0.85" />
@@ -73,29 +67,29 @@ export function PDArrayConfluenceDiagram({ className = "" }: PDArrayConfluenceDi
         })}
 
         {/* Label "1.1780" à gauche, dans la bande */}
-        <rect className="svg-halo" x="44" y="68" width="56" height="14" rx="3" fill="#09090b" />
+        <rect x="44" y="68" width="56" height="14" rx="3" fill="#09090b" />
         <text x="72" y="78" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">1.1780</text>
 
         {/* Étiquette "Ancien support cassé" — posée sur le bord haut de la bande, à gauche, sous le badge titre */}
-        <rect className="svg-halo" x="58" y="44" width="130" height="14" rx="3" fill="#09090b" />
-        <rect className="svg-halo" x="58" y="44" width="130" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
+        <rect x="58" y="44" width="130" height="14" rx="3" fill="#09090b" />
+        <rect x="58" y="44" width="130" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
         <text x="123" y="54" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Ancien support cassé</text>
 
         {/* Étiquette "FVG bearish" — juste sous la bande, au centre, dans un espace libre sans corps de bougie */}
         <line x1="320" y1="100" x2="320" y2="95" stroke="#f59e0b" strokeWidth="0.9" strokeOpacity="0.7" />
-        <rect className="svg-halo" x="270" y="100" width="100" height="14" rx="3" fill="#09090b" />
-        <rect className="svg-halo" x="270" y="100" width="100" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
+        <rect x="270" y="100" width="100" height="14" rx="3" fill="#09090b" />
+        <rect x="270" y="100" width="100" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
         <text x="320" y="110" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">FVG bearish</text>
 
         {/* Étiquette "Sweep récent" — au-dessus de la bande, reliée à la mèche du sweep (cx=430, wickTop=42) */}
         <line x1="430" y1="36" x2="430" y2="42" stroke="#f59e0b" strokeWidth="0.9" strokeOpacity="0.8" />
-        <rect className="svg-halo" x="380" y="22" width="100" height="14" rx="3" fill="#09090b" />
-        <rect className="svg-halo" x="380" y="22" width="100" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
+        <rect x="380" y="22" width="100" height="14" rx="3" fill="#09090b" />
+        <rect x="380" y="22" width="100" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
         <text x="430" y="32" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep récent</text>
 
         {/* Annotation */}
-        <rect className="svg-annot" x="170" y="294" width="360" height="22" rx="11" fill="#09090b" />
-        <rect className="svg-annot" x="170" y="294" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
+        <rect x="170" y="294" width="360" height="22" rx="11" fill="#09090b" />
+        <rect x="170" y="294" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="308" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
           Plusieurs éléments racontent la même histoire
         </text>
