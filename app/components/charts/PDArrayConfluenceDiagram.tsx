@@ -46,6 +46,9 @@ export function PDArrayConfluenceDiagram({ className = "" }: PDArrayConfluenceDi
           @media (max-width: 640px) {
             .chart-detail-labels { display: none; }
           }
+          @media (min-width: 641px) {
+            .chart-mobile-markers { display: none; }
+          }
         `}</style>
 
         {/* Badge instrument — toujours visible */}
@@ -99,25 +102,40 @@ export function PDArrayConfluenceDiagram({ className = "" }: PDArrayConfluenceDi
           </text>
 
         </g>
+
+        {/* Repères mobile — visibles uniquement sur mobile (<640px), reliés aux bullets numérotés sous le chart */}
+        <g className="chart-mobile-markers">
+          <circle cx="100" cy="75" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="100" y="75" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">1</text>
+
+          <circle cx="430" cy="22" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="430" y="22" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">2</text>
+
+          <circle cx="475" cy="145" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="475" y="145" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">3</text>
+
+          <circle cx="565" cy="235" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="565" y="235" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">4</text>
+        </g>
       </svg>
 
-      {/* Mobile : explications en bullets (remplace les labels du graphique) */}
+      {/* Mobile : explications en bullets numérotés (rappel des repères ①②③④ dans le chart) */}
       <ul className="sm:hidden px-4 py-3 space-y-2 border-t border-zinc-800/50 text-[13px] leading-snug">
-        <li className="flex items-start gap-2">
-          <span className="text-red-400 mt-0.5 shrink-0">●</span>
-          <span className="text-white">Zone confluente à <span className="font-semibold">1.1780</span></span>
+        <li className="flex items-start gap-2.5">
+          <span className="text-amber-400 font-bold shrink-0 tabular-nums">①</span>
+          <span className="text-white">Zone confluente à <span className="font-semibold">1.1780</span> (support cassé + FVG + sweep)</span>
         </li>
-        <li className="flex items-start gap-2">
-          <span className="text-amber-400 mt-0.5 shrink-0">●</span>
-          <span className="text-white">Ancien support cassé + FVG bearish + sweep récent</span>
+        <li className="flex items-start gap-2.5">
+          <span className="text-amber-400 font-bold shrink-0 tabular-nums">②</span>
+          <span className="text-white">Sweep récent au-dessus de la zone (mèche dépasse)</span>
         </li>
-        <li className="flex items-start gap-2">
-          <span className="text-amber-400 mt-0.5 shrink-0">●</span>
-          <span className="text-white">3 éléments alignés au même niveau = confluence forte</span>
+        <li className="flex items-start gap-2.5">
+          <span className="text-amber-400 font-bold shrink-0 tabular-nums">③</span>
+          <span className="text-white">Rejet bearish franc dès le retour dans la zone</span>
         </li>
-        <li className="flex items-start gap-2">
-          <span className="text-red-400 mt-0.5 shrink-0">●</span>
-          <span className="text-zinc-300">Rejet bearish franc dès le retour dans la zone</span>
+        <li className="flex items-start gap-2.5">
+          <span className="text-amber-400 font-bold shrink-0 tabular-nums">④</span>
+          <span className="text-zinc-300">Continuation bearish vers les niveaux inférieurs</span>
         </li>
       </ul>
 

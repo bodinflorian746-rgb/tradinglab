@@ -53,6 +53,9 @@ export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramPro
           @media (max-width: 640px) {
             .chart-detail-labels { display: none; }
           }
+          @media (min-width: 641px) {
+            .chart-mobile-markers { display: none; }
+          }
         `}</style>
 
         {/* Badge instrument — toujours visible */}
@@ -99,25 +102,40 @@ export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramPro
           </text>
 
         </g>
+
+        {/* Repères mobile — visibles uniquement sur mobile (<640px), reliés aux bullets numérotés sous le chart */}
+        <g className="chart-mobile-markers">
+          <circle cx="70" cy="24" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="70" y="24" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">1</text>
+
+          <circle cx="620" cy="135" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="620" y="135" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">2</text>
+
+          <circle cx="400" cy="180" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="400" y="180" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">3</text>
+
+          <circle cx="620" cy="255" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="620" y="255" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">4</text>
+        </g>
       </svg>
 
-      {/* Mobile : explications en bullets (remplace les labels du graphique) */}
+      {/* Mobile : explications en bullets numérotés (rappel des repères ①②③④ dans le chart) */}
       <ul className="sm:hidden px-4 py-3 space-y-2 border-t border-zinc-800/50 text-[13px] leading-snug">
-        <li className="flex items-start gap-2">
-          <span className="text-red-400 mt-0.5 shrink-0">●</span>
+        <li className="flex items-start gap-2.5">
+          <span className="text-amber-400 font-bold shrink-0 tabular-nums">①</span>
           <span className="text-white">Impulsion bearish depuis <span className="font-semibold">4 690 $</span></span>
         </li>
-        <li className="flex items-start gap-2">
-          <span className="text-red-400 mt-0.5 shrink-0">●</span>
+        <li className="flex items-start gap-2.5">
+          <span className="text-amber-400 font-bold shrink-0 tabular-nums">②</span>
           <span className="text-white">FVG laissé entre <span className="font-semibold">4 655 et 4 665 $</span></span>
         </li>
-        <li className="flex items-start gap-2">
-          <span className="text-emerald-400 mt-0.5 shrink-0">●</span>
+        <li className="flex items-start gap-2.5">
+          <span className="text-amber-400 font-bold shrink-0 tabular-nums">③</span>
           <span className="text-white">Retour dans le FVG (mitigation)</span>
         </li>
-        <li className="flex items-start gap-2">
-          <span className="text-amber-400 mt-0.5 shrink-0">●</span>
-          <span className="text-zinc-300">Puis continuation bearish jusqu&apos;à <span className="font-semibold">4 610 $</span></span>
+        <li className="flex items-start gap-2.5">
+          <span className="text-amber-400 font-bold shrink-0 tabular-nums">④</span>
+          <span className="text-zinc-300">Continuation bearish jusqu&apos;à <span className="font-semibold">4 610 $</span></span>
         </li>
       </ul>
 
