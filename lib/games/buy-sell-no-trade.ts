@@ -1,4 +1,18 @@
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ─── Imports moteur partagé ──────────────────────────────────────────────────
+
+import {
+  type Asset, type Session, type Volatility, type Spread,
+  type HtfBias, type MacroContext,
+  type Candle, type ChartZone, type ChartData, type ZoneKind,
+  VOL_MULT, mulberry32, pick, clamp, candle, chartDomain,
+} from "./shared";
+
+// Re-exports : les consumers de buy-sell-no-trade gardent leur surface d'API
+export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext };
+export type { Candle, ChartZone, ChartData, ZoneKind };
+export { mulberry32 };
+
+// ─── Types spécifiques au jeu ────────────────────────────────────────────────
 
 export type GameChoice = "BUY" | "SELL" | "NO_TRADE";
 
@@ -16,12 +30,6 @@ export type SetupKey =
   | "trade_before_news"
   | "range_no_opp";
 
-export type Asset = "XAU/USD" | "EUR/USD" | "NASDAQ";
-export type Session = "Asie" | "Londres" | "New York";
-export type Volatility = "faible" | "normale" | "élevée";
-export type Spread = "faible" | "élevé";
-export type HtfBias = "bullish" | "bearish" | "range";
-export type MacroContext = "normal" | "dangereux";
 export type Metric = "discipline" | "lecture" | "piege";
 
 export interface ScenarioTemplate {
@@ -42,23 +50,6 @@ export interface ScenarioInstance extends ScenarioTemplate {
   volatility: Volatility;
   spread:     Spread;
   seed:       number;
-}
-
-export interface Candle { o: number; h: number; l: number; c: number }
-
-export type ZoneKind = "support" | "resistance" | "fvg" | "liquidity_low" | "liquidity_high";
-
-export interface ChartZone {
-  kind:  ZoneKind;
-  y1:    number;
-  y2:    number;
-  label: string;
-}
-
-export interface ChartData {
-  candles: Candle[];
-  zones:   ChartZone[];
-  domain:  { min: number; max: number };
 }
 
 // ─── Templates ────────────────────────────────────────────────────────────────
@@ -205,23 +196,6 @@ const SESSIONS: readonly Session[] = ["Asie", "Londres", "New York"];
 const VOLATILITIES: readonly Volatility[] = ["faible", "normale", "élevée"];
 const SPREADS: readonly Spread[] = ["faible", "élevé"];
 
-const VOL_MULT: Record<Volatility, number> = { "faible": 0.75, "normale": 1.0, "élevée": 1.35 };
-
-export function mulberry32(seed: number): () => number {
-  let s = seed >>> 0;
-  return function () {
-    s = (s + 0x6D2B79F5) >>> 0;
-    let t = s;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function pick<T>(arr: readonly T[], rng: () => number): T {
-  return arr[Math.floor(rng() * arr.length)];
-}
-
 export function generateScenarios(seed: number): ScenarioInstance[] {
   const rng = mulberry32(seed);
   const shuffled = [...SCENARIO_TEMPLATES];
@@ -241,22 +215,8 @@ export function generateScenarios(seed: number): ScenarioInstance[] {
 
 // ─── Chart generators ─────────────────────────────────────────────────────────
 
-function clamp(n: number, lo: number, hi: number): number {
-  return Math.max(lo, Math.min(hi, n));
-}
-
-function candle(o: number, c: number, wU: number, wD: number): Candle {
-  return { o, c, h: Math.max(o, c) + wU, l: Math.min(o, c) - wD };
-}
-
 function finishChart(candles: Candle[], zones: ChartZone[]): ChartData {
-  const vals: number[] = [];
-  for (const k of candles) { vals.push(k.h, k.l); }
-  for (const z of zones)  { vals.push(z.y1, z.y2); }
-  const min = Math.min(...vals);
-  const max = Math.max(...vals);
-  const pad = (max - min) * 0.08 || 1;
-  return { candles, zones, domain: { min: min - pad, max: max + pad } };
+  return { candles, zones, domain: chartDomain(candles, zones) };
 }
 
 function genBreakoutBull(rng: () => number, m: number): ChartData {

@@ -34,25 +34,26 @@ const AVAILABLE_GAMES: Game[] = [
       </svg>
     ),
   },
-];
-
-const UPCOMING_GAMES: Game[] = [
   {
-    id:          "stop",
+    id:          "place-stop",
     title:       "Place ton Stop",
-    description: "Un graphique figé avec une entrée marquée. Tu places ton stop loss — le système évalue si c'est trop serré, correct ou trop large.",
+    description: "10 setups. Tu places ton stop loss sur le graphique, le marché révèle les bougies suivantes. Le moteur évalue : trop serré, parfait, trop large ou pleine liquidité.",
     level:       "Intermédiaire",
     levelColor:  "text-blue-400 border-blue-500/30",
-    duration:    "~3 min",
-    available:   false,
+    duration:    "~7 min",
+    available:   true,
+    href:        "/jeux/place-stop",
     icon: (
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M4 20L10 12l5 4 5-8 4 3" stroke="#52525b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <line x1="4" y1="16" x2="24" y2="16" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="3 2.5" strokeLinecap="round" />
-        <circle cx="14" cy="16" r="2.5" fill="rgba(239,68,68,0.2)" stroke="#ef4444" strokeWidth="1.5" />
+        <path d="M4 20L10 12l5 4 5-8 4 3" stroke="#52525b" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <line x1="4" y1="16" x2="24" y2="16" stroke="#ef4444" strokeWidth="1.6" strokeDasharray="3 2.5" strokeLinecap="round" />
+        <circle cx="14" cy="16" r="2.5" fill="rgba(239,68,68,0.25)" stroke="#ef4444" strokeWidth="1.6" />
       </svg>
     ),
   },
+];
+
+const UPCOMING_GAMES: Game[] = [
   {
     id:          "risk",
     title:       "Risk Calculator",
