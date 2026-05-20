@@ -44,18 +44,23 @@ export function PDArrayContextDiagram({ className = "" }: PDArrayContextDiagramP
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
 
+        <style>{`
+          @media (max-width: 640px) {
+            .chart-detail-labels { display: none; }
+          }
+        `}</style>
+
+        {/* Badge instrument — toujours visible (1 tag principal) */}
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#ffffff" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
 
-        {/* Ligne résistance / equal highs */}
+        {/* Ligne résistance / equal highs — visible toujours (zone graphique) */}
         <line x1="40" y1="60" x2="620" y2="60" stroke="#ef4444" strokeWidth="1.3" strokeDasharray="5 3" strokeOpacity="0.85" />
-        <rect x="430" y="48" width="190" height="13" rx="3" fill="#09090b" />
-        <text x="525" y="58" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Equal highs / résistance 1.1780</text>
 
-        {/* Bande FVG — y=85 à y=115 */}
+        {/* Bande FVG — toujours visible (zone graphique) */}
         <rect x="40" y="85" width="600" height="30" fill="#ef444418" stroke="#ef4444" strokeWidth="1" strokeDasharray="4 3" strokeOpacity="0.7" />
 
-        {/* Bougies */}
+        {/* Bougies — toujours visibles */}
         {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
           const bodyFill = type === "bull" ? "#10b981" : "#ef4444";
           const wickStroke = type === "bull" ? "#059669" : "#b91c1c";
@@ -67,24 +72,54 @@ export function PDArrayContextDiagram({ className = "" }: PDArrayContextDiagramP
           );
         })}
 
-        {/* Label Sweep */}
-        <line x1="252" y1="44" x2="278" y2="40" stroke="#f59e0b" strokeWidth="1" strokeOpacity="0.7" />
-        <rect x="278" y="30" width="86" height="14" rx="3" fill="#09090b" />
-        <text x="321" y="40" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep 1.1792</text>
+        {/* Labels détaillés — masqués sur mobile (<640px), remplacés par les bullets HTML en dessous */}
+        <g className="chart-detail-labels">
 
-        {/* Label FVG (dans la bande à droite) */}
-        <rect x="492" y="92" width="128" height="14" rx="3" fill="#09090b" />
-        <text x="556" y="102" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">FVG 1.1758-1.1770</text>
+          {/* Label résistance equal highs */}
+          <rect x="430" y="48" width="190" height="13" rx="3" fill="#09090b" />
+          <text x="525" y="58" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Equal highs / résistance 1.1780</text>
 
-        {/* Annotation */}
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-        <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le prix revient dans la zone créée par l&apos;impulsion
-        </text>
+          {/* Label Sweep */}
+          <line x1="252" y1="44" x2="278" y2="40" stroke="#f59e0b" strokeWidth="1" strokeOpacity="0.7" />
+          <rect x="278" y="30" width="86" height="14" rx="3" fill="#09090b" />
+          <text x="321" y="40" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep 1.1792</text>
+
+          {/* Label FVG (dans la bande à droite) */}
+          <rect x="492" y="92" width="128" height="14" rx="3" fill="#09090b" />
+          <text x="556" y="102" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">FVG 1.1758-1.1770</text>
+
+          {/* Annotation */}
+          <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
+          <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
+          <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
+            Le prix revient dans la zone créée par l&apos;impulsion
+          </text>
+
+        </g>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : explications en bullets (remplace les labels du graphique) */}
+      <ul className="sm:hidden px-4 py-3 space-y-2 border-t border-zinc-800/50 text-[13px] leading-snug">
+        <li className="flex items-start gap-2">
+          <span className="text-red-400 mt-0.5 shrink-0">●</span>
+          <span className="text-white">Résistance / equal highs à <span className="font-semibold">1.1780</span></span>
+        </li>
+        <li className="flex items-start gap-2">
+          <span className="text-amber-400 mt-0.5 shrink-0">●</span>
+          <span className="text-white">Sweep à <span className="font-semibold">1.1792</span> puis impulsion bearish</span>
+        </li>
+        <li className="flex items-start gap-2">
+          <span className="text-red-400 mt-0.5 shrink-0">●</span>
+          <span className="text-white">FVG bearish créé entre <span className="font-semibold">1.1758 et 1.1770</span></span>
+        </li>
+        <li className="flex items-start gap-2">
+          <span className="text-amber-400 mt-0.5 shrink-0">●</span>
+          <span className="text-zinc-300">Le prix revient dans la zone créée par l&apos;impulsion</span>
+        </li>
+      </ul>
+
+      {/* Desktop : légende couleur condensée */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">FVG créé par l&apos;impulsion baissière</span>

@@ -49,13 +49,20 @@ export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramPro
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
 
+        <style>{`
+          @media (max-width: 640px) {
+            .chart-detail-labels { display: none; }
+          }
+        `}</style>
+
+        {/* Badge instrument — toujours visible */}
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#ffffff" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · H1</text>
 
-        {/* Bande FVG — y=120 à y=150, mi-hauteur du graphe */}
+        {/* Bande FVG — toujours visible (zone graphique) */}
         <rect x="70" y="120" width="550" height="30" fill="#ef444418" stroke="#ef4444" strokeWidth="1" strokeDasharray="4 3" strokeOpacity="0.75" />
 
-        {/* Bougies */}
+        {/* Bougies — toujours visibles */}
         {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
           const bodyFill = type === "bull" ? "#10b981" : "#ef4444";
           const wickStroke = type === "bull" ? "#059669" : "#b91c1c";
@@ -67,29 +74,55 @@ export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramPro
           );
         })}
 
-        {/* Label "4 690 $" — décalé à droite du badge titre, dans un espace libre au-dessus des bougies */}
-        <rect x="146" y="30" width="58" height="14" rx="3" fill="#09090b" />
-        <text x="175" y="40" fill="#ffffff" fontSize="9" fontWeight="700" textAnchor="middle">4 690 $</text>
+        {/* Labels détaillés — masqués sur mobile, remplacés par les bullets HTML en dessous */}
+        <g className="chart-detail-labels">
 
-        {/* Labels FVG (bord haut et bord bas, à droite) */}
-        <rect x="625" y="113" width="58" height="14" rx="3" fill="#09090b" />
-        <text x="654" y="123" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">4 665 $</text>
-        <rect x="625" y="143" width="58" height="14" rx="3" fill="#09090b" />
-        <text x="654" y="153" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">4 655 $</text>
+          {/* Label "4 690 $" — décalé à droite du badge titre, dans un espace libre au-dessus des bougies */}
+          <rect x="146" y="30" width="58" height="14" rx="3" fill="#09090b" />
+          <text x="175" y="40" fill="#ffffff" fontSize="9" fontWeight="700" textAnchor="middle">4 690 $</text>
 
-        {/* Label "4 610 $" en bas (dernière bougie) */}
-        <rect x="625" y="263" width="58" height="14" rx="3" fill="#09090b" />
-        <text x="654" y="273" fill="#ffffff" fontSize="9" fontWeight="700" textAnchor="middle">4 610 $</text>
+          {/* Labels FVG (bord haut et bord bas, à droite) */}
+          <rect x="625" y="113" width="58" height="14" rx="3" fill="#09090b" />
+          <text x="654" y="123" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">4 665 $</text>
+          <rect x="625" y="143" width="58" height="14" rx="3" fill="#09090b" />
+          <text x="654" y="153" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">4 655 $</text>
 
-        {/* Annotation */}
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-        <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Mitigation avant continuation
-        </text>
+          {/* Label "4 610 $" en bas (dernière bougie) */}
+          <rect x="625" y="263" width="58" height="14" rx="3" fill="#09090b" />
+          <text x="654" y="273" fill="#ffffff" fontSize="9" fontWeight="700" textAnchor="middle">4 610 $</text>
+
+          {/* Annotation */}
+          <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
+          <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
+          <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
+            Mitigation avant continuation
+          </text>
+
+        </g>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : explications en bullets (remplace les labels du graphique) */}
+      <ul className="sm:hidden px-4 py-3 space-y-2 border-t border-zinc-800/50 text-[13px] leading-snug">
+        <li className="flex items-start gap-2">
+          <span className="text-red-400 mt-0.5 shrink-0">●</span>
+          <span className="text-white">Impulsion bearish depuis <span className="font-semibold">4 690 $</span></span>
+        </li>
+        <li className="flex items-start gap-2">
+          <span className="text-red-400 mt-0.5 shrink-0">●</span>
+          <span className="text-white">FVG laissé entre <span className="font-semibold">4 655 et 4 665 $</span></span>
+        </li>
+        <li className="flex items-start gap-2">
+          <span className="text-emerald-400 mt-0.5 shrink-0">●</span>
+          <span className="text-white">Retour dans le FVG (mitigation)</span>
+        </li>
+        <li className="flex items-start gap-2">
+          <span className="text-amber-400 mt-0.5 shrink-0">●</span>
+          <span className="text-zinc-300">Puis continuation bearish jusqu&apos;à <span className="font-semibold">4 610 $</span></span>
+        </li>
+      </ul>
+
+      {/* Desktop : légende couleur condensée */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">Impulsion bearish qui laisse un FVG</span>
