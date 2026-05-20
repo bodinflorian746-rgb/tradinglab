@@ -10,12 +10,33 @@ interface Game {
   levelColor:  string;
   duration:    string;
   available:   boolean;
+  href?:       string;
   icon:        React.ReactNode;
 }
 
 // ─── Game definitions ─────────────────────────────────────────────────────────
 
-const GAMES: Game[] = [
+const AVAILABLE_GAMES: Game[] = [
+  {
+    id:          "buy-sell-no-trade",
+    title:       "BUY / SELL / NO TRADE",
+    description: "12 scénarios à analyser. Mini graphique, contexte, news. Tu choisis ta décision et le système évalue ta lecture, ta discipline et ta détection de pièges.",
+    level:       "Tous niveaux",
+    levelColor:  "text-emerald-400 border-emerald-500/30",
+    duration:    "~6 min",
+    available:   true,
+    href:        "/jeux/buy-sell-no-trade",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <path d="M4 18l4-4 3 3 4-7 4 3 5-2" stroke="#52525b" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="11" cy="17" r="2.2" fill="rgba(16,185,129,0.25)" stroke="#10b981" strokeWidth="1.4" />
+        <circle cx="18" cy="13" r="2.2" fill="rgba(239,68,68,0.25)" stroke="#ef4444" strokeWidth="1.4" />
+      </svg>
+    ),
+  },
+];
+
+const UPCOMING_GAMES: Game[] = [
   {
     id:          "stop",
     title:       "Place ton Stop",
@@ -114,17 +135,63 @@ const GAMES: Game[] = [
   },
 ];
 
-// ─── Game card ─────────────────────────────────────────────────────────────────
+// ─── Available game card ──────────────────────────────────────────────────────
 
-function GameCard({ game }: { game: Game }) {
+function AvailableGameCard({ game }: { game: Game }) {
+  return (
+    <Link
+      href={game.href!}
+      className="group relative bg-zinc-900/60 border border-zinc-800 rounded-2xl p-5 sm:p-6 flex flex-col gap-4 hover:border-emerald-500/40 hover:bg-zinc-900/80 transition-all"
+    >
+      <div className="absolute top-4 right-4 flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ boxShadow: "0 0 6px rgba(16,185,129,0.7)" }} />
+        Disponible
+      </div>
+
+      <div className="flex items-start gap-3">
+        <div className="w-12 h-12 rounded-xl bg-zinc-800/80 border border-zinc-700/60 flex items-center justify-center shrink-0">
+          {game.icon}
+        </div>
+        <div className="flex-1 min-w-0 pt-1">
+          <span className={`text-[10px] font-semibold uppercase tracking-wide border rounded-full px-2 py-0.5 ${game.levelColor}`}>
+            {game.level}
+          </span>
+        </div>
+      </div>
+
+      <div className="flex-1">
+        <h3 className="text-lg font-bold text-white mb-1.5 leading-tight">{game.title}</h3>
+        <p className="text-zinc-400 text-sm leading-relaxed">{game.description}</p>
+      </div>
+
+      <div className="flex items-center justify-between pt-3 border-t border-zinc-800/60">
+        <div className="flex items-center gap-1.5 text-[11px] text-zinc-500">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+            <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.2" />
+            <path d="M5.5 3v2.5l1.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          {game.duration}
+        </div>
+        <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1 group-hover:gap-1.5 transition-all">
+          Jouer
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+            <path d="M4 9l4-3-4-3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+// ─── Upcoming game card ───────────────────────────────────────────────────────
+
+function UpcomingGameCard({ game }: { game: Game }) {
   return (
     <div className="group relative bg-zinc-900/40 border border-zinc-800/60 rounded-2xl p-6 flex flex-col gap-4 opacity-70">
-      {/* Coming soon badge */}
       <div className="absolute top-4 right-4 text-[10px] font-semibold text-zinc-600 uppercase tracking-widest border border-zinc-700/50 rounded-full px-2.5 py-0.5">
         Bientôt
       </div>
 
-      {/* Icon + level */}
       <div className="flex items-start justify-between">
         <div className="w-12 h-12 rounded-xl bg-zinc-800/60 border border-zinc-700/40 flex items-center justify-center shrink-0">
           {game.icon}
@@ -134,13 +201,11 @@ function GameCard({ game }: { game: Game }) {
         </span>
       </div>
 
-      {/* Content */}
       <div className="flex-1">
         <h3 className="text-base font-bold text-zinc-400 mb-1.5">{game.title}</h3>
         <p className="text-zinc-600 text-sm leading-relaxed">{game.description}</p>
       </div>
 
-      {/* Footer */}
       <div className="flex items-center justify-between pt-3 border-t border-zinc-800/40">
         <div className="flex items-center gap-1.5 text-[11px] text-zinc-700">
           <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
@@ -160,10 +225,10 @@ function GameCard({ game }: { game: Game }) {
 export default function JeuxPage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-4xl mx-auto px-6 py-14">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
 
         {/* Header */}
-        <div className="mb-12">
+        <div className="mb-10 sm:mb-12">
           <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-3">
             Mini jeux
           </p>
@@ -174,40 +239,33 @@ export default function JeuxPage() {
           </p>
         </div>
 
-        {/* Coming soon banner */}
-        <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl px-6 py-5 mb-10 flex items-center gap-5">
-          <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700/60 flex items-center justify-center shrink-0">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="text-zinc-400">
-              <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.4" />
-              <path d="M9 5.5v4l2.5 2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+        {/* Available games */}
+        <section className="mb-12">
+          <div className="flex items-center gap-2.5 mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ boxShadow: "0 0 6px rgba(16,185,129,0.7)" }} />
+            <h2 className="text-[11px] font-bold text-emerald-400 uppercase tracking-widest">
+              Disponible maintenant
+            </h2>
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-white mb-0.5">Les mini-jeux arrivent bientôt</p>
-            <p className="text-xs text-zinc-500">
-              En cours de développement — des exercices interactifs pour pratiquer le placement de stops, la gestion du risque et la lecture de structure.
-            </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {AVAILABLE_GAMES.map((g) => <AvailableGameCard key={g.id} game={g} />)}
           </div>
-          <div className="shrink-0 text-right hidden sm:block">
-            <p className="text-xl font-black text-zinc-700 tabular-nums">{GAMES.length}</p>
-            <p className="text-[10px] text-zinc-700 uppercase tracking-wide">À venir</p>
-          </div>
-        </div>
+        </section>
 
-        {/* Upcoming games grid */}
+        {/* Upcoming games */}
         <section>
           <div className="flex items-center gap-3 mb-5">
             <h2 className="text-sm font-semibold text-zinc-500">Prochainement</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {GAMES.map((g) => <GameCard key={g.id} game={g} />)}
+            {UPCOMING_GAMES.map((g) => <UpcomingGameCard key={g.id} game={g} />)}
           </div>
         </section>
 
         {/* Bottom CTA */}
         <div className="mt-12 pt-8 border-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-zinc-600">
-            En attendant les jeux, commence par les leçons.
+            Tu peux aussi continuer les leçons en parallèle.
           </p>
           <Link
             href="/formations/debutant/lecon1"
