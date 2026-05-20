@@ -1,3 +1,5 @@
+import { ChartScroller } from "../ChartScroller";
+
 type CD = { cx: number; wt: number; bt: number; bb: number; wb: number; bull: boolean };
 
 function MiniCandle({ cx, wt, bt, bb, wb, bull }: CD) {
@@ -51,6 +53,7 @@ export function StopLossChartDiagram({ className = '' }: StopLossChartDiagramPro
         BTC / USD — placement du Stop Loss
       </p>
 
+      <ChartScroller width="lg" className="px-2 sm:px-0 pt-2 sm:pt-0">
       <svg
         width="100%"
         viewBox="0 0 900 280"
@@ -58,12 +61,6 @@ export function StopLossChartDiagram({ className = '' }: StopLossChartDiagramPro
         preserveAspectRatio="xMidYMid meet"
         aria-label="Comparaison bon vs mauvais placement de Stop Loss"
       >
-        <style>{`
-          @media (max-width: 640px) {
-            .chart-detail-labels { display: none; }
-          }
-        `}</style>
-
         {/* ── Zone backgrounds ── */}
         <rect x={15}  y={10} width={430} height={255} fill="#10b98106" />
         <rect x={455} y={10} width={430} height={255} fill="#ef444406" />
@@ -143,6 +140,7 @@ export function StopLossChartDiagram({ className = '' }: StopLossChartDiagramPro
           </text>
         </g>
       </svg>
+      </ChartScroller>
 
       {/* Mobile : explications en bullets (remplace les labels SVG illisibles sur petit écran) */}
       <ul className="sm:hidden px-4 py-3 space-y-2 border-t border-zinc-800/50 text-[13px] leading-snug">

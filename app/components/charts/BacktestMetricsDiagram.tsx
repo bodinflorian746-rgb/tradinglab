@@ -1,3 +1,5 @@
+import { ChartScroller } from "../ChartScroller";
+
 interface BacktestMetricsDiagramProps {
   className?: string;
 }
@@ -27,6 +29,7 @@ const HIST_SCALE = 3;
 export function BacktestMetricsDiagram({ className = "" }: BacktestMetricsDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
+      <ChartScroller width="lg">
       <svg
         width="100%"
         viewBox="0 0 900 600"
@@ -183,6 +186,7 @@ export function BacktestMetricsDiagram({ className = "" }: BacktestMetricsDiagra
           Expectancy : +0.22R / trade — sur 1000 trades : +220R de gain attendu
         </text>
       </svg>
+      </ChartScroller>
     </div>
   );
 }

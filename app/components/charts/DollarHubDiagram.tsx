@@ -1,5 +1,8 @@
+import { ChartScroller } from "../ChartScroller";
+
 export const DollarHubDiagram = () => {
   return (
+    <ChartScroller width="md">
     <svg
       className="w-full h-auto"
       viewBox="0 0 800 450"
@@ -83,5 +86,6 @@ export const DollarHubDiagram = () => {
         Le dollar est au centre. Quand il bouge, tout réagit.
       </text>
     </svg>
+    </ChartScroller>
   );
 };

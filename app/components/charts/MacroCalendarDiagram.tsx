@@ -1,5 +1,8 @@
+import { ChartScroller } from "../ChartScroller";
+
 export const MacroCalendarDiagram = () => {
   return (
+    <ChartScroller width="md">
     <svg
       className="w-full h-auto"
       viewBox="0 0 800 510"
@@ -181,5 +184,6 @@ export const MacroCalendarDiagram = () => {
       <rect x="290" y="345" width="110" height="22" rx="3" fill="#09090b" fillOpacity="0.95" />
       <text x="295" y="362" textAnchor="start" fill="#f87171" fontSize="14" fontWeight="700">-150 pips en 2 min</text>
     </svg>
+    </ChartScroller>
   );
 };

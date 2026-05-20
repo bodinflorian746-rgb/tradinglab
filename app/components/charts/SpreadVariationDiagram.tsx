@@ -1,3 +1,5 @@
+import { ChartScroller } from "../ChartScroller";
+
 interface SpreadVariationDiagramProps {
   className?: string;
 }
@@ -43,6 +45,7 @@ export function SpreadVariationDiagram({ className = '' }: SpreadVariationDiagra
         EUR / USD — variation du spread sur 24h
       </p>
 
+      <ChartScroller width="lg" className="px-2 sm:px-0 pt-2 sm:pt-0">
       <svg
         width="100%"
         viewBox="0 0 900 250"
@@ -50,12 +53,6 @@ export function SpreadVariationDiagram({ className = '' }: SpreadVariationDiagra
         preserveAspectRatio="xMidYMid meet"
         aria-label="Variation du spread EUR/USD sur 24 heures"
       >
-        <style>{`
-          @media (max-width: 640px) {
-            .chart-detail-labels { display: none; }
-          }
-        `}</style>
-
         {/* ── Zone fills ── */}
         <rect x={40}  y={35} width={210} height={185} fill="#ef444410" />
         <rect x={810} y={35} width={70}  height={185} fill="#ef444410" />
@@ -127,6 +124,7 @@ export function SpreadVariationDiagram({ className = '' }: SpreadVariationDiagra
           <text x={495} y={186} fontSize="9" fill="#34d399" textAnchor="middle" fontWeight="600">1 pt — minimum</text>
         </g>
       </svg>
+      </ChartScroller>
 
       {/* Mobile : explications en bullets (remplace les labels SVG illisibles sur petit écran) */}
       <ul className="sm:hidden px-4 py-3 space-y-2 border-t border-zinc-800/50 text-[13px] leading-snug">
