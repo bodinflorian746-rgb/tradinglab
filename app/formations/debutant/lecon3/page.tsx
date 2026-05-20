@@ -4,7 +4,7 @@ import { CandleAnatomyDiagram } from "@/app/components/charts/CandleAnatomyDiagr
 // ── Schéma : exemple bougie verte vs rouge ───────────────────────────────────
 function CandleExampleDiagram() {
   return (
-    <div className="mt-4 grid grid-cols-2 gap-3">
+    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
       <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3 text-center">
         <p className="text-xs font-bold text-emerald-400 mb-2">Bougie verte</p>
         <svg viewBox="0 0 60 100" className="w-10 mx-auto mb-2" aria-label="Bougie verte">

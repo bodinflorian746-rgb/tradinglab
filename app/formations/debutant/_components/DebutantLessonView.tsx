@@ -17,7 +17,7 @@ function LongShortDiagram() {
   const shortPoints = "20,38 50,55 80,70 110,88 140,105 170,120 200,140";
 
   return (
-    <div className="mt-5 grid grid-cols-2 gap-3">
+    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
       {/* Long */}
       <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
         <p className="text-xs font-bold text-emerald-400 mb-3 text-center">LONG — Buy ↑</p>
@@ -82,7 +82,7 @@ function TakeProfitDiagram() {
       <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-4 text-center">
         Bitcoin — l'évolution du prix, avec et sans Take Profit
       </p>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
           <p className="text-[10px] font-bold text-emerald-400 text-center mb-2">AVEC Take Profit</p>
           <svg viewBox="0 0 130 145" className="w-full" fill="none">
@@ -147,7 +147,7 @@ function BreakEvenDiagram() {
           </div>
         </div>
         <p className="text-center text-[10px] text-zinc-600">↓ deux scénarios possibles</p>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl px-3 py-2.5 text-center">
             <p className="text-[10px] font-bold text-emerald-400">Prix continue ↑</p>
             <p className="text-[9px] text-zinc-400 mt-1">TP atteint à 84 000 $</p>
@@ -288,7 +288,7 @@ function ErrorsDiagram() {
       <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-4 text-center">
         Les 4 biais qui détruisent les comptes
       </p>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
           <p className="text-xs font-bold text-red-400 mb-1">FOMO</p>
           <p className="text-[10px] text-zinc-400 leading-snug">Tu achètes en urgence — souvent au sommet, juste avant le retournement</p>

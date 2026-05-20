@@ -58,6 +58,12 @@ export function StopLossChartDiagram({ className = '' }: StopLossChartDiagramPro
         preserveAspectRatio="xMidYMid meet"
         aria-label="Comparaison bon vs mauvais placement de Stop Loss"
       >
+        <style>{`
+          @media (max-width: 640px) {
+            .chart-detail-labels { display: none; }
+          }
+        `}</style>
+
         {/* ── Zone backgrounds ── */}
         <rect x={15}  y={10} width={430} height={255} fill="#10b98106" />
         <rect x={455} y={10} width={430} height={255} fill="#ef444406" />
@@ -65,79 +71,94 @@ export function StopLossChartDiagram({ className = '' }: StopLossChartDiagramPro
         {/* ── Separator ── */}
         <line x1={450} y1={10} x2={450} y2={270} stroke="#3f3f46" strokeWidth="1" />
 
-        {/* ════════════ LEFT ZONE — SL LOGIQUE ════════════ */}
-        <text x={225} y={24} textAnchor="middle" fontSize="10" fill="#34d399" fontWeight="600">
-          SL LOGIQUE — SOUS UN SUPPORT
-        </text>
-
-        {/* Support + SL lines */}
+        {/* Lignes structurelles (support + SL) — toujours visibles */}
         <line x1={15} y1={SY}   x2={440} y2={SY}   stroke="#71717a" strokeWidth="1.5" strokeDasharray="5 3" />
         <line x1={15} y1={SL_L} x2={440} y2={SL_L} stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" strokeOpacity="0.75" />
-
-        {/* Candles */}
-        {LEFT.map((c, i) => <MiniCandle key={i} {...c} />)}
-
-        {/* ENTRÉE badge — above C6 (cx=250, wt=148) */}
-        <rect x={218} y={130} width={64} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={250} y={141} textAnchor="middle" fontSize="9" fill="#34d399" fontWeight="700">ENTRÉE</text>
-
-        {/* Support badge */}
-        <rect x={15} y={190} width={56} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={43} y={201} textAnchor="middle" fontSize="9" fill="#71717a" fontWeight="600">Support</text>
-
-        {/* SL badge */}
-        <rect x={15} y={214} width={116} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={73} y={225} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="600">SL — sous support ✓</text>
-
-        {/* −1R distance: entry (y=158) → SL (y=228) */}
-        <line x1={375} y1={158} x2={375} y2={228} stroke="#3f3f46" strokeWidth="1" strokeDasharray="2 2" />
-        <text x={382} y={197} fontSize="8" fill="#f87171" fontWeight="700">−1R</text>
-
-        {/* Explanatory text */}
-        <text x={225} y={258} textAnchor="middle" fontSize="8.5" fill="#52525b">
-          Si le support casse → SL déclenché normal
-        </text>
-
-        {/* ════════════ RIGHT ZONE — SL ARBITRAIRE ════════════ */}
-        <text x={670} y={24} textAnchor="middle" fontSize="10" fill="#f87171" fontWeight="600">
-          SL ARBITRAIRE — SANS LOGIQUE
-        </text>
-
-        {/* Support + SL lines */}
         <line x1={455} y1={SY}   x2={885} y2={SY}   stroke="#71717a" strokeWidth="1.5" strokeDasharray="5 3" />
         <line x1={455} y1={SL_R} x2={885} y2={SL_R} stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" strokeOpacity="0.75" />
 
-        {/* Candles */}
-        {RIGHT.map((c, i) => <MiniCandle key={i} {...c} />)}
+        {/* Bougies — toujours visibles */}
+        {LEFT.map((c, i) => <MiniCandle key={i} {...c} />)}
+        {RIGHT.map((c, i) => <MiniCandle key={`r${i}`} {...c} />)}
 
-        {/* SL hit marker on the tight SL line */}
+        {/* SL hit marker on the tight SL line (toujours visible — signal-clé) */}
         <circle cx={688} cy={SL_R} r="4.5" fill="#ef4444" opacity="0.9" />
 
-        {/* ENTRÉE badge — above C5 (cx=650, wt=148) */}
-        <rect x={618} y={130} width={64} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={650} y={141} textAnchor="middle" fontSize="9" fill="#34d399" fontWeight="700">ENTRÉE</text>
+        {/* Labels détaillés — masqués sur mobile, remplacés par les bullets HTML en dessous */}
+        <g className="chart-detail-labels">
+          {/* ════════════ LEFT ZONE — SL LOGIQUE ════════════ */}
+          <text x={225} y={24} textAnchor="middle" fontSize="10" fill="#34d399" fontWeight="600">
+            SL LOGIQUE — SOUS UN SUPPORT
+          </text>
 
-        {/* Support badge */}
-        <rect x={455} y={190} width={56} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={483} y={201} textAnchor="middle" fontSize="9" fill="#71717a" fontWeight="600">Support</text>
+          {/* ENTRÉE badge — above C6 (cx=250, wt=148) */}
+          <rect x={218} y={130} width={64} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
+          <text x={250} y={141} textAnchor="middle" fontSize="9" fill="#34d399" fontWeight="700">ENTRÉE</text>
 
-        {/* SL badge (too tight — ABOVE support) */}
-        <rect x={455} y={168} width={102} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={506} y={179} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="600">SL — trop serré ✗</text>
+          {/* Support badge */}
+          <rect x={15} y={190} width={56} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
+          <text x={43} y={201} textAnchor="middle" fontSize="9" fill="#71717a" fontWeight="600">Support</text>
 
-        {/* −1R distance: entry (y=158) → tight SL (y=183) — visibly shorter */}
-        <line x1={835} y1={158} x2={835} y2={183} stroke="#3f3f46" strokeWidth="1" strokeDasharray="2 2" />
-        <text x={842} y={174} fontSize="8" fill="#f87171" fontWeight="700">−1R</text>
+          {/* SL badge */}
+          <rect x={15} y={214} width={116} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
+          <text x={73} y={225} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="600">SL — sous support ✓</text>
 
-        {/* "Le prix repart" badge — above bounce candles */}
-        <rect x={690} y={54} width={152} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={766} y={65} textAnchor="middle" fontSize="9" fill="#71717a" fontWeight="600">Le prix repart sans toi ↑</text>
+          {/* −1R distance: entry (y=158) → SL (y=228) */}
+          <line x1={375} y1={158} x2={375} y2={228} stroke="#3f3f46" strokeWidth="1" strokeDasharray="2 2" />
+          <text x={382} y={197} fontSize="8" fill="#f87171" fontWeight="700">−1R</text>
 
-        {/* Explanatory text */}
-        <text x={670} y={258} textAnchor="middle" fontSize="8.5" fill="#52525b">
-          SL sans logique = souvent touché par fluctuation normale
-        </text>
+          {/* Explanatory text */}
+          <text x={225} y={258} textAnchor="middle" fontSize="8.5" fill="#52525b">
+            Si le support casse → SL déclenché normal
+          </text>
+
+          {/* ════════════ RIGHT ZONE — SL ARBITRAIRE ════════════ */}
+          <text x={670} y={24} textAnchor="middle" fontSize="10" fill="#f87171" fontWeight="600">
+            SL ARBITRAIRE — SANS LOGIQUE
+          </text>
+
+          {/* ENTRÉE badge — above C5 (cx=650, wt=148) */}
+          <rect x={618} y={130} width={64} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
+          <text x={650} y={141} textAnchor="middle" fontSize="9" fill="#34d399" fontWeight="700">ENTRÉE</text>
+
+          {/* Support badge */}
+          <rect x={455} y={190} width={56} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
+          <text x={483} y={201} textAnchor="middle" fontSize="9" fill="#71717a" fontWeight="600">Support</text>
+
+          {/* SL badge (too tight — ABOVE support) */}
+          <rect x={455} y={168} width={102} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
+          <text x={506} y={179} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="600">SL — trop serré ✗</text>
+
+          {/* −1R distance: entry (y=158) → tight SL (y=183) — visibly shorter */}
+          <line x1={835} y1={158} x2={835} y2={183} stroke="#3f3f46" strokeWidth="1" strokeDasharray="2 2" />
+          <text x={842} y={174} fontSize="8" fill="#f87171" fontWeight="700">−1R</text>
+
+          {/* "Le prix repart" badge — above bounce candles */}
+          <rect x={690} y={54} width={152} height={14} rx="2" fill="#09090b" fillOpacity="0.88" />
+          <text x={766} y={65} textAnchor="middle" fontSize="9" fill="#71717a" fontWeight="600">Le prix repart sans toi ↑</text>
+
+          {/* Explanatory text */}
+          <text x={670} y={258} textAnchor="middle" fontSize="8.5" fill="#52525b">
+            SL sans logique = souvent touché par fluctuation normale
+          </text>
+        </g>
       </svg>
+
+      {/* Mobile : explications en bullets (remplace les labels SVG illisibles sur petit écran) */}
+      <ul className="sm:hidden px-4 py-3 space-y-2 border-t border-zinc-800/50 text-[13px] leading-snug">
+        <li className="flex items-start gap-2.5">
+          <span className="text-emerald-400 font-bold shrink-0">●</span>
+          <span className="text-white"><span className="font-semibold">À gauche</span> — SL placé sous un support : déclenché seulement si le support casse</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="text-red-400 font-bold shrink-0">●</span>
+          <span className="text-white"><span className="font-semibold">À droite</span> — SL placé arbitrairement, trop serré : touché par une fluctuation normale</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="text-zinc-300 font-bold shrink-0">●</span>
+          <span className="text-zinc-300">SL sans logique = sortie inutile + le prix repart sans toi</span>
+        </li>
+      </ul>
 
       {/* Legend */}
       <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">

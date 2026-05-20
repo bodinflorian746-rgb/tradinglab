@@ -77,7 +77,7 @@ function StopLossDiagram() {
 // ── Schéma : avec SL vs sans SL ──────────────────────────────────────────────
 function WithWithoutSLDiagram() {
   return (
-    <div className="mt-4 grid grid-cols-2 gap-3">
+    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
       <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
         <p className="text-[10px] font-bold text-emerald-400 mb-2 uppercase tracking-wide">Avec Stop Loss ✓</p>
         <div className="space-y-1 text-xs">

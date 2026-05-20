@@ -50,6 +50,12 @@ export function SpreadVariationDiagram({ className = '' }: SpreadVariationDiagra
         preserveAspectRatio="xMidYMid meet"
         aria-label="Variation du spread EUR/USD sur 24 heures"
       >
+        <style>{`
+          @media (max-width: 640px) {
+            .chart-detail-labels { display: none; }
+          }
+        `}</style>
+
         {/* ── Zone fills ── */}
         <rect x={40}  y={35} width={210} height={185} fill="#ef444410" />
         <rect x={810} y={35} width={70}  height={185} fill="#ef444410" />
@@ -94,28 +100,49 @@ export function SpreadVariationDiagram({ className = '' }: SpreadVariationDiagra
           strokeLinejoin="round" strokeLinecap="round"
         />
 
-        {/* ── Zone labels ── */}
-        {/* Off-peak */}
-        <rect x={46} y={39} width={110} height={26} rx="3" fill="#09090b" fillOpacity="0.88" />
-        <text x={52} y={51} fontSize="9" fill="#f87171" fontWeight="600">Heures creuses</text>
-        <text x={52} y={61} fontSize="8" fill="#f87171" opacity="0.65">22h–6h · nuit</text>
-        {/* Peak */}
-        <rect x={361} y={39} width={148} height={26} rx="3" fill="#09090b" fillOpacity="0.88" />
-        <text x={367} y={51} fontSize="9" fill="#34d399" fontWeight="600">Heures de pointe</text>
-        <text x={367} y={61} fontSize="8" fill="#34d399" opacity="0.65">London + NY actifs</text>
-
-        {/* ── Key point — MAX (2h, ~8 pts) ── */}
+        {/* Repères mobile — gros markers semantiques sur les points-clés (toujours visibles) */}
         <circle cx={110} cy={68} r="4" fill="#ef4444" />
-        <line x1={110} y1={73} x2={110} y2={80} stroke="#ef444460" strokeWidth="1" />
-        <rect x={67} y={81} width={86} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={110} y={90} fontSize="9" fill="#f87171" textAnchor="middle" fontWeight="600">8 pts — maximum</text>
-
-        {/* ── Key point — MIN (13h, ~1 pt) ── */}
         <circle cx={495} cy={201} r="4" fill="#10b981" />
-        <line x1={495} y1={196} x2={495} y2={189} stroke="#10b98160" strokeWidth="1" />
-        <rect x={448} y={177} width={94} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={495} y={186} fontSize="9" fill="#34d399" textAnchor="middle" fontWeight="600">1 pt — minimum</text>
+
+        {/* Labels détaillés — masqués sur mobile, remplacés par les bullets HTML en dessous */}
+        <g className="chart-detail-labels">
+          {/* ── Zone labels ── */}
+          {/* Off-peak */}
+          <rect x={46} y={39} width={110} height={26} rx="3" fill="#09090b" fillOpacity="0.88" />
+          <text x={52} y={51} fontSize="9" fill="#f87171" fontWeight="600">Heures creuses</text>
+          <text x={52} y={61} fontSize="8" fill="#f87171" opacity="0.65">22h–6h · nuit</text>
+          {/* Peak */}
+          <rect x={361} y={39} width={148} height={26} rx="3" fill="#09090b" fillOpacity="0.88" />
+          <text x={367} y={51} fontSize="9" fill="#34d399" fontWeight="600">Heures de pointe</text>
+          <text x={367} y={61} fontSize="8" fill="#34d399" opacity="0.65">London + NY actifs</text>
+
+          {/* ── Key point — MAX (2h, ~8 pts) ── */}
+          <line x1={110} y1={73} x2={110} y2={80} stroke="#ef444460" strokeWidth="1" />
+          <rect x={67} y={81} width={86} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
+          <text x={110} y={90} fontSize="9" fill="#f87171" textAnchor="middle" fontWeight="600">8 pts — maximum</text>
+
+          {/* ── Key point — MIN (13h, ~1 pt) ── */}
+          <line x1={495} y1={196} x2={495} y2={189} stroke="#10b98160" strokeWidth="1" />
+          <rect x={448} y={177} width={94} height={12} rx="2" fill="#09090b" fillOpacity="0.88" />
+          <text x={495} y={186} fontSize="9" fill="#34d399" textAnchor="middle" fontWeight="600">1 pt — minimum</text>
+        </g>
       </svg>
+
+      {/* Mobile : explications en bullets (remplace les labels SVG illisibles sur petit écran) */}
+      <ul className="sm:hidden px-4 py-3 space-y-2 border-t border-zinc-800/50 text-[13px] leading-snug">
+        <li className="flex items-start gap-2.5">
+          <span className="text-red-400 font-bold shrink-0">●</span>
+          <span className="text-white"><span className="font-semibold">Maximum 8 pts vers 2h</span> — heures creuses, faible liquidité</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="text-emerald-400 font-bold shrink-0">●</span>
+          <span className="text-white"><span className="font-semibold">Minimum 1 pt vers 13h</span> — pic de liquidité (London + NY)</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="text-zinc-300 font-bold shrink-0">●</span>
+          <span className="text-zinc-300">Spread serré = bonne fenêtre · Spread large = éviter petits objectifs</span>
+        </li>
+      </ul>
 
       {/* Legend */}
       <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">

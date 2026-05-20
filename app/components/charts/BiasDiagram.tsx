@@ -126,26 +126,26 @@ export function BiasDiagram() {
       <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest text-center py-3 border-b border-zinc-800/60">
         LES 4 BIAIS PSYCHOLOGIQUES — SCÉNARIOS TYPIQUES
       </p>
-      <div className="grid grid-cols-2">
-        <div className="p-3 border-b border-r border-zinc-800">
-          <p className="text-[10px] font-bold text-red-400 uppercase tracking-wide mb-2">FOMO — Tu achètes au sommet</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2">
+        <div className="p-4 sm:p-3 border-b sm:border-r border-zinc-800">
+          <p className="text-xs sm:text-[10px] font-bold text-red-400 uppercase tracking-wide mb-2">FOMO — Tu achètes au sommet</p>
           <FomoChart />
-          <p className="text-[9px] text-zinc-500 mt-1.5 leading-snug">Le marché monte fort, tu rentres en panique au sommet, le prix retourne immédiatement</p>
+          <p className="text-[12px] sm:text-[9px] text-zinc-300 sm:text-zinc-500 mt-2 sm:mt-1.5 leading-snug">Le marché monte fort, tu rentres en panique au sommet, le prix retourne immédiatement</p>
         </div>
-        <div className="p-3 border-b border-zinc-800">
-          <p className="text-[10px] font-bold text-red-400 uppercase tracking-wide mb-2">VENGEANCE — Tu doubles après une perte</p>
+        <div className="p-4 sm:p-3 border-b border-zinc-800">
+          <p className="text-xs sm:text-[10px] font-bold text-red-400 uppercase tracking-wide mb-2">VENGEANCE — Tu doubles après une perte</p>
           <VengeanceChart />
-          <p className="text-[9px] text-zinc-500 mt-1.5 leading-snug">Tu perds, tu rouvres immédiatement plus gros pour récupérer, tu perds plus</p>
+          <p className="text-[12px] sm:text-[9px] text-zinc-300 sm:text-zinc-500 mt-2 sm:mt-1.5 leading-snug">Tu perds, tu rouvres immédiatement plus gros pour récupérer, tu perds plus</p>
         </div>
-        <div className="p-3 border-r border-zinc-800">
-          <p className="text-[10px] font-bold text-blue-400 uppercase tracking-wide mb-2">ANCRAGE — Tu refuses de fermer un trade perdant</p>
+        <div className="p-4 sm:p-3 border-b sm:border-b-0 sm:border-r border-zinc-800">
+          <p className="text-xs sm:text-[10px] font-bold text-blue-400 uppercase tracking-wide mb-2">ANCRAGE — Tu refuses de fermer un trade perdant</p>
           <AncrageChart />
-          <p className="text-[9px] text-zinc-500 mt-1.5 leading-snug">Tu refuses d'admettre la perte, tu déplaces le SL, la perte explose</p>
+          <p className="text-[12px] sm:text-[9px] text-zinc-300 sm:text-zinc-500 mt-2 sm:mt-1.5 leading-snug">Tu refuses d'admettre la perte, tu déplaces le SL, la perte explose</p>
         </div>
-        <div className="p-3">
-          <p className="text-[10px] font-bold text-red-400 uppercase tracking-wide mb-2">OVERCONFIDENCE — Tu doubles la mise après plusieurs gains</p>
+        <div className="p-4 sm:p-3">
+          <p className="text-xs sm:text-[10px] font-bold text-red-400 uppercase tracking-wide mb-2">OVERCONFIDENCE — Tu doubles la mise après plusieurs gains</p>
           <OverconfidenceChart />
-          <p className="text-[9px] text-zinc-500 mt-1.5 leading-snug">5 gains d'affilée → tu te crois invincible → tu doubles la mise → un seul trade efface tout</p>
+          <p className="text-[12px] sm:text-[9px] text-zinc-300 sm:text-zinc-500 mt-2 sm:mt-1.5 leading-snug">5 gains d'affilée → tu te crois invincible → tu doubles la mise → un seul trade efface tout</p>
         </div>
       </div>
     </div>

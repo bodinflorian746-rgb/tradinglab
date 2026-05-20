@@ -437,7 +437,7 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 function TradeDiagram() {
   return (
-    <div className="mt-5 grid grid-cols-2 gap-3">
+    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
       <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
         <p className="text-[10px] font-bold text-emerald-400 text-center mb-2">Tu as raison ↑</p>
         <svg viewBox="0 0 140 140" className="w-full" fill="none">
