@@ -42,6 +42,8 @@ export function FibonacciDiagram({ className = "" }: FibonacciDiagramProps) {
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* Divider between impulse and retracement */}
         <line x1="104" y1="8" x2="104" y2="144" stroke="#27272a" strokeWidth="0.8" />
 
@@ -49,10 +51,12 @@ export function FibonacciDiagram({ className = "" }: FibonacciDiagramProps) {
         <rect x={lineX1} y={oteTopY} width={lineX2 - lineX1} height={oteBotY - oteTopY}
           fill="#60a5fa0c" stroke="#60a5fa30" strokeWidth="0.8" rx="1" />
 
-        {/* OTE badge */}
-        <rect x="108" y={oteTopY + 2} width="24" height="12" rx="2"
-          fill="#60a5fa18" stroke="#60a5fa40" strokeWidth="0.6" />
-        <text x="120" y={oteTopY + 11} fontSize="7" fill="#60a5fa" textAnchor="middle" fontWeight="700">OTE</text>
+        {/* OTE badge — masqué sur mobile */}
+        <g className="chart-detail-labels">
+          <rect x="108" y={oteTopY + 2} width="24" height="12" rx="2"
+            fill="#60a5fa18" stroke="#60a5fa40" strokeWidth="0.6" />
+          <text x="120" y={oteTopY + 11} fontSize="7" fill="#60a5fa" textAnchor="middle" fontWeight="700">OTE</text>
+        </g>
 
         {/* Fibonacci level lines */}
         {levels.map((lvl) => {
@@ -67,20 +71,22 @@ export function FibonacciDiagram({ className = "" }: FibonacciDiagramProps) {
           );
         })}
 
-        {/* Level labels — right side, with opaque backgrounds for readability */}
-        {levels.map((lvl) => {
-          const y = levelY(lvl.pct);
-          return (
-            <g key={lvl.pct}>
-              <rect x="229" y={y - 16} width="30" height="18" rx="2"
-                fill="#09090b" fillOpacity="0.85" />
-              <text x="255" y={y - 2} fontSize="6.5"
-                fill={lvl.color} textAnchor="end" fontWeight="600" opacity="0.9">
-                {lvl.label}
-              </text>
-            </g>
-          );
-        })}
+        {/* Level labels — masqués sur mobile (5 labels 6.5px sont illisibles) */}
+        <g className="chart-detail-labels">
+          {levels.map((lvl) => {
+            const y = levelY(lvl.pct);
+            return (
+              <g key={lvl.pct}>
+                <rect x="229" y={y - 16} width="30" height="18" rx="2"
+                  fill="#09090b" fillOpacity="0.85" />
+                <text x="255" y={y - 2} fontSize="6.5"
+                  fill={lvl.color} textAnchor="end" fontWeight="600" opacity="0.9">
+                  {lvl.label}
+                </text>
+              </g>
+            );
+          })}
+        </g>
 
         {/* Impulse path (left of divider) */}
         <path d={impulsePath} stroke="#10b981" strokeWidth="2" strokeLinejoin="round" />
@@ -88,23 +94,52 @@ export function FibonacciDiagram({ className = "" }: FibonacciDiagramProps) {
         {/* Retracement path (right of divider) */}
         <path d={retracePath} stroke="#71717a" strokeWidth="1.6" strokeLinejoin="round" />
 
-        {/* Swing low dot */}
+        {/* Swing dots — toujours visibles */}
         <circle cx="10" cy={swingLowY} r="3.5" fill="#71717a" opacity="0.8" />
-        <text x="28" y={swingLowY - 10} fontSize="7" fill="#71717a" fontWeight="600">Swing Low</text>
-
-        {/* Swing high dot */}
         <circle cx="102" cy={swingHighY} r="3.5" fill="#71717a" opacity="0.8" />
-        <text x="120" y={swingHighY + 14} fontSize="6.5" fill="#71717a" fontWeight="600" opacity="0.8">Swing High</text>
-
-        {/* Bounce dot at bottom of OTE */}
         <circle cx="196" cy="108" r="4" fill="#10b981" opacity="0.85" />
 
-        {/* Label: "impulsif ↑" */}
-        <text x="56" y="44" fontSize="7.5" fill="#10b981" textAnchor="middle" opacity="0.6" fontWeight="600">impulsif ↑</text>
+        {/* Labels textuels — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          <text x="28" y={swingLowY - 10} fontSize="7" fill="#71717a" fontWeight="600">Swing Low</text>
+          <text x="120" y={swingHighY + 14} fontSize="6.5" fill="#71717a" fontWeight="600" opacity="0.8">Swing High</text>
+          <text x="56" y="44" fontSize="7.5" fill="#10b981" textAnchor="middle" opacity="0.6" fontWeight="600">impulsif ↑</text>
+        </g>
       </svg>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : key card avec les niveaux Fibonacci */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
+        <p className="text-[13px] font-bold text-blue-400">Retracement Fibonacci sur l&apos;impulsion ↑</p>
+        <div className="grid grid-cols-5 gap-1 text-center">
+          {levels.map((lvl) => (
+            <div key={lvl.pct} className={`rounded-md border p-1.5 ${
+              lvl.pct === 61.8 || lvl.pct === 78.6
+                ? "border-blue-400/40 bg-blue-500/10"
+                : "border-zinc-700 bg-zinc-900/40"
+            }`}>
+              <p className="text-[11px] font-bold font-mono leading-tight" style={{ color: lvl.color }}>
+                {lvl.label}
+              </p>
+            </div>
+          ))}
+        </div>
+        <ul className="space-y-1.5 text-[13px] leading-snug pt-1">
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2.5 h-2.5 rounded-sm bg-blue-500/30 border border-blue-400 mt-1" />
+            <span className="text-white">
+              <span className="font-bold text-blue-400">Zone OTE (61.8% – 78.6%)</span>
+              <span className="text-zinc-300"> · zone privilégiée pour entrer dans le sens de la tendance</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-emerald-400 mt-1" />
+            <span className="text-zinc-300">Rebond du prix dans la zone OTE → reprise de l'impulsion</span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
           <span className="text-[10px] text-zinc-500">Mouvement impulsif</span>

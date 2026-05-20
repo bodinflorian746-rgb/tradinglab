@@ -36,6 +36,8 @@ export function TrendDiagram({ className = "" }: TrendDiagramProps) {
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* Panel dividers */}
         <line x1={sep1} y1="8" x2={sep1} y2="126" stroke="#27272a" strokeWidth="1" />
         <line x1={sep2} y1="8" x2={sep2} y2="126" stroke="#27272a" strokeWidth="1" />
@@ -80,16 +82,34 @@ export function TrendDiagram({ className = "" }: TrendDiagramProps) {
         ))}
         <text x="258" y="22" fontSize="13" fill="#ef4444" opacity="0.3" textAnchor="middle">↘</text>
 
-        {/* Bottom labels */}
-        <text x="44" y="135" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">HAUSSIER</text>
-        <text x="44" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Tendance acheteuse</text>
+        {/* Bottom labels — masqués sur mobile, repris en HTML key */}
+        <g className="chart-detail-labels">
+          <text x="44" y="135" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">HAUSSIER</text>
+          <text x="44" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Tendance acheteuse</text>
 
-        <text x="134" y="135" fontSize="9" fill="#71717a" textAnchor="middle" fontWeight="700">RANGE</text>
-        <text x="134" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Marché en équilibre</text>
+          <text x="134" y="135" fontSize="9" fill="#71717a" textAnchor="middle" fontWeight="700">RANGE</text>
+          <text x="134" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Marché en équilibre</text>
 
-        <text x="224" y="135" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">BAISSIER</text>
-        <text x="224" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Tendance vendeuse</text>
+          <text x="224" y="135" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">BAISSIER</text>
+          <text x="224" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Tendance vendeuse</text>
+        </g>
       </svg>
+
+      {/* Mobile : 3 cartes empilées sous les 3 panels */}
+      <div className="sm:hidden grid grid-cols-3 gap-1.5 px-3 py-3 border-t border-zinc-800/60">
+        <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2 text-center">
+          <p className="text-[12px] font-bold text-emerald-400 leading-tight">HAUSSIER ↗</p>
+          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">Sommets et creux plus hauts</p>
+        </div>
+        <div className="rounded-lg border border-zinc-700 bg-zinc-900/40 p-2 text-center">
+          <p className="text-[12px] font-bold text-zinc-300 leading-tight">RANGE ↔</p>
+          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">Oscillation entre 2 niveaux</p>
+        </div>
+        <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-2 text-center">
+          <p className="text-[12px] font-bold text-red-400 leading-tight">BAISSIER ↘</p>
+          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">Sommets et creux plus bas</p>
+        </div>
+      </div>
     </div>
   );
 }

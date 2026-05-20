@@ -41,6 +41,8 @@ export function GraphFakeBreakout({ className = '' }: GraphFakeBreakoutProps) {
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* Resistance zone: subtle fill above */}
         <rect x="0" y="0" width="270" height={rY + 2} fill="#ef444408" />
 
@@ -67,23 +69,53 @@ export function GraphFakeBreakout({ className = '' }: GraphFakeBreakoutProps) {
         {/* Dot marking the wick peak (fake) */}
         <circle cx="110" cy="26" r="3" fill="#b91c1c" opacity="0.95" />
 
-        {/* Annotation: wick above resistance */}
-        <line x1="113" y1="24" x2="138" y2="14" stroke="#f87171" strokeWidth="1" opacity="0.5" strokeDasharray="2 2" />
-        <text x="141" y="18" fontSize="9" fill="#f87171" opacity="0.9">mèche ↑</text>
-
-        {/* Dot marking the close (below resistance) */}
+        {/* Dot marking the close (below resistance) — toujours visible */}
         <circle cx="116" cy="68" r="2.5" fill="#ef4444" opacity="0.9" />
-        {/* Annotation: close below resistance */}
-        <line x1="118" y1="68" x2="138" y2="80" stroke="#ef4444" strokeWidth="1" opacity="0.45" strokeDasharray="2 2" />
-        <text x="141" y="84" fontSize="9" fill="#ef4444" opacity="0.8">clôture ↓</text>
 
-        {/* Resistance label avec halo */}
-        <rect x="182" y={rY - 19} width="87" height="14" rx="3" fill="#09090b" />
-        <text x="188" y={rY - 8} fontSize="9" fill="#ef4444" opacity="0.75">Résistance</text>
+        {/* Annotations textuelles — masquées sur mobile */}
+        <g className="chart-detail-labels">
+          <line x1="113" y1="24" x2="138" y2="14" stroke="#f87171" strokeWidth="1" opacity="0.5" strokeDasharray="2 2" />
+          <text x="141" y="18" fontSize="9" fill="#f87171" opacity="0.9">mèche ↑</text>
+
+          <line x1="118" y1="68" x2="138" y2="80" stroke="#ef4444" strokeWidth="1" opacity="0.45" strokeDasharray="2 2" />
+          <text x="141" y="84" fontSize="9" fill="#ef4444" opacity="0.8">clôture ↓</text>
+
+          <rect x="182" y={rY - 19} width="87" height="14" rx="3" fill="#09090b" />
+          <text x="188" y={rY - 8} fontSize="9" fill="#ef4444" opacity="0.75">Résistance</text>
+        </g>
       </svg>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : key card avec scénario du fake breakout */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
+        <p className="text-[13px] font-bold text-red-400">Fake Breakout — piège classique ✗</p>
+        <ul className="space-y-1.5 text-[13px] leading-snug">
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-3 h-1 rounded-sm bg-red-400 mt-2" />
+            <span className="text-zinc-300">
+              <span className="font-bold text-red-400">Résistance</span> ligne haute, repoussée plusieurs fois
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
+            <span className="text-zinc-300">
+              <span className="font-bold text-red-400">Mèche ↑</span> dépasse la résistance — semble valider la cassure
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
+            <span className="text-zinc-300">
+              <span className="font-bold text-red-400">Clôture ↓</span> sous la résistance — le piège se referme
+            </span>
+          </li>
+          <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
+            <span className="shrink-0 text-zinc-300 font-bold">→</span>
+            <span className="text-zinc-300">Toujours attendre une clôture pour valider une cassure</span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full bg-red-400 opacity-90" />
           <span className="text-[10px] text-zinc-500">Mèche au-dessus de la résistance</span>

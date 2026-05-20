@@ -37,13 +37,17 @@ export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramP
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* Panel dividers */}
         <line x1={sep1} y1="8" x2={sep1} y2="140" stroke="#27272a" strokeWidth="1" />
         <line x1={sep2} y1="8" x2={sep2} y2="140" stroke="#27272a" strokeWidth="1" />
 
         {/* ── PANEL 1 : DAILY ── */}
-        <text x="44" y="15" fontSize="8" fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">DAILY</text>
-        <text x="44" y="25" fontSize="7.5" fill="#10b981" textAnchor="middle">Biais ↗</text>
+        <g className="chart-detail-labels">
+          <text x="44" y="15" fontSize="8" fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">DAILY</text>
+          <text x="44" y="25" fontSize="7.5" fill="#10b981" textAnchor="middle">Biais ↗</text>
+        </g>
         <path d={p(dailyPts)} stroke="#10b981" strokeWidth="2" strokeLinejoin="round" />
         <circle cx="4" cy="114" r="2.5" fill="#52525b" />
         {dailyHH.map(([x, y], i) => (
@@ -56,8 +60,10 @@ export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramP
         <rect x="58" y="64" width="26" height="20" rx="2" stroke="#60a5fa" strokeWidth="1" fill="#60a5fa08" strokeDasharray="3 2" />
 
         {/* ── PANEL 2 : H4 ── */}
-        <text x="134" y="15" fontSize="8" fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">H4</text>
-        <text x="134" y="25" fontSize="7.5" fill="#60a5fa" textAnchor="middle">Zone</text>
+        <g className="chart-detail-labels">
+          <text x="134" y="15" fontSize="8" fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">H4</text>
+          <text x="134" y="25" fontSize="7.5" fill="#60a5fa" textAnchor="middle">Zone</text>
+        </g>
         {/* Zone of interest */}
         <rect x={h4ZoneX} y={h4ZoneY} width={h4ZoneW} height={h4ZoneH} rx="2" fill="#10b98110" stroke="#10b98140" strokeWidth="1" />
         <path d={p(h4Pts)} stroke="#10b981" strokeWidth="1.8" strokeLinejoin="round" opacity="0.8" />
@@ -66,8 +72,10 @@ export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramP
         <rect x="142" y="80" width="32" height="18" rx="2" stroke="#60a5fa" strokeWidth="1" fill="#60a5fa08" strokeDasharray="3 2" />
 
         {/* ── PANEL 3 : M15 ── */}
-        <text x="224" y="15" fontSize="8" fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">M15</text>
-        <text x="224" y="25" fontSize="7.5" fill="#60a5fa" textAnchor="middle">Signal</text>
+        <g className="chart-detail-labels">
+          <text x="224" y="15" fontSize="8" fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">M15</text>
+          <text x="224" y="25" fontSize="7.5" fill="#60a5fa" textAnchor="middle">Signal</text>
+        </g>
         {/* Zone support line */}
         <line
           x1={sep2 + 2} y1={m15ZoneY} x2="266" y2={m15ZoneY}
@@ -89,18 +97,43 @@ export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramP
             />
           </g>
         ))}
-        {/* Pin bar badge */}
+        {/* Pin bar marker — toujours visible */}
         <circle cx="226" cy="118" r="3" fill="#10b981" opacity="0.9" />
-        <rect x="210" y="122" width="32" height="13" rx="3" fill="#10b98118" stroke="#10b98138" strokeWidth="0.8" />
-        <text x="226" y="132" fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">Pin bar ↑</text>
+
+        {/* Pin bar badge — masqué sur mobile */}
+        <g className="chart-detail-labels">
+          <rect x="210" y="122" width="32" height="13" rx="3" fill="#10b98118" stroke="#10b98138" strokeWidth="0.8" />
+          <text x="226" y="132" fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">Pin bar ↑</text>
+        </g>
 
         {/* Connector hints between panels */}
         <line x1="84" y1="74" x2={sep1} y2="74" stroke="#60a5fa" strokeWidth="1" opacity="0.4" />
         <line x1={sep2} y1="90" x2="181" y2="90" stroke="#60a5fa" strokeWidth="1" opacity="0.4" />
       </svg>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : 3 timeframes empilées avec hiérarchie */}
+      <div className="sm:hidden px-3 py-3 border-t border-zinc-800/60 space-y-2">
+        <div className="grid grid-cols-3 gap-1.5">
+          <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2 text-center">
+            <p className="text-[11px] font-bold text-emerald-400">DAILY</p>
+            <p className="text-[11px] text-zinc-300 leading-snug mt-0.5">Biais ↗</p>
+          </div>
+          <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-2 text-center">
+            <p className="text-[11px] font-bold text-blue-400">H4</p>
+            <p className="text-[11px] text-zinc-300 leading-snug mt-0.5">Zone</p>
+          </div>
+          <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-2 text-center">
+            <p className="text-[11px] font-bold text-blue-400">M15</p>
+            <p className="text-[11px] text-zinc-300 leading-snug mt-0.5">Pin bar ↑</p>
+          </div>
+        </div>
+        <p className="text-[12px] text-zinc-300 leading-snug pt-1.5 border-t border-zinc-800/50">
+          <span className="text-zinc-500">→</span> Lecture : du <span className="font-bold text-emerald-400">grand timeframe (biais)</span> vers le <span className="font-bold text-blue-400">petit timeframe (déclencheur)</span>
+        </p>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
           <span className="text-[10px] text-zinc-500">Daily — biais directionnel</span>

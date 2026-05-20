@@ -33,6 +33,8 @@ export function SupportResistance({
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* Subtle zone tints */}
         <rect x="0" y="0" width="290" height={rY + 6} fill="#ef444408" />
         <rect x="0" y={sY - 6} width="290" height={148 - sY + 6} fill="#10b98108" />
@@ -52,7 +54,7 @@ export function SupportResistance({
         {/* Price path */}
         <path d={path} stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
 
-        {/* Touch dots */}
+        {/* Touch dots — toujours visibles */}
         {touchPts.map(([x, y], i) => (
           <circle
             key={i} cx={x} cy={y} r="3.5"
@@ -60,30 +62,55 @@ export function SupportResistance({
           />
         ))}
 
-        {resistancePrice && (
-          <text x="225" y={rY - 9} fontSize="9" fill="#ef4444" opacity="0.5">
-            {resistancePrice}
+        {/* Labels & prix — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          {resistancePrice && (
+            <text x="225" y={rY - 9} fontSize="9" fill="#ef4444" opacity="0.5">
+              {resistancePrice}
+            </text>
+          )}
+
+          {supportPrice && (
+            <text x="233" y={sY + 18} fontSize="9" fill="#10b981" opacity="0.5">
+              {supportPrice}
+            </text>
+          )}
+
+          <rect x="2" y={rY - 20} width="92" height="14" rx="3" fill="#09090b" />
+          <text x="8" y={rY - 9} fontSize="10" fill="#ef4444" fontWeight="600" opacity="0.9">
+            Résistance
           </text>
-        )}
 
-        {supportPrice && (
-          <text x="233" y={sY + 18} fontSize="9" fill="#10b981" opacity="0.5">
-            {supportPrice}
+          <rect x="2" y={sY + 7} width="68" height="14" rx="3" fill="#09090b" />
+          <text x="8" y={sY + 18} fontSize="10" fill="#10b981" fontWeight="600" opacity="0.9">
+            Support
           </text>
-        )}
-
-        {/* Resistance label avec halo */}
-        <rect x="2" y={rY - 20} width="92" height="14" rx="3" fill="#09090b" />
-        <text x="8" y={rY - 9} fontSize="10" fill="#ef4444" fontWeight="600" opacity="0.9">
-          Résistance
-        </text>
-
-        {/* Support label avec halo */}
-        <rect x="2" y={sY + 7} width="68" height="14" rx="3" fill="#09090b" />
-        <text x="8" y={sY + 18} fontSize="10" fill="#10b981" fontWeight="600" opacity="0.9">
-          Support
-        </text>
+        </g>
       </svg>
+
+      {/* Mobile : key card avec définitions */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
+        <ul className="space-y-1.5 text-[13px] leading-snug">
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-3 h-1 rounded-sm bg-red-400 mt-2" />
+            <span className="text-white">
+              <span className="font-bold text-red-400">Résistance</span>
+              <span className="text-zinc-300"> · zone où le prix est repoussé vers le bas {resistancePrice && <span className="font-mono text-zinc-400">({resistancePrice})</span>}</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-3 h-1 rounded-sm bg-emerald-400 mt-2" />
+            <span className="text-white">
+              <span className="font-bold text-emerald-400">Support</span>
+              <span className="text-zinc-300"> · zone où le prix rebondit vers le haut {supportPrice && <span className="font-mono text-zinc-400">({supportPrice})</span>}</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
+            <span className="shrink-0 text-zinc-300 font-bold">→</span>
+            <span className="text-zinc-300">Les points rouges/verts marquent chaque rebond du prix sur ces niveaux</span>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }

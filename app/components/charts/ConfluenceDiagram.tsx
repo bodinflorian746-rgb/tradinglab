@@ -38,6 +38,7 @@ export function ConfluenceDiagram({ className = "" }: ConfluenceDiagramProps) {
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
         <defs>
           <marker id="cd-arr-blue" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
             <path d="M 0 0 L 6 2 L 0 4 Z" fill="#60a5fa" />
@@ -97,33 +98,59 @@ export function ConfluenceDiagram({ className = "" }: ConfluenceDiagramProps) {
         {/* Point de rebond au creux */}
         <circle cx={zoneCX} cy="118" r="4.5" fill="#10b981" opacity="0.9" />
 
-        {/* ── Badges — aucun ne chevauche la courbe ── */}
+        {/* ── Badges — masqués sur mobile ── */}
+        <g className="chart-detail-labels">
+          <rect x="8" y="16" width="70" height="13" rx="3" fill="#60a5fa18" stroke="#60a5fa40" strokeWidth="0.8" />
+          <text x="43" y="26" fontSize="8" fill="#60a5fa" textAnchor="middle" fontWeight="700">Fibonacci 61.8%</text>
 
-        {/* Fibonacci badge (blue-400) — zone vide en haut à gauche */}
-        <rect x="8" y="16" width="70" height="13" rx="3" fill="#60a5fa18" stroke="#60a5fa40" strokeWidth="0.8" />
-        <text x="43" y="26" fontSize="8" fill="#60a5fa" textAnchor="middle" fontWeight="700">Fibonacci 61.8%</text>
+          <rect x="8" y="33" width="56" height="13" rx="3" fill="#71717a14" stroke="#71717a38" strokeWidth="0.8" />
+          <text x="36" y="43" fontSize="8" fill="#71717a" textAnchor="middle" fontWeight="700">Support S/R</text>
 
-        {/* Support S/R badge (zinc-500) — en dessous du badge Fib */}
-        <rect x="8" y="33" width="56" height="13" rx="3" fill="#71717a14" stroke="#71717a38" strokeWidth="0.8" />
-        <text x="36" y="43" fontSize="8" fill="#71717a" textAnchor="middle" fontWeight="700">Support S/R</text>
+          <rect x="104" y="130" width="64" height="13" rx="3" fill="#10b98118" stroke="#10b98138" strokeWidth="0.8" />
+          <text x={zoneCX} y="140" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Zone Demand</text>
 
-        {/* Niveau psychologique — label déplacé en fin de svg pour rester au-dessus */}
+          <rect x="186" y="8" width="76" height="16" rx="4" fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
+          <text x="224" y="19" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">3 confluences ✓</text>
 
-        {/* Zone Demand badge — en dessous du rectangle */}
-        <rect x="104" y="130" width="64" height="13" rx="3" fill="#10b98118" stroke="#10b98138" strokeWidth="0.8" />
-        <text x={zoneCX} y="140" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Zone Demand</text>
-
-        {/* Compteur — haut droite, au-dessus de la courbe montante */}
-        <rect x="186" y="8" width="76" height="16" rx="4" fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
-        <text x="224" y="19" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">3 confluences ✓</text>
-
-        {/* Label "1.1800" du niveau psychologique avec halo opaque, placé en fin de svg */}
-        <rect x="95" y="66" width="38" height="14" fill="#09090b" rx="3" />
-        <text x="99" y="77" fontSize="7.5" fill="#52525b" fontWeight="600">1.1800</text>
+          <rect x="95" y="66" width="38" height="14" fill="#09090b" rx="3" />
+          <text x="99" y="77" fontSize="7.5" fill="#52525b" fontWeight="600">1.1800</text>
+        </g>
       </svg>
 
-      {/* Légende */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : key card avec les 3 confluences */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
+        <p className="text-[13px] font-bold text-emerald-400">3 confluences sur la Zone Demand ✓</p>
+        <ul className="space-y-1.5 text-[13px] leading-snug">
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-3 h-1 rounded-sm bg-blue-400 mt-2" />
+            <span className="text-white">
+              <span className="font-bold text-blue-400">Fibonacci 61.8%</span>
+              <span className="text-zinc-300"> · niveau de retracement clé</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-3 h-1 rounded-sm bg-zinc-500 mt-2" />
+            <span className="text-white">
+              <span className="font-bold text-zinc-300">Support historique</span>
+              <span className="text-zinc-300"> · zone déjà respectée par le prix</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-3 h-0.5 border-t border-dashed border-zinc-600 mt-2.5" />
+            <span className="text-white">
+              <span className="font-bold text-zinc-300">Niveau psychologique</span>
+              <span className="text-zinc-300"> · prix rond (1.1800)</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
+            <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-emerald-400 mt-1" />
+            <span className="text-zinc-300">→ rebond à l'intersection des 3 niveaux</span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
           <span className="text-[10px] text-zinc-500">Zone Demand</span>

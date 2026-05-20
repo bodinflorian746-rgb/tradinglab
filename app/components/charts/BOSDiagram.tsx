@@ -65,6 +65,8 @@ export function BOSDiagram({
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* Zone de réaction au niveau BOS */}
         <rect
           x={zoneX} y={zoneTop}
@@ -93,34 +95,39 @@ export function BOSDiagram({
           <circle key={idx} cx={pts[idx][0]} cy={pts[idx][1]} r="2.5" fill={accent} opacity="0.45" />
         ))}
 
-        {/* Badge HH / LL au point BOS */}
+        {/* Cercles toujours visibles (mobile inclus) */}
         <circle cx={bosPtX} cy={bosPtY} r="3.5" fill={accent} opacity="0.9" />
-        <rect
-          x={bosPtX - 10} y={bosBadgeY} width="20" height="13"
-          rx="3"
-          fill={accentFill} stroke={accentStroke} strokeWidth="0.8"
-        />
-        <text x={bosPtX} y={bosBadgeY + 9} fontSize="8" fill={accent} textAnchor="middle" fontWeight="700">
-          {isBull ? "HH" : "LL"}
-        </text>
-
-        {/* Badge BOS au point de cassure */}
         <circle cx={bosBreakX} cy={bosBreakY} r="4" fill={accent} opacity="0.9" />
-        <rect
-          x={bosBreakX - 18} y={bosLabelY} width="36" height="14"
-          rx="3"
-          fill={accent} opacity="0.18"
-          stroke={accentStroke} strokeWidth="0.8"
-        />
-        <rect
-          x={bosBreakX - 18} y={bosLabelY} width="36" height="14"
-          rx="3"
-          fill="none"
-          stroke={accentStroke} strokeWidth="0.8"
-        />
-        <text x={bosBreakX} y={bosLabelY + 10} fontSize="8.5" fill={accent} textAnchor="middle" fontWeight="800">
-          {isBull ? "BOS ↑" : "BOS ↓"}
-        </text>
+
+        {/* Badges textuels — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          {/* Badge HH / LL au point BOS */}
+          <rect
+            x={bosPtX - 10} y={bosBadgeY} width="20" height="13"
+            rx="3"
+            fill={accentFill} stroke={accentStroke} strokeWidth="0.8"
+          />
+          <text x={bosPtX} y={bosBadgeY + 9} fontSize="8" fill={accent} textAnchor="middle" fontWeight="700">
+            {isBull ? "HH" : "LL"}
+          </text>
+
+          {/* Badge BOS au point de cassure */}
+          <rect
+            x={bosBreakX - 18} y={bosLabelY} width="36" height="14"
+            rx="3"
+            fill={accent} opacity="0.18"
+            stroke={accentStroke} strokeWidth="0.8"
+          />
+          <rect
+            x={bosBreakX - 18} y={bosLabelY} width="36" height="14"
+            rx="3"
+            fill="none"
+            stroke={accentStroke} strokeWidth="0.8"
+          />
+          <text x={bosBreakX} y={bosLabelY + 10} fontSize="8.5" fill={accent} textAnchor="middle" fontWeight="800">
+            {isBull ? "BOS ↑" : "BOS ↓"}
+          </text>
+        </g>
 
         {/* Flèche directionnelle */}
         <text
@@ -132,8 +139,31 @@ export function BOSDiagram({
         </text>
       </svg>
 
-      {/* Légende */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : key card */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
+        <p className="text-[12px] font-bold uppercase tracking-wide" style={{ color: accent }}>
+          BOS — {isBull ? "Break of Structure haussier" : "Break of Structure baissier"}
+        </p>
+        <ul className="space-y-1.5 text-[13px] leading-snug">
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: accent }} />
+            <span className="text-white">
+              <span className="font-bold" style={{ color: accent }}>{isBull ? "HH" : "LL"}</span>
+              <span className="text-zinc-300"> · dernier {isBull ? "sommet structurel" : "creux structurel"} avant la cassure</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: accent }} />
+            <span className="text-white">
+              <span className="font-bold" style={{ color: accent }}>{isBull ? "BOS ↑" : "BOS ↓"}</span>
+              <span className="text-zinc-300"> · le prix casse ce niveau → confirmation de tendance</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full" style={{ background: accent }} />
           <span className="text-[10px] text-zinc-500">

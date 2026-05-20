@@ -70,12 +70,15 @@ export function CHoCHDiagram({
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* Zone entre le niveau CHoCH et le point de cassure */}
         {(() => {
           const zoneX = chochPtX;
           const zoneW = breakX - chochPtX;
-          const zoneTop = isBull ? breakY : chochY;
-          const zoneH = isBull ? chochY - breakY : breakY - chochY;
+          // bullish setup → price falls (chochY < breakY) ; bearish setup → price rises (breakY < chochY)
+          const zoneTop = Math.min(chochY, breakY);
+          const zoneH = Math.abs(breakY - chochY);
           return (
             <rect
               x={zoneX} y={zoneTop}
@@ -108,38 +111,70 @@ export function CHoCHDiagram({
           <circle key={idx} cx={pts[idx][0]} cy={pts[idx][1]} r="2.5" fill={trendColor} opacity="0.4" />
         ))}
 
-        {/* Badge du niveau CHoCH (HL2 ou LH2) */}
+        {/* Cercles toujours visibles */}
         <circle cx={chochPtX} cy={chochPtY} r="3.5" fill={chochColor} opacity="0.9" />
-        <rect
-          x={chochPtX - 13} y={levelBadgeY} width="26" height="13"
-          rx="3"
-          fill={chochFill} stroke={chochStroke} strokeWidth="0.8"
-        />
-        <text x={chochPtX} y={levelBadgeY + 9} fontSize="8" fill={chochColor} textAnchor="middle" fontWeight="700">
-          {isBull ? "HL2" : "LH2"}
-        </text>
-
-        {/* Badge CHoCH au point de cassure */}
         <circle cx={breakX} cy={breakY} r="4" fill={chochColor} opacity="0.9" />
-        <rect
-          x={breakX - 23} y={chochBadgeY} width="46" height="14"
-          rx="3"
-          fill={chochColor} opacity="0.18"
-          stroke={chochStroke} strokeWidth="0.8"
-        />
-        <rect
-          x={breakX - 23} y={chochBadgeY} width="46" height="14"
-          rx="3"
-          fill="none"
-          stroke={chochStroke} strokeWidth="0.8"
-        />
-        <text x={breakX} y={chochBadgeY + 10} fontSize="8.5" fill={chochColor} textAnchor="middle" fontWeight="800">
-          {isBull ? "CHoCH ↓" : "CHoCH ↑"}
-        </text>
+
+        {/* Badges textuels — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          <rect
+            x={chochPtX - 13} y={levelBadgeY} width="26" height="13"
+            rx="3"
+            fill={chochFill} stroke={chochStroke} strokeWidth="0.8"
+          />
+          <text x={chochPtX} y={levelBadgeY + 9} fontSize="8" fill={chochColor} textAnchor="middle" fontWeight="700">
+            {isBull ? "HL2" : "LH2"}
+          </text>
+
+          <rect
+            x={breakX - 23} y={chochBadgeY} width="46" height="14"
+            rx="3"
+            fill={chochColor} opacity="0.18"
+            stroke={chochStroke} strokeWidth="0.8"
+          />
+          <rect
+            x={breakX - 23} y={chochBadgeY} width="46" height="14"
+            rx="3"
+            fill="none"
+            stroke={chochStroke} strokeWidth="0.8"
+          />
+          <text x={breakX} y={chochBadgeY + 10} fontSize="8.5" fill={chochColor} textAnchor="middle" fontWeight="800">
+            {isBull ? "CHoCH ↓" : "CHoCH ↑"}
+          </text>
+        </g>
       </svg>
 
-      {/* Légende */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : key card */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
+        <p className="text-[12px] font-bold uppercase tracking-wide" style={{ color: chochColor }}>
+          CHoCH — Change of Character {isBull ? "(retournement baissier)" : "(retournement haussier)"}
+        </p>
+        <ul className="space-y-1.5 text-[13px] leading-snug">
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: trendColor }} />
+            <span className="text-zinc-300">
+              Tendance initiale <span className="font-bold" style={{ color: trendColor }}>{isBull ? "haussière (HH/HL)" : "baissière (LH/LL)"}</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: chochColor }} />
+            <span className="text-white">
+              <span className="font-bold" style={{ color: chochColor }}>{isBull ? "HL2" : "LH2"} cassé</span>
+              <span className="text-zinc-300"> · le prix casse le {isBull ? "creux structurel" : "sommet structurel"} précédent</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: chochColor }} />
+            <span className="text-white">
+              <span className="font-bold" style={{ color: chochColor }}>CHoCH {isBull ? "↓" : "↑"}</span>
+              <span className="text-zinc-300"> · 1er signal de retournement de tendance</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full" style={{ background: trendColor }} />
           <span className="text-[10px] text-zinc-500">

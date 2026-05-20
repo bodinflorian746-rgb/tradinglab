@@ -66,34 +66,42 @@ export function MarketStructureDiagram({
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* Ligne de prix */}
         <path d={path} stroke={accent} strokeWidth="2" strokeLinejoin="round" />
 
         {/* Point de départ (neutre) */}
         <circle cx={pts[0][0]} cy={pts[0][1]} r="2.5" fill="#52525b" />
 
-        {/* Badges sur chaque sommet et creux clé */}
-        {labels.map(({ i, text, above }) => {
+        {/* Cercles aux sommets/creux — toujours visibles (mobile inclus) */}
+        {labels.map(({ i, text }) => {
           const [x, y] = pts[i];
-          // above=true → badge au-dessus du point (y plus faible en SVG = plus haut à l'écran)
-          const by = above ? y - 18 : y + 8;
-          return (
-            <g key={text}>
-              <circle cx={x} cy={y} r="3.5" fill={accent} opacity="0.9" />
-              <rect
-                x={x - 13} y={by} width="26" height="13"
-                rx="3"
-                fill={accentFill} stroke={accentStroke} strokeWidth="0.8"
-              />
-              <text
-                x={x} y={by + 9}
-                fontSize="8" fill={accent} textAnchor="middle" fontWeight="700"
-              >
-                {text}
-              </text>
-            </g>
-          );
+          return <circle key={`pt-${text}`} cx={x} cy={y} r="3.5" fill={accent} opacity="0.9" />;
         })}
+
+        {/* Badges textuels — masqués sur mobile, repris en HTML key sous le SVG */}
+        <g className="chart-detail-labels">
+          {labels.map(({ i, text, above }) => {
+            const [x, y] = pts[i];
+            const by = above ? y - 18 : y + 8;
+            return (
+              <g key={text}>
+                <rect
+                  x={x - 13} y={by} width="26" height="13"
+                  rx="3"
+                  fill={accentFill} stroke={accentStroke} strokeWidth="0.8"
+                />
+                <text
+                  x={x} y={by + 9}
+                  fontSize="8" fill={accent} textAnchor="middle" fontWeight="700"
+                >
+                  {text}
+                </text>
+              </g>
+            );
+          })}
+        </g>
 
         {/* Flèche directionnelle en coin pour indiquer la tendance */}
         <text
@@ -105,8 +113,31 @@ export function MarketStructureDiagram({
         </text>
       </svg>
 
-      {/* Légende */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : key card avec définitions claires */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
+        <p className="text-[12px] font-bold uppercase tracking-wide" style={{ color: accent }}>
+          {isBull ? "Tendance haussière ↗" : "Tendance baissière ↘"}
+        </p>
+        <ul className="space-y-1.5 text-[13px] leading-snug">
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: accent }} />
+            <span className="text-white">
+              <span className="font-bold" style={{ color: accent }}>{isBull ? "HH" : "LH"}</span>
+              <span className="text-zinc-300"> · {isBull ? "Higher High — chaque sommet plus haut que le précédent" : "Lower High — chaque sommet plus bas que le précédent"}</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: accent }} />
+            <span className="text-white">
+              <span className="font-bold" style={{ color: accent }}>{isBull ? "HL" : "LL"}</span>
+              <span className="text-zinc-300"> · {isBull ? "Higher Low — chaque creux plus haut que le précédent" : "Lower Low — chaque creux plus bas que le précédent"}</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full" style={{ background: accent }} />
           <span className="text-[10px] text-zinc-500">

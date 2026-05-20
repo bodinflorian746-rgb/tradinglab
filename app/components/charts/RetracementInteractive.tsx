@@ -80,6 +80,10 @@ export function RetracementInteractive({ className = "" }: { className?: string 
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`
+          .ri-pulse { animation: ri-pulse 1.5s ease-in-out infinite; }
+          @media (max-width: 640px) { .chart-detail-labels { display: none; } }
+        `}</style>
         <defs>
           <marker id="ri-arr-em" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
             <path d="M 0 0 L 6 2 L 0 4 Z" fill="#10b981" />
@@ -90,16 +94,17 @@ export function RetracementInteractive({ className = "" }: { className?: string 
         <path d={PATHS.trend} stroke="#71717a" strokeWidth="1.8" strokeLinejoin="round" />
         <path d={PATHS.retracement} stroke="#71717a" strokeWidth="1.6" strokeLinejoin="round" strokeDasharray="5 3" />
 
-        {/* HH dot */}
+        {/* HH dot — toujours visible */}
         <circle cx="118" cy="44" r="3" fill="#71717a" opacity="0.7" />
 
-        {/* HL zone label (halo + texte placés en fin pour rester au-dessus) */}
-        <rect x="146" y="79" width="26" height="14" rx="3" fill="#09090b" />
-        <text x="152" y="90" fontSize="7" fill="#71717a" fontWeight="600" opacity="0.7">HL</text>
+        {/* Labels HH/HL — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          <rect x="146" y="79" width="26" height="14" rx="3" fill="#09090b" />
+          <text x="152" y="90" fontSize="7" fill="#71717a" fontWeight="600" opacity="0.7">HL</text>
 
-        {/* HH label avec halo */}
-        <rect x="114" y="30" width="26" height="14" rx="3" fill="#09090b" />
-        <text x="120" y="41" fontSize="7" fill="#71717a" fontWeight="600" opacity="0.8">HH</text>
+          <rect x="114" y="30" width="26" height="14" rx="3" fill="#09090b" />
+          <text x="120" y="41" fontSize="7" fill="#71717a" fontWeight="600" opacity="0.8">HH</text>
+        </g>
 
         {/* Decision point "?" — pulsing when no choice made */}
         {!choice && (

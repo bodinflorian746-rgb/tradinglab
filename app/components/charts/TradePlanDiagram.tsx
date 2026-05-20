@@ -23,6 +23,7 @@ export function TradePlanDiagram({ className = "" }: TradePlanDiagramProps) {
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
         <defs>
           <marker id="tp-arr" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
             <path d="M 0 0 L 6 2 L 0 4 Z" fill="#10b981" />
@@ -67,29 +68,54 @@ export function TradePlanDiagram({ className = "" }: TradePlanDiagramProps) {
         <line x1="132" y1={entryY + 2} x2="132" y2={slY - 8}
           stroke="#ef4444" strokeWidth="1.1" opacity="0.6" markerEnd="url(#sl-arr)" />
 
-        {/* R/R badge — top right, above price path */}
-        <rect x="182" y="8" width="78" height="16" rx="4"
-          fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
-        <text x="221" y="19" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">R/R = 1:2 ✓</text>
+        {/* Badges textuels — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          <rect x="182" y="8" width="78" height="16" rx="4"
+            fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
+          <text x="221" y="19" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">R/R = 1:2 ✓</text>
 
-        {/* ENTRÉE badge — top left */}
-        <rect x="8" y="8" width="48" height="14" rx="3"
-          fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
-        <text x="32" y="18" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">ENTRÉE</text>
+          <rect x="8" y="8" width="48" height="14" rx="3"
+            fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
+          <text x="32" y="18" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">ENTRÉE</text>
 
-        {/* TP badge — right of TP line */}
-        <rect x="196" y={tpY - 8} width="58" height="13" rx="3"
-          fill="#10b98114" stroke="#10b98138" strokeWidth="0.8" />
-        <text x="225" y={tpY + 1} fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">Take Profit</text>
+          <rect x="196" y={tpY - 8} width="58" height="13" rx="3"
+            fill="#10b98114" stroke="#10b98138" strokeWidth="0.8" />
+          <text x="225" y={tpY + 1} fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">Take Profit</text>
 
-        {/* SL badge — right of SL line */}
-        <rect x="208" y={slY - 1} width="46" height="13" rx="3"
-          fill="#ef444414" stroke="#ef444438" strokeWidth="0.8" />
-        <text x="231" y={slY + 9} fontSize="7.5" fill="#ef4444" textAnchor="middle" fontWeight="700">Stop Loss</text>
+          <rect x="208" y={slY - 1} width="46" height="13" rx="3"
+            fill="#ef444414" stroke="#ef444438" strokeWidth="0.8" />
+          <text x="231" y={slY + 9} fontSize="7.5" fill="#ef4444" textAnchor="middle" fontWeight="700">Stop Loss</text>
+        </g>
       </svg>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : plan de trade en cartes */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
+        <div className="grid grid-cols-3 gap-1.5">
+          <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2 text-center">
+            <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-wide">TP</p>
+            <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">+2R</p>
+          </div>
+          <div className="rounded-lg border border-zinc-700 bg-zinc-900/40 p-2 text-center">
+            <p className="text-[10px] text-zinc-300 font-bold uppercase tracking-wide">Entrée</p>
+            <p className="text-[12px] text-zinc-400 leading-snug mt-0.5">Prix d'achat</p>
+          </div>
+          <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-2 text-center">
+            <p className="text-[10px] text-red-400 font-bold uppercase tracking-wide">SL</p>
+            <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">−1R</p>
+          </div>
+        </div>
+        <div className="text-center pt-1">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-[12px] font-bold text-emerald-400">
+            R/R = 1:2 ✓
+          </span>
+        </div>
+        <p className="text-[12px] text-zinc-400 leading-snug text-center pt-1 border-t border-zinc-800/50">
+          Tout défini AVANT l'entrée : risque connu, objectif clair.
+        </p>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
           <span className="text-[10px] text-zinc-500">Entrée / Take Profit</span>
