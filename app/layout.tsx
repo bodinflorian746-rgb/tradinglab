@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
+import type { Viewport } from "next";
 import Navbar from "@/app/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -8,6 +9,11 @@ export const metadata = {
   title: "TradingLab – Apprends le trading comme un pro",
   description:
     "La plateforme d'apprentissage du trading la plus complète.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

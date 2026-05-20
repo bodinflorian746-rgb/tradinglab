@@ -139,15 +139,20 @@ export default function StrategiesPage() {
           </p>
 
           {/* Stats row */}
-          <div className="inline-flex items-center divide-x divide-zinc-800 bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden">
+          <div className="grid grid-cols-2 sm:inline-flex sm:items-center sm:divide-x divide-zinc-800 bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden">
             {[
               { value: "8",       label: "Stratégies" },
               { value: "8",       label: "Gratuites" },
               { value: "À venir", label: "Premium" },
               { value: "3",       label: "Niveaux" },
-            ].map((s) => (
-              <div key={s.label} className="px-5 py-3 text-center">
-                <p className="text-lg font-black text-white tabular-nums">{s.value}</p>
+            ].map((s, i) => (
+              <div
+                key={s.label}
+                className={`px-4 sm:px-5 py-3 text-center border-zinc-800 ${
+                  i < 2 ? "border-b sm:border-b-0" : ""
+                } ${i % 2 === 0 ? "border-r sm:border-r-0" : ""}`}
+              >
+                <p className="text-base sm:text-lg font-black text-white tabular-nums">{s.value}</p>
                 <p className="text-[10px] text-zinc-600 uppercase tracking-wide">{s.label}</p>
               </div>
             ))}
