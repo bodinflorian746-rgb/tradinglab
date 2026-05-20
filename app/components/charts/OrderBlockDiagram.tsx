@@ -69,6 +69,8 @@ export function OrderBlockDiagram({ className = "" }: OrderBlockDiagramProps) {
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* Panel divider */}
         <line x1="134" y1="8" x2="134" y2="144" stroke="#27272a" strokeWidth="1" />
 
@@ -91,19 +93,19 @@ export function OrderBlockDiagram({ className = "" }: OrderBlockDiagramProps) {
         {/* Candles */}
         {bullCandles.map((c, i) => <MiniCandle key={i} {...c} />)}
 
-        {/* Bullish OB badge */}
-        <rect x="6" y="7" width="60" height="14" rx="3"
-          fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
-        <text x="36" y="17" fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">Bullish OB</text>
+        {/* Badges textuels bullish OB — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          <rect x="6" y="7" width="60" height="14" rx="3"
+            fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
+          <text x="36" y="17" fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">Bullish OB</text>
 
-        {/* Arrow from badge pointing to OB candle */}
-        <line x1="54" y1="21" x2="54" y2={bullOB.bodyTop - 4}
-          stroke="#10b981" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.5" />
+          <line x1="54" y1="21" x2="54" y2={bullOB.bodyTop - 4}
+            stroke="#10b981" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.5" />
 
-        {/* Return / rejet annotation */}
-        <rect x="96" y="16" width="36" height="11" rx="2"
-          fill="#09090b" fillOpacity="0.9" />
-        <text x="114" y="24" fontSize="6.5" fill="#10b981" textAnchor="middle" fontWeight="600">rejet ↑</text>
+          <rect x="96" y="16" width="36" height="11" rx="2"
+            fill="#09090b" fillOpacity="0.9" />
+          <text x="114" y="24" fontSize="6.5" fill="#10b981" textAnchor="middle" fontWeight="600">rejet ↑</text>
+        </g>
 
         {/* ── BEARISH OB ── */}
 
@@ -124,23 +126,41 @@ export function OrderBlockDiagram({ className = "" }: OrderBlockDiagramProps) {
         {/* Candles */}
         {bearCandles.map((c, i) => <MiniCandle key={i} {...c} />)}
 
-        {/* Bearish OB badge */}
-        <rect x="140" y="7" width="60" height="14" rx="3"
-          fill="#ef444418" stroke="#ef444440" strokeWidth="0.8" />
-        <text x="170" y="17" fontSize="7.5" fill="#ef4444" textAnchor="middle" fontWeight="700">Bearish OB</text>
+        {/* Badges textuels bearish OB — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          <rect x="140" y="7" width="60" height="14" rx="3"
+            fill="#ef444418" stroke="#ef444440" strokeWidth="0.8" />
+          <text x="170" y="17" fontSize="7.5" fill="#ef4444" textAnchor="middle" fontWeight="700">Bearish OB</text>
 
-        {/* Arrow from badge pointing to OB candle */}
-        <line x1="188" y1="21" x2="188" y2={bearOB.bodyTop - 4}
-          stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.5" />
+          <line x1="188" y1="21" x2="188" y2={bearOB.bodyTop - 4}
+            stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.5" />
 
-        {/* Return / rejet annotation */}
-        <rect x="230" y="44" width="36" height="11" rx="2"
-          fill="#09090b" fillOpacity="0.9" />
-        <text x="248" y="52" fontSize="6.5" fill="#ef4444" textAnchor="middle" fontWeight="600">rejet ↓</text>
+          <rect x="230" y="44" width="36" height="11" rx="2"
+            fill="#09090b" fillOpacity="0.9" />
+          <text x="248" y="52" fontSize="6.5" fill="#ef4444" textAnchor="middle" fontWeight="600">rejet ↓</text>
+        </g>
       </svg>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : 2 cartes Order Block */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2.5">
+        <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2.5 space-y-1.5">
+          <p className="text-[13px] font-bold text-emerald-400">Bullish OB (gauche)</p>
+          <p className="text-[12px] text-zinc-300 leading-snug">
+            <span className="font-bold text-emerald-400">Dernière bougie baissière</span> avant une impulsion haussière forte. Le prix revient
+            tester cette zone (<span className="font-semibold">rejet ↑</span>) puis repart à la hausse.
+          </p>
+        </div>
+        <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-2.5 space-y-1.5">
+          <p className="text-[13px] font-bold text-red-400">Bearish OB (droite)</p>
+          <p className="text-[12px] text-zinc-300 leading-snug">
+            <span className="font-bold text-red-400">Dernière bougie haussière</span> avant une impulsion baissière forte. Le prix revient
+            tester cette zone (<span className="font-semibold">rejet ↓</span>) puis chute.
+          </p>
+        </div>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
           <span className="text-[10px] text-zinc-500">Bullish OB — dernière baissière avant hausse impulsive</span>

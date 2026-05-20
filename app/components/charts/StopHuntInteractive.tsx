@@ -117,6 +117,7 @@ export function StopHuntInteractive({ className = "" }: { className?: string }) 
         .sh-pulse { animation: sh-pulse 1.5s ease-in-out infinite; }
         .sh-fade  { animation: sh-fade 0.4s ease both; }
         .sh-bad   { animation: sh-bad 0.5s ease both; }
+        @media (max-width: 640px) { .chart-detail-labels { display: none; } }
       `}</style>
 
       <svg
@@ -131,11 +132,13 @@ export function StopHuntInteractive({ className = "" }: { className?: string }) 
           fill="#3f3f4630" stroke="#71717a40" strokeWidth="0.8"
           strokeDasharray="4 3" rx="1" />
 
-        {/* Support label — opaque bg */}
-        <rect x={12} y={150} width={54} height={11} rx="2"
-          fill="#09090b" fillOpacity="0.85" />
-        <text x={39} y={158} fontSize="7.5" fill="#71717a"
-          textAnchor="middle" fontWeight="600">Support clé</text>
+        {/* Support label — masqué sur mobile (le contexte de la question explique deja) */}
+        <g className="chart-detail-labels">
+          <rect x={12} y={150} width={54} height={11} rx="2"
+            fill="#09090b" fillOpacity="0.85" />
+          <text x={39} y={158} fontSize="7.5" fill="#71717a"
+            textAnchor="middle" fontWeight="600">Support clé</text>
+        </g>
 
         {/* Context candles */}
         {CONTEXT.map((c, i) => <MiniCandle key={i} {...c} />)}
@@ -160,9 +163,9 @@ export function StopHuntInteractive({ className = "" }: { className?: string }) 
           </g>
         )}
 
-        {/* Result badge */}
+        {/* Result badge — masqué sur mobile (la carte explication ci-dessous le reprend) */}
         {choice && cfg && (
-          <g className={choice !== "wait" ? "sh-bad" : "sh-fade"}>
+          <g className={`chart-detail-labels ${choice !== "wait" ? "sh-bad" : "sh-fade"}`}>
             <rect
               x={cfg.badgeCx - cfg.badgeHw} y={cfg.badgeCy - 10}
               width={cfg.badgeHw * 2} height={16} rx="3"

@@ -62,57 +62,91 @@ export function PrecisionEntryDiagram({ className = "" }: PrecisionEntryDiagramP
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* 4 zones de confluence empilées verticalement, distinguables */}
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
 
-        {/* OTE — bande la plus haute (y=128-142) bleue */}
+        {/* 4 zones de confluence empilées (toujours visibles) */}
         <rect x={10} y={128} width={310} height={14} fill="#60a5fa18" stroke="#60a5fa55" strokeWidth="0.8" strokeDasharray="4 2" rx="2" />
-        <text x={16} y={138} fontSize="7.5" fill="#60a5fa" fontWeight="700">OTE 61.8–78.6%</text>
-
-        {/* OB — bande sous OTE (y=148-162) emerald */}
         <rect x={10} y={148} width={310} height={14} fill="#10b98118" stroke="#10b98155" strokeWidth="0.8" rx="2" />
-        <text x={16} y={158} fontSize="7.5" fill="#10b981" fontWeight="700">Order Block</text>
-
-        {/* FVG — bande sous OB (y=168-178) ambre */}
         <rect x={10} y={168} width={310} height={10} fill="#f59e0b18" stroke="#f59e0b55" strokeWidth="0.8" rx="2" />
-        <text x={16} y={176} fontSize="7" fill="#f59e0b" fontWeight="700">FVG</text>
-
-        {/* Support — ligne en bas (y=190) emerald */}
         <line x1={10} y1={190} x2={320} y2={190} stroke="#10b981" strokeWidth="1.2" strokeDasharray="5 3" />
-        <text x={16} y={186} fontSize="7" fill="#10b981" fontWeight="600">Support horizontal</text>
 
         {/* Candles au-dessus des zones */}
         {CANDLES.map((c, i) => <Candle key={i} {...c} />)}
 
-        {/* Labels latéraux distincts à droite, espacés verticalement */}
-        <rect x={330} y={127} width={48} height={14} rx="2" fill="#09090b" />
-        <text x={354} y={138} fontSize="7.5" fill="#60a5fa" textAnchor="middle" fontWeight="700">OTE</text>
-
-        <rect x={330} y={147} width={48} height={14} rx="2" fill="#09090b" />
-        <text x={354} y={158} fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">OB</text>
-
-        <rect x={330} y={165} width={48} height={14} rx="2" fill="#09090b" />
-        <text x={354} y={176} fontSize="7.5" fill="#f59e0b" textAnchor="middle" fontWeight="700">FVG</text>
-
-        <rect x={330} y={182} width={48} height={14} rx="2" fill="#09090b" />
-        <text x={354} y={193} fontSize="7" fill="#10b981" textAnchor="middle" fontWeight="700">Support</text>
-
-        {/* Signal d'entrée au contact de la zone composite */}
-        <rect x={235} y={86} width={72} height={13} rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.7" />
-        <text x={271} y={96} fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">ENTRÉE PRÉCISE</text>
-        <line x1={271} y1={99} x2={290} y2={158} stroke="#10b981" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
-
-        {/* 4 confluences counter — top right */}
-        <rect x={388} y={8} width={104} height={14} rx="3" fill="#10b98118" stroke="#10b98155" strokeWidth="0.7" />
-        <text x={440} y={18} fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">4 confluences ✓</text>
-
-        {/* Swing High marker */}
+        {/* Swing High marker — toujours visible */}
         <circle cx={110} cy={14} r="3" fill="#71717a" opacity="0.8" />
-        <text x={140} y={17} fontSize="6.5" fill="#71717a" fontWeight="600">Swing High</text>
 
+        {/* Tous les badges textuels — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          <text x={16} y={138} fontSize="7.5" fill="#60a5fa" fontWeight="700">OTE 61.8–78.6%</text>
+          <text x={16} y={158} fontSize="7.5" fill="#10b981" fontWeight="700">Order Block</text>
+          <text x={16} y={176} fontSize="7" fill="#f59e0b" fontWeight="700">FVG</text>
+          <text x={16} y={186} fontSize="7" fill="#10b981" fontWeight="600">Support horizontal</text>
+
+          <rect x={330} y={127} width={48} height={14} rx="2" fill="#09090b" />
+          <text x={354} y={138} fontSize="7.5" fill="#60a5fa" textAnchor="middle" fontWeight="700">OTE</text>
+
+          <rect x={330} y={147} width={48} height={14} rx="2" fill="#09090b" />
+          <text x={354} y={158} fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">OB</text>
+
+          <rect x={330} y={165} width={48} height={14} rx="2" fill="#09090b" />
+          <text x={354} y={176} fontSize="7.5" fill="#f59e0b" textAnchor="middle" fontWeight="700">FVG</text>
+
+          <rect x={330} y={182} width={48} height={14} rx="2" fill="#09090b" />
+          <text x={354} y={193} fontSize="7" fill="#10b981" textAnchor="middle" fontWeight="700">Support</text>
+
+          <rect x={235} y={86} width={72} height={13} rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.7" />
+          <text x={271} y={96} fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">ENTRÉE PRÉCISE</text>
+          <line x1={271} y1={99} x2={290} y2={158} stroke="#10b981" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
+
+          <rect x={388} y={8} width={104} height={14} rx="3" fill="#10b98118" stroke="#10b98155" strokeWidth="0.7" />
+          <text x={440} y={18} fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">4 confluences ✓</text>
+
+          <text x={140} y={17} fontSize="6.5" fill="#71717a" fontWeight="600">Swing High</text>
+        </g>
       </svg>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : 4 confluences détaillées en cartes + signal */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
+        <p className="text-[13px] font-bold text-emerald-400">Entrée de précision — 4 confluences ✓</p>
+        <ul className="space-y-1.5 text-[13px] leading-snug">
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-3 h-3 rounded-sm bg-blue-500/30 border border-blue-400 mt-0.5" />
+            <span className="text-white">
+              <span className="font-bold text-blue-400">1 · OTE (61.8–78.6%)</span>
+              <span className="text-zinc-300"> · zone Fibonacci optimale</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-3 h-3 rounded-sm bg-emerald-500/30 border border-emerald-500 mt-0.5" />
+            <span className="text-white">
+              <span className="font-bold text-emerald-400">2 · Order Block</span>
+              <span className="text-zinc-300"> · zone d&apos;ordres institutionnels</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-3 h-3 rounded-sm bg-amber-500/30 border border-amber-500 mt-0.5" />
+            <span className="text-white">
+              <span className="font-bold text-amber-400">3 · FVG</span>
+              <span className="text-zinc-300"> · Fair Value Gap (zone de déséquilibre)</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-3 h-0.5 border-t border-dashed border-emerald-500 mt-2.5" />
+            <span className="text-white">
+              <span className="font-bold text-emerald-400">4 · Support horizontal</span>
+              <span className="text-zinc-300"> · niveau historique respecté</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
+            <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-emerald-400 mt-1" />
+            <span className="text-zinc-300">→ À l&apos;intersection des 4 zones : <span className="font-bold text-emerald-400">ENTRÉE PRÉCISE</span> sur signal de rejet haussier</span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-blue-400/40" />
           <span className="text-[10px] text-zinc-500">Zone OTE (61.8–78.6%)</span>

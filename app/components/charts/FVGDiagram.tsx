@@ -63,6 +63,8 @@ export function FVGDiagram({ className = "" }: FVGDiagramProps) {
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* Panel divider */}
         <line x1="134" y1="8" x2="134" y2="144" stroke="#27272a" strokeWidth="1" />
 
@@ -78,29 +80,27 @@ export function FVGDiagram({ className = "" }: FVGDiagramProps) {
         <MiniCandle {...b3} />
         <MiniCandle {...b4} />
 
-        {/* FVG badge — top left, above all candles */}
-        <rect x="6" y="7" width="72" height="14" rx="3"
-          fill="#60a5fa18" stroke="#60a5fa50" strokeWidth="0.8" />
-        <text x="42" y="17" fontSize="7.5" fill="#60a5fa" textAnchor="middle" fontWeight="700">FVG haussier</text>
+        {/* Badges textuels FVG haussier — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          <rect x="6" y="7" width="72" height="14" rx="3"
+            fill="#60a5fa18" stroke="#60a5fa50" strokeWidth="0.8" />
+          <text x="42" y="17" fontSize="7.5" fill="#60a5fa" textAnchor="middle" fontWeight="700">FVG haussier</text>
 
-        {/* Gap annotation lines pointing to gap boundaries */}
-        <line x1="92" y1={fvgBullTop} x2="92" y2={fvgBullBot}
-          stroke="#60a5fa" strokeWidth="0.8" opacity="0.5" strokeDasharray="2 2" />
+          <line x1="92" y1={fvgBullTop} x2="92" y2={fvgBullBot}
+            stroke="#60a5fa" strokeWidth="0.8" opacity="0.5" strokeDasharray="2 2" />
 
-        {/* B1 high marker */}
-        <rect x="82" y={fvgBullBot - 8} width="22" height="14" rx="2"
-          fill="#09090b" fillOpacity="0.9" />
-        <text x="93" y={fvgBullBot + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B1 haut</text>
+          <rect x="82" y={fvgBullBot - 8} width="22" height="14" rx="2"
+            fill="#09090b" fillOpacity="0.9" />
+          <text x="93" y={fvgBullBot + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B1 haut</text>
 
-        {/* B3 low marker */}
-        <rect x="82" y={fvgBullTop - 8} width="22" height="14" rx="2"
-          fill="#09090b" fillOpacity="0.9" />
-        <text x="93" y={fvgBullTop + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B3 bas</text>
+          <rect x="82" y={fvgBullTop - 8} width="22" height="14" rx="2"
+            fill="#09090b" fillOpacity="0.9" />
+          <text x="93" y={fvgBullTop + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B3 bas</text>
 
-        {/* Mitigation annotation */}
-        <rect x="100" y="23" width="30" height="14" rx="2"
-          fill="#09090b" fillOpacity="0.9" />
-        <text x="115" y="34" fontSize="6.5" fill="#71717a" textAnchor="middle">retour ↓</text>
+          <rect x="100" y="23" width="30" height="14" rx="2"
+            fill="#09090b" fillOpacity="0.9" />
+          <text x="115" y="34" fontSize="6.5" fill="#71717a" textAnchor="middle">retour ↓</text>
+        </g>
 
         {/* ── BEARISH FVG ── */}
 
@@ -114,33 +114,49 @@ export function FVGDiagram({ className = "" }: FVGDiagramProps) {
         <MiniCandle {...b3r} />
         <MiniCandle {...b4r} />
 
-        {/* FVG badge */}
-        <rect x="140" y="7" width="72" height="14" rx="3"
-          fill="#60a5fa18" stroke="#60a5fa50" strokeWidth="0.8" />
-        <text x="176" y="17" fontSize="7.5" fill="#60a5fa" textAnchor="middle" fontWeight="700">FVG baissier</text>
+        {/* Badges textuels FVG baissier — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          <rect x="140" y="7" width="72" height="14" rx="3"
+            fill="#60a5fa18" stroke="#60a5fa50" strokeWidth="0.8" />
+          <text x="176" y="17" fontSize="7.5" fill="#60a5fa" textAnchor="middle" fontWeight="700">FVG baissier</text>
 
-        {/* Gap annotation lines */}
-        <line x1="220" y1={fvgBearTop} x2="220" y2={fvgBearBot}
-          stroke="#60a5fa" strokeWidth="0.8" opacity="0.5" strokeDasharray="2 2" />
+          <line x1="220" y1={fvgBearTop} x2="220" y2={fvgBearBot}
+            stroke="#60a5fa" strokeWidth="0.8" opacity="0.5" strokeDasharray="2 2" />
 
-        {/* B1r low marker */}
-        <rect x="222" y={fvgBearTop - 8} width="24" height="14" rx="2"
-          fill="#09090b" fillOpacity="0.9" />
-        <text x="234" y={fvgBearTop + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B1 bas</text>
+          <rect x="222" y={fvgBearTop - 8} width="24" height="14" rx="2"
+            fill="#09090b" fillOpacity="0.9" />
+          <text x="234" y={fvgBearTop + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B1 bas</text>
 
-        {/* B3r high marker */}
-        <rect x="222" y={fvgBearBot - 8} width="24" height="14" rx="2"
-          fill="#09090b" fillOpacity="0.9" />
-        <text x="234" y={fvgBearBot + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B3 haut</text>
+          <rect x="222" y={fvgBearBot - 8} width="24" height="14" rx="2"
+            fill="#09090b" fillOpacity="0.9" />
+          <text x="234" y={fvgBearBot + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B3 haut</text>
 
-        {/* Mitigation annotation */}
-        <rect x="234" y="41" width="30" height="14" rx="2"
-          fill="#09090b" fillOpacity="0.9" />
-        <text x="249" y="52" fontSize="6.5" fill="#71717a" textAnchor="middle">retour ↑</text>
+          <rect x="234" y="41" width="30" height="14" rx="2"
+            fill="#09090b" fillOpacity="0.9" />
+          <text x="249" y="52" fontSize="6.5" fill="#71717a" textAnchor="middle">retour ↑</text>
+        </g>
       </svg>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : 2 cartes empilées avec le mécanisme FVG */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2.5">
+        <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-2.5 space-y-1.5">
+          <p className="text-[13px] font-bold text-blue-400">FVG haussier (gauche)</p>
+          <p className="text-[12px] text-zinc-300 leading-snug">
+            3 bougies haussières d&apos;affilée → un <span className="font-bold text-blue-400">gap</span> se forme entre le haut de B1 et le bas de B3.
+            Le prix revient combler ce gap (<span className="font-semibold">retour ↓</span>) avant de repartir.
+          </p>
+        </div>
+        <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-2.5 space-y-1.5">
+          <p className="text-[13px] font-bold text-blue-400">FVG baissier (droite)</p>
+          <p className="text-[12px] text-zinc-300 leading-snug">
+            3 bougies baissières d&apos;affilée → un <span className="font-bold text-blue-400">gap</span> entre le bas de B1 et le haut de B3.
+            Le prix remonte mitiger le gap (<span className="font-semibold">retour ↑</span>) puis reprend la baisse.
+          </p>
+        </div>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm" style={{ background: "#60a5fa", opacity: 0.6 }} />
           <span className="text-[10px] text-zinc-500">FVG = Fair Value Gap (zone de déséquilibre)</span>

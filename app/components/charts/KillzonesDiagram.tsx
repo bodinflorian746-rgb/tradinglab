@@ -22,12 +22,14 @@ const volPath = "M " + VOL.map(([x, y]) => `${x},${y}`).join(" L ");
 export function KillzonesDiagram({ className = "" }: KillzonesDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
+      {/* ── DESKTOP (SVG 900×268, inchangé) ───────────────────────── */}
       <svg
         width="100%"
         viewBox="0 0 900 268"
         fill="none"
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden sm:block"
       >
         {/* Asian Range 00h–07h */}
         <rect x={hx(0)} y={42} width={hx(7) - hx(0)} height={173} fill="#3f3f4618" />
@@ -89,8 +91,43 @@ export function KillzonesDiagram({ className = "" }: KillzonesDiagramProps) {
         <text x={hx(13.5)} y={251} fontSize="8.5" fill="#10b981" textAnchor="middle" fontWeight="600">NY Open — 13h30</text>
       </svg>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* ── MOBILE (vraie timeline empilée) ────────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[12px] font-semibold text-zinc-500 uppercase tracking-wide text-center mb-1">
+          Killzones — sessions à haute volatilité (heure de Paris)
+        </p>
+        {[
+          { range: "00h – 07h", title: "Asian Range", desc: "Accumulation nocturne", color: "zinc", accent: "#52525b", icon: "🌙" },
+          { range: "07h – 10h", title: "London Killzone", desc: "Open London à 08h — forte volatilité", color: "emerald", accent: "#10b981", icon: "🟢", highlight: true },
+          { range: "12h – 15h", title: "NY AM Killzone", desc: "Open NY à 13h30 — pic d'activité institutionnelle", color: "emerald", accent: "#10b981", icon: "🟢", highlight: true },
+          { range: "18h – 20h", title: "NY PM Killzone", desc: "Dernière fenêtre — clôture américaine", color: "blue", accent: "#60a5fa", icon: "🔵" },
+        ].map((kz) => (
+          <div
+            key={kz.title}
+            className="flex items-stretch gap-2.5 rounded-lg border p-2.5"
+            style={{
+              borderColor: `${kz.accent}40`,
+              background: `${kz.accent}0d`,
+            }}
+          >
+            <div className="shrink-0 flex flex-col items-center justify-center min-w-[58px] border-r pr-2.5" style={{ borderColor: `${kz.accent}30` }}>
+              <p className="text-[11px] font-mono text-zinc-400 leading-tight">{kz.range.split(" – ")[0]}</p>
+              <p className="text-[9px] text-zinc-600 leading-tight">à</p>
+              <p className="text-[11px] font-mono text-zinc-400 leading-tight">{kz.range.split(" – ")[1]}</p>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-bold" style={{ color: kz.accent }}>{kz.title}</p>
+              <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">{kz.desc}</p>
+            </div>
+          </div>
+        ))}
+        <p className="text-[12px] text-zinc-400 leading-snug text-center pt-2 border-t border-zinc-800/50 italic">
+          Trader les killzones London + NY = activité institutionnelle maximum
+        </p>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500/50" />
           <span className="text-[10px] text-zinc-500">Killzone London / NY — haute volatilité institutionnelle</span>

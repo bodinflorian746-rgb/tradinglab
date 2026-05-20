@@ -1,5 +1,3 @@
-import { ChartScroller } from "../ChartScroller";
-
 interface BacktestMetricsDiagramProps {
   className?: string;
 }
@@ -29,13 +27,14 @@ const HIST_SCALE = 3;
 export function BacktestMetricsDiagram({ className = "" }: BacktestMetricsDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <ChartScroller width="lg">
+      {/* ── DESKTOP (SVG 900×600, inchangé) ───────────────────────── */}
       <svg
         width="100%"
         viewBox="0 0 900 600"
         fill="none"
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden sm:block"
       >
         {/* ── SECTION 1 — HERO METRICS ── */}
 
@@ -186,7 +185,111 @@ export function BacktestMetricsDiagram({ className = "" }: BacktestMetricsDiagra
           Expectancy : +0.22R / trade — sur 1000 trades : +220R de gain attendu
         </text>
       </svg>
-      </ChartScroller>
+
+      {/* ── MOBILE (HTML reconstruit) ───────────────────────────── */}
+      <div className="sm:hidden p-4 space-y-3">
+        {/* Hero metrics — 3 cartes */}
+        <div className="grid grid-cols-3 gap-1.5">
+          <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2 text-center">
+            <p className="text-[10px] text-zinc-500 uppercase tracking-wide font-bold">Win rate</p>
+            <p className="text-[20px] font-bold text-emerald-400 mt-0.5 leading-tight">55%</p>
+            <p className="text-[10px] text-zinc-600 mt-0.5">55/100</p>
+          </div>
+          <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2 text-center">
+            <p className="text-[10px] text-zinc-500 uppercase tracking-wide font-bold">Profit F.</p>
+            <p className="text-[20px] font-bold text-emerald-400 mt-0.5 leading-tight">1.8</p>
+            <p className="text-[10px] text-zinc-600 mt-0.5">gains/pertes</p>
+          </div>
+          <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-2 text-center">
+            <p className="text-[10px] text-zinc-500 uppercase tracking-wide font-bold">Drawdown</p>
+            <p className="text-[20px] font-bold text-red-400 mt-0.5 leading-tight">−12%</p>
+            <p className="text-[10px] text-zinc-600 mt-0.5">pic perte</p>
+          </div>
+        </div>
+
+        {/* Equity curve mini-SVG */}
+        <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
+          <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide text-center mb-2">
+            Equity sur 100 trades (en R)
+          </p>
+          <svg viewBox="0 0 320 130" width="100%" fill="none" aria-label="Equity curve 100 trades">
+            {/* Baseline 0R */}
+            <line x1={20} y1={118} x2={320} y2={118} stroke="#3f3f46" strokeWidth="1" strokeDasharray="4 3" opacity="0.7" />
+            <text x={6} y={122} fontSize="9" fill="#52525b">0</text>
+            <text x={2} y={20} fontSize="9" fill="#52525b">+22R</text>
+            {/* Rescale of EQ: x 36-888 → 20-320 (factor 0.352, offset +7.32) ; y 202-356 → 14-118 (factor 0.675, offset -122.4) */}
+            <path
+              d="M20,118 L50,104 L80,95 L91,81 L106,109 L121,100 L136,87 L150,73 L165,87 L195,64 L210,73 L225,55 L255,37 L270,51 L285,33 L320,18"
+              stroke="#10b981" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"
+            />
+            {/* Drawdown segment T25-T30 (in red) */}
+            <path d="M80,95 L91,81 L106,109" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" opacity="0.7" />
+            {/* Markers */}
+            <circle cx={106} cy={109} r="4" fill="#ef4444" />
+            <circle cx={320} cy={18} r="4" fill="#10b981" />
+          </svg>
+          <div className="grid grid-cols-2 gap-2 mt-2 text-[11px]">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-red-400" />
+              <span className="text-red-400 font-semibold">Drawdown max −6R</span>
+            </div>
+            <div className="flex items-center gap-1.5 justify-end">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span className="text-emerald-400 font-semibold">Equity final +22R</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Répartition gagnants / perdants */}
+        <div>
+          <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-2 text-center">
+            Répartition sur 100 trades
+          </p>
+          <div className="flex items-stretch h-8 rounded-md overflow-hidden border border-zinc-800">
+            <div className="flex items-center justify-center bg-emerald-500/30 border-r border-emerald-500/50" style={{ width: "55%" }}>
+              <span className="text-[12px] font-bold text-white">55 gagn.</span>
+            </div>
+            <div className="flex items-center justify-center bg-red-500/30" style={{ width: "45%" }}>
+              <span className="text-[12px] font-bold text-white">45 perd.</span>
+            </div>
+          </div>
+          <p className="text-[11px] text-zinc-500 text-center mt-1.5">
+            Gain moy. <span className="text-emerald-400 font-semibold">+1.4R</span> · Perte moy. <span className="text-red-400 font-semibold">−1.0R</span>
+          </p>
+        </div>
+
+        {/* Distribution des R — barres */}
+        <div>
+          <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-2 text-center">
+            Distribution des R
+          </p>
+          <div className="grid grid-cols-5 gap-1 items-end h-24">
+            {HIST.map((h) => {
+              const heightPct = (h.trades / 40) * 100;
+              return (
+                <div key={h.r} className="flex flex-col items-center justify-end h-full">
+                  <span className={`text-[11px] font-bold ${h.win ? "text-emerald-400" : "text-red-400"}`}>{h.trades}</span>
+                  <div
+                    className={`w-full rounded-t ${h.win ? "bg-emerald-500/30 border-x border-t border-emerald-500/50" : "bg-red-500/30 border-x border-t border-red-500/50"}`}
+                    style={{ height: `${heightPct}%`, minHeight: "4px" }}
+                  />
+                  <span className={`text-[10px] mt-1 font-mono ${h.win ? "text-emerald-400" : "text-red-400"}`}>{h.r}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Expectancy footer */}
+        <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2.5 text-center">
+          <p className="text-[12px] text-emerald-400 font-bold">
+            Expectancy : +0.22R / trade
+          </p>
+          <p className="text-[11px] text-zinc-300 mt-0.5">
+            Sur 1 000 trades : <span className="font-bold text-emerald-400">+220R</span> de gain attendu
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

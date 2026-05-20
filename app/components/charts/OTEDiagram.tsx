@@ -81,6 +81,8 @@ export function OTEDiagram({ className = "" }: OTEDiagramProps) {
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
+
         {/* OTE zone background */}
         <rect x={LINE_X1} y={oteTopY} width={LINE_X2 - LINE_X1} height={oteBotY - oteTopY}
           fill="#60a5fa0d" stroke="#60a5fa30" strokeWidth="0.8" strokeDasharray="4 3" rx="1" />
@@ -101,56 +103,89 @@ export function OTEDiagram({ className = "" }: OTEDiagramProps) {
         {retracement.map((c, i) => <MiniCandle key={i} {...c} />)}
         <MiniCandle {...signal} />
 
-        {/* Fib labels — opaque bg for every level (anti-Sprint3 pattern) */}
-        {levels.map((lvl) => {
-          const y = fibY(lvl.pct);
-          return (
-            <g key={lvl.pct}>
-              <rect x={LABEL_X} y={y - 8} width={52} height={14} rx="2"
-                fill="#09090b" fillOpacity="0.85" />
-              <text x={LABEL_X + 26} y={y + 3} fontSize="7"
-                fill={lvl.color} textAnchor="middle" fontWeight="600">
-                {lvl.label}
-              </text>
-            </g>
-          );
-        })}
-
-        {/* OTE badge inside zone */}
-        <rect x={LINE_X1 + 2} y={oteTopY + 2} width={26} height={13} rx="2"
-          fill="#60a5fa18" stroke="#60a5fa40" strokeWidth="0.6" />
-        <text x={LINE_X1 + 15} y={oteTopY + 12} fontSize="7.5" fill="#60a5fa"
-          textAnchor="middle" fontWeight="700">OTE</text>
-
-        {/* Swing High marker */}
+        {/* Swing markers — toujours visibles */}
         <circle cx={130} cy={swingHighY} r="3" fill="#71717a" opacity="0.8" />
-        <rect x={107} y={10} width={52} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
-        <text x={133} y={21} fontSize="7" fill="#71717a" textAnchor="middle" fontWeight="600">Swing High</text>
-
-        {/* Swing Low marker */}
         <circle cx={22} cy={swingLowY} r="3" fill="#71717a" opacity="0.8" />
-        <rect x={26} y={183} width={52} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
-        <text x={52} y={194} fontSize="7" fill="#71717a" textAnchor="middle" fontWeight="600">Swing Low</text>
 
-        {/* ENTRÉE badge above signal candle — opaque bg first to mask 50% Fib line beneath */}
-        <rect x={233} y={100} width={38} height={12} rx="2"
-          fill="#09090b" fillOpacity="0.85" />
-        <rect x={233} y={100} width={38} height={12} rx="2"
-          fill="#10b98118" stroke="#10b98140" strokeWidth="0.7" />
-        <text x={252} y={109} fontSize="7.5" fill="#10b981"
-          textAnchor="middle" fontWeight="700">ENTRÉE</text>
+        {/* Tous les badges textuels — masqués sur mobile */}
+        <g className="chart-detail-labels">
+          {levels.map((lvl) => {
+            const y = fibY(lvl.pct);
+            return (
+              <g key={lvl.pct}>
+                <rect x={LABEL_X} y={y - 8} width={52} height={14} rx="2"
+                  fill="#09090b" fillOpacity="0.85" />
+                <text x={LABEL_X + 26} y={y + 3} fontSize="7"
+                  fill={lvl.color} textAnchor="middle" fontWeight="600">
+                  {lvl.label}
+                </text>
+              </g>
+            );
+          })}
 
-        {/* Signal annotation — connector + label below signal candle */}
-        <line x1={252} y1={156} x2={252} y2={164}
-          stroke="#71717a" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
-        <rect x={212} y={162} width={80} height={14} rx="2"
-          fill="#09090b" fillOpacity="0.85" />
-        <text x={252} y={173} fontSize="7" fill="#a1a1aa"
-          textAnchor="middle">signal de rejet ↑</text>
+          <rect x={LINE_X1 + 2} y={oteTopY + 2} width={26} height={13} rx="2"
+            fill="#60a5fa18" stroke="#60a5fa40" strokeWidth="0.6" />
+          <text x={LINE_X1 + 15} y={oteTopY + 12} fontSize="7.5" fill="#60a5fa"
+            textAnchor="middle" fontWeight="700">OTE</text>
+
+          <rect x={107} y={10} width={52} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
+          <text x={133} y={21} fontSize="7" fill="#71717a" textAnchor="middle" fontWeight="600">Swing High</text>
+
+          <rect x={26} y={183} width={52} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
+          <text x={52} y={194} fontSize="7" fill="#71717a" textAnchor="middle" fontWeight="600">Swing Low</text>
+
+          <rect x={233} y={100} width={38} height={12} rx="2"
+            fill="#09090b" fillOpacity="0.85" />
+          <rect x={233} y={100} width={38} height={12} rx="2"
+            fill="#10b98118" stroke="#10b98140" strokeWidth="0.7" />
+          <text x={252} y={109} fontSize="7.5" fill="#10b981"
+            textAnchor="middle" fontWeight="700">ENTRÉE</text>
+
+          <line x1={252} y1={156} x2={252} y2={164}
+            stroke="#71717a" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
+          <rect x={212} y={162} width={80} height={14} rx="2"
+            fill="#09090b" fillOpacity="0.85" />
+          <text x={252} y={173} fontSize="7" fill="#a1a1aa"
+            textAnchor="middle">signal de rejet ↑</text>
+        </g>
       </svg>
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* Mobile : key card avec niveaux Fib + setup */}
+      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
+        <p className="text-[13px] font-bold text-blue-400">Setup OTE — Optimal Trade Entry</p>
+        <div className="grid grid-cols-5 gap-1 text-center">
+          {levels.map((lvl) => (
+            <div key={lvl.pct} className={`rounded-md border p-1.5 ${
+              lvl.pct === 61.8 || lvl.pct === 78.6
+                ? "border-blue-400/40 bg-blue-500/10"
+                : "border-zinc-700 bg-zinc-900/40"
+            }`}>
+              <p className="text-[11px] font-bold font-mono leading-tight" style={{ color: lvl.color }}>
+                {lvl.label}
+              </p>
+            </div>
+          ))}
+        </div>
+        <ul className="space-y-1.5 text-[13px] leading-snug pt-1">
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2.5 h-2.5 rounded-sm bg-blue-500/30 border border-blue-400 mt-1" />
+            <span className="text-white">
+              <span className="font-bold text-blue-400">Zone OTE (61.8% – 78.6%)</span>
+              <span className="text-zinc-300"> · zone d&apos;entrée optimale après une impulsion</span>
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-emerald-500 mt-1" />
+            <span className="text-white">
+              <span className="font-bold text-emerald-400">Signal de rejet ↑</span>
+              <span className="text-zinc-300"> · bougie haussière qui tape la zone et clôture au-dessus → entrée long</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Desktop legend (inchangée) */}
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-blue-400/40" />
           <span className="text-[10px] text-zinc-500">Zone OTE (61.8–78.6%) — entrée institutionnelle optimale</span>

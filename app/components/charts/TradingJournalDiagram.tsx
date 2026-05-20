@@ -41,12 +41,14 @@ const ROW_DY = 28;
 export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
+      {/* ── DESKTOP (SVG 900×490, inchangé) ───────────────────────── */}
       <svg
         width="100%"
         viewBox="0 0 900 490"
         fill="none"
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden sm:block"
       >
         {/* ── LEFT PANEL — TABLE ── */}
 
@@ -174,6 +176,96 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
         <text x={614} y={432} fontSize="10"  fill="#a1a1aa">SL trop serré sur 3 trades</text>
         <text x={614} y={450} fontSize="8.5" fill="#52525b">Revoir sizing et placement du SL</text>
       </svg>
+
+      {/* ── MOBILE (HTML reconstruit) ───────────────────────────── */}
+      <div className="sm:hidden p-4 space-y-3">
+        {/* Hero metrics */}
+        <div className="grid grid-cols-2 gap-2">
+          <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-center">
+            <p className="text-[10px] text-emerald-400/80 uppercase tracking-wide font-bold">Win rate</p>
+            <p className="text-[18px] font-bold text-emerald-400 mt-0.5">60%</p>
+          </div>
+          <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-center">
+            <p className="text-[10px] text-emerald-400/80 uppercase tracking-wide font-bold">Net</p>
+            <p className="text-[18px] font-bold text-emerald-400 mt-0.5">+5.5R</p>
+          </div>
+        </div>
+
+        {/* Table 10 trades — compacte */}
+        <div className="rounded-lg border border-zinc-800 overflow-hidden">
+          <div className="grid grid-cols-[44px_1fr_42px_56px] gap-2 px-3 py-2 bg-zinc-900 border-b border-zinc-800 text-[10px] font-bold text-zinc-500 uppercase tracking-wide">
+            <span>Date</span>
+            <span>Setup</span>
+            <span className="text-center">R/R</span>
+            <span className="text-right">Résult.</span>
+          </div>
+          <div className="divide-y divide-zinc-800/60">
+            {TRADES.map((t, i) => (
+              <div
+                key={i}
+                className={`grid grid-cols-[44px_1fr_42px_56px] gap-2 px-3 py-2 text-[12px] ${
+                  t.win ? "bg-emerald-500/[0.04]" : "bg-red-500/[0.04]"
+                }`}
+              >
+                <span className="text-zinc-500 font-mono">{t.date}</span>
+                <span className="text-zinc-300 truncate">{t.setup}</span>
+                <span className="text-center text-zinc-600 font-mono">{t.rr}</span>
+                <span className={`text-right font-bold font-mono ${t.win ? "text-emerald-400" : "text-red-400"}`}>
+                  {t.result}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Equity curve mini SVG */}
+        <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
+          <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide text-center mb-2">
+            Equity cumulée (R)
+          </p>
+          <svg viewBox="0 0 320 100" width="100%" fill="none" aria-label="Equity curve">
+            {/* Baseline 0R */}
+            <line x1={20} y1={88} x2={320} y2={88} stroke="#3f3f46" strokeWidth="1" strokeDasharray="4 3" opacity="0.7" />
+            <text x={6} y={92} fontSize="9" fill="#52525b">0R</text>
+            <text x={6} y={26} fontSize="9" fill="#52525b">+5R</text>
+            {/* Curve (rescaled from desktop EQ_PTS: x mapped 452-892 → 20-320, y mapped 120-340 → 12-88) */}
+            <path
+              d="M20,88 L50,68 L80,52 L110,36 L140,46 L170,56 L200,46 L230,56 L260,68 L290,56 L320,22"
+              stroke="#10b981" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round"
+            />
+            {/* Best streak peak */}
+            <circle cx={110} cy={36} r="4" fill="#10b981" />
+            {/* Worst drawdown trough */}
+            <circle cx={170} cy={56} r="4" fill="#ef4444" />
+          </svg>
+          <div className="grid grid-cols-2 gap-2 mt-2 text-[11px]">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span className="text-emerald-400 font-semibold">Best streak +5R</span>
+            </div>
+            <div className="flex items-center gap-1.5 justify-end">
+              <span className="w-2 h-2 rounded-full bg-red-400" />
+              <span className="text-red-400 font-semibold">Drawdown −2R</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Insights — 3 cartes empilées */}
+        <div className="space-y-2">
+          <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2.5">
+            <p className="text-[12px] font-bold text-emerald-400">✓ Setup le plus rentable</p>
+            <p className="text-[12px] text-zinc-300 mt-0.5">OB Bullish — 3/3 gagnants · ratio moyen +1.83R</p>
+          </div>
+          <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-2.5">
+            <p className="text-[12px] font-bold text-red-400">✗ Setup à éviter</p>
+            <p className="text-[12px] text-zinc-300 mt-0.5">Range Break — 0/2 gagnants · à supprimer du plan</p>
+          </div>
+          <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-2.5">
+            <p className="text-[12px] font-bold text-blue-400">⚠ Erreur récurrente</p>
+            <p className="text-[12px] text-zinc-300 mt-0.5">SL trop serré sur 3 trades · revoir sizing et placement</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
