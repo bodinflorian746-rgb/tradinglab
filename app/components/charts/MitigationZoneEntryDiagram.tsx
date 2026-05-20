@@ -1,9 +1,10 @@
 export default function MitigationZoneEntryDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Trader la zone de mitigation après CHoCH
@@ -65,5 +66,25 @@ export default function MitigationZoneEntryDiagram({ className = "" }: { classNa
         Après CHoCH, l&apos;ex-HL devient résistance. Entrée sur retest + signal de rejet.
       </text>
     </svg>
+
+    {/* MOBILE : mitigation après CHoCH ─────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <p className="text-[14px] font-bold text-red-400 text-center">Trader la zone de mitigation après CHoCH</p>
+      <ul className="space-y-2 text-[13px]">
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>
+          <span className="text-zinc-300">CHoCH se forme — le marché casse le dernier HL (tendance baissière confirmée).</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">2</span>
+          <span className="text-zinc-300">L'<span className="font-bold text-amber-400">ex-HL</span> (zone d'origine) devient <span className="font-bold text-red-400">résistance</span>.</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
+          <span className="text-zinc-300">Entrée short sur le <span className="font-bold text-emerald-400">retest + signal de rejet</span> (pin bar, engulfing).</span>
+        </li>
+      </ul>
+    </div>
+    </div>
   );
 }

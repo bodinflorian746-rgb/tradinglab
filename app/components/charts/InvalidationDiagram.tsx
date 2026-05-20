@@ -1,9 +1,10 @@
 export default function InvalidationDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 600 300"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       {/* Badge top droit — Setup invalidé */}
       <rect x="410" y="15" width="170" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
@@ -81,5 +82,27 @@ export default function InvalidationDiagram({ className = "" }: { className?: st
         Double Top → cassure neckline → re-cassure par le haut = pattern échoué
       </text>
     </svg>
+
+    {/* MOBILE : setup invalidé ────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <div className="rounded-xl border-2 border-red-500 bg-red-500/10 p-3 text-center">
+        <p className="text-[14px] font-bold text-red-400">⚠ Setup invalidé — couper</p>
+      </div>
+      <ul className="space-y-2 text-[13px]">
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">1</span>
+          <span className="text-zinc-300">Double Top formé, cassure de la neckline → short pris.</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">2</span>
+          <span className="text-zinc-300">Le prix remonte et <span className="font-bold text-red-400">re-casse la neckline par le haut</span> → pattern échoué.</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-zinc-700 border border-zinc-500 flex items-center justify-center text-[11px] font-bold text-zinc-300 mt-0.5">3</span>
+          <span className="text-zinc-300">Couper immédiatement — sans attendre le SL.</span>
+        </li>
+      </ul>
+    </div>
+    </div>
   );
 }

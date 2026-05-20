@@ -1,9 +1,10 @@
 export default function DTBValidationGridDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 500"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Reconnaître un Double Top valide vs un piège
@@ -59,5 +60,24 @@ export default function DTBValidationGridDiagram({ className = "" }: { className
       <rect x="480" y="280" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
       <text x="600" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">✗ Mèche, pas clôture</text>
     </svg>
+
+    {/* MOBILE : Double Top valide vs piège ─────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Double Top valide vs piège</p>
+      {[
+        { v: true, t: "Sommets quasi égaux", d: "Tolérance < 0.5%, symétrie nette" },
+        { v: false, t: "2e sommet trop bas", d: "Manque de symétrie — pattern faible" },
+        { v: false, t: "2e sommet trop haut", d: "Pas un double top, c'est une cassure de range" },
+        { v: false, t: "Mèche, pas clôture", d: "La cassure de neckline doit être en clôture, pas une simple mèche" },
+      ].map((c, i) => (
+        <div key={i} className={`rounded-lg border p-2.5 ${c.v ? "border-emerald-500/40 bg-emerald-500/8" : "border-red-500/40 bg-red-500/8"}`}>
+          <p className={`text-[13px] font-bold ${c.v ? "text-emerald-400" : "text-red-400"}`}>
+            {c.v ? "✓" : "✗"} {c.t}
+          </p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{c.d}</p>
+        </div>
+      ))}
+    </div>
+    </div>
   );
 }

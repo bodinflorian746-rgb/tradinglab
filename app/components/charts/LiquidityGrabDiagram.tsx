@@ -1,9 +1,10 @@
 export function LiquidityGrabDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 420"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       {/* Titre */}
       <text x="400" y="28" fill="#ffffff" fontSize="12" fontWeight="600" textAnchor="middle">
@@ -79,5 +80,28 @@ export function LiquidityGrabDiagram({ className = "" }: { className?: string })
         Le sweep balaie les stops avant le vrai mouvement institutionnel
       </text>
     </svg>
+
+    {/* MOBILE : liquidity grab mécanique ──────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <p className="text-[14px] font-bold text-red-400 text-center">Liquidity grab — le sweep avant le vrai mouvement</p>
+      <ul className="space-y-2 text-[13px]">
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">1</span>
+          <span className="text-zinc-300">Cluster de stops formé au-dessus des <span className="font-bold text-red-400">equal highs</span> (liquidité visible).</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">2</span>
+          <span className="text-zinc-300">Une mèche perce le niveau pour <span className="font-bold text-red-400">déclencher les stops</span> — sweep institutionnel.</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
+          <span className="text-zinc-300">Une fois la liquidité absorbée, le prix <span className="font-bold text-emerald-400">repart dans le sens opposé</span>.</span>
+        </li>
+      </ul>
+      <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+        Le sweep balaie les stops avant le vrai mouvement institutionnel.
+      </p>
+    </div>
+    </div>
   );
 }

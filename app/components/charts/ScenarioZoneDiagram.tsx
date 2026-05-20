@@ -29,7 +29,7 @@ const BODY_W = 14;
 export function ScenarioZoneDiagram({ className = "" }: ScenarioZoneDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
@@ -71,7 +71,17 @@ export function ScenarioZoneDiagram({ className = "" }: ScenarioZoneDiagramProps
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : scénario zone tracée à l'avance ──────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Scénario zone tracée à l'avance</p>
+        <ul className="space-y-2 text-[13px]">
+          <li className="flex items-start gap-2.5"><span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-[11px] font-bold text-blue-400 mt-0.5">1</span><span className="text-zinc-300">Zone tracée <span className="font-bold">AVANT</span> l'arrivée du prix.</span></li>
+          <li className="flex items-start gap-2.5"><span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">2</span><span className="text-zinc-300">Bougies haussières <span className="font-bold">rétrécissent</span> en approchant = perte d'impulsion.</span></li>
+          <li className="flex items-start gap-2.5"><span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">3</span><span className="text-zinc-300">Confirmation rejection = entrée short à la zone.</span></li>
+        </ul>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500/40 border border-red-500" />
           <span className="text-[10px] text-zinc-500">Zone tracée AVANT l&apos;arrivée du prix</span>

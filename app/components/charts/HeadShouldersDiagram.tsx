@@ -85,6 +85,7 @@ export default function HeadShouldersDiagram() {
         fill="none"
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden sm:block"
       >
         {/* ════════ HEAD & SHOULDERS (gauche) ════════ */}
 
@@ -155,6 +156,22 @@ export default function HeadShouldersDiagram() {
         <Pastille x={640} y={197} label="Neckline" color="#3f3f46" textColor="#a1a1aa" />
         <Pastille x={745} y={135} label="Cassure" color="#10b981" arrow="up" />
       </svg>
+
+      {/* MOBILE : 2 patterns H&S empilés ───────────────────────── */}
+      <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Head & Shoulders — 2 variantes</p>
+        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+          <p className="text-[13px] font-bold text-red-400">H&S classique — Retournement BAISSIER</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">3 sommets : Épaule G → Tête (plus haut) → Épaule D. Cassure sous la <span className="font-bold">neckline</span> = signal short.</p>
+        </div>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">H&S inversé — Retournement HAUSSIER</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">3 creux : Épaule G → Tête (plus bas) → Épaule D. Cassure au-dessus de la <span className="font-bold">neckline</span> = signal long.</p>
+        </div>
+        <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+          Pattern de retournement majeur, valide après cassure de la neckline.
+        </p>
+      </div>
     </div>
   );
 }

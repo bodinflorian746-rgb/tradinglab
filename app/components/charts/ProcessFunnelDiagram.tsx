@@ -8,7 +8,7 @@ interface ProcessFunnelDiagramProps {
 export function ProcessFunnelDiagram({ className = "" }: ProcessFunnelDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         {/* Bloc 1 — Daily / H4 */}
         <rect x="110" y="30" width="480" height="50" rx="6" fill="#27272a" stroke="#3f3f46" />
@@ -50,7 +50,29 @@ export function ProcessFunnelDiagram({ className = "" }: ProcessFunnelDiagramPro
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : entonnoir process ────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Entonnoir du process top-down</p>
+        <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3 text-center">
+          <p className="text-[13px] font-bold text-emerald-400">Daily / H4 — Direction dominante</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Étage 1 : contexte directionnel.</p>
+        </div>
+        <p className="text-center text-zinc-600 text-[14px]">↓</p>
+        <div className="rounded-lg border-2 border-blue-400 bg-blue-500/8 p-3 text-center">
+          <p className="text-[13px] font-bold text-blue-400">H1 — Zone d'intérêt</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Étage 2 : préparation tactique.</p>
+        </div>
+        <p className="text-center text-zinc-600 text-[14px]">↓</p>
+        <div className="rounded-lg border-2 border-amber-400 bg-amber-400/8 p-3 text-center">
+          <p className="text-[13px] font-bold text-amber-400">M15 / M5 — Déclencheur</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Étage 3 : timing d'entrée précis.</p>
+        </div>
+        <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+          Le trade n'arrive qu'au bout de l'entonnoir.
+        </p>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-700" />
           <span className="text-[10px] text-zinc-500">3 étages d&apos;analyse — du contexte au timing</span>

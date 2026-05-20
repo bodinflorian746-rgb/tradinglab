@@ -123,6 +123,7 @@ export default function RSIDivergenceDiagram() {
         fill="none"
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden sm:block"
       >
         {/* ════════════════════════════════════════════════════════════
             DIVERGENCE BAISSIÈRE (gauche)
@@ -241,6 +242,22 @@ export default function RSIDivergenceDiagram() {
         {/* ── Pastille signal ── */}
         <SignalPastille x={605} y={445} label="DIVERGENCE HAUSSIÈRE" color="#10b981" />
       </svg>
+
+      {/* MOBILE : divergence RSI ────────────────────────────── */}
+      <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Divergence RSI / Prix</p>
+        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+          <p className="text-[13px] font-bold text-red-400">Divergence BAISSIÈRE</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix fait un nouveau <span className="font-bold">HH</span>, mais le RSI fait un <span className="font-bold">LH</span> (plus bas). Le mouvement haussier s'essouffle.</p>
+        </div>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">Divergence HAUSSIÈRE</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix fait un nouveau <span className="font-bold">LL</span>, mais le RSI fait un <span className="font-bold">HL</span> (plus haut). Le mouvement baissier s'essouffle.</p>
+        </div>
+        <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+          Signal de retournement potentiel — attendre confirmation prix.
+        </p>
+      </div>
     </div>
   );
 }

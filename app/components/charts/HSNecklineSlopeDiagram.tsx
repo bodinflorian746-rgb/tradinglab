@@ -1,9 +1,10 @@
 export default function HSNecklineSlopeDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Inclinaison de la neckline = ajustement du TP
@@ -73,5 +74,23 @@ export default function HSNecklineSlopeDiagram({ className = "" }: { className?:
         XAU/USD H&amp;S ~4 620$ - 4 660$ — l&apos;inclinaison de la neckline ajuste le TP
       </text>
     </svg>
+
+    {/* MOBILE : inclinaison neckline ─────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Inclinaison de la neckline = ajustement du TP</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Neckline ascendante</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">TP étendu vers le bas — projection plus large.</p>
+      </div>
+      <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
+        <p className="text-[13px] font-bold text-zinc-300">Neckline horizontale</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Projection symétrique de la hauteur du pattern.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">Neckline descendante</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Projection réduite vers le bas — TP plus court.</p>
+      </div>
+    </div>
+    </div>
   );
 }

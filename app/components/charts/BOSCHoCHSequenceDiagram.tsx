@@ -1,9 +1,10 @@
 export default function BOSCHoCHSequenceDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Séquence de retournement structurel en 3 étapes
@@ -58,5 +59,23 @@ export default function BOSCHoCHSequenceDiagram({ className = "" }: { className?
         BOS contre-tendance → Nouvelle structure → CHoCH confirmé
       </text>
     </svg>
+
+    {/* MOBILE : séquence retournement structurel ───────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Séquence retournement en 3 étapes</p>
+      <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+        <p className="text-[13px] font-bold text-amber-400">Étape 1 — BOS contre-tendance</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Premier signe d'essoufflement : cassure de structure contre la tendance majeure.</p>
+      </div>
+      <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
+        <p className="text-[13px] font-bold text-blue-400">Étape 2 — Nouvelle structure</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix construit une nouvelle structure (LH/LL dans le sens opposé).</p>
+      </div>
+      <div className="rounded-lg border-2 border-red-500 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">Étape 3 — CHoCH confirmé</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le CHoCH dans la nouvelle direction confirme le retournement définitif.</p>
+      </div>
+    </div>
+    </div>
   );
 }

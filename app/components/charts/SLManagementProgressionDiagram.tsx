@@ -1,9 +1,10 @@
 export default function SLManagementProgressionDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 300"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Gestion dynamique du SL en 4 étapes
@@ -69,5 +70,27 @@ export default function SLManagementProgressionDiagram({ className = "" }: { cla
       <rect x="655" y="230" width="100" height="18" rx="4" fill="#10b98120" stroke="#10b981" strokeWidth="0.8" />
       <text x="705" y="243" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">Suit le prix</text>
     </svg>
+
+    {/* MOBILE : gestion SL en 4 étapes ───────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Gestion dynamique du SL en 4 étapes</p>
+      <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
+        <p className="text-[13px] font-bold text-zinc-300">1 · SL initial — fixe</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Place le SL au point structurel à l'entrée. Reste fixe tant que le prix n'a pas avancé.</p>
+      </div>
+      <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+        <p className="text-[13px] font-bold text-amber-400">2 · Break-even (+1R)</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Dès que le prix avance d'1R, déplace le SL au prix d'entrée. Trade sans risque.</p>
+      </div>
+      <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
+        <p className="text-[13px] font-bold text-blue-400">3 · SL sur structure intermédiaire</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">À chaque nouveau HH/HL formé, remonte le SL juste sous le dernier HL.</p>
+      </div>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">4 · Trailing dynamique</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">SL suit le prix — laisse courir les gains. Sortie auto si retournement.</p>
+      </div>
+    </div>
+    </div>
   );
 }

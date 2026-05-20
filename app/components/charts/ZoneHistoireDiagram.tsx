@@ -33,7 +33,7 @@ const BODY_W = 16;
 export function ZoneHistoireDiagram({ className = "" }: ZoneHistoireDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         {/* Badge timeframe */}
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
@@ -74,7 +74,23 @@ export function ZoneHistoireDiagram({ className = "" }: ZoneHistoireDiagramProps
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : zone histoire ────────────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Zone d'histoire — ex-support / FVG</p>
+        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+          <p className="text-[13px] font-bold text-red-400">Ancien support cassé = résistance</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le niveau cassé inverse sa polarité — devient zone de rejet.</p>
+        </div>
+        <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
+          <p className="text-[13px] font-bold text-blue-400">FVG bearish non mitigé</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Déséquilibre laissé par une impulsion baissière — zone à retester.</p>
+        </div>
+        <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+          Le marché a la mémoire de ses zones structurelles.
+        </p>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">Ancien support cassé = résistance</span>

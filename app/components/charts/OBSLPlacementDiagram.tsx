@@ -1,9 +1,10 @@
 export default function OBSLPlacementDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       {/* Titre avec halo */}
       <rect x="290" y="5" width="320" height="18" rx="3" fill="#09090b" />
@@ -128,5 +129,26 @@ export default function OBSLPlacementDiagram({ className = "" }: { className?: s
         Marge de 5-10 pips au-delà de la mèche extrême absorbe les wicks de retest
       </text>
     </svg>
+
+    {/* MOBILE : 3 placements SL OB ──────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">3 placements de SL — un seul correct</p>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ SL collé au corps de l'OB</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Trop serré, déclenché par le moindre wick de retest.</p>
+      </div>
+      <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">✓ SL marge 5-10 pips au-delà de la mèche</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Bonne marge — absorbe les wicks de retest sans être trop large.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ SL trop large (50+ pips)</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Inutilement grand → R/R dégradé, taille de position trop petite.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Marge 5-10 pips au-delà de la mèche extrême.
+      </p>
+    </div>
+    </div>
   );
 }

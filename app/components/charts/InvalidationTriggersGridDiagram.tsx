@@ -1,9 +1,10 @@
 export default function InvalidationTriggersGridDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 500"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Checklist invalidation — 5 critères qui déclenchent la coupe
@@ -81,5 +82,28 @@ export default function InvalidationTriggersGridDiagram({ className = "" }: { cl
       <circle cx="665" cy="425" r="12" fill="#10b981" />
       <path d="M659,425 l4,4 l8,-8" stroke="#0a0a0a" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+
+    {/* MOBILE : 5 critères invalidation ─────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">5 critères qui déclenchent la coupe</p>
+      {[
+        "Niveau clé cassé contre le sens du trade",
+        "Clôture franche au-delà du niveau structurel",
+        "Signal opposé (pin bar / engulfing) au mauvais endroit",
+        "Volume anormal contre la direction du trade",
+        "Time stop : pas de progression après X bougies",
+      ].map((c, i) => (
+        <div key={i} className="rounded-lg border border-red-500/30 bg-red-500/5 p-2.5">
+          <div className="flex items-start gap-2.5">
+            <span className="shrink-0 w-6 h-6 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[12px] font-bold text-red-400">{i + 1}</span>
+            <p className="text-[12px] text-zinc-300 leading-snug flex-1">{c}</p>
+          </div>
+        </div>
+      ))}
+      <p className="text-[13px] text-red-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        N'importe lequel = couper immédiatement.
+      </p>
+    </div>
+    </div>
   );
 }

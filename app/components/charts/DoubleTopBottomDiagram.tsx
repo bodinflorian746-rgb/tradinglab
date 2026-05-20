@@ -77,6 +77,7 @@ export default function DoubleTopBottomDiagram() {
         fill="none"
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden sm:block"
       >
         {/* ════════ DOUBLE TOP (gauche) ════════ */}
 
@@ -143,6 +144,22 @@ export default function DoubleTopBottomDiagram() {
         <Pastille x={590} y={200} label="Neckline" color="#3f3f46" textColor="#a1a1aa" />
         <Pastille x={715} y={130} label="Cassure" color="#10b981" arrow="up" />
       </svg>
+
+      {/* MOBILE : Double Top / Bottom ──────────────────────── */}
+      <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Double Top / Double Bottom</p>
+        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+          <p className="text-[13px] font-bold text-red-400">Double Top — Retournement BAISSIER</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">2 sommets quasi égaux séparés par un creux (neckline). Cassure sous la neckline = signal short.</p>
+        </div>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">Double Bottom — Retournement HAUSSIER</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">2 creux quasi égaux séparés par un sommet (neckline). Cassure au-dessus de la neckline = signal long.</p>
+        </div>
+        <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+          Pattern de retournement, validé par la cassure de la neckline.
+        </p>
+      </div>
     </div>
   );
 }

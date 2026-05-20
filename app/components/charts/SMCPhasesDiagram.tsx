@@ -1,9 +1,10 @@
 export default function SMCPhasesDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Les 3 phases du cycle de marché
@@ -80,5 +81,26 @@ export default function SMCPhasesDiagram({ className = "" }: { className?: strin
         L&apos;expansion est la seule phase où les setups SMC se prennent dans le sens directionnel
       </text>
     </svg>
+
+    {/* MOBILE : 3 phases du marché ───────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Les 3 phases du cycle de marché</p>
+      <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
+        <p className="text-[13px] font-bold text-blue-400">1 · Accumulation</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Range latéral — les institutions construisent leurs positions discrètement.</p>
+      </div>
+      <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">2 · Expansion ✓ Trader ici</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Mouvement directionnel franc. <span className="font-bold text-emerald-400">Seule phase</span> où prendre les setups SMC.</p>
+      </div>
+      <div className="rounded-lg border border-amber-400/40 bg-amber-400/5 p-3">
+        <p className="text-[13px] font-bold text-amber-400">3 · Distribution</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Les institutions sortent leurs positions au sommet — risque de retournement.</p>
+      </div>
+      <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+        L'expansion = seule phase pour entrer dans le sens directionnel.
+      </p>
+    </div>
+    </div>
   );
 }

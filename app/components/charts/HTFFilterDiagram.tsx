@@ -8,7 +8,7 @@ interface HTFFilterDiagramProps {
 export function HTFFilterDiagram({ className = "" }: HTFFilterDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         <rect x="20" y="20" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="35" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H4</text>
@@ -49,7 +49,23 @@ export function HTFFilterDiagram({ className = "" }: HTFFilterDiagramProps) {
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : filtre HTF ────────────────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Filtre HTF — EUR/USD H4</p>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">✓ Setup aligné avec biais HTF</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">À privilégier — probabilité maximale.</p>
+        </div>
+        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+          <p className="text-[13px] font-bold text-red-400">✗ Setup contre le biais HTF</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">À écarter — même si visuellement tentant.</p>
+        </div>
+        <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+          Le HTF filtre 90% des faux signaux LTF.
+        </p>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
           <span className="text-[10px] text-zinc-500">Setup aligné avec le biais HTF — à privilégier</span>

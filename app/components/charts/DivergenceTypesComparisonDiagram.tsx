@@ -1,9 +1,10 @@
 export default function DivergenceTypesComparisonDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 500"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Les 4 types de divergence RSI
@@ -100,5 +101,27 @@ export default function DivergenceTypesComparisonDiagram({ className = "" }: { c
       <circle cx="640" cy="455" r="3.5" fill="#10b981" />
       <line x1="500" y1="440" x2="640" y2="455" stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" />
     </svg>
+
+    {/* MOBILE : 4 types divergence RSI ──────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Les 4 types de divergence RSI</p>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">Régulière BAISSIÈRE</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix : HH · RSI : LH → retournement baissier</p>
+      </div>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Régulière HAUSSIÈRE</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix : LL · RSI : HL → retournement haussier</p>
+      </div>
+      <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+        <p className="text-[13px] font-bold text-amber-400">Cachée BAISSIÈRE</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix : LH · RSI : HH → continuation baissière (dans tendance ↓)</p>
+      </div>
+      <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
+        <p className="text-[13px] font-bold text-blue-400">Cachée HAUSSIÈRE</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix : HL · RSI : LL → continuation haussière (dans tendance ↑)</p>
+      </div>
+    </div>
+    </div>
   );
 }

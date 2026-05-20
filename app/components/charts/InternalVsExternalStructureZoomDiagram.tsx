@@ -1,9 +1,10 @@
 export default function InternalVsExternalStructureZoomDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Structure externe Daily ↔ Structure interne H4
@@ -69,5 +70,22 @@ export default function InternalVsExternalStructureZoomDiagram({ className = "" 
         Structure externe Daily dicte le biais. Structure interne H4 sert au timing fin.
       </text>
     </svg>
+
+    {/* MOBILE : structure externe vs interne ───────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Structure externe Daily ↔ interne H4</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Structure externe — Daily</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Dicte le <span className="font-bold">biais directionnel</span> majeur. Tendance HH/HL ou LH/LL sur Daily.</p>
+      </div>
+      <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
+        <p className="text-[13px] font-bold text-blue-400">Structure interne — H4</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Sert au <span className="font-bold">timing fin d'entrée</span>. Mini-structures dans la grande tendance Daily.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Daily = biais · H4 = timing.
+      </p>
+    </div>
+    </div>
   );
 }

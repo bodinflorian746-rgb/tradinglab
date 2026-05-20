@@ -8,7 +8,7 @@ interface ContreTendanceTrapDiagramProps {
 export function ContreTendanceTrapDiagram({ className = "" }: ContreTendanceTrapDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         {/* Panneau gauche — DAILY */}
         <rect x="20" y="20" width="74" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
@@ -45,7 +45,23 @@ export function ContreTendanceTrapDiagram({ className = "" }: ContreTendanceTrap
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : piège contre-tendance ────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Piège contre-tendance</p>
+        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+          <p className="text-[13px] font-bold text-red-400">Daily ↘ — Structure LH/LL</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Tendance HTF baissière + prix rejeté sous résistance.</p>
+        </div>
+        <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+          <p className="text-[13px] font-bold text-amber-400">M15 ↗ — Breakout local tentant</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Cassure visuelle haussière sur petit timeframe.</p>
+        </div>
+        <p className="text-[13px] text-amber-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+          ⚠ Acheter ici = trader contre le HTF → piège.
+        </p>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
           <span className="text-[10px] text-zinc-500">Breakout local M15 — visuellement tentant</span>

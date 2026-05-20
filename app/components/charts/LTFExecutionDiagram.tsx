@@ -14,6 +14,7 @@ export function LTFExecutionDiagram({ className = "" }: LTFExecutionDiagramProps
         fill="none"
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden sm:block"
       >
         {/* Badge timeframe */}
         <rect x="20" y="20" width="80" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
@@ -84,8 +85,27 @@ export function LTFExecutionDiagram({ className = "" }: LTFExecutionDiagramProps
         </text>
       </svg>
 
+      {/* MOBILE : exécution LTF M5 ──────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Exécution M5 — sweep + CHoCH</p>
+        <ul className="space-y-2 text-[13px]">
+          <li className="flex items-start gap-2.5">
+            <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">1</span>
+            <span className="text-zinc-300"><span className="font-bold text-amber-400">Sweep</span> · mèche au-dessus de ~1.1775 (chasse de stops).</span>
+          </li>
+          <li className="flex items-start gap-2.5">
+            <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">2</span>
+            <span className="text-zinc-300"><span className="font-bold text-red-400">CHoCH</span> · cassure du creux local M5 = signal d'entrée short.</span>
+          </li>
+          <li className="flex items-start gap-2.5">
+            <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
+            <span className="text-zinc-300"><span className="font-bold text-emerald-400">SL au-delà du sweep</span>, entrée après CHoCH.</span>
+          </li>
+        </ul>
+      </div>
+
       {/* Légende */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">Sweep = mèche au-dessus du niveau</span>

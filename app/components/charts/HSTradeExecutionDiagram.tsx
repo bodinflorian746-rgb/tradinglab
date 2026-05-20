@@ -1,9 +1,10 @@
 export default function HSTradeExecutionDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         2 stratégies d&apos;entrée sur Head &amp; Shoulders
@@ -75,5 +76,19 @@ export default function HSTradeExecutionDiagram({ className = "" }: { className?
         Cassure = exécution rapide. Retest = entrée tardive avec meilleur R/R.
       </text>
     </svg>
+
+    {/* MOBILE : 2 stratégies entrée H&S ───────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">2 stratégies d'entrée H&S</p>
+      <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+        <p className="text-[13px] font-bold text-amber-400">Entrée sur cassure</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Exécution rapide dès que le prix casse la neckline. R/R moyen, mais entrée immédiate.</p>
+      </div>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Entrée sur retest</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Attendre que le prix revienne tester la neckline cassée. Tardive mais <span className="font-bold">meilleur R/R</span> (entrée 4 580 $).</p>
+      </div>
+    </div>
+    </div>
   );
 }

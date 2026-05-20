@@ -8,7 +8,7 @@ interface DirectionDominanteDiagramProps {
 export function DirectionDominanteDiagram({ className = "" }: DirectionDominanteDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         <rect x="20" y="20" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="35" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · H4</text>
@@ -39,7 +39,23 @@ export function DirectionDominanteDiagram({ className = "" }: DirectionDominante
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : direction dominante ─────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Direction dominante — XAU/USD H4</p>
+        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+          <p className="text-[13px] font-bold text-red-400">Impulsions baissières</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Rapides et fortes → direction réelle du marché.</p>
+        </div>
+        <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
+          <p className="text-[13px] font-bold text-zinc-300">Corrections haussières</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Lentes et faibles → simples retracements.</p>
+        </div>
+        <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+          Vitesse + amplitude = direction dominante.
+        </p>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">Impulsions baissières : rapides et fortes</span>

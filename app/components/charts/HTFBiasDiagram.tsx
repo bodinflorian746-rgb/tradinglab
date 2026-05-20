@@ -14,6 +14,7 @@ export function HTFBiasDiagram({ className = "" }: HTFBiasDiagramProps) {
         fill="none"
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden sm:block"
       >
         {/* Badge timeframe */}
         <rect x="20" y="20" width="80" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
@@ -98,8 +99,24 @@ export function HTFBiasDiagram({ className = "" }: HTFBiasDiagramProps) {
         </text>
       </svg>
 
+      {/* MOBILE : biais HTF H4 ─────────────────────────────── */}
+      <div className="sm:hidden p-4 space-y-3">
+        <p className="text-[14px] font-bold text-white text-center">Biais directionnel HTF (H4)</p>
+        <div className="rounded-xl border-2 border-red-500 bg-red-500/8 p-4 text-center">
+          <p className="text-[12px] text-zinc-400 uppercase tracking-wider">Verdict HTF</p>
+          <p className="text-[22px] font-bold text-red-400 mt-1.5 leading-none">BAISSIER</p>
+        </div>
+        <ul className="space-y-2 text-[13px]">
+          <li className="flex items-start gap-2.5"><span className="text-emerald-400 font-bold shrink-0">✓</span><span className="text-zinc-300"><span className="font-bold">Ventes prioritaires</span> · structure H4 en LH/LL</span></li>
+          <li className="flex items-start gap-2.5"><span className="text-red-400 font-bold shrink-0">✗</span><span className="text-zinc-300"><span className="font-bold">Achats = contre-contexte</span> à éviter</span></li>
+        </ul>
+        <p className="text-[12px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+          Toute analyse LTF part de ce verdict.
+        </p>
+      </div>
+
       {/* Légende */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">Structure H4 LH/LL = biais baissier</span>

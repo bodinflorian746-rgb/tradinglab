@@ -14,6 +14,7 @@ export function SingleTimeframeTrapDiagram({ className = "" }: SingleTimeframeTr
         fill="none"
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden sm:block"
       >
         {/* Séparateur central */}
         <line x1="400" y1="20" x2="400" y2="290" stroke="#3f3f46" strokeWidth="1" strokeDasharray="4 3" />
@@ -98,8 +99,27 @@ export function SingleTimeframeTrapDiagram({ className = "" }: SingleTimeframeTr
         </text>
       </svg>
 
+      {/* MOBILE : piège du timeframe unique ─────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Le même marché, 2 timeframes opposés</p>
+        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+          <p className="text-[13px] font-bold text-red-400">Daily — Tendance baissière nette ↘</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Sur Daily, le prix forme une séquence LH/LL claire sous la résistance.</p>
+        </div>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">M15 — Breakout local haussier ↗</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Sur M15, le prix casse un mini-niveau → tentation d'acheter.</p>
+        </div>
+        <div className="rounded-lg border-2 border-amber-400 bg-amber-400/10 p-3 text-center">
+          <p className="text-[13px] font-bold text-amber-400">⚠ Signal local CONTRE la tendance Daily = piège</p>
+        </div>
+        <p className="text-[12px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+          Lire un seul timeframe = ignorer la vraie direction.
+        </p>
+      </div>
+
       {/* Légende */}
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">HTF Daily = tendance baissière</span>

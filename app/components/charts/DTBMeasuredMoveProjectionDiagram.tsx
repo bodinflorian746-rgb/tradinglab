@@ -1,9 +1,10 @@
 export default function DTBMeasuredMoveProjectionDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Calculer le TP par projection measured move
@@ -66,5 +67,25 @@ export default function DTBMeasuredMoveProjectionDiagram({ className = "" }: { c
         Hauteur du pattern projetée depuis la neckline = niveau TP cible
       </text>
     </svg>
+
+    {/* MOBILE : projection measured move ──────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <p className="text-[14px] font-bold text-white text-center">Calculer le TP par measured move</p>
+      <ul className="space-y-2 text-[13px]">
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-[11px] font-bold text-blue-400 mt-0.5">1</span>
+          <span className="text-zinc-300">Mesurer la <span className="font-bold">hauteur du pattern</span> (du sommet à la neckline).</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-[11px] font-bold text-blue-400 mt-0.5">2</span>
+          <span className="text-zinc-300">Projeter cette même distance <span className="font-bold">depuis la cassure de neckline</span>.</span>
+        </li>
+        <li className="flex items-start gap-2.5">
+          <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
+          <span className="text-zinc-300">Le niveau obtenu = <span className="font-bold text-emerald-400">TP cible</span>.</span>
+        </li>
+      </ul>
+    </div>
+    </div>
   );
 }

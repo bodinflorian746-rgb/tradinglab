@@ -1,9 +1,10 @@
 export default function OBFreshnessDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1100 500"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       {/* ═══ DEFS — marker flèche rouge pointillée ═══ */}
       <defs>
@@ -135,5 +136,22 @@ export default function OBFreshnessDiagram({ className = "" }: { className?: str
       <rect x="955" y="249" width="90" height="14" fill="#09090b" rx="3" />
       <text x="1040" y="260" fill="#ef4444" fontSize="10" textAnchor="end">Zone d&apos;OB déjà traversée</text>
     </svg>
+
+    {/* MOBILE : OB frais vs mitigé ──────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">OB frais vs OB mitigé</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">✓ OB frais — jamais retesté</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Déséquilibre haussier confirmé · zone d'OB encore intacte → entrée à haute probabilité.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ OB mitigé — déjà retraversé</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Zone d'OB déjà traversée par le prix → déséquilibre compromis, signal faible.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Un OB ne se trade que sur son <span className="font-bold">premier retest</span>.
+      </p>
+    </div>
+    </div>
   );
 }

@@ -30,7 +30,7 @@ const BODY_W = 14;
 export function RiskAffineDiagram({ className = "" }: RiskAffineDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         <rect x="20" y="18" width="100" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="70" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD</text>
@@ -97,7 +97,23 @@ export function RiskAffineDiagram({ className = "" }: RiskAffineDiagramProps) {
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : risque affiné ──────────────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Affiner le risque : H4 → M5</p>
+        <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+          <p className="text-[13px] font-bold text-amber-400">SL H4 large — risque non optimisé</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">SL au-delà de la mèche H4 = perte potentielle large, taille position petite.</p>
+        </div>
+        <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
+          <p className="text-[13px] font-bold text-emerald-400">SL M5 réduit après confirmation LTF</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Une fois CHoCH M5 confirmé → SL beaucoup plus serré, R/R amélioré.</p>
+        </div>
+        <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+          Entrée commune, SL adapté au timing LTF = R/R maximisé.
+        </p>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
           <span className="text-[10px] text-zinc-500">SL H4 large — risque non optimisé</span>

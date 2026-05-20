@@ -31,7 +31,7 @@ const BODY_W = 14;
 export function H1ZonePreparationDiagram({ className = "" }: H1ZonePreparationDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · H1</text>
@@ -67,7 +67,20 @@ export function H1ZonePreparationDiagram({ className = "" }: H1ZonePreparationDi
         </text>
       </svg>
 
-      <div className="flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
+      {/* MOBILE : préparation zone H1 ──────────────────── */}
+      <div className="sm:hidden p-4 space-y-2.5">
+        <p className="text-[14px] font-bold text-white text-center">Préparation zone H1</p>
+        <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
+          <p className="text-[13px] font-bold text-blue-400">Zone tracée à l'avance</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">FVG bearish + résistance H1 = zone d'intérêt préparée avant l'arrivée du prix.</p>
+        </div>
+        <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+          <p className="text-[13px] font-bold text-amber-400">Bougies qui raccourcissent</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Bougies de plus en plus courtes en approchant = prix qui ralentit → préparation à un retournement.</p>
+        </div>
+      </div>
+
+      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500/40 border border-red-500" />
           <span className="text-[10px] text-zinc-500">Zone tracée à l&apos;avance — FVG bearish + résistance</span>

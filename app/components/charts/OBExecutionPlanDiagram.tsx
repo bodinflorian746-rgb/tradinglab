@@ -1,9 +1,10 @@
 export default function OBExecutionPlanDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Plan d&apos;exécution OB bullish chiffré
@@ -58,5 +59,28 @@ export default function OBExecutionPlanDiagram({ className = "" }: { className?:
         Entrée limite haute corps OB · SL au-delà mèche basse · TP projection structurelle
       </text>
     </svg>
+
+    {/* MOBILE : plan d'exécution OB bullish ──────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <p className="text-[14px] font-bold text-emerald-400 text-center">Plan d'exécution OB bullish</p>
+      <div className="space-y-2">
+        <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-2.5">
+          <p className="text-[13px] font-bold text-emerald-400">Entrée</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Ordre limite sur la <span className="font-bold">haute du corps</span> de l'OB.</p>
+        </div>
+        <div className="rounded-lg bg-red-500/10 border border-red-500/30 p-2.5">
+          <p className="text-[13px] font-bold text-red-400">Stop Loss</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Au-delà de la <span className="font-bold">mèche basse</span> de l'OB (marge 5-10 pips).</p>
+        </div>
+        <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-2.5">
+          <p className="text-[13px] font-bold text-emerald-400">Take Profit</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Projection structurelle (HH précédent ou résistance majeure).</p>
+        </div>
+      </div>
+      <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/8 p-2.5 text-center">
+        <p className="text-[14px] font-bold text-emerald-400">R/R 2,79 — setup exploitable</p>
+      </div>
+    </div>
+    </div>
   );
 }
