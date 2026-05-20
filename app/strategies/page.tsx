@@ -119,12 +119,15 @@ export default function StrategiesPage() {
         {/* ── Hero ── */}
         <div className="text-center mb-14">
 
-          <div className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-full px-4 py-1.5 text-[11px] text-zinc-500 mb-7 font-medium">
+          <div className="inline-flex max-w-full items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-full px-3 sm:px-4 py-1.5 text-[10px] sm:text-[11px] text-zinc-500 mb-7 font-medium">
             <span
-              className="w-1.5 h-1.5 rounded-full bg-emerald-500"
+              className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"
               style={{ boxShadow: "0 0 6px rgba(16,185,129,0.7)" }}
             />
-            8 stratégies · 3 niveaux · Du retail au niveau institutionnel
+            <span className="truncate">
+              <span className="sm:hidden">8 stratégies · 3 niveaux · Niveau pro</span>
+              <span className="hidden sm:inline">8 stratégies · 3 niveaux · Du retail au niveau institutionnel</span>
+            </span>
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-5 leading-tight">
@@ -166,15 +169,15 @@ export default function StrategiesPage() {
             const count = STRATEGY_MODULES.filter((m) => m.level === level).length;
             return (
               <div key={level} className="flex items-center">
-                <div className="flex flex-col items-center text-center px-6 py-3 rounded-xl">
+                <div className="flex flex-col items-center text-center px-2 sm:px-6 py-3 rounded-xl">
                   <div className={`w-2.5 h-2.5 rounded-full mb-2 ${cfg.dotClass}`} />
-                  <span className="text-sm font-bold text-white">{cfg.label}</span>
+                  <span className="text-xs sm:text-sm font-bold text-white">{cfg.label}</span>
                   <span className={`text-[10px] font-medium mt-0.5 ${cfg.labelClass}`}>{cfg.tagline}</span>
                   <span className="text-[10px] text-zinc-700 mt-0.5">{count} stratégies</span>
                 </div>
                 {i < LEVELS.length - 1 && (
                   <div className="flex items-center gap-1 text-zinc-800 mb-5">
-                    <div className="w-10 h-px bg-zinc-800" />
+                    <div className="w-4 sm:w-10 h-px bg-zinc-800" />
                     <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
                       <path d="M2 1.5l4.5 3-4.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
