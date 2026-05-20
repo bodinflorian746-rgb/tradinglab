@@ -103,19 +103,23 @@ export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramPro
 
         </g>
 
-        {/* Repères mobile — visibles uniquement sur mobile (<640px), reliés aux bullets numérotés sous le chart */}
+        {/* Repères mobile — placement pédagogique : à côté de la cible, jamais sur bougie / badge / mèche-clé */}
         <g className="chart-mobile-markers">
-          <circle cx="70" cy="24" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="70" y="24" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">1</text>
+          {/* ① Impulsion bearish depuis le haut — décalé à GAUCHE de c1 (cx=70), sous le badge */}
+          <circle cx="30" cy="80" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="30" y="80" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">1</text>
 
-          <circle cx="620" cy="135" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="620" y="135" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">2</text>
+          {/* ② FVG band — dans le coin droit de la bande (zone large, marqué dans un coin) */}
+          <circle cx="605" cy="135" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="605" y="135" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">2</text>
 
-          <circle cx="400" cy="180" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="400" y="180" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">3</text>
+          {/* ③ Retour dans le FVG — AU-DESSUS des bougies du retour (c5-c8) dans espace vide */}
+          <circle cx="300" cy="100" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="300" y="100" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">3</text>
 
-          <circle cx="620" cy="255" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="620" y="255" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">4</text>
+          {/* ④ Continuation bearish — à GAUCHE de la dernière bougie (c15 cx=620), pas dessus */}
+          <circle cx="560" cy="270" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="560" y="270" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">4</text>
         </g>
       </svg>
 

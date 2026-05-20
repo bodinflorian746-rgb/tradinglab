@@ -100,19 +100,23 @@ export function PDArrayContextDiagram({ className = "" }: PDArrayContextDiagramP
 
         </g>
 
-        {/* Repères mobile — visibles uniquement sur mobile (<640px), reliés aux bullets numérotés sous le chart */}
+        {/* Repères mobile — placement pédagogique : à côté de la cible, jamais sur bougie / badge / mèche-clé */}
         <g className="chart-mobile-markers">
-          <circle cx="170" cy="40" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="170" y="40" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">1</text>
+          {/* ① Résistance / equal highs — à droite du badge, juste au-dessus de la ligne (y=60) */}
+          <circle cx="170" cy="50" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="170" y="50" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">1</text>
 
-          <circle cx="250" cy="22" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="250" y="22" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">2</text>
+          {/* ② Sweep — décalé à GAUCHE de la mèche de sweep (cx=250) pour ne pas la couvrir */}
+          <circle cx="215" cy="24" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="215" y="24" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">2</text>
 
-          <circle cx="620" cy="100" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="620" y="100" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">3</text>
+          {/* ③ FVG bearish — dans le coin droit de la bande FVG (zone large, marqué dans un coin) */}
+          <circle cx="605" cy="100" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="605" y="100" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">3</text>
 
-          <circle cx="480" cy="140" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="480" y="140" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">4</text>
+          {/* ④ Retour dans le FVG — à GAUCHE des bougies de retour (c11 cx=520), juste sous la bande */}
+          <circle cx="460" cy="125" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="460" y="125" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">4</text>
         </g>
       </svg>
 

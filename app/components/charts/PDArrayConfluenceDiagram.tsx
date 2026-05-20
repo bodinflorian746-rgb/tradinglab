@@ -103,19 +103,23 @@ export function PDArrayConfluenceDiagram({ className = "" }: PDArrayConfluenceDi
 
         </g>
 
-        {/* Repères mobile — visibles uniquement sur mobile (<640px), reliés aux bullets numérotés sous le chart */}
+        {/* Repères mobile — placement pédagogique : à côté de la cible, jamais sur bougie / badge / mèche-clé */}
         <g className="chart-mobile-markers">
-          <circle cx="100" cy="75" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="100" y="75" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">1</text>
+          {/* ① Zone confluente — dans le coin GAUCHE de la bande (zone large, marqué dans un coin) */}
+          <circle cx="60" cy="70" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="60" y="70" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">1</text>
 
-          <circle cx="430" cy="22" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="430" y="22" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">2</text>
+          {/* ② Sweep récent — décalé à DROITE de la mèche de sweep (cx=430) pour ne pas la couvrir */}
+          <circle cx="460" cy="24" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="460" y="24" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">2</text>
 
-          <circle cx="475" cy="145" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="475" y="145" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">3</text>
+          {/* ③ Rejet bearish — à DROITE de c10 (cx=475) qui démarre la chute, dans espace vide */}
+          <circle cx="510" cy="110" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="510" y="110" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">3</text>
 
-          <circle cx="565" cy="235" r="20" fill="#18181b" stroke="#fbbf24" strokeWidth="1.5" />
-          <text x="565" y="235" fill="#fbbf24" fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">4</text>
+          {/* ④ Continuation bearish — à DROITE de la dernière bougie (c12 cx=565), dans espace libre */}
+          <circle cx="620" cy="230" r="16" fill="#18181b" fillOpacity="0.92" stroke="#fbbf24" strokeWidth="1.5" />
+          <text x="620" y="230" fill="#fbbf24" fontSize="16" fontWeight="700" textAnchor="middle" dominantBaseline="central">4</text>
         </g>
       </svg>
 
