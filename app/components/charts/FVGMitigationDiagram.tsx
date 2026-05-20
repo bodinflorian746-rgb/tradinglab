@@ -47,13 +47,7 @@ const BODY_W = 14;
 export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg className="responsive-svg-text" width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-
-        <style>{`
-          @media (max-width: 640px) {
-            .responsive-svg-text text { font-size: 1.2em; }
-          }
-        `}</style>
+      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#ffffff" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · H1</text>
