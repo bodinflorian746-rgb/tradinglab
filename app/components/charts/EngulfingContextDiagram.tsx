@@ -1,9 +1,10 @@
 export default function EngulfingContextDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="15" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Engulfing — la confluence change tout
@@ -72,5 +73,26 @@ export default function EngulfingContextDiagram({ className = "" }: { className?
         Un engulfing isolé hors contexte structurel reste un signal hypothétique
       </text>
     </svg>
+
+    {/* MOBILE : engulfing avec vs sans contexte ──────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">L'importance du contexte</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">✓ Engulfing sur Fibo 0.618</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">
+          La bougie englobante apparaît exactement sur un niveau Fibonacci → setup fort, confluence visible.
+        </p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ Engulfing isolé en pleine impulsion</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">
+          Englobante au milieu d'une chute, sans niveau structurel → signal hypothétique, à ignorer.
+        </p>
+      </div>
+      <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+        Un engulfing hors contexte structurel reste hypothétique.
+      </p>
+    </div>
+    </div>
   );
 }

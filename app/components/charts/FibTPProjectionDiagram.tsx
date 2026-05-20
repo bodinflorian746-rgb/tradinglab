@@ -1,9 +1,10 @@
 export default function FibTPProjectionDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Sortir en 2 fois : TP1 à 1.272, TP2 à 1.618
@@ -50,5 +51,28 @@ export default function FibTPProjectionDiagram({ className = "" }: { className?:
         Stratégie 50/50 : sortir la moitié à TP1 (1.272), garder l&apos;autre moitié pour TP2 (1.618)
       </text>
     </svg>
+
+    {/* MOBILE : projection TP Fibo ──────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <p className="text-[14px] font-bold text-emerald-400 text-center">Sortir en 2 fois — Fibo extension</p>
+      <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-3 flex justify-between items-center">
+        <div>
+          <p className="text-[13px] font-bold text-emerald-400">TP2 — 1.618</p>
+          <p className="text-[11px] text-zinc-400">50% de la position</p>
+        </div>
+        <span className="text-[15px] font-mono font-bold text-emerald-400">4 734 $</span>
+      </div>
+      <div className="rounded-lg bg-emerald-500/8 border border-emerald-500/25 p-3 flex justify-between items-center">
+        <div>
+          <p className="text-[13px] font-bold text-emerald-400">TP1 — 1.272</p>
+          <p className="text-[11px] text-zinc-400">50% de la position</p>
+        </div>
+        <span className="text-[15px] font-mono font-bold text-emerald-400">4 692 $</span>
+      </div>
+      <p className="text-[13px] text-zinc-300 text-center leading-snug pt-2 border-t border-zinc-800">
+        <span className="font-bold text-emerald-400">Stratégie 50/50</span> : sécurise la moitié à TP1, laisse la moitié courir vers TP2.
+      </p>
+    </div>
+    </div>
   );
 }

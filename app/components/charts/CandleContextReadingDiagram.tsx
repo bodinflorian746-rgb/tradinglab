@@ -1,9 +1,10 @@
 export default function CandleContextReadingDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Une même bougie verte = 3 lectures différentes
@@ -89,5 +90,28 @@ export default function CandleContextReadingDiagram({ className = "" }: { classN
         Le contexte avant/après la bougie change tout
       </text>
     </svg>
+
+    {/* MOBILE : 3 contextes empilés ──────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center leading-snug">
+        Une même bougie verte = 3 lectures différentes
+      </p>
+      <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
+        <p className="text-[13px] font-bold text-amber-400">Sommet d'impulsion → Retournement potentiel</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Après 5 bougies vertes successives, une nouvelle bougie verte = <span className="font-semibold">essoufflement</span>.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">Creux de chute → Continuation baissière probable</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Au milieu d'une chute, une bougie verte isolée = <span className="font-semibold">bruit</span>, pas de retournement.</p>
+      </div>
+      <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
+        <p className="text-[13px] font-bold text-zinc-300">Range latéral → Bruit (pas d'info)</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Dans une oscillation, la bougie verte = <span className="font-semibold">non significative</span>.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
+        Le contexte avant/après la bougie change tout.
+      </p>
+    </div>
+    </div>
   );
 }

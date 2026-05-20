@@ -1,9 +1,10 @@
 export default function ZoneVsLineDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Niveau = zone, pas ligne
@@ -74,5 +75,22 @@ export default function ZoneVsLineDiagram({ className = "" }: { className?: stri
         Un niveau institutionnel est une zone de 15-20 pips, pas une ligne précise
       </text>
     </svg>
+
+    {/* MOBILE : ligne vs zone ─────────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Zone vs Ligne précise</p>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ Ligne trop précise</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix dépasse de quelques pips et retombe → SL touché alors que le niveau a tenu.</p>
+      </div>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">✓ Zone (15-20 pips)</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Les mèches sont absorbées dans la zone → trade valide tant que la clôture reste à l'intérieur.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Un niveau institutionnel = zone, pas ligne précise.
+      </p>
+    </div>
+    </div>
   );
 }

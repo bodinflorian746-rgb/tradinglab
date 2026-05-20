@@ -1,9 +1,10 @@
 export default function FlipFailureDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Flip qui échoue — le niveau ne tient pas
@@ -67,5 +68,23 @@ export default function FlipFailureDiagram({ className = "" }: { className?: str
         Le retour rapide sous le niveau invalide le flip — sortie immédiate
       </text>
     </svg>
+
+    {/* MOBILE : échec de flip ─────────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <p className="text-[14px] font-bold text-red-400 text-center">Flip qui échoue — niveau ne tient pas</p>
+      <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2.5">
+        <p className="text-[12px] font-bold text-emerald-400">Étape 1 — Cassure de résistance 1.1850</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Le prix casse la résistance → tu attends le retest pour entrer long.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-2.5">
+        <p className="text-[12px] font-bold text-red-400">Étape 2 — Retour franc sous le niveau</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Au lieu de rebondir, le prix replonge sous 1.1850 en clôture.</p>
+      </div>
+      <div className="rounded-lg border-2 border-red-500/60 bg-red-500/10 p-2.5">
+        <p className="text-[12px] font-bold text-red-400">Étape 3 — Sortie immédiate</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Flip invalide. Couper la position sans attendre que le SL soit touché.</p>
+      </div>
+    </div>
+    </div>
   );
 }

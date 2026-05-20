@@ -1,9 +1,10 @@
 export default function PinBarFailureDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Pin bar valide mais setup invalidé
@@ -81,5 +82,30 @@ export default function PinBarFailureDiagram({ className = "" }: { className?: s
         Même un pin bar valide peut échouer. Le SL est là pour ça.
       </text>
     </svg>
+
+    {/* MOBILE : échec de pin bar ────────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <p className="text-[14px] font-bold text-red-400 text-center">Pin bar valide mais setup invalidé</p>
+      <div className="space-y-2">
+        <div className="rounded-lg bg-emerald-500/8 border border-emerald-500/30 p-2.5 text-center">
+          <p className="text-[11px] text-emerald-400 uppercase font-bold tracking-wider">Étape 1</p>
+          <p className="text-[13px] text-white mt-1">Pin bar bullish au support 4 500 $</p>
+        </div>
+        <p className="text-center text-zinc-600 text-[14px]">↓</p>
+        <div className="rounded-lg bg-amber-400/8 border border-amber-400/30 p-2.5 text-center">
+          <p className="text-[11px] text-amber-400 uppercase font-bold tracking-wider">Étape 2</p>
+          <p className="text-[13px] text-white mt-1">Mini-rebond de 2-3 bougies → puis échec</p>
+        </div>
+        <p className="text-center text-zinc-600 text-[14px]">↓</p>
+        <div className="rounded-lg bg-red-500/10 border-2 border-red-500/50 p-2.5 text-center">
+          <p className="text-[11px] text-red-400 uppercase font-bold tracking-wider">Étape 3</p>
+          <p className="text-[13px] text-white mt-1">Cassure baissière du support → SL touché à 4 470 $</p>
+        </div>
+      </div>
+      <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+        Même un pin bar valide peut échouer. <span className="font-bold text-red-400">Le SL est là pour ça.</span>
+      </p>
+    </div>
+    </div>
   );
 }

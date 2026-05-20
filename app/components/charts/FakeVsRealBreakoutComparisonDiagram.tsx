@@ -1,9 +1,10 @@
 export default function FakeVsRealBreakoutComparisonDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Vrai breakout vs Faux breakout
@@ -89,5 +90,22 @@ export default function FakeVsRealBreakoutComparisonDiagram({ className = "" }: 
         Critère de distinction : clôture au-dessus du niveau + follow-through sur 3-5 bougies
       </text>
     </svg>
+
+    {/* MOBILE : vrai vs faux breakout ─────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Vrai breakout vs Faux breakout</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">✓ Vrai breakout</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Cassure franche + clôture AU-DESSUS du niveau + 3-5 bougies de continuation (follow-through).</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ Faux breakout</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Mèche dépasse mais <span className="font-bold">clôture sous</span> le niveau + reversal immédiat = piège.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Critère : clôture + follow-through 3-5 bougies.
+      </p>
+    </div>
+    </div>
   );
 }

@@ -1,9 +1,10 @@
 export default function MMHierarchyStackDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Lire les 3 MM en combinaison
@@ -76,5 +77,26 @@ export default function MMHierarchyStackDiagram({ className = "" }: { className?
         L&apos;ordre relatif des 3 MM signale le biais directionnel
       </text>
     </svg>
+
+    {/* MOBILE : hiérarchie MM ─────────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Lire les 3 MM en combinaison</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Golden cross — biais long ↑</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">MM20 &gt; MM50 &gt; MM200 (ordre haussier).</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">Death cross — biais short ↓</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">MM200 &gt; MM50 &gt; MM20 (ordre baissier).</p>
+      </div>
+      <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
+        <p className="text-[13px] font-bold text-zinc-300">Range — pas de biais</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">MM enchevêtrées, pente quasi nulle → ne pas trader.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        L'ordre des 3 MM signale le biais directionnel.
+      </p>
+    </div>
+    </div>
   );
 }

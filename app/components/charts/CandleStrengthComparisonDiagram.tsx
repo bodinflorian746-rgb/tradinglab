@@ -1,9 +1,10 @@
 export default function CandleStrengthComparisonDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="25" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Lire la force d&apos;une bougie en 5 secondes
@@ -58,5 +59,28 @@ export default function CandleStrengthComparisonDiagram({ className = "" }: { cl
         4 patterns clés à identifier visuellement
       </text>
     </svg>
+
+    {/* MOBILE : 4 patterns en cartes ─────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Lire la force d'une bougie en 5 secondes</p>
+      {[
+        { name: "Marubozu", icon: "█", desc: "Long corps plein, sans mèche", verdict: "Conviction forte ↑", color: "#10b981" },
+        { name: "Pin bar", icon: "│█│", desc: "Petit corps + très longue mèche d'un côté", verdict: "Rejet net ↑", color: "#10b981" },
+        { name: "Doji", icon: "+", desc: "Corps quasi nul, mèches des 2 côtés", verdict: "Indécision ↔", color: "#a1a1aa" },
+        { name: "Engulfing", icon: "▮▮", desc: "Bougie qui avale entièrement la précédente", verdict: "Bascule ↑", color: "#10b981" },
+      ].map((p) => (
+        <div key={p.name} className="rounded-lg border p-2.5" style={{ borderColor: `${p.color}55`, background: `${p.color}10` }}>
+          <div className="flex items-baseline justify-between gap-2">
+            <span className="text-[14px] font-bold" style={{ color: p.color }}>{p.name}</span>
+            <span className="text-[13px] font-bold" style={{ color: p.color }}>{p.verdict}</span>
+          </div>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">{p.desc}</p>
+        </div>
+      ))}
+      <p className="text-[12px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800">
+        4 patterns clés à identifier visuellement
+      </p>
+    </div>
+    </div>
   );
 }

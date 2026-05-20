@@ -1,9 +1,10 @@
 export default function EngulfingValidationGridDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 500"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="30" fill="#d4d4d8" fontSize="14" fontWeight="600" textAnchor="middle">
         Engulfing valide vs invalide
@@ -116,5 +117,27 @@ export default function EngulfingValidationGridDiagram({ className = "" }: { cla
         Corps englobant + amplitude suffisante + contexte de niveau
       </text>
     </svg>
+
+    {/* MOBILE : 4 cas validés/invalidés engulfing ──────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Reconnaître un engulfing valide</p>
+      {[
+        { v: true, label: "Corps englobant net", desc: "Bougie verte avale entièrement la rouge précédente + amplitude suffisante" },
+        { v: false, label: "Bougie B ne couvre pas la A", desc: "Corps trop court → pas un vrai engulfing" },
+        { v: false, label: "Amplitude minuscule", desc: "Englobante mais 20 px seulement → signal faible" },
+        { v: false, label: "Paire engulfing dans un range", desc: "Sans niveau structurel → signal inutile" },
+      ].map((c, i) => (
+        <div key={i} className={`rounded-lg border p-2.5 ${c.v ? "border-emerald-500/40 bg-emerald-500/8" : "border-red-500/40 bg-red-500/8"}`}>
+          <p className={`text-[13px] font-bold ${c.v ? "text-emerald-400" : "text-red-400"}`}>
+            {c.v ? "✓" : "✗"} {c.label}
+          </p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{c.desc}</p>
+        </div>
+      ))}
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Corps englobant + amplitude + contexte de niveau
+      </p>
+    </div>
+    </div>
   );
 }

@@ -1,9 +1,10 @@
 export default function PinBarValidationGridDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 500"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="30" fill="#d4d4d8" fontSize="14" fontWeight="600" textAnchor="middle">
         Reconnaître une pin bar valide en 5 secondes
@@ -70,5 +71,29 @@ export default function PinBarValidationGridDiagram({ className = "" }: { classN
         Ratio mèche / corps ≥ 2:1 = pin bar valide
       </text>
     </svg>
+
+    {/* MOBILE : 4 cas validés/invalidés ─────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Reconnaître une pin bar valide</p>
+      {[
+        { v: true, label: "Rejet net", wick: 140, body: 30, ratio: "4,7:1" },
+        { v: false, label: "Mèche = Corps", wick: 60, body: 60, ratio: "1:1" },
+        { v: false, label: "Corps écrase la mèche", wick: 30, body: 120, ratio: "1:4" },
+        { v: false, label: "Mèche négligeable", wick: 10, body: 60, ratio: "0,2:1" },
+      ].map((c, i) => (
+        <div key={i} className={`rounded-lg border p-2.5 ${c.v ? "border-emerald-500/40 bg-emerald-500/8" : "border-red-500/40 bg-red-500/8"}`}>
+          <p className={`text-[13px] font-bold ${c.v ? "text-emerald-400" : "text-red-400"}`}>
+            {c.v ? "✓" : "✗"} {c.label}
+          </p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">
+            Mèche {c.wick}px · Corps {c.body}px · <span className="font-bold font-mono">Ratio {c.ratio}</span>
+          </p>
+        </div>
+      ))}
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800">
+        Ratio mèche / corps ≥ 2:1 = pin bar valide
+      </p>
+    </div>
+    </div>
   );
 }

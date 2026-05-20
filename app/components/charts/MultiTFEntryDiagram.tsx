@@ -1,11 +1,12 @@
 export default function MultiTFEntryDiagram() {
   return (
+    <div>
     <svg
       viewBox="0 0 720 440"
       width="100%"
-      height="auto"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="hidden sm:block"
     >
       {/* ── ZONE 1 — Titre général ── */}
       <text x="360" y="22" textAnchor="middle" fontSize="14" fontWeight="600" fill="#10b981">
@@ -185,5 +186,44 @@ export default function MultiTFEntryDiagram() {
         Setup engulfing — Entrée 4 630$ · SL 4 590$ · TP 4 720$ · R/R 2,25
       </text>
     </svg>
+
+    {/* MOBILE : process 3 timeframes empilé ──────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <p className="text-[14px] font-bold text-emerald-400 text-center leading-snug">
+        Process complet Daily → H4 → H1 (XAU/USD)
+      </p>
+
+      <div className="space-y-2">
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/8 p-3">
+          <div className="flex items-baseline justify-between gap-2">
+            <span className="text-[14px] font-bold text-emerald-400">DAILY</span>
+            <span className="text-[11px] text-emerald-400/80 italic">Le contexte</span>
+          </div>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Tendance haussière ↑ confirmée · Support 4 500 $ → high 4 720 $</p>
+        </div>
+        <p className="text-center text-zinc-600 text-[14px]">↓</p>
+        <div className="rounded-lg border border-blue-400/30 bg-blue-500/8 p-3">
+          <div className="flex items-baseline justify-between gap-2">
+            <span className="text-[14px] font-bold text-blue-400">H4</span>
+            <span className="text-[11px] text-blue-400/80 italic">Le niveau</span>
+          </div>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Retracement vers Fibo 0.618 = 4 600 $ → zone à surveiller</p>
+        </div>
+        <p className="text-center text-zinc-600 text-[14px]">↓</p>
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/8 p-3">
+          <div className="flex items-baseline justify-between gap-2">
+            <span className="text-[14px] font-bold text-emerald-400">H1</span>
+            <span className="text-[11px] text-emerald-400/80 italic">Le déclencheur</span>
+          </div>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Bullish engulfing sur le Fibo → entrée déclenchée</p>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-2.5 text-center space-y-0.5">
+        <p className="text-[13px] text-zinc-300">Entrée <span className="font-mono font-bold text-white">4 630 $</span> · SL <span className="font-mono font-bold text-red-400">4 590 $</span> · TP <span className="font-mono font-bold text-emerald-400">4 720 $</span></p>
+        <p className="text-[14px] font-bold text-emerald-400">R/R = 2,25</p>
+      </div>
+    </div>
+    </div>
   );
 }

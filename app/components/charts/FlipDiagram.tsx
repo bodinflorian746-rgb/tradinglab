@@ -1,9 +1,10 @@
 export default function FlipDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 600 300"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       {/* Header */}
       <text x="300" y="20" fill="#a1a1aa" fontSize="10" textAnchor="middle">
@@ -105,5 +106,22 @@ export default function FlipDiagram({ className = "" }: { className?: string }) 
         Support cassé → Résistance
       </text>
     </svg>
+
+    {/* MOBILE : flip de polarité ──────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Flip de polarité — la mémoire des prix</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Résistance cassée → Support</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix casse une résistance puis revient la tester par le bas → elle devient support.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">Support cassé → Résistance</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix casse un support puis remonte le tester par le haut → il devient résistance.</p>
+      </div>
+      <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+        Un niveau cassé inverse sa polarité — toujours.
+      </p>
+    </div>
+    </div>
   );
 }

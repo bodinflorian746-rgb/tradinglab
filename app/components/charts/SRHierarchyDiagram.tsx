@@ -1,9 +1,10 @@
 export default function SRHierarchyDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="25" fill="#d4d4d8" fontSize="14" fontWeight="600" textAnchor="middle">
         Hiérarchie d&apos;un niveau selon le timeframe
@@ -76,5 +77,26 @@ export default function SRHierarchyDiagram({ className = "" }: { className?: str
       <rect x="826" y="184" width="60" height="14" rx="3" fill="#09090b" />
       <text x="880" y="195" fill="#a1a1aa" fontSize="10" textAnchor="end">4 600$</text>
     </svg>
+
+    {/* MOBILE : hiérarchie S/R par timeframe ──────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Hiérarchie des S/R par timeframe</p>
+      <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
+        <p className="text-[14px] font-bold text-emerald-400">Daily — ★★★ Niveau majeur</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Peu de touches mais franches, rebonds amples → niveau institutionnel respecté.</p>
+      </div>
+      <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
+        <p className="text-[14px] font-bold text-blue-400">H4 — ★★ Niveau intermédiaire</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Touches modérées, niveau actif sur le contexte court terme.</p>
+      </div>
+      <div className="rounded-lg border border-amber-400/40 bg-amber-400/5 p-3">
+        <p className="text-[14px] font-bold text-amber-400">M15 — ★ Niveau marginal</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Beaucoup de touches faibles, perforations fréquentes → faible fiabilité.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Plus la TF est haute, plus le niveau est fort.
+      </p>
+    </div>
+    </div>
   );
 }

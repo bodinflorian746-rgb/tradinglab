@@ -1,9 +1,10 @@
 export default function BOSvsCHoCHComparisonDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         BOS vs CHoCH — même structure, sens de cassure opposé
@@ -59,5 +60,22 @@ export default function BOSvsCHoCHComparisonDiagram({ className = "" }: { classN
         Même structure de départ. Sens de la cassure = sens du signal.
       </text>
     </svg>
+
+    {/* MOBILE : BOS vs CHoCH ─────────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">BOS vs CHoCH — même structure, sens opposés</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">BOS — Continuation</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Cassure <span className="font-bold">DANS LE SENS</span> de la tendance (HH2 cassé à la hausse). Confirme la tendance.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">CHoCH — Retournement</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Cassure <span className="font-bold">CONTRE</span> le sens de la tendance (HL2 cassé à la baisse). 1er signal de retournement.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Même structure. Sens de la cassure = sens du signal.
+      </p>
+    </div>
+    </div>
   );
 }

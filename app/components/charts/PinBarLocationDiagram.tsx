@@ -1,9 +1,10 @@
 export default function PinBarLocationDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Le niveau, pas la bougie
@@ -51,5 +52,26 @@ export default function PinBarLocationDiagram({ className = "" }: { className?: 
         Pin bar = signal de confirmation à un niveau. Sans niveau, c&apos;est du bruit.
       </text>
     </svg>
+
+    {/* MOBILE : 3 emplacements de pin bar ──────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Le niveau, pas la bougie</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">✓ Pin bar AU SUPPORT</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Bullish au plus bas du range (4 500 $) → tradable</p>
+      </div>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">✓ Pin bar À LA RÉSISTANCE</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Bearish au plus haut du range (4 650 $) → tradable</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ Pin bar HORS NIVEAU</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Au milieu du range, sans niveau structurel → ignorer</p>
+      </div>
+      <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+        Pin bar = confirmation à un niveau. Sans niveau, c'est du bruit.
+      </p>
+    </div>
+    </div>
   );
 }

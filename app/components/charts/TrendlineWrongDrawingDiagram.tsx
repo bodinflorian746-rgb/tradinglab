@@ -1,9 +1,10 @@
 export default function TrendlineWrongDrawingDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 500"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Tracer une trendline — 3 erreurs courantes
@@ -89,5 +90,27 @@ export default function TrendlineWrongDrawingDiagram({ className = "" }: { class
 
       <text x="600" y="475" fill="#ef4444" fontSize="8" textAnchor="middle">Trendline prolongée malgré la cassure</text>
     </svg>
+
+    {/* MOBILE : tracé trendline correct vs erreurs ──────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Tracer une trendline — bon vs erreurs</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">✓ Bon tracé — 3 HL alignés</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Au minimum 3 pivots HL (ou LH) connectés sur la même droite.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ 2 points isolés</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">2 pivots ne suffisent pas — toute droite passe par 2 points. Il faut au moins 3.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ Trendline forcée sur des mèches</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Relier des mèches isolées = tracé biaisé. Utiliser les corps de bougies.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ Cassure ignorée</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Une fois cassée, abandonner la trendline. Ne pas la prolonger.</p>
+      </div>
+    </div>
+    </div>
   );
 }

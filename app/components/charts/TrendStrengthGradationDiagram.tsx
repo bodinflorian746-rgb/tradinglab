@@ -1,9 +1,10 @@
 export default function TrendStrengthGradationDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Qualifier la force d&apos;une tendance
@@ -61,5 +62,26 @@ export default function TrendStrengthGradationDiagram({ className = "" }: { clas
         Plus l&apos;amplitude est grande, plus le R/R structurel devient favorable
       </text>
     </svg>
+
+    {/* MOBILE : 3 forces de tendance ──────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Qualifier la force d'une tendance</p>
+      <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
+        <p className="text-[13px] font-bold text-zinc-300">Faible — 50 pips · pente 15°</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Amplitude réduite, R/R limité. Évite ou prends des tailles plus petites.</p>
+      </div>
+      <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
+        <p className="text-[13px] font-bold text-blue-400">Modérée — 150 pips · pente 35°</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Tendance tradable avec une bonne discipline.</p>
+      </div>
+      <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Forte — 400+ pips · pente 55°</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Setup à privilégier — R/R structurel maximal.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Plus l'amplitude est grande, plus le R/R est favorable.
+      </p>
+    </div>
+    </div>
   );
 }

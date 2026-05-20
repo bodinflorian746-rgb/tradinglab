@@ -1,9 +1,10 @@
 export default function FibPullbackChecklistDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 300"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Valider un pullback Fibo en 4 critères
@@ -57,5 +58,30 @@ export default function FibPullbackChecklistDiagram({ className = "" }: { classN
       <rect x="280" y="280" width="240" height="18" rx="4" fill="#10b98120" stroke="#10b981" strokeWidth="0.8" />
       <text x="400" y="293" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">4/4 = setup à privilégier</text>
     </svg>
+
+    {/* MOBILE : 4 critères pullback Fibo ─────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Valider un pullback Fibo</p>
+      {[
+        { t: "Impulsion claire", d: "Mouvement franc, displacement > moyenne" },
+        { t: "Retracement 30-60%", d: "Zone OTE Fibonacci 61.8% à 78.6%" },
+        { t: "Signal de rejet", d: "Pin bar, engulfing, réaction immédiate" },
+        { t: "Biais TF supérieur aligné", d: "Daily ou H4 dans le sens de l'impulsion" },
+      ].map((c, i) => (
+        <div key={i} className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2.5">
+          <div className="flex items-start gap-2.5">
+            <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[14px] font-bold text-emerald-400">✓</span>
+            <div className="flex-1">
+              <p className="text-[13px] font-bold text-emerald-400">{c.t}</p>
+              <p className="text-[12px] text-zinc-300 leading-snug">{c.d}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800">
+        4/4 = setup à privilégier
+      </p>
+    </div>
+    </div>
   );
 }

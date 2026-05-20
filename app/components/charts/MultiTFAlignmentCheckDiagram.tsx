@@ -1,9 +1,10 @@
 export default function MultiTFAlignmentCheckDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 300"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Aligner Daily → H4 → M15 en 4 critères
@@ -59,5 +60,30 @@ export default function MultiTFAlignmentCheckDiagram({ className = "" }: { class
       <rect x="280" y="280" width="240" height="18" rx="4" fill="#10b98120" stroke="#10b981" strokeWidth="0.8" />
       <text x="400" y="293" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">4/4 = entrée précise possible</text>
     </svg>
+
+    {/* MOBILE : 4 critères d'alignement ─────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">4 critères d'alignement multi-TF</p>
+      {[
+        { title: "Biais Daily aligné", desc: "Tendance majeure HH/HL ou LH/LL confirmée" },
+        { title: "Niveau H4 confluent", desc: "S/R, Fibo, MM, OB croisés à la même zone" },
+        { title: "Signal M15 confirmé", desc: "Pin bar, engulfing, rejet immédiat" },
+        { title: "News clean", desc: "Pas de NFP, FOMC, CPI dans les 30 minutes" },
+      ].map((c, i) => (
+        <div key={i} className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2.5">
+          <div className="flex items-start gap-2.5">
+            <span className="shrink-0 w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[14px] font-bold text-emerald-400">✓</span>
+            <div className="flex-1">
+              <p className="text-[13px] font-bold text-emerald-400">{c.title}</p>
+              <p className="text-[12px] text-zinc-300 leading-snug">{c.desc}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800">
+        4/4 = entrée précise possible
+      </p>
+    </div>
+    </div>
   );
 }

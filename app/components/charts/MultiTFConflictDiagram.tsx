@@ -1,9 +1,10 @@
 export default function MultiTFConflictDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       {/* Badge central top */}
       <rect x="310" y="10" width="280" height="28" rx="14" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1.2" />
@@ -75,5 +76,30 @@ export default function MultiTFConflictDiagram({ className = "" }: { className?:
         Daily ↑ vs H4 ↓ vs M15 ↑ : tant que les 3 timeframes ne s&apos;alignent pas, pas d&apos;entrée
       </text>
     </svg>
+
+    {/* MOBILE : conflit multi-TF ─────────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <div className="rounded-xl border-2 border-amber-400 bg-amber-400/10 p-3 text-center">
+        <p className="text-[14px] font-bold text-amber-400">⚠ Conflit multi-TF — Pas de trade</p>
+      </div>
+      <div className="space-y-2">
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/5 p-2.5 flex justify-between items-center">
+          <span className="text-[14px] font-bold text-zinc-200">Daily</span>
+          <span className="text-[14px] font-bold text-emerald-400">↑ Haussier</span>
+        </div>
+        <div className="rounded-lg border border-red-500/40 bg-red-500/5 p-2.5 flex justify-between items-center">
+          <span className="text-[14px] font-bold text-zinc-200">H4</span>
+          <span className="text-[14px] font-bold text-red-400">↓ Baissier</span>
+        </div>
+        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/5 p-2.5 flex justify-between items-center">
+          <span className="text-[14px] font-bold text-zinc-200">M15</span>
+          <span className="text-[14px] font-bold text-emerald-400">↑ Haussier</span>
+        </div>
+      </div>
+      <p className="text-[13px] text-zinc-300 leading-snug text-center pt-2 border-t border-zinc-800">
+        Tant que les 3 timeframes ne s'alignent pas, <span className="font-bold text-amber-400">pas d'entrée</span>.
+      </p>
+    </div>
+    </div>
   );
 }

@@ -1,9 +1,10 @@
 export default function TrendlineMADiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 600 300"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       {/* Badge top droit — Trendline + MM = zone défendue */}
       <rect x="410" y="20" width="170" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
@@ -66,5 +67,28 @@ export default function TrendlineMADiagram({ className = "" }: { className?: str
         Trendline (emerald) · MM20 (bleu) · MM50 (gris) · Point de confluence
       </text>
     </svg>
+
+    {/* MOBILE : trendline + MM = zone défendue ─────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-emerald-400 text-center">Trendline + MM = zone défendue</p>
+      <ul className="space-y-2 text-[13px]">
+        <li className="flex items-center gap-2.5">
+          <span className="shrink-0 w-4 h-0.5 bg-emerald-400 rounded" />
+          <span className="text-zinc-300"><span className="font-bold text-emerald-400">Trendline</span> · droite reliant les pivots</span>
+        </li>
+        <li className="flex items-center gap-2.5">
+          <span className="shrink-0 w-4 h-0.5 bg-blue-400 rounded" />
+          <span className="text-zinc-300"><span className="font-bold text-blue-400">MM20</span> · moyenne mobile 20 périodes</span>
+        </li>
+        <li className="flex items-center gap-2.5">
+          <span className="shrink-0 w-4 h-0.5 bg-zinc-500 rounded" />
+          <span className="text-zinc-300"><span className="font-bold text-zinc-300">MM50</span> · moyenne mobile 50 périodes</span>
+        </li>
+      </ul>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Quand trendline + MM se croisent au même endroit = entrée pullback haute probabilité.
+      </p>
+    </div>
+    </div>
   );
 }

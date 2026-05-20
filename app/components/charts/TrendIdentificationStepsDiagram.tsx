@@ -1,9 +1,10 @@
 export default function TrendIdentificationStepsDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Identifier une tendance en 3 étapes
@@ -79,5 +80,26 @@ export default function TrendIdentificationStepsDiagram({ className = "" }: { cl
         Process séquentiel : pivots → succession → amplitude
       </text>
     </svg>
+
+    {/* MOBILE : 3 étapes identification tendance ───────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Identifier une tendance en 3 étapes</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Étape 1 — Pivots</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Identifier les pivots HH/HL (haussier) ou LH/LL (baissier).</p>
+      </div>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Étape 2 — Succession</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Vérifier que les pivots se succèdent dans le bon ordre (chaque HH plus haut que le précédent).</p>
+      </div>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Étape 3 — Amplitude</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Mesurer l'écart entre pivots : <span className="font-bold">≥ 30 pips minimum</span> pour être significatif.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Process séquentiel : pivots → succession → amplitude
+      </p>
+    </div>
+    </div>
   );
 }

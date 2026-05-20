@@ -1,11 +1,12 @@
 export default function PinBarSetupDiagram() {
   return (
+    <div>
     <svg
       viewBox="0 0 720 440"
       width="100%"
-      height="auto"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="hidden sm:block"
     >
       {/* ── 1. Titre ── */}
       <text x="360" y="28" textAnchor="middle" fontSize="16" fontWeight="600" fill="#10b981">
@@ -109,5 +110,43 @@ export default function PinBarSetupDiagram() {
         Risque 50$ · Gain potentiel 130$ · R/R 2,6
       </text>
     </svg>
+
+    {/* MOBILE : setup Pin bar bullish au support — XAU/USD H4 ────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <p className="text-[14px] font-bold text-emerald-400 text-center leading-snug">
+        Pin bar bullish au support — XAU/USD H4
+      </p>
+
+      <div className="space-y-2">
+        <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-2.5 flex justify-between items-center">
+          <span className="text-[12px] text-emerald-400/80 uppercase font-bold tracking-wider">Take Profit</span>
+          <span className="text-[15px] font-mono font-bold text-emerald-400">4 650 $</span>
+        </div>
+        <div className="rounded-lg bg-zinc-800 border border-zinc-700 p-2.5 flex justify-between items-center">
+          <span className="text-[12px] text-zinc-300 uppercase font-bold tracking-wider">Entrée</span>
+          <span className="text-[15px] font-mono font-bold text-white">4 520 $</span>
+        </div>
+        <div className="rounded-lg bg-zinc-800/60 border border-zinc-700 p-2.5 flex justify-between items-center">
+          <span className="text-[12px] text-zinc-400 uppercase font-bold tracking-wider">Support</span>
+          <span className="text-[14px] font-mono font-semibold text-zinc-300">4 500 $</span>
+        </div>
+        <div className="rounded-lg bg-red-500/10 border border-red-500/30 p-2.5 flex justify-between items-center">
+          <span className="text-[12px] text-red-400/80 uppercase font-bold tracking-wider">Stop Loss</span>
+          <span className="text-[15px] font-mono font-bold text-red-400">4 470 $</span>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-2.5 text-center space-y-1">
+        <p className="text-[13px] text-zinc-300">
+          <span className="text-red-400 font-bold">Risque 50 $</span> · <span className="text-emerald-400 font-bold">Gain 130 $</span>
+        </p>
+        <p className="text-[15px] font-bold text-emerald-400">R/R = 2,6</p>
+      </div>
+
+      <p className="text-[12px] text-zinc-400 italic text-center leading-snug pt-2 border-t border-zinc-800">
+        Mèche longue sous le support = rejet vendeurs → entrée sur retour au-dessus du support.
+      </p>
+    </div>
+    </div>
   );
 }

@@ -1,9 +1,10 @@
 export default function StrongVsWeakLevelDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Reconnaître un niveau fort vs un niveau faible
@@ -53,5 +54,22 @@ export default function StrongVsWeakLevelDiagram({ className = "" }: { className
         Plus de touches franches = niveau institutionnel défendu
       </text>
     </svg>
+
+    {/* MOBILE : niveau fort vs faible ─────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Reconnaître un niveau fort vs faible</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">✓ Niveau fort — 4 touches franches</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix rebondit nettement à chaque contact, sans hésiter.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">✗ Niveau faible — rebonds peu amples</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix touche mais hésite, rebondit faiblement, finit par casser.</p>
+      </div>
+      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        Plus de touches franches = niveau institutionnel défendu
+      </p>
+    </div>
+    </div>
   );
 }

@@ -1,9 +1,10 @@
 export default function BOSFakeoutDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Faux BOS — la mèche perce, la clôture invalide
@@ -72,5 +73,26 @@ export default function BOSFakeoutDiagram({ className = "" }: { className?: stri
         Mèche à 4 745$, clôture à 4 695$ → BOS invalide, continuation baissière confirme
       </text>
     </svg>
+
+    {/* MOBILE : faux BOS ─────────────────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      <p className="text-[14px] font-bold text-red-400 text-center">Faux BOS — mèche perce, clôture invalide</p>
+      <div className="rounded-lg border border-amber-400/40 bg-amber-400/5 p-3">
+        <p className="text-[13px] font-bold text-amber-400">Étape 1 — Mèche qui perce le HH (4 720 $)</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix dépasse momentanément le sommet jusqu'à 4 745 $.</p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">Étape 2 — Clôture sous le niveau (4 695 $)</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">La bougie clôture en dessous → BOS invalide.</p>
+      </div>
+      <div className="rounded-lg border-2 border-red-500/60 bg-red-500/10 p-3">
+        <p className="text-[13px] font-bold text-red-400">Étape 3 — Continuation baissière confirme</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Retour franc sous le niveau → continuation baissière confirme le faux signal.</p>
+      </div>
+      <p className="text-[13px] text-amber-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+        Toujours attendre la <span className="font-bold">clôture</span> pour valider un BOS.
+      </p>
+    </div>
+    </div>
   );
 }

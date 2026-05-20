@@ -1,9 +1,10 @@
 export default function BullishVsBearishEngulfingDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         Engulfing — toujours sur un niveau
@@ -73,5 +74,26 @@ export default function BullishVsBearishEngulfingDiagram({ className = "" }: { c
         Sans niveau structurel, l&apos;engulfing perd 70% de son taux de réussite
       </text>
     </svg>
+
+    {/* MOBILE : Bullish vs Bearish engulfing ─────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">Engulfing — toujours sur un niveau</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">Bullish engulfing AU SUPPORT</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">
+          Après une chute, une grosse bougie verte avale la rouge précédente sur le <span className="font-bold text-emerald-400">support 4 540 $</span> → rebond probable.
+        </p>
+      </div>
+      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
+        <p className="text-[13px] font-bold text-red-400">Bearish engulfing À LA RÉSISTANCE</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">
+          Après une hausse, une grosse bougie rouge avale la verte précédente sur la <span className="font-bold text-red-400">résistance</span> → chute probable.
+        </p>
+      </div>
+      <p className="text-[13px] text-amber-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
+        ⚠ Sans niveau structurel, l'engulfing perd 70% de son taux de réussite
+      </p>
+    </div>
+    </div>
   );
 }

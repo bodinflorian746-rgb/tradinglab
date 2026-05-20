@@ -1,9 +1,10 @@
 export default function FlipRetestValidationDiagram({ className = "" }: { className?: string }) {
   return (
+    <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 900 400"
-      className={`w-full h-auto ${className}`}
+      className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
         3 signaux qui valident un retest de flip
@@ -97,5 +98,26 @@ export default function FlipRetestValidationDiagram({ className = "" }: { classN
         Sans signal de rejet au contact, le flip n&apos;est pas validé
       </text>
     </svg>
+
+    {/* MOBILE : 3 signaux retest flip ────────────────────────── */}
+    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
+      <p className="text-[14px] font-bold text-white text-center">3 signaux qui valident un retest de flip</p>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">1 · Mèche traverse + rejet</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Longue mèche qui touche le niveau et clôture du bon côté → rejet net.</p>
+      </div>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">2 · Bougie de signal (pin bar / engulfing)</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Pattern de retournement clair au contact de l'ex-niveau.</p>
+      </div>
+      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
+        <p className="text-[13px] font-bold text-emerald-400">3 · Pas de pénétration profonde</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix ne traverse pas en clôture → le niveau tient.</p>
+      </div>
+      <p className="text-[13px] text-amber-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
+        Sans signal de rejet au contact, le flip n'est pas validé.
+      </p>
+    </div>
+    </div>
   );
 }
