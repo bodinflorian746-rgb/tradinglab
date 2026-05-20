@@ -39,6 +39,22 @@ for (const url of PAGES) {
   });
 }
 
+test("navigation — clic sur 'Commencer' depuis /jeux ouvre le jeu", async ({ page }) => {
+  await page.goto("/jeux", { waitUntil: "domcontentloaded" });
+  await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
+
+  // La card "BUY / SELL / NO TRADE" doit être visible avec un bouton "Commencer"
+  const card = page.getByRole("link", { name: /BUY.*SELL.*NO TRADE|Commencer/ }).first();
+  await expect(card).toBeVisible();
+  await expect(card).toHaveAttribute("href", "/jeux/buy-sell-no-trade");
+
+  await card.click();
+  await page.waitForURL("**/jeux/buy-sell-no-trade", { timeout: 5000 });
+
+  // Page du jeu chargée : 3 boutons de décision visibles
+  await expect(page.getByRole("button", { name: /^BUY$/ })).toBeVisible({ timeout: 5000 });
+});
+
 test("gameplay — choisir BUY puis avancer", async ({ page }) => {
   await page.goto("/jeux/buy-sell-no-trade", { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});

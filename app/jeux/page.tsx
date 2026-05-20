@@ -141,15 +141,17 @@ function AvailableGameCard({ game }: { game: Game }) {
   return (
     <Link
       href={game.href!}
-      className="group relative bg-zinc-900/60 border border-zinc-800 rounded-2xl p-5 sm:p-6 flex flex-col gap-4 hover:border-emerald-500/40 hover:bg-zinc-900/80 transition-all"
+      className="group relative block bg-gradient-to-br from-emerald-500/[0.08] to-zinc-900/60 border border-emerald-500/30 rounded-2xl p-5 sm:p-6 hover:border-emerald-500/60 hover:from-emerald-500/[0.12] transition-all"
     >
-      <div className="absolute top-4 right-4 flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" style={{ boxShadow: "0 0 6px rgba(16,185,129,0.7)" }} />
+      {/* Disponible badge */}
+      <div className="absolute top-4 right-4 flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/30 rounded-full px-2.5 py-1">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" style={{ boxShadow: "0 0 6px rgba(16,185,129,0.9)" }} />
         Disponible
       </div>
 
-      <div className="flex items-start gap-3">
-        <div className="w-12 h-12 rounded-xl bg-zinc-800/80 border border-zinc-700/60 flex items-center justify-center shrink-0">
+      {/* Icon + level */}
+      <div className="flex items-start gap-3 mb-4">
+        <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
           {game.icon}
         </div>
         <div className="flex-1 min-w-0 pt-1">
@@ -159,25 +161,27 @@ function AvailableGameCard({ game }: { game: Game }) {
         </div>
       </div>
 
-      <div className="flex-1">
-        <h3 className="text-lg font-bold text-white mb-1.5 leading-tight">{game.title}</h3>
-        <p className="text-zinc-400 text-sm leading-relaxed">{game.description}</p>
+      {/* Title + desc */}
+      <h3 className="text-lg sm:text-xl font-bold text-white mb-2 leading-tight">{game.title}</h3>
+      <p className="text-zinc-400 text-sm leading-relaxed mb-5">{game.description}</p>
+
+      {/* Bouton CTA Commencer (clairement visible) */}
+      <div
+        className="flex items-center justify-center gap-2 bg-emerald-500 text-zinc-950 font-bold text-sm px-4 py-3 rounded-xl group-hover:bg-emerald-400 transition-colors"
+      >
+        Commencer
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </div>
 
-      <div className="flex items-center justify-between pt-3 border-t border-zinc-800/60">
-        <div className="flex items-center gap-1.5 text-[11px] text-zinc-500">
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-            <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.2" />
-            <path d="M5.5 3v2.5l1.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          {game.duration}
-        </div>
-        <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1 group-hover:gap-1.5 transition-all">
-          Jouer
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-            <path d="M4 9l4-3-4-3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </span>
+      {/* Duration footer */}
+      <div className="flex items-center justify-center gap-1.5 text-[11px] text-zinc-500 mt-3">
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+          <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.2" />
+          <path d="M5.5 3v2.5l1.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {game.duration}
       </div>
     </Link>
   );
@@ -247,7 +251,7 @@ export default function JeuxPage() {
               Disponible maintenant
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className={`grid gap-4 ${AVAILABLE_GAMES.length > 1 ? "sm:grid-cols-2" : ""}`}>
             {AVAILABLE_GAMES.map((g) => <AvailableGameCard key={g.id} game={g} />)}
           </div>
         </section>
