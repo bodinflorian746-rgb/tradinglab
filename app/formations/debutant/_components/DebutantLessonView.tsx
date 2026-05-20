@@ -17,61 +17,95 @@ function LongShortDiagram() {
   const shortPoints = "20,38 50,55 80,70 110,88 140,105 170,120 200,140";
 
   return (
-    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-      {/* Long */}
-      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
-        <p className="text-xs font-bold text-emerald-400 mb-3 text-center">LONG — Buy ↑</p>
-        <svg viewBox="0 0 220 160" className="w-full" aria-label="Trade Long">
-          {/* Axe */}
-          <line x1="15" y1="150" x2="210" y2="150" stroke="#3f3f46" strokeWidth="1" />
-          <line x1="15" y1="10" x2="15" y2="150" stroke="#3f3f46" strokeWidth="1" />
-          {/* Ligne de prix */}
-          <polyline points={longPoints} fill="none" stroke="#059669" strokeWidth="2" strokeLinejoin="round" />
-          {/* Zone favorable */}
-          <polygon points={`20,70 ${longPoints.split(" ").slice(4).join(" ")} 200,70`} fill="#059669" fillOpacity="0.08" />
-          {/* Entrée */}
-          <circle cx="20" cy="140" r="4" fill="#34d399" />
-          <line x1="20" y1="140" x2="200" y2="140" stroke="#34d399" strokeWidth="1" strokeDasharray="4,3" />
-          <text x="24" y="138" fontSize="9" fill="#34d399" fontFamily="monospace">Entrée : 78 000 $</text>
-          {/* Sortie */}
-          <circle cx="200" cy="38" r="4" fill="#34d399" />
-          <text x="110" y="30" fontSize="9" fill="#34d399" fontFamily="monospace">Sortie : 81 000 $</text>
-          {/* Gain */}
-          <line x1="205" y1="38" x2="205" y2="140" stroke="#34d399" strokeWidth="1.5" strokeDasharray="3,3" />
-          <text x="208" y="94" fontSize="10" fill="#34d399" fontFamily="sans-serif" fontWeight="700">+3 000 $ de hausse</text>
-          {/* Flèche hausse */}
-          <path d="M105 80 L105 50 L100 56 M105 50 L110 56" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-        </svg>
-        <p className="text-[10px] text-emerald-400/70 text-center mt-1">Prix monte → mouvement favorable</p>
+    <>
+      {/* ── DESKTOP (inchangé) ───────────────────────────────────────── */}
+      <div className="hidden sm:grid mt-5 grid-cols-2 gap-3">
+        {/* Long */}
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+          <p className="text-xs font-bold text-emerald-400 mb-3 text-center">LONG — Buy ↑</p>
+          <svg viewBox="0 0 220 160" className="w-full" aria-label="Trade Long">
+            <line x1="15" y1="150" x2="210" y2="150" stroke="#3f3f46" strokeWidth="1" />
+            <line x1="15" y1="10" x2="15" y2="150" stroke="#3f3f46" strokeWidth="1" />
+            <polyline points={longPoints} fill="none" stroke="#059669" strokeWidth="2" strokeLinejoin="round" />
+            <polygon points={`20,70 ${longPoints.split(" ").slice(4).join(" ")} 200,70`} fill="#059669" fillOpacity="0.08" />
+            <circle cx="20" cy="140" r="4" fill="#34d399" />
+            <line x1="20" y1="140" x2="200" y2="140" stroke="#34d399" strokeWidth="1" strokeDasharray="4,3" />
+            <text x="24" y="138" fontSize="9" fill="#34d399" fontFamily="monospace">Entrée : 78 000 $</text>
+            <circle cx="200" cy="38" r="4" fill="#34d399" />
+            <text x="110" y="30" fontSize="9" fill="#34d399" fontFamily="monospace">Sortie : 81 000 $</text>
+            <line x1="205" y1="38" x2="205" y2="140" stroke="#34d399" strokeWidth="1.5" strokeDasharray="3,3" />
+            <text x="208" y="94" fontSize="10" fill="#34d399" fontFamily="sans-serif" fontWeight="700">+3 000 $ de hausse</text>
+            <path d="M105 80 L105 50 L100 56 M105 50 L110 56" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+          </svg>
+          <p className="text-[10px] text-emerald-400/70 text-center mt-1">Prix monte → mouvement favorable</p>
+        </div>
+
+        {/* Short */}
+        <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
+          <p className="text-xs font-bold text-red-400 mb-3 text-center">SHORT — Sell ↓</p>
+          <svg viewBox="0 0 220 160" className="w-full" aria-label="Trade Short">
+            <line x1="15" y1="150" x2="210" y2="150" stroke="#3f3f46" strokeWidth="1" />
+            <line x1="15" y1="10" x2="15" y2="150" stroke="#3f3f46" strokeWidth="1" />
+            <polyline points={shortPoints} fill="none" stroke="#dc2626" strokeWidth="2" strokeLinejoin="round" />
+            <polygon points={`20,88 ${shortPoints.split(" ").slice(3).join(" ")} 200,88`} fill="#dc2626" fillOpacity="0.08" />
+            <circle cx="20" cy="38" r="4" fill="#f87171" />
+            <line x1="20" y1="38" x2="200" y2="38" stroke="#f87171" strokeWidth="1" strokeDasharray="4,3" />
+            <text x="24" y="34" fontSize="9" fill="#f87171" fontFamily="monospace">Entrée : 78 000 $</text>
+            <circle cx="200" cy="140" r="4" fill="#f87171" />
+            <text x="100" y="155" fontSize="9" fill="#f87171" fontFamily="monospace">Sortie : 75 000 $</text>
+            <line x1="205" y1="38" x2="205" y2="140" stroke="#f87171" strokeWidth="1.5" strokeDasharray="3,3" />
+            <text x="208" y="94" fontSize="10" fill="#f87171" fontFamily="sans-serif" fontWeight="700">−3 000 $ de baisse</text>
+            <path d="M105 70 L105 100 L100 94 M105 100 L110 94" stroke="#f87171" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+          </svg>
+          <p className="text-[10px] text-red-400/70 text-center mt-1">Prix baisse → mouvement favorable</p>
+        </div>
       </div>
 
-      {/* Short */}
-      <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
-        <p className="text-xs font-bold text-red-400 mb-3 text-center">SHORT — Sell ↓</p>
-        <svg viewBox="0 0 220 160" className="w-full" aria-label="Trade Short">
-          {/* Axe */}
-          <line x1="15" y1="150" x2="210" y2="150" stroke="#3f3f46" strokeWidth="1" />
-          <line x1="15" y1="10" x2="15" y2="150" stroke="#3f3f46" strokeWidth="1" />
-          {/* Ligne de prix */}
-          <polyline points={shortPoints} fill="none" stroke="#dc2626" strokeWidth="2" strokeLinejoin="round" />
-          {/* Zone favorable */}
-          <polygon points={`20,88 ${shortPoints.split(" ").slice(3).join(" ")} 200,88`} fill="#dc2626" fillOpacity="0.08" />
-          {/* Entrée */}
-          <circle cx="20" cy="38" r="4" fill="#f87171" />
-          <line x1="20" y1="38" x2="200" y2="38" stroke="#f87171" strokeWidth="1" strokeDasharray="4,3" />
-          <text x="24" y="34" fontSize="9" fill="#f87171" fontFamily="monospace">Entrée : 78 000 $</text>
-          {/* Sortie */}
-          <circle cx="200" cy="140" r="4" fill="#f87171" />
-          <text x="100" y="155" fontSize="9" fill="#f87171" fontFamily="monospace">Sortie : 75 000 $</text>
-          {/* Gain */}
-          <line x1="205" y1="38" x2="205" y2="140" stroke="#f87171" strokeWidth="1.5" strokeDasharray="3,3" />
-          <text x="208" y="94" fontSize="10" fill="#f87171" fontFamily="sans-serif" fontWeight="700">−3 000 $ de baisse</text>
-          {/* Flèche baisse */}
-          <path d="M105 70 L105 100 L100 94 M105 100 L110 94" stroke="#f87171" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-        </svg>
-        <p className="text-[10px] text-red-400/70 text-center mt-1">Prix baisse → mouvement favorable</p>
+      {/* ── MOBILE (variante dédiée — pas de texte dans le SVG) ─────── */}
+      <div className="sm:hidden mt-5 space-y-3">
+        {/* LONG */}
+        <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-4">
+          <p className="text-[13px] font-bold text-emerald-400 mb-3">LONG — Achat (Buy) ↑</p>
+          <svg viewBox="0 0 200 80" className="w-full mb-3" fill="none" aria-label="Prix monte">
+            <polyline points="10,70 40,58 80,46 120,34 160,22 190,10" stroke="#10b981" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+            <circle cx="10" cy="70" r="5" fill="#10b981" />
+            <circle cx="190" cy="10" r="5.5" fill="#10b981" />
+          </svg>
+          <div className="grid grid-cols-2 gap-2 mb-2">
+            <div className="rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2">
+              <p className="text-[10px] text-zinc-500 uppercase tracking-wide">Entrée</p>
+              <p className="text-[15px] font-bold text-white font-mono">78 000 $</p>
+            </div>
+            <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-3 py-2">
+              <p className="text-[10px] text-emerald-400 uppercase tracking-wide">Sortie</p>
+              <p className="text-[15px] font-bold text-emerald-400 font-mono">81 000 $</p>
+            </div>
+          </div>
+          <p className="text-center text-[14px] font-bold text-emerald-400">+3 000 $ — prix monte ✔</p>
+        </div>
+
+        {/* SHORT */}
+        <div className="rounded-xl border border-red-500/25 bg-red-500/5 p-4">
+          <p className="text-[13px] font-bold text-red-400 mb-3">SHORT — Vente (Sell) ↓</p>
+          <svg viewBox="0 0 200 80" className="w-full mb-3" fill="none" aria-label="Prix baisse">
+            <polyline points="10,10 40,22 80,34 120,46 160,58 190,70" stroke="#ef4444" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+            <circle cx="10" cy="10" r="5" fill="#ef4444" />
+            <circle cx="190" cy="70" r="5.5" fill="#ef4444" />
+          </svg>
+          <div className="grid grid-cols-2 gap-2 mb-2">
+            <div className="rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2">
+              <p className="text-[10px] text-zinc-500 uppercase tracking-wide">Entrée</p>
+              <p className="text-[15px] font-bold text-white font-mono">78 000 $</p>
+            </div>
+            <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-3 py-2">
+              <p className="text-[10px] text-red-400 uppercase tracking-wide">Sortie</p>
+              <p className="text-[15px] font-bold text-red-400 font-mono">75 000 $</p>
+            </div>
+          </div>
+          <p className="text-center text-[14px] font-bold text-red-400">−3 000 $ — prix baisse, profit pour toi ✔</p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -82,7 +116,9 @@ function TakeProfitDiagram() {
       <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-4 text-center">
         Bitcoin — l'évolution du prix, avec et sans Take Profit
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+      {/* ── DESKTOP (inchangé) ───────────────────────────────────────── */}
+      <div className="hidden sm:grid grid-cols-2 gap-3">
         <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
           <p className="text-[10px] font-bold text-emerald-400 text-center mb-2">AVEC Take Profit</p>
           <svg viewBox="0 0 130 145" className="w-full" fill="none">
@@ -110,6 +146,60 @@ function TakeProfitDiagram() {
             <circle cx="112" cy="125" r="4" fill="#ef4444" />
             <text x="65" y="143" fontSize="10" fill="#ef4444" textAnchor="middle" fontWeight="700">−3 000 $ ✖</text>
           </svg>
+        </div>
+      </div>
+
+      {/* ── MOBILE (variante dédiée — pas de texte dans le SVG) ─────── */}
+      <div className="sm:hidden space-y-3">
+        {/* AVEC TP */}
+        <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-4">
+          <p className="text-[13px] font-bold text-emerald-400 mb-3">AVEC Take Profit ✔</p>
+          <svg viewBox="0 0 200 80" className="w-full mb-3" fill="none" aria-label="Prix atteint TP">
+            <line x1="0" y1="8" x2="200" y2="8" stroke="#10b981" strokeWidth="1.5" strokeDasharray="5 3" opacity="0.6" />
+            <line x1="0" y1="70" x2="200" y2="70" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" opacity="0.6" />
+            <polyline points="10,70 50,52 100,32 150,18 190,8" stroke="#10b981" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+            <circle cx="10" cy="70" r="5" fill="#10b981" />
+            <circle cx="190" cy="8" r="6" fill="#10b981" />
+          </svg>
+          <div className="space-y-1.5 mb-2">
+            <div className="flex justify-between items-center text-[13px]">
+              <span className="text-zinc-400">Entrée</span>
+              <span className="font-mono font-bold text-white">78 000 $</span>
+            </div>
+            <div className="flex justify-between items-center text-[13px]">
+              <span className="text-emerald-400">TP atteint</span>
+              <span className="font-mono font-bold text-emerald-400">84 000 $</span>
+            </div>
+          </div>
+          <p className="text-center text-[14px] font-bold text-emerald-400 pt-2 border-t border-emerald-500/20">+6 000 $ sécurisé</p>
+        </div>
+
+        {/* SANS TP */}
+        <div className="rounded-xl border border-red-500/25 bg-red-500/5 p-4">
+          <p className="text-[13px] font-bold text-red-400 mb-3">SANS Take Profit ✖</p>
+          <svg viewBox="0 0 200 80" className="w-full mb-3" fill="none" aria-label="Prix monte puis chute">
+            <line x1="0" y1="8" x2="200" y2="8" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" opacity="0.5" />
+            <line x1="0" y1="40" x2="200" y2="40" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" opacity="0.4" />
+            <polyline points="10,40 50,22 90,8 140,40 190,72" stroke="#ef4444" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+            <circle cx="10" cy="40" r="5" fill="#ef4444" />
+            <circle cx="90" cy="8" r="4" fill="#fbbf24" opacity="0.85" />
+            <circle cx="190" cy="72" r="6" fill="#ef4444" />
+          </svg>
+          <div className="space-y-1.5 mb-2">
+            <div className="flex justify-between items-center text-[13px]">
+              <span className="text-zinc-400">Entrée</span>
+              <span className="font-mono font-bold text-white">78 000 $</span>
+            </div>
+            <div className="flex justify-between items-center text-[13px]">
+              <span className="text-amber-400">+6 000 $ ignoré</span>
+              <span className="font-mono font-bold text-amber-400">84 000 $</span>
+            </div>
+            <div className="flex justify-between items-center text-[13px]">
+              <span className="text-red-400">Sortie au pire</span>
+              <span className="font-mono font-bold text-red-400">75 000 $</span>
+            </div>
+          </div>
+          <p className="text-center text-[14px] font-bold text-red-400 pt-2 border-t border-red-500/20">−3 000 $ — gain effacé</p>
         </div>
       </div>
     </div>
@@ -229,23 +319,20 @@ function RiskDiagram() {
       <p className="text-[10px] text-zinc-500 text-center mb-4">
         Zone pleine = idéal · Zone transparente = max acceptable
       </p>
-      <div className="space-y-2.5">
+      {/* ── DESKTOP (inchangé : grille 3 colonnes serrée) ───────────── */}
+      <div className="hidden sm:block space-y-2.5">
         {tiers.map((tier, i) => (
           <div key={i} className="grid grid-cols-[64px_1fr_100px] items-center gap-2">
-            {/* Label capital */}
             <div className="text-right">
               <span className="text-sm font-medium text-zinc-300">{tier.capital}</span>
             </div>
-            {/* Barre superposée */}
             <div className="relative h-8 bg-zinc-900 rounded overflow-hidden border border-zinc-800">
-              {/* Segment max (transparent, en dessous) */}
               {!tier.full && (
                 <div
                   className="absolute inset-y-0 left-0 rounded"
                   style={{ width: tier.maxBar, backgroundColor: tier.colorFade ?? undefined }}
                 />
               )}
-              {/* Segment idéal (solide, par-dessus) */}
               <div
                 className="absolute inset-y-0 left-0 rounded flex items-center overflow-hidden"
                 style={{ width: tier.idealBar, backgroundColor: tier.colorSolid }}
@@ -254,7 +341,6 @@ function RiskDiagram() {
                   {tier.idealPct}
                 </span>
               </div>
-              {/* Label "max X%" dans la zone transparente */}
               {!tier.full && (
                 <div
                   className="absolute inset-y-0 flex items-center pl-2"
@@ -266,10 +352,52 @@ function RiskDiagram() {
                 </div>
               )}
             </div>
-            {/* Montants en € */}
             <div className="text-right leading-tight">
               <span className="text-sm text-zinc-400 whitespace-nowrap">{tier.euros}</span>
               <span className="text-[10px] text-zinc-600 block">/ trade</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* ── MOBILE (chaque tier = carte verticale lisible) ──────────── */}
+      <div className="sm:hidden space-y-3">
+        {tiers.map((tier, i) => (
+          <div key={i} className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3.5">
+            {/* Header carte : capital + euros */}
+            <div className="flex items-baseline justify-between mb-2.5">
+              <span className="text-[15px] font-bold text-white">{tier.capital}</span>
+              <span className="text-[13px] text-zinc-400 font-mono">{tier.euros}<span className="text-[11px] text-zinc-600"> / trade</span></span>
+            </div>
+            {/* Barre superposée pleine largeur */}
+            <div className="relative h-7 bg-zinc-950 rounded-md overflow-hidden border border-zinc-800">
+              {!tier.full && (
+                <div
+                  className="absolute inset-y-0 left-0 rounded-md"
+                  style={{ width: tier.maxBar, backgroundColor: tier.colorFade ?? undefined }}
+                />
+              )}
+              <div
+                className="absolute inset-y-0 left-0 rounded-md flex items-center"
+                style={{ width: tier.idealBar, backgroundColor: tier.colorSolid }}
+              >
+                <span className="font-bold text-[12px] pl-2 whitespace-nowrap" style={{ color: tier.textOnBar }}>
+                  {tier.idealPct}
+                </span>
+              </div>
+            </div>
+            {/* Légende sous la barre */}
+            <div className="flex items-center gap-3 mt-2 text-[11px]">
+              <span className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: tier.colorSolid }} />
+                <span className="text-zinc-400">Idéal {tier.idealPct}</span>
+              </span>
+              {!tier.full && (
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: tier.colorFade ?? undefined }} />
+                  <span className="text-zinc-400">Max {tier.maxPct}</span>
+                </span>
+              )}
             </div>
           </div>
         ))}

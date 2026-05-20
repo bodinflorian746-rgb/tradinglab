@@ -437,34 +437,80 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 function TradeDiagram() {
   return (
-    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
-        <p className="text-[10px] font-bold text-emerald-400 text-center mb-2">Tu as raison ↑</p>
-        <svg viewBox="0 0 140 140" className="w-full" fill="none">
-          <line x1="12" y1="105" x2="128" y2="105" stroke="#3f3f46" strokeWidth="1" />
-          <line x1="12" y1="30" x2="128" y2="30" stroke="#10b981" strokeWidth="1" strokeDasharray="3 2" opacity="0.4" />
-          <polyline points="16,98 40,82 68,64 96,46 122,30" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" />
-          <circle cx="16" cy="98" r="3.5" fill="#10b981" />
-          <circle cx="122" cy="30" r="4" fill="#10b981" />
-          <text x="16" y="116" fontSize="8" fill="#a1a1aa">78 000 $</text>
-          <text x="69" y="24" fontSize="8" fill="#10b981" textAnchor="middle">81 000 $</text>
-          <text x="69" y="138" fontSize="10" fill="#10b981" textAnchor="middle" fontWeight="700">+3 000 $ de hausse ✔</text>
-        </svg>
+    <>
+      {/* ── DESKTOP (inchangé) ────────────────────────────────────────── */}
+      <div className="hidden sm:grid mt-5 grid-cols-2 gap-3">
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
+          <p className="text-[10px] font-bold text-emerald-400 text-center mb-2">Tu as raison ↑</p>
+          <svg viewBox="0 0 140 140" className="w-full" fill="none">
+            <line x1="12" y1="105" x2="128" y2="105" stroke="#3f3f46" strokeWidth="1" />
+            <line x1="12" y1="30" x2="128" y2="30" stroke="#10b981" strokeWidth="1" strokeDasharray="3 2" opacity="0.4" />
+            <polyline points="16,98 40,82 68,64 96,46 122,30" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" />
+            <circle cx="16" cy="98" r="3.5" fill="#10b981" />
+            <circle cx="122" cy="30" r="4" fill="#10b981" />
+            <text x="16" y="116" fontSize="8" fill="#a1a1aa">78 000 $</text>
+            <text x="69" y="24" fontSize="8" fill="#10b981" textAnchor="middle">81 000 $</text>
+            <text x="69" y="138" fontSize="10" fill="#10b981" textAnchor="middle" fontWeight="700">+3 000 $ de hausse ✔</text>
+          </svg>
+        </div>
+        <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
+          <p className="text-[10px] font-bold text-red-400 text-center mb-2">Tu as tort ↓</p>
+          <svg viewBox="0 0 140 140" className="w-full" fill="none">
+            <line x1="12" y1="105" x2="128" y2="105" stroke="#3f3f46" strokeWidth="1" />
+            <line x1="12" y1="30" x2="128" y2="30" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" opacity="0.4" />
+            <polyline points="16,30 40,46 68,62 96,78 122,94" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" />
+            <circle cx="16" cy="30" r="3.5" fill="#ef4444" />
+            <circle cx="122" cy="94" r="4" fill="#ef4444" />
+            <text x="16" y="24" fontSize="8" fill="#a1a1aa">78 000 $ (achat)</text>
+            <text x="69" y="102" fontSize="8" fill="#ef4444" textAnchor="middle">76 500 $</text>
+            <text x="69" y="138" fontSize="10" fill="#ef4444" textAnchor="middle" fontWeight="700">−1 500 $ de baisse ✖</text>
+          </svg>
+        </div>
       </div>
-      <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
-        <p className="text-[10px] font-bold text-red-400 text-center mb-2">Tu as tort ↓</p>
-        <svg viewBox="0 0 140 140" className="w-full" fill="none">
-          <line x1="12" y1="105" x2="128" y2="105" stroke="#3f3f46" strokeWidth="1" />
-          <line x1="12" y1="30" x2="128" y2="30" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" opacity="0.4" />
-          <polyline points="16,30 40,46 68,62 96,78 122,94" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" />
-          <circle cx="16" cy="30" r="3.5" fill="#ef4444" />
-          <circle cx="122" cy="94" r="4" fill="#ef4444" />
-          <text x="16" y="24" fontSize="8" fill="#a1a1aa">78 000 $ (achat)</text>
-          <text x="69" y="102" fontSize="8" fill="#ef4444" textAnchor="middle">76 500 $</text>
-          <text x="69" y="138" fontSize="10" fill="#ef4444" textAnchor="middle" fontWeight="700">−1 500 $ de baisse ✖</text>
-        </svg>
+
+      {/* ── MOBILE (variante dédiée — pas de texte dans le SVG) ─────── */}
+      <div className="sm:hidden mt-5 space-y-3">
+        <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-4">
+          <p className="text-[13px] font-bold text-emerald-400 mb-3">Scénario A — Tu as raison ↑</p>
+          <svg viewBox="0 0 200 70" className="w-full mb-3" fill="none" aria-label="Prix monte">
+            <polyline points="10,60 50,46 100,30 150,18 190,8" stroke="#10b981" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+            <circle cx="10" cy="60" r="5" fill="#10b981" />
+            <circle cx="190" cy="8" r="5.5" fill="#10b981" />
+          </svg>
+          <div className="grid grid-cols-2 gap-2 mb-2">
+            <div className="rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2">
+              <p className="text-[10px] text-zinc-500 uppercase tracking-wide">Achat</p>
+              <p className="text-[15px] font-bold text-white font-mono">78 000 $</p>
+            </div>
+            <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-3 py-2">
+              <p className="text-[10px] text-emerald-400 uppercase tracking-wide">Revente</p>
+              <p className="text-[15px] font-bold text-emerald-400 font-mono">81 000 $</p>
+            </div>
+          </div>
+          <p className="text-center text-[14px] font-bold text-emerald-400">+3 000 $ de hausse ✔</p>
+        </div>
+
+        <div className="rounded-xl border border-red-500/25 bg-red-500/5 p-4">
+          <p className="text-[13px] font-bold text-red-400 mb-3">Scénario B — Tu as tort ↓</p>
+          <svg viewBox="0 0 200 70" className="w-full mb-3" fill="none" aria-label="Prix baisse">
+            <polyline points="10,8 50,22 100,36 150,50 190,62" stroke="#ef4444" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+            <circle cx="10" cy="8" r="5" fill="#ef4444" />
+            <circle cx="190" cy="62" r="5.5" fill="#ef4444" />
+          </svg>
+          <div className="grid grid-cols-2 gap-2 mb-2">
+            <div className="rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2">
+              <p className="text-[10px] text-zinc-500 uppercase tracking-wide">Achat</p>
+              <p className="text-[15px] font-bold text-white font-mono">78 000 $</p>
+            </div>
+            <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-3 py-2">
+              <p className="text-[10px] text-red-400 uppercase tracking-wide">Revente</p>
+              <p className="text-[15px] font-bold text-red-400 font-mono">76 500 $</p>
+            </div>
+          </div>
+          <p className="text-center text-[14px] font-bold text-red-400">−1 500 $ de baisse ✖</p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
