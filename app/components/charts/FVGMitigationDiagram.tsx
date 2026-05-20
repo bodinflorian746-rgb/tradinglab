@@ -47,7 +47,19 @@ const BODY_W = 14;
 export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramProps) {
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg className="responsive-svg-text" width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+
+        <style>{`
+          @media (max-width: 640px) {
+            .responsive-svg-text text { font-size: 1.5em; }
+            .responsive-svg-text .svg-halo {
+              transform: scale(1.6);
+              transform-origin: center;
+              transform-box: fill-box;
+            }
+            .responsive-svg-text .svg-annot { x: 20px; width: 660px; height: 36px; }
+          }
+        `}</style>
 
         <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
         <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · H1</text>
@@ -68,22 +80,22 @@ export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramPro
         })}
 
         {/* Label "4 690 $" — décalé à droite du badge titre, dans un espace libre au-dessus des bougies */}
-        <rect x="146" y="30" width="58" height="14" rx="3" fill="#09090b" />
+        <rect className="svg-halo" x="146" y="30" width="58" height="14" rx="3" fill="#09090b" />
         <text x="175" y="40" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">4 690 $</text>
 
         {/* Labels FVG (bord haut et bord bas, à droite) */}
-        <rect x="625" y="113" width="58" height="14" rx="3" fill="#09090b" />
+        <rect className="svg-halo" x="625" y="113" width="58" height="14" rx="3" fill="#09090b" />
         <text x="654" y="123" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">4 665 $</text>
-        <rect x="625" y="143" width="58" height="14" rx="3" fill="#09090b" />
+        <rect className="svg-halo" x="625" y="143" width="58" height="14" rx="3" fill="#09090b" />
         <text x="654" y="153" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">4 655 $</text>
 
         {/* Label "4 610 $" en bas (dernière bougie) */}
-        <rect x="625" y="263" width="58" height="14" rx="3" fill="#09090b" />
+        <rect className="svg-halo" x="625" y="263" width="58" height="14" rx="3" fill="#09090b" />
         <text x="654" y="273" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">4 610 $</text>
 
         {/* Annotation */}
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
+        <rect className="svg-annot" x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
+        <rect className="svg-annot" x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
           Mitigation avant continuation
         </text>
