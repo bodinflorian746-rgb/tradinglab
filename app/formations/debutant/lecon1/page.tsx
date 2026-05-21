@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo, Fragment } from "react";
 import Link from "next/link";
 import { LESSONS } from "@/lib/lessons";
 import type { LessonContent } from "@/lib/lessons";
+import { getStoredProgress, markLessonComplete, isLessonComplete } from "@/lib/progress";
 
 type Section = LessonContent["sections"][number];
 
@@ -1082,6 +1083,13 @@ export default function Lecon1Page() {
 
   useEffect(() => {
     if (phases.every(Boolean) && !showCompletion) {
+      // Persiste la complétion dans localStorage (tradinglab_progress) —
+      // idempotent : markLessonComplete ne double-compte jamais. Le système
+      // global voit ainsi la leçon 1 comme toutes les autres.
+      const cur = getStoredProgress();
+      if (!isLessonComplete(cur, "debutant", "lecon1")) {
+        markLessonComplete(cur, "debutant", "lecon1");
+      }
       const t1 = setTimeout(() => setShowConfetti(true),   350);
       const t2 = setTimeout(() => setShowCompletion(true), 550);
       const t3 = setTimeout(() => setShowConfetti(false), 4000);

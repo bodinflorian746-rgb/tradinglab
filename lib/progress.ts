@@ -72,10 +72,14 @@ export function getFormationStats(
 
 export const TOTAL_FREE_LESSONS = 47;
 
+// XP gagné par leçon terminée (idempotent : ne double-compte jamais).
+export const LESSON_XP = 20;
+
 export interface GlobalStats {
   completedLessons: number;
   totalFreeLessons: number;
   pct: number;
+  totalXp: number;
 }
 
 export function getGlobalStats(
@@ -93,5 +97,18 @@ export function getGlobalStats(
     totalFreeLessons > 0
       ? Math.round((completedLessons / totalFreeLessons) * 100)
       : 0;
-  return { completedLessons, totalFreeLessons, pct };
+  const totalXp = completedLessons * LESSON_XP;
+  return { completedLessons, totalFreeLessons, pct, totalXp };
+}
+
+// Calcule le XP total d'un user en fonction du nombre de leçons completes
+// dans le ProgressData (toutes formations confondues).
+export function getTotalXp(progress: ProgressData): number {
+  let count = 0;
+  for (const lessons of Object.values(progress)) {
+    for (const done of Object.values(lessons)) {
+      if (done) count++;
+    }
+  }
+  return count * LESSON_XP;
 }

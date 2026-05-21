@@ -9,8 +9,10 @@ import {
   isLessonComplete,
   getGlobalStats,
   TOTAL_FREE_LESSONS,
+  LESSON_XP,
   type ProgressData,
 } from "@/lib/progress";
+import { LessonCelebration } from "@/app/components/LessonCelebration";
 
 // ── Context partagé avec LessonQuiz ──────────────────────────────────────────
 interface QuizAnsweredCtx { onAnswered: () => void }
@@ -43,6 +45,10 @@ export function LessonPage({
 }: LessonMeta & { children: React.ReactNode }) {
   const [progress, setProgress] = useState<ProgressData>({});
   const [mounted, setMounted] = useState(false);
+  // triggerKey pour la célébration : incrémenté quand on complète pour la
+  // 1re fois la leçon. Reste à 0 si l'utilisateur reclique sur "terminée"
+  // (déjà fait) → pas de double-XP visuel ni d'animation.
+  const [celebKey, setCelebKey] = useState(0);
 
   useEffect(() => {
     setProgress(getStoredProgress());
@@ -56,12 +62,19 @@ export function LessonPage({
   const globalStats = mounted ? getGlobalStats(progress, FORMATIONS) : null;
 
   function handleComplete() {
+    const wasComplete = isLessonComplete(progress, formationId, lessonId);
     const updated = markLessonComplete(progress, formationId, lessonId);
     setProgress(updated);
+    if (!wasComplete) {
+      setCelebKey((k) => k + 1);
+    }
   }
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
+
+      {/* Célébration unifiée : confettis + XP toast lors d'une 1re complétion */}
+      <LessonCelebration triggerKey={celebKey} />
 
       {/* Barre de progression globale — tout en haut de la page */}
       {mounted && globalStats && globalStats.completedLessons > 0 && (
