@@ -14,44 +14,51 @@ const audiences = [
   {
     icon: (
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <circle cx="9" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M3 15c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        {/* Socle / fondations */}
+        <path d="M3 13.5h12M4.5 13.5v-3h9v3M6 10.5v-2.5h6v2.5M7.5 8v-2h3v2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
-    title: "Tu débutes complètement",
+    title: "Construire des bases solides",
     description:
-      "Tu n'as jamais tradé. Tu ne sais pas ce qu'est un stop loss, comment lire un graphique ou pourquoi ça monte/ça descend. Commence par la formation Débutant : les fondamentaux d'abord, avant d'ouvrir un broker.",
+      "Structure de marché, lecture des prix, gestion du risque, R/R. Les fondamentaux travaillés en profondeur — pas survolés en cinq minutes.",
   },
   {
     icon: (
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <rect x="2" y="3" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M6 15h6M9 13v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        {/* Système / blueprint */}
+        <rect x="2.5" y="2.5" width="13" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M2.5 7h13M7 2.5v13" stroke="currentColor" strokeWidth="1.4" />
+        <circle cx="10.5" cy="11" r="1.5" stroke="currentColor" strokeWidth="1.3" />
       </svg>
     ),
-    title: "Tu as 500€ et tu veux pas te planter",
+    title: "Développer une vraie méthode",
     description:
-      "Capital limité = chaque erreur compte. Tu as besoin de voir des cas réalistes sur des comptes de 300€, 500€ ou 1 000€ — pas des démos sur 50k€. Gestion du risque + stratégies Price Action : c'est fait pour toi.",
+      "Transformer des connaissances dispersées en système cohérent : règles d'entrée, filtres HTF, plan de trade, journaling. Une approche, pas dix.",
   },
   {
     icon: (
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <path d="M9 2l1.8 3.6L15 6.4l-3 2.9.7 4.1L9 11.4l-3.7 2 .7-4.1-3-2.9 4.2-.8L9 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        {/* Cible / pratique */}
+        <circle cx="9" cy="9" r="6.5" stroke="currentColor" strokeWidth="1.4" />
+        <circle cx="9" cy="9" r="3.5" stroke="currentColor" strokeWidth="1.4" />
+        <circle cx="9" cy="9" r="1" fill="currentColor" />
       </svg>
     ),
-    title: "Tu as 30 min par jour après le boulot",
+    title: "S'entraîner sur des situations réelles",
     description:
-      "Pas le temps de surveiller les marchés toute la journée. Tu cherches une méthode rapide : analyser le soir, trader les setups du lendemain, fermer et continuer ta journée. Intraday actif (H4/H1/M30) adapté à ça.",
+      "Jeux interactifs, scénarios marché, erreurs retail décortiquées. Apprendre par la pratique et la répétition — pas par la théorie sèche.",
   },
   {
     icon: (
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <path d="M3 9h12M3 5h8M3 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        {/* Flèche d'exécution / momentum */}
+        <path d="M2.5 9h11M9 4.5L13.5 9 9 13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3.5 12.5l-1 2M14.5 5.5l1-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
       </svg>
     ),
-    title: "Tu as déjà perdu et tu veux recommencer proprement",
+    title: "Passer de la théorie à l'exécution",
     description:
-      "T'as cramé un compte ou pris des trades au hasard. Tu veux repartir avec une méthode claire et des règles strictes, pas enchaîner les vidéos YouTube. Backtesting + Journaling te montrent ce qui marche réellement.",
+      "Discipline, gestion émotionnelle, exécution propre. Le vrai delta entre savoir et faire — c'est là que se joue la performance dans le temps.",
   },
 ];
 
@@ -351,18 +358,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Pour qui ────────────────────────────── */}
+      {/* ── Ce que tu construis ici ─────────────── */}
       <section className="py-14 md:py-24 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <p className="text-emerald-500 text-sm font-semibold uppercase tracking-widest mb-3">
-              Pour quel profil
+              Ta progression
             </p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 max-w-2xl">
-              Pour qui c'est ?
+              Une plateforme de progression trading
             </h2>
             <p className="text-zinc-400 max-w-xl leading-relaxed">
-              TradingLab est pour les retails. Capital 300€ à 2 000€, méthode adaptée à ton rythme.
+              Que tu démarres ou que tu cherches à affiner ton edge, TradingLab structure ta montée en compétence — fondamentaux, méthode, pratique, exécution.
             </p>
           </div>
 
