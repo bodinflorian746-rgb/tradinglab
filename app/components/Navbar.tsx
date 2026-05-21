@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/formations/macro", label: "Macro" },
   { href: "/jeux", label: "Jeux" },
   { href: "/strategies", label: "Stratégies" },
+  { href: "/profil-trader", label: "Mon profil" },
   { href: "/pricing", label: "Tarifs" },
 ];
 

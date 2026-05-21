@@ -21,6 +21,14 @@ import {
   type TradeDirection,
 } from "@/lib/games/place-stop";
 import { MiniChart } from "@/app/components/games/MiniChart";
+import { logGameEvent, type SkillId } from "@/lib/trader-profile";
+
+const STOP_TYPE_TO_SKILL: Record<StopType, { skill: SkillId; outcome: "win" | "loss" }> = {
+  logical:   { skill: "structure",      outcome: "win"  },
+  wide:      { skill: "rr_management",  outcome: "loss" },
+  tight:     { skill: "gestion_risque", outcome: "loss" },
+  liquidity: { skill: "liquidite",      outcome: "loss" },
+};
 
 // ─── Constantes UI ────────────────────────────────────────────────────────────
 
@@ -159,6 +167,13 @@ export default function PlaceStopPage() {
   const handleChoose = (id: StopId) => {
     if (phase !== "placing") return;
     const r = scoreStopChoice(id, chart, streak);
+    const mapping = STOP_TYPE_TO_SKILL[r.type];
+    logGameEvent({
+      game:       "place-stop",
+      difficulty,
+      skill:      mapping.skill,
+      outcome:    mapping.outcome,
+    });
     setChosen(id);
     setResult(r);
     setScore((s) => s + r.points);

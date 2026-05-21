@@ -18,6 +18,17 @@ import {
   type ScenarioChart,
 } from "@/lib/games/find-the-mistake";
 import { MiniChart } from "@/app/components/games/MiniChart";
+import { logGameEvent, type SkillId } from "@/lib/trader-profile";
+
+const CATEGORY_TO_SKILL: Record<"technique" | "psychologique" | "execution" | "rr" | "timing" | "liquidite" | "discipline", SkillId> = {
+  technique:     "structure",
+  psychologique: "psychologie",
+  execution:     "execution",
+  rr:            "rr_management",
+  timing:        "timing",
+  liquidite:     "liquidite",
+  discipline:    "discipline",
+};
 
 const BIAS_LABEL  = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
 const MACRO_LABEL = { normal: "Normal", dangereux: "Dangereux" } as const;
@@ -112,6 +123,12 @@ export default function FindTheMistakePage() {
   const handlePick = (id: MistakeId) => {
     if (isFeedback) return;
     const r = scoreMistakeChoice(id, current.correctMistake, streak);
+    logGameEvent({
+      game:       "find-the-mistake",
+      difficulty,
+      skill:      CATEGORY_TO_SKILL[current.category],
+      outcome:    r.correct ? "win" : "loss",
+    });
     setChosen(id);
     setResult(r);
     setScore((s) => s + r.points);

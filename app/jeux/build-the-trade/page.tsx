@@ -22,6 +22,7 @@ import {
   type TpType,
 } from "@/lib/games/build-the-trade";
 import { MiniChart } from "@/app/components/games/MiniChart";
+import { logGameEvent } from "@/lib/trader-profile";
 
 const BIAS_LABEL  = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
 const MACRO_LABEL = { normal: "Normal", dangereux: "Dangereux" } as const;
@@ -144,6 +145,36 @@ export default function BuildTheTradePage() {
     if (!canValidate || !chart) return;
     const picks = { entry: entry!, stop: stop!, tp: tp! };
     const r = evaluateTrade(picks, chart, current.optimal, streak);
+
+    // Tracking profil trader : on log plusieurs events selon le résultat
+    // pour alimenter différentes compétences.
+    // 1. Quality match → structure + lecture marché
+    if (r.qualityMatch === 3) {
+      logGameEvent({ game: "build-the-trade", difficulty, skill: "structure",      outcome: "win" });
+      logGameEvent({ game: "build-the-trade", difficulty, skill: "lecture_marche", outcome: "win" });
+    } else if (r.qualityMatch === 0) {
+      logGameEvent({ game: "build-the-trade", difficulty, skill: "lecture_marche", outcome: "loss" });
+    }
+    // 2. Outcome → RR + patience
+    if (r.outcome === "tp_hit") {
+      logGameEvent({ game: "build-the-trade", difficulty, skill: "rr_management", outcome: "win" });
+      logGameEvent({ game: "build-the-trade", difficulty, skill: "patience",      outcome: "win" });
+    } else if (r.outcome === "sl_hit") {
+      logGameEvent({ game: "build-the-trade", difficulty, skill: "rr_management", outcome: "loss" });
+    }
+    // 3. Choix d'entrée → patience / discipline
+    if (picks.entry === "deep_pullback" || picks.entry === "confirmation") {
+      logGameEvent({ game: "build-the-trade", difficulty, skill: "patience", outcome: "win" });
+    } else if (picks.entry === "aggressive" && current.optimal.entry !== "aggressive") {
+      logGameEvent({ game: "build-the-trade", difficulty, skill: "patience", outcome: "loss" });
+    }
+    // 4. Choix de stop → gestion risque
+    if (picks.stop === "logical") {
+      logGameEvent({ game: "build-the-trade", difficulty, skill: "gestion_risque", outcome: "win" });
+    } else if (picks.stop === "tight") {
+      logGameEvent({ game: "build-the-trade", difficulty, skill: "gestion_risque", outcome: "loss" });
+    }
+
     setResult(r);
     setScore((s) => s + r.points);
     if (r.qualityMatch === 3 && r.outcome === "tp_hit") {

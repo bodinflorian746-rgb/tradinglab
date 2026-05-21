@@ -15,6 +15,13 @@ import {
   type ScenarioInstance,
 } from "@/lib/games/buy-sell-no-trade";
 import { MiniChart } from "@/app/components/games/MiniChart";
+import { logGameEvent, type SkillId } from "@/lib/trader-profile";
+
+const METRIC_TO_SKILL: Record<Metric, SkillId> = {
+  discipline: "discipline",
+  lecture:    "lecture_marche",
+  piege:      "liquidite",
+};
 
 // ─── Constantes ───────────────────────────────────────────────────────────────
 
@@ -151,6 +158,12 @@ export default function BuySellNoTradePage() {
   const handleChoice = (c: GameChoice) => {
     if (phase !== "placing") return;
     const r = scoreChoice(c, current.correctAnswer, streak);
+    logGameEvent({
+      game:       "buy-sell-no-trade",
+      difficulty,
+      skill:      METRIC_TO_SKILL[current.metric],
+      outcome:    r.correct ? "win" : "loss",
+    });
     setChosen(c);
     setLastPoints(r.points);
     setLastStreakBonus(r.streakBonus);
