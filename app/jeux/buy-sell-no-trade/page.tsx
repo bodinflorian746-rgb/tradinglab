@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   buildChart,
   generateScenarios,
   scoreChoice,
+  ROUNDS_PER_SESSION,
+  DIFFICULTY_META,
+  type BuySellChart,
+  type Difficulty,
   type GameChoice,
   type Metric,
   type ScenarioInstance,
@@ -13,8 +17,6 @@ import {
 import { MiniChart } from "@/app/components/games/MiniChart";
 
 // ─── Constantes ───────────────────────────────────────────────────────────────
-
-const ROUNDS_PER_SESSION = 12;
 
 const METRIC_LABELS: Record<Metric, string> = {
   discipline: "Discipline",
@@ -31,9 +33,12 @@ const METRIC_DOT: Record<Metric, string> = {
 const BIAS_LABEL = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
 const MACRO_LABEL = { normal: "Normal", dangereux: "Dangereux" } as const;
 
+const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced"];
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function BuySellNoTradePage() {
+  const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
   const [seed, setSeed] = useState<number | null>(null);
   const [scenarios, setScenarios] = useState<ScenarioInstance[]>([]);
   const [idx, setIdx] = useState(0);
@@ -47,24 +52,95 @@ export default function BuySellNoTradePage() {
     piege:      { ok: 0, total: 0 },
   });
   const [chosen, setChosen] = useState<GameChoice | null>(null);
+  const [phase, setPhase] = useState<"placing" | "revealing" | "feedback">("placing");
+  const [revealed, setRevealed] = useState(0);
   const [lastPoints, setLastPoints] = useState(0);
   const [lastStreakBonus, setLastStreakBonus] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-
-  // Initial seed côté client (évite mismatch SSR)
-  useEffect(() => {
-    const s = Math.floor(Math.random() * 1e9) >>> 0;
-    setSeed(s);
-    setScenarios(generateScenarios(s));
-  }, []);
+  const animRef = useRef<NodeJS.Timeout | null>(null);
 
   const current = scenarios[idx];
-  const chart = useMemo(
-    () => (current ? buildChart(current.id, current.seed, current.volatility) : null),
-    [current],
+  const chart: BuySellChart | null = useMemo(
+    () => (current && difficulty ? buildChart(current.id, current.seed, current.volatility, difficulty) : null),
+    [current, difficulty],
   );
 
-  if (!current || !chart || seed === null) {
+  // Quand on change de scenario, reset reveal/phase
+  useEffect(() => {
+    setPhase("placing");
+    setRevealed(0);
+    setChosen(null);
+    setLastPoints(0);
+    setLastStreakBonus(0);
+    if (animRef.current) { clearTimeout(animRef.current); animRef.current = null; }
+  }, [idx, difficulty]);
+
+  // Animation reveal après le choix
+  useEffect(() => {
+    if (phase !== "revealing" || !chart || !current) return;
+    if (revealed >= chart.future.length) {
+      animRef.current = setTimeout(() => setPhase("feedback"), 300);
+    } else {
+      animRef.current = setTimeout(() => setRevealed((c) => c + 1), 200);
+    }
+    return () => { if (animRef.current) clearTimeout(animRef.current); };
+  }, [phase, revealed, chart, current]);
+
+  // ─── Écran 1 : sélection difficulté ─────────────────────────────────────────
+  if (!difficulty || !seed) {
+    return <DifficultyPicker onPick={(d) => {
+      const s = Math.floor(Math.random() * 1e9) >>> 0;
+      setDifficulty(d);
+      setSeed(s);
+      setScenarios(generateScenarios(s, d));
+    }} />;
+  }
+
+  // ─── Écran 3 : bilan final ──────────────────────────────────────────────────
+  if (showSummary) {
+    return (
+      <Summary
+        difficulty={difficulty}
+        score={score}
+        maxStreak={maxStreak}
+        correctCount={correctCount}
+        stats={stats}
+        onReplay={() => {
+          const s = Math.floor(Math.random() * 1e9) >>> 0;
+          setSeed(s);
+          setScenarios(generateScenarios(s, difficulty));
+          setIdx(0);
+          setScore(0);
+          setStreak(0);
+          setMaxStreak(0);
+          setCorrectCount(0);
+          setStats({
+            discipline: { ok: 0, total: 0 },
+            lecture:    { ok: 0, total: 0 },
+            piege:      { ok: 0, total: 0 },
+          });
+          setShowSummary(false);
+        }}
+        onChangeDifficulty={() => {
+          setDifficulty(null);
+          setSeed(null);
+          setIdx(0);
+          setScore(0);
+          setStreak(0);
+          setMaxStreak(0);
+          setCorrectCount(0);
+          setStats({
+            discipline: { ok: 0, total: 0 },
+            lecture:    { ok: 0, total: 0 },
+            piege:      { ok: 0, total: 0 },
+          });
+          setShowSummary(false);
+        }}
+      />
+    );
+  }
+
+  if (!current || !chart) {
     return (
       <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
         <p className="text-sm text-zinc-500">Chargement…</p>
@@ -73,20 +149,20 @@ export default function BuySellNoTradePage() {
   }
 
   const handleChoice = (c: GameChoice) => {
-    if (chosen) return;
-    const result = scoreChoice(c, current.correctAnswer, streak);
+    if (phase !== "placing") return;
+    const r = scoreChoice(c, current.correctAnswer, streak);
     setChosen(c);
-    setLastPoints(result.points);
-    setLastStreakBonus(result.streakBonus);
-    setScore((s) => s + result.points);
+    setLastPoints(r.points);
+    setLastStreakBonus(r.streakBonus);
+    setScore((s) => s + r.points);
     setStats((s) => ({
       ...s,
       [current.metric]: {
-        ok:    s[current.metric].ok + (result.correct ? 1 : 0),
+        ok:    s[current.metric].ok + (r.correct ? 1 : 0),
         total: s[current.metric].total + 1,
       },
     }));
-    if (result.correct) {
+    if (r.correct) {
       const ns = streak + 1;
       setStreak(ns);
       setMaxStreak((m) => Math.max(m, ns));
@@ -94,45 +170,21 @@ export default function BuySellNoTradePage() {
     } else {
       setStreak(0);
     }
+    setPhase("revealing");
+    setRevealed(1);
   };
 
   const handleNext = () => {
-    setChosen(null);
-    setLastPoints(0);
-    setLastStreakBonus(0);
-    const next = idx + 1;
-    if (next >= ROUNDS_PER_SESSION) {
+    if (idx + 1 >= ROUNDS_PER_SESSION) {
       setShowSummary(true);
     } else {
-      setIdx(next);
+      setIdx(idx + 1);
     }
   };
 
-  const handleReset = () => {
-    const s = Math.floor(Math.random() * 1e9) >>> 0;
-    setSeed(s);
-    setScenarios(generateScenarios(s));
-    setIdx(0);
-    setScore(0);
-    setStreak(0);
-    setMaxStreak(0);
-    setCorrectCount(0);
-    setStats({
-      discipline: { ok: 0, total: 0 },
-      lecture:    { ok: 0, total: 0 },
-      piege:      { ok: 0, total: 0 },
-    });
-    setChosen(null);
-    setLastPoints(0);
-    setLastStreakBonus(0);
-    setShowSummary(false);
-  };
-
-  if (showSummary) {
-    return <Summary score={score} maxStreak={maxStreak} correctCount={correctCount} stats={stats} onReset={handleReset} />;
-  }
-
-  const correct = chosen ? chosen === current.correctAnswer : null;
+  const isPlacing = phase === "placing";
+  const isRevealing = phase === "revealing";
+  const isFeedback = phase === "feedback";
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
@@ -150,6 +202,8 @@ export default function BuySellNoTradePage() {
             Jeux
           </Link>
           <div className="flex items-center gap-3 text-[11px]">
+            <DifficultyChip difficulty={difficulty} />
+            <div className="w-px h-3 bg-zinc-800" />
             <div className="flex items-center gap-1.5">
               <span className="text-zinc-600 uppercase tracking-wide">Round</span>
               <span className="font-bold text-white tabular-nums">{idx + 1}/{ROUNDS_PER_SESSION}</span>
@@ -164,7 +218,7 @@ export default function BuySellNoTradePage() {
           </div>
         </div>
 
-        {/* Streak indicator */}
+        {/* Streak */}
         {streak > 0 && (
           <div className="mb-4 flex items-center justify-center gap-1.5 text-[11px] font-semibold">
             <span className="text-amber-400">🔥</span>
@@ -177,7 +231,7 @@ export default function BuySellNoTradePage() {
         {/* Scenario card */}
         <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden mb-5">
 
-          {/* Meta header */}
+          {/* Meta */}
           <div className="px-4 pt-3 pb-2.5 border-b border-zinc-800/60 flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2">
               <span className="text-sm font-bold text-white tabular-nums">{current.asset}</span>
@@ -203,16 +257,34 @@ export default function BuySellNoTradePage() {
             </div>
           )}
 
-          {/* Mini chart */}
+          {/* Mini chart : past + (future progressif si reveal/feedback) */}
           <div className="p-3 sm:p-4">
-            <MiniChart data={chart} />
+            <MiniChart
+              data={{
+                candles: [...chart.past, ...chart.future],
+                zones:   chart.zones,
+                domain:  chart.domain,
+              }}
+              overlay={{
+                separatorIndex:     chart.past.length,
+                visibleFutureCount: isPlacing ? 0 : revealed,
+              }}
+              height={isPlacing ? 170 : 185}
+            />
+            {chart.zones.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
+                {chart.zones.map((z, i) => (
+                  <ZoneLegendChip key={i} zone={z} />
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Context infos */}
           <div className="px-4 pb-3 grid grid-cols-3 gap-2">
-            <InfoTile label="HTF" value={BIAS_LABEL[current.htfBias]} biasClass={biasClass(current.htfBias)} />
-            <InfoTile label="Macro" value={MACRO_LABEL[current.macroContext]} biasClass={current.macroContext === "dangereux" ? "text-red-400" : "text-zinc-300"} />
-            <InfoTile label="Volatilité" value={cap(current.volatility)} biasClass="text-zinc-300" />
+            <InfoTile label="HTF"        value={BIAS_LABEL[current.htfBias]}        biasClass={biasClass(current.htfBias)} />
+            <InfoTile label="Macro"      value={MACRO_LABEL[current.macroContext]}  biasClass={current.macroContext === "dangereux" ? "text-red-400" : "text-zinc-300"} />
+            <InfoTile label="Volatilité" value={cap(current.volatility)}            biasClass="text-zinc-300" />
           </div>
 
           {/* Context text */}
@@ -221,18 +293,30 @@ export default function BuySellNoTradePage() {
           </div>
         </div>
 
-        {/* Decision area */}
-        {!chosen ? (
-          <DecisionButtons onChoose={handleChoice} />
-        ) : (
+        {/* Decision / reveal / feedback */}
+        {isPlacing && <DecisionButtons onChoose={handleChoice} />}
+
+        {isRevealing && (
+          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl px-4 py-5 text-center">
+            <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-1.5">
+              Révélation
+            </p>
+            <p className="text-sm text-zinc-300">
+              On regarde ce qui s'est passé après ta décision…
+            </p>
+          </div>
+        )}
+
+        {isFeedback && chosen && (
           <Feedback
-            correct={correct!}
             choice={chosen}
             correctAnswer={current.correctAnswer}
+            rationales={current.rationales}
+            lesson={current.lessons[difficulty]}
+            difficulty={difficulty}
             points={lastPoints}
             streakBonus={lastStreakBonus}
             title={current.title}
-            explanation={current.explanation}
             metric={current.metric}
             onNext={handleNext}
             isLast={idx + 1 >= ROUNDS_PER_SESSION}
@@ -249,6 +333,59 @@ export default function BuySellNoTradePage() {
               <StatTile key={m} metric={m} ok={stats[m].ok} total={stats[m].total} />
             ))}
           </div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+// ─── Difficulty picker ────────────────────────────────────────────────────────
+
+function DifficultyPicker({ onPick }: { onPick: (d: Difficulty) => void }) {
+  return (
+    <main className="min-h-screen bg-zinc-950 text-white">
+      <div className="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+        <Link
+          href="/jeux"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-white mb-8"
+        >
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          Jeux
+        </Link>
+
+        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
+          BUY / SELL / NO TRADE
+        </p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Choisis ton niveau</h1>
+        <p className="text-zinc-400 text-sm leading-relaxed mb-8">
+          {ROUNDS_PER_SESSION} scénarios à analyser. Le niveau module la subtilité des signaux,
+          la fréquence des pièges et la profondeur des explications.
+        </p>
+
+        <div className="flex flex-col gap-3">
+          {DIFFICULTIES.map((d) => {
+            const meta = DIFFICULTY_META[d];
+            return (
+              <button
+                key={d}
+                onClick={() => onPick(d)}
+                className="group text-left bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 rounded-2xl px-5 py-4 transition-all"
+              >
+                <div className="flex items-center justify-between gap-3 mb-1.5">
+                  <div className="flex items-center gap-2.5">
+                    <span className={`w-2 h-2 rounded-full ${meta.dotClass}`} />
+                    <span className={`text-base font-bold ${meta.textClass}`}>{meta.label}</span>
+                  </div>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-zinc-600 group-hover:text-white transition-colors">
+                    <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <p className="text-[12px] text-zinc-400 leading-relaxed">{meta.description}</p>
+              </button>
+            );
+          })}
         </div>
       </div>
     </main>
@@ -283,24 +420,24 @@ function DecisionButtons({ onChoose }: { onChoose: (c: GameChoice) => void }) {
 }
 
 interface FeedbackProps {
-  correct:       boolean;
   choice:        GameChoice;
   correctAnswer: GameChoice;
+  rationales:    { BUY: string; SELL: string; NO_TRADE: string };
+  lesson:        string;
+  difficulty:    Difficulty;
   points:        number;
   streakBonus:   number;
   title:         string;
-  explanation:   string;
   metric:        Metric;
   onNext:        () => void;
   isLast:        boolean;
 }
 
-function Feedback({ correct, choice, correctAnswer, points, streakBonus, title, explanation, metric, onNext, isLast }: FeedbackProps) {
+function Feedback({ choice, correctAnswer, rationales, lesson, difficulty, points, streakBonus, title, metric, onNext, isLast }: FeedbackProps) {
+  const correct = choice === correctAnswer;
   const headline = correct
     ? correctAnswer === "NO_TRADE" ? "Discipline parfaite" : "Bonne lecture"
     : correctAnswer === "NO_TRADE" ? "Piège évité ? Non." : "Pas la bonne lecture";
-
-  const color = correct ? "emerald" : "red";
 
   return (
     <div className={`bg-zinc-900/50 border rounded-2xl overflow-hidden ${
@@ -338,21 +475,39 @@ function Feedback({ correct, choice, correctAnswer, points, streakBonus, title, 
       </div>
 
       <div className="px-4 py-4">
-        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-1.5">
+        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-2">
           {title}
         </p>
-        <p className="text-[13px] text-zinc-300 leading-relaxed mb-3">{explanation}</p>
 
-        {!correct && (
-          <div className="text-[11px] text-zinc-500 mb-3 flex items-center gap-1.5">
-            <span>Ton choix :</span>
-            <span className={`font-bold ${color === "red" ? "text-red-400" : "text-emerald-400"}`}>
-              {humanChoice(choice)}
-            </span>
-            <span>· Bonne réponse :</span>
-            <span className="font-bold text-emerald-400">{humanChoice(correctAnswer)}</span>
-          </div>
-        )}
+        {/* Rationales : 3 lignes, une par choix */}
+        <div className="space-y-2 mb-4">
+          <RationaleRow
+            label="BUY"
+            text={rationales.BUY}
+            isCorrect={correctAnswer === "BUY"}
+            isChosen={choice === "BUY"}
+          />
+          <RationaleRow
+            label="SELL"
+            text={rationales.SELL}
+            isCorrect={correctAnswer === "SELL"}
+            isChosen={choice === "SELL"}
+          />
+          <RationaleRow
+            label="NO TRADE"
+            text={rationales.NO_TRADE}
+            isCorrect={correctAnswer === "NO_TRADE"}
+            isChosen={choice === "NO_TRADE"}
+          />
+        </div>
+
+        {/* Lesson (adapté au niveau) */}
+        <div className="bg-blue-500/8 border border-blue-500/25 rounded-lg px-3 py-2.5 mb-3">
+          <p className="text-[10px] font-bold text-blue-400 uppercase tracking-wide mb-1">
+            Leçon · {DIFFICULTY_META[difficulty].label}
+          </p>
+          <p className="text-[13px] text-zinc-200 leading-relaxed">{lesson}</p>
+        </div>
 
         <div className="flex items-center justify-between gap-3 pt-2 border-t border-zinc-800/60">
           <div className="flex items-center gap-1.5">
@@ -370,6 +525,31 @@ function Feedback({ correct, choice, correctAnswer, points, streakBonus, title, 
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function RationaleRow({ label, text, isCorrect, isChosen }: { label: string; text: string; isCorrect: boolean; isChosen: boolean }) {
+  // Style :
+  //   isCorrect = true → bordure emerald (la bonne réponse)
+  //   isChosen && !isCorrect → bordure red (le choix erroné)
+  //   sinon → bordure zinc neutre
+  const border =
+    isCorrect           ? "border-emerald-500/40 bg-emerald-500/5"
+  : isChosen            ? "border-red-500/40 bg-red-500/5"
+  :                       "border-zinc-800 bg-zinc-950/40";
+  const labelColor =
+    isCorrect ? "text-emerald-400"
+  : isChosen  ? "text-red-400"
+  :             "text-zinc-500";
+  return (
+    <div className={`border rounded-lg px-3 py-2.5 ${border}`}>
+      <p className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${labelColor}`}>
+        {label}
+        {isCorrect && <span className="ml-1.5 text-emerald-400">· bonne réponse</span>}
+        {isChosen && !isCorrect && <span className="ml-1.5 text-red-400">· ton choix</span>}
+      </p>
+      <p className="text-[12px] text-zinc-300 leading-relaxed">{text}</p>
     </div>
   );
 }
@@ -405,9 +585,9 @@ function StatTile({ metric, ok, total }: { metric: Metric; ok: number; total: nu
 
 function VolBadge({ volatility }: { volatility: "faible" | "normale" | "élevée" }) {
   const cls =
-    volatility === "élevée"  ? "text-amber-400 border-amber-400/30" :
-    volatility === "faible"  ? "text-zinc-500 border-zinc-700"       :
-                                "text-zinc-400 border-zinc-700";
+    volatility === "élevée"  ? "text-amber-400 border-amber-400/30"
+  : volatility === "faible"  ? "text-zinc-500 border-zinc-700"
+  :                            "text-zinc-400 border-zinc-700";
   return (
     <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>
       Vol. {volatility}
@@ -426,21 +606,52 @@ function SpreadBadge({ spread }: { spread: "faible" | "élevé" }) {
   );
 }
 
+function DifficultyChip({ difficulty }: { difficulty: Difficulty }) {
+  const meta = DIFFICULTY_META[difficulty];
+  return (
+    <div className="flex items-center gap-1.5">
+      <span className={`w-1.5 h-1.5 rounded-full ${meta.dotClass}`} />
+      <span className={`text-[10px] font-bold uppercase tracking-wide ${meta.textClass}`}>
+        {meta.label}
+      </span>
+    </div>
+  );
+}
+
+function ZoneLegendChip({ zone }: { zone: { kind: string; label: string } }) {
+  const cls =
+    zone.kind === "support"        ? "bg-emerald-500"
+  : zone.kind === "resistance"     ? "bg-red-500"
+  : zone.kind === "fvg"            ? "bg-amber-400"
+  :                                  "bg-amber-400";
+  return (
+    <div className="flex items-center gap-1.5">
+      <span className={`w-2 h-2 rounded-sm ${cls}`} />
+      <span className="text-[10px] text-zinc-400 font-medium">{zone.label}</span>
+    </div>
+  );
+}
+
+// ─── Summary ──────────────────────────────────────────────────────────────────
+
 function Summary({
-  score, maxStreak, correctCount, stats, onReset,
+  difficulty, score, maxStreak, correctCount, stats, onReplay, onChangeDifficulty,
 }: {
+  difficulty: Difficulty;
   score: number;
   maxStreak: number;
   correctCount: number;
   stats: Record<Metric, { ok: number; total: number }>;
-  onReset: () => void;
+  onReplay: () => void;
+  onChangeDifficulty: () => void;
 }) {
   const accuracy = Math.round((correctCount / ROUNDS_PER_SESSION) * 100);
   const verdict =
-    score >= 1000 ? { label: "Trader discipliné", color: "text-emerald-400" } :
-    score >= 600  ? { label: "Bon œil",            color: "text-emerald-400" } :
-    score >= 200  ? { label: "À polir",            color: "text-amber-400"   } :
-                    { label: "Manque de patience", color: "text-red-400"     };
+    score >= 1000 ? { label: "Trader discipliné", color: "text-emerald-400" }
+  : score >= 600  ? { label: "Bon œil",            color: "text-emerald-400" }
+  : score >= 200  ? { label: "À polir",            color: "text-amber-400"   }
+  :                 { label: "Manque de patience", color: "text-red-400"     };
+  const meta = DIFFICULTY_META[difficulty];
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
@@ -456,16 +667,16 @@ function Summary({
         </Link>
 
         <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
-          Bilan de session
+          Bilan · <span className={meta.textClass}>{meta.label}</span>
         </p>
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">{ROUNDS_PER_SESSION} scénarios joués</h1>
         <p className={`text-sm font-semibold ${verdict.color} mb-7`}>{verdict.label}</p>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-8">
-          <BigStat label="Score" value={`${score >= 0 ? "+" : ""}${score}`} valueClass={score < 0 ? "text-red-400" : "text-emerald-400"} />
-          <BigStat label="Précision" value={`${accuracy}%`} valueClass="text-white" />
+          <BigStat label="Score"           value={`${score >= 0 ? "+" : ""}${score}`} valueClass={score < 0 ? "text-red-400" : "text-emerald-400"} />
+          <BigStat label="Précision"       value={`${accuracy}%`}                      valueClass="text-white" />
           <BigStat label="Bonnes réponses" value={`${correctCount}/${ROUNDS_PER_SESSION}`} valueClass="text-white" />
-          <BigStat label="Meilleure série" value={`${maxStreak}`} valueClass="text-amber-400" />
+          <BigStat label="Meilleure série" value={`${maxStreak}`}                      valueClass="text-amber-400" />
         </div>
 
         <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-3">
@@ -479,17 +690,17 @@ function Summary({
 
         <div className="flex flex-col sm:flex-row gap-3">
           <button
-            onClick={onReset}
+            onClick={onReplay}
             className="flex-1 py-3 rounded-xl bg-white text-zinc-950 font-bold text-sm hover:bg-zinc-100 transition-colors"
           >
-            Rejouer 12 scénarios
+            Rejouer en {meta.label.toLowerCase()}
           </button>
-          <Link
-            href="/jeux"
-            className="flex-1 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-bold text-sm hover:bg-zinc-800 text-center transition-colors"
+          <button
+            onClick={onChangeDifficulty}
+            className="flex-1 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-bold text-sm hover:bg-zinc-800 transition-colors"
           >
-            Retour aux jeux
-          </Link>
+            Changer de niveau
+          </button>
         </div>
       </div>
     </main>
@@ -531,8 +742,4 @@ function biasClass(bias: "bullish" | "bearish" | "range"): string {
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
-function humanChoice(c: GameChoice): string {
-  return c === "NO_TRADE" ? "NO TRADE" : c;
 }
