@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import type { Viewport } from "next";
 import Navbar from "@/app/components/Navbar";
 import { OnboardingOverlay } from "@/app/components/OnboardingOverlay";
+import { StickyLessonNav } from "@/app/components/StickyLessonNav";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -31,6 +32,9 @@ export default function RootLayout({
 
         {/* Onboarding overlay — première visite uniquement */}
         <OnboardingOverlay />
+
+        {/* Sticky nav mobile sur les pages de leçons (auto-détection via pathname) */}
+        <StickyLessonNav />
       </body>
     </html>
   );

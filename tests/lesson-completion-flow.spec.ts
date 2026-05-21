@@ -27,9 +27,12 @@ for (const sample of SAMPLE_LESSONS) {
     page.on("pageerror", (err) => consoleErrors.push(String(err)));
     page.on("console", (msg) => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
 
-    // 1. Reset localStorage propre
+    // 1. Reset localStorage propre + skip onboarding pour libérer les clics
     await page.goto("/", { waitUntil: "domcontentloaded" });
-    await page.evaluate(() => window.localStorage.removeItem("tradinglab_progress"));
+    await page.evaluate(() => {
+      window.localStorage.removeItem("tradinglab_progress");
+      window.localStorage.setItem("tradinglab_onboarding_v1", "done");
+    });
 
     // 2. Aller sur la leçon
     const response = await page.goto(sample.url, { waitUntil: "domcontentloaded" });
@@ -79,9 +82,12 @@ for (const sample of SAMPLE_LESSONS) {
 }
 
 test("idempotence — recliquer ne double-pas l'XP", async ({ page }) => {
-  // Reset
+  // Reset + skip onboarding
   await page.goto("/", { waitUntil: "domcontentloaded" });
-  await page.evaluate(() => window.localStorage.removeItem("tradinglab_progress"));
+  await page.evaluate(() => {
+    window.localStorage.removeItem("tradinglab_progress");
+    window.localStorage.setItem("tradinglab_onboarding_v1", "done");
+  });
 
   // Aller sur une leçon, terminer
   await page.goto("/formations/debutant/lecon2", { waitUntil: "domcontentloaded" });
@@ -121,10 +127,11 @@ test("idempotence — recliquer ne double-pas l'XP", async ({ page }) => {
 });
 
 test("lecon1 débutant — persistance via flow custom", async ({ page }) => {
-  // La leçon 1 a son propre UX custom. On vérifie qu'elle aussi
-  // remplit localStorage tradinglab_progress.
   await page.goto("/", { waitUntil: "domcontentloaded" });
-  await page.evaluate(() => window.localStorage.removeItem("tradinglab_progress"));
+  await page.evaluate(() => {
+    window.localStorage.removeItem("tradinglab_progress");
+    window.localStorage.setItem("tradinglab_onboarding_v1", "done");
+  });
 
   await page.goto("/formations/debutant/lecon1", { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});

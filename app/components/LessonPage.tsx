@@ -14,6 +14,8 @@ import {
 } from "@/lib/progress";
 import { LessonCelebration } from "@/app/components/LessonCelebration";
 import { MicroFeedback } from "@/app/components/MicroFeedback";
+// StickyLessonNav est monté GLOBALEMENT dans app/layout.tsx et se détecte
+// automatiquement via pathname — pas besoin d'intégration ici.
 
 // ── Context partagé avec LessonQuiz ──────────────────────────────────────────
 interface QuizAnsweredCtx { onAnswered: () => void }
