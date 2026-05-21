@@ -262,7 +262,7 @@ export default function BuySellNoTradePage() {
             <MiniChart
               data={{
                 candles: [...chart.past, ...chart.future],
-                zones:   chart.zones,
+                zones:   maskZonesForDifficulty(chart.zones, difficulty),
                 domain:  chart.domain,
               }}
               overlay={{
@@ -273,23 +273,29 @@ export default function BuySellNoTradePage() {
             />
             {chart.zones.length > 0 && (
               <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
-                {chart.zones.map((z, i) => (
+                {maskZonesForDifficulty(chart.zones, difficulty).map((z, i) => (
                   <ZoneLegendChip key={i} zone={z} />
                 ))}
               </div>
             )}
           </div>
 
-          {/* Context infos */}
-          <div className="px-4 pb-3 grid grid-cols-3 gap-2">
+          {/* Context infos — en avancé, on cache spread/vol pour forcer la
+              lecture du chart (mais on garde la news warning visible). */}
+          <div className={`px-4 pb-3 grid gap-2 ${difficulty === "advanced" ? "grid-cols-2" : "grid-cols-3"}`}>
             <InfoTile label="HTF"        value={BIAS_LABEL[current.htfBias]}        biasClass={biasClass(current.htfBias)} />
             <InfoTile label="Macro"      value={MACRO_LABEL[current.macroContext]}  biasClass={current.macroContext === "dangereux" ? "text-red-400" : "text-zinc-300"} />
-            <InfoTile label="Volatilité" value={cap(current.volatility)}            biasClass="text-zinc-300" />
+            {difficulty !== "advanced" && (
+              <InfoTile label="Volatilité" value={cap(current.volatility)} biasClass="text-zinc-300" />
+            )}
           </div>
 
-          {/* Context text */}
+          {/* Context text — raccourci en intermédiaire/avancé pour réduire les
+              aides texte (le joueur doit lire le marché lui-même). */}
           <div className="px-4 pb-4">
-            <p className="text-[13px] text-zinc-300 leading-relaxed">{current.context}</p>
+            <p className="text-[13px] text-zinc-300 leading-relaxed">
+              {difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context))}
+            </p>
           </div>
         </div>
 
@@ -742,4 +748,25 @@ function biasClass(bias: "bullish" | "bearish" | "range"): string {
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+// V3 : en niveau avancé, les labels de zones perdent leurs noms spécifiques
+// (Support HTF, Résistance majeure, FVG haussier) au profit de labels
+// génériques. Le joueur doit lire le marché plutôt que de suivre les noms.
+function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty): BuySellChart["zones"] {
+  if (d !== "advanced") return zones;
+  return zones.map((z) => {
+    const generic =
+      z.kind === "support"        ? "Niveau bas"
+    : z.kind === "resistance"     ? "Niveau haut"
+    : z.kind === "fvg"            ? "Imbalance"
+    :                               "Liquidité";
+    return { ...z, label: generic };
+  });
+}
+
+// Retourne la 1re phrase (jusqu'au premier "." inclus).
+function firstSentence(text: string): string {
+  const i = text.indexOf(". ");
+  return i === -1 ? text : text.slice(0, i + 1);
 }

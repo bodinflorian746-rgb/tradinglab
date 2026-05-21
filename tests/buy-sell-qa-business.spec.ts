@@ -148,6 +148,70 @@ function audit(setup: SetupKey, difficulty: Difficulty, seed: number): QACheck {
     }
   }
 
+  // V3 — vérifications spécifiques aux nouveaux setups
+  if (setup === "weak_breakout") {
+    // La cassure doit être faible : body de la dernière candle avant les "non-trigger" candles
+    // (la 10e dans le past) doit être petit, et son close juste au-dessus de R=10.
+    // On vérifie qu'aucune candle past n'a un close fort au-dessus de R.
+    const above = chart.past.filter((k) => k.c > 10.4);
+    if (above.length > 0) {
+      issues.push(`weak_breakout: ${above.length} candle(s) close > 10.4 — la cassure est trop convaincante (devrait rester < 10.4)`);
+    }
+    // Dernière past doit être juste au-dessus ou à R
+    const lastPast = chart.past[chart.past.length - 1];
+    if (lastPast.c < 9.9 || lastPast.c > 10.5) {
+      issues.push(`weak_breakout: dernière past close ${lastPast.c.toFixed(2)} (devrait être [9.9, 10.5])`);
+    }
+  }
+
+  if (setup === "fvg_overmitigated") {
+    // La zone FVG doit exister. La dernière past doit être dans le bas du FVG
+    // (mitigation profonde).
+    const fvg = chart.zones.find((z) => z.kind === "fvg");
+    if (!fvg) issues.push(`fvg_overmitigated: zone FVG manquante`);
+    else {
+      const lastPast = chart.past[chart.past.length - 1];
+      const fvgMid = (fvg.y1 + fvg.y2) / 2;
+      if (lastPast.c > fvgMid + (fvg.y2 - fvg.y1) * 0.15) {
+        issues.push(`fvg_overmitigated: dernière past close ${lastPast.c.toFixed(2)} (devrait être <= mid+15% du FVG = ${(fvgMid + (fvg.y2 - fvg.y1) * 0.15).toFixed(2)})`);
+      }
+    }
+  }
+
+  if (setup === "counter_trend_bounce") {
+    // Le past doit montrer un downtrend significatif au début (au moins 3 unités de baisse)
+    // ET ne pas révéler la résolution (la fin du past ne doit pas être plus bas que le minor level).
+    const firstHigh = chart.past[0].h;
+    const minorLevelIdx = 8; // après les 8 candles de downtrend
+    if (minorLevelIdx < chart.past.length) {
+      const dropAmount = firstHigh - chart.past[minorLevelIdx - 1].l;
+      if (dropAmount < 2) {
+        issues.push(`counter_trend_bounce: downtrend trop faible (${dropAmount.toFixed(2)} < 2)`);
+      }
+    }
+  }
+
+  if (setup === "dirty_range_sweep") {
+    // Au moins une bougie past doit avoir une mèche au-dessus de R=6 (sweep haut)
+    // ET une mèche en-dessous de S=1 (sweep bas).
+    const wickAboveR = chart.past.some((k) => k.h > 6.3);
+    const wickBelowS = chart.past.some((k) => k.l < 0.7);
+    if (!wickAboveR) issues.push(`dirty_range_sweep: pas de sweep visible au-dessus de R=6`);
+    if (!wickBelowS) issues.push(`dirty_range_sweep: pas de sweep visible en-dessous de S=1`);
+    // Dernière candle doit être au milieu
+    const lastPast = chart.past[chart.past.length - 1];
+    if (lastPast.c < 2 || lastPast.c > 5) {
+      issues.push(`dirty_range_sweep: dernière past close ${lastPast.c.toFixed(2)} hors milieu du range [2, 5]`);
+    }
+  }
+
+  if (setup === "setup_toxic_execution") {
+    // Le past doit ressembler à un pullback bull (uptrend visible puis pullback).
+    // On vérifie juste qu'il y a une zone de demande et que le past finit au point bas du pullback.
+    const support = chart.zones.find((z) => z.kind === "support");
+    if (!support) issues.push(`setup_toxic_execution: zone "Zone de demande" manquante`);
+  }
+
   return { setup, difficulty, chart, issues };
 }
 
@@ -160,11 +224,24 @@ const QA_PLAN: { difficulty: Difficulty; setups: SetupKey[] }[] = [
   },
   {
     difficulty: "intermediate",
-    setups: ["false_breakout_bullish", "liquidity_sweep_reversal", "rejection_resistance"],
+    setups: [
+      "false_breakout_bullish",
+      "liquidity_sweep_reversal",
+      "rejection_resistance",
+      "weak_breakout",
+      "counter_trend_bounce",
+    ],
   },
   {
     difficulty: "advanced",
-    setups: ["false_breakout_bearish", "fvg_reaction", "range_no_opp"],
+    setups: [
+      "false_breakout_bearish",
+      "fvg_reaction",
+      "range_no_opp",
+      "fvg_overmitigated",
+      "dirty_range_sweep",
+      "setup_toxic_execution",
+    ],
   },
 ];
 
@@ -212,6 +289,41 @@ test.describe("QA métier BUY/SELL/NO TRADE V2", () => {
     expect(ids).toContain("false_breakout_bearish");
     expect(ids).toContain("liquidity_sweep_reversal");
     expect(ids).toContain("fvg_reaction");
+  });
+
+  // V3 — équilibrage des niveaux
+  test("V3 — pool avancé contient au moins 5 NO_TRADE (rééquilibrage)", () => {
+    const pool = SCENARIO_TEMPLATES.filter((t) => t.difficulties.includes("advanced"));
+    const noTrades = pool.filter((t) => t.correctAnswer === "NO_TRADE");
+    console.log(`Pool avancé : ${pool.length} setups, ${noTrades.length} NO_TRADE (${Math.round(noTrades.length / pool.length * 100)}%)`);
+    expect(noTrades.length, `pool advanced doit contenir >= 5 NO_TRADE`).toBeGreaterThanOrEqual(5);
+    // Taux NO_TRADE >= 35%
+    expect(noTrades.length / pool.length).toBeGreaterThanOrEqual(0.35);
+  });
+
+  test("V3 — les 5 nouveaux templates existent avec rationales complètes", () => {
+    const newIds: SetupKey[] = [
+      "weak_breakout",
+      "fvg_overmitigated",
+      "counter_trend_bounce",
+      "dirty_range_sweep",
+      "setup_toxic_execution",
+    ];
+    for (const id of newIds) {
+      const t = SCENARIO_TEMPLATES.find((x) => x.id === id);
+      expect(t, `${id} doit exister`).toBeDefined();
+      expect(t!.correctAnswer, `${id} doit être NO_TRADE`).toBe("NO_TRADE");
+      expect(t!.rationales.BUY.length, `${id}.rationales.BUY`).toBeGreaterThan(50);
+      expect(t!.rationales.SELL.length, `${id}.rationales.SELL`).toBeGreaterThan(50);
+      expect(t!.rationales.NO_TRADE.length, `${id}.rationales.NO_TRADE`).toBeGreaterThan(50);
+    }
+  });
+
+  test("V3 — setup_toxic_execution force spread élevé + session morte (metaOverride)", () => {
+    const t = SCENARIO_TEMPLATES.find((x) => x.id === "setup_toxic_execution");
+    expect(t!.metaOverride?.spread).toBe("élevé");
+    expect(t!.metaOverride?.session).toBe("Heures mortes");
+    expect(t!.metaOverride?.volatility).toBe("faible");
   });
 });
 

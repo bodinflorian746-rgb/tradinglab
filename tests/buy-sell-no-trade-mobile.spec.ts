@@ -117,6 +117,14 @@ test("V2 gameplay avancé — 0 erreur console + reveal anim", async ({ page }) 
   expect(errors, `Erreurs console : ${errors.join("\n")}`).toHaveLength(0);
 });
 
+test("V3 screenshots — advanced masquage zones + context court", async ({ page }) => {
+  await page.goto("/jeux/buy-sell-no-trade", { waitUntil: "domcontentloaded" });
+  await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
+  await page.getByRole("button", { name: /Avancé/ }).click();
+  await page.waitForTimeout(300);
+  await page.screenshot({ path: "test-results/bsnt-v3-advanced-round.png", fullPage: false });
+});
+
 test("V2 screenshots — difficulty picker + round débutant", async ({ page }) => {
   await page.goto("/jeux/buy-sell-no-trade", { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});

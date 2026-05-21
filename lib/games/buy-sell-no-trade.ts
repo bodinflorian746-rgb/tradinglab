@@ -39,7 +39,13 @@ export type SetupKey =
   | "liquidity_sweep_reversal"
   | "fvg_reaction"
   | "trade_before_news"
-  | "range_no_opp";
+  | "range_no_opp"
+  // ─── V3 : ajouts pour rééquilibrer intermédiaire / avancé ───────────────────
+  | "weak_breakout"          // cassure faible — NO TRADE (statistique pauvre)
+  | "fvg_overmitigated"      // FVG bouffé à 85%+ sans réaction — NO TRADE
+  | "counter_trend_bounce"   // rebond local contre HTF baissier — NO TRADE
+  | "dirty_range_sweep"      // range avec sweeps des 2 côtés — NO TRADE
+  | "setup_toxic_execution"; // setup propre mais spread/session toxiques — NO TRADE
 
 export type Metric = "discipline" | "lecture" | "piege";
 
@@ -67,6 +73,17 @@ export interface ScenarioTemplate {
   lessons:       DifficultyLessons;
   difficulties:  readonly Difficulty[];
   tags:          string[];
+  // Optionnel : force certaines variables d'environnement pour que le scénario
+  // soit cohérent (ex. spread élevé + session morte pour setup_toxic_execution).
+  metaOverride?: {
+    asset?:      Asset;
+    session?:    Session;
+    volatility?: Volatility;
+    spread?:     Spread;
+  };
+  // Contexte court pour les niveaux intermédiaire/avancé (max 1 phrase).
+  // Si non fourni, on prend la 1re phrase de `context`.
+  shortContext?: string;
 }
 
 export interface ScenarioInstance extends ScenarioTemplate {
@@ -342,6 +359,122 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["discipline", "range", "patience"],
   },
+  // ─── V3 — setups réalistes piège mental ─────────────────────────────────────
+  {
+    id: "weak_breakout",
+    title: "Cassure sans conviction",
+    correctAnswer: "NO_TRADE",
+    htfBias: "range",
+    macroContext: "normal",
+    metric: "discipline",
+    context: "Le prix vient de casser au-dessus de la résistance, mais la bougie de force manque cruellement de body.",
+    shortContext: "Cassure haussière — body très faible.",
+    rationales: {
+      BUY: "✗ Tu chases une cassure faible. Sans bougie de momentum nette, la statistique de continuation chute à ~35%. Mauvais R/R espéré.",
+      SELL: "✗ Vendre une cassure haussière sans signal de retournement = prématuré. Tu n'as ni reversal candle ni structure baissière.",
+      NO_TRADE: "✓ Une cassure doit s'imposer pour être tradable. Sans bougie de force, on attend soit un retest propre, soit un follow-through clair. Patience.",
+    },
+    lessons: {
+      beginner:     "Une grande bougie qui casse une zone = signal. Une petite bougie qui casse à peine = pas un signal.",
+      intermediate: "Le marché ne te doit pas un signal propre à chaque cassure. Si la conviction manque, tu n'es pas obligé d'y aller.",
+      advanced:     "Une cassure sans body est souvent un appât à liquidité. Les institutionnels créent ces breakouts faibles pour piéger les retails impatients. NO TRADE puis observation.",
+    },
+    difficulties: ["intermediate", "advanced"],
+    tags: ["discipline", "breakout", "momentum"],
+  },
+  {
+    id: "fvg_overmitigated",
+    title: "FVG presque invalidé",
+    correctAnswer: "NO_TRADE",
+    htfBias: "bullish",
+    macroContext: "normal",
+    metric: "lecture",
+    context: "Le FVG haussier a été mitigé sur 85%+ de sa hauteur. La réaction tarde — les acheteurs ne défendent plus la zone.",
+    shortContext: "FVG mitigé à 85%+, pas de réaction.",
+    rationales: {
+      BUY: "✗ Tu pries pour le rebond. Une mitigation profonde sans réaction = FVG mort. Les acheteurs institutionnels ne défendent plus la zone.",
+      SELL: "✗ Prématuré : pas de cassure structurelle confirmée encore. Tu shortes l'espoir, pas un signal.",
+      NO_TRADE: "✓ Edge insuffisant. Attendre soit un rejet clair du bas du FVG (BUY confirmé), soit une cassure structurelle (SELL confirmé).",
+    },
+    lessons: {
+      beginner:     "Si une zone tarde à réagir, elle perd son edge. Mieux vaut attendre la prochaine.",
+      intermediate: "Une zone profondément mitigée perd statistiquement son edge. Si la réaction n'arrive pas dans les 2-3 bougies, la zone est cuite.",
+      advanced:     "FVG mitigé 80%+ sans réaction = traque la cassure baissière pour SELL. Mais sans la cassure → NO TRADE.",
+    },
+    difficulties: ["advanced"],
+    tags: ["lecture", "FVG", "mitigation"],
+  },
+  {
+    id: "counter_trend_bounce",
+    title: "Rebond local contre HTF",
+    correctAnswer: "NO_TRADE",
+    htfBias: "bearish",
+    macroContext: "normal",
+    metric: "discipline",
+    context: "HTF baissier net. Le prix rebondit localement sur un niveau secondaire — mais la tendance reste contre toi.",
+    shortContext: "Rebond local dans un downtrend HTF.",
+    rationales: {
+      BUY: "✗ Trader contre la tendance HTF en pariant sur un niveau secondaire = jouer à 30-40% de proba. La statistique va contre toi avant même que tu cliques.",
+      SELL: "✗ Pas le bon moment : le rebond local n'a pas montré de signe d'épuisement. Si tu shortes ici, 2-3 bougies vertes peuvent te sortir avant la reprise.",
+      NO_TRADE: "✓ Setup local valide MAIS contre HTF = pas d'edge. Attendre l'épuisement du rebond ET une zone HTF claire pour shorter.",
+    },
+    lessons: {
+      beginner:     "HTF baissier = tu cherches les SELL, jamais les BUY contre la tendance.",
+      intermediate: "Un setup local n'efface jamais la tendance HTF. Si HTF dit non, tu ne dis pas oui — même si la zone locale tient.",
+      advanced:     "Les rebonds dans un downtrend sont des opportunités de SHORT, pas de BUY. Mais attendre le timing — ici trop tôt, pas de wick de rejet sur résistance HTF.",
+    },
+    difficulties: ["intermediate", "advanced"],
+    tags: ["discipline", "HTF", "contre-tendance"],
+  },
+  {
+    id: "dirty_range_sweep",
+    title: "Range avec sweeps des deux côtés",
+    correctAnswer: "NO_TRADE",
+    htfBias: "range",
+    macroContext: "normal",
+    metric: "discipline",
+    context: "Le prix vient de balayer les liquidités des deux bords du range. Aucune direction claire — l'accumulation institutionnelle est invisible.",
+    shortContext: "Range avec sweep des deux bords.",
+    rationales: {
+      BUY: "✗ Pas de signal long. Le sweep récent du haut neutralise la zone basse comme support fiable. Pas d'edge.",
+      SELL: "✗ Symétrique : le sweep récent du bas neutralise la zone haute. Le marché s'est nettoyé des deux côtés.",
+      NO_TRADE: "✓ Range sale = pas de structure exploitable. Attendre une cassure confirmée OU une accumulation reconnaissable.",
+    },
+    lessons: {
+      intermediate: "Quand un range a fait du sweep des deux côtés sans direction, attendre la sortie. Pas négociable.",
+      advanced:     "Le double-sweep est de l'accumulation institutionnelle invisible. Le bon trader attend la sortie du range. La pire chose est de jouer le ping-pong.",
+      beginner:     "Si tu vois des grosses mèches en haut ET en bas, et que le prix est au milieu, NO TRADE.",
+    },
+    difficulties: ["advanced"],
+    tags: ["discipline", "range", "sweep"],
+  },
+  {
+    id: "setup_toxic_execution",
+    title: "Setup propre, exécution toxique",
+    correctAnswer: "NO_TRADE",
+    htfBias: "bullish",
+    macroContext: "normal",
+    metric: "discipline",
+    context: "Setup technique valide — mais le contexte d'exécution est défavorable : spread élevé, session morte, volatilité absente. Le R/R réel est divisé par 2.",
+    shortContext: "Setup propre, mais spread élevé en session morte.",
+    rationales: {
+      BUY: "✗ Le signal est bon mais le contexte tue le R/R. Spread élevé + session morte = ton stop saute par bid-ask, ton TP devient inatteignable. La technique gagne, l'exécution perd.",
+      SELL: "✗ À contre-HTF en plus du contexte d'exécution déjà toxique. Double erreur : tu trades contre la tendance ET en mauvaises conditions de liquidité.",
+      NO_TRADE: "✓ Décision pro. Le même setup repassera en session Londres ou NY avec un spread propre. Tu ne perds rien à attendre.",
+    },
+    lessons: {
+      intermediate: "Un beau setup en mauvaises conditions d'exécution n'est PAS un beau trade. Technique ET exécution doivent être alignées.",
+      advanced:     "Spread x3 + volume mort = ton vrai R/R divisé par 2 même si le setup marche. Un trader pro intègre toujours l'exécution dans son edge.",
+      beginner:     "Vérifie session + spread AVANT de cliquer. Un setup en heures mortes vaut souvent NO TRADE.",
+    },
+    difficulties: ["intermediate", "advanced"],
+    tags: ["discipline", "execution", "spread"],
+    metaOverride: {
+      session:    "Heures mortes",
+      volatility: "faible",
+      spread:     "élevé",
+    },
+  },
 ];
 
 // ─── Variations ───────────────────────────────────────────────────────────────
@@ -368,12 +501,13 @@ export function generateScenarios(seed: number, difficulty: Difficulty = "interm
     if (candidate.id === lastId && shuffled.length > 1) {
       candidate = shuffled[(i + 1) % shuffled.length];
     }
+    const ov = candidate.metaOverride ?? {};
     out.push({
       ...candidate,
-      asset:      pick(ASSETS, rng),
-      session:    pick(SESSIONS, rng),
-      volatility: candidate.macroContext === "dangereux" ? "élevée" : pick(VOLATILITIES, rng),
-      spread:     candidate.macroContext === "dangereux" ? "élevé"  : pick(SPREADS, rng),
+      asset:      ov.asset      ?? pick(ASSETS, rng),
+      session:    ov.session    ?? pick(SESSIONS, rng),
+      volatility: ov.volatility ?? (candidate.macroContext === "dangereux" ? "élevée" : pick(VOLATILITIES, rng)),
+      spread:     ov.spread     ?? (candidate.macroContext === "dangereux" ? "élevé"  : pick(SPREADS, rng)),
       seed:       (seed + i * 9973) >>> 0,
       difficulty,
     });
@@ -405,12 +539,14 @@ function finalize(raw: RawScenario): BuySellChart {
   return { ...raw, domain: chartDomain(all, raw.zones) };
 }
 
-// Helpers d'amplitudes par niveau pour le trigger des breakouts / wicks
+// Helpers d'amplitudes par niveau pour le trigger des breakouts / wicks.
+// V3 : on durcit intermédiaire et avancé pour que les signaux soient
+// significativement moins évidents qu'en débutant.
 function bodyAmp(difficulty: Difficulty): number {
-  return difficulty === "beginner" ? 1.4 : difficulty === "intermediate" ? 1.0 : 0.7;
+  return difficulty === "beginner" ? 1.5 : difficulty === "intermediate" ? 0.85 : 0.55;
 }
 function wickAmp(difficulty: Difficulty): number {
-  return difficulty === "beginner" ? 1.5 : difficulty === "intermediate" ? 1.0 : 0.65;
+  return difficulty === "beginner" ? 1.6 : difficulty === "intermediate" ? 0.85 : 0.55;
 }
 
 function genBreakoutBull(rng: () => number, m: number, d: Difficulty): BuySellChart {
@@ -905,6 +1041,248 @@ function genRangeNoOpp(rng: () => number, m: number, d: Difficulty): BuySellChar
   });
 }
 
+// ─── V3 — 5 générateurs supplémentaires (NO TRADE oriented) ──────────────────
+
+function genWeakBreakout(rng: () => number, m: number, d: Difficulty): BuySellChart {
+  // Cassure légère au-dessus de la résistance : body minuscule, juste au-dessus
+  // du niveau. Future : stalle puis revient sous la résistance.
+  const past: Candle[] = [];
+  const fut: Candle[] = [];
+  const R = 10;
+  let p = 5.5 + rng() * 0.4;
+  for (let i = 0; i < 5; i++) {
+    const o = p;
+    const c = clamp(o + (0.3 + rng() * 0.45) * m, 4, R - 0.5);
+    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
+    p = c;
+  }
+  // Consolidation serrée
+  for (let i = 0; i < 4; i++) {
+    const o = p;
+    const c = clamp(o + (rng() - 0.45) * 0.6 * m, R - 1.1, R - 0.3);
+    past.push(candle(o, c, (0.22 + rng() * 0.18) * m, (0.22 + rng() * 0.18) * m));
+    p = c;
+  }
+  // Trigger : breakout TRÈS FAIBLE (juste au-dessus, body minuscule)
+  const bO = p;
+  const bC = R + 0.12 + rng() * 0.18;
+  past.push(candle(bO, bC, (0.3 + rng() * 0.2) * m, 0.18));
+  p = bC;
+  // Future : stalle puis retombe sous R (NO TRADE était la bonne décision)
+  const stall = candle(p, p - 0.06, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m);
+  fut.push(stall); p = stall.c;
+  for (let i = 0; i < 4; i++) {
+    const o = p;
+    const c = o - (0.28 + rng() * 0.42) * m;
+    fut.push(candle(o, c, (0.13 + rng() * 0.13) * m, (0.18 + rng() * 0.2) * m));
+    p = c;
+  }
+  void d;
+  return finalize({
+    past, future: fut,
+    zones: [{ kind: "resistance", y1: R - 0.15, y2: R + 0.15, label: "Résistance" }],
+  });
+}
+
+function genFvgOvermitigated(rng: () => number, m: number, d: Difficulty): BuySellChart {
+  // FVG haussier laissé par une impulse, puis pullback profond qui descend
+  // jusqu'au BAS du FVG (mitigation 85%+). Pas de réaction visible — le past
+  // finit sur 1-2 candles indécises au fond du FVG. Future : cassure baissière.
+  const past: Candle[] = [];
+  const fut: Candle[] = [];
+  let p = 2 + rng() * 0.4;
+  // 3 base candles
+  for (let i = 0; i < 3; i++) {
+    const o = p;
+    const c = o + (rng() - 0.4) * 0.4 * m;
+    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
+    p = c;
+  }
+  // Bas du FVG = high de la dernière base candle
+  const baseHigh = Math.max(...past.slice(-3).map((k) => k.h));
+  // Impulse (crée la FVG)
+  const iO = p;
+  const iC = p + (2.0 + rng() * 0.3) * m;
+  past.push(candle(iO, iC, (0.3 + rng() * 0.2) * m, 0.12));
+  p = iC;
+  // 2 candles au-dessus
+  for (let i = 0; i < 2; i++) {
+    const o = p;
+    const c = o + (0.25 + rng() * 0.25) * m;
+    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
+    p = c;
+  }
+  // Haut du FVG = low de la candle juste après l'impulse
+  const fvgLow  = baseHigh;
+  const fvgHigh = past[past.length - 2].l;  // bottom of c3 (1st candle after impulse)
+  // Pullback profond — close target ~10% au-dessus du bas (mitigation 85%+)
+  const target = fvgLow + (fvgHigh - fvgLow) * 0.1;
+  for (let i = 0; i < 5; i++) {
+    const o = p;
+    const c = Math.max(target, o - (0.32 + rng() * 0.28) * m);
+    past.push(candle(o, c, (0.12 + rng() * 0.1) * m, (0.18 + rng() * 0.18) * m));
+    p = c;
+  }
+  // 2 candles indécises au fond du FVG (pas de réaction = piège mental).
+  // On contraint le close à rester dans le bas du FVG (max = target + 5% du
+  // FVG) pour que le past ne révèle pas un faux rebond.
+  const indecMax = fvgLow + (fvgHigh - fvgLow) * 0.15;
+  for (let i = 0; i < 2; i++) {
+    const o = p;
+    const c = clamp(o + (rng() - 0.6) * 0.18 * m, target - 0.05, indecMax);
+    past.push(candle(o, c, (0.14 + rng() * 0.1) * m, (0.14 + rng() * 0.1) * m));
+    p = c;
+  }
+  // Future : cassure baissière du FVG (NO TRADE est confirmée par les faits)
+  for (let i = 0; i < 5; i++) {
+    const o = p;
+    const c = o - (0.3 + rng() * 0.4) * m;
+    fut.push(candle(o, c, (0.13 + rng() * 0.12) * m, (0.18 + rng() * 0.2) * m));
+    p = c;
+  }
+  void d;
+  return finalize({
+    past, future: fut,
+    zones: [{ kind: "fvg", y1: fvgLow, y2: fvgHigh, label: "FVG haussier" }],
+  });
+}
+
+function genCounterTrendBounce(rng: () => number, m: number, d: Difficulty): BuySellChart {
+  // HTF baissier clairement visible (downtrend en début de past). Rebond local
+  // faible sur un niveau secondaire. Future : continuation baissière.
+  const past: Candle[] = [];
+  const fut: Candle[] = [];
+  let p = 8.5 + rng() * 0.3;
+  // 8 candles downtrend
+  for (let i = 0; i < 8; i++) {
+    const o = p;
+    const c = o - (0.4 + rng() * 0.5) * m;
+    past.push(candle(o, c, (0.12 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
+    p = c;
+  }
+  const minorLevel = p;
+  // 2 candles de rebond faible
+  for (let i = 0; i < 2; i++) {
+    const o = p;
+    const c = o + (0.2 + rng() * 0.3) * m;
+    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.15 + rng() * 0.15) * m));
+    p = c;
+  }
+  // 2 candles indécises
+  for (let i = 0; i < 2; i++) {
+    const o = p;
+    const c = o + (rng() - 0.45) * 0.4 * m;
+    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
+    p = c;
+  }
+  // Future : continue down
+  for (let i = 0; i < 5; i++) {
+    const o = p;
+    const c = o - (0.32 + rng() * 0.42) * m;
+    fut.push(candle(o, c, (0.12 + rng() * 0.12) * m, (0.18 + rng() * 0.2) * m));
+    p = c;
+  }
+  void d;
+  return finalize({
+    past, future: fut,
+    zones: [{ kind: "support", y1: minorLevel - 0.1, y2: minorLevel + 0.1, label: "Niveau secondaire" }],
+  });
+}
+
+function genDirtyRangeSweep(rng: () => number, m: number, d: Difficulty): BuySellChart {
+  // Range avec un sweep du haut + un sweep du bas, dernière candle au milieu.
+  // Future : continue d'osciller (range sale, pas d'edge).
+  const past: Candle[] = [];
+  const fut: Candle[] = [];
+  const S = 1;
+  const R = 6;
+  const mid = (S + R) / 2;
+  let p = mid;
+  // 4 oscillations
+  for (let i = 0; i < 4; i++) {
+    const o = p;
+    const drift = (rng() - 0.5) * 1.4 * m + (mid - o) * 0.2;
+    const c = clamp(o + drift, S + 0.5, R - 0.5);
+    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
+    p = c;
+  }
+  // Sweep du haut (mèche dépasse R, close inside)
+  const swH = { o: p, c: R - 0.7 - rng() * 0.3, h: R + 1.0 * m + rng() * 0.3, l: p - 0.15 };
+  past.push(swH); p = swH.c;
+  // 3 oscillations
+  for (let i = 0; i < 3; i++) {
+    const o = p;
+    const c = clamp(o + (rng() - 0.55) * 1.2 * m, S + 0.5, R - 0.5);
+    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
+    p = c;
+  }
+  // Sweep du bas (mèche descend sous S, close inside)
+  const swL = { o: p, c: S + 0.7 + rng() * 0.3, h: p + 0.15, l: S - 1.0 * m - rng() * 0.3 };
+  past.push(swL); p = swL.c;
+  // 3 oscillations, derniers candles ramenant au milieu
+  for (let i = 0; i < 3; i++) {
+    const o = p;
+    const drift = (mid - o) * 0.4 + (rng() - 0.5) * 0.9 * m;
+    const c = clamp(o + drift, S + 0.5, R - 0.5);
+    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
+    p = c;
+  }
+  // Future : continue à osciller
+  for (let i = 0; i < 5; i++) {
+    const o = p;
+    const c = clamp(o + (rng() - 0.5) * 1.2 * m, S + 0.5, R - 0.5);
+    fut.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
+    p = c;
+  }
+  void d;
+  return finalize({
+    past, future: fut,
+    zones: [
+      { kind: "resistance",     y1: R - 0.15,         y2: R + 0.15,         label: "Plafond range"  },
+      { kind: "support",        y1: S - 0.15,         y2: S + 0.15,         label: "Plancher range" },
+      { kind: "liquidity_high", y1: R + 0.15,         y2: R + 1.0 * m,      label: "Sweep haut"     },
+      { kind: "liquidity_low",  y1: S - 1.0 * m,      y2: S - 0.15,         label: "Sweep bas"      },
+    ],
+  });
+}
+
+function genToxicExecution(rng: () => number, m: number, d: Difficulty): BuySellChart {
+  // Setup techniquement valide (pullback bull). Le past s'arrête juste après
+  // le pullback (sans confirmation de reprise). Future : rallye (le setup
+  // technique fonctionne). Le piège est dans le contexte d'exécution
+  // (spread élevé + session morte) qui rend le R/R réel < 1 même si le
+  // setup marche.
+  const past: Candle[] = [];
+  const fut: Candle[] = [];
+  let p = 1 + rng() * 0.3;
+  for (let i = 0; i < 8; i++) {
+    const o = p;
+    const c = o + (0.3 + rng() * 0.35) * m;
+    past.push(candle(o, c, (0.18 + rng() * 0.18) * m, (0.12 + rng() * 0.14) * m));
+    p = c;
+  }
+  for (let i = 0; i < 4; i++) {
+    const o = p;
+    const c = o - (0.2 + rng() * 0.32) * m;
+    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
+    p = c;
+  }
+  const pullbackLow = p;
+  for (let i = 0; i < 5; i++) {
+    const o = p;
+    const c = o + (0.3 + rng() * 0.42) * m;
+    fut.push(candle(o, c, (0.18 + rng() * 0.2) * m, (0.13 + rng() * 0.13) * m));
+    p = c;
+  }
+  void d;
+  return finalize({
+    past, future: fut,
+    zones: [
+      { kind: "support", y1: pullbackLow - 0.35 * m, y2: pullbackLow + 0.2 * m, label: "Zone de demande" },
+    ],
+  });
+}
+
 // ─── Build chart depuis un setup ──────────────────────────────────────────────
 
 export function buildChart(
@@ -928,6 +1306,11 @@ export function buildChart(
     case "fvg_reaction":               return genFvgReaction(rng, m, difficulty);
     case "trade_before_news":          return genTradeBeforeNews(rng, m, difficulty);
     case "range_no_opp":               return genRangeNoOpp(rng, m, difficulty);
+    case "weak_breakout":              return genWeakBreakout(rng, m, difficulty);
+    case "fvg_overmitigated":          return genFvgOvermitigated(rng, m, difficulty);
+    case "counter_trend_bounce":       return genCounterTrendBounce(rng, m, difficulty);
+    case "dirty_range_sweep":          return genDirtyRangeSweep(rng, m, difficulty);
+    case "setup_toxic_execution":      return genToxicExecution(rng, m, difficulty);
   }
 }
 
