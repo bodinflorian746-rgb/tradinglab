@@ -14,51 +14,49 @@ const audiences = [
   {
     icon: (
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        {/* Socle / fondations */}
-        <path d="M3 13.5h12M4.5 13.5v-3h9v3M6 10.5v-2.5h6v2.5M7.5 8v-2h3v2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-    title: "Construire des bases solides",
-    description:
-      "Structure de marché, lecture des prix, gestion du risque, R/R. Les fondamentaux travaillés en profondeur — pas survolés en cinq minutes.",
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        {/* Système / blueprint */}
-        <rect x="2.5" y="2.5" width="13" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
-        <path d="M2.5 7h13M7 2.5v13" stroke="currentColor" strokeWidth="1.4" />
-        <circle cx="10.5" cy="11" r="1.5" stroke="currentColor" strokeWidth="1.3" />
-      </svg>
-    ),
-    title: "Développer une vraie méthode",
-    description:
-      "Transformer des connaissances dispersées en système cohérent : règles d'entrée, filtres HTF, plan de trade, journaling. Une approche, pas dix.",
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        {/* Cible / pratique */}
+        {/* Horloge — peu de temps */}
         <circle cx="9" cy="9" r="6.5" stroke="currentColor" strokeWidth="1.4" />
-        <circle cx="9" cy="9" r="3.5" stroke="currentColor" strokeWidth="1.4" />
-        <circle cx="9" cy="9" r="1" fill="currentColor" />
+        <path d="M9 5.2v3.8l2.6 1.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
-    title: "S'entraîner sur des situations réelles",
+    title: "Progresser même avec peu de temps",
     description:
-      "Jeux interactifs, scénarios marché, erreurs retail décortiquées. Apprendre par la pratique et la répétition — pas par la théorie sèche.",
+      "Sessions courtes, progression structurée. La méthode est pensée pour avancer en 15 à 30 minutes par jour, sans surveiller les marchés toute la journée.",
   },
   {
     icon: (
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        {/* Flèche d'exécution / momentum */}
-        <path d="M2.5 9h11M9 4.5L13.5 9 9 13.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M3.5 12.5l-1 2M14.5 5.5l1-2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+        {/* Bouclier — protection du capital */}
+        <path d="M9 2L3 4.2v4.6c0 3.7 2.7 6.4 6 7.2 3.3-0.8 6-3.5 6-7.2V4.2L9 2z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M6.5 9l2 2L12 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
-    title: "Passer de la théorie à l'exécution",
+    title: "Trader intelligemment avec un petit capital",
     description:
-      "Discipline, gestion émotionnelle, exécution propre. Le vrai delta entre savoir et faire — c'est là que se joue la performance dans le temps.",
+      "Gestion du risque, R/R cohérent, scénarios calibrés sur des comptes retail. Chaque trade compte — la méthode aussi.",
+  },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        {/* Éclair — réflexes & pratique */}
+        <path d="M10.2 2L4 10.2h3.8l-1.2 5.8L13 8.2h-3.8l1.2-6.2z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    title: "Développer de vrais réflexes marché",
+    description:
+      "Jeux interactifs, cas pratiques, scénarios réels. Pas de théorie isolée — on apprend à décider vite, dans des contextes concrets.",
+  },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        {/* Boussole — discipline & repères */}
+        <circle cx="9" cy="9" r="6.5" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M9 4.5l1.6 4.5L9 13.5 7.4 9 9 4.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" fill="currentColor" fillOpacity="0.18" />
+      </svg>
+    ),
+    title: "Construire une approche disciplinée et confiante",
+    description:
+      "Comprendre pourquoi un setup fonctionne, éviter les décisions impulsives, avancer avec une méthode claire. La confiance vient des règles, pas de la chance.",
   },
 ];
 
@@ -369,7 +367,7 @@ export default function Home() {
               Une plateforme de progression trading
             </h2>
             <p className="text-zinc-400 max-w-xl leading-relaxed">
-              Que tu démarres ou que tu cherches à affiner ton edge, TradingLab structure ta montée en compétence — fondamentaux, méthode, pratique, exécution.
+              Du temps adapté, un capital respecté, une méthode reproductible. TradingLab structure ta progression autour des vraies contraintes du trader retail — pas autour d'un trader idéal.
             </p>
           </div>
 

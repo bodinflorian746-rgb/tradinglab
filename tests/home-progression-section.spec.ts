@@ -24,20 +24,19 @@ test("home — section 'Ta progression' refactorée", async ({ page }) => {
   }));
   expect(docW - viewW).toBeLessThanOrEqual(4);
 
-  // Nouveau titre présent
+  // Header progression
   await expect(page.getByText("Une plateforme de progression trading")).toBeVisible();
   await expect(page.getByText("Ta progression").first()).toBeVisible();
 
-  // Les 4 nouveaux titres de cards
-  await expect(page.getByText("Construire des bases solides")).toBeVisible();
-  await expect(page.getByText("Développer une vraie méthode")).toBeVisible();
-  await expect(page.getByText("S'entraîner sur des situations réelles")).toBeVisible();
-  await expect(page.getByText("Passer de la théorie à l'exécution")).toBeVisible();
+  // Les 4 cards V2 : nomment l'objection, pas la personne
+  await expect(page.getByText("Progresser même avec peu de temps")).toBeVisible();
+  await expect(page.getByText("Trader intelligemment avec un petit capital")).toBeVisible();
+  await expect(page.getByText("Développer de vrais réflexes marché")).toBeVisible();
+  await expect(page.getByText("Construire une approche disciplinée et confiante")).toBeVisible();
 
-  // Anciens textes catégorisants supprimés
+  // Aucune phrase catégorisante (tu débutes / tu as déjà perdu / etc.)
   await expect(page.getByText(/Tu débutes complètement/)).not.toBeVisible();
   await expect(page.getByText(/Tu as 500€/)).not.toBeVisible();
-  await expect(page.getByText(/30 min par jour/)).not.toBeVisible();
   await expect(page.getByText(/Tu as déjà perdu/)).not.toBeVisible();
 
   expect(consoleErrors, `Erreurs : ${consoleErrors.join("\n")}`).toHaveLength(0);
