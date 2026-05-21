@@ -68,6 +68,24 @@ const AVAILABLE_GAMES: Game[] = [
       </svg>
     ),
   },
+  {
+    id:          "build-the-trade",
+    title:       "Build the Trade",
+    description: "Construis un setup complet : entrée, stop, take profit. 8 scénarios, le marché révèle ensuite le résultat — RR, drawdown, verdict. Le jeu le plus stratégique.",
+    level:       "Intermédiaire",
+    levelColor:  "text-blue-400 border-blue-500/30",
+    duration:    "~8 min",
+    available:   true,
+    href:        "/jeux/build-the-trade",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <line x1="4" y1="14" x2="24" y2="14" stroke="#3b82f6" strokeWidth="1.6" strokeLinecap="round" />
+        <line x1="4" y1="8" x2="24" y2="8" stroke="#10b981" strokeWidth="1.6" strokeDasharray="3 2" strokeLinecap="round" />
+        <line x1="4" y1="20" x2="24" y2="20" stroke="#ef4444" strokeWidth="1.6" strokeDasharray="3 2" strokeLinecap="round" />
+        <circle cx="14" cy="14" r="2" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" strokeWidth="1.4" />
+      </svg>
+    ),
+  },
 ];
 
 const UPCOMING_GAMES: Game[] = [
