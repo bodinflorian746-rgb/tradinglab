@@ -8,6 +8,7 @@ import { LessonExercice } from "@/app/components/LessonExercice";
 import { LessonQuiz } from "@/app/components/LessonQuiz";
 import { PDArrayContextDiagram } from "@/app/components/charts/PDArrayContextDiagram";
 import { FVGMitigationDiagram } from "@/app/components/charts/FVGMitigationDiagram";
+import { FVGMitigationScenariosDiagram } from "@/app/components/charts/FVGMitigationScenariosDiagram";
 import { PDArrayConfluenceDiagram } from "@/app/components/charts/PDArrayConfluenceDiagram";
 
 const LESSONS = [
@@ -186,6 +187,97 @@ export default function IctLecon2Page() {
               <li>- La mitigation offre une seconde chance d&apos;entrer, avec un meilleur prix et un SL plus serré</li>
               <li>- Tous les FVG ne sont pas mitigés — mais ceux qui sont dans un contexte structurel fort le sont souvent</li>
               <li>- Ne pas confondre mitigation et invalidation : un FVG mitigé est rempli mais peut toujours réagir au prochain test</li>
+            </ul>
+          </section>
+
+          {/* Bloc 4.5 — REBOND, MITIGATION PROFONDE OU INVALIDATION */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Rebond, mitigation profonde ou invalidation : ne pas confondre</h2>
+
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              Quand le prix revient dans un FVG, il y a un piège classique : croire qu&apos;un FVG « rempli » est automatiquement mort. C&apos;est faux. Un FVG peut être traversé profondément, presque entièrement, et continuer à réagir parfaitement au test suivant. Ce qui invalide réellement un FVG, ce n&apos;est pas le remplissage — c&apos;est la <span className="text-white font-semibold">cassure structurelle propre</span> au-delà de la zone, accompagnée d&apos;une absence de réaction et d&apos;un contexte HTF qui ne soutient plus le scénario.
+            </p>
+
+            <div className="my-6">
+              <FVGMitigationScenariosDiagram />
+            </div>
+
+            <div className="space-y-4">
+              {/* 1. Rebond immédiat */}
+              <div className="border-l-2 border-emerald-500/50 pl-4">
+                <p className="text-white font-semibold text-sm mb-1">1. Rebond immédiat</p>
+                <ul className="space-y-1 text-sm text-zinc-300">
+                  <li>- Le prix touche à peine la zone (haut du FVG)</li>
+                  <li>- Réaction rapide, bougie de rejet visible</li>
+                  <li>- Momentum fort à la reprise</li>
+                  <li>- Contexte directionnel clair — c&apos;est la lecture textbook du FVG fresh</li>
+                </ul>
+              </div>
+
+              {/* 2. Mitigation partielle */}
+              <div className="border-l-2 border-emerald-500/30 pl-4">
+                <p className="text-white font-semibold text-sm mb-1">2. Mitigation partielle</p>
+                <ul className="space-y-1 text-sm text-zinc-300">
+                  <li>- Le prix entre dans une partie du FVG (~30-50%)</li>
+                  <li>- La zone est rééquilibrée mais pas saturée</li>
+                  <li>- Le setup reste valide tant que la structure tient</li>
+                  <li>- Lecture intermédiaire : entre rebond et mitigation profonde, gérer comme un FVG actif</li>
+                </ul>
+              </div>
+
+              {/* 3. Mitigation profonde */}
+              <div className="border-l-2 border-amber-500/60 pl-4">
+                <p className="text-white font-semibold text-sm mb-1">3. Mitigation profonde</p>
+                <ul className="space-y-1 text-sm text-zinc-300">
+                  <li>- Le prix remplit 70-95% de la zone, parfois jusqu&apos;au bas</li>
+                  <li>- <span className="text-amber-400 font-semibold">Pas automatiquement une invalidation</span></li>
+                  <li>- Ce qui compte : la réaction qui suit (mèche de rejet, bougie de reprise nette)</li>
+                  <li>- Si la structure HTF tient et que la réaction arrive — le FVG est mitigé mais valide</li>
+                </ul>
+              </div>
+
+              {/* 4. Invalidation réelle */}
+              <div className="border-l-2 border-red-500/60 pl-4">
+                <p className="text-white font-semibold text-sm mb-1">4. Invalidation réelle</p>
+                <ul className="space-y-1 text-sm text-zinc-300">
+                  <li>- Cassure structurelle propre au-delà de la zone d&apos;invalidation</li>
+                  <li>- Close net au-delà du FVG, pas juste une mèche</li>
+                  <li>- Absence totale de réaction sur plusieurs bougies</li>
+                  <li>- Déplacement opposé propre — momentum continu dans le sens contraire</li>
+                  <li>- Contexte HTF qui ne soutient plus le scénario (BOS / CHoCH contraire)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="border border-amber-500/30 bg-amber-500/5 rounded-xl p-4 md:p-6 my-6">
+              <p className="text-amber-400 font-semibold text-sm mb-2">Règle à retenir</p>
+              <p className="text-sm text-zinc-200 leading-relaxed">
+                FVG rempli <span className="text-zinc-500">≠</span> setup mort.
+                <br />
+                <span className="text-white font-semibold">FVG rempli SANS réaction + structure cassée = invalidation probable.</span>
+              </p>
+            </div>
+
+            <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
+              <p className="text-white font-semibold text-sm mb-3">Exemple concret — FVG haussier entre 1.0840 et 1.0860</p>
+              <ul className="space-y-2 text-sm text-zinc-300">
+                <li>
+                  <span className="text-emerald-400 font-semibold">Cas A — Rebond immédiat :</span> le prix revient à 1.0860, marque une mèche, bougie verte de force, repart vers 1.0920. FVG fresh, setup A+, RR optimisé.
+                </li>
+                <li>
+                  <span className="text-amber-400 font-semibold">Cas B — Mitigation profonde :</span> le prix descend à 1.0842 (presque tout le FVG), longue mèche d&apos;achat, close à 1.0855 puis reprise. Le FVG est mitigé mais le rejet est net — le setup reste actif. Stop à 1.0838.
+                </li>
+                <li>
+                  <span className="text-red-400 font-semibold">Cas C — Invalidation :</span> le prix traverse le FVG sans réaction, close à 1.0825, casse le swing low précédent. Pas de mèche d&apos;achat, momentum continu baissier. Le FVG est mort — pas de trade, on attend une nouvelle structure.
+                </li>
+              </ul>
+            </div>
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Avant de dire « FVG mort », vérifie : y a-t-il eu une bougie de réaction ?</li>
+              <li>- Une mèche profonde sans close au-delà = mitigation, pas invalidation</li>
+              <li>- L&apos;invalidation se confirme dans la suite — pas dans la touche elle-même</li>
+              <li>- Si HTF tient et structure intacte, un FVG profondément mitigé peut donner le meilleur signal de la session</li>
             </ul>
           </section>
 
