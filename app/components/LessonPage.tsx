@@ -13,6 +13,7 @@ import {
   type ProgressData,
 } from "@/lib/progress";
 import { LessonCelebration } from "@/app/components/LessonCelebration";
+import { MicroFeedback } from "@/app/components/MicroFeedback";
 
 // ── Context partagé avec LessonQuiz ──────────────────────────────────────────
 interface QuizAnsweredCtx { onAnswered: () => void }
@@ -75,6 +76,12 @@ export function LessonPage({
 
       {/* Célébration unifiée : confettis + XP toast lors d'une 1re complétion */}
       <LessonCelebration triggerKey={celebKey} />
+
+      {/* Micro-feedback : 1re leçon terminée (toutes formations confondues) */}
+      <MicroFeedback
+        milestone="first_lesson"
+        condition={!!globalStats && globalStats.completedLessons >= 1}
+      />
 
       {/* Barre de progression globale — tout en haut de la page */}
       {mounted && globalStats && globalStats.completedLessons > 0 && (

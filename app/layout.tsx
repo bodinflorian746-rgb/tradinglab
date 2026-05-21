@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import type { Viewport } from "next";
 import Navbar from "@/app/components/Navbar";
+import { OnboardingOverlay } from "@/app/components/OnboardingOverlay";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -27,6 +28,9 @@ export default function RootLayout({
         <Navbar />
 
         {children}
+
+        {/* Onboarding overlay — première visite uniquement */}
+        <OnboardingOverlay />
       </body>
     </html>
   );

@@ -14,6 +14,7 @@ import {
   type SkillScore,
   type TraderProfileSnapshot,
 } from "@/lib/trader-profile";
+import { MicroFeedback } from "@/app/components/MicroFeedback";
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
@@ -51,6 +52,11 @@ export default function ProfilTraderPage() {
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
+
+      {/* Micro-feedback : "Ton profil trader commence à prendre forme" affiché
+          UNE FOIS, dès qu'on a au moins 3 events trackés. */}
+      <MicroFeedback milestone="profile_forming" condition={snapshot.totalEvents >= 3} />
+
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
         {/* Header */}
