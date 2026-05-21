@@ -228,28 +228,29 @@ export default function PlaceStopPage() {
           </div>
         )}
 
-        {/* Scenario card */}
+        {/* Scenario card — version minimaliste : focus sur les stops */}
         <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden mb-5">
 
-          {/* Meta */}
-          <div className="px-4 pt-3 pb-2.5 border-b border-zinc-800/60 flex items-center justify-between gap-3 flex-wrap">
+          {/* Header ultra-simple : asset + direction */}
+          <div className="px-4 pt-3 pb-2 border-b border-zinc-800/60 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-sm font-bold text-white tabular-nums">{current.asset}</span>
               <span className="text-zinc-700 text-xs">·</span>
-              <span className="text-[11px] text-zinc-400">{current.session}</span>
+              <span className={`text-[11px] font-bold uppercase tracking-wide ${
+                current.direction === "BUY" ? "text-emerald-400" : "text-red-400"
+              }`}>
+                {current.direction}
+              </span>
             </div>
-            <div className="flex items-center gap-2 text-[10px]">
-              <VolBadge volatility={current.volatility} />
-              <SpreadBadge spread={current.spread} />
-            </div>
+            <span className="text-[10px] text-zinc-500 font-medium">{current.session}</span>
           </div>
 
-          {/* Chart with overlays : entry + tp + 3 stops + reveal */}
+          {/* Chart minimaliste : bougies + 3 stops (avec tags A/B/C) + entry/TP discrets */}
           <div className="p-3 sm:p-4">
             <MiniChart
               data={{
                 candles: [...chart.past, ...chart.future],
-                zones:   chart.zones,
+                zones:   [], // V3 minimaliste : zones HTF/support/liquidité retirées du chart
                 domain:  chart.domain,
               }}
               overlay={{
@@ -261,43 +262,37 @@ export default function PlaceStopPage() {
                   dashed:   true,
                   hit:      (isFeedback || isRevealing) && hitMapLive[s.id] !== null,
                   selected: chosen === s.id,
+                  label:    s.id,  // V3 : tag A/B/C en bout de ligne
                 })),
                 separatorIndex:     chart.past.length,
                 visibleFutureCount: isPlacing ? 0 : revealed,
+                dimEntryTp:         true,  // entry/TP discrets pour focus sur stops
               }}
-              height={185}
+              height={180}
             />
-            {/* Légende lignes */}
-            <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
-              <LegendDot color="blue"    label={`Entrée ${chart.direction} ${fmt(chart.entry)}`} />
-              {chart.tp !== null && (
-                <LegendDot color="emerald" label={`TP ${fmt(chart.tp)}`} />
-              )}
-              {chart.stops.map((s) => (
-                <LegendDot
-                  key={s.id}
-                  customDot={STOP_COLORS[s.id].dot}
-                  customText={STOP_COLORS[s.id].text}
-                  label={`Stop ${s.id} ${fmt(s.price)}`}
-                />
-              ))}
-            </div>
           </div>
 
-          {/* Context infos — en avancé on cache la volatilité chip */}
-          <div className={`px-4 pb-3 grid gap-2 ${difficulty === "advanced" ? "grid-cols-2" : "grid-cols-3"}`}>
-            <InfoTile label="HTF"        value={BIAS_LABEL[current.htfBias]}        colorClass={biasClass(current.htfBias)} />
-            <InfoTile label="Macro"      value={MACRO_LABEL[current.macroContext]}  colorClass={current.macroContext === "dangereux" ? "text-red-400" : "text-zinc-300"} />
-            {difficulty !== "advanced" && (
-              <InfoTile label="Volatilité" value={cap(current.volatility)} colorClass="text-zinc-300" />
+          {/* Strip contexte ultra-compact : 3 infos essentielles */}
+          <div className="px-4 pb-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] border-t border-zinc-800/40 pt-2.5">
+            <span className="text-zinc-500">
+              HTF <span className={`font-bold ml-1 ${biasClass(current.htfBias)}`}>{BIAS_LABEL[current.htfBias]}</span>
+            </span>
+            <span className="text-zinc-700">·</span>
+            <span className="text-zinc-500">
+              Volatilité <span className="font-bold ml-1 text-zinc-300">{cap(current.volatility)}</span>
+            </span>
+            {current.macroContext === "dangereux" && (
+              <>
+                <span className="text-zinc-700">·</span>
+                <span className="text-red-400 font-bold flex items-center gap-1">
+                  <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                    <path d="M7 1L13 12H1L7 1z" stroke="#ef4444" strokeWidth="1.4" strokeLinejoin="round" />
+                    <path d="M7 5.5v3M7 10v0.5" stroke="#ef4444" strokeWidth="1.4" strokeLinecap="round" />
+                  </svg>
+                  News imminente
+                </span>
+              </>
             )}
-          </div>
-
-          {/* Context text — court en intermédiaire/avancé */}
-          <div className="px-4 pb-4">
-            <p className="text-[13px] text-zinc-300 leading-relaxed">
-              {difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context))}
-            </p>
           </div>
         </div>
 

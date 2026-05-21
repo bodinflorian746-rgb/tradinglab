@@ -12,11 +12,14 @@ export interface MiniChartOverlay {
   entry?:             { price: number; direction: "BUY" | "SELL" };
   tp?:                { price: number };
   stop?:              { price: number; hit?: boolean };
-  // V2 multi-stops (utilisé par place-stop V2).
-  // Chaque stop peut avoir une couleur custom et un état "hit".
-  stops?:             Array<{ price: number; color: string; dashed?: boolean; hit?: boolean; selected?: boolean }>;
-  separatorIndex?:    number;   // indice de la 1re bougie "future"
-  visibleFutureCount?: number;  // combien de bougies "futures" sont révélées
+  // V2 multi-stops (utilisé par place-stop).
+  // - label optionnel : si défini, rendu comme tag coloré (A/B/C) en bout de ligne
+  // - dim : si true, ligne entry/tp/stops legacy rendus plus discrètement
+  stops?:             Array<{ price: number; color: string; dashed?: boolean; hit?: boolean; selected?: boolean; label?: string }>;
+  separatorIndex?:    number;
+  visibleFutureCount?: number;
+  // V3 minimaliste : si true, rend entry/tp avec une opacité réduite (focus sur stops)
+  dimEntryTp?:        boolean;
 }
 
 interface MiniChartProps {
@@ -143,34 +146,39 @@ export function MiniChart({ data, overlay, height = 170 }: MiniChartProps) {
           />
         )}
 
-        {/* Overlay : ligne d'entrée (bleue continue) */}
+        {/* Overlay : ligne d'entrée (bleue, plus discrète si dimEntryTp) */}
         {overlay?.entry !== undefined && (
-          <g>
+          <g opacity={overlay.dimEntryTp ? 0.55 : 1}>
             <line
               x1={padX}
               y1={y(overlay.entry.price)}
               x2={padX + innerW}
               y2={y(overlay.entry.price)}
               stroke={entryColor}
-              strokeWidth="1.2"
+              strokeWidth={overlay.dimEntryTp ? 0.8 : 1.2}
+              strokeDasharray={overlay.dimEntryTp ? "1 2" : undefined}
             />
-            <circle cx={padX + innerW - 3} cy={y(overlay.entry.price)} r="2.5" fill={entryColor} />
+            {!overlay.dimEntryTp && (
+              <circle cx={padX + innerW - 3} cy={y(overlay.entry.price)} r="2.5" fill={entryColor} />
+            )}
           </g>
         )}
 
-        {/* Overlay : ligne de TP (emerald continue) */}
+        {/* Overlay : ligne de TP (emerald, plus discrète si dimEntryTp) */}
         {overlay?.tp !== undefined && (
-          <g>
+          <g opacity={overlay.dimEntryTp ? 0.55 : 1}>
             <line
               x1={padX}
               y1={y(overlay.tp.price)}
               x2={padX + innerW}
               y2={y(overlay.tp.price)}
               stroke={tpColor}
-              strokeWidth="1.1"
-              strokeDasharray="4 2"
+              strokeWidth={overlay.dimEntryTp ? 0.8 : 1.1}
+              strokeDasharray={overlay.dimEntryTp ? "2 3" : "4 2"}
             />
-            <circle cx={padX + innerW - 3} cy={y(overlay.tp.price)} r="2.5" fill={tpColor} />
+            {!overlay.dimEntryTp && (
+              <circle cx={padX + innerW - 3} cy={y(overlay.tp.price)} r="2.5" fill={tpColor} />
+            )}
           </g>
         )}
 
@@ -191,23 +199,51 @@ export function MiniChart({ data, overlay, height = 170 }: MiniChartProps) {
         )}
 
         {/* V2 multi-stops : chaque stop avec sa couleur. "hit" = orange,
-            "selected" = épaisseur doublée. */}
+            "selected" = épaisseur doublée. Si label fourni, on remplace le
+            dot par un tag coloré (A/B/C) en bout de ligne. */}
         {overlay?.stops?.map((s, i) => {
           const color = s.hit ? "#fb923c" : s.color;
-          const sw = s.selected ? 2.0 : 1.3;
+          const sw = s.selected ? 2.0 : 1.4;
           const dash = s.dashed === false ? undefined : "3 2";
+          const tagW = 16;
+          const tagH = 14;
+          const lineEnd = s.label ? padX + innerW - tagW - 2 : padX + innerW;
           return (
             <g key={i}>
               <line
                 x1={padX}
                 y1={y(s.price)}
-                x2={padX + innerW}
+                x2={lineEnd}
                 y2={y(s.price)}
                 stroke={color}
                 strokeWidth={sw}
                 strokeDasharray={dash}
               />
-              <circle cx={padX + innerW - 3} cy={y(s.price)} r={s.selected ? 3.6 : 3} fill={color} />
+              {s.label ? (
+                <g>
+                  <rect
+                    x={padX + innerW - tagW}
+                    y={y(s.price) - tagH / 2}
+                    width={tagW}
+                    height={tagH}
+                    rx={2.5}
+                    fill={color}
+                  />
+                  <text
+                    x={padX + innerW - tagW / 2}
+                    y={y(s.price) + 4}
+                    fill="#ffffff"
+                    fontSize="11"
+                    fontWeight={900}
+                    textAnchor="middle"
+                    style={{ letterSpacing: 0 }}
+                  >
+                    {s.label}
+                  </text>
+                </g>
+              ) : (
+                <circle cx={padX + innerW - 3} cy={y(s.price)} r={s.selected ? 3.6 : 3} fill={color} />
+              )}
             </g>
           );
         })}
