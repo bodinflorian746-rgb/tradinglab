@@ -20,6 +20,9 @@ export interface MiniChartOverlay {
   visibleFutureCount?: number;
   // V3 minimaliste : si true, rend entry/tp avec une opacité réduite (focus sur stops)
   dimEntryTp?:        boolean;
+  // V4 build-the-trade : lignes de candidats (3 options de l'étape active) avec
+  // mini-label prix au bord. Très discrètes pour ne pas surcharger.
+  candidateLines?:    Array<{ price: number; color: string; label: string }>;
 }
 
 interface MiniChartProps {
@@ -197,6 +200,77 @@ export function MiniChart({ data, overlay, height = 170 }: MiniChartProps) {
             <circle cx={padX + innerW - 3} cy={y(overlay.stop.price)} r="3" fill={stopColor} />
           </g>
         )}
+
+        {/* V4 build-the-trade : lignes de candidats. Très fines + petit label
+            prix au bord DROIT (zone future, vide pendant le build). Le joueur
+            voit où se situent les 3 options avant de cliquer son bouton.
+            Mini collision-avoidance : si 2 labels sont à <14px en Y, le 2e
+            est shifté pour éviter le chevauchement. */}
+        {(() => {
+          if (!overlay?.candidateLines) return null;
+          // Pré-calcule la Y de chaque candidat et résout les collisions.
+          // On garde la Y de la LIGNE intacte mais on shift la Y du LABEL si besoin.
+          const sorted = overlay.candidateLines
+            .map((c, idx) => ({ ...c, idx, lineY: y(c.price) }))
+            .sort((a, b) => a.lineY - b.lineY);
+          let prevLabelY = -Infinity;
+          for (const c of sorted) {
+            let labelY = c.lineY;
+            if (labelY - prevLabelY < 14) labelY = prevLabelY + 14;
+            (c as typeof c & { labelY: number }).labelY = labelY;
+            prevLabelY = labelY;
+          }
+          return sorted.map((c) => {
+            const cc = c as typeof c & { labelY: number };
+            return (
+              <g key={`cand-${c.idx}`} opacity={0.85}>
+                <line
+                  x1={padX}
+                  y1={c.lineY}
+                  x2={padX + innerW - 30}
+                  y2={c.lineY}
+                  stroke={c.color}
+                  strokeWidth={0.7}
+                  strokeDasharray="2 3"
+                />
+                {/* Connecteur entre la ligne et le label décalé, si décalé */}
+                {Math.abs(cc.labelY - c.lineY) > 0.5 && (
+                  <line
+                    x1={padX + innerW - 14}
+                    y1={c.lineY}
+                    x2={padX + innerW - 14}
+                    y2={cc.labelY}
+                    stroke={c.color}
+                    strokeWidth={0.5}
+                    strokeDasharray="1 2"
+                    opacity={0.6}
+                  />
+                )}
+                <rect
+                  x={padX + innerW - 28}
+                  y={cc.labelY - 6.5}
+                  width={28}
+                  height={13}
+                  rx={2.5}
+                  fill="#09090b"
+                  stroke={c.color}
+                  strokeWidth={0.9}
+                />
+                <text
+                  x={padX + innerW - 14}
+                  y={cc.labelY + 3.5}
+                  fill={c.color}
+                  fontSize="10"
+                  fontWeight={700}
+                  textAnchor="middle"
+                  style={{ letterSpacing: 0 }}
+                >
+                  {c.label}
+                </text>
+              </g>
+            );
+          });
+        })()}
 
         {/* V2 multi-stops : chaque stop avec sa couleur. "hit" = orange,
             "selected" = épaisseur doublée. Si label fourni, on remplace le

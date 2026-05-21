@@ -224,7 +224,11 @@ export default function BuildTheTradePage() {
             </div>
           </div>
 
-          {/* Chart with overlays — entry/stop/tp lines as user picks */}
+          {/* Chart with overlays — entry/stop/tp lines as user picks.
+              Pendant la phase build : on affiche les 3 candidats de l'étape
+              active (entry candidates → stop candidates → tp candidates) avec
+              mini-labels prix, pour que le joueur voit où se situe chaque
+              option avant de cliquer son bouton. */}
           <div className="p-3 sm:p-4">
             <MiniChart
               data={{
@@ -238,6 +242,23 @@ export default function BuildTheTradePage() {
                 entry: entry ? { price: chart.entries[entry], direction: chart.direction } : undefined,
                 tp:    tp    ? { price: chart.tps[tp] } : undefined,
                 stop:  stop  ? { price: chart.stops[stop], hit: isFeedback ? (result?.slHit ?? false) : false } : undefined,
+                candidateLines: !isBuild ? undefined :
+                  entry === null ? [
+                    { price: chart.entries.aggressive,    color: "#3b82f6", label: chart.entries.aggressive.toFixed(2)    },
+                    { price: chart.entries.confirmation,  color: "#3b82f6", label: chart.entries.confirmation.toFixed(2)  },
+                    { price: chart.entries.deep_pullback, color: "#3b82f6", label: chart.entries.deep_pullback.toFixed(2) },
+                  ]
+                  : stop === null ? [
+                    { price: chart.stops.tight,   color: "#ef4444", label: chart.stops.tight.toFixed(2)   },
+                    { price: chart.stops.logical, color: "#ef4444", label: chart.stops.logical.toFixed(2) },
+                    { price: chart.stops.wide,    color: "#ef4444", label: chart.stops.wide.toFixed(2)    },
+                  ]
+                  : tp === null ? [
+                    { price: chart.tps.fast,      color: "#10b981", label: chart.tps.fast.toFixed(2)      },
+                    { price: chart.tps.balanced,  color: "#10b981", label: chart.tps.balanced.toFixed(2)  },
+                    { price: chart.tps.ambitious, color: "#10b981", label: chart.tps.ambitious.toFixed(2) },
+                  ]
+                  : undefined,
               }}
               height={185}
             />
