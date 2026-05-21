@@ -12,6 +12,9 @@ export interface MiniChartOverlay {
   entry?:             { price: number; direction: "BUY" | "SELL" };
   tp?:                { price: number };
   stop?:              { price: number; hit?: boolean };
+  // V2 multi-stops (utilisé par place-stop V2).
+  // Chaque stop peut avoir une couleur custom et un état "hit".
+  stops?:             Array<{ price: number; color: string; dashed?: boolean; hit?: boolean; selected?: boolean }>;
   separatorIndex?:    number;   // indice de la 1re bougie "future"
   visibleFutureCount?: number;  // combien de bougies "futures" sont révélées
 }
@@ -186,6 +189,28 @@ export function MiniChart({ data, overlay, height = 170 }: MiniChartProps) {
             <circle cx={padX + innerW - 3} cy={y(overlay.stop.price)} r="3" fill={stopColor} />
           </g>
         )}
+
+        {/* V2 multi-stops : chaque stop avec sa couleur. "hit" = orange,
+            "selected" = épaisseur doublée. */}
+        {overlay?.stops?.map((s, i) => {
+          const color = s.hit ? "#fb923c" : s.color;
+          const sw = s.selected ? 2.0 : 1.3;
+          const dash = s.dashed === false ? undefined : "3 2";
+          return (
+            <g key={i}>
+              <line
+                x1={padX}
+                y1={y(s.price)}
+                x2={padX + innerW}
+                y2={y(s.price)}
+                stroke={color}
+                strokeWidth={sw}
+                strokeDasharray={dash}
+              />
+              <circle cx={padX + innerW - 3} cy={y(s.price)} r={s.selected ? 3.6 : 3} fill={color} />
+            </g>
+          );
+        })}
       </svg>
 
       {/* Légende HTML pour les zones, si pas d'overlay actif (sinon le jeu gère son propre cadre) */}

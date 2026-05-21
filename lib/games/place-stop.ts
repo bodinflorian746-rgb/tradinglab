@@ -1,7 +1,17 @@
-// Mini-jeu n°2 : Place ton Stop.
-// Mêmes briques que buy-sell-no-trade (shared.ts) — types de bougies, PRNG,
-// pools de variation. Spécifique au jeu : templates de setups, génération
-// de candles passées + futures, méta-données de zones de stop, scoring.
+// Mini-jeu V2 : "QUEL STOP VA SURVIVRE ?"
+//
+// Le joueur voit un graphique avec :
+// - une entrée déjà placée
+// - 3 stop loss proposés (A / B / C, ordonnés visuellement top→bottom)
+//
+// Il choisit le stop le plus logique selon la structure, la volatilité,
+// le bruit du marché et le RR.
+//
+// Après le choix, les bougies futures se révèlent et démontrent le verdict :
+//   - tight     → généralement balayé par le 1er noise / sweep
+//   - logical   → survit ET le trade va dans le bon sens
+//   - wide      → survit mais le RR est tué (capital mal utilisé)
+//   - liquidity → placé pile dans une zone évidente de liquidité = piège
 
 import {
   type Asset, type Session, type Volatility, type Spread,
@@ -11,25 +21,38 @@ import {
 } from "./shared";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext };
+export type { Candle, ChartZone };
 
 // ─── Types ────────────────────────────────────────────────────────────────────
+
+export type Difficulty = "beginner" | "intermediate" | "advanced";
+export type TradeDirection = "BUY" | "SELL";
 
 export type PlaceStopSetupKey =
   | "pullback_bull"
   | "pullback_bear"
   | "bounce_support"
   | "rejection_resistance"
-  | "fake_breakout"
-  | "liquidity_sweep"
-  | "tight_range"
-  | "vol_expansion"
+  | "fakeout_above_resistance"
+  | "sweep_low_reversal"
   | "fvg_continuation"
-  | "news_trap"
-  | "double_top_sweep"
-  | "clean_breakout";
+  | "high_vol_pullback";
 
-export type StopVerdict = "perfect" | "good" | "wide" | "tight" | "liquidity";
-export type TradeDirection = "BUY" | "SELL";
+export type StopType = "tight" | "logical" | "wide" | "liquidity";
+export type StopId = "A" | "B" | "C";
+
+export interface StopOption {
+  id:        StopId;
+  price:     number;
+  type:      StopType;
+  rationale: string;
+}
+
+export interface DifficultyLessons {
+  beginner:     string;
+  intermediate: string;
+  advanced:     string;
+}
 
 export interface PlaceStopTemplate {
   id:            PlaceStopSetupKey;
@@ -38,7 +61,9 @@ export interface PlaceStopTemplate {
   htfBias:       HtfBias;
   macroContext:  MacroContext;
   context:       string;
-  explanation:   string;
+  shortContext?: string;
+  lessons:       DifficultyLessons;
+  difficulties:  readonly Difficulty[];
   tag:           string;
 }
 
@@ -48,28 +73,19 @@ export interface PlaceStopInstance extends PlaceStopTemplate {
   volatility: Volatility;
   spread:     Spread;
   seed:       number;
-}
-
-export interface StopMeta {
-  ideal:      { min: number; max: number };
-  acceptable: { min: number; max: number };
-  liquidity:  { min: number; max: number } | null;
-  bounds:     { min: number; max: number };
-  defaultStop: number;
+  difficulty: Difficulty;
 }
 
 export interface PlaceStopChart {
-  pastCandles:   Candle[];
-  futureCandles: Candle[];
-  zones:         ChartZone[];
-  domain:        { min: number; max: number };
-  entry:         number;
-  tp:            number | null;
-  direction:     TradeDirection;
-  stopMeta:      StopMeta;
+  past:      Candle[];
+  future:    Candle[];
+  zones:     ChartZone[];
+  domain:    { min: number; max: number };
+  entry:     number;
+  tp:        number | null;
+  direction: TradeDirection;
+  stops:     StopOption[];   // 3 stops, ordonnés visuellement top→bottom (A en haut)
 }
-
-// ─── Constantes ───────────────────────────────────────────────────────────────
 
 export const ROUNDS_PER_SESSION = 10;
 
@@ -87,8 +103,14 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Tendance haussière en place, le prix corrige sur la zone de demande. Tu es entré au rebond.",
-    explanation: "Le stop logique se place sous le swing low de la correction, avec une petite marge pour le bruit. Trop juste = bruit qui balaie. Pile sur le low = liquidité évidente.",
+    context: "Tendance haussière, le prix corrige sur la zone de demande. Tu es entré au rebond.",
+    shortContext: "Pullback BUY dans un uptrend.",
+    lessons: {
+      beginner:     "Le stop logique se place DERRIÈRE le swing low avec une marge — jamais dedans (bruit), jamais trop loin (RR ruiné).",
+      intermediate: "Le bruit du pullback va souvent retester le low avant la continuation. La marge derrière le low protège contre ce sweep classique.",
+      advanced:     "Le stop logique respecte 3 contraintes : derrière le low, hors du bruit ATR, et préserve un RR >= 2. C'est le seul qui satisfait les 3.",
+    },
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "structure",
   },
   {
@@ -97,8 +119,14 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Tendance baissière en place, le prix rebondit sur une zone d'offre. Tu es entré court.",
-    explanation: "Le stop va au-dessus du swing high de la correction, légèrement à l'écart pour absorber le bruit. Coller sur le high = stop hunt assuré.",
+    context: "Tendance baissière, le prix rebondit sur une zone d'offre. Tu es entré court.",
+    shortContext: "Pullback SELL dans un downtrend.",
+    lessons: {
+      beginner:     "Le stop logique se place AU-DESSUS du swing high avec marge — jamais en dessous, jamais trop loin.",
+      intermediate: "Le rebond peut retester son high avant de retomber. Coller le high = stop hunt assuré.",
+      advanced:     "Stop = couvre la mèche du high + marge ATR. Un stop pile au niveau est piégé, un stop trop loin tue le RR.",
+    },
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "structure",
   },
   {
@@ -107,8 +135,14 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de rebondir sur un support majeur testé plusieurs fois.",
-    explanation: "Stop sous le support avec une marge réaliste. Pile au niveau du support = ramassage de liquidité. Trop loin = RR cassé.",
+    context: "Le prix vient de rebondir sur un support majeur HTF.",
+    shortContext: "BUY sur support HTF.",
+    lessons: {
+      beginner:     "Stop sous le support avec marge réaliste. Pile sur le support = ramassage de liquidité institutionnelle.",
+      intermediate: "Le support HTF attire souvent un test profond avant la vraie réaction. La marge protège ce stop hunt.",
+      advanced:     "Distance optimale = 1.0 à 1.5x ATR sous le niveau. Plus court = noise, plus loin = capital mort.",
+    },
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "lecture",
   },
   {
@@ -117,116 +151,115 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Le prix vient de rejeter une résistance majeure avec mèches hautes.",
-    explanation: "Stop au-dessus de la mèche la plus haute, avec une marge. Coller le niveau = stop saute, trop loin = RR atrocе.",
+    context: "Le prix vient de rejeter une résistance majeure HTF avec mèches.",
+    shortContext: "SELL sur résistance HTF.",
+    lessons: {
+      beginner:     "Stop au-dessus de la mèche la plus haute, avec marge. Coller le niveau = stop hunt assuré.",
+      intermediate: "Les retests de résistance HTF sont souvent piégeux. Marge derrière la mèche = obligatoire.",
+      advanced:     "La mèche du rejet + 1 ATR = zone propre. Coller la mèche = exposé au 2e test, trop loin = RR cassé.",
+    },
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "lecture",
   },
   {
-    id: "fake_breakout",
+    id: "fakeout_above_resistance",
     title: "Faux breakout — short après rejet",
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
     context: "Le prix a piqué au-dessus de la résistance puis a refermé sous. Tu shortes le piège.",
-    explanation: "Stop au-dessus du pic du fakeout, avec une marge — surtout pas DANS la zone du piège. Trop serré = re-test possible te sort.",
+    shortContext: "SELL après fakeout.",
+    lessons: {
+      intermediate: "Stop au-dessus du PIC du fakeout (jamais à l'intérieur). Le pic est l'invalidation réelle du piège.",
+      advanced:     "Stop AU-DESSUS du wick high + ATR margin. Coller le high = retest du fakeout te dégage. Dans le piège = -100.",
+      beginner:     "Le stop doit couvrir la mèche du faux breakout. Tout stop placé dans la zone du piège = perdu.",
+    },
+    difficulties: ["intermediate", "advanced"],
     tag: "piège",
   },
   {
-    id: "liquidity_sweep",
+    id: "sweep_low_reversal",
     title: "Sweep de liquidité puis retournement",
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
     context: "Le prix vient de balayer la liquidité sous le précédent low puis a fait demi-tour.",
-    explanation: "Le sweep a déjà eu lieu — ton stop va SOUS le low du sweep, jamais dedans. C'est la zone que le marché vient de prendre.",
+    shortContext: "BUY après sweep low.",
+    lessons: {
+      intermediate: "Stop sous le LOW du sweep, jamais dans la zone qui vient d'être prise. Le sweep est la nouvelle invalidation.",
+      advanced:     "Stop = sous la mèche du sweep + marge. Pile sur le sweep low = retest probable, dans la zone liquidité = piège total.",
+      beginner:     "Le marché vient de piquer une zone — ton stop doit être SOUS cette zone, pas dedans.",
+    },
+    difficulties: ["intermediate", "advanced"],
     tag: "piège",
-  },
-  {
-    id: "tight_range",
-    title: "Range serré — entrée bas de range",
-    direction: "BUY",
-    htfBias: "range",
-    macroContext: "normal",
-    context: "Le prix oscille dans un range serré. Tu achètes le plancher pour viser le plafond.",
-    explanation: "Stop sous le plancher du range avec marge minimaliste — c'est un range, pas une tendance. RR doit rester serré.",
-    tag: "structure",
-  },
-  {
-    id: "vol_expansion",
-    title: "Expansion de volatilité",
-    direction: "BUY",
-    htfBias: "bullish",
-    macroContext: "normal",
-    context: "Les bougies s'agrandissent — la volatilité explose. Tu prends le momentum à la hausse.",
-    explanation: "Volatilité élevée = stop wider obligatoire. Un stop standard se fait balayer par le bruit normal.",
-    tag: "volatilité",
   },
   {
     id: "fvg_continuation",
-    title: "FVG haussier en continuation",
+    title: "Réaction sur FVG haussier",
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Un FVG haussier laissé par l'impulsion. Le prix revient le tester et tu entres au rebond.",
-    explanation: "Le stop va sous le bas du FVG. Dans le FVG = exposé à un re-test profond. Trop loin = RR ruiné.",
+    context: "Un FVG haussier laissé après l'impulsion. Le prix le retest et commence à réagir.",
+    shortContext: "BUY au retest du FVG.",
+    lessons: {
+      intermediate: "Stop sous le BAS du FVG. Dans le FVG = exposé à un re-test profond, trop loin = RR fragile.",
+      advanced:     "Le FVG est la zone d'invalidation. Stop = bas du FVG - 1 ATR. Plus serré que ça = noise, plus loin = capital mort.",
+      beginner:     "Le FVG est ta zone d'achat. Le stop va SOUS la zone, pas dedans.",
+    },
+    difficulties: ["intermediate", "advanced"],
     tag: "lecture",
   },
   {
-    id: "news_trap",
-    title: "Piège de volatilité — news imminente",
-    direction: "BUY",
-    htfBias: "range",
-    macroContext: "dangereux",
-    context: "News macro dans quelques minutes. Tu décides quand même de prendre le trade — sois lucide sur le stop.",
-    explanation: "Avant une news, la volatilité est imprévisible. Un stop ne peut pas être logique structurellement — il doit être très large ou tu ne devrais pas trader. La vraie discipline c'était de passer ton tour.",
-    tag: "discipline",
-  },
-  {
-    id: "double_top_sweep",
-    title: "Double top + sweep",
-    direction: "SELL",
-    htfBias: "bearish",
-    macroContext: "normal",
-    context: "Double top avec la 2e bougie qui balaie le 1er high. Le retournement est confirmé.",
-    explanation: "Stop au-dessus de la mèche du sweep, jamais entre les deux highs (zone de liquidité prise par l'institutionnel).",
-    tag: "piège",
-  },
-  {
-    id: "clean_breakout",
-    title: "Breakout propre + pullback",
+    id: "high_vol_pullback",
+    title: "Pullback en volatilité élevée",
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "La résistance vient d'être cassée nettement, puis le prix pullback sur l'ancienne résistance (devenue support).",
-    explanation: "Stop sous le niveau cassé avec marge — c'est la nouvelle zone de demande. Au-dessus = stop trop serré, dans la zone = trop dangereux.",
-    tag: "structure",
+    context: "Pullback dans un marché à volatilité élevée. Les bougies sont larges, les wicks profondes.",
+    shortContext: "BUY pullback, vol élevée.",
+    lessons: {
+      advanced:     "En vol élevée, le stop 'normal' devient trop serré. La marge doit être doublée — ce qui ressemble à un wide stop est en fait le LOGIQUE ici.",
+      intermediate: "La volatilité élargit le bruit normal. Un stop 'standard' est probablement trop serré.",
+      beginner:     "Plus le marché bouge fort, plus ton stop doit être large pour respirer.",
+    },
+    difficulties: ["advanced"],
+    tag: "volatilité",
   },
 ];
 
-// ─── Variations & instance ────────────────────────────────────────────────────
+// ─── Variations ───────────────────────────────────────────────────────────────
 
-export function generatePlaceStopScenarios(seed: number): PlaceStopInstance[] {
+export function generatePlaceStopScenarios(seed: number, difficulty: Difficulty = "intermediate"): PlaceStopInstance[] {
   const rng = mulberry32(seed);
-  const shuffled = [...PLACE_STOP_TEMPLATES];
+  const pool = PLACE_STOP_TEMPLATES.filter((t) => t.difficulties.includes(difficulty));
+  const shuffled = [...pool];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(rng() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  return shuffled.slice(0, ROUNDS_PER_SESSION).map((tmpl, i) => {
-    // News scenario force "élevée" + spread élevé pour cohérence pédagogique
-    const isNews = tmpl.id === "news_trap";
-    return {
-      ...tmpl,
+  const out: PlaceStopInstance[] = [];
+  let lastId: PlaceStopSetupKey | null = null;
+  for (let i = 0; i < ROUNDS_PER_SESSION; i++) {
+    let candidate = shuffled[i % shuffled.length];
+    if (candidate.id === lastId && shuffled.length > 1) {
+      candidate = shuffled[(i + 1) % shuffled.length];
+    }
+    const isHighVol = candidate.id === "high_vol_pullback";
+    out.push({
+      ...candidate,
       asset:      pick(ASSETS, rng),
       session:    pick(SESSIONS, rng),
-      volatility: isNews ? "élevée" : pick(VOLATILITIES, rng),
-      spread:     isNews ? "élevé"  : pick(SPREADS, rng),
+      volatility: isHighVol ? "élevée" : pick(VOLATILITIES, rng),
+      spread:     pick(SPREADS, rng),
       seed:       (seed + i * 9973) >>> 0,
-    };
-  });
+      difficulty,
+    });
+    lastId = candidate.id;
+  }
+  return out;
 }
 
-// ─── Helpers de génération ────────────────────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 interface RawScenario {
   past:      Candle[];
@@ -235,241 +268,257 @@ interface RawScenario {
   entry:     number;
   tp:        number | null;
   direction: TradeDirection;
-  meta:      StopMeta;
+  // Stops par TYPE (avant mapping vers A/B/C)
+  tight:     { price: number; rationale: string };
+  logical:   { price: number; rationale: string };
+  wide:      { price: number; rationale: string };
 }
 
-function finishScenario(raw: RawScenario): PlaceStopChart {
+function finalize(raw: RawScenario): PlaceStopChart {
+  // Mapping A/B/C par ordre VISUEL top→bottom (prix décroissant).
+  // Pour BUY (stops sous entry) : A = stop le plus haut = tight ; C = wide.
+  // Pour SELL (stops au-dessus) : A = wide (plus haut) ; C = tight.
+  const sorted = [
+    { price: raw.tight.price,   type: "tight"   as StopType, rationale: raw.tight.rationale   },
+    { price: raw.logical.price, type: "logical" as StopType, rationale: raw.logical.rationale },
+    { price: raw.wide.price,    type: "wide"    as StopType, rationale: raw.wide.rationale    },
+  ].sort((a, b) => b.price - a.price); // top→bottom (price desc)
+
+  const stops: StopOption[] = sorted.map((s, i) => ({
+    id:        (["A", "B", "C"] as StopId[])[i],
+    price:     s.price,
+    type:      s.type,
+    rationale: s.rationale,
+  }));
+
+  // Domain
   const all = [...raw.past, ...raw.fut];
-  const vals: number[] = [
-    raw.entry,
-    raw.meta.bounds.min,
-    raw.meta.bounds.max,
-  ];
-  if (raw.tp !== null) vals.push(raw.tp);
-  if (raw.meta.liquidity) vals.push(raw.meta.liquidity.min, raw.meta.liquidity.max);
-  vals.push(raw.meta.ideal.min, raw.meta.ideal.max);
+  const vals: number[] = [raw.entry, raw.tp ?? raw.entry, ...stops.map((s) => s.price)];
   for (const k of all) { vals.push(k.h, k.l); }
   for (const z of raw.zones) { vals.push(z.y1, z.y2); }
-
   const min = Math.min(...vals);
   const max = Math.max(...vals);
   const pad = (max - min) * 0.08 || 1;
 
   return {
-    pastCandles:   raw.past,
-    futureCandles: raw.fut,
-    zones:         raw.zones,
-    entry:         raw.entry,
-    tp:            raw.tp,
-    direction:     raw.direction,
-    stopMeta:      raw.meta,
-    domain:        { min: min - pad, max: max + pad },
+    past: raw.past,
+    future: raw.fut,
+    zones: raw.zones,
+    entry: raw.entry,
+    tp: raw.tp,
+    direction: raw.direction,
+    stops,
+    domain: { min: min - pad, max: max + pad },
   };
 }
 
-// ─── 12 générateurs de scénarios ─────────────────────────────────────────────
+// ─── Difficulty knobs sur les distances des stops (depuis l'entry) ───────────
+// Convention : distances POSITIVES depuis entry. Pour un BUY, le stop est à
+// entry - distance ; pour un SELL, à entry + distance.
+//
+// Contraintes :
+//   - tight < logical < wide (toujours)
+//   - logical-tight > 0.5 et wide-logical > 0.8 → garantit que le dip/bump
+//     du future peut balayer tight sans toucher logical/wide
+//   - Avec TP à entry ± 3.5*m, on vise :
+//     - RR_logical (= 3.5/logical) >= 2.5
+//     - RR_wide (= 3.5/wide) <= 1.7 → wide >= 2.06
+function spread(difficulty: Difficulty): { tight: number; logical: number; wide: number } {
+  if (difficulty === "beginner")     return { tight: 0.4, logical: 1.2, wide: 3.0 };
+  if (difficulty === "intermediate") return { tight: 0.3, logical: 1.0, wide: 2.6 };
+  /* advanced */                     return { tight: 0.2, logical: 0.85, wide: 2.3 };
+}
 
-function scnPullbackBull(rng: () => number, m: number): PlaceStopChart {
-  const past: Candle[] = [];
-  const fut:  Candle[] = [];
-  let p = 0.5 + rng() * 0.3;
-  // Phase 1 : 8 candles uptrend
-  for (let i = 0; i < 8; i++) {
-    const o = p;
-    const c = o + (0.45 + rng() * 0.55) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.22) * m, (0.13 + rng() * 0.18) * m));
-    p = c;
-  }
-  const peak = p;
-  // Phase 2 : 4 candles pullback
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = o - (0.22 + rng() * 0.35) * m;
-    past.push(candle(o, c, (0.17 + rng() * 0.18) * m, (0.18 + rng() * 0.22) * m));
-    p = c;
-  }
-  const swingLow = Math.min(...past.slice(-5).map(k => k.l));
-  const entry = p;
-  // Phase 3 : 6 future candles, dip puis reprise
-  const dip = candle(p, p - 0.18 * m, (0.15 + rng() * 0.15) * m, (0.35 + rng() * 0.2) * m);
-  fut.push(dip); p = dip.c;
+// Construit un candle avec low et high explicites (utilisé pour les dips/bumps
+// du future où on veut contrôler précisément l'amplitude).
+function explicitCandle(o: number, c: number, h: number, l: number): Candle {
+  return { o, c, h, l };
+}
+
+// ─── Rationales communs ──────────────────────────────────────────────────────
+// Réutilisables — chaque scenario les personnalise légèrement.
+const TIGHT_RATIONALE = "✗ Trop serré — placé dans le bruit normal du marché. La 1re mèche de retest va le balayer avant que le trade aboutisse. C'est l'erreur retail classique.";
+const LOGICAL_RATIONALE = "✓ Placement logique — derrière la vraie invalidation, avec une marge anti-bruit. Survit aux retests, capture la cassure structurelle si elle arrive.";
+const WIDE_RATIONALE = "≈ Survit, mais détruit le RR. Distance trop grande = capital mal utilisé, ratio risque/rendement souvent < 1.";
+
+// ─── 8 générateurs ────────────────────────────────────────────────────────────
+
+// Helper : construit le future "sweep + recovery" pour un BUY.
+// Le 1er candle du future est un dip qui sweep tight (au-dessous du niveau
+// tight) sans toucher logical. Les bougies suivantes rallient.
+function buildBuyFuture(rng: () => number, m: number, entry: number, sp: ReturnType<typeof spread>, fut: Candle[]): number {
+  const dipLow = entry - sp.tight * m - 0.1 * m;  // sweep tight, ne touche pas logical
+  let p = entry;
+  const dipClose = entry - sp.tight * m + 0.15 * m;  // close au-dessus du tight
+  fut.push(explicitCandle(p, dipClose, p + (0.1 + rng() * 0.1) * m, dipLow));
+  p = dipClose;
   for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o + (0.42 + rng() * 0.6) * m;
-    fut.push(candle(o, c, (0.18 + rng() * 0.25) * m, (0.13 + rng() * 0.18) * m));
+    const c = o + (0.45 + rng() * 0.55) * m;
+    const wU = (0.18 + rng() * 0.18) * m;
+    const wD = (0.13 + rng() * 0.13) * m;
+    fut.push(explicitCandle(o, c, Math.max(o, c) + wU, Math.min(o, c) - wD));
     p = c;
   }
+  return p;
+}
 
-  const idealCenter = swingLow - 0.55 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.22 * m, max: idealCenter + 0.18 * m },
-    acceptable: { min: idealCenter - 0.5 * m,  max: idealCenter + 0.4 * m  },
-    liquidity:  { min: swingLow - 0.12 * m,    max: swingLow + 0.1 * m     },
-    bounds:     { min: entry - 3.2 * m,        max: entry - 0.08 * m       },
-    defaultStop: idealCenter,
-  };
+// Symétrique pour SELL.
+function buildSellFuture(rng: () => number, m: number, entry: number, sp: ReturnType<typeof spread>, fut: Candle[]): number {
+  const bumpHigh = entry + sp.tight * m + 0.1 * m;
+  const bumpClose = entry + sp.tight * m - 0.15 * m;
+  let p = entry;
+  fut.push(explicitCandle(p, bumpClose, bumpHigh, p - (0.1 + rng() * 0.1) * m));
+  p = bumpClose;
+  for (let i = 0; i < 5; i++) {
+    const o = p;
+    const c = o - (0.45 + rng() * 0.55) * m;
+    const wU = (0.13 + rng() * 0.13) * m;
+    const wD = (0.18 + rng() * 0.18) * m;
+    fut.push(explicitCandle(o, c, Math.max(o, c) + wU, Math.min(o, c) - wD));
+    p = c;
+  }
+  return p;
+}
 
-  return finishScenario({
+function scnPullbackBull(rng: () => number, m: number, d: Difficulty): PlaceStopChart {
+  const past: Candle[] = [];
+  const fut: Candle[] = [];
+  let p = 1 + rng() * 0.3;
+  for (let i = 0; i < 8; i++) {
+    const o = p;
+    const c = o + (0.4 + rng() * 0.5) * m;
+    past.push(candle(o, c, (0.18 + rng() * 0.2) * m, (0.13 + rng() * 0.15) * m));
+    p = c;
+  }
+  for (let i = 0; i < 4; i++) {
+    const o = p;
+    const c = o - (0.25 + rng() * 0.35) * m;
+    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
+    p = c;
+  }
+  const swingLow = Math.min(...past.slice(-5).map((k) => k.l));
+  const entry = p;
+  const sp = spread(d);
+  buildBuyFuture(rng, m, entry, sp, fut);
+  return finalize({
     past, fut,
-    zones: [
-      { kind: "support", y1: swingLow - 0.04, y2: swingLow + 0.04, label: "Swing low" },
-    ],
+    zones: [{ kind: "support", y1: swingLow - 0.04, y2: swingLow + 0.04, label: "Swing low" }],
     entry,
-    tp: entry + (peak - swingLow) * 1.5,
+    tp: entry + 3.5 * m,
     direction: "BUY",
-    meta,
+    tight:   { price: entry - sp.tight * m,   rationale: TIGHT_RATIONALE },
+    logical: { price: entry - sp.logical * m, rationale: LOGICAL_RATIONALE },
+    wide:    { price: entry - sp.wide * m,    rationale: WIDE_RATIONALE },
   });
 }
 
-function scnPullbackBear(rng: () => number, m: number): PlaceStopChart {
+function scnPullbackBear(rng: () => number, m: number, d: Difficulty): PlaceStopChart {
   const past: Candle[] = [];
-  const fut:  Candle[] = [];
+  const fut: Candle[] = [];
   let p = 10 - rng() * 0.3;
   for (let i = 0; i < 8; i++) {
     const o = p;
-    const c = o - (0.45 + rng() * 0.55) * m;
-    past.push(candle(o, c, (0.13 + rng() * 0.18) * m, (0.18 + rng() * 0.22) * m));
+    const c = o - (0.4 + rng() * 0.5) * m;
+    past.push(candle(o, c, (0.13 + rng() * 0.15) * m, (0.18 + rng() * 0.2) * m));
     p = c;
   }
-  const bottom = p;
   for (let i = 0; i < 4; i++) {
     const o = p;
-    const c = o + (0.22 + rng() * 0.35) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.22) * m, (0.17 + rng() * 0.18) * m));
+    const c = o + (0.25 + rng() * 0.35) * m;
+    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m));
     p = c;
   }
-  const swingHigh = Math.max(...past.slice(-5).map(k => k.h));
+  const swingHigh = Math.max(...past.slice(-5).map((k) => k.h));
   const entry = p;
-  const bump = candle(p, p + 0.18 * m, (0.35 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m);
-  fut.push(bump); p = bump.c;
-  for (let i = 0; i < 5; i++) {
-    const o = p;
-    const c = o - (0.42 + rng() * 0.6) * m;
-    fut.push(candle(o, c, (0.13 + rng() * 0.18) * m, (0.18 + rng() * 0.25) * m));
-    p = c;
-  }
-
-  const idealCenter = swingHigh + 0.55 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.18 * m, max: idealCenter + 0.22 * m },
-    acceptable: { min: idealCenter - 0.4 * m,  max: idealCenter + 0.5 * m  },
-    liquidity:  { min: swingHigh - 0.1 * m,    max: swingHigh + 0.12 * m   },
-    bounds:     { min: entry + 0.08 * m,       max: entry + 3.2 * m        },
-    defaultStop: idealCenter,
-  };
-
-  return finishScenario({
+  const sp = spread(d);
+  buildSellFuture(rng, m, entry, sp, fut);
+  return finalize({
     past, fut,
-    zones: [
-      { kind: "resistance", y1: swingHigh - 0.04, y2: swingHigh + 0.04, label: "Swing high" },
-    ],
+    zones: [{ kind: "resistance", y1: swingHigh - 0.04, y2: swingHigh + 0.04, label: "Swing high" }],
     entry,
-    tp: entry - (swingHigh - bottom) * 1.5,
+    tp: entry - 3.5 * m,
     direction: "SELL",
-    meta,
+    tight:   { price: entry + sp.tight * m,   rationale: TIGHT_RATIONALE },
+    logical: { price: entry + sp.logical * m, rationale: LOGICAL_RATIONALE },
+    wide:    { price: entry + sp.wide * m,    rationale: WIDE_RATIONALE },
   });
 }
 
-function scnBounceSupport(rng: () => number, m: number): PlaceStopChart {
+function scnBounceSupport(rng: () => number, m: number, d: Difficulty): PlaceStopChart {
   const past: Candle[] = [];
-  const fut:  Candle[] = [];
+  const fut: Candle[] = [];
   const S = 1;
-  let p = 5 + rng() * 0.5;
+  let p = 5 + rng() * 0.4;
   for (let i = 0; i < 6; i++) {
     const o = p;
-    const c = clamp(o - (0.5 + rng() * 0.5) * m, S + 0.5, 6);
+    const c = clamp(o - (0.5 + rng() * 0.5) * m, S + 0.4, 6);
     past.push(candle(o, c, (0.15 + rng() * 0.18) * m, (0.18 + rng() * 0.25) * m));
     p = c;
   }
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.2) * 0.5 * m, S + 0.3, S + 1.4);
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (1.0 + rng() * 0.4) * m));
+    const c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
+    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.7 + rng() * 0.3) * m));
     p = c;
   }
   const entry = p;
-  const dip = candle(p, p - 0.1 * m, (0.15 + rng() * 0.15) * m, (0.4 + rng() * 0.2) * m);
-  fut.push(dip); p = dip.c;
-  for (let i = 0; i < 5; i++) {
-    const o = p;
-    const c = o + (0.4 + rng() * 0.55) * m;
-    fut.push(candle(o, c, (0.18 + rng() * 0.25) * m, (0.13 + rng() * 0.18) * m));
-    p = c;
-  }
-
-  const idealCenter = S - 0.5 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.22 * m, max: idealCenter + 0.18 * m },
-    acceptable: { min: idealCenter - 0.5 * m,  max: idealCenter + 0.42 * m },
-    liquidity:  { min: S - 0.12 * m,           max: S + 0.1 * m            },
-    bounds:     { min: entry - 3.0 * m,        max: entry - 0.08 * m       },
-    defaultStop: idealCenter,
-  };
-
-  return finishScenario({
+  const sp = spread(d);
+  buildBuyFuture(rng, m, entry, sp, fut);
+  return finalize({
     past, fut,
-    zones: [
-      { kind: "support", y1: S - 0.1, y2: S + 0.1, label: "Support majeur" },
-    ],
+    zones: [{ kind: "support", y1: S - 0.1, y2: S + 0.1, label: "Support HTF" }],
     entry,
-    tp: entry + 3 * m,
+    tp: entry + 3.5 * m,
     direction: "BUY",
-    meta,
+    tight:   { price: entry - sp.tight * m,   rationale: TIGHT_RATIONALE },
+    logical: { price: entry - sp.logical * m, rationale: LOGICAL_RATIONALE },
+    wide:    { price: entry - sp.wide * m,    rationale: WIDE_RATIONALE },
   });
 }
 
-function scnRejectionResistance(rng: () => number, m: number): PlaceStopChart {
+function scnRejectionResistance(rng: () => number, m: number, d: Difficulty): PlaceStopChart {
   const past: Candle[] = [];
-  const fut:  Candle[] = [];
+  const fut: Candle[] = [];
   const R = 10;
-  let p = 5 - rng() * 0.5;
+  let p = 5 - rng() * 0.4;
   for (let i = 0; i < 6; i++) {
     const o = p;
-    const c = clamp(o + (0.5 + rng() * 0.5) * m, 4, R - 0.5);
+    const c = clamp(o + (0.5 + rng() * 0.5) * m, 4, R - 0.4);
     past.push(candle(o, c, (0.18 + rng() * 0.25) * m, (0.15 + rng() * 0.18) * m));
     p = c;
   }
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.8) * 0.5 * m, R - 1.4, R - 0.3);
-    past.push(candle(o, c, (1.0 + rng() * 0.4) * m, (0.2 + rng() * 0.2) * m));
+    const c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
+    past.push(candle(o, c, (0.7 + rng() * 0.3) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
-  const swingHigh = Math.max(...past.slice(-6).map(k => k.h));
   const entry = p;
-  const bump = candle(p, p + 0.1 * m, (0.4 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m);
-  fut.push(bump); p = bump.c;
-  for (let i = 0; i < 5; i++) {
-    const o = p;
-    const c = o - (0.4 + rng() * 0.55) * m;
-    fut.push(candle(o, c, (0.13 + rng() * 0.18) * m, (0.18 + rng() * 0.25) * m));
-    p = c;
-  }
-
-  const idealCenter = swingHigh + 0.45 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.18 * m, max: idealCenter + 0.22 * m },
-    acceptable: { min: idealCenter - 0.4 * m,  max: idealCenter + 0.5 * m  },
-    liquidity:  { min: R - 0.12 * m,           max: R + 0.1 * m            },
-    bounds:     { min: entry + 0.08 * m,       max: entry + 3.0 * m        },
-    defaultStop: idealCenter,
-  };
-
-  return finishScenario({
+  const sp = spread(d);
+  buildSellFuture(rng, m, entry, sp, fut);
+  return finalize({
     past, fut,
-    zones: [
-      { kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance majeure" },
-    ],
+    zones: [{ kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance HTF" }],
     entry,
-    tp: entry - 3 * m,
+    tp: entry - 3.5 * m,
     direction: "SELL",
-    meta,
+    tight:   { price: entry + sp.tight * m,   rationale: TIGHT_RATIONALE },
+    logical: { price: entry + sp.logical * m, rationale: LOGICAL_RATIONALE },
+    wide:    { price: entry + sp.wide * m,    rationale: WIDE_RATIONALE },
   });
 }
 
-function scnFakeBreakout(rng: () => number, m: number): PlaceStopChart {
+function scnFakeoutAboveResistance(rng: () => number, m: number, d: Difficulty): PlaceStopChart {
+  // Pour ce scénario, la structure du piège (fakeout au-dessus de R) impose
+  // des positions spécifiques :
+  //   - tight = DANS le wick du fakeout (entre R et fakeoutHigh)
+  //   - logical = juste au-dessus du fakeoutHigh
+  //   - wide = bien au-dessus de fakeoutHigh
+  // On dimensionne pour que future = drop confirmant le piège (mais 1er
+  // candle du futur fait un petit retest pour balayer tight uniquement).
   const past: Candle[] = [];
-  const fut:  Candle[] = [];
+  const fut: Candle[] = [];
   const R = 10;
   let p = 6 + rng() * 0.3;
   for (let i = 0; i < 5; i++) {
@@ -478,13 +527,11 @@ function scnFakeBreakout(rng: () => number, m: number): PlaceStopChart {
     past.push(candle(o, c, (0.18 + rng() * 0.2) * m, (0.15 + rng() * 0.18) * m));
     p = c;
   }
-  // Fakeout candle : énorme mèche haute, close en-dessous
-  const fO = p;
+  // Fakeout (la zone du piège = wick au-dessus de R)
   const fakeoutHigh = R + 1.4 * m + rng() * 0.4;
-  const fC = R - 0.4 - rng() * 0.3;
-  past.push({ o: fO, c: fC, h: fakeoutHigh, l: fO - 0.2 });
-  p = fC;
-  // 2 candles confirmant le retour sous la résistance
+  past.push({ o: p, c: R - 0.4 - rng() * 0.3, h: fakeoutHigh, l: p - 0.2 });
+  p = past[past.length - 1].c;
+  // 2 candles confirmant
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = o - (0.3 + rng() * 0.3) * m;
@@ -492,199 +539,109 @@ function scnFakeBreakout(rng: () => number, m: number): PlaceStopChart {
     p = c;
   }
   const entry = p;
-  // Future : drop net
-  for (let i = 0; i < 6; i++) {
+  // Positions des stops (distances depuis entry, en respectant le piège)
+  const tightPrice   = R + (fakeoutHigh - R) * 0.4;   // DANS la zone du piège
+  const logicalPrice = fakeoutHigh + 0.4 * m;         // au-dessus du wick
+  const widePrice    = fakeoutHigh + 2.0 * m;         // bien au-dessus
+  // Future : 1er candle = retest qui rebondit dans la zone tight (sweep tight)
+  // sans dépasser logical, puis drop violent.
+  const retestHigh = tightPrice + 0.15 * m;
+  fut.push(explicitCandle(p, R - 0.5 * m, retestHigh, p - 0.2 * m));
+  p = R - 0.5 * m;
+  for (let i = 0; i < 5; i++) {
     const o = p;
     const c = o - (0.4 + rng() * 0.6) * m;
     fut.push(candle(o, c, (0.13 + rng() * 0.15) * m, (0.18 + rng() * 0.25) * m));
     p = c;
   }
-
-  const idealCenter = fakeoutHigh + 0.3 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.18 * m, max: idealCenter + 0.22 * m },
-    acceptable: { min: idealCenter - 0.4 * m,  max: idealCenter + 0.5 * m  },
-    liquidity:  { min: R + 0.1 * m,            max: fakeoutHigh + 0.05 * m },
-    bounds:     { min: entry + 0.08 * m,       max: entry + 4.0 * m        },
-    defaultStop: idealCenter,
-  };
-
-  return finishScenario({
+  void d;
+  return finalize({
     past, fut,
     zones: [
-      { kind: "resistance",     y1: R - 0.1,             y2: R + 0.1,             label: "Résistance (piège)" },
-      { kind: "liquidity_high", y1: R + 0.15 * m,         y2: fakeoutHigh,         label: "Liquidité prise"    },
+      { kind: "resistance",     y1: R - 0.1,            y2: R + 0.1,            label: "Résistance" },
+      { kind: "liquidity_high", y1: R + 0.15,           y2: fakeoutHigh,        label: "Wick fakeout" },
     ],
     entry,
-    tp: entry - 4 * m,
+    // TP étendu pour garantir RR_logical >= 2 sur ce setup où la structure
+    // pousse logical loin de l'entry.
+    tp: entry - Math.max(3.5 * m, Math.abs(entry - logicalPrice) * 2.2),
     direction: "SELL",
-    meta,
+    tight:   { price: tightPrice,   rationale: "✗ Stop dans la zone du piège — pile dans la zone que les institutionnels viennent d'utiliser pour ramasser la liquidité. Le 2e test va te balayer." },
+    logical: { price: logicalPrice, rationale: "✓ Au-dessus du pic du fakeout, avec marge. C'est la VRAIE invalidation du piège — si le prix repasse là, le scénario est cassé." },
+    wide:    { price: widePrice,    rationale: WIDE_RATIONALE },
   });
 }
 
-function scnLiquiditySweep(rng: () => number, m: number): PlaceStopChart {
+function scnSweepLowReversal(rng: () => number, m: number, d: Difficulty): PlaceStopChart {
+  // tight = DANS la zone du sweep (entre sweepLow et L)
+  // logical = sous la mèche du sweep + marge
+  // wide = bien plus bas
+  // future : 1er candle retest qui dip dans la zone sweep (sweep tight) sans
+  //   atteindre logical, puis rallye.
   const past: Candle[] = [];
-  const fut:  Candle[] = [];
-  const S = 1;
-  let p = 3 + rng() * 0.3;
+  const fut: Candle[] = [];
+  const L = 1;
+  let p = 4 + rng() * 0.3;
   for (let i = 0; i < 4; i++) {
     const o = p;
-    const c = clamp(o - (0.2 + rng() * 0.35) * m, S + 0.4, 4);
-    past.push(candle(o, c, (0.17 + rng() * 0.18) * m, (0.17 + rng() * 0.2) * m));
+    const c = clamp(o - (0.3 + rng() * 0.4) * m, L + 0.5, 4.5);
+    past.push(candle(o, c, (0.18 + rng() * 0.18) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.5 * m, S + 0.5, S + 1.4);
-    past.push(candle(o, c, (0.18 + rng() * 0.18) * m, (0.18 + rng() * 0.18) * m));
+    const c = clamp(o + (rng() - 0.5) * 0.6 * m, L + 0.5, L + 1.5);
+    past.push(candle(o, c, (0.22 + rng() * 0.2) * m, (0.22 + rng() * 0.2) * m));
     p = c;
   }
-  // Sweep candle : longue mèche basse, close au-dessus
-  const sO = p;
-  const sweepLow = S - 1.4 * m - rng() * 0.4;
-  const sC = S + 0.4 + rng() * 0.3;
-  past.push({ o: sO, c: sC, h: sO + 0.2, l: sweepLow });
-  p = sC;
-  // 2 candles confirmant
+  const sweepLow = L - 1.2 * m - rng() * 0.3;
+  past.push({ o: p, c: L + 0.4 + rng() * 0.3, h: p + 0.2, l: sweepLow });
+  p = past[past.length - 1].c;
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = o + (0.3 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.22) * m, (0.15 + rng() * 0.18) * m));
+    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m));
     p = c;
   }
   const entry = p;
-  for (let i = 0; i < 6; i++) {
-    const o = p;
-    const c = o + (0.4 + rng() * 0.6) * m;
-    fut.push(candle(o, c, (0.18 + rng() * 0.25) * m, (0.13 + rng() * 0.15) * m));
-    p = c;
-  }
-
-  const idealCenter = sweepLow - 0.3 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.22 * m, max: idealCenter + 0.18 * m },
-    acceptable: { min: idealCenter - 0.5 * m,  max: idealCenter + 0.4 * m  },
-    liquidity:  { min: sweepLow - 0.05 * m,    max: S - 0.1 * m            },
-    bounds:     { min: entry - 4.0 * m,        max: entry - 0.08 * m       },
-    defaultStop: idealCenter,
-  };
-
-  return finishScenario({
-    past, fut,
-    zones: [
-      { kind: "support",        y1: S - 0.1,             y2: S + 0.1,             label: "Précédent low"     },
-      { kind: "liquidity_low",  y1: sweepLow,            y2: S - 0.15 * m,        label: "Liquidité balayée" },
-    ],
-    entry,
-    tp: entry + 4 * m,
-    direction: "BUY",
-    meta,
-  });
-}
-
-function scnTightRange(rng: () => number, m: number): PlaceStopChart {
-  const past: Candle[] = [];
-  const fut:  Candle[] = [];
-  const S = 2;
-  const R = 6;
-  const mid = (S + R) / 2;
-  let p = mid + (rng() - 0.5);
-  for (let i = 0; i < 14; i++) {
-    const o = p;
-    const pull = (mid - o) * 0.2;
-    let c = o + pull + (rng() - 0.5) * 1.2 * m;
-    c = clamp(c, S + 0.3, R - 0.3);
-    past.push(candle(o, c, (0.2 + rng() * 0.25) * m, (0.2 + rng() * 0.25) * m));
-    p = c;
-  }
-  // Entry au bas du range (BUY le plancher)
-  const entry = S + 0.25;
-  // Future : rebond vers le plafond
-  let fp = entry;
-  for (let i = 0; i < 6; i++) {
-    const o = fp;
-    const c = clamp(o + (0.3 + rng() * 0.4) * m, S + 0.4, R - 0.2);
-    fut.push(candle(o, c, (0.18 + rng() * 0.18) * m, (0.18 + rng() * 0.18) * m));
-    fp = c;
-  }
-
-  const idealCenter = S - 0.3 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.15 * m, max: idealCenter + 0.15 * m },
-    acceptable: { min: idealCenter - 0.35 * m, max: idealCenter + 0.35 * m },
-    liquidity:  { min: S - 0.08 * m,           max: S + 0.08 * m           },
-    bounds:     { min: entry - 2.5 * m,        max: entry - 0.05 * m       },
-    defaultStop: idealCenter,
-  };
-
-  return finishScenario({
-    past, fut,
-    zones: [
-      { kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Plafond range"  },
-      { kind: "support",    y1: S - 0.1, y2: S + 0.1, label: "Plancher range" },
-    ],
-    entry,
-    tp: R - 0.3,
-    direction: "BUY",
-    meta,
-  });
-}
-
-function scnVolExpansion(rng: () => number, m: number): PlaceStopChart {
-  const past: Candle[] = [];
-  const fut:  Candle[] = [];
-  let p = 2 + rng() * 0.3;
-  // Phase 1 : 8 bougies serrées
-  for (let i = 0; i < 8; i++) {
-    const o = p;
-    const c = o + (rng() - 0.45) * 0.4 * m;
-    past.push(candle(o, c, (0.15 + rng() * 0.1) * m, (0.15 + rng() * 0.1) * m));
-    p = c;
-  }
-  // Phase 2 : 4 bougies expansion (énormes)
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = o + (0.7 + rng() * 0.9) * m * 1.8;
-    past.push(candle(o, c, (0.4 + rng() * 0.4) * m * 1.5, (0.3 + rng() * 0.3) * m * 1.5));
-    p = c;
-  }
-  const lastBody = past[past.length - 1];
-  const entry = p;
-  // Future : mouvement large et volatile mais haussier
-  const volMult = 1.6;
-  // Premier candle : dip large mais survie au-dessus du structural low
-  const dip = candle(p, p - 0.7 * m, (0.3 + rng() * 0.3) * m * volMult, (0.7 + rng() * 0.4) * m * volMult);
-  fut.push(dip); p = dip.c;
+  const tightPrice   = L - (L - sweepLow) * 0.4;
+  const logicalPrice = sweepLow - 0.4 * m;
+  const widePrice    = sweepLow - 1.8 * m;
+  // Future : retest qui dip dans la zone du sweep (touch tight) sans
+  //   atteindre logical, puis rallye
+  const retestLow = tightPrice - 0.15 * m;
+  fut.push(explicitCandle(p, L + 0.5 * m, p + 0.2 * m, retestLow));
+  p = L + 0.5 * m;
   for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o + (0.5 + rng() * 0.7) * m * 1.2;
-    fut.push(candle(o, c, (0.25 + rng() * 0.3) * m * volMult, (0.2 + rng() * 0.25) * m * volMult));
+    const c = o + (0.4 + rng() * 0.55) * m;
+    fut.push(candle(o, c, (0.2 + rng() * 0.22) * m, (0.13 + rng() * 0.15) * m));
     p = c;
   }
-
-  const structuralLow = lastBody.l;
-  const idealCenter = structuralLow - 0.8 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.35 * m, max: idealCenter + 0.25 * m },
-    acceptable: { min: idealCenter - 0.7 * m,  max: idealCenter + 0.55 * m },
-    liquidity:  null,
-    bounds:     { min: entry - 4.5 * m,        max: entry - 0.05 * m       },
-    defaultStop: structuralLow - 0.15 * m,  // défaut "normal" = trop serré pour la vol
-  };
-
-  return finishScenario({
+  void d;
+  return finalize({
     past, fut,
-    zones: [],
+    zones: [
+      { kind: "support",       y1: L - 0.1,        y2: L + 0.1,        label: "Précédent low"     },
+      { kind: "liquidity_low", y1: sweepLow,       y2: L - 0.15,       label: "Liquidité balayée" },
+    ],
     entry,
-    tp: entry + 4 * m,
+    tp: entry + Math.max(3.5 * m, Math.abs(entry - logicalPrice) * 2.2),
     direction: "BUY",
-    meta,
+    tight:   { price: tightPrice,   rationale: "✗ Stop DANS la zone du sweep — exactement là où les institutionnels viennent de ramasser la liquidité. Le retest va te chercher." },
+    logical: { price: logicalPrice, rationale: "✓ Sous la mèche du sweep, avec marge. Le low du sweep est la nouvelle invalidation — protégé contre un 2e ramassage." },
+    wide:    { price: widePrice,    rationale: WIDE_RATIONALE },
   });
 }
 
-function scnFvgContinuation(rng: () => number, m: number): PlaceStopChart {
+function scnFvgContinuation(rng: () => number, m: number, d: Difficulty): PlaceStopChart {
+  // tight = DANS le FVG (zone exposée à mitigation profonde)
+  // logical = sous le bas du FVG
+  // wide = bien plus bas
+  // future : 1er candle dip qui traverse partiellement le FVG (touch tight)
+  //   sans aller en dessous, puis rallye.
   const past: Candle[] = [];
-  const fut:  Candle[] = [];
+  const fut: Candle[] = [];
   let p = 2 + rng() * 0.3;
   for (let i = 0; i < 3; i++) {
     const o = p;
@@ -692,342 +649,211 @@ function scnFvgContinuation(rng: () => number, m: number): PlaceStopChart {
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
-  const gapBottom = p + 0.15;
-  const gO = p;
-  const gC = p + (2.0 + rng() * 0.4) * m;
-  past.push(candle(gO, gC, (0.25 + rng() * 0.2) * m, 0.1));
-  p = gC;
-  const gapTop = gO + 0.05;
+  const baseHigh = Math.max(...past.slice(-3).map((k) => k.h));
+  past.push(candle(p, p + (2.0 + rng() * 0.3) * m, (0.3 + rng() * 0.2) * m, 0.12));
+  p = past[past.length - 1].c;
   for (let i = 0; i < 2; i++) {
     const o = p;
-    const c = o + (0.3 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.2) * m, (0.13 + rng() * 0.15) * m));
+    const c = o + (0.25 + rng() * 0.25) * m;
+    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
     p = c;
   }
-  const fvgMid = (gapBottom + gapTop) / 2;
-  // Pullback dans le FVG
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = clamp(o - (0.3 + rng() * 0.3) * m, fvgMid - 0.1, p + 0.2);
-    past.push(candle(o, c, (0.13 + rng() * 0.15) * m, (0.18 + rng() * 0.2) * m));
-    p = c;
-  }
-  const entry = p;
-  // Future : rebond depuis le FVG
-  const dip = candle(p, p - 0.15 * m, (0.15 + rng() * 0.15) * m, (0.3 + rng() * 0.2) * m);
-  fut.push(dip); p = dip.c;
-  for (let i = 0; i < 5; i++) {
-    const o = p;
-    const c = o + (0.4 + rng() * 0.55) * m;
-    fut.push(candle(o, c, (0.2 + rng() * 0.25) * m, (0.13 + rng() * 0.15) * m));
-    p = c;
-  }
-
-  const idealCenter = gapBottom - 0.4 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.2 * m,  max: idealCenter + 0.18 * m },
-    acceptable: { min: idealCenter - 0.45 * m, max: idealCenter + 0.4 * m  },
-    liquidity:  { min: gapBottom - 0.05 * m,   max: (gapBottom + gapTop) / 2 + 0.05 * m },
-    bounds:     { min: entry - 3.0 * m,        max: entry - 0.05 * m       },
-    defaultStop: idealCenter,
-  };
-
-  return finishScenario({
-    past, fut,
-    zones: [
-      { kind: "fvg", y1: gapBottom, y2: gapTop, label: "FVG haussier" },
-    ],
-    entry,
-    tp: entry + 3.5 * m,
-    direction: "BUY",
-    meta,
-  });
-}
-
-function scnNewsTrap(rng: () => number, m: number): PlaceStopChart {
-  const past: Candle[] = [];
-  const fut:  Candle[] = [];
-  let p = 4 + rng() * 0.5;
-  // Phase pré-news : 14 bougies de plus en plus serrées
-  for (let i = 0; i < 14; i++) {
-    const tight = 1 - i / 24;
-    const o = p;
-    const c = o + (rng() - 0.5) * 0.8 * tight * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.22) * tight * m, (0.18 + rng() * 0.22) * tight * m));
-    p = c;
-  }
-  const entry = p;
-  // Future : spike chaotique des deux côtés
-  const spikeUp = candle(p, p + 0.6 * m, (1.4 + rng() * 0.5) * m, (0.15 + rng() * 0.15) * m);
-  fut.push(spikeUp); p = spikeUp.c;
-  const crash = candle(p, p - 2.6 * m, (0.2 + rng() * 0.2) * m, (0.6 + rng() * 0.3) * m);
-  fut.push(crash); p = crash.c;
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = o + (rng() - 0.3) * 1.2 * m;
-    fut.push(candle(o, c, (0.5 + rng() * 0.3) * m, (0.5 + rng() * 0.3) * m));
-    p = c;
-  }
-
-  // Ideal = très large car news. Mais même le très large peut sauter.
-  const idealCenter = entry - 2.8 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.5 * m, max: idealCenter + 0.4 * m },
-    acceptable: { min: idealCenter - 1.0 * m, max: idealCenter + 0.7 * m },
-    liquidity:  null,
-    bounds:     { min: entry - 4.5 * m,       max: entry - 0.05 * m       },
-    defaultStop: entry - 0.5 * m,  // défaut petit = pédagogique (presque sûr de sauter)
-  };
-
-  return finishScenario({
-    past, fut,
-    zones: [],
-    entry,
-    tp: null,
-    direction: "BUY",
-    meta,
-  });
-}
-
-function scnDoubleTopSweep(rng: () => number, m: number): PlaceStopChart {
-  const past: Candle[] = [];
-  const fut:  Candle[] = [];
-  const R = 9;
-  let p = 4 + rng() * 0.4;
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = clamp(o + (0.5 + rng() * 0.4) * m, 3, R - 0.3);
-    past.push(candle(o, c, (0.18 + rng() * 0.18) * m, (0.13 + rng() * 0.15) * m));
-    p = c;
-  }
-  // 1er top
-  const top1 = R;
+  const fvgLow = baseHigh;
+  const fvgHigh = past[past.length - 2].l;
+  // Pullback dans le FVG (mitigation partielle)
+  const target = (fvgLow + fvgHigh) / 2;
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o - (0.25 + rng() * 0.3) * m, R - 1.5, R - 0.4);
-    past.push(candle(o, c, (0.18 + rng() * 0.2) * m, (0.18 + rng() * 0.2) * m));
+    const c = Math.max(target, o - (0.3 + rng() * 0.3) * m);
+    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.18 + rng() * 0.18) * m));
     p = c;
   }
-  // Rally vers le 2nd top + sweep
-  for (let i = 0; i < 3; i++) {
-    const o = p;
-    const c = clamp(o + (0.3 + rng() * 0.4) * m, p, R - 0.4);
-    past.push(candle(o, c, (0.18 + rng() * 0.18) * m, (0.13 + rng() * 0.15) * m));
-    p = c;
-  }
-  const sweepHigh = R + 0.5 * m + rng() * 0.3;
-  const swO = p;
-  const swC = R - 0.4 - rng() * 0.3;
-  past.push({ o: swO, c: swC, h: sweepHigh, l: swO - 0.15 });
-  p = swC;
-  // 2 candles confirmant
-  for (let i = 0; i < 2; i++) {
-    const o = p;
-    const c = o - (0.3 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.13 + rng() * 0.15) * m, (0.18 + rng() * 0.2) * m));
-    p = c;
-  }
+  // Réaction visible
+  past.push(candle(p, p + 0.2 * m, (0.2 + rng() * 0.15) * m, (0.15 + rng() * 0.15) * m));
+  p = past[past.length - 1].c;
   const entry = p;
-  for (let i = 0; i < 6; i++) {
+  const tightPrice   = fvgLow + (fvgHigh - fvgLow) * 0.3;
+  const logicalPrice = fvgLow - 0.4 * m;
+  const widePrice    = fvgLow - 2.0 * m;
+  // Future : dip qui descend juste dans la zone tight (touch tight, pas logical)
+  const dipLow = tightPrice - 0.1 * m;
+  fut.push(explicitCandle(p, fvgLow + 0.2 * m, p + (0.1 + rng() * 0.1) * m, dipLow));
+  p = fvgLow + 0.2 * m;
+  for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o - (0.4 + rng() * 0.55) * m;
-    fut.push(candle(o, c, (0.13 + rng() * 0.15) * m, (0.18 + rng() * 0.22) * m));
+    const c = o + (0.4 + rng() * 0.5) * m;
+    fut.push(candle(o, c, (0.2 + rng() * 0.22) * m, (0.13 + rng() * 0.15) * m));
     p = c;
   }
-
-  const idealCenter = sweepHigh + 0.3 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.18 * m, max: idealCenter + 0.22 * m },
-    acceptable: { min: idealCenter - 0.4 * m,  max: idealCenter + 0.5 * m  },
-    liquidity:  { min: top1 - 0.08 * m,        max: sweepHigh + 0.05 * m   },
-    bounds:     { min: entry + 0.08 * m,       max: entry + 3.5 * m        },
-    defaultStop: idealCenter,
-  };
-
-  return finishScenario({
+  void d;
+  return finalize({
     past, fut,
-    zones: [
-      { kind: "resistance",     y1: top1 - 0.1,             y2: top1 + 0.1,             label: "Double top"     },
-      { kind: "liquidity_high", y1: top1 + 0.12 * m,         y2: sweepHigh,              label: "Liquidité sweep"},
-    ],
+    zones: [{ kind: "fvg", y1: fvgLow, y2: fvgHigh, label: "FVG haussier" }],
     entry,
-    tp: entry - 3.5 * m,
-    direction: "SELL",
-    meta,
+    tp: entry + Math.max(3.5 * m, Math.abs(entry - logicalPrice) * 2.2),
+    direction: "BUY",
+    tight:   { price: tightPrice,   rationale: "✗ Stop DANS le FVG — la zone est précisément celle où le marché peut retourner pour finir sa mitigation. Tu seras pris dans la profondeur de la zone." },
+    logical: { price: logicalPrice, rationale: "✓ Sous le bas du FVG avec marge. Le FVG entièrement traversé = invalidation propre. C'est le placement structurel correct." },
+    wide:    { price: widePrice,    rationale: WIDE_RATIONALE },
   });
 }
 
-function scnCleanBreakout(rng: () => number, m: number): PlaceStopChart {
+function scnHighVolPullback(rng: () => number, m: number, d: Difficulty): PlaceStopChart {
+  // Vol élevée : tous les écarts sont multipliés par volMult. Le tight devient
+  // particulièrement trompeur (taille "normale" mais dans le bruit amplifié).
   const past: Candle[] = [];
-  const fut:  Candle[] = [];
-  const R = 5;
-  let p = 2 + rng() * 0.3;
-  // Consolidation sous résistance
-  for (let i = 0; i < 5; i++) {
+  const fut: Candle[] = [];
+  const volMult = 1.6;
+  const effM = m * volMult;
+  let p = 1 + rng() * 0.3;
+  for (let i = 0; i < 8; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.45) * 0.6 * m, 1.5, R - 0.4);
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m));
+    const c = o + (0.5 + rng() * 0.6) * effM;
+    past.push(candle(o, c, (0.4 + rng() * 0.3) * effM, (0.3 + rng() * 0.25) * effM));
     p = c;
   }
-  // Breakout
-  const bO = p;
-  const bC = R + 1.3 * m + rng() * 0.4;
-  past.push(candle(bO, bC, (0.3 + rng() * 0.2) * m, 0.15));
-  p = bC;
-  // Follow-through (2)
-  for (let i = 0; i < 2; i++) {
-    const o = p;
-    const c = o + (0.3 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.2) * m, (0.13 + rng() * 0.15) * m));
-    p = c;
-  }
-  // Pullback sur l'ancienne résistance (devenue support)
   for (let i = 0; i < 4; i++) {
     const o = p;
-    const c = clamp(o - (0.25 + rng() * 0.3) * m, R - 0.1, p + 0.1);
-    past.push(candle(o, c, (0.13 + rng() * 0.15) * m, (0.18 + rng() * 0.2) * m));
+    const c = o - (0.4 + rng() * 0.5) * effM;
+    past.push(candle(o, c, (0.3 + rng() * 0.25) * effM, (0.4 + rng() * 0.3) * effM));
     p = c;
   }
+  const swingLow = Math.min(...past.slice(-5).map((k) => k.l));
   const entry = p;
-  // Future : rebond depuis le nouveau support
-  const dip = candle(p, p - 0.12 * m, (0.15 + rng() * 0.15) * m, (0.3 + rng() * 0.2) * m);
-  fut.push(dip); p = dip.c;
+  // En vol élevée, le tight "normal" (~0.5m) est dans le bruit, le logical
+  // doit être doublé (~1.5m), le wide encore plus loin.
+  const tightDist   = 0.5 * effM;
+  const logicalDist = 1.5 * effM;
+  const wideDist    = 3.5 * effM;
+  const tightPrice   = entry - tightDist;
+  const logicalPrice = entry - logicalDist;
+  const widePrice    = entry - wideDist;
+  // Future : dip large (vol élevée) qui sweep tight sans toucher logical
+  const dipLow = tightPrice - 0.15 * effM;
+  const dipClose = entry - tightDist * 0.6;
+  fut.push(explicitCandle(p, dipClose, p + (0.2 + rng() * 0.15) * effM, dipLow));
+  p = dipClose;
   for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o + (0.4 + rng() * 0.55) * m;
-    fut.push(candle(o, c, (0.18 + rng() * 0.22) * m, (0.13 + rng() * 0.15) * m));
+    const c = o + (0.4 + rng() * 0.5) * effM;
+    fut.push(candle(o, c, (0.3 + rng() * 0.25) * effM, (0.2 + rng() * 0.2) * effM));
     p = c;
   }
-
-  const idealCenter = R - 0.4 * m;
-  const meta: StopMeta = {
-    ideal:      { min: idealCenter - 0.22 * m, max: idealCenter + 0.18 * m },
-    acceptable: { min: idealCenter - 0.5 * m,  max: idealCenter + 0.4 * m  },
-    liquidity:  { min: R - 0.08 * m,           max: R + 0.08 * m           },
-    bounds:     { min: entry - 3.0 * m,        max: entry - 0.05 * m       },
-    defaultStop: idealCenter,
-  };
-
-  return finishScenario({
+  void d;
+  return finalize({
     past, fut,
-    zones: [
-      { kind: "support", y1: R - 0.1, y2: R + 0.1, label: "Ancienne résistance" },
-    ],
+    zones: [{ kind: "support", y1: swingLow - 0.05, y2: swingLow + 0.05, label: "Swing low" }],
     entry,
-    tp: entry + 3.5 * m,
+    tp: entry + 3.5 * effM,  // TP élargi aussi (proportionnel à la vol)
     direction: "BUY",
-    meta,
+    tight:   { price: tightPrice,   rationale: "✗ Stop 'standard' — qui serait OK en vol normale, mais en vol élevée ce niveau est dans le bruit. La 1re bougie de retest, large à cause de la vol, va te balayer." },
+    logical: { price: logicalPrice, rationale: "✓ Stop élargi à la volatilité du marché. Ce qui ressemble à un 'wide stop' en vol normale est en fait le LOGIQUE ici — il survit au noise amplifié sans tuer le RR (TP également plus loin)." },
+    wide:    { price: widePrice,    rationale: "≈ Survie garantie, mais même avec un TP étendu en vol élevée, le RR descend sous 1.5. Capital mal utilisé." },
   });
 }
 
-// ─── Build chart depuis un setup ──────────────────────────────────────────────
+// ─── Build chart ──────────────────────────────────────────────────────────────
 
 export function buildPlaceStopChart(
   setup: PlaceStopSetupKey,
   seed: number,
-  volatility: Volatility = "normale",
+  volatility: Volatility,
+  difficulty: Difficulty,
 ): PlaceStopChart {
   const rng = mulberry32(seed);
   const m = VOL_MULT[volatility];
   switch (setup) {
-    case "pullback_bull":         return scnPullbackBull(rng, m);
-    case "pullback_bear":         return scnPullbackBear(rng, m);
-    case "bounce_support":        return scnBounceSupport(rng, m);
-    case "rejection_resistance":  return scnRejectionResistance(rng, m);
-    case "fake_breakout":         return scnFakeBreakout(rng, m);
-    case "liquidity_sweep":       return scnLiquiditySweep(rng, m);
-    case "tight_range":           return scnTightRange(rng, m);
-    case "vol_expansion":         return scnVolExpansion(rng, m);
-    case "fvg_continuation":      return scnFvgContinuation(rng, m);
-    case "news_trap":             return scnNewsTrap(rng, m);
-    case "double_top_sweep":      return scnDoubleTopSweep(rng, m);
-    case "clean_breakout":        return scnCleanBreakout(rng, m);
+    case "pullback_bull":             return scnPullbackBull(rng, m, difficulty);
+    case "pullback_bear":             return scnPullbackBear(rng, m, difficulty);
+    case "bounce_support":            return scnBounceSupport(rng, m, difficulty);
+    case "rejection_resistance":      return scnRejectionResistance(rng, m, difficulty);
+    case "fakeout_above_resistance":  return scnFakeoutAboveResistance(rng, m, difficulty);
+    case "sweep_low_reversal":        return scnSweepLowReversal(rng, m, difficulty);
+    case "fvg_continuation":          return scnFvgContinuation(rng, m, difficulty);
+    case "high_vol_pullback":         return scnHighVolPullback(rng, m, difficulty);
   }
 }
 
 // ─── Scoring ──────────────────────────────────────────────────────────────────
 
 export interface ScoreResult {
-  verdict:     StopVerdict;
   points:      number;
-  basePoints:  number;
   streakBonus: number;
-  wasHit:      boolean;
-  hitIndex:    number | null;
+  type:        StopType;
+  correct:     boolean;
+  // Stop hit during reveal (par id de stop)
+  hitMap:      Record<StopId, number | null>;  // null si survécu, sinon index de la candle
 }
 
-function isStopHit(stop: number, direction: TradeDirection, futureCandles: Candle[]): number | null {
-  for (let i = 0; i < futureCandles.length; i++) {
-    const k = futureCandles[i];
+function isHit(stop: number, direction: TradeDirection, future: Candle[]): number | null {
+  for (let i = 0; i < future.length; i++) {
+    const k = future[i];
     if (direction === "BUY"  && k.l <= stop) return i;
     if (direction === "SELL" && k.h >= stop) return i;
   }
   return null;
 }
 
-function inRange(v: number, range: { min: number; max: number }): boolean {
-  return v >= range.min && v <= range.max;
+export function computeHits(chart: PlaceStopChart): Record<StopId, number | null> {
+  const out: Record<StopId, number | null> = { A: null, B: null, C: null };
+  for (const s of chart.stops) {
+    out[s.id] = isHit(s.price, chart.direction, chart.future);
+  }
+  return out;
 }
 
-export function scoreStopPlacement(
-  stop:           number,
-  chart:          PlaceStopChart,
-  currentStreak:  number,
-): ScoreResult {
-  const { stopMeta, direction, futureCandles } = chart;
-  const hitIndex = isStopHit(stop, direction, futureCandles);
-  const wasHit = hitIndex !== null;
-
-  let verdict: StopVerdict;
-  let basePoints: number;
-
-  // 1) Liquidité évidente : la pire erreur
-  if (stopMeta.liquidity && inRange(stop, stopMeta.liquidity)) {
-    verdict = "liquidity";
-    basePoints = -100;
+export function scoreStopChoice(chosenId: StopId, chart: PlaceStopChart, currentStreak: number): ScoreResult {
+  const chosen = chart.stops.find((s) => s.id === chosenId)!;
+  const hitMap = computeHits(chart);
+  let points = 0;
+  let streakBonus = 0;
+  switch (chosen.type) {
+    case "logical":   points = 100; if (currentStreak >= 2) streakBonus = 30; break;
+    case "wide":      points = 30; break;
+    case "tight":     points = -50; break;
+    case "liquidity": points = -100; break;
   }
-  // 2) Stop dans la zone idéale
-  else if (inRange(stop, stopMeta.ideal)) {
-    verdict = "perfect";
-    basePoints = 120;
-  }
-  // 3) Stop dans la zone acceptable
-  else if (inRange(stop, stopMeta.acceptable)) {
-    verdict = "good";
-    basePoints = 80;
-  }
-  // 4) Trop serré (hit) ou trop large (survit)
-  else if (wasHit) {
-    verdict = "tight";
-    basePoints = -50;
-  } else {
-    verdict = "wide";
-    basePoints = 40;
-  }
-
-  const streakBonus = basePoints > 0 && currentStreak >= 2 ? 30 : 0;
   return {
-    verdict,
-    basePoints,
+    points: points + streakBonus,
     streakBonus,
-    points: basePoints + streakBonus,
-    wasHit,
-    hitIndex,
+    type: chosen.type,
+    correct: chosen.type === "logical",
+    hitMap,
   };
 }
 
-// ─── Helpers UI partagés ──────────────────────────────────────────────────────
+// ─── Verdicts ─────────────────────────────────────────────────────────────────
 
-export const VERDICT_META: Record<StopVerdict, { label: string; color: "emerald" | "red" | "amber" }> = {
-  perfect:   { label: "Stop logique",    color: "emerald" },
-  good:      { label: "Stop correct",    color: "emerald" },
-  wide:      { label: "Stop trop large", color: "amber"   },
-  tight:     { label: "Stop trop serré", color: "red"     },
-  liquidity: { label: "Pleine liquidité",color: "red"     },
+export const STOP_TYPE_META: Record<StopType, { label: string; color: "emerald" | "amber" | "red" }> = {
+  logical:   { label: "Stop logique",     color: "emerald" },
+  wide:      { label: "Stop trop large",  color: "amber"   },
+  tight:     { label: "Stop trop serré",  color: "red"     },
+  liquidity: { label: "Stop en liquidité", color: "red"    },
 };
 
-export function sessionVerdict(score: number, perfectCount: number, total: number): string {
-  if (perfectCount >= total - 1) return "Stop sniper";
+export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: string; textClass: string; description: string }> = {
+  beginner: {
+    label:       "Débutant",
+    dotClass:    "bg-emerald-400",
+    textClass:   "text-emerald-400",
+    description: "Structure claire, stop logique évident, sweep très visible.",
+  },
+  intermediate: {
+    label:       "Intermédiaire",
+    dotClass:    "bg-blue-400",
+    textClass:   "text-blue-400",
+    description: "Volatilité plus sale, plusieurs stops plausibles, tight stop tentant.",
+  },
+  advanced: {
+    label:       "Avancé",
+    dotClass:    "bg-amber-400",
+    textClass:   "text-amber-400",
+    description: "Marché ambigu, sweep partiel, arbitrage survie / invalidation / RR.",
+  },
+};
+
+export function sessionVerdict(score: number, logicalCount: number, total: number): string {
+  if (logicalCount >= total - 1) return "Stop sniper";
   if (score >= 700)              return "Bonne protection";
   if (score >= 300)              return "Lecture solide";
   if (score >= 0)                return "À polir";

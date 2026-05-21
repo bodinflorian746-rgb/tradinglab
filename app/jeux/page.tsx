@@ -37,7 +37,7 @@ const AVAILABLE_GAMES: Game[] = [
   {
     id:          "place-stop",
     title:       "Place ton Stop",
-    description: "10 setups. Tu places ton stop loss sur le graphique, le marché révèle les bougies suivantes. Le moteur évalue : trop serré, parfait, trop large ou pleine liquidité.",
+    description: "Quel stop va survivre ? 10 setups, 3 stops loss proposés à chaque fois (A / B / C). Tu choisis le plus logique — structure, liquidité, RR. Le marché révèle la suite.",
     level:       "Intermédiaire",
     levelColor:  "text-blue-400 border-blue-500/30",
     duration:    "~7 min",
