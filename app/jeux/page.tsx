@@ -51,6 +51,23 @@ const AVAILABLE_GAMES: Game[] = [
       </svg>
     ),
   },
+  {
+    id:          "find-the-mistake",
+    title:       "Trouve l'erreur",
+    description: "10 setups avec une erreur cachée. Tu identifies l'erreur principale parmi 4 choix. Psychologie retail, discipline, liquidité, RR — apprends à voir les pièges classiques.",
+    level:       "Tous niveaux",
+    levelColor:  "text-emerald-400 border-emerald-500/30",
+    duration:    "~5 min",
+    available:   true,
+    href:        "/jeux/find-the-mistake",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <circle cx="11" cy="11" r="6" stroke="#52525b" strokeWidth="1.6" />
+        <path d="M15.5 15.5L22 22" stroke="#52525b" strokeWidth="1.6" strokeLinecap="round" />
+        <path d="M9 11l2 2 3-4" stroke="#ef4444" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
 ];
 
 const UPCOMING_GAMES: Game[] = [
