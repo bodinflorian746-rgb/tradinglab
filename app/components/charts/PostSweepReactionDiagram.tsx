@@ -4,6 +4,7 @@
 
 interface PostSweepReactionDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -36,7 +37,19 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function PostSweepReactionDiagram({ className = "" }: PostSweepReactionDiagramProps) {
+export function PostSweepReactionDiagram({ className = "", locale = "fr" }: PostSweepReactionDiagramProps) {
+  const isEs = locale === "es";
+  const L = {
+    impulsive:    isEs ? "Vela impulsiva" : "Bougie impulsive",
+    annot:        isEs ? "La reacción cuenta más que la ruptura" : "La réaction compte plus que la cassure",
+    mobTitle:     isEs ? "Reacción post-sweep · EUR/USD M15" : "Réaction post-sweep · EUR/USD M15",
+    mob1End:      isEs ? "· mecha por encima de la resistencia." : "· mèche au-dessus de la résistance.",
+    mob2Bold:     isEs ? "Reintegración" : "Réintégration",
+    mob2End:      isEs ? "debajo del nivel (cierre debajo)." : "sous le niveau (clôture sous).",
+    mob3End:      isEs ? "= verdadera señal de entrada short." : "= vrai signal d'entrée short.",
+    legend1:      isEs ? "Sweep + reintegración debajo de la resistencia" : "Sweep + réintégration sous la résistance",
+    legend2:      isEs ? "Vela impulsiva = verdadera señal de entrada" : "Bougie impulsive = vrai signal d'entrée",
+  };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -64,7 +77,7 @@ export function PostSweepReactionDiagram({ className = "" }: PostSweepReactionDi
         {/* Pastille pointant la bougie impulsive */}
         <line x1="394" y1="160" x2="430" y2="148" stroke="#f59e0b" strokeWidth="0.9" strokeOpacity="0.7" />
         <rect x="430" y="138" width="118" height="14" rx="3" fill="#09090b" />
-        <text x="489" y="148" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Bougie impulsive</text>
+        <text x="489" y="148" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{L.impulsive}</text>
 
         {/* Label "1.1735" en bas */}
         <rect x="544" y="264" width="58" height="13" rx="3" fill="#09090b" />
@@ -74,25 +87,25 @@ export function PostSweepReactionDiagram({ className = "" }: PostSweepReactionDi
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          La réaction compte plus que la cassure
+          {L.annot}
         </text>
       </svg>
 
       {/* MOBILE : réaction post-sweep ────────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Réaction post-sweep · EUR/USD M15</p>
+        <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">1</span>
-            <span className="text-zinc-300"><span className="font-bold text-amber-400">Sweep</span> · mèche au-dessus de la résistance.</span>
+            <span className="text-zinc-300"><span className="font-bold text-amber-400">Sweep</span> {L.mob1End}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">2</span>
-            <span className="text-zinc-300"><span className="font-bold text-red-400">Réintégration</span> sous le niveau (clôture sous).</span>
+            <span className="text-zinc-300"><span className="font-bold text-red-400">{L.mob2Bold}</span> {L.mob2End}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
-            <span className="text-zinc-300"><span className="font-bold text-emerald-400">Bougie impulsive</span> = vrai signal d'entrée short.</span>
+            <span className="text-zinc-300"><span className="font-bold text-emerald-400">{L.impulsive}</span> {L.mob3End}</span>
           </li>
         </ul>
       </div>
@@ -100,11 +113,11 @@ export function PostSweepReactionDiagram({ className = "" }: PostSweepReactionDi
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Sweep + réintégration sous la résistance</span>
+          <span className="text-[10px] text-zinc-500">{L.legend1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Bougie impulsive = vrai signal d&apos;entrée</span>
+          <span className="text-[10px] text-zinc-500">{L.legend2}</span>
         </div>
       </div>
     </div>

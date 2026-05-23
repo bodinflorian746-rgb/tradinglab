@@ -4,6 +4,7 @@
 
 interface DisplacementVsVolatilityDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -47,7 +48,22 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function DisplacementVsVolatilityDiagram({ className = "" }: DisplacementVsVolatilityDiagramProps) {
+export function DisplacementVsVolatilityDiagram({ className = "", locale = "fr" }: DisplacementVsVolatilityDiagramProps) {
+  const isEs = locale === "es";
+  const L = {
+    leftLabel:   isEs ? "Volatilidad sin secuela" : "Volatilité sans suite",
+    rightLabel:  isEs ? "Verdadero displacement" : "Vrai displacement",
+    rejection:   isEs ? "Rechazo" : "Rejet",
+    continuity:  isEs ? "Continuidad" : "Continuité",
+    pill:        isEs ? "Volatilidad ≠ displacement" : "Volatilité ≠ displacement",
+    mobTitle:    isEs ? "Displacement vs volatilidad · EUR/USD M15" : "Displacement vs volatilité · EUR/USD M15",
+    leftCardT:   isEs ? "Volatilidad aislada — no es displacement" : "Volatilité isolée — pas displacement",
+    leftCardD:   isEs ? "Gran vela aislada + rechazo inmediato = sin continuidad." : "Grande bougie isolée + rejet immédiat = pas de continuité.",
+    rightCardT:  isEs ? "Displacement = verdadera ruptura" : "Displacement = vraie cassure",
+    rightCardD:  isEs ? "Ruptura de estructura + continuación = verdadero cambio de control institucional." : "Cassure de structure + continuation = vrai changement de contrôle institutionnel.",
+    legend1:     isEs ? "Gran vela aislada + rechazo = sin continuidad" : "Grande bougie isolée + rejet = pas de continuité",
+    legend2:     isEs ? "Displacement = ruptura de estructura + continuación" : "Displacement = cassure de structure + continuation",
+  };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -60,12 +76,12 @@ export function DisplacementVsVolatilityDiagram({ className = "" }: Displacement
 
         {/* Étiquette gauche */}
         <rect x="78" y="50" width="134" height="14" rx="3" fill="#09090b" />
-        <text x="145" y="60" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Volatilité sans suite</text>
+        <text x="145" y="60" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{L.leftLabel}</text>
 
         {/* Étiquette droite */}
         <rect x="408" y="50" width="124" height="14" rx="3" fill="#09090b" />
         <rect x="408" y="50" width="124" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
-        <text x="470" y="60" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Vrai displacement</text>
+        <text x="470" y="60" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{L.rightLabel}</text>
 
         {/* Bougies */}
         {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
@@ -81,40 +97,40 @@ export function DisplacementVsVolatilityDiagram({ className = "" }: Displacement
 
         {/* Petite étiquette "Rejet" pour la partie gauche */}
         <rect x="182" y="92" width="56" height="13" rx="3" fill="#09090b" />
-        <text x="210" y="102" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">Rejet</text>
+        <text x="210" y="102" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">{L.rejection}</text>
 
         {/* Étiquette "Continuité" pour la partie droite */}
         <rect x="500" y="200" width="80" height="13" rx="3" fill="#09090b" />
-        <text x="540" y="210" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Continuité</text>
+        <text x="540" y="210" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{L.continuity}</text>
       </svg>
 
       <div className="hidden sm:block px-4 pt-1">
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-full px-3 py-1 inline-block">
-          <span className="text-[10px] text-amber-400 font-bold">Volatilité ≠ displacement</span>
+          <span className="text-[10px] text-amber-400 font-bold">{L.pill}</span>
         </div>
       </div>
 
       {/* MOBILE : displacement vs volatilité ─────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Displacement vs volatilité · EUR/USD M15</p>
+        <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
         <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-          <p className="text-[13px] font-bold text-amber-400">Volatilité isolée — pas displacement</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Grande bougie isolée + rejet immédiat = pas de continuité.</p>
+          <p className="text-[13px] font-bold text-amber-400">{L.leftCardT}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.leftCardD}</p>
         </div>
         <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Displacement = vraie cassure</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Cassure de structure + continuation = vrai changement de contrôle institutionnel.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{L.rightCardT}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.rightCardD}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 mt-2 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Grande bougie isolée + rejet = pas de continuité</span>
+          <span className="text-[10px] text-zinc-500">{L.legend1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Displacement = cassure de structure + continuation</span>
+          <span className="text-[10px] text-zinc-500">{L.legend2}</span>
         </div>
       </div>
     </div>

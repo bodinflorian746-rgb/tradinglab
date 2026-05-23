@@ -1,0 +1,41 @@
+{
+  "title": "Una tarifa simple y transparente",
+  "subtitle": "Acceso gratis vía un broker partner TradeScaleX, o 19€/mes sin pasar por un broker.",
+  "broker": {
+    "badge": "Recomendado",
+    "name": "Vía broker partner",
+    "price": "0€",
+    "period": "/mes",
+    "description": "Acceso completo vía un enlace de afiliación TradeScaleX (o de un afiliado TradeScaleX).",
+    "features": [
+      "Acceso completo a la plataforma",
+      "Cursos ICT completos",
+      "Cursos SMC completos",
+      "Price Action avanzado",
+      "Quiz y ejercicios sobre gráficos",
+      "Nuevas lecciones cada semana",
+      "Soporte prioritario",
+      "Acceso a la comunidad"
+    ],
+    "cta": "Acceder vía broker partner",
+    "haveCode": "Ya tengo un código de acceso"
+  },
+  "direct": {
+    "name": "Acceso directo",
+    "price": "19€",
+    "period": "/mes",
+    "description": "Sin pasar por un broker, sin compromiso.",
+    "features": [
+      "Acceso completo a la plataforma",
+      "Cursos ICT completos",
+      "Cursos SMC completos",
+      "Price Action avanzado",
+      "Quiz y ejercicios sobre gráficos",
+      "Nuevas lecciones cada semana",
+      "Soporte prioritario",
+      "Acceso a la comunidad"
+    ],
+    "cta": "Empezar acceso directo"
+  },
+  "guarantee": "Cancelación en cualquier momento · Pago seguro · Sin compromiso"
+}

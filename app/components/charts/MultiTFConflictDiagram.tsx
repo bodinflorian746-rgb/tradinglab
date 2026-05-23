@@ -1,4 +1,29 @@
-export default function MultiTFConflictDiagram({ className = "" }: { className?: string }) {
+export default function MultiTFConflictDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const L = locale === "es"
+    ? {
+        warning: "⚠ Conflicto multi-TF — Sin trade",
+        haussier: "↑ Alcista",
+        baissier: "↓ Bajista",
+        footer: "Daily ↑ vs H4 ↓ vs M15 ↑: mientras los 3 timeframes no se alineen, sin entrada",
+        mobWarning: "⚠ Conflicto multi-TF — Sin trade",
+        mobAlcistaSpan: "↑ Alcista",
+        mobBajistaSpan: "↓ Bajista",
+        mobFooterPre: "Mientras los 3 timeframes no se alineen, ",
+        mobFooterBold: "sin entrada",
+        mobFooterPost: ".",
+      }
+    : {
+        warning: "⚠ Conflit multi-TF — Pas de trade",
+        haussier: "↑ Haussier",
+        baissier: "↓ Baissier",
+        footer: "Daily ↑ vs H4 ↓ vs M15 ↑ : tant que les 3 timeframes ne s'alignent pas, pas d'entrée",
+        mobWarning: "⚠ Conflit multi-TF — Pas de trade",
+        mobAlcistaSpan: "↑ Haussier",
+        mobBajistaSpan: "↓ Baissier",
+        mobFooterPre: "Tant que les 3 timeframes ne s'alignent pas, ",
+        mobFooterBold: "pas d'entrée",
+        mobFooterPost: ".",
+      };
   return (
     <div className={className}>
     <svg
@@ -9,7 +34,7 @@ export default function MultiTFConflictDiagram({ className = "" }: { className?:
       {/* Badge central top */}
       <rect x="310" y="10" width="280" height="28" rx="14" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1.2" />
       <text x="450" y="29" fill="#f59e0b" fontSize="12" fontWeight="700" textAnchor="middle">
-        ⚠ Conflit multi-TF — Pas de trade
+        {L.warning}
       </text>
 
       {/* Séparateurs verticaux */}
@@ -34,7 +59,7 @@ export default function MultiTFConflictDiagram({ className = "" }: { className?:
       <path d="M135 90 L145 70 L155 90" stroke="#10b981" strokeWidth="4" fill="none" strokeLinejoin="round" />
 
       <rect x="55" y="350" width="180" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="145" y="365" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">↑ Haussier</text>
+      <text x="145" y="365" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">{L.haussier}</text>
 
       {/* ═══ PANEL 2 — H4 BAISSIER ═══ */}
       <text x="450" y="70" fill="#d4d4d8" fontSize="14" fontWeight="600" textAnchor="middle">H4</text>
@@ -54,7 +79,7 @@ export default function MultiTFConflictDiagram({ className = "" }: { className?:
       <path d="M440 340 L450 360 L460 340" stroke="#ef4444" strokeWidth="4" fill="none" strokeLinejoin="round" />
 
       <rect x="360" y="350" width="180" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="450" y="365" fill="#ef4444" fontSize="11" fontWeight="700" textAnchor="middle">↓ Baissier</text>
+      <text x="450" y="365" fill="#ef4444" fontSize="11" fontWeight="700" textAnchor="middle">{L.baissier}</text>
 
       {/* ═══ PANEL 3 — M15 HAUSSIER ═══ */}
       <text x="755" y="70" fill="#d4d4d8" fontSize="14" fontWeight="600" textAnchor="middle">M15</text>
@@ -70,34 +95,34 @@ export default function MultiTFConflictDiagram({ className = "" }: { className?:
       <path d="M745 110 L755 90 L765 110" stroke="#10b981" strokeWidth="4" fill="none" strokeLinejoin="round" />
 
       <rect x="665" y="350" width="180" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="755" y="365" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">↑ Haussier</text>
+      <text x="755" y="365" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">{L.haussier}</text>
 
       <text x="450" y="395" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        Daily ↑ vs H4 ↓ vs M15 ↑ : tant que les 3 timeframes ne s&apos;alignent pas, pas d&apos;entrée
+        {L.footer}
       </text>
     </svg>
 
     {/* MOBILE : conflit multi-TF ─────────────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
       <div className="rounded-xl border-2 border-amber-400 bg-amber-400/10 p-3 text-center">
-        <p className="text-[14px] font-bold text-amber-400">⚠ Conflit multi-TF — Pas de trade</p>
+        <p className="text-[14px] font-bold text-amber-400">{L.mobWarning}</p>
       </div>
       <div className="space-y-2">
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/5 p-2.5 flex justify-between items-center">
           <span className="text-[14px] font-bold text-zinc-200">Daily</span>
-          <span className="text-[14px] font-bold text-emerald-400">↑ Haussier</span>
+          <span className="text-[14px] font-bold text-emerald-400">{L.mobAlcistaSpan}</span>
         </div>
         <div className="rounded-lg border border-red-500/40 bg-red-500/5 p-2.5 flex justify-between items-center">
           <span className="text-[14px] font-bold text-zinc-200">H4</span>
-          <span className="text-[14px] font-bold text-red-400">↓ Baissier</span>
+          <span className="text-[14px] font-bold text-red-400">{L.mobBajistaSpan}</span>
         </div>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/5 p-2.5 flex justify-between items-center">
           <span className="text-[14px] font-bold text-zinc-200">M15</span>
-          <span className="text-[14px] font-bold text-emerald-400">↑ Haussier</span>
+          <span className="text-[14px] font-bold text-emerald-400">{L.mobAlcistaSpan}</span>
         </div>
       </div>
       <p className="text-[13px] text-zinc-300 leading-snug text-center pt-2 border-t border-zinc-800">
-        Tant que les 3 timeframes ne s'alignent pas, <span className="font-bold text-amber-400">pas d'entrée</span>.
+        {L.mobFooterPre}<span className="font-bold text-amber-400">{L.mobFooterBold}</span>{L.mobFooterPost}
       </p>
     </div>
     </div>

@@ -1,4 +1,37 @@
-export default function FlipFailureDiagram({ className = "" }: { className?: string }) {
+export default function FlipFailureDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const L = locale === "es"
+    ? {
+        title: "Flip que falla — el nivel no aguanta",
+        invalid: "✗ Flip invalidado",
+        miniSommet: "Mini-pico 1.1880",
+        cassure: "Ruptura 1.1875",
+        returnLabel: "Retorno bajo nivel",
+        resistance: "Resistencia 1.1850",
+        footer: "El retorno rápido bajo el nivel invalida el flip — salida inmediata",
+        mobTitle: "Flip que falla — el nivel no aguanta",
+        mobStep1: "Paso 1 — Ruptura de resistencia 1.1850",
+        mobStep1Desc: "El precio rompe la resistencia → esperas el retest para entrar long.",
+        mobStep2: "Paso 2 — Retorno franco bajo el nivel",
+        mobStep2Desc: "En lugar de rebotar, el precio cae bajo 1.1850 en cierre.",
+        mobStep3: "Paso 3 — Salida inmediata",
+        mobStep3Desc: "Flip inválido. Corta la posición sin esperar a que el SL sea tocado.",
+      }
+    : {
+        title: "Flip qui échoue — le niveau ne tient pas",
+        invalid: "✗ Flip invalidé",
+        miniSommet: "Mini-sommet 1.1880",
+        cassure: "Cassure 1.1875",
+        returnLabel: "Retour sous niveau",
+        resistance: "Résistance 1.1850",
+        footer: "Le retour rapide sous le niveau invalide le flip — sortie immédiate",
+        mobTitle: "Flip qui échoue — niveau ne tient pas",
+        mobStep1: "Étape 1 — Cassure de résistance 1.1850",
+        mobStep1Desc: "Le prix casse la résistance → tu attends le retest pour entrer long.",
+        mobStep2: "Étape 2 — Retour franc sous le niveau",
+        mobStep2Desc: "Au lieu de rebondir, le prix replonge sous 1.1850 en clôture.",
+        mobStep3: "Étape 3 — Sortie immédiate",
+        mobStep3Desc: "Flip invalide. Couper la position sans attendre que le SL soit touché.",
+      };
   return (
     <div className={className}>
     <svg
@@ -7,11 +40,11 @@ export default function FlipFailureDiagram({ className = "" }: { className?: str
       className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        Flip qui échoue — le niveau ne tient pas
+        {L.title}
       </text>
 
       <rect x="560" y="40" width="220" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="670" y="55" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">✗ Flip invalidé</text>
+      <text x="670" y="55" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{L.invalid}</text>
 
       {/* Niveau résistance — trait continu d'un bout à l'autre */}
       <line x1="20" y1="200" x2="780" y2="200" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" />
@@ -36,18 +69,18 @@ export default function FlipFailureDiagram({ className = "" }: { className?: str
 
       {/* Mini-sommet annotation — déplacé y=128 → y=110 (séparation verticale 18px de "Cassure 1.1875") */}
       <rect x="283" y="99" width="134" height="14" fill="#09090b" rx="3" />
-      <text x="350" y="110" fill="#71717a" fontSize="8" textAnchor="middle">Mini-sommet 1.1880</text>
+      <text x="350" y="110" fill="#71717a" fontSize="8" textAnchor="middle">{L.miniSommet}</text>
       <line x1="350" y1="114" x2="350" y2="138" stroke="#71717a" strokeWidth="0.8" strokeDasharray="2 2" />
 
       {/* Annotation cassure — pastille remplacée par halo uniforme #09090b */}
       <rect x="242" y="116" width="106" height="14" fill="#09090b" rx="3" />
-      <text x="295" y="127" fill="#d4d4d8" fontSize="9" textAnchor="middle">Cassure 1.1875</text>
+      <text x="295" y="127" fill="#d4d4d8" fontSize="9" textAnchor="middle">{L.cassure}</text>
       <line x1="295" y1="133" x2="310" y2="158" stroke="#3f3f46" strokeWidth="0.8" strokeDasharray="2 2" />
 
       {/* Annotation retour rapide — halo opaque inséré sous la pastille translucide */}
       <rect x="448" y="266" width="134" height="14" fill="#09090b" rx="3" />
       <rect x="450" y="265" width="130" height="18" rx="4" fill="#ef444420" stroke="#ef4444" strokeWidth="0.8" />
-      <text x="515" y="277" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">Retour sous niveau</text>
+      <text x="515" y="277" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">{L.returnLabel}</text>
       <line x1="450" y1="270" x2="432" y2="225" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" />
 
       {/* Continuation baissière — 3 bougies rouges */}
@@ -62,27 +95,27 @@ export default function FlipFailureDiagram({ className = "" }: { className?: str
 
       {/* Halo + label "Résistance 1.1850" déplacé tout à la fin pour rester au-dessus du path et des bougies */}
       <rect x="21" y="183" width="127" height="14" fill="#09090b" rx="3" />
-      <text x="25" y="194" fill="#ef4444" fontSize="9" fontWeight="600">Résistance 1.1850</text>
+      <text x="25" y="194" fill="#ef4444" fontSize="9" fontWeight="600">{L.resistance}</text>
 
       <text x="400" y="395" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        Le retour rapide sous le niveau invalide le flip — sortie immédiate
+        {L.footer}
       </text>
     </svg>
 
     {/* MOBILE : échec de flip ─────────────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
-      <p className="text-[14px] font-bold text-red-400 text-center">Flip qui échoue — niveau ne tient pas</p>
+      <p className="text-[14px] font-bold text-red-400 text-center">{L.mobTitle}</p>
       <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2.5">
-        <p className="text-[12px] font-bold text-emerald-400">Étape 1 — Cassure de résistance 1.1850</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Le prix casse la résistance → tu attends le retest pour entrer long.</p>
+        <p className="text-[12px] font-bold text-emerald-400">{L.mobStep1}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">{L.mobStep1Desc}</p>
       </div>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-2.5">
-        <p className="text-[12px] font-bold text-red-400">Étape 2 — Retour franc sous le niveau</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Au lieu de rebondir, le prix replonge sous 1.1850 en clôture.</p>
+        <p className="text-[12px] font-bold text-red-400">{L.mobStep2}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">{L.mobStep2Desc}</p>
       </div>
       <div className="rounded-lg border-2 border-red-500/60 bg-red-500/10 p-2.5">
-        <p className="text-[12px] font-bold text-red-400">Étape 3 — Sortie immédiate</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">Flip invalide. Couper la position sans attendre que le SL soit touché.</p>
+        <p className="text-[12px] font-bold text-red-400">{L.mobStep3}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">{L.mobStep3Desc}</p>
       </div>
     </div>
     </div>

@@ -4,12 +4,27 @@
 interface MarketStructureDiagramProps {
   trend?: "bullish" | "bearish";
   className?: string;
+  locale?: "fr" | "es";
 }
 
 export function MarketStructureDiagram({
   trend = "bullish",
   className = "",
+  locale = "fr",
 }: MarketStructureDiagramProps) {
+  const isEs = locale === "es";
+  const T = {
+    trendBull:  isEs ? "Tendencia alcista ↗" : "Tendance haussière ↗",
+    trendBear:  isEs ? "Tendencia bajista ↘" : "Tendance baissière ↘",
+    hhDesc:     isEs ? "Higher High — cada máximo más alto que el anterior" : "Higher High — chaque sommet plus haut que le précédent",
+    lhDesc:     isEs ? "Lower High — cada máximo más bajo que el anterior" : "Lower High — chaque sommet plus bas que le précédent",
+    hlDesc:     isEs ? "Higher Low — cada mínimo más alto que el anterior" : "Higher Low — chaque creux plus haut que le précédent",
+    llDesc:     isEs ? "Lower Low — cada mínimo más bajo que el anterior" : "Lower Low — chaque creux plus bas que le précédent",
+    legendHH:   isEs ? "HH = Higher High (máximo más alto)" : "HH = Higher High (sommet plus haut)",
+    legendLH:   isEs ? "LH = Lower High (máximo más bajo)" : "LH = Lower High (sommet plus bas)",
+    legendHL:   isEs ? "HL = Higher Low (mínimo más alto)" : "HL = Higher Low (creux plus haut)",
+    legendLL:   isEs ? "LL = Lower Low (mínimo más bajo)" : "LL = Lower Low (creux plus bas)",
+  };
   const isBull = trend === "bullish";
   const accent = isBull ? "#10b981" : "#ef4444";
   const accentFill = isBull ? "#10b98112" : "#ef444412";
@@ -116,21 +131,21 @@ export function MarketStructureDiagram({
       {/* Mobile : key card avec définitions claires */}
       <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
         <p className="text-[12px] font-bold uppercase tracking-wide" style={{ color: accent }}>
-          {isBull ? "Tendance haussière ↗" : "Tendance baissière ↘"}
+          {isBull ? T.trendBull : T.trendBear}
         </p>
         <ul className="space-y-1.5 text-[13px] leading-snug">
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: accent }} />
             <span className="text-white">
               <span className="font-bold" style={{ color: accent }}>{isBull ? "HH" : "LH"}</span>
-              <span className="text-zinc-300"> · {isBull ? "Higher High — chaque sommet plus haut que le précédent" : "Lower High — chaque sommet plus bas que le précédent"}</span>
+              <span className="text-zinc-300"> · {isBull ? T.hhDesc : T.lhDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: accent }} />
             <span className="text-white">
               <span className="font-bold" style={{ color: accent }}>{isBull ? "HL" : "LL"}</span>
-              <span className="text-zinc-300"> · {isBull ? "Higher Low — chaque creux plus haut que le précédent" : "Lower Low — chaque creux plus bas que le précédent"}</span>
+              <span className="text-zinc-300"> · {isBull ? T.hlDesc : T.llDesc}</span>
             </span>
           </li>
         </ul>
@@ -141,13 +156,13 @@ export function MarketStructureDiagram({
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full" style={{ background: accent }} />
           <span className="text-[10px] text-zinc-500">
-            {isBull ? "HH = Higher High (sommet plus haut)" : "LH = Lower High (sommet plus bas)"}
+            {isBull ? T.legendHH : T.legendLH}
           </span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full" style={{ background: accent }} />
           <span className="text-[10px] text-zinc-500">
-            {isBull ? "HL = Higher Low (creux plus haut)" : "LL = Lower Low (creux plus bas)"}
+            {isBull ? T.legendHL : T.legendLL}
           </span>
         </div>
       </div>

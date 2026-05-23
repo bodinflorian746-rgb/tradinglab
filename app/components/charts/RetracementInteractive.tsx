@@ -15,7 +15,7 @@ const PATHS = {
   reverse_ext:  "M166,84 L188,64 L216,44 L245,24 L258,18",
 } as const;
 
-const CONFIGS = {
+const CONFIGS_FR = {
   fomo: {
     heading: "FOMO — entrée trop tôt",
     body: "Tu es entré pendant le retracement, pas au HL. Le prix a continué sa correction et touché ton Stop Loss. Les entrées en milieu de retracement manquent de précision — attends toujours la zone de structure.",
@@ -45,10 +45,57 @@ const CONFIGS = {
   },
 };
 
-export function RetracementInteractive({ className = "" }: { className?: string }) {
+const CONFIGS_ES = {
+  fomo: {
+    heading: "FOMO — entrada demasiado pronto",
+    body: "Entraste durante el retracement, no en el HL. El precio continuó su corrección y tocó tu Stop Loss. Las entradas en medio del retracement carecen de precisión — espera siempre la zona de estructura.",
+    color: "border-red-500/20 bg-red-500/5 text-red-400",
+    badgeColor: "#ef4444",
+    badgeText: "SL tocado ✗",
+    badgeCx: 204,
+    badgeCy: 118,
+  },
+  patience: {
+    heading: "Paciencia — entrada en el HL",
+    body: "Esperaste a que el precio volviera al Higher Low estructural. El retracement se detuvo ahí. Pin bar alcista validada. El precio continuó en el sentido de la tendencia. Trade ganador.",
+    color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
+    badgeColor: "#10b981",
+    badgeText: "Trade ganador ✓",
+    badgeCx: 210,
+    badgeCy: 24,
+  },
+  reverse: {
+    heading: "Contra-tendencia — venta en una subida",
+    body: "Vendiste en una tendencia alcista. El retracement era una corrección normal — no un giro. El precio retomó su subida y tocó tu Stop Loss. Nunca vendas sin ruptura de estructura clara.",
+    color: "border-red-500/20 bg-red-500/5 text-red-400",
+    badgeColor: "#ef4444",
+    badgeText: "SL tocado ✗",
+    badgeCx: 210,
+    badgeCy: 24,
+  },
+};
+
+export function RetracementInteractive({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
   const [choice, setChoice] = useState<Choice>(null);
 
+  const CONFIGS = locale === "es" ? CONFIGS_ES : CONFIGS_FR;
   const cfg = choice ? CONFIGS[choice] : null;
+
+  const labels = locale === "es"
+    ? {
+        question: "El precio retrocede al HL — ¿qué haces?",
+        btnFomo: "Entrar ahora",
+        btnPatience: "Esperar el HL",
+        btnReverse: "Vender aquí",
+        retry: "Volver a intentar",
+      }
+    : {
+        question: "Le prix retrace sur le HL — que fais-tu ?",
+        btnFomo: "Entrer maintenant",
+        btnPatience: "Attendre le HL",
+        btnReverse: "Vendre ici",
+        retry: "Réessayer",
+      };
 
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
@@ -169,26 +216,26 @@ export function RetracementInteractive({ className = "" }: { className?: string 
       {!choice && (
         <div className="px-4 pb-4 pt-2">
           <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-2.5 text-center">
-            Le prix retrace sur le HL — que fais-tu ?
+            {labels.question}
           </p>
           <div className="flex flex-col sm:flex-row gap-2">
             <button
               onClick={() => setChoice("fomo")}
               className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 hover:bg-amber-400/20 transition-colors focus:outline-none focus:ring-1 focus:ring-amber-400"
             >
-              Entrer maintenant
+              {labels.btnFomo}
             </button>
             <button
               onClick={() => setChoice("patience")}
               className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-colors focus:outline-none focus:ring-1 focus:ring-emerald-500"
             >
-              Attendre le HL
+              {labels.btnPatience}
             </button>
             <button
               onClick={() => setChoice("reverse")}
               className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-colors focus:outline-none focus:ring-1 focus:ring-red-500"
             >
-              Vendre ici
+              {labels.btnReverse}
             </button>
           </div>
         </div>
@@ -203,7 +250,7 @@ export function RetracementInteractive({ className = "" }: { className?: string 
             onClick={() => setChoice(null)}
             className="mt-2.5 text-[10px] font-semibold text-zinc-500 hover:text-zinc-300 transition-colors focus:outline-none underline underline-offset-2"
           >
-            Réessayer
+            {labels.retry}
           </button>
         </div>
       )}

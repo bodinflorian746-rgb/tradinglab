@@ -4,6 +4,7 @@
 
 interface ICTLiquidityPrepDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -38,7 +39,32 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function ICTLiquidityPrepDiagram({ className = "" }: ICTLiquidityPrepDiagramProps) {
+export function ICTLiquidityPrepDiagram({ className = "", locale = "fr" }: ICTLiquidityPrepDiagramProps) {
+  const t = locale === "es"
+    ? {
+        equalHighs: "Equal highs 1.1780",
+        sweep: "Sweep 1.1792",
+        annotation: "La liquidez prepara el displacement",
+        mobileTitle: "ICT liquidity prep · EUR/USD H1",
+        m1a: "Equal highs",
+        m1b: " = liquidez visible de stops de compra.",
+        m2a: "Sweep + reintegración",
+        m2b: " = manipulación institucional.",
+        leg1: "Equal highs = liquidez visible",
+        leg2: "Sweep y reintegración = manipulación",
+      }
+    : {
+        equalHighs: "Equal highs 1.1780",
+        sweep: "Sweep 1.1792",
+        annotation: "La liquidité prépare le déplacement",
+        mobileTitle: "ICT liquidity prep · EUR/USD H1",
+        m1a: "Equal highs",
+        m1b: " = liquidité visible des stops d'achat.",
+        m2a: "Sweep + réintégration",
+        m2b: " = manipulation institutionnelle.",
+        leg1: "Equal highs = liquidité visible",
+        leg2: "Sweep puis réintégration = manipulation",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -49,7 +75,7 @@ export function ICTLiquidityPrepDiagram({ className = "" }: ICTLiquidityPrepDiag
         {/* Ligne equal highs */}
         <line x1="40" y1="60" x2="660" y2="60" stroke="#ef4444" strokeWidth="1.3" strokeDasharray="5 3" strokeOpacity="0.85" />
         <rect x="486" y="48" width="148" height="13" rx="3" fill="#09090b" />
-        <text x="560" y="58" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Equal highs 1.1780</text>
+        <text x="560" y="58" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">{t.equalHighs}</text>
 
         {/* Bougies */}
         {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
@@ -66,27 +92,27 @@ export function ICTLiquidityPrepDiagram({ className = "" }: ICTLiquidityPrepDiag
         {/* Label Sweep 1.1792 */}
         <line x1="342" y1="40" x2="372" y2="28" stroke="#f59e0b" strokeWidth="0.9" strokeOpacity="0.7" />
         <rect x="372" y="18" width="92" height="14" rx="3" fill="#09090b" />
-        <text x="418" y="28" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep 1.1792</text>
+        <text x="418" y="28" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.sweep}</text>
 
         {/* Annotation */}
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          La liquidité prépare le déplacement
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : ICT liquidity prep ─────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">ICT liquidity prep · EUR/USD H1</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>
-            <span className="text-zinc-300"><span className="font-bold text-red-400">Equal highs</span> = liquidité visible des stops d'achat.</span>
+            <span className="text-zinc-300"><span className="font-bold text-red-400">{t.m1a}</span>{t.m1b}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">2</span>
-            <span className="text-zinc-300"><span className="font-bold text-amber-400">Sweep + réintégration</span> = manipulation institutionnelle.</span>
+            <span className="text-zinc-300"><span className="font-bold text-amber-400">{t.m2a}</span>{t.m2b}</span>
           </li>
         </ul>
       </div>
@@ -94,11 +120,11 @@ export function ICTLiquidityPrepDiagram({ className = "" }: ICTLiquidityPrepDiag
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Equal highs = liquidité visible</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Sweep puis réintégration = manipulation</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

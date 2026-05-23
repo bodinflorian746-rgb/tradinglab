@@ -1,4 +1,68 @@
-export const InflationChainDiagram = () => {
+export const InflationChainDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+  const t = locale === "es"
+    ? {
+        title: "La cadena que controla TODO el mercado",
+        subtitle: "Apréndela de memoria — es el 80% de la macro",
+        inflation: "INFLACIÓN",
+        pricesUp: "Los precios suben",
+        taux: "TASAS",
+        banqueCent: "El banco central",
+        monteTaux: "sube las tasas",
+        devise: "MONEDA",
+        devientAttract: "Se vuelve más",
+        attractive: "atractiva",
+        marches: "MERCADOS",
+        forexIndices: "Forex / Índices",
+        orCrypto: "Oro / Crypto",
+        force: "fuerza",
+        renforce: "refuerza",
+        impacte: "impacta",
+        exemple: "EJEMPLO — La cadena en acción (2022-2023)",
+        inflationUS: "Inflación US",
+        tauxFed: "Tasas Fed",
+        dollarDxy: "Dólar (DXY)",
+        nasdaq: "Nasdaq",
+        narrative: "Una sola causa macro hizo mover TODO el mercado.",
+        footer: "Seguir la inflación = comprender el 80% de los movimientos macro",
+        mobileExemple: "Ejemplo — la cadena en acción (2022-2023)",
+        // Mobile step descriptions
+        step1Desc: "Los precios suben",
+        step2Desc: "El banco central sube las tasas",
+        step3Desc: "Se vuelve más atractiva",
+        step4Desc: "Forex / Índices / Oro / Crypto",
+        narrativeMobile: "Una sola causa macro hizo mover TODO el mercado.",
+      }
+    : {
+        title: "La chaîne qui contrôle TOUT le marché",
+        subtitle: "Apprends-la par cœur — c'est 80% de la macro",
+        inflation: "INFLATION",
+        pricesUp: "Les prix montent",
+        taux: "TAUX",
+        banqueCent: "La banque centrale",
+        monteTaux: "monte les taux",
+        devise: "DEVISE",
+        devientAttract: "Devient plus",
+        attractive: "attractive",
+        marches: "MARCHÉS",
+        forexIndices: "Forex / Indices",
+        orCrypto: "Or / Crypto",
+        force: "force",
+        renforce: "renforce",
+        impacte: "impacte",
+        exemple: "EXEMPLE — La chaîne en action (2022-2023)",
+        inflationUS: "Inflation US",
+        tauxFed: "Taux Fed",
+        dollarDxy: "Dollar (DXY)",
+        nasdaq: "Nasdaq",
+        narrative: "Une seule cause macro a fait bouger TOUT le marché.",
+        footer: "Suivre l'inflation = comprendre 80% des mouvements macro",
+        mobileExemple: "Exemple — la chaîne en action (2022-2023)",
+        step1Desc: "Les prix montent",
+        step2Desc: "La banque centrale monte les taux",
+        step3Desc: "Devient plus attractive",
+        step4Desc: "Forex / Indices / Or / Crypto",
+        narrativeMobile: "Une seule cause macro a fait bouger TOUT le marché.",
+      };
   return (
     <div>
     <svg
@@ -20,40 +84,40 @@ export const InflationChainDiagram = () => {
 
       {/* Layer 2 — Titre */}
       <text x="400" y="40" fill="white" fontSize="16" fontWeight="700" textAnchor="middle">
-        La chaîne qui contrôle TOUT le marché
+        {t.title}
       </text>
       <text x="400" y="62" fill="#a1a1aa" fontSize="12" fontStyle="italic" textAnchor="middle">
-        Apprends-la par cœur — c&apos;est 80% de la macro
+        {t.subtitle}
       </text>
 
       {/* Layer 3 — 4 boxes */}
 
       {/* Box 1 — INFLATION */}
       <rect x="55" y="160" width="150" height="110" rx="8" fill="#27272a" stroke="#ef4444" strokeWidth="2" />
-      <text x="130" y="190" fill="#ef4444" fontSize="14" fontWeight="700" textAnchor="middle">INFLATION</text>
+      <text x="130" y="190" fill="#ef4444" fontSize="14" fontWeight="700" textAnchor="middle">{t.inflation}</text>
       <text x="130" y="230" fill="#f87171" fontSize="36" fontWeight="700" textAnchor="middle">↑</text>
-      <text x="130" y="257" fill="#a1a1aa" fontSize="10" textAnchor="middle">Les prix montent</text>
+      <text x="130" y="257" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.pricesUp}</text>
 
       {/* Box 2 — TAUX */}
       <rect x="235" y="160" width="150" height="110" rx="8" fill="#27272a" stroke="#fbbf24" strokeWidth="2" />
-      <text x="310" y="190" fill="#fbbf24" fontSize="14" fontWeight="700" textAnchor="middle">TAUX</text>
+      <text x="310" y="190" fill="#fbbf24" fontSize="14" fontWeight="700" textAnchor="middle">{t.taux}</text>
       <text x="310" y="230" fill="#fbbf24" fontSize="36" fontWeight="700" textAnchor="middle">%</text>
-      <text x="310" y="250" fill="#a1a1aa" fontSize="10" textAnchor="middle">La banque centrale</text>
-      <text x="310" y="263" fill="#a1a1aa" fontSize="10" textAnchor="middle">monte les taux</text>
+      <text x="310" y="250" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.banqueCent}</text>
+      <text x="310" y="263" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.monteTaux}</text>
 
       {/* Box 3 — DEVISE */}
       <rect x="415" y="160" width="150" height="110" rx="8" fill="#27272a" stroke="#60a5fa" strokeWidth="2" />
-      <text x="490" y="190" fill="#60a5fa" fontSize="14" fontWeight="700" textAnchor="middle">DEVISE</text>
+      <text x="490" y="190" fill="#60a5fa" fontSize="14" fontWeight="700" textAnchor="middle">{t.devise}</text>
       <text x="490" y="230" fill="#60a5fa" fontSize="36" fontWeight="700" textAnchor="middle">$</text>
-      <text x="490" y="250" fill="#a1a1aa" fontSize="10" textAnchor="middle">Devient plus</text>
-      <text x="490" y="263" fill="#a1a1aa" fontSize="10" textAnchor="middle">attractive</text>
+      <text x="490" y="250" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.devientAttract}</text>
+      <text x="490" y="263" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.attractive}</text>
 
       {/* Box 4 — MARCHÉS */}
       <rect x="595" y="160" width="150" height="110" rx="8" fill="#27272a" stroke="#10b981" strokeWidth="2" />
-      <text x="670" y="190" fill="#10b981" fontSize="14" fontWeight="700" textAnchor="middle">MARCHÉS</text>
+      <text x="670" y="190" fill="#10b981" fontSize="14" fontWeight="700" textAnchor="middle">{t.marches}</text>
       <text x="670" y="230" fill="#34d399" fontSize="28" fontWeight="700" textAnchor="middle">▲▼</text>
-      <text x="670" y="250" fill="#a1a1aa" fontSize="10" textAnchor="middle">Forex / Indices</text>
-      <text x="670" y="263" fill="#a1a1aa" fontSize="10" textAnchor="middle">Or / Crypto</text>
+      <text x="670" y="250" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.forexIndices}</text>
+      <text x="670" y="263" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.orCrypto}</text>
 
       {/* Layer 4 — Flèches */}
       <line x1="205" y1="215" x2="235" y2="215" stroke="#71717a" strokeWidth="3" markerEnd="url(#arrow-inflation)" />
@@ -61,41 +125,41 @@ export const InflationChainDiagram = () => {
       <line x1="565" y1="215" x2="595" y2="215" stroke="#71717a" strokeWidth="3" markerEnd="url(#arrow-inflation)" />
 
       {/* Layer 5 — Annotations sous les flèches */}
-      <text x="220" y="235" fill="#71717a" fontSize="10" fontStyle="italic" textAnchor="middle">force</text>
-      <text x="400" y="235" fill="#71717a" fontSize="10" fontStyle="italic" textAnchor="middle">renforce</text>
-      <text x="580" y="235" fill="#71717a" fontSize="10" fontStyle="italic" textAnchor="middle">impacte</text>
+      <text x="220" y="235" fill="#71717a" fontSize="10" fontStyle="italic" textAnchor="middle">{t.force}</text>
+      <text x="400" y="235" fill="#71717a" fontSize="10" fontStyle="italic" textAnchor="middle">{t.renforce}</text>
+      <text x="580" y="235" fill="#71717a" fontSize="10" fontStyle="italic" textAnchor="middle">{t.impacte}</text>
 
       {/* Layer 6 — Encadré exemple 2022-2023 */}
       <rect x="55" y="320" width="690" height="90" rx="6" fill="#09090b" fillOpacity="0.5" stroke="#3f3f46" strokeWidth="1" />
 
       <text x="400" y="340" fill="#fbbf24" fontSize="11" fontWeight="700" letterSpacing="0.05em" textAnchor="middle">
-        EXEMPLE — La chaîne en action (2022-2023)
+        {t.exemple}
       </text>
 
       {/* Stat 1 — Inflation US */}
-      <text x="130" y="363" fill="#a1a1aa" fontSize="10" textAnchor="middle">Inflation US</text>
+      <text x="130" y="363" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.inflationUS}</text>
       <text x="130" y="383" fill="#f87171" fontSize="14" fontWeight="700" textAnchor="middle">1.4% → 9.1%</text>
 
       {/* Stat 2 — Taux Fed */}
-      <text x="310" y="363" fill="#a1a1aa" fontSize="10" textAnchor="middle">Taux Fed</text>
+      <text x="310" y="363" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.tauxFed}</text>
       <text x="310" y="383" fill="#fbbf24" fontSize="14" fontWeight="700" textAnchor="middle">0.25% → 5.5%</text>
 
       {/* Stat 3 — Dollar */}
-      <text x="490" y="363" fill="#a1a1aa" fontSize="10" textAnchor="middle">Dollar (DXY)</text>
+      <text x="490" y="363" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.dollarDxy}</text>
       <text x="490" y="383" fill="#60a5fa" fontSize="14" fontWeight="700" textAnchor="middle">+20%</text>
 
       {/* Stat 4 — Nasdaq */}
-      <text x="670" y="363" fill="#a1a1aa" fontSize="10" textAnchor="middle">Nasdaq</text>
+      <text x="670" y="363" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.nasdaq}</text>
       <text x="670" y="383" fill="#f87171" fontSize="14" fontWeight="700" textAnchor="middle">-33%</text>
 
       {/* Ligne narrative */}
       <text x="400" y="400" fill="#a1a1aa" fontSize="11" fontStyle="italic" textAnchor="middle">
-        Une seule cause macro a fait bouger TOUT le marché.
+        {t.narrative}
       </text>
 
       {/* Layer 7 — Pied de page */}
       <text x="400" y="435" fill="#34d399" fontSize="12" fontWeight="700" fontStyle="italic" textAnchor="middle">
-        Suivre l&apos;inflation = comprendre 80% des mouvements macro
+        {t.footer}
       </text>
     </svg>
 

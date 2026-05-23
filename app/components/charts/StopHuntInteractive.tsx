@@ -58,7 +58,7 @@ const REVEALED: Record<"sell" | "wait" | "buy", CD[]> = {
   ],
 };
 
-const CONFIGS = {
+const CONFIGS_FR = {
   sell: {
     heading: "Stop hunt — tu t'es fait piéger",
     body: "La mèche était une chasse de liquidité. Les institutions cherchaient les stops des acheteurs sous le support pour entrer long. Le prix est immédiatement remonté. Vendre sur la mèche, c'est exactement ce que les institutions veulent que tu fasses.",
@@ -91,7 +91,55 @@ const CONFIGS = {
   },
 } as const;
 
-export function StopHuntInteractive({ className = "" }: { className?: string }) {
+const CONFIGS_ES = {
+  sell: {
+    heading: "Stop hunt — caíste en la trampa",
+    body: "La mecha era una caza de liquidity. Las instituciones buscaban los stops de los compradores debajo del soporte para entrar long. El precio rebotó de inmediato. Vender en la mecha es exactamente lo que las instituciones quieren que hagas.",
+    color: "border-red-500/20 bg-red-500/5 text-red-400",
+    badgeColor: "#ef4444",
+    badgeText: "STOP HUNT — atrapado ✗",
+    badgeHw: 68,
+    badgeCx: 284,
+    badgeCy: 18,
+  },
+  wait: {
+    heading: "Paciencia — buena decisión",
+    body: "Esperaste el cierre de la vela. La vela cerró por encima del soporte — la mecha era un stop hunt. Al esperar, evitaste la trampa y ahora puedes buscar una entrada long con confirmación.",
+    color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
+    badgeColor: "#10b981",
+    badgeText: "Buena decisión ✓",
+    badgeHw: 56,
+    badgeCx: 284,
+    badgeCy: 18,
+  },
+  buy: {
+    heading: "Demasiado pronto — ruptura real",
+    body: "Compraste sin confirmación. Esta vez el soporte sí cedió — tu SL fue tocado. Comprar en una mecha sin señal de reversión es tan arriesgado como vender en la ruptura. Espera siempre el cierre y una señal.",
+    color: "border-amber-400/20 bg-amber-400/5 text-amber-400",
+    badgeColor: "#ef4444",
+    badgeText: "SL tocado — ruptura real ✗",
+    badgeHw: 78,
+    badgeCx: 284,
+    badgeCy: 18,
+  },
+} as const;
+
+interface StopHuntInteractiveProps {
+  className?: string;
+  locale?: "fr" | "es";
+}
+
+export function StopHuntInteractive({ className = "", locale = "fr" }: StopHuntInteractiveProps) {
+  const isEs = locale === "es";
+  const CONFIGS = isEs ? CONFIGS_ES : CONFIGS_FR;
+  const T = {
+    supportKey:    isEs ? "Soporte clave" : "Support clé",
+    question:      isEs ? "El soporte acaba de ser perforado por una mecha larga — ¿qué haces?" : "Le support vient d'être percé par une longue mèche — que fais-tu ?",
+    btnSell:       isEs ? "Vender ahora (el soporte está roto)" : "Vendre maintenant (le support est cassé)",
+    btnWait:       isEs ? "Esperar el cierre de la vela" : "Attendre la clôture de bougie",
+    btnBuy:        isEs ? "Comprar (seguramente es un fakeout)" : "Acheter (c'est sûrement un fakeout)",
+    retry:         isEs ? "Reintentar" : "Réessayer",
+  };
   const [choice, setChoice] = useState<Choice>(null);
   const cfg = choice ? CONFIGS[choice] : null;
 
@@ -137,7 +185,7 @@ export function StopHuntInteractive({ className = "" }: { className?: string }) 
           <rect x={12} y={150} width={54} height={11} rx="2"
             fill="#09090b" fillOpacity="0.85" />
           <text x={39} y={158} fontSize="7.5" fill="#71717a"
-            textAnchor="middle" fontWeight="600">Support clé</text>
+            textAnchor="middle" fontWeight="600">{T.supportKey}</text>
         </g>
 
         {/* Context candles */}
@@ -190,26 +238,26 @@ export function StopHuntInteractive({ className = "" }: { className?: string }) 
       {!choice && (
         <div className="px-4 pb-4 pt-2">
           <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-2.5 text-center">
-            Le support vient d'être percé par une longue mèche — que fais-tu ?
+            {T.question}
           </p>
           <div className="flex flex-col sm:flex-row gap-2">
             <button
               onClick={() => setChoice("sell")}
               className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 hover:bg-amber-400/20 transition-colors focus:outline-none focus:ring-1 focus:ring-amber-400"
             >
-              Vendre maintenant (le support est cassé)
+              {T.btnSell}
             </button>
             <button
               onClick={() => setChoice("wait")}
               className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-colors focus:outline-none focus:ring-1 focus:ring-emerald-500"
             >
-              Attendre la clôture de bougie
+              {T.btnWait}
             </button>
             <button
               onClick={() => setChoice("buy")}
               className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-colors focus:outline-none focus:ring-1 focus:ring-red-500"
             >
-              Acheter (c'est sûrement un fakeout)
+              {T.btnBuy}
             </button>
           </div>
         </div>
@@ -224,7 +272,7 @@ export function StopHuntInteractive({ className = "" }: { className?: string }) 
             onClick={() => setChoice(null)}
             className="mt-2.5 text-[10px] font-semibold text-zinc-500 hover:text-zinc-300 transition-colors focus:outline-none underline underline-offset-2"
           >
-            Réessayer
+            {T.retry}
           </button>
         </div>
       )}

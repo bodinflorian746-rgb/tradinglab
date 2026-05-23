@@ -1,11 +1,13 @@
 interface CHoCHDiagramProps {
   trend?: "bullish" | "bearish";
   className?: string;
+  locale?: "fr" | "es";
 }
 
 export function CHoCHDiagram({
   trend = "bullish",
   className = "",
+  locale = "fr",
 }: CHoCHDiagramProps) {
   const isBull = trend === "bullish";
 
@@ -60,6 +62,28 @@ export function CHoCHDiagram({
   // Badge CHoCH au point de cassure — au-dessus si chute (bull retournement ↓), en dessous si hausse (bear retournement ↑)
   const chochBadgeAbove = !isBull;
   const chochBadgeY = chochBadgeAbove ? breakY - 20 : breakY + 10;
+
+  const t = locale === "es"
+    ? {
+        title: `CHoCH — Change of Character ${isBull ? "(reversión bajista)" : "(reversión alcista)"}`,
+        trendInitial: "Tendencia inicial ",
+        trendStruct: isBull ? "alcista (HH/HL)" : "bajista (LH/LL)",
+        lvlBroken: ` roto`,
+        lvlDesc: isBull ? "el precio rompe el mínimo estructural anterior" : "el precio rompe el máximo estructural anterior",
+        chochDesc: "1ra señal de reversión de tendencia",
+        legStruct: isBull ? "Estructura alcista (HH/HL)" : "Estructura bajista (LH/LL)",
+        legChoch: "CHoCH — 1ra señal de reversión",
+      }
+    : {
+        title: `CHoCH — Change of Character ${isBull ? "(retournement baissier)" : "(retournement haussier)"}`,
+        trendInitial: "Tendance initiale ",
+        trendStruct: isBull ? "haussière (HH/HL)" : "baissière (LH/LL)",
+        lvlBroken: ` cassé`,
+        lvlDesc: isBull ? "le prix casse le creux structurel précédent" : "le prix casse le sommet structurel précédent",
+        chochDesc: "1er signal de retournement de tendance",
+        legStruct: isBull ? "Structure haussière (HH/HL)" : "Structure baissière (LH/LL)",
+        legChoch: "CHoCH — 1er signal de retournement",
+      };
 
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
@@ -147,27 +171,27 @@ export function CHoCHDiagram({
       {/* Mobile : key card */}
       <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
         <p className="text-[12px] font-bold uppercase tracking-wide" style={{ color: chochColor }}>
-          CHoCH — Change of Character {isBull ? "(retournement baissier)" : "(retournement haussier)"}
+          {t.title}
         </p>
         <ul className="space-y-1.5 text-[13px] leading-snug">
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: trendColor }} />
             <span className="text-zinc-300">
-              Tendance initiale <span className="font-bold" style={{ color: trendColor }}>{isBull ? "haussière (HH/HL)" : "baissière (LH/LL)"}</span>
+              {t.trendInitial}<span className="font-bold" style={{ color: trendColor }}>{t.trendStruct}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: chochColor }} />
             <span className="text-white">
-              <span className="font-bold" style={{ color: chochColor }}>{isBull ? "HL2" : "LH2"} cassé</span>
-              <span className="text-zinc-300"> · le prix casse le {isBull ? "creux structurel" : "sommet structurel"} précédent</span>
+              <span className="font-bold" style={{ color: chochColor }}>{isBull ? "HL2" : "LH2"}{t.lvlBroken}</span>
+              <span className="text-zinc-300"> · {t.lvlDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: chochColor }} />
             <span className="text-white">
               <span className="font-bold" style={{ color: chochColor }}>CHoCH {isBull ? "↓" : "↑"}</span>
-              <span className="text-zinc-300"> · 1er signal de retournement de tendance</span>
+              <span className="text-zinc-300"> · {t.chochDesc}</span>
             </span>
           </li>
         </ul>
@@ -178,12 +202,12 @@ export function CHoCHDiagram({
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full" style={{ background: trendColor }} />
           <span className="text-[10px] text-zinc-500">
-            {isBull ? "Structure haussière (HH/HL)" : "Structure baissière (LH/LL)"}
+            {t.legStruct}
           </span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full" style={{ background: chochColor }} />
-          <span className="text-[10px] text-zinc-500">CHoCH — 1er signal de retournement</span>
+          <span className="text-[10px] text-zinc-500">{t.legChoch}</span>
         </div>
       </div>
     </div>

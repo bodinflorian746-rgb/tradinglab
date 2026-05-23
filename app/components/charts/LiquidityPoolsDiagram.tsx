@@ -1,8 +1,36 @@
 interface LiquidityPoolsDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
-export function LiquidityPoolsDiagram({ className = "" }: LiquidityPoolsDiagramProps) {
+export function LiquidityPoolsDiagram({ className = "", locale = "fr" }: LiquidityPoolsDiagramProps) {
+  const t = locale === "es"
+    ? {
+        bslLabel: "Buy-side liquidity (BSL)",
+        sslLabel: "Sell-side liquidity (SSL)",
+        stopHunt: "stop hunt",
+        bslTaken: "BSL tomada ↑",
+        bslMobileDesc: " · stops de compra por encima de máximos iguales (EQH)",
+        sslMobileDesc: " · stops de venta bajo mínimos iguales (EQL)",
+        stopHuntMobileDesc: " · el precio baja a cazar los stops bajo el EQL antes de subir",
+        bslTakenMobileDesc: " · luego ruptura de máximos para tomar la liquidez opuesta",
+        leg1: "Buy-side liquidity — stops por encima de los EQH",
+        leg2: "Sell-side liquidity — stops bajo los EQL",
+        leg3: "Stop hunt = caza de liquidez",
+      }
+    : {
+        bslLabel: "Buy-side liquidity (BSL)",
+        sslLabel: "Sell-side liquidity (SSL)",
+        stopHunt: "stop hunt",
+        bslTaken: "BSL pris ↑",
+        bslMobileDesc: " · stops d’achat au-dessus des sommets égaux (EQH)",
+        sslMobileDesc: " · stops de vente sous les creux égaux (EQL)",
+        stopHuntMobileDesc: " · le prix descend chasser les stops sous l’EQL avant de repartir",
+        bslTakenMobileDesc: " · puis cassure des sommets pour prendre la liquidité opposée",
+        leg1: "Buy-side liquidity — stops au-dessus des EQH",
+        leg2: "Sell-side liquidity — stops sous les EQL",
+        leg3: "Stop hunt = chasse de liquidité",
+      };
   const BSL_Y = 24;   // buy-side liquidity line — red
   const SSL_Y = 128;  // sell-side liquidity line — emerald
   const EQH_Y = 34;   // equal highs level
@@ -64,13 +92,13 @@ export function LiquidityPoolsDiagram({ className = "" }: LiquidityPoolsDiagramP
           <rect x="6" y="7" width="112" height="13" rx="3"
             fill="#ef444414" stroke="#ef444438" strokeWidth="0.8" />
           <text x="62" y="17" fontSize="7.5" fill="#ef4444" textAnchor="middle" fontWeight="700">
-            Buy-side liquidity (BSL)
+            {t.bslLabel}
           </text>
 
           <rect x="6" y="131" width="114" height="13" rx="3"
             fill="#10b98114" stroke="#10b98138" strokeWidth="0.8" />
           <text x="63" y="141" fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">
-            Sell-side liquidity (SSL)
+            {t.sslLabel}
           </text>
 
           <rect x="44" y="22" width="28" height="10" rx="2"
@@ -84,13 +112,13 @@ export function LiquidityPoolsDiagram({ className = "" }: LiquidityPoolsDiagramP
           <rect x="178" y="133" width="48" height="11" rx="2"
             fill="#09090b" fillOpacity="0.9" />
           <text x="202" y="141" fontSize="6.5" fill="#71717a" textAnchor="middle" opacity="0.9">
-            stop hunt
+            {t.stopHunt}
           </text>
 
           <rect x="188" y="7" width="68" height="13" rx="3"
             fill="#ef444418" stroke="#ef444438" strokeWidth="0.8" />
           <text x="222" y="17" fontSize="7.5" fill="#ef4444" textAnchor="middle" fontWeight="700">
-            BSL pris ↑
+            {t.bslTaken}
           </text>
         </g>
       </svg>
@@ -102,28 +130,28 @@ export function LiquidityPoolsDiagram({ className = "" }: LiquidityPoolsDiagramP
             <span className="shrink-0 w-3 h-1 rounded-sm bg-red-400 mt-2" />
             <span className="text-white">
               <span className="font-bold text-red-400">BSL (Buy-Side Liquidity)</span>
-              <span className="text-zinc-300"> · stops d&apos;achat au-dessus des sommets égaux (EQH)</span>
+              <span className="text-zinc-300">{t.bslMobileDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-3 h-1 rounded-sm bg-emerald-400 mt-2" />
             <span className="text-white">
               <span className="font-bold text-emerald-400">SSL (Sell-Side Liquidity)</span>
-              <span className="text-zinc-300"> · stops de vente sous les creux égaux (EQL)</span>
+              <span className="text-zinc-300">{t.sslMobileDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
             <span className="text-white">
               <span className="font-bold text-red-400">Stop hunt</span>
-              <span className="text-zinc-300"> · le prix descend chasser les stops sous l&apos;EQL avant de repartir</span>
+              <span className="text-zinc-300">{t.stopHuntMobileDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
             <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
             <span className="text-white">
-              <span className="font-bold text-red-400">BSL pris ↑</span>
-              <span className="text-zinc-300"> · puis cassure des sommets pour prendre la liquidité opposée</span>
+              <span className="font-bold text-red-400">{t.bslTaken}</span>
+              <span className="text-zinc-300">{t.bslTakenMobileDesc}</span>
             </span>
           </li>
         </ul>
@@ -133,15 +161,15 @@ export function LiquidityPoolsDiagram({ className = "" }: LiquidityPoolsDiagramP
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Buy-side liquidity — stops au-dessus des EQH</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Sell-side liquidity — stops sous les EQL</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Stop hunt = chasse de liquidité</span>
+          <span className="text-[10px] text-zinc-500">{t.leg3}</span>
         </div>
       </div>
     </div>

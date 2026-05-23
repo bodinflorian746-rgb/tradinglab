@@ -4,6 +4,7 @@
 
 interface MacroFilterRegimeDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -34,7 +35,32 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 14;
 
-export function MacroFilterRegimeDiagram({ className = "" }: MacroFilterRegimeDiagramProps) {
+export function MacroFilterRegimeDiagram({ className = "", locale = "fr" }: MacroFilterRegimeDiagramProps) {
+  const t = locale === "es"
+    ? {
+        signalBearishM15: "Señal bearish M15",
+        tradeContreRegime: "Trade contra el régimen dominante",
+        contexteMacro: "El contexto macro prima sobre la señal local",
+        title: "Filtro macro régimen · XAU/USD H4",
+        regimeDominantBullish: "Régimen dominante bullish",
+        regimeDominantBullishDesc: "La tendencia macro continúa — trades long privilegiados.",
+        signalBearishLocal: "Señal bearish local = contra-régimen",
+        signalBearishLocalDesc: "Tradear contra el régimen macro = a evitar, sin importar el setup local.",
+        legend1: "Régimen dominante bullish — la tendencia continúa",
+        legend2: "Señal bearish local = trade contra el régimen",
+      }
+    : {
+        signalBearishM15: "Signal bearish M15",
+        tradeContreRegime: "Trade contre le régime dominant",
+        contexteMacro: "Le contexte macro prime sur le signal local",
+        title: "Filtre macro régime · XAU/USD H4",
+        regimeDominantBullish: "Régime dominant bullish",
+        regimeDominantBullishDesc: "La tendance macro continue — trades long privilégiés.",
+        signalBearishLocal: "⚠ Signal bearish local = contre-régime",
+        signalBearishLocalDesc: "Trader contre le régime macro = à éviter, peu importe le setup local.",
+        legend1: "Régime dominant bullish — la tendance continue",
+        legend2: "Signal bearish local = trade à contre-sens du régime",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -68,42 +94,42 @@ export function MacroFilterRegimeDiagram({ className = "" }: MacroFilterRegimeDi
         <line x1="295" y1="200" x2="306" y2="195" stroke="#ef4444" strokeWidth="0.9" strokeOpacity="0.6" />
         <rect x="306" y="188" width="130" height="14" rx="3" fill="#09090b" />
         <rect x="306" y="188" width="130" height="14" rx="3" fill="#ef444418" stroke="#ef4444" strokeWidth="0.9" />
-        <text x="371" y="198" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Signal bearish M15</text>
+        <text x="371" y="198" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">{t.signalBearishM15}</text>
 
         {/* Étiquette "Trade contre le régime dominant" — décalée en bas à gauche, dans la zone vide */}
         <rect x="70" y="250" width="210" height="14" rx="3" fill="#09090b" />
         <rect x="70" y="250" width="210" height="14" rx="3" fill="#ef444418" stroke="#ef4444" strokeWidth="0.9" />
-        <text x="175" y="260" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Trade contre le régime dominant</text>
+        <text x="175" y="260" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">{t.tradeContreRegime}</text>
 
         {/* Annotation amber */}
         <rect x="170" y="284" width="380" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="284" width="380" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="360" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le contexte macro prime sur le signal local
+          {t.contexteMacro}
         </text>
       </svg>
 
       {/* MOBILE : filtre macro régime ────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Filtre macro régime · XAU/USD H4</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.title}</p>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Régime dominant bullish</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">La tendance macro continue — trades long privilégiés.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.regimeDominantBullish}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.regimeDominantBullishDesc}</p>
         </div>
         <div className="rounded-lg border-2 border-red-500 bg-red-500/10 p-3">
-          <p className="text-[13px] font-bold text-red-400">⚠ Signal bearish local = contre-régime</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Trader contre le régime macro = à éviter, peu importe le setup local.</p>
+          <p className="text-[13px] font-bold text-red-400">{t.signalBearishLocal}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.signalBearishLocalDesc}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Régime dominant bullish — la tendance continue</span>
+          <span className="text-[10px] text-zinc-500">{t.legend1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Signal bearish local = trade à contre-sens du régime</span>
+          <span className="text-[10px] text-zinc-500">{t.legend2}</span>
         </div>
       </div>
     </div>

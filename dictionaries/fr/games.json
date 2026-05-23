@@ -1,0 +1,69 @@
+{
+  "index": {
+    "eyebrow": "Mini jeux",
+    "title": "Entraîne-toi",
+    "subtitle": "Des exercices courts pour ancrer les concepts dans la pratique. Chaque jeu cible une compétence précise du trader.",
+    "available": "Disponible maintenant",
+    "upcoming": "Prochainement",
+    "availableBadge": "Disponible",
+    "upcomingBadge": "Bientôt",
+    "unavailable": "Indisponible",
+    "playNow": "Jouer maintenant",
+    "bottomTip": "Tu peux aussi continuer les leçons en parallèle.",
+    "bottomCta": "Voir les leçons débutant",
+    "levels": {
+      "allLevels": "Tous niveaux",
+      "beginner": "Débutant",
+      "intermediate": "Intermédiaire"
+    }
+  },
+  "available": {
+    "buy-sell-no-trade": {
+      "title": "BUY / SELL / NO TRADE",
+      "description": "12 scénarios à analyser. Mini graphique, contexte, news. Tu choisis ta décision et le système évalue ta lecture, ta discipline et ta détection de pièges.",
+      "duration": "~6 min"
+    },
+    "place-stop": {
+      "title": "Place ton Stop",
+      "description": "Quel stop va survivre ? 10 setups, 3 stops loss proposés à chaque fois (A / B / C). Tu choisis le plus logique — structure, liquidité, RR. Le marché révèle la suite.",
+      "duration": "~7 min"
+    },
+    "find-the-mistake": {
+      "title": "Trouve l'erreur",
+      "description": "10 setups avec une erreur cachée. Tu identifies l'erreur principale parmi 4 choix. Psychologie retail, discipline, liquidité, RR — apprends à voir les pièges classiques.",
+      "duration": "~5 min"
+    },
+    "build-the-trade": {
+      "title": "Build the Trade",
+      "description": "Construis un setup complet : entrée, stop, take profit. 8 scénarios, le marché révèle ensuite le résultat — RR, drawdown, verdict. Le jeu le plus stratégique.",
+      "duration": "~8 min"
+    }
+  },
+  "upcoming": {
+    "risk": {
+      "title": "Risk Calculator",
+      "description": "Questions de calcul rapide : taille de position, ratio R/R, montant risqué. 30 secondes par question.",
+      "duration": "~2 min"
+    },
+    "zone": {
+      "title": "Touche ou Casse ?",
+      "description": "Le prix arrive sur une zone clé. Tu parles : rebond ou cassure ? Données historiques réelles, 10 rounds.",
+      "duration": "~3 min"
+    },
+    "rr": {
+      "title": "R/R Builder",
+      "description": "Un trade te est présenté avec une entrée et un stop. Tu places l'objectif pour atteindre le ratio R/R demandé.",
+      "duration": "~2 min"
+    },
+    "structure": {
+      "title": "Lis la Structure",
+      "description": "Un graphique s'affiche. Tu identifies le dernier BOS, le CHoCH, et la prochaine zone d'intérêt. 8 rounds.",
+      "duration": "~4 min"
+    },
+    "sizing": {
+      "title": "Position Sizing",
+      "description": "Capital, risque en %, stop en pips — calcule la bonne taille de lot en moins de 20 secondes. 10 questions.",
+      "duration": "~3 min"
+    }
+  }
+}

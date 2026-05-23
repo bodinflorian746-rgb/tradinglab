@@ -1,4 +1,48 @@
-export default function EngulfingValidationGridDiagram({ className = "" }: { className?: string }) {
+export default function EngulfingValidationGridDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const t = locale === "es"
+    ? {
+        title: "Engulfing válido vs inválido",
+        cell1: "✓ Válido — Envuelve por completo",
+        cell1Sub: "Verde > Roja (×2)",
+        cell2: "✗ Solo envuelve 60%",
+        cell2Sub: "Verde < Roja (60%)",
+        cell3: "✗ Amplitud demasiado baja",
+        cell3Sub: "Amplitud minúscula",
+        cell4: "✗ Fuera de nivel estructural",
+        rangeLabel: "Rango lateral",
+        cell4Sub: "Par engulfing en medio de un rango",
+        footer: "Cuerpo envolvente + amplitud suficiente + contexto de nivel",
+        mobileTitle: "Reconocer un engulfing válido",
+        mobileCases: [
+          { v: true, label: "Cuerpo envolvente claro", desc: "Vela verde envuelve por completo la roja anterior + amplitud suficiente" },
+          { v: false, label: "Vela B no cubre la A", desc: "Cuerpo demasiado corto → no es un verdadero engulfing" },
+          { v: false, label: "Amplitud minúscula", desc: "Envolvente pero solo 20 px → señal débil" },
+          { v: false, label: "Par engulfing en un rango", desc: "Sin nivel estructural → señal inútil" },
+        ],
+        mobileFooter: "Cuerpo envolvente + amplitud + contexto de nivel",
+      }
+    : {
+        title: "Engulfing valide vs invalide",
+        cell1: "✓ Valide — Englobe complètement",
+        cell1Sub: "Verte > Rouge (×2)",
+        cell2: "✗ N'englobe que 60%",
+        cell2Sub: "Verte < Rouge (60%)",
+        cell3: "✗ Amplitude trop faible",
+        cell3Sub: "Amplitude minuscule",
+        cell4: "✗ Hors niveau structurel",
+        rangeLabel: "Range latéral",
+        cell4Sub: "Paire engulfing au milieu d'un range",
+        footer: "Corps englobant + amplitude suffisante + contexte de niveau",
+        mobileTitle: "Reconnaître un engulfing valide",
+        mobileCases: [
+          { v: true, label: "Corps englobant net", desc: "Bougie verte avale entièrement la rouge précédente + amplitude suffisante" },
+          { v: false, label: "Bougie B ne couvre pas la A", desc: "Corps trop court → pas un vrai engulfing" },
+          { v: false, label: "Amplitude minuscule", desc: "Englobante mais 20 px seulement → signal faible" },
+          { v: false, label: "Paire engulfing dans un range", desc: "Sans niveau structurel → signal inutile" },
+        ],
+        mobileFooter: "Corps englobant + amplitude + contexte de niveau",
+      };
+
   return (
     <div className={className}>
     <svg
@@ -7,7 +51,7 @@ export default function EngulfingValidationGridDiagram({ className = "" }: { cla
       className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="30" fill="#d4d4d8" fontSize="14" fontWeight="600" textAnchor="middle">
-        Engulfing valide vs invalide
+        {t.title}
       </text>
 
       {/* Séparateurs grille */}
@@ -17,7 +61,7 @@ export default function EngulfingValidationGridDiagram({ className = "" }: { cla
       {/* ═══════ CELLULE 1 — VALIDE (haut gauche) ═══════ */}
       <rect x="60" y="70" width="300" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
       <text x="210" y="85" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">
-        ✓ Valide — Englobe complètement
+        {t.cell1}
       </text>
 
       {/* Bougie A — rouge petite */}
@@ -33,13 +77,13 @@ export default function EngulfingValidationGridDiagram({ className = "" }: { cla
       <path d="M214 191 L220 195 L214 199" stroke="#10b981" strokeWidth="1.2" fill="none" />
 
       <text x="210" y="265" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">
-        Verte &gt; Rouge (×2)
+        {t.cell1Sub}
       </text>
 
       {/* ═══════ CELLULE 2 — N'englobe que 60% (haut droite) ═══════ */}
       <rect x="450" y="70" width="300" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
       <text x="600" y="85" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">
-        ✗ N&apos;englobe que 60%
+        {t.cell2}
       </text>
 
       {/* Bougie A — rouge */}
@@ -51,13 +95,13 @@ export default function EngulfingValidationGridDiagram({ className = "" }: { cla
       <rect x="615" y="175" width="30" height="30" fill="#10b981" stroke="#059669" strokeWidth="1.5" rx="2" />
 
       <text x="600" y="265" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">
-        Verte &lt; Rouge (60%)
+        {t.cell2Sub}
       </text>
 
       {/* ═══════ CELLULE 3 — Amplitude trop faible (bas gauche) ═══════ */}
       <rect x="60" y="310" width="300" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
       <text x="210" y="325" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">
-        ✗ Amplitude trop faible
+        {t.cell3}
       </text>
 
       {/* Bougie A — rouge minuscule */}
@@ -75,19 +119,19 @@ export default function EngulfingValidationGridDiagram({ className = "" }: { cla
       <text x="295" y="404" fill="#a1a1aa" fontSize="9">20 px</text>
 
       <text x="210" y="440" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">
-        Amplitude minuscule
+        {t.cell3Sub}
       </text>
 
       {/* ═══════ CELLULE 4 — Range latéral hors niveau (bas droite) ═══════ */}
       <rect x="450" y="310" width="300" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
       <text x="600" y="325" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">
-        ✗ Hors niveau structurel
+        {t.cell4}
       </text>
 
       {/* Bornes du range */}
       <line x1="460" y1="370" x2="740" y2="370" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="3 3" opacity="0.6" />
       <line x1="460" y1="410" x2="740" y2="410" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="3 3" opacity="0.6" />
-      <text x="600" y="355" fill="#a1a1aa" fontSize="9" textAnchor="middle">Range latéral</text>
+      <text x="600" y="355" fill="#a1a1aa" fontSize="9" textAnchor="middle">{t.rangeLabel}</text>
 
       {/* Mini-zigzag 6 bougies dans le range */}
       <line x1="495" y1="385" x2="495" y2="405" stroke="#b91c1c" strokeWidth="1.5" />
@@ -110,23 +154,18 @@ export default function EngulfingValidationGridDiagram({ className = "" }: { cla
       <rect x="675" y="385" width="10" height="13" fill="#10b981" stroke="#059669" strokeWidth="1" rx="1" />
 
       <text x="600" y="450" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        Paire engulfing au milieu d&apos;un range
+        {t.cell4Sub}
       </text>
 
       <text x="400" y="490" fill="#a1a1aa" fontSize="10" textAnchor="middle">
-        Corps englobant + amplitude suffisante + contexte de niveau
+        {t.footer}
       </text>
     </svg>
 
     {/* MOBILE : 4 cas validés/invalidés engulfing ──────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Reconnaître un engulfing valide</p>
-      {[
-        { v: true, label: "Corps englobant net", desc: "Bougie verte avale entièrement la rouge précédente + amplitude suffisante" },
-        { v: false, label: "Bougie B ne couvre pas la A", desc: "Corps trop court → pas un vrai engulfing" },
-        { v: false, label: "Amplitude minuscule", desc: "Englobante mais 20 px seulement → signal faible" },
-        { v: false, label: "Paire engulfing dans un range", desc: "Sans niveau structurel → signal inutile" },
-      ].map((c, i) => (
+      <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+      {t.mobileCases.map((c, i) => (
         <div key={i} className={`rounded-lg border p-2.5 ${c.v ? "border-emerald-500/40 bg-emerald-500/8" : "border-red-500/40 bg-red-500/8"}`}>
           <p className={`text-[13px] font-bold ${c.v ? "text-emerald-400" : "text-red-400"}`}>
             {c.v ? "✓" : "✗"} {c.label}
@@ -135,7 +174,7 @@ export default function EngulfingValidationGridDiagram({ className = "" }: { cla
         </div>
       ))}
       <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-        Corps englobant + amplitude + contexte de niveau
+        {t.mobileFooter}
       </p>
     </div>
     </div>

@@ -1,8 +1,38 @@
 interface TrendDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
-export function TrendDiagram({ className = "" }: TrendDiagramProps) {
+export function TrendDiagram({ className = "", locale = "fr" }: TrendDiagramProps) {
+  const labels = locale === "es"
+    ? {
+        haussier: "ALCISTA",
+        range: "RANGE",
+        baissier: "BAJISTA",
+        tendanceAcheteuse: "Tendencia compradora",
+        marcheEquilibre: "Mercado en equilibrio",
+        tendanceVendeuse: "Tendencia vendedora",
+        mobHaussier: "ALCISTA ↗",
+        mobRange: "RANGE ↔",
+        mobBaissier: "BAJISTA ↘",
+        sommetsCreuxPlusHauts: "Picos y valles más altos",
+        oscillation: "Oscilación entre 2 niveles",
+        sommetsCreuxPlusBas: "Picos y valles más bajos",
+      }
+    : {
+        haussier: "HAUSSIER",
+        range: "RANGE",
+        baissier: "BAISSIER",
+        tendanceAcheteuse: "Tendance acheteuse",
+        marcheEquilibre: "Marché en équilibre",
+        tendanceVendeuse: "Tendance vendeuse",
+        mobHaussier: "HAUSSIER ↗",
+        mobRange: "RANGE ↔",
+        mobBaissier: "BAISSIER ↘",
+        sommetsCreuxPlusHauts: "Sommets et creux plus hauts",
+        oscillation: "Oscillation entre 2 niveaux",
+        sommetsCreuxPlusBas: "Sommets et creux plus bas",
+      };
   const p = (pts: number[][]) =>
     pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x},${y}`).join(" ");
 
@@ -84,30 +114,30 @@ export function TrendDiagram({ className = "" }: TrendDiagramProps) {
 
         {/* Bottom labels — masqués sur mobile, repris en HTML key */}
         <g className="chart-detail-labels">
-          <text x="44" y="135" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">HAUSSIER</text>
-          <text x="44" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Tendance acheteuse</text>
+          <text x="44" y="135" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">{labels.haussier}</text>
+          <text x="44" y="147" fontSize="8" fill="#71717a" textAnchor="middle">{labels.tendanceAcheteuse}</text>
 
-          <text x="134" y="135" fontSize="9" fill="#71717a" textAnchor="middle" fontWeight="700">RANGE</text>
-          <text x="134" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Marché en équilibre</text>
+          <text x="134" y="135" fontSize="9" fill="#71717a" textAnchor="middle" fontWeight="700">{labels.range}</text>
+          <text x="134" y="147" fontSize="8" fill="#71717a" textAnchor="middle">{labels.marcheEquilibre}</text>
 
-          <text x="224" y="135" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">BAISSIER</text>
-          <text x="224" y="147" fontSize="8" fill="#71717a" textAnchor="middle">Tendance vendeuse</text>
+          <text x="224" y="135" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">{labels.baissier}</text>
+          <text x="224" y="147" fontSize="8" fill="#71717a" textAnchor="middle">{labels.tendanceVendeuse}</text>
         </g>
       </svg>
 
       {/* Mobile : 3 cartes empilées sous les 3 panels */}
       <div className="sm:hidden grid grid-cols-3 gap-1.5 px-3 py-3 border-t border-zinc-800/60">
         <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2 text-center">
-          <p className="text-[12px] font-bold text-emerald-400 leading-tight">HAUSSIER ↗</p>
-          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">Sommets et creux plus hauts</p>
+          <p className="text-[12px] font-bold text-emerald-400 leading-tight">{labels.mobHaussier}</p>
+          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">{labels.sommetsCreuxPlusHauts}</p>
         </div>
         <div className="rounded-lg border border-zinc-700 bg-zinc-900/40 p-2 text-center">
-          <p className="text-[12px] font-bold text-zinc-300 leading-tight">RANGE ↔</p>
-          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">Oscillation entre 2 niveaux</p>
+          <p className="text-[12px] font-bold text-zinc-300 leading-tight">{labels.mobRange}</p>
+          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">{labels.oscillation}</p>
         </div>
         <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-2 text-center">
-          <p className="text-[12px] font-bold text-red-400 leading-tight">BAISSIER ↘</p>
-          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">Sommets et creux plus bas</p>
+          <p className="text-[12px] font-bold text-red-400 leading-tight">{labels.mobBaissier}</p>
+          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">{labels.sommetsCreuxPlusBas}</p>
         </div>
       </div>
     </div>

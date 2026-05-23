@@ -4,6 +4,7 @@
 
 interface H1ZonePreparationDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -28,7 +29,30 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 14;
 
-export function H1ZonePreparationDiagram({ className = "" }: H1ZonePreparationDiagramProps) {
+export function H1ZonePreparationDiagram({ className = "", locale = "fr" }: H1ZonePreparationDiagramProps) {
+  const L = locale === "es"
+    ? {
+        fvgBearish: "FVG bearish",
+        annotation: "La zona prepara el escenario",
+        mobTitle: "Preparación zona H1",
+        mobZoneTitle: "Zona trazada por adelantado",
+        mobZoneDesc: "FVG bearish + resistencia H1 = zona de interés preparada antes de la llegada del precio.",
+        mobBougiesTitle: "Velas que se acortan",
+        mobBougiesDesc: "Velas cada vez más cortas al acercarse = precio que se ralentiza → preparación a un giro.",
+        legendZone: "Zona trazada por adelantado — FVG bearish + resistencia",
+        legendBougies: "Velas cada vez más cortas = precio que se ralentiza al acercarse",
+      }
+    : {
+        fvgBearish: "FVG bearish",
+        annotation: "La zone prépare le scénario",
+        mobTitle: "Préparation zone H1",
+        mobZoneTitle: "Zone tracée à l'avance",
+        mobZoneDesc: "FVG bearish + résistance H1 = zone d'intérêt préparée avant l'arrivée du prix.",
+        mobBougiesTitle: "Bougies qui raccourcissent",
+        mobBougiesDesc: "Bougies de plus en plus courtes en approchant = prix qui ralentit → préparation à un retournement.",
+        legendZone: "Zone tracée à l'avance — FVG bearish + résistance",
+        legendBougies: "Bougies de plus en plus courtes = prix qui ralentit en approchant",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -49,7 +73,7 @@ export function H1ZonePreparationDiagram({ className = "" }: H1ZonePreparationDi
 
         {/* Label FVG bearish dans la bande à droite */}
         <rect x="520" y="65" width="92" height="13" rx="3" fill="#09090b" />
-        <text x="566" y="75" fill="#f59e0b" fontSize="9" fontWeight="600" textAnchor="middle">FVG bearish</text>
+        <text x="566" y="75" fill="#f59e0b" fontSize="9" fontWeight="600" textAnchor="middle">{L.fvgBearish}</text>
 
         {/* Bougies haussières — amplitude décroissante = ralentissement */}
         {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom }, i) => (
@@ -63,31 +87,31 @@ export function H1ZonePreparationDiagram({ className = "" }: H1ZonePreparationDi
         <rect x="190" y="280" width="320" height="22" rx="11" fill="#09090b" />
         <rect x="190" y="280" width="320" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="294" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          La zone prépare le scénario
+          {L.annotation}
         </text>
       </svg>
 
       {/* MOBILE : préparation zone H1 ──────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Préparation zone H1</p>
+        <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
         <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
-          <p className="text-[13px] font-bold text-blue-400">Zone tracée à l'avance</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">FVG bearish + résistance H1 = zone d'intérêt préparée avant l'arrivée du prix.</p>
+          <p className="text-[13px] font-bold text-blue-400">{L.mobZoneTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobZoneDesc}</p>
         </div>
         <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-          <p className="text-[13px] font-bold text-amber-400">Bougies qui raccourcissent</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Bougies de plus en plus courtes en approchant = prix qui ralentit → préparation à un retournement.</p>
+          <p className="text-[13px] font-bold text-amber-400">{L.mobBougiesTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobBougiesDesc}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500/40 border border-red-500" />
-          <span className="text-[10px] text-zinc-500">Zone tracée à l&apos;avance — FVG bearish + résistance</span>
+          <span className="text-[10px] text-zinc-500">{L.legendZone}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Bougies de plus en plus courtes = prix qui ralentit en approchant</span>
+          <span className="text-[10px] text-zinc-500">{L.legendBougies}</span>
         </div>
       </div>
     </div>

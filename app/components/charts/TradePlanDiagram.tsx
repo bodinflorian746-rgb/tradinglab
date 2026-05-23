@@ -1,8 +1,18 @@
 interface TradePlanDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
-export function TradePlanDiagram({ className = "" }: TradePlanDiagramProps) {
+export function TradePlanDiagram({ className = "", locale = "fr" }: TradePlanDiagramProps) {
+  const isEs = locale === "es";
+  const L = {
+    entry:        isEs ? "ENTRADA" : "ENTRÉE",
+    entryLabel:   isEs ? "Entrada" : "Entrée",
+    entryPrice:   isEs ? "Precio de compra" : "Prix d'achat",
+    footer:       isEs ? "Todo definido ANTES de la entrada: riesgo conocido, objetivo claro." : "Tout défini AVANT l'entrée : risque connu, objectif clair.",
+    legendEntry:  isEs ? "Entrada / Take Profit" : "Entrée / Take Profit",
+    legendPrice:  isEs ? "Precio" : "Prix",
+  };
   // Price descends to creux at (110, 108), then rises
   const descent = "M10,38 L46,58 L78,82 L110,108";
   const rise    = "M110,108 L148,82 L188,52 L230,28 L258,16";
@@ -76,7 +86,7 @@ export function TradePlanDiagram({ className = "" }: TradePlanDiagramProps) {
 
           <rect x="8" y="8" width="48" height="14" rx="3"
             fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
-          <text x="32" y="18" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">ENTRÉE</text>
+          <text x="32" y="18" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">{L.entry}</text>
 
           <rect x="196" y={tpY - 8} width="58" height="13" rx="3"
             fill="#10b98114" stroke="#10b98138" strokeWidth="0.8" />
@@ -96,8 +106,8 @@ export function TradePlanDiagram({ className = "" }: TradePlanDiagramProps) {
             <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">+2R</p>
           </div>
           <div className="rounded-lg border border-zinc-700 bg-zinc-900/40 p-2 text-center">
-            <p className="text-[10px] text-zinc-300 font-bold uppercase tracking-wide">Entrée</p>
-            <p className="text-[12px] text-zinc-400 leading-snug mt-0.5">Prix d'achat</p>
+            <p className="text-[10px] text-zinc-300 font-bold uppercase tracking-wide">{L.entryLabel}</p>
+            <p className="text-[12px] text-zinc-400 leading-snug mt-0.5">{L.entryPrice}</p>
           </div>
           <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-2 text-center">
             <p className="text-[10px] text-red-400 font-bold uppercase tracking-wide">SL</p>
@@ -110,7 +120,7 @@ export function TradePlanDiagram({ className = "" }: TradePlanDiagramProps) {
           </span>
         </div>
         <p className="text-[12px] text-zinc-400 leading-snug text-center pt-1 border-t border-zinc-800/50">
-          Tout défini AVANT l'entrée : risque connu, objectif clair.
+          {L.footer}
         </p>
       </div>
 
@@ -118,7 +128,7 @@ export function TradePlanDiagram({ className = "" }: TradePlanDiagramProps) {
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Entrée / Take Profit</span>
+          <span className="text-[10px] text-zinc-500">{L.legendEntry}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-red-500" />
@@ -126,7 +136,7 @@ export function TradePlanDiagram({ className = "" }: TradePlanDiagramProps) {
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Prix</span>
+          <span className="text-[10px] text-zinc-500">{L.legendPrice}</span>
         </div>
       </div>
     </div>

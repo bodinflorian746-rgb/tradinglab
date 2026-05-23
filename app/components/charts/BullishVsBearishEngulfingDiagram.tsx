@@ -1,4 +1,42 @@
-export default function BullishVsBearishEngulfingDiagram({ className = "" }: { className?: string }) {
+export default function BullishVsBearishEngulfingDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const t = locale === "es"
+    ? {
+        title: "Engulfing — siempre sobre un nivel",
+        bullPanel: "Bullish engulfing sobre soporte",
+        bearPanel: "Bearish engulfing sobre resistencia",
+        support: "Soporte 4 540$",
+        resistance: "Resistencia 4 700$",
+        footer: "Sin nivel estructural, el engulfing pierde 70% de su tasa de éxito",
+        mobileTitle: "Engulfing — siempre sobre un nivel",
+        mobileBullTitle: "Bullish engulfing EN EL SOPORTE",
+        mobileBullDesc1: "Después de una caída, una vela verde grande envuelve la roja anterior sobre el ",
+        mobileBullDesc2: "soporte 4 540 $",
+        mobileBullDesc3: " → rebote probable.",
+        mobileBearTitle: "Bearish engulfing EN LA RESISTENCIA",
+        mobileBearDesc1: "Después de una subida, una vela roja grande envuelve la verde anterior sobre la ",
+        mobileBearDesc2: "resistencia",
+        mobileBearDesc3: " → caída probable.",
+        mobileFooter: "⚠ Sin nivel estructural, el engulfing pierde 70% de su tasa de éxito",
+      }
+    : {
+        title: "Engulfing — toujours sur un niveau",
+        bullPanel: "Bullish engulfing sur support",
+        bearPanel: "Bearish engulfing sur résistance",
+        support: "Support 4 540$",
+        resistance: "Résistance 4 700$",
+        footer: "Sans niveau structurel, l'engulfing perd 70% de son taux de réussite",
+        mobileTitle: "Engulfing — toujours sur un niveau",
+        mobileBullTitle: "Bullish engulfing AU SUPPORT",
+        mobileBullDesc1: "Après une chute, une grosse bougie verte avale la rouge précédente sur le ",
+        mobileBullDesc2: "support 4 540 $",
+        mobileBullDesc3: " → rebond probable.",
+        mobileBearTitle: "Bearish engulfing À LA RÉSISTANCE",
+        mobileBearDesc1: "Après une hausse, une grosse bougie rouge avale la verte précédente sur la ",
+        mobileBearDesc2: "résistance",
+        mobileBearDesc3: " → chute probable.",
+        mobileFooter: "⚠ Sans niveau structurel, l'engulfing perd 70% de son taux de réussite",
+      };
+
   return (
     <div className={className}>
     <svg
@@ -7,18 +45,18 @@ export default function BullishVsBearishEngulfingDiagram({ className = "" }: { c
       className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        Engulfing — toujours sur un niveau
+        {t.title}
       </text>
 
       <line x1="400" y1="40" x2="400" y2="370" stroke="#3f3f46" strokeWidth="1" />
 
       {/* ═══ PANEL GAUCHE — Bullish engulfing sur support ═══ */}
       <rect x="60" y="50" width="280" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="200" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">Bullish engulfing sur support</text>
+      <text x="200" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{t.bullPanel}</text>
 
       <line x1="50" y1="280" x2="380" y2="280" stroke="#10b981" strokeWidth="1.2" strokeDasharray="5 3" />
       <rect x="52" y="286" width="100" height="12" rx="2" fill="#09090b" />
-      <text x="55" y="295" fill="#10b981" fontSize="9" fontWeight="600">Support 4 540$</text>
+      <text x="55" y="295" fill="#10b981" fontSize="9" fontWeight="600">{t.support}</text>
 
       {/* Bougies rouges descendantes */}
       <line x1="100" y1="160" x2="100" y2="220" stroke="#b91c1c" strokeWidth="1.5" />
@@ -43,11 +81,11 @@ export default function BullishVsBearishEngulfingDiagram({ className = "" }: { c
 
       {/* ═══ PANEL DROIT — Bearish engulfing sur résistance ═══ */}
       <rect x="460" y="50" width="280" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">Bearish engulfing sur résistance</text>
+      <text x="600" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{t.bearPanel}</text>
 
       <line x1="450" y1="120" x2="780" y2="120" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="5 3" />
       <rect x="452" y="104" width="118" height="12" rx="2" fill="#09090b" />
-      <text x="455" y="113" fill="#ef4444" fontSize="9" fontWeight="600">Résistance 4 700$</text>
+      <text x="455" y="113" fill="#ef4444" fontSize="9" fontWeight="600">{t.resistance}</text>
 
       {/* Bougies vertes montantes */}
       <line x1="500" y1="180" x2="500" y2="240" stroke="#059669" strokeWidth="1.5" />
@@ -71,27 +109,27 @@ export default function BullishVsBearishEngulfingDiagram({ className = "" }: { c
       <rect x="733" y="250" width="14" height="55" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
 
       <text x="400" y="385" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        Sans niveau structurel, l&apos;engulfing perd 70% de son taux de réussite
+        {t.footer}
       </text>
     </svg>
 
     {/* MOBILE : Bullish vs Bearish engulfing ─────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Engulfing — toujours sur un niveau</p>
+      <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">Bullish engulfing AU SUPPORT</p>
+        <p className="text-[13px] font-bold text-emerald-400">{t.mobileBullTitle}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">
-          Après une chute, une grosse bougie verte avale la rouge précédente sur le <span className="font-bold text-emerald-400">support 4 540 $</span> → rebond probable.
+          {t.mobileBullDesc1}<span className="font-bold text-emerald-400">{t.mobileBullDesc2}</span>{t.mobileBullDesc3}
         </p>
       </div>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">Bearish engulfing À LA RÉSISTANCE</p>
+        <p className="text-[13px] font-bold text-red-400">{t.mobileBearTitle}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">
-          Après une hausse, une grosse bougie rouge avale la verte précédente sur la <span className="font-bold text-red-400">résistance</span> → chute probable.
+          {t.mobileBearDesc1}<span className="font-bold text-red-400">{t.mobileBearDesc2}</span>{t.mobileBearDesc3}
         </p>
       </div>
       <p className="text-[13px] text-amber-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-        ⚠ Sans niveau structurel, l'engulfing perd 70% de son taux de réussite
+        {t.mobileFooter}
       </p>
     </div>
     </div>

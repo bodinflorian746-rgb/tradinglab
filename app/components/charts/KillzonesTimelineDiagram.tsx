@@ -4,6 +4,7 @@
 
 interface KillzonesTimelineDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 const BODY_W = 8;
@@ -47,7 +48,38 @@ const MINI_CANDLES: MiniCandle[] = [
   { cx: 615, wickTop:  52, bodyY:  56, bodyH: 10, wickBottom:  72, type: "bull" },
 ];
 
-export function KillzonesTimelineDiagram({ className = "" }: KillzonesTimelineDiagramProps) {
+export function KillzonesTimelineDiagram({ className = "", locale = "fr" }: KillzonesTimelineDiagramProps) {
+  const t = locale === "es"
+    ? {
+        asia: "Asia Session",
+        london: "London Open",
+        newYork: "New York Open",
+        annotation: "La volatilidad se concentra en ciertas ventanas horarias",
+        mobileTitle: "Killzones — timeline 24h",
+        asiaTitle: "Asia (00h–07h)",
+        asiaBody: "Baja volatilidad, range estrecho. Acumulación.",
+        londonTitle: "London (08h–10h)",
+        londonBody: "Expansión + impulsos francos. Killzone mayor.",
+        nyTitle: "New York (13h30–15h30)",
+        nyBody: "2da ventana — pico de actividad institucional US.",
+        leg1: "Asia Session = baja volatilidad, range estrecho",
+        leg2: "London & New York = expansión, impulsos francos",
+      }
+    : {
+        asia: "Asia Session",
+        london: "London Open",
+        newYork: "New York Open",
+        annotation: "La volatilité se concentre dans certaines fenêtres horaires",
+        mobileTitle: "Killzones — timeline 24h",
+        asiaTitle: "Asia (00h–07h)",
+        asiaBody: "Faible volatilité, range étroit. Accumulation.",
+        londonTitle: "London (08h–10h)",
+        londonBody: "Expansion + impulsions franches. Killzone majeure.",
+        nyTitle: "New York (13h30–15h30)",
+        nyBody: "2e fenêtre — pic d'activité institutionnelle US.",
+        leg1: "Asia Session = faible volatilité, range étroit",
+        leg2: "London & New York = expansion, impulsions franches",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -56,17 +88,17 @@ export function KillzonesTimelineDiagram({ className = "" }: KillzonesTimelineDi
         {/* Asia — segment fin, calme */}
         <line x1="70" y1="42" x2="240" y2="42" stroke="#52525b" strokeWidth="2" strokeLinecap="round" />
         <rect x="98" y="20" width="114" height="14" rx="3" fill="#09090b" />
-        <text x="155" y="30" fill="#a1a1aa" fontSize="10" fontWeight="700" textAnchor="middle">Asia Session</text>
+        <text x="155" y="30" fill="#a1a1aa" fontSize="10" fontWeight="700" textAnchor="middle">{t.asia}</text>
 
         {/* London — segment épais, accent */}
         <line x1="260" y1="42" x2="440" y2="42" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
         <rect x="288" y="20" width="124" height="14" rx="3" fill="#09090b" />
-        <text x="350" y="30" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">London Open</text>
+        <text x="350" y="30" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">{t.london}</text>
 
         {/* NY — segment épais, accent */}
         <line x1="460" y1="42" x2="620" y2="42" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
         <rect x="486" y="20" width="124" height="14" rx="3" fill="#09090b" />
-        <text x="548" y="30" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">New York Open</text>
+        <text x="548" y="30" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">{t.newYork}</text>
 
         {/* Séparateurs verticaux entre les phases */}
         <line x1="245" y1="50" x2="245" y2="270" stroke="#27272a" strokeWidth="1" strokeDasharray="2 3" />
@@ -88,35 +120,35 @@ export function KillzonesTimelineDiagram({ className = "" }: KillzonesTimelineDi
         <rect x="160" y="284" width="380" height="22" rx="11" fill="#09090b" />
         <rect x="160" y="284" width="380" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          La volatilité se concentre dans certaines fenêtres horaires
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : killzones timeline ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Killzones — timeline 24h</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-          <p className="text-[13px] font-bold text-zinc-300">Asia (00h–07h)</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Faible volatilité, range étroit. Accumulation.</p>
+          <p className="text-[13px] font-bold text-zinc-300">{t.asiaTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.asiaBody}</p>
         </div>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">London (08h–10h)</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Expansion + impulsions franches. Killzone majeure.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.londonTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.londonBody}</p>
         </div>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">New York (13h30–15h30)</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">2e fenêtre — pic d'activité institutionnelle US.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.nyTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.nyBody}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-600" />
-          <span className="text-[10px] text-zinc-500">Asia Session = faible volatilité, range étroit</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">London &amp; New York = expansion, impulsions franches</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

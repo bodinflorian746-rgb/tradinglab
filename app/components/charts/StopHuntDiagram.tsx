@@ -1,4 +1,23 @@
-export default function StopHuntDiagram({ className = "" }: { className?: string }) {
+export default function StopHuntDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const isEs = locale === "es";
+  const L = {
+    title:        isEs ? "Por qué el mercado caza los stops" : "Pourquoi le marché chasse les stops",
+    badge:        isEs ? "Stop hunt — mecánica de la trampa" : "Stop hunt — mécanique du piège",
+    wickAnnot:    isEs ? "La mecha dispara los stops" : "Mèche déclenche les stops",
+    bodyAnnot:    isEs ? "Cuerpo cierra debajo (4 690$)" : "Corps clôture sous (4 690$)",
+    stopsZone:    isEs ? "Zona stops cluster" : "Zone stops cluster",
+    stopsRange:   "(4 720$ - 4 745$)",
+    resistance:   isEs ? "Resistencia 4 720$" : "Résistance 4 720$",
+    footer:       isEs ? "Las instituciones apuntan a las zonas de stops para absorber liquidity antes de invertir" : "Les institutions visent les zones de stops pour absorber la liquidité avant inversion",
+    mobTitle:     isEs ? "Por qué el mercado caza los stops" : "Pourquoi le marché chasse les stops",
+    mob1:         isEs ? "Los SL de los traders se concentran justo encima de las resistencias (o debajo de los soportes)." : "Les SL des traders se concentrent juste au-dessus des résistances (ou sous les supports).",
+    mob2A:        isEs ? "Las instituciones empujan el precio por encima para" : "Les institutions poussent le prix au-dessus pour",
+    mob2Bold:     isEs ? "disparar los stops" : "déclencher les stops",
+    mob2End:      isEs ? "= liquidity masiva." : "= liquidité massive.",
+    mob3A:        isEs ? "Una vez absorbida la liquidity, el precio" : "Une fois la liquidité absorbée, le prix",
+    mob3Bold:     isEs ? "vuelve en el sentido opuesto" : "repart dans le sens opposé",
+    mobFooter:    isEs ? "Las instituciones cazan la liquidity antes de invertir." : "Les institutions chassent la liquidité avant d'inverser.",
+  };
   return (
     <div className={className}>
     <svg
@@ -7,11 +26,11 @@ export default function StopHuntDiagram({ className = "" }: { className?: string
       className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        Pourquoi le marché chasse les stops
+        {L.title}
       </text>
 
       <rect x="560" y="40" width="220" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="670" y="55" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">Stop hunt — mécanique du piège</text>
+      <text x="670" y="55" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{L.badge}</text>
 
       {/* Zone stops cluster — opacité et stroke renforcés */}
       <rect x="50" y="120" width="700" height="60" fill="#ef444433" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="4 3" />
@@ -39,11 +58,11 @@ export default function StopHuntDiagram({ className = "" }: { className?: string
       {/* Annotations sur la bougie stop hunt */}
       <line x1="298" y1="130" x2="370" y2="100" stroke="#f87171" strokeWidth="0.8" strokeDasharray="2 2" />
       <rect x="370" y="90" width="180" height="20" rx="4" fill="#ef444420" stroke="#ef4444" strokeWidth="0.8" />
-      <text x="460" y="104" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">Mèche déclenche les stops</text>
+      <text x="460" y="104" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">{L.wickAnnot}</text>
 
       <line x1="298" y1="220" x2="370" y2="250" stroke="#71717a" strokeWidth="0.8" strokeDasharray="2 2" />
       <rect x="370" y="240" width="180" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="460" y="254" fill="#d4d4d8" fontSize="9" textAnchor="middle">Corps clôture sous (4 690$)</text>
+      <text x="460" y="254" fill="#d4d4d8" fontSize="9" textAnchor="middle">{L.bodyAnnot}</text>
 
       {/* Continuation baissière : 3-4 bougies rouges */}
       <line x1="340" y1="225" x2="340" y2="270" stroke="#b91c1c" strokeWidth="1.5" />
@@ -60,36 +79,36 @@ export default function StopHuntDiagram({ className = "" }: { className?: string
 
       {/* Labels avec halos opaques placés en fin de svg */}
       <rect x="51" y="102" width="116" height="14" fill="#09090b" rx="3" />
-      <text x="55" y="113" fill="#ef4444" fontSize="10" fontWeight="600">Zone stops cluster</text>
+      <text x="55" y="113" fill="#ef4444" fontSize="10" fontWeight="600">{L.stopsZone}</text>
       <rect x="196" y="102" width="93" height="14" fill="#09090b" rx="3" />
-      <text x="200" y="113" fill="#ef4444" fontSize="9" fontStyle="italic">(4 720$ - 4 745$)</text>
+      <text x="200" y="113" fill="#ef4444" fontSize="9" fontStyle="italic">{L.stopsRange}</text>
       <rect x="51" y="189" width="110" height="14" fill="#09090b" rx="3" />
-      <text x="55" y="200" fill="#ef4444" fontSize="9" fontWeight="600">Résistance 4 720$</text>
+      <text x="55" y="200" fill="#ef4444" fontSize="9" fontWeight="600">{L.resistance}</text>
 
       <text x="400" y="385" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        Les institutions visent les zones de stops pour absorber la liquidité avant inversion
+        {L.footer}
       </text>
     </svg>
 
     {/* MOBILE : stop hunt mécanique ───────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
-      <p className="text-[14px] font-bold text-red-400 text-center">Pourquoi le marché chasse les stops</p>
+      <p className="text-[14px] font-bold text-red-400 text-center">{L.mobTitle}</p>
       <ul className="space-y-2 text-[13px]">
         <li className="flex items-start gap-2.5">
           <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">1</span>
-          <span className="text-zinc-300">Les SL des traders se concentrent juste au-dessus des résistances (ou sous les supports).</span>
+          <span className="text-zinc-300">{L.mob1}</span>
         </li>
         <li className="flex items-start gap-2.5">
           <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">2</span>
-          <span className="text-zinc-300">Les institutions poussent le prix au-dessus pour <span className="font-bold text-red-400">déclencher les stops</span> = liquidité massive.</span>
+          <span className="text-zinc-300">{L.mob2A} <span className="font-bold text-red-400">{L.mob2Bold}</span> {L.mob2End}</span>
         </li>
         <li className="flex items-start gap-2.5">
           <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
-          <span className="text-zinc-300">Une fois la liquidité absorbée, le prix <span className="font-bold text-emerald-400">repart dans le sens opposé</span>.</span>
+          <span className="text-zinc-300">{L.mob3A} <span className="font-bold text-emerald-400">{L.mob3Bold}</span>.</span>
         </li>
       </ul>
       <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
-        Les institutions chassent la liquidité avant d'inverser.
+        {L.mobFooter}
       </p>
     </div>
     </div>

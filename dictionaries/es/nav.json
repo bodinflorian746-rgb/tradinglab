@@ -1,0 +1,13 @@
+{
+  "links": {
+    "trading": "Trading",
+    "macro": "Macro",
+    "games": "Juegos",
+    "strategies": "Estrategias",
+    "profile": "Mi perfil",
+    "pricing": "Precios"
+  },
+  "cta": "Empezar",
+  "openMenu": "Abrir menú",
+  "closeMenu": "Cerrar menú"
+}

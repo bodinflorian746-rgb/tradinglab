@@ -3,9 +3,57 @@
 
 interface HTFBiasDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
-export function HTFBiasDiagram({ className = "" }: HTFBiasDiagramProps) {
+export function HTFBiasDiagram({ className = "", locale = "fr" }: HTFBiasDiagramProps) {
+  const L = locale === "es"
+    ? {
+        rLabel: "1.1780 — R",
+        prixLabel: "Precio 1.1725",
+        verdict: "VEREDICTO HTF",
+        bias: "Bias",
+        baissier: "BAJISTA",
+        ventes: "Ventas prioritarias",
+        achats: "Compras = contra",
+        contexte: "contexto",
+        analyseLtf1: "Todo análisis LTF",
+        analyseLtf2: "parte de este veredicto",
+        caption: "Estructura HTF en LH/LL → solo ventas",
+        mobTitle: "Bias direccional HTF (H4)",
+        mobVerdict: "Veredicto HTF",
+        mobBaissier: "BAJISTA",
+        mobVentes: "Ventas prioritarias",
+        mobVentesDesc: " · estructura H4 en LH/LL",
+        mobAchats: "Compras = contra-contexto",
+        mobAchatsDesc: " a evitar",
+        mobFooter: "Todo análisis LTF parte de este veredicto.",
+        legendStruct: "Estructura H4 LH/LL = bias bajista",
+        legendPrice: "Precio actual bajo la resistencia HTF",
+      }
+    : {
+        rLabel: "1.1780 — R",
+        prixLabel: "Prix 1.1725",
+        verdict: "VERDICT HTF",
+        bias: "Biais",
+        baissier: "BAISSIER",
+        ventes: "Ventes prioritaires",
+        achats: "Achats = contre",
+        contexte: "contexte",
+        analyseLtf1: "Toute analyse LTF",
+        analyseLtf2: "part de ce verdict",
+        caption: "Structure HTF en LH/LL → ventes seulement",
+        mobTitle: "Biais directionnel HTF (H4)",
+        mobVerdict: "Verdict HTF",
+        mobBaissier: "BAISSIER",
+        mobVentes: "Ventes prioritaires",
+        mobVentesDesc: " · structure H4 en LH/LL",
+        mobAchats: "Achats = contre-contexte",
+        mobAchatsDesc: " à éviter",
+        mobFooter: "Toute analyse LTF part de ce verdict.",
+        legendStruct: "Structure H4 LH/LL = biais baissier",
+        legendPrice: "Prix actuel sous la résistance HTF",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg
@@ -24,7 +72,7 @@ export function HTFBiasDiagram({ className = "" }: HTFBiasDiagramProps) {
         {/* Résistance 1.1780 */}
         <line x1="40" y1="80" x2="450" y2="80" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" />
         <rect x="40" y="66" width="80" height="13" rx="3" fill="#09090b" />
-        <text x="80" y="76" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">1.1780 — R</text>
+        <text x="80" y="76" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">{L.rLabel}</text>
 
         {/* Path baissier LH/LL */}
         <path
@@ -61,7 +109,7 @@ export function HTFBiasDiagram({ className = "" }: HTFBiasDiagramProps) {
         <line x1="40" y1="225" x2="450" y2="225" stroke="#60a5fa" strokeWidth="1.2" strokeDasharray="2 2" strokeOpacity="0.7" />
         <circle cx="445" cy="225" r="5" fill="#60a5fa" />
         <rect x="355" y="222" width="78" height="13" rx="3" fill="#09090b" />
-        <text x="394" y="232" fill="#60a5fa" fontSize="9" fontWeight="600" textAnchor="middle">Prix 1.1725</text>
+        <text x="394" y="232" fill="#60a5fa" fontSize="9" fontWeight="600" textAnchor="middle">{L.prixLabel}</text>
 
         {/* Flèche directionnelle */}
         <text x="425" y="275" fill="#ef4444" fontSize="22" opacity="0.4" textAnchor="middle">↘</text>
@@ -71,47 +119,47 @@ export function HTFBiasDiagram({ className = "" }: HTFBiasDiagramProps) {
 
         {/* Titre verdict */}
         <text x="585" y="76" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle" letterSpacing="2">
-          VERDICT HTF
+          {L.verdict}
         </text>
         <line x1="510" y1="86" x2="660" y2="86" stroke="#3f3f46" strokeWidth="1" />
 
         {/* Item 1 — Biais */}
         <rect x="510" y="100" width="150" height="34" rx="6" fill="#ef444415" stroke="#ef4444" strokeWidth="1" />
-        <text x="585" y="116" fill="#a1a1aa" fontSize="8" textAnchor="middle">Biais</text>
-        <text x="585" y="129" fill="#ef4444" fontSize="13" fontWeight="700" textAnchor="middle">BAISSIER</text>
+        <text x="585" y="116" fill="#a1a1aa" fontSize="8" textAnchor="middle">{L.bias}</text>
+        <text x="585" y="129" fill="#ef4444" fontSize="13" fontWeight="700" textAnchor="middle">{L.baissier}</text>
 
         {/* Item 2 — Priorité */}
         <text x="520" y="158" fill="#10b981" fontSize="11" fontWeight="700">✓</text>
-        <text x="535" y="158" fill="#a1a1aa" fontSize="10" fontWeight="600">Ventes prioritaires</text>
+        <text x="535" y="158" fill="#a1a1aa" fontSize="10" fontWeight="600">{L.ventes}</text>
 
         {/* Item 3 — Contre-contexte */}
         <text x="520" y="183" fill="#ef4444" fontSize="11" fontWeight="700">✗</text>
-        <text x="535" y="183" fill="#a1a1aa" fontSize="10" fontWeight="600">Achats = contre</text>
-        <text x="535" y="197" fill="#71717a" fontSize="9">contexte</text>
+        <text x="535" y="183" fill="#a1a1aa" fontSize="10" fontWeight="600">{L.achats}</text>
+        <text x="535" y="197" fill="#71717a" fontSize="9">{L.contexte}</text>
 
         {/* Note bas */}
-        <text x="585" y="232" fill="#71717a" fontSize="9" textAnchor="middle">Toute analyse LTF</text>
-        <text x="585" y="244" fill="#71717a" fontSize="9" textAnchor="middle">part de ce verdict</text>
+        <text x="585" y="232" fill="#71717a" fontSize="9" textAnchor="middle">{L.analyseLtf1}</text>
+        <text x="585" y="244" fill="#71717a" fontSize="9" textAnchor="middle">{L.analyseLtf2}</text>
 
         {/* Caption */}
         <text x="350" y="305" fill="#a1a1aa" fontSize="10" textAnchor="middle">
-          Structure HTF en LH/LL → ventes seulement
+          {L.caption}
         </text>
       </svg>
 
       {/* MOBILE : biais HTF H4 ─────────────────────────────── */}
       <div className="sm:hidden p-4 space-y-3">
-        <p className="text-[14px] font-bold text-white text-center">Biais directionnel HTF (H4)</p>
+        <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
         <div className="rounded-xl border-2 border-red-500 bg-red-500/8 p-4 text-center">
-          <p className="text-[12px] text-zinc-400 uppercase tracking-wider">Verdict HTF</p>
-          <p className="text-[22px] font-bold text-red-400 mt-1.5 leading-none">BAISSIER</p>
+          <p className="text-[12px] text-zinc-400 uppercase tracking-wider">{L.mobVerdict}</p>
+          <p className="text-[22px] font-bold text-red-400 mt-1.5 leading-none">{L.mobBaissier}</p>
         </div>
         <ul className="space-y-2 text-[13px]">
-          <li className="flex items-start gap-2.5"><span className="text-emerald-400 font-bold shrink-0">✓</span><span className="text-zinc-300"><span className="font-bold">Ventes prioritaires</span> · structure H4 en LH/LL</span></li>
-          <li className="flex items-start gap-2.5"><span className="text-red-400 font-bold shrink-0">✗</span><span className="text-zinc-300"><span className="font-bold">Achats = contre-contexte</span> à éviter</span></li>
+          <li className="flex items-start gap-2.5"><span className="text-emerald-400 font-bold shrink-0">✓</span><span className="text-zinc-300"><span className="font-bold">{L.mobVentes}</span>{L.mobVentesDesc}</span></li>
+          <li className="flex items-start gap-2.5"><span className="text-red-400 font-bold shrink-0">✗</span><span className="text-zinc-300"><span className="font-bold">{L.mobAchats}</span>{L.mobAchatsDesc}</span></li>
         </ul>
         <p className="text-[12px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
-          Toute analyse LTF part de ce verdict.
+          {L.mobFooter}
         </p>
       </div>
 
@@ -119,11 +167,11 @@ export function HTFBiasDiagram({ className = "" }: HTFBiasDiagramProps) {
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Structure H4 LH/LL = biais baissier</span>
+          <span className="text-[10px] text-zinc-500">{L.legendStruct}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-blue-400" />
-          <span className="text-[10px] text-zinc-500">Prix actuel sous la résistance HTF</span>
+          <span className="text-[10px] text-zinc-500">{L.legendPrice}</span>
         </div>
       </div>
     </div>

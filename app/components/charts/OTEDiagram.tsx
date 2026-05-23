@@ -1,5 +1,6 @@
 interface OTEDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleData = {
@@ -71,7 +72,37 @@ const signal: CandleData = {
   bull: true,
 };
 
-export function OTEDiagram({ className = "" }: OTEDiagramProps) {
+export function OTEDiagram({ className = "", locale = "fr" }: OTEDiagramProps) {
+  const t = locale === "es"
+    ? {
+        entree: "ENTRADA",
+        swingHigh: "Swing High",
+        swingLow: "Swing Low",
+        signalRejet: "señal de rechazo ↑",
+        mobileTitle: "Setup OTE — Optimal Trade Entry",
+        m1BoldStart: "Zona OTE (61.8% – 78.6%)",
+        m1Body: " · zona de entrada óptima tras un impulso",
+        m2BoldStart: "Señal de rechazo ↑",
+        m2Body: " · vela alcista que toca la zona y cierra por encima → entrada long",
+        leg1: "Zona OTE (61.8–78.6%) — entrada institucional óptima",
+        leg2: "Movimiento impulsivo alcista",
+        leg3: "Retracement en el OTE",
+      }
+    : {
+        entree: "ENTRÉE",
+        swingHigh: "Swing High",
+        swingLow: "Swing Low",
+        signalRejet: "signal de rejet ↑",
+        mobileTitle: "Setup OTE — Optimal Trade Entry",
+        m1BoldStart: "Zone OTE (61.8% – 78.6%)",
+        m1Body: " · zone d’entrée optimale après une impulsion",
+        m2BoldStart: "Signal de rejet ↑",
+        m2Body: " · bougie haussière qui tape la zone et clôture au-dessus → entrée long",
+        leg1: "Zone OTE (61.8–78.6%) — entrée institutionnelle optimale",
+        leg2: "Mouvement impulsif haussier",
+        leg3: "Retracement dans l'OTE",
+      };
+
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg
@@ -129,30 +160,30 @@ export function OTEDiagram({ className = "" }: OTEDiagramProps) {
             textAnchor="middle" fontWeight="700">OTE</text>
 
           <rect x={107} y={10} width={52} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
-          <text x={133} y={21} fontSize="7" fill="#71717a" textAnchor="middle" fontWeight="600">Swing High</text>
+          <text x={133} y={21} fontSize="7" fill="#71717a" textAnchor="middle" fontWeight="600">{t.swingHigh}</text>
 
           <rect x={26} y={183} width={52} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
-          <text x={52} y={194} fontSize="7" fill="#71717a" textAnchor="middle" fontWeight="600">Swing Low</text>
+          <text x={52} y={194} fontSize="7" fill="#71717a" textAnchor="middle" fontWeight="600">{t.swingLow}</text>
 
           <rect x={233} y={100} width={38} height={12} rx="2"
             fill="#09090b" fillOpacity="0.85" />
           <rect x={233} y={100} width={38} height={12} rx="2"
             fill="#10b98118" stroke="#10b98140" strokeWidth="0.7" />
           <text x={252} y={109} fontSize="7.5" fill="#10b981"
-            textAnchor="middle" fontWeight="700">ENTRÉE</text>
+            textAnchor="middle" fontWeight="700">{t.entree}</text>
 
           <line x1={252} y1={156} x2={252} y2={164}
             stroke="#71717a" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
           <rect x={212} y={162} width={80} height={14} rx="2"
             fill="#09090b" fillOpacity="0.85" />
           <text x={252} y={173} fontSize="7" fill="#a1a1aa"
-            textAnchor="middle">signal de rejet ↑</text>
+            textAnchor="middle">{t.signalRejet}</text>
         </g>
       </svg>
 
       {/* Mobile : key card avec niveaux Fib + setup */}
       <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
-        <p className="text-[13px] font-bold text-blue-400">Setup OTE — Optimal Trade Entry</p>
+        <p className="text-[13px] font-bold text-blue-400">{t.mobileTitle}</p>
         <div className="grid grid-cols-5 gap-1 text-center">
           {levels.map((lvl) => (
             <div key={lvl.pct} className={`rounded-md border p-1.5 ${
@@ -170,15 +201,15 @@ export function OTEDiagram({ className = "" }: OTEDiagramProps) {
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2.5 h-2.5 rounded-sm bg-blue-500/30 border border-blue-400 mt-1" />
             <span className="text-white">
-              <span className="font-bold text-blue-400">Zone OTE (61.8% – 78.6%)</span>
-              <span className="text-zinc-300"> · zone d&apos;entrée optimale après une impulsion</span>
+              <span className="font-bold text-blue-400">{t.m1BoldStart}</span>
+              <span className="text-zinc-300">{t.m1Body}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-emerald-500 mt-1" />
             <span className="text-white">
-              <span className="font-bold text-emerald-400">Signal de rejet ↑</span>
-              <span className="text-zinc-300"> · bougie haussière qui tape la zone et clôture au-dessus → entrée long</span>
+              <span className="font-bold text-emerald-400">{t.m2BoldStart}</span>
+              <span className="text-zinc-300">{t.m2Body}</span>
             </span>
           </li>
         </ul>

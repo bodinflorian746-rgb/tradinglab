@@ -1,4 +1,39 @@
-export default function SRHierarchyDiagram({ className = "" }: { className?: string }) {
+export default function SRHierarchyDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const L = locale === "es"
+    ? {
+        title: "Jerarquía de un nivel según el timeframe",
+        major: "★★★ Nivel mayor",
+        majorDesc: "3 toques francos",
+        secondary: "★★ Nivel secundario",
+        secondaryDesc: "5 toques medios",
+        marginal: "★ Nivel marginal",
+        marginalDesc: "8 toques débiles, perforaciones frecuentes",
+        mobTitle: "Jerarquía de S/R por timeframe",
+        mobDaily: "Daily — ★★★ Nivel mayor",
+        mobDailyDesc: "Pocos toques pero francos, rebotes amplios → nivel institucional respetado.",
+        mobH4: "H4 — ★★ Nivel intermedio",
+        mobH4Desc: "Toques moderados, nivel activo en el contexto corto plazo.",
+        mobM15: "M15 — ★ Nivel marginal",
+        mobM15Desc: "Muchos toques débiles, perforaciones frecuentes → poca fiabilidad.",
+        mobFooter: "Cuanto más alta la TF, más fuerte el nivel.",
+      }
+    : {
+        title: "Hiérarchie d'un niveau selon le timeframe",
+        major: "★★★ Niveau majeur",
+        majorDesc: "3 touches franches",
+        secondary: "★★ Niveau secondaire",
+        secondaryDesc: "5 touches moyennes",
+        marginal: "★ Niveau marginal",
+        marginalDesc: "8 touches faibles, perforations fréquentes",
+        mobTitle: "Hiérarchie des S/R par timeframe",
+        mobDaily: "Daily — ★★★ Niveau majeur",
+        mobDailyDesc: "Peu de touches mais franches, rebonds amples → niveau institutionnel respecté.",
+        mobH4: "H4 — ★★ Niveau intermédiaire",
+        mobH4Desc: "Touches modérées, niveau actif sur le contexte court terme.",
+        mobM15: "M15 — ★ Niveau marginal",
+        mobM15Desc: "Beaucoup de touches faibles, perforations fréquentes → faible fiabilité.",
+        mobFooter: "Plus la TF est haute, plus le niveau est fort.",
+      };
   return (
     <div className={className}>
     <svg
@@ -7,7 +42,7 @@ export default function SRHierarchyDiagram({ className = "" }: { className?: str
       className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="25" fill="#d4d4d8" fontSize="14" fontWeight="600" textAnchor="middle">
-        Hiérarchie d&apos;un niveau selon le timeframe
+        {L.title}
       </text>
 
       {/* Séparateurs verticaux */}
@@ -26,9 +61,9 @@ export default function SRHierarchyDiagram({ className = "" }: { className?: str
       <circle cx="220" cy="200" r="6" fill="#10b981" />
 
       <rect x="40" y="345" width="210" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="145" y="360" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">★★★ Niveau majeur</text>
+      <text x="145" y="360" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">{L.major}</text>
 
-      <text x="145" y="385" fill="#d4d4d8" fontSize="9" textAnchor="middle">3 touches franches</text>
+      <text x="145" y="385" fill="#d4d4d8" fontSize="9" textAnchor="middle">{L.majorDesc}</text>
 
       {/* Halo label prix Panel 1 */}
       <rect x="216" y="184" width="60" height="14" rx="3" fill="#09090b" />
@@ -47,9 +82,9 @@ export default function SRHierarchyDiagram({ className = "" }: { className?: str
       <circle cx="520" cy="200" r="5" fill="#10b981" />
 
       <rect x="345" y="345" width="210" height="22" rx="11" fill="#10b98115" stroke="#10b98180" strokeWidth="1" />
-      <text x="450" y="360" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">★★ Niveau secondaire</text>
+      <text x="450" y="360" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">{L.secondary}</text>
 
-      <text x="450" y="385" fill="#d4d4d8" fontSize="9" textAnchor="middle">5 touches moyennes</text>
+      <text x="450" y="385" fill="#d4d4d8" fontSize="9" textAnchor="middle">{L.secondaryDesc}</text>
 
       {/* Halo label prix Panel 2 */}
       <rect x="521" y="184" width="60" height="14" rx="3" fill="#09090b" />
@@ -69,9 +104,9 @@ export default function SRHierarchyDiagram({ className = "" }: { className?: str
       <circle cx="850" cy="200" r="3" fill="#10b981" />
 
       <rect x="650" y="345" width="210" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-      <text x="755" y="360" fill="#f59e0b" fontSize="11" fontWeight="700" textAnchor="middle">★ Niveau marginal</text>
+      <text x="755" y="360" fill="#f59e0b" fontSize="11" fontWeight="700" textAnchor="middle">{L.marginal}</text>
 
-      <text x="755" y="385" fill="#d4d4d8" fontSize="9" textAnchor="middle">8 touches faibles, perforations fréquentes</text>
+      <text x="755" y="385" fill="#d4d4d8" fontSize="9" textAnchor="middle">{L.marginalDesc}</text>
 
       {/* Halo label prix Panel 3 */}
       <rect x="826" y="184" width="60" height="14" rx="3" fill="#09090b" />
@@ -80,21 +115,21 @@ export default function SRHierarchyDiagram({ className = "" }: { className?: str
 
     {/* MOBILE : hiérarchie S/R par timeframe ──────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Hiérarchie des S/R par timeframe</p>
+      <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
       <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
-        <p className="text-[14px] font-bold text-emerald-400">Daily — ★★★ Niveau majeur</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Peu de touches mais franches, rebonds amples → niveau institutionnel respecté.</p>
+        <p className="text-[14px] font-bold text-emerald-400">{L.mobDaily}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobDailyDesc}</p>
       </div>
       <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
-        <p className="text-[14px] font-bold text-blue-400">H4 — ★★ Niveau intermédiaire</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Touches modérées, niveau actif sur le contexte court terme.</p>
+        <p className="text-[14px] font-bold text-blue-400">{L.mobH4}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobH4Desc}</p>
       </div>
       <div className="rounded-lg border border-amber-400/40 bg-amber-400/5 p-3">
-        <p className="text-[14px] font-bold text-amber-400">M15 — ★ Niveau marginal</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Beaucoup de touches faibles, perforations fréquentes → faible fiabilité.</p>
+        <p className="text-[14px] font-bold text-amber-400">{L.mobM15}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobM15Desc}</p>
       </div>
       <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-        Plus la TF est haute, plus le niveau est fort.
+        {L.mobFooter}
       </p>
     </div>
     </div>

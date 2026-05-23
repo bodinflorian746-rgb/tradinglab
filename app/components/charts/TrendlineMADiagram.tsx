@@ -1,4 +1,33 @@
-export default function TrendlineMADiagram({ className = "" }: { className?: string }) {
+export default function TrendlineMADiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const labels = locale === "es"
+    ? {
+        badge: "Trendline + MM = zona defendida",
+        trendline: "Trendline",
+        confluence: "Confluencia",
+        legende: "Trendline (esmeralda) · MM20 (azul) · MM50 (gris) · Punto de confluencia",
+        mobTitle: "Trendline + MM = zona defendida",
+        mobTrendline: "Trendline",
+        mobTrendlineDesc: "recta que une los pivotes",
+        mobMM20: "MM20",
+        mobMM20Desc: "media móvil 20 períodos",
+        mobMM50: "MM50",
+        mobMM50Desc: "media móvil 50 períodos",
+        mobConcl: "Cuando trendline + MM se cruzan en el mismo lugar = entrada pullback de alta probabilidad.",
+      }
+    : {
+        badge: "Trendline + MM = zone défendue",
+        trendline: "Trendline",
+        confluence: "Confluence",
+        legende: "Trendline (emerald) · MM20 (bleu) · MM50 (gris) · Point de confluence",
+        mobTitle: "Trendline + MM = zone défendue",
+        mobTrendline: "Trendline",
+        mobTrendlineDesc: "droite reliant les pivots",
+        mobMM20: "MM20",
+        mobMM20Desc: "moyenne mobile 20 périodes",
+        mobMM50: "MM50",
+        mobMM50Desc: "moyenne mobile 50 périodes",
+        mobConcl: "Quand trendline + MM se croisent au même endroit = entrée pullback haute probabilité.",
+      };
   return (
     <div className={className}>
     <svg
@@ -9,7 +38,7 @@ export default function TrendlineMADiagram({ className = "" }: { className?: str
       {/* Badge top droit — Trendline + MM = zone défendue */}
       <rect x="410" y="20" width="170" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
       <text x="495" y="35" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">
-        Trendline + MM = zone défendue
+        {labels.badge}
       </text>
 
       {/* MM50 — zinc-400, trait lissé visiblement EN DESSOUS du chemin du prix avec lag marqué */}
@@ -53,40 +82,40 @@ export default function TrendlineMADiagram({ className = "" }: { className?: str
       <circle cx="420" cy="130" r="6" fill="#10b981" />
 
       {/* Labels lignes */}
-      <text x="290" y="170" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">Trendline</text>
+      <text x="290" y="170" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{labels.trendline}</text>
       <text x="580" y="40" fill="#60a5fa" fontSize="9" fontWeight="600" textAnchor="end">MM20</text>
       <text x="580" y="110" fill="#a1a1aa" fontSize="9" fontWeight="600" textAnchor="end">MM50</text>
 
       {/* Pastille Confluence pointant le gros cercle emerald HL4 */}
       <rect x="390" y="103" width="60" height="14" rx="4" fill="#27272a" stroke="#10b981" strokeWidth="0.8" />
-      <text x="420" y="113" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">Confluence</text>
+      <text x="420" y="113" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">{labels.confluence}</text>
       <line x1="420" y1="117" x2="420" y2="124" stroke="#10b981" strokeWidth="0.8" />
 
       {/* Légende basse */}
       <text x="300" y="290" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        Trendline (emerald) · MM20 (bleu) · MM50 (gris) · Point de confluence
+        {labels.legende}
       </text>
     </svg>
 
     {/* MOBILE : trendline + MM = zone défendue ─────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-emerald-400 text-center">Trendline + MM = zone défendue</p>
+      <p className="text-[14px] font-bold text-emerald-400 text-center">{labels.mobTitle}</p>
       <ul className="space-y-2 text-[13px]">
         <li className="flex items-center gap-2.5">
           <span className="shrink-0 w-4 h-0.5 bg-emerald-400 rounded" />
-          <span className="text-zinc-300"><span className="font-bold text-emerald-400">Trendline</span> · droite reliant les pivots</span>
+          <span className="text-zinc-300"><span className="font-bold text-emerald-400">{labels.mobTrendline}</span> · {labels.mobTrendlineDesc}</span>
         </li>
         <li className="flex items-center gap-2.5">
           <span className="shrink-0 w-4 h-0.5 bg-blue-400 rounded" />
-          <span className="text-zinc-300"><span className="font-bold text-blue-400">MM20</span> · moyenne mobile 20 périodes</span>
+          <span className="text-zinc-300"><span className="font-bold text-blue-400">{labels.mobMM20}</span> · {labels.mobMM20Desc}</span>
         </li>
         <li className="flex items-center gap-2.5">
           <span className="shrink-0 w-4 h-0.5 bg-zinc-500 rounded" />
-          <span className="text-zinc-300"><span className="font-bold text-zinc-300">MM50</span> · moyenne mobile 50 périodes</span>
+          <span className="text-zinc-300"><span className="font-bold text-zinc-300">{labels.mobMM50}</span> · {labels.mobMM50Desc}</span>
         </li>
       </ul>
       <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-        Quand trendline + MM se croisent au même endroit = entrée pullback haute probabilité.
+        {labels.mobConcl}
       </p>
     </div>
     </div>

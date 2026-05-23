@@ -39,7 +39,45 @@ function Pastille({ x, y, label, color, textColor, arrow }: PastilleProps) {
   );
 }
 
-export default function DoubleTopBottomDiagram() {
+export default function DoubleTopBottomDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+  const t = locale === "es"
+    ? {
+        dtTitle: "Double Top — fin de tendencia alcista",
+        dbTitle: "Double Bottom — fin de tendencia bajista",
+        resistance: "Resistencia",
+        support: "Soporte",
+        top1: "Top 1",
+        top2: "Top 2",
+        bottom1: "Bottom 1",
+        bottom2: "Bottom 2",
+        neckline: "Neckline",
+        breakLabel: "Ruptura",
+        mobileTitle: "Double Top / Double Bottom",
+        mobileDTTitle: "Double Top — Inversión BAJISTA",
+        mobileDTDesc: "2 cumbres casi iguales separadas por un valle (neckline). Ruptura debajo de la neckline = señal short.",
+        mobileDBTitle: "Double Bottom — Inversión ALCISTA",
+        mobileDBDesc: "2 valles casi iguales separados por una cumbre (neckline). Ruptura por encima de la neckline = señal long.",
+        mobileFooter: "Patrón de inversión, validado por la ruptura de la neckline.",
+      }
+    : {
+        dtTitle: "Double Top — fin de tendance haussière",
+        dbTitle: "Double Bottom — fin de tendance baissière",
+        resistance: "Résistance",
+        support: "Support",
+        top1: "Top 1",
+        top2: "Top 2",
+        bottom1: "Bottom 1",
+        bottom2: "Bottom 2",
+        neckline: "Neckline",
+        breakLabel: "Cassure",
+        mobileTitle: "Double Top / Double Bottom",
+        mobileDTTitle: "Double Top — Retournement BAISSIER",
+        mobileDTDesc: "2 sommets quasi égaux séparés par un creux (neckline). Cassure sous la neckline = signal short.",
+        mobileDBTitle: "Double Bottom — Retournement HAUSSIER",
+        mobileDBDesc: "2 creux quasi égaux séparés par un sommet (neckline). Cassure au-dessus de la neckline = signal long.",
+        mobileFooter: "Pattern de retournement, validé par la cassure de la neckline.",
+      };
+
   // ─── Double Top (bearish reversal) ─── x = 30 → 380
   const topPts: [number, number][] = [
     [30, 295],   // début tendance haussière
@@ -82,12 +120,12 @@ export default function DoubleTopBottomDiagram() {
         {/* ════════ DOUBLE TOP (gauche) ════════ */}
 
         <text x="195" y="28" fontSize="13" fontWeight="600" fill="#d4d4d8" textAnchor="middle">
-          Double Top — fin de tendance haussière
+          {t.dtTitle}
         </text>
 
         {/* Résistance (les 2 sommets touchent ce niveau) */}
         <line x1="60" y1="90" x2="385" y2="90" stroke="#71717a" strokeWidth="1" strokeDasharray="4 4" />
-        <text x="55" y="93" fontSize="11" fill="#a1a1aa" textAnchor="end">Résistance</text>
+        <text x="55" y="93" fontSize="11" fill="#a1a1aa" textAnchor="end">{t.resistance}</text>
 
         {/* Neckline (creux intermédiaire prolongé) */}
         <line x1="130" y1="185" x2="385" y2="185" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="6 3" />
@@ -105,10 +143,10 @@ export default function DoubleTopBottomDiagram() {
         <circle cx={topPts[4][0]} cy={topPts[4][1]} r="3.5" fill="#ef4444" />
 
         {/* Pastilles */}
-        <Pastille x={130} y={70} label="Top 1" color="#ef4444" />
-        <Pastille x={240} y={75} label="Top 2" color="#ef4444" />
-        <Pastille x={185} y={207} label="Neckline" color="#3f3f46" textColor="#a1a1aa" />
-        <Pastille x={310} y={278} label="Cassure" color="#ef4444" arrow="down" />
+        <Pastille x={130} y={70} label={t.top1} color="#ef4444" />
+        <Pastille x={240} y={75} label={t.top2} color="#ef4444" />
+        <Pastille x={185} y={207} label={t.neckline} color="#3f3f46" textColor="#a1a1aa" />
+        <Pastille x={310} y={278} label={t.breakLabel} color="#ef4444" arrow="down" />
 
         {/* ════════ Séparateur vertical ════════ */}
         <line x1="405" y1="25" x2="405" y2="380" stroke="#27272a" strokeWidth="1" strokeDasharray="2 4" />
@@ -116,12 +154,12 @@ export default function DoubleTopBottomDiagram() {
         {/* ════════ DOUBLE BOTTOM (droite) ════════ */}
 
         <text x="600" y="28" fontSize="13" fontWeight="600" fill="#d4d4d8" textAnchor="middle">
-          Double Bottom — fin de tendance baissière
+          {t.dbTitle}
         </text>
 
         {/* Support (les 2 creux touchent ce niveau) */}
         <line x1="465" y1="318" x2="785" y2="318" stroke="#71717a" strokeWidth="1" strokeDasharray="4 4" />
-        <text x="460" y="321" fontSize="11" fill="#a1a1aa" textAnchor="end">Support</text>
+        <text x="460" y="321" fontSize="11" fill="#a1a1aa" textAnchor="end">{t.support}</text>
 
         {/* Neckline (sommet intermédiaire prolongé) */}
         <line x1="535" y1="220" x2="785" y2="220" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="6 3" />
@@ -139,25 +177,25 @@ export default function DoubleTopBottomDiagram() {
         <circle cx={botPts[4][0]} cy={botPts[4][1]} r="3.5" fill="#10b981" />
 
         {/* Pastilles */}
-        <Pastille x={535} y={340} label="Bottom 1" color="#10b981" />
-        <Pastille x={645} y={335} label="Bottom 2" color="#10b981" />
-        <Pastille x={590} y={200} label="Neckline" color="#3f3f46" textColor="#a1a1aa" />
-        <Pastille x={715} y={130} label="Cassure" color="#10b981" arrow="up" />
+        <Pastille x={535} y={340} label={t.bottom1} color="#10b981" />
+        <Pastille x={645} y={335} label={t.bottom2} color="#10b981" />
+        <Pastille x={590} y={200} label={t.neckline} color="#3f3f46" textColor="#a1a1aa" />
+        <Pastille x={715} y={130} label={t.breakLabel} color="#10b981" arrow="up" />
       </svg>
 
       {/* MOBILE : Double Top / Bottom ──────────────────────── */}
       <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Double Top / Double Bottom</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">Double Top — Retournement BAISSIER</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">2 sommets quasi égaux séparés par un creux (neckline). Cassure sous la neckline = signal short.</p>
+          <p className="text-[13px] font-bold text-red-400">{t.mobileDTTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.mobileDTDesc}</p>
         </div>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Double Bottom — Retournement HAUSSIER</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">2 creux quasi égaux séparés par un sommet (neckline). Cassure au-dessus de la neckline = signal long.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.mobileDBTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.mobileDBDesc}</p>
         </div>
         <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-          Pattern de retournement, validé par la cassure de la neckline.
+          {t.mobileFooter}
         </p>
       </div>
     </div>

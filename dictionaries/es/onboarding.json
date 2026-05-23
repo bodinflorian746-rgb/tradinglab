@@ -1,0 +1,41 @@
+{
+  "aria": {
+    "dialog": "Bienvenido a TradingLab",
+    "close": "Cerrar"
+  },
+  "step1": {
+    "eyebrow": "Bienvenido",
+    "title": "Una plataforma pensada para las verdaderas limitaciones del trading retail.",
+    "bullets": [
+      "Aprender trading paso a paso",
+      "Entrenar con situaciones reales",
+      "Desarrollar reflejos de mercado",
+      "Construir un enfoque disciplinado"
+    ],
+    "progressEyebrow": "Progresión recomendada",
+    "steps": ["Bases", "Juegos", "Estrategias", "Ejecución"],
+    "next": "Empezar",
+    "skip": "Omitir"
+  },
+  "step2": {
+    "back": "Atrás",
+    "eyebrow": "Punto de entrada",
+    "title": "¿Por dónde quieres empezar?",
+    "subtitle": "Puedes cambiar de opinión cuando quieras — todas las secciones están siempre accesibles.",
+    "doors": {
+      "bases": {
+        "title": "Empezar por las bases",
+        "description": "Estructura de mercado, R/R, risk management — fundamentos claros."
+      },
+      "games": {
+        "title": "Probar los juegos",
+        "description": "4 mini-juegos para desarrollar reflejos de mercado y construir tu perfil de trader."
+      },
+      "strategies": {
+        "title": "Explorar las estrategias",
+        "description": "Métodos estructurados: Price Action, SMC, ICT, Multi-TF, Macro."
+      }
+    },
+    "later": "Más tarde"
+  }
+}

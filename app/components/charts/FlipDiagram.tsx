@@ -1,4 +1,35 @@
-export default function FlipDiagram({ className = "" }: { className?: string }) {
+export default function FlipDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const L = locale === "es"
+    ? {
+        header: "Flip de polaridad — el mercado tiene memoria de los precios",
+        resistance: "Resistencia",
+        support: "Support",
+        cassure: "Ruptura",
+        retest: "Retest",
+        title1: "Resistencia rota → Support",
+        title2: "Support roto → Resistencia",
+        mobTitle: "Flip de polaridad — la memoria de los precios",
+        mobResToSup: "Resistencia rota → Support",
+        mobResToSupDesc: "El precio rompe una resistencia y luego vuelve a testearla por abajo → se convierte en support.",
+        mobSupToRes: "Support roto → Resistencia",
+        mobSupToResDesc: "El precio rompe un support y luego sube a testearlo por arriba → se convierte en resistencia.",
+        mobFooter: "Un nivel roto invierte su polaridad — siempre.",
+      }
+    : {
+        header: "Flip de polarité — le marché a la mémoire des prix",
+        resistance: "Résistance",
+        support: "Support",
+        cassure: "Cassure",
+        retest: "Retest",
+        title1: "Résistance cassée → Support",
+        title2: "Support cassé → Résistance",
+        mobTitle: "Flip de polarité — la mémoire des prix",
+        mobResToSup: "Résistance cassée → Support",
+        mobResToSupDesc: "Le prix casse une résistance puis revient la tester par le bas → elle devient support.",
+        mobSupToRes: "Support cassé → Résistance",
+        mobSupToResDesc: "Le prix casse un support puis remonte le tester par le haut → il devient résistance.",
+        mobFooter: "Un niveau cassé inverse sa polarité — toujours.",
+      };
   return (
     <div className={className}>
     <svg
@@ -8,7 +39,7 @@ export default function FlipDiagram({ className = "" }: { className?: string }) 
     >
       {/* Header */}
       <text x="300" y="20" fill="#a1a1aa" fontSize="10" textAnchor="middle">
-        Flip de polarité — le marché a la mémoire des prix
+        {L.header}
       </text>
 
       {/* Séparateur vertical */}
@@ -42,22 +73,22 @@ export default function FlipDiagram({ className = "" }: { className?: string }) 
 
       {/* Labels avec halos opaques */}
       <rect x="16" y="129" width="78" height="14" fill="#09090b" rx="3" />
-      <text x="20" y="140" fill="#ef4444" fontSize="10" fontWeight="600">Résistance</text>
+      <text x="20" y="140" fill="#ef4444" fontSize="10" fontWeight="600">{L.resistance}</text>
       <rect x="236" y="154" width="57" height="14" fill="#09090b" rx="3" />
-      <text x="240" y="165" fill="#10b981" fontSize="10" fontWeight="600">Support</text>
+      <text x="240" y="165" fill="#10b981" fontSize="10" fontWeight="600">{L.support}</text>
 
       {/* Pastille Cassure */}
       <rect x="105" y="88" width="50" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="130" y="98" fill="#d4d4d8" fontSize="8" textAnchor="middle">Cassure</text>
+      <text x="130" y="98" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.cassure}</text>
 
       {/* Pastille Retest avec petite flèche */}
       <rect x="178" y="128" width="44" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="200" y="138" fill="#d4d4d8" fontSize="8" textAnchor="middle">Retest</text>
+      <text x="200" y="138" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.retest}</text>
       <line x1="192" y1="142" x2="188" y2="145" stroke="#10b981" strokeWidth="0.8" />
 
       {/* Titre panneau bas */}
       <text x="145" y="285" fill="#d4d4d8" fontSize="11" fontWeight="600" textAnchor="middle">
-        Résistance cassée → Support
+        {L.title1}
       </text>
 
       {/* ════════════ PANNEAU DROIT — Bearish flip (Support → Résistance) ════════════ */}
@@ -88,38 +119,38 @@ export default function FlipDiagram({ className = "" }: { className?: string }) 
 
       {/* Labels avec halos opaques */}
       <rect x="326" y="154" width="57" height="14" fill="#09090b" rx="3" />
-      <text x="330" y="165" fill="#10b981" fontSize="10" fontWeight="600">Support</text>
+      <text x="330" y="165" fill="#10b981" fontSize="10" fontWeight="600">{L.support}</text>
       <rect x="511" y="129" width="78" height="14" fill="#09090b" rx="3" />
-      <text x="585" y="140" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="end">Résistance</text>
+      <text x="585" y="140" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="end">{L.resistance}</text>
 
       {/* Pastille Cassure */}
       <rect x="415" y="203" width="50" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="440" y="213" fill="#d4d4d8" fontSize="8" textAnchor="middle">Cassure</text>
+      <text x="440" y="213" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.cassure}</text>
 
       {/* Pastille Retest avec petite flèche */}
       <rect x="488" y="163" width="44" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="510" y="173" fill="#d4d4d8" fontSize="8" textAnchor="middle">Retest</text>
+      <text x="510" y="173" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.retest}</text>
       <line x1="500" y1="163" x2="497" y2="159" stroke="#ef4444" strokeWidth="0.8" />
 
       {/* Titre panneau bas */}
       <text x="455" y="285" fill="#d4d4d8" fontSize="11" fontWeight="600" textAnchor="middle">
-        Support cassé → Résistance
+        {L.title2}
       </text>
     </svg>
 
     {/* MOBILE : flip de polarité ──────────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Flip de polarité — la mémoire des prix</p>
+      <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">Résistance cassée → Support</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix casse une résistance puis revient la tester par le bas → elle devient support.</p>
+        <p className="text-[13px] font-bold text-emerald-400">{L.mobResToSup}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobResToSupDesc}</p>
       </div>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">Support cassé → Résistance</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix casse un support puis remonte le tester par le haut → il devient résistance.</p>
+        <p className="text-[13px] font-bold text-red-400">{L.mobSupToRes}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobSupToResDesc}</p>
       </div>
       <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
-        Un niveau cassé inverse sa polarité — toujours.
+        {L.mobFooter}
       </p>
     </div>
     </div>

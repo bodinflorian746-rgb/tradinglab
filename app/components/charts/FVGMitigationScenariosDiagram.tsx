@@ -12,6 +12,7 @@
 
 interface FVGMitigationScenariosDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 interface ScenarioConfig {
@@ -24,7 +25,7 @@ interface ScenarioConfig {
   verdictColor: "emerald" | "amber" | "red";
 }
 
-const SCENARIOS: ScenarioConfig[] = [
+const SCENARIOS_FR: ScenarioConfig[] = [
   {
     id:           "rebond",
     badge:        "A",
@@ -50,6 +51,36 @@ const SCENARIOS: ScenarioConfig[] = [
     title:        "Invalidation réelle",
     description:  "Le prix traverse, close au-delà, structure cassée. Pas de réaction.",
     verdict:      "FVG invalidé — pas de trade",
+    verdictColor: "red",
+  },
+];
+
+const SCENARIOS_ES: ScenarioConfig[] = [
+  {
+    id:           "rebond",
+    badge:        "A",
+    badgeClass:   "bg-emerald-500/15 border-emerald-500/40 text-emerald-400",
+    title:        "Rebote inmediato",
+    description:  "El precio roza la parte alta del FVG. Reacción nítida, momentum fuerte.",
+    verdict:      "FVG fresh — setup A+",
+    verdictColor: "emerald",
+  },
+  {
+    id:           "deep",
+    badge:        "B",
+    badgeClass:   "bg-amber-500/15 border-amber-500/40 text-amber-400",
+    title:        "Mitigation profunda + reacción",
+    description:  "El precio rellena la zona en gran parte, luego rechaza claramente.",
+    verdict:      "FVG mitigado pero válido",
+    verdictColor: "amber",
+  },
+  {
+    id:           "invalidation",
+    badge:        "C",
+    badgeClass:   "bg-red-500/15 border-red-500/40 text-red-400",
+    title:        "Invalidación real",
+    description:  "El precio atraviesa, cierra más allá, estructura rota. Sin reacción.",
+    verdict:      "FVG invalidado — no operar",
     verdictColor: "red",
   },
 ];
@@ -178,13 +209,27 @@ function ScenarioSvg({ id }: { id: ScenarioConfig["id"] }) {
 
 // ─── Composant principal ─────────────────────────────────────────────────────
 
-export function FVGMitigationScenariosDiagram({ className = "" }: FVGMitigationScenariosDiagramProps) {
+export function FVGMitigationScenariosDiagram({ className = "", locale = "fr" }: FVGMitigationScenariosDiagramProps) {
+  const SCENARIOS = locale === "es" ? SCENARIOS_ES : SCENARIOS_FR;
+  const t = locale === "es"
+    ? {
+        title: "FVG alcista — 3 retornos posibles en la zona",
+        legZone: "Zona FVG",
+        legBull: "Vela alcista",
+        legBear: "Vela bajista",
+      }
+    : {
+        title: "FVG haussier — 3 retours possibles dans la zone",
+        legZone: "Zone FVG",
+        legBull: "Bougie haussière",
+        legBear: "Bougie baissière",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       {/* Header */}
       <div className="px-4 py-3 border-b border-zinc-800/60">
         <p className="text-[14px] font-bold text-white text-center">
-          FVG haussier — 3 retours possibles dans la zone
+          {t.title}
         </p>
       </div>
 
@@ -227,15 +272,15 @@ export function FVGMitigationScenariosDiagram({ className = "" }: FVGMitigationS
       <div className="px-4 py-2.5 border-t border-zinc-800/60 flex flex-wrap gap-x-4 gap-y-1.5">
         <div className="flex items-center gap-1.5">
           <span className="w-3 h-1.5 rounded-sm bg-amber-400/40 border border-amber-500/60" />
-          <span className="text-[10px] text-zinc-500 font-medium">Zone FVG</span>
+          <span className="text-[10px] text-zinc-500 font-medium">{t.legZone}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-sm bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500 font-medium">Bougie haussière</span>
+          <span className="text-[10px] text-zinc-500 font-medium">{t.legBull}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500 font-medium">Bougie baissière</span>
+          <span className="text-[10px] text-zinc-500 font-medium">{t.legBear}</span>
         </div>
       </div>
     </div>

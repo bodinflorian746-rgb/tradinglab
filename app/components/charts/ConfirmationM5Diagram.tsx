@@ -4,6 +4,7 @@
 
 interface ConfirmationM5DiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -33,7 +34,32 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 14;
 
-export function ConfirmationM5Diagram({ className = "" }: ConfirmationM5DiagramProps) {
+export function ConfirmationM5Diagram({ className = "", locale = "fr" }: ConfirmationM5DiagramProps) {
+  const L = locale === "es"
+    ? {
+        zoneH1: "Zona H1",
+        creux: "valle local",
+        annotation: "La reacción confirma la zona",
+        mobTitle: "Confirmación M5 — disparador LTF",
+        mobMeches: "Mechas de rechazo en la zona",
+        mobMechesDesc: "El precio entra en la zona y hace mechas de rechazo — señal de presión.",
+        mobCassure: "Ruptura del valle local = confirmación",
+        mobCassureDesc: "CHoCH en M5 valida la entrada short con SL más allá de la mecha extrema.",
+        legendMeches: "Mechas de rechazo en la zona",
+        legendCassure: "Ruptura del valle local = confirmación",
+      }
+    : {
+        zoneH1: "Zone H1",
+        creux: "creux local",
+        annotation: "La réaction confirme la zone",
+        mobTitle: "Confirmation M5 — déclencheur LTF",
+        mobMeches: "Mèches de rejet dans la zone",
+        mobMechesDesc: "Le prix entre dans la zone et fait des mèches de refus — signal de pression.",
+        mobCassure: "Cassure du creux local = confirmation",
+        mobCassureDesc: "CHoCH sur M5 valide l'entrée short avec SL au-delà de la mèche extrême.",
+        legendMeches: "Mèches de rejet dans la zone",
+        legendCassure: "Cassure du creux local = confirmation",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -54,7 +80,7 @@ export function ConfirmationM5Diagram({ className = "" }: ConfirmationM5DiagramP
 
         {/* Label "Zone H1" dans la bande à droite */}
         <rect x="556" y="62" width="80" height="13" rx="3" fill="#09090b" />
-        <text x="596" y="72" fill="#f59e0b" fontSize="9" fontWeight="600" textAnchor="middle">Zone H1</text>
+        <text x="596" y="72" fill="#f59e0b" fontSize="9" fontWeight="600" textAnchor="middle">{L.zoneH1}</text>
 
         {/* Bougies — aucune ligne reliante */}
         {CANDLES.map(({ cx, wickTop, wickBottom, bodyY, bodyH, type }, i) => {
@@ -71,7 +97,7 @@ export function ConfirmationM5Diagram({ className = "" }: ConfirmationM5DiagramP
         {/* Repère du creux local à y=155 — étendu jusqu'à x=520 pour traverser le point de cassure */}
         <line x1="340" y1="155" x2="520" y2="155" stroke="#71717a" strokeWidth="1.2" strokeDasharray="3 2" strokeOpacity="0.8" />
         <rect x="370" y="138" width="76" height="13" rx="3" fill="#09090b" />
-        <text x="408" y="148" fill="#71717a" fontSize="9" fontWeight="600" textAnchor="middle">creux local</text>
+        <text x="408" y="148" fill="#71717a" fontSize="9" fontWeight="600" textAnchor="middle">{L.creux}</text>
 
         {/* Marqueur de cassure — petit point amber à l'intersection B8/creux */}
         <circle cx="454" cy="155" r="4" fill="#f59e0b" stroke="#09090b" strokeWidth="1" />
@@ -80,31 +106,31 @@ export function ConfirmationM5Diagram({ className = "" }: ConfirmationM5DiagramP
         <rect x="190" y="284" width="320" height="22" rx="11" fill="#09090b" />
         <rect x="190" y="284" width="320" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          La réaction confirme la zone
+          {L.annotation}
         </text>
       </svg>
 
       {/* MOBILE : confirmation M5 ──────────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Confirmation M5 — déclencheur LTF</p>
+        <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Mèches de rejet dans la zone</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix entre dans la zone et fait des mèches de refus — signal de pression.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{L.mobMeches}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobMechesDesc}</p>
         </div>
         <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/10 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Cassure du creux local = confirmation</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">CHoCH sur M5 valide l'entrée short avec SL au-delà de la mèche extrême.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{L.mobCassure}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobCassureDesc}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Mèches de rejet dans la zone</span>
+          <span className="text-[10px] text-zinc-500">{L.legendMeches}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Cassure du creux local = confirmation</span>
+          <span className="text-[10px] text-zinc-500">{L.legendCassure}</span>
         </div>
       </div>
     </div>

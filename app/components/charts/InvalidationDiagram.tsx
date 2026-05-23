@@ -1,4 +1,23 @@
-export default function InvalidationDiagram({ className = "" }: { className?: string }) {
+export default function InvalidationDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const isEs = locale === "es";
+  const L = {
+    setupInvalid: isEs ? "Setup invalidado — cortar" : "Setup invalidé — couper",
+    resistance:   isEs ? "Resistencia" : "Résistance",
+    neckline:     "Neckline",
+    slInit:       isEs ? "SL inicial" : "SL initial",
+    peak1:        isEs ? "Pico 1" : "Sommet 1",
+    peak2:        isEs ? "Pico 2" : "Sommet 2",
+    entryShort:   isEs ? "Entrada short" : "Entrée short",
+    patternInv:   isEs ? "Patrón invalidado" : "Pattern invalidé",
+    violentRej:   isEs ? "Vela de rechazo violenta" : "Bougie de rejet violente",
+    footer:       isEs ? "Double Top → ruptura neckline → re-ruptura por arriba = patrón fallido" : "Double Top → cassure neckline → re-cassure par le haut = pattern échoué",
+    mobInvalid:   isEs ? "⚠ Setup invalidado — cortar" : "⚠ Setup invalidé — couper",
+    mob1:         isEs ? "Double Top formado, ruptura de la neckline → short tomado." : "Double Top formé, cassure de la neckline → short pris.",
+    mob2A:        isEs ? "El precio rebota y" : "Le prix remonte et",
+    mob2Bold:     isEs ? "re-rompe la neckline por arriba" : "re-casse la neckline par le haut",
+    mob2End:      isEs ? "→ patrón fallido." : "→ pattern échoué.",
+    mob3:         isEs ? "Cortar de inmediato — sin esperar el SL." : "Couper immédiatement — sans attendre le SL.",
+  };
   return (
     <div className={className}>
     <svg
@@ -9,21 +28,21 @@ export default function InvalidationDiagram({ className = "" }: { className?: st
       {/* Badge top droit — Setup invalidé */}
       <rect x="410" y="15" width="170" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
       <text x="495" y="30" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">
-        Setup invalidé — couper
+        {L.setupInvalid}
       </text>
 
       {/* Niveau résistance */}
       <line x1="10" y1="80" x2="590" y2="80" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="4 3" />
-      <text x="20" y="72" fill="#ef4444" fontSize="10" fontWeight="600">Résistance</text>
+      <text x="20" y="72" fill="#ef4444" fontSize="10" fontWeight="600">{L.resistance}</text>
 
       {/* Niveau neckline */}
       <line x1="10" y1="170" x2="590" y2="170" stroke="#a1a1aa" strokeWidth="1.5" strokeDasharray="3 3" />
-      <text x="20" y="185" fill="#a1a1aa" fontSize="10" fontWeight="600">Neckline</text>
+      <text x="20" y="185" fill="#a1a1aa" fontSize="10" fontWeight="600">{L.neckline}</text>
 
       {/* SL initial — descendu de 12px pour s'aligner avec la ligne pointillée et se détacher de la pastille top */}
       <line x1="300" y1="55" x2="590" y2="55" stroke="#ef4444" strokeWidth="1" strokeDasharray="2 2" opacity="0.5" />
       <rect x="536" y="50" width="56" height="14" rx="3" fill="#09090b" />
-      <text x="586" y="61" fill="#ef4444" fontSize="8" fontWeight="600" textAnchor="end">SL initial</text>
+      <text x="586" y="61" fill="#ef4444" fontSize="8" fontWeight="600" textAnchor="end">{L.slInit}</text>
 
       {/* Path du prix — Double Top → cassure neckline → re-cassure violente */}
       <path
@@ -55,51 +74,51 @@ export default function InvalidationDiagram({ className = "" }: { className?: st
 
       {/* Pastille Sommet 1 */}
       <rect x="105" y="58" width="50" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="130" y="68" fill="#d4d4d8" fontSize="8" textAnchor="middle">Sommet 1</text>
+      <text x="130" y="68" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.peak1}</text>
 
       {/* Pastille Sommet 2 */}
       <rect x="225" y="58" width="50" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="250" y="68" fill="#d4d4d8" fontSize="8" textAnchor="middle">Sommet 2</text>
+      <text x="250" y="68" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.peak2}</text>
 
       {/* Pastille Entrée short */}
       <rect x="290" y="208" width="60" height="14" rx="4" fill="#ef444433" stroke="#ef4444" strokeWidth="0.8" />
-      <text x="320" y="218" fill="#ef4444" fontSize="8" fontWeight="600" textAnchor="middle">Entrée short</text>
+      <text x="320" y="218" fill="#ef4444" fontSize="8" fontWeight="600" textAnchor="middle">{L.entryShort}</text>
 
       {/* Pastille Pattern invalidé — déplacée plus haut (y=105) pour espacer de "Bougie de rejet violente" (y=160) — gap 41px */}
       <rect x="420" y="105" width="90" height="14" rx="4" fill="#09090b" />
       <rect x="420" y="105" width="90" height="14" rx="4" fill="#10b98133" stroke="#10b981" strokeWidth="0.8" />
-      <text x="465" y="115" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">Pattern invalidé</text>
+      <text x="465" y="115" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">{L.patternInv}</text>
       <line x1="420" y1="119" x2="385" y2="135" stroke="#10b981" strokeWidth="0.8" strokeDasharray="2 2" />
 
       {/* Pastille Bougie de rejet violente — repositionnée à droite avec halo */}
       <rect x="440" y="160" width="120" height="14" rx="4" fill="#09090b" />
       <rect x="440" y="160" width="120" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="500" y="170" fill="#d4d4d8" fontSize="8" textAnchor="middle">Bougie de rejet violente</text>
+      <text x="500" y="170" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.violentRej}</text>
       <line x1="440" y1="168" x2="380" y2="155" stroke="#71717a" strokeWidth="0.8" strokeDasharray="2 2" />
 
       {/* Légende basse */}
       <text x="300" y="290" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        Double Top → cassure neckline → re-cassure par le haut = pattern échoué
+        {L.footer}
       </text>
     </svg>
 
     {/* MOBILE : setup invalidé ────────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
       <div className="rounded-xl border-2 border-red-500 bg-red-500/10 p-3 text-center">
-        <p className="text-[14px] font-bold text-red-400">⚠ Setup invalidé — couper</p>
+        <p className="text-[14px] font-bold text-red-400">{L.mobInvalid}</p>
       </div>
       <ul className="space-y-2 text-[13px]">
         <li className="flex items-start gap-2.5">
           <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">1</span>
-          <span className="text-zinc-300">Double Top formé, cassure de la neckline → short pris.</span>
+          <span className="text-zinc-300">{L.mob1}</span>
         </li>
         <li className="flex items-start gap-2.5">
           <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">2</span>
-          <span className="text-zinc-300">Le prix remonte et <span className="font-bold text-red-400">re-casse la neckline par le haut</span> → pattern échoué.</span>
+          <span className="text-zinc-300">{L.mob2A} <span className="font-bold text-red-400">{L.mob2Bold}</span> {L.mob2End}</span>
         </li>
         <li className="flex items-start gap-2.5">
           <span className="shrink-0 w-5 h-5 rounded-full bg-zinc-700 border border-zinc-500 flex items-center justify-center text-[11px] font-bold text-zinc-300 mt-0.5">3</span>
-          <span className="text-zinc-300">Couper immédiatement — sans attendre le SL.</span>
+          <span className="text-zinc-300">{L.mob3}</span>
         </li>
       </ul>
     </div>

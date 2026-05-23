@@ -1,4 +1,31 @@
-export default function SLManagementProgressionDiagram({ className = "" }: { className?: string }) {
+export default function SLManagementProgressionDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const isEs = locale === "es";
+  const L = {
+    title:        isEs ? "Gestión dinámica del SL en 4 etapas" : "Gestion dynamique du SL en 4 étapes",
+    s1:           isEs ? "Etapa 1 — SL inicial" : "Étape 1 — SL initial",
+    s2:           isEs ? "Etapa 2 — Ajuste" : "Étape 2 — Resserrement",
+    s3:           isEs ? "Etapa 3 — Break-even" : "Étape 3 — Break-even",
+    s4:           isEs ? "Etapa 4 — Trailing" : "Étape 4 — Trailing",
+    entryLabel:   isEs ? "Entrada 1.1795" : "Entrée 1.1795",
+    sl1Label:     isEs ? "SL 1.1835 (+40)" : "SL 1.1835 (+40)",
+    sl1Bot:       isEs ? "SL inicial 1.1835" : "SL initial 1.1835",
+    sl2Label:     isEs ? "SL 1.1815 (+20)" : "SL 1.1815 (+20)",
+    sl2Bot:       isEs ? "SL ajustado 1.1815" : "SL resserré 1.1815",
+    sl3Label:     isEs ? "SL = Entrada 1.1795" : "SL = Entrée 1.1795",
+    sl3Bot:       isEs ? "SL break-even" : "SL break-even",
+    sl4Trail:     isEs ? "SL trailing" : "SL trailing",
+    sl4Bot:       isEs ? "Sigue el precio" : "Suit le prix",
+    sl4Entry:     isEs ? "Entrada 1.1795" : "Entrée 1.1795",
+    mobTitle:     isEs ? "Gestión dinámica del SL en 4 etapas" : "Gestion dynamique du SL en 4 étapes",
+    mob1T:        isEs ? "1 · SL inicial — fijo" : "1 · SL initial — fixe",
+    mob1D:        isEs ? "Coloca el SL en el punto estructural en la entrada. Permanece fijo mientras el precio no haya avanzado." : "Place le SL au point structurel à l'entrée. Reste fixe tant que le prix n'a pas avancé.",
+    mob2T:        isEs ? "2 · Break-even (+1R)" : "2 · Break-even (+1R)",
+    mob2D:        isEs ? "Apenas el precio avanza 1R, mueve el SL al precio de entrada. Trade sin riesgo." : "Dès que le prix avance d'1R, déplace le SL au prix d'entrée. Trade sans risque.",
+    mob3T:        isEs ? "3 · SL en estructura intermedia" : "3 · SL sur structure intermédiaire",
+    mob3D:        isEs ? "En cada nuevo HH/HL formado, sube el SL justo debajo del último HL." : "À chaque nouveau HH/HL formé, remonte le SL juste sous le dernier HL.",
+    mob4T:        isEs ? "4 · Trailing dinámico" : "4 · Trailing dynamique",
+    mob4D:        isEs ? "El SL sigue el precio — deja correr las ganancias. Salida automática si hay reversión." : "SL suit le prix — laisse courir les gains. Sortie auto si retournement.",
+  };
   return (
     <div className={className}>
     <svg
@@ -7,7 +34,7 @@ export default function SLManagementProgressionDiagram({ className = "" }: { cla
       className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        Gestion dynamique du SL en 4 étapes
+        {L.title}
       </text>
 
       <line x1="200" y1="40" x2="200" y2="270" stroke="#3f3f46" strokeWidth="1" />
@@ -16,7 +43,7 @@ export default function SLManagementProgressionDiagram({ className = "" }: { cla
 
       {/* ═══ PANEL 1 — SL initial ═══ */}
       <rect x="20" y="50" width="170" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="105" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">Étape 1 — SL initial</text>
+      <text x="105" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">{L.s1}</text>
       {/* Entrée */}
       <line x1="20" y1="150" x2="190" y2="150" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 2" />
       {/* SL */}
@@ -24,71 +51,71 @@ export default function SLManagementProgressionDiagram({ className = "" }: { cla
       <path d="M30,180 L65,165 L100,170 L135,155 L170,145" stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
       {/* Halos + labels déplacés après path pour rester au-dessus */}
       <rect x="21" y="134" width="99" height="14" fill="#09090b" rx="3" />
-      <text x="25" y="145" fill="#10b981" fontSize="8" fontWeight="600">Entrée 1.1795</text>
+      <text x="25" y="145" fill="#10b981" fontSize="8" fontWeight="600">{L.entryLabel}</text>
       <rect x="21" y="194" width="113" height="14" fill="#09090b" rx="3" />
-      <text x="25" y="205" fill="#ef4444" fontSize="8" fontWeight="600">SL 1.1835 (+40)</text>
+      <text x="25" y="205" fill="#ef4444" fontSize="8" fontWeight="600">{L.sl1Label}</text>
       <rect x="55" y="230" width="100" height="18" rx="4" fill="#ef444420" stroke="#ef4444" strokeWidth="0.8" />
-      <text x="105" y="243" fill="#ef4444" fontSize="8" fontWeight="600" textAnchor="middle">SL initial 1.1835</text>
+      <text x="105" y="243" fill="#ef4444" fontSize="8" fontWeight="600" textAnchor="middle">{L.sl1Bot}</text>
 
       {/* ═══ PANEL 2 — Resserrement ═══ */}
       <rect x="220" y="50" width="170" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="305" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">Étape 2 — Resserrement</text>
+      <text x="305" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">{L.s2}</text>
       <line x1="220" y1="150" x2="390" y2="150" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 2" />
       <line x1="220" y1="180" x2="390" y2="180" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="5 3" />
       <path d="M230,200 L265,180 L300,170 L335,160 L370,155" stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
       {/* Halos + labels déplacés après path */}
       <rect x="221" y="134" width="99" height="14" fill="#09090b" rx="3" />
-      <text x="225" y="145" fill="#10b981" fontSize="8" fontWeight="600">Entrée 1.1795</text>
+      <text x="225" y="145" fill="#10b981" fontSize="8" fontWeight="600">{L.entryLabel}</text>
       <rect x="221" y="184" width="113" height="14" fill="#09090b" rx="3" />
-      <text x="225" y="195" fill="#f59e0b" fontSize="8" fontWeight="600">SL 1.1815 (+20)</text>
+      <text x="225" y="195" fill="#f59e0b" fontSize="8" fontWeight="600">{L.sl2Label}</text>
       <rect x="255" y="230" width="100" height="18" rx="4" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="0.8" />
-      <text x="305" y="243" fill="#f59e0b" fontSize="8" fontWeight="600" textAnchor="middle">SL resserré 1.1815</text>
+      <text x="305" y="243" fill="#f59e0b" fontSize="8" fontWeight="600" textAnchor="middle">{L.sl2Bot}</text>
 
       {/* ═══ PANEL 3 — Break-even ═══ */}
       <rect x="420" y="50" width="170" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="505" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">Étape 3 — Break-even</text>
+      <text x="505" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">{L.s3}</text>
       <line x1="420" y1="150" x2="590" y2="150" stroke="#10b981" strokeWidth="1.5" strokeDasharray="3 2" />
       <path d="M430,220 L465,195 L500,170 L535,155 L575,140" stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
       {/* Halo + label déplacé après path */}
       <rect x="421" y="134" width="134" height="14" fill="#09090b" rx="3" />
-      <text x="425" y="145" fill="#10b981" fontSize="8" fontWeight="600">SL = Entrée 1.1795</text>
+      <text x="425" y="145" fill="#10b981" fontSize="8" fontWeight="600">{L.sl3Label}</text>
       <rect x="455" y="230" width="100" height="18" rx="4" fill="#10b98120" stroke="#10b981" strokeWidth="0.8" />
-      <text x="505" y="243" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">SL break-even</text>
+      <text x="505" y="243" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">{L.sl3Bot}</text>
 
       {/* ═══ PANEL 4 — Trailing ═══ */}
       <rect x="620" y="50" width="170" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="705" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">Étape 4 — Trailing</text>
+      <text x="705" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">{L.s4}</text>
       <line x1="620" y1="150" x2="790" y2="150" stroke="#71717a" strokeWidth="1" strokeDasharray="2 2" opacity="0.5" />
       {/* SL trailing qui suit le prix avec écart */}
       <path d="M630,180 L665,160 L700,140 L735,120 L770,105" stroke="#10b981" strokeWidth="1.5" strokeDasharray="4 3" />
       <path d="M630,220 L665,200 L700,180 L735,160 L770,140" stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
       {/* Halos + labels déplacés après les 2 paths pour rester au-dessus */}
       <rect x="621" y="134" width="99" height="14" fill="#09090b" rx="3" />
-      <text x="625" y="145" fill="#71717a" fontSize="8">Entrée 1.1795</text>
+      <text x="625" y="145" fill="#71717a" fontSize="8">{L.sl4Entry}</text>
       <rect x="694" y="89" width="85" height="14" fill="#09090b" rx="3" />
-      <text x="775" y="100" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="end">SL trailing</text>
+      <text x="775" y="100" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="end">{L.sl4Trail}</text>
       <rect x="655" y="230" width="100" height="18" rx="4" fill="#10b98120" stroke="#10b981" strokeWidth="0.8" />
-      <text x="705" y="243" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">Suit le prix</text>
+      <text x="705" y="243" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">{L.sl4Bot}</text>
     </svg>
 
     {/* MOBILE : gestion SL en 4 étapes ───────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Gestion dynamique du SL en 4 étapes</p>
+      <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
       <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-        <p className="text-[13px] font-bold text-zinc-300">1 · SL initial — fixe</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Place le SL au point structurel à l'entrée. Reste fixe tant que le prix n'a pas avancé.</p>
+        <p className="text-[13px] font-bold text-zinc-300">{L.mob1T}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mob1D}</p>
       </div>
       <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-        <p className="text-[13px] font-bold text-amber-400">2 · Break-even (+1R)</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Dès que le prix avance d'1R, déplace le SL au prix d'entrée. Trade sans risque.</p>
+        <p className="text-[13px] font-bold text-amber-400">{L.mob2T}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mob2D}</p>
       </div>
       <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
-        <p className="text-[13px] font-bold text-blue-400">3 · SL sur structure intermédiaire</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">À chaque nouveau HH/HL formé, remonte le SL juste sous le dernier HL.</p>
+        <p className="text-[13px] font-bold text-blue-400">{L.mob3T}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mob3D}</p>
       </div>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">4 · Trailing dynamique</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">SL suit le prix — laisse courir les gains. Sortie auto si retournement.</p>
+        <p className="text-[13px] font-bold text-emerald-400">{L.mob4T}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mob4D}</p>
       </div>
     </div>
     </div>

@@ -19,7 +19,60 @@ function Candle({
   );
 }
 
-export function FOMCTimelineDiagram() {
+export function FOMCTimelineDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+  const t = locale === "es"
+    ? {
+        volatiliteErratique: "Volatilidad errática",
+        tradeIci: "Tradea aquí ✓",
+        decisionFed: "Decisión Fed",
+        discoursPowell: "Discurso Powell",
+        legendDecision: "Decisión (20h00)",
+        legendPowell: "Powell — crítico (20h30)",
+        legendTrader: "Tradear aquí (21h00+)",
+        mobileTitle: "Anatomía de un FOMC (Decisión Fed)",
+        phase1Title: "20h00 — Decisión Fed",
+        phase1Tag: "Fase 1",
+        phase1Desc: "Publicación del comunicado. Falso spike alcista frecuentemente observado primero.",
+        phase1Pips: "+150 pips inicial (trampa frecuente)",
+        phase2Title: "20h30 — Discurso Powell",
+        phase2Tag: "Fase 2",
+        phase2DescA: "Conferencia de prensa. ",
+        phase2DescB: "Volatilidad errática",
+        phase2DescC: " — el tono real se revela.",
+        phase2Pips: "Reversión violenta: −350 pips",
+        phase3Title: "21h00+ — Tradea aquí ✓",
+        phase3Tag: "Fase 3",
+        phase3DescA: "Dirección confirmada. Tendencia instalada — momento en que se puede ",
+        phase3DescB: "por fin entrar",
+        phase3DescC: ".",
+        warning: "⚠ NUNCA tradees entre 20h00 y 21h00",
+      }
+    : {
+        volatiliteErratique: "Volatilité erratique",
+        tradeIci: "Trade ici ✓",
+        decisionFed: "Décision Fed",
+        discoursPowell: "Discours Powell",
+        legendDecision: "Décision (20h00)",
+        legendPowell: "Powell — critique (20h30)",
+        legendTrader: "Trader ici (21h00+)",
+        mobileTitle: "Anatomie d'un FOMC (Décision Fed)",
+        phase1Title: "20h00 — Décision Fed",
+        phase1Tag: "Phase 1",
+        phase1Desc: "Publication du communiqué. Faux spike haussier souvent observé en premier.",
+        phase1Pips: "+150 pips initial (piège fréquent)",
+        phase2Title: "20h30 — Discours Powell",
+        phase2Tag: "Phase 2",
+        phase2DescA: "Conférence de presse. ",
+        phase2DescB: "Volatilité erratique",
+        phase2DescC: " — le ton réel se révèle.",
+        phase2Pips: "Retournement violent : −350 pips",
+        phase3Title: "21h00+ — Trade ici ✓",
+        phase3Tag: "Phase 3",
+        phase3DescA: "Direction confirmée. Tendance installée — moment où on peut ",
+        phase3DescB: "enfin entrer",
+        phase3DescC: ".",
+        warning: "⚠ Ne JAMAIS trader entre 20h00 et 21h00",
+      };
   return (
     <div className="w-full">
       <svg
@@ -112,11 +165,11 @@ export function FOMCTimelineDiagram() {
         {/* ── Zone labels ── */}
         <rect x={290} y={90} width={164} height={16} rx="3" fill="#09090b" fillOpacity="0.88" />
         <rect x={290} y={90} width={164} height={16} rx="3" fill="#ef444410" stroke="#ef444428" strokeWidth="0.6" />
-        <text x={372} y={102} fontSize="10" fill="#ef4444" textAnchor="middle" fontStyle="italic">Volatilité erratique</text>
+        <text x={372} y={102} fontSize="10" fill="#ef4444" textAnchor="middle" fontStyle="italic">{t.volatiliteErratique}</text>
 
         <rect x={637} y={68} width={80} height={22} rx="4" fill="#09090b" fillOpacity="0.90" />
         <rect x={637} y={68} width={80} height={22} rx="4" fill="#10b98112" stroke="#10b98135" strokeWidth="0.8" />
-        <text x={677} y={83} fontSize="12" fill="#34d399" textAnchor="middle" fontWeight="700">Trade ici ✓</text>
+        <text x={677} y={83} fontSize="12" fill="#34d399" textAnchor="middle" fontWeight="700">{t.tradeIci}</text>
 
         {/* ── Marqueurs sur l'axe ── */}
         <circle cx={200} cy={330} r="3.5" fill="#60a5fa" />
@@ -135,21 +188,21 @@ export function FOMCTimelineDiagram() {
 
         {/* Labels événements (haut) */}
         <rect x={130} y={24} width={140} height={16} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={200} y={36} fontSize="11.5" fill="#60a5fa" textAnchor="middle" fontWeight="600">Décision Fed</text>
+        <text x={200} y={36} fontSize="11.5" fill="#60a5fa" textAnchor="middle" fontWeight="600">{t.decisionFed}</text>
 
         <rect x={396} y={24} width={208} height={16} rx="2" fill="#09090b" fillOpacity="0.88" />
-        <text x={500} y={36} fontSize="11.5" fill="#fbbf24" textAnchor="middle" fontWeight="600">Discours Powell</text>
+        <text x={500} y={36} fontSize="11.5" fill="#fbbf24" textAnchor="middle" fontWeight="600">{t.discoursPowell}</text>
 
         {/* ── Légende ── */}
         <g transform="translate(50,368)">
           <circle cx="6" cy="6" r="4" fill="#60a5fa20" stroke="#60a5fa60" strokeWidth="1" />
-          <text x="14" y="10" fontSize="9.5" fill="#71717a">Décision (20h00)</text>
+          <text x="14" y="10" fontSize="9.5" fill="#71717a">{t.legendDecision}</text>
 
           <circle cx="148" cy="6" r="4" fill="#fbbf2420" stroke="#fbbf2460" strokeWidth="1" />
-          <text x="156" y="10" fontSize="9.5" fill="#71717a">Powell — critique (20h30)</text>
+          <text x="156" y="10" fontSize="9.5" fill="#71717a">{t.legendPowell}</text>
 
           <circle cx="340" cy="6" r="4" fill="#10b98120" stroke="#10b98160" strokeWidth="1" />
-          <text x="348" y="10" fontSize="9.5" fill="#71717a">Trader ici (21h00+)</text>
+          <text x="348" y="10" fontSize="9.5" fill="#71717a">{t.legendTrader}</text>
         </g>
 
         {/* ── Annotations chiffrées — couche du dessus (après tous les candles) ── */}
@@ -163,47 +216,47 @@ export function FOMCTimelineDiagram() {
       {/* ── MOBILE : 3 phases FOMC empilées ────────────────────────── */}
       <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
         <p className="text-[14px] font-bold text-white text-center leading-snug">
-          Anatomie d'un FOMC (Décision Fed)
+          {t.mobileTitle}
         </p>
 
         {/* Phase 1 — 20h00 Décision Fed */}
         <div className="rounded-xl border-2 border-blue-400 bg-blue-500/8 p-3">
           <div className="flex items-baseline justify-between gap-2 mb-2">
-            <span className="text-[15px] font-bold text-blue-400">20h00 — Décision Fed</span>
-            <span className="text-[11px] text-zinc-500 italic">Phase 1</span>
+            <span className="text-[15px] font-bold text-blue-400">{t.phase1Title}</span>
+            <span className="text-[11px] text-zinc-500 italic">{t.phase1Tag}</span>
           </div>
           <p className="text-[13px] text-zinc-300 leading-snug">
-            Publication du communiqué. Faux spike haussier souvent observé en premier.
+            {t.phase1Desc}
           </p>
-          <p className="text-[13px] text-emerald-400 font-bold mt-1.5">+150 pips initial (piège fréquent)</p>
+          <p className="text-[13px] text-emerald-400 font-bold mt-1.5">{t.phase1Pips}</p>
         </div>
 
         {/* Phase 2 — 20h30 Discours Powell */}
         <div className="rounded-xl border-2 border-amber-400 bg-amber-400/8 p-3">
           <div className="flex items-baseline justify-between gap-2 mb-2">
-            <span className="text-[15px] font-bold text-amber-400">20h30 — Discours Powell</span>
-            <span className="text-[11px] text-zinc-500 italic">Phase 2</span>
+            <span className="text-[15px] font-bold text-amber-400">{t.phase2Title}</span>
+            <span className="text-[11px] text-zinc-500 italic">{t.phase2Tag}</span>
           </div>
           <p className="text-[13px] text-zinc-300 leading-snug">
-            Conférence de presse. <span className="font-bold text-red-400">Volatilité erratique</span> — le ton réel se révèle.
+            {t.phase2DescA}<span className="font-bold text-red-400">{t.phase2DescB}</span>{t.phase2DescC}
           </p>
-          <p className="text-[13px] text-red-400 font-bold mt-1.5">Retournement violent : −350 pips</p>
+          <p className="text-[13px] text-red-400 font-bold mt-1.5">{t.phase2Pips}</p>
         </div>
 
         {/* Phase 3 — 21h00+ Trade ici */}
         <div className="rounded-xl border-2 border-emerald-400 bg-emerald-500/8 p-3">
           <div className="flex items-baseline justify-between gap-2 mb-2">
-            <span className="text-[15px] font-bold text-emerald-400">21h00+ — Trade ici ✓</span>
-            <span className="text-[11px] text-zinc-500 italic">Phase 3</span>
+            <span className="text-[15px] font-bold text-emerald-400">{t.phase3Title}</span>
+            <span className="text-[11px] text-zinc-500 italic">{t.phase3Tag}</span>
           </div>
           <p className="text-[13px] text-zinc-300 leading-snug">
-            Direction confirmée. Tendance installée — moment où on peut <span className="font-bold text-emerald-400">enfin entrer</span>.
+            {t.phase3DescA}<span className="font-bold text-emerald-400">{t.phase3DescB}</span>{t.phase3DescC}
           </p>
         </div>
 
         <div className="rounded-lg border border-red-500/30 bg-red-500/5 p-2.5 mt-2">
           <p className="text-[13px] text-red-400 font-bold text-center">
-            ⚠ Ne JAMAIS trader entre 20h00 et 21h00
+            {t.warning}
           </p>
         </div>
       </div>

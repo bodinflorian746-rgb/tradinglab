@@ -27,10 +27,24 @@ function MiniCandle({ cx, bodyTop, bodyBot, wickTop, wickBot, bullish }: MiniCan
 
 interface GraphFakeBreakoutProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
-export function GraphFakeBreakout({ className = '' }: GraphFakeBreakoutProps) {
+export function GraphFakeBreakout({ className = '', locale = "fr" }: GraphFakeBreakoutProps) {
   const rY = 62;
+  const isEs = locale === "es";
+  const L = {
+    wick:           isEs ? "mecha ↑" : "mèche ↑",
+    close:          isEs ? "cierre ↓" : "clôture ↓",
+    resistance:     isEs ? "Resistencia" : "Résistance",
+    mobTitle:       isEs ? "Fake Breakout — trampa clásica ✗" : "Fake Breakout — piège classique ✗",
+    resistanceLine: isEs ? "línea alta, rechazada varias veces" : "ligne haute, repoussée plusieurs fois",
+    wickAbove:      isEs ? "rebasa la resistencia — parece validar la ruptura" : "dépasse la résistance — semble valider la cassure",
+    closeBelow:     isEs ? "debajo de la resistencia — la trampa se cierra" : "sous la résistance — le piège se referme",
+    waitClose:      isEs ? "Siempre espera un cierre para validar una ruptura" : "Toujours attendre une clôture pour valider une cassure",
+    legendWick:     isEs ? "Mecha por encima de la resistencia" : "Mèche au-dessus de la résistance",
+    legendTrap:     isEs ? "Cierre debajo de la resistencia = trampa" : "Clôture sous la résistance = piège",
+  };
 
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
@@ -75,41 +89,41 @@ export function GraphFakeBreakout({ className = '' }: GraphFakeBreakoutProps) {
         {/* Annotations textuelles — masquées sur mobile */}
         <g className="chart-detail-labels">
           <line x1="113" y1="24" x2="138" y2="14" stroke="#f87171" strokeWidth="1" opacity="0.5" strokeDasharray="2 2" />
-          <text x="141" y="18" fontSize="9" fill="#f87171" opacity="0.9">mèche ↑</text>
+          <text x="141" y="18" fontSize="9" fill="#f87171" opacity="0.9">{L.wick}</text>
 
           <line x1="118" y1="68" x2="138" y2="80" stroke="#ef4444" strokeWidth="1" opacity="0.45" strokeDasharray="2 2" />
-          <text x="141" y="84" fontSize="9" fill="#ef4444" opacity="0.8">clôture ↓</text>
+          <text x="141" y="84" fontSize="9" fill="#ef4444" opacity="0.8">{L.close}</text>
 
           <rect x="182" y={rY - 19} width="87" height="14" rx="3" fill="#09090b" />
-          <text x="188" y={rY - 8} fontSize="9" fill="#ef4444" opacity="0.75">Résistance</text>
+          <text x="188" y={rY - 8} fontSize="9" fill="#ef4444" opacity="0.75">{L.resistance}</text>
         </g>
       </svg>
 
       {/* Mobile : key card avec scénario du fake breakout */}
       <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
-        <p className="text-[13px] font-bold text-red-400">Fake Breakout — piège classique ✗</p>
+        <p className="text-[13px] font-bold text-red-400">{L.mobTitle}</p>
         <ul className="space-y-1.5 text-[13px] leading-snug">
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-3 h-1 rounded-sm bg-red-400 mt-2" />
             <span className="text-zinc-300">
-              <span className="font-bold text-red-400">Résistance</span> ligne haute, repoussée plusieurs fois
+              <span className="font-bold text-red-400">{L.resistance}</span> {L.resistanceLine}
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
             <span className="text-zinc-300">
-              <span className="font-bold text-red-400">Mèche ↑</span> dépasse la résistance — semble valider la cassure
+              <span className="font-bold text-red-400">{L.wick}</span> {L.wickAbove}
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
             <span className="text-zinc-300">
-              <span className="font-bold text-red-400">Clôture ↓</span> sous la résistance — le piège se referme
+              <span className="font-bold text-red-400">{L.close}</span> {L.closeBelow}
             </span>
           </li>
           <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
             <span className="shrink-0 text-zinc-300 font-bold">→</span>
-            <span className="text-zinc-300">Toujours attendre une clôture pour valider une cassure</span>
+            <span className="text-zinc-300">{L.waitClose}</span>
           </li>
         </ul>
       </div>
@@ -118,11 +132,11 @@ export function GraphFakeBreakout({ className = '' }: GraphFakeBreakoutProps) {
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full bg-red-400 opacity-90" />
-          <span className="text-[10px] text-zinc-500">Mèche au-dessus de la résistance</span>
+          <span className="text-[10px] text-zinc-500">{L.legendWick}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Clôture sous la résistance = piège</span>
+          <span className="text-[10px] text-zinc-500">{L.legendTrap}</span>
         </div>
       </div>
     </div>

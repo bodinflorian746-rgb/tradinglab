@@ -3,9 +3,31 @@
 
 interface DailyContextDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
-export function DailyContextDiagram({ className = "" }: DailyContextDiagramProps) {
+export function DailyContextDiagram({ className = "", locale = "fr" }: DailyContextDiagramProps) {
+  const L = locale === "es"
+    ? {
+        annotation: "El Daily define el contexto general",
+        mobTitle: "Contexto Daily — dirección vendedora",
+        mobImpulsions: "Impulsiones bajistas fuertes",
+        mobImpulsionsDesc: "Movimientos direccionales rápidos hacia abajo.",
+        mobCorrections: "Correcciones alcistas débiles",
+        mobCorrectionsDesc: "Retracements lentos → dirección vendedora confirmada.",
+        legendImpulsions: "Impulsiones bajistas fuertes",
+        legendCorrections: "Correcciones alcistas débiles = dirección vendedora",
+      }
+    : {
+        annotation: "Le Daily définit le contexte général",
+        mobTitle: "Contexte Daily — direction vendeuse",
+        mobImpulsions: "Impulsions baissières fortes",
+        mobImpulsionsDesc: "Mouvements directionnels rapides vers le bas.",
+        mobCorrections: "Corrections haussières faibles",
+        mobCorrectionsDesc: "Retracements lents → direction vendeuse confirmée.",
+        legendImpulsions: "Impulsions baissières fortes",
+        legendCorrections: "Corrections haussières faibles = direction vendeuse",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -53,31 +75,31 @@ export function DailyContextDiagram({ className = "" }: DailyContextDiagramProps
         <rect x="190" y="296" width="320" height="20" rx="10" fill="#09090b" />
         <rect x="190" y="296" width="320" height="20" rx="10" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="309" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le Daily définit le contexte général
+          {L.annotation}
         </text>
       </svg>
 
       {/* MOBILE : contexte Daily ──────────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Contexte Daily — direction vendeuse</p>
+        <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">Impulsions baissières fortes</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Mouvements directionnels rapides vers le bas.</p>
+          <p className="text-[13px] font-bold text-red-400">{L.mobImpulsions}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobImpulsionsDesc}</p>
         </div>
         <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-          <p className="text-[13px] font-bold text-zinc-300">Corrections haussières faibles</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Retracements lents → direction vendeuse confirmée.</p>
+          <p className="text-[13px] font-bold text-zinc-300">{L.mobCorrections}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobCorrectionsDesc}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Impulsions baissières fortes</span>
+          <span className="text-[10px] text-zinc-500">{L.legendImpulsions}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Corrections haussières faibles = direction vendeuse</span>
+          <span className="text-[10px] text-zinc-500">{L.legendCorrections}</span>
         </div>
       </div>
     </div>

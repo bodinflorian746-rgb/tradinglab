@@ -3,6 +3,7 @@
 
 interface ICTSequenceTimelineDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -44,7 +45,7 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 10;
 
-const STEPS = [
+const STEPS_FR = [
   { x:  55, label: "HTF bearish" },
   { x: 115, label: "Equal highs" },
   { x: 215, label: "Sweep" },
@@ -54,7 +55,51 @@ const STEPS = [
   { x: 580, label: "Chute finale" },
 ];
 
-export function ICTSequenceTimelineDiagram({ className = "" }: ICTSequenceTimelineDiagramProps) {
+const STEPS_ES = [
+  { x:  55, label: "HTF bearish" },
+  { x: 115, label: "Equal highs" },
+  { x: 215, label: "Sweep" },
+  { x: 275, label: "Displacement" },
+  { x: 360, label: "FVG" },
+  { x: 460, label: "Retorno FVG" },
+  { x: 580, label: "Caída final" },
+];
+
+export function ICTSequenceTimelineDiagram({ className = "", locale = "fr" }: ICTSequenceTimelineDiagramProps) {
+  const STEPS = locale === "es" ? STEPS_ES : STEPS_FR;
+  const t = locale === "es"
+    ? {
+        annotation: "El setup se construye etapa por etapa",
+        mobileTitle: "Secuencia ICT completa — 7 etapas",
+        steps: [
+          { n: 1, t: "Liquidez HTF identificada", c: "amber" },
+          { n: 2, t: "Sweep de la liquidez", c: "amber" },
+          { n: 3, t: "Reintegración / CHoCH", c: "red" },
+          { n: 4, t: "Displacement bearish", c: "red" },
+          { n: 5, t: "FVG creado", c: "blue" },
+          { n: 6, t: "Retorno al FVG (mitigation)", c: "blue" },
+          { n: 7, t: "Rechazo + reanudación = ejecución", c: "emerald" },
+        ],
+        mobileFooter: "Cada etapa construye la siguiente.",
+        leg1: "7 etapas — de la liquidez HTF a la ejecución",
+        leg2: "Cada etapa construye la siguiente",
+      }
+    : {
+        annotation: "Le setup se construit étape par étape",
+        mobileTitle: "Séquence ICT complète — 7 étapes",
+        steps: [
+          { n: 1, t: "Liquidité HTF identifiée", c: "amber" },
+          { n: 2, t: "Sweep de la liquidité", c: "amber" },
+          { n: 3, t: "Réintégration / CHoCH", c: "red" },
+          { n: 4, t: "Displacement bearish", c: "red" },
+          { n: 5, t: "FVG créé", c: "blue" },
+          { n: 6, t: "Retour dans le FVG (mitigation)", c: "blue" },
+          { n: 7, t: "Rejet + reprise = exécution", c: "emerald" },
+        ],
+        mobileFooter: "Chaque étape construit la suivante.",
+        leg1: "7 étapes — de la liquidité HTF à l'exécution",
+        leg2: "Chaque étape construit la suivante",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -100,40 +145,32 @@ export function ICTSequenceTimelineDiagram({ className = "" }: ICTSequenceTimeli
         <rect x="170" y="296" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="296" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="310" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le setup se construit étape par étape
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : 7 étapes ICT ──────────────────────────── */}
       <div className="sm:hidden p-4 space-y-2">
-        <p className="text-[14px] font-bold text-white text-center">Séquence ICT complète — 7 étapes</p>
-        {[
-          { n: 1, t: "Liquidité HTF identifiée", c: "amber" },
-          { n: 2, t: "Sweep de la liquidité", c: "amber" },
-          { n: 3, t: "Réintégration / CHoCH", c: "red" },
-          { n: 4, t: "Displacement bearish", c: "red" },
-          { n: 5, t: "FVG créé", c: "blue" },
-          { n: 6, t: "Retour dans le FVG (mitigation)", c: "blue" },
-          { n: 7, t: "Rejet + reprise = exécution", c: "emerald" },
-        ].map((s) => (
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+        {t.steps.map((s) => (
           <div key={s.n} className="flex items-center gap-2.5 text-[13px]">
             <span className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold bg-${s.c}-500/20 border border-${s.c}-400 text-${s.c}-400`}>{s.n}</span>
             <span className="text-zinc-300">{s.t}</span>
           </div>
         ))}
         <p className="text-[12px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
-          Chaque étape construit la suivante.
+          {t.mobileFooter}
         </p>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">7 étapes — de la liquidité HTF à l&apos;exécution</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Chaque étape construit la suivante</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

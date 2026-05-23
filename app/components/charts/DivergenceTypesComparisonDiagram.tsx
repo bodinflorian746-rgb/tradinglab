@@ -1,4 +1,22 @@
-export default function DivergenceTypesComparisonDiagram({ className = "" }: { className?: string }) {
+export default function DivergenceTypesComparisonDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const isEs = locale === "es";
+  const L = {
+    title:           isEs ? "Los 4 tipos de divergencia RSI" : "Les 4 types de divergence RSI",
+    classicBear:     isEs ? "Clásica bajista" : "Classique baissière",
+    classicBull:     isEs ? "Clásica alcista" : "Classique haussière",
+    hiddenBear:      isEs ? "Oculta bajista" : "Cachée baissière",
+    hiddenBull:      isEs ? "Oculta alcista" : "Cachée haussière",
+    price:           isEs ? "Precio" : "Prix",
+    rsi:             "RSI",
+    mobRegBear:      isEs ? "Regular BAJISTA" : "Régulière BAISSIÈRE",
+    mobRegBull:      isEs ? "Regular ALCISTA" : "Régulière HAUSSIÈRE",
+    mobHidBear:      isEs ? "Oculta BAJISTA" : "Cachée BAISSIÈRE",
+    mobHidBull:      isEs ? "Oculta ALCISTA" : "Cachée HAUSSIÈRE",
+    mobRegBearDesc:  isEs ? "Precio: HH · RSI: LH → reversal bajista" : "Prix : HH · RSI : LH → retournement baissier",
+    mobRegBullDesc:  isEs ? "Precio: LL · RSI: HL → reversal alcista" : "Prix : LL · RSI : HL → retournement haussier",
+    mobHidBearDesc:  isEs ? "Precio: LH · RSI: HH → continuación bajista (en tendencia ↓)" : "Prix : LH · RSI : HH → continuation baissière (dans tendance ↓)",
+    mobHidBullDesc:  isEs ? "Precio: HL · RSI: LL → continuación alcista (en tendencia ↑)" : "Prix : HL · RSI : LL → continuation haussière (dans tendance ↑)",
+  };
   return (
     <div className={className}>
     <svg
@@ -7,7 +25,7 @@ export default function DivergenceTypesComparisonDiagram({ className = "" }: { c
       className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        Les 4 types de divergence RSI
+        {L.title}
       </text>
 
       <line x1="400" y1="40" x2="400" y2="480" stroke="#3f3f46" strokeWidth="1" />
@@ -15,15 +33,15 @@ export default function DivergenceTypesComparisonDiagram({ className = "" }: { c
 
       {/* ═══ HAUT GAUCHE — Classique baissière : prix HH + RSI LH ═══ */}
       <rect x="80" y="50" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="200" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">Classique baissière</text>
+      <text x="200" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{L.classicBear}</text>
 
-      <text x="35" y="95" fill="#a1a1aa" fontSize="9">Prix</text>
+      <text x="35" y="95" fill="#a1a1aa" fontSize="9">{L.price}</text>
       <path d="M40,150 L100,120 L160,140 L240,90 L320,140" stroke="#10b981" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
       <circle cx="100" cy="120" r="3.5" fill="#10b981" />
       <circle cx="240" cy="90" r="3.5" fill="#10b981" />
       <line x1="100" y1="120" x2="240" y2="90" stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" />
 
-      <text x="35" y="195" fill="#a1a1aa" fontSize="9">RSI</text>
+      <text x="35" y="195" fill="#a1a1aa" fontSize="9">{L.rsi}</text>
       <line x1="40" y1="205" x2="380" y2="205" stroke="#71717a" strokeWidth="0.5" strokeDasharray="2 2" />
       <line x1="40" y1="240" x2="380" y2="240" stroke="#71717a" strokeWidth="0.5" strokeDasharray="2 2" />
       <rect x="40" y="195" width="14" height="10" rx="2" fill="#09090b" />
@@ -37,15 +55,15 @@ export default function DivergenceTypesComparisonDiagram({ className = "" }: { c
 
       {/* ═══ HAUT DROIT — Classique haussière : prix LL + RSI HL ═══ */}
       <rect x="480" y="50" width="240" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="600" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">Classique haussière</text>
+      <text x="600" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{L.classicBull}</text>
 
-      <text x="435" y="95" fill="#a1a1aa" fontSize="9">Prix</text>
+      <text x="435" y="95" fill="#a1a1aa" fontSize="9">{L.price}</text>
       <path d="M440,110 L500,140 L560,120 L640,160 L720,130" stroke="#ef4444" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
       <circle cx="500" cy="140" r="3.5" fill="#ef4444" />
       <circle cx="640" cy="160" r="3.5" fill="#ef4444" />
       <line x1="500" y1="140" x2="640" y2="160" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" />
 
-      <text x="435" y="195" fill="#a1a1aa" fontSize="9">RSI</text>
+      <text x="435" y="195" fill="#a1a1aa" fontSize="9">{L.rsi}</text>
       <line x1="440" y1="205" x2="780" y2="205" stroke="#71717a" strokeWidth="0.5" strokeDasharray="2 2" />
       <line x1="440" y1="240" x2="780" y2="240" stroke="#71717a" strokeWidth="0.5" strokeDasharray="2 2" />
       <rect x="440" y="195" width="14" height="10" rx="2" fill="#09090b" />
@@ -59,15 +77,15 @@ export default function DivergenceTypesComparisonDiagram({ className = "" }: { c
 
       {/* ═══ BAS GAUCHE — Cachée baissière : prix LH + RSI HH ═══ */}
       <rect x="80" y="275" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="200" y="290" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">Cachée baissière</text>
+      <text x="200" y="290" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{L.hiddenBear}</text>
 
-      <text x="35" y="320" fill="#a1a1aa" fontSize="9">Prix</text>
+      <text x="35" y="320" fill="#a1a1aa" fontSize="9">{L.price}</text>
       <path d="M40,360 L100,330 L160,350 L240,345 L320,380" stroke="#10b981" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
       <circle cx="100" cy="330" r="3.5" fill="#10b981" />
       <circle cx="240" cy="345" r="3.5" fill="#10b981" />
       <line x1="100" y1="330" x2="240" y2="345" stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" />
 
-      <text x="35" y="410" fill="#a1a1aa" fontSize="9">RSI</text>
+      <text x="35" y="410" fill="#a1a1aa" fontSize="9">{L.rsi}</text>
       <line x1="40" y1="420" x2="380" y2="420" stroke="#71717a" strokeWidth="0.5" strokeDasharray="2 2" />
       <line x1="40" y1="455" x2="380" y2="455" stroke="#71717a" strokeWidth="0.5" strokeDasharray="2 2" />
       <rect x="40" y="410" width="14" height="10" rx="2" fill="#09090b" />
@@ -81,15 +99,15 @@ export default function DivergenceTypesComparisonDiagram({ className = "" }: { c
 
       {/* ═══ BAS DROIT — Cachée haussière : prix HL + RSI LL ═══ */}
       <rect x="480" y="275" width="240" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="600" y="290" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">Cachée haussière</text>
+      <text x="600" y="290" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{L.hiddenBull}</text>
 
-      <text x="435" y="320" fill="#a1a1aa" fontSize="9">Prix</text>
+      <text x="435" y="320" fill="#a1a1aa" fontSize="9">{L.price}</text>
       <path d="M440,380 L500,350 L560,375 L640,345 L720,310" stroke="#ef4444" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
       <circle cx="500" cy="350" r="3.5" fill="#ef4444" />
       <circle cx="640" cy="345" r="3.5" fill="#ef4444" />
       <line x1="500" y1="350" x2="640" y2="345" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" />
 
-      <text x="435" y="410" fill="#a1a1aa" fontSize="9">RSI</text>
+      <text x="435" y="410" fill="#a1a1aa" fontSize="9">{L.rsi}</text>
       <line x1="440" y1="420" x2="780" y2="420" stroke="#71717a" strokeWidth="0.5" strokeDasharray="2 2" />
       <line x1="440" y1="455" x2="780" y2="455" stroke="#71717a" strokeWidth="0.5" strokeDasharray="2 2" />
       <rect x="440" y="410" width="14" height="10" rx="2" fill="#09090b" />
@@ -104,22 +122,22 @@ export default function DivergenceTypesComparisonDiagram({ className = "" }: { c
 
     {/* MOBILE : 4 types divergence RSI ──────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Les 4 types de divergence RSI</p>
+      <p className="text-[14px] font-bold text-white text-center">{L.title}</p>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">Régulière BAISSIÈRE</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix : HH · RSI : LH → retournement baissier</p>
+        <p className="text-[13px] font-bold text-red-400">{L.mobRegBear}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobRegBearDesc}</p>
       </div>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">Régulière HAUSSIÈRE</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix : LL · RSI : HL → retournement haussier</p>
+        <p className="text-[13px] font-bold text-emerald-400">{L.mobRegBull}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobRegBullDesc}</p>
       </div>
       <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-        <p className="text-[13px] font-bold text-amber-400">Cachée BAISSIÈRE</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix : LH · RSI : HH → continuation baissière (dans tendance ↓)</p>
+        <p className="text-[13px] font-bold text-amber-400">{L.mobHidBear}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobHidBearDesc}</p>
       </div>
       <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
-        <p className="text-[13px] font-bold text-blue-400">Cachée HAUSSIÈRE</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Prix : HL · RSI : LL → continuation haussière (dans tendance ↑)</p>
+        <p className="text-[13px] font-bold text-blue-400">{L.mobHidBull}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobHidBullDesc}</p>
       </div>
     </div>
     </div>

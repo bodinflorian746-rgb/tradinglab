@@ -1,4 +1,40 @@
-export default function EngulfingSetupDiagram() {
+export default function EngulfingSetupDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+  const t = locale === "es"
+    ? {
+        title: "Bullish engulfing en Fibo 0.618 — XAU/USD H4",
+        tpResistance: "TP — Resistencia 4 720$",
+        fiboLabel: "Fibo 0.618 — 4 600$",
+        slLabel: "SL 4 590$",
+        engulfBull: "Engulfing bullish",
+        bodyEngulf: "El cuerpo envuelve la 1ª",
+        entry: "Entrada 4 630$",
+        legend: "Riesgo 40$ · Ganancia potencial 90$ · R/R 2,25",
+        mobileTitle: "Bullish engulfing en Fibo 0.618 — XAU/USD H4",
+        mobileTP: "Take Profit",
+        mobileEntry: "Entrada",
+        mobileSL: "Stop Loss",
+        mobileRisk: "Riesgo 40 $",
+        mobileGain: "Ganancia 90 $",
+        mobileFooter: "Vela verde que envuelve por completo la roja anterior sobre el Fibo 0.618 = señal de entrada fuerte.",
+      }
+    : {
+        title: "Bullish engulfing sur Fibo 0.618 — XAU/USD H4",
+        tpResistance: "TP — Résistance 4 720$",
+        fiboLabel: "Fibo 0.618 — 4 600$",
+        slLabel: "SL 4 590$",
+        engulfBull: "Engulfing bullish",
+        bodyEngulf: "Le corps engloutit la 1ère",
+        entry: "Entrée 4 630$",
+        legend: "Risque 40$ · Gain potentiel 90$ · R/R 2,25",
+        mobileTitle: "Bullish engulfing sur Fibo 0.618 — XAU/USD H4",
+        mobileTP: "Take Profit",
+        mobileEntry: "Entrée",
+        mobileSL: "Stop Loss",
+        mobileRisk: "Risque 40 $",
+        mobileGain: "Gain 90 $",
+        mobileFooter: "Bougie verte qui avale entièrement la rouge précédente sur le Fibo 0.618 = signal d'entrée fort.",
+      };
+
   return (
     <div>
     <svg
@@ -10,7 +46,7 @@ export default function EngulfingSetupDiagram() {
     >
       {/* ── 1. Titre ── */}
       <text x="360" y="28" textAnchor="middle" fontSize="16" fontWeight="600" fill="#10b981">
-        Bullish engulfing sur Fibo 0.618 — XAU/USD H4
+        {t.title}
       </text>
 
       {/* ── 2. Axe vertical gauche ── */}
@@ -37,17 +73,17 @@ export default function EngulfingSetupDiagram() {
       {/* ── 3. Ligne TP (emerald-500) ── */}
       <line x1="120" y1="80" x2="680" y2="80" stroke="#10b981" strokeWidth="1.5" strokeDasharray="6 4" />
       <rect x="562" y="72" width="154" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="715" y="83" textAnchor="end" fontSize="11" fill="#10b981">TP — Résistance 4 720$</text>
+      <text x="715" y="83" textAnchor="end" fontSize="11" fill="#10b981">{t.tpResistance}</text>
 
       {/* ── 4. Ligne Fibo 0.618 (zinc-400) ── */}
       <line x1="120" y1="200" x2="680" y2="200" stroke="#a1a1aa" strokeWidth="1.5" strokeDasharray="6 4" />
       <rect x="571" y="192" width="144" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="715" y="203" textAnchor="end" fontSize="11" fill="#a1a1aa">Fibo 0.618 — 4 600$</text>
+      <text x="715" y="203" textAnchor="end" fontSize="11" fill="#a1a1aa">{t.fiboLabel}</text>
 
       {/* ── 5. Ligne SL (red-500) ── */}
       <line x1="120" y1="220" x2="680" y2="220" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="6 4" />
       <rect x="649" y="212" width="68" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="715" y="223" textAnchor="end" fontSize="11" fill="#ef4444">SL 4 590$</text>
+      <text x="715" y="223" textAnchor="end" fontSize="11" fill="#ef4444">{t.slLabel}</text>
 
       {/* ── 6. Bougies bearish de contexte — descente vers le Fibo ── */}
 
@@ -77,11 +113,11 @@ export default function EngulfingSetupDiagram() {
 
       {/* Annotation "Engulfing bullish" au-dessus des 2 bougies */}
       <rect x="278" y="144" width="114" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="335" y="155" textAnchor="middle" fontSize="11" fontWeight="600" fill="#10b981">Engulfing bullish</text>
+      <text x="335" y="155" textAnchor="middle" fontSize="11" fontWeight="600" fill="#10b981">{t.engulfBull}</text>
 
       {/* Annotation sous les 2 bougies */}
       <rect x="260" y="229" width="150" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="335" y="240" textAnchor="middle" fontSize="10" fontStyle="italic" fill="#71717a">Le corps engloutit la 1ère</text>
+      <text x="335" y="240" textAnchor="middle" fontSize="10" fontStyle="italic" fill="#71717a">{t.bodyEngulf}</text>
 
       {/* ── 8. Bougie de confirmation bullish ── */}
       <line x1="400" y1="130" x2="400" y2="170" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" />
@@ -104,28 +140,28 @@ export default function EngulfingSetupDiagram() {
       />
       {/* Pastille + texte */}
       <rect x="494" y="154" width="97" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="498" y="165" textAnchor="start" fontSize="11" fontWeight="600" fill="#10b981">Entrée 4 630$</text>
+      <text x="498" y="165" textAnchor="start" fontSize="11" fontWeight="600" fill="#10b981">{t.entry}</text>
 
       {/* ── 11. Légende bas ── */}
       <rect x="190" y="399" width="340" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="360" y="410" textAnchor="middle" fontSize="12" fontWeight="500" fill="#d4d4d8">
-        Risque 40$ · Gain potentiel 90$ · R/R 2,25
+        {t.legend}
       </text>
     </svg>
 
     {/* MOBILE : setup Engulfing bullish sur Fibo 0.618 ──────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
       <p className="text-[14px] font-bold text-emerald-400 text-center leading-snug">
-        Bullish engulfing sur Fibo 0.618 — XAU/USD H4
+        {t.mobileTitle}
       </p>
 
       <div className="space-y-2">
         <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-2.5 flex justify-between items-center">
-          <span className="text-[12px] text-emerald-400/80 uppercase font-bold tracking-wider">Take Profit</span>
+          <span className="text-[12px] text-emerald-400/80 uppercase font-bold tracking-wider">{t.mobileTP}</span>
           <span className="text-[15px] font-mono font-bold text-emerald-400">4 720 $</span>
         </div>
         <div className="rounded-lg bg-zinc-800 border border-zinc-700 p-2.5 flex justify-between items-center">
-          <span className="text-[12px] text-zinc-300 uppercase font-bold tracking-wider">Entrée</span>
+          <span className="text-[12px] text-zinc-300 uppercase font-bold tracking-wider">{t.mobileEntry}</span>
           <span className="text-[15px] font-mono font-bold text-white">4 630 $</span>
         </div>
         <div className="rounded-lg bg-blue-500/10 border border-blue-400/30 p-2.5 flex justify-between items-center">
@@ -133,20 +169,20 @@ export default function EngulfingSetupDiagram() {
           <span className="text-[14px] font-mono font-semibold text-blue-400">4 600 $</span>
         </div>
         <div className="rounded-lg bg-red-500/10 border border-red-500/30 p-2.5 flex justify-between items-center">
-          <span className="text-[12px] text-red-400/80 uppercase font-bold tracking-wider">Stop Loss</span>
+          <span className="text-[12px] text-red-400/80 uppercase font-bold tracking-wider">{t.mobileSL}</span>
           <span className="text-[15px] font-mono font-bold text-red-400">4 590 $</span>
         </div>
       </div>
 
       <div className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-2.5 text-center space-y-1">
         <p className="text-[13px] text-zinc-300">
-          <span className="text-red-400 font-bold">Risque 40 $</span> · <span className="text-emerald-400 font-bold">Gain 90 $</span>
+          <span className="text-red-400 font-bold">{t.mobileRisk}</span> · <span className="text-emerald-400 font-bold">{t.mobileGain}</span>
         </p>
         <p className="text-[15px] font-bold text-emerald-400">R/R = 2,25</p>
       </div>
 
       <p className="text-[12px] text-zinc-400 italic text-center leading-snug pt-2 border-t border-zinc-800">
-        Bougie verte qui avale entièrement la rouge précédente sur le Fibo 0.618 = signal d'entrée fort.
+        {t.mobileFooter}
       </p>
     </div>
     </div>

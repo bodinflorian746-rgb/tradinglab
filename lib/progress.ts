@@ -70,7 +70,7 @@ export function getFormationStats(
   return { completed, total, pct, nextLessonId };
 }
 
-export const TOTAL_FREE_LESSONS = 47;
+export const TOTAL_FREE_LESSONS = 48;
 
 // XP gagné par leçon terminée (idempotent : ne double-compte jamais).
 export const LESSON_XP = 20;

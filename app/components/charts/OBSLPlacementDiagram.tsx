@@ -1,4 +1,59 @@
-export default function OBSLPlacementDiagram({ className = "" }: { className?: string }) {
+export default function OBSLPlacementDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const t = locale === "es"
+    ? {
+        title: "3 colocaciones de SL — solo una correcta",
+        p1Title: "✗ SL en la zona",
+        p1SL: "SL 1.1770",
+        p1OB: "Order Block 1.1745-1.1780",
+        p1Note: "Las mechas disparan el SL",
+        p1Sub: "Stop hunt clásico",
+        p2Title: "⚠ SL en el límite",
+        p2SL: "SL 1.1745",
+        p2OB: "Order Block 1.1745-1.1780",
+        p2Note: "Tolerancia 0 para mechas",
+        p2Sub: "Riesgo de stop hunt",
+        p3Title: "✓ SL con margen",
+        p3SL: "SL 1.1738 (margen 7 pips)",
+        p3OB: "Order Block 1.1745-1.1780",
+        p3Note: "Absorbe las mechas secundarias",
+        p3Sub: "Colocación operativa",
+        caption: "Margen de 5-10 pips más allá de la mecha extrema absorbe las mechas de retest",
+        mobileTitle: "3 colocaciones de SL — solo una correcta",
+        m1Title: "✗ SL pegado al cuerpo del OB",
+        m1Body: "Demasiado ajustado, disparado por la mínima mecha de retest.",
+        m2Title: "✓ SL con margen 5-10 pips más allá de la mecha",
+        m2Body: "Buen margen — absorbe las mechas de retest sin ser demasiado amplio.",
+        m3Title: "✗ SL demasiado amplio (50+ pips)",
+        m3Body: "Innecesariamente grande → R/R degradado, tamaño de posición muy pequeño.",
+        mobileFooter: "Margen 5-10 pips más allá de la mecha extrema.",
+      }
+    : {
+        title: "3 placements de SL — un seul correct",
+        p1Title: "✗ SL dans la zone",
+        p1SL: "SL 1.1770",
+        p1OB: "Order Block 1.1745-1.1780",
+        p1Note: "Wicks déclenchent le SL",
+        p1Sub: "Stop hunt classique",
+        p2Title: "⚠ SL à la limite",
+        p2SL: "SL 1.1745",
+        p2OB: "Order Block 1.1745-1.1780",
+        p2Note: "Tolérance 0 pour wicks",
+        p2Sub: "Risque de stop hunt",
+        p3Title: "✓ SL avec marge",
+        p3SL: "SL 1.1738 (marge 7 pips)",
+        p3OB: "Order Block 1.1745-1.1780",
+        p3Note: "Absorbe les wicks secondaires",
+        p3Sub: "Placement opérationnel",
+        caption: "Marge de 5-10 pips au-delà de la mèche extrême absorbe les wicks de retest",
+        mobileTitle: "3 placements de SL — un seul correct",
+        m1Title: "✗ SL collé au corps de l'OB",
+        m1Body: "Trop serré, déclenché par le moindre wick de retest.",
+        m2Title: "✓ SL marge 5-10 pips au-delà de la mèche",
+        m2Body: "Bonne marge — absorbe les wicks de retest sans être trop large.",
+        m3Title: "✗ SL trop large (50+ pips)",
+        m3Body: "Inutilement grand → R/R dégradé, taille de position trop petite.",
+        mobileFooter: "Marge 5-10 pips au-delà de la mèche extrême.",
+      };
   return (
     <div className={className}>
     <svg
@@ -9,7 +64,7 @@ export default function OBSLPlacementDiagram({ className = "" }: { className?: s
       {/* Titre avec halo */}
       <rect x="290" y="5" width="320" height="18" rx="3" fill="#09090b" />
       <text x="450" y="18" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        3 placements de SL — un seul correct
+        {t.title}
       </text>
 
       <line x1="300" y1="40" x2="300" y2="370" stroke="#3f3f46" strokeWidth="1" />
@@ -17,7 +72,7 @@ export default function OBSLPlacementDiagram({ className = "" }: { className?: s
 
       {/* ═══ PANEL 1 — SL DANS LA ZONE (KO) ═══ */}
       <rect x="20" y="50" width="270" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="155" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">✗ SL dans la zone</text>
+      <text x="155" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{t.p1Title}</text>
 
       {/* Order Block emerald translucide */}
       <rect x="30" y="200" width="230" height="40" fill="#10b98120" stroke="#10b981" strokeWidth="1" strokeDasharray="3 2" />
@@ -27,11 +82,11 @@ export default function OBSLPlacementDiagram({ className = "" }: { className?: s
 
       {/* Label SL avec halo */}
       <rect x="18" y="214" width="64" height="14" rx="3" fill="#09090b" />
-      <text x="22" y="225" fill="#ef4444" fontSize="9" fontWeight="600">SL 1.1770</text>
+      <text x="22" y="225" fill="#ef4444" fontSize="9" fontWeight="600">{t.p1SL}</text>
 
       {/* Label OB avec halo */}
       <rect x="75" y="186" width="140" height="14" rx="3" fill="#09090b" />
-      <text x="145" y="197" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">Order Block 1.1745-1.1780</text>
+      <text x="145" y="197" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">{t.p1OB}</text>
 
       {/* Path prix : descente → retraverse OB → mèche basse TRAVERSE le SL → rebond */}
       <path
@@ -50,12 +105,12 @@ export default function OBSLPlacementDiagram({ className = "" }: { className?: s
       {/* Pastille en bas avec halo */}
       <rect x="50" y="320" width="210" height="20" rx="4" fill="#09090b" />
       <rect x="50" y="320" width="210" height="20" rx="4" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="155" y="334" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">Wicks déclenchent le SL</text>
-      <text x="155" y="358" fill="#a1a1aa" fontSize="8" textAnchor="middle">Stop hunt classique</text>
+      <text x="155" y="334" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">{t.p1Note}</text>
+      <text x="155" y="358" fill="#a1a1aa" fontSize="8" textAnchor="middle">{t.p1Sub}</text>
 
       {/* ═══ PANEL 2 — SL À LA LIMITE (Borderline) ═══ */}
       <rect x="320" y="50" width="270" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-      <text x="455" y="65" fill="#f59e0b" fontSize="10" fontWeight="600" textAnchor="middle">⚠ SL à la limite</text>
+      <text x="455" y="65" fill="#f59e0b" fontSize="10" fontWeight="600" textAnchor="middle">{t.p2Title}</text>
 
       <rect x="335" y="200" width="230" height="40" fill="#10b98120" stroke="#10b981" strokeWidth="1" strokeDasharray="3 2" />
 
@@ -64,11 +119,11 @@ export default function OBSLPlacementDiagram({ className = "" }: { className?: s
 
       {/* Label SL avec halo amber */}
       <rect x="323" y="234" width="64" height="14" rx="3" fill="#09090b" />
-      <text x="327" y="245" fill="#f59e0b" fontSize="9" fontWeight="600">SL 1.1745</text>
+      <text x="327" y="245" fill="#f59e0b" fontSize="9" fontWeight="600">{t.p2SL}</text>
 
       {/* Label OB avec halo */}
       <rect x="380" y="186" width="140" height="14" rx="3" fill="#09090b" />
-      <text x="450" y="197" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">Order Block 1.1745-1.1780</text>
+      <text x="450" y="197" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">{t.p2OB}</text>
 
       {/* Path prix : descente → touche limite basse → SL frôlé → rebond */}
       <path
@@ -86,12 +141,12 @@ export default function OBSLPlacementDiagram({ className = "" }: { className?: s
 
       <rect x="350" y="320" width="210" height="20" rx="4" fill="#09090b" />
       <rect x="350" y="320" width="210" height="20" rx="4" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-      <text x="455" y="334" fill="#f59e0b" fontSize="9" fontWeight="600" textAnchor="middle">Tolérance 0 pour wicks</text>
-      <text x="455" y="358" fill="#a1a1aa" fontSize="8" textAnchor="middle">Risque de stop hunt</text>
+      <text x="455" y="334" fill="#f59e0b" fontSize="9" fontWeight="600" textAnchor="middle">{t.p2Note}</text>
+      <text x="455" y="358" fill="#a1a1aa" fontSize="8" textAnchor="middle">{t.p2Sub}</text>
 
       {/* ═══ PANEL 3 — SL AVEC MARGE (OK) ═══ */}
       <rect x="625" y="50" width="270" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="760" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">✓ SL avec marge</text>
+      <text x="760" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{t.p3Title}</text>
 
       <rect x="640" y="200" width="230" height="40" fill="#10b98120" stroke="#10b981" strokeWidth="1" strokeDasharray="3 2" />
 
@@ -100,11 +155,11 @@ export default function OBSLPlacementDiagram({ className = "" }: { className?: s
 
       {/* Label SL avec halo emerald */}
       <rect x="628" y="254" width="150" height="14" rx="3" fill="#09090b" />
-      <text x="632" y="265" fill="#10b981" fontSize="9" fontWeight="600">SL 1.1738 (marge 7 pips)</text>
+      <text x="632" y="265" fill="#10b981" fontSize="9" fontWeight="600">{t.p3SL}</text>
 
       {/* Label OB avec halo */}
       <rect x="685" y="186" width="140" height="14" rx="3" fill="#09090b" />
-      <text x="755" y="197" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">Order Block 1.1745-1.1780</text>
+      <text x="755" y="197" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">{t.p3OB}</text>
 
       {/* Path prix : descente → rebondit sur limite basse SANS atteindre SL */}
       <path
@@ -122,31 +177,31 @@ export default function OBSLPlacementDiagram({ className = "" }: { className?: s
 
       <rect x="655" y="320" width="210" height="20" rx="4" fill="#09090b" />
       <rect x="655" y="320" width="210" height="20" rx="4" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="760" y="334" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">Absorbe les wicks secondaires</text>
-      <text x="760" y="358" fill="#a1a1aa" fontSize="8" textAnchor="middle">Placement opérationnel</text>
+      <text x="760" y="334" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">{t.p3Note}</text>
+      <text x="760" y="358" fill="#a1a1aa" fontSize="8" textAnchor="middle">{t.p3Sub}</text>
 
       <text x="450" y="390" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        Marge de 5-10 pips au-delà de la mèche extrême absorbe les wicks de retest
+        {t.caption}
       </text>
     </svg>
 
     {/* MOBILE : 3 placements SL OB ──────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">3 placements de SL — un seul correct</p>
+      <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">✗ SL collé au corps de l'OB</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Trop serré, déclenché par le moindre wick de retest.</p>
+        <p className="text-[13px] font-bold text-red-400">{t.m1Title}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.m1Body}</p>
       </div>
       <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">✓ SL marge 5-10 pips au-delà de la mèche</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Bonne marge — absorbe les wicks de retest sans être trop large.</p>
+        <p className="text-[13px] font-bold text-emerald-400">{t.m2Title}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.m2Body}</p>
       </div>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">✗ SL trop large (50+ pips)</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Inutilement grand → R/R dégradé, taille de position trop petite.</p>
+        <p className="text-[13px] font-bold text-red-400">{t.m3Title}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.m3Body}</p>
       </div>
       <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-        Marge 5-10 pips au-delà de la mèche extrême.
+        {t.mobileFooter}
       </p>
     </div>
     </div>

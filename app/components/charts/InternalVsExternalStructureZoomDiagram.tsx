@@ -1,4 +1,23 @@
-export default function InternalVsExternalStructureZoomDiagram({ className = "" }: { className?: string }) {
+export default function InternalVsExternalStructureZoomDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const isEs = locale === "es";
+  const L = {
+    title:      isEs ? "Estructura externa Daily ↔ Estructura interna H4" : "Structure externe Daily ↔ Structure interne H4",
+    daily:      "DAILY",
+    swingHigh:  isEs ? "Swing high 4 720$" : "Swing high 4 720$",
+    swingLow:   isEs ? "Swing low 4 460$" : "Swing low 4 460$",
+    zoomH4:     isEs ? "Zoom H4" : "Zoom H4",
+    footer:     isEs ? "La estructura externa Daily dicta el sesgo. La estructura interna H4 sirve al timing fino." : "Structure externe Daily dicte le biais. Structure interne H4 sert au timing fin.",
+    mobTitle:   isEs ? "Estructura externa Daily ↔ interna H4" : "Structure externe Daily ↔ interne H4",
+    extTitle:   isEs ? "Estructura externa — Daily" : "Structure externe — Daily",
+    extDescA:   isEs ? "Dicta el" : "Dicte le",
+    extDescBold:isEs ? "sesgo direccional" : "biais directionnel",
+    extDescB:   isEs ? "mayor. Tendencia HH/HL o LH/LL en Daily." : "majeur. Tendance HH/HL ou LH/LL sur Daily.",
+    intTitle:   isEs ? "Estructura interna — H4" : "Structure interne — H4",
+    intDescA:   isEs ? "Sirve para el" : "Sert au",
+    intDescBold:isEs ? "timing fino de entrada" : "timing fin d'entrée",
+    intDescB:   isEs ? ". Mini-estructuras dentro de la gran tendencia Daily." : ". Mini-structures dans la grande tendance Daily.",
+    mobFooter:  isEs ? "Daily = sesgo · H4 = timing." : "Daily = biais · H4 = timing.",
+  };
   return (
     <div className={className}>
     <svg
@@ -7,7 +26,7 @@ export default function InternalVsExternalStructureZoomDiagram({ className = "" 
       className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        Structure externe Daily ↔ Structure interne H4
+        {L.title}
       </text>
 
       {/* ═══ PANEL PRINCIPAL — Daily ═══ */}
@@ -39,7 +58,7 @@ export default function InternalVsExternalStructureZoomDiagram({ className = "" 
       {/* ═══ ENCART ZOOM — H4 ═══ */}
       <rect x="520" y="80" width="270" height="240" fill="#0a0a0a" stroke="#3f3f46" strokeWidth="1" rx="4" />
       <rect x="528" y="90" width="60" height="18" rx="4" fill="#27272a" stroke="#60a5fa" strokeWidth="0.8" />
-      <text x="558" y="103" fill="#60a5fa" fontSize="9" fontWeight="600" textAnchor="middle">Zoom H4</text>
+      <text x="558" y="103" fill="#60a5fa" fontSize="9" fontWeight="600" textAnchor="middle">{L.zoomH4}</text>
 
       {/* Niveaux H4 */}
       <line x1="540" y1="140" x2="775" y2="140" stroke="#10b981" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.5" />
@@ -67,23 +86,23 @@ export default function InternalVsExternalStructureZoomDiagram({ className = "" 
       <text x="745" y="142" fill="#10b981" fontSize="7">HH 4 640$</text>
 
       <text x="400" y="385" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        Structure externe Daily dicte le biais. Structure interne H4 sert au timing fin.
+        {L.footer}
       </text>
     </svg>
 
     {/* MOBILE : structure externe vs interne ───────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Structure externe Daily ↔ interne H4</p>
+      <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">Structure externe — Daily</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Dicte le <span className="font-bold">biais directionnel</span> majeur. Tendance HH/HL ou LH/LL sur Daily.</p>
+        <p className="text-[13px] font-bold text-emerald-400">{L.extTitle}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.extDescA} <span className="font-bold">{L.extDescBold}</span> {L.extDescB}</p>
       </div>
       <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
-        <p className="text-[13px] font-bold text-blue-400">Structure interne — H4</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Sert au <span className="font-bold">timing fin d'entrée</span>. Mini-structures dans la grande tendance Daily.</p>
+        <p className="text-[13px] font-bold text-blue-400">{L.intTitle}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.intDescA} <span className="font-bold">{L.intDescBold}</span>{L.intDescB}</p>
       </div>
       <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-        Daily = biais · H4 = timing.
+        {L.mobFooter}
       </p>
     </div>
     </div>

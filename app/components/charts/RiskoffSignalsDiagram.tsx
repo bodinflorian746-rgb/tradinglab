@@ -3,6 +3,7 @@
 
 interface RiskoffSignalsDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -56,7 +57,46 @@ function ArrowUp({ x, y, color }: { x: number; y: number; color: string }) {
   );
 }
 
-export function RiskoffSignalsDiagram({ className = "" }: RiskoffSignalsDiagramProps) {
+export function RiskoffSignalsDiagram({ className = "", locale = "fr" }: RiskoffSignalsDiagramProps) {
+  const t = locale === "es"
+    ? {
+        indicesActions: "Índices acciones",
+        volatilite: "Volatilidad (VIX)",
+        dollar: "Dollar",
+        xau: "XAU/USD",
+        annotation: "El régimen se confirma por varios mercados",
+        mobileTitle: "Régimen Risk-off — 4 señales concordantes",
+        orRefuge: "Oro ↑",
+        orDesc: " · valor refugio",
+        dxyFort: "DXY ↑",
+        dxyDesc: " · dólar fuerte",
+        indicesDown: "Índices ↓",
+        indicesDesc: " · acciones bajo presión",
+        yieldsDown: "Yields ↓",
+        yieldsDesc: " · fuga hacia bonos",
+        mobileFooter: "4 señales concordantes = régimen risk-off confirmado.",
+        legendRegime: "4 señales concordantes = régimen risk-off confirmado",
+        legendOr: "El oro sube con el régimen",
+      }
+    : {
+        indicesActions: "Indices actions",
+        volatilite: "Volatilité (VIX)",
+        dollar: "Dollar",
+        xau: "XAU/USD",
+        annotation: "Le régime se confirme par plusieurs marchés",
+        mobileTitle: "Régime Risk-off — 4 signaux concordants",
+        orRefuge: "Or ↑",
+        orDesc: " · valeur refuge",
+        dxyFort: "DXY ↑",
+        dxyDesc: " · dollar fort",
+        indicesDown: "Indices ↓",
+        indicesDesc: " · actions sous pression",
+        yieldsDown: "Yields ↓",
+        yieldsDesc: " · fuite vers obligations",
+        mobileFooter: "4 signaux concordants = régime risk-off confirmé.",
+        legendRegime: "4 signaux concordants = régime risk-off confirmé",
+        legendOr: "L’or monte avec le régime",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -65,22 +105,22 @@ export function RiskoffSignalsDiagram({ className = "" }: RiskoffSignalsDiagramP
         <rect x="36" y="22" width="140" height="56" rx="6" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
         <ArrowDown x={68} y={32} color="#ef4444" />
         <rect x="52" y="60" width="108" height="13" rx="3" fill="#09090b" />
-        <text x="106" y="70" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Indices actions</text>
+        <text x="106" y="70" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.indicesActions}</text>
 
         <rect x="190" y="22" width="140" height="56" rx="6" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
         <ArrowUp x={222} y={32} color="#10b981" />
         <rect x="206" y="60" width="108" height="13" rx="3" fill="#09090b" />
-        <text x="260" y="70" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Volatilité (VIX)</text>
+        <text x="260" y="70" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.volatilite}</text>
 
         <rect x="344" y="22" width="140" height="56" rx="6" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
         <ArrowUp x={376} y={32} color="#10b981" />
         <rect x="360" y="60" width="108" height="13" rx="3" fill="#09090b" />
-        <text x="414" y="70" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Dollar</text>
+        <text x="414" y="70" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.dollar}</text>
 
         <rect x="498" y="22" width="140" height="56" rx="6" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
         <ArrowUp x={530} y={32} color="#10b981" />
         <rect x="514" y="60" width="108" height="13" rx="3" fill="#09090b" />
-        <text x="568" y="70" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">XAU/USD</text>
+        <text x="568" y="70" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.xau}</text>
 
         {/* Séparateur entre vignettes et graphique */}
         <line x1="40" y1="82" x2="660" y2="82" stroke="#27272a" strokeWidth="1" strokeDasharray="2 4" />
@@ -113,32 +153,32 @@ export function RiskoffSignalsDiagram({ className = "" }: RiskoffSignalsDiagramP
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le régime se confirme par plusieurs marchés
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : Risk-off signaux ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Régime Risk-off — 4 signaux concordants</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <ul className="space-y-2 text-[13px]">
-          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-emerald-400" /><span className="text-zinc-300"><span className="font-bold text-emerald-400">Or ↑</span> · valeur refuge</span></li>
-          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-emerald-400" /><span className="text-zinc-300"><span className="font-bold text-emerald-400">DXY ↑</span> · dollar fort</span></li>
-          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-red-400" /><span className="text-zinc-300"><span className="font-bold text-red-400">Indices ↓</span> · actions sous pression</span></li>
-          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-red-400" /><span className="text-zinc-300"><span className="font-bold text-red-400">Yields ↓</span> · fuite vers obligations</span></li>
+          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-emerald-400" /><span className="text-zinc-300"><span className="font-bold text-emerald-400">{t.orRefuge}</span>{t.orDesc}</span></li>
+          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-emerald-400" /><span className="text-zinc-300"><span className="font-bold text-emerald-400">{t.dxyFort}</span>{t.dxyDesc}</span></li>
+          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-red-400" /><span className="text-zinc-300"><span className="font-bold text-red-400">{t.indicesDown}</span>{t.indicesDesc}</span></li>
+          <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-red-400" /><span className="text-zinc-300"><span className="font-bold text-red-400">{t.yieldsDown}</span>{t.yieldsDesc}</span></li>
         </ul>
         <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-          4 signaux concordants = régime risk-off confirmé.
+          {t.mobileFooter}
         </p>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">4 signaux concordants = régime risk-off confirmé</span>
+          <span className="text-[10px] text-zinc-500">{t.legendRegime}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">L&apos;or monte avec le régime</span>
+          <span className="text-[10px] text-zinc-500">{t.legendOr}</span>
         </div>
       </div>
     </div>

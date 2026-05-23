@@ -4,6 +4,7 @@
 
 interface NFPReversalDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -44,7 +45,34 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function NFPReversalDiagram({ className = "" }: NFPReversalDiagramProps) {
+export function NFPReversalDiagram({ className = "", locale = "fr" }: NFPReversalDiagramProps) {
+  const t = locale === "es"
+    ? {
+        preNfp: "4 640 $ pre-NFP",
+        paniqueInit: "Pánico inicial",
+        reevaluation: "Reevaluación",
+        renversement: "Reversión",
+        mobileTitle: "NFP reversal completo · XAU/USD M15",
+        step1: "Caída inicial violenta en el headline.",
+        step2: "Base de estabilización = digestión de los sub-datos.",
+        step3a: "Ruptura + reversión",
+        step3b: " sobre el nivel pre-NFP.",
+        legend1: "Caída inicial luego base de estabilización",
+        legend2: "Ruptura y reversión completa sobre el pre-NFP",
+      }
+    : {
+        preNfp: "4 640 $ pré-NFP",
+        paniqueInit: "Panique initiale",
+        reevaluation: "Réévaluation",
+        renversement: "Renversement",
+        mobileTitle: "NFP reversal complet · XAU/USD M15",
+        step1: "Chute initiale violente sur le headline.",
+        step2: "Base de stabilisation = digestion des sous-données.",
+        step3a: "Cassure + retournement",
+        step3b: " au-dessus du niveau pré-NFP.",
+        legend1: "Chute initiale puis base de stabilisation",
+        legend2: "Cassure et retournement complet au-dessus du pré-NFP",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -55,7 +83,7 @@ export function NFPReversalDiagram({ className = "" }: NFPReversalDiagramProps) 
         {/* Ligne pré-NFP 4 640 $ — visuellement le repère que le retournement dépasse */}
         <line x1="40" y1="80" x2="660" y2="80" stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.65" />
         <rect x="6" y="62" width="92" height="13" rx="3" fill="#09090b" />
-        <text x="52" y="72" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">4 640 $ pré-NFP</text>
+        <text x="52" y="72" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.preNfp}</text>
 
         {/* Base de stabilisation autour de y=180-200 */}
         <rect x="208" y="180" width="100" height="35" fill="#27272a40" stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.85" />
@@ -82,33 +110,33 @@ export function NFPReversalDiagram({ className = "" }: NFPReversalDiagramProps) 
 
         {/* Annotation "Panique initiale" — sur la chute */}
         <rect x="110" y="108" width="110" height="14" rx="3" fill="#09090b" />
-        <text x="165" y="118" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">Panique initiale</text>
+        <text x="165" y="118" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">{t.paniqueInit}</text>
 
         {/* Annotation "Réévaluation" — au-dessus de la base */}
         <rect x="220" y="158" width="80" height="14" rx="3" fill="#09090b" />
-        <text x="260" y="168" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Réévaluation</text>
+        <text x="260" y="168" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.reevaluation}</text>
 
         {/* Annotation "Renversement" — sur la phase haussière */}
         <rect x="376" y="194" width="100" height="14" rx="3" fill="#09090b" />
         <rect x="376" y="194" width="100" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
-        <text x="426" y="204" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Renversement</text>
+        <text x="426" y="204" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.renversement}</text>
       </svg>
 
       {/* MOBILE : NFP reversal ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">NFP reversal complet · XAU/USD M15</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>
-            <span className="text-zinc-300">Chute initiale violente sur le headline.</span>
+            <span className="text-zinc-300">{t.step1}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">2</span>
-            <span className="text-zinc-300">Base de stabilisation = digestion des sous-données.</span>
+            <span className="text-zinc-300">{t.step2}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
-            <span className="text-zinc-300"><span className="font-bold text-emerald-400">Cassure + retournement</span> au-dessus du niveau pré-NFP.</span>
+            <span className="text-zinc-300"><span className="font-bold text-emerald-400">{t.step3a}</span>{t.step3b}</span>
           </li>
         </ul>
       </div>
@@ -116,11 +144,11 @@ export function NFPReversalDiagram({ className = "" }: NFPReversalDiagramProps) 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Chute initiale puis base de stabilisation</span>
+          <span className="text-[10px] text-zinc-500">{t.legend1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Cassure et retournement complet au-dessus du pré-NFP</span>
+          <span className="text-[10px] text-zinc-500">{t.legend2}</span>
         </div>
       </div>
     </div>

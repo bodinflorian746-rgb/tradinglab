@@ -1,10 +1,17 @@
 type CalendarRow = { time: string; ccy: string; event: string; impact: 1 | 2 | 3; highlight?: boolean };
-const ROWS: CalendarRow[] = [
+const ROWS_FR: CalendarRow[] = [
   { time: "08h00", ccy: "EUR", event: "PMI Manufacturier", impact: 2 },
   { time: "10h00", ccy: "GBP", event: "Production industrielle", impact: 1 },
   { time: "14h30", ccy: "USD", event: "CPI inflation", impact: 3, highlight: true },
   { time: "16h00", ccy: "EUR", event: "Discours Lagarde", impact: 3 },
   { time: "20h00", ccy: "USD", event: "Décision FOMC", impact: 3 },
+];
+const ROWS_ES: CalendarRow[] = [
+  { time: "08h00", ccy: "EUR", event: "PMI manufacturero", impact: 2 },
+  { time: "10h00", ccy: "GBP", event: "Producción industrial", impact: 1 },
+  { time: "14h30", ccy: "USD", event: "CPI inflación", impact: 3, highlight: true },
+  { time: "16h00", ccy: "EUR", event: "Discurso Lagarde", impact: 3 },
+  { time: "20h00", ccy: "USD", event: "Decisión FOMC", impact: 3 },
 ];
 
 function ImpactDots({ n }: { n: 1 | 2 | 3 }) {
@@ -24,7 +31,79 @@ function ImpactDots({ n }: { n: 1 | 2 | 3 }) {
   );
 }
 
-export const MacroCalendarDiagram = () => {
+export const MacroCalendarDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+  const ROWS = locale === "es" ? ROWS_ES : ROWS_FR;
+  const t = locale === "es"
+    ? {
+        title: "Un día tipo en el calendario económico",
+        heure: "HORA",
+        devise: "MONEDA",
+        evenement: "EVENTO",
+        impact: "IMPACTO",
+        pmi: "PMI manufacturero",
+        productionInd: "Producción industrial",
+        cpiInflation: "CPI inflación",
+        discoursLagarde: "Discurso Lagarde",
+        decisionFomc: "Decisión FOMC",
+        cpiTag: "14h30 CPI",
+        reaction: "Reacción del mercado EUR/USD",
+        pipsAnnot: "-150 pips en 2 min",
+        synthese: "El calendario te dice CUÁNDO el mercado va a explotar. A ti te toca no estar en el lugar equivocado en el momento equivocado.",
+        actifsTitle: "ACTIVOS IMPACTADOS POR LAS NEWS MACRO",
+        forexLabel: "Forex (EUR/USD, GBP/USD)",
+        orLabel: "Oro (XAU/USD)",
+        indicesLabel: "Índices US (Nasdaq, S&P)",
+        cryptoLabel: "Crypto (BTC/USD)",
+        footer: "Una news macro nunca toca un solo mercado.",
+        mobileHeure: "Hora",
+        mobileDevise: "Moneda",
+        mobileEvenement: "Evento",
+        mobileImpact: "Impacto",
+        mobileReaction: "Reacción EUR/USD a las 14h30 (CPI)",
+        mobileBougiesAria: "Velas reacción CPI",
+        mobilePips: "−150 pips en 2 min",
+        mobileActifs: "Activos impactados por las news macro",
+        mobileForex: "Forex (EUR/USD)",
+        mobileOr: "Oro (XAU/USD)",
+        mobileIndices: "Índices US",
+        mobileCrypto: "Crypto (BTC)",
+        mobileFooter: "Una news macro nunca toca un solo mercado.",
+      }
+    : {
+        title: "Une journée type sur le calendrier économique",
+        heure: "HEURE",
+        devise: "DEVISE",
+        evenement: "ÉVÉNEMENT",
+        impact: "IMPACT",
+        pmi: "PMI Manufacturier",
+        productionInd: "Production industrielle",
+        cpiInflation: "CPI inflation",
+        discoursLagarde: "Discours Lagarde",
+        decisionFomc: "Décision FOMC",
+        cpiTag: "14h30 CPI",
+        reaction: "Réaction du marché EUR/USD",
+        pipsAnnot: "-150 pips en 2 min",
+        synthese: "Le calendrier te dit QUAND le marché va exploser. À toi de ne pas être au mauvais endroit au mauvais moment.",
+        actifsTitle: "ACTIFS IMPACTÉS PAR LES NEWS MACRO",
+        forexLabel: "Forex (EUR/USD, GBP/USD)",
+        orLabel: "Or (XAU/USD)",
+        indicesLabel: "Indices US (Nasdaq, S&P)",
+        cryptoLabel: "Crypto (BTC/USD)",
+        footer: "Une news macro ne touche jamais qu'un seul marché.",
+        mobileHeure: "Heure",
+        mobileDevise: "Devise",
+        mobileEvenement: "Événement",
+        mobileImpact: "Impact",
+        mobileReaction: "Réaction EUR/USD à 14h30 (CPI)",
+        mobileBougiesAria: "Bougies réaction CPI",
+        mobilePips: "−150 pips en 2 min",
+        mobileActifs: "Actifs impactés par les news macro",
+        mobileForex: "Forex (EUR/USD)",
+        mobileOr: "Or (XAU/USD)",
+        mobileIndices: "Indices US",
+        mobileCrypto: "Crypto (BTC)",
+        mobileFooter: "Une news macro ne touche jamais qu'un seul marché.",
+      };
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
     <svg
@@ -39,16 +118,16 @@ export const MacroCalendarDiagram = () => {
 
       {/* Layer 2 — Titre */}
       <text x="400" y="30" fill="#ffffff" fontSize="16" fontWeight="600" textAnchor="middle">
-        Une journée type sur le calendrier économique
+        {t.title}
       </text>
 
       {/* Layer 3 — Tableau calendrier */}
 
       {/* Headers */}
-      <text x="80"  y="70" fill="#71717a" fontSize="11" fontWeight="600" textAnchor="middle">HEURE</text>
-      <text x="170" y="70" fill="#71717a" fontSize="11" fontWeight="600" textAnchor="middle">DEVISE</text>
-      <text x="400" y="70" fill="#71717a" fontSize="11" fontWeight="600" textAnchor="middle">ÉVÉNEMENT</text>
-      <text x="680" y="70" fill="#71717a" fontSize="11" fontWeight="600" textAnchor="middle">IMPACT</text>
+      <text x="80"  y="70" fill="#71717a" fontSize="11" fontWeight="600" textAnchor="middle">{t.heure}</text>
+      <text x="170" y="70" fill="#71717a" fontSize="11" fontWeight="600" textAnchor="middle">{t.devise}</text>
+      <text x="400" y="70" fill="#71717a" fontSize="11" fontWeight="600" textAnchor="middle">{t.evenement}</text>
+      <text x="680" y="70" fill="#71717a" fontSize="11" fontWeight="600" textAnchor="middle">{t.impact}</text>
 
       {/* Ligne de séparation sous les headers */}
       <line x1="40" y1="82" x2="760" y2="82" stroke="#3f3f46" strokeWidth="1" />
@@ -59,7 +138,7 @@ export const MacroCalendarDiagram = () => {
       {/* Ligne 1 — y=105 — PMI Manufacturier */}
       <text x="80"  y="105" fill="#ffffff" fontSize="14" fontWeight="600" textAnchor="middle">08h00</text>
       <text x="170" y="105" fill="#60a5fa" fontSize="13" fontWeight="600" textAnchor="middle">EUR</text>
-      <text x="400" y="105" fill="#d4d4d8" fontSize="13" textAnchor="middle">PMI Manufacturier</text>
+      <text x="400" y="105" fill="#d4d4d8" fontSize="13" textAnchor="middle">{t.pmi}</text>
       <circle cx="650" cy="105" r="5" fill="#fbbf24" />
       <circle cx="670" cy="105" r="5" fill="#fbbf24" />
       <circle cx="690" cy="105" r="5" fill="none" stroke="#3f3f46" strokeWidth="1" />
@@ -67,7 +146,7 @@ export const MacroCalendarDiagram = () => {
       {/* Ligne 2 — y=137 — Production industrielle */}
       <text x="80"  y="137" fill="#ffffff" fontSize="14" fontWeight="600" textAnchor="middle">10h00</text>
       <text x="170" y="137" fill="#60a5fa" fontSize="13" fontWeight="600" textAnchor="middle">GBP</text>
-      <text x="400" y="137" fill="#d4d4d8" fontSize="13" textAnchor="middle">Production industrielle</text>
+      <text x="400" y="137" fill="#d4d4d8" fontSize="13" textAnchor="middle">{t.productionInd}</text>
       <circle cx="650" cy="137" r="5" fill="#10b981" />
       <circle cx="670" cy="137" r="5" fill="none" stroke="#3f3f46" strokeWidth="1" />
       <circle cx="690" cy="137" r="5" fill="none" stroke="#3f3f46" strokeWidth="1" />
@@ -75,7 +154,7 @@ export const MacroCalendarDiagram = () => {
       {/* Ligne 3 — y=169 — CPI (surlignée) */}
       <text x="80"  y="169" fill="#ffffff" fontSize="14" fontWeight="600" textAnchor="middle">14h30</text>
       <text x="170" y="169" fill="#60a5fa" fontSize="13" fontWeight="600" textAnchor="middle">USD</text>
-      <text x="400" y="169" fill="#d4d4d8" fontSize="13" textAnchor="middle">CPI inflation</text>
+      <text x="400" y="169" fill="#d4d4d8" fontSize="13" textAnchor="middle">{t.cpiInflation}</text>
       <circle cx="650" cy="169" r="5" fill="#ef4444" />
       <circle cx="670" cy="169" r="5" fill="#ef4444" />
       <circle cx="690" cy="169" r="5" fill="#ef4444" />
@@ -87,7 +166,7 @@ export const MacroCalendarDiagram = () => {
       {/* Ligne 4 — y=201 — Discours Lagarde */}
       <text x="80"  y="201" fill="#ffffff" fontSize="14" fontWeight="600" textAnchor="middle">16h00</text>
       <text x="170" y="201" fill="#60a5fa" fontSize="13" fontWeight="600" textAnchor="middle">EUR</text>
-      <text x="400" y="201" fill="#d4d4d8" fontSize="13" textAnchor="middle">Discours Lagarde</text>
+      <text x="400" y="201" fill="#d4d4d8" fontSize="13" textAnchor="middle">{t.discoursLagarde}</text>
       <circle cx="650" cy="201" r="5" fill="#ef4444" />
       <circle cx="670" cy="201" r="5" fill="#ef4444" />
       <circle cx="690" cy="201" r="5" fill="#ef4444" />
@@ -95,7 +174,7 @@ export const MacroCalendarDiagram = () => {
       {/* Ligne 5 — y=233 — Décision FOMC */}
       <text x="80"  y="233" fill="#ffffff" fontSize="14" fontWeight="600" textAnchor="middle">20h00</text>
       <text x="170" y="233" fill="#60a5fa" fontSize="13" fontWeight="600" textAnchor="middle">USD</text>
-      <text x="400" y="233" fill="#d4d4d8" fontSize="13" textAnchor="middle">Décision FOMC</text>
+      <text x="400" y="233" fill="#d4d4d8" fontSize="13" textAnchor="middle">{t.decisionFomc}</text>
       <circle cx="650" cy="233" r="5" fill="#ef4444" />
       <circle cx="670" cy="233" r="5" fill="#ef4444" />
       <circle cx="690" cy="233" r="5" fill="#ef4444" />
@@ -110,7 +189,7 @@ export const MacroCalendarDiagram = () => {
       {/* Layer 4 — Séparateur tableau / graphique */}
       <line x1="40" y1="270" x2="760" y2="270" stroke="#3f3f46" strokeWidth="1" strokeDasharray="4 4" />
       <text x="400" y="292" fill="#71717a" fontSize="11" fontWeight="600" textAnchor="middle">
-        Réaction du marché EUR/USD
+        {t.reaction}
       </text>
 
       {/* Layer 5 — Mini graphique */}
@@ -121,7 +200,7 @@ export const MacroCalendarDiagram = () => {
       {/* Marqueur vertical 14h30 CPI */}
       <line x1="240" y1="305" x2="240" y2="395" stroke="#ef4444" strokeWidth="2" strokeDasharray="5 3" />
       <rect x="210" y="305" width="60" height="18" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="240" y="318" fill="#ef4444" fontSize="11" fontWeight="700" textAnchor="middle">14h30 CPI</text>
+      <text x="240" y="318" fill="#ef4444" fontSize="11" fontWeight="700" textAnchor="middle">{t.cpiTag}</text>
 
       {/* Bougies avant 14h30 — 5 bougies calmes */}
 
@@ -173,53 +252,53 @@ export const MacroCalendarDiagram = () => {
 
       {/* Layer 7 — Phrase synthèse */}
       <text x="400" y="435" fill="#a1a1aa" fontSize="12" fontStyle="italic" textAnchor="middle">
-        Le calendrier te dit QUAND le marché va exploser. À toi de ne pas être au mauvais endroit au mauvais moment.
+        {t.synthese}
       </text>
 
       {/* Layer 8 — Actifs impactés par les news macro */}
       <line x1="40" y1="447" x2="760" y2="447" stroke="#3f3f46" strokeWidth="1" strokeDasharray="4 4" />
 
       <text x="400" y="463" fill="#fbbf24" fontSize="11" fontWeight="700" letterSpacing="0.05em" textAnchor="middle">
-        ACTIFS IMPACTÉS PAR LES NEWS MACRO
+        {t.actifsTitle}
       </text>
 
       {/* Colonne 1 — Forex */}
       <rect x="65" y="473" width="10" height="10" rx="2" fill="#60a5fa" />
-      <text x="80" y="482" fill="#d4d4d8" fontSize="10" textAnchor="start">Forex (EUR/USD, GBP/USD)</text>
+      <text x="80" y="482" fill="#d4d4d8" fontSize="10" textAnchor="start">{t.forexLabel}</text>
 
       {/* Colonne 2 — Or */}
       <rect x="268" y="473" width="10" height="10" rx="2" fill="#fbbf24" />
-      <text x="283" y="482" fill="#d4d4d8" fontSize="10" textAnchor="start">Or (XAU/USD)</text>
+      <text x="283" y="482" fill="#d4d4d8" fontSize="10" textAnchor="start">{t.orLabel}</text>
 
       {/* Colonne 3 — Indices */}
       <rect x="428" y="473" width="10" height="10" rx="2" fill="#34d399" />
-      <text x="443" y="482" fill="#d4d4d8" fontSize="10" textAnchor="start">Indices US (Nasdaq, S&amp;P)</text>
+      <text x="443" y="482" fill="#d4d4d8" fontSize="10" textAnchor="start">{t.indicesLabel}</text>
 
       {/* Colonne 4 — Crypto */}
       <rect x="617" y="473" width="10" height="10" rx="2" fill="#f87171" />
-      <text x="632" y="482" fill="#d4d4d8" fontSize="10" textAnchor="start">Crypto (BTC/USD)</text>
+      <text x="632" y="482" fill="#d4d4d8" fontSize="10" textAnchor="start">{t.cryptoLabel}</text>
 
       {/* Pied de page */}
       <text x="400" y="500" fill="#34d399" fontSize="11" fontStyle="italic" fontWeight="700" textAnchor="middle">
-        Une news macro ne touche jamais qu&apos;un seul marché.
+        {t.footer}
       </text>
 
       {/* Layer 6 — Annotation "-150 pips en 2 min" EN DERNIER (passe par-dessus les bougies) */}
       <rect x="290" y="345" width="110" height="22" rx="3" fill="#09090b" fillOpacity="0.95" />
-      <text x="295" y="362" textAnchor="start" fill="#f87171" fontSize="14" fontWeight="700">-150 pips en 2 min</text>
+      <text x="295" y="362" textAnchor="start" fill="#f87171" fontSize="14" fontWeight="700">{t.pipsAnnot}</text>
     </svg>
 
     {/* ── MOBILE : tableau HTML + résumé bougies ─────────────────── */}
     <div className="sm:hidden p-4 space-y-3">
-      <p className="text-[14px] font-bold text-white text-center">Une journée type sur le calendrier économique</p>
+      <p className="text-[14px] font-bold text-white text-center">{t.title}</p>
 
       {/* Tableau */}
       <div className="rounded-lg border border-zinc-800 overflow-hidden">
         <div className="grid grid-cols-[52px_44px_1fr_44px] gap-1.5 px-2.5 py-2 bg-zinc-900 border-b border-zinc-800 text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
-          <span>Heure</span>
-          <span>Devise</span>
-          <span>Événement</span>
-          <span className="text-right">Impact</span>
+          <span>{t.mobileHeure}</span>
+          <span>{t.mobileDevise}</span>
+          <span>{t.mobileEvenement}</span>
+          <span className="text-right">{t.mobileImpact}</span>
         </div>
         <div className="divide-y divide-zinc-800/70">
           {ROWS.map((r, i) => (
@@ -241,9 +320,9 @@ export const MacroCalendarDiagram = () => {
       {/* Résumé bougies */}
       <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-3">
         <p className="text-[12px] text-zinc-400 uppercase tracking-wider font-bold text-center mb-2">
-          Réaction EUR/USD à 14h30 (CPI)
+          {t.mobileReaction}
         </p>
-        <svg viewBox="0 0 280 60" width="100%" fill="none" aria-label="Bougies réaction CPI">
+        <svg viewBox="0 0 280 60" width="100%" fill="none" aria-label={t.mobileBougiesAria}>
           {[
             { x: 14,  bull: true,  bt: 22, bb: 38 },
             { x: 36,  bull: false, bt: 24, bb: 40 },
@@ -275,24 +354,24 @@ export const MacroCalendarDiagram = () => {
           {/* Marker CPI vertical line */}
           <line x1={117} y1={2} x2={117} y2={58} stroke="#ef4444" strokeWidth="1.5" strokeDasharray="3 3" />
         </svg>
-        <p className="text-center text-[14px] font-bold text-red-400 mt-2">−150 pips en 2 min</p>
+        <p className="text-center text-[14px] font-bold text-red-400 mt-2">{t.mobilePips}</p>
       </div>
 
       {/* Actifs impactés */}
       <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
         <p className="text-[12px] font-bold text-amber-400 uppercase tracking-wider text-center mb-2">
-          Actifs impactés par les news macro
+          {t.mobileActifs}
         </p>
         <ul className="grid grid-cols-2 gap-1.5 text-[12px]">
-          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-blue-400" /><span className="text-zinc-300">Forex (EUR/USD)</span></li>
-          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-amber-400" /><span className="text-zinc-300">Or (XAU/USD)</span></li>
-          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-emerald-400" /><span className="text-zinc-300">Indices US</span></li>
-          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-red-400" /><span className="text-zinc-300">Crypto (BTC)</span></li>
+          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-blue-400" /><span className="text-zinc-300">{t.mobileForex}</span></li>
+          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-amber-400" /><span className="text-zinc-300">{t.mobileOr}</span></li>
+          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-emerald-400" /><span className="text-zinc-300">{t.mobileIndices}</span></li>
+          <li className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-sm bg-red-400" /><span className="text-zinc-300">{t.mobileCrypto}</span></li>
         </ul>
       </div>
 
       <p className="text-[12px] text-emerald-400 text-center italic font-bold leading-snug">
-        Une news macro ne touche jamais qu'un seul marché.
+        {t.mobileFooter}
       </p>
     </div>
     </div>

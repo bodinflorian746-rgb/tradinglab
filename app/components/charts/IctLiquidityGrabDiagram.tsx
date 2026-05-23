@@ -4,6 +4,7 @@
 
 interface IctLiquidityGrabDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -36,7 +37,38 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function IctLiquidityGrabDiagram({ className = "" }: IctLiquidityGrabDiagramProps) {
+export function IctLiquidityGrabDiagram({ className = "", locale = "fr" }: IctLiquidityGrabDiagramProps) {
+  const t = locale === "es"
+    ? {
+        equalHighs: "Equal highs 1.1780",
+        sweep: "Sweep 1.1792",
+        rejet: "Rechazo 1.1720",
+        annotation: "El mercado toma la liquidez antes del displacement",
+        mobileTitle: "Liquidity grab en equal highs · EUR/USD H1",
+        m1a: "Equal highs",
+        m1b: " en 1.1780 = liquidez visible.",
+        m2a: "Sweep en 1.1792",
+        m2b: " · la mecha dispara los stops.",
+        m3a: "Rechazo hacia 1.1720",
+        m3b: " = movimiento institucional real.",
+        leg1: "Equal highs = liquidez visible por encima",
+        leg2: "Sweep y luego rechazo = movimiento real",
+      }
+    : {
+        equalHighs: "Equal highs 1.1780",
+        sweep: "Sweep 1.1792",
+        rejet: "Rejet 1.1720",
+        annotation: "Le marché prend la liquidité avant le déplacement",
+        mobileTitle: "Liquidity grab sur equal highs · EUR/USD H1",
+        m1a: "Equal highs",
+        m1b: " à 1.1780 = liquidité visible.",
+        m2a: "Sweep à 1.1792",
+        m2b: " · mèche déclenche les stops.",
+        m3a: "Rejet vers 1.1720",
+        m3b: " = vrai mouvement institutionnel.",
+        leg1: "Equal highs = liquidité visible au-dessus",
+        leg2: "Sweep puis rejet = mouvement réel",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -47,7 +79,7 @@ export function IctLiquidityGrabDiagram({ className = "" }: IctLiquidityGrabDiag
         {/* Ligne equal highs */}
         <line x1="60" y1="70" x2="620" y2="70" stroke="#ef4444" strokeWidth="1.3" strokeDasharray="5 3" strokeOpacity="0.85" />
         <rect x="488" y="58" width="124" height="13" rx="3" fill="#09090b" />
-        <text x="550" y="68" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Equal highs 1.1780</text>
+        <text x="550" y="68" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">{t.equalHighs}</text>
 
         {/* Bougies */}
         {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
@@ -64,35 +96,35 @@ export function IctLiquidityGrabDiagram({ className = "" }: IctLiquidityGrabDiag
         {/* Label SWEEP au-dessus du pic */}
         <line x1="332" y1="48" x2="350" y2="42" stroke="#f59e0b" strokeWidth="1" strokeOpacity="0.7" />
         <rect x="350" y="32" width="92" height="14" rx="3" fill="#09090b" />
-        <text x="396" y="42" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep 1.1792</text>
+        <text x="396" y="42" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.sweep}</text>
 
         {/* Label REJET en bas */}
         <rect x="528" y="262" width="84" height="14" rx="3" fill="#09090b" />
-        <text x="570" y="272" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Rejet 1.1720</text>
+        <text x="570" y="272" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.rejet}</text>
 
         {/* Annotation */}
         <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le marché prend la liquidité avant le déplacement
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : liquidity grab equal highs ────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Liquidity grab sur equal highs · EUR/USD H1</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>
-            <span className="text-zinc-300"><span className="font-bold text-red-400">Equal highs</span> à 1.1780 = liquidité visible.</span>
+            <span className="text-zinc-300"><span className="font-bold text-red-400">{t.m1a}</span>{t.m1b}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">2</span>
-            <span className="text-zinc-300"><span className="font-bold text-amber-400">Sweep à 1.1792</span> · mèche déclenche les stops.</span>
+            <span className="text-zinc-300"><span className="font-bold text-amber-400">{t.m2a}</span>{t.m2b}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
-            <span className="text-zinc-300"><span className="font-bold text-emerald-400">Rejet vers 1.1720</span> = vrai mouvement institutionnel.</span>
+            <span className="text-zinc-300"><span className="font-bold text-emerald-400">{t.m3a}</span>{t.m3b}</span>
           </li>
         </ul>
       </div>
@@ -100,11 +132,11 @@ export function IctLiquidityGrabDiagram({ className = "" }: IctLiquidityGrabDiag
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Equal highs = liquidité visible au-dessus</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Sweep puis rejet = mouvement réel</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

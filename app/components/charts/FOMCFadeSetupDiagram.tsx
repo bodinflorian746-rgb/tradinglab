@@ -4,6 +4,7 @@
 
 interface FOMCFadeSetupDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -44,7 +45,38 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function FOMCFadeSetupDiagram({ className = "" }: FOMCFadeSetupDiagramProps) {
+export function FOMCFadeSetupDiagram({ className = "", locale = "fr" }: FOMCFadeSetupDiagramProps) {
+  const t = locale === "es"
+    ? {
+        target: "Objetivo 4 638 $",
+        entreeLong: "Entrada long 4 600 $",
+        sl: "SL 4 578 $",
+        exces: "Exceso",
+        stabilisation: "Estabilización",
+        fade: "Fade",
+        mobileTitle: "FOMC fade setup · XAU/USD M15",
+        step1: "Exceso post-FOMC (impulso violento).",
+        step2: "Estabilización = condición del fade.",
+        step3a: "Fade",
+        step3b: " hacia un retorno parcial, no una reversión completa.",
+        legend1: "Exceso luego estabilización = condición del fade",
+        legend2: "Fade hacia retorno parcial, no reversión completa",
+      }
+    : {
+        target: "Target 4 638 $",
+        entreeLong: "Entrée long 4 600 $",
+        sl: "SL 4 578 $",
+        exces: "Excès",
+        stabilisation: "Stabilisation",
+        fade: "Fade",
+        mobileTitle: "FOMC fade setup · XAU/USD M15",
+        step1: "Excès post-FOMC (impulsion violente).",
+        step2: "Stabilisation = condition du fade.",
+        step3a: "Fade",
+        step3b: " vers un retour partiel, pas un retournement complet.",
+        legend1: "Excès puis stabilisation = condition du fade",
+        legend2: "Fade vers un retour partiel, pas un retournement complet",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -55,17 +87,17 @@ export function FOMCFadeSetupDiagram({ className = "" }: FOMCFadeSetupDiagramPro
         {/* Ligne Target 4 638 $ (verte/gold horizontale) */}
         <line x1="40" y1="110" x2="660" y2="110" stroke="#10b981" strokeWidth="1.2" strokeDasharray="5 3" strokeOpacity="0.8" />
         <rect x="546" y="98" width="110" height="13" rx="3" fill="#09090b" />
-        <text x="601" y="108" fill="#10b981" fontSize="9" fontWeight="700" textAnchor="middle">Target 4 638 $</text>
+        <text x="601" y="108" fill="#10b981" fontSize="9" fontWeight="700" textAnchor="middle">{t.target}</text>
 
         {/* Ligne Entrée long 4 600 $ (bleue) */}
         <line x1="40" y1="180" x2="660" y2="180" stroke="#60a5fa" strokeWidth="1.2" strokeDasharray="4 2" strokeOpacity="0.85" />
         <rect x="540" y="168" width="118" height="13" rx="3" fill="#09090b" />
-        <text x="599" y="178" fill="#60a5fa" fontSize="9" fontWeight="700" textAnchor="middle">Entrée long 4 600 $</text>
+        <text x="599" y="178" fill="#60a5fa" fontSize="9" fontWeight="700" textAnchor="middle">{t.entreeLong}</text>
 
         {/* Ligne SL 4 578 $ (rouge pointillée) */}
         <line x1="40" y1="225" x2="660" y2="225" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="5 3" strokeOpacity="0.85" />
         <rect x="558" y="228" width="98" height="13" rx="3" fill="#09090b" />
-        <text x="607" y="238" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">SL 4 578 $</text>
+        <text x="607" y="238" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">{t.sl}</text>
 
         {/* Zone de stabilisation — rectangle léger autour de y=185-200, x=210-345 */}
         <rect x="210" y="183" width="135" height="22" fill="#27272a40" stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.85" />
@@ -84,33 +116,33 @@ export function FOMCFadeSetupDiagram({ className = "" }: FOMCFadeSetupDiagramPro
 
         {/* Annotation "Excès" — pointe la chute / creux */}
         <rect x="138" y="246" width="58" height="13" rx="3" fill="#09090b" />
-        <text x="167" y="256" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">Excès</text>
+        <text x="167" y="256" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">{t.exces}</text>
 
         {/* Annotation "Stabilisation" — au-dessus du rectangle */}
         <rect x="220" y="164" width="116" height="13" rx="3" fill="#09090b" />
-        <text x="278" y="174" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Stabilisation</text>
+        <text x="278" y="174" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.stabilisation}</text>
 
         {/* Annotation "Fade" — au-dessus du retour haussier */}
         <rect x="404" y="74" width="58" height="13" rx="3" fill="#09090b" />
         <rect x="404" y="74" width="58" height="13" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
-        <text x="433" y="84" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Fade</text>
+        <text x="433" y="84" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.fade}</text>
       </svg>
 
       {/* MOBILE : FOMC fade setup ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">FOMC fade setup · XAU/USD M15</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>
-            <span className="text-zinc-300">Excès post-FOMC (impulsion violente).</span>
+            <span className="text-zinc-300">{t.step1}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">2</span>
-            <span className="text-zinc-300">Stabilisation = condition du fade.</span>
+            <span className="text-zinc-300">{t.step2}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
-            <span className="text-zinc-300"><span className="font-bold text-emerald-400">Fade</span> vers un retour partiel, pas un retournement complet.</span>
+            <span className="text-zinc-300"><span className="font-bold text-emerald-400">{t.step3a}</span>{t.step3b}</span>
           </li>
         </ul>
       </div>
@@ -118,11 +150,11 @@ export function FOMCFadeSetupDiagram({ className = "" }: FOMCFadeSetupDiagramPro
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Excès puis stabilisation = condition du fade</span>
+          <span className="text-[10px] text-zinc-500">{t.legend1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-blue-400" />
-          <span className="text-[10px] text-zinc-500">Fade vers un retour partiel, pas un retournement complet</span>
+          <span className="text-[10px] text-zinc-500">{t.legend2}</span>
         </div>
       </div>
     </div>

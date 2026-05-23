@@ -1,4 +1,53 @@
-export default function MultiTFEntryDiagram() {
+export default function MultiTFEntryDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+  const L = locale === "es"
+    ? {
+        title: "Proceso completo — Tendencia Daily → Nivel H4 → Entrada H1",
+        contexte: "El contexto",
+        leNiveau: "El nivel",
+        declencheur: "El disparador",
+        tendanceHaussiere: "Tendencia alcista ↑",
+        supportHigh: "Support 4 500$ → high 4 720$",
+        retracementFibo: "Retracement hacia Fibo",
+        fibo618: "Fibo 0.618 — 4 600$",
+        zoneSurveiller: "Zona a vigilar: 4 600$",
+        tp4720: "TP 4 720$",
+        sl4590: "SL 4 590$",
+        engulfingBullish: "Engulfing bullish",
+        fiboH1: "Fibo 4 600$",
+        setupLegend: "Setup engulfing — Entrada 4 630$ · SL 4 590$ · TP 4 720$ · R/R 2,25",
+        mobTitle: "Proceso completo Daily → H4 → H1 (XAU/USD)",
+        mobContexte: "El contexto",
+        mobLeNiveau: "El nivel",
+        mobDeclencheur: "El disparador",
+        mobDaily: "Tendencia alcista ↑ confirmada · Support 4 500 $ → high 4 720 $",
+        mobH4: "Retracement hacia Fibo 0.618 = 4 600 $ → zona a vigilar",
+        mobH1: "Bullish engulfing en el Fibo → entrada activada",
+        mobEntry: "Entrada",
+      }
+    : {
+        title: "Process complet — Tendance Daily → Niveau H4 → Entrée H1",
+        contexte: "Le contexte",
+        leNiveau: "Le niveau",
+        declencheur: "Le déclencheur",
+        tendanceHaussiere: "Tendance haussière ↑",
+        supportHigh: "Support 4 500$ → high 4 720$",
+        retracementFibo: "Retracement vers Fibo",
+        fibo618: "Fibo 0.618 — 4 600$",
+        zoneSurveiller: "Zone à surveiller : 4 600$",
+        tp4720: "TP 4 720$",
+        sl4590: "SL 4 590$",
+        engulfingBullish: "Engulfing bullish",
+        fiboH1: "Fibo 4 600$",
+        setupLegend: "Setup engulfing — Entrée 4 630$ · SL 4 590$ · TP 4 720$ · R/R 2,25",
+        mobTitle: "Process complet Daily → H4 → H1 (XAU/USD)",
+        mobContexte: "Le contexte",
+        mobLeNiveau: "Le niveau",
+        mobDeclencheur: "Le déclencheur",
+        mobDaily: "Tendance haussière ↑ confirmée · Support 4 500 $ → high 4 720 $",
+        mobH4: "Retracement vers Fibo 0.618 = 4 600 $ → zone à surveiller",
+        mobH1: "Bullish engulfing sur le Fibo → entrée déclenchée",
+        mobEntry: "Entrée",
+      };
   return (
     <div>
     <svg
@@ -10,7 +59,7 @@ export default function MultiTFEntryDiagram() {
     >
       {/* ── ZONE 1 — Titre général ── */}
       <text x="360" y="22" textAnchor="middle" fontSize="14" fontWeight="600" fill="#10b981">
-        Process complet — Tendance Daily → Niveau H4 → Entrée H1
+        {L.title}
       </text>
       <text x="360" y="40" textAnchor="middle" fontSize="11" fontWeight="500" fill="#a1a1aa">
         XAU/USD
@@ -25,7 +74,7 @@ export default function MultiTFEntryDiagram() {
 
       {/* Header */}
       <text x="130" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill="#10b981">DAILY</text>
-      <text x="130" y="104" textAnchor="middle" fontSize="10" fill="#a1a1aa">Le contexte</text>
+      <text x="130" y="104" textAnchor="middle" fontSize="10" fill="#a1a1aa">{L.contexte}</text>
 
       {/* Bougie D1 — bullish */}
       <line x1="58" y1="270" x2="58" y2="300" stroke="#059669" strokeWidth="1.2" strokeLinecap="round" />
@@ -49,11 +98,11 @@ export default function MultiTFEntryDiagram() {
 
       {/* Annotation tendance ↑ */}
       <rect x="70" y="129" width="120" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="130" y="140" textAnchor="middle" fontSize="10" fontWeight="600" fill="#10b981">Tendance haussière ↑</text>
+      <text x="130" y="140" textAnchor="middle" fontSize="10" fontWeight="600" fill="#10b981">{L.tendanceHaussiere}</text>
 
       {/* Légende prix bas panel 1 */}
       <rect x="48" y="324" width="164" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="130" y="335" textAnchor="middle" fontSize="9" fontStyle="italic" fill="#71717a">Support 4 500$ → high 4 720$</text>
+      <text x="130" y="335" textAnchor="middle" fontSize="9" fontStyle="italic" fill="#71717a">{L.supportHigh}</text>
 
       {/* ══════════════════════════════════════════
           PANEL 2 — H4 (centre)
@@ -64,11 +113,11 @@ export default function MultiTFEntryDiagram() {
 
       {/* Header */}
       <text x="360" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill="#10b981">H4</text>
-      <text x="360" y="104" textAnchor="middle" fontSize="10" fill="#a1a1aa">Le niveau</text>
+      <text x="360" y="104" textAnchor="middle" fontSize="10" fill="#a1a1aa">{L.leNiveau}</text>
 
       {/* Annotation "Retracement vers Fibo" */}
       <rect x="297" y="119" width="126" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="360" y="130" textAnchor="middle" fontSize="10" fontWeight="500" fill="#a1a1aa">Retracement vers Fibo</text>
+      <text x="360" y="130" textAnchor="middle" fontSize="10" fontWeight="500" fill="#a1a1aa">{L.retracementFibo}</text>
 
       {/* Ligne Fibo 0.618 */}
       <line x1="270" y1="235" x2="450" y2="235" stroke="#a1a1aa" strokeWidth="1.2" strokeDasharray="5 3" />
@@ -98,11 +147,11 @@ export default function MultiTFEntryDiagram() {
 
       {/* Label Fibo H4 — déplacé après les candles pour rester au-dessus */}
       <rect x="268" y="217" width="114" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="270" y="228" textAnchor="start" fontSize="9" fontStyle="italic" fill="#a1a1aa">Fibo 0.618 — 4 600$</text>
+      <text x="270" y="228" textAnchor="start" fontSize="9" fontStyle="italic" fill="#a1a1aa">{L.fibo618}</text>
 
       {/* Légende H4 */}
       <rect x="288" y="323" width="144" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="360" y="335" textAnchor="middle" fontSize="9" fontStyle="italic" fill="#71717a">Zone à surveiller : 4 600$</text>
+      <text x="360" y="335" textAnchor="middle" fontSize="9" fontStyle="italic" fill="#71717a">{L.zoneSurveiller}</text>
 
       {/* ══════════════════════════════════════════
           PANEL 3 — H1 (droite)
@@ -113,14 +162,14 @@ export default function MultiTFEntryDiagram() {
 
       {/* Header */}
       <text x="590" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill="#10b981">H1</text>
-      <text x="590" y="104" textAnchor="middle" fontSize="10" fill="#a1a1aa">Le déclencheur</text>
+      <text x="590" y="104" textAnchor="middle" fontSize="10" fill="#a1a1aa">{L.declencheur}</text>
 
       {/* Ligne TP emerald */}
       <line x1="500" y1="140" x2="680" y2="140" stroke="#10b981" strokeWidth="1.2" strokeDasharray="5 3" />
 
       {/* Label TP */}
       <rect x="498" y="122" width="58" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="500" y="133" textAnchor="start" fontSize="9" fontWeight="600" fill="#10b981">TP 4 720$</text>
+      <text x="500" y="133" textAnchor="start" fontSize="9" fontWeight="600" fill="#10b981">{L.tp4720}</text>
 
       {/* Ligne Fibo zinc */}
       <line x1="500" y1="235" x2="680" y2="235" stroke="#a1a1aa" strokeWidth="1.2" strokeDasharray="5 3" />
@@ -130,7 +179,7 @@ export default function MultiTFEntryDiagram() {
 
       {/* Label SL */}
       <rect x="498" y="272" width="58" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="500" y="283" textAnchor="start" fontSize="9" fontWeight="600" fill="#ef4444">SL 4 590$</text>
+      <text x="500" y="283" textAnchor="start" fontSize="9" fontWeight="600" fill="#ef4444">{L.sl4590}</text>
 
       {/* H1-1 bearish */}
       <line x1="516" y1="170" x2="516" y2="205" stroke="#b91c1c" strokeWidth="1" strokeLinecap="round" />
@@ -156,7 +205,7 @@ export default function MultiTFEntryDiagram() {
 
       {/* Annotation Engulfing bullish */}
       <rect x="573" y="194" width="94" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="620" y="205" textAnchor="middle" fontSize="9" fontWeight="600" fill="#10b981">Engulfing bullish</text>
+      <text x="620" y="205" textAnchor="middle" fontSize="9" fontWeight="600" fill="#10b981">{L.engulfingBullish}</text>
 
       {/* Bougie de confirmation */}
       <line x1="656" y1="180" x2="656" y2="215" stroke="#059669" strokeWidth="1" strokeLinecap="round" />
@@ -164,7 +213,7 @@ export default function MultiTFEntryDiagram() {
 
       {/* Label Fibo H1 — déplacé après les candles pour rester au-dessus */}
       <rect x="498" y="217" width="66" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="500" y="228" textAnchor="start" fontSize="9" fontStyle="italic" fill="#a1a1aa">Fibo 4 600$</text>
+      <text x="500" y="228" textAnchor="start" fontSize="9" fontStyle="italic" fill="#a1a1aa">{L.fiboH1}</text>
 
       {/* ══════════════════════════════════════════
           ZONE 3 — Flèches de liaison
@@ -183,44 +232,44 @@ export default function MultiTFEntryDiagram() {
       ══════════════════════════════════════════ */}
       <rect x="145" y="404" width="430" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
       <text x="360" y="415" textAnchor="middle" fontSize="11" fontWeight="500" fill="#d4d4d8">
-        Setup engulfing — Entrée 4 630$ · SL 4 590$ · TP 4 720$ · R/R 2,25
+        {L.setupLegend}
       </text>
     </svg>
 
     {/* MOBILE : process 3 timeframes empilé ──────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
       <p className="text-[14px] font-bold text-emerald-400 text-center leading-snug">
-        Process complet Daily → H4 → H1 (XAU/USD)
+        {L.mobTitle}
       </p>
 
       <div className="space-y-2">
         <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/8 p-3">
           <div className="flex items-baseline justify-between gap-2">
             <span className="text-[14px] font-bold text-emerald-400">DAILY</span>
-            <span className="text-[11px] text-emerald-400/80 italic">Le contexte</span>
+            <span className="text-[11px] text-emerald-400/80 italic">{L.mobContexte}</span>
           </div>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Tendance haussière ↑ confirmée · Support 4 500 $ → high 4 720 $</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobDaily}</p>
         </div>
         <p className="text-center text-zinc-600 text-[14px]">↓</p>
         <div className="rounded-lg border border-blue-400/30 bg-blue-500/8 p-3">
           <div className="flex items-baseline justify-between gap-2">
             <span className="text-[14px] font-bold text-blue-400">H4</span>
-            <span className="text-[11px] text-blue-400/80 italic">Le niveau</span>
+            <span className="text-[11px] text-blue-400/80 italic">{L.mobLeNiveau}</span>
           </div>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Retracement vers Fibo 0.618 = 4 600 $ → zone à surveiller</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobH4}</p>
         </div>
         <p className="text-center text-zinc-600 text-[14px]">↓</p>
         <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/8 p-3">
           <div className="flex items-baseline justify-between gap-2">
             <span className="text-[14px] font-bold text-emerald-400">H1</span>
-            <span className="text-[11px] text-emerald-400/80 italic">Le déclencheur</span>
+            <span className="text-[11px] text-emerald-400/80 italic">{L.mobDeclencheur}</span>
           </div>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Bullish engulfing sur le Fibo → entrée déclenchée</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobH1}</p>
         </div>
       </div>
 
       <div className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-2.5 text-center space-y-0.5">
-        <p className="text-[13px] text-zinc-300">Entrée <span className="font-mono font-bold text-white">4 630 $</span> · SL <span className="font-mono font-bold text-red-400">4 590 $</span> · TP <span className="font-mono font-bold text-emerald-400">4 720 $</span></p>
+        <p className="text-[13px] text-zinc-300">{L.mobEntry} <span className="font-mono font-bold text-white">4 630 $</span> · SL <span className="font-mono font-bold text-red-400">4 590 $</span> · TP <span className="font-mono font-bold text-emerald-400">4 720 $</span></p>
         <p className="text-[14px] font-bold text-emerald-400">R/R = 2,25</p>
       </div>
     </div>

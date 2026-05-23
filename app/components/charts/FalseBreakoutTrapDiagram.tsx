@@ -4,6 +4,7 @@
 
 interface FalseBreakoutTrapDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -36,7 +37,20 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function FalseBreakoutTrapDiagram({ className = "" }: FalseBreakoutTrapDiagramProps) {
+export function FalseBreakoutTrapDiagram({ className = "", locale = "fr" }: FalseBreakoutTrapDiagramProps) {
+  const isEs = locale === "es";
+  const L = {
+    resistance: isEs ? "Resistencia 4 680 $" : "Résistance 4 680 $",
+    entries:    isEs ? "Entradas breakout" : "Entrées breakout",
+    annot:      isEs ? "Ruptura visible ≠ continuación real" : "Cassure visible ≠ continuation réelle",
+    mobTitle:   isEs ? "False breakout — trampa XAU/USD M15" : "Faux breakout — piège XAU/USD M15",
+    visualT:    isEs ? "Ruptura visual de la resistencia" : "Cassure visuelle de la résistance",
+    visualD:    isEs ? "El precio sube por encima → tentación de comprar en breakout." : "Le prix monte au-dessus → tentation d'acheter sur breakout.",
+    reintT:     isEs ? "Reintegración bajo el nivel = trampa" : "Réintégration sous le niveau = piège",
+    reintD:     isEs ? "Ruptura no mantenida, el precio cae en cierre debajo de la resistencia → setup inválido." : "Cassure non tenue, prix replonge en clôture sous la résistance → setup invalide.",
+    legendNotHeld: isEs ? "Ruptura no mantenida por encima de la resistencia" : "Cassure non tenue au-dessus de la résistance",
+    legendTrap:    isEs ? "Reintegración bajo el nivel = trampa" : "Réintégration sous le niveau = piège",
+  };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -47,7 +61,7 @@ export function FalseBreakoutTrapDiagram({ className = "" }: FalseBreakoutTrapDi
         {/* Ligne résistance */}
         <line x1="60" y1="80" x2="620" y2="80" stroke="#ef4444" strokeWidth="1.3" strokeDasharray="5 3" strokeOpacity="0.85" />
         <rect x="486" y="68" width="124" height="13" rx="3" fill="#09090b" />
-        <text x="548" y="78" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Résistance 4 680 $</text>
+        <text x="548" y="78" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">{L.resistance}</text>
 
         {/* Bougies */}
         {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
@@ -69,7 +83,7 @@ export function FalseBreakoutTrapDiagram({ className = "" }: FalseBreakoutTrapDi
         {/* Marqueur "entrées breakout" — petit cercle zinc-500 + label */}
         <circle cx="280" cy="78" r="4" fill="#71717a" stroke="#09090b" strokeWidth="1.2" />
         <rect x="296" y="71" width="96" height="13" rx="3" fill="#09090b" />
-        <text x="344" y="81" fill="#a1a1aa" fontSize="9" fontWeight="600" textAnchor="middle">Entrées breakout</text>
+        <text x="344" y="81" fill="#a1a1aa" fontSize="9" fontWeight="600" textAnchor="middle">{L.entries}</text>
 
         {/* Label "4 650 $" en bas */}
         <rect x="540" y="258" width="64" height="13" rx="3" fill="#09090b" />
@@ -79,31 +93,31 @@ export function FalseBreakoutTrapDiagram({ className = "" }: FalseBreakoutTrapDi
         <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Cassure visible ≠ continuation réelle
+          {L.annot}
         </text>
       </svg>
 
       {/* MOBILE : faux breakout — piège ─────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-red-400 text-center">Faux breakout — piège XAU/USD M15</p>
+        <p className="text-[14px] font-bold text-red-400 text-center">{L.mobTitle}</p>
         <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-          <p className="text-[13px] font-bold text-amber-400">Cassure visuelle de la résistance</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le prix monte au-dessus → tentation d'acheter sur breakout.</p>
+          <p className="text-[13px] font-bold text-amber-400">{L.visualT}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.visualD}</p>
         </div>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">Réintégration sous le niveau = piège</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Cassure non tenue, prix replonge en clôture sous la résistance → setup invalide.</p>
+          <p className="text-[13px] font-bold text-red-400">{L.reintT}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.reintD}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Cassure non tenue au-dessus de la résistance</span>
+          <span className="text-[10px] text-zinc-500">{L.legendNotHeld}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Réintégration sous le niveau = piège</span>
+          <span className="text-[10px] text-zinc-500">{L.legendTrap}</span>
         </div>
       </div>
     </div>

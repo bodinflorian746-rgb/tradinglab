@@ -1,8 +1,34 @@
 interface FibonacciDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
-export function FibonacciDiagram({ className = "" }: FibonacciDiagramProps) {
+export function FibonacciDiagram({ className = "", locale = "fr" }: FibonacciDiagramProps) {
+  const T = locale === "es"
+    ? {
+        swingLow: "Swing Low",
+        swingHigh: "Swing High",
+        impulsif: "impulsivo ↑",
+        mobTitle: "Retracement Fibonacci sobre la impulsión ↑",
+        mobOte: "Zona OTE (61.8% – 78.6%)",
+        mobOteDesc: " · zona privilegiada para entrar en el sentido de la tendencia",
+        mobRebond: "Rebote del precio en la zona OTE → reanudación de la impulsión",
+        legendImpulsif: "Movimiento impulsivo",
+        legendOte: "Zona OTE (61.8–78.6%)",
+        legendRetracement: "Retracement",
+      }
+    : {
+        swingLow: "Swing Low",
+        swingHigh: "Swing High",
+        impulsif: "impulsif ↑",
+        mobTitle: "Retracement Fibonacci sur l'impulsion ↑",
+        mobOte: "Zone OTE (61.8% – 78.6%)",
+        mobOteDesc: " · zone privilégiée pour entrer dans le sens de la tendance",
+        mobRebond: "Rebond du prix dans la zone OTE → reprise de l'impulsion",
+        legendImpulsif: "Mouvement impulsif",
+        legendOte: "Zone OTE (61.8–78.6%)",
+        legendRetracement: "Retracement",
+      };
   // Swing low at (10,136), swing high at (102,16) — range 120px
   const swingLowY  = 136;
   const swingHighY = 16;
@@ -101,15 +127,15 @@ export function FibonacciDiagram({ className = "" }: FibonacciDiagramProps) {
 
         {/* Labels textuels — masqués sur mobile */}
         <g className="chart-detail-labels">
-          <text x="28" y={swingLowY - 10} fontSize="7" fill="#71717a" fontWeight="600">Swing Low</text>
-          <text x="120" y={swingHighY + 14} fontSize="6.5" fill="#71717a" fontWeight="600" opacity="0.8">Swing High</text>
-          <text x="56" y="44" fontSize="7.5" fill="#10b981" textAnchor="middle" opacity="0.6" fontWeight="600">impulsif ↑</text>
+          <text x="28" y={swingLowY - 10} fontSize="7" fill="#71717a" fontWeight="600">{T.swingLow}</text>
+          <text x="120" y={swingHighY + 14} fontSize="6.5" fill="#71717a" fontWeight="600" opacity="0.8">{T.swingHigh}</text>
+          <text x="56" y="44" fontSize="7.5" fill="#10b981" textAnchor="middle" opacity="0.6" fontWeight="600">{T.impulsif}</text>
         </g>
       </svg>
 
       {/* Mobile : key card avec les niveaux Fibonacci */}
       <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
-        <p className="text-[13px] font-bold text-blue-400">Retracement Fibonacci sur l&apos;impulsion ↑</p>
+        <p className="text-[13px] font-bold text-blue-400">{T.mobTitle}</p>
         <div className="grid grid-cols-5 gap-1 text-center">
           {levels.map((lvl) => (
             <div key={lvl.pct} className={`rounded-md border p-1.5 ${
@@ -127,13 +153,13 @@ export function FibonacciDiagram({ className = "" }: FibonacciDiagramProps) {
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2.5 h-2.5 rounded-sm bg-blue-500/30 border border-blue-400 mt-1" />
             <span className="text-white">
-              <span className="font-bold text-blue-400">Zone OTE (61.8% – 78.6%)</span>
-              <span className="text-zinc-300"> · zone privilégiée pour entrer dans le sens de la tendance</span>
+              <span className="font-bold text-blue-400">{T.mobOte}</span>
+              <span className="text-zinc-300">{T.mobOteDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-emerald-400 mt-1" />
-            <span className="text-zinc-300">Rebond du prix dans la zone OTE → reprise de l'impulsion</span>
+            <span className="text-zinc-300">{T.mobRebond}</span>
           </li>
         </ul>
       </div>
@@ -142,15 +168,15 @@ export function FibonacciDiagram({ className = "" }: FibonacciDiagramProps) {
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Mouvement impulsif</span>
+          <span className="text-[10px] text-zinc-500">{T.legendImpulsif}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <span className="text-[10px] text-zinc-500">Zone OTE (61.8–78.6%)</span>
+          <span className="text-[10px] text-zinc-500">{T.legendOte}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Retracement</span>
+          <span className="text-[10px] text-zinc-500">{T.legendRetracement}</span>
         </div>
       </div>
     </div>

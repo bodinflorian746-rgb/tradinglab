@@ -4,6 +4,7 @@
 
 interface TimingComparisonDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -45,7 +46,36 @@ const CANDLES: CandleSpec[] = [
 const BODY_W = 12;
 const RESISTANCE_Y = 90;
 
-export function TimingComparisonDiagram({ className = "" }: TimingComparisonDiagramProps) {
+export function TimingComparisonDiagram({ className = "", locale = "fr" }: TimingComparisonDiagramProps) {
+  const t = locale === "es"
+    ? {
+        asia: "Asia / 03h UTC",
+        london: "London Open",
+        reactionMolle: "Reacción débil",
+        reactionExplosive: "Reacción explosiva",
+        annotation: "Mismo setup. Timing diferente.",
+        mobileTitle: "Fuera vs En Killzone · EUR/USD M15",
+        b1Title: "✗ Fuera de Killzone",
+        b1Body: "Reacción débil, lateralización, señales poco fiables.",
+        b2Title: "✓ En Killzone",
+        b2Body: "Sweep + impulso franco, señales claras.",
+        leg1: "Fuera de Killzone = reacción débil, lateralización",
+        leg2: "En Killzone = sweep + impulso franco",
+      }
+    : {
+        asia: "Asia / 03h UTC",
+        london: "London Open",
+        reactionMolle: "Réaction molle",
+        reactionExplosive: "Réaction explosive",
+        annotation: "Même setup. Timing différent.",
+        mobileTitle: "Hors vs En Killzone · EUR/USD M15",
+        b1Title: "✗ Hors Killzone",
+        b1Body: "Réaction molle, latéralisation, signaux peu fiables.",
+        b2Title: "✓ En Killzone",
+        b2Body: "Sweep + impulsion franche, signaux clairs.",
+        leg1: "Hors Killzone = réaction molle, latéralisation",
+        leg2: "En Killzone = sweep + impulsion franche",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -63,12 +93,12 @@ export function TimingComparisonDiagram({ className = "" }: TimingComparisonDiag
 
         {/* Étiquette test 1 — "Asia / 03h UTC" */}
         <rect x="120" y="48" width="110" height="14" rx="3" fill="#09090b" />
-        <text x="175" y="58" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Asia / 03h UTC</text>
+        <text x="175" y="58" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.asia}</text>
 
         {/* Étiquette test 2 — "London Open" */}
         <rect x="402" y="48" width="100" height="14" rx="3" fill="#09090b" />
         <rect x="402" y="48" width="100" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
-        <text x="452" y="58" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">London Open</text>
+        <text x="452" y="58" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.london}</text>
 
         {/* Bougies */}
         {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
@@ -84,42 +114,42 @@ export function TimingComparisonDiagram({ className = "" }: TimingComparisonDiag
 
         {/* Étiquette "Réaction molle" sous le test 1 */}
         <rect x="142" y="210" width="100" height="14" rx="3" fill="#09090b" />
-        <text x="192" y="220" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">Réaction molle</text>
+        <text x="192" y="220" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">{t.reactionMolle}</text>
 
         {/* Étiquette "Réaction explosive" sous le test 2 */}
         <rect x="425" y="248" width="120" height="14" rx="3" fill="#09090b" />
         <rect x="425" y="248" width="120" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
-        <text x="485" y="258" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Réaction explosive</text>
+        <text x="485" y="258" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.reactionExplosive}</text>
 
         {/* Annotation */}
         <rect x="195" y="290" width="310" height="22" rx="11" fill="#09090b" />
         <rect x="195" y="290" width="310" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Même setup. Timing différent.
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : timing comparaison ───────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Hors vs En Killzone · EUR/USD M15</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">✗ Hors Killzone</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Réaction molle, latéralisation, signaux peu fiables.</p>
+          <p className="text-[13px] font-bold text-red-400">{t.b1Title}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b1Body}</p>
         </div>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">✓ En Killzone</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Sweep + impulsion franche, signaux clairs.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.b2Title}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b2Body}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-600" />
-          <span className="text-[10px] text-zinc-500">Hors Killzone = réaction molle, latéralisation</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">En Killzone = sweep + impulsion franche</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

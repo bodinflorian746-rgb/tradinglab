@@ -1,4 +1,45 @@
-export default function HSNecklineSlopeDiagram({ className = "" }: { className?: string }) {
+export default function HSNecklineSlopeDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const L = locale === "es"
+    ? {
+        title: "Inclinación de la neckline = ajuste del TP",
+        flat: "Neckline plana",
+        asc: "Neckline ascendente",
+        desc: "Neckline descendente",
+        tpStandard: "TP estándar",
+        tpLong: "TP extendido",
+        tpShort: "TP recortado",
+        projFull: "Proyección measured move completa",
+        projLong: "Proyección extendida hacia abajo",
+        projShort: "Proyección reducida hacia abajo",
+        footer: "XAU/USD H&S ~4 620$ - 4 660$ — la inclinación de la neckline ajusta el TP",
+        mobileTitle: "Inclinación de la neckline = ajuste del TP",
+        mAsc: "Neckline ascendente",
+        mAscDesc: "TP extendido hacia abajo — proyección más amplia.",
+        mFlat: "Neckline horizontal",
+        mFlatDesc: "Proyección simétrica de la altura del patrón.",
+        mDesc: "Neckline descendente",
+        mDescDesc: "Proyección reducida hacia abajo — TP más corto.",
+      }
+    : {
+        title: "Inclinaison de la neckline = ajustement du TP",
+        flat: "Neckline plate",
+        asc: "Neckline ascendante",
+        desc: "Neckline descendante",
+        tpStandard: "TP standard",
+        tpLong: "TP rallongé",
+        tpShort: "TP raccourci",
+        projFull: "Projection measured move pleine",
+        projLong: "Projection prolongée vers le bas",
+        projShort: "Projection réduite vers le bas",
+        footer: "XAU/USD H&S ~4 620$ - 4 660$ — l'inclinaison de la neckline ajuste le TP",
+        mobileTitle: "Inclinaison de la neckline = ajustement du TP",
+        mAsc: "Neckline ascendante",
+        mAscDesc: "TP étendu vers le bas — projection plus large.",
+        mFlat: "Neckline horizontale",
+        mFlatDesc: "Projection symétrique de la hauteur du pattern.",
+        mDesc: "Neckline descendante",
+        mDescDesc: "Projection réduite vers le bas — TP plus court.",
+      };
   return (
     <div className={className}>
     <svg
@@ -7,7 +48,7 @@ export default function HSNecklineSlopeDiagram({ className = "" }: { className?:
       className="hidden sm:block w-full h-auto"
     >
       <text x="450" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        Inclinaison de la neckline = ajustement du TP
+        {L.title}
       </text>
 
       <line x1="305" y1="40" x2="305" y2="370" stroke="#3f3f46" strokeWidth="1" />
@@ -15,7 +56,7 @@ export default function HSNecklineSlopeDiagram({ className = "" }: { className?:
 
       {/* ═══ PANEL 1 — Neckline plate ═══ */}
       <rect x="20" y="50" width="270" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="155" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">Neckline plate</text>
+      <text x="155" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{L.flat}</text>
 
       {/* H&S avec neckline horizontale */}
       <line x1="30" y1="220" x2="280" y2="220" stroke="#a1a1aa" strokeWidth="1.2" strokeDasharray="4 3" />

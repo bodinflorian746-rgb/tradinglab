@@ -4,6 +4,7 @@
 
 interface PDArrayConfluenceDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -37,7 +38,34 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function PDArrayConfluenceDiagram({ className = "" }: PDArrayConfluenceDiagramProps) {
+export function PDArrayConfluenceDiagram({ className = "", locale = "fr" }: PDArrayConfluenceDiagramProps) {
+  const t = locale === "es"
+    ? {
+        ancienSupport: "Antiguo soporte roto",
+        fvgBearish: "FVG bearish",
+        sweepRecent: "Sweep reciente",
+        annotation: "Varios elementos cuentan la misma historia",
+        mobileTitle: "Confluencia PD Array · EUR/USD H1",
+        b1Title: "3 confluencias = zona fuerte",
+        b1Body: "Soporte roto + FVG + sweep = zona de alta probabilidad de ejecución.",
+        b2Title: "Rechazo bajista franco al regreso",
+        b2Body: "En cuanto el precio toca la zona confluente, rechazo inmediato = señal short.",
+        leg1: "Confluencia (soporte roto + FVG + sweep) = zona fuerte",
+        leg2: "Rechazo bajista franco al regreso a la zona",
+      }
+    : {
+        ancienSupport: "Ancien support cassé",
+        fvgBearish: "FVG bearish",
+        sweepRecent: "Sweep récent",
+        annotation: "Plusieurs éléments racontent la même histoire",
+        mobileTitle: "Confluence PD Array · EUR/USD H1",
+        b1Title: "3 confluences = zone forte",
+        b1Body: "Support cassé + FVG + sweep = zone à haute probabilité d'exécution.",
+        b2Title: "Rejet bearish franc dès le retour",
+        b2Body: "Dès que le prix touche la zone confluente, rejet immédiat = signal short.",
+        leg1: "Confluence (support cassé + FVG + sweep) = zone forte",
+        leg2: "Rejet bearish franc dès le retour dans la zone",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -67,49 +95,49 @@ export function PDArrayConfluenceDiagram({ className = "" }: PDArrayConfluenceDi
         {/* Étiquette "Ancien support cassé" — posée sur le bord haut de la bande, à gauche, sous le badge titre */}
         <rect x="58" y="44" width="130" height="14" rx="3" fill="#09090b" />
         <rect x="58" y="44" width="130" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
-        <text x="123" y="54" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Ancien support cassé</text>
+        <text x="123" y="54" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.ancienSupport}</text>
 
         {/* Étiquette "FVG bearish" — juste sous la bande, au centre, dans un espace libre sans corps de bougie */}
         <line x1="320" y1="100" x2="320" y2="95" stroke="#f59e0b" strokeWidth="0.9" strokeOpacity="0.7" />
         <rect x="270" y="100" width="100" height="14" rx="3" fill="#09090b" />
         <rect x="270" y="100" width="100" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
-        <text x="320" y="110" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">FVG bearish</text>
+        <text x="320" y="110" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.fvgBearish}</text>
 
         {/* Étiquette "Sweep récent" — au-dessus de la bande, reliée à la mèche du sweep (cx=430, wickTop=42) */}
         <line x1="430" y1="36" x2="430" y2="42" stroke="#f59e0b" strokeWidth="0.9" strokeOpacity="0.8" />
         <rect x="380" y="22" width="100" height="14" rx="3" fill="#09090b" />
         <rect x="380" y="22" width="100" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
-        <text x="430" y="32" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep récent</text>
+        <text x="430" y="32" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.sweepRecent}</text>
 
         {/* Annotation */}
         <rect x="170" y="294" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="294" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="308" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Plusieurs éléments racontent la même histoire
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : confluence PD Array ────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Confluence PD Array · EUR/USD H1</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">3 confluences = zone forte</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Support cassé + FVG + sweep = zone à haute probabilité d'exécution.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.b1Title}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b1Body}</p>
         </div>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">Rejet bearish franc dès le retour</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Dès que le prix touche la zone confluente, rejet immédiat = signal short.</p>
+          <p className="text-[13px] font-bold text-red-400">{t.b2Title}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b2Body}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Confluence (support cassé + FVG + sweep) = zone forte</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Rejet bearish franc dès le retour dans la zone</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

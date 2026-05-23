@@ -2,13 +2,30 @@ interface SupportResistanceProps {
   supportPrice?: string;
   resistancePrice?: string;
   className?: string;
+  locale?: "fr" | "es";
 }
 
 export function SupportResistance({
   supportPrice = '1.0800',
   resistancePrice = '1.0950',
   className = '',
+  locale = 'fr',
 }: SupportResistanceProps) {
+  const T = locale === 'es'
+    ? {
+        resistance: "Resistencia",
+        support: "Support",
+        rDesc: " · zona donde el precio es rechazado hacia abajo ",
+        sDesc: " · zona donde el precio rebota hacia arriba ",
+        arrow: "Los puntos rojos/verdes marcan cada rebote del precio en estos niveles",
+      }
+    : {
+        resistance: "Résistance",
+        support: "Support",
+        rDesc: " · zone où le prix est repoussé vers le bas ",
+        sDesc: " · zone où le prix rebondit vers le haut ",
+        arrow: "Les points rouges/verts marquent chaque rebond du prix sur ces niveaux",
+      };
   const rY = 32;
   const sY = 114;
 
@@ -78,12 +95,12 @@ export function SupportResistance({
 
           <rect x="2" y={rY - 20} width="92" height="14" rx="3" fill="#09090b" />
           <text x="8" y={rY - 9} fontSize="10" fill="#ef4444" fontWeight="600" opacity="0.9">
-            Résistance
+            {T.resistance}
           </text>
 
           <rect x="2" y={sY + 7} width="68" height="14" rx="3" fill="#09090b" />
           <text x="8" y={sY + 18} fontSize="10" fill="#10b981" fontWeight="600" opacity="0.9">
-            Support
+            {T.support}
           </text>
         </g>
       </svg>
@@ -94,20 +111,20 @@ export function SupportResistance({
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-3 h-1 rounded-sm bg-red-400 mt-2" />
             <span className="text-white">
-              <span className="font-bold text-red-400">Résistance</span>
-              <span className="text-zinc-300"> · zone où le prix est repoussé vers le bas {resistancePrice && <span className="font-mono text-zinc-400">({resistancePrice})</span>}</span>
+              <span className="font-bold text-red-400">{T.resistance}</span>
+              <span className="text-zinc-300">{T.rDesc}{resistancePrice && <span className="font-mono text-zinc-400">({resistancePrice})</span>}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-3 h-1 rounded-sm bg-emerald-400 mt-2" />
             <span className="text-white">
-              <span className="font-bold text-emerald-400">Support</span>
-              <span className="text-zinc-300"> · zone où le prix rebondit vers le haut {supportPrice && <span className="font-mono text-zinc-400">({supportPrice})</span>}</span>
+              <span className="font-bold text-emerald-400">{T.support}</span>
+              <span className="text-zinc-300">{T.sDesc}{supportPrice && <span className="font-mono text-zinc-400">({supportPrice})</span>}</span>
             </span>
           </li>
           <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
             <span className="shrink-0 text-zinc-300 font-bold">→</span>
-            <span className="text-zinc-300">Les points rouges/verts marquent chaque rebond du prix sur ces niveaux</span>
+            <span className="text-zinc-300">{T.arrow}</span>
           </li>
         </ul>
       </div>

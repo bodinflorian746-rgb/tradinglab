@@ -4,6 +4,7 @@
 
 interface FOMCExhaustionDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -44,7 +45,28 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function FOMCExhaustionDiagram({ className = "" }: FOMCExhaustionDiagramProps) {
+export function FOMCExhaustionDiagram({ className = "", locale = "fr" }: FOMCExhaustionDiagramProps) {
+  const t = locale === "es"
+    ? {
+        annotation: "El impulso se ralentiza antes del retorno",
+        mobileTitle: "FOMC agotamiento · XAU/USD M15",
+        mecheTitle: "Mechas de rechazo repetidas en la cima",
+        mecheDesc: "Varias velas muestran un rechazo a subir más alto.",
+        perteTitle: "Pérdida de aceleración = agotamiento",
+        perteDesc: "El impulso FOMC se agota → condiciones para un fade bearish.",
+        legendMeche: "Mechas de rechazo repetidas en la cima",
+        legendPerte: "Pérdida de aceleración = agotamiento",
+      }
+    : {
+        annotation: "L'impulsion ralentit avant le retour",
+        mobileTitle: "FOMC essoufflement · XAU/USD M15",
+        mecheTitle: "Mèches de rejet répétées au sommet",
+        mecheDesc: "Plusieurs bougies montrent un refus à monter plus haut.",
+        perteTitle: "Perte d'accélération = essoufflement",
+        perteDesc: "L'impulsion FOMC s'essouffle → conditions pour un fade bearish.",
+        legendMeche: "Mèches de rejet répétées au sommet",
+        legendPerte: "Perte d’accélération = essoufflement",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -81,31 +103,31 @@ export function FOMCExhaustionDiagram({ className = "" }: FOMCExhaustionDiagramP
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          L&apos;impulsion ralentit avant le retour
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : FOMC exhaustion ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">FOMC essoufflement · XAU/USD M15</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-          <p className="text-[13px] font-bold text-amber-400">Mèches de rejet répétées au sommet</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Plusieurs bougies montrent un refus à monter plus haut.</p>
+          <p className="text-[13px] font-bold text-amber-400">{t.mecheTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.mecheDesc}</p>
         </div>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">Perte d'accélération = essoufflement</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">L'impulsion FOMC s'essouffle → conditions pour un fade bearish.</p>
+          <p className="text-[13px] font-bold text-red-400">{t.perteTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.perteDesc}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Mèches de rejet répétées au sommet</span>
+          <span className="text-[10px] text-zinc-500">{t.legendMeche}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Perte d&apos;accélération = essoufflement</span>
+          <span className="text-[10px] text-zinc-500">{t.legendPerte}</span>
         </div>
       </div>
     </div>

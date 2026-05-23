@@ -4,6 +4,7 @@
 
 interface ICTDisplacementSetupDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -44,7 +45,30 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function ICTDisplacementSetupDiagram({ className = "" }: ICTDisplacementSetupDiagramProps) {
+export function ICTDisplacementSetupDiagram({ className = "", locale = "fr" }: ICTDisplacementSetupDiagramProps) {
+  const t = locale === "es"
+    ? {
+        annotation: "El displacement construye la zona de ejecución",
+        mobileTitle: "ICT displacement setup · EUR/USD H1",
+        m1a: "Displacement bearish crea el ",
+        m1b: " en la caída.",
+        m2: "Retorno del precio al FVG.",
+        m3a: "Rechazo bearish",
+        m3b: " = señal de entrada short confirmada.",
+        leg1: "Displacement bearish crea el FVG en la caída",
+        leg2: "Retorno al FVG y luego rechazo bearish",
+      }
+    : {
+        annotation: "Le déplacement construit la zone d'exécution",
+        mobileTitle: "ICT displacement setup · EUR/USD H1",
+        m1a: "Displacement bearish crée le ",
+        m1b: " dans la chute.",
+        m2: "Retour du prix dans le FVG.",
+        m3a: "Rejet bearish",
+        m3b: " = signal d'entrée short confirmé.",
+        leg1: "Displacement bearish crée le FVG dans la chute",
+        leg2: "Retour dans le FVG puis rejet bearish",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -91,25 +115,25 @@ export function ICTDisplacementSetupDiagram({ className = "" }: ICTDisplacementS
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le déplacement construit la zone d&apos;exécution
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : ICT displacement setup ──────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">ICT displacement setup · EUR/USD H1</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>
-            <span className="text-zinc-300">Displacement bearish crée le <span className="font-bold text-blue-400">FVG</span> dans la chute.</span>
+            <span className="text-zinc-300">{t.m1a}<span className="font-bold text-blue-400">FVG</span>{t.m1b}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-[11px] font-bold text-blue-400 mt-0.5">2</span>
-            <span className="text-zinc-300">Retour du prix dans le FVG.</span>
+            <span className="text-zinc-300">{t.m2}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
-            <span className="text-zinc-300"><span className="font-bold text-emerald-400">Rejet bearish</span> = signal d'entrée short confirmé.</span>
+            <span className="text-zinc-300"><span className="font-bold text-emerald-400">{t.m3a}</span>{t.m3b}</span>
           </li>
         </ul>
       </div>
@@ -117,11 +141,11 @@ export function ICTDisplacementSetupDiagram({ className = "" }: ICTDisplacementS
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Displacement bearish crée le FVG dans la chute</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Retour dans le FVG puis rejet bearish</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

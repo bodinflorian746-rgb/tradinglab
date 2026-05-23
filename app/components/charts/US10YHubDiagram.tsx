@@ -1,4 +1,49 @@
-export const US10YHubDiagram = () => {
+interface US10YHubDiagramProps {
+  locale?: "fr" | "es";
+}
+
+export const US10YHubDiagram = ({ locale = "fr" }: US10YHubDiagramProps = {}) => {
+  const isEs = locale === "es";
+  const L = {
+    title:        isEs ? "El ecosistema US10Y" : "L'écosystème US10Y",
+    subtitle:     isEs ? "El rendimiento que dirige todos los demás mercados" : "Le rendement qui dirige tous les autres marchés",
+    rend:         isEs ? "Rendimiento 10 años US" : "Rendement 10 ans US",
+    taux:         isEs ? "Tasa libre de riesgo mundial" : "Taux sans risque mondial",
+    upWhenSold:   isEs ? "↑ cuando se vende" : "↑ quand vendu",
+    or:           isEs ? "Oro" : "Or",
+    techCrois:    isEs ? "Tech / Crecimiento" : "Tech / Croissance",
+    activRisque:  isEs ? "Activo de riesgo" : "Actif risqué",
+    indexDxy:     isEs ? "Índice Dólar US" : "Indice Dollar US",
+    bearPress:    isEs ? "↓ presión bajista" : "↓ pression baissière",
+    valoBaiss:    isEs ? "↓ valoraciones" : "↓ valorisations",
+    riskOff:      isEs ? "↓ risk-off posible" : "↓ risk-off possible",
+    yieldAttract: isEs ? "↑ rendimiento atractivo" : "↑ rendement attractif",
+    corr:         isEs ? "Correlación" : "Corrélation",
+    whenUp:       isEs ? "Cuando US10Y sube..." : "Quand US10Y monte...",
+    thresholds:   isEs ? "UMBRALES PSICOLÓGICOS US10Y" : "SEUILS PSYCHOLOGIQUES US10Y",
+    footer:       isEs ? "El oro, la tech y el Bitcoin reaccionan al mismo número. Y ese número es US10Y." : "L'or, la tech et le Bitcoin réagissent souvent au même chiffre. Et ce chiffre, c'est US10Y.",
+    mobWhenUp:    isEs ? "Cuando US10Y sube ↑" : "Quand US10Y monte ↑",
+    mobThresh:    isEs ? "Umbrales psicológicos US10Y" : "Seuils psychologiques US10Y",
+    mobCorr:      isEs ? "Corr" : "Corr",
+    mobLvlCalm:   isEs ? "Calma" : "Calme",
+    mobLvlWatch:  isEs ? "Vigilancia" : "Vigilance",
+    mobLvlStress: isEs ? "Estrés" : "Stress",
+    mobLvlPanic:  isEs ? "Pánico" : "Panique",
+    mobFooter:    isEs ? "El oro, la tech, el Bitcoin reaccionan al mismo número: US10Y." : "L'or, la tech, le Bitcoin réagissent au même chiffre : US10Y.",
+  };
+  const sats = isEs
+    ? [
+        { name: "XAU/USD", desc: L.or, reaction: L.bearPress, correl: "−0.80", color: "#f87171" },
+        { name: "NASDAQ", desc: L.techCrois, reaction: L.valoBaiss, correl: "−0.65", color: "#f87171" },
+        { name: "BTC/USD", desc: L.activRisque, reaction: L.riskOff, correl: "−0.45", color: "#f87171" },
+        { name: "DXY", desc: L.indexDxy, reaction: L.yieldAttract, correl: "+0.65", color: "#34d399" },
+      ]
+    : [
+        { name: "XAU/USD", desc: "Or", reaction: "↓ pression baissière", correl: "−0.80", color: "#f87171" },
+        { name: "NASDAQ", desc: "Tech / Croissance", reaction: "↓ valorisations", correl: "−0.65", color: "#f87171" },
+        { name: "BTC/USD", desc: "Actif risqué", reaction: "↓ risk-off possible", correl: "−0.45", color: "#f87171" },
+        { name: "DXY", desc: "Indice Dollar US", reaction: "↑ rendement attractif", correl: "+0.65", color: "#34d399" },
+      ];
   return (
     <div>
     <svg
@@ -22,10 +67,10 @@ export const US10YHubDiagram = () => {
 
       {/* Layer 2 — Titre */}
       <text x="400" y="35" fill="white" fontSize="16" fontWeight="700" textAnchor="middle">
-        L&apos;écosystème US10Y
+        {L.title}
       </text>
       <text x="400" y="55" fill="#a1a1aa" fontSize="11" fontStyle="italic" textAnchor="middle">
-        Le rendement qui dirige tous les autres marchés
+        {L.subtitle}
       </text>
 
       {/* Layer 4 — Flèches (sous les cartes) */}
@@ -44,13 +89,13 @@ export const US10YHubDiagram = () => {
         US10Y
       </text>
       <text x="400" y="288" fill="#d4d4d8" fontSize="11" textAnchor="middle">
-        Rendement 10 ans US
+        {L.rend}
       </text>
       <text x="400" y="308" fill="#a1a1aa" fontSize="10" fontStyle="italic" textAnchor="middle">
-        Taux sans risque mondial
+        {L.taux}
       </text>
       <text x="400" y="328" fill="#fbbf24" fontSize="9" textAnchor="middle">
-        ↑ quand vendu
+        {L.upWhenSold}
       </text>
 
       {/* Layer 6 — Cartes satellites */}
@@ -58,39 +103,39 @@ export const US10YHubDiagram = () => {
       {/* Carte 1 — XAU/USD */}
       <rect x="60" y="110" width="180" height="90" rx="8" fill="#27272a" stroke="#f87171" strokeWidth="2" />
       <text x="150" y="140" fill="#f87171" fontSize="16" fontWeight="800" textAnchor="middle">XAU/USD</text>
-      <text x="150" y="158" fill="#d4d4d8" fontSize="10" fontStyle="italic" textAnchor="middle">Or</text>
-      <text x="150" y="180" fill="white" fontSize="11" fontWeight="700" textAnchor="middle">↓ pression baissière</text>
-      <text x="150" y="195" fill="#a1a1aa" fontSize="9" textAnchor="middle">Corrélation : -0.80</text>
+      <text x="150" y="158" fill="#d4d4d8" fontSize="10" fontStyle="italic" textAnchor="middle">{L.or}</text>
+      <text x="150" y="180" fill="white" fontSize="11" fontWeight="700" textAnchor="middle">{L.bearPress}</text>
+      <text x="150" y="195" fill="#a1a1aa" fontSize="9" textAnchor="middle">{L.corr}: -0.80</text>
 
       {/* Carte 2 — Nasdaq */}
       <rect x="560" y="110" width="180" height="90" rx="8" fill="#27272a" stroke="#f87171" strokeWidth="2" />
       <text x="650" y="140" fill="#f87171" fontSize="16" fontWeight="800" textAnchor="middle">NASDAQ</text>
-      <text x="650" y="158" fill="#d4d4d8" fontSize="10" fontStyle="italic" textAnchor="middle">Tech / Croissance</text>
-      <text x="650" y="180" fill="white" fontSize="11" fontWeight="700" textAnchor="middle">↓ valorisations</text>
-      <text x="650" y="195" fill="#a1a1aa" fontSize="9" textAnchor="middle">Corrélation : -0.65</text>
+      <text x="650" y="158" fill="#d4d4d8" fontSize="10" fontStyle="italic" textAnchor="middle">{L.techCrois}</text>
+      <text x="650" y="180" fill="white" fontSize="11" fontWeight="700" textAnchor="middle">{L.valoBaiss}</text>
+      <text x="650" y="195" fill="#a1a1aa" fontSize="9" textAnchor="middle">{L.corr}: -0.65</text>
 
       {/* Carte 3 — BTC/USD */}
       <rect x="60" y="360" width="180" height="90" rx="8" fill="#27272a" stroke="#f87171" strokeWidth="2" />
       <text x="150" y="390" fill="#f87171" fontSize="16" fontWeight="800" textAnchor="middle">BTC/USD</text>
-      <text x="150" y="408" fill="#d4d4d8" fontSize="10" fontStyle="italic" textAnchor="middle">Actif risqué</text>
-      <text x="150" y="430" fill="white" fontSize="11" fontWeight="700" textAnchor="middle">↓ risk-off possible</text>
-      <text x="150" y="445" fill="#a1a1aa" fontSize="9" textAnchor="middle">Corrélation : -0.45</text>
+      <text x="150" y="408" fill="#d4d4d8" fontSize="10" fontStyle="italic" textAnchor="middle">{L.activRisque}</text>
+      <text x="150" y="430" fill="white" fontSize="11" fontWeight="700" textAnchor="middle">{L.riskOff}</text>
+      <text x="150" y="445" fill="#a1a1aa" fontSize="9" textAnchor="middle">{L.corr}: -0.45</text>
 
       {/* Carte 4 — DXY */}
       <rect x="560" y="360" width="180" height="90" rx="8" fill="#27272a" stroke="#34d399" strokeWidth="2" />
       <text x="650" y="390" fill="#34d399" fontSize="16" fontWeight="800" textAnchor="middle">DXY</text>
-      <text x="650" y="408" fill="#d4d4d8" fontSize="10" fontStyle="italic" textAnchor="middle">Indice Dollar US</text>
-      <text x="650" y="430" fill="white" fontSize="11" fontWeight="700" textAnchor="middle">↑ rendement attractif</text>
-      <text x="650" y="445" fill="#a1a1aa" fontSize="9" textAnchor="middle">Corrélation : +0.65</text>
+      <text x="650" y="408" fill="#d4d4d8" fontSize="10" fontStyle="italic" textAnchor="middle">{L.indexDxy}</text>
+      <text x="650" y="430" fill="white" fontSize="11" fontWeight="700" textAnchor="middle">{L.yieldAttract}</text>
+      <text x="650" y="445" fill="#a1a1aa" fontSize="9" textAnchor="middle">{L.corr}: +0.65</text>
 
       {/* Layer 7 — Légende centrale */}
       <text x="400" y="485" fill="#fbbf24" fontSize="12" fontWeight="700" textAnchor="middle" letterSpacing="0.05em">
-        Quand US10Y monte...
+        {L.whenUp}
       </text>
 
       {/* Layer 8 — Échelle des seuils psychologiques */}
       <text x="400" y="510" fill="#fbbf24" fontSize="11" fontWeight="700" letterSpacing="0.05em" textAnchor="middle">
-        SEUILS PSYCHOLOGIQUES US10Y
+        {L.thresholds}
       </text>
 
       {/* Axe horizontal */}
@@ -114,37 +159,32 @@ export const US10YHubDiagram = () => {
 
       {/* Layer 9 — Pied de page */}
       <text x="400" y="585" fill="#34d399" fontSize="11" fontWeight="700" fontStyle="italic" textAnchor="middle">
-        L&apos;or, la tech et le Bitcoin réagissent souvent au même chiffre. Et ce chiffre, c&apos;est US10Y.
+        {L.footer}
       </text>
     </svg>
 
     {/* ── MOBILE : Hub US10Y + 4 satellites + seuils ────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
       <p className="text-[14px] font-bold text-white text-center leading-snug">
-        L'écosystème US10Y
+        {L.title}
       </p>
       <p className="text-[12px] text-zinc-400 italic text-center -mt-1">
-        Le rendement qui dirige tous les autres marchés
+        {L.subtitle}
       </p>
 
       {/* Hub US10Y */}
       <div className="rounded-2xl border-2 border-amber-400 bg-amber-400/8 p-4 text-center">
         <p className="text-[28px] font-bold text-amber-400 leading-none">US10Y</p>
-        <p className="text-[12px] text-zinc-300 mt-1.5">Rendement 10 ans US</p>
-        <p className="text-[11px] text-zinc-400 italic mt-0.5">Taux sans risque mondial</p>
-        <p className="text-[12px] text-amber-400 font-semibold mt-1">↑ quand vendu</p>
+        <p className="text-[12px] text-zinc-300 mt-1.5">{L.rend}</p>
+        <p className="text-[11px] text-zinc-400 italic mt-0.5">{L.taux}</p>
+        <p className="text-[12px] text-amber-400 font-semibold mt-1">{L.upWhenSold}</p>
       </div>
 
-      <p className="text-center text-zinc-500 text-[12px] font-semibold mt-2">Quand US10Y monte ↑</p>
+      <p className="text-center text-zinc-500 text-[12px] font-semibold mt-2">{L.mobWhenUp}</p>
 
       {/* 4 satellites */}
       <div className="space-y-2">
-        {[
-          { name: "XAU/USD", desc: "Or", reaction: "↓ pression baissière", correl: "−0.80", color: "#f87171" },
-          { name: "NASDAQ", desc: "Tech / Croissance", reaction: "↓ valorisations", correl: "−0.65", color: "#f87171" },
-          { name: "BTC/USD", desc: "Actif risqué", reaction: "↓ risk-off possible", correl: "−0.45", color: "#f87171" },
-          { name: "DXY", desc: "Indice Dollar US", reaction: "↑ rendement attractif", correl: "+0.65", color: "#34d399" },
-        ].map((sat) => (
+        {sats.map((sat) => (
           <div key={sat.name} className="rounded-lg border p-2.5" style={{ borderColor: sat.color }}>
             <div className="flex items-baseline justify-between gap-2">
               <span className="text-[14px] font-bold" style={{ color: sat.color }}>{sat.name}</span>
@@ -152,7 +192,7 @@ export const US10YHubDiagram = () => {
             </div>
             <div className="flex items-center justify-between mt-1">
               <span className="text-[13px] text-zinc-200 font-semibold">{sat.reaction}</span>
-              <span className="text-[12px] text-zinc-400 font-mono">Corr {sat.correl}</span>
+              <span className="text-[12px] text-zinc-400 font-mono">{L.mobCorr} {sat.correl}</span>
             </div>
           </div>
         ))}
@@ -160,29 +200,29 @@ export const US10YHubDiagram = () => {
 
       {/* Seuils psychologiques */}
       <p className="text-[12px] font-bold text-amber-400 uppercase tracking-wider text-center pt-2 border-t border-zinc-800">
-        Seuils psychologiques US10Y
+        {L.mobThresh}
       </p>
       <div className="grid grid-cols-4 gap-1.5 text-center">
         <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2">
           <p className="text-[14px] font-bold font-mono text-emerald-400">3.5%</p>
-          <p className="text-[10px] text-zinc-500 mt-0.5">Calme</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">{L.mobLvlCalm}</p>
         </div>
         <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-2">
           <p className="text-[14px] font-bold font-mono text-zinc-300">4.0%</p>
-          <p className="text-[10px] text-zinc-500 mt-0.5">Vigilance</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">{L.mobLvlWatch}</p>
         </div>
         <div className="rounded-lg border border-amber-400/30 bg-amber-400/5 p-2">
           <p className="text-[14px] font-bold font-mono text-amber-400">4.5%</p>
-          <p className="text-[10px] text-zinc-500 mt-0.5">Stress</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">{L.mobLvlStress}</p>
         </div>
         <div className="rounded-lg border border-red-500/30 bg-red-500/5 p-2">
           <p className="text-[14px] font-bold font-mono text-red-400">5.0%</p>
-          <p className="text-[10px] text-zinc-500 mt-0.5">Panique</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">{L.mobLvlPanic}</p>
         </div>
       </div>
 
       <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
-        L'or, la tech, le Bitcoin réagissent au même chiffre : US10Y.
+        {L.mobFooter}
       </p>
     </div>
     </div>

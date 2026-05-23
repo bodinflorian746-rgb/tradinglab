@@ -4,6 +4,7 @@
 
 interface M15ValidationDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -32,7 +33,32 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 14;
 
-export function M15ValidationDiagram({ className = "" }: M15ValidationDiagramProps) {
+export function M15ValidationDiagram({ className = "", locale = "fr" }: M15ValidationDiagramProps) {
+  const L = locale === "es"
+    ? {
+        zoneH1: "Zona H1",
+        creux: "valle local",
+        annotation: "La reacción valida la entrada",
+        mobTitle: "Validación M15 — confirmación entrada",
+        mobMeches: "Mechas de rechazo en la zona",
+        mobMechesDesc: "Mechas de rechazo = presión vendedora presente en la zona H1.",
+        mobCassure: "Ruptura del valle local = confirmación",
+        mobCassureDesc: "CHoCH en M15 → entrada short validada, SL más allá de la mecha extrema.",
+        legendMeches: "Mechas de rechazo en la zona",
+        legendCassure: "Ruptura del valle local = confirmación",
+      }
+    : {
+        zoneH1: "Zone H1",
+        creux: "creux local",
+        annotation: "La réaction valide l'entrée",
+        mobTitle: "Validation M15 — confirmation entrée",
+        mobMeches: "Mèches de rejet dans la zone",
+        mobMechesDesc: "Mèches de refus = pression vendeuse présente sur la zone H1.",
+        mobCassure: "Cassure du creux local = confirmation",
+        mobCassureDesc: "CHoCH sur M15 → entrée short validée, SL au-delà de la mèche extrême.",
+        legendMeches: "Mèches de rejet dans la zone",
+        legendCassure: "Cassure du creux local = confirmation",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -53,7 +79,7 @@ export function M15ValidationDiagram({ className = "" }: M15ValidationDiagramPro
 
         {/* Label "Zone H1" dans la bande à droite */}
         <rect x="540" y="62" width="76" height="13" rx="3" fill="#09090b" />
-        <text x="578" y="72" fill="#f59e0b" fontSize="9" fontWeight="600" textAnchor="middle">Zone H1</text>
+        <text x="578" y="72" fill="#f59e0b" fontSize="9" fontWeight="600" textAnchor="middle">{L.zoneH1}</text>
 
         {/* Bougies */}
         {CANDLES.map(({ cx, wickTop, wickBottom, bodyY, bodyH, type }, i) => {
@@ -70,7 +96,7 @@ export function M15ValidationDiagram({ className = "" }: M15ValidationDiagramPro
         {/* Repère du creux local à y=150 */}
         <line x1="340" y1="150" x2="520" y2="150" stroke="#71717a" strokeWidth="1.2" strokeDasharray="3 2" strokeOpacity="0.8" />
         <rect x="370" y="134" width="76" height="13" rx="3" fill="#09090b" />
-        <text x="408" y="144" fill="#71717a" fontSize="9" fontWeight="600" textAnchor="middle">creux local</text>
+        <text x="408" y="144" fill="#71717a" fontSize="9" fontWeight="600" textAnchor="middle">{L.creux}</text>
 
         {/* Marqueur de cassure — point amber à l'intersection B7/creux */}
         <circle cx="443" cy="150" r="4" fill="#f59e0b" stroke="#09090b" strokeWidth="1" />
@@ -79,31 +105,31 @@ export function M15ValidationDiagram({ className = "" }: M15ValidationDiagramPro
         <rect x="190" y="284" width="320" height="22" rx="11" fill="#09090b" />
         <rect x="190" y="284" width="320" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          La réaction valide l&apos;entrée
+          {L.annotation}
         </text>
       </svg>
 
       {/* MOBILE : validation M15 ─────────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Validation M15 — confirmation entrée</p>
+        <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Mèches de rejet dans la zone</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Mèches de refus = pression vendeuse présente sur la zone H1.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{L.mobMeches}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobMechesDesc}</p>
         </div>
         <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/10 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Cassure du creux local = confirmation</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">CHoCH sur M15 → entrée short validée, SL au-delà de la mèche extrême.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{L.mobCassure}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobCassureDesc}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Mèches de rejet dans la zone</span>
+          <span className="text-[10px] text-zinc-500">{L.legendMeches}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Cassure du creux local = confirmation</span>
+          <span className="text-[10px] text-zinc-500">{L.legendCassure}</span>
         </div>
       </div>
     </div>

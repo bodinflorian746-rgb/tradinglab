@@ -1,0 +1,90 @@
+{
+  "debutant": {
+    "title": "Principiante",
+    "description": "Los fundamentos del trading para arrancar bien. Sin requisitos previos.",
+    "badge": "Gratis",
+    "lessons": {
+      "lecon1": { "title": "¿Qué es el trading?",                          "duration": "8 min"  },
+      "lecon2": { "title": "Comprar / Vender — Long y Short",              "duration": "9 min"  },
+      "lecon3": { "title": "Leer un gráfico de velas",                     "duration": "10 min" },
+      "lecon4": { "title": "Spread, Bid y Ask",                            "duration": "8 min"  },
+      "lecon5": { "title": "El Stop Loss",                                 "duration": "10 min" },
+      "lecon6": { "title": "El Take Profit",                               "duration": "9 min"  },
+      "lecon7": { "title": "El Break Even",                                "duration": "8 min"  },
+      "lecon8": { "title": "Risk management — el money management",        "duration": "12 min" },
+      "lecon9": { "title": "Los errores del principiante",                 "duration": "11 min" }
+    }
+  },
+  "intermediaire": {
+    "title": "Intermedio",
+    "description": "Estructura de mercado, zonas institucionales y lectura avanzada del precio.",
+    "badge": "Intermedio",
+    "lessons": {
+      "lecon1": { "title": "Estructura de mercado — BOS y CHoCH",          "duration": "20 min" },
+      "lecon2": { "title": "Zonas clave — Soporte y Resistencia",          "duration": "22 min" },
+      "lecon3": { "title": "Supply & Demand",                              "duration": "20 min" },
+      "lecon4": { "title": "Tendencias — tradear en el sentido del mercado", "duration": "18 min" },
+      "lecon5": { "title": "Confluencias y probabilidad",                  "duration": "20 min" },
+      "lecon6": { "title": "Fake Breakout — no caer en la trampa",         "duration": "18 min" },
+      "lecon7": { "title": "Análisis Multi-Timeframe",                     "duration": "22 min" },
+      "lecon8": { "title": "Plan de trade",                                "duration": "20 min" },
+      "lecon9": { "title": "Fibonacci — retrocesos y confluencias",        "duration": "20 min" }
+    }
+  },
+  "avance": {
+    "title": "Avanzado",
+    "description": "Liquidity institucional, Smart Money y técnicas de trading de precisión.",
+    "badge": "Avanzado",
+    "lessons": {
+      "lecon1": { "title": "Liquidity — entender los pools de órdenes",    "duration": "25 min" },
+      "lecon2": { "title": "Fair Value Gap (FVG)",                         "duration": "20 min" },
+      "lecon3": { "title": "Order Blocks",                                 "duration": "24 min" },
+      "lecon4": { "title": "Killzones — las sesiones que cuentan",         "duration": "20 min" },
+      "lecon5": { "title": "OTE — Optimal Trade Entry",                    "duration": "22 min" },
+      "lecon6": { "title": "Stop Hunts — la caza de stops",                "duration": "22 min" },
+      "lecon7": { "title": "Entradas de precisión",                        "duration": "25 min" },
+      "lecon8": { "title": "Journaling — analizar para progresar",         "duration": "18 min" },
+      "lecon9": { "title": "Backtesting — validar tu estrategia",          "duration": "22 min" }
+    }
+  },
+  "mt5": {
+    "title": "Trader en práctica (MT5)",
+    "description": "Dominar MetaTrader 5 de A a Z: interfaz, órdenes, gestión de posiciones.",
+    "badge": "Gratis",
+    "lessons": {
+      "lecon1": { "title": "Instalar MetaTrader 5",                "duration": "6 min"  },
+      "lecon2": { "title": "La interfaz de MT5",                   "duration": "10 min" },
+      "lecon3": { "title": "Tu primer trade",                      "duration": "10 min" },
+      "lecon4": { "title": "Stop Loss y Take Profit en MT5",       "duration": "9 min"  },
+      "lecon5": { "title": "Tamaño de lote",                       "duration": "8 min"  },
+      "lecon6": { "title": "Cálculo del riesgo",                   "duration": "10 min" },
+      "lecon7": { "title": "Modificar un trade abierto",           "duration": "8 min"  },
+      "lecon8": { "title": "Cerrar un trade",                      "duration": "7 min"  },
+      "lecon9": { "title": "Ejemplo de trade completo",            "duration": "12 min" }
+    }
+  },
+  "macro": {
+    "title": "Macro Trading",
+    "subtitle": "Entiende por qué se mueven los mercados y úsalo para tradear mejor. La macro no es una teoría académica — es una herramienta de decisión.",
+    "breadcrumb": "Macro Trading",
+    "levels": {
+      "debutant": {
+        "label": "Principiante",
+        "description": "Los fundamentos: quién controla el mercado, por qué la macro importa en trading.",
+        "count": "6 lecciones"
+      },
+      "intermediaire": {
+        "label": "Intermedio",
+        "description": "Hawkish vs Dovish, previsión vs real, correlaciones entre mercados.",
+        "count": "6 lecciones"
+      },
+      "avance": {
+        "label": "Avanzado",
+        "description": "FOMC, NFP, rendimientos de bonos US y regímenes de mercado — entender las noticias que mueven los mercados",
+        "count": "4 lecciones"
+      }
+    },
+    "cta": "Empezar",
+    "comingSoon": "Pronto disponible"
+  }
+}

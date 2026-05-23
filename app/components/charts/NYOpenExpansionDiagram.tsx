@@ -4,6 +4,7 @@
 
 interface NYOpenExpansionDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -40,7 +41,30 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 14;
 
-export function NYOpenExpansionDiagram({ className = "" }: NYOpenExpansionDiagramProps) {
+export function NYOpenExpansionDiagram({ className = "", locale = "fr" }: NYOpenExpansionDiagramProps) {
+  const t = locale === "es"
+    ? {
+        nyOpen: "NY Open",
+        annotation: "El volumen transforma el mercado",
+        mobileTitle: "NY Open expansion · XAU/USD M15",
+        b1Title: "Pre-market — velas planas",
+        b1Body: "Volumen bajo, range estrecho.",
+        b2Title: "NY Open — impulso explosivo",
+        b2Body: "El volumen explota a las 13h30 → sweep + rechazo visible inmediato.",
+        leg1: "Pre-market = velas planas, volumen bajo",
+        leg2: "NY Open = impulso explosivo y luego sweep y rechazo",
+      }
+    : {
+        nyOpen: "NY Open",
+        annotation: "Le volume transforme le marché",
+        mobileTitle: "NY Open expansion · XAU/USD M15",
+        b1Title: "Pré-market — bougies plates",
+        b1Body: "Volume faible, range étroit.",
+        b2Title: "NY Open — impulsion explosive",
+        b2Body: "Volume explose à 13h30 → sweep + rejet visible immédiat.",
+        leg1: "Pré-market = bougies plates, faible volume",
+        leg2: "NY Open = impulsion explosive puis sweep et rejet",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -51,7 +75,7 @@ export function NYOpenExpansionDiagram({ className = "" }: NYOpenExpansionDiagra
         {/* Repère vertical "NY Open" entre phase 1 et phase 2 */}
         <line x1="272" y1="50" x2="272" y2="278" stroke="#f59e0b" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.5" />
         <rect x="232" y="50" width="78" height="14" rx="3" fill="#09090b" />
-        <text x="271" y="60" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">NY Open</text>
+        <text x="271" y="60" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.nyOpen}</text>
 
         {/* Bougies */}
         {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
@@ -82,31 +106,31 @@ export function NYOpenExpansionDiagram({ className = "" }: NYOpenExpansionDiagra
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le volume transforme le marché
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : NY Open expansion ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">NY Open expansion · XAU/USD M15</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-          <p className="text-[13px] font-bold text-zinc-300">Pré-market — bougies plates</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Volume faible, range étroit.</p>
+          <p className="text-[13px] font-bold text-zinc-300">{t.b1Title}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b1Body}</p>
         </div>
         <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">NY Open — impulsion explosive</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Volume explose à 13h30 → sweep + rejet visible immédiat.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.b2Title}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b2Body}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Pré-market = bougies plates, faible volume</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">NY Open = impulsion explosive puis sweep et rejet</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

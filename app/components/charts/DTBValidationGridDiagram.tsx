@@ -1,4 +1,37 @@
-export default function DTBValidationGridDiagram({ className = "" }: { className?: string }) {
+export default function DTBValidationGridDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const labels = locale === "es"
+    ? {
+        title: "Reconocer un Double Top válido vs una trampa",
+        valid: "✓ Válido — diferencia 0,2%, ruptura clara",
+        invalidGap: "✗ Diferencia demasiado grande — 0,5%",
+        invalidNoTrend: "✗ Sin tendencia previa",
+        invalidWick: "✗ Mecha, no cierre",
+        rangeNote: "Rango lateral — no es un retroceso",
+        wickOnly: "solo mecha",
+        mobileTitle: "Double Top válido vs trampa",
+        items: [
+          { v: true, t: "Cimas casi iguales", d: "Tolerancia < 0.5%, simetría clara" },
+          { v: false, t: "2ª cima demasiado baja", d: "Falta de simetría — patrón débil" },
+          { v: false, t: "2ª cima demasiado alta", d: "No es un double top, es una ruptura de rango" },
+          { v: false, t: "Mecha, no cierre", d: "La ruptura de la neckline debe ser en cierre, no una simple mecha" },
+        ],
+      }
+    : {
+        title: "Reconnaître un Double Top valide vs un piège",
+        valid: "✓ Valide — écart 0,2%, cassure nette",
+        invalidGap: "✗ Écart trop grand — 0,5%",
+        invalidNoTrend: "✗ Pas de tendance préalable",
+        invalidWick: "✗ Mèche, pas clôture",
+        rangeNote: "Range latéral — pas un retournement",
+        wickOnly: "mèche seulement",
+        mobileTitle: "Double Top valide vs piège",
+        items: [
+          { v: true, t: "Sommets quasi égaux", d: "Tolérance < 0.5%, symétrie nette" },
+          { v: false, t: "2e sommet trop bas", d: "Manque de symétrie — pattern faible" },
+          { v: false, t: "2e sommet trop haut", d: "Pas un double top, c'est une cassure de range" },
+          { v: false, t: "Mèche, pas clôture", d: "La cassure de neckline doit être en clôture, pas une simple mèche" },
+        ],
+      };
   return (
     <div className={className}>
     <svg
@@ -7,7 +40,7 @@ export default function DTBValidationGridDiagram({ className = "" }: { className
       className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        Reconnaître un Double Top valide vs un piège
+        {labels.title}
       </text>
 
       <line x1="400" y1="40" x2="400" y2="480" stroke="#3f3f46" strokeWidth="1" />
@@ -22,7 +55,7 @@ export default function DTBValidationGridDiagram({ className = "" }: { className
       <line x1="320" y1="170" x2="320" y2="220" stroke="#b91c1c" strokeWidth="1.5" />
       <rect x="314" y="190" width="12" height="30" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
       <rect x="80" y="50" width="240" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="200" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">✓ Valide — écart 0,2%, cassure nette</text>
+      <text x="200" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{labels.valid}</text>
 
       {/* ═══ Cellule 2 — INVALIDE écart (haut droite) ═══ */}
       <line x1="440" y1="100" x2="760" y2="100" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
@@ -32,7 +65,7 @@ export default function DTBValidationGridDiagram({ className = "" }: { className
       <circle cx="650" cy="135" r="4" fill="#ef4444" />
       <line x1="555" y1="100" x2="645" y2="135" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" />
       <rect x="480" y="50" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">✗ Écart trop grand — 0,5%</text>
+      <text x="600" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{labels.invalidGap}</text>
 
       {/* ═══ Cellule 3 — INVALIDE pas de tendance (bas gauche) ═══ */}
       <line x1="40" y1="320" x2="360" y2="320" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
@@ -42,8 +75,8 @@ export default function DTBValidationGridDiagram({ className = "" }: { className
       <circle cx="170" cy="320" r="4" fill="#ef4444" />
       <circle cx="270" cy="320" r="4" fill="#ef4444" />
       <rect x="80" y="280" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="200" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">✗ Pas de tendance préalable</text>
-      <text x="200" y="460" fill="#71717a" fontSize="8" textAnchor="middle">Range latéral — pas un retournement</text>
+      <text x="200" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{labels.invalidNoTrend}</text>
+      <text x="200" y="460" fill="#71717a" fontSize="8" textAnchor="middle">{labels.rangeNote}</text>
 
       {/* ═══ Cellule 4 — INVALIDE mèche au lieu de clôture (bas droite) ═══ */}
       <line x1="440" y1="320" x2="760" y2="320" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
@@ -56,20 +89,15 @@ export default function DTBValidationGridDiagram({ className = "" }: { className
       <rect x="714" y="380" width="12" height="10" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
       <line x1="730" y1="410" x2="755" y2="415" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" />
       <rect x="685" y="410" width="82" height="11" rx="2" fill="#09090b" />
-      <text x="765" y="418" fill="#ef4444" fontSize="8" textAnchor="end">mèche seulement</text>
+      <text x="765" y="418" fill="#ef4444" fontSize="8" textAnchor="end">{labels.wickOnly}</text>
       <rect x="480" y="280" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">✗ Mèche, pas clôture</text>
+      <text x="600" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{labels.invalidWick}</text>
     </svg>
 
     {/* MOBILE : Double Top valide vs piège ─────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Double Top valide vs piège</p>
-      {[
-        { v: true, t: "Sommets quasi égaux", d: "Tolérance < 0.5%, symétrie nette" },
-        { v: false, t: "2e sommet trop bas", d: "Manque de symétrie — pattern faible" },
-        { v: false, t: "2e sommet trop haut", d: "Pas un double top, c'est une cassure de range" },
-        { v: false, t: "Mèche, pas clôture", d: "La cassure de neckline doit être en clôture, pas une simple mèche" },
-      ].map((c, i) => (
+      <p className="text-[14px] font-bold text-white text-center">{labels.mobileTitle}</p>
+      {labels.items.map((c, i) => (
         <div key={i} className={`rounded-lg border p-2.5 ${c.v ? "border-emerald-500/40 bg-emerald-500/8" : "border-red-500/40 bg-red-500/8"}`}>
           <p className={`text-[13px] font-bold ${c.v ? "text-emerald-400" : "text-red-400"}`}>
             {c.v ? "✓" : "✗"} {c.t}

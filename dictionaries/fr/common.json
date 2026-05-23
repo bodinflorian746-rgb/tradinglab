@@ -1,0 +1,57 @@
+{
+  "buttons": {
+    "start": "Commencer",
+    "continue": "Continuer",
+    "resume": "Reprendre",
+    "review": "Réviser",
+    "back": "Retour",
+    "later": "Plus tard",
+    "skip": "Passer",
+    "close": "Fermer"
+  },
+  "status": {
+    "done": "Terminée",
+    "inProgress": "En cours",
+    "comingSoon": "Bientôt",
+    "available": "Disponible",
+    "unavailable": "Indisponible",
+    "popular": "Populaire",
+    "recommended": "Recommandé"
+  },
+  "auth": {
+    "logout": "Déconnexion"
+  },
+  "lessons": {
+    "breadcrumbFormations": "Formations",
+    "lessonNumber": "Leçon {n}",
+    "completed": "Terminée",
+    "structureSteps": {
+      "read": "Lecture",
+      "remember": "À retenir",
+      "exercise": "Exercice",
+      "quiz": "Quiz"
+    },
+    "markComplete": "Marquer la leçon comme terminée",
+    "doneTitle": "Leçon terminée",
+    "doneNextSubtitle": "Continue sur ta lancée — la leçon suivante t'attend.",
+    "doneAllSubtitle": "Tu as complété toutes les leçons de cette formation.",
+    "nextLessonLabel": "Leçon suivante",
+    "formationCompleteLabel": "Formation complète",
+    "viewAllFormations": "Voir toutes les formations",
+    "globalCount": "{done} / {total} leçons gratuites"
+  },
+  "stickyNav": {
+    "moduleMacro": "Module Macro",
+    "moduleDefault": "Module",
+    "formations": "Formations",
+    "backToModule": "Retour au {label}",
+    "previousLesson": "Leçon précédente",
+    "nextLesson": "Leçon suivante",
+    "topOfPage": "Haut de page"
+  },
+  "milestones": {
+    "profileForming": "Ton profil trader commence à prendre forme.",
+    "firstLesson": "Première leçon terminée. Continue pour débloquer plus de statistiques.",
+    "firstGameWin": "Premier signal capté. Continue, c'est en jouant que les réflexes se construisent."
+  }
+}

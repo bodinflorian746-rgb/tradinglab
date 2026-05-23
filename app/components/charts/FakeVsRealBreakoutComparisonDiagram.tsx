@@ -1,4 +1,21 @@
-export default function FakeVsRealBreakoutComparisonDiagram({ className = "" }: { className?: string }) {
+export default function FakeVsRealBreakoutComparisonDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const isEs = locale === "es";
+  const L = {
+    title:       isEs ? "Verdadero breakout vs Falso breakout" : "Vrai breakout vs Faux breakout",
+    real:        isEs ? "✓ Verdadero breakout" : "✓ Vrai breakout",
+    fake:        isEs ? "✗ Falso breakout" : "✗ Faux breakout",
+    resistance:  isEs ? "Resistencia 4 650$" : "{L.resistance}",
+    realClose:   isEs ? "Cierre 4 680$ + follow-through" : "Clôture 4 680$ + follow-through",
+    wickLabel:   isEs ? "mecha 4 685$" : "mèche 4 685$",
+    closeLabel:  isEs ? "cierre 4 620$" : "clôture 4 620$",
+    fakeBottom:  isEs ? "Mecha + cierre debajo + reversal" : "Mèche + clôture sous + reversal",
+    footer:      isEs ? "Criterio de distinción: cierre por encima del nivel + follow-through en 3-5 velas" : "Critère de distinction : clôture au-dessus du niveau + follow-through sur 3-5 bougies",
+    realDesc:    isEs ? "Ruptura franca + cierre POR ENCIMA del nivel + 3-5 velas de continuación (follow-through)." : "Cassure franche + clôture AU-DESSUS du niveau + 3-5 bougies de continuation (follow-through).",
+    fakeDescA:   isEs ? "La mecha rebasa pero" : "Mèche dépasse mais",
+    fakeDescBold:isEs ? "cierre debajo" : "clôture sous",
+    fakeDescB:   isEs ? "del nivel + reversal inmediato = trampa." : "le niveau + reversal immédiat = piège.",
+    mobCriterion:isEs ? "Criterio: cierre + follow-through 3-5 velas." : "Critère : clôture + follow-through 3-5 bougies.",
+  };
   return (
     <div className={className}>
     <svg
@@ -7,14 +24,14 @@ export default function FakeVsRealBreakoutComparisonDiagram({ className = "" }: 
       className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        Vrai breakout vs Faux breakout
+        {L.title}
       </text>
 
       <line x1="400" y1="40" x2="400" y2="370" stroke="#3f3f46" strokeWidth="1" />
 
       {/* ═══ PANEL GAUCHE — VRAI breakout ═══ */}
       <rect x="60" y="50" width="280" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="200" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">✓ Vrai breakout</text>
+      <text x="200" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{L.real}</text>
 
       <line x1="50" y1="150" x2="380" y2="150" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" />
 
@@ -39,16 +56,16 @@ export default function FakeVsRealBreakoutComparisonDiagram({ className = "" }: 
       <line x1="300" y1="50" x2="300" y2="90" stroke="#059669" strokeWidth="1.5" />
       <rect x="293" y="55" width="14" height="30" fill="#10b981" stroke="#059669" strokeWidth="1" rx="1" />
 
-      {/* Halo + label "Résistance 4 650$" déplacés après les bougies pour rester au-dessus */}
+      {/* Halo + label "{L.resistance}" déplacés après les bougies pour rester au-dessus */}
       <rect x="53" y="133" width="127" height="14" fill="#09090b" rx="3" />
-      <text x="57" y="144" fill="#ef4444" fontSize="9" fontWeight="600">Résistance 4 650$</text>
+      <text x="57" y="144" fill="#ef4444" fontSize="9" fontWeight="600">{L.resistance}</text>
 
       <rect x="80" y="310" width="240" height="20" rx="4" fill="#27272a" stroke="#10b981" strokeWidth="0.8" />
-      <text x="200" y="324" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">Clôture 4 680$ + follow-through</text>
+      <text x="200" y="324" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">{L.realClose}</text>
 
       {/* ═══ PANEL DROIT — FAUX breakout ═══ */}
       <rect x="460" y="50" width="280" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">✗ Faux breakout</text>
+      <text x="600" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{L.fake}</text>
 
       <line x1="450" y1="150" x2="780" y2="150" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" />
 
@@ -65,9 +82,9 @@ export default function FakeVsRealBreakoutComparisonDiagram({ className = "" }: 
 
       {/* Labels avec halos */}
       <rect x="583" y="97" width="92" height="14" fill="#09090b" rx="3" />
-      <text x="587" y="108" fill="#ef4444" fontSize="8" fontWeight="600">mèche 4 685$</text>
+      <text x="587" y="108" fill="#ef4444" fontSize="8" fontWeight="600">{L.wickLabel}</text>
       <rect x="593" y="184" width="106" height="14" fill="#09090b" rx="3" />
-      <text x="597" y="195" fill="#ef4444" fontSize="8" fontWeight="600">clôture 4 620$</text>
+      <text x="597" y="195" fill="#ef4444" fontSize="8" fontWeight="600">{L.closeLabel}</text>
 
       {/* Continuation baissière */}
       <line x1="620" y1="210" x2="620" y2="270" stroke="#b91c1c" strokeWidth="1.5" />
@@ -79,31 +96,31 @@ export default function FakeVsRealBreakoutComparisonDiagram({ className = "" }: 
       <line x1="700" y1="280" x2="700" y2="350" stroke="#b91c1c" strokeWidth="1.5" />
       <rect x="693" y="285" width="14" height="55" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
 
-      {/* Halo + label "Résistance 4 650$" panel droit, déplacés après les bougies */}
+      {/* Halo + label "{L.resistance}" panel droit, déplacés après les bougies */}
       <rect x="453" y="133" width="127" height="14" fill="#09090b" rx="3" />
-      <text x="457" y="144" fill="#ef4444" fontSize="9" fontWeight="600">Résistance 4 650$</text>
+      <text x="457" y="144" fill="#ef4444" fontSize="9" fontWeight="600">{L.resistance}</text>
 
       <rect x="480" y="310" width="240" height="20" rx="4" fill="#27272a" stroke="#ef4444" strokeWidth="0.8" />
-      <text x="600" y="324" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">Mèche + clôture sous + reversal</text>
+      <text x="600" y="324" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">{L.fakeBottom}</text>
 
       <text x="400" y="385" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        Critère de distinction : clôture au-dessus du niveau + follow-through sur 3-5 bougies
+        {L.footer}
       </text>
     </svg>
 
     {/* MOBILE : vrai vs faux breakout ─────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Vrai breakout vs Faux breakout</p>
+      <p className="text-[14px] font-bold text-white text-center">{L.title}</p>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">✓ Vrai breakout</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Cassure franche + clôture AU-DESSUS du niveau + 3-5 bougies de continuation (follow-through).</p>
+        <p className="text-[13px] font-bold text-emerald-400">{L.real}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.realDesc}</p>
       </div>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">✗ Faux breakout</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Mèche dépasse mais <span className="font-bold">clôture sous</span> le niveau + reversal immédiat = piège.</p>
+        <p className="text-[13px] font-bold text-red-400">{L.fake}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.fakeDescA} <span className="font-bold">{L.fakeDescBold}</span> {L.fakeDescB}</p>
       </div>
       <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-        Critère : clôture + follow-through 3-5 bougies.
+        {L.mobCriterion}
       </p>
     </div>
     </div>

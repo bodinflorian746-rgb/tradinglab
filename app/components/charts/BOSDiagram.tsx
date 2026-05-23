@@ -1,11 +1,13 @@
 interface BOSDiagramProps {
   trend?: "bullish" | "bearish";
   className?: string;
+  locale?: "fr" | "es";
 }
 
 export function BOSDiagram({
   trend = "bullish",
   className = "",
+  locale = "fr",
 }: BOSDiagramProps) {
   const isBull = trend === "bullish";
   const accent = isBull ? "#10b981" : "#ef4444";
@@ -55,6 +57,22 @@ export function BOSDiagram({
   // Badge "BOS ↑"/"BOS ↓" au point de cassure (point 4)
   const bosLabelAbove = isBull; // flèche haussière → badge au-dessus de la cassure
   const bosLabelY = bosLabelAbove ? bosBreakY - 20 : bosBreakY + 10;
+
+  const t = locale === "es"
+    ? {
+        bosTitle: isBull ? "BOS — Break of Structure alcista" : "BOS — Break of Structure bajista",
+        bosDescStruct: isBull ? "último máximo estructural antes de la ruptura" : "último mínimo estructural antes de la ruptura",
+        bosDescBreak: "el precio rompe este nivel → confirmación de tendencia",
+        legLevel: isBull ? "HH = último Higher High (nivel BOS)" : "LL = último Lower Low (nivel BOS)",
+        legBreak: "Break of Structure — confirmación de tendencia",
+      }
+    : {
+        bosTitle: isBull ? "BOS — Break of Structure haussier" : "BOS — Break of Structure baissier",
+        bosDescStruct: isBull ? "dernier sommet structurel avant la cassure" : "dernier creux structurel avant la cassure",
+        bosDescBreak: "le prix casse ce niveau → confirmation de tendance",
+        legLevel: isBull ? "HH = dernier Higher High (niveau BOS)" : "LL = dernier Lower Low (niveau BOS)",
+        legBreak: "Break of Structure — confirmation de tendance",
+      };
 
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
@@ -142,21 +160,21 @@ export function BOSDiagram({
       {/* Mobile : key card */}
       <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
         <p className="text-[12px] font-bold uppercase tracking-wide" style={{ color: accent }}>
-          BOS — {isBull ? "Break of Structure haussier" : "Break of Structure baissier"}
+          {t.bosTitle}
         </p>
         <ul className="space-y-1.5 text-[13px] leading-snug">
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: accent }} />
             <span className="text-white">
               <span className="font-bold" style={{ color: accent }}>{isBull ? "HH" : "LL"}</span>
-              <span className="text-zinc-300"> · dernier {isBull ? "sommet structurel" : "creux structurel"} avant la cassure</span>
+              <span className="text-zinc-300"> · {t.bosDescStruct}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2 h-2 rounded-full mt-1.5" style={{ background: accent }} />
             <span className="text-white">
               <span className="font-bold" style={{ color: accent }}>{isBull ? "BOS ↑" : "BOS ↓"}</span>
-              <span className="text-zinc-300"> · le prix casse ce niveau → confirmation de tendance</span>
+              <span className="text-zinc-300"> · {t.bosDescBreak}</span>
             </span>
           </li>
         </ul>
@@ -167,14 +185,14 @@ export function BOSDiagram({
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full" style={{ background: accent }} />
           <span className="text-[10px] text-zinc-500">
-            {isBull ? "HH = dernier Higher High (niveau BOS)" : "LL = dernier Lower Low (niveau BOS)"}
+            {t.legLevel}
           </span>
         </div>
         <div className="flex items-center gap-2">
           <svg width="18" height="6" viewBox="0 0 18 6">
             <line x1="0" y1="3" x2="18" y2="3" stroke={accent} strokeWidth="1.5" strokeDasharray="4 2.5" opacity="0.7" />
           </svg>
-          <span className="text-[10px] text-zinc-500">Break of Structure — confirmation de tendance</span>
+          <span className="text-[10px] text-zinc-500">{t.legBreak}</span>
         </div>
       </div>
     </div>

@@ -14,6 +14,8 @@ import {
 } from "@/lib/progress";
 import { LessonCelebration } from "@/app/components/LessonCelebration";
 import { MicroFeedback } from "@/app/components/MicroFeedback";
+import { useLocale, useDict } from "@/app/components/LocaleProvider";
+import { localizedHref } from "@/lib/i18n/href";
 // StickyLessonNav est monté GLOBALEMENT dans app/layout.tsx et se détecte
 // automatiquement via pathname — pas besoin d'intégration ici.
 
@@ -46,6 +48,13 @@ export function LessonPage({
   next,
   children,
 }: LessonMeta & { children: React.ReactNode }) {
+  const locale = useLocale();
+  const t = useDict("common").lessons;
+  const fdict = useDict("formations") as Record<string, {
+    title?: string;
+    badge?: string;
+    lessons?: Record<string, { title?: string; duration?: string }>;
+  } | undefined>;
   const [progress, setProgress] = useState<ProgressData>({});
   const [mounted, setMounted] = useState(false);
   // triggerKey pour la célébration : incrémenté quand on complète pour la
@@ -63,6 +72,11 @@ export function LessonPage({
   const lessonIds = lessons.map((l) => l.id);
   const done = mounted && isLessonComplete(progress, formationId, lessonId);
   const globalStats = mounted ? getGlobalStats(progress, FORMATIONS) : null;
+  const fEntry = fdict[formationId];
+  const localizedFormationTitle = fEntry?.title ?? formation?.title ?? formationId;
+  const localizedFormationBadge = fEntry?.badge ?? formation?.badge ?? formation?.title;
+  const localizedLessonTitle = (lid: string, fallback: string) =>
+    fEntry?.lessons?.[lid]?.title ?? fallback;
 
   function handleComplete() {
     const wasComplete = isLessonComplete(progress, formationId, lessonId);
@@ -99,15 +113,15 @@ export function LessonPage({
 
         {/* Fil d'Ariane */}
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
-          <Link href="/formations" className="hover:text-zinc-400 transition-colors">
-            Formations
+          <Link href={localizedHref("/formations", locale)} className="hover:text-zinc-400 transition-colors">
+            {t.breadcrumbFormations}
           </Link>
           <span>/</span>
-          <Link href="/formations" className="hover:text-zinc-400 transition-colors capitalize">
-            {formation?.title ?? formationId}
+          <Link href={localizedHref("/formations", locale)} className="hover:text-zinc-400 transition-colors capitalize">
+            {localizedFormationTitle}
           </Link>
           <span>/</span>
-          <span className="text-zinc-500">Leçon {lessonNumber}</span>
+          <span className="text-zinc-500">{t.lessonNumber.replace("{n}", String(lessonNumber))}</span>
         </nav>
 
         {/* En-tête ────────────────────────────────────────────────────────── */}
@@ -115,7 +129,7 @@ export function LessonPage({
           {/* Méta ligne */}
           <div className="flex items-center gap-2.5 mb-4 flex-wrap">
             <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${formation?.badgeStyle ?? "bg-zinc-700 text-zinc-300"}`}>
-              {formation?.badge ?? formation?.title}
+              {localizedFormationBadge}
             </span>
             <span className="text-zinc-700 text-xs">·</span>
             <span className="text-xs text-zinc-600">{duration}</span>
@@ -124,7 +138,7 @@ export function LessonPage({
                 <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
                   <path d="M1 4.5l2.5 2.5 4.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Terminée
+                {t.completed}
               </span>
             )}
           </div>
@@ -138,7 +152,7 @@ export function LessonPage({
 
           {/* Indicateur de structure */}
           <div className="mt-5 flex items-center gap-2 text-xs text-zinc-600">
-            {["Lecture", "À retenir", "Exercice", "Quiz"].map((step, i, arr) => (
+            {[t.structureSteps.read, t.structureSteps.remember, t.structureSteps.exercise, t.structureSteps.quiz].map((step, i, arr) => (
               <span key={step} className="flex items-center gap-2">
                 <span>{step}</span>
                 {i < arr.length - 1 && (
@@ -173,12 +187,12 @@ export function LessonPage({
                     ) : (
                       <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-white" : "bg-zinc-600"}`} />
                     )}
-                    {lesson.title.replace(/Leçon \d+ : /, "")}
+                    {localizedLessonTitle(lesson.id, lesson.title).replace(/Leçon \d+ : /, "")}
                   </span>
                 );
 
                 return !isCurrent ? (
-                  <Link key={lesson.id} href={lesson.href}>{pill}</Link>
+                  <Link key={lesson.id} href={localizedHref(lesson.href, locale)}>{pill}</Link>
                 ) : (
                   <div key={lesson.id}>{pill}</div>
                 );
@@ -187,7 +201,9 @@ export function LessonPage({
               {/* Stats globales à droite */}
               {mounted && globalStats && (
                 <span className="ml-auto text-xs text-zinc-600">
-                  {globalStats.completedLessons} / {TOTAL_FREE_LESSONS} leçons gratuites
+                  {t.globalCount
+                    .replace("{done}", String(globalStats.completedLessons))
+                    .replace("{total}", String(TOTAL_FREE_LESSONS))}
                 </span>
               )}
             </div>
@@ -212,7 +228,7 @@ export function LessonPage({
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 8l3.5 3.5 6.5-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Marquer la leçon comme terminée
+                {t.markComplete}
               </button>
             ) : (
               /* État terminé */
@@ -224,22 +240,20 @@ export function LessonPage({
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
+                    <p className="text-sm font-semibold text-emerald-400">{t.doneTitle}</p>
                     <p className="text-xs text-zinc-500 mt-0.5">
-                      {next
-                        ? "Continue sur ta lancée — la leçon suivante t'attend."
-                        : "Tu as complété toutes les leçons de cette formation."}
+                      {next ? t.doneNextSubtitle : t.doneAllSubtitle}
                     </p>
                   </div>
                 </div>
 
                 {next && (
                   <Link
-                    href={next.href}
+                    href={localizedHref(next.href, locale)}
                     className="group w-full flex items-center justify-between bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-600 px-5 py-4 rounded-xl transition-all duration-200"
                   >
                     <div>
-                      <p className="text-xs text-zinc-500 mb-0.5">Leçon suivante</p>
+                      <p className="text-xs text-zinc-500 mb-0.5">{t.nextLessonLabel}</p>
                       <p className="text-sm font-semibold text-white">{next.label}</p>
                     </div>
                     <svg
@@ -253,12 +267,12 @@ export function LessonPage({
 
                 {!next && (
                   <Link
-                    href="/formations"
+                    href={localizedHref("/formations", locale)}
                     className="group w-full flex items-center justify-between bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-600 px-5 py-4 rounded-xl transition-all duration-200"
                   >
                     <div>
-                      <p className="text-xs text-zinc-500 mb-0.5">Formation complète</p>
-                      <p className="text-sm font-semibold text-white">Voir toutes les formations</p>
+                      <p className="text-xs text-zinc-500 mb-0.5">{t.formationCompleteLabel}</p>
+                      <p className="text-sm font-semibold text-white">{t.viewAllFormations}</p>
                     </div>
                     <svg
                       width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -275,7 +289,7 @@ export function LessonPage({
             {prev && (
               <div className="mt-5">
                 <Link
-                  href={prev.href}
+                  href={localizedHref(prev.href, locale)}
                   className="inline-flex items-center gap-1.5 text-sm text-zinc-600 hover:text-zinc-400 transition-colors"
                 >
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">

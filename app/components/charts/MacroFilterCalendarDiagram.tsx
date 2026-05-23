@@ -4,6 +4,7 @@
 
 interface MacroFilterCalendarDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -33,7 +34,38 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 14;
 
-export function MacroFilterCalendarDiagram({ className = "" }: MacroFilterCalendarDiagramProps) {
+export function MacroFilterCalendarDiagram({ className = "", locale = "fr" }: MacroFilterCalendarDiagramProps) {
+  const t = locale === "es"
+    ? {
+        checklist: "Checklist",
+        setupTechValide: "Setup técnico válido",
+        newsImminente: "News mayor inminente",
+        filtreMacro: "Filtro macro",
+        rouge: "ROJO",
+        annotation: "Un buen setup puede volverse malo en el mal momento",
+        mobileTitle: "Filtro macro calendario",
+        mobileSetupTitle: "Setup técnico limpio",
+        mobileSetupDesc: "El patrón técnico es válido en sí.",
+        mobileNewsTitle: "⚠ News inminente = filtro rojo",
+        mobileNewsDesc: "FOMC / NFP / CPI en los próximos 30 min → sin trade, sin importar el setup.",
+        legendSetup: "Setup técnico limpio",
+        legendNews: "News inminente = filtro macro rojo, sin trade",
+      }
+    : {
+        checklist: "Checklist",
+        setupTechValide: "Setup technique valide",
+        newsImminente: "News majeure imminente",
+        filtreMacro: "Filtre macro",
+        rouge: "ROUGE",
+        annotation: "Un bon setup peut devenir mauvais au mauvais moment",
+        mobileTitle: "Filtre macro calendrier",
+        mobileSetupTitle: "Setup technique propre",
+        mobileSetupDesc: "Le pattern technique est valide en soi.",
+        mobileNewsTitle: "⚠ News imminente = filtre rouge",
+        mobileNewsDesc: "FOMC / NFP / CPI dans les 30 min → pas de trade, peu importe le setup.",
+        legendSetup: "Setup technique propre",
+        legendNews: "News imminente = filtre macro rouge, pas de trade",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -41,22 +73,22 @@ export function MacroFilterCalendarDiagram({ className = "" }: MacroFilterCalend
         {/* Checklist à gauche */}
         <rect x="20" y="40" width="240" height="200" rx="8" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
         <rect x="34" y="50" width="68" height="14" rx="3" fill="#09090b" />
-        <text x="68" y="60" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Checklist</text>
+        <text x="68" y="60" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.checklist}</text>
 
         {/* Ligne 1 — Setup technique valide (coche verte) */}
         <circle cx="44" cy="92" r="9" fill="#10b98118" stroke="#10b981" strokeWidth="1.4" />
         <path d="M 39 92 L 43 96 L 50 88" fill="none" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <text x="60" y="96" fill="#e4e4e7" fontSize="10" fontWeight="600">Setup technique valide</text>
+        <text x="60" y="96" fill="#e4e4e7" fontSize="10" fontWeight="600">{t.setupTechValide}</text>
 
         {/* Ligne 2 — News majeure imminente (croix rouge) */}
         <circle cx="44" cy="132" r="9" fill="#ef444418" stroke="#ef4444" strokeWidth="1.4" />
         <path d="M 39 127 L 49 137 M 49 127 L 39 137" stroke="#ef4444" strokeWidth="1.8" strokeLinecap="round" />
-        <text x="60" y="136" fill="#e4e4e7" fontSize="10" fontWeight="600">News majeure imminente</text>
+        <text x="60" y="136" fill="#e4e4e7" fontSize="10" fontWeight="600">{t.newsImminente}</text>
 
         {/* Ligne 3 — Filtre macro (pastille ROUGE) */}
-        <text x="34" y="186" fill="#e4e4e7" fontSize="10" fontWeight="600">Filtre macro</text>
+        <text x="34" y="186" fill="#e4e4e7" fontSize="10" fontWeight="600">{t.filtreMacro}</text>
         <rect x="34" y="196" width="60" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1.4" />
-        <text x="64" y="211" fill="#ef4444" fontSize="10" fontWeight="800" textAnchor="middle">ROUGE</text>
+        <text x="64" y="211" fill="#ef4444" fontSize="10" fontWeight="800" textAnchor="middle">{t.rouge}</text>
 
         {/* Badge graphique à droite */}
         <rect x="282" y="20" width="118" height="20" rx="4" fill="#27272a" stroke="#3f3f46" />
@@ -85,31 +117,31 @@ export function MacroFilterCalendarDiagram({ className = "" }: MacroFilterCalend
         <rect x="170" y="284" width="380" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="284" width="380" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="360" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Un bon setup peut devenir mauvais au mauvais moment
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : filtre macro calendrier ─────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Filtre macro calendrier</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Setup technique propre</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Le pattern technique est valide en soi.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.mobileSetupTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.mobileSetupDesc}</p>
         </div>
         <div className="rounded-lg border-2 border-red-500 bg-red-500/10 p-3">
-          <p className="text-[13px] font-bold text-red-400">⚠ News imminente = filtre rouge</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">FOMC / NFP / CPI dans les 30 min → pas de trade, peu importe le setup.</p>
+          <p className="text-[13px] font-bold text-red-400">{t.mobileNewsTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.mobileNewsDesc}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Setup technique propre</span>
+          <span className="text-[10px] text-zinc-500">{t.legendSetup}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">News imminente = filtre macro rouge, pas de trade</span>
+          <span className="text-[10px] text-zinc-500">{t.legendNews}</span>
         </div>
       </div>
     </div>

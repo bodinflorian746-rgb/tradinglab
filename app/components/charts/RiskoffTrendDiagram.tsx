@@ -4,6 +4,7 @@
 
 interface RiskoffTrendDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -44,7 +45,32 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function RiskoffTrendDiagram({ className = "" }: RiskoffTrendDiagramProps) {
+export function RiskoffTrendDiagram({ className = "", locale = "fr" }: RiskoffTrendDiagramProps) {
+  const t = locale === "es"
+    ? {
+        pullback: "Pullback",
+        continuationRegime: "Continuación del régimen",
+        annotation: "Tradear en el sentido del régimen, no contra",
+        mobileTitle: "Risk-off trend · XAU/USD H4",
+        structureTitle: "Estructura HH/HL = régimen intacto",
+        structureDesc: "El oro hace cimas y suelos sucesivos más altos → régimen risk-off activo.",
+        pullbackTitle: "Pullback limitado + continuación",
+        pullbackDesc: "Correcciones cortas luego reanudación bullish — entradas en pullbacks.",
+        legendStructure: "Estructura HH/HL = régimen intacto",
+        legendPullback: "Pullback limitado luego continuación bullish",
+      }
+    : {
+        pullback: "Pullback",
+        continuationRegime: "Continuation du régime",
+        annotation: "Trader dans le sens du régime, pas contre",
+        mobileTitle: "Risk-off trend · XAU/USD H4",
+        structureTitle: "Structure HH/HL = régime intact",
+        structureDesc: "L'or fait des sommets et creux successifs plus hauts → régime risk-off actif.",
+        pullbackTitle: "Pullback limité + continuation",
+        pullbackDesc: "Corrections courtes puis reprise bullish — entrées sur pullbacks.",
+        legendStructure: "Structure HH/HL = régime intact",
+        legendPullback: "Pullback limité puis continuation bullish",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -83,42 +109,42 @@ export function RiskoffTrendDiagram({ className = "" }: RiskoffTrendDiagramProps
         {/* Annotation "Pullback" — sur la correction */}
         <line x1="290" y1="118" x2="290" y2="135" stroke="#71717a" strokeWidth="0.9" strokeOpacity="0.7" />
         <rect x="262" y="104" width="58" height="14" rx="3" fill="#09090b" />
-        <text x="291" y="114" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">Pullback</text>
+        <text x="291" y="114" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">{t.pullback}</text>
 
         {/* Annotation "Continuation du régime" — sur la reprise */}
         <rect x="440" y="200" width="148" height="14" rx="3" fill="#09090b" />
         <rect x="440" y="200" width="148" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
-        <text x="514" y="210" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Continuation du régime</text>
+        <text x="514" y="210" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.continuationRegime}</text>
 
         {/* Annotation amber */}
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Trader dans le sens du régime, pas contre
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : Risk-off trend ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Risk-off trend · XAU/USD H4</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Structure HH/HL = régime intact</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">L'or fait des sommets et creux successifs plus hauts → régime risk-off actif.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.structureTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.structureDesc}</p>
         </div>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Pullback limité + continuation</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Corrections courtes puis reprise bullish — entrées sur pullbacks.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.pullbackTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.pullbackDesc}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Structure HH/HL = régime intact</span>
+          <span className="text-[10px] text-zinc-500">{t.legendStructure}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Pullback limité puis continuation bullish</span>
+          <span className="text-[10px] text-zinc-500">{t.legendPullback}</span>
         </div>
       </div>
     </div>

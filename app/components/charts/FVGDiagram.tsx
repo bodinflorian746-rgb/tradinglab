@@ -1,5 +1,6 @@
 interface FVGDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleData = {
@@ -26,7 +27,59 @@ function MiniCandle({ cx, wickTop, bodyTop, bodyBot, wickBot, bull }: CandleData
   );
 }
 
-export function FVGDiagram({ className = "" }: FVGDiagramProps) {
+export function FVGDiagram({ className = "", locale = "fr" }: FVGDiagramProps) {
+  const t = locale === "es"
+    ? {
+        fvgBullish: "FVG alcista",
+        fvgBearish: "FVG bajista",
+        b1High: "B1 alto",
+        b3Low: "B3 bajo",
+        b1Low: "B1 bajo",
+        b3High: "B3 alto",
+        retourDown: "retorno ↓",
+        retourUp: "retorno ↑",
+        mobileBullTitle: "FVG alcista (izquierda)",
+        mobileBullBodyPart1: "3 velas alcistas seguidas → se forma un ",
+        mobileBullBodyBold1: "gap",
+        mobileBullBodyPart2: " entre el alto de B1 y el bajo de B3. El precio regresa a llenar este gap (",
+        mobileBullBodyBold2: "retorno ↓",
+        mobileBullBodyPart3: ") antes de seguir.",
+        mobileBearTitle: "FVG bajista (derecha)",
+        mobileBearBodyPart1: "3 velas bajistas seguidas → un ",
+        mobileBearBodyBold1: "gap",
+        mobileBearBodyPart2: " entre el bajo de B1 y el alto de B3. El precio sube a mitigar el gap (",
+        mobileBearBodyBold2: "retorno ↑",
+        mobileBearBodyPart3: ") y luego retoma la baja.",
+        leg1: "FVG = Fair Value Gap (zona de desequilibrio)",
+        leg2: "Vela alcista",
+        leg3: "Vela bajista",
+      }
+    : {
+        fvgBullish: "FVG haussier",
+        fvgBearish: "FVG baissier",
+        b1High: "B1 haut",
+        b3Low: "B3 bas",
+        b1Low: "B1 bas",
+        b3High: "B3 haut",
+        retourDown: "retour ↓",
+        retourUp: "retour ↑",
+        mobileBullTitle: "FVG haussier (gauche)",
+        mobileBullBodyPart1: "3 bougies haussières d’affilée → un ",
+        mobileBullBodyBold1: "gap",
+        mobileBullBodyPart2: " se forme entre le haut de B1 et le bas de B3. Le prix revient combler ce gap (",
+        mobileBullBodyBold2: "retour ↓",
+        mobileBullBodyPart3: ") avant de repartir.",
+        mobileBearTitle: "FVG baissier (droite)",
+        mobileBearBodyPart1: "3 bougies baissières d’affilée → un ",
+        mobileBearBodyBold1: "gap",
+        mobileBearBodyPart2: " entre le bas de B1 et le haut de B3. Le prix remonte mitiger le gap (",
+        mobileBearBodyBold2: "retour ↑",
+        mobileBearBodyPart3: ") puis reprend la baisse.",
+        leg1: "FVG = Fair Value Gap (zone de déséquilibre)",
+        leg2: "Bougie haussière",
+        leg3: "Bougie baissière",
+      };
+
   // ── BULLISH FVG (left, x=4–130) ──────────────────────────────
   // B1: small candle before impulse. Its HIGH (wickTop) = y=88
   // B3: bullish continuation. Its LOW (wickBot) = y=70
@@ -84,22 +137,22 @@ export function FVGDiagram({ className = "" }: FVGDiagramProps) {
         <g className="chart-detail-labels">
           <rect x="6" y="7" width="72" height="14" rx="3"
             fill="#60a5fa18" stroke="#60a5fa50" strokeWidth="0.8" />
-          <text x="42" y="17" fontSize="7.5" fill="#60a5fa" textAnchor="middle" fontWeight="700">FVG haussier</text>
+          <text x="42" y="17" fontSize="7.5" fill="#60a5fa" textAnchor="middle" fontWeight="700">{t.fvgBullish}</text>
 
           <line x1="92" y1={fvgBullTop} x2="92" y2={fvgBullBot}
             stroke="#60a5fa" strokeWidth="0.8" opacity="0.5" strokeDasharray="2 2" />
 
           <rect x="82" y={fvgBullBot - 8} width="22" height="14" rx="2"
             fill="#09090b" fillOpacity="0.9" />
-          <text x="93" y={fvgBullBot + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B1 haut</text>
+          <text x="93" y={fvgBullBot + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">{t.b1High}</text>
 
           <rect x="82" y={fvgBullTop - 8} width="22" height="14" rx="2"
             fill="#09090b" fillOpacity="0.9" />
-          <text x="93" y={fvgBullTop + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B3 bas</text>
+          <text x="93" y={fvgBullTop + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">{t.b3Low}</text>
 
           <rect x="100" y="23" width="30" height="14" rx="2"
             fill="#09090b" fillOpacity="0.9" />
-          <text x="115" y="34" fontSize="6.5" fill="#71717a" textAnchor="middle">retour ↓</text>
+          <text x="115" y="34" fontSize="6.5" fill="#71717a" textAnchor="middle">{t.retourDown}</text>
         </g>
 
         {/* ── BEARISH FVG ── */}
@@ -118,39 +171,37 @@ export function FVGDiagram({ className = "" }: FVGDiagramProps) {
         <g className="chart-detail-labels">
           <rect x="140" y="7" width="72" height="14" rx="3"
             fill="#60a5fa18" stroke="#60a5fa50" strokeWidth="0.8" />
-          <text x="176" y="17" fontSize="7.5" fill="#60a5fa" textAnchor="middle" fontWeight="700">FVG baissier</text>
+          <text x="176" y="17" fontSize="7.5" fill="#60a5fa" textAnchor="middle" fontWeight="700">{t.fvgBearish}</text>
 
           <line x1="220" y1={fvgBearTop} x2="220" y2={fvgBearBot}
             stroke="#60a5fa" strokeWidth="0.8" opacity="0.5" strokeDasharray="2 2" />
 
           <rect x="222" y={fvgBearTop - 8} width="24" height="14" rx="2"
             fill="#09090b" fillOpacity="0.9" />
-          <text x="234" y={fvgBearTop + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B1 bas</text>
+          <text x="234" y={fvgBearTop + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">{t.b1Low}</text>
 
           <rect x="222" y={fvgBearBot - 8} width="24" height="14" rx="2"
             fill="#09090b" fillOpacity="0.9" />
-          <text x="234" y={fvgBearBot + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">B3 haut</text>
+          <text x="234" y={fvgBearBot + 3} fontSize="6" fill="#60a5fa" textAnchor="middle">{t.b3High}</text>
 
           <rect x="234" y="41" width="30" height="14" rx="2"
             fill="#09090b" fillOpacity="0.9" />
-          <text x="249" y="52" fontSize="6.5" fill="#71717a" textAnchor="middle">retour ↑</text>
+          <text x="249" y="52" fontSize="6.5" fill="#71717a" textAnchor="middle">{t.retourUp}</text>
         </g>
       </svg>
 
       {/* Mobile : 2 cartes empilées avec le mécanisme FVG */}
       <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2.5">
         <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-2.5 space-y-1.5">
-          <p className="text-[13px] font-bold text-blue-400">FVG haussier (gauche)</p>
+          <p className="text-[13px] font-bold text-blue-400">{t.mobileBullTitle}</p>
           <p className="text-[12px] text-zinc-300 leading-snug">
-            3 bougies haussières d&apos;affilée → un <span className="font-bold text-blue-400">gap</span> se forme entre le haut de B1 et le bas de B3.
-            Le prix revient combler ce gap (<span className="font-semibold">retour ↓</span>) avant de repartir.
+            {t.mobileBullBodyPart1}<span className="font-bold text-blue-400">{t.mobileBullBodyBold1}</span>{t.mobileBullBodyPart2}<span className="font-semibold">{t.mobileBullBodyBold2}</span>{t.mobileBullBodyPart3}
           </p>
         </div>
         <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-2.5 space-y-1.5">
-          <p className="text-[13px] font-bold text-blue-400">FVG baissier (droite)</p>
+          <p className="text-[13px] font-bold text-blue-400">{t.mobileBearTitle}</p>
           <p className="text-[12px] text-zinc-300 leading-snug">
-            3 bougies baissières d&apos;affilée → un <span className="font-bold text-blue-400">gap</span> entre le bas de B1 et le haut de B3.
-            Le prix remonte mitiger le gap (<span className="font-semibold">retour ↑</span>) puis reprend la baisse.
+            {t.mobileBearBodyPart1}<span className="font-bold text-blue-400">{t.mobileBearBodyBold1}</span>{t.mobileBearBodyPart2}<span className="font-semibold">{t.mobileBearBodyBold2}</span>{t.mobileBearBodyPart3}
           </p>
         </div>
       </div>
@@ -159,15 +210,15 @@ export function FVGDiagram({ className = "" }: FVGDiagramProps) {
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm" style={{ background: "#60a5fa", opacity: 0.6 }} />
-          <span className="text-[10px] text-zinc-500">FVG = Fair Value Gap (zone de déséquilibre)</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Bougie haussière</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Bougie baissière</span>
+          <span className="text-[10px] text-zinc-500">{t.leg3}</span>
         </div>
       </div>
     </div>

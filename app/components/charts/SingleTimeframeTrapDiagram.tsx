@@ -3,9 +3,45 @@
 
 interface SingleTimeframeTrapDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
-export function SingleTimeframeTrapDiagram({ className = "" }: SingleTimeframeTrapDiagramProps) {
+export function SingleTimeframeTrapDiagram({ className = "", locale = "fr" }: SingleTimeframeTrapDiagramProps) {
+  const t = locale === "es"
+    ? {
+        resistanceDaily: "Resistencia Daily",
+        tendance: "Tendencia bajista nítida",
+        niveauM15: "Nivel M15 local",
+        breakoutLocal: "Breakout local alcista",
+        annotation: "Señal compradora local — CONTRA la tendencia Daily",
+        mobileTitle: "El mismo mercado, 2 timeframes opuestos",
+        b1Title: "Daily — Tendencia bajista nítida ↘",
+        b1Body: "En Daily, el precio forma una secuencia LH/LL clara bajo la resistencia.",
+        b2Title: "M15 — Breakout local alcista ↗",
+        b2Body: "En M15, el precio rompe un mini-nivel → tentación de comprar.",
+        warning: "⚠ Señal local CONTRA la tendencia Daily = trampa",
+        mobileFooter: "Leer un solo timeframe = ignorar la verdadera dirección.",
+        leg1: "HTF Daily = tendencia bajista",
+        leg2: "LTF M15 = señal engañosa aislada",
+        leg3: "Leer un solo TF = trampa",
+      }
+    : {
+        resistanceDaily: "Résistance Daily",
+        tendance: "Tendance baissière nette",
+        niveauM15: "Niveau M15 local",
+        breakoutLocal: "Breakout local haussier",
+        annotation: "Signal acheteur local — CONTRE la tendance Daily",
+        mobileTitle: "Le même marché, 2 timeframes opposés",
+        b1Title: "Daily — Tendance baissière nette ↘",
+        b1Body: "Sur Daily, le prix forme une séquence LH/LL claire sous la résistance.",
+        b2Title: "M15 — Breakout local haussier ↗",
+        b2Body: "Sur M15, le prix casse un mini-niveau → tentation d'acheter.",
+        warning: "⚠ Signal local CONTRE la tendance Daily = piège",
+        mobileFooter: "Lire un seul timeframe = ignorer la vraie direction.",
+        leg1: "HTF Daily = tendance baissière",
+        leg2: "LTF M15 = signal trompeur isolé",
+        leg3: "Lire un seul TF = piège",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg
@@ -26,7 +62,7 @@ export function SingleTimeframeTrapDiagram({ className = "" }: SingleTimeframeTr
         {/* Résistance Daily */}
         <line x1="40" y1="70" x2="380" y2="70" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" strokeOpacity="0.7" />
         <rect x="40" y="56" width="86" height="13" rx="3" fill="#09090b" />
-        <text x="83" y="66" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">Résistance Daily</text>
+        <text x="83" y="66" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">{t.resistanceDaily}</text>
 
         {/* Path baissier LH/LL */}
         <path
@@ -53,7 +89,7 @@ export function SingleTimeframeTrapDiagram({ className = "" }: SingleTimeframeTr
 
         {/* Flèche tendance */}
         <text x="365" y="260" fill="#ef4444" fontSize="20" opacity="0.5" textAnchor="middle">↘</text>
-        <text x="200" y="285" fill="#a1a1aa" fontSize="10" textAnchor="middle">Tendance baissière nette</text>
+        <text x="200" y="285" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.tendance}</text>
 
         {/* ═══ MOITIÉ DROITE — M15 breakout local haussier ═══ */}
         <rect x="660" y="20" width="120" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
@@ -62,7 +98,7 @@ export function SingleTimeframeTrapDiagram({ className = "" }: SingleTimeframeTr
         {/* Mini-niveau cassé */}
         <line x1="440" y1="160" x2="780" y2="160" stroke="#71717a" strokeWidth="1.2" strokeDasharray="3 2" />
         <rect x="440" y="147" width="100" height="13" rx="3" fill="#09090b" />
-        <text x="490" y="157" fill="#71717a" fontSize="9" fontWeight="600" textAnchor="middle">Niveau M15 local</text>
+        <text x="490" y="157" fill="#71717a" fontSize="9" fontWeight="600" textAnchor="middle">{t.niveauM15}</text>
 
         {/* Bougies — 5 bougies, dont 3 vertes qui cassent le niveau */}
         {/* B1 rouge */}
@@ -89,32 +125,32 @@ export function SingleTimeframeTrapDiagram({ className = "" }: SingleTimeframeTr
 
         {/* Annotation locale — "tentation" */}
         <rect x="540" y="68" width="180" height="14" rx="3" fill="#09090b" />
-        <text x="630" y="78" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">Breakout local haussier</text>
+        <text x="630" y="78" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">{t.breakoutLocal}</text>
 
         {/* ═══ Annotation traversante : Signal contre tendance ═══ */}
         <rect x="200" y="300" width="400" height="18" rx="9" fill="#09090b" />
         <rect x="200" y="300" width="400" height="18" rx="9" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="400" y="313" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Signal acheteur local — CONTRE la tendance Daily
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : piège du timeframe unique ─────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Le même marché, 2 timeframes opposés</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">Daily — Tendance baissière nette ↘</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Sur Daily, le prix forme une séquence LH/LL claire sous la résistance.</p>
+          <p className="text-[13px] font-bold text-red-400">{t.b1Title}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b1Body}</p>
         </div>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">M15 — Breakout local haussier ↗</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Sur M15, le prix casse un mini-niveau → tentation d'acheter.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.b2Title}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b2Body}</p>
         </div>
         <div className="rounded-lg border-2 border-amber-400 bg-amber-400/10 p-3 text-center">
-          <p className="text-[13px] font-bold text-amber-400">⚠ Signal local CONTRE la tendance Daily = piège</p>
+          <p className="text-[13px] font-bold text-amber-400">{t.warning}</p>
         </div>
         <p className="text-[12px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
-          Lire un seul timeframe = ignorer la vraie direction.
+          {t.mobileFooter}
         </p>
       </div>
 
@@ -122,15 +158,15 @@ export function SingleTimeframeTrapDiagram({ className = "" }: SingleTimeframeTr
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">HTF Daily = tendance baissière</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">LTF M15 = signal trompeur isolé</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Lire un seul TF = piège</span>
+          <span className="text-[10px] text-zinc-500">{t.leg3}</span>
         </div>
       </div>
     </div>

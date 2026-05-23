@@ -1,5 +1,6 @@
 interface OrderBlockDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleData = {
@@ -27,7 +28,47 @@ function MiniCandle({ cx, wickTop, bodyTop, bodyBot, wickBot, bull, wide }: Cand
   );
 }
 
-export function OrderBlockDiagram({ className = "" }: OrderBlockDiagramProps) {
+export function OrderBlockDiagram({ className = "", locale = "fr" }: OrderBlockDiagramProps) {
+  const t = locale === "es"
+    ? {
+        bullishOb: "Bullish OB",
+        bearishOb: "Bearish OB",
+        rejetUp: "rechazo ↑",
+        rejetDown: "rechazo ↓",
+        bullMobileTitle: "Bullish OB (izquierda)",
+        bullMobileBoldStart: "Última vela bajista",
+        bullMobileBodyPart1: " antes de un impulso alcista fuerte. El precio regresa a testear esta zona (",
+        bullMobileBodyBold: "rechazo ↑",
+        bullMobileBodyPart2: ") y luego sigue al alza.",
+        bearMobileTitle: "Bearish OB (derecha)",
+        bearMobileBoldStart: "Última vela alcista",
+        bearMobileBodyPart1: " antes de un impulso bajista fuerte. El precio regresa a testear esta zona (",
+        bearMobileBodyBold: "rechazo ↓",
+        bearMobileBodyPart2: ") y luego cae.",
+        leg1: "Bullish OB — última bajista antes de alza impulsiva",
+        leg2: "Bearish OB — última alcista antes de baja impulsiva",
+        leg3: "Zona OB = zona de órdenes institucionales",
+      }
+    : {
+        bullishOb: "Bullish OB",
+        bearishOb: "Bearish OB",
+        rejetUp: "rejet ↑",
+        rejetDown: "rejet ↓",
+        bullMobileTitle: "Bullish OB (gauche)",
+        bullMobileBoldStart: "Dernière bougie baissière",
+        bullMobileBodyPart1: " avant une impulsion haussière forte. Le prix revient tester cette zone (",
+        bullMobileBodyBold: "rejet ↑",
+        bullMobileBodyPart2: ") puis repart à la hausse.",
+        bearMobileTitle: "Bearish OB (droite)",
+        bearMobileBoldStart: "Dernière bougie haussière",
+        bearMobileBodyPart1: " avant une impulsion baissière forte. Le prix revient tester cette zone (",
+        bearMobileBodyBold: "rejet ↓",
+        bearMobileBodyPart2: ") puis chute.",
+        leg1: "Bullish OB — dernière baissière avant hausse impulsive",
+        leg2: "Bearish OB — dernière haussière avant baisse impulsive",
+        leg3: "Zone OB = zone d’ordres institutionnels",
+      };
+
   // ── BULLISH OB (left, x=4–128) ────────────────────────────────
   // 2 bearish descent candles → last bearish (OB) → 2 big bullish impulse → return to OB
   const bullCandles: CandleData[] = [
@@ -97,14 +138,14 @@ export function OrderBlockDiagram({ className = "" }: OrderBlockDiagramProps) {
         <g className="chart-detail-labels">
           <rect x="6" y="7" width="60" height="14" rx="3"
             fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
-          <text x="36" y="17" fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">Bullish OB</text>
+          <text x="36" y="17" fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">{t.bullishOb}</text>
 
           <line x1="54" y1="21" x2="54" y2={bullOB.bodyTop - 4}
             stroke="#10b981" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.5" />
 
           <rect x="96" y="16" width="36" height="11" rx="2"
             fill="#09090b" fillOpacity="0.9" />
-          <text x="114" y="24" fontSize="6.5" fill="#10b981" textAnchor="middle" fontWeight="600">rejet ↑</text>
+          <text x="114" y="24" fontSize="6.5" fill="#10b981" textAnchor="middle" fontWeight="600">{t.rejetUp}</text>
         </g>
 
         {/* ── BEARISH OB ── */}
@@ -130,31 +171,29 @@ export function OrderBlockDiagram({ className = "" }: OrderBlockDiagramProps) {
         <g className="chart-detail-labels">
           <rect x="140" y="7" width="60" height="14" rx="3"
             fill="#ef444418" stroke="#ef444440" strokeWidth="0.8" />
-          <text x="170" y="17" fontSize="7.5" fill="#ef4444" textAnchor="middle" fontWeight="700">Bearish OB</text>
+          <text x="170" y="17" fontSize="7.5" fill="#ef4444" textAnchor="middle" fontWeight="700">{t.bearishOb}</text>
 
           <line x1="188" y1="21" x2="188" y2={bearOB.bodyTop - 4}
             stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.5" />
 
           <rect x="230" y="44" width="36" height="11" rx="2"
             fill="#09090b" fillOpacity="0.9" />
-          <text x="248" y="52" fontSize="6.5" fill="#ef4444" textAnchor="middle" fontWeight="600">rejet ↓</text>
+          <text x="248" y="52" fontSize="6.5" fill="#ef4444" textAnchor="middle" fontWeight="600">{t.rejetDown}</text>
         </g>
       </svg>
 
       {/* Mobile : 2 cartes Order Block */}
       <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2.5">
         <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2.5 space-y-1.5">
-          <p className="text-[13px] font-bold text-emerald-400">Bullish OB (gauche)</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.bullMobileTitle}</p>
           <p className="text-[12px] text-zinc-300 leading-snug">
-            <span className="font-bold text-emerald-400">Dernière bougie baissière</span> avant une impulsion haussière forte. Le prix revient
-            tester cette zone (<span className="font-semibold">rejet ↑</span>) puis repart à la hausse.
+            <span className="font-bold text-emerald-400">{t.bullMobileBoldStart}</span>{t.bullMobileBodyPart1}<span className="font-semibold">{t.bullMobileBodyBold}</span>{t.bullMobileBodyPart2}
           </p>
         </div>
         <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-2.5 space-y-1.5">
-          <p className="text-[13px] font-bold text-red-400">Bearish OB (droite)</p>
+          <p className="text-[13px] font-bold text-red-400">{t.bearMobileTitle}</p>
           <p className="text-[12px] text-zinc-300 leading-snug">
-            <span className="font-bold text-red-400">Dernière bougie haussière</span> avant une impulsion baissière forte. Le prix revient
-            tester cette zone (<span className="font-semibold">rejet ↓</span>) puis chute.
+            <span className="font-bold text-red-400">{t.bearMobileBoldStart}</span>{t.bearMobileBodyPart1}<span className="font-semibold">{t.bearMobileBodyBold}</span>{t.bearMobileBodyPart2}
           </p>
         </div>
       </div>
@@ -163,15 +202,15 @@ export function OrderBlockDiagram({ className = "" }: OrderBlockDiagramProps) {
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Bullish OB — dernière baissière avant hausse impulsive</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Bearish OB — dernière haussière avant baisse impulsive</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-2 rounded-sm border border-zinc-600 bg-zinc-800" />
-          <span className="text-[10px] text-zinc-500">Zone OB = zone d'ordres institutionnels</span>
+          <span className="text-[10px] text-zinc-500">{t.leg3}</span>
         </div>
       </div>
     </div>

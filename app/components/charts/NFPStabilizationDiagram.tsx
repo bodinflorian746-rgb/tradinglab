@@ -4,6 +4,7 @@
 
 interface NFPStabilizationDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -44,7 +45,28 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function NFPStabilizationDiagram({ className = "" }: NFPStabilizationDiagramProps) {
+export function NFPStabilizationDiagram({ className = "", locale = "fr" }: NFPStabilizationDiagramProps) {
+  const t = locale === "es"
+    ? {
+        annotation: "La volatilidad disminuye antes de la reversión",
+        mobileTitle: "NFP estabilización · XAU/USD M15",
+        mecheTitle: "Mechas bajas repetidas",
+        mecheDesc: "Absorción compradora en el nivel alcanzado — fin de la caída.",
+        repriseTitle: "Reanudación bullish progresiva",
+        repriseDesc: "Tras estabilización, el mercado rebota lentamente = oportunidad long contra-trend.",
+        legendMeche: "Mechas bajas repetidas = absorción compradora",
+        legendReprise: "Reanudación bullish progresiva tras estabilización",
+      }
+    : {
+        annotation: "La volatilité ralentit avant le retournement",
+        mobileTitle: "NFP stabilisation · XAU/USD M15",
+        mecheTitle: "Mèches basses répétées",
+        mecheDesc: "Absorption acheteuse au niveau atteint — fin de la chute.",
+        repriseTitle: "Reprise bullish progressive",
+        repriseDesc: "Après stabilisation, le marché rebondit lentement = opportunité long contre-trend.",
+        legendMeche: "Mèches basses répétées = absorption acheteuse",
+        legendReprise: "Reprise bullish progressive après stabilisation",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -83,31 +105,31 @@ export function NFPStabilizationDiagram({ className = "" }: NFPStabilizationDiag
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          La volatilité ralentit avant le retournement
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : NFP stabilisation ─────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">NFP stabilisation · XAU/USD M15</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-          <p className="text-[13px] font-bold text-amber-400">Mèches basses répétées</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Absorption acheteuse au niveau atteint — fin de la chute.</p>
+          <p className="text-[13px] font-bold text-amber-400">{t.mecheTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.mecheDesc}</p>
         </div>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Reprise bullish progressive</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Après stabilisation, le marché rebondit lentement = opportunité long contre-trend.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.repriseTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.repriseDesc}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Mèches basses répétées = absorption acheteuse</span>
+          <span className="text-[10px] text-zinc-500">{t.legendMeche}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Reprise bullish progressive après stabilisation</span>
+          <span className="text-[10px] text-zinc-500">{t.legendReprise}</span>
         </div>
       </div>
     </div>

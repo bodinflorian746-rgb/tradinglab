@@ -1,8 +1,42 @@
 interface MultiTimeframeDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
-export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramProps) {
+export function MultiTimeframeDiagram({ className = "", locale = "fr" }: MultiTimeframeDiagramProps) {
+  const L = locale === "es"
+    ? {
+        biais: "Bias ↗",
+        zone: "Zona",
+        signal: "Señal",
+        pinBar: "Pin bar ↑",
+        mobBias: "Bias ↗",
+        mobZone: "Zona",
+        mobPinBar: "Pin bar ↑",
+        mobReadPre: " Lectura: del ",
+        mobReadGrand: "timeframe alto (bias)",
+        mobReadMid: " hacia el ",
+        mobReadPetit: "timeframe pequeño (disparador)",
+        legendDaily: "Daily — bias direccional",
+        legendH4: "H4 — zona de entrada",
+        legendM15: "M15 — señal de disparo",
+      }
+    : {
+        biais: "Biais ↗",
+        zone: "Zone",
+        signal: "Signal",
+        pinBar: "Pin bar ↑",
+        mobBias: "Biais ↗",
+        mobZone: "Zone",
+        mobPinBar: "Pin bar ↑",
+        mobReadPre: " Lecture : du ",
+        mobReadGrand: "grand timeframe (biais)",
+        mobReadMid: " vers le ",
+        mobReadPetit: "petit timeframe (déclencheur)",
+        legendDaily: "Daily — biais directionnel",
+        legendH4: "H4 — zone d'entrée",
+        legendM15: "M15 — signal de déclenchement",
+      };
   const p = (pts: number[][]) =>
     pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x},${y}`).join(" ");
 
@@ -46,7 +80,7 @@ export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramP
         {/* ── PANEL 1 : DAILY ── */}
         <g className="chart-detail-labels">
           <text x="44" y="15" fontSize="8" fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">DAILY</text>
-          <text x="44" y="25" fontSize="7.5" fill="#10b981" textAnchor="middle">Biais ↗</text>
+          <text x="44" y="25" fontSize="7.5" fill="#10b981" textAnchor="middle">{L.biais}</text>
         </g>
         <path d={p(dailyPts)} stroke="#10b981" strokeWidth="2" strokeLinejoin="round" />
         <circle cx="4" cy="114" r="2.5" fill="#52525b" />
@@ -62,7 +96,7 @@ export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramP
         {/* ── PANEL 2 : H4 ── */}
         <g className="chart-detail-labels">
           <text x="134" y="15" fontSize="8" fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">H4</text>
-          <text x="134" y="25" fontSize="7.5" fill="#60a5fa" textAnchor="middle">Zone</text>
+          <text x="134" y="25" fontSize="7.5" fill="#60a5fa" textAnchor="middle">{L.zone}</text>
         </g>
         {/* Zone of interest */}
         <rect x={h4ZoneX} y={h4ZoneY} width={h4ZoneW} height={h4ZoneH} rx="2" fill="#10b98110" stroke="#10b98140" strokeWidth="1" />
@@ -74,7 +108,7 @@ export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramP
         {/* ── PANEL 3 : M15 ── */}
         <g className="chart-detail-labels">
           <text x="224" y="15" fontSize="8" fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">M15</text>
-          <text x="224" y="25" fontSize="7.5" fill="#60a5fa" textAnchor="middle">Signal</text>
+          <text x="224" y="25" fontSize="7.5" fill="#60a5fa" textAnchor="middle">{L.signal}</text>
         </g>
         {/* Zone support line */}
         <line
@@ -103,7 +137,7 @@ export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramP
         {/* Pin bar badge — masqué sur mobile */}
         <g className="chart-detail-labels">
           <rect x="210" y="122" width="32" height="13" rx="3" fill="#10b98118" stroke="#10b98138" strokeWidth="0.8" />
-          <text x="226" y="132" fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">Pin bar ↑</text>
+          <text x="226" y="132" fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">{L.pinBar}</text>
         </g>
 
         {/* Connector hints between panels */}
@@ -116,19 +150,19 @@ export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramP
         <div className="grid grid-cols-3 gap-1.5">
           <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-2 text-center">
             <p className="text-[11px] font-bold text-emerald-400">DAILY</p>
-            <p className="text-[11px] text-zinc-300 leading-snug mt-0.5">Biais ↗</p>
+            <p className="text-[11px] text-zinc-300 leading-snug mt-0.5">{L.mobBias}</p>
           </div>
           <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-2 text-center">
             <p className="text-[11px] font-bold text-blue-400">H4</p>
-            <p className="text-[11px] text-zinc-300 leading-snug mt-0.5">Zone</p>
+            <p className="text-[11px] text-zinc-300 leading-snug mt-0.5">{L.mobZone}</p>
           </div>
           <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-2 text-center">
             <p className="text-[11px] font-bold text-blue-400">M15</p>
-            <p className="text-[11px] text-zinc-300 leading-snug mt-0.5">Pin bar ↑</p>
+            <p className="text-[11px] text-zinc-300 leading-snug mt-0.5">{L.mobPinBar}</p>
           </div>
         </div>
         <p className="text-[12px] text-zinc-300 leading-snug pt-1.5 border-t border-zinc-800/50">
-          <span className="text-zinc-500">→</span> Lecture : du <span className="font-bold text-emerald-400">grand timeframe (biais)</span> vers le <span className="font-bold text-blue-400">petit timeframe (déclencheur)</span>
+          <span className="text-zinc-500">→</span>{L.mobReadPre}<span className="font-bold text-emerald-400">{L.mobReadGrand}</span>{L.mobReadMid}<span className="font-bold text-blue-400">{L.mobReadPetit}</span>
         </p>
       </div>
 
@@ -136,15 +170,15 @@ export function MultiTimeframeDiagram({ className = "" }: MultiTimeframeDiagramP
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Daily — biais directionnel</span>
+          <span className="text-[10px] text-zinc-500">{L.legendDaily}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <span className="text-[10px] text-zinc-500">H4 — zone d'entrée</span>
+          <span className="text-[10px] text-zinc-500">{L.legendH4}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full" style={{ background: "#60a5fa" }} />
-          <span className="text-[10px] text-zinc-500">M15 — signal de déclenchement</span>
+          <span className="text-[10px] text-zinc-500">{L.legendM15}</span>
         </div>
       </div>
     </div>

@@ -1,8 +1,24 @@
 interface ConfluenceDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
-export function ConfluenceDiagram({ className = "" }: ConfluenceDiagramProps) {
+export function ConfluenceDiagram({ className = "", locale = "fr" }: ConfluenceDiagramProps) {
+  const isEs = locale === "es";
+  const L = {
+    supportSR:        isEs ? "Soporte S/R" : "Support S/R",
+    zoneDemand:       isEs ? "Zona Demand" : "Zone Demand",
+    confluences:      isEs ? "3 confluencias ✓" : "3 confluences ✓",
+    mobTitle:         isEs ? "3 confluencias en la Zona Demand ✓" : "3 confluences sur la Zone Demand ✓",
+    fibDesc:          isEs ? "· nivel de retroceso clave" : "· niveau de retracement clé",
+    supportHist:      isEs ? "Soporte histórico" : "Support historique",
+    supportHistDesc:  isEs ? "· zona ya respetada por el precio" : "· zone déjà respectée par le prix",
+    psychoLevel:      isEs ? "Nivel psicológico" : "Niveau psychologique",
+    psychoDesc:       isEs ? "· precio redondo (1.1800)" : "· prix rond (1.1800)",
+    rebound:          isEs ? "→ rebote en la intersección de los 3 niveles" : "→ rebond à l'intersection des 3 niveaux",
+    legendDemand:     isEs ? "Zona Demand" : "Zone Demand",
+    legendSupportH:   isEs ? "Soporte histórico" : "Support historique",
+  };
   // Zone Demand — creux de la courbe, centre du diagramme
   const zoneX = 106, zoneY = 102, zoneW = 60, zoneH = 26;
   const zoneCX = zoneX + zoneW / 2; // 136
@@ -104,13 +120,13 @@ export function ConfluenceDiagram({ className = "" }: ConfluenceDiagramProps) {
           <text x="43" y="26" fontSize="8" fill="#60a5fa" textAnchor="middle" fontWeight="700">Fibonacci 61.8%</text>
 
           <rect x="8" y="33" width="56" height="13" rx="3" fill="#71717a14" stroke="#71717a38" strokeWidth="0.8" />
-          <text x="36" y="43" fontSize="8" fill="#71717a" textAnchor="middle" fontWeight="700">Support S/R</text>
+          <text x="36" y="43" fontSize="8" fill="#71717a" textAnchor="middle" fontWeight="700">{L.supportSR}</text>
 
           <rect x="104" y="130" width="64" height="13" rx="3" fill="#10b98118" stroke="#10b98138" strokeWidth="0.8" />
-          <text x={zoneCX} y="140" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Zone Demand</text>
+          <text x={zoneCX} y="140" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">{L.zoneDemand}</text>
 
           <rect x="186" y="8" width="76" height="16" rx="4" fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />
-          <text x="224" y="19" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">3 confluences ✓</text>
+          <text x="224" y="19" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">{L.confluences}</text>
 
           <rect x="95" y="66" width="38" height="14" fill="#09090b" rx="3" />
           <text x="99" y="77" fontSize="7.5" fill="#52525b" fontWeight="600">1.1800</text>
@@ -119,32 +135,32 @@ export function ConfluenceDiagram({ className = "" }: ConfluenceDiagramProps) {
 
       {/* Mobile : key card avec les 3 confluences */}
       <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
-        <p className="text-[13px] font-bold text-emerald-400">3 confluences sur la Zone Demand ✓</p>
+        <p className="text-[13px] font-bold text-emerald-400">{L.mobTitle}</p>
         <ul className="space-y-1.5 text-[13px] leading-snug">
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-3 h-1 rounded-sm bg-blue-400 mt-2" />
             <span className="text-white">
               <span className="font-bold text-blue-400">Fibonacci 61.8%</span>
-              <span className="text-zinc-300"> · niveau de retracement clé</span>
+              <span className="text-zinc-300"> {L.fibDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-3 h-1 rounded-sm bg-zinc-500 mt-2" />
             <span className="text-white">
-              <span className="font-bold text-zinc-300">Support historique</span>
-              <span className="text-zinc-300"> · zone déjà respectée par le prix</span>
+              <span className="font-bold text-zinc-300">{L.supportHist}</span>
+              <span className="text-zinc-300"> {L.supportHistDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-3 h-0.5 border-t border-dashed border-zinc-600 mt-2.5" />
             <span className="text-white">
-              <span className="font-bold text-zinc-300">Niveau psychologique</span>
-              <span className="text-zinc-300"> · prix rond (1.1800)</span>
+              <span className="font-bold text-zinc-300">{L.psychoLevel}</span>
+              <span className="text-zinc-300"> {L.psychoDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
             <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-emerald-400 mt-1" />
-            <span className="text-zinc-300">→ rebond à l'intersection des 3 niveaux</span>
+            <span className="text-zinc-300">{L.rebound}</span>
           </li>
         </ul>
       </div>
@@ -153,7 +169,7 @@ export function ConfluenceDiagram({ className = "" }: ConfluenceDiagramProps) {
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Zone Demand</span>
+          <span className="text-[10px] text-zinc-500">{L.legendDemand}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-blue-400" />
@@ -161,7 +177,7 @@ export function ConfluenceDiagram({ className = "" }: ConfluenceDiagramProps) {
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Support historique</span>
+          <span className="text-[10px] text-zinc-500">{L.legendSupportH}</span>
         </div>
       </div>
     </div>

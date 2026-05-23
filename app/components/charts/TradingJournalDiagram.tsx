@@ -1,5 +1,6 @@
 interface TradingJournalDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type Trade = {
@@ -38,7 +39,50 @@ const HDR_SEP = 66;
 const ROW_Y0 = 86;
 const ROW_DY = 28;
 
-export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramProps) {
+export function TradingJournalDiagram({ className = "", locale = "fr" }: TradingJournalDiagramProps) {
+  const isEs = locale === "es";
+  const L = {
+    winRate:      isEs ? "Win Rate 60%" : "Win Rate 60%",
+    netR:         isEs ? "+5.5R neto" : "+5.5R net",
+    hdrDate:      isEs ? "FECHA" : "DATE",
+    hdrSetup:     "SETUP",
+    hdrRR:        "R/R",
+    hdrResult:    isEs ? "RESULTADO" : "RÉSULTAT",
+    equityCap:    isEs ? "Equity — capital acumulado (en R)" : "Equity — capital cumulé (en R)",
+    tradeNum:     isEs ? "Trade #" : "Trade #",
+    bestStreak:   isEs ? "Best streak +5R" : "Best streak +5R",
+    worstDd:      isEs ? "Worst drawdown -2R" : "Worst drawdown -2R",
+    bestSetup:    isEs ? "✓  Setup más rentable" : "✓  Setup le plus rentable",
+    bestSetupVal: isEs ? "OB Bullish — 3 / 3 ganadores" : "OB Bullish — 3 / 3 gagnants",
+    bestSetupSub: isEs ? "Ratio promedio: +1.83R / trade" : "Ratio moyen : +1.83R / trade",
+    avoidSetup:   isEs ? "✗  Setup a evitar" : "✗  Setup à éviter",
+    avoidVal:     isEs ? "Range Break — 0 / 2 ganadores" : "Range Break — 0 / 2 gagnants",
+    avoidSub:     isEs ? "Eliminar de tu plan de trading" : "Supprimer de ton plan de trading",
+    recError:     isEs ? "⚠  Error recurrente" : "⚠  Erreur récurrente",
+    recVal:       isEs ? "SL muy ajustado en 3 trades" : "SL trop serré sur 3 trades",
+    recSub:       isEs ? "Revisar sizing y colocación del SL" : "Revoir sizing et placement du SL",
+    mobEqCap:     isEs ? "Equity acumulada (en R)" : "Equity cumulée (en R)",
+    mobWinRate:   isEs ? "Win rate" : "Win rate",
+    mobWinRateD:  isEs ? "6 / 10 trades" : "6 / 10 trades",
+    mobNet:       isEs ? "Net" : "Net",
+    mobNetD:      isEs ? "capital acumulado" : "capital cumulé",
+    mobResult:    isEs ? "Result." : "Résult.",
+    mobBest:      isEs ? "Best +5R" : "Best +5R",
+    mobDd:        isEs ? "Drawdown −2R" : "Drawdown −2R",
+    mobOBVal:     isEs ? "3/3 ganadores" : "3/3 gagnants",
+    mobRangeVal:  isEs ? "0/2 ganadores" : "0/2 gagnants",
+    mobSlTrades:  isEs ? "3 trades" : "3 trades",
+    mobSlVal:     isEs ? "SL muy ajustado —" : "SL trop serré —",
+    mobSlValEnd:  isEs ? "detenidos" : "stoppés",
+    mobObTitle:   isEs ? "OB Bullish —" : "OB Bullish —",
+    mobRangeT:    isEs ? "Range Break —" : "Range Break —",
+    mobAvoidSub:  isEs ? "A eliminar del plan de trading" : "À supprimer du plan de trading",
+    mobRecSub:    isEs ? "Revisar sizing y colocación del SL" : "Revoir sizing et placement du SL",
+    mobBestSub:   isEs ? "Ratio promedio: +1.83R / trade" : "Ratio moyen : +1.83R / trade",
+    mobBestTitle: isEs ? "✓ Setup más rentable" : "✓ Setup le plus rentable",
+    mobAvoidTitle:isEs ? "✗ Setup a evitar" : "✗ Setup à éviter",
+    mobRecTitle:  isEs ? "⚠ Error recurrente" : "⚠ Erreur récurrente",
+  };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       {/* ── DESKTOP (SVG 900×490, inchangé) ───────────────────────── */}
@@ -55,18 +99,18 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
         <rect x={15} y={12} width={90} height={17} rx="3"
           fill="#10b98114" stroke="#10b98130" strokeWidth="0.8" />
         <text x={60} y={24} fontSize="9" fill="#10b981"
-          textAnchor="middle" fontWeight="700">Win Rate 60%</text>
+          textAnchor="middle" fontWeight="700">{L.winRate}</text>
 
         <rect x={115} y={12} width={72} height={17} rx="3"
           fill="#10b98114" stroke="#10b98130" strokeWidth="0.8" />
         <text x={151} y={24} fontSize="9" fill="#10b981"
-          textAnchor="middle" fontWeight="700">+5.5R net</text>
+          textAnchor="middle" fontWeight="700">{L.netR}</text>
 
         <rect x={10} y={38} width={425} height={28} fill="#18181b" />
-        <text x={COL.date}   y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">DATE</text>
-        <text x={COL.setup}  y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">SETUP</text>
-        <text x={COL.rr}     y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">R/R</text>
-        <text x={COL.result} y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">RÉSULTAT</text>
+        <text x={COL.date}   y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">{L.hdrDate}</text>
+        <text x={COL.setup}  y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">{L.hdrSetup}</text>
+        <text x={COL.rr}     y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">{L.hdrRR}</text>
+        <text x={COL.result} y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">{L.hdrResult}</text>
         <line x1={10} y1={HDR_SEP} x2={435} y2={HDR_SEP} stroke="#3f3f46" strokeWidth="1.2" />
 
         {TRADES.map((t, i) => {
@@ -95,7 +139,7 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
         <rect x={588} y={12} width={190} height={16} rx="3"
           fill="#09090b" fillOpacity="0.85" />
         <text x={683} y={23} fontSize="8.5" fill="#52525b"
-          textAnchor="middle" fontWeight="600">Equity — capital cumulé (en R)</text>
+          textAnchor="middle" fontWeight="600">{L.equityCap}</text>
 
         {/* Zero baseline */}
         <line x1={452} y1={340} x2={892} y2={340}
@@ -118,7 +162,7 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
             <text x={x} y={360} fontSize="8" fill="#52525b" textAnchor="middle">{i + 1}</text>
           </g>
         ))}
-        <text x={672} y={374} fontSize="8" fill="#3f3f46" textAnchor="middle">Trade #</text>
+        <text x={672} y={374} fontSize="8" fill="#3f3f46" textAnchor="middle">{L.tradeNum}</text>
 
         {/* Equity fill */}
         <path d={`${eqPath} L892,340 L452,340 Z`} fill="#10b98108" />
@@ -142,7 +186,7 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
         <rect x={524} y={109} width={120} height={16} rx="3"
           fill="#10b98112" stroke="#10b98130" strokeWidth="0.7" />
         <text x={584} y={121} fontSize="8.5" fill="#10b981"
-          textAnchor="middle" fontWeight="700">Best streak +5R</text>
+          textAnchor="middle" fontWeight="700">{L.bestStreak}</text>
 
         {/* Worst drawdown — T5 trough (672, 220) */}
         <circle cx={672} cy={220} r="5" fill="#ef4444" opacity="0.9" />
@@ -153,28 +197,28 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
         <rect x={606} y={233} width={132} height={16} rx="3"
           fill="#ef444412" stroke="#ef444430" strokeWidth="0.7" />
         <text x={672} y={245} fontSize="8.5" fill="#ef4444"
-          textAnchor="middle" fontWeight="700">Worst drawdown -2R</text>
+          textAnchor="middle" fontWeight="700">{L.worstDd}</text>
 
         {/* ── INSIGHTS BAND ── */}
         <line x1={10} y1={386} x2={892} y2={386} stroke="#27272a" strokeWidth="1" />
 
         <rect x={10}  y={394} width={280} height={80} rx="4"
           fill="#10b9810a" stroke="#10b98120" strokeWidth="0.8" />
-        <text x={22} y={414} fontSize="8.5" fill="#34d399" fontWeight="700">✓  Setup le plus rentable</text>
-        <text x={22} y={432} fontSize="10"  fill="#a1a1aa">OB Bullish — 3 / 3 gagnants</text>
-        <text x={22} y={450} fontSize="8.5" fill="#52525b">Ratio moyen : +1.83R / trade</text>
+        <text x={22} y={414} fontSize="8.5" fill="#34d399" fontWeight="700">{L.bestSetup}</text>
+        <text x={22} y={432} fontSize="10"  fill="#a1a1aa">{L.bestSetupVal}</text>
+        <text x={22} y={450} fontSize="8.5" fill="#52525b">{L.bestSetupSub}</text>
 
         <rect x={306} y={394} width={280} height={80} rx="4"
           fill="#ef44440a" stroke="#ef444420" strokeWidth="0.8" />
-        <text x={318} y={414} fontSize="8.5" fill="#f87171" fontWeight="700">✗  Setup à éviter</text>
-        <text x={318} y={432} fontSize="10"  fill="#a1a1aa">Range Break — 0 / 2 gagnants</text>
-        <text x={318} y={450} fontSize="8.5" fill="#52525b">Supprimer de ton plan de trading</text>
+        <text x={318} y={414} fontSize="8.5" fill="#f87171" fontWeight="700">{L.avoidSetup}</text>
+        <text x={318} y={432} fontSize="10"  fill="#a1a1aa">{L.avoidVal}</text>
+        <text x={318} y={450} fontSize="8.5" fill="#52525b">{L.avoidSub}</text>
 
         <rect x={602} y={394} width={286} height={80} rx="4"
           fill="#60a5fa0a" stroke="#60a5fa20" strokeWidth="0.8" />
-        <text x={614} y={414} fontSize="8.5" fill="#60a5fa" fontWeight="700">⚠  Erreur récurrente</text>
-        <text x={614} y={432} fontSize="10"  fill="#a1a1aa">SL trop serré sur 3 trades</text>
-        <text x={614} y={450} fontSize="8.5" fill="#52525b">Revoir sizing et placement du SL</text>
+        <text x={614} y={414} fontSize="8.5" fill="#60a5fa" fontWeight="700">{L.recError}</text>
+        <text x={614} y={432} fontSize="10"  fill="#a1a1aa">{L.recVal}</text>
+        <text x={614} y={450} fontSize="8.5" fill="#52525b">{L.recSub}</text>
       </svg>
 
       {/* ── MOBILE (HTML reconstruit — tailles aggressives) ────────────────── */}
@@ -182,21 +226,21 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
         {/* Hero metrics : 2 chiffres XXL */}
         <div className="grid grid-cols-2 gap-2.5">
           <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-center">
-            <p className="text-[12px] text-emerald-400/80 uppercase tracking-wider font-bold">Win rate</p>
+            <p className="text-[12px] text-emerald-400/80 uppercase tracking-wider font-bold">{L.mobWinRate}</p>
             <p className="text-[32px] font-bold text-emerald-400 mt-1 leading-none">60%</p>
-            <p className="text-[12px] text-zinc-500 mt-1">6 / 10 trades</p>
+            <p className="text-[12px] text-zinc-500 mt-1">{L.mobWinRateD}</p>
           </div>
           <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-center">
-            <p className="text-[12px] text-emerald-400/80 uppercase tracking-wider font-bold">Net</p>
+            <p className="text-[12px] text-emerald-400/80 uppercase tracking-wider font-bold">{L.mobNet}</p>
             <p className="text-[32px] font-bold text-emerald-400 mt-1 leading-none">+5.5R</p>
-            <p className="text-[12px] text-zinc-500 mt-1">capital cumulé</p>
+            <p className="text-[12px] text-zinc-500 mt-1">{L.mobNetD}</p>
           </div>
         </div>
 
         {/* Equity curve simplifié — pleine largeur, plus haut, sans texte SVG */}
         <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3.5">
           <p className="text-[13px] font-bold text-zinc-400 uppercase tracking-wider text-center mb-3">
-            Equity cumulée (en R)
+            {L.mobEqCap}
           </p>
           <svg viewBox="0 0 320 130" width="100%" fill="none" aria-label="Equity curve">
             {/* Grille discrète */}
@@ -225,11 +269,11 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
           <div className="grid grid-cols-2 gap-3 mt-3">
             <div className="flex items-center gap-2">
               <span className="shrink-0 w-3 h-3 rounded-full bg-emerald-400" />
-              <span className="text-[13px] text-emerald-400 font-bold">Best +5R</span>
+              <span className="text-[13px] text-emerald-400 font-bold">{L.mobBest}</span>
             </div>
             <div className="flex items-center gap-2 justify-end">
               <span className="shrink-0 w-3 h-3 rounded-full bg-red-400" />
-              <span className="text-[13px] text-red-400 font-bold">Drawdown −2R</span>
+              <span className="text-[13px] text-red-400 font-bold">{L.mobDd}</span>
             </div>
           </div>
         </div>
@@ -237,10 +281,10 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
         {/* Table 10 trades — colonnes optimisées, noms complets */}
         <div className="rounded-xl border border-zinc-800 overflow-hidden">
           <div className="grid grid-cols-[48px_1fr_40px_56px] gap-1.5 px-2.5 py-2.5 bg-zinc-900 border-b border-zinc-800 text-[11px] font-bold text-zinc-500 uppercase tracking-wide">
-            <span>Date</span>
+            <span>{isEs ? "Fecha" : "Date"}</span>
             <span>Setup</span>
             <span className="text-center">R/R</span>
-            <span className="text-right">Résult.</span>
+            <span className="text-right">{L.mobResult}</span>
           </div>
           <div className="divide-y divide-zinc-800/70">
             {TRADES.map((t, i) => (
@@ -264,19 +308,19 @@ export function TradingJournalDiagram({ className = "" }: TradingJournalDiagramP
         {/* Insights — 3 cartes, texte aggressif */}
         <div className="space-y-2.5">
           <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/8 p-3">
-            <p className="text-[14px] font-bold text-emerald-400">✓ Setup le plus rentable</p>
-            <p className="text-[14px] text-white leading-snug mt-1">OB Bullish — <span className="font-bold text-emerald-400">3/3 gagnants</span></p>
-            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">Ratio moyen : +1.83R / trade</p>
+            <p className="text-[14px] font-bold text-emerald-400">{L.mobBestTitle}</p>
+            <p className="text-[14px] text-white leading-snug mt-1">{L.mobObTitle} <span className="font-bold text-emerald-400">{L.mobOBVal}</span></p>
+            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">{L.mobBestSub}</p>
           </div>
           <div className="rounded-xl border border-red-500/30 bg-red-500/8 p-3">
-            <p className="text-[14px] font-bold text-red-400">✗ Setup à éviter</p>
-            <p className="text-[14px] text-white leading-snug mt-1">Range Break — <span className="font-bold text-red-400">0/2 gagnants</span></p>
-            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">À supprimer du plan de trading</p>
+            <p className="text-[14px] font-bold text-red-400">{L.mobAvoidTitle}</p>
+            <p className="text-[14px] text-white leading-snug mt-1">{L.mobRangeT} <span className="font-bold text-red-400">{L.mobRangeVal}</span></p>
+            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">{L.mobAvoidSub}</p>
           </div>
           <div className="rounded-xl border border-blue-400/30 bg-blue-500/8 p-3">
-            <p className="text-[14px] font-bold text-blue-400">⚠ Erreur récurrente</p>
-            <p className="text-[14px] text-white leading-snug mt-1">SL trop serré — <span className="font-bold text-blue-400">3 trades</span> stoppés</p>
-            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">Revoir sizing et placement du SL</p>
+            <p className="text-[14px] font-bold text-blue-400">{L.mobRecTitle}</p>
+            <p className="text-[14px] text-white leading-snug mt-1">{L.mobSlVal} <span className="font-bold text-blue-400">{L.mobSlTrades}</span> {L.mobSlValEnd}</p>
+            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">{L.mobRecSub}</p>
           </div>
         </div>
       </div>

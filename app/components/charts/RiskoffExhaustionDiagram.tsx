@@ -4,6 +4,7 @@
 
 interface RiskoffExhaustionDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -52,7 +53,28 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function RiskoffExhaustionDiagram({ className = "" }: RiskoffExhaustionDiagramProps) {
+export function RiskoffExhaustionDiagram({ className = "", locale = "fr" }: RiskoffExhaustionDiagramProps) {
+  const t = locale === "es"
+    ? {
+        annotation: "El régimen pierde progresivamente fuerza",
+        mobileTitle: "Risk-off agotamiento · XAU/USD H4",
+        bullishTitle: "Tendencia bullish fuerte al inicio",
+        bullishDesc: "Régimen risk-off activo, el oro sube fuerte.",
+        sommetsTitle: "Cimas débiles + correcciones profundas",
+        sommetsDesc: "Agotamiento progresivo — preparación para una reversión.",
+        legendBullish: "Tendencia bullish fuerte al inicio",
+        legendSommets: "Cimas más débiles + correcciones más profundas = agotamiento",
+      }
+    : {
+        annotation: "Le régime perd progressivement en force",
+        mobileTitle: "Risk-off exhaustion · XAU/USD H4",
+        bullishTitle: "Tendance bullish forte au départ",
+        bullishDesc: "Régime risk-off actif, l'or monte fort.",
+        sommetsTitle: "Sommets faibles + corrections profondes",
+        sommetsDesc: "Essoufflement progressif — préparation à un retournement.",
+        legendBullish: "Tendance bullish forte au départ",
+        legendSommets: "Sommets plus faibles + corrections plus profondes = essoufflement",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -85,31 +107,31 @@ export function RiskoffExhaustionDiagram({ className = "" }: RiskoffExhaustionDi
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le régime perd progressivement en force
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : Risk-off exhaustion ──────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Risk-off exhaustion · XAU/USD H4</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Tendance bullish forte au départ</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Régime risk-off actif, l'or monte fort.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.bullishTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.bullishDesc}</p>
         </div>
         <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-          <p className="text-[13px] font-bold text-amber-400">Sommets faibles + corrections profondes</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Essoufflement progressif — préparation à un retournement.</p>
+          <p className="text-[13px] font-bold text-amber-400">{t.sommetsTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.sommetsDesc}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Tendance bullish forte au départ</span>
+          <span className="text-[10px] text-zinc-500">{t.legendBullish}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Sommets plus faibles + corrections plus profondes = essoufflement</span>
+          <span className="text-[10px] text-zinc-500">{t.legendSommets}</span>
         </div>
       </div>
     </div>

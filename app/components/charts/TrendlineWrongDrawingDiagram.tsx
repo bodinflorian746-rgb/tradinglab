@@ -1,4 +1,47 @@
-export default function TrendlineWrongDrawingDiagram({ className = "" }: { className?: string }) {
+export default function TrendlineWrongDrawingDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const labels = locale === "es"
+    ? {
+        title: "Trazar una trendline — 3 errores comunes",
+        good: "✓ Bien trazada — 3 HL alineados",
+        bad2pts: "✗ 2 puntos aislados",
+        hlIgnore: "HL ignorado",
+        hl3Ignored: "3 HL ignorados bajo el path",
+        slope: "✗ Pendiente irreal",
+        angleNote: "Ángulo ~70° vs path a ~30°",
+        breakIgnored: "✗ Ruptura ignorada",
+        breakLabel: "Ruptura ignorada",
+        prolonged: "Trendline prolongada a pesar de la ruptura",
+        mobTitle: "Trazar una trendline — buena vs errores",
+        mobGood: "✓ Bien trazada — 3 HL alineados",
+        mobGoodDesc: "Mínimo 3 pivotes HL (o LH) conectados sobre la misma recta.",
+        mob2pts: "✗ 2 puntos aislados",
+        mob2ptsDesc: "2 pivotes no bastan — cualquier recta pasa por 2 puntos. Hacen falta al menos 3.",
+        mobWicks: "✗ Trendline forzada sobre mechas",
+        mobWicksDesc: "Unir mechas aisladas = trazo sesgado. Usa los cuerpos de las velas.",
+        mobBreak: "✗ Ruptura ignorada",
+        mobBreakDesc: "Una vez rota, abandona la trendline. No la prolongues.",
+      }
+    : {
+        title: "Tracer une trendline — 3 erreurs courantes",
+        good: "✓ Bon tracé — 3 HL alignés",
+        bad2pts: "✗ 2 points isolés",
+        hlIgnore: "HL ignoré",
+        hl3Ignored: "3 HL ignorés sous le path",
+        slope: "✗ Pente irréaliste",
+        angleNote: "Angle ~70° vs path à ~30°",
+        breakIgnored: "✗ Cassure ignorée",
+        breakLabel: "Cassure ignorée",
+        prolonged: "Trendline prolongée malgré la cassure",
+        mobTitle: "Tracer une trendline — bon vs erreurs",
+        mobGood: "✓ Bon tracé — 3 HL alignés",
+        mobGoodDesc: "Au minimum 3 pivots HL (ou LH) connectés sur la même droite.",
+        mob2pts: "✗ 2 points isolés",
+        mob2ptsDesc: "2 pivots ne suffisent pas — toute droite passe par 2 points. Il faut au moins 3.",
+        mobWicks: "✗ Trendline forcée sur des mèches",
+        mobWicksDesc: "Relier des mèches isolées = tracé biaisé. Utiliser les corps de bougies.",
+        mobBreak: "✗ Cassure ignorée",
+        mobBreakDesc: "Une fois cassée, abandonner la trendline. Ne pas la prolonger.",
+      };
   return (
     <div className={className}>
     <svg
@@ -7,7 +50,7 @@ export default function TrendlineWrongDrawingDiagram({ className = "" }: { class
       className="hidden sm:block w-full h-auto"
     >
       <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        Tracer une trendline — 3 erreurs courantes
+        {labels.title}
       </text>
 
       <line x1="400" y1="40" x2="400" y2="480" stroke="#3f3f46" strokeWidth="1" />
@@ -15,7 +58,7 @@ export default function TrendlineWrongDrawingDiagram({ className = "" }: { class
 
       {/* ═══ Cellule 1 — BON tracé (haut gauche) ═══ */}
       <rect x="80" y="50" width="240" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="200" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">✓ Bon tracé — 3 HL alignés</text>
+      <text x="200" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{labels.good}</text>
 
       <path d="M40,230 L80,160 L120,200 L160,140 L200,180 L240,100 L280,140 L320,80 L360,120" stroke="#71717a" strokeWidth="1.8" fill="none" strokeLinejoin="round" />
 
@@ -28,7 +71,7 @@ export default function TrendlineWrongDrawingDiagram({ className = "" }: { class
 
       {/* ═══ Cellule 2 — MAUVAIS 2 points isolés (haut droite) ═══ */}
       <rect x="480" y="50" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">✗ 2 points isolés</text>
+      <text x="600" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{labels.bad2pts}</text>
 
       <path d="M440,230 L480,160 L520,200 L560,140 L600,180 L640,100 L680,140 L720,80 L760,120" stroke="#71717a" strokeWidth="1.8" fill="none" strokeLinejoin="round" />
 
@@ -46,15 +89,15 @@ export default function TrendlineWrongDrawingDiagram({ className = "" }: { class
 
       {/* Labels avec halos placés en fin de cellule 2 pour rester au-dessus du path et de la trendline */}
       <rect x="524" y="189" width="53" height="14" fill="#09090b" rx="3" />
-      <text x="528" y="198" fill="#ef4444" fontSize="7" fontWeight="600">HL ignoré</text>
+      <text x="528" y="198" fill="#ef4444" fontSize="7" fontWeight="600">{labels.hlIgnore}</text>
       <rect x="604" y="169" width="53" height="14" fill="#09090b" rx="3" />
-      <text x="608" y="178" fill="#ef4444" fontSize="7" fontWeight="600">HL ignoré</text>
+      <text x="608" y="178" fill="#ef4444" fontSize="7" fontWeight="600">{labels.hlIgnore}</text>
       <rect x="524" y="237" width="152" height="14" fill="#09090b" rx="3" />
-      <text x="600" y="248" fill="#ef4444" fontSize="8" textAnchor="middle">3 HL ignorés sous le path</text>
+      <text x="600" y="248" fill="#ef4444" fontSize="8" textAnchor="middle">{labels.hl3Ignored}</text>
 
       {/* ═══ Cellule 3 — MAUVAIS pente trop forte (bas gauche) ═══ */}
       <rect x="80" y="280" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="200" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">✗ Pente irréaliste</text>
+      <text x="200" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{labels.slope}</text>
 
       <path d="M40,450 L80,420 L120,440 L160,400 L200,420 L240,380 L280,400 L320,360 L360,380" stroke="#71717a" strokeWidth="1.8" fill="none" strokeLinejoin="round" />
 
@@ -64,11 +107,11 @@ export default function TrendlineWrongDrawingDiagram({ className = "" }: { class
 
       {/* Trendline red avec pente quasi-verticale (~70°) clairement irréaliste */}
       <line x1="80" y1="450" x2="160" y2="340" stroke="#ef4444" strokeWidth="2" />
-      <text x="200" y="475" fill="#ef4444" fontSize="8" textAnchor="middle">Angle ~70° vs path à ~30°</text>
+      <text x="200" y="475" fill="#ef4444" fontSize="8" textAnchor="middle">{labels.angleNote}</text>
 
       {/* ═══ Cellule 4 — MAUVAIS cassure ignorée (bas droite) ═══ */}
       <rect x="480" y="280" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">✗ Cassure ignorée</text>
+      <text x="600" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{labels.breakIgnored}</text>
 
       <path d="M440,440 L480,400 L520,420 L560,380 L600,400 L640,360 L680,410 L720,450 L760,470" stroke="#71717a" strokeWidth="1.8" fill="none" strokeLinejoin="round" />
 
@@ -86,29 +129,29 @@ export default function TrendlineWrongDrawingDiagram({ className = "" }: { class
       {/* Pastille "Cassure ignorée" à côté de la bougie de cassure */}
       <line x1="712" y1="400" x2="745" y2="395" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" />
       <rect x="640" y="320" width="120" height="18" rx="4" fill="#ef444433" stroke="#ef4444" strokeWidth="1.2" />
-      <text x="700" y="332" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">Cassure ignorée</text>
+      <text x="700" y="332" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">{labels.breakLabel}</text>
 
-      <text x="600" y="475" fill="#ef4444" fontSize="8" textAnchor="middle">Trendline prolongée malgré la cassure</text>
+      <text x="600" y="475" fill="#ef4444" fontSize="8" textAnchor="middle">{labels.prolonged}</text>
     </svg>
 
     {/* MOBILE : tracé trendline correct vs erreurs ──────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Tracer une trendline — bon vs erreurs</p>
+      <p className="text-[14px] font-bold text-white text-center">{labels.mobTitle}</p>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">✓ Bon tracé — 3 HL alignés</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Au minimum 3 pivots HL (ou LH) connectés sur la même droite.</p>
+        <p className="text-[13px] font-bold text-emerald-400">{labels.mobGood}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{labels.mobGoodDesc}</p>
       </div>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">✗ 2 points isolés</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">2 pivots ne suffisent pas — toute droite passe par 2 points. Il faut au moins 3.</p>
+        <p className="text-[13px] font-bold text-red-400">{labels.mob2pts}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{labels.mob2ptsDesc}</p>
       </div>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">✗ Trendline forcée sur des mèches</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Relier des mèches isolées = tracé biaisé. Utiliser les corps de bougies.</p>
+        <p className="text-[13px] font-bold text-red-400">{labels.mobWicks}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{labels.mobWicksDesc}</p>
       </div>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">✗ Cassure ignorée</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Une fois cassée, abandonner la trendline. Ne pas la prolonger.</p>
+        <p className="text-[13px] font-bold text-red-400">{labels.mobBreak}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{labels.mobBreakDesc}</p>
       </div>
     </div>
     </div>

@@ -39,7 +39,44 @@ function Pastille({ x, y, label, color, textColor, arrow }: PastilleProps) {
   );
 }
 
-export default function HeadShouldersDiagram() {
+export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+  const L = locale === "es"
+    ? {
+        hsTitle: "Head & Shoulders — fin de tendencia alcista",
+        ihsTitle: "H&S Invertido — fin de tendencia bajista",
+        shoulders: "Hombros",
+        shoulderL: "Hombro I",
+        head: "Cabeza",
+        shoulderR: "Hombro D",
+        neckline: "Neckline",
+        breakout: "Ruptura",
+        mobileTitle: "Head & Shoulders — 2 variantes",
+        classicTitle: "H&S clásico — Reversión BAJISTA",
+        classicDesc1: "3 cimas: Hombro I → Cabeza (más alta) → Hombro D. Ruptura bajo la ",
+        classicDesc2: " = señal short.",
+        invTitle: "H&S invertido — Reversión ALCISTA",
+        invDesc1: "3 mínimos: Hombro I → Cabeza (más bajo) → Hombro D. Ruptura sobre la ",
+        invDesc2: " = señal long.",
+        footer: "Patrón de reversión mayor, válido tras ruptura de la neckline.",
+      }
+    : {
+        hsTitle: "Head & Shoulders — fin de tendance haussière",
+        ihsTitle: "H&S Inversé — fin de tendance baissière",
+        shoulders: "Épaules",
+        shoulderL: "Épaule G",
+        head: "Tête",
+        shoulderR: "Épaule D",
+        neckline: "Neckline",
+        breakout: "Cassure",
+        mobileTitle: "Head & Shoulders — 2 variantes",
+        classicTitle: "H&S classique — Retournement BAISSIER",
+        classicDesc1: "3 sommets : Épaule G → Tête (plus haut) → Épaule D. Cassure sous la ",
+        classicDesc2: " = signal short.",
+        invTitle: "H&S inversé — Retournement HAUSSIER",
+        invDesc1: "3 creux : Épaule G → Tête (plus bas) → Épaule D. Cassure au-dessus de la ",
+        invDesc2: " = signal long.",
+        footer: "Pattern de retournement majeur, valide après cassure de la neckline.",
+      };
   // ─── Head & Shoulders classique (bearish reversal) ─── x = 30 → 380
   const hsPts: [number, number][] = [
     [30, 295],   // début pré-tendance haussière
@@ -90,12 +127,12 @@ export default function HeadShouldersDiagram() {
         {/* ════════ HEAD & SHOULDERS (gauche) ════════ */}
 
         <text x="195" y="28" fontSize="13" fontWeight="600" fill="#d4d4d8" textAnchor="middle">
-          Head &amp; Shoulders — fin de tendance haussière
+          {L.hsTitle}
         </text>
 
         {/* Ligne guide des 2 épaules (résistance des shoulders) */}
         <line x1="60" y1="130" x2="310" y2="130" stroke="#71717a" strokeWidth="1" strokeDasharray="4 4" />
-        <text x="55" y="133" fontSize="11" fill="#a1a1aa" textAnchor="end">Épaules</text>
+        <text x="55" y="133" fontSize="11" fill="#a1a1aa" textAnchor="end">{L.shoulders}</text>
 
         {/* Neckline reliant les 2 creux */}
         <line x1="90" y1="185" x2="385" y2="185" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="6 3" />
@@ -114,11 +151,11 @@ export default function HeadShouldersDiagram() {
         <circle cx={hsPts[7][0]} cy={hsPts[7][1]} r="3.5" fill="#ef4444" />
 
         {/* Pastilles */}
-        <Pastille x={80} y={110} label="Épaule G" color="#ef4444" />
-        <Pastille x={175} y={55} label="Tête" color="#ef4444" />
-        <Pastille x={290} y={110} label="Épaule D" color="#ef4444" />
-        <Pastille x={235} y={208} label="Neckline" color="#3f3f46" textColor="#a1a1aa" />
-        <Pastille x={340} y={270} label="Cassure" color="#ef4444" arrow="down" />
+        <Pastille x={80} y={110} label={L.shoulderL} color="#ef4444" />
+        <Pastille x={175} y={55} label={L.head} color="#ef4444" />
+        <Pastille x={290} y={110} label={L.shoulderR} color="#ef4444" />
+        <Pastille x={235} y={208} label={L.neckline} color="#3f3f46" textColor="#a1a1aa" />
+        <Pastille x={340} y={270} label={L.breakout} color="#ef4444" arrow="down" />
 
         {/* ════════ Séparateur vertical ════════ */}
         <line x1="405" y1="25" x2="405" y2="380" stroke="#27272a" strokeWidth="1" strokeDasharray="2 4" />
@@ -126,12 +163,12 @@ export default function HeadShouldersDiagram() {
         {/* ════════ HEAD & SHOULDERS INVERSÉ (droite) ════════ */}
 
         <text x="600" y="28" fontSize="13" fontWeight="600" fill="#d4d4d8" textAnchor="middle">
-          H&amp;S Inversé — fin de tendance baissière
+          {L.ihsTitle}
         </text>
 
         {/* Ligne guide des 2 épaules (support des shoulders inversées) */}
         <line x1="465" y1="275" x2="715" y2="275" stroke="#71717a" strokeWidth="1" strokeDasharray="4 4" />
-        <text x="460" y="278" fontSize="11" fill="#a1a1aa" textAnchor="end">Épaules</text>
+        <text x="460" y="278" fontSize="11" fill="#a1a1aa" textAnchor="end">{L.shoulders}</text>
 
         {/* Neckline reliant les 2 sommets */}
         <line x1="495" y1="220" x2="785" y2="220" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="6 3" />
@@ -150,26 +187,26 @@ export default function HeadShouldersDiagram() {
         <circle cx={ihsPts[7][0]} cy={ihsPts[7][1]} r="3.5" fill="#10b981" />
 
         {/* Pastilles */}
-        <Pastille x={485} y={295} label="Épaule G" color="#10b981" />
-        <Pastille x={580} y={345} label="Tête" color="#10b981" />
-        <Pastille x={695} y={295} label="Épaule D" color="#10b981" />
-        <Pastille x={640} y={197} label="Neckline" color="#3f3f46" textColor="#a1a1aa" />
-        <Pastille x={745} y={135} label="Cassure" color="#10b981" arrow="up" />
+        <Pastille x={485} y={295} label={L.shoulderL} color="#10b981" />
+        <Pastille x={580} y={345} label={L.head} color="#10b981" />
+        <Pastille x={695} y={295} label={L.shoulderR} color="#10b981" />
+        <Pastille x={640} y={197} label={L.neckline} color="#3f3f46" textColor="#a1a1aa" />
+        <Pastille x={745} y={135} label={L.breakout} color="#10b981" arrow="up" />
       </svg>
 
       {/* MOBILE : 2 patterns H&S empilés ───────────────────────── */}
       <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Head & Shoulders — 2 variantes</p>
+        <p className="text-[14px] font-bold text-white text-center">{L.mobileTitle}</p>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">H&S classique — Retournement BAISSIER</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">3 sommets : Épaule G → Tête (plus haut) → Épaule D. Cassure sous la <span className="font-bold">neckline</span> = signal short.</p>
+          <p className="text-[13px] font-bold text-red-400">{L.classicTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.classicDesc1}<span className="font-bold">neckline</span>{L.classicDesc2}</p>
         </div>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">H&S inversé — Retournement HAUSSIER</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">3 creux : Épaule G → Tête (plus bas) → Épaule D. Cassure au-dessus de la <span className="font-bold">neckline</span> = signal long.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{L.invTitle}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.invDesc1}<span className="font-bold">neckline</span>{L.invDesc2}</p>
         </div>
         <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-          Pattern de retournement majeur, valide après cassure de la neckline.
+          {L.footer}
         </p>
       </div>
     </div>

@@ -1,4 +1,75 @@
-export const MacroDangerWindowsDiagram = () => {
+export const MacroDangerWindowsDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+  const t = locale === "es"
+    ? {
+        title: "Las ventanas de peligro macro — día tipo",
+        subtitle: "Identifica cuándo evitar, cuándo observar, cuándo tradear",
+        sessionEU: "Sesión EU",
+        sessionUS: "Sesión US",
+        regleDor: "REGLA DE ORO",
+        avantLabel: "30 MIN ANTES",
+        eviteEntrer: "Evita entrar",
+        enPosition: "en posición",
+        pendant: "DURANTE",
+        neTradePas: "No tradees",
+        observe: "Observa",
+        unHApres: "1H DESPUÉS",
+        attends: "Espera",
+        confirmation: "confirmación",
+        footer: "El riesgo depende de la hora. Aprende a leer el día como una meteorología macro.",
+        mobileTitle: "Ventanas de peligro macro — día tipo",
+        timeline: [
+          { range: "08h – 12h30", session: "Sesión EU", danger: false, label: "Zona tranquila", events: null },
+          { range: "12h30 – 13h", session: null, danger: true, label: "⚠ BoE 13h", events: "Discurso Banco de Inglaterra" },
+          { range: "14h15", session: null, danger: true, label: "⚠ BCE 14h15", events: "Decisión BCE" },
+          { range: "14h30", session: null, danger: true, label: "🔴 NFP / CPI 14h30", events: "La news US más grande del día" },
+          { range: "16h – 19h30", session: "Sesión US", danger: false, label: "Zona tranquila", events: null },
+          { range: "20h", session: null, danger: true, label: "🔴 FOMC 20h", events: "Decisión Reserva Federal" },
+          { range: "21h – 22h", session: null, danger: false, label: "Fin de día", events: null },
+        ] as { range: string; session: string | null; danger: boolean; label: string; events: string | null }[],
+        regleMobile: "⚡ Regla de oro",
+        avantMobile: "30 min ANTES",
+        eviteEntrerMobile: "Evita entrar en posición",
+        pendantMobile: "DURANTE",
+        neTradePasMobile: "No tradees — observa solamente",
+        unHApresMobile: "1H DESPUÉS",
+        attendsConfMobile: "Espera confirmación de dirección",
+        mobileFooter: "El riesgo depende de la hora. Lee el día como una meteorología macro.",
+      }
+    : {
+        title: "Les fenêtres de danger macro — journée type",
+        subtitle: "Identifie quand éviter, quand observer, quand trader",
+        sessionEU: "Session EU",
+        sessionUS: "Session US",
+        regleDor: "RÈGLE D'OR",
+        avantLabel: "30 MIN AVANT",
+        eviteEntrer: "Évite d'entrer",
+        enPosition: "en position",
+        pendant: "PENDANT",
+        neTradePas: "Ne trade pas",
+        observe: "Observe",
+        unHApres: "1H APRÈS",
+        attends: "Attends",
+        confirmation: "confirmation",
+        footer: "Le risque dépend de l'heure. Apprends à lire la journée comme une météo macro.",
+        mobileTitle: "Fenêtres de danger macro — journée type",
+        timeline: [
+          { range: "08h – 12h30", session: "Session EU", danger: false, label: "Zone calme", events: null },
+          { range: "12h30 – 13h", session: null, danger: true, label: "⚠ BoE 13h", events: "Discours Banque d'Angleterre" },
+          { range: "14h15", session: null, danger: true, label: "⚠ BCE 14h15", events: "Décision BCE" },
+          { range: "14h30", session: null, danger: true, label: "🔴 NFP / CPI 14h30", events: "Plus grosse news US du jour" },
+          { range: "16h – 19h30", session: "Session US", danger: false, label: "Zone calme", events: null },
+          { range: "20h", session: null, danger: true, label: "🔴 FOMC 20h", events: "Décision Réserve fédérale" },
+          { range: "21h – 22h", session: null, danger: false, label: "Fin de journée", events: null },
+        ] as { range: string; session: string | null; danger: boolean; label: string; events: string | null }[],
+        regleMobile: "⚡ Règle d'or",
+        avantMobile: "30 min AVANT",
+        eviteEntrerMobile: "Évite d'entrer en position",
+        pendantMobile: "PENDANT",
+        neTradePasMobile: "Ne trade pas — observe seulement",
+        unHApresMobile: "1H APRÈS",
+        attendsConfMobile: "Attends confirmation de direction",
+        mobileFooter: "Le risque dépend de l'heure. Lis la journée comme une météo macro.",
+      };
   return (
     <div>
     <svg
@@ -13,10 +84,10 @@ export const MacroDangerWindowsDiagram = () => {
 
       {/* Layer 2 — Titre */}
       <text x="400" y="35" fill="white" fontSize="16" fontWeight="700" textAnchor="middle">
-        Les fenêtres de danger macro — journée type
+        {t.title}
       </text>
       <text x="400" y="55" fill="#a1a1aa" fontSize="12" fontStyle="italic" textAnchor="middle">
-        Identifie quand éviter, quand observer, quand trader
+        {t.subtitle}
       </text>
 
       {/* Layer 3 — Zones colorées (avant axe et marqueurs) */}
@@ -46,8 +117,8 @@ export const MacroDangerWindowsDiagram = () => {
         fill="#10b981" fillOpacity="0.15" stroke="#34d399" strokeOpacity="0.4" strokeWidth="1" />
 
       {/* Labels de session dans les zones vertes */}
-      <text x="169" y="205" fill="#34d399" fontSize="9" fontStyle="italic" textAnchor="middle">Session EU</text>
-      <text x="533" y="205" fill="#34d399" fontSize="9" fontStyle="italic" textAnchor="middle">Session US</text>
+      <text x="169" y="205" fill="#34d399" fontSize="9" fontStyle="italic" textAnchor="middle">{t.sessionEU}</text>
+      <text x="533" y="205" fill="#34d399" fontSize="9" fontStyle="italic" textAnchor="middle">{t.sessionUS}</text>
 
       {/* Layer 4 — Axe horizontal */}
       <line x1="60" y1="225" x2="740" y2="225" stroke="#3f3f46" strokeWidth="1.5" />
@@ -114,50 +185,42 @@ export const MacroDangerWindowsDiagram = () => {
       <line x1="60" y1="263" x2="740" y2="263" stroke="#27272a" strokeWidth="1" />
 
       <text x="400" y="282" fill="#fbbf24" fontSize="12" fontWeight="700" letterSpacing="0.08em" textAnchor="middle">
-        RÈGLE D&apos;OR
+        {t.regleDor}
       </text>
 
       {/* Colonne AVANT — x=180 */}
       <circle cx="180" cy="302" r="7" fill="#ef4444" />
-      <text x="180" y="322" fill="#d4d4d8" fontSize="11" fontWeight="700" textAnchor="middle">30 MIN AVANT</text>
-      <text x="180" y="338" fill="#a1a1aa" fontSize="10" textAnchor="middle">Évite d&apos;entrer</text>
-      <text x="180" y="352" fill="#a1a1aa" fontSize="10" textAnchor="middle">en position</text>
+      <text x="180" y="322" fill="#d4d4d8" fontSize="11" fontWeight="700" textAnchor="middle">{t.avantLabel}</text>
+      <text x="180" y="338" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.eviteEntrer}</text>
+      <text x="180" y="352" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.enPosition}</text>
 
       {/* Colonne PENDANT — x=400 */}
       <circle cx="400" cy="302" r="7" fill="#ef4444" />
-      <text x="400" y="322" fill="#d4d4d8" fontSize="11" fontWeight="700" textAnchor="middle">PENDANT</text>
-      <text x="400" y="338" fill="#a1a1aa" fontSize="10" textAnchor="middle">Ne trade pas</text>
-      <text x="400" y="352" fill="#a1a1aa" fontSize="10" textAnchor="middle">Observe</text>
+      <text x="400" y="322" fill="#d4d4d8" fontSize="11" fontWeight="700" textAnchor="middle">{t.pendant}</text>
+      <text x="400" y="338" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.neTradePas}</text>
+      <text x="400" y="352" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.observe}</text>
 
       {/* Colonne APRÈS — x=620 */}
       <circle cx="620" cy="302" r="7" fill="#fbbf24" />
-      <text x="620" y="322" fill="#d4d4d8" fontSize="11" fontWeight="700" textAnchor="middle">1H APRÈS</text>
-      <text x="620" y="338" fill="#a1a1aa" fontSize="10" textAnchor="middle">Attends</text>
-      <text x="620" y="352" fill="#a1a1aa" fontSize="10" textAnchor="middle">confirmation</text>
+      <text x="620" y="322" fill="#d4d4d8" fontSize="11" fontWeight="700" textAnchor="middle">{t.unHApres}</text>
+      <text x="620" y="338" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.attends}</text>
+      <text x="620" y="352" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.confirmation}</text>
 
       {/* Layer 9 — Pied de page */}
       <text x="400" y="430" fill="#34d399" fontSize="12" fontWeight="700" fontStyle="italic" textAnchor="middle">
-        Le risque dépend de l&apos;heure. Apprends à lire la journée comme une météo macro.
+        {t.footer}
       </text>
     </svg>
 
     {/* ── MOBILE : fenêtres temporelles empilées ─────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
       <p className="text-[14px] font-bold text-white text-center leading-snug">
-        Fenêtres de danger macro — journée type
+        {t.mobileTitle}
       </p>
 
       {/* Timeline verticale */}
       <div className="space-y-2">
-        {[
-          { range: "08h – 12h30", session: "Session EU", danger: false, label: "Zone calme", events: null },
-          { range: "12h30 – 13h", session: null, danger: true, label: "⚠ BoE 13h", events: "Discours Banque d'Angleterre" },
-          { range: "14h15", session: null, danger: true, label: "⚠ BCE 14h15", events: "Décision BCE" },
-          { range: "14h30", session: null, danger: true, label: "🔴 NFP / CPI 14h30", events: "Plus grosse news US du jour" },
-          { range: "16h – 19h30", session: "Session US", danger: false, label: "Zone calme", events: null },
-          { range: "20h", session: null, danger: true, label: "🔴 FOMC 20h", events: "Décision Réserve fédérale" },
-          { range: "21h – 22h", session: null, danger: false, label: "Fin de journée", events: null },
-        ].map((w, i) => (
+        {t.timeline.map((w, i) => (
           <div
             key={i}
             className={`rounded-lg border p-2.5 ${
@@ -178,35 +241,35 @@ export const MacroDangerWindowsDiagram = () => {
       {/* Règle d'or */}
       <div className="rounded-xl border-2 border-amber-400 bg-amber-400/5 p-3 mt-3">
         <p className="text-[13px] font-bold text-amber-400 uppercase tracking-wider text-center mb-2.5">
-          ⚡ Règle d'or
+          {t.regleMobile}
         </p>
         <div className="space-y-2">
           <div className="flex items-start gap-2.5">
             <span className="shrink-0 w-3 h-3 rounded-full bg-red-400 mt-1" />
             <div>
-              <p className="text-[13px] font-bold text-white">30 min AVANT</p>
-              <p className="text-[12px] text-zinc-300 leading-snug">Évite d'entrer en position</p>
+              <p className="text-[13px] font-bold text-white">{t.avantMobile}</p>
+              <p className="text-[12px] text-zinc-300 leading-snug">{t.eviteEntrerMobile}</p>
             </div>
           </div>
           <div className="flex items-start gap-2.5">
             <span className="shrink-0 w-3 h-3 rounded-full bg-red-400 mt-1" />
             <div>
-              <p className="text-[13px] font-bold text-white">PENDANT</p>
-              <p className="text-[12px] text-zinc-300 leading-snug">Ne trade pas — observe seulement</p>
+              <p className="text-[13px] font-bold text-white">{t.pendantMobile}</p>
+              <p className="text-[12px] text-zinc-300 leading-snug">{t.neTradePasMobile}</p>
             </div>
           </div>
           <div className="flex items-start gap-2.5">
             <span className="shrink-0 w-3 h-3 rounded-full bg-amber-400 mt-1" />
             <div>
-              <p className="text-[13px] font-bold text-white">1H APRÈS</p>
-              <p className="text-[12px] text-zinc-300 leading-snug">Attends confirmation de direction</p>
+              <p className="text-[13px] font-bold text-white">{t.unHApresMobile}</p>
+              <p className="text-[12px] text-zinc-300 leading-snug">{t.attendsConfMobile}</p>
             </div>
           </div>
         </div>
       </div>
 
       <p className="text-[13px] text-emerald-400 font-bold italic text-center leading-snug pt-2 border-t border-zinc-800">
-        Le risque dépend de l'heure. Lis la journée comme une météo macro.
+        {t.mobileFooter}
       </p>
     </div>
     </div>

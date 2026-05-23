@@ -11,6 +11,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useDict } from "@/app/components/LocaleProvider";
 
 const STORAGE_KEY = "tradinglab_milestones_v1";
 
@@ -19,10 +20,11 @@ export type MilestoneId =
   | "first_lesson"      // après la 1re leçon complète
   | "first_game_win";   // après le 1er event "win" tracking
 
-const MILESTONE_MESSAGES: Record<MilestoneId, string> = {
-  profile_forming: "Ton profil trader commence à prendre forme.",
-  first_lesson:    "Première leçon terminée. Continue pour débloquer plus de statistiques.",
-  first_game_win:  "Premier signal capté. Continue, c'est en jouant que les réflexes se construisent.",
+// Mapping vers les clés du dico common.milestones.
+const MILESTONE_DICT_KEY: Record<MilestoneId, "profileForming" | "firstLesson" | "firstGameWin"> = {
+  profile_forming: "profileForming",
+  first_lesson:    "firstLesson",
+  first_game_win:  "firstGameWin",
 };
 
 interface Milestones {
@@ -55,6 +57,7 @@ interface MicroFeedbackProps {
 
 export function MicroFeedback({ milestone, condition }: MicroFeedbackProps) {
   const [show, setShow] = useState(false);
+  const milestones = useDict("common").milestones;
 
   useEffect(() => {
     if (!condition) return;
@@ -79,7 +82,7 @@ export function MicroFeedback({ milestone, condition }: MicroFeedbackProps) {
             </svg>
           </div>
           <p className="text-[12px] text-zinc-200 leading-snug font-medium">
-            {MILESTONE_MESSAGES[milestone]}
+            {milestones[MILESTONE_DICT_KEY[milestone]]}
           </p>
         </div>
       </div>

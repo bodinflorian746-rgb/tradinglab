@@ -4,6 +4,7 @@
 
 interface ICTTimingDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -40,7 +41,34 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function ICTTimingDiagram({ className = "" }: ICTTimingDiagramProps) {
+export function ICTTimingDiagram({ className = "", locale = "fr" }: ICTTimingDiagramProps) {
+  const t = locale === "es"
+    ? {
+        rangeAsia: "Range Asia",
+        londonOpen: "London Open",
+        sweep: "Sweep",
+        annotation: "El timing activa el movimiento",
+        mobileTitle: "ICT timing · XAU/USD M15",
+        block1Title: "Range Asia — liquidez visible",
+        block1Body: "Stops acumulados a los 2 lados del range nocturno.",
+        block2Title: "Sweep + displacement en London Open",
+        block2Body: "London toma la liquidez de Asia y luego envía un displacement franco = setup ICT clásico.",
+        leg1: "Range Asia = bolsa de liquidez visible",
+        leg2: "Sweep y displacement en London Open",
+      }
+    : {
+        rangeAsia: "Range Asia",
+        londonOpen: "London Open",
+        sweep: "Sweep",
+        annotation: "Le timing active le mouvement",
+        mobileTitle: "ICT timing · XAU/USD M15",
+        block1Title: "Range Asia — liquidité visible",
+        block1Body: "Stops accumulés des 2 côtés du range nocturne.",
+        block2Title: "Sweep + displacement en London Open",
+        block2Body: "London prend la liquidité d'Asia puis envoie un displacement franc = setup ICT classique.",
+        leg1: "Range Asia = poche de liquidité visible",
+        leg2: "Sweep et displacement en London Open",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -52,12 +80,12 @@ export function ICTTimingDiagram({ className = "" }: ICTTimingDiagramProps) {
         {/* Segment Asia — fin, calme */}
         <line x1="70" y1="60" x2="265" y2="60" stroke="#52525b" strokeWidth="2" strokeLinecap="round" />
         <rect x="125" y="44" width="84" height="14" rx="3" fill="#09090b" />
-        <text x="167" y="54" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Range Asia</text>
+        <text x="167" y="54" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.rangeAsia}</text>
 
         {/* Segment London — épais, accent */}
         <line x1="285" y1="60" x2="490" y2="60" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
         <rect x="332" y="44" width="110" height="14" rx="3" fill="#09090b" />
-        <text x="387" y="54" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">London Open</text>
+        <text x="387" y="54" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.londonOpen}</text>
 
         {/* Séparateur vertical */}
         <line x1="275" y1="68" x2="275" y2="290" stroke="#27272a" strokeWidth="1" strokeDasharray="2 4" />
@@ -91,37 +119,37 @@ export function ICTTimingDiagram({ className = "" }: ICTTimingDiagramProps) {
         {/* Label Sweep au-dessus de la mèche */}
         <line x1="292" y1="96" x2="320" y2="84" stroke="#f59e0b" strokeWidth="0.9" strokeOpacity="0.7" />
         <rect x="320" y="74" width="56" height="14" rx="3" fill="#09090b" />
-        <text x="348" y="84" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep</text>
+        <text x="348" y="84" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.sweep}</text>
 
         {/* Annotation */}
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le timing active le mouvement
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : ICT timing ──────────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">ICT timing · XAU/USD M15</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-          <p className="text-[13px] font-bold text-zinc-300">Range Asia — liquidité visible</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Stops accumulés des 2 côtés du range nocturne.</p>
+          <p className="text-[13px] font-bold text-zinc-300">{t.block1Title}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.block1Body}</p>
         </div>
         <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">Sweep + displacement en London Open</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">London prend la liquidité d'Asia puis envoie un displacement franc = setup ICT classique.</p>
+          <p className="text-[13px] font-bold text-emerald-400">{t.block2Title}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.block2Body}</p>
         </div>
       </div>
 
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Range Asia = poche de liquidité visible</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Sweep et displacement en London Open</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

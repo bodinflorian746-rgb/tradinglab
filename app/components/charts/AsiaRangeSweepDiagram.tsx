@@ -4,6 +4,7 @@
 
 interface AsiaRangeSweepDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -40,7 +41,36 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 12;
 
-export function AsiaRangeSweepDiagram({ className = "" }: AsiaRangeSweepDiagramProps) {
+export function AsiaRangeSweepDiagram({ className = "", locale = "fr" }: AsiaRangeSweepDiagramProps) {
+  const t = locale === "es"
+    ? {
+        asiaSession: "Asia Session",
+        sweep: "Sweep 1.1702",
+        annotation: "El range asiático se vuelve el objetivo",
+        mobileTitle: "Asia range sweep · EUR/USD M15",
+        m1a: "Range Asia",
+        m1b: " = bolsa de liquidez visible.",
+        m2a: "Sweep",
+        m2b: " bajo el range — dispara los stops.",
+        m3a: "Expansión violenta",
+        m3b: " en sentido opuesto en London Open.",
+        leg1: "Range Asia = bolsa de liquidez visible",
+        leg2: "Sweep bajo el range y luego expansión violenta",
+      }
+    : {
+        asiaSession: "Asia Session",
+        sweep: "Sweep 1.1702",
+        annotation: "Le range asiatique devient la cible",
+        mobileTitle: "Asia range sweep · EUR/USD M15",
+        m1a: "Range Asia",
+        m1b: " = poche de liquidité visible.",
+        m2a: "Sweep",
+        m2b: " sous le range — déclenche les stops.",
+        m3a: "Expansion violente",
+        m3b: " dans le sens opposé en London Open.",
+        leg1: "Range Asia = poche de liquidité visible",
+        leg2: "Sweep sous le range puis expansion violente",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -53,7 +83,7 @@ export function AsiaRangeSweepDiagram({ className = "" }: AsiaRangeSweepDiagramP
 
         {/* Label "Asia Session" en haut du rectangle */}
         <rect x="100" y="92" width="120" height="14" rx="3" fill="#09090b" />
-        <text x="160" y="102" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">Asia Session</text>
+        <text x="160" y="102" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.asiaSession}</text>
 
         {/* Labels niveaux 1.1725 (haut) / 1.1710 (bas) — à GAUCHE du rectangle Asia, alignés sur ses bords */}
         <rect x="6" y="103" width="50" height="13" rx="3" fill="#09090b" />
@@ -76,7 +106,7 @@ export function AsiaRangeSweepDiagram({ className = "" }: AsiaRangeSweepDiagramP
         {/* Label SWEEP 1.1702 */}
         <line x1="295" y1="206" x2="335" y2="222" stroke="#f59e0b" strokeWidth="0.9" strokeOpacity="0.7" />
         <rect x="335" y="218" width="74" height="14" rx="3" fill="#09090b" />
-        <text x="372" y="228" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">Sweep 1.1702</text>
+        <text x="372" y="228" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.sweep}</text>
 
         {/* Label sommet 1.1750 */}
         <rect x="556" y="28" width="62" height="14" rx="3" fill="#09090b" />
@@ -86,25 +116,25 @@ export function AsiaRangeSweepDiagram({ className = "" }: AsiaRangeSweepDiagramP
         <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Le range asiatique devient la cible
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : Asia range sweep ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">Asia range sweep · EUR/USD M15</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-zinc-700 border border-zinc-500 flex items-center justify-center text-[11px] font-bold text-zinc-300 mt-0.5">1</span>
-            <span className="text-zinc-300"><span className="font-bold text-zinc-300">Range Asia</span> = poche de liquidité visible.</span>
+            <span className="text-zinc-300"><span className="font-bold text-zinc-300">{t.m1a}</span>{t.m1b}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">2</span>
-            <span className="text-zinc-300"><span className="font-bold text-amber-400">Sweep</span> sous le range — déclenche les stops.</span>
+            <span className="text-zinc-300"><span className="font-bold text-amber-400">{t.m2a}</span>{t.m2b}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
-            <span className="text-zinc-300"><span className="font-bold text-emerald-400">Expansion violente</span> dans le sens opposé en London Open.</span>
+            <span className="text-zinc-300"><span className="font-bold text-emerald-400">{t.m3a}</span>{t.m3b}</span>
           </li>
         </ul>
       </div>
@@ -112,11 +142,11 @@ export function AsiaRangeSweepDiagram({ className = "" }: AsiaRangeSweepDiagramP
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">Range Asia = poche de liquidité visible</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Sweep sous le range puis expansion violente</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

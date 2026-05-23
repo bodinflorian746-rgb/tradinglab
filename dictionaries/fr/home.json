@@ -1,0 +1,147 @@
+{
+  "hero": {
+    "badge": "Formations structurées · Du débutant à l'avancé",
+    "titleLine1": "Trader avec ton capital,",
+    "titleLine2": "à ton rythme.",
+    "subtitle": "Apprends le trading avec une méthode structurée et des cas pratiques calibrés pour les retails. Du débutant à l'avancé, à ton rythme.",
+    "ctaPrimary": "Commencer gratuitement",
+    "ctaSecondary": "Voir les formations"
+  },
+  "stats": {
+    "lessons": "Leçons gratuites",
+    "strategies": "Stratégies enseignées",
+    "levels": "3 niveaux",
+    "levelsLabel": "Débutant · Intermédiaire · Avancé",
+    "online": "100%",
+    "onlineLabel": "En ligne, à ton rythme"
+  },
+  "tradingSection": {
+    "eyebrow": "Formation Trading",
+    "title": "Apprends à lire les graphiques et construire des setups solides.",
+    "levels": {
+      "debutant": {
+        "label": "Débutant",
+        "description": "Les fondamentaux du trading pour partir sur de bonnes bases. Aucun prérequis.",
+        "count": "{n} leçons"
+      },
+      "intermediaire": {
+        "label": "Intermédiaire",
+        "description": "Structure de marché, zones institutionnelles et lecture avancée du prix.",
+        "count": "{n} leçons"
+      },
+      "avance": {
+        "label": "Avancé",
+        "description": "Liquidité institutionnelle, Smart Money et techniques de trading de précision.",
+        "count": "{n} leçons"
+      }
+    },
+    "cta": "Commencer"
+  },
+  "macroSection": {
+    "eyebrow": "Macro Trading",
+    "title": "Comprends pourquoi les marchés bougent et utilise-le pour mieux trader.",
+    "levels": {
+      "debutant": {
+        "label": "Débutant",
+        "description": "Les fondamentaux : qui contrôle le marché, pourquoi la macro compte en trading.",
+        "count": "6 leçons"
+      },
+      "intermediaire": {
+        "label": "Intermédiaire",
+        "description": "Hawkish vs Dovish, prévision vs réel, corrélations entre marchés.",
+        "count": "6 leçons"
+      },
+      "avance": {
+        "label": "Avancé",
+        "description": "FOMC, NFP, rendements obligataires US et régimes de marché — comprendre les news qui font bouger les marchés",
+        "count": "4 leçons"
+      }
+    },
+    "cta": "Commencer"
+  },
+  "audiencesSection": {
+    "eyebrow": "Ta progression",
+    "title": "Une plateforme de progression trading",
+    "subtitle": "Du temps adapté, un capital respecté, une méthode reproductible. TradingLab structure ta progression autour des vraies contraintes du trader retail — pas autour d'un trader idéal.",
+    "cards": [
+      {
+        "title": "Progresser même avec peu de temps",
+        "description": "Sessions courtes, progression structurée. La méthode est pensée pour avancer en 15 à 30 minutes par jour, sans surveiller les marchés toute la journée."
+      },
+      {
+        "title": "Trader intelligemment avec un petit capital",
+        "description": "Gestion du risque, R/R cohérent, scénarios calibrés sur des comptes retail. Chaque trade compte — la méthode aussi."
+      },
+      {
+        "title": "Développer de vrais réflexes marché",
+        "description": "Jeux interactifs, cas pratiques, scénarios réels. Pas de théorie isolée — on apprend à décider vite, dans des contextes concrets."
+      },
+      {
+        "title": "Construire une approche disciplinée et confiante",
+        "description": "Comprendre pourquoi un setup fonctionne, éviter les décisions impulsives, avancer avec une méthode claire. La confiance vient des règles, pas de la chance."
+      }
+    ]
+  },
+  "memberSection": {
+    "eyebrow": "Ce que tu trouveras",
+    "title": "Un parcours complet, du premier graphique à la stratégie avancée",
+    "subtitle": "Exemples et exercices calibrés pour 300€ à 2 500€. Leçons 15-25 min, structurées pour avancer à ton rythme sans être submergé.",
+    "cards": [
+      {
+        "title": "Formations par niveaux",
+        "description": "Débutant, Intermédiaire, Avancé — progression logique et sans trous. Tu construis sur des fondations solides."
+      },
+      {
+        "title": "Stratégies Price Action, SMC & ICT",
+        "description": "Trois approches complémentaires enseignées rigoureusement : principes, quand les utiliser, exemples concrets sur vrais graphiques."
+      },
+      {
+        "title": "Quiz et exercices pratiques",
+        "description": "À la fin de chaque leçon : questions ciblées et cas appliqués directement sur des graphiques pour valider ta compréhension."
+      },
+      {
+        "title": "Tableau de bord de progression",
+        "description": "Visualise exactement où tu en es : leçons complétées, ce qui reste à faire, progression étape par étape."
+      },
+      {
+        "title": "Contenu mis à jour régulièrement",
+        "description": "Les formations évoluent avec le marché. Accès toujours à jour sans frais supplémentaires."
+      },
+      {
+        "title": "Accès desktop et mobile",
+        "description": "Apprends quand et où tu veux : ton ordinateur ou ton téléphone. Structuré pour les deux."
+      }
+    ]
+  },
+  "methodSection": {
+    "eyebrow": "Une approche pédagogique sérieuse",
+    "titleLine1": "Apprendre avec méthode,",
+    "titleLine2": "pas au hasard",
+    "subtitle": "Le trading s'apprend. Mais il s'apprend mieux avec une structure claire, des objectifs définis et des outils pour mesurer ta progression. TradingLab est construit autour de cette conviction.",
+    "cta": "Voir les formations",
+    "benefits": [
+      {
+        "title": "Un parcours structuré, pas du contenu en vrac",
+        "description": "Les leçons s'enchaînent dans un ordre logique et progressif. Tu construis tes connaissances sur des bases solides, sans sauter d'étapes essentielles."
+      },
+      {
+        "title": "Tu valides ce que tu as compris, leçon par leçon",
+        "description": "Chaque module se termine par un quiz. Tu sais exactement ce que tu maîtrises et ce sur quoi tu dois encore travailler."
+      },
+      {
+        "title": "Des stratégies enseignées dans leur contexte",
+        "description": "Price Action, SMC, ICT — chaque méthode est expliquée avec ses fondements, ses conditions d'application et des exemples tirés de marchés réels."
+      },
+      {
+        "title": "Un rythme qui s'adapte au tien",
+        "description": "Pas de deadline, pas de pression. Tu avances à ta vitesse et tu reviens sur une leçon autant de fois que nécessaire."
+      }
+    ]
+  },
+  "finalCta": {
+    "title": "Commence ton parcours dès maintenant",
+    "subtitle": "Les premières leçons sont accessibles gratuitement. Tu explores le contenu, tu testes la plateforme, et tu décides ensuite.",
+    "ctaPrimary": "Commencer gratuitement",
+    "ctaSecondary": "Voir les offres"
+  }
+}

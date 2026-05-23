@@ -4,6 +4,7 @@
 
 interface FVGMitigationDiagramProps {
   className?: string;
+  locale?: "fr" | "es";
 }
 
 type CandleSpec = {
@@ -44,7 +45,36 @@ const CANDLES: CandleSpec[] = [
 
 const BODY_W = 14;
 
-export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramProps) {
+export function FVGMitigationDiagram({ className = "", locale = "fr" }: FVGMitigationDiagramProps) {
+  const t = locale === "es"
+    ? {
+        annotation: "Mitigation antes de la continuación",
+        mobileTitle: "FVG mitigation · XAU/USD H1",
+        m1Part1: "Impulso bajista fuerte deja un ",
+        m1Bold: "FVG",
+        m1Part2: " (zona no rellenada).",
+        m2Part1: "El precio regresa al FVG (",
+        m2Bold: "mitigation",
+        m2Part2: ") y luego rechazo.",
+        m3Bold: "Continuación bajista",
+        m3Part2: " = mitigation exitosa.",
+        leg1: "Impulso bajista que deja un FVG",
+        leg2: "Retorno al FVG y luego continuación = mitigation",
+      }
+    : {
+        annotation: "Mitigation avant continuation",
+        mobileTitle: "FVG mitigation · XAU/USD H1",
+        m1Part1: "Impulsion bearish forte laisse un ",
+        m1Bold: "FVG",
+        m1Part2: " (zone non remplie).",
+        m2Part1: "Le prix revient dans le FVG (",
+        m2Bold: "mitigation",
+        m2Part2: ") puis rejet.",
+        m3Bold: "Continuation bearish",
+        m3Part2: " = mitigation réussie.",
+        leg1: "Impulsion bearish qui laisse un FVG",
+        leg2: "Retour dans le FVG puis continuation = mitigation",
+      };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
       <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
@@ -85,25 +115,25 @@ export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramPro
         <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
         <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Mitigation avant continuation
+          {t.annotation}
         </text>
       </svg>
 
       {/* MOBILE : FVG mitigation ──────────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">FVG mitigation · XAU/USD H1</p>
+        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>
-            <span className="text-zinc-300">Impulsion bearish forte laisse un <span className="font-bold text-blue-400">FVG</span> (zone non remplie).</span>
+            <span className="text-zinc-300">{t.m1Part1}<span className="font-bold text-blue-400">{t.m1Bold}</span>{t.m1Part2}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-[11px] font-bold text-blue-400 mt-0.5">2</span>
-            <span className="text-zinc-300">Le prix revient dans le FVG (<span className="font-bold">mitigation</span>) puis rejet.</span>
+            <span className="text-zinc-300">{t.m2Part1}<span className="font-bold">{t.m2Bold}</span>{t.m2Part2}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">3</span>
-            <span className="text-zinc-300"><span className="font-bold text-red-400">Continuation bearish</span> = mitigation réussie.</span>
+            <span className="text-zinc-300"><span className="font-bold text-red-400">{t.m3Bold}</span>{t.m3Part2}</span>
           </li>
         </ul>
       </div>
@@ -111,11 +141,11 @@ export function FVGMitigationDiagram({ className = "" }: FVGMitigationDiagramPro
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Impulsion bearish qui laisse un FVG</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Retour dans le FVG puis continuation = mitigation</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
       </div>
     </div>

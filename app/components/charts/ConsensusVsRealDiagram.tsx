@@ -1,4 +1,47 @@
-export const ConsensusVsRealDiagram = () => {
+export const ConsensusVsRealDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+  const t = locale === "es"
+    ? {
+        title: "El mercado reacciona a la SORPRESA, no a la cifra",
+        col1Header: "REAL = CONSENSO",
+        col1Line1: "NFP 200k esperados",
+        col1Line2: "200k reales",
+        col2Header: "REAL > CONSENSO",
+        col2Line1: "NFP 350k reales",
+        col2Line2: "200k esperados",
+        col3Header: "REAL < CONSENSO",
+        col3Line1: "NFP 100k reales",
+        col3Line2: "200k esperados",
+        verdictCol1a: "Sin sorpresa",
+        verdictCol1b: "→ mercado estable",
+        verdictCol2a: "Sorpresa positiva",
+        verdictCol2b: "→ spike alcista",
+        verdictCol3a: "Sorpresa negativa",
+        verdictCol3b: "→ spike bajista",
+        footer: "Cuanto mayor sea la diferencia entre previsión y realidad, más violento es el movimiento.",
+        pipsSec: "/ 30 seg",
+        mobilePips30sec: "/ 30 seg",
+      }
+    : {
+        title: "Le marché réagit à la SURPRISE, pas au chiffre",
+        col1Header: "RÉEL = CONSENSUS",
+        col1Line1: "NFP 200k attendus",
+        col1Line2: "200k réels",
+        col2Header: "RÉEL > CONSENSUS",
+        col2Line1: "NFP 350k réels",
+        col2Line2: "200k attendus",
+        col3Header: "RÉEL < CONSENSUS",
+        col3Line1: "NFP 100k réels",
+        col3Line2: "200k attendus",
+        verdictCol1a: "Pas de surprise",
+        verdictCol1b: "→ marché stable",
+        verdictCol2a: "Surprise positive",
+        verdictCol2b: "→ spike haussier",
+        verdictCol3a: "Surprise négative",
+        verdictCol3b: "→ spike baissier",
+        footer: "Plus l'écart entre prévision et réalité est grand, plus le mouvement est violent.",
+        pipsSec: "/ 30 sec",
+        mobilePips30sec: "/ 30 sec",
+      };
   return (
     <div>
     <svg
@@ -13,7 +56,7 @@ export const ConsensusVsRealDiagram = () => {
 
       {/* Layer 2 — Titre haut centré */}
       <text x="400" y="35" fill="white" fontSize="16" fontWeight="700" textAnchor="middle">
-        Le marché réagit à la SURPRISE, pas au chiffre
+        {t.title}
       </text>
 
       {/* Layer 3 — Conteneurs des 3 colonnes */}
@@ -30,19 +73,19 @@ export const ConsensusVsRealDiagram = () => {
       {/* Layer 4 — Headers de colonnes */}
 
       {/* Colonne 1 */}
-      <text x="140" y="85" fill="#71717a" fontSize="13" fontWeight="700" textAnchor="middle" letterSpacing="0.05em">RÉEL = CONSENSUS</text>
-      <text x="140" y="105" fill="#a1a1aa" fontSize="11" textAnchor="middle">NFP 200k attendus</text>
-      <text x="140" y="120" fill="#a1a1aa" fontSize="11" textAnchor="middle">200k réels</text>
+      <text x="140" y="85" fill="#71717a" fontSize="13" fontWeight="700" textAnchor="middle" letterSpacing="0.05em">{t.col1Header}</text>
+      <text x="140" y="105" fill="#a1a1aa" fontSize="11" textAnchor="middle">{t.col1Line1}</text>
+      <text x="140" y="120" fill="#a1a1aa" fontSize="11" textAnchor="middle">{t.col1Line2}</text>
 
       {/* Colonne 2 */}
-      <text x="400" y="85" fill="#34d399" fontSize="13" fontWeight="700" textAnchor="middle" letterSpacing="0.05em">RÉEL &gt; CONSENSUS</text>
-      <text x="400" y="105" fill="#a1a1aa" fontSize="11" textAnchor="middle">NFP 350k réels</text>
-      <text x="400" y="120" fill="#a1a1aa" fontSize="11" textAnchor="middle">200k attendus</text>
+      <text x="400" y="85" fill="#34d399" fontSize="13" fontWeight="700" textAnchor="middle" letterSpacing="0.05em">{t.col2Header}</text>
+      <text x="400" y="105" fill="#a1a1aa" fontSize="11" textAnchor="middle">{t.col2Line1}</text>
+      <text x="400" y="120" fill="#a1a1aa" fontSize="11" textAnchor="middle">{t.col2Line2}</text>
 
       {/* Colonne 3 */}
-      <text x="660" y="85" fill="#f87171" fontSize="13" fontWeight="700" textAnchor="middle" letterSpacing="0.05em">RÉEL &lt; CONSENSUS</text>
-      <text x="660" y="105" fill="#a1a1aa" fontSize="11" textAnchor="middle">NFP 100k réels</text>
-      <text x="660" y="120" fill="#a1a1aa" fontSize="11" textAnchor="middle">200k attendus</text>
+      <text x="660" y="85" fill="#f87171" fontSize="13" fontWeight="700" textAnchor="middle" letterSpacing="0.05em">{t.col3Header}</text>
+      <text x="660" y="105" fill="#a1a1aa" fontSize="11" textAnchor="middle">{t.col3Line1}</text>
+      <text x="660" y="120" fill="#a1a1aa" fontSize="11" textAnchor="middle">{t.col3Line2}</text>
 
       {/* Layer 5 — Mini-charts de bougies */}
 
@@ -99,20 +142,20 @@ export const ConsensusVsRealDiagram = () => {
       {/* Layer 6 — Verdicts en bas de chaque colonne */}
 
       {/* Colonne 1 */}
-      <text x="140" y="350" fill="#a1a1aa" fontSize="11" fontWeight="600" textAnchor="middle">Pas de surprise</text>
-      <text x="140" y="365" fill="#71717a" fontSize="10" textAnchor="middle">→ marché stable</text>
+      <text x="140" y="350" fill="#a1a1aa" fontSize="11" fontWeight="600" textAnchor="middle">{t.verdictCol1a}</text>
+      <text x="140" y="365" fill="#71717a" fontSize="10" textAnchor="middle">{t.verdictCol1b}</text>
 
       {/* Colonne 2 */}
-      <text x="400" y="350" fill="#34d399" fontSize="11" fontWeight="600" textAnchor="middle">Surprise positive</text>
-      <text x="400" y="365" fill="#a1a1aa" fontSize="10" textAnchor="middle">→ spike haussier</text>
+      <text x="400" y="350" fill="#34d399" fontSize="11" fontWeight="600" textAnchor="middle">{t.verdictCol2a}</text>
+      <text x="400" y="365" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.verdictCol2b}</text>
 
       {/* Colonne 3 */}
-      <text x="660" y="350" fill="#f87171" fontSize="11" fontWeight="600" textAnchor="middle">Surprise négative</text>
-      <text x="660" y="365" fill="#a1a1aa" fontSize="10" textAnchor="middle">→ spike baissier</text>
+      <text x="660" y="350" fill="#f87171" fontSize="11" fontWeight="600" textAnchor="middle">{t.verdictCol3a}</text>
+      <text x="660" y="365" fill="#a1a1aa" fontSize="10" textAnchor="middle">{t.verdictCol3b}</text>
 
       {/* Layer 7 — Pied de page italique */}
       <text x="400" y="420" fill="#a1a1aa" fontSize="12" fontStyle="italic" textAnchor="middle">
-        Plus l'écart entre prévision et réalité est grand, plus le mouvement est violent.
+        {t.footer}
       </text>
 
       {/* Layer 8 — Annotations EN DERNIER (par-dessus les bougies) */}
@@ -120,52 +163,52 @@ export const ConsensusVsRealDiagram = () => {
       {/* Annotation "+80 pips / 30 sec" — colonne 2 bougie énorme */}
       <rect x="405" y="140" width="85" height="22" rx="3" fill="#09090b" fillOpacity="0.95" />
       <text x="410" y="155" textAnchor="start" fill="#34d399" fontSize="13" fontWeight="700">+80 pips</text>
-      <text x="410" y="170" textAnchor="start" fill="#a1a1aa" fontSize="9">/ 30 sec</text>
+      <text x="410" y="170" textAnchor="start" fill="#a1a1aa" fontSize="9">{t.pipsSec}</text>
 
       {/* Annotation "-80 pips / 30 sec" — colonne 3 bougie énorme */}
       <rect x="655" y="290" width="85" height="22" rx="3" fill="#09090b" fillOpacity="0.95" />
       <text x="660" y="305" textAnchor="start" fill="#f87171" fontSize="13" fontWeight="700">-80 pips</text>
-      <text x="660" y="320" textAnchor="start" fill="#a1a1aa" fontSize="9">/ 30 sec</text>
+      <text x="660" y="320" textAnchor="start" fill="#a1a1aa" fontSize="9">{t.pipsSec}</text>
     </svg>
 
     {/* ── MOBILE : 3 scénarios consensus empilés ─────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden p-4 space-y-3">
       <p className="text-[14px] font-bold text-white text-center leading-snug">
-        Le marché réagit à la SURPRISE, pas au chiffre
+        {t.title}
       </p>
 
       {/* Scénario 1 — RÉEL = CONSENSUS */}
       <div className="rounded-xl border border-zinc-700 bg-zinc-800/40 p-3">
-        <p className="text-[12px] text-zinc-400 font-bold uppercase tracking-wider">RÉEL = CONSENSUS</p>
-        <p className="text-[13px] text-zinc-300 mt-1">NFP 200k attendus · 200k réels</p>
+        <p className="text-[12px] text-zinc-400 font-bold uppercase tracking-wider">{t.col1Header}</p>
+        <p className="text-[13px] text-zinc-300 mt-1">{t.col1Line1} · {t.col1Line2}</p>
         <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t border-zinc-700/60">
-          <span className="text-[13px] text-zinc-300">Pas de surprise</span>
-          <span className="text-[13px] text-zinc-400 font-semibold">→ marché stable</span>
+          <span className="text-[13px] text-zinc-300">{t.verdictCol1a}</span>
+          <span className="text-[13px] text-zinc-400 font-semibold">{t.verdictCol1b}</span>
         </div>
       </div>
 
       {/* Scénario 2 — RÉEL > CONSENSUS */}
       <div className="rounded-xl border border-emerald-500/40 bg-emerald-500/5 p-3">
-        <p className="text-[12px] text-emerald-400 font-bold uppercase tracking-wider">RÉEL &gt; CONSENSUS</p>
-        <p className="text-[13px] text-zinc-300 mt-1">NFP 350k réels · 200k attendus</p>
+        <p className="text-[12px] text-emerald-400 font-bold uppercase tracking-wider">{t.col2Header}</p>
+        <p className="text-[13px] text-zinc-300 mt-1">{t.col2Line1} · {t.col2Line2}</p>
         <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t border-emerald-500/20">
-          <span className="text-[13px] text-emerald-400 font-bold">Surprise positive</span>
-          <span className="text-[13px] text-emerald-400 font-bold">+80 pips / 30 sec ↑</span>
+          <span className="text-[13px] text-emerald-400 font-bold">{t.verdictCol2a}</span>
+          <span className="text-[13px] text-emerald-400 font-bold">+80 pips {t.mobilePips30sec} ↑</span>
         </div>
       </div>
 
       {/* Scénario 3 — RÉEL < CONSENSUS */}
       <div className="rounded-xl border border-red-500/40 bg-red-500/5 p-3">
-        <p className="text-[12px] text-red-400 font-bold uppercase tracking-wider">RÉEL &lt; CONSENSUS</p>
-        <p className="text-[13px] text-zinc-300 mt-1">NFP 100k réels · 200k attendus</p>
+        <p className="text-[12px] text-red-400 font-bold uppercase tracking-wider">{t.col3Header}</p>
+        <p className="text-[13px] text-zinc-300 mt-1">{t.col3Line1} · {t.col3Line2}</p>
         <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t border-red-500/20">
-          <span className="text-[13px] text-red-400 font-bold">Surprise négative</span>
-          <span className="text-[13px] text-red-400 font-bold">−80 pips / 30 sec ↓</span>
+          <span className="text-[13px] text-red-400 font-bold">{t.verdictCol3a}</span>
+          <span className="text-[13px] text-red-400 font-bold">−80 pips {t.mobilePips30sec} ↓</span>
         </div>
       </div>
 
       <p className="text-[12px] text-zinc-400 italic text-center leading-snug pt-2 border-t border-zinc-800">
-        Plus l'écart entre prévision et réalité est grand, plus le mouvement est violent.
+        {t.footer}
       </p>
     </div>
     </div>

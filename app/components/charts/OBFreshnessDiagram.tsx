@@ -1,4 +1,53 @@
-export default function OBFreshnessDiagram({ className = "" }: { className?: string }) {
+export default function OBFreshnessDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+  const t = locale === "es"
+    ? {
+        title: "OB fresh vs OB mitigado",
+        leftTitle: "✓ OB fresh — nunca retesteado",
+        leftSubtitle: "Desequilibrio alcista confirmado",
+        rightTitle: "✗ OB mitigado — ya retraversado",
+        rightSubtitle: "Desequilibrio alcista comprometido",
+        obCree: "OB creado",
+        retest: "Retest",
+        leftBottomTitle: "3 velas desde la formación",
+        leftBottomSub: "Sin retorno del precio a la zona",
+        rightBottomTitle: "Retest + rechazo = OB consumido",
+        rightBottomSub: "Órdenes institucionales ya ejecutadas",
+        infoCaption: "Un OB mitigado está consumido: sus órdenes institucionales ya se dispararon",
+        leftZoneLabel: "Zona OB nunca retesteada",
+        rightZoneLabel: "Zona OB ya atravesada",
+        mobileTitle: "OB fresh vs OB mitigado",
+        leftMobileTitle: "✓ OB fresh — nunca retesteado",
+        leftMobileBody: "Desequilibrio alcista confirmado · zona OB aún intacta → entrada de alta probabilidad.",
+        rightMobileTitle: "✗ OB mitigado — ya retraversado",
+        rightMobileBody: "Zona OB ya atravesada por el precio → desequilibrio comprometido, señal débil.",
+        mobileFooterPart1: "Un OB solo se opera en su ",
+        mobileFooterBold: "primer retest",
+        mobileFooterPart2: ".",
+      }
+    : {
+        title: "OB frais vs OB mitigé",
+        leftTitle: "✓ OB frais — jamais retesté",
+        leftSubtitle: "Déséquilibre haussier confirmé",
+        rightTitle: "✗ OB mitigé — déjà retraversé",
+        rightSubtitle: "Déséquilibre haussier compromis",
+        obCree: "OB créé",
+        retest: "Retest",
+        leftBottomTitle: "3 bougies depuis formation",
+        leftBottomSub: "Aucun retour du prix dans la zone",
+        rightBottomTitle: "Retest + rejet = OB consommé",
+        rightBottomSub: "Ordres institutionnels déjà exécutés",
+        infoCaption: "Un OB mitigé est consommé : ses ordres institutionnels ont déjà été déclenchés",
+        leftZoneLabel: "Zone d'OB jamais retestée",
+        rightZoneLabel: "Zone d'OB déjà traversée",
+        mobileTitle: "OB frais vs OB mitigé",
+        leftMobileTitle: "✓ OB frais — jamais retesté",
+        leftMobileBody: "Déséquilibre haussier confirmé · zone d'OB encore intacte → entrée à haute probabilité.",
+        rightMobileTitle: "✗ OB mitigé — déjà retraversé",
+        rightMobileBody: "Zone d'OB déjà traversée par le prix → déséquilibre compromis, signal faible.",
+        mobileFooterPart1: "Un OB ne se trade que sur son ",
+        mobileFooterBold: "premier retest",
+        mobileFooterPart2: ".",
+      };
   return (
     <div className={className}>
     <svg
@@ -15,7 +64,7 @@ export default function OBFreshnessDiagram({ className = "" }: { className?: str
 
       {/* ═══ Titre haut ═══ */}
       <text x="550" y="30" fill="#ffffff" fontSize="18" fontWeight="700" textAnchor="middle">
-        OB frais vs OB mitigé
+        {t.title}
       </text>
 
       {/* ═══ Cartes (bordures gauche et droite) ═══ */}
@@ -27,11 +76,11 @@ export default function OBFreshnessDiagram({ className = "" }: { className?: str
       <text x="550" y="265" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">VS</text>
 
       {/* ═══ Titres et sous-titres des cartes ═══ */}
-      <text x="270" y="95" fill="#10b981" fontSize="16" fontWeight="700" textAnchor="middle">✓ OB frais — jamais retesté</text>
-      <text x="270" y="115" fill="#10b981" fontSize="13" fontWeight="500" textAnchor="middle">Déséquilibre haussier confirmé</text>
+      <text x="270" y="95" fill="#10b981" fontSize="16" fontWeight="700" textAnchor="middle">{t.leftTitle}</text>
+      <text x="270" y="115" fill="#10b981" fontSize="13" fontWeight="500" textAnchor="middle">{t.leftSubtitle}</text>
 
-      <text x="830" y="95" fill="#ef4444" fontSize="16" fontWeight="700" textAnchor="middle">✗ OB mitigé — déjà retraversé</text>
-      <text x="830" y="115" fill="#ef4444" fontSize="13" fontWeight="500" textAnchor="middle">Déséquilibre haussier compromis</text>
+      <text x="830" y="95" fill="#ef4444" fontSize="16" fontWeight="700" textAnchor="middle">{t.rightTitle}</text>
+      <text x="830" y="115" fill="#ef4444" fontSize="13" fontWeight="500" textAnchor="middle">{t.rightSubtitle}</text>
 
       {/* ═══ PANNEAU GAUCHE ═══ */}
 
@@ -101,55 +150,55 @@ export default function OBFreshnessDiagram({ className = "" }: { className?: str
 
       {/* ═══ Pastilles "OB créé" sous bougie 2 dans les 2 panneaux ═══ */}
       <rect x="115" y="310" width="50" height="18" rx="9" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="140" y="323" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">OB créé</text>
+      <text x="140" y="323" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{t.obCree}</text>
 
       <rect x="675" y="310" width="50" height="18" rx="9" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="700" y="323" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">OB créé</text>
+      <text x="700" y="323" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{t.obCree}</text>
 
       {/* Pastille "Retest" sous la flèche */}
       <rect x="855" y="310" width="50" height="18" rx="9" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="880" y="323" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">Retest</text>
+      <text x="880" y="323" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{t.retest}</text>
 
       {/* ═══ Pastilles bottom (wrappers + titres + captions) ═══ */}
       {/* Pastille bottom gauche */}
       <rect x="50" y="380" width="440" height="60" rx="12" fill="#10b98110" stroke="#10b98140" strokeWidth="1" />
-      <text x="270" y="405" fill="#10b981" fontSize="14" fontWeight="600" textAnchor="middle">3 bougies depuis formation</text>
-      <text x="270" y="425" fill="#10b981" fontSize="12" textAnchor="middle">Aucun retour du prix dans la zone</text>
+      <text x="270" y="405" fill="#10b981" fontSize="14" fontWeight="600" textAnchor="middle">{t.leftBottomTitle}</text>
+      <text x="270" y="425" fill="#10b981" fontSize="12" textAnchor="middle">{t.leftBottomSub}</text>
 
       {/* Pastille bottom droite */}
       <rect x="610" y="380" width="440" height="60" rx="12" fill="#ef444410" stroke="#ef444440" strokeWidth="1" />
-      <text x="830" y="405" fill="#ef4444" fontSize="14" fontWeight="600" textAnchor="middle">Retest + rejet = OB consommé</text>
-      <text x="830" y="425" fill="#ef4444" fontSize="12" textAnchor="middle">Ordres institutionnels déjà exécutés</text>
+      <text x="830" y="405" fill="#ef4444" fontSize="14" fontWeight="600" textAnchor="middle">{t.rightBottomTitle}</text>
+      <text x="830" y="425" fill="#ef4444" fontSize="12" textAnchor="middle">{t.rightBottomSub}</text>
 
       {/* ═══ Caption central bas — pastille bleue avec icône info ═══ */}
       <rect x="300" y="475" width="500" height="22" rx="11" fill="rgba(96,165,250,0.10)" stroke="#60a5fa" strokeWidth="1" strokeOpacity="0.5" />
       <circle cx="320" cy="486" r="7" stroke="#60a5fa" strokeWidth="1.2" fill="none" />
       <text x="320" y="490" fill="#60a5fa" fontSize="9" fontWeight="700" textAnchor="middle">i</text>
       <text x="560" y="490" fill="#60a5fa" fontSize="11" textAnchor="middle">
-        Un OB mitigé est consommé : ses ordres institutionnels ont déjà été déclenchés
+        {t.infoCaption}
       </text>
 
       {/* ═══ EN FIN — Halos opaques + labels "Zone d'OB ..." (à droite des zones, alignés end pour rester dans la carte) ═══ */}
       <rect x="305" y="249" width="80" height="14" fill="#09090b" rx="3" />
-      <text x="380" y="260" fill="#10b981" fontSize="10" textAnchor="end">Zone d&apos;OB jamais retestée</text>
+      <text x="380" y="260" fill="#10b981" fontSize="10" textAnchor="end">{t.leftZoneLabel}</text>
 
       <rect x="955" y="249" width="90" height="14" fill="#09090b" rx="3" />
-      <text x="1040" y="260" fill="#ef4444" fontSize="10" textAnchor="end">Zone d&apos;OB déjà traversée</text>
+      <text x="1040" y="260" fill="#ef4444" fontSize="10" textAnchor="end">{t.rightZoneLabel}</text>
     </svg>
 
     {/* MOBILE : OB frais vs mitigé ──────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">OB frais vs OB mitigé</p>
+      <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">✓ OB frais — jamais retesté</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Déséquilibre haussier confirmé · zone d'OB encore intacte → entrée à haute probabilité.</p>
+        <p className="text-[13px] font-bold text-emerald-400">{t.leftMobileTitle}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.leftMobileBody}</p>
       </div>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">✗ OB mitigé — déjà retraversé</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">Zone d'OB déjà traversée par le prix → déséquilibre compromis, signal faible.</p>
+        <p className="text-[13px] font-bold text-red-400">{t.rightMobileTitle}</p>
+        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.rightMobileBody}</p>
       </div>
       <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-        Un OB ne se trade que sur son <span className="font-bold">premier retest</span>.
+        {t.mobileFooterPart1}<span className="font-bold">{t.mobileFooterBold}</span>{t.mobileFooterPart2}
       </p>
     </div>
     </div>

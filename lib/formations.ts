@@ -34,6 +34,7 @@ export const FORMATIONS: Formation[] = [
       { id: "lecon7", title: "Le Break Even",                     duration: "8 min",  href: "/formations/debutant/lecon7" },
       { id: "lecon8", title: "Gestion du risque — le money management", duration: "12 min", href: "/formations/debutant/lecon8" },
       { id: "lecon9", title: "Les erreurs des débutants",         duration: "11 min", href: "/formations/debutant/lecon9" },
+      { id: "lecon10", title: "Risk management : pourquoi 90% des traders perdent", duration: "13 min", href: "/formations/debutant/lecon10" },
     ],
   },
   {
