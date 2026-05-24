@@ -81,7 +81,7 @@ test("ES — onboarding overlay : step 1 affiche les bons libellés", async ({ p
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
   await page.waitForTimeout(700); // attendre le délai d'affichage (350ms)
 
-  await expect(page.getByRole("dialog", { name: /Bienvenido a TradingLab/i })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: /Bienvenido a TradeScaleX/i })).toBeVisible();
   await expect(page.getByText(/Una plataforma pensada para las verdaderas limitaciones/i)).toBeVisible();
   await page.screenshot({ path: "test-results/es-onboarding-step1.png", fullPage: false });
 

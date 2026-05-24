@@ -6,7 +6,6 @@ import { getDictionary, type Dictionaries } from "@/i18n/dictionaries";
 // ─── Available games ───────────────────────────────────────────────────────────
 
 type AvailableId = keyof Dictionaries["games"]["available"];
-type UpcomingId  = keyof Dictionaries["games"]["upcoming"];
 type GamesDict   = Dictionaries["games"];
 
 type LevelKey = "allLevels" | "intermediate" | "beginner";
@@ -14,13 +13,6 @@ type LevelKey = "allLevels" | "intermediate" | "beginner";
 interface AvailableGameMeta {
   id:         AvailableId;
   href:       string;
-  levelKey:   LevelKey;
-  levelColor: string;
-  icon:       React.ReactNode;
-}
-
-interface UpcomingGameMeta {
-  id:         UpcomingId;
   levelKey:   LevelKey;
   levelColor: string;
   icon:       React.ReactNode;
@@ -77,69 +69,6 @@ const AVAILABLE_GAMES: AvailableGameMeta[] = [
         <line x1="4" y1="8" x2="24" y2="8" stroke="#10b981" strokeWidth="1.6" strokeDasharray="3 2" strokeLinecap="round" />
         <line x1="4" y1="20" x2="24" y2="20" stroke="#ef4444" strokeWidth="1.6" strokeDasharray="3 2" strokeLinecap="round" />
         <circle cx="14" cy="14" r="2" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" strokeWidth="1.4" />
-      </svg>
-    ),
-  },
-];
-
-const UPCOMING_GAMES: UpcomingGameMeta[] = [
-  {
-    id:         "risk",
-    levelKey:   "allLevels",
-    levelColor: "text-emerald-400 border-emerald-500/30",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <rect x="5" y="5" width="18" height="18" rx="3" stroke="#52525b" strokeWidth="1.5" />
-        <path d="M10 14h8M14 10v8" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    id:         "zone",
-    levelKey:   "intermediate",
-    levelColor: "text-blue-400 border-blue-500/30",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M4 18L9 12l4 3 5-6 6 4" stroke="#52525b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <line x1="4" y1="13" x2="24" y2="13" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M19 10l2 3-2 3" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    id:         "rr",
-    levelKey:   "beginner",
-    levelColor: "text-zinc-400 border-zinc-700",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <line x1="4" y1="20" x2="24" y2="20" stroke="#3f3f46" strokeWidth="1.4" strokeLinecap="round" />
-        <line x1="4" y1="8" x2="24" y2="8" stroke="#10b981" strokeWidth="1.4" strokeDasharray="3 2" strokeLinecap="round" />
-        <line x1="14" y1="20" x2="14" y2="8" stroke="#52525b" strokeWidth="1.2" strokeDasharray="2 2" strokeLinecap="round" />
-        <circle cx="14" cy="14" r="2" fill="rgba(16,185,129,0.2)" stroke="#10b981" strokeWidth="1.4" />
-      </svg>
-    ),
-  },
-  {
-    id:         "structure",
-    levelKey:   "intermediate",
-    levelColor: "text-blue-400 border-blue-500/30",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M4 18l4-6 4 4 5-8 5 4" stroke="#52525b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <line x1="12" y1="12" x2="20" y2="4" stroke="#3b82f6" strokeWidth="1.4" strokeDasharray="2.5 2" strokeLinecap="round" />
-        <circle cx="20" cy="4" r="2" fill="rgba(59,130,246,0.2)" stroke="#3b82f6" strokeWidth="1.4" />
-      </svg>
-    ),
-  },
-  {
-    id:         "sizing",
-    levelKey:   "beginner",
-    levelColor: "text-zinc-400 border-zinc-700",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <rect x="6" y="8" width="16" height="13" rx="2" stroke="#52525b" strokeWidth="1.5" />
-        <path d="M10 8V6a4 4 0 018 0v2" stroke="#52525b" strokeWidth="1.4" strokeLinecap="round" />
-        <circle cx="14" cy="14.5" r="2.5" fill="rgba(16,185,129,0.2)" stroke="#10b981" strokeWidth="1.4" />
       </svg>
     ),
   },
@@ -202,42 +131,6 @@ function AvailableGameCard({
   );
 }
 
-function UpcomingGameCard({ meta, t }: { meta: UpcomingGameMeta; t: GamesDict }) {
-  const game = t.upcoming[meta.id];
-  return (
-    <div className="group relative bg-zinc-900/40 border border-zinc-800/60 rounded-2xl p-6 flex flex-col gap-4 opacity-70">
-      <div className="absolute top-4 right-4 text-[10px] font-semibold text-zinc-600 uppercase tracking-widest border border-zinc-700/50 rounded-full px-2.5 py-0.5">
-        {t.index.upcomingBadge}
-      </div>
-
-      <div className="flex items-start justify-between">
-        <div className="w-12 h-12 rounded-xl bg-zinc-800/60 border border-zinc-700/40 flex items-center justify-center shrink-0">
-          {meta.icon}
-        </div>
-        <span className={`text-[10px] font-semibold uppercase tracking-wide border rounded-full px-2.5 py-0.5 ${meta.levelColor}`}>
-          {t.index.levels[meta.levelKey]}
-        </span>
-      </div>
-
-      <div className="flex-1">
-        <h3 className="text-base font-bold text-zinc-400 mb-1.5">{game.title}</h3>
-        <p className="text-zinc-600 text-sm leading-relaxed">{game.description}</p>
-      </div>
-
-      <div className="flex items-center justify-between pt-3 border-t border-zinc-800/40">
-        <div className="flex items-center gap-1.5 text-[11px] text-zinc-700">
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-            <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.2" />
-            <path d="M5.5 3v2.5l1.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          {game.duration}
-        </div>
-        <span className="text-xs text-zinc-700 font-medium">{t.index.unavailable}</span>
-      </div>
-    </div>
-  );
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function JeuxPage({
@@ -273,16 +166,6 @@ export default async function JeuxPage({
           </div>
           <div className={`grid gap-4 ${AVAILABLE_GAMES.length > 1 ? "sm:grid-cols-2" : ""}`}>
             {AVAILABLE_GAMES.map((g) => <AvailableGameCard key={g.id} meta={g} t={t} locale={locale} />)}
-          </div>
-        </section>
-
-        {/* Upcoming games */}
-        <section>
-          <div className="flex items-center gap-3 mb-5">
-            <h2 className="text-sm font-semibold text-zinc-500">{t.index.upcoming}</h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {UPCOMING_GAMES.map((g) => <UpcomingGameCard key={g.id} meta={g} t={t} />)}
           </div>
         </section>
 

@@ -1,4 +1,4 @@
-// Moteur partagé pour tous les mini-jeux TradingLab.
+// Moteur partagé pour tous les mini-jeux TradeScaleX.
 // Contient les types de base, le PRNG seedé, les pools de variation,
 // et les helpers de construction de bougies / domaine de chart.
 

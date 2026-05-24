@@ -23,7 +23,7 @@ test("onboarding — première visite affiche l'overlay welcome", async ({ page 
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
 
   // L'overlay doit apparaître (après le délai 350ms)
-  const overlay = page.getByRole("dialog", { name: /Bienvenue sur TradingLab/i });
+  const overlay = page.getByRole("dialog", { name: /Bienvenue sur TradeScaleX/i });
   await expect(overlay).toBeVisible({ timeout: 3000 });
 
   // Step 1 : welcome
@@ -83,7 +83,7 @@ test("onboarding — visite 2 n'affiche plus l'overlay", async ({ page }) => {
   await page.waitForTimeout(800); // attendre le délai de l'effect
 
   // L'overlay NE doit PAS s'afficher
-  const dialog = page.getByRole("dialog", { name: /Bienvenue sur TradingLab/i });
+  const dialog = page.getByRole("dialog", { name: /Bienvenue sur TradeScaleX/i });
   await expect(dialog).not.toBeVisible();
 });
 

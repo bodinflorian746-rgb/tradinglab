@@ -1,4 +1,4 @@
-// Composant célébration unifié pour toutes les leçons TradingLab.
+// Composant célébration unifié pour toutes les leçons TradeScaleX.
 // Quand triggerKey change (et != 0), joue une animation de ~2.8s :
 //   - Confettis (60 particules colorées tombant)
 //   - Toast XP "+20 XP" qui pop en haut

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useLocale, useDict } from "@/app/components/LocaleProvider";
 import { localizedHref, stripLocalePrefix } from "@/lib/i18n/href";
 import type { Locale } from "@/i18n/config";
+import Logo from "@/app/components/Logo";
 
 const SWITCHER_LOCALES: { code: Locale; label: string }[] = [
   { code: "fr", label: "FR" },
@@ -69,11 +70,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
         {/* Logo */}
-        <Link href={localizedHref("/", locale)} className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-            📈
-          </div>
-          <span className="text-lg font-bold">TradingLab</span>
+        <Link href={localizedHref("/", locale)} aria-label="TradeScaleX">
+          <Logo size="sm" showTagline={false} />
         </Link>
 
         {/* Nav desktop */}

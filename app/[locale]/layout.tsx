@@ -40,7 +40,7 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(SITE_URL),
-    title: "TradingLab – Apprends le trading comme un pro",
+    title: "TradeScaleX – Apprends le trading comme un pro",
     description: "La plateforme d'apprentissage du trading la plus complète.",
     alternates: {
       canonical: `${SITE_URL}/${safeLocale}`,

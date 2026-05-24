@@ -1,4 +1,4 @@
-// Onboarding 2 étapes pour les nouveaux visiteurs TradingLab.
+// Onboarding 2 étapes pour les nouveaux visiteurs TradeScaleX.
 //
 // Étape 1 — Welcome : présentation rapide + progression recommandée
 // Étape 2 — Choix : 3 portes d'entrée (Bases / Jeux / Stratégies)
@@ -90,7 +90,7 @@ export function OnboardingOverlay() {
                 <path d="M3 14L7 9l3 3 5-7" stroke="#09090b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
-            <span className="text-base font-bold text-white">TradingLab</span>
+            <span className="text-base font-bold text-white">TradeScale<span className="text-emerald-500">X</span></span>
           </div>
           <button
             onClick={markDone}
