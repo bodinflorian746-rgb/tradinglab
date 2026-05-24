@@ -58,7 +58,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Entender el calendario económico — cómo leer el mercado por adelantado
+            Entender el calendario económico, cómo leer el mercado por adelantado
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -288,7 +288,7 @@ export default function ContentEs() {
               <span className="font-semibold text-zinc-200">¿Por qué?</span> Porque las instituciones reducen su exposición, ajustan sus posiciones y esperan las cifras. Ves a menudo <span className="font-semibold text-zinc-200">movimientos pre-news</span> desde el martes por la mañana en estas semanas.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Al revés, una semana <span className="font-semibold text-zinc-200">macro calma</span> deja más espacio al análisis técnico puro — es el buen momento para aplicar tus setups habituales sin sorpresas externas.
+              Al revés, una semana <span className="font-semibold text-zinc-200">macro calma</span> deja más espacio al análisis técnico puro, es el buen momento para aplicar tus setups habituales sin sorpresas externas.
             </p>
             <div className="bg-zinc-800/30 rounded-xl px-4 py-3 mb-5">
               <p className="text-xs font-semibold text-zinc-400 mb-2">En una semana FOMC + CPI + NFP, estos activos se ven todos impactados:</p>
@@ -461,11 +461,11 @@ export default function ContentEs() {
               "Las news macro no sirven para nada en forex",
             ]}
             correctIndex={2}
-            explanation="Una cifra real cercana al consenso no siempre basta para explicar un gran movimiento. Las revisiones pueden modificar toda la lectura de la tendencia del empleo (por ejemplo, una cifra previa revisada de 250k a 170k cambia la percepción del mercado laboral US). La opción A ignora la lógica macro — los movimientos casi siempre tienen una causa identificable. La opción B es falsa aquí: 205k vs 200k no es una desviación grande. La opción D contradice todo el módulo Macro. Es exactamente el escenario del hero de esta lección. Esta lógica de las revisiones aplica a todos los activos ligados al dólar: EUR/USD, XAU/USD, Nasdaq y BTC/USD reaccionan todos a la misma reevaluación."
+            explanation="Una cifra real cercana al consenso no siempre basta para explicar un gran movimiento. Las revisiones pueden modificar toda la lectura de la tendencia del empleo (por ejemplo, una cifra previa revisada de 250k a 170k cambia la percepción del mercado laboral US). La opción A ignora la lógica macro, los movimientos casi siempre tienen una causa identificable. La opción B es falsa aquí: 205k vs 200k no es una desviación grande. La opción D contradice todo el módulo Macro. Es exactamente el escenario del hero de esta lección. Esta lógica de las revisiones aplica a todos los activos ligados al dólar: EUR/USD, XAU/USD, Nasdaq y BTC/USD reaccionan todos a la misma reevaluación."
             answerExplanations={[
-              "Falso. El mercado sigue una lógica precisa basada en las expectativas y las revisiones. La reacción no es aleatoria — casi siempre tiene una causa identificable.",
+              "Falso. El mercado sigue una lógica precisa basada en las expectativas y las revisiones. La reacción no es aleatoria, casi siempre tiene una causa identificable.",
               "Falso. 205k vs 200k es una desviación mínima, insuficiente para provocar un gran movimiento. No es la cifra del día la que explica la reacción.",
-              "Correcto. Las revisiones pueden modificar toda la lectura macro. Una cifra previa revisada de 250k a 170k cambia la percepción del mercado laboral US — y el mercado reacciona a esta nueva realidad.",
+              "Correcto. Las revisiones pueden modificar toda la lectura macro. Una cifra previa revisada de 250k a 170k cambia la percepción del mercado laboral US, y el mercado reacciona a esta nueva realidad.",
               "Falso. Las news macro son una de las causas principales de los grandes movimientos en forex. Todo este módulo lo demuestra.",
             ]}
           />
@@ -509,10 +509,10 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 1 — Hawkish vs Dovish
+                Lección 1. Hawkish vs Dovish
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                CPI, PPI e inflación — Próximamente →
+                CPI, PPI e inflación. Próximamente →
               </span>
             </div>
 

@@ -11,24 +11,24 @@ function ContentFr() {
       formationId="avance"
       lessonId="lecon3"
       title="Order Blocks"
-      subtitle="Un Order Block est la dernière bougie avant un mouvement impulsif institutionnel. C'est là que les institutions ont placé leurs ordres — et où le prix revient souvent les chercher."
+      subtitle="Un Order Block est la dernière bougie avant un mouvement impulsif institutionnel. C'est là que les institutions ont placé leurs ordres, et où le prix revient souvent les chercher."
       duration="24 min"
       lessonNumber={3}
-      prev={{ href: "/formations/avance/lecon2", label: "Leçon 2 — Fair Value Gap" }}
-      next={{ href: "/formations/avance/lecon4", label: "Leçon 4 — Killzones" }}
+      prev={{ href: "/formations/avance/lecon2", label: "Leçon 2 : Fair Value Gap" }}
+      next={{ href: "/formations/avance/lecon4", label: "Leçon 4 : Killzones" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Qu'est-ce qu'un Order Block ?</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Quand une institution place un ordre massif (achat ou vente), elle ne peut pas l'exécuter en une seule fois — le marché n'a pas assez de liquidité. Elle fractionne ses ordres sur plusieurs bougies, puis lance le mouvement. La dernière bougie avant ce mouvement impulsif est appelée <span className="text-white font-medium">Order Block (OB)</span>.
+          Quand une institution place un ordre massif (achat ou vente), elle ne peut pas l'exécuter en une seule fois, le marché n'a pas assez de liquidité. Elle fractionne ses ordres sur plusieurs bougies, puis lance le mouvement. La dernière bougie avant ce mouvement impulsif est appelée <span className="text-white font-medium">Order Block (OB)</span>.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Quand le prix revient dans la zone de cet OB lors d'un retracement, les ordres institutionnels restants s'activent — ce qui crée souvent un rebond puissant.
+          Quand le prix revient dans la zone de cet OB lors d'un retracement, les ordres institutionnels restants s'activent, ce qui crée souvent un rebond puissant.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">En résumé :</span> un OB est une zone où les institutions ont laissé des ordres non exécutés. Le prix y revient pour les combler — et c'est là que tu entres.
+            <span className="text-white font-medium">En résumé :</span> un OB est une zone où les institutions ont laissé des ordres non exécutés. Le prix y revient pour les combler, et c'est là que tu entres.
           </p>
         </div>
       </section>
@@ -67,7 +67,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">OB vs Order Block "mitigé"</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Un Order Block n'est valide qu'une seule fois. Quand le prix y revient et réagit, on dit que l'OB est <span className="text-white font-medium">"mitigé"</span>. Après mitigation, la zone perd sa puissance institutionnelle — tu ne dois plus traiter un OB mitigé comme un signal.
+          Un Order Block n'est valide qu'une seule fois. Quand le prix y revient et réagit, on dit que l'OB est <span className="text-white font-medium">"mitigé"</span>. Après mitigation, la zone perd sa puissance institutionnelle, tu ne dois plus traiter un OB mitigé comme un signal.
         </p>
         <div className="space-y-2">
           {[
@@ -117,7 +117,7 @@ function ContentFr() {
           "Un Order Block = dernière bougie avant un mouvement impulsif institutionnel créant un BOS.",
           "Bullish OB = dernière bougie baissière avant une hausse impulsive. Bearish OB = inverse.",
           "La zone de l'OB est définie par le corps (open → close) de la bougie, pas les mèches.",
-          "Un OB est valide une seule fois : après mitigation, il perd sa puissance — ne plus le trader.",
+          "Un OB est valide une seule fois : après mitigation, il perd sa puissance, ne plus le trader.",
           "La confluence OB + FVG est l'une des combinaisons les plus puissantes en Smart Money.",
         ]}
       />
@@ -128,25 +128,25 @@ function ContentFr() {
           "Cherche un mouvement impulsif haussier récent (une série de bougies directionnelles sans retracement). Note la bougie qui le précède.",
           "Vérifie : cette bougie est-elle baissière ? Si oui, c'est un Bullish Order Block potentiel. Note ses niveaux open et close.",
           "Le prix est-il revenu dans la zone depuis ? Si oui, y a-t-il eu une réaction (rebond) ? L'OB est-il mitigé ou encore actif ?",
-          "Répète l'exercice pour un mouvement baissier — trouve un Bearish Order Block.",
+          "Répète l'exercice pour un mouvement baissier, trouve un Bearish Order Block.",
         ]}
       />
 
       <LessonQuiz
         question="Tu identifies un mouvement haussier impulsif sur le graphique. La bougie juste avant ce mouvement est une bougie baissière. Que représente-t-elle ?"
         options={[
-          "Un signal de vente — la bougie baissière signifie que le marché va baisser",
-          "Un Bullish Order Block — c'est la zone où les institutions ont placé leurs ordres d'achat",
-          "Un Fair Value Gap — il n'y a pas eu d'échanges à ce niveau",
+          "Un signal de vente, la bougie baissière signifie que le marché va baisser",
+          "Un Bullish Order Block, c'est la zone où les institutions ont placé leurs ordres d'achat",
+          "Un Fair Value Gap, il n'y a pas eu d'échanges à ce niveau",
           "Un niveau de support/résistance classique sans signification institutionnelle",
         ]}
         correctIndex={1}
-        explanation="La dernière bougie baissière avant un mouvement haussier impulsif est un Bullish Order Block. Paradoxalement, c'est une bougie baissière qui marque une zone d'achat institutionnel — les institutions ont absorbé la pression vendeuse dans cette bougie avant de lancer leur mouvement haussier."
+        explanation="La dernière bougie baissière avant un mouvement haussier impulsif est un Bullish Order Block. Paradoxalement, c'est une bougie baissière qui marque une zone d'achat institutionnel, les institutions ont absorbé la pression vendeuse dans cette bougie avant de lancer leur mouvement haussier."
         answerExplanations={[
-          "Faux. La direction de la bougie en elle-même n'est pas le signal — c'est son contexte. Une bougie baissière précédant un mouvement haussier impulsif est un Bullish OB, pas un signal de vente.",
+          "Faux. La direction de la bougie en elle-même n'est pas le signal, c'est son contexte. Une bougie baissière précédant un mouvement haussier impulsif est un Bullish OB, pas un signal de vente.",
           "Correct. C'est précisément la définition d'un Bullish Order Block. La dernière bougie directionnellement opposée avant un mouvement impulsif marque la zone où les institutions ont exécuté leurs ordres.",
           "Faux. Un FVG se définit sur 3 bougies et concerne une zone de prix non échangée. L'Order Block est la bougie elle-même (son corps), pas un espace entre bougies.",
-          "Faux. Ce n'est pas un simple S/R — c'est une zone institutionnelle avec des ordres en attente. La différence est fondamentale : les OB ont une logique de déclenchement que les S/R classiques n'ont pas.",
+          "Faux. Ce n'est pas un simple S/R, c'est une zone institutionnelle avec des ordres en attente. La différence est fondamentale : les OB ont une logique de déclenchement que les S/R classiques n'ont pas.",
         ]}
       />
 

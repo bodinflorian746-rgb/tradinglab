@@ -248,14 +248,14 @@ export default function ContentFr() {
               "BOS = cassure du dernier extrême structurel dans le sens de la tendance (continuation).",
               "CHoCH = cassure du dernier creux/sommet de structure inverse (retournement).",
               "La sortie d’une position se déclenche dès le BOS validé. L’inversion exige le CHoCH confirmé.",
-              "Sans clôture franche (mèche seulement), pas de BOS — c’est un liquidity grab.",
+              "Sans clôture franche (mèche seulement), pas de BOS, c’est un liquidity grab.",
             ]}
           />
 
           <LessonExercice
             description="Sur XAU/USD H4, la tendance haussière en cours a formé un dernier HL à 4 580$ et un dernier HH à 4 660$. Une bougie clôture à 4 555$ avec un corps significatif, soit 25$ sous le dernier HL. 4 bougies suivantes maintiennent leur clôture sous 4 580$. Le prix forme ensuite un sommet à 4 600$ puis redescend former un creux à 4 530$. Comment se construit le plan complet ?"
             steps={[
-              "Qualifier le BOS baissier : clôture franche à 4 555$ (25$ sous le HL 4 580$), corps significatif, pas de réintégration sur 4 bougies — BOS validé",
+              "Qualifier le BOS baissier : clôture franche à 4 555$ (25$ sous le HL 4 580$), corps significatif, pas de réintégration sur 4 bougies. BOS validé",
               "Déclencher la sortie de toute position long existante dès la clôture à 4 555$",
               "Observer la structure post-cassure : sommet à 4 600$ (premier LH potentiel) puis creux à 4 530$ (premier LL)",
               "Confirmer le CHoCH baissier : la séquence LH (4 600$) + LL (4 530$) inverse officiellement la tendance",

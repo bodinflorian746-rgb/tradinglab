@@ -58,12 +58,12 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Hawkish vs Dovish — comment lire le ton d&apos;une banque centrale
+            Hawkish vs Dovish, comment lire le ton d&apos;une banque centrale
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Tu peux avoir raison sur les chiffres et perdre quand même. Parce que ce qui fait bouger le marché, ce n&apos;est pas la décision de la Fed — c&apos;est le ton avec lequel Powell la prononce.
+              Tu peux avoir raison sur les chiffres et perdre quand même. Parce que ce qui fait bouger le marché, ce n&apos;est pas la décision de la Fed, c&apos;est le ton avec lequel Powell la prononce.
             </p>
           </div>
 
@@ -145,7 +145,7 @@ export default function ContentFr() {
               </p>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              C&apos;est exactement pour ça que les meilleurs traders macro lisent les <span className="font-semibold text-zinc-300">discours</span> et les <span className="font-semibold text-zinc-300">minutes</span> (procès-verbaux des réunions de banques centrales) — pas seulement les chiffres.
+              C&apos;est exactement pour ça que les meilleurs traders macro lisent les <span className="font-semibold text-zinc-300">discours</span> et les <span className="font-semibold text-zinc-300">minutes</span> (procès-verbaux des réunions de banques centrales), pas seulement les chiffres.
             </p>
           </section>
 
@@ -153,7 +153,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Comment reconnaître un ton hawkish vs dovish</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Voici les <span className="font-semibold text-zinc-200">mots-signaux</span> que tu vas croiser dans les communiqués officiels (la plupart sont publiés en anglais — voici les traductions).
+              Voici les <span className="font-semibold text-zinc-200">mots-signaux</span> que tu vas croiser dans les communiqués officiels (la plupart sont publiés en anglais, voici les traductions).
             </p>
 
             <p className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">Vocabulaire HAWKISH (ton dur, pro-resserrement)</p>
@@ -204,7 +204,7 @@ export default function ContentFr() {
               Prenons un exemple chiffré pour fixer les idées.
             </p>
 
-            <p className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">Cas hawkish sur le dollar US — la Fed durcit le ton</p>
+            <p className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">Cas hawkish sur le dollar US, la Fed durcit le ton</p>
             <div className="overflow-hidden rounded-xl border border-zinc-800 mb-2">
               <div className="grid grid-cols-2 border-b border-zinc-800">
                 <div className="px-4 py-2 bg-zinc-800/50 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Actif</div>
@@ -212,7 +212,7 @@ export default function ContentFr() {
               </div>
               <div className="divide-y divide-zinc-800/60">
                 {[
-                  { asset: "EUR/USD", reaction: "Baisse — 100 à 300 pips sur la séance" },
+                  { asset: "EUR/USD", reaction: "Baisse, 100 à 300 pips sur la séance" },
                   { asset: "DXY", reaction: "Monte (mesure la force du dollar)" },
                   { asset: "XAU/USD", reaction: "Baisse (taux réels hauts pénalisent l'or)" },
                   { asset: "Nasdaq", reaction: "Baisse (taux hauts pénalisent la tech)" },
@@ -227,7 +227,7 @@ export default function ContentFr() {
             </div>
             <p className="text-xs text-zinc-500 italic mb-5">Une seule décision hawkish déclenche TOUT ça en même temps.</p>
 
-            <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Cas dovish sur le dollar US — la Fed adoucit le ton</p>
+            <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Cas dovish sur le dollar US, la Fed adoucit le ton</p>
             <div className="overflow-hidden rounded-xl border border-zinc-800 mb-2">
               <div className="grid grid-cols-2 border-b border-zinc-800">
                 <div className="px-4 py-2 bg-zinc-800/50 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Actif</div>
@@ -387,15 +387,15 @@ export default function ContentFr() {
             question="La Fed monte ses taux de 25bps. Tu lis le communiqué et le ton est globalement hawkish. Pourtant, le dollar BAISSE après l'annonce. Quelle est l'explication la plus probable ?"
             options={[
               "Le marché ne suit pas toujours la logique fondamentale, c'est aléatoire",
-              "Le marché avait anticipé une hausse plus importante (50bps) ou un ton encore plus dur — c'est une \"dovish surprise\"",
+              "Le marché avait anticipé une hausse plus importante (50bps) ou un ton encore plus dur, c'est une \"dovish surprise\"",
               "Le dollar baisse toujours sur les annonces de la Fed, peu importe le ton",
               "Powell a fait une erreur de communication",
             ]}
             correctIndex={1}
-            explanation="Le marché ne réagit pas à la décision en absolu, mais à l'écart entre la décision et les anticipations. Si la Fed monte de 25bps alors que le marché pricait 50bps, cela revient à un signal 'moins hawkish que prévu' — donc dovish par contraste. Les options A et C sont fausses : le marché suit une logique précise, et le sens de réaction dépend toujours des attentes. L'option D détourne le sujet : Powell ne fait pas d'erreurs de communication, il calibre chaque mot. Cette logique d'anticipations vaut pour tous les actifs liés au dollar : EUR/USD, XAU/USD, Nasdaq et BTC/USD réagissent tous à l'écart entre attentes et réalité."
+            explanation="Le marché ne réagit pas à la décision en absolu, mais à l'écart entre la décision et les anticipations. Si la Fed monte de 25bps alors que le marché pricait 50bps, cela revient à un signal 'moins hawkish que prévu', donc dovish par contraste. Les options A et C sont fausses : le marché suit une logique précise, et le sens de réaction dépend toujours des attentes. L'option D détourne le sujet : Powell ne fait pas d'erreurs de communication, il calibre chaque mot. Cette logique d'anticipations vaut pour tous les actifs liés au dollar : EUR/USD, XAU/USD, Nasdaq et BTC/USD réagissent tous à l'écart entre attentes et réalité."
             answerExplanations={[
-              "Faux. Le marché suit une logique très précise basée sur les anticipations. La réaction n'est pas aléatoire — elle mesure l'écart entre ce qui était attendu et ce qui a été annoncé.",
-              "Correct. Le marché avait pricé 50bps. Une hausse de 25bps est donc 'moins hawkish que prévu' — c'est une dovish surprise. Le dollar baisse parce que les attentes n'ont pas été confirmées.",
+              "Faux. Le marché suit une logique très précise basée sur les anticipations. La réaction n'est pas aléatoire, elle mesure l'écart entre ce qui était attendu et ce qui a été annoncé.",
+              "Correct. Le marché avait pricé 50bps. Une hausse de 25bps est donc 'moins hawkish que prévu', c'est une dovish surprise. Le dollar baisse parce que les attentes n'ont pas été confirmées.",
               "Faux. Le dollar peut monter ou baisser sur une annonce Fed selon la direction de la surprise. Il n'y a pas de règle mécanique indépendante du ton et des anticipations.",
               "Faux. Powell calibre chaque mot avec précision. La réaction du marché reflète l'écart entre anticipations et réalité, pas une erreur de communication.",
             ]}
@@ -443,7 +443,7 @@ export default function ContentFr() {
                 Retour au module
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Comprendre le calendrier économique — Bientôt disponible →
+                Comprendre le calendrier économique. Bientôt disponible →
               </span>
             </div>
 

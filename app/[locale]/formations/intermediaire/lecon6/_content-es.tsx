@@ -10,12 +10,12 @@ export default function ContentEs() {
     <LessonPage
       formationId="intermediaire"
       lessonId="lecon6"
-      title="Fake Breakout — no caer en la trampa"
-      subtitle="El precio rompe un nivel, entras en el sentido de la ruptura — y el precio vuelve inmediatamente en el otro sentido. Esta trampa pasa varias veces por semana. Acá tienes cómo reconocerla e incluso tradearla."
+      title="Fake Breakout, no caer en la trampa"
+      subtitle="El precio rompe un nivel, entras en el sentido de la ruptura, y el precio vuelve inmediatamente en el otro sentido. Esta trampa pasa varias veces por semana. Acá tienes cómo reconocerla e incluso tradearla."
       duration="18 min"
       lessonNumber={6}
-      prev={{ href: "/formations/intermediaire/lecon5", label: "Lección 5 — Confluencias" }}
-      next={{ href: "/formations/intermediaire/lecon7", label: "Lección 7 — Multi-Timeframe" }}
+      prev={{ href: "/formations/intermediaire/lecon5", label: "Lección 5 : Confluencias" }}
+      next={{ href: "/formations/intermediaire/lecon7", label: "Lección 7 : Multi-Timeframe" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -57,7 +57,7 @@ export default function ContentEs() {
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
             <p className="text-sm font-medium text-white mb-1">Lo que pasa</p>
             <p className="text-xs text-zinc-500 leading-relaxed">
-              El precio sube, activa las órdenes de compra encima de la resistencia. Esas compras suben ligeramente. Pero no hay suficiente momentum para seguir. El precio vuelve abajo — y los compradores que siguieron la ruptura están ahora en pérdida.
+              El precio sube, activa las órdenes de compra encima de la resistencia. Esas compras suben ligeramente. Pero no hay suficiente momentum para seguir. El precio vuelve abajo, y los compradores que siguieron la ruptura están ahora en pérdida.
             </p>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
@@ -72,9 +72,9 @@ export default function ContentEs() {
         <h2 className="text-lg font-semibold text-white mb-3">Cómo reconocer un fake breakout</h2>
         <div className="space-y-2.5">
           {[
-            { label: "La vela cierra del otro lado del nivel", detail: "Señal principal. El precio perfora el nivel pero el cierre queda del otro lado → fake breakout. Espera siempre el cierre — nunca el intrabar." },
+            { label: "La vela cierra del otro lado del nivel", detail: "Señal principal. El precio perfora el nivel pero el cierre queda del otro lado → fake breakout. Espera siempre el cierre : nunca el intrabar." },
             { label: "Mecha larga en la dirección de la ruptura", detail: "Una mecha alta encima de una resistencia con cierre debajo = rechazo fuerte. Es la señal visual número 1 del fake breakout." },
-            { label: "El retorno es rápido y agresivo", detail: "Después de un fake, el reversal es violento. El precio no duda — vuelve con momentum. Es en sí mismo una señal." },
+            { label: "El retorno es rápido y agresivo", detail: "Después de un fake, el reversal es violento. El precio no duda : vuelve con momentum. Es en sí mismo una señal." },
             { label: "La tendencia de fondo contradice la ruptura", detail: "Ruptura alcista en una tendencia bajista fuerte = sospechoso. El mercado busca stops, no una verdadera dirección." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -92,7 +92,7 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Tradear el fake breakout — el setup en sentido inverso</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Tradear el fake breakout : el setup en sentido inverso</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Una vez identificado, puedes tradear el fake breakout en el sentido del reversal. Es uno de los setups más potentes: entras justo después de que los stops fueron barridos.
         </p>
@@ -163,7 +163,7 @@ export default function ContentEs() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Error clásico</p>
         <p className="text-sm font-semibold text-white mb-2">Entrar en la ruptura antes del cierre de la vela</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          El precio perfora la resistencia a 1.0950 → trepa a 1.0962 en intrabar. Compras inmediatamente &quot;para no perder el movimiento&quot;. La vela cierra a 1.0945 — debajo de la resistencia. Estás en short involuntariamente. La regla es simple: cierre de vela primero, decisión después.
+          El precio perfora la resistencia a 1.0950 → trepa a 1.0962 en intrabar. Compras inmediatamente &quot;para no perder el movimiento&quot;. La vela cierra a 1.0945, debajo de la resistencia. Estás en short involuntariamente. La regla es simple: cierre de vela primero, decisión después.
         </p>
       </section>
 
@@ -205,17 +205,17 @@ export default function ContentEs() {
       <LessonQuiz
         question="En EUR/USD H1, el precio sube y perfora la resistencia a 1.0950 durante la vela en curso. La vela todavía no cerró y muestra +18 pips encima del nivel. ¿Qué haces?"
         options={[
-          "Compras inmediatamente — la ruptura está en curso y quieres estar en el movimiento",
+          "Compras inmediatamente, la ruptura está en curso y quieres estar en el movimiento",
           "Esperas el cierre de esa vela H1 antes de tomar una decisión",
-          "Vendes — el precio subió muy rápido, es seguramente un fake",
+          "Vendes, el precio subió muy rápido, es seguramente un fake",
           "Colocas una orden de compra justo encima de 1.0950 para la próxima vela",
         ]}
         correctIndex={1}
-        explanation="La regla es absoluta: espera el cierre de la vela. El precio puede estar a +18 pips encima en intrabar y cerrar bajo la resistencia — es exactamente la definición de un fake breakout. Decidir antes del cierre es tradear en un precio provisorio."
+        explanation="La regla es absoluta: espera el cierre de la vela. El precio puede estar a +18 pips encima en intrabar y cerrar bajo la resistencia, es exactamente la definición de un fake breakout. Decidir antes del cierre es tradear en un precio provisorio."
         answerExplanations={[
           "Falso. La ruptura todavía no está confirmada. El precio puede volver bajo 1.0950 antes del cierre. Entrar ahora es reaccionar a un precio temporal. Si la vela cierra bajo 1.0950, estás en el sentido equivocado.",
           "Correcto. El cierre de vela es el único momento en que puedes juzgar una ruptura. Si cierra encima de 1.0950 → potencialmente ruptura real. Si cierra debajo → fake breakout. Esperas.",
-          "Falso. +18 pips en una resistencia puede ser el inicio de una ruptura real — no necesariamente un fake. No puedes concluir &apos;fake breakout&apos; sin el cierre de la vela.",
+          "Falso. +18 pips en una resistencia puede ser el inicio de una ruptura real, no necesariamente un fake. No puedes concluir &apos;fake breakout&apos; sin el cierre de la vela.",
           "Riesgoso. Colocar una orden limit justo encima de 1.0950 para la próxima vela es anticipar una continuación sin confirmación. Espera el cierre primero.",
         ]}
       />

@@ -209,7 +209,7 @@ export default function ContentEs() {
                 <li>- M15: pin bar alcista, mecha inferior 1.1762, cierre 1.1778</li>
                 <li>- Entrada long: 1.1778 (cierre de la pin bar M15)</li>
                 <li>- Stop loss: 1.1745 (5 pips debajo de la zona H4)</li>
-                <li>- Take profit nivel 1: 1.1840 (HH Daily) — nivel 2: 1.1900 (extensión)</li>
+                <li>- Take profit nivel 1: 1.1840 (HH Daily), nivel 2: 1.1900 (extensión)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Cálculo del R/R</p>
@@ -335,13 +335,13 @@ export default function ContentEs() {
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="text-zinc-600">
                   <path d="M9.5 3.5l-4 4 4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 3 — Engulfing: la reversión de fuerza
+                Lección 3. Engulfing: la reversión de fuerza
               </Link>
               <Link
                 href="/strategies/price-action"
                 className="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
               >
-                Módulo terminado — Volver al módulo
+                Módulo terminado. Volver al módulo
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M5.5 10.5l4-4-4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

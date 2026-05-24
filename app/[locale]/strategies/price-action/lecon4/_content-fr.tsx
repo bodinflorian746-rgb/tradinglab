@@ -209,7 +209,7 @@ export default function ContentFr() {
                 <li>- M15 : pin bar haussière, mèche basse 1.1762, clôture 1.1778</li>
                 <li>- Entrée long : 1.1778 (clôture de la pin bar M15)</li>
                 <li>- Stop loss : 1.1745 (5 pips sous la zone H4)</li>
-                <li>- Take profit niveau 1 : 1.1840 (HH Daily) — niveau 2 : 1.1900 (extension)</li>
+                <li>- Take profit niveau 1 : 1.1840 (HH Daily), niveau 2 : 1.1900 (extension)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
@@ -335,13 +335,13 @@ export default function ContentFr() {
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="text-zinc-600">
                   <path d="M9.5 3.5l-4 4 4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 3 — Engulfing : le retournement de force
+                Leçon 3. Engulfing : le retournement de force
               </Link>
               <Link
                 href="/strategies/price-action"
                 className="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
               >
-                Module terminé — Retour au module
+                Module terminé. Retour au module
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M5.5 10.5l4-4-4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

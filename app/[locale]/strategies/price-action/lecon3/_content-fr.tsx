@@ -305,10 +305,10 @@ export default function ContentFr() {
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="text-zinc-600">
                   <path d="M9.5 3.5l-4 4 4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 2 — Pin bar : le rejet de niveau
+                Leçon 2. Pin bar : le rejet de niveau
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 4 — Setup multi-timeframe Daily → H1
+                Leçon 4. Setup multi-timeframe Daily → H1
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

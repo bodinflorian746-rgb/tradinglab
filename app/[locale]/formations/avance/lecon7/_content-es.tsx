@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="La entrada es el momento donde todo se juega. Una entrada precisa te da un SL ajustado, un R/R elevado y menos estrés una vez abierto el trade. Aquí está cómo afinar cada entrada."
       duration="25 min"
       lessonNumber={7}
-      prev={{ href: "/formations/avance/lecon6", label: "Lección 6 — Stop Hunts" }}
-      next={{ href: "/formations/avance/lecon8", label: "Lección 8 — Journaling" }}
+      prev={{ href: "/formations/avance/lecon6", label: "Lección 6 : Stop Hunts" }}
+      next={{ href: "/formations/avance/lecon8", label: "Lección 8 : Journaling" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -72,11 +72,11 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Colocación del Stop Loss de precisión</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Un SL de precisión se coloca con lógica de estructura — jamás arbitrariamente. Debe ser invalidante: si el precio lo alcanza, el setup queda verdaderamente invalidado.
+          Un SL de precisión se coloca con lógica de estructura, jamás arbitrariamente. Debe ser invalidante: si el precio lo alcanza, el setup queda verdaderamente invalidado.
         </p>
         <div className="space-y-2.5">
           {[
-            { rule: "Debajo del extremo de la zona (OB o FVG)", detail: "Si el precio cruza por completo el OB o el FVG, el nivel institucional queda consumido — la idea de trade queda invalidada." },
+            { rule: "Debajo del extremo de la zona (OB o FVG)", detail: "Si el precio cruza por completo el OB o el FVG, el nivel institucional queda consumido, la idea de trade queda invalidada." },
             { rule: "Debajo del swing low de la entrada", detail: "Si entras en un rechazo en M15, el SL va debajo del extremo inferior de la pin bar o del engulfing." },
             { rule: "Algunos pips de margen", detail: "Deja 2 a 5 pips (según el instrumento) debajo del nivel exacto para evitar ser stopeado por el spread o el ruido natural del mercado." },
             { rule: "Jamás un monto fijo", detail: "Un SL de 20 pips 'porque es tu costumbre' no tiene ningún sentido estructural. El SL debe reflejar la geografía del gráfico." },
@@ -102,9 +102,9 @@ export default function ContentEs() {
         points={[
           "La entrada precisa = esperar una señal de confirmación en M5/M15 dentro de la zona institucional.",
           "Los 3 métodos: rechazo de vela, retest del nivel roto, sweep + retroceso.",
-          "Un SL preciso se basa en la estructura del gráfico — jamás en un monto fijo arbitrario.",
+          "Un SL preciso se basa en la estructura del gráfico, jamás en un monto fijo arbitrario.",
           "Bajar a M5 para afinar la entrada permite un SL más ajustado y un R/R significativamente mejor.",
-          "La espera de una confirmación reduce el número de trades — pero mejora la calidad de cada uno.",
+          "La espera de una confirmación reduce el número de trades, pero mejora la calidad de cada uno.",
         ]}
       />
 
@@ -129,10 +129,10 @@ export default function ContentEs() {
         correctIndex={2}
         explanation="Esperar una señal de rechazo en M5/M15 es el enfoque más preciso. Te da una confirmación de que el precio efectivamente reacciona al OB (no solo en tránsito), un SL ajustado al extremo inferior de la señal y un R/R claramente superior a una entrada al toque o a media zona."
         answerExplanations={[
-          "Demasiado apresurado. El precio puede cruzar el extremo inferior del OB y regresar — o cruzarlo por completo. Entrar al toque sin confirmación expone a un SL amplio o a un stop prematuro.",
+          "Demasiado apresurado. El precio puede cruzar el extremo inferior del OB y regresar, o cruzarlo por completo. Entrar al toque sin confirmación expone a un SL amplio o a un stop prematuro.",
           "Mejor que el toque, pero todavía impreciso. El medio del OB no tiene una lógica estructural particular. Una orden limit aquí puede también ser activada sin que el precio reaccione.",
           "Correcto. Es la entrada de precisión: bajar a M5/M15, esperar un rechazo dentro de la zona OB, entrar al cierre de la señal con un SL debajo del extremo de la mecha. Es el balance óptimo entre confirmación y timing.",
-          "No es lo bastante preciso. 'La próxima vela alcista' dentro del OB puede ser cualquier pequeña vela verde — no es necesariamente una señal de rechazo fuerte. Una pin bar o un engulfing es requerido para una confirmación institucional.",
+          "No es lo bastante preciso. 'La próxima vela alcista' dentro del OB puede ser cualquier pequeña vela verde, no es necesariamente una señal de rechazo fuerte. Una pin bar o un engulfing es requerido para una confirmación institucional.",
         ]}
       />
 

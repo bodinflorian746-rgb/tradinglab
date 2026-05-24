@@ -138,7 +138,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La decisión FOMC casi siempre dispara una reacción inmediata del mercado, pero ese primer impulso rara vez es el verdadero movimiento direccional. Está impulsado por la emoción de los participantes que sobreinterpretan el tono de Powell, la redacción de las minutas o un cambio de postura marginal. Esta reacción emocional empuja al precio más allá del nivel estructural que habría sido coherente con el contenido real de la decisión — de ahí el exceso.
+              La decisión FOMC casi siempre dispara una reacción inmediata del mercado, pero ese primer impulso rara vez es el verdadero movimiento direccional. Está impulsado por la emoción de los participantes que sobreinterpretan el tono de Powell, la redacción de las minutas o un cambio de postura marginal. Esta reacción emocional empuja al precio más allá del nivel estructural que habría sido coherente con el contenido real de la decisión, de ahí el exceso.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -152,7 +152,7 @@ export default function ContentEs() {
               <li>- Puntos accionables: el primer impulso FOMC suele ser una reacción emocional, no una lectura estructural</li>
               <li>- El movimiento inicial frecuentemente supera lo que los datos reales justifican</li>
               <li>- Tradear el impulso = tradear el ruido, no la decisión</li>
-              <li>- El verdadero movimiento direccional llega después — a veces dentro de la hora, a veces más tarde</li>
+              <li>- El verdadero movimiento direccional llega después, a veces dentro de la hora, a veces más tarde</li>
             </ul>
           </section>
 
@@ -165,13 +165,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El agotamiento es la señal clave del FOMC Fade. Después del impulso inicial, el mercado alcanza un nivel donde ya no logra avanzar: las velas siguientes muestran mechas de rechazo repetidas, la aceleración se detiene, el precio falla en imprimir un nuevo máximo (o mínimo) significativo. Esa es la firma visible de que la emoción se agota — los participantes que persiguieron el impulso se dan cuenta de que están solos, y la presión en la dirección inicial se debilita. Este punto de agotamiento es la condición previa para la ejecución del fade.
+              El agotamiento es la señal clave del FOMC Fade. Después del impulso inicial, el mercado alcanza un nivel donde ya no logra avanzar: las velas siguientes muestran mechas de rechazo repetidas, la aceleración se detiene, el precio falla en imprimir un nuevo máximo (o mínimo) significativo. Esa es la firma visible de que la emoción se agota, los participantes que persiguieron el impulso se dan cuenta de que están solos, y la presión en la dirección inicial se debilita. Este punto de agotamiento es la condición previa para la ejecución del fade.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD: impulso bullish 4 640 $ → 4 705 $ después del FOMC. En el techo, tres velas M15 consecutivas imprimen mechas superiores de 6-8 $ sin cerrar por encima de 4 705. La aceleración está rota — el mercado deja de hacer nuevos máximos. Algunas velas después, el precio corrige hacia 4 670 $, el fade funciona.
+                XAU/USD: impulso bullish 4 640 $ → 4 705 $ después del FOMC. En el techo, tres velas M15 consecutivas imprimen mechas superiores de 6-8 $ sin cerrar por encima de 4 705. La aceleración está rota, el mercado deja de hacer nuevos máximos. Algunas velas después, el precio corrige hacia 4 670 $, el fade funciona.
               </p>
             </div>
 
@@ -192,7 +192,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El FOMC Fade no consiste en anticipar un cambio completo de tendencia — es un trade de retorno PARCIAL, calibrado sobre la zona donde la mayor parte del impulso excesivo ha sido corregida. La estructura debe mantenerse clara: entrada después de la estabilización del precio en el punto de agotamiento, stop loss ajustado justo más allá del extremo del impulso, target sobre el nivel estructural desde donde partió el impulso. Sin estos tres elementos alineados, el setup no es válido.
+              El FOMC Fade no consiste en anticipar un cambio completo de tendencia, es un trade de retorno PARCIAL, calibrado sobre la zona donde la mayor parte del impulso excesivo ha sido corregida. La estructura debe mantenerse clara: entrada después de la estabilización del precio en el punto de agotamiento, stop loss ajustado justo más allá del extremo del impulso, target sobre el nivel estructural desde donde partió el impulso. Sin estos tres elementos alineados, el setup no es válido.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -203,9 +203,9 @@ export default function ContentEs() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Puntos accionables: el fade apunta a un retorno parcial — típicamente 50-80 % del impulso</li>
+              <li>- Puntos accionables: el fade apunta a un retorno parcial, típicamente 50-80 % del impulso</li>
               <li>- Entrada después de una estabilización visible, nunca durante el impulso</li>
-              <li>- SL ajustado más allá del extremo — estructura de invalidación clara</li>
+              <li>- SL ajustado más allá del extremo, estructura de invalidación clara</li>
               <li>- Target sobre el nivel estructural previo al impulso (antiguo soporte / resistencia)</li>
             </ul>
           </section>
@@ -218,35 +218,35 @@ export default function ContentEs() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Etapa 1 — Contexto H4</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 1. Contexto H4</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: XAU bajo resistencia H4 en 4 680 $, mercado expectante antes del FOMC, compresión de volatilidad</li>
-                <li>- Conclusión: alta probabilidad de expansión sobre la decisión — se prepara el escenario de fade</li>
+                <li>- Conclusión: alta probabilidad de expansión sobre la decisión, se prepara el escenario de fade</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 2 — Reacción FOMC</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Reacción FOMC</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: primer impulso bearish 4 660 $ → 4 590 $, movimiento de 70 $ en pocos minutos, volatilidad agresiva</li>
-                <li>- Conclusión: reacción potencialmente excesiva — se espera el agotamiento, no la entrada inmediata</li>
+                <li>- Conclusión: reacción potencialmente excesiva, se espera el agotamiento, no la entrada inmediata</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 3 — Agotamiento</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 3. Agotamiento</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: el mercado deja de crear nuevos mínimos, mechas inferiores largas en M15, estabilización alrededor de 4 595 $</li>
-                <li>- Conclusión: presión vendedora en desaceleración — la condición del fade está validada</li>
+                <li>- Conclusión: presión vendedora en desaceleración, la condición del fade está validada</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 4 — Ejecución del Fade</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 4. Ejecución del Fade</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrada long: 4 600 $</li>
                 <li>- Stop loss: 4 578 $ (más allá del extremo del impulso)</li>
                 <li>- Target: 4 638 $ (retorno parcial hacia el nivel pre-FOMC)</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 5 — Gestión del riesgo</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 5. Gestión del riesgo</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Volatilidad superior a la normal → tamaño de posición prudente</li>
-                <li>- Ejecución únicamente después de la estabilización — no durante el impulso</li>
+                <li>- Ejecución únicamente después de la estabilización, no durante el impulso</li>
                 <li>- El peligro principal sigue siendo la entrada prematura en el impulso inicial</li>
               </ul>
 
@@ -260,7 +260,7 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "El primer impulso FOMC casi siempre está impulsado por la emoción — no por la interpretación estructural.",
+              "El primer impulso FOMC casi siempre está impulsado por la emoción, no por la interpretación estructural.",
               "La señal explotable aparece después del agotamiento: mechas de rechazo, falla al imprimir un nuevo mínimo / máximo.",
               "El FOMC Fade apunta a un retorno PARCIAL del movimiento inicial, no a un cambio completo de tendencia Daily.",
               "Sin estabilización visible = sin entrada. Entrar en el impulso inicial = tradear el ruido emocional.",
@@ -285,12 +285,12 @@ export default function ContentEs() {
               "Colocas una orden limit justo en el extremo alcanzado por el impulso",
             ]}
             correctIndex={1}
-            explanation="La regla central del FOMC Fade es clara: no se entra nunca durante el impulso. La primera reacción FOMC está impulsada por la emoción, su amplitud es imprevisible, y su extremo puede ser superado varias veces antes de la verdadera estabilización. La disciplina consiste en esperar a que el mercado señale por sí mismo su agotamiento — mechas de rechazo, falla al imprimir nuevos mínimos, estabilización alrededor de un nivel. Es esa señal la que abre la ventana de ejecución, no la amplitud del movimiento inicial."
+            explanation="La regla central del FOMC Fade es clara: no se entra nunca durante el impulso. La primera reacción FOMC está impulsada por la emoción, su amplitud es imprevisible, y su extremo puede ser superado varias veces antes de la verdadera estabilización. La disciplina consiste en esperar a que el mercado señale por sí mismo su agotamiento, mechas de rechazo, falla al imprimir nuevos mínimos, estabilización alrededor de un nivel. Es esa señal la que abre la ventana de ejecución, no la amplitud del movimiento inicial."
             answerExplanations={[
               "Falso. Entrar short en el impulso es precisamente la trampa que el FOMC Fade busca evitar. El impulso emocional puede extenderse sin previo aviso, y entrar en pleno medio expone a un SL muy amplio o a un cambio violento contra la posición.",
               "Correcto. El agotamiento es la condición previa absoluta del setup. Sin señal visible de fin de impulso (mechas de rechazo, pérdida de aceleración, estabilización), no hay entrada. La paciencia es la disciplina estructural del Fade.",
-              "Falso. El FOMC Fade no es un trade de cambio inmediato. Entrar long en pleno medio de un impulso bearish es anticipar un cambio que no tiene ninguna base estructural visible — es exactamente lo contrario del modelo.",
-              "Falso. Colocar una orden limit en el extremo del impulso supone que se conoce de antemano el extremo — lo cual es imposible. El mercado puede superarlo varias veces antes de estabilizarse, y la orden limit se gatillaría sin confirmación estructural.",
+              "Falso. El FOMC Fade no es un trade de cambio inmediato. Entrar long en pleno medio de un impulso bearish es anticipar un cambio que no tiene ninguna base estructural visible, es exactamente lo contrario del modelo.",
+              "Falso. Colocar una orden limit en el extremo del impulso supone que se conoce de antemano el extremo, lo cual es imposible. El mercado puede superarlo varias veces antes de estabilizarse, y la orden limit se gatillaría sin confirmación estructural.",
             ]}
           />
 
@@ -333,7 +333,7 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Módulo Macro Trading — Vista general
+                Módulo Macro Trading. Vista general
               </Link>
               <Link href="/strategies/macro-trading/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Lección siguiente

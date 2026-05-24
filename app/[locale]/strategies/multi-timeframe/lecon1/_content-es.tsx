@@ -63,7 +63,7 @@ export default function ContentEs() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Esta lección establece la lógica del multi-timeframe: por qué operar un solo gráfico te deja ciego, y el rol concreto de cada nivel — el timeframe superior da el sesgo, el timeframe intermedio localiza la zona, el timeframe de ejecución dispara la entrada.
+              Esta lección establece la lógica del multi-timeframe: por qué operar un solo gráfico te deja ciego, y el rol concreto de cada nivel, el timeframe superior da el sesgo, el timeframe intermedio localiza la zona, el timeframe de ejecución dispara la entrada.
             </p>
           </div>
 
@@ -148,7 +148,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: el Daily muestra una estructura bajista en LH/LL, con una resistencia mayor alrededor de 1.1820. En M15, un breakout alcista local se forma cerca de 1.1760. El precio sube hasta 1.1775 — luego cae de nuevo hacia 1.1700. La señal M15 era técnicamente válida; el problema venía del contexto HTF.
+                EUR/USD: el Daily muestra una estructura bajista en LH/LL, con una resistencia mayor alrededor de 1.1820. En M15, un breakout alcista local se forma cerca de 1.1760. El precio sube hasta 1.1775, luego cae de nuevo hacia 1.1700. La señal M15 era técnicamente válida; el problema venía del contexto HTF.
               </p>
             </div>
 
@@ -169,7 +169,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El HTF responde a una sola pregunta: ¿en qué sentido tiene el mercado estadísticamente más probabilidades de continuar? No sirve para entrar — sirve para filtrar los malos trades antes incluso de buscar un setup.
+              El HTF responde a una sola pregunta: ¿en qué sentido tiene el mercado estadísticamente más probabilidades de continuar? No sirve para entrar, sirve para filtrar los malos trades antes incluso de buscar un setup.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -236,7 +236,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: el HTF es bajista. En H1, una zona de resistencia se dibuja entre 1.1765 y 1.1780. El precio regresa — entonces se vigila una señal vendedora en el LTF.
+                EUR/USD: el HTF es bajista. En H1, una zona de resistencia se dibuja entre 1.1765 y 1.1780. El precio regresa, entonces se vigila una señal vendedora en el LTF.
               </p>
             </div>
 
@@ -303,19 +303,19 @@ export default function ContentEs() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Paso 1 — HTF (H4)</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 1. HTF (H4)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: estructura bajista en LH/LL, resistencia importante en 1.1780, precio actual en 1.1725</li>
                 <li>- Conclusión: prioridad a las ventas, ninguna compra agresiva buscada</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Paso 2 — Timeframe intermedio (H1)</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 2. Timeframe intermedio (H1)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: zona de resistencia entre 1.1765 y 1.1780, antiguo soporte vuelto resistencia, rechazo ya observado</li>
                 <li>- Conclusión: zona ideal para esperar una reacción bajista</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Paso 3 — LTF (M5 / M15)</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 3. LTF (M5 / M15)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: sweep alcista hasta 1.1778, CHoCH bajista en M5, vela impulsiva de rechazo</li>
                 <li>- Conclusión: confirmación vendedora válida, entrada short posible después del breakout local</li>
@@ -332,7 +332,7 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "Un solo timeframe da una visión incompleta del mercado.",
-              "El HTF define el sesgo principal — la dirección del trade.",
+              "El HTF define el sesgo principal, la dirección del trade.",
               "El timeframe intermedio localiza la zona de interés donde actuar.",
               "El LTF sirve únicamente para el disparo: da el timing, no el sesgo.",
             ]}
@@ -357,7 +357,7 @@ export default function ContentEs() {
               "Reemplazar completamente el análisis HTF",
             ]}
             correctIndex={2}
-            explanation="El LTF sirve para confirmar la ejecución en una zona ya preparada por los timeframes superiores. El sesgo viene del HTF, la zona viene del timeframe intermedio; el LTF interviene solo para afinar el timing y reducir el risk. Complementa el análisis HTF — nunca lo reemplaza."
+            explanation="El LTF sirve para confirmar la ejecución en una zona ya preparada por los timeframes superiores. El sesgo viene del HTF, la zona viene del timeframe intermedio; el LTF interviene solo para afinar el timing y reducir el risk. Complementa el análisis HTF, nunca lo reemplaza."
           />
 
         </div>
@@ -399,7 +399,7 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Módulo Multi-timeframe — Vista general
+                Módulo Multi-timeframe. Vista general
               </Link>
               <Link href="/strategies/multi-timeframe/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Lección siguiente

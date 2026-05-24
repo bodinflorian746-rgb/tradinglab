@@ -288,8 +288,8 @@ export default function ContentEs() {
               "Delimitar el Order Block bullish: cuerpo de la vela opuesta entre 4 555$ y 4 562$, mecha baja en 4 547$. OB fresh (8 velas transcurridas), alineado Daily alcista, no mitigado.",
               "Colocar la entrada en 4 562$ (límite alto del cuerpo del OB) con espera de la señal de rechazo M15 (pin bar, engulfing bullish).",
               "Colocar el stop loss en 4 549$ (13$ debajo de la entrada, más allá de la mecha baja 4 547$ con margen 2$). Riesgo = 13$ por unidad.",
-              "Variante naive — TP alejado en 4 720$ (proyección extensión completa del impulso inicial): Ganancia = 4 720 - 4 562 = 158$. R/R = 158 / 13 = 12,3. Ratio atractivo sobre el papel pero demasiado optimista: la probabilidad de alcanzar un objetivo a 12:1 sin pullback intermedio sigue siendo baja.",
-              "Variante realista — TP parcial en 4 632$ (primer HH intermedio identificado, toma de profit parcial): Ganancia = 4 632 - 4 562 = 70$. R/R = 70 / 13 = 5,4. Objetivo estructural realista, alcanzable sin desvío. El R/R 5,4 sigue siendo excelente para un setup OB y permite asegurar la posición antes del HH anterior en 4 650$, donde el mercado arriesga producir una reacción técnica antes del TP final.",
+              "Variante naive. TP alejado en 4 720$ (proyección extensión completa del impulso inicial): Ganancia = 4 720 - 4 562 = 158$. R/R = 158 / 13 = 12,3. Ratio atractivo sobre el papel pero demasiado optimista: la probabilidad de alcanzar un objetivo a 12:1 sin pullback intermedio sigue siendo baja.",
+              "Variante realista. TP parcial en 4 632$ (primer HH intermedio identificado, toma de profit parcial): Ganancia = 4 632 - 4 562 = 70$. R/R = 70 / 13 = 5,4. Objetivo estructural realista, alcanzable sin desvío. El R/R 5,4 sigue siendo excelente para un setup OB y permite asegurar la posición antes del HH anterior en 4 650$, donde el mercado arriesga producir una reacción técnica antes del TP final.",
             ]}
           />
 
@@ -347,7 +347,7 @@ export default function ContentEs() {
                 Lección 2
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 4 — Próximamente
+                Lección 4. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

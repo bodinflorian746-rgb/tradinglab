@@ -163,9 +163,9 @@ export default function ContentEs() {
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">La neckline de un H&amp;S no siempre es estrictamente horizontal. Su pendiente condiciona el measured move y por lo tanto el objetivo de TP.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="text-white font-semibold">Neckline horizontal</span> — measured move estándar, TP pleno conservado.</li>
-              <li>- <span className="text-white font-semibold">Neckline ascendente</span> — measured move extendido, el TP gana algunos pips adicionales.</li>
-              <li>- <span className="text-white font-semibold">Neckline descendente</span> — measured move reducido, TP más ajustado, R/R a menudo menos favorable.</li>
+              <li>- <span className="text-white font-semibold">Neckline horizontal</span>, measured move estándar, TP pleno conservado.</li>
+              <li>- <span className="text-white font-semibold">Neckline ascendente</span>, measured move extendido, el TP gana algunos pips adicionales.</li>
+              <li>- <span className="text-white font-semibold">Neckline descendente</span>, measured move reducido, TP más ajustado, R/R a menudo menos favorable.</li>
             </ul>
           </section>
 
@@ -255,8 +255,8 @@ export default function ContentEs() {
           <LessonExercice
             description="En XAU/USD H1, ves un H&S con hombro izquierdo en 4 650$, cabeza en 4 680$, hombro derecho en 4 658$. Neckline en 4 620$. La cabeza está 30 pips por encima de los hombros (0,65%). El precio acaba de cerrar en 4 615$. ¿Tomas el setup?"
             steps={[
-              "Verifica que la cabeza (4 680$) esté estrictamente más alta que los 2 hombros: 30 pips por encima, o sea 0,65% — superior al umbral de 0,3%, OK",
-              "Confirma que los hombros sean simétricos: 4 650$ vs 4 658$, diferencia de 8 pips (0,17%) — debajo del umbral de 0,5%, OK",
+              "Verifica que la cabeza (4 680$) esté estrictamente más alta que los 2 hombros: 30 pips por encima, o sea 0,65%, superior al umbral de 0,3%, OK",
+              "Confirma que los hombros sean simétricos: 4 650$ vs 4 658$, diferencia de 8 pips (0,17%), debajo del umbral de 0,5%, OK",
               "Confirma el breakout: cierre en 4 615$ debajo de la neckline en 4 620$, no una simple mecha",
               "Verifica que no haya news mayor prevista en los próximos 30 minutos",
               "Toma la entrada short en 4 615$, SL por encima del hombro derecho en 4 668$, TP measured move extendido a 4 540$ para un R/R redondo de 1,5:1",
@@ -317,7 +317,7 @@ export default function ContentEs() {
                 Lección 1
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 3 — Próximamente
+                Lección 3. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

@@ -11,11 +11,11 @@ export default function ContentEs() {
       formationId="intermediaire"
       lessonId="lecon3"
       title="Supply & Demand"
-      subtitle="Las zonas SD no son líneas mágicas — son las cicatrices que dejan las instituciones cuando pasaron órdenes grandes. El precio vuelve ahí a ejecutar el resto."
+      subtitle="Las zonas SD no son líneas mágicas, son las cicatrices que dejan las instituciones cuando pasaron órdenes grandes. El precio vuelve ahí a ejecutar el resto."
       duration="20 min"
       lessonNumber={3}
-      prev={{ href: "/formations/intermediaire/lecon2", label: "Lección 2 — Zonas clave" }}
-      next={{ href: "/formations/intermediaire/lecon4", label: "Lección 4 — Tendencias" }}
+      prev={{ href: "/formations/intermediaire/lecon2", label: "Lección 2 : Zonas clave" }}
+      next={{ href: "/formations/intermediaire/lecon4", label: "Lección 4 : Tendencias" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -36,7 +36,7 @@ export default function ContentEs() {
           </div>
         </div>
         <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-3 py-2">
-          <p className="text-xs text-zinc-400"><span className="text-white font-medium">Señal clave:</span> la salida de la zona siempre es IMPULSIVA — fuerte, rápida, pocas mechas. Si la salida es lenta, no es una zona SD válida.</p>
+          <p className="text-xs text-zinc-400"><span className="text-white font-medium">Señal clave:</span> la salida de la zona siempre es IMPULSIVA, fuerte, rápida, pocas mechas. Si la salida es lenta, no es una zona SD válida.</p>
         </div>
       </section>
 
@@ -54,7 +54,7 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Cómo trazar una zona SD válida</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Una zona SD se traza en las velas de consolidación justo antes de la salida impulsiva — no en la salida misma. La zona = el lugar donde se pasaron las órdenes. La salida = la prueba de que se ejecutaron.
+          Una zona SD se traza en las velas de consolidación justo antes de la salida impulsiva, no en la salida misma. La zona = el lugar donde se pasaron las órdenes. La salida = la prueba de que se ejecutaron.
         </p>
         <div className="space-y-2">
           {[
@@ -75,9 +75,9 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">SD vs S/R — la diferencia en la práctica</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">SD vs S/R : la diferencia en la práctica</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Los dos parecen similares pero su lógica es diferente. En la práctica, se complementan — una zona SD que coincide con un S/R es una confluencia potente.
+          Los dos parecen similares pero su lógica es diferente. En la práctica, se complementan, una zona SD que coincide con un S/R es una confluencia potente.
         </p>
         <div className="space-y-2.5">
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
@@ -133,7 +133,7 @@ export default function ContentEs() {
             <span className="text-lg">—</span>
             <div>
               <p className="text-sm font-semibold text-zinc-300">Zona ya testeada varias veces</p>
-              <p className="text-xs text-zinc-400 mt-0.5">La ignoras o reduces tu confianza. Una zona tocada 3+ veces pierde su fuerza — las órdenes institucionales se agotaron.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">La ignoras o reduces tu confianza. Una zona tocada 3+ veces pierde su fuerza, las órdenes institucionales se agotaron.</p>
             </div>
           </div>
         </div>
@@ -167,18 +167,18 @@ export default function ContentEs() {
           "Demand = el precio sale de una zona con una salida alcista impulsiva → las instituciones compraron.",
           "Supply = el precio sale de una zona con una salida bajista impulsiva → las instituciones vendieron.",
           "Zona fresca (no-retesteada) = zona fuerte. Zona testeada 3× = zona debilitada.",
-          "La zona se traza en la consolidación antes de la salida — no en la salida misma.",
-          "La zona SD indica dónde mirar — la señal de vela indica cuándo entrar.",
+          "La zona se traza en la consolidación antes de la salida, no en la salida misma.",
+          "La zona SD indica dónde mirar, la señal de vela indica cuándo entrar.",
         ]}
       />
 
       <LessonExercice
         description="En TradingView, abre EUR/USD en H4 e identifica zonas SD válidas."
         steps={[
-          "Detecta el último gran movimiento alcista (varias velas verdes consecutivas). Sube justo antes — ahí está tu zona de Demand. Marca un rectángulo.",
+          "Detecta el último gran movimiento alcista (varias velas verdes consecutivas). Sube justo antes, ahí está tu zona de Demand. Marca un rectángulo.",
           "Haz lo mismo para el último gran movimiento bajista. Marca tu zona de Supply.",
           "Verifica si el precio volvió a testear alguna de estas zonas desde entonces. ¿Cómo reaccionó?",
-          "Busca una zona SD que coincida con un nivel de S/R histórico — es una confluencia fuerte. Anota el precio exacto.",
+          "Busca una zona SD que coincida con un nivel de S/R histórico, es una confluencia fuerte. Anota el precio exacto.",
         ]}
       />
 
@@ -187,11 +187,11 @@ export default function ContentEs() {
         options={[
           "Compras inmediatamente apenas el precio entra a la zona",
           "Esperas una señal de rechazo en la zona (pin bar o engulfing alcista), luego entras",
-          "Ignoras la zona — el precio baja, es señal de debilidad",
+          "Ignoras la zona, el precio baja, es señal de debilidad",
           "Colocas una orden limit en el bottom de la zona sin esperar señal",
         ]}
         correctIndex={1}
-        explanation="La zona te dice dónde mirar — la señal de vela te dice cuándo entrar. Esperar un rechazo (pin bar, engulfing alcista) en la zona de Demand confirma que los compradores institucionales están activos. Sin señal, anticipas sin prueba."
+        explanation="La zona te dice dónde mirar, la señal de vela te dice cuándo entrar. Esperar un rechazo (pin bar, engulfing alcista) en la zona de Demand confirma que los compradores institucionales están activos. Sin señal, anticipas sin prueba."
         answerExplanations={[
           "Demasiado apurado. El precio puede atravesar la zona y seguir bajando. Entrar sin señal de confirmación es tomar el riesgo de entrar en una zona que no aguanta. La zona es de atención, no un disparador de compra automático.",
           "Correcto. Es el método en dos tiempos: la zona define el nivel de interés, la señal de vela confirma que los compradores reaccionan. Pin bar = rechazo de precios bajos. Engulfing alcista = los compradores toman el control. Entras con SL bajo la zona.",

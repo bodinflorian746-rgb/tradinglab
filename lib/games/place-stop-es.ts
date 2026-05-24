@@ -59,7 +59,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     context: "Tendencia alcista, el precio corrige en la zona de demanda. Entraste al rebote.",
     shortContext: "Pullback BUY en un uptrend.",
     lessons: {
-      beginner:     "El stop lógico se coloca DETRÁS del swing low con un margen — jamás dentro (ruido), jamás demasiado lejos (RR arruinado).",
+      beginner:     "El stop lógico se coloca DETRÁS del swing low con un margen, jamás dentro (ruido), jamás demasiado lejos (RR arruinado).",
       intermediate: "El ruido del pullback suele retestear el low antes de la continuación. El margen detrás del low protege contra ese sweep clásico.",
       advanced:     "El stop lógico respeta 3 restricciones: detrás del low, fuera del ruido ATR, y preserva un RR >= 2. Es el único que satisface las 3.",
     },
@@ -75,7 +75,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     context: "Tendencia bajista, el precio rebota en una zona de oferta. Entraste en corto.",
     shortContext: "Pullback SELL en un downtrend.",
     lessons: {
-      beginner:     "El stop lógico se coloca SOBRE el swing high con margen — jamás debajo, jamás demasiado lejos.",
+      beginner:     "El stop lógico se coloca SOBRE el swing high con margen, jamás debajo, jamás demasiado lejos.",
       intermediate: "El rebote puede retestear su high antes de caer. Pegar el high = stop hunt asegurado.",
       advanced:     "Stop = cubre la mecha del high + margen ATR. Un stop pile en el nivel está atrapado, un stop demasiado lejos mata el RR.",
     },
@@ -116,7 +116,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
   },
   {
     id: "fakeout_above_resistance",
-    title: "Falso breakout — short tras rechazo",
+    title: "Falso breakout : short tras rechazo",
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
@@ -141,7 +141,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     lessons: {
       intermediate: "Stop bajo el LOW del sweep, jamás en la zona que acaba de ser tomada. El sweep es la nueva invalidación.",
       advanced:     "Stop = bajo la mecha del sweep + margen. Pegado al sweep low = retest probable, dentro de la zona de liquidity = trampa total.",
-      beginner:     "El mercado acaba de pinchar una zona — tu stop debe estar BAJO esa zona, no dentro.",
+      beginner:     "El mercado acaba de pinchar una zona, tu stop debe estar BAJO esa zona, no dentro.",
     },
     difficulties: ["intermediate", "advanced"],
     tag: "trampa",
@@ -171,7 +171,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     context: "Pullback en un mercado de volatilidad elevada. Las velas son anchas, los wicks profundos.",
     shortContext: "BUY pullback, vol elevada.",
     lessons: {
-      advanced:     "En vol elevada, el stop 'normal' se vuelve demasiado ajustado. El margen debe duplicarse — lo que parece un wide stop en realidad es el LÓGICO aquí.",
+      advanced:     "En vol elevada, el stop 'normal' se vuelve demasiado ajustado. El margen debe duplicarse, lo que parece un wide stop en realidad es el LÓGICO aquí.",
       intermediate: "La volatilidad amplía el ruido normal. Un stop 'estándar' probablemente está demasiado ajustado.",
       beginner:     "Cuanto más se mueve el mercado, más amplio debe ser tu stop para respirar.",
     },
@@ -207,35 +207,35 @@ function translateZones(zones: ChartZone[]): ChartZone[] {
 // Las rationales se incrustan en el chart (no en los templates). Las del módulo
 // FR son strings fijos; las traducimos por mapping de exact-match.
 
-const TIGHT_RATIONALE_FR = "✗ Trop serré — placé dans le bruit normal du marché. La 1re mèche de retest va le balayer avant que le trade aboutisse. C'est l'erreur retail classique.";
-const LOGICAL_RATIONALE_FR = "✓ Placement logique — derrière la vraie invalidation, avec une marge anti-bruit. Survit aux retests, capture la cassure structurelle si elle arrive.";
+const TIGHT_RATIONALE_FR = "✗ Trop serré, placé dans le bruit normal du marché. La 1re mèche de retest va le balayer avant que le trade aboutisse. C'est l'erreur retail classique.";
+const LOGICAL_RATIONALE_FR = "✓ Placement logique, derrière la vraie invalidation, avec une marge anti-bruit. Survit aux retests, capture la cassure structurelle si elle arrive.";
 const WIDE_RATIONALE_FR = "≈ Survit, mais détruit le RR. Distance trop grande = capital mal utilisé, ratio risque/rendement souvent < 1.";
 
-const FAKEOUT_TIGHT_FR   = "✗ Stop dans la zone du piège — pile dans la zone que les institutionnels viennent d'utiliser pour ramasser la liquidité. Le 2e test va te balayer.";
-const FAKEOUT_LOGICAL_FR = "✓ Au-dessus du pic du fakeout, avec marge. C'est la VRAIE invalidation du piège — si le prix repasse là, le scénario est cassé.";
+const FAKEOUT_TIGHT_FR   = "✗ Stop dans la zone du piège, pile dans la zone que les institutionnels viennent d'utiliser pour ramasser la liquidité. Le 2e test va te balayer.";
+const FAKEOUT_LOGICAL_FR = "✓ Au-dessus du pic du fakeout, avec marge. C'est la VRAIE invalidation du piège, si le prix repasse là, le scénario est cassé.";
 
-const SWEEP_TIGHT_FR   = "✗ Stop DANS la zone du sweep — exactement là où les institutionnels viennent de ramasser la liquidité. Le retest va te chercher.";
-const SWEEP_LOGICAL_FR = "✓ Sous la mèche du sweep, avec marge. Le low du sweep est la nouvelle invalidation — protégé contre un 2e ramassage.";
+const SWEEP_TIGHT_FR   = "✗ Stop DANS la zone du sweep, exactement là où les institutionnels viennent de ramasser la liquidité. Le retest va te chercher.";
+const SWEEP_LOGICAL_FR = "✓ Sous la mèche du sweep, avec marge. Le low du sweep est la nouvelle invalidation, protégé contre un 2e ramassage.";
 
-const FVG_TIGHT_FR   = "✗ Stop DANS le FVG — la zone est précisément celle où le marché peut retourner pour finir sa mitigation. Tu seras pris dans la profondeur de la zone.";
+const FVG_TIGHT_FR   = "✗ Stop DANS le FVG, la zone est précisément celle où le marché peut retourner pour finir sa mitigation. Tu seras pris dans la profondeur de la zone.";
 const FVG_LOGICAL_FR = "✓ Sous le bas du FVG avec marge. Le FVG entièrement traversé = invalidation propre. C'est le placement structurel correct.";
 
-const HIGHVOL_TIGHT_FR   = "✗ Stop 'standard' — qui serait OK en vol normale, mais en vol élevée ce niveau est dans le bruit. La 1re bougie de retest, large à cause de la vol, va te balayer.";
-const HIGHVOL_LOGICAL_FR = "✓ Stop élargi à la volatilité du marché. Ce qui ressemble à un 'wide stop' en vol normale est en fait le LOGIQUE ici — il survit au noise amplifié sans tuer le RR (TP également plus loin).";
+const HIGHVOL_TIGHT_FR   = "✗ Stop 'standard', qui serait OK en vol normale, mais en vol élevée ce niveau est dans le bruit. La 1re bougie de retest, large à cause de la vol, va te balayer.";
+const HIGHVOL_LOGICAL_FR = "✓ Stop élargi à la volatilité du marché. Ce qui ressemble à un 'wide stop' en vol normale est en fait le LOGIQUE ici, il survit au noise amplifié sans tuer le RR (TP également plus loin).";
 const HIGHVOL_WIDE_FR    = "≈ Survie garantie, mais même avec un TP étendu en vol élevée, le RR descend sous 1.5. Capital mal utilisé.";
 
 const RATIONALE_ES: Record<string, string> = {
-  [TIGHT_RATIONALE_FR]:   "✗ Demasiado ajustado — colocado en el ruido normal del mercado. La 1ra mecha de retest lo va a barrer antes de que el trade prospere. Es el error retail clásico.",
-  [LOGICAL_RATIONALE_FR]: "✓ Colocación lógica — detrás de la verdadera invalidación, con un margen anti-ruido. Sobrevive a los retests, captura la ruptura estructural si llega.",
+  [TIGHT_RATIONALE_FR]:   "✗ Demasiado ajustado, colocado en el ruido normal del mercado. La 1ra mecha de retest lo va a barrer antes de que el trade prospere. Es el error retail clásico.",
+  [LOGICAL_RATIONALE_FR]: "✓ Colocación lógica, detrás de la verdadera invalidación, con un margen anti-ruido. Sobrevive a los retests, captura la ruptura estructural si llega.",
   [WIDE_RATIONALE_FR]:    "≈ Sobrevive, pero destruye el RR. Distancia demasiado grande = capital mal utilizado, ratio riesgo/recompensa a menudo < 1.",
-  [FAKEOUT_TIGHT_FR]:     "✗ Stop en la zona de la trampa — pile en la zona que los institucionales acaban de usar para recoger la liquidity. El 2do test te va a barrer.",
-  [FAKEOUT_LOGICAL_FR]:   "✓ Sobre el pico del fakeout, con margen. Es la VERDADERA invalidación de la trampa — si el precio vuelve a pasar por ahí, el escenario está roto.",
-  [SWEEP_TIGHT_FR]:       "✗ Stop DENTRO de la zona del sweep — exactamente donde los institucionales acaban de recoger la liquidity. El retest te va a buscar.",
-  [SWEEP_LOGICAL_FR]:     "✓ Bajo la mecha del sweep, con margen. El low del sweep es la nueva invalidación — protegido contra una 2da recogida.",
-  [FVG_TIGHT_FR]:         "✗ Stop DENTRO del FVG — la zona es precisamente la que el mercado puede regresar para terminar su mitigation. Quedarás atrapado en la profundidad de la zona.",
+  [FAKEOUT_TIGHT_FR]:     "✗ Stop en la zona de la trampa, pile en la zona que los institucionales acaban de usar para recoger la liquidity. El 2do test te va a barrer.",
+  [FAKEOUT_LOGICAL_FR]:   "✓ Sobre el pico del fakeout, con margen. Es la VERDADERA invalidación de la trampa, si el precio vuelve a pasar por ahí, el escenario está roto.",
+  [SWEEP_TIGHT_FR]:       "✗ Stop DENTRO de la zona del sweep, exactamente donde los institucionales acaban de recoger la liquidity. El retest te va a buscar.",
+  [SWEEP_LOGICAL_FR]:     "✓ Bajo la mecha del sweep, con margen. El low del sweep es la nueva invalidación, protegido contra una 2da recogida.",
+  [FVG_TIGHT_FR]:         "✗ Stop DENTRO del FVG, la zona es precisamente la que el mercado puede regresar para terminar su mitigation. Quedarás atrapado en la profundidad de la zona.",
   [FVG_LOGICAL_FR]:       "✓ Bajo el bottom del FVG con margen. El FVG totalmente atravesado = invalidación limpia. Es la colocación estructural correcta.",
-  [HIGHVOL_TIGHT_FR]:     "✗ Stop 'estándar' — que estaría OK en vol normal, pero en vol elevada este nivel está dentro del ruido. La 1ra vela de retest, amplia por la vol, te va a barrer.",
-  [HIGHVOL_LOGICAL_FR]:   "✓ Stop ampliado a la volatilidad del mercado. Lo que parece un 'wide stop' en vol normal en realidad es el LÓGICO aquí — sobrevive al noise amplificado sin matar el RR (TP también más lejos).",
+  [HIGHVOL_TIGHT_FR]:     "✗ Stop 'estándar', que estaría OK en vol normal, pero en vol elevada este nivel está dentro del ruido. La 1ra vela de retest, amplia por la vol, te va a barrer.",
+  [HIGHVOL_LOGICAL_FR]:   "✓ Stop ampliado a la volatilidad del mercado. Lo que parece un 'wide stop' en vol normal en realidad es el LÓGICO aquí, sobrevive al noise amplificado sin matar el RR (TP también más lejos).",
   [HIGHVOL_WIDE_FR]:      "≈ Supervivencia garantizada, pero incluso con un TP extendido en vol elevada, el RR baja debajo de 1.5. Capital mal utilizado.",
 };
 

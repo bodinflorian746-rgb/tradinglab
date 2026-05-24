@@ -207,7 +207,7 @@ export default function ContentEs() {
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrada long: 4 565$ (cierre de la pin bar)</li>
                 <li>- Stop loss: 4 510$ (10$ bajo el nivel 0.786 en 4 519$)</li>
-                <li>- Take profit nivel 1: 4 660$ (HH anterior) — nivel 2: 4 720$ (extensión 138%)</li>
+                <li>- Take profit nivel 1: 4 660$ (HH anterior), nivel 2: 4 720$ (extensión 138%)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Cálculo del R/R</p>
@@ -253,7 +253,7 @@ export default function ContentEs() {
             steps={[
               "Medir el impulso: 1.1820 - 1.1720 = 100 pips",
               "Calcular la posición del retroceso: 1.1820 - 1.1760 = 60 pips bajo el HH, o sea 60% del impulso",
-              "Identificar el nivel Fibonacci: 60% corresponde a un nivel entre 0.5 (1.1770) y 0.618 (1.1758). El precio actual en 1.1760 se ubica prácticamente en el nivel 0.618 — zona de entrada óptima",
+              "Identificar el nivel Fibonacci: 60% corresponde a un nivel entre 0.5 (1.1770) y 0.618 (1.1758). El precio actual en 1.1760 se ubica prácticamente en el nivel 0.618, zona de entrada óptima",
               "Esperar la señal de rechazo (pin bar, engulfing) al contacto de 1.1758-1.1760 para validar el setup",
               "Armar el plan: entrada long al cierre de la señal, stop loss bajo 1.1741 (nivel 0.786 + margen 10 pips), take profit en 1.1820 (HH anterior) o 1.1858 (extensión 138%). Tamaño de posición según el riesgo por trade adaptado al capital",
             ]}
@@ -268,7 +268,7 @@ export default function ContentEs() {
               "Indeterminado, Fibonacci no se aplica en tendencia",
             ]}
             correctIndex={1}
-            explanation="Un retroceso al 70% se ubica entre 0.618 (61,8%) y 0.786 (78,6%) — zona de entrada válida pero profunda, explotable únicamente con una señal de rechazo confirmada. La pin bar de rechazo aporta esa confirmación. El stop loss se coloca más allá de 0.786 con margen 5-10 pips. Más allá de 0.786, la estructura de la tendencia quedaría en cuestión."
+            explanation="Un retroceso al 70% se ubica entre 0.618 (61,8%) y 0.786 (78,6%), zona de entrada válida pero profunda, explotable únicamente con una señal de rechazo confirmada. La pin bar de rechazo aporta esa confirmación. El stop loss se coloca más allá de 0.786 con margen 5-10 pips. Más allá de 0.786, la estructura de la tendencia quedaría en cuestión."
           />
 
         </div>
@@ -313,7 +313,7 @@ export default function ContentEs() {
                 Lección 2
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 4 — Próximamente
+                Lección 4. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

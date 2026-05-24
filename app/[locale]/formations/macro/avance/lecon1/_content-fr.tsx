@@ -56,7 +56,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            FOMC — l&apos;événement qui peut changer la direction du marché
+            FOMC, l&apos;événement qui peut changer la direction du marché
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -166,9 +166,9 @@ export default function ContentFr() {
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-4 mb-3">
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-400 leading-relaxed mb-4">
-                À 20h00, EUR/USD peut faire +100 à +150 pips en 3 minutes — parfois plus. Tu vois le breakout, tu entres. À 20h30, Powell parle. Le marché inverse. Entre 20h30 et 21h30, EUR/USD peut perdre 200 à 400 pips.
+                À 20h00, EUR/USD peut faire +100 à +150 pips en 3 minutes, parfois plus. Tu vois le breakout, tu entres. À 20h30, Powell parle. Le marché inverse. Entre 20h30 et 21h30, EUR/USD peut perdre 200 à 400 pips.
               </p>
-              <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Matrice hawkish surprise — en 3 minutes</p>
+              <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Matrice hawkish surprise, en 3 minutes</p>
               <div className="grid grid-cols-2 gap-2 mb-3">
                 {[
                   { asset: "EUR/USD", move: "-100 à -150 pips", note: "dollar plus fort" },
@@ -188,7 +188,7 @@ export default function ContentFr() {
               </p>
             </div>
             <div className="bg-zinc-800/30 rounded-xl px-4 py-3 mb-3">
-              <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">FOMC vraiment surprise — amplitudes extrêmes</p>
+              <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">FOMC vraiment surprise, amplitudes extrêmes</p>
               <div className="grid grid-cols-2 gap-2 mb-2">
                 {[
                   { asset: "EUR/USD", move: "200 à 400 pips" },
@@ -307,7 +307,7 @@ export default function ContentFr() {
             </p>
             <div className="bg-zinc-800/30 rounded-xl px-4 py-3 mb-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Le même phénomène se produit simultanément sur XAU/USD, le Nasdaq et BTC/USD — les niveaux techniques sont balayés sur tous les actifs liés au dollar en même temps. C&apos;est ce qui rend le FOMC si dangereux : tu peux te faire stop out sur 4 actifs en même seconde.
+                Le même phénomène se produit simultanément sur XAU/USD, le Nasdaq et BTC/USD, les niveaux techniques sont balayés sur tous les actifs liés au dollar en même temps. C&apos;est ce qui rend le FOMC si dangereux : tu peux te faire stop out sur 4 actifs en même seconde.
               </p>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
@@ -326,7 +326,7 @@ export default function ContentFr() {
                 20h00 : la Fed laisse les taux inchangés. Première impulsion violente. 20h30 : Powell devient hawkish et insiste sur une inflation encore trop élevée. EUR/USD plonge, remonte brutalement, puis replonge encore. Le chaos classique du FOMC. Tu ne touches toujours à rien. À 21h05, une bougie M15 clôture sous ton Order Block 1.1820. Le dollar confirme sa force. La confluence macro + technique est là.
               </p>
               <p>
-                Concrètement : entrée short à 1.1820, SL à 1.1850, TP à 1.1760. Tu risques 20€ (2% de 1 000€), tu peux gagner environ 40€. Tu coupes ton chart, tu vas dormir. Tu vérifieras au réveil — les mouvements post-21h00 du FOMC continuent souvent pendant toute la session asiatique.
+                Concrètement : entrée short à 1.1820, SL à 1.1850, TP à 1.1760. Tu risques 20€ (2% de 1 000€), tu peux gagner environ 40€. Tu coupes ton chart, tu vas dormir. Tu vérifieras au réveil, les mouvements post-21h00 du FOMC continuent souvent pendant toute la session asiatique.
               </p>
             </div>
           </div>
@@ -341,10 +341,10 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "Le FOMC décide des taux et de la politique monétaire américaine.",
-              "Le discours de Powell est déterminant — c'est lui qui donne la vraie direction.",
+              "Le discours de Powell est déterminant, c'est lui qui donne la vraie direction.",
               "20h00–21h00 = zone instable ; la vraie direction apparaît après 21h.",
               "La première impulsion est instable et sert souvent de piège à liquidité.",
-              "Le FOMC impacte simultanément EUR/USD, XAU/USD, Nasdaq et BTC/USD — surveille la cohérence entre eux.",
+              "Le FOMC impacte simultanément EUR/USD, XAU/USD, Nasdaq et BTC/USD, surveille la cohérence entre eux.",
             ]}
           />
 
@@ -353,8 +353,8 @@ export default function ContentFr() {
             steps={[
               "Ouvre EUR/USD en M5.",
               "Trouve un FOMC récent via un calendrier économique (Investing.com, Forex Factory).",
-              "Observe le mouvement à 20h00 — dans quelle direction ? Quelle amplitude ?",
-              "Observe la réaction à 20h30 (début discours Powell) — y a-t-il eu inversion ?",
+              "Observe le mouvement à 20h00, dans quelle direction ? Quelle amplitude ?",
+              "Observe la réaction à 20h30 (début discours Powell), y a-t-il eu inversion ?",
               "Identifie la direction confirmée après 21h00.",
               "Question : si tu avais été devant ton écran ce jour-là, à quelle heure exacte serais-tu entré ? Avec quelle confluence ? Note-le.",
             ]}
@@ -363,7 +363,7 @@ export default function ContentFr() {
           <LessonQuiz
             question="À 20h00, EUR/USD casse une résistance pendant un FOMC. Que fais-tu ?"
             options={[
-              "Tu achètes immédiatement — c'est un breakout clair",
+              "Tu achètes immédiatement, c'est un breakout clair",
               "Tu attends la fin du discours et une clôture M5 confirmée après 21h00",
               "Tu vends directement en pariant sur un retournement",
               "Tu entres dans les deux sens avec deux ordres opposés",
@@ -371,10 +371,10 @@ export default function ContentFr() {
             correctIndex={1}
             explanation="La première impulsion d'un FOMC est instable et sert souvent à prendre la liquidité avant que Powell parle. Attendre une clôture confirmée après 21h00 évite ce piège et te permet d'entrer dans la vraie direction avec une confluence technique. Ce principe vaut pour tous les actifs touchés par le FOMC : le même piège se produit sur XAU/USD, le Nasdaq et BTC/USD en même temps."
             answerExplanations={[
-              "Faux. Cette impulsion à 20h00 est très souvent un piège — le marché chasse la liquidité des stops avant de s'inverser à 20h30 quand Powell parle. Acheter immédiatement, c'est entrer dans la zone la plus instable du FOMC.",
+              "Faux. Cette impulsion à 20h00 est très souvent un piège, le marché chasse la liquidité des stops avant de s'inverser à 20h30 quand Powell parle. Acheter immédiatement, c'est entrer dans la zone la plus instable du FOMC.",
               "Correct. La vraie direction se confirme après 21h00. En attendant une clôture M5 avec une confluence technique (OB, résistance cassée), tu évites le bruit et tu entres avec une probabilité bien supérieure.",
-              "Trop agressif et sans logique. Il n'y a aucun signal de retournement confirmé à ce stade — tu ne sais pas si la résistance va tenir ou céder. Vendre aveuglément dans un breakout, c'est parier, pas trader.",
-              "Faux. Entrer dans les deux sens est une erreur — tu paies le spread des deux côtés et tu n'as aucun biais directionnel. La méthode correcte est d'attendre la confirmation, pas de se couvrir en aveugle.",
+              "Trop agressif et sans logique. Il n'y a aucun signal de retournement confirmé à ce stade, tu ne sais pas si la résistance va tenir ou céder. Vendre aveuglément dans un breakout, c'est parier, pas trader.",
+              "Faux. Entrer dans les deux sens est une erreur, tu paies le spread des deux côtés et tu n'as aucun biais directionnel. La méthode correcte est d'attendre la confirmation, pas de se couvrir en aveugle.",
             ]}
           />
 
@@ -420,7 +420,7 @@ export default function ContentFr() {
                 Retour au module
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                NFP — Bientôt disponible →
+                NFP. Bientôt disponible →
               </span>
             </div>
 

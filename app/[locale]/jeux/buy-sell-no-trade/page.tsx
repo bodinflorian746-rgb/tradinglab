@@ -68,7 +68,7 @@ export default function BuySellNoTradePage() {
         bonusActive:     "· bono activo",
         skills:          "Habilidades",
         loading:         "Cargando…",
-        newsWarning:     "Noticia macro mayor en menos de 30 min — volatilidad y spread imprevisibles.",
+        newsWarning:     "Noticia macro mayor en menos de 30 min, volatilidad y spread imprevisibles.",
         htf:             "HTF",
         macro:           "Macro",
         volatility:      "Volatilidad",
@@ -113,7 +113,7 @@ export default function BuySellNoTradePage() {
         bonusActive:     "· bonus actif",
         skills:          "Compétences",
         loading:         "Chargement…",
-        newsWarning:     "News macro majeure dans < 30 min — volatilité et spread imprévisibles.",
+        newsWarning:     "News macro majeure dans < 30 min, volatilité et spread imprévisibles.",
         htf:             "HTF",
         macro:           "Macro",
         volatility:      "Volatilité",
@@ -875,7 +875,7 @@ function SummarySkill({ metric, ok, total, METRIC_LABELS }: { metric: Metric; ok
       <p className="text-lg font-black tabular-nums text-white">
         {ok}<span className="text-zinc-700">/{total}</span>
       </p>
-      <p className="text-[10px] text-zinc-500 tabular-nums">{total > 0 ? `${pct}%` : "—"}</p>
+      <p className="text-[10px] text-zinc-500 tabular-nums">{total > 0 ? `${pct}%` : ""}</p>
     </div>
   );
 }

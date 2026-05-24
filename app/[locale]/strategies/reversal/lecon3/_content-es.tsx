@@ -163,10 +163,10 @@ export default function ContentEs() {
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">La divergencia se divide en 4 tipos según el sentido del precio y del RSI. Las clásicas (bajista + alcista) anuncian una inversión. Las ocultas (bajista + alcista) señalan una continuación de la tendencia.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="text-white font-semibold">Clásica bajista</span> — precio HH + RSI LH = inversión bajista potencial.</li>
-              <li>- <span className="text-white font-semibold">Clásica alcista</span> — precio LL + RSI HL = inversión alcista potencial.</li>
-              <li>- <span className="text-white font-semibold">Oculta bajista</span> — precio LH + RSI HH = continuación bajista (a evitar para un principiante).</li>
-              <li>- <span className="text-white font-semibold">Oculta alcista</span> — precio HL + RSI LL = continuación alcista (a evitar para un principiante).</li>
+              <li>- <span className="text-white font-semibold">Clásica bajista</span>, precio HH + RSI LH = inversión bajista potencial.</li>
+              <li>- <span className="text-white font-semibold">Clásica alcista</span>, precio LL + RSI HL = inversión alcista potencial.</li>
+              <li>- <span className="text-white font-semibold">Oculta bajista</span>, precio LH + RSI HH = continuación bajista (a evitar para un principiante).</li>
+              <li>- <span className="text-white font-semibold">Oculta alcista</span>, precio HL + RSI LL = continuación alcista (a evitar para un principiante).</li>
             </ul>
           </section>
 
@@ -261,7 +261,7 @@ export default function ContentEs() {
             description="En XAU/USD H1: el precio hace un máximo 1 en 4 720$, baja a 4 690$, y luego hace un máximo 2 en 4 740$. El RSI marcaba 78 en el máximo 1 y 72 en el máximo 2. El precio acaba de cerrar en 4 685$. ¿Tomas el setup short?"
             steps={[
               "Verifica que el precio forme un HH: 4 740$ > 4 720$, OK",
-              "Verifica que el RSI forme un LH: 72 < 78, OK — divergencia bajista confirmada",
+              "Verifica que el RSI forme un LH: 72 < 78, OK, divergencia bajista confirmada",
               "Confirma el breakout estructural: cierre en 4 685$ debajo del mínimo 4 690$, OK",
               "Verifica que no haya news mayor prevista en los próximos 30 minutos",
               "Toma la entrada short en 4 685$, SL por encima de la mecha del máximo 2 (por ejemplo 4 750$), TP measured move extendido hacia 4 585$ para apuntar a un R/R 1,5 a 2:1",

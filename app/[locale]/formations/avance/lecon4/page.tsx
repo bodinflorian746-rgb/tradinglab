@@ -10,18 +10,18 @@ function ContentFr() {
     <LessonPage
       formationId="avance"
       lessonId="lecon4"
-      title="Killzones — les sessions qui comptent"
-      subtitle="Le marché ne bouge pas uniformément. Il existe des fenêtres horaires précises où l'activité institutionnelle est maximale — c'est là que se forment les meilleurs setups."
+      title="Killzones, les sessions qui comptent"
+      subtitle="Le marché ne bouge pas uniformément. Il existe des fenêtres horaires précises où l'activité institutionnelle est maximale, c'est là que se forment les meilleurs setups."
       duration="20 min"
       lessonNumber={4}
-      prev={{ href: "/formations/avance/lecon3", label: "Leçon 3 — Order Blocks" }}
-      next={{ href: "/formations/avance/lecon5", label: "Leçon 5 — OTE" }}
+      prev={{ href: "/formations/avance/lecon3", label: "Leçon 3 : Order Blocks" }}
+      next={{ href: "/formations/avance/lecon5", label: "Leçon 5 : OTE" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Pourquoi le timing est critique</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          La plupart des traders analysent <em>quoi</em> trader, mais ignorent <em>quand</em> trader. Or, les institutions opèrent selon des horaires précis liés aux ouvertures des grandes places financières. En dehors de ces fenêtres, le marché est dominé par les retail traders — les mouvements sont moins fiables, plus aléatoires.
+          La plupart des traders analysent <em>quoi</em> trader, mais ignorent <em>quand</em> trader. Or, les institutions opèrent selon des horaires précis liés aux ouvertures des grandes places financières. En dehors de ces fenêtres, le marché est dominé par les retail traders, les mouvements sont moins fiables, plus aléatoires.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
@@ -47,13 +47,13 @@ function ContentFr() {
               name: "London Killzone",
               hours: "07h00 – 10h00",
               color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400",
-              detail: "Ouverture de Londres — l'une des fenêtres les plus puissantes. Les institutions européennes entrent sur le marché. On voit souvent un sweep de liquidité suivi d'un mouvement directionnel fort. C'est ici que se forment les highs ou lows de la journée.",
+              detail: "Ouverture de Londres, l'une des fenêtres les plus puissantes. Les institutions européennes entrent sur le marché. On voit souvent un sweep de liquidité suivi d'un mouvement directionnel fort. C'est ici que se forment les highs ou lows de la journée.",
             },
             {
               name: "New York Killzone",
               hours: "13h00 – 16h00",
               color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400",
-              detail: "Ouverture de New York — la plus volatile. Recoupement avec Londres pendant 1h à 2h : liquidité maximale. Les annonces économiques majeures tombent à 13h30 ou 15h00. Les mouvements ici sont rapides et puissants.",
+              detail: "Ouverture de New York, la plus volatile. Recoupement avec Londres pendant 1h à 2h : liquidité maximale. Les annonces économiques majeures tombent à 13h30 ou 15h00. Les mouvements ici sont rapides et puissants.",
             },
             {
               name: "London Close",
@@ -80,7 +80,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Comment utiliser les Killzones</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Les Killzones structurent ta journée de trading. Elles te disent quand être devant l'écran — et surtout quand ne pas trader.
+          Les Killzones structurent ta journée de trading. Elles te disent quand être devant l'écran, et surtout quand ne pas trader.
         </p>
         <div className="space-y-2.5">
           {[
@@ -124,7 +124,7 @@ function ContentFr() {
         points={[
           "Les Killzones sont les fenêtres horaires d'activité institutionnelle maximale.",
           "London Killzone (07h–10h) et NY Killzone (13h–16h) sont les plus importantes pour le Forex.",
-          "Analyse et planifie AVANT l'ouverture — entre dans la Killzone avec un plan, pas des questions.",
+          "Analyse et planifie AVANT l'ouverture, entre dans la Killzone avec un plan, pas des questions.",
           "Les heures creuses (10h–13h) sont piégeuses : faible liquidité, mouvements aléatoires.",
           "La Asian Session (01h–04h) forme souvent les niveaux que Londres et NY viennent chercher.",
         ]}
@@ -143,18 +143,18 @@ function ContentFr() {
       <LessonQuiz
         question="Tu veux trader EUR/USD. Il est 11h30 (heure de Paris). Que fais-tu ?"
         options={[
-          "Tu trades normalement — le marché est toujours ouvert et actif",
-          "Tu attends la NY Killzone (13h00) — la liquidité actuelle est trop faible pour des setups fiables",
+          "Tu trades normalement, le marché est toujours ouvert et actif",
+          "Tu attends la NY Killzone (13h00), la liquidité actuelle est trop faible pour des setups fiables",
           "Tu passes en M5 pour capter les micro-mouvements de cette heure creuse",
-          "Tu shortcut en cassure de range — les heures creuses sont idéales pour les breakouts",
+          "Tu shortcut en cassure de range, les heures creuses sont idéales pour les breakouts",
         ]}
         correctIndex={1}
-        explanation="11h30 est en pleine heure creuse — après la fermeture de la London Killzone et avant l'ouverture de New York. La liquidité institutionnelle est minimale, les mouvements sont aléatoires et les faux signaux nombreux. La décision disciplinée est d'attendre la NY Killzone à 13h00."
+        explanation="11h30 est en pleine heure creuse, après la fermeture de la London Killzone et avant l'ouverture de New York. La liquidité institutionnelle est minimale, les mouvements sont aléatoires et les faux signaux nombreux. La décision disciplinée est d'attendre la NY Killzone à 13h00."
         answerExplanations={[
-          "Faux. Le marché est ouvert, mais ce n'est pas suffisant pour trader. Les heures creuses (10h–13h) ont une liquidité institutionnelle très faible — les mouvements manquent de direction et les faux signaux pullulent.",
+          "Faux. Le marché est ouvert, mais ce n'est pas suffisant pour trader. Les heures creuses (10h–13h) ont une liquidité institutionnelle très faible, les mouvements manquent de direction et les faux signaux pullulent.",
           "Correct. En attendant la NY Killzone, tu t'assures d'opérer dans une fenêtre où l'activité institutionnelle est forte, les mouvements directionnels et les setups plus fiables.",
-          "Faux. Descendre en M5 pendant les heures creuses amplifie le problème — le bruit est encore plus fort sur les petits timeframes quand la liquidité est faible.",
-          "Faux. Les heures creuses ne sont pas idéales pour les breakouts — elles sont connues pour les faux breakouts précisément parce que le volume institutionnel manque pour confirmer les cassures.",
+          "Faux. Descendre en M5 pendant les heures creuses amplifie le problème, le bruit est encore plus fort sur les petits timeframes quand la liquidité est faible.",
+          "Faux. Les heures creuses ne sont pas idéales pour les breakouts, elles sont connues pour les faux breakouts précisément parce que le volume institutionnel manque pour confirmer les cassures.",
         ]}
       />
 

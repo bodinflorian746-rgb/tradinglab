@@ -200,8 +200,8 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur EUR/USD H4, 3 creux sont identifiés à 1.1685, 1.1690 et 1.1688. Le prix actuel se situe à 1.1750. Comment se trace la zone de support ?"
             steps={[
-              "Démarrer le tracé avec l’outil Rectangle, du plus bas des 3 creux (1.1685) au plus haut (1.1690) — zone initiale de 5 pips, trop fine",
-              "Élargir la zone : limite basse à 1.1680, limite haute à 1.1695 — zone finale de 15 pips, conforme à la règle 10-20 pips",
+              "Démarrer le tracé avec l’outil Rectangle, du plus bas des 3 creux (1.1685) au plus haut (1.1690), zone initiale de 5 pips, trop fine",
+              "Élargir la zone : limite basse à 1.1680, limite haute à 1.1695, zone finale de 15 pips, conforme à la règle 10-20 pips",
               "Colorer le rectangle en vert transparent (40% d’opacité)",
               "Vérifier les 4 critères : 3 touches confirmées (OK), épaisseur 15 pips (OK), distance 60 pips du prix actuel (OK), fraîcheur à confirmer selon historique",
               "Conclure : la zone valide les 4 critères et devient tradable",
@@ -257,7 +257,7 @@ export default function ContentFr() {
             <div className="mt-5 flex items-center justify-between">
               <span />
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 2 — À venir
+                Leçon 2. À venir
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

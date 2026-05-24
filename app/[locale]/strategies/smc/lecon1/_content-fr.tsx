@@ -232,10 +232,10 @@ export default function ContentFr() {
               La cartographie SMC d&apos;un graphique suit une méthode top-down structurée.
             </p>
             <ol className="space-y-2 text-sm text-zinc-300 list-decimal pl-5">
-              <li><span className="font-semibold text-white">Daily ou Weekly</span> — identifier les 3-5 derniers swings majeurs (structure externe)</li>
-              <li><span className="font-semibold text-white">Classifier la phase</span> — accumulation, expansion, ou distribution</li>
-              <li><span className="font-semibold text-white">H4</span> — vérifier l&apos;alignement de la structure interne avec la structure externe</li>
-              <li><span className="font-semibold text-white">H1 ou M15</span> — pré-identifier zones d&apos;intérêt (HL, liquidity, OB potentiels)</li>
+              <li><span className="font-semibold text-white">Daily ou Weekly</span>, identifier les 3-5 derniers swings majeurs (structure externe)</li>
+              <li><span className="font-semibold text-white">Classifier la phase</span>, accumulation, expansion, ou distribution</li>
+              <li><span className="font-semibold text-white">H4</span>, vérifier l&apos;alignement de la structure interne avec la structure externe</li>
+              <li><span className="font-semibold text-white">H1 ou M15</span>, pré-identifier zones d&apos;intérêt (HL, liquidity, OB potentiels)</li>
             </ol>
           </section>
 
@@ -306,8 +306,8 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur EUR/USD, le Daily affiche une structure baissière avec LL/LH sur les 6 dernières semaines. Le H4 montre depuis 3 jours une structure interne avec un HH récent à 1.1780 et un HL à 1.1720. Le prix actuel est à 1.1760. Comment classifier cette situation et quel biais opérationnel en découle ?"
             steps={[
-              "Identifier la structure externe Daily : structure baissière confirmée (LL/LH) sur les 6 dernières semaines — biais directionnel majeur baissier.",
-              "Identifier la structure interne H4 : structure haussière de court terme (HH récent à 1.1780, HL à 1.1720) — mouvement contre-tendance par rapport au Daily.",
+              "Identifier la structure externe Daily : structure baissière confirmée (LL/LH) sur les 6 dernières semaines, biais directionnel majeur baissier.",
+              "Identifier la structure interne H4 : structure haussière de court terme (HH récent à 1.1780, HL à 1.1720), mouvement contre-tendance par rapport au Daily.",
               "Classifier la situation : structure interne H4 haussière INTERNE à une structure externe Daily baissière → pullback technique dans la tendance baissière majeure.",
               "Vérifier l’absence de signal de retournement : aucun BOS contre-tendance Daily ni CHoCH confirmé. La structure externe Daily reste valide.",
               "Biais opérationnel : SHORT, dans le sens de la structure externe Daily. Aucun setup long n’est exploitable tant que le Daily n’a pas produit BOS + CHoCH. La structure interne H4 sert uniquement à identifier la zone de rejet potentielle autour de 1.1780 (dernier HH H4 = résistance short potentielle au contact).",
@@ -366,7 +366,7 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Module SMC — Vue d&apos;ensemble
+                Module SMC. Vue d&apos;ensemble
               </Link>
               <Link href="/strategies/smc/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Leçon 2

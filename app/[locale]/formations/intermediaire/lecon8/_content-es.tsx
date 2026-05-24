@@ -10,11 +10,11 @@ export default function ContentEs() {
       formationId="intermediaire"
       lessonId="lecon8"
       title="Plan de trading"
-      subtitle="Un trade sin plan es una decisión emocional. El plan de trading transforma tu análisis en acciones precisas — y elimina la improvisación en el peor momento."
+      subtitle="Un trade sin plan es una decisión emocional. El plan de trading transforma tu análisis en acciones precisas, y elimina la improvisación en el peor momento."
       duration="20 min"
       lessonNumber={8}
-      prev={{ href: "/formations/intermediaire/lecon7", label: "Lección 7 — Multi-Timeframe" }}
-      next={{ href: "/formations/intermediaire/lecon9", label: "Lección 9 — Fibonacci" }}
+      prev={{ href: "/formations/intermediaire/lecon7", label: "Lección 7 : Multi-Timeframe" }}
+      next={{ href: "/formations/intermediaire/lecon9", label: "Lección 9 : Fibonacci" }}
     >
 
       {/* ── Lo que debes VER ── */}
@@ -23,15 +23,15 @@ export default function ContentEs() {
         <h2 className="text-lg font-semibold text-white mb-4">La diferencia entre tradear con y sin plan</h2>
         <div className="space-y-3">
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-red-400 mb-2">Sin plan — lo que pasa en la realidad</p>
+            <p className="text-sm font-semibold text-red-400 mb-2">Sin plan, lo que pasa en la realidad</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
               EUR/USD sube rápido. Ves +30 pips en 10 minutos. Entras por FOMO en 1.0980. El precio retrocede a 1.0960. Aguantas &quot;porque va a subir de nuevo&quot;. Baja a 1.0940. Entras en pánico y cortas. El precio se va a 1.1020 sin ti. Perdiste 40 pips y el trade que estabas esperando.
             </p>
           </div>
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-emerald-400 mb-2">Con plan — el mismo día</p>
+            <p className="text-sm font-semibold text-emerald-400 mb-2">Con plan, el mismo día</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Habías identificado 1.0850 como zona de compra en la mañana. Ves al precio subir sin ti — sin estrés. Retrocede a 1.0853. Pin bar en tu zona. Entras exactamente como lo previste. SL en 1.0835, TP en 1.0950. No improvisas nada. <strong className="text-white">Ejecutas.</strong>
+              Habías identificado 1.0850 como zona de compra en la mañana. Ves al precio subir sin ti, sin estrés. Retrocede a 1.0853. Pin bar en tu zona. Entras exactamente como lo previste. SL en 1.0835, TP en 1.0950. No improvisas nada. <strong className="text-white">Ejecutas.</strong>
             </p>
           </div>
         </div>
@@ -41,11 +41,11 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Por qué un plan de trading es indispensable</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          La mayoría de traders pierden no porque les falte conocimiento, sino porque toman decisiones en el calor del momento. Un plan de trading te obliga a decidir ANTES de que la emoción entre en juego — cuando estás tranquilo, lúcido y objetivo.
+          La mayoría de traders pierden no porque les falte conocimiento, sino porque toman decisiones en el calor del momento. Un plan de trading te obliga a decidir ANTES de que la emoción entre en juego, cuando estás tranquilo, lúcido y objetivo.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400">
-            <span className="text-white font-medium">Regla fundamental:</span> todo lo que vas a hacer durante un trade debe estar decidido antes de entrar. SL, TP, tamaño — fijados de antemano, jamás modificados bajo la emoción.
+            <span className="text-white font-medium">Regla fundamental:</span> todo lo que vas a hacer durante un trade debe estar decidido antes de entrar. SL, TP, tamaño, fijados de antemano, jamás modificados bajo la emoción.
           </p>
         </div>
       </section>
@@ -61,7 +61,7 @@ export default function ContentEs() {
             { q: "¿Cuál es mi sesgo?", r: "Alcista, bajista o neutro (no hay trade). Basado en el análisis Daily." },
             { q: "¿Cuáles son mis niveles clave?", r: "Las zonas de soporte/resistencia, zonas SD y estructuras importantes para la sesión." },
             { q: "¿En qué condición entro?", r: "El disparador preciso: 'Si el precio vuelve a 1.0850 y forma un rechazo, compro'." },
-            { q: "¿Dónde está mi Stop Loss?", r: "Nivel definido de antemano, lógico en el gráfico — no modificable una vez abierto el trade." },
+            { q: "¿Dónde está mi Stop Loss?", r: "Nivel definido de antemano, lógico en el gráfico, no modificable una vez abierto el trade." },
             { q: "¿Dónde está mi Take Profit?", r: "Objetivo basado en la estructura del mercado. R/R de al menos 1:2." },
             { q: "¿Cuál es mi regla de stop diario?", r: "Si pierdo X% hoy, paro. Protege contra el revenge trading." },
           ].map((item, i) => (
@@ -79,7 +79,7 @@ export default function ContentEs() {
 
       {/* ── Journal de trading ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">El journal de trading — lo que realmente te hace progresar</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">El journal de trading : lo que realmente te hace progresar</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           El journal es el registro de cada trade. Permite identificar tus patrones de éxito, tus errores recurrentes, y progresar de forma estructurada.
         </p>
@@ -180,10 +180,10 @@ export default function ContentEs() {
 
       <LessonKeyPoints
         points={[
-          "Un plan de trading se escribe ANTES de la sesión — jamás en tiempo real bajo la emoción.",
+          "Un plan de trading se escribe ANTES de la sesión, jamás en tiempo real bajo la emoción.",
           "Los 6 elementos esenciales: sesgo, niveles clave, disparador, SL, TP, regla de stop diario.",
           "El journal de trading es la herramienta que permite progresar de forma estructurada.",
-          "Un trade que no respeta el plan es un error — incluso si termina ganando.",
+          "Un trade que no respeta el plan es un error, incluso si termina ganando.",
           "La disciplina es ejecutar el plan incluso cuando la emoción sugiere otra cosa.",
         ]}
       />
@@ -191,7 +191,7 @@ export default function ContentEs() {
       <LessonExercice
         description="Escribe tu primer plan de trading completo para la próxima sesión en EUR/USD."
         steps={[
-          "Analiza EUR/USD en Daily y H4 — anota tu sesgo para mañana (alcista, bajista, o sin trade).",
+          "Analiza EUR/USD en Daily y H4, anota tu sesgo para mañana (alcista, bajista, o sin trade).",
           "Identifica 2 zonas clave en las que podrías reaccionar. Escribe los precios exactos.",
           "Para cada zona, describe el disparador exacto: 'Si el precio llega a X y veo Y, entonces entro en Z'.",
           "Define tu SL (debajo de la zona), tu TP (próximo nivel de estructura), calcula el R/R y fija tu regla de stop diario.",
@@ -199,20 +199,20 @@ export default function ContentEs() {
       />
 
       <LessonQuiz
-        question="Estás en compra en EUR/USD. SL en 1.0835. El trade va contra ti — el precio baja a 1.0845, a 10 pips de tu SL. Piensas 'va a subir de nuevo'. ¿Qué haces?"
+        question="Estás en compra en EUR/USD. SL en 1.0835. El trade va contra ti, el precio baja a 1.0845, a 10 pips de tu SL. Piensas 'va a subir de nuevo'. ¿Qué haces?"
         options={[
           "Mueves el SL a 1.0820 para darle más espacio",
-          "Cierras el trade de inmediato — el mercado va contra tu plan",
-          "Mantienes el SL en 1.0835 y dejas que el mercado decida — es la decisión del plan",
+          "Cierras el trade de inmediato, el mercado va contra tu plan",
+          "Mantienes el SL en 1.0835 y dejas que el mercado decida, es la decisión del plan",
           "Agregas a tu posición long para mejorar tu precio promedio de entrada",
         ]}
         correctIndex={2}
-        explanation="El SL fue colocado en 1.0835 por una razón estructural — debajo de la zona de entrada. El mercado puede oscilar antes de regresar en la dirección correcta. Mover el SL es pasar de una pérdida definida a una pérdida desconocida. Si el SL es lógico, lo dejas hacer su trabajo."
+        explanation="El SL fue colocado en 1.0835 por una razón estructural, debajo de la zona de entrada. El mercado puede oscilar antes de regresar en la dirección correcta. Mover el SL es pasar de una pérdida definida a una pérdida desconocida. Si el SL es lógico, lo dejas hacer su trabajo."
         answerExplanations={[
           "Falso. Mover el SL bajo la emoción es uno de los errores más caros. Tenías 1.0835 por una razón estructural. Moverlo es aceptar una pérdida más grande sin razón válida. La presión emocional no es una razón técnica.",
           "Parcialmente válido. Si la estructura que habías identificado está claramente rota (no solo 'bajando'), cerrar puede justificarse. Pero si el SL no ha sido tocado y la zona aguanta, el plan prevalece.",
-          "Correcto. El plan se estableció fuera de la emoción. Si el SL es lógico en el gráfico, lo dejas en su lugar. El precio puede oscilar antes de irse. Es precisamente para eso que existe el SL — para definir tu pérdida máxima sin que tengas que decidir bajo presión.",
-          "Falso. Agregar a una posición perdedora ('promediar') aumenta tu riesgo en un trade que ya va en la dirección equivocada. Es uno de los errores más peligrosos en trading — transforma pérdidas pequeñas en pérdidas grandes.",
+          "Correcto. El plan se estableció fuera de la emoción. Si el SL es lógico en el gráfico, lo dejas en su lugar. El precio puede oscilar antes de irse. Es precisamente para eso que existe el SL, para definir tu pérdida máxima sin que tengas que decidir bajo presión.",
+          "Falso. Agregar a una posición perdedora ('promediar') aumenta tu riesgo en un trade que ya va en la dirección equivocada. Es uno de los errores más peligrosos en trading, transforma pérdidas pequeñas en pérdidas grandes.",
         ]}
       />
 

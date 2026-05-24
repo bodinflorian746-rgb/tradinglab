@@ -9,21 +9,21 @@ export default function ContentEs() {
     <LessonPage
       formationId="avance"
       lessonId="lecon5"
-      title="OTE — Optimal Trade Entry"
+      title="OTE. Optimal Trade Entry"
       subtitle="El OTE es una técnica de entrada de precisión basada en los retrocesos de Fibonacci. Te permite entrar al mejor precio posible en el sentido del movimiento institucional."
       duration="22 min"
       lessonNumber={5}
-      prev={{ href: "/formations/avance/lecon4", label: "Lección 4 — Killzones" }}
-      next={{ href: "/formations/avance/lecon6", label: "Lección 6 — Stop Hunts" }}
+      prev={{ href: "/formations/avance/lecon4", label: "Lección 4 : Killzones" }}
+      next={{ href: "/formations/avance/lecon6", label: "Lección 6 : Stop Hunts" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">¿Qué es el OTE?</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          El OTE (Optimal Trade Entry) es una zona de retroceso identificada por los niveles de Fibonacci 61.8% y 78.6% de un movimiento impulsivo. Después de un BOS (Break of Structure), el precio suele regresar a esa zona — que coincide con un Order Block o un FVG — antes de retomar la dirección institucional.
+          El OTE (Optimal Trade Entry) es una zona de retroceso identificada por los niveles de Fibonacci 61.8% y 78.6% de un movimiento impulsivo. Después de un BOS (Break of Structure), el precio suele regresar a esa zona, que coincide con un Order Block o un FVG, antes de retomar la dirección institucional.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          El OTE no es una señal de entrada en sí mismo. Es una <span className="text-white font-medium">zona de timing</span> que te dice dónde buscar tu entrada — no directamente por qué.
+          El OTE no es una señal de entrada en sí mismo. Es una <span className="text-white font-medium">zona de timing</span> que te dice dónde buscar tu entrada, no directamente por qué.
         </p>
         <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
@@ -86,7 +86,7 @@ export default function ContentEs() {
         <div className="space-y-2.5">
           {[
             { label: "No es una orden automática", detail: "Llegar a la zona OTE no dispara automáticamente una entrada. Es una zona de atención que requiere confirmación." },
-            { label: "No siempre a 61.8%", detail: "El precio puede reaccionar en 63%, 70% o 78%. La zona OTE es un rango — no un nivel único. Usa un OB o FVG para precisar la entrada." },
+            { label: "No siempre a 61.8%", detail: "El precio puede reaccionar en 63%, 70% o 78%. La zona OTE es un rango : no un nivel único. Usa un OB o FVG para precisar la entrada." },
             { label: "No es válido sin BOS", detail: "El OTE solo tiene sentido tras un BOS. Sin ruptura de estructura confirmada, trazar un Fibonacci es un ejercicio sin fundamento institucional." },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -111,7 +111,7 @@ export default function ContentEs() {
       <LessonKeyPoints
         points={[
           "OTE = zona de retroceso 61.8%–78.6% de un swing tras un BOS confirmado.",
-          "El OTE es una zona de timing, no una señal — necesitas una confluencia (OB o FVG) para entrar.",
+          "El OTE es una zona de timing, no una señal, necesitas una confluencia (OB o FVG) para entrar.",
           "El setup OTE completo: sesgo → BOS → retroceso OTE → OB/FVG → señal de vela → entrada.",
           "El SL se coloca bajo el swing low (punto A), el TP apunta al próximo pool de liquidity.",
           "Sin BOS previo, trazar el OTE no tiene sentido institucional.",
@@ -122,7 +122,7 @@ export default function ContentEs() {
         description="Aplica el setup OTE en un gráfico real."
         steps={[
           "En EUR/USD en H1, identifica el último BOS alcista. Anota el swing low (A) y swing high (B) que lo formaron.",
-          "Traza el Fibonacci de A hacia B. Identifica la zona 61.8%–78.6% — es tu zona OTE.",
+          "Traza el Fibonacci de A hacia B. Identifica la zona 61.8%–78.6%, es tu zona OTE.",
           "¿Hay un Bullish Order Block o un Bullish FVG dentro de esa zona? Si sí, tienes una confluencia.",
           "Si el precio regresa al OTE, anota la señal de vela esperada para la entrada. Define SL y TP.",
         ]}
@@ -131,18 +131,18 @@ export default function ContentEs() {
       <LessonQuiz
         question="Identificas un BOS alcista en H1. El precio retrocede al 65% del swing A→B y forma una pin bar alcista en un Bullish OB. ¿Qué haces?"
         options={[
-          "No entras — 65% no es exactamente el golden ratio en 61.8%",
-          "Entras en compra — BOS confirmado, retroceso en la zona OTE, confluencia OB, señal de vela",
+          "No entras, 65% no es exactamente el golden ratio en 61.8%",
+          "Entras en compra. BOS confirmado, retroceso en la zona OTE, confluencia OB, señal de vela",
           "Esperas que el precio llegue al 78.6% para estar en la zona OTE exacta",
-          "Entras en venta — el retroceso de 65% sugiere una debilidad de los compradores",
+          "Entras en venta, el retroceso de 65% sugiere una debilidad de los compradores",
         ]}
         correctIndex={1}
-        explanation="65% está dentro de la zona OTE (61.8%–78.6%). La confluencia Bullish OB + pin bar alcista en esa zona tras un BOS confirmado constituye un setup institucional completo de alta probabilidad. El OTE es un rango — 65% es válido."
+        explanation="65% está dentro de la zona OTE (61.8%–78.6%). La confluencia Bullish OB + pin bar alcista en esa zona tras un BOS confirmado constituye un setup institucional completo de alta probabilidad. El OTE es un rango, 65% es válido."
         answerExplanations={[
           "Falso. La zona OTE se extiende de 61.8% a 78.6%. El 65% está plenamente dentro de esa zona. Esperar exactamente 61.8% es un error de precisión que hace perder entradas válidas.",
           "Correcto. Todos los elementos del setup OTE completo están reunidos: BOS alcista → retroceso en el OTE → Bullish OB como confluencia → pin bar como señal. Es un setup institucional de alta probabilidad.",
-          "Falso. 78.6% es el límite superior de la zona OTE — si una confluencia y una señal aparecen al 65%, no hay ninguna razón para esperar más lejos. Esperar 78.6% sin razón es potencialmente perder la entrada óptima.",
-          "Falso. En tendencia alcista con BOS confirmado, un retroceso del 65% es esperado y normal. No es una debilidad — es precisamente la zona de recarga institucional antes de retomar el alza.",
+          "Falso. 78.6% es el límite superior de la zona OTE, si una confluencia y una señal aparecen al 65%, no hay ninguna razón para esperar más lejos. Esperar 78.6% sin razón es potencialmente perder la entrada óptima.",
+          "Falso. En tendencia alcista con BOS confirmado, un retroceso del 65% es esperado y normal. No es una debilidad, es precisamente la zona de recarga institucional antes de retomar el alza.",
         ]}
       />
 

@@ -10,11 +10,11 @@ export default function ContentEs() {
       formationId="avance"
       lessonId="lecon2"
       title="Fair Value Gap"
-      subtitle="Los Fair Value Gaps son desequilibrios dejados por movimientos institucionales rápidos. El mercado busca cerrarlos — y ahí se esconden algunas de las mejores entradas."
+      subtitle="Los Fair Value Gaps son desequilibrios dejados por movimientos institucionales rápidos. El mercado busca cerrarlos, y ahí se esconden algunas de las mejores entradas."
       duration="20 min"
       lessonNumber={2}
-      prev={{ href: "/formations/avance/lecon1", label: "Lección 1 — Liquidity" }}
-      next={{ href: "/formations/avance/lecon3", label: "Lección 3 — Order Blocks" }}
+      prev={{ href: "/formations/avance/lecon1", label: "Lección 1 : Liquidity" }}
+      next={{ href: "/formations/avance/lecon3", label: "Lección 3 : Order Blocks" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -22,14 +22,14 @@ export default function ContentEs() {
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Un Fair Value Gap (FVG) es un desequilibrio de precio creado cuando un movimiento
           es tan rápido que las velas adyacentes no se superponen.
-          Queda una zona de precio donde no se realizaron intercambios — el mercado
+          Queda una zona de precio donde no se realizaron intercambios, el mercado
           tiende a regresar para &quot;cerrar&quot; ese desequilibrio.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Principio:</span> un FVG se
             forma con 3 velas consecutivas. La zona entre la mecha superior de la
-            vela 1 y la mecha inferior de la vela 3 no fue intercambiada — ese es
+            vela 1 y la mecha inferior de la vela 3 no fue intercambiada, ese es
             el gap.
           </p>
         </div>
@@ -53,7 +53,7 @@ export default function ContentEs() {
             <div className="space-y-2">
               {[
                 { label: "Vela 1", desc: "La vela que precede al movimiento. Retén su mecha superior (para un FVG bullish) o inferior (para un bearish)." },
-                { label: "Vela 2", desc: "La vela impulsiva — grande, direccional, a menudo sin mecha. Crea el desequilibrio." },
+                { label: "Vela 2", desc: "La vela impulsiva : grande, direccional, a menudo sin mecha. Crea el desequilibrio." },
                 { label: "Vela 3", desc: "La vela que sigue. Retén su mecha inferior (bullish) o superior (bearish). Si no se solapa con la mecha de la vela 1, el FVG existe." },
               ].map((b) => (
                 <div key={b.label} className="flex items-start gap-3">
@@ -81,16 +81,16 @@ export default function ContentEs() {
             <p className="font-semibold text-emerald-400 text-sm mb-2">Bullish FVG</p>
             <ul className="space-y-1.5">
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Formado tras un movimiento alcista impulsivo (vela 2 bullish)
+               . Formado tras un movimiento alcista impulsivo (vela 2 bullish)
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — La zona está entre: mecha superior de V1 (parte baja del gap) y mecha inferior de V3 (parte alta del gap)
+               . La zona está entre: mecha superior de V1 (parte baja del gap) y mecha inferior de V3 (parte alta del gap)
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Cuando el precio regresa a esa zona, es un potencial punto de compra
+               . Cuando el precio regresa a esa zona, es un potencial punto de compra
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Stop: debajo de la zona. Target: próximo nivel de resistencia o liquidity
+               . Stop: debajo de la zona. Target: próximo nivel de resistencia o liquidity
               </li>
             </ul>
           </div>
@@ -98,16 +98,16 @@ export default function ContentEs() {
             <p className="font-semibold text-red-400 text-sm mb-2">Bearish FVG</p>
             <ul className="space-y-1.5">
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Formado tras un movimiento bajista impulsivo (vela 2 bearish)
+               . Formado tras un movimiento bajista impulsivo (vela 2 bearish)
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — La zona está entre: mecha inferior de V1 (parte alta del gap) y mecha superior de V3 (parte baja del gap)
+               . La zona está entre: mecha inferior de V1 (parte alta del gap) y mecha superior de V3 (parte baja del gap)
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Cuando el precio sube a esa zona, es un potencial punto de venta
+               . Cuando el precio sube a esa zona, es un potencial punto de venta
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Stop: por encima de la zona. Target: próximo soporte o pool de liquidity
+               . Stop: por encima de la zona. Target: próximo soporte o pool de liquidity
               </li>
             </ul>
           </div>
@@ -170,9 +170,9 @@ export default function ContentEs() {
       <LessonKeyPoints
         points={[
           "Un FVG es un desequilibrio en 3 velas: no hubo intercambios en la zona entre la mecha superior de V1 y la mecha inferior de V3 (bullish).",
-          "El mercado busca cerrar sus FVG — son zonas de retorno potencial a vigilar.",
+          "El mercado busca cerrar sus FVG, son zonas de retorno potencial a vigilar.",
           "Un FVG solo es válido en el sentido de la tendencia y con al menos una confluencia adicional.",
-          "Un FVG cruzado sin reacción queda invalidado — quítalo de tu análisis de inmediato.",
+          "Un FVG cruzado sin reacción queda invalidado, quítalo de tu análisis de inmediato.",
         ]}
       />
 
@@ -193,7 +193,7 @@ export default function ContentEs() {
           "El precio cierra por encima del máximo de la vela anterior",
         ]}
         correctIndex={1}
-        explanation="Un Bullish FVG existe cuando la mecha superior de la vela 1 es inferior a la mecha inferior de la vela 3 — hay un espacio entre esas dos mechas que nunca fue intercambiado. Ese desequilibrio es el que el mercado busca cerrar al regresar, creando una oportunidad de entrada en compra dentro de un contexto alcista."
+        explanation="Un Bullish FVG existe cuando la mecha superior de la vela 1 es inferior a la mecha inferior de la vela 3, hay un espacio entre esas dos mechas que nunca fue intercambiado. Ese desequilibrio es el que el mercado busca cerrar al regresar, creando una oportunidad de entrada en compra dentro de un contexto alcista."
       />
 
     </LessonPage>

@@ -63,7 +63,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Cette leçon pose la logique du multi-timeframe : pourquoi trader un seul graphique rend aveugle, et le rôle concret de chaque étage — le timeframe supérieur donne le biais, le timeframe intermédiaire localise la zone, le timeframe d&apos;exécution déclenche l&apos;entrée.
+              Cette leçon pose la logique du multi-timeframe : pourquoi trader un seul graphique rend aveugle, et le rôle concret de chaque étage, le timeframe supérieur donne le biais, le timeframe intermédiaire localise la zone, le timeframe d&apos;exécution déclenche l&apos;entrée.
             </p>
           </div>
 
@@ -148,7 +148,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : le Daily affiche une structure baissière en LH/LL, avec une résistance majeure autour de 1.1820. Sur M15, un breakout haussier local se forme vers 1.1760. Le prix monte jusqu&apos;à 1.1775 — puis replonge vers 1.1700. Le signal M15 était techniquement valide ; le problème venait du contexte HTF.
+                EUR/USD : le Daily affiche une structure baissière en LH/LL, avec une résistance majeure autour de 1.1820. Sur M15, un breakout haussier local se forme vers 1.1760. Le prix monte jusqu&apos;à 1.1775, puis replonge vers 1.1700. Le signal M15 était techniquement valide ; le problème venait du contexte HTF.
               </p>
             </div>
 
@@ -169,7 +169,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le HTF répond à une seule question : dans quel sens le marché a-t-il statistiquement le plus de chances de continuer ? Il ne sert pas à entrer — il sert à filtrer les mauvais trades avant même de chercher un setup.
+              Le HTF répond à une seule question : dans quel sens le marché a-t-il statistiquement le plus de chances de continuer ? Il ne sert pas à entrer, il sert à filtrer les mauvais trades avant même de chercher un setup.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -236,7 +236,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : le HTF est baissier. Sur H1, une zone de résistance se dessine entre 1.1765 et 1.1780. Le prix y revient — on surveille alors un signal vendeur sur le LTF.
+                EUR/USD : le HTF est baissier. Sur H1, une zone de résistance se dessine entre 1.1765 et 1.1780. Le prix y revient, on surveille alors un signal vendeur sur le LTF.
               </p>
             </div>
 
@@ -303,19 +303,19 @@ export default function ContentFr() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1 — HTF (H4)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (H4)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : structure baissière en LH/LL, résistance importante à 1.1780, prix actuel à 1.1725</li>
                 <li>- Conclusion : priorité aux ventes, aucun achat agressif recherché</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 2 — Timeframe intermédiaire (H1)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 2. Timeframe intermédiaire (H1)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : zone de résistance entre 1.1765 et 1.1780, ancien support devenu résistance, rejet déjà observé</li>
                 <li>- Conclusion : zone idéale pour attendre une réaction baissière</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 3 — LTF (M5 / M15)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 3. LTF (M5 / M15)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : sweep haussier jusqu&apos;à 1.1778, CHoCH baissier sur M5, bougie impulsive de rejet</li>
                 <li>- Conclusion : confirmation vendeuse valide, entrée short possible après la cassure locale</li>
@@ -332,7 +332,7 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "Un seul timeframe donne une vision incomplète du marché.",
-              "Le HTF définit le biais principal — la direction du trade.",
+              "Le HTF définit le biais principal, la direction du trade.",
               "Le timeframe intermédiaire localise la zone d’intérêt où agir.",
               "Le LTF sert uniquement au déclenchement : il donne le timing, pas le biais.",
             ]}
@@ -357,7 +357,7 @@ export default function ContentFr() {
               "Remplacer complètement l’analyse HTF",
             ]}
             correctIndex={2}
-            explanation="Le LTF sert à confirmer l’exécution dans une zone déjà préparée par les timeframes supérieurs. Le biais vient du HTF, la zone vient du timeframe intermédiaire ; le LTF intervient seulement pour affiner le timing et réduire le risque. Il complète l’analyse HTF — il ne la remplace jamais."
+            explanation="Le LTF sert à confirmer l’exécution dans une zone déjà préparée par les timeframes supérieurs. Le biais vient du HTF, la zone vient du timeframe intermédiaire ; le LTF intervient seulement pour affiner le timing et réduire le risque. Il complète l’analyse HTF, il ne la remplace jamais."
           />
 
         </div>
@@ -399,7 +399,7 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Module Multi-timeframe — Vue d&apos;ensemble
+                Module Multi-timeframe. Vue d&apos;ensemble
               </Link>
               <Link href="/strategies/multi-timeframe/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Leçon suivante

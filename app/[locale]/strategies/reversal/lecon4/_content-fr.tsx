@@ -149,7 +149,7 @@ export default function ContentFr() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Cassure rejetée.</span> <span className="text-zinc-300">Le prix re-clôture au-dessus (ou au-dessous) de la neckline dans les 1-3 bougies suivant l&apos;entrée. Pattern invalidé, sortie immédiate.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Bougie de rejet violente.</span> <span className="text-zinc-300">Une grosse bougie verte englobant les 2-3 bougies baissières précédentes = signal d&apos;absorption. Sortie immédiate même sans re-cassure de neckline.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Volume incohérent.</span> <span className="text-zinc-300">Cassure initiale sans volume particulier + reprise avec gros volume = lecture inversée. Pattern faible, sortie immédiate.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. News imprévue dans la fenêtre.</span> <span className="text-zinc-300">News macro qui sort pendant le trade (Fed minutes, géopolitique, données inattendues). Sortie par précaution requise — les news détruisent les patterns.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. News imprévue dans la fenêtre.</span> <span className="text-zinc-300">News macro qui sort pendant le trade (Fed minutes, géopolitique, données inattendues). Sortie par précaution requise, les news détruisent les patterns.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm md:col-span-2"><span className="text-white font-semibold">5. Temps écoulé sans confirmation.</span> <span className="text-zinc-300">Après 5-8 bougies sur le timeframe d&apos;entrée (H1 ou H4) sans progression vers le TP, pattern faible. Sortie pas obligatoire, mais SL resserré au break-even minimum. Si le pattern fonctionnait, ça serait déjà parti.</span></div>
             </div>
           </section>
@@ -163,10 +163,10 @@ export default function ContentFr() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Visuellement, l&apos;invalidation se lit immédiatement sur le graphique. Le marché signale littéralement l&apos;invalidation, la seule action requise est d&apos;écouter le signal et d&apos;exécuter la coupe sans débat.</p>
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Signaux visuels à repérer :</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Re-clôture franche au-dessus (ou en dessous) du niveau cassé — critère 1.</li>
-              <li>- Bougie d&apos;absorption verte large englobant les 2-3 baissières précédentes — critère 2.</li>
-              <li>- Volume contraire à la cassure initiale — critère 3.</li>
-              <li>- Stagnation prolongée sans progression vers le TP — critère 5.</li>
+              <li>- Re-clôture franche au-dessus (ou en dessous) du niveau cassé, critère 1.</li>
+              <li>- Bougie d&apos;absorption verte large englobant les 2-3 baissières précédentes, critère 2.</li>
+              <li>- Volume contraire à la cassure initiale, critère 3.</li>
+              <li>- Stagnation prolongée sans progression vers le TP, critère 5.</li>
             </ul>
           </section>
 
@@ -256,11 +256,11 @@ export default function ContentFr() {
           <LessonExercice
             description="Tu es entré short XAU/USD à 4 720$ sur un double top. SL à 4 760$, TP à 4 640$. Position ouverte depuis 1 heure. Le prix descend à 4 705$, puis remonte fortement. Bougie H1 qui clôture à 4 745$ avec un volume 2x supérieur à la moyenne. Que fais-tu ?"
             steps={[
-              "Vérifier le critère 1 — cassure rejetée : le prix a re-cassé la neckline à 4 720$ vers le haut, OUI",
-              "Vérifier le critère 2 — bougie de rejet violente : large bougie verte qui clôture à 4 745$, OUI",
-              "Vérifier le critère 3 — volume incohérent : volume 2x supérieur pendant la remontée, OUI",
+              "Vérifier le critère 1, cassure rejetée : le prix a re-cassé la neckline à 4 720$ vers le haut, OUI",
+              "Vérifier le critère 2, bougie de rejet violente : large bougie verte qui clôture à 4 745$, OUI",
+              "Vérifier le critère 3, volume incohérent : volume 2x supérieur pendant la remontée, OUI",
               "3 critères sur 5 allumés : aucun débat, tu coupes immédiatement à la clôture",
-              "Couper à 4 745$ : perte de 25$ par unité au lieu des 40$ prévus si tu attendais le SL à 4 760$ — tu sauves plus d’un tiers de ton risque",
+              "Couper à 4 745$ : perte de 25$ par unité au lieu des 40$ prévus si tu attendais le SL à 4 760$, tu sauves plus d’un tiers de ton risque",
             ]}
           />
 
@@ -273,7 +273,7 @@ export default function ContentFr() {
               "Le RSI repasse au-dessus de 50",
             ]}
             correctIndex={1}
-            explanation="Le critère 1 — cassure rejetée — est le déclencheur principal. Si le prix re-clôture au-dessus de la neckline dans les 1-3 bougies qui suivent l’entrée, le pattern est invalidé. Le marché signale littéralement l’invalidation. La sortie est immédiate."
+            explanation="Le critère 1, cassure rejetée, est le déclencheur principal. Si le prix re-clôture au-dessus de la neckline dans les 1-3 bougies qui suivent l’entrée, le pattern est invalidé. Le marché signale littéralement l’invalidation. La sortie est immédiate."
           />
 
           <LessonQuiz

@@ -12,11 +12,11 @@ function ContentFr() {
       formationId="intermediaire"
       lessonId="lecon3"
       title="Supply & Demand"
-      subtitle="Les zones SD ne sont pas des lignes magiques — ce sont les cicatrices laissées par les institutions quand elles ont passé de gros ordres. Le prix y retourne pour exécuter le reste."
+      subtitle="Les zones SD ne sont pas des lignes magiques, ce sont les cicatrices laissées par les institutions quand elles ont passé de gros ordres. Le prix y retourne pour exécuter le reste."
       duration="20 min"
       lessonNumber={3}
-      prev={{ href: "/formations/intermediaire/lecon2", label: "Leçon 2 — Zones clés" }}
-      next={{ href: "/formations/intermediaire/lecon4", label: "Leçon 4 — Tendances" }}
+      prev={{ href: "/formations/intermediaire/lecon2", label: "Leçon 2 : Zones clés" }}
+      next={{ href: "/formations/intermediaire/lecon4", label: "Leçon 4 : Tendances" }}
     >
 
       {/* ── Ce que tu dois VOIR ── */}
@@ -38,7 +38,7 @@ function ContentFr() {
           </div>
         </div>
         <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-3 py-2">
-          <p className="text-xs text-zinc-400"><span className="text-white font-medium">Signe clé :</span> le départ de la zone est toujours IMPULSIF — fort, rapide, peu de mèches. Si le départ est lent, ce n'est pas une zone SD valide.</p>
+          <p className="text-xs text-zinc-400"><span className="text-white font-medium">Signe clé :</span> le départ de la zone est toujours IMPULSIF, fort, rapide, peu de mèches. Si le départ est lent, ce n'est pas une zone SD valide.</p>
         </div>
       </section>
 
@@ -58,7 +58,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Comment tracer une zone SD valide</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Une zone SD se trace sur les bougies de consolidation juste avant le départ impulsif — pas sur le départ lui-même. La zone = l'endroit où les ordres ont été passés. Le départ = la preuve qu'ils ont été exécutés.
+          Une zone SD se trace sur les bougies de consolidation juste avant le départ impulsif, pas sur le départ lui-même. La zone = l'endroit où les ordres ont été passés. Le départ = la preuve qu'ils ont été exécutés.
         </p>
         <div className="space-y-2">
           {[
@@ -80,9 +80,9 @@ function ContentFr() {
 
       {/* ── SD vs S/R ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">SD vs S/R — la différence en pratique</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">SD vs S/R : la différence en pratique</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Les deux semblent similaires mais leur logique est différente. En pratique, ils se complètent — une zone SD qui coïncide avec un S/R est une confluence puissante.
+          Les deux semblent similaires mais leur logique est différente. En pratique, ils se complètent, une zone SD qui coïncide avec un S/R est une confluence puissante.
         </p>
         <div className="space-y-2.5">
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
@@ -140,7 +140,7 @@ function ContentFr() {
             <span className="text-lg">—</span>
             <div>
               <p className="text-sm font-semibold text-zinc-300">Zone déjà testée plusieurs fois</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu ignores ou tu réduis ta confiance. Une zone touchée 3+ fois perd sa puissance — les ordres institutionnels sont épuisés.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu ignores ou tu réduis ta confiance. Une zone touchée 3+ fois perd sa puissance, les ordres institutionnels sont épuisés.</p>
             </div>
           </div>
         </div>
@@ -176,18 +176,18 @@ function ContentFr() {
           "Demand = le prix quitte une zone avec un départ haussier impulsif → les institutions ont acheté.",
           "Supply = le prix quitte une zone avec un départ baissier impulsif → les institutions ont vendu.",
           "Zone fraîche (non-retestée) = zone forte. Zone testée 3× = zone affaiblie.",
-          "On trace la zone sur la consolidation avant le départ — pas sur le départ lui-même.",
-          "La zone SD indique où regarder — le signal de bougie indique quand entrer.",
+          "On trace la zone sur la consolidation avant le départ, pas sur le départ lui-même.",
+          "La zone SD indique où regarder, le signal de bougie indique quand entrer.",
         ]}
       />
 
       <LessonExercice
         description="Sur TradingView, ouvre EUR/USD en H4 et identifie des zones SD valides."
         steps={[
-          "Repère le dernier grand mouvement haussier (plusieurs bougies vertes consécutives). Remonte juste avant — c'est là que ta zone de Demand se trouve. Trace un rectangle.",
+          "Repère le dernier grand mouvement haussier (plusieurs bougies vertes consécutives). Remonte juste avant, c'est là que ta zone de Demand se trouve. Trace un rectangle.",
           "Fais de même pour le dernier grand mouvement baissier. Trace ta zone de Supply.",
           "Vérifie si le prix est revenu tester l'une de ces zones depuis. Comment a-t-il réagi ?",
-          "Cherche une zone SD qui coïncide avec un niveau de S/R historique — c'est une confluence forte. Note le prix exact.",
+          "Cherche une zone SD qui coïncide avec un niveau de S/R historique, c'est une confluence forte. Note le prix exact.",
         ]}
       />
 
@@ -196,11 +196,11 @@ function ContentFr() {
         options={[
           "Tu achètes immédiatement dès que le prix entre dans la zone",
           "Tu attends un signal de rejet dans la zone (pin bar ou engulfing haussier), puis tu entres",
-          "Tu ignores la zone — le prix descend, c'est un signe de faiblesse",
+          "Tu ignores la zone, le prix descend, c'est un signe de faiblesse",
           "Tu places un ordre limite au bas de la zone sans attendre de signal",
         ]}
         correctIndex={1}
-        explanation="La zone te dit où regarder — le signal de bougie te dit quand entrer. Attendre un rejet (pin bar, engulfing haussier) dans la zone de Demand confirme que les acheteurs institutionnels sont actifs. Sans signal, tu anticipes sans preuve."
+        explanation="La zone te dit où regarder, le signal de bougie te dit quand entrer. Attendre un rejet (pin bar, engulfing haussier) dans la zone de Demand confirme que les acheteurs institutionnels sont actifs. Sans signal, tu anticipes sans preuve."
         answerExplanations={[
           "Trop hâtif. Le prix peut traverser la zone et continuer à baisser. Entrer sans signal de confirmation, c'est prendre le risque d'entrer sur une zone qui ne tient pas. La zone est une zone d'attention, pas un déclencheur d'achat automatique.",
           "Correct. C'est la méthode en deux temps : la zone définit le niveau d'intérêt, le signal de bougie confirme que les acheteurs réagissent. Pin bar = rejet des prix bas. Engulfing haussier = les acheteurs prennent le contrôle. Tu entres avec SL sous la zone.",

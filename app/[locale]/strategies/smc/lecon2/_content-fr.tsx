@@ -148,7 +148,7 @@ export default function ContentFr() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
-                <p className="text-emerald-400 font-semibold text-sm mb-2">BOS — Break of Structure</p>
+                <p className="text-emerald-400 font-semibold text-sm mb-2">BOS. Break of Structure</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Cassure dans le sens de la tendance (HH en haussier, LL en baissier)</li>
                   <li>- Valide la continuation, structure HH/HL ou LH/LL intacte</li>
@@ -156,7 +156,7 @@ export default function ContentFr() {
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
-                <p className="text-amber-400 font-semibold text-sm mb-2">CHoCH — Change of Character</p>
+                <p className="text-amber-400 font-semibold text-sm mb-2">CHoCH. Change of Character</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Cassure dans le sens opposé à la tendance (HL en haussier, LH en baissier)</li>
                   <li>- Signale un retournement potentiel, rupture de la structure</li>
@@ -217,15 +217,15 @@ export default function ContentFr() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le retournement structurel institutionnel suit une séquence en 3 étapes. Cette séquence garantit que l&apos;inversion ne se prend qu&apos;après confirmation complète.</p>
 
             <ol className="space-y-2 text-sm text-zinc-300 list-decimal pl-5">
-              <li><span className="font-semibold text-white">BOS contre-tendance</span> — cassure du dernier HL (haussier) ou LH (baissier). Ouvre la possibilité du retournement sans le confirmer. Sortie progressive des positions, pas encore d&apos;inversion.</li>
-              <li><span className="font-semibold text-white">Formation de la nouvelle structure</span> — 5 à 15 bougies pour produire un premier LL/LH (retournement baissier) ou HH/HL (retournement haussier). Aucune entrée d&apos;inversion pendant cette phase d&apos;observation.</li>
-              <li><span className="font-semibold text-white">CHoCH confirmé + mitigation</span> — nouvelle structure inverse complète. Entrée sur le retracement vers le niveau structurel cassé (ex-HL devenu résistance, ou ex-LH devenu support) avec signal de rejet. Stop loss serré possible.</li>
+              <li><span className="font-semibold text-white">BOS contre-tendance</span>, cassure du dernier HL (haussier) ou LH (baissier). Ouvre la possibilité du retournement sans le confirmer. Sortie progressive des positions, pas encore d&apos;inversion.</li>
+              <li><span className="font-semibold text-white">Formation de la nouvelle structure</span>, 5 à 15 bougies pour produire un premier LL/LH (retournement baissier) ou HH/HL (retournement haussier). Aucune entrée d&apos;inversion pendant cette phase d&apos;observation.</li>
+              <li><span className="font-semibold text-white">CHoCH confirmé + mitigation</span>, nouvelle structure inverse complète. Entrée sur le retracement vers le niveau structurel cassé (ex-HL devenu résistance, ou ex-LH devenu support) avec signal de rejet. Stop loss serré possible.</li>
             </ol>
           </section>
 
           {/* Bloc 6 — FAUX BOS + ERREURS */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Faux BOS — mèche perce, clôture invalide</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Faux BOS : mèche perce, clôture invalide</h2>
 
             <div className="my-8">
               <BOSFakeoutDiagram />
@@ -306,8 +306,8 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur XAU/USD H4, la tendance baissière en cours affiche 3 LH successifs à 4 720$, 4 660$ et 4 620$, et 3 LL successifs à 4 660$, 4 600$ et 4 540$. Une bougie H4 vient de clôturer à 4 670$, soit 50$ au-dessus du dernier LH à 4 620$. 4 bougies suivantes maintiennent leur clôture au-dessus de 4 620$. Aucune news macro dans la fenêtre. Comment se construit la lecture BOS/CHoCH ?"
             steps={[
-              "Identifier la nature du niveau cassé : 4 620$ est le dernier LH (sommet de structure baissière inverse) — il s’agit d’un signal de retournement potentiel, pas d’une continuation.",
-              "Qualifier la cassure : clôture franche à 4 670$ (50$ au-dessus du LH), displacement supérieur à la moyenne récente, aucune réintégration sur 4 bougies — cassure validée structurellement.",
+              "Identifier la nature du niveau cassé : 4 620$ est le dernier LH (sommet de structure baissière inverse), il s’agit d’un signal de retournement potentiel, pas d’une continuation.",
+              "Qualifier la cassure : clôture franche à 4 670$ (50$ au-dessus du LH), displacement supérieur à la moyenne récente, aucune réintégration sur 4 bougies, cassure validée structurellement.",
               "Classifier le signal : la cassure du dernier LH constitue un BOS contre-tendance, premier signal de retournement potentiel de la tendance baissière.",
               "Attendre la formation de la nouvelle structure : observer la formation d’un premier HL (creux plus haut que le précédent) après le BOS contre-tendance.",
               "Valider le CHoCH avant inversion : confirmer le CHoCH par la séquence complète HL plus HH dans la nouvelle structure haussière avant toute prise de position long. La sortie des positions short existantes peut se déclencher dès le BOS contre-tendance, l’inversion exige le CHoCH.",
@@ -323,7 +323,7 @@ export default function ContentFr() {
               "Le BOS s’utilise sur M15, le CHoCH sur Daily",
             ]}
             correctIndex={1}
-            explanation="Sur tendance haussière, un BOS valide la continuation par la cassure du dernier HH (extrême dans le sens de la tendance). Un CHoCH amorce un retournement par la cassure du dernier HL (creux structurel qui définit la structure haussière). La nature du niveau cassé — HH vs HL — dicte la nature du signal et la décision opérationnelle."
+            explanation="Sur tendance haussière, un BOS valide la continuation par la cassure du dernier HH (extrême dans le sens de la tendance). Un CHoCH amorce un retournement par la cassure du dernier HL (creux structurel qui définit la structure haussière). La nature du niveau cassé, HH vs HL, dicte la nature du signal et la décision opérationnelle."
           />
 
         </div>
@@ -369,7 +369,7 @@ export default function ContentFr() {
                 Leçon 1
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 3 — À venir
+                Leçon 3. À venir
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

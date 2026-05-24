@@ -223,9 +223,9 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Le prix arrive au plafond d'un range serré. Tu cherches le SELL.",
     optimal: { entry: "confirmation", stop: "logical", tp: "fast" },
-    optimalExplain: "Dans un range, l'edge est petit — confirmation pour valider l'entrée, TP rapide car la course est limitée par la borne basse du range.",
+    optimalExplain: "Dans un range, l'edge est petit, confirmation pour valider l'entrée, TP rapide car la course est limitée par la borne basse du range.",
     lessons: {
-      intermediate: "Un range a un R/R intrinsèquement limité. Le TP ambitieux n'a pas de sens — on vise le plancher du range.",
+      intermediate: "Un range a un R/R intrinsèquement limité. Le TP ambitieux n'a pas de sens, on vise le plancher du range.",
       advanced:     "Range = environnement de fade. Confirmation + TP rapide = pourcentage de win plus haut, RR < 2.",
       beginner:     "Au plafond d'un range, on vend petit. Pas de gros TP car le prix bouge dans une boîte.",
     },
@@ -243,14 +243,14 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     optimalExplain: "Range = arbitrage entre plancher et plafond. Confirmation + TP rapide car la course est bornée.",
     lessons: {
       intermediate: "Le BUY du plancher vise le plafond, pas plus. Le TP rapide colle au plafond.",
-      advanced:     "Mêmes principes que le SELL du plafond — confirmation + TP serré pour maximiser le % de win.",
+      advanced:     "Mêmes principes que le SELL du plafond, confirmation + TP serré pour maximiser le % de win.",
       beginner:     "Range = on vise l'autre côté, sans plus. Pas d'ambition.",
     },
     difficulties: ["intermediate", "advanced"],
   },
   {
     id: "fake_breakout_short",
-    title: "Faux breakout — SELL après le piège",
+    title: "Faux breakout : SELL après le piège",
     chartShape: "fakeout_above",
     direction: "SELL",
     htfBias: "bearish",
@@ -260,7 +260,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     optimalExplain: "Après un fakeout, on attend la confirmation (bougie qui valide le retour sous résistance). Stop au-dessus du pic du fakeout, TP équilibré jusqu'au prochain support.",
     lessons: {
       intermediate: "Fakeout = signal d'entrée mais avec confirmation. Sans confirm, le retest peut faire un 2e sweep.",
-      advanced:     "Stop au-dessus du wick du fakeout — c'est la VRAIE invalidation. Pas dans la zone du piège.",
+      advanced:     "Stop au-dessus du wick du fakeout, c'est la VRAIE invalidation. Pas dans la zone du piège.",
       beginner:     "Après un piège visible, on attend la suite. Pas de FOMO.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -301,7 +301,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
   },
   {
     id: "weak_breakout_setup",
-    title: "Cassure faible — édge réduit",
+    title: "Cassure faible : édge réduit",
     chartShape: "weak_breakout",
     direction: "BUY",
     htfBias: "range",
@@ -318,7 +318,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
   },
   {
     id: "deep_pullback_risky",
-    title: "Pullback très profond — risque de breakdown",
+    title: "Pullback très profond : risque de breakdown",
     chartShape: "deep_pullback_risky",
     direction: "BUY",
     htfBias: "bullish",
@@ -344,7 +344,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     optimal: { entry: "confirmation", stop: "wide", tp: "balanced" },
     optimalExplain: "Volatilité élevée = le bruit est amplifié. Stop standard se fait balayer. Le 'wide stop' devient le stop LOGIQUE. TP équilibré car le mouvement potentiel est aussi étendu.",
     lessons: {
-      advanced:     "Stop ATR-ajusté. En vol élevée, le 'wide stop' n'est pas large — il est juste adapté.",
+      advanced:     "Stop ATR-ajusté. En vol élevée, le 'wide stop' n'est pas large, il est juste adapté.",
       intermediate: "Le stop doit s'adapter à la volatilité du moment, pas à un standard fixe.",
       beginner:     "Quand le marché bouge fort, le stop doit respirer. Sinon il saute pour rien.",
     },
@@ -352,12 +352,12 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
   },
   {
     id: "counter_trend_local",
-    title: "Setup local contre HTF — défensif",
+    title: "Setup local contre HTF : défensif",
     chartShape: "counter_trend_local",
     direction: "BUY",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "HTF baissier. Un setup BUY apparaît localement (LTF) — risqué mais tradable.",
+    context: "HTF baissier. Un setup BUY apparaît localement (LTF), risqué mais tradable.",
     optimal: { entry: "confirmation", stop: "logical", tp: "fast" },
     optimalExplain: "Contre HTF = proba défavorable. Confirmation obligatoire + TP rapide pour sécuriser ce qu'on peut. Pas d'ambition contre la tendance majeure.",
     lessons: {
@@ -1237,7 +1237,7 @@ export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: stri
     label:       "Débutant",
     dotClass:    "bg-emerald-400",
     textClass:   "text-emerald-400",
-    description: "Structure claire, choix relativement évidents — comprends invalidation et RR.",
+    description: "Structure claire, choix relativement évidents, comprends invalidation et RR.",
   },
   intermediate: {
     label:       "Intermédiaire",

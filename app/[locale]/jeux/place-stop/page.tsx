@@ -91,7 +91,7 @@ export default function PlaceStopPage() {
         hitCandle:       "Tocado en la vela",
         title:           "Coloca tu Stop",
         heading:         "¿Qué stop va a sobrevivir?",
-        pickerIntro:     "escenarios. Para cada uno, 3 stops loss propuestos (A / B / C). Eliges el más lógico — estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.",
+        pickerIntro:     "escenarios. Para cada uno, 3 stops loss propuestos (A / B / C). Eliges el más lógico, estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.",
         summary:         "Resumen",
         stopsChosen:     "stops elegidos",
         logicalStops:    "Stops lógicos",
@@ -130,7 +130,7 @@ export default function PlaceStopPage() {
         hitCandle:       "Touché bougie",
         title:           "Place ton Stop",
         heading:         "Quel stop va survivre ?",
-        pickerIntro:     "scénarios. Pour chacun, 3 stops loss proposés (A / B / C). Tu choisis le plus logique — structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.",
+        pickerIntro:     "scénarios. Pour chacun, 3 stops loss proposés (A / B / C). Tu choisis le plus logique, structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.",
         summary:         "Bilan",
         stopsChosen:     "stops choisis",
         logicalStops:    "Stops logiques",
@@ -478,8 +478,8 @@ function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Diffic
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{isEs ? "¿Qué stop va a sobrevivir?" : "Quel stop va survivre ?"}</h1>
         <p className="text-zinc-400 text-sm leading-relaxed mb-8">
           {isEs
-            ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, 3 stops loss propuestos (A / B / C). Eliges el más lógico — estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.`
-            : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, 3 stops loss proposés (A / B / C). Tu choisis le plus logique — structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.`}
+            ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, 3 stops loss propuestos (A / B / C). Eliges el más lógico, estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.`
+            : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, 3 stops loss proposés (A / B / C). Tu choisis le plus logique, structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.`}
         </p>
 
         <div className="flex flex-col gap-3">
@@ -738,27 +738,27 @@ function totalRounds(s: SessionStats): number {
   return s.logical + s.wide + s.tight + s.liquidity;
 }
 function pct(n: number, d: number): string {
-  if (d === 0) return "—";
+  if (d === 0) return "";
   return Math.round((n / d) * 100) + "%";
 }
 function derivedDiscipline(s: SessionStats): string {
   const t = totalRounds(s);
-  if (t === 0) return "—";
+  if (t === 0) return "";
   return pct(t - s.liquidity, t);
 }
 function derivedProtection(s: SessionStats): string {
   const t = totalRounds(s);
-  if (t === 0) return "—";
+  if (t === 0) return "";
   return pct(s.logical + s.wide, t);
 }
 function derivedPrecision(s: SessionStats): string {
   const t = totalRounds(s);
-  if (t === 0) return "—";
+  if (t === 0) return "";
   return pct(s.logical, t);
 }
 function derivedAggression(s: SessionStats): string {
   const t = totalRounds(s);
-  if (t === 0) return "—";
+  if (t === 0) return "";
   return pct(s.logical + s.tight, t);
 }
 

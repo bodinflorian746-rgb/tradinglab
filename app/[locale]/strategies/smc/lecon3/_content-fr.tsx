@@ -288,8 +288,8 @@ export default function ContentFr() {
               "Délimiter l’Order Block bullish : corps de la bougie opposée entre 4 555$ et 4 562$, mèche basse à 4 547$. OB frais (8 bougies écoulées), aligné Daily haussier, non mitigé.",
               "Placer l’entrée à 4 562$ (limite haute du corps de l’OB) avec attente du signal de rejet M15 (pin bar, engulfing bullish).",
               "Placer le stop loss à 4 549$ (13$ sous l’entrée, au-delà de la mèche basse 4 547$ avec marge 2$). Risque = 13$ par unité.",
-              "Variante naïve — TP éloigné à 4 720$ (projection extension complète de l’impulsion initiale) : Gain = 4 720 - 4 562 = 158$. R/R = 158 / 13 = 12,3. Ratio attractif sur le papier mais trop optimiste : la probabilité d’atteindre une cible à 12:1 sans pullback intermédiaire reste faible.",
-              "Variante réaliste — TP partiel à 4 632$ (premier HH intermédiaire identifié, prise de profit partielle) : Gain = 4 632 - 4 562 = 70$. R/R = 70 / 13 = 5,4. Cible structurelle réaliste, atteignable sans détour. Le R/R 5,4 reste excellent pour un setup OB et permet de sécuriser la position avant le HH précédent à 4 650$, où le marché risque de produire une réaction technique avant le TP final.",
+              "Variante naïve. TP éloigné à 4 720$ (projection extension complète de l’impulsion initiale) : Gain = 4 720 - 4 562 = 158$. R/R = 158 / 13 = 12,3. Ratio attractif sur le papier mais trop optimiste : la probabilité d’atteindre une cible à 12:1 sans pullback intermédiaire reste faible.",
+              "Variante réaliste. TP partiel à 4 632$ (premier HH intermédiaire identifié, prise de profit partielle) : Gain = 4 632 - 4 562 = 70$. R/R = 70 / 13 = 5,4. Cible structurelle réaliste, atteignable sans détour. Le R/R 5,4 reste excellent pour un setup OB et permet de sécuriser la position avant le HH précédent à 4 650$, où le marché risque de produire une réaction technique avant le TP final.",
             ]}
           />
 
@@ -347,7 +347,7 @@ export default function ContentFr() {
                 Leçon 2
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 4 — À venir
+                Leçon 4. À venir
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

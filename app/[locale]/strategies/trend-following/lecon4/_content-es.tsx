@@ -248,14 +248,14 @@ export default function ContentEs() {
               "BOS = ruptura del último extremo estructural en el sentido de la tendencia (continuación).",
               "CHoCH = ruptura del último mínimo/máximo de estructura inversa (reversión).",
               "La salida de una posición se dispara apenas el BOS quede validado. La inversión exige el CHoCH confirmado.",
-              "Sin cierre claro (solo mecha), no hay BOS — es un liquidity grab.",
+              "Sin cierre claro (solo mecha), no hay BOS, es un liquidity grab.",
             ]}
           />
 
           <LessonExercice
             description="En XAU/USD H4, la tendencia alcista en curso formó un último HL en 4 580$ y un último HH en 4 660$. Una vela cierra en 4 555$ con un cuerpo significativo, o sea 25$ bajo el último HL. Las 4 velas siguientes mantienen su cierre bajo 4 580$. Luego el precio forma un máximo en 4 600$ y vuelve a bajar a formar un mínimo en 4 530$. ¿Cómo se construye el plan completo?"
             steps={[
-              "Calificar el BOS bajista: cierre claro en 4 555$ (25$ bajo el HL 4 580$), cuerpo significativo, sin reintegración en 4 velas — BOS validado",
+              "Calificar el BOS bajista: cierre claro en 4 555$ (25$ bajo el HL 4 580$), cuerpo significativo, sin reintegración en 4 velas. BOS validado",
               "Disparar la salida de toda posición long existente apenas el cierre en 4 555$",
               "Observar la estructura post-ruptura: máximo en 4 600$ (primer LH potencial) luego mínimo en 4 530$ (primer LL)",
               "Confirmar el CHoCH bajista: la secuencia LH (4 600$) + LL (4 530$) invierte oficialmente la tendencia",

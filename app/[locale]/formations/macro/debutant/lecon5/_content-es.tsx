@@ -58,7 +58,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            El rol del dólar en el mundo — por qué todo pasa por él
+            El rol del dólar en el mundo, por qué todo pasa por él
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -66,7 +66,7 @@ export default function ContentEs() {
               ¿Operas XAU/USD, EUR/USD, BTC/USD? Mira su punto en común.
             </p>
             <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
-              No operas el oro, el euro o el Bitcoin. Operas el dólar — ya sea que esté arriba o abajo del símbolo.
+              No operas el oro, el euro o el Bitcoin. Operas el dólar, ya sea que esté arriba o abajo del símbolo.
             </p>
           </div>
 
@@ -285,13 +285,13 @@ export default function ContentEs() {
             </p>
             <div className="space-y-3 mb-5">
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                <p className="text-sm font-semibold text-zinc-200 mb-1.5">Paso 1 — Antes de tu análisis técnico</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-1.5">Paso 1. Antes de tu análisis técnico</p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   Abre el gráfico del DXY en H1 o H4. Mira la tendencia de los últimos 3 días.
                 </p>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                <p className="text-sm font-semibold text-zinc-200 mb-2">Paso 2 — Identifica el contexto</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-2">Paso 2. Identifica el contexto</p>
                 <ul className="space-y-1">
                   {[
                     { bold: "DXY alcista fuerte", rest: " → dólar fuerte → contexto risk-off" },
@@ -306,7 +306,7 @@ export default function ContentEs() {
                 </ul>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                <p className="text-sm font-semibold text-zinc-200 mb-1.5">Paso 3 — Adapta tus setups</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-1.5">Paso 3. Adapta tus setups</p>
                 <p className="text-sm text-zinc-300 leading-relaxed mb-2">
                   Si quieres comprar (long) en EUR/USD, XAU/USD o BTC/USD → verifica que el DXY <span className="font-semibold text-zinc-200">NO esté subiendo con fuerza</span>. Si no, tu setup probablemente fallará incluso si técnicamente es perfecto.
                 </p>
@@ -323,7 +323,7 @@ export default function ContentEs() {
                 <span className="text-sm font-bold text-amber-400 tracking-wide">Realidad del retail</span>
               </div>
               <p className="text-base text-zinc-300 leading-relaxed">
-                Si operas EUR/USD, XAU/USD o BTC/USD sin mirar el DXY, te falta la mitad de la historia. Los setups técnicos fallan a menudo porque <span className="font-semibold text-zinc-200">el contexto del dólar no es favorable</span> — no porque la estrategia sea mala.
+                Si operas EUR/USD, XAU/USD o BTC/USD sin mirar el DXY, te falta la mitad de la historia. Los setups técnicos fallan a menudo porque <span className="font-semibold text-zinc-200">el contexto del dólar no es favorable</span>, no porque la estrategia sea mala.
               </p>
             </div>
 
@@ -373,11 +373,11 @@ export default function ContentEs() {
               "El DXY no tiene ningún impacto sobre el oro o la crypto",
             ]}
             correctIndex={1}
-            explanation="Cuando el DXY sube, significa que el dólar se fortalece. EUR/USD generalmente está bajo presión porque el euro baja frente al dólar. La opción A confunde DXY alto con dólar débil (es lo inverso). La opción C es falsa: el DXY da un contexto global sobre el dólar, no solo sobre las acciones US — influye en el forex, las materias primas, el oro y la crypto. La opción D también es falsa: el oro (XAU/USD) y la crypto (BTC/USD) están denominados en dólares, por lo que están directamente impactados por su fuerza."
+            explanation="Cuando el DXY sube, significa que el dólar se fortalece. EUR/USD generalmente está bajo presión porque el euro baja frente al dólar. La opción A confunde DXY alto con dólar débil (es lo inverso). La opción C es falsa: el DXY da un contexto global sobre el dólar, no solo sobre las acciones US, influye en el forex, las materias primas, el oro y la crypto. La opción D también es falsa: el oro (XAU/USD) y la crypto (BTC/USD) están denominados en dólares, por lo que están directamente impactados por su fuerza."
             answerExplanations={[
-              "Falso. DXY subiendo significa dólar fuerte — es lo inverso de un dólar débil. Cuando el dólar se fortalece, EUR/USD generalmente baja, no lo inverso.",
+              "Falso. DXY subiendo significa dólar fuerte, es lo inverso de un dólar débil. Cuando el dólar se fortalece, EUR/USD generalmente baja, no lo inverso.",
               "Correcto. Un DXY al alza significa un dólar fuerte. EUR/USD generalmente está bajo presión en este contexto porque el euro se deprecia frente al dólar.",
-              "Falso. El DXY da un contexto global sobre la fuerza del dólar — influye en el forex, las materias primas, el oro y la crypto, no solo en las acciones US.",
+              "Falso. El DXY da un contexto global sobre la fuerza del dólar, influye en el forex, las materias primas, el oro y la crypto, no solo en las acciones US.",
               "Falso. El oro (XAU/USD) y la crypto (BTC/USD) están ambos denominados en dólares, por lo que están directamente impactados por la fuerza del dólar. Un DXY alcista a menudo pone al oro y a la crypto bajo presión.",
             ]}
           />
@@ -421,10 +421,10 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 4 — Entender la inflación
+                Lección 4. Entender la inflación
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Macro y risk management — Pronto disponible →
+                Macro y risk management. Pronto disponible →
               </span>
             </div>
 

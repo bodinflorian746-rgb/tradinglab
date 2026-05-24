@@ -58,7 +58,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Sesiones de trading y liquidez — cuándo el mercado se mueve de verdad
+            Sesiones de trading y liquidez, cuándo el mercado se mueve de verdad
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -122,12 +122,12 @@ export default function ContentEs() {
 
             <div className="space-y-4 mb-5">
               <div>
-                <p className="text-sm font-semibold text-zinc-200 mb-1">Sesión Asia — 00:00 a 09:00 hora de París</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-1">Sesión Asia, 00:00 a 09:00 hora de París</p>
                 <p className="text-sm text-zinc-300 mb-0.5">Tokio, Singapur, Hong Kong. Liquidez baja. Volatilidad baja.</p>
                 <p className="text-sm text-zinc-400">Pares activos: USD/JPY, AUD/JPY, NZD/JPY, AUD/USD.</p>
               </div>
               <div>
-                <p className="text-sm font-semibold text-zinc-200 mb-1">Sesión Londres — 08:00 a 17:00 hora de París</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-1">Sesión Londres, 08:00 a 17:00 hora de París</p>
                 <p className="text-sm text-zinc-300 mb-0.5">
                   <span className="font-semibold text-zinc-200">LA sesión más importante.</span> Representa aproximadamente el{" "}
                   <span className="font-semibold text-zinc-200">35-40% del volumen forex mundial</span>.
@@ -135,7 +135,7 @@ export default function ContentEs() {
                 <p className="text-sm text-zinc-400">Pares activos: EUR/USD, GBP/USD, EUR/GBP, GBP/JPY, XAU/USD.</p>
               </div>
               <div>
-                <p className="text-sm font-semibold text-zinc-200 mb-1">Sesión New York — 14:00 a 22:00 hora de París</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-1">Sesión New York, 14:00 a 22:00 hora de París</p>
                 <p className="text-sm text-zinc-300 mb-0.5">
                   Wall Street, índices US, news americanas. Representa aproximadamente el{" "}
                   <span className="font-semibold text-zinc-200">20-25% del volumen forex mundial</span>.
@@ -258,7 +258,7 @@ export default function ContentEs() {
                 <span className="text-sm font-bold text-amber-400 tracking-wide">Realidad del retail</span>
               </div>
               <p className="text-base text-zinc-300 leading-relaxed">
-                El retail opera a menudo cuando está disponible. No cuando el mercado está óptimo. ¿El resultado? Setups que parecen perfectos pero que fallan — no por la estrategia, sino por la hora.
+                El retail opera a menudo cuando está disponible. No cuando el mercado está óptimo. ¿El resultado? Setups que parecen perfectos pero que fallan, no por la estrategia, sino por la hora.
               </p>
             </div>
           </section>
@@ -341,7 +341,7 @@ export default function ContentEs() {
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                Una estrategia de scalping en sesión Asia es como jugar al tenis sin rival — puedes pegarle a la pelota, pero no pasa nada.
+                Una estrategia de scalping en sesión Asia es como jugar al tenis sin rival, puedes pegarle a la pelota, pero no pasa nada.
               </p>
             </div>
           </section>
@@ -431,11 +431,11 @@ export default function ContentEs() {
               "El mercado forex está cerrado a las 23:00",
             ]}
             correctIndex={1}
-            explanation="A las 23:00 hora de París, Londres y New York están cerrados. En EUR/USD, la liquidez suele ser más baja, los spreads pueden ampliarse y las rupturas son menos confiables. Es exactamente la trampa de la sesión Asia en los pares europeos/US. La opción A es demasiado radical (tu estrategia puede funcionar muy bien en el overlap Londres-NY). La opción C es falsa (EUR/USD respeta perfectamente las resistencias cuando hay liquidez). La opción D es incorrecta: el forex está abierto, pero no siempre es bien operable. Este mismo principio aplica a XAU/USD, los índices US y BTC/USD — el timing es universal, no solo forex."
+            explanation="A las 23:00 hora de París, Londres y New York están cerrados. En EUR/USD, la liquidez suele ser más baja, los spreads pueden ampliarse y las rupturas son menos confiables. Es exactamente la trampa de la sesión Asia en los pares europeos/US. La opción A es demasiado radical (tu estrategia puede funcionar muy bien en el overlap Londres-NY). La opción C es falsa (EUR/USD respeta perfectamente las resistencias cuando hay liquidez). La opción D es incorrecta: el forex está abierto, pero no siempre es bien operable. Este mismo principio aplica a XAU/USD, los índices US y BTC/USD, el timing es universal, no solo forex."
             answerExplanations={[
               "Falso. Tu estrategia no es el problema aquí. El problema viene del contexto horario, no del análisis técnico. Una estrategia puede funcionar perfectamente en el overlap y fallar de noche.",
               "Correcto. A las 23:00 hora de París, Londres y New York están cerrados. La liquidez en EUR/USD es baja, los spreads se amplían y las rupturas son menos confiables. Es la trampa clásica de la sesión Asia en los pares europeos.",
-              "Falso. EUR/USD respeta muy bien los niveles técnicos — pero solo cuando hay liquidez, es decir principalmente durante las sesiones Londres y New York.",
+              "Falso. EUR/USD respeta muy bien los niveles técnicos, pero solo cuando hay liquidez, es decir principalmente durante las sesiones Londres y New York.",
               "Falso. El forex está técnicamente abierto 24/7. Pero 'abierto' no significa 'operable en buenas condiciones'.",
             ]}
           />
@@ -479,10 +479,10 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 3 — CPI, PPI e inflación
+                Lección 3. CPI, PPI e inflación
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Las correlaciones — Pronto disponible →
+                Las correlaciones. Pronto disponible →
               </span>
             </div>
 

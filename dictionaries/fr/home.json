@@ -53,7 +53,7 @@
       },
       "avance": {
         "label": "Avancé",
-        "description": "FOMC, NFP, rendements obligataires US et régimes de marché — comprendre les news qui font bouger les marchés",
+        "description": "FOMC, NFP, rendements obligataires US et régimes de marché, comprendre les news qui font bouger les marchés",
         "count": "4 leçons"
       }
     },
@@ -62,7 +62,7 @@
   "audiencesSection": {
     "eyebrow": "Ta progression",
     "title": "Une plateforme de progression trading",
-    "subtitle": "Du temps adapté, un capital respecté, une méthode reproductible. TradeScaleX structure ta progression autour des vraies contraintes du trader retail — pas autour d'un trader idéal.",
+    "subtitle": "Du temps adapté, un capital respecté, une méthode reproductible. TradeScaleX structure ta progression autour des vraies contraintes du trader retail, pas autour d'un trader idéal.",
     "cards": [
       {
         "title": "Progresser même avec peu de temps",
@@ -70,11 +70,11 @@
       },
       {
         "title": "Trader intelligemment avec un petit capital",
-        "description": "Gestion du risque, R/R cohérent, scénarios calibrés sur des comptes retail. Chaque trade compte — la méthode aussi."
+        "description": "Gestion du risque, R/R cohérent, scénarios calibrés sur des comptes retail. Chaque trade compte, la méthode aussi."
       },
       {
         "title": "Développer de vrais réflexes marché",
-        "description": "Jeux interactifs, cas pratiques, scénarios réels. Pas de théorie isolée — on apprend à décider vite, dans des contextes concrets."
+        "description": "Jeux interactifs, cas pratiques, scénarios réels. Pas de théorie isolée, on apprend à décider vite, dans des contextes concrets."
       },
       {
         "title": "Construire une approche disciplinée et confiante",
@@ -89,7 +89,7 @@
     "cards": [
       {
         "title": "Formations par niveaux",
-        "description": "Débutant, Intermédiaire, Avancé — progression logique et sans trous. Tu construis sur des fondations solides."
+        "description": "Débutant, Intermédiaire, Avancé, progression logique et sans trous. Tu construis sur des fondations solides."
       },
       {
         "title": "Stratégies Price Action, SMC & ICT",
@@ -130,7 +130,7 @@
       },
       {
         "title": "Des stratégies enseignées dans leur contexte",
-        "description": "Price Action, SMC, ICT — chaque méthode est expliquée avec ses fondements, ses conditions d'application et des exemples tirés de marchés réels."
+        "description": "Price Action, SMC, ICT, chaque méthode est expliquée avec ses fondements, ses conditions d'application et des exemples tirés de marchés réels."
       },
       {
         "title": "Un rythme qui s'adapte au tien",

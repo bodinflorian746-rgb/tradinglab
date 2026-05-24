@@ -147,7 +147,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     context: "HTF claramente bajista. Tomas este BUY en un rebote local.",
     correctMistake: "trade_against_htf",
     decoyMistakes: ["bad_timing", "no_confirmation", "fomo_after_pump"],
-    explanation: "Los rebotes en downtrend son oportunidades de SHORT, no de BUY. Estadísticamente, tomar longs contra HTF tiene una tasa de éxito del 30-40% — el edge está invertido.",
+    explanation: "Los rebotes en downtrend son oportunidades de SHORT, no de BUY. Estadísticamente, tomar longs contra HTF tiene una tasa de éxito del 30-40%, el edge está invertido.",
     lessons: {
       beginner:     "HTF bajista = se buscan SELL. Nunca BUY.",
       intermediate: "Un setup local no borra la tendencia HTF. Si HTF dice no, no dices sí.",
@@ -189,7 +189,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     decoyMistakes: ["bad_rr", "trade_against_htf", "fomo_after_pump"],
     explanation: "El swing low casi siempre va a ser retesteado antes de la continuación. Un stop sobre el low = barrido por el ruido normal del retest. El trade sería bueno con un stop bajo el swing low.",
     lessons: {
-      beginner:     "Un stop se coloca DETRÁS de la invalidación con margen — nunca dentro, nunca encima.",
+      beginner:     "Un stop se coloca DETRÁS de la invalidación con margen, nunca dentro, nunca encima.",
       intermediate: "El retest del low está estadísticamente presente en el 70%+ de los pullbacks. El margen anti-ruido es obligatorio.",
       advanced:     "Sin margen ATR detrás de la estructura, tu stop sirve de imán a la liquidity. Los institucionales recogen esos niveles.",
     },
@@ -227,7 +227,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     context: "Tomas este SELL en el rebote con stop justo sobre el swing high.",
     correctMistake: "stop_in_liquidity",
     decoyMistakes: ["stop_too_tight", "bad_rr", "no_confirmation"],
-    explanation: "El swing high es un objetivo institucional evidente — ahí está la liquidity de los shorts atrapados. Stop colocado pile en ese lugar = imán para el sweep. Margen obligatorio por encima.",
+    explanation: "El swing high es un objetivo institucional evidente, ahí está la liquidity de los shorts atrapados. Stop colocado pile en ese lugar = imán para el sweep. Margen obligatorio por encima.",
     lessons: {
       intermediate: "Los swing highs/lows son zonas de caza de liquidity. Pegar tu stop ahí = que te cacen.",
       advanced:     "El institucional TARGETEA esos niveles para recoger el combustible. El stop lógico va más allá de la zona de liquidity, no dentro.",
@@ -287,10 +287,10 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     context: "Tomas este BUY en XAU/USD con 50x de apalancamiento. El setup es correcto.",
     correctMistake: "over_leverage",
     decoyMistakes: ["stop_too_tight", "volatility_ignored", "bad_rr"],
-    explanation: "A 50x en XAU, un movimiento del 2% liquida la posición. La volatilidad natural de XAU es de 1-2% por día — la liquidación es estadísticamente casi garantizada en una sola sesión.",
+    explanation: "A 50x en XAU, un movimiento del 2% liquida la posición. La volatilidad natural de XAU es de 1-2% por día, la liquidación es estadísticamente casi garantizada en una sola sesión.",
     lessons: {
       advanced:     "Apalancamiento razonable XAU/forex: 5-10x máx. BTC: 3-5x. Más allá, juegas a la ruleta rusa con tu capital.",
-      intermediate: "El apalancamiento NO cambia el edge del setup. Solo multiplica la varianza — y por ende los drawdowns.",
+      intermediate: "El apalancamiento NO cambia el edge del setup. Solo multiplica la varianza, y por ende los drawdowns.",
       beginner:     "50x = 2% de movimiento contrario y pierdes todo. La volatilidad natural de assets líquidos es de 1-2%/día. Estadísticamente es una liquidación.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -371,11 +371,11 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     context: "Acabas de tomar 2 stops seguidos. Re-entras inmediatamente en este setup.",
     correctMistake: "revenge_trade",
     decoyMistakes: ["fomo_after_pump", "bad_timing", "stop_too_tight"],
-    explanation: "El setup puede ser válido, pero tu decisión no la guía el análisis — la guían las ganas de recuperar las pérdidas. Es la trampa emocional #1 del retail.",
+    explanation: "El setup puede ser válido, pero tu decisión no la guía el análisis, la guían las ganas de recuperar las pérdidas. Es la trampa emocional #1 del retail.",
     lessons: {
       intermediate: "Tras 2 stops, pausa obligatoria (15-30 min). El cerebro en pérdida de capital toma decisiones sesgadas.",
       advanced:     "El revenge trade tiene un win rate ~10 puntos por debajo del promedio del mismo trader. La pausa restaura la objetividad.",
-      beginner:     "Si tradeas para 'recuperar', ya no tradeas — apuestas.",
+      beginner:     "Si tradeas para 'recuperar', ya no tradeas, apuestas.",
     },
     difficulties: ["intermediate", "advanced"],
     extraInfo: "2 stops recientes",
@@ -392,7 +392,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     context: "El precio acaba de barrer la liquidity bajo el low previo con una mecha grande. Vendes ahora.",
     correctMistake: "sweep_ignored",
     decoyMistakes: ["trade_against_htf", "bad_rr", "stop_too_tight"],
-    explanation: "El sweep acaba de pasar — es la señal de reversión alcista. SELL aquí = vender en el fondo que el institucional acaba de crear para recomprar. La dirección está invertida.",
+    explanation: "El sweep acaba de pasar, es la señal de reversión alcista. SELL aquí = vender en el fondo que el institucional acaba de crear para recomprar. La dirección está invertida.",
     lessons: {
       advanced:     "Pattern ICT clásico: sweep = toma de liquidity antes de continuation HTF. El edge es BUY al regreso, no SELL.",
       intermediate: "Una mecha grande que barre un nivel y luego se gira = señal de reversal probable. Lectura invertida.",

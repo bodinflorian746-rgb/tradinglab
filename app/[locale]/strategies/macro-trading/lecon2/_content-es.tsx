@@ -113,7 +113,7 @@ export default function ContentEs() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-amber-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « El dato NFP es apenas una línea del reporte. El mercado tarda unos minutos en leer todo el resto — y ahí es donde se juega el verdadero movimiento. »
+                « El dato NFP es apenas una línea del reporte. El mercado tarda unos minutos en leer todo el resto, y ahí es donde se juega el verdadero movimiento. »
               </p>
             </div>
           </section>
@@ -138,7 +138,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El NFP se publica cada primer viernes del mes y casi siempre dispara un impulso violento sobre el dólar y los activos sensibles — XAU/USD, EUR/USD, índices US. Pero esa primera reacción se construye sobre el dato headline (el número de empleos creados) en una fracción de segundo, mientras que el reporte completo contiene otros datos — salarios, tasa de desempleo, tasa de participación, revisiones de meses previos. El mercado reacciona primero al headline, luego integra bruscamente el resto del reporte unos minutos después. Esta doble fase es la firma misma del setup NFP Overreaction.
+              El NFP se publica cada primer viernes del mes y casi siempre dispara un impulso violento sobre el dólar y los activos sensibles. XAU/USD, EUR/USD, índices US. Pero esa primera reacción se construye sobre el dato headline (el número de empleos creados) en una fracción de segundo, mientras que el reporte completo contiene otros datos, salarios, tasa de desempleo, tasa de participación, revisiones de meses previos. El mercado reacciona primero al headline, luego integra bruscamente el resto del reporte unos minutos después. Esta doble fase es la firma misma del setup NFP Overreaction.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -165,7 +165,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La ventana de ejecución del setup NFP se abre cuando el movimiento inicial deja de avanzar. Visualmente, esto se traduce en una SERIE de velas M15 con mechas repetidas en el sentido contrario del impulso — mechas inferiores si el impulso era bearish, mechas superiores si era bullish. El precio se comprime alrededor de un nivel, ya no logra hacer nuevos extremos. Es la huella visible de que los vendedores (o compradores) iniciales terminaron de actuar, y que la liquidity contraria empieza a absorber. Sin esa estabilización visible, el setup no está activado.
+              La ventana de ejecución del setup NFP se abre cuando el movimiento inicial deja de avanzar. Visualmente, esto se traduce en una SERIE de velas M15 con mechas repetidas en el sentido contrario del impulso, mechas inferiores si el impulso era bearish, mechas superiores si era bullish. El precio se comprime alrededor de un nivel, ya no logra hacer nuevos extremos. Es la huella visible de que los vendedores (o compradores) iniciales terminaron de actuar, y que la liquidity contraria empieza a absorber. Sin esa estabilización visible, el setup no está activado.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -192,13 +192,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              No todos los NFP producen un simple fade. Cuando la reevaluación post-estabilización se transforma en un movimiento franco, amplio y sostenido, el mercado realmente cambia de dirección — el reporte completo implica una lectura distinta del headline inicial, y los participantes institucionales se posicionan en sentido contrario. La señal distintiva: el retorno no se detiene en el nivel pre-NFP sino que lo supera claramente. Cuando aparece esta dinámica, el setup ya no es un fade táctico sino una oportunidad de tendencia corta/media.
+              No todos los NFP producen un simple fade. Cuando la reevaluación post-estabilización se transforma en un movimiento franco, amplio y sostenido, el mercado realmente cambia de dirección, el reporte completo implica una lectura distinta del headline inicial, y los participantes institucionales se posicionan en sentido contrario. La señal distintiva: el retorno no se detiene en el nivel pre-NFP sino que lo supera claramente. Cuando aparece esta dinámica, el setup ya no es un fade táctico sino una oportunidad de tendencia corta/media.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD: impulso inicial NFP de 4 640 $ hacia 4 575 $. Base alrededor de 4 580-4 585 $. Luego ruptura bullish por encima de 4 620 $, aceleración hasta 4 665 $ — más allá del nivel pre-NFP. El reporte completo (salarios sólidos, revisiones positivas) anulaba la interpretación hawkish del headline. El mercado revirtió completamente su sesgo.
+                XAU/USD: impulso inicial NFP de 4 640 $ hacia 4 575 $. Base alrededor de 4 580-4 585 $. Luego ruptura bullish por encima de 4 620 $, aceleración hasta 4 665 $, más allá del nivel pre-NFP. El reporte completo (salarios sólidos, revisiones positivas) anulaba la interpretación hawkish del headline. El mercado revirtió completamente su sesgo.
               </p>
             </div>
 
@@ -218,38 +218,38 @@ export default function ContentEs() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Etapa 1 — Contexto H4 pre-NFP</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 1. Contexto H4 pre-NFP</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: XAU/USD se comprime entre 4 630 $ y 4 650 $ en las horas previas al NFP, volatilidad reducida</li>
-                <li>- Conclusión: alta probabilidad de expansión sobre la publicación — se prepara el escenario de fade</li>
+                <li>- Conclusión: alta probabilidad de expansión sobre la publicación, se prepara el escenario de fade</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 2 — Publicación NFP</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Publicación NFP</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: dato headline por encima del consenso, primer impulso bearish 4 640 → 4 575 $ en pocos minutos</li>
-                <li>- Conclusión: reacción headline excesiva — se espera la estabilización, sin entrada inmediata</li>
+                <li>- Conclusión: reacción headline excesiva, se espera la estabilización, sin entrada inmediata</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 3 — Estabilización M15</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 3. Estabilización M15</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: el precio deja de hacer nuevos mínimos, cuatro velas M15 con mechas inferiores repetidas, precio asentado alrededor de 4 580-4 585 $</li>
-                <li>- Conclusión: absorción compradora visible — la condición del setup está validada</li>
+                <li>- Conclusión: absorción compradora visible, la condición del setup está validada</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 4 — Confirmación de la reevaluación</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 4. Confirmación de la reevaluación</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: primera vela de recuperación franca, el mercado empieza a imprimir máximos locales</li>
-                <li>- Conclusión: la reevaluación está en marcha — se puede ejecutar el fade</li>
+                <li>- Conclusión: la reevaluación está en marcha, se puede ejecutar el fade</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 5 — Ejecución del Fade</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 5. Ejecución del Fade</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrada long: 4 612 $</li>
                 <li>- Stop loss: 4 568 $ (más allá del extremo del impulso)</li>
                 <li>- Target: 4 655 $ (cerca del nivel pre-NFP)</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 6 — Gestión del riesgo</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 6. Gestión del riesgo</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Volatilidad post-NFP superior a la normal → tamaño de posición prudente</li>
                 <li>- Ejecución únicamente después de estabilización visible, nunca en el impulso</li>
@@ -266,10 +266,10 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "El primer impulso NFP está impulsado por el dato headline — no por el reporte completo, que se digiere en 15-60 minutos.",
+              "El primer impulso NFP está impulsado por el dato headline, no por el reporte completo, que se digiere en 15-60 minutos.",
               "La señal explotable aparece después de la estabilización: mechas repetidas, pérdida de aceleración, precio asentado en una zona estrecha.",
               "El fade clásico apunta a un retorno parcial hacia el nivel pre-NFP; una superación franca señala un verdadero cambio de sesgo.",
-              "Sin estabilización visible, sin entrada — la amplitud inicial no es por sí sola una señal de ejecución.",
+              "Sin estabilización visible, sin entrada, la amplitud inicial no es por sí sola una señal de ejecución.",
             ]}
           />
 
@@ -291,12 +291,12 @@ export default function ContentEs() {
               "Ignoras el setup: la volatilidad post-NFP es demasiado peligrosa para tradear",
             ]}
             correctIndex={1}
-            explanation="La secuencia NFP Overreaction es clara: impulso → estabilización → confirmación → ejecución. Aquí la estabilización es visible (mechas inferiores repetidas, precio asentado), pero la confirmación de la reevaluación aún no ha llegado. Se espera la primera vela de recuperación franca para validar que el mercado realmente ha basculado sobre la lectura completa del reporte. Sin esa confirmación, la entrada sería prematura — la estabilización puede durar más de lo previsto, o incluso ceder en el sentido inicial."
+            explanation="La secuencia NFP Overreaction es clara: impulso → estabilización → confirmación → ejecución. Aquí la estabilización es visible (mechas inferiores repetidas, precio asentado), pero la confirmación de la reevaluación aún no ha llegado. Se espera la primera vela de recuperación franca para validar que el mercado realmente ha basculado sobre la lectura completa del reporte. Sin esa confirmación, la entrada sería prematura, la estabilización puede durar más de lo previsto, o incluso ceder en el sentido inicial."
             answerExplanations={[
               "Falso. Entrar short después de la estabilización es tradear en el sentido del impulso emocional inicial, justo cuando el mercado señala que terminó de bajar. Es el contrapié del setup NFP Overreaction.",
-              "Correcto. La secuencia exige estabilización Y LUEGO confirmación. La primera vela de recuperación franca valida la reevaluación y abre la ventana de ejecución del fade. Sin esa confirmación, se espera — la estabilización puede ser más larga, o prolongarse en lateralización.",
-              "Falso. Una orden limit en el extremo del movimiento inicial parte del principio de que se conoce el límite — cuando puede ser testeado más abajo o no. E incluso si el precio vuelve allí, la entrada se haría sin confirmación estructural.",
-              "Falso. La volatilidad post-NFP es precisamente lo que hace interesante este setup — es ella la que crea la amplitud explotada por el fade. La disciplina (esperar estabilización + confirmación) basta para gestionar el riesgo sin renunciar al setup.",
+              "Correcto. La secuencia exige estabilización Y LUEGO confirmación. La primera vela de recuperación franca valida la reevaluación y abre la ventana de ejecución del fade. Sin esa confirmación, se espera, la estabilización puede ser más larga, o prolongarse en lateralización.",
+              "Falso. Una orden limit en el extremo del movimiento inicial parte del principio de que se conoce el límite, cuando puede ser testeado más abajo o no. E incluso si el precio vuelve allí, la entrada se haría sin confirmación estructural.",
+              "Falso. La volatilidad post-NFP es precisamente lo que hace interesante este setup, es ella la que crea la amplitud explotada por el fade. La disciplina (esperar estabilización + confirmación) basta para gestionar el riesgo sin renunciar al setup.",
             ]}
           />
 

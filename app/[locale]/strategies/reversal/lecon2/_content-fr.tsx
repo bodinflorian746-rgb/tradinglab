@@ -163,9 +163,9 @@ export default function ContentFr() {
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">La neckline d&apos;un H&amp;S n&apos;est pas toujours strictement horizontale. Sa pente conditionne le measured move et donc la cible TP.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="text-white font-semibold">Neckline horizontale</span> — measured move standard, TP plein conservé.</li>
-              <li>- <span className="text-white font-semibold">Neckline ascendante</span> — measured move étendu, le TP gagne quelques pips supplémentaires.</li>
-              <li>- <span className="text-white font-semibold">Neckline descendante</span> — measured move réduit, TP plus serré, R/R souvent moins favorable.</li>
+              <li>- <span className="text-white font-semibold">Neckline horizontale</span>, measured move standard, TP plein conservé.</li>
+              <li>- <span className="text-white font-semibold">Neckline ascendante</span>, measured move étendu, le TP gagne quelques pips supplémentaires.</li>
+              <li>- <span className="text-white font-semibold">Neckline descendante</span>, measured move réduit, TP plus serré, R/R souvent moins favorable.</li>
             </ul>
           </section>
 
@@ -255,8 +255,8 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur XAU/USD H1, tu vois un H&S avec épaule gauche à 4 650$, tête à 4 680$, épaule droite à 4 658$. Neckline à 4 620$. La tête est 30 pips au-dessus des épaules (0,65%). Le prix vient de clôturer à 4 615$. Tu prends le setup ?"
             steps={[
-              "Vérifier que la tête (4 680$) est strictement plus haute que les 2 épaules : 30 pips au-dessus, soit 0,65% — supérieur au seuil de 0,3%, OK",
-              "Confirmer que les épaules sont symétriques : 4 650$ vs 4 658$, écart de 8 pips (0,17%) — sous le seuil de 0,5%, OK",
+              "Vérifier que la tête (4 680$) est strictement plus haute que les 2 épaules : 30 pips au-dessus, soit 0,65%, supérieur au seuil de 0,3%, OK",
+              "Confirmer que les épaules sont symétriques : 4 650$ vs 4 658$, écart de 8 pips (0,17%), sous le seuil de 0,5%, OK",
               "Confirmer la cassure : clôture à 4 615$ sous la neckline à 4 620$, pas une simple mèche",
               "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
               "Prendre l’entrée short à 4 615$, SL au-dessus de l’épaule droite à 4 668$, TP measured move étendu à 4 540$ pour un R/R rond de 1,5:1",
@@ -317,7 +317,7 @@ export default function ContentFr() {
                 Leçon 1
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 3 — À venir
+                Leçon 3. À venir
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

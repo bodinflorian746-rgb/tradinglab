@@ -58,12 +58,12 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Hawkish vs Dovish — cómo leer el tono de un banco central
+            Hawkish vs Dovish, cómo leer el tono de un banco central
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Puedes tener razón sobre las cifras y perder de todos modos. Porque lo que mueve al mercado no es la decisión de la Fed — es el tono con el que Powell la pronuncia.
+              Puedes tener razón sobre las cifras y perder de todos modos. Porque lo que mueve al mercado no es la decisión de la Fed, es el tono con el que Powell la pronuncia.
             </p>
           </div>
 
@@ -145,7 +145,7 @@ export default function ContentEs() {
               </p>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              Por eso exactamente los mejores traders macro leen los <span className="font-semibold text-zinc-300">discursos</span> y las <span className="font-semibold text-zinc-300">minutes</span> (actas de las reuniones de los bancos centrales) — no solo las cifras.
+              Por eso exactamente los mejores traders macro leen los <span className="font-semibold text-zinc-300">discursos</span> y las <span className="font-semibold text-zinc-300">minutes</span> (actas de las reuniones de los bancos centrales), no solo las cifras.
             </p>
           </section>
 
@@ -153,7 +153,7 @@ export default function ContentEs() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Cómo reconocer un tono hawkish vs dovish</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Estas son las <span className="font-semibold text-zinc-200">palabras-señal</span> que vas a encontrar en los comunicados oficiales (la mayoría se publican en inglés — aquí están las traducciones).
+              Estas son las <span className="font-semibold text-zinc-200">palabras-señal</span> que vas a encontrar en los comunicados oficiales (la mayoría se publican en inglés, aquí están las traducciones).
             </p>
 
             <p className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">Vocabulario HAWKISH (tono duro, pro-endurecimiento)</p>
@@ -204,7 +204,7 @@ export default function ContentEs() {
               Veamos un ejemplo con cifras para fijar las ideas.
             </p>
 
-            <p className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">Caso hawkish sobre el dólar US — la Fed endurece el tono</p>
+            <p className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">Caso hawkish sobre el dólar US, la Fed endurece el tono</p>
             <div className="overflow-hidden rounded-xl border border-zinc-800 mb-2">
               <div className="grid grid-cols-2 border-b border-zinc-800">
                 <div className="px-4 py-2 bg-zinc-800/50 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Activo</div>
@@ -212,7 +212,7 @@ export default function ContentEs() {
               </div>
               <div className="divide-y divide-zinc-800/60">
                 {[
-                  { asset: "EUR/USD", reaction: "Cae — 100 a 300 pips en la sesión" },
+                  { asset: "EUR/USD", reaction: "Cae, 100 a 300 pips en la sesión" },
                   { asset: "DXY", reaction: "Sube (mide la fortaleza del dólar)" },
                   { asset: "XAU/USD", reaction: "Cae (yields reales altos penalizan al oro)" },
                   { asset: "Nasdaq", reaction: "Cae (tasas altas penalizan a la tech)" },
@@ -227,7 +227,7 @@ export default function ContentEs() {
             </div>
             <p className="text-xs text-zinc-500 italic mb-5">Una sola decisión hawkish dispara TODO eso al mismo tiempo.</p>
 
-            <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Caso dovish sobre el dólar US — la Fed suaviza el tono</p>
+            <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Caso dovish sobre el dólar US, la Fed suaviza el tono</p>
             <div className="overflow-hidden rounded-xl border border-zinc-800 mb-2">
               <div className="grid grid-cols-2 border-b border-zinc-800">
                 <div className="px-4 py-2 bg-zinc-800/50 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Activo</div>
@@ -387,15 +387,15 @@ export default function ContentEs() {
             question="La Fed sube sus tasas 25bps. Lees el comunicado y el tono es globalmente hawkish. Sin embargo, el dólar CAE después del anuncio. ¿Cuál es la explicación más probable?"
             options={[
               "El mercado no siempre sigue la lógica fundamental, es aleatorio",
-              "El mercado había anticipado una subida mayor (50bps) o un tono aún más duro — es una \"dovish surprise\"",
+              "El mercado había anticipado una subida mayor (50bps) o un tono aún más duro, es una \"dovish surprise\"",
               "El dólar siempre cae en los anuncios de la Fed, sin importar el tono",
               "Powell cometió un error de comunicación",
             ]}
             correctIndex={1}
-            explanation="El mercado no reacciona a la decisión en absoluto, sino a la diferencia entre la decisión y las expectativas. Si la Fed sube 25bps mientras el mercado priceaba 50bps, eso equivale a una señal 'menos hawkish de lo previsto' — por lo tanto dovish por contraste. Las opciones A y C son falsas: el mercado sigue una lógica precisa, y el sentido de la reacción siempre depende de las expectativas. La opción D desvía el tema: Powell no comete errores de comunicación, calibra cada palabra. Esta lógica de expectativas vale para todos los activos ligados al dólar: EUR/USD, XAU/USD, Nasdaq y BTC/USD reaccionan todos a la diferencia entre expectativas y realidad."
+            explanation="El mercado no reacciona a la decisión en absoluto, sino a la diferencia entre la decisión y las expectativas. Si la Fed sube 25bps mientras el mercado priceaba 50bps, eso equivale a una señal 'menos hawkish de lo previsto', por lo tanto dovish por contraste. Las opciones A y C son falsas: el mercado sigue una lógica precisa, y el sentido de la reacción siempre depende de las expectativas. La opción D desvía el tema: Powell no comete errores de comunicación, calibra cada palabra. Esta lógica de expectativas vale para todos los activos ligados al dólar: EUR/USD, XAU/USD, Nasdaq y BTC/USD reaccionan todos a la diferencia entre expectativas y realidad."
             answerExplanations={[
-              "Falso. El mercado sigue una lógica muy precisa basada en las expectativas. La reacción no es aleatoria — mide la diferencia entre lo que se esperaba y lo que se anunció.",
-              "Correcto. El mercado había priceado 50bps. Una subida de 25bps es entonces 'menos hawkish de lo previsto' — es una dovish surprise. El dólar cae porque las expectativas no se confirmaron.",
+              "Falso. El mercado sigue una lógica muy precisa basada en las expectativas. La reacción no es aleatoria, mide la diferencia entre lo que se esperaba y lo que se anunció.",
+              "Correcto. El mercado había priceado 50bps. Una subida de 25bps es entonces 'menos hawkish de lo previsto', es una dovish surprise. El dólar cae porque las expectativas no se confirmaron.",
               "Falso. El dólar puede subir o caer en un anuncio Fed según la dirección de la sorpresa. No hay regla mecánica independiente del tono y de las expectativas.",
               "Falso. Powell calibra cada palabra con precisión. La reacción del mercado refleja la diferencia entre expectativas y realidad, no un error de comunicación.",
             ]}
@@ -443,7 +443,7 @@ export default function ContentEs() {
                 Volver al módulo
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Entender el calendario económico — Próximamente →
+                Entender el calendario económico. Próximamente →
               </span>
             </div>
 

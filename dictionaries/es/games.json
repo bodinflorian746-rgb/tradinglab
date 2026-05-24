@@ -25,17 +25,17 @@
     },
     "place-stop": {
       "title": "Coloca tu Stop",
-      "description": "¿Qué stop va a sobrevivir? 10 setups, 3 stops loss propuestos cada vez (A / B / C). Eliges el más lógico — estructura, liquidity, RR. El mercado revela lo que sigue.",
+      "description": "¿Qué stop va a sobrevivir? 10 setups, 3 stops loss propuestos cada vez (A / B / C). Eliges el más lógico, estructura, liquidity, RR. El mercado revela lo que sigue.",
       "duration": "~7 min"
     },
     "find-the-mistake": {
       "title": "Encuentra el error",
-      "description": "10 setups con un error oculto. Identificas el error principal entre 4 opciones. Psicología retail, disciplina, liquidity, RR — aprende a ver las trampas clásicas.",
+      "description": "10 setups con un error oculto. Identificas el error principal entre 4 opciones. Psicología retail, disciplina, liquidity, RR, aprende a ver las trampas clásicas.",
       "duration": "~5 min"
     },
     "build-the-trade": {
       "title": "Build the Trade",
-      "description": "Construye un setup completo: entrada, stop, take profit. 8 escenarios, el mercado revela después el resultado — RR, drawdown, veredicto. El juego más estratégico.",
+      "description": "Construye un setup completo: entrada, stop, take profit. 8 escenarios, el mercado revela después el resultado. RR, drawdown, veredicto. El juego más estratégico.",
       "duration": "~8 min"
     }
   },
@@ -62,7 +62,7 @@
     },
     "sizing": {
       "title": "Position Sizing",
-      "description": "Capital, riesgo en %, stop en pips — calcula el tamaño de lote correcto en menos de 20 segundos. 10 preguntas.",
+      "description": "Capital, riesgo en %, stop en pips, calcula el tamaño de lote correcto en menos de 20 segundos. 10 preguntas.",
       "duration": "~3 min"
     }
   }

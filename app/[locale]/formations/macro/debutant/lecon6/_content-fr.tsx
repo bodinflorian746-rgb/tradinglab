@@ -58,7 +58,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Macro et risk management — adapter ton risque au contexte
+            Macro et risk management, adapter ton risque au contexte
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -147,14 +147,14 @@ export default function ContentFr() {
 
             <div className="space-y-5 mb-5">
               <div>
-                <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 1 — Pas de position ouverte sur news 3 étoiles</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 1. Pas de position ouverte sur news 3 étoiles</p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   Si une news majeure arrive, tu vérifies tes positions. Tu fermes, tu réduis, ou tu assumes consciemment le risque. Mais tu ne <span className="font-semibold text-zinc-200">découvres jamais</span> la news après coup.
                 </p>
               </div>
 
               <div>
-                <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 2 — Taille divisée par 2 après la news</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 2. Taille divisée par 2 après la news</p>
                 <p className="text-sm text-zinc-300 leading-relaxed mb-2">
                   Si tu trades après la réaction (méthode vue en leçon 3) :
                 </p>
@@ -174,7 +174,7 @@ export default function ContentFr() {
               </div>
 
               <div>
-                <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 3 — SL plus large ou pas de trade</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 3. SL plus large ou pas de trade</p>
                 <p className="text-sm text-zinc-300 leading-relaxed mb-2">
                   Si le marché bouge encore trop vite après la news :
                 </p>
@@ -462,15 +462,15 @@ export default function ContentFr() {
           <LessonQuiz
             question="Tu veux entrer long EUR/USD à 14h10. Le calendrier indique un NFP à 14h30. Ton setup technique est propre. Que fais-tu ?"
             options={[
-              "Tu entres normalement, ton setup est propre — la macro c'est pour les nouvelles",
+              "Tu entres normalement, ton setup est propre, la macro c'est pour les nouvelles",
               "Tu entres avec plus de taille pour profiter du mouvement attendu",
               "Tu attends la publication NFP, tu observes la réaction, et tu réévalues le setup ensuite",
               "Tu retires ton stop loss pour éviter d'être sorti par la volatilité",
             ]}
             correctIndex={2}
-            explanation="Un NFP peut créer un mouvement violent et imprévisible (200-500 pips de mouvement total possible). Même si ton setup est techniquement propre, le risque réel est trop élevé juste avant la publication. L'option A ignore complètement le contexte macro et te fait subir la volatilité. L'option B est encore pire — tu augmentes ton risque dans la fenêtre la plus dangereuse. L'option D est catastrophique : retirer ton SL transforme une perte limitée en perte potentiellement énorme. La seule réponse pro : attendre, observer, réévaluer. Ce principe vaut sur tous les actifs sensibles à la macro : EUR/USD, XAU/USD, Nasdaq, BTC/USD."
+            explanation="Un NFP peut créer un mouvement violent et imprévisible (200-500 pips de mouvement total possible). Même si ton setup est techniquement propre, le risque réel est trop élevé juste avant la publication. L'option A ignore complètement le contexte macro et te fait subir la volatilité. L'option B est encore pire, tu augmentes ton risque dans la fenêtre la plus dangereuse. L'option D est catastrophique : retirer ton SL transforme une perte limitée en perte potentiellement énorme. La seule réponse pro : attendre, observer, réévaluer. Ce principe vaut sur tous les actifs sensibles à la macro : EUR/USD, XAU/USD, Nasdaq, BTC/USD."
             answerExplanations={[
-              "Faux. Ignorer une news 3 étoiles à 20 minutes, c'est subir la volatilité. Un NFP peut créer un mouvement de 200-500 pips — ton setup technique ne tient pas face à cette réalité.",
+              "Faux. Ignorer une news 3 étoiles à 20 minutes, c'est subir la volatilité. Un NFP peut créer un mouvement de 200-500 pips, ton setup technique ne tient pas face à cette réalité.",
               "Faux. Augmenter la taille dans la fenêtre de danger maximale est une erreur grave. Tu maximises ton risque au pire moment possible.",
               "Correct. Un NFP peut créer un mouvement violent et imprévisible. Attendre, observer la réaction, puis réévaluer le setup est la seule approche professionnelle.",
               "Faux. Retirer ton SL est catastrophique : cela transforme une perte limitée en perte potentiellement énorme si le marché part dans le mauvais sens.",
@@ -516,7 +516,7 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 5 — Le rôle du dollar dans le monde
+                Leçon 5. Le rôle du dollar dans le monde
               </Link>
               <span className="text-sm text-emerald-400 italic cursor-default">
                 Module Débutant Macro complet ✓

@@ -200,7 +200,7 @@ export default function ContentEs() {
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrada long: 1.1778 (cierre de la pin bar)</li>
                 <li>- Stop loss: 1.1750 (10 pips bajo la mecha inferior en 1.1762)</li>
-                <li>- Take profit nivel 1: 1.1820 (HH anterior) — nivel 2: 1.1860 (extensión)</li>
+                <li>- Take profit nivel 1: 1.1820 (HH anterior), nivel 2: 1.1860 (extensión)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Cálculo del R/R</p>
@@ -236,7 +236,7 @@ export default function ContentEs() {
           <LessonExercice
             description="En XAU/USD H4 en tendencia bajista confirmada, el precio evoluciona bajo la MM200 H4 en 4 720$. Se trazó una trendline bajista sobre 3 LH sucesivos en 4 680$, 4 650$ y 4 620$. La MM50 H4 está actualmente en 4 605$. El precio sube hacia 4 600$. ¿Cuál es el estatus del setup y qué plan teórico aplica?"
             steps={[
-              "Validar la trendline bajista: 3 LH confirmados en 4 680$, 4 650$, 4 620$ — trendline tradeable",
+              "Validar la trendline bajista: 3 LH confirmados en 4 680$, 4 650$, 4 620$, trendline tradeable",
               "Identificar la confluencia: MM50 H4 en 4 605$ + trendline que pasa por 4 600$ = zona de confluencia 4 600$-4 605$",
               "Verificar el sesgo MM200 H4: precio bajo 4 720$ = sesgo short alineado, setup conforme",
               "Esperar la señal de rechazo bajista (pin bar alta, engulfing bajista) al contacto de la zona 4 600$-4 605$ para validar la entrada",
@@ -298,7 +298,7 @@ export default function ContentEs() {
                 Lección 1
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 3 — Próximamente
+                Lección 3. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

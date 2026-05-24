@@ -194,7 +194,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     context: "HTF clairement baissier. Tu prends ce BUY sur un rebond local.",
     correctMistake: "trade_against_htf",
     decoyMistakes: ["bad_timing", "no_confirmation", "fomo_after_pump"],
-    explanation: "Les rebonds en downtrend sont des opportunités de SHORT, pas de BUY. Statistiquement, prendre des longs contre HTF a un taux de réussite de 30-40% — l'edge est inversé.",
+    explanation: "Les rebonds en downtrend sont des opportunités de SHORT, pas de BUY. Statistiquement, prendre des longs contre HTF a un taux de réussite de 30-40%, l'edge est inversé.",
     lessons: {
       beginner:     "HTF baissier = on cherche les SELL. Jamais les BUY.",
       intermediate: "Un setup local n'efface pas la tendance HTF. Si HTF dit non, tu ne dis pas oui.",
@@ -236,7 +236,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     decoyMistakes: ["bad_rr", "trade_against_htf", "fomo_after_pump"],
     explanation: "Le swing low va presque toujours être retesté avant la continuation. Un stop au-dessus du low = balayé par le bruit normal du retest. Le trade serait bon avec un stop sous le swing low.",
     lessons: {
-      beginner:     "Un stop se place DERRIÈRE l'invalidation avec marge — jamais dedans, jamais au-dessus.",
+      beginner:     "Un stop se place DERRIÈRE l'invalidation avec marge, jamais dedans, jamais au-dessus.",
       intermediate: "Le retest du low est statistiquement présent dans 70%+ des pullbacks. La marge anti-bruit est obligatoire.",
       advanced:     "Sans marge ATR derrière la structure, ton stop sert d'aimant à liquidité. Les institutionnels ramassent ces niveaux.",
     },
@@ -274,7 +274,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     context: "Tu prends ce SELL au rebond avec stop juste au-dessus du swing high.",
     correctMistake: "stop_in_liquidity",
     decoyMistakes: ["stop_too_tight", "bad_rr", "no_confirmation"],
-    explanation: "Le swing high est une cible institutionnelle évidente — c'est là qu'est la liquidité des shorts piégés. Stop placé pile à cet endroit = aimant à sweep. Marge obligatoire au-dessus.",
+    explanation: "Le swing high est une cible institutionnelle évidente, c'est là qu'est la liquidité des shorts piégés. Stop placé pile à cet endroit = aimant à sweep. Marge obligatoire au-dessus.",
     lessons: {
       intermediate: "Les swings highs/lows sont des zones de chasse à liquidité. Coller ton stop dessus = se faire chasser.",
       advanced:     "L'institutionnel CIBLE ces niveaux pour ramasser le carburant. Le stop logique va au-delà de la zone de liquidité, pas dedans.",
@@ -334,10 +334,10 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     context: "Tu prends ce BUY sur XAU/USD avec 50x de levier. Le setup est correct.",
     correctMistake: "over_leverage",
     decoyMistakes: ["stop_too_tight", "volatility_ignored", "bad_rr"],
-    explanation: "À 50x sur XAU, un mouvement de 2% liquide la position. La volatilité naturelle de XAU est de 1-2% par jour — la liquidation est statistiquement quasi-garantie sur une seule séance.",
+    explanation: "À 50x sur XAU, un mouvement de 2% liquide la position. La volatilité naturelle de XAU est de 1-2% par jour, la liquidation est statistiquement quasi-garantie sur une seule séance.",
     lessons: {
       advanced:     "Levier raisonnable XAU/forex : 5-10x max. BTC : 3-5x. Au-delà, tu joues à la roulette russe avec ton capital.",
-      intermediate: "Le levier ne change PAS l'edge du setup. Il multiplie juste la variance — donc les drawdowns.",
+      intermediate: "Le levier ne change PAS l'edge du setup. Il multiplie juste la variance, donc les drawdowns.",
       beginner:     "50x = 2% de mouvement contraire et tu perds tout. La volatilité naturelle des assets liquides est de 1-2%/jour. C'est statistiquement une liquidation.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -418,11 +418,11 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     context: "Tu viens de prendre 2 stops d'affilée. Tu ré-entres immédiatement sur ce setup.",
     correctMistake: "revenge_trade",
     decoyMistakes: ["fomo_after_pump", "bad_timing", "stop_too_tight"],
-    explanation: "Le setup peut être valide, mais ta décision n'est pas guidée par l'analyse — elle est guidée par l'envie de récupérer les pertes. C'est le piège émotionnel #1 du retail.",
+    explanation: "Le setup peut être valide, mais ta décision n'est pas guidée par l'analyse, elle est guidée par l'envie de récupérer les pertes. C'est le piège émotionnel #1 du retail.",
     lessons: {
       intermediate: "Après 2 stops, pause obligatoire (15-30 min). Le cerveau en perte de capital prend des décisions biaisées.",
       advanced:     "Le revenge trade a un win rate ~10 points en-dessous de la moyenne du même trader. La pause restaure l'objectivité.",
-      beginner:     "Si tu trades pour 'récupérer', tu ne trades plus — tu paries.",
+      beginner:     "Si tu trades pour 'récupérer', tu ne trades plus, tu paries.",
     },
     difficulties: ["intermediate", "advanced"],
     extraInfo: "2 stops récents",
@@ -439,7 +439,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     context: "Le prix vient de balayer la liquidité sous le précédent low avec une grosse mèche. Tu SELL maintenant.",
     correctMistake: "sweep_ignored",
     decoyMistakes: ["trade_against_htf", "bad_rr", "stop_too_tight"],
-    explanation: "Le sweep vient d'avoir lieu — c'est le signal de retournement haussier. SELL ici = vendre au creux que l'institutionnel vient de créer pour racheter. La direction est inversée.",
+    explanation: "Le sweep vient d'avoir lieu, c'est le signal de retournement haussier. SELL ici = vendre au creux que l'institutionnel vient de créer pour racheter. La direction est inversée.",
     lessons: {
       advanced:     "Pattern ICT classique : sweep = prise de liquidité avant continuation HTF. L'edge est de BUY le retournement, pas de SELL.",
       intermediate: "Une grosse mèche qui balaie un niveau puis retourne = signal de reversal probable. Lecture inversée.",

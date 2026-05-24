@@ -148,7 +148,7 @@ export default function ContentEs() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
-                <p className="text-emerald-400 font-semibold text-sm mb-2">BOS — Break of Structure</p>
+                <p className="text-emerald-400 font-semibold text-sm mb-2">BOS. Break of Structure</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Ruptura en el sentido de la tendencia (HH en alcista, LL en bajista)</li>
                   <li>- Valida la continuación, estructura HH/HL o LH/LL intacta</li>
@@ -156,7 +156,7 @@ export default function ContentEs() {
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
-                <p className="text-amber-400 font-semibold text-sm mb-2">CHoCH — Change of Character</p>
+                <p className="text-amber-400 font-semibold text-sm mb-2">CHoCH. Change of Character</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Ruptura en el sentido opuesto a la tendencia (HL en alcista, LH en bajista)</li>
                   <li>- Señala un retroceso potencial, ruptura de la estructura</li>
@@ -217,15 +217,15 @@ export default function ContentEs() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">El retroceso estructural institucional sigue una secuencia en 3 etapas. Esta secuencia garantiza que la inversión solo se toma tras confirmación completa.</p>
 
             <ol className="space-y-2 text-sm text-zinc-300 list-decimal pl-5">
-              <li><span className="font-semibold text-white">BOS contratendencia</span> — ruptura del último HL (alcista) o LH (bajista). Abre la posibilidad del retroceso sin confirmarlo. Salida progresiva de las posiciones, todavía sin inversión.</li>
-              <li><span className="font-semibold text-white">Formación de la nueva estructura</span> — 5 a 15 velas para producir un primer LL/LH (retroceso bajista) o HH/HL (retroceso alcista). Ninguna entrada de inversión durante esta fase de observación.</li>
-              <li><span className="font-semibold text-white">CHoCH confirmado + mitigation</span> — nueva estructura inversa completa. Entrada en el retroceso hacia el nivel estructural roto (ex-HL convertido en resistencia, o ex-LH convertido en soporte) con señal de rechazo. Stop loss ajustado posible.</li>
+              <li><span className="font-semibold text-white">BOS contratendencia</span>, ruptura del último HL (alcista) o LH (bajista). Abre la posibilidad del retroceso sin confirmarlo. Salida progresiva de las posiciones, todavía sin inversión.</li>
+              <li><span className="font-semibold text-white">Formación de la nueva estructura</span>, 5 a 15 velas para producir un primer LL/LH (retroceso bajista) o HH/HL (retroceso alcista). Ninguna entrada de inversión durante esta fase de observación.</li>
+              <li><span className="font-semibold text-white">CHoCH confirmado + mitigation</span>, nueva estructura inversa completa. Entrada en el retroceso hacia el nivel estructural roto (ex-HL convertido en resistencia, o ex-LH convertido en soporte) con señal de rechazo. Stop loss ajustado posible.</li>
             </ol>
           </section>
 
           {/* Bloque 6 — FALSO BOS + ERRORES */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Falso BOS — la mecha perfora, el cierre invalida</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Falso BOS : la mecha perfora, el cierre invalida</h2>
 
             <div className="my-8">
               <BOSFakeoutDiagram locale="es" />
@@ -306,8 +306,8 @@ export default function ContentEs() {
           <LessonExercice
             description="En XAU/USD H4, la tendencia bajista en curso muestra 3 LH sucesivos en 4 720$, 4 660$ y 4 620$, y 3 LL sucesivos en 4 660$, 4 600$ y 4 540$. Una vela H4 acaba de cerrar en 4 670$, es decir 50$ por encima del último LH en 4 620$. 4 velas siguientes mantienen su cierre por encima de 4 620$. Sin news macro en la ventana. ¿Cómo se construye la lectura BOS/CHoCH?"
             steps={[
-              "Identificar la naturaleza del nivel roto: 4 620$ es el último LH (máximo de estructura bajista inversa) — se trata de una señal de retroceso potencial, no de continuación.",
-              "Calificar la ruptura: cierre franco en 4 670$ (50$ por encima del LH), displacement superior al promedio reciente, sin reintegración en 4 velas — ruptura validada estructuralmente.",
+              "Identificar la naturaleza del nivel roto: 4 620$ es el último LH (máximo de estructura bajista inversa), se trata de una señal de retroceso potencial, no de continuación.",
+              "Calificar la ruptura: cierre franco en 4 670$ (50$ por encima del LH), displacement superior al promedio reciente, sin reintegración en 4 velas, ruptura validada estructuralmente.",
               "Clasificar la señal: la ruptura del último LH constituye un BOS contratendencia, primera señal de retroceso potencial de la tendencia bajista.",
               "Esperar la formación de la nueva estructura: observar la formación de un primer HL (mínimo más alto que el anterior) tras el BOS contratendencia.",
               "Validar el CHoCH antes de la inversión: confirmar el CHoCH por la secuencia completa HL más HH en la nueva estructura alcista antes de cualquier toma de posición long. La salida de las posiciones short existentes puede dispararse desde el BOS contratendencia, la inversión exige el CHoCH.",
@@ -323,7 +323,7 @@ export default function ContentEs() {
               "El BOS se usa en M15, el CHoCH en Daily",
             ]}
             correctIndex={1}
-            explanation="En tendencia alcista, un BOS valida la continuación por la ruptura del último HH (extremo en el sentido de la tendencia). Un CHoCH inicia un retroceso por la ruptura del último HL (mínimo estructural que define la estructura alcista). La naturaleza del nivel roto — HH vs HL — dicta la naturaleza de la señal y la decisión operativa."
+            explanation="En tendencia alcista, un BOS valida la continuación por la ruptura del último HH (extremo en el sentido de la tendencia). Un CHoCH inicia un retroceso por la ruptura del último HL (mínimo estructural que define la estructura alcista). La naturaleza del nivel roto, HH vs HL, dicta la naturaleza de la señal y la decisión operativa."
           />
 
         </div>
@@ -369,7 +369,7 @@ export default function ContentEs() {
                 Lección 1
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 3 — Próximamente
+                Lección 3. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

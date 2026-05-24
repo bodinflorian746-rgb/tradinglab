@@ -163,10 +163,10 @@ export default function ContentFr() {
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">La divergence se décline en 4 types selon le sens du prix et du RSI. Les classiques (baissière + haussière) annoncent un retournement. Les cachées (baissière + haussière) signalent une continuation de la tendance.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="text-white font-semibold">Classique baissière</span> — prix HH + RSI LH = retournement baissier potentiel.</li>
-              <li>- <span className="text-white font-semibold">Classique haussière</span> — prix LL + RSI HL = retournement haussier potentiel.</li>
-              <li>- <span className="text-white font-semibold">Cachée baissière</span> — prix LH + RSI HH = continuation baissière (à éviter pour un débutant).</li>
-              <li>- <span className="text-white font-semibold">Cachée haussière</span> — prix HL + RSI LL = continuation haussière (à éviter pour un débutant).</li>
+              <li>- <span className="text-white font-semibold">Classique baissière</span>, prix HH + RSI LH = retournement baissier potentiel.</li>
+              <li>- <span className="text-white font-semibold">Classique haussière</span>, prix LL + RSI HL = retournement haussier potentiel.</li>
+              <li>- <span className="text-white font-semibold">Cachée baissière</span>, prix LH + RSI HH = continuation baissière (à éviter pour un débutant).</li>
+              <li>- <span className="text-white font-semibold">Cachée haussière</span>, prix HL + RSI LL = continuation haussière (à éviter pour un débutant).</li>
             </ul>
           </section>
 
@@ -261,7 +261,7 @@ export default function ContentFr() {
             description="Sur XAU/USD H1 : le prix fait un sommet 1 à 4 720$, redescend à 4 690$, puis fait un sommet 2 à 4 740$. Le RSI affichait 78 au sommet 1 et 72 au sommet 2. Le prix vient de clôturer à 4 685$. Tu prends le setup short ?"
             steps={[
               "Vérifier que le prix forme un HH : 4 740$ > 4 720$, OK",
-              "Vérifier que le RSI forme un LH : 72 < 78, OK — divergence baissière confirmée",
+              "Vérifier que le RSI forme un LH : 72 < 78, OK, divergence baissière confirmée",
               "Confirmer la cassure structurelle : clôture à 4 685$ sous le creux 4 690$, OK",
               "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
               "Prendre l’entrée short à 4 685$, SL au-dessus de la mèche du sommet 2 (par exemple 4 750$), TP measured move étendu vers 4 585$ pour viser un R/R 1,5 à 2:1",

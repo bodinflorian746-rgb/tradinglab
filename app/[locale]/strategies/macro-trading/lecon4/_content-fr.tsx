@@ -139,13 +139,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Avant tout setup, la première question à se poser est simple : y a-t-il une publication économique majeure dans la fenêtre qui vient ? FOMC, NFP, CPI, données d&apos;emploi, conférence Powell — ces événements provoquent des volatilités extrêmes et imprévisibles qui désorganisent complètement les structures techniques. Un setup techniquement parfait à 10h UTC peut être réduit à néant par une bougie de 70 $ à 13h30 UTC sur la publication NFP. Le calendrier économique est donc le filtre le plus simple et le plus efficace : si une news majeure est dans la fenêtre du trade, on ne prend pas le trade — peu importe la qualité technique du setup.
+              Avant tout setup, la première question à se poser est simple : y a-t-il une publication économique majeure dans la fenêtre qui vient ? FOMC, NFP, CPI, données d&apos;emploi, conférence Powell, ces événements provoquent des volatilités extrêmes et imprévisibles qui désorganisent complètement les structures techniques. Un setup techniquement parfait à 10h UTC peut être réduit à néant par une bougie de 70 $ à 13h30 UTC sur la publication NFP. Le calendrier économique est donc le filtre le plus simple et le plus efficace : si une news majeure est dans la fenêtre du trade, on ne prend pas le trade, peu importe la qualité technique du setup.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD 13h25 UTC : setup short H4 parfait, prix sous résistance, structure baissière nette. Mais le calendrier indique la publication du CPI américain à 13h30 UTC. La probabilité d&apos;une volatilité de 50-100 $ dans les minutes qui suivent est très élevée — le SL serait emporté avant que le scénario ait la moindre chance de s&apos;exprimer. Filtre rouge : pas de trade. On attend que la publication soit digérée (typiquement 30-60 minutes) avant de réévaluer.
+                XAU/USD 13h25 UTC : setup short H4 parfait, prix sous résistance, structure baissière nette. Mais le calendrier indique la publication du CPI américain à 13h30 UTC. La probabilité d&apos;une volatilité de 50-100 $ dans les minutes qui suivent est très élevée, le SL serait emporté avant que le scénario ait la moindre chance de s&apos;exprimer. Filtre rouge : pas de trade. On attend que la publication soit digérée (typiquement 30-60 minutes) avant de réévaluer.
               </p>
             </div>
 
@@ -166,7 +166,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le second filtre est le régime macro. Si le contexte général (risk-on, risk-off, biais Daily des actifs refuges, structure HTF) pointe dans une direction, prendre un trade contre cette direction n&apos;est pas seulement risqué — c&apos;est statistiquement perdant. Un signal bearish M15 isolé sur l&apos;or pendant un régime risk-off bullish établi a une probabilité de continuation très faible. La structure HTF absorbe en général ces signaux contraires en quelques bougies, le SL est touché, et le trade échoue. Trader dans le sens du régime, jamais contre.
+              Le second filtre est le régime macro. Si le contexte général (risk-on, risk-off, biais Daily des actifs refuges, structure HTF) pointe dans une direction, prendre un trade contre cette direction n&apos;est pas seulement risqué, c&apos;est statistiquement perdant. Un signal bearish M15 isolé sur l&apos;or pendant un régime risk-off bullish établi a une probabilité de continuation très faible. La structure HTF absorbe en général ces signaux contraires en quelques bougies, le SL est touché, et le trade échoue. Trader dans le sens du régime, jamais contre.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -179,7 +179,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Points actionnables : vérifier le régime macro et la structure HTF avant chaque trade</li>
               <li>- Setup contre-tendance = filtre amber ou rouge, sauf preuve structurelle de retournement</li>
-              <li>- Le régime dominant prime sur le signal local — toujours</li>
+              <li>- Le régime dominant prime sur le signal local, toujours</li>
               <li>- Un signal techniquement valide mais hors régime = setup à passer son tour</li>
             </ul>
           </section>
@@ -193,19 +193,19 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le filtre macro n&apos;est PAS un outil pour trouver des trades. C&apos;est un outil pour en éviter. Sa logique est négative : à chaque étape, on cherche une raison de NE PAS prendre le trade. News majeure imminente ? Refus. Régime contraire ? Refus. Setup faible ? Refus. Seuls les setups qui passent les trois filtres méritent l&apos;exécution. Cette logique inverse — chercher des raisons de refuser plutôt que des raisons d&apos;entrer — est exactement ce qui sépare les traders profitables des autres : ils prennent peu de trades, mais ceux qu&apos;ils prennent ont passé tous les contrôles.
+              Le filtre macro n&apos;est PAS un outil pour trouver des trades. C&apos;est un outil pour en éviter. Sa logique est négative : à chaque étape, on cherche une raison de NE PAS prendre le trade. News majeure imminente ? Refus. Régime contraire ? Refus. Setup faible ? Refus. Seuls les setups qui passent les trois filtres méritent l&apos;exécution. Cette logique inverse, chercher des raisons de refuser plutôt que des raisons d&apos;entrer, est exactement ce qui sépare les traders profitables des autres : ils prennent peu de trades, mais ceux qu&apos;ils prennent ont passé tous les contrôles.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Sur une semaine de trading, un trader discipliné peut identifier 15 setups techniques. En appliquant le filtre macro : 5 sont refusés à cause de news majeures dans la fenêtre, 4 sont refusés parce qu&apos;ils vont contre le régime dominant, 2 sont refusés parce que le setup technique manque d&apos;une confluence claire. Il en reste 4 — qu&apos;il exécute. Cette sélectivité, perçue comme « trader moins », est en réalité le multiplicateur de performance principal.
+                Sur une semaine de trading, un trader discipliné peut identifier 15 setups techniques. En appliquant le filtre macro : 5 sont refusés à cause de news majeures dans la fenêtre, 4 sont refusés parce qu&apos;ils vont contre le régime dominant, 2 sont refusés parce que le setup technique manque d&apos;une confluence claire. Il en reste 4, qu&apos;il exécute. Cette sélectivité, perçue comme « trader moins », est en réalité le multiplicateur de performance principal.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Points actionnables : appliquer les 3 filtres systématiquement à chaque setup envisagé</li>
-              <li>- Un seul filtre rouge suffit à refuser le trade — aucune négociation</li>
+              <li>- Un seul filtre rouge suffit à refuser le trade, aucune négociation</li>
               <li>- Trader moins de setups mais de meilleure qualité = principal levier de performance</li>
               <li>- La logique du filtre est NÉGATIVE : chercher à éviter, pas à trouver</li>
             </ul>
@@ -215,28 +215,28 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan d&apos;application : deux cas concrets sur XAU/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Voici deux cas concrets — un trade validé à travers le filtre, et un trade refusé — pour illustrer la décision étape par étape.
+              Voici deux cas concrets, un trade validé à travers le filtre, et un trade refusé, pour illustrer la décision étape par étape.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Cas 1 — Trade validé en 3 étapes</p>
+              <p className="text-white font-semibold text-sm mb-2">Cas 1. Trade validé en 3 étapes</p>
 
-              <p className="text-zinc-300 leading-relaxed text-sm mb-2"><span className="font-semibold text-white">Étape 1 — Calendrier :</span></p>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-2"><span className="font-semibold text-white">Étape 1. Calendrier :</span></p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-3">
                 <li>- Observation : aucune publication majeure dans les 2 heures précédentes ni dans les 4 heures à venir</li>
-                <li>- Conclusion : filtre calendrier VERT — on continue</li>
+                <li>- Conclusion : filtre calendrier VERT, on continue</li>
               </ul>
 
-              <p className="text-zinc-300 leading-relaxed text-sm mb-2"><span className="font-semibold text-white">Étape 2 — Régime macro :</span></p>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-2"><span className="font-semibold text-white">Étape 2. Régime macro :</span></p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-3">
                 <li>- Observation : régime risk-off établi, structure HH/HL claire en H4 sur XAU, biais Daily haussier confirmé</li>
-                <li>- Conclusion : filtre régime VERT — un setup long est aligné</li>
+                <li>- Conclusion : filtre régime VERT, un setup long est aligné</li>
               </ul>
 
-              <p className="text-zinc-300 leading-relaxed text-sm mb-2"><span className="font-semibold text-white">Étape 3 — Setup technique :</span></p>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-2"><span className="font-semibold text-white">Étape 3. Setup technique :</span></p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-3">
                 <li>- Observation : pullback H4 vers un ancien sommet devenu support, stabilisation M15 visible, bougie de reprise franche</li>
-                <li>- Conclusion : filtre setup VERT — exécution validée. Entrée long avec SL sous le pullback, target sur la prochaine zone de continuation</li>
+                <li>- Conclusion : filtre setup VERT, exécution validée. Entrée long avec SL sous le pullback, target sur la prochaine zone de continuation</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3 mb-5">
@@ -245,16 +245,16 @@ export default function ContentFr() {
                 </p>
               </div>
 
-              <p className="text-white font-semibold text-sm mb-2">Cas 2 — Trade refusé</p>
+              <p className="text-white font-semibold text-sm mb-2">Cas 2. Trade refusé</p>
 
-              <p className="text-zinc-300 leading-relaxed text-sm mb-2"><span className="font-semibold text-white">Étape 1 — Calendrier :</span></p>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-2"><span className="font-semibold text-white">Étape 1. Calendrier :</span></p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-3">
                 <li>- Observation : publication CPI US à 13h30 UTC, dans 25 minutes</li>
-                <li>- Conclusion : filtre calendrier ROUGE — pas de trade, peu importe le reste</li>
+                <li>- Conclusion : filtre calendrier ROUGE, pas de trade, peu importe le reste</li>
               </ul>
 
               <p className="text-sm text-zinc-400 italic leading-relaxed mb-1">
-                Note : on ne va pas vérifier les autres filtres. Un seul filtre rouge suffit à refuser. Le setup technique peut être superbe, le régime peut être aligné — la news imminente rend l&apos;exécution trop risquée. On attend la publication digérée pour réévaluer.
+                Note : on ne va pas vérifier les autres filtres. Un seul filtre rouge suffit à refuser. Le setup technique peut être superbe, le régime peut être aligné, la news imminente rend l&apos;exécution trop risquée. On attend la publication digérée pour réévaluer.
               </p>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -269,7 +269,7 @@ export default function ContentFr() {
             points={[
               "Le filtre macro est une logique NÉGATIVE : chercher des raisons de refuser un trade, pas d’en prendre.",
               "Trois filtres en série : calendrier économique, régime macro, setup technique. Un seul rouge = pas de trade.",
-              "Trader moins mais mieux est le principal levier de performance — la sélectivité prime sur la fréquence.",
+              "Trader moins mais mieux est le principal levier de performance, la sélectivité prime sur la fréquence.",
               "Aucun setup technique ne justifie de trader contre le calendrier ou contre le régime dominant.",
             ]}
           />
@@ -279,7 +279,7 @@ export default function ContentFr() {
             steps={[
               "À chaque setup technique repéré, consulte d&apos;abord le calendrier économique pour les 2 heures à venir. Si une news majeure est dans cette fenêtre, marque le setup REFUSÉ pour cause de calendrier.",
               "Si le calendrier est vert, vérifie le régime macro et la structure HTF. Si le setup va contre le régime dominant, marque-le REFUSÉ pour cause de régime.",
-              "Si les deux premiers filtres passent, évalue la qualité technique du setup (confluence, structure, niveaux). Si elle est insuffisante, marque REFUSÉ pour cause de setup faible. Sinon, marque EXÉCUTÉ. À la fin de la semaine, compare le nombre de setups identifiés au nombre de setups exécutés — c&apos;est ta sélectivité.",
+              "Si les deux premiers filtres passent, évalue la qualité technique du setup (confluence, structure, niveaux). Si elle est insuffisante, marque REFUSÉ pour cause de setup faible. Sinon, marque EXÉCUTÉ. À la fin de la semaine, compare le nombre de setups identifiés au nombre de setups exécutés, c&apos;est ta sélectivité.",
             ]}
           />
 
@@ -292,12 +292,12 @@ export default function ContentFr() {
               "Tu places un ordre limite plus loin pour éviter la volatilité initiale",
             ]}
             correctIndex={1}
-            explanation="La règle du filtre macro est non-négociable : un seul filtre rouge suffit à refuser le trade. Ici, le calendrier est explicitement rouge (NFP dans 30 minutes), ce qui rend l'exécution trop risquée — la volatilité post-NFP peut emporter le SL en quelques minutes sans rapport avec la qualité technique du setup. La qualité du régime macro ou du setup technique ne compensent jamais un filtre calendrier rouge. La discipline est d'attendre la publication digérée (typiquement 30-60 minutes) avant de réévaluer."
+            explanation="La règle du filtre macro est non-négociable : un seul filtre rouge suffit à refuser le trade. Ici, le calendrier est explicitement rouge (NFP dans 30 minutes), ce qui rend l'exécution trop risquée, la volatilité post-NFP peut emporter le SL en quelques minutes sans rapport avec la qualité technique du setup. La qualité du régime macro ou du setup technique ne compensent jamais un filtre calendrier rouge. La discipline est d'attendre la publication digérée (typiquement 30-60 minutes) avant de réévaluer."
             answerExplanations={[
               "Faux. « Le setup technique est solide » ne suffit jamais à compenser un filtre calendrier rouge. La volatilité NFP est imprévisible et peut emporter le SL avant que le setup ait la moindre chance de s&apos;exprimer.",
               "Correct. Un seul filtre rouge suffit à refuser, et le calendrier est le filtre le plus simple à respecter. On attend la publication, on observe la réaction, et on réévalue ensuite. La discipline prime sur l&apos;attachement au setup identifié.",
-              "Faux. Réduire la taille ne change pas la nature du problème : la volatilité NFP peut largement dépasser n&apos;importe quel SL raisonnable. On ne diminue pas un mauvais trade en risquant moins — on le supprime.",
-              "Faux. Placer un ordre limite plus loin ne contourne pas le filtre. C&apos;est une rationalisation pour exécuter quand même un setup qu&apos;on a déjà mentalement décidé de prendre — exactement ce que le filtre est censé empêcher.",
+              "Faux. Réduire la taille ne change pas la nature du problème : la volatilité NFP peut largement dépasser n&apos;importe quel SL raisonnable. On ne diminue pas un mauvais trade en risquant moins, on le supprime.",
+              "Faux. Placer un ordre limite plus loin ne contourne pas le filtre. C&apos;est une rationalisation pour exécuter quand même un setup qu&apos;on a déjà mentalement décidé de prendre, exactement ce que le filtre est censé empêcher.",
             ]}
           />
 

@@ -13,7 +13,7 @@ const lessons = [
   {
     id: "lecon2",
     number: 2,
-    title: "NFP — la news mensuelle qui fait trembler tous les actifs",
+    title: "NFP : la news mensuelle qui fait trembler tous les actifs",
     duration: "16 min",
     description: "Lire le rapport complet (headline, chômage, salaires, révisions) et trader la réaction confirmée.",
     href: "/formations/macro/avance/lecon2",
@@ -22,16 +22,16 @@ const lessons = [
   {
     id: "lecon3",
     number: 3,
-    title: "Les rendements obligataires US — le marché qui dirige tous les autres",
+    title: "Les rendements obligataires US : le marché qui dirige tous les autres",
     duration: "16 min",
-    description: "US10Y, courbe des taux et corrélations XAU/Nasdaq/BTC — l'indicateur n°1 que regardent les pros",
+    description: "US10Y, courbe des taux et corrélations XAU/Nasdaq/BTC, l'indicateur n°1 que regardent les pros",
     href: "/formations/macro/avance/lecon3",
     disabled: false,
   },
   {
     id: "lecon4",
     number: 4,
-    title: "Risk-on / Risk-off — le cadre mental du pro",
+    title: "Risk-on / Risk-off : le cadre mental du pro",
     duration: "18 min",
     description: "4 régimes de marché : risk-on, risk-off, reflation, flight to quality. Le vocabulaire et la grille de lecture du pro.",
     href: "/formations/macro/avance/lecon4",
@@ -54,7 +54,7 @@ export default function MacroAvancePage() {
 
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-3 flex-wrap">
-            <h1 className="text-4xl md:text-5xl font-bold">Macro Trading — Avancé</h1>
+            <h1 className="text-4xl md:text-5xl font-bold">Macro Trading : Avancé</h1>
             <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-400/10 text-amber-400 border border-amber-400/20 shrink-0">
               Avancé
             </span>

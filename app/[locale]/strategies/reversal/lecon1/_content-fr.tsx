@@ -261,8 +261,8 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur EUR/USD H1, tu vois un double top avec un premier sommet à 1.1850 et un deuxième à 1.1825. Écart : 25 pips, soit environ 0,23%. La neckline est à 1.1750. Le prix clôture à 1.1745. Tu prends le setup ?"
             steps={[
-              "Vérifier que l’écart entre les 2 sommets reste sous la limite : 0,23% < 0,3% — OK",
-              "Confirmer que la cassure est par clôture sous 1.1750, pas une simple mèche — OK",
+              "Vérifier que l’écart entre les 2 sommets reste sous la limite : 0,23% < 0,3%. OK",
+              "Confirmer que la cassure est par clôture sous 1.1750, pas une simple mèche. OK",
               "Vérifier que la tendance haussière préalable est claire (HH/HL)",
               "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
               "Prendre l’entrée short à 1.1745, SL au-dessus du 2ème sommet, TP measured move",
@@ -278,7 +278,7 @@ export default function ContentFr() {
               "Un volume très élevé",
             ]}
             correctIndex={2}
-            explanation="La confirmation d’un double top arrive uniquement quand le prix clôture une bougie sous la neckline. Une simple mèche qui pique sous puis revient au-dessus ne valide rien — attendre une clôture franche reste indispensable pour éviter les faux signaux."
+            explanation="La confirmation d’un double top arrive uniquement quand le prix clôture une bougie sous la neckline. Une simple mèche qui pique sous puis revient au-dessus ne valide rien, attendre une clôture franche reste indispensable pour éviter les faux signaux."
           />
 
         </div>
@@ -323,7 +323,7 @@ export default function ContentFr() {
                 Retour au module
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 2 — À venir
+                Leçon 2. À venir
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

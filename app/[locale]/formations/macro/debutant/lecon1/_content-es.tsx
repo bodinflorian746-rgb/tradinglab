@@ -66,7 +66,7 @@ export default function ContentEs() {
               Un evento macro puede borrar el 2% de tu capital en 2 minutos.
             </p>
             <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
-              En EUR/USD, en el oro, en el Nasdaq, en el Bitcoin — no importa qué operes, la macro te cae encima.
+              En EUR/USD, en el oro, en el Nasdaq, en el Bitcoin, no importa qué operes, la macro te cae encima.
             </p>
           </div>
 
@@ -271,15 +271,15 @@ export default function ContentEs() {
                 },
                 {
                   label: "Los gobiernos",
-                  text: "— toman las decisiones de política fiscal (impuestos, gasto público, deuda).",
+                  text: "toman las decisiones de política fiscal (impuestos, gasto público, deuda).",
                 },
                 {
                   label: "Las agencias estadísticas",
-                  text: "— publican los datos oficiales de inflación, empleo, PIB. Son sus publicaciones las que disparan los movimientos brutales en los mercados.",
+                  text: "publican los datos oficiales de inflación, empleo, PIB. Son sus publicaciones las que disparan los movimientos brutales en los mercados.",
                 },
                 {
                   label: "Los inversionistas institucionales",
-                  text: "— bancos, fondos de inversión, gestores de activos. Representan la mayoría del volumen en los mercados. Cuando compran o venden en masa basados en una noticia macro, el precio se mueve violentamente.",
+                  text: "bancos, fondos de inversión, gestores de activos. Representan la mayoría del volumen en los mercados. Cuando compran o venden en masa basados en una noticia macro, el precio se mueve violentamente.",
                 },
               ].map((item) => (
                 <li key={item.label} className="flex items-start gap-2.5 text-sm text-zinc-300">
@@ -311,9 +311,9 @@ export default function ContentEs() {
             </p>
             <ul className="space-y-2 mb-5">
               {[
-                { label: "Impacto bajo", desc: "(1 estrella / verde) — poco movimiento esperado", color: "bg-emerald-400/60" },
-                { label: "Impacto medio", desc: "(2 estrellas / amarillo o naranja) — movimiento moderado posible", color: "bg-amber-400/60" },
-                { label: "Impacto fuerte", desc: "(3 estrellas / rojo) — movimiento violento casi garantizado", color: "bg-red-500/60" },
+                { label: "Impacto bajo", desc: "(1 estrella / verde) : poco movimiento esperado", color: "bg-emerald-400/60" },
+                { label: "Impacto medio", desc: "(2 estrellas / amarillo o naranja) : movimiento moderado posible", color: "bg-amber-400/60" },
+                { label: "Impacto fuerte", desc: "(3 estrellas / rojo) : movimiento violento casi garantizado", color: "bg-red-500/60" },
               ].map((item) => (
                 <li key={item.label} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className={`w-1.5 h-1.5 rounded-full ${item.color} shrink-0 mt-1.5`} />
@@ -423,9 +423,9 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "La macro es el estudio de las grandes fuerzas económicas (tasas, inflación, empleo, crecimiento) que mueven los mercados.",
-              "La técnica te dice DÓNDE entrar, la macro te dice POR QUÉ se mueve el mercado — las dos son complementarias.",
+              "La técnica te dice DÓNDE entrar, la macro te dice POR QUÉ se mueve el mercado, las dos son complementarias.",
               "Las 4 fuerzas clave: tasas de interés, inflación, empleo, crecimiento económico.",
-              "El calendario económico es tu herramienta n°1 — evita operar en los 30 min antes/después de un evento de 3 estrellas.",
+              "El calendario económico es tu herramienta n°1, evita operar en los 30 min antes/después de un evento de 3 estrellas.",
             ]}
           />
 
@@ -453,11 +453,11 @@ export default function ContentEs() {
               "Cambio a H4 para ignorar el ruido de la news",
             ]}
             correctIndex={1}
-            explanation="Una publicación de 3 estrellas puede mover EUR/USD de 80-150 pips en pocos minutos, en una dirección imprevisible. Entrar justo antes (opción A) equivale a apostar a cara o cruz. La opción C es falsa: el CPI puede subir o bajar el euro según los datos sorprendan al alza o a la baja. La opción D es una fuga — cambiar de timeframe no te protege del movimiento violento. La buena práctica: espera a que pase la news, observa la reacción del mercado, y opera después con la nueva información. Este principio aplica a todos los activos: forex, oro, índices, crypto."
+            explanation="Una publicación de 3 estrellas puede mover EUR/USD de 80-150 pips en pocos minutos, en una dirección imprevisible. Entrar justo antes (opción A) equivale a apostar a cara o cruz. La opción C es falsa: el CPI puede subir o bajar el euro según los datos sorprendan al alza o a la baja. La opción D es una fuga, cambiar de timeframe no te protege del movimiento violento. La buena práctica: espera a que pase la news, observa la reacción del mercado, y opera después con la nueva información. Este principio aplica a todos los activos: forex, oro, índices, crypto."
             answerExplanations={[
-              "Falso. Entrar justo antes de una publicación de 3 estrellas equivale a apostar a cara o cruz. EUR/USD puede moverse 80-150 pips en pocos minutos en una dirección imprevisible. Tu análisis técnico ya no cuenta — la macro lo aplasta todo.",
+              "Falso. Entrar justo antes de una publicación de 3 estrellas equivale a apostar a cara o cruz. EUR/USD puede moverse 80-150 pips en pocos minutos en una dirección imprevisible. Tu análisis técnico ya no cuenta, la macro lo aplasta todo.",
               "Correcto. La buena práctica: espera a que pase la news, observa la reacción del mercado, y opera después con la nueva información. Conservas tu setup Y sabes en qué dirección el mercado decidió ir.",
-              "Falso. El CPI puede subir o bajar el euro según los datos sorprendan al alza o a la baja. No hay una dirección sistemática — lo que cuenta es la diferencia respecto a las expectativas.",
+              "Falso. El CPI puede subir o bajar el euro según los datos sorprendan al alza o a la baja. No hay una dirección sistemática, lo que cuenta es la diferencia respecto a las expectativas.",
               "Falso. Cambiar de timeframe no te protege del movimiento violento. Un movimiento de 80-150 pips en M5 es un movimiento de 80-150 pips en H4 también. El timeframe no cambia la amplitud real.",
             ]}
           />
@@ -504,7 +504,7 @@ export default function ContentEs() {
                 Volver al módulo
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Los 4 grandes bancos centrales — Próximamente →
+                Los 4 grandes bancos centrales. Próximamente →
               </span>
             </div>
 

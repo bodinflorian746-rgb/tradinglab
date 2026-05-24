@@ -140,13 +140,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un displacement es una secuencia de velas impulsivas, con cuerpos grandes, que se desplaza en una dirección sin corrección significativa — no una simple vela grande aislada. La secuencia se reconoce por tres características: amplitud de los cuerpos anormalmente superior a las velas anteriores, ausencia de mechas significativas en el sentido contrario (el mercado no retoma aliento), y creación casi sistemática de uno o varios FVG en la caída o el alza. Es esa combinación la que distingue el displacement de una simple volatilidad.
+              Un displacement es una secuencia de velas impulsivas, con cuerpos grandes, que se desplaza en una dirección sin corrección significativa, no una simple vela grande aislada. La secuencia se reconoce por tres características: amplitud de los cuerpos anormalmente superior a las velas anteriores, ausencia de mechas significativas en el sentido contrario (el mercado no retoma aliento), y creación casi sistemática de uno o varios FVG en la caída o el alza. Es esa combinación la que distingue el displacement de una simple volatilidad.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Gráfico M15 EUR/USD: desde 1.1780, el precio imprime una mecha de sweep en 1.1792 y luego encadena 4 velas bajistas consecutivas, cada una con un cuerpo de 12-15 pips, sin ninguna mecha superior notable. El precio cae hasta 1.1748 en menos de una hora, dejando dos FVG bearish visibles en la caída. Es un displacement característico — no una volatilidad pasajera, sino una secuencia orientada.
+                Gráfico M15 EUR/USD: desde 1.1780, el precio imprime una mecha de sweep en 1.1792 y luego encadena 4 velas bajistas consecutivas, cada una con un cuerpo de 12-15 pips, sin ninguna mecha superior notable. El precio cae hasta 1.1748 en menos de una hora, dejando dos FVG bearish visibles en la caída. Es un displacement característico, no una volatilidad pasajera, sino una secuencia orientada.
               </p>
             </div>
 
@@ -167,13 +167,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Antes de un displacement, el mercado suele estar en equilibrio — velas de baja amplitud, alternancia verde/rojo, lateralización. Cuando llega el displacement, es el equilibrio el que se rompe: un lado toma bruscamente la ventaja e impone la dirección. Esa ruptura es la firma de una intención institucional. Leer un displacement es leer quién — vendedores o compradores — acaba de ganar la batalla en curso. La dirección del displacement define el sesgo inmediato de los minutos / horas que siguen.
+              Antes de un displacement, el mercado suele estar en equilibrio, velas de baja amplitud, alternancia verde/rojo, lateralización. Cuando llega el displacement, es el equilibrio el que se rompe: un lado toma bruscamente la ventaja e impone la dirección. Esa ruptura es la firma de una intención institucional. Leer un displacement es leer quién, vendedores o compradores, acaba de ganar la batalla en curso. La dirección del displacement define el sesgo inmediato de los minutos / horas que siguen.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD M15: el precio consolida alrededor de 4 650 $ durante 3 horas, velas planas, mercado equilibrado. A las 14h UTC, una vela hace sweep de un máximo en 4 668 $, seguida de inmediato por 5 velas bajistas con cuerpos grandes que regresan el precio a 4 608 $. El equilibrio está roto: son los vendedores los que toman el control. El sesgo de las horas siguientes está definido — ya no se buscan longs hasta nueva orden.
+                XAU/USD M15: el precio consolida alrededor de 4 650 $ durante 3 horas, velas planas, mercado equilibrado. A las 14h UTC, una vela hace sweep de un máximo en 4 668 $, seguida de inmediato por 5 velas bajistas con cuerpos grandes que regresan el precio a 4 608 $. El equilibrio está roto: son los vendedores los que toman el control. El sesgo de las horas siguientes está definido, ya no se buscan longs hasta nueva orden.
             </p>
             </div>
 
@@ -194,13 +194,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un displacement deja tras de sí una zona explotable: el FVG creado por las grandes velas de la secuencia. El mercado suele venir a revisitar esa zona antes de continuar en la dirección del displacement — es el escenario de mitigation ya visto en la Lección 2, pero aquí en un contexto particularmente confiable porque el FVG nació de una intención institucional visible. El regreso al FVG ofrece una entrada ajustada, con un SL arriba del extremo del displacement y un TP hacia la próxima zona de liquidity en la dirección del movimiento.
+              Un displacement deja tras de sí una zona explotable: el FVG creado por las grandes velas de la secuencia. El mercado suele venir a revisitar esa zona antes de continuar en la dirección del displacement, es el escenario de mitigation ya visto en la Lección 2, pero aquí en un contexto particularmente confiable porque el FVG nació de una intención institucional visible. El regreso al FVG ofrece una entrada ajustada, con un SL arriba del extremo del displacement y un TP hacia la próxima zona de liquidity en la dirección del movimiento.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1: el sweep en 1.1792 y el displacement bearish hasta 1.1748 dejan un FVG visible entre 1.1768 y 1.1780. En las horas siguientes, el precio sube progresivamente, entra a la banda FVG, y luego una vela bajista franca relanza la baja. Entrada short al regreso al FVG, SL justo arriba de 1.1780, TP hacia la próxima zona de liquidity baja — el displacement inicial creó por sí solo la entrada y el SL.
+                EUR/USD H1: el sweep en 1.1792 y el displacement bearish hasta 1.1748 dejan un FVG visible entre 1.1768 y 1.1780. En las horas siguientes, el precio sube progresivamente, entra a la banda FVG, y luego una vela bajista franca relanza la baja. Entrada short al regreso al FVG, SL justo arriba de 1.1780, TP hacia la próxima zona de liquidity baja, el displacement inicial creó por sí solo la entrada y el SL.
               </p>
             </div>
 
@@ -221,20 +221,20 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La trampa clásica es confundir cualquier vela grande con un displacement. Una vela aislada, incluso muy grande, que no esté precedida de una estructura explotada ni seguida de una continuidad, es simplemente volatilidad — un evento puntual sin secuela. El verdadero displacement se distingue por dos elementos: rompe una estructura local (BOS en el sentido del movimiento) y va seguido de una continuación, no de un rechazo inmediato. Sin estas dos condiciones, es solo una mecha que el mercado va a borrar en los minutos siguientes. El tamaño de 18 pips nunca es en sí mismo un criterio — la ruptura y la continuidad sí lo son.
+              La trampa clásica es confundir cualquier vela grande con un displacement. Una vela aislada, incluso muy grande, que no esté precedida de una estructura explotada ni seguida de una continuidad, es simplemente volatilidad, un evento puntual sin secuela. El verdadero displacement se distingue por dos elementos: rompe una estructura local (BOS en el sentido del movimiento) y va seguido de una continuación, no de un rechazo inmediato. Sin estas dos condiciones, es solo una mecha que el mercado va a borrar en los minutos siguientes. El tamaño de 18 pips nunca es en sí mismo un criterio, la ruptura y la continuidad sí lo son.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                En EUR/USD, una vela M15 imprime brutalmente 18 pips al alza tras una news menor, y luego la siguiente vela cierra completamente el movimiento — sin ruptura estructural, sin continuación. Es volatilidad, no un displacement. Al contrario, una secuencia de 4 velas bajistas de 10-12 pips cada una que rompe un mínimo local y encadena en la misma dirección es un displacement, aunque ninguna vela supere los 12 pips.
+                En EUR/USD, una vela M15 imprime brutalmente 18 pips al alza tras una news menor, y luego la siguiente vela cierra completamente el movimiento, sin ruptura estructural, sin continuación. Es volatilidad, no un displacement. Al contrario, una secuencia de 4 velas bajistas de 10-12 pips cada una que rompe un mínimo local y encadena en la misma dirección es un displacement, aunque ninguna vela supere los 12 pips.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Vela grande aislada + rechazo inmediato = volatilidad, no displacement</li>
               <li>- Displacement = ruptura de estructura (BOS) + continuación en la dirección</li>
-              <li>- El tamaño de una sola vela nunca es un criterio — la secuencia y lo que sigue son lo que cuentan</li>
+              <li>- El tamaño de una sola vela nunca es un criterio, la secuencia y lo que sigue son lo que cuentan</li>
               <li>- Tradear la volatilidad como un displacement = posicionarte del lado equivocado</li>
             </ul>
           </section>
@@ -247,34 +247,34 @@ export default function ContentEs() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Etapa 1 — HTF (Daily): sesgo direccional</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 1. HTF (Daily): sesgo direccional</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: EUR/USD Daily en LH/LL, resistencia Daily 1.1780</li>
-                <li>- Conclusión: sesgo bajista — se buscará un displacement en el sentido vendedor</li>
+                <li>- Conclusión: sesgo bajista, se buscará un displacement en el sentido vendedor</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 2 — Liquidity (H1): identificar el objetivo</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Liquidity (H1): identificar el objetivo</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: equal highs recientes en 1.1780, stops acumulados arriba</li>
                 <li>- Conclusión: la liquidity arriba de 1.1780 es el objetivo probable antes de cualquier verdadero movimiento bearish</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 3 — Sweep (M15 en Killzone)</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 3. Sweep (M15 en Killzone)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: en la apertura NY, el precio hace sweep en 1.1792 y luego se reintegra debajo de 1.1780</li>
                 <li>- Conclusión: la liquidity está tomada. Ahora se vigila el displacement</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 4 — Displacement bearish</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 4. Displacement bearish</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: 4 velas bajistas consecutivas con cuerpos grandes, sin mechas superiores, el precio cae a 1.1748. FVG visible entre 1.1768 y 1.1780</li>
                 <li>- Conclusión: displacement validado. La entrada no está en el displacement (ya pasó), está en el FVG que creó</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 5 — Regreso al FVG: ejecución</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 5. Regreso al FVG: ejecución</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: el precio sube progresivamente hacia 1.1768-1.1780, entra a la banda FVG, y luego vela bajista de rechazo</li>
-                <li>- Conclusión: entrada short al regreso al FVG, SL justo arriba de 1.1780 (extremo del displacement), TP hacia 1.1695. R/R ≈ 1 : 2 — setup de alta probabilidad alineado HTF + liquidity + sweep + displacement + FVG</li>
+                <li>- Conclusión: entrada short al regreso al FVG, SL justo arriba de 1.1780 (extremo del displacement), TP hacia 1.1695. R/R ≈ 1 : 2, setup de alta probabilidad alineado HTF + liquidity + sweep + displacement + FVG</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -287,10 +287,10 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "Un displacement es una secuencia de velas impulsivas, no una vela aislada — cuerpos grandes, pocas mechas contrarias, FVG dejados atrás.",
+              "Un displacement es una secuencia de velas impulsivas, no una vela aislada, cuerpos grandes, pocas mechas contrarias, FVG dejados atrás.",
               "El displacement marca el paso del equilibrio a la toma de control institucional.",
-              "El FVG creado por un displacement es una zona de entrada premium — la entrada se toma al regreso, no dentro del displacement mismo.",
-              "Una gran vela aislada sin ruptura ni continuación es volatilidad — no un displacement.",
+              "El FVG creado por un displacement es una zona de entrada premium, la entrada se toma al regreso, no dentro del displacement mismo.",
+              "Una gran vela aislada sin ruptura ni continuación es volatilidad, no un displacement.",
             ]}
           />
 
@@ -306,18 +306,18 @@ export default function ContentEs() {
           <LessonQuiz
             question="En EUR/USD, una vela M15 imprime brutalmente 18 pips al alza, y luego la siguiente vela cierra completamente el movimiento. No hay ruptura estructural visible. ¿Cómo calificas este movimiento?"
             options={[
-              "Es un displacement alcista — 18 pips en una vela es una señal fuerte",
-              "Es volatilidad sin secuela, no un displacement — sin ruptura ni continuación",
+              "Es un displacement alcista, 18 pips en una vela es una señal fuerte",
+              "Es volatilidad sin secuela, no un displacement, sin ruptura ni continuación",
               "Es un sweep, así que el escenario inverso queda validado para entrar short de inmediato",
               "Es una señal indeterminada, hay que esperar 1h para decidir",
             ]}
             correctIndex={1}
-            explanation="Un displacement nunca se define por el tamaño de una sola vela. Los dos criterios estructurales son: una ruptura de estructura local (BOS) Y una continuación en la dirección. Aquí, la siguiente vela cierra íntegramente el movimiento y no hay ruptura — es exactamente la definición de volatilidad sin secuela, no un displacement. Tradear esa vela como una señal de compra equivaldría a comprar el máximo del movimiento falso."
+            explanation="Un displacement nunca se define por el tamaño de una sola vela. Los dos criterios estructurales son: una ruptura de estructura local (BOS) Y una continuación en la dirección. Aquí, la siguiente vela cierra íntegramente el movimiento y no hay ruptura, es exactamente la definición de volatilidad sin secuela, no un displacement. Tradear esa vela como una señal de compra equivaldría a comprar el máximo del movimiento falso."
             answerExplanations={[
               "Falso. El tamaño de una vela no tiene ningún valor sin ruptura de estructura y continuación. 18 pips aislados e inmediatamente rechazados = volatilidad puntual, exactamente la trampa que el concepto de displacement busca evitar.",
-              "Correcto. Sin ruptura estructural ni continuación, es una vela aislada — entonces volatilidad, no un displacement. La regla del ICT es clara: un displacement solo se valida con una secuencia orientada que rompe una estructura y continúa.",
-              "Falso. Un sweep es solo una condición previa, jamás una señal de entrada por sí sola. Entrar short de inmediato sobre la base de una vela alcista aislada no tiene ninguna lógica estructural — hay que esperar la confirmación (reintegración + vela impulsiva opuesta).",
-              "Falso. Esperar 1h arbitrariamente no cambia la lectura. El movimiento ya está calificado de volatilidad por los criterios estructurales (sin ruptura, rechazo inmediato). No se necesita un timer — solo hay que leer correctamente lo que se ve.",
+              "Correcto. Sin ruptura estructural ni continuación, es una vela aislada, entonces volatilidad, no un displacement. La regla del ICT es clara: un displacement solo se valida con una secuencia orientada que rompe una estructura y continúa.",
+              "Falso. Un sweep es solo una condición previa, jamás una señal de entrada por sí sola. Entrar short de inmediato sobre la base de una vela alcista aislada no tiene ninguna lógica estructural, hay que esperar la confirmación (reintegración + vela impulsiva opuesta).",
+              "Falso. Esperar 1h arbitrariamente no cambia la lectura. El movimiento ya está calificado de volatilidad por los criterios estructurales (sin ruptura, rechazo inmediato). No se necesita un timer, solo hay que leer correctamente lo que se ve.",
             ]}
           />
 

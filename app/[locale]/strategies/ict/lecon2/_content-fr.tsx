@@ -132,7 +132,7 @@ export default function ContentFr() {
 
           <section>
             <p className="text-zinc-300 leading-relaxed text-sm">
-              Après la prise de liquidité vue en Leçon 1, la deuxième brique du modèle ICT consiste à savoir OÙ le marché peut réagir. PD Array signifie Premium/Discount Array : ce sont les zones de prix où le marché institutionnel a statistiquement le plus de chances de réagir. FVG, Order Blocks, anciens supports/résistances, sweeps récents — ces éléments sont les briques élémentaires d&apos;un PD Array. Bien lus, ils permettent d&apos;anticiper où une zone va probablement produire un rejet ; mal lus, ils noient le graphique sous une infinité de niveaux dont aucun ne tient.
+              Après la prise de liquidité vue en Leçon 1, la deuxième brique du modèle ICT consiste à savoir OÙ le marché peut réagir. PD Array signifie Premium/Discount Array : ce sont les zones de prix où le marché institutionnel a statistiquement le plus de chances de réagir. FVG, Order Blocks, anciens supports/résistances, sweeps récents, ces éléments sont les briques élémentaires d&apos;un PD Array. Bien lus, ils permettent d&apos;anticiper où une zone va probablement produire un rejet ; mal lus, ils noient le graphique sous une infinité de niveaux dont aucun ne tient.
             </p>
           </section>
 
@@ -145,20 +145,20 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Sur n&apos;importe quel graphique, on peut trouver des dizaines de FVG et d&apos;Order Blocks. La majorité ne produiront rien — le prix passera à travers sans même ralentir. Le tri se fait par le CONTEXTE : un FVG créé par une impulsion juste après un sweep de liquidité est très différent d&apos;un FVG laissé par une bougie aléatoire en milieu de range. Le premier est porteur de l&apos;intention institutionnelle qui vient de prendre la liquidité ; le second n&apos;est qu&apos;un trou statistique sans signification structurelle.
+              Sur n&apos;importe quel graphique, on peut trouver des dizaines de FVG et d&apos;Order Blocks. La majorité ne produiront rien, le prix passera à travers sans même ralentir. Le tri se fait par le CONTEXTE : un FVG créé par une impulsion juste après un sweep de liquidité est très différent d&apos;un FVG laissé par une bougie aléatoire en milieu de range. Le premier est porteur de l&apos;intention institutionnelle qui vient de prendre la liquidité ; le second n&apos;est qu&apos;un trou statistique sans signification structurelle.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1 : résistance H4 à 1.1780, deux equal highs visibles. Une bougie sweep à 1.1792 prend la liquidité au-dessus, puis une grosse bougie baissière crée un FVG entre 1.1758 et 1.1770. Ce FVG est qualifié : il est né juste après la prise de liquidité, dans une impulsion claire. Quand le prix remontera dans cette zone, la probabilité de rejet est élevée — pas parce que c&apos;est « un FVG », mais parce que c&apos;est un FVG dans un contexte structurel cohérent.
+                EUR/USD H1 : résistance H4 à 1.1780, deux equal highs visibles. Une bougie sweep à 1.1792 prend la liquidité au-dessus, puis une grosse bougie baissière crée un FVG entre 1.1758 et 1.1770. Ce FVG est qualifié : il est né juste après la prise de liquidité, dans une impulsion claire. Quand le prix remontera dans cette zone, la probabilité de rejet est élevée, pas parce que c&apos;est « un FVG », mais parce que c&apos;est un FVG dans un contexte structurel cohérent.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Un FVG ou un OB seul, hors contexte, n&apos;a aucune valeur prédictive</li>
               <li>- Le contexte = ce qui s&apos;est passé juste avant (sweep, BOS, CHoCH)</li>
-              <li>- Un FVG né d&apos;une impulsion post-liquidité est qualifié — un FVG « du milieu de range » ne l&apos;est pas</li>
+              <li>- Un FVG né d&apos;une impulsion post-liquidité est qualifié, un FVG « du milieu de range » ne l&apos;est pas</li>
               <li>- La règle : pas de contexte = on ignore le niveau, même s&apos;il semble visuellement clair</li>
             </ul>
           </section>
@@ -172,20 +172,20 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une impulsion qui laisse un FVG est par nature un déséquilibre — le prix est passé trop vite pour que toutes les transactions du « bon » prix soient exécutées. Le marché a tendance à revenir mitiger ces déséquilibres avant de continuer dans la direction de l&apos;impulsion. Cette mitigation est précisément l&apos;opportunité que cherche le trader ICT : le retour dans le FVG offre une zone d&apos;entrée beaucoup plus précise et serrée que l&apos;impulsion elle-même, qui se joue rarement à temps.
+              Une impulsion qui laisse un FVG est par nature un déséquilibre, le prix est passé trop vite pour que toutes les transactions du « bon » prix soient exécutées. Le marché a tendance à revenir mitiger ces déséquilibres avant de continuer dans la direction de l&apos;impulsion. Cette mitigation est précisément l&apos;opportunité que cherche le trader ICT : le retour dans le FVG offre une zone d&apos;entrée beaucoup plus précise et serrée que l&apos;impulsion elle-même, qui se joue rarement à temps.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD H1 : depuis 4 690 $, une forte impulsion baissière laisse un FVG entre 4 655 et 4 665 $. Le prix continue jusqu&apos;à 4 620, puis remonte progressivement vers 4 660 — il rentre dans le FVG. Là, une bougie baissière impulsive marque le rejet ; le prix repart vers 4 610 dans la séance suivante. La mitigation a été le signal d&apos;entrée — pas l&apos;impulsion initiale, déjà passée.
+                XAU/USD H1 : depuis 4 690 $, une forte impulsion baissière laisse un FVG entre 4 655 et 4 665 $. Le prix continue jusqu&apos;à 4 620, puis remonte progressivement vers 4 660, il rentre dans le FVG. Là, une bougie baissière impulsive marque le rejet ; le prix repart vers 4 610 dans la séance suivante. La mitigation a été le signal d&apos;entrée, pas l&apos;impulsion initiale, déjà passée.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Un FVG est un déséquilibre — le marché tend à y revenir pour combler les transactions manquées</li>
+              <li>- Un FVG est un déséquilibre, le marché tend à y revenir pour combler les transactions manquées</li>
               <li>- La mitigation offre une seconde chance d&apos;entrer, avec un meilleur prix et un SL plus serré</li>
-              <li>- Tous les FVG ne sont pas mitigés — mais ceux qui sont dans un contexte structurel fort le sont souvent</li>
+              <li>- Tous les FVG ne sont pas mitigés, mais ceux qui sont dans un contexte structurel fort le sont souvent</li>
               <li>- Ne pas confondre mitigation et invalidation : un FVG mitigé est rempli mais peut toujours réagir au prochain test</li>
             </ul>
           </section>
@@ -195,7 +195,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Rebond, mitigation profonde ou invalidation : ne pas confondre</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Quand le prix revient dans un FVG, il y a un piège classique : croire qu&apos;un FVG « rempli » est automatiquement mort. C&apos;est faux. Un FVG peut être traversé profondément, presque entièrement, et continuer à réagir parfaitement au test suivant. Ce qui invalide réellement un FVG, ce n&apos;est pas le remplissage — c&apos;est la <span className="text-white font-semibold">cassure structurelle propre</span> au-delà de la zone, accompagnée d&apos;une absence de réaction et d&apos;un contexte HTF qui ne soutient plus le scénario.
+              Quand le prix revient dans un FVG, il y a un piège classique : croire qu&apos;un FVG « rempli » est automatiquement mort. C&apos;est faux. Un FVG peut être traversé profondément, presque entièrement, et continuer à réagir parfaitement au test suivant. Ce qui invalide réellement un FVG, ce n&apos;est pas le remplissage, c&apos;est la <span className="text-white font-semibold">cassure structurelle propre</span> au-delà de la zone, accompagnée d&apos;une absence de réaction et d&apos;un contexte HTF qui ne soutient plus le scénario.
             </p>
 
             <div className="my-6">
@@ -210,7 +210,7 @@ export default function ContentFr() {
                   <li>- Le prix touche à peine la zone (haut du FVG)</li>
                   <li>- Réaction rapide, bougie de rejet visible</li>
                   <li>- Momentum fort à la reprise</li>
-                  <li>- Contexte directionnel clair — c&apos;est la lecture textbook du FVG fresh</li>
+                  <li>- Contexte directionnel clair, c&apos;est la lecture textbook du FVG fresh</li>
                 </ul>
               </div>
 
@@ -232,7 +232,7 @@ export default function ContentFr() {
                   <li>- Le prix remplit 70-95% de la zone, parfois jusqu&apos;au bas</li>
                   <li>- <span className="text-amber-400 font-semibold">Pas automatiquement une invalidation</span></li>
                   <li>- Ce qui compte : la réaction qui suit (mèche de rejet, bougie de reprise nette)</li>
-                  <li>- Si la structure HTF tient et que la réaction arrive — le FVG est mitigé mais valide</li>
+                  <li>- Si la structure HTF tient et que la réaction arrive, le FVG est mitigé mais valide</li>
                 </ul>
               </div>
 
@@ -243,7 +243,7 @@ export default function ContentFr() {
                   <li>- Cassure structurelle propre au-delà de la zone d&apos;invalidation</li>
                   <li>- Close net au-delà du FVG, pas juste une mèche</li>
                   <li>- Absence totale de réaction sur plusieurs bougies</li>
-                  <li>- Déplacement opposé propre — momentum continu dans le sens contraire</li>
+                  <li>- Déplacement opposé propre, momentum continu dans le sens contraire</li>
                   <li>- Contexte HTF qui ne soutient plus le scénario (BOS / CHoCH contraire)</li>
                 </ul>
               </div>
@@ -259,16 +259,16 @@ export default function ContentFr() {
             </div>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-3">Exemple concret — FVG haussier entre 1.0840 et 1.0860</p>
+              <p className="text-white font-semibold text-sm mb-3">Exemple concret. FVG haussier entre 1.0840 et 1.0860</p>
               <ul className="space-y-2 text-sm text-zinc-300">
                 <li>
-                  <span className="text-emerald-400 font-semibold">Cas A — Rebond immédiat :</span> le prix revient à 1.0860, marque une mèche, bougie verte de force, repart vers 1.0920. FVG fresh, setup A+, RR optimisé.
+                  <span className="text-emerald-400 font-semibold">Cas A. Rebond immédiat :</span> le prix revient à 1.0860, marque une mèche, bougie verte de force, repart vers 1.0920. FVG fresh, setup A+, RR optimisé.
                 </li>
                 <li>
-                  <span className="text-amber-400 font-semibold">Cas B — Mitigation profonde :</span> le prix descend à 1.0842 (presque tout le FVG), longue mèche d&apos;achat, close à 1.0855 puis reprise. Le FVG est mitigé mais le rejet est net — le setup reste actif. Stop à 1.0838.
+                  <span className="text-amber-400 font-semibold">Cas B. Mitigation profonde :</span> le prix descend à 1.0842 (presque tout le FVG), longue mèche d&apos;achat, close à 1.0855 puis reprise. Le FVG est mitigé mais le rejet est net, le setup reste actif. Stop à 1.0838.
                 </li>
                 <li>
-                  <span className="text-red-400 font-semibold">Cas C — Invalidation :</span> le prix traverse le FVG sans réaction, close à 1.0825, casse le swing low précédent. Pas de mèche d&apos;achat, momentum continu baissier. Le FVG est mort — pas de trade, on attend une nouvelle structure.
+                  <span className="text-red-400 font-semibold">Cas C. Invalidation :</span> le prix traverse le FVG sans réaction, close à 1.0825, casse le swing low précédent. Pas de mèche d&apos;achat, momentum continu baissier. Le FVG est mort, pas de trade, on attend une nouvelle structure.
                 </li>
               </ul>
             </div>
@@ -276,7 +276,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Avant de dire « FVG mort », vérifie : y a-t-il eu une bougie de réaction ?</li>
               <li>- Une mèche profonde sans close au-delà = mitigation, pas invalidation</li>
-              <li>- L&apos;invalidation se confirme dans la suite — pas dans la touche elle-même</li>
+              <li>- L&apos;invalidation se confirme dans la suite, pas dans la touche elle-même</li>
               <li>- Si HTF tient et structure intacte, un FVG profondément mitigé peut donner le meilleur signal de la session</li>
             </ul>
           </section>
@@ -290,20 +290,20 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une zone seule, même qualifiée, reste un pari probabiliste. La force d&apos;un PD Array augmente significativement quand plusieurs éléments structurels se superposent au même niveau de prix : un ancien support cassé devenu résistance, un FVG bearish dans la même bande, un sweep récent au-dessus. Quand trois éléments racontent la même histoire au même endroit, la zone devient un véritable point de pivot — c&apos;est ce qu&apos;on appelle une confluence. Les zones de confluence sont rares mais offrent les meilleurs setups du modèle ICT.
+              Une zone seule, même qualifiée, reste un pari probabiliste. La force d&apos;un PD Array augmente significativement quand plusieurs éléments structurels se superposent au même niveau de prix : un ancien support cassé devenu résistance, un FVG bearish dans la même bande, un sweep récent au-dessus. Quand trois éléments racontent la même histoire au même endroit, la zone devient un véritable point de pivot, c&apos;est ce qu&apos;on appelle une confluence. Les zones de confluence sont rares mais offrent les meilleurs setups du modèle ICT.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1 : à 1.1780, on retrouve simultanément un ancien support H1 cassé deux séances plus tôt, un FVG bearish laissé par l&apos;impulsion qui a cassé ce support, et un sweep récent juste au-dessus. Trois éléments, une seule zone. Quand le prix revient tester ce niveau, la probabilité de rejet est nettement supérieure à celle d&apos;un FVG isolé — le marché « voit » la zone par plusieurs canaux à la fois.
+                EUR/USD H1 : à 1.1780, on retrouve simultanément un ancien support H1 cassé deux séances plus tôt, un FVG bearish laissé par l&apos;impulsion qui a cassé ce support, et un sweep récent juste au-dessus. Trois éléments, une seule zone. Quand le prix revient tester ce niveau, la probabilité de rejet est nettement supérieure à celle d&apos;un FVG isolé, le marché « voit » la zone par plusieurs canaux à la fois.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Une zone seule = setup correct ; une confluence = setup premium</li>
               <li>- Empiler ancien support/résistance + FVG + sweep dans le même prix multiplie la fiabilité</li>
-              <li>- Les zones de confluence sont rares — on en repère 1 à 3 par semaine sur une paire majeure</li>
+              <li>- Les zones de confluence sont rares, on en repère 1 à 3 par semaine sur une paire majeure</li>
               <li>- Si aucun élément structurel ne se superpose au FVG, c&apos;est qu&apos;il faut probablement passer son tour</li>
             </ul>
           </section>
@@ -316,28 +316,28 @@ export default function ContentFr() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1 — Daily : direction et contexte</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. Daily : direction et contexte</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : EUR/USD Daily en structure LH/LL, résistance Daily à 1.1780, prix actuel 1.1735</li>
-                <li>- Conclusion : biais baissier — on cherchera des shorts sur PD Array haut</li>
+                <li>- Conclusion : biais baissier, on cherchera des shorts sur PD Array haut</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 2 — H1 : identifier les PD Arrays</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 2. H1 : identifier les PD Arrays</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : ancien support H1 cassé à 1.1780 + FVG bearish entre 1.1758 et 1.1770 + sweep récent à 1.1792</li>
-                <li>- Conclusion : zone confluente 1.1758-1.1780 — PD Array premium, on prépare un scénario short au retour</li>
+                <li>- Conclusion : zone confluente 1.1758-1.1780. PD Array premium, on prépare un scénario short au retour</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 3 — Retour dans la zone : surveiller la mitigation</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 3. Retour dans la zone : surveiller la mitigation</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : sur 3 séances, le prix remonte progressivement vers 1.1760, rentre dans le FVG</li>
-                <li>- Conclusion : la zone est testée — on passe en mode « guet » pour la réaction, pas d&apos;entrée encore</li>
+                <li>- Conclusion : la zone est testée, on passe en mode « guet » pour la réaction, pas d&apos;entrée encore</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 4 — Exécution potentielle (M15)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 4. Exécution potentielle (M15)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : sur M15, mèches hautes de rejet à 1.1768, puis bougie baissière impulsive qui casse le creux local à 1.1748</li>
-                <li>- Conclusion : entrée short à 1.1758 sur la cassure, SL à 1.1772 (au-dessus du sommet de rejet), TP vers la prochaine zone de liquidité basse à 1.1695. Si aucune bougie impulsive n&apos;apparaît, la zone échoue — pas d&apos;entrée</li>
+                <li>- Conclusion : entrée short à 1.1758 sur la cassure, SL à 1.1772 (au-dessus du sommet de rejet), TP vers la prochaine zone de liquidité basse à 1.1695. Si aucune bougie impulsive n&apos;apparaît, la zone échoue, pas d&apos;entrée</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -350,7 +350,7 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Un FVG ou un OB seul ne vaut rien sans contexte structurel — sweep, BOS ou impulsion juste avant.",
+              "Un FVG ou un OB seul ne vaut rien sans contexte structurel, sweep, BOS ou impulsion juste avant.",
               "Le marché tend à revenir mitiger les déséquilibres avant de continuer dans la direction de l’impulsion.",
               "Une confluence (support cassé + FVG + sweep dans la même zone) multiplie nettement la fiabilité du PD Array.",
               "Pas de contexte = on ignore le niveau ; pas de confluence = setup correct mais pas premium.",
@@ -360,9 +360,9 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur TradingView, repère un PD Array confluent sur la paire de ton choix et qualifie-le étape par étape."
             steps={[
-              "HTF (Daily/H4) : conclus un biais directionnel clair. Sans biais, ne descends pas plus bas — un PD Array hors biais est très peu fiable.",
+              "HTF (Daily/H4) : conclus un biais directionnel clair. Sans biais, ne descends pas plus bas, un PD Array hors biais est très peu fiable.",
               "H1 : recherche un FVG dans le sens du biais, créé par une impulsion juste après un sweep ou un BOS. Vérifie qu&apos;il coïncide avec un ancien support/résistance cassé. Si oui, tu as une confluence.",
-              "Attends le retour du prix dans le PD Array. Sur M15, observe la réaction : mèches de rejet + bougie impulsive = entrée validée. Si la zone est traversée sans réaction, le setup est invalidé — passe à la prochaine.",
+              "Attends le retour du prix dans le PD Array. Sur M15, observe la réaction : mèches de rejet + bougie impulsive = entrée validée. Si la zone est traversée sans réaction, le setup est invalidé, passe à la prochaine.",
             ]}
           />
 
@@ -377,9 +377,9 @@ export default function ContentFr() {
             correctIndex={1}
             explanation="Un PD Array isolé reste un pari probabiliste. La fiabilité augmente significativement quand plusieurs éléments racontent la même histoire au même niveau : ancien support cassé + FVG + sweep récent = confluence. C&apos;est précisément cette superposition qui fait passer un setup correct à un setup premium."
             answerExplanations={[
-              "Faux. Un FVG isolé, sans autre niveau structurel autour, est un setup faible. Le marché peut le traverser sans réaction. L&apos;isolation n&apos;est pas une qualité — c&apos;est l&apos;absence de confluence.",
+              "Faux. Un FVG isolé, sans autre niveau structurel autour, est un setup faible. Le marché peut le traverser sans réaction. L&apos;isolation n&apos;est pas une qualité, c&apos;est l&apos;absence de confluence.",
               "Correct. La confluence (ancien support cassé + FVG + sweep) signifie que plusieurs lectures structurelles convergent au même prix. Le marché « voit » la zone par plusieurs canaux, ce qui augmente nettement la probabilité de réaction.",
-              "Faux. Un FVG éloigné de toute structure est tout sauf premium. L&apos;ICT cherche la concentration d&apos;éléments, pas leur dispersion — un niveau isolé n&apos;a aucune raison particulière de tenir.",
+              "Faux. Un FVG éloigné de toute structure est tout sauf premium. L&apos;ICT cherche la concentration d&apos;éléments, pas leur dispersion, un niveau isolé n&apos;a aucune raison particulière de tenir.",
               "Faux. Un FVG né sans impulsion préalable, en simple drift latéral, n&apos;est pas qualifié. L&apos;impulsion est précisément ce qui donne sa valeur au FVG : elle traduit l&apos;intention institutionnelle qui a déséquilibré le prix.",
             ]}
           />

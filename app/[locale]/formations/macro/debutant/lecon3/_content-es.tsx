@@ -58,7 +58,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Los datos macro a vigilar — qué mirar y cuándo
+            Los datos macro a vigilar, qué mirar y cuándo
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -388,7 +388,7 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "El mercado reacciona a la sorpresa (real vs previsión), no al dato bruto",
-              "5 datos dominan: NFP, CPI, FOMC, PMI, GDP — concéntrate en ellos",
+              "5 datos dominan: NFP, CPI, FOMC, PMI, GDP, concéntrate en ellos",
               "Los eventos de 3 estrellas son los únicos que merecen tu atención",
               "Cuanto mayor es la diferencia entre previsión y realidad, más violento es el movimiento",
             ]}
@@ -419,10 +419,10 @@ export default function ContentEs() {
             correctIndex={2}
             explanation="El mercado no reacciona al dato solo, sino a la diferencia con las expectativas. Aquí, la inflación sale en 3.8% en lugar del 3.0% esperado → gran sorpresa inflacionaria → movimiento violento casi garantizado. Las opciones A, B y D son falsas: el sentido siempre depende del contexto (la dirección del movimiento, en sí, depende de si una inflación más alta se percibe como positiva o negativa según la situación económica del momento). Este principio se aplica a todos los activos: forex, oro, índices, crypto."
             answerExplanations={[
-              "Falso. Que un dato esté previsto no significa que no tendrá impacto. 3.8% vs 3.0% esperado representa una diferencia importante — el mercado siempre reacciona a una sorpresa así.",
+              "Falso. Que un dato esté previsto no significa que no tendrá impacto. 3.8% vs 3.0% esperado representa una diferencia importante, el mercado siempre reacciona a una sorpresa así.",
               "Falso. La dirección del movimiento depende del contexto económico. Una inflación más alta puede percibirse como positiva o negativa según la situación. Lo único seguro: habrá un movimiento fuerte.",
               "Correcto. 3.8% vs 3.0% esperado = +0.8% de diferencia en la inflación, es una gran sorpresa. El mercado va a reaccionar con fuerza. La dirección exacta depende del contexto, pero el movimiento violento está casi garantizado.",
-              "Falso. La dirección depende del contexto económico, no de una regla fija. Lo único seguro es que habrá un movimiento fuerte — no necesariamente a la baja.",
+              "Falso. La dirección depende del contexto económico, no de una regla fija. Lo único seguro es que habrá un movimiento fuerte, no necesariamente a la baja.",
             ]}
           />
 
@@ -465,10 +465,10 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 2 — Los 4 grandes bancos centrales
+                Lección 2. Los 4 grandes bancos centrales
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Entender la inflación — Pronto disponible →
+                Entender la inflación. Pronto disponible →
               </span>
             </div>
 

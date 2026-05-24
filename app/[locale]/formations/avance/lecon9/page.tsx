@@ -10,18 +10,18 @@ function ContentFr() {
     <LessonPage
       formationId="avance"
       lessonId="lecon9"
-      title="Backtesting — valider sa stratégie"
-      subtitle="Avant de risquer de l'argent réel, tu dois avoir la preuve que ta stratégie fonctionne. Le backtesting est cette preuve — construite sur des données historiques, pas sur l'espoir."
+      title="Backtesting, valider sa stratégie"
+      subtitle="Avant de risquer de l'argent réel, tu dois avoir la preuve que ta stratégie fonctionne. Le backtesting est cette preuve, construite sur des données historiques, pas sur l'espoir."
       duration="22 min"
       lessonNumber={9}
-      prev={{ href: "/formations/avance/lecon8", label: "Leçon 8 — Journaling" }}
+      prev={{ href: "/formations/avance/lecon8", label: "Leçon 8 : Journaling" }}
       next={null}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Qu'est-ce que le backtesting ?</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Le backtesting consiste à appliquer ta stratégie sur des données de marché passées pour évaluer sa performance. Tu rejoues des situations historiques comme si tu tradais en temps réel — et tu enregistres chaque décision dans un journal.
+          Le backtesting consiste à appliquer ta stratégie sur des données de marché passées pour évaluer sa performance. Tu rejoues des situations historiques comme si tu tradais en temps réel, et tu enregistres chaque décision dans un journal.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Ce n'est pas la même chose que regarder un graphique passé et dire "j'aurais vendu ici". Le backtesting rigoureux cache les bougies futures (replay mode) et force des décisions en temps réel simulé.
@@ -37,7 +37,7 @@ function ContentFr() {
         <h2 className="text-lg font-semibold text-white mb-3">Comment faire un backtest rigoureux</h2>
         <div className="space-y-2">
           {[
-            { step: "1", text: "Définis ta stratégie précisément : quelles confluences sont requises ? Sur quel timeframe ? Dans quelles Killzones ? Sois spécifique — une stratégie vague donne un backtest vague." },
+            { step: "1", text: "Définis ta stratégie précisément : quelles confluences sont requises ? Sur quel timeframe ? Dans quelles Killzones ? Sois spécifique, une stratégie vague donne un backtest vague." },
             { step: "2", text: "Utilise TradingView en mode Replay (flèche 'play' en haut) ou Forex Tester. Remonte 6 à 12 mois en arrière et avance bougie par bougie." },
             { step: "3", text: "Applique ta stratégie exactement comme tu le ferais en live : identifie les setups, marque l'entrée, le SL et le TP avant que la bougie suivante se forme." },
             { step: "4", text: "Enregistre chaque trade dans ton journal : confluences présentes, résultat en R, screenshot." },
@@ -57,7 +57,7 @@ function ContentFr() {
           <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
         </div>
         <p className="text-base text-zinc-300 leading-relaxed">
-          Si tu backtestes avec un capital de 200 à 1 000 €, utilise les vrais % de ta grille de risque (cf. Débutant leçon 8) — pas la règle théorique du 1%. Backtester avec 1% sur un compte de 300 € revient à risquer 3 € par trade, inapplicable avec les lots disponibles. Un backtest calibré sur ton capital réel te donnera des résultats exploitables en live — pas des chiffres déconnectés de ta réalité.
+          Si tu backtestes avec un capital de 200 à 1 000 €, utilise les vrais % de ta grille de risque (cf. Débutant leçon 8), pas la règle théorique du 1%. Backtester avec 1% sur un compte de 300 € revient à risquer 3 € par trade, inapplicable avec les lots disponibles. Un backtest calibré sur ton capital réel te donnera des résultats exploitables en live, pas des chiffres déconnectés de ta réalité.
         </p>
       </div>
 
@@ -71,7 +71,7 @@ function ContentFr() {
             { metric: "Win Rate", good: "> 40%", desc: "Pourcentage de trades gagnants. Avec un bon R/R, même 40% de win rate peut être profitable." },
             { metric: "R moyen", good: "> +0.5R", desc: "Gain moyen par trade en R. Un win rate de 50% avec R moyen de +1R = très rentable." },
             { metric: "Profit Factor", good: "> 1.5", desc: "Total des gains ÷ total des pertes. Doit être supérieur à 1.0 pour être rentable." },
-            { metric: "Drawdown max", good: "< 15%", desc: "Perte maximale depuis un pic. Un drawdown élevé teste ta psychologie en live — connais-le à l'avance." },
+            { metric: "Drawdown max", good: "< 15%", desc: "Perte maximale depuis un pic. Un drawdown élevé teste ta psychologie en live, connais-le à l'avance." },
             { metric: "Nombre de trades", good: "> 50", desc: "En dessous de 50 trades, les résultats ne sont pas statistiquement fiables. Vise 100 minimum." },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-4 bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -95,7 +95,7 @@ function ContentFr() {
           {[
             { label: "Hindsight bias (biais rétrospectif)", detail: "Croire que tu aurais 'évidemment' vu le setup parce que tu vois les bougies passées. Le replay bougie par bougie est le seul remède." },
             { label: "Over-fitting", detail: "Optimiser ta stratégie jusqu'à ce qu'elle performe parfaitement sur le passé. En live, cette stratégie surgénérée sur les données historiques échoue." },
-            { label: "Ignorer les frais", detail: "Chaque trade a un coût (spread, commission). Intègre-les dans ton backtest — ils peuvent transformer un edge positif en edge négatif." },
+            { label: "Ignorer les frais", detail: "Chaque trade a un coût (spread, commission). Intègre-les dans ton backtest : ils peuvent transformer un edge positif en edge négatif." },
             { label: "Backtest sur trop peu de conditions", detail: "Un backtest sur 3 mois de hausse ne dit rien de la performance en range ou en baisse. Teste sur au moins 12 mois avec différentes conditions." },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -120,10 +120,10 @@ function ContentFr() {
       <LessonKeyPoints
         points={[
           "Le backtesting valide ta stratégie sur des données passées avant de risquer de l'argent réel.",
-          "Utilise le mode Replay de TradingView pour simuler le temps réel — jamais le graphique statique.",
+          "Utilise le mode Replay de TradingView pour simuler le temps réel, jamais le graphique statique.",
           "50 trades minimum pour la validation, 100 pour une confiance statistique solide.",
           "Les métriques clés : win rate (>40%), R moyen (>+0.5R), profit factor (>1.5), drawdown (<15%).",
-          "Intègre les frais (spread, commission) dans chaque trade — ils comptent sur la durée.",
+          "Intègre les frais (spread, commission) dans chaque trade, ils comptent sur la durée.",
         ]}
       />
 
@@ -140,9 +140,9 @@ function ContentFr() {
       <LessonQuiz
         question="Après 20 trades en backtest, tu obtiens un win rate de 70% et un profit factor de 1.8. Tu décides de passer en live immédiatement. Quelle est l'erreur ?"
         options={[
-          "Le win rate de 70% est trop élevé — ce n'est pas réaliste",
+          "Le win rate de 70% est trop élevé, ce n'est pas réaliste",
           "20 trades est un échantillon trop petit pour valider une stratégie de façon statistiquement fiable",
-          "Le profit factor de 1.8 est insuffisant — il faut au moins 3.0 pour trader en live",
+          "Le profit factor de 1.8 est insuffisant, il faut au moins 3.0 pour trader en live",
           "Il faut d'abord backtester sur 5 instruments différents avant de trader EUR/USD",
         ]}
         correctIndex={1}
@@ -150,7 +150,7 @@ function ContentFr() {
         answerExplanations={[
           "Faux. Un win rate de 70% n'est pas irréaliste si le R/R est favorable (>1:1). Certaines stratégies scalping ou à hautes confluences peuvent atteindre ces chiffres. Ce n'est pas le problème ici.",
           "Correct. 20 trades = variance aléatoire trop élevée. Le même backtest avec 20 autres trades pourrait donner 30% de win rate et un profit factor de 0.8. Il faut 50 à 100 trades pour que les statistiques soient significatives.",
-          "Faux. Un profit factor de 1.8 est déjà solide — au-dessus de 1.5 est généralement un objectif valide. 3.0 est exceptionnel et n'est pas requis pour trader en live avec un edge réel.",
+          "Faux. Un profit factor de 1.8 est déjà solide, au-dessus de 1.5 est généralement un objectif valide. 3.0 est exceptionnel et n'est pas requis pour trader en live avec un edge réel.",
           "Faux. Backtester sur plusieurs instruments peut être utile mais n'est pas une condition préalable obligatoire. La priorité est d'avoir un échantillon suffisamment large sur un seul instrument avant de généraliser.",
         ]}
       />

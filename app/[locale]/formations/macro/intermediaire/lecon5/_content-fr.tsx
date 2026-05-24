@@ -58,7 +58,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Les corrélations — comment les marchés bougent ensemble (et pourquoi tu te fais piéger)
+            Les corrélations, comment les marchés bougent ensemble (et pourquoi tu te fais piéger)
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -509,10 +509,10 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 4 — Sessions de trading et liquidité
+                Leçon 4. Sessions de trading et liquidité
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Construire son biais hebdomadaire — Bientôt disponible →
+                Construire son biais hebdomadaire. Bientôt disponible →
               </span>
             </div>
 

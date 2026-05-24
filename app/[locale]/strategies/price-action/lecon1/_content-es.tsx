@@ -200,10 +200,10 @@ export default function ContentEs() {
           <LessonExercice
             description="En XAU/USD H4, una vela cierra con estas características: apertura 4 580$, máximo 4 595$, mínimo 4 530$, cierre 4 588$. ¿Cómo se lee esta vela según los 4 criterios del balance de fuerzas?"
             steps={[
-              "Criterio 1 — Tamaño del cuerpo: apertura 4 580$ a cierre 4 588$ = cuerpo alcista de 8$ (a comparar con el promedio de las 20 velas recientes)",
-              "Criterio 2 — Mechas: mecha inferior de 50$ (4 580$ - 4 530$), mecha superior de 7$ (4 595$ - 4 588$) — mecha inferior 6 veces más larga que el cuerpo, señal de rechazo alcista potente abajo",
-              "Criterio 3 — Posición del cierre: 4 588$ dentro del rango 4 530$-4 595$ = 89% del rango, en el tercio superior, dominación de los compradores al final del período",
-              "Criterio 4 — Contexto adyacente: a relacionar con las velas anteriores y un nivel estructural cercano",
+              "Criterio 1. Tamaño del cuerpo: apertura 4 580$ a cierre 4 588$ = cuerpo alcista de 8$ (a comparar con el promedio de las 20 velas recientes)",
+              "Criterio 2. Mechas: mecha inferior de 50$ (4 580$ - 4 530$), mecha superior de 7$ (4 595$ - 4 588$), mecha inferior 6 veces más larga que el cuerpo, señal de rechazo alcista potente abajo",
+              "Criterio 3. Posición del cierre: 4 588$ dentro del rango 4 530$-4 595$ = 89% del rango, en el tercio superior, dominación de los compradores al final del período",
+              "Criterio 4. Contexto adyacente: a relacionar con las velas anteriores y un nivel estructural cercano",
               "Síntesis: la vela corresponde al patrón pin bar alcista (cuerpo reducido + mecha inferior larga + cierre arriba), señal de rechazo a la baja particularmente operativa si aparece al contacto con un support o una zona Order Block",
             ]}
           />
@@ -257,7 +257,7 @@ export default function ContentEs() {
             <div className="mt-5 flex items-center justify-between">
               <span />
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 2 — Pin bar — el rechazo de nivel
+                Lección 2, Pin bar, el rechazo de nivel
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

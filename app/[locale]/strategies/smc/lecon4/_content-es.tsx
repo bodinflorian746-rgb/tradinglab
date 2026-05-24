@@ -255,7 +255,7 @@ export default function ContentEs() {
             description="En XAU/USD H4, el mercado muestra 2 equal highs en 4 680$ y un mínimo reciente en 4 600$. Una vela H4 perfora 4 680$, imprime una mecha en 4 690$, y luego cierra en 4 660$. Las velas siguientes crean un FVG bearish entre 4 645$ y 4 658$. El precio regresa luego al FVG. ¿Cómo se construye el plan de trade en este setup?"
             steps={[
               "Identificar la liquidity: los 2 equal highs en 4 680$ constituyen una BSL. La mecha en 4 690$ confirma el sweep por encima del nivel.",
-              "Confirmar el rechazo: el cierre en 4 660$, debajo de los equal highs, valida la reintegración — el breakout era un sweep, no una ruptura.",
+              "Confirmar el rechazo: el cierre en 4 660$, debajo de los equal highs, valida la reintegración, el breakout era un sweep, no una ruptura.",
               "Localizar el FVG: el desequilibrio bearish se sitúa entre 4 645$ y 4 658$. El regreso del precio a esta zona da el punto de entrada short.",
               "Plantear el plan: entrada short 4 655$ (dentro del FVG), stop loss 4 695$ (arriba de la mecha del sweep), take profit 4 605$ (objetivo la SSL debajo del mínimo 4 600$).",
               "Calcular el R/R: riesgo 40$, ganancia potencial 50$, R/R 1,25. El setup sigue siendo aceptable pero presenta un rendimiento menos favorable que el caso EUR/USD H4.",
@@ -316,7 +316,7 @@ export default function ContentEs() {
                 Lección 3
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 5 — Próximamente
+                Lección 5. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

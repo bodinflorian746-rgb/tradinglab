@@ -149,7 +149,7 @@ export default function ContentEs() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Breakout rechazado.</span> <span className="text-zinc-300">El precio vuelve a cerrar por encima (o por debajo) de la neckline en las 1-3 velas siguientes a la entrada. Patrón invalidado, salida inmediata.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Vela de rechazo violenta.</span> <span className="text-zinc-300">Una vela verde grande englobando las 2-3 velas bajistas previas = señal de absorción. Salida inmediata incluso sin re-breakout de la neckline.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Volumen incoherente.</span> <span className="text-zinc-300">Breakout inicial sin volumen particular + recuperación con volumen grande = lectura invertida. Patrón débil, salida inmediata.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. News imprevista en la ventana.</span> <span className="text-zinc-300">News macro que sale durante el trade (Fed minutes, geopolítica, datos inesperados). Salida por precaución requerida — las news destruyen los patrones.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. News imprevista en la ventana.</span> <span className="text-zinc-300">News macro que sale durante el trade (Fed minutes, geopolítica, datos inesperados). Salida por precaución requerida, las news destruyen los patrones.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm md:col-span-2"><span className="text-white font-semibold">5. Tiempo transcurrido sin confirmación.</span> <span className="text-zinc-300">Después de 5-8 velas en el timeframe de entrada (H1 o H4) sin progresión hacia el TP, patrón débil. La salida no es obligatoria, pero SL ajustado al break-even como mínimo. Si el patrón funcionaba, ya habría arrancado.</span></div>
             </div>
           </section>
@@ -163,10 +163,10 @@ export default function ContentEs() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Visualmente, la invalidación se lee de inmediato en el gráfico. El mercado señala literalmente la invalidación, la única acción requerida es escuchar la señal y ejecutar el corte sin debate.</p>
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Señales visuales para detectar:</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Re-cierre franco por encima (o por debajo) del nivel roto — criterio 1.</li>
-              <li>- Vela de absorción verde grande englobando las 2-3 bajistas previas — criterio 2.</li>
-              <li>- Volumen contrario al breakout inicial — criterio 3.</li>
-              <li>- Estancamiento prolongado sin progresión hacia el TP — criterio 5.</li>
+              <li>- Re-cierre franco por encima (o por debajo) del nivel roto, criterio 1.</li>
+              <li>- Vela de absorción verde grande englobando las 2-3 bajistas previas, criterio 2.</li>
+              <li>- Volumen contrario al breakout inicial, criterio 3.</li>
+              <li>- Estancamiento prolongado sin progresión hacia el TP, criterio 5.</li>
             </ul>
           </section>
 
@@ -256,11 +256,11 @@ export default function ContentEs() {
           <LessonExercice
             description="Entraste short XAU/USD en 4 720$ en un double top. SL en 4 760$, TP en 4 640$. Posición abierta desde hace 1 hora. El precio baja a 4 705$, y luego sube con fuerza. Vela H1 que cierra en 4 745$ con un volumen 2x superior al promedio. ¿Qué haces?"
             steps={[
-              "Verifica el criterio 1 — breakout rechazado: el precio rompió de nuevo la neckline en 4 720$ hacia arriba, SÍ",
-              "Verifica el criterio 2 — vela de rechazo violenta: vela verde ancha que cierra en 4 745$, SÍ",
-              "Verifica el criterio 3 — volumen incoherente: volumen 2x superior durante la subida, SÍ",
+              "Verifica el criterio 1, breakout rechazado: el precio rompió de nuevo la neckline en 4 720$ hacia arriba, SÍ",
+              "Verifica el criterio 2, vela de rechazo violenta: vela verde ancha que cierra en 4 745$, SÍ",
+              "Verifica el criterio 3, volumen incoherente: volumen 2x superior durante la subida, SÍ",
               "3 criterios sobre 5 encendidos: ningún debate, cortas de inmediato al cierre",
-              "Cortar en 4 745$: pérdida de 25$ por unidad en vez de los 40$ previstos si esperabas el SL en 4 760$ — salvas más de un tercio de tu riesgo",
+              "Cortar en 4 745$: pérdida de 25$ por unidad en vez de los 40$ previstos si esperabas el SL en 4 760$, salvas más de un tercio de tu riesgo",
             ]}
           />
 
@@ -273,7 +273,7 @@ export default function ContentEs() {
               "El RSI vuelve por encima de 50",
             ]}
             correctIndex={1}
-            explanation="El criterio 1 — breakout rechazado — es el disparador principal. Si el precio vuelve a cerrar por encima de la neckline en las 1-3 velas que siguen a la entrada, el patrón queda invalidado. El mercado señala literalmente la invalidación. La salida es inmediata."
+            explanation="El criterio 1, breakout rechazado, es el disparador principal. Si el precio vuelve a cerrar por encima de la neckline en las 1-3 velas que siguen a la entrada, el patrón queda invalidado. El mercado señala literalmente la invalidación. La salida es inmediata."
           />
 
           <LessonQuiz

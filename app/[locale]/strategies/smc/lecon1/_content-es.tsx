@@ -232,10 +232,10 @@ export default function ContentEs() {
               La cartografía SMC de un gráfico sigue un método top-down estructurado.
             </p>
             <ol className="space-y-2 text-sm text-zinc-300 list-decimal pl-5">
-              <li><span className="font-semibold text-white">Daily o Weekly</span> — identificar los 3-5 últimos swings mayores (estructura externa)</li>
-              <li><span className="font-semibold text-white">Clasificar la fase</span> — acumulación, expansión, o distribución</li>
-              <li><span className="font-semibold text-white">H4</span> — verificar la alineación de la estructura interna con la estructura externa</li>
-              <li><span className="font-semibold text-white">H1 o M15</span> — pre-identificar zonas de interés (HL, liquidity, OB potenciales)</li>
+              <li><span className="font-semibold text-white">Daily o Weekly</span>, identificar los 3-5 últimos swings mayores (estructura externa)</li>
+              <li><span className="font-semibold text-white">Clasificar la fase</span>, acumulación, expansión, o distribución</li>
+              <li><span className="font-semibold text-white">H4</span>, verificar la alineación de la estructura interna con la estructura externa</li>
+              <li><span className="font-semibold text-white">H1 o M15</span>, pre-identificar zonas de interés (HL, liquidity, OB potenciales)</li>
             </ol>
           </section>
 
@@ -306,8 +306,8 @@ export default function ContentEs() {
           <LessonExercice
             description="En EUR/USD, el Daily muestra una estructura bajista con LL/LH en las últimas 6 semanas. El H4 muestra desde hace 3 días una estructura interna con un HH reciente en 1.1780 y un HL en 1.1720. El precio actual es 1.1760. ¿Cómo clasificar esta situación y qué sesgo operativo deriva?"
             steps={[
-              "Identificar la estructura externa Daily: estructura bajista confirmada (LL/LH) en las últimas 6 semanas — sesgo direccional mayor bajista.",
-              "Identificar la estructura interna H4: estructura alcista de corto plazo (HH reciente en 1.1780, HL en 1.1720) — movimiento contratendencia respecto al Daily.",
+              "Identificar la estructura externa Daily: estructura bajista confirmada (LL/LH) en las últimas 6 semanas, sesgo direccional mayor bajista.",
+              "Identificar la estructura interna H4: estructura alcista de corto plazo (HH reciente en 1.1780, HL en 1.1720), movimiento contratendencia respecto al Daily.",
               "Clasificar la situación: estructura interna H4 alcista INTERNA a una estructura externa Daily bajista → pullback técnico dentro de la tendencia bajista mayor.",
               "Verificar la ausencia de señal de retroceso: ningún BOS contratendencia Daily ni CHoCH confirmado. La estructura externa Daily sigue válida.",
               "Sesgo operativo: SHORT, en el sentido de la estructura externa Daily. Ningún setup long es explotable mientras el Daily no produzca BOS + CHoCH. La estructura interna H4 sirve únicamente para identificar la zona de rechazo potencial alrededor de 1.1780 (último HH H4 = resistencia short potencial al contacto).",
@@ -366,7 +366,7 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Módulo SMC — Vista general
+                Módulo SMC. Vista general
               </Link>
               <Link href="/strategies/smc/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Lección 2

@@ -11,12 +11,12 @@ function ContentFr() {
     <LessonPage
       formationId="intermediaire"
       lessonId="lecon4"
-      title="Tendances — trader dans le sens du marché"
+      title="Tendances, trader dans le sens du marché"
       subtitle="90% des traders perdants tradent contre la tendance sans le savoir. Apprendre à lire la direction dominante, c'est mettre les probabilités de ton côté avant même d'ouvrir un trade."
       duration="18 min"
       lessonNumber={4}
-      prev={{ href: "/formations/intermediaire/lecon3", label: "Leçon 3 — Supply & Demand" }}
-      next={{ href: "/formations/intermediaire/lecon5", label: "Leçon 5 — Confluences" }}
+      prev={{ href: "/formations/intermediaire/lecon3", label: "Leçon 3 : Supply & Demand" }}
+      next={{ href: "/formations/intermediaire/lecon5", label: "Leçon 5 : Confluences" }}
     >
 
       {/* ── Ce que tu dois VOIR ── */}
@@ -39,7 +39,7 @@ function ContentFr() {
           <div className="bg-zinc-800/50 border border-zinc-700/50 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-zinc-300 mb-2">Range</p>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              Le prix va et vient entre deux niveaux horizontaux. Ni les acheteurs ni les vendeurs ne gagnent clairement. Pas de trade directionnel — attendre.
+              Le prix va et vient entre deux niveaux horizontaux. Ni les acheteurs ni les vendeurs ne gagnent clairement. Pas de trade directionnel, attendre.
             </p>
           </div>
         </div>
@@ -53,7 +53,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-3">Teste ton instinct</p>
         <h2 className="text-lg font-semibold text-white mb-4">Quand entres-tu ?</h2>
         <p className="text-zinc-300 text-sm leading-relaxed mb-4">
-          Le prix est en tendance haussière. Il retrace vers le Higher Low. À ce stade précis — que fais-tu ?
+          Le prix est en tendance haussière. Il retrace vers le Higher Low. À ce stade précis, que fais-tu ?
         </p>
         <RetracementInteractive />
       </section>
@@ -66,9 +66,9 @@ function ContentFr() {
         </p>
         <div className="space-y-2.5">
           {[
-            { label: "Daily ou H4 — le biais principal", detail: "C'est la tendance que tu dois respecter. Si Daily est haussier, tu cherches uniquement des achats." },
-            { label: "H1 — les zones d'entrée", detail: "En tendance haussière Daily, le H1 montre les retracements (corrections). Ce sont tes fenêtres d'entrée." },
-            { label: "M15 — le timing précis", detail: "Sur M15, tu cherches le signal final (rejet, pin bar, engulfing). C'est le déclencheur de l'entrée." },
+            { label: "Daily ou H4 : le biais principal", detail: "C'est la tendance que tu dois respecter. Si Daily est haussier, tu cherches uniquement des achats." },
+            { label: "H1 : les zones d'entrée", detail: "En tendance haussière Daily, le H1 montre les retracements (corrections). Ce sont tes fenêtres d'entrée." },
+            { label: "M15 : le timing précis", detail: "Sur M15, tu cherches le signal final (rejet, pin bar, engulfing). C'est le déclencheur de l'entrée." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
@@ -85,7 +85,7 @@ function ContentFr() {
 
       {/* ── Scénario réel ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Scénario réel — trader le retracement</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Scénario réel : trader le retracement</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           C'est le setup de base en tendance : attendre que le prix revienne sur un niveau de structure, puis entrer dans le sens de la tendance.
         </p>
@@ -112,7 +112,7 @@ function ContentFr() {
           {[
             { n: "1", t: "Ouvre le Daily", d: "Regarde la direction générale : les sommets et creux montent-ils ou descendent-ils ?" },
             { n: "2", t: "Note ton biais : achats ou ventes", d: "Haussier = achats seulement. Baissier = ventes seulement. Range = pas de trade." },
-            { n: "3", t: "Descends en H4 — où est le dernier HL ou LH ?", d: "C'est là que tu vas surveiller pour entrer. Le retracement doit arriver sur cette zone." },
+            { n: "3", t: "Descends en H4, où est le dernier HL ou LH ?", d: "C'est là que tu vas surveiller pour entrer. Le retracement doit arriver sur cette zone." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.n}</span>
@@ -148,7 +148,7 @@ function ContentFr() {
             <span className="text-lg">—</span>
             <div>
               <p className="text-sm font-semibold text-zinc-300">Range</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Pas de trade directionnel. Si tu veux trader le range, tu achètes le bas et vends le haut — mais c'est avancé. Pour l'instant, évite.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Pas de trade directionnel. Si tu veux trader le range, tu achètes le bas et vends le haut, mais c'est avancé. Pour l'instant, évite.</p>
             </div>
           </div>
         </div>
@@ -202,18 +202,18 @@ function ContentFr() {
       <LessonQuiz
         question="EUR/USD est clairement haussier en Daily (HH/HL). Le prix vient de faire un nouveau sommet à 1.0950 et recule maintenant. Il descend vers 1.0860 (dernier Higher Low). Tu vois une pin bar haussière sur ce niveau en H1. Que fais-tu ?"
         options={[
-          "Tu attends encore — peut-être que le retracement va continuer jusqu'à 1.0800",
+          "Tu attends encore, peut-être que le retracement va continuer jusqu'à 1.0800",
           "Tu achètes sur la pin bar, SL sous 1.0850, TP vers 1.0990",
-          "Tu vends — le prix descend, c'est un signal de faiblesse",
-          "Tu ne fais rien — le marché est trop incertain en ce moment",
+          "Tu vends, le prix descend, c'est un signal de faiblesse",
+          "Tu ne fais rien, le marché est trop incertain en ce moment",
         ]}
         correctIndex={1}
         explanation="Tous les éléments sont alignés : tendance haussière Daily, retracement sur le dernier HL, signal de confirmation (pin bar). C'est le setup en tendance par excellence. Tu entres en achat avec SL sous le HL et TP vers le dépassement du dernier HH."
         answerExplanations={[
           "Trop prudent. Tu as 3 éléments alignés : tendance, niveau de structure, signal. C'est exactement le setup que tu attendais. Attendre davantage sans raison, c'est laisser passer une opportunité valide.",
           "Correct. Tendance haussière + retracement sur HL + signal pin bar = setup à haute probabilité. SL à 1.0810 (sous le HL à 1.0860), TP vers le prochain HH (1.0960). R/R d'environ 1:2.",
-          "Faux. Le prix qui descend vers un HL en tendance haussière, c'est un retracement normal — une correction. Ce n'est pas de la faiblesse. C'est l'opportunité d'achat que tu attendais.",
-          "Faux. L'incertitude ne justifie pas l'inaction quand le setup est clairement défini. Tendance + structure + signal = trade valide. L'incertitude est toujours présente — la gestion du risque (SL + taille) s'en charge.",
+          "Faux. Le prix qui descend vers un HL en tendance haussière, c'est un retracement normal, une correction. Ce n'est pas de la faiblesse. C'est l'opportunité d'achat que tu attendais.",
+          "Faux. L'incertitude ne justifie pas l'inaction quand le setup est clairement défini. Tendance + structure + signal = trade valide. L'incertitude est toujours présente, la gestion du risque (SL + taille) s'en charge.",
         ]}
       />
 

@@ -255,7 +255,7 @@ export default function ContentFr() {
             description="Sur XAU/USD H4, le marché affiche 2 equal highs à 4 680$ et un creux récent à 4 600$. Une bougie H4 perce 4 680$, imprime une mèche à 4 690$, puis clôture à 4 660$. Les bougies suivantes créent un FVG bearish entre 4 645$ et 4 658$. Le prix revient ensuite dans le FVG. Comment se construit le plan de trade sur ce setup ?"
             steps={[
               "Identifier la liquidité : les 2 equal highs à 4 680$ constituent une BSL. La mèche à 4 690$ confirme le sweep au-dessus du niveau.",
-              "Confirmer le rejet : la clôture à 4 660$, sous les equal highs, valide la réintégration — le breakout était un sweep, pas une cassure.",
+              "Confirmer le rejet : la clôture à 4 660$, sous les equal highs, valide la réintégration, le breakout était un sweep, pas une cassure.",
               "Localiser le FVG : le déséquilibre bearish se situe entre 4 645$ et 4 658$. Le retour du prix dans cette zone fournit le point d’entrée short.",
               "Poser le plan : entrée short 4 655$ (dans le FVG), stop loss 4 695$ (au-dessus de la mèche du sweep), take profit 4 605$ (cible la SSL sous le creux 4 600$).",
               "Calculer le R/R : risque 40$, gain potentiel 50$, R/R 1,25. Le setup reste acceptable mais présente un rendement moins favorable que le cas EUR/USD H4.",
@@ -316,7 +316,7 @@ export default function ContentFr() {
                 Leçon 3
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 5 — À venir
+                Leçon 5. À venir
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

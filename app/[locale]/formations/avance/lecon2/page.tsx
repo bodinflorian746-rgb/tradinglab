@@ -11,11 +11,11 @@ function ContentFr() {
       formationId="avance"
       lessonId="lecon2"
       title="Fair Value Gap"
-      subtitle="Les Fair Value Gaps sont des déséquilibres laissés par des mouvements institutionnels rapides. Le marché cherche à les combler — et c'est là que se cachent certaines des meilleures entrées."
+      subtitle="Les Fair Value Gaps sont des déséquilibres laissés par des mouvements institutionnels rapides. Le marché cherche à les combler, et c'est là que se cachent certaines des meilleures entrées."
       duration="20 min"
       lessonNumber={2}
-      prev={{ href: "/formations/avance/lecon1", label: "Leçon 1 — Liquidité" }}
-      next={{ href: "/formations/avance/lecon3", label: "Leçon 3 — Order Blocks" }}
+      prev={{ href: "/formations/avance/lecon1", label: "Leçon 1 : Liquidité" }}
+      next={{ href: "/formations/avance/lecon3", label: "Leçon 3 : Order Blocks" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -23,14 +23,14 @@ function ContentFr() {
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Un Fair Value Gap (FVG) est un déséquilibre de prix créé lorsqu'un mouvement
           est tellement rapide que les bougies adjacentes ne se chevauchent pas.
-          Il reste une zone de prix où les échanges n'ont pas eu lieu — le marché
+          Il reste une zone de prix où les échanges n'ont pas eu lieu, le marché
           tend à y revenir pour "combler" ce déséquilibre.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Principe :</span> un FVG se
             forme sur 3 bougies consécutives. La zone entre la mèche haute de la
-            bougie 1 et la mèche basse de la bougie 3 n'a pas été échangée — c'est
+            bougie 1 et la mèche basse de la bougie 3 n'a pas été échangée, c'est
             le gap.
           </p>
         </div>
@@ -54,7 +54,7 @@ function ContentFr() {
             <div className="space-y-2">
               {[
                 { label: "Bougie 1", desc: "La bougie qui précède le mouvement. Retiens sa mèche haute (pour un FVG bullish) ou basse (pour un bearish)." },
-                { label: "Bougie 2", desc: "La bougie impulsive — grande, directionnelle, souvent sans mèche. Elle crée le déséquilibre." },
+                { label: "Bougie 2", desc: "La bougie impulsive : grande, directionnelle, souvent sans mèche. Elle crée le déséquilibre." },
                 { label: "Bougie 3", desc: "La bougie qui suit. Retiens sa mèche basse (bullish) ou haute (bearish). Si elle ne chevauche pas la mèche de la bougie 1, le FVG existe." },
               ].map((b) => (
                 <div key={b.label} className="flex items-start gap-3">
@@ -82,16 +82,16 @@ function ContentFr() {
             <p className="font-semibold text-emerald-400 text-sm mb-2">Bullish FVG</p>
             <ul className="space-y-1.5">
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Formé après un mouvement haussier impulsif (bougie 2 bullish)
+               . Formé après un mouvement haussier impulsif (bougie 2 bullish)
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — La zone est entre : mèche haute de B1 (bas du gap) et mèche basse de B3 (haut du gap)
+               . La zone est entre : mèche haute de B1 (bas du gap) et mèche basse de B3 (haut du gap)
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Quand le prix revient dans cette zone, c'est un potentiel point d'achat
+               . Quand le prix revient dans cette zone, c'est un potentiel point d'achat
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Stop : en dessous de la zone. Target : prochain niveau de résistance ou liquidité
+               . Stop : en dessous de la zone. Target : prochain niveau de résistance ou liquidité
               </li>
             </ul>
           </div>
@@ -99,16 +99,16 @@ function ContentFr() {
             <p className="font-semibold text-red-400 text-sm mb-2">Bearish FVG</p>
             <ul className="space-y-1.5">
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Formé après un mouvement baissier impulsif (bougie 2 bearish)
+               . Formé après un mouvement baissier impulsif (bougie 2 bearish)
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — La zone est entre : mèche basse de B1 (haut du gap) et mèche haute de B3 (bas du gap)
+               . La zone est entre : mèche basse de B1 (haut du gap) et mèche haute de B3 (bas du gap)
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Quand le prix remonte dans cette zone, c'est un potentiel point de vente
+               . Quand le prix remonte dans cette zone, c'est un potentiel point de vente
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-                — Stop : au-dessus de la zone. Target : prochain support ou pool de liquidité
+               . Stop : au-dessus de la zone. Target : prochain support ou pool de liquidité
               </li>
             </ul>
           </div>
@@ -171,9 +171,9 @@ function ContentFr() {
       <LessonKeyPoints
         points={[
           "Un FVG est un déséquilibre sur 3 bougies : aucun échange n'a eu lieu dans la zone entre la mèche haute de B1 et la mèche basse de B3 (bullish).",
-          "Le marché cherche à combler ses FVG — ce sont des zones de retour potentiel à surveiller.",
+          "Le marché cherche à combler ses FVG, ce sont des zones de retour potentiel à surveiller.",
           "Un FVG n'est valide que dans le sens de la tendance et avec au moins une confluence supplémentaire.",
-          "Un FVG traversé sans réaction est invalidé — le retirer de son analyse immédiatement.",
+          "Un FVG traversé sans réaction est invalidé, le retirer de son analyse immédiatement.",
         ]}
       />
 
@@ -194,7 +194,7 @@ function ContentFr() {
           "Le prix clôture au-dessus du plus haut de la bougie précédente",
         ]}
         correctIndex={1}
-        explanation="Un Bullish FVG existe quand la mèche haute de la bougie 1 est inférieure à la mèche basse de la bougie 3 — il y a un espace entre ces deux mèches qui n'a jamais été échangé. C'est ce déséquilibre que le marché cherche à combler en y revenant, créant une opportunité d'entrée à l'achat dans un contexte haussier."
+        explanation="Un Bullish FVG existe quand la mèche haute de la bougie 1 est inférieure à la mèche basse de la bougie 3, il y a un espace entre ces deux mèches qui n'a jamais été échangé. C'est ce déséquilibre que le marché cherche à combler en y revenant, créant une opportunité d'entrée à l'achat dans un contexte haussier."
       />
 
     </LessonPage>

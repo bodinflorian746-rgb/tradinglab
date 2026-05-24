@@ -58,7 +58,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Les 4 grandes banques centrales — qui contrôle le marché
+            Les 4 grandes banques centrales, qui contrôle le marché
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -333,7 +333,7 @@ export default function ContentFr() {
               "4 banques centrales dominent le marché : Fed, BCE, BoE, BoJ",
               "Elles contrôlent les taux, la liquidité et la direction des marchés",
               "La Fed est la plus importante (USD = devise mondiale, 80% des paires majeures)",
-              "Leurs décisions créent les plus gros mouvements — connaître le calendrier est indispensable",
+              "Leurs décisions créent les plus gros mouvements, connaître le calendrier est indispensable",
             ]}
           />
 
@@ -354,18 +354,18 @@ export default function ContentFr() {
           <LessonQuiz
             question="Tu trades GBP/USD pendant la semaine des décisions de taux. La BoE a annoncé son taux ce matin (8h00 GMT) et la Fed annonce le sien à 20h00. Quel événement va le plus probablement faire bouger ta paire dans la journée ?"
             options={[
-              "La BoE — c'est la banque centrale du GBP, donc impact direct sur GBP/USD",
-              "La Fed — le dollar US influence toutes les paires majeures, et son impact est généralement plus fort",
-              "Aucun des deux — les deux décisions s'annulent",
+              "La BoE, c'est la banque centrale du GBP, donc impact direct sur GBP/USD",
+              "La Fed, le dollar US influence toutes les paires majeures, et son impact est généralement plus fort",
+              "Aucun des deux, les deux décisions s'annulent",
               "La BoE le matin, mais la Fed reprendra le contrôle le soir",
             ]}
             correctIndex={1}
-            explanation="Même sur une paire qui contient le GBP, la Fed reste le premier driver. Le dollar US influence toutes les paires majeures, et historiquement, les décisions de la Fed ont plus d'impact sur GBP/USD que les décisions de la BoE elle-même. C'est la confirmation que la Fed est 'le boss du jeu' même quand tu crois trader 'autre chose'. L'option D semble logique mais ne reflète pas la réalité — souvent l'effet Fed efface complètement l'effet BoE plus tard dans la journée."
+            explanation="Même sur une paire qui contient le GBP, la Fed reste le premier driver. Le dollar US influence toutes les paires majeures, et historiquement, les décisions de la Fed ont plus d'impact sur GBP/USD que les décisions de la BoE elle-même. C'est la confirmation que la Fed est 'le boss du jeu' même quand tu crois trader 'autre chose'. L'option D semble logique mais ne reflète pas la réalité, souvent l'effet Fed efface complètement l'effet BoE plus tard dans la journée."
             answerExplanations={[
-              "Faux. La BoE a bien un impact sur GBP/USD, mais historiquement, la Fed génère des mouvements plus forts sur toutes les paires majeures. Le dollar US étant la devise de réserve mondiale, une décision Fed impacte l'ensemble du marché forex — y compris GBP/USD.",
+              "Faux. La BoE a bien un impact sur GBP/USD, mais historiquement, la Fed génère des mouvements plus forts sur toutes les paires majeures. Le dollar US étant la devise de réserve mondiale, une décision Fed impacte l'ensemble du marché forex, y compris GBP/USD.",
               "Correct. La Fed est le premier driver même sur GBP/USD. Son annonce à 20h00 va dominer les mouvements de la journée. C'est la confirmation du principe : la Fed est 'le boss du jeu' même sur des paires qui semblent concerner d'autres devises.",
-              "Faux. Les deux décisions ne s'annulent pas automatiquement. Elles peuvent se superposer, s'amplifier ou se contredire — mais dans la pratique, la Fed reste le driver dominant. L'effet 'annulation' est une simplification incorrecte.",
-              "Partiellement logique, mais incomplet. L'effet BoE le matin existe, mais la réponse complète est que la Fed est globalement le driver dominant — pas seulement en reprise le soir. Historiquement, l'effet Fed efface souvent complètement l'effet BoE antérieur.",
+              "Faux. Les deux décisions ne s'annulent pas automatiquement. Elles peuvent se superposer, s'amplifier ou se contredire, mais dans la pratique, la Fed reste le driver dominant. L'effet 'annulation' est une simplification incorrecte.",
+              "Partiellement logique, mais incomplet. L'effet BoE le matin existe, mais la réponse complète est que la Fed est globalement le driver dominant, pas seulement en reprise le soir. Historiquement, l'effet Fed efface souvent complètement l'effet BoE antérieur.",
             ]}
           />
 
@@ -408,10 +408,10 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 1 — C&apos;est quoi la macro
+                Leçon 1. C&apos;est quoi la macro
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Les chiffres macro à surveiller — Bientôt disponible →
+                Les chiffres macro à surveiller. Bientôt disponible →
               </span>
             </div>
 

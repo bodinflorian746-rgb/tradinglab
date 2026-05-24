@@ -238,7 +238,7 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur EUR/USD H4, une résistance à 1.1850 est cassée par une bougie qui clôture à 1.1875 avec un corps significatif. 4 bougies plus tard, le prix retrace vers 1.1850 et imprime une pin bar avec mèche longue qui rejette. Comment se construit le plan de trade flip ?"
             steps={[
-              "Qualifier la cassure : clôture à 1.1875, distance 25 pips au-dessus de la zone, corps significatif, pas de retour immédiat sur 4 bougies — cassure validée",
+              "Qualifier la cassure : clôture à 1.1875, distance 25 pips au-dessus de la zone, corps significatif, pas de retour immédiat sur 4 bougies, cassure validée",
               "Constater l’inversion du rôle : la résistance 1.1850 devient un support",
               "Identifier le signal de rejet : la pin bar au contact de la zone valide le flip",
               "Placer l’entrée long à la clôture de la pin bar, stop loss à 1.1830 (20 pips sous la zone pour absorber les wicks)",
@@ -300,7 +300,7 @@ export default function ContentFr() {
                 Leçon 2
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 4 — À venir
+                Leçon 4. À venir
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

@@ -9,18 +9,18 @@ export default function ContentEs() {
     <LessonPage
       formationId="avance"
       lessonId="lecon6"
-      title="Stop Hunts — la cacería de stops"
-      subtitle="Los stop hunts no son manipulación ilegal — son una mecánica estructural del mercado. Aprender a leerlos te transforma de víctima en observador atento."
+      title="Stop Hunts, la cacería de stops"
+      subtitle="Los stop hunts no son manipulación ilegal, son una mecánica estructural del mercado. Aprender a leerlos te transforma de víctima en observador atento."
       duration="22 min"
       lessonNumber={6}
-      prev={{ href: "/formations/avance/lecon5", label: "Lección 5 — OTE" }}
-      next={{ href: "/formations/avance/lecon7", label: "Lección 7 — Entradas de precisión" }}
+      prev={{ href: "/formations/avance/lecon5", label: "Lección 5 : OTE" }}
+      next={{ href: "/formations/avance/lecon7", label: "Lección 7 : Entradas de precisión" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">La mecánica del Stop Hunt</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Un stop hunt ocurre cuando el precio rebasa brevemente un nivel clave — soporte, resistencia, Equal High o Equal Low — solo para disparar los stops de los traders posicionados en ese nivel. Una vez ejecutados los stops, el precio regresa de inmediato en dirección opuesta.
+          Un stop hunt ocurre cuando el precio rebasa brevemente un nivel clave, soporte, resistencia, Equal High o Equal Low, solo para disparar los stops de los traders posicionados en ese nivel. Una vez ejecutados los stops, el precio regresa de inmediato en dirección opuesta.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           No es una conspiración. Es una mecánica natural: los stops de los traders retail constituyen <span className="text-white font-medium">pools de liquidity</span> que las instituciones deben consumir para ejecutar sus propias órdenes masivas.
@@ -46,7 +46,7 @@ export default function ContentEs() {
           {[
             {
               label: "Mecha larga que rebasa un nivel evidente",
-              detail: "Una vela con mecha que perfora una resistencia o un soporte visible para todos — es la señal de que los stops fueron cazados.",
+              detail: "Una vela con mecha que perfora una resistencia o un soporte visible para todos, es la señal de que los stops fueron cazados.",
             },
             {
               label: "Cierre del otro lado del nivel",
@@ -78,7 +78,7 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Tradear DESPUÉS del Stop Hunt</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Un stop hunt confirmado es uno de los setups más potentes en Smart Money. Entras después de la cacería — en el sentido del retroceso institucional.
+          Un stop hunt confirmado es uno de los setups más potentes en Smart Money. Entras después de la cacería, en el sentido del retroceso institucional.
         </p>
         <div className="space-y-2">
           {[
@@ -102,7 +102,7 @@ export default function ContentEs() {
 
       <div className="flex items-center gap-4 py-2">
         <div className="flex-1 h-px bg-zinc-800" />
-        <span className="text-[11px] font-semibold text-blue-400 uppercase tracking-widest">Pon a prueba tu instinto — frente a un stop hunt</span>
+        <span className="text-[11px] font-semibold text-blue-400 uppercase tracking-widest">Pon a prueba tu instinto, frente a un stop hunt</span>
         <div className="flex-1 h-px bg-zinc-800" />
       </div>
 
@@ -135,9 +135,9 @@ export default function ContentEs() {
       <LessonKeyPoints
         points={[
           "Un stop hunt: spike rápido más allá de un nivel clave → disparo de stops → retroceso brutal.",
-          "Los EQH y EQL son los blancos favoritos de los stop hunts — desconfía de los niveles 'demasiado evidentes'.",
+          "Los EQH y EQL son los blancos favoritos de los stop hunts, desconfía de los niveles 'demasiado evidentes'.",
           "Señal: mecha larga que perfora un nivel + cierre del lado opuesto + retroceso violento.",
-          "Nunca sigas la mecha de un spike — espera la confirmación del retroceso antes de entrar.",
+          "Nunca sigas la mecha de un spike, espera la confirmación del retroceso antes de entrar.",
           "Después de un stop hunt confirmado: SL ajustado más allá del pico, TP hacia la liquidity opuesta.",
         ]}
       />
@@ -155,17 +155,17 @@ export default function ContentEs() {
       <LessonQuiz
         question="El precio sube brevemente por encima de una resistencia mayor (Equal Highs) y luego cierra de inmediato debajo, con una mecha superior larga. ¿Qué haces?"
         options={[
-          "Compras en breakout — el precio claramente rebasó la resistencia",
-          "Ignoras — ese movimiento es demasiado ambiguo para sacar una conclusión",
-          "Vigilas una señal de retroceso bajista — probablemente es un stop hunt sobre la BSL",
+          "Compras en breakout, el precio claramente rebasó la resistencia",
+          "Ignoras, ese movimiento es demasiado ambiguo para sacar una conclusión",
+          "Vigilas una señal de retroceso bajista, probablemente es un stop hunt sobre la BSL",
           "Colocas una orden de compra arriba del pico del spike para seguir el momentum",
         ]}
         correctIndex={2}
-        explanation="Un spike por encima de los Equal Highs con cierre por debajo es la firma de un stop hunt sobre la Buy-side Liquidity (BSL). Las instituciones acaban de tomar la liquidity de los stops de los shorts. El retroceso bajista que sigue está alimentado por las ventas institucionales — ahí es donde se busca una señal de venta."
+        explanation="Un spike por encima de los Equal Highs con cierre por debajo es la firma de un stop hunt sobre la Buy-side Liquidity (BSL). Las instituciones acaban de tomar la liquidity de los stops de los shorts. El retroceso bajista que sigue está alimentado por las ventas institucionales, ahí es donde se busca una señal de venta."
         answerExplanations={[
-          "Falso. El cierre debajo de la resistencia invalida la ruptura. No es un breakout — es precisamente un false breakout (stop hunt). Comprar aquí es posicionarte del lado equivocado del movimiento institucional.",
+          "Falso. El cierre debajo de la resistencia invalida la ruptura. No es un breakout, es precisamente un false breakout (stop hunt). Comprar aquí es posicionarte del lado equivocado del movimiento institucional.",
           "Falso. No es ambiguo para alguien que conoce los stop hunts. La firma es clara: spike + mecha larga + cierre del lado opuesto. Es una señal de alerta, no una situación neutra.",
-          "Correcto. Un spike en los EQH con regreso debajo de la resistencia = stop hunt sobre la BSL. Las instituciones vendieron en ese spike. La probabilidad de una continuación bajista es alta — vigila un engulfing o pin bar bajista para entrar.",
+          "Correcto. Un spike en los EQH con regreso debajo de la resistencia = stop hunt sobre la BSL. Las instituciones vendieron en ese spike. La probabilidad de una continuación bajista es alta, vigila un engulfing o pin bar bajista para entrar.",
           "Falso. Colocar una orden por encima del spike es esperar que la ruptura sea real. Pero la señal es exactamente la opuesta: el precio rechazó ese nivel con fuerza. Te dispondrías a entrar en la dirección del stop hunt, no en la dirección institucional.",
         ]}
       />

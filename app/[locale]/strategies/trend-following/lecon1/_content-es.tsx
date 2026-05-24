@@ -200,7 +200,7 @@ export default function ContentEs() {
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrada long: 1.1765 (cierre de la pin bar)</li>
                 <li>- Stop loss: 1.1720 (10 pips por debajo del último HL en 1.1730)</li>
-                <li>- Take profit nivel 1: 1.1810 (HH anterior) — nivel 2: 1.1890 (proyección 80 pips)</li>
+                <li>- Take profit nivel 1: 1.1810 (HH anterior), nivel 2: 1.1890 (proyección 80 pips)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Cálculo del R/R</p>
@@ -298,7 +298,7 @@ export default function ContentEs() {
                 </span>
               </span>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 2 — Próximamente
+                Lección 2. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

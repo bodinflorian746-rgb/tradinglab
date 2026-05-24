@@ -58,7 +58,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Le rôle du dollar dans le monde — pourquoi tout passe par lui
+            Le rôle du dollar dans le monde, pourquoi tout passe par lui
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -66,7 +66,7 @@ export default function ContentFr() {
               Tu trades XAU/USD, EUR/USD, BTC/USD ? Regarde leur point commun.
             </p>
             <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
-              Tu ne trades pas l&apos;or, l&apos;euro ou le Bitcoin. Tu trades le dollar — qu&apos;il soit en haut ou en bas du symbole.
+              Tu ne trades pas l&apos;or, l&apos;euro ou le Bitcoin. Tu trades le dollar, qu&apos;il soit en haut ou en bas du symbole.
             </p>
           </div>
 
@@ -285,13 +285,13 @@ export default function ContentFr() {
             </p>
             <div className="space-y-3 mb-5">
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                <p className="text-sm font-semibold text-zinc-200 mb-1.5">Étape 1 — Avant ton analyse technique</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-1.5">Étape 1. Avant ton analyse technique</p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   Ouvre le graphique du DXY en H1 ou H4. Regarde la tendance des 3 derniers jours.
                 </p>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                <p className="text-sm font-semibold text-zinc-200 mb-2">Étape 2 — Identifie le contexte</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-2">Étape 2. Identifie le contexte</p>
                 <ul className="space-y-1">
                   {[
                     { bold: "DXY haussier fort", rest: " → dollar fort → contexte risk-off" },
@@ -306,7 +306,7 @@ export default function ContentFr() {
                 </ul>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                <p className="text-sm font-semibold text-zinc-200 mb-1.5">Étape 3 — Adapte tes setups</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-1.5">Étape 3. Adapte tes setups</p>
                 <p className="text-sm text-zinc-300 leading-relaxed mb-2">
                   Si tu veux acheter (long) sur EUR/USD, XAU/USD ou BTC/USD → vérifie que le DXY n&apos;est <span className="font-semibold text-zinc-200">PAS en train de monter fort</span>. Sinon ton setup va probablement échouer même si techniquement il est parfait.
                 </p>
@@ -323,7 +323,7 @@ export default function ContentFr() {
                 <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
               </div>
               <p className="text-base text-zinc-300 leading-relaxed">
-                Si tu trades EUR/USD, XAU/USD ou BTC/USD sans regarder le DXY, il te manque la moitié de l&apos;histoire. Les setups techniques échouent souvent parce que <span className="font-semibold text-zinc-200">le contexte dollar n&apos;est pas favorable</span> — pas parce que la stratégie est mauvaise.
+                Si tu trades EUR/USD, XAU/USD ou BTC/USD sans regarder le DXY, il te manque la moitié de l&apos;histoire. Les setups techniques échouent souvent parce que <span className="font-semibold text-zinc-200">le contexte dollar n&apos;est pas favorable</span>, pas parce que la stratégie est mauvaise.
               </p>
             </div>
 
@@ -373,11 +373,11 @@ export default function ContentFr() {
               "Le DXY n'a aucun impact sur l'or ou la crypto",
             ]}
             correctIndex={1}
-            explanation="Quand le DXY monte, cela signifie que le dollar se renforce. EUR/USD est généralement sous pression car l'euro baisse face au dollar. L'option A confond DXY haut et dollar faible (c'est l'inverse). L'option C est fausse : le DXY donne un contexte global sur le dollar, pas seulement sur les actions US — il influence le forex, les matières premières, l'or et la crypto. L'option D est fausse aussi : l'or (XAU/USD) et la crypto (BTC/USD) sont libellés en dollars, donc directement impactés par sa force."
+            explanation="Quand le DXY monte, cela signifie que le dollar se renforce. EUR/USD est généralement sous pression car l'euro baisse face au dollar. L'option A confond DXY haut et dollar faible (c'est l'inverse). L'option C est fausse : le DXY donne un contexte global sur le dollar, pas seulement sur les actions US, il influence le forex, les matières premières, l'or et la crypto. L'option D est fausse aussi : l'or (XAU/USD) et la crypto (BTC/USD) sont libellés en dollars, donc directement impactés par sa force."
             answerExplanations={[
-              "Faux. DXY qui monte signifie dollar fort — c'est l'inverse d'un dollar faible. Quand le dollar se renforce, EUR/USD baisse généralement, pas l'inverse.",
+              "Faux. DXY qui monte signifie dollar fort, c'est l'inverse d'un dollar faible. Quand le dollar se renforce, EUR/USD baisse généralement, pas l'inverse.",
               "Correct. Un DXY en hausse signifie un dollar fort. EUR/USD est généralement sous pression dans ce contexte car l'euro se déprécie face au dollar.",
-              "Faux. Le DXY donne un contexte global sur la force du dollar — il influence le forex, les matières premières, l'or et la crypto, pas seulement les actions US.",
+              "Faux. Le DXY donne un contexte global sur la force du dollar, il influence le forex, les matières premières, l'or et la crypto, pas seulement les actions US.",
               "Faux. L'or (XAU/USD) et la crypto (BTC/USD) sont tous les deux libellés en dollars, donc directement impactés par la force du dollar. Un DXY haussier met souvent l'or et la crypto sous pression.",
             ]}
           />
@@ -421,10 +421,10 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 4 — Comprendre l&apos;inflation
+                Leçon 4. Comprendre l&apos;inflation
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Macro et risk management — Bientôt disponible →
+                Macro et risk management. Bientôt disponible →
               </span>
             </div>
 

@@ -240,9 +240,9 @@ export default function ContentEs() {
           <LessonExercice
             description="En EUR/USD H1, el precio se acerca a una resistance calificada en 1.1820 (3 toques en las últimas 5 semanas, MM50 H4 en 1.1815 = confluence). Una vela H1 imprime una mecha superior hasta 1.1835 y luego cierra en 1.1803. Apertura en 1.1815. ¿Qué calificación tiene esta señal y cuál es el plan de trade?"
             steps={[
-              "Medir la pin bar: mecha superior 32 pips (de 1.1803 a 1.1835), cuerpo 12 pips (de 1.1815 a 1.1803). Ratio mecha/cuerpo = 32/12 = 2,67:1 — criterio 1 validado",
-              "Verificar la dirección y el contacto: mecha larga arriba, pin bar bajista al contacto con la resistance 1.1820 — criterios 2 y 4 validados",
-              "Posición del cierre: 1.1803 dentro del rango 1.1803-1.1835, en el mínimo absoluto, cierre en el tercio inferior — criterio 3 validado",
+              "Medir la pin bar: mecha superior 32 pips (de 1.1803 a 1.1835), cuerpo 12 pips (de 1.1815 a 1.1803). Ratio mecha/cuerpo = 32/12 = 2,67:1, criterio 1 validado",
+              "Verificar la dirección y el contacto: mecha larga arriba, pin bar bajista al contacto con la resistance 1.1820, criterios 2 y 4 validados",
+              "Posición del cierre: 1.1803 dentro del rango 1.1803-1.1835, en el mínimo absoluto, cierre en el tercio inferior, criterio 3 validado",
               "Confluence: MM50 H4 en 1.1815 dentro de la zona = refuerzo de la señal",
               "Plan: entrada short en 1.1803 (cierre pin bar), stop loss en 1.1843 (8 pips por encima del wick en 1.1835), take profit en 1.1720 (siguiente support H4). Riesgo 40 pips, ganancia 83 pips, R/R 2,07. Tamaño de posición según el riesgo por trade adaptado al capital",
             ]}
@@ -302,10 +302,10 @@ export default function ContentEs() {
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="text-zinc-600">
                   <path d="M9.5 3.5l-4 4 4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 1 — Leer una vela: cuerpo, mecha, señal
+                Lección 1. Leer una vela: cuerpo, mecha, señal
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 3 — Engulfing — la reversión de fuerza
+                Lección 3, Engulfing, la reversión de fuerza
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

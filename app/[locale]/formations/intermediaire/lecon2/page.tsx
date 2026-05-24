@@ -11,12 +11,12 @@ function ContentFr() {
     <LessonPage
       formationId="intermediaire"
       lessonId="lecon2"
-      title="Zones clés — Support & Résistance"
-      subtitle="Les zones clés sont les niveaux où le prix s'est déjà arrêté. Ce sont les seuls endroits où tu dois trader — tout le reste est du bruit."
+      title="Zones clés. Support & Résistance"
+      subtitle="Les zones clés sont les niveaux où le prix s'est déjà arrêté. Ce sont les seuls endroits où tu dois trader, tout le reste est du bruit."
       duration="22 min"
       lessonNumber={2}
-      prev={{ href: "/formations/intermediaire/lecon1", label: "Leçon 1 — Structure" }}
-      next={{ href: "/formations/intermediaire/lecon3", label: "Leçon 3 — Supply & Demand" }}
+      prev={{ href: "/formations/intermediaire/lecon1", label: "Leçon 1 : Structure" }}
+      next={{ href: "/formations/intermediaire/lecon3", label: "Leçon 3 : Supply & Demand" }}
     >
 
       {/* ── Ce que tu dois VOIR ── */}
@@ -56,13 +56,13 @@ function ContentFr() {
 
       {/* ── Support & Résistance ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Polarité — quand le rôle s'inverse</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Polarité : quand le rôle s'inverse</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Quand un support est cassé avec conviction, il devient une résistance. Quand une résistance est cassée, elle devient un support. C'est l'une des dynamiques les plus fiables du marché.
         </p>
         <div className="space-y-2.5">
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
-            <p className="text-sm font-medium text-white mb-1">Scénario réel — EUR/USD</p>
+            <p className="text-sm font-medium text-white mb-1">Scénario réel. EUR/USD</p>
             <p className="text-xs text-zinc-500 leading-relaxed">
               EUR/USD rebondit 3× sur 1.0800 (support). Puis le prix casse 1.0800 avec une grosse bougie baissière. Il remonte ensuite tester 1.0800 → cette zone était un support, elle devient maintenant une résistance. Tu peux y vendre avec un SL au-dessus.
             </p>
@@ -76,7 +76,7 @@ function ContentFr() {
 
       {/* ── Order Blocks ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Order Blocks — où les institutions ont agi</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Order Blocks : où les institutions ont agi</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Un Order Block (OB) est la dernière bougie de direction opposée avant un mouvement impulsif. C'est là qu'une institution a passé un gros ordre. Le prix y revient souvent pour compléter l'exécution.
         </p>
@@ -151,7 +151,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Erreur classique</p>
         <p className="text-sm font-semibold text-white mb-2">Tracer une ligne au lieu d'une zone</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Tu traces une ligne exacte à 1.0800 et tu places ton SL à 1.0798. Le prix descend à 1.0796, déclenche ton SL, puis repart à la hausse. Le problème : le prix n'est jamais exact. Il faut tracer une zone de 10-20 pips d'épaisseur et mettre le SL sous la zone entière — pas sous la ligne.
+          Tu traces une ligne exacte à 1.0800 et tu places ton SL à 1.0798. Le prix descend à 1.0796, déclenche ton SL, puis repart à la hausse. Le problème : le prix n'est jamais exact. Il faut tracer une zone de 10-20 pips d'épaisseur et mettre le SL sous la zone entière, pas sous la ligne.
         </p>
       </section>
 
@@ -176,8 +176,8 @@ function ContentFr() {
           "Support = zone où les acheteurs ont repoussé la baisse plusieurs fois.",
           "Résistance = zone où les vendeurs ont repoussé la hausse plusieurs fois.",
           "Polarité : support cassé → résistance. Résistance cassée → support.",
-          "Order Block = dernière bougie opposée avant un mouvement impulsif — zone institutionnelle.",
-          "Jamais de trade au milieu — attends toujours qu'un prix arrive sur une zone clé.",
+          "Order Block = dernière bougie opposée avant un mouvement impulsif, zone institutionnelle.",
+          "Jamais de trade au milieu, attends toujours qu'un prix arrive sur une zone clé.",
         ]}
       />
 
@@ -194,18 +194,18 @@ function ContentFr() {
       <LessonQuiz
         question="EUR/USD rebondissait sur 1.0800 depuis 3 semaines. Le prix vient de casser 1.0800 à la baisse avec une grosse bougie baissière. Maintenant il remonte vers 1.0800. Que fais-tu ?"
         options={[
-          "Tu achètes — 1.0800 est un support historique fort",
-          "Tu vends sur 1.0800 — l'ancien support devient une résistance par polarité",
-          "Tu ne fais rien — le niveau est trop connu, il ne fonctionnera pas",
+          "Tu achètes, 1.0800 est un support historique fort",
+          "Tu vends sur 1.0800, l'ancien support devient une résistance par polarité",
+          "Tu ne fais rien, le niveau est trop connu, il ne fonctionnera pas",
           "Tu attends que le prix repasse au-dessus de 1.0800 pour confirmer",
         ]}
         correctIndex={1}
         explanation="C'est la polarité en action. 1.0800 était un support. Il a été cassé avec conviction. Maintenant que le prix revient tester ce niveau, il se comporte comme une résistance. Tu vends sur le pullback avec SL au-dessus de 1.0800."
         answerExplanations={[
-          "Faux. 1.0800 était un support, mais il a été cassé. Une fois cassé, un support ne joue plus son rôle d'acheteur — il se retourne en résistance. Acheter ici, c'est ignorer la polarité.",
+          "Faux. 1.0800 était un support, mais il a été cassé. Une fois cassé, un support ne joue plus son rôle d'acheteur, il se retourne en résistance. Acheter ici, c'est ignorer la polarité.",
           "Correct. La polarité est l'un des comportements les plus fiables du marché. 1.0800 cassé → devient résistance. Le pullback sur ce niveau est une opportunité de vente avec un SL logique au-dessus.",
-          "Faux. Les niveaux très connus fonctionnent souvent mieux, pas moins bien — c'est là que se concentrent les ordres. La popularité d'un niveau n'est pas une raison de l'ignorer.",
-          "Faux. Attendre que le prix repasse au-dessus pour confirmer, c'est rater l'entrée. Le signal de vente, c'est le retour sur 1.0800 avec un rejet — pas la cassure à la hausse.",
+          "Faux. Les niveaux très connus fonctionnent souvent mieux, pas moins bien, c'est là que se concentrent les ordres. La popularité d'un niveau n'est pas une raison de l'ignorer.",
+          "Faux. Attendre que le prix repasse au-dessus pour confirmer, c'est rater l'entrée. Le signal de vente, c'est le retour sur 1.0800 avec un rejet, pas la cassure à la hausse.",
         ]}
       />
 

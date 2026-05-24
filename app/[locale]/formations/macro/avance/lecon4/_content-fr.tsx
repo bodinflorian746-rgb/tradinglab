@@ -56,7 +56,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Risk-on / Risk-off — le cadre mental du pro
+            Risk-on / Risk-off, le cadre mental du pro
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -455,7 +455,7 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 3 — Rendements obligataires US
+                Leçon 3. Rendements obligataires US
               </Link>
             </div>
 

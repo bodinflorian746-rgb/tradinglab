@@ -138,7 +138,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une zone d&apos;intérêt valide ne se résume pas à une ligne tracée au hasard. Une zone forte raconte une histoire : elle empile plusieurs raisons de réaction au même niveau — un ancien support devenu résistance, un FVG laissé par une impulsion, une zone de liquidité non encore prise. Plus le niveau cumule de raisons, plus la probabilité de réaction est élevée.
+              Une zone d&apos;intérêt valide ne se résume pas à une ligne tracée au hasard. Une zone forte raconte une histoire : elle empile plusieurs raisons de réaction au même niveau, un ancien support devenu résistance, un FVG laissé par une impulsion, une zone de liquidité non encore prise. Plus le niveau cumule de raisons, plus la probabilité de réaction est élevée.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -165,7 +165,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le marché ne monte ni ne descend en ligne droite. Après une impulsion forte, le prix revient fréquemment dans les zones de déséquilibre laissées en chemin — FVG, Order Block, mèche de rejet. Ce retour n&apos;est pas un retournement : c&apos;est une mitigation du déséquilibre avant la reprise du mouvement initial.
+              Le marché ne monte ni ne descend en ligne droite. Après une impulsion forte, le prix revient fréquemment dans les zones de déséquilibre laissées en chemin. FVG, Order Block, mèche de rejet. Ce retour n&apos;est pas un retournement : c&apos;est une mitigation du déséquilibre avant la reprise du mouvement initial.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -178,7 +178,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Repérer les FVG laissés par les impulsions HTF</li>
               <li>- Attendre le retour du prix dans la zone, ne pas anticiper</li>
-              <li>- Un retour n&apos;est pas un retournement — c&apos;est une mitigation</li>
+              <li>- Un retour n&apos;est pas un retournement, c&apos;est une mitigation</li>
               <li>- Privilégier les zones cohérentes avec le biais HTF</li>
             </ul>
           </section>
@@ -192,13 +192,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le timeframe intermédiaire ne sert pas à entrer — il sert à préparer le terrain. C&apos;est l&apos;étage qui transforme la direction HTF en plan exploitable. On y trace la zone, on y note les niveaux, on y prépare ce qu&apos;on attendra ensuite sur le timeframe d&apos;exécution. Le scénario est posé bien avant qu&apos;un signal apparaisse.
+              Le timeframe intermédiaire ne sert pas à entrer, il sert à préparer le terrain. C&apos;est l&apos;étage qui transforme la direction HTF en plan exploitable. On y trace la zone, on y note les niveaux, on y prépare ce qu&apos;on attendra ensuite sur le timeframe d&apos;exécution. Le scénario est posé bien avant qu&apos;un signal apparaisse.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1 : biais HTF baissier, zone de résistance large entre 1.1750 et 1.1760 tracée à l&apos;avance. À l&apos;approche de la bande, les bougies haussières perdent en amplitude — les impulsions se raccourcissent, les corrections s&apos;allongent. Le marché s&apos;essouffle sans qu&apos;aucun signal d&apos;entrée n&apos;ait encore été émis. Le scénario est prêt : il ne reste qu&apos;à attendre le déclencheur sur le timeframe d&apos;exécution.
+                EUR/USD H1 : biais HTF baissier, zone de résistance large entre 1.1750 et 1.1760 tracée à l&apos;avance. À l&apos;approche de la bande, les bougies haussières perdent en amplitude, les impulsions se raccourcissent, les corrections s&apos;allongent. Le marché s&apos;essouffle sans qu&apos;aucun signal d&apos;entrée n&apos;ait encore été émis. Le scénario est prêt : il ne reste qu&apos;à attendre le déclencheur sur le timeframe d&apos;exécution.
               </p>
             </div>
 
@@ -206,7 +206,7 @@ export default function ContentFr() {
               <li>- Tracer la zone AVANT que le prix l&apos;atteigne</li>
               <li>- Noter les niveaux clés en amont</li>
               <li>- Observer la perte d&apos;impulsion à l&apos;approche de la zone</li>
-              <li>- Ne pas entrer sur le timeframe intermédiaire — préparer, c&apos;est tout</li>
+              <li>- Ne pas entrer sur le timeframe intermédiaire, préparer, c&apos;est tout</li>
             </ul>
           </section>
 
@@ -214,23 +214,23 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan d&apos;application : un cas EUR/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le timeframe intermédiaire se lit après le HTF et avant le LTF. Voici comment poser la zone sur un cas EUR/USD — l&apos;objectif n&apos;est pas d&apos;entrer, mais de préparer le scénario.
+              Le timeframe intermédiaire se lit après le HTF et avant le LTF. Voici comment poser la zone sur un cas EUR/USD, l&apos;objectif n&apos;est pas d&apos;entrer, mais de préparer le scénario.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1 — HTF (Daily/H4)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily/H4)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : structure en LH/LL, biais baissier déjà identifié (cf. Leçon 2)</li>
                 <li>- Conclusion : direction dominante baissière, ventes prioritaires</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 2 — Timeframe intermédiaire (H1)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 2. Timeframe intermédiaire (H1)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : ancien support à 1.1760 devenu résistance, FVG bearish 1.1750-1.1760 non mitigé</li>
-                <li>- Conclusion : zone confluente à surveiller — préparer un scénario short au retour du prix</li>
+                <li>- Conclusion : zone confluente à surveiller, préparer un scénario short au retour du prix</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 3 — Préparer le scénario</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 3. Préparer le scénario</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Attendu : une remontée vers la bande 1.1750-1.1760, perte d&apos;impulsion à l&apos;approche, puis confirmation sur le timeframe d&apos;exécution (Leçon 4)</li>
                 <li>- Évité : une entrée anticipée avant le retour effectif du prix dans la zone</li>
@@ -246,10 +246,10 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Une zone forte cumule plusieurs raisons de réaction — la confluence avant tout.",
+              "Une zone forte cumule plusieurs raisons de réaction, la confluence avant tout.",
               "Le marché revient dans les déséquilibres laissés par les impulsions HTF.",
               "Le timeframe intermédiaire prépare le scénario, il n’exécute pas.",
-              "Tracer la zone avant que le prix l’atteigne — jamais après.",
+              "Tracer la zone avant que le prix l’atteigne, jamais après.",
             ]}
           />
 
@@ -266,15 +266,15 @@ export default function ContentFr() {
             question="Qu'est-ce qui rend une zone d'intérêt particulièrement forte sur le timeframe intermédiaire ?"
             options={[
               "Le simple fait que le prix l’ait déjà touchée plusieurs fois",
-              "La confluence — plusieurs raisons de réaction empilées au même niveau",
+              "La confluence, plusieurs raisons de réaction empilées au même niveau",
               "Sa position sur un nombre rond comme 1.1800 ou 1.2000",
               "Le fait que ce soit le plus haut ou le plus bas absolu de la journée",
             ]}
             correctIndex={1}
-            explanation="Une zone forte raconte une histoire : un ancien support devenu résistance, un FVG laissé par une impulsion, une zone de liquidité non encore prise. Plus le niveau cumule de raisons, plus la probabilité de réaction est élevée. Un simple toucher répété, un nombre rond ou un extrême journalier ne suffisent pas seuls — c'est l'empilement de critères techniques qui crée une zone vraiment exploitable."
+            explanation="Une zone forte raconte une histoire : un ancien support devenu résistance, un FVG laissé par une impulsion, une zone de liquidité non encore prise. Plus le niveau cumule de raisons, plus la probabilité de réaction est élevée. Un simple toucher répété, un nombre rond ou un extrême journalier ne suffisent pas seuls, c'est l'empilement de critères techniques qui crée une zone vraiment exploitable."
             answerExplanations={[
               "Incorrect. Un niveau touché plusieurs fois retient l'attention, mais sans contexte (ancien S/R, FVG, liquidité), il reste fragile. Le nombre de touchers ne crée pas de confluence à lui seul.",
-              "Correct. La confluence — l'empilement de plusieurs raisons de réaction au même endroit — est le critère central. Plus la zone cumule d'arguments techniques, plus la probabilité de réaction est forte.",
+              "Correct. La confluence, l'empilement de plusieurs raisons de réaction au même endroit, est le critère central. Plus la zone cumule d'arguments techniques, plus la probabilité de réaction est forte.",
               "Incorrect. Les nombres ronds attirent l'attention psychologique des participants, mais ne créent pas, à eux seuls, une zone d'intérêt institutionnelle. Sans confluence technique réelle, ce sont des niveaux faibles.",
               "Incorrect. Le plus haut ou plus bas du jour n'est qu'une référence statistique. Sans alignement avec une zone structurelle, un FVG ou de la liquidité, ce niveau ne raconte aucune histoire exploitable.",
             ]}

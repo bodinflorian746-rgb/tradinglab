@@ -140,13 +140,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El proceso multi-timeframe funciona como un embudo: cada nivel filtra al siguiente y reduce las posibilidades. Daily / H4 → dar la dirección; H1 → identificar la zona de interés; M15 / M30 → esperar la reacción y confirmar. El trade solo llega al final — es la culminación de una cadena lógica, no una señal aislada que se atrapa al vuelo.
+              El proceso multi-timeframe funciona como un embudo: cada nivel filtra al siguiente y reduce las posibilidades. Daily / H4 → dar la dirección; H1 → identificar la zona de interés; M15 / M30 → esperar la reacción y confirmar. El trade solo llega al final, es la culminación de una cadena lógica, no una señal aislada que se atrapa al vuelo.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- El análisis baja siempre del HTF al LTF, nunca al revés</li>
               <li>- Cada nivel responde a una pregunta precisa: hacia dónde va el mercado, dónde puede reaccionar, cuándo entrar</li>
-              <li>- Un trade alineado en los tres niveles es raro — pero precisamente eso lo convierte en un setup de alta probabilidad</li>
+              <li>- Un trade alineado en los tres niveles es raro, pero precisamente eso lo convierte en un setup de alta probabilidad</li>
               <li>- Saltar un nivel = improvisar; el proceso protege contra la impulsividad</li>
             </ul>
           </section>
@@ -160,13 +160,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El Daily (o H4) es el nivel del contexto. Responde a una sola pregunta: ¿en qué sentido evoluciona el mercado durante varios días o semanas? La lectura se hace vía la estructura: Lower Highs / Lower Lows para una tendencia bajista, Higher Highs / Higher Lows para una alcista. Las impulsiones son fuertes y extendidas en el sentido dominante, las correcciones son blandas y limitadas en el sentido opuesto. Este sesgo condiciona todo lo que sigue — solo se tomarán ventas en un contexto HTF bajista, compras solo en un contexto HTF alcista.
+              El Daily (o H4) es el nivel del contexto. Responde a una sola pregunta: ¿en qué sentido evoluciona el mercado durante varios días o semanas? La lectura se hace vía la estructura: Lower Highs / Lower Lows para una tendencia bajista, Higher Highs / Higher Lows para una alcista. Las impulsiones son fuertes y extendidas en el sentido dominante, las correcciones son blandas y limitadas en el sentido opuesto. Este sesgo condiciona todo lo que sigue, solo se tomarán ventas en un contexto HTF bajista, compras solo en un contexto HTF alcista.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: en Daily, tres LH consecutivos (1.1860, 1.1830, 1.1780) debajo de la resistencia 1.1860, con impulsiones bajistas claras entre cada corrección. El sesgo es claramente vendedor — toda idea de compra queda descartada de entrada. Se buscarán shorts al regreso del precio a una zona superior.
+                EUR/USD: en Daily, tres LH consecutivos (1.1860, 1.1830, 1.1780) debajo de la resistencia 1.1860, con impulsiones bajistas claras entre cada corrección. El sesgo es claramente vendedor, toda idea de compra queda descartada de entrada. Se buscarán shorts al regreso del precio a una zona superior.
               </p>
             </div>
 
@@ -187,20 +187,20 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Una vez establecida la dirección, el H1 localiza la zona precisa donde el escenario puede activarse. Estas zonas se trazan con antelación — antiguos soportes vueltos resistencias, FVG no mitigados, Order Blocks bearish, confluencias. El precio las aborda en general desacelerando: las velas se vuelven más cortas, el impulso disminuye. Esta zona queda inerte mientras el precio no la haya testeado realmente — no dispara ningún trade por sí misma, prepara el terreno.
+              Una vez establecida la dirección, el H1 localiza la zona precisa donde el escenario puede activarse. Estas zonas se trazan con antelación, antiguos soportes vueltos resistencias, FVG no mitigados, Order Blocks bearish, confluencias. El precio las aborda en general desacelerando: las velas se vuelven más cortas, el impulso disminuye. Esta zona queda inerte mientras el precio no la haya testeado realmente, no dispara ningún trade por sí misma, prepara el terreno.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: en 1.1750-1.1760, un antiguo soporte roto se superpone a un FVG bearish no mitigado dejado por la última impulsión bajista. La zona se traza en el H1, en el sentido del sesgo Daily. El precio sube progresivamente con velas cada vez más cortas al acercarse a 1.1760 — el terreno está listo, se espera la reacción.
+                EUR/USD: en 1.1750-1.1760, un antiguo soporte roto se superpone a un FVG bearish no mitigado dejado por la última impulsión bajista. La zona se traza en el H1, en el sentido del sesgo Daily. El precio sube progresivamente con velas cada vez más cortas al acercarse a 1.1760, el terreno está listo, se espera la reacción.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Una zona H1 se traza con antelación, nunca a posteriori</li>
               <li>- Mientras más confluente sea la zona (FVG + antiguo soporte + Order Block) más fuerte es</li>
-              <li>- La zona no dispara nada — prepara la hipótesis de trade</li>
+              <li>- La zona no dispara nada, prepara la hipótesis de trade</li>
               <li>- La desaceleración del precio al acercarse es un signo de interés, no una señal de entrada</li>
             </ul>
           </section>
@@ -214,21 +214,21 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El M15 es el nivel del timing. Cuando el precio entra en la zona H1, se baja al LTF para observar la reacción: mechas de rechazo sucesivas, formación de un máximo local, luego breakout estructural de un mínimo reciente a favor del sesgo. Son estas señales concretas las que validan la entrada — no la simple presencia del precio en la zona. La ejecución se hace en el breakout, el SL queda calado ajustado justo por encima del último máximo de rechazo.
+              El M15 es el nivel del timing. Cuando el precio entra en la zona H1, se baja al LTF para observar la reacción: mechas de rechazo sucesivas, formación de un máximo local, luego breakout estructural de un mínimo reciente a favor del sesgo. Son estas señales concretas las que validan la entrada, no la simple presencia del precio en la zona. La ejecución se hace en el breakout, el SL queda calado ajustado justo por encima del último máximo de rechazo.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: el precio llega a la zona 1.1750-1.1760 e imprime tres mechas altas consecutivas entre 1.1758 y 1.1762, sin cerrar por encima. El último mínimo local entre las velas de rechazo está en 1.1750. Tres velas M15 bajistas se encadenan y rompen ese mínimo francamente hacia 1.1745. La reacción es nítida, el breakout confirma — entrada short en 1.1758 en el breakout, SL en 1.1772 (justo por encima del último máximo de rechazo).
+                EUR/USD: el precio llega a la zona 1.1750-1.1760 e imprime tres mechas altas consecutivas entre 1.1758 y 1.1762, sin cerrar por encima. El último mínimo local entre las velas de rechazo está en 1.1750. Tres velas M15 bajistas se encadenan y rompen ese mínimo francamente hacia 1.1745. La reacción es nítida, el breakout confirma, entrada short en 1.1758 en el breakout, SL en 1.1772 (justo por encima del último máximo de rechazo).
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- El M15 no sirve para analizar el mercado — sirve para confirmar una hipótesis construida más arriba</li>
+              <li>- El M15 no sirve para analizar el mercado, sirve para confirmar una hipótesis construida más arriba</li>
               <li>- Mecha de rechazo + breakout de mínimo local = combo clásico de validación</li>
               <li>- El SL ajustado exige una estructura local clara (máximo de rechazo)</li>
-              <li>- Ninguna reacción = ninguna entrada — la zona falla, se espera la siguiente</li>
+              <li>- Ninguna reacción = ninguna entrada, la zona falla, se espera la siguiente</li>
             </ul>
           </section>
 
@@ -240,30 +240,30 @@ export default function ContentEs() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Paso 1 — Daily: dirección</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 1. Daily: dirección</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: estructura LH/LL clara desde hace tres semanas, resistencia Daily en 1.1860</li>
-                <li>- Conclusión: sesgo bajista confirmado — únicamente shorts a privilegiar</li>
+                <li>- Conclusión: sesgo bajista confirmado, únicamente shorts a privilegiar</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Paso 2 — H1: zona</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 2. H1: zona</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: zona confluente 1.1750-1.1760 (antiguo soporte roto + FVG bearish no mitigado)</li>
                 <li>- Conclusión: zona trazada con antelación, lista para recibir el precio; escenario short preparado al regreso</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Paso 3 — M15: confirmación</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 3. M15: confirmación</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: precio en la zona, tres mechas altas consecutivas, breakout del mínimo local en 1.1748</li>
-                <li>- Conclusión: la reacción valida la entrada — ejecución autorizada</li>
+                <li>- Conclusión: la reacción valida la entrada, ejecución autorizada</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Paso 4 — Ejecución</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 4. Ejecución</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrada short: 1.1758</li>
-                <li>- Stop loss: 1.1772 (justo por encima del último máximo de rechazo) — o sea 14 pts de risk</li>
-                <li>- Take profit: 1.1695 (al nivel del último LL Daily) — o sea 63 pts de ganancia potencial</li>
-                <li>- R/R ≈ 1 : 4,5 — setup de alta probabilidad porque está alineado Daily + H1 + M15</li>
+                <li>- Stop loss: 1.1772 (justo por encima del último máximo de rechazo), o sea 14 pts de risk</li>
+                <li>- Take profit: 1.1695 (al nivel del último LL Daily), o sea 63 pts de ganancia potencial</li>
+                <li>- R/R ≈ 1 : 4,5, setup de alta probabilidad porque está alineado Daily + H1 + M15</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -279,7 +279,7 @@ export default function ContentEs() {
             <h2 className="text-lg font-semibold text-white mb-3">Los errores que destruyen el proceso</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El proceso es potente mientras se respete el orden. En el momento en que se salta un nivel, el escenario pierde toda su lógica — se recae en el trading impulsivo. Aquí tienes los cuatro desvíos típicos.
+              El proceso es potente mientras se respete el orden. En el momento en que se salta un nivel, el escenario pierde toda su lógica, se recae en el trading impulsivo. Aquí tienes los cuatro desvíos típicos.
             </p>
 
             <div className="grid gap-3 my-6">
@@ -293,14 +293,14 @@ export default function ContentEs() {
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">2. Saltar la zona H1</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Tener un sesgo Daily y entrar directamente en una señal M15, sin zona H1 trazada con antelación, es operar señales aisladas. La zona da el contexto de la entrada — sin ella, el M15 produce ruido en permanencia.
+                  Tener un sesgo Daily y entrar directamente en una señal M15, sin zona H1 trazada con antelación, es operar señales aisladas. La zona da el contexto de la entrada, sin ella, el M15 produce ruido en permanencia.
                 </p>
               </div>
 
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">3. Entrar sin reacción M15</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  El precio toca la zona H1, se entra por anticipación porque « todo lo demás está alineado ». Es exactamente ahí donde la zona falla con más frecuencia. Sin señal LTF clara, la entrada no está validada — se espera o se pasa.
+                  El precio toca la zona H1, se entra por anticipación porque « todo lo demás está alineado ». Es exactamente ahí donde la zona falla con más frecuencia. Sin señal LTF clara, la entrada no está validada, se espera o se pasa.
                 </p>
               </div>
 
@@ -315,9 +315,9 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "El proceso baja siempre del HTF al LTF — nunca al revés.",
+              "El proceso baja siempre del HTF al LTF, nunca al revés.",
               "Cada nivel tiene un rol distinto: Daily = dirección, H1 = zona, M15 = timing.",
-              "El M15 valida la ejecución — confirma la reacción, no la predice.",
+              "El M15 valida la ejecución, confirma la reacción, no la predice.",
               "Saltar un nivel = recaer en el trading impulsivo: el proceso protege contra la improvisación.",
             ]}
           />
@@ -325,9 +325,9 @@ export default function ContentEs() {
           <LessonExercice
             description="En TradingView, recorre un proceso multi-timeframe completo sobre el par de tu elección, del Daily al M15."
             steps={[
-              "Daily: identifica la estructura (LH/LL o HH/HL) y concluye un sesgo direccional claro. Si la estructura es ambigua, cambia de par — sin un sesgo HTF nítido, el proceso no arranca.",
+              "Daily: identifica la estructura (LH/LL o HH/HL) y concluye un sesgo direccional claro. Si la estructura es ambigua, cambia de par, sin un sesgo HTF nítido, el proceso no arranca.",
               "H1: traza con antelación la zona de interés más confluente en el sentido del sesgo (antiguo soporte/resistencia, FVG, Order Block). Anota los niveles exactos arriba y abajo de la zona.",
-              "M15: espera a que el precio entre en la zona, luego observa la reacción. Si aparece una mecha de rechazo seguida de un breakout estructural, anota la entrada, el SL ajustado y el TP buscado. Si no pasa nada, no fuerces — anota simplemente que la zona falló.",
+              "M15: espera a que el precio entre en la zona, luego observa la reacción. Si aparece una mecha de rechazo seguida de un breakout estructural, anota la entrada, el SL ajustado y el TP buscado. Si no pasa nada, no fuerces, anota simplemente que la zona falló.",
             ]}
           />
 
@@ -340,17 +340,17 @@ export default function ContentEs() {
               "No entras: una señal M15 fuera de proceso no es un setup válido",
             ]}
             correctIndex={3}
-            explanation="Una señal LTF aislada, sin zona H1 preparada y sin sesgo Daily alineado, no es un setup multi-timeframe — es solo ruido que se notó al vuelo. El proceso exige que los tres niveles sean coherentes ANTES de la señal de ejecución. Operar una señal M15 fuera de contexto es exactamente aquello contra lo que el proceso fue diseñado: la impulsividad."
+            explanation="Una señal LTF aislada, sin zona H1 preparada y sin sesgo Daily alineado, no es un setup multi-timeframe, es solo ruido que se notó al vuelo. El proceso exige que los tres niveles sean coherentes ANTES de la señal de ejecución. Operar una señal M15 fuera de contexto es exactamente aquello contra lo que el proceso fue diseñado: la impulsividad."
             answerExplanations={[
-              "Falso. Bajar aún más (M5) no añade el contexto HTF que falta. Afinar una señal aislada no la transforma en setup — solo aumenta la precisión de una decisión mal encuadrada.",
+              "Falso. Bajar aún más (M5) no añade el contexto HTF que falta. Afinar una señal aislada no la transforma en setup, solo aumenta la precisión de una decisión mal encuadrada.",
               "Falso. Reducir el tamaño no corrige el problema de fondo: la ausencia de contexto HTF. No se reduce un mal setup arriesgando menos, se elimina.",
-              "Falso. Tomar el otro lado con base en una sola señal LTF, sin sesgo estructural ni zona, es operar el ruido en la otra dirección — exactamente el mismo problema.",
-              "Correcto. El proceso exige la alineación Daily + H1 + M15. Una señal M15 fuera de proceso es por definición una señal aislada, localizada sin preparación. La disciplina es no operar fuera de proceso — la paciencia permite esperar un setup realmente construido.",
+              "Falso. Tomar el otro lado con base en una sola señal LTF, sin sesgo estructural ni zona, es operar el ruido en la otra dirección, exactamente el mismo problema.",
+              "Correcto. El proceso exige la alineación Daily + H1 + M15. Una señal M15 fuera de proceso es por definición una señal aislada, localizada sin preparación. La disciplina es no operar fuera de proceso, la paciencia permite esperar un setup realmente construido.",
             ]}
           />
 
           <LessonQuiz
-            question="Tienes un sesgo Daily bajista y una zona H1 en 1.1750-1.1760. El precio entra en la zona, pero en M15, ninguna mecha de rechazo, ningún breakout de mínimo local — solo una consolidación lateral. ¿Qué haces?"
+            question="Tienes un sesgo Daily bajista y una zona H1 en 1.1750-1.1760. El precio entra en la zona, pero en M15, ninguna mecha de rechazo, ningún breakout de mínimo local, solo una consolidación lateral. ¿Qué haces?"
             options={[
               "Entras: la zona H1 es confluente, la consolidación terminará por romper a la baja",
               "Entras en medio de la zona apostando por la media de fluctuación",
@@ -358,12 +358,12 @@ export default function ContentEs() {
               "Colocas una orden limitada por encima de la zona y dejas que actúe",
             ]}
             correctIndex={2}
-            explanation="Sin confirmación M15, el proceso no está completo — sin importar la calidad del Daily y de la zona H1. La consolidación lateral en la zona no es ni un rechazo ni un breakout; no valida nada. El rol del M15 es precisamente filtrar este tipo de zona que « habría podido » funcionar pero no muestra ninguna señal concreta. Paciencia."
+            explanation="Sin confirmación M15, el proceso no está completo, sin importar la calidad del Daily y de la zona H1. La consolidación lateral en la zona no es ni un rechazo ni un breakout; no valida nada. El rol del M15 es precisamente filtrar este tipo de zona que « habría podido » funcionar pero no muestra ninguna señal concreta. Paciencia."
             answerExplanations={[
               "Falso. « Terminará por romper » es una predicción, no una observación. El proceso se construye sobre señales concretas, no sobre proyecciones.",
-              "Falso. Entrar en medio de la zona sin señal LTF es una apuesta a la media — exactamente lo contrario de un setup confirmado. Es lo que se evita.",
-              "Correcto. El M15 debe validar la reacción (mecha de rechazo + breakout estructural). Sin estas señales, el nivel de ejecución no se franquea — no hay entrada. Esta disciplina protege contra las zonas que parecen fuertes pero no reaccionan.",
-              "Falso. Una orden limitada pasiva transforma un setup no confirmado en automatismo — es el peor compromiso: se asume el risk sin haber validado el disparador.",
+              "Falso. Entrar en medio de la zona sin señal LTF es una apuesta a la media, exactamente lo contrario de un setup confirmado. Es lo que se evita.",
+              "Correcto. El M15 debe validar la reacción (mecha de rechazo + breakout estructural). Sin estas señales, el nivel de ejecución no se franquea, no hay entrada. Esta disciplina protege contra las zonas que parecen fuertes pero no reaccionan.",
+              "Falso. Una orden limitada pasiva transforma un setup no confirmado en automatismo, es el peor compromiso: se asume el risk sin haber validado el disparador.",
             ]}
           />
 
@@ -378,8 +378,8 @@ export default function ContentEs() {
             correctIndex={2}
             explanation="El Daily (o H4) es el nivel del contexto. Su rol único es definir la dirección dominante vía la estructura (LH/LL o HH/HL). Esta dirección condiciona luego qué tipos de trades están autorizados en los niveles inferiores. El Daily no da ni punto de entrada preciso (demasiado amplio), ni la zona de ejecución (eso es el H1), ni el SL ajustado (eso es el M15)."
             answerExplanations={[
-              "Falso. El Daily es demasiado amplio para proporcionar un punto de entrada preciso — una vela Daily representa una amplitud de varias decenas de pts. La entrada se prepara en H1 y se dispara en M15.",
-              "Falso. El Daily no tiene nada que ver con el timing fino. Afinar en M1 sería competencia del LTF, y el Daily está precisamente en el extremo opuesto a ese nivel — establece el contexto general, no el disparador.",
+              "Falso. El Daily es demasiado amplio para proporcionar un punto de entrada preciso, una vela Daily representa una amplitud de varias decenas de pts. La entrada se prepara en H1 y se dispara en M15.",
+              "Falso. El Daily no tiene nada que ver con el timing fino. Afinar en M1 sería competencia del LTF, y el Daily está precisamente en el extremo opuesto a ese nivel, establece el contexto general, no el disparador.",
               "Correcto. El Daily da el contexto general: estructura LH/LL = ventas únicamente, estructura HH/HL = compras únicamente. Es esta dirección la que condiciona el conjunto del proceso aguas abajo.",
               "Falso. El SL ajustado se construye sobre la estructura local del M15 (máximo o mínimo de rechazo). Un SL calado en una estructura Daily sería demasiado amplio y mataría el R/R.",
             ]}

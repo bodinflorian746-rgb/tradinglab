@@ -24,7 +24,7 @@ const PHASE_TOASTS = [
   null,
   { message: "¡Bien hecho!", sub: "Puntos clave asimilados" },
   { message: "¡Estás progresando!", sub: "Ejercicio completado" },
-  { message: "¡Sigue así!", sub: "Quiz validado — lección terminada" },
+  { message: "¡Sigue así!", sub: "Quiz validado, lección terminada" },
 ];
 
 const MOTIVATIONAL_PHRASES = [
@@ -472,7 +472,7 @@ function TradeDiagram() {
       {/* ── MOBILE (variante dédiée — pas de texte dans le SVG) ─────── */}
       <div className="sm:hidden mt-5 space-y-3">
         <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-4">
-          <p className="text-[13px] font-bold text-emerald-400 mb-3">Escenario A — Tienes razón ↑</p>
+          <p className="text-[13px] font-bold text-emerald-400 mb-3">Escenario A. Tienes razón ↑</p>
           <svg viewBox="0 0 200 70" className="w-full mb-3" fill="none" aria-label="El precio sube">
             <polyline points="10,60 50,46 100,30 150,18 190,8" stroke="#10b981" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
             <circle cx="10" cy="60" r="5" fill="#10b981" />
@@ -492,7 +492,7 @@ function TradeDiagram() {
         </div>
 
         <div className="rounded-xl border border-red-500/25 bg-red-500/5 p-4">
-          <p className="text-[13px] font-bold text-red-400 mb-3">Escenario B — Te equivocas ↓</p>
+          <p className="text-[13px] font-bold text-red-400 mb-3">Escenario B. Te equivocas ↓</p>
           <svg viewBox="0 0 200 70" className="w-full mb-3" fill="none" aria-label="El precio baja">
             <polyline points="10,8 50,22 100,36 150,50 190,62" stroke="#ef4444" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
             <circle cx="10" cy="8" r="5" fill="#ef4444" />

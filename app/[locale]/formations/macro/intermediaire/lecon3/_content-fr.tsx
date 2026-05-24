@@ -58,7 +58,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            CPI, PPI et inflation — décoder les chiffres qui font bouger le marché
+            CPI, PPI et inflation, décoder les chiffres qui font bouger le marché
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -66,7 +66,7 @@ export default function ContentFr() {
               14h30. Le CPI sort, le marché explose. Mais les pros n&apos;ont pas attendu le choc.
             </p>
             <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
-              Le vrai signal était sorti 12 jours plus tôt — sur un chiffre que personne ne regarde : le PPI.
+              Le vrai signal était sorti 12 jours plus tôt, sur un chiffre que personne ne regarde : le PPI.
             </p>
           </div>
 
@@ -109,7 +109,7 @@ export default function ContentFr() {
 
           {/* Bloc 1 — La chaîne d'inflation */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">La chaîne d&apos;inflation — du producteur au consommateur</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La chaîne d&apos;inflation : du producteur au consommateur</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               L&apos;inflation ne tombe pas du ciel. Elle suit une <span className="font-semibold text-zinc-200">chaîne logique</span> : du producteur vers le consommateur, avec des indicateurs à chaque étape.
             </p>
@@ -118,10 +118,10 @@ export default function ContentFr() {
             </p>
             <ul className="space-y-2 mb-4">
               {[
-                { bold: "PPI", rest: " (Producer Price Index) — les prix à la sortie d'usine" },
-                { bold: "CPI Headline", rest: " — l'inflation totale ressentie par le consommateur" },
-                { bold: "Core CPI", rest: " — l'inflation hors énergie et alimentation" },
-                { bold: "Core PCE", rest: " — l'indicateur officiel de la Fed" },
+                { bold: "PPI", rest: " (Producer Price Index), les prix à la sortie d'usine" },
+                { bold: "CPI Headline", rest: " l'inflation totale ressentie par le consommateur" },
+                { bold: "Core CPI", rest: " l'inflation hors énergie et alimentation" },
+                { bold: "Core PCE", rest: " l'indicateur officiel de la Fed" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
@@ -144,9 +144,9 @@ export default function ContentFr() {
 
           {/* Bloc 2 — Le PPI, le signal précoce */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Le PPI — le signal précoce que le marché ignore</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Le PPI : le signal précoce que le marché ignore</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le PPI sort environ <span className="font-semibold text-zinc-200">12 jours avant le CPI</span>. C&apos;est le prix que les producteurs reçoivent pour leurs biens — avant que l&apos;inflation ne remonte vers le consommateur.
+              Le PPI sort environ <span className="font-semibold text-zinc-200">12 jours avant le CPI</span>. C&apos;est le prix que les producteurs reçoivent pour leurs biens, avant que l&apos;inflation ne remonte vers le consommateur.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               <span className="font-semibold text-zinc-200">Pourquoi c&apos;est un signal précoce ?</span> Parce que les hausses de coût chez les producteurs finissent presque toujours par être répercutées en aval.
@@ -172,10 +172,10 @@ export default function ContentFr() {
               <p className="text-xs font-semibold text-zinc-400 mb-2">Quand le PPI surprend fortement, les pros surveillent en parallèle :</p>
               <ul className="space-y-1.5">
                 {[
-                  { bold: "DXY", rest: " (force du dollar) — anticipation de la réaction Fed" },
-                  { bold: "XAU/USD", rest: " — souvent le 1er à réagir aux signaux inflationnistes" },
-                  { bold: "Nasdaq", rest: " — sensible aux taux longs US (inflation = taux hauts = tech sous pression)" },
-                  { bold: "BTC/USD", rest: " — tend à anticiper le risk-on/risk-off global" },
+                  { bold: "DXY", rest: " (force du dollar), anticipation de la réaction Fed" },
+                  { bold: "XAU/USD", rest: " souvent le 1er à réagir aux signaux inflationnistes" },
+                  { bold: "Nasdaq", rest: " sensible aux taux longs US (inflation = taux hauts = tech sous pression)" },
+                  { bold: "BTC/USD", rest: " tend à anticiper le risk-on/risk-off global" },
                 ].map((item) => (
                   <li key={item.bold} className="flex items-start gap-2 text-xs text-zinc-400">
                     <div className="w-1 h-1 rounded-full bg-zinc-600 shrink-0 mt-1.5" />
@@ -194,13 +194,13 @@ export default function ContentFr() {
 
           {/* Bloc 3 — CPI Headline vs Core CPI */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">CPI Headline vs Core CPI — pourquoi ça change tout</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">CPI Headline vs Core CPI : pourquoi ça change tout</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               Quand le CPI sort, tu vois deux chiffres. La plupart des débutants ne regardent que le premier.
             </p>
             <div className="space-y-2 mb-4">
               <p className="text-zinc-300 leading-relaxed text-sm">
-                <span className="font-semibold text-zinc-200">CPI Headline</span> → l&apos;inflation totale, énergie et alimentation incluses. C&apos;est le chiffre médiatisé. Il est <span className="font-semibold text-zinc-200">volatil</span> — il monte et descend avec le prix du pétrole.
+                <span className="font-semibold text-zinc-200">CPI Headline</span> → l&apos;inflation totale, énergie et alimentation incluses. C&apos;est le chiffre médiatisé. Il est <span className="font-semibold text-zinc-200">volatil</span>, il monte et descend avec le prix du pétrole.
               </p>
               <p className="text-zinc-300 leading-relaxed text-sm">
                 <span className="font-semibold text-zinc-200">Core CPI</span> → l&apos;inflation hors énergie et alimentation. C&apos;est la <span className="font-semibold text-zinc-200">tendance de fond</span>. C&apos;est ce que les pros regardent vraiment.
@@ -228,7 +228,7 @@ export default function ContentFr() {
 
           {/* Bloc 4 — Core PCE, l'indicateur officiel de la Fed */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Core PCE — l&apos;indicateur officiel de la Fed</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Core PCE : l&apos;indicateur officiel de la Fed</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               Le Core PCE (Personal Consumption Expenditures) est l&apos;<span className="font-semibold text-zinc-200">indicateur d&apos;inflation officiellement préféré de la Fed</span>. Il sort environ 2 semaines après le CPI.
             </p>
@@ -238,7 +238,7 @@ export default function ContentFr() {
             <ul className="space-y-2 mb-4">
               {[
                 { bold: "Il couvre un panier plus large", rest: " que le CPI" },
-                { bold: "Il ajuste automatiquement", rest: " les habitudes de consommation (si le bœuf augmente, les gens achètent du poulet — le PCE le capture)" },
+                { bold: "Il ajuste automatiquement", rest: " les habitudes de consommation (si le bœuf augmente, les gens achètent du poulet, le PCE le capture)" },
                 { bold: "Il lisse mieux", rest: " les variations temporaires" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
@@ -262,7 +262,7 @@ export default function ContentFr() {
 
           {/* Bloc 5 — Réaction de marché en pratique */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Réaction de marché — ce qui se passe en pratique</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Réaction de marché : ce qui se passe en pratique</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               Le scénario le plus fréquent le jour du CPI :
             </p>
@@ -276,7 +276,7 @@ export default function ContentFr() {
             </div>
 
             <div className="bg-zinc-900/60 rounded-xl px-4 py-3 mb-5">
-              <p className="text-xs font-semibold text-zinc-400 mb-2">Concrètement, sur un Core CPI qui surprend fortement à la hausse (ex : 3.5% vs 3.2% attendus) — 30 premières minutes :</p>
+              <p className="text-xs font-semibold text-zinc-400 mb-2">Concrètement, sur un Core CPI qui surprend fortement à la hausse (ex : 3.5% vs 3.2% attendus), 30 premières minutes :</p>
               <div className="overflow-hidden rounded-xl border border-zinc-800">
                 <div className="grid grid-cols-2 border-b border-zinc-800">
                   <div className="px-4 py-2 bg-zinc-800/50 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Actif</div>
@@ -350,7 +350,7 @@ export default function ContentFr() {
               Si le scénario se confirme après 2-5 minutes : tu entres avec ta taille habituelle.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Si la réaction est floue ou contradictoire : <span className="font-semibold text-zinc-200">tu ne trades pas</span>. Ce n&apos;est pas une occasion ratée — c&apos;est du capital préservé.
+              Si la réaction est floue ou contradictoire : <span className="font-semibold text-zinc-200">tu ne trades pas</span>. Ce n&apos;est pas une occasion ratée, c&apos;est du capital préservé.
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
@@ -369,7 +369,7 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "La chaîne inflation suit un ordre : PPI → CPI Headline → Core CPI → Core PCE",
-              "Le PPI sort 12 jours avant le CPI — c'est le signal précoce que le marché sous-estime",
+              "Le PPI sort 12 jours avant le CPI, c'est le signal précoce que le marché sous-estime",
               "Le Core CPI (hors énergie et alimentation) est ce que les pros regardent vraiment",
               "Le Core PCE est l'indicateur officiel de la Fed, avec une cible à 2% annuel",
               "Attendre 2-5 minutes après la publication pour éviter le fakeout du premier tick",
@@ -381,7 +381,7 @@ export default function ContentFr() {
             steps={[
               "Trouve la date du prochain CPI US sur ton calendrier économique.",
               "Note le consensus Core CPI et le chiffre précédent.",
-              "Vérifie le PPI publié les semaines précédentes — était-il haussier ou baissier ?",
+              "Vérifie le PPI publié les semaines précédentes, était-il haussier ou baissier ?",
               "Écris ton plan A (Core CPI > attentes) et ton plan B (Core CPI < attentes) avec les marchés concernés.",
               "Le jour J, attends 2-5 minutes après 14h30 avant toute décision.",
             ]}
@@ -393,13 +393,13 @@ export default function ContentFr() {
           <LessonQuiz
             question="Le PPI vient de sortir fortement au-dessus des attentes. Le CPI n'est pas encore publié. Qu'est-ce que cette information indique le plus probablement ?"
             options={[
-              "Rien — le PPI et le CPI sont des indicateurs indépendants sans lien direct",
+              "Rien, le PPI et le CPI sont des indicateurs indépendants sans lien direct",
               "Une pression inflationniste en amont qui risque de se retrouver dans le prochain CPI",
               "Le dollar va forcément baisser dans les prochains jours",
               "La Fed va immédiatement annoncer une hausse de taux",
             ]}
             correctIndex={1}
-            explanation="Le PPI mesure les prix à la sortie usine. Quand il dépasse les attentes, les coûts de production plus élevés sont généralement répercutés sur les consommateurs dans les semaines suivantes — ce qui tend à faire monter le CPI. C'est la logique de la chaîne inflation. L'option A est fausse : il existe un lien documenté entre PPI et CPI. L'option C est trop directe et trop certaine — la réaction du dollar dépend du contexte global. L'option D est fausse : la Fed attend plusieurs publications avant d'agir, elle ne réagit pas à un seul chiffre PPI isolé. Un PPI surprenant à la hausse n'impacte pas seulement EUR/USD — XAU/USD, Nasdaq et BTC/USD anticipent souvent la même réévaluation hawkish avant même la publication du CPI."
+            explanation="Le PPI mesure les prix à la sortie usine. Quand il dépasse les attentes, les coûts de production plus élevés sont généralement répercutés sur les consommateurs dans les semaines suivantes, ce qui tend à faire monter le CPI. C'est la logique de la chaîne inflation. L'option A est fausse : il existe un lien documenté entre PPI et CPI. L'option C est trop directe et trop certaine, la réaction du dollar dépend du contexte global. L'option D est fausse : la Fed attend plusieurs publications avant d'agir, elle ne réagit pas à un seul chiffre PPI isolé. Un PPI surprenant à la hausse n'impacte pas seulement EUR/USD. XAU/USD, Nasdaq et BTC/USD anticipent souvent la même réévaluation hawkish avant même la publication du CPI."
             answerExplanations={[
               "Faux. PPI et CPI sont liés par la chaîne de transmission de l'inflation. Les hausses de coût des producteurs remontent vers les consommateurs dans les semaines suivantes.",
               "Correct. Un PPI élevé signale une pression inflationniste en amont. Ces coûts supplémentaires finissent généralement par être répercutés, ce qui peut faire monter le prochain CPI.",
@@ -447,10 +447,10 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 2 — Comprendre le calendrier économique
+                Leçon 2. Comprendre le calendrier économique
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Le carry trade — Bientôt disponible →
+                Le carry trade. Bientôt disponible →
               </span>
             </div>
 

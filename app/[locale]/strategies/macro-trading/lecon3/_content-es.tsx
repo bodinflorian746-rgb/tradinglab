@@ -113,7 +113,7 @@ export default function ContentEs() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-amber-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « Un régimen no se tradea como una señal. Es un contexto que dura — se lo identifica, se lo respeta, se lo explota mientras se sostenga. »
+                « Un régimen no se tradea como una señal. Es un contexto que dura, se lo identifica, se lo respeta, se lo explota mientras se sostenga. »
               </p>
             </div>
           </section>
@@ -138,20 +138,20 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El régimen risk-off nunca se deduce de un solo mercado. Se instala cuando varios indicadores cuentan simultáneamente la misma historia: los índices accionarios bajan, la volatilidad (VIX) sube, el dólar se fortalece frente a las divisas más riesgosas, el oro y el franco suizo atraen los flujos. Cuando estas cuatro señales apuntan en el mismo sentido durante varias sesiones, ya no estamos en un movimiento aislado — estamos en un cambio de régimen. Es esa concordancia la que permite tener confianza en la dirección de los activos safe-haven.
+              El régimen risk-off nunca se deduce de un solo mercado. Se instala cuando varios indicadores cuentan simultáneamente la misma historia: los índices accionarios bajan, la volatilidad (VIX) sube, el dólar se fortalece frente a las divisas más riesgosas, el oro y el franco suizo atraen los flujos. Cuando estas cuatro señales apuntan en el mismo sentido durante varias sesiones, ya no estamos en un movimiento aislado, estamos en un cambio de régimen. Es esa concordancia la que permite tener confianza en la dirección de los activos safe-haven.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                En una semana de tensiones geopolíticas, el S&amp;P 500 baja 3 %, el VIX pasa de 14 a 22, el DXY sube 1,5 % y XAU/USD pasa progresivamente de 4 585 $ a 4 705 $ en estructura alcista. Los cuatro mercados convergen — el régimen risk-off está instalado, el oro es el activo direccional a priorizar en sentido long mientras la concordancia se mantenga.
+                En una semana de tensiones geopolíticas, el S&amp;P 500 baja 3 %, el VIX pasa de 14 a 22, el DXY sube 1,5 % y XAU/USD pasa progresivamente de 4 585 $ a 4 705 $ en estructura alcista. Los cuatro mercados convergen, el régimen risk-off está instalado, el oro es el activo direccional a priorizar en sentido long mientras la concordancia se mantenga.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Puntos accionables: la concordancia de 3-4 señales macro confirma el régimen — no una sola</li>
+              <li>- Puntos accionables: la concordancia de 3-4 señales macro confirma el régimen, no una sola</li>
               <li>- Índices bajistas + VIX alcista + Dólar fuerte + oro fuerte = firma risk-off clásica</li>
-              <li>- Sin concordancia, no hablamos todavía de régimen — solo de un movimiento</li>
+              <li>- Sin concordancia, no hablamos todavía de régimen, solo de un movimiento</li>
               <li>- La lectura macro precede a la lectura técnica sobre los activos safe-haven</li>
             </ul>
           </section>
@@ -165,7 +165,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Una vez identificado el régimen, la disciplina operacional es simple: se tradea en su sentido, nunca en contra. Esto significa privilegiar exclusivamente los longs sobre el oro y los shorts sobre los pares riesgosos mientras la estructura macro siga coherente. Los pullbacks H4 se vuelven entonces oportunidades de entrada — se espera que el precio se reajuste sobre un soporte técnico, que se estabilice, y se entra para aprovechar la continuación. Contratradear un régimen establecido es luchar contra la dirección de fondo — estadísticamente perdedor.
+              Una vez identificado el régimen, la disciplina operacional es simple: se tradea en su sentido, nunca en contra. Esto significa privilegiar exclusivamente los longs sobre el oro y los shorts sobre los pares riesgosos mientras la estructura macro siga coherente. Los pullbacks H4 se vuelven entonces oportunidades de entrada, se espera que el precio se reajuste sobre un soporte técnico, que se estabilice, y se entra para aprovechar la continuación. Contratradear un régimen establecido es luchar contra la dirección de fondo, estadísticamente perdedor.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -192,13 +192,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Ningún régimen dura indefinidamente. El agotamiento de un risk-off se lee progresivamente: máximos cada vez más débiles en los activos safe-haven (cada nuevo high es menos alto que el anterior), correcciones H4 más profundas que en la fase de instalación, impulsos bullish que pierden amplitud. Las señales macro acompañan esta desaceleración: el VIX baja, los índices se estabilizan, el dólar deja de subir. Cuando aparecen estas señales, se reduce progresivamente la exposición a los longs sobre el oro — no se espera la ruptura estructural.
+              Ningún régimen dura indefinidamente. El agotamiento de un risk-off se lee progresivamente: máximos cada vez más débiles en los activos safe-haven (cada nuevo high es menos alto que el anterior), correcciones H4 más profundas que en la fase de instalación, impulsos bullish que pierden amplitud. Las señales macro acompañan esta desaceleración: el VIX baja, los índices se estabilizan, el dólar deja de subir. Cuando aparecen estas señales, se reduce progresivamente la exposición a los longs sobre el oro, no se espera la ruptura estructural.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD H4: tras una fuerte tendencia alcista desde 4 590 $, tres máximos sucesivos se debilitan — 4 735 $, luego 4 720 $, luego 4 705 $. Las correcciones pasan de 25 $ a 40 $ y luego 65 $ de amplitud. Los impulsos alcistas se vuelven más cortos. El régimen aún no está roto, pero pierde fuerza — se ajustan los SL, se reduce el tamaño de posición, se prepara la transición.
+                XAU/USD H4: tras una fuerte tendencia alcista desde 4 590 $, tres máximos sucesivos se debilitan, 4 735 $, luego 4 720 $, luego 4 705 $. Las correcciones pasan de 25 $ a 40 $ y luego 65 $ de amplitud. Los impulsos alcistas se vuelven más cortos. El régimen aún no está roto, pero pierde fuerza, se ajustan los SL, se reduce el tamaño de posición, se prepara la transición.
               </p>
             </div>
 
@@ -206,7 +206,7 @@ export default function ContentEs() {
               <li>- Puntos accionables: máximos más débiles + correcciones más profundas = señal de agotamiento</li>
               <li>- El VIX bajando confirma la desaceleración macro</li>
               <li>- Se reduce la exposición ANTES de la ruptura estructural, no después</li>
-              <li>- El agotamiento no es un cambio — es una transición a vigilar</li>
+              <li>- El agotamiento no es un cambio, es una transición a vigilar</li>
             </ul>
           </section>
 
@@ -218,32 +218,32 @@ export default function ContentEs() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Etapa 1 — Diagnóstico macro</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 1. Diagnóstico macro</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: S&amp;P 500 bajando desde hace 3 sesiones, VIX por encima de 20, DXY alcista, XAU alcista</li>
-                <li>- Conclusión: régimen risk-off confirmado por concordancia — sesgo long únicamente sobre el oro</li>
+                <li>- Conclusión: régimen risk-off confirmado por concordancia, sesgo long únicamente sobre el oro</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 2 — Contexto técnico H4</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Contexto técnico H4</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: XAU/USD en estructura HH/HL clara desde el inicio del régimen, precio actual 4 690 $</li>
-                <li>- Conclusión: estructura intacta — se busca el próximo pullback para entrar long</li>
+                <li>- Conclusión: estructura intacta, se busca el próximo pullback para entrar long</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 3 — Espera del pullback</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 3. Espera del pullback</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: corrección H4 hacia 4 655 $ (antiguo máximo convertido en soporte), estabilización visible con mechas inferiores en M15</li>
-                <li>- Conclusión: zona de entrada preparada — se espera la primera vela de recuperación franca</li>
+                <li>- Conclusión: zona de entrada preparada, se espera la primera vela de recuperación franca</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 4 — Ejecución</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 4. Ejecución</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrada long: 4 660 $</li>
                 <li>- Stop loss: 4 640 $ (bajo el pullback)</li>
                 <li>- Target: 4 730 $ (zona de continuación)</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 5 — Seguimiento del régimen</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 5. Seguimiento del régimen</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Vigilar la concordancia de las señales macro mientras la posición esté abierta</li>
                 <li>- Si el VIX baja con fuerza O si los índices se estabilizan: alerta de agotamiento</li>
@@ -260,7 +260,7 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "Un régimen risk-off se confirma por CONCORDANCIA de varias señales macro — nunca por un solo mercado.",
+              "Un régimen risk-off se confirma por CONCORDANCIA de varias señales macro, nunca por un solo mercado.",
               "Mientras la estructura HH/HL se mantenga en los activos safe-haven, se tradea en el sentido del régimen y se evita todo contra-trade.",
               "Los pullbacks H4 son oportunidades de entrada, no cambios a anticipar.",
               "El agotamiento se lee progresivamente: máximos más débiles, correcciones más profundas, VIX que baja.",
@@ -287,10 +287,10 @@ export default function ContentEs() {
             correctIndex={1}
             explanation="En un régimen risk-off establecido con estructura HH/HL intacta, un pullback H4 hacia un antiguo soporte es precisamente la oportunidad de entrada recomendada. Se deja al precio estabilizarse en el nivel técnico, se busca la primera vela de recuperación franca, y se entra en el sentido del régimen. Tradear contra la dirección de fondo (entrar short en el pullback) o anticipar el fin del régimen sin señal de agotamiento, es luchar contra la lógica macro que conduce el movimiento."
             answerExplanations={[
-              "Falso. Entrar short en un régimen risk-off establecido es tradear contra el contexto macro que sostiene el oro. El pullback es una corrección técnica, no un cambio — la estadística favorece la continuación.",
+              "Falso. Entrar short en un régimen risk-off establecido es tradear contra el contexto macro que sostiene el oro. El pullback es una corrección técnica, no un cambio, la estadística favorece la continuación.",
               "Correcto. La disciplina del régimen es clara: se entra en su sentido sobre los pullbacks. El soporte técnico ofrece una entrada ajustada, la concordancia macro respalda el trade, la estructura HH/HL valida la continuación probable.",
               "Falso. Cerrar una posición long en un pullback de 30 $, sin señal de agotamiento (máximos debilitándose, correcciones más profundas, VIX que baja), es salir prematuramente. Los pullbacks forman parte de una tendencia sana.",
-              "Falso. Esperar la ruptura del máximo anterior para entrar es entrar demasiado tarde — por encima del último high, sin soporte técnico para asentar el SL. Las mejores entradas en régimen son sobre pullback, no sobre breakout.",
+              "Falso. Esperar la ruptura del máximo anterior para entrar es entrar demasiado tarde, por encima del último high, sin soporte técnico para asentar el SL. Las mejores entradas en régimen son sobre pullback, no sobre breakout.",
             ]}
           />
 

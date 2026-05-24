@@ -144,14 +144,14 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : la zone H1 est entre 1.1750 et 1.1760. Sur M5, le prix arrive dans la bande, imprime trois mèches hautes consécutives au-dessus de 1.1755, puis une impulsion baissière casse le dernier creux local à 1.1748. La réaction est visible, la cassure structurelle confirme — le signal d&apos;entrée est valide.
+                EUR/USD : la zone H1 est entre 1.1750 et 1.1760. Sur M5, le prix arrive dans la bande, imprime trois mèches hautes consécutives au-dessus de 1.1755, puis une impulsion baissière casse le dernier creux local à 1.1748. La réaction est visible, la cassure structurelle confirme, le signal d&apos;entrée est valide.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Attendre une réaction visible dans la zone, pas une simple présence du prix</li>
               <li>- Mèches de rejet, cassure de creux local, BOS bearish = signaux LTF</li>
-              <li>- Aucune réaction = aucune entrée — la patience prime</li>
+              <li>- Aucune réaction = aucune entrée, la patience prime</li>
               <li>- Le LTF ne prédit pas, il confirme</li>
             </ul>
           </section>
@@ -165,20 +165,20 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le LTF ne sert pas seulement à confirmer : il permet aussi de réduire la distance entre l&apos;entrée et le Stop Loss. La même idée se joue avec deux dimensionnements de risque très différents selon que l&apos;on entre dès le HTF ou après confirmation locale. Le SL reste calé sur une structure qui invalide le scénario — mais cette structure est plus serrée sur le LTF.
+              Le LTF ne sert pas seulement à confirmer : il permet aussi de réduire la distance entre l&apos;entrée et le Stop Loss. La même idée se joue avec deux dimensionnements de risque très différents selon que l&apos;on entre dès le HTF ou après confirmation locale. Le SL reste calé sur une structure qui invalide le scénario, mais cette structure est plus serrée sur le LTF.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : entrée short à 1.1758 sous la zone. Sans confirmation LTF, le SL doit couvrir l&apos;intégralité de la zone H4 — placé à 1.1790, soit 35 pts de risque. Avec confirmation M5, le SL passe juste au-dessus du dernier sommet local de rejet — placé à 1.1772, soit 14 pts. Même idée de trade, même cible, mais la distance entrée-SL est divisée par 2,5.
+                EUR/USD : entrée short à 1.1758 sous la zone. Sans confirmation LTF, le SL doit couvrir l&apos;intégralité de la zone H4, placé à 1.1790, soit 35 pts de risque. Avec confirmation M5, le SL passe juste au-dessus du dernier sommet local de rejet, placé à 1.1772, soit 14 pts. Même idée de trade, même cible, mais la distance entrée-SL est divisée par 2,5.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Le SL serré exige une structure locale claire (sommet de rejet, mèche)</li>
               <li>- Distance entrée-SL réduite = meilleur R/R sur la même cible</li>
-              <li>- Le SL n&apos;est jamais collé arbitrairement — il invalide une structure</li>
+              <li>- Le SL n&apos;est jamais collé arbitrairement, il invalide une structure</li>
               <li>- Risque mesuré en pts/pips, indépendamment de la taille de position (cf. Leçon 8 Débutant)</li>
             </ul>
           </section>
@@ -192,19 +192,19 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Toutes les zones ne réagissent pas. Une zone forte sur le papier peut être traversée sans aucun signal — le marché ne s&apos;y arrête pas, n&apos;y produit aucune mèche de rejet, aucune cassure locale en faveur du scénario. Le LTF protège alors le capital : pas de réaction = pas d&apos;entrée. La patience permet d&apos;attendre la zone suivante plutôt que de forcer un trade.
+              Toutes les zones ne réagissent pas. Une zone forte sur le papier peut être traversée sans aucun signal, le marché ne s&apos;y arrête pas, n&apos;y produit aucune mèche de rejet, aucune cassure locale en faveur du scénario. Le LTF protège alors le capital : pas de réaction = pas d&apos;entrée. La patience permet d&apos;attendre la zone suivante plutôt que de forcer un trade.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : support H1 attendu à 4 545 $. Sur M5, le prix arrive et traverse la bande sans aucune mèche basse de rejet, dans une séquence baissière franche. La continuation se prolonge nettement sous la zone, sans rebond ni signe de reprise. Aucun signal d&apos;entrée n&apos;est émis — le setup est invalidé.
+                XAU/USD : support H1 attendu à 4 545 $. Sur M5, le prix arrive et traverse la bande sans aucune mèche basse de rejet, dans une séquence baissière franche. La continuation se prolonge nettement sous la zone, sans rebond ni signe de reprise. Aucun signal d&apos;entrée n&apos;est émis, le setup est invalidé.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Une zone peut être traversée sans réaction — c&apos;est attendu</li>
-              <li>- L&apos;absence de réaction est elle-même un signal — ne pas entrer</li>
+              <li>- Une zone peut être traversée sans réaction, c&apos;est attendu</li>
+              <li>- L&apos;absence de réaction est elle-même un signal, ne pas entrer</li>
               <li>- Garder la patience : la zone suivante ou un retour peut donner un meilleur signal</li>
               <li>- Trader sur confirmation, jamais sur prédiction</li>
             </ul>
@@ -218,22 +218,22 @@ export default function ContentFr() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1 — HTF (Daily / H4)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily / H4)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : biais baissier en LH/LL, résistance Daily 1.1780, prix actuel 1.1715</li>
-                <li>- Conclusion : direction dominante baissière — ventes prioritaires</li>
+                <li>- Conclusion : direction dominante baissière, ventes prioritaires</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 2 — Timeframe intermédiaire (H1)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 2. Timeframe intermédiaire (H1)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : zone confluente 1.1750-1.1760 (ancien support cassé + FVG bearish non mitigé)</li>
                 <li>- Conclusion : préparer un scénario short au retour du prix dans la zone</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 3 — LTF (M5)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 3. LTF (M5)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : prix dans la zone, trois mèches hautes de rejet consécutives, cassure du creux local à 1.1748</li>
-                <li>- Conclusion : confirmation valide — entrée short à 1.1758, SL serré juste au-dessus du dernier sommet de rejet (1.1772, 14 pts)</li>
+                <li>- Conclusion : confirmation valide, entrée short à 1.1758, SL serré juste au-dessus du dernier sommet de rejet (1.1772, 14 pts)</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -246,10 +246,10 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Le LTF ne sert pas à analyser — il sert à confirmer que la zone réagit.",
+              "Le LTF ne sert pas à analyser, il sert à confirmer que la zone réagit.",
               "Une réaction visible (mèche de rejet, cassure de structure locale) déclenche l’entrée.",
               "Le LTF permet aussi de réduire le risque par un SL serré sur la structure locale.",
-              "Aucune réaction = aucune entrée — protéger le capital prime sur le besoin de trader.",
+              "Aucune réaction = aucune entrée, protéger le capital prime sur le besoin de trader.",
             ]}
           />
 
@@ -263,7 +263,7 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Le prix arrive dans une zone HTF préparée. Sur M5, aucune mèche de rejet, aucune cassure de structure locale — juste une traversée franche. Que fais-tu ?"
+            question="Le prix arrive dans une zone HTF préparée. Sur M5, aucune mèche de rejet, aucune cassure de structure locale, juste une traversée franche. Que fais-tu ?"
             options={[
               "Tu entres quand même : la zone HTF est solide, le LTF n'a qu'un rôle secondaire",
               "Tu entres avec un SL très large pour absorber la fluctuation",
@@ -271,9 +271,9 @@ export default function ContentFr() {
               "Tu prends l'autre sens, en supposant un retournement",
             ]}
             correctIndex={2}
-            explanation="Le rôle du LTF est de CONFIRMER la réaction du marché dans la zone. Si la zone est traversée sans aucun signal de rejet ou de cassure structurelle, le scénario est invalidé. L'absence de réaction est en soi un signal — la patience permet d'attendre la prochaine opportunité plutôt que d'entrer à l'aveugle."
+            explanation="Le rôle du LTF est de CONFIRMER la réaction du marché dans la zone. Si la zone est traversée sans aucun signal de rejet ou de cassure structurelle, le scénario est invalidé. L'absence de réaction est en soi un signal, la patience permet d'attendre la prochaine opportunité plutôt que d'entrer à l'aveugle."
             answerExplanations={[
-              "Faux. Le LTF n'est pas accessoire — il est la condition même de l'entrée. Une zone qui ne réagit pas n'est pas exploitable, peu importe sa qualité HTF.",
+              "Faux. Le LTF n'est pas accessoire, il est la condition même de l'entrée. Une zone qui ne réagit pas n'est pas exploitable, peu importe sa qualité HTF.",
               "Faux. Élargir le SL pour 'absorber le risque' ne corrige pas le problème de fond : sans réaction LTF, rien n'indique que le scénario va se déclencher. C'est juste un pari plus cher.",
               "Correct. Sans signal LTF (mèche de rejet, BOS, cassure de creux local), le setup n'est pas confirmé. La règle est claire : aucune réaction = aucune entrée. Le capital reste protégé.",
               "Faux. Prendre l'autre sens sur la simple traversée d'une zone, sans contexte HTF favorable ni signal de retournement structurel, c'est trader contre la tendance dominante sans aucune base.",

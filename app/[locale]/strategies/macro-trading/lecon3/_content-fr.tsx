@@ -113,7 +113,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-amber-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « Un régime ne se trade pas comme un signal. C&apos;est un contexte qui dure — on l&apos;identifie, on le respecte, on l&apos;exploite tant qu&apos;il tient. »
+                « Un régime ne se trade pas comme un signal. C&apos;est un contexte qui dure, on l&apos;identifie, on le respecte, on l&apos;exploite tant qu&apos;il tient. »
               </p>
             </div>
           </section>
@@ -138,20 +138,20 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le régime risk-off ne se déduit jamais d&apos;un seul marché. Il s&apos;installe quand plusieurs indicateurs racontent simultanément la même histoire : les indices actions descendent, la volatilité (VIX) monte, le dollar se renforce face aux devises plus risquées, l&apos;or et le franc suisse attirent les flux. Quand ces quatre signaux pointent dans le même sens pendant plusieurs séances, on n&apos;est plus dans un mouvement isolé — on est dans un changement de régime. C&apos;est cette concordance qui permet d&apos;avoir confiance dans la direction des actifs refuges.
+              Le régime risk-off ne se déduit jamais d&apos;un seul marché. Il s&apos;installe quand plusieurs indicateurs racontent simultanément la même histoire : les indices actions descendent, la volatilité (VIX) monte, le dollar se renforce face aux devises plus risquées, l&apos;or et le franc suisse attirent les flux. Quand ces quatre signaux pointent dans le même sens pendant plusieurs séances, on n&apos;est plus dans un mouvement isolé, on est dans un changement de régime. C&apos;est cette concordance qui permet d&apos;avoir confiance dans la direction des actifs refuges.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Sur une semaine de tensions géopolitiques, le S&amp;P 500 baisse de 3 %, le VIX passe de 14 à 22, le DXY monte de 1,5 %, et XAU/USD passe progressivement de 4 585 $ à 4 705 $ en structure haussière. Les quatre marchés convergent — le régime risk-off est installé, l&apos;or est l&apos;actif directionnel à privilégier dans le sens long tant que la concordance tient.
+                Sur une semaine de tensions géopolitiques, le S&amp;P 500 baisse de 3 %, le VIX passe de 14 à 22, le DXY monte de 1,5 %, et XAU/USD passe progressivement de 4 585 $ à 4 705 $ en structure haussière. Les quatre marchés convergent, le régime risk-off est installé, l&apos;or est l&apos;actif directionnel à privilégier dans le sens long tant que la concordance tient.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Points actionnables : la concordance de 3-4 signaux macro confirme le régime — pas un seul</li>
+              <li>- Points actionnables : la concordance de 3-4 signaux macro confirme le régime, pas un seul</li>
               <li>- Indices baissiers + VIX haussier + Dollar fort + or fort = signature risk-off classique</li>
-              <li>- Sans concordance, on ne parle pas encore de régime — juste d&apos;un mouvement</li>
+              <li>- Sans concordance, on ne parle pas encore de régime, juste d&apos;un mouvement</li>
               <li>- La lecture macro précède la lecture technique sur les actifs refuges</li>
             </ul>
           </section>
@@ -165,7 +165,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une fois le régime identifié, la discipline opérationnelle est simple : on trade dans son sens, jamais contre. Cela signifie privilégier exclusivement les longs sur l&apos;or et les courts sur les paires risquées tant que la structure macro reste cohérente. Les pullbacks H4 deviennent alors des opportunités d&apos;entrée — on attend que le prix se réajuste sur un support technique, qu&apos;il stabilise, et on entre pour profiter de la continuation. Contre-trader un régime établi, c&apos;est lutter contre la direction de fond — statistiquement perdant.
+              Une fois le régime identifié, la discipline opérationnelle est simple : on trade dans son sens, jamais contre. Cela signifie privilégier exclusivement les longs sur l&apos;or et les courts sur les paires risquées tant que la structure macro reste cohérente. Les pullbacks H4 deviennent alors des opportunités d&apos;entrée, on attend que le prix se réajuste sur un support technique, qu&apos;il stabilise, et on entre pour profiter de la continuation. Contre-trader un régime établi, c&apos;est lutter contre la direction de fond, statistiquement perdant.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -192,13 +192,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Aucun régime ne dure indéfiniment. L&apos;essoufflement d&apos;un risk-off se lit progressivement : les sommets de plus en plus faibles sur les actifs refuges (chaque nouveau high est moins élevé que le précédent), des corrections H4 plus profondes que dans la phase d&apos;installation, des impulsions bullish qui perdent en amplitude. Les signaux macro accompagnent ce ralentissement : le VIX redescend, les indices se stabilisent, le dollar s&apos;arrête de monter. Quand ces signes apparaissent, on réduit progressivement l&apos;exposition aux longs sur l&apos;or — on n&apos;attend pas la cassure structurelle.
+              Aucun régime ne dure indéfiniment. L&apos;essoufflement d&apos;un risk-off se lit progressivement : les sommets de plus en plus faibles sur les actifs refuges (chaque nouveau high est moins élevé que le précédent), des corrections H4 plus profondes que dans la phase d&apos;installation, des impulsions bullish qui perdent en amplitude. Les signaux macro accompagnent ce ralentissement : le VIX redescend, les indices se stabilisent, le dollar s&apos;arrête de monter. Quand ces signes apparaissent, on réduit progressivement l&apos;exposition aux longs sur l&apos;or, on n&apos;attend pas la cassure structurelle.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD H4 : après une forte tendance haussière depuis 4 590 $, trois sommets successifs faiblissent — 4 735 $, puis 4 720 $, puis 4 705 $. Les corrections passent de 25 $ à 40 $ puis 65 $ d&apos;amplitude. Les impulsions haussières deviennent plus courtes. Le régime n&apos;est pas encore cassé, mais il perd en force — on resserre les SL, on réduit la taille de position, on prépare la transition.
+                XAU/USD H4 : après une forte tendance haussière depuis 4 590 $, trois sommets successifs faiblissent, 4 735 $, puis 4 720 $, puis 4 705 $. Les corrections passent de 25 $ à 40 $ puis 65 $ d&apos;amplitude. Les impulsions haussières deviennent plus courtes. Le régime n&apos;est pas encore cassé, mais il perd en force, on resserre les SL, on réduit la taille de position, on prépare la transition.
               </p>
             </div>
 
@@ -206,7 +206,7 @@ export default function ContentFr() {
               <li>- Points actionnables : sommets plus faibles + corrections plus profondes = signal d&apos;essoufflement</li>
               <li>- Le VIX qui redescend confirme le ralentissement macro</li>
               <li>- On réduit l&apos;exposition AVANT la cassure structurelle, pas après</li>
-              <li>- L&apos;essoufflement n&apos;est pas un retournement — c&apos;est une transition à surveiller</li>
+              <li>- L&apos;essoufflement n&apos;est pas un retournement, c&apos;est une transition à surveiller</li>
             </ul>
           </section>
 
@@ -218,32 +218,32 @@ export default function ContentFr() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1 — Diagnostic macro</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. Diagnostic macro</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : S&amp;P 500 en baisse depuis 3 séances, VIX au-dessus de 20, DXY haussier, XAU haussier</li>
-                <li>- Conclusion : régime risk-off confirmé par concordance — biais long uniquement sur l&apos;or</li>
+                <li>- Conclusion : régime risk-off confirmé par concordance, biais long uniquement sur l&apos;or</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 2 — Contexte technique H4</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 2. Contexte technique H4</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : XAU/USD en structure HH/HL claire depuis le début du régime, prix actuel 4 690 $</li>
-                <li>- Conclusion : structure intacte — on cherche le prochain pullback pour entrer long</li>
+                <li>- Conclusion : structure intacte, on cherche le prochain pullback pour entrer long</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 3 — Attente du pullback</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 3. Attente du pullback</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : correction H4 vers 4 655 $ (ancien sommet devenu support), stabilisation visible avec mèches basses sur M15</li>
-                <li>- Conclusion : zone d&apos;entrée préparée — on attend la première bougie de reprise franche</li>
+                <li>- Conclusion : zone d&apos;entrée préparée, on attend la première bougie de reprise franche</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 4 — Exécution</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 4. Exécution</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 4 660 $</li>
                 <li>- Stop loss : 4 640 $ (sous le pullback)</li>
                 <li>- Target : 4 730 $ (zone de continuation)</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 5 — Suivi du régime</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 5. Suivi du régime</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Surveiller la concordance des signaux macro tant que la position est ouverte</li>
                 <li>- Si le VIX redescend franchement OU si les indices se stabilisent : alerte essoufflement</li>
@@ -260,7 +260,7 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Un régime risk-off se confirme par CONCORDANCE de plusieurs signaux macro — jamais par un seul marché.",
+              "Un régime risk-off se confirme par CONCORDANCE de plusieurs signaux macro, jamais par un seul marché.",
               "Tant que la structure HH/HL tient sur les actifs refuges, on trade dans le sens du régime et on évite tout contre-trade.",
               "Les pullbacks H4 sont des opportunités d’entrée, pas des retournements à anticiper.",
               "L’essoufflement se lit progressivement : sommets plus faibles, corrections plus profondes, VIX qui redescend.",
@@ -287,10 +287,10 @@ export default function ContentFr() {
             correctIndex={1}
             explanation="Dans un régime risk-off établi avec structure HH/HL intacte, un pullback H4 vers un ancien support est précisément l&apos;opportunité d&apos;entrée recommandée. On laisse le prix se stabiliser sur le niveau technique, on cherche la première bougie de reprise franche, et on entre dans le sens du régime. Trader contre la direction de fond (shorter le pullback) ou anticiper la fin du régime sans signal d&apos;essoufflement, c&apos;est lutter contre la logique macro qui pilote le mouvement."
             answerExplanations={[
-              "Faux. Shorter dans un régime risk-off établi, c&apos;est trader contre le contexte macro qui soutient l&apos;or. Le pullback est une correction technique, pas un retournement — la statistique favorise la continuation.",
+              "Faux. Shorter dans un régime risk-off établi, c&apos;est trader contre le contexte macro qui soutient l&apos;or. Le pullback est une correction technique, pas un retournement, la statistique favorise la continuation.",
               "Correct. La discipline du régime est claire : on entre dans son sens sur les pullbacks. Le support technique offre une entrée serrée, la concordance macro soutient le trade, la structure HH/HL valide la continuation probable.",
               "Faux. Fermer une position long sur un pullback de 30 $, sans signe d&apos;essoufflement (sommets faiblissants, corrections plus profondes, VIX qui redescend), c&apos;est sortir prématurément. Les pullbacks font partie d&apos;une tendance saine.",
-              "Faux. Attendre la cassure du sommet précédent pour entrer, c&apos;est entrer beaucoup trop tard — au-dessus du dernier high, sans support technique pour caler le SL. Les meilleures entrées en régime sont sur pullback, pas sur breakout.",
+              "Faux. Attendre la cassure du sommet précédent pour entrer, c&apos;est entrer beaucoup trop tard, au-dessus du dernier high, sans support technique pour caler le SL. Les meilleures entrées en régime sont sur pullback, pas sur breakout.",
             ]}
           />
 

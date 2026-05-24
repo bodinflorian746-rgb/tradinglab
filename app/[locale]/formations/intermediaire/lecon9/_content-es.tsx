@@ -9,11 +9,11 @@ export default function ContentEs() {
     <LessonPage
       formationId="intermediaire"
       lessonId="lecon9"
-      title="Fibonacci — retrocesos y confluencias"
+      title="Fibonacci, retrocesos y confluencias"
       subtitle="La herramienta Fibonacci identifica las zonas de retroceso probabilísticas en un movimiento. Combinada con otras confluencias, mejora considerablemente la precisión de entrada."
       duration="20 min"
       lessonNumber={9}
-      prev={{ href: "/formations/intermediaire/lecon8", label: "Lección 8 — Plan de trading" }}
+      prev={{ href: "/formations/intermediaire/lecon8", label: "Lección 8 : Plan de trading" }}
       next={null}
     >
 
@@ -31,13 +31,13 @@ export default function ContentEs() {
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-blue-400 mb-2">El retroceso (zona de entrada)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              El precio retrocede desde 1.0980. Baja, baja... y se detiene en 1.0870. Es el 61.8% de Fibonacci. Miras — también hay un soporte histórico en ese nivel. <strong className="text-white">Confluencia.</strong> Esperas una señal de vela antes de entrar en compra.
+              El precio retrocede desde 1.0980. Baja, baja... y se detiene en 1.0870. Es el 61.8% de Fibonacci. Miras, también hay un soporte histórico en ese nivel. <strong className="text-white">Confluencia.</strong> Esperas una señal de vela antes de entrar en compra.
             </p>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-red-400 mb-2">Lo que NO debes hacer</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Entrar apenas el precio toque el 61.8% — sin señal. El precio puede atravesar hacia el 78.6% o más abajo. Fibonacci identifica la <strong className="text-white">zona de atención</strong>, no la entrada automática.
+              Entrar apenas el precio toque el 61.8%, sin señal. El precio puede atravesar hacia el 78.6% o más abajo. Fibonacci identifica la <strong className="text-white">zona de atención</strong>, no la entrada automática.
             </p>
           </div>
         </div>
@@ -51,11 +51,11 @@ export default function ContentEs() {
         </p>
         <div className="space-y-2.5">
           {[
-            { level: "23.6%", desc: "Retroceso superficial — tendencia muy fuerte, poca corrección. Raro.", color: "text-zinc-400" },
-            { level: "38.2%", desc: "Retroceso moderado — común en tendencia sólida. Buena relación riesgo/recompensa.", color: "text-blue-400" },
-            { level: "50%", desc: "Nivel psicológico fuerte — no es un Fibonacci puro, pero muy respetado por los traders.", color: "text-blue-400" },
-            { level: "61.8%", desc: "El 'golden ratio' — la zona de retroceso más usada y más poderosa. A vigilar prioritariamente.", color: "text-emerald-400" },
-            { level: "78.6%", desc: "Retroceso profundo — útil para entradas agresivas cerca del swing low. Riesgoso sin confluencia.", color: "text-red-400" },
+            { level: "23.6%", desc: "Retroceso superficial, tendencia muy fuerte, poca corrección. Raro.", color: "text-zinc-400" },
+            { level: "38.2%", desc: "Retroceso moderado, común en tendencia sólida. Buena relación riesgo/recompensa.", color: "text-blue-400" },
+            { level: "50%", desc: "Nivel psicológico fuerte, no es un Fibonacci puro, pero muy respetado por los traders.", color: "text-blue-400" },
+            { level: "61.8%", desc: "El 'golden ratio', la zona de retroceso más usada y más poderosa. A vigilar prioritariamente.", color: "text-emerald-400" },
+            { level: "78.6%", desc: "Retroceso profundo, útil para entradas agresivas cerca del swing low. Riesgoso sin confluencia.", color: "text-red-400" },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-4 bg-zinc-800/40 rounded-xl px-4 py-3">
               <span className={`text-sm font-bold shrink-0 w-12 ${item.color}`}>{item.level}</span>
@@ -73,7 +73,7 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Cómo trazar Fibonacci correctamente</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Los niveles de Fibonacci se trazan sobre un movimiento impulsivo completo — del swing low al swing high (tendencia alcista), o del swing high al swing low (tendencia bajista).
+          Los niveles de Fibonacci se trazan sobre un movimiento impulsivo completo, del swing low al swing high (tendencia alcista), o del swing high al swing low (tendencia bajista).
         </p>
         <div className="space-y-2">
           {[
@@ -98,7 +98,7 @@ export default function ContentEs() {
         </p>
         <div className="space-y-2.5">
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
-            <p className="text-sm font-medium text-emerald-400 mb-1">Setup ideal — 3 confluencias + señal</p>
+            <p className="text-sm font-medium text-emerald-400 mb-1">Setup ideal, 3 confluencias + señal</p>
             <p className="text-xs text-zinc-400 leading-relaxed">
               EUR/USD Daily alcista → 61.8% Fib en 1.0869 → antiguo soporte histórico en 1.0870 → zona de Demand sin retest en la misma zona. El precio llega. Pin bar alcista. Entras en compra. SL debajo de la zona (1.0848), TP hacia 1.0980.
             </p>
@@ -190,8 +190,8 @@ export default function ContentEs() {
         points={[
           "Fibonacci identifica zonas de retroceso probabilísticas: 38.2%, 50%, 61.8% son las más usadas.",
           "Traza Fibonacci sobre un movimiento impulsivo completo: swing low → swing high (tendencia alcista).",
-          "El 61.8% (golden ratio) es el nivel más respetado — pero jamás infalible.",
-          "Fibonacci solo no es una señal — espera una confluencia (S/R, zona SD) Y una señal de vela.",
+          "El 61.8% (golden ratio) es el nivel más respetado, pero jamás infalible.",
+          "Fibonacci solo no es una señal, espera una confluencia (S/R, zona SD) Y una señal de vela.",
           "Las 'zonas de oro' = intersección de varias confluencias incluyendo un nivel Fib clave.",
         ]}
       />
@@ -209,18 +209,18 @@ export default function ContentEs() {
       <LessonQuiz
         question="Trazas Fibonacci sobre un movimiento alcista EUR/USD (1.0800 → 1.0980). El precio retrocede hasta el 61.8% en 1.0869. Este nivel coincide con un soporte histórico respetado 2 veces. ¿Qué haces?"
         options={[
-          "Entras de inmediato en compra — el golden ratio + soporte es suficiente",
+          "Entras de inmediato en compra, el golden ratio + soporte es suficiente",
           "Esperas una señal de vela (pin bar o engulfing alcista) en la zona antes de entrar",
-          "Lanzas una orden de venta — el retroceso probablemente continuará hasta el 78.6%",
-          "Ignoras el 61.8% — el soporte ya fue tocado 2 veces, está debilitado",
+          "Lanzas una orden de venta, el retroceso probablemente continuará hasta el 78.6%",
+          "Ignoras el 61.8%, el soporte ya fue tocado 2 veces, está debilitado",
         ]}
         correctIndex={1}
-        explanation="Tienes 2 confluencias sólidas: 61.8% Fib + soporte histórico. Es una zona de oro a vigilar. Pero la señal de vela aún falta. Espera que una pin bar o un engulfing alcista confirme que el precio reacciona a la zona — luego entras con SL debajo de 1.0848 y TP hacia 1.0980."
+        explanation="Tienes 2 confluencias sólidas: 61.8% Fib + soporte histórico. Es una zona de oro a vigilar. Pero la señal de vela aún falta. Espera que una pin bar o un engulfing alcista confirme que el precio reacciona a la zona, luego entras con SL debajo de 1.0848 y TP hacia 1.0980."
         answerExplanations={[
-          "Demasiado apresurado. Tienes 2 confluencias sólidas, pero sin señal de vela, entras en un precio que puede seguir bajando hacia 1.0840 o menos. La confluencia te dice 'mira aquí' — no 'entra ahora'.",
+          "Demasiado apresurado. Tienes 2 confluencias sólidas, pero sin señal de vela, entras en un precio que puede seguir bajando hacia 1.0840 o menos. La confluencia te dice 'mira aquí', no 'entra ahora'.",
           "Correcto. El 61.8% + soporte es una zona de oro. Pero la confirmación sigue siendo necesaria. Una pin bar alcista o un engulfing en esta zona te dice que los compradores reaccionan. Entonces entras con SL debajo de la zona (1.0848) y TP hacia el swing high (1.0980).",
-          "Falso. En tendencia alcista Daily, el retroceso hacia el 61.8% es una oportunidad de compra — no de venta. Hacer short aquí es tradear contra la tendencia de fondo y contra 2 confluencias alcistas.",
-          "Parcialmente. Un soporte tocado 2 veces es menos fuerte que un soporte virgen, pero sigue siendo válido — sobre todo combinado con el 61.8% Fib. La coincidencia de los dos niveles refuerza la zona, no la anula.",
+          "Falso. En tendencia alcista Daily, el retroceso hacia el 61.8% es una oportunidad de compra, no de venta. Hacer short aquí es tradear contra la tendencia de fondo y contra 2 confluencias alcistas.",
+          "Parcialmente. Un soporte tocado 2 veces es menos fuerte que un soporte virgen, pero sigue siendo válido, sobre todo combinado con el 61.8% Fib. La coincidencia de los dos niveles refuerza la zona, no la anula.",
         ]}
       />
 

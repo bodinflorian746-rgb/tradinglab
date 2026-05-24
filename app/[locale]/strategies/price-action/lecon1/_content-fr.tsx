@@ -200,10 +200,10 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur XAU/USD H4, une bougie clôture avec ces caractéristiques : ouverture 4 580$, plus haut 4 595$, plus bas 4 530$, clôture 4 588$. Comment se lit cette bougie selon les 4 critères du rapport de force ?"
             steps={[
-              "Critère 1 — Taille du corps : ouverture 4 580$ à clôture 4 588$ = corps haussier de 8$ (à comparer à la moyenne des 20 bougies récentes)",
-              "Critère 2 — Mèches : mèche basse de 50$ (4 580$ - 4 530$), mèche haute de 7$ (4 595$ - 4 588$) — mèche basse 6 fois plus longue que le corps, signal de rejet haussier puissant en bas",
-              "Critère 3 — Position de la clôture : 4 588$ dans la fourchette 4 530$-4 595$ = 89% de la fourchette, dans le tiers supérieur, domination des acheteurs sur la fin de période",
-              "Critère 4 — Contexte adjacent : à mettre en relation avec les bougies précédentes et un niveau structurel proche",
+              "Critère 1. Taille du corps : ouverture 4 580$ à clôture 4 588$ = corps haussier de 8$ (à comparer à la moyenne des 20 bougies récentes)",
+              "Critère 2. Mèches : mèche basse de 50$ (4 580$ - 4 530$), mèche haute de 7$ (4 595$ - 4 588$), mèche basse 6 fois plus longue que le corps, signal de rejet haussier puissant en bas",
+              "Critère 3. Position de la clôture : 4 588$ dans la fourchette 4 530$-4 595$ = 89% de la fourchette, dans le tiers supérieur, domination des acheteurs sur la fin de période",
+              "Critère 4. Contexte adjacent : à mettre en relation avec les bougies précédentes et un niveau structurel proche",
               "Synthèse : la bougie correspond au pattern pin bar haussier (corps réduit + mèche basse longue + clôture en haut), signal de rejet à la baisse particulièrement opérationnel s’il intervient au contact d’un support ou d’une zone Order Block",
             ]}
           />
@@ -257,7 +257,7 @@ export default function ContentFr() {
             <div className="mt-5 flex items-center justify-between">
               <span />
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 2 — Pin bar — le rejet de niveau
+                Leçon 2, Pin bar, le rejet de niveau
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

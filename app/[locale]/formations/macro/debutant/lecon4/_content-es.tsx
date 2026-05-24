@@ -58,7 +58,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Entender la inflación — por qué todo parte de ahí
+            Entender la inflación, por qué todo parte de ahí
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -237,25 +237,25 @@ export default function ContentEs() {
             </p>
             <div className="space-y-3 mb-5">
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                <p className="text-sm font-semibold text-zinc-200 mb-1">Fase 1 — La inflación explota</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-1">Fase 1. La inflación explota</p>
                 <p className="text-sm text-zinc-300">
                   la inflación de EE. UU. sube de 1.4% a <span className="font-semibold text-zinc-200">9.1%</span> (récord en 40 años).
                 </p>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                <p className="text-sm font-semibold text-zinc-200 mb-1">Fase 2 — La Fed entra en pánico y actúa</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-1">Fase 2. La Fed entra en pánico y actúa</p>
                 <p className="text-sm text-zinc-300">
-                  sube las tasas de <span className="font-semibold text-zinc-200">0.25% a 5.5%</span> en menos de 18 meses — uno de los ciclos de subida más violentos de la historia.
+                  sube las tasas de <span className="font-semibold text-zinc-200">0.25% a 5.5%</span> en menos de 18 meses, uno de los ciclos de subida más violentos de la historia.
                 </p>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                <p className="text-sm font-semibold text-zinc-200 mb-1">Fase 3 — El dólar explota</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-1">Fase 3. El dólar explota</p>
                 <p className="text-sm text-zinc-300">
                   el DXY (índice del dólar) gana <span className="font-semibold text-zinc-200">+20%</span> en 2022. EUR/USD pasa de 1.20 a 0.95.
                 </p>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
-                <p className="text-sm font-semibold text-zinc-200 mb-2">Fase 4 — Todos los mercados se desploman</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-2">Fase 4. Todos los mercados se desploman</p>
                 <ul className="space-y-1">
                   <li className="text-sm text-zinc-300">Nasdaq: <span className="font-semibold text-zinc-200">-33%</span> en 2022</li>
                   <li className="text-sm text-zinc-300">Bitcoin: <span className="font-semibold text-zinc-200">-65%</span> en el año</li>
@@ -291,7 +291,7 @@ export default function ContentEs() {
                 { text: "las publicaciones mensuales (como ", bold: "CPI", after: ")" },
                 { text: "los discursos de los bancos centrales", bold: null, after: null },
                 { text: "las expectativas del mercado", bold: null, after: null },
-                { text: "los indicadores relacionados (como el ", bold: "Core PCE", after: " — el indicador favorito de la Fed)" },
+                { text: "los indicadores relacionados (como el ", bold: "Core PCE", after: " el indicador favorito de la Fed)" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
@@ -334,7 +334,7 @@ export default function ContentEs() {
                 <span className="text-sm font-bold text-amber-400 tracking-wide">Realidad del retail</span>
               </div>
               <p className="text-base text-zinc-300 leading-relaxed">
-                ¿Operas sin seguir la inflación de EE. UU.? Es como conducir en la autopista sin mirar el velocímetro. Quizás sobrevivas 10 minutos — pero no mucho más.
+                ¿Operas sin seguir la inflación de EE. UU.? Es como conducir en la autopista sin mirar el velocímetro. Quizás sobrevivas 10 minutos, pero no mucho más.
               </p>
             </div>
 
@@ -378,18 +378,18 @@ export default function ContentEs() {
           <LessonQuiz
             question="La inflación de EE. UU. sale en 5% (en lugar del 3% esperado). Sin siquiera conocer la continuación, ¿cuál es la reacción más probable del dólar en las horas siguientes?"
             options={[
-              "El dólar baja — la inflación es mala para la divisa",
-              "El dólar sube — el mercado anticipa que la Fed subirá sus tasas para combatir la inflación",
-              "Ningún movimiento — la inflación solo afecta a los consumidores, no a los mercados",
+              "El dólar baja, la inflación es mala para la divisa",
+              "El dólar sube, el mercado anticipa que la Fed subirá sus tasas para combatir la inflación",
+              "Ningún movimiento, la inflación solo afecta a los consumidores, no a los mercados",
               "El dólar solo reacciona cuando la Fed toma una decisión real",
             ]}
             correctIndex={1}
-            explanation="El mercado anticipa la cadena de causalidad incluso antes de que la Fed actúe. Inflación sorpresa alta → anticipación de subida de tasas → mayor demanda de dólares → el dólar sube. Eso es exactamente lo que pasó en 2022 cuando la inflación explotó: el DXY subió incluso antes de las subidas de tasas. La opción A confunde causa a largo plazo y reacción inmediata. La opción C es falsa — la inflación es EL driver macro principal. La opción D ignora el papel de las anticipaciones: el mercado se mueve por anticipaciones, no por hechos consumados (ver lección 3 sobre consenso vs real)."
+            explanation="El mercado anticipa la cadena de causalidad incluso antes de que la Fed actúe. Inflación sorpresa alta → anticipación de subida de tasas → mayor demanda de dólares → el dólar sube. Eso es exactamente lo que pasó en 2022 cuando la inflación explotó: el DXY subió incluso antes de las subidas de tasas. La opción A confunde causa a largo plazo y reacción inmediata. La opción C es falsa, la inflación es EL driver macro principal. La opción D ignora el papel de las anticipaciones: el mercado se mueve por anticipaciones, no por hechos consumados (ver lección 3 sobre consenso vs real)."
             answerExplanations={[
-              "Falso. La inflación alta se percibe como positiva para la divisa a corto plazo porque señala que el banco central va a subir las tasas — lo que atrae capitales. La confusión viene del largo plazo, donde una inflación sin control puede destruir la divisa.",
+              "Falso. La inflación alta se percibe como positiva para la divisa a corto plazo porque señala que el banco central va a subir las tasas, lo que atrae capitales. La confusión viene del largo plazo, donde una inflación sin control puede destruir la divisa.",
               "Correcto. El mercado anticipa la cadena incluso antes de que la Fed actúe: inflación sorpresa → subida de tasas probable → dólar atractivo → el dólar sube. Eso es exactamente lo que pasó en 2022.",
               "Falso. La inflación es el driver macro principal de todos los mercados. Una sorpresa inflacionaria de +2% desata movimientos inmediatos en forex, bonos, acciones y materias primas.",
-              "Falso. El mercado se mueve por anticipaciones, no por decisiones oficiales. En cuanto sale el dato CPI, los traders reevalúan la probabilidad de subida de tasas — y el dólar se mueve inmediatamente.",
+              "Falso. El mercado se mueve por anticipaciones, no por decisiones oficiales. En cuanto sale el dato CPI, los traders reevalúan la probabilidad de subida de tasas, y el dólar se mueve inmediatamente.",
             ]}
           />
 
@@ -432,10 +432,10 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 3 — Los datos macro a vigilar
+                Lección 3. Los datos macro a vigilar
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                El rol del dólar en el mundo — Pronto disponible →
+                El rol del dólar en el mundo. Pronto disponible →
               </span>
             </div>
 

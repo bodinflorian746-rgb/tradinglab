@@ -12,12 +12,12 @@ function ContentFr() {
     <LessonPage
       formationId="intermediaire"
       lessonId="lecon1"
-      title="Structure de marché — BOS & CHoCH"
+      title="Structure de marché. BOS & CHoCH"
       subtitle="Avant d'identifier une entrée, tu dois savoir dans quelle direction le marché évolue. La structure, c'est ta boussole. Sans elle, tu trades à l'aveugle."
       duration="20 min"
       lessonNumber={1}
       prev={null}
-      next={{ href: "/formations/intermediaire/lecon2", label: "Leçon 2 — Zones clés" }}
+      next={{ href: "/formations/intermediaire/lecon2", label: "Leçon 2 : Zones clés" }}
     >
 
       {/* ── Ce que tu dois VOIR ── */}
@@ -56,9 +56,9 @@ function ContentFr() {
 
       {/* ── BOS ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Break of Structure (BOS) — la tendance confirme</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Break of Structure (BOS) : la tendance confirme</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Un BOS, c'est quand le prix casse le dernier sommet (en haussier) ou le dernier creux (en baissier). Il confirme que la tendance continue. C'est une information — pas un signal d'entrée.
+          Un BOS, c'est quand le prix casse le dernier sommet (en haussier) ou le dernier creux (en baissier). Il confirme que la tendance continue. C'est une information, pas un signal d'entrée.
         </p>
         <div className="space-y-2.5">
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
@@ -77,15 +77,15 @@ function ContentFr() {
 
       {/* ── CHoCH ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Change of Character (CHoCH) — la tendance craque</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Change of Character (CHoCH) : la tendance craque</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Le CHoCH est la première fissure dans la structure. En tendance haussière, c'est quand le prix casse en dessous du dernier Higher Low. Ce n'est pas encore un retournement confirmé — c'est une alerte.
+          Le CHoCH est la première fissure dans la structure. En tendance haussière, c'est quand le prix casse en dessous du dernier Higher Low. Ce n'est pas encore un retournement confirmé, c'est une alerte.
         </p>
         <div className="space-y-2.5">
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
             <p className="text-sm font-medium text-white mb-1">Scénario réel</p>
             <p className="text-xs text-zinc-500 leading-relaxed">
-              Tu observes EUR/USD en H4 haussier. Le prix forme HH à 1.0950, recule, puis casse son dernier HL à 1.0880. C'est un CHoCH baissier. Tu passes en mode observation — tu n'achètes plus. Tu attends un BOS baissier pour confirmer le retournement.
+              Tu observes EUR/USD en H4 haussier. Le prix forme HH à 1.0950, recule, puis casse son dernier HL à 1.0880. C'est un CHoCH baissier. Tu passes en mode observation, tu n'achètes plus. Tu attends un BOS baissier pour confirmer le retournement.
             </p>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
@@ -105,8 +105,8 @@ function ContentFr() {
         <h2 className="text-lg font-semibold text-white mb-4">Lire la structure rapidement</h2>
         <div className="space-y-2">
           {[
-            { n: "1", t: "Zoom arrière sur le Daily ou H4", d: "Ne commence jamais par le M15 — tu perdrais le contexte global." },
-            { n: "2", t: "Trace les 3 derniers sommets et creux significatifs", d: "Ignore les petites fluctuations — seuls les swings importants comptent." },
+            { n: "1", t: "Zoom arrière sur le Daily ou H4", d: "Ne commence jamais par le M15, tu perdrais le contexte global." },
+            { n: "2", t: "Trace les 3 derniers sommets et creux significatifs", d: "Ignore les petites fluctuations, seuls les swings importants comptent." },
             { n: "3", t: "La direction des sommets/creux = ta tendance", d: "Sommets et creux qui montent → haussier. Qui descendent → baissier. Stagnants → range, pas de trade." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -154,7 +154,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Erreur classique</p>
         <p className="text-sm font-semibold text-white mb-2">Entrer sur le BOS au lieu d'attendre le retour sur structure</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Tu vois le prix casser un nouveau High → tu achètes immédiatement. Mais c'est souvent le moment où le marché retrace. Le bon timing, c'est d'attendre que le prix revienne sur le dernier HL — pas d'acheter le breakout. Entrer sur le BOS = payer cher avec un mauvais ratio R/R.
+          Tu vois le prix casser un nouveau High → tu achètes immédiatement. Mais c'est souvent le moment où le marché retrace. Le bon timing, c'est d'attendre que le prix revienne sur le dernier HL, pas d'acheter le breakout. Entrer sur le BOS = payer cher avec un mauvais ratio R/R.
         </p>
       </section>
 
@@ -180,7 +180,7 @@ function ContentFr() {
           "BOS = le prix casse un sommet/creux précédent → la tendance continue.",
           "CHoCH = premier signal de retournement → alerte, pas encore un trade.",
           "CHoCH + BOS opposé = retournement confirmé.",
-          "En range, tu ne trades pas — tu attends une structure claire.",
+          "En range, tu ne trades pas, tu attends une structure claire.",
         ]}
       />
 
@@ -197,18 +197,18 @@ function ContentFr() {
       <LessonQuiz
         question="Tu regardes EUR/USD en H4. Le prix est en tendance haussière (HH/HL). Il vient de casser en dessous du dernier Higher Low à 1.0820. Qu'est-ce que ça signifie ?"
         options={[
-          "La tendance haussière est confirmée — c'est un bon moment d'acheter maintenant",
-          "C'est un CHoCH — la structure haussière est fragilisée, tu passes en observation",
-          "La tendance baissière est officielle — tu entres en short immédiatement",
-          "C'est une information neutre — aucune action à prendre",
+          "La tendance haussière est confirmée, c'est un bon moment d'acheter maintenant",
+          "C'est un CHoCH, la structure haussière est fragilisée, tu passes en observation",
+          "La tendance baissière est officielle, tu entres en short immédiatement",
+          "C'est une information neutre, aucune action à prendre",
         ]}
         correctIndex={1}
-        explanation="Casser le dernier Higher Low en tendance haussière est la définition du CHoCH. La structure haussière est compromise. Tu ne cherches plus d'achats — tu observes si un BOS baissier confirme le retournement."
+        explanation="Casser le dernier Higher Low en tendance haussière est la définition du CHoCH. La structure haussière est compromise. Tu ne cherches plus d'achats, tu observes si un BOS baissier confirme le retournement."
         answerExplanations={[
-          "Faux. Casser le dernier HL est l'inverse d'un signal d'achat. C'est la première rupture de la structure haussière — tu ne dois pas acheter maintenant.",
+          "Faux. Casser le dernier HL est l'inverse d'un signal d'achat. C'est la première rupture de la structure haussière, tu ne dois pas acheter maintenant.",
           "Correct. CHoCH = Change of Character. La structure haussière est fragilisée. Tu passes en mode observation et attends un BOS baissier pour confirmer le retournement avant d'entrer en short.",
           "Faux. Un CHoCH seul ne confirme pas un retournement. Il faut un BOS baissier (cassure du dernier LL) pour officialiser la nouvelle tendance. Entrer en short immédiatement, c'est anticiper sans confirmation.",
-          "Faux. Un CHoCH est une information très importante — c'est le premier signal que le contexte change. L'ignorer, c'est rater un avertissement majeur du marché.",
+          "Faux. Un CHoCH est une information très importante, c'est le premier signal que le contexte change. L'ignorer, c'est rater un avertissement majeur du marché.",
         ]}
       />
 

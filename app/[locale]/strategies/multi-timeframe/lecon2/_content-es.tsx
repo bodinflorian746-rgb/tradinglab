@@ -62,7 +62,7 @@ export default function ContentEs() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              El timeframe superior construye el contexto antes de toda ejecución: identifica la dirección dominante, localiza las zonas importantes y muestra hacia dónde empuja realmente el mercado. No sirve para entrar en posición — sirve para evitar los trades tomados contra la tendencia de fondo.
+              El timeframe superior construye el contexto antes de toda ejecución: identifica la dirección dominante, localiza las zonas importantes y muestra hacia dónde empuja realmente el mercado. No sirve para entrar en posición, sirve para evitar los trades tomados contra la tendencia de fondo.
             </p>
           </div>
 
@@ -165,7 +165,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La dirección dominante se lee en la calidad de las impulsiones y de las correcciones. El objetivo no es contar las velas — es observar qué dirección controla realmente el mercado.
+              La dirección dominante se lee en la calidad de las impulsiones y de las correcciones. El objetivo no es contar las velas, es observar qué dirección controla realmente el mercado.
             </p>
 
             <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 mb-6">
@@ -181,7 +181,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD: las correcciones alcistas en M15 son lentas, pero las caídas en H4 son agresivas — del orden de 35 a 40 $ — con rechazos sistemáticos por debajo de 4 680 $. El mercado sigue bajista a pesar de varios rebotes locales.
+                XAU/USD: las correcciones alcistas en M15 son lentas, pero las caídas en H4 son agresivas, del orden de 35 a 40 $, con rechazos sistemáticos por debajo de 4 680 $. El mercado sigue bajista a pesar de varios rebotes locales.
               </p>
             </div>
 
@@ -202,7 +202,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El HTF elimina los setups débiles antes incluso de buscar una entrada. El trader no busca « un trade » — busca un trade alineado con la dirección dominante.
+              El HTF elimina los setups débiles antes incluso de buscar una entrada. El trader no busca « un trade », busca un trade alineado con la dirección dominante.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -224,23 +224,23 @@ export default function ContentEs() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de aplicación: un caso EUR/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El HTF se lee del más grande al más pequeño. Aquí tienes la secuencia sobre un caso EUR/USD — sin buscar una entrada, el objetivo es solo establecer el contexto.
+              El HTF se lee del más grande al más pequeño. Aquí tienes la secuencia sobre un caso EUR/USD, sin buscar una entrada, el objetivo es solo establecer el contexto.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Paso 1 — Daily</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 1. Daily</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: estructura en LH/LL, resistencia Daily en 1.1760, impulsiones bajistas más fuertes que los rebotes</li>
                 <li>- Conclusión: dirección dominante bajista, prioridad a las ventas</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Paso 2 — H4</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 2. H4</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: zona de resistencia entre 1.1750 y 1.1760, rechazos repetidos debajo de la resistencia</li>
                 <li>- Conclusión: zona ideal para esperar una reacción bajista</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Paso 3 — Preparar el escenario</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 3. Preparar el escenario</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Esperado: una subida hacia la resistencia, un rechazo local, luego una confirmación más tarde en el timeframe de ejecución</li>
                 <li>- Evitado: una compra impulsiva contra la tendencia Daily</li>

@@ -41,7 +41,7 @@ export default async function Page({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
           {/* Scénario A — Risque 1% */}
           <div className="rounded-xl border border-emerald-500/30 bg-zinc-900 p-4">
-            <p className="text-sm font-bold text-emerald-400 mb-3">Scénario A — Risque 1%</p>
+            <p className="text-sm font-bold text-emerald-400 mb-3">Scénario A. Risque 1%</p>
             <ul className="space-y-1.5 text-[13px] text-zinc-300">
               <li className="flex justify-between gap-3"><span className="text-zinc-500">Compte</span><span className="font-mono">500&nbsp;€</span></li>
               <li className="flex justify-between gap-3"><span className="text-zinc-500">Risque par trade</span><span className="font-mono">5&nbsp;€</span></li>
@@ -55,7 +55,7 @@ export default async function Page({
 
           {/* Scénario B — Risque 10% */}
           <div className="rounded-xl border border-red-500/30 bg-zinc-900 p-4">
-            <p className="text-sm font-bold text-red-400 mb-3">Scénario B — Risque 10%</p>
+            <p className="text-sm font-bold text-red-400 mb-3">Scénario B. Risque 10%</p>
             <ul className="space-y-1.5 text-[13px] text-zinc-300">
               <li className="flex justify-between gap-3"><span className="text-zinc-500">Compte</span><span className="font-mono">500&nbsp;€</span></li>
               <li className="flex justify-between gap-3"><span className="text-zinc-500">Risque par trade</span><span className="font-mono">50&nbsp;€</span></li>
@@ -199,7 +199,7 @@ export default async function Page({
 
       {/* ── Section 6 — Exemple concret XAU/USD ──────────────────────────── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Exemple concret XAU/USD — deux RR, deux résultats</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Exemple concret XAU/USD : deux RR, deux résultats</h2>
 
         <div className="bg-zinc-800/50 border-l-4 border-amber-400 px-5 py-4 rounded">
           <div className="flex items-center gap-2 mb-2">
@@ -211,7 +211,7 @@ export default async function Page({
           </p>
         </div>
 
-        <h3 className="text-base font-semibold text-white mt-5 mb-3">Même setup, deux RR — résultat après 10 trades</h3>
+        <h3 className="text-base font-semibold text-white mt-5 mb-3">Même setup, deux RR : résultat après 10 trades</h3>
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -286,7 +286,7 @@ export default async function Page({
 
         <div className="space-y-2.5 mt-4">
           {[
-            "Risque par trade : 0,5% à 1% du capital (ou selon ta grille de capital — voir leçon 8)",
+            "Risque par trade : 0,5% à 1% du capital (ou selon ta grille de capital, voir leçon 8)",
             "Maximum 2-3 trades par jour",
             "Stop journalier : 2% à 3% du capital",
             "RR minimum acceptable : 1:2",

@@ -56,7 +56,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Los rendimientos de bonos US — el mercado que dirige a todos los demás
+            Los rendimientos de bonos US, el mercado que dirige a todos los demás
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -507,13 +507,13 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 2 — NFP
+                Lección 2. NFP
               </Link>
               <Link
                 href="/formations/macro/avance/lecon4"
                 className="inline-flex items-center gap-1.5 text-sm text-zinc-600 hover:text-zinc-400 transition-colors"
               >
-                Lección 4 — Risk-on / Risk-off
+                Lección 4. Risk-on / Risk-off
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

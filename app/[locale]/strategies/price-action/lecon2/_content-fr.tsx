@@ -240,9 +240,9 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur EUR/USD H1, le prix s’approche d’une résistance qualifiée à 1.1820 (3 touches dans les 5 dernières semaines, MM50 H4 à 1.1815 = confluence). Une bougie H1 imprime une mèche haute jusqu’à 1.1835 puis clôture à 1.1803. Ouverture à 1.1815. Quelle qualification pour ce signal et quel plan de trade ?"
             steps={[
-              "Mesurer la pin bar : mèche haute 32 pips (de 1.1803 à 1.1835), corps 12 pips (de 1.1815 à 1.1803). Ratio mèche/corps = 32/12 = 2,67:1 — critère 1 validé",
-              "Vérifier la direction et le contact : mèche longue en haut, pin bar baissière au contact de la résistance 1.1820 — critères 2 et 4 validés",
-              "Position de la clôture : 1.1803 dans la fourchette 1.1803-1.1835, au plus bas absolu, clôture dans le tiers inférieur — critère 3 validé",
+              "Mesurer la pin bar : mèche haute 32 pips (de 1.1803 à 1.1835), corps 12 pips (de 1.1815 à 1.1803). Ratio mèche/corps = 32/12 = 2,67:1, critère 1 validé",
+              "Vérifier la direction et le contact : mèche longue en haut, pin bar baissière au contact de la résistance 1.1820, critères 2 et 4 validés",
+              "Position de la clôture : 1.1803 dans la fourchette 1.1803-1.1835, au plus bas absolu, clôture dans le tiers inférieur, critère 3 validé",
               "Confluence : MM50 H4 à 1.1815 dans la zone = renforcement du signal",
               "Plan : entrée short à 1.1803 (clôture pin bar), stop loss à 1.1843 (8 pips au-dessus du wick à 1.1835), take profit à 1.1720 (support H4 suivant). Risque 40 pips, gain 83 pips, R/R 2,07. Taille de position selon le risque par trade adapté au capital",
             ]}
@@ -302,10 +302,10 @@ export default function ContentFr() {
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="text-zinc-600">
                   <path d="M9.5 3.5l-4 4 4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 1 — Lire une bougie : corps, mèche, signal
+                Leçon 1. Lire une bougie : corps, mèche, signal
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 3 — Engulfing — le retournement de force
+                Leçon 3, Engulfing, le retournement de force
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

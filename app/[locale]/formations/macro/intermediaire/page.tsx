@@ -4,7 +4,7 @@ const lessons = [
   {
     id: "lecon1",
     number: 1,
-    title: "Hawkish vs Dovish — comment lire le ton d'une banque centrale",
+    title: "Hawkish vs Dovish : comment lire le ton d'une banque centrale",
     duration: "18 min",
     description: "Décoder le langage des banques centrales pour anticiper les mouvements de fond.",
     href: "/formations/macro/intermediaire/lecon1",
@@ -13,7 +13,7 @@ const lessons = [
   {
     id: "lecon2",
     number: 2,
-    title: "Comprendre le calendrier économique — comment lire le marché à l'avance",
+    title: "Comprendre le calendrier économique : comment lire le marché à l'avance",
     duration: "14 min",
     description: "Consensus, précédent, révisions : les 4 colonnes qui font la différence entre subir et anticiper.",
     href: "/formations/macro/intermediaire/lecon2",
@@ -22,7 +22,7 @@ const lessons = [
   {
     id: "lecon3",
     number: 3,
-    title: "CPI, PPI et inflation — décoder les chiffres qui font bouger le marché",
+    title: "CPI, PPI et inflation : décoder les chiffres qui font bouger le marché",
     duration: "16 min",
     description: "PPI, CPI Headline, Core CPI, Core PCE : la chaîne complète et comment trader chaque publication.",
     href: "/formations/macro/intermediaire/lecon3",
@@ -31,7 +31,7 @@ const lessons = [
   {
     id: "lecon4",
     number: 4,
-    title: "Sessions de trading et liquidité — quand le marché bouge vraiment",
+    title: "Sessions de trading et liquidité : quand le marché bouge vraiment",
     duration: "14 min",
     description: "Asie, Londres, New York : pourquoi l'overlap 14h-17h concentre les vrais mouvements et comment adapter ta fenêtre de trading.",
     href: "/formations/macro/intermediaire/lecon4",
@@ -40,7 +40,7 @@ const lessons = [
   {
     id: "lecon5",
     number: 5,
-    title: "Les corrélations — comment les marchés bougent ensemble",
+    title: "Les corrélations : comment les marchés bougent ensemble",
     duration: "14 min",
     description: "Corrélations positives, négatives, cassures : comment éviter d'empiler le même risque macro sur plusieurs actifs.",
     href: "/formations/macro/intermediaire/lecon5",
@@ -51,7 +51,7 @@ const lessons = [
     number: 6,
     title: "Construire son biais hebdomadaire",
     duration: "14 min",
-    description: "Routine pro pour préparer ta semaine — calendrier, corrélations, biais par actif.",
+    description: "Routine pro pour préparer ta semaine, calendrier, corrélations, biais par actif.",
     href: "/formations/macro/intermediaire/lecon6",
     disabled: false,
   },
@@ -72,7 +72,7 @@ export default function MacroIntermediairePage() {
 
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-3 flex-wrap">
-            <h1 className="text-4xl md:text-5xl font-bold">Macro Trading — Intermédiaire</h1>
+            <h1 className="text-4xl md:text-5xl font-bold">Macro Trading : Intermédiaire</h1>
             <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-400/10 text-blue-400 border border-blue-400/20 shrink-0">
               Intermédiaire
             </span>

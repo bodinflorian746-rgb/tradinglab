@@ -10,12 +10,12 @@ function ContentFr() {
     <LessonPage
       formationId="avance"
       lessonId="lecon8"
-      title="Journaling — analyser pour progresser"
-      subtitle="Les meilleurs traders ne s'améliorent pas par intuition — ils s'améliorent par données. Le journal de trading est l'outil qui transforme l'expérience brute en progression mesurable."
+      title="Journaling, analyser pour progresser"
+      subtitle="Les meilleurs traders ne s'améliorent pas par intuition, ils s'améliorent par données. Le journal de trading est l'outil qui transforme l'expérience brute en progression mesurable."
       duration="18 min"
       lessonNumber={8}
-      prev={{ href: "/formations/avance/lecon7", label: "Leçon 7 — Entrées de précision" }}
-      next={{ href: "/formations/avance/lecon9", label: "Leçon 9 — Backtesting" }}
+      prev={{ href: "/formations/avance/lecon7", label: "Leçon 7 : Entrées de précision" }}
+      next={{ href: "/formations/avance/lecon9", label: "Leçon 9 : Backtesting" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -25,7 +25,7 @@ function ContentFr() {
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">Fait :</span> la majorité des traders professionnels tient un journal détaillé. Ce n'est pas une option — c'est un outil de performance au même titre qu'une stratégie.
+            <span className="text-white font-medium">Fait :</span> la majorité des traders professionnels tient un journal détaillé. Ce n'est pas une option, c'est un outil de performance au même titre qu'une stratégie.
           </p>
         </div>
       </section>
@@ -33,7 +33,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Ce que contient un bon journal de trading</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Un journal efficace documente chaque trade de façon structurée — avant, pendant et après. Voici les informations essentielles à capturer.
+          Un journal efficace documente chaque trade de façon structurée, avant, pendant et après. Voici les informations essentielles à capturer.
         </p>
         <div className="space-y-2.5">
           {[
@@ -72,7 +72,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Analyser en R, pas en euros</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Le R (Risk/Reward) est l'unité standard pour mesurer la performance de trading. Analyser en euros biaise l'analyse — un trade gagné de 50€ peut être un mauvais trade si le R/R était 1:0.5. Un trade perdu de 20€ peut être un bon trade si le plan était respecté.
+          Le R (Risk/Reward) est l'unité standard pour mesurer la performance de trading. Analyser en euros biaise l'analyse, un trade gagné de 50€ peut être un mauvais trade si le R/R était 1:0.5. Un trade perdu de 20€ peut être un bon trade si le plan était respecté.
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -112,8 +112,8 @@ function ContentFr() {
         points={[
           "Le journal transforme l'expérience brute en données utilisables pour progresser.",
           "Documente AVANT (plan, confluences, SL/TP) et APRÈS (résultat, comportement, erreurs).",
-          "Mesure tout en R — pas en euros. L'euro biaise la perception de la qualité du trade.",
-          "La révision hebdomadaire est aussi importante que le journal lui-même — c'est là que l'apprentissage se produit.",
+          "Mesure tout en R, pas en euros. L'euro biaise la perception de la qualité du trade.",
+          "La révision hebdomadaire est aussi importante que le journal lui-même, c'est là que l'apprentissage se produit.",
           "Un trade perdu mais respectant le plan est un bon trade. Un trade gagné mais hors plan est une erreur.",
         ]}
       />
@@ -131,10 +131,10 @@ function ContentFr() {
       <LessonQuiz
         question="Tu as gagné 3 trades cette semaine pour +1.5R total, et perdu 2 trades pour -2R. Que fait un bon journal te dire ?"
         options={[
-          "Ta semaine est négative (-0.5R) — tu dois changer de stratégie immédiatement",
-          "Le résultat hebdomadaire n'est pas suffisant pour tirer des conclusions — analyse les 5 trades individuellement",
-          "Ton win rate de 60% est excellent — continue exactement comme tu fais",
-          "Les trades perdus sont plus importants que les gagnants — focus sur les erreurs",
+          "Ta semaine est négative (-0.5R), tu dois changer de stratégie immédiatement",
+          "Le résultat hebdomadaire n'est pas suffisant pour tirer des conclusions, analyse les 5 trades individuellement",
+          "Ton win rate de 60% est excellent, continue exactement comme tu fais",
+          "Les trades perdus sont plus importants que les gagnants, focus sur les erreurs",
         ]}
         correctIndex={1}
         explanation="5 trades ne permettent pas de tirer des conclusions statistiquement fiables. Un bon journal t'invite à analyser chaque trade individuellement : les trades gagnants étaient-ils bien construits ? Les trades perdants ont-ils respecté le plan ? Le résultat hebdomadaire (-0.5R) peut être normal avec une bonne stratégie sur une petite série."

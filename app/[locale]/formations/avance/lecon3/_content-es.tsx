@@ -10,24 +10,24 @@ export default function ContentEs() {
       formationId="avance"
       lessonId="lecon3"
       title="Order Blocks"
-      subtitle="Un Order Block es la última vela antes de un movimiento impulsivo institucional. Ahí es donde las instituciones colocaron sus órdenes — y donde el precio suele volver a buscarlas."
+      subtitle="Un Order Block es la última vela antes de un movimiento impulsivo institucional. Ahí es donde las instituciones colocaron sus órdenes, y donde el precio suele volver a buscarlas."
       duration="24 min"
       lessonNumber={3}
-      prev={{ href: "/formations/avance/lecon2", label: "Lección 2 — Fair Value Gap" }}
-      next={{ href: "/formations/avance/lecon4", label: "Lección 4 — Killzones" }}
+      prev={{ href: "/formations/avance/lecon2", label: "Lección 2 : Fair Value Gap" }}
+      next={{ href: "/formations/avance/lecon4", label: "Lección 4 : Killzones" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">¿Qué es un Order Block?</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Cuando una institución coloca una orden masiva (de compra o venta), no puede ejecutarla de una sola vez — el mercado no tiene suficiente liquidity. Fracciona sus órdenes en varias velas y luego lanza el movimiento. La última vela antes de ese movimiento impulsivo se llama <span className="text-white font-medium">Order Block (OB)</span>.
+          Cuando una institución coloca una orden masiva (de compra o venta), no puede ejecutarla de una sola vez, el mercado no tiene suficiente liquidity. Fracciona sus órdenes en varias velas y luego lanza el movimiento. La última vela antes de ese movimiento impulsivo se llama <span className="text-white font-medium">Order Block (OB)</span>.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Cuando el precio regresa a la zona de ese OB durante un retroceso, las órdenes institucionales restantes se activan — lo que suele crear un rebote potente.
+          Cuando el precio regresa a la zona de ese OB durante un retroceso, las órdenes institucionales restantes se activan, lo que suele crear un rebote potente.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">En resumen:</span> un OB es una zona donde las instituciones dejaron órdenes sin ejecutar. El precio regresa para completarlas — y ahí es donde tú entras.
+            <span className="text-white font-medium">En resumen:</span> un OB es una zona donde las instituciones dejaron órdenes sin ejecutar. El precio regresa para completarlas, y ahí es donde tú entras.
           </p>
         </div>
       </section>
@@ -66,7 +66,7 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">OB vs Order Block &quot;mitigado&quot;</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Un Order Block solo es válido una vez. Cuando el precio regresa y reacciona, se dice que el OB está <span className="text-white font-medium">&quot;mitigado&quot;</span>. Después de la mitigation, la zona pierde su potencia institucional — no debes seguir tratando un OB mitigado como una señal.
+          Un Order Block solo es válido una vez. Cuando el precio regresa y reacciona, se dice que el OB está <span className="text-white font-medium">&quot;mitigado&quot;</span>. Después de la mitigation, la zona pierde su potencia institucional, no debes seguir tratando un OB mitigado como una señal.
         </p>
         <div className="space-y-2">
           {[
@@ -116,7 +116,7 @@ export default function ContentEs() {
           "Un Order Block = última vela antes de un movimiento impulsivo institucional que crea un BOS.",
           "Bullish OB = última vela bajista antes de un alza impulsiva. Bearish OB = inverso.",
           "La zona del OB se define por el cuerpo (open → close) de la vela, no por las mechas.",
-          "Un OB es válido una sola vez: tras la mitigation, pierde su potencia — no lo sigas tradeando.",
+          "Un OB es válido una sola vez: tras la mitigation, pierde su potencia, no lo sigas tradeando.",
           "La confluencia OB + FVG es una de las combinaciones más potentes en Smart Money.",
         ]}
       />
@@ -127,25 +127,25 @@ export default function ContentEs() {
           "Busca un movimiento alcista impulsivo reciente (una serie de velas direccionales sin retroceso). Anota la vela que lo precede.",
           "Verifica: ¿esa vela es bajista? Si sí, es un potencial Bullish Order Block. Anota sus niveles de open y close.",
           "¿El precio ha regresado a la zona desde entonces? Si sí, ¿hubo una reacción (rebote)? ¿El OB está mitigado o sigue activo?",
-          "Repite el ejercicio para un movimiento bajista — encuentra un Bearish Order Block.",
+          "Repite el ejercicio para un movimiento bajista, encuentra un Bearish Order Block.",
         ]}
       />
 
       <LessonQuiz
         question="Identificas un movimiento alcista impulsivo en el gráfico. La vela justo antes de ese movimiento es bajista. ¿Qué representa?"
         options={[
-          "Una señal de venta — la vela bajista significa que el mercado va a bajar",
-          "Un Bullish Order Block — es la zona donde las instituciones colocaron sus órdenes de compra",
-          "Un Fair Value Gap — no hubo intercambios a ese nivel",
+          "Una señal de venta, la vela bajista significa que el mercado va a bajar",
+          "Un Bullish Order Block, es la zona donde las instituciones colocaron sus órdenes de compra",
+          "Un Fair Value Gap, no hubo intercambios a ese nivel",
           "Un nivel de soporte/resistencia clásico sin significado institucional",
         ]}
         correctIndex={1}
-        explanation="La última vela bajista antes de un movimiento alcista impulsivo es un Bullish Order Block. Paradójicamente, es una vela bajista la que marca una zona de compra institucional — las instituciones absorbieron la presión vendedora en esa vela antes de lanzar su movimiento alcista."
+        explanation="La última vela bajista antes de un movimiento alcista impulsivo es un Bullish Order Block. Paradójicamente, es una vela bajista la que marca una zona de compra institucional, las instituciones absorbieron la presión vendedora en esa vela antes de lanzar su movimiento alcista."
         answerExplanations={[
-          "Falso. La dirección de la vela por sí misma no es la señal — es su contexto. Una vela bajista que precede a un movimiento alcista impulsivo es un Bullish OB, no una señal de venta.",
+          "Falso. La dirección de la vela por sí misma no es la señal, es su contexto. Una vela bajista que precede a un movimiento alcista impulsivo es un Bullish OB, no una señal de venta.",
           "Correcto. Es precisamente la definición de un Bullish Order Block. La última vela direccionalmente opuesta antes de un movimiento impulsivo marca la zona donde las instituciones ejecutaron sus órdenes.",
           "Falso. Un FVG se define en 3 velas y concierne a una zona de precio no intercambiada. El Order Block es la vela en sí (su cuerpo), no un espacio entre velas.",
-          "Falso. No es un simple S/R — es una zona institucional con órdenes en espera. La diferencia es fundamental: los OB tienen una lógica de activación que los S/R clásicos no tienen.",
+          "Falso. No es un simple S/R, es una zona institucional con órdenes en espera. La diferencia es fundamental: los OB tienen una lógica de activación que los S/R clásicos no tienen.",
         ]}
       />
 

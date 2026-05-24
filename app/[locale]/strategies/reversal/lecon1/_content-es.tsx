@@ -261,8 +261,8 @@ export default function ContentEs() {
           <LessonExercice
             description="En EUR/USD H1, ves un double top con un primer máximo en 1.1850 y un segundo en 1.1825. Diferencia: 25 pips, aproximadamente 0,23%. La neckline está en 1.1750. El precio cierra en 1.1745. ¿Tomas el setup?"
             steps={[
-              "Verifica que la diferencia entre los 2 máximos esté bajo el límite: 0,23% < 0,3% — OK",
-              "Confirma que el breakout sea por cierre debajo de 1.1750, no una simple mecha — OK",
+              "Verifica que la diferencia entre los 2 máximos esté bajo el límite: 0,23% < 0,3%. OK",
+              "Confirma que el breakout sea por cierre debajo de 1.1750, no una simple mecha. OK",
               "Verifica que la tendencia alcista previa sea clara (HH/HL)",
               "Verifica que no haya news mayor prevista en los próximos 30 minutos",
               "Toma la entrada short en 1.1745, SL por encima del 2do máximo, TP measured move",
@@ -278,7 +278,7 @@ export default function ContentEs() {
               "Un volumen muy elevado",
             ]}
             correctIndex={2}
-            explanation="La confirmación de un double top llega únicamente cuando el precio cierra una vela debajo de la neckline. Una simple mecha que pincha debajo y vuelve por encima no valida nada — esperar un cierre franco sigue siendo indispensable para evitar las señales falsas."
+            explanation="La confirmación de un double top llega únicamente cuando el precio cierra una vela debajo de la neckline. Una simple mecha que pincha debajo y vuelve por encima no valida nada, esperar un cierre franco sigue siendo indispensable para evitar las señales falsas."
           />
 
         </div>
@@ -323,7 +323,7 @@ export default function ContentEs() {
                 Volver al módulo
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 2 — Próximamente
+                Lección 2. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

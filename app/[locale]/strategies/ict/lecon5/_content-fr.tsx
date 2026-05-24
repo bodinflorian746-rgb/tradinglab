@@ -140,12 +140,12 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le modèle ICT ne se trade pas par signal isolé : il se trade par séquence. La majorité des trades à haute probabilité enchaînent une suite d&apos;événements structurels qui se construisent les uns sur les autres : un biais HTF qui pose la direction, une liquidité repérée comme cible probable, un sweep qui la prend, un displacement qui valide l&apos;intention, un FVG qui ouvre une fenêtre d&apos;entrée, puis l&apos;exécution sur le retour. Lire la séquence, c&apos;est anticiper le trade — pas le subir.
+              Le modèle ICT ne se trade pas par signal isolé : il se trade par séquence. La majorité des trades à haute probabilité enchaînent une suite d&apos;événements structurels qui se construisent les uns sur les autres : un biais HTF qui pose la direction, une liquidité repérée comme cible probable, un sweep qui la prend, un displacement qui valide l&apos;intention, un FVG qui ouvre une fenêtre d&apos;entrée, puis l&apos;exécution sur le retour. Lire la séquence, c&apos;est anticiper le trade, pas le subir.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Le modèle ICT = séquence d&apos;événements, pas signal isolé</li>
-              <li>- Chaque étape construit la suivante — sauter une étape brise la lecture</li>
+              <li>- Chaque étape construit la suivante, sauter une étape brise la lecture</li>
               <li>- Lire la séquence permet d&apos;anticiper l&apos;exécution avant qu&apos;elle arrive</li>
               <li>- Trader hors séquence = retomber dans le pattern réactif</li>
             </ul>
@@ -160,13 +160,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La première étape de toute séquence ICT, c&apos;est la liquidité. Avant qu&apos;un vrai mouvement institutionnel arrive, il faut identifier OÙ se trouve la liquidité visible — equal highs, equal lows, derniers sommets / creux clairement repérables. Cette liquidité est la cible probable du prochain sweep. La séquence ne démarre pas avant que cette poche soit prise : si le prix tourne autour sans la toucher, on attend.
+              La première étape de toute séquence ICT, c&apos;est la liquidité. Avant qu&apos;un vrai mouvement institutionnel arrive, il faut identifier OÙ se trouve la liquidité visible, equal highs, equal lows, derniers sommets / creux clairement repérables. Cette liquidité est la cible probable du prochain sweep. La séquence ne démarre pas avant que cette poche soit prise : si le prix tourne autour sans la toucher, on attend.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1 : prix actuel 1.1745, biais Daily baissier, résistance Daily à 1.1780. Deux equal highs visibles à 1.1780 sur les heures précédentes — la liquidité au-dessus de ces sommets est la cible. Le scénario complet attend que cette liquidité soit prise (mèche au-dessus de 1.1780) avant de chercher l&apos;exécution short. Sans sweep, pas de séquence — on patiente.
+                EUR/USD H1 : prix actuel 1.1745, biais Daily baissier, résistance Daily à 1.1780. Deux equal highs visibles à 1.1780 sur les heures précédentes, la liquidité au-dessus de ces sommets est la cible. Le scénario complet attend que cette liquidité soit prise (mèche au-dessus de 1.1780) avant de chercher l&apos;exécution short. Sans sweep, pas de séquence, on patiente.
               </p>
             </div>
 
@@ -187,7 +187,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une fois la liquidité prise par le sweep, l&apos;étape critique est le displacement : la séquence de bougies impulsives qui montre que le marché s&apos;est vraiment retourné dans la direction du biais HTF. Sans displacement, le sweep peut être un faux mouvement — le prix sweep, hésite, puis repart dans la direction initiale. AVEC displacement, l&apos;intention institutionnelle est claire et le FVG laissé dans la chute (ou la montée) devient la zone d&apos;exécution. L&apos;entrée se prend au retour du prix dans ce FVG.
+              Une fois la liquidité prise par le sweep, l&apos;étape critique est le displacement : la séquence de bougies impulsives qui montre que le marché s&apos;est vraiment retourné dans la direction du biais HTF. Sans displacement, le sweep peut être un faux mouvement, le prix sweep, hésite, puis repart dans la direction initiale. AVEC displacement, l&apos;intention institutionnelle est claire et le FVG laissé dans la chute (ou la montée) devient la zone d&apos;exécution. L&apos;entrée se prend au retour du prix dans ce FVG.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -214,13 +214,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La séquence ICT n&apos;a sa pleine valeur qu&apos;en Killzone. Le même enchaînement liquidité → sweep → displacement → FVG peut techniquement se produire en Asia Session, mais avec une probabilité de continuation faible — le volume manque pour soutenir le mouvement. Les séquences à haute probabilité combinent toujours setup ICT ET timing : sweep d&apos;un range Asia en London Open, sweep d&apos;un equal high en NY Open, displacement à l&apos;ouverture d&apos;une Killzone. Sans timing favorable, on attend la prochaine fenêtre.
+              La séquence ICT n&apos;a sa pleine valeur qu&apos;en Killzone. Le même enchaînement liquidité → sweep → displacement → FVG peut techniquement se produire en Asia Session, mais avec une probabilité de continuation faible, le volume manque pour soutenir le mouvement. Les séquences à haute probabilité combinent toujours setup ICT ET timing : sweep d&apos;un range Asia en London Open, sweep d&apos;un equal high en NY Open, displacement à l&apos;ouverture d&apos;une Killzone. Sans timing favorable, on attend la prochaine fenêtre.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : range Asia entre 4 642 et 4 655 $. À l&apos;ouverture de London, mèche de sweep au-dessus de 4 655 $, puis displacement bearish de 38 $ qui crée un FVG dans la chute. Setup complet ET en Killzone = setup premium. La même séquence à 03h UTC aurait probablement échoué — le marché manquait de volume pour soutenir le displacement.
+                XAU/USD : range Asia entre 4 642 et 4 655 $. À l&apos;ouverture de London, mèche de sweep au-dessus de 4 655 $, puis displacement bearish de 38 $ qui crée un FVG dans la chute. Setup complet ET en Killzone = setup premium. La même séquence à 03h UTC aurait probablement échoué, le marché manquait de volume pour soutenir le displacement.
               </p>
             </div>
 
@@ -240,40 +240,40 @@ export default function ContentFr() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1 — HTF (Daily) : biais directionnel</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily) : biais directionnel</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : EUR/USD Daily en LH/LL, résistance Daily à 1.1780</li>
-                <li>- Conclusion : biais baissier — toute la séquence cherchera un short</li>
+                <li>- Conclusion : biais baissier, toute la séquence cherchera un short</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 2 — Liquidité (H1) : identifier la cible</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 2. Liquidité (H1) : identifier la cible</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : deux equal highs visibles à 1.1780, stops accumulés au-dessus</li>
                 <li>- Conclusion : la liquidité au-dessus de 1.1780 est la cible probable du prochain sweep</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 3 — Sweep (M15 en Killzone)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 3. Sweep (M15 en Killzone)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : à l&apos;ouverture NY, mèche à 1.1792 puis réintégration sous 1.1780</li>
                 <li>- Conclusion : la liquidité est prise. On attend maintenant le displacement</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 4 — Displacement bearish</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 4. Displacement bearish</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : 4 bougies M15 baissières consécutives à grands corps, chute jusqu&apos;à 1.1748. FVG visible entre 1.1768 et 1.1780</li>
                 <li>- Conclusion : displacement validé, le FVG est la zone d&apos;exécution</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 5 — Retour dans le FVG</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 5. Retour dans le FVG</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : sur les heures suivantes, le prix remonte progressivement et rentre dans la bande 1.1768-1.1780</li>
-                <li>- Conclusion : zone d&apos;exécution active — on guette la confirmation de rejet</li>
+                <li>- Conclusion : zone d&apos;exécution active, on guette la confirmation de rejet</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 6 — Exécution</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 6. Exécution</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : une bougie M15 de rejet apparaît dans le FVG, suivie d&apos;une bougie baissière impulsive</li>
-                <li>- Conclusion : entrée short à 1.1774, SL à 1.1798 (au-dessus de l&apos;extrémité du displacement), TP vers 1.1695. R/R ≈ 1 : 3,3 — séquence ICT complète et alignée</li>
+                <li>- Conclusion : entrée short à 1.1774, SL à 1.1798 (au-dessus de l&apos;extrémité du displacement), TP vers 1.1695. R/R ≈ 1 : 3,3, séquence ICT complète et alignée</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -296,14 +296,14 @@ export default function ContentFr() {
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">1. Entrer sur le sweep seul</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Voir une mèche dépasser un equal high et entrer immédiatement, sans attendre le displacement, c&apos;est trader la mèche — exactement le piège que la séquence cherche à éviter. Le sweep n&apos;est qu&apos;une condition préalable ; sans displacement qui suit, c&apos;est juste un faux mouvement.
+                  Voir une mèche dépasser un equal high et entrer immédiatement, sans attendre le displacement, c&apos;est trader la mèche, exactement le piège que la séquence cherche à éviter. Le sweep n&apos;est qu&apos;une condition préalable ; sans displacement qui suit, c&apos;est juste un faux mouvement.
                 </p>
               </div>
 
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">2. Sauter le HTF</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Repérer un sweep et un displacement sans avoir d&apos;abord posé le biais Daily / H4, c&apos;est confondre setup local et trade. Le HTF dicte la direction des trades autorisés — sans cette lecture, la séquence peut bouger correctement et te placer du mauvais côté du mouvement réel.
+                  Repérer un sweep et un displacement sans avoir d&apos;abord posé le biais Daily / H4, c&apos;est confondre setup local et trade. Le HTF dicte la direction des trades autorisés, sans cette lecture, la séquence peut bouger correctement et te placer du mauvais côté du mouvement réel.
                 </p>
               </div>
 
@@ -325,9 +325,9 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Le modèle ICT est une SÉQUENCE — liquidité, manipulation, déplacement, exécution — pas un signal isolé.",
+              "Le modèle ICT est une SÉQUENCE, liquidité, manipulation, déplacement, exécution, pas un signal isolé.",
               "Chaque étape construit la suivante : sauter ou inverser l’ordre brise la lecture du marché.",
-              "Le FVG créé par le displacement est la zone d’exécution — on entre au retour, jamais pendant l’impulsion.",
+              "Le FVG créé par le displacement est la zone d’exécution, on entre au retour, jamais pendant l’impulsion.",
               "Le timing (Killzones) reste essentiel : un setup ICT hors Killzone est statistiquement non rentable.",
             ]}
           />
@@ -336,13 +336,13 @@ export default function ContentFr() {
             description="Sur TradingView, déroule une séquence ICT complète sur la paire de ton choix, du Daily à l&apos;exécution."
             steps={[
               "HTF (Daily) : conclus un biais directionnel clair. Repère sur H1 une poche de liquidité visible dans le sens du biais (equal highs/lows, dernier sommet/creux).",
-              "Attends une Killzone (London ou NY Open). Surveille le sweep de la liquidité repérée, puis le displacement qui suit. Si la séquence s&apos;arrête au sweep sans displacement, c&apos;est un faux mouvement — pas de trade.",
+              "Attends une Killzone (London ou NY Open). Surveille le sweep de la liquidité repérée, puis le displacement qui suit. Si la séquence s&apos;arrête au sweep sans displacement, c&apos;est un faux mouvement, pas de trade.",
               "Trace le FVG laissé par le displacement. Attends le retour du prix dans la bande. Si la réaction confirme (bougie de rejet + impulsion), note l&apos;entrée, le SL au-dessus de l&apos;extrémité du displacement, le TP vers la prochaine liquidité.",
             ]}
           />
 
           <LessonQuiz
-            question="Tu vois sur EUR/USD une mèche qui sweep des equal highs à 1.1780, montant jusqu'à 1.1792. Aucune bougie de displacement bearish ne suit — le prix consolide autour de 1.1782 pendant 6 bougies. Que fais-tu ?"
+            question="Tu vois sur EUR/USD une mèche qui sweep des equal highs à 1.1780, montant jusqu'à 1.1792. Aucune bougie de displacement bearish ne suit, le prix consolide autour de 1.1782 pendant 6 bougies. Que fais-tu ?"
             options={[
               "Tu entres short immédiatement : le sweep seul est le signal d'entrée du modèle ICT",
               "Tu n'entres pas : sans displacement après le sweep, la séquence ICT n'est pas validée",
@@ -350,12 +350,12 @@ export default function ContentFr() {
               "Tu places un ordre limite à 1.1780 et tu laisses faire automatiquement",
             ]}
             correctIndex={1}
-            explanation="Le sweep n'est qu'une condition préalable de la séquence ICT, pas un signal d'entrée. Sans le displacement bearish qui suit, l'intention institutionnelle n'est pas confirmée — la consolidation au-dessus du niveau balayé suggère même que le sweep pourrait être un faux mouvement. La discipline du modèle est claire : pas de displacement, pas de séquence, pas d'entrée. On attend que le marché parle plus clairement avant d'agir."
+            explanation="Le sweep n'est qu'une condition préalable de la séquence ICT, pas un signal d'entrée. Sans le displacement bearish qui suit, l'intention institutionnelle n'est pas confirmée, la consolidation au-dessus du niveau balayé suggère même que le sweep pourrait être un faux mouvement. La discipline du modèle est claire : pas de displacement, pas de séquence, pas d'entrée. On attend que le marché parle plus clairement avant d'agir."
             answerExplanations={[
-              "Faux. Entrer sur le sweep seul, c'est exactement le piège que la séquence ICT cherche à éviter. Le sweep est une condition, pas un signal — sans displacement, rien ne confirme l&apos;intention vendeuse.",
-              "Correct. La séquence ICT exige sweep + displacement + FVG + retour. Si le displacement ne se matérialise pas après le sweep, l&apos;étape suivante manque — la séquence n&apos;est pas validée. La discipline est de ne pas entrer.",
+              "Faux. Entrer sur le sweep seul, c'est exactement le piège que la séquence ICT cherche à éviter. Le sweep est une condition, pas un signal, sans displacement, rien ne confirme l&apos;intention vendeuse.",
+              "Correct. La séquence ICT exige sweep + displacement + FVG + retour. Si le displacement ne se matérialise pas après le sweep, l&apos;étape suivante manque, la séquence n&apos;est pas validée. La discipline est de ne pas entrer.",
               "Faux. Anticiper la direction d&apos;une consolidation sans signal structurel est de la spéculation pure. Et trader long contre le biais HTF baissier supposé est doublement risqué.",
-              "Faux. Placer un ordre limite transforme un setup non confirmé en pari automatique. C&apos;est l&apos;une des pires habitudes — on prend le risque sans avoir vérifié que la séquence se déroule réellement.",
+              "Faux. Placer un ordre limite transforme un setup non confirmé en pari automatique. C&apos;est l&apos;une des pires habitudes, on prend le risque sans avoir vérifié que la séquence se déroule réellement.",
             ]}
           />
 
@@ -368,12 +368,12 @@ export default function ContentFr() {
               "Tu attends que le prix sorte du FVG puis tu prends la cassure",
             ]}
             correctIndex={2}
-            explanation="Le timing est une composante structurelle du modèle ICT, pas un détail secondaire. Une séquence ICT techniquement parfaite hors Killzone manque de volume institutionnel pour soutenir la continuation — le prix dans le FVG peut très bien rester latéral plusieurs heures sans déclencher quoi que ce soit. La discipline ICT consiste à filtrer par timing AVANT d&apos;exécuter, pas à exécuter tout setup techniquement valide. On attend la prochaine Killzone."
+            explanation="Le timing est une composante structurelle du modèle ICT, pas un détail secondaire. Une séquence ICT techniquement parfaite hors Killzone manque de volume institutionnel pour soutenir la continuation, le prix dans le FVG peut très bien rester latéral plusieurs heures sans déclencher quoi que ce soit. La discipline ICT consiste à filtrer par timing AVANT d&apos;exécuter, pas à exécuter tout setup techniquement valide. On attend la prochaine Killzone."
             answerExplanations={[
               "Faux. « Peu importe l&apos;heure » contredit le modèle ICT, qui intègre le timing comme une condition structurelle. Un setup techniquement parfait sans timing favorable est statistiquement non rentable.",
               "Faux. Élargir le SL ne corrige pas le problème de fond : le marché manque de volume pour exécuter le scénario. On prend juste plus de risque sur un setup qui ne se déclenchera probablement pas.",
               "Correct. La séquence ICT exige timing ET setup. Hors Killzone, la probabilité que le FVG soit respecté et que la continuation se produise chute drastiquement. La discipline est d&apos;attendre London ou NY pour exécuter.",
-              "Faux. « Sortir du FVG » et « prendre la cassure » est une lecture mécanique sans logique structurelle. Le FVG n&apos;est pas un range qu&apos;on trade en cassure — c&apos;est une zone d&apos;entrée sur rejet, pas sur sortie.",
+              "Faux. « Sortir du FVG » et « prendre la cassure » est une lecture mécanique sans logique structurelle. Le FVG n&apos;est pas un range qu&apos;on trade en cassure, c&apos;est une zone d&apos;entrée sur rejet, pas sur sortie.",
             ]}
           />
 
@@ -386,11 +386,11 @@ export default function ContentFr() {
               "Utiliser des paires majeures plutôt que des paires exotiques",
             ]}
             correctIndex={0}
-            explanation="Entrer pendant le displacement, c&apos;est sauter l&apos;étape critique de la séquence ICT : attendre le retour dans le FVG. Cette erreur a deux conséquences majeures : un SL beaucoup plus large (puisqu&apos;on entre au milieu d&apos;une impulsion en cours) et un R/R catastrophique. La logique du modèle est de patienter entre le displacement et le retour pour obtenir une entrée serrée avec un SL structurel — sauter cette patience, c&apos;est inverser le rapport risque/rendement de toute la séquence."
+            explanation="Entrer pendant le displacement, c&apos;est sauter l&apos;étape critique de la séquence ICT : attendre le retour dans le FVG. Cette erreur a deux conséquences majeures : un SL beaucoup plus large (puisqu&apos;on entre au milieu d&apos;une impulsion en cours) et un R/R catastrophique. La logique du modèle est de patienter entre le displacement et le retour pour obtenir une entrée serrée avec un SL structurel, sauter cette patience, c&apos;est inverser le rapport risque/rendement de toute la séquence."
             answerExplanations={[
               "Correct. C&apos;est l&apos;erreur la plus coûteuse car elle ruine le R/R du setup. Entrer au milieu du displacement = SL trop large + entrée trop tardive. L&apos;ICT impose la patience : on attend le retour dans le FVG.",
               "Faux. Les horaires exacts peuvent être consultés sur n&apos;importe quel terminal. Ce n&apos;est pas une erreur structurelle, c&apos;est un détail technique facile à corriger.",
-              "Faux. La distinction bearish/bullish d&apos;un FVG vient de la direction du déplacement qui l&apos;a créé — pas d&apos;une lecture à l&apos;œil. C&apos;est une compréhension du concept, pas une erreur d&apos;application.",
+              "Faux. La distinction bearish/bullish d&apos;un FVG vient de la direction du déplacement qui l&apos;a créé, pas d&apos;une lecture à l&apos;œil. C&apos;est une compréhension du concept, pas une erreur d&apos;application.",
               "Faux. Le choix de la paire est une préférence personnelle, pas une erreur de modèle. Les paires majeures sont simplement plus liquides et offrent des séquences plus propres.",
             ]}
           />

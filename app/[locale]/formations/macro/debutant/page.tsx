@@ -15,7 +15,7 @@ const lessons = [
     number: 2,
     title: "Les 4 grandes banques centrales",
     duration: "12 min",
-    description: "Fed, BCE, BoE, BoJ — comprends qui fixe les règles du jeu et pourquoi le dollar domine tout.",
+    description: "Fed, BCE, BoE, BoJ, comprends qui fixe les règles du jeu et pourquoi le dollar domine tout.",
     href: "/formations/macro/debutant/lecon2",
     disabled: false,
   },
@@ -33,7 +33,7 @@ const lessons = [
     number: 4,
     title: "Comprendre l'inflation",
     duration: "12 min",
-    description: "Pourquoi tout part de là — la chaîne inflation → taux → devise → marchés.",
+    description: "Pourquoi tout part de là, la chaîne inflation → taux → devise → marchés.",
     href: "/formations/macro/debutant/lecon4",
     disabled: false,
   },
@@ -42,7 +42,7 @@ const lessons = [
     number: 5,
     title: "Le rôle du dollar dans le monde",
     duration: "12 min",
-    description: "Pourquoi tout passe par lui — DXY, devise pivot et impact sur tous les marchés.",
+    description: "Pourquoi tout passe par lui. DXY, devise pivot et impact sur tous les marchés.",
     href: "/formations/macro/debutant/lecon5",
     disabled: false,
   },
@@ -51,7 +51,7 @@ const lessons = [
     number: 6,
     title: "Macro et risk management",
     duration: "12 min",
-    description: "Adapter ton risque au contexte macro — fenêtres dangereuses, grille de décision et règles d'or.",
+    description: "Adapter ton risque au contexte macro, fenêtres dangereuses, grille de décision et règles d'or.",
     href: "/formations/macro/debutant/lecon6",
     disabled: false,
   },
@@ -72,7 +72,7 @@ export default function MacroDebutantPage() {
 
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-3 flex-wrap">
-            <h1 className="text-4xl md:text-5xl font-bold">Macro Trading — Débutant</h1>
+            <h1 className="text-4xl md:text-5xl font-bold">Macro Trading : Débutant</h1>
             <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
               Débutant
             </span>

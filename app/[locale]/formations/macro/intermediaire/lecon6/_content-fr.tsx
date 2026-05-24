@@ -58,7 +58,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Construire son biais hebdomadaire — la routine macro que personne ne fait
+            Construire son biais hebdomadaire, la routine macro que personne ne fait
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -203,11 +203,11 @@ export default function ContentFr() {
             </p>
             <div className="space-y-3 mb-5">
               {[
-                { bold: "Étape 1 — Calendrier (5 min)", rest: "Tu ouvres la semaine. Tu notes les news 3 étoiles. Tu repères les clusters." },
-                { bold: "Étape 2 — Ton macro (5 min)", rest: "Tu regardes la dernière communication Fed / BCE. Hawkish, dovish ou neutre ?" },
-                { bold: "Étape 3 — DXY (3 min)", rest: "Le dollar est-il haussier, baissier ou en range ?" },
-                { bold: "Étape 4 — Corrélations (3 min)", rest: "XAU/USD confirme-t-il le DXY ? BTC/USD suit-il le Nasdaq ? Une corrélation casse-t-elle ?" },
-                { bold: "Étape 5 — Biais par actif (4 min)", rest: "Pour chaque actif que tu trades : long / short / neutre." },
+                { bold: "Étape 1. Calendrier (5 min)", rest: "Tu ouvres la semaine. Tu notes les news 3 étoiles. Tu repères les clusters." },
+                { bold: "Étape 2. Ton macro (5 min)", rest: "Tu regardes la dernière communication Fed / BCE. Hawkish, dovish ou neutre ?" },
+                { bold: "Étape 3. DXY (3 min)", rest: "Le dollar est-il haussier, baissier ou en range ?" },
+                { bold: "Étape 4. Corrélations (3 min)", rest: "XAU/USD confirme-t-il le DXY ? BTC/USD suit-il le Nasdaq ? Une corrélation casse-t-elle ?" },
+                { bold: "Étape 5. Biais par actif (4 min)", rest: "Pour chaque actif que tu trades : long / short / neutre." },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
                   <p className="text-sm text-zinc-300 leading-relaxed">
@@ -441,7 +441,7 @@ export default function ContentFr() {
               "Tu passes immédiatement short sans autre confirmation",
             ]}
             correctIndex={2}
-            explanation="Un biais doit être respecté, mais seulement tant que ses conditions restent valides. Ici, le CPI plus haut que prévu + le DXY qui explose + la cassure technique forment une invalidation macro complète. Tu fermes l'idée et tu attends une nouvelle structure. L'option A confond discipline et entêtement (un biais invalidé ne se respecte plus). L'option B aggrave le risque sur une thèse cassée. L'option D réagit trop vite sans reconstruire de plan — il faut attendre une nouvelle confirmation, pas flipper directement."
+            explanation="Un biais doit être respecté, mais seulement tant que ses conditions restent valides. Ici, le CPI plus haut que prévu + le DXY qui explose + la cassure technique forment une invalidation macro complète. Tu fermes l'idée et tu attends une nouvelle structure. L'option A confond discipline et entêtement (un biais invalidé ne se respecte plus). L'option B aggrave le risque sur une thèse cassée. L'option D réagit trop vite sans reconstruire de plan, il faut attendre une nouvelle confirmation, pas flipper directement."
             answerExplanations={[
               "Faux. Respecter son plan ne signifie pas ignorer une invalidation macro complète. Quand les conditions qui fondaient ton biais changent radicalement, le biais doit changer aussi.",
               "Faux. Doubler une position sur une thèse invalidée par le macro aggrave le risque. C'est l'un des pièges les plus coûteux en trading.",
@@ -489,7 +489,7 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 5 — Les corrélations
+                Leçon 5. Les corrélations
               </Link>
               <span className="text-sm font-bold text-emerald-400 cursor-default">
                 Module Intermédiaire Macro complet ✓

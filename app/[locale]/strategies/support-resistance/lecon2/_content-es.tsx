@@ -201,10 +201,10 @@ export default function ContentEs() {
           <LessonExercice
             description="Una zona de resistencia EUR/USD entre 1.1880 y 1.1900 fue tocada 2 veces en las últimas 8 semanas con rechazos netos (mechas de 30 a 40 pips). El nivel psicológico 1.1900 está en el techo de la zona. La MM50 H4 pasa actualmente por 1.1875. ¿Cuál es el veredicto de calificación?"
             steps={[
-              "Criterio 1 — Toques: 2 toques confirmados en las últimas 8 semanas = mínimo requerido validado",
-              "Criterio 2 — Reacciones: rechazos netos con mechas de 30 a 40 pips = reacciones claras proporcionadas",
-              "Criterio 3 — Frescura: zona tocada en las últimas 8 semanas = frescura aceptable",
-              "Criterio 4 — Confluencias: nivel psicológico 1.1900 en el techo de la zona (confluencia 1) + MM50 H4 en 1.1875 dentro de la zona (confluencia 2) = 2 confluencias identificadas",
+              "Criterio 1. Toques: 2 toques confirmados en las últimas 8 semanas = mínimo requerido validado",
+              "Criterio 2. Reacciones: rechazos netos con mechas de 30 a 40 pips = reacciones claras proporcionadas",
+              "Criterio 3. Frescura: zona tocada en las últimas 8 semanas = frescura aceptable",
+              "Criterio 4. Confluencias: nivel psicológico 1.1900 en el techo de la zona (confluencia 1) + MM50 H4 en 1.1875 dentro de la zona (confluencia 2) = 2 confluencias identificadas",
               "Veredicto: zona tradeable confirmada. 3 criterios validados claramente + 2 confluencias. Nota operativa elevada. La zona entra en la selección prioritaria para un setup short en retroceso con señal de rechazo confirmada",
             ]}
           />
@@ -263,7 +263,7 @@ export default function ContentEs() {
                 Lección 1
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 3 — Próximamente
+                Lección 3. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

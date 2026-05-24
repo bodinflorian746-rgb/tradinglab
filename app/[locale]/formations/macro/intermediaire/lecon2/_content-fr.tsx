@@ -58,7 +58,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Comprendre le calendrier économique — comment lire le marché à l&apos;avance
+            Comprendre le calendrier économique, comment lire le marché à l&apos;avance
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -288,7 +288,7 @@ export default function ContentFr() {
               <span className="font-semibold text-zinc-200">Pourquoi ?</span> Parce que les institutions réduisent leur exposition, ajustent leurs positions, et attendent les chiffres. Tu vois souvent des <span className="font-semibold text-zinc-200">mouvements pré-news</span> dès le mardi matin sur ces semaines.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              À l&apos;inverse, une semaine <span className="font-semibold text-zinc-200">calme macro</span> laisse plus de place à l&apos;analyse technique pure — c&apos;est le bon moment pour appliquer tes setups habituels sans surprise externe.
+              À l&apos;inverse, une semaine <span className="font-semibold text-zinc-200">calme macro</span> laisse plus de place à l&apos;analyse technique pure, c&apos;est le bon moment pour appliquer tes setups habituels sans surprise externe.
             </p>
             <div className="bg-zinc-800/30 rounded-xl px-4 py-3 mb-5">
               <p className="text-xs font-semibold text-zinc-400 mb-2">Sur une semaine FOMC + CPI + NFP, ces actifs sont tous impactés :</p>
@@ -461,11 +461,11 @@ export default function ContentFr() {
               "Les news macro ne servent à rien sur le forex",
             ]}
             correctIndex={2}
-            explanation="Un chiffre réel proche du consensus ne suffit pas toujours à expliquer un gros mouvement. Les révisions peuvent modifier toute la lecture de la tendance de l'emploi (par exemple, un chiffre précédent révisé de 250k à 170k change la perception du marché du travail US). L'option A ignore la logique macro — les mouvements ont presque toujours une cause identifiable. L'option B est fausse ici : 205k contre 200k n'est pas un gros écart. L'option D contredit tout le module Macro. C'est exactement le scénario du hero de cette leçon. Cette logique des révisions s'applique sur tous les actifs liés au dollar : EUR/USD, XAU/USD, Nasdaq et BTC/USD réagissent tous à la même réévaluation."
+            explanation="Un chiffre réel proche du consensus ne suffit pas toujours à expliquer un gros mouvement. Les révisions peuvent modifier toute la lecture de la tendance de l'emploi (par exemple, un chiffre précédent révisé de 250k à 170k change la perception du marché du travail US). L'option A ignore la logique macro, les mouvements ont presque toujours une cause identifiable. L'option B est fausse ici : 205k contre 200k n'est pas un gros écart. L'option D contredit tout le module Macro. C'est exactement le scénario du hero de cette leçon. Cette logique des révisions s'applique sur tous les actifs liés au dollar : EUR/USD, XAU/USD, Nasdaq et BTC/USD réagissent tous à la même réévaluation."
             answerExplanations={[
-              "Faux. Le marché suit une logique précise basée sur les anticipations et les révisions. La réaction n'est pas aléatoire — elle a presque toujours une cause identifiable.",
+              "Faux. Le marché suit une logique précise basée sur les anticipations et les révisions. La réaction n'est pas aléatoire, elle a presque toujours une cause identifiable.",
               "Faux. 205k contre 200k est un écart minimal, insuffisant pour provoquer un gros mouvement. Ce n'est pas le chiffre du jour qui explique la réaction.",
-              "Correct. Les révisions peuvent modifier toute la lecture macro. Un chiffre précédent révisé de 250k à 170k change la perception du marché du travail US — et le marché réagit à cette nouvelle réalité.",
+              "Correct. Les révisions peuvent modifier toute la lecture macro. Un chiffre précédent révisé de 250k à 170k change la perception du marché du travail US, et le marché réagit à cette nouvelle réalité.",
               "Faux. Les news macro sont l'une des principales causes des gros mouvements sur le forex. Ce module entier en est la démonstration.",
             ]}
           />
@@ -509,10 +509,10 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 1 — Hawkish vs Dovish
+                Leçon 1. Hawkish vs Dovish
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                CPI, PPI et inflation — Bientôt disponible →
+                CPI, PPI et inflation. Bientôt disponible →
               </span>
             </div>
 

@@ -58,7 +58,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Las correlaciones — cómo los mercados se mueven juntos (y por qué caes en la trampa)
+            Las correlaciones, cómo los mercados se mueven juntos (y por qué caes en la trampa)
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -509,10 +509,10 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 4 — Sesiones de trading y liquidity
+                Lección 4. Sesiones de trading y liquidity
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Construir tu sesgo semanal — Pronto disponible →
+                Construir tu sesgo semanal. Pronto disponible →
               </span>
             </div>
 

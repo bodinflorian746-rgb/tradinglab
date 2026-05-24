@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="El mercado cuenta la misma historia a distintas escalas. Aprender a leer estos niveles en el orden correcto es una de las habilidades más potentes del trader."
       duration="22 min"
       lessonNumber={7}
-      prev={{ href: "/formations/intermediaire/lecon6", label: "Lección 6 — Fake Breakout" }}
-      next={{ href: "/formations/intermediaire/lecon8", label: "Lección 8 — Plan de trade" }}
+      prev={{ href: "/formations/intermediaire/lecon6", label: "Lección 6 : Fake Breakout" }}
+      next={{ href: "/formations/intermediaire/lecon8", label: "Lección 8 : Plan de trade" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -22,19 +22,19 @@ export default function ContentEs() {
         <h2 className="text-lg font-semibold text-white mb-4">El mismo par, dos historias distintas</h2>
         <div className="space-y-3">
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-emerald-400 mb-2">EUR/USD — Daily (sesgo)</p>
+            <p className="text-sm font-semibold text-emerald-400 mb-2">EUR/USD. Daily (sesgo)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
               Abres EUR/USD en Daily. El gráfico sube en escalera desde hace 3 semanas. HH/HL claros. <strong className="text-white">Sesgo alcista.</strong> Solo buscas compras para la semana.
             </p>
           </div>
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD — H4 (zona de interés)</p>
+            <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD. H4 (zona de interés)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Pasas a H4. El precio retrocede a 1.0850 — el último Higher Low. Es una zona de soporte. <strong className="text-white">Marcas la zona</strong> como zona de entrada potencial en compra.
+              Pasas a H4. El precio retrocede a 1.0850, el último Higher Low. Es una zona de soporte. <strong className="text-white">Marcas la zona</strong> como zona de entrada potencial en compra.
             </p>
           </div>
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD — M15 (disparador)</p>
+            <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD. M15 (disparador)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
               Pasas a M15 cuando el precio toca la zona. Una pin bar alcista se forma. <strong className="text-white">Es la señal.</strong> Entras en compra en el sentido del Daily. Los 3 timeframes cuentan la misma historia.
             </p>
@@ -49,12 +49,12 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Por qué los timeframes parecen contradecirse</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          El mismo mercado puede mostrar una tendencia alcista en Daily y una tendencia bajista en H1 simultáneamente. No es un error — son dos niveles de lectura distintos. El Daily muestra el contexto. El H1 muestra el movimiento en curso dentro de ese contexto.
+          El mismo mercado puede mostrar una tendencia alcista en Daily y una tendencia bajista en H1 simultáneamente. No es un error, son dos niveles de lectura distintos. El Daily muestra el contexto. El H1 muestra el movimiento en curso dentro de ese contexto.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Analogía: </span>
-            Imagina mirar un mapa de un país (Daily) vs un mapa de tu ciudad (H1). El país te da la dirección — la ciudad te da las calles. Los dos son correctos, pero a escalas distintas.
+            Imagina mirar un mapa de un país (Daily) vs un mapa de tu ciudad (H1). El país te da la dirección, la ciudad te da las calles. Los dos son correctos, pero a escalas distintas.
           </p>
         </div>
       </section>
@@ -97,7 +97,7 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">El método Top-Down en la práctica</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          El método top-down consiste en analizar del timeframe grande al chico — nunca al revés. Cada nivel valida o invalida lo que ves en el nivel inferior.
+          El método top-down consiste en analizar del timeframe grande al chico, nunca al revés. Cada nivel valida o invalida lo que ves en el nivel inferior.
         </p>
         <div className="space-y-2">
           {[
@@ -161,7 +161,7 @@ export default function ContentEs() {
             <span className="text-lg">✗</span>
             <div>
               <p className="text-sm font-semibold text-red-400">Señal M15 contra el Daily</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Ignoras. El timeframe chico que va contra el grande es un retroceso — no un reversal. Nunca tradees contra el sesgo Daily.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Ignoras. El timeframe chico que va contra el grande es un retroceso, no un reversal. Nunca tradees contra el sesgo Daily.</p>
             </div>
           </div>
         </div>
@@ -192,11 +192,11 @@ export default function ContentEs() {
 
       <LessonKeyPoints
         points={[
-          "Siempre analizar del timeframe grande al chico — el Daily define el sesgo, el M15 afina la entrada.",
+          "Siempre analizar del timeframe grande al chico, el Daily define el sesgo, el M15 afina la entrada.",
           "Una señal en el timeframe chico que contradice el grande hay que ignorarla.",
           "Weekly/Daily = contexto y tendencia. H4 = zonas. H1/M15 = timing y señal.",
           "Los 3 timeframes deben contar la misma historia para que un setup sea de alta probabilidad.",
-          "Mientras más bajas en los timeframes, más ganas precisión — pero el sesgo siempre viene del grande.",
+          "Mientras más bajas en los timeframes, más ganas precisión, pero el sesgo siempre viene del grande.",
         ]}
       />
 
@@ -204,27 +204,27 @@ export default function ContentEs() {
         description="En TradingView, realiza un análisis top-down completo en EUR/USD."
         steps={[
           "Abre EUR/USD en Daily — ¿cuál es la tendencia? ¿Alcista, bajista o range? Anota tu sesgo.",
-          "Baja a H4 — identifica las 2 zonas más importantes (soporte o resistencia según la tendencia). Anota los precios exactos.",
+          "Baja a H4, identifica las 2 zonas más importantes (soporte o resistencia según la tendencia). Anota los precios exactos.",
           "Baja a H1 — ¿el precio está cerca de una de esas zonas H4? ¿Hay una señal naciente en el sentido del Daily?",
-          "Baja a M15 — si la señal H1 está presente, ¿el M15 la confirma? Anota si los 3 timeframes se alinean o se contradicen.",
+          "Baja a M15, si la señal H1 está presente, ¿el M15 la confirma? Anota si los 3 timeframes se alinean o se contradicen.",
         ]}
       />
 
       <LessonQuiz
         question="EUR/USD es claramente alcista en Daily. Pasas a H1 y ves un engulfing bajista nítido en una resistencia H1. ¿Qué haces?"
         options={[
-          "Tomas el Short en H1 — la señal es limpia y reciente",
-          "Ignoras la señal H1 — va contra la tendencia Daily, esperas una señal de compra alineada",
+          "Tomas el Short en H1, la señal es limpia y reciente",
+          "Ignoras la señal H1, va contra la tendencia Daily, esperas una señal de compra alineada",
           "Esperas que el Daily vuelva a la baja para confirmar antes de entrar",
           "Tomas el Short pero con una posición la mitad para limitar el riesgo",
         ]}
         correctIndex={1}
-        explanation="En análisis multi-timeframe, el timeframe grande siempre prima. Si el Daily es alcista, buscas compras — no ventas. La señal H1 bajista probablemente es un retroceso en la tendencia Daily alcista — exactamente donde podrías buscar un Long."
+        explanation="En análisis multi-timeframe, el timeframe grande siempre prima. Si el Daily es alcista, buscas compras, no ventas. La señal H1 bajista probablemente es un retroceso en la tendencia Daily alcista, exactamente donde podrías buscar un Long."
         answerExplanations={[
-          "Falso. Tradear una señal H1 contra una tendencia Daily fuerte es estadísticamente desfavorable. Vas a contracorriente de la dirección dominante — aunque la señal técnica parezca limpia.",
-          "Correcto. La regla top-down es clara: el Daily define el sesgo. Si Daily = alcista, solo buscas compras. La señal H1 bajista significa que el precio está en retroceso. Es justamente donde buscas una compra — no una venta.",
+          "Falso. Tradear una señal H1 contra una tendencia Daily fuerte es estadísticamente desfavorable. Vas a contracorriente de la dirección dominante, aunque la señal técnica parezca limpia.",
+          "Correcto. La regla top-down es clara: el Daily define el sesgo. Si Daily = alcista, solo buscas compras. La señal H1 bajista significa que el precio está en retroceso. Es justamente donde buscas una compra, no una venta.",
           "Parcialmente válido pero demasiado conservador. Esperar que el Daily se invierta es un enfoque muy lento. En la práctica, una señal H1 bajista en una tendencia Daily alcista es un retroceso temporal, no una señal de reversal.",
-          "Falso. Reducir el tamaño no cambia el problema fundamental: tradeas contra la tendencia dominante. El tamaño de posición gestiona el riesgo — no compensa una mala dirección.",
+          "Falso. Reducir el tamaño no cambia el problema fundamental: tradeas contra la tendencia dominante. El tamaño de posición gestiona el riesgo, no compensa una mala dirección.",
         ]}
       />
 

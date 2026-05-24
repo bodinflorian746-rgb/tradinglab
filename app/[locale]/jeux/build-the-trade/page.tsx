@@ -85,7 +85,7 @@ export default function BuildTheTradePage() {
         slHits:           "SL tocados",
         buildTitle:       "Build the Trade",
         buildHeading:     "Construye el setup",
-        buildIntro:       "escenarios. Para cada uno, eliges la entrada, el stop loss y el take profit. El mercado revela después lo que pasó — RR, drawdown, veredicto.",
+        buildIntro:       "escenarios. Para cada uno, eliges la entrada, el stop loss y el take profit. El mercado revela después lo que pasó. RR, drawdown, veredicto.",
         summary:          "Resumen",
         setupsBuilt:      "setups construidos",
         replayIn:         "Volver a jugar en",
@@ -137,7 +137,7 @@ export default function BuildTheTradePage() {
         slHits:           "SL touchés",
         buildTitle:       "Build the Trade",
         buildHeading:     "Construis le setup",
-        buildIntro:       "scénarios. Pour chacun, tu choisis l'entrée, le stop loss et le take profit. Le marché révèle ensuite ce qui s'est passé — RR, drawdown, verdict.",
+        buildIntro:       "scénarios. Pour chacun, tu choisis l'entrée, le stop loss et le take profit. Le marché révèle ensuite ce qui s'est passé. RR, drawdown, verdict.",
         summary:          "Bilan",
         setupsBuilt:      "setups construits",
         replayIn:         "Rejouer en",
@@ -505,8 +505,8 @@ function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Diffic
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{isEs ? "Construye el setup" : "Construis le setup"}</h1>
         <p className="text-zinc-400 text-sm leading-relaxed mb-8">
           {isEs
-            ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, eliges la entrada, el stop loss y el take profit. El mercado revela después lo que pasó — RR, drawdown, veredicto.`
-            : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, tu choisis l'entrée, le stop loss et le take profit. Le marché révèle ensuite ce qui s'est passé — RR, drawdown, verdict.`}
+            ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, eliges la entrada, el stop loss y el take profit. El mercado revela después lo que pasó. RR, drawdown, veredicto.`
+            : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, tu choisis l'entrée, le stop loss et le take profit. Le marché révèle ensuite ce qui s'est passé. RR, drawdown, verdict.`}
         </p>
 
         <div className="flex flex-col gap-3">
@@ -703,7 +703,7 @@ function RrPreview({ T, chart, entry, stop, tp }: { T: { [k: string]: string }; 
     <div className="grid grid-cols-3 gap-2 mb-3 text-center">
       <RrTile label={T.risk} value={risk.toFixed(2)} colorClass="text-zinc-300" />
       <RrTile label={T.reward} value={reward.toFixed(2)} colorClass="text-zinc-300" />
-      <RrTile label={T.rr} value={rr > 0 ? `1:${rr.toFixed(1)}` : "—"} colorClass={rrColor} />
+      <RrTile label={T.rr} value={rr > 0 ? `1:${rr.toFixed(1)}` : ""} colorClass={rrColor} />
     </div>
   );
 }
@@ -787,7 +787,7 @@ function Feedback({
           />
           <OutcomeTile
             label={T.rrRealized}
-            value={result.rr > 0 ? `1:${result.rr.toFixed(1)}` : "—"}
+            value={result.rr > 0 ? `1:${result.rr.toFixed(1)}` : ""}
             colorClass={result.rr >= 2 ? "text-emerald-400" : result.rr >= 1 ? "text-amber-400" : "text-zinc-400"}
           />
         </div>

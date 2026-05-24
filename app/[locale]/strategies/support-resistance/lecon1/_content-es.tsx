@@ -200,8 +200,8 @@ export default function ContentEs() {
           <LessonExercice
             description="En EUR/USD H4, se identifican 3 mínimos en 1.1685, 1.1690 y 1.1688. El precio actual se sitúa en 1.1750. ¿Cómo se traza la zona de soporte?"
             steps={[
-              "Iniciar el trazado con la herramienta Rectángulo, desde el más bajo de los 3 mínimos (1.1685) hasta el más alto (1.1690) — zona inicial de 5 pips, demasiado fina",
-              "Ampliar la zona: límite inferior en 1.1680, límite superior en 1.1695 — zona final de 15 pips, conforme a la regla 10-20 pips",
+              "Iniciar el trazado con la herramienta Rectángulo, desde el más bajo de los 3 mínimos (1.1685) hasta el más alto (1.1690), zona inicial de 5 pips, demasiado fina",
+              "Ampliar la zona: límite inferior en 1.1680, límite superior en 1.1695, zona final de 15 pips, conforme a la regla 10-20 pips",
               "Colorear el rectángulo en verde transparente (40% de opacidad)",
               "Verificar los 4 criterios: 3 toques confirmados (OK), grosor 15 pips (OK), distancia 60 pips del precio actual (OK), frescura a confirmar según historial",
               "Conclusión: la zona valida los 4 criterios y se vuelve tradeable",
@@ -257,7 +257,7 @@ export default function ContentEs() {
             <div className="mt-5 flex items-center justify-between">
               <span />
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 2 — Próximamente
+                Lección 2. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

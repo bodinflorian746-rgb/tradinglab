@@ -14,8 +14,8 @@ function ContentFr() {
       subtitle="Le marché raconte la même histoire à différentes échelles. Apprendre à lire ces niveaux dans le bon ordre est l'une des compétences les plus puissantes du trader."
       duration="22 min"
       lessonNumber={7}
-      prev={{ href: "/formations/intermediaire/lecon6", label: "Leçon 6 — Fake Breakout" }}
-      next={{ href: "/formations/intermediaire/lecon8", label: "Leçon 8 — Plan de trade" }}
+      prev={{ href: "/formations/intermediaire/lecon6", label: "Leçon 6 : Fake Breakout" }}
+      next={{ href: "/formations/intermediaire/lecon8", label: "Leçon 8 : Plan de trade" }}
     >
 
       {/* ── Ce que tu dois VOIR ── */}
@@ -24,19 +24,19 @@ function ContentFr() {
         <h2 className="text-lg font-semibold text-white mb-4">La même paire, deux histoires différentes</h2>
         <div className="space-y-3">
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-emerald-400 mb-2">EUR/USD — Daily (biais)</p>
+            <p className="text-sm font-semibold text-emerald-400 mb-2">EUR/USD. Daily (biais)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
               Tu ouvres EUR/USD en Daily. Le graphique monte en escalier depuis 3 semaines. HH/HL clairs. <strong className="text-white">Biais haussier.</strong> Tu ne cherches que des achats pour la semaine.
             </p>
           </div>
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD — H4 (zone d'intérêt)</p>
+            <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD. H4 (zone d'intérêt)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Tu passes en H4. Le prix recule vers 1.0850 — le dernier Higher Low. C'est une zone de support. <strong className="text-white">Tu marques la zone</strong> comme zone d'entrée potentielle en achat.
+              Tu passes en H4. Le prix recule vers 1.0850, le dernier Higher Low. C'est une zone de support. <strong className="text-white">Tu marques la zone</strong> comme zone d'entrée potentielle en achat.
             </p>
           </div>
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD — M15 (déclencheur)</p>
+            <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD. M15 (déclencheur)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
               Tu passes en M15 quand le prix touche la zone. Une pin bar haussière se forme. <strong className="text-white">C'est le signal.</strong> Tu entres en achat dans le sens du Daily. Les 3 timeframes racontent la même histoire.
             </p>
@@ -52,12 +52,12 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Pourquoi les timeframes semblent se contredire</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Le même marché peut afficher une tendance haussière en Daily et une tendance baissière en H1 simultanément. Ce n'est pas une erreur — c'est deux niveaux de lecture différents. Le Daily montre le contexte. Le H1 montre le mouvement en cours dans ce contexte.
+          Le même marché peut afficher une tendance haussière en Daily et une tendance baissière en H1 simultanément. Ce n'est pas une erreur, c'est deux niveaux de lecture différents. Le Daily montre le contexte. Le H1 montre le mouvement en cours dans ce contexte.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Analogie : </span>
-            Imagine regarder une carte de France (Daily) vs une carte de ta ville (H1). La France te donne la direction — la ville te donne les rues. Les deux sont justes, mais à des échelles différentes.
+            Imagine regarder une carte de France (Daily) vs une carte de ta ville (H1). La France te donne la direction, la ville te donne les rues. Les deux sont justes, mais à des échelles différentes.
           </p>
         </div>
       </section>
@@ -102,7 +102,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">La méthode Top-Down en pratique</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          La méthode top-down consiste à analyser du grand timeframe vers le petit — jamais l'inverse. Chaque niveau valide ou invalide ce que tu vois au niveau inférieur.
+          La méthode top-down consiste à analyser du grand timeframe vers le petit, jamais l'inverse. Chaque niveau valide ou invalide ce que tu vois au niveau inférieur.
         </p>
         <div className="space-y-2">
           {[
@@ -130,9 +130,9 @@ function ContentFr() {
         <h2 className="text-lg font-semibold text-white mb-4">Vérifier l'alignement des timeframes</h2>
         <div className="space-y-2">
           {[
-            { n: "1", t: "Daily — quelle est la tendance ?", d: "Haussier = cherche des achats. Baissier = cherche des ventes. Range = pas de trade directionnel." },
-            { n: "2", t: "H4 — le prix est-il sur une zone clé ?", d: "Support en tendance haussière = potentiel achat. Résistance en tendance baissière = potentiel vente. Sinon → attends." },
-            { n: "3", t: "M15 — y a-t-il un signal ?", d: "Pin bar, engulfing dans le sens du Daily sur la zone H4 = entrée. Si le signal va contre le Daily → ignore." },
+            { n: "1", t: "Daily, quelle est la tendance ?", d: "Haussier = cherche des achats. Baissier = cherche des ventes. Range = pas de trade directionnel." },
+            { n: "2", t: "H4, le prix est-il sur une zone clé ?", d: "Support en tendance haussière = potentiel achat. Résistance en tendance baissière = potentiel vente. Sinon → attends." },
+            { n: "3", t: "M15, y a-t-il un signal ?", d: "Pin bar, engulfing dans le sens du Daily sur la zone H4 = entrée. Si le signal va contre le Daily → ignore." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.n}</span>
@@ -168,7 +168,7 @@ function ContentFr() {
             <span className="text-lg">✗</span>
             <div>
               <p className="text-sm font-semibold text-red-400">Signal M15 contre le Daily</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu ignores. Le petit timeframe qui va contre le grand est un retracement — pas un retournement. Ne jamais trader contre le biais Daily.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu ignores. Le petit timeframe qui va contre le grand est un retracement, pas un retournement. Ne jamais trader contre le biais Daily.</p>
             </div>
           </div>
         </div>
@@ -201,39 +201,39 @@ function ContentFr() {
 
       <LessonKeyPoints
         points={[
-          "Toujours analyser du grand timeframe vers le petit — le Daily définit le biais, le M15 affine l'entrée.",
+          "Toujours analyser du grand timeframe vers le petit, le Daily définit le biais, le M15 affine l'entrée.",
           "Un signal sur le petit timeframe qui contredit le grand timeframe est à ignorer.",
           "Weekly/Daily = contexte et tendance. H4 = zones. H1/M15 = timing et signal.",
           "Les 3 timeframes doivent raconter la même histoire pour qu'un setup soit à haute probabilité.",
-          "Plus tu descends dans les timeframes, plus tu gagnes en précision — mais le biais vient toujours du grand.",
+          "Plus tu descends dans les timeframes, plus tu gagnes en précision, mais le biais vient toujours du grand.",
         ]}
       />
 
       <LessonExercice
         description="Sur TradingView, réalise une analyse top-down complète sur EUR/USD."
         steps={[
-          "Ouvre EUR/USD en Daily — quelle est la tendance ? Haussière, baissière ou range ? Note ton biais.",
-          "Descends en H4 — identifie les 2 zones les plus importantes (support ou résistance selon la tendance). Note les prix exacts.",
-          "Descends en H1 — est-ce que le prix est proche d'une de ces zones H4 ? Y a-t-il un signal naissant dans le sens du Daily ?",
-          "Descends en M15 — si le signal H1 est présent, est-ce que le M15 confirme ? Note si les 3 timeframes s'alignent ou se contredisent.",
+          "Ouvre EUR/USD en Daily, quelle est la tendance ? Haussière, baissière ou range ? Note ton biais.",
+          "Descends en H4, identifie les 2 zones les plus importantes (support ou résistance selon la tendance). Note les prix exacts.",
+          "Descends en H1, est-ce que le prix est proche d'une de ces zones H4 ? Y a-t-il un signal naissant dans le sens du Daily ?",
+          "Descends en M15, si le signal H1 est présent, est-ce que le M15 confirme ? Note si les 3 timeframes s'alignent ou se contredisent.",
         ]}
       />
 
       <LessonQuiz
         question="EUR/USD est clairement haussier en Daily. Tu passes en H1 et tu vois un engulfing baissier net sur une résistance H1. Que fais-tu ?"
         options={[
-          "Tu prends le Short en H1 — le signal est propre et récent",
-          "Tu ignores le signal H1 — il va contre la tendance Daily, tu attends un signal d'achat aligné",
+          "Tu prends le Short en H1, le signal est propre et récent",
+          "Tu ignores le signal H1, il va contre la tendance Daily, tu attends un signal d'achat aligné",
           "Tu attends que le Daily retourne à la baisse pour confirmer avant d'entrer",
           "Tu prends le Short mais avec une position deux fois plus petite pour limiter le risque",
         ]}
         correctIndex={1}
-        explanation="En analyse multi-timeframe, le grand timeframe prime toujours. Si le Daily est haussier, tu cherches des achats — pas des ventes. Le signal H1 baissier est probablement un retracement dans la tendance Daily haussière — exactement là où tu pourrais chercher un Long."
+        explanation="En analyse multi-timeframe, le grand timeframe prime toujours. Si le Daily est haussier, tu cherches des achats, pas des ventes. Le signal H1 baissier est probablement un retracement dans la tendance Daily haussière, exactement là où tu pourrais chercher un Long."
         answerExplanations={[
-          "Faux. Trader un signal H1 contre une tendance Daily forte est statistiquement défavorable. Tu vas à contre-courant de la direction dominante — même si le signal technique semble propre.",
-          "Correct. La règle top-down est claire : le Daily définit le biais. Si Daily = haussier, tu ne cherches que des achats. Le signal H1 baissier signifie que le prix est en retracement. C'est justement là où tu cherches un achat — pas une vente.",
+          "Faux. Trader un signal H1 contre une tendance Daily forte est statistiquement défavorable. Tu vas à contre-courant de la direction dominante, même si le signal technique semble propre.",
+          "Correct. La règle top-down est claire : le Daily définit le biais. Si Daily = haussier, tu ne cherches que des achats. Le signal H1 baissier signifie que le prix est en retracement. C'est justement là où tu cherches un achat, pas une vente.",
           "Partiellement valide mais trop conservateur. Attendre que le Daily retourne est une approche très lente. En pratique, un signal H1 baissier dans une tendance Daily haussière est un retracement temporaire, pas un signal de retournement.",
-          "Faux. Réduire la taille ne change pas le problème fondamental : tu trades contre la tendance dominante. La taille de position gère le risque — elle ne compense pas une mauvaise direction.",
+          "Faux. Réduire la taille ne change pas le problème fondamental : tu trades contre la tendance dominante. La taille de position gère le risque, elle ne compense pas une mauvaise direction.",
         ]}
       />
 

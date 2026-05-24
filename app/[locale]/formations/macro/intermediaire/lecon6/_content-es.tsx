@@ -58,7 +58,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Construir tu sesgo semanal — la rutina macro que nadie hace
+            Construir tu sesgo semanal, la rutina macro que nadie hace
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -203,11 +203,11 @@ export default function ContentEs() {
             </p>
             <div className="space-y-3 mb-5">
               {[
-                { bold: "Paso 1 — Calendario (5 min)", rest: "Abres la semana. Anotas las news 3 estrellas. Identificas los clusters." },
-                { bold: "Paso 2 — Tono macro (5 min)", rest: "Miras la última comunicación Fed / BCE. ¿Hawkish, dovish o neutral?" },
-                { bold: "Paso 3 — DXY (3 min)", rest: "¿El dólar está alcista, bajista o en range?" },
-                { bold: "Paso 4 — Correlaciones (3 min)", rest: "¿XAU/USD confirma al DXY? ¿BTC/USD sigue al Nasdaq? ¿Se está rompiendo alguna correlación?" },
-                { bold: "Paso 5 — Sesgo por activo (4 min)", rest: "Para cada activo que operas: long / short / neutral." },
+                { bold: "Paso 1. Calendario (5 min)", rest: "Abres la semana. Anotas las news 3 estrellas. Identificas los clusters." },
+                { bold: "Paso 2. Tono macro (5 min)", rest: "Miras la última comunicación Fed / BCE. ¿Hawkish, dovish o neutral?" },
+                { bold: "Paso 3. DXY (3 min)", rest: "¿El dólar está alcista, bajista o en range?" },
+                { bold: "Paso 4. Correlaciones (3 min)", rest: "¿XAU/USD confirma al DXY? ¿BTC/USD sigue al Nasdaq? ¿Se está rompiendo alguna correlación?" },
+                { bold: "Paso 5. Sesgo por activo (4 min)", rest: "Para cada activo que operas: long / short / neutral." },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
                   <p className="text-sm text-zinc-300 leading-relaxed">
@@ -441,7 +441,7 @@ export default function ContentEs() {
               "Pasas inmediatamente a short sin otra confirmación",
             ]}
             correctIndex={2}
-            explanation="Un sesgo debe respetarse, pero solo mientras sus condiciones sigan válidas. Aquí, el CPI más alto que lo esperado + el DXY que explota + la ruptura técnica forman una invalidación macro completa. Cierras la idea y esperas una nueva estructura. La opción A confunde disciplina y terquedad (un sesgo invalidado ya no se respeta). La opción B agrava el riesgo sobre una tesis rota. La opción D reacciona demasiado rápido sin reconstruir un plan — hay que esperar una nueva confirmación, no flippear directamente."
+            explanation="Un sesgo debe respetarse, pero solo mientras sus condiciones sigan válidas. Aquí, el CPI más alto que lo esperado + el DXY que explota + la ruptura técnica forman una invalidación macro completa. Cierras la idea y esperas una nueva estructura. La opción A confunde disciplina y terquedad (un sesgo invalidado ya no se respeta). La opción B agrava el riesgo sobre una tesis rota. La opción D reacciona demasiado rápido sin reconstruir un plan, hay que esperar una nueva confirmación, no flippear directamente."
             answerExplanations={[
               "Falso. Respetar tu plan no significa ignorar una invalidación macro completa. Cuando las condiciones que fundaban tu sesgo cambian radicalmente, el sesgo también debe cambiar.",
               "Falso. Doblar una posición sobre una tesis invalidada por la macro agrava el riesgo. Es una de las trampas más costosas en trading.",
@@ -489,7 +489,7 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 5 — Las correlaciones
+                Lección 5. Las correlaciones
               </Link>
               <span className="text-sm font-bold text-emerald-400 cursor-default">
                 Módulo Intermedio Macro completo ✓

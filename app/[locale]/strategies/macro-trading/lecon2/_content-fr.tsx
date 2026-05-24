@@ -113,7 +113,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-amber-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « Le chiffre NFP n&apos;est qu&apos;une ligne du rapport. Le marché met quelques minutes à lire tout le reste — et c&apos;est là que se joue le vrai mouvement. »
+                « Le chiffre NFP n&apos;est qu&apos;une ligne du rapport. Le marché met quelques minutes à lire tout le reste, et c&apos;est là que se joue le vrai mouvement. »
               </p>
             </div>
           </section>
@@ -138,7 +138,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le NFP est publié chaque premier vendredi du mois et déclenche presque toujours une impulsion violente sur le dollar et les actifs qui lui sont sensibles — XAU/USD, EUR/USD, indices US. Mais cette première réaction se construit sur le chiffre headline (le nombre d&apos;emplois créés) en une fraction de seconde, alors que le rapport complet contient d&apos;autres données — salaires, taux de chômage, taux de participation, révisions des mois précédents. Le marché réagit d&apos;abord au headline, puis intègre brutalement le reste du rapport quelques minutes plus tard. Cette double phase est la signature même du setup NFP Overreaction.
+              Le NFP est publié chaque premier vendredi du mois et déclenche presque toujours une impulsion violente sur le dollar et les actifs qui lui sont sensibles. XAU/USD, EUR/USD, indices US. Mais cette première réaction se construit sur le chiffre headline (le nombre d&apos;emplois créés) en une fraction de seconde, alors que le rapport complet contient d&apos;autres données, salaires, taux de chômage, taux de participation, révisions des mois précédents. Le marché réagit d&apos;abord au headline, puis intègre brutalement le reste du rapport quelques minutes plus tard. Cette double phase est la signature même du setup NFP Overreaction.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -165,7 +165,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La fenêtre d&apos;exécution du setup NFP s&apos;ouvre quand le mouvement initial cesse de progresser. Visuellement, cela se traduit par une SÉRIE de bougies M15 avec des mèches répétées dans le sens contraire de l&apos;impulsion — mèches basses si l&apos;impulsion était bearish, mèches hautes si elle était bullish. Le prix se compresse autour d&apos;un niveau, n&apos;arrive plus à faire de nouveaux extrêmes. C&apos;est la trace visible que les vendeurs (ou acheteurs) initiaux ont fini d&apos;agir, et que la liquidité contraire commence à absorber. Sans cette stabilisation visible, le setup n&apos;est pas activé.
+              La fenêtre d&apos;exécution du setup NFP s&apos;ouvre quand le mouvement initial cesse de progresser. Visuellement, cela se traduit par une SÉRIE de bougies M15 avec des mèches répétées dans le sens contraire de l&apos;impulsion, mèches basses si l&apos;impulsion était bearish, mèches hautes si elle était bullish. Le prix se compresse autour d&apos;un niveau, n&apos;arrive plus à faire de nouveaux extrêmes. C&apos;est la trace visible que les vendeurs (ou acheteurs) initiaux ont fini d&apos;agir, et que la liquidité contraire commence à absorber. Sans cette stabilisation visible, le setup n&apos;est pas activé.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -192,13 +192,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Tous les NFP ne produisent pas un simple fade. Quand la réévaluation post-stabilisation se transforme en mouvement franc, large et soutenu, le marché change réellement de direction — le rapport complet implique une lecture différente du headline initial, et les participants institutionnels positionnent dans le sens inverse. Le signe distinctif : le retour ne s&apos;arrête pas au niveau pré-NFP mais le dépasse nettement. Quand cette dynamique apparaît, le setup n&apos;est plus un fade tactique mais une opportunité de tendance courte/moyenne.
+              Tous les NFP ne produisent pas un simple fade. Quand la réévaluation post-stabilisation se transforme en mouvement franc, large et soutenu, le marché change réellement de direction, le rapport complet implique une lecture différente du headline initial, et les participants institutionnels positionnent dans le sens inverse. Le signe distinctif : le retour ne s&apos;arrête pas au niveau pré-NFP mais le dépasse nettement. Quand cette dynamique apparaît, le setup n&apos;est plus un fade tactique mais une opportunité de tendance courte/moyenne.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : impulsion initiale NFP de 4 640 $ vers 4 575 $. Base autour de 4 580-4 585 $. Puis cassure bullish au-dessus de 4 620 $, accélération jusqu&apos;à 4 665 $ — au-delà du niveau pré-NFP. Le rapport complet (salaires solides, révisions positives) annulait l&apos;interprétation hawkish du headline. Le marché a complètement renversé son biais.
+                XAU/USD : impulsion initiale NFP de 4 640 $ vers 4 575 $. Base autour de 4 580-4 585 $. Puis cassure bullish au-dessus de 4 620 $, accélération jusqu&apos;à 4 665 $, au-delà du niveau pré-NFP. Le rapport complet (salaires solides, révisions positives) annulait l&apos;interprétation hawkish du headline. Le marché a complètement renversé son biais.
               </p>
             </div>
 
@@ -218,38 +218,38 @@ export default function ContentFr() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1 — Contexte H4 pré-NFP</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. Contexte H4 pré-NFP</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : XAU/USD compresse entre 4 630 $ et 4 650 $ dans les heures précédant le NFP, volatilité réduite</li>
-                <li>- Conclusion : forte probabilité d&apos;expansion sur la publication — on prépare le scénario de fade</li>
+                <li>- Conclusion : forte probabilité d&apos;expansion sur la publication, on prépare le scénario de fade</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 2 — Publication NFP</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 2. Publication NFP</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : chiffre headline au-dessus du consensus, première impulsion bearish 4 640 → 4 575 $ en quelques minutes</li>
-                <li>- Conclusion : réaction headline excessive — on attend la stabilisation, pas d&apos;entrée immédiate</li>
+                <li>- Conclusion : réaction headline excessive, on attend la stabilisation, pas d&apos;entrée immédiate</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 3 — Stabilisation M15</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 3. Stabilisation M15</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : le prix cesse de faire de nouveaux plus bas, quatre bougies M15 avec mèches basses répétées, prix calé autour de 4 580-4 585 $</li>
-                <li>- Conclusion : absorption acheteuse visible — la condition du setup est validée</li>
+                <li>- Conclusion : absorption acheteuse visible, la condition du setup est validée</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 4 — Confirmation de la réévaluation</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 4. Confirmation de la réévaluation</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : première bougie de reprise franche, le marché commence à imprimer des plus hauts locaux</li>
-                <li>- Conclusion : la réévaluation est engagée — on peut exécuter le fade</li>
+                <li>- Conclusion : la réévaluation est engagée, on peut exécuter le fade</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 5 — Exécution du Fade</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 5. Exécution du Fade</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 4 612 $</li>
                 <li>- Stop loss : 4 568 $ (au-delà de l&apos;extrémité de l&apos;impulsion)</li>
                 <li>- Target : 4 655 $ (proche du niveau pré-NFP)</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 6 — Gestion du risque</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 6. Gestion du risque</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Volatilité post-NFP supérieure à la normale → taille de position prudente</li>
                 <li>- Exécution uniquement après stabilisation visible, jamais dans l&apos;impulsion</li>
@@ -266,10 +266,10 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "La première impulsion NFP est portée par le chiffre headline — pas par le rapport complet qui se digère sur 15-60 minutes.",
+              "La première impulsion NFP est portée par le chiffre headline, pas par le rapport complet qui se digère sur 15-60 minutes.",
               "Le signal exploitable apparaît après la stabilisation : mèches répétées, perte d’accélération, prix calé autour d’une zone étroite.",
               "Le fade classique vise un retour partiel vers le niveau pré-NFP ; un dépassement franc signale un vrai retournement de biais.",
-              "Sans stabilisation visible, pas d’entrée — l’amplitude initiale n’est jamais en soi un signal d’exécution.",
+              "Sans stabilisation visible, pas d’entrée, l’amplitude initiale n’est jamais en soi un signal d’exécution.",
             ]}
           />
 
@@ -291,12 +291,12 @@ export default function ContentFr() {
               "Tu ignores le setup : la volatilité post-NFP est trop dangereuse à trader",
             ]}
             correctIndex={1}
-            explanation="La séquence NFP Overreaction est claire : impulsion → stabilisation → confirmation → exécution. Ici la stabilisation est visible (mèches basses répétées, prix calé), mais la confirmation de la réévaluation n'est pas encore arrivée. On attend la première bougie de reprise franche pour valider que le marché a réellement basculé sur la lecture complète du rapport. Sans cette confirmation, l'entrée serait prématurée — la stabilisation peut durer plus longtemps que prévu, voire céder dans le sens initial."
+            explanation="La séquence NFP Overreaction est claire : impulsion → stabilisation → confirmation → exécution. Ici la stabilisation est visible (mèches basses répétées, prix calé), mais la confirmation de la réévaluation n'est pas encore arrivée. On attend la première bougie de reprise franche pour valider que le marché a réellement basculé sur la lecture complète du rapport. Sans cette confirmation, l'entrée serait prématurée, la stabilisation peut durer plus longtemps que prévu, voire céder dans le sens initial."
             answerExplanations={[
               "Faux. Shorter après stabilisation, c&apos;est trader dans le sens de l&apos;impulsion émotionnelle initiale alors que le marché signale précisément qu&apos;il a fini de descendre. C&apos;est le contre-pied du setup NFP Overreaction.",
-              "Correct. La séquence exige stabilisation PUIS confirmation. La première bougie de reprise franche valide la réévaluation et ouvre la fenêtre d&apos;exécution du fade. Sans cette confirmation, on patiente — la stabilisation peut être plus longue, ou se prolonger en latéralisation.",
-              "Faux. Un ordre limite à l&apos;extrémité du mouvement initial part du principe qu&apos;on connaît la borne — alors qu&apos;elle peut être retestée plus bas ou non. Et même si le prix y revient, l&apos;entrée se ferait sans confirmation structurelle.",
-              "Faux. La volatilité post-NFP est précisément ce qui rend ce setup intéressant — c&apos;est elle qui crée l&apos;amplitude exploitée par le fade. La discipline (attendre stabilisation + confirmation) suffit à gérer le risque sans renoncer au setup.",
+              "Correct. La séquence exige stabilisation PUIS confirmation. La première bougie de reprise franche valide la réévaluation et ouvre la fenêtre d&apos;exécution du fade. Sans cette confirmation, on patiente, la stabilisation peut être plus longue, ou se prolonger en latéralisation.",
+              "Faux. Un ordre limite à l&apos;extrémité du mouvement initial part du principe qu&apos;on connaît la borne, alors qu&apos;elle peut être retestée plus bas ou non. Et même si le prix y revient, l&apos;entrée se ferait sans confirmation structurelle.",
+              "Faux. La volatilité post-NFP est précisément ce qui rend ce setup intéressant, c&apos;est elle qui crée l&apos;amplitude exploitée par le fade. La discipline (attendre stabilisation + confirmation) suffit à gérer le risque sans renoncer au setup.",
             ]}
           />
 

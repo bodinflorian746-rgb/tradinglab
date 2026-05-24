@@ -10,12 +10,12 @@ export default function ContentEs() {
     <LessonPage
       formationId="intermediaire"
       lessonId="lecon2"
-      title="Zonas clave — Soporte y Resistencia"
-      subtitle="Las zonas clave son los niveles donde el precio ya se detuvo. Son los únicos lugares donde debes tradear — el resto es ruido."
+      title="Zonas clave. Soporte y Resistencia"
+      subtitle="Las zonas clave son los niveles donde el precio ya se detuvo. Son los únicos lugares donde debes tradear, el resto es ruido."
       duration="22 min"
       lessonNumber={2}
-      prev={{ href: "/formations/intermediaire/lecon1", label: "Lección 1 — Estructura" }}
-      next={{ href: "/formations/intermediaire/lecon3", label: "Lección 3 — Supply & Demand" }}
+      prev={{ href: "/formations/intermediaire/lecon1", label: "Lección 1 : Estructura" }}
+      next={{ href: "/formations/intermediaire/lecon3", label: "Lección 3 : Supply & Demand" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -52,13 +52,13 @@ export default function ContentEs() {
       </div>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Polaridad — cuando el rol se invierte</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Polaridad : cuando el rol se invierte</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Cuando un soporte se rompe con convicción, se vuelve resistencia. Cuando una resistencia se rompe, se vuelve soporte. Es una de las dinámicas más fiables del mercado.
         </p>
         <div className="space-y-2.5">
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
-            <p className="text-sm font-medium text-white mb-1">Escenario real — EUR/USD</p>
+            <p className="text-sm font-medium text-white mb-1">Escenario real. EUR/USD</p>
             <p className="text-xs text-zinc-500 leading-relaxed">
               EUR/USD rebota 3× en 1.0800 (soporte). Después el precio rompe 1.0800 con una gran vela bajista. Luego sube a testear 1.0800 → esa zona era un soporte, ahora se vuelve resistencia. Puedes vender ahí con un SL arriba.
             </p>
@@ -71,7 +71,7 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Order Blocks — donde actuaron las instituciones</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Order Blocks : donde actuaron las instituciones</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Un Order Block (OB) es la última vela de dirección opuesta antes de un movimiento impulsivo. Es donde una institución colocó una orden grande. El precio suele volver ahí para completar la ejecución.
         </p>
@@ -143,7 +143,7 @@ export default function ContentEs() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Error clásico</p>
         <p className="text-sm font-semibold text-white mb-2">Trazar una línea en vez de una zona</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Trazas una línea exacta a 1.0800 y colocas tu SL a 1.0798. El precio baja a 1.0796, activa tu SL, y luego sube. El problema: el precio nunca es exacto. Hay que trazar una zona de 10-20 pips de grosor y colocar el SL bajo la zona entera — no bajo la línea.
+          Trazas una línea exacta a 1.0800 y colocas tu SL a 1.0798. El precio baja a 1.0796, activa tu SL, y luego sube. El problema: el precio nunca es exacto. Hay que trazar una zona de 10-20 pips de grosor y colocar el SL bajo la zona entera, no bajo la línea.
         </p>
       </section>
 
@@ -167,8 +167,8 @@ export default function ContentEs() {
           "Soporte = zona donde los compradores empujaron la bajada varias veces.",
           "Resistencia = zona donde los vendedores empujaron la subida varias veces.",
           "Polaridad: soporte roto → resistencia. Resistencia rota → soporte.",
-          "Order Block = última vela opuesta antes de un movimiento impulsivo — zona institucional.",
-          "Nunca tradees en el medio — siempre espera que un precio llegue a una zona clave.",
+          "Order Block = última vela opuesta antes de un movimiento impulsivo, zona institucional.",
+          "Nunca tradees en el medio, siempre espera que un precio llegue a una zona clave.",
         ]}
       />
 
@@ -185,18 +185,18 @@ export default function ContentEs() {
       <LessonQuiz
         question="EUR/USD rebotaba en 1.0800 desde hace 3 semanas. El precio acaba de romper 1.0800 a la baja con una gran vela bajista. Ahora sube hacia 1.0800. ¿Qué haces?"
         options={[
-          "Compras — 1.0800 es un soporte histórico fuerte",
-          "Vendes en 1.0800 — el viejo soporte se vuelve resistencia por polaridad",
-          "No haces nada — el nivel es muy conocido, no va a funcionar",
+          "Compras, 1.0800 es un soporte histórico fuerte",
+          "Vendes en 1.0800, el viejo soporte se vuelve resistencia por polaridad",
+          "No haces nada, el nivel es muy conocido, no va a funcionar",
           "Esperas que el precio vuelva a pasar arriba de 1.0800 para confirmar",
         ]}
         correctIndex={1}
         explanation="Es la polaridad en acción. 1.0800 era un soporte. Se rompió con convicción. Ahora que el precio vuelve a testear ese nivel, se comporta como una resistencia. Vendes en el pullback con SL arriba de 1.0800."
         answerExplanations={[
-          "Falso. 1.0800 era un soporte, pero se rompió. Una vez roto, un soporte ya no cumple su rol de comprador — se invierte en resistencia. Comprar acá es ignorar la polaridad.",
+          "Falso. 1.0800 era un soporte, pero se rompió. Una vez roto, un soporte ya no cumple su rol de comprador, se invierte en resistencia. Comprar acá es ignorar la polaridad.",
           "Correcto. La polaridad es uno de los comportamientos más fiables del mercado. 1.0800 roto → se vuelve resistencia. El pullback en ese nivel es una oportunidad de venta con un SL lógico encima.",
-          "Falso. Los niveles muy conocidos suelen funcionar mejor, no peor — es ahí donde se concentran las órdenes. La popularidad de un nivel no es razón para ignorarlo.",
-          "Falso. Esperar que el precio vuelva arriba para confirmar es perder la entrada. La señal de venta es el retorno a 1.0800 con un rechazo — no la ruptura al alza.",
+          "Falso. Los niveles muy conocidos suelen funcionar mejor, no peor, es ahí donde se concentran las órdenes. La popularidad de un nivel no es razón para ignorarlo.",
+          "Falso. Esperar que el precio vuelva arriba para confirmar es perder la entrada. La señal de venta es el retorno a 1.0800 con un rechazo, no la ruptura al alza.",
         ]}
       />
 

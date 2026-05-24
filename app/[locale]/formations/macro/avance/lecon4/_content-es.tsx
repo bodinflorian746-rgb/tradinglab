@@ -56,7 +56,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Risk-on / Risk-off — el marco mental del pro
+            Risk-on / Risk-off, el marco mental del pro
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -455,7 +455,7 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 3 — Rendimientos de bonos US
+                Lección 3. Rendimientos de bonos US
               </Link>
             </div>
 

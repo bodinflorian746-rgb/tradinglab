@@ -200,7 +200,7 @@ export default function ContentFr() {
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 1.1765 (clôture de la pin bar)</li>
                 <li>- Stop loss : 1.1720 (10 pips sous le dernier HL à 1.1730)</li>
-                <li>- Take profit niveau 1 : 1.1810 (HH précédent) — niveau 2 : 1.1890 (projection 80 pips)</li>
+                <li>- Take profit niveau 1 : 1.1810 (HH précédent), niveau 2 : 1.1890 (projection 80 pips)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
@@ -298,7 +298,7 @@ export default function ContentFr() {
                 </span>
               </span>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 2 — À venir
+                Leçon 2. À venir
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

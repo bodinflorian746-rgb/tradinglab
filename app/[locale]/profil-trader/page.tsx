@@ -461,7 +461,7 @@ function EmptyState({ locale, t }: { locale: Locale; t: ProfileDict }) {
 function accuracyStr(snapshot: TraderProfileSnapshot): string {
   const wins   = Object.values(snapshot.gameStats).reduce((a, b) => a + b.wins, 0);
   const total  = snapshot.totalEvents;
-  if (total === 0) return "—";
+  if (total === 0) return "";
   return `${Math.round((wins / total) * 100)}%`;
 }
 

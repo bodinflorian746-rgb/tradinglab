@@ -100,14 +100,14 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     metric: "lecture",
     context: "El precio consolida bajo una resistencia mayor y acaba de romperla con una vela de fuerza.",
     rationales: {
-      BUY: "✓ El HTF es alcista y el breakout está alineado. La resistencia se rompió con una vela de fuerza — es el escenario textbook de continuación. BUY es la lectura lógica del mercado.",
+      BUY: "✓ El HTF es alcista y el breakout está alineado. La resistencia se rompió con una vela de fuerza, es el escenario textbook de continuación. BUY es la lectura lógica del mercado.",
       SELL: "✗ Vender frente a un breakout alcista en HTF alcista = ponerte a contracorriente sin señal de reversión. Es un trade típicamente emocional.",
-      NO_TRADE: "✗ El setup está completo: breakout, HTF alineado, contexto macro sin peligro. Pasar de turno aquí es perder el edge — no es disciplina.",
+      NO_TRADE: "✗ El setup está completo: breakout, HTF alineado, contexto macro sin peligro. Pasar de turno aquí es perder el edge, no es disciplina.",
     },
     lessons: {
       beginner:     "Regla simple: un breakout en el sentido del HTF, sin peligro macro, es un trade. Sin más complicaciones.",
       intermediate: "Cuando HTF, estructura y contexto se alinean, el edge es estadístico. No operar esta config = dejar dinero sobre la mesa.",
-      advanced:     "Los setups de alineación clean como este son raros. Cuando aparecen — full size, sin dudas.",
+      advanced:     "Los setups de alineación clean como este son raros. Cuando aparecen, full size, sin dudas.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["lectura", "breakout", "alineación HTF"],
@@ -122,7 +122,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     context: "El precio consolida sobre un soporte mayor y acaba de romperlo con una vela de fuerza.",
     rationales: {
       BUY: "✗ Comprar una ruptura de soporte en HTF bajista = peleas contra el mercado. No hay señal de reversión, solo aceleración bajista.",
-      SELL: "✓ Breakdown limpio en el sentido del HTF bajista — momentum del lado vendedor. SELL es la lectura correcta.",
+      SELL: "✓ Breakdown limpio en el sentido del HTF bajista, momentum del lado vendedor. SELL es la lectura correcta.",
       NO_TRADE: "✗ HTF alineado + ruptura limpia + sin news: la config está completa. Pasar de turno aquí no es prudencia.",
     },
     lessons: {
@@ -140,7 +140,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "piege",
-    context: "El precio acaba de romper sobre una resistencia — pero el HTF sigue bajista. La ruptura parece sospechosa.",
+    context: "El precio acaba de romper sobre una resistencia, pero el HTF sigue bajista. La ruptura parece sospechosa.",
     rationales: {
       BUY: "✗ Sigues el breakout sin mirar el HTF. Una ruptura alcista en HTF bajista tiene 60-70% de probabilidad de ser una trampa de liquidity. Así es como cazan a los retails.",
       SELL: "✓ HTF bajista + breakout contra-tendencia = setup de fakeout. La liquidity arriba de la resistencia es el combustible de los shorts institucionales. SELL después de la trampa.",
@@ -149,7 +149,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     lessons: {
       beginner:     "Regla de oro: un breakout EN CONTRA del HTF casi siempre es una trampa. Si HTF bajista + breakout alcista → quédate fuera o busca el SELL.",
       intermediate: "La trampa clásica. Los institucionales crean la ruptura para absorber la liquidity de los stops shorts arriba de la resistencia, y luego empujan en el sentido del HTF.",
-      advanced:     "No tienes confirmación del wick rejection aquí — decides ANTES. Si HTF + macro lo permiten, anticipar el fakeout es un edge mayor. Si no, NO TRADE.",
+      advanced:     "No tienes confirmación del wick rejection aquí, decides ANTES. Si HTF + macro lo permiten, anticipar el fakeout es un edge mayor. Si no, NO TRADE.",
     },
     difficulties: ["intermediate", "advanced"],
     tags: ["trampa", "fakeout", "liquidity"],
@@ -161,7 +161,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "piege",
-    context: "El precio acaba de romper bajo un soporte — pero el HTF sigue alcista. La ruptura parece una trampa.",
+    context: "El precio acaba de romper bajo un soporte, pero el HTF sigue alcista. La ruptura parece una trampa.",
     rationales: {
       BUY: "✓ HTF alcista + breakout bajista contra-tendencia = trampa clásica. La liquidity bajo el soporte se recoge para preparar el movimiento alcista. BUY el regreso.",
       SELL: "✗ Vender en ruptura contra el HTF es unirte a los retails atrapados. Estadísticamente, estos fakeouts regresan en el sentido del HTF en 60-70% de los casos.",
@@ -352,7 +352,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     macroContext: "normal",
     metric: "discipline",
     context: "El precio acaba de romper sobre la resistencia, pero a la vela de fuerza le falta body cruelmente.",
-    shortContext: "Ruptura alcista — body muy débil.",
+    shortContext: "Ruptura alcista, body muy débil.",
     rationales: {
       BUY: "✗ Persigues una ruptura débil. Sin vela de momentum nítida, la estadística de continuación cae a ~35%. Mal R/R esperado.",
       SELL: "✗ Vender una ruptura alcista sin señal de reversión = prematuro. No tienes ni reversal candle ni estructura bajista.",
@@ -373,7 +373,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "lecture",
-    context: "El FVG alcista se mitigó en 85%+ de su altura. La reacción se demora — los compradores ya no defienden la zona.",
+    context: "El FVG alcista se mitigó en 85%+ de su altura. La reacción se demora, los compradores ya no defienden la zona.",
     shortContext: "FVG mitigado al 85%+, sin reacción.",
     rationales: {
       BUY: "✗ Le rezas al rebote. Una mitigation profunda sin reacción = FVG muerto. Los compradores institucionales ya no defienden la zona.",
@@ -395,7 +395,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "discipline",
-    context: "HTF bajista nítido. El precio rebota localmente sobre un nivel secundario — pero la tendencia sigue en contra tuya.",
+    context: "HTF bajista nítido. El precio rebota localmente sobre un nivel secundario, pero la tendencia sigue en contra tuya.",
     shortContext: "Rebote local en un downtrend HTF.",
     rationales: {
       BUY: "✗ Operar contra la tendencia HTF apostando a un nivel secundario = jugar a 30-40% de proba. La estadística está en tu contra antes incluso de hacer click.",
@@ -404,8 +404,8 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     },
     lessons: {
       beginner:     "HTF bajista = buscas los SELL, nunca los BUY contra la tendencia.",
-      intermediate: "Un setup local nunca borra la tendencia HTF. Si el HTF dice no, no dices sí — aunque la zona local aguante.",
-      advanced:     "Los rebotes en un downtrend son oportunidades de SHORT, no de BUY. Pero hay que esperar el timing — aquí muy temprano, sin wick de rechazo sobre resistencia HTF.",
+      intermediate: "Un setup local nunca borra la tendencia HTF. Si el HTF dice no, no dices sí, aunque la zona local aguante.",
+      advanced:     "Los rebotes en un downtrend son oportunidades de SHORT, no de BUY. Pero hay que esperar el timing, aquí muy temprano, sin wick de rechazo sobre resistencia HTF.",
     },
     difficulties: ["intermediate", "advanced"],
     tags: ["disciplina", "HTF", "contra-tendencia"],
@@ -417,7 +417,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "range",
     macroContext: "normal",
     metric: "discipline",
-    context: "El precio acaba de barrer la liquidity de los dos bordes del range. Ninguna dirección clara — la acumulación institucional es invisible.",
+    context: "El precio acaba de barrer la liquidity de los dos bordes del range. Ninguna dirección clara, la acumulación institucional es invisible.",
     shortContext: "Range con sweep de los dos bordes.",
     rationales: {
       BUY: "✗ Sin señal long. El sweep reciente del techo neutraliza la zona baja como soporte confiable. Sin edge.",
@@ -439,7 +439,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "discipline",
-    context: "Setup técnico válido — pero el contexto de ejecución es desfavorable: spread alto, sesión muerta, volatilidad ausente. El R/R real se divide por 2.",
+    context: "Setup técnico válido, pero el contexto de ejecución es desfavorable: spread alto, sesión muerta, volatilidad ausente. El R/R real se divide por 2.",
     shortContext: "Setup limpio, pero spread alto en sesión muerta.",
     rationales: {
       BUY: "✗ La señal es buena pero el contexto mata el R/R. Spread alto + sesión muerta = tu stop salta por bid-ask, tu TP queda inalcanzable. La técnica gana, la ejecución pierde.",

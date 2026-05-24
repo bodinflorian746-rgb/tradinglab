@@ -10,12 +10,12 @@ export default function ContentEs() {
     <LessonPage
       formationId="intermediaire"
       lessonId="lecon4"
-      title="Tendencias — tradear en el sentido del mercado"
+      title="Tendencias, tradear en el sentido del mercado"
       subtitle="El 90% de los traders perdedores tradean contra la tendencia sin saberlo. Aprender a leer la dirección dominante es poner las probabilidades de tu lado antes incluso de abrir un trade."
       duration="18 min"
       lessonNumber={4}
-      prev={{ href: "/formations/intermediaire/lecon3", label: "Lección 3 — Supply & Demand" }}
-      next={{ href: "/formations/intermediaire/lecon5", label: "Lección 5 — Confluencias" }}
+      prev={{ href: "/formations/intermediaire/lecon3", label: "Lección 3 : Supply & Demand" }}
+      next={{ href: "/formations/intermediaire/lecon5", label: "Lección 5 : Confluencias" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -37,7 +37,7 @@ export default function ContentEs() {
           <div className="bg-zinc-800/50 border border-zinc-700/50 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-zinc-300 mb-2">Range</p>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              El precio va y viene entre dos niveles horizontales. Ni los compradores ni los vendedores ganan claramente. Sin trade direccional — esperar.
+              El precio va y viene entre dos niveles horizontales. Ni los compradores ni los vendedores ganan claramente. Sin trade direccional, esperar.
             </p>
           </div>
         </div>
@@ -63,9 +63,9 @@ export default function ContentEs() {
         </p>
         <div className="space-y-2.5">
           {[
-            { label: "Daily o H4 — el sesgo principal", detail: "Es la tendencia que debes respetar. Si Daily es alcista, buscas únicamente compras." },
-            { label: "H1 — las zonas de entrada", detail: "En tendencia alcista Daily, el H1 muestra los retrocesos (correcciones). Son tus ventanas de entrada." },
-            { label: "M15 — el timing preciso", detail: "En M15, buscas la señal final (rechazo, pin bar, engulfing). Es el disparador de la entrada." },
+            { label: "Daily o H4 : el sesgo principal", detail: "Es la tendencia que debes respetar. Si Daily es alcista, buscas únicamente compras." },
+            { label: "H1 : las zonas de entrada", detail: "En tendencia alcista Daily, el H1 muestra los retrocesos (correcciones). Son tus ventanas de entrada." },
+            { label: "M15 : el timing preciso", detail: "En M15, buscas la señal final (rechazo, pin bar, engulfing). Es el disparador de la entrada." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
@@ -81,7 +81,7 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Escenario real — tradear el retroceso</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Escenario real : tradear el retroceso</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Es el setup básico en tendencia: esperar que el precio vuelva a un nivel de estructura, luego entrar en el sentido de la tendencia.
         </p>
@@ -142,7 +142,7 @@ export default function ContentEs() {
             <span className="text-lg">—</span>
             <div>
               <p className="text-sm font-semibold text-zinc-300">Range</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Sin trade direccional. Si quieres tradear el range, compras el bottom y vendes el top — pero es avanzado. Por ahora, evítalo.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Sin trade direccional. Si quieres tradear el range, compras el bottom y vendes el top, pero es avanzado. Por ahora, evítalo.</p>
             </div>
           </div>
         </div>
@@ -194,18 +194,18 @@ export default function ContentEs() {
       <LessonQuiz
         question="EUR/USD es claramente alcista en Daily (HH/HL). El precio acaba de hacer un nuevo máximo a 1.0950 y ahora retrocede. Baja hacia 1.0860 (último Higher Low). Ves una pin bar alcista en ese nivel en H1. ¿Qué haces?"
         options={[
-          "Esperas más — quizá el retroceso siga hasta 1.0800",
+          "Esperas más, quizá el retroceso siga hasta 1.0800",
           "Compras en la pin bar, SL bajo 1.0850, TP hacia 1.0990",
-          "Vendes — el precio baja, es una señal de debilidad",
-          "No haces nada — el mercado está muy incierto ahora",
+          "Vendes, el precio baja, es una señal de debilidad",
+          "No haces nada, el mercado está muy incierto ahora",
         ]}
         correctIndex={1}
         explanation="Todos los elementos están alineados: tendencia alcista Daily, retroceso en el último HL, señal de confirmación (pin bar). Es el setup en tendencia por excelencia. Entras en compra con SL bajo el HL y TP hacia el cruce del último HH."
         answerExplanations={[
           "Demasiado prudente. Tienes 3 elementos alineados: tendencia, nivel de estructura, señal. Es exactamente el setup que esperabas. Esperar más sin razón es dejar pasar una oportunidad válida.",
           "Correcto. Tendencia alcista + retroceso en HL + señal pin bar = setup de alta probabilidad. SL a 1.0810 (bajo el HL a 1.0860), TP hacia el próximo HH (1.0960). R/R aproximado 1:2.",
-          "Falso. El precio que baja hacia un HL en tendencia alcista es un retroceso normal — una corrección. No es debilidad. Es la oportunidad de compra que esperabas.",
-          "Falso. La incertidumbre no justifica la inacción cuando el setup está claramente definido. Tendencia + estructura + señal = trade válido. La incertidumbre siempre está presente — el risk management (SL + tamaño) se encarga.",
+          "Falso. El precio que baja hacia un HL en tendencia alcista es un retroceso normal, una corrección. No es debilidad. Es la oportunidad de compra que esperabas.",
+          "Falso. La incertidumbre no justifica la inacción cuando el setup está claramente definido. Tendencia + estructura + señal = trade válido. La incertidumbre siempre está presente, el risk management (SL + tamaño) se encarga.",
         ]}
       />
 

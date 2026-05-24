@@ -56,7 +56,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            NFP — la news mensuelle qui fait trembler tous les actifs
+            NFP, la news mensuelle qui fait trembler tous les actifs
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -295,29 +295,29 @@ export default function ContentFr() {
             <div className="space-y-2 mb-5">
               {[
                 {
-                  time: "13h00–14h25 — Sécurisation",
+                  time: "13h00–14h25. Sécurisation",
                   body: "Tu fermes ou réduis les positions fragiles. Tu vérifies EUR/USD, DXY, XAU/USD, Nasdaq et BTC/USD.",
                 },
                 {
-                  time: "14h25–14h30 — Pré-positionnement",
+                  time: "14h25–14h30. Pré-positionnement",
                   body: "Les spreads peuvent s'élargir. Tu n'entres pas.",
                 },
                 {
-                  time: "14h30–14h35 — Lecture brute",
+                  time: "14h30–14h35. Lecture brute",
                   body: "La première impulsion peut être violente.",
                   bold: "Tu ne trades pas les premières minutes.",
                 },
                 {
-                  time: "14h35–15h00 — Analyse complète",
+                  time: "14h35–15h00. Analyse complète",
                   items: ["headline", "chômage", "salaires", "participation", "révisions"],
                   suffix: "Puis tu compares avec DXY, XAU/USD et Nasdaq.",
                 },
                 {
-                  time: "15h00–15h30 — Setup possible",
+                  time: "15h00–15h30. Setup possible",
                   body: "Si la réaction est cohérente et confirmée, tu peux chercher une entrée avec confluence.",
                 },
                 {
-                  time: "15h30+ — Continuation ou digestion",
+                  time: "15h30+. Continuation ou digestion",
                   body: "Avec l'ouverture US, le marché confirme ou annule la première lecture.",
                 },
               ].map((item, i) => (
@@ -413,23 +413,23 @@ export default function ContentFr() {
             <div className="space-y-3 mb-5">
               {[
                 {
-                  bold: "Piège 1 — La première impulsion",
+                  bold: "Piège 1. La première impulsion",
                   body: "La première bougie part dans un sens, puis inverse. C'est souvent là que le retail se fait sortir.",
                 },
                 {
-                  bold: "Piège 2 — Trader seulement le headline",
+                  bold: "Piège 2. Trader seulement le headline",
                   body: "NFP supérieur aux attentes ne veut pas toujours dire dollar haussier. Les salaires, le chômage et les révisions peuvent contredire le chiffre.",
                 },
                 {
-                  bold: "Piège 3 — Ignorer les actifs corrélés",
+                  bold: "Piège 3. Ignorer les actifs corrélés",
                   body: "Si tu trades XAU/USD, regarde le DXY. Si tu trades BTC/USD, regarde le Nasdaq. Si tu trades EUR/USD, regarde aussi GBP/USD et USD/CHF.",
                 },
                 {
-                  bold: "Piège 4 — Stop trop serré",
+                  bold: "Piège 4. Stop trop serré",
                   body: "Après NFP, un stop classique peut sauter sans invalider la thèse. La volatilité est différente. Ton risque doit l'être aussi.",
                 },
                 {
-                  bold: "Piège 5 — Oublier la chaîne macro",
+                  bold: "Piège 5. Oublier la chaîne macro",
                   body: "Le NFP arrive après CPI et PPI, puis influence le prochain FOMC.",
                   chain: true,
                 },
@@ -517,7 +517,7 @@ export default function ContentFr() {
               "Faux. Lire uniquement le headline est une erreur classique. Une révision de -80k et des salaires faibles peuvent neutraliser ou inverser l'impact d'un NFP fort.",
               "Correct. Le chiffre principal est positif, mais les révisions négatives et les salaires faibles affaiblissent le signal. La lecture pro intègre toujours les sous-données.",
               "Faux. XAU/USD dépend du contexte global : si les révisions et les salaires affaiblissent le dollar, l'or peut remonter même avec un NFP headline fort.",
-              "Faux. BTC/USD réagit souvent au sentiment de risque et aux anticipations de taux directeurs — deux variables directement influencées par le NFP.",
+              "Faux. BTC/USD réagit souvent au sentiment de risque et aux anticipations de taux directeurs, deux variables directement influencées par le NFP.",
             ]}
           />
 
@@ -560,13 +560,13 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 1 — FOMC
+                Leçon 1. FOMC
               </Link>
               <Link
                 href="/formations/macro/avance/lecon3"
                 className="inline-flex items-center gap-1.5 text-sm text-zinc-600 hover:text-zinc-400 transition-colors"
               >
-                Leçon 3 — Rendements obligataires US
+                Leçon 3. Rendements obligataires US
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

@@ -58,7 +58,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Les chiffres macro à surveiller — quoi regarder et quand
+            Les chiffres macro à surveiller, quoi regarder et quand
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -388,7 +388,7 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "Le marché réagit à la surprise (réel vs prévision), pas au chiffre brut",
-              "5 chiffres dominent : NFP, CPI, FOMC, PMI, GDP — concentre-toi dessus",
+              "5 chiffres dominent : NFP, CPI, FOMC, PMI, GDP, concentre-toi dessus",
               "Les événements 3 étoiles sont les seuls qui méritent ton attention",
               "Plus l'écart entre prévision et réalité est grand, plus le mouvement est violent",
             ]}
@@ -419,10 +419,10 @@ export default function ContentFr() {
             correctIndex={2}
             explanation="Le marché ne réagit pas au chiffre seul, mais à l'écart avec les attentes. Ici, l'inflation sort à 3.8% au lieu de 3.0% attendus → grosse surprise inflationniste → mouvement violent quasi garanti. Les options A, B et D sont fausses : le sens dépend toujours du contexte (la direction du mouvement, elle, dépend si une inflation plus haute est perçue comme positive ou négative selon la situation économique du moment). Ce principe s'applique à tous les actifs : forex, or, indices, crypto."
             answerExplanations={[
-              "Faux. Ce n'est pas parce qu'un chiffre est attendu qu'il n'aura pas d'impact. 3.8% vs 3.0% attendus représente un écart important — le marché réagit toujours à une telle surprise.",
+              "Faux. Ce n'est pas parce qu'un chiffre est attendu qu'il n'aura pas d'impact. 3.8% vs 3.0% attendus représente un écart important, le marché réagit toujours à une telle surprise.",
               "Faux. La direction du mouvement dépend du contexte économique. Une inflation plus haute peut être perçue positivement ou négativement selon la situation. Ce qui est certain : il y aura un mouvement fort.",
               "Correct. 3.8% vs 3.0% attendus = +0.8% d'écart sur l'inflation, c'est une grosse surprise. Le marché va réagir fortement. La direction exacte dépend du contexte, mais le mouvement violent est quasi garanti.",
-              "Faux. La direction dépend du contexte économique, pas d'une règle fixe. Ce qui est certain, c'est qu'il y aura un mouvement fort — pas nécessairement à la baisse.",
+              "Faux. La direction dépend du contexte économique, pas d'une règle fixe. Ce qui est certain, c'est qu'il y aura un mouvement fort, pas nécessairement à la baisse.",
             ]}
           />
 
@@ -465,10 +465,10 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 2 — Les 4 grandes banques centrales
+                Leçon 2. Les 4 grandes banques centrales
               </Link>
               <span className="text-sm text-zinc-700 cursor-default">
-                Comprendre l&apos;inflation — Bientôt disponible →
+                Comprendre l&apos;inflation. Bientôt disponible →
               </span>
             </div>
 

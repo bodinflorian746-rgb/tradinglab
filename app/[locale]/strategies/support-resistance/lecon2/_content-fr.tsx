@@ -201,10 +201,10 @@ export default function ContentFr() {
           <LessonExercice
             description="Une zone de résistance EUR/USD entre 1.1880 et 1.1900 a été touchée 2 fois dans les 8 dernières semaines avec rejets nets (mèches de 30 à 40 pips). Le niveau psychologique 1.1900 est au sommet de la zone. La MM50 H4 passe actuellement à 1.1875. Quel est le verdict de qualification ?"
             steps={[
-              "Critère 1 — Touches : 2 touches confirmées dans les 8 dernières semaines = minimum requis validé",
-              "Critère 2 — Réactions : rejets nets avec mèches de 30 à 40 pips = réactions claires proportionnées",
-              "Critère 3 — Fraîcheur : zone touchée dans les 8 dernières semaines = fraîcheur acceptable",
-              "Critère 4 — Confluences : niveau psychologique 1.1900 au sommet de la zone (confluence 1) + MM50 H4 à 1.1875 dans la zone (confluence 2) = 2 confluences identifiées",
+              "Critère 1. Touches : 2 touches confirmées dans les 8 dernières semaines = minimum requis validé",
+              "Critère 2. Réactions : rejets nets avec mèches de 30 à 40 pips = réactions claires proportionnées",
+              "Critère 3. Fraîcheur : zone touchée dans les 8 dernières semaines = fraîcheur acceptable",
+              "Critère 4. Confluences : niveau psychologique 1.1900 au sommet de la zone (confluence 1) + MM50 H4 à 1.1875 dans la zone (confluence 2) = 2 confluences identifiées",
               "Verdict : zone tradable confirmée. 3 critères validés franchement + 2 confluences. Note opérationnelle élevée. La zone entre dans la sélection prioritaire pour un setup short sur retracement avec signal de rejet confirmé",
             ]}
           />
@@ -263,7 +263,7 @@ export default function ContentFr() {
                 Leçon 1
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 3 — À venir
+                Leçon 3. À venir
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

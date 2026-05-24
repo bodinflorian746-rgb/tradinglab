@@ -238,7 +238,7 @@ export default function ContentEs() {
           <LessonExercice
             description="En EUR/USD H4, una resistencia en 1.1850 es rota por una vela que cierra en 1.1875 con un cuerpo significativo. 4 velas después, el precio retrocede hacia 1.1850 e imprime una pin bar con mecha larga que rechaza. ¿Cómo se construye el plan de trade flip?"
             steps={[
-              "Calificar la ruptura: cierre en 1.1875, distancia 25 pips por encima de la zona, cuerpo significativo, sin retorno inmediato en 4 velas — ruptura validada",
+              "Calificar la ruptura: cierre en 1.1875, distancia 25 pips por encima de la zona, cuerpo significativo, sin retorno inmediato en 4 velas, ruptura validada",
               "Constatar la inversión del rol: la resistencia 1.1850 se convierte en soporte",
               "Identificar la señal de rechazo: la pin bar al contacto con la zona valida el flip",
               "Colocar la entrada long en el cierre de la pin bar, stop loss en 1.1830 (20 pips bajo la zona para absorber las mechas)",
@@ -300,7 +300,7 @@ export default function ContentEs() {
                 Lección 2
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 4 — Próximamente
+                Lección 4. Próximamente
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="Una sola señal es una apuesta. Tres señales alineadas en el mismo nivel es un trade construido. La diferencia es tu probabilidad de éxito."
       duration="20 min"
       lessonNumber={5}
-      prev={{ href: "/formations/intermediaire/lecon4", label: "Lección 4 — Tendencias" }}
-      next={{ href: "/formations/intermediaire/lecon6", label: "Lección 6 — Fake Breakout" }}
+      prev={{ href: "/formations/intermediaire/lecon4", label: "Lección 4 : Tendencias" }}
+      next={{ href: "/formations/intermediaire/lecon6", label: "Lección 6 : Fake Breakout" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -25,7 +25,7 @@ export default function ContentEs() {
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400">
-            <span className="text-white font-medium">Regla fundamental:</span> nunca entres por una sola razón. Cada confluencia adicional independiente aumenta la probabilidad — y reduce el riesgo de una entrada en el sentido equivocado.
+            <span className="text-white font-medium">Regla fundamental:</span> nunca entres por una sola razón. Cada confluencia adicional independiente aumenta la probabilidad, y reduce el riesgo de una entrada en el sentido equivocado.
           </p>
         </div>
       </section>
@@ -37,15 +37,15 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Las confluencias para combinar</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Cada categoría aporta un tipo de información distinto. Es su combinación la que crea el valor — no su número solo.
+          Cada categoría aporta un tipo de información distinto. Es su combinación la que crea el valor, no su número solo.
         </p>
         <div className="space-y-2.5">
           {[
-            { label: "Tendencia (estructura de mercado)", detail: "La dirección dominante — alcista o bajista. Es la base. Verifica en Daily primero.", color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400" },
+            { label: "Tendencia (estructura de mercado)", detail: "La dirección dominante : alcista o bajista. Es la base. Verifica en Daily primero.", color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400" },
             { label: "Zona S/R o SD", detail: "Un nivel donde el precio ya reaccionó. Un viejo soporte, una resistencia, o una zona de Demand/Supply.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
-            { label: "Nivel Fibonacci", detail: "38.2%, 50% o 61.8% del último movimiento impulsivo. Suele coincidir con un S/R — ahí está la potencia.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
+            { label: "Nivel Fibonacci", detail: "38.2%, 50% o 61.8% del último movimiento impulsivo. Suele coincidir con un S/R : ahí está la potencia.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
             { label: "Nivel psicológico", detail: "1.1000, 45 000$, 2 000$... Los traders colocan naturalmente stops y órdenes en los números redondos.", color: "bg-amber-400/5 border-amber-400/15 text-amber-400" },
-            { label: "Señal de vela (disparador)", detail: "Pin bar, engulfing, rechazo. Es el gatillo — no la razón de entrar. La razón son las confluencias de arriba.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
+            { label: "Señal de vela (disparador)", detail: "Pin bar, engulfing, rechazo. Es el gatillo : no la razón de entrar. La razón son las confluencias de arriba.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
           ].map((item, i) => (
             <div key={i} className={`rounded-xl px-4 py-3 border ${item.color}`}>
               <p className="text-sm font-semibold mb-1">{item.label}</p>
@@ -56,13 +56,13 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Escenario completo — 4 confluencias alineadas</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Escenario completo : 4 confluencias alineadas</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Acá tienes cómo construir un trade de alta probabilidad, paso a paso.
         </p>
         <div className="space-y-2">
           {[
-            { step: "1", text: "Daily alcista (HH/HL) — tu sesgo: compras únicamente." },
+            { step: "1", text: "Daily alcista (HH/HL), tu sesgo: compras únicamente." },
             { step: "2", text: "H4: el precio retrocede al último Higher Low a 1.0850." },
             { step: "3", text: "1.0850 coincide con un soporte histórico respetado 2× en el pasado." },
             { step: "4", text: "Fibonacci 61.8% del último movimiento impulsivo = 1.0848." },
@@ -133,7 +133,7 @@ export default function ContentEs() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Error clásico</p>
         <p className="text-sm font-semibold text-white mb-2">Contar confluencias redundantes como confluencias independientes</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Ves: RSI en sobreventa + MACD cruzado + Estocástico bajo. Piensas &quot;3 confluencias&quot;. Pero estos 3 indicadores usan los mismos datos de precio — todos dicen lo mismo de 3 formas distintas. 3 indicadores = 1 sola confluencia. Las verdaderas confluencias son independientes: tendencia, S/R, Fibonacci, nivel psicológico.
+          Ves: RSI en sobreventa + MACD cruzado + Estocástico bajo. Piensas &quot;3 confluencias&quot;. Pero estos 3 indicadores usan los mismos datos de precio, todos dicen lo mismo de 3 formas distintas. 3 indicadores = 1 sola confluencia. Las verdaderas confluencias son independientes: tendencia, S/R, Fibonacci, nivel psicológico.
         </p>
       </section>
 
@@ -156,7 +156,7 @@ export default function ContentEs() {
         points={[
           "Confluencia = una razón independiente que sostiene tu trade. Mínimo 2-3 antes de entrar.",
           "Las 5 principales: tendencia, S/R, zona SD, Fibonacci, nivel psicológico.",
-          "La señal de vela es el disparador — no la razón principal de entrar.",
+          "La señal de vela es el disparador, no la razón principal de entrar.",
           "Los indicadores (RSI, MACD) no son confluencias independientes entre ellos.",
           "Calidad prima sobre cantidad: 3 confluencias sólidas valen más que 6 mediocres.",
         ]}
@@ -166,7 +166,7 @@ export default function ContentEs() {
         description="En TradingView, construye un setup completo con 3 confluencias mínimo en EUR/USD."
         steps={[
           "Analiza EUR/USD en Daily — ¿cuál es la tendencia? Anota tu sesgo (compra o venta únicamente).",
-          "Baja a H4 — identifica el próximo nivel de estructura clave (HL en alcista, LH en bajista).",
+          "Baja a H4, identifica el próximo nivel de estructura clave (HL en alcista, LH en bajista).",
           "Verifica: ¿hay un S/R histórico o una zona SD que coincida con ese nivel? Anota la confluencia.",
           "Marca Fibonacci en el último movimiento impulsivo — ¿un nivel Fib coincide con tu zona? Si sí, 3 confluencias alineadas. Anota la entrada, el SL y el TP con el R/R.",
         ]}
@@ -175,17 +175,17 @@ export default function ContentEs() {
       <LessonQuiz
         question="Ves EUR/USD Daily alcista. El precio retrocede a 1.0850. También es un soporte histórico respetado 2×. Sin otra confluencia. ¿Qué haces?"
         options={[
-          "Compras inmediatamente — 2 confluencias (tendencia + soporte) alcanzan de sobra",
+          "Compras inmediatamente, 2 confluencias (tendencia + soporte) alcanzan de sobra",
           "Esperas una señal de vela de rechazo en 1.0850 antes de entrar",
           "Buscas una 3ª confluencia (Fibonacci, nivel psicológico) y luego una señal de vela",
-          "No entras — 2 confluencias es muy poco para un trade",
+          "No entras, 2 confluencias es muy poco para un trade",
         ]}
         correctIndex={2}
         explanation="2 confluencias son un comienzo, pero no todavía suficiente para entrar con confianza. Buscas una 3ª confluencia (¿Fibonacci 61.8%? ¿Nivel psicológico 1.0850?) y luego esperas una señal de vela en la zona. Es el proceso completo."
         answerExplanations={[
           "Demasiado apurado. 2 confluencias sin señal de confirmación es entrar muy pronto. El precio puede seguir bajando en la zona. Espera al menos una señal de vela en el nivel.",
           "Mejor, pero incompleto. Esperar la señal es una buena práctica, pero buscar una 3ª confluencia antes refuerza aún más el trade. La combinación de ambas es el método óptimo.",
-          "Correcto. Tienes 2 confluencias sólidas. Busca si un nivel Fibonacci (61.8% del movimiento) o un nivel psicológico coincide con 1.0850 — si sí, tienes 3 confluencias. Luego esperas la señal de vela. Es el proceso completo.",
+          "Correcto. Tienes 2 confluencias sólidas. Busca si un nivel Fibonacci (61.8% del movimiento) o un nivel psicológico coincide con 1.0850, si sí, tienes 3 confluencias. Luego esperas la señal de vela. Es el proceso completo.",
           "No del todo. 2 confluencias pueden justificar un trade con tamaño reducido. 3 confluencias + señal = tamaño normal. No es la ausencia de trade lo recomendado, sino el agregado de una 3ª confirmación.",
         ]}
       />

@@ -15,7 +15,7 @@ function ContentFr() {
       duration="25 min"
       lessonNumber={1}
       prev={null}
-      next={{ href: "/formations/avance/lecon2", label: "Leçon 2 — Fair Value Gap" }}
+      next={{ href: "/formations/avance/lecon2", label: "Leçon 2 : Fair Value Gap" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -23,12 +23,12 @@ function ContentFr() {
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           La liquidité, c'est la capacité à exécuter un ordre sans faire bouger
           le prix. Pour une institution qui place un ordre de plusieurs millions,
-          il lui faut un contrepartiste — quelqu'un qui vend quand elle achète,
+          il lui faut un contrepartiste, quelqu'un qui vend quand elle achète,
           et vice versa.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Ces contreparties se trouvent là où les autres traders ont placé leurs
-          stop-loss. Les stops sont des ordres en attente — ils constituent un
+          stop-loss. Les stops sont des ordres en attente, ils constituent un
           pool de liquidité que les institutions exploitent.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
@@ -44,7 +44,7 @@ function ContentFr() {
         <h2 className="text-lg font-semibold text-white mb-3">Buy-side et Sell-side Liquidity</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Les pools de liquidité se forment autour des niveaux évidents que tout
-          le monde surveille — c'est précisément là que s'accumulent les stops.
+          le monde surveille, c'est précisément là que s'accumulent les stops.
         </p>
         <div className="space-y-3 mb-4">
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl p-4">
@@ -52,7 +52,7 @@ function ContentFr() {
             <p className="text-xs text-zinc-400 leading-relaxed mb-2">
               Se trouve <span className="text-white">au-dessus</span> des résistances
               et des Equal Highs (EQH). Les traders short y ont placé leurs stops.
-              Quand le prix y monte, il déclenche ces stops — des ordres d'achat
+              Quand le prix y monte, il déclenche ces stops, des ordres d'achat
               qui alimentent une vente institutionnelle.
             </p>
             <p className="text-xs text-zinc-500">
@@ -64,7 +64,7 @@ function ContentFr() {
             <p className="text-xs text-zinc-400 leading-relaxed mb-2">
               Se trouve <span className="text-white">en dessous</span> des supports
               et des Equal Lows (EQL). Les traders long y ont placé leurs stops.
-              Quand le prix y descend, il déclenche ces stops — des ordres de vente
+              Quand le prix y descend, il déclenche ces stops, des ordres de vente
               qui alimentent un achat institutionnel.
             </p>
             <p className="text-xs text-zinc-500">
@@ -79,11 +79,11 @@ function ContentFr() {
       </div>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Stop Hunts — la chasse aux stops</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Stop Hunts : la chasse aux stops</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Un stop hunt est un mouvement rapide du prix qui dépasse un niveau clé,
           déclenche les stops des retail traders, puis revient brusquement dans
-          la direction opposée. Ce n'est pas du hasard — c'est une mécanique
+          la direction opposée. Ce n'est pas du hasard, c'est une mécanique
           structurelle du marché.
         </p>
         <div className="space-y-2.5">
@@ -124,13 +124,13 @@ function ContentFr() {
         <h2 className="text-lg font-semibold text-white mb-3">Exploiter la liquidité dans tes setups</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Une fois que tu identifies les pools de liquidité, tu peux anticiper où
-          le prix va aller chercher avant de s'inverser — et positionner ton entrée en conséquence.
+          le prix va aller chercher avant de s'inverser, et positionner ton entrée en conséquence.
         </p>
         <div className="space-y-2.5">
           {[
             {
               label: "Identifie les EQH / EQL sur le graphique",
-              detail: "Cherche deux ou trois sommets ou creux au même niveau — c'est là que les stops s'accumulent.",
+              detail: "Cherche deux ou trois sommets ou creux au même niveau, c'est là que les stops s'accumulent.",
             },
             {
               label: "Attends que le prix y aille",
@@ -166,18 +166,18 @@ function ContentFr() {
 
       <LessonKeyPoints
         points={[
-          "Les institutions ont besoin de liquidité pour exécuter leurs ordres — elles vont la chercher là où se trouvent les stops.",
+          "Les institutions ont besoin de liquidité pour exécuter leurs ordres, elles vont la chercher là où se trouvent les stops.",
           "Buy-side Liquidity = au-dessus des Equal Highs. Sell-side Liquidity = en dessous des Equal Lows.",
           "Un stop hunt : spike rapide sur un niveau → déclenchement des stops → retournement brutal.",
-          "Le prix se déplace vers la liquidité avant de partir dans sa vraie direction — anticipe ce mouvement.",
+          "Le prix se déplace vers la liquidité avant de partir dans sa vraie direction, anticipe ce mouvement.",
         ]}
       />
 
       <LessonExercice
         description="Sur n'importe quel graphique en H1, pars à la chasse aux pools de liquidité. C'est l'analyse la plus importante avant tout trade."
         steps={[
-          "Identifie au moins un ensemble d'Equal Highs (EQH) — deux ou plusieurs sommets alignés au même niveau.",
-          "Identifie au moins un ensemble d'Equal Lows (EQL) — deux ou plusieurs creux alignés au même niveau.",
+          "Identifie au moins un ensemble d'Equal Highs (EQH), deux ou plusieurs sommets alignés au même niveau.",
+          "Identifie au moins un ensemble d'Equal Lows (EQL), deux ou plusieurs creux alignés au même niveau.",
           "Le prix est-il récemment allé prendre l'un de ces niveaux avant de repartir dans l'autre sens ? Tu viens d'identifier un stop hunt.",
         ]}
       />
@@ -190,7 +190,7 @@ function ContentFr() {
           "Pour déclencher des signaux techniques et attirer de nouveaux acheteurs",
         ]}
         correctIndex={1}
-        explanation="Les institutions passent des ordres massifs qui nécessitent une contrepartie équivalente. Les stop-loss des retail traders sont des ordres en attente — en poussant le prix vers ces niveaux, les institutions déclenchent ces stops et obtiennent la liquidité dont elles ont besoin pour entrer ou sortir du marché à grande échelle."
+        explanation="Les institutions passent des ordres massifs qui nécessitent une contrepartie équivalente. Les stop-loss des retail traders sont des ordres en attente, en poussant le prix vers ces niveaux, les institutions déclenchent ces stops et obtiennent la liquidité dont elles ont besoin pour entrer ou sortir du marché à grande échelle."
       />
 
     </LessonPage>

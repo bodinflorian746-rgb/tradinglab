@@ -200,7 +200,7 @@ export default function ContentFr() {
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 1.1778 (clôture de la pin bar)</li>
                 <li>- Stop loss : 1.1750 (10 pips sous la mèche basse à 1.1762)</li>
-                <li>- Take profit niveau 1 : 1.1820 (HH précédent) — niveau 2 : 1.1860 (extension)</li>
+                <li>- Take profit niveau 1 : 1.1820 (HH précédent), niveau 2 : 1.1860 (extension)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
@@ -236,7 +236,7 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur XAU/USD H4 en tendance baissière confirmée, le prix évolue sous la MM200 H4 à 4 720$. Une trendline baissière a été tracée sur 3 LH successifs à 4 680$, 4 650$ et 4 620$. La MM50 H4 est actuellement à 4 605$. Le prix remonte vers 4 600$. Quel est le statut du setup et quel plan théorique ?"
             steps={[
-              "Valider la trendline baissière : 3 LH confirmés à 4 680$, 4 650$, 4 620$ — trendline tradable",
+              "Valider la trendline baissière : 3 LH confirmés à 4 680$, 4 650$, 4 620$, trendline tradable",
               "Identifier la confluence : MM50 H4 à 4 605$ + trendline qui passe à 4 600$ = zone de confluence 4 600$-4 605$",
               "Vérifier le biais MM200 H4 : prix sous 4 720$ = biais short aligné, setup conforme",
               "Attendre le signal de rejet baissier (pin bar haute, engulfing baissière) au contact de la zone 4 600$-4 605$ pour valider l’entrée",
@@ -298,7 +298,7 @@ export default function ContentFr() {
                 Leçon 1
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 3 — À venir
+                Leçon 3. À venir
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

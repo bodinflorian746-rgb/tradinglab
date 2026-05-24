@@ -11,12 +11,12 @@ export default function ContentEs() {
     <LessonPage
       formationId="intermediaire"
       lessonId="lecon1"
-      title="Estructura de mercado — BOS y CHoCH"
+      title="Estructura de mercado. BOS y CHoCH"
       subtitle="Antes de identificar una entrada, debes saber en qué dirección evoluciona el mercado. La estructura es tu brújula. Sin ella, tradeas a ciegas."
       duration="20 min"
       lessonNumber={1}
       prev={null}
-      next={{ href: "/formations/intermediaire/lecon2", label: "Lección 2 — Zonas clave" }}
+      next={{ href: "/formations/intermediaire/lecon2", label: "Lección 2 : Zonas clave" }}
     >
 
       {/* ── Lo que debes VER ── */}
@@ -55,9 +55,9 @@ export default function ContentEs() {
 
       {/* ── BOS ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Break of Structure (BOS) — la tendencia confirma</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Break of Structure (BOS) : la tendencia confirma</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Un BOS es cuando el precio rompe el último máximo (en alcista) o el último mínimo (en bajista). Confirma que la tendencia sigue. Es una información — no una señal de entrada.
+          Un BOS es cuando el precio rompe el último máximo (en alcista) o el último mínimo (en bajista). Confirma que la tendencia sigue. Es una información, no una señal de entrada.
         </p>
         <div className="space-y-2.5">
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
@@ -76,15 +76,15 @@ export default function ContentEs() {
 
       {/* ── CHoCH ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Change of Character (CHoCH) — la tendencia se quiebra</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Change of Character (CHoCH) : la tendencia se quiebra</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          El CHoCH es la primera fisura en la estructura. En tendencia alcista, es cuando el precio rompe debajo del último Higher Low. Todavía no es un reversal confirmado — es una alerta.
+          El CHoCH es la primera fisura en la estructura. En tendencia alcista, es cuando el precio rompe debajo del último Higher Low. Todavía no es un reversal confirmado, es una alerta.
         </p>
         <div className="space-y-2.5">
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
             <p className="text-sm font-medium text-white mb-1">Escenario real</p>
             <p className="text-xs text-zinc-500 leading-relaxed">
-              Observas EUR/USD en H4 alcista. El precio forma HH a 1.0950, retrocede, luego rompe su último HL a 1.0880. Es un CHoCH bajista. Pasas a modo observación — ya no compras. Esperas un BOS bajista para confirmar el reversal.
+              Observas EUR/USD en H4 alcista. El precio forma HH a 1.0950, retrocede, luego rompe su último HL a 1.0880. Es un CHoCH bajista. Pasas a modo observación, ya no compras. Esperas un BOS bajista para confirmar el reversal.
             </p>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
@@ -104,8 +104,8 @@ export default function ContentEs() {
         <h2 className="text-lg font-semibold text-white mb-4">Leer la estructura rápido</h2>
         <div className="space-y-2">
           {[
-            { n: "1", t: "Zoom hacia atrás en el Daily o H4", d: "Nunca empieces por el M15 — perderías el contexto global." },
-            { n: "2", t: "Marca los 3 últimos máximos y mínimos significativos", d: "Ignora las fluctuaciones chicas — solo cuentan los swings importantes." },
+            { n: "1", t: "Zoom hacia atrás en el Daily o H4", d: "Nunca empieces por el M15, perderías el contexto global." },
+            { n: "2", t: "Marca los 3 últimos máximos y mínimos significativos", d: "Ignora las fluctuaciones chicas, solo cuentan los swings importantes." },
             { n: "3", t: "La dirección de los máximos/mínimos = tu tendencia", d: "Máximos y mínimos que suben → alcista. Que bajan → bajista. Estancados → range, no tradear." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -153,7 +153,7 @@ export default function ContentEs() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Error clásico</p>
         <p className="text-sm font-semibold text-white mb-2">Entrar en el BOS en vez de esperar el retorno a la estructura</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Ves al precio romper un nuevo High → compras inmediatamente. Pero suele ser el momento en que el mercado retrocede. El buen timing es esperar que el precio vuelva al último HL — no comprar el breakout. Entrar en el BOS = pagar caro con un mal ratio R/R.
+          Ves al precio romper un nuevo High → compras inmediatamente. Pero suele ser el momento en que el mercado retrocede. El buen timing es esperar que el precio vuelva al último HL, no comprar el breakout. Entrar en el BOS = pagar caro con un mal ratio R/R.
         </p>
       </section>
 
@@ -179,7 +179,7 @@ export default function ContentEs() {
           "BOS = el precio rompe un máximo/mínimo previo → la tendencia sigue.",
           "CHoCH = primera señal de reversal → alerta, todavía no un trade.",
           "CHoCH + BOS opuesto = reversal confirmado.",
-          "En range, no tradeas — esperas una estructura clara.",
+          "En range, no tradeas, esperas una estructura clara.",
         ]}
       />
 
@@ -196,18 +196,18 @@ export default function ContentEs() {
       <LessonQuiz
         question="Miras EUR/USD en H4. El precio está en tendencia alcista (HH/HL). Acaba de romper debajo del último Higher Low a 1.0820. ¿Qué significa?"
         options={[
-          "La tendencia alcista está confirmada — es un buen momento para comprar ahora",
-          "Es un CHoCH — la estructura alcista está fragilizada, pasas a observación",
-          "La tendencia bajista es oficial — entras en short inmediatamente",
-          "Es una información neutra — ninguna acción a tomar",
+          "La tendencia alcista está confirmada, es un buen momento para comprar ahora",
+          "Es un CHoCH, la estructura alcista está fragilizada, pasas a observación",
+          "La tendencia bajista es oficial, entras en short inmediatamente",
+          "Es una información neutra, ninguna acción a tomar",
         ]}
         correctIndex={1}
-        explanation="Romper el último Higher Low en tendencia alcista es la definición del CHoCH. La estructura alcista está comprometida. Ya no buscas compras — observas si un BOS bajista confirma el reversal."
+        explanation="Romper el último Higher Low en tendencia alcista es la definición del CHoCH. La estructura alcista está comprometida. Ya no buscas compras, observas si un BOS bajista confirma el reversal."
         answerExplanations={[
-          "Falso. Romper el último HL es lo opuesto de una señal de compra. Es la primera ruptura de la estructura alcista — no debes comprar ahora.",
+          "Falso. Romper el último HL es lo opuesto de una señal de compra. Es la primera ruptura de la estructura alcista, no debes comprar ahora.",
           "Correcto. CHoCH = Change of Character. La estructura alcista está fragilizada. Pasas a modo observación y esperas un BOS bajista para confirmar el reversal antes de entrar en short.",
           "Falso. Un CHoCH solo no confirma un reversal. Hace falta un BOS bajista (ruptura del último LL) para oficializar la nueva tendencia. Entrar en short inmediatamente es anticipar sin confirmación.",
-          "Falso. Un CHoCH es una información muy importante — es la primera señal de que el contexto cambia. Ignorarlo es perderte un aviso mayor del mercado.",
+          "Falso. Un CHoCH es una información muy importante, es la primera señal de que el contexto cambia. Ignorarlo es perderte un aviso mayor del mercado.",
         ]}
       />
 

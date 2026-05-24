@@ -62,7 +62,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Le timeframe supérieur construit le contexte avant toute exécution : il identifie la direction dominante, repère les zones importantes et montre où le marché pousse réellement. Il ne sert pas à entrer en position — il sert à éviter les trades pris contre la tendance de fond.
+              Le timeframe supérieur construit le contexte avant toute exécution : il identifie la direction dominante, repère les zones importantes et montre où le marché pousse réellement. Il ne sert pas à entrer en position, il sert à éviter les trades pris contre la tendance de fond.
             </p>
           </div>
 
@@ -144,7 +144,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : le Daily est baissier, avec une résistance Daily/H4 à 1.1760 et un prix actuel à 1.1715. Sur M15, un breakout haussier se forme à 1.1740. Le prix monte jusqu&apos;à 1.1752... puis se fait violemment rejeter vers 1.1685. Le breakout M15 existait bien — le problème venait de la tendance de fond, restée vendeuse.
+                EUR/USD : le Daily est baissier, avec une résistance Daily/H4 à 1.1760 et un prix actuel à 1.1715. Sur M15, un breakout haussier se forme à 1.1740. Le prix monte jusqu&apos;à 1.1752... puis se fait violemment rejeter vers 1.1685. Le breakout M15 existait bien, le problème venait de la tendance de fond, restée vendeuse.
               </p>
             </div>
 
@@ -165,7 +165,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La direction dominante se lit dans la qualité des impulsions et des corrections. Le but n&apos;est pas de compter les bougies — c&apos;est d&apos;observer quelle direction contrôle réellement le marché.
+              La direction dominante se lit dans la qualité des impulsions et des corrections. Le but n&apos;est pas de compter les bougies, c&apos;est d&apos;observer quelle direction contrôle réellement le marché.
             </p>
 
             <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 mb-6">
@@ -181,7 +181,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : les corrections haussières en M15 sont lentes, mais les chutes en H4 sont agressives — de l&apos;ordre de 35 à 40 $ — avec des rejets systématiques sous 4 680 $. Le marché reste baissier malgré plusieurs rebonds locaux.
+                XAU/USD : les corrections haussières en M15 sont lentes, mais les chutes en H4 sont agressives, de l&apos;ordre de 35 à 40 $, avec des rejets systématiques sous 4 680 $. Le marché reste baissier malgré plusieurs rebonds locaux.
               </p>
             </div>
 
@@ -202,7 +202,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le HTF élimine les setups faibles avant même de chercher une entrée. Le trader ne cherche pas « un trade » — il cherche un trade aligné avec la direction dominante.
+              Le HTF élimine les setups faibles avant même de chercher une entrée. Le trader ne cherche pas « un trade », il cherche un trade aligné avec la direction dominante.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -224,23 +224,23 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan d&apos;application : un cas EUR/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le HTF se lit du plus grand vers le plus petit. Voici la séquence sur un cas EUR/USD — sans chercher d&apos;entrée, l&apos;objectif est seulement de poser le contexte.
+              Le HTF se lit du plus grand vers le plus petit. Voici la séquence sur un cas EUR/USD, sans chercher d&apos;entrée, l&apos;objectif est seulement de poser le contexte.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1 — Daily</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. Daily</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : structure en LH/LL, résistance Daily à 1.1760, impulsions baissières plus fortes que les rebonds</li>
                 <li>- Conclusion : direction dominante baissière, priorité aux ventes</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 2 — H4</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 2. H4</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : zone de résistance entre 1.1750 et 1.1760, rejets répétés sous la résistance</li>
                 <li>- Conclusion : zone idéale pour attendre une réaction baissière</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 3 — Préparer le scénario</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 3. Préparer le scénario</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Attendu : une remontée vers la résistance, un rejet local, puis une confirmation plus tard sur le timeframe d&apos;exécution</li>
                 <li>- Évité : un achat impulsif contre la tendance Daily</li>
