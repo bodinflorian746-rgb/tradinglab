@@ -187,8 +187,8 @@ export default async function Home({
       subtitle: isEs
         ? "Lecciones claras, estrategias concretas, simulaciones y análisis macro para comprender, practicar y triunfar en los mercados."
         : "Des leçons claires, des stratégies concrètes, des simulations et des analyses macro pour comprendre, s'entraîner et réussir sur les marchés.",
-      ctaPrimary: isEs ? "Empezar ahora" : "Commencer maintenant",
-      ctaSecondary: isEs ? "Ver cómo funciona" : "Voir comment ça marche",
+      ctaPrimary: isEs ? "Ver los accesos" : "Voir les accès",
+      ctaSecondary: isEs ? "Ya tengo un código" : "J'ai déjà un code",
       features: [
         { title: isEs ? "Aprende a tu ritmo" : "Apprends à ton rythme", desc: isEs ? "Recorrido estructurado" : "Parcours structuré" },
         { title: isEs ? "Pasa a la acción" : "Passe à l'action", desc: isEs ? "Practica, simula, progresa" : "Entraîne-toi, simule, progresse" },
@@ -209,7 +209,7 @@ export default async function Home({
     poles: {
       title: isEs ? "Un recorrido completo para todos los traders" : "Un parcours complet pour tous les traders",
       subtitle: isEs ? "4 pilares esenciales para desarrollar tus competencias" : "4 pôles essentiels pour développer tes compétences",
-      cta: isEs ? "Empezar" : "Commencer",
+      cta: isEs ? "Ver los accesos" : "Voir les accès",
       trading: {
         title: "Trading",
         desc: isEs ? "Domina las bases y construye setups sólidos." : "Maîtrise les bases et construis des setups solides.",
@@ -240,9 +240,36 @@ export default async function Home({
       },
     },
     ctaInter: {
-      title: isEs ? "¿Listo para pasar al siguiente nivel?" : "Prêt à passer au niveau supérieur ?",
-      subtitle: isEs ? "Únete a TradeScaleX y conviértete en el trader que quieres ser." : "Rejoins TradeScaleX et deviens le trader que tu veux être.",
-      cta: isEs ? "Empezar ahora" : "Commencer maintenant",
+      title: isEs ? "¿Listo para unirte a la plataforma?" : "Prêt à rejoindre la plateforme ?",
+      subtitle: isEs ? "Acceso vía broker partner (0€) o abono directo (19€/mes). Código requerido al registro." : "Accès via broker partenaire (0€) ou abonnement direct (19€/mois). Code requis à l'inscription.",
+      cta: isEs ? "Ver los accesos" : "Voir les accès",
+    },
+    access: {
+      title: isEs ? "¿Cómo acceder?" : "Comment accéder ?",
+      subtitle: isEs ? "Dos vías pour unirte à la plataforma." : "Deux voies pour rejoindre la plateforme.",
+      broker: {
+        badge: isEs ? "Recomendado" : "Recommandé",
+        title: isEs ? "Vía broker partner" : "Via broker partenaire",
+        price: "0€",
+        desc: isEs
+          ? "Abre una cuenta broker vía nuestro enlace de afiliación. Recibes después tu código de acceso por email."
+          : "Tu ouvres un compte broker via notre lien d'affiliation. Tu reçois ensuite ton code d'accès par email.",
+        bullets: isEs
+          ? ["Apertura de cuenta broker partner", "Código enviado tras verificación", "Acceso completo a la plataforma"]
+          : ["Ouverture compte broker partenaire", "Code envoyé après vérification", "Accès complet à la plateforme"],
+      },
+      direct: {
+        title: isEs ? "Acceso directo" : "Accès direct",
+        price: "19€",
+        period: isEs ? "/mes" : "/mois",
+        desc: isEs
+          ? "Abono mensual sin afiliación broker. Código generado automáticamente al pagar."
+          : "Abonnement mensuel sans affiliation broker. Code généré automatiquement au paiement.",
+        bullets: isEs
+          ? ["Abono mensual", "Código generado al pagar", "Acceso completo a la plataforma"]
+          : ["Abonnement mensuel", "Code généré au paiement", "Accès complet à la plateforme"],
+      },
+      cta: isEs ? "Ver el detalle" : "Voir le détail",
     },
     col2Titles: isEs
       ? [
@@ -342,7 +369,7 @@ export default async function Home({
 
             <div className="flex flex-col sm:flex-row gap-3.5 mb-10">
               <Link
-                href={h("/formations")}
+                href={h("/pricing")}
                 className="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/35 hover:-translate-y-0.5"
               >
                 {T.hero.ctaPrimary}
@@ -351,12 +378,12 @@ export default async function Home({
                 </svg>
               </Link>
               <Link
-                href={h("/formations")}
+                href={h("/signup")}
                 className="inline-flex items-center justify-center gap-2 border border-zinc-700 hover:border-zinc-500 hover:bg-zinc-900/40 text-white font-semibold px-6 py-3.5 rounded-xl transition-all"
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
-                  <polygon points="6,5 11,8 6,11" fill="currentColor" />
+                  <path d="M5 8a3 3 0 1 1 6 0v2H5V8z" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+                  <rect x="3.5" y="7" width="9" height="6.5" rx="1" stroke="currentColor" strokeWidth="1.5" fill="none" />
                 </svg>
                 {T.hero.ctaSecondary}
               </Link>
@@ -460,7 +487,7 @@ export default async function Home({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {/* Trading — emerald */}
             <Link
-              href={h("/formations")}
+              href={h("/pricing")}
               className="group flex flex-col bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-[0_0_40px_-10px_rgba(16,185,129,0.25)] transition-all duration-300"
             >
               <div className="flex justify-center mb-5">
@@ -490,7 +517,7 @@ export default async function Home({
 
             {/* Macro — blue */}
             <Link
-              href={h("/formations/macro")}
+              href={h("/pricing")}
               className="group flex flex-col bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 hover:border-blue-500/50 hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.25)] transition-all duration-300"
             >
               <div className="flex justify-center mb-5">
@@ -520,7 +547,7 @@ export default async function Home({
 
             {/* Stratégies — amber */}
             <Link
-              href={h("/strategies")}
+              href={h("/pricing")}
               className="group flex flex-col bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 hover:border-amber-400/50 hover:shadow-[0_0_40px_-10px_rgba(251,191,36,0.25)] transition-all duration-300"
             >
               <div className="flex justify-center mb-5">
@@ -550,7 +577,7 @@ export default async function Home({
 
             {/* Jeux — violet */}
             <Link
-              href={h("/jeux")}
+              href={h("/pricing")}
               className="group flex flex-col bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 hover:border-violet-500/50 hover:shadow-[0_0_40px_-10px_rgba(139,92,246,0.25)] transition-all duration-300"
             >
               <div className="flex justify-center mb-5">
@@ -603,7 +630,7 @@ export default async function Home({
               </div>
             </div>
             <Link
-              href={h("/formations")}
+              href={h("/pricing")}
               className="shrink-0 inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/35 hover:-translate-y-0.5"
             >
               {T.ctaInter.cta}
@@ -713,6 +740,77 @@ export default async function Home({
       </section>
 
       {/* ═════════════════════════════════════════════════════════════════════
+          5b. COMMENT ACCÉDER — 2 cartes (broker partenaire / accès direct)
+          ═════════════════════════════════════════════════════════════════════ */}
+      <section className="px-6 pb-16 md:pb-20">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{T.access.title}</h2>
+            <p className="text-zinc-400 mt-2 text-[15px]">{T.access.subtitle}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+            {/* Carte A — Via broker partenaire (recommandé) */}
+            <div className="relative bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border-2 border-emerald-500/40 rounded-2xl p-6 flex flex-col shadow-[0_0_40px_-15px_rgba(16,185,129,0.25)]">
+              <span className="absolute -top-3 left-6 bg-emerald-500 text-zinc-950 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">
+                {T.access.broker.badge}
+              </span>
+              <h3 className="text-xl font-bold text-white mb-2">{T.access.broker.title}</h3>
+              <div className="flex items-baseline gap-1 mb-3">
+                <span className="text-4xl font-black text-emerald-400 tabular-nums">{T.access.broker.price}</span>
+              </div>
+              <p className="text-[13px] text-zinc-400 leading-relaxed mb-5">{T.access.broker.desc}</p>
+              <ul className="space-y-2.5 mb-6 flex-1">
+                {T.access.broker.bullets.map((b) => (
+                  <li key={b} className="flex items-start gap-2 text-[13px] text-zinc-300">
+                    <CheckSmall color="#34d399" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={h("/pricing")}
+                className="inline-flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-2.5 rounded-xl transition-colors text-sm"
+              >
+                {T.access.cta}
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M3 6h6M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+            </div>
+
+            {/* Carte B — Accès direct */}
+            <div className="bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 flex flex-col">
+              <h3 className="text-xl font-bold text-white mb-2">{T.access.direct.title}</h3>
+              <div className="flex items-baseline gap-1 mb-3">
+                <span className="text-4xl font-black text-white tabular-nums">{T.access.direct.price}</span>
+                <span className="text-sm text-zinc-500">{T.access.direct.period}</span>
+              </div>
+              <p className="text-[13px] text-zinc-400 leading-relaxed mb-5">{T.access.direct.desc}</p>
+              <ul className="space-y-2.5 mb-6 flex-1">
+                {T.access.direct.bullets.map((b) => (
+                  <li key={b} className="flex items-start gap-2 text-[13px] text-zinc-300">
+                    <CheckSmall color="#a1a1aa" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={h("/pricing")}
+                className="inline-flex items-center justify-center gap-1.5 border border-zinc-700 hover:border-zinc-500 hover:bg-zinc-900/40 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm"
+              >
+                {T.access.cta}
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M3 6h6M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ═════════════════════════════════════════════════════════════════════
           6. CTA FINAL — Commence ton parcours
           ═════════════════════════════════════════════════════════════════════ */}
       <section className="px-6 pb-16 md:pb-20">
@@ -733,13 +831,13 @@ export default async function Home({
             </div>
             <div className="shrink-0 flex flex-col sm:flex-row gap-3">
               <Link
-                href={h("/formations")}
+                href={h("/pricing")}
                 className="inline-flex items-center justify-center bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold px-6 py-3 rounded-xl transition-all text-sm shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 hover:-translate-y-0.5"
               >
                 {t.finalCta.ctaPrimary}
               </Link>
               <Link
-                href={h("/pricing")}
+                href={h("/signup")}
                 className="inline-flex items-center justify-center border border-zinc-700 hover:border-zinc-500 hover:bg-zinc-900/40 text-white font-semibold px-6 py-3 rounded-xl transition-all text-sm"
               >
                 {t.finalCta.ctaSecondary}

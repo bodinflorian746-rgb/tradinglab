@@ -4,11 +4,11 @@
     "titleLine1": "Trader avec ton capital,",
     "titleLine2": "à ton rythme.",
     "subtitle": "Apprends le trading avec une méthode structurée et des cas pratiques calibrés pour les retails. Du débutant à l'avancé, à ton rythme.",
-    "ctaPrimary": "Commencer gratuitement",
-    "ctaSecondary": "Voir les formations"
+    "ctaPrimary": "Voir les accès",
+    "ctaSecondary": "Voir les formules"
   },
   "stats": {
-    "lessons": "Leçons gratuites",
+    "lessons": "Leçons disponibles",
     "strategies": "Stratégies enseignées",
     "levels": "3 niveaux",
     "levelsLabel": "Débutant · Intermédiaire · Avancé",
@@ -139,9 +139,9 @@
     ]
   },
   "finalCta": {
-    "title": "Commence ton parcours dès maintenant",
-    "subtitle": "Les premières leçons sont accessibles gratuitement. Tu explores le contenu, tu testes la plateforme, et tu décides ensuite.",
-    "ctaPrimary": "Commencer gratuitement",
-    "ctaSecondary": "Voir les offres"
+    "title": "Prêt à rejoindre la plateforme ?",
+    "subtitle": "Accès complet via broker partenaire (0€) ou abonnement direct (19€/mois). Code d'accès requis à l'inscription.",
+    "ctaPrimary": "Voir les accès",
+    "ctaSecondary": "J'ai déjà un code"
   }
 }

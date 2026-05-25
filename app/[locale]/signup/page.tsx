@@ -73,6 +73,15 @@ export default async function SignupPage({
               className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 focus:border-emerald-500 focus:outline-none transition-colors text-sm font-mono tracking-wide"
             />
             <p className="mt-1 text-[11px] text-zinc-500">Un code = un compte. Usage unique.</p>
+            <p className="mt-1.5 text-[11px] text-zinc-500">
+              Pas encore de code ?{" "}
+              <Link
+                href={`/${locale}/pricing`}
+                className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4"
+              >
+                Voir les formules d&apos;accès
+              </Link>
+            </p>
           </div>
 
           <button

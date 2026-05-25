@@ -93,9 +93,15 @@ export default function Navbar() {
 
           <Link
             href={localizedHref("/login", locale)}
-            className="hidden md:inline-flex bg-emerald-500 text-black px-4 py-2 rounded-lg"
+            className="hidden md:inline-flex items-center text-zinc-400 hover:text-white text-sm font-medium transition-colors"
           >
-            {t.cta}
+            {t.login}
+          </Link>
+          <Link
+            href={localizedHref("/signup", locale)}
+            className="hidden md:inline-flex items-center bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+          >
+            {t.signup}
           </Link>
 
           <button
@@ -135,9 +141,16 @@ export default function Navbar() {
             <Link
               href={localizedHref("/login", locale)}
               onClick={() => setIsOpen(false)}
-              className="mt-4 mb-3 bg-emerald-500 text-black text-center px-4 py-3 rounded-lg text-sm font-semibold"
+              className="mt-4 border border-zinc-700 hover:border-zinc-500 text-white text-center px-4 py-3 rounded-lg text-sm font-semibold"
             >
-              {t.cta}
+              {t.login}
+            </Link>
+            <Link
+              href={localizedHref("/signup", locale)}
+              onClick={() => setIsOpen(false)}
+              className="mt-2 mb-3 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-center px-4 py-3 rounded-lg text-sm font-semibold"
+            >
+              {t.signup}
             </Link>
             <div className="pt-1 pb-3 flex justify-center">
               <LangSwitcher onNavigate={() => setIsOpen(false)} />
