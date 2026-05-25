@@ -43,6 +43,47 @@ const STOP_COLORS: Record<StopId, { hex: string; bg: string; border: string; tex
   C: { hex: "#a78bfa", bg: "bg-violet-500/10", border: "border-violet-500/40", text: "text-violet-400", dot: "bg-violet-500" },
 };
 
+// ─── Helpers anti-spoil ──────────────────────────────────────────────────────
+// Labels affichés au joueur = position spatiale (1=haut, 2=milieu, 3=bas)
+// au lieu du type interne ou de la lettre A/B/C (qui peut indirectement leaker
+// la couleur). Le type interne reste utilisé pour le scoring.
+
+function buildSpatialLabels(stops: readonly StopOption[]): Record<StopId, string> {
+  const sorted = [...stops].sort((a, b) => b.price - a.price);  // top→bot
+  const result: Record<StopId, string> = { A: "", B: "", C: "" };
+  sorted.forEach((s, i) => { result[s.id] = String(i + 1); });
+  return result;
+}
+
+// Détecte le type correct selon le contexte du scénario : "logical" si présent
+// dans le tableau, sinon "wide" (scénarios où le large stop est la bonne réponse).
+function isCorrectType(stopType: StopType, hasLogical: boolean): boolean {
+  if (hasLogical) return stopType === "logical";
+  return stopType === "wide";
+}
+
+// Couleur du verdict APRÈS choix (feedback). Inversé pour wide quand c'est
+// la bonne réponse.
+function feedbackColor(stopType: StopType, hasLogical: boolean): "emerald" | "amber" | "red" {
+  if (isCorrectType(stopType, hasLogical)) return "emerald";
+  if (stopType === "wide") return "amber";  // classique : survit mais RR cassé
+  return "red";
+}
+
+// Label du verdict APRÈS choix : pédagogique sans révéler la mécanique interne
+// (pas "Stop logique" / "Stop trop large" qui leakerait le type).
+function feedbackLabel(stopType: StopType, hasLogical: boolean, isEs: boolean): string {
+  if (isCorrectType(stopType, hasLogical)) {
+    return isEs ? "Buena colocación" : "Bon placement";
+  }
+  switch (stopType) {
+    case "wide":      return isEs ? "Demasiado lejos, RR roto" : "Trop loin, RR cassé";
+    case "liquidity": return isEs ? "En zona de caza" : "Dans une zone de chasse";
+    case "tight":     return isEs ? "Demasiado cerca (ruido)" : "Trop près (bruit)";
+    case "logical":   return isEs ? "Colocación lógica" : "Placement logique";  // edge case
+  }
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 interface SessionStats {
@@ -91,7 +132,7 @@ export default function PlaceStopPage() {
         hitCandle:       "Tocado en la vela",
         title:           "Coloca tu Stop",
         heading:         "¿Qué stop va a sobrevivir?",
-        pickerIntro:     "escenarios. Para cada uno, 3 stops loss propuestos (A / B / C). Eliges el más lógico, estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.",
+        pickerIntro:     "escenarios. Para cada uno, 3 stops loss propuestos (Stop 1, 2, 3). Eliges el mejor según estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.",
         summary:         "Resumen",
         stopsChosen:     "stops elegidos",
         logicalStops:    "Stops lógicos",
@@ -130,7 +171,7 @@ export default function PlaceStopPage() {
         hitCandle:       "Touché bougie",
         title:           "Place ton Stop",
         heading:         "Quel stop va survivre ?",
-        pickerIntro:     "scénarios. Pour chacun, 3 stops loss proposés (A / B / C). Tu choisis le plus logique, structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.",
+        pickerIntro:     "scénarios. Pour chacun, 3 stops loss proposés (Stop 1, 2, 3). Tu choisis le meilleur selon structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.",
         summary:         "Bilan",
         stopsChosen:     "stops choisis",
         logicalStops:    "Stops logiques",
@@ -198,6 +239,17 @@ export default function PlaceStopPage() {
     return map;
   }, [chart, revealed]);
 
+  // Mapping StopId → label spatial "1"/"2"/"3" (top→bot par prix).
+  // Décorrélé du shuffle A/B/C pour ne pas leaker le type via la lettre/couleur.
+  const spatialLabels = useMemo(
+    () => chart ? buildSpatialLabels(chart.stops) : ({ A: "", B: "", C: "" } as Record<StopId, string>),
+    [chart],
+  );
+  const hasLogicalInChart = useMemo(
+    () => chart ? chart.stops.some((s) => s.type === "logical") : false,
+    [chart],
+  );
+
   // ─── Écran 1 : sélection difficulté ─────────────────────────────────────────
   if (!difficulty || !seed) {
     return <DifficultyPicker isEs={isEs} difficultyMeta={G.DIFFICULTY_META} onPick={(d) => {
@@ -256,11 +308,13 @@ export default function PlaceStopPage() {
     if (phase !== "placing") return;
     const r = scoreStopChoice(id, chart, streak);
     const mapping = STOP_TYPE_TO_SKILL[r.type];
+    // outcome basé sur r.correct (qui gère les scénarios où "wide" est la
+    // bonne réponse), pas sur le mapping statique du type.
     logGameEvent({
       game:       "place-stop",
       difficulty,
       skill:      mapping.skill,
-      outcome:    mapping.outcome,
+      outcome:    r.correct ? "win" : "loss",
     });
     setChosen(id);
     setResult(r);
@@ -365,7 +419,7 @@ export default function PlaceStopPage() {
                   dashed:   true,
                   hit:      (isFeedback || isRevealing) && hitMapLive[s.id] !== null,
                   selected: chosen === s.id,
-                  label:    s.id,  // V3 : tag A/B/C en bout de ligne
+                  label:    spatialLabels[s.id],  // V4 : tag spatial "1"/"2"/"3" (top→bot)
                 })),
                 separatorIndex:     chart.past.length,
                 visibleFutureCount: isPlacing ? 0 : revealed,
@@ -407,6 +461,7 @@ export default function PlaceStopPage() {
             entry={chart.entry}
             tp={chart.tp}
             direction={chart.direction}
+            spatialLabels={spatialLabels}
             onChoose={handleChoose}
           />
         )}
@@ -433,7 +488,9 @@ export default function PlaceStopPage() {
             tag={current.tag}
             difficulty={difficulty}
             difficultyMeta={G.DIFFICULTY_META}
-            stopTypeMeta={G.STOP_TYPE_META}
+            spatialLabels={spatialLabels}
+            hasLogical={hasLogicalInChart}
+            isEs={isEs}
             onNext={handleNext}
             isLast={idx + 1 >= ROUNDS_PER_SESSION}
           />
@@ -478,8 +535,8 @@ function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Diffic
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{isEs ? "¿Qué stop va a sobrevivir?" : "Quel stop va survivre ?"}</h1>
         <p className="text-zinc-400 text-sm leading-relaxed mb-8">
           {isEs
-            ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, 3 stops loss propuestos (A / B / C). Eliges el más lógico, estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.`
-            : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, 3 stops loss proposés (A / B / C). Tu choisis le plus logique, structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.`}
+            ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, 3 stops loss propuestos (Stop 1, 2, 3). Eliges el mejor según estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.`
+            : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, 3 stops loss proposés (Stop 1, 2, 3). Tu choisis le meilleur selon structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.`}
         </p>
 
         <div className="flex flex-col gap-3">
@@ -513,15 +570,18 @@ function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Diffic
 // ─── Choice cards (3 stops A/B/C) ─────────────────────────────────────────────
 
 function ChoiceCards({
-  T, stops, entry, tp, direction, onChoose,
+  T, stops, entry, tp, direction, spatialLabels, onChoose,
 }: {
   T: { [k: string]: string };
   stops: StopOption[];
   entry: number;
   tp: number | null;
   direction: TradeDirection;
+  spatialLabels: Record<StopId, string>;
   onChoose: (id: StopId) => void;
 }) {
+  // Ordre d'affichage = ordre spatial top→bot (cohérent avec le chart).
+  const ordered = [...stops].sort((a, b) => b.price - a.price);
   return (
     <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden">
       <div className="px-4 pt-3.5 pb-2 border-b border-zinc-800/60">
@@ -530,19 +590,20 @@ function ChoiceCards({
         </p>
       </div>
       <div className="p-3 sm:p-4 grid grid-cols-1 gap-2.5">
-        {stops.map((s) => {
+        {ordered.map((s) => {
           const dist = Math.abs(s.price - entry);
           const rr = tp !== null ? Math.abs((tp - entry) / (entry - s.price)) : null;
           const colors = STOP_COLORS[s.id];
+          const num = spatialLabels[s.id];
           return (
             <button
               key={s.id}
               onClick={() => onChoose(s.id)}
-              aria-label={`Stop ${s.id}`}
+              aria-label={`Stop ${num}`}
               className={`text-left flex items-center gap-3 sm:gap-4 ${colors.bg} ${colors.border} border-2 hover:brightness-110 active:scale-[0.99] rounded-xl px-4 py-3 sm:py-3.5 transition-all`}
             >
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${colors.bg} border ${colors.border}`}>
-                <span className={`text-base font-black ${colors.text}`}>{s.id}</span>
+                <span className={`text-base font-black ${colors.text}`}>{num}</span>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 flex-wrap">
@@ -571,7 +632,7 @@ function ChoiceCards({
 // ─── Feedback panel ──────────────────────────────────────────────────────────
 
 function Feedback({
-  T, result, chosen, chart, title, lesson, tag, difficulty, difficultyMeta, stopTypeMeta, onNext, isLast,
+  T, result, chosen, chart, title, lesson, tag, difficulty, difficultyMeta, spatialLabels, hasLogical, isEs, onNext, isLast,
 }: {
   T:              { [k: string]: string };
   result:         ScoreResult;
@@ -582,23 +643,26 @@ function Feedback({
   tag:            string;
   difficulty:     Difficulty;
   difficultyMeta: typeof FrGame.DIFFICULTY_META;
-  stopTypeMeta:   typeof FrGame.STOP_TYPE_META;
+  spatialLabels:  Record<StopId, string>;
+  hasLogical:     boolean;
+  isEs:           boolean;
   onNext:         () => void;
   isLast:         boolean;
 }) {
-  const meta = stopTypeMeta[result.type];
+  const headerColor = feedbackColor(result.type, hasLogical);
+  const headerLabel = feedbackLabel(result.type, hasLogical, isEs);
   const borderClass =
-    meta.color === "emerald" ? "border-emerald-500/30"
-  : meta.color === "amber"   ? "border-amber-500/30"
-  :                            "border-red-500/30";
+    headerColor === "emerald" ? "border-emerald-500/30"
+  : headerColor === "amber"   ? "border-amber-500/30"
+  :                             "border-red-500/30";
   const bgClass =
-    meta.color === "emerald" ? "bg-emerald-500/8"
-  : meta.color === "amber"   ? "bg-amber-500/8"
-  :                            "bg-red-500/8";
+    headerColor === "emerald" ? "bg-emerald-500/8"
+  : headerColor === "amber"   ? "bg-amber-500/8"
+  :                             "bg-red-500/8";
   const textClass =
-    meta.color === "emerald" ? "text-emerald-400"
-  : meta.color === "amber"   ? "text-amber-400"
-  :                            "text-red-400";
+    headerColor === "emerald" ? "text-emerald-400"
+  : headerColor === "amber"   ? "text-amber-400"
+  :                             "text-red-400";
 
   return (
     <div className={`bg-zinc-900/50 border rounded-2xl overflow-hidden ${borderClass}`}>
@@ -611,12 +675,12 @@ function Feedback({
             </svg>
           ) : (
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">
-              <circle cx="9" cy="9" r="8" stroke={meta.color === "amber" ? "#f59e0b" : "#ef4444"} strokeWidth="1.5" />
-              <path d="M6 6l6 6M12 6l-6 6" stroke={meta.color === "amber" ? "#f59e0b" : "#ef4444"} strokeWidth="1.8" strokeLinecap="round" />
+              <circle cx="9" cy="9" r="8" stroke={headerColor === "amber" ? "#f59e0b" : "#ef4444"} strokeWidth="1.5" />
+              <path d="M6 6l6 6M12 6l-6 6" stroke={headerColor === "amber" ? "#f59e0b" : "#ef4444"} strokeWidth="1.8" strokeLinecap="round" />
             </svg>
           )}
           <p className={`text-sm font-bold ${textClass} truncate`}>
-            {meta.label}
+            {headerLabel}
           </p>
         </div>
         <div className="shrink-0 text-right">
@@ -636,9 +700,9 @@ function Feedback({
           {title}
         </p>
 
-        {/* Les 3 stops avec leur verdict (le choisi est highlighté) */}
+        {/* Les 3 stops avec leur verdict (le choisi est highlighté) — ordre spatial top→bot */}
         <div className="space-y-2 mb-4">
-          {chart.stops.map((s) => (
+          {[...chart.stops].sort((a, b) => b.price - a.price).map((s) => (
             <StopVerdictRow
               key={s.id}
               T={T}
@@ -646,7 +710,9 @@ function Feedback({
               isChosen={chosen === s.id}
               hitIndex={result.hitMap[s.id]}
               futureLength={chart.future.length}
-              stopTypeMeta={stopTypeMeta}
+              spatialLabels={spatialLabels}
+              hasLogical={hasLogical}
+              isEs={isEs}
             />
           ))}
         </div>
@@ -677,40 +743,45 @@ function Feedback({
 }
 
 function StopVerdictRow({
-  T, stop, isChosen, hitIndex, futureLength, stopTypeMeta,
+  T, stop, isChosen, hitIndex, futureLength, spatialLabels, hasLogical, isEs,
 }: {
   T: { [k: string]: string };
   stop: StopOption;
   isChosen: boolean;
   hitIndex: number | null;
   futureLength: number;
-  stopTypeMeta: typeof FrGame.STOP_TYPE_META;
+  spatialLabels: Record<StopId, string>;
+  hasLogical: boolean;
+  isEs: boolean;
 }) {
   const colors = STOP_COLORS[stop.id];
-  const meta = stopTypeMeta[stop.type];
+  const rowColor = feedbackColor(stop.type, hasLogical);
+  const rowLabel = feedbackLabel(stop.type, hasLogical, isEs);
+  const isCorrectAnswer = isCorrectType(stop.type, hasLogical);
+  const num = spatialLabels[stop.id];
   const border =
     isChosen ? colors.border
-  : meta.color === "emerald" ? "border-emerald-500/30"
+  : rowColor === "emerald" ? "border-emerald-500/30"
   : "border-zinc-800";
   const survived = hitIndex === null;
   return (
     <div className={`border rounded-lg px-3 py-2.5 bg-zinc-950/40 ${border}`}>
       <div className="flex items-center gap-2 mb-1">
         <span className={`w-6 h-6 rounded-md flex items-center justify-center ${colors.bg} border ${colors.border}`}>
-          <span className={`text-[11px] font-black ${colors.text}`}>{stop.id}</span>
+          <span className={`text-[11px] font-black ${colors.text}`}>{num}</span>
         </span>
         <p className={`text-[11px] font-bold uppercase tracking-widest ${
-          meta.color === "emerald" ? "text-emerald-400"
-        : meta.color === "amber"   ? "text-amber-400"
-        :                            "text-red-400"
+          rowColor === "emerald" ? "text-emerald-400"
+        : rowColor === "amber"   ? "text-amber-400"
+        :                          "text-red-400"
         }`}>
-          {meta.label}
+          {rowLabel}
         </p>
         <span className="text-[10px] text-zinc-600 tabular-nums">{fmt(stop.price)}</span>
         {isChosen && (
           <span className="ml-auto text-[10px] text-zinc-400 font-bold uppercase tracking-wide">{T.yourChoice}</span>
         )}
-        {!isChosen && stop.type === "logical" && (
+        {!isChosen && isCorrectAnswer && (
           <span className="ml-auto text-[10px] text-emerald-400 font-bold uppercase tracking-wide">{T.theRight}</span>
         )}
       </div>
