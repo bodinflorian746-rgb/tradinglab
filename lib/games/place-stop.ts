@@ -486,7 +486,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Quand plusieurs swing lows sont alignés, l'invalidation structurelle vraie est sous le plus bas. SL sous les autres = stop out sur fluctuation normale.",
       advanced:     "La séquence de lower lows en mode pullback fait partie du structural design. Le SL doit respecter la profondeur maximale du pullback attendu, pas s'arrêter au 1er swing.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "structure",
   },
   {
@@ -534,7 +534,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Les niveaux psychologiques sont des aimants. Le prix les teste presque systématiquement. SL placé pile au-dessus = sweep garanti.",
       advanced:     "Anticiper le test d'un niveau magnétique = placer le SL au-delà de l'amplitude prévisible du sweep, pas juste au-dessus du niveau.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "lecture",
   },
   // ─── V2.3 : 5 miroirs SELL pour rééquilibrer la distribution spatiale ────────
@@ -583,7 +583,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Quand plusieurs swing highs sont alignés, l'invalidation structurelle vraie est au-dessus du plus haut. SL au-dessus des autres = stop out sur fluctuation normale.",
       advanced:     "La séquence de higher highs en mode pullback bearish fait partie du structural design. Le SL doit respecter la profondeur maximale du pullback attendu.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "structure",
   },
   {
@@ -615,7 +615,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Les niveaux psychologiques sont des aimants. Le prix les teste systématiquement. SL pile au-dessus = sweep garanti.",
       advanced:     "Anticiper le test d'un niveau magnétique = placer le SL au-delà de l'amplitude prévisible du sweep.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "lecture",
   },
 ];
