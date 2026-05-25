@@ -71,7 +71,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link href={localizedHref("/", locale)} aria-label="TradeScaleX">
-          <Logo size="sm" showTagline={false} />
+          <Logo size="sm" />
         </Link>
 
         {/* Nav desktop */}

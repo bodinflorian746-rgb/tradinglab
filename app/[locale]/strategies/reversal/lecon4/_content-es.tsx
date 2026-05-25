@@ -294,7 +294,7 @@ export default function ContentEs() {
               "Porque los patrones no funcionan",
               "Porque los retails no saben reconocer una invalidación y mantienen sus posiciones perdedoras",
               "Porque los brokers manipulan los precios",
-              "Porque los retails usan demasiado apalancamiento",
+              "Porque los retails usan el apalancamiento máximo ofrecido por su broker",
             ]}
             correctIndex={1}
             explanation="Los patrones tienen un win rate real en torno al 55-65% cuando son limpios. Para la mayoría de los retails, ese ratio cae al 30-40% porque no saben reconocer cuándo el patrón falló y mantienen sus posiciones esperando un retorno."

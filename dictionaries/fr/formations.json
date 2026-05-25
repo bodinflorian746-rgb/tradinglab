@@ -1,4 +1,10 @@
 {
+  "page": {
+    "hero": {
+      "title": "Trading",
+      "subtitle": "Maîtrise les bases et construis des setups solides à chaque étape de ta progression."
+    }
+  },
   "debutant": {
     "title": "Débutant",
     "description": "Les fondamentaux du trading pour partir sur de bonnes bases. Aucun prérequis.",

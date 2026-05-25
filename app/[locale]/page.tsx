@@ -758,7 +758,7 @@ export default async function Home({
             {/* Brand col */}
             <div>
               <Link href={h("/")} aria-label="TradeScaleX" className="inline-block mb-4">
-                <Logo size="md" showTagline={true} />
+                <Logo size="md" />
               </Link>
               <p className="text-sm text-zinc-400 leading-relaxed">
                 {T.footer.taglineL1}

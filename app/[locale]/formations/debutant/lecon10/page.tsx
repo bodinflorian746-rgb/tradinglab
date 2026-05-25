@@ -1,4 +1,5 @@
 import { LessonPage } from "@/app/components/LessonPage";
+import { LessonQuiz } from "@/app/components/LessonQuiz";
 import RRComparisonDiagram from "@/app/components/charts/RRComparisonDiagram";
 
 export default async function Page({
@@ -39,17 +40,17 @@ export default async function Page({
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
-          {/* Scénario A — Risque 1% */}
+          {/* Scénario A — Risque 3% */}
           <div className="rounded-xl border border-emerald-500/30 bg-zinc-900 p-4">
-            <p className="text-sm font-bold text-emerald-400 mb-3">Scénario A. Risque 1%</p>
+            <p className="text-sm font-bold text-emerald-400 mb-3">Scénario A. Risque 3%</p>
             <ul className="space-y-1.5 text-[13px] text-zinc-300">
               <li className="flex justify-between gap-3"><span className="text-zinc-500">Compte</span><span className="font-mono">500&nbsp;€</span></li>
-              <li className="flex justify-between gap-3"><span className="text-zinc-500">Risque par trade</span><span className="font-mono">5&nbsp;€</span></li>
-              <li className="flex justify-between gap-3"><span className="text-zinc-500">5 pertes consécutives</span><span className="font-mono">−25&nbsp;€</span></li>
-              <li className="flex justify-between gap-3"><span className="text-zinc-500">Compte restant</span><span className="font-mono">475&nbsp;€</span></li>
+              <li className="flex justify-between gap-3"><span className="text-zinc-500">Risque par trade</span><span className="font-mono">15&nbsp;€ (3%)</span></li>
+              <li className="flex justify-between gap-3"><span className="text-zinc-500">5 pertes consécutives</span><span className="font-mono">−75&nbsp;€</span></li>
+              <li className="flex justify-between gap-3"><span className="text-zinc-500">Compte restant</span><span className="font-mono">425&nbsp;€</span></li>
             </ul>
             <p className="text-[13px] text-emerald-400 leading-snug mt-3 pt-3 border-t border-emerald-500/20">
-              Le trader est encore totalement vivant. Il peut continuer à trader normalement.
+              Le trader est encore vivant. Il peut continuer à trader normalement.
             </p>
           </div>
 
@@ -158,22 +159,22 @@ export default async function Page({
                 <td className="py-2.5 px-3 leading-snug text-white font-medium text-sm">Trader A</td>
                 <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">70%</td>
                 <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">1:0,7</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">5€</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">+9,50€</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">15€</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">+28,50€</td>
               </tr>
               <tr>
                 <td className="py-2.5 px-3 leading-snug text-white font-medium text-sm">Trader B</td>
                 <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">45%</td>
                 <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">1:3</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">5€</td>
-                <td className="py-2.5 px-3 leading-snug text-emerald-400 text-sm font-semibold">+40€</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">15€</td>
+                <td className="py-2.5 px-3 leading-snug text-emerald-400 text-sm font-semibold">+120€</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <p className="text-zinc-300 leading-relaxed text-sm mt-5">
-          Le trader A a tort 30% du temps. Le trader B a tort 55% du temps. Et pourtant, le trader B finit 4x plus rentable. Pourquoi ? Parce que chaque fois qu&apos;il a raison, il encaisse 15€. Le trader A n&apos;encaisse que 3,50€.
+          Le trader A a tort 30% du temps. Le trader B a tort 55% du temps. Et pourtant, le trader B finit plus de 4x plus rentable. Pourquoi ? Parce que chaque fois qu&apos;il a raison, il encaisse 45€. Le trader A n&apos;encaisse que 10,50€.
         </p>
 
         <div className="mt-5 rounded-xl border border-emerald-500/40 bg-zinc-900 px-5 py-4">
@@ -207,7 +208,7 @@ export default async function Page({
             <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
           </div>
           <p className="text-base text-zinc-300 leading-relaxed">
-            Deux traders prennent XAU/USD au même moment, sur le même setup d&apos;entrée. Même capital de 500€, même risque de 1% (5€). La seule différence : où ils placent leur Take Profit. Donc leur RR. Voilà l&apos;impact réel sur 10 trades.
+            Deux traders prennent XAU/USD au même moment, sur le même setup d&apos;entrée. Même capital de 500€, même risque de 15€ (3%). La seule différence : où ils placent leur Take Profit. Donc leur RR. Voilà l&apos;impact réel sur 10 trades.
           </p>
         </div>
 
@@ -230,8 +231,8 @@ export default async function Page({
               </tr>
               <tr>
                 <td className="py-2.5 px-3 leading-snug text-white font-medium text-sm">Risque par trade</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">5€ (1%)</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">5€ (1%)</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">15€ (3%)</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">15€ (3%)</td>
               </tr>
               <tr className="bg-zinc-900/40">
                 <td className="py-2.5 px-3 leading-snug text-white font-medium text-sm">Entrée XAU/USD</td>
@@ -255,25 +256,25 @@ export default async function Page({
               </tr>
               <tr className="bg-zinc-900/40">
                 <td className="py-2.5 px-3 leading-snug text-white font-medium text-sm">Trades gagnés</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">6 × +5€ = +30€</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">4 × +15€ = +60€</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">6 × +15€ = +90€</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">4 × +45€ = +180€</td>
               </tr>
               <tr>
                 <td className="py-2.5 px-3 leading-snug text-white font-medium text-sm">Trades perdus</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">4 × -5€ = -20€</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">6 × -5€ = -30€</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">4 × -15€ = -60€</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">6 × -15€ = -90€</td>
               </tr>
               <tr className="bg-zinc-900/40">
                 <td className="py-2.5 px-3 leading-snug text-white font-medium text-sm">Résultat net</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">+10€</td>
-                <td className="py-2.5 px-3 leading-snug text-emerald-400 text-sm font-semibold">+30€</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">+30€</td>
+                <td className="py-2.5 px-3 leading-snug text-emerald-400 text-sm font-semibold">+90€</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <p className="text-zinc-300 leading-relaxed text-sm mt-5">
-          Le trader RR 1:1 gagne plus souvent (60% des trades). Mais il finit la série à +10€. Le trader RR 1:3 perd plus souvent (60% des trades), mais il finit à +30€. Soit 3x plus rentable, avec moins de trades gagnants. C&apos;est ça, la puissance du RR : tu peux te tromper plus de la moitié du temps et être quand même beaucoup plus rentable que celui qui a raison plus souvent.
+          Le trader RR 1:1 gagne plus souvent (60% des trades). Mais il finit la série à +30€. Le trader RR 1:3 perd plus souvent (60% des trades), mais il finit à +90€. Soit 3x plus rentable, avec moins de trades gagnants. C&apos;est ça, la puissance du RR : tu peux te tromper plus de la moitié du temps et être quand même beaucoup plus rentable que celui qui a raison plus souvent.
         </p>
       </section>
 
@@ -286,9 +287,9 @@ export default async function Page({
 
         <div className="space-y-2.5 mt-4">
           {[
-            "Risque par trade : 0,5% à 1% du capital (ou selon ta grille de capital, voir leçon 8)",
+            "Risque par trade : 3% à 5% du capital (selon ta grille de capital détaillée en leçon 8 : 5% si tu démarres à 200-500€, 3% si tu es à 500-1000€, 2% au-delà)",
             "Maximum 2-3 trades par jour",
-            "Stop journalier : 2% à 3% du capital",
+            "Stop journalier : 10% à 15% du capital max par jour",
             "RR minimum acceptable : 1:2",
             "Arrêt immédiat après une perte qui te fait perdre ta lucidité émotionnelle",
             "Jamais de revenge trading",
@@ -355,6 +356,33 @@ export default async function Page({
           Le retail inverse cette hiérarchie. Il veut performer vite, sans protéger, sans survivre. Et c&apos;est précisément pour ça qu&apos;il perd.
         </p>
       </section>
+
+      {/* ── Quiz de fin de leçon (3 questions) ───────────────────────────── */}
+      <LessonQuiz
+        question="Tu risques 20€ pour gagner 60€ sur un trade. Quel est ton RR ?"
+        options={["1:0,3", "1:2", "1:3", "1:60"]}
+        correctIndex={2}
+        explanation="RR = gain potentiel / risque. Ici 60€ / 20€ = 3. Donc le RR est de 1:3. Tu risques 1 pour gagner 3."
+      />
+
+      <LessonQuiz
+        question="Tu as perdu 50% de ton compte. Quel pourcentage de gain te faut-il pour revenir à ton capital initial ?"
+        options={["50%", "75%", "100%", "150%"]}
+        correctIndex={2}
+        explanation="Si ton compte passe de 1000€ à 500€ (perte de 50%), il te faut +100% (doubler ton compte restant) pour revenir à 1000€. C&apos;est pour ça que les pros pensent d&apos;abord à survivre."
+      />
+
+      <LessonQuiz
+        question="Quel trader est le plus rentable sur 10 trades, avec un risque constant de 15€ par trade ?"
+        options={[
+          "Trader A : 80% de winrate, RR 1:0,5",
+          "Trader B : 50% de winrate, RR 1:2",
+          "Trader C : 90% de winrate, RR 1:0,3",
+          "Tous identiques car la chance compense",
+        ]}
+        correctIndex={1}
+        explanation="Trader A : 8 × +7,50€ - 2 × 15€ = +30€. Trader B : 5 × +30€ - 5 × 15€ = +75€. Trader C : 9 × +4,50€ - 1 × 15€ = +25,50€. Le trader B est le plus rentable malgré son winrate plus faible, grâce à son RR. C&apos;est la puissance de l&apos;asymétrie."
+      />
     </LessonPage>
   );
 }

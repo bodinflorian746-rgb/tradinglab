@@ -14,74 +14,139 @@ import {
 import { useLocale, useDict } from "@/app/components/LocaleProvider";
 import { localizedHref } from "@/lib/i18n/href";
 
-/* ── Icônes ──────────────────────────────────────────── */
+/* ── Icônes ─────────────────────────────────────────────────────────────── */
 
-function CheckIcon({ className = "text-emerald-400" }: { className?: string }) {
+function IconCandlesLarge() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className={className}>
-      <path d="M2.5 7.5l3.5 3.5 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="40" height="40" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <line x1="8" y1="4" x2="8" y2="9" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
+      <rect x="5" y="9" width="6" height="9" fill="#10b981" rx="1" />
+      <line x1="8" y1="18" x2="8" y2="22" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="16" y1="6" x2="16" y2="10" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
+      <rect x="13" y="10" width="6" height="13" fill="#10b981" rx="1" />
+      <line x1="16" y1="23" x2="16" y2="27" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="24" y1="2" x2="24" y2="6" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
+      <rect x="21" y="6" width="6" height="17" fill="#10b981" rx="1" />
+      <line x1="24" y1="23" x2="24" y2="28" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
 
-function ArrowIcon() {
+// Débutant : livre ouvert (fondations / apprentissage)
+function IconBook() {
   return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-      <path d="M4 9l4-3-4-3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+      <path d="M4 6c0-1.1.9-2 2-2h7v18H6c-1.1 0-2-.9-2-2V6z" stroke="#34d399" strokeWidth="1.6" strokeLinejoin="round" fill="#10b981" fillOpacity="0.1" />
+      <path d="M24 6c0-1.1-.9-2-2-2h-7v18h7c1.1 0 2-.9 2-2V6z" stroke="#34d399" strokeWidth="1.6" strokeLinejoin="round" fill="#10b981" fillOpacity="0.1" />
+      <line x1="7" y1="9" x2="11" y2="9" stroke="#10b981" strokeWidth="1.3" strokeLinecap="round" />
+      <line x1="7" y1="12.5" x2="11" y2="12.5" stroke="#10b981" strokeWidth="1.3" strokeLinecap="round" />
+      <line x1="7" y1="16" x2="10" y2="16" stroke="#10b981" strokeWidth="1.3" strokeLinecap="round" />
+      <line x1="17" y1="9" x2="21" y2="9" stroke="#10b981" strokeWidth="1.3" strokeLinecap="round" />
+      <line x1="17" y1="12.5" x2="21" y2="12.5" stroke="#10b981" strokeWidth="1.3" strokeLinecap="round" />
+      <line x1="17" y1="16" x2="20" y2="16" stroke="#10b981" strokeWidth="1.3" strokeLinecap="round" />
     </svg>
   );
 }
 
-function ChevronIcon({ open }: { open: boolean }) {
+// Intermédiaire : graphique en hausse (progression)
+function IconChartUp() {
   return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-    >
-      <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+      <line x1="4" y1="23" x2="24" y2="23" stroke="#60a5fa" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+      <line x1="4" y1="23" x2="4" y2="5" stroke="#60a5fa" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+      <path d="M6 18l5-5 4 4 7-9" stroke="#3b82f6" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path d="M17 8h5v5" stroke="#3b82f6" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <circle cx="11" cy="13" r="1.6" fill="#60a5fa" />
+      <circle cx="15" cy="17" r="1.6" fill="#60a5fa" />
     </svg>
   );
 }
 
-/* ── Barre de progression ────────────────────────────── */
-
-function ProgressBar({ pct, height = "h-1" }: { pct: number; height?: string }) {
+// Avancé : diamant (maîtrise / expertise)
+function IconDiamond() {
   return (
-    <div className={`w-full ${height} bg-zinc-800 rounded-full overflow-hidden`}>
-      <div
-        className="h-full bg-emerald-500 rounded-full transition-all duration-500"
-        style={{ width: `${pct}%` }}
-      />
-    </div>
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+      <path d="M14 4l5 6-5 16-5-16 5-6z" stroke="#fbbf24" strokeWidth="1.6" strokeLinejoin="round" fill="#fbbf24" fillOpacity="0.2" />
+      <path d="M6 10h16" stroke="#fbbf24" strokeWidth="1.6" />
+      <path d="M14 4l-5 6h10l-5-6z" fill="#fbbf24" fillOpacity="0.35" stroke="#fbbf24" strokeWidth="1.6" strokeLinejoin="round" />
+      <line x1="11" y1="10" x2="14" y2="26" stroke="#fbbf24" strokeWidth="1.2" opacity="0.5" />
+      <line x1="17" y1="10" x2="14" y2="26" stroke="#fbbf24" strokeWidth="1.2" opacity="0.5" />
+    </svg>
   );
 }
 
-/* ── Couleurs d'accent par niveau ───────────────────── */
+// MT5 : moniteur avec petit graphique (désactivé, zinc)
+function IconMonitor() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+      <rect x="3" y="5" width="22" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+      <line x1="10" y1="23" x2="18" y2="23" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="14" y1="19" x2="14" y2="23" stroke="currentColor" strokeWidth="1.5" />
+      <polyline points="7,15 10,11 13,13 17,8 20,11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.7" />
+    </svg>
+  );
+}
 
-type LevelColor = {
-  badge: string;
-  button: string;
+function IconArrow() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M3 6h6M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/* ── Theme par niveau ───────────────────────────────────────────────────── */
+
+type LevelTheme = {
+  Icon:        () => React.ReactElement;
+  iconBg:      string;
+  iconBorder:  string;
+  iconGlow:    string;
+  cardHover:   string;
+  textAccent:  string;
+  progressBar: string;
 };
 
-const LEVEL_COLORS: Record<string, LevelColor> = {
+const LEVEL_THEMES: Record<string, LevelTheme> = {
   debutant: {
-    badge: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
-    button: "bg-emerald-500 hover:bg-emerald-400 text-zinc-950",
+    Icon:        IconBook,
+    iconBg:      "bg-emerald-500/10",
+    iconBorder:  "border-emerald-500/20",
+    iconGlow:    "shadow-[0_0_20px_rgba(16,185,129,0.15)]",
+    cardHover:   "hover:border-emerald-500/40 hover:shadow-[0_0_40px_-10px_rgba(16,185,129,0.25)] hover:scale-[1.02]",
+    textAccent:  "text-emerald-400",
+    progressBar: "bg-emerald-500",
   },
   intermediaire: {
-    badge: "bg-blue-400/10 text-blue-400 border border-blue-400/20",
-    button: "bg-blue-400 hover:bg-blue-300 text-zinc-950",
+    Icon:        IconChartUp,
+    iconBg:      "bg-blue-500/10",
+    iconBorder:  "border-blue-500/20",
+    iconGlow:    "shadow-[0_0_20px_rgba(59,130,246,0.15)]",
+    cardHover:   "hover:border-blue-500/40 hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.25)] hover:scale-[1.02]",
+    textAccent:  "text-blue-400",
+    progressBar: "bg-blue-400",
   },
   avance: {
-    badge: "bg-amber-400/10 text-amber-400 border border-amber-400/20",
-    button: "bg-amber-400 hover:bg-amber-300 text-zinc-950",
+    Icon:        IconDiamond,
+    iconBg:      "bg-amber-400/10",
+    iconBorder:  "border-amber-400/20",
+    iconGlow:    "shadow-[0_0_20px_rgba(251,191,36,0.15)]",
+    cardHover:   "hover:border-amber-400/40 hover:shadow-[0_0_40px_-10px_rgba(251,191,36,0.25)] hover:scale-[1.02]",
+    textAccent:  "text-amber-400",
+    progressBar: "bg-amber-400",
+  },
+  mt5: {
+    Icon:        IconMonitor,
+    iconBg:      "bg-zinc-800/40",
+    iconBorder:  "border-zinc-700/60",
+    iconGlow:    "",
+    cardHover:   "",
+    textAccent:  "text-zinc-500",
+    progressBar: "bg-zinc-700",
   },
 };
 
-/* ── Helpers ────────────────────────────────────────── */
+/* ── Helpers ─────────────────────────────────────────────────────────────── */
 
 function getActiveLessonKey(progress: ProgressData): string | null {
   for (const f of FORMATIONS) {
@@ -98,34 +163,31 @@ function getActiveLessonKey(progress: ProgressData): string | null {
   return null;
 }
 
-/* ── Page ────────────────────────────────────────────── */
+/* ── Page ────────────────────────────────────────────────────────────────── */
+
+type FormationDictEntry = {
+  title?: string;
+  description?: string;
+  badge?: string;
+  lessons?: Record<string, { title?: string; duration?: string }>;
+};
+
+type FormationsDict = Record<string, FormationDictEntry | undefined> & {
+  page?: { hero?: { title?: string; subtitle?: string } };
+};
 
 export default function FormationsPage() {
   const locale = useLocale();
-  const fdict = useDict("formations") as Record<string, {
-    title?: string;
-    description?: string;
-    badge?: string;
-    lessons?: Record<string, { title?: string; duration?: string }>;
-  } | undefined>;
+  const fdictRaw = useDict("formations");
+  const fdict = fdictRaw as unknown as FormationsDict;
   const common = useDict("common");
   const [progress, setProgress] = useState<ProgressData>({});
   const [mounted, setMounted] = useState(false);
-  const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     setProgress(getStoredProgress());
     setMounted(true);
   }, []);
-
-  function toggleExpand(id: string) {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }
 
   const global = mounted
     ? getGlobalStats(progress, FORMATIONS)
@@ -133,223 +195,167 @@ export default function FormationsPage() {
 
   const activeLessonKey = mounted ? getActiveLessonKey(progress) : null;
 
+  // Hero text — fallback FR si ES n&apos;a pas la clé page.hero
+  const isEs = locale === "es";
+  const heroTitle = fdict.page?.hero?.title ?? "Trading";
+  const heroSubtitle = fdict.page?.hero?.subtitle ?? (isEs
+    ? "Domina las bases y construye setups sólidos en cada etapa de tu progresión."
+    : "Maîtrise les bases et construis des setups solides à chaque étape de ta progression.");
+
   return (
-    <main className="min-h-screen bg-zinc-950 text-white px-6 py-12 md:py-20">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen bg-zinc-950 text-white">
+      {/* Halo emerald radial diffus en haut */}
+      <div
+        className="absolute inset-x-0 top-0 -z-10 h-[500px] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(16,185,129,0.12) 0%, transparent 70%)",
+        }}
+      />
 
-        {/* ── En-tête ── */}
-        <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{common.lessons.breadcrumbFormations}</h1>
-        </div>
+      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
 
-        {/* ── Progression globale ── */}
-        <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 mb-8">
-          <div className="flex items-center justify-between gap-4 mb-2.5">
-            <span className="text-sm font-semibold tabular-nums">
-              {common.lessons.globalCount
-                .replace("{done}", String(global.completedLessons))
-                .replace("{total}", String(global.totalFreeLessons))}
-            </span>
+        {/* ── HERO ── */}
+        <section className="text-center mb-14 md:mb-16">
+          <div className="inline-flex w-20 h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.2)] mb-6">
+            <IconCandlesLarge />
           </div>
-          <ProgressBar pct={global.pct} height="h-1.5" />
-        </div>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">{heroTitle}</h1>
+          <p className="text-zinc-400 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+            {heroSubtitle}
+          </p>
 
-        {/* ── Cards de formations ── */}
-        <div className="space-y-6">
+          {/* Progression globale */}
+          <div className="max-w-md mx-auto bg-zinc-900/60 border border-zinc-800 rounded-xl px-5 py-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-semibold text-white tabular-nums">
+                {common.lessons.globalCount
+                  .replace("{done}", String(global.completedLessons))
+                  .replace("{total}", String(global.totalFreeLessons))}
+              </span>
+              <span className="text-xs font-medium text-emerald-400 tabular-nums">{global.pct}%</span>
+            </div>
+            <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+                style={{ width: `${global.pct}%` }}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ── CARDS GRID ── */}
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {FORMATIONS.map((formation) => {
+            const theme = LEVEL_THEMES[formation.id] ?? LEVEL_THEMES.debutant;
             const lessonIds = formation.lessons.map((l) => l.id);
             const stats = mounted
               ? getFormationStats(progress, formation.id, lessonIds)
               : { completed: 0, total: formation.lessons.length, pct: 0, nextLessonId: lessonIds[0] };
-
-            const nextLesson = formation.lessons.find((l) => l.id === stats.nextLessonId) ?? null;
+            const nextLesson =
+              formation.lessons.find((l) => l.id === stats.nextLessonId) ?? formation.lessons[0];
             const allDone = stats.completed === stats.total && mounted;
-            const isExpanded = expanded.has(formation.id);
-            const colors = LEVEL_COLORS[formation.id];
+            const isDisabled = !!formation.disabled;
             const fEntry = fdict[formation.id];
             const fTitle = fEntry?.title ?? formation.title;
-            const fBadge = fEntry?.badge ?? formation.badge;
-            const fDesc  = fEntry?.description ?? formation.description;
-            const tr = (lid: string, fallback: string) => fEntry?.lessons?.[lid]?.title ?? fallback;
+            const fDesc = fEntry?.description ?? formation.description;
+            const isActive = !!(activeLessonKey && activeLessonKey.startsWith(`${formation.id}:`));
 
-            return (
-              <div
-                key={formation.id}
-                className={`bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden ${
-                  formation.disabled ? "opacity-50 bg-zinc-900/40 border-zinc-800/60" : ""
-                }`}
-              >
-                {/* En-tête de card — cliquable pour déplier */}
-                <div
-                  className={`px-6 py-5 ${
-                    isExpanded && !formation.disabled ? "border-b border-zinc-800" : ""
-                  } ${!formation.disabled ? "cursor-pointer" : ""}`}
-                  onClick={() => !formation.disabled && toggleExpand(formation.id)}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
+            const baseClasses =
+              "group flex flex-col bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 transition-all duration-200";
+            const cardClasses = isDisabled
+              ? `${baseClasses} opacity-60 cursor-not-allowed`
+              : `${baseClasses} ${theme.cardHover}`;
 
-                      {/* Titre + badge */}
-                      <div className="flex items-center gap-2.5 mb-1 flex-wrap">
-                        <h2 className="text-xl font-semibold">{fTitle}</h2>
-                        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${colors?.badge ?? formation.badgeStyle}`}>
-                          {fBadge}
-                        </span>
-                        {formation.disabled && (
-                          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-zinc-800 text-zinc-500 border border-zinc-700">
-                            {common.status.comingSoon}
-                          </span>
-                        )}
-                        {allDone && !formation.disabled && (
-                          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                            {common.status.done}
-                          </span>
-                        )}
-                      </div>
+            const ctaLabel = isDisabled
+              ? common.status.comingSoon
+              : allDone
+                ? common.buttons.review
+                : stats.completed === 0
+                  ? common.buttons.start
+                  : common.buttons.continue;
 
-                      <p className="text-sm text-zinc-500 mb-3">{fDesc}</p>
+            const cardInner = (
+              <>
+                <div className="flex justify-center mb-5">
+                  <div
+                    className={`w-16 h-16 rounded-2xl ${theme.iconBg} border ${theme.iconBorder} flex items-center justify-center ${theme.iconGlow} ${
+                      isDisabled ? "text-zinc-600" : ""
+                    }`}
+                  >
+                    <theme.Icon />
+                  </div>
+                </div>
 
-                      {/* Barre de progression */}
-                      <div className="flex items-center gap-3">
-                        <div className="flex-1 max-w-[180px]">
-                          <ProgressBar pct={stats.pct} />
-                        </div>
-                        <span className="text-xs text-zinc-600 tabular-nums shrink-0">
-                          {stats.completed}/{stats.total}
-                        </span>
-                      </div>
-                    </div>
+                <div className="flex items-center justify-center gap-2 mb-2 flex-wrap">
+                  <h3 className="text-xl font-bold text-white">{fTitle}</h3>
+                  {isActive && !isDisabled && (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 border border-amber-400/20 uppercase tracking-wide">
+                      <span className="w-1 h-1 rounded-full bg-amber-400" />
+                      {common.status.inProgress}
+                    </span>
+                  )}
+                </div>
 
-                    {/* Bouton Commencer / Continuer / Réviser */}
-                    <div
-                      className="shrink-0 hidden md:flex flex-col items-end gap-1"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {!formation.disabled && (
-                        <>
-                          {allDone ? (
-                            <Link
-                              href={localizedHref(formation.lessons[0].href, locale)}
-                              className="inline-flex items-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors"
-                            >
-                              {common.buttons.review}
-                            </Link>
-                          ) : nextLesson ? (
-                            <Link
-                              href={localizedHref(nextLesson.href, locale)}
-                              className={`inline-flex items-center gap-1.5 ${colors?.button ?? "bg-emerald-500 hover:bg-emerald-400 text-zinc-950"} text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors`}
-                            >
-                              {stats.completed === 0 ? common.buttons.start : common.buttons.continue}
-                              <ArrowIcon />
-                            </Link>
-                          ) : null}
-                          {nextLesson && stats.completed > 0 && (
-                            <span className="text-[11px] text-zinc-600 max-w-[140px] text-right leading-tight">
-                              {tr(nextLesson.id, nextLesson.title).split(":")[0]}
-                            </span>
-                          )}
-                        </>
-                      )}
-                    </div>
+                <p className="text-[13px] text-zinc-400 text-center leading-relaxed mb-5 flex-1">
+                  {fDesc}
+                </p>
 
-                    {/* Chevron déplier / replier */}
-                    {!formation.disabled && (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleExpand(formation.id);
-                        }}
-                        aria-label={isExpanded ? "Replier le module" : "Déplier le module"}
-                        aria-expanded={isExpanded}
-                        className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/60 transition-colors mt-1"
-                      >
-                        <ChevronIcon open={isExpanded} />
-                      </button>
+                {/* Compteur + barre de progression */}
+                <div className="mb-5">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs text-zinc-500 tabular-nums">
+                      {stats.completed}/{stats.total} {isEs ? "lecciones" : "leçons"}
+                    </span>
+                    {allDone && (
+                      <span className={`text-[10px] font-bold ${theme.textAccent}`}>
+                        {common.status.done}
+                      </span>
+                    )}
+                    {isDisabled && (
+                      <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wide">
+                        {common.status.comingSoon}
+                      </span>
                     )}
                   </div>
-                </div>
-
-                {/* Liste des leçons */}
-                {isExpanded && !formation.disabled && (
-                  <div className="divide-y divide-zinc-800/60">
-                  {formation.lessons.map((lesson, i) => {
-                    const completed = mounted && isLessonComplete(progress, formation.id, lesson.id);
-                    const isActive = mounted && activeLessonKey === `${formation.id}:${lesson.id}`;
-
-                    const row = (
-                      <div className="flex items-center justify-between px-6 py-4">
-                        <div className="flex items-center gap-3 min-w-0">
-
-                          {/* Numéro / check */}
-                          <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
-                            completed
-                              ? "bg-emerald-500/10 border border-emerald-500/20"
-                              : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                          }`}>
-                            {completed ? <CheckIcon /> : i + 1}
-                          </div>
-
-                          {/* Titre + badge "En cours" */}
-                          <div className="flex items-center gap-2 flex-wrap min-w-0">
-                            <span className="text-sm font-medium truncate text-white">
-                              {tr(lesson.id, lesson.title)}
-                            </span>
-                            {isActive && (
-                              <span className="shrink-0 inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 border border-amber-400/20 uppercase tracking-wide">
-                                <span className="w-1 h-1 rounded-full bg-amber-400" />
-                                {common.status.inProgress}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-3 shrink-0">
-                          <span className="text-xs text-zinc-700">{lesson.duration}</span>
-                          {!completed && (
-                            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="text-emerald-400">
-                              <path d="M5.5 10.5l4-4-4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )}
-                        </div>
-                      </div>
-                    );
-
-                    return (
-                      <Link
-                        key={lesson.id}
-                        href={localizedHref(lesson.href, locale)}
-                        className={`block transition-colors ${
-                          isActive
-                            ? "bg-amber-400/5 hover:bg-amber-400/10"
-                            : "hover:bg-zinc-800/40"
-                        }`}
-                      >
-                        {row}
-                      </Link>
-                    );
-                  })}
-                </div>
-                )}
-
-                {/* Bouton mobile */}
-                {isExpanded && !formation.disabled && !allDone && nextLesson && (
-                  <div className="px-6 py-4 border-t border-zinc-800 md:hidden">
-                    <Link
-                      href={localizedHref(nextLesson.href, locale)}
-                      className={`flex items-center justify-between ${colors?.button ?? "bg-emerald-500 hover:bg-emerald-400 text-zinc-950"} text-sm font-semibold px-4 py-3 rounded-xl transition-colors`}
-                    >
-                      <span>{stats.completed === 0 ? common.buttons.start : common.buttons.continue}</span>
-                      <span className="opacity-70 text-xs font-normal truncate max-w-[160px]">
-                        {tr(nextLesson.id, nextLesson.title).split(":")[0]}
-                      </span>
-                    </Link>
+                  <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full ${theme.progressBar} rounded-full transition-all duration-500`}
+                      style={{ width: `${stats.pct}%` }}
+                    />
                   </div>
-                )}
-              </div>
+                </div>
+
+                {/* CTA */}
+                <span
+                  className={`inline-flex items-center justify-center gap-1.5 text-sm font-semibold ${theme.textAccent} ${
+                    isDisabled ? "" : "group-hover:gap-2 transition-all"
+                  }`}
+                >
+                  {ctaLabel}
+                  {!isDisabled && <IconArrow />}
+                </span>
+              </>
+            );
+
+            if (isDisabled) {
+              return (
+                <div key={formation.id} className={cardClasses} aria-disabled="true">
+                  {cardInner}
+                </div>
+              );
+            }
+
+            return (
+              <Link
+                key={formation.id}
+                href={localizedHref(nextLesson.href, locale)}
+                className={cardClasses}
+              >
+                {cardInner}
+              </Link>
             );
           })}
-        </div>
+        </section>
 
       </div>
     </main>

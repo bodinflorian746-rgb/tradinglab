@@ -1,34 +1,26 @@
 import Image from "next/image";
 
-interface LogoProps {
+type LogoProps = {
   size?: "sm" | "md" | "lg";
-  // Conservé pour compat API. La tagline fait partie du PNG officiel.
-  showTagline?: boolean;
-}
+  className?: string;
+};
 
-// Tailles responsives :
-//   sm  → navbar (160px mobile, 200px desktop)
-//   md  → footer (200px)
-//   lg  → hero (320px)
-// Ratio strictement préservé via h-auto + intrinsic dimensions.
-const SIZE_CLASSES = {
-  sm: "w-[160px] md:w-[200px]",
-  md: "w-[200px]",
-  lg: "w-[320px]",
+const SIZES = {
+  sm: { width: 160, height: 45 },
+  md: { width: 200, height: 57 },
+  lg: { width: 240, height: 68 },
 } as const;
 
-const LOGO_SRC = "/branding/tradescalex-logo.png";
-const LOGO_INTRINSIC = { width: 1536, height: 614 } as const;
-
-export default function Logo({ size = "md" }: LogoProps) {
+export default function Logo({ size = "md", className = "" }: LogoProps) {
+  const { width, height } = SIZES[size];
   return (
     <Image
-      src={LOGO_SRC}
+      src="/branding/tradescalex-logo.png"
       alt="TradeScaleX"
-      width={LOGO_INTRINSIC.width}
-      height={LOGO_INTRINSIC.height}
+      width={width}
+      height={height}
       priority
-      className={`${SIZE_CLASSES[size]} h-auto max-w-full object-contain select-none`}
+      className={`object-contain ${className}`}
     />
   );
 }

@@ -294,7 +294,7 @@ export default function ContentFr() {
               "Parce que les patterns ne fonctionnent pas",
               "Parce que les retails ne savent pas reconnaître une invalidation et gardent leurs positions perdantes",
               "Parce que les brokers manipulent les prix",
-              "Parce que les retails utilisent un trop gros levier",
+              "Parce que les retails utilisent le levier maximum proposé par leur broker",
             ]}
             correctIndex={1}
             explanation="Les patterns ont un taux de réussite réel autour de 55-65% quand ils sont propres. Pour la majorité des retails, ce taux tombe à 30-40% parce qu’ils ne savent pas reconnaître quand le pattern a foiré et gardent leurs positions en espérant un retour."
