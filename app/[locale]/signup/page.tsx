@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { signIn } from "@/app/[locale]/auth/actions";
+import { signUp } from "@/app/[locale]/auth/actions";
 
-export default async function LoginPage({
+export default async function SignupPage({
   params,
   searchParams,
 }: {
@@ -14,9 +14,9 @@ export default async function LoginPage({
   return (
     <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8">
-        <h1 className="text-3xl font-bold mb-2 text-center">Connexion</h1>
+        <h1 className="text-3xl font-bold mb-2 text-center">Créer un compte</h1>
         <p className="text-sm text-zinc-400 text-center mb-6">
-          Connecte-toi à ton compte TradeScaleX.
+          Rejoins TradeScaleX en quelques secondes.
         </p>
 
         {error && (
@@ -25,7 +25,7 @@ export default async function LoginPage({
           </div>
         )}
 
-        <form action={signIn} className="space-y-4">
+        <form action={signUp} className="space-y-4">
           <input type="hidden" name="locale" value={locale} />
 
           <div>
@@ -51,26 +51,28 @@ export default async function LoginPage({
               type="password"
               name="password"
               required
-              autoComplete="current-password"
+              minLength={6}
+              autoComplete="new-password"
               className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 focus:border-emerald-500 focus:outline-none transition-colors text-sm"
             />
+            <p className="mt-1 text-[11px] text-zinc-500">6 caractères minimum.</p>
           </div>
 
           <button
             type="submit"
             className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3 rounded-xl transition-colors text-sm"
           >
-            Se connecter
+            Créer mon compte
           </button>
         </form>
 
         <p className="text-sm text-zinc-500 mt-6 text-center">
-          Pas encore de compte ?{" "}
+          Déjà un compte ?{" "}
           <Link
-            href={`/${locale}/signup`}
+            href={`/${locale}/login`}
             className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4"
           >
-            Créer un compte
+            Se connecter
           </Link>
         </p>
       </div>

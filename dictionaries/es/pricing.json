@@ -1,21 +1,19 @@
 {
   "title": "Una tarifa simple y transparente",
-  "subtitle": "Acceso gratis vía un broker partner TradeScaleX, o 19€/mes sin pasar por un broker.",
+  "subtitle": "Acceso gratuito para los traders afiliados a un broker partner, o 19€/mes en acceso directo.",
   "broker": {
     "badge": "Recomendado",
     "name": "Vía broker partner",
     "price": "0€",
     "period": "/mes",
-    "description": "Acceso completo vía un enlace de afiliación TradeScaleX (o de un afiliado TradeScaleX).",
+    "description": "Abres una cuenta broker vía nuestro enlace de afiliación (o el de un partner de nuestra red). A cambio, accedes gratuitamente a toda la plataforma.",
     "features": [
-      "Acceso completo a la plataforma",
-      "Cursos ICT completos",
-      "Cursos SMC completos",
-      "Price Action avanzado",
-      "Quiz y ejercicios sobre gráficos",
-      "Nuevas lecciones cada semana",
-      "Soporte prioritario",
-      "Acceso a la comunidad"
+      "Formaciones de Trading completas (Principiante → Avanzado)",
+      "Módulo Macroeconomía (FOMC, NFP, indicadores clave)",
+      "Estrategias institucionales (SMC, ICT, Price Action)",
+      "Juegos y simuladores (Place tu SL, Encuentra el error...)",
+      "Quiz y ejercicios sobre gráficos reales",
+      "Contenido actualizado regularmente"
     ],
     "cta": "Acceder vía broker partner",
     "haveCode": "Ya tengo un código de acceso"
@@ -24,18 +22,16 @@
     "name": "Acceso directo",
     "price": "19€",
     "period": "/mes",
-    "description": "Sin pasar por un broker, sin compromiso.",
+    "description": "Para quienes prefieren un acceso directo, sin afiliación broker. Mismos contenidos, sin compromiso.",
     "features": [
-      "Acceso completo a la plataforma",
-      "Cursos ICT completos",
-      "Cursos SMC completos",
-      "Price Action avanzado",
-      "Quiz y ejercicios sobre gráficos",
-      "Nuevas lecciones cada semana",
-      "Soporte prioritario",
-      "Acceso a la comunidad"
+      "Formaciones de Trading completas (Principiante → Avanzado)",
+      "Módulo Macroeconomía (FOMC, NFP, indicadores clave)",
+      "Estrategias institucionales (SMC, ICT, Price Action)",
+      "Juegos y simuladores (Place tu SL, Encuentra el error...)",
+      "Quiz y ejercicios sobre gráficos reales",
+      "Contenido actualizado regularmente"
     ],
     "cta": "Empezar acceso directo"
   },
-  "guarantee": "Cancelación en cualquier momento · Pago seguro · Sin compromiso"
+  "guarantee": "Sin compromiso · Pago seguro · Cancelación en 1 clic"
 }
