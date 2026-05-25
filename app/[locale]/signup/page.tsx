@@ -58,6 +58,23 @@ export default async function SignupPage({
             <p className="mt-1 text-[11px] text-zinc-500">6 caractères minimum.</p>
           </div>
 
+          <div>
+            <label htmlFor="code" className="block text-xs font-medium text-zinc-400 mb-1.5">
+              Code d&apos;accès
+            </label>
+            <input
+              id="code"
+              type="text"
+              name="code"
+              required
+              autoComplete="off"
+              spellCheck={false}
+              placeholder="Ex : TEST-V1-ABC123"
+              className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 focus:border-emerald-500 focus:outline-none transition-colors text-sm font-mono tracking-wide"
+            />
+            <p className="mt-1 text-[11px] text-zinc-500">Un code = un compte. Usage unique.</p>
+          </div>
+
           <button
             type="submit"
             className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3 rounded-xl transition-colors text-sm"
