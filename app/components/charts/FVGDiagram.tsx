@@ -87,8 +87,9 @@ export function FVGDiagram({ className = "", locale = "fr" }: FVGDiagramProps) {
   const b1: CandleData = { cx: 28,  wickTop: 88,  bodyTop: 92,  bodyBot: 104, wickBot: 108, bull: false };
   const b2: CandleData = { cx: 54,  wickTop: 50,  bodyTop: 54,  bodyBot: 102, wickBot: 106, bull: true  };
   const b3: CandleData = { cx: 80,  wickTop: 40,  bodyTop: 44,  bodyBot: 64,  wickBot: 70,  bull: true  };
-  // B4: mitigation — bearish candle whose wick enters the FVG zone (y=70–88)
-  const b4: CandleData = { cx: 112, wickTop: 38,  bodyTop: 42,  bodyBot: 76,  wickBot: 84,  bull: false };
+  // B4: mitigation — bearish candle whose wick tape la FVG partiellement (mèche
+  // descend à y=79, soit ~50% de la zone, puis rejet net). FVG reste active.
+  const b4: CandleData = { cx: 112, wickTop: 38,  bodyTop: 42,  bodyBot: 76,  wickBot: 79,  bull: false };
 
   // FVG rect: spans between B1.wickTop and B3.wickBot
   const fvgBullTop = b3.wickBot;  // y=70 (upper boundary on screen, higher price)
@@ -101,8 +102,9 @@ export function FVGDiagram({ className = "", locale = "fr" }: FVGDiagramProps) {
   const b1r: CandleData = { cx: 158, wickTop: 44,  bodyTop: 48,  bodyBot: 58,  wickBot: 62,  bull: true  };
   const b2r: CandleData = { cx: 184, wickTop: 46,  bodyTop: 50,  bodyBot: 98,  wickBot: 102, bull: false };
   const b3r: CandleData = { cx: 210, wickTop: 80,  bodyTop: 84,  bodyBot: 104, wickBot: 110, bull: false };
-  // B4r: mitigation — bullish candle that taps back into FVG zone (y=62–80)
-  const b4r: CandleData = { cx: 248, wickTop: 58,  bodyTop: 62,  bodyBot: 80,  wickBot: 86,  bull: true  };
+  // B4r: mitigation — bullish candle qui tape la FVG partiellement (body reste
+  // sous le milieu de la zone, mèche atteint mi-FVG, puis rejet). FVG reste active.
+  const b4r: CandleData = { cx: 248, wickTop: 68,  bodyTop: 70,  bodyBot: 80,  wickBot: 86,  bull: true  };
 
   const fvgBearTop = b1r.wickBot; // y=62
   const fvgBearBot = b3r.wickTop; // y=80

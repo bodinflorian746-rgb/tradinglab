@@ -137,7 +137,7 @@ export default function ContentEs() {
             <div className="my-8">
               <BOSCHoCHSequenceDiagram locale="es" />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El modelo SMC se basa en una sucesión de etapas coherentes. Cada elemento prepara el siguiente: la liquidity atrae al precio, el sweep dispara el displacement, y luego la mitigation provee la entrada.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El modelo SMC se basa en una sucesión de etapas coherentes. Cada elemento prepara el siguiente: la liquidity atrae al precio, el sweep dispara el displacement, y luego la estructura provee la entrada.</p>
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Las 7 etapas del trade SMC</p>
             <ol className="space-y-1 text-sm text-zinc-300 list-decimal pl-5">
               <li>Análisis HTF: determinar el sesgo direccional vía la estructura de mercado</li>

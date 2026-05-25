@@ -220,7 +220,7 @@ export default function ContentEs() {
               <li>- Cuenta 2 500€ → 2% = riesgo 50€, ganancia potencial 147€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
-              El RR se mantiene en 2,93:1 sin importar el tamaño de la cuenta.
+              El RR se mantiene en 1:2,93 sin importar el tamaño de la cuenta.
             </p>
           </section>
 

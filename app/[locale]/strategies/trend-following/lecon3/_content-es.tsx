@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { getStoredProgress, markLessonComplete, isLessonComplete } from "@/lib/progress";
 import { FibonacciDiagram } from "@/app/components/charts/FibonacciDiagram";
 import { OTEDiagram } from "@/app/components/charts/OTEDiagram";
-import { PrecisionEntryDiagram } from "@/app/components/charts/PrecisionEntryDiagram";
+import PullbackContinuationDiagram from "@/app/components/charts/PullbackContinuationDiagram";
 import FibPullbackChecklistDiagram from "@/app/components/charts/FibPullbackChecklistDiagram";
 import FibTPProjectionDiagram from "@/app/components/charts/FibTPProjectionDiagram";
 import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
@@ -175,18 +175,18 @@ export default function ContentEs() {
             <h2 className="text-lg font-semibold text-white mb-3">Confluencia multi-elemento</h2>
 
             <div className="my-8">
-              <PrecisionEntryDiagram locale="es" />
+              <PullbackContinuationDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La zona OTE gana fuerza cuando se superpone con otros elementos estructurales. La confluencia multiplica la probabilidad de reacción institucional.
+              La zona OTE gana fuerza cuando se inscribe en una secuencia coherente: ancla estructural abajo, retracement dentro del OTE, huella institucional en el punto de entrada, desequilibrio a llenar como objetivo.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- OTE + Order Block visible en la zona = defensa institucional confirmada</li>
-              <li>- OTE + FVG (Fair Value Gap) no llenado = liquidity por absorber</li>
-              <li>- OTE + Support / Resistance H4 o Daily = memoria colectiva</li>
-              <li>- 3 confluencias o más = entrada de precisión</li>
+              <li>- Soporte HTF en zona baja = ancla estructural (donde el precio defiende)</li>
+              <li>- Pullback hacia OTE 61.8%-78.6% = zona de retracement óptima para re-entrar en la tendencia</li>
+              <li>- Order Block dentro del OTE = huella institucional donde colocar la entrada</li>
+              <li>- FVG arriba = desequilibrio a llenar, objetivo lógico de continuación</li>
             </ul>
           </section>
 

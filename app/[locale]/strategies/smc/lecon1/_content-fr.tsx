@@ -62,7 +62,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Cette leçon couvre la lecture institutionnelle de la structure du marché : identifier les swings significatifs, distinguer structure interne et externe, et reconnaître les phases d&apos;accumulation, expansion et distribution.
+              Cette leçon couvre la lecture institutionnelle de la structure du marché : identifier les swings significatifs, distinguer structure interne et externe, et reconnaître les phases d&apos;accumulation, manipulation et expansion.
             </p>
           </div>
 
@@ -207,19 +207,19 @@ export default function ContentFr() {
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
+                <p className="text-amber-400 font-semibold text-sm mb-2">Manipulation (faux breakout)</p>
+                <ul className="space-y-1 text-sm text-zinc-300">
+                  <li>- Sweep de liquidité au-dessus ou en-dessous du range</li>
+                  <li>- Mèche perce, retour brutal à l&apos;intérieur du range</li>
+                  <li>- Piège pour collecter les stops retail avant le vrai mouvement</li>
+                </ul>
+              </div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-emerald-400 font-semibold text-sm mb-2">Expansion (markup/markdown)</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Tendance directionnelle nette HH/HL ou LL/LH</li>
                   <li>- Amplitude des swings supérieure à la moyenne</li>
-                  <li>- Setups pullback + BOS continuation prioritaires</li>
-                </ul>
-              </div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
-                <p className="text-amber-400 font-semibold text-sm mb-2">Distribution</p>
-                <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- Range latéral après tendance haussière</li>
-                  <li>- Faux breakouts haussiers pour piéger acheteurs retail</li>
-                  <li>- Setups range + breakout baissier post-confirmation</li>
+                  <li>- C&apos;est la phase où les setups SMC se prennent dans le sens directionnel</li>
                 </ul>
               </div>
             </div>
@@ -297,7 +297,7 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "La lecture SMC distingue structure interne (M15/H1) et externe (H4/Daily). L’alignement donne le biais.",
-              "Le marché alterne 3 phases : accumulation, expansion (markup/markdown), distribution.",
+              "Le marché alterne 3 phases : accumulation, manipulation (faux breakout), expansion (markup/markdown).",
               "Procédure top-down obligatoire : Daily → H4 → H1 → M15. Pas d’analyse directionnelle sur M15 isolé.",
               "Aucun setup contre la structure externe Daily sans BOS contre-tendance + CHoCH confirmé.",
             ]}
