@@ -28,7 +28,7 @@ export type MistakeId =
   | "sell_in_support"
   | "bad_rr"
   | "no_confirmation"
-  | "over_leverage"
+  | "oversized_position"
   | "bad_spread"
   | "volatility_ignored"
   | "fomo_after_pump"
@@ -37,27 +37,35 @@ export type MistakeId =
   | "sweep_ignored"
   | "mitigation_misread"
   | "bad_timing"
-  | "ignored_zone";
+  | "ignored_zone"
+  | "risk_not_reduced_news"
+  | "position_held_through_event"
+  | "size_not_adapted_to_vol"
+  | "weekend_gap_exposure";
 
 export const MISTAKE_LABELS: Record<MistakeId, string> = {
-  stop_too_tight:        "Stop trop serré",
-  stop_in_liquidity:     "Stop dans liquidité",
-  trade_against_htf:     "Trade contre HTF",
-  trade_before_news:     "Trade avant news",
-  buy_in_resistance:     "Achat dans résistance",
-  sell_in_support:       "Vente dans support",
-  bad_rr:                "Ratio R/R mauvais",
-  no_confirmation:       "Breakout sans confirmation",
-  over_leverage:         "Levier excessif",
-  bad_spread:            "Spread ignoré",
-  volatility_ignored:    "Volatilité ignorée",
-  fomo_after_pump:       "Entrée FOMO",
-  revenge_trade:         "Revenge trade",
-  range_middle:          "Trade dans range sale",
-  sweep_ignored:         "Liquidité ignorée",
-  mitigation_misread:    "Mitigation mal lue",
-  bad_timing:            "Mauvais timing",
-  ignored_zone:          "Zone HTF ignorée",
+  stop_too_tight:              "Stop trop serré",
+  stop_in_liquidity:           "Stop dans liquidité",
+  trade_against_htf:           "Trade contre HTF",
+  trade_before_news:           "Trade avant news",
+  buy_in_resistance:           "Achat dans résistance",
+  sell_in_support:             "Vente dans support",
+  bad_rr:                      "Ratio R/R mauvais",
+  no_confirmation:             "Breakout sans confirmation",
+  oversized_position:          "Exposition excessive",
+  bad_spread:                  "Spread ignoré",
+  volatility_ignored:          "Volatilité ignorée",
+  fomo_after_pump:             "Entrée FOMO",
+  revenge_trade:               "Revenge trade",
+  range_middle:                "Trade sans biais directionnel",
+  sweep_ignored:               "Liquidité ignorée",
+  mitigation_misread:          "Mitigation mal lue",
+  bad_timing:                  "Mauvais timing",
+  ignored_zone:                "Zone HTF ignorée",
+  risk_not_reduced_news:       "Risque non réduit avant news",
+  position_held_through_event: "Position non gérée avant événement",
+  size_not_adapted_to_vol:     "Taille non adaptée à la volatilité",
+  weekend_gap_exposure:        "Exposition weekend non réduite",
 };
 
 export type MistakeCategory =
@@ -194,7 +202,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     context: "HTF clairement baissier. Tu prends ce BUY sur un rebond local.",
     correctMistake: "trade_against_htf",
     decoyMistakes: ["bad_timing", "no_confirmation", "fomo_after_pump"],
-    explanation: "Les rebonds en downtrend sont des opportunités de SHORT, pas de BUY. Statistiquement, prendre des longs contre HTF a un taux de réussite de 30-40% — l'edge est inversé.",
+    explanation: "Les rebonds en downtrend sont des opportunités de SHORT, pas de BUY. Statistiquement, prendre des longs contre HTF a un taux de réussite de 30-40%, l'edge est inversé.",
     lessons: {
       beginner:     "HTF baissier = on cherche les SELL. Jamais les BUY.",
       intermediate: "Un setup local n'efface pas la tendance HTF. Si HTF dit non, tu ne dis pas oui.",
@@ -236,7 +244,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     decoyMistakes: ["bad_rr", "trade_against_htf", "fomo_after_pump"],
     explanation: "Le swing low va presque toujours être retesté avant la continuation. Un stop au-dessus du low = balayé par le bruit normal du retest. Le trade serait bon avec un stop sous le swing low.",
     lessons: {
-      beginner:     "Un stop se place DERRIÈRE l'invalidation avec marge — jamais dedans, jamais au-dessus.",
+      beginner:     "Un stop se place DERRIÈRE l'invalidation avec marge, jamais dedans, jamais au-dessus.",
       intermediate: "Le retest du low est statistiquement présent dans 70%+ des pullbacks. La marge anti-bruit est obligatoire.",
       advanced:     "Sans marge ATR derrière la structure, ton stop sert d'aimant à liquidité. Les institutionnels ramassent ces niveaux.",
     },
@@ -274,7 +282,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     context: "Tu prends ce SELL au rebond avec stop juste au-dessus du swing high.",
     correctMistake: "stop_in_liquidity",
     decoyMistakes: ["stop_too_tight", "bad_rr", "no_confirmation"],
-    explanation: "Le swing high est une cible institutionnelle évidente — c'est là qu'est la liquidité des shorts piégés. Stop placé pile à cet endroit = aimant à sweep. Marge obligatoire au-dessus.",
+    explanation: "Le swing high est une cible institutionnelle évidente, c'est là qu'est la liquidité des shorts piégés. Stop placé pile à cet endroit = aimant à sweep. Marge obligatoire au-dessus.",
     lessons: {
       intermediate: "Les swings highs/lows sont des zones de chasse à liquidité. Coller ton stop dessus = se faire chasser.",
       advanced:     "L'institutionnel CIBLE ces niveaux pour ramasser le carburant. Le stop logique va au-delà de la zone de liquidité, pas dedans.",
@@ -324,24 +332,24 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     showLines: "buy_entry",
   },
   {
-    id: "over_leverage",
-    title: "Levier 50x sur XAU/USD",
+    id: "oversized_position",
+    title: "Position trop grosse pour le compte",
     category: "execution",
     chartShape: "uptrend_pullback",
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Tu prends ce BUY sur XAU/USD avec 50x de levier. Le setup est correct.",
-    correctMistake: "over_leverage",
+    context: "Tu prends ce BUY sur XAU/USD. Capital du compte : 500€. Taille de position choisie : lot qui expose 250€ si le SL est touché. Le setup technique est correct.",
+    correctMistake: "oversized_position",
     decoyMistakes: ["stop_too_tight", "volatility_ignored", "bad_rr"],
-    explanation: "À 50x sur XAU, un mouvement de 2% liquide la position. La volatilité naturelle de XAU est de 1-2% par jour — la liquidation est statistiquement quasi-garantie sur une seule séance.",
+    explanation: "Risquer 50% du capital sur un seul trade est suicidaire. Une seule perte coupe le compte en deux. Et pour revenir à 500€, il faudra ensuite faire +100% sur le capital restant.",
     lessons: {
-      advanced:     "Levier raisonnable XAU/forex : 5-10x max. BTC : 3-5x. Au-delà, tu joues à la roulette russe avec ton capital.",
-      intermediate: "Le levier ne change PAS l'edge du setup. Il multiplie juste la variance — donc les drawdowns.",
-      beginner:     "50x = 2% de mouvement contraire et tu perds tout. La volatilité naturelle des assets liquides est de 1-2%/jour. C'est statistiquement une liquidation.",
+      advanced:     "La grille de risque pro : 0,5 à 2% du capital par trade selon la taille du compte. Au-delà de 5%, ce n'est plus du trading, c'est du gambling.",
+      intermediate: "La taille de position est la variable n°1 du money management. Un setup correct + un lot trop gros = compte mort. La règle : sur 500€, jamais plus de 5% par trade (donc 25€ max de risque).",
+      beginner:     "La grille de référence : 5% max sur un compte de 200-500€, 3% sur 500-1000€, 2% sur 1000-5000€. Le levier de ton broker n'a aucune importance, ce qui compte c'est combien tu perds en euros si ton SL est touché.",
     },
     difficulties: ["intermediate", "advanced"],
-    extraInfo: "Levier 50x",
+    extraInfo: "Risque par trade : 50% du capital",
     showLines: "buy_entry",
   },
   {
@@ -376,7 +384,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     macroContext: "normal",
     context: "Volatilité explosive sur BTC. Tu prends ce BUY avec un stop de taille standard.",
     correctMistake: "volatility_ignored",
-    decoyMistakes: ["stop_too_tight", "bad_rr", "over_leverage"],
+    decoyMistakes: ["stop_too_tight", "bad_rr", "oversized_position"],
     explanation: "En vol élevée, le bruit normal est 2-3x plus large. Un stop 'normal' est dans le bruit amplifié → balayé avant que le trade aboutisse.",
     lessons: {
       advanced:     "Le stop doit s'adapter à l'ATR du moment, pas à une distance fixe. En vol élevée, élargi le stop ET le TP proportionnellement.",
@@ -418,11 +426,11 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     context: "Tu viens de prendre 2 stops d'affilée. Tu ré-entres immédiatement sur ce setup.",
     correctMistake: "revenge_trade",
     decoyMistakes: ["fomo_after_pump", "bad_timing", "stop_too_tight"],
-    explanation: "Le setup peut être valide, mais ta décision n'est pas guidée par l'analyse — elle est guidée par l'envie de récupérer les pertes. C'est le piège émotionnel #1 du retail.",
+    explanation: "Le setup peut être valide, mais ta décision n'est pas guidée par l'analyse, elle est guidée par l'envie de récupérer les pertes. C'est le piège émotionnel #1 du retail.",
     lessons: {
       intermediate: "Après 2 stops, pause obligatoire (15-30 min). Le cerveau en perte de capital prend des décisions biaisées.",
       advanced:     "Le revenge trade a un win rate ~10 points en-dessous de la moyenne du même trader. La pause restaure l'objectivité.",
-      beginner:     "Si tu trades pour 'récupérer', tu ne trades plus — tu paries.",
+      beginner:     "Si tu trades pour 'récupérer', tu ne trades plus, tu paries.",
     },
     difficulties: ["intermediate", "advanced"],
     extraInfo: "2 stops récents",
@@ -439,7 +447,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     context: "Le prix vient de balayer la liquidité sous le précédent low avec une grosse mèche. Tu SELL maintenant.",
     correctMistake: "sweep_ignored",
     decoyMistakes: ["trade_against_htf", "bad_rr", "stop_too_tight"],
-    explanation: "Le sweep vient d'avoir lieu — c'est le signal de retournement haussier. SELL ici = vendre au creux que l'institutionnel vient de créer pour racheter. La direction est inversée.",
+    explanation: "Le sweep vient d'avoir lieu, c'est le signal de retournement haussier. SELL ici = vendre au creux que l'institutionnel vient de créer pour racheter. La direction est inversée.",
     lessons: {
       advanced:     "Pattern ICT classique : sweep = prise de liquidité avant continuation HTF. L'edge est de BUY le retournement, pas de SELL.",
       intermediate: "Une grosse mèche qui balaie un niveau puis retourne = signal de reversal probable. Lecture inversée.",
@@ -466,6 +474,90 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       beginner:     "Si une zone tarde à réagir, elle perd sa puissance. Mieux vaut attendre la prochaine.",
     },
     difficulties: ["advanced"],
+    showLines: "buy_entry",
+  },
+  {
+    id: "risk_not_reduced_news",
+    title: "Lot habituel avant news majeure",
+    category: "timing",
+    chartShape: "calm_before_news",
+    direction: "BUY",
+    htfBias: "bullish",
+    macroContext: "dangereux",
+    context: "14h20. NFP dans 10 minutes. Tu entres en BUY sur EUR/USD avec ta taille de lot habituelle. Le setup technique est correct.",
+    correctMistake: "risk_not_reduced_news",
+    decoyMistakes: ["stop_too_tight", "oversized_position", "bad_rr"],
+    explanation: "Sur une news majeure (NFP, FOMC, CPI), le spread peut s'élargir x5 à x10, et le prix peut faire un mouvement instantané qui saute le SL. La règle pro : diviser la taille de lot par 2 ou 3 dans les 30 minutes autour d'une news rouge, ou ne pas trader du tout.",
+    lessons: {
+      advanced:     "Les algos institutionnels coupent leur exposition avant les news pour la même raison : la price action devient binaire et imprévisible. Garder une taille normale = parier sur l'aléatoire.",
+      intermediate: "Une news majeure peut faire bouger une paire de 50-100 pips en 1 seconde. Ton SL devient théorique car le slippage te fait sortir 20-30 pips plus loin. Réduire la taille protège ton compte.",
+      beginner:     "Avant un NFP, un FOMC, ou un CPI : tu divises ton lot par 2 ou 3, ou tu attends que la news passe. Le marché va trembler, tes stops ne tiendront pas comme d'habitude.",
+    },
+    difficulties: ["intermediate", "advanced"],
+    extraInfo: "Taille de lot identique à un trade normal",
+    showLines: "buy_entry",
+  },
+  {
+    id: "position_held_through_event",
+    title: "Position laissée ouverte pendant FOMC",
+    category: "timing",
+    chartShape: "calm_before_news",
+    direction: "BUY",
+    htfBias: "bullish",
+    macroContext: "dangereux",
+    context: "Tu as un BUY ouvert sur XAU/USD depuis 19h55. FOMC dans 5 minutes (annonce + conférence Powell pendant 1h). Tu décides de laisser courir avec ton lot et ton SL habituels.",
+    correctMistake: "position_held_through_event",
+    decoyMistakes: ["stop_too_tight", "oversized_position", "trade_before_news"],
+    explanation: "Sur FOMC + Powell, XAU peut faire 50-100$ d'amplitude en quelques minutes. Ton SL standard sera traversé en slippage. Soit tu coupes la position avant l'annonce, soit tu réduis le lot, soit tu places un SL très large pour absorber la vol.",
+    lessons: {
+      advanced:     "Le risk management institutionnel impose de neutraliser l'exposition avant tout événement à pricing power. Sur Powell, même les bons setups sont à la merci d'une phrase mal interprétée.",
+      intermediate: "Une position laissée à découvert pendant un événement macro = pari binaire. Le setup technique perd toute valeur face à un titre fort. Soit tu sors, soit tu acceptes de gambler.",
+      beginner:     "Avant un FOMC ou une conférence de banque centrale : tu fermes ta position, ou tu la réduis fortement. Le marché va bouger plus que tes calculs techniques le prévoient.",
+    },
+    difficulties: ["intermediate", "advanced"],
+    extraInfo: "Position non gérée à l'approche de l'événement",
+    showLines: "buy_entry",
+  },
+  {
+    id: "size_not_adapted_to_vol",
+    title: "Lot habituel en volatilité doublée",
+    category: "execution",
+    chartShape: "high_vol_pullback",
+    direction: "SELL",
+    htfBias: "bearish",
+    macroContext: "dangereux",
+    context: "ATR journalier sur XAU/USD à 80$ contre 35$ habituellement (volatilité x2,3). Tu prends ce SELL avec ta taille de lot habituelle et ton SL standard de 30$.",
+    correctMistake: "size_not_adapted_to_vol",
+    decoyMistakes: ["stop_too_tight", "oversized_position", "bad_rr"],
+    explanation: "Quand la volatilité double, ton risque effectif double aussi à taille de lot constante. Un SL de 30$ qui tenait sur un ATR de 35$ va sauter facilement sur un ATR de 80$. Adapter la taille à la vol = principe de base du risk management.",
+    lessons: {
+      advanced:     "La position sizing dynamique se calcule sur l'ATR : taille = (capital × risque%) / (ATR × multiplicateur SL). Quand l'ATR double, la taille doit être divisée par 2 pour conserver le même risque.",
+      intermediate: "Les bons traders ajustent leur lot selon la volatilité du jour. Un ATR 2x supérieur à la normale = lot divisé par 2 ou SL doublé. Sinon le risque réel devient hors contrôle.",
+      beginner:     "Quand le marché bouge plus que d'habitude, tu réduis ta taille de lot. Sinon ton stop saute trop facilement. La règle : taille adaptée à la volatilité, pas au feeling.",
+    },
+    difficulties: ["intermediate", "advanced"],
+    extraInfo: "ATR x2,3 vs moyenne, lot inchangé",
+    showLines: "sell_entry",
+  },
+  {
+    id: "weekend_gap_exposure",
+    title: "Position FX ouverte avant weekend",
+    category: "timing",
+    chartShape: "uptrend_pullback",
+    direction: "BUY",
+    htfBias: "bullish",
+    macroContext: "dangereux",
+    context: "Vendredi 22h45, fermeture du forex dans 15 minutes. Tu ouvres un BUY sur EUR/USD avec ta taille de lot habituelle. Le setup est valide.",
+    correctMistake: "weekend_gap_exposure",
+    decoyMistakes: ["stop_too_tight", "oversized_position", "trade_before_news"],
+    explanation: "Le weekend, les marchés FX sont fermés mais le monde continue. Une news géopolitique majeure (déclaration banque centrale, conflit, élection) peut créer un gap à l'ouverture du dimanche qui saute ton SL de 50 à 200 pips. Le slippage weekend est non négociable.",
+    lessons: {
+      advanced:     "Les hedge funds sortent généralement leurs positions FX directionnelles avant le close du vendredi, ou se hedgent via options. Garder une exposition naked sur le weekend = pari sur l'actualité géopolitique.",
+      intermediate: "Avant un weekend, deux options : sortir tes positions, ou réduire fortement la taille. Le gap d'ouverture dimanche peut être brutal et ton SL ne te protège pas pendant la fermeture.",
+      beginner:     "Le vendredi soir : tu fermes tes positions ou tu réduis leur taille. Pendant le weekend, le marché est fermé mais le monde bouge. Lundi matin, le prix peut sauter directement à l'autre bout de ton stop.",
+    },
+    difficulties: ["intermediate", "advanced"],
+    extraInfo: "Position laissée ouverte sur le weekend",
     showLines: "buy_entry",
   },
 ];

@@ -1,1 +1,163 @@
-{}
+{
+  "hero": {
+    "badge": "★ MADE BY A TRADER",
+    "titleLine1": "Maximize your chances",
+    "titleLine2": "of becoming profitable.",
+    "subtitle": "A real method for the real constraints of retail traders.",
+    "ctaPrimary": "See access",
+    "ctaSecondary": "I already have a code",
+    "bullets": [
+      { "title": "Learn at your pace", "description": "Structured path" },
+      { "title": "Take action", "description": "Practice, simulate, progress" },
+      { "title": "Become profitable", "description": "Strategies, discipline, consistency" }
+    ]
+  },
+  "platformPreview": {
+    "eyebrow": "Inside the platform",
+    "title": "Here's what it looks like.",
+    "subtitle": "A clean, structured interface that guides you step by step.",
+    "url": "tradescalex.com/en/lessons/strategies/smc/order-blocks",
+    "sidebarTitle": "Strategies path",
+    "lessons": [
+      "Lesson 1 · Market structure",
+      "Lesson 2 · BOS & CHoCH",
+      "Lesson 3 · Liquidity",
+      "Lesson 4 · ICT Order Blocks",
+      "Lesson 5 · Fair Value Gaps",
+      "Lesson 6 · Killzones"
+    ],
+    "lessonTitle": "ICT Order Blocks",
+    "lessonSubtitle": "The zones where institutions place their orders.",
+    "chartBadge": "BULLISH ORDER BLOCK",
+    "chartObLabel": "OB",
+    "chartReactionLabel": "REACTION",
+    "intro": [
+      "**What exactly is an Order Block?**",
+      "Many traders use Order Blocks without really knowing what they represent. Result: they identify them poorly, play them at the wrong time, or confuse them with other zones.",
+      "An Order Block is the **last opposite candle** before a violent expansion move. Its power comes from the fact that institutions haven't finished filling their orders at that level, and will likely come back to test it before continuing the move.",
+      "For an OB to be valid, it must respect **3 specific conditions** that most traders ignore: the first one is…"
+    ]
+  },
+  "piliers": {
+    "title": "4 pillars, one goal: becoming profitable",
+    "subtitle": "From chart to mindset, you progress on every front.",
+    "items": [
+      {
+        "key": "trading",
+        "icon": "📊",
+        "title": "Trading",
+        "description": "From a blank chart to your first structured trade.",
+        "bullets": [
+          "Solid bases and proven setups",
+          "Detailed trade plans",
+          "Interactive validation quizzes",
+          "28 lessons · All levels"
+        ]
+      },
+      {
+        "key": "macro",
+        "icon": "🌍",
+        "title": "Macro",
+        "description": "Anticipate moves before they happen.",
+        "bullets": [
+          "FOMC, NFP, CPI decoded",
+          "Cross-asset correlations",
+          "Build your weekly bias",
+          "16 lessons · All levels"
+        ]
+      },
+      {
+        "key": "strategies",
+        "icon": "🎯",
+        "title": "Strategies",
+        "description": "The real methods used by profitable traders.",
+        "bullets": [
+          "Price Action, SMC, ICT",
+          "Multi-TF, Trend Following",
+          "Backtests and real cases",
+          "7 complete strategies"
+        ]
+      },
+      {
+        "key": "games",
+        "icon": "🎮",
+        "title": "Games",
+        "description": "Learn by practicing, validate by playing.",
+        "bullets": [
+          "Build the Trade",
+          "Place your Stop",
+          "Buy/Sell, Find the Mistake",
+          "4 unique interactive games"
+        ]
+      }
+    ]
+  },
+  "approche": {
+    "eyebrow": "The approach",
+    "titleLine1": "Learn with method,",
+    "titleLine2": "not by chance.",
+    "features": [
+      {
+        "icon": "⚡",
+        "title": "\"I don't have time\"",
+        "description": "Sessions of 15 to 30 minutes a day. You make real progress, even working full-time."
+      },
+      {
+        "icon": "💰",
+        "title": "\"I don't have the capital\"",
+        "description": "Strategies and risk management calibrated for small accounts, from €300 to €2,500."
+      },
+      {
+        "icon": "📺",
+        "title": "\"I've seen it all on YouTube\"",
+        "description": "Interactive pedagogy with validation at every step. You truly understand, you don't just watch."
+      },
+      {
+        "icon": "🎯",
+        "title": "\"I'm a total beginner\"",
+        "description": "Structured progressive path. You start at level 1, you advance step by step, at your pace."
+      },
+      {
+        "icon": "🔬",
+        "title": "\"I'm already intermediate\"",
+        "description": "SMC, ICT, Multi-TF and advanced macro modules. You deepen exactly what you're missing."
+      },
+      {
+        "icon": "🛡️",
+        "title": "\"Other platforms disappointed me\"",
+        "description": "No magical promise. Just a real method, interactive tools, and results that depend on your work."
+      }
+    ]
+  },
+  "testimonialsSection": {
+    "eyebrow": "They tried it",
+    "title": "What they're saying.",
+    "trustRating": "4.3/5",
+    "trustText": "Validated by pro traders and early users"
+  },
+  "leaveReview": {
+    "title": "Using TradeScaleX?",
+    "subtitle": "Your feedback helps us improve the platform. It takes 2 minutes.",
+    "ctaLabel": "Leave a review"
+  },
+  "buildSpotlight": {
+    "tag": "The game everyone loves",
+    "title": "Build the Trade",
+    "description": "The game even pro traders can't put down. Learn to structure a complete trade step by step: bias, entry zone, stop, target, with real market scenarios."
+  },
+  "transformation": {
+    "label": "★ Time to decide",
+    "titlePrefix": "What are you going to do",
+    "titleAccent": "tomorrow?",
+    "choiceA": {
+      "label": "OPTION A",
+      "body": "Are you really sure you want to close this tab and keep doing exactly what you're doing today? Watching one more YouTube video. Following a Telegram guru promising you €5K/month. Tomorrow will be like today."
+    },
+    "choiceB": {
+      "label": "OPTION B",
+      "body": "Or do you decide it's time to really get serious? Learn properly. Practice. Progress. With a real method, at your pace, to maximize your chances of succeeding."
+    },
+    "ctaPrimary": "See access",
+    "ctaSecondary": "I already have a code"
+  }
+}

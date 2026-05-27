@@ -21,11 +21,11 @@
     "back": "Retour",
     "eyebrow": "Point d'entrée",
     "title": "Par quoi tu veux commencer ?",
-    "subtitle": "Tu peux changer d'avis à tout moment — toutes les sections restent accessibles.",
+    "subtitle": "Tu peux changer d'avis à tout moment, toutes les sections restent accessibles.",
     "doors": {
       "bases": {
         "title": "Commencer les bases",
-        "description": "Structure marché, R/R, gestion du risque — fondations claires."
+        "description": "Structure marché, R/R, gestion du risque, fondations claires."
       },
       "games": {
         "title": "Tester les jeux",

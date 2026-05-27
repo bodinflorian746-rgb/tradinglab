@@ -83,7 +83,7 @@ export default function PreviewSvgPage() {
       <div className="max-w-4xl mx-auto">
 
         <h1 className="text-3xl font-bold mb-4">
-          Preview composants SVG — Session refonte Stratégies
+          Preview composants SVG. Session refonte Stratégies
         </h1>
         <p className="text-zinc-400 mb-12">
           44 nouveaux composants créés lors de la session de refonte Stratégies. Vérification visuelle avant intégration dans les pages.

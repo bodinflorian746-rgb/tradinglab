@@ -1,74 +1,11 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { FORMATIONS } from "@/lib/formations";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary } from "@/i18n/dictionaries";
 import Logo from "@/app/components/Logo";
-
-// ───────────────────────────────────────────────────────────────────────────────
-// Icônes SVG inline pour les 4 cartes pôles + features hero
-// ───────────────────────────────────────────────────────────────────────────────
-function IconCandles() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <line x1="8" y1="4" x2="8" y2="9" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="5" y="9" width="6" height="9" fill="#10b981" rx="1" />
-      <line x1="8" y1="18" x2="8" y2="22" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
-      <line x1="16" y1="6" x2="16" y2="10" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="13" y="10" width="6" height="13" fill="#10b981" rx="1" />
-      <line x1="16" y1="23" x2="16" y2="27" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
-      <line x1="24" y1="2" x2="24" y2="6" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="21" y="6" width="6" height="17" fill="#10b981" rx="1" />
-      <line x1="24" y1="23" x2="24" y2="28" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function IconGlobe() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <circle cx="16" cy="16" r="13" stroke="#60a5fa" strokeWidth="1.8" />
-      <ellipse cx="16" cy="16" rx="13" ry="5" stroke="#60a5fa" strokeWidth="1.4" />
-      <ellipse cx="16" cy="16" rx="5" ry="13" stroke="#60a5fa" strokeWidth="1.4" />
-      <line x1="3" y1="16" x2="29" y2="16" stroke="#60a5fa" strokeWidth="1.4" />
-    </svg>
-  );
-}
-
-function IconKnight() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <path
-        d="M11 6 C 8 8, 7 11, 8 14 L 6 16 L 6 18 L 9 18 C 9 18, 10 16, 12 16 C 14 16, 13 19, 11 21 L 10 24 L 23 24 L 23 22 C 23 18, 22 14, 20 11 C 18 8, 15 6, 13 6 L 11 6 Z"
-        fill="#fbbf24"
-        stroke="#d97706"
-        strokeWidth="0.8"
-        strokeLinejoin="round"
-      />
-      <rect x="9" y="24" width="15" height="3" rx="1" fill="#fbbf24" />
-      <circle cx="13" cy="11" r="0.9" fill="#09090b" />
-    </svg>
-  );
-}
-
-function IconGamepad() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <path
-        d="M6 12 C 4 12, 3 14, 3 17 L 4 22 C 4 24, 6 25, 8 24 L 11 22 L 21 22 L 24 24 C 26 25, 28 24, 28 22 L 29 17 C 29 14, 28 12, 26 12 L 6 12 Z"
-        fill="#8b5cf6"
-        stroke="#7c3aed"
-        strokeWidth="0.8"
-        strokeLinejoin="round"
-      />
-      <circle cx="9" cy="17" r="1.5" fill="#a78bfa" />
-      <line x1="8" y1="17" x2="10" y2="17" stroke="#09090b" strokeWidth="1.2" strokeLinecap="round" />
-      <line x1="9" y1="16" x2="9" y2="18" stroke="#09090b" strokeWidth="1.2" strokeLinecap="round" />
-      <circle cx="22" cy="16" r="1.2" fill="#a78bfa" />
-      <circle cx="25" cy="18" r="1.2" fill="#a78bfa" />
-    </svg>
-  );
-}
+import { ReviewsCarousel } from "@/app/components/ReviewsCarousel";
 
 function CheckSmall({ color }: { color: string }) {
   return (
@@ -120,45 +57,25 @@ function Hexagon({ n, color, glow, dropShadow }: { n: number; color: string; glo
   );
 }
 
-// ───────────────────────────────────────────────────────────────────────────────
-// Sub-item small icons for the 3-col section (réutilise les SVG existants)
-// ───────────────────────────────────────────────────────────────────────────────
-const COL1_ICONS = [
-  // 1. Progresser même avec peu de temps — chart-up (📈)
-  (<svg key="1" width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M2 14l4-5 3 3 4-6 3 4" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /><polyline points="12,6 16,6 16,10" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>),
-  // 2. Trader intelligemment avec un petit capital — briefcase (💼)
-  (<svg key="2" width="16" height="16" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4" /><path d="M6.5 5V3.5A1 1 0 0 1 7.5 2.5h3a1 1 0 0 1 1 1V5" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" /><line x1="2" y1="9" x2="16" y2="9" stroke="currentColor" strokeWidth="1.2" /></svg>),
-  // 3. Développer de vrais réflexes marché — éclair (⚡)
-  (<svg key="3" width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M10.2 2L4 10.2h3.8l-1.2 5.8L13 8.2h-3.8l1.2-6.2z" stroke="currentColor" strokeWidth="1.4" fill="currentColor" fillOpacity="0.2" strokeLinecap="round" strokeLinejoin="round" /></svg>),
-  // 4. Construire une approche disciplinée et confiante — cible (🎯)
-  (<svg key="4" width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.4" /><circle cx="9" cy="9" r="4" stroke="currentColor" strokeWidth="1.4" /><circle cx="9" cy="9" r="1.5" fill="currentColor" /></svg>),
-];
+// État des leçons dans la sidebar du mock plateforme. Ordonné comme la
+// liste t.platformPreview.lessons[] — 0-2 done, 3 active, 4-5 locked.
+const LESSON_STATES = ["done", "done", "done", "active", "locked", "locked"] as const;
 
-const COL2_ICONS = [
-  // 1. Formations par niveaux — chart bars ascendant
-  (<svg key="1" width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="13" width="3" height="3" rx="0.5" fill="currentColor" /><rect x="7" y="9" width="3" height="7" rx="0.5" fill="currentColor" /><rect x="12" y="5" width="3" height="11" rx="0.5" fill="currentColor" /></svg>),
-  // 2. Stratégies Price Action, SMC & ICT — cible/target
-  (<svg key="2" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.4" /><circle cx="9" cy="9" r="4" stroke="currentColor" strokeWidth="1.4" /><circle cx="9" cy="9" r="1.5" fill="currentColor" /></svg>),
-  // 3. Quiz et exercices pratiques — lightbulb
-  (<svg key="3" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2a5 5 0 0 0-3 9v2h6v-2a5 5 0 0 0-3-9z" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinejoin="round" /><line x1="7" y1="15.5" x2="11" y2="15.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>),
-  // 4. Tableaux de bord de progression — chart-up avec ligne
-  (<svg key="4" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 14l4-5 3 3 4-6 3 4" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /><line x1="2" y1="15.5" x2="16" y2="15.5" stroke="currentColor" strokeWidth="1.2" opacity="0.5" /></svg>),
-  // 5. Contenu mis à jour régulièrement — étoile
-  (<svg key="5" width="18" height="18" viewBox="0 0 18 18" fill="none"><polygon points="9,2 11,7 16,7 12,10 13.5,15 9,12 4.5,15 6,10 2,7 7,7" stroke="currentColor" strokeWidth="1.3" fill="currentColor" fillOpacity="0.2" strokeLinejoin="round" /></svg>),
-  // 6. Accès desktop et mobile — écran + téléphone
-  (<svg key="6" width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="9" height="7" rx="1" stroke="currentColor" strokeWidth="1.4" /><line x1="4" y1="13" x2="9" y2="13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /><rect x="12" y="6" width="4" height="9" rx="0.8" stroke="currentColor" strokeWidth="1.4" /></svg>),
-];
-
-// Textes hardcodés pour la grille 2x3 "Ce que tu trouveras" (alignés mot pour mot
-// avec la spec — diffère de dictionaries/fr/home.json sur "Tableaux" pluriel)
-const COL2_TITLES = [
-  "Formations par niveaux",
-  "Stratégies Price Action, SMC & ICT",
-  "Quiz et exercices pratiques",
-  "Tableaux de bord de progression",
-  "Contenu mis à jour régulièrement",
-  "Accès desktop et mobile",
-];
+// Rendu d'un paragraphe d'intro avec marqueurs **bold** (markdown light).
+// Permet de garder le contenu i18n simple en JSON sans HTML embarqué.
+function renderBold(text: string): React.ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={i} className="font-semibold text-white">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return <Fragment key={i}>{part}</Fragment>;
+  });
+}
 
 export default async function Home({
   params,
@@ -180,21 +97,9 @@ export default async function Home({
   // ───────────────────────────────────────────────────────────────────────────
   const isEs = locale === "es";
   const T = {
-    hero: {
-      badge: isEs ? "La plataforma definitiva para progresar" : "La plateforme ultime pour progresser",
-      titleLine1: isEs ? "De principiante a trader" : "De débutant à trader",
-      titleLine2: isEs ? "a tu ritmo" : "à ton rythme",
-      subtitle: isEs
-        ? "Lecciones claras, estrategias concretas, simulaciones y análisis macro para comprender, practicar y triunfar en los mercados."
-        : "Des leçons claires, des stratégies concrètes, des simulations et des analyses macro pour comprendre, s'entraîner et réussir sur les marchés.",
-      ctaPrimary: isEs ? "Empezar ahora" : "Commencer maintenant",
-      ctaSecondary: isEs ? "Ver cómo funciona" : "Voir comment ça marche",
-      features: [
-        { title: isEs ? "Aprende a tu ritmo" : "Apprends à ton rythme", desc: isEs ? "Recorrido estructurado" : "Parcours structuré" },
-        { title: isEs ? "Pasa a la acción" : "Passe à l'action", desc: isEs ? "Practica, simula, progresa" : "Entraîne-toi, simule, progresse" },
-        { title: isEs ? "Vuélvete rentable" : "Deviens rentable", desc: isEs ? "Estrategias, disciplina, regularidad" : "Stratégies, discipline, régularité" },
-      ],
-    },
+    // T.hero retiré — désormais 100% géré par t.hero du dictionnaire.
+    // T.progression, T.poles, T.access, T.footer restent en FR/ES inline car
+    // ces sections sont hors scope mockup F (parcours hexagones / footer).
     progression: {
       title: isEs ? "Tu recorrido progresivo" : "Ton parcours progressif",
       subtitle: isEs ? "Aprende paso a paso y desarrolla tus competencias" : "Apprends étape par étape et développe tes compétences",
@@ -209,7 +114,7 @@ export default async function Home({
     poles: {
       title: isEs ? "Un recorrido completo para todos los traders" : "Un parcours complet pour tous les traders",
       subtitle: isEs ? "4 pilares esenciales para desarrollar tus competencias" : "4 pôles essentiels pour développer tes compétences",
-      cta: isEs ? "Empezar" : "Commencer",
+      cta: isEs ? "Ver los accesos" : "Voir les accès",
       trading: {
         title: "Trading",
         desc: isEs ? "Domina las bases y construye setups sólidos." : "Maîtrise les bases et construis des setups solides.",
@@ -239,21 +144,33 @@ export default async function Home({
           : ["Simulations réalistes", "Défis quotidiens", "Classements", "Récompenses"],
       },
     },
-    ctaInter: {
-      title: isEs ? "¿Listo para pasar al siguiente nivel?" : "Prêt à passer au niveau supérieur ?",
-      subtitle: isEs ? "Únete a TradeScaleX y conviértete en el trader que quieres ser." : "Rejoins TradeScaleX et deviens le trader que tu veux être.",
-      cta: isEs ? "Empezar ahora" : "Commencer maintenant",
+    access: {
+      title: isEs ? "¿Cómo acceder?" : "Comment accéder ?",
+      subtitle: isEs ? "Dos vías pour unirte à la plataforma." : "Deux voies pour rejoindre la plateforme.",
+      broker: {
+        badge: isEs ? "Recomendado" : "Recommandé",
+        title: isEs ? "Vía broker partner" : "Via broker partenaire",
+        price: "0€",
+        desc: isEs
+          ? "Abre una cuenta broker vía nuestro enlace de afiliación. Recibes después tu código de acceso por email."
+          : "Tu ouvres un compte broker via notre lien d'affiliation. Tu reçois ensuite ton code d'accès par email.",
+        bullets: isEs
+          ? ["Apertura de cuenta broker partner", "Código enviado tras verificación", "Acceso completo a la plataforma"]
+          : ["Ouverture compte broker partenaire", "Code envoyé après vérification", "Accès complet à la plateforme"],
+      },
+      direct: {
+        title: isEs ? "Acceso directo" : "Accès direct",
+        price: "19€",
+        period: isEs ? "/mes" : "/mois",
+        desc: isEs
+          ? "Abono mensual sin afiliación broker. Código generado automáticamente al pagar."
+          : "Abonnement mensuel sans affiliation broker. Code généré automatiquement au paiement.",
+        bullets: isEs
+          ? ["Abono mensual", "Código generado al pagar", "Acceso completo a la plataforma"]
+          : ["Abonnement mensuel", "Code généré au paiement", "Accès complet à la plateforme"],
+      },
+      cta: isEs ? "Ver el detalle" : "Voir le détail",
     },
-    col2Titles: isEs
-      ? [
-          "Cursos por niveles",
-          "Estrategias Price Action, SMC e ICT",
-          "Quiz y ejercicios prácticos",
-          "Dashboards de progreso",
-          "Contenido actualizado seguido",
-          "Acceso desktop y móvil",
-        ]
-      : COL2_TITLES,
     footer: {
       taglineL1: isEs ? "Aprende, comprende, progresa." : "Apprends, comprends, progresse.",
       taglineL2: isEs ? "De principiante a rentable." : "De débutant à rentable.",
@@ -280,113 +197,72 @@ export default async function Home({
   return (
     <main className="bg-zinc-950 text-white overflow-hidden">
       {/* ═════════════════════════════════════════════════════════════════════
-          1. HERO — contenu centré (illustration SVG marches 3D supprimée)
+          1. HERO — 3 blobs glow emerald via .hero / .hero-inner pseudo-elements
+                    (cf. globals.css). PAS d'overflow-hidden : le glow doit
+                    déborder dans .parcours-section pour transition fluide.
           ═════════════════════════════════════════════════════════════════════ */}
-      <section className="relative px-6 pt-16 md:pt-24 pb-16 md:pb-24">
-        {/* Halo emerald radial diffus en haut de page */}
-        <div
-          className="absolute inset-x-0 top-0 -z-10 h-[600px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(16,185,129,0.18) 0%, transparent 70%)",
-          }}
-        />
-        {/* Ambient glow secondaire */}
-        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-          <div className="absolute top-[-100px] left-1/4 w-[600px] h-[400px] bg-emerald-500/[0.07] rounded-full blur-3xl" />
-          <div className="absolute top-[20%] right-[-50px] w-[400px] h-[400px] bg-emerald-500/[0.04] rounded-full blur-3xl" />
-        </div>
-        {/* Particules flottantes (statiques) */}
-        <svg
-          className="absolute inset-0 -z-10 w-full h-full pointer-events-none"
-          viewBox="0 0 1200 600"
-          preserveAspectRatio="xMidYMid slice"
-          aria-hidden="true"
-        >
-          <circle cx="80" cy="90" r="1.5" fill="#10b981" opacity="0.55" />
-          <circle cx="180" cy="220" r="1" fill="#34d399" opacity="0.4" />
-          <circle cx="240" cy="380" r="2" fill="#10b981" opacity="0.35" />
-          <circle cx="320" cy="120" r="1.5" fill="#fbbf24" opacity="0.45" />
-          <circle cx="420" cy="280" r="1" fill="#34d399" opacity="0.5" />
-          <circle cx="520" cy="430" r="2" fill="#10b981" opacity="0.4" />
-          <circle cx="620" cy="80" r="1" fill="#fbbf24" opacity="0.35" />
-          <circle cx="700" cy="340" r="1.5" fill="#34d399" opacity="0.55" />
-          <circle cx="780" cy="180" r="2.5" fill="#10b981" opacity="0.3" />
-          <circle cx="880" cy="260" r="1" fill="#fbbf24" opacity="0.4" />
-          <circle cx="960" cy="100" r="1.5" fill="#34d399" opacity="0.45" />
-          <circle cx="1040" cy="380" r="1" fill="#10b981" opacity="0.5" />
-          <circle cx="1120" cy="220" r="2" fill="#34d399" opacity="0.35" />
-          <circle cx="1080" cy="490" r="1.5" fill="#fbbf24" opacity="0.4" />
-        </svg>
+      <section className="hero px-6 pt-24 pb-24 text-center md:pt-[120px] md:pb-[100px]">
+        <div className="hero-inner mx-auto max-w-[800px]">
+          <span className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-semibold tracking-wider text-emerald-400">
+            {t.hero.badge}
+          </span>
 
-        <div className="max-w-4xl mx-auto text-left">
-          <div>
-            <div className="inline-flex items-center gap-2 bg-zinc-900/80 backdrop-blur-sm border border-emerald-500/25 rounded-full px-4 py-1.5 mb-7 shadow-[0_0_20px_rgba(16,185,129,0.06)]">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.9)]" />
-              <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-[0.18em]">
-                {T.hero.badge}
-              </span>
-            </div>
+          <h1 className="mb-5 text-4xl font-extrabold tracking-tight leading-[1.05] md:text-[56px]">
+            {t.hero.titleLine1}
+            <br />
+            <span className="text-emerald-500">{t.hero.titleLine2}</span>
+          </h1>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
-              {T.hero.titleLine1}
-              <br />
-              <span className="bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-transparent">
-                {T.hero.titleLine2}
-              </span>
-            </h1>
+          <p className="mx-auto mb-9 max-w-[580px] text-base leading-relaxed text-zinc-400 md:text-[17px]">
+            {t.hero.subtitle}
+          </p>
 
-            <p className="text-base md:text-lg text-zinc-400 leading-relaxed mb-9 max-w-xl">
-              {T.hero.subtitle}
-            </p>
+          <div className="mb-12 flex flex-wrap justify-center gap-3">
+            <Link
+              href={h("/pricing")}
+              className="inline-flex items-center gap-1.5 rounded-[10px] bg-emerald-500 px-6 py-3.5 text-[15px] font-semibold text-zinc-950 transition-all hover:-translate-y-0.5 hover:bg-emerald-400 shadow-lg shadow-emerald-500/25"
+            >
+              {t.hero.ctaPrimary}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+            <Link
+              href={h("/signup")}
+              className="inline-flex items-center gap-2 rounded-[10px] border border-zinc-700 bg-zinc-800/50 px-6 py-3.5 text-[15px] font-medium text-white transition-all hover:bg-zinc-800/80"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M4 6V4.5a3 3 0 1 1 6 0V6" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+                <rect x="2.5" y="6" width="9" height="6" rx="1" stroke="currentColor" strokeWidth="1.4" fill="none" />
+              </svg>
+              {t.hero.ctaSecondary}
+            </Link>
+          </div>
 
-            <div className="flex flex-col sm:flex-row gap-3.5 mb-10">
-              <Link
-                href={h("/formations")}
-                className="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/35 hover:-translate-y-0.5"
-              >
-                {T.hero.ctaPrimary}
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
-              <Link
-                href={h("/formations")}
-                className="inline-flex items-center justify-center gap-2 border border-zinc-700 hover:border-zinc-500 hover:bg-zinc-900/40 text-white font-semibold px-6 py-3.5 rounded-xl transition-all"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
-                  <polygon points="6,5 11,8 6,11" fill="currentColor" />
-                </svg>
-                {T.hero.ctaSecondary}
-              </Link>
-            </div>
-
-            {/* 3 mini-features — icônes dans pastilles bordées zinc-900 */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-4">
-              {T.hero.features.map((f) => (
-                <div key={f.title} className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-900 border border-zinc-800">
-                    <svg className="h-4 w-4 text-emerald-400" viewBox="0 0 14 14" fill="none">
-                      <path d="M2.5 7l3 3 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-white leading-tight">{f.title}</p>
-                    <p className="text-xs text-zinc-400 leading-tight mt-0.5">{f.desc}</p>
-                  </div>
+          <div className="flex flex-wrap justify-center gap-10">
+            {t.hero.bullets.map((b) => (
+              <div key={b.title} className="flex items-center gap-3 text-left">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-400">
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2.5 7l3 3 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </div>
-              ))}
-            </div>
+                <div className="text-[13px]">
+                  <strong className="block font-semibold text-white">{b.title}</strong>
+                  <span className="text-zinc-500">{b.description}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ═════════════════════════════════════════════════════════════════════
-          2. TON PARCOURS PROGRESSIF — 3 hexagones
+          2. TON PARCOURS PROGRESSIF — 3 hexagones (avec blob de transition
+             venant du hero, cf. .parcours-section dans globals.css)
           ═════════════════════════════════════════════════════════════════════ */}
-      <section className="px-6 pb-16 md:pb-20">
-        <div className="max-w-5xl mx-auto rounded-3xl border border-zinc-800 bg-gradient-to-b from-zinc-900/60 to-zinc-900/20 px-6 py-12 md:py-14 shadow-[0_0_60px_-20px_rgba(16,185,129,0.08)]">
+      <section className="parcours-section px-6 pt-20 pb-16 md:pb-20">
+        <div className="relative z-10 max-w-5xl mx-auto rounded-3xl border border-zinc-800 bg-gradient-to-b from-zinc-900/60 to-zinc-900/20 px-6 py-12 md:py-14 shadow-[0_0_60px_-20px_rgba(16,185,129,0.08)]">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{T.progression.title}</h2>
             <p className="text-zinc-400 mt-2 text-[15px]">
@@ -395,8 +271,29 @@ export default async function Home({
           </div>
 
           <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 items-start">
-            {/* Pointillés desktop entre hexagones (decoratif) */}
-            <div className="hidden md:block absolute left-[18%] right-[18%] top-[45px] h-px border-t-2 border-dashed border-zinc-700/60 pointer-events-none" />
+            {/*
+              Deux segments distincts qui contournent l'hexagone du milieu :
+              - Segment 1 : entre hex 1 et hex 2
+              - Segment 2 : entre hex 2 et hex 3
+              Hex centré dans sa colonne (chaque col = 33.33% large), donc
+              entre col 1 et col 2 = de 16.67%+38px à 50%-38px (38px = demi-hex).
+            */}
+            <div
+              aria-hidden="true"
+              className="hidden md:block absolute top-[45px] h-px border-t-2 border-dashed border-zinc-700/60 pointer-events-none"
+              style={{
+                left: "calc(16.67% + 38px)",
+                right: "calc(50% + 38px)",
+              }}
+            />
+            <div
+              aria-hidden="true"
+              className="hidden md:block absolute top-[45px] h-px border-t-2 border-dashed border-zinc-700/60 pointer-events-none"
+              style={{
+                left: "calc(50% + 38px)",
+                right: "calc(16.67% + 38px)",
+              }}
+            />
 
             {[
               {
@@ -446,305 +343,477 @@ export default async function Home({
       </section>
 
       {/* ═════════════════════════════════════════════════════════════════════
-          3. UN PARCOURS COMPLET — 4 cartes pôles
+          2b. L'INTÉRIEUR DE LA PLATEFORME — mock screenshot + Order Block SVG
+              + texte de leçon coupé (effet Zeigarnik). SVG copié à
+              l'identique du mockup (coordonnées validées techniquement).
           ═════════════════════════════════════════════════════════════════════ */}
-      <section className="px-6 py-16 md:py-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{T.poles.title}</h2>
-            <p className="text-zinc-400 mt-2 text-[15px]">
-              {T.poles.subtitle}
+      <section className="platform-preview-section px-6 py-20">
+        <div className="relative z-10">
+          <div className="mb-6 text-center">
+            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-400">
+              {t.platformPreview.eyebrow}
+            </span>
+            <h2 className="mt-2.5 text-2xl font-extrabold tracking-tight md:text-[28px]">
+              {t.platformPreview.title}
+            </h2>
+            <p className="mt-1.5 text-sm text-zinc-400">
+              {t.platformPreview.subtitle}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {/* Trading — emerald */}
-            <Link
-              href={h("/formations")}
-              className="group flex flex-col bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 hover:border-emerald-500/50 hover:shadow-[0_0_40px_-10px_rgba(16,185,129,0.25)] transition-all duration-300"
-            >
-              <div className="flex justify-center mb-5">
-                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.15)]">
-                  <IconCandles />
+          <div className="mx-auto max-w-[960px] overflow-hidden rounded-2xl border border-zinc-700 bg-gradient-to-b from-zinc-900 to-zinc-950 shadow-[0_30px_80px_-20px_rgba(16,185,129,0.15),0_0_0_1px_rgba(16,185,129,0.10)]">
+            {/* Toolbar browser */}
+            <div className="flex items-center gap-2 border-b border-zinc-800 bg-black/30 px-4 py-3">
+              <span aria-hidden="true" className="h-[11px] w-[11px] rounded-full bg-red-500" />
+              <span aria-hidden="true" className="h-[11px] w-[11px] rounded-full bg-amber-400" />
+              <span aria-hidden="true" className="h-[11px] w-[11px] rounded-full bg-emerald-500" />
+              <span className="flex-1 text-center font-mono text-xs text-zinc-500">
+                {t.platformPreview.url}
+              </span>
+            </div>
+
+            {/* Body */}
+            <div className="grid grid-cols-1 gap-8 p-10 md:grid-cols-[250px_1fr]">
+              {/* Sidebar — masquée en mobile */}
+              <aside className="hidden rounded-[10px] bg-black/20 p-5 md:block">
+                <p className="mb-3.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-zinc-500">
+                  {t.platformPreview.sidebarTitle}
+                </p>
+                {t.platformPreview.lessons.map((title, i) => {
+                  const state = LESSON_STATES[i];
+                  const isActive = state === "active";
+                  const isLocked = state === "locked";
+                  const rowClass = isActive
+                    ? "bg-emerald-500/10 text-emerald-400"
+                    : isLocked
+                      ? "text-zinc-500 opacity-40"
+                      : "text-zinc-400";
+                  const badgeClass = isLocked
+                    ? "bg-white/[0.08] text-zinc-500"
+                    : "bg-emerald-500/20 text-emerald-400";
+                  return (
+                    <div
+                      key={title}
+                      className={`mb-1 flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-[13px] ${rowClass}`}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={`flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full text-[10px] ${badgeClass}`}
+                      >
+                        {isLocked ? i + 1 : "✓"}
+                      </span>
+                      <span>{title}</span>
+                    </div>
+                  );
+                })}
+              </aside>
+
+              {/* Main lesson preview */}
+              <div>
+                <h4 className="mb-2 text-2xl font-semibold">
+                  {t.platformPreview.lessonTitle}
+                </h4>
+                <p className="mb-6 text-sm text-zinc-400">
+                  {t.platformPreview.lessonSubtitle}
+                </p>
+
+                {/* Chart Order Block (SVG copié pixel-perfect du mockup) */}
+                <div className="relative h-[220px] overflow-hidden rounded-[10px] border border-zinc-800 bg-black/30 p-6">
+                  <div aria-hidden="true" className="preview-chart-grid absolute inset-6" />
+                  <svg
+                    viewBox="0 0 500 180"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="absolute inset-6"
+                    style={{ width: "calc(100% - 3rem)", height: "calc(100% - 3rem)" }}
+                    aria-hidden="true"
+                  >
+                    {/* Zone Order Block (englobe high/low de la bougie OB) */}
+                    <rect x="75" y="105" width="405" height="37" fill="rgba(16,185,129,0.15)" stroke="#10b981" strokeWidth="1" strokeDasharray="3 3" />
+                    <text x="105" y="100" fill="#10b981" fontSize="9" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartBadge}</text>
+
+                    {/* Bougies de consolidation */}
+                    <rect x="20" y="115" width="7" height="20" fill="#ef4444" />
+                    <line x1="23.5" y1="110" x2="23.5" y2="140" stroke="#b91c1c" strokeWidth="1.5" />
+                    <rect x="40" y="118" width="7" height="18" fill="#10b981" />
+                    <line x1="43.5" y1="112" x2="43.5" y2="140" stroke="#059669" strokeWidth="1.5" />
+                    <rect x="60" y="115" width="7" height="22" fill="#ef4444" />
+                    <line x1="63.5" y1="110" x2="63.5" y2="142" stroke="#b91c1c" strokeWidth="1.5" />
+
+                    {/* Bougie OB (dernière baissière avant expansion) */}
+                    <rect x="80" y="110" width="9" height="25" fill="#ef4444" stroke="#fbbf24" strokeWidth="1.5" />
+                    <line x1="84.5" y1="105" x2="84.5" y2="142" stroke="#b91c1c" strokeWidth="1.5" />
+                    <text x="76" y="158" fill="#fbbf24" fontSize="8" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartObLabel}</text>
+
+                    {/* Mouvement explosif bullish (BOS) */}
+                    <rect x="105" y="80" width="7" height="35" fill="#10b981" />
+                    <line x1="108.5" y1="72" x2="108.5" y2="118" stroke="#059669" strokeWidth="1.5" />
+                    <rect x="125" y="55" width="7" height="40" fill="#10b981" />
+                    <line x1="128.5" y1="48" x2="128.5" y2="100" stroke="#059669" strokeWidth="1.5" />
+                    <rect x="145" y="35" width="7" height="35" fill="#10b981" />
+                    <line x1="148.5" y1="28" x2="148.5" y2="75" stroke="#059669" strokeWidth="1.5" />
+                    <rect x="165" y="30" width="7" height="20" fill="#ef4444" />
+                    <line x1="168.5" y1="25" x2="168.5" y2="55" stroke="#b91c1c" strokeWidth="1.5" />
+                    <rect x="185" y="35" width="7" height="25" fill="#10b981" />
+                    <line x1="188.5" y1="28" x2="188.5" y2="65" stroke="#059669" strokeWidth="1.5" />
+
+                    {/* Retour vers le OB (mitigation) */}
+                    <rect x="220" y="55" width="7" height="30" fill="#ef4444" />
+                    <line x1="223.5" y1="48" x2="223.5" y2="90" stroke="#b91c1c" strokeWidth="1.5" />
+                    <rect x="240" y="75" width="7" height="35" fill="#ef4444" />
+                    <line x1="243.5" y1="65" x2="243.5" y2="115" stroke="#b91c1c" strokeWidth="1.5" />
+                    <rect x="260" y="95" width="7" height="30" fill="#ef4444" />
+                    <line x1="263.5" y1="85" x2="263.5" y2="130" stroke="#b91c1c" strokeWidth="1.5" />
+
+                    {/* Bougie de mitigation (entre dans la zone OB puis rejette) */}
+                    <rect x="280" y="110" width="9" height="20" fill="#10b981" stroke="#fbbf24" strokeWidth="1.5" />
+                    <line x1="284.5" y1="105" x2="284.5" y2="140" stroke="#059669" strokeWidth="1.5" />
+                    <text x="272" y="155" fill="#fbbf24" fontSize="8" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartReactionLabel}</text>
+
+                    {/* Rebond depuis OB */}
+                    <rect x="305" y="85" width="7" height="25" fill="#10b981" />
+                    <line x1="308.5" y1="78" x2="308.5" y2="115" stroke="#059669" strokeWidth="1.5" />
+                    <rect x="325" y="60" width="7" height="30" fill="#10b981" />
+                    <line x1="328.5" y1="52" x2="328.5" y2="95" stroke="#059669" strokeWidth="1.5" />
+                    <rect x="345" y="40" width="7" height="25" fill="#10b981" />
+                    <line x1="348.5" y1="32" x2="348.5" y2="70" stroke="#059669" strokeWidth="1.5" />
+                    <rect x="365" y="25" width="7" height="20" fill="#10b981" />
+                    <line x1="368.5" y1="18" x2="368.5" y2="50" stroke="#059669" strokeWidth="1.5" />
+                    <rect x="385" y="20" width="7" height="15" fill="#ef4444" />
+                    <line x1="388.5" y1="15" x2="388.5" y2="40" stroke="#b91c1c" strokeWidth="1.5" />
+                    <rect x="405" y="22" width="7" height="13" fill="#10b981" />
+                    <line x1="408.5" y1="18" x2="408.5" y2="40" stroke="#059669" strokeWidth="1.5" />
+                    <rect x="425" y="15" width="7" height="18" fill="#10b981" />
+                    <line x1="428.5" y1="10" x2="428.5" y2="38" stroke="#059669" strokeWidth="1.5" />
+                    <rect x="445" y="10" width="7" height="13" fill="#10b981" />
+                    <line x1="448.5" y1="5" x2="448.5" y2="28" stroke="#059669" strokeWidth="1.5" />
+                  </svg>
+                </div>
+
+                {/* Texte d'intro coupé en fade-out (effet Zeigarnik) */}
+                <div className="lesson-text-preview mt-6">
+                  {t.platformPreview.intro.map((paragraph, i) => (
+                    <p key={i} className="mb-2.5 text-[13.5px] leading-relaxed text-zinc-300">
+                      {renderBold(paragraph)}
+                    </p>
+                  ))}
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-center text-white mb-2">{T.poles.trading.title}</h3>
-              <p className="text-[13px] text-zinc-400 text-center leading-relaxed mb-5">
-                {T.poles.trading.desc}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═════════════════════════════════════════════════════════════════════
+          3. 4 PILIERS — Trading / Macro / Stratégies / Jeux
+             Couleurs limitées au design system : emerald, blue, amber.
+             Games partage emerald (pas de violet/purple par règle DS).
+          ═════════════════════════════════════════════════════════════════════ */}
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center">
+            <h2 className="text-2xl font-extrabold tracking-tight md:text-[36px]">
+              {t.piliers.title}
+            </h2>
+            <p className="mt-2 text-[15px] text-zinc-400">{t.piliers.subtitle}</p>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {t.piliers.items.map((p) => {
+              const colorClass =
+                p.key === "macro"
+                  ? "bg-blue-400/15 text-blue-400"
+                  : p.key === "strategies"
+                    ? "bg-amber-400/15 text-amber-400"
+                    : "bg-emerald-500/15 text-emerald-400";
+              return (
+                <div
+                  key={p.key}
+                  className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-zinc-700"
+                >
+                  <div
+                    aria-hidden="true"
+                    className={`mb-3.5 flex h-11 w-11 items-center justify-center rounded-[10px] text-xl ${colorClass}`}
+                  >
+                    {p.icon}
+                  </div>
+                  <h3 className="mb-1.5 text-[17px] font-semibold">{p.title}</h3>
+                  <p className="mb-4 text-[13px] leading-relaxed text-zinc-400">
+                    {p.description}
+                  </p>
+                  <ul className="space-y-1">
+                    {p.bullets.map((b) => (
+                      <li
+                        key={b}
+                        className="flex items-center gap-2 text-[13px] text-zinc-300"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="text-xs font-bold text-emerald-400"
+                        >
+                          ✓
+                        </span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═════════════════════════════════════════════════════════════════════
+          (CTA intermédiaire retiré — doublonnait avec le finalCta de fin de page,
+          per mockup version-e2-final.html un seul "Prêt à rejoindre" suffit)
+          ═════════════════════════════════════════════════════════════════════ */}
+
+      {/* ═════════════════════════════════════════════════════════════════════
+          5. L'APPROCHE — 6 features en grille 3×2 (mockup section .methode)
+          ═════════════════════════════════════════════════════════════════════ */}
+      <section className="border-y border-zinc-800 bg-zinc-900/20 px-6 py-20 md:py-24">
+        <div className="max-w-6xl mx-auto">
+          {/* Heading centré */}
+          <div className="text-center mb-6">
+            <span className="inline-block text-[11px] font-bold text-emerald-400 uppercase tracking-[0.15em] mb-3">
+              {t.approche.eyebrow}
+            </span>
+            <h2 className="text-3xl md:text-[40px] font-extrabold tracking-tight leading-[1.1]">
+              {t.approche.titleLine1}
+              <br />
+              {t.approche.titleLine2}
+            </h2>
+          </div>
+
+          {/* Grille 3 colonnes × 2 lignes — chaque feature a un border-top */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            {t.approche.features.map((f) => (
+              <div key={f.title} className="border-t border-zinc-800 pt-7">
+                <div
+                  aria-hidden="true"
+                  className="mb-[18px] flex h-[38px] w-[38px] items-center justify-center rounded-[10px] border border-emerald-500/20 bg-emerald-500/10 text-base text-emerald-400"
+                >
+                  {f.icon}
+                </div>
+                <h3 className="mb-2 text-[17px] font-semibold leading-snug">{f.title}</h3>
+                <p className="text-sm leading-[1.55] text-zinc-400">{f.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═════════════════════════════════════════════════════════════════════
+          5a-bis. TÉMOIGNAGES — carrousel infini CSS + leave-review + build spotlight
+          ═════════════════════════════════════════════════════════════════════ */}
+      <section className="testimonials-section px-6 py-20 md:py-24">
+        {/* Halo emerald géré par .testimonials-section::before (globals.css) */}
+        <div className="relative z-10 max-w-6xl mx-auto">
+          {/* Heading + trust bar */}
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 mb-3">
+              <span className="w-5 h-px bg-emerald-500/60" />
+              <p className="text-[11px] font-bold text-emerald-400 uppercase tracking-[0.18em]">
+                {t.testimonialsSection.eyebrow}
               </p>
-              <ul className="space-y-2.5 mb-5 flex-1">
-                {T.poles.trading.bullets.map((b) => (
+            </div>
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-5 leading-tight">
+              {t.testimonialsSection.title}
+            </h2>
+            <div className="inline-flex items-center gap-3.5 bg-zinc-900/80 border border-zinc-800 px-5 py-2.5 rounded-full">
+              <span className="text-emerald-400 text-base tracking-[2px]" aria-hidden="true">
+                ★★★★★
+              </span>
+              <span className="text-[13px] text-zinc-400">
+                <strong className="text-white font-semibold">
+                  {t.testimonialsSection.trustRating}
+                </strong>
+                {" · "}
+                {t.testimonialsSection.trustText}
+              </span>
+            </div>
+          </div>
+
+          {/* Carrousel infini (Server Component, animation CSS) */}
+          <ReviewsCarousel locale={locale} />
+
+          {/* Banner "laisser un avis" */}
+          <div className="mt-14 mx-auto max-w-xl flex flex-wrap items-center justify-between gap-5 px-8 py-6 rounded-2xl border border-dashed border-zinc-700 bg-gradient-to-br from-zinc-900/60 to-zinc-900/30">
+            <div className="flex-1 min-w-[200px]">
+              <h4 className="text-[15px] font-semibold mb-1">{t.leaveReview.title}</h4>
+              <p className="text-[13px] text-zinc-400 leading-relaxed">
+                {t.leaveReview.subtitle}
+              </p>
+            </div>
+            <Link
+              href={h("/reviews/new")}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10 font-semibold text-[13px] transition-colors"
+            >
+              {t.leaveReview.ctaLabel}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path
+                  d="M3 6h6M6 3l3 3-3 3"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Build the Trade spotlight — mockup .build-spotlight :
+              max-width 750px, margin-top 64px, padding 40px,
+              gradient 135deg rgba(16,185,129,0.08) → rgba(24,24,27,0.4),
+              border emerald-500/20, fond grille 24px ×24px (cf. .spotlight-grid). */}
+          <div
+            className="relative mt-16 mx-auto max-w-[750px] overflow-hidden rounded-[20px] border border-emerald-500/20 p-10 text-center"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(24,24,27,0.4))",
+            }}
+          >
+            <div aria-hidden="true" className="spotlight-grid absolute inset-0" />
+            <div className="relative">
+              <span className="inline-block text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-400">
+                ⚡ {t.buildSpotlight.tag}
+              </span>
+              <h3 className="mb-3 mt-3.5 text-[30px] font-extrabold tracking-tight leading-tight">
+                {t.buildSpotlight.title}
+              </h3>
+              <p className="mx-auto max-w-[520px] text-[15px] leading-relaxed text-zinc-400">
+                {t.buildSpotlight.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═════════════════════════════════════════════════════════════════════
+          5b. COMMENT ACCÉDER — 2 cartes (broker partenaire / accès direct)
+          ═════════════════════════════════════════════════════════════════════ */}
+      <section className="px-6 pb-16 md:pb-20">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{T.access.title}</h2>
+            <p className="text-zinc-400 mt-2 text-[15px]">{T.access.subtitle}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+            {/* Carte A — Via broker partenaire (recommandé) */}
+            <div className="relative bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border-2 border-emerald-500/40 rounded-2xl p-6 flex flex-col shadow-[0_0_40px_-15px_rgba(16,185,129,0.25)]">
+              <span className="absolute -top-3 left-6 bg-emerald-500 text-zinc-950 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">
+                {T.access.broker.badge}
+              </span>
+              <h3 className="text-xl font-bold text-white mb-2">{T.access.broker.title}</h3>
+              <div className="flex items-baseline gap-1 mb-3">
+                <span className="text-4xl font-black text-emerald-400 tabular-nums">{T.access.broker.price}</span>
+              </div>
+              <p className="text-[13px] text-zinc-400 leading-relaxed mb-5">{T.access.broker.desc}</p>
+              <ul className="space-y-2.5 mb-6 flex-1">
+                {T.access.broker.bullets.map((b) => (
                   <li key={b} className="flex items-start gap-2 text-[13px] text-zinc-300">
                     <CheckSmall color="#34d399" />
                     {b}
                   </li>
                 ))}
               </ul>
-              <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-emerald-400 group-hover:gap-2 transition-all">
-                {T.poles.cta}
+              <Link
+                href={h("/pricing")}
+                className="inline-flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-2.5 rounded-xl transition-colors text-sm"
+              >
+                {T.access.cta}
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M3 6h6M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M3 6h6M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </span>
-            </Link>
+              </Link>
+            </div>
 
-            {/* Macro — blue */}
-            <Link
-              href={h("/formations/macro")}
-              className="group flex flex-col bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 hover:border-blue-500/50 hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.25)] transition-all duration-300"
-            >
-              <div className="flex justify-center mb-5">
-                <div className="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.15)]">
-                  <IconGlobe />
-                </div>
+            {/* Carte B — Accès direct */}
+            <div className="bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 flex flex-col">
+              <h3 className="text-xl font-bold text-white mb-2">{T.access.direct.title}</h3>
+              <div className="flex items-baseline gap-1 mb-3">
+                <span className="text-4xl font-black text-white tabular-nums">{T.access.direct.price}</span>
+                <span className="text-sm text-zinc-500">{T.access.direct.period}</span>
               </div>
-              <h3 className="text-xl font-bold text-center text-white mb-2">{T.poles.macro.title}</h3>
-              <p className="text-[13px] text-zinc-400 text-center leading-relaxed mb-5">
-                {T.poles.macro.desc}
-              </p>
-              <ul className="space-y-2.5 mb-5 flex-1">
-                {T.poles.macro.bullets.map((b) => (
+              <p className="text-[13px] text-zinc-400 leading-relaxed mb-5">{T.access.direct.desc}</p>
+              <ul className="space-y-2.5 mb-6 flex-1">
+                {T.access.direct.bullets.map((b) => (
                   <li key={b} className="flex items-start gap-2 text-[13px] text-zinc-300">
-                    <CheckSmall color="#60a5fa" />
+                    <CheckSmall color="#a1a1aa" />
                     {b}
                   </li>
                 ))}
               </ul>
-              <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-blue-400 group-hover:gap-2 transition-all">
-                {T.poles.cta}
+              <Link
+                href={h("/pricing")}
+                className="inline-flex items-center justify-center gap-1.5 border border-zinc-700 hover:border-zinc-500 hover:bg-zinc-900/40 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm"
+              >
+                {T.access.cta}
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M3 6h6M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M3 6h6M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </span>
-            </Link>
+              </Link>
+            </div>
 
-            {/* Stratégies — amber */}
-            <Link
-              href={h("/strategies")}
-              className="group flex flex-col bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 hover:border-amber-400/50 hover:shadow-[0_0_40px_-10px_rgba(251,191,36,0.25)] transition-all duration-300"
-            >
-              <div className="flex justify-center mb-5">
-                <div className="w-16 h-16 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center shadow-[0_0_20px_rgba(251,191,36,0.15)]">
-                  <IconKnight />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-center text-white mb-2">{T.poles.strategies.title}</h3>
-              <p className="text-[13px] text-zinc-400 text-center leading-relaxed mb-5">
-                {T.poles.strategies.desc}
-              </p>
-              <ul className="space-y-2.5 mb-5 flex-1">
-                {T.poles.strategies.bullets.map((b) => (
-                  <li key={b} className="flex items-start gap-2 text-[13px] text-zinc-300">
-                    <CheckSmall color="#fbbf24" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-              <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-amber-400 group-hover:gap-2 transition-all">
-                {T.poles.cta}
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M3 6h6M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </Link>
-
-            {/* Jeux — violet */}
-            <Link
-              href={h("/jeux")}
-              className="group flex flex-col bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 hover:border-violet-500/50 hover:shadow-[0_0_40px_-10px_rgba(139,92,246,0.25)] transition-all duration-300"
-            >
-              <div className="flex justify-center mb-5">
-                <div className="w-16 h-16 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.15)]">
-                  <IconGamepad />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-center text-white mb-2">{T.poles.games.title}</h3>
-              <p className="text-[13px] text-zinc-400 text-center leading-relaxed mb-5">
-                {T.poles.games.desc}
-              </p>
-              <ul className="space-y-2.5 mb-5 flex-1">
-                {T.poles.games.bullets.map((b) => (
-                  <li key={b} className="flex items-start gap-2 text-[13px] text-zinc-300">
-                    <CheckSmall color="#a78bfa" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-              <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-violet-400 group-hover:gap-2 transition-all">
-                {T.poles.cta}
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M3 6h6M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </Link>
           </div>
         </div>
       </section>
 
       {/* ═════════════════════════════════════════════════════════════════════
-          4. CTA INTERMÉDIAIRE — "Prêt à passer au niveau supérieur ?"
+          6. TRANSFORMATION — "Tu vas faire quoi demain ?"
+             Question calibrée (Option A : continuer comme avant /
+             Option B : passer à l'action). Glow via .transformation-section
+             pseudo-element. Remplace l'ancien finalCta.
           ═════════════════════════════════════════════════════════════════════ */}
-      <section className="px-6 pb-16 md:pb-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative flex flex-col md:flex-row items-center justify-between gap-6 bg-gradient-to-r from-zinc-900/80 to-zinc-900/40 border border-zinc-800 rounded-2xl px-6 md:px-10 py-8 shadow-[0_0_60px_-20px_rgba(16,185,129,0.12)]">
-            <div className="flex items-center gap-5">
-              <div className="shrink-0 w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
-                <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-                  <circle cx="13" cy="13" r="10" stroke="#10b981" strokeWidth="1.8" />
-                  <circle cx="13" cy="13" r="6" stroke="#10b981" strokeWidth="1.8" />
-                  <circle cx="13" cy="13" r="2.5" fill="#10b981" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-lg md:text-xl font-bold text-white">{T.ctaInter.title}</h3>
-                <p className="text-[14px] text-zinc-400 mt-0.5">
-                  {T.ctaInter.subtitle}
-                </p>
-              </div>
+      <section className="transformation-section px-6 py-24 text-center">
+        <div className="relative z-10 mx-auto max-w-[720px]">
+          <span className="mb-5 inline-block text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-400">
+            {t.transformation.label}
+          </span>
+          <h2 className="mb-8 text-3xl font-extrabold tracking-tight leading-tight md:text-[42px]">
+            {t.transformation.titlePrefix}{" "}
+            <span className="text-emerald-500">{t.transformation.titleAccent}</span>
+          </h2>
+
+          <div className="mb-4 rounded-2xl border border-zinc-800 bg-zinc-900/50 px-7 py-6 text-left">
+            <div className="mb-3 text-[13px] font-bold uppercase tracking-wider text-zinc-500">
+              {t.transformation.choiceA.label}
             </div>
+            <p className="text-[14.5px] leading-relaxed text-zinc-400">
+              {t.transformation.choiceA.body}
+            </p>
+          </div>
+
+          <div className="mb-9 rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/[0.08] to-zinc-900/50 px-7 py-6 text-left">
+            <div className="mb-3 text-[13px] font-bold uppercase tracking-wider text-emerald-400">
+              {t.transformation.choiceB.label}
+            </div>
+            <p className="text-[14.5px] leading-relaxed text-zinc-300">
+              {t.transformation.choiceB.body}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3">
             <Link
-              href={h("/formations")}
-              className="shrink-0 inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/35 hover:-translate-y-0.5"
+              href={h("/pricing")}
+              className="inline-flex items-center gap-1.5 rounded-[10px] bg-emerald-500 px-6 py-3.5 text-[15px] font-semibold text-zinc-950 transition-all hover:-translate-y-0.5 hover:bg-emerald-400 shadow-lg shadow-emerald-500/25"
             >
-              {T.ctaInter.cta}
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              {t.transformation.ctaPrimary}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ═════════════════════════════════════════════════════════════════════
-          5. SECTION 3 COLONNES — Ta progression / Tu trouveras / Méthode
-          (réutilise les clés i18n existantes : audiencesSection / memberSection / methodSection)
-          ═════════════════════════════════════════════════════════════════════ */}
-      <section className="px-6 py-16 md:py-20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Col 1 — TA PROGRESSION */}
-          <div className="bg-gradient-to-b from-zinc-900/70 to-zinc-900/30 border border-zinc-800 rounded-2xl p-7">
-            <div className="inline-flex items-center gap-2 mb-3">
-              <span className="w-5 h-px bg-emerald-500/60" />
-              <p className="text-[11px] font-bold text-emerald-400 uppercase tracking-[0.18em]">
-                {t.audiencesSection.eyebrow}
-              </p>
-            </div>
-            <h3 className="text-xl md:text-2xl font-bold text-white leading-tight mb-3">
-              {t.audiencesSection.title}
-            </h3>
-            <p className="text-sm text-zinc-400 leading-relaxed mb-6">
-              {t.audiencesSection.subtitle}
-            </p>
-            <ul className="space-y-3">
-              {t.audiencesSection.cards.map((c, i) => (
-                <li key={c.title} className="flex items-start gap-3 bg-zinc-900/60 border border-zinc-800 rounded-xl p-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                    {COL1_ICONS[i]}
-                  </div>
-                  <div>
-                    <p className="text-[13px] font-semibold text-white leading-snug">{c.title}</p>
-                    <p className="text-[12px] text-zinc-500 leading-relaxed mt-0.5">{c.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 2 — CE QUE TU TROUVERAS */}
-          <div className="bg-gradient-to-b from-zinc-900/70 to-zinc-900/30 border border-zinc-800 rounded-2xl p-7">
-            <div className="inline-flex items-center gap-2 mb-3">
-              <span className="w-5 h-px bg-emerald-500/60" />
-              <p className="text-[11px] font-bold text-emerald-400 uppercase tracking-[0.18em]">
-                {t.memberSection.eyebrow}
-              </p>
-            </div>
-            <h3 className="text-xl md:text-2xl font-bold text-white leading-tight mb-3">
-              {t.memberSection.title}
-            </h3>
-            <p className="text-sm text-zinc-400 leading-relaxed mb-6">
-              {t.memberSection.subtitle}
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              {T.col2Titles.map((title, i) => (
-                <div
-                  key={title}
-                  className="flex flex-col items-start justify-start gap-2 h-full min-h-[100px] bg-zinc-900 border border-zinc-800 rounded-lg p-4"
-                >
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400">
-                    {COL2_ICONS[i]}
-                  </div>
-                  <p className="text-sm font-semibold text-zinc-300 leading-tight">{title}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Col 3 — UNE APPROCHE PÉDAGOGIQUE SÉRIEUSE */}
-          <div className="bg-gradient-to-b from-zinc-900/70 to-zinc-900/30 border border-zinc-800 rounded-2xl p-7">
-            <div className="inline-flex items-center gap-2 mb-3">
-              <span className="w-5 h-px bg-emerald-500/60" />
-              <p className="text-[11px] font-bold text-emerald-400 uppercase tracking-[0.18em]">
-                {t.methodSection.eyebrow}
-              </p>
-            </div>
-            <h3 className="text-xl md:text-2xl font-bold text-white leading-tight mb-3">
-              {t.methodSection.titleLine1} {t.methodSection.titleLine2}
-            </h3>
-            <p className="text-sm text-zinc-400 leading-relaxed mb-6">
-              {t.methodSection.subtitle}
-            </p>
-            <ul className="space-y-3">
-              {t.methodSection.benefits.map((b) => (
-                <li key={b.title} className="flex items-start gap-3">
-                  <div className="shrink-0 w-6 h-6 rounded-md bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 mt-0.5">
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                      <path d="M2.5 7l3 3 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-[13px] font-semibold text-white leading-snug">{b.title}</p>
-                    <p className="text-[12px] text-zinc-500 leading-relaxed mt-0.5">{b.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* ═════════════════════════════════════════════════════════════════════
-          6. CTA FINAL — Commence ton parcours
-          ═════════════════════════════════════════════════════════════════════ */}
-      <section className="px-6 pb-16 md:pb-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative flex flex-col md:flex-row items-center justify-between gap-6 bg-gradient-to-r from-zinc-900/80 to-zinc-900/40 border border-zinc-800 rounded-2xl px-6 md:px-10 py-8 shadow-[0_0_60px_-20px_rgba(16,185,129,0.12)]">
-            <div className="flex items-center gap-5">
-              <div className="shrink-0 w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
-                <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-                  <circle cx="13" cy="13" r="10" stroke="#10b981" strokeWidth="1.8" />
-                  <circle cx="13" cy="13" r="6" stroke="#10b981" strokeWidth="1.8" />
-                  <circle cx="13" cy="13" r="2.5" fill="#10b981" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-lg md:text-xl font-bold text-white">{t.finalCta.title}</h3>
-                <p className="text-[14px] text-zinc-400 mt-0.5 max-w-lg leading-relaxed">{t.finalCta.subtitle}</p>
-              </div>
-            </div>
-            <div className="shrink-0 flex flex-col sm:flex-row gap-3">
-              <Link
-                href={h("/formations")}
-                className="inline-flex items-center justify-center bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold px-6 py-3 rounded-xl transition-all text-sm shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 hover:-translate-y-0.5"
-              >
-                {t.finalCta.ctaPrimary}
-              </Link>
-              <Link
-                href={h("/pricing")}
-                className="inline-flex items-center justify-center border border-zinc-700 hover:border-zinc-500 hover:bg-zinc-900/40 text-white font-semibold px-6 py-3 rounded-xl transition-all text-sm"
-              >
-                {t.finalCta.ctaSecondary}
-              </Link>
-            </div>
+            <Link
+              href={h("/signup")}
+              className="inline-flex items-center gap-2 rounded-[10px] border border-zinc-700 bg-zinc-800/50 px-6 py-3.5 text-[15px] font-medium text-white transition-all hover:bg-zinc-800/80"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M4 6V4.5a3 3 0 1 1 6 0V6" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+                <rect x="2.5" y="6" width="9" height="6" rx="1" stroke="currentColor" strokeWidth="1.4" fill="none" />
+              </svg>
+              {t.transformation.ctaSecondary}
+            </Link>
           </div>
         </div>
       </section>
@@ -758,7 +827,7 @@ export default async function Home({
             {/* Brand col */}
             <div>
               <Link href={h("/")} aria-label="TradeScaleX" className="inline-block mb-4">
-                <Logo size="md" showTagline={true} />
+                <Logo size="md" />
               </Link>
               <p className="text-sm text-zinc-400 leading-relaxed">
                 {T.footer.taglineL1}

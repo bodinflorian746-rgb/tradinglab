@@ -36,7 +36,7 @@ export const SKILL_DESCRIPTIONS: Record<SkillId, string> = {
   discipline:      "Refuser les setups médiocres, attendre les bonnes opportunités.",
   lecture_marche:  "Identifier la direction et le contexte HTF correctement.",
   gestion_risque:  "Placer les stops à des distances cohérentes avec la structure.",
-  timing:          "Choisir le bon moment d'entrée — pas trop tôt, pas trop tard.",
+  timing:          "Choisir le bon moment d'entrée, pas trop tôt, pas trop tard.",
   liquidite:       "Reconnaître les sweeps, traps et zones de chasse à liquidité.",
   structure:       "Lire les swings, supports, résistances et niveaux clés.",
   psychologie:     "Éviter FOMO, revenge trade, surconfiance.",

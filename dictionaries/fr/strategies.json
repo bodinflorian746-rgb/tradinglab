@@ -5,7 +5,7 @@
       "badgeLong":    "8 stratégies · 3 niveaux · Du retail au niveau institutionnel",
       "titleLine1":   "Apprends à trader",
       "titleLine2":   "avec une vraie méthode.",
-      "subtitle":     "Un parcours structuré — des fondations aux techniques institutionnelles — pour construire une approche solide et reproductible."
+      "subtitle":     "Un parcours structuré, des fondations aux techniques institutionnelles, pour construire une approche solide et reproductible."
     },
     "stats": {
       "strategies": "Stratégies",
@@ -28,7 +28,7 @@
       "avance": {
         "label":       "Avancé",
         "tagline":     "La maîtrise",
-        "description": "Les techniques des traders professionnels — précision chirurgicale et lecture institutionnelle."
+        "description": "Les techniques des traders professionnels, précision chirurgicale et lecture institutionnelle."
       }
     },
     "card": {
@@ -41,7 +41,7 @@
   "modules": {
     "price-action": {
       "title":    "Price Action",
-      "subtitle": "Lis le marché brut sans indicateurs — bougies, pin bars, engulfing et setup multi-timeframe.",
+      "subtitle": "Lis le marché brut sans indicateurs, bougies, pin bars, engulfing et setup multi-timeframe.",
       "lessons": {
         "lecon1": { "title": "Lire une bougie : corps, mèche, signal",                 "description": "L'unité de base du trading. Comprends l'anatomie d'une bougie japonaise et ce qu'elle révèle sur le combat acheteurs vs vendeurs.", "duration": "12 min" },
         "lecon2": { "title": "Pin bar : le rejet de niveau",                          "description": "Le premier vrai setup de trade. Identifie un pin bar valide à un niveau clé, trade-le avec entrée, SL et TP précis.",          "duration": "14 min" },
@@ -51,17 +51,17 @@
     },
     "support-resistance": {
       "title":    "Support / Résistance & Range",
-      "subtitle": "Identifie les zones de prix qui comptent et trade les marchés latéraux — polarité, range, breakout vs fakeout.",
+      "subtitle": "Identifie les zones de prix qui comptent et trade les marchés latéraux, polarité, range, breakout vs fakeout.",
       "lessons": {
-        "lecon1": { "title": "Support et résistance : les zones où le marché réagit",         "description": "Comprends ce qu'est un support et une résistance — les zones où le prix rebondit ou rejette régulièrement.",                  "duration": "15 min" },
-        "lecon2": { "title": "Identifier un vrai niveau (vs une ligne tracée au hasard)",     "description": "Les critères pour distinguer un vrai niveau d'une ligne au hasard — touches multiples, rejets visibles, niveau récent.",        "duration": "15 min" },
-        "lecon3": { "title": "Flip support↔résistance et trader un rebond",                    "description": "Les niveaux ne disparaissent pas quand ils cassent — ils changent souvent de rôle. Trade les retests après flip pour des setups classiques.", "duration": "18 min" },
-        "lecon4": { "title": "Cassure vraie vs fake breakout",                                 "description": "Distinguer les vraies cassures des pièges. Les fakes sont violentes et rejettent vite — un setup à part entière.",         "duration": "17 min" }
+        "lecon1": { "title": "Support et résistance : les zones où le marché réagit",         "description": "Comprends ce qu'est un support et une résistance, les zones où le prix rebondit ou rejette régulièrement.",                  "duration": "15 min" },
+        "lecon2": { "title": "Identifier un vrai niveau (vs une ligne tracée au hasard)",     "description": "Les critères pour distinguer un vrai niveau d'une ligne au hasard, touches multiples, rejets visibles, niveau récent.",        "duration": "15 min" },
+        "lecon3": { "title": "Flip support↔résistance et trader un rebond",                    "description": "Les niveaux ne disparaissent pas quand ils cassent, ils changent souvent de rôle. Trade les retests après flip pour des setups classiques.", "duration": "18 min" },
+        "lecon4": { "title": "Cassure vraie vs fake breakout",                                 "description": "Distinguer les vraies cassures des pièges. Les fakes sont violentes et rejettent vite, un setup à part entière.",         "duration": "17 min" }
       }
     },
     "trend-following": {
       "title":    "Trend Following",
-      "subtitle": "Trade dans le sens du marché avec des pullbacks disciplinés — tendance, retracement, sortie sur structure.",
+      "subtitle": "Trade dans le sens du marché avec des pullbacks disciplinés, tendance, retracement, sortie sur structure.",
       "lessons": {
         "lecon1": { "title": "Reconnaître une tendance (HH/HL vs LH/LL)",          "description": "Le marché ne fait que trois choses : monter, descendre, ou attendre. Les critères visuels pour distinguer les trois.",                                                         "duration": "15 min" },
         "lecon2": { "title": "Trendline et moyennes mobiles : tracer la tendance", "description": "La structure HH/HL reste la base. Trendline et MM donnent une lecture plus rapide et plus propre du marché.",                                                                   "duration": "15 min" },
@@ -71,7 +71,7 @@
     },
     "smc": {
       "title":    "SMC : Penser institutionnel",
-      "subtitle": "Comprends comment les institutions structurent leurs positions et aligne-toi — Supply/Demand, BOS, CHoCH, confluences.",
+      "subtitle": "Comprends comment les institutions structurent leurs positions et aligne-toi. Supply/Demand, BOS, CHoCH, confluences.",
       "lessons": {
         "lecon1": { "title": "Market Structure SMC : lire la structure du marché comme une institution",      "description": "Identifier les swings significatifs, distinguer structure interne et externe, lire les phases d'accumulation, expansion, distribution.",       "duration": "18 min" },
         "lecon2": { "title": "BOS et CHoCH : lire les signaux structurels institutionnels",                   "description": "Distinguer BOS et CHoCH, qualifier opérationnellement la cassure, comprendre la séquence de retournement institutionnelle en 3 étapes.",       "duration": "18 min" },
@@ -82,7 +82,7 @@
     },
     "reversal": {
       "title":    "Reversal & Retournements",
-      "subtitle": "Identifie et trade les retournements aux extrêmes — Fibonacci 0.618/0.786, divergences, confirmations combinées.",
+      "subtitle": "Identifie et trade les retournements aux extrêmes. Fibonacci 0.618/0.786, divergences, confirmations combinées.",
       "lessons": {
         "lecon1": { "title": "Double top / Double bottom : la signature du retournement",        "description": "Reconnaître les 2 patterns de retournement les plus simples et les trader avec un R/R 2:1 propre.",                  "duration": "16 min" },
         "lecon2": { "title": "Head & Shoulders : le retournement majeur",                         "description": "Le pattern de retournement le plus réputé. Comment le repérer, le valider et le trader avec un R/R rond de 1,5:1.",      "duration": "18 min" },
@@ -92,7 +92,7 @@
     },
     "multi-timeframe": {
       "title":    "Multi-timeframe Process",
-      "subtitle": "Méthode top-down disciplinée pour transformer une lecture macro en exécution précise — Daily → H4 → H1 → entrée.",
+      "subtitle": "Méthode top-down disciplinée pour transformer une lecture macro en exécution précise. Daily → H4 → H1 → entrée.",
       "lessons": {
         "lecon1": { "title": "Pourquoi analyser en multi-timeframe",                              "description": "Pourquoi trader un seul graphique rend aveugle, et le rôle de chaque étage : biais, zone, déclencheur.",            "duration": "16 min" },
         "lecon2": { "title": "Le timeframe supérieur : définir le contexte et le biais",          "description": "Lire le timeframe supérieur (H4/Daily) : structure, zones, et en sortir un biais directionnel clair.",              "duration": "18 min" },
@@ -103,21 +103,21 @@
     },
     "ict": {
       "title":    "ICT complet",
-      "subtitle": "L'arsenal institutionnel pro — Order Block, FVG, Liquidity sweeps, Killzones, OTE, Power of 3.",
+      "subtitle": "L'arsenal institutionnel pro. Order Block, FVG, Liquidity sweeps, Killzones, OTE, Power of 3.",
       "lessons": {
         "lecon1": { "title": "Comprendre le modèle ICT : liquidité et manipulation",       "description": "Pourquoi le marché va chercher la liquidité avant de bouger, et comment lire le sweep + réintégration.",          "duration": "18 min" },
         "lecon2": { "title": "PD Arrays : repérer les zones où le marché peut réagir",     "description": "FVG, Order Blocks et confluence : identifier les zones premium/discount où la réaction est probable.",        "duration": "18 min" },
-        "lecon3": { "title": "Killzones : quand le marché bouge vraiment",                  "description": "Les fenêtres horaires qui concentrent la volatilité — Asia, London Open, New York Open.",                       "duration": "18 min" },
+        "lecon3": { "title": "Killzones : quand le marché bouge vraiment",                  "description": "Les fenêtres horaires qui concentrent la volatilité. Asia, London Open, New York Open.",                       "duration": "18 min" },
         "lecon4": { "title": "Le displacement : reconnaître le vrai déplacement institutionnel", "description": "Distinguer une vraie impulsion de prise de contrôle d'une simple bougie volatile sans suite.",                 "duration": "18 min" },
         "lecon5": { "title": "Le modèle ICT complet : de la liquidité à l'exécution",     "description": "Dérouler la séquence complète : liquidité → manipulation → déplacement → exécution.",                            "duration": "20 min" }
       }
     },
     "macro-trading": {
       "title":    "Macro Trading",
-      "subtitle": "Trade les news majeures et les régimes de marché — FOMC Fade, NFP Overreaction, Régime Risk-off, filtre macro pré-trade.",
+      "subtitle": "Trade les news majeures et les régimes de marché. FOMC Fade, NFP Overreaction, Régime Risk-off, filtre macro pré-trade.",
       "lessons": {
-        "lecon1": { "title": "FOMC Fade : trader le retour de balancier après la décision",      "description": "Exploiter l'excès de réaction qui suit la décision FOMC — entrer après stabilisation, pas dans l'impulsion.",          "duration": "18 min" },
-        "lecon2": { "title": "NFP Overreaction : trader la sur-réaction au rapport sur l'emploi US", "description": "Exploiter la sur-réaction au chiffre headline NFP — entrer après la réévaluation, pas dans le mouvement initial.",   "duration": "18 min" },
+        "lecon1": { "title": "FOMC Fade : trader le retour de balancier après la décision",      "description": "Exploiter l'excès de réaction qui suit la décision FOMC, entrer après stabilisation, pas dans l'impulsion.",          "duration": "18 min" },
+        "lecon2": { "title": "NFP Overreaction : trader la sur-réaction au rapport sur l'emploi US", "description": "Exploiter la sur-réaction au chiffre headline NFP, entrer après la réévaluation, pas dans le mouvement initial.",   "duration": "18 min" },
         "lecon3": { "title": "Régime Risk-off : trader quand le marché fuit le risque",          "description": "Identifier l'installation d'un régime risk-off via les signaux concordants et trader dans son sens.",                  "duration": "18 min" },
         "lecon4": { "title": "Le filtre macro pré-trade : valider le contexte avant d'exécuter",  "description": "Construire un filtre macro systématique (calendrier + régime + setup) pour éviter les mauvais trades.",               "duration": "20 min" }
       }

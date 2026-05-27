@@ -24,12 +24,12 @@ export function KillzonesDiagram({ className = "", locale = "fr" }: KillzonesDia
   const t = locale === "es"
     ? {
         londonOpen8: "London Open — 08h",
-        nyOpen1330: "NY Open — 13h30",
+        nyOpen1330: "NY Open · 14h30/15h30",
         mobileTitle: "Killzones · hora de París",
         kz: [
           { start: "00h", end: "07h", title: "Asian Range", desc: "Acumulación nocturna, baja volatilidad.", accent: "#71717a", highlight: false },
           { start: "07h", end: "10h", title: "London Killzone", desc: "Open London a las 08h — primera fuerte volatilidad.", accent: "#10b981", highlight: true },
-          { start: "12h", end: "15h", title: "NY AM Killzone", desc: "Open NY a las 13h30 — pico de actividad institucional.", accent: "#10b981", highlight: true },
+          { start: "12h", end: "15h", title: "NY AM Killzone", desc: "Open NY a las 14h30 o 15h30 (París) — pico de actividad institucional.", accent: "#10b981", highlight: true },
           { start: "18h", end: "20h", title: "NY PM Killzone", desc: "Última ventana — cierre americano.", accent: "#60a5fa", highlight: false },
         ],
         mobileFooterPrefix: "Operar en las killzones ",
@@ -41,12 +41,12 @@ export function KillzonesDiagram({ className = "", locale = "fr" }: KillzonesDia
       }
     : {
         londonOpen8: "London Open — 08h",
-        nyOpen1330: "NY Open — 13h30",
+        nyOpen1330: "NY Open · 14h30/15h30",
         mobileTitle: "Killzones · heure de Paris",
         kz: [
           { start: "00h", end: "07h", title: "Asian Range", desc: "Accumulation nocturne, faible volatilité.", accent: "#71717a", highlight: false },
           { start: "07h", end: "10h", title: "London Killzone", desc: "Open London à 08h — première forte volatilité.", accent: "#10b981", highlight: true },
-          { start: "12h", end: "15h", title: "NY AM Killzone", desc: "Open NY à 13h30 — pic d'activité institutionnelle.", accent: "#10b981", highlight: true },
+          { start: "12h", end: "15h", title: "NY AM Killzone", desc: "Open NY à 14h30 ou 15h30 (Paris) — pic d'activité institutionnelle.", accent: "#10b981", highlight: true },
           { start: "18h", end: "20h", title: "NY PM Killzone", desc: "Dernière fenêtre — clôture américaine.", accent: "#60a5fa", highlight: false },
         ],
         mobileFooterPrefix: "Trader sur les killzones ",
@@ -119,10 +119,10 @@ export function KillzonesDiagram({ className = "", locale = "fr" }: KillzonesDia
           fill="#09090b" fillOpacity="0.85" />
         <text x={hx(8)} y={251} fontSize="8.5" fill="#10b981" textAnchor="middle" fontWeight="600">{t.londonOpen8}</text>
 
-        {/* Annotation — NY Open 13h30 */}
+        {/* Annotation — NY Open 14h30/15h30 (Paris) */}
         <line x1={hx(13.5)} y1={42} x2={hx(13.5)} y2={215}
           stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.35" />
-        <rect x={hx(13.5) - 48} y={240} width={96} height={14} rx="2"
+        <rect x={hx(13.5) - 60} y={240} width={120} height={14} rx="2"
           fill="#09090b" fillOpacity="0.85" />
         <text x={hx(13.5)} y={251} fontSize="8.5" fill="#10b981" textAnchor="middle" fontWeight="600">{t.nyOpen1330}</text>
       </svg>

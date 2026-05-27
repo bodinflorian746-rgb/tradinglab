@@ -7,7 +7,9 @@
     "profile": "Mi perfil",
     "pricing": "Precios"
   },
-  "cta": "Empezar",
+  "cta": "Crear cuenta",
+  "login": "Conexión",
+  "signup": "Crear cuenta",
   "openMenu": "Abrir menú",
   "closeMenu": "Cerrar menú"
 }

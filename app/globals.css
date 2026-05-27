@@ -20,3 +20,233 @@ body {
 * {
   box-sizing: border-box;
 }
+
+/* ─── Homepage utilities ───────────────────────────────────────────────
+   Animations + clip-paths qui ne s'expriment pas proprement en classes
+   Tailwind arbitraires. Utilisés uniquement par app/[locale]/page.tsx. */
+
+/* Carrousel témoignages : translate de 0 à -50% (la moitié = la liste
+   originale, l'autre moitié = sa duplication). Boucle visuellement
+   sans saut quand on revient à 0. */
+@keyframes ts-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ts-carousel-track {
+  animation: ts-scroll 60s linear infinite;
+}
+.ts-carousel-wrapper:hover .ts-carousel-track {
+  animation-play-state: paused;
+}
+
+/* Hexagone des étapes "parcours progressif". */
+.hex-clip {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+/* Grille de fond pour le spotlight "Build the Trade". */
+.spotlight-grid {
+  background-image:
+    linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ─── Glows verts homepage (pseudo-elements purs CSS) ─────────────────
+   IMPORTANT : pas de translation en Tailwind, pas de <div> wrapper. Tels
+   quels en CSS pour respecter pixel-perfect le mockup version-f-pro.html.
+   .hero NE DOIT PAS avoir overflow-hidden : le glow déborde dans .parcours
+   pour créer une transition fluide (anti effet "case Shopify"). */
+
+.hero {
+  position: relative;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1300px;
+  height: 1000px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(16, 185, 129, 0.22) 0%,
+    rgba(16, 185, 129, 0.12) 25%,
+    rgba(16, 185, 129, 0.05) 50%,
+    rgba(16, 185, 129, 0.015) 75%,
+    transparent 100%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 45%;
+  left: 15%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle at center,
+    rgba(16, 185, 129, 0.14) 0%,
+    rgba(16, 185, 129, 0.06) 35%,
+    rgba(16, 185, 129, 0.02) 65%,
+    transparent 100%
+  );
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-inner {
+  position: relative;
+  z-index: 1;
+}
+.hero-inner::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  right: -200px;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(
+    circle at center,
+    rgba(16, 185, 129, 0.11) 0%,
+    rgba(16, 185, 129, 0.05) 35%,
+    rgba(16, 185, 129, 0.015) 65%,
+    transparent 100%
+  );
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.parcours-section {
+  position: relative;
+}
+.parcours-section::before {
+  content: "";
+  position: absolute;
+  top: -500px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1600px;
+  height: 1000px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(16, 185, 129, 0.10) 0%,
+    rgba(16, 185, 129, 0.05) 35%,
+    rgba(16, 185, 129, 0.02) 60%,
+    transparent 90%
+  );
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: 0;
+}
+.parcours-section::after {
+  content: "";
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.07) 0%, transparent 70%);
+  filter: blur(110px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.platform-preview-section {
+  position: relative;
+}
+.platform-preview-section::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1400px;
+  height: 600px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(16, 185, 129, 0.10) 0%,
+    rgba(16, 185, 129, 0.04) 35%,
+    transparent 70%
+  );
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.testimonials-section {
+  position: relative;
+  overflow: hidden;
+}
+.testimonials-section::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1100px;
+  height: 600px;
+  background: radial-gradient(ellipse, rgba(16, 185, 129, 0.12), transparent 70%);
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.transformation-section {
+  position: relative;
+  overflow: hidden;
+}
+.transformation-section::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1200px;
+  height: 700px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(16, 185, 129, 0.18) 0%,
+    rgba(16, 185, 129, 0.08) 30%,
+    rgba(16, 185, 129, 0.02) 60%,
+    transparent 100%
+  );
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Effet Zeigarnik : texte de leçon coupé par un fade-out vers le bas. */
+.lesson-text-preview {
+  position: relative;
+  max-height: 200px;
+  overflow: hidden;
+}
+.lesson-text-preview::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(15, 15, 16, 0.7) 50%,
+    rgba(15, 15, 16, 0.98) 100%
+  );
+  pointer-events: none;
+}
+
+/* Grille de fond pour le mock chart (preview-chart). */
+.preview-chart-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+}

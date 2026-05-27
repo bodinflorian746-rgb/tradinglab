@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(npx tsc *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(xargs grep -l \"namespace Subscription\")",
+      "Bash(xargs grep -l \"interface Subscription \")",
+      "Bash(node -e \"require\\('dns'\\).lookup\\('api.supabase.com', \\(e,a\\)=>console.log\\(e?'FAIL '+e.code:'OK '+a\\)\\)\")",
+      "Bash(curl -sS -o /dev/null -w \"http_code=%{http_code}\\\\n\" --max-time 5 https://api.supabase.com/platform/health)",
+      "Bash(awk -F= '/^NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY|^STRIPE_SECRET_KEY/ { print $1\"=\" substr\\($2,1,8\\)\"…\" }' .env.local)"
     ]
   }
 }

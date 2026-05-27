@@ -48,7 +48,7 @@ export const PROFILES: ProfileTemplate[] = [
   {
     id: "breakout_hunter",
     name: "Chasseur de breakout",
-    description: "Tu prends les cassures avec conviction. Méfie-toi des fakeouts — la liquidité au-dessus/dessous des niveaux est ton ennemie.",
+    description: "Tu prends les cassures avec conviction. Méfie-toi des fakeouts, la liquidité au-dessus/dessous des niveaux est ton ennemie.",
     match: (s) => high(s.lecture_marche) + high(s.timing) - low(s.liquidite),
   },
   {
@@ -60,13 +60,13 @@ export const PROFILES: ProfileTemplate[] = [
   {
     id: "patient",
     name: "Trader patient",
-    description: "Tu attends les bons setups, tu ne forces rien. Continue de cultiver cette qualité — c'est l'arme #1 du trader long-terme.",
+    description: "Tu attends les bons setups, tu ne forces rien. Continue de cultiver cette qualité, c'est l'arme #1 du trader long-terme.",
     match: (s) => high(s.patience) + high(s.discipline) - (s.psychologie < 45 ? 20 : 0),
   },
   {
     id: "analyst_no_executor",
     name: "Bon analyste, mauvaise exécution",
-    description: "Tu lis correctement le marché, mais le spread, la session et le timing ruinent tes trades. La technique seule ne suffit pas — l'exécution est partie du edge.",
+    description: "Tu lis correctement le marché, mais le spread, la session et le timing ruinent tes trades. La technique seule ne suffit pas, l'exécution est partie du edge.",
     match: (s) => high(s.lecture_marche) + low(s.execution) + low(s.timing) * 0.5,
   },
   {
@@ -78,7 +78,7 @@ export const PROFILES: ProfileTemplate[] = [
   {
     id: "neutral",
     name: "Trader en développement",
-    description: "Pas encore assez de signaux pour identifier un profil dominant. Continue à jouer en alternant les jeux et les niveaux — ton profil se précisera.",
+    description: "Pas encore assez de signaux pour identifier un profil dominant. Continue à jouer en alternant les jeux et les niveaux, ton profil se précisera.",
     match: (s) => {
       // Score neutre si toutes les skills sont autour de 50 (peu de signal)
       const values = Object.values(s);
@@ -100,62 +100,62 @@ export const RECOMMENDATIONS_BY_SKILL: Record<SkillId, {
   discipline: {
     reason:      "Tu acceptes trop de trades médiocres. Le NO TRADE est aussi une décision.",
     gameUrl:     "/jeux/buy-sell-no-trade",
-    gameLabel:   "BUY / SELL / NO TRADE — niveau avancé",
+    gameLabel:   "BUY / SELL / NO TRADE : niveau avancé",
     lessonUrl:   "/formations/debutant/lecon1",
     lessonLabel: "La discipline de l'attente",
   },
   lecture_marche: {
     reason:      "Tu manques régulièrement le sens du marché ou le HTF.",
     gameUrl:     "/jeux/buy-sell-no-trade",
-    gameLabel:   "BUY / SELL / NO TRADE — niveau intermédiaire",
+    gameLabel:   "BUY / SELL / NO TRADE : niveau intermédiaire",
     lessonUrl:   "/formations/intermediaire/lecon1",
     lessonLabel: "Lecture HTF & structure",
   },
   gestion_risque: {
-    reason:      "Tes stops sont mal placés — trop serrés ou trop larges.",
+    reason:      "Tes stops sont mal placés, trop serrés ou trop larges.",
     gameUrl:     "/jeux/place-stop",
-    gameLabel:   "Quel stop va survivre ? — niveau intermédiaire",
+    gameLabel:   "Quel stop va survivre ? : niveau intermédiaire",
     lessonUrl:   "/formations/debutant/lecon3",
     lessonLabel: "Placement des stops",
   },
   timing: {
     reason:      "Tu entres trop tôt ou trop tard. Le timing est crucial.",
     gameUrl:     "/jeux/build-the-trade",
-    gameLabel:   "Build the Trade — choix de l'entrée",
+    gameLabel:   "Build the Trade : choix de l'entrée",
   },
   liquidite: {
     reason:      "Tu rates les sweeps ou tombes dans les pièges à liquidité.",
     gameUrl:     "/jeux/find-the-mistake",
-    gameLabel:   "Trouve l'erreur — niveau avancé",
+    gameLabel:   "Trouve l'erreur : niveau avancé",
     lessonUrl:   "/strategies/ict/lecon1",
     lessonLabel: "Liquidité & sweeps (ICT)",
   },
   structure: {
     reason:      "Tu lis mal les niveaux clés et la structure HTF.",
     gameUrl:     "/jeux/place-stop",
-    gameLabel:   "Quel stop va survivre ? — apprend la structure",
+    gameLabel:   "Quel stop va survivre ? : apprend la structure",
     lessonUrl:   "/strategies/support-resistance/lecon1",
     lessonLabel: "Support / Résistance",
   },
   psychologie: {
     reason:      "Tes décisions sont affectées par le FOMO, le revenge trade ou la surconfiance.",
     gameUrl:     "/jeux/find-the-mistake",
-    gameLabel:   "Trouve l'erreur — focus psychologie",
+    gameLabel:   "Trouve l'erreur : focus psychologie",
   },
   execution: {
     reason:      "Tu ignores le spread, la session et la volatilité. La technique seule ne suffit pas.",
     gameUrl:     "/jeux/find-the-mistake",
-    gameLabel:   "Trouve l'erreur — focus exécution",
+    gameLabel:   "Trouve l'erreur : focus exécution",
   },
   patience: {
     reason:      "Tu chases les mouvements au lieu d'attendre la bonne entrée.",
     gameUrl:     "/jeux/build-the-trade",
-    gameLabel:   "Build the Trade — choix de la confirmation",
+    gameLabel:   "Build the Trade : choix de la confirmation",
   },
   rr_management: {
     reason:      "Ton ratio risque/rendement est trop bas. Tu prends de mauvais trades à RR.",
     gameUrl:     "/jeux/build-the-trade",
-    gameLabel:   "Build the Trade — équilibre RR",
+    gameLabel:   "Build the Trade : équilibre RR",
     lessonUrl:   "/formations/debutant/lecon4",
     lessonLabel: "Ratio risque/rendement",
   },

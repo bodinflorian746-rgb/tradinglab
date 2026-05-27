@@ -1,21 +1,19 @@
 {
   "title": "Un tarif simple et transparent",
-  "subtitle": "Accès gratuit via un partenaire broker TradeScaleX, ou 19€/mois sans passer par un broker.",
+  "subtitle": "Accès gratuit pour les traders affiliés à un broker partenaire, ou 19€/mois en accès direct.",
   "broker": {
     "badge": "Recommandé",
-    "name": "Via partenaire broker",
+    "name": "Via broker partenaire",
     "price": "0€",
     "period": "/mois",
-    "description": "Accès complet via un lien d'affiliation TradeScaleX (ou d'un affilié TradeScaleX).",
+    "description": "Tu ouvres un compte broker via notre lien d'affiliation (ou celui d'un partenaire de notre réseau). En contrepartie, tu accèdes gratuitement à toute la plateforme.",
     "features": [
-      "Accès complet à la plateforme",
-      "Formations ICT complètes",
-      "Formations SMC complètes",
-      "Price Action avancé",
-      "Quiz & exercices sur graphiques",
-      "Nouvelles leçons chaque semaine",
-      "Support prioritaire",
-      "Accès à la communauté"
+      "Formations Trading complètes (Débutant → Avancé)",
+      "Module Macro-économie (FOMC, NFP, indicateurs clés)",
+      "Stratégies institutionnelles (SMC, ICT, Price Action)",
+      "Jeux et simulateurs (Place ton SL, Trouve l'erreur...)",
+      "Quiz et exercices sur graphiques réels",
+      "Contenu régulièrement mis à jour"
     ],
     "cta": "Accéder via un broker partenaire",
     "haveCode": "J'ai déjà un code d'accès"
@@ -24,18 +22,16 @@
     "name": "Accès direct",
     "price": "19€",
     "period": "/mois",
-    "description": "Sans passer par un broker, sans engagement.",
+    "description": "Pour ceux qui préfèrent un accès direct, sans affiliation broker. Mêmes contenus, sans engagement.",
     "features": [
-      "Accès complet à la plateforme",
-      "Formations ICT complètes",
-      "Formations SMC complètes",
-      "Price Action avancé",
-      "Quiz & exercices sur graphiques",
-      "Nouvelles leçons chaque semaine",
-      "Support prioritaire",
-      "Accès à la communauté"
+      "Formations Trading complètes (Débutant → Avancé)",
+      "Module Macro-économie (FOMC, NFP, indicateurs clés)",
+      "Stratégies institutionnelles (SMC, ICT, Price Action)",
+      "Jeux et simulateurs (Place ton SL, Trouve l'erreur...)",
+      "Quiz et exercices sur graphiques réels",
+      "Contenu régulièrement mis à jour"
     ],
     "cta": "Commencer l'accès direct"
   },
-  "guarantee": "Annulation à tout moment · Paiement sécurisé · Aucun engagement"
+  "guarantee": "Aucun engagement · Paiement sécurisé · Annulation en 1 clic"
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary } from "@/i18n/dictionaries";
+import CheckoutButton from "./CheckoutButton";
 
 function CheckIcon() {
   return (
@@ -110,12 +111,11 @@ export default async function PricingPage({
               ))}
             </ul>
 
-            <Link
-              href={h("/login")}
-              className="block text-center border border-zinc-700 hover:border-zinc-500 text-white font-semibold py-3 rounded-xl transition-colors text-sm"
+            <CheckoutButton
+              className="block w-full text-center border border-zinc-700 hover:border-zinc-500 text-white font-semibold py-3 rounded-xl transition-colors text-sm"
             >
               {t.direct.cta}
-            </Link>
+            </CheckoutButton>
           </div>
         </div>
 

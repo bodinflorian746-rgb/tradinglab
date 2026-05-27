@@ -1,16 +1,14 @@
-// Proxy Next.js 16 (anciennement middleware) — détection locale + redirect.
+// Proxy Next.js 16 (anciennement middleware) — détection locale + refresh
+// de session Supabase.
 //
 // Comportement :
-//   - Si l'URL commence déjà par /fr|/en|/es → laisse passer
-//   - Sinon : redirige vers /{locale}{pathname}
-//     locale = cookie tradinglab_locale > Accept-Language > DEFAULT_LOCALE
-//   - Set cookie tradinglab_locale (1 an) à chaque redirect pour persister
-//     le choix entre visites
-//
-// Pas de dépendance externe (pas de negotiator / intl-localematcher).
-// Parser Accept-Language minimaliste — suffisant pour 3 locales.
+//   1. Locale : si l'URL n'a pas de préfixe /fr|/en|/es → redirect avec préfixe
+//   2. Si locale OK → refresh de la session Supabase via cookies
+//   - locale = cookie tradinglab_locale > Accept-Language > DEFAULT_LOCALE
+//   - Le cookie tradinglab_locale est posé à chaque redirect (1 an)
 
 import { NextResponse, type NextRequest } from "next/server";
+import { createServerClient } from "@supabase/ssr";
 import { LOCALES, DEFAULT_LOCALE, LOCALE_COOKIE, type Locale } from "@/i18n/config";
 
 function parseAcceptLanguage(header: string | null): string[] {
@@ -44,24 +42,55 @@ function resolveLocale(request: NextRequest): Locale {
   return matchPreferredLocale(parseAcceptLanguage(request.headers.get("accept-language")));
 }
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // 1. Locale routing : redirige si pas de préfixe
   const pathnameHasLocale = LOCALES.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   );
-  if (pathnameHasLocale) return;
+  if (!pathnameHasLocale) {
+    const locale = resolveLocale(request);
+    const url = request.nextUrl.clone();
+    url.pathname = `/${locale}${pathname}`;
+    const response = NextResponse.redirect(url);
+    response.cookies.set(LOCALE_COOKIE, locale, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+    });
+    return response;
+  }
 
-  const locale = resolveLocale(request);
-  const url = request.nextUrl.clone();
-  url.pathname = `/${locale}${pathname}`;
+  // 2. Locale OK → refresh de la session Supabase via cookies.
+  // Pattern @supabase/ssr : créer une response, écouter les cookies set par
+  // supabase.auth.getUser(), les propager sur la response retournée.
+  let response = NextResponse.next({ request });
 
-  const response = NextResponse.redirect(url);
-  response.cookies.set(LOCALE_COOKIE, locale, {
-    path: "/",
-    maxAge: 60 * 60 * 24 * 365, // 1 an
-    sameSite: "lax",
-  });
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value),
+          );
+          response = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options),
+          );
+        },
+      },
+    },
+  );
+
+  // ⚠ getUser() refresh la session si nécessaire (et set les cookies via setAll).
+  await supabase.auth.getUser();
+
   return response;
 }
 

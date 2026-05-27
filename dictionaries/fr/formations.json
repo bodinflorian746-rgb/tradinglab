@@ -1,17 +1,23 @@
 {
+  "page": {
+    "hero": {
+      "title": "Trading",
+      "subtitle": "Maîtrise les bases et construis des setups solides à chaque étape de ta progression."
+    }
+  },
   "debutant": {
     "title": "Débutant",
     "description": "Les fondamentaux du trading pour partir sur de bonnes bases. Aucun prérequis.",
     "badge": "Gratuit",
     "lessons": {
       "lecon1": { "title": "C'est quoi le trading ?",                  "duration": "8 min"  },
-      "lecon2": { "title": "Acheter / Vendre — Long et Short",         "duration": "9 min"  },
+      "lecon2": { "title": "Acheter / Vendre. Long et Short",         "duration": "9 min"  },
       "lecon3": { "title": "Lire un graphique en bougies",             "duration": "10 min" },
       "lecon4": { "title": "Spread, Bid et Ask",                       "duration": "8 min"  },
       "lecon5": { "title": "Le Stop Loss",                             "duration": "10 min" },
       "lecon6": { "title": "Le Take Profit",                           "duration": "9 min"  },
       "lecon7": { "title": "Le Break Even",                            "duration": "8 min"  },
-      "lecon8": { "title": "Gestion du risque — le money management",  "duration": "12 min" },
+      "lecon8": { "title": "Gestion du risque, le money management",  "duration": "12 min" },
       "lecon9": { "title": "Les erreurs des débutants",                "duration": "11 min" }
     }
   },
@@ -20,15 +26,15 @@
     "description": "Structure de marché, zones institutionnelles et lecture avancée du prix.",
     "badge": "Intermédiaire",
     "lessons": {
-      "lecon1": { "title": "Structure de marché — BOS & CHoCH",           "duration": "20 min" },
-      "lecon2": { "title": "Zones clés — Support & Résistance",           "duration": "22 min" },
+      "lecon1": { "title": "Structure de marché. BOS & CHoCH",           "duration": "20 min" },
+      "lecon2": { "title": "Zones clés. Support & Résistance",           "duration": "22 min" },
       "lecon3": { "title": "Supply & Demand",                              "duration": "20 min" },
-      "lecon4": { "title": "Tendances — trader dans le sens du marché",    "duration": "18 min" },
+      "lecon4": { "title": "Tendances, trader dans le sens du marché",    "duration": "18 min" },
       "lecon5": { "title": "Confluences et probabilité",                   "duration": "20 min" },
-      "lecon6": { "title": "Fake Breakout — ne pas se faire piéger",       "duration": "18 min" },
+      "lecon6": { "title": "Fake Breakout, ne pas se faire piéger",       "duration": "18 min" },
       "lecon7": { "title": "Analyse Multi-Timeframe",                      "duration": "22 min" },
       "lecon8": { "title": "Plan de trade",                                "duration": "20 min" },
-      "lecon9": { "title": "Fibonacci — retracements et confluences",      "duration": "20 min" }
+      "lecon9": { "title": "Fibonacci, retracements et confluences",      "duration": "20 min" }
     }
   },
   "avance": {
@@ -36,15 +42,15 @@
     "description": "Liquidité institutionnelle, Smart Money et techniques de trading de précision.",
     "badge": "Avancé",
     "lessons": {
-      "lecon1": { "title": "Liquidité — comprendre les pools d'ordres",  "duration": "25 min" },
+      "lecon1": { "title": "Liquidité, comprendre les pools d'ordres",  "duration": "25 min" },
       "lecon2": { "title": "Fair Value Gap (FVG)",                       "duration": "20 min" },
       "lecon3": { "title": "Order Blocks",                               "duration": "24 min" },
-      "lecon4": { "title": "Killzones — les sessions qui comptent",      "duration": "20 min" },
-      "lecon5": { "title": "OTE — Optimal Trade Entry",                  "duration": "22 min" },
-      "lecon6": { "title": "Stop Hunts — la chasse aux stops",           "duration": "22 min" },
+      "lecon4": { "title": "Killzones, les sessions qui comptent",      "duration": "20 min" },
+      "lecon5": { "title": "OTE. Optimal Trade Entry",                  "duration": "22 min" },
+      "lecon6": { "title": "Stop Hunts, la chasse aux stops",           "duration": "22 min" },
       "lecon7": { "title": "Entrées de précision",                       "duration": "25 min" },
-      "lecon8": { "title": "Journaling — analyser pour progresser",      "duration": "18 min" },
-      "lecon9": { "title": "Backtesting — valider sa stratégie",         "duration": "22 min" }
+      "lecon8": { "title": "Journaling, analyser pour progresser",      "duration": "18 min" },
+      "lecon9": { "title": "Backtesting, valider sa stratégie",         "duration": "22 min" }
     }
   },
   "mt5": {
@@ -65,7 +71,7 @@
   },
   "macro": {
     "title": "Macro Trading",
-    "subtitle": "Comprends pourquoi les marchés bougent et utilise-le pour mieux trader. La macro n'est pas une théorie académique — c'est un outil de décision.",
+    "subtitle": "Comprends pourquoi les marchés bougent et utilise-le pour mieux trader. La macro n'est pas une théorie académique, c'est un outil de décision.",
     "breadcrumb": "Macro Trading",
     "levels": {
       "debutant": {
@@ -80,7 +86,7 @@
       },
       "avance": {
         "label": "Avancé",
-        "description": "FOMC, NFP, rendements obligataires US et régimes de marché — comprendre les news qui font bouger les marchés",
+        "description": "FOMC, NFP, rendements obligataires US et régimes de marché, comprendre les news qui font bouger les marchés",
         "count": "4 leçons"
       }
     },
