@@ -1,146 +1,162 @@
 {
   "hero": {
-    "badge": "Formations structurées · Du débutant à l'avancé",
-    "titleLine1": "Trader avec ton capital,",
-    "titleLine2": "à ton rythme.",
-    "subtitle": "Apprends le trading avec une méthode structurée et des cas pratiques calibrés pour les retails. Du débutant à l'avancé, à ton rythme.",
+    "badge": "★ FAIT PAR UN TRADER",
+    "titleLine1": "Mets toutes les chances de ton côté",
+    "titleLine2": "pour devenir rentable.",
+    "subtitle": "Une vraie méthode pour les vraies contraintes du trader retail.",
     "ctaPrimary": "Voir les accès",
-    "ctaSecondary": "Voir les formules"
+    "ctaSecondary": "J'ai déjà un code",
+    "bullets": [
+      { "title": "Apprends à ton rythme", "description": "Parcours structuré" },
+      { "title": "Passe à l'action", "description": "Entraîne-toi, simule, progresse" },
+      { "title": "Deviens rentable", "description": "Stratégies, discipline, régularité" }
+    ]
   },
-  "stats": {
-    "lessons": "Leçons disponibles",
-    "strategies": "Stratégies enseignées",
-    "levels": "3 niveaux",
-    "levelsLabel": "Débutant · Intermédiaire · Avancé",
-    "online": "100%",
-    "onlineLabel": "En ligne, à ton rythme"
+  "platformPreview": {
+    "eyebrow": "L'intérieur de la plateforme",
+    "title": "Voici à quoi ça ressemble.",
+    "subtitle": "Une interface claire, structurée, qui te guide étape par étape.",
+    "url": "tradescalex.com/fr/formations/strategies/smc/order-blocks",
+    "sidebarTitle": "Parcours stratégies",
+    "lessons": [
+      "Leçon 1 · Structure de marché",
+      "Leçon 2 · BOS & CHoCH",
+      "Leçon 3 · Liquidité",
+      "Leçon 4 · Order Blocks ICT",
+      "Leçon 5 · Fair Value Gaps",
+      "Leçon 6 · Killzones"
+    ],
+    "lessonTitle": "Order Blocks ICT",
+    "lessonSubtitle": "Les zones où les institutionnels placent leurs ordres.",
+    "chartBadge": "BULLISH ORDER BLOCK",
+    "chartObLabel": "OB",
+    "chartReactionLabel": "RÉACTION",
+    "intro": [
+      "**Qu'est-ce qu'un Order Block exactement ?**",
+      "Beaucoup de traders utilisent les Order Blocks sans vraiment savoir ce qu'ils représentent. Résultat : ils les identifient mal, les jouent au mauvais moment, ou les confondent avec d'autres zones.",
+      "Un Order Block, c'est la **dernière bougie opposée** avant un mouvement d'expansion violent. Sa puissance vient du fait que les institutionnels n'ont pas terminé de remplir leurs ordres à ce niveau, et reviendront probablement le tester avant de continuer leur mouvement.",
+      "Pour qu'un OB soit valide, il doit respecter **3 conditions précises** que la plupart des traders ignorent : la première c'est…"
+    ]
   },
-  "tradingSection": {
-    "eyebrow": "Formation Trading",
-    "title": "Apprends à lire les graphiques et construire des setups solides.",
-    "levels": {
-      "debutant": {
-        "label": "Débutant",
-        "description": "Les fondamentaux du trading pour partir sur de bonnes bases. Aucun prérequis.",
-        "count": "{n} leçons"
-      },
-      "intermediaire": {
-        "label": "Intermédiaire",
-        "description": "Structure de marché, zones institutionnelles et lecture avancée du prix.",
-        "count": "{n} leçons"
-      },
-      "avance": {
-        "label": "Avancé",
-        "description": "Liquidité institutionnelle, Smart Money et techniques de trading de précision.",
-        "count": "{n} leçons"
-      }
-    },
-    "cta": "Commencer"
-  },
-  "macroSection": {
-    "eyebrow": "Macro Trading",
-    "title": "Comprends pourquoi les marchés bougent et utilise-le pour mieux trader.",
-    "levels": {
-      "debutant": {
-        "label": "Débutant",
-        "description": "Les fondamentaux : qui contrôle le marché, pourquoi la macro compte en trading.",
-        "count": "6 leçons"
-      },
-      "intermediaire": {
-        "label": "Intermédiaire",
-        "description": "Hawkish vs Dovish, prévision vs réel, corrélations entre marchés.",
-        "count": "6 leçons"
-      },
-      "avance": {
-        "label": "Avancé",
-        "description": "FOMC, NFP, rendements obligataires US et régimes de marché, comprendre les news qui font bouger les marchés",
-        "count": "4 leçons"
-      }
-    },
-    "cta": "Commencer"
-  },
-  "audiencesSection": {
-    "eyebrow": "Ta progression",
-    "title": "Une plateforme de progression trading",
-    "subtitle": "Du temps adapté, un capital respecté, une méthode reproductible. TradeScaleX structure ta progression autour des vraies contraintes du trader retail, pas autour d'un trader idéal.",
-    "cards": [
+  "piliers": {
+    "title": "4 piliers, un seul objectif : devenir rentable",
+    "subtitle": "Du graphique au mindset, tu progresses sur tous les fronts.",
+    "items": [
       {
-        "title": "Progresser même avec peu de temps",
-        "description": "Sessions courtes, progression structurée. La méthode est pensée pour avancer en 15 à 30 minutes par jour, sans surveiller les marchés toute la journée."
+        "key": "trading",
+        "icon": "📊",
+        "title": "Trading",
+        "description": "Du graphique vide à ton premier trade structuré.",
+        "bullets": [
+          "Bases solides et setups éprouvés",
+          "Plans de trade détaillés",
+          "Quiz interactifs de validation",
+          "28 leçons · Tous niveaux"
+        ]
       },
       {
-        "title": "Trader intelligemment avec un petit capital",
-        "description": "Gestion du risque, R/R cohérent, scénarios calibrés sur des comptes retail. Chaque trade compte, la méthode aussi."
+        "key": "macro",
+        "icon": "🌍",
+        "title": "Macro",
+        "description": "Anticipe les mouvements avant qu'ils arrivent.",
+        "bullets": [
+          "FOMC, NFP, CPI décryptés",
+          "Corrélations entre actifs",
+          "Construire son biais hebdo",
+          "16 leçons · Tous niveaux"
+        ]
       },
       {
-        "title": "Développer de vrais réflexes marché",
-        "description": "Jeux interactifs, cas pratiques, scénarios réels. Pas de théorie isolée, on apprend à décider vite, dans des contextes concrets."
+        "key": "strategies",
+        "icon": "🎯",
+        "title": "Stratégies",
+        "description": "Les vraies méthodes utilisées par les traders rentables.",
+        "bullets": [
+          "Price Action, SMC, ICT",
+          "Multi-TF, Trend Following",
+          "Backtests et cas concrets",
+          "7 stratégies complètes"
+        ]
       },
       {
-        "title": "Construire une approche disciplinée et confiante",
-        "description": "Comprendre pourquoi un setup fonctionne, éviter les décisions impulsives, avancer avec une méthode claire. La confiance vient des règles, pas de la chance."
+        "key": "games",
+        "icon": "🎮",
+        "title": "Jeux",
+        "description": "Apprends en pratiquant, valide en jouant.",
+        "bullets": [
+          "Build the Trade",
+          "Place ton Stop",
+          "Buy/Sell, Find the Mistake",
+          "4 jeux interactifs uniques"
+        ]
       }
     ]
   },
-  "memberSection": {
-    "eyebrow": "Ce que tu trouveras",
-    "title": "Un parcours complet, du premier graphique à la stratégie avancée",
-    "subtitle": "Exemples et exercices calibrés pour 300€ à 2 500€. Leçons 15-25 min, structurées pour avancer à ton rythme sans être submergé.",
-    "cards": [
-      {
-        "title": "Formations par niveaux",
-        "description": "Débutant, Intermédiaire, Avancé, progression logique et sans trous. Tu construis sur des fondations solides."
-      },
-      {
-        "title": "Stratégies Price Action, SMC & ICT",
-        "description": "Trois approches complémentaires enseignées rigoureusement : principes, quand les utiliser, exemples concrets sur vrais graphiques."
-      },
-      {
-        "title": "Quiz et exercices pratiques",
-        "description": "À la fin de chaque leçon : questions ciblées et cas appliqués directement sur des graphiques pour valider ta compréhension."
-      },
-      {
-        "title": "Tableau de bord de progression",
-        "description": "Visualise exactement où tu en es : leçons complétées, ce qui reste à faire, progression étape par étape."
-      },
-      {
-        "title": "Contenu mis à jour régulièrement",
-        "description": "Les formations évoluent avec le marché. Accès toujours à jour sans frais supplémentaires."
-      },
-      {
-        "title": "Accès desktop et mobile",
-        "description": "Apprends quand et où tu veux : ton ordinateur ou ton téléphone. Structuré pour les deux."
-      }
-    ]
-  },
-  "methodSection": {
-    "eyebrow": "Une approche pédagogique sérieuse",
+  "approche": {
+    "eyebrow": "L'approche",
     "titleLine1": "Apprendre avec méthode,",
-    "titleLine2": "pas au hasard",
-    "subtitle": "Le trading s'apprend. Mais il s'apprend mieux avec une structure claire, des objectifs définis et des outils pour mesurer ta progression. TradeScaleX est construit autour de cette conviction.",
-    "cta": "Voir les formations",
-    "benefits": [
+    "titleLine2": "pas au hasard.",
+    "features": [
       {
-        "title": "Un parcours structuré, pas du contenu en vrac",
-        "description": "Les leçons s'enchaînent dans un ordre logique et progressif. Tu construis tes connaissances sur des bases solides, sans sauter d'étapes essentielles."
+        "icon": "⚡",
+        "title": "\"J'ai pas le temps\"",
+        "description": "Sessions de 15 à 30 minutes par jour. Tu avances vraiment, même en bossant en CDI."
       },
       {
-        "title": "Tu valides ce que tu as compris, leçon par leçon",
-        "description": "Chaque module se termine par un quiz. Tu sais exactement ce que tu maîtrises et ce sur quoi tu dois encore travailler."
+        "icon": "💰",
+        "title": "\"J'ai pas le capital\"",
+        "description": "Stratégies et gestion du risque calibrées pour les petits comptes, de 300€ à 2 500€."
       },
       {
-        "title": "Des stratégies enseignées dans leur contexte",
-        "description": "Price Action, SMC, ICT, chaque méthode est expliquée avec ses fondements, ses conditions d'application et des exemples tirés de marchés réels."
+        "icon": "📺",
+        "title": "\"J'ai déjà tout vu sur YouTube\"",
+        "description": "Pédagogie interactive avec validation à chaque étape. Tu comprends pour de vrai, pas juste tu regardes."
       },
       {
-        "title": "Un rythme qui s'adapte au tien",
-        "description": "Pas de deadline, pas de pression. Tu avances à ta vitesse et tu reviens sur une leçon autant de fois que nécessaire."
+        "icon": "🎯",
+        "title": "\"Je suis débutant total\"",
+        "description": "Parcours progressif structuré. Tu démarres au niveau 1, tu avances étape par étape, à ton rythme."
+      },
+      {
+        "icon": "🔬",
+        "title": "\"Je suis déjà intermédiaire\"",
+        "description": "Modules SMC, ICT, Multi-TF, macro avancée. Tu approfondis exactement ce qui te manque."
+      },
+      {
+        "icon": "🛡️",
+        "title": "\"Les autres plateformes m'ont déçu\"",
+        "description": "Aucune promesse magique. Juste une vraie méthode, des outils interactifs, et des résultats qui dépendent de ton travail."
       }
     ]
   },
-  "finalCta": {
-    "title": "Prêt à rejoindre la plateforme ?",
-    "subtitle": "Accès complet via broker partenaire (0€) ou abonnement direct (19€/mois). Code d'accès requis à l'inscription.",
+  "testimonialsSection": {
+    "eyebrow": "Ils ont testé",
+    "title": "Ce qu'ils en disent.",
+    "trustRating": "4.3/5",
+    "trustText": "Validé par des traders pros et les premiers utilisateurs"
+  },
+  "leaveReview": {
+    "title": "Tu utilises TradeScaleX ?",
+    "subtitle": "Ton retour nous aide à améliorer la plateforme. Ça prend 2 minutes.",
+    "ctaLabel": "Laisser un avis"
+  },
+  "buildSpotlight": {
+    "tag": "Le jeu qui fait l'unanimité",
+    "title": "Build ton trade",
+    "description": "Le jeu que même les traders pros n'arrivent pas à lâcher. Apprends à structurer un trade complet pas à pas : biais, zone d'entrée, stop, target, avec des scénarios marché réels."
+  },
+  "transformation": {
+    "label": "★ Le moment de décider",
+    "titlePrefix": "Tu vas faire quoi",
+    "titleAccent": "demain ?",
+    "choiceA": {
+      "label": "OPTION A",
+      "body": "Es-tu sûr de vouloir fermer cet onglet et continuer exactement ce que tu fais aujourd'hui ? Regarder une vidéo YouTube de plus. Suivre un gourou Telegram qui te promet 5K€/mois. Demain sera comme aujourd'hui."
+    },
+    "choiceB": {
+      "label": "OPTION B",
+      "body": "Ou tu décides que c'est le moment de t'y mettre vraiment ? Apprendre sérieusement. Pratiquer. Progresser. Avec une vraie méthode, à ton rythme, pour mettre toutes les chances de ton côté."
+    },
     "ctaPrimary": "Voir les accès",
     "ctaSecondary": "J'ai déjà un code"
   }
