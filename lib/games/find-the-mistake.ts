@@ -57,7 +57,7 @@ export const MISTAKE_LABELS: Record<MistakeId, string> = {
   volatility_ignored:          "Volatilité ignorée",
   fomo_after_pump:             "Entrée FOMO",
   revenge_trade:               "Revenge trade",
-  range_middle:                "Trade dans range sale",
+  range_middle:                "Trade sans biais directionnel",
   sweep_ignored:               "Liquidité ignorée",
   mitigation_misread:          "Mitigation mal lue",
   bad_timing:                  "Mauvais timing",

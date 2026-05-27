@@ -50,7 +50,7 @@ export function NYOpenExpansionDiagram({ className = "", locale = "fr" }: NYOpen
         b1Title: "Pre-market — velas planas",
         b1Body: "Volumen bajo, range estrecho.",
         b2Title: "NY Open — impulso explosivo",
-        b2Body: "El volumen explota a las 13h30 → sweep + rechazo visible inmediato.",
+        b2Body: "El volumen explota a las 14h30 o 15h30 (París) → sweep + rechazo visible inmediato.",
         leg1: "Pre-market = velas planas, volumen bajo",
         leg2: "NY Open = impulso explosivo y luego sweep y rechazo",
       }
@@ -61,7 +61,7 @@ export function NYOpenExpansionDiagram({ className = "", locale = "fr" }: NYOpen
         b1Title: "Pré-market — bougies plates",
         b1Body: "Volume faible, range étroit.",
         b2Title: "NY Open — impulsion explosive",
-        b2Body: "Volume explose à 13h30 → sweep + rejet visible immédiat.",
+        b2Body: "Volume explose à 14h30 ou 15h30 (Paris) → sweep + rejet visible immédiat.",
         leg1: "Pré-market = bougies plates, faible volume",
         leg2: "NY Open = impulsion explosive puis sweep et rejet",
       };

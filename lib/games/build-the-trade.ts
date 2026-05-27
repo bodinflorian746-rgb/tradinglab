@@ -815,8 +815,8 @@ function shapeFvgContinuation(rng: () => number, m: number): ShapeOutput {
   p = past[past.length - 1].c;
   const entryRef = p;
   const fut: Candle[] = [];
-  // Dip léger qui touche fvgLow puis rallye
-  fut.push({ o: p, c: target + 0.1 * m, h: p + 0.1 * m, l: fvgLow + 0.1 * m });
+  // Dip léger qui touche le FVG sans le mitiger entièrement (~25-50% max), puis rallye
+  fut.push({ o: p, c: target + 0.1 * m, h: p + 0.1 * m, l: fvgLow + 0.75 * m });
   p = target + 0.1 * m;
   fut.push(candle(p, p + 0.4 * m, (0.2 + rng() * 0.15) * m, 0.1));
   p += 0.4 * m;

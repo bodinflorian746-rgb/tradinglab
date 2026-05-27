@@ -438,7 +438,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     rationales: {
       BUY: "✗ Pas de signal long. Le sweep récent du haut neutralise la zone basse comme support fiable. Pas d'edge.",
       SELL: "✗ Symétrique : le sweep récent du bas neutralise la zone haute. Le marché s'est nettoyé des deux côtés.",
-      NO_TRADE: "✓ Range sale = pas de structure exploitable. Attendre une cassure confirmée OU une accumulation reconnaissable.",
+      NO_TRADE: "✓ Pas de biais directionnel = pas de structure exploitable. Attendre une cassure confirmée OU une accumulation reconnaissable.",
     },
     lessons: {
       intermediate: "Quand un range a fait du sweep des deux côtés sans direction, attendre la sortie. Pas négociable.",
@@ -1191,7 +1191,7 @@ function genCounterTrendBounce(rng: () => number, m: number, d: Difficulty): Buy
 
 function genDirtyRangeSweep(rng: () => number, m: number, d: Difficulty): BuySellChart {
   // Range avec un sweep du haut + un sweep du bas, dernière candle au milieu.
-  // Future : continue d'osciller (range sale, pas d'edge).
+  // Future : continue d'osciller (pas de biais directionnel, pas d'edge).
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const S = 1;
