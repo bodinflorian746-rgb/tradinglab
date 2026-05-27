@@ -133,6 +133,22 @@ export default function ContentFr() {
             </ul>
           </div>
 
+          {/* Bloc fractalité — fondement du multi-timeframe */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">La fractalité des marchés</h2>
+
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">
+              Les marchés sont fractals : les mêmes patterns se répètent à toutes les échelles temporelles. Un mouvement impulsif sur H4 ressemble à un mouvement impulsif sur M15. Une consolidation Daily a la même forme qu&apos;une consolidation H1. C&apos;est précisément cette propriété qui justifie l&apos;analyse multi-timeframe : ce qui paraît être un retournement clair sur M15 peut n&apos;être qu&apos;un simple retracement à l&apos;intérieur d&apos;une impulsion Daily.
+            </p>
+
+            <ul className="space-y-1 text-sm text-zinc-300">
+              <li>- Les structures (BOS, CHoCH, ranges, impulsions) se forment à toutes les échelles</li>
+              <li>- Un swing M15 entier peut n&apos;être qu&apos;une seule bougie sur H4</li>
+              <li>- Sans relier les échelles, on prend un fragment pour le tout</li>
+              <li>- La fractalité explique pourquoi le HTF contient toujours le LTF</li>
+            </ul>
+          </section>
+
           {/* Bloc 3 — LE PIÈGE DU GRAPHIQUE UNIQUE */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Le piège du graphique unique</h2>

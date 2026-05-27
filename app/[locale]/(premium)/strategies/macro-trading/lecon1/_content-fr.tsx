@@ -61,7 +61,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Le marché réagit souvent trop vite après le FOMC. La première impulsion attire l&apos;attention. Le retour de balancier crée souvent le vrai setup exploitable.
+              Le marché réagit souvent trop vite après le FOMC. La première impulsion attire l'attention. Le retour de balancier crée souvent le vrai setup exploitable.
             </p>
           </div>
 
@@ -113,7 +113,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-amber-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « La décision FOMC est rarement le signal. C&apos;est ce qui se passe APRÈS l&apos;impulsion initiale qui crée le vrai trade. »
+                « La décision FOMC est rarement le signal. C'est ce qui se passe APRÈS l'impulsion initiale qui crée le vrai trade. »
               </p>
             </div>
           </section>
@@ -138,48 +138,48 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La décision FOMC déclenche presque toujours une réaction immédiate du marché, mais cette première impulsion est rarement le vrai mouvement directionnel. Elle est portée par l&apos;émotion des participants qui surinterprètent le ton de Powell, le wording des minutes, ou un changement de point de vue marginal. Cette réaction émotionnelle pousse souvent le prix au-delà du niveau structurel qui aurait été cohérent avec le contenu réel de la décision, d&apos;où l&apos;excès.
+              La décision FOMC déclenche presque toujours une réaction immédiate du marché, mais cette première impulsion est rarement le vrai mouvement directionnel. Elle est portée par l'émotion des participants qui surinterprètent le ton de Powell, le wording des minutes, ou un changement de point de vue marginal. Cette réaction émotionnelle pousse souvent le prix au-delà du niveau structurel qui aurait été cohérent avec le contenu réel de la décision, d'où l'excès.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : prix avant FOMC 4 660 $ ; première impulsion bearish jusqu&apos;à 4 590 $ ; mouvement initial de 70 $ en quelques minutes. Trente minutes plus tard : retour du prix vers 4 638 $, correction de la majorité de l&apos;impulsion initiale.
+                XAU/USD : prix avant FOMC 4 660 $ ; première impulsion bearish jusqu'à 4 590 $ ; mouvement initial de 70 $ en quelques minutes. Trente minutes plus tard : retour du prix vers 4 638 $, correction de la majorité de l'impulsion initiale.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Points actionnables : la première impulsion FOMC est souvent une réaction émotionnelle, pas une lecture structurelle</li>
               <li>- Le mouvement initial dépasse fréquemment ce que justifient les données réelles</li>
-              <li>- Trader l&apos;impulsion = trader le bruit, pas la décision</li>
-              <li>- Le vrai mouvement directionnel arrive après, parfois dans l&apos;heure, parfois plus tard</li>
+              <li>- Trader l'impulsion = trader le bruit, pas la décision</li>
+              <li>- Le vrai mouvement directionnel arrive après, parfois dans l'heure, parfois plus tard</li>
             </ul>
           </section>
 
           {/* Bloc 4 — LE SIGNAL APPARAÎT APRÈS L'ESSOUFFLEMENT */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Le signal apparaît après l&apos;essoufflement</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Le signal apparaît après l'essoufflement</h2>
 
             <div className="my-8">
               <FOMCExhaustionDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              L&apos;essoufflement est le signal-clé du FOMC Fade. Après l&apos;impulsion initiale, le marché atteint un niveau où il n&apos;arrive plus à progresser : les bougies suivantes affichent des mèches de rejet répétées, l&apos;accélération s&apos;arrête, le prix échoue à imprimer un nouveau plus haut (ou plus bas) significatif. C&apos;est la signature visible que l&apos;émotion s&apos;épuise, les participants qui ont chassé l&apos;impulsion réalisent qu&apos;ils sont seuls, et la pression dans la direction initiale faiblit. Ce point d&apos;essoufflement est la condition préalable à l&apos;exécution du fade.
+              L'essoufflement est le signal-clé du FOMC Fade. Après l'impulsion initiale, le marché atteint un niveau où il n'arrive plus à progresser : les bougies suivantes affichent des mèches de rejet répétées, l'accélération s'arrête, le prix échoue à imprimer un nouveau plus haut (ou plus bas) significatif. C'est la signature visible que l'émotion s'épuise, les participants qui ont chassé l'impulsion réalisent qu'ils sont seuls, et la pression dans la direction initiale faiblit. Ce point d'essoufflement est la condition préalable à l'exécution du fade.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : impulsion bullish 4 640 $ → 4 705 $ après FOMC. Au sommet, trois bougies M15 consécutives impriment des mèches hautes de 6-8 $ sans clôturer au-dessus de 4 705. L&apos;accélération est cassée, le marché ne fait plus de nouveaux plus hauts. Quelques bougies plus tard, le prix corrige vers 4 670 $, le fade fonctionne.
+                XAU/USD : impulsion bullish 4 640 $ → 4 705 $ après FOMC. Au sommet, trois bougies M15 consécutives impriment des mèches hautes de 6-8 $ sans clôturer au-dessus de 4 705. L'accélération est cassée, le marché ne fait plus de nouveaux plus hauts. Quelques bougies plus tard, le prix corrige vers 4 670 $, le fade fonctionne.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Points actionnables : essoufflement = mèches de rejet répétées + perte d&apos;accélération</li>
-              <li>- Échec à imprimer un nouveau plus haut / plus bas significatif = signal de fin d&apos;impulsion</li>
-              <li>- Pas d&apos;essoufflement visible = on ne fade pas, on attend</li>
-              <li>- Le M15 est l&apos;échelle de lecture de l&apos;essoufflement</li>
+              <li>- Points actionnables : essoufflement = mèches de rejet répétées + perte d'accélération</li>
+              <li>- Échec à imprimer un nouveau plus haut / plus bas significatif = signal de fin d'impulsion</li>
+              <li>- Pas d'essoufflement visible = on ne fade pas, on attend</li>
+              <li>- Le M15 est l'échelle de lecture de l'essoufflement</li>
             </ul>
           </section>
 
@@ -192,7 +192,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le FOMC Fade ne consiste pas à anticiper un retournement complet de tendance, c&apos;est un trade de retour PARTIEL, calibré sur la zone où la majorité de l&apos;impulsion excessive a été corrigée. La structure doit rester claire : entrée après stabilisation du prix au point d&apos;essoufflement, stop loss serré juste au-delà de l&apos;extrémité de l&apos;impulsion, target sur le niveau structurel d&apos;où l&apos;impulsion est partie. Sans ces trois éléments alignés, le setup n&apos;est pas valide.
+              Le FOMC Fade ne consiste pas à anticiper un retournement complet de tendance, c'est un trade de retour PARTIEL, calibré sur la zone où la majorité de l'impulsion excessive a été corrigée. La structure doit rester claire : entrée après stabilisation du prix au point d'essoufflement, stop loss serré juste au-delà de l'extrémité de l'impulsion, target sur le niveau structurel d'où l'impulsion est partie. Sans ces trois éléments alignés, le setup n'est pas valide.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -203,31 +203,31 @@ export default function ContentFr() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Points actionnables : le fade vise un retour partiel, typiquement 50-80 % de l&apos;impulsion</li>
-              <li>- Entrée après stabilisation visible, jamais en cours d&apos;impulsion</li>
-              <li>- SL serré au-delà de l&apos;extrémité, structure d&apos;invalidation claire</li>
-              <li>- Target sur le niveau structurel précédent l&apos;impulsion (ancien support / résistance)</li>
+              <li>- Points actionnables : le fade vise un retour partiel, typiquement 50-80 % de l'impulsion</li>
+              <li>- Entrée après stabilisation visible, jamais en cours d'impulsion</li>
+              <li>- SL serré au-delà de l'extrémité, structure d'invalidation claire</li>
+              <li>- Target sur le niveau structurel précédent l'impulsion (ancien support / résistance)</li>
             </ul>
           </section>
 
           {/* Bloc 6 — PLAN D'APPLICATION */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan d&apos;application : un FOMC Fade complet sur XAU/USD</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan d'application : un FOMC Fade complet sur XAU/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Voici la séquence complète d&apos;un setup FOMC Fade, du contexte pré-FOMC à la gestion du risque. Cinq étapes, chacune avec son rôle.
+              Voici la séquence complète d'un setup FOMC Fade, du contexte pré-FOMC à la gestion du risque. Cinq étapes, chacune avec son rôle.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Étape 1. Contexte H4</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : XAU sous résistance H4 à 4 680 $, marché attentiste avant FOMC, compression de volatilité</li>
-                <li>- Conclusion : forte probabilité d&apos;expansion sur la décision, on prépare le scénario de fade</li>
+                <li>- Conclusion : forte probabilité d'expansion sur la décision, on prépare le scénario de fade</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 2. Réaction FOMC</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : première impulsion bearish 4 660 $ → 4 590 $, mouvement de 70 $ en quelques minutes, volatilité agressive</li>
-                <li>- Conclusion : réaction potentiellement excessive, on attend l&apos;essoufflement, pas l&apos;entrée immédiate</li>
+                <li>- Conclusion : réaction potentiellement excessive, on attend l'essoufflement, pas l'entrée immédiate</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 3. Essoufflement</p>
@@ -239,15 +239,15 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Exécution du Fade</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 4 600 $</li>
-                <li>- Stop loss : 4 578 $ (au-delà de l&apos;extrémité de l&apos;impulsion)</li>
+                <li>- Stop loss : 4 578 $ (au-delà de l'extrémité de l'impulsion)</li>
                 <li>- Target : 4 638 $ (retour partiel vers le niveau pré-FOMC)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 5. Gestion du risque</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Volatilité supérieure à la normale → taille de position prudente</li>
-                <li>- Exécution uniquement après stabilisation, pas en cours d&apos;impulsion</li>
-                <li>- Le danger principal reste l&apos;entrée prématurée dans l&apos;impulsion initiale</li>
+                <li>- Exécution uniquement après stabilisation, pas en cours d'impulsion</li>
+                <li>- Le danger principal reste l'entrée prématurée dans l'impulsion initiale</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -270,9 +270,9 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur TradingView, identifie un FOMC récent sur EUR/USD ou XAU/USD et reconstruis a posteriori le setup FOMC Fade."
             steps={[
-              "Repère la bougie M15 du FOMC : note le prix avant l&apos;impulsion, l&apos;amplitude de la première réaction, et le niveau extrême atteint.",
-              "Observe ce qui se passe dans les 30-60 minutes suivantes : essoufflement visible ? mèches de rejet ? stabilisation ? Note le point précis où la pression s&apos;arrête.",
-              "Si la stabilisation s&apos;est produite : reconstruis le setup fade (entrée, SL serré, target sur le niveau pré-FOMC). Vérifie a posteriori si le R/R aurait été favorable. Si pas de stabilisation visible : note pourquoi le setup n&apos;aurait pas dû être pris.",
+              "Repère la bougie M15 du FOMC : note le prix avant l'impulsion, l'amplitude de la première réaction, et le niveau extrême atteint.",
+              "Observe ce qui se passe dans les 30-60 minutes suivantes : essoufflement visible ? mèches de rejet ? stabilisation ? Note le point précis où la pression s'arrête.",
+              "Si la stabilisation s'est produite : reconstruis le setup fade (entrée, SL serré, target sur le niveau pré-FOMC). Vérifie a posteriori si le R/R aurait été favorable. Si pas de stabilisation visible : note pourquoi le setup n'aurait pas dû être pris.",
             ]}
           />
 
@@ -333,7 +333,7 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Module Macro Trading. Vue d&apos;ensemble
+                Module Macro Trading. Vue d'ensemble
               </Link>
               <Link href="/strategies/macro-trading/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Leçon suivante

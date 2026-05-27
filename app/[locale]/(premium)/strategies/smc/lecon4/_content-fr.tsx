@@ -237,7 +237,7 @@ export default function ContentFr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Sweep sans FVG clair</span> <span className="text-zinc-300">= manque de déséquilibre exploitable.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">FVG déjà totalement mitigé</span> <span className="text-zinc-300">= inefficience déjà comblée.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Contexte de range sale</span> <span className="text-zinc-300">= absence de direction HTF.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Contexte sans biais directionnel</span> <span className="text-zinc-300">= absence de direction HTF.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">News macro majeure imminente</span> <span className="text-zinc-300">= volatilité imprévisible.</span></div>
             </div>
           </section>
