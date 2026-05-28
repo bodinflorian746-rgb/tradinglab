@@ -236,9 +236,9 @@ export const REVIEWS: readonly Review[] = [
       es: "Trader ICT · 2 años de experiencia",
     },
     text: {
-      fr: "J'utilise les concepts ICT depuis 2 ans. Je pensais bien maîtriser, sauf que la leçon sur les FVG m'a fait réaliser que je les jouais mal. Une FVG non comblée totalement peut servir de support après réaction, j'avais jamais vu ça expliqué clairement nulle part.",
-      en: "I've been using ICT concepts for 2 years. I thought I had it nailed, until the FVG lesson made me realize I was playing them wrong. An FVG that's not fully filled can act as support after a reaction, I'd never seen that explained clearly anywhere.",
-      es: "Llevo 2 años usando los conceptos ICT. Pensaba que los dominaba, hasta que la lección sobre las FVG me hizo darme cuenta de que los jugaba mal. Una FVG no completamente cubierta puede servir de soporte tras reacción, nunca lo había visto explicado tan claro en ningún lado.",
+      fr: "Les leçons et les jeux sont bien faits, j'ai appris des choses même après 2 ans d'ICT. Ce qui me manque vraiment c'est l'aspect communauté : pas de chat, pas d'espace pour échanger avec d'autres traders ou poser des questions. Du coup tu apprends seul. J'espère que ça viendra.",
+      en: "The lessons and games are well made, I learned things even after 2 years of ICT. What I really miss is the community aspect: no chat, no space to exchange with other traders or ask questions. So you learn on your own. I hope it's coming.",
+      es: "Las lecciones y los juegos están bien hechos, aprendí cosas incluso después de 2 años de ICT. Lo que realmente me falta es el aspecto comunidad: no hay chat, ni espacio para intercambiar con otros traders o hacer preguntas. Así que aprendes solo. Espero que llegue.",
     },
   },
   {

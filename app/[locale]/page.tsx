@@ -417,19 +417,23 @@ export default async function Home({
                   {t.platformPreview.lessonSubtitle}
                 </p>
 
-                {/* Chart Order Block (SVG copié pixel-perfect du mockup) */}
-                <div className="relative h-[220px] overflow-hidden rounded-[10px] border border-zinc-800 bg-black/30 p-6">
-                  <div aria-hidden="true" className="preview-chart-grid absolute inset-6" />
+                {/* Chart Order Block (SVG copié pixel-perfect du mockup).
+                    Hauteur pilotée par le ratio du viewBox (500:180) via
+                    w-full + h-auto : le SVG remplit la largeur et le cadre
+                    suit sa hauteur, donc plus d'espace noir vide sur mobile.
+                    Padding réduit en mobile (p-3) pour maximiser la surface. */}
+                <div className="relative overflow-hidden rounded-[10px] border border-zinc-800 bg-black/30 p-3 md:p-6">
+                  <div aria-hidden="true" className="preview-chart-grid absolute inset-3 md:inset-6" />
                   <svg
                     viewBox="0 0 500 180"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="absolute inset-6"
-                    style={{ width: "calc(100% - 3rem)", height: "calc(100% - 3rem)" }}
+                    preserveAspectRatio="xMidYMid meet"
+                    className="relative block h-auto w-full"
                     aria-hidden="true"
                   >
                     {/* Zone Order Block (englobe high/low de la bougie OB) */}
                     <rect x="75" y="105" width="405" height="37" fill="rgba(16,185,129,0.15)" stroke="#10b981" strokeWidth="1" strokeDasharray="3 3" />
-                    <text x="105" y="100" fill="#10b981" fontSize="9" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartBadge}</text>
+                    <text x="475" y="137" textAnchor="end" fill="#10b981" fontSize="11" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartBadge}</text>
 
                     {/* Bougies de consolidation */}
                     <rect x="20" y="115" width="7" height="20" fill="#ef4444" />
@@ -442,7 +446,7 @@ export default async function Home({
                     {/* Bougie OB (dernière baissière avant expansion) */}
                     <rect x="80" y="110" width="9" height="25" fill="#ef4444" stroke="#fbbf24" strokeWidth="1.5" />
                     <line x1="84.5" y1="105" x2="84.5" y2="142" stroke="#b91c1c" strokeWidth="1.5" />
-                    <text x="76" y="158" fill="#fbbf24" fontSize="8" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartObLabel}</text>
+                    <text x="76" y="158" fill="#fbbf24" fontSize="11" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartObLabel}</text>
 
                     {/* Mouvement explosif bullish (BOS) */}
                     <rect x="105" y="80" width="7" height="35" fill="#10b981" />
@@ -464,12 +468,13 @@ export default async function Home({
                     <rect x="260" y="95" width="7" height="30" fill="#ef4444" />
                     <line x1="263.5" y1="85" x2="263.5" y2="130" stroke="#b91c1c" strokeWidth="1.5" />
 
-                    {/* Bougie de mitigation (entre dans la zone OB puis rejette) */}
-                    <rect x="280" y="110" width="9" height="20" fill="#10b981" stroke="#fbbf24" strokeWidth="1.5" />
-                    <line x1="284.5" y1="105" x2="284.5" y2="140" stroke="#059669" strokeWidth="1.5" />
-                    <text x="272" y="155" fill="#fbbf24" fontSize="8" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartReactionLabel}</text>
+                    {/* Bougie de mitigation : retour BAISSIER qui rentre dans l'OB (rouge) */}
+                    <rect x="280" y="115" width="9" height="20" fill="#ef4444" stroke="#fbbf24" strokeWidth="1.5" />
+                    <line x1="284.5" y1="108" x2="284.5" y2="140" stroke="#b91c1c" strokeWidth="1.5" />
+                    <text x="266" y="155" fill="#fbbf24" fontSize="11" fontFamily="monospace" fontWeight="700">MITIGATION</text>
 
-                    {/* Rebond depuis OB */}
+                    {/* Rebond depuis OB = RÉACTION haussière (vert) */}
+                    <text x="300" y="42" fill="#10b981" fontSize="11" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartReactionLabel}</text>
                     <rect x="305" y="85" width="7" height="25" fill="#10b981" />
                     <line x1="308.5" y1="78" x2="308.5" y2="115" stroke="#059669" strokeWidth="1.5" />
                     <rect x="325" y="60" width="7" height="30" fill="#10b981" />
