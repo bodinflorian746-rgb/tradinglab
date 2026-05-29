@@ -37,14 +37,6 @@
       "generic": "Ha ocurrido un error. Inténtalo de nuevo."
     }
   },
-  "verifyEmail": {
-    "title": "Verifica tu email",
-    "sentTo": "Te hemos enviado un código de activación a:",
-    "body": "Abre tu correo e introduce el código en la página de activación para empezar tus 48 h de prueba gratis.",
-    "hint": "Revisa tu carpeta de spam si no lo ves en unos minutos.",
-    "ctaActivate": "Ya tengo mi código",
-    "backToLogin": "Volver al inicio de sesión"
-  },
   "activateCode": {
     "title": "Activar tu código",
     "subtitle": "Introduce el código recibido por email para empezar tus 48 h de prueba gratis.",

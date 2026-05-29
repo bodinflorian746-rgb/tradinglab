@@ -37,14 +37,6 @@
       "generic": "Une erreur est survenue. Réessaie."
     }
   },
-  "verifyEmail": {
-    "title": "Vérifie ton email",
-    "sentTo": "On t'a envoyé un code d'activation à :",
-    "body": "Ouvre ton mail et entre le code sur la page d'activation pour démarrer tes 48h d'essai gratuit.",
-    "hint": "Pense à vérifier tes spams si tu ne le vois pas dans quelques minutes.",
-    "ctaActivate": "J'ai mon code",
-    "backToLogin": "Retour à la connexion"
-  },
   "activateCode": {
     "title": "Activer ton code",
     "subtitle": "Entre le code reçu par email pour démarrer tes 48h d'essai gratuit.",

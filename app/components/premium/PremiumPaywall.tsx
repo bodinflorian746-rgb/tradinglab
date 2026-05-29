@@ -16,63 +16,78 @@ type PremiumPaywallProps = {
 
 type Strings = {
   eyebrow: string;
-  title: string;
+  titleLocked: string;
+  titleHasCode: string;
   subtitleNotLoggedIn: string;
-  subtitleTrialExpired: string;
-  ctaTrial: string;
+  subtitleHasCode: string;
+  ctaSignup: string;
+  ctaActivate: string;
   ctaSubscribe: string;
-  secondaryAccessCode: string;
+  ctaLogin: string;
 };
 
 const STRINGS: Record<Locale, Strings> = {
   fr: {
     eyebrow: "Accès Premium",
-    title: "Accès Premium requis",
+    titleLocked: "Accès Premium requis",
+    titleHasCode: "Active tes 48h gratuites",
     subtitleNotLoggedIn:
       "Crée ton compte pour profiter de 48h d'essai gratuit, puis débloque tout TradeScaleX.",
-    subtitleTrialExpired:
-      "Ton essai gratuit est terminé. Choisis ton accès pour continuer à apprendre.",
-    ctaTrial: "Essayer 48h gratuit",
+    subtitleHasCode:
+      "Tu as reçu un code par email à ton inscription. Entre-le pour activer tes 48h gratuites et débloquer tout TradeScaleX.",
+    ctaSignup: "Essayer 48h gratuit",
+    ctaActivate: "J'ai mon code",
     ctaSubscribe: "Voir les abonnements",
-    secondaryAccessCode: "J'ai un code d'accès",
+    ctaLogin: "Se connecter",
   },
   en: {
     eyebrow: "Premium access",
-    title: "Premium access required",
+    titleLocked: "Premium access required",
+    titleHasCode: "Activate your 48h free trial",
     subtitleNotLoggedIn:
       "Sign up to start your 48h free trial, then unlock the full TradeScaleX experience.",
-    subtitleTrialExpired:
-      "Your free trial has ended. Choose a plan to keep learning.",
-    ctaTrial: "Start 48h free trial",
+    subtitleHasCode:
+      "You received a code by email when you signed up. Enter it to activate your 48h free trial and unlock all of TradeScaleX.",
+    ctaSignup: "Start 48h free trial",
+    ctaActivate: "I have my code",
     ctaSubscribe: "See plans",
-    secondaryAccessCode: "I have an access code",
+    ctaLogin: "Log in",
   },
   es: {
     eyebrow: "Acceso Premium",
-    title: "Acceso Premium requerido",
+    titleLocked: "Acceso Premium requerido",
+    titleHasCode: "Activa tus 48 h gratis",
     subtitleNotLoggedIn:
-      "Crea tu cuenta para empezar una prueba gratuita de 48h y desbloquear todo TradeScaleX.",
-    subtitleTrialExpired:
-      "Tu prueba gratuita ha terminado. Elige un plan para seguir aprendiendo.",
-    ctaTrial: "Probar 48h gratis",
+      "Crea tu cuenta para empezar una prueba gratuita de 48 h y desbloquear todo TradeScaleX.",
+    subtitleHasCode:
+      "Recibiste un código por email al registrarte. Introdúcelo para activar tus 48 h gratis y desbloquear todo TradeScaleX.",
+    ctaSignup: "Probar 48 h gratis",
+    ctaActivate: "Tengo mi código",
     ctaSubscribe: "Ver planes",
-    secondaryAccessCode: "Tengo un código de acceso",
+    ctaLogin: "Iniciar sesión",
   },
 };
 
 export function PremiumPaywall({ locale, reason }: PremiumPaywallProps) {
   const t = STRINGS[locale];
   const isNotLoggedIn = reason === "not_logged_in";
-  const ctaHref = isNotLoggedIn ? `/${locale}/signup` : `/${locale}/pricing`;
-  const ctaLabel = isNotLoggedIn ? t.ctaTrial : t.ctaSubscribe;
-  const subtitle = isNotLoggedIn ? t.subtitleNotLoggedIn : t.subtitleTrialExpired;
+
+  // Connecté mais non premium (trial_expired) → on invite à activer le code
+  // reçu par mail (parcours post-signup fluide). Anonyme → invite à créer un
+  // compte.
+  const title = isNotLoggedIn ? t.titleLocked : t.titleHasCode;
+  const subtitle = isNotLoggedIn ? t.subtitleNotLoggedIn : t.subtitleHasCode;
+  const ctaHref = isNotLoggedIn ? `/${locale}/signup` : `/${locale}/activer-code`;
+  const ctaLabel = isNotLoggedIn ? t.ctaSignup : t.ctaActivate;
+  const secondaryHref = isNotLoggedIn ? `/${locale}/login` : `/${locale}/pricing`;
+  const secondaryLabel = isNotLoggedIn ? t.ctaLogin : t.ctaSubscribe;
 
   // z-40 (sous la Navbar en z-50) pour que la nav reste cliquable.
   return (
     <div
       role="dialog"
       aria-modal="true"
-      aria-label={t.title}
+      aria-label={title}
       className="fixed inset-0 z-40 flex items-center justify-center px-6 py-12"
     >
       {/* Dim layer additionnel — le blur des enfants est déjà appliqué par PremiumGate */}
@@ -88,7 +103,7 @@ export function PremiumPaywall({ locale, reason }: PremiumPaywallProps) {
             {t.eyebrow}
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-            {t.title}
+            {title}
           </h2>
           <p className="text-zinc-400 text-sm leading-relaxed mb-6">
             {subtitle}
@@ -102,10 +117,10 @@ export function PremiumPaywall({ locale, reason }: PremiumPaywallProps) {
           </Link>
 
           <Link
-            href={`/${locale}/activer-code`}
+            href={secondaryHref}
             className="block text-sm text-zinc-400 hover:text-emerald-300 underline underline-offset-4 transition-colors"
           >
-            {t.secondaryAccessCode}
+            {secondaryLabel}
           </Link>
         </div>
       </div>

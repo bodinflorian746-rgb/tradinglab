@@ -81,9 +81,12 @@ export async function signUp(formData: FormData) {
     console.error(`[signup] envoi email échoué pour ${email}: ${sent.error}`);
   }
 
-  // ─── 5. Redirection vers "vérifie ton email" (email passé pour affichage) ──
+  // ─── 5. Redirection vers la home connectée (parcours fluide) ──────────────
+  // Plus de page intermédiaire : l'utilisateur navigue librement le contenu
+  // public. Le contenu premium affiche un paywall l'invitant à activer le code
+  // reçu par mail. Le mail Resend sert de filet si l'onglet est fermé avant.
   revalidatePath("/", "layout");
-  redirect(`/${locale}/verifie-email?email=${encodeURIComponent(email)}`);
+  redirect(`/${locale}`);
 }
 
 export async function signIn(formData: FormData) {
