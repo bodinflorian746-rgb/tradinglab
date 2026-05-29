@@ -21,6 +21,44 @@
   "auth": {
     "logout": "Cerrar sesión"
   },
+  "signup": {
+    "title": "Crear una cuenta",
+    "subtitle": "Únete a TradeScaleX en unos segundos.",
+    "emailLabel": "Email",
+    "passwordLabel": "Contraseña",
+    "passwordHint": "6 caracteres mínimo.",
+    "trialNote": "Al crear tu cuenta, recibirás por email un código para activar tus 48 h de prueba gratis.",
+    "submit": "Crear mi cuenta",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "login": "Iniciar sesión",
+    "errors": {
+      "missing": "Email y contraseña obligatorios.",
+      "exists": "Ya existe una cuenta con este email.",
+      "generic": "Ha ocurrido un error. Inténtalo de nuevo."
+    }
+  },
+  "verifyEmail": {
+    "title": "Verifica tu email",
+    "sentTo": "Te hemos enviado un código de activación a:",
+    "body": "Abre tu correo e introduce el código en la página de activación para empezar tus 48 h de prueba gratis.",
+    "hint": "Revisa tu carpeta de spam si no lo ves en unos minutos.",
+    "ctaActivate": "Ya tengo mi código",
+    "backToLogin": "Volver al inicio de sesión"
+  },
+  "activateCode": {
+    "title": "Activar tu código",
+    "subtitle": "Introduce el código recibido por email para empezar tus 48 h de prueba gratis.",
+    "label": "Código de activación",
+    "submit": "Activar",
+    "backToLogin": "Volver al inicio de sesión",
+    "errors": {
+      "invalid": "Código inválido.",
+      "expired": "Este código ha caducado.",
+      "used": "Este código ya ha sido utilizado.",
+      "notLoggedIn": "Debes iniciar sesión para activar un código.",
+      "generic": "Ha ocurrido un error. Inténtalo de nuevo."
+    }
+  },
   "lessons": {
     "breadcrumbFormations": "Cursos",
     "lessonNumber": "Lección {n}",

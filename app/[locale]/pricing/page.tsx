@@ -111,8 +111,15 @@ export default async function PricingPage({
               ))}
             </ul>
 
+            <Link
+              href={h("/signup")}
+              className="mb-3 block w-full text-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 font-semibold py-2.5 rounded-xl transition-colors text-sm"
+            >
+              {t.direct.trialBadge}
+            </Link>
             <CheckoutButton
-              className="block w-full text-center border border-zinc-700 hover:border-zinc-500 text-white font-semibold py-3 rounded-xl transition-colors text-sm"
+              locale={locale}
+              className="block w-full text-center border border-zinc-700 hover:border-zinc-500 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-60 text-sm"
             >
               {t.direct.cta}
             </CheckoutButton>

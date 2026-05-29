@@ -1,11 +1,14 @@
 "use server";
 
-// Server Actions auth V1 : signUp (avec code d'accès), signIn, signOut.
-// Appelées depuis les <form action={...}> dans /signup, /login, /dashboard.
+// Server Actions auth : signUp (grand public, code trial auto par mail),
+// signIn, signOut. Appelées depuis les <form action={...}>.
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { generateCode } from "@/lib/access-codes";
+import { sendTrialCodeEmail } from "@/lib/email/send-trial-code";
 
 function getStr(formData: FormData, key: string): string {
   const v = formData.get(key);
@@ -19,90 +22,69 @@ function signupError(locale: string, msg: string): never {
 export async function signUp(formData: FormData) {
   const email    = getStr(formData, "email").trim();
   const password = getStr(formData, "password");
-  const code     = getStr(formData, "code").trim();
   const locale   = getStr(formData, "locale") || "fr";
 
   if (!email || !password) {
-    signupError(locale, "Email et mot de passe requis.");
-  }
-  if (!code) {
-    signupError(locale, "Code d'accès requis.");
+    signupError(locale, "missing");
   }
 
   const supabase = await createClient();
+  const admin = createAdminClient();
 
-  // ─── 1. Pré-validation du code d'accès ────────────────────────────────────
-  // Lecture du code pour vérifier statut + expiration AVANT toute création
-  // de compte. Évite la création d'un user orphelin si le code est invalide.
-  const { data: codeRow, error: codeReadErr } = await supabase
-    .from("access_codes")
-    .select("code, status, expires_at")
-    .eq("code", code)
-    .maybeSingle();
-
-  if (codeReadErr) {
-    signupError(locale, "Impossible de vérifier le code d'accès. Réessaie.");
-  }
-  if (!codeRow) {
-    signupError(locale, "Code d'accès invalide.");
-  }
-  if (codeRow.status === "used") {
-    signupError(locale, "Ce code d'accès a déjà été utilisé.");
-  }
-  if (codeRow.status === "revoked") {
-    signupError(locale, "Ce code d'accès a été révoqué.");
-  }
-  if (codeRow.status !== "available") {
-    signupError(locale, "Code d'accès invalide.");
-  }
-  if (codeRow.expires_at && new Date(codeRow.expires_at).getTime() < Date.now()) {
-    signupError(locale, "Ce code d'accès a expiré.");
-  }
-
-  // ─── 2. Création du compte Supabase ───────────────────────────────────────
-  const { data: signUpData, error: signUpErr } = await supabase.auth.signUp({
+  // ─── 1. Création du compte via service role, email NON confirmé ────────────
+  // email_confirm:false → email_confirmed_at reste null. lib/auth/premium.ts
+  // s'appuie sur ce champ : tant qu'il est null, AUCUN trial 48h. Le trial est
+  // déclenché uniquement à la saisie du code sur /activer-code (preuve que
+  // l'email est réel). On gère NOUS le mail (Resend), pas Supabase.
+  const { data: created, error: createErr } = await admin.auth.admin.createUser({
     email,
     password,
-    options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/auth/callback`,
-    },
+    email_confirm: false,
   });
-
-  if (signUpErr) {
-    signupError(locale, signUpErr.message);
+  if (createErr || !created.user) {
+    const exists =
+      createErr?.code === "email_exists" ||
+      (createErr?.message ?? "").toLowerCase().includes("already");
+    signupError(locale, exists ? "exists" : "generic");
   }
 
-  const userId = signUpData.user?.id;
-  if (!userId) {
-    signupError(locale, "Erreur lors de la création du compte.");
+  // ─── 2. Connexion immédiate pour établir la session ───────────────────────
+  // La session permet d'identifier l'user sur /activer-code. Nécessite "Confirm
+  // email" OFF côté Supabase (sinon signInWithPassword refuse un email non
+  // confirmé). email_confirmed_at reste null malgré la session → pas de trial.
+  const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
+  if (signInErr) {
+    signupError(locale, "generic");
   }
 
-  // ─── 3. Consommation atomique du code ─────────────────────────────────────
-  // UPDATE conditionnel : on n'écrit que si status='available' au moment de
-  // l'UPDATE. Si une autre signup concurrente vient de réserver le code
-  // entre notre SELECT (étape 1) et notre UPDATE, l'UPDATE matche 0 lignes
-  // → on détecte la race et on rejette le signup.
-  const { data: updated, error: updateErr } = await supabase
-    .from("access_codes")
-    .update({
-      status:          "used",
-      used_by_user_id: userId,
-      used_at:         new Date().toISOString(),
-    })
-    .eq("code", code)
-    .eq("status", "available")
-    .select("code");
-
-  if (updateErr || !updated || updated.length === 0) {
-    // Race condition : un autre user vient de prendre ce code.
-    // Le compte vient d'être créé mais n'a pas de code consommé.
-    // On signe out l'user et on lui demande de réessayer / contacter support.
-    await supabase.auth.signOut();
-    signupError(locale, "Ce code d'accès vient d'être utilisé. Contacte le support si tu pensais l'avoir réservé.");
+  // ─── 3. Génération + insertion d'un code trial (expire dans 7 jours) ───────
+  // Code rattaché à l'user créé (used_by_user_id) ; reste "available" jusqu'à
+  // l'activation sur /activer-code qui posera status='used' + used_at.
+  const code = generateCode();
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+  const { error: codeErr } = await admin.from("access_codes").insert({
+    code,
+    status: "available",
+    type: "trial",
+    expires_at: expiresAt,
+    used_by_user_id: created.user.id,
+  });
+  if (codeErr) {
+    // Compte créé mais code non inséré : on log et on continue (l'user pourra
+    // demander un renvoi). On ne bloque pas l'UX d'inscription.
+    console.error(`[signup] insertion code échouée pour ${email}: ${codeErr.message}`);
   }
 
+  // ─── 4. Envoi du mail Resend (code + lien d'activation) ───────────────────
+  const activateUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/activer-code`;
+  const sent = await sendTrialCodeEmail(email, code, locale, activateUrl);
+  if (!sent.ok) {
+    console.error(`[signup] envoi email échoué pour ${email}: ${sent.error}`);
+  }
+
+  // ─── 5. Redirection vers "vérifie ton email" (email passé pour affichage) ──
   revalidatePath("/", "layout");
-  redirect(`/${locale}/dashboard`);
+  redirect(`/${locale}/verifie-email?email=${encodeURIComponent(email)}`);
 }
 
 export async function signIn(formData: FormData) {

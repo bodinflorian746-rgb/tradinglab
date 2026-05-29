@@ -21,6 +21,44 @@
   "auth": {
     "logout": "Déconnexion"
   },
+  "signup": {
+    "title": "Créer un compte",
+    "subtitle": "Rejoins TradeScaleX en quelques secondes.",
+    "emailLabel": "Email",
+    "passwordLabel": "Mot de passe",
+    "passwordHint": "6 caractères minimum.",
+    "trialNote": "En créant ton compte, tu reçois par email un code pour activer tes 48h d'essai gratuit.",
+    "submit": "Créer mon compte",
+    "haveAccount": "Déjà un compte ?",
+    "login": "Se connecter",
+    "errors": {
+      "missing": "Email et mot de passe requis.",
+      "exists": "Un compte existe déjà avec cet email.",
+      "generic": "Une erreur est survenue. Réessaie."
+    }
+  },
+  "verifyEmail": {
+    "title": "Vérifie ton email",
+    "sentTo": "On t'a envoyé un code d'activation à :",
+    "body": "Ouvre ton mail et entre le code sur la page d'activation pour démarrer tes 48h d'essai gratuit.",
+    "hint": "Pense à vérifier tes spams si tu ne le vois pas dans quelques minutes.",
+    "ctaActivate": "J'ai mon code",
+    "backToLogin": "Retour à la connexion"
+  },
+  "activateCode": {
+    "title": "Activer ton code",
+    "subtitle": "Entre le code reçu par email pour démarrer tes 48h d'essai gratuit.",
+    "label": "Code d'activation",
+    "submit": "Activer",
+    "backToLogin": "Retour à la connexion",
+    "errors": {
+      "invalid": "Code invalide.",
+      "expired": "Ce code a expiré.",
+      "used": "Ce code a déjà été utilisé.",
+      "notLoggedIn": "Tu dois être connecté pour activer un code.",
+      "generic": "Une erreur est survenue. Réessaie."
+    }
+  },
   "lessons": {
     "breadcrumbFormations": "Formations",
     "lessonNumber": "Leçon {n}",
