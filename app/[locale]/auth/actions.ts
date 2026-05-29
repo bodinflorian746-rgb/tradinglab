@@ -31,35 +31,35 @@ export async function signUp(formData: FormData) {
   const supabase = await createClient();
   const admin = createAdminClient();
 
-  // ─── 1. Création du compte via service role, email NON confirmé ────────────
-  // email_confirm:false → email_confirmed_at reste null. lib/auth/premium.ts
-  // s'appuie sur ce champ : tant qu'il est null, AUCUN trial 48h. Le trial est
-  // déclenché uniquement à la saisie du code sur /activer-code (preuve que
-  // l'email est réel). On gère NOUS le mail (Resend), pas Supabase.
-  const { data: created, error: createErr } = await admin.auth.admin.createUser({
-    email,
-    password,
-    email_confirm: false,
-  });
+  // ─── 1. Inscription publique (auto-confirme + ouvre la session) ────────────
+  // Avec "Confirm email" OFF côté Supabase, supabase.auth.signUp() auto-confirme
+  // l'email ET établit la session immédiatement (cookies posés par le client
+  // SSR). On ne peut PAS utiliser admin.createUser + signInWithPassword : un user
+  // créé non confirmé se voit refuser la connexion (erreur email_not_confirmed).
+  const { data: created, error: createErr } = await supabase.auth.signUp({ email, password });
   if (createErr || !created.user) {
     const exists =
-      createErr?.code === "email_exists" ||
+      createErr?.code === "user_already_exists" ||
       (createErr?.message ?? "").toLowerCase().includes("already");
     signupError(locale, exists ? "exists" : "generic");
   }
 
-  // ─── 2. Connexion immédiate pour établir la session ───────────────────────
-  // La session permet d'identifier l'user sur /activer-code. Nécessite "Confirm
-  // email" OFF côté Supabase (sinon signInWithPassword refuse un email non
-  // confirmé). email_confirmed_at reste null malgré la session → pas de trial.
-  const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
-  if (signInErr) {
-    signupError(locale, "generic");
+  // ─── 2. Remise à null de email_confirmed_at (le trial ne démarre PAS ici) ──
+  // signUp() vient de poser email_confirmed_at = now. Or lib/auth/premium.ts
+  // déclenche le trial 48h sur ce champ : on le remet à null via le service role
+  // (fonction SQL reset_email_confirmation, SECURITY DEFINER) pour que le trial
+  // ne démarre qu'à l'activation du code. La session déjà émise reste valide.
+  const { error: resetErr } = await admin.rpc("reset_email_confirmation", {
+    uid: created.user.id,
+  });
+  if (resetErr) {
+    console.error(`[signup] reset_email_confirmation échoué pour ${email}: ${resetErr.message}`);
   }
 
   // ─── 3. Génération + insertion d'un code trial (expire dans 7 jours) ───────
-  // Code rattaché à l'user créé (used_by_user_id) ; reste "available" jusqu'à
-  // l'activation sur /activer-code qui posera status='used' + used_at.
+  // Code "available" NON lié à un user : la contrainte access_codes_used_consistency
+  // interdit used_by_user_id sur un code non 'used'. Le lien (used_by_user_id +
+  // status='used') est posé à l'activation, sur /activer-code.
   const code = generateCode();
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
   const { error: codeErr } = await admin.from("access_codes").insert({
@@ -67,7 +67,6 @@ export async function signUp(formData: FormData) {
     status: "available",
     type: "trial",
     expires_at: expiresAt,
-    used_by_user_id: created.user.id,
   });
   if (codeErr) {
     // Compte créé mais code non inséré : on log et on continue (l'user pourra
