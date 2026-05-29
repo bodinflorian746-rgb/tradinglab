@@ -37,7 +37,7 @@ const STRINGS: Record<Locale, Strings> = {
       "Tu as reçu un code par email à ton inscription. Entre-le pour activer tes 48h gratuites et débloquer tout TradeScaleX.",
     ctaSignup: "Essayer 48h gratuit",
     ctaActivate: "J'ai mon code",
-    ctaSubscribe: "Voir les abonnements",
+    ctaSubscribe: "Voir nos accès",
     ctaLogin: "Se connecter",
   },
   en: {
@@ -63,7 +63,7 @@ const STRINGS: Record<Locale, Strings> = {
       "Recibiste un código por email al registrarte. Introdúcelo para activar tus 48 h gratis y desbloquear todo TradeScaleX.",
     ctaSignup: "Probar 48 h gratis",
     ctaActivate: "Tengo mi código",
-    ctaSubscribe: "Ver planes",
+    ctaSubscribe: "Ver nuestros accesos",
     ctaLogin: "Iniciar sesión",
   },
 };

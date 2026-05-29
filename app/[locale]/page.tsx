@@ -180,7 +180,7 @@ export default async function Home({
       profile: isEs ? "Mi perfil" : "Mon profil",
       progress: isEs ? "Mi progreso" : "Ma progression",
       settings: isEs ? "Configuración" : "Paramètres",
-      pricing: isEs ? "Precios" : "Tarifs",
+      pricing: isEs ? "Nuestros accesos" : "Nos accès",
       about: isEs ? "Sobre nosotros" : "À propos",
       contact: isEs ? "Contacto" : "Contact",
       newsletter: isEs ? "Mantente informado" : "Reste informé",

@@ -68,7 +68,7 @@ test("ES — navbar mobile : libellés traduits", async ({ page, context }) => {
   await expect(page.getByRole("link", { name: "Juegos", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Estrategias", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Mi perfil", exact: true })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Precios", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Nuestros accesos", exact: true })).toBeVisible();
   await page.screenshot({ path: "test-results/es-navbar-mobile.png", fullPage: false });
 });
 
@@ -100,7 +100,7 @@ test("ES — pricing : prix + features traduits, 19€/mes visible", async ({ pa
   await page.goto("/es/pricing", { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
 
-  await expect(page.getByText("Una tarifa simple y transparente")).toBeVisible();
+  await expect(page.getByText("Elige tu acceso")).toBeVisible();
   await expect(page.getByText(/Acceso gratis vía un broker partner TradeScaleX/i)).toBeVisible();
   await expect(page.getByText("Recomendado")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Vía broker partner" })).toBeVisible();
