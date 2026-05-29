@@ -102,7 +102,7 @@ export function PremiumPaywall({ locale, reason }: PremiumPaywallProps) {
           </Link>
 
           <Link
-            href={`/${locale}/redeem`}
+            href={`/${locale}/activer-code`}
             className="block text-sm text-zinc-400 hover:text-emerald-300 underline underline-offset-4 transition-colors"
           >
             {t.secondaryAccessCode}
