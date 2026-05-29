@@ -6,6 +6,7 @@
 
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
+import { requestTrialCode } from "@/app/[locale]/pricing/actions";
 
 export type PaywallReason = "trial_expired" | "not_logged_in";
 
@@ -22,6 +23,7 @@ type Strings = {
   subtitleHasCode: string;
   ctaSignup: string;
   ctaActivate: string;
+  ctaRequestCode: string;
   ctaSubscribe: string;
   ctaLogin: string;
 };
@@ -37,6 +39,7 @@ const STRINGS: Record<Locale, Strings> = {
       "Tu as reçu un code par email à ton inscription. Entre-le pour activer tes 48h gratuites et débloquer tout TradeScaleX.",
     ctaSignup: "Essayer 48h gratuit",
     ctaActivate: "J'ai mon code",
+    ctaRequestCode: "Pas encore de code ? Recevoir mes 48h gratuites",
     ctaSubscribe: "Voir nos accès",
     ctaLogin: "Se connecter",
   },
@@ -50,6 +53,7 @@ const STRINGS: Record<Locale, Strings> = {
       "You received a code by email when you signed up. Enter it to activate your 48h free trial and unlock all of TradeScaleX.",
     ctaSignup: "Start 48h free trial",
     ctaActivate: "I have my code",
+    ctaRequestCode: "No code yet? Get my 48h free trial",
     ctaSubscribe: "See plans",
     ctaLogin: "Log in",
   },
@@ -63,6 +67,7 @@ const STRINGS: Record<Locale, Strings> = {
       "Recibiste un código por email al registrarte. Introdúcelo para activar tus 48 h gratis y desbloquear todo TradeScaleX.",
     ctaSignup: "Probar 48 h gratis",
     ctaActivate: "Tengo mi código",
+    ctaRequestCode: "¿Aún no tienes código? Recibir mis 48 h gratis",
     ctaSubscribe: "Ver nuestros accesos",
     ctaLogin: "Iniciar sesión",
   },
@@ -115,6 +120,19 @@ export function PremiumPaywall({ locale, reason }: PremiumPaywallProps) {
           >
             {ctaLabel}
           </Link>
+
+          {/* Connecté sans code encore demandé : recevoir le code 48h. */}
+          {!isNotLoggedIn && (
+            <form action={requestTrialCode} className="mb-3">
+              <input type="hidden" name="locale" value={locale} />
+              <button
+                type="submit"
+                className="block w-full text-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 font-semibold py-2.5 rounded-xl transition-colors text-sm"
+              >
+                {t.ctaRequestCode}
+              </button>
+            </form>
+          )}
 
           <Link
             href={secondaryHref}

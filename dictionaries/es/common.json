@@ -37,6 +37,13 @@
       "generic": "Ha ocurrido un error. Inténtalo de nuevo."
     }
   },
+  "codeSent": {
+    "title": "¡Te enviamos un código!",
+    "body": "Hemos enviado un código de activación de 48 h a:",
+    "hint": "Introdúcelo en la página de activación para desbloquear tu acceso. Revisa tu carpeta de spam.",
+    "ctaActivate": "Tengo mi código",
+    "backHome": "Volver al inicio"
+  },
   "activateCode": {
     "title": "Activar tu código",
     "subtitle": "Introduce el código recibido por email para empezar tus 48 h de prueba gratis.",

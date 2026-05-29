@@ -7,8 +7,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { generateCode } from "@/lib/access-codes";
-import { sendTrialCodeEmail } from "@/lib/email/send-trial-code";
 
 function getStr(formData: FormData, key: string): string {
   const v = formData.get(key);
@@ -23,6 +21,7 @@ export async function signUp(formData: FormData) {
   const email    = getStr(formData, "email").trim();
   const password = getStr(formData, "password");
   const locale   = getStr(formData, "locale") || "fr";
+  const from     = getStr(formData, "from");
 
   if (!email || !password) {
     signupError(locale, "missing");
@@ -56,37 +55,13 @@ export async function signUp(formData: FormData) {
     console.error(`[signup] reset_email_confirmation échoué pour ${email}: ${resetErr.message}`);
   }
 
-  // ─── 3. Génération + insertion d'un code trial (expire dans 7 jours) ───────
-  // Code "available" NON lié à un user : la contrainte access_codes_used_consistency
-  // interdit used_by_user_id sur un code non 'used'. Le lien (used_by_user_id +
-  // status='used') est posé à l'activation, sur /activer-code.
-  const code = generateCode();
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
-  const { error: codeErr } = await admin.from("access_codes").insert({
-    code,
-    status: "available",
-    type: "trial",
-    expires_at: expiresAt,
-  });
-  if (codeErr) {
-    // Compte créé mais code non inséré : on log et on continue (l'user pourra
-    // demander un renvoi). On ne bloque pas l'UX d'inscription.
-    console.error(`[signup] insertion code échouée pour ${email}: ${codeErr.message}`);
-  }
-
-  // ─── 4. Envoi du mail Resend (code + lien d'activation) ───────────────────
-  const activateUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/activer-code`;
-  const sent = await sendTrialCodeEmail(email, code, locale, activateUrl);
-  if (!sent.ok) {
-    console.error(`[signup] envoi email échoué pour ${email}: ${sent.error}`);
-  }
-
-  // ─── 5. Redirection vers la home connectée (parcours fluide) ──────────────
-  // Plus de page intermédiaire : l'utilisateur navigue librement le contenu
-  // public. Le contenu premium affiche un paywall l'invitant à activer le code
-  // reçu par mail. Le mail Resend sert de filet si l'onglet est fermé avant.
+  // ─── 3. Redirection ───────────────────────────────────────────────────────
+  // PAS de génération de code ni d'envoi de mail ici : le code 48h ne part que
+  // sur action explicite (clic du badge "48h gratuit" → requestTrialCode).
+  // `from=trial` : l'user venait du badge en étant déconnecté → on le ramène sur
+  // /pricing pour qu'il (re)clique "48h gratuit", maintenant connecté. Sinon home.
   revalidatePath("/", "layout");
-  redirect(`/${locale}`);
+  redirect(from === "trial" ? `/${locale}/pricing` : `/${locale}`);
 }
 
 export async function signIn(formData: FormData) {

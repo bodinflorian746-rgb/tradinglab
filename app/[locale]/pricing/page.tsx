@@ -3,6 +3,23 @@ import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary } from "@/i18n/dictionaries";
 import CheckoutButton from "./CheckoutButton";
+import { requestTrialCode } from "./actions";
+
+// Badge "48h gratuit" : un <form> qui POST sur requestTrialCode. L'action gère
+// le cas non connecté (redirect /signup?from=trial) côté serveur.
+function TrialBadgeForm({ locale, label }: { locale: string; label: string }) {
+  return (
+    <form action={requestTrialCode} className="mb-3">
+      <input type="hidden" name="locale" value={locale} />
+      <button
+        type="submit"
+        className="block w-full text-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 font-semibold py-2.5 rounded-xl transition-colors text-sm"
+      >
+        {label}
+      </button>
+    </form>
+  );
+}
 
 function CheckIcon() {
   return (
@@ -20,11 +37,14 @@ function CheckIcon() {
 
 export default async function PricingPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ trial_error?: string }>;
 }) {
   const raw = (await params).locale;
   const locale: Locale = hasLocale(raw) ? raw : DEFAULT_LOCALE;
+  const { trial_error } = await searchParams;
   const t = await getDictionary(locale, "pricing");
   const h = (p: string) => localizedHref(p, locale);
   return (
@@ -39,6 +59,13 @@ export default async function PricingPage({
             {t.subtitle}
           </p>
         </div>
+
+        {/* Erreur demande de code 48h */}
+        {trial_error === "1" && (
+          <div className="max-w-3xl mx-auto mb-8 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-300 text-center">
+            {t.trialError}
+          </div>
+        )}
 
         {/* Plans */}
         <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
@@ -73,12 +100,7 @@ export default async function PricingPage({
               ))}
             </ul>
 
-            <Link
-              href={h("/signup")}
-              className="mb-3 block w-full text-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 font-semibold py-2.5 rounded-xl transition-colors text-sm"
-            >
-              {t.broker.trialBadge}
-            </Link>
+            <TrialBadgeForm locale={locale} label={t.broker.trialBadge} />
             <Link
               href={h("/login")}
               className="block text-center bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3 rounded-xl transition-colors text-sm"
@@ -117,12 +139,7 @@ export default async function PricingPage({
               ))}
             </ul>
 
-            <Link
-              href={h("/signup")}
-              className="mb-3 block w-full text-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 font-semibold py-2.5 rounded-xl transition-colors text-sm"
-            >
-              {t.direct.trialBadge}
-            </Link>
+            <TrialBadgeForm locale={locale} label={t.direct.trialBadge} />
             <CheckoutButton
               locale={locale}
               className="block w-full text-center border border-zinc-700 hover:border-zinc-500 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-60 text-sm"

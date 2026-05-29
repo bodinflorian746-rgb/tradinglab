@@ -35,5 +35,6 @@
     "cta": "Commencer l'accès direct",
     "trialBadge": "48h d'essai gratuit"
   },
-  "guarantee": "Aucun engagement · Paiement sécurisé · Annulation en 1 clic"
+  "guarantee": "Aucun engagement · Paiement sécurisé · Annulation en 1 clic",
+  "trialError": "Une erreur est survenue lors de l'envoi de ton code. Réessaie dans un instant."
 }

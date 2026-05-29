@@ -8,11 +8,11 @@ export default async function SignupPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; from?: string }>;
 }) {
   const raw = (await params).locale;
   const locale: Locale = hasLocale(raw) ? raw : DEFAULT_LOCALE;
-  const { error } = await searchParams;
+  const { error, from } = await searchParams;
   const t = (await getDictionary(locale, "common")).signup;
 
   const errors = t.errors as Record<string, string>;
@@ -32,6 +32,7 @@ export default async function SignupPage({
 
         <form action={signUp} className="space-y-4">
           <input type="hidden" name="locale" value={locale} />
+          {from === "trial" && <input type="hidden" name="from" value="trial" />}
 
           <div>
             <label htmlFor="email" className="block text-xs font-medium text-zinc-400 mb-1.5">

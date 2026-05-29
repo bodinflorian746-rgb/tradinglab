@@ -37,6 +37,13 @@
       "generic": "Une erreur est survenue. Réessaie."
     }
   },
+  "codeSent": {
+    "title": "On t'a envoyé un code !",
+    "body": "Un code d'activation 48h a été envoyé à :",
+    "hint": "Entre-le sur la page d'activation pour débloquer ton accès. Pense à vérifier tes spams.",
+    "ctaActivate": "J'ai mon code",
+    "backHome": "Retour à l'accueil"
+  },
   "activateCode": {
     "title": "Activer ton code",
     "subtitle": "Entre le code reçu par email pour démarrer tes 48h d'essai gratuit.",

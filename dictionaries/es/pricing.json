@@ -35,5 +35,6 @@
     "cta": "Empezar acceso directo",
     "trialBadge": "48 h de prueba gratis"
   },
-  "guarantee": "Sin compromiso · Pago seguro · Cancelación en 1 clic"
+  "guarantee": "Sin compromiso · Pago seguro · Cancelación en 1 clic",
+  "trialError": "Ha ocurrido un error al enviar tu código. Inténtalo de nuevo en un momento."
 }
