@@ -2,8 +2,9 @@
 
 // Server Action d'activation d'un code d'accès (parcours grand public).
 // Vérifie le code dans access_codes (existe / non expiré / non utilisé),
-// le consomme atomiquement, puis DÉCLENCHE le trial 48h en posant
-// email_confirmed_at via le service role (lib/auth/premium.ts lit ce champ).
+// le consomme atomiquement, puis confirme l'email via le service role.
+//   - code 'trial'            → trial 48h (email_confirmed_at lu par premium.ts)
+//   - code 'broker'/'lifetime'→ subscription active "à vie" (accès illimité)
 //
 // Les erreurs sont renvoyées sous forme de CODE (?error=invalid|expired|...)
 // que la page mappe vers un message localisé (FR/ES).
@@ -36,10 +37,10 @@ export async function activateCode(formData: FormData) {
 
   const admin = createAdminClient();
 
-  // ─── 1. Lecture + validation du code ──────────────────────────────────────
+  // ─── 1. Lecture + validation du code (avec le type) ───────────────────────
   const { data: row, error: readErr } = await admin
     .from("access_codes")
-    .select("code, status, expires_at, used_at")
+    .select("code, status, type, expires_at, used_at")
     .eq("code", code)
     .maybeSingle();
 
@@ -65,11 +66,45 @@ export async function activateCode(formData: FormData) {
 
   if (updErr || !updated || updated.length === 0) activateError(locale, "used");
 
-  // ─── 3. Déclenche le trial 48h : email_confirmed_at = now (service role) ───
+  // ─── 3. Confirme l'email : email_confirmed_at = now (service role) ─────────
+  // Pour un code 'trial' c'est ce qui déclenche le trial 48h via premium.ts.
+  // Pour 'broker'/'lifetime' on confirme aussi l'email (cohérence + login), mais
+  // l'accès illimité vient de la subscription créée à l'étape 4.
   const { error: confirmErr } = await admin.auth.admin.updateUserById(user.id, {
     email_confirm: true,
   });
   if (confirmErr) activateError(locale, "generic");
+
+  // ─── 4. Codes 'broker' / 'lifetime' : accès illimité via une subscription ──
+  // premium.ts accorde l'accès si status ∈ {active,trialing} ET
+  // current_period_end > now : on pose donc une date très lointaine (accès à
+  // vie), sans Stripe (stripe_subscription_id null). La distinction
+  // broker/lifetime reste tracée dans access_codes.type (ligne consommée).
+  if (row.type === "broker" || row.type === "lifetime") {
+    const FAR_FUTURE = "2099-12-31T23:59:59.000Z";
+    const nowIso = new Date().toISOString();
+    const { error: subErr } = await admin.from("subscriptions").upsert(
+      {
+        user_id: user.id,
+        status: "active",
+        stripe_subscription_id: null,
+        stripe_customer_id: null,
+        stripe_price_id: null,
+        current_period_start: nowIso,
+        current_period_end: FAR_FUTURE,
+        cancel_at_period_end: false,
+        updated_at: nowIso,
+      },
+      { onConflict: "user_id" },
+    );
+    if (subErr) {
+      // Code déjà consommé : on ne bloque pas (sinon user coincé). On log pour
+      // réparation manuelle ; l'user garde au minimum l'accès 48h (email_confirm).
+      console.error(
+        `[activate] upsert subscription (${row.type}) échoué pour ${user.id}: ${subErr.message}`,
+      );
+    }
+  }
 
   revalidatePath("/", "layout");
   redirect(`/${locale}/dashboard`);

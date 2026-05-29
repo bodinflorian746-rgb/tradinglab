@@ -16,7 +16,8 @@
       "Contenu régulièrement mis à jour"
     ],
     "cta": "Accéder via un broker partenaire",
-    "haveCode": "J'ai déjà un code d'accès"
+    "haveCode": "J'ai déjà un code d'accès",
+    "trialBadge": "48h d'essai gratuit"
   },
   "direct": {
     "name": "Accès direct",

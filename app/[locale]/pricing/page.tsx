@@ -74,6 +74,12 @@ export default async function PricingPage({
             </ul>
 
             <Link
+              href={h("/signup")}
+              className="mb-3 block w-full text-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 font-semibold py-2.5 rounded-xl transition-colors text-sm"
+            >
+              {t.broker.trialBadge}
+            </Link>
+            <Link
               href={h("/login")}
               className="block text-center bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3 rounded-xl transition-colors text-sm"
             >
