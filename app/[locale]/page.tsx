@@ -367,7 +367,7 @@ export default async function Home({
               <span aria-hidden="true" className="h-[11px] w-[11px] rounded-full bg-red-500" />
               <span aria-hidden="true" className="h-[11px] w-[11px] rounded-full bg-amber-400" />
               <span aria-hidden="true" className="h-[11px] w-[11px] rounded-full bg-emerald-500" />
-              <span className="flex-1 text-center font-mono text-xs text-zinc-500">
+              <span className="min-w-0 flex-1 truncate text-center font-mono text-xs text-zinc-500">
                 {t.platformPreview.url}
               </span>
             </div>
@@ -433,7 +433,7 @@ export default async function Home({
                   >
                     {/* Zone Order Block (englobe high/low de la bougie OB) */}
                     <rect x="75" y="105" width="405" height="37" fill="rgba(16,185,129,0.15)" stroke="#10b981" strokeWidth="1" strokeDasharray="3 3" />
-                    <text x="475" y="137" textAnchor="end" fill="#10b981" fontSize="11" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartBadge}</text>
+                    <text x="470" y="137" textAnchor="end" fill="#10b981" fontSize="11" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartBadge}</text>
 
                     {/* Bougies de consolidation */}
                     <rect x="20" y="115" width="7" height="20" fill="#ef4444" />
@@ -474,7 +474,7 @@ export default async function Home({
                     <text x="266" y="155" fill="#fbbf24" fontSize="11" fontFamily="monospace" fontWeight="700">MITIGATION</text>
 
                     {/* Rebond depuis OB = RÉACTION haussière (vert) */}
-                    <text x="300" y="42" fill="#10b981" fontSize="11" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartReactionLabel}</text>
+                    <text x="290" y="38" textAnchor="middle" fill="#10b981" fontSize="11" fontFamily="monospace" fontWeight="700">{t.platformPreview.chartReactionLabel}</text>
                     <rect x="305" y="85" width="7" height="25" fill="#10b981" />
                     <line x1="308.5" y1="78" x2="308.5" y2="115" stroke="#059669" strokeWidth="1.5" />
                     <rect x="325" y="60" width="7" height="30" fill="#10b981" />
