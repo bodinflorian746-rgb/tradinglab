@@ -44,7 +44,37 @@
     "passwordLabel": "Mot de passe",
     "submit": "Se connecter",
     "noAccount": "Pas encore de compte ?",
-    "signup": "Créer un compte"
+    "signup": "Créer un compte",
+    "forgotPassword": "Mot de passe oublié ?"
+  },
+  "resetPassword": {
+    "title": "Mot de passe oublié",
+    "subtitle": "Entre ton email — on t'envoie un lien pour choisir un nouveau mot de passe.",
+    "emailLabel": "Email",
+    "submit": "Envoyer le lien",
+    "backToLogin": "Retour à la connexion",
+    "sentTitle": "Si un compte existe, le lien est parti.",
+    "sentBody": "Vérifie ta boîte mail (et tes spams). Le lien est valide 1 heure.",
+    "errors": {
+      "missing": "Email requis.",
+      "generic": "Une erreur est survenue. Réessaie."
+    }
+  },
+  "newPassword": {
+    "title": "Choisir un nouveau mot de passe",
+    "subtitle": "Définis ton nouveau mot de passe pour te reconnecter.",
+    "passwordLabel": "Nouveau mot de passe",
+    "passwordConfirmLabel": "Confirmer le mot de passe",
+    "passwordHint": "6 caractères minimum.",
+    "submit": "Mettre à jour mon mot de passe",
+    "successRedirect": "Mot de passe mis à jour, reconnecte-toi.",
+    "errors": {
+      "missing": "Mot de passe requis.",
+      "mismatch": "Les deux mots de passe ne correspondent pas.",
+      "weak": "Mot de passe trop court (6 caractères minimum).",
+      "notRecovery": "Lien invalide ou expiré. Redemande un email.",
+      "generic": "Une erreur est survenue. Réessaie."
+    }
   },
   "codeSent": {
     "title": "On t'a envoyé un code !",

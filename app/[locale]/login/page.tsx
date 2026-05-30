@@ -76,6 +76,15 @@ export default async function LoginPage({
           </button>
         </form>
 
+        <p className="text-center mt-4">
+          <Link
+            href={`/${locale}/mot-de-passe-oublie`}
+            className="text-xs text-zinc-500 hover:text-zinc-300 underline underline-offset-4 transition-colors"
+          >
+            {t.forgotPassword}
+          </Link>
+        </p>
+
         <p className="text-sm text-zinc-500 mt-6 text-center">
           {t.noAccount}{" "}
           <Link

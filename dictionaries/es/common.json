@@ -44,7 +44,37 @@
     "passwordLabel": "Contraseña",
     "submit": "Iniciar sesión",
     "noAccount": "¿Aún no tienes cuenta?",
-    "signup": "Crear una cuenta"
+    "signup": "Crear una cuenta",
+    "forgotPassword": "¿Olvidaste tu contraseña?"
+  },
+  "resetPassword": {
+    "title": "Contraseña olvidada",
+    "subtitle": "Ingresa tu email — te enviamos un enlace para elegir una nueva contraseña.",
+    "emailLabel": "Email",
+    "submit": "Enviar el enlace",
+    "backToLogin": "Volver al inicio de sesión",
+    "sentTitle": "Si la cuenta existe, el enlace ha sido enviado.",
+    "sentBody": "Revisa tu correo (y la carpeta de spam). El enlace es válido 1 hora.",
+    "errors": {
+      "missing": "Email obligatorio.",
+      "generic": "Ha ocurrido un error. Inténtalo de nuevo."
+    }
+  },
+  "newPassword": {
+    "title": "Elige una nueva contraseña",
+    "subtitle": "Define tu nueva contraseña para volver a conectarte.",
+    "passwordLabel": "Nueva contraseña",
+    "passwordConfirmLabel": "Confirmar la contraseña",
+    "passwordHint": "6 caracteres mínimo.",
+    "submit": "Actualizar mi contraseña",
+    "successRedirect": "Contraseña actualizada, vuelve a conectarte.",
+    "errors": {
+      "missing": "Contraseña obligatoria.",
+      "mismatch": "Las dos contraseñas no coinciden.",
+      "weak": "Contraseña demasiado corta (6 caracteres mínimo).",
+      "notRecovery": "Enlace inválido o caducado. Solicita un nuevo email.",
+      "generic": "Ha ocurrido un error. Inténtalo de nuevo."
+    }
   },
   "codeSent": {
     "title": "¡Te enviamos un código!",
