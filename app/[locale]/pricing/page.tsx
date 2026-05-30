@@ -108,7 +108,7 @@ export default async function PricingPage({
               {t.broker.cta}
             </Link>
             <Link
-              href={h("/access")}
+              href={h("/activer-code")}
               className="block text-center text-xs text-zinc-400 hover:text-zinc-200 underline underline-offset-4 mt-3 transition-colors"
             >
               {t.broker.haveCode}

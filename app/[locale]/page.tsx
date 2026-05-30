@@ -228,7 +228,7 @@ export default async function Home({
               </svg>
             </Link>
             <Link
-              href={h("/signup")}
+              href={h("/activer-code")}
               className="inline-flex items-center gap-2 rounded-[10px] border border-zinc-700 bg-zinc-800/50 px-6 py-3.5 text-[15px] font-medium text-white transition-all hover:bg-zinc-800/80"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -810,7 +810,7 @@ export default async function Home({
               </svg>
             </Link>
             <Link
-              href={h("/signup")}
+              href={h("/activer-code")}
               className="inline-flex items-center gap-2 rounded-[10px] border border-zinc-700 bg-zinc-800/50 px-6 py-3.5 text-[15px] font-medium text-white transition-all hover:bg-zinc-800/80"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">

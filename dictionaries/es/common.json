@@ -37,6 +37,15 @@
       "generic": "Ha ocurrido un error. Inténtalo de nuevo."
     }
   },
+  "login": {
+    "title": "Iniciar sesión",
+    "subtitle": "Conéctate a tu cuenta TradeScaleX.",
+    "emailLabel": "Email",
+    "passwordLabel": "Contraseña",
+    "submit": "Iniciar sesión",
+    "noAccount": "¿Aún no tienes cuenta?",
+    "signup": "Crear una cuenta"
+  },
   "codeSent": {
     "title": "¡Te enviamos un código!",
     "body": "Hemos enviado un código de activación de 48 h a:",

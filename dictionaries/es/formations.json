@@ -1,4 +1,10 @@
 {
+  "page": {
+    "hero": {
+      "title": "Trading",
+      "subtitle": "Domina las bases y construye setups sólidos en cada etapa de tu progresión."
+    }
+  },
   "debutant": {
     "title": "Principiante",
     "description": "Los fundamentos del trading para arrancar bien. Sin requisitos previos.",
