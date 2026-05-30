@@ -152,6 +152,32 @@ export function ICTSequenceTimelineDiagram({ className = "", locale = "fr" }: IC
       {/* MOBILE : 7 étapes ICT ──────────────────────────── */}
       <div className="sm:hidden p-4 space-y-2">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+        {/* Mini-SVG : timeline horizontale des étapes ICT (4 nœuds colorés) */}
+        <svg viewBox="0 0 280 70" className="w-full h-auto" aria-label="Sequence timeline ICT" fill="none">
+          {/* Ligne timeline */}
+          <line x1="20" y1="35" x2="260" y2="35" stroke="#52525b" strokeWidth="1.5" />
+          {/* 4 étapes */}
+          {[
+            { x: 35, color: "#a1a1aa", label: "1" },
+            { x: 105, color: "#f59e0b", label: "2" },
+            { x: 175, color: "#10b981", label: "3" },
+            { x: 245, color: "#10b981", label: "4" },
+          ].map((s, i) => (
+            <g key={s.label}>
+              <circle cx={s.x} cy="35" r="10" fill="#09090b" stroke={s.color} strokeWidth="1.5" />
+              <text x={s.x} y="39" fontSize="11" fill={s.color} textAnchor="middle" fontWeight="700">{s.label}</text>
+              {i < 3 && (
+                <path d={`M${s.x + 12},35 L${s.x + 60},35`} stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" />
+              )}
+            </g>
+          ))}
+          <text x="35" y="60" fontSize="9" fill="#a1a1aa" textAnchor="middle">Prep</text>
+          <text x="105" y="60" fontSize="9" fill="#f59e0b" textAnchor="middle">Sweep</text>
+          <text x="175" y="60" fontSize="9" fill="#10b981" textAnchor="middle">Disp</text>
+          <text x="245" y="60" fontSize="9" fill="#10b981" textAnchor="middle">Entry</text>
+        </svg>
+
         {t.steps.map((s) => (
           <div key={s.n} className="flex items-center gap-2.5 text-[13px]">
             <span className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold bg-${s.c}-500/20 border border-${s.c}-400 text-${s.c}-400`}>{s.n}</span>

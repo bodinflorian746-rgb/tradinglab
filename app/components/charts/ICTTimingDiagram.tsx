@@ -132,6 +132,27 @@ export function ICTTimingDiagram({ className = "", locale = "fr" }: ICTTimingDia
       {/* MOBILE : ICT timing ──────────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+        {/* Mini-SVG : timeline 24h avec 3 fenêtres ICT (London Open, NY AM, Power Hour) */}
+        <svg viewBox="0 0 300 60" className="w-full h-auto" aria-label="ICT timing windows" fill="none">
+          <line x1="10" y1="40" x2="290" y2="40" stroke="#52525b" strokeWidth="1" />
+          {[0, 6, 12, 18, 24].map((h) => (
+            <g key={h}>
+              <line x1={10 + (h * 280) / 24} y1="40" x2={10 + (h * 280) / 24} y2="44" stroke="#52525b" strokeWidth="0.8" />
+              <text x={10 + (h * 280) / 24} y="54" fontSize="9" fill="#71717a" textAnchor="middle">{h}h</text>
+            </g>
+          ))}
+          {/* London Open 7h-9h (emerald) */}
+          <rect x={10 + (7 * 280) / 24} y="14" width={(2 * 280) / 24} height="26" fill="#10b98130" stroke="#10b98180" strokeWidth="1" />
+          <text x={10 + (8 * 280) / 24} y="10" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">LON</text>
+          {/* NY AM 13h-15h (emerald — clé) */}
+          <rect x={10 + (13 * 280) / 24} y="8" width={(2 * 280) / 24} height="32" fill="#10b98140" stroke="#10b981" strokeWidth="1.2" />
+          <text x={10 + (14 * 280) / 24} y="6" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">NY ★</text>
+          {/* Power Hour 14h-15h (badge dans NY) */}
+          {/* Asia (zone moins active, juste pour contexte) */}
+          <rect x={10 + (0 * 280) / 24} y="26" width={(6 * 280) / 24} height="14" fill="#71717a15" stroke="#71717a55" strokeWidth="0.7" />
+        </svg>
+
         <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
           <p className="text-[13px] font-bold text-zinc-300">{t.block1Title}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.block1Body}</p>

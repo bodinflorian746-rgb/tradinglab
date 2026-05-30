@@ -188,6 +188,28 @@ export default function OBSLPlacementDiagram({ className = "", locale = "fr" }: 
     {/* MOBILE : 3 placements SL OB ──────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+      {/* Mini-SVG : placement SL — zone OB + entry au milieu + SL sous le low de la zone */}
+      <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="Placement SL sur OB" fill="none">
+        {/* Zone OB */}
+        <rect x="40" y="55" width="200" height="24" fill="#10b98115" stroke="#10b98155" strokeWidth="1" strokeDasharray="3 2" />
+        <text x="140" y="48" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Zone OB</text>
+        {/* Bougie d'origine (à gauche, qui définit le low du SL) */}
+        <line x1="55" y1="48" x2="55" y2="92" stroke="#dc2626" strokeWidth="1.2" strokeLinecap="round" />
+        <rect x="50" y="58" width="10" height="22" fill="#ef4444" stroke="#dc2626" strokeWidth="0.7" rx="1" />
+        {/* Entry point au milieu de la zone */}
+        <circle cx="140" cy="67" r="4" fill="#10b981" />
+        <rect x="118" y="72" width="36" height="11" rx="2" fill="#09090b" />
+        <text x="136" y="80" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Entry</text>
+        {/* SL ligne — sous le low de la bougie d'origine (donc sous le 92) */}
+        <line x1="10" y1="105" x2="270" y2="105" stroke="#ef4444" strokeWidth="1.4" strokeDasharray="3 2" />
+        <rect x="120" y="109" width="40" height="12" rx="2" fill="#ef444418" stroke="#ef4444" strokeWidth="0.7" />
+        <text x="140" y="118" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">SL</text>
+        {/* Annotation buffer */}
+        <text x="36" y="100" fontSize="8" fill="#f87171" textAnchor="end">low + buffer</text>
+        <line x1="40" y1="98" x2="55" y2="92" stroke="#f87171" strokeWidth="0.8" />
+      </svg>
+
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
         <p className="text-[13px] font-bold text-red-400">{t.m1Title}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.m1Body}</p>

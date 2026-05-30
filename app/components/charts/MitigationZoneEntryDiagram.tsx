@@ -88,6 +88,22 @@ export default function MitigationZoneEntryDiagram({ className = "", locale = "f
     {/* MOBILE : mitigation après CHoCH ─────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
       <p className="text-[14px] font-bold text-red-400 text-center">{L.mobTitle}</p>
+
+      {/* Mini-SVG : zone de mitigation — origine, retour du prix sur zone, retest, rebond */}
+      <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="Mitigation zone entry" fill="none">
+        {/* Zone mitigation */}
+        <rect x="50" y="55" width="180" height="20" fill="#f59e0b15" stroke="#f59e0b55" strokeWidth="1" strokeDasharray="3 2" />
+        <text x="140" y="48" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Zone mitigation</text>
+        {/* Trajectoire : impulsion haussière → pullback dans la zone → continuation */}
+        <path d="M10,90 L40,80 L65,60 L90,40 L120,30 L140,55 L165,65 L195,55 L225,40 L260,18" stroke="#71717a" strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
+        {/* Entry au retour dans la zone */}
+        <circle cx="165" cy="65" r="3.5" fill="#10b981" />
+        <rect x="145" y="78" width="42" height="11" rx="2" fill="#09090b" />
+        <text x="166" y="86" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Entry</text>
+        {/* Flèche montrant le rebond */}
+        <path d="M195,55 L210,40 L218,46 M210,40 L208,48" stroke="#10b981" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+      </svg>
+
       <ul className="space-y-2 text-[13px]">
         <li className="flex items-start gap-2.5">
           <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>

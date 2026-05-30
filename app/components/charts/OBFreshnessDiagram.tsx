@@ -189,6 +189,25 @@ export default function OBFreshnessDiagram({ className = "", locale = "fr" }: { 
     {/* MOBILE : OB frais vs mitigé ──────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+      {/* Mini-SVG : 2 panels — OB fresh (jamais touché, emerald) vs OB old (déjà mitigé, zinc) */}
+      <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="OB Fresh vs Old" fill="none">
+        <line x1="138" y1="10" x2="138" y2="110" stroke="#3f3f46" strokeWidth="0.8" />
+        {/* Panel Fresh — zone non touchée */}
+        <rect x="20" y="50" width="100" height="18" fill="#10b98115" stroke="#10b98155" strokeWidth="1" strokeDasharray="3 2" />
+        <path d="M15,30 L40,40 L65,50 L90,40 L120,28" stroke="#10b981" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
+        <rect x="50" y="6" width="42" height="13" rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.8" />
+        <text x="71" y="15" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">FRESH ✓</text>
+        <text x="70" y="92" fontSize="9" fill="#10b981" textAnchor="middle">Jamais touché</text>
+        {/* Panel Old — zone déjà mitigée */}
+        <rect x="160" y="50" width="100" height="18" fill="#71717a15" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" />
+        {/* Path passe DANS la zone (= déjà mitigé) */}
+        <path d="M158,30 L180,50 L195,65 L210,58 L225,50 L240,68 L260,42" stroke="#71717a" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
+        <rect x="190" y="6" width="42" height="13" rx="2" fill="#71717a18" stroke="#52525b" strokeWidth="0.8" />
+        <text x="211" y="15" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">OLD ✗</text>
+        <text x="210" y="92" fontSize="9" fill="#a1a1aa" textAnchor="middle">Déjà mitigé</text>
+      </svg>
+
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
         <p className="text-[13px] font-bold text-emerald-400">{t.leftMobileTitle}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.leftMobileBody}</p>

@@ -150,6 +150,23 @@ export function HTFBiasDiagram({ className = "", locale = "fr" }: HTFBiasDiagram
       {/* MOBILE : biais HTF H4 ─────────────────────────────── */}
       <div className="sm:hidden p-4 space-y-3">
         <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
+
+        {/* Mini-SVG : 2 panels — HTF bias bearish dicte la direction, LTF aligné dans le sens */}
+        <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="HTF bias" fill="none">
+          <line x1="138" y1="10" x2="138" y2="110" stroke="#3f3f46" strokeWidth="0.8" />
+          {/* Panel HTF — tendance baissière nette */}
+          <path d="M15,28 L40,45 L60,38 L85,65 L100,58 L120,90" stroke="#ef4444" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="120" cy="90" r="3" fill="#ef4444" />
+          <rect x="35" y="6" width="70" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
+          <text x="70" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">HTF ↘ BEARISH</text>
+          {/* Panel LTF — micro pullback puis continuation dans le sens HTF baissier */}
+          <path d="M155,30 L170,40 L185,28 L200,48 L215,38 L230,60 L245,55 L262,82" stroke="#ef4444" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="262" cy="82" r="3" fill="#ef4444" />
+          <rect x="178" y="6" width="60" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
+          <text x="208" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">LTF ↘</text>
+          <text x="208" y="105" fontSize="8" fill="#a1a1aa" textAnchor="middle" fontStyle="italic">aligné HTF</text>
+        </svg>
+
         <div className="rounded-xl border-2 border-red-500 bg-red-500/8 p-4 text-center">
           <p className="text-[12px] text-zinc-400 uppercase tracking-wider">{L.mobVerdict}</p>
           <p className="text-[22px] font-bold text-red-400 mt-1.5 leading-none">{L.mobBaissier}</p>

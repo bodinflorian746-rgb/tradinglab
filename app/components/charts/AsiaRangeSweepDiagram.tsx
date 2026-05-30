@@ -123,6 +123,28 @@ export function AsiaRangeSweepDiagram({ className = "", locale = "fr" }: AsiaRan
       {/* MOBILE : Asia range sweep ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+        {/* Mini-SVG : Asia range étroit puis sweep au London Open */}
+        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Asia range sweep" fill="none">
+          {/* Range Asia (rectangle horizontal) */}
+          <rect x="15" y="48" width="150" height="22" fill="#71717a18" stroke="#71717a55" strokeWidth="1" strokeDasharray="3 2" />
+          <line x1="15" y1="48" x2="165" y2="48" stroke="#71717a" strokeWidth="0.7" strokeDasharray="2 2" />
+          <line x1="15" y1="70" x2="165" y2="70" stroke="#71717a" strokeWidth="0.7" strokeDasharray="2 2" />
+          <text x="90" y="42" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">Asia range</text>
+          {/* Oscillation dans le range */}
+          <path d="M20,60 L40,52 L60,65 L80,55 L100,62 L120,55 L140,65 L160,58" stroke="#71717a" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
+          {/* Ligne verticale London Open */}
+          <line x1="175" y1="10" x2="175" y2="95" stroke="#10b981" strokeWidth="1" strokeDasharray="2 2" opacity="0.6" />
+          <rect x="148" y="2" width="60" height="12" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.7" />
+          <text x="178" y="11" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">London</text>
+          {/* Sweep : mèche perce au-dessus du high range puis reversal */}
+          <path d="M175,58 L195,18 L210,32" stroke="#f59e0b" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+          <rect x="195" y="2" width="58" height="12" rx="2" fill="#f59e0b18" stroke="#f59e0b55" strokeWidth="0.7" />
+          <text x="224" y="11" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Sweep ↑</text>
+          {/* Reversal bearish */}
+          <path d="M210,32 L235,60 L255,80 L270,92" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        </svg>
+
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-zinc-700 border border-zinc-500 flex items-center justify-center text-[11px] font-bold text-zinc-300 mt-0.5">1</span>

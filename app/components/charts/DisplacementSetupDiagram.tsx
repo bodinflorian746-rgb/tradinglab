@@ -110,6 +110,26 @@ export function DisplacementSetupDiagram({ className = "", locale = "fr" }: Disp
       {/* MOBILE : displacement setup ─────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
+
+        {/* Mini-SVG : setup displacement — sweep, gap (FVG), retour sur la zone, entry */}
+        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Displacement setup" fill="none">
+          {/* Zone FVG (blue) */}
+          <rect x="100" y="40" width="50" height="16" fill="#60a5fa18" stroke="#60a5fa55" strokeWidth="0.9" strokeDasharray="3 2" />
+          <rect x="105" y="22" width="40" height="13" rx="2" fill="#60a5fa18" stroke="#60a5fa55" strokeWidth="0.7" />
+          <text x="125" y="31" fontSize="9" fill="#60a5fa" textAnchor="middle" fontWeight="700">FVG</text>
+          {/* Trajectoire : sweep → impulsion création FVG → retour sur FVG → continuation */}
+          <path d="M15,80 L40,90 L60,75 L80,55 L100,42 L130,45 L165,62 L195,52 L225,38 L260,18" stroke="#71717a" strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
+          {/* Sweep point */}
+          <circle cx="40" cy="90" r="3" fill="#f59e0b" />
+          <text x="40" y="105" fontSize="8" fill="#f59e0b" textAnchor="middle">sweep</text>
+          {/* Entry au retour sur FVG */}
+          <circle cx="140" cy="48" r="3.5" fill="#10b981" />
+          <rect x="118" y="60" width="44" height="11" rx="2" fill="#09090b" />
+          <text x="140" y="68" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Entry ✓</text>
+          {/* Target */}
+          <circle cx="260" cy="18" r="3" fill="#10b981" />
+        </svg>
+
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>

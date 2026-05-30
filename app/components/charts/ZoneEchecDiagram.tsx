@@ -63,6 +63,25 @@ export function ZoneEchecDiagram({ className = "" }: ZoneEchecDiagramProps) {
       {/* MOBILE : zone qui échoue ───────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-red-400 text-center">Zone qui échoue — setup invalidé</p>
+
+        {/* Mini-SVG : zone traversée sans réaction (échec setup) */}
+        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Zone qui echoue" fill="none">
+          {/* Zone censée tenir */}
+          <rect x="20" y="48" width="240" height="20" fill="#71717a15" stroke="#71717a55" strokeWidth="1" strokeDasharray="3 2" />
+          <rect x="100" y="30" width="80" height="13" rx="2" fill="#71717a18" stroke="#52525b" strokeWidth="0.7" />
+          <text x="140" y="39" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">Zone attendue</text>
+          {/* Prix traverse en ligne droite sans réaction */}
+          <path d="M15,30 L50,42 L85,52 L115,60 L150,72 L185,85 L220,95 L265,105" stroke="#ef4444" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="265" cy="105" r="3" fill="#ef4444" />
+          {/* X au passage de la zone */}
+          <g transform="translate(150,58)">
+            <line x1="-6" y1="-6" x2="6" y2="6" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
+            <line x1="-6" y1="6" x2="6" y2="-6" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
+          </g>
+          <rect x="160" y="76" width="50" height="13" rx="2" fill="#ef444418" stroke="#ef4444" strokeWidth="0.7" />
+          <text x="185" y="85" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Échec ✗</text>
+        </svg>
+
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">Prix traverse la zone sans réaction</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">Pas de mèche de rejet, pas de signal LTF → la zone ne tient pas.</p>

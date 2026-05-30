@@ -93,6 +93,24 @@ export default function InternalVsExternalStructureZoomDiagram({ className = "",
     {/* MOBILE : structure externe vs interne ───────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
+
+      {/* Mini-SVG : 2 panels — External (macro HH/HL) vs Internal (zoom sur le pullback) */}
+      <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Structure externe vs interne" fill="none">
+        <line x1="138" y1="10" x2="138" y2="100" stroke="#3f3f46" strokeWidth="0.8" />
+        <path d="M15,90 L35,75 L50,82 L75,55 L90,62 L115,35" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx="75" cy="55" r="2.5" fill="#10b981" />
+        <circle cx="115" cy="35" r="3" fill="#10b981" />
+        <rect x="35" y="6" width="74" height="12" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.7" />
+        <text x="72" y="14" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">EXTERNAL ↗</text>
+        <path d="M158,42 L172,52 L185,46 L200,58 L215,52 L230,64 L245,58 L262,70" stroke="#71717a" strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx="172" cy="52" r="2" fill="#71717a" />
+        <circle cx="200" cy="58" r="2" fill="#71717a" />
+        <circle cx="230" cy="64" r="2" fill="#71717a" />
+        <rect x="170" y="6" width="60" height="12" rx="2" fill="#71717a18" stroke="#52525b" strokeWidth="0.7" />
+        <text x="200" y="14" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">INTERNAL</text>
+        <text x="200" y="92" fontSize="8" fill="#71717a" textAnchor="middle" fontStyle="italic">zoom du pullback</text>
+      </svg>
+
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
         <p className="text-[13px] font-bold text-emerald-400">{L.extTitle}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.extDescA} <span className="font-bold">{L.extDescBold}</span> {L.extDescB}</p>

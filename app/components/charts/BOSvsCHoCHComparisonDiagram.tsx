@@ -101,6 +101,24 @@ export default function BOSvsCHoCHComparisonDiagram({ className = "", locale = "
     {/* MOBILE : BOS vs CHoCH ─────────────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+      {/* Mini-SVG : 2 panels comparant BOS (continuation tendance) vs CHoCH (retournement) */}
+      <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="BOS vs CHoCH" fill="none">
+        <line x1="138" y1="10" x2="138" y2="100" stroke="#3f3f46" strokeWidth="0.8" />
+        {/* Panel BOS — continuation haussière, dépasse HH précédent */}
+        <line x1="10" y1="50" x2="125" y2="50" stroke="#71717a" strokeWidth="0.7" strokeDasharray="3 3" />
+        <path d="M15,85 L35,70 L55,75 L80,55 L100,62 L120,32" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx="120" cy="32" r="3" fill="#10b981" />
+        <rect x="92" y="6" width="36" height="12" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.7" />
+        <text x="110" y="14" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">BOS ↑</text>
+        {/* Panel CHoCH — retournement, casse du HL précédent */}
+        <line x1="155" y1="60" x2="270" y2="60" stroke="#71717a" strokeWidth="0.7" strokeDasharray="3 3" />
+        <path d="M160,40 L180,30 L200,40 L220,55 L240,75 L262,92" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx="262" cy="92" r="3" fill="#ef4444" />
+        <rect x="220" y="6" width="48" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
+        <text x="244" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">CHoCH ↓</text>
+      </svg>
+
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
         <p className="text-[13px] font-bold text-emerald-400">{t.bosMobileTitle}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.bosMobileBodyPart1}<span className="font-bold">{t.bosMobileBodyBold}</span>{t.bosMobileBodyPart2}</p>

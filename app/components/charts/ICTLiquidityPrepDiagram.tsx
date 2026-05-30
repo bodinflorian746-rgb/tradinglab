@@ -105,6 +105,27 @@ export function ICTLiquidityPrepDiagram({ className = "", locale = "fr" }: ICTLi
       {/* MOBILE : ICT liquidity prep ─────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+        {/* Mini-SVG : pool de liquidité (stops retail) au-dessus du HH, ciblé par smart money */}
+        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Liquidity prep" fill="none">
+          {/* Niveau HH (avec stops retail clustered) */}
+          <line x1="10" y1="35" x2="270" y2="35" stroke="#ef4444" strokeWidth="1" strokeDasharray="3 3" />
+          {/* Cluster d'icônes "stops" au-dessus du HH (petits triangles rouges) */}
+          {[140, 158, 176, 194, 212].map((x) => (
+            <g key={x}>
+              <path d={`M${x},25 L${x - 4},32 L${x + 4},32 Z`} fill="#ef4444" opacity="0.75" />
+            </g>
+          ))}
+          <rect x="155" y="6" width="80" height="13" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
+          <text x="195" y="15" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Stops retail</text>
+          {/* Trajectoire approche : HH précédent, tap des stops puis reversal */}
+          <path d="M15,85 L40,75 L60,80 L85,65 L110,55 L140,40 L175,28 L195,32 L210,55 L240,80 L265,95" stroke="#71717a" strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
+          {/* Sweep arrow upward */}
+          <path d="M125,55 L170,28 M170,28 L162,30 M170,28 L168,36" stroke="#f59e0b" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+          <rect x="170" y="65" width="50" height="12" rx="2" fill="#f59e0b18" stroke="#f59e0b55" strokeWidth="0.7" />
+          <text x="195" y="73" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Sweep ciblé</text>
+        </svg>
+
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>

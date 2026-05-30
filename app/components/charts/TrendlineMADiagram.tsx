@@ -100,6 +100,33 @@ export default function TrendlineMADiagram({ className = "", locale = "fr" }: { 
     {/* MOBILE : trendline + MM = zone défendue ─────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-emerald-400 text-center">{labels.mobTitle}</p>
+      {/* Mini-SVG : prix HH/HL + trendline emerald + MM20 bleue + MM50 grise (confluence) */}
+      <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Trendline + MM" fill="none">
+        {/* MM50 — grise, lissée, lag marqué */}
+        <path d="M15,95 L60,85 L110,75 L160,60 L210,45 L262,35"
+          stroke="#a1a1aa" strokeWidth="1.2" fill="none" strokeLinejoin="round" />
+        {/* MM20 — bleue, enveloppe haute */}
+        <path d="M15,75 L60,55 L110,45 L160,30 L210,18 L262,8"
+          stroke="#60a5fa" strokeWidth="1.2" fill="none" strokeLinejoin="round" />
+        {/* Prix — structure ascendante HH/HL */}
+        <path d="M15,85 L40,55 L60,75 L85,45 L110,65 L135,35 L160,55 L185,25 L210,45 L240,15 L262,8"
+          stroke="#71717a" strokeWidth="1.6" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+        {/* Trendline emerald reliant les HL */}
+        <line x1="60" y1="75" x2="262" y2="20" stroke="#10b981" strokeWidth="1.3" />
+        {/* HL pivots */}
+        <circle cx="60" cy="75" r="2.2" fill="#10b981" />
+        <circle cx="110" cy="65" r="2.2" fill="#10b981" />
+        <circle cx="160" cy="55" r="2.2" fill="#10b981" />
+        {/* Confluence : trendline + MM se croisent ~210,45 */}
+        <circle cx="210" cy="45" r="6" fill="#10b981" opacity="0.35" />
+        <circle cx="210" cy="45" r="3" fill="#10b981" />
+        {/* Labels */}
+        <text x="262" y="6" fontSize="8" fill="#60a5fa" fontWeight="700" textAnchor="end">MM20</text>
+        <text x="262" y="46" fontSize="8" fill="#a1a1aa" fontWeight="700" textAnchor="end">MM50</text>
+        <rect x="140" y="86" width="80" height="13" rx="2" fill="#10b98118" stroke="#10b981" strokeWidth="0.6" />
+        <text x="180" y="95" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Confluence</text>
+        <line x1="200" y1="86" x2="208" y2="52" stroke="#10b981" strokeWidth="0.7" strokeDasharray="2 2" />
+      </svg>
       <ul className="space-y-2 text-[13px]">
         <li className="flex items-center gap-2.5">
           <span className="shrink-0 w-4 h-0.5 bg-emerald-400 rounded" />

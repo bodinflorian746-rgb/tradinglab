@@ -75,6 +75,21 @@ export function ProcessFunnelDiagram({ className = "", locale = "fr" }: ProcessF
       {/* MOBILE : entonnoir process ────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
+
+        {/* Mini-SVG : funnel HTF → MTF → LTF (entonnoir vertical) */}
+        <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="Process funnel HTF/MTF/LTF" fill="none">
+          {/* Trapèze funnel */}
+          <path d="M40,10 L240,10 L200,55 L80,55 Z" fill="#10b98115" stroke="#10b98155" strokeWidth="1" />
+          <text x="140" y="35" fontSize="11" fill="#10b981" textAnchor="middle" fontWeight="700">D / W bias</text>
+          <text x="140" y="48" fontSize="8" fill="#a1a1aa" textAnchor="middle">HTF</text>
+          <path d="M80,60 L200,60 L170,90 L110,90 Z" fill="#60a5fa15" stroke="#60a5fa55" strokeWidth="1" />
+          <text x="140" y="78" fontSize="11" fill="#60a5fa" textAnchor="middle" fontWeight="700">H4 / H1 zone</text>
+          <text x="140" y="88" fontSize="8" fill="#a1a1aa" textAnchor="middle">MTF</text>
+          <path d="M110,95 L170,95 L155,120 L125,120 Z" fill="#f59e0b15" stroke="#f59e0b55" strokeWidth="1" />
+          <text x="140" y="111" fontSize="11" fill="#f59e0b" textAnchor="middle" fontWeight="700">M15 entry</text>
+          <text x="140" y="119" fontSize="7" fill="#a1a1aa" textAnchor="middle">LTF</text>
+        </svg>
+
         <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3 text-center">
           <p className="text-[13px] font-bold text-emerald-400">{L.block1}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobStage1}</p>

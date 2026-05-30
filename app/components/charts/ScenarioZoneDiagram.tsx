@@ -78,6 +78,25 @@ export function ScenarioZoneDiagram({ className = "", locale = "fr" }: ScenarioZ
 
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
+
+        {/* Mini-SVG : zone + 2 scénarios (rebond emerald / cassure red) */}
+        <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="Zone et 2 scenarios" fill="none">
+          {/* Zone S/R */}
+          <rect x="20" y="58" width="240" height="18" fill="#60a5fa15" stroke="#60a5fa55" strokeWidth="1" strokeDasharray="3 2" />
+          <rect x="100" y="40" width="80" height="13" rx="2" fill="#60a5fa18" stroke="#60a5fa55" strokeWidth="0.7" />
+          <text x="140" y="49" fontSize="9" fill="#60a5fa" textAnchor="middle" fontWeight="700">Zone clé</text>
+          {/* Approche commune */}
+          <path d="M25,30 L55,45 L85,60 L115,68" stroke="#71717a" strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
+          {/* Scénario 1 — rebond emerald */}
+          <path d="M115,68 L135,50 L160,30 L185,15" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="185" cy="15" r="3" fill="#10b981" />
+          <text x="178" y="32" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Rebond ↑</text>
+          {/* Scénario 2 — cassure red */}
+          <path d="M115,68 L140,82 L165,95 L195,108 L225,115" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="225" cy="115" r="3" fill="#ef4444" />
+          <text x="225" y="105" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Cassure ↓</text>
+        </svg>
+
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5"><span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-[11px] font-bold text-blue-400 mt-0.5">1</span><span className="text-zinc-300">{L.mob1A} <span className="font-bold">{L.mob1B}</span> {L.mob1C}</span></li>
           <li className="flex items-start gap-2.5"><span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">2</span><span className="text-zinc-300">{L.mob2A} <span className="font-bold">{L.mob2B}</span> {L.mob2C}</span></li>

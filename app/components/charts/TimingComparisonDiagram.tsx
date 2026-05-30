@@ -132,6 +132,30 @@ export function TimingComparisonDiagram({ className = "", locale = "fr" }: Timin
       {/* MOBILE : timing comparaison ───────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+        {/* Mini-SVG : comparison — mauvais timing (hors killzone) vs bon timing (en killzone) */}
+        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Timing comparison" fill="none">
+          <line x1="138" y1="10" x2="138" y2="100" stroke="#3f3f46" strokeWidth="0.8" />
+          {/* Panel mauvais timing (red) — entrée hors KZ, sans expansion */}
+          <line x1="15" y1="75" x2="125" y2="75" stroke="#52525b" strokeWidth="0.7" strokeDasharray="3 3" />
+          <path d="M15,75 L30,72 L45,78 L60,74 L75,77 L90,73 L105,78 L122,76" stroke="#ef4444" strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="60" cy="74" r="3" fill="#ef4444" />
+          <rect x="48" y="80" width="34" height="11" rx="2" fill="#09090b" />
+          <text x="65" y="88" fontSize="8" fill="#ef4444" textAnchor="middle" fontWeight="700">Entry ✗</text>
+          <rect x="35" y="6" width="70" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
+          <text x="70" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Hors KZ</text>
+          {/* Panel bon timing (emerald) — entrée en KZ, expansion */}
+          <line x1="155" y1="75" x2="265" y2="75" stroke="#10b98155" strokeWidth="0.7" strokeDasharray="3 3" />
+          {/* zone highlight KZ */}
+          <rect x="170" y="20" width="50" height="80" fill="#10b98108" />
+          <path d="M155,75 L170,72 L185,68 L200,55 L215,40 L235,28 L262,12" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="185" cy="68" r="3" fill="#10b981" />
+          <rect x="173" y="74" width="34" height="11" rx="2" fill="#09090b" />
+          <text x="190" y="82" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Entry ✓</text>
+          <rect x="178" y="6" width="64" height="12" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.7" />
+          <text x="210" y="14" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">En KZ</text>
+        </svg>
+
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">{t.b1Title}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b1Body}</p>

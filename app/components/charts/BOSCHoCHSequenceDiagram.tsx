@@ -104,6 +104,28 @@ export default function BOSCHoCHSequenceDiagram({ className = "", locale = "fr" 
     {/* MOBILE : séquence retournement structurel ───────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+      {/* Mini-SVG : séquence BOS (continuation HH/HL) puis CHoCH (cassure du LL = retournement) */}
+      <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="Séquence BOS puis CHoCH" fill="none">
+        {/* Trend up : HH/HL */}
+        <path d="M10,90 L40,75 L55,82 L80,60 L95,68 L120,45 L140,55 L165,30" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        {/* HH points */}
+        <circle cx="80" cy="60" r="3" fill="#10b981" />
+        <circle cx="120" cy="45" r="3" fill="#10b981" />
+        <circle cx="165" cy="30" r="3.5" fill="#10b981" />
+        {/* BOS label (au sommet) */}
+        <rect x="148" y="10" width="34" height="14" rx="3" fill="#10b98115" stroke="#10b98155" strokeWidth="0.8" />
+        <text x="165" y="20" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">BOS</text>
+        {/* Reversal : casse du HL → CHoCH */}
+        <path d="M165,30 L185,60 L200,55 L220,80 L240,95 L265,85" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        {/* Niveau du dernier HL (cassé) */}
+        <line x1="80" y1="60" x2="240" y2="60" stroke="#71717a" strokeWidth="0.8" strokeDasharray="3 3" />
+        {/* CHoCH label */}
+        <rect x="210" y="98" width="50" height="14" rx="3" fill="#ef444415" stroke="#ef444455" strokeWidth="0.8" />
+        <text x="235" y="108" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">CHoCH</text>
+        <circle cx="220" cy="80" r="3" fill="#ef4444" />
+      </svg>
+
       <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
         <p className="text-[13px] font-bold text-amber-400">{t.m1Title}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.m1Body}</p>

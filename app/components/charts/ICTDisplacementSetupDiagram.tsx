@@ -122,6 +122,26 @@ export function ICTDisplacementSetupDiagram({ className = "", locale = "fr" }: I
       {/* MOBILE : ICT displacement setup ──────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+        {/* Mini-SVG : setup ICT — Liquidity → Sweep → Displacement → FVG → Retour → Entry */}
+        <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="ICT setup displacement" fill="none">
+          {/* Niveau liquidité (HH retail) */}
+          <line x1="10" y1="35" x2="270" y2="35" stroke="#71717a" strokeWidth="0.8" strokeDasharray="3 3" />
+          <text x="14" y="32" fontSize="8" fill="#a1a1aa">Liquidity</text>
+          {/* FVG zone */}
+          <rect x="115" y="55" width="40" height="14" fill="#60a5fa18" stroke="#60a5fa55" strokeWidth="0.9" strokeDasharray="2 2" />
+          <text x="135" y="52" fontSize="9" fill="#60a5fa" textAnchor="middle" fontWeight="700">FVG</text>
+          {/* Trajectoire : approche, sweep, impulsion crée FVG, retour FVG, continuation */}
+          <path d="M15,75 L40,65 L60,42 L80,28 L95,48 L120,62 L150,55 L175,72 L205,58 L240,32 L268,12" stroke="#71717a" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
+          {/* Sweep */}
+          <circle cx="80" cy="28" r="3" fill="#f59e0b" />
+          <text x="80" y="20" fontSize="8" fill="#f59e0b" textAnchor="middle" fontWeight="700">sweep</text>
+          {/* Entry sur retour FVG */}
+          <circle cx="175" cy="72" r="3.5" fill="#10b981" />
+          <rect x="155" y="78" width="40" height="11" rx="2" fill="#09090b" />
+          <text x="175" y="86" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Entry ✓</text>
+        </svg>
+
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>

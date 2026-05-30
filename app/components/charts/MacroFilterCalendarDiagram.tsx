@@ -124,6 +124,48 @@ export function MacroFilterCalendarDiagram({ className = "", locale = "fr" }: Ma
       {/* MOBILE : filtre macro calendrier ─────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+        {/* Mini-SVG : checklist + pastille filtre ROUGE + volatilité news */}
+        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Filtre macro calendrier" fill="none">
+          {/* Checklist gauche */}
+          <rect x="8" y="10" width="120" height="90" rx="4" fill="#18181b" stroke="#3f3f46" strokeWidth="0.6" />
+          {/* Ligne 1 : setup OK */}
+          <circle cx="22" cy="28" r="5" fill="#10b98118" stroke="#10b981" strokeWidth="0.9" />
+          <path d="M19,28 L21,30 L25,26" fill="none" stroke="#10b981" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+          <text x="32" y="31" fontSize="8" fill="#d4d4d8" fontWeight="600">Setup OK</text>
+          {/* Ligne 2 : News imminente */}
+          <circle cx="22" cy="50" r="5" fill="#ef444418" stroke="#ef4444" strokeWidth="0.9" />
+          <path d="M19,47 L25,53 M25,47 L19,53" stroke="#ef4444" strokeWidth="1" strokeLinecap="round" />
+          <text x="32" y="53" fontSize="8" fill="#d4d4d8" fontWeight="600">News imminente</text>
+          {/* Ligne 3 : Filtre ROUGE */}
+          <text x="14" y="75" fontSize="8" fill="#d4d4d8" fontWeight="600">Filtre macro</text>
+          <rect x="14" y="80" width="50" height="14" rx="7" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
+          <text x="39" y="89" fontSize="8" fill="#ef4444" textAnchor="middle" fontWeight="800">ROUGE</text>
+          {/* Mini-graphique volatilité news à droite */}
+          <text x="135" y="20" fontSize="7" fill="#a1a1aa" fontWeight="700">XAU/USD M15</text>
+          {/* Mini bougies normales + spike + chute */}
+          <line x1="142" y1="48" x2="142" y2="58" stroke="#059669" strokeWidth="0.7" />
+          <rect x="139.5" y="50" width="5" height="7" fill="#10b981" rx="0.4" />
+          <line x1="154" y1="48" x2="154" y2="58" stroke="#b91c1c" strokeWidth="0.7" />
+          <rect x="151.5" y="50" width="5" height="7" fill="#ef4444" rx="0.4" />
+          <line x1="166" y1="45" x2="166" y2="55" stroke="#059669" strokeWidth="0.7" />
+          <rect x="163.5" y="47" width="5" height="7" fill="#10b981" rx="0.4" />
+          {/* Grande bougie news bullish (spike haut) */}
+          <line x1="180" y1="25" x2="180" y2="55" stroke="#059669" strokeWidth="1.2" />
+          <rect x="176" y="28" width="8" height="25" fill="#10b981" stroke="#059669" strokeWidth="0.5" rx="1" />
+          {/* Grande bougie news bearish (reversal) */}
+          <line x1="194" y1="32" x2="194" y2="85" stroke="#b91c1c" strokeWidth="1.2" />
+          <rect x="190" y="40" width="8" height="42" fill="#ef4444" stroke="#b91c1c" strokeWidth="0.5" rx="1" />
+          {/* Continuation bearish */}
+          <line x1="208" y1="78" x2="208" y2="92" stroke="#b91c1c" strokeWidth="0.7" />
+          <rect x="205.5" y="80" width="5" height="10" fill="#ef4444" rx="0.4" />
+          <line x1="220" y1="86" x2="220" y2="98" stroke="#b91c1c" strokeWidth="0.7" />
+          <rect x="217.5" y="88" width="5" height="9" fill="#ef4444" rx="0.4" />
+          <line x1="232" y1="92" x2="232" y2="102" stroke="#b91c1c" strokeWidth="0.7" />
+          <rect x="229.5" y="94" width="5" height="7" fill="#ef4444" rx="0.4" />
+          {/* Label volatilité */}
+          <rect x="155" y="62" width="80" height="11" rx="2" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.5" />
+          <text x="195" y="70" fontSize="7" fill="#f59e0b" textAnchor="middle" fontWeight="700">Volatilité news</text>
+        </svg>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
           <p className="text-[13px] font-bold text-emerald-400">{t.mobileSetupTitle}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.mobileSetupDesc}</p>

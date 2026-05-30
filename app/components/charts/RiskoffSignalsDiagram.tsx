@@ -160,6 +160,38 @@ export function RiskoffSignalsDiagram({ className = "", locale = "fr" }: Riskoff
       {/* MOBILE : Risk-off signaux ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+        {/* Mini-SVG : 4 vignettes-signaux + XAU haussier */}
+        <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="Risk-off signals" fill="none">
+          {/* 4 vignettes-signaux côte-à-côte en haut */}
+          {/* Indices ↓ */}
+          <rect x="8" y="6" width="60" height="36" rx="4" fill="#18181b" stroke="#3f3f46" strokeWidth="0.6" />
+          <line x1="20" y1="14" x2="56" y2="34" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M50,28 L56,34 L50,32" fill="none" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <text x="38" y="40" fontSize="6" fill="#a1a1aa" textAnchor="middle" fontWeight="700">Indices</text>
+          {/* VIX ↑ */}
+          <rect x="74" y="6" width="60" height="36" rx="4" fill="#18181b" stroke="#3f3f46" strokeWidth="0.6" />
+          <line x1="86" y1="34" x2="122" y2="14" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M118,20 L122,14 L116,18" fill="none" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <text x="104" y="40" fontSize="6" fill="#a1a1aa" textAnchor="middle" fontWeight="700">VIX</text>
+          {/* DXY ↑ */}
+          <rect x="140" y="6" width="60" height="36" rx="4" fill="#18181b" stroke="#3f3f46" strokeWidth="0.6" />
+          <line x1="152" y1="34" x2="188" y2="14" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M184,20 L188,14 L182,18" fill="none" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <text x="170" y="40" fontSize="6" fill="#a1a1aa" textAnchor="middle" fontWeight="700">DXY</text>
+          {/* XAU ↑ */}
+          <rect x="206" y="6" width="60" height="36" rx="4" fill="#18181b" stroke="#3f3f46" strokeWidth="0.6" />
+          <line x1="218" y1="34" x2="254" y2="14" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M250,20 L254,14 L248,18" fill="none" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <text x="236" y="40" fontSize="6" fill="#a1a1aa" textAnchor="middle" fontWeight="700">XAU</text>
+          {/* Séparateur */}
+          <line x1="10" y1="50" x2="270" y2="50" stroke="#27272a" strokeWidth="0.6" strokeDasharray="2 3" />
+          {/* Courbe XAU/USD haussière */}
+          <path d="M15,118 L40,108 L60,98 L80,102 L100,90 L125,82 L150,86 L175,72 L205,62 L235,55 L265,48"
+            stroke="#10b981" strokeWidth="1.6" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+          {/* Marker fin haussier */}
+          <circle cx="265" cy="48" r="3" fill="#10b981" />
+          <text x="260" y="125" fontSize="8" fill="#10b981" textAnchor="end" fontWeight="700">XAU/USD ↑</text>
+        </svg>
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-emerald-400" /><span className="text-zinc-300"><span className="font-bold text-emerald-400">{t.orRefuge}</span>{t.orDesc}</span></li>
           <li className="flex items-center gap-2.5"><span className="shrink-0 w-2 h-2 rounded-full bg-emerald-400" /><span className="text-zinc-300"><span className="font-bold text-emerald-400">{t.dxyFort}</span>{t.dxyDesc}</span></li>

@@ -124,6 +124,45 @@ export function NFPHeadlineReactionDiagram({ className = "", locale = "fr" }: NF
       {/* MOBILE : NFP headline reaction ───────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+        {/* Mini-SVG : pré-NFP stable + spike bearish + stabilisation + réévaluation */}
+        <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="NFP headline reaction" fill="none">
+          {/* Support */}
+          <line x1="15" y1="55" x2="265" y2="55" stroke="#ef4444" strokeWidth="0.9" strokeDasharray="3 2" />
+          <text x="265" y="50" fontSize="8" fill="#ef4444" fontWeight="700" textAnchor="end">Support</text>
+          {/* Pré-NFP — bougies stables */}
+          <line x1="22" y1="38" x2="22" y2="48" stroke="#059669" strokeWidth="0.8" />
+          <rect x="19" y="40" width="6" height="7" fill="#10b981" rx="0.5" />
+          <line x1="38" y1="38" x2="38" y2="48" stroke="#b91c1c" strokeWidth="0.8" />
+          <rect x="35" y="40" width="6" height="7" fill="#ef4444" rx="0.5" />
+          <line x1="54" y1="38" x2="54" y2="48" stroke="#059669" strokeWidth="0.8" />
+          <rect x="51" y="40" width="6" height="7" fill="#10b981" rx="0.5" />
+          {/* GRANDE bougie NFP — spike vers le bas */}
+          <line x1="75" y1="40" x2="75" y2="100" stroke="#b91c1c" strokeWidth="1.4" />
+          <rect x="70" y="42" width="10" height="55" fill="#ef4444" stroke="#b91c1c" strokeWidth="0.6" rx="1" />
+          {/* Stabilisation autour de y=90 */}
+          <line x1="95" y1="85" x2="95" y2="100" stroke="#b91c1c" strokeWidth="0.8" />
+          <rect x="92" y="88" width="6" height="10" fill="#ef4444" rx="0.5" />
+          <line x1="111" y1="85" x2="111" y2="100" stroke="#059669" strokeWidth="0.8" />
+          <rect x="108" y="88" width="6" height="10" fill="#10b981" rx="0.5" />
+          <line x1="127" y1="85" x2="127" y2="100" stroke="#b91c1c" strokeWidth="0.8" />
+          <rect x="124" y="88" width="6" height="10" fill="#ef4444" rx="0.5" />
+          {/* Réévaluation — remontée progressive */}
+          <line x1="148" y1="72" x2="148" y2="92" stroke="#059669" strokeWidth="0.8" />
+          <rect x="145" y="75" width="6" height="15" fill="#10b981" rx="0.5" />
+          <line x1="166" y1="58" x2="166" y2="80" stroke="#059669" strokeWidth="0.8" />
+          <rect x="163" y="62" width="6" height="18" fill="#10b981" rx="0.5" />
+          <line x1="184" y1="48" x2="184" y2="68" stroke="#059669" strokeWidth="0.8" />
+          <rect x="181" y="50" width="6" height="16" fill="#10b981" rx="0.5" />
+          <line x1="202" y1="40" x2="202" y2="58" stroke="#059669" strokeWidth="0.8" />
+          <rect x="199" y="42" width="6" height="14" fill="#10b981" rx="0.5" />
+          <line x1="220" y1="32" x2="220" y2="48" stroke="#059669" strokeWidth="0.8" />
+          <rect x="217" y="35" width="6" height="12" fill="#10b981" rx="0.5" />
+          {/* Labels */}
+          <rect x="58" y="6" width="50" height="13" rx="2" fill="#ef444418" stroke="#ef4444" strokeWidth="0.6" />
+          <text x="83" y="15" fontSize="8" fill="#ef4444" textAnchor="middle" fontWeight="700">Headline</text>
+          <rect x="160" y="6" width="80" height="13" rx="2" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.6" />
+          <text x="200" y="15" fontSize="8" fill="#f59e0b" textAnchor="middle" fontWeight="700">Réévaluation</text>
+        </svg>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">{t.mobileExcess}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.mobileExcessDesc}</p>

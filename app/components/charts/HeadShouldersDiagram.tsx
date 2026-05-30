@@ -197,6 +197,27 @@ export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" 
       {/* MOBILE : 2 patterns H&S empilés ───────────────────────── */}
       <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{L.mobileTitle}</p>
+
+        {/* Mini-SVG : Head & Shoulders — épaule gauche, tête, épaule droite + neckline */}
+        <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="Head and Shoulders" fill="none">
+          {/* Neckline */}
+          <line x1="15" y1="85" x2="265" y2="85" stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
+          <rect x="100" y="92" width="80" height="13" rx="2" fill="#71717a18" stroke="#52525b" strokeWidth="0.6" />
+          <text x="140" y="101" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">Neckline</text>
+          {/* Pattern H&S — left shoulder, head, right shoulder */}
+          <path d="M15,100 L55,55 L85,85 L140,20 L195,85 L225,55 L265,100" stroke="#ef4444" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="55" cy="55" r="3" fill="#ef4444" opacity="0.7" />
+          <circle cx="140" cy="20" r="4" fill="#ef4444" />
+          <circle cx="225" cy="55" r="3" fill="#ef4444" opacity="0.7" />
+          {/* Labels */}
+          <text x="55" y="48" fontSize="9" fill="#a1a1aa" textAnchor="middle">L-shoulder</text>
+          <text x="140" y="13" fontSize="10" fill="#ef4444" textAnchor="middle" fontWeight="700">Head</text>
+          <text x="225" y="48" fontSize="9" fill="#a1a1aa" textAnchor="middle">R-shoulder</text>
+          {/* Cassure neckline → target bearish */}
+          <path d="M265,100 L275,120" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="2 2" />
+          <text x="270" y="125" fontSize="8" fill="#ef4444" textAnchor="end" fontWeight="700">target ↓</text>
+        </svg>
+
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">{L.classicTitle}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.classicDesc1}<span className="font-bold">neckline</span>{L.classicDesc2}</p>

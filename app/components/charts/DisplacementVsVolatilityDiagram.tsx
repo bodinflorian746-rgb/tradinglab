@@ -113,6 +113,39 @@ export function DisplacementVsVolatilityDiagram({ className = "", locale = "fr" 
       {/* MOBILE : displacement vs volatilité ─────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
+
+        {/* Mini-SVG : 2 panels — volatilité chaotique (amber) vs displacement directionnel (emerald) */}
+        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Displacement vs volatilité" fill="none">
+          <line x1="138" y1="10" x2="138" y2="100" stroke="#3f3f46" strokeWidth="0.8" />
+          {/* Panel volatilité — bougies en zigzag chaotique (amber) */}
+          {[20, 40, 60, 80, 100, 120].map((x, i) => {
+            const bull = [0, 3, 5].includes(i);
+            const y = 35 + ((i * 7) % 22);
+            return (
+              <g key={x}>
+                <line x1={x} y1={y - 4} x2={x} y2={y + 26} stroke={bull ? "#d97706" : "#dc2626"} strokeWidth="1" strokeLinecap="round" />
+                <rect x={x - 4} y={y + 2} width="8" height="22" fill={bull ? "#f59e0b" : "#ef4444"} stroke={bull ? "#d97706" : "#dc2626"} strokeWidth="0.6" rx="0.6" />
+              </g>
+            );
+          })}
+          <rect x="20" y="6" width="100" height="12" rx="2" fill="#f59e0b15" stroke="#f59e0b55" strokeWidth="0.7" />
+          <text x="70" y="14" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Volatilité chaotique</text>
+          <text x="70" y="98" fontSize="8" fill="#f59e0b" textAnchor="middle">pas de direction</text>
+          {/* Panel displacement — grandes bougies directionnelles emerald */}
+          {[160, 185, 210, 235, 258].map((x, i) => {
+            const y = 70 - i * 8;
+            return (
+              <g key={x}>
+                <line x1={x} y1={y - 5} x2={x} y2={y + 18} stroke="#059669" strokeWidth="1.2" strokeLinecap="round" />
+                <rect x={x - 5} y={y} width="10" height="15" fill="#10b981" stroke="#059669" strokeWidth="0.7" rx="0.8" />
+              </g>
+            );
+          })}
+          <rect x="160" y="6" width="100" height="12" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.7" />
+          <text x="210" y="14" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Displacement ↑</text>
+          <text x="210" y="98" fontSize="8" fill="#10b981" textAnchor="middle">direction nette</text>
+        </svg>
+
         <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
           <p className="text-[13px] font-bold text-amber-400">{L.leftCardT}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.leftCardD}</p>

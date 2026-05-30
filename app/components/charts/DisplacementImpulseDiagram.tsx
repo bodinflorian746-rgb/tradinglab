@@ -93,6 +93,37 @@ export function DisplacementImpulseDiagram({ className = "" }: DisplacementImpul
       {/* MOBILE : displacement impulsion ─────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">Displacement impulsion · EUR/USD M15</p>
+
+        {/* Mini-SVG : sweep amber (mèche) puis impulsion violente bullish */}
+        <svg viewBox="0 0 280 100" className="w-full h-auto" aria-label="Displacement impulsion" fill="none">
+          {/* Niveau de référence (high pré-sweep) */}
+          <line x1="10" y1="45" x2="270" y2="45" stroke="#71717a" strokeWidth="0.8" strokeDasharray="3 3" />
+          {/* Bougies d'approche neutres */}
+          {[30, 50].map((x, i) => (
+            <g key={x}>
+              <line x1={x} y1="42" x2={x} y2="62" stroke={i === 0 ? "#dc2626" : "#059669"} strokeWidth="1" strokeLinecap="round" />
+              <rect x={x - 3.5} y="48" width="7" height="12" fill={i === 0 ? "#ef4444" : "#10b981"} stroke={i === 0 ? "#dc2626" : "#059669"} strokeWidth="0.5" rx="0.6" />
+            </g>
+          ))}
+          {/* Sweep : bougie avec longue mèche au-dessus du niveau */}
+          <line x1="80" y1="25" x2="80" y2="62" stroke="#dc2626" strokeWidth="1.2" strokeLinecap="round" />
+          <rect x="76" y="52" width="8" height="10" fill="#ef4444" stroke="#dc2626" strokeWidth="0.6" rx="0.8" />
+          <rect x="55" y="6" width="50" height="12" rx="2" fill="#f59e0b15" stroke="#f59e0b55" strokeWidth="0.7" />
+          <text x="80" y="14" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Sweep</text>
+          {/* Impulsion : grandes bougies bullish post-sweep */}
+          {[120, 145, 170, 195, 220, 245].map((x, i) => {
+            const y = 55 - i * 5;
+            return (
+              <g key={x}>
+                <line x1={x} y1={y - 4} x2={x} y2={y + 16} stroke="#059669" strokeWidth="1.2" strokeLinecap="round" />
+                <rect x={x - 5} y={y} width="10" height="14" fill="#10b981" stroke="#059669" strokeWidth="0.7" rx="0.8" />
+              </g>
+            );
+          })}
+          <rect x="160" y="78" width="80" height="13" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.7" />
+          <text x="200" y="87" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">IMPULSION ↑</text>
+        </svg>
+
         <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
           <p className="text-[13px] font-bold text-amber-400">Sweep initial</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">Manipulation pour chasser la liquidité.</p>

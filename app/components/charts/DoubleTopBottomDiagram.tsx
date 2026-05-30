@@ -186,6 +186,30 @@ export default function DoubleTopBottomDiagram({ locale = "fr" }: { locale?: "fr
       {/* MOBILE : Double Top / Bottom ──────────────────────── */}
       <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+        {/* Mini-SVG : 2 panels — Double Top (M, red) vs Double Bottom (W, emerald) */}
+        <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="Double Top et Double Bottom" fill="none">
+          <line x1="138" y1="10" x2="138" y2="110" stroke="#3f3f46" strokeWidth="0.8" />
+          {/* Double Top */}
+          <line x1="15" y1="30" x2="125" y2="30" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" />
+          <path d="M15,75 L40,30 L65,55 L90,30 L115,75" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="40" cy="30" r="3" fill="#ef4444" />
+          <circle cx="90" cy="30" r="3" fill="#ef4444" />
+          <line x1="15" y1="55" x2="125" y2="55" stroke="#71717a" strokeWidth="0.8" strokeDasharray="3 3" />
+          <rect x="22" y="6" width="60" height="13" rx="2" fill="#ef444418" stroke="#ef4444" strokeWidth="0.6" />
+          <text x="52" y="15" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Double Top</text>
+          {/* Cassure neckline (cible bearish) */}
+          <path d="M115,75 L125,95" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="2 2" opacity="0.7" />
+          {/* Double Bottom */}
+          <line x1="155" y1="90" x2="265" y2="90" stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" />
+          <path d="M155,45 L180,90 L205,65 L230,90 L262,45" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="180" cy="90" r="3" fill="#10b981" />
+          <circle cx="230" cy="90" r="3" fill="#10b981" />
+          <line x1="155" y1="65" x2="265" y2="65" stroke="#71717a" strokeWidth="0.8" strokeDasharray="3 3" />
+          <rect x="170" y="6" width="80" height="13" rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.6" />
+          <text x="210" y="15" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Double Bottom</text>
+        </svg>
+
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">{t.mobileDTTitle}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.mobileDTDesc}</p>

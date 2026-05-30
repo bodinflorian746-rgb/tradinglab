@@ -113,6 +113,23 @@ export function IctLiquidityGrabDiagram({ className = "", locale = "fr" }: IctLi
       {/* MOBILE : liquidity grab equal highs ────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+        {/* Mini-SVG : pool de stops au HH → sweep amber par smart money → reversal */}
+        <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="Liquidity grab" fill="none">
+          <line x1="10" y1="40" x2="270" y2="40" stroke="#ef4444" strokeWidth="1" strokeDasharray="3 3" />
+          {[145, 162, 179, 196, 213].map((x) => (
+            <path key={x} d={`M${x},30 L${x - 4},37 L${x + 4},37 Z`} fill="#ef4444" opacity="0.7" />
+          ))}
+          <rect x="148" y="6" width="74" height="13" rx="2" fill="#ef444415" stroke="#ef444555" strokeWidth="0.7" />
+          <text x="185" y="15" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Stops</text>
+          <path d="M15,85 L40,75 L70,65 L100,52 L130,42 L160,30 L180,16" stroke="#71717a" strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="180" cy="16" r="3.5" fill="#f59e0b" />
+          <rect x="155" y="50" width="60" height="13" rx="2" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.7" />
+          <text x="185" y="59" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Sweep ↑</text>
+          <path d="M180,16 L200,40 L225,68 L250,90 L268,105" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="268" cy="105" r="3" fill="#ef4444" />
+        </svg>
+
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>

@@ -127,6 +127,29 @@ export function KillzonesTimelineDiagram({ className = "", locale = "fr" }: Kill
       {/* MOBILE : killzones timeline ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+        {/* Mini-SVG : timeline 24h compressée avec 3 killzones colorées (Asia, London, NY) */}
+        <svg viewBox="0 0 300 60" className="w-full h-auto" aria-label="Timeline 24h killzones" fill="none">
+          {/* Axe + ticks horaires */}
+          <line x1="10" y1="40" x2="290" y2="40" stroke="#52525b" strokeWidth="1" />
+          {[0, 6, 12, 18, 24].map((h) => (
+            <g key={h}>
+              <line x1={10 + (h * 280) / 24} y1="40" x2={10 + (h * 280) / 24} y2="44" stroke="#52525b" strokeWidth="0.8" />
+              <text x={10 + (h * 280) / 24} y="54" fontSize="9" fill="#71717a" textAnchor="middle">{h}h</text>
+            </g>
+          ))}
+          {/* Asia 00-07 (zinc) */}
+          <rect x={10 + (0 * 280) / 24} y="20" width={(7 * 280) / 24} height="20" fill="#71717a25" stroke="#71717a55" strokeWidth="0.7" />
+          {/* London 07-10 (emerald) */}
+          <rect x={10 + (7 * 280) / 24} y="14" width={(3 * 280) / 24} height="26" fill="#10b98125" stroke="#10b98155" strokeWidth="0.9" />
+          <text x={10 + (8.5 * 280) / 24} y="10" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">LON</text>
+          {/* NY AM 12-15 (emerald) */}
+          <rect x={10 + (12 * 280) / 24} y="10" width={(3 * 280) / 24} height="30" fill="#10b98130" stroke="#10b981" strokeWidth="1" />
+          <text x={10 + (13.5 * 280) / 24} y="6" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">NY</text>
+          {/* NY PM 18-20 (blue) */}
+          <rect x={10 + (18 * 280) / 24} y="22" width={(2 * 280) / 24} height="18" fill="#60a5fa25" stroke="#60a5fa55" strokeWidth="0.7" />
+        </svg>
+
         <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
           <p className="text-[13px] font-bold text-zinc-300">{t.asiaTitle}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.asiaBody}</p>

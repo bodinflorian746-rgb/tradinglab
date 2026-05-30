@@ -123,6 +123,45 @@ export function FOMCImpulseExcessDiagram({ className = "", locale = "fr" }: FOMC
       {/* MOBILE : FOMC impulsion excessive ───────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+        {/* Mini-SVG : support cassé par grande bougie FOMC + retour de balancier */}
+        <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="FOMC impulse excess" fill="none">
+          {/* Support cassé */}
+          <line x1="15" y1="60" x2="265" y2="60" stroke="#ef4444" strokeWidth="0.9" strokeDasharray="3 2" />
+          <text x="265" y="55" fontSize="8" fill="#ef4444" fontWeight="700" textAnchor="end">Support</text>
+          {/* 4 petites bougies pré-FOMC */}
+          <line x1="25" y1="38" x2="25" y2="55" stroke="#059669" strokeWidth="0.8" />
+          <rect x="22" y="42" width="6" height="10" fill="#10b981" rx="0.5" />
+          <line x1="40" y1="38" x2="40" y2="55" stroke="#b91c1c" strokeWidth="0.8" />
+          <rect x="37" y="42" width="6" height="10" fill="#ef4444" rx="0.5" />
+          <line x1="55" y1="38" x2="55" y2="55" stroke="#059669" strokeWidth="0.8" />
+          <rect x="52" y="42" width="6" height="10" fill="#10b981" rx="0.5" />
+          <line x1="70" y1="38" x2="70" y2="55" stroke="#b91c1c" strokeWidth="0.8" />
+          <rect x="67" y="42" width="6" height="10" fill="#ef4444" rx="0.5" />
+          {/* GRANDE bougie FOMC bearish — perce le support */}
+          <line x1="95" y1="45" x2="95" y2="115" stroke="#b91c1c" strokeWidth="1.4" />
+          <rect x="90" y="50" width="10" height="60" fill="#ef4444" stroke="#b91c1c" strokeWidth="0.6" rx="1" />
+          {/* Retour de balancier — bougies emerald qui remontent */}
+          <line x1="120" y1="90" x2="120" y2="112" stroke="#059669" strokeWidth="0.8" />
+          <rect x="117" y="95" width="6" height="15" fill="#10b981" rx="0.5" />
+          <line x1="138" y1="78" x2="138" y2="100" stroke="#059669" strokeWidth="0.8" />
+          <rect x="135" y="82" width="6" height="15" fill="#10b981" rx="0.5" />
+          <line x1="156" y1="65" x2="156" y2="88" stroke="#059669" strokeWidth="0.8" />
+          <rect x="153" y="68" width="6" height="18" fill="#10b981" rx="0.5" />
+          <line x1="174" y1="55" x2="174" y2="78" stroke="#059669" strokeWidth="0.8" />
+          <rect x="171" y="58" width="6" height="18" fill="#10b981" rx="0.5" />
+          <line x1="192" y1="45" x2="192" y2="68" stroke="#059669" strokeWidth="0.8" />
+          <rect x="189" y="48" width="6" height="18" fill="#10b981" rx="0.5" />
+          <line x1="210" y1="38" x2="210" y2="60" stroke="#059669" strokeWidth="0.8" />
+          <rect x="207" y="42" width="6" height="15" fill="#10b981" rx="0.5" />
+          <line x1="228" y1="32" x2="228" y2="52" stroke="#059669" strokeWidth="0.8" />
+          <rect x="225" y="35" width="6" height="14" fill="#10b981" rx="0.5" />
+          {/* Label impulsion */}
+          <rect x="78" y="6" width="50" height="13" rx="2" fill="#ef444418" stroke="#ef4444" strokeWidth="0.6" />
+          <text x="103" y="15" fontSize="8" fill="#ef4444" textAnchor="middle" fontWeight="700">Impulsion</text>
+          {/* Label retour */}
+          <rect x="170" y="6" width="60" height="13" rx="2" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.6" />
+          <text x="200" y="15" fontSize="8" fill="#f59e0b" textAnchor="middle" fontWeight="700">Balancier</text>
+        </svg>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">{t.impulsionTitle}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.impulsionDesc}</p>

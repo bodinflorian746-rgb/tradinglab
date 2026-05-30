@@ -104,6 +104,26 @@ export default function InvalidationDiagram({ className = "", locale = "fr" }: {
 
     {/* MOBILE : setup invalidé ────────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
+      {/* Mini-SVG : zone setup + entrée + SL franchi = invalidation */}
+      <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="Setup invalidation" fill="none">
+        {/* Neckline */}
+        <line x1="15" y1="55" x2="265" y2="55" stroke="#a1a1aa" strokeWidth="0.8" strokeDasharray="3 3" />
+        <text x="20" y="50" fontSize="8" fill="#a1a1aa" fontWeight="600">Neckline</text>
+        {/* SL initial line */}
+        <line x1="15" y1="28" x2="265" y2="28" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
+        <text x="262" y="24" fontSize="8" fill="#ef4444" fontWeight="600" textAnchor="end">SL</text>
+        {/* Prix : Double Top → cassure neckline → re-cassure violente au-dessus du SL */}
+        <path d="M15,90 L45,40 L75,55 L105,40 L135,75 L160,80 L185,55 L210,30 L240,15 L262,10"
+          stroke="#71717a" strokeWidth="1.6" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+        {/* Bougie de rejet violente */}
+        <line x1="200" y1="20" x2="200" y2="62" stroke="#059669" strokeWidth="1" />
+        <rect x="195" y="30" width="10" height="25" fill="#10b981" stroke="#059669" strokeWidth="0.6" rx="1" />
+        {/* Croix rouge sur l'entrée short */}
+        <circle cx="135" cy="75" r="3" fill="#ef4444" />
+        {/* Badge "Setup invalidé" */}
+        <rect x="80" y="98" width="120" height="15" rx="3" fill="#ef444418" stroke="#ef4444" strokeWidth="0.7" />
+        <text x="140" y="108" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Pattern invalidé</text>
+      </svg>
       <div className="rounded-xl border-2 border-red-500 bg-red-500/10 p-3 text-center">
         <p className="text-[14px] font-bold text-red-400">{L.mobInvalid}</p>
       </div>

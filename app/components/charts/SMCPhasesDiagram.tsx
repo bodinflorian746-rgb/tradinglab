@@ -139,6 +139,29 @@ export default function SMCPhasesDiagram({ className = "" }: { className?: strin
     {/* MOBILE : 3 phases du marché ───────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-white text-center">Les 3 phases du cycle de marché</p>
+
+      {/* Mini-SVG : visuel des 3 phases (oscillation range → spike fakeout → impulsion HH/HL) */}
+      <svg viewBox="0 0 300 100" className="w-full h-auto" aria-label="3 phases du marché" fill="none">
+        {/* séparateurs entre phases */}
+        <line x1="100" y1="10" x2="100" y2="90" stroke="#3f3f46" strokeWidth="0.8" />
+        <line x1="200" y1="10" x2="200" y2="90" stroke="#3f3f46" strokeWidth="0.8" />
+        {/* Panel 1 — Accumulation (range oscillant zinc) */}
+        <line x1="8" y1="40" x2="92" y2="40" stroke="#52525b" strokeWidth="0.8" strokeDasharray="3 3" />
+        <line x1="8" y1="70" x2="92" y2="70" stroke="#52525b" strokeWidth="0.8" strokeDasharray="3 3" />
+        <path d="M10,55 L25,42 L40,68 L55,45 L70,68 L85,50" stroke="#71717a" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        {/* Panel 2 — Manipulation (spike au-dessus + retour amber) */}
+        <line x1="108" y1="40" x2="192" y2="40" stroke="#52525b" strokeWidth="0.8" strokeDasharray="3 3" />
+        <line x1="108" y1="70" x2="192" y2="70" stroke="#52525b" strokeWidth="0.8" strokeDasharray="3 3" />
+        <path d="M110,55 L125,50 L140,55 L150,20 L160,55 L175,65 L190,60" stroke="#f59e0b" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx="150" cy="20" r="3" fill="#f59e0b" />
+        {/* Panel 3 — Expansion (impulsion HH/HL emerald) */}
+        <path d="M210,80 L225,60 L235,68 L250,46 L265,52 L280,30 L292,18" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx="225" cy="60" r="2.5" fill="#10b981" />
+        <circle cx="250" cy="46" r="2.5" fill="#10b981" />
+        <circle cx="280" cy="30" r="2.5" fill="#10b981" />
+        <circle cx="292" cy="18" r="3" fill="#10b981" />
+      </svg>
+
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
         <p className="text-[13px] font-bold text-emerald-400">1 · Accumulation</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">Range latéral, smart money construit ses positions. Pas de trade directionnel.</p>

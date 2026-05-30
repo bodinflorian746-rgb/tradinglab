@@ -123,6 +123,30 @@ export function LiquidityGrabDiagram({ className = "", locale = "fr" }: { classN
     {/* MOBILE : liquidity grab mécanique ──────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
       <p className="text-[14px] font-bold text-red-400 text-center">{t.mobileTitle}</p>
+      {/* Mini-SVG : equal highs + stops cluster + mèche sweep + retournement bearish */}
+      <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="Liquidity grab" fill="none">
+        {/* Ligne equal highs */}
+        <line x1="15" y1="40" x2="265" y2="40" stroke="#ef4444" strokeWidth="0.9" strokeDasharray="3 2" />
+        <text x="20" y="35" fontSize="8" fill="#ef4444" fontWeight="600">Equal highs</text>
+        {/* Cluster de stops (triangles rouges) au-dessus */}
+        <path d="M120,32 L125,24 L130,32 Z" fill="#ef4444" opacity="0.7" />
+        <path d="M135,32 L140,24 L145,32 Z" fill="#ef4444" opacity="0.7" />
+        <path d="M150,32 L155,24 L160,32 Z" fill="#ef4444" opacity="0.7" />
+        {/* Path approche : 2 tops sur equal highs */}
+        <path d="M15,90 L40,70 L65,40 L85,60 L110,40 L130,55"
+          stroke="#71717a" strokeWidth="1.6" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+        {/* La bougie sweep : mèche perce au-dessus, corps repasse sous */}
+        <line x1="140" y1="15" x2="140" y2="60" stroke="#b91c1c" strokeWidth="1.2" />
+        <rect x="135" y="45" width="10" height="15" fill="#ef4444" stroke="#b91c1c" strokeWidth="0.6" rx="1" />
+        {/* Flèche sweep amber pointant la mèche */}
+        <line x1="180" y1="20" x2="148" y2="18" stroke="#f59e0b" strokeWidth="1" strokeDasharray="2 2" />
+        <rect x="180" y="13" width="50" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.6" />
+        <text x="205" y="22" fontSize="8" fill="#f59e0b" textAnchor="middle" fontWeight="700">Sweep</text>
+        {/* Retournement bearish après sweep */}
+        <path d="M145,60 L170,80 L195,100 L225,118 L260,125"
+          stroke="#ef4444" strokeWidth="1.8" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+        <path d="M255,120 L262,125 L257,128" stroke="#ef4444" strokeWidth="1.2" fill="none" />
+      </svg>
       <ul className="space-y-2 text-[13px]">
         <li className="flex items-start gap-2.5">
           <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">1</span>

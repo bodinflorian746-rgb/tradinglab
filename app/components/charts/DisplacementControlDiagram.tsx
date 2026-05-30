@@ -96,6 +96,31 @@ export function DisplacementControlDiagram({ className = "" }: DisplacementContr
       {/* MOBILE : displacement control ─────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">Displacement = prise de contrôle · XAU/USD M15</p>
+
+        {/* Mini-SVG : bougies courtes (équilibre) suivies d'une grosse bougie (displacement) */}
+        <svg viewBox="0 0 280 100" className="w-full h-auto" aria-label="Displacement contrôle" fill="none">
+          {/* Petites bougies — équilibre */}
+          {[20, 40, 60, 80, 100, 120].map((x, i) => {
+            const bull = i % 2 === 0;
+            const y = 45 + (i % 3) * 4;
+            return (
+              <g key={x}>
+                <line x1={x} y1={y - 5} x2={x} y2={y + 18} stroke={bull ? "#059669" : "#dc2626"} strokeWidth="1" strokeLinecap="round" />
+                <rect x={x - 4} y={y} width="8" height="13" fill={bull ? "#10b981" : "#ef4444"} stroke={bull ? "#059669" : "#dc2626"} strokeWidth="0.6" rx="0.8" />
+              </g>
+            );
+          })}
+          <text x="70" y="92" fontSize="9" fill="#a1a1aa" textAnchor="middle">Équilibre</text>
+          {/* Séparateur */}
+          <line x1="150" y1="20" x2="150" y2="80" stroke="#3f3f46" strokeWidth="0.8" strokeDasharray="2 2" />
+          {/* Displacement : grande bougie bullish puissante */}
+          <line x1="190" y1="15" x2="190" y2="80" stroke="#059669" strokeWidth="1.6" strokeLinecap="round" />
+          <rect x="180" y="22" width="20" height="55" fill="#10b981" stroke="#059669" strokeWidth="1" rx="1.5" />
+          <rect x="160" y="2" width="80" height="13" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.7" />
+          <text x="200" y="11" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">DISPLACEMENT</text>
+          <text x="200" y="92" fontSize="9" fill="#10b981" textAnchor="middle">Prise de contrôle ↑</text>
+        </svg>
+
         <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
           <p className="text-[13px] font-bold text-zinc-300">Phase lente — équilibre</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">Bougies courtes, aucune prise de contrôle visible.</p>

@@ -228,6 +228,31 @@ export default function RSIDivergenceDiagram({ locale = "fr" }: { locale?: "fr" 
       {/* MOBILE : divergence RSI ────────────────────────────── */}
       <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
+
+        {/* Mini-SVG : 2 panels superposés — prix monte (HH), RSI baisse (LH) = divergence */}
+        <svg viewBox="0 0 280 140" className="w-full h-auto" aria-label="RSI divergence" fill="none">
+          {/* Panel prix — HH montant */}
+          <rect x="14" y="6" width="40" height="13" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.6" />
+          <text x="34" y="15" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">PRIX</text>
+          <path d="M15,55 L40,40 L60,48 L90,32 L115,40 L145,22 L175,28 L205,20 L240,12 L265,8" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="90" cy="32" r="2.5" fill="#10b981" />
+          <circle cx="145" cy="22" r="3" fill="#10b981" />
+          <circle cx="205" cy="20" r="3" fill="#10b981" />
+          <line x1="90" y1="32" x2="265" y2="32" stroke="#10b981" strokeWidth="0.7" strokeDasharray="2 2" opacity="0.5" />
+          {/* Séparateur */}
+          <line x1="10" y1="72" x2="270" y2="72" stroke="#3f3f46" strokeWidth="0.7" />
+          {/* Panel RSI — LH descendant */}
+          <rect x="14" y="80" width="40" height="13" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.6" />
+          <text x="34" y="89" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">RSI</text>
+          <path d="M15,118 L40,108 L60,115 L90,95 L115,110 L145,102 L175,114 L205,112 L240,124 L265,128" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="90" cy="95" r="3" fill="#ef4444" />
+          <circle cx="145" cy="102" r="2.5" fill="#ef4444" />
+          <circle cx="205" cy="112" r="2.5" fill="#ef4444" />
+          <line x1="90" y1="95" x2="265" y2="125" stroke="#ef4444" strokeWidth="0.7" strokeDasharray="2 2" opacity="0.5" />
+          <rect x="100" y="60" width="80" height="11" rx="2" fill="#ef444418" stroke="#ef4444" strokeWidth="0.6" />
+          <text x="140" y="68" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Divergence ✗</text>
+        </svg>
+
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">{L.mobBear}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobBearPre} <span className="font-bold">HH</span>{L.mobBearMid} <span className="font-bold">LH</span> {L.mobBearEnd}</p>

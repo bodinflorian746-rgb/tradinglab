@@ -68,6 +68,25 @@ export function DirectionDominanteDiagram({ className = "", locale = "fr" }: Dir
       {/* MOBILE : direction dominante ─────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
+
+        {/* Mini-SVG : grande flèche HTF baissière + petites flèches LTF alignées baissières */}
+        <svg viewBox="0 0 280 100" className="w-full h-auto" aria-label="Direction dominante" fill="none">
+          {/* Flèche HTF directionnelle baissière */}
+          <path d="M20,20 L260,80 M250,82 L260,80 L255,72" stroke="#ef4444" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <rect x="60" y="6" width="80" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
+          <text x="100" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">HTF ↘ dominant</text>
+          {/* Petites flèches LTF alignées (toutes baissières) */}
+          {[40, 90, 140, 190, 240].map((x, i) => {
+            const y = 30 + i * 8;
+            return (
+              <g key={x}>
+                <path d={`M${x - 6},${y - 4} L${x + 6},${y + 4} M${x + 2},${y + 4} L${x + 6},${y + 4} L${x + 6},${y}`} stroke="#ef4444" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+              </g>
+            );
+          })}
+          <text x="140" y="95" fontSize="8" fill="#a1a1aa" textAnchor="middle" fontStyle="italic">LTF dans le sens HTF</text>
+        </svg>
+
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">{L.mobImpulsions}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobImpulsionsDesc}</p>

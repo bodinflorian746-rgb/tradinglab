@@ -113,6 +113,22 @@ export function NYOpenExpansionDiagram({ className = "", locale = "fr" }: NYOpen
       {/* MOBILE : NY Open expansion ──────────────────────── */}
       <div className="sm:hidden p-4 space-y-2.5">
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
+
+        {/* Mini-SVG : pré-NY plat puis expansion violente à NY Open */}
+        <svg viewBox="0 0 280 100" className="w-full h-auto" aria-label="NY Open expansion" fill="none">
+          {/* Niveau de référence */}
+          <line x1="10" y1="60" x2="270" y2="60" stroke="#52525b" strokeWidth="0.8" strokeDasharray="3 3" />
+          {/* Pré-NY : range plat (oscillation faible amplitude) */}
+          <path d="M15,60 L30,58 L45,62 L60,57 L75,63 L90,58 L105,62 L120,58" stroke="#71717a" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
+          {/* Ligne verticale NY Open */}
+          <line x1="130" y1="10" x2="130" y2="90" stroke="#10b981" strokeWidth="1" strokeDasharray="2 2" opacity="0.6" />
+          <rect x="100" y="2" width="60" height="12" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.7" />
+          <text x="130" y="11" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">NY Open</text>
+          {/* Expansion violente (impulsion ascendante post-NY) */}
+          <path d="M130,58 L145,40 L160,48 L180,28 L200,32 L222,18 L250,22 L270,8" stroke="#10b981" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="270" cy="8" r="3.5" fill="#10b981" />
+        </svg>
+
         <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
           <p className="text-[13px] font-bold text-zinc-300">{t.b1Title}</p>
           <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b1Body}</p>

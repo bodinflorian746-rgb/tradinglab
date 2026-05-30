@@ -116,6 +116,26 @@ export default function BOSFakeoutDiagram({ className = "", locale = "fr" }: { c
     {/* MOBILE : faux BOS ─────────────────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
       <p className="text-[14px] font-bold text-red-400 text-center">{t.mobileTitle}</p>
+
+      {/* Mini-SVG : fakeout BOS — spike au-dessus du HH puis retour brutal */}
+      <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="BOS fakeout" fill="none">
+        {/* Niveau HH cible */}
+        <line x1="10" y1="40" x2="270" y2="40" stroke="#71717a" strokeWidth="0.8" strokeDasharray="3 3" />
+        <rect x="10" y="26" width="38" height="12" rx="2" fill="#09090b" />
+        <text x="29" y="35" fontSize="9" fill="#71717a" textAnchor="middle" fontWeight="600">HH</text>
+        {/* Approche du HH */}
+        <path d="M15,80 L40,72 L65,75 L90,60 L115,55" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        {/* Spike fakeout au-dessus du HH (vrai bullish) */}
+        <path d="M115,55 L140,18 L150,30" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx="140" cy="18" r="3" fill="#10b981" />
+        {/* Fakeout label */}
+        <rect x="125" y="2" width="60" height="12" rx="2" fill="#ef444418" stroke="#ef444455" strokeWidth="0.8" />
+        <text x="155" y="10" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Fakeout</text>
+        {/* Reversal violent — retombée sous le niveau */}
+        <path d="M150,30 L170,55 L195,75 L220,90 L260,98" stroke="#ef4444" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx="260" cy="98" r="3" fill="#ef4444" />
+      </svg>
+
       <div className="rounded-lg border border-amber-400/40 bg-amber-400/5 p-3">
         <p className="text-[13px] font-bold text-amber-400">{t.step1Title}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.step1Body}</p>

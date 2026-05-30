@@ -141,6 +141,28 @@ export default function FlipDiagram({ className = "", locale = "fr" }: { classNa
     {/* MOBILE : flip de polarité ──────────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
+      {/* Mini-SVG : niveau pivote — résistance (rouge) → cassure → retest par-dessus → support (emerald) */}
+      <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Flip de polarité" fill="none">
+        {/* Ligne S/R : moitié rouge (résistance) → moitié emerald (support) */}
+        <line x1="15" y1="55" x2="140" y2="55" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 2" />
+        <line x1="140" y1="55" x2="265" y2="55" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 2" />
+        {/* Labels */}
+        <text x="20" y="50" fontSize="8" fill="#ef4444" fontWeight="700">Résistance</text>
+        <text x="262" y="68" fontSize="8" fill="#10b981" fontWeight="700" textAnchor="end">Support</text>
+        {/* Path prix : 2 touches résistance → cassure → retest par le bas → rebond */}
+        <path d="M15,95 L35,55 L55,80 L75,55 L100,75 L130,55 L145,30 L170,45 L190,55 L215,40 L240,25 L262,10"
+          stroke="#71717a" strokeWidth="1.6" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+        {/* Touches résistance (avant cassure) */}
+        <circle cx="35" cy="55" r="2.5" fill="#ef4444" />
+        <circle cx="75" cy="55" r="2.5" fill="#ef4444" />
+        {/* Retest par le bas (devient support) */}
+        <circle cx="190" cy="55" r="3.5" fill="#10b981" />
+        {/* Bougie de cassure */}
+        <rect x="135" y="35" width="8" height="20" fill="#10b981" stroke="#059669" strokeWidth="0.6" rx="1" />
+        {/* Label "Flip" */}
+        <rect x="160" y="65" width="40" height="12" rx="2" fill="#10b98118" stroke="#10b981" strokeWidth="0.6" />
+        <text x="180" y="73" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Retest</text>
+      </svg>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
         <p className="text-[13px] font-bold text-emerald-400">{L.mobResToSup}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobResToSupDesc}</p>

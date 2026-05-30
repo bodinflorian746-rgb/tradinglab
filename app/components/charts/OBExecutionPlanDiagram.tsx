@@ -110,6 +110,30 @@ export default function OBExecutionPlanDiagram({ className = "", locale = "fr" }
     {/* MOBILE : plan d'exécution OB bullish ──────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
       <p className="text-[14px] font-bold text-emerald-400 text-center">{t.mobileTitle}</p>
+
+      {/* Mini-SVG : plan d'exécution OB — zone + entrée + SL en dessous + TP au-dessus */}
+      <svg viewBox="0 0 280 140" className="w-full h-auto" aria-label="Plan d'exécution OB" fill="none">
+        {/* Zone OB rectangle */}
+        <rect x="60" y="68" width="160" height="22" fill="#10b98115" stroke="#10b98155" strokeWidth="1" strokeDasharray="3 2" />
+        <text x="140" y="62" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Zone OB</text>
+        {/* Niveau Entry (milieu OB) */}
+        <line x1="60" y1="79" x2="220" y2="79" stroke="#10b981" strokeWidth="0.9" strokeDasharray="2 2" opacity="0.7" />
+        {/* Trajectoire prix : approche, touche OB, rebond */}
+        <path d="M10,40 L40,55 L70,72 L100,80 L130,75 L160,55 L195,35 L240,15 L270,8" stroke="#71717a" strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
+        {/* Entry point */}
+        <circle cx="100" cy="80" r="3.5" fill="#10b981" />
+        <rect x="78" y="84" width="32" height="11" rx="2" fill="#09090b" />
+        <text x="94" y="92" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Entry</text>
+        {/* SL ligne sous zone OB */}
+        <line x1="10" y1="115" x2="270" y2="115" stroke="#ef4444" strokeWidth="1" strokeDasharray="3 2" opacity="0.8" />
+        <rect x="10" y="119" width="22" height="11" rx="2" fill="#09090b" />
+        <text x="21" y="127" fontSize="8" fill="#ef4444" textAnchor="middle" fontWeight="700">SL</text>
+        {/* TP ligne haut */}
+        <line x1="10" y1="14" x2="270" y2="14" stroke="#10b981" strokeWidth="1" strokeDasharray="3 2" opacity="0.8" />
+        <rect x="248" y="2" width="22" height="11" rx="2" fill="#09090b" />
+        <text x="259" y="10" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">TP</text>
+      </svg>
+
       <div className="space-y-2">
         <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-2.5">
           <p className="text-[13px] font-bold text-emerald-400">{t.entryTitle}</p>

@@ -155,6 +155,23 @@ export default function EngulfingSetupDiagram({ locale = "fr" }: { locale?: "fr"
         {t.mobileTitle}
       </p>
 
+      {/* Mini-SVG : 2 bougies — petite bearish puis grande bullish englobante (engulfing) */}
+      <svg viewBox="0 0 200 140" className="w-full h-auto max-h-[180px]" aria-label="Engulfing setup" fill="none">
+        {/* Niveau de référence */}
+        <line x1="20" y1="100" x2="180" y2="100" stroke="#71717a" strokeWidth="0.7" strokeDasharray="3 3" />
+        {/* Bougie 1 — petite bearish */}
+        <line x1="65" y1="50" x2="65" y2="105" stroke="#dc2626" strokeWidth="1.4" strokeLinecap="round" />
+        <rect x="55" y="65" width="20" height="32" fill="#ef4444" stroke="#dc2626" strokeWidth="1" rx="1.5" />
+        <text x="65" y="125" fontSize="9" fill="#a1a1aa" textAnchor="middle">1</text>
+        {/* Bougie 2 — grande bullish englobante */}
+        <line x1="125" y1="20" x2="125" y2="110" stroke="#059669" strokeWidth="1.6" strokeLinecap="round" />
+        <rect x="113" y="35" width="24" height="65" fill="#10b981" stroke="#059669" strokeWidth="1" rx="1.5" />
+        <text x="125" y="125" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">2 ↑</text>
+        {/* Label engulfing */}
+        <rect x="55" y="6" width="86" height="13" rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.6" />
+        <text x="98" y="15" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Engulfing ↑</text>
+      </svg>
+
       <div className="space-y-2">
         <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-2.5 flex justify-between items-center">
           <span className="text-[12px] text-emerald-400/80 uppercase font-bold tracking-wider">{t.mobileTP}</span>

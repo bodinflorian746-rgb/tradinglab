@@ -155,6 +155,26 @@ export default function PinBarSetupDiagram({ locale = "fr" }: { locale?: "fr" | 
         {t.mobileTitle}
       </p>
 
+      {/* Mini-SVG : bougie Pin Bar bullish — longue mèche du bas, petit corps en haut */}
+      <svg viewBox="0 0 200 160" className="w-full h-auto max-h-[180px]" aria-label="Pin Bar setup" fill="none">
+        {/* Niveau supportive */}
+        <line x1="20" y1="130" x2="180" y2="130" stroke="#10b98155" strokeWidth="1" strokeDasharray="3 3" />
+        <rect x="22" y="118" width="56" height="11" rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.6" />
+        <text x="50" y="126" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Support</text>
+        {/* Pin Bar — mèche longue qui descend sous le support puis revient */}
+        <line x1="100" y1="30" x2="100" y2="140" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
+        {/* Corps petit en haut */}
+        <rect x="92" y="30" width="16" height="22" fill="#10b981" stroke="#059669" strokeWidth="1.4" rx="1.5" />
+        {/* Annotations */}
+        <rect x="118" y="25" width="62" height="13" rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.6" />
+        <text x="149" y="34" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Corps</text>
+        <rect x="118" y="95" width="62" height="13" rx="2" fill="#f59e0b18" stroke="#f59e0b55" strokeWidth="0.6" />
+        <text x="149" y="104" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Mèche</text>
+        {/* Flèche : rejet */}
+        <path d="M100,148 L60,148 M60,148 L65,143 M60,148 L65,153" stroke="#10b981" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+        <text x="38" y="152" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">rejet ↑</text>
+      </svg>
+
       <div className="space-y-2">
         <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-2.5 flex justify-between items-center">
           <span className="text-[12px] text-emerald-400/80 uppercase font-bold tracking-wider">{t.mobileTP}</span>

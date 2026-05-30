@@ -87,6 +87,38 @@ export default function StrongVsWeakLevelDiagram({ className = "", locale = "fr"
     {/* MOBILE : niveau fort vs faible ─────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
+      {/* Mini-SVG : 2 panels — niveau fort (4 rebonds nets emerald) vs niveau faible (2 rebonds mous amber) */}
+      <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="Niveau fort vs faible" fill="none">
+        {/* Séparateur central */}
+        <line x1="138" y1="10" x2="138" y2="120" stroke="#3f3f46" strokeWidth="0.8" />
+        {/* ─── Panel gauche : Niveau fort (4 touches franches) ─── */}
+        <rect x="12" y="6" width="60" height="13" rx="2" fill="#10b98118" stroke="#10b981" strokeWidth="0.6" />
+        <text x="42" y="15" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Fort ✓</text>
+        {/* Support emerald (ligne) */}
+        <line x1="14" y1="80" x2="128" y2="80" stroke="#10b981" strokeWidth="1" strokeDasharray="3 2" />
+        {/* Path qui rebondit 4 fois franchement */}
+        <path d="M16,40 L30,80 L44,32 L58,80 L72,28 L86,80 L100,38 L114,80 L126,45"
+          stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+        {/* 4 cercles emerald aux touches */}
+        <circle cx="30" cy="80" r="3" fill="#10b981" />
+        <circle cx="58" cy="80" r="3" fill="#10b981" />
+        <circle cx="86" cy="80" r="3" fill="#10b981" />
+        <circle cx="114" cy="80" r="3" fill="#10b981" />
+        <text x="71" y="115" fontSize="8" fill="#a1a1aa" textAnchor="middle">4 touches franches</text>
+
+        {/* ─── Panel droit : Niveau faible (2 touches molles) ─── */}
+        <rect x="172" y="6" width="80" height="13" rx="2" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.6" />
+        <text x="212" y="15" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Faible ⚠</text>
+        {/* Support amber */}
+        <line x1="148" y1="90" x2="266" y2="90" stroke="#f59e0b" strokeWidth="1" strokeDasharray="3 2" />
+        {/* Path mou : touches sans réaction ample */}
+        <path d="M150,60 L170,90 L188,80 L208,90 L228,84 L248,90 L266,82"
+          stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+        {/* 2 cercles amber faibles */}
+        <circle cx="170" cy="90" r="2.5" fill="#f59e0b" />
+        <circle cx="208" cy="90" r="2.5" fill="#f59e0b" />
+        <text x="207" y="115" fontSize="8" fill="#a1a1aa" textAnchor="middle">2 touches molles</text>
+      </svg>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
         <p className="text-[13px] font-bold text-emerald-400">{L.mobStrong}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobStrongDesc}</p>

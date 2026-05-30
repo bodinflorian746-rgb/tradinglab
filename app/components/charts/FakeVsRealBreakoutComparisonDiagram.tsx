@@ -111,6 +111,54 @@ export default function FakeVsRealBreakoutComparisonDiagram({ className = "", lo
     {/* MOBILE : vrai vs faux breakout ─────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-white text-center">{L.title}</p>
+      {/* Mini-SVG : 2 panels — vrai breakout (cassure + cont. emerald) vs faux breakout (mèche + reversal rouge) */}
+      <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="Vrai vs faux breakout" fill="none">
+        {/* Séparateur central */}
+        <line x1="138" y1="10" x2="138" y2="120" stroke="#3f3f46" strokeWidth="0.8" />
+        {/* ─── Panel gauche : VRAI breakout ─── */}
+        <rect x="12" y="6" width="60" height="13" rx="2" fill="#10b98118" stroke="#10b981" strokeWidth="0.6" />
+        <text x="42" y="15" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Vrai ✓</text>
+        {/* Niveau résistance */}
+        <line x1="14" y1="55" x2="128" y2="55" stroke="#ef4444" strokeWidth="0.9" strokeDasharray="3 2" />
+        {/* Bougies d'approche bullish */}
+        <line x1="22" y1="80" x2="22" y2="105" stroke="#059669" strokeWidth="0.8" />
+        <rect x="19" y="82" width="6" height="20" fill="#10b981" rx="0.5" />
+        <line x1="38" y1="68" x2="38" y2="95" stroke="#059669" strokeWidth="0.8" />
+        <rect x="35" y="70" width="6" height="22" fill="#10b981" rx="0.5" />
+        {/* GROSSE bougie de cassure — clôture au-dessus */}
+        <line x1="56" y1="32" x2="56" y2="72" stroke="#059669" strokeWidth="1.2" />
+        <rect x="52" y="35" width="8" height="30" fill="#10b981" stroke="#059669" strokeWidth="0.6" rx="1" />
+        {/* Continuation bullish — follow-through */}
+        <line x1="74" y1="22" x2="74" y2="42" stroke="#059669" strokeWidth="0.8" />
+        <rect x="71" y="24" width="6" height="16" fill="#10b981" rx="0.5" />
+        <line x1="90" y1="14" x2="90" y2="32" stroke="#059669" strokeWidth="0.8" />
+        <rect x="87" y="16" width="6" height="14" fill="#10b981" rx="0.5" />
+        <line x1="106" y1="10" x2="106" y2="26" stroke="#059669" strokeWidth="0.8" />
+        <rect x="103" y="12" width="6" height="12" fill="#10b981" rx="0.5" />
+        <text x="71" y="125" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Clôture + follow-through</text>
+
+        {/* ─── Panel droit : FAUX breakout ─── */}
+        <rect x="172" y="6" width="80" height="13" rx="2" fill="#ef444418" stroke="#ef4444" strokeWidth="0.6" />
+        <text x="212" y="15" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Faux ✗</text>
+        {/* Niveau résistance */}
+        <line x1="148" y1="55" x2="266" y2="55" stroke="#ef4444" strokeWidth="0.9" strokeDasharray="3 2" />
+        {/* Bougies d'approche bullish */}
+        <line x1="156" y1="80" x2="156" y2="105" stroke="#059669" strokeWidth="0.8" />
+        <rect x="153" y="82" width="6" height="20" fill="#10b981" rx="0.5" />
+        <line x1="172" y1="68" x2="172" y2="95" stroke="#059669" strokeWidth="0.8" />
+        <rect x="169" y="70" width="6" height="22" fill="#10b981" rx="0.5" />
+        {/* Bougie fake : mèche dépasse, corps clôture SOUS la résistance */}
+        <line x1="190" y1="28" x2="190" y2="78" stroke="#b91c1c" strokeWidth="1.2" />
+        <rect x="186" y="60" width="8" height="15" fill="#ef4444" stroke="#b91c1c" strokeWidth="0.6" rx="1" />
+        {/* Reversal bearish */}
+        <line x1="208" y1="72" x2="208" y2="100" stroke="#b91c1c" strokeWidth="0.8" />
+        <rect x="205" y="75" width="6" height="22" fill="#ef4444" rx="0.5" />
+        <line x1="224" y1="90" x2="224" y2="112" stroke="#b91c1c" strokeWidth="0.8" />
+        <rect x="221" y="92" width="6" height="18" fill="#ef4444" rx="0.5" />
+        <line x1="240" y1="100" x2="240" y2="118" stroke="#b91c1c" strokeWidth="0.8" />
+        <rect x="237" y="103" width="6" height="13" fill="#ef4444" rx="0.5" />
+        <text x="207" y="125" fontSize="8" fill="#ef4444" textAnchor="middle" fontWeight="700">Mèche + rejet sous</text>
+      </svg>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
         <p className="text-[13px] font-bold text-emerald-400">{L.real}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.realDesc}</p>
