@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { createClient } from "@/lib/supabase/server";
 import { signUp } from "@/app/[locale]/auth/actions";
 
 export default async function SignupPage({
@@ -12,6 +14,14 @@ export default async function SignupPage({
 }) {
   const raw = (await params).locale;
   const locale: Locale = hasLocale(raw) ? raw : DEFAULT_LOCALE;
+
+  // Garde : déjà connecté → home (pas de form d'inscription en doublon).
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) redirect(`/${locale}`);
+
   const { error, from } = await searchParams;
   const t = (await getDictionary(locale, "common")).signup;
 
@@ -64,7 +74,9 @@ export default async function SignupPage({
             <p className="mt-1 text-[11px] text-zinc-500">{t.passwordHint}</p>
           </div>
 
-          <p className="text-[11px] text-zinc-500 leading-relaxed">{t.trialNote}</p>
+          {from === "trial" && (
+            <p className="text-[11px] text-zinc-500 leading-relaxed">{t.trialNote}</p>
+          )}
 
           <button
             type="submit"

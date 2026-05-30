@@ -66,12 +66,15 @@ export async function activateCode(formData: FormData) {
 
   if (updErr || !updated || updated.length === 0) activateError(locale, "used");
 
-  // ─── 3. Confirme l'email : email_confirmed_at = now (service role) ─────────
+  // ─── 3. Pose email_confirmed_at = now() via SQL (service role) ─────────────
   // Pour un code 'trial' c'est ce qui déclenche le trial 48h via premium.ts.
-  // Pour 'broker'/'lifetime' on confirme aussi l'email (cohérence + login), mais
-  // l'accès illimité vient de la subscription créée à l'étape 4.
-  const { error: confirmErr } = await admin.auth.admin.updateUserById(user.id, {
-    email_confirm: true,
+  // Pour 'broker'/'lifetime' on actualise aussi (cohérence) ; l'accès illimité
+  // vient de la subscription créée à l'étape 4.
+  // On utilise une RPC SECURITY DEFINER (pas admin.updateUserById({email_confirm:true}))
+  // car au signup on backdate à 1970 ; updateUserById(email_confirm:true) est
+  // no-op si email_confirmed_at est déjà set (même très ancien). La RPC force now().
+  const { error: confirmErr } = await admin.rpc("set_email_confirmed_at_now", {
+    uid: user.id,
   });
   if (confirmErr) activateError(locale, "generic");
 
@@ -107,5 +110,5 @@ export async function activateCode(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect(`/${locale}/dashboard`);
+  redirect(`/${locale}`);
 }

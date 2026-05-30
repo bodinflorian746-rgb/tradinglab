@@ -6,6 +6,7 @@ import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary } from "@/i18n/dictionaries";
 import Logo from "@/app/components/Logo";
 import { ReviewsCarousel } from "@/app/components/ReviewsCarousel";
+import { requestTrialCode } from "@/app/[locale]/pricing/actions";
 
 function CheckSmall({ color }: { color: string }) {
   return (
@@ -147,6 +148,13 @@ export default async function Home({
     access: {
       title: isEs ? "¿Cómo acceder?" : "Comment accéder ?",
       subtitle: isEs ? "Dos vías pour unirte à la plataforma." : "Deux voies pour rejoindre la plateforme.",
+      trial: {
+        title: isEs ? "48h gratis" : "48h gratuites",
+        desc: isEs
+          ? "Prueba la plataforma durante 48h, sin compromiso."
+          : "Teste la plateforme pendant 48h, sans engagement.",
+        cta: isEs ? "Recibir mi código" : "Recevoir mon code",
+      },
       broker: {
         badge: isEs ? "Recomendado" : "Recommandé",
         title: isEs ? "Vía broker partner" : "Via broker partenaire",
@@ -703,6 +711,27 @@ export default async function Home({
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{T.access.title}</h2>
             <p className="text-zinc-400 mt-2 text-[15px]">{T.access.subtitle}</p>
           </div>
+
+          {/* Carte 48h gratuites — entry-point trial.
+              Réutilise exactement le flow du badge 48h de /pricing : <form>
+              vers la server action requestTrialCode (déconnecté → /signup?from=trial,
+              connecté → mail envoyé + /code-envoye). Aucune nouvelle route. */}
+          <div className="mb-5 bg-zinc-900/60 border border-emerald-500/30 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+            <div className="flex-1">
+              <h3 className="text-lg md:text-xl font-bold text-white mb-1">{T.access.trial.title}</h3>
+              <p className="text-[13px] text-zinc-400 leading-relaxed">{T.access.trial.desc}</p>
+            </div>
+            <form action={requestTrialCode} className="w-full md:w-auto shrink-0">
+              <input type="hidden" name="locale" value={locale} />
+              <button
+                type="submit"
+                className="w-full md:w-auto bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-2.5 px-5 rounded-xl transition-colors text-sm whitespace-nowrap"
+              >
+                {T.access.trial.cta}
+              </button>
+            </form>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
             {/* Carte A — Via broker partenaire (recommandé) */}

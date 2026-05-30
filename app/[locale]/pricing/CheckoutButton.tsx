@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface CheckoutButtonProps {
   locale: string;
@@ -10,6 +11,8 @@ interface CheckoutButtonProps {
 
 export default function CheckoutButton({ locale, className, children }: CheckoutButtonProps) {
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const autoTriggered = useRef(false);
 
   const handleCheckout = async () => {
     if (loading) return;
@@ -43,6 +46,20 @@ export default function CheckoutButton({ locale, className, children }: Checkout
       setLoading(false);
     }
   };
+
+  // Auto-checkout : si on arrive sur /pricing?auto_checkout=1 (typique après
+  // un signup avec from=pricing), on déclenche le checkout dès le mount. Le
+  // ref évite tout double-trigger sur re-render.
+  useEffect(() => {
+    if (searchParams?.get("auto_checkout") === "1" && !autoTriggered.current) {
+      autoTriggered.current = true;
+      handleCheckout();
+    }
+    // handleCheckout est une fermeture stable (uniquement `locale`/`loading` lus
+    // depuis la closure) ; on volontairement n'inclut pas dans les deps pour
+    // ne déclencher qu'à l'apparition du searchParam.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   return (
     <button

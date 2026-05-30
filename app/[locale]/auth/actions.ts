@@ -1,12 +1,19 @@
 "use server";
 
-// Server Actions auth : signUp (grand public, code trial auto par mail),
-// signIn, signOut. Appelées depuis les <form action={...}>.
+// Server Actions auth : signUp, signIn, signOut. Appelées depuis les
+// <form action={...}>.
+//
+// signUp gère 3 branches selon le param `from` (input caché du formulaire) :
+//   - from=trial    → après création, envoie auto le code 48h + redirect /code-envoye
+//   - from=pricing  → après création, redirect /pricing?auto_checkout=1 (auto-lance
+//                     le checkout Stripe via CheckoutButton.tsx)
+//   - sinon         → redirect /${locale} (signup libre, aucun code, aucun mail)
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendTrialCodeForUser } from "@/lib/auth/send-trial-code-flow";
 
 function getStr(formData: FormData, key: string): string {
   const v = formData.get(key);
@@ -43,25 +50,44 @@ export async function signUp(formData: FormData) {
     signupError(locale, exists ? "exists" : "generic");
   }
 
-  // ─── 2. Remise à null de email_confirmed_at (le trial ne démarre PAS ici) ──
-  // signUp() vient de poser email_confirmed_at = now. Or lib/auth/premium.ts
-  // déclenche le trial 48h sur ce champ : on le remet à null via le service role
-  // (fonction SQL reset_email_confirmation, SECURITY DEFINER) pour que le trial
-  // ne démarre qu'à l'activation du code. La session déjà émise reste valide.
-  const { error: resetErr } = await admin.rpc("reset_email_confirmation", {
+  // ─── 2. Backdate email_confirmed_at à 1970 (le trial ne démarre PAS ici) ──
+  // supabase.auth.signUp() vient de poser email_confirmed_at = now. Or
+  // lib/auth/premium.ts déclenche le trial 48h sur ce champ : on le backdate
+  // à '1970-01-01' via service role (fonction SQL set_email_confirmed_at_far_past,
+  // SECURITY DEFINER) — pas null, sinon signInWithPassword refuse l'user à la
+  // re-connexion (code email_not_confirmed). Avec une date passée, le trial est
+  // expiré (paywall affiché) ET le login fonctionne. L'activation posera la
+  // date à now() via set_email_confirmed_at_now.
+  const { error: resetErr } = await admin.rpc("set_email_confirmed_at_far_past", {
     uid: created.user.id,
   });
   if (resetErr) {
-    console.error(`[signup] reset_email_confirmation échoué pour ${email}: ${resetErr.message}`);
+    console.error(`[signup] set_email_confirmed_at_far_past échoué pour ${email}: ${resetErr.message}`);
   }
 
-  // ─── 3. Redirection ───────────────────────────────────────────────────────
-  // PAS de génération de code ni d'envoi de mail ici : le code 48h ne part que
-  // sur action explicite (clic du badge "48h gratuit" → requestTrialCode).
-  // `from=trial` : l'user venait du badge en étant déconnecté → on le ramène sur
-  // /pricing pour qu'il (re)clique "48h gratuit", maintenant connecté. Sinon home.
+  // ─── 3. Redirection selon l'intention (from) ─────────────────────────────
   revalidatePath("/", "layout");
-  redirect(from === "trial" ? `/${locale}/pricing` : `/${locale}`);
+
+  if (from === "trial") {
+    // Le user vient du badge "48h gratuit" : envoi auto du code maintenant
+    // (factorise avec requestTrialCode via send-trial-code-flow).
+    const result = await sendTrialCodeForUser(admin, created.user, locale);
+    if (!result.ok) {
+      console.error(`[signup] sendTrialCodeForUser échoué pour ${email}: ${result.error}`);
+      redirect(`/${locale}/pricing?trial_error=1`);
+    }
+    redirect(`/${locale}/code-envoye?email=${encodeURIComponent(email)}`);
+  }
+
+  if (from === "pricing") {
+    // Le user vient du CheckoutButton (intention abonnement) : on relance le
+    // checkout Stripe automatiquement au mount via le paramètre auto_checkout=1
+    // (lu par app/[locale]/pricing/CheckoutButton.tsx).
+    redirect(`/${locale}/pricing?auto_checkout=1`);
+  }
+
+  // Signup libre (sans intention) : home.
+  redirect(`/${locale}`);
 }
 
 export async function signIn(formData: FormData) {
@@ -77,7 +103,7 @@ export async function signIn(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect(`/${locale}/dashboard`);
+  redirect(`/${locale}`);
 }
 
 export async function signOut(formData: FormData) {

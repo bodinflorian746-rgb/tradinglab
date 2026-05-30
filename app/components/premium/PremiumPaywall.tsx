@@ -36,10 +36,10 @@ const STRINGS: Record<Locale, Strings> = {
     subtitleNotLoggedIn:
       "Crée ton compte pour profiter de 48h d'essai gratuit, puis débloque tout TradeScaleX.",
     subtitleHasCode:
-      "Tu as reçu un code par email à ton inscription. Entre-le pour activer tes 48h gratuites et débloquer tout TradeScaleX.",
+      "Reçois un code par email pour débloquer 48h gratuites, ou utilise un code que tu as déjà reçu.",
     ctaSignup: "Essayer 48h gratuit",
     ctaActivate: "J'ai mon code",
-    ctaRequestCode: "Pas encore de code ? Recevoir mes 48h gratuites",
+    ctaRequestCode: "Recevoir mes 48h gratuites",
     ctaSubscribe: "Voir nos accès",
     ctaLogin: "Se connecter",
   },
@@ -53,7 +53,7 @@ const STRINGS: Record<Locale, Strings> = {
       "You received a code by email when you signed up. Enter it to activate your 48h free trial and unlock all of TradeScaleX.",
     ctaSignup: "Start 48h free trial",
     ctaActivate: "I have my code",
-    ctaRequestCode: "No code yet? Get my 48h free trial",
+    ctaRequestCode: "Get my 48h free trial",
     ctaSubscribe: "See plans",
     ctaLogin: "Log in",
   },
@@ -64,10 +64,10 @@ const STRINGS: Record<Locale, Strings> = {
     subtitleNotLoggedIn:
       "Crea tu cuenta para empezar una prueba gratuita de 48 h y desbloquear todo TradeScaleX.",
     subtitleHasCode:
-      "Recibiste un código por email al registrarte. Introdúcelo para activar tus 48 h gratis y desbloquear todo TradeScaleX.",
+      "Recibe un código por email para desbloquear 48 h gratuitas, o utiliza un código que ya hayas recibido.",
     ctaSignup: "Probar 48 h gratis",
     ctaActivate: "Tengo mi código",
-    ctaRequestCode: "¿Aún no tienes código? Recibir mis 48 h gratis",
+    ctaRequestCode: "Recibir mis 48 h gratis",
     ctaSubscribe: "Ver nuestros accesos",
     ctaLogin: "Iniciar sesión",
   },
@@ -77,15 +77,11 @@ export function PremiumPaywall({ locale, reason }: PremiumPaywallProps) {
   const t = STRINGS[locale];
   const isNotLoggedIn = reason === "not_logged_in";
 
-  // Connecté mais non premium (trial_expired) → on invite à activer le code
-  // reçu par mail (parcours post-signup fluide). Anonyme → invite à créer un
-  // compte.
+  // Connecté mais non premium (trial_expired) → action principale = recevoir le
+  // code 48h, puis "j'ai déjà un code", puis "voir nos accès". Anonyme → invite
+  // à créer un compte.
   const title = isNotLoggedIn ? t.titleLocked : t.titleHasCode;
   const subtitle = isNotLoggedIn ? t.subtitleNotLoggedIn : t.subtitleHasCode;
-  const ctaHref = isNotLoggedIn ? `/${locale}/signup` : `/${locale}/activer-code`;
-  const ctaLabel = isNotLoggedIn ? t.ctaSignup : t.ctaActivate;
-  const secondaryHref = isNotLoggedIn ? `/${locale}/login` : `/${locale}/pricing`;
-  const secondaryLabel = isNotLoggedIn ? t.ctaLogin : t.ctaSubscribe;
 
   // z-40 (sous la Navbar en z-50) pour que la nav reste cliquable.
   return (
@@ -114,32 +110,51 @@ export function PremiumPaywall({ locale, reason }: PremiumPaywallProps) {
             {subtitle}
           </p>
 
-          <Link
-            href={ctaHref}
-            className="block w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3 rounded-xl transition-colors text-sm mb-3"
-          >
-            {ctaLabel}
-          </Link>
-
-          {/* Connecté sans code encore demandé : recevoir le code 48h. */}
-          {!isNotLoggedIn && (
-            <form action={requestTrialCode} className="mb-3">
-              <input type="hidden" name="locale" value={locale} />
-              <button
-                type="submit"
-                className="block w-full text-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 font-semibold py-2.5 rounded-xl transition-colors text-sm"
+          {isNotLoggedIn ? (
+            <>
+              <Link
+                href={`/${locale}/signup`}
+                className="block w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3 rounded-xl transition-colors text-sm mb-3"
               >
-                {t.ctaRequestCode}
-              </button>
-            </form>
-          )}
+                {t.ctaSignup}
+              </Link>
+              <Link
+                href={`/${locale}/login`}
+                className="block text-sm text-zinc-400 hover:text-emerald-300 underline underline-offset-4 transition-colors"
+              >
+                {t.ctaLogin}
+              </Link>
+            </>
+          ) : (
+            <>
+              {/* 1. Action principale : recevoir le code 48h par email. */}
+              <form action={requestTrialCode} className="mb-3">
+                <input type="hidden" name="locale" value={locale} />
+                <button
+                  type="submit"
+                  className="block w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3 rounded-xl transition-colors text-sm"
+                >
+                  {t.ctaRequestCode}
+                </button>
+              </form>
 
-          <Link
-            href={secondaryHref}
-            className="block text-sm text-zinc-400 hover:text-emerald-300 underline underline-offset-4 transition-colors"
-          >
-            {secondaryLabel}
-          </Link>
+              {/* 2. Secondaire : j'ai déjà un code. */}
+              <Link
+                href={`/${locale}/activer-code`}
+                className="mb-3 block w-full text-center bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15 font-semibold py-2.5 rounded-xl transition-colors text-sm"
+              >
+                {t.ctaActivate}
+              </Link>
+
+              {/* 3. Lien : voir nos accès. */}
+              <Link
+                href={`/${locale}/pricing`}
+                className="block text-sm text-zinc-400 hover:text-emerald-300 underline underline-offset-4 transition-colors"
+              >
+                {t.ctaSubscribe}
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>

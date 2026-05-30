@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 // Garde serveur : vérifie la session Supabase avant de rendre toute page
-// du segment /profil-trader. Redirige vers /[locale]/login si anonyme.
+// du segment /profil-trader. Redirige vers /[locale]/pricing si anonyme.
 export default async function ProtectedLayout({
   children,
   params,
@@ -15,7 +15,7 @@ export default async function ProtectedLayout({
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect(`/${locale}/login`);
+    redirect(`/${locale}/pricing`);
   }
 
   return <>{children}</>;

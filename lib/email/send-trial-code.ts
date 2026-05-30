@@ -28,7 +28,7 @@ const COPY: Record<MailLocale, Copy> = {
     intro: "Voici ton code pour activer tes 48h d'essai gratuit :",
     codeLabel: "Ton code d'activation",
     cta: "Activer mes 48h gratuites",
-    outro: "Si tu n'es pas à l'origine de cette inscription, ignore cet email.",
+    outro: "Si tu n'as pas demandé ce code, ignore cet email.",
   },
   es: {
     subject: "Tu código de activación TradeScaleX",
@@ -36,7 +36,7 @@ const COPY: Record<MailLocale, Copy> = {
     intro: "Aquí está tu código para activar tus 48 h de prueba gratis:",
     codeLabel: "Tu código de activación",
     cta: "Activar mis 48 h gratis",
-    outro: "Si no fuiste tú quien se registró, ignora este correo.",
+    outro: "Si no solicitaste este código, ignora este correo.",
   },
 };
 

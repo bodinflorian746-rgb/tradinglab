@@ -6,9 +6,11 @@ import Navbar from "@/app/components/Navbar";
 import { OnboardingOverlay } from "@/app/components/OnboardingOverlay";
 import { StickyLessonNav } from "@/app/components/StickyLessonNav";
 import { LocaleProvider } from "@/app/components/LocaleProvider";
+import { SessionProvider } from "@/app/components/SessionProvider";
 import { LOCALES, DEFAULT_LOCALE, hasLocale, type Locale } from "@/i18n/config";
 import { getAllDictionaries } from "@/i18n/dictionaries";
 import { SITE_URL } from "@/i18n/site";
+import { createClient } from "@/lib/supabase/server";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -69,19 +71,25 @@ export default async function LocaleLayout({
   // les clés manquantes en EN/ES.
   const dicts = await getAllDictionaries(locale);
 
+  // Session côté serveur pour hydrater la Navbar (auth-aware sans flicker).
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
     <html lang={locale} className={inter.className}>
       <body className="bg-zinc-950 text-white antialiased">
         <LocaleProvider locale={locale} dicts={dicts}>
-          <Navbar />
+          <SessionProvider initialUser={user}>
+            <Navbar />
 
-          {children}
+            {children}
 
-          {/* Onboarding overlay — première visite uniquement */}
-          <OnboardingOverlay />
+            {/* Onboarding overlay — première visite uniquement */}
+            <OnboardingOverlay />
 
-          {/* Sticky nav mobile sur les pages de leçons (auto-détection via pathname) */}
-          <StickyLessonNav />
+            {/* Sticky nav mobile sur les pages de leçons (auto-détection via pathname) */}
+            <StickyLessonNav />
+          </SessionProvider>
         </LocaleProvider>
       </body>
     </html>

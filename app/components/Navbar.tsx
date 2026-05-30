@@ -4,9 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useLocale, useDict } from "@/app/components/LocaleProvider";
+import { useSession } from "@/app/components/SessionProvider";
 import { localizedHref, stripLocalePrefix } from "@/lib/i18n/href";
 import type { Locale } from "@/i18n/config";
 import Logo from "@/app/components/Logo";
+import { signOut } from "@/app/[locale]/auth/actions";
+
+function shortEmail(email: string | undefined): string {
+  if (!email) return "";
+  if (email.length <= 22) return email;
+  const local = email.split("@")[0] ?? "";
+  return `${local}@…`;
+}
 
 const SWITCHER_LOCALES: { code: Locale; label: string }[] = [
   { code: "fr", label: "FR" },
@@ -64,6 +73,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const locale = useLocale();
   const t = useDict("nav");
+  const { user } = useSession();
+  const isLoggedIn = !!user;
 
   return (
     <nav className="sticky top-0 z-50 border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-md">
@@ -91,18 +102,40 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <LangSwitcher />
 
-          <Link
-            href={localizedHref("/login", locale)}
-            className="hidden md:inline-flex items-center text-zinc-400 hover:text-white text-sm font-medium transition-colors"
-          >
-            {t.login}
-          </Link>
-          <Link
-            href={localizedHref("/signup", locale)}
-            className="hidden md:inline-flex items-center bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
-          >
-            {t.signup}
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <span
+                className="hidden md:inline-flex items-center text-zinc-400 text-sm font-medium select-text"
+                title={user?.email ?? undefined}
+              >
+                {shortEmail(user?.email)}
+              </span>
+              <form action={signOut} className="hidden md:inline-flex">
+                <input type="hidden" name="locale" value={locale} />
+                <button
+                  type="submit"
+                  className="inline-flex items-center border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white text-sm font-medium px-3 py-1.5 rounded-lg transition-colors"
+                >
+                  {t.signOut}
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <Link
+                href={localizedHref("/login", locale)}
+                className="hidden md:inline-flex items-center text-zinc-400 hover:text-white text-sm font-medium transition-colors"
+              >
+                {t.login}
+              </Link>
+              <Link
+                href={localizedHref("/signup", locale)}
+                className="hidden md:inline-flex items-center bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+              >
+                {t.signup}
+              </Link>
+            </>
+          )}
 
           <button
             type="button"
@@ -138,20 +171,43 @@ export default function Navbar() {
                 {t.links[l.key]}
               </Link>
             ))}
-            <Link
-              href={localizedHref("/login", locale)}
-              onClick={() => setIsOpen(false)}
-              className="mt-4 border border-zinc-700 hover:border-zinc-500 text-white text-center px-4 py-3 rounded-lg text-sm font-semibold"
-            >
-              {t.login}
-            </Link>
-            <Link
-              href={localizedHref("/signup", locale)}
-              onClick={() => setIsOpen(false)}
-              className="mt-2 mb-3 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-center px-4 py-3 rounded-lg text-sm font-semibold"
-            >
-              {t.signup}
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <p
+                  className="mt-4 text-zinc-400 text-center text-sm font-medium break-all"
+                  title={user?.email ?? undefined}
+                >
+                  {shortEmail(user?.email)}
+                </p>
+                <form action={signOut} className="mt-2 mb-3">
+                  <input type="hidden" name="locale" value={locale} />
+                  <button
+                    type="submit"
+                    onClick={() => setIsOpen(false)}
+                    className="w-full border border-zinc-700 hover:border-zinc-500 text-white text-center px-4 py-3 rounded-lg text-sm font-semibold transition-colors"
+                  >
+                    {t.signOut}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <>
+                <Link
+                  href={localizedHref("/login", locale)}
+                  onClick={() => setIsOpen(false)}
+                  className="mt-4 border border-zinc-700 hover:border-zinc-500 text-white text-center px-4 py-3 rounded-lg text-sm font-semibold"
+                >
+                  {t.login}
+                </Link>
+                <Link
+                  href={localizedHref("/signup", locale)}
+                  onClick={() => setIsOpen(false)}
+                  className="mt-2 mb-3 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-center px-4 py-3 rounded-lg text-sm font-semibold"
+                >
+                  {t.signup}
+                </Link>
+              </>
+            )}
             <div className="pt-1 pb-3 flex justify-center">
               <LangSwitcher onNavigate={() => setIsOpen(false)} />
             </div>
