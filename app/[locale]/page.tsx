@@ -165,6 +165,9 @@ export default async function Home({
         bullets: isEs
           ? ["Apertura de cuenta broker partner", "Código enviado tras verificación", "Acceso completo a la plataforma"]
           : ["Ouverture compte broker partenaire", "Code envoyé après vérification", "Accès complet à la plateforme"],
+        depositNote: isEs
+          ? "Depósito 200 € en tu cuenta broker · tu dinero, retirable cuando quieras"
+          : "Dépôt 200 € sur ton compte broker · ton argent, retirable à tout moment",
       },
       direct: {
         title: isEs ? "Acceso directo" : "Accès direct",
@@ -247,7 +250,10 @@ export default async function Home({
             </Link>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-10">
+          {/* Mobile : items empilés alignés à gauche, container centré (mx-auto + w-fit)
+              → icônes check verticalement alignées. Desktop (sm+) : restaure le layout
+              ligne wrap + justify-center d'origine. */}
+          <div className="flex flex-col items-start gap-4 w-fit mx-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-10 sm:w-auto">
             {t.hero.bullets.map((b) => (
               <div key={b.title} className="flex items-center gap-3 text-left">
                 <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-400">
@@ -744,7 +750,7 @@ export default async function Home({
                 <span className="text-4xl font-black text-emerald-400 tabular-nums">{T.access.broker.price}</span>
               </div>
               <p className="text-[13px] text-zinc-400 leading-relaxed mb-5">{T.access.broker.desc}</p>
-              <ul className="space-y-2.5 mb-6 flex-1">
+              <ul className="space-y-2.5 mb-4 flex-1">
                 {T.access.broker.bullets.map((b) => (
                   <li key={b} className="flex items-start gap-2 text-[13px] text-zinc-300">
                     <CheckSmall color="#34d399" />
@@ -752,6 +758,9 @@ export default async function Home({
                   </li>
                 ))}
               </ul>
+              <p className="mb-5 rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-2 text-[12px] leading-snug text-zinc-300">
+                {T.access.broker.depositNote}
+              </p>
               <Link
                 href={h("/pricing")}
                 className="inline-flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-2.5 rounded-xl transition-colors text-sm"

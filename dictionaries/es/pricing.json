@@ -17,7 +17,24 @@
     ],
     "cta": "Acceder vía broker partner",
     "haveCode": "Ya tengo un código de acceso",
-    "trialBadge": "48 h de prueba gratis"
+    "trialBadge": "48 h de prueba gratis",
+    "deposit": {
+      "lineTitle": "Depósito mínimo: 200 €",
+      "lineSubtitle": "Los 200 € siguen siendo su dinero y pueden retirarse en cualquier momento.",
+      "modal": {
+        "title": "Antes de continuar",
+        "bullets": [
+          "Depósito mínimo requerido: 200 €",
+          "Este depósito no es un pago a TradeScaleX",
+          "Los fondos se ingresan en su propia cuenta broker",
+          "Los 200 € siguen siendo su dinero",
+          "Puede recuperar sus fondos en cualquier momento desde su área de cliente broker",
+          "200 € es el mínimo recomendado para empezar en buenas condiciones"
+        ],
+        "continueLabel": "Entiendo y continúo",
+        "cancelLabel": "Cancelar"
+      }
+    }
   },
   "direct": {
     "name": "Acceso directo",

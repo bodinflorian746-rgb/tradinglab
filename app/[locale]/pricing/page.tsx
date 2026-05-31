@@ -3,6 +3,7 @@ import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary } from "@/i18n/dictionaries";
 import CheckoutButton from "./CheckoutButton";
+import BrokerConfirmCTA from "./BrokerConfirmCTA";
 import { requestTrialCode } from "./actions";
 
 // Badge "48h gratuit" : un <form> qui POST sur requestTrialCode. L'action gère
@@ -91,7 +92,7 @@ export default async function PricingPage({
               </p>
             </div>
 
-            <ul className="space-y-3 mb-8 flex-1">
+            <ul className="space-y-3 mb-6 flex-1">
               {t.broker.features.map((f) => (
                 <li key={f} className="flex items-center gap-3 text-sm text-zinc-200">
                   <CheckIcon />
@@ -100,13 +101,30 @@ export default async function PricingPage({
               ))}
             </ul>
 
+            {/* Clarification dépôt broker — 2 lignes simples, pas de pavé.
+                Le détail complet est ouvert dans la modal au clic du CTA. */}
+            <div className="mb-6">
+              <p className="text-sm font-semibold text-white mb-1">
+                {t.broker.deposit.lineTitle}
+              </p>
+              <p className="text-sm text-zinc-400 leading-relaxed">
+                {t.broker.deposit.lineSubtitle}
+              </p>
+            </div>
+
             <TrialBadgeForm locale={locale} label={t.broker.trialBadge} />
-            <Link
-              href={h("/login")}
-              className="block text-center bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3 rounded-xl transition-colors text-sm"
-            >
-              {t.broker.cta}
-            </Link>
+            <BrokerConfirmCTA
+              locale={locale}
+              strings={{
+                cta: t.broker.cta,
+                modal: {
+                  title: t.broker.deposit.modal.title,
+                  bullets: t.broker.deposit.modal.bullets,
+                  continueLabel: t.broker.deposit.modal.continueLabel,
+                  cancelLabel: t.broker.deposit.modal.cancelLabel,
+                },
+              }}
+            />
             <Link
               href={h("/activer-code")}
               className="block text-center text-xs text-zinc-400 hover:text-zinc-200 underline underline-offset-4 mt-3 transition-colors"
