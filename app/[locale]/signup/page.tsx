@@ -42,7 +42,7 @@ export default async function SignupPage({
 
         <form action={signUp} className="space-y-4">
           <input type="hidden" name="locale" value={locale} />
-          {from === "trial" && <input type="hidden" name="from" value="trial" />}
+          {from && <input type="hidden" name="from" value={from} />}
 
           <div>
             <label htmlFor="email" className="block text-xs font-medium text-zinc-400 mb-1.5">
@@ -76,6 +76,10 @@ export default async function SignupPage({
 
           {from === "trial" && (
             <p className="text-[11px] text-zinc-500 leading-relaxed">{t.trialNote}</p>
+          )}
+
+          {from === "pricing" && (
+            <p className="text-[11px] text-zinc-500 leading-relaxed">{t.fromPricingNote}</p>
           )}
 
           <button

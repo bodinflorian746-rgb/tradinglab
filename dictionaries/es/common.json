@@ -28,6 +28,7 @@
     "passwordLabel": "Contraseña",
     "passwordHint": "6 caracteres mínimo.",
     "trialNote": "Al crear tu cuenta, recibirás por email un código para activar tus 48 h de prueba gratis.",
+    "fromPricingNote": "Crea tu cuenta para finalizar tu suscripción y desbloquear todo el contenido premium.",
     "submit": "Crear mi cuenta",
     "haveAccount": "¿Ya tienes una cuenta?",
     "login": "Iniciar sesión",
