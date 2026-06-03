@@ -27,6 +27,9 @@ export default function ContentEs() {
             <span className="text-white font-medium">Hecho:</span> la mayoría de los traders profesionales lleva un journal detallado. No es opcional, es una herramienta de performance al mismo nivel que una estrategia.
           </p>
         </div>
+        <p className="text-zinc-300 leading-relaxed text-sm mt-4">
+          Lleva tu trading como un juego de probabilidades. Ninguna operación es segura; sobre un gran número de operaciones, lo que decide es tu ventaja estadística. El diario sirve exactamente para eso: detectar qué parámetros (setups, sesiones, pares, condiciones) te resultan rentables y cuáles te cuestan, para optimizar esa ventaja. El objetivo no es juzgar una operación aislada sino entender tus errores recurrentes. El trading se adapta a cada uno: un trader = una estrategia, la tuya se construye con tus propios datos.
+        </p>
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

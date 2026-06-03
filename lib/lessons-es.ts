@@ -332,7 +332,7 @@ export const LESSONS_ES: LevelData[] = [
           },
           {
             heading: "El spread varía según las condiciones",
-            body: "El spread no es fijo. Depende de la liquidity del mercado, cuántos compradores y vendedores están activos en ese momento. Mientras más actividad, más ajustado es el spread.",
+            body: "El spread no es fijo. Depende de la liquidity del mercado, cuántos compradores y vendedores están activos en ese momento. Mientras más actividad, más ajustado es el spread.\n\nMás allá de la liquidez, los brokers e intermediarios añaden a menudo su propio margen al spread: es una de sus fuentes de ingresos. Un spread más amplio significa un coste de entrada más alto para ti.",
             table: {
               headers: ["Situación", "Spread típico", "Impacto"],
               rows: [
@@ -405,7 +405,7 @@ export const LESSONS_ES: LevelData[] = [
         sections: [
           {
             heading: "¿Qué es un Stop Loss?",
-            body: "Un Stop Loss (SL) es una orden automática que cierra tu trade si el precio va demasiado lejos en la dirección equivocada. Lo defines antes de entrar al trade. Cuando el precio lo toca, tu posición se cierra sola, estés frente a la pantalla o no.",
+            body: "Un Stop Loss (SL) es una orden automática que cierra tu trade si el precio va demasiado lejos en la dirección equivocada. Lo defines antes de entrar al trade. Cuando el precio lo toca, tu posición se cierra sola, estés frente a la pantalla o no.\n\nEl verdadero papel del Stop Loss: marca la invalidación de tu teoría, el punto exacto donde te dices «aquí ya no tomo la operación». Sin ese nivel, no hay R/R, no hay winrate, no hay riesgo medible. A largo plazo, es lo que protege tu capital.",
             items: [
               "Trade Long (compra): tu SL se coloca DEBAJO de tu precio de entrada",
               "Trade Short (venta): tu SL se coloca ENCIMA de tu precio de entrada",
@@ -495,7 +495,7 @@ export const LESSONS_ES: LevelData[] = [
         sections: [
           {
             heading: "El principio, en una frase",
-            body: "Un Take Profit (TP) es una orden automática que cierra tu trade en cuanto el precio toca el objetivo que fijaste. Defines ese objetivo antes de entrar, el broker ejecuta solo cuando el precio llega, estés frente a la pantalla o no.",
+            body: "Un Take Profit (TP) es una orden automática que cierra tu trade en cuanto el precio toca el objetivo que fijaste. Defines ese objetivo antes de entrar, el broker ejecuta solo cuando el precio llega, estés frente a la pantalla o no.\n\nA la inversa, el Take Profit marca la validación de tu teoría: el nivel donde tu escenario se ha cumplido. No es una cantidad que quieras alcanzar a toda costa ni un beneficio que te impongas, es el punto donde la razón de ser de tu operación queda confirmada.",
             diagram: "takeprofit",
             items: [
               "Long: tu TP se coloca ARRIBA de tu precio de entrada",
@@ -607,7 +607,7 @@ export const LESSONS_ES: LevelData[] = [
           },
           {
             heading: "¿Cuándo activar el Break Even?",
-            body: "El timing es crucial. Demasiado pronto, el mercado te saca en una simple fluctuación normal. En el buen momento, el BE te protege de verdad. La regla: espera que el precio haya recorrido al menos 1R a tu favor, o sea la distancia que separa tu entrada de tu Stop Loss.",
+            body: "El timing es crucial. Demasiado pronto, el mercado te saca en una simple fluctuación normal. En el buen momento, el BE te protege de verdad. La regla: espera que el precio haya recorrido al menos 1R a tu favor, o sea la distancia que separa tu entrada de tu Stop Loss.\n\nDeja un pequeño margen antes de pasar a break-even: si colocas tu stop justo en tu precio de entrada, las comisiones y el spread pueden sacarte con una ligera pérdida. Nos ponemos en break-even cuando estimamos que el precio puede girarse e invalidar nuestra teoría en nuestro punto de entrada.",
             table: {
               headers: ["Distancia entrada → SL", "Activar el BE cuando…", "Por qué"],
               rows: [
@@ -723,6 +723,20 @@ export const LESSONS_ES: LevelData[] = [
                 ["5%", "59,9 %, moral por el piso, errores que se acumulan"],
                 ["10%", "34,9 %, muy difícil de levantarte"],
                 ["20%", "10,7 %, cuenta casi destruida"],
+              ],
+            },
+          },
+          {
+            heading: "El efecto del drawdown: por qué proteger tu capital",
+            body: "Cuanto mayor es la pérdida, más desproporcionada es la recuperación. De ahí la prioridad: preservar el capital en lugar de intentar recuperarse.",
+            table: {
+              headers: ["Pérdida sufrida", "Ganancia necesaria para volver al equilibrio"],
+              rows: [
+                ["-10%", "+11%"],
+                ["-25%", "+33%"],
+                ["-50%", "+100%"],
+                ["-75%", "+300%"],
+                ["-90%", "+900%"],
               ],
             },
           },

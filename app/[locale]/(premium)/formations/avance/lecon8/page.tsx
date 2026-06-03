@@ -28,6 +28,9 @@ function ContentFr() {
             <span className="text-white font-medium">Fait :</span> la majorité des traders professionnels tient un journal détaillé. Ce n'est pas une option, c'est un outil de performance au même titre qu'une stratégie.
           </p>
         </div>
+        <p className="text-zinc-300 leading-relaxed text-sm mt-4">
+          Tiens ton trading comme un jeu de probabilités. Aucun trade n&apos;est sûr ; sur un grand nombre de trades, c&apos;est ton avantage statistique qui décide. Le journal sert exactement à ça : repérer quels paramètres (setups, sessions, paires, conditions) te sont rentables et lesquels te coûtent, pour optimiser cet avantage. Le but n&apos;est pas de juger un trade isolé mais de comprendre tes erreurs récurrentes. Le trading s&apos;adapte à chacun : un trader = une stratégie, la tienne se construit avec tes propres données.
+        </p>
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

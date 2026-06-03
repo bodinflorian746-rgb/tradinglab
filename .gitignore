@@ -17,6 +17,7 @@
 /blob-report
 /playwright/.cache
 /screenshots
+/tmp-tests
 
 # next.js
 /.next/

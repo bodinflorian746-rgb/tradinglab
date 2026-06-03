@@ -137,7 +137,7 @@ export default function ContentFr() {
             <div className="my-8">
               <BOSCHoCHSequenceDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le modèle SMC repose sur une succession d&apos;étapes cohérentes. Chaque élément prépare le suivant : la liquidité attire le prix, le sweep déclenche le déplacement, puis la structure fournit l&apos;entrée.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le modèle SMC repose sur une succession d&apos;étapes cohérentes. La structure (BOS/CHoCH) donne le biais et le contexte, puis la mitigation du FVG ou de l&apos;Order Block fournit l&apos;entrée.</p>
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Les 7 étapes du trade SMC</p>
             <ol className="space-y-1 text-sm text-zinc-300 list-decimal pl-5">
               <li>Analyse HTF : déterminer le biais directionnel via la structure de marché</li>
@@ -263,7 +263,7 @@ export default function ContentFr() {
               "Liquidité → breakout → entrée → mitigation → BOS",
             ]}
             correctIndex={2}
-            explanation="Le modèle SMC repose sur une logique séquentielle. Le biais HTF définit la direction prioritaire. La liquidité attire ensuite le prix avant le sweep. Le CHoCH confirme le changement de contrôle, puis la mitigation du FVG ou de l’Order Block fournit l’entrée optimisée."
+            explanation="Le modèle SMC repose sur une logique séquentielle. Le biais HTF définit la direction prioritaire. La liquidité attire ensuite le prix avant le sweep. La structure (BOS/CHoCH) donne le biais et le contexte, puis la mitigation du FVG ou de l'Order Block fournit l'entrée."
           />
 
           <LessonQuiz

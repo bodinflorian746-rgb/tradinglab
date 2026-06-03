@@ -40,6 +40,28 @@ export async function requestTrialCode(formData: FormData) {
   }
 
   const admin = createAdminClient();
+
+  // ─── UX honnête : routage selon l'état du trial dans app_metadata ────────
+  // - trial_consumed_at présent → l'user a déjà eu son trial 48h, plus jamais
+  //   éligible. Redirection silencieuse vers /pricing (pas de mail, pas de
+  //   page /code-envoye trompeuse).
+  // - trial_code_requested_at présent (mais pas consumed) → un code lui a déjà
+  //   été envoyé et reste activable tant que non expiré. On l'envoie sur
+  //   /activer-code pour saisir son code existant, pas de 2e mail.
+  // - aucun flag → flow normal (envoi + /code-envoye).
+  const { data: fullUser, error: getErr } = await admin.auth.admin.getUserById(user.id);
+  if (getErr) {
+    console.error(`[trial] getUserById échoué pour ${user.id}: ${getErr.message}`);
+    redirect(`/${locale}/pricing?trial_error=1`);
+  }
+  const meta = (fullUser.user?.app_metadata ?? {}) as Record<string, unknown>;
+  if (meta.trial_consumed_at) {
+    redirect(`/${locale}/pricing?trial_already_used=1`);
+  }
+  if (meta.trial_code_requested_at) {
+    redirect(`/${locale}/activer-code`);
+  }
+
   const result = await sendTrialCodeForUser(admin, user, locale);
 
   if (!result.ok) {

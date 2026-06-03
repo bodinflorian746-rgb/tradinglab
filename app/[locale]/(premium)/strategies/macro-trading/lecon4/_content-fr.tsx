@@ -283,6 +283,18 @@ export default function ContentFr() {
             ]}
           />
 
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-3">Ce qu'il faut retenir des leçons macro</h2>
+            <ul className="space-y-2 text-sm text-zinc-300">
+              <li>- FOMC Fade : la première impulsion après la décision est émotionnelle. On attend l&apos;essoufflement (mèches de rejet, échec à imprimer un nouveau plus haut ou plus bas), puis on fade vers un retour partiel du mouvement, sans viser un retournement de la tendance Daily.</li>
+              <li>- NFP Overreaction : le marché surréagit au chiffre avant de se réévaluer sur 15 à 60 minutes. Le signal arrive après stabilisation (mèches répétées, perte d&apos;accélération, range étroit), avec un fade vers le niveau d&apos;avant la news.</li>
+              <li>- Régime Risk-off : il se confirme par la concordance de plusieurs signaux macro, jamais un seul marché. Tant que la structure HH/HL tient sur les actifs refuges, on trade dans le sens du régime ; les pullbacks H4 sont des entrées, pas des retournements.</li>
+            </ul>
+            <p className="text-zinc-300 leading-relaxed text-sm mt-4">
+              Le point commun de ces trois setups : on n&apos;entre jamais sur la première réaction émotionnelle, on attend la confirmation. Et avant de chercher un setup, le filtre macro ci-dessous sert à valider si le contexte autorise à trader.
+            </p>
+          </section>
+
           <LessonQuiz
             question="Tu identifies un setup short H4 techniquement parfait sur XAU/USD à 13h00 UTC. Le calendrier indique une publication NFP à 13h30 UTC. Le régime macro est neutre. Que fais-tu ?"
             options={[

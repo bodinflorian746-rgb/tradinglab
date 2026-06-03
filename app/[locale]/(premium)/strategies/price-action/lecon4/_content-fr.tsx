@@ -270,15 +270,14 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Quelle est la condition principale pour valider une bullish engulfing comme signal de retournement opérationnel ?"
+            question="Ton setup est propre et le prix réagit sur une bonne zone, mais ton biais en unité de temps supérieure (HTF) pointe dans le sens inverse. Que fais-tu ?"
             options={[
-              "Le corps de la 2e bougie englobe entièrement le corps de la 1ère, dans le sens opposé, à un niveau structurel significatif",
-              "La 2e bougie a un volume supérieur de 200% à la moyenne",
-              "La 2e bougie clôture exactement au plus haut de la session",
-              "La 2e bougie est précédée d’un doji obligatoire",
+              "Je prends le trade : setup et zone valides suffisent.",
+              "Je m'abstiens : sans le biais HTF dans mon sens, la probabilité chute trop.",
+              "Je prends en réduisant fortement ma taille pour tester.",
             ]}
-            correctIndex={0}
-            explanation="Une bullish engulfing valide exige 3 conditions : le corps de la 2e bougie englobe entièrement le corps de la 1ère (qui est baissière), la direction inverse de la 1ère, et l’apparition à un niveau structurel significatif (support, résistance, zone OB). Sans contexte structurel, l’engulfing perd sa puissance opérationnelle."
+            correctIndex={1}
+            explanation="Un setup propre sur une bonne zone ne compense pas un contexte qui joue contre toi. Le biais HTF est un filtre : à contre-courant, tu nages contre le marché. Le bon réflexe est de laisser passer et d'attendre un trade aligné."
           />
 
           <LessonQuiz

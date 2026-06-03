@@ -79,45 +79,11 @@ function ContentFr() {
       </div>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Stop Hunts : la chasse aux stops</h2>
-        <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Un stop hunt est un mouvement rapide du prix qui dépasse un niveau clé,
-          déclenche les stops des retail traders, puis revient brusquement dans
-          la direction opposée. Ce n'est pas du hasard, c'est une mécanique
-          structurelle du marché.
+        <p className="text-sm text-zinc-300 leading-relaxed">
+          Ces zones de liquidité sont précisément ce que visent les stop hunts :
+          des mouvements brusques qui déclenchent les stops accumulés avant de
+          repartir dans l&apos;autre sens. On les étudie en détail en leçon 6.
         </p>
-        <div className="space-y-2.5">
-          {[
-            {
-              step: "1. Accumulation",
-              detail: "Le prix range dans une zone étroite. Les stops s'accumulent des deux côtés.",
-            },
-            {
-              step: "2. Chasse",
-              detail: "Le prix spike brusquement au-delà d'un niveau (EQH ou EQL), déclenchant les stops.",
-            },
-            {
-              step: "3. Retournement",
-              detail: "Les institutions ont leur liquidité. Le prix inverse immédiatement et part dans la vraie direction.",
-            },
-          ].map((s, i) => (
-            <div key={i} className="flex items-start gap-4 bg-zinc-800/40 rounded-xl px-4 py-3">
-              <span className="text-xs font-bold text-zinc-500 shrink-0 mt-0.5 w-6">{i + 1}</span>
-              <div>
-                <p className="text-sm font-medium text-white">{s.step}</p>
-                <p className="text-xs text-zinc-500 mt-0.5 leading-relaxed">{s.detail}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
-          <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">Signal :</span> une longue mèche
-            qui perce un niveau clé puis clôture en sens inverse est souvent le
-            signe d'un stop hunt. C'est le moment d'alerter, pas d'entrer dans
-            la direction de la mèche.
-          </p>
-        </div>
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -168,7 +134,6 @@ function ContentFr() {
         points={[
           "Les institutions ont besoin de liquidité pour exécuter leurs ordres, elles vont la chercher là où se trouvent les stops.",
           "Buy-side Liquidity = au-dessus des Equal Highs. Sell-side Liquidity = en dessous des Equal Lows.",
-          "Un stop hunt : spike rapide sur un niveau → déclenchement des stops → retournement brutal.",
           "Le prix se déplace vers la liquidité avant de partir dans sa vraie direction, anticipe ce mouvement.",
         ]}
       />

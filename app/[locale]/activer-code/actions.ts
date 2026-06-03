@@ -52,6 +52,24 @@ export async function activateCode(formData: FormData) {
     activateError(locale, "expired");
   }
 
+  // ─── 1bis. Anti ré-activation trial (1 seul trial 48h par compte, à vie) ──
+  // On lit app_metadata.trial_consumed_at AVANT toute consommation. Si le code
+  // est de type 'trial' ET l'user a déjà consommé un trial → on refuse et on
+  // redirige vers /pricing. Le code n'est PAS marqué used (il reste utilisable
+  // par un autre user, ce qui est cohérent vu qu'il n'est pas lié à un user
+  // tant qu'il est available). NB : on ne se base JAMAIS sur
+  // trial_code_requested_at — un code demandé mais non consommé doit rester
+  // activable.
+  let userMetaForActivation: Record<string, unknown> = {};
+  if (row.type === "trial") {
+    const { data: fullUser, error: getErr } = await admin.auth.admin.getUserById(user.id);
+    if (getErr) activateError(locale, "generic");
+    userMetaForActivation = (fullUser.user?.app_metadata ?? {}) as Record<string, unknown>;
+    if (userMetaForActivation.trial_consumed_at) {
+      redirect(`/${locale}/pricing?trial_already_used=1`);
+    }
+  }
+
   // ─── 2. Consommation atomique (anti double-usage concurrent) ──────────────
   const { data: updated, error: updErr } = await admin
     .from("access_codes")
@@ -77,6 +95,26 @@ export async function activateCode(formData: FormData) {
     uid: user.id,
   });
   if (confirmErr) activateError(locale, "generic");
+
+  // ─── 3bis. Marqueur durable trial_consumed_at (verrou 1 trial / compte) ──
+  // Posé uniquement pour les codes de type 'trial'. broker/lifetime conservent
+  // leur propre logique (subscription à durée illimitée) et ne déclenchent pas
+  // ce verrou. Non bloquant si l'update échoue : le code est déjà consommé +
+  // email_confirmed_at posé → le user a accès, le flag est juste manqué pour
+  // la prochaine demande (à corriger côté DB si besoin).
+  if (row.type === "trial") {
+    const { error: trialMetaErr } = await admin.auth.admin.updateUserById(user.id, {
+      app_metadata: {
+        ...userMetaForActivation,
+        trial_consumed_at: new Date().toISOString(),
+      },
+    });
+    if (trialMetaErr) {
+      console.error(
+        `[activate] trial_consumed_at update échoué pour ${user.id}: ${trialMetaErr.message}`,
+      );
+    }
+  }
 
   // ─── 4. Codes 'broker' / 'lifetime' : accès illimité via une subscription ──
   // premium.ts accorde l'accès si status ∈ {active,trialing} ET

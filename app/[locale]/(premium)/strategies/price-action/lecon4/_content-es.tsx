@@ -270,15 +270,14 @@ export default function ContentEs() {
           />
 
           <LessonQuiz
-            question="¿Cuál es la condición principal para validar una bullish engulfing como señal de reversión operativa?"
+            question="Tu setup es limpio y el precio reacciona en una buena zona, pero tu sesgo en temporalidad superior (HTF) apunta en sentido contrario. ¿Qué haces?"
             options={[
-              "El cuerpo de la 2ª vela envuelve por completo el cuerpo de la 1ª, en sentido opuesto, en un nivel estructural significativo",
-              "La 2ª vela tiene un volumen superior en 200% al promedio",
-              "La 2ª vela cierra exactamente en el máximo de la sesión",
-              "La 2ª vela está precedida obligatoriamente de un doji",
+              "Tomo la operación: setup y zona válidos son suficientes.",
+              "Me abstengo: sin el sesgo HTF a mi favor, la probabilidad cae demasiado.",
+              "Entro reduciendo mucho mi tamaño para probar.",
             ]}
-            correctIndex={0}
-            explanation="Una bullish engulfing válida exige 3 condiciones: el cuerpo de la 2ª vela envuelve por completo el cuerpo de la 1ª (que es bajista), la dirección inversa a la 1ª, y la aparición en un nivel estructural significativo (support, resistance, zona OB). Sin contexto estructural, el engulfing pierde su potencia operativa."
+            correctIndex={1}
+            explanation="Un setup limpio en una buena zona no compensa un contexto que juega en tu contra. El sesgo HTF es un filtro: a contracorriente, nadas contra el mercado. Lo correcto es dejarla pasar y esperar una operación alineada."
           />
 
           <LessonQuiz

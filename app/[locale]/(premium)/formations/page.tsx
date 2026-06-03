@@ -348,7 +348,7 @@ export default function FormationsPage() {
             return (
               <Link
                 key={formation.id}
-                href={localizedHref(nextLesson.href, locale)}
+                href={localizedHref(`/formations/${formation.id}`, locale)}
                 className={cardClasses}
               >
                 {cardInner}
