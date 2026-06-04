@@ -20,8 +20,9 @@ function getStr(formData: FormData, key: string): string {
   return typeof v === "string" ? v : "";
 }
 
-function signupError(locale: string, msg: string): never {
-  redirect(`/${locale}/signup?error=${encodeURIComponent(msg)}`);
+function signupError(locale: string, msg: string, from?: string): never {
+  const fromQS = from === "pricing" ? `&from=${from}` : "";
+  redirect(`/${locale}/signup?error=${encodeURIComponent(msg)}${fromQS}`);
 }
 
 export async function signUp(formData: FormData) {
@@ -31,7 +32,7 @@ export async function signUp(formData: FormData) {
   const from     = getStr(formData, "from");
 
   if (!email || !password) {
-    signupError(locale, "missing");
+    signupError(locale, "missing", from);
   }
 
   const supabase = await createClient();
@@ -47,7 +48,7 @@ export async function signUp(formData: FormData) {
     const exists =
       createErr?.code === "user_already_exists" ||
       (createErr?.message ?? "").toLowerCase().includes("already");
-    signupError(locale, exists ? "exists" : "generic");
+    signupError(locale, exists ? "exists" : "generic", from);
   }
 
   // ─── 2. Backdate email_confirmed_at à 1970 (le trial ne démarre PAS ici) ──
@@ -94,15 +95,25 @@ export async function signIn(formData: FormData) {
   const email = getStr(formData, "email");
   const password = getStr(formData, "password");
   const locale = getStr(formData, "locale") || "fr";
+  const from = getStr(formData, "from");
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    redirect(`/${locale}/login?error=${encodeURIComponent(error.message)}`);
+    const fromQS = from === "pricing" ? `&from=${from}` : "";
+    redirect(`/${locale}/login?error=${encodeURIComponent(error.message)}${fromQS}`);
   }
 
   revalidatePath("/", "layout");
+
+  // Reprise checkout : user existant venu de /pricing → on relance le paiement
+  // au lieu de l'envoyer sur la home. CheckoutButton détecte auto_checkout=1
+  // et déclenche fetch /api/stripe/checkout au mount. Toute autre valeur de
+  // `from` (ou aucune) → home, comportement historique inchangé.
+  if (from === "pricing") {
+    redirect(`/${locale}/pricing?auto_checkout=1`);
+  }
   redirect(`/${locale}`);
 }
 

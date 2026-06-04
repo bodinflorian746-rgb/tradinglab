@@ -10,7 +10,7 @@ export default async function LoginPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; from?: string }>;
 }) {
   const raw = (await params).locale;
   const locale: Locale = hasLocale(raw) ? raw : DEFAULT_LOCALE;
@@ -22,7 +22,7 @@ export default async function LoginPage({
   } = await supabase.auth.getUser();
   if (user) redirect(`/${locale}`);
 
-  const { error } = await searchParams;
+  const { error, from } = await searchParams;
   const t = (await getDictionary(locale, "common")).login;
 
   return (
@@ -39,6 +39,7 @@ export default async function LoginPage({
 
         <form action={signIn} className="space-y-4">
           <input type="hidden" name="locale" value={locale} />
+          {from && <input type="hidden" name="from" value={from} />}
 
           <div>
             <label htmlFor="email" className="block text-xs font-medium text-zinc-400 mb-1.5">

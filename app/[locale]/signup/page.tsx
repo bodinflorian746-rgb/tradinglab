@@ -93,7 +93,7 @@ export default async function SignupPage({
         <p className="text-sm text-zinc-500 mt-6 text-center">
           {t.haveAccount}{" "}
           <Link
-            href={`/${locale}/login`}
+            href={from === "pricing" ? `/${locale}/login?from=pricing` : `/${locale}/login`}
             className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4"
           >
             {t.login}
