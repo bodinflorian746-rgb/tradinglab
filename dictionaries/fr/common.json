@@ -97,6 +97,20 @@
       "generic": "Une erreur est survenue. Réessaie."
     }
   },
+  "updatePassword": {
+    "title": "Définis un nouveau mot de passe",
+    "subtitle": "Choisis un nouveau mot de passe pour sécuriser ton compte.",
+    "newPasswordLabel": "Nouveau mot de passe",
+    "confirmLabel": "Confirmer le mot de passe",
+    "passwordHint": "6 caractères minimum.",
+    "submit": "Mettre à jour mon mot de passe",
+    "backToLogin": "Retour à la connexion",
+    "errors": {
+      "mismatch": "Les deux mots de passe ne correspondent pas.",
+      "tooShort": "Mot de passe trop court (6 caractères minimum).",
+      "generic": "Une erreur est survenue. Réessaie."
+    }
+  },
   "codeSent": {
     "title": "On t'a envoyé un code !",
     "body": "Un code d'activation 48h a été envoyé à :",

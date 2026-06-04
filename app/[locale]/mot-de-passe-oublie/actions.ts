@@ -2,9 +2,9 @@
 
 // Server Action de demande de réinitialisation de mot de passe.
 // Envoie un mail Supabase contenant un lien de recovery vers
-// /[locale]/auth/callback?next=/mot-de-passe-nouveau. Le callback
-// échange le code contre une session, puis redirige vers la page
-// de saisie du nouveau mot de passe.
+// /[locale]/auth/update-password. La page elle-même détecte le `code=`
+// transmis par Supabase et le route via /auth/callback pour l'échange
+// code → session (cookies). Cf. app/[locale]/auth/update-password/page.tsx.
 //
 // Sécurité : on ne révèle pas si l'email existe (anti-énumération).
 // Supabase resetPasswordForEmail retourne déjà OK même si le compte
@@ -29,7 +29,7 @@ export async function requestPasswordReset(formData: FormData) {
 
   const supabase = await createClient();
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? SITE_URL;
-  const redirectTo = `${baseUrl}/${locale}/auth/callback?next=/mot-de-passe-nouveau`;
+  const redirectTo = `${baseUrl}/${locale}/auth/update-password`;
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
 

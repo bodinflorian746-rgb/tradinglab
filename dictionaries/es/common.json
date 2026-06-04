@@ -97,6 +97,20 @@
       "generic": "Ha ocurrido un error. Inténtalo de nuevo."
     }
   },
+  "updatePassword": {
+    "title": "Define una nueva contraseña",
+    "subtitle": "Elige una nueva contraseña para proteger tu cuenta.",
+    "newPasswordLabel": "Nueva contraseña",
+    "confirmLabel": "Confirmar la contraseña",
+    "passwordHint": "6 caracteres mínimo.",
+    "submit": "Actualizar mi contraseña",
+    "backToLogin": "Volver al inicio de sesión",
+    "errors": {
+      "mismatch": "Las dos contraseñas no coinciden.",
+      "tooShort": "Contraseña demasiado corta (6 caracteres mínimo).",
+      "generic": "Ha ocurrido un error. Inténtalo de nuevo."
+    }
+  },
   "codeSent": {
     "title": "¡Te enviamos un código!",
     "body": "Hemos enviado un código de activación de 48 h a:",
