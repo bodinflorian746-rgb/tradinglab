@@ -2,25 +2,22 @@
 
 // Server Actions admin pour les codes d'accès.
 // Génération via service role (createAdminClient) uniquement, jamais exposée
-// au client. Chaque action re-vérifie que l'appelant est l'admin (défense en
+// au client. Chaque action re-vérifie que l'appelant est admin (défense en
 // profondeur : une Server Action est invocable indépendamment de la page).
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { generateCode } from "@/lib/access-codes";
+import { isAdmin } from "@/lib/auth/admin";
 
-/** Vérifie que l'utilisateur courant est l'admin (email === ADMIN_EMAIL). */
+/** Vérifie que l'utilisateur courant figure dans ADMIN_EMAILS (ou fallback ADMIN_EMAIL). */
 async function assertAdmin(): Promise<void> {
-  const adminEmail = process.env.ADMIN_EMAIL;
-  if (!adminEmail) {
-    throw new Error("ADMIN_EMAIL non configuré côté serveur.");
-  }
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user || user.email !== adminEmail) {
+  if (!user || !isAdmin(user.email)) {
     throw new Error("Accès refusé.");
   }
 }

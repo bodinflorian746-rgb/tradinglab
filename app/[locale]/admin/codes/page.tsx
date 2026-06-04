@@ -1,6 +1,6 @@
-// Page admin des codes d'accès. Réservée à l'admin (email === ADMIN_EMAIL).
-// Tout visiteur non-admin reçoit un 404 (notFound) : la page n'existe pas pour
-// lui, on ne révèle même pas son existence.
+// Page admin des codes d'accès. Réservée aux admins (liste ADMIN_EMAILS,
+// fallback ADMIN_EMAIL). Tout visiteur non-admin reçoit un 404 (notFound) :
+// la page n'existe pas pour lui, on ne révèle même pas son existence.
 //
 // Lecture des codes via service role (RLS verrouillé sur access_codes).
 
@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+import { isAdmin } from "@/lib/auth/admin";
 import { CodesAdmin, type AdminCode } from "./CodesAdmin";
 
 export const dynamic = "force-dynamic";
@@ -21,13 +22,12 @@ export default async function AdminCodesPage({
   const locale: Locale = hasLocale(raw) ? raw : DEFAULT_LOCALE;
 
   // ─── Guard admin ──────────────────────────────────────────────────────────
-  const adminEmail = process.env.ADMIN_EMAIL;
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!adminEmail || !user || user.email !== adminEmail) {
+  if (!user || !isAdmin(user.email)) {
     notFound();
   }
 
