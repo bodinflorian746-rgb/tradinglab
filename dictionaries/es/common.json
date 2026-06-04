@@ -21,6 +21,26 @@
   "auth": {
     "logout": "Cerrar sesión"
   },
+  "account": {
+    "title": "Mi cuenta",
+    "subtitle": "Gestiona tu suscripción y tus accesos.",
+    "emailLabel": "Email",
+    "statusLabel": "Suscripción",
+    "subscription": {
+      "active": "Tu suscripción está activa.",
+      "ending": "Suscripción activa hasta el {date}. No se renovará.",
+      "trial": "Prueba gratuita en curso.",
+      "none": "No tienes una suscripción activa."
+    },
+    "buttons": {
+      "managePortal": "Gestionar mi suscripción",
+      "viewPricing": "Ver los accesos"
+    },
+    "errors": {
+      "portal": "No se pudo abrir el portal. Inténtalo de nuevo en un momento.",
+      "noPortal": "No tienes una suscripción Stripe que gestionar por ahora."
+    }
+  },
   "signup": {
     "title": "Crear una cuenta",
     "subtitle": "Únete a TradeScaleX en unos segundos.",

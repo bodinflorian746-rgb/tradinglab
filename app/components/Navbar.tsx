@@ -104,6 +104,12 @@ export default function Navbar() {
 
           {isLoggedIn ? (
             <>
+              <Link
+                href={localizedHref("/compte", locale)}
+                className="hidden md:inline-flex items-center text-zinc-400 hover:text-white text-sm font-medium transition-colors"
+              >
+                {t.account}
+              </Link>
               <span
                 className="hidden md:inline-flex items-center text-zinc-400 text-sm font-medium select-text"
                 title={user?.email ?? undefined}
@@ -173,6 +179,13 @@ export default function Navbar() {
             ))}
             {isLoggedIn ? (
               <>
+                <Link
+                  href={localizedHref("/compte", locale)}
+                  onClick={() => setIsOpen(false)}
+                  className="text-zinc-300 hover:text-white py-3 text-sm font-medium border-t border-zinc-800/60 mt-1"
+                >
+                  {t.account}
+                </Link>
                 <p
                   className="mt-4 text-zinc-400 text-center text-sm font-medium break-all"
                   title={user?.email ?? undefined}

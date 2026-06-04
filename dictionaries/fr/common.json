@@ -21,6 +21,26 @@
   "auth": {
     "logout": "Déconnexion"
   },
+  "account": {
+    "title": "Mon compte",
+    "subtitle": "Gère ton abonnement et tes accès.",
+    "emailLabel": "Email",
+    "statusLabel": "Abonnement",
+    "subscription": {
+      "active": "Ton abonnement est actif.",
+      "ending": "Abonnement actif jusqu'au {date}. Il ne sera pas renouvelé.",
+      "trial": "Essai gratuit en cours.",
+      "none": "Tu n'as pas d'abonnement actif."
+    },
+    "buttons": {
+      "managePortal": "Gérer mon abonnement",
+      "viewPricing": "Voir les accès"
+    },
+    "errors": {
+      "portal": "Impossible d'ouvrir le portail. Réessaie dans un instant.",
+      "noPortal": "Tu n'as pas d'abonnement Stripe à gérer pour le moment."
+    }
+  },
   "signup": {
     "title": "Créer un compte",
     "subtitle": "Rejoins TradeScaleX en quelques secondes.",
