@@ -34,6 +34,25 @@ export async function requestPasswordReset(formData: FormData) {
   const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
 
   if (error) {
+    // Rate limit Supabase = un mail vient juste d'être envoyé pour cet email
+    // (cooldown ~60s par défaut). Fonctionnellement c'est un succès — le user
+    // a son lien dans la boîte. On affiche le message de succès au lieu d'une
+    // erreur technique trompeuse. Détection : status 429 OU code/message qui
+    // contiennent "rate" / "over_email_send_rate_limit".
+    const status = error.status ?? 0;
+    const codeStr = (error.code ?? "").toLowerCase();
+    const msgStr = (error.message ?? "").toLowerCase();
+    const isRateLimit =
+      status === 429 ||
+      codeStr.includes("rate") ||
+      msgStr.includes("rate limit") ||
+      msgStr.includes("over_email_send_rate_limit");
+
+    if (isRateLimit) {
+      // Pas d'erreur logguée : c'est un comportement attendu de double-clic.
+      redirect(`/${locale}/mot-de-passe-oublie?sent=1`);
+    }
+
     console.error(`[reset-password] resetPasswordForEmail échoué pour ${email}: ${error.message}`);
     redirect(`/${locale}/mot-de-passe-oublie?error=generic`);
   }
