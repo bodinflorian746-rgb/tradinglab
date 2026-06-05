@@ -20,9 +20,34 @@ export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
 
-// Hreflang + canonical + metadata par locale.
-// Étape 2/3 INFRA : title/description encore FR pour toutes les locales —
-// la localisation des libellés sera faite à l'étape 4 (chrome global FR→dico).
+// Hreflang + canonical + metadata + Open Graph par locale.
+// title/description sont localisés FR/ES, fallback FR pour toute locale
+// inconnue. L'image OG est un placeholder /og-image.png à créer côté design
+// avant le lancement (1200×630 conseillé pour Twitter/LinkedIn/Facebook).
+const METADATA_COPY: Record<Locale, { title: string; description: string }> = {
+  fr: {
+    title: "TradeScaleX — La plateforme d'éducation au trading",
+    description:
+      "Formations, stratégies institutionnelles, macro, jeux interactifs. Pour traders sérieux.",
+  },
+  en: {
+    title: "TradeScaleX — The trading education platform",
+    description:
+      "Courses, institutional strategies, macro, interactive games. For serious traders.",
+  },
+  es: {
+    title: "TradeScaleX — La plataforma de educación al trading",
+    description:
+      "Formaciones, estrategias institucionales, macro, juegos interactivos. Para traders serios.",
+  },
+};
+
+const OG_LOCALE_TAG: Record<Locale, string> = {
+  fr: "fr_FR",
+  en: "en_US",
+  es: "es_ES",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -41,13 +66,41 @@ export async function generateMetadata({
   // x-default → FR (locale racine)
   languages["x-default"] = `${SITE_URL}/${DEFAULT_LOCALE}`;
 
+  const copy = METADATA_COPY[safeLocale];
+  const canonical = `${SITE_URL}/${safeLocale}`;
+
   return {
     metadataBase: new URL(SITE_URL),
-    title: "TradeScaleX – Apprends le trading comme un pro",
-    description: "La plateforme d'apprentissage du trading la plus complète.",
+    title: copy.title,
+    description: copy.description,
     alternates: {
-      canonical: `${SITE_URL}/${safeLocale}`,
+      canonical,
       languages,
+    },
+    openGraph: {
+      type: "website",
+      siteName: "TradeScaleX",
+      title: copy.title,
+      description: copy.description,
+      url: canonical,
+      locale: OG_LOCALE_TAG[safeLocale],
+      alternateLocale: LOCALES.filter((l) => l !== safeLocale).map(
+        (l) => OG_LOCALE_TAG[l],
+      ),
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: copy.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: copy.title,
+      description: copy.description,
+      images: ["/og-image.png"],
     },
   };
 }
