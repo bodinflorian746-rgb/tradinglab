@@ -14,6 +14,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isPremium } from "@/lib/auth/premium";
+import { isAdmin } from "@/lib/auth/admin";
 import { sendTrialCodeForUser } from "@/lib/auth/send-trial-code-flow";
 
 function getStr(formData: FormData, key: string): string {
@@ -33,6 +34,12 @@ export async function requestTrialCode(formData: FormData) {
   }
 
   const emailEnc = encodeURIComponent(user.email);
+
+  // Admin → accès illimité, pas besoin de trial 48h. Redirect home comme
+  // pour un user premium.
+  if (isAdmin(user.email)) {
+    redirect(`/${locale}`);
+  }
 
   const premium = await isPremium(user.id);
   if (premium.isPremium) {
