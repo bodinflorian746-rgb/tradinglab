@@ -11,6 +11,7 @@ import { LOCALES, DEFAULT_LOCALE, hasLocale, type Locale } from "@/i18n/config";
 import { getAllDictionaries } from "@/i18n/dictionaries";
 import { SITE_URL } from "@/i18n/site";
 import { createClient } from "@/lib/supabase/server";
+import { isAdmin } from "@/lib/auth/admin";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -72,14 +73,17 @@ export default async function LocaleLayout({
   const dicts = await getAllDictionaries(locale);
 
   // Session côté serveur pour hydrater la Navbar (auth-aware sans flicker).
+  // isAdmin évalué ici (server-only) car lib/auth/admin lit process.env —
+  // jamais exposé côté client, on hydrate juste le boolean dérivé.
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  const userIsAdmin = isAdmin(user?.email);
 
   return (
     <html lang={locale} className={inter.className}>
       <body className="bg-zinc-950 text-white antialiased">
         <LocaleProvider locale={locale} dicts={dicts}>
-          <SessionProvider initialUser={user}>
+          <SessionProvider initialUser={user} initialIsAdmin={userIsAdmin}>
             <Navbar />
 
             {children}

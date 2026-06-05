@@ -12,6 +12,7 @@
   "signup": "Créer un compte",
   "signOut": "Se déconnecter",
   "account": "Mon compte",
+  "admin": "Admin",
   "openMenu": "Ouvrir le menu",
   "closeMenu": "Fermer le menu"
 }

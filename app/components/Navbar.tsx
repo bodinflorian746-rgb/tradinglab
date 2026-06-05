@@ -73,7 +73,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const locale = useLocale();
   const t = useDict("nav");
-  const { user } = useSession();
+  const { user, isAdmin } = useSession();
   const isLoggedIn = !!user;
 
   return (
@@ -116,6 +116,14 @@ export default function Navbar() {
               >
                 {shortEmail(user?.email)}
               </span>
+              {isAdmin && (
+                <Link
+                  href={localizedHref("/admin/codes", locale)}
+                  className="hidden md:inline-flex items-center text-zinc-400 hover:text-white text-sm font-medium transition-colors"
+                >
+                  {t.admin}
+                </Link>
+              )}
               <form action={signOut} className="hidden md:inline-flex">
                 <input type="hidden" name="locale" value={locale} />
                 <button
@@ -192,6 +200,15 @@ export default function Navbar() {
                 >
                   {shortEmail(user?.email)}
                 </p>
+                {isAdmin && (
+                  <Link
+                    href={localizedHref("/admin/codes", locale)}
+                    onClick={() => setIsOpen(false)}
+                    className="mt-2 text-center text-zinc-300 hover:text-white py-2 text-sm font-medium"
+                  >
+                    {t.admin}
+                  </Link>
+                )}
                 <form action={signOut} className="mt-2 mb-3">
                   <input type="hidden" name="locale" value={locale} />
                   <button
