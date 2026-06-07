@@ -48,7 +48,7 @@ export function MiniChart({ data, overlay, height = 170 }: MiniChartProps) {
   const innerH = H - padY * 2;
   const totalSlots = data.candles.length;
   const slotW = innerW / totalSlots;
-  const bodyW = Math.max(2.2, slotW * 0.6);
+  const bodyW = Math.max(3, slotW * 0.72);
 
   // Combien de bougies on dessine ? Si separatorIndex défini, on cache
   // les futures non révélées.
@@ -127,7 +127,7 @@ export function MiniChart({ data, overlay, height = 170 }: MiniChartProps) {
           const color = isGreen ? "#10b981" : "#ef4444";
           const bodyTop = y(Math.max(k.o, k.c));
           const bodyBottom = y(Math.min(k.o, k.c));
-          const bodyH = Math.max(1.2, bodyBottom - bodyTop);
+          const bodyH = Math.max(3, bodyBottom - bodyTop);
           return (
             <g key={i}>
               <line x1={cx} y1={y(k.h)} x2={cx} y2={y(k.l)} stroke={color} strokeWidth="1" strokeLinecap="round" />
