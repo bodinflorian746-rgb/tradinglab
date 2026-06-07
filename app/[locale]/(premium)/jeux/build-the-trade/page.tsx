@@ -173,6 +173,39 @@ export default function BuildTheTradePage() {
     [current, G],
   );
 
+  // Domaine d'affichage phase-aware : recalculé à chaque sous-étape pour ne
+  // couvrir QUE ce qui est rendu (bougies visibles + zones + niveaux choisis
+  // + lignes candidates de la sous-étape active). Évite que le wide stop /
+  // ambitious TP étirent le domaine en permanence et écrasent les bougies.
+  const renderedDomain = useMemo(() => {
+    if (!chart) return { min: 0, max: 1 };
+    const isBuild = phase === "build";
+    const visibleCandles = isBuild
+      ? chart.past
+      : [...chart.past, ...chart.future.slice(0, revealed)];
+    const vals: number[] = [];
+    for (const k of visibleCandles) { vals.push(k.h, k.l); }
+    for (const z of chart.zones) { vals.push(z.y1, z.y2); }
+    // niveaux déjà choisis (rendus en overlay) → restent visibles
+    if (entry) vals.push(chart.entries[entry]);
+    if (stop)  vals.push(chart.stops[stop]);
+    if (tp)    vals.push(chart.tps[tp]);
+    // lignes candidates affichées à la sous-étape courante
+    if (isBuild) {
+      if (entry === null) {
+        vals.push(chart.entries.aggressive, chart.entries.confirmation, chart.entries.deep_pullback);
+      } else if (stop === null) {
+        vals.push(chart.stops.tight, chart.stops.logical, chart.stops.wide);
+      } else if (tp === null) {
+        vals.push(chart.tps.fast, chart.tps.balanced, chart.tps.ambitious);
+      }
+    }
+    const min = Math.min(...vals);
+    const max = Math.max(...vals);
+    const pad = (max - min) * 0.08 || 1;
+    return { min: min - pad, max: max + pad };
+  }, [chart, phase, revealed, entry, stop, tp]);
+
   // Reset state au scenario suivant
   useEffect(() => {
     setEntry(null);
@@ -376,7 +409,7 @@ export default function BuildTheTradePage() {
               data={{
                 candles: [...chart.past, ...chart.future],
                 zones:   chart.zones,
-                domain:  chart.domain,
+                domain:  renderedDomain,
               }}
               overlay={{
                 separatorIndex:     chart.past.length,
