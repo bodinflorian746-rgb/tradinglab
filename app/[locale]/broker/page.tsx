@@ -72,15 +72,19 @@ const content: Record<
     faqs: [
       {
         q: "Est-ce que l'accès TradeScaleX est vraiment gratuit ?",
-        a: "Oui. En contrepartie du dépôt effectué chez un broker partenaire, tu reçois un accès gratuit à TradeScaleX. Aucun abonnement, aucune option payante.",
+        a: "Oui. Ton accès est offert après ouverture du compte et dépôt validé chez un broker partenaire.",
+      },
+      {
+        q: "Est-ce que les brokers partenaires sont régulés ?",
+        a: "Oui. Nous travaillons uniquement avec des brokers régulés.",
+      },
+      {
+        q: "Est-ce que je peux récupérer mon argent à tout moment ?",
+        a: "Oui. Ton dépôt reste sur ton compte broker. TradeScaleX ne reçoit jamais tes fonds.",
       },
       {
         q: "Quand est-ce que je reçois mon accès ?",
-        a: "Après vérification du dépôt par le broker (généralement 24 à 72 h), tu reçois ton code d'accès par email. Tu l'actives en quelques secondes.",
-      },
-      {
-        q: "Est-ce que je peux retirer mon dépôt ?",
-        a: "Oui. Ton dépôt reste sur ton compte broker, tu peux le retirer à tout moment depuis ton espace client broker (selon les conditions du broker). Le bonus, lui, n'est pas retirable.",
+        a: "Une fois ton dépôt vérifié, ton accès est activé rapidement.",
       },
     ],
     riskNote:
@@ -117,15 +121,19 @@ const content: Record<
     faqs: [
       {
         q: "¿El acceso a TradeScaleX es realmente gratuito?",
-        a: "Sí. A cambio del depósito realizado en un bróker asociado, recibes acceso gratuito a TradeScaleX. Sin suscripción, sin opciones de pago.",
+        a: "Sí. Tu acceso se ofrece después de abrir tu cuenta y validar tu depósito con un broker asociado.",
+      },
+      {
+        q: "¿Los brokers asociados están regulados?",
+        a: "Sí. Trabajamos únicamente con brokers regulados.",
+      },
+      {
+        q: "¿Puedo retirar mi dinero en cualquier momento?",
+        a: "Sí. Tu depósito permanece en tu cuenta del broker. TradeScaleX nunca recibe tus fondos.",
       },
       {
         q: "¿Cuándo recibo mi acceso?",
-        a: "Después de que el bróker verifique el depósito (normalmente 24 a 72 h), recibes tu código de acceso por email. Lo activas en unos segundos.",
-      },
-      {
-        q: "¿Puedo retirar mi depósito?",
-        a: "Sí. Tu depósito permanece en tu cuenta de bróker, puedes retirarlo en cualquier momento desde el área de cliente del bróker (según las condiciones del bróker). El bono no es retirable.",
+        a: "Una vez verificado tu depósito, tu acceso se activa rápidamente.",
       },
     ],
     riskNote:
