@@ -74,7 +74,7 @@ export default function BrokerConfirmCTA({
             </ul>
 
             <Link
-              href={`/${locale}/login`}
+              href={`/${locale}/broker`}
               className="block w-full text-center bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3 rounded-xl transition-colors text-sm mb-3"
             >
               {strings.modal.continueLabel}
