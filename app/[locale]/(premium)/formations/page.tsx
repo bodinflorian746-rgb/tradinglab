@@ -244,8 +244,8 @@ export default function FormationsPage() {
         </section>
 
         {/* ── CARDS GRID ── */}
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {FORMATIONS.map((formation) => {
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {FORMATIONS.filter((formation) => formation.id !== "mt5").map((formation) => {
             const theme = LEVEL_THEMES[formation.id] ?? LEVEL_THEMES.debutant;
             const lessonIds = formation.lessons.map((l) => l.id);
             const stats = mounted
