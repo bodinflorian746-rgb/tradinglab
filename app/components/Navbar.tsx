@@ -19,6 +19,7 @@ function shortEmail(email: string | undefined): string {
 
 const SWITCHER_LOCALES: { code: Locale; label: string }[] = [
   { code: "fr", label: "FR" },
+  { code: "en", label: "EN" },
   { code: "es", label: "ES" },
 ];
 
@@ -213,7 +214,6 @@ export default function Navbar() {
                   <input type="hidden" name="locale" value={locale} />
                   <button
                     type="submit"
-                    onClick={() => setIsOpen(false)}
                     className="w-full border border-zinc-700 hover:border-zinc-500 text-white text-center px-4 py-3 rounded-lg text-sm font-semibold transition-colors"
                   >
                     {t.signOut}
