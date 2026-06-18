@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useLocale, useDict } from "@/app/components/LocaleProvider";
 import { useSession } from "@/app/components/SessionProvider";
 import { localizedHref, stripLocalePrefix } from "@/lib/i18n/href";
@@ -76,6 +76,20 @@ export default function Navbar() {
   const t = useDict("nav");
   const { user, isAdmin } = useSession();
   const isLoggedIn = !!user;
+
+  // Déconnexion mobile : on dispatch la Server Action via une transition portée
+  // par la Navbar (composant persistant) et non par le panneau mobile éphémère
+  // ({isOpen && …}). Sinon le démontage du panneau annule l'action en vol et le
+  // redirect /login ne se produit jamais — d'où le bouton "mort" sur mobile.
+  // Le desktop garde son <form action={signOut}> (toujours monté, déjà OK).
+  const [isSigningOut, startSignOut] = useTransition();
+  const handleMobileSignOut = () => {
+    startSignOut(async () => {
+      const formData = new FormData();
+      formData.set("locale", locale);
+      await signOut(formData);
+    });
+  };
 
   return (
     <nav className="sticky top-0 z-50 border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-md">
@@ -210,15 +224,14 @@ export default function Navbar() {
                     {t.admin}
                   </Link>
                 )}
-                <form action={signOut} className="mt-2 mb-3">
-                  <input type="hidden" name="locale" value={locale} />
-                  <button
-                    type="submit"
-                    className="w-full border border-zinc-700 hover:border-zinc-500 text-white text-center px-4 py-3 rounded-lg text-sm font-semibold transition-colors"
-                  >
-                    {t.signOut}
-                  </button>
-                </form>
+                <button
+                  type="button"
+                  onClick={handleMobileSignOut}
+                  disabled={isSigningOut}
+                  className="mt-2 mb-3 w-full border border-zinc-700 hover:border-zinc-500 text-white text-center px-4 py-3 rounded-lg text-sm font-semibold transition-colors disabled:opacity-60 disabled:pointer-events-none"
+                >
+                  {t.signOut}
+                </button>
               </>
             ) : (
               <>

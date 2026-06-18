@@ -138,7 +138,7 @@ export default async function Home({
       { value: "48h", label: isEs ? "gratis" : "gratuites", icon: "timer" },
       { value: "79", label: isEs ? "lecciones estructuradas" : "leçons structurées", icon: "book" },
       { value: "8", label: isEs ? "estrategias explicadas" : "stratégies expliquées", icon: "target" },
-      { value: "4", label: isEs ? "pilares de aprendizaje" : "piliers d'apprentissage", icon: "layers" },
+      { value: "4", label: isEs ? "juegos educativos" : "jeux éducatifs", icon: "layers" },
     ],
     discover: isEs ? "Descubrir" : "Découvrir",
 
