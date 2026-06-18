@@ -17,6 +17,36 @@ function CheckSmall({ color }: { color: string }) {
   );
 }
 
+// Icônes des 4 cartes statistiques sous le hero (stroke = currentColor,
+// hérite de la couleur emerald du badge). Traits simples, zéro asset.
+const STAT_ICON: Record<string, React.ReactNode> = {
+  timer: (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <circle cx="9" cy="10" r="6" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M9 7v3l2 1.5M6.5 2.5h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  ),
+  book: (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path d="M9 4.5C7.5 3.3 5.3 3 3 3.5v9.5c2.3-.5 4.5-.3 6 .9 1.5-1.2 3.7-1.4 6-.9V3.5c-2.3-.5-4.5-.2-6 1z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M9 5.5v9" stroke="currentColor" strokeWidth="1.3" />
+    </svg>
+  ),
+  target: (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <circle cx="9" cy="9" r="6.2" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="9" cy="9" r="3" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="9" cy="9" r="0.6" fill="currentColor" />
+    </svg>
+  ),
+  layers: (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path d="M9 2.5l6 3-6 3-6-3 6-3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M3 9l6 3 6-3M3 12.5l6 3 6-3" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    </svg>
+  ),
+};
+
 // ───────────────────────────────────────────────────────────────────────────────
 // Hexagon for "Ton parcours progressif"
 // Flat-top hexagon, radius r=40
@@ -101,6 +131,27 @@ export default async function Home({
     // T.hero retiré — désormais 100% géré par t.hero du dictionnaire.
     // T.progression, T.poles, T.access, T.footer restent en FR/ES inline car
     // ces sections sont hors scope mockup F (parcours hexagones / footer).
+
+    // Cartes statistiques sous le hero. Valeurs marketing figées (alignées
+    // sur la maquette), pas dérivées de FORMATIONS pour rester stables.
+    stats: [
+      { value: "48h", label: isEs ? "gratis" : "gratuites", icon: "timer" },
+      { value: "79", label: isEs ? "lecciones estructuradas" : "leçons structurées", icon: "book" },
+      { value: "8", label: isEs ? "estrategias explicadas" : "stratégies expliquées", icon: "target" },
+      { value: "4", label: isEs ? "pilares de aprendizaje" : "piliers d'apprentissage", icon: "layers" },
+    ],
+    discover: isEs ? "Descubrir" : "Découvrir",
+
+    // Bloc "Build ton trade" — panneau horizontal premium.
+    buildTag: isEs ? "Juego exclusivo incluido en la formación" : "Jeu exclusif inclus dans la formation",
+    buildCta: isEs ? "Descubrir el juego" : "Découvrir le jeu",
+    buildCards: [
+      { label: isEs ? "Escenario" : "Scénario", icon: "🎯", delta: "A+", bars: [10, 16, 12] },
+      { label: "Analyse", icon: "📊", delta: "+24%", bars: [14, 9, 18] },
+      { label: isEs ? "Decisiones" : "Décisions", icon: "⚡", delta: "1.8R", bars: [9, 15, 11] },
+      { label: isEs ? "Objetivos" : "Objectifs", icon: "🏆", delta: "92%", bars: [12, 18, 14] },
+    ],
+
     progression: {
       title: isEs ? "Tu recorrido progresivo" : "Ton parcours progressif",
       subtitle: isEs ? "Aprende paso a paso y desarrolla tus competencias" : "Apprends étape par étape et développe tes compétences",
@@ -206,13 +257,194 @@ export default async function Home({
   };
 
   return (
-    <main className="bg-zinc-950 text-white overflow-hidden">
+    <main
+      className="relative text-white overflow-hidden"
+      style={{
+        // Socle colorimétrique : dégradé vertical bleu nuit → bleu pétrole →
+        // turquoise très sombre → vert profond. Plus de nuances pétrole/turquoise
+        // et moins de noir pur, avec une légère ondulation de teinte entre les
+        // sections. Toutes ces teintes restent sombres → texte blanc lisible.
+        background:
+          "linear-gradient(180deg, #04121B 0%, #06181F 16%, #06202A 32%, #051B24 48%, #062023 64%, #051E1A 80%, #06231C 100%)",
+      }}
+    >
+      {/* ═════════════════════════════════════════════════════════════════════
+          0. FOND GLOBAL — halos larges multi-teintes (emerald / teal / bleu
+             pétrole / turquoise) répartis en alternance gauche/droite sur toute
+             la hauteur. Donne la richesse colorée et la continuité demandées.
+             -z-10 : derrière le contenu, au-dessus du dégradé de base de <main>.
+          ═════════════════════════════════════════════════════════════════════ */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background: [
+            "radial-gradient(1150px 660px at 82% 4%, rgba(16,185,129,0.12), transparent 68%)",    // emerald — haut droite (hero)
+            "radial-gradient(1000px 660px at 6% 16%, rgba(12,128,118,0.10), transparent 70%)",     // teal — gauche
+            "radial-gradient(900px 600px at 92% 30%, rgba(11,92,116,0.10), transparent 70%)",      // pétrole — droite (variation)
+            "radial-gradient(1100px 740px at 88% 46%, rgba(11,92,116,0.11), transparent 72%)",     // pétrole profond — droite
+            "radial-gradient(1000px 700px at 8% 60%, rgba(16,185,129,0.10), transparent 72%)",     // emerald — gauche
+            "radial-gradient(900px 620px at 84% 73%, rgba(26,150,138,0.085), transparent 70%)",    // turquoise — droite (variation)
+            "radial-gradient(1120px 760px at 12% 88%, rgba(26,150,138,0.085), transparent 72%)",   // turquoise — bas gauche
+          ].join(", "),
+        }}
+      />
       {/* ═════════════════════════════════════════════════════════════════════
           1. HERO — 3 blobs glow emerald via .hero / .hero-inner pseudo-elements
                     (cf. globals.css). PAS d'overflow-hidden : le glow doit
                     déborder dans .parcours-section pour transition fluide.
           ═════════════════════════════════════════════════════════════════════ */}
       <section className="hero px-6 pt-24 pb-24 text-center md:pt-[120px] md:pb-[100px]">
+        {/* ─── Couche décorative hero (desktop only) ──────────────────────────
+            En complément des glows .hero::before/::after (globals.css) :
+            1) gros faisceau lumineux vert en diagonale à gauche,
+            2) faisceaux secondaires plus fins (lignes lumineuses),
+            3) mock dashboard sombre à droite (fenêtre + chart chandeliers).
+            100% SVG/CSS, zéro asset/réseau. Masquée < lg pour préserver les
+            perfs mobiles et éviter tout débordement horizontal. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 hidden overflow-hidden lg:block">
+          {/* Halo ambiant vert profond en haut-gauche (source du faisceau) */}
+          <div
+            className="absolute -left-[8%] -top-[30%] h-[125%] w-[740px]"
+            style={{
+              background: "radial-gradient(ellipse at 35% 40%, rgba(16,185,129,0.26), rgba(16,185,129,0.075) 45%, transparent 72%)",
+              filter: "blur(70px)",
+            }}
+          />
+          {/* Profondeur bleu pétrole derrière le titre (centre du hero) */}
+          <div
+            className="absolute left-1/2 top-[16%] h-[480px] w-[940px] -translate-x-1/2"
+            style={{
+              background: "radial-gradient(ellipse at 50% 50%, rgba(11,92,116,0.19), rgba(12,128,118,0.08) 46%, transparent 72%)",
+              filter: "blur(82px)",
+            }}
+          />
+          {/* Gros faisceau lumineux gauche (cône diagonal flouté) — élargi/intensifié */}
+          <div
+            className="absolute -left-[16%] -top-[25%] h-[170%] w-[660px] -rotate-[22deg]"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, rgba(16,185,129,0.16) 32%, rgba(52,211,153,0.40) 50%, rgba(16,185,129,0.16) 68%, transparent)",
+              filter: "blur(38px)",
+            }}
+          />
+          {/* Cœurs du faisceau, plus nets et plus clairs (lignes lumineuses) */}
+          <div
+            className="absolute left-[3%] -top-[12%] h-[140%] w-[4px] -rotate-[22deg]"
+            style={{
+              background: "linear-gradient(180deg, transparent, rgba(167,243,208,0.6), transparent)",
+              filter: "blur(1.5px)",
+            }}
+          />
+          <div
+            className="absolute left-[8%] -top-[12%] h-[140%] w-[2px] -rotate-[22deg]"
+            style={{
+              background: "linear-gradient(180deg, transparent, rgba(52,211,153,0.44), transparent)",
+            }}
+          />
+          <div
+            className="absolute left-[12%] -top-[12%] h-[140%] w-px -rotate-[22deg]"
+            style={{
+              background: "linear-gradient(180deg, transparent, rgba(60,180,168,0.36), transparent)",
+            }}
+          />
+
+          {/* Glow ambiant bleu pétrole/turquoise derrière le dashboard (richesse) */}
+          <div
+            className="absolute right-[-4%] top-[2%] h-[620px] w-[760px]"
+            style={{
+              background: "radial-gradient(ellipse at 60% 45%, rgba(26,150,138,0.16), rgba(11,92,116,0.08) 45%, transparent 72%)",
+              filter: "blur(75px)",
+            }}
+          />
+
+          {/* Faisceaux secondaires diagonaux côté droit (lignes lumineuses) */}
+          <svg className="absolute inset-0 h-full w-full" preserveAspectRatio="none" viewBox="0 0 1440 700" fill="none">
+            <defs>
+              <linearGradient id="hero-beam" x1="1440" y1="0" x2="560" y2="640" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#34d399" stopOpacity="0.7" />
+                <stop offset="1" stopColor="#34d399" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="hero-beam-teal" x1="1440" y1="40" x2="620" y2="700" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#2a9d92" stopOpacity="0.4" />
+                <stop offset="1" stopColor="#2a9d92" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <g stroke="url(#hero-beam)" strokeWidth="2">
+              <line x1="1480" y1="30" x2="680" y2="560" />
+              <line x1="1480" y1="110" x2="740" y2="650" />
+              <line x1="1400" y1="-30" x2="620" y2="500" />
+              <line x1="1520" y1="190" x2="780" y2="690" />
+            </g>
+            <g stroke="url(#hero-beam-teal)" strokeWidth="1.5">
+              <line x1="1500" y1="80" x2="700" y2="700" />
+              <line x1="1340" y1="-10" x2="600" y2="540" />
+            </g>
+          </svg>
+
+          {/* Mock dashboard sombre à droite (déborde hors écran, rotation légère) */}
+          <div
+            className="absolute right-[-70px] top-[76px] w-[710px] -rotate-[4deg] rounded-2xl border border-emerald-400/25 bg-[#061a22]/85 shadow-[0_60px_160px_-30px_rgba(16,185,129,0.5)] xl:right-[0px]"
+          >
+            {/* Glow emerald derrière le panneau */}
+            <div
+              className="absolute -inset-12 -z-10 rounded-[44px]"
+              style={{ background: "radial-gradient(ellipse at 55% 45%, rgba(16,185,129,0.26), rgba(26,150,138,0.095) 50%, transparent 72%)", filter: "blur(44px)" }}
+            />
+            {/* Barre de fenêtre */}
+            <div className="flex items-center gap-1.5 border-b border-white/5 px-4 py-2.5">
+              <span className="h-2 w-2 rounded-full bg-red-500/70" />
+              <span className="h-2 w-2 rounded-full bg-amber-400/70" />
+              <span className="h-2 w-2 rounded-full bg-emerald-500/70" />
+              <span className="ml-3 h-1.5 w-40 rounded-full bg-white/5" />
+            </div>
+            {/* Corps : mini sidebar + chart */}
+            <div className="flex gap-4 p-4">
+              <div className="hidden w-28 shrink-0 flex-col gap-2 xl:flex">
+                <span className="h-2 w-20 rounded bg-emerald-500/25" />
+                <span className="h-2 w-16 rounded bg-white/8" />
+                <span className="h-2 w-24 rounded bg-white/8" />
+                <span className="h-2 w-14 rounded bg-white/8" />
+                <span className="h-2 w-20 rounded bg-white/8" />
+                <span className="mt-2 h-2 w-24 rounded bg-emerald-500/20" />
+              </div>
+              <div className="relative flex-1 overflow-hidden rounded-lg border border-white/5 bg-black/30 p-3">
+                <div aria-hidden="true" className="preview-chart-grid absolute inset-3" />
+                <svg viewBox="0 0 380 150" className="relative block h-auto w-full" fill="none">
+                  <defs>
+                    <linearGradient id="hero-dash-candle" x1="0" y1="0" x2="0" y2="1">
+                      <stop stopColor="#34d399" />
+                      <stop offset="1" stopColor="#10b981" stopOpacity="0.5" />
+                    </linearGradient>
+                    <linearGradient id="hero-dash-line" x1="0" y1="0" x2="380" y2="0" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#34d399" stopOpacity="0" />
+                      <stop offset="0.5" stopColor="#34d399" stopOpacity="0.8" />
+                      <stop offset="1" stopColor="#34d399" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  {/* Trend line ascendante */}
+                  <path d="M10 120 L70 100 L120 108 L180 70 L240 80 L300 45 L370 30" stroke="url(#hero-dash-line)" strokeWidth="1.5" fill="none" />
+                  {/* Chandeliers */}
+                  <g stroke="#059669" strokeWidth="1.2">
+                    <line x1="30" y1="96" x2="30" y2="128" /><line x1="70" y1="84" x2="70" y2="118" />
+                    <line x1="110" y1="92" x2="110" y2="124" /><line x1="150" y1="60" x2="150" y2="104" />
+                    <line x1="190" y1="66" x2="190" y2="100" /><line x1="230" y1="70" x2="230" y2="108" />
+                    <line x1="270" y1="44" x2="270" y2="86" /><line x1="310" y1="50" x2="310" y2="84" />
+                    <line x1="350" y1="28" x2="350" y2="64" />
+                  </g>
+                  <g fill="url(#hero-dash-candle)">
+                    <rect x="25" y="104" width="10" height="18" rx="1" /><rect x="65" y="92" width="10" height="20" rx="1" />
+                    <rect x="105" y="100" width="10" height="18" rx="1" /><rect x="145" y="70" width="10" height="28" rx="1" />
+                    <rect x="185" y="74" width="10" height="20" rx="1" /><rect x="225" y="80" width="10" height="22" rx="1" />
+                    <rect x="265" y="52" width="10" height="28" rx="1" /><rect x="305" y="58" width="10" height="20" rx="1" />
+                    <rect x="345" y="36" width="10" height="22" rx="1" />
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="hero-inner mx-auto max-w-[800px]">
           <span className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-semibold tracking-wider text-emerald-400">
             {t.hero.badge}
@@ -228,7 +460,7 @@ export default async function Home({
             {t.hero.subtitle}
           </p>
 
-          <div className="mb-12 flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-3">
             <Link
               href={h("/pricing")}
               className="inline-flex items-center gap-1.5 rounded-[10px] bg-emerald-500 px-6 py-3.5 text-[15px] font-semibold text-zinc-950 transition-all hover:-translate-y-0.5 hover:bg-emerald-400 shadow-lg shadow-emerald-500/25"
@@ -249,25 +481,40 @@ export default async function Home({
               {t.hero.ctaSecondary}
             </Link>
           </div>
+          {/* Bullets retirées : la rangée de 4 cartes stats (section 1b) joue
+              désormais ce rôle, conformément à la maquette validée. */}
+        </div>
+      </section>
 
-          {/* Mobile : items empilés alignés à gauche, container centré (mx-auto + w-fit)
-              → icônes check verticalement alignées. Desktop (sm+) : restaure le layout
-              ligne wrap + justify-center d'origine. */}
-          <div className="flex flex-col items-start gap-4 w-fit mx-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-10 sm:w-auto">
-            {t.hero.bullets.map((b) => (
-              <div key={b.title} className="flex items-center gap-3 text-left">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-400">
-                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M2.5 7l3 3 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+      {/* ═════════════════════════════════════════════════════════════════════
+          1b. CARTES STATISTIQUES — 48h / 30+ leçons / 12+ stratégies / 4 piliers
+              Rangée sous le hero. Grid 4 col (desktop) → 2 col (mobile).
+              z-10 pour passer au-dessus du glow hero, fond transparent pour
+              laisser transparaître le halo emerald.
+          ═════════════════════════════════════════════════════════════════════ */}
+      <section className="relative z-10 -mt-6 px-6 pb-6 md:-mt-10 md:pb-10">
+        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+          {T.stats.map((s) => (
+            <div
+              key={s.value}
+              className="flex items-center gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/50 px-4 py-4 transition-colors hover:border-zinc-700 md:px-5"
+            >
+              <div
+                aria-hidden="true"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/[0.12] text-emerald-400"
+              >
+                {STAT_ICON[s.icon]}
+              </div>
+              <div className="min-w-0">
+                <div className="text-xl font-extrabold tabular-nums text-emerald-400 md:text-2xl">
+                  {s.value}
                 </div>
-                <div className="text-[13px]">
-                  <strong className="block font-semibold text-white">{b.title}</strong>
-                  <span className="text-zinc-500">{b.description}</span>
+                <div className="text-[12px] leading-tight text-zinc-400 md:text-[13px]">
+                  {s.label}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -319,6 +566,7 @@ export default async function Home({
                 glow: "#10b98115",
                 dropShadow: "0 0 15px rgba(16,185,129,0.5)",
                 badgeBg: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400",
+                href: "/formations",
               },
               {
                 n: 2,
@@ -329,6 +577,7 @@ export default async function Home({
                 glow: "#3b82f615",
                 dropShadow: "0 0 15px rgba(59,130,246,0.5)",
                 badgeBg: "bg-blue-500/10 border-blue-500/30 text-blue-400",
+                href: "/formations/intermediaire",
               },
               {
                 n: 3,
@@ -339,6 +588,7 @@ export default async function Home({
                 glow: "#fbbf2415",
                 dropShadow: "0 0 15px rgba(251,191,36,0.5)",
                 badgeBg: "bg-amber-400/10 border-amber-400/30 text-amber-400",
+                href: "/formations/avance",
               },
             ].map((step) => (
               <div key={step.n} className="relative flex flex-col items-center text-center">
@@ -350,6 +600,16 @@ export default async function Home({
                 <span className={`mt-3 text-[11px] font-semibold px-3 py-1 rounded-full border ${step.badgeBg}`}>
                   {step.count}
                 </span>
+                <Link
+                  href={h(step.href)}
+                  className="mt-3.5 inline-flex items-center gap-1 text-[13px] font-semibold transition-opacity hover:opacity-80"
+                  style={{ color: step.color }}
+                >
+                  {T.discover}
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path d="M3 6h6M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
               </div>
             ))}
           </div>
@@ -361,21 +621,36 @@ export default async function Home({
               + texte de leçon coupé (effet Zeigarnik). SVG copié à
               l'identique du mockup (coordonnées validées techniquement).
           ═════════════════════════════════════════════════════════════════════ */}
-      <section className="platform-preview-section px-6 py-20">
+      <section className="platform-preview-section px-6 py-24 md:py-28">
         <div className="relative z-10">
-          <div className="mb-6 text-center">
+          <div className="mb-8 text-center">
             <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-400">
               {t.platformPreview.eyebrow}
             </span>
-            <h2 className="mt-2.5 text-2xl font-extrabold tracking-tight md:text-[28px]">
+            <h2 className="mt-2.5 text-3xl font-extrabold tracking-tight md:text-[38px]">
               {t.platformPreview.title}
             </h2>
-            <p className="mt-1.5 text-sm text-zinc-400">
+            <p className="mt-2 text-[15px] text-zinc-400">
               {t.platformPreview.subtitle}
             </p>
           </div>
 
-          <div className="mx-auto max-w-[960px] overflow-hidden rounded-2xl border border-zinc-700 bg-gradient-to-b from-zinc-900 to-zinc-950 shadow-[0_30px_80px_-20px_rgba(16,185,129,0.15),0_0_0_1px_rgba(16,185,129,0.10)]">
+          <div className="relative mx-auto max-w-[1180px]">
+            {/* Double glow derrière le screenshot — emerald + bleu pétrole — pour
+                que la pièce centrale "flotte" sur un halo riche et marqué. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-x-20 -inset-y-24 -z-10"
+              style={{
+                background: [
+                  "radial-gradient(ellipse at 50% 42%, rgba(16,185,129,0.30), rgba(16,185,129,0.08) 50%, transparent 75%)",
+                  "radial-gradient(circle at 20% 60%, rgba(11,92,116,0.20), transparent 68%)",
+                  "radial-gradient(circle at 82% 36%, rgba(26,150,138,0.155), transparent 66%)",
+                ].join(", "),
+                filter: "blur(60px)",
+              }}
+            />
+            <div className="relative overflow-hidden rounded-2xl border border-emerald-400/30 bg-gradient-to-b from-[#0a1f24] to-[#06141a] shadow-[0_60px_150px_-30px_rgba(16,185,129,0.50),0_0_0_1px_rgba(16,185,129,0.20)] ring-1 ring-emerald-400/10">
             {/* Toolbar browser */}
             <div className="flex items-center gap-2 border-b border-zinc-800 bg-black/30 px-4 py-3">
               <span aria-hidden="true" className="h-[11px] w-[11px] rounded-full bg-red-500" />
@@ -519,6 +794,7 @@ export default async function Home({
               </div>
             </div>
           </div>
+          </div>
         </div>
       </section>
 
@@ -527,7 +803,20 @@ export default async function Home({
              Couleurs limitées au design system : emerald, blue, amber.
              Games partage emerald (pas de violet/purple par règle DS).
           ═════════════════════════════════════════════════════════════════════ */}
-      <section className="px-6 py-20">
+      <section className="relative px-6 py-20">
+        {/* Halo central (teal/pétrole) pour que le milieu de page ne retombe
+            pas dans le noir plat entre l'aperçu plateforme et les objections. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[700px] w-[1300px] -translate-x-1/2 -translate-y-1/2"
+          style={{
+            background: [
+              "radial-gradient(ellipse at 50% 50%, rgba(12,128,118,0.08), transparent 68%)",
+              "radial-gradient(circle at 80% 40%, rgba(16,185,129,0.075), transparent 66%)",
+            ].join(", "),
+            filter: "blur(80px)",
+          }}
+        />
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
             <h2 className="text-2xl font-extrabold tracking-tight md:text-[36px]">
@@ -590,7 +879,13 @@ export default async function Home({
       {/* ═════════════════════════════════════════════════════════════════════
           5. L'APPROCHE — 6 features en grille 3×2 (mockup section .methode)
           ═════════════════════════════════════════════════════════════════════ */}
-      <section className="border-y border-zinc-800 bg-zinc-900/20 px-6 py-20 md:py-24">
+      <section
+        className="border-y border-emerald-500/10 px-6 py-20 md:py-24"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(5,16,23,0.5), rgba(6,22,27,0.35) 50%, rgba(4,19,22,0.5))",
+        }}
+      >
         <div className="max-w-6xl mx-auto">
           {/* Heading centré */}
           <div className="text-center mb-6">
@@ -681,28 +976,104 @@ export default async function Home({
             </Link>
           </div>
 
-          {/* Build the Trade spotlight — mockup .build-spotlight :
-              max-width 750px, margin-top 64px, padding 40px,
-              gradient 135deg rgba(16,185,129,0.08) → rgba(24,24,27,0.4),
-              border emerald-500/20, fond grille 24px ×24px (cf. .spotlight-grid). */}
-          <div
-            className="relative mt-16 mx-auto max-w-[750px] overflow-hidden rounded-[20px] border border-emerald-500/20 p-10 text-center"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(24,24,27,0.4))",
-            }}
-          >
-            <div aria-hidden="true" className="spotlight-grid absolute inset-0" />
-            <div className="relative">
-              <span className="inline-block text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-400">
-                ⚡ {t.buildSpotlight.tag}
-              </span>
-              <h3 className="mb-3 mt-3.5 text-[30px] font-extrabold tracking-tight leading-tight">
-                {t.buildSpotlight.title}
-              </h3>
-              <p className="mx-auto max-w-[520px] text-[15px] leading-relaxed text-zinc-400">
-                {t.buildSpotlight.description}
-              </p>
+          {/* Build ton trade — panneau horizontal premium (texte à gauche,
+              visuel cartes à droite). Gradient 135deg emerald→zinc, border
+              emerald-500/20, fond grille 24px (.spotlight-grid).
+              Le visuel cartes 3D est une version CSS légère (grille 2×2 en
+              perspective) plutôt qu'une image exportée : conforme à l'audit
+              (cartes 3D fragiles en responsive → simplifier), masquée < md
+              car les transforms 3D sont peu fiables sur petit écran. */}
+          <div className="relative mt-16">
+            {/* Glow externe large multi-teintes (hors du panneau overflow-hidden
+                → visible tout autour). Emerald + turquoise + pétrole. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-x-16 -inset-y-16 -z-10"
+              style={{
+                background: [
+                  "radial-gradient(ellipse at 68% 50%, rgba(16,185,129,0.22), rgba(16,185,129,0.055) 52%, transparent 76%)",
+                  "radial-gradient(circle at 88% 60%, rgba(26,150,138,0.14), transparent 66%)",
+                  "radial-gradient(circle at 14% 40%, rgba(11,92,116,0.13), transparent 66%)",
+                ].join(", "),
+                filter: "blur(54px)",
+              }}
+            />
+            <div
+              className="relative overflow-hidden rounded-[24px] border border-emerald-400/35 p-8 shadow-[0_55px_150px_-30px_rgba(16,185,129,0.6),inset_0_1px_0_rgba(255,255,255,0.08)] md:p-12 lg:p-14"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(16,185,129,0.22) 0%, rgba(12,128,118,0.13) 38%, rgba(6,26,33,0.62) 68%, rgba(4,16,21,0.72))",
+              }}
+            >
+              <div aria-hidden="true" className="spotlight-grid absolute inset-0" />
+              <div className="relative grid items-center gap-10 md:grid-cols-[1fr_1.15fr] md:gap-12">
+                {/* Colonne texte */}
+                <div className="text-center md:text-left">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-400">
+                    ⚡ {T.buildTag}
+                  </span>
+                  <h3 className="mb-3 mt-4 text-[32px] font-extrabold leading-tight tracking-tight md:text-[38px]">
+                    {t.buildSpotlight.title}
+                  </h3>
+                  <p className="mx-auto mb-7 max-w-[480px] text-[15px] leading-relaxed text-zinc-300/90 md:mx-0">
+                    {t.buildSpotlight.description}
+                  </p>
+                  <Link
+                    href={h("/jeux")}
+                    className="inline-flex items-center gap-1.5 rounded-[10px] bg-emerald-500 px-6 py-3.5 text-[15px] font-semibold text-zinc-950 shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5 hover:bg-emerald-400"
+                  >
+                    {T.buildCta}
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                </div>
+
+                {/* Colonne visuel — cartes "jeu" premium en perspective.
+                    Grille 2×2 inclinée (rotateY/rotateX) : profondeur sans
+                    positionnement absolu fragile. Masquée en mobile. */}
+                <div
+                  className="hidden items-center justify-center md:flex"
+                  style={{ perspective: "1100px" }}
+                >
+                  <div
+                    className="grid grid-cols-2 gap-4"
+                    style={{
+                      transform: "rotateY(-17deg) rotateX(8deg)",
+                      transformStyle: "preserve-3d",
+                    }}
+                  >
+                    {T.buildCards.map((c) => (
+                      <div
+                        key={c.label}
+                        className="w-[168px] rounded-2xl border border-emerald-400/45 bg-gradient-to-br from-[#0c2730]/95 to-[#08181e]/95 p-4 shadow-[0_26px_66px_-12px_rgba(16,185,129,0.55)] ring-1 ring-emerald-400/12 backdrop-blur-sm"
+                      >
+                        <div className="mb-3 flex items-center justify-between">
+                          <div
+                            aria-hidden="true"
+                            className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/15 text-base ring-1 ring-emerald-500/20"
+                          >
+                            {c.icon}
+                          </div>
+                          <span className="rounded-md bg-emerald-500/12 px-1.5 py-0.5 text-[11px] font-bold tabular-nums text-emerald-400">
+                            {c.delta}
+                          </span>
+                        </div>
+                        <p className="text-[13px] font-semibold text-white">{c.label}</p>
+                        <div className="mt-3 flex items-end gap-1" aria-hidden="true">
+                          {c.bars.map((bh, bi) => (
+                            <span
+                              key={bi}
+                              className="w-2 rounded-sm bg-gradient-to-t from-emerald-500/40 to-emerald-400/80"
+                              style={{ height: `${bh + 4}px` }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -711,7 +1082,20 @@ export default async function Home({
       {/* ═════════════════════════════════════════════════════════════════════
           5b. COMMENT ACCÉDER — 2 cartes (broker partenaire / accès direct)
           ═════════════════════════════════════════════════════════════════════ */}
-      <section className="px-6 pb-16 md:pb-20">
+      <section className="relative px-6 pb-16 md:pb-20">
+        {/* Halo emerald/pétrole derrière les cartes de pricing (continuité +
+            mise en valeur), -z-10 et flouté pour ne pas gêner la lisibilité. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[640px] w-[1200px] -translate-x-1/2 -translate-y-1/2"
+          style={{
+            background: [
+              "radial-gradient(ellipse at 50% 50%, rgba(16,185,129,0.10), transparent 68%)",
+              "radial-gradient(circle at 78% 60%, rgba(11,92,116,0.10), transparent 66%)",
+            ].join(", "),
+            filter: "blur(70px)",
+          }}
+        />
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{T.access.title}</h2>

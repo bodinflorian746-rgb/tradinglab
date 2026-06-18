@@ -16,17 +16,28 @@ type PremiumGateProps = {
 };
 
 export async function PremiumGate({ children, locale }: PremiumGateProps) {
+  // Dev bypass : en local (npm run dev), on rend directement les enfants sans
+  // vérifier l'accès premium. En prod (NODE_ENV === "production"), comportement
+  // strictement inchangé. Voir aussi les 5 layouts (premium)/<sub>/layout.tsx
+  // qui appliquent le même bypass au niveau redirect serveur.
+  // .app-bg : applique la palette globale validée (dégradé + halos) à TOUT le
+  // premium via cet unique wrapper. Règles couleur-only définies dans
+  // globals.css, scopées sous .app-bg → aucun impact layout/UX.
+  if (process.env.NODE_ENV !== "production") {
+    return <div className="app-bg">{children}</div>;
+  }
+
   const { isPremium, reason } = await requirePremium();
 
   if (isPremium) {
-    return <>{children}</>;
+    return <div className="app-bg">{children}</div>;
   }
 
   const paywallReason: PaywallReason =
     reason === "not_logged_in" ? "not_logged_in" : "trial_expired";
 
   return (
-    <div className="relative min-h-screen">
+    <div className="app-bg relative min-h-screen">
       {/*
         Contenu blurré derrière. `inert` (React 19) bloque clavier + souris +
         AT, en plus du pointer-events/select. aria-hidden pour screen readers.

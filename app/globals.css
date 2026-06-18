@@ -71,10 +71,10 @@ body {
   height: 1000px;
   background: radial-gradient(
     ellipse at center,
-    rgba(16, 185, 129, 0.22) 0%,
-    rgba(16, 185, 129, 0.12) 25%,
-    rgba(16, 185, 129, 0.05) 50%,
-    rgba(16, 185, 129, 0.015) 75%,
+    rgba(16, 185, 129, 0.18) 0%,
+    rgba(16, 185, 129, 0.10) 25%,
+    rgba(16, 185, 129, 0.04) 50%,
+    rgba(16, 185, 129, 0.012) 75%,
     transparent 100%
   );
   filter: blur(80px);
@@ -90,9 +90,9 @@ body {
   height: 600px;
   background: radial-gradient(
     circle at center,
-    rgba(16, 185, 129, 0.14) 0%,
-    rgba(16, 185, 129, 0.06) 35%,
-    rgba(16, 185, 129, 0.02) 65%,
+    rgba(16, 185, 129, 0.115) 0%,
+    rgba(16, 185, 129, 0.05) 35%,
+    rgba(16, 185, 129, 0.016) 65%,
     transparent 100%
   );
   filter: blur(100px);
@@ -112,9 +112,9 @@ body {
   height: 550px;
   background: radial-gradient(
     circle at center,
-    rgba(16, 185, 129, 0.11) 0%,
-    rgba(16, 185, 129, 0.05) 35%,
-    rgba(16, 185, 129, 0.015) 65%,
+    rgba(16, 185, 129, 0.09) 0%,
+    rgba(16, 185, 129, 0.042) 35%,
+    rgba(16, 185, 129, 0.012) 65%,
     transparent 100%
   );
   filter: blur(90px);
@@ -133,13 +133,16 @@ body {
   transform: translateX(-50%);
   width: 1600px;
   height: 1000px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(16, 185, 129, 0.10) 0%,
-    rgba(16, 185, 129, 0.05) 35%,
-    rgba(16, 185, 129, 0.02) 60%,
-    transparent 90%
-  );
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(16, 185, 129, 0.10) 0%,
+      rgba(16, 185, 129, 0.05) 35%,
+      rgba(16, 185, 129, 0.016) 60%,
+      transparent 90%
+    ),
+    radial-gradient(circle at 22% 55%, rgba(12, 128, 118, 0.095), transparent 70%),
+    radial-gradient(circle at 80% 60%, rgba(11, 92, 116, 0.08), transparent 70%);
   filter: blur(140px);
   pointer-events: none;
   z-index: 0;
@@ -151,7 +154,7 @@ body {
   right: -200px;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.055) 0%, transparent 70%);
   filter: blur(110px);
   pointer-events: none;
   z-index: 0;
@@ -163,18 +166,21 @@ body {
 .platform-preview-section::before {
   content: "";
   position: absolute;
-  top: -100px;
+  top: -140px;
   left: 50%;
   transform: translateX(-50%);
-  width: 1400px;
-  height: 600px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(16, 185, 129, 0.10) 0%,
-    rgba(16, 185, 129, 0.04) 35%,
-    transparent 70%
-  );
-  filter: blur(100px);
+  width: 1600px;
+  height: 760px;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(16, 185, 129, 0.14) 0%,
+      rgba(16, 185, 129, 0.05) 38%,
+      transparent 72%
+    ),
+    radial-gradient(circle at 24% 58%, rgba(11, 92, 116, 0.11), transparent 70%),
+    radial-gradient(circle at 78% 50%, rgba(26, 150, 138, 0.085), transparent 70%);
+  filter: blur(110px);
   pointer-events: none;
   z-index: 0;
 }
@@ -189,10 +195,13 @@ body {
   top: 30%;
   left: 50%;
   transform: translateX(-50%);
-  width: 1100px;
-  height: 600px;
-  background: radial-gradient(ellipse, rgba(16, 185, 129, 0.12), transparent 70%);
-  filter: blur(90px);
+  width: 1300px;
+  height: 720px;
+  background:
+    radial-gradient(ellipse, rgba(16, 185, 129, 0.12), transparent 70%),
+    radial-gradient(circle at 72% 62%, rgba(26, 150, 138, 0.10), transparent 70%),
+    radial-gradient(circle at 26% 40%, rgba(11, 92, 116, 0.08), transparent 70%);
+  filter: blur(100px);
   pointer-events: none;
   z-index: 0;
 }
@@ -211,9 +220,9 @@ body {
   height: 700px;
   background: radial-gradient(
     ellipse at center,
-    rgba(16, 185, 129, 0.18) 0%,
-    rgba(16, 185, 129, 0.08) 30%,
-    rgba(16, 185, 129, 0.02) 60%,
+    rgba(16, 185, 129, 0.145) 0%,
+    rgba(16, 185, 129, 0.065) 30%,
+    rgba(16, 185, 129, 0.016) 60%,
     transparent 100%
   );
   filter: blur(90px);
@@ -249,4 +258,69 @@ body {
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 30px 30px;
+}
+
+/* ═══ PALETTE GLOBALE DU SITE PREMIUM ═══════════════════════════════════════
+   Reprend l'ambiance validée de la landing (bleu nuit → pétrole → vert profond
+   + halos emerald/teal/pétrole) sur toutes les pages premium, via UN unique
+   wrapper .app-bg (posé par le composant PremiumGate). TOUTES les règles sont
+   scopées sous .app-bg → landing, auth et pricing ne sont PAS affectés.
+   Règles 100% couleur/opacité → aucun impact layout, aucun reflow, aucun risque
+   d'overflow. Non-layered → l'emportent sur les utilitaires Tailwind (@layer). */
+
+.app-bg {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+}
+
+/* Fond ambiance : dégradé de base + 5 halos larges, fixés au viewport pour une
+   continuité constante au scroll (z-index -1 : derrière tout le contenu). */
+.app-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 640px at 82% 2%, rgba(16, 185, 129, 0.10), transparent 68%),
+    radial-gradient(1000px 660px at 6% 18%, rgba(12, 128, 118, 0.095), transparent 70%),
+    radial-gradient(1050px 720px at 90% 44%, rgba(11, 92, 116, 0.10), transparent 72%),
+    radial-gradient(980px 680px at 8% 66%, rgba(16, 185, 129, 0.08), transparent 72%),
+    radial-gradient(1080px 740px at 84% 88%, rgba(26, 150, 138, 0.085), transparent 72%),
+    linear-gradient(180deg, #04121b 0%, #06181f 22%, #06202a 44%, #051b24 62%, #062023 80%, #06231c 100%);
+}
+
+/* Neutralise les fonds noirs RACINES des pages/leçons (min-h-screen +
+   bg-zinc-950) → laisse apparaître le dégradé. Les bg-zinc-950 ponctuels
+   (modales, panneaux isolés…) ne sont PAS touchés (pas de min-h-screen). */
+.app-bg :where([class~="min-h-screen"][class~="bg-zinc-950"]) {
+  background-color: transparent;
+}
+
+/* Cartes moins noires : retinte des cartes translucides en pétrole profond. */
+.app-bg :where(
+    [class~="bg-zinc-900/30"],
+    [class~="bg-zinc-900/40"],
+    [class~="bg-zinc-900/50"],
+    [class~="bg-zinc-900/60"]
+  ) {
+  background-color: rgba(7, 25, 32, 0.55);
+}
+
+/* Sous-cartes internes (ACHAT/REVENTE leçon, panneaux imbriqués, sélecteurs…)
+   en bg-zinc-900 SOLIDE : léger éclaircissement (+~6%) et harmonisation pétrole.
+   Reste assez sombre pour ne pas gêner la lisibilité des diagrammes. */
+.app-bg :where([class~="bg-zinc-900"]) {
+  background-color: #12303a;
+}
+
+/* Contraste des textes secondaires : zinc-500 → zinc-400 sous le premium. */
+.app-bg :where([class~="text-zinc-500"]) {
+  color: #a1a1aa;
+}
+
+/* Bordures emerald discrètes (séparateurs / cartes). */
+.app-bg :where([class~="border-zinc-800"]) {
+  border-color: rgba(16, 185, 129, 0.10);
 }
