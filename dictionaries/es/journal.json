@@ -1,0 +1,333 @@
+{
+  "nav": "Diario",
+  "hero": {
+    "title": "Diario de trading",
+    "subtitle": "Analiza tus operaciones, detecta tus errores y progresa con la IA."
+  },
+  "addTrade": "Añadir una operación",
+  "empty": {
+    "title": "Aún no hay operaciones",
+    "subtitle": "Añade tu primera operación para empezar a analizar tu rendimiento.",
+    "cta": "Añadir tu primera operación"
+  },
+  "dashboard": {
+    "title": "Resumen",
+    "totalTrades": "Operaciones",
+    "winrate": "Tasa de acierto",
+    "avgR": "R medio",
+    "wins": "Ganadas",
+    "losses": "Perdidas",
+    "breakEven": "Break-even",
+    "open": "Abiertas",
+    "topMistakes": "Errores frecuentes",
+    "topSetup": "Setup más usado",
+    "occurrences": "veces"
+  },
+  "list": {
+    "title": "Mis operaciones"
+  },
+  "card": {
+    "entry": "Entrada",
+    "sl": "SL",
+    "tp": "TP",
+    "risk": "Riesgo",
+    "rMultiple": "R",
+    "screenshot": "Captura",
+    "plan": "Plan",
+    "emotionBefore": "Antes",
+    "emotionDuring": "Durante",
+    "emotionAfter": "Después",
+    "mistake": "Error",
+    "details": "Detalles de la operación",
+    "seeDetails": "Detalles",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirmDelete": "¿Eliminar esta operación? Esta acción es definitiva."
+  },
+  "ai": {
+    "badge": {
+      "pending": "Análisis pendiente",
+      "analyzed": "Analizado por la IA",
+      "failed": "Análisis fallido",
+      "skipped": "Sin analizar"
+    },
+    "summary": "Resumen",
+    "feedback": "Feedback",
+    "mistakes": "Errores detectados",
+    "score": "Puntuación de disciplina",
+    "recommendations": "Recomendaciones",
+    "disclaimer": "La IA analiza tu comportamiento como trader. No predice el mercado ni promete ganancias."
+  },
+  "form": {
+    "title": "Añadir una operación",
+    "sections": {
+      "essential": "Esencial",
+      "setup": "Análisis del setup",
+      "risk": "Gestión del riesgo",
+      "psychology": "Psicología",
+      "notes": "Notas y captura"
+    },
+    "asset": "Activo operado",
+    "assetPlaceholder": "EURUSD, XAUUSD, NASDAQ, BTC…",
+    "direction": "Dirección",
+    "timeframe": "Temporalidad",
+    "tradeType": "Tipo de operación",
+    "result": "Resultado",
+    "tradeDate": "Fecha de la operación",
+    "platform": "Plataforma",
+    "setup": "Setup utilizado",
+    "marketTrend": "Tendencia del mercado",
+    "session": "Sesión",
+    "entryReason": "Razón de entrada",
+    "entryReasonPlaceholder": "Por qué entraste…",
+    "exitReason": "Razón de salida",
+    "exitReasonPlaceholder": "Por qué saliste…",
+    "accountCapital": "Capital de la cuenta",
+    "entryPrice": "Precio de entrada",
+    "stopLoss": "Stop loss",
+    "takeProfit": "Take profit",
+    "riskPercent": "Riesgo (%)",
+    "riskAmount": "Riesgo (importe)",
+    "rMultiple": "Ganancia/pérdida (R)",
+    "fees": "Comisiones / gastos",
+    "followedPlan": "¿Respetaste tu plan?",
+    "emotionBefore": "Emoción antes",
+    "emotionDuring": "Emoción durante",
+    "emotionAfter": "Emoción después",
+    "perceivedMistake": "Error principal percibido",
+    "userComment": "Comentario",
+    "userCommentPlaceholder": "Contexto, escenario, lo que viste…",
+    "screenshot": "Captura de pantalla",
+    "screenshotHint": "Puedes añadir una captura de TradingView, MT4, MT5, cTrader o una captura normal.",
+    "screenshotChange": "Cambiar",
+    "screenshotRemove": "Quitar",
+    "choose": "Elegir…",
+    "submit": "Guardar operación",
+    "submitting": "Guardando…",
+    "cancel": "Cancelar",
+    "required": "obligatorio",
+    "fixErrors": "Revisa los campos en rojo."
+  },
+  "capture": {
+    "step": "Paso {n}/{total}",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "editTitle": "Editar operación",
+    "req": {
+      "asset": "Activo obligatorio",
+      "direction": "Dirección obligatoria",
+      "timeframe": "Temporalidad obligatoria",
+      "trade_type": "Tipo de operación obligatorio",
+      "result": "Resultado obligatorio",
+      "setup": "Estrategia obligatoria",
+      "emotion_before": "Emoción antes obligatoria",
+      "emotion_after": "Emoción después obligatoria",
+      "followed_plan": "Respeto del plan obligatorio"
+    },
+    "manual": {
+      "title": "Entrada manual de la operación",
+      "facts": "Datos de la operación",
+      "risk": "Riesgo",
+      "feeling": "Sensación"
+    },
+    "s1": {
+      "title": "Añade una captura de tu operación",
+      "subtitle": "TradingView, MT4, MT5, cTrader o una captura normal.",
+      "dropzone": "Arrastra una imagen, pega (Ctrl+V) o haz clic para elegir",
+      "choose": "Elegir un archivo",
+      "skip": "Continuar sin captura"
+    },
+    "s2": {
+      "title": "Análisis de la operación",
+      "analyzing": "Analizando la operación…",
+      "confidence": "Confianza",
+      "detail": "Detalles detectados",
+      "asset": "Activo detectado",
+      "timeframe": "Temporalidad detectada",
+      "direction": "Dirección detectada",
+      "structure": "Estructura detectada",
+      "setup": "Setup probable",
+      "entry": "Entrada",
+      "sl": "Stop loss",
+      "tp": "Take profit",
+      "rr": "RR estimado",
+      "editableHint": "Esta información será detectada automáticamente por la IA. Siempre podrás modificarla antes de guardar.",
+      "disclaimerSim": "Valores simulados (demo) — la IA Vision real llegará más adelante."
+    },
+    "ai": {
+      "phases": [
+        "Analizando la operación…",
+        "Identificando la estructura…",
+        "Detectando el setup…",
+        "Analizando el riesgo…"
+      ],
+      "confidence": "Confianza global",
+      "score": "Nota de la operación",
+      "explanation": "Análisis IA",
+      "positives": "Puntos positivos",
+      "warnings": "Puntos a vigilar",
+      "detectedDetails": "Datos detectados · editable",
+      "addFeeling": "Añadir mi sensación"
+    },
+    "s3": {
+      "title": "Añade cómo te sentiste",
+      "aiCant": "Lo que la IA no puede saber",
+      "subtitle": "Este es el corazón de tu diario.",
+      "result": "Resultado",
+      "strategy": "Estrategia utilizada",
+      "emotionBefore": "Emoción antes",
+      "emotionAfter": "Emoción después",
+      "followedPlan": "¿Respetaste tu plan?",
+      "mistake": "Error principal",
+      "comment": "Comentario",
+      "commentPlaceholder": "Nota libre…",
+      "optional": "opcional"
+    },
+    "s4": {
+      "title": "Resumen",
+      "subtitle": "Revisa y guarda.",
+      "detected": "Datos detectados",
+      "feeling": "Tu sensación",
+      "noCapture": "Sin captura",
+      "save": "Guardar operación",
+      "saving": "Guardando…"
+    },
+    "errors": {
+      "fill": "Completa los campos obligatorios."
+    }
+  },
+  "analysis": {
+    "nav": "Mi Análisis",
+    "back": "Volver al diario",
+    "demoBadge": "Análisis simulado",
+    "coachName": "Tu coach",
+    "sections": {
+      "score": "Puntuación global",
+      "progression": "Tu progreso",
+      "strengths": "Puntos fuertes",
+      "weaknesses": "Puntos a mejorar",
+      "behaviors": "Comportamientos detectados",
+      "goal": "Objetivo de la semana",
+      "level": "Tu nivel"
+    },
+    "behaviorsBetter": "Rindes mejor",
+    "behaviorsWorse": "Rindes peor",
+    "goalProgress": "{done} días de {target}",
+    "levelCurrent": "Nivel actual",
+    "levelNext": "Hacia"
+  },
+  "command": {
+    "coachTitle": "Tu coach IA",
+    "thisWeek": "Esta semana",
+    "seeFullAnalysis": "Ver mi análisis completo",
+    "newAnalysis": "Nuevo análisis disponible",
+    "frequentError": "Error frecuente detectado",
+    "seeAnalysis": "Ver el análisis",
+    "statsTitle": "Tus estadísticas",
+    "recentTrades": "Operaciones recientes"
+  },
+  "tradeAnalysis": {
+    "trigger": "Análisis",
+    "title": "Análisis de la operación",
+    "score": "Puntuación global",
+    "good": "Lo que se hizo bien",
+    "improve": "Lo que se podría mejorar",
+    "advice": "Consejo del coach",
+    "impact": "Impacto potencial en el resultado"
+  },
+  "options": {
+    "direction": { "buy": "Compra", "sell": "Venta" },
+    "result": {
+      "win": "Ganada",
+      "loss": "Perdida",
+      "break_even": "Break-even",
+      "open": "Abierta"
+    },
+    "trade_type": { "scalp": "Scalp", "intraday": "Intradía", "swing": "Swing" },
+    "platform": {
+      "tradingview": "TradingView",
+      "mt4": "MetaTrader 4",
+      "mt5": "MetaTrader 5",
+      "ctrader": "cTrader",
+      "other": "Otra"
+    },
+    "setup": {
+      "order_block": "Order Block",
+      "fair_value_gap": "Fair Value Gap",
+      "liquidity_sweep": "Liquidity Sweep",
+      "breakout": "Breakout",
+      "retest": "Retest",
+      "support_resistance": "Soporte / Resistencia",
+      "trend_following": "Trend Following",
+      "reversal": "Reversal",
+      "news_macro": "Noticias / Macro",
+      "other": "Otro"
+    },
+    "market_trend": {
+      "bullish": "Alcista",
+      "bearish": "Bajista",
+      "range": "Rango",
+      "uncertain": "Incierta"
+    },
+    "session": {
+      "asia": "Asia",
+      "london": "Londres",
+      "new_york": "Nueva York",
+      "other": "Otra"
+    },
+    "followed_plan": { "yes": "Sí", "partial": "Parcialmente", "no": "No" },
+    "main_mistake": {
+      "entry_too_early": "Entrada demasiado pronto",
+      "entry_too_late": "Entrada demasiado tarde",
+      "bad_stop": "Stop loss mal colocado",
+      "tp_too_close": "Take profit demasiado cerca",
+      "out_of_plan": "Operación fuera del plan",
+      "revenge_trading": "Revenge trading",
+      "overtrading": "Overtrading",
+      "fomo": "Miedo a perderse la operación",
+      "exit_too_early": "Salida demasiado pronto",
+      "none": "Ningún error",
+      "other": "Otro"
+    },
+    "emotion_before": {
+      "calm": "Tranquilo",
+      "confident": "Confiado",
+      "stressed": "Estresado",
+      "impatient": "Impaciente",
+      "fomo": "Miedo a perderse",
+      "euphoric": "Eufórico",
+      "tired": "Cansado",
+      "frustrated": "Frustrado"
+    },
+    "emotion_during": {
+      "calm": "Tranquilo",
+      "stressed": "Estresado",
+      "hesitant": "Dudoso",
+      "impatient": "Impaciente",
+      "confident": "Confiado",
+      "frustrated": "Frustrado"
+    },
+    "emotion_after": {
+      "satisfied": "Satisfecho",
+      "frustrated": "Frustrado",
+      "relieved": "Aliviado",
+      "angry": "Enfadado",
+      "neutral": "Neutral",
+      "motivated": "Motivado"
+    }
+  },
+  "errors": {
+    "asset": "Indica el activo operado.",
+    "direction": "Elige una dirección.",
+    "timeframe": "Elige una temporalidad.",
+    "trade_type": "Elige un tipo de operación.",
+    "result": "Elige un resultado.",
+    "trade_date": "Indica la fecha de la operación.",
+    "number": "Valor numérico no válido.",
+    "screenshot": "Problema con la imagen.",
+    "imageType": "Formato de imagen no admitido (PNG, JPG, WEBP, GIF).",
+    "imageSize": "Imagen demasiado pesada (máx. 5 MB).",
+    "notLoggedIn": "Debes iniciar sesión para guardar una operación.",
+    "generic": "Ha ocurrido un error. Inténtalo de nuevo."
+  }
+}

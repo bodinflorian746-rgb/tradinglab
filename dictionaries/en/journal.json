@@ -1,0 +1,333 @@
+{
+  "nav": "Journal",
+  "hero": {
+    "title": "Trading journal",
+    "subtitle": "Analyze your trades, spot your mistakes and improve with AI."
+  },
+  "addTrade": "Add a trade",
+  "empty": {
+    "title": "No trades yet",
+    "subtitle": "Add your first trade to start analyzing your performance.",
+    "cta": "Add your first trade"
+  },
+  "dashboard": {
+    "title": "Overview",
+    "totalTrades": "Trades",
+    "winrate": "Win rate",
+    "avgR": "Avg R",
+    "wins": "Wins",
+    "losses": "Losses",
+    "breakEven": "Break-even",
+    "open": "Open",
+    "topMistakes": "Frequent mistakes",
+    "topSetup": "Most used setup",
+    "occurrences": "times"
+  },
+  "list": {
+    "title": "My trades"
+  },
+  "card": {
+    "entry": "Entry",
+    "sl": "SL",
+    "tp": "TP",
+    "risk": "Risk",
+    "rMultiple": "R",
+    "screenshot": "Screenshot",
+    "plan": "Plan",
+    "emotionBefore": "Before",
+    "emotionDuring": "During",
+    "emotionAfter": "After",
+    "mistake": "Mistake",
+    "details": "Trade details",
+    "seeDetails": "Details",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Delete this trade? This cannot be undone."
+  },
+  "ai": {
+    "badge": {
+      "pending": "Analysis coming",
+      "analyzed": "Analyzed by AI",
+      "failed": "Analysis failed",
+      "skipped": "Not analyzed"
+    },
+    "summary": "Summary",
+    "feedback": "Feedback",
+    "mistakes": "Detected mistakes",
+    "score": "Discipline score",
+    "recommendations": "Recommendations",
+    "disclaimer": "The AI analyzes your trading behavior. It does not predict the market and never promises gains."
+  },
+  "form": {
+    "title": "Add a trade",
+    "sections": {
+      "essential": "Essential",
+      "setup": "Setup analysis",
+      "risk": "Risk management",
+      "psychology": "Psychology",
+      "notes": "Notes & screenshot"
+    },
+    "asset": "Traded asset",
+    "assetPlaceholder": "EURUSD, XAUUSD, NASDAQ, BTC…",
+    "direction": "Direction",
+    "timeframe": "Timeframe",
+    "tradeType": "Trade type",
+    "result": "Result",
+    "tradeDate": "Trade date",
+    "platform": "Platform",
+    "setup": "Setup used",
+    "marketTrend": "Market trend",
+    "session": "Session",
+    "entryReason": "Entry reason",
+    "entryReasonPlaceholder": "Why you entered…",
+    "exitReason": "Exit reason",
+    "exitReasonPlaceholder": "Why you exited…",
+    "accountCapital": "Account capital",
+    "entryPrice": "Entry price",
+    "stopLoss": "Stop loss",
+    "takeProfit": "Take profit",
+    "riskPercent": "Risk (%)",
+    "riskAmount": "Risk (amount)",
+    "rMultiple": "Profit/loss (R)",
+    "fees": "Fees / commissions",
+    "followedPlan": "Did you follow your plan?",
+    "emotionBefore": "Emotion before",
+    "emotionDuring": "Emotion during",
+    "emotionAfter": "Emotion after",
+    "perceivedMistake": "Main perceived mistake",
+    "userComment": "Comment",
+    "userCommentPlaceholder": "Context, scenario, what you saw…",
+    "screenshot": "Screenshot",
+    "screenshotHint": "You can add a TradingView, MT4, MT5, cTrader or a regular screenshot.",
+    "screenshotChange": "Change",
+    "screenshotRemove": "Remove",
+    "choose": "Choose…",
+    "submit": "Save trade",
+    "submitting": "Saving…",
+    "cancel": "Cancel",
+    "required": "required",
+    "fixErrors": "Check the fields in red."
+  },
+  "capture": {
+    "step": "Step {n}/{total}",
+    "next": "Next",
+    "back": "Back",
+    "editTitle": "Edit trade",
+    "req": {
+      "asset": "Asset required",
+      "direction": "Direction required",
+      "timeframe": "Timeframe required",
+      "trade_type": "Trade type required",
+      "result": "Result required",
+      "setup": "Strategy required",
+      "emotion_before": "Emotion before required",
+      "emotion_after": "Emotion after required",
+      "followed_plan": "Plan adherence required"
+    },
+    "manual": {
+      "title": "Manual trade entry",
+      "facts": "Trade facts",
+      "risk": "Risk",
+      "feeling": "How you felt"
+    },
+    "s1": {
+      "title": "Add a screenshot of your trade",
+      "subtitle": "TradingView, MT4, MT5, cTrader or a regular screenshot.",
+      "dropzone": "Drop an image, paste (Ctrl+V) or click to choose",
+      "choose": "Choose a file",
+      "skip": "Continue without a screenshot"
+    },
+    "s2": {
+      "title": "Trade analysis",
+      "analyzing": "Analyzing trade…",
+      "confidence": "Confidence",
+      "detail": "Detected details",
+      "asset": "Detected asset",
+      "timeframe": "Detected timeframe",
+      "direction": "Detected direction",
+      "structure": "Detected structure",
+      "setup": "Probable setup",
+      "entry": "Entry",
+      "sl": "Stop loss",
+      "tp": "Take profit",
+      "rr": "Estimated RR",
+      "editableHint": "This information will be detected automatically by the AI. You can always edit it before saving.",
+      "disclaimerSim": "Simulated values (demo) — the real Vision AI is coming later."
+    },
+    "ai": {
+      "phases": [
+        "Analyzing trade…",
+        "Identifying structure…",
+        "Detecting setup…",
+        "Assessing risk…"
+      ],
+      "confidence": "Overall confidence",
+      "score": "Trade score",
+      "explanation": "AI analysis",
+      "positives": "Strengths",
+      "warnings": "Watch out for",
+      "detectedDetails": "Detected data · editable",
+      "addFeeling": "Add how I felt"
+    },
+    "s3": {
+      "title": "Add how you felt",
+      "aiCant": "What the AI can't know",
+      "subtitle": "This is the heart of your journal.",
+      "result": "Result",
+      "strategy": "Strategy used",
+      "emotionBefore": "Emotion before",
+      "emotionAfter": "Emotion after",
+      "followedPlan": "Did you follow your plan?",
+      "mistake": "Main mistake",
+      "comment": "Comment",
+      "commentPlaceholder": "Free note…",
+      "optional": "optional"
+    },
+    "s4": {
+      "title": "Summary",
+      "subtitle": "Review and save.",
+      "detected": "Detected data",
+      "feeling": "How you felt",
+      "noCapture": "No screenshot",
+      "save": "Save trade",
+      "saving": "Saving…"
+    },
+    "errors": {
+      "fill": "Fill in the required fields."
+    }
+  },
+  "analysis": {
+    "nav": "My Analysis",
+    "back": "Back to journal",
+    "demoBadge": "Simulated analysis",
+    "coachName": "Your coach",
+    "sections": {
+      "score": "Overall score",
+      "progression": "Your progress",
+      "strengths": "Strengths",
+      "weaknesses": "Areas to work on",
+      "behaviors": "Detected behaviors",
+      "goal": "Goal of the week",
+      "level": "Your level"
+    },
+    "behaviorsBetter": "You perform better",
+    "behaviorsWorse": "You perform worse",
+    "goalProgress": "{done} days out of {target}",
+    "levelCurrent": "Current level",
+    "levelNext": "Towards"
+  },
+  "command": {
+    "coachTitle": "Your AI coach",
+    "thisWeek": "This week",
+    "seeFullAnalysis": "See my full analysis",
+    "newAnalysis": "New analysis available",
+    "frequentError": "Frequent mistake detected",
+    "seeAnalysis": "See the analysis",
+    "statsTitle": "Your statistics",
+    "recentTrades": "Recent trades"
+  },
+  "tradeAnalysis": {
+    "trigger": "Analysis",
+    "title": "Trade analysis",
+    "score": "Overall score",
+    "good": "What went well",
+    "improve": "What could be improved",
+    "advice": "Coach's advice",
+    "impact": "Potential impact on the result"
+  },
+  "options": {
+    "direction": { "buy": "Buy", "sell": "Sell" },
+    "result": {
+      "win": "Win",
+      "loss": "Loss",
+      "break_even": "Break-even",
+      "open": "Open"
+    },
+    "trade_type": { "scalp": "Scalp", "intraday": "Intraday", "swing": "Swing" },
+    "platform": {
+      "tradingview": "TradingView",
+      "mt4": "MetaTrader 4",
+      "mt5": "MetaTrader 5",
+      "ctrader": "cTrader",
+      "other": "Other"
+    },
+    "setup": {
+      "order_block": "Order Block",
+      "fair_value_gap": "Fair Value Gap",
+      "liquidity_sweep": "Liquidity Sweep",
+      "breakout": "Breakout",
+      "retest": "Retest",
+      "support_resistance": "Support / Resistance",
+      "trend_following": "Trend Following",
+      "reversal": "Reversal",
+      "news_macro": "News / Macro",
+      "other": "Other"
+    },
+    "market_trend": {
+      "bullish": "Bullish",
+      "bearish": "Bearish",
+      "range": "Range",
+      "uncertain": "Uncertain"
+    },
+    "session": {
+      "asia": "Asia",
+      "london": "London",
+      "new_york": "New York",
+      "other": "Other"
+    },
+    "followed_plan": { "yes": "Yes", "partial": "Partially", "no": "No" },
+    "main_mistake": {
+      "entry_too_early": "Entered too early",
+      "entry_too_late": "Entered too late",
+      "bad_stop": "Poorly placed stop loss",
+      "tp_too_close": "Take profit too close",
+      "out_of_plan": "Out-of-plan trade",
+      "revenge_trading": "Revenge trading",
+      "overtrading": "Overtrading",
+      "fomo": "Fear of missing out",
+      "exit_too_early": "Exited too early",
+      "none": "No mistake",
+      "other": "Other"
+    },
+    "emotion_before": {
+      "calm": "Calm",
+      "confident": "Confident",
+      "stressed": "Stressed",
+      "impatient": "Impatient",
+      "fomo": "Fear of missing out",
+      "euphoric": "Euphoric",
+      "tired": "Tired",
+      "frustrated": "Frustrated"
+    },
+    "emotion_during": {
+      "calm": "Calm",
+      "stressed": "Stressed",
+      "hesitant": "Hesitant",
+      "impatient": "Impatient",
+      "confident": "Confident",
+      "frustrated": "Frustrated"
+    },
+    "emotion_after": {
+      "satisfied": "Satisfied",
+      "frustrated": "Frustrated",
+      "relieved": "Relieved",
+      "angry": "Angry",
+      "neutral": "Neutral",
+      "motivated": "Motivated"
+    }
+  },
+  "errors": {
+    "asset": "Enter the traded asset.",
+    "direction": "Choose a direction.",
+    "timeframe": "Choose a timeframe.",
+    "trade_type": "Choose a trade type.",
+    "result": "Choose a result.",
+    "trade_date": "Enter the trade date.",
+    "number": "Invalid number.",
+    "screenshot": "Image problem.",
+    "imageType": "Unsupported image format (PNG, JPG, WEBP, GIF).",
+    "imageSize": "Image too large (max 5 MB).",
+    "notLoggedIn": "You must be logged in to save a trade.",
+    "generic": "Something went wrong. Try again."
+  }
+}

@@ -64,6 +64,7 @@ function LangSwitcher({ onNavigate }: { onNavigate?: () => void }) {
 const LINK_DEFS = [
   { href: "/formations", key: "trading" as const },
   { href: "/formations/macro", key: "macro" as const },
+  { href: "/journal", key: "journal" as const },
   { href: "/jeux", key: "games" as const },
   { href: "/strategies", key: "strategies" as const },
   { href: "/profil-trader", key: "profile" as const },

@@ -24,6 +24,7 @@ import type frProfile from "../dictionaries/fr/profile.json";
 import type frGames from "../dictionaries/fr/games.json";
 import type frFormations from "../dictionaries/fr/formations.json";
 import type frStrategies from "../dictionaries/fr/strategies.json";
+import type frJournal from "../dictionaries/fr/journal.json";
 
 export type Dictionaries = {
   common:     typeof frCommon;
@@ -36,6 +37,7 @@ export type Dictionaries = {
   games:      typeof frGames;
   formations: typeof frFormations;
   strategies: typeof frStrategies;
+  journal:    typeof frJournal;
 };
 
 export type Namespace = keyof Dictionaries;
@@ -51,6 +53,7 @@ export const NAMESPACES = [
   "games",
   "formations",
   "strategies",
+  "journal",
 ] as const satisfies readonly Namespace[];
 
 type LoaderMap = {
@@ -71,6 +74,7 @@ const loaders: LoaderMap = {
     games:      () => import("../dictionaries/fr/games.json").then((m) => m.default),
     formations: () => import("../dictionaries/fr/formations.json").then((m) => m.default),
     strategies: () => import("../dictionaries/fr/strategies.json").then((m) => m.default),
+    journal:    () => import("../dictionaries/fr/journal.json").then((m) => m.default),
   },
   en: {
     common:     () => import("../dictionaries/en/common.json").then((m) => m.default),
@@ -83,6 +87,7 @@ const loaders: LoaderMap = {
     games:      () => import("../dictionaries/en/games.json").then((m) => m.default),
     formations: () => import("../dictionaries/en/formations.json").then((m) => m.default),
     strategies: () => import("../dictionaries/en/strategies.json").then((m) => m.default),
+    journal:    () => import("../dictionaries/en/journal.json").then((m) => m.default),
   },
   es: {
     common:     () => import("../dictionaries/es/common.json").then((m) => m.default),
@@ -95,6 +100,7 @@ const loaders: LoaderMap = {
     games:      () => import("../dictionaries/es/games.json").then((m) => m.default),
     formations: () => import("../dictionaries/es/formations.json").then((m) => m.default),
     strategies: () => import("../dictionaries/es/strategies.json").then((m) => m.default),
+    journal:    () => import("../dictionaries/es/journal.json").then((m) => m.default),
   },
 };
 
