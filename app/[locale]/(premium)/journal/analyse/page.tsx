@@ -6,7 +6,7 @@ import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localizedHref } from "@/lib/i18n/href";
-import { MOCK_ANALYSIS } from "@/lib/journal/analysis-mock";
+import { getMockAnalysis } from "@/lib/journal/analysis-mock";
 import { AnalysisView } from "../_components/analysis/AnalysisView";
 
 export default async function AnalysePage({
@@ -17,7 +17,7 @@ export default async function AnalysePage({
   const raw = (await params).locale;
   const locale: Locale = hasLocale(raw) ? raw : DEFAULT_LOCALE;
   const t = await getDictionary(locale, "journal");
-  const a = MOCK_ANALYSIS;
+  const a = getMockAnalysis(locale);
 
   return (
     <main className="min-h-screen text-white">

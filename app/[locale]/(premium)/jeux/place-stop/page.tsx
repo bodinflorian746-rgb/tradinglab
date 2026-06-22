@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as FrGame from "@/lib/games/place-stop";
 import * as EsGame from "@/lib/games/place-stop-es";
+import * as EnGame from "@/lib/games/place-stop-en";
 import {
   computeHits,
   scoreStopChoice,
@@ -32,8 +33,10 @@ const STOP_TYPE_TO_SKILL: Record<StopType, { skill: SkillId; outcome: "win" | "l
 
 const BIAS_LABEL_FR  = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
 const BIAS_LABEL_ES  = { bullish: "Alcista", bearish: "Bajista", range: "Range" } as const;
+const BIAS_LABEL_EN  = { bullish: "Bullish", bearish: "Bearish", range: "Range" } as const;
 const MACRO_LABEL_FR = { normal: "Normal", dangereux: "Dangereux" } as const;
 const MACRO_LABEL_ES = { normal: "Normal", dangereux: "Peligroso" } as const;
+const MACRO_LABEL_EN = { normal: "Normal", dangereux: "Dangerous" } as const;
 const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced"];
 
 // Couleurs distinctes pour les 3 stops (rouge / amber / violet)
@@ -72,15 +75,17 @@ function feedbackColor(stopType: StopType, hasLogical: boolean): "emerald" | "am
 
 // Label du verdict APRÈS choix : pédagogique sans révéler la mécanique interne
 // (pas "Stop logique" / "Stop trop large" qui leakerait le type).
-function feedbackLabel(stopType: StopType, hasLogical: boolean, isEs: boolean): string {
+function feedbackLabel(stopType: StopType, hasLogical: boolean, locale: string | undefined): string {
+  const isEs = locale === "es";
+  const isEn = locale === "en";
   if (isCorrectType(stopType, hasLogical)) {
-    return isEs ? "Buena colocación" : "Bon placement";
+    return isEs ? "Buena colocación" : isEn ? "Good placement" : "Bon placement";
   }
   switch (stopType) {
-    case "wide":      return isEs ? "Demasiado lejos, RR roto" : "Trop loin, RR cassé";
-    case "liquidity": return isEs ? "En zona de caza" : "Dans une zone de chasse";
-    case "tight":     return isEs ? "Demasiado cerca (ruido)" : "Trop près (bruit)";
-    case "logical":   return isEs ? "Colocación lógica" : "Placement logique";  // edge case
+    case "wide":      return isEs ? "Demasiado lejos, RR roto" : isEn ? "Too far, R/R broken" : "Trop loin, RR cassé";
+    case "liquidity": return isEs ? "En zona de caza" : isEn ? "In a hunt zone" : "Dans une zone de chasse";
+    case "tight":     return isEs ? "Demasiado cerca (ruido)" : isEn ? "Too close (noise)" : "Trop près (bruit)";
+    case "logical":   return isEs ? "Colocación lógica" : isEn ? "Logical placement" : "Placement logique";  // edge case
   }
 }
 
@@ -98,11 +103,10 @@ const EMPTY_STATS: SessionStats = { logical: 0, wide: 0, tight: 0, liquidity: 0 
 export default function PlaceStopPage() {
   const params = useParams<{ locale: string }>();
   const locale = params?.locale;
-  const G = locale === "es" ? EsGame : FrGame;
-  const isEs = locale === "es";
-  const BIAS_LABEL = isEs ? BIAS_LABEL_ES : BIAS_LABEL_FR;
+  const G = locale === "es" ? EsGame : locale === "en" ? EnGame : FrGame;
+  const BIAS_LABEL = locale === "es" ? BIAS_LABEL_ES : locale === "en" ? BIAS_LABEL_EN : BIAS_LABEL_FR;
   // MACRO_LABEL kept for potential future use
-  const T = isEs
+  const T = locale === "es"
     ? {
         games:           "Juegos",
         round:           "Ronda",
@@ -140,6 +144,46 @@ export default function PlaceStopPage() {
         bestStreak:      "Mejor racha",
         replayIn:        "Volver a jugar en",
         changeLevel:     "Cambiar de nivel",
+        macroLabel:      "Macro",
+      }
+    : locale === "en"
+    ? {
+        games:           "Games",
+        round:           "Round",
+        score:           "Score",
+        ofStreak:        "streak",
+        bonusActive:     "· bonus active",
+        loading:         "Loading…",
+        htf:             "HTF",
+        volatility:      "Volatility",
+        newsImminent:    "News imminent",
+        question:        "Which stop do you choose?",
+        revelation:      "Reveal",
+        revealTextPre:   "Let's see which stops survive the next",
+        revealTextPost:  "candles…",
+        viewSummary:     "View summary",
+        nextScenario:    "Next scenario",
+        lesson:          "Lesson",
+        skills:          "Skills",
+        discipline:      "Discipline",
+        protection:      "Protection",
+        precision:       "Precision",
+        aggressivity:    "Aggressiveness",
+        yourChoice:      "Your choice",
+        theRight:        "The right one",
+        survived:        "Survived",
+        candles:         "candles",
+        hitCandle:       "Hit on candle",
+        title:           "Place your Stop",
+        heading:         "Which stop will survive?",
+        pickerIntro:     "scenarios. For each one, 3 stop losses proposed (Stop 1, 2, 3). You pick the best based on structure, liquidity, volatility, R/R. The market then reveals the continuation.",
+        summary:         "Summary",
+        stopsChosen:     "stops chosen",
+        logicalStops:    "Logical stops",
+        tightStops:      "Tight stops",
+        bestStreak:      "Best streak",
+        replayIn:        "Replay in",
+        changeLevel:     "Change level",
         macroLabel:      "Macro",
       }
     : {
@@ -252,7 +296,7 @@ export default function PlaceStopPage() {
 
   // ─── Écran 1 : sélection difficulté ─────────────────────────────────────────
   if (!difficulty || !seed) {
-    return <DifficultyPicker isEs={isEs} difficultyMeta={G.DIFFICULTY_META} onPick={(d) => {
+    return <DifficultyPicker locale={locale} difficultyMeta={G.DIFFICULTY_META} onPick={(d) => {
       const s = Math.floor(Math.random() * 1e9) >>> 0;
       setDifficulty(d);
       setSeed(s);
@@ -436,7 +480,7 @@ export default function PlaceStopPage() {
             </span>
             <span className="text-zinc-700">·</span>
             <span className="text-zinc-500">
-              {T.volatility} <span className="font-bold ml-1 text-zinc-300">{cap(translateVolatility(current.volatility, isEs))}</span>
+              {T.volatility} <span className="font-bold ml-1 text-zinc-300">{cap(translateVolatility(current.volatility, locale))}</span>
             </span>
             {current.macroContext === "dangereux" && (
               <>
@@ -490,7 +534,7 @@ export default function PlaceStopPage() {
             difficultyMeta={G.DIFFICULTY_META}
             spatialLabels={spatialLabels}
             hasLogical={hasLogicalInChart}
-            isEs={isEs}
+            locale={locale}
             onNext={handleNext}
             isLast={idx + 1 >= ROUNDS_PER_SESSION}
           />
@@ -515,7 +559,7 @@ export default function PlaceStopPage() {
 
 // ─── Difficulty picker ────────────────────────────────────────────────────────
 
-function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; isEs: boolean }) {
+function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; locale: string | undefined }) {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
       <div className="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
@@ -526,16 +570,18 @@ function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Diffic
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
             <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          {isEs ? "Juegos" : "Jeux"}
+          {locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux"}
         </Link>
 
         <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
-          {isEs ? "Coloca tu Stop" : "Place ton Stop"}
+          {locale === "es" ? "Coloca tu Stop" : locale === "en" ? "Place your Stop" : "Place ton Stop"}
         </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{isEs ? "¿Qué stop va a sobrevivir?" : "Quel stop va survivre ?"}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{locale === "es" ? "¿Qué stop va a sobrevivir?" : locale === "en" ? "Which stop will survive?" : "Quel stop va survivre ?"}</h1>
         <p className="text-zinc-400 text-sm leading-relaxed mb-8">
-          {isEs
+          {locale === "es"
             ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, 3 stops loss propuestos (Stop 1, 2, 3). Eliges el mejor según estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.`
+            : locale === "en"
+            ? `${ROUNDS_PER_SESSION} scenarios. For each one, 3 stop losses proposed (Stop 1, 2, 3). You pick the best based on structure, liquidity, volatility, R/R. The market then reveals the continuation.`
             : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, 3 stops loss proposés (Stop 1, 2, 3). Tu choisis le meilleur selon structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.`}
         </p>
 
@@ -632,7 +678,7 @@ function ChoiceCards({
 // ─── Feedback panel ──────────────────────────────────────────────────────────
 
 function Feedback({
-  T, result, chosen, chart, title, lesson, tag, difficulty, difficultyMeta, spatialLabels, hasLogical, isEs, onNext, isLast,
+  T, result, chosen, chart, title, lesson, tag, difficulty, difficultyMeta, spatialLabels, hasLogical, locale, onNext, isLast,
 }: {
   T:              { [k: string]: string };
   result:         ScoreResult;
@@ -645,12 +691,12 @@ function Feedback({
   difficultyMeta: typeof FrGame.DIFFICULTY_META;
   spatialLabels:  Record<StopId, string>;
   hasLogical:     boolean;
-  isEs:           boolean;
+  locale:         string | undefined;
   onNext:         () => void;
   isLast:         boolean;
 }) {
   const headerColor = feedbackColor(result.type, hasLogical);
-  const headerLabel = feedbackLabel(result.type, hasLogical, isEs);
+  const headerLabel = feedbackLabel(result.type, hasLogical, locale);
   const borderClass =
     headerColor === "emerald" ? "border-emerald-500/30"
   : headerColor === "amber"   ? "border-amber-500/30"
@@ -712,7 +758,7 @@ function Feedback({
               futureLength={chart.future.length}
               spatialLabels={spatialLabels}
               hasLogical={hasLogical}
-              isEs={isEs}
+              locale={locale}
             />
           ))}
         </div>
@@ -743,7 +789,7 @@ function Feedback({
 }
 
 function StopVerdictRow({
-  T, stop, isChosen, hitIndex, futureLength, spatialLabels, hasLogical, isEs,
+  T, stop, isChosen, hitIndex, futureLength, spatialLabels, hasLogical, locale,
 }: {
   T: { [k: string]: string };
   stop: StopOption;
@@ -752,11 +798,11 @@ function StopVerdictRow({
   futureLength: number;
   spatialLabels: Record<StopId, string>;
   hasLogical: boolean;
-  isEs: boolean;
+  locale: string | undefined;
 }) {
   const colors = STOP_COLORS[stop.id];
   const rowColor = feedbackColor(stop.type, hasLogical);
-  const rowLabel = feedbackLabel(stop.type, hasLogical, isEs);
+  const rowLabel = feedbackLabel(stop.type, hasLogical, locale);
   const isCorrectAnswer = isCorrectType(stop.type, hasLogical);
   const num = spatialLabels[stop.id];
   const border =
@@ -1015,9 +1061,10 @@ function fmt(p: number): string {
   return p.toFixed(2);
 }
 
-function translateVolatility(v: "faible" | "normale" | "élevée", isEs: boolean): string {
-  if (!isEs) return v;
-  return v === "élevée" ? "alta" : v === "faible" ? "baja" : "normal";
+function translateVolatility(v: "faible" | "normale" | "élevée", locale: string | undefined): string {
+  if (locale === "es") return v === "élevée" ? "alta" : v === "faible" ? "baja" : "normal";
+  if (locale === "en") return v === "élevée" ? "high" : v === "faible" ? "low" : "normal";
+  return v;
 }
 
 function firstSentence(text: string): string {

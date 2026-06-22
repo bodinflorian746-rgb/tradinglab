@@ -7,7 +7,7 @@ import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localizedHref } from "@/lib/i18n/href";
 import { getJournalView, computeStats } from "@/lib/journal/queries";
-import { MOCK_ANALYSIS } from "@/lib/journal/analysis-mock";
+import { getMockAnalysis } from "@/lib/journal/analysis-mock";
 import { JournalDashboard } from "./_components/JournalDashboard";
 import { JournalList } from "./_components/JournalList";
 import { AddTradeButton } from "./_components/AddTradeButton";
@@ -33,7 +33,7 @@ export default async function JournalPage({
   const isEmpty = entries.length === 0;
 
   // Command center (V0.5) — réutilise le mock d'analyse + les entrées chargées.
-  const a = MOCK_ANALYSIS;
+  const a = getMockAnalysis(locale);
   const lastAnalyzed = entries.find((e) => e.ai_status === "analyzed") ?? null;
   const topMistakeKey = stats.topMistakes[0]?.key ?? null;
   const mistakeLabel = topMistakeKey ? t.options.main_mistake[topMistakeKey] : null;

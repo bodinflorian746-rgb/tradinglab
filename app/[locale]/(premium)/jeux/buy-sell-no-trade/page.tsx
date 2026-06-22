@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as FrGame from "@/lib/games/buy-sell-no-trade";
 import * as EsGame from "@/lib/games/buy-sell-no-trade-es";
+import * as EnGame from "@/lib/games/buy-sell-no-trade-en";
 import {
   scoreChoice,
   ROUNDS_PER_SESSION,
@@ -35,6 +36,11 @@ const METRIC_LABELS_ES: Record<Metric, string> = {
   lecture:    "Lectura del mercado",
   piege:      "Detección de trampa",
 };
+const METRIC_LABELS_EN: Record<Metric, string> = {
+  discipline: "Discipline",
+  lecture:    "Market reading",
+  piege:      "Trap detection",
+};
 
 const METRIC_DOT: Record<Metric, string> = {
   discipline: "bg-blue-400",
@@ -44,8 +50,10 @@ const METRIC_DOT: Record<Metric, string> = {
 
 const BIAS_LABEL_FR = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
 const BIAS_LABEL_ES = { bullish: "Alcista", bearish: "Bajista", range: "Range" } as const;
+const BIAS_LABEL_EN = { bullish: "Bullish", bearish: "Bearish", range: "Range" } as const;
 const MACRO_LABEL_FR = { normal: "Normal", dangereux: "Dangereux" } as const;
 const MACRO_LABEL_ES = { normal: "Normal", dangereux: "Peligroso" } as const;
+const MACRO_LABEL_EN = { normal: "Normal", dangereux: "Dangerous" } as const;
 
 const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced"];
 
@@ -54,12 +62,11 @@ const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced"];
 export default function BuySellNoTradePage() {
   const params = useParams<{ locale: string }>();
   const locale = params?.locale;
-  const G = locale === "es" ? EsGame : FrGame;
-  const isEs = locale === "es";
-  const METRIC_LABELS = isEs ? METRIC_LABELS_ES : METRIC_LABELS_FR;
-  const BIAS_LABEL = isEs ? BIAS_LABEL_ES : BIAS_LABEL_FR;
-  const MACRO_LABEL = isEs ? MACRO_LABEL_ES : MACRO_LABEL_FR;
-  const T = isEs
+  const G = locale === "es" ? EsGame : locale === "en" ? EnGame : FrGame;
+  const METRIC_LABELS = locale === "es" ? METRIC_LABELS_ES : locale === "en" ? METRIC_LABELS_EN : METRIC_LABELS_FR;
+  const BIAS_LABEL = locale === "es" ? BIAS_LABEL_ES : locale === "en" ? BIAS_LABEL_EN : BIAS_LABEL_FR;
+  const MACRO_LABEL = locale === "es" ? MACRO_LABEL_ES : locale === "en" ? MACRO_LABEL_EN : MACRO_LABEL_FR;
+  const T = locale === "es"
     ? {
         games:           "Juegos",
         round:           "Ronda",
@@ -104,6 +111,52 @@ export default function BuySellNoTradePage() {
         volLow:          "baja",
         volNormal:       "normal",
         volHigh:         "alta",
+      }
+    : locale === "en"
+    ? {
+        games:           "Games",
+        round:           "Round",
+        score:           "Score",
+        ofStreak:        "streak",
+        bonusActive:     "· bonus active",
+        skills:          "Skills",
+        loading:         "Loading…",
+        newsWarning:     "Major macro news in < 30 min, unpredictable volatility and spread.",
+        htf:             "HTF",
+        macro:           "Macro",
+        volatility:      "Volatility",
+        revelation:      "Reveal",
+        revealText:      "Let's see what happened after your decision…",
+        viewSummary:     "View summary",
+        nextScenario:    "Next scenario",
+        lesson:          "Lesson",
+        correctAnswer:   "· correct answer",
+        yourChoice:      "· your choice",
+        chooseLevel:     "Choose your level",
+        pickerIntro:     "scenarios to analyze. The level adjusts the subtlety of the signals, the frequency of traps and the depth of the explanations.",
+        title:           "BUY / SELL / NO TRADE",
+        summary:         "Summary",
+        scenariosPlayed: "scenarios played",
+        traderDisciplined: "Disciplined trader",
+        goodEye:         "Good eye",
+        toPolish:        "To polish",
+        lackPatience:    "Lack of patience",
+        precision:       "Accuracy",
+        correctAnswers:  "Correct answers",
+        bestStreak:      "Best streak",
+        replayIn:        "Replay in",
+        changeLevel:     "Change level",
+        disciplinePerfect: "Perfect discipline",
+        goodRead:        "Good read",
+        trapAvoided:     "Trap avoided? No.",
+        wrongRead:       "Wrong read",
+        vol:             "Vol.",
+        spread:          "Spread",
+        spreadLow:       "low",
+        spreadHigh:      "high",
+        volLow:          "low",
+        volNormal:       "normal",
+        volHigh:         "high",
       }
     : {
         games:           "Jeux",
@@ -200,7 +253,7 @@ export default function BuySellNoTradePage() {
 
   // ─── Écran 1 : sélection difficulté ─────────────────────────────────────────
   if (!difficulty || !seed) {
-    return <DifficultyPicker isEs={isEs} difficultyMeta={G.DIFFICULTY_META} onPick={(d) => {
+    return <DifficultyPicker locale={locale} difficultyMeta={G.DIFFICULTY_META} onPick={(d) => {
       const s = Math.floor(Math.random() * 1e9) >>> 0;
       setDifficulty(d);
       setSeed(s);
@@ -212,7 +265,6 @@ export default function BuySellNoTradePage() {
   if (showSummary) {
     return (
       <Summary
-        isEs={isEs}
         T={T}
         METRIC_LABELS={METRIC_LABELS}
         difficulty={difficulty}
@@ -361,8 +413,8 @@ export default function BuySellNoTradePage() {
               <span className="text-[11px] text-zinc-400">{current.session}</span>
             </div>
             <div className="flex items-center gap-2 text-[10px]">
-              <VolBadge volatility={current.volatility} T={T} isEs={isEs} />
-              <SpreadBadge spread={current.spread} T={T} isEs={isEs} />
+              <VolBadge volatility={current.volatility} T={T} />
+              <SpreadBadge spread={current.spread} T={T} />
             </div>
           </div>
 
@@ -384,7 +436,7 @@ export default function BuySellNoTradePage() {
             <MiniChart
               data={{
                 candles: [...chart.past, ...chart.future],
-                zones:   maskZonesForDifficulty(chart.zones, difficulty, isEs),
+                zones:   maskZonesForDifficulty(chart.zones, difficulty, locale),
                 domain:  chart.domain,
               }}
               overlay={{
@@ -395,7 +447,7 @@ export default function BuySellNoTradePage() {
             />
             {chart.zones.length > 0 && (
               <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
-                {maskZonesForDifficulty(chart.zones, difficulty, isEs).map((z, i) => (
+                {maskZonesForDifficulty(chart.zones, difficulty, locale).map((z, i) => (
                   <ZoneLegendChip key={i} zone={z} />
                 ))}
               </div>
@@ -408,7 +460,7 @@ export default function BuySellNoTradePage() {
             <InfoTile label={T.htf}        value={BIAS_LABEL[current.htfBias]}        biasClass={biasClass(current.htfBias)} />
             <InfoTile label={T.macro}      value={MACRO_LABEL[current.macroContext]}  biasClass={current.macroContext === "dangereux" ? "text-red-400" : "text-zinc-300"} />
             {difficulty !== "advanced" && (
-              <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, isEs))} biasClass="text-zinc-300" />
+              <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} biasClass="text-zinc-300" />
             )}
           </div>
 
@@ -472,7 +524,7 @@ export default function BuySellNoTradePage() {
 
 // ─── Difficulty picker ────────────────────────────────────────────────────────
 
-function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; isEs: boolean }) {
+function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; locale: string | undefined }) {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
       <div className="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
@@ -483,16 +535,18 @@ function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Diffic
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
             <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          {isEs ? "Juegos" : "Jeux"}
+          {locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux"}
         </Link>
 
         <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
           BUY / SELL / NO TRADE
         </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{isEs ? "Elige tu nivel" : "Choisis ton niveau"}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{locale === "es" ? "Elige tu nivel" : locale === "en" ? "Choose your level" : "Choisis ton niveau"}</h1>
         <p className="text-zinc-400 text-sm leading-relaxed mb-8">
-          {isEs
+          {locale === "es"
             ? `${ROUNDS_PER_SESSION} escenarios para analizar. El nivel modula la sutileza de las señales, la frecuencia de las trampas y la profundidad de las explicaciones.`
+            : locale === "en"
+            ? `${ROUNDS_PER_SESSION} scenarios to analyze. The level adjusts the subtlety of the signals, the frequency of traps and the depth of the explanations.`
             : `${ROUNDS_PER_SESSION} scénarios à analyser. Le niveau module la subtilité des signaux, la fréquence des pièges et la profondeur des explications.`}
         </p>
 
@@ -721,14 +775,12 @@ function StatTile({ metric, ok, total, METRIC_LABELS }: { metric: Metric; ok: nu
   );
 }
 
-function VolBadge({ volatility, T, isEs }: { volatility: "faible" | "normale" | "élevée"; T: { [k: string]: string }; isEs: boolean }) {
+function VolBadge({ volatility, T }: { volatility: "faible" | "normale" | "élevée"; T: { [k: string]: string } }) {
   const cls =
     volatility === "élevée"  ? "text-amber-400 border-amber-400/30"
   : volatility === "faible"  ? "text-zinc-500 border-zinc-700"
   :                            "text-zinc-400 border-zinc-700";
-  const label = isEs
-    ? (volatility === "élevée" ? T.volHigh : volatility === "faible" ? T.volLow : T.volNormal)
-    : volatility;
+  const label = volatility === "élevée" ? T.volHigh : volatility === "faible" ? T.volLow : T.volNormal;
   return (
     <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>
       {T.vol} {label}
@@ -736,13 +788,11 @@ function VolBadge({ volatility, T, isEs }: { volatility: "faible" | "normale" | 
   );
 }
 
-function SpreadBadge({ spread, T, isEs }: { spread: "faible" | "élevé"; T: { [k: string]: string }; isEs: boolean }) {
+function SpreadBadge({ spread, T }: { spread: "faible" | "élevé"; T: { [k: string]: string } }) {
   const cls = spread === "élevé"
     ? "text-amber-400 border-amber-400/30"
     : "text-zinc-500 border-zinc-700";
-  const label = isEs
-    ? (spread === "élevé" ? T.spreadHigh : T.spreadLow)
-    : spread;
+  const label = spread === "élevé" ? T.spreadHigh : T.spreadLow;
   return (
     <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>
       {T.spread} {label}
@@ -779,9 +829,8 @@ function ZoneLegendChip({ zone }: { zone: { kind: string; label: string } }) {
 // ─── Summary ──────────────────────────────────────────────────────────────────
 
 function Summary({
-  isEs, T, METRIC_LABELS, difficulty, difficultyMeta, score, maxStreak, correctCount, stats, onReplay, onChangeDifficulty,
+  T, METRIC_LABELS, difficulty, difficultyMeta, score, maxStreak, correctCount, stats, onReplay, onChangeDifficulty,
 }: {
-  isEs: boolean;
   T: { [k: string]: string };
   METRIC_LABELS: Record<Metric, string>;
   difficulty: Difficulty;
@@ -895,14 +944,19 @@ function cap(s: string): string {
 // V3 : en niveau avancé, les labels de zones perdent leurs noms spécifiques
 // (Support HTF, Résistance majeure, FVG haussier) au profit de labels
 // génériques. Le joueur doit lire le marché plutôt que de suivre les noms.
-function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, isEs: boolean): BuySellChart["zones"] {
+function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, locale: string | undefined): BuySellChart["zones"] {
   if (d !== "advanced") return zones;
   return zones.map((z) => {
-    const generic = isEs
+    const generic = locale === "es"
       ? (z.kind === "support"        ? "Nivel bajo"
        : z.kind === "resistance"     ? "Nivel alto"
        : z.kind === "fvg"            ? "Imbalance"
        :                                "Liquidez")
+      : locale === "en"
+      ? (z.kind === "support"        ? "Low level"
+       : z.kind === "resistance"     ? "High level"
+       : z.kind === "fvg"            ? "Imbalance"
+       :                                "Liquidity")
       : (z.kind === "support"        ? "Niveau bas"
        : z.kind === "resistance"     ? "Niveau haut"
        : z.kind === "fvg"            ? "Imbalance"
@@ -911,9 +965,10 @@ function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, isE
   });
 }
 
-function translateVolatility(v: "faible" | "normale" | "élevée", isEs: boolean): string {
-  if (!isEs) return v;
-  return v === "élevée" ? "alta" : v === "faible" ? "baja" : "normal";
+function translateVolatility(v: "faible" | "normale" | "élevée", locale: string | undefined): string {
+  if (locale === "es") return v === "élevée" ? "alta" : v === "faible" ? "baja" : "normal";
+  if (locale === "en") return v === "élevée" ? "high" : v === "faible" ? "low" : "normal";
+  return v;
 }
 
 // Retourne la 1re phrase (jusqu'au premier "." inclus).

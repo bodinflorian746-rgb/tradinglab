@@ -196,10 +196,11 @@ export default function FormationsPage() {
   const activeLessonKey = mounted ? getActiveLessonKey(progress) : null;
 
   // Hero text — fallback FR si ES n&apos;a pas la clé page.hero
-  const isEs = locale === "es";
   const heroTitle = fdict.page?.hero?.title ?? "Trading";
-  const heroSubtitle = fdict.page?.hero?.subtitle ?? (isEs
+  const heroSubtitle = fdict.page?.hero?.subtitle ?? (locale === "es"
     ? "Domina las bases y construye setups sólidos en cada etapa de tu progresión."
+    : locale === "en"
+    ? "Master the basics and build solid setups at every stage of your progress."
     : "Maîtrise les bases et construis des setups solides à chaque étape de ta progression.");
 
   return (
@@ -304,7 +305,7 @@ export default function FormationsPage() {
                 <div className="mb-5">
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-xs text-zinc-500 tabular-nums">
-                      {stats.completed}/{stats.total} {isEs ? "lecciones" : "leçons"}
+                      {stats.completed}/{stats.total} {locale === "es" ? "lecciones" : locale === "en" ? "lessons" : "leçons"}
                     </span>
                     {allDone && (
                       <span className={`text-[10px] font-bold ${theme.textAccent}`}>

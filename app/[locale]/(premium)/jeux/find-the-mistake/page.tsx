@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import * as FrGame from "@/lib/games/find-the-mistake";
 import * as EsGame from "@/lib/games/find-the-mistake-es";
+import * as EnGame from "@/lib/games/find-the-mistake-en";
 import {
   scoreMistakeChoice,
   ROUNDS_PER_SESSION,
@@ -29,8 +30,10 @@ const CATEGORY_TO_SKILL: Record<"technique" | "psychologique" | "execution" | "r
 
 const BIAS_LABEL_FR  = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
 const BIAS_LABEL_ES  = { bullish: "Alcista", bearish: "Bajista", range: "Range" } as const;
+const BIAS_LABEL_EN  = { bullish: "Bullish", bearish: "Bearish", range: "Range" } as const;
 const MACRO_LABEL_FR = { normal: "Normal", dangereux: "Dangereux" } as const;
 const MACRO_LABEL_ES = { normal: "Normal", dangereux: "Peligroso" } as const;
+const MACRO_LABEL_EN = { normal: "Normal", dangereux: "Dangerous" } as const;
 const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced"];
 
 // ─── Page ────────────────────────────────────────────────────────────────────
@@ -44,11 +47,10 @@ const EMPTY_STATS: SessionStats = { correct: 0, incorrect: 0 };
 export default function FindTheMistakePage() {
   const params = useParams<{ locale: string }>();
   const locale = params?.locale;
-  const G = locale === "es" ? EsGame : FrGame;
-  const isEs = locale === "es";
-  const BIAS_LABEL = isEs ? BIAS_LABEL_ES : BIAS_LABEL_FR;
-  const MACRO_LABEL = isEs ? MACRO_LABEL_ES : MACRO_LABEL_FR;
-  const T = isEs
+  const G = locale === "es" ? EsGame : locale === "en" ? EnGame : FrGame;
+  const BIAS_LABEL = locale === "es" ? BIAS_LABEL_ES : locale === "en" ? BIAS_LABEL_EN : BIAS_LABEL_FR;
+  const MACRO_LABEL = locale === "es" ? MACRO_LABEL_ES : locale === "en" ? MACRO_LABEL_EN : MACRO_LABEL_FR;
+  const T = locale === "es"
     ? {
         games:           "Juegos",
         round:           "Ronda",
@@ -86,6 +88,45 @@ export default function FindTheMistakePage() {
         volLow:          "baja",
         volNormal:       "normal",
         volHigh:         "alta",
+      }
+    : locale === "en"
+    ? {
+        games:           "Games",
+        round:           "Round",
+        score:           "Score",
+        ofStreak:        "streak",
+        bonusActive:     "· bonus active",
+        loading:         "Loading…",
+        newsWarning:     "Major macro news in < 30 min.",
+        htf:             "HTF",
+        macro:           "Macro",
+        volatility:      "Volatility",
+        question:        "What's the main mistake?",
+        wellSeen:        "Well spotted",
+        wrongMistake:    "Not the right mistake",
+        correctAnswerTag: "✓ Correct answer",
+        yourChoice:      "Your choice",
+        lesson:          "Lesson",
+        viewSummary:     "View the summary",
+        next:            "Next",
+        correct:         "Correct",
+        title:           "Find the Mistake",
+        heading:         "What's the main mistake?",
+        pickerIntro:     "scenarios. For each one, you see a setup or a trade, and you identify the main mistake among 4 choices. The goal: train your eye for the classic retail mistakes.",
+        summary:         "Summary",
+        scenariosPlayed: "scenarios played",
+        precision:       "Accuracy",
+        correctAnswers:  "Correct answers",
+        bestStreak:      "Best streak",
+        replayIn:        "Replay in",
+        changeLevel:     "Change level",
+        vol:             "Vol.",
+        spread:          "Spread",
+        spreadLow:       "low",
+        spreadHigh:      "high",
+        volLow:          "low",
+        volNormal:       "normal",
+        volHigh:         "high",
       }
     : {
         games:           "Jeux",
@@ -151,7 +192,7 @@ export default function FindTheMistakePage() {
 
   // ─── Écran picker ──────────────────────────────────────────────────────────
   if (!difficulty || !seed) {
-    return <DifficultyPicker isEs={isEs} difficultyMeta={G.DIFFICULTY_META} onPick={(d) => {
+    return <DifficultyPicker locale={locale} difficultyMeta={G.DIFFICULTY_META} onPick={(d) => {
       const s = Math.floor(Math.random() * 1e9) >>> 0;
       setDifficulty(d);
       setSeed(s);
@@ -305,8 +346,8 @@ export default function FindTheMistakePage() {
                   {current.extraInfo}
                 </span>
               )}
-              <VolBadge volatility={current.volatility} T={T} isEs={isEs} />
-              <SpreadBadge spread={current.spread} T={T} isEs={isEs} />
+              <VolBadge volatility={current.volatility} T={T} />
+              <SpreadBadge spread={current.spread} T={T} />
             </div>
           </div>
 
@@ -351,7 +392,7 @@ export default function FindTheMistakePage() {
           <div className="px-4 pb-3 grid grid-cols-2 sm:grid-cols-3 gap-2">
             <InfoTile label={T.htf}        value={BIAS_LABEL[current.htfBias]}        colorClass={biasClass(current.htfBias)} />
             <InfoTile label={T.macro}      value={MACRO_LABEL[current.macroContext]}  colorClass={current.macroContext === "dangereux" ? "text-red-400" : "text-zinc-300"} />
-            <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, isEs))}            colorClass="text-zinc-300" />
+            <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))}            colorClass="text-zinc-300" />
           </div>
 
           {/* Context text */}
@@ -403,7 +444,7 @@ export default function FindTheMistakePage() {
 
 // ─── Difficulty picker ────────────────────────────────────────────────────────
 
-function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; isEs: boolean }) {
+function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; locale: string | undefined }) {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
       <div className="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
@@ -414,16 +455,18 @@ function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Diffic
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
             <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          {isEs ? "Juegos" : "Jeux"}
+          {locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux"}
         </Link>
 
         <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
-          {isEs ? "Encuentra el error" : "Trouve l'erreur"}
+          {locale === "es" ? "Encuentra el error" : locale === "en" ? "Find the Mistake" : "Trouve l'erreur"}
         </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{isEs ? "¿Cuál es el error principal?" : "Quelle est l'erreur principale ?"}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{locale === "es" ? "¿Cuál es el error principal?" : locale === "en" ? "What's the main mistake?" : "Quelle est l'erreur principale ?"}</h1>
         <p className="text-zinc-400 text-sm leading-relaxed mb-8">
-          {isEs
+          {locale === "es"
             ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, ves un setup o un trade, e identificas el error principal entre 4 opciones. El objetivo: desarrollar tu ojo para los errores retail clásicos.`
+            : locale === "en"
+            ? `${ROUNDS_PER_SESSION} scenarios. For each one, you see a setup or a trade, and you identify the main mistake among 4 choices. The goal: train your eye for the classic retail mistakes.`
             : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, tu vois un setup ou un trade, et tu identifies l'erreur principale parmi 4 choix. Le but : développer ton œil pour les erreurs retail classiques.`}
         </p>
 
@@ -620,30 +663,27 @@ function StatTile({ label, value }: { label: string; value: string }) {
   );
 }
 
-function VolBadge({ volatility, T, isEs }: { volatility: "faible" | "normale" | "élevée"; T: { [k: string]: string }; isEs: boolean }) {
+function VolBadge({ volatility, T }: { volatility: "faible" | "normale" | "élevée"; T: { [k: string]: string } }) {
   const cls =
     volatility === "élevée"  ? "text-amber-400 border-amber-400/30"
   : volatility === "faible"  ? "text-zinc-500 border-zinc-700"
   :                            "text-zinc-400 border-zinc-700";
-  const label = isEs
-    ? (volatility === "élevée" ? T.volHigh : volatility === "faible" ? T.volLow : T.volNormal)
-    : volatility;
+  const label = volatility === "élevée" ? T.volHigh : volatility === "faible" ? T.volLow : T.volNormal;
   return <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>{T.vol} {label}</span>;
 }
 
-function SpreadBadge({ spread, T, isEs }: { spread: "faible" | "élevé"; T: { [k: string]: string }; isEs: boolean }) {
+function SpreadBadge({ spread, T }: { spread: "faible" | "élevé"; T: { [k: string]: string } }) {
   const cls = spread === "élevé"
     ? "text-amber-400 border-amber-400/30"
     : "text-zinc-500 border-zinc-700";
-  const label = isEs
-    ? (spread === "élevé" ? T.spreadHigh : T.spreadLow)
-    : spread;
+  const label = spread === "élevé" ? T.spreadHigh : T.spreadLow;
   return <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>{T.spread} {label}</span>;
 }
 
-function translateVolatility(v: "faible" | "normale" | "élevée", isEs: boolean): string {
-  if (!isEs) return v;
-  return v === "élevée" ? "alta" : v === "faible" ? "baja" : "normal";
+function translateVolatility(v: "faible" | "normale" | "élevée", locale: string | undefined): string {
+  if (locale === "es") return v === "élevée" ? "alta" : v === "faible" ? "baja" : "normal";
+  if (locale === "en") return v === "élevée" ? "high" : v === "faible" ? "low" : "normal";
+  return v;
 }
 
 function DifficultyChip({ difficulty, difficultyMeta }: { difficulty: Difficulty; difficultyMeta: typeof FrGame.DIFFICULTY_META }) {

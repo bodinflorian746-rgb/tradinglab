@@ -123,7 +123,6 @@ export default async function MacroPage({
   const fdict = await getDictionary(locale, "formations");
   const common = await getDictionary(locale, "common");
   const macro = fdict.macro;
-  const isEs = locale === "es";
 
   return (
     <main className="relative min-h-screen bg-zinc-950 text-white overflow-hidden">
@@ -162,7 +161,7 @@ export default async function MacroPage({
           {LEVEL_ORDER.map((levelKey) => {
             const theme = LEVEL_THEMES[levelKey];
             const lvl = macro.levels[levelKey];
-            const lessonsLabel = isEs ? lvl.count.replace("leçons", "lecciones") : lvl.count;
+            const lessonsLabel = locale === "es" ? lvl.count.replace("leçons", "lecciones") : locale === "en" ? lvl.count.replace("leçons", "lessons") : lvl.count;
 
             return (
               <Link

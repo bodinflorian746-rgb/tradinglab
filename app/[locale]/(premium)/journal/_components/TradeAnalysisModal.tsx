@@ -7,13 +7,15 @@ import { useEffect, useMemo, useState } from "react";
 import type { TradeEntryView } from "@/lib/journal/types";
 import type { Dictionaries } from "@/i18n/dictionaries";
 import { buildTradeAnalysis } from "@/lib/journal/trade-analysis-mock";
+import { useLocale } from "@/app/components/LocaleProvider";
 import { ScoreGauge } from "./analysis/ScoreGauge";
 
 type JournalDict = Dictionaries["journal"];
 
 export function TradeAnalysisModal({ entry, t }: { entry: TradeEntryView; t: JournalDict }) {
   const [open, setOpen] = useState(false);
-  const a = useMemo(() => buildTradeAnalysis(entry, t), [entry, t]);
+  const locale = useLocale();
+  const a = useMemo(() => buildTradeAnalysis(entry, t, locale), [entry, t, locale]);
   const s = t.tradeAnalysis;
 
   useEffect(() => {

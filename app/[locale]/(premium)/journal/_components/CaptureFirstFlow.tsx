@@ -15,7 +15,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef, useState, useTransition, type ReactNode } from "react";
-import { useDict } from "@/app/components/LocaleProvider";
+import { useDict, useLocale } from "@/app/components/LocaleProvider";
 import {
   DIRECTIONS,
   TIMEFRAMES,
@@ -31,7 +31,7 @@ import {
   EMOTIONS_AFTER,
   type TradeEntryView,
 } from "@/lib/journal/types";
-import { createTradeEntry } from "../actions";
+import { createTradeEntry, updateTradeEntry } from "../actions";
 import { ScoreGauge } from "./analysis/ScoreGauge";
 
 const DETECTED_MOCK = {
@@ -46,14 +46,29 @@ const DETECTED_MOCK = {
   r_multiple: "2.1",
 };
 
-const AI_VERDICT_MOCK = {
-  confidence: 81,
-  score: 78,
-  positives: ["Entrée cohérente avec la structure", "Structure haussière respectée", "Ratio risque/rendement intéressant"],
-  warnings: ["Stop loss un peu serré", "Entrée légèrement anticipée"],
-  explanation:
-    "L'entrée est cohérente avec la structure haussière observée. Le principal point d'amélioration concerne le placement du stop loss, un peu trop serré par rapport à la volatilité récente.",
-};
+function getAiVerdict(locale: "fr" | "es" | "en") {
+  const text = {
+    fr: {
+      positives: ["Entrée cohérente avec la structure", "Structure haussière respectée", "Ratio risque/rendement intéressant"],
+      warnings: ["Stop loss un peu serré", "Entrée légèrement anticipée"],
+      explanation:
+        "L'entrée est cohérente avec la structure haussière observée. Le principal point d'amélioration concerne le placement du stop loss, un peu trop serré par rapport à la volatilité récente.",
+    },
+    en: {
+      positives: ["Entry consistent with the structure", "Bullish structure respected", "Attractive risk/reward ratio"],
+      warnings: ["Stop loss a bit tight", "Entry slightly early"],
+      explanation:
+        "The entry is consistent with the bullish structure observed. The main area for improvement is the stop loss placement, a bit too tight relative to recent volatility.",
+    },
+    es: {
+      positives: ["Entrada coherente con la estructura", "Estructura alcista respetada", "Ratio riesgo/recompensa interesante"],
+      warnings: ["Stop loss un poco ajustado", "Entrada ligeramente anticipada"],
+      explanation:
+        "La entrada es coherente con la estructura alcista observada. El principal punto de mejora es la colocación del stop loss, un poco demasiado ajustado respecto a la volatilidad reciente.",
+    },
+  }[locale];
+  return { confidence: 81, score: 78, ...text };
+}
 
 type TradeForm = {
   asset: string; direction: string; timeframe: string; trade_type: string; result: string;
@@ -140,6 +155,8 @@ function BlockTitle({ children }: { children: ReactNode }) {
 export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; initial?: TradeEntryView | null }) {
   const t = useDict("journal");
   const c = t.capture;
+  const locale = useLocale();
+  const aiVerdict = getAiVerdict(locale);
   const isEdit = !!initial;
   const editMode: Mode = initial?.screenshot_url ? "capture" : "manual";
 
@@ -263,7 +280,14 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
     for (const k of optional) if (form[k]) fd.set(k, form[k]);
     if (imageFile) fd.set("screenshot", imageFile);
     startTransition(async () => {
-      const res = await createTradeEntry({ ok: false }, fd);
+      // Édition → updateTradeEntry (jamais de doublon) ; création → createTradeEntry.
+      let res;
+      if (isEdit && initial?.id) {
+        fd.set("id", initial.id);
+        res = await updateTradeEntry(fd);
+      } else {
+        res = await createTradeEntry({ ok: false }, fd);
+      }
       if (res.ok) onClose();
       else setSaveError(res.error ?? "generic");
     });
@@ -305,7 +329,24 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
                 <span className="inline-flex items-center bg-emerald-500 text-zinc-950 text-sm font-semibold px-5 py-2.5 rounded-xl">{c.s1.choose}</span>
               </button>
               <input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/webp,image/gif" className="hidden" onChange={(e) => onPickFile(e.target.files?.[0])} />
-              <button type="button" onClick={goManual} className="mt-7 text-sm text-zinc-400 hover:text-emerald-300 underline underline-offset-4 transition-colors">{c.s1.skip}</button>
+
+              {/* Carte d'aide — explique ce que la capture doit idéalement montrer */}
+              <div className="w-full mt-5 rounded-2xl border border-zinc-800 bg-zinc-900/40 px-4 py-3.5 text-left">
+                <p className="text-xs font-semibold text-zinc-300 mb-2.5">{c.s1.help.title}</p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
+                  {c.s1.help.items.map((it) => (
+                    <li key={it} className="flex items-start gap-2 text-xs text-zinc-400">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-emerald-400 shrink-0 mt-0.5" aria-hidden="true">
+                        <path d="M2.5 6.2l2.2 2.3L9.5 3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-[11px] text-zinc-500 mt-3 leading-relaxed">{c.s1.help.reassure}</p>
+              </div>
+
+              <button type="button" onClick={goManual} className="mt-6 text-sm text-zinc-400 hover:text-emerald-300 underline underline-offset-4 transition-colors">{c.s1.skip}</button>
             </div>
           )}
 
@@ -338,24 +379,24 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
               ) : (
                 <>
                   <div className="bg-gradient-to-br from-emerald-500/10 to-zinc-900/40 border border-emerald-500/20 rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-5">
-                    <ScoreGauge value={AI_VERDICT_MOCK.score} max={100} label={c.ai.score} />
+                    <ScoreGauge value={aiVerdict.score} max={100} label={c.ai.score} />
                     <div className="text-center sm:text-left">
-                      <span className="inline-flex items-center text-sm font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1.5">{c.ai.confidence} · {AI_VERDICT_MOCK.confidence}%</span>
+                      <span className="inline-flex items-center text-sm font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1.5">{c.ai.confidence} · {aiVerdict.confidence}%</span>
                       <p className="text-[11px] text-zinc-500 italic mt-3 max-w-xs">{c.s2.disclaimerSim}</p>
                     </div>
                   </div>
                   <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4">
                     <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2">{c.ai.explanation}</p>
-                    <p className="text-sm text-zinc-300 leading-relaxed">{AI_VERDICT_MOCK.explanation}</p>
+                    <p className="text-sm text-zinc-300 leading-relaxed">{aiVerdict.explanation}</p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4">
                       <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2.5">{c.ai.positives}</p>
-                      <ul className="space-y-2">{AI_VERDICT_MOCK.positives.map((p) => (<li key={p} className="flex items-start gap-2"><span className="w-4 h-4 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.2 2.3L9.5 3.5" stroke="#34d399" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg></span><span className="text-sm text-zinc-300">{p}</span></li>))}</ul>
+                      <ul className="space-y-2">{aiVerdict.positives.map((p) => (<li key={p} className="flex items-start gap-2"><span className="w-4 h-4 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.2 2.3L9.5 3.5" stroke="#34d399" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg></span><span className="text-sm text-zinc-300">{p}</span></li>))}</ul>
                     </div>
                     <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4">
                       <p className="text-[11px] font-semibold text-amber-400 uppercase tracking-wide mb-2.5">{c.ai.warnings}</p>
-                      <ul className="space-y-2">{AI_VERDICT_MOCK.warnings.map((w) => (<li key={w} className="flex items-start gap-2"><span className="w-4 h-4 rounded-full bg-amber-400/15 border border-amber-400/25 flex items-center justify-center shrink-0 mt-0.5"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2.5v4M6 8.5h.01" stroke="#fbbf24" strokeWidth="1.7" strokeLinecap="round" /></svg></span><span className="text-sm text-zinc-300">{w}</span></li>))}</ul>
+                      <ul className="space-y-2">{aiVerdict.warnings.map((w) => (<li key={w} className="flex items-start gap-2"><span className="w-4 h-4 rounded-full bg-amber-400/15 border border-amber-400/25 flex items-center justify-center shrink-0 mt-0.5"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2.5v4M6 8.5h.01" stroke="#fbbf24" strokeWidth="1.7" strokeLinecap="round" /></svg></span><span className="text-sm text-zinc-300">{w}</span></li>))}</ul>
                     </div>
                   </div>
                   <details className="border border-zinc-800 rounded-xl">

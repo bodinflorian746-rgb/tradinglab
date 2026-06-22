@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-type Locale = "fr" | "es";
+type Locale = "fr" | "es" | "en";
 
 function ChevronDown({ className = "" }: { className?: string }) {
   return (
@@ -75,8 +75,8 @@ const content: Record<
         a: "Oui. Ton accès est offert après ouverture du compte et dépôt validé chez un broker partenaire.",
       },
       {
-        q: "Est-ce que les brokers partenaires sont régulés ?",
-        a: "Oui. Nous travaillons uniquement avec des brokers régulés.",
+        q: "Mon dépôt est-il en sécurité ?",
+        a: "Ton dépôt reste sur ton compte broker personnel. TradeScaleX ne reçoit jamais tes fonds et n'a aucun accès à ton capital. Nous avons sélectionné nos brokers partenaires pour leur fiabilité opérationnelle et leurs conditions de trading.",
       },
       {
         q: "Est-ce que je peux récupérer mon argent à tout moment ?",
@@ -124,8 +124,8 @@ const content: Record<
         a: "Sí. Tu acceso se ofrece después de abrir tu cuenta y validar tu depósito con un broker asociado.",
       },
       {
-        q: "¿Los brokers asociados están regulados?",
-        a: "Sí. Trabajamos únicamente con brokers regulados.",
+        q: "¿Mi depósito está seguro?",
+        a: "Tu depósito permanece en tu cuenta de broker personal. TradeScaleX nunca recibe tus fondos ni tiene acceso a tu capital. Hemos seleccionado nuestros brokers asociados por su fiabilidad operativa y sus condiciones de trading.",
       },
       {
         q: "¿Puedo retirar mi dinero en cualquier momento?",
@@ -139,6 +139,55 @@ const content: Record<
     riskNote:
       "El trading conlleva un riesgo de pérdida de capital. Las condiciones del bono las establece el bróker y pueden evolucionar.",
   },
+  en: {
+    breadcrumbHome: "Home",
+    breadcrumbCurrent: "Access via a broker",
+    title: "Get free access to TradeScaleX",
+    subtitle:
+      "Choose your deposit amount, open your account with a partner broker, then receive your free access.",
+    chooseDepositTitle: "How much do you want to deposit?",
+    cards: [
+      {
+        amount: "Less than €1,000",
+        brokerLabel: "Recommended broker",
+        brokerName: "RaiseFX",
+        bonus: "100% margin bonus\nValid up to €2,000 deposit",
+        cta: "Choose RaiseFX",
+        url: "https://partners.raisefx.com/visit/?bta=168801&brand=raisefx",
+      },
+      {
+        amount: "€1,000 or more",
+        brokerLabel: "Recommended broker",
+        brokerName: "FXLift",
+        bonus: "40% tradable bonus",
+        cta: "Choose FXLift",
+        url: "https://go.fxlift.com/visit/?bta=35146&brand=fxlift",
+      },
+    ],
+    reassurance:
+      "The deposit stays in your broker account. TradeScaleX does not receive your funds.",
+    faqTitle: "Frequently asked questions",
+    faqs: [
+      {
+        q: "Is TradeScaleX access really free?",
+        a: "Yes. Your access is granted after opening your account and validating your deposit with a partner broker.",
+      },
+      {
+        q: "Is my deposit safe?",
+        a: "Your deposit stays in your personal broker account. TradeScaleX never receives your funds and has no access to your capital. We selected our partner brokers for their operational reliability and trading conditions.",
+      },
+      {
+        q: "Can I withdraw my money at any time?",
+        a: "Yes. Your deposit stays in your broker account. TradeScaleX never receives your funds.",
+      },
+      {
+        q: "When do I receive my access?",
+        a: "Once your deposit is verified, your access is activated quickly.",
+      },
+    ],
+    riskNote:
+      "Trading involves a risk of capital loss. Bonus conditions are set by the broker and may change.",
+  },
 };
 
 export default async function BrokerPage({
@@ -147,7 +196,7 @@ export default async function BrokerPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const lang: Locale = locale === "es" ? "es" : "fr";
+  const lang: Locale = locale === "es" ? "es" : locale === "en" ? "en" : "fr";
   const t = content[lang];
 
   return (

@@ -126,133 +126,152 @@ export default async function Home({
   // Dictionnaire local FR/ES pour les textes hardcodés (hors i18n classique)
   // FR reste la source ; ES traduit les mêmes clés pour /es
   // ───────────────────────────────────────────────────────────────────────────
-  const isEs = locale === "es";
   const T = {
     // T.hero retiré — désormais 100% géré par t.hero du dictionnaire.
-    // T.progression, T.poles, T.access, T.footer restent en FR/ES inline car
+    // T.progression, T.poles, T.access, T.footer restent en FR/ES/EN inline car
     // ces sections sont hors scope mockup F (parcours hexagones / footer).
 
     // Cartes statistiques sous le hero. Valeurs marketing figées (alignées
     // sur la maquette), pas dérivées de FORMATIONS pour rester stables.
     stats: [
-      { value: "48h", label: isEs ? "gratis" : "gratuites", icon: "timer" },
-      { value: "79", label: isEs ? "lecciones estructuradas" : "leçons structurées", icon: "book" },
-      { value: "8", label: isEs ? "estrategias explicadas" : "stratégies expliquées", icon: "target" },
-      { value: "4", label: isEs ? "juegos educativos" : "jeux éducatifs", icon: "layers" },
+      { value: "48h", label: locale === "es" ? "gratis" : locale === "en" ? "free" : "gratuites", icon: "timer" },
+      { value: "79", label: locale === "es" ? "lecciones estructuradas" : locale === "en" ? "structured lessons" : "leçons structurées", icon: "book" },
+      { value: "8", label: locale === "es" ? "estrategias explicadas" : locale === "en" ? "strategies explained" : "stratégies expliquées", icon: "target" },
+      { value: "4", label: locale === "es" ? "juegos educativos" : locale === "en" ? "educational games" : "jeux éducatifs", icon: "layers" },
     ],
-    discover: isEs ? "Descubrir" : "Découvrir",
+    discover: locale === "es" ? "Descubrir" : locale === "en" ? "Discover" : "Découvrir",
 
     // Bloc "Build ton trade" — panneau horizontal premium.
-    buildTag: isEs ? "Juego exclusivo incluido en la formación" : "Jeu exclusif inclus dans la formation",
-    buildCta: isEs ? "Descubrir el juego" : "Découvrir le jeu",
+    buildTag: locale === "es" ? "Juego exclusivo incluido en la formación" : locale === "en" ? "Exclusive game included in the course" : "Jeu exclusif inclus dans la formation",
+    buildCta: locale === "es" ? "Descubrir el juego" : locale === "en" ? "Discover the game" : "Découvrir le jeu",
     buildCards: [
-      { label: isEs ? "Escenario" : "Scénario", icon: "🎯", delta: "A+", bars: [10, 16, 12] },
-      { label: "Analyse", icon: "📊", delta: "+24%", bars: [14, 9, 18] },
-      { label: isEs ? "Decisiones" : "Décisions", icon: "⚡", delta: "1.8R", bars: [9, 15, 11] },
-      { label: isEs ? "Objetivos" : "Objectifs", icon: "🏆", delta: "92%", bars: [12, 18, 14] },
+      { label: locale === "es" ? "Escenario" : locale === "en" ? "Scenario" : "Scénario", icon: "🎯", delta: "A+", bars: [10, 16, 12] },
+      { label: locale === "en" ? "Analysis" : "Analyse", icon: "📊", delta: "+24%", bars: [14, 9, 18] },
+      { label: locale === "es" ? "Decisiones" : locale === "en" ? "Decisions" : "Décisions", icon: "⚡", delta: "1.8R", bars: [9, 15, 11] },
+      { label: locale === "es" ? "Objetivos" : locale === "en" ? "Targets" : "Objectifs", icon: "🏆", delta: "92%", bars: [12, 18, 14] },
     ],
 
     progression: {
-      title: isEs ? "Tu recorrido progresivo" : "Ton parcours progressif",
-      subtitle: isEs ? "Aprende paso a paso y desarrolla tus competencias" : "Apprends étape par étape et développe tes compétences",
-      debutantLabel: isEs ? "PRINCIPIANTE" : "DÉBUTANT",
-      debutantDesc: isEs ? "Aprende las bases" : "Apprends les bases",
-      intermediateLabel: isEs ? "INTERMEDIO" : "INTERMÉDIAIRE",
-      intermediateDesc: isEs ? "Refuerza tus competencias" : "Renforce tes compétences",
-      advancedLabel: isEs ? "AVANZADO" : "AVANCÉ",
-      advancedDesc: isEs ? "Domina los mercados" : "Maîtrise les marchés",
-      lessons: isEs ? "lecciones" : "leçons",
+      title: locale === "es" ? "Tu recorrido progresivo" : locale === "en" ? "Your progressive path" : "Ton parcours progressif",
+      subtitle: locale === "es" ? "Aprende paso a paso y desarrolla tus competencias" : locale === "en" ? "Learn step by step and build your skills" : "Apprends étape par étape et développe tes compétences",
+      debutantLabel: locale === "es" ? "PRINCIPIANTE" : locale === "en" ? "BEGINNER" : "DÉBUTANT",
+      debutantDesc: locale === "es" ? "Aprende las bases" : locale === "en" ? "Learn the basics" : "Apprends les bases",
+      intermediateLabel: locale === "es" ? "INTERMEDIO" : locale === "en" ? "INTERMEDIATE" : "INTERMÉDIAIRE",
+      intermediateDesc: locale === "es" ? "Refuerza tus competencias" : locale === "en" ? "Strengthen your skills" : "Renforce tes compétences",
+      advancedLabel: locale === "es" ? "AVANZADO" : locale === "en" ? "ADVANCED" : "AVANCÉ",
+      advancedDesc: locale === "es" ? "Domina los mercados" : locale === "en" ? "Master the markets" : "Maîtrise les marchés",
+      lessons: locale === "es" ? "lecciones" : locale === "en" ? "lessons" : "leçons",
     },
     poles: {
-      title: isEs ? "Un recorrido completo para todos los traders" : "Un parcours complet pour tous les traders",
-      subtitle: isEs ? "4 pilares esenciales para desarrollar tus competencias" : "4 pôles essentiels pour développer tes compétences",
-      cta: isEs ? "Ver los accesos" : "Voir les accès",
+      title: locale === "es" ? "Un recorrido completo para todos los traders" : locale === "en" ? "A complete path for every trader" : "Un parcours complet pour tous les traders",
+      subtitle: locale === "es" ? "4 pilares esenciales para desarrollar tus competencias" : locale === "en" ? "4 essential pillars to build your skills" : "4 pôles essentiels pour développer tes compétences",
+      cta: locale === "es" ? "Ver los accesos" : locale === "en" ? "View the plans" : "Voir les accès",
       trading: {
         title: "Trading",
-        desc: isEs ? "Domina las bases y construye setups sólidos." : "Maîtrise les bases et construis des setups solides.",
-        bullets: isEs
+        desc: locale === "es" ? "Domina las bases y construye setups sólidos." : locale === "en" ? "Master the basics and build solid setups." : "Maîtrise les bases et construis des setups solides.",
+        bullets: locale === "es"
           ? [`${debutantCount} lecciones principiante`, `${intermediaireCount} lecciones intermedio`, `${avanceCount} lecciones avanzado`, "Quiz y ejercicios"]
+          : locale === "en"
+          ? [`${debutantCount} beginner lessons`, `${intermediaireCount} intermediate lessons`, `${avanceCount} advanced lessons`, "Quizzes and exercises"]
           : [`${debutantCount} leçons débutant`, `${intermediaireCount} leçons intermédiaire`, `${avanceCount} leçons avancé`, "Quiz et exercices"],
       },
       macro: {
         title: "Macro",
-        desc: isEs ? "Entiende las fuerzas que mueven los mercados." : "Comprends les forces qui déplacent les marchés.",
-        bullets: isEs
+        desc: locale === "es" ? "Entiende las fuerzas que mueven los mercados." : locale === "en" ? "Understand the forces that move the markets." : "Comprends les forces qui déplacent les marchés.",
+        bullets: locale === "es"
           ? ["Análisis macroeconómicos", "Indicadores clave", "Eventos mayores", "Impacto en los mercados"]
+          : locale === "en"
+          ? ["Macroeconomic analysis", "Key indicators", "Major events", "Impact on the markets"]
           : ["Analyses macroéconomiques", "Indicateurs clés", "Événements majeurs", "Impact sur les marchés"],
       },
       strategies: {
-        title: isEs ? "Estrategias" : "Stratégies",
-        desc: isEs ? "Descubre y aplica estrategias probadas." : "Découvre et applique des stratégies éprouvées.",
-        bullets: isEs
+        title: locale === "es" ? "Estrategias" : locale === "en" ? "Strategies" : "Stratégies",
+        desc: locale === "es" ? "Descubre y aplica estrategias probadas." : locale === "en" ? "Discover and apply proven strategies." : "Découvre et applique des stratégies éprouvées.",
+        bullets: locale === "es"
           ? ["Estrategias rentables", "Planes de trading detallados", "Gestión del riesgo", "Backtests y casos reales"]
+          : locale === "en"
+          ? ["Profitable strategies", "Detailed trading plans", "Risk management", "Backtests and real cases"]
           : ["Stratégies rentables", "Plans de trading détaillés", "Gestion du risque", "Backtests et cas réels"],
       },
       games: {
-        title: isEs ? "Juegos" : "Jeux",
-        desc: isEs ? "Aprende divirtiéndote y pon a prueba tus competencias." : "Apprends en t'amusant et teste tes compétences.",
-        bullets: isEs
+        title: locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux",
+        desc: locale === "es" ? "Aprende divirtiéndote y pon a prueba tus competencias." : locale === "en" ? "Learn while having fun and test your skills." : "Apprends en t'amusant et teste tes compétences.",
+        bullets: locale === "es"
           ? ["Simulaciones realistas", "Retos diarios", "Rankings", "Recompensas"]
+          : locale === "en"
+          ? ["Realistic simulations", "Daily challenges", "Leaderboards", "Rewards"]
           : ["Simulations réalistes", "Défis quotidiens", "Classements", "Récompenses"],
       },
     },
     access: {
-      title: isEs ? "¿Cómo acceder?" : "Comment accéder ?",
-      subtitle: isEs ? "Dos vías pour unirte à la plataforma." : "Deux voies pour rejoindre la plateforme.",
+      title: locale === "es" ? "¿Cómo acceder?" : locale === "en" ? "How to get access?" : "Comment accéder ?",
+      subtitle: locale === "es" ? "Dos vías pour unirte à la plataforma." : locale === "en" ? "Two ways to join the platform." : "Deux voies pour rejoindre la plateforme.",
       trial: {
-        title: isEs ? "48h gratis" : "48h gratuites",
-        desc: isEs
+        title: locale === "es" ? "48h gratis" : locale === "en" ? "48h free" : "48h gratuites",
+        desc: locale === "es"
           ? "Prueba la plataforma durante 48h, sin compromiso."
+          : locale === "en"
+          ? "Try the platform for 48h, no commitment."
           : "Teste la plateforme pendant 48h, sans engagement.",
-        cta: isEs ? "Recibir mi código" : "Recevoir mon code",
+        cta: locale === "es" ? "Recibir mi código" : locale === "en" ? "Get my code" : "Recevoir mon code",
       },
       broker: {
-        badge: isEs ? "Recomendado" : "Recommandé",
-        title: isEs ? "Vía broker partner" : "Via broker partenaire",
+        badge: locale === "es" ? "Recomendado" : locale === "en" ? "Recommended" : "Recommandé",
+        title: locale === "es" ? "Vía broker partner" : locale === "en" ? "Via partner broker" : "Via broker partenaire",
         price: "0€",
-        desc: isEs
+        desc: locale === "es"
           ? "Abre una cuenta broker vía nuestro enlace de afiliación. Recibes después tu código de acceso por email."
+          : locale === "en"
+          ? "Open a broker account through our affiliate link. You then receive your access code by email."
           : "Tu ouvres un compte broker via notre lien d'affiliation. Tu reçois ensuite ton code d'accès par email.",
-        bullets: isEs
+        bullets: locale === "es"
           ? ["Apertura de cuenta broker partner", "Código enviado tras verificación", "Acceso completo a la plataforma"]
+          : locale === "en"
+          ? ["Open a partner broker account", "Code sent after verification", "Full access to the platform"]
           : ["Ouverture compte broker partenaire", "Code envoyé après vérification", "Accès complet à la plateforme"],
-        depositNote: isEs
+        depositNote: locale === "es"
           ? "Depósito 200 € en tu cuenta broker · tu dinero, retirable cuando quieras"
+          : locale === "en"
+          ? "€200 deposit into your broker account · your money, withdrawable at any time"
           : "Dépôt 200 € sur ton compte broker · ton argent, retirable à tout moment",
       },
       direct: {
-        title: isEs ? "Acceso directo" : "Accès direct",
+        title: locale === "es" ? "Acceso directo" : locale === "en" ? "Direct access" : "Accès direct",
         price: "19€",
-        period: isEs ? "/mes" : "/mois",
-        desc: isEs
+        period: locale === "es" ? "/mes" : locale === "en" ? "/month" : "/mois",
+        desc: locale === "es"
           ? "Abono mensual sin afiliación broker. Código generado automáticamente al pagar."
+          : locale === "en"
+          ? "Monthly subscription with no broker affiliation. Code generated automatically on payment."
           : "Abonnement mensuel sans affiliation broker. Code généré automatiquement au paiement.",
-        bullets: isEs
+        bullets: locale === "es"
           ? ["Abono mensual", "Código generado al pagar", "Acceso completo a la plataforma"]
+          : locale === "en"
+          ? ["Monthly subscription", "Code generated on payment", "Full access to the platform"]
           : ["Abonnement mensuel", "Code généré au paiement", "Accès complet à la plateforme"],
       },
-      cta: isEs ? "Ver el detalle" : "Voir le détail",
+      cta: locale === "es" ? "Ver el detalle" : locale === "en" ? "View the details" : "Voir le détail",
     },
     footer: {
-      taglineL1: isEs ? "Aprende, comprende, progresa." : "Apprends, comprends, progresse.",
-      taglineL2: isEs ? "De principiante a rentable." : "De débutant à rentable.",
-      platform: isEs ? "Plataforma" : "Plateforme",
-      account: isEs ? "Cuenta" : "Compte",
-      resources: isEs ? "Recursos" : "Ressources",
-      profile: isEs ? "Mi perfil" : "Mon profil",
-      progress: isEs ? "Mi progreso" : "Ma progression",
-      settings: isEs ? "Configuración" : "Paramètres",
-      pricing: isEs ? "Nuestros accesos" : "Nos accès",
-      about: isEs ? "Sobre nosotros" : "À propos",
-      contact: isEs ? "Contacto" : "Contact",
-      newsletter: isEs ? "Mantente informado" : "Reste informé",
-      newsletterDesc: isEs ? "Recibe consejos, novedades y actualizaciones." : "Reçois des conseils, les nouveautés et les mises à jour.",
-      emailPlaceholder: isEs ? "Tu email" : "Ton email",
-      subscribe: isEs ? "Suscribirme" : "S'abonner",
-      copyright: isEs ? "© 2025 TradeScaleX. Todos los derechos reservados." : "© 2025 TradeScaleX. Tous droits réservés.",
-      legalNotice: isEs ? "Aviso legal" : "Mentions légales",
-      terms: isEs ? "Términos de uso" : "Conditions d'utilisation",
-      privacy: isEs ? "Política de privacidad" : "Politique de confidentialité",
+      taglineL1: locale === "es" ? "Aprende, comprende, progresa." : locale === "en" ? "Learn, understand, progress." : "Apprends, comprends, progresse.",
+      taglineL2: locale === "es" ? "De principiante a rentable." : locale === "en" ? "From beginner to profitable." : "De débutant à rentable.",
+      platform: locale === "es" ? "Plataforma" : locale === "en" ? "Platform" : "Plateforme",
+      account: locale === "es" ? "Cuenta" : locale === "en" ? "Account" : "Compte",
+      resources: locale === "es" ? "Recursos" : locale === "en" ? "Resources" : "Ressources",
+      profile: locale === "es" ? "Mi perfil" : locale === "en" ? "My profile" : "Mon profil",
+      progress: locale === "es" ? "Mi progreso" : locale === "en" ? "My progress" : "Ma progression",
+      settings: locale === "es" ? "Configuración" : locale === "en" ? "Settings" : "Paramètres",
+      pricing: locale === "es" ? "Nuestros accesos" : locale === "en" ? "Plans" : "Nos accès",
+      about: locale === "es" ? "Sobre nosotros" : locale === "en" ? "About" : "À propos",
+      contact: locale === "es" ? "Contacto" : locale === "en" ? "Contact" : "Contact",
+      newsletter: locale === "es" ? "Mantente informado" : locale === "en" ? "Stay informed" : "Reste informé",
+      newsletterDesc: locale === "es" ? "Recibe consejos, novedades y actualizaciones." : locale === "en" ? "Get tips, news and updates." : "Reçois des conseils, les nouveautés et les mises à jour.",
+      emailPlaceholder: locale === "es" ? "Tu email" : locale === "en" ? "Your email" : "Ton email",
+      subscribe: locale === "es" ? "Suscribirme" : locale === "en" ? "Subscribe" : "S'abonner",
+      copyright: locale === "es" ? "© 2025 TradeScaleX. Todos los derechos reservados." : locale === "en" ? "© 2025 TradeScaleX. All rights reserved." : "© 2025 TradeScaleX. Tous droits réservés.",
+      legalNotice: locale === "es" ? "Aviso legal" : locale === "en" ? "Legal notice" : "Mentions légales",
+      terms: locale === "es" ? "Términos de uso" : locale === "en" ? "Terms of use" : "Conditions d'utilisation",
+      privacy: locale === "es" ? "Política de privacidad" : locale === "en" ? "Privacy policy" : "Política de confidentialité",
     },
   };
 

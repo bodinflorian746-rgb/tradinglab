@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as FrGame from "@/lib/games/build-the-trade";
 import * as EsGame from "@/lib/games/build-the-trade-es";
+import * as EnGame from "@/lib/games/build-the-trade-en";
 import {
   evaluateTrade,
   ROUNDS_PER_SESSION,
@@ -21,8 +22,10 @@ import { logGameEvent } from "@/lib/trader-profile";
 
 const BIAS_LABEL_FR  = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
 const BIAS_LABEL_ES  = { bullish: "Alcista", bearish: "Bajista", range: "Range" } as const;
+const BIAS_LABEL_EN  = { bullish: "Bullish", bearish: "Bearish", range: "Range" } as const;
 const MACRO_LABEL_FR = { normal: "Normal", dangereux: "Dangereux" } as const;
 const MACRO_LABEL_ES = { normal: "Normal", dangereux: "Peligroso" } as const;
+const MACRO_LABEL_EN = { normal: "Normal", dangereux: "Dangerous" } as const;
 const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced"];
 
 const ENTRY_TYPES: EntryType[] = ["aggressive", "confirmation", "deep_pullback"];
@@ -41,11 +44,10 @@ const EMPTY_STATS: SessionStats = { perfectSetups: 0, tpHits: 0, slHits: 0 };
 export default function BuildTheTradePage() {
   const params = useParams<{ locale: string }>();
   const locale = params?.locale;
-  const G = locale === "es" ? EsGame : FrGame;
-  const isEs = locale === "es";
-  const BIAS_LABEL = isEs ? BIAS_LABEL_ES : BIAS_LABEL_FR;
-  const MACRO_LABEL = isEs ? MACRO_LABEL_ES : MACRO_LABEL_FR;
-  const T = isEs
+  const G = locale === "es" ? EsGame : locale === "en" ? EnGame : FrGame;
+  const BIAS_LABEL = locale === "es" ? BIAS_LABEL_ES : locale === "en" ? BIAS_LABEL_EN : BIAS_LABEL_FR;
+  const MACRO_LABEL = locale === "es" ? MACRO_LABEL_ES : locale === "en" ? MACRO_LABEL_EN : MACRO_LABEL_FR;
+  const T = locale === "es"
     ? {
         games:            "Juegos",
         round:            "Ronda",
@@ -97,6 +99,59 @@ export default function BuildTheTradePage() {
         volLow:           "baja",
         volNormal:        "normal",
         volHigh:          "alta",
+      }
+    : locale === "en"
+    ? {
+        games:            "Games",
+        round:            "Round",
+        score:            "Score",
+        consecutivePerfect: "perfect setups in a row",
+        loading:          "Loading…",
+        htf:              "HTF",
+        macro:            "Macro",
+        volatility:       "Volatility",
+        entry:            "ENTRY",
+        stopLoss:         "STOP LOSS",
+        takeProfit:       "TAKE PROFIT",
+        validateTrade:    "Validate the trade",
+        risk:             "Risk",
+        reward:           "Reward",
+        rr:               "R/R",
+        revelation:       "Reveal",
+        revealText:       "Let's see how the market behaves with your plan…",
+        outcome:          "Outcome",
+        tpHit:            "TP hit ✓",
+        slHit:            "SL hit ✗",
+        noFill:           "No entry",
+        tradeOpen:        "Trade open",
+        rrRealized:       "R/R realized",
+        drawdown:         "Drawdown",
+        optimalPlan:      "Optimal plan",
+        entryLabel:       "Entry",
+        stopLabel:        "Stop",
+        tpLabel:          "Take Prof",
+        optimalSetup:     "Optimal setup",
+        lesson:           "Lesson",
+        viewSummary:      "View the summary",
+        nextScenario:     "Next scenario",
+        skills:           "Skills",
+        perfectSetups:    "Perfect setups",
+        tpHits:           "TP hits",
+        slHits:           "SL hits",
+        buildTitle:       "Build the Trade",
+        buildHeading:     "Build the setup",
+        buildIntro:       "scenarios. For each one, you choose the entry, the stop loss and the take profit. The market then reveals what happened. RR, drawdown, verdict.",
+        summary:          "Summary",
+        setupsBuilt:      "setups built",
+        replayIn:         "Replay in",
+        changeLevel:      "Change level",
+        vol:              "Vol.",
+        spread:           "Spread",
+        spreadLow:        "low",
+        spreadHigh:       "high",
+        volLow:           "low",
+        volNormal:        "normal",
+        volHigh:          "high",
       }
     : {
         games:            "Jeux",
@@ -229,7 +284,7 @@ export default function BuildTheTradePage() {
   }, [phase, revealed, chart]);
 
   if (!difficulty || !seed) {
-    return <DifficultyPicker isEs={isEs} difficultyMeta={G.DIFFICULTY_META} onPick={(d) => {
+    return <DifficultyPicker locale={locale} difficultyMeta={G.DIFFICULTY_META} onPick={(d) => {
       const s = Math.floor(Math.random() * 1e9) >>> 0;
       setDifficulty(d);
       setSeed(s);
@@ -394,8 +449,8 @@ export default function BuildTheTradePage() {
               }`}>{current.direction}</span>
             </div>
             <div className="flex items-center gap-2 text-[10px]">
-              <VolBadge volatility={current.volatility} T={T} isEs={isEs} />
-              <SpreadBadge spread={current.spread} T={T} isEs={isEs} />
+              <VolBadge volatility={current.volatility} T={T} />
+              <SpreadBadge spread={current.spread} T={T} />
             </div>
           </div>
 
@@ -451,7 +506,7 @@ export default function BuildTheTradePage() {
             <InfoTile label={T.htf}        value={BIAS_LABEL[current.htfBias]}        colorClass={biasClass(current.htfBias)} />
             <InfoTile label={T.macro}      value={MACRO_LABEL[current.macroContext]}  colorClass={current.macroContext === "dangereux" ? "text-red-400" : "text-zinc-300"} />
             {difficulty !== "advanced" && (
-              <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, isEs))} colorClass="text-zinc-300" />
+              <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} colorClass="text-zinc-300" />
             )}
           </div>
 
@@ -521,7 +576,7 @@ export default function BuildTheTradePage() {
 
 // ─── Difficulty picker ────────────────────────────────────────────────────────
 
-function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; isEs: boolean }) {
+function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; locale: string | undefined }) {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
       <div className="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
@@ -529,16 +584,18 @@ function DifficultyPicker({ onPick, difficultyMeta, isEs }: { onPick: (d: Diffic
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
             <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          {isEs ? "Juegos" : "Jeux"}
+          {locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux"}
         </Link>
 
         <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
           Build the Trade
         </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{isEs ? "Construye el setup" : "Construis le setup"}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{locale === "es" ? "Construye el setup" : locale === "en" ? "Build the setup" : "Construis le setup"}</h1>
         <p className="text-zinc-400 text-sm leading-relaxed mb-8">
-          {isEs
+          {locale === "es"
             ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, eliges la entrada, el stop loss y el take profit. El mercado revela después lo que pasó. RR, drawdown, veredicto.`
+            : locale === "en"
+            ? `${ROUNDS_PER_SESSION} scenarios. For each one, you choose the entry, the stop loss and the take profit. The market then reveals what happened. RR, drawdown, verdict.`
             : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, tu choisis l'entrée, le stop loss et le take profit. Le marché révèle ensuite ce qui s'est passé. RR, drawdown, verdict.`}
         </p>
 
@@ -917,30 +974,27 @@ function StatTile({ label, value }: { label: string; value: string }) {
   );
 }
 
-function VolBadge({ volatility, T, isEs }: { volatility: "faible" | "normale" | "élevée"; T: { [k: string]: string }; isEs: boolean }) {
+function VolBadge({ volatility, T }: { volatility: "faible" | "normale" | "élevée"; T: { [k: string]: string } }) {
   const cls =
     volatility === "élevée"  ? "text-amber-400 border-amber-400/30"
   : volatility === "faible"  ? "text-zinc-500 border-zinc-700"
   :                            "text-zinc-400 border-zinc-700";
-  const label = isEs
-    ? (volatility === "élevée" ? T.volHigh : volatility === "faible" ? T.volLow : T.volNormal)
-    : volatility;
+  const label = volatility === "élevée" ? T.volHigh : volatility === "faible" ? T.volLow : T.volNormal;
   return <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>{T.vol} {label}</span>;
 }
 
-function SpreadBadge({ spread, T, isEs }: { spread: "faible" | "élevé"; T: { [k: string]: string }; isEs: boolean }) {
+function SpreadBadge({ spread, T }: { spread: "faible" | "élevé"; T: { [k: string]: string } }) {
   const cls = spread === "élevé"
     ? "text-amber-400 border-amber-400/30"
     : "text-zinc-500 border-zinc-700";
-  const label = isEs
-    ? (spread === "élevé" ? T.spreadHigh : T.spreadLow)
-    : spread;
+  const label = spread === "élevé" ? T.spreadHigh : T.spreadLow;
   return <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>{T.spread} {label}</span>;
 }
 
-function translateVolatility(v: "faible" | "normale" | "élevée", isEs: boolean): string {
-  if (!isEs) return v;
-  return v === "élevée" ? "alta" : v === "faible" ? "baja" : "normal";
+function translateVolatility(v: "faible" | "normale" | "élevée", locale: string | undefined): string {
+  if (locale === "es") return v === "élevée" ? "alta" : v === "faible" ? "baja" : "normal";
+  if (locale === "en") return v === "élevée" ? "high" : v === "faible" ? "low" : "normal";
+  return v;
 }
 
 function DifficultyChip({ difficulty, difficultyMeta }: { difficulty: Difficulty; difficultyMeta: typeof FrGame.DIFFICULTY_META }) {
