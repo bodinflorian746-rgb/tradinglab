@@ -1,22 +1,4 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
-
-// Garde serveur : vérifie la session Supabase avant de rendre toute page
-// du segment /dashboard. Redirige vers /[locale]/pricing si anonyme.
-export default async function ProtectedLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect(`/${locale}/pricing`);
-  }
-
-  return <>{children}</>;
-}
+// Segment /dashboard — section strictement personnelle, intégralement premium.
+// Verrouillée par le garde générique : anonyme ou non premium → écran de
+// verrouillage ; premium / trial 48h actif / admin → accès complet.
+export { default } from "@/app/components/premium/LockedContentLayout";

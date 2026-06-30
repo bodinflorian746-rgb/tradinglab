@@ -7,74 +7,18 @@
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import { requestTrialCode } from "@/app/[locale]/pricing/actions";
+import { PAYWALL_STRINGS, type PaywallReason } from "./paywall-strings";
 
-export type PaywallReason = "trial_expired" | "not_logged_in";
+// Ré-export pour compatibilité des imports existants (PremiumGate, etc.).
+export type { PaywallReason };
 
 type PremiumPaywallProps = {
   locale: Locale;
   reason: PaywallReason;
 };
 
-type Strings = {
-  eyebrow: string;
-  titleLocked: string;
-  titleHasCode: string;
-  subtitleNotLoggedIn: string;
-  subtitleHasCode: string;
-  ctaSignup: string;
-  ctaActivate: string;
-  ctaRequestCode: string;
-  ctaSubscribe: string;
-  ctaLogin: string;
-};
-
-const STRINGS: Record<Locale, Strings> = {
-  fr: {
-    eyebrow: "Accès Premium",
-    titleLocked: "Accès Premium requis",
-    titleHasCode: "Active tes 48h gratuites",
-    subtitleNotLoggedIn:
-      "Crée ton compte pour profiter de 48h d'essai gratuit, puis débloque tout TradeScaleX.",
-    subtitleHasCode:
-      "Reçois un code par email pour débloquer 48h gratuites, ou utilise un code que tu as déjà reçu.",
-    ctaSignup: "Essayer 48h gratuit",
-    ctaActivate: "J'ai mon code",
-    ctaRequestCode: "Recevoir mes 48h gratuites",
-    ctaSubscribe: "Voir nos accès",
-    ctaLogin: "Se connecter",
-  },
-  en: {
-    eyebrow: "Premium access",
-    titleLocked: "Premium access required",
-    titleHasCode: "Activate your 48h free trial",
-    subtitleNotLoggedIn:
-      "Sign up to start your 48h free trial, then unlock the full TradeScaleX experience.",
-    subtitleHasCode:
-      "You received a code by email when you signed up. Enter it to activate your 48h free trial and unlock all of TradeScaleX.",
-    ctaSignup: "Start 48h free trial",
-    ctaActivate: "I have my code",
-    ctaRequestCode: "Get my 48h free trial",
-    ctaSubscribe: "See plans",
-    ctaLogin: "Log in",
-  },
-  es: {
-    eyebrow: "Acceso Premium",
-    titleLocked: "Acceso Premium requerido",
-    titleHasCode: "Activa tus 48 h gratis",
-    subtitleNotLoggedIn:
-      "Crea tu cuenta para empezar una prueba gratuita de 48 h y desbloquear todo TradeScaleX.",
-    subtitleHasCode:
-      "Recibe un código por email para desbloquear 48 h gratuitas, o utiliza un código que ya hayas recibido.",
-    ctaSignup: "Probar 48 h gratis",
-    ctaActivate: "Tengo mi código",
-    ctaRequestCode: "Recibir mis 48 h gratis",
-    ctaSubscribe: "Ver nuestros accesos",
-    ctaLogin: "Iniciar sesión",
-  },
-};
-
 export function PremiumPaywall({ locale, reason }: PremiumPaywallProps) {
-  const t = STRINGS[locale];
+  const t = PAYWALL_STRINGS[locale];
   const isNotLoggedIn = reason === "not_logged_in";
 
   // Connecté mais non premium (trial_expired) → action principale = recevoir le

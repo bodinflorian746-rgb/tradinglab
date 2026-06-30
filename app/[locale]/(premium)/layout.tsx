@@ -1,23 +1,20 @@
 // Layout du Route Group (premium).
-// Wrappe toutes les pages gatées (dashboard, formations, jeux, profil-trader,
-// strategies) via PremiumGate. Les parenthèses dans le nom de dossier sont
-// la convention Next.js pour un Route Group : aucun impact sur les URLs.
 //
-// Toute page placée sous ce dossier déclenche la vérif premium.
+// Ce groupe ne verrouille PLUS tout en bloc. Modèle d'accès :
+//   - Les pages de liste / index (hub formations, niveaux, modules, liste des
+//     jeux, listes de stratégies) sont librement consultables par les visiteurs.
+//   - Chaque *contenu* détaillé (leçon, stratégie, jeu) est verrouillé par son
+//     propre layout feuille (LockedContentLayout).
+//   - Les sections strictement personnelles (dashboard, journal, profil-trader,
+//     compte) restent intégralement premium via leur layout dédié.
+//
+// Ce layout ne fait donc qu'appliquer la palette globale `.app-bg` (dégradé +
+// halos, règles couleur-only scopées sous .app-bg dans globals.css) à tout le
+// premium. Les parenthèses du dossier sont un Route Group Next.js : aucun
+// impact sur les URLs.
 
 import type { ReactNode } from "react";
-import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
-import { PremiumGate } from "@/app/components/premium/PremiumGate";
 
-export default async function PremiumLayout({
-  children,
-  params,
-}: {
-  children: ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
-  const raw = (await params).locale;
-  const locale: Locale = hasLocale(raw) ? raw : DEFAULT_LOCALE;
-
-  return <PremiumGate locale={locale}>{children}</PremiumGate>;
+export default function PremiumLayout({ children }: { children: ReactNode }) {
+  return <div className="app-bg">{children}</div>;
 }

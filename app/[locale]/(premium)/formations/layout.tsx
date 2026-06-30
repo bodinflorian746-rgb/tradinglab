@@ -1,23 +1,15 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+// Segment /formations/* — accès libre aux pages de liste / index.
+//
+// Le hub formations, les niveaux (débutant/intermédiaire/avancé) et les hubs
+// Macro sont des pages de présentation (titres, descriptions, durées, niveaux)
+// consultables sans compte. L'intérieur de chaque leçon reste verrouillé par
+// son propre layout feuille (LockedContentLayout). Plus aucune redirection
+// anonyme ici.
 
-// Garde serveur : vérifie la session Supabase avant de rendre toute page
-// du segment /formations/* (toutes les formations + leçons enfants).
-// Redirige vers /[locale]/pricing si anonyme.
-export default async function ProtectedLayout({
+export default function FormationsLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect(`/${locale}/pricing`);
-  }
-
   return <>{children}</>;
 }

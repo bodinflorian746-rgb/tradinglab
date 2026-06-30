@@ -1,23 +1,14 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+// Segment /jeux/* — accès libre à la liste des jeux.
+//
+// La page liste des jeux (cartes de présentation : titres, descriptions) est
+// consultable sans compte. L'intérieur de chaque jeu reste verrouillé par son
+// propre layout feuille (LockedContentLayout). Plus aucune redirection anonyme
+// ici.
 
-// Garde serveur : vérifie la session Supabase avant de rendre toute page
-// du segment /jeux/* (hub + tous les mini-jeux).
-// Redirige vers /[locale]/pricing si anonyme.
-export default async function ProtectedLayout({
+export default function JeuxLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect(`/${locale}/pricing`);
-  }
-
   return <>{children}</>;
 }

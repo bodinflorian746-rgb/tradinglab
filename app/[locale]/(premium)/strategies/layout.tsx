@@ -1,23 +1,14 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+// Segment /strategies/* — accès libre aux pages de liste / index.
+//
+// Le hub stratégies et les vues d'ensemble de chaque module sont consultables
+// sans compte (titres, descriptions, niveaux). L'intérieur de chaque leçon de
+// stratégie reste verrouillé par son propre layout feuille
+// (LockedContentLayout). Plus aucune redirection anonyme ici.
 
-// Garde serveur : vérifie la session Supabase avant de rendre toute page
-// du segment /strategies/* (hub + tous les modules + toutes les leçons).
-// Redirige vers /[locale]/pricing si anonyme.
-export default async function ProtectedLayout({
+export default function StrategiesLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect(`/${locale}/pricing`);
-  }
-
   return <>{children}</>;
 }
