@@ -42,7 +42,83 @@
     "seeDetails": "Detalles",
     "edit": "Editar",
     "delete": "Eliminar",
+    "duplicate": "Duplicar",
     "confirmDelete": "¿Eliminar esta operación? Esta acción es definitiva."
+  },
+  "insights": {
+    "title": "Tu análisis real",
+    "subtitle": "Calculado sobre tus operaciones ganadas/perdidas.",
+    "notEnough": "Aún no hay suficientes datos.",
+    "notEnoughHint": "Añade más operaciones cerradas (ganadas o perdidas) para desbloquear tu análisis real.",
+    "bestSetup": "Mejor setup",
+    "worstSetup": "Setup a vigilar",
+    "bestSession": "Mejor sesión",
+    "worstSession": "Sesión difícil",
+    "bestDirection": "Mejor dirección",
+    "worstDirection": "Dirección difícil",
+    "topMistake": "Error más frecuente",
+    "planRespect": "Plan vs resultado",
+    "planYes": "Con plan",
+    "planNo": "Fuera de plan",
+    "winEmotion": "Emoción en ganancias",
+    "lossEmotion": "Emoción en pérdidas",
+    "winrateShort": "WR",
+    "trades": "operaciones",
+    "occurrences": "veces"
+  },
+  "filters": {
+    "asset": "Activo",
+    "result": "Resultado",
+    "timeframe": "Timeframe",
+    "setup": "Setup",
+    "period": "Período",
+    "periodAll": "Todo el período",
+    "period7": "7 días",
+    "period30": "30 días",
+    "period90": "90 días",
+    "reset": "Restablecer",
+    "count": "{n} operación(es)",
+    "noMatch": "Ninguna operación coincide con estos filtros."
+  },
+  "coach": {
+    "scoresTitle": "Tus puntuaciones reales",
+    "scoresSubtitle": "Calculadas sobre tus operaciones, con el detalle.",
+    "notEnough": "No hay suficientes datos",
+    "basedOn": "sobre {n} operaciones",
+    "overall": "Puntuación global",
+    "weight": "peso",
+    "scores": {
+      "discipline": "Disciplina",
+      "execution": "Ejecución",
+      "psychology": "Psicología"
+    },
+    "parts": {
+      "plan_respect": "Respeto del plan",
+      "out_of_plan_avoided": "Operaciones fuera de plan evitadas",
+      "mistake_free": "Operaciones sin error",
+      "winrate": "Eficacia (winrate)",
+      "rr_quality": "Calidad del R/R",
+      "stability": "Estabilidad de resultados",
+      "process": "Proceso documentado",
+      "calm_before": "Entradas serenas",
+      "risk_free": "Comportamientos controlados",
+      "calm_during": "Calma en posición"
+    },
+    "level": {
+      "current": "Nivel actual",
+      "next": "Próximo nivel",
+      "debutant": "Principiante",
+      "en_progression": "En progresión",
+      "discipline": "Disciplinado",
+      "confirme": "Consolidado",
+      "avance": "Avanzado"
+    },
+    "objectives": {
+      "respect_plan": "Respetar tu plan en 5 operaciones seguidas",
+      "reduce_mistake": "Reducir «{x}» en tus próximas 5 operaciones",
+      "calm_entries": "Entrar solo en estado de calma en 5 operaciones",
+      "keep_consistency": "Mantener tu regularidad en 5 operaciones"
+    }
   },
   "ai": {
     "badge": {
@@ -135,7 +211,20 @@
       "subtitle": "TradingView, MT4, MT5, cTrader o una captura normal.",
       "dropzone": "Arrastra una imagen, pega (Ctrl+V) o haz clic para elegir",
       "choose": "Elegir un archivo",
-      "skip": "Continuar sin captura"
+      "skip": "Continuar sin captura",
+      "help": {
+        "title": "Para un mejor análisis, tu captura debería mostrar:",
+        "items": [
+          "El activo operado (si es posible)",
+          "La temporalidad (si es posible)",
+          "Tu zona de entrada",
+          "Tu stop loss",
+          "Tu take profit",
+          "El movimiento del precio alrededor de la operación",
+          "Tus anotaciones de TradingView / MT4 / MT5"
+        ],
+        "reassure": "Si alguna información no es visible, podrás completarla o corregirla en el siguiente paso."
+      }
     },
     "s2": {
       "title": "Análisis de la operación",
@@ -214,7 +303,26 @@
     "behaviorsWorse": "Rindes peor",
     "goalProgress": "{done} días de {target}",
     "levelCurrent": "Nivel actual",
-    "levelNext": "Hacia"
+    "levelNext": "Hacia",
+    "real": {
+      "intro": "Analicé tus {n} operaciones. Esto es lo que observo en tu comportamiento — no en el mercado.",
+      "basedOn": "Basado en {n} operaciones",
+      "notEnoughTitle": "Datos insuficientes",
+      "notEnoughBody": "Añade más operaciones cerradas (ganadas o perdidas) para desbloquear tu análisis completo.",
+      "noTrades": "Aún no hay operaciones. Añade tu primera operación para iniciar tu análisis.",
+      "strengthSetup": "Rindes bien en {x}",
+      "strengthSession": "Eres más eficaz en la sesión {x}",
+      "strengthDirection": "Te va mejor en {x}",
+      "strengthDiscipline": "Buena disciplina global",
+      "strengthEmotion": "Ganas sobre todo en un estado {x}",
+      "noStrengths": "Aún no hay un punto fuerte destacado.",
+      "weaknessSetup": "Setup a mejorar: {x}",
+      "weaknessSession": "Sesión difícil: {x}",
+      "weaknessMistake": "Error recurrente: {x}",
+      "weaknessOutOfPlan": "Demasiadas operaciones fuera de plan",
+      "weaknessEmotion": "A menudo pierdes en un estado {x}",
+      "noWeaknesses": "No se detecta ningún área crítica."
+    }
   },
   "command": {
     "coachTitle": "Tu coach IA",

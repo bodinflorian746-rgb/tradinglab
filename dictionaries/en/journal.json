@@ -42,7 +42,83 @@
     "seeDetails": "Details",
     "edit": "Edit",
     "delete": "Delete",
+    "duplicate": "Duplicate",
     "confirmDelete": "Delete this trade? This cannot be undone."
+  },
+  "insights": {
+    "title": "Your real analysis",
+    "subtitle": "Computed from your won/lost trades.",
+    "notEnough": "Not enough data yet.",
+    "notEnoughHint": "Add more closed trades (won or lost) to unlock your real analysis.",
+    "bestSetup": "Best setup",
+    "worstSetup": "Setup to watch",
+    "bestSession": "Best session",
+    "worstSession": "Tough session",
+    "bestDirection": "Best direction",
+    "worstDirection": "Tough direction",
+    "topMistake": "Most frequent mistake",
+    "planRespect": "Plan vs result",
+    "planYes": "With plan",
+    "planNo": "Off plan",
+    "winEmotion": "Winning emotion",
+    "lossEmotion": "Losing emotion",
+    "winrateShort": "WR",
+    "trades": "trades",
+    "occurrences": "times"
+  },
+  "filters": {
+    "asset": "Asset",
+    "result": "Result",
+    "timeframe": "Timeframe",
+    "setup": "Setup",
+    "period": "Period",
+    "periodAll": "All time",
+    "period7": "7 days",
+    "period30": "30 days",
+    "period90": "90 days",
+    "reset": "Reset",
+    "count": "{n} trade(s)",
+    "noMatch": "No trade matches these filters."
+  },
+  "coach": {
+    "scoresTitle": "Your real scores",
+    "scoresSubtitle": "Computed from your trades, with the breakdown.",
+    "notEnough": "Not enough data",
+    "basedOn": "over {n} trades",
+    "overall": "Overall score",
+    "weight": "weight",
+    "scores": {
+      "discipline": "Discipline",
+      "execution": "Execution",
+      "psychology": "Psychology"
+    },
+    "parts": {
+      "plan_respect": "Plan adherence",
+      "out_of_plan_avoided": "Off-plan trades avoided",
+      "mistake_free": "Mistake-free trades",
+      "winrate": "Efficiency (win rate)",
+      "rr_quality": "R/R quality",
+      "stability": "Result stability",
+      "process": "Documented process",
+      "calm_before": "Calm entries",
+      "risk_free": "Controlled behavior",
+      "calm_during": "Calm in position"
+    },
+    "level": {
+      "current": "Current level",
+      "next": "Next tier",
+      "debutant": "Beginner",
+      "en_progression": "Progressing",
+      "discipline": "Disciplined",
+      "confirme": "Seasoned",
+      "avance": "Advanced"
+    },
+    "objectives": {
+      "respect_plan": "Stick to your plan on 5 trades in a row",
+      "reduce_mistake": "Reduce \"{x}\" over your next 5 trades",
+      "calm_entries": "Enter only in a calm state on 5 trades",
+      "keep_consistency": "Keep your consistency over 5 trades"
+    }
   },
   "ai": {
     "badge": {
@@ -135,7 +211,20 @@
       "subtitle": "TradingView, MT4, MT5, cTrader or a regular screenshot.",
       "dropzone": "Drop an image, paste (Ctrl+V) or click to choose",
       "choose": "Choose a file",
-      "skip": "Continue without a screenshot"
+      "skip": "Continue without a screenshot",
+      "help": {
+        "title": "For a better analysis, your screenshot should show:",
+        "items": [
+          "The traded asset (if possible)",
+          "The timeframe (if possible)",
+          "Your entry zone",
+          "Your stop loss",
+          "Your take profit",
+          "The price movement around your trade",
+          "Your TradingView / MT4 / MT5 annotations"
+        ],
+        "reassure": "If some information isn't visible, you'll be able to complete or correct it in the next step."
+      }
     },
     "s2": {
       "title": "Trade analysis",
@@ -214,7 +303,26 @@
     "behaviorsWorse": "You perform worse",
     "goalProgress": "{done} days out of {target}",
     "levelCurrent": "Current level",
-    "levelNext": "Towards"
+    "levelNext": "Towards",
+    "real": {
+      "intro": "I analyzed your {n} trades. Here's what I notice in your behavior — not in the market.",
+      "basedOn": "Based on {n} trades",
+      "notEnoughTitle": "Not enough data",
+      "notEnoughBody": "Add more closed trades (won or lost) to unlock your full analysis.",
+      "noTrades": "No trade yet. Add your first trade to start your analysis.",
+      "strengthSetup": "You perform well on {x}",
+      "strengthSession": "You're more effective in the {x} session",
+      "strengthDirection": "You do better on {x}",
+      "strengthDiscipline": "Good overall discipline",
+      "strengthEmotion": "You win mostly in a {x} state",
+      "noStrengths": "No standout strength yet.",
+      "weaknessSetup": "Setup to rework: {x}",
+      "weaknessSession": "Tough session: {x}",
+      "weaknessMistake": "Recurring mistake: {x}",
+      "weaknessOutOfPlan": "Too many off-plan trades",
+      "weaknessEmotion": "You often lose in a {x} state",
+      "noWeaknesses": "No critical area detected."
+    }
   },
   "command": {
     "coachTitle": "Your AI coach",

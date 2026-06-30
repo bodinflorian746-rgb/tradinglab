@@ -42,7 +42,83 @@
     "seeDetails": "Détails",
     "edit": "Modifier",
     "delete": "Supprimer",
+    "duplicate": "Dupliquer",
     "confirmDelete": "Supprimer ce trade ? Cette action est définitive."
+  },
+  "insights": {
+    "title": "Ton analyse réelle",
+    "subtitle": "Calculée sur tes trades gagnés/perdus.",
+    "notEnough": "Pas encore assez de données.",
+    "notEnoughHint": "Ajoute plus de trades clôturés (gagnés ou perdus) pour débloquer ton analyse réelle.",
+    "bestSetup": "Meilleur setup",
+    "worstSetup": "Setup à surveiller",
+    "bestSession": "Meilleure session",
+    "worstSession": "Session difficile",
+    "bestDirection": "Meilleure direction",
+    "worstDirection": "Direction difficile",
+    "topMistake": "Erreur la plus fréquente",
+    "planRespect": "Plan vs résultat",
+    "planYes": "Avec plan",
+    "planNo": "Hors plan",
+    "winEmotion": "Émotion des gains",
+    "lossEmotion": "Émotion des pertes",
+    "winrateShort": "WR",
+    "trades": "trades",
+    "occurrences": "fois"
+  },
+  "filters": {
+    "asset": "Actif",
+    "result": "Résultat",
+    "timeframe": "Timeframe",
+    "setup": "Setup",
+    "period": "Période",
+    "periodAll": "Toute période",
+    "period7": "7 jours",
+    "period30": "30 jours",
+    "period90": "90 jours",
+    "reset": "Réinitialiser",
+    "count": "{n} trade(s)",
+    "noMatch": "Aucun trade ne correspond à ces filtres."
+  },
+  "coach": {
+    "scoresTitle": "Tes scores réels",
+    "scoresSubtitle": "Calculés sur tes trades, avec le détail du calcul.",
+    "notEnough": "Pas assez de données",
+    "basedOn": "sur {n} trades",
+    "overall": "Score global",
+    "weight": "poids",
+    "scores": {
+      "discipline": "Discipline",
+      "execution": "Exécution",
+      "psychology": "Psychologie"
+    },
+    "parts": {
+      "plan_respect": "Respect du plan",
+      "out_of_plan_avoided": "Trades hors plan évités",
+      "mistake_free": "Trades sans erreur",
+      "winrate": "Efficacité (winrate)",
+      "rr_quality": "Qualité du R/R",
+      "stability": "Stabilité des résultats",
+      "process": "Process documenté",
+      "calm_before": "Entrées sereines",
+      "risk_free": "Comportements maîtrisés",
+      "calm_during": "Calme en position"
+    },
+    "level": {
+      "current": "Niveau actuel",
+      "next": "Prochain palier",
+      "debutant": "Débutant",
+      "en_progression": "En progression",
+      "discipline": "Discipliné",
+      "confirme": "Confirmé",
+      "avance": "Avancé"
+    },
+    "objectives": {
+      "respect_plan": "Respecter ton plan sur 5 trades consécutifs",
+      "reduce_mistake": "Réduire « {x} » sur tes 5 prochains trades",
+      "calm_entries": "Entrer uniquement dans un état calme sur 5 trades",
+      "keep_consistency": "Maintenir ta régularité sur 5 trades"
+    }
   },
   "ai": {
     "badge": {
@@ -135,7 +211,20 @@
       "subtitle": "TradingView, MT4, MT5, cTrader ou capture classique.",
       "dropzone": "Glisse une image, colle (Ctrl+V) ou clique pour choisir",
       "choose": "Choisir un fichier",
-      "skip": "Continuer sans capture"
+      "skip": "Continuer sans capture",
+      "help": {
+        "title": "Pour une meilleure analyse, ta capture doit montrer :",
+        "items": [
+          "L'actif tradé (si possible)",
+          "Le timeframe (si possible)",
+          "Ta zone d'entrée",
+          "Ton stop loss",
+          "Ton take profit",
+          "Le mouvement du prix autour de ton trade",
+          "Tes annotations TradingView / MT4 / MT5"
+        ],
+        "reassure": "Si certaines informations ne sont pas visibles, tu pourras les compléter ou les corriger à l'étape suivante."
+      }
     },
     "s2": {
       "title": "Analyse du trade",
@@ -214,7 +303,26 @@
     "behaviorsWorse": "Tu performes moins bien",
     "goalProgress": "{done} jours sur {target}",
     "levelCurrent": "Niveau actuel",
-    "levelNext": "Vers"
+    "levelNext": "Vers",
+    "real": {
+      "intro": "J'ai analysé tes {n} trades. Voici ce que je remarque dans ton comportement — pas dans le marché.",
+      "basedOn": "Basée sur {n} trades",
+      "notEnoughTitle": "Données insuffisantes",
+      "notEnoughBody": "Ajoute plus de trades clôturés (gagnés ou perdus) pour débloquer ton analyse complète.",
+      "noTrades": "Aucun trade pour l'instant. Ajoute ton premier trade pour lancer ton analyse.",
+      "strengthSetup": "Tu performes bien sur {x}",
+      "strengthSession": "Tu es plus efficace en session {x}",
+      "strengthDirection": "Tu réussis mieux en {x}",
+      "strengthDiscipline": "Bonne discipline globale",
+      "strengthEmotion": "Tu gagnes surtout dans un état {x}",
+      "noStrengths": "Pas encore de point fort marquant.",
+      "weaknessSetup": "Setup à retravailler : {x}",
+      "weaknessSession": "Session difficile : {x}",
+      "weaknessMistake": "Erreur récurrente : {x}",
+      "weaknessOutOfPlan": "Trop de trades pris hors plan",
+      "weaknessEmotion": "Tu perds souvent dans un état {x}",
+      "noWeaknesses": "Aucun axe critique détecté."
+    }
   },
   "command": {
     "coachTitle": "Ton coach IA",

@@ -122,3 +122,83 @@ export async function deleteTradeEntry(formData: FormData): Promise<void> {
 
   revalidatePath("/[locale]/journal", "page");
 }
+
+export async function updateTradeEntry(formData: FormData): Promise<CreateTradeState> {
+  // ── Mode démo local (DEV) : succès simulé, aucune écriture réelle ──
+  if (isMockEnvEnabled()) {
+    const { errors } = validateTradeInput(formData);
+    if (errors) return { ok: false, errors };
+    return { ok: true };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "notLoggedIn" };
+
+  const id = formData.get("id");
+  if (typeof id !== "string" || !id) return { ok: false, error: "generic" };
+
+  // Vérifie l'existence + propriété (RLS limite déjà à ses propres trades) et
+  // récupère l'ancienne capture pour une éventuelle purge.
+  const { data: existing, error: readErr } = await supabase
+    .from("trading_journal_entries")
+    .select("screenshot_url")
+    .eq("id", id)
+    .maybeSingle();
+  if (readErr || !existing) return { ok: false, error: "generic" };
+  const oldPath = (existing as { screenshot_url: string | null }).screenshot_url;
+
+  const { data, errors } = validateTradeInput(formData);
+  if (errors || !data) return { ok: false, errors };
+
+  // ── Nouvelle capture ? Sinon on CONSERVE l'ancienne (screenshot_url non touché) ──
+  let newPath: string | null = null;
+  const file = formData.get("screenshot");
+  if (file instanceof File && file.size > 0) {
+    if (!ALLOWED_IMG.includes(file.type)) {
+      return { ok: false, errors: { screenshot: "imageType" } };
+    }
+    if (file.size > MAX_IMG_BYTES) {
+      return { ok: false, errors: { screenshot: "imageSize" } };
+    }
+    const ext = (file.name.split(".").pop() ?? "png").toLowerCase().slice(0, 5);
+    const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
+    const { error: upErr } = await supabase.storage
+      .from(SCREENSHOT_BUCKET)
+      .upload(path, file, { contentType: file.type, upsert: false });
+    if (upErr) {
+      console.error("[journal] upload capture (update) échoué (non bloquant):", upErr.message);
+    } else {
+      newPath = path;
+    }
+  }
+
+  // On met à jour les colonnes validées ; screenshot_url uniquement si nouvelle
+  // capture. On NE touche PAS aux colonnes ai_* (l'analyse reste inchangée).
+  const payload: Record<string, unknown> = { ...data };
+  if (newPath) payload.screenshot_url = newPath;
+
+  const { error } = await supabase
+    .from("trading_journal_entries")
+    .update(payload)
+    .eq("id", id);
+
+  if (error) {
+    console.error("[journal] update trade échoué:", error.message);
+    // Nettoyage de la nouvelle capture orpheline si l'update a échoué.
+    if (newPath) {
+      await supabase.storage.from(SCREENSHOT_BUCKET).remove([newPath]);
+    }
+    return { ok: false, error: "generic" };
+  }
+
+  // Purge de l'ancienne capture si elle a été remplacée.
+  if (newPath && oldPath && oldPath !== newPath) {
+    await supabase.storage.from(SCREENSHOT_BUCKET).remove([oldPath]);
+  }
+
+  revalidatePath("/[locale]/journal", "page");
+  return { ok: true };
+}
