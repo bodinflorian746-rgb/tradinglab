@@ -93,8 +93,11 @@ export function PremiumLockScreen({ locale, reason }: PremiumLockScreenProps) {
         <div className="mt-5">
           {isNotLoggedIn ? (
             <>
+              {/* from=trial : après création du compte, signUp() envoie auto
+                  le code 48h (sendTrialCodeForUser) puis redirige vers
+                  /code-envoye. Sans ce param, le signup ne déclenche aucun mail. */}
               <Link
-                href={`/${locale}/signup`}
+                href={`/${locale}/signup?from=trial`}
                 className="block w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3 rounded-xl transition-colors text-sm mb-3"
               >
                 {t.ctaSignup}

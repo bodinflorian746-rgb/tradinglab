@@ -78,6 +78,14 @@ export default function Navbar() {
   const { user, isAdmin } = useSession();
   const isLoggedIn = !!user;
 
+  // L'entrée Journal (espace perso premium) n'est visible que pour les
+  // connectés. Les visiteurs ne voient que les parties publiques (Trading,
+  // Macro, Stratégies, Jeux, Offres). On masque uniquement l'entrée de nav ;
+  // le journal lui-même n'est pas modifié.
+  const navLinks = isLoggedIn
+    ? LINK_DEFS
+    : LINK_DEFS.filter((l) => l.key !== "journal");
+
   // Déconnexion mobile : on dispatch la Server Action via une transition portée
   // par la Navbar (composant persistant) et non par le panneau mobile éphémère
   // ({isOpen && …}). Sinon le démontage du panneau annule l'action en vol et le
@@ -103,7 +111,7 @@ export default function Navbar() {
 
         {/* Nav desktop */}
         <div className="hidden md:flex items-center gap-7">
-          {LINK_DEFS.map((l) => (
+          {navLinks.map((l) => (
             <Link
               key={l.href}
               href={localizedHref(l.href, locale)}
@@ -191,7 +199,7 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden border-t border-zinc-800/60 bg-zinc-950/95 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col">
-            {LINK_DEFS.map((l) => (
+            {navLinks.map((l) => (
               <Link
                 key={l.href}
                 href={localizedHref(l.href, locale)}
