@@ -163,7 +163,7 @@ export function CodesAdmin({ codes, locale }: { codes: AdminCode[]; locale: stri
             {codes.length === 0 ? (
               <tr>
                 <td colSpan={6} className="px-4 py-8 text-center text-zinc-500">
-                  Aucun code pour l'instant. Génère ton premier code ci-dessus.
+                  Aucun code pour l&apos;instant. Génère ton premier code ci-dessus.
                 </td>
               </tr>
             ) : (

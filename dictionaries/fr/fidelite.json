@@ -1,0 +1,103 @@
+{
+  "brand": "Programme de fidélité",
+  "landing": {
+    "title": "Mes points",
+    "subtitle": "Active les codes reçus sur Telegram et suis tes points par groupe.",
+    "none": "Tu n'as pas encore de portefeuille. Active ton premier code ci-dessous.",
+    "viewHistory": "Voir l'historique"
+  },
+  "activate": {
+    "title": "Activer un code",
+    "hint": "Saisis le code reçu de ton Master sur Telegram (format PTS-XXXX-XXXX).",
+    "placeholder": "PTS-XXXX-XXXX",
+    "submit": "Activer",
+    "submitting": "Activation…",
+    "success": "+{n} points crédités !",
+    "errors": {
+      "unauthenticated": "Connecte-toi pour activer un code.",
+      "invalid": "Saisis un code avant de valider.",
+      "not_found": "Ce code n'existe pas.",
+      "already_used": "Ce code a déjà été utilisé ou révoqué.",
+      "expired": "Ce code a expiré.",
+      "group_suspended": "Ce groupe est suspendu, activation impossible.",
+      "db": "Erreur technique, réessaie."
+    }
+  },
+  "join": {
+    "title": "Rejoindre un groupe",
+    "hint": "Saisis le code de référence du groupe (format GRP-XXXX-XXXX) partagé par ton Master.",
+    "placeholder": "GRP-XXXX-XXXX",
+    "submit": "Rejoindre",
+    "submitting": "Rattachement…",
+    "success": "Tu as rejoint {name} !",
+    "errors": {
+      "unauthenticated": "Connecte-toi pour rejoindre un groupe.",
+      "invalid": "Saisis un code avant de valider.",
+      "not_found": "Ce code de référence n'existe pas.",
+      "already_member": "Tu es déjà membre de ce groupe.",
+      "group_suspended": "Ce groupe est suspendu, rattachement impossible.",
+      "db": "Erreur technique, réessaie."
+    }
+  },
+  "suspended": {
+    "badge": "Suspendu",
+    "landingNotice": "Groupe suspendu — accès désactivé",
+    "title": "Accès désactivé",
+    "message": "Ce groupe est suspendu. Tes points et ton historique ne sont plus consultables tant que le groupe n'est pas réactivé."
+  },
+  "wallet": {
+    "balance": "Solde",
+    "earned": "Total gagné",
+    "tier": "Niveau"
+  },
+  "tiers": {
+    "bronze": "Bronze",
+    "silver": "Argent",
+    "gold": "Or"
+  },
+  "history": {
+    "title": "Historique",
+    "empty": "Aucune opération pour ce groupe.",
+    "th": {
+      "date": "Date",
+      "kind": "Opération",
+      "amount": "Montant",
+      "code": "Code",
+      "reason": "Motif"
+    }
+  },
+  "kinds": {
+    "code_reward": "Récompense code",
+    "tier_bonus": "Bonus niveau",
+    "purchase": "Achat",
+    "manual_credit": "Crédit manuel",
+    "manual_debit": "Débit manuel",
+    "cancellation": "Annulation",
+    "correction": "Correction"
+  },
+  "shop": {
+    "title": "Magasin",
+    "empty": "Aucun article disponible pour ce groupe.",
+    "points": "points",
+    "buy": "Acheter",
+    "buying": "Achat…",
+    "insufficientBalance": "Solde insuffisant",
+    "outOfStock": "Rupture de stock",
+    "buySuccess": "Achat confirmé : {name} !",
+    "buyErrors": {
+      "unauthenticated": "Connecte-toi pour acheter.",
+      "invalid": "Requête invalide, recharge la page et réessaie.",
+      "idempotency_key_reused": "Requête invalide, recharge la page et réessaie.",
+      "not_found": "Cet article n'existe plus.",
+      "item_inactive": "Cet article n'est plus disponible.",
+      "group_suspended": "Ce groupe est suspendu, achat impossible.",
+      "not_member": "Tu n'es plus membre actif de ce groupe.",
+      "insufficient_balance": "Solde insuffisant pour cet achat.",
+      "out_of_stock": "Cet article n'est plus en stock.",
+      "db": "Erreur technique, réessaie."
+    }
+  },
+  "nav": { "back": "← Mes points" },
+  "pager": { "prev": "Précédent", "next": "Suivant", "page": "Page {p} / {t}" },
+  "common": { "loadError": "Erreur de chargement." }
+}

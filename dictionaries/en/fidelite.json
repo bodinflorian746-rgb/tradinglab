@@ -1,0 +1,103 @@
+{
+  "brand": "Loyalty program",
+  "landing": {
+    "title": "My points",
+    "subtitle": "Activate codes received on Telegram and track your points per group.",
+    "none": "You don't have a wallet yet. Activate your first code below.",
+    "viewHistory": "View history"
+  },
+  "activate": {
+    "title": "Activate a code",
+    "hint": "Enter the code you received from your Master on Telegram (format PTS-XXXX-XXXX).",
+    "placeholder": "PTS-XXXX-XXXX",
+    "submit": "Activate",
+    "submitting": "Activating…",
+    "success": "+{n} points credited!",
+    "errors": {
+      "unauthenticated": "Sign in to activate a code.",
+      "invalid": "Enter a code before submitting.",
+      "not_found": "This code doesn't exist.",
+      "already_used": "This code has already been used or revoked.",
+      "expired": "This code has expired.",
+      "group_suspended": "This group is suspended, activation not allowed.",
+      "db": "Technical error, try again."
+    }
+  },
+  "join": {
+    "title": "Join a group",
+    "hint": "Enter the group's reference code (format GRP-XXXX-XXXX) shared by your Master.",
+    "placeholder": "GRP-XXXX-XXXX",
+    "submit": "Join",
+    "submitting": "Joining…",
+    "success": "You joined {name}!",
+    "errors": {
+      "unauthenticated": "Sign in to join a group.",
+      "invalid": "Enter a code before submitting.",
+      "not_found": "This reference code doesn't exist.",
+      "already_member": "You are already a member of this group.",
+      "group_suspended": "This group is suspended, joining not allowed.",
+      "db": "Technical error, try again."
+    }
+  },
+  "suspended": {
+    "badge": "Suspended",
+    "landingNotice": "Group suspended — access disabled",
+    "title": "Access disabled",
+    "message": "This group is suspended. Your points and history are no longer available until the group is reactivated."
+  },
+  "wallet": {
+    "balance": "Balance",
+    "earned": "Total earned",
+    "tier": "Tier"
+  },
+  "tiers": {
+    "bronze": "Bronze",
+    "silver": "Silver",
+    "gold": "Gold"
+  },
+  "history": {
+    "title": "History",
+    "empty": "No operations for this group.",
+    "th": {
+      "date": "Date",
+      "kind": "Operation",
+      "amount": "Amount",
+      "code": "Code",
+      "reason": "Reason"
+    }
+  },
+  "kinds": {
+    "code_reward": "Code reward",
+    "tier_bonus": "Tier bonus",
+    "purchase": "Purchase",
+    "manual_credit": "Manual credit",
+    "manual_debit": "Manual debit",
+    "cancellation": "Cancellation",
+    "correction": "Correction"
+  },
+  "shop": {
+    "title": "Shop",
+    "empty": "No items available for this group.",
+    "points": "points",
+    "buy": "Buy",
+    "buying": "Buying…",
+    "insufficientBalance": "Insufficient balance",
+    "outOfStock": "Out of stock",
+    "buySuccess": "Purchase confirmed: {name}!",
+    "buyErrors": {
+      "unauthenticated": "Sign in to buy.",
+      "invalid": "Invalid request, reload the page and try again.",
+      "idempotency_key_reused": "Invalid request, reload the page and try again.",
+      "not_found": "This item no longer exists.",
+      "item_inactive": "This item is no longer available.",
+      "group_suspended": "This group is suspended, purchase not allowed.",
+      "not_member": "You are no longer an active member of this group.",
+      "insufficient_balance": "Insufficient balance for this purchase.",
+      "out_of_stock": "This item is out of stock.",
+      "db": "Technical error, try again."
+    }
+  },
+  "nav": { "back": "← My points" },
+  "pager": { "prev": "Previous", "next": "Next", "page": "Page {p} / {t}" },
+  "common": { "loadError": "Loading error." }
+}

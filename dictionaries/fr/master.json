@@ -1,0 +1,234 @@
+{
+  "brand": "Admin",
+  "landing": {
+    "title": "Mes groupes",
+    "subtitle": "Groupes que vous administrez.",
+    "none": "Vous n'administrez aucun groupe pour l'instant.",
+    "manage": "Gérer"
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "codes": "Codes",
+    "unlock": "Déblocage",
+    "shop": "Magasin",
+    "members": "Membres",
+    "operations": "Opérations",
+    "back": "← Mes groupes"
+  },
+  "status": { "active": "Actif", "suspended": "Suspendu" },
+  "suspendedNotice": "Ce groupe est suspendu : consultation uniquement. La génération et la révocation de codes sont désactivées.",
+  "referenceCode": {
+    "label": "Code de référence du groupe",
+    "copy": "Copier",
+    "copied": "Copié !",
+    "hint": "Ce code permanent permet à un membre de rejoindre ce groupe depuis son espace Fidélité. Il est réutilisable, jamais consommé, et ne donne jamais de droits d'administration."
+  },
+  "tiles": {
+    "members": "Membres",
+    "admins": "Admins",
+    "codes": "Codes",
+    "codeValue": "Valeur codes",
+    "credited": "Crédités",
+    "debited": "Débités",
+    "net": "Solde net"
+  },
+  "generate": {
+    "title": "Générer des codes",
+    "hint": "Un code généré est disponible mais non utilisé, jusqu'à son activation par un membre.",
+    "count": "Nombre de codes",
+    "value": "Valeur (points)",
+    "expires": "Expiration (optionnel)",
+    "submit": "Générer",
+    "submitting": "Génération…",
+    "success": "{n} code(s) généré(s).",
+    "errors": {
+      "invalid_count": "Nombre invalide (1 à 5000).",
+      "invalid_value": "Valeur invalide (1 à 1000000).",
+      "invalid_expiry": "Date d'expiration invalide.",
+      "expiry_not_future": "L'expiration doit être strictement dans le futur.",
+      "forbidden": "Action non autorisée.",
+      "group_suspended": "Groupe suspendu : génération désactivée.",
+      "unauthenticated": "Session expirée, reconnectez-vous.",
+      "collision": "Impossible de générer des codes uniques, réessayez.",
+      "partial": "Génération incomplète, réessayez.",
+      "db": "Erreur technique, réessayez."
+    }
+  },
+  "codes": {
+    "title": "Codes de points",
+    "empty": "Aucun code.",
+    "th": {
+      "code": "Code",
+      "value": "Valeur",
+      "status": "Statut",
+      "createdBy": "Créé par",
+      "usedBy": "Activé par",
+      "created": "Créé le",
+      "expires": "Expire le",
+      "used": "Utilisé le"
+    },
+    "revoke": "Révoquer",
+    "revoking": "…",
+    "revokeConfirm": "Révoquer ce code ?",
+    "revoked": "Code révoqué.",
+    "statusFilter": "Statut du code",
+    "all": "Tous",
+    "revokeErrors": {
+      "not_found": "Code introuvable.",
+      "wrong_group": "Ce code n'appartient pas à ce groupe.",
+      "not_revocable": "Code non révocable (déjà utilisé, révoqué ou expiré).",
+      "forbidden": "Action non autorisée.",
+      "group_suspended": "Groupe suspendu : révocation désactivée.",
+      "unauthenticated": "Session expirée, reconnectez-vous.",
+      "db": "Erreur technique, réessayez."
+    }
+  },
+  "codeStatus": {
+    "available": "Disponible",
+    "used": "Utilisé",
+    "revoked": "Révoqué",
+    "expired": "Expiré"
+  },
+  "members": {
+    "title": "Membres",
+    "empty": "Aucun membre.",
+    "th": { "user": "Utilisateur", "role": "Rôle", "status": "Statut", "joined": "Arrivé le" }
+  },
+  "roles": { "admin": "Admin", "member": "Membre" },
+  "shop": {
+    "title": "Magasin",
+    "itemsTitle": "Articles",
+    "purchasesTitle": "Achats des membres",
+    "purchasesEmpty": "Aucun achat.",
+    "empty": "Aucun article pour l'instant.",
+    "newItem": "Nouvel article",
+    "edit": "Modifier",
+    "activate": "Activer",
+    "deactivate": "Désactiver",
+    "toggling": "…",
+    "th": {
+      "name": "Nom",
+      "type": "Type",
+      "price": "Prix",
+      "stock": "Stock",
+      "status": "Statut",
+      "item": "Article",
+      "buyer": "Acheteur",
+      "pricePaid": "Prix payé",
+      "date": "Date"
+    },
+    "type": { "product": "Produit", "reward": "Récompense" },
+    "status": { "active": "Actif", "inactive": "Inactif" },
+    "form": {
+      "name": "Nom",
+      "description": "Description (optionnel)",
+      "type": "Type",
+      "price": "Prix (points, 0 = gratuit)",
+      "stock": "Stock (optionnel, vide = illimité)",
+      "imageUrl": "Image — URL (optionnel)",
+      "create": "Créer",
+      "save": "Enregistrer",
+      "saving": "Enregistrement…",
+      "cancel": "Annuler"
+    },
+    "errors": {
+      "unauthenticated": "Session expirée, reconnectez-vous.",
+      "forbidden": "Action non autorisée.",
+      "group_suspended": "Groupe suspendu : action désactivée.",
+      "invalid_name": "Nom invalide.",
+      "invalid_description": "Description trop longue.",
+      "invalid_type": "Type invalide.",
+      "invalid_price": "Prix invalide (entier positif ou nul).",
+      "invalid_stock": "Stock invalide (entier positif ou nul, vide = illimité).",
+      "invalid_image_url": "URL d'image invalide.",
+      "not_found": "Article introuvable.",
+      "db": "Erreur technique, réessayez."
+    }
+  },
+  "unlock": {
+    "title": "Codes de déblocage de compte",
+    "empty": "Aucun code de déblocage.",
+    "th": {
+      "code": "Code",
+      "kind": "Type",
+      "status": "Statut",
+      "created": "Créé le",
+      "expires": "Expire le",
+      "used": "Utilisé par"
+    },
+    "status": { "available": "Disponible", "used": "Utilisé", "revoked": "Révoqué" },
+    "generate": {
+      "title": "Générer des codes de déblocage",
+      "hint": "Un code de déblocage active un accès premium au compte qui l'utilise : à vie, ou pour la durée que tu choisis. Réutilise le même format que les codes d'accès existants. Aucune limite de quantité.",
+      "count": "Nombre de codes",
+      "kindLabel": "Type d'accès",
+      "kind": { "lifetime": "À vie", "duration": "Durée limitée" },
+      "durationDays": "Durée (jours)",
+      "durationDaysValue": "{n} jours",
+      "expires": "Expiration du code (optionnel)",
+      "submit": "Générer",
+      "submitting": "Génération…",
+      "success": "{n} code(s) généré(s).",
+      "errors": {
+        "invalid_count": "Nombre de codes invalide.",
+        "invalid_kind": "Type d'accès invalide.",
+        "invalid_duration": "Durée invalide (nombre de jours entier positif).",
+        "invalid_expiry": "Date d'expiration invalide.",
+        "expiry_not_future": "L'expiration doit être strictement dans le futur.",
+        "forbidden": "Action non autorisée.",
+        "group_suspended": "Groupe suspendu : génération désactivée.",
+        "unauthenticated": "Session expirée, reconnectez-vous.",
+        "collision": "Impossible de générer des codes uniques, réessayez.",
+        "partial": "Génération incomplète, réessayez.",
+        "db": "Erreur technique, réessayez."
+      }
+    },
+    "revoke": "Révoquer",
+    "revoking": "…",
+    "revokeConfirm": "Révoquer ce code de déblocage ?",
+    "revokeErrors": {
+      "not_found": "Code introuvable.",
+      "wrong_group": "Ce code n'appartient pas à ce groupe.",
+      "not_revocable": "Code non révocable (déjà utilisé, révoqué ou expiré).",
+      "forbidden": "Action non autorisée.",
+      "group_suspended": "Groupe suspendu : révocation désactivée.",
+      "unauthenticated": "Session expirée, reconnectez-vous.",
+      "db": "Erreur technique, réessayez."
+    }
+  },
+  "operations": {
+    "title": "Registre de points",
+    "empty": "Aucune opération.",
+    "th": {
+      "date": "Date",
+      "user": "Utilisateur",
+      "kind": "Opération",
+      "amount": "Montant",
+      "code": "Code",
+      "reason": "Motif",
+      "author": "Auteur"
+    },
+    "filters": {
+      "from": "Du",
+      "to": "Au",
+      "kind": "Type d'opération",
+      "sign": "Sens",
+      "member": "ID membre (UUID)",
+      "reset": "Réinitialiser",
+      "credit": "Crédits",
+      "debit": "Débits",
+      "all": "Tous"
+    }
+  },
+  "kinds": {
+    "code_reward": "Récompense code",
+    "tier_bonus": "Bonus niveau",
+    "purchase": "Achat",
+    "manual_credit": "Crédit manuel",
+    "manual_debit": "Débit manuel",
+    "cancellation": "Annulation",
+    "correction": "Correction"
+  },
+  "pager": { "prev": "Précédent", "next": "Suivant", "page": "Page {p} / {t}" },
+  "common": { "readonly": "Lecture seule", "loadError": "Erreur de chargement." }
+}

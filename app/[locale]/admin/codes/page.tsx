@@ -47,7 +47,7 @@ export default async function AdminCodesPage({
           <p className="mb-1 text-[11px] font-semibold uppercase tracking-widest text-emerald-400">
             Admin
           </p>
-          <h1 className="text-3xl font-bold">Codes d'accès</h1>
+          <h1 className="text-3xl font-bold">Codes d&apos;accès</h1>
           <p className="mt-1 text-sm text-zinc-400">
             Connecté en tant que {user.email}.
           </p>

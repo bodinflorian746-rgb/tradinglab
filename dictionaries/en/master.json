@@ -1,0 +1,234 @@
+{
+  "brand": "Admin",
+  "landing": {
+    "title": "My groups",
+    "subtitle": "Groups you administer.",
+    "none": "You don't administer any group yet.",
+    "manage": "Manage"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "codes": "Codes",
+    "unlock": "Unlock",
+    "shop": "Shop",
+    "members": "Members",
+    "operations": "Operations",
+    "back": "← My groups"
+  },
+  "status": { "active": "Active", "suspended": "Suspended" },
+  "suspendedNotice": "This group is suspended: read-only. Code generation and revocation are disabled.",
+  "referenceCode": {
+    "label": "Group reference code",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "hint": "This permanent code lets a member join this group from their Loyalty area. It is reusable, never consumed, and never grants admin rights."
+  },
+  "tiles": {
+    "members": "Members",
+    "admins": "Admins",
+    "codes": "Codes",
+    "codeValue": "Codes value",
+    "credited": "Credited",
+    "debited": "Debited",
+    "net": "Net balance"
+  },
+  "generate": {
+    "title": "Generate codes",
+    "hint": "A generated code is available but unused, until a member activates it.",
+    "count": "Number of codes",
+    "value": "Value (points)",
+    "expires": "Expiry (optional)",
+    "submit": "Generate",
+    "submitting": "Generating…",
+    "success": "{n} code(s) generated.",
+    "errors": {
+      "invalid_count": "Invalid number (1 to 5000).",
+      "invalid_value": "Invalid value (1 to 1000000).",
+      "invalid_expiry": "Invalid expiry date.",
+      "expiry_not_future": "Expiry must be strictly in the future.",
+      "forbidden": "Action not allowed.",
+      "group_suspended": "Group suspended: generation disabled.",
+      "unauthenticated": "Session expired, please sign in again.",
+      "collision": "Could not generate unique codes, try again.",
+      "partial": "Incomplete generation, try again.",
+      "db": "Technical error, try again."
+    }
+  },
+  "codes": {
+    "title": "Points codes",
+    "empty": "No codes.",
+    "th": {
+      "code": "Code",
+      "value": "Value",
+      "status": "Status",
+      "createdBy": "Created by",
+      "usedBy": "Activated by",
+      "created": "Created",
+      "expires": "Expires",
+      "used": "Used"
+    },
+    "revoke": "Revoke",
+    "revoking": "…",
+    "revokeConfirm": "Revoke this code?",
+    "revoked": "Code revoked.",
+    "statusFilter": "Code status",
+    "all": "All",
+    "revokeErrors": {
+      "not_found": "Code not found.",
+      "wrong_group": "This code does not belong to this group.",
+      "not_revocable": "Code not revocable (already used, revoked or expired).",
+      "forbidden": "Action not allowed.",
+      "group_suspended": "Group suspended: revocation disabled.",
+      "unauthenticated": "Session expired, please sign in again.",
+      "db": "Technical error, try again."
+    }
+  },
+  "codeStatus": {
+    "available": "Available",
+    "used": "Used",
+    "revoked": "Revoked",
+    "expired": "Expired"
+  },
+  "members": {
+    "title": "Members",
+    "empty": "No members.",
+    "th": { "user": "User", "role": "Role", "status": "Status", "joined": "Joined" }
+  },
+  "roles": { "admin": "Admin", "member": "Member" },
+  "shop": {
+    "title": "Shop",
+    "itemsTitle": "Items",
+    "purchasesTitle": "Member purchases",
+    "purchasesEmpty": "No purchases.",
+    "empty": "No items yet.",
+    "newItem": "New item",
+    "edit": "Edit",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "toggling": "…",
+    "th": {
+      "name": "Name",
+      "type": "Type",
+      "price": "Price",
+      "stock": "Stock",
+      "status": "Status",
+      "item": "Item",
+      "buyer": "Buyer",
+      "pricePaid": "Price paid",
+      "date": "Date"
+    },
+    "type": { "product": "Product", "reward": "Reward" },
+    "status": { "active": "Active", "inactive": "Inactive" },
+    "form": {
+      "name": "Name",
+      "description": "Description (optional)",
+      "type": "Type",
+      "price": "Price (points, 0 = free)",
+      "stock": "Stock (optional, empty = unlimited)",
+      "imageUrl": "Image — URL (optional)",
+      "create": "Create",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "unauthenticated": "Session expired, please sign in again.",
+      "forbidden": "Action not allowed.",
+      "group_suspended": "Group suspended: action disabled.",
+      "invalid_name": "Invalid name.",
+      "invalid_description": "Description too long.",
+      "invalid_type": "Invalid type.",
+      "invalid_price": "Invalid price (must be a non-negative integer).",
+      "invalid_stock": "Invalid stock (non-negative integer, empty = unlimited).",
+      "invalid_image_url": "Invalid image URL.",
+      "not_found": "Item not found.",
+      "db": "Technical error, try again."
+    }
+  },
+  "unlock": {
+    "title": "Account unlock codes",
+    "empty": "No unlock codes.",
+    "th": {
+      "code": "Code",
+      "kind": "Type",
+      "status": "Status",
+      "created": "Created",
+      "expires": "Expires",
+      "used": "Used by"
+    },
+    "status": { "available": "Available", "used": "Used", "revoked": "Revoked" },
+    "generate": {
+      "title": "Generate unlock codes",
+      "hint": "An unlock code activates a premium access for the account that redeems it: lifetime, or for the duration you choose. Reuses the same format as the existing access codes. No quantity limit.",
+      "count": "Number of codes",
+      "kindLabel": "Access type",
+      "kind": { "lifetime": "Lifetime", "duration": "Limited duration" },
+      "durationDays": "Duration (days)",
+      "durationDaysValue": "{n} days",
+      "expires": "Code expiry (optional)",
+      "submit": "Generate",
+      "submitting": "Generating…",
+      "success": "{n} code(s) generated.",
+      "errors": {
+        "invalid_count": "Invalid number of codes.",
+        "invalid_kind": "Invalid access type.",
+        "invalid_duration": "Invalid duration (must be a positive whole number of days).",
+        "invalid_expiry": "Invalid expiry date.",
+        "expiry_not_future": "Expiry must be strictly in the future.",
+        "forbidden": "Action not allowed.",
+        "group_suspended": "Group suspended: generation disabled.",
+        "unauthenticated": "Session expired, please sign in again.",
+        "collision": "Could not generate unique codes, try again.",
+        "partial": "Incomplete generation, try again.",
+        "db": "Technical error, try again."
+      }
+    },
+    "revoke": "Revoke",
+    "revoking": "…",
+    "revokeConfirm": "Revoke this unlock code?",
+    "revokeErrors": {
+      "not_found": "Code not found.",
+      "wrong_group": "This code does not belong to this group.",
+      "not_revocable": "Code not revocable (already used, revoked or expired).",
+      "forbidden": "Action not allowed.",
+      "group_suspended": "Group suspended: revocation disabled.",
+      "unauthenticated": "Session expired, please sign in again.",
+      "db": "Technical error, try again."
+    }
+  },
+  "operations": {
+    "title": "Points ledger",
+    "empty": "No operations.",
+    "th": {
+      "date": "Date",
+      "user": "User",
+      "kind": "Operation",
+      "amount": "Amount",
+      "code": "Code",
+      "reason": "Reason",
+      "author": "Author"
+    },
+    "filters": {
+      "from": "From",
+      "to": "To",
+      "kind": "Operation type",
+      "sign": "Direction",
+      "member": "Member ID (UUID)",
+      "reset": "Reset",
+      "credit": "Credits",
+      "debit": "Debits",
+      "all": "All"
+    }
+  },
+  "kinds": {
+    "code_reward": "Code reward",
+    "tier_bonus": "Tier bonus",
+    "purchase": "Purchase",
+    "manual_credit": "Manual credit",
+    "manual_debit": "Manual debit",
+    "cancellation": "Cancellation",
+    "correction": "Correction"
+  },
+  "pager": { "prev": "Previous", "next": "Next", "page": "Page {p} / {t}" },
+  "common": { "readonly": "Read-only", "loadError": "Loading error." }
+}

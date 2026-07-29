@@ -1,73 +1,38 @@
 "use client";
 
+// Navigation premium minimaliste :
+//   • barre principale : Trading, Macro, Jeux, Stratégies, Nos accès (pricing —
+//     visible connecté ET non connecté) — tout le reste (compte,
+//     points, master, admin) vit derrière le menu compte (avatar / e-mail) ;
+//   • sélecteur de langue compact ("FR ▾") au lieu du switcher en ligne ;
+//   • Admin (espace group admin, libellé "masterArea") : visible uniquement
+//     pour un admin de groupe actif (isGroupAdmin) ;
+//   • Administration : jamais visible pour un user standard (aucun élément
+//     DOM rendu — pas seulement masqué visuellement), visible uniquement pour
+//     isAdmin, regroupée dans une section dédiée du menu compte plutôt que
+//     retirée totalement : la retirer pour les admins eux-mêmes n'apporterait
+//     aucune sécurité supplémentaire (déjà 100% invisible pour les autres) et
+//     dégraderait leur usage quotidien (plus de bookmark, obligés de taper
+//     l'URL à chaque fois).
+
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useLocale, useDict } from "@/app/components/LocaleProvider";
 import { useSession } from "@/app/components/SessionProvider";
-import { localizedHref, stripLocalePrefix } from "@/lib/i18n/href";
-import type { Locale } from "@/i18n/config";
+import { localizedHref } from "@/lib/i18n/href";
 import Logo from "@/app/components/Logo";
 import { signOut } from "@/app/[locale]/auth/actions";
+import { LangMenu } from "@/app/components/nav/LangMenu";
+import { AccountMenu, AccountLinks } from "@/app/components/nav/AccountMenu";
 
-function shortEmail(email: string | undefined): string {
-  if (!email) return "";
-  if (email.length <= 22) return email;
-  const local = email.split("@")[0] ?? "";
-  return `${local}@…`;
-}
-
-const SWITCHER_LOCALES: { code: Locale; label: string }[] = [
-  { code: "fr", label: "FR" },
-  { code: "en", label: "EN" },
-  { code: "es", label: "ES" },
-];
-
-function LangSwitcher({ onNavigate }: { onNavigate?: () => void }) {
-  const currentLocale = useLocale();
-  const pathname = usePathname() ?? "/";
-  const basePath = stripLocalePrefix(pathname);
-
-  return (
-    <div
-      className="inline-flex items-center text-[12px] font-semibold tracking-wide select-none"
-      aria-label="Sélecteur de langue"
-    >
-      {SWITCHER_LOCALES.map((l, i) => {
-        const isActive = currentLocale === l.code;
-        const href = localizedHref(basePath, l.code);
-        return (
-          <span key={l.code} className="inline-flex items-center">
-            <Link
-              href={href}
-              hrefLang={l.code}
-              aria-current={isActive ? "true" : undefined}
-              onClick={onNavigate}
-              className={
-                isActive
-                  ? "text-white px-1.5 py-0.5 cursor-default transition-colors"
-                  : "text-zinc-500 hover:text-zinc-200 px-1.5 py-0.5 transition-colors"
-              }
-            >
-              {l.label}
-            </Link>
-            {i < SWITCHER_LOCALES.length - 1 && (
-              <span aria-hidden="true" className="text-zinc-700">|</span>
-            )}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
-
+// Journal IA volontairement absent : chantier séparé, pas encore livré
+// (cf. lib/journal/feature-flag.ts — routes /journal renvoient 404 tant que
+// NEXT_PUBLIC_JOURNAL_ENABLED n'est pas explicitement "true").
 const LINK_DEFS = [
   { href: "/formations", key: "trading" as const },
   { href: "/formations/macro", key: "macro" as const },
-  { href: "/journal", key: "journal" as const },
   { href: "/jeux", key: "games" as const },
   { href: "/strategies", key: "strategies" as const },
-  { href: "/profil-trader", key: "profile" as const },
   { href: "/pricing", key: "pricing" as const },
 ];
 
@@ -75,24 +40,17 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const locale = useLocale();
   const t = useDict("nav");
-  const { user, isAdmin } = useSession();
+  const { user, isAdmin, isGroupAdmin } = useSession();
   const isLoggedIn = !!user;
+  const navLinks = LINK_DEFS;
 
-  // L'entrée Journal (espace perso premium) n'est visible que pour les
-  // connectés. Les visiteurs ne voient que les parties publiques (Trading,
-  // Macro, Stratégies, Jeux, Offres). On masque uniquement l'entrée de nav ;
-  // le journal lui-même n'est pas modifié.
-  const navLinks = isLoggedIn
-    ? LINK_DEFS
-    : LINK_DEFS.filter((l) => l.key !== "journal");
-
-  // Déconnexion mobile : on dispatch la Server Action via une transition portée
-  // par la Navbar (composant persistant) et non par le panneau mobile éphémère
-  // ({isOpen && …}). Sinon le démontage du panneau annule l'action en vol et le
-  // redirect /login ne se produit jamais — d'où le bouton "mort" sur mobile.
-  // Le desktop garde son <form action={signOut}> (toujours monté, déjà OK).
+  // Déconnexion pilotée en JS (useTransition) plutôt qu'un <form> HTML classique :
+  // le bouton vit maintenant dans un panneau conditionnellement rendu (menu
+  // compte desktop ET panneau mobile) — un <form action={signOut}> démonté au
+  // clic interromprait l'action en vol et le redirect /login ne se produirait
+  // jamais. La transition, elle, survit au démontage (simple Promise capturée).
   const [isSigningOut, startSignOut] = useTransition();
-  const handleMobileSignOut = () => {
+  const handleSignOut = () => {
     startSignOut(async () => {
       const formData = new FormData();
       formData.set("locale", locale);
@@ -109,7 +67,7 @@ export default function Navbar() {
           <Logo size="sm" />
         </Link>
 
-        {/* Nav desktop */}
+        {/* Nav desktop — 5 liens seulement */}
         <div className="hidden md:flex items-center gap-7">
           {navLinks.map((l) => (
             <Link
@@ -122,42 +80,19 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Right cluster — switcher langue + bouton Commencer + burger mobile */}
-        <div className="flex items-center gap-3">
-          <LangSwitcher />
+        {/* Right cluster — langue + compte (ou login/signup) + burger mobile */}
+        <div className="flex items-center gap-2">
+          <LangMenu />
 
           {isLoggedIn ? (
-            <>
-              <Link
-                href={localizedHref("/compte", locale)}
-                className="hidden md:inline-flex items-center text-zinc-400 hover:text-white text-sm font-medium transition-colors"
-              >
-                {t.account}
-              </Link>
-              <span
-                className="hidden md:inline-flex items-center text-zinc-400 text-sm font-medium select-text"
-                title={user?.email ?? undefined}
-              >
-                {shortEmail(user?.email)}
-              </span>
-              {isAdmin && (
-                <Link
-                  href={localizedHref("/admin/codes", locale)}
-                  className="hidden md:inline-flex items-center text-zinc-400 hover:text-white text-sm font-medium transition-colors"
-                >
-                  {t.admin}
-                </Link>
-              )}
-              <form action={signOut} className="hidden md:inline-flex">
-                <input type="hidden" name="locale" value={locale} />
-                <button
-                  type="submit"
-                  className="inline-flex items-center border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white text-sm font-medium px-3 py-1.5 rounded-lg transition-colors"
-                >
-                  {t.signOut}
-                </button>
-              </form>
-            </>
+            <AccountMenu
+              locale={locale}
+              email={user?.email}
+              isAdmin={isAdmin}
+              isGroupAdmin={isGroupAdmin}
+              onSignOut={handleSignOut}
+              signingOut={isSigningOut}
+            />
           ) : (
             <>
               <Link
@@ -177,6 +112,7 @@ export default function Navbar() {
 
           <button
             type="button"
+            data-testid="nav-burger"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? t.closeMenu : t.openMenu}
             aria-expanded={isOpen}
@@ -197,7 +133,7 @@ export default function Navbar() {
 
       {/* Panneau mobile */}
       {isOpen && (
-        <div className="md:hidden border-t border-zinc-800/60 bg-zinc-950/95 backdrop-blur-md">
+        <div className="md:hidden max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-zinc-800/60 bg-zinc-950/95 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col">
             {navLinks.map((l) => (
               <Link
@@ -209,38 +145,30 @@ export default function Navbar() {
                 {t.links[l.key]}
               </Link>
             ))}
+
             {isLoggedIn ? (
               <>
-                <Link
-                  href={localizedHref("/compte", locale)}
-                  onClick={() => setIsOpen(false)}
-                  className="text-zinc-300 hover:text-white py-3 text-sm font-medium border-t border-zinc-800/60 mt-1"
-                >
-                  {t.account}
-                </Link>
-                <p
-                  className="mt-4 text-zinc-400 text-center text-sm font-medium break-all"
-                  title={user?.email ?? undefined}
-                >
-                  {shortEmail(user?.email)}
-                </p>
-                {isAdmin && (
-                  <Link
-                    href={localizedHref("/admin/codes", locale)}
-                    onClick={() => setIsOpen(false)}
-                    className="mt-2 text-center text-zinc-300 hover:text-white py-2 text-sm font-medium"
-                  >
-                    {t.admin}
-                  </Link>
-                )}
-                <button
-                  type="button"
-                  onClick={handleMobileSignOut}
-                  disabled={isSigningOut}
-                  className="mt-2 mb-3 w-full border border-zinc-700 hover:border-zinc-500 text-white text-center px-4 py-3 rounded-lg text-sm font-semibold transition-colors disabled:opacity-60 disabled:pointer-events-none"
-                >
-                  {t.signOut}
-                </button>
+                <div className="mt-3 mb-1 flex items-center gap-2.5 border-t border-zinc-800/60 pt-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/15 text-xs font-bold text-emerald-400">
+                    {(user?.email?.trim()?.[0] ?? "?").toUpperCase()}
+                  </span>
+                  <span className="truncate text-sm font-medium text-zinc-300" title={user?.email ?? undefined}>
+                    {user?.email}
+                  </span>
+                </div>
+                <div className="mb-3">
+                  <AccountLinks
+                    locale={locale}
+                    isAdmin={isAdmin}
+                    isGroupAdmin={isGroupAdmin}
+                    onNavigate={() => setIsOpen(false)}
+                    onSignOut={() => {
+                      setIsOpen(false);
+                      handleSignOut();
+                    }}
+                    signingOut={isSigningOut}
+                  />
+                </div>
               </>
             ) : (
               <>
@@ -260,8 +188,9 @@ export default function Navbar() {
                 </Link>
               </>
             )}
+
             <div className="pt-1 pb-3 flex justify-center">
-              <LangSwitcher onNavigate={() => setIsOpen(false)} />
+              <LangMenu onNavigate={() => setIsOpen(false)} />
             </div>
           </div>
         </div>
