@@ -25,6 +25,8 @@ import type frGames from "../dictionaries/fr/games.json";
 import type frFormations from "../dictionaries/fr/formations.json";
 import type frStrategies from "../dictionaries/fr/strategies.json";
 import type frJournal from "../dictionaries/fr/journal.json";
+import type frMaster from "../dictionaries/fr/master.json";
+import type frFidelite from "../dictionaries/fr/fidelite.json";
 
 export type Dictionaries = {
   common:     typeof frCommon;
@@ -38,6 +40,8 @@ export type Dictionaries = {
   formations: typeof frFormations;
   strategies: typeof frStrategies;
   journal:    typeof frJournal;
+  master:     typeof frMaster;
+  fidelite:   typeof frFidelite;
 };
 
 export type Namespace = keyof Dictionaries;
@@ -54,6 +58,8 @@ export const NAMESPACES = [
   "formations",
   "strategies",
   "journal",
+  "master",
+  "fidelite",
 ] as const satisfies readonly Namespace[];
 
 type LoaderMap = {
@@ -75,6 +81,8 @@ const loaders: LoaderMap = {
     formations: () => import("../dictionaries/fr/formations.json").then((m) => m.default),
     strategies: () => import("../dictionaries/fr/strategies.json").then((m) => m.default),
     journal:    () => import("../dictionaries/fr/journal.json").then((m) => m.default),
+    master:     () => import("../dictionaries/fr/master.json").then((m) => m.default),
+    fidelite:   () => import("../dictionaries/fr/fidelite.json").then((m) => m.default),
   },
   en: {
     common:     () => import("../dictionaries/en/common.json").then((m) => m.default),
@@ -88,6 +96,8 @@ const loaders: LoaderMap = {
     formations: () => import("../dictionaries/en/formations.json").then((m) => m.default),
     strategies: () => import("../dictionaries/en/strategies.json").then((m) => m.default),
     journal:    () => import("../dictionaries/en/journal.json").then((m) => m.default),
+    master:     () => import("../dictionaries/en/master.json").then((m) => m.default),
+    fidelite:   () => import("../dictionaries/en/fidelite.json").then((m) => m.default),
   },
   es: {
     common:     () => import("../dictionaries/es/common.json").then((m) => m.default),
@@ -101,6 +111,8 @@ const loaders: LoaderMap = {
     formations: () => import("../dictionaries/es/formations.json").then((m) => m.default),
     strategies: () => import("../dictionaries/es/strategies.json").then((m) => m.default),
     journal:    () => import("../dictionaries/es/journal.json").then((m) => m.default),
+    master:     () => import("../dictionaries/es/master.json").then((m) => m.default),
+    fidelite:   () => import("../dictionaries/es/fidelite.json").then((m) => m.default),
   },
 };
 
