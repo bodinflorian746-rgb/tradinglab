@@ -3,6 +3,7 @@
     "trading": "Trading",
     "macro": "Macro",
     "journal": "Journal",
+    "fidelite": "Mes points",
     "games": "Jeux",
     "strategies": "Stratégies",
     "profile": "Mon profil",
@@ -13,7 +14,11 @@
   "signup": "Créer un compte",
   "signOut": "Se déconnecter",
   "account": "Mon compte",
-  "admin": "Admin",
+  "admin": "Codes d'accès",
+  "adminLoyalty": "Fidélité",
+  "masterArea": "Admin",
+  "language": "Langue",
+  "adminSection": "Administration",
   "openMenu": "Ouvrir le menu",
   "closeMenu": "Fermer le menu"
 }

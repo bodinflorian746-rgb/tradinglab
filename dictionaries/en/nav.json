@@ -1,1 +1,24 @@
-{}
+{
+  "links": {
+    "trading": "Trading",
+    "macro": "Macro",
+    "journal": "Journal",
+    "fidelite": "My points",
+    "games": "Games",
+    "strategies": "Strategies",
+    "profile": "My profile",
+    "pricing": "Plans"
+  },
+  "cta": "Create an account",
+  "login": "Log in",
+  "signup": "Create an account",
+  "signOut": "Log out",
+  "account": "My account",
+  "admin": "Access codes",
+  "adminLoyalty": "Loyalty",
+  "masterArea": "Admin",
+  "language": "Language",
+  "adminSection": "Administration",
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu"
+}
