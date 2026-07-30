@@ -1,14 +1,19 @@
 {
   "brand": "Programa de fidelización",
+  "tabs": {
+    "points": "Mis puntos",
+    "join": "Unirse a un grupo"
+  },
   "landing": {
     "title": "Mis puntos",
-    "subtitle": "Activa los códigos recibidos en Telegram y sigue tus puntos por grupo.",
-    "none": "Todavía no tienes una cartera. Activa tu primer código abajo.",
+    "subtitle": "Sigue tus puntos y accede a las tiendas de tus grupos.",
+    "none": "Todavía no te has unido a ningún grupo.",
+    "noneHint": "Usa la pestaña «Unirse a un grupo» para ingresar tu código de referencia.",
     "viewHistory": "Ver historial"
   },
   "activate": {
-    "title": "Activar un código",
-    "hint": "Ingresa el código recibido de tu Master en Telegram (formato PTS-XXXX-XXXX).",
+    "title": "Código de puntos",
+    "hint": "Ingresa tu código para acreditar tus puntos.",
     "placeholder": "PTS-XXXX-XXXX",
     "submit": "Activar",
     "submitting": "Activando…",
@@ -25,7 +30,7 @@
   },
   "join": {
     "title": "Unirse a un grupo",
-    "hint": "Ingresa el código de referencia del grupo (formato GRP-XXXX-XXXX) compartido por tu Master.",
+    "hint": "Ingresa el código de referencia proporcionado por el administrador del grupo.",
     "placeholder": "GRP-XXXX-XXXX",
     "submit": "Unirse",
     "submitting": "Uniéndose…",

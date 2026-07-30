@@ -1,14 +1,19 @@
 {
   "brand": "Loyalty program",
+  "tabs": {
+    "points": "My points",
+    "join": "Join a group"
+  },
   "landing": {
     "title": "My points",
-    "subtitle": "Activate codes received on Telegram and track your points per group.",
-    "none": "You don't have a wallet yet. Activate your first code below.",
+    "subtitle": "Track your points and access your groups' shops.",
+    "none": "You haven't joined any group yet.",
+    "noneHint": "Use the \"Join a group\" tab to enter your reference code.",
     "viewHistory": "View history"
   },
   "activate": {
-    "title": "Activate a code",
-    "hint": "Enter the code you received from your Master on Telegram (format PTS-XXXX-XXXX).",
+    "title": "Points code",
+    "hint": "Enter your code to credit your points.",
     "placeholder": "PTS-XXXX-XXXX",
     "submit": "Activate",
     "submitting": "Activating…",
@@ -25,7 +30,7 @@
   },
   "join": {
     "title": "Join a group",
-    "hint": "Enter the group's reference code (format GRP-XXXX-XXXX) shared by your Master.",
+    "hint": "Enter the reference code provided by the group's administrator.",
     "placeholder": "GRP-XXXX-XXXX",
     "submit": "Join",
     "submitting": "Joining…",

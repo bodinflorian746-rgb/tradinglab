@@ -1,14 +1,19 @@
 {
   "brand": "Programme de fidélité",
+  "tabs": {
+    "points": "Mes points",
+    "join": "Rejoindre un groupe"
+  },
   "landing": {
     "title": "Mes points",
-    "subtitle": "Active les codes reçus sur Telegram et suis tes points par groupe.",
-    "none": "Tu n'as pas encore de portefeuille. Active ton premier code ci-dessous.",
+    "subtitle": "Suis tes points et accède aux boutiques de tes groupes.",
+    "none": "Tu n'as rejoint aucun groupe.",
+    "noneHint": "Utilise l'onglet « Rejoindre un groupe » pour saisir ton code de référence.",
     "viewHistory": "Voir l'historique"
   },
   "activate": {
-    "title": "Activer un code",
-    "hint": "Saisis le code reçu de ton Master sur Telegram (format PTS-XXXX-XXXX).",
+    "title": "Code de points",
+    "hint": "Saisis ton code pour créditer tes points.",
     "placeholder": "PTS-XXXX-XXXX",
     "submit": "Activer",
     "submitting": "Activation…",
@@ -25,7 +30,7 @@
   },
   "join": {
     "title": "Rejoindre un groupe",
-    "hint": "Saisis le code de référence du groupe (format GRP-XXXX-XXXX) partagé par ton Master.",
+    "hint": "Saisis le code de référence fourni par l'administrateur du groupe.",
     "placeholder": "GRP-XXXX-XXXX",
     "submit": "Rejoindre",
     "submitting": "Rattachement…",
