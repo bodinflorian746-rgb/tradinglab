@@ -25,9 +25,9 @@ import { signOut } from "@/app/[locale]/auth/actions";
 import { LangMenu } from "@/app/components/nav/LangMenu";
 import { AccountMenu, AccountLinks } from "@/app/components/nav/AccountMenu";
 
-// Journal IA volontairement absent : chantier séparé, pas encore livré
-// (cf. lib/journal/feature-flag.ts — routes /journal renvoient 404 tant que
-// NEXT_PUBLIC_JOURNAL_ENABLED n'est pas explicitement "true").
+// Journal IA volontairement absent : retiré de production (hotfix), bloqué
+// inconditionnellement côté route (app/[locale]/(premium)/journal/layout.tsx
+// — 404 systématique, sans dépendre d'un flag).
 const LINK_DEFS = [
   { href: "/formations", key: "trading" as const },
   { href: "/formations/macro", key: "macro" as const },
