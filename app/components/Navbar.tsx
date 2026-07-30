@@ -64,7 +64,6 @@ function LangSwitcher({ onNavigate }: { onNavigate?: () => void }) {
 const LINK_DEFS = [
   { href: "/formations", key: "trading" as const },
   { href: "/formations/macro", key: "macro" as const },
-  { href: "/journal", key: "journal" as const },
   { href: "/jeux", key: "games" as const },
   { href: "/strategies", key: "strategies" as const },
   { href: "/profil-trader", key: "profile" as const },
@@ -78,13 +77,7 @@ export default function Navbar() {
   const { user, isAdmin } = useSession();
   const isLoggedIn = !!user;
 
-  // L'entrée Journal (espace perso premium) n'est visible que pour les
-  // connectés. Les visiteurs ne voient que les parties publiques (Trading,
-  // Macro, Stratégies, Jeux, Offres). On masque uniquement l'entrée de nav ;
-  // le journal lui-même n'est pas modifié.
-  const navLinks = isLoggedIn
-    ? LINK_DEFS
-    : LINK_DEFS.filter((l) => l.key !== "journal");
+  const navLinks = LINK_DEFS;
 
   // Déconnexion mobile : on dispatch la Server Action via une transition portée
   // par la Navbar (composant persistant) et non par le panneau mobile éphémère
