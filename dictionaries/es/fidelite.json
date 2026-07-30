@@ -1,14 +1,10 @@
 {
   "brand": "Programa de fidelización",
-  "tabs": {
-    "points": "Mis puntos",
-    "join": "Unirse a un grupo"
-  },
   "landing": {
     "title": "Mis puntos",
     "subtitle": "Sigue tus puntos y accede a las tiendas de tus grupos.",
     "none": "Todavía no te has unido a ningún grupo.",
-    "noneHint": "Usa la pestaña «Unirse a un grupo» para ingresar tu código de referencia.",
+    "noneHint": "Únete a un grupo desde la página Mi cuenta.",
     "viewHistory": "Ver historial"
   },
   "activate": {
@@ -29,10 +25,9 @@
     }
   },
   "join": {
-    "title": "Unirse a un grupo",
     "hint": "Ingresa el código de referencia proporcionado por el administrador del grupo.",
     "placeholder": "GRP-XXXX-XXXX",
-    "submit": "Unirse",
+    "submit": "Unirse al grupo",
     "submitting": "Uniéndose…",
     "success": "¡Te uniste a {name}!",
     "errors": {

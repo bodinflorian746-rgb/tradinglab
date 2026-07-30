@@ -1,8 +1,15 @@
 "use client";
 
-// Formulaire de rattachement à un groupe via son code de référence (Membre).
-// Appelle la Server Action joinGroupByReferenceCodeAction → RPC atomique et
-// idempotente (join_group_by_reference_code). Toujours rôle "member".
+// Formulaire de rattachement à un groupe via son code de référence. Vit
+// désormais dans Mon compte (GroupMembership.tsx), pas dans l'espace Points —
+// le groupe et les points sont deux préoccupations séparées. Appelle la
+// Server Action joinGroupByReferenceCodeAction → RPC atomique et idempotente
+// (join_group_by_reference_code). Toujours rôle "member".
+//
+// Pas de titre/encadré propres : le composant appelant (GroupMembership)
+// fournit déjà le titre de section "Groupe de fidélité" — un seul consommateur
+// aujourd'hui, donc le texte ci-dessous colle exactement à ce contexte plutôt
+// que de rester générique via des props.
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
@@ -34,9 +41,8 @@ export function JoinGroupForm() {
   }
 
   return (
-    <section className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
-      <h2 className="mb-1 text-lg font-bold">{t.join.title}</h2>
-      <p className="mb-5 text-sm text-zinc-400">{t.join.hint}</p>
+    <div>
+      <p className="mb-3 text-sm text-zinc-400">{t.join.hint}</p>
 
       <form onSubmit={onSubmit} className="flex flex-wrap items-end gap-3">
         <div className="flex-1 min-w-[180px]">
@@ -62,6 +68,6 @@ export function JoinGroupForm() {
           {msg.text}
         </p>
       )}
-    </section>
+    </div>
   );
 }

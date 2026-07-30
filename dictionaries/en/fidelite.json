@@ -1,14 +1,10 @@
 {
   "brand": "Loyalty program",
-  "tabs": {
-    "points": "My points",
-    "join": "Join a group"
-  },
   "landing": {
     "title": "My points",
     "subtitle": "Track your points and access your groups' shops.",
     "none": "You haven't joined any group yet.",
-    "noneHint": "Use the \"Join a group\" tab to enter your reference code.",
+    "noneHint": "Join a group from the My account page.",
     "viewHistory": "View history"
   },
   "activate": {
@@ -29,10 +25,9 @@
     }
   },
   "join": {
-    "title": "Join a group",
     "hint": "Enter the reference code provided by the group's administrator.",
     "placeholder": "GRP-XXXX-XXXX",
-    "submit": "Join",
+    "submit": "Join the group",
     "submitting": "Joining…",
     "success": "You joined {name}!",
     "errors": {

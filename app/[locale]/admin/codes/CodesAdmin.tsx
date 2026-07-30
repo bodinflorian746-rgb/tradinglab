@@ -1,17 +1,20 @@
 "use client";
 
 // UI admin des codes d'accès : génération (1 ou en lot) + liste + copie.
-// Aligné sur la vraie table : clé = code, champ type (trial|broker|lifetime),
-// pas de colonne note. La logique sensible (insert) est dans la Server Action
-// generateCodes ; ce composant ne fait que l'orchestration UI + copy.
+// Type d'accès : trial|broker|lifetime (existants, inchangés) + duration
+// (nouveau — durée choisie, en jours, mêmes sémantiques que le formulaire de
+// déblocage Group Admin : app/[locale]/master/[groupId]/deblocage). La
+// logique sensible (insert) est dans la Server Action generateCodes ; ce
+// composant ne fait que l'orchestration UI + copy.
 
 import { useActionState, useState } from "react";
-import { generateCodes, type GenerateResult } from "./actions";
+import { generateCodes, type CodeType, type GenerateResult } from "./actions";
 
 export type AdminCode = {
   code: string;
   status: string;
   type: string;
+  duration_days: number | null;
   used_by_user_id: string | null;
   used_at: string | null;
   created_at: string;
@@ -32,14 +35,20 @@ const STATUS_LABELS: Record<string, string> = {
 const TYPE_LABELS: Record<string, string> = {
   trial: "Trial",
   broker: "Broker",
-  lifetime: "Lifetime",
+  lifetime: "À vie",
 };
 
 const TYPE_STYLES: Record<string, string> = {
   trial: "bg-blue-400/15 text-blue-400",
   broker: "bg-emerald-500/15 text-emerald-400",
   lifetime: "bg-amber-400/15 text-amber-400",
+  duration: "bg-purple-400/15 text-purple-400",
 };
+
+function typeDisplay(c: AdminCode): string {
+  if (c.type === "duration") return `${c.duration_days ?? "?"} jours`;
+  return TYPE_LABELS[c.type] ?? c.type;
+}
 
 function formatDate(iso: string | null): string {
   if (!iso) return "—";
@@ -48,12 +57,19 @@ function formatDate(iso: string | null): string {
   return d.toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
 
+const DURATION_PRESETS = [7, 14, 30] as const;
+
 export function CodesAdmin({ codes, locale }: { codes: AdminCode[]; locale: string }) {
   const [state, formAction, pending] = useActionState<GenerateResult | null, FormData>(
     async (_prev, formData) => generateCodes(formData),
     null,
   );
   const [copied, setCopied] = useState<string | null>(null);
+  const [type, setType] = useState<CodeType>("trial");
+  const [durationPreset, setDurationPreset] = useState<(typeof DURATION_PRESETS)[number] | "custom">(7);
+  const [customDuration, setCustomDuration] = useState("30");
+
+  const effectiveDurationDays = durationPreset === "custom" ? customDuration : String(durationPreset);
 
   async function copy(code: string) {
     try {
@@ -80,6 +96,7 @@ export function CodesAdmin({ codes, locale }: { codes: AdminCode[]; locale: stri
 
         <form action={formAction} className="flex flex-wrap items-end gap-3">
           <input type="hidden" name="locale" value={locale} />
+          {type === "duration" && <input type="hidden" name="durationDays" value={effectiveDurationDays} />}
 
           <div>
             <label htmlFor="count" className="mb-1.5 block text-xs font-medium text-zinc-400">
@@ -90,7 +107,7 @@ export function CodesAdmin({ codes, locale }: { codes: AdminCode[]; locale: stri
               name="count"
               type="number"
               min={1}
-              max={100}
+              max={5000}
               defaultValue={1}
               className="w-28 rounded-xl border border-zinc-700 bg-zinc-800 px-3 py-2.5 text-sm focus:border-emerald-500 focus:outline-none"
             />
@@ -98,19 +115,64 @@ export function CodesAdmin({ codes, locale }: { codes: AdminCode[]; locale: stri
 
           <div>
             <label htmlFor="type" className="mb-1.5 block text-xs font-medium text-zinc-400">
-              Type
+              Type d&apos;accès
             </label>
             <select
               id="type"
               name="type"
-              defaultValue="trial"
+              value={type}
+              onChange={(e) => setType(e.target.value as CodeType)}
               className="rounded-xl border border-zinc-700 bg-zinc-800 px-3 py-2.5 text-sm focus:border-emerald-500 focus:outline-none"
             >
               <option value="trial">Trial</option>
               <option value="broker">Broker</option>
-              <option value="lifetime">Lifetime</option>
+              <option value="lifetime">À vie</option>
+              <option value="duration">Temporaire</option>
             </select>
           </div>
+
+          {type === "duration" && (
+            <div>
+              <span className="mb-1.5 block text-xs font-medium text-zinc-400">Durée</span>
+              <div className="flex flex-wrap items-center gap-1.5">
+                {DURATION_PRESETS.map((d) => (
+                  <button
+                    key={d}
+                    type="button"
+                    onClick={() => setDurationPreset(d)}
+                    className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                      durationPreset === d
+                        ? "bg-emerald-500/15 text-emerald-400"
+                        : "border border-zinc-700 text-zinc-300 hover:border-zinc-500"
+                    }`}
+                  >
+                    {d} jours
+                  </button>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => setDurationPreset("custom")}
+                  className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    durationPreset === "custom"
+                      ? "bg-emerald-500/15 text-emerald-400"
+                      : "border border-zinc-700 text-zinc-300 hover:border-zinc-500"
+                  }`}
+                >
+                  Durée personnalisée
+                </button>
+                {durationPreset === "custom" && (
+                  <input
+                    type="number"
+                    min={1}
+                    value={customDuration}
+                    onChange={(e) => setCustomDuration(e.target.value)}
+                    aria-label="Durée personnalisée (jours)"
+                    className="w-24 rounded-xl border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+                  />
+                )}
+              </div>
+            </div>
+          )}
 
           <button
             type="submit"
@@ -185,7 +247,7 @@ export function CodesAdmin({ codes, locale }: { codes: AdminCode[]; locale: stri
                         TYPE_STYLES[c.type] ?? "bg-zinc-700/40 text-zinc-400"
                       }`}
                     >
-                      {TYPE_LABELS[c.type] ?? c.type}
+                      {typeDisplay(c)}
                     </span>
                   </td>
                   <td className="px-4 py-3 font-mono text-[11px] text-zinc-500">

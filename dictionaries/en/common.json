@@ -1,1 +1,186 @@
-{}
+{
+  "buttons": {
+    "start": "Start",
+    "continue": "Continue",
+    "resume": "Resume",
+    "review": "Review",
+    "back": "Back",
+    "later": "Later",
+    "skip": "Skip",
+    "close": "Close"
+  },
+  "status": {
+    "done": "Completed",
+    "inProgress": "In progress",
+    "comingSoon": "Soon",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "popular": "Popular",
+    "recommended": "Recommended"
+  },
+  "auth": {
+    "logout": "Log out"
+  },
+  "account": {
+    "title": "My account",
+    "subtitle": "Manage your subscription and access.",
+    "emailLabel": "Email",
+    "statusLabel": "Subscription",
+    "subscription": {
+      "active": "Your subscription is active.",
+      "ending": "Subscription active until {date}. It will not renew.",
+      "trial": "Free trial in progress.",
+      "none": "You don't have an active subscription.",
+      "admin": "Super Admin access active",
+      "adminSecondary": "You have full access to the platform and admin tools."
+    },
+    "group": {
+      "title": "Loyalty group",
+      "joinedOn": "Joined on {date}",
+      "leaveButton": "Leave this group",
+      "leaving": "Leaving…",
+      "confirmLeave": "Confirm?",
+      "confirmYes": "Yes, leave",
+      "confirmNo": "Cancel",
+      "adminRole": "Administrator",
+      "leaveErrors": {
+        "unauthenticated": "Sign in to continue.",
+        "not_found": "Membership not found.",
+        "admin_role": "You can't leave a group you administer.",
+        "db": "Technical error, try again."
+      }
+    },
+    "buttons": {
+      "managePortal": "Manage my subscription",
+      "viewPricing": "See plans"
+    },
+    "errors": {
+      "portal": "Couldn't open the portal. Please try again in a moment.",
+      "noPortal": "You don't have a Stripe subscription to manage right now."
+    }
+  },
+  "signup": {
+    "title": "Create an account",
+    "subtitle": "Join TradeScaleX in seconds.",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "passwordHint": "6 characters minimum.",
+    "trialNote": "When you create your account, you'll receive a code by email to activate your 48h free trial.",
+    "fromPricingNote": "Create your account to finalize your subscription and unlock all premium content.",
+    "submit": "Create my account",
+    "haveAccount": "Already have an account?",
+    "login": "Log in",
+    "errors": {
+      "missing": "Email and password required.",
+      "exists": "An account already exists with this email.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "login": {
+    "title": "Log in",
+    "subtitle": "Log in to your TradeScaleX account.",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "submit": "Log in",
+    "noAccount": "Don't have an account yet?",
+    "signup": "Create an account",
+    "forgotPassword": "Forgot your password?"
+  },
+  "resetPassword": {
+    "title": "Forgot password",
+    "subtitle": "Enter your email — we'll send you a link to choose a new password.",
+    "emailLabel": "Email",
+    "submit": "Send the link",
+    "backToLogin": "Back to login",
+    "sentTitle": "If an account exists, the link is on its way.",
+    "sentBody": "Check your inbox (and your spam folder). The link is valid for 1 hour.",
+    "errors": {
+      "missing": "Email required.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "newPassword": {
+    "title": "Choose a new password",
+    "subtitle": "Set your new password to log back in.",
+    "passwordLabel": "New password",
+    "passwordConfirmLabel": "Confirm password",
+    "passwordHint": "6 characters minimum.",
+    "submit": "Update my password",
+    "successRedirect": "Password updated, please log back in.",
+    "errors": {
+      "missing": "Password required.",
+      "mismatch": "The two passwords don't match.",
+      "weak": "Password too short (6 characters minimum).",
+      "notRecovery": "Invalid or expired link. Request a new email.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "updatePassword": {
+    "title": "Set a new password",
+    "subtitle": "Choose a new password to secure your account.",
+    "newPasswordLabel": "New password",
+    "confirmLabel": "Confirm password",
+    "passwordHint": "6 characters minimum.",
+    "submit": "Update my password",
+    "backToLogin": "Back to login",
+    "errors": {
+      "mismatch": "The two passwords don't match.",
+      "tooShort": "Password too short (6 characters minimum).",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "codeSent": {
+    "title": "We sent you a code!",
+    "body": "A 48h activation code has been sent to:",
+    "hint": "Enter it on the activation page to unlock your access. Remember to check your spam folder.",
+    "ctaActivate": "I have my code",
+    "backHome": "Back to home"
+  },
+  "activateCode": {
+    "title": "Activate your code",
+    "subtitle": "Enter the code received by email to start your 48h free trial.",
+    "label": "Activation code",
+    "submit": "Activate",
+    "backToLogin": "Back to login",
+    "errors": {
+      "invalid": "Invalid code.",
+      "expired": "This code has expired.",
+      "used": "This code has already been used.",
+      "notLoggedIn": "You must be logged in to activate a code.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "lessons": {
+    "breadcrumbFormations": "Courses",
+    "lessonNumber": "Lesson {n}",
+    "completed": "Completed",
+    "structureSteps": {
+      "read": "Read",
+      "remember": "Key points",
+      "exercise": "Exercise",
+      "quiz": "Quiz"
+    },
+    "markComplete": "Mark lesson as completed",
+    "doneTitle": "Lesson completed",
+    "doneNextSubtitle": "Keep the momentum going, the next lesson is waiting.",
+    "doneAllSubtitle": "You've completed all the lessons in this course.",
+    "nextLessonLabel": "Next lesson",
+    "formationCompleteLabel": "Course complete",
+    "viewAllFormations": "See all courses",
+    "globalCount": "{done} / {total} free lessons"
+  },
+  "stickyNav": {
+    "moduleMacro": "Macro module",
+    "moduleDefault": "Module",
+    "formations": "Courses",
+    "backToModule": "Back to {label}",
+    "previousLesson": "Previous lesson",
+    "nextLesson": "Next lesson",
+    "topOfPage": "Top of page"
+  },
+  "milestones": {
+    "profileForming": "Your trader profile is starting to take shape.",
+    "firstLesson": "First lesson completed. Keep going to unlock more stats.",
+    "firstGameWin": "First signal caught. Keep going, instincts are built by playing."
+  }
+}

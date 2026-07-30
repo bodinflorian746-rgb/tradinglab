@@ -57,6 +57,58 @@ function walletFromLedger(group: PartnerGroup, rows: LedgerAmount[]): MemberWall
   };
 }
 
+export type MyGroupMembership = {
+  membershipId: string;
+  group: PartnerGroup;
+  role: "admin" | "member";
+  joinedAt: string;
+};
+
+/**
+ * Groupes où l'utilisateur est membre ACTIF (tous rôles), pour l'espace
+ * Mon compte (rattachement/quitter un groupe) — distinct de getMyWallets qui
+ * charge en plus le ledger, inutile ici.
+ */
+export async function getMyGroupMemberships(userId: string): Promise<MyGroupMembership[]> {
+  const supabase = await readClient();
+
+  const { data: memberships, error: mErr } = await supabase
+    .from("group_memberships")
+    .select("id, group_id, role, joined_at")
+    .eq("user_id", userId)
+    .eq("status", "active");
+  if (mErr) {
+    console.error(`[loyalty/member] getMyGroupMemberships memberships: ${mErr.message}`);
+    return [];
+  }
+  const rows = memberships ?? [];
+  if (rows.length === 0) return [];
+
+  const groupIds = rows.map((m) => m.group_id as string);
+  const { data: groups, error: gErr } = await supabase
+    .from("partner_groups")
+    .select("id, name, slug, telegram_reference, status, created_by, created_at, updated_at")
+    .in("id", groupIds);
+  if (gErr) {
+    console.error(`[loyalty/member] getMyGroupMemberships groups: ${gErr.message}`);
+    return [];
+  }
+  const groupById = new Map((groups as PartnerGroup[]).map((g) => [g.id, g]));
+
+  return rows
+    .map((m) => {
+      const group = groupById.get(m.group_id as string);
+      if (!group) return null;
+      return {
+        membershipId: m.id as string,
+        group,
+        role: m.role as "admin" | "member",
+        joinedAt: m.joined_at as string,
+      };
+    })
+    .filter((x): x is MyGroupMembership => x !== null);
+}
+
 /** Un portefeuille par groupe où l'utilisateur est membre ACTIF. */
 export async function getMyWallets(userId: string): Promise<MemberWallet[]> {
   const supabase = await readClient();

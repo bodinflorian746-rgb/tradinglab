@@ -30,7 +30,25 @@
       "active": "Tu suscripción está activa.",
       "ending": "Suscripción activa hasta el {date}. No se renovará.",
       "trial": "Prueba gratuita en curso.",
-      "none": "No tienes una suscripción activa."
+      "none": "No tienes una suscripción activa.",
+      "admin": "Acceso de Super Admin activo",
+      "adminSecondary": "Tienes acceso completo a la plataforma y a las herramientas de administración."
+    },
+    "group": {
+      "title": "Grupo de fidelización",
+      "joinedOn": "Unido el {date}",
+      "leaveButton": "Salir de este grupo",
+      "leaving": "Saliendo…",
+      "confirmLeave": "¿Confirmar?",
+      "confirmYes": "Sí, salir",
+      "confirmNo": "Cancelar",
+      "adminRole": "Administrador",
+      "leaveErrors": {
+        "unauthenticated": "Inicia sesión para continuar.",
+        "not_found": "Membresía no encontrada.",
+        "admin_role": "No puedes salir de un grupo que administras.",
+        "db": "Error técnico, inténtalo de nuevo."
+      }
     },
     "buttons": {
       "managePortal": "Gestionar mi suscripción",

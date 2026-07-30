@@ -15,10 +15,13 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isPremium } from "@/lib/auth/premium";
+import { isAdmin } from "@/lib/auth/admin";
 import { getDictionary } from "@/i18n/dictionaries";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
+import { getMyGroupMemberships } from "@/lib/loyalty/member";
 import { createPortalSession } from "./actions";
+import { GroupMembership } from "./_components/GroupMembership";
 
 function formatDate(iso: string | null | undefined, locale: Locale): string {
   if (!iso) return "";
@@ -39,7 +42,7 @@ type SubRow = {
   stripe_customer_id: string | null;
 };
 
-type StateKind = "active" | "ending" | "trial" | "none";
+type StateKind = "admin" | "active" | "ending" | "trial" | "none";
 
 export default async function ComptePage({
   params,
@@ -76,8 +79,16 @@ export default async function ComptePage({
   const periodEnd = sub?.current_period_end ?? null;
   const hasStripeCustomer = !!sub?.stripe_customer_id;
 
+  // Super Admin (ADMIN_EMAILS/ADMIN_EMAIL, même mécanisme que le reste de
+  // l'admin) : accès plateforme complet par construction, indépendant de
+  // toute ligne subscriptions — prioritaire sur l'état Stripe réel (souvent
+  // absent pour ce compte). Ne crée ni ne modifie aucune donnée d'abonnement.
+  const userIsAdmin = isAdmin(user.email);
+
   let state: StateKind;
-  if (isActive && !cancelAtEnd) {
+  if (userIsAdmin) {
+    state = "admin";
+  } else if (isActive && !cancelAtEnd) {
     state = "active";
   } else if (isActive && cancelAtEnd) {
     state = "ending";
@@ -85,6 +96,8 @@ export default async function ComptePage({
     const premium = await isPremium(user.id);
     state = premium.reason === "trial" ? "trial" : "none";
   }
+
+  const memberships = await getMyGroupMemberships(user.id);
 
   const common = await getDictionary(locale, "common");
   const t = common.account;
@@ -124,6 +137,12 @@ export default async function ComptePage({
             {t.statusLabel}
           </p>
 
+          {state === "admin" && (
+            <div className="mb-6">
+              <p className="text-base text-white font-medium">{t.subscription.admin}</p>
+              <p className="mt-1 text-sm text-zinc-400">{t.subscription.adminSecondary}</p>
+            </div>
+          )}
           {state === "active" && (
             <p className="text-base text-white font-medium mb-6">
               {t.subscription.active}
@@ -175,6 +194,10 @@ export default async function ComptePage({
             </Link>
           )}
         </section>
+
+        <div className="mt-6">
+          <GroupMembership memberships={memberships} />
+        </div>
 
       </div>
     </main>

@@ -35,7 +35,7 @@ export default async function AdminCodesPage({
   const admin = createAdminClient();
   const { data, error } = await admin
     .from("access_codes")
-    .select("code, status, type, used_by_user_id, used_at, created_at")
+    .select("code, status, type, duration_days, used_by_user_id, used_at, created_at")
     .order("created_at", { ascending: false });
 
   const codes: AdminCode[] = error || !data ? [] : (data as AdminCode[]);

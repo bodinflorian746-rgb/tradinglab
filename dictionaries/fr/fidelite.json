@@ -1,14 +1,10 @@
 {
   "brand": "Programme de fidélité",
-  "tabs": {
-    "points": "Mes points",
-    "join": "Rejoindre un groupe"
-  },
   "landing": {
     "title": "Mes points",
     "subtitle": "Suis tes points et accède aux boutiques de tes groupes.",
     "none": "Tu n'as rejoint aucun groupe.",
-    "noneHint": "Utilise l'onglet « Rejoindre un groupe » pour saisir ton code de référence.",
+    "noneHint": "Rejoins un groupe depuis la page Mon compte.",
     "viewHistory": "Voir l'historique"
   },
   "activate": {
@@ -29,10 +25,9 @@
     }
   },
   "join": {
-    "title": "Rejoindre un groupe",
     "hint": "Saisis le code de référence fourni par l'administrateur du groupe.",
     "placeholder": "GRP-XXXX-XXXX",
-    "submit": "Rejoindre",
+    "submit": "Rejoindre le groupe",
     "submitting": "Rattachement…",
     "success": "Tu as rejoint {name} !",
     "errors": {
