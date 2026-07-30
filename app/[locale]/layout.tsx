@@ -12,6 +12,7 @@ import { getAllDictionaries } from "@/i18n/dictionaries";
 import { SITE_URL } from "@/i18n/site";
 import { createClient } from "@/lib/supabase/server";
 import { isAdmin } from "@/lib/auth/admin";
+import { hasActiveAdminGroup } from "@/lib/loyalty/access";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -131,12 +132,19 @@ export default async function LocaleLayout({
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   const userIsAdmin = isAdmin(user?.email);
+  // Flag « admin d'au moins un groupe partenaire » → affiche l'entrée Espace
+  // Master dans la nav. Calculé serveur (service_role) ; jamais la liste exposée.
+  const userIsGroupAdmin = user ? await hasActiveAdminGroup(user.id) : false;
 
   return (
     <html lang={locale} className={inter.className}>
       <body className="bg-zinc-950 text-white antialiased">
         <LocaleProvider locale={locale} dicts={dicts}>
-          <SessionProvider initialUser={user} initialIsAdmin={userIsAdmin}>
+          <SessionProvider
+            initialUser={user}
+            initialIsAdmin={userIsAdmin}
+            initialIsGroupAdmin={userIsGroupAdmin}
+          >
             <Navbar />
 
             {children}

@@ -13,21 +13,29 @@
 import { createContext, useContext, type ReactNode } from "react";
 import type { User } from "@supabase/supabase-js";
 
-type SessionCtx = { user: User | null; isAdmin: boolean };
+type SessionCtx = { user: User | null; isAdmin: boolean; isGroupAdmin: boolean };
 
-const SessionContext = createContext<SessionCtx>({ user: null, isAdmin: false });
+const SessionContext = createContext<SessionCtx>({
+  user: null,
+  isAdmin: false,
+  isGroupAdmin: false,
+});
 
 export function SessionProvider({
   initialUser,
   initialIsAdmin,
+  initialIsGroupAdmin,
   children,
 }: {
   initialUser: User | null;
   initialIsAdmin: boolean;
+  initialIsGroupAdmin: boolean;
   children: ReactNode;
 }) {
   return (
-    <SessionContext.Provider value={{ user: initialUser, isAdmin: initialIsAdmin }}>
+    <SessionContext.Provider
+      value={{ user: initialUser, isAdmin: initialIsAdmin, isGroupAdmin: initialIsGroupAdmin }}
+    >
       {children}
     </SessionContext.Provider>
   );
