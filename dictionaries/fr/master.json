@@ -11,6 +11,7 @@
     "codes": "Codes",
     "unlock": "Déblocage",
     "shop": "Magasin",
+    "orders": "Commandes",
     "members": "Membres",
     "operations": "Opérations",
     "back": "← Mes groupes"
@@ -228,6 +229,22 @@
     "manual_debit": "Débit manuel",
     "cancellation": "Annulation",
     "correction": "Correction"
+  },
+  "orders": {
+    "title": "Commandes",
+    "empty": "Aucune commande pour le moment.",
+    "free": "Gratuit",
+    "th": { "date": "Date", "client": "Client", "product": "Produit", "price": "Prix", "status": "Statut" },
+    "status": { "pending": "À traiter", "delivered": "Livrée" },
+    "markDelivered": "Marquer comme livrée",
+    "marking": "…",
+    "errors": {
+      "unauthenticated": "Session expirée, reconnectez-vous.",
+      "forbidden": "Action non autorisée.",
+      "group_suspended": "Groupe suspendu : action désactivée.",
+      "not_found": "Commande introuvable.",
+      "db": "Erreur technique, réessayez."
+    }
   },
   "pager": { "prev": "Précédent", "next": "Suivant", "page": "Page {p} / {t}" },
   "common": { "readonly": "Lecture seule", "loadError": "Erreur de chargement." }

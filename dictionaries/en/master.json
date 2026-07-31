@@ -11,6 +11,7 @@
     "codes": "Codes",
     "unlock": "Unlock",
     "shop": "Shop",
+    "orders": "Orders",
     "members": "Members",
     "operations": "Operations",
     "back": "← My groups"
@@ -228,6 +229,22 @@
     "manual_debit": "Manual debit",
     "cancellation": "Cancellation",
     "correction": "Correction"
+  },
+  "orders": {
+    "title": "Orders",
+    "empty": "No orders yet.",
+    "free": "Free",
+    "th": { "date": "Date", "client": "Customer", "product": "Product", "price": "Price", "status": "Status" },
+    "status": { "pending": "Pending", "delivered": "Delivered" },
+    "markDelivered": "Mark as delivered",
+    "marking": "…",
+    "errors": {
+      "unauthenticated": "Session expired, please sign in again.",
+      "forbidden": "Action not allowed.",
+      "group_suspended": "Group suspended: action disabled.",
+      "not_found": "Order not found.",
+      "db": "Technical error, please try again."
+    }
   },
   "pager": { "prev": "Previous", "next": "Next", "page": "Page {p} / {t}" },
   "common": { "readonly": "Read-only", "loadError": "Loading error." }

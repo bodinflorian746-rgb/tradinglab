@@ -11,6 +11,7 @@
     "codes": "Códigos",
     "unlock": "Desbloqueo",
     "shop": "Tienda",
+    "orders": "Pedidos",
     "members": "Miembros",
     "operations": "Operaciones",
     "back": "← Mis grupos"
@@ -228,6 +229,22 @@
     "manual_debit": "Débito manual",
     "cancellation": "Cancelación",
     "correction": "Corrección"
+  },
+  "orders": {
+    "title": "Pedidos",
+    "empty": "Todavía no hay pedidos.",
+    "free": "Gratis",
+    "th": { "date": "Fecha", "client": "Cliente", "product": "Producto", "price": "Precio", "status": "Estado" },
+    "status": { "pending": "Pendiente", "delivered": "Entregado" },
+    "markDelivered": "Marcar como entregado",
+    "marking": "…",
+    "errors": {
+      "unauthenticated": "Sesión caducada, vuelve a iniciar sesión.",
+      "forbidden": "Acción no autorizada.",
+      "group_suspended": "Grupo suspendido: acción desactivada.",
+      "not_found": "Pedido no encontrado.",
+      "db": "Error técnico, inténtalo de nuevo."
+    }
   },
   "pager": { "prev": "Anterior", "next": "Siguiente", "page": "Página {p} / {t}" },
   "common": { "readonly": "Solo lectura", "loadError": "Error de carga." }

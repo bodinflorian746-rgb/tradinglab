@@ -19,6 +19,7 @@ export function MasterNav({ groupId }: { groupId: string }) {
     { href: `${base}/codes`, label: t.nav.codes },
     { href: `${base}/deblocage`, label: t.nav.unlock },
     { href: `${base}/magasin`, label: t.nav.shop },
+    { href: `${base}/commandes`, label: t.nav.orders },
     { href: `${base}/membres`, label: t.nav.members },
     { href: `${base}/operations`, label: t.nav.operations },
   ];
