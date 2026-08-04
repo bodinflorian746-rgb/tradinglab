@@ -45,8 +45,12 @@ async function readClient() {
 
 // Résolution d'e-mail EXCLUSIVEMENT côté serveur, via l'API admin GoTrue
 // (service_role) — jamais la service_role key exposée au navigateur, jamais
-// d'e-mail renvoyé par une route/composant client.
-async function resolveBuyerEmails(userIds: readonly string[]): Promise<Map<string, string | null>> {
+// d'e-mail renvoyé par une route/composant client. Exportée : même mécanisme
+// réutilisé par app/[locale]/master/[groupId]/page.tsx et
+// app/[locale]/admin/loyalty/groups/[groupId]/page.tsx pour afficher un
+// e-mail réel plutôt qu'un UUID tronqué, chacun avec sa propre garde
+// d'autorisation.
+export async function resolveUserEmails(userIds: readonly string[]): Promise<Map<string, string | null>> {
   const unique = [...new Set(userIds)];
   const admin = createAdminClient();
   const entries = await Promise.all(
@@ -99,7 +103,7 @@ export async function listGroupOrders(
 
   const rowsRaw = (data ?? []) as PurchaseRow[];
   const [emails, items] = await Promise.all([
-    resolveBuyerEmails(rowsRaw.map((r) => r.user_id)),
+    resolveUserEmails(rowsRaw.map((r) => r.user_id)),
     resolveItemNames(supabase, rowsRaw.map((r) => r.item_id)),
   ]);
 
