@@ -402,3 +402,46 @@ export async function revokeAccessCodeAction(input: {
     ),
   };
 }
+
+// ─── Référence Telegram du groupe ─────────────────────────────────────────────
+// Même garde que les codes/magasin (authorizeGroupWrite : admin actif du
+// groupe OU Super Admin, groupe actif requis) — accessible aux DEUX consoles
+// (Master et la fiche groupe Super Admin), contrairement à renameGroupAction
+// (Super Admin uniquement).
+
+const TELEGRAM_REFERENCE_MAX_LENGTH = 500;
+
+export type UpdateTelegramResult = { ok: true } | { ok: false; error: string };
+
+export async function updateGroupTelegramAction(input: {
+  locale: string;
+  groupId: string;
+  telegramReference: unknown;
+}): Promise<UpdateTelegramResult> {
+  const user = await currentUser();
+  if (!user) return { ok: false, error: "unauthenticated" };
+
+  const authz = await authorizeGroupWrite(user.id, input.groupId, user.email);
+  if (authz !== "ok") return { ok: false, error: authz };
+
+  if (typeof input.telegramReference !== "string") return { ok: false, error: "invalid_telegram" };
+  const trimmed = input.telegramReference.trim();
+  if (trimmed.length > TELEGRAM_REFERENCE_MAX_LENGTH) return { ok: false, error: "invalid_telegram" };
+  const telegramReference = trimmed === "" ? null : trimmed;
+
+  const admin = createAdminClient();
+  const { data, error } = await admin
+    .from("partner_groups")
+    .update({ telegram_reference: telegramReference })
+    .eq("id", input.groupId)
+    .select("id");
+  if (error) {
+    console.error(`[master/telegram] update error group=${input.groupId}: ${error.message}`);
+    return { ok: false, error: "db" };
+  }
+  if ((data?.length ?? 0) !== 1) return { ok: false, error: "not_found" };
+
+  revalidatePath(`/${input.locale}/master/${input.groupId}`);
+  revalidatePath(`/${input.locale}/admin/loyalty/groups/${input.groupId}`);
+  return { ok: true };
+}

@@ -15,6 +15,7 @@ import {
   listGroupLedger,
   listGroupMembers,
 } from "@/lib/loyalty/admin";
+import { resolveUserEmails } from "@/lib/loyalty/orders";
 import {
   CODE_STATUS_LABELS,
   GROUP_STATUS_LABELS,
@@ -36,6 +37,7 @@ import {
   Pager,
 } from "./_components/DetailControls";
 import { AssignAdminForm, RenameGroupForm, RoleToggleButton } from "./_components/MemberRoleControls";
+import { TelegramEditForm } from "@/app/[locale]/master/_components/TelegramEditForm";
 
 export const dynamic = "force-dynamic";
 const PAGE_SIZE = 25;
@@ -116,6 +118,11 @@ export default async function GroupDetailPage({
     }),
   ]);
 
+  // Page réservée au Super Admin (guard ci-dessus) : e-mail réel des membres
+  // affiché sans restriction supplémentaire, même mécanisme de résolution
+  // que le reste de la console (cf. lib/loyalty/orders.ts).
+  const memberEmails = await resolveUserEmails(members.rows.map((m) => m.user_id));
+
   const pages = (total: number) => Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   return (
@@ -182,7 +189,13 @@ export default async function GroupDetailPage({
               </div>
             </div>
             <InfoRow label="Slug" value={<span className="font-mono">{group.slug}</span>} />
-            <InfoRow label="Référence Telegram" value={group.telegram_reference ?? "—"} />
+            <div className="flex flex-col gap-2 border-b border-zinc-800/60 py-3 last:border-0 sm:flex-row sm:items-center sm:justify-between">
+              <span className="text-sm text-zinc-500">Référence Telegram</span>
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-zinc-200">{group.telegram_reference ?? "—"}</span>
+                <TelegramEditForm locale={locale} groupId={groupId} currentValue={group.telegram_reference} />
+              </div>
+            </div>
             <InfoRow
               label="Statut"
               value={GROUP_STATUS_LABELS[group.status] ?? group.status}
@@ -212,7 +225,7 @@ export default async function GroupDetailPage({
           >
             {members.rows.map((m) => (
               <tr key={m.id} className="border-b border-zinc-800/60 last:border-0">
-                <td className="px-4 py-3 font-mono text-xs text-zinc-300">{shortId(m.user_id)}</td>
+                <td className="px-4 py-3 text-xs text-zinc-300">{memberEmails.get(m.user_id) ?? shortId(m.user_id)}</td>
                 <td className="px-4 py-3">{MEMBERSHIP_ROLE_LABELS[m.role] ?? m.role}</td>
                 <td className="px-4 py-3">{GROUP_STATUS_LABELS[m.status] ?? m.status}</td>
                 <td className="px-4 py-3 text-zinc-400">{formatDate(m.joined_at)}</td>

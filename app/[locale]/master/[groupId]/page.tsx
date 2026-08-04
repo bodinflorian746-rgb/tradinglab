@@ -4,11 +4,15 @@
 import { notFound } from "next/navigation";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getGroupAdminUser, getGroupDashboard } from "@/lib/loyalty/master";
+import { createClient } from "@/lib/supabase/server";
+import { isDevAuthBypass } from "@/lib/dev-auth";
+import { canManageGroup } from "@/lib/loyalty/access";
+import { getGroupAdminEmails, getGroupAdminUser, getGroupDashboard } from "@/lib/loyalty/master";
 import { formatDate, shortId } from "@/lib/loyalty/admin-format";
 import { MasterNav } from "../_components/MasterNav";
 import { Tile, SuspendedNotice } from "../_components/ui";
 import { CopyButton } from "../_components/CopyButton";
+import { TelegramEditForm } from "../_components/TelegramEditForm";
 
 export const dynamic = "force-dynamic";
 
@@ -37,6 +41,23 @@ export default async function MasterDashboard({
   if (!dashboard) notFound();
   const { group, stats } = dashboard;
   const suspended = group.status !== "active";
+
+  // Visibilité de l'e-mail des admins DU GROUPE (attribués via "Attribuer le
+  // rôle admin", jamais partner_groups.created_by — un concept distinct,
+  // volontairement non touché ici) : re-vérifiée INDÉPENDAMMENT du guard de
+  // page ci-dessus (getGroupAdminUser) — jamais un simple flag hérité — pour
+  // qu'une éventuelle faille future du guard ne rende pas cette donnée
+  // accessible par ricochet. Super Admin, OU l'admin réellement actif de CE
+  // groupe précis (jamais un autre groupe, jamais un simple membre).
+  let canSeeAdminEmail = isDevAuthBypass();
+  if (!canSeeAdminEmail) {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    canSeeAdminEmail = !!user && (await canManageGroup(user.id, user.email, groupId));
+  }
+  const adminEmails = canSeeAdminEmail ? await getGroupAdminEmails(groupId) : [];
 
   return (
     <main className="min-h-screen bg-zinc-950 px-6 py-12 text-white md:py-16">
@@ -89,8 +110,22 @@ export default async function MasterDashboard({
           <p className="border-b border-zinc-800/60 py-3 text-xs text-zinc-500">
             {t.referenceCode.hint}
           </p>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800/60 py-3">
+            <span className="text-sm text-zinc-500">Telegram</span>
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-zinc-200">{group.telegram_reference ?? "—"}</span>
+              <TelegramEditForm locale={locale} groupId={groupId} currentValue={group.telegram_reference} />
+            </div>
+          </div>
+          {canSeeAdminEmail && (
+            <div className="flex justify-between border-b border-zinc-800/60 py-3 last:border-0">
+              <span className="text-sm text-zinc-500">Administrateur(s)</span>
+              <span className="text-sm text-zinc-200">
+                {adminEmails.length > 0 ? adminEmails.join(", ") : "—"}
+              </span>
+            </div>
+          )}
           {[
-            ["Telegram", group.telegram_reference ?? "—"],
             ["Slug", group.slug],
             [t.codes.th.createdBy, shortId(group.created_by)],
             [t.codes.th.created, formatDate(group.created_at)],

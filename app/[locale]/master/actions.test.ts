@@ -22,6 +22,7 @@ const h: {
   unlockInsertQueue: Res[];
   unlockUpdateResult: Res;
   unlockCodeLookup: { group_id: string; status: string } | null;
+  telegramUpdateResult: Res;
 } = {
   membershipRole: "admin",
   groupStatus: "active",
@@ -33,6 +34,7 @@ const h: {
   unlockInsertQueue: [],
   unlockUpdateResult: { data: [], error: null },
   unlockCodeLookup: null,
+  telegramUpdateResult: { data: [{ id: "g1" }], error: null },
 };
 
 function makeFrom() {
@@ -43,8 +45,10 @@ function makeFrom() {
       const isUpdate = calls.includes("update");
       if (table === "group_memberships")
         return { data: h.membershipRole != null ? { role: h.membershipRole } : null, error: null };
-      if (table === "partner_groups")
+      if (table === "partner_groups") {
+        if (isUpdate) return h.telegramUpdateResult;
         return { data: h.groupStatus != null ? { status: h.groupStatus } : null, error: null };
+      }
       if (table === "points_codes") {
         if (isInsert) return h.insertQueue.shift() ?? { data: [], error: null };
         if (isUpdate) return h.updateResult;
@@ -94,6 +98,7 @@ import {
   toggleShopItemStatusAction,
   generateAccessCodesAction,
   revokeAccessCodeAction,
+  updateGroupTelegramAction,
 } from "@/app/[locale]/master/actions";
 
 const GID = "a0000000-0000-4000-8000-000000000001";
@@ -114,6 +119,7 @@ beforeEach(() => {
   h.unlockInsertQueue = [];
   h.unlockUpdateResult = { data: [], error: null };
   h.unlockCodeLookup = null;
+  h.telegramUpdateResult = { data: [{ id: "g1" }], error: null };
   fromMock.mockClear();
 });
 afterEach(() => vi.clearAllMocks());
@@ -417,5 +423,69 @@ describe("revokeAccessCodeAction", () => {
   it("non admin → forbidden", async () => {
     h.membershipRole = null;
     expect(await revokeAccessCodeAction(rev)).toEqual({ ok: false, error: "forbidden" });
+  });
+});
+
+describe("updateGroupTelegramAction", () => {
+  const base = { locale: "fr", groupId: GID, telegramReference: "@monhandle" };
+
+  it("succès : admin actif du groupe", async () => {
+    expect(await updateGroupTelegramAction(base)).toEqual({ ok: true });
+  });
+
+  it("succès : Super Admin (autorisé via authorizeGroupWrite, pas admin de CE groupe)", async () => {
+    const prev = process.env.ADMIN_EMAILS;
+    process.env.ADMIN_EMAILS = "superadmin@dev.local";
+    try {
+      h.membershipRole = null;
+      getUserMock.mockResolvedValue({ data: { user: { id: "u-admin", email: "superadmin@dev.local" } } });
+      expect(await updateGroupTelegramAction(base)).toEqual({ ok: true });
+    } finally {
+      process.env.ADMIN_EMAILS = prev;
+    }
+  });
+
+  it("chaîne vide → telegram_reference mis à null (effacement autorisé)", async () => {
+    expect(await updateGroupTelegramAction({ ...base, telegramReference: "   " })).toEqual({ ok: true });
+  });
+
+  it("valeur non-string → invalid_telegram", async () => {
+    expect(await updateGroupTelegramAction({ ...base, telegramReference: 42 })).toEqual({
+      ok: false,
+      error: "invalid_telegram",
+    });
+  });
+
+  it("valeur trop longue (> 500) → invalid_telegram", async () => {
+    expect(await updateGroupTelegramAction({ ...base, telegramReference: "x".repeat(501) })).toEqual({
+      ok: false,
+      error: "invalid_telegram",
+    });
+  });
+
+  it("groupe suspendu → group_suspended (aucune écriture)", async () => {
+    h.groupStatus = "suspended";
+    expect(await updateGroupTelegramAction(base)).toEqual({ ok: false, error: "group_suspended" });
+  });
+
+  it("non admin de ce groupe → forbidden", async () => {
+    h.membershipRole = null;
+    getUserMock.mockResolvedValue({ data: { user: { id: "u-1", email: "notadmin@test" } } });
+    expect(await updateGroupTelegramAction(base)).toEqual({ ok: false, error: "forbidden" });
+  });
+
+  it("non authentifié → unauthenticated", async () => {
+    setUser(null);
+    expect(await updateGroupTelegramAction(base)).toEqual({ ok: false, error: "unauthenticated" });
+  });
+
+  it("aucune ligne modifiée (groupe inexistant après le check) → not_found", async () => {
+    h.telegramUpdateResult = { data: [], error: null };
+    expect(await updateGroupTelegramAction(base)).toEqual({ ok: false, error: "not_found" });
+  });
+
+  it("erreur DB → db", async () => {
+    h.telegramUpdateResult = { data: null, error: { message: "boom" } };
+    expect(await updateGroupTelegramAction(base)).toEqual({ ok: false, error: "db" });
   });
 });

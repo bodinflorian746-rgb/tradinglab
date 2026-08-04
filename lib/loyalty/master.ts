@@ -17,6 +17,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { isDevAuthBypass, DEV_USER } from "@/lib/dev-auth";
 import { isGroupAdmin } from "@/lib/loyalty/access";
 import { isAdmin } from "@/lib/auth/admin";
+import { resolveUserEmails } from "@/lib/loyalty/orders";
 import {
   buildGroupsWithStats,
   type CodeStatRow,
@@ -257,4 +258,23 @@ export async function listLedger(
     .range(offset, offset + pageSize - 1);
   if (error) return { rows: [], total: 0, error: error.message };
   return { rows: (data ?? []) as LedgerRow[], total: count ?? 0, error: null };
+}
+
+/**
+ * E-mails des admins ACTIFS de ce groupe (role='admin', status='active') —
+ * jamais le créateur du groupe (partner_groups.created_by, un concept
+ * distinct). Utilisée pour l'affichage restreint (canManageGroup) du
+ * tableau de bord Master : app/[locale]/master/[groupId]/page.tsx.
+ */
+export async function getGroupAdminEmails(groupId: string): Promise<string[]> {
+  const supabase = await readClient();
+  const { data, error } = await supabase
+    .from("group_memberships")
+    .select("user_id")
+    .eq("group_id", groupId)
+    .eq("role", "admin")
+    .eq("status", "active");
+  if (error || !data) return [];
+  const emails = await resolveUserEmails(data.map((r) => r.user_id as string));
+  return [...emails.values()].filter((e): e is string => !!e);
 }
