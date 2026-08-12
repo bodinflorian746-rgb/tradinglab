@@ -213,7 +213,7 @@ export function JournalCard({
           {t.ai.badge[entry.ai_status]}
         </span>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <TradeAnalysisModal entry={entry} t={t} />
+          {entry.result !== "open" && <TradeAnalysisModal entry={entry} t={t} />}
           <TradeDetails entry={entry} t={t} locale={locale} />
           <EditTradeButton entry={entry} />
           <DeleteTradeButton

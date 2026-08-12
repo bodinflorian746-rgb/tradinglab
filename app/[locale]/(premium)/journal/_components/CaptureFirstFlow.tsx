@@ -1,10 +1,13 @@
 "use client";
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  FLUX D'AJOUT / MODIFICATION DE TRADE — 2 CHEMINS (PROTOTYPE / MOCK)
+//  FLUX D'AJOUT / MODIFICATION DE TRADE — 2 CHEMINS
 // ─────────────────────────────────────────────────────────────────────────────
-//  CHEMIN A (capture) : capture → analyse IA simulée → ressenti → résumé
+//  CHEMIN A (capture) : capture → saisie manuelle des données du trade → ressenti → résumé
 //  CHEMIN B (manuel)  : « continuer sans capture » → saisie manuelle → résumé
+//
+//  La capture d'écran n'est qu'une pièce jointe au trade (aucune analyse
+//  automatique de son contenu) : tous les champs sont saisis à la main.
 //
 //  ÉDITION (Priorité 2) : prop `initial` → pré-remplit tout et ouvre le MÊME
 //  flux (capture-first ou manuel selon la présence d'une capture). Mock : la
@@ -15,7 +18,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef, useState, useTransition, type ReactNode } from "react";
-import { useDict, useLocale } from "@/app/components/LocaleProvider";
+import { useDict } from "@/app/components/LocaleProvider";
 import {
   DIRECTIONS,
   TIMEFRAMES,
@@ -32,43 +35,6 @@ import {
   type TradeEntryView,
 } from "@/lib/journal/types";
 import { createTradeEntry, updateTradeEntry } from "../actions";
-import { ScoreGauge } from "./analysis/ScoreGauge";
-
-const DETECTED_MOCK = {
-  asset: "EURUSD",
-  timeframe: "H1",
-  direction: "buy",
-  market_trend: "bullish",
-  setup: "order_block",
-  entry_price: "1.0742",
-  stop_loss: "1.0728",
-  take_profit: "1.0790",
-  r_multiple: "2.1",
-};
-
-function getAiVerdict(locale: "fr" | "es" | "en") {
-  const text = {
-    fr: {
-      positives: ["Entrée cohérente avec la structure", "Structure haussière respectée", "Ratio risque/rendement intéressant"],
-      warnings: ["Stop loss un peu serré", "Entrée légèrement anticipée"],
-      explanation:
-        "L'entrée est cohérente avec la structure haussière observée. Le principal point d'amélioration concerne le placement du stop loss, un peu trop serré par rapport à la volatilité récente.",
-    },
-    en: {
-      positives: ["Entry consistent with the structure", "Bullish structure respected", "Attractive risk/reward ratio"],
-      warnings: ["Stop loss a bit tight", "Entry slightly early"],
-      explanation:
-        "The entry is consistent with the bullish structure observed. The main area for improvement is the stop loss placement, a bit too tight relative to recent volatility.",
-    },
-    es: {
-      positives: ["Entrada coherente con la estructura", "Estructura alcista respetada", "Ratio riesgo/recompensa interesante"],
-      warnings: ["Stop loss un poco ajustado", "Entrada ligeramente anticipada"],
-      explanation:
-        "La entrada es coherente con la estructura alcista observada. El principal punto de mejora es la colocación del stop loss, un poco demasiado ajustado respecto a la volatilidad reciente.",
-    },
-  }[locale];
-  return { confidence: 81, score: 78, ...text };
-}
 
 type TradeForm = {
   asset: string; direction: string; timeframe: string; trade_type: string; result: string;
@@ -85,7 +51,7 @@ const BASE_FORM: TradeForm = {
 };
 
 type Mode = "capture" | "manual";
-type StepId = "capture" | "analysis" | "manual" | "ressenti" | "summary";
+type StepId = "capture" | "details" | "manual" | "ressenti" | "summary";
 
 function deriveTradeType(tf: string): string {
   if (["M1", "M5", "M15"].includes(tf)) return "scalp";
@@ -155,20 +121,16 @@ function BlockTitle({ children }: { children: ReactNode }) {
 export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; initial?: TradeEntryView | null }) {
   const t = useDict("journal");
   const c = t.capture;
-  const locale = useLocale();
-  const aiVerdict = getAiVerdict(locale);
   const isEdit = !!initial;
   const editMode: Mode = initial?.screenshot_url ? "capture" : "manual";
 
   const [mode, setMode] = useState<Mode>(isEdit ? editMode : "capture");
-  const [step, setStep] = useState<StepId>(isEdit ? (editMode === "manual" ? "manual" : "analysis") : "capture");
+  const [step, setStep] = useState<StepId>(isEdit ? (editMode === "manual" ? "manual" : "details") : "capture");
   const [form, setForm] = useState<TradeForm>(() =>
     initial ? entryToForm(initial) : { ...BASE_FORM, trade_date: nowLocalValue() },
   );
   const [imageUrl, setImageUrl] = useState<string | null>(initial?.screenshot_signed_url ?? null);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [analyzing, setAnalyzing] = useState(false);
-  const [phase, setPhase] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [saveError, setSaveError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
@@ -210,27 +172,17 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
     }
     return true;
   }
+  const DETAILS_REQ: (keyof TradeForm)[] = ["asset", "direction", "timeframe"];
   const MANUAL_REQ: (keyof TradeForm)[] = ["asset", "direction", "timeframe", "trade_type", "result", "setup", "emotion_before", "emotion_after", "followed_plan"];
   const RESSENTI_REQ: (keyof TradeForm)[] = ["result", "setup", "emotion_before", "emotion_after", "followed_plan"];
 
-  // ── Chemin A : analyse IA simulée ──
-  function startAnalysis(file: File) {
+  // ── Chemin A : capture jointe au trade (aucune analyse automatique) ──
+  function onPickFile(file: File | undefined) {
+    if (!file || !file.type.startsWith("image/")) return;
     setMode("capture");
     setImageFile(file);
     setImageUrl(URL.createObjectURL(file));
-    setStep("analysis");
-    setAnalyzing(true);
-    setPhase(0);
-    const phaseCount = c.ai.phases.length;
-    const PHASE_MS = 650;
-    for (let i = 1; i <= phaseCount; i++) window.setTimeout(() => setPhase(i), i * PHASE_MS);
-    window.setTimeout(() => {
-      set(DETECTED_MOCK);
-      setAnalyzing(false);
-    }, phaseCount * PHASE_MS + 450);
-  }
-  function onPickFile(file: File | undefined) {
-    if (file && file.type.startsWith("image/")) startAnalysis(file);
+    setStep("details");
   }
   function goManual() {
     setMode("manual");
@@ -244,11 +196,10 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
     function onPaste(e: ClipboardEvent) {
       const item = Array.from(e.clipboardData?.items ?? []).find((i) => i.type.startsWith("image/"));
       const file = item?.getAsFile();
-      if (file) startAnalysis(file);
+      if (file) onPickFile(file);
     }
     window.addEventListener("paste", onPaste);
     return () => window.removeEventListener("paste", onPaste);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
   useEffect(() => {
@@ -257,8 +208,8 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
   }, []);
 
   const flow: StepId[] = isEdit
-    ? (mode === "manual" ? ["manual", "summary"] : ["analysis", "ressenti", "summary"])
-    : (mode === "manual" ? ["capture", "manual", "summary"] : ["capture", "analysis", "ressenti", "summary"]);
+    ? (mode === "manual" ? ["manual", "summary"] : ["details", "ressenti", "summary"])
+    : (mode === "manual" ? ["capture", "manual", "summary"] : ["capture", "details", "ressenti", "summary"]);
   const idx = Math.max(0, flow.indexOf(step));
 
   function goBack() {
@@ -350,75 +301,45 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
             </div>
           )}
 
-          {/* ── ANALYSE IA ── */}
-          {step === "analysis" && (
-            <div className="space-y-5">
+          {/* ── DÉTAILS DU TRADE (saisie manuelle après capture) ── */}
+          {step === "details" && (
+            <div className="space-y-6">
               {imageUrl && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={imageUrl} alt="capture" className="w-full rounded-xl border border-zinc-800 object-contain max-h-64 bg-black/30" />
               )}
-              {analyzing ? (
-                <div className="py-6 space-y-3">
-                  {c.ai.phases.map((label, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <span className="w-6 h-6 flex items-center justify-center shrink-0">
-                        {i < phase ? (
-                          <span className="w-5 h-5 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center">
-                            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.2 2.3L9.5 3.5" stroke="#34d399" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                          </span>
-                        ) : i === phase ? (
-                          <span className="w-5 h-5 rounded-full border-2 border-emerald-500/30 border-t-emerald-400 animate-spin" />
-                        ) : (
-                          <span className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
-                        )}
-                      </span>
-                      <span className={`text-sm font-medium ${i <= phase ? "text-zinc-200" : "text-zinc-600"}`}>{label}</span>
-                    </div>
+
+              <div className="space-y-4">
+                <BlockTitle>{c.manual.facts}</BlockTitle>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div id={`cf-field-asset`}>
+                    <label className={labelClass}>{t.form.asset} *</label>
+                    <input value={form.asset} onChange={(e) => set({ asset: e.target.value })} maxLength={40} placeholder={t.form.assetPlaceholder} className={inputClass + eb("asset")} />
+                    {msg("asset")}
+                  </div>
+                  <div id={`cf-field-timeframe`}>
+                    <label className={labelClass}>{t.form.timeframe} *</label>
+                    <select value={form.timeframe} onChange={(e) => set({ timeframe: e.target.value })} className={inputClass + eb("timeframe")}><option value="" disabled>{t.form.choose}</option>{TIMEFRAMES.map((tf) => (<option key={tf} value={tf}>{tf}</option>))}</select>
+                    {msg("timeframe")}
+                  </div>
+                  <div id={`cf-field-direction`}>
+                    <label className={labelClass}>{t.form.direction} *</label>
+                    <select value={form.direction} onChange={(e) => set({ direction: e.target.value })} className={inputClass + eb("direction")}><option value="" disabled>{t.form.choose}</option>{opt(DIRECTIONS, t.options.direction)}</select>
+                    {msg("direction")}
+                  </div>
+                  <div><label className={labelClass}>{t.form.marketTrend}</label><select value={form.market_trend} onChange={(e) => set({ market_trend: e.target.value })} className={inputClass}><option value="">—</option>{opt(MARKET_TRENDS, t.options.market_trend)}</select></div>
+                  <div className="sm:col-span-2"><label className={labelClass}>{t.form.setup}</label><select value={form.setup} onChange={(e) => set({ setup: e.target.value })} className={inputClass}><option value="">—</option>{opt(SETUPS, t.options.setup)}</select></div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <BlockTitle>{c.manual.risk}</BlockTitle>
+                <div className="grid grid-cols-2 gap-3">
+                  {([["entry_price", t.form.entryPrice], ["stop_loss", t.form.stopLoss], ["take_profit", t.form.takeProfit], ["r_multiple", t.form.rMultiple]] as const).map(([k, label]) => (
+                    <div key={k}><label className={labelClass}>{label}</label><input value={form[k]} onChange={(e) => set({ [k]: e.target.value })} inputMode="decimal" className={inputClass} /></div>
                   ))}
                 </div>
-              ) : (
-                <>
-                  <div className="bg-gradient-to-br from-emerald-500/10 to-zinc-900/40 border border-emerald-500/20 rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-5">
-                    <ScoreGauge value={aiVerdict.score} max={100} label={c.ai.score} />
-                    <div className="text-center sm:text-left">
-                      <span className="inline-flex items-center text-sm font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1.5">{c.ai.confidence} · {aiVerdict.confidence}%</span>
-                      <p className="text-[11px] text-zinc-500 italic mt-3 max-w-xs">{c.s2.disclaimerSim}</p>
-                    </div>
-                  </div>
-                  <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4">
-                    <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2">{c.ai.explanation}</p>
-                    <p className="text-sm text-zinc-300 leading-relaxed">{aiVerdict.explanation}</p>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4">
-                      <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2.5">{c.ai.positives}</p>
-                      <ul className="space-y-2">{aiVerdict.positives.map((p) => (<li key={p} className="flex items-start gap-2"><span className="w-4 h-4 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.2 2.3L9.5 3.5" stroke="#34d399" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg></span><span className="text-sm text-zinc-300">{p}</span></li>))}</ul>
-                    </div>
-                    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4">
-                      <p className="text-[11px] font-semibold text-amber-400 uppercase tracking-wide mb-2.5">{c.ai.warnings}</p>
-                      <ul className="space-y-2">{aiVerdict.warnings.map((w) => (<li key={w} className="flex items-start gap-2"><span className="w-4 h-4 rounded-full bg-amber-400/15 border border-amber-400/25 flex items-center justify-center shrink-0 mt-0.5"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2.5v4M6 8.5h.01" stroke="#fbbf24" strokeWidth="1.7" strokeLinecap="round" /></svg></span><span className="text-sm text-zinc-300">{w}</span></li>))}</ul>
-                    </div>
-                  </div>
-                  <details className="border border-zinc-800 rounded-xl">
-                    <summary className="px-4 py-2.5 text-sm font-medium text-zinc-300 cursor-pointer select-none">{c.ai.detectedDetails}</summary>
-                    <div className="px-4 pb-4 space-y-3">
-                      <p className="text-[11px] text-zinc-500 leading-relaxed">{c.s2.editableHint}</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div><label className={labelClass}>{c.s2.asset}</label><input value={form.asset} onChange={(e) => set({ asset: e.target.value })} className={inputClass} /></div>
-                        <div><label className={labelClass}>{c.s2.timeframe}</label><select value={form.timeframe} onChange={(e) => set({ timeframe: e.target.value })} className={inputClass}>{TIMEFRAMES.map((tf) => (<option key={tf} value={tf}>{tf}</option>))}</select></div>
-                        <div><label className={labelClass}>{c.s2.direction}</label><select value={form.direction} onChange={(e) => set({ direction: e.target.value })} className={inputClass}>{opt(DIRECTIONS, t.options.direction)}</select></div>
-                        <div><label className={labelClass}>{c.s2.structure}</label><select value={form.market_trend} onChange={(e) => set({ market_trend: e.target.value })} className={inputClass}>{opt(MARKET_TRENDS, t.options.market_trend)}</select></div>
-                        <div className="sm:col-span-2"><label className={labelClass}>{c.s2.setup}</label><select value={form.setup} onChange={(e) => set({ setup: e.target.value })} className={inputClass}>{opt(SETUPS, t.options.setup)}</select></div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        {([["entry_price", c.s2.entry], ["stop_loss", c.s2.sl], ["take_profit", c.s2.tp], ["r_multiple", c.s2.rr]] as const).map(([k, label]) => (
-                          <div key={k}><label className={labelClass}>{label}</label><input value={form[k]} onChange={(e) => set({ [k]: e.target.value })} inputMode="decimal" className={inputClass} /></div>
-                        ))}
-                      </div>
-                    </div>
-                  </details>
-                </>
-              )}
+              </div>
             </div>
           )}
 
@@ -595,7 +516,7 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
             <button type="button" onClick={goBack} disabled={pending} className="px-4 py-2.5 text-sm font-medium text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded-xl transition-colors disabled:opacity-50">{c.back}</button>
           ) : (<span />)}
           <div className="flex-1" />
-          {step === "analysis" && !analyzing && (<button type="button" onClick={() => setStep("ressenti")} className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-semibold rounded-xl transition-colors">{c.ai.addFeeling}</button>)}
+          {step === "details" && (<button type="button" onClick={() => validate(DETAILS_REQ) && setStep("ressenti")} className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-semibold rounded-xl transition-colors">{c.next}</button>)}
           {step === "manual" && (<button type="button" onClick={() => validate(MANUAL_REQ) && setStep("summary")} className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-semibold rounded-xl transition-colors">{c.next}</button>)}
           {step === "ressenti" && (<button type="button" onClick={() => validate(RESSENTI_REQ) && setStep("summary")} className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-semibold rounded-xl transition-colors">{c.next}</button>)}
           {step === "summary" && (<button type="button" onClick={handleSave} disabled={pending} className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 text-zinc-950 text-sm font-semibold rounded-xl transition-colors">{pending ? c.s4.saving : c.s4.save}</button>)}

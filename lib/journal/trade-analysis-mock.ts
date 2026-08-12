@@ -22,7 +22,7 @@ import type { Locale } from "@/i18n/config";
 type JournalDict = Dictionaries["journal"];
 
 export interface TradeAnalysisView {
-  score: number; // 0-100
+  score: number | null; // 0-100, null = pas d'analyse disponible (ex. trade encore ouvert)
   good: string[];
   improve: string[];
   coachAdvice: string;
@@ -42,7 +42,10 @@ export interface TradeAnalysisHistory {
 }
 
 // Score simulé : réutilise ai_score s'il existe, sinon dérive des données.
-export function getTradeScore(e: TradeEntryView): number {
+// Un trade encore ouvert (result === "open") n'a pas de résultat à analyser :
+// aucun score ne doit être calculé pour lui (cf. buildTradeAnalysis ci-dessous).
+export function getTradeScore(e: TradeEntryView): number | null {
+  if (e.result === "open") return null;
   if (typeof e.ai_score === "number") return e.ai_score;
   let s = 62;
   if (e.result === "win") s += 16;
@@ -56,7 +59,20 @@ export function getTradeScore(e: TradeEntryView): number {
 }
 
 // Construit l'analyse pédagogique (mock) à partir du trade + libellés localisés.
+// Garde défensive : un trade encore ouvert n'a pas de résultat clôturé à
+// analyser (le bouton d'analyse est déjà masqué pour ces trades côté UI —
+// voir JournalCard.tsx — mais on ne fait jamais confiance qu'au seul appelant).
 export function buildTradeAnalysis(e: TradeEntryView, t: JournalDict, locale: Locale): TradeAnalysisView {
+  if (e.result === "open") {
+    return {
+      score: null,
+      good: [],
+      improve: [],
+      coachAdvice: t.tradeAnalysis.notAvailableOpen,
+      impact: "",
+    };
+  }
+
   const TX = {
     fr: {
       followedPlan: "Tu as respecté ton plan de trading.",

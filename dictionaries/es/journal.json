@@ -226,38 +226,6 @@
         "reassure": "Si alguna información no es visible, podrás completarla o corregirla en el siguiente paso."
       }
     },
-    "s2": {
-      "title": "Análisis de la operación",
-      "analyzing": "Analizando la operación…",
-      "confidence": "Confianza",
-      "detail": "Detalles detectados",
-      "asset": "Activo detectado",
-      "timeframe": "Temporalidad detectada",
-      "direction": "Dirección detectada",
-      "structure": "Estructura detectada",
-      "setup": "Setup probable",
-      "entry": "Entrada",
-      "sl": "Stop loss",
-      "tp": "Take profit",
-      "rr": "RR estimado",
-      "editableHint": "Esta información será detectada automáticamente por la IA. Siempre podrás modificarla antes de guardar.",
-      "disclaimerSim": "Valores simulados (demo) — la IA Vision real llegará más adelante."
-    },
-    "ai": {
-      "phases": [
-        "Analizando la operación…",
-        "Identificando la estructura…",
-        "Detectando el setup…",
-        "Analizando el riesgo…"
-      ],
-      "confidence": "Confianza global",
-      "score": "Nota de la operación",
-      "explanation": "Análisis IA",
-      "positives": "Puntos positivos",
-      "warnings": "Puntos a vigilar",
-      "detectedDetails": "Datos detectados · editable",
-      "addFeeling": "Añadir mi sensación"
-    },
     "s3": {
       "title": "Añade cómo te sentiste",
       "aiCant": "Lo que la IA no puede saber",
@@ -341,7 +309,8 @@
     "good": "Lo que se hizo bien",
     "improve": "Lo que se podría mejorar",
     "advice": "Consejo del coach",
-    "impact": "Impacto potencial en el resultado"
+    "impact": "Impacto potencial en el resultado",
+    "notAvailableOpen": "Análisis no disponible: esta operación sigue abierta."
   },
   "options": {
     "direction": { "buy": "Compra", "sell": "Venta" },

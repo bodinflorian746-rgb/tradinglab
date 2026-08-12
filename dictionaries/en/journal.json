@@ -226,38 +226,6 @@
         "reassure": "If some information isn't visible, you'll be able to complete or correct it in the next step."
       }
     },
-    "s2": {
-      "title": "Trade analysis",
-      "analyzing": "Analyzing trade…",
-      "confidence": "Confidence",
-      "detail": "Detected details",
-      "asset": "Detected asset",
-      "timeframe": "Detected timeframe",
-      "direction": "Detected direction",
-      "structure": "Detected structure",
-      "setup": "Probable setup",
-      "entry": "Entry",
-      "sl": "Stop loss",
-      "tp": "Take profit",
-      "rr": "Estimated RR",
-      "editableHint": "This information will be detected automatically by the AI. You can always edit it before saving.",
-      "disclaimerSim": "Simulated values (demo) — the real Vision AI is coming later."
-    },
-    "ai": {
-      "phases": [
-        "Analyzing trade…",
-        "Identifying structure…",
-        "Detecting setup…",
-        "Assessing risk…"
-      ],
-      "confidence": "Overall confidence",
-      "score": "Trade score",
-      "explanation": "AI analysis",
-      "positives": "Strengths",
-      "warnings": "Watch out for",
-      "detectedDetails": "Detected data · editable",
-      "addFeeling": "Add how I felt"
-    },
     "s3": {
       "title": "Add how you felt",
       "aiCant": "What the AI can't know",
@@ -341,7 +309,8 @@
     "good": "What went well",
     "improve": "What could be improved",
     "advice": "Coach's advice",
-    "impact": "Potential impact on the result"
+    "impact": "Potential impact on the result",
+    "notAvailableOpen": "Analysis unavailable: this trade is still open."
   },
   "options": {
     "direction": { "buy": "Buy", "sell": "Sell" },

@@ -226,38 +226,6 @@
         "reassure": "Si certaines informations ne sont pas visibles, tu pourras les compléter ou les corriger à l'étape suivante."
       }
     },
-    "s2": {
-      "title": "Analyse du trade",
-      "analyzing": "Analyse du trade…",
-      "confidence": "Confiance",
-      "detail": "Détails détectés",
-      "asset": "Actif détecté",
-      "timeframe": "Timeframe détecté",
-      "direction": "Direction détectée",
-      "structure": "Structure détectée",
-      "setup": "Setup probable",
-      "entry": "Entrée",
-      "sl": "Stop loss",
-      "tp": "Take profit",
-      "rr": "RR estimé",
-      "editableHint": "Ces informations seront détectées automatiquement par l'IA. Tu pourras toujours les modifier avant d'enregistrer.",
-      "disclaimerSim": "Valeurs simulées (démo) — l'IA Vision réelle viendra plus tard."
-    },
-    "ai": {
-      "phases": [
-        "Analyse du trade…",
-        "Identification de la structure…",
-        "Détection du setup…",
-        "Analyse du risque…"
-      ],
-      "confidence": "Confiance globale",
-      "score": "Note du trade",
-      "explanation": "Analyse IA",
-      "positives": "Points positifs",
-      "warnings": "Points à surveiller",
-      "detectedDetails": "Données détectées · modifiable",
-      "addFeeling": "Ajouter mon ressenti"
-    },
     "s3": {
       "title": "Complète ton ressenti",
       "aiCant": "Ce que l'IA ne peut pas savoir",
@@ -341,7 +309,8 @@
     "good": "Ce qui a été bien fait",
     "improve": "Ce qui aurait pu être amélioré",
     "advice": "Conseil du coach",
-    "impact": "Impact potentiel sur le résultat"
+    "impact": "Impact potentiel sur le résultat",
+    "notAvailableOpen": "Analyse indisponible : ce trade est encore ouvert."
   },
   "options": {
     "direction": { "buy": "Achat", "sell": "Vente" },
