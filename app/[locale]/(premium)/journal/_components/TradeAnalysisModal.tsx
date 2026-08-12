@@ -1,31 +1,50 @@
 "use client";
 
-// Analyse individuelle d'un trade (modale) — Priorité 3.
-// 100% mock : contenu pédagogique dérivé des données du trade (buildTradeAnalysis).
+// Analyse individuelle d'un trade (modale) — IA réelle (Claude Haiku 4.5).
+// Ne se déclenche jamais automatiquement : l'utilisateur doit cliquer sur
+// "Lancer l'analyse IA" à l'intérieur de la modale. Si le trade est déjà
+// analysé, le résultat persisté est affiché directement (aucun nouvel appel).
 
-import { useEffect, useMemo, useState } from "react";
+import { useState, useTransition } from "react";
 import type { TradeEntryView } from "@/lib/journal/types";
 import type { Dictionaries } from "@/i18n/dictionaries";
-import { buildTradeAnalysis } from "@/lib/journal/trade-analysis-mock";
-import { useLocale } from "@/app/components/LocaleProvider";
+import type { AiAnalysis } from "@/lib/journal/ai";
+import { analyzeTradeWithAiAction, type AnalyzeTradeAiError } from "../actions";
 import { ScoreGauge } from "./analysis/ScoreGauge";
 
 type JournalDict = Dictionaries["journal"];
 
+function persistedResult(entry: TradeEntryView): AiAnalysis | null {
+  if (entry.ai_status !== "analyzed" || !entry.ai_summary) return null;
+  return {
+    summary: entry.ai_summary,
+    strengths: Array.isArray(entry.ai_recommendations) ? entry.ai_recommendations : [],
+    mistakes: Array.isArray(entry.ai_mistakes) ? entry.ai_mistakes : [],
+    behavioral_advice: entry.ai_feedback ?? "",
+    score: entry.ai_score ?? 0,
+  };
+}
+
 export function TradeAnalysisModal({ entry, t }: { entry: TradeEntryView; t: JournalDict }) {
   const [open, setOpen] = useState(false);
-  const locale = useLocale();
-  const a = useMemo(() => buildTradeAnalysis(entry, t, locale), [entry, t, locale]);
+  const [result, setResult] = useState<AiAnalysis | null>(() => persistedResult(entry));
+  const [error, setError] = useState<AnalyzeTradeAiError | null>(null);
+  const [pending, startTransition] = useTransition();
   const s = t.tradeAnalysis;
 
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
+  // Garde défensive : le bouton déclencheur est déjà masqué pour un trade
+  // encore ouvert (JournalCard.tsx), mais ce composant ne fait jamais
+  // confiance qu'au seul appelant.
+  const isOpenTrade = entry.result === "open";
+
+  function runAnalysis() {
+    setError(null);
+    startTransition(async () => {
+      const res = await analyzeTradeWithAiAction(entry.id);
+      if (res.ok && res.data) setResult(res.data);
+      else setError(res.error ?? "generic");
+    });
+  }
 
   return (
     <>
@@ -69,73 +88,97 @@ export function TradeAnalysisModal({ entry, t }: { entry: TradeEntryView; t: Jou
               </button>
             </div>
 
-            {a.score === null ? (
-              // Garde défensive : pas d'analyse pour un trade encore ouvert
-              // (le bouton déclencheur est déjà masqué pour ce cas — JournalCard.tsx).
-              <div className="px-5 py-5">
+            <div className="px-5 py-5">
+              {isOpenTrade ? (
                 <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-5 text-center">
-                  <p className="text-sm text-zinc-400">{a.coachAdvice}</p>
+                  <p className="text-sm text-zinc-400">{s.notAvailableOpen}</p>
                 </div>
-              </div>
-            ) : (
-              <div className="px-5 py-5 space-y-5">
-                {/* 1 — Score global */}
-                <div className="bg-gradient-to-br from-emerald-500/10 to-zinc-900/40 border border-emerald-500/20 rounded-2xl p-5 flex flex-col items-center gap-3">
-                  <ScoreGauge value={a.score} max={100} label={s.score} />
-                  {entry.ai_summary && (
-                    <p className="text-sm text-zinc-300 leading-relaxed text-center">{entry.ai_summary}</p>
+              ) : result ? (
+                <div className="space-y-5">
+                  {/* 1 — Score global + résumé */}
+                  <div className="bg-gradient-to-br from-emerald-500/10 to-zinc-900/40 border border-emerald-500/20 rounded-2xl p-5 flex flex-col items-center gap-3">
+                    <ScoreGauge value={result.score} max={100} label={s.score} />
+                    <p className="text-sm text-zinc-300 leading-relaxed text-center">{result.summary}</p>
+                  </div>
+
+                  {/* 2 — Ce qui a été bien fait */}
+                  {result.strengths.length > 0 && (
+                    <div>
+                      <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2.5">{s.good}</p>
+                      <ul className="space-y-2">
+                        {result.strengths.map((g) => (
+                          <li key={g} className="flex items-start gap-2.5">
+                            <span className="w-5 h-5 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5">
+                              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                                <path d="M2.5 6.2l2.2 2.3L9.5 3.5" stroke="#34d399" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            </span>
+                            <span className="text-sm text-zinc-300">{g}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
-                </div>
 
-                {/* 2 — Ce qui a été bien fait */}
-                <div>
-                  <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2.5">{s.good}</p>
-                  <ul className="space-y-2">
-                    {a.good.map((g) => (
-                      <li key={g} className="flex items-start gap-2.5">
-                        <span className="w-5 h-5 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5">
-                          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                            <path d="M2.5 6.2l2.2 2.3L9.5 3.5" stroke="#34d399" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </span>
-                        <span className="text-sm text-zinc-300">{g}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  {/* 3 — Erreurs identifiées */}
+                  {result.mistakes.length > 0 && (
+                    <div>
+                      <p className="text-[11px] font-semibold text-amber-400 uppercase tracking-wide mb-2.5">{s.improve}</p>
+                      <ul className="space-y-2">
+                        {result.mistakes.map((w) => (
+                          <li key={w} className="flex items-start gap-2.5">
+                            <span className="w-5 h-5 rounded-full bg-amber-400/15 border border-amber-400/25 flex items-center justify-center shrink-0 mt-0.5">
+                              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                                <path d="M6 2.5v4M6 8.5h.01" stroke="#fbbf24" strokeWidth="1.6" strokeLinecap="round" />
+                              </svg>
+                            </span>
+                            <span className="text-sm text-zinc-300">{w}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-                {/* 3 — Ce qui aurait pu être amélioré */}
-                <div>
-                  <p className="text-[11px] font-semibold text-amber-400 uppercase tracking-wide mb-2.5">{s.improve}</p>
-                  <ul className="space-y-2">
-                    {a.improve.map((w) => (
-                      <li key={w} className="flex items-start gap-2.5">
-                        <span className="w-5 h-5 rounded-full bg-amber-400/15 border border-amber-400/25 flex items-center justify-center shrink-0 mt-0.5">
-                          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                            <path d="M6 2.5v4M6 8.5h.01" stroke="#fbbf24" strokeWidth="1.6" strokeLinecap="round" />
-                          </svg>
-                        </span>
-                        <span className="text-sm text-zinc-300">{w}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  {/* 4 — Conseil du coach */}
+                  <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4">
+                    <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2">{s.advice}</p>
+                    <p className="text-sm text-zinc-300 leading-relaxed">{result.behavioral_advice}</p>
+                  </div>
 
-                {/* 4 — Conseil du coach */}
-                <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4">
-                  <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2">{s.advice}</p>
-                  <p className="text-sm text-zinc-300 leading-relaxed">{a.coachAdvice}</p>
+                  <p className="text-[10px] text-zinc-500 italic">{t.ai.disclaimer}</p>
                 </div>
-
-                {/* 5 — Impact potentiel sur le résultat */}
-                <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-4">
-                  <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2">{s.impact}</p>
-                  <p className="text-sm text-zinc-200 leading-relaxed">{a.impact}</p>
+              ) : pending ? (
+                <div className="flex flex-col items-center gap-3 py-10 text-center">
+                  <span className="w-8 h-8 rounded-full border-2 border-emerald-500/30 border-t-emerald-400 animate-spin" />
+                  <p className="text-sm text-zinc-400">{s.loading}</p>
                 </div>
-
-                <p className="text-[10px] text-zinc-500 italic">{t.ai.disclaimer}</p>
-              </div>
-            )}
+              ) : error ? (
+                <div className="space-y-4">
+                  <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-5 text-center">
+                    <p className="text-sm text-red-300">{s.errorGeneric}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={runAnalysis}
+                    className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-semibold py-2.5 rounded-xl transition-colors"
+                  >
+                    {s.retry}
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center gap-4 py-6 text-center">
+                  <p className="text-sm text-zinc-400 max-w-sm">{s.ctaHint}</p>
+                  <button
+                    type="button"
+                    onClick={runAnalysis}
+                    className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
+                  >
+                    {s.cta}
+                  </button>
+                  <p className="text-[10px] text-zinc-500 italic">{t.ai.disclaimer}</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

@@ -313,10 +313,15 @@
     "title": "Trade analysis",
     "score": "Overall score",
     "good": "What went well",
-    "improve": "What could be improved",
+    "improve": "Mistakes identified",
     "advice": "Coach's advice",
     "impact": "Potential impact on the result",
-    "notAvailableOpen": "Analysis unavailable: this trade is still open."
+    "notAvailableOpen": "Analysis unavailable: this trade is still open.",
+    "cta": "Run AI analysis",
+    "ctaHint": "Analyzes this closed trade from the data you entered. No market data is used.",
+    "loading": "Analyzing…",
+    "errorGeneric": "Analysis unavailable for this trade.",
+    "retry": "Retry"
   },
   "options": {
     "direction": { "buy": "Buy", "sell": "Sell" },

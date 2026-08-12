@@ -313,10 +313,15 @@
     "title": "Análisis de la operación",
     "score": "Puntuación global",
     "good": "Lo que se hizo bien",
-    "improve": "Lo que se podría mejorar",
+    "improve": "Errores identificados",
     "advice": "Consejo del coach",
     "impact": "Impacto potencial en el resultado",
-    "notAvailableOpen": "Análisis no disponible: esta operación sigue abierta."
+    "notAvailableOpen": "Análisis no disponible: esta operación sigue abierta.",
+    "cta": "Ejecutar análisis IA",
+    "ctaHint": "Analiza esta operación cerrada a partir de los datos que introdujiste. No se usa ningún dato de mercado.",
+    "loading": "Analizando…",
+    "errorGeneric": "Análisis no disponible para esta operación.",
+    "retry": "Reintentar"
   },
   "options": {
     "direction": { "buy": "Compra", "sell": "Venta" },

@@ -313,10 +313,15 @@
     "title": "Analyse du trade",
     "score": "Score global",
     "good": "Ce qui a été bien fait",
-    "improve": "Ce qui aurait pu être amélioré",
+    "improve": "Erreurs identifiées",
     "advice": "Conseil du coach",
     "impact": "Impact potentiel sur le résultat",
-    "notAvailableOpen": "Analyse indisponible : ce trade est encore ouvert."
+    "notAvailableOpen": "Analyse indisponible : ce trade est encore ouvert.",
+    "cta": "Lancer l'analyse IA",
+    "ctaHint": "Analyse ce trade clôturé à partir des données que tu as saisies. Aucune donnée de marché n'est utilisée.",
+    "loading": "Analyse en cours…",
+    "errorGeneric": "Analyse indisponible pour ce trade.",
+    "retry": "Réessayer"
   },
   "options": {
     "direction": { "buy": "Achat", "sell": "Vente" },

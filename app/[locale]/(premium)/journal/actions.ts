@@ -7,6 +7,8 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { validateTradeInput, type FieldErrors } from "@/lib/journal/validation";
 import { isMockEnvEnabled } from "@/lib/journal/mock";
+import { analyzeTrade, isAiConfigured, type AiAnalysis } from "@/lib/journal/ai";
+import type { TradeEntry } from "@/lib/journal/types";
 
 const SCREENSHOT_BUCKET = "trade-screenshots";
 const MAX_IMG_BYTES = 5 * 1024 * 1024; // 5 Mo
@@ -201,4 +203,102 @@ export async function updateTradeEntry(formData: FormData): Promise<CreateTradeS
 
   revalidatePath("/[locale]/journal", "page");
   return { ok: true };
+}
+
+export type AnalyzeTradeAiError =
+  | "notLoggedIn"
+  | "notFound"
+  | "openTrade"
+  | "notConfigured"
+  | "invalidFormat"
+  | "blockedContent"
+  | "timeout"
+  | "generic";
+
+export interface AnalyzeTradeAiState {
+  ok: boolean;
+  data?: AiAnalysis;
+  error?: AnalyzeTradeAiError;
+}
+
+// Déclenchée UNIQUEMENT par un clic explicite sur "Lancer l'analyse IA" dans
+// TradeAnalysisModal — jamais automatiquement à la sauvegarde d'un trade.
+// Idempotente : si le trade est déjà analysé, renvoie le résultat déjà
+// persisté sans ré-appeler l'IA (coût + latence évités).
+export async function analyzeTradeWithAiAction(tradeId: string): Promise<AnalyzeTradeAiState> {
+  // Mode démo local (dev) : pas de trade réel en base, pas d'appel IA possible.
+  if (isMockEnvEnabled()) return { ok: false, error: "notConfigured" };
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "notLoggedIn" };
+
+  // RLS garantit qu'un user ne peut lire que ses propres trades.
+  const { data: row, error: readErr } = await supabase
+    .from("trading_journal_entries")
+    .select("*")
+    .eq("id", tradeId)
+    .maybeSingle();
+  if (readErr || !row) return { ok: false, error: "notFound" };
+
+  const entry = row as TradeEntry;
+
+  // Défense en profondeur : même si l'UI masque déjà le bouton pour un trade
+  // ouvert (JournalCard.tsx), on ne fait jamais confiance qu'au seul appelant.
+  if (entry.result === "open") return { ok: false, error: "openTrade" };
+
+  // Déjà analysé → renvoie le résultat persisté, aucun nouvel appel IA.
+  if (entry.ai_status === "analyzed" && entry.ai_summary) {
+    return {
+      ok: true,
+      data: {
+        summary: entry.ai_summary,
+        strengths: Array.isArray(entry.ai_recommendations) ? entry.ai_recommendations : [],
+        mistakes: Array.isArray(entry.ai_mistakes) ? entry.ai_mistakes : [],
+        behavioral_advice: entry.ai_feedback ?? "",
+        score: entry.ai_score ?? 0,
+      },
+    };
+  }
+
+  if (!isAiConfigured()) return { ok: false, error: "notConfigured" };
+
+  const result = await analyzeTrade(entry);
+  if (!result.ok) {
+    const errorByReason: Record<typeof result.reason, AnalyzeTradeAiError> = {
+      not_configured: "notConfigured",
+      api_error: "generic",
+      timeout: "timeout",
+      invalid_format: "invalidFormat",
+      blocked_content: "blockedContent",
+    };
+    return { ok: false, error: errorByReason[result.reason] };
+  }
+
+  // Persistance du JSON validé + filtré uniquement (jamais de texte brut non
+  // vérifié). Mapping vers les colonnes existantes (aucune migration) :
+  // ai_recommendations stocke ici "strengths" (le nom de colonne est
+  // historique — cf. lib/journal/ai.ts sur le choix du schéma de sortie).
+  const { error: updateErr } = await supabase
+    .from("trading_journal_entries")
+    .update({
+      ai_status: "analyzed",
+      ai_summary: result.data.summary,
+      ai_feedback: result.data.behavioral_advice,
+      ai_mistakes: result.data.mistakes,
+      ai_score: result.data.score,
+      ai_recommendations: result.data.strengths,
+    })
+    .eq("id", tradeId);
+
+  if (updateErr) {
+    console.error("[journal] persistance analyse IA échouée:", updateErr.message);
+    return { ok: false, error: "generic" };
+  }
+
+  revalidatePath("/[locale]/journal", "page");
+
+  return { ok: true, data: result.data };
 }
