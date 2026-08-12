@@ -40,6 +40,10 @@ export type MarketTrend = (typeof MARKET_TRENDS)[number];
 export const SESSIONS = ["asia", "london", "new_york", "other"] as const;
 export type Session = (typeof SESSIONS)[number];
 
+// Jour de la semaine (convention JS Date.getUTCDay() : 0 = dimanche).
+export const WEEKDAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
+export type Weekday = (typeof WEEKDAYS)[number];
+
 // Respect du plan.
 export const FOLLOWED_PLAN = ["yes", "partial", "no"] as const;
 export type FollowedPlan = (typeof FOLLOWED_PLAN)[number];

@@ -1,6 +1,8 @@
 // V0.5 — Command Center du Journal (Server Components, présentationnels).
-// PURE UX/hiérarchie : réutilise le mock d'analyse (MOCK_ANALYSIS) et les
-// entrées déjà chargées. Aucune logique métier, aucune donnée modifiée.
+// PURE UX/hiérarchie : reçoit en props les données réelles déjà calculées par
+// page.tsx/analyse/page.tsx (buildRealAnalysis + entries). Aucune logique
+// métier ici — le type TraderAnalysis est importé depuis analysis-mock.ts
+// mais son générateur de données mock (getMockAnalysis) n'est plus utilisé.
 
 import Link from "next/link";
 import type { TraderAnalysis } from "@/lib/journal/analysis-mock";
@@ -161,46 +163,7 @@ export function ObjectiveCard({
   );
 }
 
-/* ── SECTION 4 — Comportements détectés (emphase pleine largeur) ─────────── */
-export function BehaviorsCard({
-  behaviors,
-  t,
-}: {
-  behaviors: TraderAnalysis["behaviors"];
-  t: JournalDict;
-}) {
-  return (
-    <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-      <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide mb-4">
-        {t.analysis.sections.behaviors}
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div>
-          <p className="text-xs font-semibold text-emerald-400 mb-2.5">{t.analysis.behaviorsBetter}</p>
-          <div className="flex flex-wrap gap-2">
-            {behaviors.better.map((b) => (
-              <span key={b} className="text-xs font-medium text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1.5">
-                {b}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="sm:border-l sm:border-zinc-800/70 sm:pl-5">
-          <p className="text-xs font-semibold text-amber-400 mb-2.5">{t.analysis.behaviorsWorse}</p>
-          <div className="flex flex-wrap gap-2">
-            {behaviors.worse.map((b) => (
-              <span key={b} className="text-xs font-medium text-amber-300 bg-amber-400/10 border border-amber-400/20 rounded-full px-3 py-1.5">
-                {b}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── SECTION 5 — Dernière analyse IA ────────────────────────────────────── */
+/* ── SECTION 4 — Dernière analyse IA ────────────────────────────────────── */
 export function LastAnalysisCard({
   entry,
   mistakeLabel,

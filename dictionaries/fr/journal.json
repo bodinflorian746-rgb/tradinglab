@@ -56,6 +56,12 @@
     "worstSession": "Session difficile",
     "bestDirection": "Meilleure direction",
     "worstDirection": "Direction difficile",
+    "bestHour": "Meilleur créneau horaire",
+    "worstHour": "Créneau horaire difficile",
+    "bestAsset": "Meilleur actif",
+    "worstAsset": "Actif difficile",
+    "bestWeekday": "Meilleur jour",
+    "worstWeekday": "Jour difficile",
     "topMistake": "Erreur la plus fréquente",
     "planRespect": "Plan vs résultat",
     "planYes": "Avec plan",
@@ -351,6 +357,15 @@
       "london": "Londres",
       "new_york": "New York",
       "other": "Autre"
+    },
+    "weekday": {
+      "mon": "Lundi",
+      "tue": "Mardi",
+      "wed": "Mercredi",
+      "thu": "Jeudi",
+      "fri": "Vendredi",
+      "sat": "Samedi",
+      "sun": "Dimanche"
     },
     "followed_plan": { "yes": "Oui", "partial": "Partiellement", "no": "Non" },
     "main_mistake": {

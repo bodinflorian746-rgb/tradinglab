@@ -1,5 +1,6 @@
 // Vue "Mon Analyse" (Server Component, présentationnel). Compose les 7 sections
-// à partir d'un objet TraderAnalysis mocké. Ton = débrief de coach.
+// à partir d'un objet TraderAnalysis réel, construit par buildRealAnalysis()
+// dans analyse/page.tsx. Ton = débrief de coach.
 
 import type { TraderAnalysis } from "@/lib/journal/analysis-mock";
 import type { Dictionaries } from "@/i18n/dictionaries";

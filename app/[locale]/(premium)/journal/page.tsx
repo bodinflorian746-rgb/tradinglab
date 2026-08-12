@@ -7,15 +7,17 @@ import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localizedHref } from "@/lib/i18n/href";
 import { getJournalView, computeStats } from "@/lib/journal/queries";
-import { getMockAnalysis } from "@/lib/journal/analysis-mock";
+import { computeCoachInsights } from "@/lib/journal/insights";
+import { computeCoachReport } from "@/lib/journal/coach";
 import { JournalDashboard } from "./_components/JournalDashboard";
-import { JournalList } from "./_components/JournalList";
+import { JournalFeed } from "./_components/JournalFeed";
+import { CoachDataInsights } from "./_components/CoachDataInsights";
+import { CoachScores } from "./_components/CoachScores";
 import { AddTradeButton } from "./_components/AddTradeButton";
 import {
   CoachHero,
   CoachInsightsCard,
   ObjectiveCard,
-  BehaviorsCard,
   LastAnalysisCard,
 } from "./_components/CommandCenter";
 
@@ -30,10 +32,58 @@ export default async function JournalPage({
   const t = await getDictionary(locale, "journal");
   const { entries, isMock } = await getJournalView();
   const stats = computeStats(entries);
+  const insights = computeCoachInsights(entries);
+  const report = computeCoachReport(entries);
   const isEmpty = entries.length === 0;
 
-  // Command center (V0.5) — réutilise le mock d'analyse + les entrées chargées.
-  const a = getMockAnalysis(locale);
+  // ── Coach RÉEL (remplace le mock) ──
+  const c = t.coach;
+
+  // Hero : score discipline réel (fallback score global), niveau réel.
+  const heroScoreVal = report.discipline.score ?? report.overall;
+  const heroScore =
+    heroScoreVal != null
+      ? {
+          value: heroScoreVal,
+          max: 100,
+          label: report.discipline.score != null ? c.scores.discipline : c.overall,
+          deltaLabel: c.basedOn.replace("{n}", String(report.tradesAnalyzed)),
+          positive: heroScoreVal >= 60,
+        }
+      : null;
+  const levelName = c.level[report.level.key as keyof typeof c.level];
+  const nextLevelName = report.level.nextKey
+    ? c.level[report.level.nextKey as keyof typeof c.level]
+    : "";
+
+  // Teaser forces/faiblesses : chaînes concises dérivées des données réelles.
+  const setupLabel = (k: string) => t.options.setup[k as keyof typeof t.options.setup] ?? k;
+  const sessionLabel = (k: string) => t.options.session[k as keyof typeof t.options.session] ?? k;
+  const wrTag = (n: number) => `${n}% ${t.insights.winrateShort}`;
+  const strengths: string[] = [];
+  if (insights.bestSetup) strengths.push(`${setupLabel(insights.bestSetup.key)} · ${wrTag(insights.bestSetup.winrate)}`);
+  if (insights.bestSession) strengths.push(`${sessionLabel(insights.bestSession.key)} · ${wrTag(insights.bestSession.winrate)}`);
+  if (insights.winEmotion) strengths.push(t.insights.winEmotion + ` : ${t.options.emotion_before[insights.winEmotion.key]}`);
+  const weakness: string | null = insights.worstSetup
+    ? `${setupLabel(insights.worstSetup.key)} · ${wrTag(insights.worstSetup.winrate)}`
+    : insights.topMistake
+      ? t.options.main_mistake[insights.topMistake.key]
+      : null;
+
+  // Objectif hebdo réel (généré depuis la faiblesse dominante).
+  let objectiveGoal: { label: string; progress: number; target: number } | null = null;
+  if (report.objective) {
+    const o = report.objective;
+    const tmpl = c.objectives[o.key as keyof typeof c.objectives];
+    objectiveGoal = {
+      label: o.x
+        ? tmpl.replace("{x}", t.options.main_mistake[o.x as keyof typeof t.options.main_mistake] ?? o.x)
+        : tmpl,
+      progress: o.progress,
+      target: o.target,
+    };
+  }
+
   const lastAnalyzed = entries.find((e) => e.ai_status === "analyzed") ?? null;
   const topMistakeKey = stats.topMistakes[0]?.key ?? null;
   const mistakeLabel = topMistakeKey ? t.options.main_mistake[topMistakeKey] : null;
@@ -97,22 +147,31 @@ export default async function JournalPage({
           </section>
         ) : (
           <div className="space-y-6">
-            {/* 1 — Hero coach (effet wow immédiat) */}
-            <CoachHero score={a.score} level={a.level} t={t} />
+            {/* 1 — Hero coach (score discipline RÉEL + niveau RÉEL) */}
+            {heroScore && (
+              <CoachHero
+                score={heroScore}
+                level={{ current: levelName, next: nextLevelName, progress: report.level.progress }}
+                t={t}
+              />
+            )}
 
-            {/* 2 — Ton coach IA (teaser → analyse complète) */}
+            {/* 2 — Scores réels (discipline / exécution / psychologie) + niveau, explicables */}
+            <CoachScores report={report} t={t} />
+
+            {/* 3 — Ton coach IA (teaser RÉEL → analyse complète) */}
             <CoachInsightsCard
-              strengths={a.strengths}
-              weakness={a.weaknesses[0] ?? null}
+              strengths={strengths}
+              weakness={weakness}
               locale={locale}
               t={t}
             />
 
-            {/* 3 — Objectif de la semaine */}
-            <ObjectiveCard goal={a.weeklyGoal} t={t} />
+            {/* 4 — Objectif de la semaine (généré depuis les faiblesses RÉELLES) */}
+            {objectiveGoal && <ObjectiveCard goal={objectiveGoal} t={t} />}
 
-            {/* 4 — Comportements détectés (emphase) */}
-            <BehaviorsCard behaviors={a.behaviors} t={t} />
+            {/* 5 — Analyse réelle (best/worst calculés sur les trades) */}
+            <CoachDataInsights insights={insights} t={t} />
 
             {/* 5 — Dernière analyse IA (si disponible) */}
             {lastAnalyzed && (
@@ -129,9 +188,9 @@ export default async function JournalPage({
               <JournalDashboard stats={stats} t={t} />
             </div>
 
-            {/* 7 — Trades récents (tout en bas) */}
+            {/* 7 — Trades récents + filtres (tout en bas) */}
             <div className="pt-4">
-              <JournalList entries={entries} t={t} locale={locale} />
+              <JournalFeed entries={entries} t={t} locale={locale} />
             </div>
           </div>
         )}
