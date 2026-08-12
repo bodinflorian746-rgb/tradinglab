@@ -3,10 +3,10 @@
 import { notFound } from "next/navigation";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getGroupAdminUser, listMembers } from "@/lib/loyalty/master";
-import { formatDate, sanitizePage, shortId } from "@/lib/loyalty/admin-format";
+import { getGroupAdminUser, listMembersWithPoints } from "@/lib/loyalty/master";
+import { sanitizePage } from "@/lib/loyalty/admin-format";
 import { MasterNav } from "../../_components/MasterNav";
-import { TableShell } from "../../_components/ui";
+import { TableShell, TierBadge } from "../../_components/ui";
 import { Pager } from "../../_components/MasterControls";
 
 export const dynamic = "force-dynamic";
@@ -31,9 +31,10 @@ export default async function MasterMembersPage({
   if (!(await getGroupAdminUser(groupId))) notFound();
 
   const page = sanitizePage(pick(sp.mpage));
-  const members = await listMembers(groupId, { page, pageSize: PAGE_SIZE });
+  const members = await listMembersWithPoints(groupId, { page, pageSize: PAGE_SIZE });
   const totalPages = Math.max(1, Math.ceil(members.total / PAGE_SIZE));
   const th = t.members.th;
+  const tierLabels = t.tiers as Record<string, string>;
 
   return (
     <main className="min-h-screen bg-zinc-950 px-6 py-12 text-white md:py-16">
@@ -48,17 +49,18 @@ export default async function MasterMembersPage({
         <MasterNav groupId={groupId} />
 
         <TableShell
-          head={[th.user, th.role, th.status, th.joined]}
+          head={[th.email, th.balance, th.tier]}
           isEmpty={members.rows.length === 0}
           empty={members.error ?? t.members.empty}
-          emptyColspan={4}
+          emptyColspan={3}
         >
           {members.rows.map((m) => (
             <tr key={m.id} className="border-b border-zinc-800/60 last:border-0">
-              <td className="px-4 py-3 font-mono text-xs text-zinc-300">{shortId(m.user_id)}</td>
-              <td className="px-4 py-3">{(t.roles as Record<string, string>)[m.role] ?? m.role}</td>
-              <td className="px-4 py-3">{(t.status as Record<string, string>)[m.status] ?? m.status}</td>
-              <td className="px-4 py-3 text-zinc-400">{formatDate(m.joined_at)}</td>
+              <td className="px-4 py-3 text-xs text-zinc-300">{m.email ?? "—"}</td>
+              <td className="px-4 py-3 font-semibold text-emerald-400">{m.balance}</td>
+              <td className="px-4 py-3">
+                <TierBadge tier={m.tier} label={tierLabels[m.tier] ?? m.tier} />
+              </td>
             </tr>
           ))}
         </TableShell>

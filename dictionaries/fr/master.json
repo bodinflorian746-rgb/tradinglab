@@ -93,8 +93,9 @@
   "members": {
     "title": "Membres",
     "empty": "Aucun membre.",
-    "th": { "user": "Utilisateur", "role": "Rôle", "status": "Statut", "joined": "Arrivé le" }
+    "th": { "user": "Utilisateur", "role": "Rôle", "status": "Statut", "joined": "Arrivé le", "email": "E-mail", "balance": "Solde de points", "tier": "Niveau" }
   },
+  "tiers": { "bronze": "Bronze", "silver": "Argent", "gold": "Or" },
   "roles": { "admin": "Admin", "member": "Membre" },
   "shop": {
     "title": "Magasin",

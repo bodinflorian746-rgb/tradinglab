@@ -20,12 +20,15 @@ import { isAdmin } from "@/lib/auth/admin";
 import { resolveUserEmails } from "@/lib/loyalty/orders";
 import {
   buildGroupsWithStats,
+  buildMemberBalances,
   type CodeStatRow,
   type GroupStats,
   type LedgerStatRow,
+  type MemberLedgerRow,
   type MembershipStatRow,
 } from "@/lib/loyalty/admin-format";
-import type { GroupAccessCode, PartnerGroup } from "@/lib/loyalty/types";
+import { tierForEarned } from "@/lib/loyalty/points";
+import type { GroupAccessCode, PartnerGroup, Tier } from "@/lib/loyalty/types";
 import type { CodeRow, LedgerRow, MemberRow, Paged } from "@/lib/loyalty/admin";
 
 export type GroupAdminUser = { id: string; email: string };
@@ -163,6 +166,63 @@ export async function listMembers(
     .range(from, from + pageSize - 1);
   if (error) return { rows: [], total: 0, error: error.message };
   return { rows: (data ?? []) as MemberRow[], total: count ?? 0, error: null };
+}
+
+export type MemberWithPoints = MemberRow & {
+  email: string | null;
+  balance: number;
+  tier: Tier;
+};
+
+/**
+ * Membres du groupe enrichis de leur e-mail réel, solde et niveau — pour
+ * l'écran « Membres » de l'admin de groupe (app/[locale]/master/[groupId]/membres).
+ *
+ * Isolation : `group_memberships` ET `points_ledger` passent par readClient()
+ * (session + RLS `is_group_admin(group_id)`, cf. entête de fichier) — un admin
+ * ne peut donc récupérer que les lignes de SES groupes, même en falsifiant
+ * `groupId` dans l'URL. L'e-mail est résolu uniquement pour les user_id déjà
+ * filtrés par cette même requête RLS (jamais un id arbitraire fourni par le
+ * client), via resolveUserEmails (service_role, server-only — cf. orders.ts).
+ * Le solde/niveau réutilise le calcul pur de lib/loyalty/points.ts (aucune
+ * seconde logique de points).
+ */
+export async function listMembersWithPoints(
+  groupId: string,
+  opts: { page?: number; pageSize?: number } = {},
+): Promise<Paged<MemberWithPoints>> {
+  const supabase = await readClient();
+  const page = opts.page ?? 1;
+  const pageSize = opts.pageSize ?? 25;
+  const from = (page - 1) * pageSize;
+  const { data, error, count } = await supabase
+    .from("group_memberships")
+    .select("id, user_id, role, status, joined_at", { count: "exact" })
+    .eq("group_id", groupId)
+    .order("joined_at", { ascending: false })
+    .range(from, from + pageSize - 1);
+  if (error) return { rows: [], total: 0, error: error.message };
+
+  const members = (data ?? []) as MemberRow[];
+  if (members.length === 0) return { rows: [], total: count ?? 0, error: null };
+
+  const ids = members.map((m) => m.user_id);
+  const [ledgerRes, emails] = await Promise.all([
+    supabase
+      .from("points_ledger")
+      .select("user_id, amount, kind")
+      .eq("group_id", groupId)
+      .in("user_id", ids),
+    resolveUserEmails(ids),
+  ]);
+  if (ledgerRes.error) return { rows: [], total: 0, error: ledgerRes.error.message };
+
+  const balances = buildMemberBalances((ledgerRes.data ?? []) as MemberLedgerRow[]);
+  const rows: MemberWithPoints[] = members.map((m) => {
+    const b = balances.get(m.user_id) ?? { balance: 0, tier: tierForEarned(0) };
+    return { ...m, email: emails.get(m.user_id) ?? null, balance: b.balance, tier: b.tier };
+  });
+  return { rows, total: count ?? 0, error: null };
 }
 
 export async function listCodes(

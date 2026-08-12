@@ -93,8 +93,9 @@
   "members": {
     "title": "Members",
     "empty": "No members.",
-    "th": { "user": "User", "role": "Role", "status": "Status", "joined": "Joined" }
+    "th": { "user": "User", "role": "Role", "status": "Status", "joined": "Joined", "email": "Email", "balance": "Points balance", "tier": "Tier" }
   },
+  "tiers": { "bronze": "Bronze", "silver": "Silver", "gold": "Gold" },
   "roles": { "admin": "Admin", "member": "Member" },
   "shop": {
     "title": "Shop",

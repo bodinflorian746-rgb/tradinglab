@@ -68,6 +68,26 @@ export function TableShell({
   );
 }
 
+// Mêmes styles que TierBadge de app/[locale]/fidelite/_components/ui.tsx
+// (cohérence visuelle membre ↔ admin de groupe pour le même concept de niveau).
+const TIER_STYLES: Record<string, string> = {
+  bronze: "bg-amber-700/15 text-amber-500",
+  silver: "bg-zinc-400/15 text-zinc-300",
+  gold: "bg-yellow-400/15 text-yellow-400",
+};
+
+export function TierBadge({ tier, label }: { tier: string; label: string }) {
+  return (
+    <span
+      className={`inline-block rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+        TIER_STYLES[tier] ?? "bg-zinc-700/40 text-zinc-400"
+      }`}
+    >
+      {label}
+    </span>
+  );
+}
+
 export function SuspendedNotice({ text }: { text: string }) {
   return (
     <p className="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-300">

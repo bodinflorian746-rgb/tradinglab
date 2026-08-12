@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildGroupsWithStats,
+  buildMemberBalances,
   buildOverview,
   maskCode,
   parseCodeStatusFilter,
@@ -12,6 +13,7 @@ import {
   shortId,
   type CodeStatRow,
   type LedgerStatRow,
+  type MemberLedgerRow,
   type MembershipStatRow,
 } from "@/lib/loyalty/admin-format";
 import type { PartnerGroup } from "@/lib/loyalty/types";
@@ -110,6 +112,35 @@ describe("buildGroupsWithStats — isolation inter-groupes", () => {
     );
     expect(res[0].stats.admins).toBe(0);
     expect(res[0].stats.netBalance).toBe(0);
+  });
+});
+
+describe("buildMemberBalances", () => {
+  it("ventile par user_id et calcule solde + niveau via points.ts", () => {
+    const entries: MemberLedgerRow[] = [
+      { user_id: "u1", amount: 50, kind: "code_reward" },
+      { user_id: "u1", amount: 60, kind: "code_reward" }, // u1: earned 110 → silver
+      { user_id: "u2", amount: 250, kind: "code_reward" },
+      { user_id: "u2", amount: -30, kind: "purchase" }, // u2: solde 220, gagné 250 → gold (jamais réduit par une dépense)
+    ];
+    const balances = buildMemberBalances(entries);
+    expect(balances.get("u1")).toEqual({ balance: 110, tier: "silver" });
+    expect(balances.get("u2")).toEqual({ balance: 220, tier: "gold" });
+  });
+
+  it("un user_id absent du ledger n'apparaît pas dans la map (solde 0 géré par l'appelant)", () => {
+    const balances = buildMemberBalances([]);
+    expect(balances.get("u3")).toBeUndefined();
+  });
+
+  it("n'agrège jamais les points d'un autre membre (pas de fuite entre user_id)", () => {
+    const entries: MemberLedgerRow[] = [
+      { user_id: "u1", amount: 500, kind: "code_reward" },
+      { user_id: "u2", amount: 10, kind: "code_reward" },
+    ];
+    const balances = buildMemberBalances(entries);
+    expect(balances.get("u1")!.balance).toBe(500);
+    expect(balances.get("u2")!.balance).toBe(10);
   });
 });
 

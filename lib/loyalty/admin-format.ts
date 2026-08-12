@@ -9,11 +9,12 @@
 // environnement. Limite de scaling connue (cf. lib/loyalty/admin.ts) : à
 // remplacer par des RPC SQL si le volume du ledger devient important.
 
-import { summarizeLedger } from "@/lib/loyalty/points";
+import { computeBalance, computeEarnedTotal, summarizeLedger, tierForEarned } from "@/lib/loyalty/points";
 import type {
   LedgerKind,
   PartnerGroup,
   PointsCodeStatus,
+  Tier,
 } from "@/lib/loyalty/types";
 
 // ─── Lignes minimales récupérées (colonnes utiles seulement) ─────────────────
@@ -131,6 +132,35 @@ export function buildGroupsWithStats(
   }
 
   return groups.map((g) => ({ ...g, stats: stats.get(g.id) ?? emptyGroupStats() }));
+}
+
+// ─── Solde / niveau par membre ───────────────────────────────────────────────
+export type MemberLedgerRow = { user_id: string; amount: number; kind: LedgerKind };
+export type MemberBalance = { balance: number; tier: Tier };
+
+/**
+ * Ventile des lignes de ledger (déjà scopées à un groupe) par user_id et
+ * réutilise le calcul pur de points.ts (solde = computeBalance, niveau =
+ * tierForEarned(computeEarnedTotal)) — même sémantique que le portefeuille
+ * membre (/fidelite) et les stats de groupe (buildGroupsWithStats).
+ */
+export function buildMemberBalances(
+  entries: readonly MemberLedgerRow[],
+): Map<string, MemberBalance> {
+  const byUser = new Map<string, MemberLedgerRow[]>();
+  for (const e of entries) {
+    const rows = byUser.get(e.user_id);
+    if (rows) rows.push(e);
+    else byUser.set(e.user_id, [e]);
+  }
+  const result = new Map<string, MemberBalance>();
+  for (const [userId, rows] of byUser) {
+    result.set(userId, {
+      balance: computeBalance(rows),
+      tier: tierForEarned(computeEarnedTotal(rows)),
+    });
+  }
+  return result;
 }
 
 // ─── Confidentialité : masquage des codes ────────────────────────────────────
