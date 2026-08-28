@@ -20,6 +20,10 @@ export function MasterNav({ groupId }: { groupId: string }) {
     { href: `${base}/deblocage`, label: t.nav.unlock },
     { href: `${base}/magasin`, label: t.nav.shop },
     { href: `${base}/commandes`, label: t.nav.orders },
+    // "Créditer" : pas de clé i18n dédiée (dictionnaire hors périmètre du
+    // Sprint 1) — libellé français direct, même choix que le header de
+    // colonne "Pseudo" dans membres/page.tsx.
+    { href: `${base}/crediter`, label: "Créditer" },
     { href: `${base}/membres`, label: t.nav.members },
     { href: `${base}/operations`, label: t.nav.operations },
   ];

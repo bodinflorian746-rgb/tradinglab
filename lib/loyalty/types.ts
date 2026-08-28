@@ -66,6 +66,11 @@ export type PointsLedgerEntry = {
   reason: string | null;
   created_by: string | null;
   created_at: string;
+  // Migration 20260828130000 : figent le libellé de la règle de barème au
+  // moment du crédit (kind='manual_credit' via group_point_rules) — null
+  // pour toute ligne sans règle associée (code_reward, purchase, ...).
+  rule_slug: string | null;
+  rule_label: string | null;
 };
 
 // ─── Magasin par groupe (migration 20260724120000) ──────────────────────────
@@ -127,6 +132,24 @@ export type GroupAccessCode = {
 export type Profile = {
   id: string;
   username: string;
+  created_at: string;
+  updated_at: string;
+};
+
+// ─── Barème de points par groupe (migration 20260828130000_group_point_rules.sql)
+// slug texte libre (pas un enum Postgres) : "actions libres", is_system
+// distingue les 3 règles semées par défaut d'une règle future ajoutée par un
+// admin (écran d'édition = Sprint 2). sort_order = ordre d'affichage stable.
+
+export type GroupPointRule = {
+  id: string;
+  group_id: string;
+  slug: string;
+  label: string;
+  points: number;
+  is_active: boolean;
+  is_system: boolean;
+  sort_order: number;
   created_at: string;
   updated_at: string;
 };
