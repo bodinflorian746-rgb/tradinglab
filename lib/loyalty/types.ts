@@ -121,3 +121,12 @@ export type GroupAccessCode = {
   expires_at: string | null;
   created_at: string;
 };
+
+// ─── Profil public (migration 20260825120000_profiles.sql) ─────────────────
+
+export type Profile = {
+  id: string;
+  username: string;
+  created_at: string;
+  updated_at: string;
+};

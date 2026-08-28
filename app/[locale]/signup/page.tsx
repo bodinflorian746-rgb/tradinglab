@@ -26,7 +26,17 @@ export default async function SignupPage({
   const t = (await getDictionary(locale, "common")).signup;
 
   const errors = t.errors as Record<string, string>;
-  const errorMsg = error ? (errors[error] ?? errors.generic) : null;
+  // "invalid_username" / "username_taken" : pas de clé dictionnaire dédiée
+  // (hors périmètre des fichiers autorisés pour cette modification) —
+  // messages français directs, avant repli sur le dictionnaire existant.
+  const errorMsg =
+    error === "username_taken"
+      ? "Ce pseudo est déjà pris"
+      : error === "invalid_username"
+        ? "Le pseudo doit faire 3 à 20 caractères : minuscules, chiffres et _ uniquement."
+        : error
+          ? (errors[error] ?? errors.generic)
+          : null;
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-12">
@@ -56,6 +66,24 @@ export default async function SignupPage({
               autoComplete="email"
               className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 focus:border-emerald-500 focus:outline-none transition-colors text-sm"
             />
+          </div>
+
+          <div>
+            <label htmlFor="username" className="block text-xs font-medium text-zinc-400 mb-1.5">
+              Pseudo
+            </label>
+            <input
+              id="username"
+              type="text"
+              name="username"
+              required
+              minLength={3}
+              maxLength={20}
+              pattern="[a-z0-9_]{3,20}"
+              autoComplete="off"
+              className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 focus:border-emerald-500 focus:outline-none transition-colors text-sm"
+            />
+            <p className="mt-1 text-[11px] text-zinc-500">3 à 20 caractères : minuscules, chiffres et _.</p>
           </div>
 
           <div>

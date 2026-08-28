@@ -22,6 +22,7 @@ import { localizedHref } from "@/lib/i18n/href";
 import { getMyGroupMemberships } from "@/lib/loyalty/member";
 import { createPortalSession } from "./actions";
 import { GroupMembership } from "./_components/GroupMembership";
+import { UsernameCard } from "./_components/UsernameCard";
 
 function formatDate(iso: string | null | undefined, locale: Locale): string {
   if (!iso) return "";
@@ -70,6 +71,14 @@ export default async function ComptePage({
     .select("status, current_period_end, cancel_at_period_end, stripe_customer_id")
     .eq("user_id", user.id)
     .maybeSingle<SubRow>();
+
+  // RLS : policy profiles_select autorise l'user à lire uniquement sa propre
+  // ligne (auth.uid() = id) — cf. supabase/migrations/20260825120000_profiles.sql.
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("username")
+    .eq("id", user.id)
+    .maybeSingle<{ username: string }>();
 
   // Détermine la branche d'affichage. Trial = fallback uniquement si pas d'abo
   // Stripe actif (isPremium renvoie reason="trial" dans ce cas).
@@ -194,6 +203,10 @@ export default async function ComptePage({
             </Link>
           )}
         </section>
+
+        <div className="mt-6">
+          <UsernameCard username={profile?.username ?? null} />
+        </div>
 
         <div className="mt-6">
           <GroupMembership memberships={memberships} />

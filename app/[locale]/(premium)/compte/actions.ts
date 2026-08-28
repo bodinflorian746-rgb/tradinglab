@@ -80,6 +80,64 @@ export async function leaveGroupAction(input: {
   return { ok: true };
 }
 
+// ─── Modifier son pseudo (Mon compte) ────────────────────────────────────────
+// Même pattern que leaveGroupAction ci-dessus : user.id TOUJOURS relu côté
+// serveur depuis la session (jamais reçu du client, contrairement à
+// `username`, seul input non fiable) ; écriture via createAdminClient()
+// (service_role — public.profiles n'a aucune policy INSERT/UPDATE/DELETE
+// pour authenticated, cf. supabase/migrations/20260825120000_profiles.sql) ;
+// retour en union discriminée, jamais de throw.
+//
+// Le format est revalidé ici même si la contrainte profiles_username_format
+// existe déjà en base (défense en profondeur : message clair avant tout
+// aller-retour DB). La violation de l'unicité (23505) reste possible malgré
+// cette validation (TOCTOU entre deux requêtes concurrentes sur le même
+// pseudo) : c'est le seul cas où l'on s'appuie sur l'erreur Postgres, jamais
+// remontée telle quelle au client — traduite en message fixe.
+//
+// Pas de dictionnaire i18n ici (fichier qui n'en utilise déjà aucun) :
+// messages français directs, affichés tels quels côté client.
+
+const USERNAME_FORMAT = /^[a-z0-9_]{3,20}$/;
+
+export type UpdateUsernameResult =
+  | { ok: true; username: string }
+  | { ok: false; error: string };
+
+export async function updateUsernameAction(input: {
+  username: string;
+}): Promise<UpdateUsernameResult> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "Tu dois être connecté." };
+
+  const username = typeof input.username === "string" ? input.username.trim() : "";
+  if (!USERNAME_FORMAT.test(username)) {
+    return {
+      ok: false,
+      error: "Le pseudo doit faire 3 à 20 caractères : minuscules, chiffres et _ uniquement.",
+    };
+  }
+
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from("profiles")
+    .update({ username })
+    .eq("id", user.id);
+
+  if (error) {
+    if (error.code === "23505") {
+      return { ok: false, error: "Ce pseudo est déjà pris" };
+    }
+    console.error(`[compte/username] update échoué user=${user.id}: ${error.message}`);
+    return { ok: false, error: "Une erreur est survenue, réessaie plus tard." };
+  }
+
+  return { ok: true, username };
+}
+
 export async function createPortalSession(formData: FormData) {
   const locale = getStr(formData, "locale") || "fr";
 
