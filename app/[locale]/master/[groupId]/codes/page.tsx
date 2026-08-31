@@ -75,7 +75,9 @@ export default async function MasterCodesPage({
         <p className="mb-1 text-[11px] font-semibold uppercase tracking-widest text-emerald-400">
           {t.brand} · {dashboard.group.name}
         </p>
-        <h1 className="mb-6 text-3xl font-bold">{t.codes.title}</h1>
+        <h1 className="mb-6 text-3xl font-bold">
+          {t.codes.title} <span className="text-lg font-normal text-zinc-500">({codes.total})</span>
+        </h1>
 
         <MasterNav groupId={groupId} />
 
@@ -85,8 +87,7 @@ export default async function MasterCodesPage({
           <GenerateForm groupId={groupId} canWrite={canWrite} />
         </div>
 
-        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-          <p className="text-sm text-zinc-500">{codes.total}</p>
+        <div className="mb-4 flex flex-wrap items-end justify-end gap-3">
           <CodeStatusFilter />
         </div>
 

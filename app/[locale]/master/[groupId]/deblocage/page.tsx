@@ -68,7 +68,9 @@ export default async function MasterUnlockCodesPage({
         <p className="mb-1 text-[11px] font-semibold uppercase tracking-widest text-emerald-400">
           {t.brand} · {dashboard.group.name}
         </p>
-        <h1 className="mb-6 text-3xl font-bold">{t.unlock.title}</h1>
+        <h1 className="mb-6 text-3xl font-bold">
+          {t.unlock.title} <span className="text-lg font-normal text-zinc-500">({codes.total})</span>
+        </h1>
 
         <MasterNav groupId={groupId} />
 
@@ -77,8 +79,6 @@ export default async function MasterUnlockCodesPage({
         <div className="mb-8">
           <AccessCodeGenerateForm groupId={groupId} canWrite={canWrite} />
         </div>
-
-        <p className="mb-4 text-sm text-zinc-500">{codes.total}</p>
 
         <TableShell
           head={head}
