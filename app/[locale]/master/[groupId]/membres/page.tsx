@@ -162,7 +162,11 @@ export default async function MasterMembersPage({
                 <TierBadge tier={selected.tier} label={tierLabels[selected.tier] ?? selected.tier} />
               </div>
               <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                <Tile label={t.members.th.balance} value={selected.balance} tone="emerald" />
+                <Tile
+                  label={t.members.th.balance}
+                  value={selected.balance}
+                  tone={selected.balance >= 0 ? "emerald" : "red"}
+                />
               </div>
 
               <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-zinc-400">
@@ -237,7 +241,9 @@ export default async function MasterMembersPage({
               {members.rows.map((m) => (
                 <tr key={m.id} className="border-b border-zinc-800/60 last:border-0">
                   <td className="px-4 py-3 text-xs text-zinc-300">{usernames.get(m.user_id) ?? "—"}</td>
-                  <td className="px-4 py-3 font-semibold text-emerald-400">{m.balance}</td>
+                  <td className={`px-4 py-3 font-semibold ${m.balance >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                    {m.balance}
+                  </td>
                   <td className="px-4 py-3">
                     <TierBadge tier={m.tier} label={tierLabels[m.tier] ?? m.tier} />
                   </td>
