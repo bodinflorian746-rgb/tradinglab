@@ -227,6 +227,63 @@ export function validateShopItemParams(raw: {
   return { ok: true, value: { name, description, itemType: raw.itemType, pricePoints, stock, imageUrl } };
 }
 
+// ─── Barème de points par groupe (group_point_rules) ─────────────────────────
+// Une action ("Témoignage écrit", "Parrainage", ...) = un label libre + un
+// nombre de points fixe > 0 (contrainte DB, cf. migration 20260828130000).
+// Le slug est DÉRIVÉ du label à la création, jamais saisi ni modifiable
+// ensuite : il est copié dans points_ledger.rule_slug à chaque crédit et sert
+// d'identité stable de l'action dans l'historique, même si le label est
+// renommé plus tard.
+
+export const RULE_LABEL_MAX_LENGTH = 80;
+export const RULE_POINTS_MIN = 1;
+export const RULE_POINTS_MAX = 100_000;
+export const RULE_SLUG_MAX_LENGTH = 40;
+
+export type GroupPointRuleParamsError = "invalid_label" | "invalid_points";
+
+export type GroupPointRuleParams = { label: string; points: number };
+
+/**
+ * Valide les paramètres de création/édition d'une règle de barème.
+ *   • label : chaîne non vide après trim, ≤ 80 caractères ;
+ *   • points : entier dans [1, 100000] (garde-fou technique — la contrainte
+ *     DB n'exige que > 0, la borne haute évite une valeur absurde).
+ */
+export function validateGroupPointRuleParams(raw: {
+  label: unknown;
+  points: unknown;
+}): { ok: true; value: GroupPointRuleParams } | { ok: false; error: GroupPointRuleParamsError } {
+  const label = typeof raw.label === "string" ? raw.label.trim() : "";
+  if (!label || label.length > RULE_LABEL_MAX_LENGTH) {
+    return { ok: false, error: "invalid_label" };
+  }
+  const points = toInt(raw.points);
+  if (points === null || points < RULE_POINTS_MIN || points > RULE_POINTS_MAX) {
+    return { ok: false, error: "invalid_points" };
+  }
+  return { ok: true, value: { label, points } };
+}
+
+/**
+ * Dérive un slug technique (a-z0-9_, ≤ 40 caractères) à partir d'un label
+ * libre : minuscules, diacritiques retirés, tout caractère non [a-z0-9]
+ * remplacé par "_", underscores dupliqués/en bord retirés. Ne garantit PAS
+ * l'unicité (group_id, slug) — l'appelant retente avec un suffixe numérique
+ * sur collision (23505), même principe que resolve_unique_username() côté SQL
+ * pour les pseudos.
+ */
+export function deriveRuleSlug(label: string): string {
+  const base = label
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "")
+    .slice(0, RULE_SLUG_MAX_LENGTH);
+  return base || "action";
+}
+
 export type RevokeFailure = "not_found" | "wrong_group" | "not_revocable";
 
 /**

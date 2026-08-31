@@ -18,8 +18,10 @@ import { generatePointsCode } from "@/lib/loyalty/codes";
 import { generateCode } from "@/lib/access-codes";
 import {
   classifyRevokeFailure,
+  deriveRuleSlug,
   validateAccessCodeGenerateParams,
   validateGenerateParams,
+  validateGroupPointRuleParams,
   validateShopItemParams,
 } from "@/lib/loyalty/master-validation";
 
@@ -444,4 +446,239 @@ export async function updateGroupTelegramAction(input: {
   revalidatePath(`/${input.locale}/master/${input.groupId}`);
   revalidatePath(`/${input.locale}/admin/loyalty/groups/${input.groupId}`);
   return { ok: true };
+}
+
+// ─── Barème de points par groupe (group_point_rules) ─────────────────────────
+// Même garde que le magasin/les codes : authorizeGroupWrite (admin actif du
+// groupe OU Super Admin, groupe actif requis). Écriture exclusivement en
+// service_role (aucune policy d'écriture sur group_point_rules — cf.
+// migration 20260828130000). Le slug est dérivé du label UNE SEULE FOIS, à la
+// création : il n'est plus jamais réécrit ensuite (updateGroupPointRuleAction
+// ne touche que label/points) car il sert d'identité stable de l'action dans
+// points_ledger.rule_slug — le renommer romprait le lien avec l'historique
+// déjà crédité.
+
+export type GroupPointRuleResult = { ok: true; ruleId: string } | { ok: false; error: string };
+
+export async function createGroupPointRuleAction(input: {
+  locale: string;
+  groupId: string;
+  label: unknown;
+  points: unknown;
+}): Promise<GroupPointRuleResult> {
+  const user = await currentUser();
+  if (!user) return { ok: false, error: "unauthenticated" };
+
+  const authz = await authorizeGroupWrite(user.id, input.groupId, user.email);
+  if (authz !== "ok") return { ok: false, error: authz };
+
+  const v = validateGroupPointRuleParams(input);
+  if (!v.ok) return { ok: false, error: v.error };
+
+  const admin = createAdminClient();
+
+  // sort_order = juste après la règle la plus basse existante du groupe (les
+  // nouvelles actions apparaissent en bas de liste, réordonnables ensuite).
+  const { data: lastRow } = await admin
+    .from("group_point_rules")
+    .select("sort_order")
+    .eq("group_id", input.groupId)
+    .order("sort_order", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const nextSortOrder = (lastRow?.sort_order ?? -1) + 1;
+
+  const base = deriveRuleSlug(v.value.label);
+  const MAX_ATTEMPTS = 20;
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    const slug = attempt === 0 ? base : `${base}_${attempt + 1}`;
+    const { data, error } = await admin
+      .from("group_point_rules")
+      .insert({
+        group_id: input.groupId,
+        slug,
+        label: v.value.label,
+        points: v.value.points,
+        is_active: true,
+        is_system: false,
+        sort_order: nextSortOrder,
+      })
+      .select("id")
+      .single();
+    if (!error) {
+      revalidatePath(`/${input.locale}/master/${input.groupId}/bareme`);
+      return { ok: true, ruleId: data.id as string };
+    }
+    if (error.code === "23505") continue; // collision de slug → réessaie avec un suffixe
+    console.error(`[master/bareme] create error group=${input.groupId}: ${error.message}`);
+    return { ok: false, error: "db" };
+  }
+  return { ok: false, error: "collision" };
+}
+
+export async function updateGroupPointRuleAction(input: {
+  locale: string;
+  groupId: string;
+  ruleId: string;
+  label: unknown;
+  points: unknown;
+}): Promise<GroupPointRuleResult> {
+  const user = await currentUser();
+  if (!user) return { ok: false, error: "unauthenticated" };
+
+  const authz = await authorizeGroupWrite(user.id, input.groupId, user.email);
+  if (authz !== "ok") return { ok: false, error: authz };
+
+  const v = validateGroupPointRuleParams(input);
+  if (!v.ok) return { ok: false, error: v.error };
+
+  const admin = createAdminClient();
+  const { data, error } = await admin
+    .from("group_point_rules")
+    .update({ label: v.value.label, points: v.value.points })
+    .eq("id", input.ruleId)
+    .eq("group_id", input.groupId)
+    .select("id");
+
+  if (error) {
+    console.error(`[master/bareme] update error rule=${input.ruleId}: ${error.message}`);
+    return { ok: false, error: "db" };
+  }
+  if ((data?.length ?? 0) !== 1) return { ok: false, error: "not_found" };
+
+  revalidatePath(`/${input.locale}/master/${input.groupId}/bareme`);
+  return { ok: true, ruleId: input.ruleId };
+}
+
+export async function toggleGroupPointRuleStatusAction(input: {
+  locale: string;
+  groupId: string;
+  ruleId: string;
+  nextActive: boolean;
+}): Promise<GroupPointRuleResult> {
+  const user = await currentUser();
+  if (!user) return { ok: false, error: "unauthenticated" };
+
+  const authz = await authorizeGroupWrite(user.id, input.groupId, user.email);
+  if (authz !== "ok") return { ok: false, error: authz };
+
+  const admin = createAdminClient();
+  const { data, error } = await admin
+    .from("group_point_rules")
+    .update({ is_active: input.nextActive })
+    .eq("id", input.ruleId)
+    .eq("group_id", input.groupId)
+    .select("id");
+
+  if (error) {
+    console.error(`[master/bareme] toggle error rule=${input.ruleId}: ${error.message}`);
+    return { ok: false, error: "db" };
+  }
+  if ((data?.length ?? 0) !== 1) return { ok: false, error: "not_found" };
+
+  revalidatePath(`/${input.locale}/master/${input.groupId}/bareme`);
+  return { ok: true, ruleId: input.ruleId };
+}
+
+export type DeleteGroupPointRuleResult = { ok: true } | { ok: false; error: string };
+
+export async function deleteGroupPointRuleAction(input: {
+  locale: string;
+  groupId: string;
+  ruleId: string;
+}): Promise<DeleteGroupPointRuleResult> {
+  const user = await currentUser();
+  if (!user) return { ok: false, error: "unauthenticated" };
+
+  const authz = await authorizeGroupWrite(user.id, input.groupId, user.email);
+  if (authz !== "ok") return { ok: false, error: authz };
+
+  const admin = createAdminClient();
+
+  // is_system se vérifie AVANT le delete (jamais une confiance dans un input
+  // client) : les 3 actions semées par défaut ne sont jamais supprimables,
+  // seulement renommables/repointables/désactivables.
+  const { data: row, error: readErr } = await admin
+    .from("group_point_rules")
+    .select("is_system")
+    .eq("id", input.ruleId)
+    .eq("group_id", input.groupId)
+    .maybeSingle();
+  if (readErr) {
+    console.error(`[master/bareme] read error rule=${input.ruleId}: ${readErr.message}`);
+    return { ok: false, error: "db" };
+  }
+  if (!row) return { ok: false, error: "not_found" };
+  if (row.is_system) return { ok: false, error: "is_system" };
+
+  const { error } = await admin
+    .from("group_point_rules")
+    .delete()
+    .eq("id", input.ruleId)
+    .eq("group_id", input.groupId)
+    .eq("is_system", false);
+  if (error) {
+    console.error(`[master/bareme] delete error rule=${input.ruleId}: ${error.message}`);
+    return { ok: false, error: "db" };
+  }
+
+  revalidatePath(`/${input.locale}/master/${input.groupId}/bareme`);
+  return { ok: true };
+}
+
+/**
+ * Échange le sort_order de la règle `ruleId` avec son voisin immédiat
+ * (direction "up" = voisin précédent, "down" = voisin suivant). No-op (ok:true)
+ * si la règle est déjà en bout de liste dans cette direction. Deux UPDATE
+ * séquentiels non transactionnels : risque de contention négligeable (écran
+ * admin, un seul opérateur à la fois en pratique).
+ */
+export async function reorderGroupPointRuleAction(input: {
+  locale: string;
+  groupId: string;
+  ruleId: string;
+  direction: "up" | "down";
+}): Promise<GroupPointRuleResult> {
+  const user = await currentUser();
+  if (!user) return { ok: false, error: "unauthenticated" };
+
+  const authz = await authorizeGroupWrite(user.id, input.groupId, user.email);
+  if (authz !== "ok") return { ok: false, error: authz };
+
+  if (input.direction !== "up" && input.direction !== "down") {
+    return { ok: false, error: "invalid_direction" };
+  }
+
+  const admin = createAdminClient();
+  const { data: rows, error } = await admin
+    .from("group_point_rules")
+    .select("id, sort_order")
+    .eq("group_id", input.groupId)
+    .order("sort_order", { ascending: true });
+  if (error || !rows) {
+    console.error(`[master/bareme] reorder read error group=${input.groupId}: ${error?.message}`);
+    return { ok: false, error: "db" };
+  }
+
+  const idx = rows.findIndex((r) => r.id === input.ruleId);
+  if (idx === -1) return { ok: false, error: "not_found" };
+
+  const neighborIdx = input.direction === "up" ? idx - 1 : idx + 1;
+  if (neighborIdx < 0 || neighborIdx >= rows.length) {
+    return { ok: true, ruleId: input.ruleId }; // déjà en bout de liste : no-op
+  }
+
+  const current = rows[idx];
+  const neighbor = rows[neighborIdx];
+  const [r1, r2] = await Promise.all([
+    admin.from("group_point_rules").update({ sort_order: neighbor.sort_order }).eq("id", current.id),
+    admin.from("group_point_rules").update({ sort_order: current.sort_order }).eq("id", neighbor.id),
+  ]);
+  if (r1.error || r2.error) {
+    console.error(`[master/bareme] reorder write error group=${input.groupId}: ${r1.error?.message ?? r2.error?.message}`);
+    return { ok: false, error: "db" };
+  }
+
+  revalidatePath(`/${input.locale}/master/${input.groupId}/bareme`);
+  return { ok: true, ruleId: input.ruleId };
 }

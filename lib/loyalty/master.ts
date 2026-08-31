@@ -28,7 +28,7 @@ import {
   type MembershipStatRow,
 } from "@/lib/loyalty/admin-format";
 import { tierForEarned } from "@/lib/loyalty/points";
-import type { GroupAccessCode, PartnerGroup, Tier } from "@/lib/loyalty/types";
+import type { GroupAccessCode, GroupPointRule, PartnerGroup, Tier } from "@/lib/loyalty/types";
 import type { CodeRow, LedgerRow, MemberRow, Paged } from "@/lib/loyalty/admin";
 
 export type GroupAdminUser = { id: string; email: string };
@@ -223,6 +223,26 @@ export async function listMembersWithPoints(
     return { ...m, email: emails.get(m.user_id) ?? null, balance: b.balance, tier: b.tier };
   });
   return { rows, total: count ?? 0, error: null };
+}
+
+/**
+ * Barème complet d'un groupe (actif ET inactif), pour l'écran de gestion
+ * (bareme/page.tsx) — trié par sort_order. Passe par readClient() (session +
+ * RLS group_point_rules_select, qui couvre admin ET membre actif) : pas
+ * besoin de service_role en lecture, seules les écritures (Server Actions)
+ * l'exigent (aucune policy d'écriture sur cette table).
+ */
+export async function listGroupPointRules(
+  groupId: string,
+): Promise<{ rows: GroupPointRule[]; error: string | null }> {
+  const supabase = await readClient();
+  const { data, error } = await supabase
+    .from("group_point_rules")
+    .select("id, group_id, slug, label, points, is_active, is_system, sort_order, created_at, updated_at")
+    .eq("group_id", groupId)
+    .order("sort_order", { ascending: true });
+  if (error) return { rows: [], error: error.message };
+  return { rows: (data ?? []) as GroupPointRule[], error: null };
 }
 
 export async function listCodes(
