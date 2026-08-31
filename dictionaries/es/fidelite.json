@@ -48,7 +48,17 @@
   "wallet": {
     "balance": "Saldo",
     "earned": "Total ganado",
-    "tier": "Nivel"
+    "tier": "Nivel",
+    "pseudo": "Apodo"
+  },
+  "tabs": { "earn": "Ganar", "spend": "Gastar" },
+  "earn": {
+    "rulesTitle": "Acciones que otorgan puntos",
+    "rulesHint": "Envía tu contribución por Telegram indicando tu apodo del sitio: el administrador del grupo te acreditará los puntos correspondientes.",
+    "rulesEmpty": "Ninguna acción disponible para este grupo por ahora.",
+    "pseudoLabel": "Tu apodo",
+    "copy": "Copiar",
+    "copied": "¡Copiado!"
   },
   "tiers": {
     "bronze": "Bronce",

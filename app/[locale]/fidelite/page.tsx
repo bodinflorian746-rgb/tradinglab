@@ -10,12 +10,12 @@ import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary, type Dictionaries } from "@/i18n/dictionaries";
 import { localizedHref } from "@/lib/i18n/href";
-import { getCurrentMember, getMyWallets, type MemberWallet } from "@/lib/loyalty/member";
+import { getCurrentMember, getMyUsername, getMyWallets, listActiveGroupPointRules, type MemberWallet } from "@/lib/loyalty/member";
 import { listActiveShopItemsForMember } from "@/lib/loyalty/shop";
-import type { GroupShopItem } from "@/lib/loyalty/types";
+import type { GroupPointRule, GroupShopItem } from "@/lib/loyalty/types";
 import { ActivateForm } from "./_components/ActivateForm";
 import { Tile, TierBadge } from "./_components/ui";
-import { MemberShop } from "./_components/MemberShop";
+import { PointsTabs } from "./_components/PointsTabs";
 
 export const dynamic = "force-dynamic";
 
@@ -34,18 +34,26 @@ export default async function FideliteLanding({
   const wallets = await getMyWallets(member.id);
   const activeWallets = wallets.filter((w) => w.group.status === "active");
 
-  // Boutique de chaque groupe actif chargée en parallèle, réutilise
-  // exactement listActiveShopItemsForMember + MemberShop déjà utilisés par
-  // app/[locale]/fidelite/[groupId]/page.tsx — aucun second système de
-  // boutique.
-  const shops = await Promise.all(
-    activeWallets.map(async (w) => ({
-      groupId: w.group.id,
-      ...(await listActiveShopItemsForMember(w.group.id)),
-    })),
-  );
+  // Boutique + barème de chaque groupe actif chargés en parallèle, réutilise
+  // exactement listActiveShopItemsForMember/listActiveGroupPointRules déjà
+  // utilisés par app/[locale]/fidelite/[groupId]/page.tsx — aucun second
+  // système de boutique ni de barème. Le champ de code (ActivateForm) reste
+  // unique en haut de page : générique à tous les groupes, le dupliquer dans
+  // chaque carte de groupe n'apporterait rien.
+  const [username, shops, rules] = await Promise.all([
+    getMyUsername(member.id),
+    Promise.all(
+      activeWallets.map(async (w) => ({ groupId: w.group.id, ...(await listActiveShopItemsForMember(w.group.id)) })),
+    ),
+    Promise.all(
+      activeWallets.map(async (w) => ({ groupId: w.group.id, ...(await listActiveGroupPointRules(w.group.id)) })),
+    ),
+  ]);
   const shopByGroup = new Map<string, { rows: GroupShopItem[]; error: string | null }>(
     shops.map((s) => [s.groupId, { rows: s.rows, error: s.error }]),
+  );
+  const rulesByGroup = new Map<string, { rows: GroupPointRule[]; error: string | null }>(
+    rules.map((r) => [r.groupId, { rows: r.rows, error: r.error }]),
   );
 
   return (
@@ -85,7 +93,15 @@ export default async function FideliteLanding({
                   <p className="text-sm text-zinc-500">{t.suspended.landingNotice}</p>
                 </div>
               ) : (
-                <GroupPointsCard key={w.group.id} wallet={w} shop={shopByGroup.get(w.group.id)} t={t} locale={locale} />
+                <GroupPointsCard
+                  key={w.group.id}
+                  wallet={w}
+                  shop={shopByGroup.get(w.group.id)}
+                  rules={rulesByGroup.get(w.group.id)}
+                  username={username}
+                  t={t}
+                  locale={locale}
+                />
               ),
             )}
           </div>
@@ -98,11 +114,15 @@ export default async function FideliteLanding({
 function GroupPointsCard({
   wallet,
   shop,
+  rules,
+  username,
   t,
   locale,
 }: {
   wallet: MemberWallet;
   shop: { rows: GroupShopItem[]; error: string | null } | undefined;
+  rules: { rows: GroupPointRule[]; error: string | null } | undefined;
+  username: string | null;
   t: Dictionaries["fidelite"];
   locale: Locale;
 }) {
@@ -127,12 +147,14 @@ function GroupPointsCard({
         <Tile label={t.wallet.tier} value={(t.tiers as Record<string, string>)[wallet.tier]} />
       </div>
 
-      <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-zinc-400">{t.shop.title}</h3>
-      <MemberShop
+      <PointsTabs
         groupId={wallet.group.id}
-        items={shop?.rows ?? []}
-        balance={wallet.balance}
-        loadError={shop?.error}
+        username={username}
+        rules={rules?.rows ?? []}
+        rulesError={rules?.error}
+        shopItems={shop?.rows ?? []}
+        shopBalance={wallet.balance}
+        shopLoadError={shop?.error}
       />
     </section>
   );

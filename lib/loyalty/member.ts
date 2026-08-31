@@ -19,7 +19,7 @@ import {
   tierForEarned,
   type LedgerAmount,
 } from "@/lib/loyalty/points";
-import type { PartnerGroup, Tier } from "@/lib/loyalty/types";
+import type { GroupPointRule, PartnerGroup, Tier } from "@/lib/loyalty/types";
 
 async function readClient() {
   return isDevAuthBypass() ? createAdminClient() : await createClient();
@@ -36,6 +36,33 @@ export async function getCurrentMember(): Promise<CurrentMember | null> {
   } = await supabase.auth.getUser();
   if (!user) return null;
   return { id: user.id, email: user.email ?? "" };
+}
+
+/** Pseudo public du membre courant — lecture RLS (profiles_select : auth.uid() = id). */
+export async function getMyUsername(userId: string): Promise<string | null> {
+  const supabase = await readClient();
+  const { data, error } = await supabase.from("profiles").select("username").eq("id", userId).maybeSingle();
+  if (error || !data) return null;
+  return data.username as string;
+}
+
+/**
+ * Actions du barème ACTIVES d'un groupe — onglet "Gagner" de l'espace membre.
+ * RLS group_point_rules_select (is_group_member) couvre déjà membre ET admin ;
+ * le .eq("is_active", true) est redondant avec l'usage prévu mais explicite.
+ */
+export async function listActiveGroupPointRules(
+  groupId: string,
+): Promise<{ rows: GroupPointRule[]; error: string | null }> {
+  const supabase = await readClient();
+  const { data, error } = await supabase
+    .from("group_point_rules")
+    .select("id, group_id, slug, label, points, is_active, is_system, sort_order, created_at, updated_at")
+    .eq("group_id", groupId)
+    .eq("is_active", true)
+    .order("sort_order", { ascending: true });
+  if (error) return { rows: [], error: error.message };
+  return { rows: (data ?? []) as GroupPointRule[], error: null };
 }
 
 export type MemberWallet = {

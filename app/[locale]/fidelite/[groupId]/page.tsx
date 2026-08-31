@@ -7,12 +7,12 @@ import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localizedHref } from "@/lib/i18n/href";
-import { getCurrentMember, getWalletDetail, listMyLedger } from "@/lib/loyalty/member";
+import { getCurrentMember, getMyUsername, getWalletDetail, listActiveGroupPointRules, listMyLedger } from "@/lib/loyalty/member";
 import { listActiveShopItemsForMember } from "@/lib/loyalty/shop";
 import { formatDate, formatSignedPoints, sanitizePage } from "@/lib/loyalty/admin-format";
 import { Tile, TierBadge, TableShell } from "../_components/ui";
 import { Pager } from "../_components/Pager";
-import { MemberShop } from "../_components/MemberShop";
+import { PointsTabs } from "../_components/PointsTabs";
 
 export const dynamic = "force-dynamic";
 const PAGE_SIZE = 25;
@@ -76,7 +76,11 @@ export default async function FideliteGroupHistory({
   const totalPages = Math.max(1, Math.ceil(history.total / PAGE_SIZE));
   const th = t.history.th;
 
-  const { rows: shopItems, error: shopError } = await listActiveShopItemsForMember(groupId);
+  const [{ rows: shopItems, error: shopError }, { rows: rules, error: rulesError }, username] = await Promise.all([
+    listActiveShopItemsForMember(groupId),
+    listActiveGroupPointRules(groupId),
+    getMyUsername(member.id),
+  ]);
 
   return (
     <main className="min-h-screen bg-zinc-950 px-6 py-12 text-white md:py-16">
@@ -88,15 +92,24 @@ export default async function FideliteGroupHistory({
           <TierBadge tier={wallet.tier} label={(t.tiers as Record<string, string>)[wallet.tier]} />
         </div>
 
-        <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-3">
+        <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {username && <Tile label={t.wallet.pseudo} value={username} tone="emerald" />}
           <Tile label={t.wallet.balance} value={wallet.balance} tone="emerald" />
           <Tile label={t.wallet.earned} value={wallet.earnedTotal} tone="amber" />
           <Tile label={t.wallet.tier} value={(t.tiers as Record<string, string>)[wallet.tier]} />
         </div>
 
-        <h2 className="mb-3 text-lg font-bold">{t.shop.title}</h2>
         <div className="mb-8">
-          <MemberShop groupId={groupId} items={shopItems} balance={wallet.balance} loadError={shopError} />
+          <PointsTabs
+            groupId={groupId}
+            username={username}
+            rules={rules}
+            rulesError={rulesError}
+            shopItems={shopItems}
+            shopBalance={wallet.balance}
+            shopLoadError={shopError}
+            showActivateForm
+          />
         </div>
 
         <h2 className="mb-3 text-lg font-bold">
