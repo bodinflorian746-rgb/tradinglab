@@ -103,7 +103,10 @@ export function PointsTabs({
           </section>
         </div>
       ) : (
-        <MemberShop groupId={groupId} items={shopItems} balance={shopBalance} loadError={shopLoadError} />
+        <div>
+          <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-zinc-400">{t.shop.title}</h3>
+          <MemberShop groupId={groupId} items={shopItems} balance={shopBalance} loadError={shopLoadError} />
+        </div>
       )}
     </div>
   );
