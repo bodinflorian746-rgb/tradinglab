@@ -232,29 +232,65 @@ export default async function MasterMembersPage({
         ) : (
           <>
             <p className="mb-3 text-sm text-zinc-500">{t.members.browseHint}</p>
-            <TableShell
-              head={[t.members.th.pseudo, t.members.th.balance, t.members.th.tier, ""]}
-              isEmpty={members.rows.length === 0}
-              empty={members.error ?? t.members.empty}
-              emptyColspan={4}
-            >
-              {members.rows.map((m) => (
-                <tr key={m.id} className="border-b border-zinc-800/60 last:border-0">
-                  <td className="px-4 py-3 text-xs text-zinc-300">{usernames.get(m.user_id) ?? "—"}</td>
-                  <td className={`px-4 py-3 font-semibold ${m.balance >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                    {m.balance}
-                  </td>
-                  <td className="px-4 py-3">
-                    <TierBadge tier={m.tier} label={tierLabels[m.tier] ?? m.tier} />
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <a href={`?userId=${m.user_id}`} className="text-xs font-medium text-emerald-400 hover:underline">
+            {/* Desktop/tablette (≥ 640px) : tableau. En dessous, un tableau à 4
+                colonnes déborde (colonne Créditer coupée, en-tête Solde de
+                points sur 3 lignes) — remplacé par des cartes empilées. */}
+            <div className="hidden sm:block">
+              <TableShell
+                head={[t.members.th.pseudo, t.members.th.balance, t.members.th.tier, ""]}
+                isEmpty={members.rows.length === 0}
+                empty={members.error ?? t.members.empty}
+                emptyColspan={4}
+              >
+                {members.rows.map((m) => (
+                  <tr key={m.id} className="border-b border-zinc-800/60 last:border-0">
+                    <td className="px-4 py-3 text-xs text-zinc-300">{usernames.get(m.user_id) ?? "—"}</td>
+                    <td className={`px-4 py-3 font-semibold ${m.balance >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                      {m.balance}
+                    </td>
+                    <td className="px-4 py-3">
+                      <TierBadge tier={m.tier} label={tierLabels[m.tier] ?? m.tier} />
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <a href={`?userId=${m.user_id}`} className="text-xs font-medium text-emerald-400 hover:underline">
+                        {t.members.select}
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </TableShell>
+            </div>
+
+            <div className="space-y-3 sm:hidden">
+              {members.rows.length === 0 ? (
+                <p className="rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-6 text-center text-sm text-zinc-500">
+                  {members.error ?? t.members.empty}
+                </p>
+              ) : (
+                members.rows.map((m) => (
+                  <div key={m.id} className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
+                    <div className="mb-3 flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-sm font-semibold text-zinc-200">{usernames.get(m.user_id) ?? "—"}</p>
+                        <p className="mt-1 text-xs text-zinc-500">
+                          {t.members.th.balance}{" "}
+                          <span className={`font-semibold ${m.balance >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                            {m.balance}
+                          </span>
+                        </p>
+                      </div>
+                      <TierBadge tier={m.tier} label={tierLabels[m.tier] ?? m.tier} />
+                    </div>
+                    <a
+                      href={`?userId=${m.user_id}`}
+                      className="block w-full rounded-lg border border-zinc-700 px-3 py-2 text-center text-sm font-medium text-emerald-400 transition-colors hover:border-emerald-500/50"
+                    >
                       {t.members.select}
                     </a>
-                  </td>
-                </tr>
-              ))}
-            </TableShell>
+                  </div>
+                ))
+              )}
+            </div>
 
             <div className="mt-3">
               <Pager page={page} totalPages={totalPages} param="mpage" />
