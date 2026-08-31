@@ -14,7 +14,10 @@
     "orders": "Orders",
     "members": "Members",
     "operations": "Operations",
-    "back": "← My groups"
+    "back": "← My groups",
+    "shopSection": "Shop",
+    "configSection": "Configuration",
+    "bareme": "Point rules"
   },
   "status": { "active": "Active", "suspended": "Suspended" },
   "suspendedNotice": "This group is suspended: read-only. Code generation and revocation are disabled.",
@@ -93,7 +96,30 @@
   "members": {
     "title": "Members",
     "empty": "No members.",
-    "th": { "user": "User", "role": "Role", "status": "Status", "joined": "Joined", "email": "Email", "balance": "Points balance", "tier": "Tier" }
+    "th": { "user": "User", "role": "Role", "status": "Status", "joined": "Joined", "email": "Email", "pseudo": "Username", "balance": "Points balance", "tier": "Tier" },
+    "searchLabel": "Search a member (username or email, partial)",
+    "searchPlaceholder": "username or email...",
+    "search": "Search",
+    "reset": "Reset",
+    "results": "Results",
+    "noResults": "No member matches this search.",
+    "select": "Credit →",
+    "browseHint": "Search a username or email to credit a contribution, or pick a member below.",
+    "credit": {
+      "title": "Credit a contribution",
+      "noRules": "No active point rule for this group.",
+      "crediting": "Crediting...",
+      "success": "+{n} points credited ({label}).",
+      "recentTitle": "Recent credits",
+      "recentEmpty": "No credit for this member.",
+      "errors": {
+        "unauthenticated": "You must be signed in.",
+        "forbidden": "You don't have rights on this group.",
+        "rule_not_found": "This rule is no longer available.",
+        "not_member": "This user is no longer an active member of the group.",
+        "db": "Something went wrong, try again later."
+      }
+    }
   },
   "tiers": { "bronze": "Bronze", "silver": "Silver", "gold": "Gold" },
   "roles": { "admin": "Admin", "member": "Member" },
@@ -248,5 +274,42 @@
     }
   },
   "pager": { "prev": "Previous", "next": "Next", "page": "Page {p} / {t}" },
-  "common": { "readonly": "Read-only", "loadError": "Loading error." }
+  "common": { "readonly": "Read-only", "loadError": "Loading error." },
+  "bareme": {
+    "title": "Point rules",
+    "hint": "Each action grants a fixed number of points. Default actions can be renamed, repointed and disabled, but never deleted.",
+    "newRule": "New action",
+    "empty": "No rule yet.",
+    "th": { "label": "Action", "points": "Points", "status": "Status" },
+    "systemBadge": "Default",
+    "edit": "Edit",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "toggling": "…",
+    "delete": "Delete",
+    "deleting": "…",
+    "deleteConfirm": "Delete this action? This cannot be undone.",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "moving": "…",
+    "form": {
+      "label": "Label",
+      "points": "Points",
+      "create": "Create",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "unauthenticated": "Session expired, sign in again.",
+      "forbidden": "Action not allowed.",
+      "group_suspended": "Group suspended: action disabled.",
+      "invalid_label": "Invalid label (1 to 80 characters).",
+      "invalid_points": "Invalid points (integer from 1 to 100000).",
+      "not_found": "Rule not found.",
+      "is_system": "This default action cannot be deleted.",
+      "collision": "Could not generate a unique id for this action, try again.",
+      "db": "Technical error, try again."
+    }
+  }
 }

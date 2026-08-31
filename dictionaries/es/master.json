@@ -14,7 +14,10 @@
     "orders": "Pedidos",
     "members": "Miembros",
     "operations": "Operaciones",
-    "back": "← Mis grupos"
+    "back": "← Mis grupos",
+    "shopSection": "Tienda",
+    "configSection": "Configuración",
+    "bareme": "Baremo"
   },
   "status": { "active": "Activo", "suspended": "Suspendido" },
   "suspendedNotice": "Este grupo está suspendido: solo consulta. La generación y revocación de códigos están desactivadas.",
@@ -93,7 +96,30 @@
   "members": {
     "title": "Miembros",
     "empty": "Sin miembros.",
-    "th": { "user": "Usuario", "role": "Rol", "status": "Estado", "joined": "Se unió", "email": "Correo", "balance": "Saldo de puntos", "tier": "Nivel" }
+    "th": { "user": "Usuario", "role": "Rol", "status": "Estado", "joined": "Se unió", "email": "Correo", "pseudo": "Apodo", "balance": "Saldo de puntos", "tier": "Nivel" },
+    "searchLabel": "Buscar un miembro (apodo o correo, parcial)",
+    "searchPlaceholder": "apodo o correo...",
+    "search": "Buscar",
+    "reset": "Restablecer",
+    "results": "Resultados",
+    "noResults": "Ningún miembro coincide con esta búsqueda.",
+    "select": "Acreditar →",
+    "browseHint": "Busca un apodo o un correo para acreditar una contribución, o elige un miembro abajo.",
+    "credit": {
+      "title": "Acreditar una contribución",
+      "noRules": "Ninguna regla de baremo activa para este grupo.",
+      "crediting": "Acreditando...",
+      "success": "+{n} puntos acreditados ({label}).",
+      "recentTitle": "Últimos créditos",
+      "recentEmpty": "Ningún crédito para este miembro.",
+      "errors": {
+        "unauthenticated": "Debes iniciar sesión.",
+        "forbidden": "No tienes derechos sobre este grupo.",
+        "rule_not_found": "Esta regla ya no está disponible.",
+        "not_member": "Este usuario ya no es miembro activo del grupo.",
+        "db": "Ocurrió un error, inténtalo más tarde."
+      }
+    }
   },
   "tiers": { "bronze": "Bronce", "silver": "Plata", "gold": "Oro" },
   "roles": { "admin": "Admin", "member": "Miembro" },
@@ -248,5 +274,42 @@
     }
   },
   "pager": { "prev": "Anterior", "next": "Siguiente", "page": "Página {p} / {t}" },
-  "common": { "readonly": "Solo lectura", "loadError": "Error de carga." }
+  "common": { "readonly": "Solo lectura", "loadError": "Error de carga." },
+  "bareme": {
+    "title": "Baremo de puntos",
+    "hint": "Cada acción otorga un número fijo de puntos. Las acciones por defecto pueden renombrarse, repuntuarse y desactivarse, pero nunca eliminarse.",
+    "newRule": "Nueva acción",
+    "empty": "Todavía no hay reglas.",
+    "th": { "label": "Acción", "points": "Puntos", "status": "Estado" },
+    "systemBadge": "Por defecto",
+    "edit": "Modificar",
+    "activate": "Activar",
+    "deactivate": "Desactivar",
+    "toggling": "…",
+    "delete": "Eliminar",
+    "deleting": "…",
+    "deleteConfirm": "¿Eliminar esta acción? Esta operación es definitiva.",
+    "moveUp": "Subir",
+    "moveDown": "Bajar",
+    "moving": "…",
+    "form": {
+      "label": "Etiqueta",
+      "points": "Puntos",
+      "create": "Crear",
+      "save": "Guardar",
+      "saving": "Guardando…",
+      "cancel": "Cancelar"
+    },
+    "errors": {
+      "unauthenticated": "Sesión caducada, vuelve a iniciar sesión.",
+      "forbidden": "Acción no autorizada.",
+      "group_suspended": "Grupo suspendido: acción desactivada.",
+      "invalid_label": "Etiqueta inválida (1 a 80 caracteres).",
+      "invalid_points": "Puntos inválidos (entero de 1 a 100000).",
+      "not_found": "Regla no encontrada.",
+      "is_system": "Esta acción por defecto no se puede eliminar.",
+      "collision": "No se pudo generar un identificador único para esta acción, inténtalo de nuevo.",
+      "db": "Error técnico, inténtalo de nuevo."
+    }
+  }
 }

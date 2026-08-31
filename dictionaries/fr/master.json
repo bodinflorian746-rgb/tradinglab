@@ -14,7 +14,10 @@
     "orders": "Commandes",
     "members": "Membres",
     "operations": "Opérations",
-    "back": "← Mes groupes"
+    "back": "← Mes groupes",
+    "shopSection": "Boutique",
+    "configSection": "Configuration",
+    "bareme": "Barème"
   },
   "status": { "active": "Actif", "suspended": "Suspendu" },
   "suspendedNotice": "Ce groupe est suspendu : consultation uniquement. La génération et la révocation de codes sont désactivées.",
@@ -93,7 +96,30 @@
   "members": {
     "title": "Membres",
     "empty": "Aucun membre.",
-    "th": { "user": "Utilisateur", "role": "Rôle", "status": "Statut", "joined": "Arrivé le", "email": "E-mail", "balance": "Solde de points", "tier": "Niveau" }
+    "th": { "user": "Utilisateur", "role": "Rôle", "status": "Statut", "joined": "Arrivé le", "email": "E-mail", "pseudo": "Pseudo", "balance": "Solde de points", "tier": "Niveau" },
+    "searchLabel": "Rechercher un membre (pseudo ou e-mail, partiel)",
+    "searchPlaceholder": "pseudo ou email...",
+    "search": "Rechercher",
+    "reset": "Réinitialiser",
+    "results": "Résultats",
+    "noResults": "Aucun membre ne correspond à cette recherche.",
+    "select": "Créditer →",
+    "browseHint": "Cherche un pseudo ou un e-mail pour créditer une contribution, ou choisis un membre ci-dessous.",
+    "credit": {
+      "title": "Créditer une contribution",
+      "noRules": "Aucune règle de barème active pour ce groupe.",
+      "crediting": "Crédit...",
+      "success": "+{n} points crédités ({label}).",
+      "recentTitle": "Derniers crédits",
+      "recentEmpty": "Aucun crédit pour ce membre.",
+      "errors": {
+        "unauthenticated": "Tu dois être connecté.",
+        "forbidden": "Tu n'as pas les droits sur ce groupe.",
+        "rule_not_found": "Cette règle n'est plus disponible.",
+        "not_member": "Cet utilisateur n'est plus membre actif du groupe.",
+        "db": "Une erreur est survenue, réessaie plus tard."
+      }
+    }
   },
   "tiers": { "bronze": "Bronze", "silver": "Argent", "gold": "Or" },
   "roles": { "admin": "Admin", "member": "Membre" },
@@ -248,5 +274,42 @@
     }
   },
   "pager": { "prev": "Précédent", "next": "Suivant", "page": "Page {p} / {t}" },
-  "common": { "readonly": "Lecture seule", "loadError": "Erreur de chargement." }
+  "common": { "readonly": "Lecture seule", "loadError": "Erreur de chargement." },
+  "bareme": {
+    "title": "Barème de points",
+    "hint": "Chaque action rapporte un nombre de points fixe. Les actions par défaut peuvent être renommées, repointées et désactivées, mais jamais supprimées.",
+    "newRule": "Nouvelle action",
+    "empty": "Aucune règle pour l'instant.",
+    "th": { "label": "Action", "points": "Points", "status": "Statut" },
+    "systemBadge": "Par défaut",
+    "edit": "Modifier",
+    "activate": "Activer",
+    "deactivate": "Désactiver",
+    "toggling": "…",
+    "delete": "Supprimer",
+    "deleting": "…",
+    "deleteConfirm": "Supprimer cette action ? Cette opération est définitive.",
+    "moveUp": "Monter",
+    "moveDown": "Descendre",
+    "moving": "…",
+    "form": {
+      "label": "Libellé",
+      "points": "Points",
+      "create": "Créer",
+      "save": "Enregistrer",
+      "saving": "Enregistrement…",
+      "cancel": "Annuler"
+    },
+    "errors": {
+      "unauthenticated": "Session expirée, reconnectez-vous.",
+      "forbidden": "Action non autorisée.",
+      "group_suspended": "Groupe suspendu : action désactivée.",
+      "invalid_label": "Libellé invalide (1 à 80 caractères).",
+      "invalid_points": "Points invalides (entier de 1 à 100000).",
+      "not_found": "Règle introuvable.",
+      "is_system": "Cette action par défaut ne peut pas être supprimée.",
+      "collision": "Impossible de générer un identifiant unique pour cette action, réessayez.",
+      "db": "Erreur technique, réessayez."
+    }
+  }
 }
