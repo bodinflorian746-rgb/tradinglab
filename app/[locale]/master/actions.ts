@@ -173,6 +173,7 @@ export async function createShopItemAction(input: {
   pricePoints: unknown;
   stock?: unknown;
   imageUrl?: unknown;
+  emoji?: unknown;
 }): Promise<ShopItemResult> {
   const user = await currentUser();
   if (!user) return { ok: false, error: "unauthenticated" };
@@ -195,6 +196,7 @@ export async function createShopItemAction(input: {
       price_points: v.value.pricePoints,
       stock: v.value.stock,
       image_url: v.value.imageUrl,
+      emoji: v.value.emoji,
       created_by: userId,
     })
     .select("id")
@@ -219,6 +221,7 @@ export async function updateShopItemAction(input: {
   pricePoints: unknown;
   stock?: unknown;
   imageUrl?: unknown;
+  emoji?: unknown;
 }): Promise<ShopItemResult> {
   const user = await currentUser();
   if (!user) return { ok: false, error: "unauthenticated" };
@@ -242,6 +245,7 @@ export async function updateShopItemAction(input: {
       price_points: v.value.pricePoints,
       stock: v.value.stock,
       image_url: v.value.imageUrl,
+      emoji: v.value.emoji,
     })
     .eq("id", input.itemId)
     .eq("group_id", input.groupId)

@@ -122,7 +122,10 @@ export function ShopManager({
           ) : (
             <tr key={item.id} className="border-b border-zinc-800/60 last:border-0">
               <td className="px-4 py-3">
-                <p className="font-medium text-zinc-200">{item.name}</p>
+                <p className="font-medium text-zinc-200">
+                  {item.emoji && <span className="mr-1.5" aria-hidden>{item.emoji}</span>}
+                  {item.name}
+                </p>
                 {item.description && (
                   <p className="mt-0.5 max-w-md truncate text-xs text-zinc-500">{item.description}</p>
                 )}

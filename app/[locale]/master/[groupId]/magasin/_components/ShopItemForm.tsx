@@ -10,7 +10,7 @@ import {
   createShopItemAction,
   updateShopItemAction,
 } from "@/app/[locale]/master/actions";
-import { SHOP_ITEM_PRICE_MIN, SHOP_ITEM_PRICE_MAX } from "@/lib/loyalty/master-validation";
+import { SHOP_ITEM_PRICE_MIN, SHOP_ITEM_PRICE_MAX, SHOP_ITEM_EMOJI_MAX_LENGTH } from "@/lib/loyalty/master-validation";
 import type { GroupShopItem } from "@/lib/loyalty/types";
 
 export function ShopItemForm({
@@ -33,6 +33,7 @@ export function ShopItemForm({
   const [pricePoints, setPricePoints] = useState(initial ? String(initial.price_points) : "");
   const [stock, setStock] = useState(initial?.stock != null ? String(initial.stock) : "");
   const [imageUrl, setImageUrl] = useState(initial?.image_url ?? "");
+  const [emoji, setEmoji] = useState(initial?.emoji ?? "");
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
   const isEdit = !!initial;
@@ -52,8 +53,9 @@ export function ShopItemForm({
             pricePoints,
             stock,
             imageUrl,
+            emoji,
           })
-        : await createShopItemAction({ locale, groupId, name, description, itemType, pricePoints, stock, imageUrl });
+        : await createShopItemAction({ locale, groupId, name, description, itemType, pricePoints, stock, imageUrl, emoji });
 
       if (res.ok) {
         if (!isEdit) {
@@ -63,6 +65,7 @@ export function ShopItemForm({
           setPricePoints("");
           setStock("");
           setImageUrl("");
+          setEmoji("");
         }
         onDone?.();
       } else {
@@ -103,6 +106,18 @@ export function ShopItemForm({
           onChange={(e) => setDescription(e.target.value)}
           disabled={pending}
           rows={2}
+          className={inputCls}
+        />
+      </div>
+      <div>
+        <label htmlFor={`shop-emoji-${uid}`} className="mb-1.5 block text-xs font-medium text-zinc-400">{t.shop.form.emoji}</label>
+        <input
+          id={`shop-emoji-${uid}`}
+          value={emoji}
+          onChange={(e) => setEmoji(e.target.value)}
+          disabled={pending}
+          maxLength={SHOP_ITEM_EMOJI_MAX_LENGTH}
+          placeholder="🎁"
           className={inputCls}
         />
       </div>

@@ -154,6 +154,7 @@
       "price": "Price (points, 0 = free)",
       "stock": "Stock (optional, empty = unlimited)",
       "imageUrl": "Image — URL (optional)",
+      "emoji": "Emoji (optional)",
       "create": "Create",
       "save": "Save",
       "saving": "Saving…",
@@ -169,6 +170,7 @@
       "invalid_price": "Invalid price (must be a non-negative integer).",
       "invalid_stock": "Invalid stock (non-negative integer, empty = unlimited).",
       "invalid_image_url": "Invalid image URL.",
+      "invalid_emoji": "Invalid emoji (16 characters max).",
       "not_found": "Item not found.",
       "db": "Technical error, try again."
     }

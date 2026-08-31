@@ -154,6 +154,7 @@
       "price": "Precio (puntos, 0 = gratis)",
       "stock": "Stock (opcional, vacío = ilimitado)",
       "imageUrl": "Imagen — URL (opcional)",
+      "emoji": "Emoji (opcional)",
       "create": "Crear",
       "save": "Guardar",
       "saving": "Guardando…",
@@ -169,6 +170,7 @@
       "invalid_price": "Precio inválido (entero positivo o cero).",
       "invalid_stock": "Stock inválido (entero positivo o cero, vacío = ilimitado).",
       "invalid_image_url": "URL de imagen inválida.",
+      "invalid_emoji": "Emoji inválido (16 caracteres máximo).",
       "not_found": "Artículo no encontrado.",
       "db": "Error técnico, inténtalo de nuevo."
     }

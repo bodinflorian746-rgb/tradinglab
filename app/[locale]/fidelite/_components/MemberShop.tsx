@@ -91,7 +91,10 @@ export function MemberShop({
           return (
             <div key={item.id} className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
               <div className="mb-2 flex items-start justify-between gap-3">
-                <h3 className="font-bold text-zinc-100">{item.name}</h3>
+                <h3 className="font-bold text-zinc-100">
+                  {item.emoji && <span className="mr-1.5" aria-hidden>{item.emoji}</span>}
+                  {item.name}
+                </h3>
                 <span className="whitespace-nowrap rounded-full bg-amber-500/15 px-2.5 py-1 text-[11px] font-semibold text-amber-400">
                   {item.price_points} {t.shop.points}
                 </span>

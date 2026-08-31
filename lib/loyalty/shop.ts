@@ -30,7 +30,7 @@ async function readClient() {
 }
 
 const ITEM_COLUMNS =
-  "id, group_id, name, description, item_type, price_points, image_url, stock, status, created_by, created_at, updated_at";
+  "id, group_id, name, description, item_type, price_points, image_url, stock, status, emoji, created_by, created_at, updated_at";
 
 /** Tous les articles d'un groupe (actifs + inactifs) — vue gestionnaire. */
 export async function listShopItemsForManager(

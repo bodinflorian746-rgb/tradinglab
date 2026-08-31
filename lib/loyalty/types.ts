@@ -88,6 +88,9 @@ export type GroupShopItem = {
   image_url: string | null;
   stock: number | null;
   status: ShopItemStatus;
+  // Emoji court choisi par l'admin de groupe (migration 20260901150000),
+  // affiché à côté du nom côté membre. null = aucun emoji choisi.
+  emoji: string | null;
   created_by: string | null;
   created_at: string;
   updated_at: string;

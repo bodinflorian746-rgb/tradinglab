@@ -154,6 +154,7 @@
       "price": "Prix (points, 0 = gratuit)",
       "stock": "Stock (optionnel, vide = illimité)",
       "imageUrl": "Image — URL (optionnel)",
+      "emoji": "Emoji (optionnel)",
       "create": "Créer",
       "save": "Enregistrer",
       "saving": "Enregistrement…",
@@ -169,6 +170,7 @@
       "invalid_price": "Prix invalide (entier positif ou nul).",
       "invalid_stock": "Stock invalide (entier positif ou nul, vide = illimité).",
       "invalid_image_url": "URL d'image invalide.",
+      "invalid_emoji": "Emoji invalide (16 caractères maximum).",
       "not_found": "Article introuvable.",
       "db": "Erreur technique, réessayez."
     }

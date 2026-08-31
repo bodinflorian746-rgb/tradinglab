@@ -150,6 +150,9 @@ export const SHOP_ITEM_DESCRIPTION_MAX_LENGTH = 2000;
 
 export const SHOP_ITEM_STOCK_MAX = 1_000_000_000;
 export const SHOP_ITEM_IMAGE_URL_MAX_LENGTH = 2000;
+// Même borne que la contrainte DB (migration 20260901150000) : un emoji
+// composé (famille, ton de peau, ZWJ) peut compter plusieurs points de code.
+export const SHOP_ITEM_EMOJI_MAX_LENGTH = 16;
 
 export type ShopItemParamsError =
   | "invalid_name"
@@ -157,7 +160,8 @@ export type ShopItemParamsError =
   | "invalid_type"
   | "invalid_price"
   | "invalid_stock"
-  | "invalid_image_url";
+  | "invalid_image_url"
+  | "invalid_emoji";
 
 export type ShopItemParams = {
   name: string;
@@ -166,6 +170,7 @@ export type ShopItemParams = {
   pricePoints: number;
   stock: number | null;
   imageUrl: string | null;
+  emoji: string | null;
 };
 
 /**
@@ -180,6 +185,10 @@ export type ShopItemParams = {
  *   • imageUrl : optionnelle, ≤ 2000 caractères, vide → null. Aucune
  *     validation de format (URL publique ou chemin Storage — choix
  *     applicatif, cf. migration 20260724120000).
+ *   • emoji : optionnel, ≤ 16 caractères (compté par point de code via
+ *     `[...str]`, pas `.length`, pour ne pas sur-compter les emoji hors BMP),
+ *     vide → null. Aucune validation de format : un simple champ texte court,
+ *     pas de vérification que la valeur EST réellement un emoji.
  */
 export function validateShopItemParams(raw: {
   name: unknown;
@@ -188,6 +197,7 @@ export function validateShopItemParams(raw: {
   pricePoints: unknown;
   stock?: unknown;
   imageUrl?: unknown;
+  emoji?: unknown;
 }): { ok: true; value: ShopItemParams } | { ok: false; error: ShopItemParamsError } {
   const name = typeof raw.name === "string" ? raw.name.trim() : "";
   if (!name || name.length > SHOP_ITEM_NAME_MAX_LENGTH) {
@@ -224,7 +234,14 @@ export function validateShopItemParams(raw: {
     imageUrl = u;
   }
 
-  return { ok: true, value: { name, description, itemType: raw.itemType, pricePoints, stock, imageUrl } };
+  let emoji: string | null = null;
+  if (typeof raw.emoji === "string" && raw.emoji.trim() !== "") {
+    const e = raw.emoji.trim();
+    if ([...e].length > SHOP_ITEM_EMOJI_MAX_LENGTH) return { ok: false, error: "invalid_emoji" };
+    emoji = e;
+  }
+
+  return { ok: true, value: { name, description, itemType: raw.itemType, pricePoints, stock, imageUrl, emoji } };
 }
 
 // ─── Barème de points par groupe (group_point_rules) ─────────────────────────
