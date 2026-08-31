@@ -10,7 +10,7 @@
 import { notFound } from "next/navigation";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getGroupAdminUser, listMembersWithPoints } from "@/lib/loyalty/master";
+import { getGroupAdminUser, listMembersWithPoints, resolveUsernames } from "@/lib/loyalty/master";
 import { resolveUserEmails } from "@/lib/loyalty/orders";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sanitizePage, formatDate, formatSignedPoints } from "@/lib/loyalty/admin-format";
@@ -31,15 +31,6 @@ const HISTORY_LIMIT = 10;
 
 function pick(v: string | string[] | undefined): string | undefined {
   return Array.isArray(v) ? v[0] : v;
-}
-
-async function resolveUsernames(userIds: readonly string[]): Promise<Map<string, string>> {
-  const unique = [...new Set(userIds)];
-  if (unique.length === 0) return new Map();
-  const admin = createAdminClient();
-  const { data, error } = await admin.from("profiles").select("id, username").in("id", unique);
-  if (error || !data) return new Map();
-  return new Map(data.map((p) => [p.id as string, p.username as string]));
 }
 
 async function listActiveRules(groupId: string): Promise<GroupPointRule[]> {

@@ -4,7 +4,7 @@
 import { notFound } from "next/navigation";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getGroupAdminUser, listLedger } from "@/lib/loyalty/master";
+import { getGroupAdminUser, listLedger, resolveUsernames } from "@/lib/loyalty/master";
 import {
   formatDate,
   formatSignedPoints,
@@ -50,6 +50,7 @@ export default async function MasterOperationsPage({
     pageSize: PAGE_SIZE,
   });
   const totalPages = Math.max(1, Math.ceil(ledger.total / PAGE_SIZE));
+  const usernames = await resolveUsernames(ledger.rows.flatMap((l) => [l.user_id, l.created_by]));
   const th = t.operations.th;
 
   return (
@@ -78,7 +79,7 @@ export default async function MasterOperationsPage({
           {ledger.rows.map((l) => (
             <tr key={l.id} className="border-b border-zinc-800/60 last:border-0">
               <td className="px-4 py-3 text-zinc-400">{formatDate(l.created_at)}</td>
-              <td className="px-4 py-3 font-mono text-xs text-zinc-300">{shortId(l.user_id)}</td>
+              <td className="px-4 py-3 text-xs text-zinc-300">{usernames.get(l.user_id) ?? shortId(l.user_id)}</td>
               <td className="px-4 py-3">{(t.kinds as Record<string, string>)[l.kind] ?? l.kind}</td>
               <td
                 className={`px-4 py-3 text-right font-semibold ${
@@ -89,7 +90,9 @@ export default async function MasterOperationsPage({
               </td>
               <td className="px-4 py-3 font-mono text-xs text-zinc-500">{l.points_code ?? "—"}</td>
               <td className="px-4 py-3 text-zinc-400">{l.reason ?? "—"}</td>
-              <td className="px-4 py-3 font-mono text-xs text-zinc-500">{shortId(l.created_by)}</td>
+              <td className="px-4 py-3 text-xs text-zinc-500">
+                {l.created_by ? (usernames.get(l.created_by) ?? shortId(l.created_by)) : "—"}
+              </td>
             </tr>
           ))}
         </TableShell>

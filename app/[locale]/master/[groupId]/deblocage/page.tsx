@@ -5,7 +5,7 @@
 import { notFound } from "next/navigation";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getGroupAdminUser, getGroupDashboard, listAccessCodes } from "@/lib/loyalty/master";
+import { getGroupAdminUser, getGroupDashboard, listAccessCodes, resolveUsernames } from "@/lib/loyalty/master";
 import { formatDate, maskCode, sanitizePage, shortId } from "@/lib/loyalty/admin-format";
 import { MasterNav } from "../../_components/MasterNav";
 import { TableShell, SuspendedNotice } from "../../_components/ui";
@@ -57,6 +57,7 @@ export default async function MasterUnlockCodesPage({
   const page = sanitizePage(pick(sp.upage));
   const codes = await listAccessCodes(groupId, { page, pageSize: PAGE_SIZE });
   const totalPages = Math.max(1, Math.ceil(codes.total / PAGE_SIZE));
+  const usernames = await resolveUsernames(codes.rows.map((c) => c.used_by_user_id));
 
   const th = t.unlock.th;
   const head = [th.code, th.kind, th.status, th.created, th.expires, th.used, ""];
@@ -104,7 +105,9 @@ export default async function MasterUnlockCodesPage({
               </td>
               <td className="px-4 py-3 text-zinc-400">{formatDate(c.created_at)}</td>
               <td className="px-4 py-3 text-zinc-400">{formatDate(c.expires_at)}</td>
-              <td className="px-4 py-3 font-mono text-xs text-zinc-500">{shortId(c.used_by_user_id)}</td>
+              <td className="px-4 py-3 text-xs text-zinc-400">
+                {c.used_by_user_id ? (usernames.get(c.used_by_user_id) ?? shortId(c.used_by_user_id)) : "—"}
+              </td>
               <td className="px-4 py-3 text-right">
                 {canWrite && c.status === "available" ? (
                   <AccessCodeRevokeButton groupId={groupId} code={c.code} />

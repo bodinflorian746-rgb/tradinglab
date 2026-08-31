@@ -4,7 +4,7 @@
 import { notFound } from "next/navigation";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getGroupAdminUser, getGroupDashboard, listCodes } from "@/lib/loyalty/master";
+import { getGroupAdminUser, getGroupDashboard, listCodes, resolveUsernames } from "@/lib/loyalty/master";
 import {
   formatDate,
   maskCode,
@@ -64,6 +64,7 @@ export default async function MasterCodesPage({
   const cPage = sanitizePage(pick(sp.cpage));
   const codes = await listCodes(groupId, { status: cStatus, page: cPage, pageSize: PAGE_SIZE });
   const totalPages = Math.max(1, Math.ceil(codes.total / PAGE_SIZE));
+  const usernames = await resolveUsernames(codes.rows.flatMap((c) => [c.created_by, c.used_by_user_id]));
 
   const th = t.codes.th;
   const head = [th.code, th.value, th.status, th.createdBy, th.usedBy, th.created, th.expires, th.used, ""];
@@ -103,8 +104,12 @@ export default async function MasterCodesPage({
                   {(t.codeStatus as Record<string, string>)[c.status] ?? c.status}
                 </span>
               </td>
-              <td className="px-4 py-3 font-mono text-xs text-zinc-500">{shortId(c.created_by)}</td>
-              <td className="px-4 py-3 font-mono text-xs text-zinc-500">{shortId(c.used_by_user_id)}</td>
+              <td className="px-4 py-3 text-xs text-zinc-400">
+                {c.created_by ? (usernames.get(c.created_by) ?? shortId(c.created_by)) : "—"}
+              </td>
+              <td className="px-4 py-3 text-xs text-zinc-400">
+                {c.used_by_user_id ? (usernames.get(c.used_by_user_id) ?? shortId(c.used_by_user_id)) : "—"}
+              </td>
               <td className="px-4 py-3 text-zinc-400">{formatDate(c.created_at)}</td>
               <td className="px-4 py-3 text-zinc-400">{formatDate(c.expires_at)}</td>
               <td className="px-4 py-3 text-zinc-400">{formatDate(c.used_at)}</td>

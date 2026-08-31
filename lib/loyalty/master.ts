@@ -245,6 +245,26 @@ export async function listGroupPointRules(
   return { rows: (data ?? []) as GroupPointRule[], error: null };
 }
 
+/**
+ * Résout des user_id en pseudo (profiles.username) — utilisé par tous les
+ * écrans Master qui affichaient jusqu'ici un fragment d'UUID brut (Codes,
+ * Déblocage, Opérations, Membres). `null`/`undefined` sont filtrés avant la
+ * requête (une colonne "créé par"/"utilisé par" est souvent nullable).
+ * Fallback à la charge de l'appelant (shortId) si un id n'a pas de profil —
+ * un compte peut avoir été créé avant le trigger handle_new_user(), ou
+ * supprimé depuis.
+ */
+export async function resolveUsernames(
+  userIds: readonly (string | null | undefined)[],
+): Promise<Map<string, string>> {
+  const unique = [...new Set(userIds.filter((id): id is string => !!id))];
+  if (unique.length === 0) return new Map();
+  const admin = createAdminClient();
+  const { data, error } = await admin.from("profiles").select("id, username").in("id", unique);
+  if (error || !data) return new Map();
+  return new Map(data.map((p) => [p.id as string, p.username as string]));
+}
+
 export async function listCodes(
   groupId: string,
   opts: {
