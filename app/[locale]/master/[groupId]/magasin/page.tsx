@@ -3,34 +3,26 @@
 // Écritures désactivées si le groupe est suspendu.
 
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getGroupAdminUser, getGroupDashboard } from "@/lib/loyalty/master";
-import { listShopItemsForManager, listGroupPurchases } from "@/lib/loyalty/shop";
-import { formatDate, sanitizePage, shortId } from "@/lib/loyalty/admin-format";
+import { listShopItemsForManager } from "@/lib/loyalty/shop";
+import { localizedHref } from "@/lib/i18n/href";
 import { MasterNav } from "../../_components/MasterNav";
-import { TableShell, SuspendedNotice } from "../../_components/ui";
+import { SuspendedNotice } from "../../_components/ui";
 import { CopyButton } from "../../_components/CopyButton";
-import { Pager } from "../../_components/MasterControls";
 import { ShopManager } from "./_components/ShopManager";
 
 export const dynamic = "force-dynamic";
-const PAGE_SIZE = 25;
-
-function pick(v: string | string[] | undefined): string | undefined {
-  return Array.isArray(v) ? v[0] : v;
-}
 
 export default async function MasterShopPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string; groupId: string }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { locale: raw, groupId } = await params;
   const locale: Locale = hasLocale(raw) ? raw : DEFAULT_LOCALE;
-  const sp = await searchParams;
   const t = await getDictionary(locale, "master");
 
   if (!(await getGroupAdminUser(groupId))) notFound();
@@ -50,12 +42,6 @@ export default async function MasterShopPage({
   const canWrite = dashboard.group.status === "active";
 
   const { rows: items, error: itemsError } = await listShopItemsForManager(groupId);
-
-  const pPage = sanitizePage(pick(sp.ppage));
-  const purchases = await listGroupPurchases(groupId, { page: pPage, pageSize: PAGE_SIZE });
-  const totalPages = Math.max(1, Math.ceil(purchases.total / PAGE_SIZE));
-
-  const purchasesHead = [t.shop.th.item, t.shop.th.buyer, t.shop.th.pricePaid, t.shop.th.date];
 
   return (
     <main className="min-h-screen bg-zinc-950 px-6 py-12 text-white md:py-16">
@@ -89,25 +75,13 @@ export default async function MasterShopPage({
           <ShopManager groupId={groupId} canWrite={canWrite} items={items} loadError={itemsError} />
         </div>
 
-        <h2 className="mb-3 text-lg font-semibold">{t.shop.purchasesTitle}</h2>
-        <TableShell
-          head={purchasesHead}
-          isEmpty={purchases.rows.length === 0}
-          empty={purchases.error ?? t.shop.purchasesEmpty}
-          emptyColspan={purchasesHead.length}
+        <p className="mb-2 text-sm text-zinc-500">{t.shop.purchasesTitle}</p>
+        <Link
+          href={localizedHref(`/master/${groupId}/commandes`, locale)}
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-400 hover:underline"
         >
-          {purchases.rows.map((p) => (
-            <tr key={p.id} className="border-b border-zinc-800/60 last:border-0">
-              <td className="px-4 py-3 text-zinc-200">{p.item_name ?? "—"}</td>
-              <td className="px-4 py-3 font-mono text-xs text-zinc-500">{shortId(p.user_id)}</td>
-              <td className="px-4 py-3 text-amber-400">{p.price_paid}</td>
-              <td className="px-4 py-3 text-zinc-400">{formatDate(p.created_at)}</td>
-            </tr>
-          ))}
-        </TableShell>
-        <div className="mt-3">
-          <Pager page={pPage} totalPages={totalPages} param="ppage" />
-        </div>
+          {t.nav.orders} →
+        </Link>
       </div>
     </main>
   );
