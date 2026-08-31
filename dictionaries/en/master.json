@@ -21,6 +21,7 @@
   },
   "status": { "active": "Active", "suspended": "Suspended" },
   "suspendedNotice": "This group is suspended: read-only. Code generation and revocation are disabled.",
+  "creditShortcut": "Credit a member",
   "referenceCode": {
     "label": "Group reference code",
     "copy": "Copy",

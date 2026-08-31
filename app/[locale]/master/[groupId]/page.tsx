@@ -2,6 +2,7 @@
 // 404 sinon. Un groupe suspendu reste consultable (bandeau lecture seule).
 
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { createClient } from "@/lib/supabase/server";
@@ -9,6 +10,7 @@ import { isDevAuthBypass } from "@/lib/dev-auth";
 import { canManageGroup } from "@/lib/loyalty/access";
 import { getGroupAdminEmails, getGroupAdminUser, getGroupDashboard } from "@/lib/loyalty/master";
 import { formatDate, shortId } from "@/lib/loyalty/admin-format";
+import { localizedHref } from "@/lib/i18n/href";
 import { MasterNav } from "../_components/MasterNav";
 import { Tile, SuspendedNotice } from "../_components/ui";
 import { CopyButton } from "../_components/CopyButton";
@@ -80,6 +82,13 @@ export default async function MasterDashboard({
         <MasterNav groupId={groupId} />
 
         {suspended && <SuspendedNotice text={t.suspendedNotice} />}
+
+        <Link
+          href={localizedHref(`/master/${groupId}/membres`, locale)}
+          className="mb-8 inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400"
+        >
+          {t.creditShortcut} →
+        </Link>
 
         <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
           <Tile label={t.tiles.members} value={stats.members} />

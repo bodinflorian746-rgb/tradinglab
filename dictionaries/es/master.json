@@ -21,6 +21,7 @@
   },
   "status": { "active": "Activo", "suspended": "Suspendido" },
   "suspendedNotice": "Este grupo está suspendido: solo consulta. La generación y revocación de códigos están desactivadas.",
+  "creditShortcut": "Acreditar a un miembro",
   "referenceCode": {
     "label": "Código de referencia del grupo",
     "copy": "Copiar",
