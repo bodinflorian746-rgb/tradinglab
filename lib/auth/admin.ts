@@ -14,8 +14,9 @@
 // Server-only : n'expose JAMAIS la liste côté client.
 
 import "server-only";
+import { isDevAuthBypass } from "@/lib/dev-auth";
 
-function parseEmailList(raw: string | undefined | null): string[] {
+export function parseEmailList(raw: string | undefined | null): string[] {
   if (typeof raw !== "string" || raw.length === 0) return [];
   return raw
     .split(",")
@@ -40,6 +41,8 @@ export function getAdminEmails(): string[] {
  * → false (fail-closed).
  */
 export function isAdmin(userEmail: string | null | undefined): boolean {
+  // Dev local uniquement : l'utilisateur de dev est traité comme Super Admin.
+  if (isDevAuthBypass()) return true;
   if (typeof userEmail !== "string" || userEmail.length === 0) return false;
   const normalized = userEmail.trim().toLowerCase();
   if (normalized.length === 0) return false;
