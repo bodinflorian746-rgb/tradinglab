@@ -284,6 +284,22 @@ export async function getGroupCompletionBonus(
 }
 
 /**
+ * Lien Telegram cliquable du groupe (group_telegram_link, migration
+ * 20260901170000), pour l'écran d'informations générales (master/[groupId]).
+ * `null` = aucun lien configuré, pas une erreur. Distinct de
+ * partner_groups.telegram_reference (texte libre, non touché ici).
+ */
+export async function getGroupTelegramLink(groupId: string): Promise<string | null> {
+  const supabase = await readClient();
+  const { data } = await supabase
+    .from("group_telegram_link")
+    .select("telegram_link")
+    .eq("group_id", groupId)
+    .maybeSingle();
+  return (data?.telegram_link as string | null | undefined) ?? null;
+}
+
+/**
  * Résout des user_id en pseudo (profiles.username) — utilisé par tous les
  * écrans Master qui affichaient jusqu'ici un fragment d'UUID brut (Codes,
  * Déblocage, Opérations, Membres). `null`/`undefined` sont filtrés avant la

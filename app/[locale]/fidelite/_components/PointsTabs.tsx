@@ -24,6 +24,7 @@ export function PointsTabs({
   username,
   rules,
   rulesError,
+  telegramLink,
   completionBonus,
   shopItems,
   shopBalance,
@@ -34,6 +35,7 @@ export function PointsTabs({
   username: string | null;
   rules: GroupPointRule[];
   rulesError?: string | null;
+  telegramLink: string | null;
   completionBonus: CompletionBonusStatus | null;
   shopItems: GroupShopItem[];
   shopBalance: number;
@@ -43,18 +45,35 @@ export function PointsTabs({
   const t = useDict("fidelite");
   const [tab, setTab] = useState<Tab>("earn");
 
+  // Segmented control : les deux options dans un même conteneur bordé,
+  // largeur égale (flex-1), l'onglet actif nettement distingué (fond plein),
+  // l'inactif visiblement cliquable (texte clair + hover, pas juste du gris
+  // discret sur fond transparent — l'ancien style "bouton plein vs texte nu"
+  // ne se lisait pas comme deux onglets d'un même contrôle).
   const tabCls = (active: boolean) =>
-    `rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
-      active ? "bg-emerald-500 text-zinc-950" : "text-zinc-400 hover:text-white"
+    `flex-1 rounded-lg px-4 py-2.5 text-center text-sm font-semibold transition-colors ${
+      active ? "bg-emerald-500 text-zinc-950" : "text-zinc-300 hover:bg-zinc-800 hover:text-white"
     }`;
 
   return (
     <div>
-      <div className="mb-5 flex gap-2 border-b border-zinc-800 pb-3">
-        <button type="button" onClick={() => setTab("earn")} className={tabCls(tab === "earn")}>
+      <div role="tablist" className="mb-5 flex gap-1 rounded-xl border border-zinc-800 bg-zinc-900/50 p-1">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "earn"}
+          onClick={() => setTab("earn")}
+          className={tabCls(tab === "earn")}
+        >
           {t.tabs.earn}
         </button>
-        <button type="button" onClick={() => setTab("spend")} className={tabCls(tab === "spend")}>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "spend"}
+          onClick={() => setTab("spend")}
+          className={tabCls(tab === "spend")}
+        >
           {t.tabs.spend}
         </button>
       </div>
@@ -69,7 +88,22 @@ export function PointsTabs({
             <h3 className="mb-1 text-sm font-bold uppercase tracking-wide text-zinc-400">
               {t.earn.rulesTitle}
             </h3>
-            <p className="mb-4 text-sm text-zinc-400">{t.earn.rulesHint}</p>
+            <p className="mb-4 text-sm text-zinc-400">
+              {t.earn.rulesHintBefore}
+              {telegramLink ? (
+                <a
+                  href={telegramLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-400 underline decoration-emerald-400/40 underline-offset-2 hover:text-emerald-300"
+                >
+                  {t.earn.rulesHintTelegram}
+                </a>
+              ) : (
+                t.earn.rulesHintTelegram
+              )}
+              {t.earn.rulesHintAfter}
+            </p>
 
             {username && (
               <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-4 py-3">

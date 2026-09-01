@@ -54,7 +54,9 @@
   "tabs": { "earn": "Gagner", "spend": "Dépenser" },
   "earn": {
     "rulesTitle": "Actions qui rapportent des points",
-    "rulesHint": "Envoie ta contribution sur Telegram en indiquant ton pseudo du site : l'administrateur du groupe te crédite les points correspondants.",
+    "rulesHintBefore": "Envoie ta contribution sur ",
+    "rulesHintTelegram": "Telegram",
+    "rulesHintAfter": " en indiquant ton pseudo du site : l'administrateur du groupe te crédite les points correspondants.",
     "rulesEmpty": "Aucune action disponible pour ce groupe pour le moment.",
     "pseudoLabel": "Ton pseudo",
     "copy": "Copier",

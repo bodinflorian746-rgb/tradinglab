@@ -66,6 +66,21 @@ export async function listActiveGroupPointRules(
   return { rows: (data ?? []) as GroupPointRule[], error: null };
 }
 
+/**
+ * Liens Telegram cliquables (group_telegram_link, migration 20260901170000)
+ * des groupes demandés, pour l'onglet "Gagner". `null` (absent de la map ou
+ * valeur null) = aucun lien configuré → la phrase reste en texte simple côté
+ * UI, jamais un lien mort. Bulk (Map par group_id) pour la landing /fidelite
+ * qui affiche plusieurs groupes à la fois ; appelée avec un seul id pour
+ * /fidelite/[groupId].
+ */
+export async function listGroupTelegramLinks(groupIds: string[]): Promise<Map<string, string | null>> {
+  if (groupIds.length === 0) return new Map();
+  const supabase = await readClient();
+  const { data } = await supabase.from("group_telegram_link").select("group_id, telegram_link").in("group_id", groupIds);
+  return new Map((data ?? []).map((r) => [r.group_id as string, r.telegram_link as string | null]));
+}
+
 export type MemberWallet = {
   group: PartnerGroup;
   balance: number;

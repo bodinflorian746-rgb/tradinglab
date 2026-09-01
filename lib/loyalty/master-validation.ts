@@ -347,6 +347,51 @@ export function validateCompletionBonusParams(
   return { ok: true, value: { points, ruleSlugs, isActive: raw.isActive === true } };
 }
 
+// ─── Lien Telegram cliquable du groupe (group_telegram_link) ─────────────────
+// Contrairement à telegram_reference (texte libre, cf. migration
+// 20260901170000), cette valeur DOIT toujours être un lien Telegram
+// exploitable si elle est non-null — jamais du texte descriptif arbitraire,
+// pour ne jamais produire de lien mort côté membre.
+//
+// Deux formes acceptées, normalisées en une URL canonique https://t.me/… :
+//   • un handle Telegram ("@moncanal" ou "moncanal" sans @) — règles Telegram :
+//     5 à 32 caractères, lettres/chiffres/underscore, débute par une lettre ;
+//   • une URL déjà complète vers t.me / telegram.me / telegram.dog (https
+//     uniquement — jamais http, jamais un autre domaine, pour ne jamais
+//     rendre cliquable un lien vers un site arbitraire saisi par erreur ou
+//     par malveillance).
+// Chaîne vide → null (efface le lien), même convention que
+// updateGroupTelegramAction pour telegram_reference.
+
+const TELEGRAM_HANDLE_RE = /^@?[A-Za-z][A-Za-z0-9_]{4,31}$/;
+const TELEGRAM_HOSTS = new Set(["t.me", "telegram.me", "telegram.dog"]);
+
+export type TelegramLinkParamsError = "invalid_telegram_link";
+export type TelegramLinkParams = { telegramLink: string | null };
+
+export function validateTelegramLinkParams(raw: {
+  telegramLink: unknown;
+}): { ok: true; value: TelegramLinkParams } | { ok: false; error: TelegramLinkParamsError } {
+  const input = typeof raw.telegramLink === "string" ? raw.telegramLink.trim() : "";
+  if (input === "") return { ok: true, value: { telegramLink: null } };
+
+  if (TELEGRAM_HANDLE_RE.test(input)) {
+    const handle = input.startsWith("@") ? input.slice(1) : input;
+    return { ok: true, value: { telegramLink: `https://t.me/${handle}` } };
+  }
+
+  try {
+    const url = new URL(input);
+    if (url.protocol === "https:" && TELEGRAM_HOSTS.has(url.hostname.replace(/^www\./, ""))) {
+      return { ok: true, value: { telegramLink: url.toString() } };
+    }
+  } catch {
+    // Pas une URL du tout → tombe sur l'erreur ci-dessous, même traitement
+    // qu'un handle mal formé.
+  }
+  return { ok: false, error: "invalid_telegram_link" };
+}
+
 export type RevokeFailure = "not_found" | "wrong_group" | "not_revocable";
 
 /**

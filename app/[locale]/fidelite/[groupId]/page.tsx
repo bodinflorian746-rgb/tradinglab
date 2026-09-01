@@ -13,6 +13,7 @@ import {
   getMyUsername,
   getWalletDetail,
   listActiveGroupPointRules,
+  listGroupTelegramLinks,
   listMyLedger,
 } from "@/lib/loyalty/member";
 import { listActiveShopItemsForMember } from "@/lib/loyalty/shop";
@@ -88,11 +89,13 @@ export default async function FideliteGroupHistory({
     { rows: rules, error: rulesError },
     username,
     { status: completionBonus },
+    telegramLinks,
   ] = await Promise.all([
     listActiveShopItemsForMember(groupId),
     listActiveGroupPointRules(groupId),
     getMyUsername(member.id),
     getMyCompletionBonusStatus(member.id, groupId),
+    listGroupTelegramLinks([groupId]),
   ]);
 
   return (
@@ -118,6 +121,7 @@ export default async function FideliteGroupHistory({
             username={username}
             rules={rules}
             rulesError={rulesError}
+            telegramLink={telegramLinks.get(groupId) ?? null}
             completionBonus={completionBonus}
             shopItems={shopItems}
             shopBalance={wallet.balance}

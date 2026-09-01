@@ -8,13 +8,14 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { createClient } from "@/lib/supabase/server";
 import { isDevAuthBypass } from "@/lib/dev-auth";
 import { canManageGroup } from "@/lib/loyalty/access";
-import { getGroupAdminEmails, getGroupAdminUser, getGroupDashboard } from "@/lib/loyalty/master";
+import { getGroupAdminEmails, getGroupAdminUser, getGroupDashboard, getGroupTelegramLink } from "@/lib/loyalty/master";
 import { formatDate, shortId } from "@/lib/loyalty/admin-format";
 import { localizedHref } from "@/lib/i18n/href";
 import { MasterNav } from "../_components/MasterNav";
 import { Tile, SuspendedNotice } from "../_components/ui";
 import { CopyButton } from "../_components/CopyButton";
 import { TelegramEditForm } from "../_components/TelegramEditForm";
+import { TelegramLinkEditForm } from "../_components/TelegramLinkEditForm";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +29,10 @@ export default async function MasterDashboard({
   const t = await getDictionary(locale, "master");
 
   if (!(await getGroupAdminUser(groupId))) notFound();
-  const { dashboard, error } = await getGroupDashboard(groupId);
+  const [{ dashboard, error }, telegramLink] = await Promise.all([
+    getGroupDashboard(groupId),
+    getGroupTelegramLink(groupId),
+  ]);
   if (error && !dashboard) {
     return (
       <main className="min-h-screen bg-zinc-950 px-6 py-16 text-white">
@@ -124,6 +128,18 @@ export default async function MasterDashboard({
             <div className="flex items-center gap-3">
               <span className="text-sm text-zinc-200">{group.telegram_reference ?? "—"}</span>
               <TelegramEditForm locale={locale} groupId={groupId} currentValue={group.telegram_reference} />
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800/60 py-3">
+            <div>
+              <span className="text-sm text-zinc-500">Lien Telegram (membres)</span>
+              <p className="text-[11px] text-zinc-600">
+                Affiché comme lien cliquable dans l&apos;onglet Gagner des membres.
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="max-w-[14rem] truncate text-sm text-zinc-200">{telegramLink ?? "—"}</span>
+              <TelegramLinkEditForm locale={locale} groupId={groupId} currentValue={telegramLink} />
             </div>
           </div>
           {canSeeAdminEmail && (

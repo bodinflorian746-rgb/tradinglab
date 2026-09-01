@@ -16,6 +16,7 @@ import {
   getMyUsername,
   getMyWallets,
   listActiveGroupPointRules,
+  listGroupTelegramLinks,
   type CompletionBonusStatus,
   type MemberWallet,
 } from "@/lib/loyalty/member";
@@ -48,7 +49,7 @@ export default async function FideliteLanding({
   // système de boutique ni de barème. Le champ de code (ActivateForm) reste
   // unique en haut de page : générique à tous les groupes, le dupliquer dans
   // chaque carte de groupe n'apporterait rien.
-  const [username, shops, rules, bonuses] = await Promise.all([
+  const [username, shops, rules, bonuses, telegramLinks] = await Promise.all([
     getMyUsername(member.id),
     Promise.all(
       activeWallets.map(async (w) => ({ groupId: w.group.id, ...(await listActiveShopItemsForMember(w.group.id)) })),
@@ -59,6 +60,7 @@ export default async function FideliteLanding({
     Promise.all(
       activeWallets.map(async (w) => ({ groupId: w.group.id, ...(await getMyCompletionBonusStatus(member.id, w.group.id)) })),
     ),
+    listGroupTelegramLinks(activeWallets.map((w) => w.group.id)),
   ]);
   const shopByGroup = new Map<string, { rows: GroupShopItem[]; error: string | null }>(
     shops.map((s) => [s.groupId, { rows: s.rows, error: s.error }]),
@@ -113,6 +115,7 @@ export default async function FideliteLanding({
                   shop={shopByGroup.get(w.group.id)}
                   rules={rulesByGroup.get(w.group.id)}
                   completionBonus={bonusByGroup.get(w.group.id) ?? null}
+                  telegramLink={telegramLinks.get(w.group.id) ?? null}
                   username={username}
                   t={t}
                   locale={locale}
@@ -131,6 +134,7 @@ function GroupPointsCard({
   shop,
   rules,
   completionBonus,
+  telegramLink,
   username,
   t,
   locale,
@@ -139,6 +143,7 @@ function GroupPointsCard({
   shop: { rows: GroupShopItem[]; error: string | null } | undefined;
   rules: { rows: GroupPointRule[]; error: string | null } | undefined;
   completionBonus: CompletionBonusStatus | null;
+  telegramLink: string | null;
   username: string | null;
   t: Dictionaries["fidelite"];
   locale: Locale;
@@ -169,6 +174,7 @@ function GroupPointsCard({
         username={username}
         rules={rules?.rows ?? []}
         rulesError={rules?.error}
+        telegramLink={telegramLink}
         completionBonus={completionBonus}
         shopItems={shop?.rows ?? []}
         shopBalance={wallet.balance}

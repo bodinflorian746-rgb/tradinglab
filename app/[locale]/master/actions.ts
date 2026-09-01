@@ -24,6 +24,7 @@ import {
   validateGenerateParams,
   validateGroupPointRuleParams,
   validateShopItemParams,
+  validateTelegramLinkParams,
 } from "@/lib/loyalty/master-validation";
 
 export type GenerateResult =
@@ -451,6 +452,46 @@ export async function updateGroupTelegramAction(input: {
   revalidatePath(`/${input.locale}/master/${input.groupId}`);
   revalidatePath(`/${input.locale}/admin/loyalty/groups/${input.groupId}`);
   return { ok: true };
+}
+
+// ─── Lien Telegram cliquable du groupe (group_telegram_link) ─────────────────
+// Distinct de telegram_reference ci-dessus (texte libre, table
+// partner_groups) : cette valeur DOIT toujours être un lien exploitable si
+// non-null, validée par validateTelegramLinkParams (handle ou URL t.me,
+// normalisée en https://t.me/… — jamais du texte arbitraire). Table dédiée
+// group_telegram_link (migration 20260901170000), pas de policy d'écriture :
+// toute écriture passe ici, en service_role, derrière authorizeGroupWrite —
+// même garde que le champ voisin.
+
+export type UpdateTelegramLinkResult = { ok: true; telegramLink: string | null } | { ok: false; error: string };
+
+export async function updateGroupTelegramLinkAction(input: {
+  locale: string;
+  groupId: string;
+  telegramLink: unknown;
+}): Promise<UpdateTelegramLinkResult> {
+  const user = await currentUser();
+  if (!user) return { ok: false, error: "unauthenticated" };
+
+  const authz = await authorizeGroupWrite(user.id, input.groupId, user.email);
+  if (authz !== "ok") return { ok: false, error: authz };
+
+  const v = validateTelegramLinkParams(input);
+  if (!v.ok) return { ok: false, error: v.error };
+
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from("group_telegram_link")
+    .upsert({ group_id: input.groupId, telegram_link: v.value.telegramLink }, { onConflict: "group_id" });
+  if (error) {
+    console.error(`[master/telegram-link] upsert error group=${input.groupId}: ${error.message}`);
+    return { ok: false, error: "db" };
+  }
+
+  revalidatePath(`/${input.locale}/master/${input.groupId}`);
+  revalidatePath(`/${input.locale}/fidelite/${input.groupId}`);
+  revalidatePath(`/${input.locale}/fidelite`);
+  return { ok: true, telegramLink: v.value.telegramLink };
 }
 
 // ─── Barème de points par groupe (group_point_rules) ─────────────────────────

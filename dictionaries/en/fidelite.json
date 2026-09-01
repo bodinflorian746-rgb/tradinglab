@@ -54,7 +54,9 @@
   "tabs": { "earn": "Earn", "spend": "Spend" },
   "earn": {
     "rulesTitle": "Actions that earn points",
-    "rulesHint": "Send your contribution on Telegram with your site username: the group admin will credit the matching points.",
+    "rulesHintBefore": "Send your contribution on ",
+    "rulesHintTelegram": "Telegram",
+    "rulesHintAfter": " with your site username: the group admin will credit the matching points.",
     "rulesEmpty": "No action available for this group yet.",
     "pseudoLabel": "Your username",
     "copy": "Copy",
