@@ -1,6 +1,8 @@
-// Bonus mensuel de complétion — onglet "Gagner" de l'espace membre. Affiche la
-// progression du mois (checklist + barre) et le temps restant (urgence).
-// Composant de présentation pur (déjà résolu côté serveur, cf.
+// Bonus de complétion — onglet "Gagner" de l'espace membre. Affiche la
+// progression du CYCLE en cours de ce membre (30 jours glissants ancrés sur
+// son adhésion, pas le mois calendaire — cf. lib/loyalty/completion-bonus.ts)
+// via une checklist + barre, et le temps restant (urgence). Composant de
+// présentation pur (déjà résolu côté serveur, cf.
 // lib/loyalty/member.ts#getMyCompletionBonusStatus) : pas de hook, pas de
 // "use client" — rendu par PointsTabs (client) sans effet de bord.
 
@@ -49,7 +51,7 @@ export function CompletionBonusCard({ status, t }: { status: CompletionBonusStat
         ))}
       </ul>
 
-      {status.alreadyAwardedThisMonth ? (
+      {status.alreadyAwardedThisCycle ? (
         <p className="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm font-semibold text-emerald-400">
           {t.alreadyAwarded}
         </p>

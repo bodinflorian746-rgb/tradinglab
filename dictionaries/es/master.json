@@ -111,7 +111,7 @@
       "noRules": "Ninguna regla de baremo activa para este grupo.",
       "crediting": "Acreditando...",
       "success": "+{n} puntos acreditados ({label}).",
-      "bonusAwarded": "¡Bonificación mensual de finalización desbloqueada: +{n} puntos!",
+      "bonusAwarded": "¡Bonificación de finalización desbloqueada: +{n} puntos!",
       "recentTitle": "Últimos créditos",
       "recentEmpty": "Ningún crédito para este miembro.",
       "errors": {
@@ -316,8 +316,8 @@
       "db": "Error técnico, inténtalo de nuevo."
     },
     "completionBonus": {
-      "title": "Bonificación mensual de finalización",
-      "hint": "Un miembro acreditado en CADA UNA de las acciones marcadas abajo, dentro del mes en curso, recibe esta bonificación automáticamente — una sola vez al mes. Se reinicia el día 1.",
+      "title": "Bonificación de finalización",
+      "hint": "Un miembro acreditado en CADA UNA de las acciones marcadas abajo, dentro de su ciclo de 30 días en curso, recibe esta bonificación automáticamente — una sola vez por ciclo. Cada miembro tiene su propio ciclo, que empieza en la fecha en que se unió al grupo.",
       "rulesLabel": "Acciones requeridas",
       "noActiveRules": "Ninguna acción activa en el baremo para componer una bonificación.",
       "inactiveBadge": "Inactiva",

@@ -71,6 +71,11 @@ export type PointsLedgerEntry = {
   // pour toute ligne sans règle associée (code_reward, purchase, ...).
   rule_slug: string | null;
   rule_label: string | null;
+  // Migration 20260901160000 : identité de cycle du bonus de complétion au
+  // moment du versement (kind='manual_credit', rule_slug='__completion_bonus__')
+  // — null pour toute autre ligne. Cf. lib/loyalty/completion-bonus.ts.
+  completion_bonus_membership_id: string | null;
+  completion_bonus_cycle: number | null;
 };
 
 // ─── Magasin par groupe (migration 20260724120000) ──────────────────────────

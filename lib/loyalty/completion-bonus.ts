@@ -3,9 +3,13 @@
 // Partagée entre la Server Action de crédit (déclenchement, membres/actions.ts)
 // et la lecture membre (progression affichée, lib/loyalty/member.ts).
 //
-// Fuseau : mois calendaire UTC — cf. justification détaillée dans la migration
-// supabase/migrations/20260901160000_group_completion_bonus.sql (aucune
-// convention de fuseau horaire n'existe ailleurs dans le projet).
+// Cycle : fenêtre glissante de 30 jours ANCRÉE SUR L'ADHÉSION du membre
+// (group_memberships.joined_at) — PAS le mois calendaire. Un membre qui
+// rejoint le 29 du mois aurait eu 2 jours pour compléter ses actions avec un
+// cycle calendaire ; l'ancrage sur l'adhésion garantit 30 jours pleins à
+// chaque membre, dès son premier jour. Cycle 0 = [joinedAt, joinedAt+30j),
+// cycle 1 = [+30j, +60j), etc. — cf. justification complète dans la
+// migration supabase/migrations/20260901160000_group_completion_bonus.sql.
 
 /**
  * rule_slug technique du bonus dans points_ledger — ne peut jamais entrer en
@@ -15,33 +19,54 @@
  * commençant par "__".
  */
 export const COMPLETION_BONUS_SLUG = "__completion_bonus__";
-export const COMPLETION_BONUS_LABEL = "Bonus mensuel de complétion";
+export const COMPLETION_BONUS_LABEL = "Bonus de complétion";
 
-export type MonthRange = { start: string; end: string; daysRemaining: number };
+export const CYCLE_LENGTH_DAYS = 30;
+const CYCLE_LENGTH_MS = CYCLE_LENGTH_DAYS * 24 * 60 * 60 * 1000;
+
+export type MembershipCycle = {
+  /** 0-indexé : 0 = premier cycle depuis l'adhésion, 1 = deuxième, etc. */
+  cycleNumber: number;
+  start: string; // ISO, inclus
+  end: string; // ISO, exclusif
+  daysRemaining: number;
+};
 
 /**
- * Bornes [début, fin) du mois calendaire UTC contenant `nowMs`, en ISO — pour
- * un filtre `gte(start) / lt(end)` sur points_ledger.created_at. `end` est
- * exclusif (1er du mois suivant à 00:00 UTC). `daysRemaining` est arrondi au
- * jour supérieur, jamais 0 (au moins 1 tant qu'on est dans le mois).
+ * Cycle en cours pour un membre dont l'adhésion (group_memberships.joined_at)
+ * a eu lieu à `joinedAtMs`, évalué à l'instant `nowMs`.
+ *
+ * `Math.max(0, ...)` absorbe un `nowMs` légèrement antérieur à `joinedAtMs`
+ * (lecture DB vs horloge applicative, écart de quelques ms) → traité comme
+ * "tout début du cycle 0", jamais un cycle négatif.
+ *
+ * `daysRemaining` arrondi au jour supérieur, jamais 0 (au moins 1 tant qu'on
+ * est dans le cycle).
  */
-export function utcMonthRange(nowMs: number): MonthRange {
-  const now = new Date(nowMs);
-  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
-  const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1));
-  const daysRemaining = Math.max(1, Math.ceil((end.getTime() - nowMs) / 86_400_000));
-  return { start: start.toISOString(), end: end.toISOString(), daysRemaining };
+export function membershipCycleWindow(joinedAtMs: number, nowMs: number): MembershipCycle {
+  const elapsedMs = Math.max(0, nowMs - joinedAtMs);
+  const cycleNumber = Math.floor(elapsedMs / CYCLE_LENGTH_MS);
+  const startMs = joinedAtMs + cycleNumber * CYCLE_LENGTH_MS;
+  const endMs = startMs + CYCLE_LENGTH_MS;
+  const daysRemaining = Math.max(1, Math.ceil((endMs - nowMs) / 86_400_000));
+  return {
+    cycleNumber,
+    start: new Date(startMs).toISOString(),
+    end: new Date(endMs).toISOString(),
+    daysRemaining,
+  };
 }
 
 /**
  * Un ensemble de bonus est complété quand CHAQUE slug requis a été crédité au
- * moins une fois ce mois-ci. Un ensemble vide n'est jamais considéré complet
- * (configuration dégénérée — validateCompletionBonusParams empêche de toute
- * façon d'enregistrer un ensemble vide, cf. lib/loyalty/master-validation.ts).
+ * moins une fois dans le cycle en cours. Un ensemble vide n'est jamais
+ * considéré complet (configuration dégénérée — validateCompletionBonusParams
+ * empêche de toute façon d'enregistrer un ensemble vide, cf.
+ * lib/loyalty/master-validation.ts).
  */
 export function isCompletionSetFulfilled(
   requiredSlugs: readonly string[],
-  creditedSlugsThisMonth: ReadonlySet<string>,
+  creditedSlugsThisCycle: ReadonlySet<string>,
 ): boolean {
-  return requiredSlugs.length > 0 && requiredSlugs.every((slug) => creditedSlugsThisMonth.has(slug));
+  return requiredSlugs.length > 0 && requiredSlugs.every((slug) => creditedSlugsThisCycle.has(slug));
 }

@@ -60,10 +60,10 @@
     "copy": "Copiar",
     "copied": "¡Copiado!",
     "completionBonus": {
-      "title": "Bonificación del mes",
-      "subtitle": "Completa todas las acciones de abajo este mes para desbloquear +{n} puntos.",
-      "daysRemaining": "{n} días restantes este mes",
-      "alreadyAwarded": "¡Bonificación ya desbloqueada este mes!",
+      "title": "Bonificación del ciclo",
+      "subtitle": "Completa todas las acciones de abajo dentro de tu ciclo para desbloquear +{n} puntos.",
+      "daysRemaining": "{n} días restantes en tu ciclo",
+      "alreadyAwarded": "¡Bonificación ya desbloqueada en este ciclo!",
       "complete": "Todas las acciones validadas — la bonificación se desbloquea en tu próximo crédito."
     }
   },

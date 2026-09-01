@@ -111,7 +111,7 @@
       "noRules": "Aucune règle de barème active pour ce groupe.",
       "crediting": "Crédit...",
       "success": "+{n} points crédités ({label}).",
-      "bonusAwarded": "Bonus mensuel de complétion débloqué : +{n} points !",
+      "bonusAwarded": "Bonus de complétion débloqué : +{n} points !",
       "recentTitle": "Derniers crédits",
       "recentEmpty": "Aucun crédit pour ce membre.",
       "errors": {
@@ -316,8 +316,8 @@
       "db": "Erreur technique, réessayez."
     },
     "completionBonus": {
-      "title": "Bonus mensuel de complétion",
-      "hint": "Un membre crédité pour CHACUNE des actions cochées ci-dessous, dans le mois en cours, reçoit ce bonus automatiquement — une seule fois par mois. Remise à zéro le 1er.",
+      "title": "Bonus de complétion",
+      "hint": "Un membre crédité pour CHACUNE des actions cochées ci-dessous, dans son cycle de 30 jours en cours, reçoit ce bonus automatiquement — une seule fois par cycle. Chaque membre a son propre cycle, qui démarre à la date de son adhésion au groupe.",
       "rulesLabel": "Actions requises",
       "noActiveRules": "Aucune action active dans le barème pour composer un bonus.",
       "inactiveBadge": "Inactive",

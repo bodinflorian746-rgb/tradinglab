@@ -60,10 +60,10 @@
     "copy": "Copy",
     "copied": "Copied!",
     "completionBonus": {
-      "title": "This month's bonus",
-      "subtitle": "Complete every action below this month to unlock +{n} points.",
-      "daysRemaining": "{n} days left this month",
-      "alreadyAwarded": "Bonus already unlocked this month!",
+      "title": "Cycle bonus",
+      "subtitle": "Complete every action below within your cycle to unlock +{n} points.",
+      "daysRemaining": "{n} days left in your cycle",
+      "alreadyAwarded": "Bonus already unlocked this cycle!",
       "complete": "All actions validated — bonus unlocks on your next credit."
     }
   },

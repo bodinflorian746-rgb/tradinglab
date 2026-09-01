@@ -23,10 +23,11 @@
 // un double-crédit ne s'annule pas d'ici, c'est pourquoi CreditButtons
 // désactive le bouton pendant la requête (anti double-clic côté UI).
 //
-// Après le crédit normal : évaluation du bonus mensuel de complétion
+// Après le crédit normal : évaluation du bonus de complétion
 // (evaluateAndPayCompletionBonus, cf. migration 20260901160000) — ce crédit
 // vient peut-être de compléter l'ensemble configuré par l'admin pour ce
-// membre ce mois-ci.
+// membre, dans SON cycle de 30 jours ancré sur son adhésion (group_memberships
+// .joined_at) — pas le mois calendaire, cf. lib/loyalty/completion-bonus.ts.
 
 import { revalidatePath } from "next/cache";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -37,7 +38,7 @@ import {
   COMPLETION_BONUS_LABEL,
   COMPLETION_BONUS_SLUG,
   isCompletionSetFulfilled,
-  utcMonthRange,
+  membershipCycleWindow,
 } from "@/lib/loyalty/completion-bonus";
 
 export type CreditContributionResult =
@@ -61,7 +62,7 @@ export type CreditContributionResult =
  */
 async function evaluateAndPayCompletionBonus(
   admin: SupabaseClient,
-  input: { groupId: string; userId: string; createdBy: string },
+  input: { groupId: string; userId: string; membershipId: string; joinedAt: string; createdBy: string },
 ): Promise<number | null> {
   const { data: bonus, error: bErr } = await admin
     .from("group_completion_bonus")
@@ -86,7 +87,8 @@ async function evaluateAndPayCompletionBonus(
   const requiredSlugs = (ruleRows ?? []).map((r) => r.rule_slug as string);
   if (requiredSlugs.length === 0) return null;
 
-  const { start, end } = utcMonthRange(Date.now());
+  // Cycle DE CE MEMBRE, ancré sur son adhésion — pas le mois calendaire.
+  const { cycleNumber, start, end } = membershipCycleWindow(new Date(input.joinedAt).getTime(), Date.now());
 
   const { data: creditRows, error: cErr } = await admin
     .from("points_ledger")
@@ -104,8 +106,9 @@ async function evaluateAndPayCompletionBonus(
   }
   const creditedSlugs = new Set((creditRows ?? []).map((r) => r.rule_slug as string));
 
-  // Déjà versé ce mois-ci (vérif applicative — l'idempotence réelle est
-  // portée par l'index unique de points_ledger, cf. entête de fonction).
+  // Déjà versé sur ce cycle (vérif applicative — l'idempotence réelle est
+  // portée par l'index unique (completion_bonus_membership_id,
+  // completion_bonus_cycle) de points_ledger, cf. entête de fonction).
   if (creditedSlugs.has(COMPLETION_BONUS_SLUG)) return null;
   if (!isCompletionSetFulfilled(requiredSlugs, creditedSlugs)) return null;
 
@@ -118,9 +121,11 @@ async function evaluateAndPayCompletionBonus(
     rule_slug: COMPLETION_BONUS_SLUG,
     rule_label: COMPLETION_BONUS_LABEL,
     created_by: input.createdBy,
+    completion_bonus_membership_id: input.membershipId,
+    completion_bonus_cycle: cycleNumber,
   });
   if (insErr) {
-    // 23505 = déjà versé ce mois (course concurrente bloquée par l'index
+    // 23505 = déjà versé sur ce cycle (course concurrente bloquée par l'index
     // unique partiel) : comportement attendu, pas une erreur.
     if (insErr.code !== "23505") {
       console.error(
@@ -169,7 +174,7 @@ export async function creditContributionAction(input: {
   // membre ciblé et ce même groupe.
   const { data: membership, error: memErr } = await admin
     .from("group_memberships")
-    .select("id")
+    .select("id, joined_at")
     .eq("group_id", input.groupId)
     .eq("user_id", input.userId)
     .eq("status", "active")
@@ -195,12 +200,15 @@ export async function creditContributionAction(input: {
     return { ok: false, error: "db" };
   }
 
-  // Évalué APRÈS le crédit normal, sur ce même admin client : ce crédit
-  // vient peut-être de compléter l'ensemble du mois. Ne peut jamais faire
-  // échouer la réponse — le crédit demandé par l'admin est déjà acquis.
+  // Évalué APRÈS le crédit normal, sur ce même admin client : ce crédit vient
+  // peut-être de compléter l'ensemble du cycle en cours de CE membre. Ne peut
+  // jamais faire échouer la réponse — le crédit demandé par l'admin est déjà
+  // acquis.
   const bonusAwarded = await evaluateAndPayCompletionBonus(admin, {
     groupId: input.groupId,
     userId: input.userId,
+    membershipId: membership.id as string,
+    joinedAt: membership.joined_at as string,
     createdBy: user.id,
   });
 

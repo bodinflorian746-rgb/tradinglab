@@ -111,7 +111,7 @@
       "noRules": "No active point rule for this group.",
       "crediting": "Crediting...",
       "success": "+{n} points credited ({label}).",
-      "bonusAwarded": "Monthly completion bonus unlocked: +{n} points!",
+      "bonusAwarded": "Completion bonus unlocked: +{n} points!",
       "recentTitle": "Recent credits",
       "recentEmpty": "No credit for this member.",
       "errors": {
@@ -316,8 +316,8 @@
       "db": "Technical error, try again."
     },
     "completionBonus": {
-      "title": "Monthly completion bonus",
-      "hint": "A member credited for EVERY action checked below, within the current month, receives this bonus automatically — once a month. Resets on the 1st.",
+      "title": "Completion bonus",
+      "hint": "A member credited for EVERY action checked below, within their current 30-day cycle, receives this bonus automatically — once per cycle. Each member has their own cycle, starting from the date they joined the group.",
       "rulesLabel": "Required actions",
       "noActiveRules": "No active rule in the point rules to build a bonus.",
       "inactiveBadge": "Inactive",

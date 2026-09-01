@@ -19,7 +19,7 @@ import {
   tierForEarned,
   type LedgerAmount,
 } from "@/lib/loyalty/points";
-import { COMPLETION_BONUS_SLUG, isCompletionSetFulfilled, utcMonthRange } from "@/lib/loyalty/completion-bonus";
+import { COMPLETION_BONUS_SLUG, isCompletionSetFulfilled, membershipCycleWindow } from "@/lib/loyalty/completion-bonus";
 import type { GroupPointRule, PartnerGroup, Tier } from "@/lib/loyalty/types";
 
 async function readClient() {
@@ -262,18 +262,20 @@ export type CompletionBonusStatus = {
   completedCount: number;
   totalCount: number;
   complete: boolean;
-  alreadyAwardedThisMonth: boolean;
+  alreadyAwardedThisCycle: boolean;
   daysRemaining: number;
 };
 
 /**
- * Progression du membre courant sur le bonus de complétion du mois, pour
- * l'onglet "Gagner" de l'espace membre. `status: null` signifie "rien à
- * afficher" (aucun bonus configuré, bonus inactif, ou ensemble vide) — la
- * page appelante n'affiche alors aucun bloc bonus, jamais un message d'erreur.
- * points_ledger est lu via readClient() (RLS `auth.uid() = user_id`) : ce
- * membre ne peut techniquement voir QUE ses propres crédits, même en cas de
- * bug applicatif.
+ * Progression du membre courant sur le bonus de complétion de SON cycle en
+ * cours (30 jours glissants ancrés sur son adhésion, group_memberships
+ * .joined_at — pas le mois calendaire, cf. lib/loyalty/completion-bonus.ts),
+ * pour l'onglet "Gagner" de l'espace membre. `status: null` signifie "rien à
+ * afficher" (aucun bonus configuré, bonus inactif, ensemble vide, ou membre
+ * non actif de ce groupe) — la page appelante n'affiche alors aucun bloc
+ * bonus, jamais un message d'erreur. points_ledger et group_memberships sont
+ * lus via readClient() (RLS `auth.uid() = user_id`) : ce membre ne peut
+ * techniquement voir QUE ses propres lignes, même en cas de bug applicatif.
  */
 export async function getMyCompletionBonusStatus(
   userId: string,
@@ -281,14 +283,27 @@ export async function getMyCompletionBonusStatus(
 ): Promise<{ status: CompletionBonusStatus | null; error: string | null }> {
   const supabase = await readClient();
 
-  const { data: bonusRow, error: bErr } = await supabase
-    .from("group_completion_bonus")
-    .select("id, points")
-    .eq("group_id", groupId)
-    .eq("is_active", true)
-    .maybeSingle();
-  if (bErr) return { status: null, error: bErr.message };
-  if (!bonusRow) return { status: null, error: null };
+  const [bonusRes, membershipRes] = await Promise.all([
+    supabase
+      .from("group_completion_bonus")
+      .select("id, points")
+      .eq("group_id", groupId)
+      .eq("is_active", true)
+      .maybeSingle(),
+    supabase
+      .from("group_memberships")
+      .select("joined_at")
+      .eq("group_id", groupId)
+      .eq("user_id", userId)
+      .eq("status", "active")
+      .maybeSingle(),
+  ]);
+  if (bonusRes.error) return { status: null, error: bonusRes.error.message };
+  if (!bonusRes.data) return { status: null, error: null };
+  if (membershipRes.error) return { status: null, error: membershipRes.error.message };
+  // Pas (ou plus) membre actif de ce groupe : aucun cycle à afficher.
+  if (!membershipRes.data) return { status: null, error: null };
+  const bonusRow = bonusRes.data;
 
   const { data: ruleRows, error: rErr } = await supabase
     .from("group_completion_bonus_rules")
@@ -298,7 +313,11 @@ export async function getMyCompletionBonusStatus(
   const requiredSlugs = (ruleRows ?? []).map((r) => r.rule_slug as string);
   if (requiredSlugs.length === 0) return { status: null, error: null };
 
-  const { start, end, daysRemaining } = utcMonthRange(Date.now());
+  // Cycle DE CE MEMBRE, ancré sur son adhésion.
+  const { start, end, daysRemaining } = membershipCycleWindow(
+    new Date(membershipRes.data.joined_at as string).getTime(),
+    Date.now(),
+  );
 
   const [defsRes, creditsRes] = await Promise.all([
     // Labels lisibles : le barème ACTUEL. Cas limite improbable (règle
@@ -332,7 +351,7 @@ export async function getMyCompletionBonusStatus(
       completedCount,
       totalCount: rules.length,
       complete: isCompletionSetFulfilled(requiredSlugs, creditedSlugs),
-      alreadyAwardedThisMonth: creditedSlugs.has(COMPLETION_BONUS_SLUG),
+      alreadyAwardedThisCycle: creditedSlugs.has(COMPLETION_BONUS_SLUG),
       daysRemaining,
     },
     error: null,
