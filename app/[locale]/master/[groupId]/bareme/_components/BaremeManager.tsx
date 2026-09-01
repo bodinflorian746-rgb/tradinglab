@@ -17,7 +17,8 @@ import {
 } from "@/app/[locale]/master/actions";
 import { TableShell } from "../../../_components/ui";
 import { RuleForm } from "./RuleForm";
-import type { GroupPointRule } from "@/lib/loyalty/types";
+import { CompletionBonusManager } from "./CompletionBonusManager";
+import type { GroupCompletionBonusWithRules, GroupPointRule } from "@/lib/loyalty/types";
 
 function RowActions({
   groupId,
@@ -119,11 +120,15 @@ export function BaremeManager({
   canWrite,
   rules,
   loadError,
+  bonus,
+  bonusLoadError,
 }: {
   groupId: string;
   canWrite: boolean;
   rules: GroupPointRule[];
   loadError?: string | null;
+  bonus: GroupCompletionBonusWithRules | null;
+  bonusLoadError?: string | null;
 }) {
   const t = useDict("master");
   const router = useRouter();
@@ -215,6 +220,14 @@ export function BaremeManager({
           ),
         )}
       </TableShell>
+
+      <CompletionBonusManager
+        groupId={groupId}
+        canWrite={canWrite}
+        rules={rules}
+        bonus={bonus}
+        loadError={bonusLoadError}
+      />
     </div>
   );
 }

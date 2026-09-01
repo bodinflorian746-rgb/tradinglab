@@ -58,7 +58,14 @@
     "rulesEmpty": "No action available for this group yet.",
     "pseudoLabel": "Your username",
     "copy": "Copy",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "completionBonus": {
+      "title": "This month's bonus",
+      "subtitle": "Complete every action below this month to unlock +{n} points.",
+      "daysRemaining": "{n} days left this month",
+      "alreadyAwarded": "Bonus already unlocked this month!",
+      "complete": "All actions validated — bonus unlocks on your next credit."
+    }
   },
   "tiers": {
     "bronze": "Bronze",

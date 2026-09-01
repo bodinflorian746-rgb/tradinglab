@@ -7,7 +7,7 @@
 import { notFound } from "next/navigation";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getGroupAdminUser, getGroupDashboard, listGroupPointRules } from "@/lib/loyalty/master";
+import { getGroupAdminUser, getGroupCompletionBonus, getGroupDashboard, listGroupPointRules } from "@/lib/loyalty/master";
 import { MasterNav } from "../../_components/MasterNav";
 import { SuspendedNotice } from "../../_components/ui";
 import { BaremeManager } from "./_components/BaremeManager";
@@ -39,7 +39,10 @@ export default async function MasterBaremePage({
   if (!dashboard) notFound();
   const canWrite = dashboard.group.status === "active";
 
-  const { rows: rules, error: rulesError } = await listGroupPointRules(groupId);
+  const [{ rows: rules, error: rulesError }, { bonus, error: bonusError }] = await Promise.all([
+    listGroupPointRules(groupId),
+    getGroupCompletionBonus(groupId),
+  ]);
 
   return (
     <main className="min-h-screen bg-zinc-950 px-6 py-12 text-white md:py-16">
@@ -54,7 +57,14 @@ export default async function MasterBaremePage({
 
         {!canWrite && <SuspendedNotice text={t.suspendedNotice} />}
 
-        <BaremeManager groupId={groupId} canWrite={canWrite} rules={rules} loadError={rulesError} />
+        <BaremeManager
+          groupId={groupId}
+          canWrite={canWrite}
+          rules={rules}
+          loadError={rulesError}
+          bonus={bonus}
+          bonusLoadError={bonusError}
+        />
       </div>
     </main>
   );

@@ -301,6 +301,52 @@ export function deriveRuleSlug(label: string): string {
   return base || "action";
 }
 
+// ─── Bonus mensuel de complétion (group_completion_bonus) ────────────────────
+// Un seul bonus par groupe : montant + ensemble d'actions du barème (par
+// slug) qui doivent CHACUNE être créditées dans le mois pour déclencher le
+// versement. Cf. migration 20260901160000 pour la logique complète.
+
+export const COMPLETION_BONUS_POINTS_MIN = 1;
+export const COMPLETION_BONUS_POINTS_MAX = 100_000;
+
+export type CompletionBonusParamsError = "invalid_points" | "invalid_rules";
+
+export type CompletionBonusParams = {
+  points: number;
+  ruleSlugs: string[];
+  isActive: boolean;
+};
+
+/**
+ * Valide les paramètres du bonus de complétion.
+ *   • points : entier dans [1, 100000] (même style de garde-fou technique que
+ *     RULE_POINTS_*) ;
+ *   • ruleSlugs : dédoublonnés, filtrés contre `validSlugs` (les slugs des
+ *     règles ACTIVES du groupe au moment de l'appel — un slug inconnu ou
+ *     désactivé fourni par le client est silencieusement ignoré, jamais
+ *     une confiance aveugle dans l'input) ; au moins 1 requis — un ensemble
+ *     vide ne peut jamais être complété (cf. isCompletionSetFulfilled), donc
+ *     on refuse de l'enregistrer plutôt que de créer un bonus inatteignable ;
+ *   • isActive : coercé en booléen strict (`=== true`).
+ */
+export function validateCompletionBonusParams(
+  raw: { points: unknown; ruleSlugs: unknown; isActive: unknown },
+  validSlugs: ReadonlySet<string>,
+): { ok: true; value: CompletionBonusParams } | { ok: false; error: CompletionBonusParamsError } {
+  const points = toInt(raw.points);
+  if (points === null || points < COMPLETION_BONUS_POINTS_MIN || points > COMPLETION_BONUS_POINTS_MAX) {
+    return { ok: false, error: "invalid_points" };
+  }
+
+  const rawSlugs = Array.isArray(raw.ruleSlugs) ? raw.ruleSlugs : [];
+  const ruleSlugs = [
+    ...new Set(rawSlugs.filter((s): s is string => typeof s === "string" && validSlugs.has(s))),
+  ];
+  if (ruleSlugs.length === 0) return { ok: false, error: "invalid_rules" };
+
+  return { ok: true, value: { points, ruleSlugs, isActive: raw.isActive === true } };
+}
+
 export type RevokeFailure = "not_found" | "wrong_group" | "not_revocable";
 
 /**

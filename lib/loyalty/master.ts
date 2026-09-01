@@ -28,7 +28,13 @@ import {
   type MembershipStatRow,
 } from "@/lib/loyalty/admin-format";
 import { tierForEarned } from "@/lib/loyalty/points";
-import type { GroupAccessCode, GroupPointRule, PartnerGroup, Tier } from "@/lib/loyalty/types";
+import type {
+  GroupAccessCode,
+  GroupCompletionBonusWithRules,
+  GroupPointRule,
+  PartnerGroup,
+  Tier,
+} from "@/lib/loyalty/types";
 import type { CodeRow, LedgerRow, MemberRow, Paged } from "@/lib/loyalty/admin";
 
 export type GroupAdminUser = { id: string; email: string };
@@ -243,6 +249,38 @@ export async function listGroupPointRules(
     .order("sort_order", { ascending: true });
   if (error) return { rows: [], error: error.message };
   return { rows: (data ?? []) as GroupPointRule[], error: null };
+}
+
+/**
+ * Bonus de complétion du groupe (points + ensemble de slugs), pour l'écran
+ * Barème (sous la liste des actions). Passe par readClient() (session + RLS
+ * group_completion_bonus_select / group_completion_bonus_rules_select, qui
+ * couvrent admin ET membre actif) — même principe que listGroupPointRules,
+ * aucune policy d'écriture sur ces deux tables. `bonus: null` signifie
+ * "aucun bonus configuré pour ce groupe" (pas une erreur).
+ */
+export async function getGroupCompletionBonus(
+  groupId: string,
+): Promise<{ bonus: GroupCompletionBonusWithRules | null; error: string | null }> {
+  const supabase = await readClient();
+  const { data: row, error } = await supabase
+    .from("group_completion_bonus")
+    .select("id, group_id, points, is_active, created_at, updated_at")
+    .eq("group_id", groupId)
+    .maybeSingle();
+  if (error) return { bonus: null, error: error.message };
+  if (!row) return { bonus: null, error: null };
+
+  const { data: ruleRows, error: rulesErr } = await supabase
+    .from("group_completion_bonus_rules")
+    .select("rule_slug")
+    .eq("bonus_id", row.id);
+  if (rulesErr) return { bonus: null, error: rulesErr.message };
+
+  return {
+    bonus: { ...row, ruleSlugs: (ruleRows ?? []).map((r) => r.rule_slug as string) } as GroupCompletionBonusWithRules,
+    error: null,
+  };
 }
 
 /**

@@ -13,7 +13,9 @@ import { useDict } from "@/app/components/LocaleProvider";
 import { CopyButton } from "@/app/[locale]/master/_components/CopyButton";
 import { ActivateForm } from "./ActivateForm";
 import { MemberShop } from "./MemberShop";
+import { CompletionBonusCard } from "./CompletionBonusCard";
 import type { GroupPointRule, GroupShopItem } from "@/lib/loyalty/types";
+import type { CompletionBonusStatus } from "@/lib/loyalty/member";
 
 type Tab = "earn" | "spend";
 
@@ -22,6 +24,7 @@ export function PointsTabs({
   username,
   rules,
   rulesError,
+  completionBonus,
   shopItems,
   shopBalance,
   shopLoadError,
@@ -31,6 +34,7 @@ export function PointsTabs({
   username: string | null;
   rules: GroupPointRule[];
   rulesError?: string | null;
+  completionBonus: CompletionBonusStatus | null;
   shopItems: GroupShopItem[];
   shopBalance: number;
   shopLoadError?: string | null;
@@ -58,6 +62,8 @@ export function PointsTabs({
       {tab === "earn" ? (
         <div className="space-y-6">
           {showActivateForm && <ActivateForm />}
+
+          {completionBonus && <CompletionBonusCard status={completionBonus} t={t.earn.completionBonus} />}
 
           <section className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5">
             <h3 className="mb-1 text-sm font-bold uppercase tracking-wide text-zinc-400">

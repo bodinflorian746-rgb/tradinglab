@@ -20,6 +20,7 @@ import {
   classifyRevokeFailure,
   deriveRuleSlug,
   validateAccessCodeGenerateParams,
+  validateCompletionBonusParams,
   validateGenerateParams,
   validateGroupPointRuleParams,
   validateShopItemParams,
@@ -685,4 +686,86 @@ export async function reorderGroupPointRuleAction(input: {
 
   revalidatePath(`/${input.locale}/master/${input.groupId}/bareme`);
   return { ok: true, ruleId: input.ruleId };
+}
+
+// ─── Bonus mensuel de complétion (group_completion_bonus) ─────────────────────
+// Même garde que le barème (authorizeGroupWrite : admin actif du groupe OU
+// Super Admin, groupe actif requis). Écriture exclusivement en service_role
+// (aucune policy d'écriture sur ces deux tables — migration 20260901160000).
+//
+// Deux écritures séquentielles non transactionnelles (upsert du bonus, puis
+// remplacement intégral de sa composition) : même tolérance que
+// reorderGroupPointRuleAction ci-dessus (écran admin, un seul opérateur à la
+// fois en pratique). Un déclenchement de bonus concurrent pendant cette
+// fenêtre reste sûr : l'idempotence du versement repose sur l'index unique
+// partiel de points_ledger (migration 20260901160000), jamais sur l'état de
+// ces deux tables de configuration.
+
+export type CompletionBonusResult = { ok: true } | { ok: false; error: string };
+
+export async function upsertGroupCompletionBonusAction(input: {
+  locale: string;
+  groupId: string;
+  points: unknown;
+  ruleSlugs: unknown;
+  isActive: unknown;
+}): Promise<CompletionBonusResult> {
+  const user = await currentUser();
+  if (!user) return { ok: false, error: "unauthenticated" };
+
+  const authz = await authorizeGroupWrite(user.id, input.groupId, user.email);
+  if (authz !== "ok") return { ok: false, error: authz };
+
+  const admin = createAdminClient();
+
+  // Ensemble validé UNIQUEMENT contre les slugs des règles ACTIVES du groupe
+  // au moment de l'appel — jamais une confiance dans les slugs fournis par le
+  // client (cf. validateCompletionBonusParams).
+  const { data: activeRules, error: rulesErr } = await admin
+    .from("group_point_rules")
+    .select("slug")
+    .eq("group_id", input.groupId)
+    .eq("is_active", true);
+  if (rulesErr) {
+    console.error(`[master/completion-bonus] read rules error group=${input.groupId}: ${rulesErr.message}`);
+    return { ok: false, error: "db" };
+  }
+  const validSlugs = new Set((activeRules ?? []).map((r) => r.slug as string));
+
+  const v = validateCompletionBonusParams(input, validSlugs);
+  if (!v.ok) return { ok: false, error: v.error };
+
+  const { data: bonus, error: upsertErr } = await admin
+    .from("group_completion_bonus")
+    .upsert(
+      { group_id: input.groupId, points: v.value.points, is_active: v.value.isActive },
+      { onConflict: "group_id" },
+    )
+    .select("id")
+    .single();
+  if (upsertErr || !bonus) {
+    console.error(`[master/completion-bonus] upsert error group=${input.groupId}: ${upsertErr?.message}`);
+    return { ok: false, error: "db" };
+  }
+
+  // Remplacement intégral de la composition : plus simple et aussi fiable
+  // qu'un diff insert/delete pour une liste courte (checkboxes), même
+  // principe que la ré-écriture complète pratiquée ailleurs sur ce genre
+  // d'écran (aucun historique à préserver sur cette table de configuration).
+  const { error: delErr } = await admin.from("group_completion_bonus_rules").delete().eq("bonus_id", bonus.id);
+  if (delErr) {
+    console.error(`[master/completion-bonus] delete rules error group=${input.groupId}: ${delErr.message}`);
+    return { ok: false, error: "db" };
+  }
+
+  const { error: insErr } = await admin
+    .from("group_completion_bonus_rules")
+    .insert(v.value.ruleSlugs.map((rule_slug) => ({ bonus_id: bonus.id, rule_slug })));
+  if (insErr) {
+    console.error(`[master/completion-bonus] insert rules error group=${input.groupId}: ${insErr.message}`);
+    return { ok: false, error: "db" };
+  }
+
+  revalidatePath(`/${input.locale}/master/${input.groupId}/bareme`);
+  return { ok: true };
 }

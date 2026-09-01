@@ -156,3 +156,19 @@ export type GroupPointRule = {
   created_at: string;
   updated_at: string;
 };
+
+// ─── Bonus mensuel de complétion (migration 20260901160000_group_completion_bonus.sql)
+// Un seul par groupe (unicité sur group_id). La composition de l'ensemble vit
+// dans group_completion_bonus_rules (une ligne par rule_slug) — jamais chargée
+// séparément côté app : `ruleSlugs` la porte déjà résolue.
+
+export type GroupCompletionBonus = {
+  id: string;
+  group_id: string;
+  points: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type GroupCompletionBonusWithRules = GroupCompletionBonus & { ruleSlugs: string[] };

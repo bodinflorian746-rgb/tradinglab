@@ -7,7 +7,14 @@ import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localizedHref } from "@/lib/i18n/href";
-import { getCurrentMember, getMyUsername, getWalletDetail, listActiveGroupPointRules, listMyLedger } from "@/lib/loyalty/member";
+import {
+  getCurrentMember,
+  getMyCompletionBonusStatus,
+  getMyUsername,
+  getWalletDetail,
+  listActiveGroupPointRules,
+  listMyLedger,
+} from "@/lib/loyalty/member";
 import { listActiveShopItemsForMember } from "@/lib/loyalty/shop";
 import { formatDate, formatSignedPoints, sanitizePage } from "@/lib/loyalty/admin-format";
 import { Tile, TierBadge, TableShell } from "../_components/ui";
@@ -76,10 +83,16 @@ export default async function FideliteGroupHistory({
   const totalPages = Math.max(1, Math.ceil(history.total / PAGE_SIZE));
   const th = t.history.th;
 
-  const [{ rows: shopItems, error: shopError }, { rows: rules, error: rulesError }, username] = await Promise.all([
+  const [
+    { rows: shopItems, error: shopError },
+    { rows: rules, error: rulesError },
+    username,
+    { status: completionBonus },
+  ] = await Promise.all([
     listActiveShopItemsForMember(groupId),
     listActiveGroupPointRules(groupId),
     getMyUsername(member.id),
+    getMyCompletionBonusStatus(member.id, groupId),
   ]);
 
   return (
@@ -105,6 +118,7 @@ export default async function FideliteGroupHistory({
             username={username}
             rules={rules}
             rulesError={rulesError}
+            completionBonus={completionBonus}
             shopItems={shopItems}
             shopBalance={wallet.balance}
             shopLoadError={shopError}

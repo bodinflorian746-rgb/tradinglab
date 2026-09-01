@@ -111,6 +111,7 @@
       "noRules": "No active point rule for this group.",
       "crediting": "Crediting...",
       "success": "+{n} points credited ({label}).",
+      "bonusAwarded": "Monthly completion bonus unlocked: +{n} points!",
       "recentTitle": "Recent credits",
       "recentEmpty": "No credit for this member.",
       "errors": {
@@ -313,6 +314,26 @@
       "is_system": "This default action cannot be deleted.",
       "collision": "Could not generate a unique id for this action, try again.",
       "db": "Technical error, try again."
+    },
+    "completionBonus": {
+      "title": "Monthly completion bonus",
+      "hint": "A member credited for EVERY action checked below, within the current month, receives this bonus automatically — once a month. Resets on the 1st.",
+      "rulesLabel": "Required actions",
+      "noActiveRules": "No active rule in the point rules to build a bonus.",
+      "inactiveBadge": "Inactive",
+      "pointsLabel": "Bonus amount",
+      "activeLabel": "Bonus active",
+      "save": "Save",
+      "saving": "Saving…",
+      "success": "Completion bonus saved.",
+      "errors": {
+        "unauthenticated": "Session expired, sign in again.",
+        "forbidden": "Action not allowed.",
+        "group_suspended": "Group suspended: action disabled.",
+        "invalid_points": "Invalid amount (integer from 1 to 100000).",
+        "invalid_rules": "Select at least one active action.",
+        "db": "Technical error, try again."
+      }
     }
   }
 }

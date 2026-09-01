@@ -58,7 +58,14 @@
     "rulesEmpty": "Aucune action disponible pour ce groupe pour le moment.",
     "pseudoLabel": "Ton pseudo",
     "copy": "Copier",
-    "copied": "Copié !"
+    "copied": "Copié !",
+    "completionBonus": {
+      "title": "Bonus du mois",
+      "subtitle": "Complète toutes les actions ci-dessous ce mois-ci pour débloquer +{n} points.",
+      "daysRemaining": "{n} jours restants ce mois-ci",
+      "alreadyAwarded": "Bonus déjà débloqué ce mois-ci !",
+      "complete": "Toutes les actions sont validées — bonus débloqué au prochain crédit."
+    }
   },
   "tiers": {
     "bronze": "Bronze",

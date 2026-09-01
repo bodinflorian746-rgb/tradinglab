@@ -111,6 +111,7 @@
       "noRules": "Aucune règle de barème active pour ce groupe.",
       "crediting": "Crédit...",
       "success": "+{n} points crédités ({label}).",
+      "bonusAwarded": "Bonus mensuel de complétion débloqué : +{n} points !",
       "recentTitle": "Derniers crédits",
       "recentEmpty": "Aucun crédit pour ce membre.",
       "errors": {
@@ -313,6 +314,26 @@
       "is_system": "Cette action par défaut ne peut pas être supprimée.",
       "collision": "Impossible de générer un identifiant unique pour cette action, réessayez.",
       "db": "Erreur technique, réessayez."
+    },
+    "completionBonus": {
+      "title": "Bonus mensuel de complétion",
+      "hint": "Un membre crédité pour CHACUNE des actions cochées ci-dessous, dans le mois en cours, reçoit ce bonus automatiquement — une seule fois par mois. Remise à zéro le 1er.",
+      "rulesLabel": "Actions requises",
+      "noActiveRules": "Aucune action active dans le barème pour composer un bonus.",
+      "inactiveBadge": "Inactive",
+      "pointsLabel": "Montant du bonus",
+      "activeLabel": "Bonus actif",
+      "save": "Enregistrer",
+      "saving": "Enregistrement…",
+      "success": "Bonus de complétion enregistré.",
+      "errors": {
+        "unauthenticated": "Session expirée, reconnectez-vous.",
+        "forbidden": "Action non autorisée.",
+        "group_suspended": "Groupe suspendu : action désactivée.",
+        "invalid_points": "Montant invalide (entier de 1 à 100000).",
+        "invalid_rules": "Sélectionne au moins une action active.",
+        "db": "Erreur technique, réessayez."
+      }
     }
   }
 }

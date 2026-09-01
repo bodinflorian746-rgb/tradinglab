@@ -58,7 +58,14 @@
     "rulesEmpty": "Ninguna acción disponible para este grupo por ahora.",
     "pseudoLabel": "Tu apodo",
     "copy": "Copiar",
-    "copied": "¡Copiado!"
+    "copied": "¡Copiado!",
+    "completionBonus": {
+      "title": "Bonificación del mes",
+      "subtitle": "Completa todas las acciones de abajo este mes para desbloquear +{n} puntos.",
+      "daysRemaining": "{n} días restantes este mes",
+      "alreadyAwarded": "¡Bonificación ya desbloqueada este mes!",
+      "complete": "Todas las acciones validadas — la bonificación se desbloquea en tu próximo crédito."
+    }
   },
   "tiers": {
     "bronze": "Bronce",

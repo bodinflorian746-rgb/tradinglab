@@ -10,7 +10,15 @@ import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary, type Dictionaries } from "@/i18n/dictionaries";
 import { localizedHref } from "@/lib/i18n/href";
-import { getCurrentMember, getMyUsername, getMyWallets, listActiveGroupPointRules, type MemberWallet } from "@/lib/loyalty/member";
+import {
+  getCurrentMember,
+  getMyCompletionBonusStatus,
+  getMyUsername,
+  getMyWallets,
+  listActiveGroupPointRules,
+  type CompletionBonusStatus,
+  type MemberWallet,
+} from "@/lib/loyalty/member";
 import { listActiveShopItemsForMember } from "@/lib/loyalty/shop";
 import type { GroupPointRule, GroupShopItem } from "@/lib/loyalty/types";
 import { ActivateForm } from "./_components/ActivateForm";
@@ -40,7 +48,7 @@ export default async function FideliteLanding({
   // système de boutique ni de barème. Le champ de code (ActivateForm) reste
   // unique en haut de page : générique à tous les groupes, le dupliquer dans
   // chaque carte de groupe n'apporterait rien.
-  const [username, shops, rules] = await Promise.all([
+  const [username, shops, rules, bonuses] = await Promise.all([
     getMyUsername(member.id),
     Promise.all(
       activeWallets.map(async (w) => ({ groupId: w.group.id, ...(await listActiveShopItemsForMember(w.group.id)) })),
@@ -48,12 +56,18 @@ export default async function FideliteLanding({
     Promise.all(
       activeWallets.map(async (w) => ({ groupId: w.group.id, ...(await listActiveGroupPointRules(w.group.id)) })),
     ),
+    Promise.all(
+      activeWallets.map(async (w) => ({ groupId: w.group.id, ...(await getMyCompletionBonusStatus(member.id, w.group.id)) })),
+    ),
   ]);
   const shopByGroup = new Map<string, { rows: GroupShopItem[]; error: string | null }>(
     shops.map((s) => [s.groupId, { rows: s.rows, error: s.error }]),
   );
   const rulesByGroup = new Map<string, { rows: GroupPointRule[]; error: string | null }>(
     rules.map((r) => [r.groupId, { rows: r.rows, error: r.error }]),
+  );
+  const bonusByGroup = new Map<string, CompletionBonusStatus | null>(
+    bonuses.map((b) => [b.groupId, b.status]),
   );
 
   return (
@@ -98,6 +112,7 @@ export default async function FideliteLanding({
                   wallet={w}
                   shop={shopByGroup.get(w.group.id)}
                   rules={rulesByGroup.get(w.group.id)}
+                  completionBonus={bonusByGroup.get(w.group.id) ?? null}
                   username={username}
                   t={t}
                   locale={locale}
@@ -115,6 +130,7 @@ function GroupPointsCard({
   wallet,
   shop,
   rules,
+  completionBonus,
   username,
   t,
   locale,
@@ -122,6 +138,7 @@ function GroupPointsCard({
   wallet: MemberWallet;
   shop: { rows: GroupShopItem[]; error: string | null } | undefined;
   rules: { rows: GroupPointRule[]; error: string | null } | undefined;
+  completionBonus: CompletionBonusStatus | null;
   username: string | null;
   t: Dictionaries["fidelite"];
   locale: Locale;
@@ -152,6 +169,7 @@ function GroupPointsCard({
         username={username}
         rules={rules?.rows ?? []}
         rulesError={rules?.error}
+        completionBonus={completionBonus}
         shopItems={shop?.rows ?? []}
         shopBalance={wallet.balance}
         shopLoadError={shop?.error}

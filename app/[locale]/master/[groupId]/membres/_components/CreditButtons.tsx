@@ -39,10 +39,11 @@ export function CreditButtons({
         ruleSlug: rule.slug,
       });
       if (res.ok) {
-        setMsg({
-          ok: true,
-          text: t.members.credit.success.replace("{n}", String(res.amount)).replace("{label}", res.label),
-        });
+        const base = t.members.credit.success.replace("{n}", String(res.amount)).replace("{label}", res.label);
+        const text = res.bonusAwarded
+          ? `${base} ${t.members.credit.bonusAwarded.replace("{n}", String(res.bonusAwarded))}`
+          : base;
+        setMsg({ ok: true, text });
         router.refresh();
       } else {
         const map = t.members.credit.errors as Record<string, string>;

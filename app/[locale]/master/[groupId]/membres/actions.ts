@@ -22,15 +22,116 @@
 // migration 20260828130000). Le ledger est append-only (trigger bloquant) :
 // un double-crédit ne s'annule pas d'ici, c'est pourquoi CreditButtons
 // désactive le bouton pendant la requête (anti double-clic côté UI).
+//
+// Après le crédit normal : évaluation du bonus mensuel de complétion
+// (evaluateAndPayCompletionBonus, cf. migration 20260901160000) — ce crédit
+// vient peut-être de compléter l'ensemble configuré par l'admin pour ce
+// membre ce mois-ci.
 
 import { revalidatePath } from "next/cache";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { canManageGroup } from "@/lib/loyalty/access";
+import {
+  COMPLETION_BONUS_LABEL,
+  COMPLETION_BONUS_SLUG,
+  isCompletionSetFulfilled,
+  utcMonthRange,
+} from "@/lib/loyalty/completion-bonus";
 
 export type CreditContributionResult =
-  | { ok: true; amount: number; label: string }
+  | { ok: true; amount: number; label: string; bonusAwarded: number | null }
   | { ok: false; error: "unauthenticated" | "forbidden" | "rule_not_found" | "not_member" | "db" };
+
+/**
+ * Évalue le bonus de complétion du groupe pour CE membre après un crédit
+ * normal, et le verse s'il est mérité. Aucune donnée reçue du client :
+ * groupId/userId/createdBy viennent tous d'un contexte déjà autorisé par
+ * l'appelant (creditContributionAction).
+ *
+ * Idempotence : une lecture applicative (rapide, évite un aller-retour
+ * inutile la plupart du temps) PUIS un INSERT dont l'idempotence réelle
+ * repose sur l'index unique partiel de points_ledger (migration
+ * 20260901160000) — un doublon (double-clic, requêtes concurrentes) échoue en
+ * 23505, traité ici comme "déjà versé", jamais comme une erreur. N'échoue
+ * jamais le crédit normal qui vient d'avoir lieu : toute erreur ici est
+ * journalisée et absorbée (retour null), le crédit demandé par l'admin reste
+ * acquis dans tous les cas.
+ */
+async function evaluateAndPayCompletionBonus(
+  admin: SupabaseClient,
+  input: { groupId: string; userId: string; createdBy: string },
+): Promise<number | null> {
+  const { data: bonus, error: bErr } = await admin
+    .from("group_completion_bonus")
+    .select("id, points")
+    .eq("group_id", input.groupId)
+    .eq("is_active", true)
+    .maybeSingle();
+  if (bErr) {
+    console.error(`[membres/completion-bonus] read bonus error group=${input.groupId}: ${bErr.message}`);
+    return null;
+  }
+  if (!bonus) return null;
+
+  const { data: ruleRows, error: rErr } = await admin
+    .from("group_completion_bonus_rules")
+    .select("rule_slug")
+    .eq("bonus_id", bonus.id);
+  if (rErr) {
+    console.error(`[membres/completion-bonus] read rules error group=${input.groupId}: ${rErr.message}`);
+    return null;
+  }
+  const requiredSlugs = (ruleRows ?? []).map((r) => r.rule_slug as string);
+  if (requiredSlugs.length === 0) return null;
+
+  const { start, end } = utcMonthRange(Date.now());
+
+  const { data: creditRows, error: cErr } = await admin
+    .from("points_ledger")
+    .select("rule_slug")
+    .eq("group_id", input.groupId)
+    .eq("user_id", input.userId)
+    .eq("kind", "manual_credit")
+    .gte("created_at", start)
+    .lt("created_at", end);
+  if (cErr) {
+    console.error(
+      `[membres/completion-bonus] read credits error group=${input.groupId} user=${input.userId}: ${cErr.message}`,
+    );
+    return null;
+  }
+  const creditedSlugs = new Set((creditRows ?? []).map((r) => r.rule_slug as string));
+
+  // Déjà versé ce mois-ci (vérif applicative — l'idempotence réelle est
+  // portée par l'index unique de points_ledger, cf. entête de fonction).
+  if (creditedSlugs.has(COMPLETION_BONUS_SLUG)) return null;
+  if (!isCompletionSetFulfilled(requiredSlugs, creditedSlugs)) return null;
+
+  const { error: insErr } = await admin.from("points_ledger").insert({
+    group_id: input.groupId,
+    user_id: input.userId,
+    kind: "manual_credit",
+    amount: bonus.points,
+    reason: COMPLETION_BONUS_LABEL,
+    rule_slug: COMPLETION_BONUS_SLUG,
+    rule_label: COMPLETION_BONUS_LABEL,
+    created_by: input.createdBy,
+  });
+  if (insErr) {
+    // 23505 = déjà versé ce mois (course concurrente bloquée par l'index
+    // unique partiel) : comportement attendu, pas une erreur.
+    if (insErr.code !== "23505") {
+      console.error(
+        `[membres/completion-bonus] insert error group=${input.groupId} user=${input.userId}: ${insErr.message}`,
+      );
+    }
+    return null;
+  }
+
+  return bonus.points as number;
+}
 
 export async function creditContributionAction(input: {
   locale: string;
@@ -94,6 +195,15 @@ export async function creditContributionAction(input: {
     return { ok: false, error: "db" };
   }
 
+  // Évalué APRÈS le crédit normal, sur ce même admin client : ce crédit
+  // vient peut-être de compléter l'ensemble du mois. Ne peut jamais faire
+  // échouer la réponse — le crédit demandé par l'admin est déjà acquis.
+  const bonusAwarded = await evaluateAndPayCompletionBonus(admin, {
+    groupId: input.groupId,
+    userId: input.userId,
+    createdBy: user.id,
+  });
+
   revalidatePath(`/${input.locale}/master/${input.groupId}/membres`);
-  return { ok: true, amount: rule.points, label: rule.label };
+  return { ok: true, amount: rule.points, label: rule.label, bonusAwarded };
 }

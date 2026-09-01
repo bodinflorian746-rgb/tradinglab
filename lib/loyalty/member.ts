@@ -19,6 +19,7 @@ import {
   tierForEarned,
   type LedgerAmount,
 } from "@/lib/loyalty/points";
+import { COMPLETION_BONUS_SLUG, isCompletionSetFulfilled, utcMonthRange } from "@/lib/loyalty/completion-bonus";
 import type { GroupPointRule, PartnerGroup, Tier } from "@/lib/loyalty/types";
 
 async function readClient() {
@@ -251,4 +252,89 @@ export async function listMyLedger(
     .range(from, from + pageSize - 1);
   if (error) return { rows: [], total: 0, error: error.message };
   return { rows: (data ?? []) as MemberLedgerRow[], total: count ?? 0, error: null };
+}
+
+export type CompletionBonusRuleStatus = { slug: string; label: string; done: boolean };
+
+export type CompletionBonusStatus = {
+  points: number;
+  rules: CompletionBonusRuleStatus[];
+  completedCount: number;
+  totalCount: number;
+  complete: boolean;
+  alreadyAwardedThisMonth: boolean;
+  daysRemaining: number;
+};
+
+/**
+ * Progression du membre courant sur le bonus de complétion du mois, pour
+ * l'onglet "Gagner" de l'espace membre. `status: null` signifie "rien à
+ * afficher" (aucun bonus configuré, bonus inactif, ou ensemble vide) — la
+ * page appelante n'affiche alors aucun bloc bonus, jamais un message d'erreur.
+ * points_ledger est lu via readClient() (RLS `auth.uid() = user_id`) : ce
+ * membre ne peut techniquement voir QUE ses propres crédits, même en cas de
+ * bug applicatif.
+ */
+export async function getMyCompletionBonusStatus(
+  userId: string,
+  groupId: string,
+): Promise<{ status: CompletionBonusStatus | null; error: string | null }> {
+  const supabase = await readClient();
+
+  const { data: bonusRow, error: bErr } = await supabase
+    .from("group_completion_bonus")
+    .select("id, points")
+    .eq("group_id", groupId)
+    .eq("is_active", true)
+    .maybeSingle();
+  if (bErr) return { status: null, error: bErr.message };
+  if (!bonusRow) return { status: null, error: null };
+
+  const { data: ruleRows, error: rErr } = await supabase
+    .from("group_completion_bonus_rules")
+    .select("rule_slug")
+    .eq("bonus_id", bonusRow.id);
+  if (rErr) return { status: null, error: rErr.message };
+  const requiredSlugs = (ruleRows ?? []).map((r) => r.rule_slug as string);
+  if (requiredSlugs.length === 0) return { status: null, error: null };
+
+  const { start, end, daysRemaining } = utcMonthRange(Date.now());
+
+  const [defsRes, creditsRes] = await Promise.all([
+    // Labels lisibles : le barème ACTUEL. Cas limite improbable (règle
+    // supprimée depuis) → fallback au slug brut ci-dessous, jamais bloquant.
+    supabase.from("group_point_rules").select("slug, label").eq("group_id", groupId).in("slug", requiredSlugs),
+    supabase
+      .from("points_ledger")
+      .select("rule_slug")
+      .eq("group_id", groupId)
+      .eq("user_id", userId)
+      .eq("kind", "manual_credit")
+      .gte("created_at", start)
+      .lt("created_at", end),
+  ]);
+  if (creditsRes.error) return { status: null, error: creditsRes.error.message };
+
+  const labelBySlug = new Map((defsRes.data ?? []).map((r) => [r.slug as string, r.label as string]));
+  const creditedSlugs = new Set((creditsRes.data ?? []).map((r) => r.rule_slug as string));
+
+  const rules = requiredSlugs.map((slug) => ({
+    slug,
+    label: labelBySlug.get(slug) ?? slug,
+    done: creditedSlugs.has(slug),
+  }));
+  const completedCount = rules.filter((r) => r.done).length;
+
+  return {
+    status: {
+      points: bonusRow.points as number,
+      rules,
+      completedCount,
+      totalCount: rules.length,
+      complete: isCompletionSetFulfilled(requiredSlugs, creditedSlugs),
+      alreadyAwardedThisMonth: creditedSlugs.has(COMPLETION_BONUS_SLUG),
+      daysRemaining,
+    },
+    error: null,
+  };
 }
