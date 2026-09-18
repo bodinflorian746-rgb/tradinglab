@@ -18,7 +18,6 @@ function ChevronDown({ className = "" }: { className?: string }) {
 }
 
 type Card = {
-  amount: string;
   brokerLabel: string;
   brokerName: string;
   bonus: string;
@@ -33,8 +32,8 @@ const content: Record<
     breadcrumbCurrent: string;
     title: string;
     subtitle: string;
-    chooseDepositTitle: string;
-    cards: [Card, Card];
+    sectionTitle: string;
+    card: Card;
     reassurance: string;
     faqTitle: string;
     faqs: { q: string; a: string }[];
@@ -46,26 +45,15 @@ const content: Record<
     breadcrumbCurrent: "Accès via un broker",
     title: "Accède gratuitement à TradeScaleX",
     subtitle:
-      "Choisis ton montant de dépôt, ouvre ton compte chez un broker partenaire, puis reçois ton accès gratuit.",
-    chooseDepositTitle: "Quel montant veux-tu déposer ?",
-    cards: [
-      {
-        amount: "Moins de 1 000 €",
-        brokerLabel: "Broker recommandé",
-        brokerName: "RaiseFX",
-        bonus: "100 % de bonus de marge\nValable jusqu'à 2 000 € de dépôt",
-        cta: "Choisir RaiseFX",
-        url: "https://partners.raisefx.com/visit/?bta=168801&brand=raisefx",
-      },
-      {
-        amount: "1 000 € ou plus",
-        brokerLabel: "Broker recommandé",
-        brokerName: "FXLift",
-        bonus: "40 % de bonus tradable",
-        cta: "Choisir FXLift",
-        url: "https://go.fxlift.com/visit/?bta=35146&brand=fxlift",
-      },
-    ],
+      "Ouvre ton compte chez notre broker partenaire, puis reçois ton accès gratuit.",
+    sectionTitle: "Notre broker partenaire",
+    card: {
+      brokerLabel: "Broker partenaire",
+      brokerName: "RaiseFX",
+      bonus: "100 % de bonus de marge\nValable jusqu'à 2 000 € de dépôt",
+      cta: "Ouvrir un compte RaiseFX",
+      url: "https://partners.raisefx.com/visit/?bta=168801&brand=raisefx",
+    },
     reassurance:
       "Le dépôt reste sur ton compte broker. TradeScaleX ne reçoit pas tes fonds.",
     faqTitle: "Questions fréquentes",
@@ -95,26 +83,15 @@ const content: Record<
     breadcrumbCurrent: "Acceso a través de un bróker",
     title: "Accede gratis a TradeScaleX",
     subtitle:
-      "Elige tu cantidad de depósito, abre tu cuenta con un bróker asociado y recibe tu acceso gratuito.",
-    chooseDepositTitle: "¿Qué cantidad quieres depositar?",
-    cards: [
-      {
-        amount: "Menos de 1 000 €",
-        brokerLabel: "Bróker recomendado",
-        brokerName: "RaiseFX",
-        bonus: "100 % de bono de margen\nVálido hasta 2 000 € de depósito",
-        cta: "Elegir RaiseFX",
-        url: "https://partners.raisefx.com/visit/?bta=168801&brand=raisefx",
-      },
-      {
-        amount: "1 000 € o más",
-        brokerLabel: "Bróker recomendado",
-        brokerName: "FXLift",
-        bonus: "40 % de bono tradable",
-        cta: "Elegir FXLift",
-        url: "https://go.fxlift.com/visit/?bta=35146&brand=fxlift",
-      },
-    ],
+      "Abre tu cuenta con nuestro bróker asociado y recibe tu acceso gratuito.",
+    sectionTitle: "Nuestro bróker asociado",
+    card: {
+      brokerLabel: "Bróker asociado",
+      brokerName: "RaiseFX",
+      bonus: "100 % de bono de margen\nVálido hasta 2 000 € de depósito",
+      cta: "Abrir una cuenta en RaiseFX",
+      url: "https://partners.raisefx.com/visit/?bta=168801&brand=raisefx",
+    },
     reassurance:
       "El depósito permanece en tu cuenta de bróker. TradeScaleX no recibe tus fondos.",
     faqTitle: "Preguntas frecuentes",
@@ -144,26 +121,15 @@ const content: Record<
     breadcrumbCurrent: "Access via a broker",
     title: "Get free access to TradeScaleX",
     subtitle:
-      "Choose your deposit amount, open your account with a partner broker, then receive your free access.",
-    chooseDepositTitle: "How much do you want to deposit?",
-    cards: [
-      {
-        amount: "Less than €1,000",
-        brokerLabel: "Recommended broker",
-        brokerName: "RaiseFX",
-        bonus: "100% margin bonus\nValid up to €2,000 deposit",
-        cta: "Choose RaiseFX",
-        url: "https://partners.raisefx.com/visit/?bta=168801&brand=raisefx",
-      },
-      {
-        amount: "€1,000 or more",
-        brokerLabel: "Recommended broker",
-        brokerName: "FXLift",
-        bonus: "40% tradable bonus",
-        cta: "Choose FXLift",
-        url: "https://go.fxlift.com/visit/?bta=35146&brand=fxlift",
-      },
-    ],
+      "Open your account with our partner broker, then receive your free access.",
+    sectionTitle: "Our partner broker",
+    card: {
+      brokerLabel: "Partner broker",
+      brokerName: "RaiseFX",
+      bonus: "100% margin bonus\nValid up to €2,000 deposit",
+      cta: "Open a RaiseFX account",
+      url: "https://partners.raisefx.com/visit/?bta=168801&brand=raisefx",
+    },
     reassurance:
       "The deposit stays in your broker account. TradeScaleX does not receive your funds.",
     faqTitle: "Frequently asked questions",
@@ -220,29 +186,25 @@ export default async function BrokerPage({
           </p>
         </header>
 
-        {/* Section principale : 2 grosses cartes cliquables */}
+        {/* Section principale : carte broker unique */}
         <section className="mb-12">
-          <h2 className="text-xl md:text-2xl font-bold mb-6">{t.chooseDepositTitle}</h2>
-          <div className="grid gap-5 md:grid-cols-2">
-            {t.cards.map((c) => (
-              <a
-                key={c.brokerName}
-                href={c.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex flex-col bg-zinc-900/60 border border-zinc-800 hover:border-emerald-500/40 rounded-2xl p-6 md:p-8 transition-colors"
-              >
-                <div className="text-2xl md:text-3xl font-bold text-white mb-4">{c.amount}</div>
-                <div className="text-[11px] uppercase tracking-widest text-zinc-500 mb-1">
-                  {c.brokerLabel}
-                </div>
-                <div className="text-lg font-semibold text-emerald-400 mb-4">{c.brokerName}</div>
-                <p className="text-sm text-zinc-400 mb-6 leading-relaxed whitespace-pre-line flex-1">{c.bonus}</p>
-                <span className="inline-flex items-center justify-center w-full rounded-xl bg-emerald-500 group-hover:bg-emerald-400 text-zinc-950 font-semibold py-3 transition-colors">
-                  {c.cta}
-                </span>
-              </a>
-            ))}
+          <h2 className="text-xl md:text-2xl font-bold mb-6">{t.sectionTitle}</h2>
+          <div className="max-w-md mx-auto">
+            <a
+              href={t.card.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col bg-zinc-900/60 border border-zinc-800 hover:border-emerald-500/40 rounded-2xl p-6 md:p-8 transition-colors"
+            >
+              <div className="text-[11px] uppercase tracking-widest text-zinc-500 mb-2">
+                {t.card.brokerLabel}
+              </div>
+              <div className="text-2xl md:text-3xl font-semibold text-emerald-400 mb-5">{t.card.brokerName}</div>
+              <p className="text-sm text-zinc-400 mb-6 leading-relaxed whitespace-pre-line">{t.card.bonus}</p>
+              <span className="inline-flex items-center justify-center w-full rounded-xl bg-emerald-500 group-hover:bg-emerald-400 text-zinc-950 font-semibold py-3 transition-colors">
+                {t.card.cta}
+              </span>
+            </a>
           </div>
         </section>
 
