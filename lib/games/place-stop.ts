@@ -2715,6 +2715,54 @@ export function buildPlaceStopChart(
   volatility: Volatility,
   difficulty: Difficulty,
 ): PlaceStopChart {
+  return rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed);
+}
+
+// ─── Anti-biais « le bon stop est toujours au milieu » ───────────────────────
+// Les stops sont numérotés 1/2/3 par position (haut → bas). Dans les scénarios
+// « serré / logique / large », le logique est toujours au milieu. Pour une part
+// des rounds, on remplace le piège serré par un 2e stop trop loin : le logique
+// devient le plus proche de l'entrée (en haut pour un BUY, en bas pour un SELL).
+// Les deux stops trop loin survivent et dégradent le RR, comme le dit leur
+// rationale. Tirage décorrélé : aucun autre tirage du scénario ne change.
+const FAR_VARIANT_SHARE = 0.45;
+
+function rebalanceCorrectPosition(chart: PlaceStopChart, seed: number): PlaceStopChart {
+  const correctType: StopType = chart.stops.some((s) => s.type === "logical") ? "logical" : "wide";
+  const [top, mid, bot] = chart.stops; // déjà triés top → bas
+  if (!mid || mid.type !== correctType) return chart;
+  if (mulberry32((seed ^ 0x85EBCA6B) >>> 0)() >= FAR_VARIANT_SHARE) return chart;
+  const buy = chart.direction === "BUY";
+  const near = buy ? top : bot;   // piège le plus proche de l'entrée
+  const far  = buy ? bot : top;   // stop trop loin
+  if (near.type !== "tight" && near.type !== "liquidity") return chart;
+  if (far.rationale.trim().startsWith("✗")) return chart;
+  const dFar = Math.abs(far.price - chart.entry);
+  const dMid = Math.abs(mid.price - chart.entry);
+  const dWider = dFar + Math.max((dFar - dMid) * 0.6, dFar * 0.3);
+  const wider = { price: buy ? chart.entry - dWider : chart.entry + dWider, type: far.type, rationale: far.rationale };
+  const sorted = [
+    wider,
+    { price: mid.price, type: mid.type, rationale: mid.rationale },
+    { price: far.price, type: far.type, rationale: far.rationale },
+  ].sort((a, b) => b.price - a.price);
+  const labels = shuffleSeeded(["A", "B", "C"] as StopId[], seed);
+  const stops: StopOption[] = sorted.map((s, i) => ({ id: labels[i], ...s }));
+  const lo = Math.min(chart.domain.min, wider.price);
+  const hi = Math.max(chart.domain.max, wider.price);
+  return {
+    ...chart,
+    stops,
+    domain: { min: buy ? Math.min(lo, wider.price - (hi - lo) * 0.04) : lo, max: buy ? hi : Math.max(hi, wider.price + (hi - lo) * 0.04) },
+  };
+}
+
+function buildScenarioChart(
+  setup: PlaceStopSetupKey,
+  seed: number,
+  volatility: Volatility,
+  difficulty: Difficulty,
+): PlaceStopChart {
   const rng = mulberry32(seed);
   // Mode de placement dérivé d'un seed décorrélé (constante 2^32 / φ) pour
   // que la distribution des modes soit indépendante de la trajectoire du chart.

@@ -3,7 +3,8 @@
 // Pour chaque setup, sur 5 seeds, on vérifie :
 // 1) Les 3 stops sont bien dans la zone valide (côté entry attendu).
 // 2) Le stop TIGHT se fait SWEEP par les futures candles (sinon il n'est
-//    pas pédagogiquement "trop serré").
+//    pas pédagogiquement "trop serré"). Variante anti-biais de position : pas
+//    de stop serré mais 2 stops trop loin (WIDE), qui survivent tous les deux.
 // 3) Le stop LOGICAL SURVIT aux futures (sinon il n'est pas logique).
 // 4) Le stop WIDE SURVIT aussi (sinon il est défectueux).
 // 5) Le RR du stop LOGICAL est >= 1.5 (sinon ce n'est pas un bon trade).
@@ -41,11 +42,13 @@ function audit(setup: PlaceStopSetupKey, difficulty: Difficulty, seed: number): 
   const tight   = chart.stops.find((s) => s.type === "tight");
   const logical = chart.stops.find((s) => s.type === "logical");
   const wide    = chart.stops.find((s) => s.type === "wide");
+  const wides   = chart.stops.filter((s) => s.type === "wide");
+  const farVariant = !tight && wides.length === 2;
 
-  if (!tight)   issues.push(`tight stop manquant`);
+  if (!tight && !farVariant) issues.push(`tight stop manquant`);
   if (!logical) issues.push(`logical stop manquant`);
   if (!wide)    issues.push(`wide stop manquant`);
-  if (!tight || !logical || !wide) return issues;
+  if ((!tight && !farVariant) || !logical || !wide) return issues;
 
   // Critère 1 : tous les stops du bon côté de l'entry
   for (const s of chart.stops) {
@@ -59,30 +62,34 @@ function audit(setup: PlaceStopSetupKey, difficulty: Difficulty, seed: number): 
 
   // Critère 2/3/4 : hits cohérents
   const hits = computeHits(chart);
-  const tightHit   = hits[tight.id];
+  const tightHit   = tight ? hits[tight.id] : undefined;
   const logicalHit = hits[logical.id];
-  const wideHit    = hits[wide.id];
 
-  if (tightHit === null) {
+  if (tight && tightHit === null) {
     issues.push(`tight (${tight.id}) a SURVÉCU — devrait être balayé par les futures candles`);
   }
   if (logicalHit !== null) {
     issues.push(`logical (${logical.id}) a été TOUCHÉ bougie ${logicalHit + 1} — devrait survivre`);
   }
-  if (wideHit !== null) {
-    issues.push(`wide (${wide.id}) a été TOUCHÉ bougie ${wideHit + 1} — devrait survivre (et juste avoir un mauvais RR)`);
+  for (const w of wides) {
+    const wideHit = hits[w.id];
+    if (wideHit !== null) {
+      issues.push(`wide (${w.id}) a été TOUCHÉ bougie ${wideHit + 1} — devrait survivre (et juste avoir un mauvais RR)`);
+    }
   }
 
   // Critère 5/6 : RR
   if (chart.tp !== null) {
     const tpDistance = Math.abs(chart.tp - chart.entry);
     const rrLogical = tpDistance / Math.abs(chart.entry - logical.price);
-    const rrWide    = tpDistance / Math.abs(chart.entry - wide.price);
     if (rrLogical < 2.0) {
       issues.push(`RR logical = 1:${rrLogical.toFixed(2)} (< 2.0 — pas assez généreux)`);
     }
-    if (rrWide > 1.7) {
-      issues.push(`RR wide = 1:${rrWide.toFixed(2)} (> 1.7 — n'est pas suffisamment pénalisé)`);
+    for (const w of wides) {
+      const rrWide = tpDistance / Math.abs(chart.entry - w.price);
+      if (rrWide > 1.7) {
+        issues.push(`RR wide = 1:${rrWide.toFixed(2)} (> 1.7 — n'est pas suffisamment pénalisé)`);
+      }
     }
   }
 
