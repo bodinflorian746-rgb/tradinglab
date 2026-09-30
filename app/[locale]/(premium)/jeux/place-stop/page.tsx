@@ -23,7 +23,7 @@ import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameC
 import { StepBadge, VerdictOverlay, GeneralCasesNote, type VerdictState } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { formatPrice } from "@/lib/games/price-scale";
-import type { Asset } from "@/lib/games/shared";
+import { sessionLabel, type Asset } from "@/lib/games/shared";
 
 const STOP_TYPE_TO_SKILL: Record<StopType, { skill: SkillId; outcome: "win" | "loss" }> = {
   logical:   { skill: "structure",      outcome: "win"  },
@@ -429,14 +429,14 @@ export default function PlaceStopPage() {
     <main className="v2-page mx-auto flex w-full max-w-[880px] flex-col">
       <div className="flex flex-col gap-3">
         {/* Top bar */}
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
           <Link href="/jeux" className="v2-link-back">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             {T.games}
           </Link>
-          <div className="flex items-center gap-3 text-[12px]">
+          <div className="ml-auto flex items-center gap-3 text-[12px]">
             <DifficultyChip difficulty={difficulty} difficultyMeta={G.DIFFICULTY_META} />
             <span className="h-3 w-px bg-white/15" />
             <div className="flex items-center gap-1.5">
@@ -475,7 +475,7 @@ export default function PlaceStopPage() {
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
               <span className="v2-display v2-asset mr-1 font-bold">{current.asset}</span>
               <span className={`v2-chip ${current.direction === "BUY" ? "v2-chip--emerald" : "v2-chip--red"}`}>{current.direction}</span>
-              <span className="v2-chip">{current.session}</span>
+              <span className="v2-chip">{sessionLabel(current.session, locale)}</span>
               <span className={`v2-chip ${current.volatility === "élevée" ? "v2-chip--amber" : ""}`}>
                 {T.volatility} {translateVolatility(current.volatility, locale)}
               </span>
@@ -875,7 +875,7 @@ function InfoTile({ label, value, valueClass }: { label: string; value: string; 
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
     <div className="v2-well px-3 py-2.5">
-      <p className="mb-1 truncate text-[12px] font-semibold uppercase tracking-wide text-[color:var(--v2-text-3)]">{label}</p>
+      <p className="mb-1 min-h-[2lh] leading-tight [overflow-wrap:anywhere] sm:min-h-0 text-[12px] font-semibold uppercase tracking-wide text-[color:var(--v2-text-3)]">{label}</p>
       <p className="v2-mono text-[16px] font-bold text-[color:var(--v2-text)]">{value}</p>
     </div>
   );

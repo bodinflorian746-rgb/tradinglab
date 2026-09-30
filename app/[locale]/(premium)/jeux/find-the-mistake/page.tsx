@@ -18,6 +18,7 @@ import {
 import { GameChartV2, type GameChartMark } from "@/app/components/games/v2/GameChartV2";
 import { StepBadge, VerdictOverlay, GeneralCasesNote } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
+import { sessionLabel } from "@/lib/games/shared";
 
 const CATEGORY_TO_SKILL: Record<"technique" | "psychologique" | "execution" | "rr" | "timing" | "liquidite" | "discipline", SkillId> = {
   technique:     "structure",
@@ -309,14 +310,14 @@ export default function FindTheMistakePage() {
     <main className="v2-page mx-auto flex w-full max-w-[880px] flex-col">
       <div className="flex flex-col gap-3">
         {/* Top bar */}
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
           <Link href="/jeux" className="v2-link-back">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             {T.games}
           </Link>
-          <div className="flex items-center gap-3 text-[12px]">
+          <div className="ml-auto flex items-center gap-3 text-[12px]">
             <DifficultyChip difficulty={difficulty} difficultyMeta={G.DIFFICULTY_META} />
             <span className="h-3 w-px bg-white/15" />
             <div className="flex items-center gap-1.5">
@@ -357,7 +358,7 @@ export default function FindTheMistakePage() {
               {current.direction && (
                 <span className={`v2-chip ${current.direction === "BUY" ? "v2-chip--emerald" : "v2-chip--red"}`}>{current.direction}</span>
               )}
-              <span className="v2-chip">{current.session}</span>
+              <span className="v2-chip">{sessionLabel(current.session, locale)}</span>
               <VolBadge volatility={current.volatility} T={T} />
               <SpreadBadge spread={current.spread} T={T} />
               {current.extraInfo && <span className="v2-chip v2-chip--amber">{current.extraInfo}</span>}
@@ -651,7 +652,7 @@ function InfoTile({ label, value, valueClass }: { label: string; value: string; 
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
     <div className="v2-well px-3 py-2.5">
-      <p className="mb-1 truncate text-[12px] font-semibold uppercase tracking-wide text-[color:var(--v2-text-3)]">{label}</p>
+      <p className="mb-1 min-h-[2lh] leading-tight [overflow-wrap:anywhere] sm:min-h-0 text-[12px] font-semibold uppercase tracking-wide text-[color:var(--v2-text-3)]">{label}</p>
       <p className="v2-mono text-[16px] font-bold text-[color:var(--v2-text)]">{value}</p>
     </div>
   );

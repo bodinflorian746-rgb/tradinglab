@@ -18,6 +18,7 @@ import {
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
 import { ChoiceRow, StepBadge, VerdictOverlay, type ChoiceOption, GeneralCasesNote } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
+import { sessionLabel } from "@/lib/games/shared";
 
 const METRIC_TO_SKILL: Record<Metric, SkillId> = {
   discipline: "discipline",
@@ -394,14 +395,14 @@ export default function BuySellNoTradePage() {
     <main className="v2-page mx-auto flex w-full max-w-[880px] flex-col">
       <div className="flex flex-col gap-3">
         {/* Top bar */}
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
           <Link href="/jeux" className="v2-link-back">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             {T.games}
           </Link>
-          <div className="flex items-center gap-3 text-[12px]">
+          <div className="ml-auto flex items-center gap-3 text-[12px]">
             <DifficultyChip difficulty={difficulty} difficultyMeta={G.DIFFICULTY_META} />
             <span className="h-3 w-px bg-white/15" />
             <div className="flex items-center gap-1.5">
@@ -443,7 +444,7 @@ export default function BuySellNoTradePage() {
 
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
               <span className="v2-display v2-asset mr-1 font-bold">{current.asset}</span>
-              <span className="v2-chip">{current.session}</span>
+              <span className="v2-chip">{sessionLabel(current.session, locale)}</span>
               <VolBadge volatility={current.volatility} T={T} />
               <SpreadBadge spread={current.spread} T={T} />
             </div>
@@ -693,13 +694,12 @@ function InfoTile({ label, value, valueClass }: { label: string; value: string; 
 function StatTile({ metric, ok, total, METRIC_LABELS }: { metric: Metric; ok: number; total: number; METRIC_LABELS: Record<Metric, string> }) {
   const pct = total > 0 ? Math.round((ok / total) * 100) : 0;
   return (
-    <div className="v2-well px-3 py-2.5">
-      <div className="mb-1 flex items-center gap-1.5">
-        <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${METRIC_DOT[metric]}`} />
-        <p className="truncate text-[12px] font-semibold uppercase tracking-wide text-[color:var(--v2-text-3)]">
-          {METRIC_LABELS[metric]}
-        </p>
-      </div>
+    <div className="v2-well px-2.5 py-2.5 sm:px-3">
+      {/* Libellé sur 2 lignes max à 390 px : le point suit le texte au lieu d'occuper une colonne */}
+      <p className="mb-1 min-h-[2lh] text-[11px] font-semibold uppercase leading-tight tracking-normal text-[color:var(--v2-text-3)] [overflow-wrap:anywhere] sm:min-h-0 sm:text-[12px] sm:tracking-wide">
+        <span className={`mr-1.5 inline-block h-1.5 w-1.5 rounded-full align-middle ${METRIC_DOT[metric]}`} />
+        {METRIC_LABELS[metric]}
+      </p>
       <p className="v2-mono text-[16px] font-bold text-[color:var(--v2-text)]">
         {ok}<span className="text-[color:var(--v2-text-3)]">/{total}</span>
       </p>

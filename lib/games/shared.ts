@@ -11,6 +11,16 @@ export type Spread       = "faible" | "élevé";
 export type HtfBias      = "bullish" | "bearish" | "range";
 export type MacroContext = "normal" | "dangereux";
 
+/** Libellé affiché d'une session (les valeurs internes restent en français). */
+const SESSION_LABELS: Record<"fr" | "en" | "es", Record<Session, string>> = {
+  fr: { Asie: "Asie", Londres: "Londres", "New York": "New York", Overlap: "Overlap", "Heures mortes": "Heures mortes" },
+  en: { Asie: "Asia", Londres: "London", "New York": "New York", Overlap: "Overlap", "Heures mortes": "Off-hours" },
+  es: { Asie: "Asia", Londres: "Londres", "New York": "Nueva York", Overlap: "Overlap", "Heures mortes": "Horas muertas" },
+};
+export function sessionLabel(session: Session, locale: string | undefined): string {
+  return SESSION_LABELS[locale === "en" || locale === "es" ? locale : "fr"][session];
+}
+
 export interface Candle { o: number; h: number; l: number; c: number }
 
 export type ZoneKind = "support" | "resistance" | "fvg" | "liquidity_low" | "liquidity_high";
