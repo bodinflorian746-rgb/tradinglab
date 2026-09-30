@@ -75,13 +75,13 @@ test("V2 gameplay — pick difficulty, choisir stop, reveal, suivant", async ({ 
   // Choisir Débutant
   await page.getByRole("button", { name: /Débutant/ }).click();
 
-  // Round 1 : 3 cards A / B / C visibles
-  await expect(page.getByRole("button", { name: /Stop A/i })).toBeVisible({ timeout: 5000 });
-  await expect(page.getByRole("button", { name: /Stop B/i })).toBeVisible({ timeout: 5000 });
-  await expect(page.getByRole("button", { name: /Stop C/i })).toBeVisible({ timeout: 5000 });
+  // Round 1 : 3 cartes Stop 1 / 2 / 3 visibles (numérotées par position)
+  await expect(page.getByRole("button", { name: /Stop 1/i })).toBeVisible({ timeout: 5000 });
+  await expect(page.getByRole("button", { name: /Stop 2/i })).toBeVisible({ timeout: 5000 });
+  await expect(page.getByRole("button", { name: /Stop 3/i })).toBeVisible({ timeout: 5000 });
 
-  // Cliquer B (souvent le logical) → reveal → feedback
-  await page.getByRole("button", { name: /Stop B/i }).click();
+  // Cliquer Stop 2 → reveal → feedback
+  await page.getByRole("button", { name: /Stop 2/i }).click();
 
   // Attendre le reveal complet et le bouton suivant
   const next = page.getByRole("button", { name: /Scénario suivant|Voir le bilan/ });
@@ -89,11 +89,12 @@ test("V2 gameplay — pick difficulty, choisir stop, reveal, suivant", async ({ 
 
   // Le feedback contient les 3 verdicts de stops + lesson
   await expect(page.getByText(/Leçon · Débutant/i)).toBeVisible();
-  await expect(page.getByText(/Ton choix/i)).toBeVisible();
+  // « ton choix » figure aussi sur la pastille épinglée au graphique : on vise la carte de feedback
+  await expect(page.getByText(/Ton choix/i).last()).toBeVisible();
 
   // Suivant
   await next.click();
-  await expect(page.getByRole("button", { name: /Stop A/i })).toBeVisible({ timeout: 5000 });
+  await expect(page.getByRole("button", { name: /Stop 1/i })).toBeVisible({ timeout: 5000 });
 });
 
 test("V2 gameplay avancé — 0 erreur console + reveal anim", async ({ page }) => {
@@ -105,7 +106,7 @@ test("V2 gameplay avancé — 0 erreur console + reveal anim", async ({ page }) 
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
 
   await page.getByRole("button", { name: /Avancé/ }).click();
-  await page.getByRole("button", { name: /Stop A/i }).click();
+  await page.getByRole("button", { name: /Stop 1/i }).click();
   await expect(page.getByRole("button", { name: /Scénario suivant|Voir le bilan/ })).toBeVisible({ timeout: 8000 });
   await expect(page.getByText(/Leçon · Avancé/i)).toBeVisible();
 
@@ -121,7 +122,7 @@ test("V2 screenshots — picker + round débutant + feedback", async ({ page }) 
   await page.waitForTimeout(300);
   await page.screenshot({ path: "test-results/place-stop-v2-round-beginner.png", fullPage: false });
 
-  await page.getByRole("button", { name: /Stop B/i }).click();
+  await page.getByRole("button", { name: /Stop 2/i }).click();
   await expect(page.getByRole("button", { name: /Scénario suivant|Voir le bilan/ })).toBeVisible({ timeout: 8000 });
   await page.screenshot({ path: "test-results/place-stop-v2-feedback.png", fullPage: false });
 });
