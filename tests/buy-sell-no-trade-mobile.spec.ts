@@ -61,7 +61,7 @@ test("navigation — clic sur 'Commencer' depuis /jeux ouvre le jeu", async ({ p
   // La card "BUY / SELL / NO TRADE" doit être visible avec un bouton CTA
   const card = page.getByRole("link", { name: /BUY.*SELL.*NO TRADE|Jouer maintenant|Commencer/ }).first();
   await expect(card).toBeVisible();
-  await expect(card).toHaveAttribute("href", "/jeux/buy-sell-no-trade");
+  await expect(card).toHaveAttribute("href", /^(\/fr)?\/jeux\/buy-sell-no-trade$/);
 
   await card.click();
   await page.waitForURL("**/jeux/buy-sell-no-trade", { timeout: 5000 });

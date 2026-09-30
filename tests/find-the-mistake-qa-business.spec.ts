@@ -127,7 +127,7 @@ test.describe("QA métier 'Trouve l'erreur'", () => {
     },
     {
       difficulty: "advanced",
-      setupIds: ["sweep_ignored", "mitigation_misread", "over_leverage"],
+      setupIds: ["sweep_ignored", "mitigation_misread", "oversized_position"],
     },
   ];
 

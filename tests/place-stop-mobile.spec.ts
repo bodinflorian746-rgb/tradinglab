@@ -50,7 +50,7 @@ test("navigation — depuis /jeux le bouton 'Place ton Stop' ouvre le jeu", asyn
 
   const card = page.getByRole("link", { name: /Place ton Stop|Quel stop va survivre/ }).first();
   await expect(card).toBeVisible();
-  await expect(card).toHaveAttribute("href", "/jeux/place-stop");
+  await expect(card).toHaveAttribute("href", /^(\/fr)?\/jeux\/place-stop$/);
 
   await card.click();
   await page.waitForURL("**/jeux/place-stop", { timeout: 5000 });

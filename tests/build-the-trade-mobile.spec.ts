@@ -46,7 +46,7 @@ test("navigation — depuis /jeux ouvre 'Build the Trade'", async ({ page }) => 
 
   const card = page.getByRole("link", { name: /Build the Trade|Construis le setup/i }).first();
   await expect(card).toBeVisible();
-  await expect(card).toHaveAttribute("href", "/jeux/build-the-trade");
+  await expect(card).toHaveAttribute("href", /^(\/fr)?\/jeux\/build-the-trade$/);
 
   await card.click();
   await page.waitForURL("**/jeux/build-the-trade", { timeout: 5000 });

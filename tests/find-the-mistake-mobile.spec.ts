@@ -48,7 +48,7 @@ test("navigation — depuis /jeux ouvre 'Trouve l'erreur'", async ({ page }) => 
 
   const card = page.getByRole("link", { name: /Trouve l'erreur|Quelle est l'erreur/i }).first();
   await expect(card).toBeVisible();
-  await expect(card).toHaveAttribute("href", "/jeux/find-the-mistake");
+  await expect(card).toHaveAttribute("href", /^(\/fr)?\/jeux\/find-the-mistake$/);
 
   await card.click();
   await page.waitForURL("**/jeux/find-the-mistake", { timeout: 5000 });
