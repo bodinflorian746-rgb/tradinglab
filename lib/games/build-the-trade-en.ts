@@ -27,6 +27,7 @@ import {
   buildBuildTradeChart as buildBuildTradeChartFr,
   evaluateTrade,
 } from "./build-the-trade";
+export { withAssetPrices } from "./build-the-trade";
 
 // ─── Reexports types / utils ─────────────────────────────────────────────────
 

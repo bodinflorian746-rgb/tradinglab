@@ -247,7 +247,7 @@ export default function BuySellNoTradePage() {
 
   const current = scenarios[idx];
   const chart: BuySellChart | null = useMemo(
-    () => (current && difficulty ? G.buildChart(current.id, current.seed, current.volatility, difficulty) : null),
+    () => (current && difficulty ? G.withAssetPrices(G.buildChart(current.id, current.seed, current.volatility, difficulty), current) : null),
     [current, difficulty, G],
   );
 

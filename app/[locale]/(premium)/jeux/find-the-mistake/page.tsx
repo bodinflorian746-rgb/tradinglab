@@ -196,7 +196,7 @@ export default function FindTheMistakePage() {
 
   const current = scenarios[idx];
   const chart: ScenarioChart | null = useMemo(
-    () => (current ? G.buildScenarioChart(current, current.seed, current.volatility) : null),
+    () => (current ? G.withAssetPrices(G.buildScenarioChart(current, current.seed, current.volatility), current) : null),
     [current, G],
   );
 

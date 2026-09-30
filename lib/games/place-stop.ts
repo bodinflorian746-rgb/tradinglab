@@ -17,8 +17,10 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, pick, clamp, candle,
+  VOL_MULT, mulberry32, clamp, candle,
 } from "./shared";
+import { pickMarketContext, contextRule } from "./market-context";
+import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext };
 export type { Candle, ChartZone };
@@ -113,9 +115,7 @@ export interface PlaceStopChart {
 export const ROUNDS_PER_SESSION = 10;
 
 const ASSETS:        readonly Asset[]      = ["EUR/USD", "XAU/USD", "BTC/USD", "NASDAQ"];
-const SESSIONS:      readonly Session[]    = ["Londres", "New York", "Overlap", "Heures mortes"];
-const VOLATILITIES:  readonly Volatility[] = ["faible", "normale", "élevée"];
-const SPREADS:       readonly Spread[]     = ["faible", "élevé"];
+const SESSIONS:      readonly Session[]    = ["Asie", "Londres", "New York", "Overlap", "Heures mortes"];
 
 // ─── Templates ────────────────────────────────────────────────────────────────
 
@@ -645,10 +645,8 @@ export function generatePlaceStopScenarios(seed: number, difficulty: Difficulty 
     const isHighVol = candidate.id === "high_vol_pullback";
     out.push({
       ...candidate,
-      asset:      pick(ASSETS, rng),
-      session:    pick(SESSIONS, rng),
-      volatility: isHighVol ? "élevée" : pick(VOLATILITIES, rng),
-      spread:     pick(SPREADS, rng),
+      // Contexte cohérent : session, actif tradé dans la session, volatilité et spread de la session
+      ...pickMarketContext(rng, { assets: ASSETS, sessions: SESSIONS }, contextRule("ps", candidate.id, isHighVol ? { volatility: "élevée" } : {})),
       seed:       (seed + i * 9973) >>> 0,
       difficulty,
     });
@@ -2713,6 +2711,26 @@ function scnKeyLevelMagnetSell(rng: () => number, m: number, d: Difficulty, mode
 }
 
 // ─── Build chart ──────────────────────────────────────────────────────────────
+
+/**
+ * Graphique converti à l'échelle de prix de l'actif (au dernier moment, pour
+ * l'affichage). Le scénario « chiffre rond » tombe sur un vrai chiffre rond.
+ */
+export function withAssetPrices(chart: PlaceStopChart, inst: { id: string; asset: Asset; seed: number }): PlaceStopChart {
+  const roundZone = inst.id === "round_number_sweep" ? chart.zones[0] : undefined;
+  const anchor = roundZone ? (roundZone.y1 + roundZone.y2) / 2 : chart.entry;
+  const f = assetPriceMap(inst.asset, inst.seed, anchor, { round: !!roundZone });
+  return {
+    ...chart,
+    past:   chart.past.map(mapCandle(f)),
+    future: chart.future.map(mapCandle(f)),
+    zones:  chart.zones.map(mapZone(f)),
+    domain: mapDomain(f, chart.domain),
+    entry:  f(chart.entry),
+    tp:     chart.tp === null ? null : f(chart.tp),
+    stops:  chart.stops.map((st) => ({ ...st, price: f(st.price) })),
+  };
+}
 
 export function buildPlaceStopChart(
   setup: PlaceStopSetupKey,

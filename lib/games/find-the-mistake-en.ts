@@ -24,6 +24,7 @@ import {
   buildScenarioChart as buildScenarioChartFr,
   scoreMistakeChoice,
 } from "./find-the-mistake";
+export { withAssetPrices } from "./find-the-mistake";
 
 // ─── Reexports types / utils ─────────────────────────────────────────────────
 

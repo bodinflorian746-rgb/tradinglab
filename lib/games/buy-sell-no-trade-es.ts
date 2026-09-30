@@ -48,6 +48,7 @@ export type {
   ChartZone,
   ZoneKind,
 } from "./buy-sell-no-trade";
+export { withAssetPrices } from "./buy-sell-no-trade";
 
 export { ROUNDS_PER_SESSION, scoreChoice, mulberry32 };
 

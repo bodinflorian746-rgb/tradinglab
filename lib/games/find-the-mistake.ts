@@ -8,8 +8,10 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, pick, clamp, candle,
+  VOL_MULT, mulberry32, clamp, candle,
 } from "./shared";
+import { pickMarketContext, contextRule } from "./market-context";
+import { anchorPrice, assetPriceMap, linearPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext, Candle, ChartZone };
 
@@ -145,8 +147,6 @@ export const ROUNDS_PER_SESSION = 10;
 
 const ASSETS:       readonly Asset[]      = ["EUR/USD", "XAU/USD", "BTC/USD", "NASDAQ"];
 const SESSIONS:     readonly Session[]    = ["Londres", "New York", "Overlap", "Heures mortes"];
-const VOLATILITIES: readonly Volatility[] = ["faible", "normale", "élevée"];
-const SPREADS:      readonly Spread[]     = ["faible", "élevé"];
 
 // ─── Templates (16) ───────────────────────────────────────────────────────────
 
@@ -588,10 +588,11 @@ export function generateMistakeScenarios(seed: number, difficulty: Difficulty): 
     }
     out.push({
       ...cand,
-      asset:      ov.asset      ?? pick(ASSETS, rng),
-      session:    ov.session    ?? pick(SESSIONS, rng),
-      volatility: ov.volatility ?? (cand.macroContext === "dangereux" ? "élevée" : pick(VOLATILITIES, rng)),
-      spread:     ov.spread     ?? (cand.macroContext === "dangereux" ? "élevé"  : pick(SPREADS, rng)),
+      // Contexte cohérent : session, actif tradé dans la session, volatilité et spread de la session
+      ...pickMarketContext(rng, { assets: ASSETS, sessions: SESSIONS }, contextRule("ftm", cand.id, {
+        ...ov,
+        ...(cand.macroContext === "dangereux" ? { volatility: ov.volatility ?? "élevée", spread: ov.spread ?? "élevé" } : {}),
+      })),
       seed:       (seed + i * 9973) >>> 0,
       difficulty,
       shuffledChoices: allChoices,
@@ -919,6 +920,32 @@ function shHighVolPullback(rng: () => number, m: number): { chart: ScenarioChart
 }
 
 // ─── Build scenario chart (entry + dispatch) ─────────────────────────────────
+
+/**
+ * Graphique converti à l'échelle de prix de l'actif (au dernier moment, pour
+ * l'affichage). « Pomper 5 % en 3 bougies » : l'échelle est calée pour que la
+ * hausse des 3 dernières bougies vaille 5 %.
+ */
+export function withAssetPrices(chart: ScenarioChart, inst: { id: string; asset: Asset; seed: number }): ScenarioChart {
+  const past = chart.past;
+  let f = assetPriceMap(inst.asset, inst.seed, past[past.length - 1].c);
+  if (inst.id === "fomo_after_pump" && past.length >= 4) {
+    const from = past[past.length - 4].c, to = past[past.length - 1].c;
+    const base = anchorPrice(inst.asset, inst.seed);
+    f = linearPriceMap(from, base, (0.05 * base) / (to - from));
+  }
+  const g = (p: number | undefined) => (p === undefined ? undefined : f(p));
+  return {
+    ...chart,
+    past:   past.map(mapCandle(f)),
+    future: chart.future.map(mapCandle(f)),
+    zones:  chart.zones.map(mapZone(f)),
+    domain: mapDomain(f, chart.domain),
+    entry:  g(chart.entry),
+    stop:   g(chart.stop),
+    tp:     g(chart.tp),
+  };
+}
 
 export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility): ScenarioChart {
   const rng = mulberry32(seed);

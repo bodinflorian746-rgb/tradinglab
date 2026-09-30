@@ -15,8 +15,10 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone, type ChartData, type ZoneKind,
-  VOL_MULT, mulberry32, pick, clamp, candle, chartDomain,
+  VOL_MULT, mulberry32, clamp, candle, chartDomain,
 } from "./shared";
+import { pickMarketContext, contextRule } from "./market-context";
+import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext };
 export type { Candle, ChartZone, ChartData, ZoneKind };
@@ -481,8 +483,6 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
 
 const ASSETS: readonly Asset[] = ["XAU/USD", "EUR/USD", "NASDAQ"];
 const SESSIONS: readonly Session[] = ["Asie", "Londres", "New York"];
-const VOLATILITIES: readonly Volatility[] = ["faible", "normale", "élevée"];
-const SPREADS: readonly Spread[] = ["faible", "élevé"];
 
 export function generateScenarios(seed: number, difficulty: Difficulty = "intermediate"): ScenarioInstance[] {
   const rng = mulberry32(seed);
@@ -504,10 +504,11 @@ export function generateScenarios(seed: number, difficulty: Difficulty = "interm
     const ov = candidate.metaOverride ?? {};
     out.push({
       ...candidate,
-      asset:      ov.asset      ?? pick(ASSETS, rng),
-      session:    ov.session    ?? pick(SESSIONS, rng),
-      volatility: ov.volatility ?? (candidate.macroContext === "dangereux" ? "élevée" : pick(VOLATILITIES, rng)),
-      spread:     ov.spread     ?? (candidate.macroContext === "dangereux" ? "élevé"  : pick(SPREADS, rng)),
+      // Contexte cohérent : session, actif tradé dans la session, volatilité et spread de la session
+      ...pickMarketContext(rng, { assets: ASSETS, sessions: SESSIONS }, contextRule("bsnt", candidate.id, {
+        ...ov,
+        ...(candidate.macroContext === "dangereux" ? { volatility: ov.volatility ?? "élevée", spread: ov.spread ?? "élevé" } : {}),
+      })),
       seed:       (seed + i * 9973) >>> 0,
       difficulty,
     });
@@ -1325,6 +1326,18 @@ function genToxicExecution(rng: () => number, m: number, d: Difficulty): BuySell
 }
 
 // ─── Build chart depuis un setup ──────────────────────────────────────────────
+
+/** Graphique converti à l'échelle de prix de l'actif (au dernier moment, pour l'affichage). */
+export function withAssetPrices(chart: BuySellChart, inst: { asset: Asset; seed: number }): BuySellChart {
+  const f = assetPriceMap(inst.asset, inst.seed, chart.past[chart.past.length - 1].c);
+  return {
+    ...chart,
+    past:   chart.past.map(mapCandle(f)),
+    future: chart.future.map(mapCandle(f)),
+    zones:  chart.zones.map(mapZone(f)),
+    domain: mapDomain(f, chart.domain),
+  };
+}
 
 export function buildChart(
   setup: SetupKey,

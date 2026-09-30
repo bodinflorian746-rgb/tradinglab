@@ -10,8 +10,10 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, pick, clamp, candle,
+  VOL_MULT, mulberry32, clamp, candle,
 } from "./shared";
+import { pickMarketContext, contextRule } from "./market-context";
+import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext, Candle, ChartZone };
 
@@ -106,8 +108,6 @@ export const ROUNDS_PER_SESSION = 8;
 
 const ASSETS:       readonly Asset[]      = ["EUR/USD", "XAU/USD", "BTC/USD", "NASDAQ"];
 const SESSIONS:     readonly Session[]    = ["Londres", "New York", "Overlap", "Heures mortes"];
-const VOLATILITIES: readonly Volatility[] = ["faible", "normale", "élevée"];
-const SPREADS:      readonly Spread[]     = ["faible", "élevé"];
 
 // ─── Templates (15) ───────────────────────────────────────────────────────────
 
@@ -388,10 +388,8 @@ export function generateBuildTradeScenarios(seed: number, difficulty: Difficulty
     }
     out.push({
       ...cand,
-      asset:      pick(ASSETS, rng),
-      session:    pick(SESSIONS, rng),
-      volatility: cand.chartShape === "high_vol_pullback" ? "élevée" : pick(VOLATILITIES, rng),
-      spread:     pick(SPREADS, rng),
+      // Contexte cohérent : session, actif tradé dans la session, volatilité et spread de la session
+      ...pickMarketContext(rng, { assets: ASSETS, sessions: SESSIONS }, contextRule("btt", cand.id, cand.chartShape === "high_vol_pullback" ? { volatility: "élevée" } : {})),
       seed:       (seed + i * 9973) >>> 0,
       difficulty,
     });
@@ -1127,6 +1125,24 @@ function shapeCounterTrendLocal(rng: () => number, m: number): ShapeOutput {
 
 // ─── Dispatch + entries/stops/tps ────────────────────────────────────────────
 
+/** Graphique converti à l'échelle de prix de l'actif (au dernier moment, pour l'affichage). */
+export function withAssetPrices(chart: BuildTradeChart, inst: { asset: Asset; seed: number }): BuildTradeChart {
+  const f = assetPriceMap(inst.asset, inst.seed, chart.currentPrice);
+  const map = <T extends string>(r: Record<T, number>) =>
+    Object.fromEntries(Object.entries(r).map(([k, v]) => [k, f(v as number)])) as Record<T, number>;
+  return {
+    ...chart,
+    past:    chart.past.map(mapCandle(f)),
+    future:  chart.future.map(mapCandle(f)),
+    zones:   chart.zones.map(mapZone(f)),
+    domain:  mapDomain(f, chart.domain),
+    entries: map(chart.entries),
+    stops:   map(chart.stops),
+    tps:     map(chart.tps),
+    currentPrice: f(chart.currentPrice),
+  };
+}
+
 export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number, vol: Volatility): BuildTradeChart {
   const rng = mulberry32(seed);
   const m = VOL_MULT[vol];
@@ -1184,7 +1200,7 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   const dir = direction === "BUY" ? 1 : -1;
   let fast = ref + dir * refRisk * (shape.ref.fastR ?? 1.0);
   if (shape.ref.reversal !== undefined) fast = shape.ref.reversal - dir * 0.1 * effM;
-  if (shape.ref.bound !== undefined) fast = ref + dir * Math.min(Math.abs(shape.ref.bound - ref) - 0.05 * effM, 1.95 * refRisk);
+  if (shape.ref.bound !== undefined) fast = ref + dir * Math.min(Math.abs(shape.ref.bound - ref) - 0.05 * effM, 1.9 * refRisk);
   const fastBuy = fast;
   const fastSell = fast;
   const tps = direction === "BUY"

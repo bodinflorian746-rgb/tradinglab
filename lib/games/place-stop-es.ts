@@ -26,6 +26,7 @@ import {
   computeHits,
   scoreStopChoice,
 } from "./place-stop";
+export { withAssetPrices } from "./place-stop";
 
 // ─── Reexports tipos / utilidades ────────────────────────────────────────────
 

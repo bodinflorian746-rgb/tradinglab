@@ -20,6 +20,8 @@ import {
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
 import { StepBadge, VerdictOverlay, GeneralCasesNote } from "@/app/components/games/v2/ui";
 import { logGameEvent } from "@/lib/trader-profile";
+import { formatPrice } from "@/lib/games/price-scale";
+import type { Asset } from "@/lib/games/shared";
 
 const BIAS_LABEL_FR  = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
 const BIAS_LABEL_ES  = { bullish: "Alcista", bearish: "Bajista", range: "Range" } as const;
@@ -38,7 +40,7 @@ const STEP_COLOR: Record<BuildStep, string> = { entry: "#3b82f6", stop: "#ef4444
 const REVEAL_STEP_MS = 420;
 /** Durée max de la révélation bougie par bougie (suites longues : pas raccourci) */
 const REVEAL_MAX_MS = 5600;
-const fmt = (p: number) => p.toFixed(2);
+
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
@@ -246,7 +248,7 @@ export default function BuildTheTradePage() {
 
   const current = scenarios[idx];
   const chart: BuildTradeChart | null = useMemo(
-    () => (current ? G.buildBuildTradeChart(current, current.seed, current.volatility) : null),
+    () => (current ? G.withAssetPrices(G.buildBuildTradeChart(current, current.seed, current.volatility), current) : null),
     [current, G],
   );
 
@@ -414,6 +416,7 @@ export default function BuildTheTradePage() {
 
   const step = isBuild ? 1 : isReveal ? 2 : 3;
   const stepLabel = isBuild ? T.stepBuild : isReveal ? T.revelation : T.stepVerdict;
+  const fmt = (p: number) => formatPrice(current.asset, p);
   const levels: Record<BuildStep, Record<string, number>> = { entry: chart.entries, stop: chart.stops, tp: chart.tps };
   const types: Record<BuildStep, string[]> = { entry: ENTRY_TYPES, stop: STOP_TYPES, tp: TP_TYPES };
   const stepNames: Record<BuildStep, string> = { entry: T.entryLabel, stop: T.stopLabel, tp: T.lineTp };
@@ -584,7 +587,7 @@ export default function BuildTheTradePage() {
                   ))}
                 </div>
               ) : canValidate ? (
-                <RrPreview T={T} chart={chart} entry={entry!} stop={stop!} tp={tp!} />
+                <RrPreview T={T} chart={chart} entry={entry!} stop={stop!} tp={tp!} asset={current.asset} />
               ) : null}
             </div>
 
@@ -626,6 +629,7 @@ export default function BuildTheTradePage() {
                 setupVerdictFn={G.setupVerdict}
                 onNext={handleNext}
                 isLast={idx + 1 >= ROUNDS_PER_SESSION}
+                asset={current.asset}
               />
             )}
 
@@ -705,7 +709,7 @@ function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Diff
 
 // ─── R/R du plan ─────────────────────────────────────────────────────────────
 
-function RrPreview({ T, chart, entry, stop, tp }: { T: { [k: string]: string }; chart: BuildTradeChart; entry: EntryType; stop: StopType; tp: TpType }) {
+function RrPreview({ T, chart, entry, stop, tp, asset }: { T: { [k: string]: string }; chart: BuildTradeChart; entry: EntryType; stop: StopType; tp: TpType; asset: Asset }) {
   const e = chart.entries[entry];
   const s = chart.stops[stop];
   const t = chart.tps[tp];
@@ -715,8 +719,8 @@ function RrPreview({ T, chart, entry, stop, tp }: { T: { [k: string]: string }; 
   const rrColor = rr >= 2 ? "text-emerald-400" : rr >= 1 ? "text-amber-300" : "text-red-400";
   return (
     <div className="grid grid-cols-3 gap-2 sm:gap-3">
-      <OutcomeTile label={T.risk}   value={risk.toFixed(2)}   valueClass="" />
-      <OutcomeTile label={T.reward} value={reward.toFixed(2)} valueClass="" />
+      <OutcomeTile label={T.risk}   value={formatPrice(asset, risk)}   valueClass="" />
+      <OutcomeTile label={T.reward} value={formatPrice(asset, reward)} valueClass="" />
       <OutcomeTile label={T.rr}     value={rr > 0 ? `1:${rr.toFixed(1)}` : ""} valueClass={rrColor} />
     </div>
   );
@@ -728,7 +732,7 @@ function RrPreview({ T, chart, entry, stop, tp }: { T: { [k: string]: string }; 
 
 function Feedback({
   T, result, picks, optimal, title, optimalExplain, lesson, difficulty, difficultyMeta,
-  entryLabels, stopLabels, tpLabels, setupVerdictFn, onNext, isLast,
+  entryLabels, stopLabels, tpLabels, setupVerdictFn, onNext, isLast, asset,
 }: {
   T:              { [k: string]: string };
   result:         BuildTradeResult;
@@ -745,6 +749,7 @@ function Feedback({
   setupVerdictFn: typeof FrGame.setupVerdict;
   onNext:         () => void;
   isLast:         boolean;
+  asset:          Asset;
 }) {
   const verdict = setupVerdictFn(result);
   const tint = verdict.color === "emerald" ? "#34d399" : verdict.color === "amber" ? "#fcd34d" : "#f87171";
@@ -776,7 +781,7 @@ function Feedback({
         />
         {result.entryFilled && (
           <>
-            <OutcomeTile label={T.drawdown} value={result.maxDrawdown.toFixed(2)} valueClass="" />
+            <OutcomeTile label={T.drawdown} value={formatPrice(asset, result.maxDrawdown)} valueClass="" />
             <OutcomeTile
               label={T.optimalPlan}
               value={`${result.qualityMatch}/3`}

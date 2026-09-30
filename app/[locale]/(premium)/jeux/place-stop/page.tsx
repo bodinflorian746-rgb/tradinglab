@@ -22,6 +22,8 @@ import {
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
 import { StepBadge, VerdictOverlay, GeneralCasesNote } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
+import { formatPrice } from "@/lib/games/price-scale";
+import type { Asset } from "@/lib/games/shared";
 
 const STOP_TYPE_TO_SKILL: Record<StopType, { skill: SkillId; outcome: "win" | "loss" }> = {
   logical:   { skill: "structure",      outcome: "win"  },
@@ -258,7 +260,7 @@ export default function PlaceStopPage() {
 
   const current = scenarios[idx];
   const chart: PlaceStopChart | null = useMemo(
-    () => (current && difficulty ? G.buildPlaceStopChart(current.id, current.seed, current.volatility, difficulty) : null),
+    () => (current && difficulty ? G.withAssetPrices(G.buildPlaceStopChart(current.id, current.seed, current.volatility, difficulty), current) : null),
     [current, difficulty, G],
   );
 
@@ -526,6 +528,7 @@ export default function PlaceStopPage() {
               tp={chart.tp}
               direction={chart.direction}
               spatialLabels={spatialLabels}
+              asset={current.asset}
               picked={chosen}
               onChoose={isPlacing ? handleChoose : undefined}
             />
@@ -551,6 +554,7 @@ export default function PlaceStopPage() {
                 difficulty={difficulty}
                 difficultyMeta={G.DIFFICULTY_META}
                 spatialLabels={spatialLabels}
+                asset={current.asset}
                 hasLogical={hasLogicalInChart}
                 locale={locale}
                 onNext={handleNext}
@@ -630,8 +634,9 @@ function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Diff
 // ─── Choix des stops (ordre spatial haut → bas, cohérent avec le graphique) ──
 
 function StopChoices({
-  stops, entry, tp, direction, spatialLabels, picked, onChoose,
+  stops, entry, tp, direction, spatialLabels, picked, onChoose, asset,
 }: {
+  asset: Asset;
   stops: StopOption[];
   entry: number;
   tp: number | null;
@@ -665,9 +670,9 @@ function StopChoices({
               {num}
             </span>
             <span className="flex min-w-0 flex-col">
-              <span className="v2-mono text-[16px] font-bold" style={{ color }}>{fmt(s.price)}</span>
+              <span className="v2-mono text-[16px] font-bold" style={{ color }}>{fmt(s.price, asset)}</span>
               <span className="flex items-center gap-2 text-[12px]">
-                <span className="v2-mono text-[color:var(--v2-text-3)]">{direction === "BUY" ? "−" : "+"}{dist.toFixed(2)}</span>
+                <span className="v2-mono text-[color:var(--v2-text-3)]">{direction === "BUY" ? "−" : "+"}{fmt(dist, asset)}</span>
                 {rr !== null && rr > 0 && (
                   <span className={`v2-mono font-semibold ${rr >= 2 ? "text-emerald-300" : rr >= 1 ? "text-amber-300" : "text-red-300"}`}>
                     RR 1:{rr.toFixed(1)}
@@ -687,7 +692,7 @@ function StopChoices({
 // détaille les 3 stops, la leçon et l'accès au scénario suivant.
 
 function Feedback({
-  T, result, chosen, chart, title, lesson, tag, difficulty, difficultyMeta, spatialLabels, hasLogical, locale, onNext, isLast,
+  T, result, chosen, chart, title, lesson, tag, difficulty, difficultyMeta, spatialLabels, hasLogical, locale, onNext, isLast, asset,
 }: {
   T:              { [k: string]: string };
   result:         ScoreResult;
@@ -703,6 +708,7 @@ function Feedback({
   locale:         string | undefined;
   onNext:         () => void;
   isLast:         boolean;
+  asset:          Asset;
 }) {
   const headerColor = feedbackColor(result.type, hasLogical);
   return (
@@ -716,6 +722,7 @@ function Feedback({
             key={s.id}
             T={T}
             stop={s}
+            asset={asset}
             isChosen={chosen === s.id}
             hitIndex={result.hitMap[s.id]}
             futureLength={chart.future.length}
@@ -750,8 +757,9 @@ function Feedback({
 }
 
 function StopVerdictRow({
-  T, stop, isChosen, hitIndex, futureLength, spatialLabels, hasLogical, locale,
+  T, stop, isChosen, hitIndex, futureLength, spatialLabels, hasLogical, locale, asset,
 }: {
+  asset: Asset;
   T: { [k: string]: string };
   stop: StopOption;
   isChosen: boolean;
@@ -779,7 +787,7 @@ function StopVerdictRow({
         }`}>
           {rowLabel}
         </p>
-        <span className="v2-mono text-[12px] text-[color:var(--v2-text-3)]">{fmt(stop.price)}</span>
+        <span className="v2-mono text-[12px] text-[color:var(--v2-text-3)]">{fmt(stop.price, asset)}</span>
         {isChosen && (
           <span className="ml-auto text-[12px] font-bold uppercase tracking-wide text-[color:var(--v2-text-2)]">{T.yourChoice}</span>
         )}
@@ -955,8 +963,8 @@ function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function fmt(p: number): string {
-  return p.toFixed(2);
+function fmt(p: number, asset: Asset): string {
+  return formatPrice(asset, p);
 }
 
 function translateVolatility(v: "faible" | "normale" | "élevée", locale: string | undefined): string {
