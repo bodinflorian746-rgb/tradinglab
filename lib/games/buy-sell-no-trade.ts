@@ -18,6 +18,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle, chartDomain,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
+import { realizeChart } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext };
@@ -1339,7 +1340,19 @@ export function withAssetPrices(chart: BuySellChart, inst: { asset: Asset; seed:
   };
 }
 
+/** Graphique du scénario, avec la passe de réalisme des bougies (niveaux clés : les zones). */
 export function buildChart(
+  setup: SetupKey,
+  seed: number,
+  volatility: Volatility = "normale",
+  difficulty: Difficulty = "intermediate",
+): BuySellChart {
+  const ch = buildChartRaw(setup, seed, volatility, difficulty);
+  return realizeChart(ch, ch.zones.flatMap((z) => [z.y1, z.y2]), seed);
+}
+
+/** Graphique brut du scénario, avant la passe de réalisme (audits). */
+export function buildChartRaw(
   setup: SetupKey,
   seed: number,
   volatility: Volatility = "normale",

@@ -20,6 +20,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
+import { realizeChart } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext };
@@ -2739,7 +2740,12 @@ export function buildPlaceStopChart(
   difficulty: Difficulty,
 ): PlaceStopChart {
   const chart = rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed);
-  return keepPricesPositive(setup === "tight_consolidation" ? chart : ensureCorrectStopRR(chart));
+  const withTarget = setup === "tight_consolidation" ? chart : ensureCorrectStopRR(chart);
+  // Passe de réalisme des bougies (niveaux clés : zones, entrée, TP, les 3 stops)
+  // (passé : zones ; futur : aussi entrée, TP et stops, qui décident de l'issue)
+  const zones = withTarget.zones.flatMap((z) => [z.y1, z.y2]);
+  const outcome = [...(withTarget.tp !== null ? [withTarget.tp] : []), ...withTarget.stops.map((st) => st.price)];
+  return keepPricesPositive(realizeChart(withTarget, { past: zones, future: [...zones, withTarget.entry, ...outcome] }, seed));
 }
 
 // Le bon stop ne doit jamais avoir un R/R faible : l'objectif (TP) est au moins

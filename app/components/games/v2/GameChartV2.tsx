@@ -114,13 +114,15 @@ type V2CandleProps = Candle & {
   dim?: "anim" | "now" | "full";
   /** true : visible d'emblée (pas d'animation d'apparition) */
   still?: boolean;
+  /** Clôture précédente : couleur d'une bougie sans corps (jamais de bougie neutre) */
+  prevClose?: number;
 };
 
-export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still = false }: V2CandleProps) {
-  const up = c > o;
-  const down = c < o;
-  const body = up ? "var(--v2-bull)" : down ? "var(--v2-bear)" : "var(--v2-doji)";
-  const wick = up ? "var(--v2-bull-wick)" : down ? "var(--v2-bear-wick)" : "var(--v2-doji)";
+export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still = false, prevClose }: V2CandleProps) {
+  // Toujours verte ou rouge : sans corps, la couleur suit la clôture précédente
+  const up = c > o || (c === o && (prevClose === undefined || c >= prevClose));
+  const body = up ? "var(--v2-bull)" : "var(--v2-bear)";
+  const wick = up ? "var(--v2-bull-wick)" : "var(--v2-bear-wick)";
   const yTop = toY(Math.max(o, c));
   const yBot = toY(Math.min(o, c));
   const dimClass = dim === "anim" ? "v2-dim" : dim === "now" ? "v2-dim--now" : undefined;
@@ -472,12 +474,12 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
         {/* Bougies */}
         {visible.map((k, i) => {
           const isFuture = sep !== undefined && i >= sep;
-          if (question) return <V2Candle key={i} {...k} x={xOf(i)} width={bodyW} toY={toY} index={i} dim={keepCandlesBright ? "full" : "anim"} />;
+          if (question) return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={i} dim={keepCandlesBright ? "full" : "anim"} />;
           if (mode === "reveal" && isFuture) {
             // Montée par la page toutes les 420ms : apparaît à son arrivée
-            return <V2Candle key={i} {...k} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="full" />;
+            return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="full" />;
           }
-          return <V2Candle key={i} {...k} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="now" still />;
+          return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="now" still />;
         })}
 
         {/* Impact : le stop touché est marqué à la bougie qui l'atteint */}

@@ -13,6 +13,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
+import { realizeChart } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext, Candle, ChartZone };
@@ -1143,7 +1144,17 @@ export function withAssetPrices(chart: BuildTradeChart, inst: { asset: Asset; se
   };
 }
 
+/** Graphique du scénario, avec la passe de réalisme des bougies (niveaux clés : zones, entrées, stops, TP). */
 export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number, vol: Volatility): BuildTradeChart {
+  const ch = buildBuildTradeChartRaw(template, seed, vol);
+  // (passé : zones ; futur : aussi entrées, stops et TP, qui décident de l'issue)
+  const zones = ch.zones.flatMap((z) => [z.y1, z.y2]);
+  const plan = [...Object.values(ch.entries), ...Object.values(ch.stops), ...Object.values(ch.tps)];
+  return realizeChart(ch, { past: zones, future: [...zones, ...plan] }, seed);
+}
+
+/** Graphique brut du scénario, avant la passe de réalisme (audits). */
+export function buildBuildTradeChartRaw(template: BuildTradeTemplate, seed: number, vol: Volatility): BuildTradeChart {
   const rng = mulberry32(seed);
   const m = VOL_MULT[vol];
   let shape: ShapeOutput;
