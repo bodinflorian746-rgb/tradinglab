@@ -420,6 +420,11 @@ function finalize(past: Candle[], future: Candle[], zones: ChartZone[], extras: 
   return { domain: { min: min - pad, max: max + pad } };
 }
 
+function medianBody(candles: Candle[]): number {
+  const b = candles.map((k) => Math.abs(k.c - k.o)).sort((x, y) => x - y);
+  return b[Math.floor(b.length / 2)];
+}
+
 // 1. Uptrend + pullback (BUY)
 function shapeUptrendPullback(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
@@ -443,7 +448,7 @@ function shapeUptrendPullback(rng: () => number, m: number): ShapeOutput {
   const fut: Candle[] = [];
   // 1er future : dip qui descend juste au-dessus du swingLow (= deep_pullback level)
   const dipLow = swingLow + 0.05 * m;
-  fut.push({ o: p, c: swingLow + 0.4 * m, h: p + 0.1 * m, l: dipLow });
+  fut.push({ o: p, c: swingLow + 0.4 * m, h: Math.max(p, swingLow + 0.4 * m) + 0.1 * m, l: dipLow });
   p = swingLow + 0.4 * m;
   // 2e : bougie verte de confirmation (= confirmation level)
   fut.push(candle(p, p + 0.5 * m, (0.2 + rng() * 0.15) * m, 0.1));
@@ -481,7 +486,7 @@ function shapeDowntrendPullback(rng: () => number, m: number): ShapeOutput {
   const entryRef = p;
   const fut: Candle[] = [];
   const bumpHigh = swingHigh - 0.05 * m;
-  fut.push({ o: p, c: swingHigh - 0.4 * m, h: bumpHigh, l: p - 0.1 * m });
+  fut.push({ o: p, c: swingHigh - 0.4 * m, h: bumpHigh, l: Math.min(p, swingHigh - 0.4 * m) - 0.1 * m });
   p = swingHigh - 0.4 * m;
   fut.push(candle(p, p - 0.5 * m, 0.1, (0.2 + rng() * 0.15) * m));
   p -= 0.5 * m;
@@ -512,11 +517,14 @@ function shapeBreakoutUp(rng: () => number, m: number): ShapeOutput {
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 0.8 * m, R - 1.3, R - 0.3);
-    past.push(candle(o, c, (0.25 + rng() * 0.2) * m, (0.25 + rng() * 0.2) * m));
+    const k = candle(o, c, (0.25 + rng() * 0.2) * m, (0.25 + rng() * 0.2) * m);
+    k.h = Math.min(k.h, R + 0.05); // la résistance tient jusqu'à la cassure
+    past.push(k);
     p = c;
   }
-  // breakout candle
-  past.push(candle(p, R + (1.0 + rng() * 0.4) * m, (0.3 + rng() * 0.2) * m, 0.15));
+  // breakout candle : corps d'au moins 2× le corps médian (« bougie de force »)
+  const forceBody = 2.05 * medianBody(past);
+  past.push(candle(p, Math.max(R + (1.0 + rng() * 0.4) * m, p + forceBody), (0.3 + rng() * 0.2) * m, 0.15));
   p = past[past.length - 1].c;
   const entryRef = p;
   // Future : pullback léger (touche confirmation), pas de deep_pullback, puis rallye
@@ -549,10 +557,13 @@ function shapeBreakoutDown(rng: () => number, m: number): ShapeOutput {
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 0.8 * m, S + 0.3, S + 1.3);
-    past.push(candle(o, c, (0.25 + rng() * 0.2) * m, (0.25 + rng() * 0.2) * m));
+    const k = candle(o, c, (0.25 + rng() * 0.2) * m, (0.25 + rng() * 0.2) * m);
+    k.l = Math.max(k.l, S - 0.05); // le support tient jusqu'à la cassure
+    past.push(k);
     p = c;
   }
-  past.push(candle(p, S - (1.0 + rng() * 0.4) * m, 0.15, (0.3 + rng() * 0.2) * m));
+  const forceBody = 2.05 * medianBody(past);
+  past.push(candle(p, Math.min(S - (1.0 + rng() * 0.4) * m, p - forceBody), 0.15, (0.3 + rng() * 0.2) * m));
   p = past[past.length - 1].c;
   const entryRef = p;
   const fut: Candle[] = [];
@@ -577,20 +588,27 @@ function shapeBounceSupport(rng: () => number, m: number): ShapeOutput {
   for (let i = 0; i < 6; i++) {
     const o = p;
     const c = clamp(o - (0.5 + rng() * 0.5) * m, S + 0.4, 6);
-    past.push(candle(o, c, (0.15 + rng() * 0.18) * m, (0.18 + rng() * 0.25) * m));
+    const k = candle(o, c, (0.15 + rng() * 0.18) * m, (0.18 + rng() * 0.25) * m);
+    k.l = Math.max(k.l, S - 0.05); // le support tient
+    past.push(k);
     p = c;
   }
-  // 3 bougies testant support avec mèches
+  // 3 bougies testant support avec mèches (sans le percer), les 2 dernières le
+  // touchent ; la dernière avec une mèche au moins aussi longue que son corps (« mèche claire »)
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.7 + rng() * 0.3) * m));
+    let c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
+    const wU = (0.2 + rng() * 0.2) * m;
+    let l = Math.max(Math.min(o, c) - (0.7 + rng() * 0.3) * m, S - 0.05);
+    if (i >= 1) l = Math.min(l, S + 0.05); // support « testé 2-3 fois »
+    if (i === 2) c = c > o ? Math.min(c, 2 * o - l) : Math.max(c, (o + l) / 2);
+    past.push({ o, c, h: Math.max(o, c) + wU, l });
     p = c;
   }
   const entryRef = p;
   const fut: Candle[] = [];
   // 1 dip vers le support (deep_pullback fillable)
-  fut.push({ o: p, c: S + 0.5 * m, h: p + 0.1 * m, l: S + 0.05 * m });
+  fut.push({ o: p, c: S + 0.5 * m, h: Math.max(p, S + 0.5 * m) + 0.1 * m, l: S + 0.05 * m });
   p = S + 0.5 * m;
   // Confirmation candle (green)
   fut.push(candle(p, p + 0.4 * m, (0.2 + rng() * 0.15) * m, 0.1));
@@ -615,18 +633,26 @@ function shapeRejectionResistance(rng: () => number, m: number): ShapeOutput {
   for (let i = 0; i < 6; i++) {
     const o = p;
     const c = clamp(o + (0.5 + rng() * 0.5) * m, 4, R - 0.4);
-    past.push(candle(o, c, (0.18 + rng() * 0.25) * m, (0.15 + rng() * 0.18) * m));
+    const k = candle(o, c, (0.18 + rng() * 0.25) * m, (0.15 + rng() * 0.18) * m);
+    k.h = Math.min(k.h, R + 0.05); // la résistance tient
+    past.push(k);
     p = c;
   }
+  // 3 bougies testant la résistance (sans la percer), les 2 dernières la
+  // touchent ; la dernière avec une mèche de rejet au moins aussi longue que son corps
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
-    past.push(candle(o, c, (0.7 + rng() * 0.3) * m, (0.2 + rng() * 0.2) * m));
+    let c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
+    let h = Math.min(Math.max(o, c) + (0.7 + rng() * 0.3) * m, R + 0.05);
+    const wD = (0.2 + rng() * 0.2) * m;
+    if (i >= 1) h = Math.max(h, R - 0.05); // résistance testée plusieurs fois
+    if (i === 2) c = c < o ? Math.max(c, 2 * o - h) : Math.min(c, (o + h) / 2);
+    past.push({ o, c, h, l: Math.min(o, c) - wD });
     p = c;
   }
   const entryRef = p;
   const fut: Candle[] = [];
-  fut.push({ o: p, c: R - 0.5 * m, h: R - 0.05 * m, l: p - 0.1 * m });
+  fut.push({ o: p, c: R - 0.5 * m, h: R - 0.05 * m, l: Math.min(p, R - 0.5 * m) - 0.1 * m });
   p = R - 0.5 * m;
   fut.push(candle(p, p - 0.4 * m, 0.1, (0.2 + rng() * 0.15) * m));
   p -= 0.4 * m;
@@ -641,6 +667,13 @@ function shapeRejectionResistance(rng: () => number, m: number): ShapeOutput {
   ], ref: { swingLow: entryRef - 4 * m, swingHigh: R, entryRef } };
 }
 
+// Mèches contenues dans les zones du range (bornes ± 0,1)
+function inRange(k: Candle, S: number, R: number): Candle {
+  k.h = Math.min(k.h, R + 0.1);
+  k.l = Math.max(k.l, S - 0.1);
+  return k;
+}
+
 // 7. Range oscillation
 function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDirection): ShapeOutput {
   const past: Candle[] = [];
@@ -653,19 +686,23 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
     const o = p;
     const drift = (mid - o) * 0.25 + (rng() - 0.5) * 1.2 * m;
     const c = clamp(o + drift, S + 0.4, R - 0.4);
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m));
+    past.push(inRange(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m), S, R));
     p = c;
   }
-  // 2 candles approchant la borne ciblée
+  // 2 candles approchant la borne ciblée : la dernière clôture dans le tiers
+  // de range côté borne (« le prix arrive au plafond / plancher »)
   for (let i = 0; i < 2; i++) {
     const o = p;
     let c: number;
+    const step = (0.3 + rng() * 0.3) * m;
     if (direction === "SELL") {
-      c = clamp(o + (0.3 + rng() * 0.3) * m, S + 0.4, R - 0.3);
+      c = clamp(o + step, S + 0.4, R - 0.3);
+      c = clamp(Math.max(c, i === 0 ? (o + R - 0.35) / 2 : R - 0.35 - 0.5 * step), S + 0.4, R - 0.3);
     } else {
-      c = clamp(o - (0.3 + rng() * 0.3) * m, S + 0.3, R - 0.4);
+      c = clamp(o - step, S + 0.3, R - 0.4);
+      c = clamp(Math.min(c, i === 0 ? (o + S + 0.35) / 2 : S + 0.35 + 0.5 * step), S + 0.3, R - 0.4);
     }
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m));
+    past.push(inRange(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m), S, R));
     p = c;
   }
   const entryRef = p;
@@ -673,25 +710,25 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
   // Future : oscillation jusqu'à l'autre borne
   if (direction === "SELL") {
     // 1 bump test résistance puis drop vers support
-    fut.push({ o: p, c: R - 0.5 * m, h: R - 0.05 * m, l: p - 0.1 * m });
+    fut.push({ o: p, c: R - 0.5 * m, h: R - 0.05 * m, l: Math.min(p, R - 0.5 * m) - 0.1 * m });
     p = R - 0.5 * m;
-    fut.push(candle(p, p - 0.5 * m, 0.1, (0.2 + rng() * 0.15) * m));
+    fut.push(inRange(candle(p, p - 0.5 * m, 0.1, (0.2 + rng() * 0.15) * m), S, R));
     p -= 0.5 * m;
     for (let i = 0; i < 5; i++) {
       const o = p;
       const c = clamp(o - (0.4 + rng() * 0.3) * m, S + 0.4, R);
-      fut.push(candle(o, c, (0.1 + rng() * 0.1) * m, (0.2 + rng() * 0.2) * m));
+      fut.push(inRange(candle(o, c, (0.1 + rng() * 0.1) * m, (0.2 + rng() * 0.2) * m), S, R));
       p = c;
     }
   } else {
-    fut.push({ o: p, c: S + 0.5 * m, h: p + 0.1 * m, l: S + 0.05 * m });
+    fut.push({ o: p, c: S + 0.5 * m, h: Math.max(p, S + 0.5 * m) + 0.1 * m, l: S + 0.05 * m });
     p = S + 0.5 * m;
-    fut.push(candle(p, p + 0.5 * m, (0.2 + rng() * 0.15) * m, 0.1));
+    fut.push(inRange(candle(p, p + 0.5 * m, (0.2 + rng() * 0.15) * m, 0.1), S, R));
     p += 0.5 * m;
     for (let i = 0; i < 5; i++) {
       const o = p;
       const c = clamp(o + (0.4 + rng() * 0.3) * m, S, R - 0.4);
-      fut.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.1 + rng() * 0.1) * m));
+      fut.push(inRange(candle(o, c, (0.2 + rng() * 0.2) * m, (0.1 + rng() * 0.1) * m), S, R));
       p = c;
     }
   }
@@ -714,7 +751,8 @@ function shapeFakeoutAbove(rng: () => number, m: number): ShapeOutput {
   }
   // Fakeout candle
   const fakeoutHigh = R + 1.2 * m + rng() * 0.3;
-  past.push({ o: p, c: R - 0.5 - rng() * 0.2, h: fakeoutHigh, l: p - 0.15 });
+  const fakeoutClose = R - 0.5 - rng() * 0.2;
+  past.push({ o: p, c: fakeoutClose, h: fakeoutHigh, l: Math.min(p, fakeoutClose) - 0.15 });
   p = past[past.length - 1].c;
   // 2 candles confirmant
   for (let i = 0; i < 2; i++) {
@@ -726,7 +764,7 @@ function shapeFakeoutAbove(rng: () => number, m: number): ShapeOutput {
   const entryRef = p;
   const fut: Candle[] = [];
   // Future : 1 bump léger qui retest R sans atteindre fakeoutHigh, puis drop
-  fut.push({ o: p, c: R - 0.6 * m, h: R - 0.05 * m, l: p - 0.15 });
+  fut.push({ o: p, c: R - 0.6 * m, h: R - 0.05 * m, l: Math.min(p, R - 0.6 * m) - 0.15 });
   p = R - 0.6 * m;
   fut.push(candle(p, p - 0.4 * m, 0.1, (0.2 + rng() * 0.15) * m));
   p -= 0.4 * m;
@@ -759,6 +797,10 @@ function shapeSweepLowReversal(rng: () => number, m: number): ShapeOutput {
     past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
     p = c;
   }
+  // Le « précédent low » : le creux de la consolidation touche le niveau L
+  const consol = past.slice(-3);
+  const prevLow = consol.reduce((a, k) => (k.l < a.l ? k : a));
+  prevLow.l = Math.min(prevLow.l, L + 0.02);
   // Sweep candle
   const sweepLow = L - 1.2 * m - rng() * 0.3;
   past.push({ o: p, c: L + 0.4 + rng() * 0.2, h: p + 0.15, l: sweepLow });
@@ -816,7 +858,7 @@ function shapeFvgContinuation(rng: () => number, m: number): ShapeOutput {
   const entryRef = p;
   const fut: Candle[] = [];
   // Dip léger qui touche le FVG sans le mitiger entièrement (~25-50% max), puis rallye
-  fut.push({ o: p, c: target + 0.1 * m, h: p + 0.1 * m, l: fvgLow + 0.75 * m });
+  fut.push({ o: p, c: target + 0.1 * m, h: p + 0.1 * m, l: Math.min(fvgLow + 0.75 * m, target + 0.05 * m) });
   p = target + 0.1 * m;
   fut.push(candle(p, p + 0.4 * m, (0.2 + rng() * 0.15) * m, 0.1));
   p += 0.4 * m;
@@ -849,7 +891,24 @@ function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
     past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.25) * m));
     p = c;
   }
+  // « Plus de 60% de l'impulsion retracée » sans la retracer entièrement :
+  // on met à l'échelle les corps du pullback (mèches conservées).
+  const impulse = peak - past[0].o;
+  const ratio = (peak - p) / impulse;
+  const target = ratio < 0.62 ? 0.62 + 0.1 * (ratio / 0.62) : ratio > 0.88 ? 0.88 : ratio;
+  if (target !== ratio) {
+    const f = target / ratio;
+    let q = peak;
+    for (const k of past.slice(8)) {
+      const wU = k.h - Math.max(k.o, k.c), wD = Math.min(k.o, k.c) - k.l;
+      const c = q - (k.o - k.c) * f;
+      k.o = q; k.c = c; k.h = q + wU; k.l = c - wD;
+      q = c;
+    }
+    p = q;
+  }
   const swingLow = Math.min(...past.slice(-7).map((k) => k.l));
+  const topHigh = Math.max(...past.map((k) => k.h));
   const entryRef = p;
   const fut: Candle[] = [];
   // Future : 1 candle indécise puis recovery (mais initiale faible)
@@ -865,7 +924,7 @@ function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
   }
   return { past, future: fut, zones: [
     { kind: "support",        y1: swingLow - 0.04,    y2: swingLow + 0.04,    label: "Zone douteuse" },
-    { kind: "liquidity_high", y1: peak - 0.05,         y2: peak + 0.05,        label: "Précédent high" },
+    { kind: "liquidity_high", y1: topHigh - 0.05,      y2: topHigh + 0.05,     label: "Précédent high" },
   ], ref: { swingLow, swingHigh: peak, entryRef } };
 }
 
@@ -889,13 +948,13 @@ function shapeHighVolPullback(rng: () => number, m: number): ShapeOutput {
   const swingLow = Math.min(...past.slice(-5).map((k) => k.l));
   const entryRef = p;
   const fut: Candle[] = [];
-  // Dip large (vol élevée) qui balaie le swingLow par 0.3 (= sweep tight)
-  // mais reste au-dessus du logical (wide pour ce template)
+  // Dip large (vol élevée) qui balaie le swingLow jusque sous le stop logique
+  // (« le stop standard se fait balayer ») mais reste au-dessus du wide
   fut.push({
     o: p,
     c: swingLow + 0.6 * effM,
     h: p + (0.3 + rng() * 0.2) * effM,
-    l: swingLow - 0.3 * effM,
+    l: swingLow - 0.55 * effM,
   });
   p = swingLow + 0.6 * effM;
   for (let i = 0; i < 6; i++) {
@@ -922,12 +981,18 @@ function shapeWeakBreakout(rng: () => number, m: number): ShapeOutput {
   }
   for (let i = 0; i < 4; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.5 * m, R - 1.1, R - 0.3);
-    past.push(candle(o, c, (0.22 + rng() * 0.18) * m, (0.22 + rng() * 0.18) * m));
+    const d = rng() - 0.5;
+    // La dernière bougie de consolidation clôture juste sous la résistance :
+    // la cassure qui suit est « petite et hésitante »
+    const c = i === 3 ? R - 0.05 - 0.05 * (d + 0.5) : clamp(o + d * 0.5 * m, R - 1.1, R - 0.3);
+    const k = candle(o, c, (0.22 + rng() * 0.18) * m, (0.22 + rng() * 0.18) * m);
+    k.h = Math.min(k.h, R + 0.05);
+    past.push(k);
     p = c;
   }
-  // Weak breakout candle
-  past.push(candle(p, R + 0.15 + rng() * 0.2, (0.3 + rng() * 0.2) * m, 0.15));
+  // Weak breakout candle : petit corps, mèche haute d'au moins 1,6× le corps
+  const weakClose = R + 0.15 + rng() * 0.2;
+  past.push(candle(p, weakClose, Math.max((0.3 + rng() * 0.2) * m, 1.6 * (weakClose - p)), 0.15));
   p = past[past.length - 1].c;
   const entryRef = p;
   const fut: Candle[] = [];
@@ -1024,15 +1089,16 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
         confirmation:  entryRef - 0.5 * effM,
         deep_pullback: Math.min(swingHigh - 0.1 * effM, entryRef + 0.7 * effM),
       };
-  // Stops (depuis le swing logique)
+  // Stops (depuis le swing logique). Le serré reste au-delà de l'entrée
+  // « pullback profond » (qui peut être plafonnée au même niveau que lui).
   const stops = direction === "BUY"
     ? {
-        tight:   swingLow + 0.1 * effM,
+        tight:   Math.min(swingLow + 0.1 * effM, entries.deep_pullback - 0.1 * effM),
         logical: swingLow - 0.4 * effM,
         wide:    swingLow - 1.2 * effM,
       }
     : {
-        tight:   swingHigh - 0.1 * effM,
+        tight:   Math.max(swingHigh - 0.1 * effM, entries.deep_pullback + 0.1 * effM),
         logical: swingHigh + 0.4 * effM,
         wide:    swingHigh + 1.2 * effM,
       };
