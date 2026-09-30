@@ -622,9 +622,14 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
 
 // ─── Variations ───────────────────────────────────────────────────────────────
 
+// Scénarios conservés dans le code mais retirés de la rotation (décision PO).
+// tight_consolidation : ses textes annoncent un RR < 1:2 pour le bon stop, ce
+// qui contredit la règle « une bonne réponse n'a jamais un R/R faible ».
+const DISABLED_SETUPS: ReadonlySet<PlaceStopSetupKey> = new Set<PlaceStopSetupKey>(["tight_consolidation"]);
+
 export function generatePlaceStopScenarios(seed: number, difficulty: Difficulty = "intermediate"): PlaceStopInstance[] {
   const rng = mulberry32(seed);
-  const pool = PLACE_STOP_TEMPLATES.filter((t) => t.difficulties.includes(difficulty));
+  const pool = PLACE_STOP_TEMPLATES.filter((t) => t.difficulties.includes(difficulty) && !DISABLED_SETUPS.has(t.id));
   const shuffled = [...pool];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(rng() * (i + 1));
