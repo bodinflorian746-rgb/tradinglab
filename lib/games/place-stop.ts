@@ -2715,7 +2715,30 @@ export function buildPlaceStopChart(
   volatility: Volatility,
   difficulty: Difficulty,
 ): PlaceStopChart {
-  return keepPricesPositive(rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed));
+  const chart = rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed);
+  return keepPricesPositive(setup === "tight_consolidation" ? chart : ensureCorrectStopRR(chart));
+}
+
+// Le bon stop ne doit jamais avoir un R/R faible : l'objectif (TP) est au moins
+// à MIN_CORRECT_RR × la distance du bon stop. Exception : la consolidation
+// serrée, dont les textes annoncent un RR limité par le plafond du range.
+const MIN_CORRECT_RR = 2.2;
+
+function ensureCorrectStopRR(chart: PlaceStopChart): PlaceStopChart {
+  if (chart.tp === null) return chart;
+  const correctType: StopType = chart.stops.some((s) => s.type === "logical") ? "logical" : "wide";
+  const good = chart.stops.find((s) => s.type === correctType);
+  if (!good) return chart;
+  const dGood = Math.abs(chart.entry - good.price);
+  const dTp = Math.abs(chart.tp - chart.entry);
+  if (dTp >= MIN_CORRECT_RR * dGood) return chart;
+  const tp = chart.entry + Math.sign(chart.tp - chart.entry) * MIN_CORRECT_RR * dGood;
+  const span = chart.domain.max - chart.domain.min;
+  return {
+    ...chart,
+    tp,
+    domain: { min: Math.min(chart.domain.min, tp - span * 0.04), max: Math.max(chart.domain.max, tp + span * 0.04) },
+  };
 }
 
 // Les prix sont affichés au joueur (boutons de stop) : un graphique qui passe

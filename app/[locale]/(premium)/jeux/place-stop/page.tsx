@@ -495,6 +495,7 @@ export default function PlaceStopPage() {
                 dimEntryTp:         true,
               }}
               mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
+              tpOffscale
               pin={chosenStop ? { label: `Stop ${spatialLabels[chosenStop.id]}`, sub: T.yourChoicePin, color: STOP_COLORS[chosenStop.id].hex } : undefined}
             >
               {isFeedback && result && (

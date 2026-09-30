@@ -167,6 +167,12 @@ export interface GameChartV2Props {
    * (ex. les étapes de « Build the Trade »).
    */
   reserve?: { prices?: number[]; labels?: string[] };
+  /**
+   * Objectif (overlay.tp) très au-delà des bougies et des stops : tracé au bord
+   * du graphique avec une étiquette « TP ↑ / ↓ », hors échelle, pour ne pas
+   * écraser les bougies.
+   */
+  tpOffscale?: boolean;
   /** Calque superposé au graphique (ex. VerdictOverlay). */
   children?: ReactNode;
 }
@@ -211,7 +217,7 @@ function fvgStartIndex(candles: Candle[], z: ChartZone): number {
   return i < 0 ? 0 : i;
 }
 
-export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBright, mark, reserve, children }: GameChartV2Props) {
+export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBright, mark, reserve, tpOffscale, children }: GameChartV2Props) {
   const { ref: sizeRef, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const { ref: playRef, playing } = usePlayOnView<HTMLDivElement>(0.4);
   const desktop = useIsDesktop();
@@ -238,7 +244,16 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
   const nSlots = question && sep !== undefined ? sep + QUESTION_SPARE_SLOTS : all.length;
   // Colonne des étiquettes de lignes (bord droit) : réservée hors de la zone
   // des bougies, pour qu'aucune bougie ne passe sous une étiquette.
+  // Objectif hors échelle : ramené au bord, signalé par une flèche
+  const tpRaw = overlay?.tp?.price;
+  const baseVals = scaled.flatMap((k) => [k.h, k.l])
+    .concat(data.zones.flatMap((z) => [z.y1, z.y2]), [overlay?.entry?.price, overlay?.stop?.price].filter((p): p is number => p !== undefined), (overlay?.stops ?? []).map((s) => s.price));
+  const bMin = Math.min(...baseVals), bMax = Math.max(...baseVals), bSpan = bMax - bMin || 1;
+  const tpArrow = !tpOffscale || tpRaw === undefined ? null : tpRaw > bMax + 0.35 * bSpan ? "up" : tpRaw < bMin - 0.35 * bSpan ? "down" : null;
+  const tpShown = tpArrow === "up" ? bMax + 0.12 * bSpan : tpArrow === "down" ? bMin - 0.12 * bSpan : tpRaw;
+  const tpTagLabel = tpArrow === "up" ? "TP ↑" : tpArrow === "down" ? "TP ↓" : null;
   const lineLabels = [
+    ...(tpTagLabel ? [tpTagLabel] : []),
     ...(overlay?.stops ?? []).flatMap((st) => (st.label ? [st.label] : [])),
     ...(overlay?.candidateLines ?? []).map((c) => c.label),
   ];
@@ -264,7 +279,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
   const prices = scaled.flatMap((k) => [k.h, k.l])
     .concat(zones.flatMap((z) => [z.y1, z.y2]))
     .concat(
-      [overlay?.entry?.price, overlay?.tp?.price, overlay?.stop?.price].filter((p): p is number => p !== undefined),
+      [overlay?.entry?.price, tpShown, overlay?.stop?.price].filter((p): p is number => p !== undefined),
       (overlay?.stops ?? []).map((s) => s.price),
       (overlay?.candidateLines ?? []).map((c) => c.price),
       reserve?.prices ?? [],
@@ -348,6 +363,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
     const TAG_H = 22;
     const TAG_GAP = 4;
     const tagSpecs = [
+      ...(tpTagLabel && tpShown !== undefined ? [{ key: "tpTag", price: tpShown, label: tpTagLabel, color: "#10b981", hit: false }] : []),
       ...(overlay?.stops ?? []).flatMap((s, i) => (s.label ? [{ key: `stopTag${i}`, price: s.price, label: s.label, color: s.hit ? "#fb923c" : s.color, hit: !!s.hit }] : [])),
       ...(overlay?.candidateLines ?? []).map((c, i) => ({ key: `candTag${i}`, price: c.price, label: c.label, color: c.color, hit: false })),
       ...(columnMode && hero ? [{ key: "heroTag", price: (hero.y1 + hero.y2) / 2, label: hero.label, color: HERO_GRADIENT[hero.kind], hit: false }] : []),
@@ -448,7 +464,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
 
         {/* Lignes de trade */}
         {overlay?.entry && hLine("entry", overlay.entry.price, "var(--v2-entry)", { opacity: overlay.dimEntryTp ? 0.55 : 1, dashed: overlay.dimEntryTp })}
-        {overlay?.tp && hLine("tp", overlay.tp.price, "var(--v2-bull)", { dashed: true, opacity: overlay.dimEntryTp ? 0.55 : 1 })}
+        {overlay?.tp && tpShown !== undefined && hLine("tp", tpShown, "var(--v2-bull)", { dashed: true, opacity: overlay.dimEntryTp ? 0.55 : 1, x2: tpTagLabel ? lineEnd : undefined })}
         {overlay?.stop && hLine("stop", overlay.stop.price, overlay.stop.hit ? "#fb923c" : "var(--v2-bear)", { dashed: true, width: 2.5 })}
         {overlay?.candidateLines?.map((c, i) => hLine(`cand${i}`, c.price, c.color, { dashed: true, opacity: 0.85, x2: lineEnd }))}
         {overlay?.stops?.map((s, i) => hLine(`stop${i}`, s.price, s.hit ? "#fb923c" : s.color, { dashed: s.dashed !== false && !s.hit, width: s.hit ? 3 : s.selected ? 3 : 2, x2: s.label ? lineEnd : lineX1 }))}
