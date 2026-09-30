@@ -8,6 +8,7 @@ import * as EsGame from "@/lib/games/build-the-trade-es";
 import * as EnGame from "@/lib/games/build-the-trade-en";
 import {
   evaluateTrade,
+  maxTradePoints,
   ROUNDS_PER_SESSION,
   type BuildTradeChart,
   type BuildTradeInstance,
@@ -527,7 +528,7 @@ export default function BuildTheTradePage() {
                   state={VERDICT_STATE[G.setupVerdict(result).color]}
                   headline={G.setupVerdict(result).label}
                   points={result.points - result.streakBonus}
-                  max={evaluateTrade(current.optimal, chart, current.optimal, 0).points}
+                  max={maxTradePoints(chart, current.optimal)}
                   bonus={result.streakBonus > 0 ? `+${result.streakBonus} streak` : undefined}
                 />
               )}

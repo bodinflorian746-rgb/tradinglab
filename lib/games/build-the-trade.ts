@@ -1434,6 +1434,20 @@ export function evaluateTrade(
   };
 }
 
+/**
+ * Points maximum atteignables sur ce graphique : meilleur des 27 plans, hors
+ * bonus de série. Sert d'échelle au verdict (« +90 / 170 ») ; un plan non
+ * optimal peut rapporter plus que le plan optimal quand son R/R réalisé est plus grand.
+ */
+export function maxTradePoints(chart: BuildTradeChart, optimal: ChoiceSet): number {
+  let best = -Infinity;
+  for (const entry of ["aggressive", "confirmation", "deep_pullback"] as EntryType[])
+    for (const stop of ["tight", "logical", "wide"] as StopType[])
+      for (const tp of ["fast", "balanced", "ambitious"] as TpType[])
+        best = Math.max(best, evaluateTrade({ entry, stop, tp }, chart, optimal, 0).points);
+  return best;
+}
+
 // ─── Verdicts ────────────────────────────────────────────────────────────────
 
 export function setupVerdict(result: BuildTradeResult): { label: string; color: "emerald" | "amber" | "red" } {
