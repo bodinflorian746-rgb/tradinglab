@@ -1,0 +1,374 @@
+/* Charte v2 des jeux — portage de la charte validée de /design-lab
+   (components/design-lab/lab.css). Tout est scopé sous .tsx-v2, posé par le
+   layout de chaque jeu migré : rien ne s'applique ailleurs. Les @keyframes
+   sont préfixés v2- pour éviter toute collision de nom.
+   Aucune classe zinc n'est utilisée dans le balisage v2 : les réécritures de
+   couleurs de .app-bg (globals.css) ne peuvent donc pas s'y appliquer. */
+
+.tsx-v2 {
+  /* Surfaces */
+  --v2-bg: #04060a;
+  --v2-surface: #0a0e14;
+  --v2-surface-2: #0f141c;
+  --v2-edge: rgba(255, 255, 255, 0.06);
+  --v2-edge-strong: rgba(255, 255, 255, 0.12);
+
+  /* Texte */
+  --v2-text: #f5f5f7;
+  --v2-text-2: #c7c9d1;
+  --v2-text-3: #9ca0ab;
+
+  /* Marché */
+  --v2-bull: #10b981;
+  --v2-bull-wick: #059669;
+  --v2-bear: #ef4444;
+  --v2-bear-wick: #dc2626;
+  --v2-doji: #a1a1aa;
+  --v2-zone: #f59e0b;
+  --v2-emerald: #34d399;
+  --v2-entry: #3b82f6;
+
+  /* Typo : Space Grotesk et JetBrains Mono posées par next/font dans le
+     layout du jeu ; le corps reste en Inter (police du site). */
+  --v2-font-display: var(--font-v2-display), system-ui, sans-serif;
+  --v2-font-mono: var(--font-v2-mono), ui-monospace, monospace;
+
+  /* Tempo */
+  --v2-candle-step: 420ms;
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  overflow-x: clip;
+  color: var(--v2-text);
+  background-color: var(--v2-bg);
+  background-image:
+    radial-gradient(60% 45% at 12% -5%, rgba(16, 185, 129, 0.22), transparent 70%),
+    radial-gradient(45% 35% at 95% 18%, rgba(245, 158, 11, 0.12), transparent 70%),
+    radial-gradient(70% 45% at 50% 105%, rgba(16, 185, 129, 0.14), transparent 70%);
+}
+
+/* Grille fine en texture, fondue vers les bords */
+.tsx-v2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 100%);
+}
+
+.tsx-v2 .v2-display { font-family: var(--v2-font-display); letter-spacing: -0.02em; }
+.tsx-v2 .v2-mono { font-family: var(--v2-font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+
+.tsx-v2 .v2-eyebrow {
+  font-family: var(--v2-font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--v2-emerald);
+}
+
+/* ─── Cartes en couches ───────────────────────────────────────────────── */
+
+.tsx-v2 .v2-card {
+  position: relative;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012) 40%),
+    var(--v2-surface);
+  box-shadow:
+    inset 0 0 0 1px var(--v2-edge),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 30px 80px -30px rgba(16, 185, 129, 0.28),
+    0 12px 32px -16px rgba(0, 0, 0, 0.9);
+}
+
+.tsx-v2 .v2-well {
+  border-radius: 18px;
+  background: radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 60%), #06090d;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.tsx-v2 .v2-well--good { box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.4), inset 0 10px 30px rgba(0, 0, 0, 0.5); }
+.tsx-v2 .v2-well--bad { box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.4), inset 0 10px 30px rgba(0, 0, 0, 0.5); }
+.tsx-v2 .v2-well--amber { background: rgba(245, 158, 11, 0.1); box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.35); }
+.tsx-v2 .v2-well--danger { background: rgba(239, 68, 68, 0.08); box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.35); }
+
+.tsx-v2 .v2-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--v2-text-2);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px var(--v2-edge-strong);
+}
+.tsx-v2 .v2-chip--amber { color: #fcd34d; background: rgba(245, 158, 11, 0.12); box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.35); }
+.tsx-v2 .v2-chip--emerald { color: #6ee7b7; background: rgba(16, 185, 129, 0.12); box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.35); }
+.tsx-v2 .v2-chip--red { color: #fca5a5; background: rgba(239, 68, 68, 0.12); box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.35); }
+.tsx-v2 .v2-chip--blue { color: #93c5fd; background: rgba(59, 130, 246, 0.12); box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.35); }
+
+/* ─── Boutons ─────────────────────────────────────────────────────────── */
+
+.tsx-v2 .v2-choice {
+  position: relative;
+  border-radius: clamp(14px, 1.2vw, 18px);
+  padding: clamp(12px, 1.1vw, 17px) 6px;
+  font-family: var(--v2-font-display);
+  font-weight: 700;
+  font-size: clamp(16px, 0.45vw + 14px, 20px);
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  transition: transform 160ms ease, opacity 300ms ease, box-shadow 300ms ease;
+}
+.tsx-v2 .v2-choice:active { transform: scale(0.97); }
+.tsx-v2 .v2-choice--buy {
+  color: #ecfdf5;
+  background: linear-gradient(180deg, #16c08a, #0a8f64);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 12px 30px -10px rgba(16, 185, 129, 0.65);
+}
+.tsx-v2 .v2-choice--sell {
+  color: #fef2f2;
+  background: linear-gradient(180deg, #f25555, #c42525);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 12px 30px -10px rgba(239, 68, 68, 0.6);
+}
+.tsx-v2 .v2-choice--none {
+  color: var(--v2-text);
+  background: linear-gradient(180deg, #232833, #151922);
+  box-shadow: inset 0 0 0 1px var(--v2-edge-strong), 0 12px 30px -14px rgba(0, 0, 0, 0.9);
+}
+.tsx-v2 .v2-choice[data-state="faded"] { opacity: 0.3; box-shadow: none; }
+.tsx-v2 .v2-choice[data-state="picked"] { outline: 3px solid rgba(255, 255, 255, 0.9); outline-offset: 3px; }
+
+/* Bouton secondaire (scénario suivant, bilan) et bouton clair */
+.tsx-v2 .v2-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 14px;
+  font-family: var(--v2-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--v2-text);
+  background: linear-gradient(180deg, #232833, #151922);
+  box-shadow: inset 0 0 0 1px var(--v2-edge-strong), 0 12px 30px -14px rgba(0, 0, 0, 0.9);
+  transition: transform 160ms ease, box-shadow 200ms ease;
+}
+.tsx-v2 .v2-btn:hover { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22), 0 12px 30px -14px rgba(0, 0, 0, 0.9); }
+.tsx-v2 .v2-btn:active { transform: scale(0.98); }
+.tsx-v2 .v2-btn--light { color: #04060a; background: linear-gradient(180deg, #ffffff, #e4e4e7); box-shadow: 0 12px 30px -14px rgba(255, 255, 255, 0.35); }
+
+.tsx-v2 .v2-link-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--v2-text-3);
+  transition: color 150ms ease;
+}
+.tsx-v2 .v2-link-back:hover { color: var(--v2-text); }
+
+/* ─── SVG : bougies, zone héros, étiquettes ───────────────────────────── */
+
+.tsx-v2 .v2-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.tsx-v2 .v2-svg text { font-family: inherit; }
+.tsx-v2 .v2-svg .v2-mono { font-family: var(--v2-font-mono); }
+.tsx-v2 .v2-svg .v2-display { font-family: var(--v2-font-display); }
+
+/* Révélation bougie par bougie (déclenchée par .is-playing) */
+.tsx-v2 .v2-candle {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.tsx-v2 .is-playing .v2-candle {
+  animation: v2-candle-in 420ms cubic-bezier(0.2, 0.9, 0.25, 1.15) both;
+  animation-delay: calc(var(--i, 0) * var(--v2-candle-step));
+}
+.tsx-v2 .v2-candle--static { opacity: 1; }
+.tsx-v2 .is-playing .v2-candle--static { animation: none; }
+
+/* Tout ce qui n'est pas le héros s'estompe au moment où le héros s'allume */
+.tsx-v2 .is-playing .v2-dim {
+  animation: v2-dim 700ms ease forwards;
+  animation-delay: var(--spot, 0ms);
+}
+.tsx-v2 .v2-dim--now { opacity: 0.35; }
+
+/* Élément héros : zone remplie + glow + pastille */
+.tsx-v2 .v2-hero { opacity: 0; }
+.tsx-v2 .is-playing .v2-hero {
+  animation: v2-hero-in 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both, v2-hero-pulse 2.6s ease-in-out infinite;
+  animation-delay: var(--spot, 0ms), calc(var(--spot, 0ms) + 900ms);
+}
+.tsx-v2 .v2-hero-label {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+}
+.tsx-v2 .is-playing .v2-hero-label {
+  animation: v2-pop 600ms cubic-bezier(0.2, 1.4, 0.3, 1) both;
+  animation-delay: calc(var(--spot, 0ms) + 350ms);
+}
+
+/* Libellés secondaires : apparaissent avec le héros, restent lisibles */
+.tsx-v2 .v2-late { opacity: 0; }
+.tsx-v2 .is-playing .v2-late {
+  animation: v2-fade 500ms ease both;
+  animation-delay: calc(var(--spot, 0ms) + 500ms);
+}
+
+/* Verdict : grand, centré, effet d'échelle */
+.tsx-v2 .v2-verdict { opacity: 0; transform: scale(0.6); }
+.tsx-v2 .is-playing .v2-verdict {
+  animation: v2-verdict-in 900ms cubic-bezier(0.2, 1.35, 0.3, 1) both;
+  animation-delay: var(--spot, 0ms);
+}
+.tsx-v2 .v2-verdict-points { text-shadow: 0 0 28px rgba(16, 185, 129, 0.7), 0 0 60px rgba(16, 185, 129, 0.35); }
+.tsx-v2 .v2-verdict-points--bad { text-shadow: 0 0 28px rgba(239, 68, 68, 0.7), 0 0 60px rgba(239, 68, 68, 0.35); }
+
+/* Pastille "ton choix" épinglée */
+.tsx-v2 .v2-pin { opacity: 0; transform: translateY(-6px); }
+.tsx-v2 .is-playing .v2-pin { animation: v2-drop 500ms cubic-bezier(0.2, 1.2, 0.3, 1) both; }
+
+/* ─── Tailles fluides (identiques à la charte v2 du design-lab) ───────── */
+
+.tsx-v2 .v2-page {
+  padding: clamp(18px, 4vw, 64px) clamp(10px, 3vw, 32px) 96px;
+  gap: clamp(28px, 4vw, 56px);
+}
+.tsx-v2 .v2-pad { padding: clamp(12px, 2.4vw, 36px); }
+.tsx-v2 .v2-gap { gap: clamp(16px, 2.2vw, 32px); }
+.tsx-v2 .v2-gap-s { gap: clamp(8px, 1vw, 14px); }
+.tsx-v2 .v2-inset { padding-inline: clamp(10px, 1.2vw, 16px); }
+
+.tsx-v2 .v2-h1 { font-size: clamp(30px, 2.6vw + 20px, 72px); line-height: 1.02; }
+.tsx-v2 .v2-h2 { font-size: clamp(26px, 1.5vw + 20px, 50px); line-height: 1.04; }
+.tsx-v2 .v2-h3 { font-size: clamp(19px, 0.55vw + 16.5px, 26px); line-height: 1.15; }
+.tsx-v2 .v2-lead { font-size: clamp(15px, 0.25vw + 14px, 18px); line-height: 1.55; }
+.tsx-v2 .v2-body { font-size: clamp(14.5px, 0.15vw + 14px, 16px); line-height: 1.55; }
+.tsx-v2 .v2-asset { font-size: clamp(16px, 0.5vw + 14px, 22px); line-height: 1.1; }
+.tsx-v2 .v2-tile-value { font-size: clamp(16px, 0.35vw + 14.5px, 20px); line-height: 1.2; }
+.tsx-v2 .v2-num-l { font-size: clamp(21px, 0.6vw + 19px, 28px); line-height: 1.1; }
+.tsx-v2 .v2-verdict-title { font-size: clamp(24px, 0.8vw + 21px, 34px); line-height: 1.1; }
+.tsx-v2 .v2-verdict-num { font-size: clamp(62px, 2.2vw + 54px, 88px); line-height: 1; }
+.tsx-v2 .v2-pin-tag { font-size: clamp(13px, 0.2vw + 12.5px, 15px); }
+
+.tsx-v2 .v2-step {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  font-family: var(--v2-font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--v2-text);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+/* Cadres des graphiques : la géométrie SVG est calculée sur la taille réelle
+   du cadre ; la hauteur reste bornée par l'écran. */
+.tsx-v2 .v2-chart { position: relative; width: 100%; }
+.tsx-v2 .v2-chart--question { height: clamp(240px, min(84vw, 100svh - 290px), 440px); }
+.tsx-v2 .v2-chart--result { height: clamp(240px, min(84vw, 100svh - 170px), 440px); }
+
+/* ─── Desktop (≥ 1024px) — identique au bloc validé du design-lab ─────── */
+@media (min-width: 1024px) {
+  .tsx-v2 .v2-page {
+    padding: 40.96px 30.72px 96px;
+    gap: 40.96px;
+  }
+  .tsx-v2 .v2-pad { padding: 24.58px; }
+  .tsx-v2 .v2-gap { gap: 22.53px; }
+  .tsx-v2 .v2-gap-s { gap: 10.24px; }
+  .tsx-v2 .v2-inset { padding-inline: 12.29px; }
+
+  .tsx-v2 .v2-h1 { font-size: 46.62px; }
+  .tsx-v2 .v2-h2 { font-size: 35.36px; }
+  .tsx-v2 .v2-h3 { font-size: 22.13px; }
+  .tsx-v2 .v2-lead { font-size: 16.56px; }
+  .tsx-v2 .v2-body { font-size: 15.54px; }
+  .tsx-v2 .v2-asset { font-size: 19.12px; }
+  .tsx-v2 .v2-tile-value { font-size: 16px; }
+  .tsx-v2 .v2-num-l { font-size: 25.12px; }
+  .tsx-v2 .v2-verdict-title { font-size: 29.19px; }
+  .tsx-v2 .v2-verdict-num { font-size: 76.53px; }
+  .tsx-v2 .v2-pin-tag { font-size: 14.55px; }
+
+  .tsx-v2 .v2-choice { padding: 12px 6px; border-radius: 14px; font-size: 18.61px; }
+  .tsx-v2 .v2-verdict { padding: 16.38px 26.62px; border-radius: 20.48px; }
+  .tsx-v2 .v2-verdict > span { width: 34px; height: 34px; }
+
+  .tsx-v2 .v2-chart--question { height: clamp(240px, 100svh - 290px, 360px); }
+  .tsx-v2 .v2-chart--result { height: clamp(240px, 100svh - 170px, 360px); }
+}
+
+@keyframes v2-candle-in {
+  0% { opacity: 0; transform: translateY(14px) scaleY(0.4); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes v2-dim {
+  to { opacity: 0.35; }
+}
+@keyframes v2-hero-in {
+  0% { opacity: 0; }
+  35% { opacity: 1; filter: brightness(1.8); }
+  100% { opacity: 1; filter: none; }
+}
+@keyframes v2-hero-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.78; }
+}
+@keyframes v2-pop {
+  0% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes v2-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes v2-verdict-in {
+  0% { opacity: 0; transform: scale(0.55); }
+  60% { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes v2-drop {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Mouvement réduit : état final immédiat, aucune animation */
+@media (prefers-reduced-motion: reduce) {
+  .tsx-v2 .v2-candle,
+  .tsx-v2 .v2-hero,
+  .tsx-v2 .v2-hero-label,
+  .tsx-v2 .v2-late,
+  .tsx-v2 .v2-pin { opacity: 1; transform: none; }
+  .tsx-v2 .v2-verdict { opacity: 1; transform: none; }
+  .tsx-v2 .is-playing .v2-dim,
+  .tsx-v2 .v2-dim { opacity: 0.35; }
+  .tsx-v2 .is-playing .v2-candle,
+  .tsx-v2 .is-playing .v2-dim,
+  .tsx-v2 .is-playing .v2-hero,
+  .tsx-v2 .is-playing .v2-hero-label,
+  .tsx-v2 .is-playing .v2-late,
+  .tsx-v2 .is-playing .v2-verdict,
+  .tsx-v2 .is-playing .v2-pin { animation: none; }
+  .tsx-v2 .v2-choice,
+  .tsx-v2 .v2-btn { transition: none; }
+}

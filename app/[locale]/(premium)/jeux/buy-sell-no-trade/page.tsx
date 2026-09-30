@@ -15,7 +15,8 @@ import {
   type Metric,
   type ScenarioInstance,
 } from "@/lib/games/buy-sell-no-trade";
-import { MiniChart } from "@/app/components/games/MiniChart";
+import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
+import { ChoiceRow, StepBadge, VerdictOverlay, type ChoiceOption } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 
 const METRIC_TO_SKILL: Record<Metric, SkillId> = {
@@ -56,6 +57,17 @@ const MACRO_LABEL_ES = { normal: "Normal", dangereux: "Peligroso" } as const;
 const MACRO_LABEL_EN = { normal: "Normal", dangereux: "Dangerous" } as const;
 
 const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced"];
+
+// Charte v2 : une bougie future révélée toutes les 420ms (rythme du design-lab)
+const REVEAL_STEP_MS = 420;
+
+const CHOICE_OPTIONS: ChoiceOption<GameChoice>[] = [
+  { value: "BUY",      label: "BUY",      variant: "buy"  },
+  { value: "SELL",     label: "SELL",     variant: "sell" },
+  { value: "NO_TRADE", label: "NO TRADE", variant: "none" },
+];
+const CHOICE_TINT: Record<GameChoice, string> = { BUY: "#10b981", SELL: "#ef4444", NO_TRADE: "#e4e4e7" };
+const CHOICE_LABEL: Record<GameChoice, string> = { BUY: "BUY", SELL: "SELL", NO_TRADE: "NO TRADE" };
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -111,6 +123,9 @@ export default function BuySellNoTradePage() {
         volLow:          "baja",
         volNormal:       "normal",
         volHigh:         "alta",
+        stepQuestion:    "Pregunta",
+        stepChoice:      "Elección hecha",
+        stepVerdict:     "Veredicto",
       }
     : locale === "en"
     ? {
@@ -157,6 +172,9 @@ export default function BuySellNoTradePage() {
         volLow:          "low",
         volNormal:       "normal",
         volHigh:         "high",
+        stepQuestion:    "Question",
+        stepChoice:      "Choice made",
+        stepVerdict:     "Verdict",
       }
     : {
         games:           "Jeux",
@@ -202,6 +220,9 @@ export default function BuySellNoTradePage() {
         volLow:          "faible",
         volNormal:       "normale",
         volHigh:         "élevée",
+        stepQuestion:    "Question",
+        stepChoice:      "Choix fait",
+        stepVerdict:     "Verdict",
       };
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
   const [seed, setSeed] = useState<number | null>(null);
@@ -240,13 +261,15 @@ export default function BuySellNoTradePage() {
     if (animRef.current) { clearTimeout(animRef.current); animRef.current = null; }
   }, [idx, difficulty]);
 
-  // Animation reveal après le choix
+  // Animation reveal après le choix : le graphique glisse d'abord vers son
+  // cadrage « passé + futur » (V2_REVEAL_DELAY_MS), puis une bougie toutes les 420ms.
   useEffect(() => {
     if (phase !== "revealing" || !chart || !current) return;
     if (revealed >= chart.future.length) {
       animRef.current = setTimeout(() => setPhase("feedback"), 300);
     } else {
-      animRef.current = setTimeout(() => setRevealed((c) => c + 1), 200);
+      const glide = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : V2_REVEAL_DELAY_MS;
+      animRef.current = setTimeout(() => setRevealed((c) => c + 1), revealed === 0 ? glide : REVEAL_STEP_MS);
     }
     return () => { if (animRef.current) clearTimeout(animRef.current); };
   }, [phase, revealed, chart, current]);
@@ -310,8 +333,8 @@ export default function BuySellNoTradePage() {
 
   if (!current || !chart) {
     return (
-      <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
-        <p className="text-sm text-zinc-500">{T.loading}</p>
+      <main className="v2-page flex min-h-[60vh] items-center justify-center">
+        <p className="text-[14px] text-[color:var(--v2-text-3)]">{T.loading}</p>
       </main>
     );
   }
@@ -345,7 +368,7 @@ export default function BuySellNoTradePage() {
       setStreak(0);
     }
     setPhase("revealing");
-    setRevealed(1);
+    setRevealed(0); // la 1re bougie future arrive après le glissement du graphique
   };
 
   const handleNext = () => {
@@ -359,165 +382,167 @@ export default function BuySellNoTradePage() {
   const isPlacing = phase === "placing";
   const isRevealing = phase === "revealing";
   const isFeedback = phase === "feedback";
+  const zones = maskZonesForDifficulty(chart.zones, difficulty, locale);
+  const correct = chosen !== null && chosen === current.correctAnswer;
+  const headline = correct
+    ? current.correctAnswer === "NO_TRADE" ? T.disciplinePerfect : T.goodRead
+    : current.correctAnswer === "NO_TRADE" ? T.trapAvoided : T.wrongRead;
+  const step = isPlacing ? 1 : isRevealing ? 2 : 3;
+  const stepLabel = isPlacing ? T.stepQuestion : isRevealing ? T.stepChoice : T.stepVerdict;
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-
+    <main className="v2-page mx-auto flex w-full max-w-[880px] flex-col">
+      <div className="flex flex-col gap-3">
         {/* Top bar */}
-        <div className="flex items-center justify-between mb-5">
-          <Link
-            href="/jeux"
-            className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-white transition-colors"
-          >
+        <div className="flex items-center justify-between gap-3">
+          <Link href="/jeux" className="v2-link-back">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             {T.games}
           </Link>
-          <div className="flex items-center gap-3 text-[11px]">
+          <div className="flex items-center gap-3 text-[12px]">
             <DifficultyChip difficulty={difficulty} difficultyMeta={G.DIFFICULTY_META} />
-            <div className="w-px h-3 bg-zinc-800" />
+            <span className="h-3 w-px bg-white/15" />
             <div className="flex items-center gap-1.5">
-              <span className="text-zinc-600 uppercase tracking-wide">{T.round}</span>
-              <span className="font-bold text-white tabular-nums">{idx + 1}/{ROUNDS_PER_SESSION}</span>
+              <span className="uppercase tracking-wide text-[color:var(--v2-text-3)]">{T.round}</span>
+              <span className="v2-mono font-bold text-[color:var(--v2-text)]">{idx + 1}/{ROUNDS_PER_SESSION}</span>
             </div>
-            <div className="w-px h-3 bg-zinc-800" />
+            <span className="h-3 w-px bg-white/15" />
             <div className="flex items-center gap-1.5">
-              <span className="text-zinc-600 uppercase tracking-wide">{T.score}</span>
-              <span className={`font-bold tabular-nums ${score < 0 ? "text-red-400" : "text-emerald-400"}`}>
+              <span className="uppercase tracking-wide text-[color:var(--v2-text-3)]">{T.score}</span>
+              <span className={`v2-mono font-bold ${score < 0 ? "text-red-400" : "text-emerald-400"}`}>
                 {score >= 0 ? "+" : ""}{score}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Streak */}
-        {streak > 0 && (
-          <div className="mb-4 flex items-center justify-center gap-1.5 text-[11px] font-semibold">
-            <span className="text-amber-400">🔥</span>
-            <span className="text-amber-400 tabular-nums">{streak}</span>
-            <span className="text-zinc-500">{T.ofStreak}</span>
-            {streak >= 3 && <span className="text-amber-400">{T.bonusActive}</span>}
-          </div>
-        )}
+        {/* Streak — emplacement toujours réservé : son apparition au clic ne
+            doit pas décaler le jeu (c'est l'instant filmé) */}
+        <div
+          className={`flex h-[18px] items-center justify-center gap-1.5 text-[12px] font-semibold ${streak > 0 ? "" : "invisible"}`}
+          aria-hidden={streak === 0}
+        >
+          <span className="text-amber-300">🔥</span>
+          <span className="v2-mono text-amber-300">{streak}</span>
+          <span className="text-[color:var(--v2-text-3)]">{T.ofStreak}</span>
+          {streak >= 3 && <span className="text-amber-300">{T.bonusActive}</span>}
+        </div>
 
-        {/* Scenario card */}
-        <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden mb-5">
+        {/* Scénario */}
+        <section className="v2-card v2-pad v2-gap flex flex-col" aria-labelledby="bsnt-title">
+          <h2 id="bsnt-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">
+            BUY <span className="text-[color:var(--v2-text-3)]">/</span>{" "}
+            <span className="text-red-400">SELL</span> <span className="text-[color:var(--v2-text-3)]">/</span>{" "}
+            <span className="whitespace-nowrap bg-[linear-gradient(90deg,#f4f4f5,#a1a1aa)] bg-clip-text text-transparent">NO TRADE</span>
+          </h2>
 
-          {/* Meta */}
-          <div className="px-4 pt-3 pb-2.5 border-b border-zinc-800/60 flex items-center justify-between gap-3 flex-wrap">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-white tabular-nums">{current.asset}</span>
-              <span className="text-zinc-700 text-xs">·</span>
-              <span className="text-[11px] text-zinc-400">{current.session}</span>
-            </div>
-            <div className="flex items-center gap-2 text-[10px]">
+          <div className="v2-gap-s mx-auto flex w-full max-w-3xl flex-col">
+            <StepBadge n={step} label={stepLabel} />
+
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+              <span className="v2-display v2-asset mr-1 font-bold">{current.asset}</span>
+              <span className="v2-chip">{current.session}</span>
               <VolBadge volatility={current.volatility} T={T} />
               <SpreadBadge spread={current.spread} T={T} />
             </div>
-          </div>
 
-          {/* News warning */}
-          {current.macroContext === "dangereux" && (
-            <div className="px-4 py-2.5 border-b border-zinc-800/60 bg-red-500/5 flex items-start gap-2.5">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 mt-0.5">
-                <path d="M7 1L13 12H1L7 1z" stroke="#ef4444" strokeWidth="1.4" strokeLinejoin="round" />
-                <path d="M7 5.5v3M7 10v0.5" stroke="#ef4444" strokeWidth="1.4" strokeLinecap="round" />
-              </svg>
-              <p className="text-[11px] text-red-400 font-semibold leading-snug">
-                {T.newsWarning}
-              </p>
-            </div>
-          )}
+            {/* News warning */}
+            {current.macroContext === "dangereux" && (
+              <div className="v2-well v2-well--danger flex items-start gap-2.5 px-3.5 py-3">
+                <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="mt-0.5 shrink-0">
+                  <path d="M7 1L13 12H1L7 1z" stroke="#f87171" strokeWidth="1.4" strokeLinejoin="round" />
+                  <path d="M7 5.5v3M7 10v0.5" stroke="#f87171" strokeWidth="1.4" strokeLinecap="round" />
+                </svg>
+                <p className="text-[13px] font-semibold leading-snug text-red-300">{T.newsWarning}</p>
+              </div>
+            )}
 
-          {/* Mini chart : past + (future progressif si reveal/feedback) */}
-          <div className="p-3 sm:p-4">
-            <MiniChart
-              data={{
-                candles: [...chart.past, ...chart.future],
-                zones:   maskZonesForDifficulty(chart.zones, difficulty, locale),
-                domain:  chart.domain,
-              }}
+            {/* Graphique : passé, puis futur révélé bougie par bougie, puis verdict */}
+            <GameChartV2
+              data={{ candles: [...chart.past, ...chart.future], zones, domain: chart.domain }}
               overlay={{
                 separatorIndex:     chart.past.length,
                 visibleFutureCount: isPlacing ? 0 : revealed,
               }}
-              height={isPlacing ? 170 : 185}
-            />
-            {chart.zones.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
-                {maskZonesForDifficulty(chart.zones, difficulty, locale).map((z, i) => (
-                  <ZoneLegendChip key={i} zone={z} />
-                ))}
+              mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
+              pin={chosen ? { label: CHOICE_LABEL[chosen], sub: T.yourChoice, color: CHOICE_TINT[chosen] } : undefined}
+            >
+              {isFeedback && chosen && (
+                <VerdictOverlay
+                  correct={correct}
+                  headline={headline}
+                  points={lastPoints}
+                  bonus={lastStreakBonus > 0 ? `+${lastStreakBonus} streak` : undefined}
+                />
+              )}
+            </GameChartV2>
+
+            {/* Légende : utile quand plusieurs zones (la 1re est nommée sur le graphique) */}
+            {zones.length > 1 && (
+              <div className="flex flex-wrap gap-x-2 gap-y-1.5">
+                {zones.map((z, i) => <ZoneLegendChip key={i} zone={z} />)}
               </div>
             )}
-          </div>
 
-          {/* Context infos — en avancé, on cache spread/vol pour forcer la
-              lecture du chart (mais on garde la news warning visible). */}
-          <div className={`px-4 pb-3 grid gap-2 ${difficulty === "advanced" ? "grid-cols-2" : "grid-cols-3"}`}>
-            <InfoTile label={T.htf}        value={BIAS_LABEL[current.htfBias]}        biasClass={biasClass(current.htfBias)} />
-            <InfoTile label={T.macro}      value={MACRO_LABEL[current.macroContext]}  biasClass={current.macroContext === "dangereux" ? "text-red-400" : "text-zinc-300"} />
-            {difficulty !== "advanced" && (
-              <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} biasClass="text-zinc-300" />
-            )}
-          </div>
+            {/* Context infos — en avancé, on cache la volatilité pour forcer la
+                lecture du chart (mais on garde la news warning visible). */}
+            <div className={`grid gap-2 sm:gap-3 ${difficulty === "advanced" ? "grid-cols-2" : "grid-cols-3"}`}>
+              <InfoTile label={T.htf}   value={BIAS_LABEL[current.htfBias]}       valueClass={biasClass(current.htfBias)} />
+              <InfoTile label={T.macro} value={MACRO_LABEL[current.macroContext]} valueClass={current.macroContext === "dangereux" ? "text-red-300" : ""} />
+              {difficulty !== "advanced" && (
+                <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} valueClass="" />
+              )}
+            </div>
 
-          {/* Context text — raccourci en intermédiaire/avancé pour réduire les
-              aides texte (le joueur doit lire le marché lui-même). */}
-          <div className="px-4 pb-4">
-            <p className="text-[13px] text-zinc-300 leading-relaxed">
+            {/* Context text — raccourci en intermédiaire/avancé pour réduire les
+                aides texte (le joueur doit lire le marché lui-même). */}
+            <p className="v2-lead text-[color:var(--v2-text-2)]">
               {difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context))}
             </p>
+
+            {/* Décision : interactive, puis figée (le choix reste visible) */}
+            {isPlacing
+              ? <ChoiceRow options={CHOICE_OPTIONS} onPick={handleChoice} />
+              : <ChoiceRow options={CHOICE_OPTIONS} picked={chosen} />}
+
+            {isRevealing && (
+              <div className="v2-well px-4 py-3 text-center">
+                <p className="v2-eyebrow">{T.revelation}</p>
+                <p className="v2-lead mt-1 text-[color:var(--v2-text)]">{T.revealText}</p>
+              </div>
+            )}
+
+            {isFeedback && chosen && (
+              <Feedback
+                T={T}
+                METRIC_LABELS={METRIC_LABELS}
+                choice={chosen}
+                correctAnswer={current.correctAnswer}
+                rationales={current.rationales}
+                lesson={current.lessons[difficulty]}
+                difficulty={difficulty}
+                difficultyMeta={G.DIFFICULTY_META}
+                title={current.title}
+                metric={current.metric}
+                onNext={handleNext}
+                isLast={idx + 1 >= ROUNDS_PER_SESSION}
+              />
+            )}
           </div>
-        </div>
-
-        {/* Decision / reveal / feedback */}
-        {isPlacing && <DecisionButtons onChoose={handleChoice} />}
-
-        {isRevealing && (
-          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl px-4 py-5 text-center">
-            <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-1.5">
-              {T.revelation}
-            </p>
-            <p className="text-sm text-zinc-300">
-              {T.revealText}
-            </p>
-          </div>
-        )}
-
-        {isFeedback && chosen && (
-          <Feedback
-            T={T}
-            METRIC_LABELS={METRIC_LABELS}
-            choice={chosen}
-            correctAnswer={current.correctAnswer}
-            rationales={current.rationales}
-            lesson={current.lessons[difficulty]}
-            difficulty={difficulty}
-            difficultyMeta={G.DIFFICULTY_META}
-            points={lastPoints}
-            streakBonus={lastStreakBonus}
-            title={current.title}
-            metric={current.metric}
-            onNext={handleNext}
-            isLast={idx + 1 >= ROUNDS_PER_SESSION}
-          />
-        )}
-
-        {/* Stats footer */}
-        <div className="mt-6 pt-5 border-t border-zinc-800/60">
-          <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-3">
-            {T.skills}
-          </p>
-          <div className="grid grid-cols-3 gap-2.5">
-            {(["discipline", "lecture", "piege"] as Metric[]).map((m) => (
-              <StatTile key={m} metric={m} METRIC_LABELS={METRIC_LABELS} ok={stats[m].ok} total={stats[m].total} />
-            ))}
-          </div>
-        </div>
+        </section>
       </div>
+
+      {/* Stats footer */}
+      <section className="mx-auto flex w-full max-w-3xl flex-col gap-3">
+        <p className="v2-eyebrow" style={{ color: "var(--v2-text-3)" }}>{T.skills}</p>
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
+          {(["discipline", "lecture", "piege"] as Metric[]).map((m) => (
+            <StatTile key={m} metric={m} METRIC_LABELS={METRIC_LABELS} ok={stats[m].ok} total={stats[m].total} />
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
@@ -526,84 +551,54 @@ export default function BuySellNoTradePage() {
 
 function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; locale: string | undefined }) {
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-        <Link
-          href="/jeux"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-white mb-8"
-        >
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          {locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux"}
-        </Link>
+    <main className="v2-page mx-auto flex w-full max-w-xl flex-col">
+      <Link href="/jeux" className="v2-link-back">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux"}
+      </Link>
 
-        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
-          BUY / SELL / NO TRADE
-        </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{locale === "es" ? "Elige tu nivel" : locale === "en" ? "Choose your level" : "Choisis ton niveau"}</h1>
-        <p className="text-zinc-400 text-sm leading-relaxed mb-8">
+      <div className="v2-gap-s flex flex-col">
+        <p className="v2-eyebrow">BUY / SELL / NO TRADE</p>
+        <h1 className="v2-display v2-h2 font-bold">{locale === "es" ? "Elige tu nivel" : locale === "en" ? "Choose your level" : "Choisis ton niveau"}</h1>
+        <p className="v2-lead text-[color:var(--v2-text-2)]">
           {locale === "es"
             ? `${ROUNDS_PER_SESSION} escenarios para analizar. El nivel modula la sutileza de las señales, la frecuencia de las trampas y la profundidad de las explicaciones.`
             : locale === "en"
             ? `${ROUNDS_PER_SESSION} scenarios to analyze. The level adjusts the subtlety of the signals, the frequency of traps and the depth of the explanations.`
             : `${ROUNDS_PER_SESSION} scénarios à analyser. Le niveau module la subtilité des signaux, la fréquence des pièges et la profondeur des explications.`}
         </p>
+      </div>
 
-        <div className="flex flex-col gap-3">
-          {DIFFICULTIES.map((d) => {
-            const meta = difficultyMeta[d];
-            return (
-              <button
-                key={d}
-                onClick={() => onPick(d)}
-                className="group text-left bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 rounded-2xl px-5 py-4 transition-all"
-              >
-                <div className="flex items-center justify-between gap-3 mb-1.5">
-                  <div className="flex items-center gap-2.5">
-                    <span className={`w-2 h-2 rounded-full ${meta.dotClass}`} />
-                    <span className={`text-base font-bold ${meta.textClass}`}>{meta.label}</span>
-                  </div>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-zinc-600 group-hover:text-white transition-colors">
-                    <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+      <div className="flex flex-col gap-3">
+        {DIFFICULTIES.map((d) => {
+          const meta = difficultyMeta[d];
+          return (
+            <button
+              key={d}
+              onClick={() => onPick(d)}
+              className="v2-card group px-5 py-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              <div className="mb-1.5 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className={`h-2 w-2 rounded-full ${meta.dotClass}`} />
+                  <span className={`v2-display text-[18px] font-bold ${meta.textClass}`}>{meta.label}</span>
                 </div>
-                <p className="text-[12px] text-zinc-400 leading-relaxed">{meta.description}</p>
-              </button>
-            );
-          })}
-        </div>
+                <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="text-[color:var(--v2-text-3)] transition-colors group-hover:text-[color:var(--v2-text)]">
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <p className="v2-body text-[color:var(--v2-text-2)]">{meta.description}</p>
+            </button>
+          );
+        })}
       </div>
     </main>
   );
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
-
-function DecisionButtons({ onChoose }: { onChoose: (c: GameChoice) => void }) {
-  return (
-    <div className="grid grid-cols-3 gap-2 sm:gap-3">
-      <button
-        onClick={() => onChoose("BUY")}
-        className="py-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold text-sm hover:bg-emerald-500/20 hover:border-emerald-500/50 active:scale-[0.98] transition-all"
-      >
-        BUY
-      </button>
-      <button
-        onClick={() => onChoose("SELL")}
-        className="py-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 font-bold text-sm hover:bg-red-500/20 hover:border-red-500/50 active:scale-[0.98] transition-all"
-      >
-        SELL
-      </button>
-      <button
-        onClick={() => onChoose("NO_TRADE")}
-        className="py-3.5 rounded-xl bg-zinc-800/60 border border-zinc-700 text-zinc-300 font-bold text-xs sm:text-sm hover:bg-zinc-800 hover:border-zinc-600 active:scale-[0.98] transition-all"
-      >
-        NO TRADE
-      </button>
-    </div>
-  );
-}
 
 interface FeedbackProps {
   T:              { [k: string]: string };
@@ -614,143 +609,79 @@ interface FeedbackProps {
   lesson:         string;
   difficulty:     Difficulty;
   difficultyMeta: typeof FrGame.DIFFICULTY_META;
-  points:         number;
-  streakBonus:    number;
   title:          string;
   metric:         Metric;
   onNext:         () => void;
   isLast:         boolean;
 }
 
-function Feedback({ T, METRIC_LABELS, choice, correctAnswer, rationales, lesson, difficulty, difficultyMeta, points, streakBonus, title, metric, onNext, isLast }: FeedbackProps) {
+// Le verdict (titre + points) est affiché en grand sur le graphique ; la carte
+// détaille les rationales, la leçon et l'accès au scénario suivant.
+function Feedback({ T, METRIC_LABELS, choice, correctAnswer, rationales, lesson, difficulty, difficultyMeta, title, metric, onNext, isLast }: FeedbackProps) {
   const correct = choice === correctAnswer;
-  const headline = correct
-    ? correctAnswer === "NO_TRADE" ? T.disciplinePerfect : T.goodRead
-    : correctAnswer === "NO_TRADE" ? T.trapAvoided : T.wrongRead;
-
   return (
-    <div className={`bg-zinc-900/50 border rounded-2xl overflow-hidden ${
-      correct ? "border-emerald-500/30" : "border-red-500/30"
-    }`}>
-      <div className={`px-4 py-3 ${correct ? "bg-emerald-500/8" : "bg-red-500/8"} flex items-center justify-between gap-3`}>
-        <div className="flex items-center gap-2.5 min-w-0">
-          {correct ? (
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">
-              <circle cx="9" cy="9" r="8" stroke="#10b981" strokeWidth="1.5" />
-              <path d="M5.5 9.5l2.5 2.5 4.5-5" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          ) : (
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">
-              <circle cx="9" cy="9" r="8" stroke="#ef4444" strokeWidth="1.5" />
-              <path d="M6 6l6 6M12 6l-6 6" stroke="#ef4444" strokeWidth="1.8" strokeLinecap="round" />
-            </svg>
-          )}
-          <p className={`text-sm font-bold ${correct ? "text-emerald-400" : "text-red-400"} truncate`}>
-            {headline}
-          </p>
-        </div>
-        <div className="shrink-0 text-right">
-          <p className={`text-base font-black tabular-nums ${
-            points >= 0 ? "text-emerald-400" : "text-red-400"
-          }`}>
-            {points >= 0 ? "+" : ""}{points}
-          </p>
-          {streakBonus > 0 && (
-            <p className="text-[9px] text-amber-400 uppercase tracking-wide font-bold">
-              +{streakBonus} streak
-            </p>
-          )}
-        </div>
+    <div className="v2-well v2-gap-s flex flex-col p-4 sm:p-5">
+      <p className="v2-eyebrow" style={{ color: correct ? "#34d399" : "#f87171" }}>{title}</p>
+
+      {/* Rationales : 3 lignes, une par choix */}
+      <div className="flex flex-col gap-2">
+        {(["BUY", "SELL", "NO_TRADE"] as GameChoice[]).map((c) => (
+          <RationaleRow
+            key={c}
+            T={T}
+            label={CHOICE_LABEL[c]}
+            text={rationales[c]}
+            isCorrect={correctAnswer === c}
+            isChosen={choice === c}
+          />
+        ))}
       </div>
 
-      <div className="px-4 py-4">
-        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-2">
-          {title}
+      {/* Lesson (adapté au niveau) */}
+      <div className="v2-well--amber rounded-[14px] px-4 py-3">
+        <p className="text-[12px] font-bold uppercase tracking-wider text-amber-300">
+          {T.lesson} · {difficultyMeta[difficulty].label}
         </p>
+        <p className="v2-body mt-1 text-[color:var(--v2-text)]">{lesson}</p>
+      </div>
 
-        {/* Rationales : 3 lignes, une par choix */}
-        <div className="space-y-2 mb-4">
-          <RationaleRow
-            T={T}
-            label="BUY"
-            text={rationales.BUY}
-            isCorrect={correctAnswer === "BUY"}
-            isChosen={choice === "BUY"}
-          />
-          <RationaleRow
-            T={T}
-            label="SELL"
-            text={rationales.SELL}
-            isCorrect={correctAnswer === "SELL"}
-            isChosen={choice === "SELL"}
-          />
-          <RationaleRow
-            T={T}
-            label="NO TRADE"
-            text={rationales.NO_TRADE}
-            isCorrect={correctAnswer === "NO_TRADE"}
-            isChosen={choice === "NO_TRADE"}
-          />
+      <div className="flex items-center justify-between gap-3 pt-1">
+        <div className="flex items-center gap-1.5">
+          <span className={`h-1.5 w-1.5 rounded-full ${METRIC_DOT[metric]}`} />
+          <span className="text-[12px] font-medium text-[color:var(--v2-text-3)]">{METRIC_LABELS[metric]}</span>
         </div>
-
-        {/* Lesson (adapté au niveau) */}
-        <div className="bg-blue-500/8 border border-blue-500/25 rounded-lg px-3 py-2.5 mb-3">
-          <p className="text-[10px] font-bold text-blue-400 uppercase tracking-wide mb-1">
-            {T.lesson} · {difficultyMeta[difficulty].label}
-          </p>
-          <p className="text-[13px] text-zinc-200 leading-relaxed">{lesson}</p>
-        </div>
-
-        <div className="flex items-center justify-between gap-3 pt-2 border-t border-zinc-800/60">
-          <div className="flex items-center gap-1.5">
-            <span className={`w-1.5 h-1.5 rounded-full ${METRIC_DOT[metric]}`} />
-            <span className="text-[10px] text-zinc-500 font-medium">{METRIC_LABELS[metric]}</span>
-          </div>
-          <button
-            onClick={onNext}
-            className="flex items-center gap-1.5 text-sm font-semibold text-white bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg px-4 py-2 transition-colors"
-          >
-            {isLast ? T.viewSummary : T.nextScenario}
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-              <path d="M2 6.5h9M8 3.5l3 3-3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-        </div>
+        <button onClick={onNext} className="v2-btn">
+          {isLast ? T.viewSummary : T.nextScenario}
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M2 6.5h9M8 3.5l3 3-3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
       </div>
     </div>
   );
 }
 
 function RationaleRow({ T, label, text, isCorrect, isChosen }: { T: { [k: string]: string }; label: string; text: string; isCorrect: boolean; isChosen: boolean }) {
-  // Style :
-  //   isCorrect = true → bordure emerald (la bonne réponse)
-  //   isChosen && !isCorrect → bordure red (le choix erroné)
-  //   sinon → bordure zinc neutre
-  const border =
-    isCorrect           ? "border-emerald-500/40 bg-emerald-500/5"
-  : isChosen            ? "border-red-500/40 bg-red-500/5"
-  :                       "border-zinc-800 bg-zinc-950/40";
-  const labelColor =
-    isCorrect ? "text-emerald-400"
-  : isChosen  ? "text-red-400"
-  :             "text-zinc-500";
+  // Bonne réponse → cadre emerald ; choix erroné → cadre rouge ; sinon neutre
+  const frame = isCorrect ? "v2-well--good" : isChosen ? "v2-well--bad" : "";
+  const labelColor = isCorrect ? "text-emerald-300" : isChosen ? "text-red-300" : "text-[color:var(--v2-text-3)]";
   return (
-    <div className={`border rounded-lg px-3 py-2.5 ${border}`}>
-      <p className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${labelColor}`}>
+    <div className={`v2-well ${frame} px-3.5 py-3`}>
+      <p className={`v2-display text-[14px] font-bold ${labelColor}`}>
         {label}
-        {isCorrect && <span className="ml-1.5 text-emerald-400">{T.correctAnswer}</span>}
-        {isChosen && !isCorrect && <span className="ml-1.5 text-red-400">{T.yourChoice}</span>}
+        {isCorrect && <span className="ml-1.5 font-medium text-[color:var(--v2-text-2)]">{T.correctAnswer}</span>}
+        {isChosen && <span className="ml-1.5 font-medium text-[color:var(--v2-text-2)]">{T.yourChoice}</span>}
       </p>
-      <p className="text-[12px] text-zinc-300 leading-relaxed">{text}</p>
+      <p className="v2-body mt-1 text-[color:var(--v2-text)]">{text}</p>
     </div>
   );
 }
 
-function InfoTile({ label, value, biasClass }: { label: string; value: string; biasClass: string }) {
+function InfoTile({ label, value, valueClass }: { label: string; value: string; valueClass: string }) {
   return (
-    <div className="bg-zinc-950/60 border border-zinc-800/60 rounded-lg px-2.5 py-1.5">
-      <p className="text-[9px] text-zinc-600 uppercase tracking-wide">{label}</p>
-      <p className={`text-[12px] font-semibold ${biasClass} truncate`}>{value}</p>
+    <div className="v2-well flex flex-col gap-0.5 px-3 py-2.5 sm:px-4">
+      <span className="text-[12px] font-semibold uppercase tracking-wider text-[color:var(--v2-text-3)]">{label}</span>
+      <span className={`v2-display v2-tile-value truncate font-bold ${valueClass}`}>{value}</span>
     </div>
   );
 }
@@ -758,56 +689,37 @@ function InfoTile({ label, value, biasClass }: { label: string; value: string; b
 function StatTile({ metric, ok, total, METRIC_LABELS }: { metric: Metric; ok: number; total: number; METRIC_LABELS: Record<Metric, string> }) {
   const pct = total > 0 ? Math.round((ok / total) * 100) : 0;
   return (
-    <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 py-2.5">
-      <div className="flex items-center gap-1.5 mb-1.5">
-        <span className={`w-1.5 h-1.5 rounded-full ${METRIC_DOT[metric]}`} />
-        <p className="text-[10px] text-zinc-500 uppercase tracking-wide font-semibold truncate">
+    <div className="v2-well px-3 py-2.5">
+      <div className="mb-1 flex items-center gap-1.5">
+        <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${METRIC_DOT[metric]}`} />
+        <p className="truncate text-[12px] font-semibold uppercase tracking-wide text-[color:var(--v2-text-3)]">
           {METRIC_LABELS[metric]}
         </p>
       </div>
-      <p className="text-sm font-bold text-white tabular-nums">
-        {ok}<span className="text-zinc-600">/{total}</span>
+      <p className="v2-mono text-[16px] font-bold text-[color:var(--v2-text)]">
+        {ok}<span className="text-[color:var(--v2-text-3)]">/{total}</span>
       </p>
-      {total > 0 && (
-        <p className="text-[10px] text-zinc-600 tabular-nums">{pct}%</p>
-      )}
+      {total > 0 && <p className="v2-mono text-[12px] text-[color:var(--v2-text-3)]">{pct}%</p>}
     </div>
   );
 }
 
 function VolBadge({ volatility, T }: { volatility: "faible" | "normale" | "élevée"; T: { [k: string]: string } }) {
-  const cls =
-    volatility === "élevée"  ? "text-amber-400 border-amber-400/30"
-  : volatility === "faible"  ? "text-zinc-500 border-zinc-700"
-  :                            "text-zinc-400 border-zinc-700";
   const label = volatility === "élevée" ? T.volHigh : volatility === "faible" ? T.volLow : T.volNormal;
-  return (
-    <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>
-      {T.vol} {label}
-    </span>
-  );
+  return <span className={`v2-chip ${volatility === "élevée" ? "v2-chip--amber" : ""}`}>{T.vol} {label}</span>;
 }
 
 function SpreadBadge({ spread, T }: { spread: "faible" | "élevé"; T: { [k: string]: string } }) {
-  const cls = spread === "élevé"
-    ? "text-amber-400 border-amber-400/30"
-    : "text-zinc-500 border-zinc-700";
   const label = spread === "élevé" ? T.spreadHigh : T.spreadLow;
-  return (
-    <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>
-      {T.spread} {label}
-    </span>
-  );
+  return <span className={`v2-chip ${spread === "élevé" ? "v2-chip--amber" : ""}`}>{T.spread} {label}</span>;
 }
 
 function DifficultyChip({ difficulty, difficultyMeta }: { difficulty: Difficulty; difficultyMeta: typeof FrGame.DIFFICULTY_META }) {
   const meta = difficultyMeta[difficulty];
   return (
     <div className="flex items-center gap-1.5">
-      <span className={`w-1.5 h-1.5 rounded-full ${meta.dotClass}`} />
-      <span className={`text-[10px] font-bold uppercase tracking-wide ${meta.textClass}`}>
-        {meta.label}
-      </span>
+      <span className={`h-1.5 w-1.5 rounded-full ${meta.dotClass}`} />
+      <span className={`text-[12px] font-bold uppercase tracking-wide ${meta.textClass}`}>{meta.label}</span>
     </div>
   );
 }
@@ -816,13 +728,12 @@ function ZoneLegendChip({ zone }: { zone: { kind: string; label: string } }) {
   const cls =
     zone.kind === "support"        ? "bg-emerald-500"
   : zone.kind === "resistance"     ? "bg-red-500"
-  : zone.kind === "fvg"            ? "bg-amber-400"
   :                                  "bg-amber-400";
   return (
-    <div className="flex items-center gap-1.5">
-      <span className={`w-2 h-2 rounded-sm ${cls}`} />
-      <span className="text-[10px] text-zinc-400 font-medium">{zone.label}</span>
-    </div>
+    <span className="v2-chip">
+      <span className={`h-2 w-2 rounded-sm ${cls}`} />
+      {zone.label}
+    </span>
   );
 }
 
@@ -844,61 +755,52 @@ function Summary({
 }) {
   const accuracy = Math.round((correctCount / ROUNDS_PER_SESSION) * 100);
   const verdict =
-    score >= 1000 ? { label: T.traderDisciplined, color: "text-emerald-400" }
-  : score >= 600  ? { label: T.goodEye,            color: "text-emerald-400" }
-  : score >= 200  ? { label: T.toPolish,           color: "text-amber-400"   }
-  :                 { label: T.lackPatience,       color: "text-red-400"     };
+    score >= 1000 ? { label: T.traderDisciplined, color: "text-emerald-300" }
+  : score >= 600  ? { label: T.goodEye,            color: "text-emerald-300" }
+  : score >= 200  ? { label: T.toPolish,           color: "text-amber-300"   }
+  :                 { label: T.lackPatience,       color: "text-red-300"     };
   const meta = difficultyMeta[difficulty];
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <Link
-          href="/jeux"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-white mb-6"
-        >
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          {T.games}
-        </Link>
+    <main className="v2-page mx-auto flex w-full max-w-3xl flex-col">
+      <Link href="/jeux" className="v2-link-back">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {T.games}
+      </Link>
 
-        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
+      <div className="v2-gap-s flex flex-col">
+        <p className="v2-eyebrow">
           {T.summary} · <span className={meta.textClass}>{meta.label}</span>
         </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">{ROUNDS_PER_SESSION} {T.scenariosPlayed}</h1>
-        <p className={`text-sm font-semibold ${verdict.color} mb-7`}>{verdict.label}</p>
+        <h1 className="v2-display v2-h2 font-bold">{ROUNDS_PER_SESSION} {T.scenariosPlayed}</h1>
+        <p className={`v2-display text-[18px] font-bold ${verdict.color}`}>{verdict.label}</p>
+      </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-8">
-          <BigStat label={T.score}          value={`${score >= 0 ? "+" : ""}${score}`} valueClass={score < 0 ? "text-red-400" : "text-emerald-400"} />
-          <BigStat label={T.precision}      value={`${accuracy}%`}                      valueClass="text-white" />
-          <BigStat label={T.correctAnswers} value={`${correctCount}/${ROUNDS_PER_SESSION}`} valueClass="text-white" />
-          <BigStat label={T.bestStreak}     value={`${maxStreak}`}                      valueClass="text-amber-400" />
-        </div>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
+        <BigStat label={T.score}          value={`${score >= 0 ? "+" : ""}${score}`} valueClass={score < 0 ? "text-red-400" : "text-emerald-400"} />
+        <BigStat label={T.precision}      value={`${accuracy}%`}                      valueClass="text-[color:var(--v2-text)]" />
+        <BigStat label={T.correctAnswers} value={`${correctCount}/${ROUNDS_PER_SESSION}`} valueClass="text-[color:var(--v2-text)]" />
+        <BigStat label={T.bestStreak}     value={`${maxStreak}`}                      valueClass="text-amber-300" />
+      </div>
 
-        <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-3">
-          {T.skills}
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+      <div className="flex flex-col gap-3">
+        <p className="v2-eyebrow" style={{ color: "var(--v2-text-3)" }}>{T.skills}</p>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {(["discipline", "lecture", "piege"] as Metric[]).map((m) => (
             <SummarySkill key={m} metric={m} METRIC_LABELS={METRIC_LABELS} ok={stats[m].ok} total={stats[m].total} />
           ))}
         </div>
+      </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <button
-            onClick={onReplay}
-            className="flex-1 py-3 rounded-xl bg-white text-zinc-950 font-bold text-sm hover:bg-zinc-100 transition-colors"
-          >
-            {T.replayIn} {meta.label.toLowerCase()}
-          </button>
-          <button
-            onClick={onChangeDifficulty}
-            className="flex-1 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-bold text-sm hover:bg-zinc-800 transition-colors"
-          >
-            {T.changeLevel}
-          </button>
-        </div>
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <button onClick={onReplay} className="v2-btn v2-btn--light flex-1">
+          {T.replayIn} {meta.label.toLowerCase()}
+        </button>
+        <button onClick={onChangeDifficulty} className="v2-btn flex-1">
+          {T.changeLevel}
+        </button>
       </div>
     </main>
   );
@@ -906,9 +808,9 @@ function Summary({
 
 function BigStat({ label, value, valueClass }: { label: string; value: string; valueClass: string }) {
   return (
-    <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl px-3 py-3">
-      <p className="text-[10px] text-zinc-600 uppercase tracking-wide font-semibold mb-1">{label}</p>
-      <p className={`text-xl font-black tabular-nums ${valueClass}`}>{value}</p>
+    <div className="v2-well px-4 py-3">
+      <p className="mb-1 text-[12px] font-semibold uppercase tracking-wider text-[color:var(--v2-text-3)]">{label}</p>
+      <p className={`v2-mono v2-num-l font-bold ${valueClass}`}>{value}</p>
     </div>
   );
 }
@@ -916,15 +818,15 @@ function BigStat({ label, value, valueClass }: { label: string; value: string; v
 function SummarySkill({ metric, ok, total, METRIC_LABELS }: { metric: Metric; ok: number; total: number; METRIC_LABELS: Record<Metric, string> }) {
   const pct = total > 0 ? Math.round((ok / total) * 100) : 0;
   return (
-    <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl px-4 py-3">
-      <div className="flex items-center gap-2 mb-2">
-        <span className={`w-2 h-2 rounded-full ${METRIC_DOT[metric]}`} />
-        <p className="text-xs font-bold text-white">{METRIC_LABELS[metric]}</p>
+    <div className="v2-well px-4 py-3">
+      <div className="mb-2 flex items-center gap-2">
+        <span className={`h-2 w-2 rounded-full ${METRIC_DOT[metric]}`} />
+        <p className="v2-display text-[14px] font-bold text-[color:var(--v2-text)]">{METRIC_LABELS[metric]}</p>
       </div>
-      <p className="text-lg font-black tabular-nums text-white">
-        {ok}<span className="text-zinc-700">/{total}</span>
+      <p className="v2-mono v2-num-l font-bold text-[color:var(--v2-text)]">
+        {ok}<span className="text-[color:var(--v2-text-3)]">/{total}</span>
       </p>
-      <p className="text-[10px] text-zinc-500 tabular-nums">{total > 0 ? `${pct}%` : ""}</p>
+      <p className="v2-mono text-[12px] text-[color:var(--v2-text-3)]">{total > 0 ? `${pct}%` : ""}</p>
     </div>
   );
 }
@@ -932,9 +834,9 @@ function SummarySkill({ metric, ok, total, METRIC_LABELS }: { metric: Metric; ok
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function biasClass(bias: "bullish" | "bearish" | "range"): string {
-  return bias === "bullish" ? "text-emerald-400"
-       : bias === "bearish" ? "text-red-400"
-       :                       "text-zinc-400";
+  return bias === "bullish" ? "text-emerald-300"
+       : bias === "bearish" ? "text-red-300"
+       :                       "";
 }
 
 function cap(s: string): string {

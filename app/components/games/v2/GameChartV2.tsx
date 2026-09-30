@@ -1,0 +1,432 @@
+"use client";
+
+// Graphique des jeux — charte v2 (rendu validé dans /design-lab).
+// Même API que MiniChart (data / overlay / height), plus trois props
+// optionnelles : mode (question / reveal / verdict), pin (choix du joueur) et
+// children (calque superposé, ex. le verdict).
+//
+// - Géométrie calculée en pixels réels sur la taille du cadre (ResizeObserver).
+// - Traits ≥ 2px, zone héros (1re zone) remplie + glow + pastille.
+// - Couleur = mouvement : close > open → vert, close < open → rouge,
+//   close = open (doji) → neutre.
+// - Révélation : bougies du passé une à une au chargement (420ms), puis
+//   chaque bougie future montée par la page apparaît avec la même animation.
+// Doit être rendu sous un ancêtre .tsx-v2 (games-v2.css).
+
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
+import type { Candle, ChartData, ChartZone, ZoneKind } from "@/lib/games/shared";
+import type { MiniChartOverlay } from "@/app/components/games/MiniChart";
+
+// ─── Outils partagés (réutilisés par ui.tsx et les autres jeux v2) ──────────
+
+export function cssVars(vars: Record<string, string | number>): CSSProperties {
+  return vars as CSSProperties;
+}
+
+export const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+
+/** Largeur approximative d'un libellé (Space Grotesk / Inter gras). */
+export const textWidth = (s: string, fontPx: number) => s.length * fontPx * 0.6;
+
+/** Lance les animations quand le bloc entre dans l'écran ; replay() les rejoue. */
+export function usePlayOnView<T extends Element>(threshold = 0.3) {
+  const ref = useRef<T | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const [runKey, setRunKey] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || playing) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setPlaying(true);
+          io.disconnect();
+        }
+      },
+      { threshold },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [playing, threshold, runKey]);
+
+  const replay = useCallback(() => {
+    setRunKey((k) => k + 1);
+    setPlaying(false);
+  }, []);
+
+  return { ref, playing, runKey, replay };
+}
+
+/** Taille réelle d'un cadre : le SVG dessine en pixels CSS. */
+export function useBoxSize<T extends Element>() {
+  const ref = useRef<T | null>(null);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setSize((s) => (Math.abs(s.w - width) < 0.5 && Math.abs(s.h - height) < 0.5 ? s : { w: width, h: height }));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return { ref, ...size };
+}
+
+const DESKTOP_QUERY = "(min-width: 1024px)";
+/** Taille de la pastille héros sur desktop (≥ 1024px). */
+export const DESKTOP_PILL_PX = 13;
+
+export function useIsDesktop() {
+  return useSyncExternalStore(
+    (onChange) => {
+      const mq = window.matchMedia(DESKTOP_QUERY);
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(DESKTOP_QUERY).matches,
+    () => false,
+  );
+}
+
+// ─── Bougie ──────────────────────────────────────────────────────────────────
+
+type V2CandleProps = Candle & {
+  x: number;
+  width: number;
+  toY: (price: number) => number;
+  index: number;
+  /** "anim" : révélée puis estompée au --spot ; "now" : déjà estompée ; "full" : pleine opacité */
+  dim?: "anim" | "now" | "full";
+  /** true : visible d'emblée (pas d'animation d'apparition) */
+  still?: boolean;
+};
+
+export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still = false }: V2CandleProps) {
+  const up = c > o;
+  const down = c < o;
+  const body = up ? "var(--v2-bull)" : down ? "var(--v2-bear)" : "var(--v2-doji)";
+  const wick = up ? "var(--v2-bull-wick)" : down ? "var(--v2-bear-wick)" : "var(--v2-doji)";
+  const yTop = toY(Math.max(o, c));
+  const yBot = toY(Math.min(o, c));
+  const dimClass = dim === "anim" ? "v2-dim" : dim === "now" ? "v2-dim--now" : undefined;
+
+  return (
+    <g className={dimClass}>
+      <g className={still ? "v2-candle v2-candle--static" : "v2-candle"} style={cssVars({ "--i": index })}>
+        <line x1={x} x2={x} y1={toY(h)} y2={toY(l)} stroke={wick} strokeWidth={3} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        <rect x={x - width / 2} y={yTop} width={width} height={Math.max(yBot - yTop, 3)} rx={3} fill={body} />
+      </g>
+    </g>
+  );
+}
+
+// ─── Graphique ──────────────────────────────────────────────────────────────
+
+export type GameChartMode = "question" | "reveal" | "verdict";
+
+export interface GameChartV2Props {
+  data: ChartData;
+  overlay?: MiniChartOverlay;
+  /** Compatibilité MiniChart : ignoré, la hauteur vient de la charte v2. */
+  height?: number;
+  /** Déduit de l'overlay si absent : question tant qu'aucune bougie future n'est révélée. */
+  mode?: GameChartMode;
+  /** Choix du joueur, épinglé en haut à gauche (reveal / verdict). */
+  pin?: { label: string; sub?: string; color: string };
+  /** Calque superposé au graphique (ex. VerdictOverlay). */
+  children?: ReactNode;
+}
+
+const STEP_MS = 420;
+/**
+ * Durée du glissement au clic (cadrage « passé » → « passé + futur »). La page
+ * attend cette durée avant de révéler la 1re bougie future.
+ */
+export const V2_GLIDE_MS = 500;
+/**
+ * Délai avant la 1re bougie future : la transition CSS démarre une image après
+ * le clic ; la marge garantit que la révélation commence APRÈS le glissement.
+ */
+export const V2_REVEAL_DELAY_MS = V2_GLIDE_MS + 80;
+const GLIDE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)"; // ease-out
+/** Emplacements laissés libres à droite en état question (la suite du prix) */
+const QUESTION_SPARE_SLOTS = 3;
+/** Emprise de la pastille « ton choix » (HTML, coin haut gauche) en px */
+const PIN_BOX = { right: 224, bottom: 54 };
+
+const ZONE_COLOR: Record<ZoneKind, { stroke: string; fill: string; dashed: boolean }> = {
+  support:        { stroke: "var(--v2-bull)", fill: "rgba(16,185,129,0.18)", dashed: true },
+  resistance:     { stroke: "var(--v2-bear)", fill: "rgba(239,68,68,0.18)",  dashed: true },
+  fvg:            { stroke: "var(--v2-zone)", fill: "rgba(245,158,11,0.18)", dashed: false },
+  liquidity_low:  { stroke: "var(--v2-zone)", fill: "rgba(245,158,11,0.12)", dashed: true },
+  liquidity_high: { stroke: "var(--v2-zone)", fill: "rgba(245,158,11,0.12)", dashed: true },
+};
+const HERO_GRADIENT: Record<ZoneKind, string> = {
+  support: "#10b981",
+  resistance: "#ef4444",
+  fvg: "#f59e0b",
+  liquidity_low: "#f59e0b",
+  liquidity_high: "#f59e0b",
+};
+
+/** Début horizontal d'une zone FVG : la bougie d'impulsion dont le corps couvre toute la zone. */
+function fvgStartIndex(candles: Candle[], z: ChartZone): number {
+  const lo = Math.min(z.y1, z.y2);
+  const hi = Math.max(z.y1, z.y2);
+  const i = candles.findIndex((k) => Math.min(k.o, k.c) <= lo && Math.max(k.o, k.c) >= hi);
+  return i < 0 ? 0 : i;
+}
+
+export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: GameChartV2Props) {
+  const { ref: sizeRef, w: W, h: H } = useBoxSize<HTMLDivElement>();
+  const { ref: playRef, playing } = usePlayOnView<HTMLDivElement>(0.4);
+  const desktop = useIsDesktop();
+
+  const all = data.candles;
+  const sep = overlay?.separatorIndex;
+  const revealed = overlay?.visibleFutureCount ?? 0;
+  const mode: GameChartMode = modeProp ?? (sep !== undefined && revealed > 0 ? "reveal" : "question");
+  const question = mode === "question";
+  const visibleCount = sep === undefined ? all.length : question ? sep : Math.min(all.length, sep + revealed);
+  const visible = all.slice(0, visibleCount);
+  const zones = data.zones;
+  const hero = question ? zones[0] : undefined;
+  const spotMs = question ? visibleCount * STEP_MS + 250 : 0;
+
+  // Les bougies du passé rejouent leur apparition à chaque nouveau scénario
+  const roundKey = `${all.length}:${all[0]?.o ?? 0}:${all[0]?.c ?? 0}`;
+
+  // ─── Géométrie (pixels réels) ───
+  // Question : cadrage sur le passé. Révélation / verdict : cadrage « passé +
+  // futur » dès le clic (l'échelle ne bouge plus pendant la révélation).
+  const scaled = question ? visible : all;
+  const padX = clamp(W * 0.02, 8, 16);
+  const nSlots = question && sep !== undefined ? sep + QUESTION_SPARE_SLOTS : all.length;
+  const slot = W > 0 ? (W - 2 * padX) / nSlots : 0;
+  const xOf = (i: number) => padX + slot * (i + 0.5);
+  const bodyW = clamp(slot * 0.6, 8, 30);
+
+  // Échelle des prix calée sur les données, les zones et les lignes
+  const prices = scaled.flatMap((k) => [k.h, k.l])
+    .concat(zones.flatMap((z) => [z.y1, z.y2]))
+    .concat(
+      [overlay?.entry?.price, overlay?.tp?.price, overlay?.stop?.price].filter((p): p is number => p !== undefined),
+      (overlay?.stops ?? []).map((s) => s.price),
+      (overlay?.candidateLines ?? []).map((c) => c.price),
+    );
+  const min = prices.length ? Math.min(...prices) : 0;
+  const max = prices.length ? Math.max(...prices) : 1;
+  const range = max - min || 1;
+
+  const fsPill = desktop ? DESKTOP_PILL_PX : clamp(W * 0.036, 13, 17);
+  const pillH = fsPill + 12;
+  const bottomPad = hero ? pillH + 16 : 14; // la pastille héros vit sous la zone
+  // Réserve juste ce qu'il faut pour que la pastille « ton choix » ne
+  // recouvre aucune bougie de son coin.
+  const topPad = !pin || H <= 0 ? 14 : scaled.reduce((acc, k, i) => {
+    if (xOf(i) - bodyW / 2 > PIN_BOX.right) return acc;
+    const f = (max - k.h) / range;
+    return f < 1 ? Math.max(acc, (PIN_BOX.bottom - f * (H - bottomPad)) / (1 - f)) : acc;
+  }, 14);
+
+  // ─── Glissement au clic (FLIP) ───
+  // Le tracé est rendu directement dans son nouveau cadrage ; avant l'affichage,
+  // on lui applique la transformation qui le ramène à l'ancien cadrage, puis on
+  // la relâche en ease-out. Seul le passage question → révélation glisse.
+  const geo = useMemo(
+    () => (W > 0 && H > 0 ? { mode, W, H, padX, slot, min, max, top: topPad, bottom: bottomPad } : null),
+    [mode, W, H, padX, slot, min, max, topPad, bottomPad],
+  );
+  const plotRef = useRef<SVGGElement | null>(null);
+  const prevGeo = useRef<typeof geo>(null);
+  useLayoutEffect(() => {
+    const prev = prevGeo.current;
+    prevGeo.current = geo;
+    const el = plotRef.current;
+    if (!geo || !prev || !el) return;
+    if (prev.mode !== "question" || geo.mode === "question" || prev.W !== geo.W || prev.H !== geo.H) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const kPrev = (prev.H - prev.top - prev.bottom) / (prev.max - prev.min || 1);
+    const kNext = (geo.H - geo.top - geo.bottom) / (geo.max - geo.min || 1);
+    const sx = prev.slot / geo.slot;
+    const tx = prev.padX - sx * geo.padX;
+    const sy = kPrev / kNext;
+    const ty = prev.top + (prev.max - geo.max) * kPrev - sy * geo.top;
+    el.style.transition = "none";
+    el.style.transform = `matrix(${sx}, 0, 0, ${sy}, ${tx}, ${ty})`;
+    void el.getBoundingClientRect();
+    // Pas d'annulation au démontage : le relâchement doit toujours avoir lieu
+    requestAnimationFrame(() => {
+      el.style.transition = `transform ${V2_GLIDE_MS}ms ${GLIDE_EASE}`;
+      el.style.transform = "none";
+    });
+  }, [geo]);
+
+  let svg: ReactNode = null;
+  if (W > 0 && H > 0) {
+    const toY = (p: number) => topPad + ((max - p) / range) * (H - topPad - bottomPad);
+    const lineX1 = W - padX;
+    const splitX = sep !== undefined ? padX + slot * sep : null;
+
+    const zoneRect = (z: ChartZone) => {
+      const top = toY(Math.max(z.y1, z.y2));
+      const h = Math.max(toY(Math.min(z.y1, z.y2)) - top, 6);
+      const x0 = z.kind === "fvg" ? xOf(fvgStartIndex(all, z)) - slot / 2 : padX;
+      return { x: x0, y: top, w: lineX1 - x0, h };
+    };
+
+    const heroBox = hero ? zoneRect(hero) : null;
+    const pillW = hero ? textWidth(hero.label, fsPill) + fsPill * 1.3 : 0;
+
+    // Lignes de trade (entrée / TP / stop / stops / candidats), style v2
+    const hLine = (key: string, price: number, color: string, opts: { dashed?: boolean; width?: number; opacity?: number } = {}) => (
+      <line key={key} x1={padX} x2={lineX1} y1={toY(price)} y2={toY(price)} stroke={color}
+        strokeWidth={opts.width ?? 2} strokeDasharray={opts.dashed ? "6 5" : undefined} opacity={opts.opacity ?? 1} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+    );
+    const tag = (key: string, price: number, label: string, color: string, dy = 0) => {
+      const fs = 12;
+      const w = textWidth(label, fs) + 14;
+      const y = toY(price) + dy;
+      return (
+        <g key={key}>
+          <rect x={lineX1 - w} y={y - 10} width={w} height={20} rx={10} fill={color} />
+          <text x={lineX1 - w / 2} y={y + 4} textAnchor="middle" fontSize={fs} fontWeight={700} fill="#04060a" className="v2-display">{label}</text>
+        </g>
+      );
+    };
+
+    svg = (
+      <svg
+        key={roundKey}
+        className="v2-svg absolute inset-0"
+        width={W}
+        height={H}
+        viewBox={`0 0 ${W} ${H}`}
+        role="img"
+        aria-label={zones[0] ? `${zones[0].label} — ${visible.length} bougies` : `${visible.length} bougies`}
+        style={cssVars({ "--spot": `${spotMs}ms`, "--v2-candle-step": `${STEP_MS}ms` })}
+      >
+        <defs>
+          {hero && (
+            <linearGradient id="v2-hero-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={HERO_GRADIENT[hero.kind]} stopOpacity="0.5" />
+              <stop offset="100%" stopColor={HERO_GRADIENT[hero.kind]} stopOpacity="0.2" />
+            </linearGradient>
+          )}
+          <filter id="v2-hero-glow" x="-10%" y="-80%" width="120%" height="260%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Tracé (zones, lignes, bougies) : c'est ce groupe qui glisse au clic */}
+        <g ref={plotRef} className="v2-plot" style={{ transformOrigin: "0 0", transformBox: "view-box" }}>
+
+        {/* Zones : la 1re est le héros en état question, le reste est estompé */}
+        {zones.map((z, i) => {
+          const r = zoneRect(z);
+          const style = ZONE_COLOR[z.kind];
+          if (hero && i === 0) {
+            return (
+              <g key={`z${i}`} className="v2-hero">
+                <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={6}
+                  fill="url(#v2-hero-fill)" stroke={style.stroke} strokeWidth={3} filter="url(#v2-hero-glow)" vectorEffect="non-scaling-stroke" />
+              </g>
+            );
+          }
+          return (
+            <g key={`z${i}`} className={question ? "v2-dim" : "v2-dim--now"}>
+              <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={6} fill={style.fill} stroke={style.stroke}
+                strokeWidth={3} strokeDasharray={style.dashed ? "6 5" : undefined} vectorEffect="non-scaling-stroke" />
+            </g>
+          );
+        })}
+
+        {/* Séparation passé / futur */}
+        {!question && splitX !== null && (
+          <line x1={splitX} x2={splitX} y1={pin && splitX < PIN_BOX.right ? PIN_BOX.bottom : topPad - 6} y2={H - bottomPad + 4}
+            stroke="#ffffff" strokeOpacity={0.35} strokeWidth={3} strokeDasharray="5 7" vectorEffect="non-scaling-stroke" />
+        )}
+
+        {/* Lignes de trade */}
+        {overlay?.entry && hLine("entry", overlay.entry.price, "var(--v2-entry)", { opacity: overlay.dimEntryTp ? 0.55 : 1, dashed: overlay.dimEntryTp })}
+        {overlay?.tp && hLine("tp", overlay.tp.price, "var(--v2-bull)", { dashed: true, opacity: overlay.dimEntryTp ? 0.55 : 1 })}
+        {overlay?.stop && hLine("stop", overlay.stop.price, overlay.stop.hit ? "#fb923c" : "var(--v2-bear)", { dashed: true, width: 2.5 })}
+        {overlay?.candidateLines?.map((c, i) => hLine(`cand${i}`, c.price, c.color, { dashed: true, opacity: 0.85 }))}
+        {overlay?.stops?.map((s, i) => hLine(`stop${i}`, s.price, s.hit ? "#fb923c" : s.color, { dashed: s.dashed !== false, width: s.selected ? 3 : 2 }))}
+
+        {/* Bougies */}
+        {visible.map((k, i) => {
+          const isFuture = sep !== undefined && i >= sep;
+          if (question) return <V2Candle key={i} {...k} x={xOf(i)} width={bodyW} toY={toY} index={i} dim="anim" />;
+          if (mode === "reveal" && isFuture) {
+            // Montée par la page toutes les 420ms : apparaît à son arrivée
+            return <V2Candle key={i} {...k} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="full" />;
+          }
+          return <V2Candle key={i} {...k} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="now" still />;
+        })}
+
+        {/* Étiquettes des lignes (au-dessus des bougies) */}
+        {overlay?.stops?.map((s, i) => s.label ? tag(`stopTag${i}`, s.price, s.label, s.hit ? "#fb923c" : s.color) : null)}
+        {overlay?.candidateLines?.map((c, i) => tag(`candTag${i}`, c.price, c.label, c.color))}
+        </g>
+
+        {/* Pastille du héros, accrochée sous la zone, à droite */}
+        {hero && heroBox && (
+          <g className="v2-hero-label">
+            <rect x={lineX1 - pillW} y={heroBox.y + heroBox.h + 6} width={pillW} height={pillH} rx={pillH / 2} fill={HERO_GRADIENT[hero.kind]} />
+            <text x={lineX1 - pillW / 2} y={heroBox.y + heroBox.h + 6 + pillH / 2 + fsPill * 0.35} textAnchor="middle"
+              fontSize={fsPill} fontWeight={700} fill="#1c1206" className="v2-display">
+              {hero.label}
+            </text>
+          </g>
+        )}
+      </svg>
+    );
+  }
+
+  return (
+    <div ref={playRef} className={playing ? "is-playing" : undefined}>
+      <div
+        ref={sizeRef}
+        /* Même hauteur de cadre dans tous les états : aucun saut au clic */
+        className="v2-chart v2-chart--question v2-well overflow-hidden"
+      >
+        {svg}
+
+        {/* Choix du joueur épinglé sur le graphique */}
+        {pin && (
+          <div className="v2-pin absolute left-3 top-3 z-10">
+            <span
+              className="v2-display v2-pin-tag inline-flex items-center gap-2 rounded-full px-3 py-1 font-bold"
+              style={{ color: pin.color, background: "rgba(4,6,10,0.85)", boxShadow: `inset 0 0 0 2px ${pin.color}, 0 0 24px -4px ${pin.color}` }}
+            >
+              {pin.label}
+              {pin.sub && <span className="font-medium text-[color:var(--v2-text-2)]">{pin.sub}</span>}
+            </span>
+          </div>
+        )}
+
+        {children}
+      </div>
+    </div>
+  );
+}
