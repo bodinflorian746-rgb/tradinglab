@@ -1035,7 +1035,9 @@ function scnBounceSupport(rng: () => number, m: number, d: Difficulty, mode: Pla
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.7 + rng() * 0.3) * m));
+    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.7 + rng() * 0.3) * m);
+    k.l = Math.min(k.l, S + 0.05); // « vient de rebondir sur le support » : la mèche entre dans la zone
+    past.push(k);
     p = c;
   }
   const entry = p;
@@ -1068,7 +1070,9 @@ function scnRejectionResistance(rng: () => number, m: number, d: Difficulty, mod
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
-    past.push(candle(o, c, (0.7 + rng() * 0.3) * m, (0.2 + rng() * 0.2) * m));
+    const k = candle(o, c, (0.7 + rng() * 0.3) * m, (0.2 + rng() * 0.2) * m);
+    k.h = Math.max(k.h, R - 0.05); // « vient de rejeter la résistance avec mèches » : la mèche entre dans la zone
+    past.push(k);
     p = c;
   }
   const entry = p;
@@ -1255,8 +1259,10 @@ function scnFvgContinuation(rng: () => number, m: number, d: Difficulty, mode: P
   const widePrice    = fvgLow - 2.0 * m - widePushFor(mode) * m;
   // Future : dip qui descend juste dans la zone tight (touch tight, pas logical)
   const dipLow = tightPrice - 0.1 * m;
-  fut.push(explicitCandle(p, fvgLow + 0.2 * m, p + (0.1 + rng() * 0.1) * m, dipLow));
-  p = fvgLow + 0.2 * m;
+  // Clôture au-dessus du plus bas de la mèche (OHLC valide) : dip dans le FVG puis reprise
+  const retestClose = Math.max(fvgLow + 0.2 * m, dipLow + 0.15 * m);
+  fut.push(explicitCandle(p, retestClose, p + (0.1 + rng() * 0.1) * m, dipLow));
+  p = retestClose;
   for (let i = 0; i < 5; i++) {
     const o = p;
     const c = o + (0.4 + rng() * 0.5) * m;
@@ -1345,26 +1351,35 @@ function scnEqualLowsTrap(rng: () => number, m: number, d: Difficulty, mode: Pla
     p = c;
   }
   const low1 = p;
+  // « Deux lows quasi égaux » : la mèche du 1er low s'arrête juste sous sa clôture
+  past[past.length - 1].l = low1 - 0.03 * m;
   // Rebond
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = o + (0.3 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.15 + rng() * 0.15) * m));
+    const k = candle(o, c, (0.2 + rng() * 0.18) * m, (0.15 + rng() * 0.15) * m);
+    k.l = Math.max(k.l, low1 - 0.02 * m); // la remontée ne perce pas le 1er low
+    past.push(k);
     p = c;
   }
   // 2e descente, touche un low quasi égal au 1er
   const low2Target = low1 + 0.1 * m;
   for (let i = 0; i < 4; i++) {
     const o = p;
-    const c = i === 3 ? low2Target : o - (0.3 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.13 + rng() * 0.13) * m, (0.18 + rng() * 0.2) * m));
+    // La 2e descente reste au-dessus du 1er low, puis retombe à quelques pips de lui
+    const c = i === 3 ? low2Target : Math.max(o - (0.3 + rng() * 0.3) * m, low1 + 0.15 * m);
+    const k = candle(o, c, (0.13 + rng() * 0.13) * m, (0.18 + rng() * 0.2) * m);
+    k.l = i === 3 ? low1 - 0.01 * m : Math.max(k.l, low1 + 0.05 * m);
+    past.push(k);
     p = c;
   }
   // Rebond vers entry
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = o + (0.3 + rng() * 0.25) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.12) * m));
+    const k = candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.12) * m);
+    k.l = Math.max(k.l, low1 + 0.02 * m); // le rebond ne revient pas sous les equal lows
+    past.push(k);
     p = c;
   }
   const entry = p;
@@ -1459,14 +1474,18 @@ function scnAsiaHighSweep(rng: () => number, m: number, d: Difficulty, mode: Pla
     const o = p;
     const target = i % 2 === 0 ? asiaHigh - 0.1 * m : asiaLow + 0.2 * m;
     const c = o + (target - o) * (0.5 + rng() * 0.3);
-    past.push(candle(o, c, (0.12 + rng() * 0.12) * m, (0.12 + rng() * 0.12) * m));
+    const k = candle(o, c, (0.12 + rng() * 0.12) * m, (0.12 + rng() * 0.12) * m);
+    k.h = Math.min(k.h, asiaHigh + 0.04 * m); // le high du range Asia n'est pas dépassé avant London
+    past.push(k);
     p = c;
   }
   // Approche finale vers le high (entry juste sous le high)
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = o + (asiaHigh - 0.05 * m - o) * (0.5 + rng() * 0.3);
-    past.push(candle(o, c, (0.12 + rng() * 0.1) * m, (0.1 + rng() * 0.08) * m));
+    const k = candle(o, c, (0.12 + rng() * 0.1) * m, (0.1 + rng() * 0.08) * m);
+    k.h = Math.min(k.h, asiaHigh + 0.04 * m);
+    past.push(k);
     p = c;
   }
   const entry = p;
@@ -1476,7 +1495,7 @@ function scnAsiaHighSweep(rng: () => number, m: number, d: Difficulty, mode: Pla
   // Future : sweep d'Asia high (1 bougie qui dépasse), puis drop
   const bumpHigh = asiaHigh + 0.4 * m;
   const bumpClose = asiaHigh - 0.4 * m;
-  fut.push(explicitCandle(p, bumpClose, bumpHigh, p - 0.15 * m));
+  fut.push(explicitCandle(p, bumpClose, bumpHigh, Math.min(p, bumpClose) - 0.15 * m));
   p = bumpClose;
   for (let i = 0; i < 5; i++) {
     const o = p;
@@ -1591,10 +1610,12 @@ function scnPrevDayLowTrap(rng: () => number, m: number, d: Difficulty, mode: Pl
     p = c;
   }
   const entry = p;
-  const PDL = entry - 0.6 * m;
+  // Le PDL n'a pas encore été touché : il se situe sous tous les lows du passé
+  const PDL = Math.min(entry - 0.6 * m, Math.min(...past.map((k) => k.l)) - 0.08 * m);
   const liquidityPrice = PDL - 0.1 * m;
   const logicalPrice   = PDL - trapMarginFor(d, mode) * m - 0.5 * m;
-  const widePrice      = entry - 2.6 * m - widePushFor(mode) * m;
+  // Le stop large reste plus loin que le logique même si le PDL descend
+  const widePrice      = Math.min(entry - 2.6 * m - widePushFor(mode) * m, logicalPrice - 0.8 * m);
   // Future : sweep du PDL (mèche descend de 0.4m sous PDL), puis rallye
   const dipLow = PDL - 0.4 * m;
   const dipClose = PDL + 0.3 * m;
@@ -2255,7 +2276,8 @@ function scnFakeoutZoneWide(rng: () => number, m: number, d: Difficulty, mode: P
   }
   // 1er fakeout
   const fake1High = R + 0.4 * m + rng() * 0.1;
-  past.push({ o: p, c: R - 0.4 - rng() * 0.2, h: fake1High, l: p - 0.15 * m });
+  const fake1Close = R - 0.4 - rng() * 0.2;
+  past.push({ o: p, c: fake1Close, h: fake1High, l: Math.min(p, fake1Close) - 0.15 * m });
   p = past[past.length - 1].c;
   // Petit retour vers R
   for (let i = 0; i < 2; i++) {
@@ -2266,7 +2288,8 @@ function scnFakeoutZoneWide(rng: () => number, m: number, d: Difficulty, mode: P
   }
   // 2e fakeout
   const fake2High = R + 0.5 * m + rng() * 0.15;
-  past.push({ o: p, c: R - 0.5 - rng() * 0.2, h: fake2High, l: p - 0.15 * m });
+  const fake2Close = R - 0.5 - rng() * 0.2;
+  past.push({ o: p, c: fake2Close, h: fake2High, l: Math.min(p, fake2Close) - 0.15 * m });
   p = past[past.length - 1].c;
   // Quelques bougies de consolidation sous R
   for (let i = 0; i < 3; i++) {
@@ -2282,7 +2305,7 @@ function scnFakeoutZoneWide(rng: () => number, m: number, d: Difficulty, mode: P
   // Future : 3e fakeout (amplitude supérieure aux précédents), puis drop
   const bumpHigh = R + 0.9 * m;  // dépasse ltt (0.6m) mais pas wide (2.5m)
   const bumpClose = R - 0.5 * m;
-  fut.push(explicitCandle(p, bumpClose, bumpHigh, p - 0.15 * m));
+  fut.push(explicitCandle(p, bumpClose, bumpHigh, Math.min(p, bumpClose) - 0.15 * m));
   p = bumpClose;
   for (let i = 0; i < 5; i++) {
     const o = p;
