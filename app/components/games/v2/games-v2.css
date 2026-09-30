@@ -249,6 +249,32 @@
 /* Impact d'un stop touché : le marqueur apparaît avec un effet d'échelle */
 .tsx-v2 .v2-hit { transform-box: fill-box; transform-origin: 50% 50%; animation: v2-pop 450ms cubic-bezier(0.2, 1.4, 0.3, 1) both; }
 
+/* Marquage de verdict : apparaît juste après le glissement du graphique */
+.tsx-v2 .v2-mark { animation: v2-fade 450ms ease 520ms both; }
+
+/* Choix d'erreur (Trouve l'erreur) : texte sur plusieurs lignes, 2 colonnes */
+.tsx-v2 .v2-mistake-choice {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-family: var(--v2-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  color: var(--v2-text);
+  background: linear-gradient(180deg, #232833, #151922);
+  box-shadow: inset 0 0 0 1px var(--v2-edge-strong), 0 12px 30px -14px rgba(0, 0, 0, 0.9);
+  transition: transform 160ms ease, opacity 300ms ease, box-shadow 300ms ease;
+}
+.tsx-v2 .v2-mistake-choice:active { transform: scale(0.98); }
+.tsx-v2 .v2-mistake-choice[data-state="faded"] { opacity: 0.3; }
+.tsx-v2 .v2-mistake-choice[data-state="picked"] { outline: 3px solid rgba(255, 255, 255, 0.9); outline-offset: 3px; }
+.tsx-v2 .v2-mistake-choice[data-result="good"] { opacity: 1; color: #ecfdf5; background: linear-gradient(180deg, #16c08a, #0a8f64); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 12px 30px -10px rgba(16, 185, 129, 0.65); }
+.tsx-v2 .v2-mistake-choice[data-result="bad"] { opacity: 1; color: #fef2f2; background: linear-gradient(180deg, #f25555, #c42525); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 12px 30px -10px rgba(239, 68, 68, 0.6); }
+
 /* Pastille "ton choix" épinglée */
 .tsx-v2 .v2-pin { opacity: 0; transform: translateY(-6px); }
 .tsx-v2 .is-playing .v2-pin { animation: v2-drop 500ms cubic-bezier(0.2, 1.2, 0.3, 1) both; }
@@ -378,7 +404,9 @@
   .tsx-v2 .is-playing .v2-late,
   .tsx-v2 .is-playing .v2-verdict,
   .tsx-v2 .is-playing .v2-pin { animation: none; }
-  .tsx-v2 .v2-hit { animation: none; }
+  .tsx-v2 .v2-hit,
+  .tsx-v2 .v2-mark { animation: none; }
+  .tsx-v2 .v2-mistake-choice { transition: none; }
   .tsx-v2 .v2-choice,
   .tsx-v2 .v2-stop-choice,
   .tsx-v2 .v2-btn { transition: none; }

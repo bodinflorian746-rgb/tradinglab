@@ -139,6 +139,12 @@ export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still
 
 export type GameChartMode = "question" | "reveal" | "verdict";
 
+/** Marquage de verdict : une ligne de prix, une zone ou un point (dernière bougie). */
+export type GameChartMark =
+  | { kind: "line"; price: number; label: string }
+  | { kind: "zone"; index: number; label: string }
+  | { kind: "point"; price: number; label: string };
+
 export interface GameChartV2Props {
   data: ChartData;
   overlay?: MiniChartOverlay;
@@ -148,6 +154,13 @@ export interface GameChartV2Props {
   mode?: GameChartMode;
   /** Choix du joueur, épinglé en haut à gauche (reveal / verdict). */
   pin?: { label: string; sub?: string; color: string };
+  /**
+   * Garde les bougies à pleine opacité en état question (pas d'estompage au
+   * « spot »). Utile quand le joueur doit lire les bougies elles-mêmes.
+   */
+  keepCandlesBright?: boolean;
+  /** Élément marqué en rouge au verdict (ex. l'erreur de « Trouve l'erreur »). */
+  mark?: GameChartMark;
   /** Calque superposé au graphique (ex. VerdictOverlay). */
   children?: ReactNode;
 }
@@ -192,7 +205,7 @@ function fvgStartIndex(candles: Candle[], z: ChartZone): number {
   return i < 0 ? 0 : i;
 }
 
-export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: GameChartV2Props) {
+export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBright, mark, children }: GameChartV2Props) {
   const { ref: sizeRef, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const { ref: playRef, playing } = usePlayOnView<HTMLDivElement>(0.4);
   const desktop = useIsDesktop();
@@ -217,7 +230,25 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: Ga
   const scaled = question ? visible : all;
   const padX = clamp(W * 0.02, 8, 16);
   const nSlots = question && sep !== undefined ? sep + QUESTION_SPARE_SLOTS : all.length;
-  const slot = W > 0 ? (W - 2 * padX) / nSlots : 0;
+  // Colonne des étiquettes de lignes (bord droit) : réservée hors de la zone
+  // des bougies, pour qu'aucune bougie ne passe sous une étiquette.
+  const lineLabels = [
+    ...(overlay?.stops ?? []).flatMap((st) => (st.label ? [st.label] : [])),
+    ...(overlay?.candidateLines ?? []).map((c) => c.label),
+  ];
+  // Quand cette colonne existe, la pastille héros et celle du marquage y sont
+  // rangées aussi : elles profitent de l'écartement et ne recouvrent aucune bougie.
+  const columnMode = lineLabels.length > 0;
+  const markPrice = !mark ? undefined
+    : mark.kind === "zone" ? (zones[mark.index] ? (zones[mark.index].y1 + zones[mark.index].y2) / 2 : undefined)
+    : mark.price;
+  const tagLabels = [
+    ...lineLabels,
+    ...(columnMode && hero ? [hero.label] : []),
+    ...(columnMode && mark && mode === "verdict" && markPrice !== undefined ? [mark.label] : []),
+  ];
+  const tagColW = tagLabels.length ? Math.max(...tagLabels.map((l) => textWidth(l, 12) + 16)) + 18 : 0;
+  const slot = W > 0 ? (W - 2 * padX - tagColW) / nSlots : 0;
   const xOf = (i: number) => padX + slot * (i + 0.5);
   const bodyW = clamp(slot * 0.6, 8, 30);
 
@@ -235,14 +266,16 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: Ga
 
   const fsPill = desktop ? DESKTOP_PILL_PX : clamp(W * 0.036, 13, 17);
   const pillH = fsPill + 12;
-  const bottomPad = hero ? pillH + 16 : 14; // la pastille héros vit sous la zone
+  const bottomPad = hero && !columnMode ? pillH + 16 : 14; // la pastille héros vit sous la zone
   // Réserve juste ce qu'il faut pour que la pastille « ton choix » ne
   // recouvre aucune bougie de son coin.
-  const topPad = !pin || H <= 0 ? 14 : scaled.reduce((acc, k, i) => {
+  const topPadBase = !pin || H <= 0 ? 14 : scaled.reduce((acc, k, i) => {
     if (xOf(i) - bodyW / 2 > PIN_BOX.right) return acc;
     const f = (max - k.h) / range;
     return f < 1 ? Math.max(acc, (PIN_BOX.bottom - f * (H - bottomPad)) / (1 - f)) : acc;
   }, 14);
+  // Verdict en bandeau (élément marqué) : sa hauteur est réservée en haut
+  const topPad = mark && mode === "verdict" ? Math.max(topPadBase, 76) : topPadBase;
 
   // ─── Glissement au clic (FLIP) ───
   // Le tracé est rendu directement dans son nouveau cadrage ; avant l'affichage,
@@ -292,6 +325,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: Ga
 
     const heroBox = hero ? zoneRect(hero) : null;
     const pillW = hero ? textWidth(hero.label, fsPill) + fsPill * 1.3 : 0;
+    // Pastille héros : à droite, sauf si des étiquettes de lignes occupent cette colonne
 
     // Lignes de trade (entrée / TP / stop / stops / candidats), style v2
     const hLine = (key: string, price: number, color: string, opts: { dashed?: boolean; width?: number; opacity?: number; x2?: number } = {}) => (
@@ -307,6 +341,8 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: Ga
     const tagSpecs = [
       ...(overlay?.stops ?? []).flatMap((s, i) => (s.label ? [{ key: `stopTag${i}`, price: s.price, label: s.label, color: s.hit ? "#fb923c" : s.color, hit: !!s.hit }] : [])),
       ...(overlay?.candidateLines ?? []).map((c, i) => ({ key: `candTag${i}`, price: c.price, label: c.label, color: c.color, hit: false })),
+      ...(columnMode && hero ? [{ key: "heroTag", price: (hero.y1 + hero.y2) / 2, label: hero.label, color: HERO_GRADIENT[hero.kind], hit: false }] : []),
+      ...(columnMode && mark && mode === "verdict" && markPrice !== undefined ? [{ key: "markTag", price: markPrice, label: mark.label, color: "#f87171", hit: false }] : []),
     ].map((t) => ({ ...t, lineY: toY(t.price), y: toY(t.price), w: textWidth(t.label, TAG_FS) + 16 }));
     const tagW = tagSpecs.length ? Math.max(...tagSpecs.map((t) => t.w)) : 0;
     const sortedTags = [...tagSpecs].sort((a, b) => a.lineY - b.lineY);
@@ -322,7 +358,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: Ga
     const tagX = lineX1 - tagW; // colonne des étiquettes, alignées à droite
     const lineEnd = tagSpecs.length ? tagX - 8 : lineX1;
     const tag = (t: (typeof tagSpecs)[number]) => (
-      <g key={t.key}>
+      <g key={t.key} className={t.key === "markTag" ? "v2-mark" : undefined}>
         {Math.abs(t.y - t.lineY) > 0.5 && (
           <line x1={lineEnd} y1={t.lineY} x2={tagX} y2={t.y} stroke={t.color} strokeWidth={2} vectorEffect="non-scaling-stroke" />
         )}
@@ -411,7 +447,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: Ga
         {/* Bougies */}
         {visible.map((k, i) => {
           const isFuture = sep !== undefined && i >= sep;
-          if (question) return <V2Candle key={i} {...k} x={xOf(i)} width={bodyW} toY={toY} index={i} dim="anim" />;
+          if (question) return <V2Candle key={i} {...k} x={xOf(i)} width={bodyW} toY={toY} index={i} dim={keepCandlesBright ? "full" : "anim"} />;
           if (mode === "reveal" && isFuture) {
             // Montée par la page toutes les 420ms : apparaît à son arrivée
             return <V2Candle key={i} {...k} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="full" />;
@@ -435,8 +471,53 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: Ga
         {tagSpecs.map(tag)}
         </g>
 
+        {/* Marquage de verdict : l'élément fautif en rouge, avec son libellé */}
+        {mark && mode === "verdict" && (() => {
+          const RED = "#f87171";
+          const fs = 13;
+          const pw = textWidth(mark.label, fs) + 20;
+          const ph = 26;
+          let body: ReactNode = null;
+          let top = 0;      // bord haut de l'élément marqué
+          let bottom = 0;   // bord bas de l'élément marqué
+          let pillX = lineX1 - pw;
+          let pillY = 0;
+          if (mark.kind === "line") {
+            top = bottom = toY(mark.price);
+            body = <line x1={padX} x2={lineX1} y1={top} y2={top} stroke={RED} strokeWidth={3.5} filter="url(#v2-hero-glow)" strokeLinecap="round" />;
+          } else if (mark.kind === "zone" && zones[mark.index]) {
+            const r = zoneRect(zones[mark.index]);
+            top = r.y; bottom = r.y + r.h;
+            body = <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={6} fill="rgba(239,68,68,0.22)" stroke={RED} strokeWidth={3} filter="url(#v2-hero-glow)" />;
+          } else if (mark.kind === "point") {
+            const cx = xOf(visible.length - 1);
+            top = bottom = toY(mark.price);
+            // Centrée sous le point, sans empiéter sur la colonne des étiquettes
+            pillX = Math.max(padX, Math.min(cx - pw / 2, (tagSpecs.length ? tagX - 8 : lineX1) - pw));
+            body = (
+              <>
+                <circle cx={cx} cy={top} r={15} fill="rgba(239,68,68,0.2)" stroke={RED} strokeWidth={3} filter="url(#v2-hero-glow)" />
+                <path d={`M${cx - 5} ${top - 5}l10 10M${cx + 5} ${top - 5}l-10 10`} stroke="#fef2f2" strokeWidth={2.5} strokeLinecap="round" />
+              </>
+            );
+          }
+          if (mark.kind === "point") pillY = top + 22 + ph <= H - 4 ? top + 22 : top - 22 - ph;
+          else pillY = bottom + 8 + ph <= H - 4 ? bottom + 8 : top - 8 - ph; // sous l'élément, sinon au-dessus
+          return (
+            <g className="v2-mark">
+              {body}
+              {!columnMode && (
+                <>
+                  <rect x={pillX} y={pillY} width={pw} height={ph} rx={ph / 2} fill={RED} />
+                  <text x={pillX + pw / 2} y={pillY + ph / 2 + fs * 0.36} textAnchor="middle" fontSize={fs} fontWeight={700} fill="#1f0707" className="v2-display">{mark.label}</text>
+                </>
+              )}
+            </g>
+          );
+        })()}
+
         {/* Pastille du héros, accrochée sous la zone, à droite */}
-        {hero && heroBox && (
+        {hero && heroBox && !columnMode && (
           <g className="v2-hero-label">
             <rect x={lineX1 - pillW} y={heroBox.y + heroBox.h + 6} width={pillW} height={pillH} rx={pillH / 2} fill={HERO_GRADIENT[hero.kind]} />
             <text x={lineX1 - pillW / 2} y={heroBox.y + heroBox.h + 6 + pillH / 2 + fsPill * 0.35} textAnchor="middle"

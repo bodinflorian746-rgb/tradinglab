@@ -75,13 +75,42 @@ export function VerdictOverlay({
   headline,
   points,
   bonus,
+  compact = false,
 }: {
   correct: boolean;
   headline: string;
   points: number;
   /** Ligne secondaire optionnelle (ex. « +30 streak ») */
   bonus?: string;
+  /**
+   * Variante compacte en bandeau, en haut du graphique : laisse visible un
+   * élément marqué sur le graphique (ex. l'erreur de « Trouve l'erreur »).
+   */
+  compact?: boolean;
 }) {
+  if (compact) {
+    const tint = correct ? "#10b981" : "#ef4444";
+    return (
+      <div className="pointer-events-none absolute inset-x-0 top-3 z-[5] flex justify-center px-3" style={cssVars({ "--spot": "250ms" })}>
+        <div
+          className="v2-verdict flex items-center gap-3 rounded-full py-2 pl-2.5 pr-4"
+          style={{ background: "rgba(4,6,10,0.92)", boxShadow: `inset 0 0 0 2px ${tint}, 0 16px 40px -12px ${correct ? "rgba(16,185,129,0.7)" : "rgba(239,68,68,0.7)"}` }}
+        >
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full" style={{ background: correct ? "rgba(16,185,129,0.18)" : "rgba(239,68,68,0.18)", boxShadow: `inset 0 0 0 2px ${tint}` }} aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 22 22" fill="none">
+              {correct
+                ? <path d="M5 11.5l4 4 8-9" stroke="#34d399" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                : <path d="M6 6l10 10M16 6L6 16" stroke="#f87171" strokeWidth="3" strokeLinecap="round" />}
+            </svg>
+          </span>
+          <p className={`v2-display text-[18px] font-bold ${correct ? "text-emerald-300" : "text-red-300"}`}>{headline}</p>
+          <p className={`v2-mono text-[24px] font-bold leading-none ${points >= 0 ? "text-emerald-400 v2-verdict-points" : "text-red-400 v2-verdict-points v2-verdict-points--bad"}`}>
+            {points >= 0 ? "+" : ""}{points}
+          </p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="pointer-events-none absolute inset-0 z-[5] grid place-items-center pb-2 pt-11" style={cssVars({ "--spot": "250ms" })}>
       <div

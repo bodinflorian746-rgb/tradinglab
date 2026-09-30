@@ -15,7 +15,8 @@ import {
   type MistakeScoreResult,
   type ScenarioChart,
 } from "@/lib/games/find-the-mistake";
-import { MiniChart } from "@/app/components/games/MiniChart";
+import { GameChartV2, type GameChartMark } from "@/app/components/games/v2/GameChartV2";
+import { StepBadge, VerdictOverlay } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 
 const CATEGORY_TO_SKILL: Record<"technique" | "psychologique" | "execution" | "rr" | "timing" | "liquidite" | "discipline", SkillId> = {
@@ -88,6 +89,11 @@ export default function FindTheMistakePage() {
         volLow:          "baja",
         volNormal:       "normal",
         volHigh:         "alta",
+        stepQuestion:    "Pregunta",
+        stepVerdict:     "Veredicto",
+        lineEntry:       "Entrada",
+        lineStop:        "Stop",
+        lineTp:          "TP",
       }
     : locale === "en"
     ? {
@@ -127,6 +133,11 @@ export default function FindTheMistakePage() {
         volLow:          "low",
         volNormal:       "normal",
         volHigh:         "high",
+        stepQuestion:    "Question",
+        stepVerdict:     "Verdict",
+        lineEntry:       "Entry",
+        lineStop:        "Stop",
+        lineTp:          "TP",
       }
     : {
         games:           "Jeux",
@@ -165,6 +176,11 @@ export default function FindTheMistakePage() {
         volLow:          "faible",
         volNormal:       "normale",
         volHigh:         "élevée",
+        stepQuestion:    "Question",
+        stepVerdict:     "Verdict",
+        lineEntry:       "Entrée",
+        lineStop:        "Stop",
+        lineTp:          "TP",
       };
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
   const [seed, setSeed] = useState<number | null>(null);
@@ -238,8 +254,8 @@ export default function FindTheMistakePage() {
 
   if (!current || !chart) {
     return (
-      <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
-        <p className="text-sm text-zinc-500">{T.loading}</p>
+      <main className="v2-page flex min-h-[60vh] items-center justify-center">
+        <p className="text-[14px] text-[color:var(--v2-text-3)]">{T.loading}</p>
       </main>
     );
   }
@@ -279,261 +295,286 @@ export default function FindTheMistakePage() {
     }
   };
 
-  return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+  const step = isFeedback ? 2 : 1;
+  const stepLabel = isFeedback ? T.stepVerdict : T.stepQuestion;
+  const dir: "BUY" | "SELL" = current.direction === "SELL" ? "SELL" : "BUY";
+  // Lignes étiquetées (Entrée / Stop / TP) : écartées automatiquement si proches
+  const labelledLines = [
+    ...(chart.entry !== undefined ? [{ price: chart.entry, color: "#3b82f6", label: T.lineEntry }] : []),
+    ...(chart.stop !== undefined ? [{ price: chart.stop, color: "#ef4444", label: T.lineStop }] : []),
+    ...(chart.tp !== undefined ? [{ price: chart.tp, color: "#10b981", label: T.lineTp }] : []),
+  ];
 
+  return (
+    <main className="v2-page mx-auto flex w-full max-w-[880px] flex-col">
+      <div className="flex flex-col gap-3">
         {/* Top bar */}
-        <div className="flex items-center justify-between mb-5">
-          <Link
-            href="/jeux"
-            className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-white transition-colors"
-          >
+        <div className="flex items-center justify-between gap-3">
+          <Link href="/jeux" className="v2-link-back">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             {T.games}
           </Link>
-          <div className="flex items-center gap-3 text-[11px]">
+          <div className="flex items-center gap-3 text-[12px]">
             <DifficultyChip difficulty={difficulty} difficultyMeta={G.DIFFICULTY_META} />
-            <div className="w-px h-3 bg-zinc-800" />
+            <span className="h-3 w-px bg-white/15" />
             <div className="flex items-center gap-1.5">
-              <span className="text-zinc-600 uppercase tracking-wide">{T.round}</span>
-              <span className="font-bold text-white tabular-nums">{idx + 1}/{ROUNDS_PER_SESSION}</span>
+              <span className="uppercase tracking-wide text-[color:var(--v2-text-3)]">{T.round}</span>
+              <span className="v2-mono font-bold text-[color:var(--v2-text)]">{idx + 1}/{ROUNDS_PER_SESSION}</span>
             </div>
-            <div className="w-px h-3 bg-zinc-800" />
+            <span className="h-3 w-px bg-white/15" />
             <div className="flex items-center gap-1.5">
-              <span className="text-zinc-600 uppercase tracking-wide">{T.score}</span>
-              <span className={`font-bold tabular-nums ${score < 0 ? "text-red-400" : "text-emerald-400"}`}>
+              <span className="uppercase tracking-wide text-[color:var(--v2-text-3)]">{T.score}</span>
+              <span className={`v2-mono font-bold ${score < 0 ? "text-red-400" : "text-emerald-400"}`}>
                 {score >= 0 ? "+" : ""}{score}
               </span>
             </div>
           </div>
         </div>
 
-        {streak > 0 && (
-          <div className="mb-4 flex items-center justify-center gap-1.5 text-[11px] font-semibold">
-            <span className="text-amber-400">🔥</span>
-            <span className="text-amber-400 tabular-nums">{streak}</span>
-            <span className="text-zinc-500">{T.ofStreak}</span>
-            {streak >= 3 && <span className="text-amber-400">{T.bonusActive}</span>}
-          </div>
-        )}
+        {/* Streak — emplacement toujours réservé : son apparition au clic ne
+            doit pas décaler le jeu (c'est l'instant filmé) */}
+        <div
+          className={`flex h-[18px] items-center justify-center gap-1.5 text-[12px] font-semibold ${streak > 0 ? "" : "invisible"}`}
+          aria-hidden={streak === 0}
+        >
+          <span className="text-amber-300">🔥</span>
+          <span className="v2-mono text-amber-300">{streak}</span>
+          <span className="text-[color:var(--v2-text-3)]">{T.ofStreak}</span>
+          {streak >= 3 && <span className="text-amber-300">{T.bonusActive}</span>}
+        </div>
 
-        {/* Scenario card */}
-        <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden mb-5">
+        {/* Scénario */}
+        <section className="v2-card v2-pad v2-gap flex flex-col" aria-labelledby="ftm-title">
+          <h2 id="ftm-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">{T.title}</h2>
 
-          {/* Meta */}
-          <div className="px-4 pt-3 pb-2.5 border-b border-zinc-800/60 flex items-center justify-between gap-3 flex-wrap">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-white tabular-nums">{current.asset}</span>
-              <span className="text-zinc-700 text-xs">·</span>
-              <span className="text-[11px] text-zinc-400">{current.session}</span>
+          <div className="v2-gap-s mx-auto flex w-full max-w-3xl flex-col">
+            <StepBadge n={step} label={stepLabel} />
+
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+              <span className="v2-display v2-asset mr-1 font-bold">{current.asset}</span>
               {current.direction && (
-                <>
-                  <span className="text-zinc-700 text-xs">·</span>
-                  <span className={`text-[10px] font-bold uppercase tracking-wide ${
-                    current.direction === "BUY" ? "text-emerald-400" : "text-red-400"
-                  }`}>
-                    {current.direction}
-                  </span>
-                </>
+                <span className={`v2-chip ${current.direction === "BUY" ? "v2-chip--emerald" : "v2-chip--red"}`}>{current.direction}</span>
               )}
-            </div>
-            <div className="flex items-center gap-2 text-[10px]">
-              {current.extraInfo && (
-                <span className="border border-amber-500/40 text-amber-400 rounded-full px-2 py-0.5 font-bold">
-                  {current.extraInfo}
-                </span>
-              )}
+              <span className="v2-chip">{current.session}</span>
               <VolBadge volatility={current.volatility} T={T} />
               <SpreadBadge spread={current.spread} T={T} />
+              {current.extraInfo && <span className="v2-chip v2-chip--amber">{current.extraInfo}</span>}
             </div>
-          </div>
 
-          {/* News warning */}
-          {current.macroContext === "dangereux" && (
-            <div className="px-4 py-2.5 border-b border-zinc-800/60 bg-red-500/5 flex items-start gap-2.5">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 mt-0.5">
-                <path d="M7 1L13 12H1L7 1z" stroke="#ef4444" strokeWidth="1.4" strokeLinejoin="round" />
-                <path d="M7 5.5v3M7 10v0.5" stroke="#ef4444" strokeWidth="1.4" strokeLinecap="round" />
-              </svg>
-              <p className="text-[11px] text-red-400 font-semibold leading-snug">
-                {T.newsWarning}
-              </p>
-            </div>
-          )}
-
-          {/* Chart with optional lines */}
-          <div className="p-3 sm:p-4">
-            <MiniChart
-              data={{
-                candles: [...chart.past, ...chart.future],
-                zones:   chart.zones,
-                domain:  chart.domain,
-              }}
-              overlay={{
-                entry: chart.entry !== undefined ? { price: chart.entry, direction: current.direction === "SELL" ? "SELL" : "BUY" } : undefined,
-                tp:    chart.tp    !== undefined ? { price: chart.tp } : undefined,
-                stop:  chart.stop  !== undefined ? { price: chart.stop } : undefined,
-              }}
-              height={170}
-            />
-            {chart.zones.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
-                {chart.zones.map((z, i) => (
-                  <ZoneLegendChip key={i} zone={z} />
-                ))}
+            {/* News warning (présent dès la question : aucun saut au clic) */}
+            {current.macroContext === "dangereux" && (
+              <div className="v2-well v2-well--danger flex items-center gap-2.5 px-3.5 py-2.5">
+                <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="shrink-0">
+                  <path d="M7 1L13 12H1L7 1z" stroke="#f87171" strokeWidth="1.4" strokeLinejoin="round" />
+                  <path d="M7 5.5v3M7 10v0.5" stroke="#f87171" strokeWidth="1.4" strokeLinecap="round" />
+                </svg>
+                <p className="text-[13px] font-semibold leading-snug text-red-300">{T.newsWarning}</p>
               </div>
             )}
+
+            {/* Le trade à juger : au-dessus du graphique, pour que prémisse,
+                graphique et choix tiennent dans le même écran */}
+            <p className="v2-lead text-[color:var(--v2-text)]">{current.context}</p>
+
+            <GameChartV2
+              data={{ candles: [...chart.past, ...chart.future], zones: chart.zones, domain: chart.domain }}
+              overlay={{ entry: chart.entry !== undefined ? { price: chart.entry, direction: dir } : undefined, candidateLines: labelledLines }}
+              mode={isFeedback ? "verdict" : "question"}
+              keepCandlesBright={chart.zones.length === 0}
+              mark={isFeedback ? mistakeMark(current.correctMistake, chart, G.MISTAKE_LABELS[current.correctMistake]) : undefined}
+            >
+              {isFeedback && result && (
+                <VerdictOverlay
+                  compact
+                  correct={result.correct}
+                  headline={result.correct ? T.wellSeen : T.wrongMistake}
+                  points={result.points}
+                />
+              )}
+            </GameChartV2>
+
+            {/* Question + 4 choix : interactifs, puis figés avec le résultat */}
+            <p className="v2-eyebrow">{T.question}</p>
+            <MistakeChoices
+              choices={current.shuffledChoices}
+              labels={G.MISTAKE_LABELS}
+              picked={chosen}
+              correct={isFeedback ? current.correctMistake : null}
+              onPick={isFeedback ? undefined : handlePick}
+            />
+
+            {isFeedback && result && chosen && (
+              <Feedback
+                T={T}
+                result={result}
+                chosen={chosen}
+                correctMistake={current.correctMistake}
+                title={current.title}
+                explanation={current.explanation}
+                lesson={current.lessons[difficulty]}
+                category={current.category}
+                difficulty={difficulty}
+                difficultyMeta={G.DIFFICULTY_META}
+                categoryMeta={G.CATEGORY_META}
+                mistakeLabels={G.MISTAKE_LABELS}
+                onNext={handleNext}
+                isLast={idx + 1 >= ROUNDS_PER_SESSION}
+              />
+            )}
+
+            {/* Contexte */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              <InfoTile label={T.htf}        value={BIAS_LABEL[current.htfBias]}       valueClass={biasClass(current.htfBias)} />
+              <InfoTile label={T.macro}      value={MACRO_LABEL[current.macroContext]} valueClass={current.macroContext === "dangereux" ? "text-red-300" : ""} />
+              <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} valueClass="" />
+            </div>
           </div>
-
-          {/* Context infos */}
-          <div className="px-4 pb-3 grid grid-cols-2 sm:grid-cols-3 gap-2">
-            <InfoTile label={T.htf}        value={BIAS_LABEL[current.htfBias]}        colorClass={biasClass(current.htfBias)} />
-            <InfoTile label={T.macro}      value={MACRO_LABEL[current.macroContext]}  colorClass={current.macroContext === "dangereux" ? "text-red-400" : "text-zinc-300"} />
-            <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))}            colorClass="text-zinc-300" />
-          </div>
-
-          {/* Context text */}
-          <div className="px-4 pb-4">
-            <p className="text-[13px] text-zinc-300 leading-relaxed">{current.context}</p>
-          </div>
-        </div>
-
-        {/* Question + 4 choix */}
-        {!isFeedback && (
-          <ChoicesPanel
-            T={T}
-            choices={current.shuffledChoices}
-            mistakeLabels={G.MISTAKE_LABELS}
-            onPick={handlePick}
-          />
-        )}
-
-        {/* Feedback */}
-        {isFeedback && result && chosen && (
-          <Feedback
-            T={T}
-            result={result}
-            chosen={chosen}
-            correctMistake={current.correctMistake}
-            choices={current.shuffledChoices}
-            title={current.title}
-            explanation={current.explanation}
-            lesson={current.lessons[difficulty]}
-            category={current.category}
-            difficulty={difficulty}
-            difficultyMeta={G.DIFFICULTY_META}
-            categoryMeta={G.CATEGORY_META}
-            mistakeLabels={G.MISTAKE_LABELS}
-            onNext={handleNext}
-            isLast={idx + 1 >= ROUNDS_PER_SESSION}
-          />
-        )}
-
-        {/* Stats */}
-        <div className="mt-6 pt-5 border-t border-zinc-800/60 grid grid-cols-2 gap-2.5">
-          <StatTile label={T.correct} value={`${stats.correct}/${stats.correct + stats.incorrect}`} />
-          <StatTile label={T.score} value={`${score >= 0 ? "+" : ""}${score}`} />
-        </div>
+        </section>
       </div>
+
+      {/* Stats */}
+      <section className="mx-auto grid w-full max-w-3xl grid-cols-2 gap-2 sm:gap-3">
+        <StatTile label={T.correct} value={`${stats.correct}/${stats.correct + stats.incorrect}`} />
+        <StatTile label={T.score} value={`${score >= 0 ? "+" : ""}${score}`} />
+      </section>
     </main>
   );
+}
+
+// ─── Élément marqué sur le graphique au verdict ──────────────────────────────
+// L'erreur principale est montrée là où elle se voit : la ligne fautive (stop,
+// TP), la zone mal lue, ou le point d'entrée pour les erreurs de contexte.
+
+function mistakeMark(mistake: MistakeId, chart: ScenarioChart, label: string): GameChartMark | undefined {
+  const entry = chart.entry ?? chart.past[chart.past.length - 1]?.c;
+  const zoneIdx = (kinds: string[]) => chart.zones.findIndex((z) => kinds.includes(z.kind));
+  switch (mistake) {
+    case "stop_too_tight":
+    case "stop_in_liquidity":
+    case "volatility_ignored":
+      if (chart.stop !== undefined) return { kind: "line", price: chart.stop, label };
+      break;
+    case "bad_rr":
+      if (chart.tp !== undefined) return { kind: "line", price: chart.tp, label };
+      break;
+    case "buy_in_resistance": {
+      const i = zoneIdx(["resistance"]); if (i >= 0) return { kind: "zone", index: i, label };
+      break;
+    }
+    case "sell_in_support": {
+      const i = zoneIdx(["support"]); if (i >= 0) return { kind: "zone", index: i, label };
+      break;
+    }
+    case "sweep_ignored": {
+      const i = zoneIdx(["liquidity_low"]); if (i >= 0) return { kind: "zone", index: i, label };
+      break;
+    }
+    case "mitigation_misread": {
+      const i = zoneIdx(["fvg"]); if (i >= 0) return { kind: "zone", index: i, label };
+      break;
+    }
+  }
+  return entry !== undefined ? { kind: "point", price: entry, label } : undefined;
 }
 
 // ─── Difficulty picker ────────────────────────────────────────────────────────
 
 function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; locale: string | undefined }) {
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-        <Link
-          href="/jeux"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-white mb-8"
-        >
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          {locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux"}
-        </Link>
+    <main className="v2-page mx-auto flex w-full max-w-xl flex-col">
+      <Link href="/jeux" className="v2-link-back">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux"}
+      </Link>
 
-        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
-          {locale === "es" ? "Encuentra el error" : locale === "en" ? "Find the Mistake" : "Trouve l'erreur"}
-        </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{locale === "es" ? "¿Cuál es el error principal?" : locale === "en" ? "What's the main mistake?" : "Quelle est l'erreur principale ?"}</h1>
-        <p className="text-zinc-400 text-sm leading-relaxed mb-8">
+      <div className="v2-gap-s flex flex-col">
+        <p className="v2-eyebrow">{locale === "es" ? "Encuentra el error" : locale === "en" ? "Find the mistake" : "Trouve l'erreur"}</p>
+        <h1 className="v2-display v2-h2 font-bold">{locale === "es" ? "Elige tu nivel" : locale === "en" ? "Choose your level" : "Choisis ton niveau"}</h1>
+        <p className="v2-lead text-[color:var(--v2-text-2)]">
           {locale === "es"
             ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, ves un setup o un trade, e identificas el error principal entre 4 opciones. El objetivo: desarrollar tu ojo para los errores retail clásicos.`
             : locale === "en"
-            ? `${ROUNDS_PER_SESSION} scenarios. For each one, you see a setup or a trade, and you identify the main mistake among 4 choices. The goal: train your eye for the classic retail mistakes.`
+            ? `${ROUNDS_PER_SESSION} scenarios. For each one, you see a setup or a trade, and you identify the main mistake among 4 choices. The goal: train your eye for classic retail mistakes.`
             : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, tu vois un setup ou un trade, et tu identifies l'erreur principale parmi 4 choix. Le but : développer ton œil pour les erreurs retail classiques.`}
         </p>
+      </div>
 
-        <div className="flex flex-col gap-3">
-          {DIFFICULTIES.map((d) => {
-            const meta = difficultyMeta[d];
-            return (
-              <button
-                key={d}
-                onClick={() => onPick(d)}
-                className="group text-left bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 rounded-2xl px-5 py-4 transition-all"
-              >
-                <div className="flex items-center justify-between gap-3 mb-1.5">
-                  <div className="flex items-center gap-2.5">
-                    <span className={`w-2 h-2 rounded-full ${meta.dotClass}`} />
-                    <span className={`text-base font-bold ${meta.textClass}`}>{meta.label}</span>
-                  </div>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-zinc-600 group-hover:text-white transition-colors">
-                    <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+      <div className="flex flex-col gap-3">
+        {DIFFICULTIES.map((d) => {
+          const meta = difficultyMeta[d];
+          return (
+            <button
+              key={d}
+              onClick={() => onPick(d)}
+              className="v2-card group px-5 py-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              <div className="mb-1.5 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className={`h-2 w-2 rounded-full ${meta.dotClass}`} />
+                  <span className={`v2-display text-[18px] font-bold ${meta.textClass}`}>{meta.label}</span>
                 </div>
-                <p className="text-[12px] text-zinc-400 leading-relaxed">{meta.description}</p>
-              </button>
-            );
-          })}
-        </div>
+                <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="text-[color:var(--v2-text-3)] transition-colors group-hover:text-[color:var(--v2-text)]">
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <p className="v2-body text-[color:var(--v2-text-2)]">{meta.description}</p>
+            </button>
+          );
+        })}
       </div>
     </main>
   );
 }
 
-// ─── Choices panel ───────────────────────────────────────────────────────────
+// ─── Choix d'erreur ──────────────────────────────────────────────────────────
 
-function ChoicesPanel({ T, choices, onPick, mistakeLabels }: { T: { [k: string]: string }; choices: MistakeId[]; onPick: (id: MistakeId) => void; mistakeLabels: typeof FrGame.MISTAKE_LABELS }) {
+function MistakeChoices({
+  choices, labels, picked, correct, onPick,
+}: {
+  choices: MistakeId[];
+  labels: typeof FrGame.MISTAKE_LABELS;
+  picked: MistakeId | null;
+  correct: MistakeId | null;
+  onPick?: (id: MistakeId) => void;
+}) {
   return (
-    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden">
-      <div className="px-4 pt-3.5 pb-2 border-b border-zinc-800/60">
-        <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
-          {T.question}
-        </p>
-      </div>
-      <div className="p-3 sm:p-4 flex flex-col gap-2.5">
-        {choices.map((id) => (
+    <div className="grid grid-cols-2 gap-2 sm:gap-3">
+      {choices.map((id) => {
+        const state = picked ? (picked === id ? "picked" : "faded") : undefined;
+        const res = correct ? (id === correct ? "good" : id === picked ? "bad" : undefined) : undefined;
+        return (
           <button
             key={id}
-            onClick={() => onPick(id)}
-            className="text-left bg-zinc-800/60 border-2 border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600 active:scale-[0.99] rounded-xl px-4 py-3.5 transition-all flex items-center justify-between gap-3"
+            type="button"
+            data-choice={id}
+            onClick={onPick ? () => onPick(id) : undefined}
+            disabled={!onPick}
+            aria-pressed={picked === id}
+            data-state={state}
+            data-result={res}
+            className={`v2-mistake-choice ${onPick ? "cursor-pointer" : "cursor-default"}`}
           >
-            <span className="text-sm font-bold text-white">{mistakeLabels[id]}</span>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-zinc-600 shrink-0">
-              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            {labels[id]}
           </button>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 }
 
 // ─── Feedback panel ──────────────────────────────────────────────────────────
+// Le verdict est affiché sur le graphique (bandeau + erreur marquée) ; la carte
+// détaille l'explication, la leçon et l'accès au scénario suivant.
 
 interface FeedbackProps {
   T:              { [k: string]: string };
   result:         MistakeScoreResult;
   chosen:         MistakeId;
   correctMistake: MistakeId;
-  choices:        MistakeId[];
   title:          string;
   explanation:    string;
   lesson:         string;
@@ -547,97 +588,45 @@ interface FeedbackProps {
 }
 
 function Feedback({
-  T, result, chosen, correctMistake, choices, title, explanation, lesson, category, difficulty,
+  T, result, chosen, correctMistake, title, explanation, lesson, category, difficulty,
   difficultyMeta, categoryMeta, mistakeLabels, onNext, isLast,
 }: FeedbackProps) {
   const catMeta = categoryMeta[category];
   return (
-    <div className={`bg-zinc-900/50 border rounded-2xl overflow-hidden ${
-      result.correct ? "border-emerald-500/30" : "border-red-500/30"
-    }`}>
-      <div className={`px-4 py-3 ${result.correct ? "bg-emerald-500/8" : "bg-red-500/8"} flex items-center justify-between gap-3`}>
-        <div className="flex items-center gap-2.5 min-w-0">
-          {result.correct ? (
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">
-              <circle cx="9" cy="9" r="8" stroke="#10b981" strokeWidth="1.5" />
-              <path d="M5.5 9.5l2.5 2.5 4.5-5" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          ) : (
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">
-              <circle cx="9" cy="9" r="8" stroke="#ef4444" strokeWidth="1.5" />
-              <path d="M6 6l6 6M12 6l-6 6" stroke="#ef4444" strokeWidth="1.8" strokeLinecap="round" />
-            </svg>
-          )}
-          <p className={`text-sm font-bold ${result.correct ? "text-emerald-400" : "text-red-400"} truncate`}>
-            {result.correct ? T.wellSeen : T.wrongMistake}
+    <div className="v2-well v2-gap-s flex flex-col p-4 sm:p-5">
+      <p className="v2-eyebrow" style={{ color: result.correct ? "#34d399" : "#f87171" }}>{title}</p>
+
+      <div className="flex flex-col gap-1">
+        <p className="v2-display text-[14px] font-bold text-emerald-300">
+          {mistakeLabels[correctMistake]} <span className="font-medium text-[color:var(--v2-text-2)]">{T.correctAnswerTag}</span>
+        </p>
+        {!result.correct && (
+          <p className="v2-display text-[14px] font-bold text-red-300">
+            {mistakeLabels[chosen]} <span className="font-medium text-[color:var(--v2-text-2)]">· {T.yourChoice}</span>
           </p>
-        </div>
-        <div className="shrink-0 text-right">
-          <p className={`text-base font-black tabular-nums ${result.points >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-            {result.points >= 0 ? "+" : ""}{result.points}
-          </p>
-          {result.streakBonus > 0 && (
-            <p className="text-[9px] text-amber-400 uppercase tracking-wide font-bold">
-              +{result.streakBonus} streak
-            </p>
-          )}
-        </div>
+        )}
+        <p className="v2-body mt-1 text-[color:var(--v2-text)]">{explanation}</p>
       </div>
 
-      <div className="px-4 py-4">
-        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-2">{title}</p>
+      {/* Leçon */}
+      <div className="v2-well--amber rounded-[14px] px-4 py-3">
+        <p className="text-[12px] font-bold uppercase tracking-wider text-amber-300">
+          {T.lesson} · {difficultyMeta[difficulty].label}
+        </p>
+        <p className="v2-body mt-1 text-[color:var(--v2-text)]">{lesson}</p>
+      </div>
 
-        {/* Choix avec leur statut */}
-        <div className="space-y-1.5 mb-4">
-          {choices.map((id) => {
-            const isCorrect = id === correctMistake;
-            const isChosen = id === chosen;
-            const bg =
-              isCorrect ? "bg-emerald-500/10 border-emerald-500/40"
-            : isChosen  ? "bg-red-500/10 border-red-500/40"
-            :             "bg-zinc-950/40 border-zinc-800";
-            const txt =
-              isCorrect ? "text-emerald-400"
-            : isChosen  ? "text-red-400"
-            :             "text-zinc-500";
-            return (
-              <div key={id} className={`border rounded-lg px-3 py-2 flex items-center justify-between gap-2 ${bg}`}>
-                <span className={`text-[12px] font-bold ${txt}`}>{mistakeLabels[id]}</span>
-                {isCorrect && <span className="text-[9px] uppercase tracking-widest font-bold text-emerald-400">{T.correctAnswerTag}</span>}
-                {isChosen && !isCorrect && <span className="text-[9px] uppercase tracking-widest font-bold text-red-400">{T.yourChoice}</span>}
-              </div>
-            );
-          })}
+      <div className="flex items-center justify-between gap-3 pt-1">
+        <div className="flex items-center gap-1.5">
+          <span className={`h-1.5 w-1.5 rounded-full ${catMeta.dotClass}`} />
+          <span className={`text-[12px] font-medium ${catMeta.textClass}`}>{catMeta.label}</span>
         </div>
-
-        {/* Explication */}
-        <div className="bg-zinc-950/50 border border-zinc-800 rounded-lg px-3 py-3 mb-3">
-          <p className="text-[13px] text-zinc-200 leading-relaxed">{explanation}</p>
-        </div>
-
-        {/* Leçon */}
-        <div className="bg-blue-500/8 border border-blue-500/25 rounded-lg px-3 py-2.5 mb-3">
-          <p className="text-[10px] font-bold text-blue-400 uppercase tracking-wide mb-1">
-            {T.lesson} · {difficultyMeta[difficulty].label}
-          </p>
-          <p className="text-[13px] text-zinc-200 leading-relaxed">{lesson}</p>
-        </div>
-
-        <div className="flex items-center justify-between gap-3 pt-2 border-t border-zinc-800/60">
-          <div className="flex items-center gap-1.5">
-            <span className={`w-1.5 h-1.5 rounded-full ${catMeta.dotClass}`} />
-            <span className={`text-[10px] font-medium ${catMeta.textClass}`}>{catMeta.label}</span>
-          </div>
-          <button
-            onClick={onNext}
-            className="flex items-center gap-1.5 text-sm font-semibold text-white bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg px-4 py-2 transition-colors"
-          >
-            {isLast ? T.viewSummary : T.next}
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-              <path d="M2 6.5h9M8 3.5l3 3-3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-        </div>
+        <button onClick={onNext} className="v2-btn">
+          {isLast ? T.viewSummary : T.next}
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M2 6.5h9M8 3.5l3 3-3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
       </div>
     </div>
   );
@@ -645,39 +634,32 @@ function Feedback({
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function InfoTile({ label, value, colorClass }: { label: string; value: string; colorClass: string }) {
+function InfoTile({ label, value, valueClass }: { label: string; value: string; valueClass: string }) {
   return (
-    <div className="bg-zinc-950/60 border border-zinc-800/60 rounded-lg px-2.5 py-1.5">
-      <p className="text-[9px] text-zinc-600 uppercase tracking-wide">{label}</p>
-      <p className={`text-[12px] font-semibold ${colorClass} truncate`}>{value}</p>
+    <div className="v2-well flex flex-col gap-0.5 px-3 py-2.5 sm:px-4">
+      <span className="text-[12px] font-semibold uppercase tracking-wider text-[color:var(--v2-text-3)]">{label}</span>
+      <span className={`v2-display v2-tile-value truncate font-bold ${valueClass}`}>{value}</span>
     </div>
   );
 }
 
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 py-2.5">
-      <p className="text-[10px] text-zinc-500 uppercase tracking-wide font-semibold mb-1">{label}</p>
-      <p className="text-sm font-bold text-white tabular-nums">{value}</p>
+    <div className="v2-well px-3 py-2.5">
+      <p className="mb-1 truncate text-[12px] font-semibold uppercase tracking-wide text-[color:var(--v2-text-3)]">{label}</p>
+      <p className="v2-mono text-[16px] font-bold text-[color:var(--v2-text)]">{value}</p>
     </div>
   );
 }
 
 function VolBadge({ volatility, T }: { volatility: "faible" | "normale" | "élevée"; T: { [k: string]: string } }) {
-  const cls =
-    volatility === "élevée"  ? "text-amber-400 border-amber-400/30"
-  : volatility === "faible"  ? "text-zinc-500 border-zinc-700"
-  :                            "text-zinc-400 border-zinc-700";
   const label = volatility === "élevée" ? T.volHigh : volatility === "faible" ? T.volLow : T.volNormal;
-  return <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>{T.vol} {label}</span>;
+  return <span className={`v2-chip ${volatility === "élevée" ? "v2-chip--amber" : ""}`}>{T.vol} {label}</span>;
 }
 
 function SpreadBadge({ spread, T }: { spread: "faible" | "élevé"; T: { [k: string]: string } }) {
-  const cls = spread === "élevé"
-    ? "text-amber-400 border-amber-400/30"
-    : "text-zinc-500 border-zinc-700";
   const label = spread === "élevé" ? T.spreadHigh : T.spreadLow;
-  return <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>{T.spread} {label}</span>;
+  return <span className={`v2-chip ${spread === "élevé" ? "v2-chip--amber" : ""}`}>{T.spread} {label}</span>;
 }
 
 function translateVolatility(v: "faible" | "normale" | "élevée", locale: string | undefined): string {
@@ -690,32 +672,16 @@ function DifficultyChip({ difficulty, difficultyMeta }: { difficulty: Difficulty
   const meta = difficultyMeta[difficulty];
   return (
     <div className="flex items-center gap-1.5">
-      <span className={`w-1.5 h-1.5 rounded-full ${meta.dotClass}`} />
-      <span className={`text-[10px] font-bold uppercase tracking-wide ${meta.textClass}`}>
-        {meta.label}
-      </span>
-    </div>
-  );
-}
-
-function ZoneLegendChip({ zone }: { zone: { kind: string; label: string } }) {
-  const cls =
-    zone.kind === "support"        ? "bg-emerald-500"
-  : zone.kind === "resistance"     ? "bg-red-500"
-  : zone.kind === "fvg"            ? "bg-amber-400"
-  :                                  "bg-amber-400";
-  return (
-    <div className="flex items-center gap-1.5">
-      <span className={`w-2 h-2 rounded-sm ${cls}`} />
-      <span className="text-[10px] text-zinc-400 font-medium">{zone.label}</span>
+      <span className={`h-1.5 w-1.5 rounded-full ${meta.dotClass}`} />
+      <span className={`text-[12px] font-bold uppercase tracking-wide ${meta.textClass}`}>{meta.label}</span>
     </div>
   );
 }
 
 function biasClass(b: "bullish" | "bearish" | "range"): string {
-  return b === "bullish" ? "text-emerald-400"
-       : b === "bearish" ? "text-red-400"
-       :                   "text-zinc-400";
+  return b === "bullish" ? "text-emerald-300"
+       : b === "bearish" ? "text-red-300"
+       :                   "";
 }
 
 function cap(s: string): string {
@@ -741,51 +707,42 @@ function Summary({
   const accuracy = total > 0 ? Math.round((stats.correct / total) * 100) : 0;
   const verdict = sessionVerdictFn(score, stats.correct, total);
   const verdictColor =
-    score >= 700 ? "text-emerald-400"
-  : score >= 0   ? "text-amber-400"
-  :                "text-red-400";
+    score >= 700 ? "text-emerald-300"
+  : score >= 0   ? "text-amber-300"
+  :                "text-red-300";
   const meta = difficultyMeta[difficulty];
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <Link
-          href="/jeux"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-white mb-6"
-        >
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          {T.games}
-        </Link>
+    <main className="v2-page mx-auto flex w-full max-w-3xl flex-col">
+      <Link href="/jeux" className="v2-link-back">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {T.games}
+      </Link>
 
-        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
+      <div className="v2-gap-s flex flex-col">
+        <p className="v2-eyebrow">
           {T.summary} · <span className={meta.textClass}>{meta.label}</span>
         </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">{ROUNDS_PER_SESSION} {T.scenariosPlayed}</h1>
-        <p className={`text-sm font-semibold ${verdictColor} mb-7`}>{verdict}</p>
+        <h1 className="v2-display v2-h2 font-bold">{ROUNDS_PER_SESSION} {T.scenariosPlayed}</h1>
+        <p className={`v2-display text-[18px] font-bold ${verdictColor}`}>{verdict}</p>
+      </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-8">
-          <BigStat label={T.score}          value={`${score >= 0 ? "+" : ""}${score}`}    valueClass={score < 0 ? "text-red-400" : "text-emerald-400"} />
-          <BigStat label={T.precision}      value={`${accuracy}%`}                          valueClass="text-white" />
-          <BigStat label={T.correctAnswers} value={`${stats.correct}/${ROUNDS_PER_SESSION}`} valueClass="text-emerald-400" />
-          <BigStat label={T.bestStreak}     value={`${maxStreak}`}                          valueClass="text-amber-400" />
-        </div>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
+        <BigStat label={T.score}          value={`${score >= 0 ? "+" : ""}${score}`}       valueClass={score < 0 ? "text-red-400" : "text-emerald-400"} />
+        <BigStat label={T.precision}      value={`${accuracy}%`}                             valueClass="text-[color:var(--v2-text)]" />
+        <BigStat label={T.correctAnswers} value={`${stats.correct}/${ROUNDS_PER_SESSION}`}  valueClass="text-emerald-400" />
+        <BigStat label={T.bestStreak}     value={`${maxStreak}`}                             valueClass="text-amber-300" />
+      </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <button
-            onClick={onReplay}
-            className="flex-1 py-3 rounded-xl bg-white text-zinc-950 font-bold text-sm hover:bg-zinc-100 transition-colors"
-          >
-            {T.replayIn} {meta.label.toLowerCase()}
-          </button>
-          <button
-            onClick={onChangeDifficulty}
-            className="flex-1 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-bold text-sm hover:bg-zinc-800 transition-colors"
-          >
-            {T.changeLevel}
-          </button>
-        </div>
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <button onClick={onReplay} className="v2-btn v2-btn--light flex-1">
+          {T.replayIn} {meta.label.toLowerCase()}
+        </button>
+        <button onClick={onChangeDifficulty} className="v2-btn flex-1">
+          {T.changeLevel}
+        </button>
       </div>
     </main>
   );
@@ -793,9 +750,9 @@ function Summary({
 
 function BigStat({ label, value, valueClass }: { label: string; value: string; valueClass: string }) {
   return (
-    <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl px-3 py-3">
-      <p className="text-[10px] text-zinc-600 uppercase tracking-wide font-semibold mb-1">{label}</p>
-      <p className={`text-xl font-black tabular-nums ${valueClass}`}>{value}</p>
+    <div className="v2-well px-4 py-3">
+      <p className="mb-1 text-[12px] font-semibold uppercase tracking-wider text-[color:var(--v2-text-3)]">{label}</p>
+      <p className={`v2-mono v2-num-l font-bold ${valueClass}`}>{value}</p>
     </div>
   );
 }
