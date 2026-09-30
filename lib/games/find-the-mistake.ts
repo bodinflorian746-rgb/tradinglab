@@ -678,7 +678,9 @@ function shApproachResistance(rng: () => number, m: number): { chart: ScenarioCh
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 0.5 * m, R - 1.2, R - 0.4);
-    past.push(candle(o, c, (0.6 + rng() * 0.3) * m, (0.2 + rng() * 0.2) * m));
+    const k = candle(o, c, (0.6 + rng() * 0.3) * m, (0.2 + rng() * 0.2) * m);
+    k.h = Math.max(k.h, R - 0.05); // « testée plusieurs fois » : la mèche entre dans la zone
+    past.push(k);
     p = c;
   }
   // 2 dernières candles : prix re-approche R
@@ -708,7 +710,9 @@ function shApproachSupport(rng: () => number, m: number): { chart: ScenarioChart
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 0.5 * m, S + 0.4, S + 1.2);
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.6 + rng() * 0.3) * m));
+    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.6 + rng() * 0.3) * m);
+    k.l = Math.min(k.l, S + 0.05); // « testé plusieurs fois » : la mèche entre dans la zone
+    past.push(k);
     p = c;
   }
   for (let i = 0; i < 2; i++) {
@@ -733,9 +737,14 @@ function shRangeOscillation(rng: () => number, m: number): { chart: ScenarioChar
   for (let i = 0; i < 14; i++) {
     const o = p;
     const drift = (mid - o) * 0.25 + (rng() - 0.5) * 1.4 * m;
-    let c = o + drift;
+    // « Tu prends ce BUY au milieu » : la dernière bougie finit dans le tiers central
+    let c = i === 13 ? mid + (drift - (mid - o) * 0.25) * 0.25 : o + drift;
     c = clamp(c, S + 0.4, R - 0.4);
-    past.push(candle(o, c, (0.2 + rng() * 0.22) * m, (0.2 + rng() * 0.22) * m));
+    const k = candle(o, c, (0.2 + rng() * 0.22) * m, (0.2 + rng() * 0.22) * m);
+    // Le prix « oscille dans un range » : les mèches restent dans ses bornes
+    k.h = Math.min(k.h, R + 0.1);
+    k.l = Math.max(k.l, S - 0.1);
+    past.push(k);
     p = c;
   }
   const entry = p;
@@ -780,12 +789,19 @@ function shWeakBreakout(rng: () => number, m: number): { chart: ScenarioChart; R
   }
   for (let i = 0; i < 4; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.6 * m, R - 1.1, R - 0.3);
+    // La dernière bougie de consolidation clôt juste sous la résistance : la
+    // cassure qui suit peut ainsi n'avoir qu'un corps minuscule (continuité).
+    const c = i === 3
+      ? R - 0.02 - rng() * 0.08
+      : clamp(o + (rng() - 0.5) * 0.6 * m, R - 1.1, R - 0.3);
     past.push(candle(o, c, (0.22 + rng() * 0.18) * m, (0.22 + rng() * 0.18) * m));
     p = c;
   }
-  // Weak breakout candle (body petit, juste au-dessus de R)
-  past.push(candle(p, R + 0.12 + rng() * 0.18, (0.3 + rng() * 0.2) * m, 0.18));
+  // « La bougie de force est minuscule » : clôture juste au-dessus de la zone,
+  // corps minuscule, mèches qui dominent la bougie
+  const bC = R + 0.14 + rng() * 0.16;
+  const bBody = bC - p;
+  past.push(candle(p, bC, Math.max((0.3 + rng() * 0.2) * m, 1.6 * bBody), Math.max(0.18, 0.3 * bBody)));
   p = past[past.length - 1].c;
   const entry = p;
   return { chart: finishChart(past, [], [
@@ -864,8 +880,13 @@ function shFvgDeepPullback(rng: () => number, m: number): { chart: ScenarioChart
   const target = fvgLow + (fvgHigh - fvgLow) * 0.12;
   for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = Math.max(target, o - (0.32 + rng() * 0.28) * m);
-    past.push(candle(o, c, (0.12 + rng() * 0.1) * m, (0.18 + rng() * 0.18) * m));
+    // La dernière bougie du pullback finit au fond de la zone (pas de réaction)
+    const c = i === 4 ? target : Math.max(target, o - (0.32 + rng() * 0.28) * m);
+    const k = candle(o, c, (0.12 + rng() * 0.1) * m, (0.18 + rng() * 0.18) * m);
+    // « Mitigé 85 %+ » sans casser le FVG : la mèche descend au fond de la zone
+    if (i === 4) k.l = fvgLow + (fvgHigh - fvgLow) * 0.06;
+    else k.l = Math.max(k.l, fvgLow + (fvgHigh - fvgLow) * 0.02);
+    past.push(k);
     p = c;
   }
   const entry = p;
@@ -908,7 +929,7 @@ export function buildScenarioChart(template: MistakeTemplate, seed: number, vol:
       const ch = r.chart;
       if (template.showLines === "buy_with_tight_stop") {
         ch.entry = r.entry;
-        ch.stop = r.swingLow + 0.05 * m;  // pile au-dessus du swing low = tight
+        ch.stop = r.swingLow + Math.max(0.05 * m, 0.06);  // pile au-dessus du swing low (et de sa zone) = tight
         ch.tp = r.entry + (r.entry - ch.stop) * 2.2;
       } else if (template.showLines === "buy_with_bad_rr") {
         ch.entry = r.entry;
@@ -924,7 +945,7 @@ export function buildScenarioChart(template: MistakeTemplate, seed: number, vol:
       const ch = r.chart;
       if (template.showLines === "sell_with_liquidity_stop") {
         ch.entry = r.entry;
-        ch.stop = r.swingHigh + 0.05 * m;  // pile au-dessus du swing high (liquidité)
+        ch.stop = r.swingHigh + Math.max(0.05 * m, 0.06);  // pile au-dessus du swing high (liquidité)
         ch.tp = r.entry - (ch.stop - r.entry) * 2.2;
       } else if (template.showLines === "sell_with_bad_rr") {
         ch.entry = r.entry;
