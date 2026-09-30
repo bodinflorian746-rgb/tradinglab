@@ -406,7 +406,9 @@ interface ShapeOutput {
   past: Candle[];
   future: Candle[];
   zones: ChartZone[];
-  ref: { swingLow: number; swingHigh: number; entryRef: number };
+  // reversal : niveau où le prix se retourne (contre-tendance locale), le TP
+  // rapide se place juste avant.
+  ref: { swingLow: number; swingHigh: number; entryRef: number; reversal?: number };
 }
 
 function finalize(past: Candle[], future: Candle[], zones: ChartZone[], extras: number[]): { domain: { min: number; max: number } } {
@@ -1040,16 +1042,22 @@ function shapeCounterTrendLocal(rng: () => number, m: number): ShapeOutput {
     fut.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.13) * m));
     p = c;
   }
+  // Sommet du rebond : mèche de rejet au-dessus de l'entrée « confirmation »
+  // (entryRef + 0,5), c'est le niveau de retournement
+  const top = fut[fut.length - 1];
+  top.h = Math.max(top.h, entryRef + 0.9 * m);
   // Puis échec
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = o - (0.35 + rng() * 0.35) * m;
-    fut.push(candle(o, c, (0.13 + rng() * 0.13) * m, (0.2 + rng() * 0.2) * m));
+    const k = candle(o, c, (0.13 + rng() * 0.13) * m, (0.2 + rng() * 0.2) * m);
+    k.h = Math.min(k.h, top.h - 0.02 * m); // l'échec ne dépasse pas le sommet
+    fut.push(k);
     p = c;
   }
   return { past, future: fut, zones: [
     { kind: "support", y1: minorLevel - 0.08, y2: minorLevel + 0.08, label: "Niveau secondaire" },
-  ], ref: { swingLow: minorLevel - 0.5, swingHigh: entryRef + 1.5 * m, entryRef } };
+  ], ref: { swingLow: minorLevel - 0.5, swingHigh: entryRef + 1.5 * m, entryRef, reversal: top.h } };
 }
 
 // ─── Dispatch + entries/stops/tps ────────────────────────────────────────────
@@ -1106,14 +1114,17 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   // On utilise l'entry "confirmation" comme référence pour le risque
   const ref = direction === "BUY" ? entries.confirmation : entries.confirmation;
   const refRisk = Math.abs(ref - stops.logical);
+  // TP rapide : juste avant le niveau de retournement quand le scénario en a un
+  const fastBuy  = shape.ref.reversal !== undefined ? shape.ref.reversal - 0.1 * effM : ref + refRisk * 1.0;
+  const fastSell = shape.ref.reversal !== undefined ? shape.ref.reversal + 0.1 * effM : ref - refRisk * 1.0;
   const tps = direction === "BUY"
     ? {
-        fast:      ref + refRisk * 1.0,
+        fast:      fastBuy,
         balanced:  ref + refRisk * 2.2,
         ambitious: ref + refRisk * 3.8,
       }
     : {
-        fast:      ref - refRisk * 1.0,
+        fast:      fastSell,
         balanced:  ref - refRisk * 2.2,
         ambitious: ref - refRisk * 3.8,
       };
