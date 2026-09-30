@@ -18,7 +18,10 @@ import {
   type TpType,
 } from "@/lib/games/build-the-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, type VerdictState } from "@/app/components/games/v2/ui";
+
+// Couleur du verdict de setup → état du verdict superposé (icône, titre et points)
+const VERDICT_STATE: Record<"emerald" | "amber" | "red", VerdictState> = { emerald: "good", amber: "partial", red: "bad" };
 import { logGameEvent } from "@/lib/trader-profile";
 import { formatPrice } from "@/lib/games/price-scale";
 import type { Asset } from "@/lib/games/shared";
@@ -521,9 +524,10 @@ export default function BuildTheTradePage() {
             >
               {isFeedback && result && (
                 <VerdictOverlay
-                  correct={result.points > 0}
+                  state={VERDICT_STATE[G.setupVerdict(result).color]}
                   headline={G.setupVerdict(result).label}
-                  points={result.points}
+                  points={result.points - result.streakBonus}
+                  max={evaluateTrade(current.optimal, chart, current.optimal, 0).points}
                   bonus={result.streakBonus > 0 ? `+${result.streakBonus} streak` : undefined}
                 />
               )}

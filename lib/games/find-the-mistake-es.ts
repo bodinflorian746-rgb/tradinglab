@@ -444,7 +444,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
       beginner:     "Antes de un NFP, un FOMC, o un CPI: divides tu lote por 2 o 3, o esperas a que pase la news. El mercado va a temblar, tus stops no aguantarán como de costumbre.",
     },
     difficulties: ["intermediate", "advanced"],
-    extraInfo: "Tamaño de lote idéntico a una operación normal",
+    extraInfo: "NFP a las 14h30 · lote 1,00",
     showLines: "buy_entry",
   },
   {
@@ -465,7 +465,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
       beginner:     "Antes de un FOMC o una conferencia de banco central: cierras tu posición, o la reduces fuertemente. El mercado va a moverse más de lo que tus cálculos técnicos prevén.",
     },
     difficulties: ["intermediate", "advanced"],
-    extraInfo: "Posición no gestionada al acercarse el evento",
+    extraInfo: "FOMC a las 20h00 · BUY abierto desde las 19h55",
     showLines: "buy_entry",
   },
   {
@@ -486,7 +486,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
       beginner:     "Cuando el mercado se mueve más de lo habitual, reduces tu tamaño de lote. Si no, tu stop salta demasiado fácil. La regla: tamaño adaptado a la volatilidad, no al feeling.",
     },
     difficulties: ["intermediate", "advanced"],
-    extraInfo: "ATR x2,3 vs media, lote sin cambiar",
+    extraInfo: "ATR 80 $ (media 35 $) · lote 1,00 · SL 30 $",
     showLines: "sell_entry",
   },
   {
@@ -507,7 +507,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
       beginner:     "El viernes por la noche: cierras tus posiciones o reduces su tamaño. Durante el fin de semana, el mercado está cerrado pero el mundo se mueve. El lunes por la mañana, el precio puede saltar directamente al otro lado de tu stop.",
     },
     difficulties: ["intermediate", "advanced"],
-    extraInfo: "Posición dejada abierta en el fin de semana",
+    extraInfo: "Viernes 22h45 · cierre del forex a las 23h00",
     showLines: "buy_entry",
   },
 ];

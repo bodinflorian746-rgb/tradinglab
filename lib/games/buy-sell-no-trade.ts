@@ -1348,7 +1348,7 @@ export function buildChart(
   difficulty: Difficulty = "intermediate",
 ): BuySellChart {
   const ch = buildChartRaw(setup, seed, volatility, difficulty);
-  return realizeChart(ch, ch.zones.flatMap((z) => [z.y1, z.y2]), seed);
+  return realizeChart(ch, ch.zones.flatMap((z) => [z.y1, z.y2]), seed, { calmPast: setup === "trade_before_news" });
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

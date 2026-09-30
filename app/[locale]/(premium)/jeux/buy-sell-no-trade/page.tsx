@@ -471,9 +471,10 @@ export default function BuySellNoTradePage() {
             >
               {isFeedback && chosen && (
                 <VerdictOverlay
-                  correct={correct}
+                  state={correct ? "good" : "bad"}
                   headline={headline}
-                  points={lastPoints}
+                  points={lastPoints - lastStreakBonus}
+                  max={current.correctAnswer === "NO_TRADE" ? 120 : 100}
                   bonus={lastStreakBonus > 0 ? `+${lastStreakBonus} streak` : undefined}
                 />
               )}

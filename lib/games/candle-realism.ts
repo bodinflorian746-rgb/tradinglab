@@ -17,6 +17,7 @@
 import { mulberry32, type Candle } from "./shared";
 
 const PHI = 0.55;          // persistance des grappes de volatilité
+const RANGE_GROWTH = 1.15; // marché calme : amplitude max / plus grande amplitude d'origine du passé
 const RUN_SIGMA = 0.9;    // dispersion log-normale des corps dans une jambe
 const BODY_SIGMA = 0.8;            // dispersion log-normale des corps hors jambes
 const MIN_BODY_SHARE_PIN = 0.25;    // corps plancher d'une pin bar structurelle
@@ -56,6 +57,9 @@ function swings(cs: Candle[], side: "h" | "l"): number[] {
 }
 
 /** Niveaux clés : les mêmes partout, ou distincts pour le passé et pour le futur. */
+/** calmPast : le scénario affirme un marché calme dans le passé (amplitude plafonnée). */
+export type RealismOptions = { calmPast?: boolean };
+
 export type RealismLevels = number[] | { past: number[]; future: number[] };
 
 /**
@@ -64,7 +68,7 @@ export type RealismLevels = number[] | { past: number[]; future: number[] };
  * mèches est conservée. Pour le passé, seuls comptent les niveaux lus par le
  * joueur avant de décider ; pour le futur, aussi ceux qui décident de l'issue.
  */
-export function realizeCandles(past: Candle[], future: Candle[], levels: RealismLevels, seed: number): { past: Candle[]; future: Candle[] } {
+export function realizeCandles(past: Candle[], future: Candle[], levels: RealismLevels, seed: number, opts: RealismOptions = {}): { past: Candle[]; future: Candle[] } {
   const all = [...past, ...future].map((k) => ({ ...k }));
   const orig = all.map((k) => ({ ...k }));
   const n = all.length, np = past.length;
@@ -97,7 +101,10 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
   const medBefore = median(orig.slice(0, Math.max(0, np - 1)).map((k) => Math.abs(k.c - k.o)));
   const capPast = Math.min(bigMin(0, np) / 2.2, lastBody >= 1.3 * medBefore ? lastBody / 2.05 : Infinity);
   const capFut = bigMin(np, n) / 2.2;
-  const bodyCap = (i: number) => (bigBody[i] || i === np - 1 ? Infinity : i < np ? capPast : capFut);
+  // marché calme : les corps du passé restent sous l'enveloppe d'amplitude (mèches comprises)
+  const pastMaxR = Math.max(0, ...orig.slice(0, np).map((k) => k.h - k.l));
+  const calmCap = opts.calmPast ? 0.75 * RANGE_GROWTH * pastMaxR : Infinity;
+  const bodyCap = (i: number) => (i === np - 1 ? Infinity : i < np ? Math.min(bigBody[i] ? Infinity : capPast, calmCap) : bigBody[i] ? Infinity : capFut);
 
   const grows = (j: number, next: number, cur: number) => next > cur + eps && next > bodyCap(j);
   // Déplace la clôture i (et l'ouverture i + 1) si la clôture ne change de côté
@@ -261,8 +268,21 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
     if (Lof(i).some((K) => K === o0.l) && o0.l <= B) { lLo = o0.l; lHi = o0.l; }
     // extrêmes figés et bougies déclencheuses : extrêmes d'origine exacts
     const keepH = fixH.has(i) || trigger(i), keepL = fixL.has(i) || trigger(i);
+    // marché calme (avant news) : amplitude du passé ≤ RANGE_GROWTH × la plus grande d'origine
+    const rCap = inPast && opts.calmPast ? RANGE_GROWTH * pastMaxR : Infinity;
+    hHi = Math.min(hHi, Math.max(hLo, B + rCap));
+    lLo = Math.max(lLo, Math.min(lHi, T - rCap));
     k.h = keepH ? Math.max(o0.h, T) : Math.min(Math.max(hWant, hLo), Math.max(hHi, hLo));
     k.l = keepL ? Math.min(o0.l, B) : Math.max(Math.min(lWant, lHi), Math.min(lLo, lHi));
+    const over = k.h - k.l - rCap;
+    if (over > 0) {
+      // les deux mèches rendent l'excédent au prorata, sans passer sous leurs bornes
+      const up = keepH ? 0 : k.h - Math.max(hLo, T), dn = keepL ? 0 : Math.min(lHi, B) - k.l;
+      if (up + dn > 0) {
+        const f = Math.min(1, over / (up + dn));
+        k.h -= up * f; k.l += dn * f;
+      }
+    }
     hB.push(fixH.has(i) || trigger(i) ? [k.h, k.h] : [hLo, Math.max(hHi, hLo)]);
     lB.push(fixL.has(i) || trigger(i) ? [k.l, k.l] : [Math.min(lLo, lHi), lHi]);
   }
@@ -308,8 +328,8 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
 }
 
 /** Applique la passe de réalisme à un graphique (passé + futur) et élargit son domaine. */
-export function realizeChart<T extends { past: Candle[]; future: Candle[]; domain: { min: number; max: number } }>(chart: T, levels: RealismLevels, seed: number): T {
-  const { past, future } = realizeCandles(chart.past, chart.future, levels, seed);
+export function realizeChart<T extends { past: Candle[]; future: Candle[]; domain: { min: number; max: number } }>(chart: T, levels: RealismLevels, seed: number, opts: RealismOptions = {}): T {
+  const { past, future } = realizeCandles(chart.past, chart.future, levels, seed, opts);
   const vals = [...past, ...future].flatMap((k) => [k.h, k.l]);
   return {
     ...chart,

@@ -1439,7 +1439,8 @@ export function evaluateTrade(
 export function setupVerdict(result: BuildTradeResult): { label: string; color: "emerald" | "amber" | "red" } {
   if (result.qualityMatch === 3 && result.outcome === "tp_hit") return { label: "Setup parfait",     color: "emerald" };
   if (result.qualityMatch >= 2  && result.outcome === "tp_hit") return { label: "Setup solide",      color: "emerald" };
-  if (result.outcome === "tp_hit")                              return { label: "Trade gagnant",     color: "emerald" };
+  // 0 ou 1 critère sur 3 : trade gagnant, mais le plan reste faible (ambre)
+  if (result.outcome === "tp_hit")                              return { label: "Gagnant, mais plan faible", color: "amber" };
   if (result.outcome === "no_fill")                             return { label: "Trade non rempli",  color: "amber"   };
   if (result.outcome === "open")                                return { label: "Trade en cours",    color: "amber"   };
   if (result.qualityMatch >= 2)                                 return { label: "Bon plan, mauvais marché", color: "amber" };

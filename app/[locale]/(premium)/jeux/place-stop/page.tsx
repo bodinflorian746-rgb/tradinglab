@@ -20,7 +20,7 @@ import {
   type TradeDirection,
 } from "@/lib/games/place-stop";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, type VerdictState } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { formatPrice } from "@/lib/games/price-scale";
 import type { Asset } from "@/lib/games/shared";
@@ -81,18 +81,33 @@ function feedbackColor(stopType: StopType, hasLogical: boolean): "emerald" | "am
 
 // Label du verdict APRÈS choix : pédagogique sans révéler la mécanique interne
 // (pas "Stop logique" / "Stop trop large" qui leakerait le type).
-function feedbackLabel(stopType: StopType, hasLogical: boolean, locale: string | undefined): string {
+// `rr` : R/R affiché pour ce stop (arrondi à 0,1 comme sur le bouton) ; un stop trop
+// large dont le R/R reste ≥ 1 dégrade le RR sans le casser.
+function feedbackLabel(stopType: StopType, hasLogical: boolean, locale: string | undefined, rr: number | null): string {
   const isEs = locale === "es";
   const isEn = locale === "en";
   if (isCorrectType(stopType, hasLogical)) {
     return isEs ? "Buena colocación" : isEn ? "Good placement" : "Bon placement";
   }
   switch (stopType) {
-    case "wide":      return isEs ? "Demasiado lejos, RR roto" : isEn ? "Too far, R/R broken" : "Trop loin, RR cassé";
+    case "wide":
+      if (rr !== null && rr >= 1) return isEs ? "Demasiado lejos, RR degradado" : isEn ? "Too far, R/R degraded" : "Trop loin, RR dégradé";
+      return isEs ? "Demasiado lejos, RR roto" : isEn ? "Too far, R/R broken" : "Trop loin, RR cassé";
     case "liquidity": return isEs ? "En zona de caza" : isEn ? "In a hunt zone" : "Dans une zone de chasse";
     case "tight":     return isEs ? "Demasiado cerca (ruido)" : isEn ? "Too close (noise)" : "Trop près (bruit)";
     case "logical":   return isEs ? "Colocación lógica" : isEn ? "Logical placement" : "Placement logique";  // edge case
   }
+}
+
+/** R/R tel qu'affiché sur le bouton du stop (1 décimale), null sans TP. */
+function displayedRR(entry: number, tp: number | null, stop: number): number | null {
+  return tp !== null ? Number(Math.abs((tp - entry) / (entry - stop)).toFixed(1)) : null;
+}
+
+/** État du verdict : bon (vert), partiel (ambre : stop trop large, +30), faux (rouge). */
+function verdictState(stopType: StopType, hasLogical: boolean): VerdictState {
+  if (isCorrectType(stopType, hasLogical)) return "good";
+  return stopType === "wide" ? "partial" : "bad";
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -502,9 +517,10 @@ export default function PlaceStopPage() {
             >
               {isFeedback && result && (
                 <VerdictOverlay
-                  correct={result.correct}
-                  headline={feedbackLabel(result.type, hasLogicalInChart, locale)}
-                  points={result.points}
+                  state={verdictState(result.type, hasLogicalInChart)}
+                  headline={feedbackLabel(result.type, hasLogicalInChart, locale, displayedRR(chart.entry, chart.tp, chart.stops.find((s) => s.id === chosen)!.price))}
+                  points={result.points - result.streakBonus}
+                  max={100}
                   bonus={result.streakBonus > 0 ? `+${result.streakBonus} streak` : undefined}
                 />
               )}
@@ -729,6 +745,7 @@ function Feedback({
             spatialLabels={spatialLabels}
             hasLogical={hasLogical}
             locale={locale}
+            rr={displayedRR(chart.entry, chart.tp, s.price)}
           />
         ))}
       </div>
@@ -757,9 +774,10 @@ function Feedback({
 }
 
 function StopVerdictRow({
-  T, stop, isChosen, hitIndex, futureLength, spatialLabels, hasLogical, locale, asset,
+  T, stop, isChosen, hitIndex, futureLength, spatialLabels, hasLogical, locale, asset, rr,
 }: {
   asset: Asset;
+  rr: number | null;
   T: { [k: string]: string };
   stop: StopOption;
   isChosen: boolean;
@@ -771,7 +789,7 @@ function StopVerdictRow({
 }) {
   const color = STOP_COLORS[stop.id].hex;
   const rowColor = feedbackColor(stop.type, hasLogical);
-  const rowLabel = feedbackLabel(stop.type, hasLogical, locale);
+  const rowLabel = feedbackLabel(stop.type, hasLogical, locale, rr);
   const isCorrectAnswer = isCorrectType(stop.type, hasLogical);
   const num = spatialLabels[stop.id];
   const frame = isCorrectAnswer ? "v2-well--good" : isChosen ? "v2-well--bad" : "";

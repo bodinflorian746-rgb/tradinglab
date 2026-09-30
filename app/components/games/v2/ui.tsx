@@ -67,20 +67,49 @@ export function StepBadge({ n, label }: { n: number; label: string }) {
 
 // ─── Verdict superposé ───────────────────────────────────────────────────────
 
+export type VerdictState = "good" | "partial" | "bad";
+
+/** Couleurs d'un état de verdict : icône, titre et points restent toujours cohérents. */
+const VERDICT_TONE: Record<VerdictState, { ring: string; soft: string; glow: string; title: string; points: string; icon: string }> = {
+  good:    { ring: "#10b981", soft: "rgba(16,185,129,0.18)", glow: "rgba(16,185,129,0.6)", title: "text-emerald-300", points: "text-emerald-400 v2-verdict-points", icon: "#34d399" },
+  partial: { ring: "#f59e0b", soft: "rgba(245,158,11,0.18)", glow: "rgba(245,158,11,0.55)", title: "text-amber-300", points: "text-amber-300 v2-verdict-points v2-verdict-points--partial", icon: "#fbbf24" },
+  bad:     { ring: "#ef4444", soft: "rgba(239,68,68,0.18)", glow: "rgba(239,68,68,0.6)", title: "text-red-300", points: "text-red-400 v2-verdict-points v2-verdict-points--bad", icon: "#f87171" },
+};
+
+function VerdictIcon({ state, size }: { state: VerdictState; size: number }) {
+  const c = VERDICT_TONE[state].icon;
+  return (
+    <svg width={size} height={size} viewBox="0 0 22 22" fill="none">
+      {state === "good" && <path d="M5 11.5l4 4 8-9" stroke={c} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />}
+      {state === "partial" && <path d="M6 11h10" stroke={c} strokeWidth="3" strokeLinecap="round" />}
+      {state === "bad" && <path d="M6 6l10 10M16 6L6 16" stroke={c} strokeWidth="3" strokeLinecap="round" />}
+    </svg>
+  );
+}
+
+const fmtPoints = (n: number) => `${n >= 0 ? "+" : ""}${n}`;
+
 /**
  * Verdict en grand au centre du graphique, avec effet d'échelle. À passer en
  * `children` de GameChartV2 : il hérite du déclenchement .is-playing du graphique.
+ * Trois états : bon (vert, ✓), partiel (ambre, –), faux (rouge, ✗) ; l'icône, le
+ * titre et les points suivent toujours l'état. `max` : points maximum du round.
  */
 export function VerdictOverlay({
+  state,
   correct,
   headline,
   points,
+  max,
   bonus,
   compact = false,
 }: {
-  correct: boolean;
+  state?: VerdictState;
+  /** Compatibilité : bon / faux quand `state` n'est pas fourni. */
+  correct?: boolean;
   headline: string;
   points: number;
+  max?: number;
   /** Ligne secondaire optionnelle (ex. « +30 streak ») */
   bonus?: string;
   /**
@@ -89,25 +118,27 @@ export function VerdictOverlay({
    */
   compact?: boolean;
 }) {
+  const st: VerdictState = state ?? (correct ? "good" : "bad");
+  const tone = VERDICT_TONE[st];
+  const maxLabel = max !== undefined ? <span className="v2-verdict-max"> / {max}</span> : null;
   if (compact) {
-    const tint = correct ? "#10b981" : "#ef4444";
     return (
       <div className="pointer-events-none absolute inset-x-0 top-3 z-[5] flex justify-center px-3" style={cssVars({ "--spot": "250ms" })}>
         <div
           className="v2-verdict flex items-center gap-3 rounded-full py-2 pl-2.5 pr-4"
-          style={{ background: "rgba(4,6,10,0.92)", boxShadow: `inset 0 0 0 2px ${tint}, 0 16px 40px -12px ${correct ? "rgba(16,185,129,0.7)" : "rgba(239,68,68,0.7)"}` }}
+          data-verdict={st}
+          style={{ background: "rgba(4,6,10,0.92)", boxShadow: `inset 0 0 0 2px ${tone.ring}, 0 16px 40px -12px ${tone.glow}` }}
         >
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full" style={{ background: correct ? "rgba(16,185,129,0.18)" : "rgba(239,68,68,0.18)", boxShadow: `inset 0 0 0 2px ${tint}` }} aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 22 22" fill="none">
-              {correct
-                ? <path d="M5 11.5l4 4 8-9" stroke="#34d399" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                : <path d="M6 6l10 10M16 6L6 16" stroke="#f87171" strokeWidth="3" strokeLinecap="round" />}
-            </svg>
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full" style={{ background: tone.soft, boxShadow: `inset 0 0 0 2px ${tone.ring}` }} aria-hidden="true">
+            <VerdictIcon state={st} size={16} />
           </span>
-          <p className={`v2-display text-[18px] font-bold ${correct ? "text-emerald-300" : "text-red-300"}`}>{headline}</p>
-          <p className={`v2-mono text-[24px] font-bold leading-none ${points >= 0 ? "text-emerald-400 v2-verdict-points" : "text-red-400 v2-verdict-points v2-verdict-points--bad"}`}>
-            {points >= 0 ? "+" : ""}{points}
-          </p>
+          <p className={`v2-display text-[18px] font-bold ${tone.title}`}>{headline}</p>
+          <div className="flex flex-col items-end gap-0.5">
+            <p className={`v2-mono text-[24px] font-bold leading-none ${tone.points}`}>
+              {fmtPoints(points)}{maxLabel}
+            </p>
+            {bonus && <p className="v2-mono text-[10px] font-bold uppercase leading-none tracking-wider text-amber-300">{bonus}</p>}
+          </div>
         </div>
       </div>
     );
@@ -116,25 +147,22 @@ export function VerdictOverlay({
     <div className="pointer-events-none absolute inset-0 z-[5] grid place-items-center pb-2 pt-11" style={cssVars({ "--spot": "250ms" })}>
       <div
         className="v2-verdict flex flex-col items-center gap-1 rounded-[clamp(20px,2vw,28px)] px-[clamp(18px,2.6vw,40px)] py-[clamp(10px,1.6vw,26px)] text-center"
+        data-verdict={st}
         style={{
           background: "radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,0.08), rgba(4,6,10,0.92) 60%)",
-          boxShadow: `inset 0 0 0 1px rgba(255,255,255,0.1), 0 30px 80px -20px ${correct ? "rgba(16,185,129,0.6)" : "rgba(239,68,68,0.6)"}`,
+          boxShadow: `inset 0 0 0 1px rgba(255,255,255,0.1), 0 30px 80px -20px ${tone.glow}`,
         }}
       >
         <span
           className="grid h-[clamp(34px,2.8vw,46px)] w-[clamp(34px,2.8vw,46px)] place-items-center rounded-full"
-          style={{ background: correct ? "rgba(16,185,129,0.18)" : "rgba(239,68,68,0.18)", boxShadow: `inset 0 0 0 2px ${correct ? "#10b981" : "#ef4444"}` }}
+          style={{ background: tone.soft, boxShadow: `inset 0 0 0 2px ${tone.ring}` }}
           aria-hidden="true"
         >
-          <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
-            {correct
-              ? <path d="M5 11.5l4 4 8-9" stroke="#34d399" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              : <path d="M6 6l10 10M16 6L6 16" stroke="#f87171" strokeWidth="3" strokeLinecap="round" />}
-          </svg>
+          <VerdictIcon state={st} size={20} />
         </span>
-        <p className={`v2-display v2-verdict-title font-bold ${correct ? "text-emerald-300" : "text-red-300"}`}>{headline}</p>
-        <p className={`v2-mono v2-verdict-num font-bold ${points >= 0 ? "text-emerald-400 v2-verdict-points" : "text-red-400 v2-verdict-points v2-verdict-points--bad"}`}>
-          {points >= 0 ? "+" : ""}{points}
+        <p className={`v2-display v2-verdict-title font-bold ${tone.title}`}>{headline}</p>
+        <p className={`v2-mono v2-verdict-num font-bold ${tone.points}`}>
+          {fmtPoints(points)}{maxLabel}
         </p>
         {bonus && <p className="v2-mono text-[12px] font-bold uppercase tracking-wider text-amber-300">{bonus}</p>}
       </div>

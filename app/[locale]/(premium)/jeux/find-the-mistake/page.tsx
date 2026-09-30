@@ -388,9 +388,11 @@ export default function FindTheMistakePage() {
               {isFeedback && result && (
                 <VerdictOverlay
                   compact
-                  correct={result.correct}
+                  state={result.correct ? "good" : "bad"}
                   headline={result.correct ? T.wellSeen : T.wrongMistake}
-                  points={result.points}
+                  points={result.points - result.streakBonus}
+                  max={100}
+                  bonus={result.streakBonus > 0 ? `+${result.streakBonus} streak` : undefined}
                 />
               )}
             </GameChartV2>

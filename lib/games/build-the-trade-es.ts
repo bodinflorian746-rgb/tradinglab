@@ -389,7 +389,8 @@ export function generateBuildTradeScenarios(seed: number, difficulty: Difficulty
 export function setupVerdict(result: BuildTradeResult): { label: string; color: "emerald" | "amber" | "red" } {
   if (result.qualityMatch === 3 && result.outcome === "tp_hit") return { label: "Setup perfecto",      color: "emerald" };
   if (result.qualityMatch >= 2  && result.outcome === "tp_hit") return { label: "Setup sólido",        color: "emerald" };
-  if (result.outcome === "tp_hit")                              return { label: "Trade ganador",       color: "emerald" };
+  // 0 ou 1 critère sur 3 : trade gagnant, mais le plan reste faible (ambre)
+  if (result.outcome === "tp_hit")                              return { label: "Ganador, pero plan débil", color: "amber" };
   if (result.outcome === "no_fill")                             return { label: "Trade no completado", color: "amber"   };
   if (result.outcome === "open")                                return { label: "Trade en curso",      color: "amber"   };
   if (result.qualityMatch >= 2)                                 return { label: "Buen plan, mal mercado", color: "amber" };

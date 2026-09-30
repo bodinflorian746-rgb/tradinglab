@@ -245,6 +245,9 @@
 }
 .tsx-v2 .v2-verdict-points { text-shadow: 0 0 28px rgba(16, 185, 129, 0.7), 0 0 60px rgba(16, 185, 129, 0.35); }
 .tsx-v2 .v2-verdict-points--bad { text-shadow: 0 0 28px rgba(239, 68, 68, 0.7), 0 0 60px rgba(239, 68, 68, 0.35); }
+.tsx-v2 .v2-verdict-points--partial { text-shadow: 0 0 28px rgba(245, 158, 11, 0.6), 0 0 60px rgba(245, 158, 11, 0.3); }
+/* Maximum du round à côté des points (« +30 / 100 ») : discret, sans lueur */
+.tsx-v2 .v2-verdict-max { font-size: 0.42em; font-weight: 700; color: var(--v2-text-3); text-shadow: none; letter-spacing: 0; }
 
 /* Impact d'un stop touché : le marqueur apparaît avec un effet d'échelle */
 .tsx-v2 .v2-hit { transform-box: fill-box; transform-origin: 50% 50%; animation: v2-pop 450ms cubic-bezier(0.2, 1.4, 0.3, 1) both; }

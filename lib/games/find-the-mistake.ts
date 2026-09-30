@@ -495,7 +495,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       beginner:     "Avant un NFP, un FOMC, ou un CPI : tu divises ton lot par 2 ou 3, ou tu attends que la news passe. Le marché va trembler, tes stops ne tiendront pas comme d'habitude.",
     },
     difficulties: ["intermediate", "advanced"],
-    extraInfo: "Taille de lot identique à un trade normal",
+    extraInfo: "NFP à 14h30 · lot 1,00",
     showLines: "buy_entry",
   },
   {
@@ -516,7 +516,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       beginner:     "Avant un FOMC ou une conférence de banque centrale : tu fermes ta position, ou tu la réduis fortement. Le marché va bouger plus que tes calculs techniques le prévoient.",
     },
     difficulties: ["intermediate", "advanced"],
-    extraInfo: "Position non gérée à l'approche de l'événement",
+    extraInfo: "FOMC à 20h00 · BUY ouvert depuis 19h55",
     showLines: "buy_entry",
   },
   {
@@ -537,7 +537,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       beginner:     "Quand le marché bouge plus que d'habitude, tu réduis ta taille de lot. Sinon ton stop saute trop facilement. La règle : taille adaptée à la volatilité, pas au feeling.",
     },
     difficulties: ["intermediate", "advanced"],
-    extraInfo: "ATR x2,3 vs moyenne, lot inchangé",
+    extraInfo: "ATR 80 $ (moyenne 35 $) · lot 1,00 · SL 30 $",
     showLines: "sell_entry",
   },
   {
@@ -558,7 +558,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       beginner:     "Le vendredi soir : tu fermes tes positions ou tu réduis leur taille. Pendant le weekend, le marché est fermé mais le monde bouge. Lundi matin, le prix peut sauter directement à l'autre bout de ton stop.",
     },
     difficulties: ["intermediate", "advanced"],
-    extraInfo: "Position laissée ouverte sur le weekend",
+    extraInfo: "Vendredi 22h45 · clôture forex à 23h00",
     showLines: "buy_entry",
   },
 ];
@@ -953,7 +953,7 @@ export function buildScenarioChart(template: MistakeTemplate, seed: number, vol:
   const ch = buildScenarioChartRaw(template, seed, vol);
   const zones = ch.zones.flatMap((z) => [z.y1, z.y2]);
   const lines = [ch.entry, ch.stop, ch.tp].filter((p): p is number => p !== undefined);
-  return realizeChart(ch, { past: zones, future: [...zones, ...lines] }, seed);
+  return realizeChart(ch, { past: zones, future: [...zones, ...lines] }, seed, { calmPast: template.chartShape === "calm_before_news" });
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */
