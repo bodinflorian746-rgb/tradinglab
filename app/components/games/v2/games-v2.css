@@ -275,6 +275,46 @@
 .tsx-v2 .v2-mistake-choice[data-result="good"] { opacity: 1; color: #ecfdf5; background: linear-gradient(180deg, #16c08a, #0a8f64); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 12px 30px -10px rgba(16, 185, 129, 0.65); }
 .tsx-v2 .v2-mistake-choice[data-result="bad"] { opacity: 1; color: #fef2f2; background: linear-gradient(180deg, #f25555, #c42525); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 12px 30px -10px rgba(239, 68, 68, 0.6); }
 
+/* Build the Trade : onglets d'étape (Entrée / Stop / TP) et choix de l'étape active.
+   --tab-color = couleur de l'étape (bleu / rouge / vert) */
+.tsx-v2 .v2-build-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 8px 12px;
+  border-radius: 14px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: inset 0 0 0 1px var(--v2-edge);
+  transition: box-shadow 200ms ease, background 200ms ease;
+}
+.tsx-v2 .v2-build-tab:not(:disabled) { cursor: pointer; }
+.tsx-v2 .v2-build-tab[data-active] {
+  background: color-mix(in srgb, var(--tab-color) 12%, transparent);
+  box-shadow: inset 0 0 0 2px var(--tab-color);
+}
+.tsx-v2 .v2-build-choice {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  min-height: 64px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  font-family: var(--v2-font-display);
+  text-align: left;
+  color: var(--v2-text);
+  background: linear-gradient(180deg, #232833, #151922);
+  box-shadow: inset 0 0 0 1px var(--v2-edge-strong), inset 3px 0 0 var(--tab-color), 0 12px 30px -14px rgba(0, 0, 0, 0.9);
+  transition: transform 160ms ease, box-shadow 200ms ease;
+  cursor: pointer;
+}
+.tsx-v2 .v2-build-choice:hover { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22), inset 3px 0 0 var(--tab-color), 0 12px 30px -14px rgba(0, 0, 0, 0.9); }
+.tsx-v2 .v2-build-choice:active { transform: scale(0.98); }
+.tsx-v2 .v2-build-choice[data-selected] { box-shadow: inset 0 0 0 2px var(--tab-color), 0 12px 30px -14px rgba(0, 0, 0, 0.9); }
+
 /* Pastille "ton choix" épinglée */
 .tsx-v2 .v2-pin { opacity: 0; transform: translateY(-6px); }
 .tsx-v2 .is-playing .v2-pin { animation: v2-drop 500ms cubic-bezier(0.2, 1.2, 0.3, 1) both; }
@@ -407,6 +447,8 @@
   .tsx-v2 .v2-hit,
   .tsx-v2 .v2-mark { animation: none; }
   .tsx-v2 .v2-mistake-choice { transition: none; }
+  .tsx-v2 .v2-build-tab,
+  .tsx-v2 .v2-build-choice { transition: none; }
   .tsx-v2 .v2-choice,
   .tsx-v2 .v2-stop-choice,
   .tsx-v2 .v2-btn { transition: none; }

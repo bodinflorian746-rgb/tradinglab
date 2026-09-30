@@ -161,6 +161,12 @@ export interface GameChartV2Props {
   keepCandlesBright?: boolean;
   /** Élément marqué en rouge au verdict (ex. l'erreur de « Trouve l'erreur »). */
   mark?: GameChartMark;
+  /**
+   * Prix et libellés à venir, réservés d'avance dans l'échelle et la colonne
+   * d'étiquettes : le cadrage ne bouge pas quand les lignes affichées changent
+   * (ex. les étapes de « Build the Trade »).
+   */
+  reserve?: { prices?: number[]; labels?: string[] };
   /** Calque superposé au graphique (ex. VerdictOverlay). */
   children?: ReactNode;
 }
@@ -205,7 +211,7 @@ function fvgStartIndex(candles: Candle[], z: ChartZone): number {
   return i < 0 ? 0 : i;
 }
 
-export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBright, mark, children }: GameChartV2Props) {
+export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBright, mark, reserve, children }: GameChartV2Props) {
   const { ref: sizeRef, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const { ref: playRef, playing } = usePlayOnView<HTMLDivElement>(0.4);
   const desktop = useIsDesktop();
@@ -247,7 +253,8 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
     ...(columnMode && hero ? [hero.label] : []),
     ...(columnMode && mark && mode === "verdict" && markPrice !== undefined ? [mark.label] : []),
   ];
-  const tagColW = tagLabels.length ? Math.max(...tagLabels.map((l) => textWidth(l, 12) + 16)) + 18 : 0;
+  const colLabels = reserve?.labels ? [...tagLabels, ...reserve.labels] : tagLabels;
+  const tagColW = colLabels.length ? Math.max(...colLabels.map((l) => textWidth(l, 12) + 16)) + 18 : 0;
   const slot = W > 0 ? (W - 2 * padX - tagColW) / nSlots : 0;
   const xOf = (i: number) => padX + slot * (i + 0.5);
   const bodyW = clamp(slot * 0.6, 8, 30);
@@ -259,6 +266,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
       [overlay?.entry?.price, overlay?.tp?.price, overlay?.stop?.price].filter((p): p is number => p !== undefined),
       (overlay?.stops ?? []).map((s) => s.price),
       (overlay?.candidateLines ?? []).map((c) => c.price),
+      reserve?.prices ?? [],
     );
   const min = prices.length ? Math.min(...prices) : 0;
   const max = prices.length ? Math.max(...prices) : 1;
