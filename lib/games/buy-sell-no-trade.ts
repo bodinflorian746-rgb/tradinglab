@@ -549,6 +549,12 @@ function wickAmp(difficulty: Difficulty): number {
   return difficulty === "beginner" ? 1.6 : difficulty === "intermediate" ? 0.85 : 0.55;
 }
 
+// Médiane des corps : une « bougie de force » doit dépasser nettement les bougies précédentes.
+function medianBody(candles: Candle[]): number {
+  const b = candles.map((k) => Math.abs(k.c - k.o)).sort((x, y) => x - y);
+  return b.length ? b[Math.floor(b.length / 2)] : 0;
+}
+
 function genBreakoutBull(rng: () => number, m: number, d: Difficulty): BuySellChart {
   const past: Candle[] = [];
   const fut: Candle[] = [];
@@ -568,7 +574,8 @@ function genBreakoutBull(rng: () => number, m: number, d: Difficulty): BuySellCh
   }
   // Trigger : breakout candle (taille module par difficulté)
   const bO = p;
-  const bC = R + (1.0 + rng() * 0.7) * m * bodyAmp(d);
+  // « Bougie de force » : corps ≥ 1,6× la médiane des corps précédents
+  const bC = Math.max(R + (1.0 + rng() * 0.7) * m * bodyAmp(d), bO + 1.6 * medianBody(past));
   past.push(candle(bO, bC, (0.3 + rng() * 0.2) * m, 0.2));
   p = bC;
   // Beginner : 1 petite confirmation verte dans le past (rend l'evidence visible)
@@ -608,7 +615,8 @@ function genBreakoutBear(rng: () => number, m: number, d: Difficulty): BuySellCh
     p = c;
   }
   const bO = p;
-  const bC = S - (1.0 + rng() * 0.7) * m * bodyAmp(d);
+  // « Bougie de force » : corps ≥ 1,6× la médiane des corps précédents
+  const bC = Math.min(S - (1.0 + rng() * 0.7) * m * bodyAmp(d), bO - 1.6 * medianBody(past));
   past.push(candle(bO, bC, 0.2, (0.3 + rng() * 0.2) * m));
   p = bC;
   if (d === "beginner") {
@@ -828,7 +836,10 @@ function genRejectionResistance(rng: () => number, m: number, d: Difficulty): Bu
   for (let i = 0; i < tests; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.6) * 0.7 * m, R - 1.3, R - 0.4);
-    past.push(candle(o, c, (1.0 + rng() * 0.4) * m * wickK, (0.2 + rng() * 0.2) * m));
+    const k = candle(o, c, (1.0 + rng() * 0.4) * m * wickK, (0.2 + rng() * 0.2) * m);
+    // « La zone a déjà rejeté plusieurs fois » : la mèche entre toujours dans la zone
+    k.h = Math.max(k.h, R - 0.15);
+    past.push(k);
     p = c;
   }
   // Future : drop
@@ -860,7 +871,10 @@ function genBounceSupport(rng: () => number, m: number, d: Difficulty): BuySellC
   for (let i = 0; i < tests; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.4) * 0.7 * m, S + 0.4, S + 1.3);
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (1.0 + rng() * 0.4) * m * wickK));
+    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (1.0 + rng() * 0.4) * m * wickK);
+    // « La zone a déjà tenu plusieurs fois » : la mèche entre toujours dans la zone
+    k.l = Math.min(k.l, S + 0.15);
+    past.push(k);
     p = c;
   }
   for (let i = 0; i < 5; i++) {
@@ -887,13 +901,17 @@ function genLiquiditySweep(rng: () => number, m: number, d: Difficulty): BuySell
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = clamp(o - (0.3 + rng() * 0.5) * m, L + 0.4, 4.5);
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.25) * m));
+    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.25) * m);
+    k.l = Math.max(k.l, L - 0.12); // le précédent low n'est pas balayé avant le sweep
+    past.push(k);
     p = c;
   }
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 0.8 * m, L + 0.5, L + 1.6);
-    past.push(candle(o, c, (0.25 + rng() * 0.22) * m, (0.25 + rng() * 0.22) * m));
+    const k = candle(o, c, (0.25 + rng() * 0.22) * m, (0.25 + rng() * 0.22) * m);
+    k.l = Math.max(k.l, L - 0.12); // le précédent low n'est pas balayé avant le sweep
+    past.push(k);
     p = c;
   }
   // Trigger : sweep candle (longue mèche basse) — module par difficulté
@@ -902,7 +920,8 @@ function genLiquiditySweep(rng: () => number, m: number, d: Difficulty): BuySell
   const sC = d === "beginner"
     ? L + 0.4 + rng() * 0.3   // beginner : close clairement au-dessus du low
     : L + 0.15 + rng() * 0.25; // inter/adv : close juste au-dessus
-  past.push({ o: sO, c: sC, h: sO + 0.2, l: L - wickDown });
+  // « Grosse mèche » : la mèche basse est au moins 1,2× le corps
+  past.push({ o: sO, c: sC, h: Math.max(sO, sC) + 0.2, l: Math.min(L - wickDown, Math.min(sO, sC) - 1.2 * Math.abs(sO - sC)) });
   p = sC;
   if (d === "beginner") {
     // 1 confirmation candle après sweep
@@ -936,12 +955,10 @@ function genFvgReaction(rng: () => number, m: number, d: Difficulty): BuySellCha
     past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
-  const gapBottom = p + 0.25;
   const gO = p;
   const gC = p + (2.0 + rng() * 0.4) * m;
   past.push(candle(gO, gC, (0.3 + rng() * 0.2) * m, 0.12));
   p = gC;
-  const gapTop = gO + 0.05;
   // 2 candles d'impulsion au-dessus du FVG
   for (let i = 0; i < 2; i++) {
     const o = p;
@@ -949,17 +966,27 @@ function genFvgReaction(rng: () => number, m: number, d: Difficulty): BuySellCha
     past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m));
     p = c;
   }
-  // Pullback dans le FVG — profondeur variable par difficulté
+  // FVG réel : entre le haut de la bougie 1 (avant l'impulsion) et le bas de la
+  // bougie 3 (juste après). Le prix ne le touche pas avant le pullback final.
+  const fvgLow = past[2].h;
+  const fvgHigh = past[4].l;
+  past[5].l = Math.max(past[5].l, fvgHigh + 0.05);
+  // Pullback dans le FVG — profondeur variable par difficulté ; seule la
+  // dernière bougie du pullback vient tester la zone (1er retest), sans la casser.
   const pullbackTarget = d === "beginner"
-    ? gapTop - 0.1                  // beginner : pullback peu profond (FVG fresh)
+    ? fvgHigh - 0.15 * (fvgHigh - fvgLow)   // beginner : retest peu profond (FVG fresh)
   : d === "intermediate"
-    ? (gapBottom + gapTop) / 2      // intermediate : pullback à mi-FVG
-    : gapBottom + 0.05;             // advanced : mitigation profonde (frôle le bas)
+    ? (fvgLow + fvgHigh) / 2                // intermediate : retest à mi-FVG
+    : fvgLow + 0.1 * (fvgHigh - fvgLow);    // advanced : mitigation profonde (frôle le bas)
   const steps = d === "beginner" ? 3 : 4;
   for (let i = 0; i < steps; i++) {
     const o = p;
-    const c = clamp(o - (0.3 + rng() * 0.3) * m, pullbackTarget, p + 0.2);
-    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
+    const lastStep = i === steps - 1;
+    const drop = (0.3 + rng() * 0.3) * m;
+    const c = lastStep ? pullbackTarget : Math.max(o - drop, fvgHigh + 0.1 * (steps - i));
+    const k = candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m);
+    k.l = lastStep ? Math.max(k.l, fvgLow + 0.02) : Math.max(k.l, fvgHigh + 0.03);
+    past.push(k);
     p = c;
   }
   // Future : reprise
@@ -971,7 +998,7 @@ function genFvgReaction(rng: () => number, m: number, d: Difficulty): BuySellCha
   }
   return finalize({
     past, future: fut,
-    zones: [{ kind: "fvg", y1: gapBottom, y2: gapTop, label: "FVG haussier" }],
+    zones: [{ kind: "fvg", y1: fvgLow, y2: fvgHigh, label: "FVG haussier" }],
   });
 }
 
@@ -1019,9 +1046,14 @@ function genRangeNoOpp(rng: () => number, m: number, d: Difficulty): BuySellChar
     const o = p;
     const pull = (mid - o) * 0.25;
     const drift = pull + (rng() - 0.5) * 1.5 * m;
-    let c = o + drift;
+    // « Au milieu d'un range » : la dernière bougie finit dans le tiers central
+    let c = i === 13 ? mid + (drift - pull) * 0.25 : o + drift;
     c = clamp(c, S + 0.4, R - 0.4);
-    past.push(candle(o, c, (0.25 + rng() * 0.28) * m, (0.25 + rng() * 0.28) * m));
+    const k = candle(o, c, (0.25 + rng() * 0.28) * m, (0.25 + rng() * 0.28) * m);
+    // « Sans test de zone » : les mèches restent à l'intérieur du range
+    k.h = Math.min(k.h, R - 0.2);
+    k.l = Math.max(k.l, S + 0.2);
+    past.push(k);
     p = c;
   }
   // Future : continue à osciller
@@ -1059,14 +1091,20 @@ function genWeakBreakout(rng: () => number, m: number, d: Difficulty): BuySellCh
   // Consolidation serrée
   for (let i = 0; i < 4; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.45) * 0.6 * m, R - 1.1, R - 0.3);
+    // La dernière bougie de consolidation clôt juste sous la résistance : la
+    // cassure qui suit peut ainsi n'avoir qu'un corps minuscule (continuité).
+    const c = i === 3
+      ? R - 0.02 - rng() * 0.08
+      : clamp(o + (rng() - 0.45) * 0.6 * m, R - 1.1, R - 0.3);
     past.push(candle(o, c, (0.22 + rng() * 0.18) * m, (0.22 + rng() * 0.18) * m));
     p = c;
   }
-  // Trigger : breakout TRÈS FAIBLE (juste au-dessus, body minuscule)
+  // Trigger : breakout TRÈS FAIBLE (clôture juste au-dessus de la zone, body
+  // minuscule, mèches qui dominent la bougie)
   const bO = p;
-  const bC = R + 0.12 + rng() * 0.18;
-  past.push(candle(bO, bC, (0.3 + rng() * 0.2) * m, 0.18));
+  const bC = R + 0.18 + rng() * 0.12;
+  const bBody = bC - bO;
+  past.push(candle(bO, bC, Math.max((0.3 + rng() * 0.2) * m, 1.6 * bBody), Math.max(0.18, 0.3 * bBody)));
   p = bC;
   // Future : stalle puis retombe sous R (NO TRADE était la bonne décision)
   const stall = candle(p, p - 0.06, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m);
@@ -1207,7 +1245,8 @@ function genDirtyRangeSweep(rng: () => number, m: number, d: Difficulty): BuySel
     p = c;
   }
   // Sweep du haut (mèche dépasse R, close inside)
-  const swH = { o: p, c: R - 0.7 - rng() * 0.3, h: R + 1.0 * m + rng() * 0.3, l: p - 0.15 };
+  const swHc = R - 0.7 - rng() * 0.3;
+  const swH = { o: p, c: swHc, h: R + 1.0 * m + rng() * 0.3, l: Math.min(p, swHc) - 0.15 };
   past.push(swH); p = swH.c;
   // 3 oscillations
   for (let i = 0; i < 3; i++) {
@@ -1217,13 +1256,15 @@ function genDirtyRangeSweep(rng: () => number, m: number, d: Difficulty): BuySel
     p = c;
   }
   // Sweep du bas (mèche descend sous S, close inside)
-  const swL = { o: p, c: S + 0.7 + rng() * 0.3, h: p + 0.15, l: S - 1.0 * m - rng() * 0.3 };
+  const swLc = S + 0.7 + rng() * 0.3;
+  const swL = { o: p, c: swLc, h: Math.max(p, swLc) + 0.15, l: S - 1.0 * m - rng() * 0.3 };
   past.push(swL); p = swL.c;
   // 3 oscillations, derniers candles ramenant au milieu
   for (let i = 0; i < 3; i++) {
     const o = p;
     const drift = (mid - o) * 0.4 + (rng() - 0.5) * 0.9 * m;
-    const c = clamp(o + drift, S + 0.5, R - 0.5);
+    // « Prix au milieu » : la dernière bougie revient dans le tiers central
+    const c = i === 2 ? mid + (drift - (mid - o) * 0.4) * 0.3 : clamp(o + drift, S + 0.5, R - 0.5);
     past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
     p = c;
   }
