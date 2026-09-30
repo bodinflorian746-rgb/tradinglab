@@ -2715,7 +2715,33 @@ export function buildPlaceStopChart(
   volatility: Volatility,
   difficulty: Difficulty,
 ): PlaceStopChart {
-  return rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed);
+  return keepPricesPositive(rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed));
+}
+
+// Les prix sont affichés au joueur (boutons de stop) : un graphique qui passe
+// sous 0 est décalé d'un nombre entier (distances, touches, RR et chiffres
+// ronds inchangés).
+function keepPricesPositive(chart: PlaceStopChart): PlaceStopChart {
+  const low = Math.min(
+    ...chart.stops.map((s) => s.price),
+    ...[...chart.past, ...chart.future].map((k) => k.l),
+    ...chart.zones.map((z) => Math.min(z.y1, z.y2)),
+    chart.entry,
+    chart.tp ?? chart.entry,
+  );
+  if (low >= 0.5) return chart;
+  const d = Math.ceil(1 - low);
+  const k = (c: Candle): Candle => ({ o: c.o + d, h: c.h + d, l: c.l + d, c: c.c + d });
+  return {
+    ...chart,
+    past:   chart.past.map(k),
+    future: chart.future.map(k),
+    zones:  chart.zones.map((z) => ({ ...z, y1: z.y1 + d, y2: z.y2 + d })),
+    entry:  chart.entry + d,
+    tp:     chart.tp === null ? null : chart.tp + d,
+    stops:  chart.stops.map((s) => ({ ...s, price: s.price + d })),
+    domain: { min: chart.domain.min + d, max: chart.domain.max + d },
+  };
 }
 
 // ─── Anti-biais « le bon stop est toujours au milieu » ───────────────────────

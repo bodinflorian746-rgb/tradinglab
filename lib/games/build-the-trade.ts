@@ -1184,7 +1184,7 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   const { domain } = finalize(shape.past, shape.future, shape.zones, [
     ...Object.values(entries), ...Object.values(stops), ...Object.values(tps),
   ]);
-  return {
+  return keepPricesPositive({
     past:    shape.past,
     future:  shape.future,
     zones:   shape.zones,
@@ -1194,6 +1194,32 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
     stops,
     tps,
     currentPrice: entryRef,
+  });
+}
+
+// Les prix sont affichés au joueur (boutons, étiquettes) : un graphique qui
+// passe sous 0 est décalé d'un nombre entier (distances, R/R et issues inchangés).
+function keepPricesPositive(ch: BuildTradeChart): BuildTradeChart {
+  const low = Math.min(
+    ...Object.values(ch.entries), ...Object.values(ch.stops), ...Object.values(ch.tps),
+    ...[...ch.past, ...ch.future].map((k) => k.l),
+    ...ch.zones.map((z) => Math.min(z.y1, z.y2)),
+  );
+  if (low >= 0.5) return ch;
+  const d = Math.ceil(1 - low);
+  const k = (c: Candle): Candle => ({ o: c.o + d, h: c.h + d, l: c.l + d, c: c.c + d });
+  const add = <T extends string>(r: Record<T, number>) =>
+    Object.fromEntries(Object.entries(r).map(([key, v]) => [key, (v as number) + d])) as Record<T, number>;
+  return {
+    ...ch,
+    past:    ch.past.map(k),
+    future:  ch.future.map(k),
+    zones:   ch.zones.map((z) => ({ ...z, y1: z.y1 + d, y2: z.y2 + d })),
+    domain:  { min: ch.domain.min + d, max: ch.domain.max + d },
+    entries: add(ch.entries),
+    stops:   add(ch.stops),
+    tps:     add(ch.tps),
+    currentPrice: ch.currentPrice + d,
   };
 }
 
