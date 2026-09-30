@@ -36,6 +36,8 @@ const TP_TYPES:    TpType[]    = ["fast", "balanced", "ambitious"];
 type BuildStep = "entry" | "stop" | "tp";
 const STEP_COLOR: Record<BuildStep, string> = { entry: "#3b82f6", stop: "#ef4444", tp: "#10b981" };
 const REVEAL_STEP_MS = 420;
+/** Durée max de la révélation bougie par bougie (suites longues : pas raccourci) */
+const REVEAL_MAX_MS = 5600;
 const fmt = (p: number) => p.toFixed(2);
 
 // ─── Page ────────────────────────────────────────────────────────────────────
@@ -248,6 +250,14 @@ export default function BuildTheTradePage() {
     [current, G],
   );
 
+  // Suite révélée : jusqu'au 1er TP / stop touché par le plan du joueur, sinon
+  // toute la suite (FUTURE_LENGTH bougies au maximum)
+  const revealCount = useMemo(() => {
+    if (!chart) return 0;
+    const hits = [result?.tpIdx, result?.slIdx].filter((i): i is number => i !== null && i !== undefined);
+    return hits.length ? Math.min(...hits) + 1 : chart.future.length;
+  }, [chart, result]);
+
   // Reset state au scenario suivant
   useEffect(() => {
     setEntry(null);
@@ -261,17 +271,19 @@ export default function BuildTheTradePage() {
   }, [idx]);
 
   // Révélation : la 1re bougie future arrive après le glissement du graphique
-  // (V2_REVEAL_DELAY_MS), puis une bougie toutes les 420ms.
+  // (V2_REVEAL_DELAY_MS), puis une bougie toutes les 420ms (moins si la suite
+  // est longue : la révélation ne dépasse pas REVEAL_MAX_MS).
   useEffect(() => {
     if (phase !== "reveal" || !chart) return;
-    if (revealed >= chart.future.length) {
+    if (revealed >= revealCount) {
       animRef.current = setTimeout(() => setPhase("feedback"), 350);
     } else {
       const glide = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : V2_REVEAL_DELAY_MS;
-      animRef.current = setTimeout(() => setRevealed((c) => c + 1), revealed === 0 ? glide : REVEAL_STEP_MS);
+      const step = Math.min(REVEAL_STEP_MS, Math.round(REVEAL_MAX_MS / revealCount));
+      animRef.current = setTimeout(() => setRevealed((c) => c + 1), revealed === 0 ? glide : step);
     }
     return () => { if (animRef.current) clearTimeout(animRef.current); };
-  }, [phase, revealed, chart]);
+  }, [phase, revealed, chart, revealCount]);
 
   if (!difficulty || !seed) {
     return <DifficultyPicker locale={locale} difficultyMeta={G.DIFFICULTY_META} onPick={(d) => {
@@ -490,7 +502,7 @@ export default function BuildTheTradePage() {
             <p className="v2-lead text-[color:var(--v2-text)]">{current.context}</p>
 
             <GameChartV2
-              data={{ candles: [...chart.past, ...chart.future], zones: chart.zones, domain: chart.domain }}
+              data={{ candles: [...chart.past, ...chart.future.slice(0, revealCount)], zones: chart.zones, domain: chart.domain }}
               overlay={{
                 separatorIndex:     chart.past.length,
                 visibleFutureCount: isBuild ? 0 : revealed,

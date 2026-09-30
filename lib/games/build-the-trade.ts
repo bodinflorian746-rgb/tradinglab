@@ -422,6 +422,46 @@ function finalize(past: Candle[], future: Candle[], zones: ChartZone[], extras: 
   return { domain: { min: min - pad, max: max + pad } };
 }
 
+// Nombre de bougies de la suite révélée (au maximum : la révélation s'arrête
+// dès que le TP ou le stop du joueur est touché)
+export const FUTURE_LENGTH = 15;
+
+type Continuation =
+  | { kind: "target"; dir: 1 | -1; target: number; fade: boolean }
+  | { kind: "drift"; dir: 1 | -1 }
+  | { kind: "range"; S: number; R: number };
+
+// Prolonge la suite jusqu'à FUTURE_LENGTH bougies. « target » : avance vers le
+// niveau visé (chaque pas couvre au moins la part restante, il est donc atteint
+// au plus tard à la dernière bougie), puis poursuit mollement (ou s'essouffle
+// si fade). « range » : oscille dans le range.
+function extendFuture(fut: Candle[], rng: () => number, m: number, mode: Continuation): void {
+  let p = fut[fut.length - 1].c;
+  let reached = mode.kind !== "target"
+    || fut.some((k) => (mode.dir > 0 ? k.h >= mode.target : k.l <= mode.target));
+  while (fut.length < FUTURE_LENGTH) {
+    const o = p;
+    const left = FUTURE_LENGTH - fut.length;
+    let c: number;
+    if (mode.kind === "range") {
+      const mid = (mode.S + mode.R) / 2;
+      c = clamp(o + (mid - o) * 0.3 + (rng() - 0.5) * 0.8 * m, mode.S + 0.4, mode.R - 0.4);
+    } else if (mode.kind === "target" && !reached) {
+      const need = Math.max(0, (mode.target - o) * mode.dir);
+      c = o + mode.dir * Math.max(need / left, 0.3 * m) * (1 + rng() * 0.4);
+    } else if (mode.kind === "target" && mode.fade) {
+      c = o - mode.dir * (0.1 + rng() * 0.25) * m;
+    } else {
+      c = o + mode.dir * (0.1 + rng() * 0.3) * m;
+    }
+    const k = candle(o, c, (0.12 + rng() * 0.15) * m, (0.12 + rng() * 0.15) * m);
+    if (mode.kind === "range") inRange(k, mode.S, mode.R);
+    fut.push(k);
+    p = c;
+    if (mode.kind === "target") reached ||= mode.dir > 0 ? k.h >= mode.target : k.l <= mode.target;
+  }
+}
+
 function medianBody(candles: Candle[]): number {
   const b = candles.map((k) => Math.abs(k.c - k.o)).sort((x, y) => x - y);
   return b[Math.floor(b.length / 2)];
@@ -1128,6 +1168,19 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
         balanced:  ref - refRisk * 2.2,
         ambitious: ref - refRisk * 3.8,
       };
+  // Suite prolongée jusqu'à FUTURE_LENGTH bougies, tirage séparé (le début de
+  // la suite ne change pas) : le marché va au bout du plan optimal au lieu de
+  // s'arrêter en cours de route.
+  const shapeKind = template.chartShape;
+  extendFuture(shape.future, mulberry32((seed ^ 0xC2B2AE35) >>> 0), effM,
+    shapeKind === "range_oscillation" ? { kind: "range", S: swingLow, R: swingHigh }
+    : shapeKind === "counter_trend_local" ? { kind: "drift", dir: -1 }  // l'échec du rebond se poursuit
+    : {
+        kind:   "target",
+        dir:    direction === "BUY" ? 1 : -1,
+        target: tps[template.optimal.tp] + (direction === "BUY" ? 0.15 : -0.15) * effM,
+        fade:   shapeKind === "weak_breakout", // cassure faible : pas de continuation après le TP
+      });
   const { domain } = finalize(shape.past, shape.future, shape.zones, [
     ...Object.values(entries), ...Object.values(stops), ...Object.values(tps),
   ]);

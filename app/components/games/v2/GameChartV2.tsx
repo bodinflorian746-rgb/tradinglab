@@ -257,7 +257,8 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
   const tagColW = colLabels.length ? Math.max(...colLabels.map((l) => textWidth(l, 12) + 16)) + 18 : 0;
   const slot = W > 0 ? (W - 2 * padX - tagColW) / nSlots : 0;
   const xOf = (i: number) => padX + slot * (i + 0.5);
-  const bodyW = clamp(slot * 0.6, 8, 30);
+  // Plafond relatif au pas : les bougies ne se touchent jamais, même nombreuses
+  const bodyW = Math.min(clamp(slot * 0.6, 8, 30), slot * 0.78);
 
   // Échelle des prix calée sur les données, les zones et les lignes
   const prices = scaled.flatMap((k) => [k.h, k.l])
