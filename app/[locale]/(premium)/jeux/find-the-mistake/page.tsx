@@ -16,7 +16,7 @@ import {
   type ScenarioChart,
 } from "@/lib/games/find-the-mistake";
 import { GameChartV2, type GameChartMark } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 
 const CATEGORY_TO_SKILL: Record<"technique" | "psychologique" | "execution" | "rr" | "timing" | "liquidite" | "discipline", SkillId> = {
@@ -501,6 +501,7 @@ function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Diff
             ? `${ROUNDS_PER_SESSION} scenarios. For each one, you see a setup or a trade, and you identify the main mistake among 4 choices. The goal: train your eye for classic retail mistakes.`
             : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, tu vois un setup ou un trade, et tu identifies l'erreur principale parmi 4 choix. Le but : développer ton œil pour les erreurs retail classiques.`}
         </p>
+        <GeneralCasesNote />
       </div>
 
       <div className="flex flex-col gap-3">
@@ -615,6 +616,8 @@ function Feedback({
         </p>
         <p className="v2-body mt-1 text-[color:var(--v2-text)]">{lesson}</p>
       </div>
+
+      <GeneralCasesNote />
 
       <div className="flex items-center justify-between gap-3 pt-1">
         <div className="flex items-center gap-1.5">

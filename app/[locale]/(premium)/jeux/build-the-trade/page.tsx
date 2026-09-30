@@ -18,7 +18,7 @@ import {
   type TpType,
 } from "@/lib/games/build-the-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote } from "@/app/components/games/v2/ui";
 import { logGameEvent } from "@/lib/trader-profile";
 
 const BIAS_LABEL_FR  = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
@@ -673,6 +673,7 @@ function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Diff
             ? `${ROUNDS_PER_SESSION} scenarios. For each one, you choose the entry, the stop loss and the take profit. The market then reveals what happened. RR, drawdown, verdict.`
             : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, tu choisis l'entrée, le stop loss et le take profit. Le marché révèle ensuite ce qui s'est passé. RR, drawdown, verdict.`}
         </p>
+        <GeneralCasesNote />
       </div>
 
       <div className="flex flex-col gap-3">
@@ -803,6 +804,8 @@ function Feedback({
         </p>
         <p className="v2-body mt-1 text-[color:var(--v2-text)]">{lesson}</p>
       </div>
+
+      <GeneralCasesNote />
 
       <div className="flex items-center justify-end pt-1">
         <button onClick={onNext} className="v2-btn">

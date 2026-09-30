@@ -3,6 +3,7 @@
 // Composants UI v2 partagés par les jeux migrés (charte /design-lab).
 // À rendre sous un ancêtre .tsx-v2 (games-v2.css).
 
+import { useParams } from "next/navigation";
 import { cssVars } from "./GameChartV2";
 
 // ─── Rangée de choix ─────────────────────────────────────────────────────────
@@ -139,4 +140,22 @@ export function VerdictOverlay({
       </div>
     </div>
   );
+}
+
+// ─── Mention « cas généraux » ────────────────────────────────────────────────
+
+const GENERAL_CASES_TEXT = {
+  fr: "Ces exercices illustrent des cas généraux. Selon la stratégie que tu utilises, la bonne lecture peut être différente.",
+  es: "Estos ejercicios ilustran casos generales. Según la estrategia que utilices, la lectura correcta puede ser diferente.",
+  en: "These exercises show general cases. Depending on the strategy you use, the right read may differ.",
+} as const;
+
+/**
+ * Rappel discret que les exercices illustrent des cas généraux. Écran de choix
+ * du niveau (sous le titre) et bas de la carte de feedback, jamais sur le graphique.
+ */
+export function GeneralCasesNote() {
+  const locale = useParams<{ locale: string }>()?.locale;
+  const text = locale === "es" ? GENERAL_CASES_TEXT.es : locale === "en" ? GENERAL_CASES_TEXT.en : GENERAL_CASES_TEXT.fr;
+  return <p className="v2-general-note text-[13px] leading-snug text-[color:var(--v2-text-3)]">{text}</p>;
 }

@@ -20,7 +20,7 @@ import {
   type TradeDirection,
 } from "@/lib/games/place-stop";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 
 const STOP_TYPE_TO_SKILL: Record<StopType, { skill: SkillId; outcome: "win" | "loss" }> = {
@@ -597,6 +597,7 @@ function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Diff
             ? `${ROUNDS_PER_SESSION} scenarios. For each one, 3 stop losses proposed (Stop 1, 2, 3). You pick the best based on structure, liquidity, volatility, R/R. The market then reveals the continuation.`
             : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, 3 stops loss proposés (Stop 1, 2, 3). Tu choisis le meilleur selon structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.`}
         </p>
+        <GeneralCasesNote />
       </div>
 
       <div className="flex flex-col gap-3">
@@ -732,6 +733,8 @@ function Feedback({
         </p>
         <p className="v2-body mt-1 text-[color:var(--v2-text)]">{lesson}</p>
       </div>
+
+      <GeneralCasesNote />
 
       <div className="flex items-center justify-between gap-3 pt-1">
         <span className="text-[12px] font-medium uppercase tracking-wide text-[color:var(--v2-text-3)]">{tag}</span>
