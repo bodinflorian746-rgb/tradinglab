@@ -407,8 +407,10 @@ interface ShapeOutput {
   future: Candle[];
   zones: ChartZone[];
   // reversal : niveau où le prix se retourne (contre-tendance locale), le TP
-  // rapide se place juste avant.
-  ref: { swingLow: number; swingHigh: number; entryRef: number; reversal?: number };
+  // rapide se place juste avant. bound : borne opposée d'un range, le TP rapide
+  // se place juste avant (R/R < 2). fastR : distance du TP rapide en R.
+  // wideM : distance du stop large au swing, en ATR (1,2 par défaut).
+  ref: { swingLow: number; swingHigh: number; entryRef: number; reversal?: number; bound?: number; fastR?: number; wideM?: number };
 }
 
 function finalize(past: Candle[], future: Candle[], zones: ChartZone[], extras: number[]): { domain: { min: number; max: number } } {
@@ -429,21 +431,25 @@ export const FUTURE_LENGTH = 15;
 type Continuation =
   | { kind: "target"; dir: 1 | -1; target: number; fade: boolean }
   | { kind: "drift"; dir: 1 | -1 }
-  | { kind: "range"; S: number; R: number };
+  | { kind: "range"; S: number; R: number; dir: 1 | -1; target: number };
 
 // Prolonge la suite jusqu'à FUTURE_LENGTH bougies. « target » : avance vers le
 // niveau visé (chaque pas couvre au moins la part restante, il est donc atteint
 // au plus tard à la dernière bougie), puis poursuit mollement (ou s'essouffle
-// si fade). « range » : oscille dans le range.
+// si fade). « range » : va toucher le niveau visé (près de la borne opposée,
+// par une mèche si besoin), puis oscille dans le range.
 function extendFuture(fut: Candle[], rng: () => number, m: number, mode: Continuation): void {
   let p = fut[fut.length - 1].c;
-  let reached = mode.kind !== "target"
+  let reached = mode.kind === "drift"
     || fut.some((k) => (mode.dir > 0 ? k.h >= mode.target : k.l <= mode.target));
   while (fut.length < FUTURE_LENGTH) {
     const o = p;
     const left = FUTURE_LENGTH - fut.length;
     let c: number;
-    if (mode.kind === "range") {
+    if (mode.kind === "range" && !reached) {
+      const need = Math.max(0, (mode.target - o) * mode.dir);
+      c = clamp(o + mode.dir * Math.max(need / left, 0.3 * m) * (1 + rng() * 0.4), mode.S + 0.4, mode.R - 0.4);
+    } else if (mode.kind === "range") {
       const mid = (mode.S + mode.R) / 2;
       c = clamp(o + (mid - o) * 0.3 + (rng() - 0.5) * 0.8 * m, mode.S + 0.4, mode.R - 0.4);
     } else if (mode.kind === "target" && !reached) {
@@ -455,10 +461,16 @@ function extendFuture(fut: Candle[], rng: () => number, m: number, mode: Continu
       c = o + mode.dir * (0.1 + rng() * 0.3) * m;
     }
     const k = candle(o, c, (0.12 + rng() * 0.15) * m, (0.12 + rng() * 0.15) * m);
-    if (mode.kind === "range") inRange(k, mode.S, mode.R);
+    if (mode.kind === "range") {
+      // près de la borne : la mèche va chercher le niveau visé
+      if (!reached && Math.abs(c - mode.target) < 0.6 * m) {
+        if (mode.dir > 0) k.h = Math.max(k.h, mode.target + 0.02); else k.l = Math.min(k.l, mode.target - 0.02);
+      }
+      inRange(k, mode.S, mode.R);
+    }
     fut.push(k);
     p = c;
-    if (mode.kind === "target") reached ||= mode.dir > 0 ? k.h >= mode.target : k.l <= mode.target;
+    if (mode.kind !== "drift") reached ||= mode.dir > 0 ? k.h >= mode.target : k.l <= mode.target;
   }
 }
 
@@ -739,10 +751,12 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
     const step = (0.3 + rng() * 0.3) * m;
     if (direction === "SELL") {
       c = clamp(o + step, S + 0.4, R - 0.3);
-      c = clamp(Math.max(c, i === 0 ? (o + R - 0.35) / 2 : R - 0.35 - 0.5 * step), S + 0.4, R - 0.3);
+      // la dernière clôture colle au plafond (R - 0,3 à R - 0,45) : l'objectif,
+      // le plancher, reste à au moins 1,5 R de l'entrée
+      c = i === 0 ? clamp(Math.max(c, (o + R - 0.35) / 2), S + 0.4, R - 0.3) : R - 0.3 - 0.15 * (step / m - 0.3) / 0.3;
     } else {
       c = clamp(o - step, S + 0.3, R - 0.4);
-      c = clamp(Math.min(c, i === 0 ? (o + S + 0.35) / 2 : S + 0.35 + 0.5 * step), S + 0.3, R - 0.4);
+      c = i === 0 ? clamp(Math.min(c, (o + S + 0.35) / 2), S + 0.3, R - 0.4) : S + 0.3 + 0.15 * (step / m - 0.3) / 0.3;
     }
     past.push(inRange(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m), S, R));
     p = c;
@@ -777,7 +791,7 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
   return { past, future: fut, zones: [
     { kind: "resistance", y1: R - 0.15, y2: R + 0.15, label: "Plafond range" },
     { kind: "support",    y1: S - 0.15, y2: S + 0.15, label: "Plancher range" },
-  ], ref: { swingLow: S, swingHigh: R, entryRef } };
+  ], ref: { swingLow: S, swingHigh: R, entryRef, bound: direction === "SELL" ? S + 0.15 : R - 0.15 } };
 }
 
 // 8. Fakeout above (SELL after trap)
@@ -1007,7 +1021,7 @@ function shapeHighVolPullback(rng: () => number, m: number): ShapeOutput {
   }
   return { past, future: fut, zones: [
     { kind: "support", y1: swingLow - 0.05, y2: swingLow + 0.05, label: "Swing low" },
-  ], ref: { swingLow, swingHigh: entryRef + 4 * effM, entryRef } };
+  ], ref: { swingLow, swingHigh: entryRef + 4 * effM, entryRef, wideM: 0.95 } };
 }
 
 // 13. Weak breakout
@@ -1049,7 +1063,7 @@ function shapeWeakBreakout(rng: () => number, m: number): ShapeOutput {
   }
   return { past, future: fut, zones: [
     { kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance" },
-  ], ref: { swingLow: R - 0.5, swingHigh: R + 0.5, entryRef } };
+  ], ref: { swingLow: R - 0.5, swingHigh: R + 0.5, entryRef, fastR: 1.6 } };
 }
 
 // 14. Counter-trend local (BUY against HTF bearish)
@@ -1072,32 +1086,43 @@ function shapeCounterTrendLocal(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   const entryRef = p;
+  // Structure de confirmation : les 2 dernières bougies du rebond local. Le
+  // stop logique se place dessous (swingLow - marge, cf. formule des stops).
+  const structLow = Math.min(past[past.length - 1].l, past[past.length - 2].l);
+  const conf = entryRef + 0.5 * m;              // entrée « confirmation »
+  const risk = conf - (structLow - 0.4 * m);    // jusqu'au stop logique
   const fut: Candle[] = [];
-  // Future : rebond modéré puis échec (continuation baissière)
+  // Future : rebond jusqu'au niveau de retournement puis échec (continuation baissière)
   fut.push(candle(p, p - 0.15 * m, 0.1, (0.2 + rng() * 0.15) * m));
   p -= 0.15 * m;
-  for (let i = 0; i < 2; i++) {
+  // Le sommet du rebond est assez haut pour que le TP rapide, placé juste
+  // avant, vaille 1,7 R depuis l'entrée confirmation
+  const rebound = [0, 1].map(() => ({ s: (0.25 + rng() * 0.25) * m, wU: (0.18 + rng() * 0.15) * m, wD: (0.13 + rng() * 0.13) * m }));
+  const topLevel = conf + 1.7 * risk + 0.1 * m;
+  const kr = Math.max(1, (topLevel - rebound[1].wU - p) / (rebound[0].s + rebound[1].s));
+  for (const r of rebound) {
     const o = p;
-    const c = o + (0.25 + rng() * 0.25) * m;  // petit rebond
-    fut.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.13) * m));
+    const c = o + r.s * kr;
+    fut.push(candle(o, c, r.wU, r.wD));
     p = c;
   }
-  // Sommet du rebond : mèche de rejet au-dessus de l'entrée « confirmation »
-  // (entryRef + 0,5), c'est le niveau de retournement
+  // Sommet du rebond : mèche de rejet, c'est le niveau de retournement
   const top = fut[fut.length - 1];
   top.h = Math.max(top.h, entryRef + 0.9 * m);
-  // Puis échec
-  for (let i = 0; i < 4; i++) {
+  // Puis échec : le prix repasse sous le point d'entrée
+  const fail = [0, 1, 2, 3].map(() => ({ s: (0.35 + rng() * 0.35) * m, wU: (0.13 + rng() * 0.13) * m, wD: (0.2 + rng() * 0.2) * m }));
+  const kf = Math.max(1, (p - (entryRef - 0.3 * m)) / fail.reduce((a, f) => a + f.s, 0));
+  for (const f of fail) {
     const o = p;
-    const c = o - (0.35 + rng() * 0.35) * m;
-    const k = candle(o, c, (0.13 + rng() * 0.13) * m, (0.2 + rng() * 0.2) * m);
+    const c = o - f.s * kf;
+    const k = candle(o, c, f.wU, f.wD);
     k.h = Math.min(k.h, top.h - 0.02 * m); // l'échec ne dépasse pas le sommet
     fut.push(k);
     p = c;
   }
   return { past, future: fut, zones: [
     { kind: "support", y1: minorLevel - 0.08, y2: minorLevel + 0.08, label: "Niveau secondaire" },
-  ], ref: { swingLow: minorLevel - 0.5, swingHigh: entryRef + 1.5 * m, entryRef, reversal: top.h } };
+  ], ref: { swingLow: structLow, swingHigh: entryRef + 1.5 * m, entryRef, reversal: top.h } };
 }
 
 // ─── Dispatch + entries/stops/tps ────────────────────────────────────────────
@@ -1143,20 +1168,25 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
     ? {
         tight:   Math.min(swingLow + 0.1 * effM, entries.deep_pullback - 0.1 * effM),
         logical: swingLow - 0.4 * effM,
-        wide:    swingLow - 1.2 * effM,
+        wide:    swingLow - (shape.ref.wideM ?? 1.2) * effM,
       }
     : {
         tight:   Math.max(swingHigh - 0.1 * effM, entries.deep_pullback + 0.1 * effM),
         logical: swingHigh + 0.4 * effM,
-        wide:    swingHigh + 1.2 * effM,
+        wide:    swingHigh + (shape.ref.wideM ?? 1.2) * effM,
       };
   // TPs (depuis entry, multiples de risque)
   // On utilise l'entry "confirmation" comme référence pour le risque
   const ref = direction === "BUY" ? entries.confirmation : entries.confirmation;
   const refRisk = Math.abs(ref - stops.logical);
-  // TP rapide : juste avant le niveau de retournement quand le scénario en a un
-  const fastBuy  = shape.ref.reversal !== undefined ? shape.ref.reversal - 0.1 * effM : ref + refRisk * 1.0;
-  const fastSell = shape.ref.reversal !== undefined ? shape.ref.reversal + 0.1 * effM : ref - refRisk * 1.0;
+  // TP rapide : juste avant le niveau de retournement ou la borne opposée du
+  // range quand le scénario en a un, sinon à fastR (1 par défaut) × le risque
+  const dir = direction === "BUY" ? 1 : -1;
+  let fast = ref + dir * refRisk * (shape.ref.fastR ?? 1.0);
+  if (shape.ref.reversal !== undefined) fast = shape.ref.reversal - dir * 0.1 * effM;
+  if (shape.ref.bound !== undefined) fast = ref + dir * Math.min(Math.abs(shape.ref.bound - ref) - 0.05 * effM, 1.95 * refRisk);
+  const fastBuy = fast;
+  const fastSell = fast;
   const tps = direction === "BUY"
     ? {
         fast:      fastBuy,
@@ -1173,7 +1203,8 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   // s'arrêter en cours de route.
   const shapeKind = template.chartShape;
   extendFuture(shape.future, mulberry32((seed ^ 0xC2B2AE35) >>> 0), effM,
-    shapeKind === "range_oscillation" ? { kind: "range", S: swingLow, R: swingHigh }
+    shapeKind === "range_oscillation"
+      ? { kind: "range", S: swingLow, R: swingHigh, dir: direction === "BUY" ? 1 : -1, target: tps[template.optimal.tp] }
     : shapeKind === "counter_trend_local" ? { kind: "drift", dir: -1 }  // l'échec du rebond se poursuit
     : {
         kind:   "target",
