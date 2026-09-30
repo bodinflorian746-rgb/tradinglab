@@ -294,20 +294,55 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: Ga
     const pillW = hero ? textWidth(hero.label, fsPill) + fsPill * 1.3 : 0;
 
     // Lignes de trade (entrée / TP / stop / stops / candidats), style v2
-    const hLine = (key: string, price: number, color: string, opts: { dashed?: boolean; width?: number; opacity?: number } = {}) => (
-      <line key={key} x1={padX} x2={lineX1} y1={toY(price)} y2={toY(price)} stroke={color}
+    const hLine = (key: string, price: number, color: string, opts: { dashed?: boolean; width?: number; opacity?: number; x2?: number } = {}) => (
+      <line key={key} x1={padX} x2={opts.x2 ?? lineX1} y1={toY(price)} y2={toY(price)} stroke={color}
         strokeWidth={opts.width ?? 2} strokeDasharray={opts.dashed ? "6 5" : undefined} opacity={opts.opacity ?? 1} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
     );
-    const tag = (key: string, price: number, label: string, color: string, dy = 0) => {
-      const fs = 12;
-      const w = textWidth(label, fs) + 14;
-      const y = toY(price) + dy;
-      return (
-        <g key={key}>
-          <rect x={lineX1 - w} y={y - 10} width={w} height={20} rx={10} fill={color} />
-          <text x={lineX1 - w / 2} y={y + 4} textAnchor="middle" fontSize={fs} fontWeight={700} fill="#04060a" className="v2-display">{label}</text>
-        </g>
-      );
+    // Étiquettes des lignes (stops, candidats) : placées au bord droit, puis
+    // écartées verticalement pour ne JAMAIS se chevaucher, même quand deux
+    // niveaux sont très proches. Un trait relie l'étiquette décalée à sa ligne.
+    const TAG_FS = 12;
+    const TAG_H = 22;
+    const TAG_GAP = 4;
+    const tagSpecs = [
+      ...(overlay?.stops ?? []).flatMap((s, i) => (s.label ? [{ key: `stopTag${i}`, price: s.price, label: s.label, color: s.hit ? "#fb923c" : s.color, hit: !!s.hit }] : [])),
+      ...(overlay?.candidateLines ?? []).map((c, i) => ({ key: `candTag${i}`, price: c.price, label: c.label, color: c.color, hit: false })),
+    ].map((t) => ({ ...t, lineY: toY(t.price), y: toY(t.price), w: textWidth(t.label, TAG_FS) + 16 }));
+    const tagW = tagSpecs.length ? Math.max(...tagSpecs.map((t) => t.w)) : 0;
+    const sortedTags = [...tagSpecs].sort((a, b) => a.lineY - b.lineY);
+    for (let i = 1; i < sortedTags.length; i++) {
+      sortedTags[i].y = Math.max(sortedTags[i].y, sortedTags[i - 1].y + TAG_H + TAG_GAP);
+    }
+    // Si le bas déborde, on remonte la pile (toujours sans chevauchement)
+    const maxY = H - TAG_H / 2 - 2;
+    for (let i = sortedTags.length - 1; i >= 0; i--) {
+      const cap = i === sortedTags.length - 1 ? maxY : sortedTags[i + 1].y - TAG_H - TAG_GAP;
+      sortedTags[i].y = Math.min(sortedTags[i].y, cap);
+    }
+    const tagX = lineX1 - tagW; // colonne des étiquettes, alignées à droite
+    const lineEnd = tagSpecs.length ? tagX - 8 : lineX1;
+    const tag = (t: (typeof tagSpecs)[number]) => (
+      <g key={t.key}>
+        {Math.abs(t.y - t.lineY) > 0.5 && (
+          <line x1={lineEnd} y1={t.lineY} x2={tagX} y2={t.y} stroke={t.color} strokeWidth={2} vectorEffect="non-scaling-stroke" />
+        )}
+        <rect x={tagX} y={t.y - TAG_H / 2} width={tagW} height={TAG_H} rx={TAG_H / 2} fill={t.color}
+          stroke={t.hit ? "#fff7ed" : "none"} strokeWidth={t.hit ? 2 : 0} vectorEffect="non-scaling-stroke" />
+        <text x={tagX + tagW / 2} y={t.y + TAG_FS * 0.36} textAnchor="middle" fontSize={TAG_FS} fontWeight={700} fill="#04060a" className="v2-display">
+          {t.label}
+        </text>
+      </g>
+    );
+
+    // Stop touché : 1re bougie révélée qui atteint le niveau (mis en évidence)
+    const hitPoint = (price: number) => {
+      if (sep === undefined || !overlay?.entry) return null;
+      const buy = overlay.entry.direction === "BUY";
+      for (let i = sep; i < visible.length; i++) {
+        const k = visible[i];
+        if (buy ? k.l <= price : k.h >= price) return { x: xOf(i), y: toY(price) };
+      }
+      return null;
     };
 
     svg = (
@@ -370,8 +405,8 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: Ga
         {overlay?.entry && hLine("entry", overlay.entry.price, "var(--v2-entry)", { opacity: overlay.dimEntryTp ? 0.55 : 1, dashed: overlay.dimEntryTp })}
         {overlay?.tp && hLine("tp", overlay.tp.price, "var(--v2-bull)", { dashed: true, opacity: overlay.dimEntryTp ? 0.55 : 1 })}
         {overlay?.stop && hLine("stop", overlay.stop.price, overlay.stop.hit ? "#fb923c" : "var(--v2-bear)", { dashed: true, width: 2.5 })}
-        {overlay?.candidateLines?.map((c, i) => hLine(`cand${i}`, c.price, c.color, { dashed: true, opacity: 0.85 }))}
-        {overlay?.stops?.map((s, i) => hLine(`stop${i}`, s.price, s.hit ? "#fb923c" : s.color, { dashed: s.dashed !== false, width: s.selected ? 3 : 2 }))}
+        {overlay?.candidateLines?.map((c, i) => hLine(`cand${i}`, c.price, c.color, { dashed: true, opacity: 0.85, x2: lineEnd }))}
+        {overlay?.stops?.map((s, i) => hLine(`stop${i}`, s.price, s.hit ? "#fb923c" : s.color, { dashed: s.dashed !== false && !s.hit, width: s.hit ? 3 : s.selected ? 3 : 2, x2: s.label ? lineEnd : lineX1 }))}
 
         {/* Bougies */}
         {visible.map((k, i) => {
@@ -384,9 +419,20 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, children }: Ga
           return <V2Candle key={i} {...k} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="now" still />;
         })}
 
+        {/* Impact : le stop touché est marqué à la bougie qui l'atteint */}
+        {overlay?.stops?.map((s, i) => {
+          const hp = s.hit ? hitPoint(s.price) : null;
+          if (!hp) return null;
+          return (
+            <g key={`hit${i}`} className="v2-hit">
+              <circle cx={hp.x} cy={hp.y} r={11} fill="rgba(251,146,60,0.22)" stroke="#fb923c" strokeWidth={2.5} vectorEffect="non-scaling-stroke" />
+              <path d={`M${hp.x - 4.5} ${hp.y - 4.5}l9 9M${hp.x + 4.5} ${hp.y - 4.5}l-9 9`} stroke="#fff7ed" strokeWidth={2.5} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+            </g>
+          );
+        })}
+
         {/* Étiquettes des lignes (au-dessus des bougies) */}
-        {overlay?.stops?.map((s, i) => s.label ? tag(`stopTag${i}`, s.price, s.label, s.hit ? "#fb923c" : s.color) : null)}
-        {overlay?.candidateLines?.map((c, i) => tag(`candTag${i}`, c.price, c.label, c.color))}
+        {tagSpecs.map(tag)}
         </g>
 
         {/* Pastille du héros, accrochée sous la zone, à droite */}

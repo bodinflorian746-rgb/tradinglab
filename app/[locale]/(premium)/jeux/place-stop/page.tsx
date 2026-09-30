@@ -19,7 +19,8 @@ import {
   type StopType,
   type TradeDirection,
 } from "@/lib/games/place-stop";
-import { MiniChart } from "@/app/components/games/MiniChart";
+import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
+import { StepBadge, VerdictOverlay } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 
 const STOP_TYPE_TO_SKILL: Record<StopType, { skill: SkillId; outcome: "win" | "loss" }> = {
@@ -38,6 +39,9 @@ const MACRO_LABEL_FR = { normal: "Normal", dangereux: "Dangereux" } as const;
 const MACRO_LABEL_ES = { normal: "Normal", dangereux: "Peligroso" } as const;
 const MACRO_LABEL_EN = { normal: "Normal", dangereux: "Dangerous" } as const;
 const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced"];
+
+// Charte v2 : une bougie future révélée toutes les 420ms (rythme du design-lab)
+const REVEAL_STEP_MS = 420;
 
 // Couleurs distinctes pour les 3 stops (rouge / amber / violet)
 const STOP_COLORS: Record<StopId, { hex: string; bg: string; border: string; text: string; dot: string }> = {
@@ -145,6 +149,10 @@ export default function PlaceStopPage() {
         replayIn:        "Volver a jugar en",
         changeLevel:     "Cambiar de nivel",
         macroLabel:      "Macro",
+        yourChoicePin:   "· tu elección",
+        stepQuestion:    "Pregunta",
+        stepChoice:      "Elección hecha",
+        stepVerdict:     "Veredicto",
       }
     : locale === "en"
     ? {
@@ -185,6 +193,10 @@ export default function PlaceStopPage() {
         replayIn:        "Replay in",
         changeLevel:     "Change level",
         macroLabel:      "Macro",
+        yourChoicePin:   "· your choice",
+        stepQuestion:    "Question",
+        stepChoice:      "Choice made",
+        stepVerdict:     "Verdict",
       }
     : {
         games:           "Jeux",
@@ -224,6 +236,10 @@ export default function PlaceStopPage() {
         replayIn:        "Rejouer en",
         changeLevel:     "Changer de niveau",
         macroLabel:      "Macro",
+        yourChoicePin:   "· ton choix",
+        stepQuestion:    "Question",
+        stepChoice:      "Choix fait",
+        stepVerdict:     "Verdict",
       };
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
   const [seed, setSeed] = useState<number | null>(null);
@@ -256,13 +272,15 @@ export default function PlaceStopPage() {
     if (animRef.current) { clearTimeout(animRef.current); animRef.current = null; }
   }, [chart]);
 
-  // Animation reveal
+  // Animation reveal : le graphique glisse d'abord vers son cadrage « passé +
+  // futur » (V2_REVEAL_DELAY_MS), puis une bougie toutes les 420ms.
   useEffect(() => {
     if (phase !== "revealing" || !chart) return;
     if (revealed >= chart.future.length) {
       animRef.current = setTimeout(() => setPhase("feedback"), 350);
     } else {
-      animRef.current = setTimeout(() => setRevealed((c) => c + 1), 200);
+      const glide = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : V2_REVEAL_DELAY_MS;
+      animRef.current = setTimeout(() => setRevealed((c) => c + 1), revealed === 0 ? glide : REVEAL_STEP_MS);
     }
     return () => { if (animRef.current) clearTimeout(animRef.current); };
   }, [phase, revealed, chart]);
@@ -342,8 +360,8 @@ export default function PlaceStopPage() {
 
   if (!chart || !current) {
     return (
-      <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
-        <p className="text-sm text-zinc-500">{T.loading}</p>
+      <main className="v2-page flex min-h-[60vh] items-center justify-center">
+        <p className="text-[14px] text-[color:var(--v2-text-3)]">{T.loading}</p>
       </main>
     );
   }
@@ -372,7 +390,7 @@ export default function PlaceStopPage() {
       setStreak(0);
     }
     setPhase("revealing");
-    setRevealed(1);
+    setRevealed(0); // la 1re bougie future arrive après le glissement du graphique
   };
 
   const handleNext = () => {
@@ -386,74 +404,81 @@ export default function PlaceStopPage() {
   const isPlacing = phase === "placing";
   const isRevealing = phase === "revealing";
   const isFeedback = phase === "feedback";
+  const step = isPlacing ? 1 : isRevealing ? 2 : 3;
+  const stepLabel = isPlacing ? T.stepQuestion : isRevealing ? T.stepChoice : T.stepVerdict;
+  const chosenStop = chosen ? chart.stops.find((s) => s.id === chosen) ?? null : null;
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-
+    <main className="v2-page mx-auto flex w-full max-w-[880px] flex-col">
+      <div className="flex flex-col gap-3">
         {/* Top bar */}
-        <div className="flex items-center justify-between mb-5">
-          <Link
-            href="/jeux"
-            className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-white transition-colors"
-          >
+        <div className="flex items-center justify-between gap-3">
+          <Link href="/jeux" className="v2-link-back">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             {T.games}
           </Link>
-          <div className="flex items-center gap-3 text-[11px]">
+          <div className="flex items-center gap-3 text-[12px]">
             <DifficultyChip difficulty={difficulty} difficultyMeta={G.DIFFICULTY_META} />
-            <div className="w-px h-3 bg-zinc-800" />
+            <span className="h-3 w-px bg-white/15" />
             <div className="flex items-center gap-1.5">
-              <span className="text-zinc-600 uppercase tracking-wide">{T.round}</span>
-              <span className="font-bold text-white tabular-nums">{idx + 1}/{ROUNDS_PER_SESSION}</span>
+              <span className="uppercase tracking-wide text-[color:var(--v2-text-3)]">{T.round}</span>
+              <span className="v2-mono font-bold text-[color:var(--v2-text)]">{idx + 1}/{ROUNDS_PER_SESSION}</span>
             </div>
-            <div className="w-px h-3 bg-zinc-800" />
+            <span className="h-3 w-px bg-white/15" />
             <div className="flex items-center gap-1.5">
-              <span className="text-zinc-600 uppercase tracking-wide">{T.score}</span>
-              <span className={`font-bold tabular-nums ${score < 0 ? "text-red-400" : "text-emerald-400"}`}>
+              <span className="uppercase tracking-wide text-[color:var(--v2-text-3)]">{T.score}</span>
+              <span className={`v2-mono font-bold ${score < 0 ? "text-red-400" : "text-emerald-400"}`}>
                 {score >= 0 ? "+" : ""}{score}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Streak */}
-        {streak > 0 && (
-          <div className="mb-4 flex items-center justify-center gap-1.5 text-[11px] font-semibold">
-            <span className="text-amber-400">🔥</span>
-            <span className="text-amber-400 tabular-nums">{streak}</span>
-            <span className="text-zinc-500">{T.ofStreak}</span>
-            {streak >= 3 && <span className="text-amber-400">{T.bonusActive}</span>}
-          </div>
-        )}
+        {/* Streak — emplacement toujours réservé : son apparition au clic ne
+            doit pas décaler le jeu (c'est l'instant filmé) */}
+        <div
+          className={`flex h-[18px] items-center justify-center gap-1.5 text-[12px] font-semibold ${streak > 0 ? "" : "invisible"}`}
+          aria-hidden={streak === 0}
+        >
+          <span className="text-amber-300">🔥</span>
+          <span className="v2-mono text-amber-300">{streak}</span>
+          <span className="text-[color:var(--v2-text-3)]">{T.ofStreak}</span>
+          {streak >= 3 && <span className="text-amber-300">{T.bonusActive}</span>}
+        </div>
 
-        {/* Scenario card — version minimaliste : focus sur les stops */}
-        <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden mb-5">
+        {/* Scénario */}
+        <section className="v2-card v2-pad v2-gap flex flex-col" aria-labelledby="ps-title">
+          <h2 id="ps-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">{T.title}</h2>
 
-          {/* Header ultra-simple : asset + direction */}
-          <div className="px-4 pt-3 pb-2 border-b border-zinc-800/60 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-white tabular-nums">{current.asset}</span>
-              <span className="text-zinc-700 text-xs">·</span>
-              <span className={`text-[11px] font-bold uppercase tracking-wide ${
-                current.direction === "BUY" ? "text-emerald-400" : "text-red-400"
-              }`}>
-                {current.direction}
+          <div className="v2-gap-s mx-auto flex w-full max-w-3xl flex-col">
+            <StepBadge n={step} label={stepLabel} />
+
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+              <span className="v2-display v2-asset mr-1 font-bold">{current.asset}</span>
+              <span className={`v2-chip ${current.direction === "BUY" ? "v2-chip--emerald" : "v2-chip--red"}`}>{current.direction}</span>
+              <span className="v2-chip">{current.session}</span>
+              <span className={`v2-chip ${current.volatility === "élevée" ? "v2-chip--amber" : ""}`}>
+                {T.volatility} {translateVolatility(current.volatility, locale)}
               </span>
             </div>
-            <span className="text-[10px] text-zinc-500 font-medium">{current.session}</span>
-          </div>
 
-          {/* Chart minimaliste : bougies + 3 stops (avec tags A/B/C) + entry/TP discrets */}
-          <div className="p-3 sm:p-4">
-            <MiniChart
-              data={{
-                candles: [...chart.past, ...chart.future],
-                zones:   [], // V3 minimaliste : zones HTF/support/liquidité retirées du chart
-                domain:  chart.domain,
-              }}
+            {/* News warning (présent dès la question : aucun saut au clic) */}
+            {current.macroContext === "dangereux" && (
+              <div className="v2-well v2-well--danger flex items-center gap-2.5 px-3.5 py-2.5">
+                <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="shrink-0">
+                  <path d="M7 1L13 12H1L7 1z" stroke="#f87171" strokeWidth="1.4" strokeLinejoin="round" />
+                  <path d="M7 5.5v3M7 10v0.5" stroke="#f87171" strokeWidth="1.4" strokeLinecap="round" />
+                </svg>
+                <p className="text-[13px] font-semibold leading-snug text-red-300">{T.newsImminent}</p>
+              </div>
+            )}
+
+            {/* Graphique : bougies + 3 stops (étiquettes Stop 1/2/3 sans
+                chevauchement) + entrée/TP discrets, puis impact du stop touché */}
+            <GameChartV2
+              data={{ candles: [...chart.past, ...chart.future], zones: [], domain: chart.domain }}
               overlay={{
                 entry: { price: chart.entry, direction: chart.direction },
                 tp:    chart.tp !== null ? { price: chart.tp } : undefined,
@@ -463,96 +488,88 @@ export default function PlaceStopPage() {
                   dashed:   true,
                   hit:      (isFeedback || isRevealing) && hitMapLive[s.id] !== null,
                   selected: chosen === s.id,
-                  label:    spatialLabels[s.id],  // V4 : tag spatial "1"/"2"/"3" (top→bot)
+                  label:    `Stop ${spatialLabels[s.id]}`,
                 })),
                 separatorIndex:     chart.past.length,
                 visibleFutureCount: isPlacing ? 0 : revealed,
-                dimEntryTp:         true,  // entry/TP discrets pour focus sur stops
+                dimEntryTp:         true,
               }}
-              height={180}
-            />
-          </div>
+              mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
+              pin={chosenStop ? { label: `Stop ${spatialLabels[chosenStop.id]}`, sub: T.yourChoicePin, color: STOP_COLORS[chosenStop.id].hex } : undefined}
+            >
+              {isFeedback && result && (
+                <VerdictOverlay
+                  correct={result.correct}
+                  headline={feedbackLabel(result.type, hasLogicalInChart, locale)}
+                  points={result.points}
+                  bonus={result.streakBonus > 0 ? `+${result.streakBonus} streak` : undefined}
+                />
+              )}
+            </GameChartV2>
 
-          {/* Strip contexte ultra-compact : 3 infos essentielles */}
-          <div className="px-4 pb-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] border-t border-zinc-800/40 pt-2.5">
-            <span className="text-zinc-500">
-              {T.htf} <span className={`font-bold ml-1 ${biasClass(current.htfBias)}`}>{BIAS_LABEL[current.htfBias]}</span>
-            </span>
-            <span className="text-zinc-700">·</span>
-            <span className="text-zinc-500">
-              {T.volatility} <span className="font-bold ml-1 text-zinc-300">{cap(translateVolatility(current.volatility, locale))}</span>
-            </span>
-            {current.macroContext === "dangereux" && (
-              <>
-                <span className="text-zinc-700">·</span>
-                <span className="text-red-400 font-bold flex items-center gap-1">
-                  <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
-                    <path d="M7 1L13 12H1L7 1z" stroke="#ef4444" strokeWidth="1.4" strokeLinejoin="round" />
-                    <path d="M7 5.5v3M7 10v0.5" stroke="#ef4444" strokeWidth="1.4" strokeLinecap="round" />
-                  </svg>
-                  {T.newsImminent}
-                </span>
-              </>
+            {/* Contexte */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              <InfoTile label={T.htf} value={BIAS_LABEL[current.htfBias]} valueClass={biasClass(current.htfBias)} />
+              <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} valueClass="" />
+            </div>
+
+            <p className="v2-lead text-[color:var(--v2-text-2)]">
+              {difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context))}
+            </p>
+
+            {/* Question + 3 stops : interactifs, puis figés (le choix reste visible) */}
+            <p className="v2-eyebrow">{T.question}</p>
+            <StopChoices
+              stops={chart.stops}
+              entry={chart.entry}
+              tp={chart.tp}
+              direction={chart.direction}
+              spatialLabels={spatialLabels}
+              picked={chosen}
+              onChoose={isPlacing ? handleChoose : undefined}
+            />
+
+            {isRevealing && (
+              <div className="v2-well px-4 py-3 text-center">
+                <p className="v2-eyebrow">{T.revelation}</p>
+                <p className="v2-lead mt-1 text-[color:var(--v2-text)]">
+                  {T.revealTextPre} {chart.future.length} {T.revealTextPost}
+                </p>
+              </div>
+            )}
+
+            {isFeedback && result && chosen && (
+              <Feedback
+                T={T}
+                result={result}
+                chosen={chosen}
+                chart={chart}
+                title={current.title}
+                lesson={current.lessons[difficulty]}
+                tag={current.tag}
+                difficulty={difficulty}
+                difficultyMeta={G.DIFFICULTY_META}
+                spatialLabels={spatialLabels}
+                hasLogical={hasLogicalInChart}
+                locale={locale}
+                onNext={handleNext}
+                isLast={idx + 1 >= ROUNDS_PER_SESSION}
+              />
             )}
           </div>
-        </div>
-
-        {/* Question + 3 cards de choix */}
-        {isPlacing && (
-          <ChoiceCards
-            T={T}
-            stops={chart.stops}
-            entry={chart.entry}
-            tp={chart.tp}
-            direction={chart.direction}
-            spatialLabels={spatialLabels}
-            onChoose={handleChoose}
-          />
-        )}
-
-        {isRevealing && (
-          <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl px-4 py-5 text-center">
-            <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-1.5">
-              {T.revelation}
-            </p>
-            <p className="text-sm text-zinc-300">
-              {T.revealTextPre} {chart.future.length} {T.revealTextPost}
-            </p>
-          </div>
-        )}
-
-        {isFeedback && result && chosen && (
-          <Feedback
-            T={T}
-            result={result}
-            chosen={chosen}
-            chart={chart}
-            title={current.title}
-            lesson={current.lessons[difficulty]}
-            tag={current.tag}
-            difficulty={difficulty}
-            difficultyMeta={G.DIFFICULTY_META}
-            spatialLabels={spatialLabels}
-            hasLogical={hasLogicalInChart}
-            locale={locale}
-            onNext={handleNext}
-            isLast={idx + 1 >= ROUNDS_PER_SESSION}
-          />
-        )}
-
-        {/* Stats footer */}
-        <div className="mt-6 pt-5 border-t border-zinc-800/60">
-          <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-3">
-            {T.skills}
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <StatTile label={T.discipline}   value={derivedDiscipline(stats)} />
-            <StatTile label={T.protection}   value={derivedProtection(stats)} />
-            <StatTile label={T.precision}    value={derivedPrecision(stats)}  />
-            <StatTile label={T.aggressivity} value={derivedAggression(stats)} />
-          </div>
-        </div>
+        </section>
       </div>
+
+      {/* Stats footer */}
+      <section className="mx-auto flex w-full max-w-3xl flex-col gap-3">
+        <p className="v2-eyebrow" style={{ color: "var(--v2-text-3)" }}>{T.skills}</p>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
+          <StatTile label={T.discipline}   value={derivedDiscipline(stats)} />
+          <StatTile label={T.protection}   value={derivedProtection(stats)} />
+          <StatTile label={T.precision}    value={derivedPrecision(stats)}  />
+          <StatTile label={T.aggressivity} value={derivedAggression(stats)} />
+        </div>
+      </section>
     </main>
   );
 }
@@ -561,121 +578,111 @@ export default function PlaceStopPage() {
 
 function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Difficulty) => void; difficultyMeta: typeof FrGame.DIFFICULTY_META; locale: string | undefined }) {
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-        <Link
-          href="/jeux"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-white mb-8"
-        >
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          {locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux"}
-        </Link>
+    <main className="v2-page mx-auto flex w-full max-w-xl flex-col">
+      <Link href="/jeux" className="v2-link-back">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {locale === "es" ? "Juegos" : locale === "en" ? "Games" : "Jeux"}
+      </Link>
 
-        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
-          {locale === "es" ? "Coloca tu Stop" : locale === "en" ? "Place your Stop" : "Place ton Stop"}
-        </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{locale === "es" ? "¿Qué stop va a sobrevivir?" : locale === "en" ? "Which stop will survive?" : "Quel stop va survivre ?"}</h1>
-        <p className="text-zinc-400 text-sm leading-relaxed mb-8">
+      <div className="v2-gap-s flex flex-col">
+        <p className="v2-eyebrow">{locale === "es" ? "Coloca tu Stop" : locale === "en" ? "Place your Stop" : "Place ton Stop"}</p>
+        <h1 className="v2-display v2-h2 font-bold">{locale === "es" ? "¿Qué stop va a sobrevivir?" : locale === "en" ? "Which stop will survive?" : "Quel stop va survivre ?"}</h1>
+        <p className="v2-lead text-[color:var(--v2-text-2)]">
           {locale === "es"
             ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, 3 stops loss propuestos (Stop 1, 2, 3). Eliges el mejor según estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.`
             : locale === "en"
             ? `${ROUNDS_PER_SESSION} scenarios. For each one, 3 stop losses proposed (Stop 1, 2, 3). You pick the best based on structure, liquidity, volatility, R/R. The market then reveals the continuation.`
             : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, 3 stops loss proposés (Stop 1, 2, 3). Tu choisis le meilleur selon structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.`}
         </p>
+      </div>
 
-        <div className="flex flex-col gap-3">
-          {DIFFICULTIES.map((d) => {
-            const meta = difficultyMeta[d];
-            return (
-              <button
-                key={d}
-                onClick={() => onPick(d)}
-                className="group text-left bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 rounded-2xl px-5 py-4 transition-all"
-              >
-                <div className="flex items-center justify-between gap-3 mb-1.5">
-                  <div className="flex items-center gap-2.5">
-                    <span className={`w-2 h-2 rounded-full ${meta.dotClass}`} />
-                    <span className={`text-base font-bold ${meta.textClass}`}>{meta.label}</span>
-                  </div>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-zinc-600 group-hover:text-white transition-colors">
-                    <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+      <div className="flex flex-col gap-3">
+        {DIFFICULTIES.map((d) => {
+          const meta = difficultyMeta[d];
+          return (
+            <button
+              key={d}
+              onClick={() => onPick(d)}
+              className="v2-card group px-5 py-4 text-left transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              <div className="mb-1.5 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className={`h-2 w-2 rounded-full ${meta.dotClass}`} />
+                  <span className={`v2-display text-[18px] font-bold ${meta.textClass}`}>{meta.label}</span>
                 </div>
-                <p className="text-[12px] text-zinc-400 leading-relaxed">{meta.description}</p>
-              </button>
-            );
-          })}
-        </div>
+                <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="text-[color:var(--v2-text-3)] transition-colors group-hover:text-[color:var(--v2-text)]">
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <p className="v2-body text-[color:var(--v2-text-2)]">{meta.description}</p>
+            </button>
+          );
+        })}
       </div>
     </main>
   );
 }
 
-// ─── Choice cards (3 stops A/B/C) ─────────────────────────────────────────────
+// ─── Choix des stops (ordre spatial haut → bas, cohérent avec le graphique) ──
 
-function ChoiceCards({
-  T, stops, entry, tp, direction, spatialLabels, onChoose,
+function StopChoices({
+  stops, entry, tp, direction, spatialLabels, picked, onChoose,
 }: {
-  T: { [k: string]: string };
   stops: StopOption[];
   entry: number;
   tp: number | null;
   direction: TradeDirection;
   spatialLabels: Record<StopId, string>;
-  onChoose: (id: StopId) => void;
+  picked: StopId | null;
+  onChoose?: (id: StopId) => void;
 }) {
-  // Ordre d'affichage = ordre spatial top→bot (cohérent avec le chart).
   const ordered = [...stops].sort((a, b) => b.price - a.price);
   return (
-    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden">
-      <div className="px-4 pt-3.5 pb-2 border-b border-zinc-800/60">
-        <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">
-          {T.question}
-        </p>
-      </div>
-      <div className="p-3 sm:p-4 grid grid-cols-1 gap-2.5">
-        {ordered.map((s) => {
-          const dist = Math.abs(s.price - entry);
-          const rr = tp !== null ? Math.abs((tp - entry) / (entry - s.price)) : null;
-          const colors = STOP_COLORS[s.id];
-          const num = spatialLabels[s.id];
-          return (
-            <button
-              key={s.id}
-              onClick={() => onChoose(s.id)}
-              aria-label={`Stop ${num}`}
-              className={`text-left flex items-center gap-3 sm:gap-4 ${colors.bg} ${colors.border} border-2 hover:brightness-110 active:scale-[0.99] rounded-xl px-4 py-3 sm:py-3.5 transition-all`}
-            >
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${colors.bg} border ${colors.border}`}>
-                <span className={`text-base font-black ${colors.text}`}>{num}</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-3 flex-wrap">
-                  <p className={`text-base font-black tabular-nums ${colors.text}`}>{fmt(s.price)}</p>
-                  <p className="text-[11px] text-zinc-500">
-                    {direction === "BUY" ? "−" : "+"}{dist.toFixed(2)}
-                  </p>
-                  {rr !== null && rr > 0 && (
-                    <p className={`text-[11px] tabular-nums font-semibold ${rr >= 2 ? "text-emerald-400" : rr >= 1 ? "text-amber-400" : "text-red-400"}`}>
-                      RR 1:{rr.toFixed(1)}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-zinc-600">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          );
-        })}
-      </div>
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3">
+      {ordered.map((s) => {
+        const dist = Math.abs(s.price - entry);
+        const rr = tp !== null ? Math.abs((tp - entry) / (entry - s.price)) : null;
+        const color = STOP_COLORS[s.id].hex;
+        const num = spatialLabels[s.id];
+        const state = picked ? (picked === s.id ? "picked" : "faded") : undefined;
+        return (
+          <button
+            key={s.id}
+            type="button"
+            onClick={onChoose ? () => onChoose(s.id) : undefined}
+            disabled={!onChoose}
+            aria-label={`Stop ${num}`}
+            aria-pressed={picked === s.id}
+            data-state={state}
+            className={`v2-stop-choice flex items-center gap-3 rounded-[16px] px-3.5 py-2.5 text-left ${onChoose ? "cursor-pointer" : "cursor-default"}`}
+            style={{ boxShadow: `inset 0 0 0 2px ${color}`, background: `linear-gradient(180deg, ${color}22, ${color}0d)` }}
+          >
+            <span className="v2-display grid h-9 w-9 shrink-0 place-items-center rounded-[10px] text-[16px] font-bold" style={{ background: color, color: "#04060a" }}>
+              {num}
+            </span>
+            <span className="flex min-w-0 flex-col">
+              <span className="v2-mono text-[16px] font-bold" style={{ color }}>{fmt(s.price)}</span>
+              <span className="flex items-center gap-2 text-[12px]">
+                <span className="v2-mono text-[color:var(--v2-text-3)]">{direction === "BUY" ? "−" : "+"}{dist.toFixed(2)}</span>
+                {rr !== null && rr > 0 && (
+                  <span className={`v2-mono font-semibold ${rr >= 2 ? "text-emerald-300" : rr >= 1 ? "text-amber-300" : "text-red-300"}`}>
+                    RR 1:{rr.toFixed(1)}
+                  </span>
+                )}
+              </span>
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }
 
 // ─── Feedback panel ──────────────────────────────────────────────────────────
+// Le verdict (titre + points) est affiché en grand sur le graphique ; la carte
+// détaille les 3 stops, la leçon et l'accès au scénario suivant.
 
 function Feedback({
   T, result, chosen, chart, title, lesson, tag, difficulty, difficultyMeta, spatialLabels, hasLogical, locale, onNext, isLast,
@@ -696,93 +703,43 @@ function Feedback({
   isLast:         boolean;
 }) {
   const headerColor = feedbackColor(result.type, hasLogical);
-  const headerLabel = feedbackLabel(result.type, hasLogical, locale);
-  const borderClass =
-    headerColor === "emerald" ? "border-emerald-500/30"
-  : headerColor === "amber"   ? "border-amber-500/30"
-  :                             "border-red-500/30";
-  const bgClass =
-    headerColor === "emerald" ? "bg-emerald-500/8"
-  : headerColor === "amber"   ? "bg-amber-500/8"
-  :                             "bg-red-500/8";
-  const textClass =
-    headerColor === "emerald" ? "text-emerald-400"
-  : headerColor === "amber"   ? "text-amber-400"
-  :                             "text-red-400";
-
   return (
-    <div className={`bg-zinc-900/50 border rounded-2xl overflow-hidden ${borderClass}`}>
-      <div className={`px-4 py-3 ${bgClass} flex items-center justify-between gap-3`}>
-        <div className="flex items-center gap-2.5 min-w-0">
-          {result.correct ? (
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">
-              <circle cx="9" cy="9" r="8" stroke="#10b981" strokeWidth="1.5" />
-              <path d="M5.5 9.5l2.5 2.5 4.5-5" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          ) : (
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0">
-              <circle cx="9" cy="9" r="8" stroke={headerColor === "amber" ? "#f59e0b" : "#ef4444"} strokeWidth="1.5" />
-              <path d="M6 6l6 6M12 6l-6 6" stroke={headerColor === "amber" ? "#f59e0b" : "#ef4444"} strokeWidth="1.8" strokeLinecap="round" />
-            </svg>
-          )}
-          <p className={`text-sm font-bold ${textClass} truncate`}>
-            {headerLabel}
-          </p>
-        </div>
-        <div className="shrink-0 text-right">
-          <p className={`text-base font-black tabular-nums ${result.points >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-            {result.points >= 0 ? "+" : ""}{result.points}
-          </p>
-          {result.streakBonus > 0 && (
-            <p className="text-[9px] text-amber-400 uppercase tracking-wide font-bold">
-              +{result.streakBonus} streak
-            </p>
-          )}
-        </div>
+    <div className="v2-well v2-gap-s flex flex-col p-4 sm:p-5">
+      <p className="v2-eyebrow" style={{ color: headerColor === "emerald" ? "#34d399" : headerColor === "amber" ? "#fcd34d" : "#f87171" }}>{title}</p>
+
+      {/* Les 3 stops avec leur verdict (le choisi est highlighté) — ordre spatial top→bot */}
+      <div className="flex flex-col gap-2">
+        {[...chart.stops].sort((a, b) => b.price - a.price).map((s) => (
+          <StopVerdictRow
+            key={s.id}
+            T={T}
+            stop={s}
+            isChosen={chosen === s.id}
+            hitIndex={result.hitMap[s.id]}
+            futureLength={chart.future.length}
+            spatialLabels={spatialLabels}
+            hasLogical={hasLogical}
+            locale={locale}
+          />
+        ))}
       </div>
 
-      <div className="px-4 py-4">
-        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-2">
-          {title}
+      {/* Leçon adaptée au niveau */}
+      <div className="v2-well--amber rounded-[14px] px-4 py-3">
+        <p className="text-[12px] font-bold uppercase tracking-wider text-amber-300">
+          {T.lesson} · {difficultyMeta[difficulty].label}
         </p>
+        <p className="v2-body mt-1 text-[color:var(--v2-text)]">{lesson}</p>
+      </div>
 
-        {/* Les 3 stops avec leur verdict (le choisi est highlighté) — ordre spatial top→bot */}
-        <div className="space-y-2 mb-4">
-          {[...chart.stops].sort((a, b) => b.price - a.price).map((s) => (
-            <StopVerdictRow
-              key={s.id}
-              T={T}
-              stop={s}
-              isChosen={chosen === s.id}
-              hitIndex={result.hitMap[s.id]}
-              futureLength={chart.future.length}
-              spatialLabels={spatialLabels}
-              hasLogical={hasLogical}
-              locale={locale}
-            />
-          ))}
-        </div>
-
-        {/* Leçon adaptée au niveau */}
-        <div className="bg-blue-500/8 border border-blue-500/25 rounded-lg px-3 py-2.5 mb-3">
-          <p className="text-[10px] font-bold text-blue-400 uppercase tracking-wide mb-1">
-            {T.lesson} · {difficultyMeta[difficulty].label}
-          </p>
-          <p className="text-[13px] text-zinc-200 leading-relaxed">{lesson}</p>
-        </div>
-
-        <div className="flex items-center justify-between gap-3 pt-2 border-t border-zinc-800/60">
-          <span className="text-[10px] text-zinc-500 font-medium uppercase tracking-wide">{tag}</span>
-          <button
-            onClick={onNext}
-            className="flex items-center gap-1.5 text-sm font-semibold text-white bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg px-4 py-2 transition-colors"
-          >
-            {isLast ? T.viewSummary : T.nextScenario}
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-              <path d="M2 6.5h9M8 3.5l3 3-3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-        </div>
+      <div className="flex items-center justify-between gap-3 pt-1">
+        <span className="text-[12px] font-medium uppercase tracking-wide text-[color:var(--v2-text-3)]">{tag}</span>
+        <button onClick={onNext} className="v2-btn">
+          {isLast ? T.viewSummary : T.nextScenario}
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M2 6.5h9M8 3.5l3 3-3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
       </div>
     </div>
   );
@@ -800,48 +757,43 @@ function StopVerdictRow({
   hasLogical: boolean;
   locale: string | undefined;
 }) {
-  const colors = STOP_COLORS[stop.id];
+  const color = STOP_COLORS[stop.id].hex;
   const rowColor = feedbackColor(stop.type, hasLogical);
   const rowLabel = feedbackLabel(stop.type, hasLogical, locale);
   const isCorrectAnswer = isCorrectType(stop.type, hasLogical);
   const num = spatialLabels[stop.id];
-  const border =
-    isChosen ? colors.border
-  : rowColor === "emerald" ? "border-emerald-500/30"
-  : "border-zinc-800";
+  const frame = isCorrectAnswer ? "v2-well--good" : isChosen ? "v2-well--bad" : "";
   const survived = hitIndex === null;
   return (
-    <div className={`border rounded-lg px-3 py-2.5 bg-zinc-950/40 ${border}`}>
-      <div className="flex items-center gap-2 mb-1">
-        <span className={`w-6 h-6 rounded-md flex items-center justify-center ${colors.bg} border ${colors.border}`}>
-          <span className={`text-[11px] font-black ${colors.text}`}>{num}</span>
-        </span>
-        <p className={`text-[11px] font-bold uppercase tracking-widest ${
-          rowColor === "emerald" ? "text-emerald-400"
-        : rowColor === "amber"   ? "text-amber-400"
-        :                          "text-red-400"
+    <div className={`v2-well ${frame} px-3.5 py-3`}>
+      <div className="mb-1 flex flex-wrap items-center gap-2">
+        <span className="v2-display grid h-6 w-6 place-items-center rounded-md text-[12px] font-bold" style={{ background: color, color: "#04060a" }}>{num}</span>
+        <p className={`v2-display text-[14px] font-bold ${
+          rowColor === "emerald" ? "text-emerald-300"
+        : rowColor === "amber"   ? "text-amber-300"
+        :                          "text-red-300"
         }`}>
           {rowLabel}
         </p>
-        <span className="text-[10px] text-zinc-600 tabular-nums">{fmt(stop.price)}</span>
+        <span className="v2-mono text-[12px] text-[color:var(--v2-text-3)]">{fmt(stop.price)}</span>
         {isChosen && (
-          <span className="ml-auto text-[10px] text-zinc-400 font-bold uppercase tracking-wide">{T.yourChoice}</span>
+          <span className="ml-auto text-[12px] font-bold uppercase tracking-wide text-[color:var(--v2-text-2)]">{T.yourChoice}</span>
         )}
         {!isChosen && isCorrectAnswer && (
-          <span className="ml-auto text-[10px] text-emerald-400 font-bold uppercase tracking-wide">{T.theRight}</span>
+          <span className="ml-auto text-[12px] font-bold uppercase tracking-wide text-emerald-300">{T.theRight}</span>
         )}
       </div>
-      <p className="text-[12px] text-zinc-300 leading-relaxed">{stop.rationale}</p>
-      <div className="mt-1.5 text-[10px] flex items-center gap-1.5">
+      <p className="v2-body text-[color:var(--v2-text)]">{stop.rationale}</p>
+      <div className="mt-1.5 flex items-center gap-1.5 text-[12px]">
         {survived ? (
           <>
-            <span className="w-1 h-1 rounded-full bg-emerald-500" />
-            <span className="text-emerald-400">{T.survived} {futureLength} {T.candles}</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <span className="text-emerald-300">{T.survived} {futureLength} {T.candles}</span>
           </>
         ) : (
           <>
-            <span className="w-1 h-1 rounded-full bg-red-500" />
-            <span className="text-red-400">{T.hitCandle} {hitIndex + 1}</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
+            <span className="text-orange-300">{T.hitCandle} {hitIndex + 1}</span>
           </>
         )}
       </div>
@@ -881,70 +833,30 @@ function derivedAggression(s: SessionStats): string {
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
 
-function InfoTile({ label, value, colorClass }: { label: string; value: string; colorClass: string }) {
+function InfoTile({ label, value, valueClass }: { label: string; value: string; valueClass: string }) {
   return (
-    <div className="bg-zinc-950/60 border border-zinc-800/60 rounded-lg px-2.5 py-1.5">
-      <p className="text-[9px] text-zinc-600 uppercase tracking-wide">{label}</p>
-      <p className={`text-[12px] font-semibold ${colorClass} truncate`}>{value}</p>
+    <div className="v2-well flex flex-col gap-0.5 px-3 py-2.5 sm:px-4">
+      <span className="text-[12px] font-semibold uppercase tracking-wider text-[color:var(--v2-text-3)]">{label}</span>
+      <span className={`v2-display v2-tile-value truncate font-bold ${valueClass}`}>{value}</span>
     </div>
   );
 }
 
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 py-2.5">
-      <p className="text-[10px] text-zinc-500 uppercase tracking-wide font-semibold mb-1">{label}</p>
-      <p className="text-sm font-bold text-white tabular-nums">{value}</p>
+    <div className="v2-well px-3 py-2.5">
+      <p className="mb-1 truncate text-[12px] font-semibold uppercase tracking-wide text-[color:var(--v2-text-3)]">{label}</p>
+      <p className="v2-mono text-[16px] font-bold text-[color:var(--v2-text)]">{value}</p>
     </div>
   );
-}
-
-function VolBadge({ volatility }: { volatility: "faible" | "normale" | "élevée" }) {
-  const cls =
-    volatility === "élevée"  ? "text-amber-400 border-amber-400/30"
-  : volatility === "faible"  ? "text-zinc-500 border-zinc-700"
-  :                            "text-zinc-400 border-zinc-700";
-  return <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>Vol. {volatility}</span>;
-}
-
-function SpreadBadge({ spread }: { spread: "faible" | "élevé" }) {
-  const cls = spread === "élevé"
-    ? "text-amber-400 border-amber-400/30"
-    : "text-zinc-500 border-zinc-700";
-  return <span className={`border rounded-full px-2 py-0.5 font-semibold ${cls}`}>Spread {spread}</span>;
 }
 
 function DifficultyChip({ difficulty, difficultyMeta }: { difficulty: Difficulty; difficultyMeta: typeof FrGame.DIFFICULTY_META }) {
   const meta = difficultyMeta[difficulty];
   return (
     <div className="flex items-center gap-1.5">
-      <span className={`w-1.5 h-1.5 rounded-full ${meta.dotClass}`} />
-      <span className={`text-[10px] font-bold uppercase tracking-wide ${meta.textClass}`}>
-        {meta.label}
-      </span>
-    </div>
-  );
-}
-
-function LegendDot({ color, customDot, customText, label }: { color?: "blue" | "emerald" | "amber" | "red"; customDot?: string; customText?: string; label: string }) {
-  const dot = customDot ?? (
-    color === "blue"    ? "bg-blue-500"
-  : color === "emerald" ? "bg-emerald-500"
-  : color === "amber"   ? "bg-amber-400"
-  : color === "red"     ? "bg-red-500"
-  :                       "bg-zinc-500"
-  );
-  const txt = customText ?? (
-    color === "blue"    ? "text-blue-400"
-  : color === "emerald" ? "text-emerald-400"
-  : color === "amber"   ? "text-amber-400"
-  : color === "red"     ? "text-red-400"
-  :                       "text-zinc-400"
-  );
-  return (
-    <div className="flex items-center gap-1.5">
-      <span className={`w-2.5 h-1 rounded-sm ${dot}`} />
-      <span className={`text-[11px] font-medium ${txt}`}>{label}</span>
+      <span className={`h-1.5 w-1.5 rounded-full ${meta.dotClass}`} />
+      <span className={`text-[12px] font-bold uppercase tracking-wide ${meta.textClass}`}>{meta.label}</span>
     </div>
   );
 }
@@ -967,61 +879,52 @@ function Summary({
   const total = totalRounds(stats);
   const verdict = sessionVerdictFn(score, stats.logical, total);
   const verdictColor =
-    score >= 700 ? "text-emerald-400"
-  : score >= 0   ? "text-amber-400"
-  :                "text-red-400";
+    score >= 700 ? "text-emerald-300"
+  : score >= 0   ? "text-amber-300"
+  :                "text-red-300";
   const meta = difficultyMeta[difficulty];
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <Link
-          href="/jeux"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-white mb-6"
-        >
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          {T.games}
-        </Link>
+    <main className="v2-page mx-auto flex w-full max-w-3xl flex-col">
+      <Link href="/jeux" className="v2-link-back">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M11 6.5H2M5 3.5l-3 3 3 3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {T.games}
+      </Link>
 
-        <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-2">
+      <div className="v2-gap-s flex flex-col">
+        <p className="v2-eyebrow">
           {T.summary} · <span className={meta.textClass}>{meta.label}</span>
         </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">{ROUNDS_PER_SESSION} {T.stopsChosen}</h1>
-        <p className={`text-sm font-semibold ${verdictColor} mb-7`}>{verdict}</p>
+        <h1 className="v2-display v2-h2 font-bold">{ROUNDS_PER_SESSION} {T.stopsChosen}</h1>
+        <p className={`v2-display text-[18px] font-bold ${verdictColor}`}>{verdict}</p>
+      </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-8">
-          <BigStat label={T.score}        value={`${score >= 0 ? "+" : ""}${score}`}    valueClass={score < 0 ? "text-red-400" : "text-emerald-400"} />
-          <BigStat label={T.logicalStops} value={`${stats.logical}/${total}`}            valueClass="text-emerald-400" />
-          <BigStat label={T.tightStops}   value={`${stats.tight}`}                       valueClass={stats.tight > 0 ? "text-red-400" : "text-zinc-300"} />
-          <BigStat label={T.bestStreak}   value={`${maxStreak}`}                         valueClass="text-amber-400" />
-        </div>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
+        <BigStat label={T.score}        value={`${score >= 0 ? "+" : ""}${score}`} valueClass={score < 0 ? "text-red-400" : "text-emerald-400"} />
+        <BigStat label={T.logicalStops} value={`${stats.logical}/${total}`}         valueClass="text-emerald-400" />
+        <BigStat label={T.tightStops}   value={`${stats.tight}`}                    valueClass={stats.tight > 0 ? "text-red-400" : "text-[color:var(--v2-text)]"} />
+        <BigStat label={T.bestStreak}   value={`${maxStreak}`}                      valueClass="text-amber-300" />
+      </div>
 
-        <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-3">
-          {T.skills}
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-8">
-          <SkillCard label={T.discipline}   value={derivedDiscipline(stats)} />
-          <SkillCard label={T.protection}   value={derivedProtection(stats)} />
-          <SkillCard label={T.precision}    value={derivedPrecision(stats)}  />
-          <SkillCard label={T.aggressivity} value={derivedAggression(stats)} />
+      <div className="flex flex-col gap-3">
+        <p className="v2-eyebrow" style={{ color: "var(--v2-text-3)" }}>{T.skills}</p>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
+          <BigStat label={T.discipline}   value={derivedDiscipline(stats)} valueClass="text-[color:var(--v2-text)]" />
+          <BigStat label={T.protection}   value={derivedProtection(stats)} valueClass="text-[color:var(--v2-text)]" />
+          <BigStat label={T.precision}    value={derivedPrecision(stats)}  valueClass="text-[color:var(--v2-text)]" />
+          <BigStat label={T.aggressivity} value={derivedAggression(stats)} valueClass="text-[color:var(--v2-text)]" />
         </div>
+      </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <button
-            onClick={onReplay}
-            className="flex-1 py-3 rounded-xl bg-white text-zinc-950 font-bold text-sm hover:bg-zinc-100 transition-colors"
-          >
-            {T.replayIn} {meta.label.toLowerCase()}
-          </button>
-          <button
-            onClick={onChangeDifficulty}
-            className="flex-1 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white font-bold text-sm hover:bg-zinc-800 transition-colors"
-          >
-            {T.changeLevel}
-          </button>
-        </div>
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <button onClick={onReplay} className="v2-btn v2-btn--light flex-1">
+          {T.replayIn} {meta.label.toLowerCase()}
+        </button>
+        <button onClick={onChangeDifficulty} className="v2-btn flex-1">
+          {T.changeLevel}
+        </button>
       </div>
     </main>
   );
@@ -1029,18 +932,9 @@ function Summary({
 
 function BigStat({ label, value, valueClass }: { label: string; value: string; valueClass: string }) {
   return (
-    <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl px-3 py-3">
-      <p className="text-[10px] text-zinc-600 uppercase tracking-wide font-semibold mb-1">{label}</p>
-      <p className={`text-xl font-black tabular-nums ${valueClass}`}>{value}</p>
-    </div>
-  );
-}
-
-function SkillCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl px-3 py-3">
-      <p className="text-[10px] text-zinc-500 uppercase tracking-wide font-semibold mb-1">{label}</p>
-      <p className="text-lg font-black tabular-nums text-white">{value}</p>
+    <div className="v2-well px-4 py-3">
+      <p className="mb-1 text-[12px] font-semibold uppercase tracking-wider text-[color:var(--v2-text-3)]">{label}</p>
+      <p className={`v2-mono v2-num-l font-bold ${valueClass}`}>{value}</p>
     </div>
   );
 }
@@ -1048,9 +942,9 @@ function SkillCard({ label, value }: { label: string; value: string }) {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function biasClass(b: "bullish" | "bearish" | "range"): string {
-  return b === "bullish" ? "text-emerald-400"
-       : b === "bearish" ? "text-red-400"
-       :                   "text-zinc-400";
+  return b === "bullish" ? "text-emerald-300"
+       : b === "bearish" ? "text-red-300"
+       :                   "";
 }
 
 function cap(s: string): string {
