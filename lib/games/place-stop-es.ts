@@ -417,7 +417,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
       intermediate: "Cuando varios swing lows se alinean, la invalidación estructural está más bien bajo el más bajo. Un SL bajo los demás puede ser tocado en una fluctuación normal.",
       advanced:     "Aquí, la secuencia de lower lows forma parte del pullback. El SL funciona mejor respetando la profundidad máxima esperada del pullback que deteniéndose en el 1er swing.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "estructura",
   },
   {
@@ -465,7 +465,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
       intermediate: "Los niveles psicológicos suelen actuar como imanes: el precio los prueba con mucha frecuencia. Un SL justo encima tiene muchas probabilidades de ser barrido.",
       advanced:     "Para anticipar el test de un nivel magnético, colocar el SL más allá de la amplitud probable del sweep, en lugar de justo encima del nivel, tiene sentido.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "lectura",
   },
   // V2.3 — 5 espejos SELL para reequilibrar la distribución espacial
@@ -514,7 +514,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
       intermediate: "Cuando varios swing highs se alinean, la invalidación estructural está más bien sobre el más alto. Un SL sobre los demás puede ser tocado en una fluctuación normal.",
       advanced:     "Aquí, la secuencia de higher highs forma parte del pullback bajista. El SL funciona mejor respetando la profundidad máxima esperada del pullback.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "estructura",
   },
   {
@@ -546,7 +546,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
       intermediate: "Los niveles psicológicos suelen actuar como imanes: el precio los prueba con mucha frecuencia. Un SL justo encima tiene muchas probabilidades de ser barrido.",
       advanced:     "Para anticipar el test de un nivel magnético, colocar el SL más allá de la amplitud probable del sweep tiene sentido.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "lectura",
   },
 ];

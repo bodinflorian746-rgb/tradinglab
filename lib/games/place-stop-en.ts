@@ -417,7 +417,7 @@ export const PLACE_STOP_TEMPLATES_EN: PlaceStopTemplate[] = [
       intermediate: "When several swing lows line up, the structural invalidation rather lies below the lowest. An SL below the others may get hit on a normal fluctuation.",
       advanced:     "Here, the sequence of lower lows is part of the pullback. The SL works better respecting the pullback's maximum expected depth than stopping at the 1st swing.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "structure",
   },
   {
@@ -465,7 +465,7 @@ export const PLACE_STOP_TEMPLATES_EN: PlaceStopTemplate[] = [
       intermediate: "Psychological levels often act as magnets: price tests them very frequently. An SL right above is likely to be swept.",
       advanced:     "To anticipate the test of a magnetic level, placing the SL beyond the likely sweep range, rather than just above the level, makes sense.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "reading",
   },
   // V2.3 — 5 SELL mirrors to rebalance the spatial distribution
@@ -514,7 +514,7 @@ export const PLACE_STOP_TEMPLATES_EN: PlaceStopTemplate[] = [
       intermediate: "When several swing highs line up, the structural invalidation rather lies above the highest. An SL above the others may get hit on a normal fluctuation.",
       advanced:     "Here, the sequence of higher highs is part of the bearish pullback. The SL works better respecting the pullback's maximum expected depth.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "structure",
   },
   {
@@ -546,7 +546,7 @@ export const PLACE_STOP_TEMPLATES_EN: PlaceStopTemplate[] = [
       intermediate: "Psychological levels often act as magnets: price tests them very frequently. An SL right above is likely to be swept.",
       advanced:     "To anticipate the test of a magnetic level, placing the SL beyond the likely upward sweep range makes sense.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "reading",
   },
 ];
