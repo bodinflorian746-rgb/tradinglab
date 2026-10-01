@@ -107,6 +107,10 @@ export interface BuildTradeChart {
 
 export const ROUNDS_PER_SESSION = 8;
 
+/** TP ambitieux : entre 3R et 5R du plan optimal (au-delà, un R/R n'est plus réaliste). */
+const AMBITIOUS_MIN_R = 3;
+const AMBITIOUS_MAX_R = 5;
+
 const ASSETS:       readonly Asset[]      = ["EUR/USD", "XAU/USD", "BTC/USD", "NASDAQ"];
 const SESSIONS:     readonly Session[]    = ["Londres", "New York", "Overlap", "Heures mortes"];
 
@@ -1225,6 +1229,18 @@ export function buildBuildTradeChartRaw(template: BuildTradeTemplate, seed: numb
         balanced:  ref - refRisk * 2.2,
         ambitious: ref - refRisk * 3.8,
       };
+  // TP ambitieux réaliste : entre 3R et 5R, R étant le risque du plan optimal
+  // (son entrée et son stop) ; le TP équilibré reste entre le rapide et l'ambitieux.
+  {
+    const E = entries[template.optimal.entry];
+    const R = Math.abs(E - stops[template.optimal.stop]);
+    const dist = (p: number) => dir * (p - E);
+    const dAmb = Math.min(AMBITIOUS_MAX_R * R, Math.max(AMBITIOUS_MIN_R * R, dist(tps.ambitious)));
+    tps.ambitious = E + dir * dAmb;
+    const dFast = dist(tps.fast);
+    const lo = dFast + 0.25 * (dAmb - dFast), hi = dAmb - 0.25 * (dAmb - dFast);
+    if (dFast < dAmb) tps.balanced = E + dir * Math.min(hi, Math.max(lo, dist(tps.balanced)));
+  }
   // Suite prolongée jusqu'à FUTURE_LENGTH bougies, tirage séparé (le début de
   // la suite ne change pas) : le marché va au bout du plan optimal au lieu de
   // s'arrêter en cours de route.

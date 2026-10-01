@@ -39,6 +39,9 @@ function generic(ch: BuildTradeChart, t: BuildTradeTemplate): string[] {
   const oe = ch.entries[t.optimal.entry], os = ch.stops[t.optimal.stop], ot = ch.tps[t.optimal.tp];
   const rrOpt = Math.abs(ot - oe) / Math.abs(oe - os);
   if (rrOpt < 1.5 - 1e-9) out.push("R/R du plan optimal < 1,5");
+  // Règle PO (J11) : TP ambitieux réaliste, entre 3R et 5R du plan optimal
+  const rrAmb = Math.abs(ch.tps.ambitious - oe) / Math.abs(oe - os);
+  if (rrAmb < 3 - 1e-6 || rrAmb > 5 + 1e-6) out.push(`TP ambitieux à ${rrAmb.toFixed(2)}R (attendu 3 à 5R)`);
   // Leçon avancée du range (« RR < 2 »)
   if (t.id === "range_top_short" && rrOpt >= 2) out.push("range : R/R ≥ 2 alors que la leçon dit « RR < 2 »");
   return out;

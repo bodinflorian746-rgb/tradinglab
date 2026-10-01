@@ -84,14 +84,19 @@ test.describe("QA métier Build the Trade", () => {
     }
   });
 
-  test("RR balanced ≈ 2:1 (avec confirmation + logical)", () => {
+  // J11 : TP ambitieux réaliste, entre 3R et 5R du plan optimal (son entrée et son
+  // stop) ; le TP équilibré reste strictement entre le rapide et l'ambitieux.
+  test("TP ambitieux entre 3R et 5R du plan optimal, équilibré entre rapide et ambitieux", () => {
     for (const t of BUILD_TRADE_TEMPLATES) {
       const chart = buildBuildTradeChart(t, 42, "normale");
-      const risk = Math.abs(chart.entries.confirmation - chart.stops.logical);
-      const reward = Math.abs(chart.tps.balanced - chart.entries.confirmation);
-      const rr = reward / risk;
-      expect(rr, `${t.id} RR balanced ≈ 2:1 (got ${rr.toFixed(2)})`).toBeGreaterThan(1.8);
-      expect(rr, `${t.id} RR balanced ≈ 2:1 (got ${rr.toFixed(2)})`).toBeLessThan(2.6);
+      const entry = chart.entries[t.optimal.entry];
+      const risk = Math.abs(entry - chart.stops[t.optimal.stop]);
+      const d = (p: number) => Math.abs(p - entry);
+      const rrAmb = d(chart.tps.ambitious) / risk;
+      expect(rrAmb, `${t.id} R/R ambitieux ${rrAmb.toFixed(2)} ≥ 3`).toBeGreaterThanOrEqual(3 - 1e-9);
+      expect(rrAmb, `${t.id} R/R ambitieux ${rrAmb.toFixed(2)} ≤ 5`).toBeLessThanOrEqual(5 + 1e-9);
+      expect(d(chart.tps.balanced), `${t.id} TP équilibré avant l'ambitieux`).toBeLessThan(d(chart.tps.ambitious));
+      expect(d(chart.tps.balanced), `${t.id} TP équilibré après le rapide`).toBeGreaterThan(d(chart.tps.fast));
     }
   });
 
