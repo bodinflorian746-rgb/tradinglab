@@ -346,7 +346,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     explanation: "Risquer 50% du capital sur un seul trade est extrêmement dangereux. Une seule perte coupe le compte en deux, et pour revenir à 500€, il faudrait ensuite faire +100% sur le capital restant.",
     lessons: {
       advanced:     "Repère courant chez les pros : 0,5 à 2 % du capital par trade selon la taille du compte. Au-delà de 5 %, on s'éloigne du trading pour se rapprocher du pari.",
-      intermediate: "La taille de position est une variable clé du money management. Un setup correct avec un lot trop gros peut suffire à vider un compte. Repère souvent cité pour un petit compte : sur 500€, pas plus de 5 % par trade (soit 25€ de risque).",
+      intermediate: "La taille de position est une variable clé du money management. Un setup correct avec un lot trop gros peut suffire à vider un compte. Le repère souvent cité est de 1 à 2 % du capital, même sur un petit compte.",
       beginner:     "Grille souvent citée : 5 % max sur un compte de 200-500€, 3 % sur 500-1000€, 2 % sur 1000-5000€, puis 0,5 à 2 % au-delà. Le levier de ton broker compte peu ; ce qui compte, c'est combien tu perds en euros si ton SL est touché.",
     },
     difficulties: ["intermediate", "advanced"],

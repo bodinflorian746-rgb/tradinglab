@@ -296,7 +296,7 @@ export const MISTAKE_TEMPLATES_EN: MistakeTemplate[] = [
     explanation: "Risking 50% of capital on a single trade is extremely dangerous. A single loss cuts the account in half, and to get back to €500, you would then need +100% on the remaining capital.",
     lessons: {
       advanced:     "A common pro benchmark: 0.5 to 2% of capital per trade depending on account size. Beyond 5%, you drift away from trading and closer to gambling.",
-      intermediate: "Position size is a key variable of money management. A correct setup with a lot that's too big can be enough to wipe out an account. A benchmark often quoted for a small account: on €500, no more than 5% per trade (so €25 of risk).",
+      intermediate: "Position size is a key variable of money management. A correct setup with a lot that's too big can be enough to wipe out an account. The often-quoted benchmark is 1 to 2% of capital, even on a small account.",
       beginner:     "An often-quoted grid: 5% max on a €200-500 account, 3% on €500-1,000, 2% on €1,000-5,000, then 0.5 to 2% beyond. Your broker's leverage matters little; what counts is how much you lose in euros if your SL is hit.",
     },
     difficulties: ["intermediate", "advanced"],

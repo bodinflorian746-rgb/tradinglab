@@ -296,7 +296,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     explanation: "Arriesgar el 50% del capital en una sola operación es extremadamente peligroso. Una sola pérdida corta la cuenta a la mitad, y para volver a 500€ habría que hacer después +100% sobre el capital restante.",
     lessons: {
       advanced:     "Referencia habitual entre pros: 0,5 a 2 % del capital por operación según el tamaño de la cuenta. Más allá del 5 %, uno se aleja del trading y se acerca a la apuesta.",
-      intermediate: "El tamaño de posición es una variable clave del money management. Un setup correcto con un lote demasiado grande puede bastar para vaciar una cuenta. Referencia citada a menudo para una cuenta pequeña: con 500€, no más del 5 % por operación (es decir, 25€ de riesgo).",
+      intermediate: "El tamaño de posición es una variable clave del money management. Un setup correcto con un lote demasiado grande puede bastar para vaciar una cuenta. La referencia citada a menudo es del 1 al 2 % del capital, incluso en una cuenta pequeña.",
       beginner:     "Tabla citada a menudo: 5 % máx. en una cuenta de 200-500€, 3 % en 500-1000€, 2 % en 1000-5000€, y de 0,5 a 2 % por encima. El apalancamiento de tu broker importa poco; lo que cuenta es cuánto pierdes en euros si tocan tu SL.",
     },
     difficulties: ["intermediate", "advanced"],
