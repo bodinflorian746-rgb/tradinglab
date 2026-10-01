@@ -20,17 +20,17 @@
   "available": {
     "buy-sell-no-trade": {
       "title": "BUY / SELL / NO TRADE",
-      "description": "12 escenarios para analizar. Mini-gráfico, contexto, noticias. Eliges tu decisión y el sistema evalúa tu lectura, tu disciplina y tu detección de trampas.",
+      "description": "10 escenarios para analizar. Mini-gráfico, contexto, noticias. Tomas tu decisión y el sistema evalúa tu lectura, tu disciplina y tu detección de trampas.",
       "duration": "~6 min"
     },
     "place-stop": {
       "title": "Coloca tu Stop",
-      "description": "¿Qué stop va a sobrevivir? 10 setups, 3 stops loss propuestos cada vez (A / B / C). Eliges el más lógico, estructura, liquidity, RR. El mercado revela lo que sigue.",
+      "description": "¿Qué stop va a sobrevivir? 10 setups, 3 stop loss propuestos cada vez: Stop 1, 2 o 3. Eliges el más lógico según la estructura, la liquidez y el RR, y luego el mercado revela lo que sigue.",
       "duration": "~7 min"
     },
     "find-the-mistake": {
       "title": "Encuentra el error",
-      "description": "10 setups con un error oculto. Identificas el error principal entre 4 opciones. Psicología retail, disciplina, liquidity, RR, aprende a ver las trampas clásicas.",
+      "description": "10 setups con un error oculto. Identificas el error principal entre 4 opciones. Psicología retail, disciplina, liquidez, RR: aprende a detectar las trampas clásicas.",
       "duration": "~5 min"
     },
     "build-the-trade": {
