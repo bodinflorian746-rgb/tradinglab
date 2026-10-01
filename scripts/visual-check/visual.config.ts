@@ -5,12 +5,13 @@
 //   npm run visual:check -- -g "hub-jeux"         → une seule page
 // Nécessite le serveur de dev déjà lancé sur le port 3000 (le script ne le démarre jamais).
 // Références hors dépôt (captures propres à la machine, plusieurs dizaines de Mo) :
-// dossier VISUAL_REFS, par défaut <tmp système>/tsx-visual-refs.
+// dossier VISUAL_REFS, par défaut <dossier utilisateur>/tsx-visual-refs (stable :
+// le dossier temporaire peut être vidé par Windows).
 import os from "node:os";
 import path from "node:path";
 import { defineConfig } from "@playwright/test";
 
-const REFS = process.env.VISUAL_REFS ?? path.join(os.tmpdir(), "tsx-visual-refs");
+const REFS = process.env.VISUAL_REFS ?? path.join(os.homedir(), "tsx-visual-refs");
 
 export default defineConfig({
   testDir: ".",
