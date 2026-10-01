@@ -11,7 +11,7 @@
 //   close = open (doji) → neutre.
 // - Révélation : bougies du passé une à une au chargement (420ms), puis
 //   chaque bougie future montée par la page apparaît avec la même animation.
-// Doit être rendu sous un ancêtre .tsx-v2 (games-v2.css).
+// Doit être rendu sous un ancêtre .tsx-v2 (app/styles/tsx-v2.css).
 
 import {
   useCallback,

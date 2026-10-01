@@ -1,7 +1,7 @@
 "use client";
 
 // Composants UI v2 partagés par les jeux migrés (charte /design-lab).
-// À rendre sous un ancêtre .tsx-v2 (games-v2.css).
+// À rendre sous un ancêtre .tsx-v2 (app/styles/tsx-v2.css).
 
 import { useParams } from "next/navigation";
 import { cssVars } from "./GameChartV2";

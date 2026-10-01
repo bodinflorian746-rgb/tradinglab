@@ -1,5 +1,8 @@
 import "../globals.css";
-import { Inter } from "next/font/google";
+// Charte v2 (opt-in, scopée sous .tsx-v2) : après globals.css, comme quand elle
+// était importée par les layouts des jeux
+import "@/app/styles/tsx-v2.css";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/app/components/Navbar";
@@ -15,6 +18,10 @@ import { isAdmin } from "@/lib/auth/admin";
 import { hasActiveAdminGroup } from "@/lib/loyalty/access";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
+// Polices de la charte v2 : sans préchargement, exposées en variables CSS ;
+// elles ne se chargent que sur les pages qui les utilisent (éléments .tsx-v2).
+const v2Display = Space_Grotesk({ subsets: ["latin"], variable: "--font-v2-display", display: "swap", preload: false });
+const v2Mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-v2-mono", display: "swap", preload: false });
 
 // Pré-rendu statique des 3 locales.
 export function generateStaticParams() {
@@ -137,7 +144,7 @@ export default async function LocaleLayout({
   const userIsGroupAdmin = user ? await hasActiveAdminGroup(user.id) : false;
 
   return (
-    <html lang={locale} className={inter.className}>
+    <html lang={locale} className={`${inter.className} ${v2Display.variable} ${v2Mono.variable}`}>
       <body className="bg-zinc-950 text-white antialiased">
         <LocaleProvider locale={locale} dicts={dicts}>
           <SessionProvider

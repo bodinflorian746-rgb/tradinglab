@@ -1,7 +1,9 @@
-/* Charte v2 des jeux — portage de la charte validée de /design-lab
-   (components/design-lab/lab.css). Tout est scopé sous .tsx-v2, posé par le
-   layout de chaque jeu migré : rien ne s'applique ailleurs. Les @keyframes
-   sont préfixés v2- pour éviter toute collision de nom.
+/* Charte v2 du site (opt-in) — portage de la charte validée de /design-lab
+   (components/design-lab/lab.css). Importée une fois par le layout racine,
+   mais tout est scopé sous .tsx-v2 : une page n'en hérite que si elle pose
+   elle-même un élément .tsx-v2 (jeux, puis pages refondues). Polices Space
+   Grotesk / JetBrains Mono : variables --font-v2-* posées sur <html> par le
+   layout racine. Les @keyframes sont préfixés v2- pour éviter toute collision.
    Aucune classe zinc n'est utilisée dans le balisage v2 : les réécritures de
    couleurs de .app-bg (globals.css) ne peuvent donc pas s'y appliquer. */
 
@@ -29,7 +31,7 @@
   --v2-entry: #3b82f6;
 
   /* Typo : Space Grotesk et JetBrains Mono posées par next/font dans le
-     layout du jeu ; le corps reste en Inter (police du site). */
+     layout racine (variables --font-v2-*) ; le corps reste en Inter. */
   --v2-font-display: var(--font-v2-display), system-ui, sans-serif;
   --v2-font-mono: var(--font-v2-mono), ui-monospace, monospace;
 
