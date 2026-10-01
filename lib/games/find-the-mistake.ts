@@ -11,7 +11,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
-import { realizeChart } from "./candle-realism";
+import { realizeChart, type MarketCtx } from "./candle-realism";
 import { anchorPrice, assetPriceMap, linearPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext, Candle, ChartZone };
@@ -949,11 +949,12 @@ export function withAssetPrices(chart: ScenarioChart, inst: { id: string; asset:
 }
 
 /** Graphique du scénario, avec la passe de réalisme des bougies (niveaux clés : zones, entrée, stop, TP). */
-export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility): ScenarioChart {
+export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): ScenarioChart {
   const ch = buildScenarioChartRaw(template, seed, vol);
   const zones = ch.zones.flatMap((z) => [z.y1, z.y2]);
   const lines = [ch.entry, ch.stop, ch.tp].filter((p): p is number => p !== undefined);
-  return realizeChart(ch, { past: zones, future: [...zones, ...lines] }, seed, { calmPast: template.chartShape === "calm_before_news" });
+  const calm = template.chartShape === "calm_before_news";
+  return realizeChart(ch, { past: zones, future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm });
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

@@ -26,6 +26,7 @@ import {
   computeHits,
   scoreStopChoice,
 } from "./place-stop";
+import type { MarketCtx } from "./candle-realism";
 export { withAssetPrices } from "./place-stop";
 
 // ─── Reexports tipos / utilidades ────────────────────────────────────────────
@@ -756,8 +757,9 @@ export function buildPlaceStopChart(
   seed: number,
   volatility: Volatility,
   difficulty: Difficulty,
+  ctx: MarketCtx = {},
 ): PlaceStopChart {
-  const chart = buildPlaceStopChartFr(setup, seed, volatility, difficulty);
+  const chart = buildPlaceStopChartFr(setup, seed, volatility, difficulty, ctx);
   return {
     ...chart,
     zones: translateZones(chart.zones),

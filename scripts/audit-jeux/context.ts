@@ -7,7 +7,7 @@ import * as BS from "../../lib/games/buy-sell-no-trade";
 import * as FTM from "../../lib/games/find-the-mistake";
 import * as PS from "../../lib/games/place-stop";
 import * as BT from "../../lib/games/build-the-trade";
-import { ASSET_SCALE } from "../../lib/games/price-scale";
+import { ASSET_SCALE, formatPrice } from "../../lib/games/price-scale";
 import { SESSION_ASSETS, CALM_SESSIONS } from "../../lib/games/market-context";
 
 type Inst = { id: string; asset: any; session: any; volatility: any; spread: any; context: string; seed: number; difficulty: any };
@@ -53,6 +53,22 @@ for (const [g, gen, build] of games) for (const d of ["beginner", "intermediate"
       // distance entre les 2 lows cités ≤ 15 pips
       const lows = chart.zones.map((z: any) => Math.abs(z.y2 - z.y1) / 0.0001);
       if (lows.some((x: number) => x > 15)) err(`${g} « quelques pips » > 15 pips`, `${tag} ${lows.map((x: number) => x.toFixed(1)).join("/")}`);
+    }
+  }
+}
+// Prix affichés : les options d'un même choix (entrée et 3 stops ; entrées, stops, TP)
+// ne s'affichent jamais avec le même prix une fois arrondies aux décimales de l'actif
+for (const d of ["beginner", "intermediate", "advanced"] as const) for (let s = 1; s <= 60; s++) {
+  for (const i of PS.generatePlaceStopScenarios(s * 7919, d)) {
+    const c = PS.withAssetPrices(PS.buildPlaceStopChart(i.id, i.seed, i.volatility, d, i), i);
+    const f = [c.entry, ...c.stops.map((x) => x.price)].map((p) => formatPrice(i.asset, p));
+    if (new Set(f).size < f.length) err(`PS prix affichés identiques`, `${i.id} ${i.asset} ${f.join(" / ")}`);
+  }
+  for (const i of BT.generateBuildTradeScenarios(s * 7919, d)) {
+    const c = BT.withAssetPrices(BT.buildBuildTradeChart(i, i.seed, i.volatility, i), i);
+    for (const g of [c.entries, c.stops, c.tps]) {
+      const f = Object.values(g).map((p) => formatPrice(i.asset, p as number));
+      if (new Set(f).size < f.length) err(`BTT prix affichés identiques`, `${i.id} ${i.asset} ${f.join(" / ")}`);
     }
   }
 }

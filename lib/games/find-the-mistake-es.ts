@@ -24,6 +24,7 @@ import {
   buildScenarioChart as buildScenarioChartFr,
   scoreMistakeChoice,
 } from "./find-the-mistake";
+import type { MarketCtx } from "./candle-realism";
 export { withAssetPrices } from "./find-the-mistake";
 
 // ─── Reexports tipos / utilidades ────────────────────────────────────────────
@@ -66,8 +67,8 @@ function translateZones(zones: ChartZone[]): ChartZone[] {
 }
 
 // Wrapper de buildScenarioChart que traduce las etiquetas de zonas.
-export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility): ScenarioChart {
-  const chart = buildScenarioChartFr(template, seed, vol);
+export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): ScenarioChart {
+  const chart = buildScenarioChartFr(template, seed, vol, ctx);
   return { ...chart, zones: translateZones(chart.zones) };
 }
 

@@ -18,7 +18,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle, chartDomain,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
-import { realizeChart } from "./candle-realism";
+import { realizeChart, type MarketCtx } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext };
@@ -1346,9 +1346,11 @@ export function buildChart(
   seed: number,
   volatility: Volatility = "normale",
   difficulty: Difficulty = "intermediate",
+  ctx: MarketCtx = {},
 ): BuySellChart {
   const ch = buildChartRaw(setup, seed, volatility, difficulty);
-  return realizeChart(ch, ch.zones.flatMap((z) => [z.y1, z.y2]), seed, { calmPast: setup === "trade_before_news" });
+  const calm = setup === "trade_before_news";
+  return realizeChart(ch, ch.zones.flatMap((z) => [z.y1, z.y2]), seed, { ...ctx, volatility, calmPast: calm, preNews: calm });
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

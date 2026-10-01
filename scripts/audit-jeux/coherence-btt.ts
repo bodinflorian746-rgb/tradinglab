@@ -1,6 +1,7 @@
 // Audit cohérence texte / données — Build the Trade.
 // Usage : npx vite-node scripts/audit-jeux/coherence-btt.ts [fr|en|es] (lancé par run.mjs)
 import * as FR from "../../lib/games/build-the-trade";
+import { auditCtx } from "./market-ctx";
 import * as EN from "../../lib/games/build-the-trade-en";
 import * as ES from "../../lib/games/build-the-trade-es";
 import type { BuildTradeChart, BuildTradeTemplate, Candle, ChartZone, Difficulty } from "../../lib/games/build-the-trade";
@@ -204,8 +205,8 @@ for (const t of G.BUILD_TRADE_TEMPLATES as BuildTradeTemplate[]) {
     for (let n = 0; n < N; n++) {
       const seed = (n * 2654435761 + t.id.length * 97 + d.length) >>> 0;
       const vol = t.chartShape === "high_vol_pullback" ? "élevée" : VOLS[n % 3];
-      const ch = G.buildBuildTradeChart(t, seed, vol);
-      const frCh = LOC === "fr" ? ch : FR.buildBuildTradeChart(frT, seed, vol);
+      const ch = G.buildBuildTradeChart(t, seed, vol, auditCtx(seed));
+      const frCh = LOC === "fr" ? ch : FR.buildBuildTradeChart(frT, seed, vol, auditCtx(seed));
       const reasons = generic(ch, t);
       if (LOC !== "fr") {
         const strip = (c: BuildTradeChart) => JSON.stringify({ p: c.past, f: c.future, e: c.entries, s: c.stops, t: c.tps, z: c.zones.map((z) => [z.kind, z.y1, z.y2]) });

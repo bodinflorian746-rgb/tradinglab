@@ -16,11 +16,14 @@ export interface AssetScale {
   round:    number;
 }
 
+// Calées sur 12 mois de données M15 (sept. 2025 – août 2026) : plage = prix de
+// clôture entre les centiles 5 et 95 ; unité = amplitude M15 médiane réelle /
+// amplitude médiane des bougies générées (≈ 1 unité abstraite).
 export const ASSET_SCALE: Record<Asset, AssetScale> = {
-  "EUR/USD": { unit: 0.0012, lo: 1.05,  hi: 1.18,  decimals: 4, round: 0.01 },
-  "XAU/USD": { unit: 6,      lo: 2300,  hi: 2900,  decimals: 2, round: 50 },
-  "BTC/USD": { unit: 300,    lo: 58000, hi: 98000, decimals: 0, round: 1000 },
-  "NASDAQ":  { unit: 25,     lo: 17000, hi: 21000, decimals: 1, round: 100 },
+  "EUR/USD": { unit: 0.0005, lo: 1.14,  hi: 1.18,   decimals: 5, round: 0.01 },
+  "XAU/USD": { unit: 8,      lo: 3670,  hi: 5150,   decimals: 2, round: 50 },
+  "BTC/USD": { unit: 210,    lo: 62500, hi: 115600, decimals: 0, round: 1000 },
+  "NASDAQ":  { unit: 31,     lo: 24000, hi: 30100,  decimals: 1, round: 100 },
 };
 
 /** Prix d'ancrage tiré de la graine du round (arrondi au pas de cotation, ou chiffre rond). */
@@ -51,7 +54,7 @@ export function assetDecimals(asset: Asset | undefined): number {
   return asset ? ASSET_SCALE[asset].decimals : 2;
 }
 
-/** Prix formaté selon l'actif (EUR/USD 1.0843, XAU/USD 2384.15, BTC/USD 67432, NASDAQ 18234.5). */
+/** Prix formaté selon l'actif (EUR/USD 1.16432, XAU/USD 4384.15, BTC/USD 97432, NASDAQ 27234.5). */
 export function formatPrice(asset: Asset | undefined, p: number): string {
   return p.toFixed(assetDecimals(asset));
 }

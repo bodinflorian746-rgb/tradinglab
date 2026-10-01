@@ -27,6 +27,7 @@ import {
   buildBuildTradeChart as buildBuildTradeChartFr,
   evaluateTrade,
 } from "./build-the-trade";
+import type { MarketCtx } from "./candle-realism";
 export { withAssetPrices } from "./build-the-trade";
 
 // ─── Reexports types / utils ─────────────────────────────────────────────────
@@ -78,8 +79,8 @@ function translateZones(zones: ChartZone[]): ChartZone[] {
 }
 
 // Wrapper around buildBuildTradeChart that translates the zone labels.
-export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number, vol: Volatility): BuildTradeChart {
-  const chart = buildBuildTradeChartFr(template, seed, vol);
+export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): BuildTradeChart {
+  const chart = buildBuildTradeChartFr(template, seed, vol, ctx);
   return { ...chart, zones: translateZones(chart.zones) };
 }
 

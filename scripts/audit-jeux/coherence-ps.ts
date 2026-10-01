@@ -1,6 +1,7 @@
 // Audit cohérence texte / données — Place ton Stop.
 // Usage : npx vite-node scripts/audit-jeux/coherence-ps.ts [fr|en|es] (lancé par run.mjs)
 import * as FR from "../../lib/games/place-stop";
+import { auditCtx } from "./market-ctx";
 import * as EN from "../../lib/games/place-stop-en";
 import * as ES from "../../lib/games/place-stop-es";
 import type { Candle, ChartZone, PlaceStopChart, PlaceStopTemplate, StopOption } from "../../lib/games/place-stop";
@@ -124,8 +125,8 @@ for (const t of G.PLACE_STOP_TEMPLATES) {
       const seed = (n * 2654435761 + t.id.length * 97 + d.length) >>> 0;
       const vol = t.id === "high_vol_pullback" ? "élevée" : VOLS[n % 3];
       TPL_ID = t.id;
-      const ch = G.buildPlaceStopChart(t.id, seed, vol, d);
-      const frCh = LOC === "fr" ? ch : FR.buildPlaceStopChart(t.id, seed, vol, d);
+      const ch = G.buildPlaceStopChart(t.id, seed, vol, d, auditCtx(seed));
+      const frCh = LOC === "fr" ? ch : FR.buildPlaceStopChart(t.id, seed, vol, d, auditCtx(seed));
       const reasons = generic(ch);
       if (LOC !== "fr") {
         const strip = (c: PlaceStopChart) => JSON.stringify({ p: c.past, f: c.future, e: c.entry, tp: c.tp, s: c.stops.map((x) => [x.id, x.type, x.price]), z: c.zones.map((z) => [z.kind, z.y1, z.y2]) });

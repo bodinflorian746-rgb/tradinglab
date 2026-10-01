@@ -270,7 +270,7 @@ export default function PlaceStopPage() {
 
   const current = scenarios[idx];
   const chart: PlaceStopChart | null = useMemo(
-    () => (current && difficulty ? G.withAssetPrices(G.buildPlaceStopChart(current.id, current.seed, current.volatility, difficulty), current) : null),
+    () => (current && difficulty ? G.withAssetPrices(G.buildPlaceStopChart(current.id, current.seed, current.volatility, difficulty, { asset: current.asset, session: current.session }), current) : null),
     [current, difficulty, G],
   );
 

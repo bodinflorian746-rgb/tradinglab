@@ -1,6 +1,7 @@
 // Audit cohérence texte / données — Trouve l'erreur.
 // Usage : npx vite-node scripts/audit-jeux/coherence-ftm.ts [fr|en|es] (lancé par run.mjs)
 import * as FR from "../../lib/games/find-the-mistake";
+import { auditCtx } from "./market-ctx";
 import * as EN from "../../lib/games/find-the-mistake-en";
 import * as ES from "../../lib/games/find-the-mistake-es";
 import type { Candle, ChartZone, Difficulty, MistakeTemplate, ScenarioChart } from "../../lib/games/find-the-mistake";
@@ -125,8 +126,8 @@ for (const t of G.MISTAKE_TEMPLATES) {
     for (let n = 0; n < N; n++) {
       const seed = (n * 2654435761 + t.id.length * 97 + d.length) >>> 0;
       const vol = t.metaOverride?.volatility ?? (t.macroContext === "dangereux" ? "élevée" : VOLS[n % 3]);
-      const ch = G.buildScenarioChart(t, seed, vol);
-      const frCh = LOC === "fr" ? ch : FR.buildScenarioChart(frT, seed, vol);
+      const ch = G.buildScenarioChart(t, seed, vol, auditCtx(seed));
+      const frCh = LOC === "fr" ? ch : FR.buildScenarioChart(frT, seed, vol, auditCtx(seed));
       const reasons = generic(ch, t);
       if (LOC !== "fr") {
         const strip = (c: ScenarioChart) => JSON.stringify({ p: c.past, f: c.future, e: c.entry, s: c.stop, tp: c.tp, z: c.zones.map((z) => [z.kind, z.y1, z.y2]) });

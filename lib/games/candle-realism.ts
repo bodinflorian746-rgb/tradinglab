@@ -1,9 +1,9 @@
 // Passe de réalisme appliquée aux bougies générées (échelle abstraite), commune
-// aux 4 mini-jeux :
-//   - corps de tailles variées dans les jambes de tendance (log-normale, en
-//     grappes de volatilité), vrais corps dans les consolidations ;
-//   - amplitude = corps / part du corps (30–85 %, en grappes) ; une mèche
-//     dominante et une mèche mineure ;
+// aux 4 mini-jeux. Les proportions viennent de vraies données de marché
+// (bibliothèque data/market-shapes.json, extraite d'historiques M15) :
+//   - une séquence réelle (actif × session × volatilité), alignée bougie par
+//     bougie, donne la taille relative des corps, des mèches et l'amplitude ;
+//   - les bougies d'impulsion prennent les mèches d'une vraie bougie d'impulsion ;
 //   - plus aucune clôture égale à l'ouverture.
 // Elle ne change jamais ce que les textes et le scoring lisent :
 //   - la position de chaque clôture et de chaque mèche par rapport aux niveaux
@@ -14,23 +14,49 @@
 //     des extrêmes de deux bougies voisines ;
 //   - les longues mèches structurelles (une mèche qui atteint un niveau clé).
 
-import { mulberry32, type Candle } from "./shared";
+import { mulberry32, type Asset, type Candle, type Session, type Volatility } from "./shared";
+import SHAPES from "./data/market-shapes.json";
 
-const PHI = 0.55;          // persistance des grappes de volatilité
 const RANGE_GROWTH = 1.15; // marché calme : amplitude max / plus grande amplitude d'origine du passé
-const RUN_SIGMA = 0.9;    // dispersion log-normale des corps dans une jambe
-const BODY_SIGMA = 0.8;            // dispersion log-normale des corps hors jambes
 const MIN_BODY_SHARE_PIN = 0.25;    // corps plancher d'une pin bar structurelle
+const MIN_BODY = 0.05;              // corps minimal (en corps médians) : jamais de clôture = ouverture
+
+/** Bougie réelle normalisée : [corps signé, mèche haute, mèche basse]. */
+type Shape = number[];
+type AssetShapes = { sequences: Record<string, Shape[][]>; keyCandles: Record<string, Shape[]> };
+const LIBRARY = (SHAPES as unknown as { assets: Record<Asset, AssetShapes> }).assets;
+const ASSETS = Object.keys(LIBRARY) as Asset[];
+
+/**
+ * Séquence réelle de n bougies : séquences de la bibliothèque enchaînées, de la
+ * classe la plus proche (actif × session × volatilité, ou « pré-news »).
+ */
+function realTemplate(n: number, rng: () => number, opts: RealismOptions): Shape[] {
+  const asset = opts.asset ?? ASSETS[Math.floor(rng() * ASSETS.length)];
+  const seqs = LIBRARY[asset].sequences;
+  const keys = Object.keys(seqs);
+  const vol = opts.volatility ?? "normale";
+  const exact = opts.preNews && seqs["pré-news"] ? ["pré-news"] : opts.session ? keys.filter((k) => k === `${opts.session}|${vol}`) : [];
+  const pool = exact.length ? exact : keys.filter((k) => k.endsWith(`|${vol}`)).length ? keys.filter((k) => k.endsWith(`|${vol}`)) : keys;
+  const out: Shape[] = [];
+  while (out.length < n) {
+    const list = seqs[pool[Math.floor(rng() * pool.length)]];
+    out.push(...list[Math.floor(rng() * list.length)]);
+  }
+  return out.slice(0, n);
+}
+
+/** Vraie bougie d'un type donné (impulsion, rejet…) pour l'actif. */
+function keyCandle(type: string, rng: () => number, opts: RealismOptions): Shape | null {
+  const asset = opts.asset ?? ASSETS[Math.floor(rng() * ASSETS.length)];
+  const list = LIBRARY[asset].keyCandles[type];
+  return list?.length ? list[Math.floor(rng() * list.length)] : null;
+}
 
 function median(a: number[]): number {
   if (!a.length) return 0;
   const s = [...a].sort((x, y) => x - y);
   return s[Math.floor(s.length / 2)];
-}
-
-function gauss(rng: () => number): number {
-  const u = Math.max(rng(), 1e-12), v = rng();
-  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
 }
 
 /** Extrêmes figés : extrêmes globaux d'une série (le plus haut, le plus bas). */
@@ -57,8 +83,15 @@ function swings(cs: Candle[], side: "h" | "l"): number[] {
 }
 
 /** Niveaux clés : les mêmes partout, ou distincts pour le passé et pour le futur. */
-/** calmPast : le scénario affirme un marché calme dans le passé (amplitude plafonnée). */
-export type RealismOptions = { calmPast?: boolean };
+/**
+ * calmPast : le scénario affirme un marché calme dans le passé (amplitude plafonnée) ;
+ * asset / session / volatility : classe des séquences réelles ; preNews : séquences
+ * de l'heure qui précède une news majeure.
+ */
+export type RealismOptions = { calmPast?: boolean; asset?: Asset; session?: Session; volatility?: Volatility; preNews?: boolean };
+
+/** Contexte de marché d'un round : choisit la classe des séquences réelles. */
+export type MarketCtx = { asset?: Asset; session?: Session };
 
 export type RealismLevels = number[] | { past: number[]; future: number[] };
 
@@ -75,6 +108,10 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
   if (n < 3) return { past, future };
   const rng = mulberry32((seed ^ 0x51ED270B) >>> 0);
   const medBody = median(all.map((k) => Math.abs(k.c - k.o)).filter((b) => b > 1e-9)) || 1e-3;
+  // Séquence réelle alignée bougie par bougie, et échelle : corps médian réel ↦ corps médian du scénario
+  const TPL = realTemplate(n, rng, opts);
+  const medTB = median(TPL.map((t) => Math.abs(t[0])).filter((b) => b > 1e-9)) || 1;
+  const scale = medBody / medTB;
   const eps = medBody * 1e-4;
   const clean = (a: number[]) => a.filter((x) => Number.isFinite(x));
   const LP = clean(Array.isArray(levels) ? levels : levels.past);
@@ -114,6 +151,8 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
     if (!sameSide(i, k.c, c2)) return false;
     if (!colorOk(i, Math.sign(c2 - k.o))) return false;
     if (nx && !colorOk(i + 1, Math.sign(nx.c - c2))) return false;
+    // le corps d'une bougie déclencheuse (cassure, rejet, sweep) reste celui du scénario
+    if (nx && trigger(i + 1) && Math.abs(Math.abs(nx.c - c2) - Math.abs(nx.c - nx.o)) > eps) return false;
     // aucun corps (la bougie ou sa voisine) ne grossit au-delà du plafond
     if (grows(i, Math.abs(c2 - k.o), Math.abs(k.c - k.o)) || (nx && grows(i + 1, Math.abs(nx.c - c2), Math.abs(nx.c - nx.o)))) return false;
     k.c = c2;
@@ -130,7 +169,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
     return true;
   };
 
-  // 1. Jambes de tendance : corps redistribués (log-normale en grappes), clôtures
+  // 1. Jambes de tendance : corps redistribués selon les corps réels, clôtures
   //    de début et de fin de jambe inchangées, chaque clôture dans son intervalle
   //    d'origine entre deux niveaux clés.
   const inRun = new Array<boolean>(n).fill(false);
@@ -143,9 +182,9 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
     if (len >= 2) {
       for (let j = i0; j <= i1; j++) inRun[j] = true;
       const start = all[i0].o, end = all[i1].c, total = end - start;
-      let z = gauss(rng) * RUN_SIGMA;
+      // poids = corps réels de la séquence alignée (tailles et grappes du vrai marché)
       const w: number[] = [];
-      for (let j = 0; j < len; j++) { if (j) z = PHI * z + Math.sqrt(1 - PHI * PHI) * RUN_SIGMA * gauss(rng); w.push(Math.exp(z)); }
+      for (let j = 0; j < len; j++) w.push(Math.max(0.05 * medTB, Math.abs(TPL[i0 + j][0])));
       const sw = w.reduce((a, b) => a + b, 0);
       const interval = (i: number, c: number) => {
         let lo = -Infinity, hi = Infinity;
@@ -186,16 +225,14 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
     i0 = i1 + 1;
   }
 
-  // 2. Corps : hors des jambes, taille cible log-normale en grappes (corps agrandi
-  //    ou réduit) ; plancher pour les pin bars structurelles (≥ 25 % de leur
-  //    amplitude) ; plus aucune clôture égale à l'ouverture.
-  let zb = gauss(rng) * BODY_SIGMA;
+  // 2. Corps : hors des jambes, taille du corps réel aligné (agrandi ou réduit) ;
+  //    plancher pour les pin bars structurelles (≥ 25 % de leur amplitude) ;
+  //    plus aucune clôture égale à l'ouverture.
   for (let i = 0; i < n; i++) {
-    if (i > 0) zb = PHI * zb + Math.sqrt(1 - PHI * PHI) * BODY_SIGMA * gauss(rng);
     const k = all[i], o0 = orig[i];
     const pin = pinUp[i] || pinDown[i];
     const domWick0 = Math.max(o0.h - Math.max(o0.o, o0.c), Math.min(o0.o, o0.c) - o0.l);
-    const floor = Math.min(Math.max(0.2 * medBody, pin ? MIN_BODY_SHARE_PIN * (o0.h - o0.l) : 0), pin ? 0.8 * domWick0 : Infinity, bodyCap(i));
+    const floor = Math.min(Math.max(MIN_BODY * medBody, pin ? MIN_BODY_SHARE_PIN * (o0.h - o0.l) : 0), pin ? 0.8 * domWick0 : Infinity, bodyCap(i));
     const cur = Math.abs(k.c - k.o);
     // pin bar, bougie déclencheuse (dernière du passé) ou jambe : pas de nouvelle taille, seulement le plancher
     if (trigger(i)) {
@@ -207,7 +244,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
       if (!fixed && !locked(i) && all[i + 1]) setClose(i, k.o + Math.sign(all[i + 1].c - all[i + 1].o || 1) * 0.05 * medBody);
       continue;
     }
-    const target = medBody * Math.exp(zb);   // médiane des corps conservée
+    const target = Math.abs(TPL[i][0]) * scale;   // corps réel remis à l'échelle (médiane conservée)
     const want = inRun[i] || locked(i) || bigBody[i]
       ? Math.max(cur, floor)
       : Math.min(bodyCap(i), pin ? Math.min(0.8 * domWick0, 0.45 * (o0.h - o0.l)) : Infinity, Math.max(floor, target));
@@ -217,7 +254,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
     let done = false;
     for (const f of [1, 0.6, 0.3, 0.1]) {
       const target = cur + (want - cur) * f;
-      if (target < 0.2 * medBody && target < cur) continue;
+      if (target < MIN_BODY * medBody && target < cur) continue;
       for (const d of dirs) {
         if (locked(i) ? i > 0 && setOpen(i, k.c - d * target) : setClose(i, k.o + d * target)) { done = true; break; }
         // sinon le corps grandit côté ouverture (la clôture précédente recule), hors bougie déclencheuse
@@ -239,24 +276,33 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
   const futMaxH = np < n ? Math.max(...orig.slice(np).map((k) => k.h)) : Infinity;
   const futMinL = np < n ? Math.min(...orig.slice(np).map((k) => k.l)) : -Infinity;
 
-  // 4. Mèches : amplitude = corps / part du corps (30–85 %, en grappes), une
-  //    mèche dominante (75–95 % des mèches) et une mineure ; bornées par les
-  //    niveaux clés et les extrêmes figés.
+  // 4. Mèches : celles de la bougie réelle alignée (remises à l'échelle, du même
+  //    côté par rapport au sens de la bougie) ; impulsions : mèches d'une vraie
+  //    bougie d'impulsion ; bornées par les niveaux clés et les extrêmes figés.
   const hB: [number, number][] = [], lB: [number, number][] = [];
-  let y = gauss(rng) * 1.1;
   for (let i = 0; i < n; i++) {
-    if (i > 0) y = PHI * y + Math.sqrt(1 - PHI * PHI) * 1.1 * gauss(rng);
-    const beta = 0.3 + 0.62 / (1 + Math.exp(-y));
     const k = all[i], o0 = orig[i];
     const T = Math.max(k.o, k.c), B = Math.min(k.o, k.c), b = T - B;
-    const U0 = o0.h - Math.max(o0.o, o0.c), D0 = Math.min(o0.o, o0.c) - o0.l;
-    // mèche dominante : côté du niveau pour une pin bar ; sinon, le plus souvent
-    // côté ouverture (une bougie de tendance clôture près de son extrême)
-    const upDominant = pinUp[i] !== pinDown[i] ? pinUp[i] : rng() < 0.8 ? k.c < k.o : U0 > D0 || (U0 === D0 && rng() < 0.5);
-    const share = 0.75 + 0.2 * rng();
-    const W = b * (1 / beta - 1);
-    let hWant = T + (upDominant ? W * share : W * (1 - share));
-    let lWant = B - (upDominant ? W * (1 - share) : W * share);
+    const up = k.c > k.o;
+    const t = TPL[i];
+    // amplitude de la bougie réelle (remise à l'échelle) : les mèches comblent l'écart
+    // avec le corps imposé par le scénario, réparties comme dans la vraie bougie
+    // (la mèche « côté ouverture » reste côté ouverture)
+    // échelle locale (corps effectif / corps réel), bornée autour de l'échelle globale :
+    // une petite bougie réelle reste petite, une grande reste grande
+    const localScale = Math.abs(t[0]) > 1e-9 ? Math.min(1.6 * scale, Math.max(0.5 * scale, b / Math.abs(t[0]))) : scale;
+    const realRange = (Math.abs(t[0]) + t[1] + t[2]) * localScale;
+    const wickTotal = Math.max(realRange - b, 0.15 * (t[1] + t[2]) * localScale);
+    const upShare = t[1] + t[2] > 1e-9 ? t[1] / (t[1] + t[2]) : 0.5;
+    let [wu, wl] = (t[0] >= 0) === up ? [wickTotal * upShare, wickTotal * (1 - upShare)] : [wickTotal * (1 - upShare), wickTotal * upShare];
+    if (bigBody[i]) {
+      const kc = keyCandle(up ? "impulsion_haussiere" : "impulsion_baissiere", rng, opts);
+      if (kc && Math.abs(kc[0]) > 1e-9) { wu = b * kc[1] / Math.abs(kc[0]); wl = b * kc[2] / Math.abs(kc[0]); }
+    }
+    // pin bar structurelle : la plus longue mèche du côté du niveau
+    if (pinUp[i] !== pinDown[i]) { const big = Math.max(wu, wl), small = Math.min(wu, wl); [wu, wl] = pinUp[i] ? [big, small] : [small, big]; }
+    let hWant = T + wu;
+    let lWant = B - wl;
     if (trigger(i)) { hWant = Math.max(o0.h, T); lWant = Math.min(o0.l, B); }
     const inPast = i < np;
     let hLo = T, hHi = fixH.has(i) ? Infinity : (inPast ? pastMaxH : futMaxH) - eps;
@@ -274,6 +320,12 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
     lLo = Math.max(lLo, Math.min(lHi, T - rCap));
     k.h = keepH ? Math.max(o0.h, T) : Math.min(Math.max(hWant, hLo), Math.max(hHi, hLo));
     k.l = keepL ? Math.min(o0.l, B) : Math.max(Math.min(lWant, lHi), Math.min(lLo, lHi));
+    // mèche coupée par une borne : l'amplitude perdue passe sur la mèche opposée (amplitude réelle conservée)
+    if (!keepH && !keepL && pinUp[i] === pinDown[i]) {
+      const lostH = Math.max(0, hWant - k.h), lostL = Math.max(0, k.l - lWant);
+      if (lostH > 0) k.l = Math.max(Math.min(k.l - lostH, lHi), Math.min(lLo, lHi), k.l - lostH);
+      if (lostL > 0) k.h = Math.min(Math.max(k.h + lostL, hLo), Math.max(hHi, hLo));
+    }
     const over = k.h - k.l - rCap;
     if (over > 0) {
       // les deux mèches rendent l'excédent au prorata, sans passer sous leurs bornes
@@ -324,6 +376,20 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
       }
     }
   }
+  // 7. Dernier recours, jamais de bougie blanche : un doji encore exact reçoit un corps
+  //    minuscule (0,1 % d'un corps médian), dans le sens qui ne change la couleur
+  //    d'aucune voisine ; la clôture verrouillée (prix d'entrée) ne bouge pas.
+  const tiny = 1e-3 * medBody;
+  for (let i = 0; i < n; i++) {
+    const k = all[i];
+    if (k.c !== k.o) continue;
+    const p = all[i - 1], nx = all[i + 1];
+    for (const d of [1, -1]) {
+      if (!locked(i) && (!nx || Math.sign(nx.c - (k.c + d * tiny)) === Math.sign(nx.c - nx.o))) { k.c += d * tiny; if (nx) nx.o = k.c; break; }
+      if (p && Math.sign((k.o - d * tiny) - p.o) === Math.sign(p.c - p.o)) { k.o -= d * tiny; p.c = k.o; break; }
+    }
+  }
+  for (const k of all) { k.h = Math.max(k.h, k.o, k.c); k.l = Math.min(k.l, k.o, k.c); }
   return { past: all.slice(0, np), future: all.slice(np) };
 }
 

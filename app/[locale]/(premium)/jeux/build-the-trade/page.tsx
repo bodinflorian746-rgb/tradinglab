@@ -252,7 +252,7 @@ export default function BuildTheTradePage() {
 
   const current = scenarios[idx];
   const chart: BuildTradeChart | null = useMemo(
-    () => (current ? G.withAssetPrices(G.buildBuildTradeChart(current, current.seed, current.volatility), current) : null),
+    () => (current ? G.withAssetPrices(G.buildBuildTradeChart(current, current.seed, current.volatility, { asset: current.asset, session: current.session }), current) : null),
     [current, G],
   );
 

@@ -5,6 +5,7 @@
 // bougies, + direction de la suite cohérente avec la bonne réponse (BUY/SELL),
 // + règles dures (continuité, OHLC valide, couleur = mouvement / doji neutre).
 import * as FR from "../../lib/games/buy-sell-no-trade";
+import { auditCtx } from "./market-ctx";
 import * as EN from "../../lib/games/buy-sell-no-trade-en";
 import * as ES from "../../lib/games/buy-sell-no-trade-es";
 import type { BuySellChart, Candle, ChartZone, Difficulty, ScenarioTemplate, Volatility } from "../../lib/games/buy-sell-no-trade";
@@ -196,7 +197,7 @@ for (const t of G.SCENARIO_TEMPLATES) {
     for (let n = 0; n < N; n++) {
       const seed = (n * 2654435761 + t.id.length * 97 + d.length) >>> 0;
       const vol: Volatility = t.metaOverride?.volatility ?? (t.macroContext === "dangereux" ? "élevée" : VOLS[n % 3]);
-      const ch = G.buildChart(t.id, seed, vol, d);
+      const ch = G.buildChart(t.id, seed, vol, d, auditCtx(seed));
       const reasons: string[] = [];
       const hr = hardRules(ch); if (hr) reasons.push(`[dure] ${hr}`);
       for (const [name, fn] of Object.entries(CHECKS[t.id] ?? {})) { const r = fn(ch, t, d); if (r) reasons.push(`${name} → ${r}`); }

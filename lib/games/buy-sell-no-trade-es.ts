@@ -22,6 +22,7 @@ import {
   scoreChoice,
   mulberry32,
 } from "./buy-sell-no-trade";
+import type { MarketCtx } from "./candle-realism";
 import type { ChartZone } from "./shared";
 
 // Reexports de tipos / utilidades
@@ -84,8 +85,9 @@ export function buildChart(
   seed: number,
   volatility: ScenarioInstance["volatility"] = "normale",
   difficulty: Difficulty = "intermediate",
+  ctx: MarketCtx = {},
 ): BuySellChart {
-  const chart = buildChartFr(setup, seed, volatility, difficulty);
+  const chart = buildChartFr(setup, seed, volatility, difficulty, ctx);
   return { ...chart, zones: translateZones(chart.zones) };
 }
 
