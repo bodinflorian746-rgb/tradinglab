@@ -2,6 +2,8 @@ import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary, type Dictionaries } from "@/i18n/dictionaries";
+import { GameChartV2 } from "@/app/components/games/v2/GameChartV2";
+import { buildGamePreviews, type GamePreview } from "./_components/previews";
 
 // ─── Available games ───────────────────────────────────────────────────────────
 
@@ -14,74 +16,26 @@ interface AvailableGameMeta {
   id:         AvailableId;
   href:       string;
   levelKey:   LevelKey;
-  levelChip:  string;   // puce de niveau (charte v2)
-  icon:       React.ReactNode;
+  accent:     string;   // couleur signature du jeu (charte v2), reprise de l'intérieur du jeu
 }
 
 const AVAILABLE_GAMES: AvailableGameMeta[] = [
-  {
-    id:         "buy-sell-no-trade",
-    href:       "/jeux/buy-sell-no-trade",
-    levelKey:   "allLevels",
-    levelChip:  "v2-chip--emerald",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M4 18l4-4 3 3 4-7 4 3 5-2" stroke="#52525b" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="11" cy="17" r="2.2" fill="rgba(16,185,129,0.25)" stroke="#10b981" strokeWidth="1.4" />
-        <circle cx="18" cy="13" r="2.2" fill="rgba(239,68,68,0.25)" stroke="#ef4444" strokeWidth="1.4" />
-      </svg>
-    ),
-  },
-  {
-    id:         "place-stop",
-    href:       "/jeux/place-stop",
-    levelKey:   "intermediate",
-    levelChip:  "v2-chip--blue",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M4 20L10 12l5 4 5-8 4 3" stroke="#52525b" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-        <line x1="4" y1="16" x2="24" y2="16" stroke="#ef4444" strokeWidth="1.6" strokeDasharray="3 2.5" strokeLinecap="round" />
-        <circle cx="14" cy="16" r="2.5" fill="rgba(239,68,68,0.25)" stroke="#ef4444" strokeWidth="1.6" />
-      </svg>
-    ),
-  },
-  {
-    id:         "find-the-mistake",
-    href:       "/jeux/find-the-mistake",
-    levelKey:   "allLevels",
-    levelChip:  "v2-chip--emerald",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="11" cy="11" r="6" stroke="#52525b" strokeWidth="1.6" />
-        <path d="M15.5 15.5L22 22" stroke="#52525b" strokeWidth="1.6" strokeLinecap="round" />
-        <path d="M9 11l2 2 3-4" stroke="#ef4444" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    id:         "build-the-trade",
-    href:       "/jeux/build-the-trade",
-    levelKey:   "intermediate",
-    levelChip:  "v2-chip--blue",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <line x1="4" y1="14" x2="24" y2="14" stroke="#3b82f6" strokeWidth="1.6" strokeLinecap="round" />
-        <line x1="4" y1="8" x2="24" y2="8" stroke="#10b981" strokeWidth="1.6" strokeDasharray="3 2" strokeLinecap="round" />
-        <line x1="4" y1="20" x2="24" y2="20" stroke="#ef4444" strokeWidth="1.6" strokeDasharray="3 2" strokeLinecap="round" />
-        <circle cx="14" cy="14" r="2" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" strokeWidth="1.4" />
-      </svg>
-    ),
-  },
+  { id: "buy-sell-no-trade", href: "/jeux/buy-sell-no-trade", levelKey: "allLevels",    accent: "v2-accent--emerald" },
+  { id: "place-stop",        href: "/jeux/place-stop",        levelKey: "intermediate", accent: "v2-accent--violet" },
+  { id: "find-the-mistake",  href: "/jeux/find-the-mistake",  levelKey: "allLevels",    accent: "v2-accent--red" },
+  { id: "build-the-trade",   href: "/jeux/build-the-trade",   levelKey: "intermediate", accent: "v2-accent--blue" },
 ];
 
 // ─── Cards ─────────────────────────────────────────────────────────────────────
 
 function AvailableGameCard({
   meta,
+  preview,
   t,
   locale,
 }: {
   meta: AvailableGameMeta;
+  preview: GamePreview;
   t: GamesDict;
   locale: Locale;
 }) {
@@ -89,24 +43,26 @@ function AvailableGameCard({
   return (
     <Link
       href={localizedHref(meta.href, locale)}
-      className="v2-card group flex flex-col gap-4 p-5 transition-transform duration-200 hover:-translate-y-0.5 sm:gap-5 sm:p-6"
+      className={`v2-card v2-card--accent ${meta.accent} group flex flex-col gap-4 p-4 sm:p-5 motion-safe:hover:-translate-y-0.5`}
     >
-      {/* Icône, niveau, durée et disponibilité */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="v2-well grid h-12 w-12 shrink-0 place-items-center sm:h-14 sm:w-14">{meta.icon}</div>
-          <div className="flex flex-col items-start gap-1.5">
-            <span className={`v2-chip ${meta.levelChip}`}>{t.index.levels[meta.levelKey]}</span>
-            <span className="v2-mono flex items-center gap-1.5 text-[12px] text-[color:var(--v2-text-3)]">
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
-                <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.2" />
-                <path d="M5.5 3v2.5l1.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              {game.duration}
-            </span>
-          </div>
+      {/* Aperçu animé : vraies bougies du jeu et son élément clé */}
+      <div aria-hidden="true">
+        <GameChartV2 {...preview} preview />
+      </div>
+
+      {/* Niveau, durée et disponibilité */}
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <span className="v2-chip">{t.index.levels[meta.levelKey]}</span>
+          <span className="v2-mono flex items-center gap-1.5 text-[12px] text-[color:var(--v2-text-3)]">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+              <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.2" />
+              <path d="M5.5 3v2.5l1.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            {game.duration}
+          </span>
         </div>
-        <span className="v2-chip v2-chip--emerald">
+        <span className="v2-chip">
           <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--v2-emerald)]" style={{ boxShadow: "0 0 6px rgba(16,185,129,0.9)" }} />
           {t.index.availableBadge}
         </span>
@@ -118,8 +74,8 @@ function AvailableGameCard({
         <p className="v2-body text-[color:var(--v2-text-2)]">{game.description}</p>
       </div>
 
-      {/* Bouton Jouer maintenant */}
-      <span className="v2-btn v2-btn--light mt-auto w-full">
+      {/* Bouton Jouer maintenant, dans la couleur du jeu */}
+      <span className="v2-btn v2-btn--accent mt-auto w-full">
         {t.index.playNow}
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M2 8h11M9 3l5 5-5 5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
@@ -141,6 +97,7 @@ export default async function JeuxPage({
   const raw = (await params).locale;
   const locale: Locale = hasLocale(raw) ? raw : DEFAULT_LOCALE;
   const t = await getDictionary(locale, "games");
+  const previews = buildGamePreviews(locale);
   return (
     <div className="tsx-v2">
       <main className="v2-page mx-auto flex w-full max-w-4xl flex-col">
@@ -158,8 +115,8 @@ export default async function JeuxPage({
             <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--v2-emerald)]" style={{ boxShadow: "0 0 6px rgba(16,185,129,0.7)" }} />
             <h2 className="v2-eyebrow">{t.index.available}</h2>
           </div>
-          <div className={`grid gap-3 sm:gap-4 ${AVAILABLE_GAMES.length > 1 ? "sm:grid-cols-2" : ""}`}>
-            {AVAILABLE_GAMES.map((g) => <AvailableGameCard key={g.id} meta={g} t={t} locale={locale} />)}
+          <div className={`grid gap-4 sm:gap-5 ${AVAILABLE_GAMES.length > 1 ? "sm:grid-cols-2" : ""}`}>
+            {AVAILABLE_GAMES.map((g) => <AvailableGameCard key={g.id} meta={g} preview={previews[g.id]} t={t} locale={locale} />)}
           </div>
         </section>
 

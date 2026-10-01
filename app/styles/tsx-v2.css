@@ -366,6 +366,43 @@
 .tsx-v2 .v2-chart { position: relative; width: 100%; }
 .tsx-v2 .v2-chart--question { height: clamp(240px, min(84vw, 100svh - 290px), 440px); }
 .tsx-v2 .v2-chart--result { height: clamp(240px, min(84vw, 100svh - 170px), 440px); }
+/* Aperçu (cartes du hub des jeux) : bas, pour qu'une carte entière tienne dans l'écran */
+.tsx-v2 .v2-chart--preview { height: clamp(150px, 42vw, 180px); }
+
+/* ─── Couleur signature d'un jeu (cartes du hub) ──────────────────────── */
+/* --accent : halo, cadre de l'aperçu ; --accent-top / --accent-bot / --accent-ink : bouton */
+.tsx-v2 .v2-accent--emerald { --accent: #10b981; --accent-top: #16c08a; --accent-bot: #0a8f64; --accent-ink: #ecfdf5; }
+.tsx-v2 .v2-accent--violet { --accent: #8b5cf6; --accent-top: #9d74f7; --accent-bot: #6b3fd4; --accent-ink: #f5f3ff; }
+.tsx-v2 .v2-accent--red { --accent: #ef4444; --accent-top: #f25555; --accent-bot: #c42525; --accent-ink: #fef2f2; }
+.tsx-v2 .v2-accent--blue { --accent: #3b82f6; --accent-top: #4b8ef7; --accent-bot: #1f5fd6; --accent-ink: #eff6ff; }
+
+.tsx-v2 .v2-card--accent {
+  background:
+    radial-gradient(90% 55% at 50% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012) 40%),
+    var(--v2-surface);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 30px 80px -30px color-mix(in srgb, var(--accent) 50%, transparent),
+    0 12px 32px -16px rgba(0, 0, 0, 0.9);
+  transition: box-shadow 250ms ease, transform 200ms ease;
+}
+.tsx-v2 .v2-card--accent:hover {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 30px 90px -26px color-mix(in srgb, var(--accent) 65%, transparent),
+    0 12px 32px -16px rgba(0, 0, 0, 0.9);
+}
+.tsx-v2 .v2-card--accent .v2-well {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent), inset 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.tsx-v2 .v2-btn--accent {
+  color: var(--accent-ink);
+  background: linear-gradient(180deg, var(--accent-top), var(--accent-bot));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 12px 30px -12px color-mix(in srgb, var(--accent) 65%, transparent);
+}
 
 /* ─── Desktop (≥ 1024px) — identique au bloc validé du design-lab ─────── */
 @media (min-width: 1024px) {
@@ -396,6 +433,7 @@
 
   .tsx-v2 .v2-chart--question { height: clamp(240px, 100svh - 290px, 360px); }
   .tsx-v2 .v2-chart--result { height: clamp(240px, 100svh - 170px, 360px); }
+  .tsx-v2 .v2-chart--preview { height: 180px; }
 }
 
 @keyframes v2-candle-in {
@@ -457,4 +495,5 @@
   .tsx-v2 .v2-choice,
   .tsx-v2 .v2-stop-choice,
   .tsx-v2 .v2-btn { transition: none; }
+  .tsx-v2 .v2-card--accent { transition: none; }
 }

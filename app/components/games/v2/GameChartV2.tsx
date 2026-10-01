@@ -175,11 +175,18 @@ export interface GameChartV2Props {
    * écraser les bougies.
    */
   tpOffscale?: boolean;
+  /**
+   * Aperçu (hub des jeux) : cadre bas (.v2-chart--preview), révélation
+   * accélérée, et marquage affiché dès l'état question, avec le héros.
+   */
+  preview?: boolean;
   /** Calque superposé au graphique (ex. VerdictOverlay). */
   children?: ReactNode;
 }
 
 const STEP_MS = 420;
+/** Rythme de révélation des aperçus : quelques bougies, révélées en ~1 s */
+const PREVIEW_STEP_MS = 100;
 /**
  * Durée du glissement au clic (cadrage « passé » → « passé + futur »). La page
  * attend cette durée avant de révéler la 1re bougie future.
@@ -219,7 +226,7 @@ function fvgStartIndex(candles: Candle[], z: ChartZone): number {
   return i < 0 ? 0 : i;
 }
 
-export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBright, mark, reserve, tpOffscale, children }: GameChartV2Props) {
+export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBright, mark, reserve, tpOffscale, preview, children }: GameChartV2Props) {
   const { ref: sizeRef, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const { ref: playRef, playing } = usePlayOnView<HTMLDivElement>(0.4);
   const desktop = useIsDesktop();
@@ -233,7 +240,10 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
   const visible = all.slice(0, visibleCount);
   const zones = data.zones;
   const hero = question ? zones[0] : undefined;
-  const spotMs = question ? visibleCount * STEP_MS + 250 : 0;
+  const stepMs = preview ? PREVIEW_STEP_MS : STEP_MS;
+  const spotMs = question ? visibleCount * stepMs + 250 : 0;
+  // Marquage : au verdict dans les jeux ; dès la question dans un aperçu
+  const showMark = !!mark && (mode === "verdict" || !!preview);
 
   // Les bougies du passé rejouent leur apparition à chaque nouveau scénario
   const roundKey = `${all.length}:${all[0]?.o ?? 0}:${all[0]?.c ?? 0}`;
@@ -268,7 +278,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
   const tagLabels = [
     ...lineLabels,
     ...(columnMode && hero ? [hero.label] : []),
-    ...(columnMode && mark && mode === "verdict" && markPrice !== undefined ? [mark.label] : []),
+    ...(columnMode && mark && showMark && markPrice !== undefined ? [mark.label] : []),
   ];
   const colLabels = reserve?.labels ? [...tagLabels, ...reserve.labels] : tagLabels;
   const tagColW = colLabels.length ? Math.max(...colLabels.map((l) => textWidth(l, 12) + 16)) + 18 : 0;
@@ -369,7 +379,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
       ...(overlay?.stops ?? []).flatMap((s, i) => (s.label ? [{ key: `stopTag${i}`, price: s.price, label: s.label, color: s.hit ? "#fb923c" : s.color, hit: !!s.hit }] : [])),
       ...(overlay?.candidateLines ?? []).map((c, i) => ({ key: `candTag${i}`, price: c.price, label: c.label, color: c.color, hit: false })),
       ...(columnMode && hero ? [{ key: "heroTag", price: (hero.y1 + hero.y2) / 2, label: hero.label, color: HERO_GRADIENT[hero.kind], hit: false }] : []),
-      ...(columnMode && mark && mode === "verdict" && markPrice !== undefined ? [{ key: "markTag", price: markPrice, label: mark.label, color: "#f87171", hit: false }] : []),
+      ...(columnMode && mark && showMark && markPrice !== undefined ? [{ key: "markTag", price: markPrice, label: mark.label, color: "#f87171", hit: false }] : []),
     ].map((t) => ({ ...t, lineY: toY(t.price), y: toY(t.price), w: textWidth(t.label, TAG_FS) + 16 }));
     const tagW = tagSpecs.length ? Math.max(...tagSpecs.map((t) => t.w)) : 0;
     const sortedTags = [...tagSpecs].sort((a, b) => a.lineY - b.lineY);
@@ -384,8 +394,10 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
     }
     const tagX = lineX1 - tagW; // colonne des étiquettes, alignées à droite
     const lineEnd = tagSpecs.length ? tagX - 8 : lineX1;
+    // Aperçu en état question : le marquage apparaît avec le héros (v2-late)
+    const markClass = mode === "verdict" ? "v2-mark" : "v2-late";
     const tag = (t: (typeof tagSpecs)[number]) => (
-      <g key={t.key} className={t.key === "markTag" ? "v2-mark" : undefined}>
+      <g key={t.key} className={t.key === "markTag" ? markClass : undefined}>
         {Math.abs(t.y - t.lineY) > 0.5 && (
           <line x1={lineEnd} y1={t.lineY} x2={tagX} y2={t.y} stroke={t.color} strokeWidth={2} vectorEffect="non-scaling-stroke" />
         )}
@@ -417,7 +429,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
         viewBox={`0 0 ${W} ${H}`}
         role="img"
         aria-label={zones[0] ? `${zones[0].label} — ${visible.length} bougies` : `${visible.length} bougies`}
-        style={cssVars({ "--spot": `${spotMs}ms`, "--v2-candle-step": `${STEP_MS}ms` })}
+        style={cssVars({ "--spot": `${spotMs}ms`, "--v2-candle-step": `${stepMs}ms` })}
       >
         <defs>
           {hero && (
@@ -499,7 +511,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
         </g>
 
         {/* Marquage de verdict : l'élément fautif en rouge, avec son libellé */}
-        {mark && mode === "verdict" && (() => {
+        {mark && showMark && (() => {
           const RED = "#f87171";
           const fs = 13;
           const pw = textWidth(mark.label, fs) + 20;
@@ -531,7 +543,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
           if (mark.kind === "point") pillY = top + 22 + ph <= H - 4 ? top + 22 : top - 22 - ph;
           else pillY = bottom + 8 + ph <= H - 4 ? bottom + 8 : top - 8 - ph; // sous l'élément, sinon au-dessus
           return (
-            <g className="v2-mark">
+            <g className={markClass}>
               {body}
               {!columnMode && (
                 <>
@@ -562,7 +574,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
       <div
         ref={sizeRef}
         /* Même hauteur de cadre dans tous les états : aucun saut au clic */
-        className="v2-chart v2-chart--question v2-well overflow-hidden"
+        className={`v2-chart ${preview ? "v2-chart--preview" : "v2-chart--question"} v2-well overflow-hidden`}
       >
         {svg}
 
