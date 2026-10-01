@@ -297,7 +297,7 @@ export const MISTAKE_TEMPLATES_EN: MistakeTemplate[] = [
     lessons: {
       advanced:     "A common pro benchmark: 0.5 to 2% of capital per trade depending on account size. Beyond 5%, you drift away from trading and closer to gambling.",
       intermediate: "Position size is a key variable of money management. A correct setup with a lot that's too big can be enough to wipe out an account. The often-quoted benchmark is 1 to 2% of capital, even on a small account.",
-      beginner:     "An often-quoted grid: 5% max on a €200-500 account, 3% on €500-1,000, 2% on €1,000-5,000, then 0.5 to 2% beyond. Your broker's leverage matters little; what counts is how much you lose in euros if your SL is hit.",
+      beginner:     "An often-quoted benchmark: 1 to 2% of capital per trade, whatever the account size (so €5 to €10 on €500). Your broker's leverage matters little; what counts is how much you lose in euros if your SL is hit.",
     },
     difficulties: ["intermediate", "advanced"],
     extraInfo: "Risk per trade: 50% of capital",

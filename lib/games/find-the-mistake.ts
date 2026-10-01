@@ -347,7 +347,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     lessons: {
       advanced:     "Repère courant chez les pros : 0,5 à 2 % du capital par trade selon la taille du compte. Au-delà de 5 %, on s'éloigne du trading pour se rapprocher du pari.",
       intermediate: "La taille de position est une variable clé du money management. Un setup correct avec un lot trop gros peut suffire à vider un compte. Le repère souvent cité est de 1 à 2 % du capital, même sur un petit compte.",
-      beginner:     "Grille souvent citée : 5 % max sur un compte de 200-500€, 3 % sur 500-1000€, 2 % sur 1000-5000€, puis 0,5 à 2 % au-delà. Le levier de ton broker compte peu ; ce qui compte, c'est combien tu perds en euros si ton SL est touché.",
+      beginner:     "Repère souvent cité : 1 à 2 % du capital par trade, quelle que soit la taille du compte (soit 5 à 10€ sur 500€). Le levier de ton broker compte peu ; ce qui compte, c'est combien tu perds en euros si ton SL est touché.",
     },
     difficulties: ["intermediate", "advanced"],
     extraInfo: "Risque par trade : 50% du capital",

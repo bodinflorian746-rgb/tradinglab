@@ -297,7 +297,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     lessons: {
       advanced:     "Referencia habitual entre pros: 0,5 a 2 % del capital por operación según el tamaño de la cuenta. Más allá del 5 %, uno se aleja del trading y se acerca a la apuesta.",
       intermediate: "El tamaño de posición es una variable clave del money management. Un setup correcto con un lote demasiado grande puede bastar para vaciar una cuenta. La referencia citada a menudo es del 1 al 2 % del capital, incluso en una cuenta pequeña.",
-      beginner:     "Tabla citada a menudo: 5 % máx. en una cuenta de 200-500€, 3 % en 500-1000€, 2 % en 1000-5000€, y de 0,5 a 2 % por encima. El apalancamiento de tu broker importa poco; lo que cuenta es cuánto pierdes en euros si tocan tu SL.",
+      beginner:     "Referencia citada a menudo: del 1 al 2 % del capital por operación, sea cual sea el tamaño de la cuenta (es decir, de 5 a 10€ con 500€). El apalancamiento de tu broker importa poco; lo que cuenta es cuánto pierdes en euros si tocan tu SL.",
     },
     difficulties: ["intermediate", "advanced"],
     extraInfo: "Riesgo por operación: 50% del capital",
