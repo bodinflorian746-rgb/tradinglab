@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "audit:jeux": "node scripts/audit-jeux/run.mjs"
+    "audit:jeux": "node scripts/audit-jeux/run.mjs",
+    "visual:check": "playwright test -c scripts/visual-check/visual.config.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
