@@ -270,7 +270,7 @@ export const PLACE_STOP_TEMPLATES_EN: PlaceStopTemplate[] = [
     shortContext: "ATR x2 vs normal",
     lessons: {
       beginner:     "When volatility explodes (FOMC, NFP), a 'normal' SL often becomes too tight. Widening the margin to the day's ATR is a logical option.",
-      intermediate: "On a day when the ATR doubles, the 'standard' SL is effectively too tight. Here, a margin adjusted to real volatility avoids an almost certain stop out.",
+      intermediate: "On a day when the ATR doubles, the 'standard' SL is effectively too tight. Here, a margin adjusted to real volatility avoids a very likely stop out.",
       advanced:     "SL size isn't a fixed number of pips: it rather follows the day's ATR. When the ATR doubles, doubling the margin makes sense, otherwise your SL becomes too tight.",
     },
     difficulties: ["advanced"],
@@ -604,7 +604,7 @@ function translateZones(zones: ChartZone[]): ChartZone[] {
 
 const TIGHT_RATIONALE_FR = "✗ Trop serré : ici, le stop est placé dans le bruit normal du marché. La 1re mèche de retest risque de le balayer avant que le trade aboutisse. C'est une erreur fréquente.";
 const LOGICAL_RATIONALE_FR = "✓ Placement logique : derrière la vraie invalidation, avec une marge anti-bruit. Ici, il survit aux retests et laisse le trade capter la cassure structurelle si elle arrive.";
-const WIDE_RATIONALE_FR = "≈ Il survit, mais dégrade le R/R. Ici, la distance est trop grande : le capital est mal utilisé, avec un ratio risque/rendement souvent sous 1.";
+const WIDE_RATIONALE_FR = "≈ Il survit, mais dégrade le R/R. Ici, la distance est trop grande : le capital est mal utilisé, et le R/R baisse nettement par rapport au stop logique.";
 
 const FAKEOUT_TIGHT_FR   = "✗ Ici, le stop est dans la zone du piège, là où la liquidité vient d'être ramassée. Le 2e test risque de le balayer.";
 const FAKEOUT_LOGICAL_FR = "✓ Au-dessus du pic du fakeout, avec une marge. C'est ici la VRAIE invalidation du piège : si le prix repasse là, le scénario est probablement cassé.";
@@ -678,7 +678,7 @@ const KEY_MAGNET_WIDE_SELL_FR_NEW  = "✓ Au-delà de l'amplitude du test attend
 const RATIONALE_EN: Record<string, string> = {
   [TIGHT_RATIONALE_FR]:   "✗ Too tight: here, the stop sits in the market's normal noise. The 1st retest wick is likely to sweep it before the trade plays out. It's a frequent mistake.",
   [LOGICAL_RATIONALE_FR]: "✓ Logical placement: behind the real invalidation, with an anti-noise margin. Here, it survives the retests and lets the trade capture the structural break if it comes.",
-  [WIDE_RATIONALE_FR]:    "≈ It survives, but degrades the R/R. Here, the distance is too large: capital is poorly used, with a risk/reward ratio often below 1.",
+  [WIDE_RATIONALE_FR]:    "≈ It survives, but degrades the R/R. Here, the distance is too large: capital is poorly used, and the R/R drops clearly compared with the logical stop.",
   [FAKEOUT_TIGHT_FR]:     "✗ Here, the stop is in the trap zone, where liquidity was just collected. The 2nd test is likely to sweep it.",
   [FAKEOUT_LOGICAL_FR]:   "✓ Above the fakeout's peak, with a margin. Here, it's the REAL invalidation of the trap: if price goes back there, the scenario is probably broken.",
   [SWEEP_TIGHT_FR]:       "✗ Here, the stop is INSIDE the sweep zone, where liquidity was just collected. The retest is likely to come for it.",

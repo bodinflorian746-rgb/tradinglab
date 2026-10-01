@@ -255,7 +255,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     lessons: {
       beginner:     "El PDL (Previous Day Low) suele ser una zona de caza. Un SL bajo el PDL, con margen, aguanta mejor que uno justo debajo.",
       intermediate: "El PDL (Previous Day Low) es un nivel de liquidez diario, a menudo objetivo de las cazas de stops. Un SL justo debajo tiene muchas probabilidades de ser capturado.",
-      advanced:     "El PDL forma parte de los niveles clave, junto con PDH, PWL, PWH y PML. Un SL colocado a 0-5 pips de uno de ellos tiene bastantes probabilidades de ser cazado antes del movimiento real.",
+      advanced:     "El PDL forma parte de los niveles clave, junto con PDH, PWL, PWH y PML. Un SL colocado a 0-5 pips más allá de uno de ellos tiene bastantes probabilidades de ser cazado antes del movimiento real.",
     },
     difficulties: ["intermediate", "advanced"],
     tag: "trampa",
@@ -270,7 +270,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     shortContext: "ATR x2 vs normal",
     lessons: {
       beginner:     "Cuando la volatilidad se dispara (FOMC, NFP), un SL 'normal' suele quedarse demasiado ajustado. Ampliar el margen según el ATR del día es una opción lógica.",
-      intermediate: "Un día en que el ATR se duplica, el SL 'estándar' queda en la práctica demasiado ajustado. Aquí, un margen ajustado a la volatilidad real evita una salida casi segura.",
+      intermediate: "Un día en que el ATR se duplica, el SL 'estándar' queda en la práctica demasiado ajustado. Aquí, un margen ajustado a la volatilidad real evita una salida muy probable.",
       advanced:     "El tamaño del SL no es un número fijo de pips: sigue más bien el ATR del día. Cuando el ATR se duplica, duplicar el margen tiene sentido; si no, tu SL queda demasiado ajustado.",
     },
     difficulties: ["advanced"],
@@ -604,7 +604,7 @@ function translateZones(zones: ChartZone[]): ChartZone[] {
 
 const TIGHT_RATIONALE_FR = "✗ Trop serré : ici, le stop est placé dans le bruit normal du marché. La 1re mèche de retest risque de le balayer avant que le trade aboutisse. C'est une erreur fréquente.";
 const LOGICAL_RATIONALE_FR = "✓ Placement logique : derrière la vraie invalidation, avec une marge anti-bruit. Ici, il survit aux retests et laisse le trade capter la cassure structurelle si elle arrive.";
-const WIDE_RATIONALE_FR = "≈ Il survit, mais dégrade le R/R. Ici, la distance est trop grande : le capital est mal utilisé, avec un ratio risque/rendement souvent sous 1.";
+const WIDE_RATIONALE_FR = "≈ Il survit, mais dégrade le R/R. Ici, la distance est trop grande : le capital est mal utilisé, et le R/R baisse nettement par rapport au stop logique.";
 
 const FAKEOUT_TIGHT_FR   = "✗ Ici, le stop est dans la zone du piège, là où la liquidité vient d'être ramassée. Le 2e test risque de le balayer.";
 const FAKEOUT_LOGICAL_FR = "✓ Au-dessus du pic du fakeout, avec une marge. C'est ici la VRAIE invalidation du piège : si le prix repasse là, le scénario est probablement cassé.";
@@ -678,7 +678,7 @@ const KEY_MAGNET_WIDE_SELL_FR_NEW  = "✓ Au-delà de l'amplitude du test attend
 const RATIONALE_ES: Record<string, string> = {
   [TIGHT_RATIONALE_FR]:   "✗ Demasiado ajustado: aquí, el stop está en el ruido normal del mercado. La 1ª mecha de retest puede barrerlo antes de que el trade prospere. Es un error frecuente.",
   [LOGICAL_RATIONALE_FR]: "✓ Colocación lógica: detrás de la verdadera invalidación, con un margen anti-ruido. Aquí, sobrevive a los retests y permite al trade captar la ruptura estructural si llega.",
-  [WIDE_RATIONALE_FR]:    "≈ Sobrevive, pero degrada el R/R. Aquí, la distancia es demasiado grande: el capital se usa mal, con un ratio riesgo/beneficio a menudo por debajo de 1.",
+  [WIDE_RATIONALE_FR]:    "≈ Sobrevive, pero degrada el R/R. Aquí, la distancia es demasiado grande: el capital se usa mal, y el R/R baja claramente respecto al stop lógico.",
   [FAKEOUT_TIGHT_FR]:     "✗ Aquí, el stop está en la zona de la trampa, donde se acaba de recoger la liquidez. El 2º test puede barrerlo.",
   [FAKEOUT_LOGICAL_FR]:   "✓ Sobre el pico del fakeout, con margen. Aquí, es la VERDADERA invalidación de la trampa: si el precio vuelve ahí, el escenario probablemente está roto.",
   [SWEEP_TIGHT_FR]:       "✗ Aquí, el stop está DENTRO de la zona del sweep, donde se acaba de recoger la liquidez. El retest puede ir a buscarlo.",

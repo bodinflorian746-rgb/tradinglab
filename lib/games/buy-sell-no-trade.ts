@@ -357,7 +357,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     lessons: {
       beginner:     "Si tu ne peux pas expliquer en une phrase pourquoi le trade existe, il vaut souvent mieux ne pas le prendre. Ici, NO TRADE.",
       intermediate: "Trader le milieu d'un range revient souvent à risquer 1R pour environ 0,3R de gain. Un range se trade plutôt à ses bornes.",
-      advanced:     "La discipline compte plus que l'activité. Beaucoup de traders pros ne prennent que quelques trades par semaine. Ne pas trader est aussi une décision à part entière.",
+      advanced:     "La discipline compte plus que l'activité. Beaucoup de traders expérimentés filtrent fortement leurs entrées. Ne pas trader est aussi une décision à part entière.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["discipline", "range", "patience"],

@@ -196,7 +196,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     explanation: "El swing low se retestea muy a menudo antes de la continuación. Aquí, un stop sobre el low corre el riesgo de ser barrido por el ruido normal del retest. El trade aguantaría mejor con un stop bajo el swing low.",
     lessons: {
       beginner:     "Un stop se coloca más bien DETRÁS de la invalidación, con margen: colocarlo dentro o encima lo expone al ruido.",
-      intermediate: "El retest del low aparece en una gran mayoría de los pullbacks. Por eso, un margen anti-ruido es muy recomendable.",
+      intermediate: "El low se retestea a menudo durante un pullback, antes de la continuación. Un margen anti-ruido detrás del low es, por tanto, una opción lógica.",
       advanced:     "Sin margen ATR detrás de la estructura, tu stop puede atraer liquidez. Estos niveles suelen ser el objetivo antes del movimiento real.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -255,8 +255,8 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     decoyMistakes: ["stop_too_tight", "trade_against_htf", "fomo_after_pump"],
     explanation: "Con un R/R inferior a 1, incluso un 60 % de trades ganadores puede dejar una esperanza negativa. Un setup válido con un mal R/R sigue siendo aquí un trade discutible.",
     lessons: {
-      intermediate: "La esperanza de un setup se calcula así: (proba de ganancia × ganancia) - (proba de pérdida × riesgo). Si el R/R está por debajo de 1, hace falta más de un 60 % de aciertos solo para quedar en equilibrio.",
-      advanced:     "Muchos traders buscan un R/R de al menos 2:1 para absorber comisiones y períodos de drawdown. Por debajo de ese umbral, la ventaja estadística se reduce rápido.",
+      intermediate: "La esperanza de un setup se calcula así: (proba de ganancia × ganancia) - (proba de pérdida × riesgo). Con un R/R por debajo de 1, hace falta más de un 50 % de aciertos para quedar en equilibrio, y un 67 % con un R/R de 0,5.",
+      advanced:     "Muchos traders buscan un R/R de al menos 2:1: deja margen para las comisiones y las rachas de pérdidas. Con un R/R más bajo, hace falta una tasa de acierto más alta para seguir ganando.",
       beginner:     "Si arriesgas 100 € para ganar 50 €, te arriesgas a perder a largo plazo, aunque ganes a menudo.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -296,8 +296,8 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     explanation: "Arriesgar el 50% del capital en una sola operación es extremadamente peligroso. Una sola pérdida corta la cuenta a la mitad, y para volver a 500€ habría que hacer después +100% sobre el capital restante.",
     lessons: {
       advanced:     "Referencia habitual entre pros: 0,5 a 2 % del capital por operación según el tamaño de la cuenta. Más allá del 5 %, uno se aleja del trading y se acerca a la apuesta.",
-      intermediate: "El tamaño de posición es una variable clave del money management. Un setup correcto con un lote demasiado grande puede bastar para vaciar una cuenta. Referencia prudente: con 500€, no más del 5 % por operación (es decir, 25€ de riesgo).",
-      beginner:     "Tabla de referencia: 5 % máx. en una cuenta de 200-500€, 3 % en 500-1000€, 2 % en 1000-5000€. El apalancamiento de tu broker importa poco; lo que cuenta es cuánto pierdes en euros si tocan tu SL.",
+      intermediate: "El tamaño de posición es una variable clave del money management. Un setup correcto con un lote demasiado grande puede bastar para vaciar una cuenta. Referencia citada a menudo para una cuenta pequeña: con 500€, no más del 5 % por operación (es decir, 25€ de riesgo).",
+      beginner:     "Tabla citada a menudo: 5 % máx. en una cuenta de 200-500€, 3 % en 500-1000€, 2 % en 1000-5000€, y de 0,5 a 2 % por encima. El apalancamiento de tu broker importa poco; lo que cuenta es cuánto pierdes en euros si tocan tu SL.",
     },
     difficulties: ["intermediate", "advanced"],
     extraInfo: "Riesgo por operación: 50% del capital",
@@ -441,7 +441,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     explanation: "En una news mayor (NFP, FOMC, CPI), el spread puede ampliarse x5 a x10, y un movimiento instantáneo puede saltar el SL. Una práctica habitual: dividir el tamaño del lote por 2 o 3 en los 30 minutos alrededor de una news roja, o no operar.",
     lessons: {
       advanced:     "Muchos actores reducen su exposición antes de las news por esta razón: la price action puede volverse binaria e impredecible. Mantener un tamaño normal supone entonces apostar al azar.",
-      intermediate: "Una news mayor puede mover un par 50-100 pips en un segundo. Tu SL se vuelve teórico si el slippage te saca 20-30 pips más lejos. Reducir el tamaño protege tu cuenta.",
+      intermediate: "Una news mayor puede mover un par varias decenas de pips en pocos segundos. Tu SL se vuelve teórico si el slippage te saca varios pips más lejos. Reducir el tamaño protege tu cuenta.",
       beginner:     "Antes de un NFP, un FOMC o un CPI, una opción lógica: dividir tu lote por 2 o 3, o esperar a que pase la news. El mercado puede agitarse y tus stops podrían no aguantar como de costumbre.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -501,9 +501,9 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     context: "Viernes 22h45, cierre del forex en 15 minutos. Abres un BUY en EUR/USD con tu tamaño de lote habitual. El setup es válido.",
     correctMistake: "weekend_gap_exposure",
     decoyMistakes: ["stop_too_tight", "oversized_position", "trade_before_news"],
-    explanation: "El fin de semana, los mercados FX están cerrados, pero la actualidad sigue. Una news geopolítica mayor (declaración de banco central, conflicto, elección) puede crear un gap en la apertura del domingo y saltar tu SL de 50 a 200 pips. El slippage del fin de semana escapa a tu control.",
+    explanation: "El fin de semana, los mercados FX están cerrados, pero la actualidad sigue. Una news geopolítica mayor (declaración de banco central, conflicto, elección) puede crear un gap en la apertura del domingo y saltar tu SL varias decenas de pips, a veces mucho más. El slippage del fin de semana escapa a tu control.",
     lessons: {
-      advanced:     "Muchos fondos reducen sus posiciones FX direccionales antes del cierre del viernes, o se cubren con opciones. Mantener una exposición sin cobertura durante el fin de semana supone apostar por la actualidad geopolítica.",
+      advanced:     "Algunos fondos reducen sus posiciones FX direccionales antes del cierre del viernes, o se cubren con opciones. Mantener una exposición sin cobertura durante el fin de semana supone apostar por la actualidad geopolítica.",
       intermediate: "Antes de un fin de semana, dos opciones lógicas: salir de tus posiciones o reducir mucho el tamaño. El gap de apertura del domingo puede ser brutal, y tu SL no te protege mientras el mercado está cerrado.",
       beginner:     "El viernes por la noche, cerrar tus posiciones o reducir su tamaño es una opción lógica. Durante el fin de semana, el mercado está cerrado pero el mundo se mueve. El lunes por la mañana, el precio puede saltar directamente al otro lado de tu stop.",
     },

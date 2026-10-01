@@ -246,7 +246,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     explanation: "Le swing low est très souvent retesté avant la continuation. Ici, un stop au-dessus du low risque d'être balayé par le bruit normal du retest. Le trade tiendrait mieux avec un stop sous le swing low.",
     lessons: {
       beginner:     "Un stop se place plutôt DERRIÈRE l'invalidation, avec une marge : le placer dedans ou au-dessus l'expose au bruit.",
-      intermediate: "Le retest du low apparaît dans une large majorité des pullbacks. Une marge anti-bruit est donc fortement recommandée.",
+      intermediate: "Le low est souvent retesté pendant un pullback, avant la continuation. Une marge anti-bruit derrière le low est donc une option logique.",
       advanced:     "Sans marge ATR derrière la structure, ton stop peut attirer la liquidité. Ces niveaux sont souvent visés avant la vraie direction.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -305,8 +305,8 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     decoyMistakes: ["stop_too_tight", "trade_against_htf", "fomo_after_pump"],
     explanation: "Avec un R/R inférieur à 1, même 60 % de trades gagnants peuvent laisser une espérance négative. Un setup valide avec un mauvais R/R reste ici un trade discutable.",
     lessons: {
-      intermediate: "L'espérance d'un setup se calcule ainsi : (proba de gain × gain) - (proba de perte × risque). Si le R/R est sous 1, il faut plus de 60 % de réussite juste pour atteindre l'équilibre.",
-      advanced:     "Beaucoup de traders visent un R/R d'au moins 2:1 pour absorber les frais et les périodes de drawdown. Sous ce seuil, l'avantage statistique s'amenuise vite.",
+      intermediate: "L'espérance d'un setup se calcule ainsi : (proba de gain × gain) - (proba de perte × risque). Avec un R/R sous 1, il faut plus de 50 % de réussite pour atteindre l'équilibre, et 67 % pour un R/R de 0,5.",
+      advanced:     "Beaucoup de traders visent un R/R d'au moins 2:1 : cela laisse de la marge pour les frais et les séries de pertes. Avec un R/R plus faible, il faut un taux de réussite plus élevé pour rester gagnant.",
       beginner:     "Si tu risques 100€ pour gagner 50€, tu risques de perdre à long terme, même en gagnant souvent.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -346,8 +346,8 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     explanation: "Risquer 50% du capital sur un seul trade est extrêmement dangereux. Une seule perte coupe le compte en deux, et pour revenir à 500€, il faudrait ensuite faire +100% sur le capital restant.",
     lessons: {
       advanced:     "Repère courant chez les pros : 0,5 à 2 % du capital par trade selon la taille du compte. Au-delà de 5 %, on s'éloigne du trading pour se rapprocher du pari.",
-      intermediate: "La taille de position est une variable clé du money management. Un setup correct avec un lot trop gros peut suffire à vider un compte. Repère prudent : sur 500€, pas plus de 5 % par trade (soit 25€ de risque).",
-      beginner:     "Grille de référence : 5 % max sur un compte de 200-500€, 3 % sur 500-1000€, 2 % sur 1000-5000€. Le levier de ton broker compte peu ; ce qui compte, c'est combien tu perds en euros si ton SL est touché.",
+      intermediate: "La taille de position est une variable clé du money management. Un setup correct avec un lot trop gros peut suffire à vider un compte. Repère souvent cité pour un petit compte : sur 500€, pas plus de 5 % par trade (soit 25€ de risque).",
+      beginner:     "Grille souvent citée : 5 % max sur un compte de 200-500€, 3 % sur 500-1000€, 2 % sur 1000-5000€, puis 0,5 à 2 % au-delà. Le levier de ton broker compte peu ; ce qui compte, c'est combien tu perds en euros si ton SL est touché.",
     },
     difficulties: ["intermediate", "advanced"],
     extraInfo: "Risque par trade : 50% du capital",
@@ -491,7 +491,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     explanation: "Sur une news majeure (NFP, FOMC, CPI), le spread peut s'élargir x5 à x10, et un mouvement instantané peut sauter le SL. Une pratique courante : diviser la taille de lot par 2 ou 3 dans les 30 minutes autour d'une news rouge, ou ne pas trader.",
     lessons: {
       advanced:     "Beaucoup d'acteurs réduisent leur exposition avant les news pour cette raison : la price action peut devenir binaire et imprévisible. Garder une taille normale revient alors à parier sur le hasard.",
-      intermediate: "Une news majeure peut faire bouger une paire de 50-100 pips en une seconde. Ton SL devient théorique si le slippage te fait sortir 20-30 pips plus loin. Réduire la taille protège ton compte.",
+      intermediate: "Une news majeure peut faire bouger une paire de plusieurs dizaines de pips en quelques secondes. Ton SL devient théorique si le slippage te fait sortir plusieurs pips plus loin. Réduire la taille protège ton compte.",
       beginner:     "Avant un NFP, un FOMC ou un CPI, une option logique : diviser ton lot par 2 ou 3, ou attendre que la news passe. Le marché peut s'agiter, et tes stops risquent de ne pas tenir comme d'habitude.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -551,9 +551,9 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     context: "Vendredi 22h45, fermeture du forex dans 15 minutes. Tu ouvres un BUY sur EUR/USD avec ta taille de lot habituelle. Le setup est valide.",
     correctMistake: "weekend_gap_exposure",
     decoyMistakes: ["stop_too_tight", "oversized_position", "trade_before_news"],
-    explanation: "Le weekend, les marchés FX sont fermés, mais l'actualité continue. Une news géopolitique majeure (déclaration de banque centrale, conflit, élection) peut créer un gap à l'ouverture du dimanche et sauter ton SL de 50 à 200 pips. Le slippage du weekend échappe à ton contrôle.",
+    explanation: "Le weekend, les marchés FX sont fermés, mais l'actualité continue. Une news géopolitique majeure (déclaration de banque centrale, conflit, élection) peut créer un gap à l'ouverture du dimanche et sauter ton SL de plusieurs dizaines de pips, parfois bien plus. Le slippage du weekend échappe à ton contrôle.",
     lessons: {
-      advanced:     "Beaucoup de fonds réduisent leurs positions FX directionnelles avant la clôture du vendredi, ou se couvrent via des options. Garder une exposition non couverte sur le weekend revient à parier sur l'actualité géopolitique.",
+      advanced:     "Certains fonds réduisent leurs positions FX directionnelles avant la clôture du vendredi, ou se couvrent via des options. Garder une exposition non couverte sur le weekend revient à parier sur l'actualité géopolitique.",
       intermediate: "Avant un weekend, deux options logiques : sortir de tes positions, ou réduire fortement la taille. Le gap d'ouverture du dimanche peut être brutal, et ton SL ne te protège pas pendant la fermeture.",
       beginner:     "Le vendredi soir, fermer tes positions ou réduire leur taille est une option logique. Pendant le weekend, le marché est fermé mais le monde bouge. Lundi matin, le prix peut sauter directement de l'autre côté de ton stop.",
     },

@@ -196,7 +196,7 @@ export const MISTAKE_TEMPLATES_EN: MistakeTemplate[] = [
     explanation: "The swing low is very often retested before the continuation. Here, a stop above the low is likely to be swept by the normal noise of the retest. The trade would hold better with a stop below the swing low.",
     lessons: {
       beginner:     "A stop is rather placed BEHIND the invalidation, with a margin: placing it inside or above exposes it to noise.",
-      intermediate: "The retest of the low shows up in a large majority of pullbacks. An anti-noise margin is therefore strongly recommended.",
+      intermediate: "The low is often retested during a pullback, before the continuation. An anti-noise margin behind the low is therefore a logical option.",
       advanced:     "Without an ATR margin behind the structure, your stop can attract liquidity. These levels are often targeted before the real move.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -255,8 +255,8 @@ export const MISTAKE_TEMPLATES_EN: MistakeTemplate[] = [
     decoyMistakes: ["stop_too_tight", "trade_against_htf", "fomo_after_pump"],
     explanation: "With an R/R below 1, even 60% winning trades can leave a negative expectancy. A valid setup with a poor R/R remains a questionable trade here.",
     lessons: {
-      intermediate: "A setup's expectancy is computed as: (win prob × reward) - (loss prob × risk). If the R/R is below 1, you need over 60% wins just to break even.",
-      advanced:     "Many traders aim for an R/R of at least 2:1 to absorb fees and drawdown periods. Below that threshold, the statistical edge shrinks quickly.",
+      intermediate: "A setup's expectancy is computed as: (win prob × reward) - (loss prob × risk). With an R/R below 1, you need over 50% wins to break even, and 67% for an R/R of 0.5.",
+      advanced:     "Many traders aim for an R/R of at least 2:1: it leaves room for fees and losing streaks. With a lower R/R, you need a higher win rate to stay profitable.",
       beginner:     "If you risk €100 to make €50, you risk losing in the long run, even when you win often.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -296,8 +296,8 @@ export const MISTAKE_TEMPLATES_EN: MistakeTemplate[] = [
     explanation: "Risking 50% of capital on a single trade is extremely dangerous. A single loss cuts the account in half, and to get back to €500, you would then need +100% on the remaining capital.",
     lessons: {
       advanced:     "A common pro benchmark: 0.5 to 2% of capital per trade depending on account size. Beyond 5%, you drift away from trading and closer to gambling.",
-      intermediate: "Position size is a key variable of money management. A correct setup with a lot that's too big can be enough to wipe out an account. A cautious benchmark: on €500, no more than 5% per trade (so €25 of risk).",
-      beginner:     "Reference grid: 5% max on a €200-500 account, 3% on €500-1,000, 2% on €1,000-5,000. Your broker's leverage matters little; what counts is how much you lose in euros if your SL is hit.",
+      intermediate: "Position size is a key variable of money management. A correct setup with a lot that's too big can be enough to wipe out an account. A benchmark often quoted for a small account: on €500, no more than 5% per trade (so €25 of risk).",
+      beginner:     "An often-quoted grid: 5% max on a €200-500 account, 3% on €500-1,000, 2% on €1,000-5,000, then 0.5 to 2% beyond. Your broker's leverage matters little; what counts is how much you lose in euros if your SL is hit.",
     },
     difficulties: ["intermediate", "advanced"],
     extraInfo: "Risk per trade: 50% of capital",
@@ -441,7 +441,7 @@ export const MISTAKE_TEMPLATES_EN: MistakeTemplate[] = [
     explanation: "On major news (NFP, FOMC, CPI), the spread can widen x5 to x10, and an instant move can jump the SL. A common practice: divide the lot size by 2 or 3 in the 30 minutes around red news, or don't trade.",
     lessons: {
       advanced:     "Many players reduce their exposure before news for this reason: price action can become binary and unpredictable. Keeping a normal size then means betting on chance.",
-      intermediate: "Major news can move a pair 50-100 pips in a second. Your SL becomes theoretical if slippage takes you out 20-30 pips further. Reducing size protects your account.",
+      intermediate: "Major news can move a pair by several dozen pips within seconds. Your SL becomes theoretical if slippage takes you out several pips further. Reducing size protects your account.",
       beginner:     "Before an NFP, an FOMC or a CPI, a logical option: divide your lot by 2 or 3, or wait for the news to pass. The market can get jumpy, and your stops may not hold as usual.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -501,9 +501,9 @@ export const MISTAKE_TEMPLATES_EN: MistakeTemplate[] = [
     context: "Friday 4:45pm, forex closes in 15 minutes. You open a BUY on EUR/USD with your usual lot size. The setup is valid.",
     correctMistake: "weekend_gap_exposure",
     decoyMistakes: ["stop_too_tight", "oversized_position", "trade_before_news"],
-    explanation: "Over the weekend, FX markets are closed, but the news keeps coming. Major geopolitical news (central bank statement, conflict, election) can create a gap at Sunday's open and jump your SL by 50 to 200 pips. Weekend slippage is beyond your control.",
+    explanation: "Over the weekend, FX markets are closed, but the news keeps coming. Major geopolitical news (central bank statement, conflict, election) can create a gap at Sunday's open and jump your SL by several dozen pips, sometimes far more. Weekend slippage is beyond your control.",
     lessons: {
-      advanced:     "Many funds reduce their directional FX positions before the Friday close, or hedge via options. Holding unhedged exposure over the weekend means betting on geopolitical headlines.",
+      advanced:     "Some funds reduce their directional FX positions before the Friday close, or hedge via options. Holding unhedged exposure over the weekend means betting on geopolitical headlines.",
       intermediate: "Before a weekend, two logical options: exit your positions, or heavily reduce size. The Sunday opening gap can be brutal, and your SL doesn't protect you while the market is closed.",
       beginner:     "On Friday evening, closing your positions or reducing their size is a logical option. Over the weekend, the market is closed but the world moves. On Monday morning, price can jump straight to the other side of your stop.",
     },

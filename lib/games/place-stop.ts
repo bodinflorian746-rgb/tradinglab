@@ -131,7 +131,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     shortContext: "Pullback BUY dans un uptrend.",
     lessons: {
       beginner:     "Le stop logique se place plutôt DERRIÈRE le swing low, avec une marge : dedans, il reste dans le bruit ; trop loin, il dégrade le R/R.",
-      intermediate: "Le bruit du pullback retest souvent le low avant la continuation. Ici, une marge derrière le low protège contre ce sweep classique.",
+      intermediate: "Pendant un pullback, le prix revient souvent tester le low avant la continuation. Ici, une marge derrière le low protège contre ce sweep classique.",
       advanced:     "Ici, le stop logique respecte 3 contraintes : derrière le low, hors du bruit ATR, et un R/R d'au moins 2. C'est le seul des trois qui les remplit toutes.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -324,7 +324,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     lessons: {
       beginner:     "Le PDL (Previous Day Low) est souvent une zone de chasse. Un SL sous le PDL, avec une marge, tient mieux qu'un SL pile en dessous.",
       intermediate: "Le PDL (Previous Day Low) est un niveau de liquidité quotidien, souvent visé par les chasses aux stops. Un SL pile en dessous risque fort d'être capturé.",
-      advanced:     "Le PDL fait partie des niveaux clés, avec PDH, PWL, PWH et PML. Un SL placé à 0-5 pips sous l'un d'eux a de fortes chances d'être chassé avant le vrai mouvement.",
+      advanced:     "Le PDL fait partie des niveaux clés, avec PDH, PWL, PWH et PML. Un SL placé à 0-5 pips au-delà de l'un d'eux a de fortes chances d'être chassé avant le vrai mouvement.",
     },
     difficulties: ["intermediate", "advanced"],
     tag: "piège",
@@ -339,7 +339,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     shortContext: "ATR x2 vs normale",
     lessons: {
       beginner:     "Quand la volatilité explose (FOMC, NFP), un SL « normal » devient souvent trop serré. Élargir la marge selon l'ATR du jour est une option logique.",
-      intermediate: "Un jour où l'ATR double, le SL « standard » devient en pratique trop serré. Ici, une marge ajustée à la volatilité réelle évite une sortie quasi certaine.",
+      intermediate: "Un jour où l'ATR double, le SL « standard » devient en pratique trop serré. Ici, une marge ajustée à la volatilité réelle évite une sortie très probable.",
       advanced:     "La taille du SL n'est pas un nombre fixe de pips : elle suit plutôt l'ATR du jour. Quand l'ATR double, doubler la marge se défend, sinon ton SL devient trop serré.",
     },
     difficulties: ["advanced"],
@@ -812,7 +812,7 @@ function explicitCandle(o: number, c: number, h: number, l: number): Candle {
 // Réutilisables — chaque scenario les personnalise légèrement.
 const TIGHT_RATIONALE = "✗ Trop serré : ici, le stop est placé dans le bruit normal du marché. La 1re mèche de retest risque de le balayer avant que le trade aboutisse. C'est une erreur fréquente.";
 const LOGICAL_RATIONALE = "✓ Placement logique : derrière la vraie invalidation, avec une marge anti-bruit. Ici, il survit aux retests et laisse le trade capter la cassure structurelle si elle arrive.";
-const WIDE_RATIONALE = "≈ Il survit, mais dégrade le R/R. Ici, la distance est trop grande : le capital est mal utilisé, avec un ratio risque/rendement souvent sous 1.";
+const WIDE_RATIONALE = "≈ Il survit, mais dégrade le R/R. Ici, la distance est trop grande : le capital est mal utilisé, et le R/R baisse nettement par rapport au stop logique.";
 
 // Rationales spécifiques aux nouveaux scénarios (sweep / liquidity / multi-structure)
 const EQUAL_LOWS_TIGHT_FR   = "✗ Ici, le stop est DANS la zone de liquidité créée par les 2 equal lows. C'est le SL le plus évident, souvent ramassé avant la hausse.";
