@@ -8,7 +8,7 @@ import * as EsGame from "@/lib/games/build-the-trade-es";
 import * as EnGame from "@/lib/games/build-the-trade-en";
 import {
   evaluateTrade,
-  maxTradePoints,
+  MAX_TRADE_POINTS,
   ROUNDS_PER_SESSION,
   type BuildTradeChart,
   type BuildTradeInstance,
@@ -386,7 +386,7 @@ export default function BuildTheTradePage() {
 
     setResult(r);
     setScore((s) => s + r.points);
-    if (r.qualityMatch === 3 && r.outcome === "tp_hit") {
+    if (r.qualityMatch === 3) {
       const ns = streak + 1;
       setStreak(ns);
       setMaxStreak((m) => Math.max(m, ns));
@@ -527,9 +527,8 @@ export default function BuildTheTradePage() {
                 <VerdictOverlay
                   state={VERDICT_STATE[G.setupVerdict(result).color]}
                   headline={G.setupVerdict(result).label}
-                  points={result.points - result.streakBonus}
-                  max={maxTradePoints(chart, current.optimal)}
-                  bonus={result.streakBonus > 0 ? `+${result.streakBonus} streak` : undefined}
+                  points={result.points}
+                  max={MAX_TRADE_POINTS}
                 />
               )}
             </GameChartV2>
@@ -790,7 +789,7 @@ function Feedback({
             <OutcomeTile
               label={T.optimalPlan}
               value={`${result.qualityMatch}/3`}
-              valueClass={result.qualityMatch === 3 ? "text-emerald-300" : result.qualityMatch >= 2 ? "text-amber-300" : "text-red-300"}
+              valueClass={result.qualityMatch === 3 ? "text-emerald-300" : result.qualityMatch >= 1 ? "text-amber-300" : "text-red-300"}
             />
           </>
         )}
@@ -945,8 +944,8 @@ function Summary({
   const total = ROUNDS_PER_SESSION;
   const verdict = sessionVerdictFn(score, stats.perfectSetups, total);
   const verdictColor =
-    score >= 500 ? "text-emerald-300"
-  : score >= 0   ? "text-amber-300"
+    score >= 180 ? "text-emerald-300"
+  : score >= 60  ? "text-amber-300"
   :                "text-red-300";
   const meta = difficultyMeta[difficulty];
 

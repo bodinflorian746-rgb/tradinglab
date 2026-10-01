@@ -75,7 +75,6 @@ function isCorrectType(stopType: StopType, hasLogical: boolean): boolean {
 // la bonne réponse.
 function feedbackColor(stopType: StopType, hasLogical: boolean): "emerald" | "amber" | "red" {
   if (isCorrectType(stopType, hasLogical)) return "emerald";
-  if (stopType === "wide") return "amber";  // classique : survit mais RR cassé
   return "red";
 }
 
@@ -104,10 +103,9 @@ function displayedRR(entry: number, tp: number | null, stop: number): number | n
   return tp !== null ? Number(Math.abs((tp - entry) / (entry - stop)).toFixed(1)) : null;
 }
 
-/** État du verdict : bon (vert), partiel (ambre : stop trop large, +30), faux (rouge). */
+/** État du verdict (barème simple) : bon stop vert, tout autre stop rouge. */
 function verdictState(stopType: StopType, hasLogical: boolean): VerdictState {
-  if (isCorrectType(stopType, hasLogical)) return "good";
-  return stopType === "wide" ? "partial" : "bad";
+  return isCorrectType(stopType, hasLogical) ? "good" : "bad";
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -133,7 +131,6 @@ export default function PlaceStopPage() {
         round:           "Ronda",
         score:           "Puntuación",
         ofStreak:        "de racha",
-        bonusActive:     "· bono activo",
         loading:         "Cargando…",
         htf:             "HTF",
         volatility:      "Volatilidad",
@@ -177,7 +174,6 @@ export default function PlaceStopPage() {
         round:           "Round",
         score:           "Score",
         ofStreak:        "streak",
-        bonusActive:     "· bonus active",
         loading:         "Loading…",
         htf:             "HTF",
         volatility:      "Volatility",
@@ -220,7 +216,6 @@ export default function PlaceStopPage() {
         round:           "Round",
         score:           "Score",
         ofStreak:        "de série",
-        bonusActive:     "· bonus actif",
         loading:         "Chargement…",
         htf:             "HTF",
         volatility:      "Volatilité",
@@ -462,7 +457,6 @@ export default function PlaceStopPage() {
           <span className="text-amber-300">🔥</span>
           <span className="v2-mono text-amber-300">{streak}</span>
           <span className="text-[color:var(--v2-text-3)]">{T.ofStreak}</span>
-          {streak >= 3 && <span className="text-amber-300">{T.bonusActive}</span>}
         </div>
 
         {/* Scénario */}
@@ -519,9 +513,8 @@ export default function PlaceStopPage() {
                 <VerdictOverlay
                   state={verdictState(result.type, hasLogicalInChart)}
                   headline={feedbackLabel(result.type, hasLogicalInChart, locale, displayedRR(chart.entry, chart.tp, chart.stops.find((s) => s.id === chosen)!.price))}
-                  points={result.points - result.streakBonus}
-                  max={100}
-                  bonus={result.streakBonus > 0 ? `+${result.streakBonus} streak` : undefined}
+                  points={result.points}
+                  max={10}
                 />
               )}
             </GameChartV2>
@@ -909,8 +902,8 @@ function Summary({
   const total = totalRounds(stats);
   const verdict = sessionVerdictFn(score, stats.logical, total);
   const verdictColor =
-    score >= 700 ? "text-emerald-300"
-  : score >= 0   ? "text-amber-300"
+    score >= 70 ? "text-emerald-300"
+  : score >= 30 ? "text-amber-300"
   :                "text-red-300";
   const meta = difficultyMeta[difficulty];
 

@@ -87,7 +87,8 @@ function VerdictIcon({ state, size }: { state: VerdictState; size: number }) {
   );
 }
 
-const fmtPoints = (n: number) => `${n >= 0 ? "+" : ""}${n}`;
+// « +10 » pour un gain, « 0 » sans signe pour une mauvaise réponse
+const fmtPoints = (n: number) => `${n > 0 ? "+" : ""}${n}`;
 
 /**
  * Verdict en grand au centre du graphique, avec effet d'échelle. À passer en

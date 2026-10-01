@@ -10,7 +10,7 @@
 //  - sonde Build the Trade : chaque bouton de l'étape active a son prix en
 //    étiquette sur le graphique, étiquettes rangées par prix ;
 //  - verdict : état (bon / partiel / faux), couleurs du titre et des points
-//    cohérentes, maximum affiché ; « RR dégradé » seulement en état partiel.
+//    cohérentes, maximum affiché ; barème simple : bon > 0, faux = 0 (sans signe).
 import { chromium } from "playwright";
 
 const arg = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) ?? `--${k}=${d}`).split("=")[1];
@@ -19,7 +19,6 @@ const GAMES = arg("jeux", "buy-sell-no-trade,find-the-mistake,place-stop,build-t
 const LANGS = arg("langues", "fr,en,es").split(",");
 const FORMATS = arg("formats", "390,1440").split(",");
 const VALIDATE = { fr: "Valider le trade", en: "Validate the trade", es: "Validar el trade" };
-const DEGRADED = /RR dégradé|R\/R degraded|RR degradado/;
 const STATE_CLASS = { good: "emerald", partial: "amber", bad: "red" };
 
 const scan = (page) => page.evaluate(() => {
@@ -74,7 +73,7 @@ const probePlan = (page) => page.evaluate(() => {
   return errs;
 });
 
-const probeVerdict = (page) => page.evaluate(({ STATE_CLASS, degraded }) => {
+const probeVerdict = (page) => page.evaluate(({ STATE_CLASS }) => {
   const v = document.querySelector(".tsx-v2 [data-verdict]");
   if (!v) return ["verdict absent"];
   const st = v.getAttribute("data-verdict");
@@ -85,12 +84,13 @@ const probeVerdict = (page) => page.evaluate(({ STATE_CLASS, degraded }) => {
   if (!pts || !pts.className.includes(STATE_CLASS[st])) errs.push(`points pas en ${STATE_CLASS[st]} pour l'état ${st}`);
   if (!title || !title.className.includes(STATE_CLASS[st])) errs.push(`titre pas en ${STATE_CLASS[st]} pour l'état ${st}`);
   if (!v.querySelector(".v2-verdict-max") || !/\/\s*-?\d+/.test(v.querySelector(".v2-verdict-max").textContent)) errs.push("maximum du round non affiché");
-  const pv = parseInt((pts?.firstChild?.textContent ?? "").replace(/[^\d-]/g, ""), 10);
+  const raw = (pts?.firstChild?.textContent ?? "").trim();
+  const pv = parseInt(raw.replace(/[^\d-]/g, ""), 10);
   if (st === "good" && !(pv > 0)) errs.push(`état bon avec ${pv} points`);
-  if (st === "bad" && !(pv < 0)) errs.push(`état faux avec ${pv} points`);
-  if (new RegExp(degraded).test(title?.textContent ?? "") && st !== "partial") errs.push("« RR dégradé » hors état partiel");
+  if (st === "bad" && pv !== 0) errs.push(`état faux avec ${pv} points (attendu 0)`);
+  if (raw.startsWith("+") !== pv > 0) errs.push(`signe des points incohérent « ${raw} »`);
   return errs;
-}, { STATE_CLASS, degraded: DEGRADED.source });
+}, { STATE_CLASS });
 
 async function session(browser, slug, loc, w) {
   const mobile = +w < 800;

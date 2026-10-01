@@ -387,14 +387,9 @@ export function generateBuildTradeScenarios(seed: number, difficulty: Difficulty
 // ─── EN verdicts ──────────────────────────────────────────────────────────────
 
 export function setupVerdict(result: BuildTradeResult): { label: string; color: "emerald" | "amber" | "red" } {
-  if (result.qualityMatch === 3 && result.outcome === "tp_hit") return { label: "Perfect setup",      color: "emerald" };
-  if (result.qualityMatch >= 2  && result.outcome === "tp_hit") return { label: "Solid setup",        color: "emerald" };
-  // 0 ou 1 critère sur 3 : trade gagnant, mais le plan reste faible (ambre)
-  if (result.outcome === "tp_hit")                              return { label: "Winner, but weak plan", color: "amber" };
-  if (result.outcome === "no_fill")                             return { label: "Trade not filled",   color: "amber"   };
-  if (result.outcome === "open")                                return { label: "Trade open",         color: "amber"   };
-  if (result.qualityMatch >= 2)                                 return { label: "Good plan, bad market", color: "amber" };
-  return { label: "Failed setup", color: "red" };
+  // Barème simple : le verdict ne dépend que des 3 décisions (entrée, stop, TP)
+  const q = result.qualityMatch;
+  return { label: `${q}/3 right decisions`, color: q === 3 ? "emerald" : q >= 1 ? "amber" : "red" };
 }
 
 export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: string; textClass: string; description: string }> = {
@@ -420,9 +415,9 @@ export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: stri
 
 export function sessionVerdict(score: number, perfectCount: number, total: number): string {
   if (perfectCount >= total - 1) return "Architect trader";
-  if (score >= 500)              return "Solid build";
-  if (score >= 200)              return "Decent plan";
-  if (score >= 0)                return "Still to structure";
+  if (score >= 180)              return "Solid build";
+  if (score >= 120)              return "Decent plan";
+  if (score >= 60)               return "Still to structure";
   return "Messy plan";
 }
 

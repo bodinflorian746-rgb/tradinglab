@@ -1348,6 +1348,10 @@ function maxDrawdownAfterEntry(entry: number, direction: TradeDirection, future:
   return Math.abs(entry - worst);
 }
 
+export const POINTS_PER_DECISION = 10;
+/** Points maximum d'un round : 3 décisions justes. */
+export const MAX_TRADE_POINTS = 3 * POINTS_PER_DECISION;
+
 export function evaluateTrade(
   picks:    ChoiceSet,
   chart:    BuildTradeChart,
@@ -1399,22 +1403,13 @@ export function evaluateTrade(
   if (picks.entry === optimal.entry) qualityMatch++;
   if (picks.stop  === optimal.stop)  qualityMatch++;
   if (picks.tp    === optimal.tp)    qualityMatch++;
-  const qualityPoints = qualityMatch === 3 ? 60 : qualityMatch === 2 ? 30 : qualityMatch === 1 ? 0 : -20;
-
-  let outcomePoints = 0;
-  if (outcome === "tp_hit") {
-    outcomePoints = 30 + Math.max(0, Math.round((rr - 1) * 20));
-  } else if (outcome === "sl_hit") {
-    outcomePoints = -30;
-  } else if (outcome === "open") {
-    outcomePoints = 5;
-  } else {
-    // no_fill
-    outcomePoints = 10;
-  }
-
-  const basePoints = qualityPoints + outcomePoints;
-  const streakBonus = qualityMatch === 3 && outcome === "tp_hit" && currentStreak >= 2 ? 30 : 0;
+  // Barème simple (décision PO) : +10 par décision juste. L'issue du trade (TP, stop,
+  // ouvert, non rempli) reste affichée comme information mais ne compte plus.
+  void currentStreak;
+  const qualityPoints = POINTS_PER_DECISION * qualityMatch;
+  const outcomePoints = 0;
+  const basePoints = qualityPoints;
+  const streakBonus = 0;
 
   return {
     outcome,
@@ -1434,31 +1429,12 @@ export function evaluateTrade(
   };
 }
 
-/**
- * Points maximum atteignables sur ce graphique : meilleur des 27 plans, hors
- * bonus de série. Sert d'échelle au verdict (« +90 / 170 ») ; un plan non
- * optimal peut rapporter plus que le plan optimal quand son R/R réalisé est plus grand.
- */
-export function maxTradePoints(chart: BuildTradeChart, optimal: ChoiceSet): number {
-  let best = -Infinity;
-  for (const entry of ["aggressive", "confirmation", "deep_pullback"] as EntryType[])
-    for (const stop of ["tight", "logical", "wide"] as StopType[])
-      for (const tp of ["fast", "balanced", "ambitious"] as TpType[])
-        best = Math.max(best, evaluateTrade({ entry, stop, tp }, chart, optimal, 0).points);
-  return best;
-}
-
 // ─── Verdicts ────────────────────────────────────────────────────────────────
 
 export function setupVerdict(result: BuildTradeResult): { label: string; color: "emerald" | "amber" | "red" } {
-  if (result.qualityMatch === 3 && result.outcome === "tp_hit") return { label: "Setup parfait",     color: "emerald" };
-  if (result.qualityMatch >= 2  && result.outcome === "tp_hit") return { label: "Setup solide",      color: "emerald" };
-  // 0 ou 1 critère sur 3 : trade gagnant, mais le plan reste faible (ambre)
-  if (result.outcome === "tp_hit")                              return { label: "Gagnant, mais plan faible", color: "amber" };
-  if (result.outcome === "no_fill")                             return { label: "Trade non rempli",  color: "amber"   };
-  if (result.outcome === "open")                                return { label: "Trade en cours",    color: "amber"   };
-  if (result.qualityMatch >= 2)                                 return { label: "Bon plan, mauvais marché", color: "amber" };
-  return { label: "Setup raté", color: "red" };
+  // Barème simple : le verdict ne dépend que des 3 décisions (entrée, stop, TP)
+  const q = result.qualityMatch;
+  return { label: `${q}/3 décisions justes`, color: q === 3 ? "emerald" : q >= 1 ? "amber" : "red" };
 }
 
 export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: string; textClass: string; description: string }> = {
@@ -1484,8 +1460,8 @@ export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: stri
 
 export function sessionVerdict(score: number, perfectCount: number, total: number): string {
   if (perfectCount >= total - 1) return "Trader architecte";
-  if (score >= 500)              return "Construction solide";
-  if (score >= 200)              return "Plan correct";
-  if (score >= 0)                return "Encore à structurer";
+  if (score >= 180)              return "Construction solide";
+  if (score >= 120)              return "Plan correct";
+  if (score >= 60)               return "Encore à structurer";
   return "Plan désordonné";
 }

@@ -85,7 +85,6 @@ export default function BuySellNoTradePage() {
         round:           "Ronda",
         score:           "Puntuación",
         ofStreak:        "de racha",
-        bonusActive:     "· bono activo",
         skills:          "Habilidades",
         loading:         "Cargando…",
         newsWarning:     "Noticia macro mayor en menos de 30 min, volatilidad y spread imprevisibles.",
@@ -134,7 +133,6 @@ export default function BuySellNoTradePage() {
         round:           "Round",
         score:           "Score",
         ofStreak:        "streak",
-        bonusActive:     "· bonus active",
         skills:          "Skills",
         loading:         "Loading…",
         newsWarning:     "Major macro news in < 30 min, unpredictable volatility and spread.",
@@ -182,7 +180,6 @@ export default function BuySellNoTradePage() {
         round:           "Round",
         score:           "Score",
         ofStreak:        "de série",
-        bonusActive:     "· bonus actif",
         skills:          "Compétences",
         loading:         "Chargement…",
         newsWarning:     "News macro majeure dans < 30 min, volatilité et spread imprévisibles.",
@@ -242,7 +239,6 @@ export default function BuySellNoTradePage() {
   const [phase, setPhase] = useState<"placing" | "revealing" | "feedback">("placing");
   const [revealed, setRevealed] = useState(0);
   const [lastPoints, setLastPoints] = useState(0);
-  const [lastStreakBonus, setLastStreakBonus] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
   const animRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -258,7 +254,6 @@ export default function BuySellNoTradePage() {
     setRevealed(0);
     setChosen(null);
     setLastPoints(0);
-    setLastStreakBonus(0);
     if (animRef.current) { clearTimeout(animRef.current); animRef.current = null; }
   }, [idx, difficulty]);
 
@@ -351,7 +346,6 @@ export default function BuySellNoTradePage() {
     });
     setChosen(c);
     setLastPoints(r.points);
-    setLastStreakBonus(r.streakBonus);
     setScore((s) => s + r.points);
     setStats((s) => ({
       ...s,
@@ -428,7 +422,6 @@ export default function BuySellNoTradePage() {
           <span className="text-amber-300">🔥</span>
           <span className="v2-mono text-amber-300">{streak}</span>
           <span className="text-[color:var(--v2-text-3)]">{T.ofStreak}</span>
-          {streak >= 3 && <span className="text-amber-300">{T.bonusActive}</span>}
         </div>
 
         {/* Scénario */}
@@ -474,9 +467,8 @@ export default function BuySellNoTradePage() {
                 <VerdictOverlay
                   state={correct ? "good" : "bad"}
                   headline={headline}
-                  points={lastPoints - lastStreakBonus}
-                  max={current.correctAnswer === "NO_TRADE" ? 120 : 100}
-                  bonus={lastStreakBonus > 0 ? `+${lastStreakBonus} streak` : undefined}
+                  points={lastPoints}
+                  max={10}
                 />
               )}
             </GameChartV2>
@@ -759,9 +751,9 @@ function Summary({
 }) {
   const accuracy = Math.round((correctCount / ROUNDS_PER_SESSION) * 100);
   const verdict =
-    score >= 1000 ? { label: T.traderDisciplined, color: "text-emerald-300" }
-  : score >= 600  ? { label: T.goodEye,            color: "text-emerald-300" }
-  : score >= 200  ? { label: T.toPolish,           color: "text-amber-300"   }
+    score >= 80 ? { label: T.traderDisciplined, color: "text-emerald-300" }
+  : score >= 60 ? { label: T.goodEye,            color: "text-emerald-300" }
+  : score >= 30 ? { label: T.toPolish,           color: "text-amber-300"   }
   :                 { label: T.lackPatience,       color: "text-red-300"     };
   const meta = difficultyMeta[difficulty];
 

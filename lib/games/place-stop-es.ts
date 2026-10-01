@@ -817,10 +817,10 @@ export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: stri
 
 export function sessionVerdict(score: number, logicalCount: number, total: number): string {
   if (logicalCount >= total - 1) return "Stop sniper";
-  if (score >= 700)              return "Buena protección";
-  if (score >= 300)              return "Lectura sólida";
-  if (score >= 0)                return "Por pulir";
-  if (score >= -200)             return "Demasiado emocional";
+  if (score >= 70)               return "Buena protección";
+  if (score >= 50)               return "Lectura sólida";
+  if (score >= 30)               return "Por pulir";
+  if (score >= 10)               return "Demasiado emocional";
   return "Le das tu SL al mercado";
 }
 

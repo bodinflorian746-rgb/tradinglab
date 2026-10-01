@@ -119,17 +119,16 @@ test.describe("QA métier Build the Trade", () => {
         expect(t, `template ${id} existe`).toBeDefined();
         expect(t!.difficulties.includes(difficulty)).toBe(true);
 
-        // Sur 5 seeds, le combo optimal doit donner un score >= +50
-        // (le combo optimal pourrait perdre sur certains seeds extrêmes, mais
-        // sur la majorité doit gagner)
-        let totalScore = 0;
+        // Barème simple (J10) : le combo optimal vaut 3/3 décisions = 30 points,
+        // et le trade gagne (TP atteint) sur la majorité des 5 seeds.
+        let tpHits = 0;
         for (let s = 1; s <= 5; s++) {
           const chart = buildBuildTradeChart(t!, s * 1000 + 31, "normale");
           const result = evaluateTrade(t!.optimal, chart, t!.optimal, 0);
-          totalScore += result.points;
+          expect(result.points, `${id} ${difficulty} combo optimal = 30 points`).toBe(30);
+          if (result.outcome === "tp_hit") tpHits++;
         }
-        const avgScore = totalScore / 5;
-        expect(avgScore, `${id} ${difficulty} avg score optimal ${avgScore.toFixed(1)} >= 50`).toBeGreaterThanOrEqual(50);
+        expect(tpHits, `${id} ${difficulty} TP atteint par le combo optimal sur ${tpHits}/5 seeds`).toBeGreaterThanOrEqual(3);
       });
     }
   }

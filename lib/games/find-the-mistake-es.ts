@@ -571,9 +571,9 @@ export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: stri
 
 export function sessionVerdict(score: number, correctCount: number, total: number): string {
   if (correctCount >= total - 1) return "Ojo de lince";
-  if (score >= 700)              return "Sólido";
-  if (score >= 300)              return "Por pulir";
-  if (score >= 0)                return "Aún hay camino";
+  if (score >= 70)               return "Sólido";
+  if (score >= 30)               return "Por pulir";
+  if (score >= 10)               return "Aún hay camino";
   return "Mucho que aprender";
 }
 

@@ -387,14 +387,9 @@ export function generateBuildTradeScenarios(seed: number, difficulty: Difficulty
 // ─── Verdicts ES ─────────────────────────────────────────────────────────────
 
 export function setupVerdict(result: BuildTradeResult): { label: string; color: "emerald" | "amber" | "red" } {
-  if (result.qualityMatch === 3 && result.outcome === "tp_hit") return { label: "Setup perfecto",      color: "emerald" };
-  if (result.qualityMatch >= 2  && result.outcome === "tp_hit") return { label: "Setup sólido",        color: "emerald" };
-  // 0 ou 1 critère sur 3 : trade gagnant, mais le plan reste faible (ambre)
-  if (result.outcome === "tp_hit")                              return { label: "Ganador, pero plan débil", color: "amber" };
-  if (result.outcome === "no_fill")                             return { label: "Trade no completado", color: "amber"   };
-  if (result.outcome === "open")                                return { label: "Trade en curso",      color: "amber"   };
-  if (result.qualityMatch >= 2)                                 return { label: "Buen plan, mal mercado", color: "amber" };
-  return { label: "Setup fallido", color: "red" };
+  // Barème simple : le verdict ne dépend que des 3 décisions (entrée, stop, TP)
+  const q = result.qualityMatch;
+  return { label: `${q}/3 decisiones acertadas`, color: q === 3 ? "emerald" : q >= 1 ? "amber" : "red" };
 }
 
 export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: string; textClass: string; description: string }> = {
@@ -420,9 +415,9 @@ export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: stri
 
 export function sessionVerdict(score: number, perfectCount: number, total: number): string {
   if (perfectCount >= total - 1) return "Trader arquitecto";
-  if (score >= 500)              return "Construcción sólida";
-  if (score >= 200)              return "Plan correcto";
-  if (score >= 0)                return "Aún por estructurar";
+  if (score >= 180)              return "Construcción sólida";
+  if (score >= 120)              return "Plan correcto";
+  if (score >= 60)               return "Aún por estructurar";
   return "Plan desordenado";
 }
 

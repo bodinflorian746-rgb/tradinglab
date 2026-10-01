@@ -571,9 +571,9 @@ export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: stri
 
 export function sessionVerdict(score: number, correctCount: number, total: number): string {
   if (correctCount >= total - 1) return "Eagle eye";
-  if (score >= 700)              return "Solid";
-  if (score >= 300)              return "Needs polish";
-  if (score >= 0)                return "Still some way to go";
+  if (score >= 70)               return "Solid";
+  if (score >= 30)               return "Needs polish";
+  if (score >= 10)               return "Still some way to go";
   return "Lots to learn";
 }
 

@@ -58,7 +58,6 @@ export default function FindTheMistakePage() {
         round:           "Ronda",
         score:           "Puntuación",
         ofStreak:        "de racha",
-        bonusActive:     "· bono activo",
         loading:         "Cargando…",
         newsWarning:     "Noticia macro mayor en menos de 30 min.",
         htf:             "HTF",
@@ -102,7 +101,6 @@ export default function FindTheMistakePage() {
         round:           "Round",
         score:           "Score",
         ofStreak:        "streak",
-        bonusActive:     "· bonus active",
         loading:         "Loading…",
         newsWarning:     "Major macro news in < 30 min.",
         htf:             "HTF",
@@ -145,7 +143,6 @@ export default function FindTheMistakePage() {
         round:           "Round",
         score:           "Score",
         ofStreak:        "de série",
-        bonusActive:     "· bonus actif",
         loading:         "Chargement…",
         newsWarning:     "News macro majeure dans < 30 min.",
         htf:             "HTF",
@@ -343,7 +340,6 @@ export default function FindTheMistakePage() {
           <span className="text-amber-300">🔥</span>
           <span className="v2-mono text-amber-300">{streak}</span>
           <span className="text-[color:var(--v2-text-3)]">{T.ofStreak}</span>
-          {streak >= 3 && <span className="text-amber-300">{T.bonusActive}</span>}
         </div>
 
         {/* Scénario */}
@@ -391,9 +387,8 @@ export default function FindTheMistakePage() {
                   compact
                   state={result.correct ? "good" : "bad"}
                   headline={result.correct ? T.wellSeen : T.wrongMistake}
-                  points={result.points - result.streakBonus}
-                  max={100}
-                  bonus={result.streakBonus > 0 ? `+${result.streakBonus} streak` : undefined}
+                  points={result.points}
+                  max={10}
                 />
               )}
             </GameChartV2>
@@ -713,8 +708,8 @@ function Summary({
   const accuracy = total > 0 ? Math.round((stats.correct / total) * 100) : 0;
   const verdict = sessionVerdictFn(score, stats.correct, total);
   const verdictColor =
-    score >= 700 ? "text-emerald-300"
-  : score >= 0   ? "text-amber-300"
+    score >= 70 ? "text-emerald-300"
+  : score >= 30 ? "text-amber-300"
   :                "text-red-300";
   const meta = difficultyMeta[difficulty];
 

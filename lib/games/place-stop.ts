@@ -2918,22 +2918,12 @@ export function scoreStopChoice(chosenId: StopId, chart: PlaceStopChart, current
   const hasLogical = chart.stops.some((s) => s.type === "logical");
   const correctType: StopType = hasLogical ? "logical" : "wide";
   const isCorrect = chosen.type === correctType;
-  let points = 0;
-  let streakBonus = 0;
-  if (isCorrect) {
-    points = 100;
-    if (currentStreak >= 2) streakBonus = 30;
-  } else {
-    switch (chosen.type) {
-      case "wide":      points = 30; break;   // classique : survit mais RR cassé
-      case "liquidity": points = -100; break;
-      case "tight":     points = -50; break;  // inclut les "logical_too_tight" (mêmes -50)
-      case "logical":   points = 100; break;  // dead-code : si "logical" existe, c'est le correctType
-    }
-  }
+  // Barème simple (décision PO) : bon stop +10, tout autre stop 0 (plus de points
+  // partiels pour le stop trop large, plus de malus). La série n'ajoute rien.
+  void currentStreak;
   return {
-    points: points + streakBonus,
-    streakBonus,
+    points: isCorrect ? 10 : 0,
+    streakBonus: 0,
     type: chosen.type,
     correct: isCorrect,
     hitMap,
@@ -2972,9 +2962,9 @@ export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: stri
 
 export function sessionVerdict(score: number, logicalCount: number, total: number): string {
   if (logicalCount >= total - 1) return "Stop sniper";
-  if (score >= 700)              return "Bonne protection";
-  if (score >= 300)              return "Lecture solide";
-  if (score >= 0)                return "À polir";
-  if (score >= -200)             return "Trop émotionnel";
+  if (score >= 70)               return "Bonne protection";
+  if (score >= 50)               return "Lecture solide";
+  if (score >= 30)               return "À polir";
+  if (score >= 10)               return "Trop émotionnel";
   return "Tu donnes ton SL au marché";
 }

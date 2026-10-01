@@ -1389,16 +1389,14 @@ export interface ScoreResult {
   streakBonus:  number;
 }
 
+// Barème simple (décision PO) : bonne réponse +10, mauvaise 0, sans bonus ni malus.
+export const POINTS_PER_CORRECT = 10;
+
+// `currentStreak` est conservé dans la signature pour les appelants, sans effet sur les points.
 export function scoreChoice(choice: GameChoice, correct: GameChoice, currentStreak: number): ScoreResult {
-  if (choice === correct) {
-    const base = correct === "NO_TRADE" ? 120 : 100;
-    const streakBonus = currentStreak >= 2 ? 30 : 0;
-    return { correct: true, points: base + streakBonus, streakBonus };
-  }
-  if (correct === "NO_TRADE") {
-    return { correct: false, points: -100, streakBonus: 0 };
-  }
-  return { correct: false, points: -50, streakBonus: 0 };
+  void currentStreak;
+  const ok = choice === correct;
+  return { correct: ok, points: ok ? POINTS_PER_CORRECT : 0, streakBonus: 0 };
 }
 
 // ─── QA helpers exposés (utiles pour tests Playwright et auto-vérification) ──

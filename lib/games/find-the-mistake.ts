@@ -1071,13 +1071,13 @@ export interface MistakeScoreResult {
   streakBonus: number;
 }
 
+// Barème simple (décision PO) : bonne réponse +10, mauvaise 0, sans bonus ni malus.
+export const POINTS_PER_CORRECT = 10;
+
 export function scoreMistakeChoice(picked: MistakeId, correct: MistakeId, currentStreak: number): MistakeScoreResult {
-  if (picked === correct) {
-    const base = 100;
-    const streakBonus = currentStreak >= 2 ? 30 : 0;
-    return { correct: true, points: base + streakBonus, streakBonus };
-  }
-  return { correct: false, points: -30, streakBonus: 0 };
+  void currentStreak;
+  const ok = picked === correct;
+  return { correct: ok, points: ok ? POINTS_PER_CORRECT : 0, streakBonus: 0 };
 }
 
 // ─── Verdicts ────────────────────────────────────────────────────────────────
@@ -1115,8 +1115,8 @@ export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: stri
 
 export function sessionVerdict(score: number, correctCount: number, total: number): string {
   if (correctCount >= total - 1) return "Œil de lynx";
-  if (score >= 700)              return "Solide";
-  if (score >= 300)              return "À polir";
-  if (score >= 0)                return "Encore du chemin";
+  if (score >= 70)               return "Solide";
+  if (score >= 30)               return "À polir";
+  if (score >= 10)               return "Encore du chemin";
   return "Beaucoup à apprendre";
 }
