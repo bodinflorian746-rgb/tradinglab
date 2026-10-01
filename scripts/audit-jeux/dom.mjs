@@ -10,7 +10,9 @@
 //  - sonde Build the Trade : chaque bouton de l'étape active a son prix en
 //    étiquette sur le graphique, étiquettes rangées par prix ;
 //  - verdict : état (bon / partiel / faux), couleurs du titre et des points
-//    cohérentes, maximum affiché ; barème simple : bon > 0, faux = 0 (sans signe).
+//    cohérentes, maximum affiché ; barème simple : bon > 0, faux = 0 (sans signe) ;
+//  - lignes au verdict (entrée, TP, stops, erreur marquée) : chacune a un rendu
+//    non nul (le graphique change quand on la masque).
 import { chromium } from "playwright";
 
 const arg = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) ?? `--${k}=${d}`).split("=")[1];
@@ -73,6 +75,61 @@ const probePlan = (page) => page.evaluate(() => {
   return errs;
 });
 
+// Lignes mises en évidence au verdict (entrée, TP, stops, erreur marquée) :
+// chacune doit avoir un rendu non nul. On compare le graphique avec et sans la
+// ligne : une ligne que le navigateur ne dessine pas (ex. filtre SVG sur une
+// boîte de hauteur nulle) ne change aucun pixel. Une ligne entièrement couverte
+// par une ligne visible au même niveau (ex. le stop sous l'erreur marquée) est
+// visible à travers elle.
+async function probeLines(page) {
+  const chart = page.locator(".tsx-v2 .v2-chart").first();
+  const lines = await chart.evaluate((c) => {
+    const ls = [...c.querySelectorAll("svg.v2-svg line")].filter((l) =>
+      Math.abs(l.y1.baseVal.value - l.y2.baseVal.value) < 0.5 && Math.abs(l.x2.baseVal.value - l.x1.baseVal.value) > 20);
+    const box = (l) => ({ y: l.y1.baseVal.value, x1: Math.min(l.x1.baseVal.value, l.x2.baseVal.value), x2: Math.max(l.x1.baseVal.value, l.x2.baseVal.value), w: +(l.getAttribute("stroke-width") ?? 1) });
+    return ls.map((l, i) => {
+      l.setAttribute("data-probe-line", String(i));
+      const b = box(l);
+      // lignes peintes au-dessus (plus loin dans le DOM), au même niveau, qui la couvrent
+      const coveredBy = ls.map((m, j) => ({ m, j })).filter(({ m, j }) => {
+        if (j <= i) return false;
+        const o = box(m);
+        return Math.abs(o.y - b.y) < 0.5 && o.x1 <= b.x1 + 0.5 && o.x2 >= b.x2 - 0.5 && o.w >= b.w;
+      }).map(({ j }) => j);
+      return { i, stroke: l.getAttribute("stroke"), mark: !!l.closest(".v2-mark, .v2-late"), coveredBy };
+    });
+  });
+  const shot = () => chart.screenshot({ scale: "css", animations: "disabled" });
+  const setHidden = (i, hidden) => chart.evaluate((c, [i, hidden]) => {
+    c.querySelector(`[data-probe-line="${i}"]`).style.visibility = hidden ? "hidden" : "";
+  }, [i, hidden]);
+  // Capture stable (deux captures identiques), sinon la comparaison ne prouve rien
+  const stableShot = async () => {
+    let prev = await shot();
+    for (let k = 0; k < 4; k++) {
+      await page.waitForTimeout(250);
+      const cur = await shot();
+      if (cur.equals(prev)) return cur;
+      prev = cur;
+    }
+    return null;
+  };
+  if (!lines.length) return { errs: [], n: 0, marks: 0 };
+  const ref = await stableShot();
+  if (!ref) return { errs: ["graphique instable : comparaison des lignes impossible"], n: lines.length, marks: 0 };
+  const drawn = new Map();
+  // Du dessus vers le dessous : une ligne couverte s'appuie sur le résultat de celles qui la couvrent
+  for (const l of [...lines].reverse()) {
+    await setHidden(l.i, true);
+    const b = await shot();
+    await setHidden(l.i, false);
+    drawn.set(l.i, !ref.equals(b) || l.coveredBy.some((j) => drawn.get(j)));
+  }
+  const errs = lines.filter((l) => !drawn.get(l.i))
+    .map((l) => `ligne ${l.mark ? "de l'erreur marquée" : `« ${l.stroke} »`} sans rendu (aucun pixel dessiné)`);
+  return { errs, n: lines.length, marks: lines.filter((l) => l.mark).length };
+}
+
 const probeVerdict = (page) => page.evaluate(({ STATE_CLASS }) => {
   const v = document.querySelector(".tsx-v2 [data-verdict]");
   if (!v) return ["verdict absent"];
@@ -106,7 +163,7 @@ async function session(browser, slug, loc, w) {
     add("niveau", await scan(page));
     await page.getByRole("button", { name: /Interm/ }).first().click();
     const states = new Set();
-    let round = 0;
+    let round = 0, lineCount = 0, markCount = 0;
     for (; round < 12; round++) {
       const ready = slug === "build-the-trade" ? page.locator('[data-pick^="entry:"]').first()
         : slug === "place-stop" ? page.getByRole("button", { name: "Stop 1", exact: true })
@@ -126,6 +183,9 @@ async function session(browser, slug, loc, w) {
       await page.locator(".v2-verdict").first().waitFor({ timeout: 20000 });
       await page.waitForTimeout(1500);
       add(`verdict ${round + 1}`, await probeVerdict(page));
+      const pl = await probeLines(page);
+      add(`verdict ${round + 1} lignes`, pl.errs);
+      lineCount += pl.n; markCount += pl.marks;
       states.add(await page.locator("[data-verdict]").first().getAttribute("data-verdict"));
       if (round === 0) add("verdict", await scan(page));
       const next = page.locator(".tsx-v2 button.v2-btn").last();
@@ -135,9 +195,9 @@ async function session(browser, slug, loc, w) {
     }
     await page.waitForTimeout(1200);
     add("bilan", await scan(page));
-    return { errs: [...new Set(errs)], rounds: round + 1, states: [...states].join("/") };
+    return { errs: [...new Set(errs)], rounds: round + 1, states: [...states].join("/"), lines: `${lineCount} lignes sondées dont ${markCount} d'erreur marquée` };
   } catch (e) {
-    return { errs: [...errs, `session interrompue : ${e.message.split("\n")[0].slice(0, 120)}`], rounds: 0, states: "" };
+    return { errs: [...errs, `session interrompue : ${e.message.split("\n")[0].slice(0, 120)}`], rounds: 0, states: "", lines: "" };
   } finally { await ctx.close(); }
 }
 
@@ -152,7 +212,7 @@ async function session(browser, slug, loc, w) {
       const [g, l, f] = job;
       const r = await session(browser, g, l, f);
       errors += r.errs.length;
-      lines.push(`${g.padEnd(18)} ${l} ${f.padStart(4)} : ${r.errs.length} erreur(s), ${r.rounds} rounds, états ${r.states}`);
+      lines.push(`${g.padEnd(18)} ${l} ${f.padStart(4)} : ${r.errs.length} erreur(s), ${r.rounds} rounds, états ${r.states}, ${r.lines}`);
       r.errs.slice(0, 6).forEach((e) => lines.push(`    ${e}`));
     }
   };

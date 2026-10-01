@@ -445,6 +445,17 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          {/* Lueur d'une ligne : région en unités utilisateur (tout le graphique).
+              Une ligne horizontale a une boîte de hauteur nulle : en unités de
+              boîte (objectBoundingBox), la région du filtre serait vide et
+              Chrome ne dessinerait pas la ligne. */}
+          <filter id="v2-line-glow" filterUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
         {/* Tracé (zones, lignes, bougies) : c'est ce groupe qui glisse au clic */}
@@ -523,7 +534,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
           let pillY = 0;
           if (mark.kind === "line") {
             top = bottom = toY(mark.price);
-            body = <line x1={padX} x2={lineX1} y1={top} y2={top} stroke={RED} strokeWidth={3.5} filter="url(#v2-hero-glow)" strokeLinecap="round" />;
+            body = <line x1={padX} x2={lineX1} y1={top} y2={top} stroke={RED} strokeWidth={3.5} filter="url(#v2-line-glow)" strokeLinecap="round" />;
           } else if (mark.kind === "zone" && zones[mark.index]) {
             const r = zoneRect(zones[mark.index]);
             top = r.y; bottom = r.y + r.h;

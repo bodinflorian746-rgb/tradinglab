@@ -89,8 +89,7 @@ function findMistakePreview(locale: Locale): GamePreview {
   const entry = chart.entry ?? chart.past[chart.past.length - 1].c;
   return {
     data: { candles: lastCandles(chart.past, N), zones: [], domain: chart.domain },
-    // Ligne du stop tracée par l'overlay : le marquage « line » n'est qu'une lueur
-    overlay: { entry: { price: entry, direction: "BUY" }, stop: chart.stop !== undefined ? { price: chart.stop } : undefined },
+    overlay: { entry: { price: entry, direction: "BUY" } },
     // L'erreur marquée, comme au verdict du jeu : le stop trop serré
     mark: chart.stop !== undefined
       ? { kind: "line", price: chart.stop, label: G.MISTAKE_LABELS.stop_too_tight }
