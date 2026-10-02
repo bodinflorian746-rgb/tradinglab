@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as FrGame from "@/lib/games/buy-sell-no-trade";
 import * as EsGame from "@/lib/games/buy-sell-no-trade-es";
 import * as EnGame from "@/lib/games/buy-sell-no-trade-en";
@@ -16,7 +16,7 @@ import {
   type ScenarioInstance,
 } from "@/lib/games/buy-sell-no-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { ChoiceRow, StepBadge, VerdictOverlay, type ChoiceOption, GeneralCasesNote } from "@/app/components/games/v2/ui";
+import { ChoiceRow, StepBadge, VerdictOverlay, type ChoiceOption, GeneralCasesNote, JargonHints, useJargon } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { sessionLabel } from "@/lib/games/shared";
 
@@ -226,6 +226,7 @@ export default function BuySellNoTradePage() {
   const [seed, setSeed] = useState<number | null>(null);
   const [scenarios, setScenarios] = useState<ScenarioInstance[]>([]);
   const [idx, setIdx] = useState(0);
+  const jargon = useJargon(locale, difficulty, seed);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
@@ -496,6 +497,9 @@ export default function BuySellNoTradePage() {
               ? <ChoiceRow options={CHOICE_OPTIONS} onPick={handleChoice} />
               : <ChoiceRow options={CHOICE_OPTIONS} picked={chosen} />}
 
+            {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) */}
+            <JargonHints locale={locale} entries={jargon(`${idx}:q`, [T.htf, MACRO_LABEL[current.macroContext], difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context)), ...zones.map((z) => z.label)])} />
+
             {isRevealing && (
               <div className="v2-well px-4 py-3 text-center">
                 <p className="v2-eyebrow">{T.revelation}</p>
@@ -517,6 +521,7 @@ export default function BuySellNoTradePage() {
                 metric={current.metric}
                 onNext={handleNext}
                 isLast={idx + 1 >= ROUNDS_PER_SESSION}
+                jargon={<JargonHints locale={locale} entries={jargon(`${idx}:f`, [current.title, current.rationales.BUY, current.rationales.SELL, current.rationales.NO_TRADE, current.lessons[difficulty]])} />}
               />
             )}
           </div>
@@ -603,11 +608,12 @@ interface FeedbackProps {
   metric:         Metric;
   onNext:         () => void;
   isLast:         boolean;
+  jargon?:        ReactNode;
 }
 
 // Le verdict (titre + points) est affiché en grand sur le graphique ; la carte
 // détaille les rationales, la leçon et l'accès au scénario suivant.
-function Feedback({ T, METRIC_LABELS, choice, correctAnswer, rationales, lesson, difficulty, difficultyMeta, title, metric, onNext, isLast }: FeedbackProps) {
+function Feedback({ T, METRIC_LABELS, choice, correctAnswer, rationales, lesson, difficulty, difficultyMeta, title, metric, onNext, isLast, jargon }: FeedbackProps) {
   const correct = choice === correctAnswer;
   return (
     <div className="v2-well v2-gap-s flex flex-col p-4 sm:p-5">
@@ -634,6 +640,8 @@ function Feedback({ T, METRIC_LABELS, choice, correctAnswer, rationales, lesson,
         </p>
         <p className="v2-body mt-1 text-[color:var(--v2-text)]">{lesson}</p>
       </div>
+
+      {jargon}
 
       <GeneralCasesNote />
 

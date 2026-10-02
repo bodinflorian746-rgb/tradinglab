@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as FrGame from "@/lib/games/build-the-trade";
 import * as EsGame from "@/lib/games/build-the-trade-es";
 import * as EnGame from "@/lib/games/build-the-trade-en";
@@ -19,7 +19,7 @@ import {
   type TpType,
 } from "@/lib/games/build-the-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote, type VerdictState } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, type VerdictState } from "@/app/components/games/v2/ui";
 
 // Couleur du verdict de setup → état du verdict superposé (icône, titre et points)
 const VERDICT_STATE: Record<"emerald" | "amber" | "red", VerdictState> = { emerald: "good", amber: "partial", red: "bad" };
@@ -235,6 +235,7 @@ export default function BuildTheTradePage() {
   const [seed, setSeed] = useState<number | null>(null);
   const [scenarios, setScenarios] = useState<BuildTradeInstance[]>([]);
   const [idx, setIdx] = useState(0);
+  const jargon = useJargon(locale, difficulty, seed);
   const [entry, setEntry] = useState<EntryType | null>(null);
   const [stop, setStop] = useState<StopType | null>(null);
   const [tp, setTp] = useState<TpType | null>(null);
@@ -637,6 +638,9 @@ export default function BuildTheTradePage() {
               </button>
             )}
 
+            {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) */}
+            <JargonHints locale={locale} entries={jargon(`${idx}:q`, [T.spread, current.context, ...chart.zones.map((z) => z.label), ...(["entry", "stop", "tp"] as const).flatMap((st) => Object.values(optionLabels[st])), T.htf, MACRO_LABEL[current.macroContext]])} />
+
             {isReveal && (
               <div className="v2-well flex min-h-[46px] items-center justify-center px-4 py-2 text-center">
                 <p className="v2-body text-[color:var(--v2-text-2)]">{T.revealText}</p>
@@ -660,6 +664,7 @@ export default function BuildTheTradePage() {
                 setupVerdictFn={G.setupVerdict}
                 onNext={handleNext}
                 isLast={idx + 1 >= ROUNDS_PER_SESSION}
+                jargon={<JargonHints locale={locale} entries={jargon(`${idx}:f`, [current.title, T.rrRealized, T.drawdown, current.optimalExplain, current.lessons[difficulty]])} />}
                 asset={current.asset}
               />
             )}
@@ -763,7 +768,7 @@ function RrPreview({ T, chart, entry, stop, tp, asset }: { T: { [k: string]: str
 
 function Feedback({
   T, result, picks, optimal, title, optimalExplain, lesson, difficulty, difficultyMeta,
-  entryLabels, stopLabels, tpLabels, setupVerdictFn, onNext, isLast, asset,
+  entryLabels, stopLabels, tpLabels, setupVerdictFn, onNext, isLast, asset, jargon,
 }: {
   T:              { [k: string]: string };
   result:         BuildTradeResult;
@@ -780,6 +785,7 @@ function Feedback({
   setupVerdictFn: typeof FrGame.setupVerdict;
   onNext:         () => void;
   isLast:         boolean;
+  jargon?:        ReactNode;
   asset:          Asset;
 }) {
   const verdict = setupVerdictFn(result);
@@ -840,6 +846,8 @@ function Feedback({
         </p>
         <p className="v2-body mt-1 text-[color:var(--v2-text)]">{lesson}</p>
       </div>
+
+      {jargon}
 
       <GeneralCasesNote />
 

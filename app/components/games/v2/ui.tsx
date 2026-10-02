@@ -3,7 +3,9 @@
 // Composants UI v2 partagés par les jeux migrés (charte /design-lab).
 // À rendre sous un ancêtre .tsx-v2 (app/styles/tsx-v2.css).
 
+import { useCallback, useRef } from "react";
 import { useParams } from "next/navigation";
+import { termsIn, type GlossaryEntry } from "@/lib/games/glossary";
 import { cssVars } from "./GameChartV2";
 
 // ─── Rangée de choix ─────────────────────────────────────────────────────────
@@ -187,4 +189,51 @@ export function GeneralCasesNote() {
   const locale = useParams<{ locale: string }>()?.locale;
   const text = locale === "es" ? GENERAL_CASES_TEXT.es : locale === "en" ? GENERAL_CASES_TEXT.en : GENERAL_CASES_TEXT.fr;
   return <p className="v2-general-note text-[13px] leading-snug text-[color:var(--v2-text-3)]">{text}</p>;
+}
+
+// ─── Jargon : explication courte à la première apparition ───────────────────
+
+const JARGON_TITLE = { fr: "Lexique", es: "Léxico" } as const;
+// Typographie : espace avant les deux-points en français, pas en espagnol
+
+/**
+ * Explications du jargon (niveaux débutant et intermédiaire, FR / ES) : chaque
+ * terme du glossaire (lib/games/glossary.ts) est expliqué une seule fois par
+ * session, à sa première apparition (question, puis feedback). Le résultat est
+ * mémorisé par clé de bloc (« 3:q », « 3:f ») pour rester stable au rendu.
+ */
+export function useJargon(locale: string | undefined, difficulty: string | null, sessionKey: unknown) {
+  const store = useRef<{ session: unknown; seen: Set<string>; blocks: Map<string, GlossaryEntry[]> }>({ session: undefined, seen: new Set(), blocks: new Map() });
+  return useCallback((blockKey: string, texts: (string | undefined | null)[]): GlossaryEntry[] => {
+    if ((locale !== "fr" && locale !== "es") || (difficulty !== "beginner" && difficulty !== "intermediate")) return [];
+    const s = store.current;
+    if (s.session !== sessionKey) { s.session = sessionKey; s.seen = new Set(); s.blocks = new Map(); }
+    const cached = s.blocks.get(blockKey);
+    if (cached) return cached;
+    const shown = texts.filter((t): t is string => !!t);
+    const fresh = termsIn(shown, locale).filter((g) => !s.seen.has(g.id));
+    fresh.forEach((g) => s.seen.add(g.id));
+    // Terme déjà défini dans le texte (ex. « (ATR, l'amplitude moyenne d'une journée) ») : pas de redite
+    const joined = shown.join("\n");
+    const hints = fresh.filter((g) => !(g.inlineDef && joined.includes(g.inlineDef[locale])));
+    s.blocks.set(blockKey, hints);
+    return hints;
+  }, [locale, difficulty, sessionKey]);
+}
+
+export function JargonHints({ entries, locale }: { entries: GlossaryEntry[]; locale: string | undefined }) {
+  if (!entries.length) return null;
+  const loc = locale === "es" ? "es" : "fr";
+  return (
+    <div className="v2-jargon" data-jargon>
+      <p className="v2-eyebrow">{JARGON_TITLE[loc]}</p>
+      <ul className="mt-1 space-y-1">
+        {entries.map((g) => (
+          <li key={g.id} data-term={g.id} className="text-[14px] leading-snug text-[color:var(--v2-text-2)]">
+            <strong className="font-semibold text-[color:var(--v2-text)]">{g.term[loc]}</strong>{loc === "es" ? ": " : " : "}{g.def[loc]}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }

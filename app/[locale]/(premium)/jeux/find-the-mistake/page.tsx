@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import * as FrGame from "@/lib/games/find-the-mistake";
 import * as EsGame from "@/lib/games/find-the-mistake-es";
 import * as EnGame from "@/lib/games/find-the-mistake-en";
@@ -16,7 +16,7 @@ import {
   type ScenarioChart,
 } from "@/lib/games/find-the-mistake";
 import { GameChartV2, type GameChartMark } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { sessionLabel } from "@/lib/games/shared";
 
@@ -184,6 +184,7 @@ export default function FindTheMistakePage() {
   const [seed, setSeed] = useState<number | null>(null);
   const [scenarios, setScenarios] = useState<MistakeInstance[]>([]);
   const [idx, setIdx] = useState(0);
+  const jargon = useJargon(locale, difficulty, seed);
   const [chosen, setChosen] = useState<MistakeId | null>(null);
   const [result, setResult] = useState<MistakeScoreResult | null>(null);
   const [score, setScore] = useState(0);
@@ -404,6 +405,9 @@ export default function FindTheMistakePage() {
               onPick={isFeedback ? undefined : handlePick}
             />
 
+            {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) */}
+            <JargonHints locale={locale} entries={jargon(`${idx}:q`, [T.spread, current.extraInfo, current.context, ...chart.zones.map((z) => z.label), ...current.shuffledChoices.map((c) => G.MISTAKE_LABELS[c])])} />
+
             {isFeedback && result && chosen && (
               <Feedback
                 T={T}
@@ -420,6 +424,7 @@ export default function FindTheMistakePage() {
                 mistakeLabels={G.MISTAKE_LABELS}
                 onNext={handleNext}
                 isLast={idx + 1 >= ROUNDS_PER_SESSION}
+                jargon={<JargonHints locale={locale} entries={jargon(`${idx}:f`, [current.title, current.explanation, current.lessons[difficulty]])} />}
               />
             )}
 
@@ -585,11 +590,12 @@ interface FeedbackProps {
   mistakeLabels:  typeof FrGame.MISTAKE_LABELS;
   onNext:         () => void;
   isLast:         boolean;
+  jargon?:        ReactNode;
 }
 
 function Feedback({
   T, result, chosen, correctMistake, title, explanation, lesson, category, difficulty,
-  difficultyMeta, categoryMeta, mistakeLabels, onNext, isLast,
+  difficultyMeta, categoryMeta, mistakeLabels, onNext, isLast, jargon,
 }: FeedbackProps) {
   const catMeta = categoryMeta[category];
   return (
@@ -615,6 +621,8 @@ function Feedback({
         </p>
         <p className="v2-body mt-1 text-[color:var(--v2-text)]">{lesson}</p>
       </div>
+
+      {jargon}
 
       <GeneralCasesNote />
 

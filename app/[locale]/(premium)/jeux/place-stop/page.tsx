@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as FrGame from "@/lib/games/place-stop";
 import * as EsGame from "@/lib/games/place-stop-es";
 import * as EnGame from "@/lib/games/place-stop-en";
@@ -20,9 +20,10 @@ import {
   type TradeDirection,
 } from "@/lib/games/place-stop";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote, type VerdictState } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, type VerdictState } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { formatPrice } from "@/lib/games/price-scale";
+import { firstDefinitionOnly } from "@/lib/games/glossary";
 import { sessionLabel, type Asset } from "@/lib/games/shared";
 
 const STOP_TYPE_TO_SKILL: Record<StopType, { skill: SkillId; outcome: "win" | "loss" }> = {
@@ -260,6 +261,7 @@ export default function PlaceStopPage() {
   const [seed, setSeed] = useState<number | null>(null);
   const [scenarios, setScenarios] = useState<PlaceStopInstance[]>([]);
   const [idx, setIdx] = useState(0);
+  const jargon = useJargon(locale, difficulty, seed);
   const [chosen, setChosen] = useState<StopId | null>(null);
   const [phase, setPhase] = useState<"placing" | "revealing" | "feedback">("placing");
   const [revealed, setRevealed] = useState(0);
@@ -422,6 +424,17 @@ export default function PlaceStopPage() {
   const step = isPlacing ? 1 : isRevealing ? 2 : 3;
   const stepLabel = isPlacing ? T.stepQuestion : isRevealing ? T.stepChoice : T.stepVerdict;
   const chosenStop = chosen ? chart.stops.find((s) => s.id === chosen) ?? null : null;
+  // Textes du round dans l'ordre d'affichage : contexte, justifications (stops du
+  // plus haut au plus bas, comme le feedback), leçon. Une définition portée par
+  // le texte (ATR) n'apparaît qu'une fois.
+  const stopsByPrice = [...chart.stops].sort((a, b) => b.price - a.price);
+  const [shownContext, ...shownAfter] = firstDefinitionOnly([
+    difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context)),
+    ...stopsByPrice.map((s) => s.rationale),
+    current.lessons[difficulty],
+  ], locale);
+  const shownLesson = shownAfter[stopsByPrice.length];
+  const shownChart = { ...chart, stops: chart.stops.map((s) => ({ ...s, rationale: shownAfter[stopsByPrice.indexOf(s)] })) };
 
   return (
     <main className="v2-page mx-auto flex w-full max-w-[880px] flex-col">
@@ -528,7 +541,7 @@ export default function PlaceStopPage() {
             </div>
 
             <p className="v2-lead text-[color:var(--v2-text-2)]">
-              {difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context))}
+              {shownContext}
             </p>
 
             {/* Question + 3 stops : interactifs, puis figés (le choix reste visible) */}
@@ -544,6 +557,10 @@ export default function PlaceStopPage() {
               onChoose={isPlacing ? handleChoose : undefined}
             />
 
+            {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) ;
+                « R/R » est affiché dans chaque bouton de stop */}
+            <JargonHints locale={locale} entries={jargon(`${idx}:q`, [T.htf, shownContext, "R/R"])} />
+
             {isRevealing && (
               <div className="v2-well px-4 py-3 text-center">
                 <p className="v2-eyebrow">{T.revelation}</p>
@@ -558,9 +575,9 @@ export default function PlaceStopPage() {
                 T={T}
                 result={result}
                 chosen={chosen}
-                chart={chart}
+                chart={shownChart}
                 title={current.title}
-                lesson={current.lessons[difficulty]}
+                lesson={shownLesson}
                 tag={current.tag}
                 difficulty={difficulty}
                 difficultyMeta={G.DIFFICULTY_META}
@@ -570,6 +587,7 @@ export default function PlaceStopPage() {
                 locale={locale}
                 onNext={handleNext}
                 isLast={idx + 1 >= ROUNDS_PER_SESSION}
+                jargon={<JargonHints locale={locale} entries={jargon(`${idx}:f`, [current.title, ...shownAfter])} />}
               />
             )}
           </div>
@@ -703,7 +721,7 @@ function StopChoices({
 // détaille les 3 stops, la leçon et l'accès au scénario suivant.
 
 function Feedback({
-  T, result, chosen, chart, title, lesson, tag, difficulty, difficultyMeta, spatialLabels, hasLogical, locale, onNext, isLast, asset,
+  T, result, chosen, chart, title, lesson, tag, difficulty, difficultyMeta, spatialLabels, hasLogical, locale, onNext, isLast, asset, jargon,
 }: {
   T:              { [k: string]: string };
   result:         ScoreResult;
@@ -719,6 +737,7 @@ function Feedback({
   locale:         string | undefined;
   onNext:         () => void;
   isLast:         boolean;
+  jargon?:        ReactNode;
   asset:          Asset;
 }) {
   const headerColor = feedbackColor(result.type, hasLogical);
@@ -752,6 +771,8 @@ function Feedback({
         </p>
         <p className="v2-body mt-1 text-[color:var(--v2-text)]">{lesson}</p>
       </div>
+
+      {jargon}
 
       <GeneralCasesNote />
 
