@@ -6,7 +6,8 @@
 // Règles « données » (vite-node, 3 langues) :
 //   cohérence texte ↔ graphique (4 jeux), contexte de marché et prix (K1),
 //   distribution du bon stop ≤ 50 %, R/R des bonnes réponses, réalisme des
-//   bougies, énumération des verdicts, textes (français en EN/ES, ton).
+//   bougies, énumération des verdicts, textes (français en EN/ES, ton),
+//   glossaire (libellés de zones et termes = vocabulaire des leçons).
 // Règles « DOM » (Playwright) : troncature 3 langues × 390/1440, sonde
 //   lignes = étiquettes = boutons, cohérence du verdict affiché.
 // Code de sortie 1 dès qu'une règle compte une erreur.
@@ -63,8 +64,8 @@ process.stdout.write("… contexte de marché et prix\n");
   record("Contexte de marché, sessions, prix", /K1 —/.test(out) ? (ok ? 0 : n || 1) : null, ok ? "" : out.split("\n").slice(-6).join(" | "));
 }
 
-// 3. Réalisme, verdicts, textes
-for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (français en EN/ES, ton)", "texts.ts"]]) {
+// 3. Réalisme, verdicts, textes, glossaire
+for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (français en EN/ES, ton)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"]]) {
   process.stdout.write(`… ${rule}\n`);
   const out = viteNode(file);
   const r = resultOf(out);

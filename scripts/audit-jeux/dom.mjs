@@ -7,8 +7,9 @@
 //    l'écran de niveau, la 1re question, le 1er verdict et le bilan ;
 //  - sonde Place ton Stop : ordre vertical des lignes = ordre des étiquettes
 //    « Stop 1/2/3 » = ordre des boutons (couleurs et numéros) ;
-//  - sonde Build the Trade : chaque bouton de l'étape active a son prix en
-//    étiquette sur le graphique, étiquettes rangées par prix ;
+//  - étiquettes du graphique (question, chaque étape de Build the Trade, verdict) :
+//    toute ligne étiquetée à sa hauteur, aucun chevauchement, au plus 4 en 390,
+//    mêmes noms que les boutons, aucun doublon avec une légende ;
 //  - verdict : état (bon / partiel / faux), couleurs du titre et des points
 //    cohérentes, maximum affiché ; barème simple : bon > 0, faux = 0 (sans signe) ;
 //  - lignes au verdict (entrée, TP, stops, erreur marquée) : chacune a un rendu
@@ -62,18 +63,54 @@ const probeStops = (page) => page.evaluate(() => {
   return errs;
 });
 
-// Build the Trade, étape active : prix des boutons = étiquettes du graphique, rangées par prix
-const probePlan = (page) => page.evaluate(() => {
-  const num = (s) => parseFloat(s.replace(/[^\d.,-]/g, "").replace(/,/g, ""));
+// Étiquettes du graphique (mode inlineLabels) :
+//  - toute ligne affichée (hors traits discrets) a une étiquette lisible posée à sa hauteur ;
+//  - aucune étiquette n'en chevauche une autre, aucune ne sort du graphique ;
+//  - au plus 4 étiquettes visibles en même temps en 390 × 844 ;
+//  - les étiquettes portent les noms des boutons (Place ton Stop : Stop 1/2/3 ;
+//    Build the Trade : noms de l'étape active) ;
+//  - aucune étiquette en double entre le graphique et une légende.
+// Mesure après le fondu d'apparition des étiquettes (après l'intro des bougies en question)
+const probeLabels = async (page, opts) => {
+  await page.waitForFunction(() => [...document.querySelectorAll(".tsx-v2 .v2-chart .v2-labels")].every((g) => getComputedStyle(g).opacity === "1"), null, { timeout: 15000 }).catch(() => {});
+  return measureLabels(page, opts);
+};
+const measureLabels = (page, { mobile, buttons }) => page.evaluate(({ mobile, buttons }) => {
   const chart = document.querySelector(".tsx-v2 .v2-chart");
-  const tags = [...chart.querySelectorAll("text")].map((t) => ({ txt: t.textContent.trim(), y: t.getBoundingClientRect().top })).filter((t) => /^[\d.,]+$/.test(t.txt));
-  const prices = [...document.querySelectorAll(".tsx-v2 [data-pick]")].map((b) => b.querySelector(".v2-mono")?.textContent.trim()).filter(Boolean);
+  const svg = chart?.querySelector("svg.v2-svg");
+  if (!svg) return ["graphique absent"];
+  const sr = svg.getBoundingClientRect();
+  const visible = (el) => { for (let e = el; e && e !== svg; e = e.parentElement) { const cs = getComputedStyle(e); if (cs.display === "none" || cs.visibility === "hidden" || +cs.opacity === 0) return false; } return true; };
+  const labels = [...svg.querySelectorAll("[data-label-for]")].filter(visible).map((g) => {
+    const r = g.querySelector("rect").getBoundingClientRect();
+    const t = g.querySelector("text");
+    return { key: g.getAttribute("data-label-for"), txt: t.textContent.trim(), r, fs: t.getBoundingClientRect().height };
+  });
+  const lines = [...svg.querySelectorAll("line[data-line]:not([data-discreet])")].filter(visible)
+    .map((l) => ({ key: l.getAttribute("data-line"), y: l.getBoundingClientRect().top + l.getBoundingClientRect().height / 2 }));
   const errs = [];
-  for (const p of prices) if (!tags.some((t) => t.txt === p)) errs.push(`prix du bouton ${p} absent des étiquettes`);
-  const sorted = [...tags].sort((a, b) => a.y - b.y);
-  for (let i = 1; i < sorted.length; i++) if (num(sorted[i].txt) > num(sorted[i - 1].txt)) { errs.push("étiquettes pas rangées par prix"); break; }
+  for (const l of lines) if (!labels.some((t) => l.y >= t.r.top - 1 && l.y <= t.r.bottom + 1)) errs.push(`ligne « ${l.key} » sans étiquette à sa hauteur`);
+  for (const t of labels) {
+    if (!t.txt) errs.push(`étiquette « ${t.key} » vide`);
+    if (t.fs < 10) errs.push(`étiquette « ${t.txt} » illisible (${t.fs.toFixed(1)} px)`);
+    if (t.r.left < sr.left - 1 || t.r.right > sr.right + 1 || t.r.top < sr.top - 1 || t.r.bottom > sr.bottom + 1) errs.push(`étiquette « ${t.txt} » hors du graphique`);
+  }
+  for (let i = 0; i < labels.length; i++) for (let j = i + 1; j < labels.length; j++) {
+    const a = labels[i].r, b = labels[j].r;
+    if (a.left < b.right - 0.5 && b.left < a.right - 0.5 && a.top < b.bottom - 0.5 && b.top < a.bottom - 0.5) errs.push(`« ${labels[i].txt} » chevauche « ${labels[j].txt} »`);
+  }
+  if (mobile && labels.length > 4) errs.push(`${labels.length} étiquettes visibles (max 4) : ${labels.map((t) => t.txt).join(", ")}`);
+  if (buttons) {
+    const names = [...document.querySelectorAll(buttons.selector)].map((b) => (b.getAttribute("aria-label") ?? b.querySelector("span")?.textContent ?? "").trim());
+    const onChart = labels.filter((t) => new RegExp(buttons.keys).test(t.key)).map((t) => t.txt);
+    if (names.sort().join("|") !== onChart.sort().join("|")) errs.push(`étiquettes [${onChart.join(", ")}] ≠ boutons [${names.join(", ")}]`);
+  }
+  const legend = [...document.querySelectorAll(".tsx-v2 [data-legend]")].map((e) => e.textContent.trim());
+  for (const t of labels) if (legend.includes(t.txt)) errs.push(`« ${t.txt} » à la fois sur le graphique et en légende`);
   return errs;
-});
+}, { mobile, buttons });
+const STOP_BUTTONS = { selector: ".tsx-v2 button.v2-stop-choice", keys: "^stop\\d" };
+const stepButtons = (step) => ({ selector: `.tsx-v2 [data-pick^="${step}:"]`, keys: "^cand\\d" });
 
 // Lignes mises en évidence au verdict (entrée, TP, stops, erreur marquée) :
 // chacune doit avoir un rendu non nul. On compare le graphique avec et sans la
@@ -173,9 +210,15 @@ async function session(browser, slug, loc, w) {
       await page.waitForTimeout(round === 0 ? 4500 : 1500);
       if (round === 0) add("question", await scan(page));
       if (slug === "place-stop") add(`round ${round + 1}`, await probeStops(page));
+      if (slug !== "build-the-trade") add(`round ${round + 1} étiquettes`, await probeLabels(page, { mobile, buttons: slug === "place-stop" ? STOP_BUTTONS : null }));
       if (slug === "build-the-trade") {
-        add(`round ${round + 1} entrée`, await probePlan(page));
-        for (const step of ["entry", "stop", "tp"]) { await page.locator(`[data-pick^="${step}:"]`).nth(round % 3).click(); await page.waitForTimeout(250); }
+        // Étiquettes à chaque étape (le choix reste affiché 600 ms, puis le cadrage glisse)
+        for (const step of ["entry", "stop", "tp"]) {
+          if (step !== "entry") await page.waitForTimeout(1400);
+          add(`round ${round + 1} étape ${step}`, await probeLabels(page, { mobile, buttons: stepButtons(step) }));
+          await page.locator(`[data-pick^="${step}:"]`).nth(round % 3).click();
+        }
+        await page.waitForTimeout(400);
         await page.getByRole("button", { name: VALIDATE[loc] }).click();
       } else if (slug === "place-stop") await page.getByRole("button", { name: `Stop ${(round % 3) + 1}`, exact: true }).click();
       else if (slug === "find-the-mistake") await page.locator("[data-choice]").nth(round % 4).click();
@@ -183,6 +226,7 @@ async function session(browser, slug, loc, w) {
       await page.locator(".v2-verdict").first().waitFor({ timeout: 20000 });
       await page.waitForTimeout(1500);
       add(`verdict ${round + 1}`, await probeVerdict(page));
+      add(`verdict ${round + 1} étiquettes`, await probeLabels(page, { mobile, buttons: null }));
       const pl = await probeLines(page);
       add(`verdict ${round + 1} lignes`, pl.errs);
       lineCount += pl.n; markCount += pl.marks;
