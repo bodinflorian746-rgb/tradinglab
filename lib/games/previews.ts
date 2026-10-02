@@ -1,4 +1,4 @@
-// Aperçus des cartes du hub /jeux : quelques vraies bougies tirées du
+// Aperçus des jeux (cartes du hub /jeux et de la home) : quelques vraies bougies tirées du
 // générateur de chaque jeu (graine fixe : même aperçu à chaque visite) et
 // l'élément clé du jeu. Calculé côté serveur ; seules les données du
 // graphique partent vers le client (GameChartV2).

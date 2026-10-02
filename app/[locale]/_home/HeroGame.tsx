@@ -4,14 +4,14 @@
 // (question → glissement et révélation des bougies → verdict ✓ / ✗ avec
 // l'explication du jeu). AUCUNE écriture : ni analytics, ni profil trader, ni
 // points. Après le verdict : « Joue la suite » (connecté → le jeu ; visiteur →
-// parcours d'essai 48h existant) et « Rejouer » (round suivant, graines fixes).
+// parcours d'essai 48h existant, /signup?from=trial) et « Rejouer » (round
+// suivant, graines fixes).
 // Hauteur constante dans tous les états : aucun saut de mise en page.
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
 import { useSession } from "@/app/components/SessionProvider";
-import { requestTrialCode } from "@/app/[locale]/pricing/actions";
 import type { GameChoice } from "@/lib/games/buy-sell-no-trade";
 import type { HeroRound } from "./hero-rounds";
 
@@ -48,7 +48,7 @@ export interface HeroGameStrings {
 
 type Phase = "question" | "reveal" | "verdict";
 
-export function HeroGame({ rounds, s, locale, gameHref }: { rounds: HeroRound[]; s: HeroGameStrings; locale: string; gameHref: string }) {
+export function HeroGame({ rounds, s, gameHref, trialHref }: { rounds: HeroRound[]; s: HeroGameStrings; gameHref: string; trialHref: string }) {
   const { user } = useSession();
   const [idx, setIdx] = useState(0);
   const [phase, setPhase] = useState<Phase>("question");
@@ -162,20 +162,11 @@ export function HeroGame({ rounds, s, locale, gameHref }: { rounds: HeroRound[];
         </div>
       ) : (
         <div className="hv2-actions">
-          {user ? (
-            <Link href={gameHref} className="v2-btn v2-btn--accent">
-              {s.playNext}
-              <Arrow />
-            </Link>
-          ) : (
-            <form action={requestTrialCode} className="flex">
-              <input type="hidden" name="locale" value={locale} />
-              <button type="submit" className="v2-btn v2-btn--accent w-full">
-                {s.playNext}
-                <Arrow />
-              </button>
-            </form>
-          )}
+          {/* Le jeu est réservé aux membres : un visiteur passe par l'essai 48h */}
+          <Link href={user ? gameHref : trialHref} className="v2-btn v2-btn--accent">
+            {s.playNext}
+            <Arrow />
+          </Link>
           <button type="button" onClick={replay} className="v2-btn">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M2.5 7a4.5 4.5 0 1 0 1.3-3.2M2.5 2v2.8h2.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />

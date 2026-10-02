@@ -2,7 +2,7 @@
 
 // Révélation à l'arrivée dans l'écran, une seule fois : un observateur unique
 // marque chaque élément [data-reveal] de la page (data-revealed). L'animation
-// (opacité + translation, sans effet sur la mise en page) est dans home-v2.css ;
+// (opacité + translation, sans effet sur la mise en page) est dans home.css ;
 // mouvement réduit : tout est visible d'emblée, sans animation.
 
 import { useEffect } from "react";

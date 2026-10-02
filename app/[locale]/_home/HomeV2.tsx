@@ -1,14 +1,11 @@
-// /[locale]/home-v2 — nouvelle home en charte v2, à comparer avec la home
-// actuelle (app/[locale]/page.tsx, inchangée). Hors navigation et noindex.
+// Home en charte v2 (FR et ES), rendue par app/[locale]/page.tsx. Métadonnées
+// SEO : celles du layout de locale (titre, description, Open Graph, indexée).
 // Contenu réel uniquement : textes des dictionnaires home / games et textes en
-// ligne de la home actuelle (./_components/strings.ts) ; avis et note tels quels.
-// FR et ES (l'anglais n'est pas traité : 404).
+// ligne repris de l'ancienne home (./strings.ts) ; avis et note tels quels.
 
-import type { Metadata } from "next";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { hasLocale, type Locale } from "@/i18n/config";
+import type { Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary, type Dictionaries } from "@/i18n/dictionaries";
 import { FORMATIONS } from "@/lib/formations";
@@ -16,18 +13,13 @@ import { STRATEGY_MODULES } from "@/lib/strategies";
 import { REVIEWS, type Review } from "@/lib/reviews";
 import Logo from "@/app/components/Logo";
 import { GameChartV2 } from "@/app/components/games/v2/GameChartV2";
-import { buildGamePreviews, type PreviewId } from "@/app/[locale]/(premium)/jeux/_components/previews";
-import { requestTrialCode } from "@/app/[locale]/pricing/actions";
-import { RevealOnView } from "./_components/RevealOnView";
-import { HeroGame } from "./_components/HeroGame";
-import { buildHeroRounds } from "./_components/hero-rounds";
-import { homeStrings, JOURNAL_OPEN, type HomeLocale } from "./_components/strings";
-import "./home-v2.css";
-
-export const metadata: Metadata = {
-  title: "TradeScaleX — Home v2",
-  robots: { index: false, follow: false },
-};
+import { buildGamePreviews, type PreviewId } from "@/lib/games/previews";
+import { RevealOnView } from "./RevealOnView";
+import { HeroGame } from "./HeroGame";
+import { TrialCta } from "./TrialCta";
+import { buildHeroRounds } from "./hero-rounds";
+import { homeStrings, JOURNAL_OPEN, type HomeLocale } from "./strings";
+import "./home.css";
 
 const css = (vars: Record<string, string | number>) => vars as CSSProperties;
 
@@ -211,11 +203,10 @@ function ReviewCard({ review, locale, s }: { review: Review; locale: HomeLocale;
   );
 }
 
-export default async function HomeV2({ params }: { params: Promise<{ locale: string }> }) {
-  const raw = (await params).locale;
-  if (!hasLocale(raw) || raw === "en") notFound();
-  const locale = raw as HomeLocale;
+export async function HomeV2({ locale }: { locale: HomeLocale }) {
   const h = (p: string) => localizedHref(p, locale as Locale);
+  // Parcours d'essai 48h existant (cf. TrialCta)
+  const trialHref = h("/signup?from=trial");
   const t = await getDictionary(locale, "home");
   const g: Dictionaries["games"] = await getDictionary(locale, "games");
   const s = homeStrings(locale);
@@ -280,8 +271,8 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
         <HeroGame
           rounds={rounds}
           s={{ ...s.game, duration: g.available["buy-sell-no-trade"].duration }}
-          locale={locale}
           gameHref={h("/jeux/buy-sell-no-trade")}
+          trialHref={trialHref}
         />
       </section>
 
@@ -295,13 +286,10 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
               <p className="mt-1 text-[14px] text-[color:var(--v2-text-2)]">{s.offer.desc}</p>
             </div>
           </div>
-          <form action={requestTrialCode} className="w-full shrink-0 sm:w-auto">
-            <input type="hidden" name="locale" value={locale} />
-            <button type="submit" className="hv2-btn-main w-full sm:w-auto">
-              {s.offer.cta}
-              <Arrow />
-            </button>
-          </form>
+          <TrialCta locale={locale} trialHref={trialHref} className="hv2-btn-main w-full sm:w-auto" formClassName="w-full shrink-0 sm:w-auto">
+            {s.offer.cta}
+            <Arrow />
+          </TrialCta>
         </div>
         {/* 79 leçons (mobile) : bloc dédié sous l'offre */}
         <div data-reveal className="mt-8 lg:hidden">
@@ -479,13 +467,10 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
               <p className="v2-display text-[22px] font-bold">{s.access.trial.title}</p>
               <p className="text-[14.5px] text-[color:var(--v2-text-2)]">{s.access.trial.desc}</p>
             </div>
-            <form action={requestTrialCode} className="w-full shrink-0 sm:w-auto">
-              <input type="hidden" name="locale" value={locale} />
-              <button type="submit" className="hv2-btn-main w-full sm:w-auto">
-                {s.access.trial.cta}
-                <Arrow />
-              </button>
-            </form>
+            <TrialCta locale={locale} trialHref={trialHref} className="hv2-btn-main w-full sm:w-auto" formClassName="w-full shrink-0 sm:w-auto">
+              {s.access.trial.cta}
+              <Arrow />
+            </TrialCta>
           </div>
 
           <div className="mx-auto grid w-full max-w-4xl gap-4 md:grid-cols-2">

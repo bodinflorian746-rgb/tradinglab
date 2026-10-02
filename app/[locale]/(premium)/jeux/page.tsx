@@ -3,7 +3,7 @@ import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary, type Dictionaries } from "@/i18n/dictionaries";
 import { GameChartV2 } from "@/app/components/games/v2/GameChartV2";
-import { buildGamePreviews, type GamePreview } from "./_components/previews";
+import { buildGamePreviews, type GamePreview } from "@/lib/games/previews";
 
 // ─── Available games ───────────────────────────────────────────────────────────
 
