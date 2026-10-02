@@ -46,6 +46,9 @@ const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced"];
 const REVEAL_STEP_MS = 420;
 
 // Couleurs distinctes pour les 3 stops (rouge / amber / violet)
+/** Étiquette de la ligne d'entrée sur le graphique */
+const ENTRY_LABEL: Record<string, string> = { fr: "Entrée", es: "Entrada", en: "Entry" };
+
 const STOP_COLORS: Record<StopId, { hex: string; bg: string; border: string; text: string; dot: string }> = {
   A: { hex: "#ef4444", bg: "bg-red-500/10",    border: "border-red-500/40",    text: "text-red-400",    dot: "bg-red-500"    },
   B: { hex: "#f59e0b", bg: "bg-amber-500/10",  border: "border-amber-500/40",  text: "text-amber-400",  dot: "bg-amber-500"  },
@@ -486,13 +489,14 @@ export default function PlaceStopPage() {
               </div>
             )}
 
-            {/* Graphique : bougies + 3 stops (étiquettes Stop 1/2/3 sans
-                chevauchement) + entrée/TP discrets, puis impact du stop touché */}
+            {/* Graphique : bougies, entrée et 3 stops, chacun étiqueté sur sa ligne
+                (4 étiquettes au plus) ; le TP n'est pas tracé : le R/R de chaque
+                stop est dans son bouton. Puis impact du stop touché. */}
             <GameChartV2
               data={{ candles: [...chart.past, ...chart.future], zones: [], domain: chart.domain }}
+              inlineLabels
               overlay={{
-                entry: { price: chart.entry, direction: chart.direction },
-                tp:    chart.tp !== null ? { price: chart.tp } : undefined,
+                entry: { price: chart.entry, direction: chart.direction, label: ENTRY_LABEL[locale ?? "fr"] ?? ENTRY_LABEL.fr },
                 stops: chart.stops.map((s) => ({
                   price:    s.price,
                   color:    STOP_COLORS[s.id].hex,
@@ -503,10 +507,8 @@ export default function PlaceStopPage() {
                 })),
                 separatorIndex:     chart.past.length,
                 visibleFutureCount: isPlacing ? 0 : revealed,
-                dimEntryTp:         true,
               }}
               mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
-              tpOffscale
               pin={chosenStop ? { label: `Stop ${spatialLabels[chosenStop.id]}`, sub: T.yourChoicePin, color: STOP_COLORS[chosenStop.id].hex } : undefined}
             >
               {isFeedback && result && (

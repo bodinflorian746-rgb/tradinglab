@@ -240,6 +240,11 @@ export default function BuildTheTradePage() {
   const [tp, setTp] = useState<TpType | null>(null);
   // Étape rouverte par le joueur (onglet) ; sinon la 1re étape non remplie
   const [editing, setEditing] = useState<BuildStep | null>(null);
+  // Candidat survolé ou touché (sa ligne s'éclaire), et choix tenu un instant
+  // sur son étape avant de passer à la suivante (le joueur voit sa ligne)
+  const [hover, setHover] = useState<string | null>(null);
+  const [hold, setHold] = useState<{ step: BuildStep; value: string } | null>(null);
+  const holdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [phase, setPhase] = useState<"build" | "reveal" | "feedback">("build");
   const [revealed, setRevealed] = useState(0);
   const [result, setResult] = useState<BuildTradeResult | null>(null);
@@ -270,6 +275,9 @@ export default function BuildTheTradePage() {
     setStop(null);
     setTp(null);
     setEditing(null);
+    setHover(null);
+    setHold(null);
+    if (holdRef.current) { clearTimeout(holdRef.current); holdRef.current = null; }
     setPhase("build");
     setRevealed(0);
     setResult(null);
@@ -348,7 +356,7 @@ export default function BuildTheTradePage() {
   const isReveal = phase === "reveal";
   const isFeedback = phase === "feedback";
   const active: BuildStep | null = !isBuild ? null
-    : editing ?? (entry === null ? "entry" : stop === null ? "stop" : tp === null ? "tp" : null);
+    : hold?.step ?? editing ?? (entry === null ? "entry" : stop === null ? "stop" : tp === null ? "tp" : null);
 
   const handleValidate = () => {
     if (!canValidate || !chart) return;
@@ -416,6 +424,10 @@ export default function BuildTheTradePage() {
     if (s === "stop")  setStop(value as StopType);
     if (s === "tp")    setTp(value as TpType);
     setEditing(null);
+    // La ligne choisie reste éclairée un instant avant l'étape suivante
+    setHold({ step: s, value });
+    if (holdRef.current) clearTimeout(holdRef.current);
+    holdRef.current = setTimeout(() => { setHold(null); setHover(null); holdRef.current = null; }, 600);
   };
 
   const step = isBuild ? 1 : isReveal ? 2 : 3;
@@ -431,8 +443,10 @@ export default function BuildTheTradePage() {
   const slLive = !!result?.slHit && result.slIdx !== null && result.slIdx < revealed;
   const tpLive = !!result?.tpHit && result.tpIdx !== null && result.tpIdx < revealed;
 
-  // Lignes du graphique : niveaux déjà choisis (étiquetés Entrée / Stop / TP)
-  // et, pendant la construction, les 3 candidats de l'étape active (leur prix).
+  // Lignes du graphique. Construction : les 3 candidats de l'étape active,
+  // nommés comme leurs boutons (« Serré », « Logique »…), et l'entrée choisie ;
+  // les autres niveaux déjà choisis restent des traits discrets, sans
+  // étiquette (4 étiquettes au plus). Révélation / verdict : Entrée, Stop, TP.
   const chosenLines = (["entry", "stop", "tp"] as BuildStep[]).flatMap((s) => {
     const v = picked[s];
     if (v === null || s === active) return [];
@@ -440,15 +454,21 @@ export default function BuildTheTradePage() {
       price:    levels[s][v],
       color:    STEP_COLOR[s],
       dashed:   false,
-      label:    stepNames[s],
+      label:    !isBuild || s === "entry" ? stepNames[s] : undefined,
       hit:      s === "stop" && !isBuild && slLive,
       selected: s === "tp" && !isBuild && tpLive,
     }];
   });
   const candidateLines = active
-    ? types[active].map((t) => ({ price: levels[active][t], color: STEP_COLOR[active], label: fmt(levels[active][t]) }))
+    ? types[active].map((t) => ({ price: levels[active][t], color: STEP_COLOR[active], label: optionLabels[active][t] }))
     : undefined;
-  const allPrices = [...Object.values(chart.entries), ...Object.values(chart.stops), ...Object.values(chart.tps)];
+  // Candidat mis en avant : touché / survolé, tenu après le choix, ou déjà choisi
+  const emphasisValue = active ? (hold?.value ?? hover ?? picked[active]) : null;
+  const emphasis = active && emphasisValue ? `cand${types[active].indexOf(emphasisValue)}` : null;
+  // Zones nommées sur le graphique : la zone principale à l'étape Entrée et au
+  // verdict ; aux étapes Stop et TP, la place va aux 3 candidats et à l'entrée
+  const labeledZones = isBuild && active !== "entry" ? [] : [0];
+  const legendZones = chart.zones.filter((_, i) => !labeledZones.includes(i));
 
   return (
     <main className="v2-page mx-auto flex w-full max-w-[880px] flex-col">
@@ -517,11 +537,12 @@ export default function BuildTheTradePage() {
                 candidateLines,
               }}
               mode={isBuild ? "question" : isReveal ? "reveal" : "verdict"}
-              reserve={{
-                // Échelle fixe pendant toute la construction (les 9 niveaux)
-                prices: isBuild ? allPrices : undefined,
-                labels: [...allPrices.map(fmt), T.entryLabel, T.stopLabel, T.lineTp],
-              }}
+              // Étiquettes posées sur leur ligne ; échelle calée sur les bougies et
+              // les niveaux de l'étape en cours, avec un glissement d'une étape à l'autre
+              inlineLabels
+              labeledZones={labeledZones}
+              emphasis={emphasis}
+              glideScale
             >
               {isFeedback && result && (
                 <VerdictOverlay
@@ -533,9 +554,10 @@ export default function BuildTheTradePage() {
               )}
             </GameChartV2>
 
-            {chart.zones.length > 0 && (
+            {/* Légende : uniquement les zones non nommées sur le graphique à cette étape */}
+            {legendZones.length > 0 && (
               <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {chart.zones.map((z, i) => <ZoneLegendChip key={i} zone={z} />)}
+                {legendZones.map((z, i) => <ZoneLegendChip key={i} zone={z} />)}
               </div>
             )}
 
@@ -582,6 +604,11 @@ export default function BuildTheTradePage() {
                       data-pick={`${active}:${t}`}
                       data-selected={picked[active] === t ? "" : undefined}
                       onClick={() => pick(active, t)}
+                      onPointerEnter={() => setHover(t)}
+                      onPointerDown={() => setHover(t)}
+                      onPointerLeave={() => setHover((h) => (h === t ? null : h))}
+                      onFocus={() => setHover(t)}
+                      onBlur={() => setHover((h) => (h === t ? null : h))}
                       className="v2-build-choice"
                       style={{ ["--tab-color" as string]: STEP_COLOR[active] }}
                     >
@@ -909,7 +936,7 @@ function ZoneLegendChip({ zone }: { zone: { kind: string; label: string } }) {
   : zone.kind === "resistance" ? "#ef4444"
   :                              "#f59e0b";
   return (
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-1.5" data-legend={zone.label}>
       <span className="h-2.5 w-2.5 rounded-[3px]" style={{ background: color }} />
       <span className="text-[12px] font-medium text-[color:var(--v2-text-2)]">{zone.label}</span>
     </div>

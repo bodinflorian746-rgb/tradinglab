@@ -377,6 +377,7 @@ export default function FindTheMistakePage() {
 
             <GameChartV2
               data={{ candles: [...chart.past, ...chart.future], zones: chart.zones, domain: chart.domain }}
+              inlineLabels
               overlay={{ entry: chart.entry !== undefined ? { price: chart.entry, direction: dir } : undefined, candidateLines: labelledLines }}
               mode={isFeedback ? "verdict" : "question"}
               keepCandlesBright={chart.zones.length === 0}

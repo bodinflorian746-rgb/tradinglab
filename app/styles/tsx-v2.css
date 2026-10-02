@@ -269,6 +269,10 @@
 /* Impact d'un stop touché : le marqueur apparaît avec un effet d'échelle */
 .tsx-v2 .v2-hit { transform-box: fill-box; transform-origin: 50% 50%; animation: v2-pop 450ms cubic-bezier(0.2, 1.4, 0.3, 1) both; }
 
+/* Étiquettes posées sur leur ligne (inlineLabels) : fondu une fois le cadrage posé */
+.tsx-v2 .v2-labels { opacity: 0; }
+.tsx-v2 .is-playing .v2-labels { animation: v2-fade 300ms ease both; animation-delay: var(--labels-delay, 260ms); }
+
 /* Marquage de verdict : apparaît juste après le glissement du graphique */
 .tsx-v2 .v2-mark { animation: v2-fade 450ms ease 520ms both; }
 
@@ -503,7 +507,9 @@
   .tsx-v2 .is-playing .v2-verdict,
   .tsx-v2 .is-playing .v2-pin { animation: none; }
   .tsx-v2 .v2-hit,
-  .tsx-v2 .v2-mark { animation: none; }
+  .tsx-v2 .v2-mark,
+  .tsx-v2 .v2-labels,
+  .tsx-v2 .is-playing .v2-labels { animation: none; opacity: 1; }
   .tsx-v2 .v2-mistake-choice { transition: none; }
   .tsx-v2 .v2-build-tab,
   .tsx-v2 .v2-build-choice { transition: none; }

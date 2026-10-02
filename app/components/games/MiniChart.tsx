@@ -9,7 +9,8 @@
 import type { ChartData, ChartZone, ZoneKind } from "@/lib/games/shared";
 
 export interface MiniChartOverlay {
-  entry?:             { price: number; direction: "BUY" | "SELL" };
+  // label : étiquette de la ligne d'entrée (GameChartV2, étiquettes en ligne)
+  entry?:             { price: number; direction: "BUY" | "SELL"; label?: string };
   tp?:                { price: number };
   stop?:              { price: number; hit?: boolean };
   // V2 multi-stops (utilisé par place-stop).

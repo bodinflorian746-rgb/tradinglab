@@ -454,8 +454,10 @@ export default function BuySellNoTradePage() {
             )}
 
             {/* Graphique : passé, puis futur révélé bougie par bougie, puis verdict */}
+            {/* Chaque zone est nommée sur le graphique (étiquette posée sur la zone) */}
             <GameChartV2
               data={{ candles: [...chart.past, ...chart.future], zones, domain: chart.domain }}
+              inlineLabels
               overlay={{
                 separatorIndex:     chart.past.length,
                 visibleFutureCount: isPlacing ? 0 : revealed,
@@ -472,13 +474,6 @@ export default function BuySellNoTradePage() {
                 />
               )}
             </GameChartV2>
-
-            {/* Légende : utile quand plusieurs zones (la 1re est nommée sur le graphique) */}
-            {zones.length > 1 && (
-              <div className="flex flex-wrap gap-x-2 gap-y-1.5">
-                {zones.map((z, i) => <ZoneLegendChip key={i} zone={z} />)}
-              </div>
-            )}
 
             {/* Context infos — en avancé, on cache la volatilité pour forcer la
                 lecture du chart (mais on garde la news warning visible). */}
@@ -720,18 +715,6 @@ function DifficultyChip({ difficulty, difficultyMeta }: { difficulty: Difficulty
   );
 }
 
-function ZoneLegendChip({ zone }: { zone: { kind: string; label: string } }) {
-  const cls =
-    zone.kind === "support"        ? "bg-emerald-500"
-  : zone.kind === "resistance"     ? "bg-red-500"
-  :                                  "bg-amber-400";
-  return (
-    <span className="v2-chip">
-      <span className={`h-2 w-2 rounded-sm ${cls}`} />
-      {zone.label}
-    </span>
-  );
-}
 
 // ─── Summary ──────────────────────────────────────────────────────────────────
 
