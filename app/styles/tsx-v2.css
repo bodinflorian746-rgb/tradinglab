@@ -65,6 +65,21 @@
   -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 100%);
 }
 
+/* Variante « fond doux » (opt-in par page : home, leçons) : sans quadrillage,
+   halos colorés diffus sur un léger dégradé sombre. Les jeux et le hub
+   gardent le fond par défaut (avec quadrillage). */
+.tsx-v2.tsx-v2--soft {
+  background-color: #05070c;
+  background-image:
+    radial-gradient(900px 640px at 6% 0%, rgba(16, 185, 129, 0.2), transparent 70%),
+    radial-gradient(760px 560px at 98% 12%, rgba(59, 130, 246, 0.11), transparent 70%),
+    radial-gradient(820px 620px at 0% 40%, rgba(139, 92, 246, 0.07), transparent 70%),
+    radial-gradient(900px 660px at 100% 62%, rgba(16, 185, 129, 0.08), transparent 70%),
+    radial-gradient(820px 620px at 8% 86%, rgba(245, 158, 11, 0.05), transparent 70%),
+    linear-gradient(180deg, #071018 0%, #05070c 38%, #04060a 70%, #05090b 100%);
+}
+.tsx-v2.tsx-v2--soft::before { content: none; }
+
 .tsx-v2 .v2-display { font-family: var(--v2-font-display); letter-spacing: -0.02em; }
 .tsx-v2 .v2-mono { font-family: var(--v2-font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
 
