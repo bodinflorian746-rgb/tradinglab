@@ -98,56 +98,78 @@ function SectionHead({ eyebrow, title, sub, center }: { eyebrow?: string; title:
 // STRATEGY_MODULES en annonce 36 (ICT : lessonCount 6 pour 5 pages).
 const MACRO_LESSONS = 16;
 const STRATEGY_LESSONS = 35;
-const GAMES_COUNT = 4;
-/** Couleurs des parts (celles des piliers) */
-const COLOR: Record<string, string> = { trading: "#34d399", macro: "#60a5fa", strategies: "#fbbf24" };
 
 type LessonsStrings = ReturnType<typeof homeStrings>["lessons"];
+type ValuePart = { n: number } | { t: string } | { br: true };
 
-/** Bloc « 79 leçons » : le chiffre en très grand, la répartition dessous, stratégies et jeux en second plan */
-function LessonsBlock({ l, trading }: { l: LessonsStrings; trading: number }) {
+const PICTO: Record<string, ReactNode> = {
+  // bougies
+  trading: (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M5 3v14M10 5v10M15 2v12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <rect x="3" y="6" width="4" height="6" rx="1" fill="currentColor" />
+      <rect x="8" y="8" width="4" height="4" rx="1" fill="currentColor" opacity="0.55" />
+      <rect x="13" y="4" width="4" height="7" rx="1" fill="currentColor" />
+    </svg>
+  ),
+  // globe
+  macro: (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M3 10h14M10 3c2.2 2 3.2 4.4 3.2 7s-1 5-3.2 7c-2.2-2-3.2-4.4-3.2-7s1-5 3.2-7z" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  ),
+  // cible
+  strategies: (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="10" cy="10" r="3.5" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="10" cy="10" r="1" fill="currentColor" />
+    </svg>
+  ),
+};
+
+/**
+ * Bloc des leçons : « 79 leçons » en très grand, « Du débutant à l'avancé »,
+ * puis 3 blocs (noms du menu) qui mènent chacun à sa page, un nombre chacun.
+ */
+function LessonsBlock({ l, names, hrefs, trading }: {
+  l: LessonsStrings;
+  names: { trading: string; macro: string; strategies: string };
+  hrefs: { trading: string; macro: string; strategies: string };
+  trading: number;
+}) {
   const total = trading + MACRO_LESSONS + STRATEGY_LESSONS;
-  const parts = [
-    { key: "trading", n: trading, color: COLOR.trading, label: l.bar.trading },
-    { key: "macro", n: MACRO_LESSONS, color: COLOR.macro, label: l.bar.macro },
-    { key: "strategies", n: STRATEGY_LESSONS, color: COLOR.strategies, label: l.bar.strategies },
+  const blocks: { key: "trading" | "macro" | "strategies"; color: string; value: ValuePart[] }[] = [
+    { key: "trading", color: "#34d399", value: [{ n: trading }, { t: ` ${l.unit}` }] },
+    { key: "macro", color: "#60a5fa", value: [{ n: MACRO_LESSONS }, { t: ` ${l.unit}` }] },
+    { key: "strategies", color: "#fbbf24", value: l.strategiesValue(STRATEGY_MODULES.length, STRATEGY_LESSONS) },
   ];
-  const secondary: Record<string, number> = { strategies: STRATEGY_MODULES.length, games: GAMES_COUNT };
   return (
     <div className="hv2-lessons">
-      <p className="hv2-lessons-total">
-        <span className="hv2-lessons-n">{total}</span>
-        <span className="hv2-lessons-unit">{l.unit}</span>
-      </p>
-      {/* Répartition des leçons, à l'échelle */}
-      <div className="hv2-lessons-bar" role="img" aria-label={parts.map((p) => `${p.label} ${p.n}`).join(", ")}>
-        {parts.map((p) => <span key={p.key} style={{ flexGrow: p.n, background: p.color }} />)}
+      <div>
+        <p className="hv2-lessons-total">
+          <span className="hv2-lessons-n">{total}</span>
+          <span className="hv2-lessons-unit">{l.unit}</span>
+        </p>
+        <p className="hv2-lessons-tagline">{l.tagline}</p>
       </div>
-      <dl className="hv2-lessons-detail">
-        <div>
-          <dt><span className="hv2-dot" style={{ background: "linear-gradient(90deg, #34d399 50%, #60a5fa 50%)" }} />{l.trading}</dt>
-          <dd>
-            <span className="hv2-lessons-sub"><span className="hv2-lessons-sub-n">{trading + MACRO_LESSONS}</span> {l.unit}</span>
-            <span className="hv2-lessons-note">
-              {l.tradingDetail(trading, MACRO_LESSONS).map((part, i) => (
-                <span key={i} style={"c" in part && part.c ? { color: COLOR[part.c], fontWeight: 600, whiteSpace: "nowrap" } : undefined}>{part.t}</span>
-              ))}
+      <div className="hv2-lessons-blocks">
+        {blocks.map((b) => (
+          <Link key={b.key} href={hrefs[b.key]} className="hv2-lesson-block" style={css({ "--c": b.color })}>
+            <span className="hv2-lesson-picto">{PICTO[b.key]}</span>
+            <span className="hv2-lesson-text">
+              <span className="hv2-lesson-name">{names[b.key]}</span>
+              <span className="hv2-lesson-value">
+                {b.value.map((part, i) =>
+                  "n" in part ? <span key={i} className="hv2-lesson-n">{part.n}</span>
+                  : "br" in part ? <span key={i} className="hv2-lesson-br" />
+                  : <Fragment key={i}>{part.t}</Fragment>)}
+              </span>
             </span>
-          </dd>
-        </div>
-        <div>
-          <dt><span className="hv2-dot" style={{ background: COLOR.strategies }} />{l.strategies}</dt>
-          <dd><span className="hv2-lessons-sub"><span className="hv2-lessons-sub-n">{STRATEGY_LESSONS}</span> {l.unit}</span></dd>
-        </div>
-      </dl>
-      <p className="hv2-lessons-secondary">
-        {l.secondary.map((x, i) => (
-          <span key={x.key}>
-            {i > 0 && <span aria-hidden="true" className="px-2 text-[color:var(--v2-text-3)]">·</span>}
-            <span className="v2-mono font-semibold text-[color:var(--v2-text)]">{secondary[x.key]}</span> {x.label}
-          </span>
+          </Link>
         ))}
-      </p>
+      </div>
     </div>
   );
 }
@@ -211,6 +233,9 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
 
   const count = (id: string) => FORMATIONS.find((f) => f.id === id)?.lessons.length ?? 0;
   const tradingLessons = count("debutant") + count("intermediaire") + count("avance");
+  // Noms et liens du menu du site
+  const nav = await getDictionary(locale, "nav");
+  const lessonHrefs = { trading: h("/formations"), macro: h("/formations/macro"), strategies: h("/strategies") };
   const levels = [
     { ...s.progression.levels[0], n: count("debutant"), href: "/formations", color: "#34d399" },
     { ...s.progression.levels[1], n: count("intermediaire"), href: "/formations/intermediaire", color: "#60a5fa" },
@@ -248,7 +273,7 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
           </div>
           {/* 79 leçons (desktop) : à côté du jeu, dans le premier écran */}
           <div className="hidden w-full lg:block" style={css({ "--i": 4 })}>
-            <LessonsBlock l={s.lessons} trading={tradingLessons} />
+            <LessonsBlock l={s.lessons} names={nav.links} hrefs={lessonHrefs} trading={tradingLessons} />
           </div>
         </div>
 
@@ -280,7 +305,7 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
         </div>
         {/* 79 leçons (mobile) : bloc dédié sous l'offre */}
         <div data-reveal className="mt-8 lg:hidden">
-          <LessonsBlock l={s.lessons} trading={tradingLessons} />
+          <LessonsBlock l={s.lessons} names={nav.links} hrefs={lessonHrefs} trading={tradingLessons} />
         </div>
       </section>
 

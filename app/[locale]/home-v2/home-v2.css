@@ -186,22 +186,50 @@
   font-size: clamp(26px, 1vw + 22px, 34px);
   letter-spacing: -0.02em;
 }
-.tsx-v2 .hv2-lessons-bar { display: flex; gap: 3px; height: 10px; border-radius: 999px; overflow: hidden; }
-.tsx-v2 .hv2-lessons-bar > span { flex-basis: 0; }
-.tsx-v2 .hv2-lessons-detail { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 14px; }
-.tsx-v2 .hv2-lessons-detail dt { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--v2-text-2); }
-.tsx-v2 .hv2-lessons-detail dd { margin-top: 2px; }
-.tsx-v2 .hv2-dot { width: 10px; height: 10px; flex-shrink: 0; border-radius: 3px; }
-.tsx-v2 .hv2-lessons-sub { display: block; font-size: 15px; font-weight: 600; color: var(--v2-text-2); }
-.tsx-v2 .hv2-lessons-sub-n {
+.tsx-v2 .hv2-lessons-tagline { margin-top: 10px; font-size: 16px; font-weight: 600; color: var(--v2-text-2); }
+
+/* 3 blocs (Trading, Macro, Stratégies) : en ligne compacte en mobile, côte à côte en desktop */
+.tsx-v2 .hv2-lessons-blocks { display: grid; gap: 8px; }
+.tsx-v2 .hv2-lesson-block {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 14px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--c) 8%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 30%, transparent);
+  transition: background 200ms ease;
+}
+.tsx-v2 .hv2-lesson-block:hover { background: color-mix(in srgb, var(--c) 15%, transparent); }
+.tsx-v2 .hv2-lesson-picto {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+}
+.tsx-v2 .hv2-lesson-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.tsx-v2 .hv2-lesson-name { font-family: var(--v2-font-display); font-size: 16px; font-weight: 700; color: var(--c); }
+.tsx-v2 .hv2-lesson-value { font-size: 15px; font-weight: 600; line-height: 1.25; color: var(--v2-text-2); }
+.tsx-v2 .hv2-lesson-br { display: none; }
+.tsx-v2 .hv2-lesson-n {
   font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
   font-weight: 700;
-  font-size: 26px;
+  font-size: 22px;
   letter-spacing: -0.03em;
   color: var(--v2-text);
 }
-.tsx-v2 .hv2-lessons-note { display: block; margin-top: 2px; font-size: 13px; line-height: 1.4; color: var(--v2-text-3); }
-.tsx-v2 .hv2-lessons-secondary { padding-top: 12px; border-top: 1px solid var(--v2-edge); font-size: 13px; color: var(--v2-text-2); }
+@media (min-width: 1024px) {
+  .tsx-v2 .hv2-lessons-blocks { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .tsx-v2 .hv2-lesson-block { grid-template-columns: 1fr; align-content: start; row-gap: 10px; padding: 14px; }
+  .tsx-v2 .hv2-lesson-text { gap: 6px; }
+  .tsx-v2 .hv2-lesson-br { display: block; }
+}
+@media (prefers-reduced-motion: reduce) { .tsx-v2 .hv2-lesson-block { transition: none; } }
 
 .tsx-v2 .hv2-num {
   font-family: var(--v2-font-mono);

@@ -46,13 +46,12 @@ const S = {
       replay: "Rejouer",
     },
     offer: { title: "48h gratuites pour tout tester", desc: "Teste la plateforme pendant 48h, sans engagement.", cta: "Recevoir mon code" },
+    // Bloc des leçons : les noms des 3 blocs sont ceux du menu (dictionnaire nav)
     lessons: {
       unit: "leçons",
-      trading: "Trading",
-      tradingDetail: (trading: number, macro: number) => [{ t: "dont " }, { t: `${trading} de trading`, c: "trading" }, { t: " et " }, { t: `${macro} de macro`, c: "macro" }],
-      strategies: "Stratégies",
-      bar: { trading: "Trading", macro: "Macro", strategies: "Stratégies" },
-      secondary: [{ key: "strategies", label: "stratégies expliquées" }, { key: "games", label: "jeux éducatifs" }],
+      tagline: "Du débutant à l'avancé",
+      // « 8 stratégies, en 35 leçons » : jamais « 35 stratégies »
+      strategiesValue: (strategies: number, lessons: number) => [{ n: strategies }, { t: " stratégies," }, { br: true as const }, { t: " en " }, { n: lessons }, { t: " leçons" }],
     },
     games: {
       sub: "4 jeux sur de vrais graphiques : décider, placer ton stop, repérer l'erreur, construire un trade complet.",
@@ -153,11 +152,8 @@ const S = {
     offer: { title: "48h gratis para probarlo todo", desc: "Prueba la plataforma durante 48h, sin compromiso.", cta: "Recibir mi código" },
     lessons: {
       unit: "lecciones",
-      trading: "Trading",
-      tradingDetail: (trading: number, macro: number) => [{ t: "de las cuales " }, { t: `${trading} de trading`, c: "trading" }, { t: " y " }, { t: `${macro} de macro`, c: "macro" }],
-      strategies: "Estrategias",
-      bar: { trading: "Trading", macro: "Macro", strategies: "Estrategias" },
-      secondary: [{ key: "strategies", label: "estrategias explicadas" }, { key: "games", label: "juegos educativos" }],
+      tagline: "De principiante a avanzado",
+      strategiesValue: (strategies: number, lessons: number) => [{ n: strategies }, { t: " estrategias," }, { br: true as const }, { t: " en " }, { n: lessons }, { t: " lecciones" }],
     },
     games: {
       sub: "4 juegos sobre gráficos reales: decidir, colocar tu stop, detectar el error, construir un trade completo.",
