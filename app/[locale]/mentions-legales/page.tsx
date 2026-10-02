@@ -46,7 +46,7 @@ const CONTENT: Record<Locale, Content> = {
               "https://vercel.com",
             ],
           },
-          "Les données utilisateurs (comptes, progression, journal de trading) sont stockées via Supabase.",
+          "Les données utilisateurs (comptes, progression) sont stockées via Supabase.",
           "Les paiements sont traités par Stripe. TradeScaleX ne stocke aucune donnée bancaire.",
           "Les emails transactionnels sont envoyés via Resend.",
         ],
@@ -60,7 +60,7 @@ const CONTENT: Record<Locale, Content> = {
       {
         heading: "Avertissement sur le contenu",
         blocks: [
-          "TradeScaleX est une plateforme à vocation strictement pédagogique. Le contenu proposé (formations, analyses, journal de trading, outils) ne constitue en aucun cas un conseil en investissement financier, une incitation à investir, ni une recommandation personnalisée au sens de la réglementation applicable. Le trading sur les marchés financiers comporte un risque de perte en capital. Chaque utilisateur est seul responsable de ses décisions de trading.",
+          "TradeScaleX est une plateforme à vocation strictement pédagogique. Le contenu proposé (formations, analyses, outils) ne constitue en aucun cas un conseil en investissement financier, une incitation à investir, ni une recommandation personnalisée au sens de la réglementation applicable. Le trading sur les marchés financiers comporte un risque de perte en capital. Chaque utilisateur est seul responsable de ses décisions de trading.",
         ],
       },
     ],
@@ -154,7 +154,7 @@ const CONTENT: Record<Locale, Content> = {
               "https://vercel.com",
             ],
           },
-          "Los datos de los usuarios (cuentas, progreso, diario de trading) se almacenan a través de Supabase.",
+          "Los datos de los usuarios (cuentas, progreso) se almacenan a través de Supabase.",
           "Los pagos son procesados por Stripe. TradeScaleX no almacena ningún dato bancario.",
           "Los emails transaccionales se envían a través de Resend.",
         ],
@@ -168,7 +168,7 @@ const CONTENT: Record<Locale, Content> = {
       {
         heading: "Advertencia sobre el contenido",
         blocks: [
-          "TradeScaleX es una plataforma con una finalidad estrictamente pedagógica. El contenido ofrecido (formaciones, análisis, diario de trading, herramientas) no constituye en ningún caso un asesoramiento en inversión financiera, una incitación a invertir, ni una recomendación personalizada en el sentido de la normativa aplicable. El trading en los mercados financieros conlleva un riesgo de pérdida de capital. Cada usuario es el único responsable de sus decisiones de trading.",
+          "TradeScaleX es una plataforma con una finalidad estrictamente pedagógica. El contenido ofrecido (formaciones, análisis, herramientas) no constituye en ningún caso un asesoramiento en inversión financiera, una incitación a invertir, ni una recomendación personalizada en el sentido de la normativa aplicable. El trading en los mercados financieros conlleva un riesgo de pérdida de capital. Cada usuario es el único responsable de sus decisiones de trading.",
         ],
       },
     ],

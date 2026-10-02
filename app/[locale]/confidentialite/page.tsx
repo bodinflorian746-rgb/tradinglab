@@ -14,7 +14,7 @@ const CONTENT: Record<Locale, Content> = {
     title: "Politique de confidentialité",
     description:
       "Politique de confidentialité et gestion des données personnelles (RGPD) de TradeScaleX.",
-    updated: "Dernière mise à jour : 2 juillet 2026",
+    updated: "Dernière mise à jour : 2 octobre 2026",
     sections: [
       {
         heading: "Responsable du traitement",
@@ -26,9 +26,10 @@ const CONTENT: Record<Locale, Content> = {
           "Selon votre usage du site, nous collectons :",
           {
             list: [
-              "Compte : email, mot de passe (hashé), langue préférée",
+              "Compte : email, pseudo, mot de passe (hashé), langue préférée",
               "Paiement : géré intégralement par Stripe — TradeScaleX n'a jamais accès à vos coordonnées bancaires",
-              "Usage : progression dans les formations, données saisies dans le journal de trading, préférences de compte",
+              "Usage : progression dans les formations, préférences de compte",
+              "Contact : nom, email, sujet et message envoyés via le formulaire de contact",
               "Technique : logs de connexion, adresse IP (à des fins de sécurité)",
             ],
           },
@@ -170,7 +171,7 @@ const CONTENT: Record<Locale, Content> = {
     title: "Política de privacidad",
     description:
       "Política de privacidad y gestión de datos personales (RGPD) de TradeScaleX.",
-    updated: "Última actualización: 2 de julio de 2026",
+    updated: "Última actualización: 2 de octubre de 2026",
     sections: [
       {
         heading: "Responsable del tratamiento",
@@ -182,9 +183,10 @@ const CONTENT: Record<Locale, Content> = {
           "Según su uso del sitio, recopilamos:",
           {
             list: [
-              "Cuenta: email, contraseña (con hash), idioma preferido",
+              "Cuenta: email, seudónimo, contraseña (con hash), idioma preferido",
               "Pago: gestionado íntegramente por Stripe — TradeScaleX nunca tiene acceso a sus datos bancarios",
-              "Uso: progreso en las formaciones, datos introducidos en el diario de trading, preferencias de cuenta",
+              "Uso: progreso en las formaciones, preferencias de cuenta",
+              "Contacto: nombre, email, asunto y mensaje enviados a través del formulario de contacto",
               "Técnico: registros de conexión, dirección IP (con fines de seguridad)",
             ],
           },

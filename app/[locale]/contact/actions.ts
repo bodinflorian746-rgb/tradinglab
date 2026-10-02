@@ -1,7 +1,8 @@
 "use server";
 
-// Server Action du formulaire de contact. Envoie un email via Resend vers
-// contact@tradescalex.com. Pattern strictement aligné sur
+// Server Action du formulaire de contact. Envoie un email via Resend aux
+// adresses d'administration (ADMIN_EMAILS, ou ADMIN_EMAIL en secours), comme
+// /api/avis. Pattern strictement aligné sur
 // app/api/avis/route.ts et lib/email/send-trial-code.ts : même SDK Resend,
 // même clé RESEND_API_KEY (server-only), même sender, même échappement HTML.
 //
@@ -9,13 +10,13 @@
 // redirect) — cohérent avec l'UX des autres formulaires du site.
 
 import { Resend } from "resend";
+import { getAdminEmails } from "@/lib/auth/admin";
 
 const FROM = "TradeScaleX <noreply@tradescalex.com>";
-const TO = "contact@tradescalex.com";
 
 export type ContactState = {
   ok: boolean;
-  error?: "invalid" | "email_service_unavailable" | "send_failed" | "server_error";
+  error?: "invalid" | "email_service_unavailable" | "inbox_not_configured" | "send_failed" | "server_error";
   fields?: { name?: boolean; email?: boolean; subject?: boolean; message?: boolean };
 };
 
@@ -88,11 +89,18 @@ export async function sendContactMessage(
     return { ok: false, error: "email_service_unavailable" };
   }
 
+  // Destinataires : même liste que /api/avis (aucune adresse codée en dur)
+  const inbox = getAdminEmails();
+  if (inbox.length === 0) {
+    console.error("[contact] aucun destinataire (ADMIN_EMAILS / ADMIN_EMAIL absents)");
+    return { ok: false, error: "inbox_not_configured" };
+  }
+
   try {
     const resend = new Resend(apiKey);
     const { error } = await resend.emails.send({
       from: FROM,
-      to: TO,
+      to: inbox,
       replyTo: email,
       subject: `[Contact] ${subject}`,
       html: buildHtml(name, email, subject, message),

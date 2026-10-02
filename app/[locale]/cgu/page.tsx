@@ -7,13 +7,14 @@ import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 
 type Block = string | { list: string[] } | { lines: string[] };
 type Section = { heading: string; blocks: Block[] };
-type Content = { title: string; description: string; sections: Section[] };
+type Content = { title: string; description: string; updated?: string; sections: Section[] };
 
 const CONTENT: Record<Locale, Content> = {
   fr: {
     title: "Conditions générales d'utilisation",
     description:
       "Conditions générales d'utilisation du site et de l'application TradeScaleX.",
+    updated: "Dernière mise à jour : 2 octobre 2026",
     sections: [
       {
         heading: "Objet",
@@ -24,7 +25,7 @@ const CONTENT: Record<Locale, Content> = {
       {
         heading: "Accès au service",
         blocks: [
-          "L'accès à certains contenus nécessite la création d'un compte et, au-delà de la période d'essai gratuite de 48h, la souscription d'un abonnement payant (voir CGV).",
+          "L'accès à certains contenus nécessite la création d'un compte. Trois voies d'accès sont proposées : une période d'essai gratuite de 48h, l'ouverture d'un compte chez un broker partenaire via notre lien d'affiliation (accès gratuit à la plateforme : le code d'accès est envoyé par email après vérification, selon les conditions indiquées sur la page « Nos accès »), ou un abonnement mensuel payant (voir CGV).",
         ],
       },
       {
@@ -69,6 +70,10 @@ const CONTENT: Record<Locale, Content> = {
         blocks: [
           "TradeScaleX peut modifier les présentes CGU à tout moment. Les utilisateurs seront informés de toute modification substantielle par email.",
         ],
+      },
+      {
+        heading: "Droit applicable",
+        blocks: ["Les présentes CGU sont soumises au droit français."],
       },
     ],
   },
@@ -138,6 +143,7 @@ const CONTENT: Record<Locale, Content> = {
     title: "Condiciones generales de uso",
     description:
       "Condiciones generales de uso del sitio y de la aplicación TradeScaleX.",
+    updated: "Última actualización: 2 de octubre de 2026",
     sections: [
       {
         heading: "Objeto",
@@ -148,7 +154,7 @@ const CONTENT: Record<Locale, Content> = {
       {
         heading: "Acceso al servicio",
         blocks: [
-          "El acceso a determinados contenidos requiere la creación de una cuenta y, más allá del periodo de prueba gratuito de 48 h, la suscripción de un abono de pago (ver CGV).",
+          "El acceso a determinados contenidos requiere la creación de una cuenta. Se ofrecen tres vías de acceso: un periodo de prueba gratuito de 48 h, la apertura de una cuenta en un broker partner a través de nuestro enlace de afiliación (acceso gratuito a la plataforma: el código de acceso se envía por email tras la verificación, según las condiciones indicadas en la página «Nuestros accesos»), o un abono mensual de pago (ver CGV).",
         ],
       },
       {
@@ -193,6 +199,10 @@ const CONTENT: Record<Locale, Content> = {
         blocks: [
           "TradeScaleX puede modificar las presentes Condiciones Generales de Uso en cualquier momento. Los usuarios serán informados de toda modificación sustancial por email.",
         ],
+      },
+      {
+        heading: "Derecho aplicable",
+        blocks: ["Las presentes Condiciones Generales de Uso se rigen por el derecho francés."],
       },
     ],
   },
@@ -250,7 +260,8 @@ export default async function CguPage({
   return (
     <main className="min-h-screen bg-zinc-950 text-white px-6 py-16 md:py-20">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold mb-10">{c.title}</h1>
+        <h1 className={`text-3xl md:text-4xl font-bold ${c.updated ? "mb-3" : "mb-10"}`}>{c.title}</h1>
+        {c.updated && <p className="text-sm text-zinc-500 mb-10">{c.updated}</p>}
         <div className="space-y-10">
           {c.sections.map((section, i) => (
             <section key={i}>
