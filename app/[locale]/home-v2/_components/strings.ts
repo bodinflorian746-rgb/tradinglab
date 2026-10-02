@@ -1,21 +1,66 @@
-// Textes de la home v2 absents des dictionnaires : repris à l'identique des
-// textes en ligne de la home actuelle (app/[locale]/page.tsx), FR et ES.
-// Seule correction : le sous-titre ES de « Comment accéder », qui contenait
-// des mots français (« pour », « à »).
+// Textes de la home v2 absents des dictionnaires, FR et ES :
+// - textes en ligne de la home actuelle (app/[locale]/page.tsx), à l'identique
+//   (seule correction : le sous-titre ES de « Comment accéder », qui contenait
+//   des mots français) ;
+// - textes du jeu BUY / SELL / NO TRADE (page du jeu) pour le jeu du héros ;
+// - accroche du héros et bandeau 48h (retours PO, sprint R2 bis) ;
+// - lignes des jeux tirées de leurs descriptions (dictionnaire games).
 
 export type HomeLocale = "fr" | "es";
 
+/** Segment de titre ; hl = mot clé mis en avant */
+export type TitlePart = { t: string; hl?: boolean };
+
+/**
+ * Le journal de trading n'est pas encore ouvert aux utilisateurs (404 en
+ * production, liste blanche en local) : l'accroche qui l'annonce reste prête
+ * mais inactive. Passer à true quand le journal sera accessible à tous.
+ */
+export const JOURNAL_OPEN = false;
+
 const S = {
   fr: {
+    hero: {
+      titleJournal: [{ t: "De ta " }, { t: "première leçon", hl: true }, { t: " à ton " }, { t: "journal de trading", hl: true }, { t: "\u00a0: tout pour te former et progresser." }] as TitlePart[],
+      subtitleJournal: "Leçons, stratégies et jeux sur de vrais graphiques, puis un journal de trading pour analyser chacun de tes trades.",
+      title: [{ t: "De ta " }, { t: "première leçon", hl: true }, { t: " à ton " }, { t: "premier trade structuré", hl: true }, { t: "\u00a0: tout pour te former et progresser." }] as TitlePart[],
+      subtitle: "Leçons, stratégies et jeux sur de vrais graphiques, à ton rythme.",
+    },
+    game: {
+      question: "Question",
+      stepChoice: "Choix fait",
+      stepVerdict: "Verdict",
+      htf: "HTF",
+      macro: "Macro",
+      bias: { bullish: "Haussier", bearish: "Baissier", range: "Range" },
+      macroLabel: { normal: "Normal", dangereux: "Dangereux" },
+      revelation: "Révélation",
+      revealText: "On regarde ce qui s'est passé après ta décision…",
+      goodRead: "Bonne lecture",
+      wrongRead: "Pas la bonne lecture",
+      disciplinePerfect: "Discipline parfaite",
+      trapAvoided: "Piège évité ? Non.",
+      correctAnswer: "· bonne réponse",
+      yourChoice: "· ton choix",
+      playNext: "Joue la suite",
+      replay: "Rejouer",
+    },
+    offer: { title: "48h gratuites pour tout tester", desc: "Teste la plateforme pendant 48h, sans engagement.", cta: "Recevoir mon code" },
     stats: [
-      { value: "48h", label: "gratuites" },
       { value: "79", label: "leçons structurées" },
       { value: "8", label: "stratégies expliquées" },
       { value: "4", label: "jeux éducatifs" },
     ],
+    games: {
+      sub: "4 jeux sur de vrais graphiques : décider, placer ton stop, repérer l'erreur, construire un trade complet.",
+      lines: {
+        "buy-sell-no-trade": "Mini graphique, contexte, news : tu prends ta décision.",
+        "place-stop": "Quel stop va survivre ? Stop 1, 2 ou 3.",
+        "find-the-mistake": "10 setups, une erreur cachée à repérer parmi 4 choix.",
+        "build-the-trade": "Entrée, stop, take profit : tu construis le trade complet.",
+      } as Record<string, string>,
+    },
     discover: "Découvrir",
-    // Étape affichée par le jeu BUY / SELL / NO TRADE
-    question: "Question",
     // Descriptions des piliers Macro et Stratégies, version nuancée de la home actuelle (T.poles)
     pillarDesc: {
       macro: "Comprends les forces qui déplacent les marchés.",
@@ -77,14 +122,47 @@ const S = {
     },
   },
   es: {
+    hero: {
+      titleJournal: [{ t: "De tu " }, { t: "primera lección", hl: true }, { t: " a tu " }, { t: "diario de trading", hl: true }, { t: ": todo para formarte y progresar." }] as TitlePart[],
+      subtitleJournal: "Lecciones, estrategias y juegos sobre gráficos reales, y luego un diario de trading para analizar cada uno de tus trades.",
+      title: [{ t: "De tu " }, { t: "primera lección", hl: true }, { t: " a tu " }, { t: "primer trade estructurado", hl: true }, { t: ": todo para formarte y progresar." }] as TitlePart[],
+      subtitle: "Lecciones, estrategias y juegos sobre gráficos reales, a tu ritmo.",
+    },
+    game: {
+      question: "Pregunta",
+      stepChoice: "Elección hecha",
+      stepVerdict: "Veredicto",
+      htf: "HTF",
+      macro: "Macro",
+      bias: { bullish: "Alcista", bearish: "Bajista", range: "Range" },
+      macroLabel: { normal: "Normal", dangereux: "Peligroso" },
+      revelation: "Revelación",
+      revealText: "Veamos lo que pasó después de tu decisión…",
+      goodRead: "Buena lectura",
+      wrongRead: "Lectura incorrecta",
+      disciplinePerfect: "Disciplina perfecta",
+      trapAvoided: "¿Trampa evitada? No.",
+      correctAnswer: "· respuesta correcta",
+      yourChoice: "· tu elección",
+      playNext: "Sigue jugando",
+      replay: "Volver a jugar",
+    },
+    offer: { title: "48h gratis para probarlo todo", desc: "Prueba la plataforma durante 48h, sin compromiso.", cta: "Recibir mi código" },
     stats: [
-      { value: "48h", label: "gratis" },
       { value: "79", label: "lecciones estructuradas" },
       { value: "8", label: "estrategias explicadas" },
       { value: "4", label: "juegos educativos" },
     ],
+    games: {
+      sub: "4 juegos sobre gráficos reales: decidir, colocar tu stop, detectar el error, construir un trade completo.",
+      lines: {
+        "buy-sell-no-trade": "Mini-gráfico, contexto, noticias: tomas tu decisión.",
+        "place-stop": "¿Qué stop va a sobrevivir? Stop 1, 2 o 3.",
+        "find-the-mistake": "10 setups, un error oculto que detectar entre 4 opciones.",
+        "build-the-trade": "Entrada, stop, take profit: construyes el trade completo.",
+      } as Record<string, string>,
+    },
     discover: "Descubrir",
-    question: "Pregunta",
     pillarDesc: {
       macro: "Entiende las fuerzas que mueven los mercados.",
       strategies: "Descubre y aplica estrategias probadas.",

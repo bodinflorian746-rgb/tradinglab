@@ -18,7 +18,9 @@ import { GameChartV2 } from "@/app/components/games/v2/GameChartV2";
 import { buildGamePreviews, type PreviewId } from "@/app/[locale]/(premium)/jeux/_components/previews";
 import { requestTrialCode } from "@/app/[locale]/pricing/actions";
 import { RevealOnView } from "./_components/RevealOnView";
-import { homeStrings, type HomeLocale } from "./_components/strings";
+import { HeroGame } from "./_components/HeroGame";
+import { buildHeroRounds } from "./_components/hero-rounds";
+import { homeStrings, JOURNAL_OPEN, type HomeLocale } from "./_components/strings";
 import "./home-v2.css";
 
 export const metadata: Metadata = {
@@ -88,9 +90,23 @@ function SectionHead({ eyebrow, title, sub, center }: { eyebrow?: string; title:
   );
 }
 
+/** 3 gros chiffres sur une ligne (leçons, stratégies, jeux), une seule couleur */
+function Numbers({ stats }: { stats: readonly { value: string; label: string }[] }) {
+  return (
+    <div className="hv2-nums">
+      {stats.map((st) => (
+        <div key={st.value}>
+          <p className="hv2-num">{st.value}</p>
+          <p className="mt-1 text-[13px] leading-snug text-[color:var(--v2-text-2)]">{st.label}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ReviewCard({ review, locale, s }: { review: Review; locale: HomeLocale; s: ReturnType<typeof homeStrings> }) {
   return (
-    <article className="hv2-review v2-card flex h-full flex-col">
+    <article className="hv2-review v2-card flex flex-col">
       <div className="flex flex-1 flex-col gap-4 p-5">
         <div className="flex items-center justify-between gap-3">
           <span className="text-[15px] tracking-[2px] text-[color:var(--v2-emerald)]" aria-label={`${review.rating}/5`}>
@@ -134,6 +150,16 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
   const g: Dictionaries["games"] = await getDictionary(locale, "games");
   const s = homeStrings(locale);
   const previews = buildGamePreviews(locale);
+  const rounds = buildHeroRounds(locale);
+  // Aperçu BUY / SELL / NO TRADE de la rangée des jeux : un round lisible du
+  // héros (rejet de résistance, zone proportionnée) plutôt que l'aperçu FVG du
+  // hub, dont la zone occupe un tiers du cadre.
+  const railPreviews = {
+    ...previews,
+    "buy-sell-no-trade": { data: { candles: rounds[1].past, zones: rounds[1].zones, domain: { min: 0, max: 1 } }, keepCandlesBright: true as const },
+  };
+  const title = JOURNAL_OPEN ? s.hero.titleJournal : s.hero.title;
+  const subtitle = JOURNAL_OPEN ? s.hero.subtitleJournal : s.hero.subtitle;
 
   const count = (id: string) => FORMATIONS.find((f) => f.id === id)?.lessons.length ?? 0;
   const levels = [
@@ -149,16 +175,19 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
         <style>{".tsx-v2 [data-reveal]{opacity:1!important;transform:none!important}"}</style>
       </noscript>
 
-      {/* ═══ 1. HÉROS : promesse + le produit (un vrai jeu, vraies bougies) ═══ */}
+      {/* ═══ 1. HÉROS : accroche, puis un vrai round du jeu, jouable ═══ */}
       <section className="hv2-wrap hv2-hero">
-        <div className="hv2-hero-in flex flex-col items-start gap-5">
+        <div className="hv2-hero-head hv2-hero-in flex flex-col items-start gap-4">
           <span className="v2-chip v2-chip--emerald" style={css({ "--i": 0 })}>{t.hero.badge}</span>
           <h1 className="hv2-h1" style={css({ "--i": 1 })}>
-            {t.hero.titleLine1} <span className="hv2-accent block">{t.hero.titleLine2}</span>
+            {title.map((part, i) => (part.hl ? <span key={i} className="hv2-hl">{part.t}</span> : <Fragment key={i}>{part.t}</Fragment>))}
           </h1>
-          <p className="v2-lead max-w-xl text-[color:var(--v2-text-2)]" style={css({ "--i": 2 })}>{t.hero.subtitle}</p>
+        </div>
+
+        <div className="hv2-hero-side hv2-hero-in flex flex-col items-start gap-5">
+          <p className="v2-lead max-w-xl text-[color:var(--v2-text-2)]" style={css({ "--i": 2 })}>{subtitle}</p>
           {/* Un seul bouton plein ; « J'ai déjà un code » en lien discret à côté */}
-          <div className="flex w-full flex-wrap items-center gap-x-5 gap-y-3" style={css({ "--i": 3 })}>
+          <div className="hv2-cta-row flex w-full flex-wrap items-center gap-x-5 gap-y-3" style={css({ "--i": 3 })}>
             <Link href={h("/pricing")} className="hv2-btn-main">
               {t.hero.ctaPrimary}
               <Arrow />
@@ -168,56 +197,48 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
               {t.hero.ctaSecondary}
             </Link>
           </div>
+          {/* Chiffres (desktop) : à côté du jeu */}
+          <div className="hidden w-full lg:block" style={css({ "--i": 4 })}>
+            <Numbers stats={s.stats} />
+          </div>
         </div>
 
-        <div className="hv2-stage">
-          {/* Seconde carte, inclinée derrière (desktop) : Place ton Stop, ses 3 stops dépassent */}
-          <div aria-hidden="true" className="hv2-stage-back hidden lg:block">
-            <div className="v2-card v2-card--accent v2-accent--violet flex h-full flex-col justify-end p-4">
-              <GameChartV2 {...previews["place-stop"]} preview />
-            </div>
-          </div>
-          {/* Carte au premier plan : BUY / SELL / NO TRADE, comme dans le jeu */}
-          <Link href={h("/jeux")} className="hv2-stage-front v2-card v2-card--accent v2-accent--emerald flex flex-col gap-3 p-4 sm:p-5">
-            <div className="flex items-center justify-between gap-3">
-              <span className="flex items-center gap-2 text-[14px] font-semibold">
-                <span className="v2-step">1</span>
-                {s.question}
-              </span>
-              <span className="v2-mono flex items-center gap-1.5 text-[12px] text-[color:var(--v2-text-3)]">
-                <Clock />
-                {g.available["buy-sell-no-trade"].duration}
-              </span>
-            </div>
-            <div aria-hidden="true">
-              <GameChartV2 {...previews["buy-sell-no-trade"]} preview />
-            </div>
-            <div className="hv2-choices" aria-hidden="true">
-              <span className="v2-choice v2-choice--buy">BUY</span>
-              <span className="v2-choice v2-choice--sell">SELL</span>
-              <span className="v2-choice v2-choice--none">NO TRADE</span>
-            </div>
-            <span className="sr-only">{g.available["buy-sell-no-trade"].title}</span>
-          </Link>
-        </div>
+        <HeroGame
+          rounds={rounds}
+          s={{ ...s.game, duration: g.available["buy-sell-no-trade"].duration }}
+          locale={locale}
+          gameHref={h("/jeux/buy-sell-no-trade")}
+        />
       </section>
 
-      {/* Chiffres clés (ceux de la home actuelle) */}
-      <section className="hv2-wrap pb-4">
-        <div className="hv2-stats">
-          {s.stats.map((st, i) => (
-            <div key={st.value} data-reveal className="hv2-stat" style={css({ "--d": `${i * 70}ms` })}>
-              <p className="hv2-stat-value" style={{ color: ["#34d399", "#60a5fa", "#fbbf24", "#a78bfa"][i] }}>{st.value}</p>
-              <p className="mt-1.5 text-[13px] leading-snug text-[color:var(--v2-text-2)]">{st.label}</p>
+      {/* ═══ 1b. OFFRE 48H : le parcours d'essai existant ═══ */}
+      <section className="hv2-wrap">
+        <div className="hv2-offer">
+          <div className="flex items-center gap-4">
+            <span className="hv2-offer-badge" aria-hidden="true">48h</span>
+            <div>
+              <p className="v2-display text-[20px] font-bold leading-tight">{s.offer.title}</p>
+              <p className="mt-1 text-[14px] text-[color:var(--v2-text-2)]">{s.offer.desc}</p>
             </div>
-          ))}
+          </div>
+          <form action={requestTrialCode} className="w-full shrink-0 sm:w-auto">
+            <input type="hidden" name="locale" value={locale} />
+            <button type="submit" className="hv2-btn-main w-full sm:w-auto">
+              {s.offer.cta}
+              <Arrow />
+            </button>
+          </form>
+        </div>
+        {/* Chiffres (mobile) : sous l'offre */}
+        <div className="mt-10 lg:hidden">
+          <Numbers stats={s.stats} />
         </div>
       </section>
 
       {/* ═══ 2. LES 4 JEUX : couleur signature, aperçus animés ═══ */}
       <section className="hv2-section hv2-glow" style={css({ "--hv2-glow": "radial-gradient(60% 50% at 80% 30%, rgba(139,92,246,0.10), transparent 70%), radial-gradient(50% 45% at 10% 70%, rgba(59,130,246,0.08), transparent 70%)" })}>
         <div className="hv2-wrap flex flex-col gap-8">
-          <SectionHead eyebrow={g.index.eyebrow} title={g.index.title} sub={g.index.subtitle} />
+          <SectionHead eyebrow={g.index.eyebrow} title={g.index.title} sub={s.games.sub} />
           <div className="hv2-rail hv2-rail--games">
             {GAMES.map((gm, i) => {
               const game = g.available[gm.id];
@@ -230,7 +251,7 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
                   className={`v2-card v2-card--accent ${gm.accent} flex flex-col gap-4 p-4`}
                 >
                   <div aria-hidden="true">
-                    <GameChartV2 {...previews[gm.id]} preview />
+                    <GameChartV2 {...railPreviews[gm.id]} preview />
                   </div>
                   <div className="flex flex-col gap-2">
                     <div className="flex flex-wrap items-center gap-2">
@@ -241,6 +262,7 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
                       </span>
                     </div>
                     <h3 className="v2-display text-[20px] font-bold leading-tight">{game.title}</h3>
+                    <p className="text-[14px] leading-snug text-[color:var(--v2-text-2)]">{s.games.lines[gm.id]}</p>
                   </div>
                   <span className="v2-btn v2-btn--accent mt-auto w-full">
                     {g.index.playNow}
@@ -271,9 +293,11 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
                     </span>
                   </div>
                   <p className="v2-body text-[color:var(--v2-text)]">{s.pillarDesc[p.key] ?? p.description}</p>
-                  <ul className="hv2-list">
-                    {p.bullets.slice(0, -1).map((b) => <li key={b}>{b}</li>)}
-                  </ul>
+                  {isTrading && (
+                    <ul className="hv2-list">
+                      {p.bullets.slice(0, -1).map((b) => <li key={b}>{b}</li>)}
+                    </ul>
+                  )}
                 </>
               );
               return (
@@ -318,14 +342,26 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
       <section className="hv2-section hv2-glow" style={css({ "--hv2-glow": "radial-gradient(55% 45% at 50% 40%, rgba(16,185,129,0.09), transparent 70%)" })}>
         <div className="hv2-wrap flex flex-col gap-8">
           <SectionHead eyebrow={t.approche.eyebrow} title={<>{t.approche.titleLine1} <span className="hv2-accent">{t.approche.titleLine2}</span></>} />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {t.approche.features.map((f, i) => (
-              <div key={f.title} data-reveal className="v2-well flex flex-col gap-1.5 p-4 sm:p-5" style={css({ "--d": `${(i % 3) * 70}ms` })}>
-                <p className="v2-display text-[18px] font-bold leading-snug">{f.title}</p>
-                <p className="text-[14.5px] leading-relaxed text-[color:var(--v2-text-2)]">{f.description}</p>
+          {(() => {
+            const feats = t.approche.features;
+            const hero = feats[feats.length - 1];
+            return (
+              <div className="hv2-approach">
+                <div data-reveal className="hv2-approach-hero">
+                  <p className="v2-display text-[19px] font-bold text-[color:var(--v2-text-2)]">{hero.title}</p>
+                  <p className="v2-display mt-3 text-[clamp(22px,1.2vw+17px,30px)] font-bold leading-tight">{hero.description}</p>
+                </div>
+                <ul className="hv2-approach-list">
+                  {feats.slice(0, -1).map((f, i) => (
+                    <li key={f.title} data-reveal style={css({ "--d": `${i * 60}ms` })}>
+                      <p className="v2-display text-[17px] font-bold leading-snug">{f.title}</p>
+                      <p className="mt-1 text-[14px] leading-relaxed text-[color:var(--v2-text-2)]">{f.description}</p>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
-          </div>
+            );
+          })()}
         </div>
       </section>
 
@@ -335,13 +371,12 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
           <div data-reveal className="flex flex-col items-start gap-4">
             <p className="v2-eyebrow">{t.testimonialsSection.eyebrow}</p>
             <h2 className="hv2-h2">{t.testimonialsSection.title}</h2>
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-2xl bg-[color:rgba(255,255,255,0.05)] px-4 py-2 text-[13px] text-[color:var(--v2-text-2)] shadow-[inset_0_0_0_1px_var(--v2-edge-strong)]">
-              <span className="tracking-[2px] text-[color:var(--v2-emerald)]" aria-hidden="true">★★★★★</span>
-              <span>
-                <strong className="v2-mono text-[color:var(--v2-text)]">{t.testimonialsSection.trustRating}</strong>
-                {" · "}
-                {t.testimonialsSection.trustText}
-              </span>
+            <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
+              <p className="hv2-num leading-none">{t.testimonialsSection.trustRating}</p>
+              <div className="pb-1">
+                <p className="text-[18px] tracking-[3px] text-[color:var(--v2-emerald)]" aria-hidden="true">★★★★★</p>
+                <p className="text-[13px] text-[color:var(--v2-text-2)]">{t.testimonialsSection.trustText}</p>
+              </div>
             </div>
           </div>
           <div className="hv2-rail hv2-rail--reviews">
