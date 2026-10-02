@@ -55,9 +55,9 @@ const ZONE_LABEL_EN: Record<string, string> = {
   "Support HTF":        "HTF support",
   "Résistance":         "Resistance",
   "Support":            "Support",
-  "Plafond range":      "Range top",
-  "Plancher range":     "Range bottom",
-  "Précédent low":      "Previous low",
+  "Haut du range":      "Range top",
+  "Bas du range":     "Range bottom",
+  "Dernier creux":      "Previous low",
   "Liquidité balayée":  "Liquidity swept",
   "FVG haussier":       "Bullish FVG",
 };

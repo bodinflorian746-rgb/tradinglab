@@ -2,7 +2,7 @@
 //
 // Le joueur voit un setup/trade/contexte et identifie l'erreur principale
 // parmi 4 choix. Pédagogie centrée sur les erreurs retail réelles :
-// technique, psychologique, exécution, RR, timing, HTF, liquidité, discipline.
+// technique, psychologique, exécution, R/R, timing, HTF, liquidité, discipline.
 
 import {
   type Asset, type Session, type Volatility, type Spread,
@@ -167,7 +167,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     lessons: {
       beginner:     "Acheter sous une résistance qui rejette à chaque test est rarement une bonne idée. Attendre une cassure ou un retournement est souvent plus logique.",
       intermediate: "L'emplacement compte souvent plus que le pattern. Même un setup techniquement bon peut devenir mauvais si l'entrée se situe dans une zone hostile.",
-      advanced:     "Une résistance HTF touchée 3 fois ou plus peut signaler une zone d'offre solide. Ici, l'avantage se trouve plutôt dans un SELL sur le retest que dans un BUY sur le pullback.",
+      advanced:     "Une résistance HTF touchée 3 fois ou plus peut signaler une zone de supply solide. Ici, l'avantage se trouve plutôt dans un SELL sur le retest que dans un BUY sur le pullback.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     showLines: "buy_entry",
@@ -186,8 +186,8 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     explanation: "Ici, le support HTF a tenu à chaque test. Un SELL juste au-dessus place l'entrée au pire endroit : le TP est limité par le support immédiat, et le R/R devient très défavorable.",
     lessons: {
       beginner:     "Vendre au-dessus d'un support qui rebondit est rarement une bonne idée. Attendre la cassure du support, ou un rebond sur résistance, est souvent plus logique.",
-      intermediate: "L'emplacement compte souvent plus que le pattern. Vendre dans une zone de demande HTF revient ici à se placer contre l'avantage.",
-      advanced:     "Un support HTF avec 3 rebonds ou plus peut signaler une zone de demande solide. Ici, l'avantage se trouve plutôt dans un BUY sur le rebond que dans un SELL.",
+      intermediate: "L'emplacement compte souvent plus que le pattern. Vendre dans une zone de demand HTF revient ici à se placer contre l'avantage.",
+      advanced:     "Un support HTF avec 3 rebonds ou plus peut signaler une zone de demand solide. Ici, l'avantage se trouve plutôt dans un BUY sur le rebond que dans un SELL.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     showLines: "sell_entry",
@@ -247,7 +247,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     lessons: {
       beginner:     "Un stop se place plutôt DERRIÈRE l'invalidation, avec une marge : le placer dedans ou au-dessus l'expose au bruit.",
       intermediate: "Le low est souvent retesté pendant un pullback, avant la continuation. Une marge anti-bruit derrière le low est donc une option logique.",
-      advanced:     "Sans marge ATR derrière la structure, ton stop peut attirer la liquidité. Ces niveaux sont souvent visés avant la vraie direction.",
+      advanced:     "Sans marge derrière la structure, à la mesure de la volatilité du jour (ATR, l'amplitude moyenne d'une journée), ton stop peut attirer la liquidité. Ces niveaux sont souvent visés avant la vraie direction.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     showLines: "buy_with_tight_stop",
@@ -320,14 +320,14 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     direction: "BUY",
     htfBias: "range",
     macroContext: "normal",
-    context: "Tu prends ce BUY sur la cassure de résistance. La bougie de force est minuscule.",
+    context: "Tu prends ce BUY sur la cassure de résistance. La bougie impulsive est minuscule.",
     correctMistake: "no_confirmation",
     decoyMistakes: ["buy_in_resistance", "bad_rr", "fomo_after_pump"],
     explanation: "Une cassure sans bougie de momentum (petit corps, juste au-dessus de la résistance) continue nettement moins souvent. Elle sert souvent d'appât à liquidité.",
     lessons: {
       intermediate: "Une cassure faible peut être un piège. Une option logique : attendre une continuation claire ou un retest qui tient.",
       advanced:     "Les breakouts faibles servent souvent à aspirer les stops placés au-dessus de la résistance, avant une reprise dans le sens du HTF.",
-      beginner:     "Un vrai breakout s'accompagne souvent d'une bougie de force visible. Sinon, attendre se défend.",
+      beginner:     "Un vrai breakout s'accompagne souvent d'une bougie impulsive visible. Sinon, attendre se défend.",
     },
     difficulties: ["intermediate", "advanced"],
     showLines: "buy_entry",
@@ -388,7 +388,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     decoyMistakes: ["stop_too_tight", "bad_rr", "oversized_position"],
     explanation: "En volatilité élevée, le bruit normal peut être 2 à 3 fois plus large. Ici, un stop « normal » se retrouve dans ce bruit amplifié et risque d'être balayé avant que le trade aboutisse.",
     lessons: {
-      advanced:     "Le stop gagne à s'adapter à l'ATR du moment plutôt qu'à une distance fixe. En volatilité élevée, élargir le stop ET le TP proportionnellement est une option logique.",
+      advanced:     "Le stop gagne à s'adapter à la volatilité du moment (ATR, l'amplitude moyenne d'une journée) plutôt qu'à une distance fixe. En volatilité élevée, élargir le stop ET le TP proportionnellement est une option logique.",
       intermediate: "Si la volatilité double, un stop deux fois plus large est souvent nécessaire. Sinon, ton stop peut devenir un piège.",
       beginner:     "Plus le marché bouge fort, plus ton stop a besoin d'espace.",
     },
@@ -445,7 +445,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     direction: "SELL",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de balayer la liquidité sous le précédent low avec une grosse mèche. Tu SELL maintenant.",
+    context: "Le prix vient de balayer la liquidité sous le dernier creux avec une grosse mèche. Tu SELL maintenant.",
     correctMistake: "sweep_ignored",
     decoyMistakes: ["trade_against_htf", "bad_rr", "stop_too_tight"],
     explanation: "Ici, le sweep vient d'avoir lieu et peut signaler un retournement haussier. Un SELL revient à vendre le creux que les acheteurs viennent d'utiliser pour entrer : la lecture semble inversée.",
@@ -527,17 +527,17 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "dangereux",
-    context: "ATR journalier sur XAU/USD à 80$ contre 35$ habituellement (volatilité x2,3). Tu prends ce SELL avec ta taille de lot habituelle et ton SL standard de 30$.",
+    context: "En ce moment, l'or (XAU/USD) bouge en moyenne de 80 $ par jour (ATR, l'amplitude moyenne d'une journée), contre 35 $ d'habitude : la volatilité est multipliée par 2,3. Tu prends ce SELL avec ta taille de lot habituelle (1,00) et ton stop loss standard de 30 $.",
     correctMistake: "size_not_adapted_to_vol",
     decoyMistakes: ["stop_too_tight", "oversized_position", "bad_rr"],
-    explanation: "Quand la volatilité double, ton risque effectif double aussi si la taille de lot reste la même. Un SL de 30$ qui tenait avec un ATR de 35$ peut sauter facilement avec un ATR de 80$. Adapter la taille à la volatilité est un principe de base du risk management.",
+    explanation: "Quand la volatilité double, ton risque effectif double aussi si la taille de lot reste la même. Un stop loss de 30 $ qui tenait quand l'or bougeait de 35 $ par jour peut sauter facilement quand il bouge de 80 $ (ATR). Adapter la taille à la volatilité est un principe de base du risk management.",
     lessons: {
-      advanced:     "Le position sizing dynamique se calcule sur l'ATR : taille ≈ (capital × risque %) / (ATR × multiplicateur SL). Quand l'ATR double, diviser la taille par 2 permet de conserver le même risque.",
-      intermediate: "Beaucoup de traders ajustent leur lot à la volatilité du jour. Avec un ATR deux fois supérieur à la normale, diviser le lot par 2 ou doubler le SL sont deux options. Sinon, le risque réel peut échapper à ton contrôle.",
+      advanced:     "La taille de position peut se calculer sur la volatilité (ATR) : taille ≈ (capital × risque %) / (ATR × multiplicateur du stop loss). Quand l'ATR double, diviser la taille par 2 permet de conserver le même risque.",
+      intermediate: "Beaucoup de traders ajustent leur lot à la volatilité du jour. Quand le marché bouge deux fois plus que d'habitude (ATR), diviser le lot par 2 ou doubler le stop loss sont deux options. Sinon, le risque réel peut échapper à ton contrôle.",
       beginner:     "Quand le marché bouge plus que d'habitude, réduire ta taille de lot est une option logique. Sinon, ton stop risque de sauter trop facilement. L'idée : une taille adaptée à la volatilité, pas au ressenti.",
     },
     difficulties: ["intermediate", "advanced"],
-    extraInfo: "ATR 80 $ (moyenne 35 $) · lot 1,00 · SL 30 $",
+    extraInfo: "Volatilité ×2,3",
     showLines: "sell_entry",
   },
   {
@@ -751,8 +751,8 @@ function shRangeOscillation(rng: () => number, m: number): { chart: ScenarioChar
   }
   const entry = p;
   return { chart: finishChart(past, [], [
-    { kind: "resistance", y1: R - 0.15, y2: R + 0.15, label: "Plafond range" },
-    { kind: "support",    y1: S - 0.15, y2: S + 0.15, label: "Plancher range" },
+    { kind: "resistance", y1: R - 0.15, y2: R + 0.15, label: "Haut du range" },
+    { kind: "support",    y1: S - 0.15, y2: S + 0.15, label: "Bas du range" },
   ], [entry]), entry };
 }
 
@@ -799,7 +799,7 @@ function shWeakBreakout(rng: () => number, m: number): { chart: ScenarioChart; R
     past.push(candle(o, c, (0.22 + rng() * 0.18) * m, (0.22 + rng() * 0.18) * m));
     p = c;
   }
-  // « La bougie de force est minuscule » : clôture juste au-dessus de la zone,
+  // « La bougie impulsive est minuscule » : clôture juste au-dessus de la zone,
   // corps minuscule, mèches qui dominent la bougie
   const bC = R + 0.14 + rng() * 0.16;
   const bBody = bC - p;
@@ -852,7 +852,7 @@ function shSweepLowDone(rng: () => number, m: number): { chart: ScenarioChart; e
   p = past[past.length - 1].c;
   const entry = p;
   return { chart: finishChart(past, [], [
-    { kind: "support",       y1: L - 0.1,    y2: L + 0.1,    label: "Précédent low"     },
+    { kind: "support",       y1: L - 0.1,    y2: L + 0.1,    label: "Dernier creux"     },
     { kind: "liquidity_low", y1: sweepLow,   y2: L - 0.15,   label: "Liquidité balayée" },
   ], [entry]), entry, sweepLow, L };
 }
@@ -972,7 +972,7 @@ export function buildScenarioChartRaw(template: MistakeTemplate, seed: number, v
       } else if (template.showLines === "buy_with_bad_rr") {
         ch.entry = r.entry;
         ch.stop = r.swingLow - 0.5 * m;  // stop logique
-        ch.tp = r.entry + (r.entry - ch.stop) * 0.6;  // TP très proche = bad RR
+        ch.tp = r.entry + (r.entry - ch.stop) * 0.6;  // TP très proche = bad R/R
       } else if (template.showLines === "buy_entry") {
         ch.entry = r.entry;
       }

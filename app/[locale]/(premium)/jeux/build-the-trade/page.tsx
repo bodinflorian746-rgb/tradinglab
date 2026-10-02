@@ -101,7 +101,7 @@ export default function BuildTheTradePage() {
         slHits:           "SL tocados",
         buildTitle:       "Build the Trade",
         buildHeading:     "Construye el setup",
-        buildIntro:       "escenarios. Para cada uno, eliges la entrada, el stop loss y el take profit. El mercado revela después lo que pasó. RR, drawdown, veredicto.",
+        buildIntro:       "escenarios. Para cada uno, eliges la entrada, el stop loss y el take profit. El mercado revela después lo que pasó. R/R, drawdown, veredicto.",
         summary:          "Resumen",
         setupsBuilt:      "setups construidos",
         replayIn:         "Volver a jugar en",
@@ -214,7 +214,7 @@ export default function BuildTheTradePage() {
         slHits:           "SL touchés",
         buildTitle:       "Build the Trade",
         buildHeading:     "Construis le setup",
-        buildIntro:       "scénarios. Pour chacun, tu choisis l'entrée, le stop loss et le take profit. Le marché révèle ensuite ce qui s'est passé. RR, drawdown, verdict.",
+        buildIntro:       "scénarios. Pour chacun, tu choisis l'entrée, le stop loss et le take profit. Le marché révèle ensuite ce qui s'est passé. R/R, drawdown, verdict.",
         summary:          "Bilan",
         setupsBuilt:      "setups construits",
         replayIn:         "Rejouer en",
@@ -676,10 +676,10 @@ function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Diff
         <h1 className="v2-display v2-h2 font-bold">{locale === "es" ? "Construye el setup" : locale === "en" ? "Build the setup" : "Construis le setup"}</h1>
         <p className="v2-lead text-[color:var(--v2-text-2)]">
           {locale === "es"
-            ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, eliges la entrada, el stop loss y el take profit. El mercado revela después lo que pasó. RR, drawdown, veredicto.`
+            ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, eliges la entrada, el stop loss y el take profit. El mercado revela después lo que pasó. R/R, drawdown, veredicto.`
             : locale === "en"
             ? `${ROUNDS_PER_SESSION} scenarios. For each one, you choose the entry, the stop loss and the take profit. The market then reveals what happened. RR, drawdown, verdict.`
-            : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, tu choisis l'entrée, le stop loss et le take profit. Le marché révèle ensuite ce qui s'est passé. RR, drawdown, verdict.`}
+            : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, tu choisis l'entrée, le stop loss et le take profit. Le marché révèle ensuite ce qui s'est passé. R/R, drawdown, verdict.`}
         </p>
         <GeneralCasesNote />
       </div>

@@ -69,13 +69,13 @@ const SPECIFIC: Record<string, Check> = {
     if (!(maxH(pb) >= lo(z) - E && maxH(pb) <= hi(z) + E)) return "« Swing high » ne correspond pas au sommet du rebond";
     return continues(ch, false) ? null : "pas de continuation baissière";
   },
-  // « vient de casser une résistance HTF avec une bougie de force »
+  // « vient de casser une résistance HTF avec une bougie impulsive »
   breakout_bull_clean: (ch) => {
     const z = zone(ch, "resistance")!; const k = last(ch.past), before = ch.past.slice(0, -1);
     if (before.some((x) => x.c > hi(z))) return "clôture au-dessus de la résistance avant la cassure";
     if (before.some((x) => x.h > hi(z) + E)) return "résistance déjà percée avant la cassure";
     if (!(green(k) && k.c > hi(z) && k.o < lo(z))) return "la dernière bougie ne casse pas la résistance";
-    if (body(k) < 2 * median(before.map(body))) return "pas une « bougie de force » (corps < 2× médiane)";
+    if (body(k) < 2 * median(before.map(body))) return "pas une « bougie impulsive » (corps < 2× médiane)";
     return continues(ch, true) ? null : "pas de continuation après la cassure";
   },
   breakout_bear_clean: (ch) => {
@@ -83,7 +83,7 @@ const SPECIFIC: Record<string, Check> = {
     if (before.some((x) => x.c < lo(z))) return "clôture sous le support avant la cassure";
     if (before.some((x) => x.l < lo(z) - E)) return "support déjà percé avant la cassure";
     if (!(red(k) && k.c < lo(z) && k.o > hi(z))) return "la dernière bougie ne casse pas le support";
-    if (body(k) < 2 * median(before.map(body))) return "pas une « bougie de force » (corps < 2× médiane)";
+    if (body(k) < 2 * median(before.map(body))) return "pas une « bougie impulsive » (corps < 2× médiane)";
     return continues(ch, false) ? null : "pas de continuation après la cassure";
   },
   // « vient de rebondir sur un support HTF avec une mèche claire »
@@ -127,7 +127,7 @@ const SPECIFIC: Record<string, Check> = {
     if (i < 0) return "aucune piqûre au-dessus de la résistance";
     const k = ch.past[i];
     if (!(k.c < lo(r))) return "la piqûre ne referme pas sous la résistance";
-    if (Math.abs(k.h - hi(w)) > 1e-6) return "la zone « Wick fakeout » ne finit pas au sommet de la mèche";
+    if (Math.abs(k.h - hi(w)) > 1e-6) return "la zone « Mèche du fakeout » ne finit pas au sommet de la mèche";
     if (ch.past.slice(i + 1).some((x) => x.c > lo(r))) return "reclôture au-dessus après le piège";
     if (ch.future.some((x) => x.h >= k.h)) return "le futur dépasse le pic du fakeout";
     return continues(ch, false) ? null : "pas de baisse après le piège";
@@ -173,7 +173,7 @@ const SPECIFIC: Record<string, Check> = {
     const ret = (peak - last(ch.past).c) / (peak - start);
     if (!(ret > 0.6)) return "retracement ≤ 60 % de l'impulsion";
     const h = zone(ch, "liquidity_high")!;
-    if (!(maxH(ch.past) <= hi(h) + E && maxH(ch.past) >= lo(h) - E)) return "« Précédent high » ne contient pas le sommet";
+    if (!(maxH(ch.past) <= hi(h) + E && maxH(ch.past) >= lo(h) - E)) return "« Dernier sommet » ne contient pas le sommet";
     if (ret >= 1) return "retracement ≥ 100 % (plus un pullback)";
     return null;
   },

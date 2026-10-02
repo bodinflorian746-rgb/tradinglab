@@ -117,9 +117,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Le prix consolide sous une résistance majeure puis vient de la casser avec une bougie de force.",
+    context: "Le prix consolide sous une résistance majeure puis vient de la casser avec une bougie impulsive.",
     rationales: {
-      BUY: "✓ Ici, le HTF est haussier et le breakout va dans son sens. La résistance vient d'être franchie avec une bougie de force : c'est un scénario de continuation typique. Dans ce cas, un BUY est la lecture la plus logique.",
+      BUY: "✓ Ici, le HTF est haussier et le breakout va dans son sens. La résistance vient d'être franchie avec une bougie impulsive : c'est un scénario de continuation typique. Dans ce cas, un BUY est la lecture la plus logique.",
       SELL: "✗ Vendre face à un breakout haussier, sur un HTF haussier, revient ici à se placer à contre-courant sans signal de retournement. Ce type de trade est souvent émotionnel.",
       NO_TRADE: "✗ Ici, le setup coche les critères : breakout, HTF aligné, contexte macro sans danger. Passer son tour dans ce cas ressemble plus à une occasion manquée qu'à de la discipline.",
     },
@@ -138,7 +138,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Le prix consolide au-dessus d'un support majeur puis vient de le casser avec une bougie de force.",
+    context: "Le prix consolide au-dessus d'un support majeur puis vient de le casser avec une bougie impulsive.",
     rationales: {
       BUY: "✗ Acheter une cassure de support sur un HTF baissier revient ici à aller contre le marché. Aucun signal de retournement n'apparaît, seulement une accélération baissière.",
       SELL: "✓ Cassure propre dans le sens du HTF baissier, avec un momentum côté vendeur. Ici, un SELL est la lecture la plus cohérente.",
@@ -188,7 +188,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     },
     lessons: {
       beginner:     "Une cassure CONTRE le HTF peut être un piège. Vendre une cassure baissière dans un marché haussier reste, dans la plupart des cas, un pari risqué.",
-      intermediate: "Ici, la chasse aux stops sous le support peut signaler un retournement haussier si le HTF est aligné, à confirmer avant d'agir. Le marché vient peut-être de récupérer du carburant pour monter.",
+      intermediate: "Ici, le stop hunt sous le support peut signaler un retournement haussier si le HTF est aligné, à confirmer avant d'agir. Le marché vient peut-être de récupérer du carburant pour monter.",
       advanced:     "Ici, tu décides AVANT le retour du prix au-dessus du support. Si le HTF et la structure sont alignés, un BUY se défend. En cas de doute, NO TRADE reste une option logique.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -201,7 +201,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Tendance haussière établie, le prix corrige vers une zone de demande visible.",
+    context: "Tendance haussière établie, le prix corrige vers une zone de demand visible.",
     rationales: {
       BUY: "✓ Ici, le pullback dans la tendance offre une opportunité d'achat à meilleur prix. Tu rejoins la tendance au lieu de la poursuivre, avec souvent un meilleur R/R.",
       SELL: "✗ Vendre dans une tendance haussière revient souvent à ramer contre le courant. Ici, le pullback ressemble plus à une opportunité d'achat qu'à un signal de vente.",
@@ -209,7 +209,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     },
     lessons: {
       beginner:     "Dans une tendance haussière, les replis sont souvent les meilleurs moments pour acheter, plutôt que l'inverse. C'est l'un des trades les plus courants chez les traders de tendance.",
-      intermediate: "Un pullback dans le sens du HTF, sur une zone de demande visible, compte souvent parmi les setups les plus solides.",
+      intermediate: "Un pullback dans le sens du HTF, sur une zone de demand visible, compte souvent parmi les setups les plus solides.",
       advanced:     "Un pullback profond n'invalide pas forcément le scénario. Tant que le HTF tient et que la structure n'est pas cassée, le pullback peut rester une opportunité.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -222,16 +222,16 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Tendance baissière établie, le prix rebondit vers une zone d'offre.",
+    context: "Tendance baissière établie, le prix rebondit vers une zone de supply.",
     rationales: {
       BUY: "✗ Acheter le rebond dans une tendance baissière revient ici à chercher le point bas. Ce type de trade est souvent perdant.",
-      SELL: "✓ Ici, le rebond ramène le prix sur une zone d'offre visible. Vendre dans le sens du HTF baissier, à un meilleur prix, est une option logique.",
+      SELL: "✓ Ici, le rebond ramène le prix sur une zone de supply visible. Vendre dans le sens du HTF baissier, à un meilleur prix, est une option logique.",
       NO_TRADE: "≈ Pas faux, mais ici le HTF et la zone sont alignés. La discipline consiste à filtrer les trades, pas à tous les éviter.",
     },
     lessons: {
       beginner:     "En tendance baissière, on cherche plutôt les rebonds pour vendre. Acheter en espérant une remontée va souvent contre le marché.",
-      intermediate: "Ici, un pullback sur zone d'offre dans une tendance baissière peut constituer un setup à bonne probabilité, à considérer selon ton plan de trading.",
-      advanced:     "Si la zone d'offre est retestée proprement et que le HTF reste intact, le SELL se défend. Si la structure casse pendant le pullback, NO TRADE devient l'option logique.",
+      intermediate: "Ici, un pullback sur zone de supply dans une tendance baissière peut constituer un setup à bonne probabilité, à considérer selon ton plan de trading.",
+      advanced:     "Si la zone de supply est retestée proprement et que le HTF reste intact, le SELL se défend. Si la structure casse pendant le pullback, NO TRADE devient l'option logique.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["lecture", "pullback", "trend"],
@@ -285,7 +285,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "piege",
-    context: "Le prix vient de balayer la liquidité sous le précédent low avec une grosse mèche, puis a refermé au-dessus.",
+    context: "Le prix vient de balayer la liquidité sous le dernier creux avec une grosse mèche, puis a refermé au-dessus.",
     rationales: {
       BUY: "✓ Ici, le sweep a pris la liquidité des vendeurs piégés. Le marché dispose peut-être du carburant pour monter. Un BUY sur le retournement se défend.",
       SELL: "✗ Vendre APRÈS le sweep revient ici à vendre là où les gros acheteurs entrent souvent. Tu risques de rejoindre les vendeurs piégés.",
@@ -308,12 +308,12 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     metric: "lecture",
     context: "Un FVG haussier laissé après l'impulsion. Le prix revient le tester pour la première fois.",
     rationales: {
-      BUY: "✓ Ici, un FVG haussier, un HTF aligné et un premier retest peuvent former une zone de demande solide. C'est un setup ICT classique.",
+      BUY: "✓ Ici, un FVG haussier, un HTF aligné et un premier retest peuvent former une zone de demand solide. C'est un setup ICT classique.",
       SELL: "✗ Vendre sur un FVG haussier encore valide revient ici à se placer contre une zone que les acheteurs défendent souvent.",
       NO_TRADE: "≈ Si tu doutes de la mitigation, attendre la réaction se défend. Mais ici, un HTF aligné et une zone encore intacte donnent un avantage.",
     },
     lessons: {
-      beginner:     "Le FVG agit souvent comme un aimant pour le prix, puis comme une zone de demande au retest. Si le HTF est aligné, un BUY est une option logique.",
+      beginner:     "Le FVG agit souvent comme un aimant pour le prix, puis comme une zone de demand au retest. Si le HTF est aligné, un BUY est une option logique.",
       intermediate: "Une zone entièrement remplie n'est pas forcément invalidée. Ici, c'est la réaction au retest qui compte. Avec une réaction visible et un HTF aligné, un BUY se défend.",
       advanced:     "Fais la différence : une mitigation partielle (zone intacte) peut soutenir un BUY à bonne probabilité. Une mitigation profonde (plus de 75 %) sans réaction oriente plutôt vers NO TRADE ou un retournement.",
     },
@@ -370,12 +370,12 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "range",
     macroContext: "normal",
     metric: "discipline",
-    context: "Le prix vient de casser au-dessus de la résistance, mais la bougie de force manque cruellement de body.",
+    context: "Le prix vient de casser au-dessus de la résistance, mais la bougie impulsive manque cruellement de body.",
     shortContext: "Cassure haussière, body très faible.",
     rationales: {
       BUY: "✗ Ici, tu poursuis une cassure faible. Sans bougie de momentum nette, la continuation devient nettement moins probable, et le R/R espéré se dégrade.",
       SELL: "✗ Vendre une cassure haussière sans signal de retournement paraît ici prématuré : il n'y a ni bougie de retournement ni structure baissière.",
-      NO_TRADE: "✓ Une cassure gagne à s'imposer pour être tradable. Sans bougie de force, une option logique consiste à attendre un retest propre ou une continuation claire. Patience.",
+      NO_TRADE: "✓ Une cassure gagne à s'imposer pour être tradable. Sans bougie impulsive, une option logique consiste à attendre un retest propre ou une continuation claire. Patience.",
     },
     lessons: {
       beginner:     "Une grande bougie qui casse une zone apporte une confirmation forte. Une petite bougie qui casse à peine reste une confirmation faible, souvent insuffisante pour agir.",
@@ -527,7 +527,7 @@ export function generateScenarios(seed: number, difficulty: Difficulty = "interm
 // Difficulty :
 //   beginner     → trigger candle plus volumineuse, hint de confirmation ajouté
 //   intermediate → trigger normal, pas de hint
-//   advanced     → trigger plus subtil, peut être ambigu (vrai/faux breakout
+//   advanced     → trigger plus subtil, peut être ambigu (vrai/fakeout
 //                  ont visuellement la même tête côté past — c'est HTF qui tranche)
 
 interface RawScenario {
@@ -551,7 +551,7 @@ function wickAmp(difficulty: Difficulty): number {
   return difficulty === "beginner" ? 1.6 : difficulty === "intermediate" ? 0.85 : 0.55;
 }
 
-// Médiane des corps : une « bougie de force » doit dépasser nettement les bougies précédentes.
+// Médiane des corps : une « bougie impulsive » doit dépasser nettement les bougies précédentes.
 function medianBody(candles: Candle[]): number {
   const b = candles.map((k) => Math.abs(k.c - k.o)).sort((x, y) => x - y);
   return b.length ? b[Math.floor(b.length / 2)] : 0;
@@ -576,7 +576,7 @@ function genBreakoutBull(rng: () => number, m: number, d: Difficulty): BuySellCh
   }
   // Trigger : breakout candle (taille module par difficulté)
   const bO = p;
-  // « Bougie de force » : corps ≥ 1,6× la médiane des corps précédents
+  // « Bougie impulsive » : corps ≥ 1,6× la médiane des corps précédents
   const bC = Math.max(R + (1.0 + rng() * 0.7) * m * bodyAmp(d), bO + 1.6 * medianBody(past));
   past.push(candle(bO, bC, (0.3 + rng() * 0.2) * m, 0.2));
   p = bC;
@@ -617,7 +617,7 @@ function genBreakoutBear(rng: () => number, m: number, d: Difficulty): BuySellCh
     p = c;
   }
   const bO = p;
-  // « Bougie de force » : corps ≥ 1,6× la médiane des corps précédents
+  // « Bougie impulsive » : corps ≥ 1,6× la médiane des corps précédents
   const bC = Math.min(S - (1.0 + rng() * 0.7) * m * bodyAmp(d), bO - 1.6 * medianBody(past));
   past.push(candle(bO, bC, 0.2, (0.3 + rng() * 0.2) * m));
   p = bC;
@@ -773,8 +773,8 @@ function genPullbackBull(rng: () => number, m: number, d: Difficulty): BuySellCh
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "support",        y1: demandLow,         y2: demandHigh,         label: "Zone de demande" },
-      { kind: "liquidity_high", y1: peak - 0.15,       y2: peak + 0.15,        label: "Précédent high"   },
+      { kind: "support",        y1: demandLow,         y2: demandHigh,         label: "Zone de demand" },
+      { kind: "liquidity_high", y1: peak - 0.15,       y2: peak + 0.15,        label: "Dernier sommet"   },
     ],
   });
 }
@@ -814,8 +814,8 @@ function genPullbackBear(rng: () => number, m: number, d: Difficulty): BuySellCh
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "resistance",    y1: offerLow,          y2: offerHigh,         label: "Zone d'offre" },
-      { kind: "liquidity_low", y1: bottom - 0.15,     y2: bottom + 0.15,     label: "Précédent low" },
+      { kind: "resistance",    y1: offerLow,          y2: offerHigh,         label: "Zone de supply" },
+      { kind: "liquidity_low", y1: bottom - 0.15,     y2: bottom + 0.15,     label: "Dernier creux" },
     ],
   });
 }
@@ -904,7 +904,7 @@ function genLiquiditySweep(rng: () => number, m: number, d: Difficulty): BuySell
     const o = p;
     const c = clamp(o - (0.3 + rng() * 0.5) * m, L + 0.4, 4.5);
     const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.25) * m);
-    k.l = Math.max(k.l, L - 0.12); // le précédent low n'est pas balayé avant le sweep
+    k.l = Math.max(k.l, L - 0.12); // le dernier creux n'est pas balayé avant le sweep
     past.push(k);
     p = c;
   }
@@ -912,7 +912,7 @@ function genLiquiditySweep(rng: () => number, m: number, d: Difficulty): BuySell
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 0.8 * m, L + 0.5, L + 1.6);
     const k = candle(o, c, (0.25 + rng() * 0.22) * m, (0.25 + rng() * 0.22) * m);
-    k.l = Math.max(k.l, L - 0.12); // le précédent low n'est pas balayé avant le sweep
+    k.l = Math.max(k.l, L - 0.12); // le dernier creux n'est pas balayé avant le sweep
     past.push(k);
     p = c;
   }
@@ -940,7 +940,7 @@ function genLiquiditySweep(rng: () => number, m: number, d: Difficulty): BuySell
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "support",       y1: L - 0.15,             y2: L + 0.15,             label: "Précédent low"     },
+      { kind: "support",       y1: L - 0.15,             y2: L + 0.15,             label: "Dernier creux"     },
       { kind: "liquidity_low", y1: L - 1.5 * m,          y2: L - 0.25,             label: "Liquidité balayée" },
     ],
   });
@@ -1069,8 +1069,8 @@ function genRangeNoOpp(rng: () => number, m: number, d: Difficulty): BuySellChar
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "resistance", y1: R - 0.15, y2: R + 0.15, label: "Plafond range"  },
-      { kind: "support",    y1: S - 0.15, y2: S + 0.15, label: "Plancher range" },
+      { kind: "resistance", y1: R - 0.15, y2: R + 0.15, label: "Haut du range"  },
+      { kind: "support",    y1: S - 0.15, y2: S + 0.15, label: "Bas du range" },
     ],
   });
 }
@@ -1281,8 +1281,8 @@ function genDirtyRangeSweep(rng: () => number, m: number, d: Difficulty): BuySel
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "resistance",     y1: R - 0.15,         y2: R + 0.15,         label: "Plafond range"  },
-      { kind: "support",        y1: S - 0.15,         y2: S + 0.15,         label: "Plancher range" },
+      { kind: "resistance",     y1: R - 0.15,         y2: R + 0.15,         label: "Haut du range"  },
+      { kind: "support",        y1: S - 0.15,         y2: S + 0.15,         label: "Bas du range" },
       { kind: "liquidity_high", y1: R + 0.15,         y2: R + 1.0 * m,      label: "Sweep haut"     },
       { kind: "liquidity_low",  y1: S - 1.0 * m,      y2: S - 0.15,         label: "Sweep bas"      },
     ],
@@ -1321,7 +1321,7 @@ function genToxicExecution(rng: () => number, m: number, d: Difficulty): BuySell
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "support", y1: pullbackLow - 0.35 * m, y2: pullbackLow + 0.2 * m, label: "Zone de demande" },
+      { kind: "support", y1: pullbackLow - 0.35 * m, y2: pullbackLow + 0.2 * m, label: "Zone de demand" },
     ],
   });
 }

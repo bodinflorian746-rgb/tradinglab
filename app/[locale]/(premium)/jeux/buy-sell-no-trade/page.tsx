@@ -848,8 +848,8 @@ function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, loc
     const generic = locale === "es"
       ? (z.kind === "support"        ? "Nivel bajo"
        : z.kind === "resistance"     ? "Nivel alto"
-       : z.kind === "fvg"            ? "Imbalance"
-       :                                "Liquidez")
+       : z.kind === "fvg"            ? "Desequilibrio"
+       :                                "Liquidity")
       : locale === "en"
       ? (z.kind === "support"        ? "Low level"
        : z.kind === "resistance"     ? "High level"
@@ -857,7 +857,7 @@ function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, loc
        :                                "Liquidity")
       : (z.kind === "support"        ? "Niveau bas"
        : z.kind === "resistance"     ? "Niveau haut"
-       : z.kind === "fvg"            ? "Imbalance"
+       : z.kind === "fvg"            ? "Déséquilibre"
        :                                "Liquidité");
     return { ...z, label: generic };
   });

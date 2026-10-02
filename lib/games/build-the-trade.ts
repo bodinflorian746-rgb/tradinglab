@@ -158,13 +158,13 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de casser une résistance HTF avec une bougie de force.",
+    context: "Le prix vient de casser une résistance HTF avec une bougie impulsive.",
     optimal: { entry: "aggressive", stop: "logical", tp: "ambitious" },
     optimalExplain: "Ici, le breakout aligné avec le HTF peut signaler un momentum immédiat. Attendre un pullback profond risque de faire rater le mouvement. Une entrée agressive, un stop sous le niveau cassé et un TP ambitieux forment une option logique.",
     lessons: {
       beginner:     "Sur un breakout aligné avec le HTF, la fenêtre d'entrée est souvent courte : le marché n'attend pas le retardataire. À toi de juger selon ton plan si tu embarques.",
       intermediate: "Sur un breakout fort, attendre un pullback profond peut faire rater le mouvement. Dans ce cas, une entrée agressive se défend.",
-      advanced:     "Un breakout HTF avec une bougie de force apporte une confirmation forte. Le pullback peut être léger, voire absent : à intégrer dans ton plan.",
+      advanced:     "Un breakout HTF avec une bougie impulsive apporte une confirmation forte. Le pullback peut être léger, voire absent : à intégrer dans ton plan.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
@@ -175,7 +175,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Le prix vient de casser un support HTF avec une bougie de force.",
+    context: "Le prix vient de casser un support HTF avec une bougie impulsive.",
     optimal: { entry: "aggressive", stop: "logical", tp: "ambitious" },
     optimalExplain: "Ici, la cassure alignée avec le HTF peut signaler un momentum vendeur. Une entrée rapide avec un stop au-dessus du support cassé est une option logique.",
     lessons: {
@@ -215,47 +215,47 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     lessons: {
       beginner:     "Sur une résistance, attendre la bougie rouge de confirmation est une option prudente. Le rejet gagne à s'imposer.",
       intermediate: "Ici, la confirmation prend la forme d'une bougie de rejet visible. Sans elle, le retest peut se prolonger.",
-      advanced:     "C'est le miroir du rebond sur support. Un stop au-dessus du high, avec une marge ATR, est une option logique.",
+      advanced:     "C'est le miroir du rebond sur support. Un stop au-dessus du high, avec une marge à la mesure de la volatilité du jour (ATR, l'amplitude moyenne d'une journée), est une option logique.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
   {
     id: "range_top_short",
-    title: "SELL au plafond du range",
+    title: "SELL au haut du range",
     chartShape: "range_oscillation",
     direction: "SELL",
     htfBias: "range",
     macroContext: "normal",
-    context: "Le prix arrive au plafond d'un range serré. Tu cherches le SELL.",
+    context: "Le prix arrive au haut du range d'un range serré. Tu cherches le SELL.",
     optimal: { entry: "confirmation", stop: "logical", tp: "fast" },
     optimalExplain: "Dans un range, l'avantage reste limité : une confirmation aide à valider l'entrée, et un TP rapide se défend, car la borne basse du range limite la course.",
     lessons: {
-      intermediate: "Un range offre souvent un R/R limité. Ici, un TP ambitieux a peu de sens ; viser le plancher du range est plus logique.",
+      intermediate: "Un range offre souvent un R/R limité. Ici, un TP ambitieux a peu de sens ; viser le bas du range est plus logique.",
       advanced:     "Un range se prête plutôt au contre-mouvement. Une confirmation et un TP rapide augmentent souvent le taux de réussite, avec un R/R qui reste sous 2.",
-      beginner:     "Au plafond d'un range, un objectif modeste est souvent plus réaliste : le prix évolue dans une boîte.",
+      beginner:     "Au haut du range d'un range, un objectif modeste est souvent plus réaliste : le prix évolue dans une boîte.",
     },
     difficulties: ["intermediate", "advanced"],
   },
   {
     id: "range_bottom_long",
-    title: "BUY au plancher du range",
+    title: "BUY au bas du range",
     chartShape: "range_oscillation",
     direction: "BUY",
     htfBias: "range",
     macroContext: "normal",
-    context: "Le prix arrive au plancher d'un range serré. Tu cherches le BUY.",
+    context: "Le prix arrive au bas du range d'un range serré. Tu cherches le BUY.",
     optimal: { entry: "confirmation", stop: "logical", tp: "fast" },
-    optimalExplain: "Ici, le range se joue entre plancher et plafond. Une confirmation et un TP rapide se défendent, car la course est limitée.",
+    optimalExplain: "Ici, le range se joue entre bas du range et haut du range. Une confirmation et un TP rapide se défendent, car la course est limitée.",
     lessons: {
-      intermediate: "Un BUY au plancher vise plutôt le plafond, pas au-delà. Ici, le TP rapide se place près du plafond.",
-      advanced:     "Mêmes principes que le SELL au plafond : une confirmation et un TP serré aident souvent à augmenter le taux de réussite.",
+      intermediate: "Un BUY au bas du range vise plutôt le haut du range, pas au-delà. Ici, le TP rapide se place près du haut du range.",
+      advanced:     "Mêmes principes que le SELL au haut du range : une confirmation et un TP serré aident souvent à augmenter le taux de réussite.",
       beginner:     "Dans un range, viser l'autre borne est souvent suffisant. Ici, un objectif modeste se défend.",
     },
     difficulties: ["intermediate", "advanced"],
   },
   {
     id: "fake_breakout_short",
-    title: "Faux breakout : SELL après le piège",
+    title: "Fakeout : SELL après le piège",
     chartShape: "fakeout_above",
     direction: "SELL",
     htfBias: "bearish",
@@ -277,7 +277,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de balayer la liquidité sous le précédent low puis a refermé au-dessus.",
+    context: "Le prix vient de balayer la liquidité sous le dernier creux puis a refermé au-dessus.",
     optimal: { entry: "aggressive", stop: "logical", tp: "balanced" },
     optimalExplain: "Ici, le sweep peut signaler un retournement. Dans ce cas précis, une entrée agressive se défend, car le sweep sert déjà de première confirmation. Un stop sous le low du sweep est une option logique.",
     lessons: {
@@ -296,9 +296,9 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Le prix revient tester un FVG haussier. La réaction est en cours.",
     optimal: { entry: "confirmation", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Ici, le FVG peut servir de zone de demande, et la confirmation valide la réaction. Un stop sous le bas du FVG et un TP ambitieux se défendent, car le HTF est aligné et la zone encore intacte.",
+    optimalExplain: "Ici, le FVG peut servir de zone de demand, et la confirmation valide la réaction. Un stop sous le bas du FVG et un TP ambitieux se défendent, car le HTF est aligné et la zone encore intacte.",
     lessons: {
-      intermediate: "Le FVG agit souvent comme zone de demande au retest. Ici, la confirmation préserve l'avantage sans rater le mouvement.",
+      intermediate: "Le FVG agit souvent comme zone de demand au retest. Ici, la confirmation préserve l'avantage sans rater le mouvement.",
       advanced:     "FVG haussier, HTF aligné et premier retest : un setup de premier choix. Un R/R de 3:1 ou plus est ici logique.",
       beginner:     "Le FVG attire souvent le prix. Ici, la confirmation prend la forme d'une bougie verte qui défend la zone.",
     },
@@ -330,7 +330,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Le pullback est devenu très profond. Plus de 60% de l'impulsion précédente est retracée.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
-    optimalExplain: "Ici, le pullback profond peut annoncer une cassure de structure. La confirmation préserve l'avantage : une entrée agressive reviendrait à courir après le prix, et un pullback profond à parier sur une zone douteuse.",
+    optimalExplain: "Ici, le pullback profond peut annoncer une cassure de structure. La confirmation préserve l'avantage : une entrée agressive reviendrait à courir après le prix, et un pullback profond à parier sur un niveau secondaire.",
     lessons: {
       advanced:     "Un pullback de plus de 60 % de l'impulsion peut signaler un pattern fatigué. Ici, une confirmation et un TP modéré sont une option logique.",
       intermediate: "Plus le pullback est profond, plus la confirmation compte. Ici, une entrée agressive serait très risquée.",
@@ -349,7 +349,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     optimal: { entry: "confirmation", stop: "wide", tp: "balanced" },
     optimalExplain: "En volatilité élevée, le bruit est amplifié et un stop standard risque d'être balayé. Ici, le « stop large » devient le stop LOGIQUE. Un TP équilibré se défend, car le mouvement potentiel est aussi plus étendu.",
     lessons: {
-      advanced:     "Un stop ajusté à l'ATR est une option logique. En volatilité élevée, le « stop large » n'est pas excessif : il est simplement adapté.",
+      advanced:     "Un stop ajusté à la volatilité du jour (ATR, l'amplitude moyenne d'une journée) est une option logique. En volatilité élevée, le « stop large » n'est pas excessif : il est simplement adapté.",
       intermediate: "Le stop gagne à s'adapter à la volatilité du moment plutôt qu'à une distance fixe.",
       beginner:     "Quand le marché bouge fort, le stop a besoin d'espace. Sinon, il risque de sauter pour rien.",
     },
@@ -579,7 +579,7 @@ function shapeBreakoutUp(rng: () => number, m: number): ShapeOutput {
     past.push(k);
     p = c;
   }
-  // breakout candle : corps d'au moins 2× le corps médian (« bougie de force »)
+  // breakout candle : corps d'au moins 2× le corps médian (« bougie impulsive »)
   const forceBody = 2.05 * medianBody(past);
   past.push(candle(p, Math.max(R + (1.0 + rng() * 0.4) * m, p + forceBody), (0.3 + rng() * 0.2) * m, 0.15));
   p = past[past.length - 1].c;
@@ -747,15 +747,15 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
     p = c;
   }
   // 2 candles approchant la borne ciblée : la dernière clôture dans le tiers
-  // de range côté borne (« le prix arrive au plafond / plancher »)
+  // de range côté borne (« le prix arrive au haut du range / bas du range »)
   for (let i = 0; i < 2; i++) {
     const o = p;
     let c: number;
     const step = (0.3 + rng() * 0.3) * m;
     if (direction === "SELL") {
       c = clamp(o + step, S + 0.4, R - 0.3);
-      // la dernière clôture colle au plafond (R - 0,3 à R - 0,45) : l'objectif,
-      // le plancher, reste à au moins 1,5 R de l'entrée
+      // la dernière clôture colle au haut du range (R - 0,3 à R - 0,45) : l'objectif,
+      // le bas du range, reste à au moins 1,5 R de l'entrée
       c = i === 0 ? clamp(Math.max(c, (o + R - 0.35) / 2), S + 0.4, R - 0.3) : R - 0.3 - 0.15 * (step / m - 0.3) / 0.3;
     } else {
       c = clamp(o - step, S + 0.3, R - 0.4);
@@ -792,8 +792,8 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
     }
   }
   return { past, future: fut, zones: [
-    { kind: "resistance", y1: R - 0.15, y2: R + 0.15, label: "Plafond range" },
-    { kind: "support",    y1: S - 0.15, y2: S + 0.15, label: "Plancher range" },
+    { kind: "resistance", y1: R - 0.15, y2: R + 0.15, label: "Haut du range" },
+    { kind: "support",    y1: S - 0.15, y2: S + 0.15, label: "Bas du range" },
   ], ref: { swingLow: S, swingHigh: R, entryRef, bound: direction === "SELL" ? S + 0.15 : R - 0.15 } };
 }
 
@@ -835,7 +835,7 @@ function shapeFakeoutAbove(rng: () => number, m: number): ShapeOutput {
   }
   return { past, future: fut, zones: [
     { kind: "resistance",     y1: R - 0.1, y2: R + 0.1, label: "Résistance" },
-    { kind: "liquidity_high", y1: R + 0.15, y2: fakeoutHigh, label: "Wick fakeout" },
+    { kind: "liquidity_high", y1: R + 0.15, y2: fakeoutHigh, label: "Mèche du fakeout" },
   ], ref: { swingLow: entryRef - 4 * m, swingHigh: fakeoutHigh, entryRef } };
 }
 
@@ -856,7 +856,7 @@ function shapeSweepLowReversal(rng: () => number, m: number): ShapeOutput {
     past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
     p = c;
   }
-  // Le « précédent low » : le creux de la consolidation touche le niveau L
+  // Le « dernier creux » : le creux de la consolidation touche le niveau L
   const consol = past.slice(-3);
   const prevLow = consol.reduce((a, k) => (k.l < a.l ? k : a));
   prevLow.l = Math.min(prevLow.l, L + 0.02);
@@ -877,7 +877,7 @@ function shapeSweepLowReversal(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "support",       y1: L - 0.1,    y2: L + 0.1,    label: "Précédent low"     },
+    { kind: "support",       y1: L - 0.1,    y2: L + 0.1,    label: "Dernier creux"     },
     { kind: "liquidity_low", y1: sweepLow,   y2: L - 0.15,   label: "Liquidité balayée" },
   ], ref: { swingLow: sweepLow, swingHigh: entryRef + 4 * m, entryRef } };
 }
@@ -982,8 +982,8 @@ function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "support",        y1: swingLow - 0.04,    y2: swingLow + 0.04,    label: "Zone douteuse" },
-    { kind: "liquidity_high", y1: topHigh - 0.05,      y2: topHigh + 0.05,     label: "Précédent high" },
+    { kind: "support",        y1: swingLow - 0.04,    y2: swingLow + 0.04,    label: "Niveau secondaire" },
+    { kind: "liquidity_high", y1: topHigh - 0.05,      y2: topHigh + 0.05,     label: "Dernier sommet" },
   ], ref: { swingLow, swingHigh: peak, entryRef } };
 }
 
@@ -1458,13 +1458,13 @@ export const DIFFICULTY_META: Record<Difficulty, { label: string; dotClass: stri
     label:       "Débutant",
     dotClass:    "bg-emerald-400",
     textClass:   "text-emerald-400",
-    description: "Structure claire, choix relativement évidents, comprends invalidation et RR.",
+    description: "Structure claire, choix relativement évidents, comprends invalidation et R/R.",
   },
   intermediate: {
     label:       "Intermédiaire",
     dotClass:    "bg-blue-400",
     textClass:   "text-blue-400",
-    description: "Plusieurs choix plausibles : sécurité vs rendement, confirmation vs RR.",
+    description: "Plusieurs choix plausibles : sécurité vs rendement, confirmation vs R/R.",
   },
   advanced: {
     label:       "Avancé",

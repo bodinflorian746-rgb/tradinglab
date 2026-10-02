@@ -81,7 +81,7 @@ function feedbackColor(stopType: StopType, hasLogical: boolean): "emerald" | "am
 // Label du verdict APRÈS choix : pédagogique sans révéler la mécanique interne
 // (pas "Stop logique" / "Stop trop large" qui leakerait le type).
 // `rr` : R/R affiché pour ce stop (arrondi à 0,1 comme sur le bouton) ; un stop trop
-// large dont le R/R reste ≥ 1 dégrade le RR sans le casser.
+// large dont le R/R reste ≥ 1 dégrade le R/R sans le casser.
 function feedbackLabel(stopType: StopType, hasLogical: boolean, locale: string | undefined, rr: number | null): string {
   const isEs = locale === "es";
   const isEn = locale === "en";
@@ -90,9 +90,9 @@ function feedbackLabel(stopType: StopType, hasLogical: boolean, locale: string |
   }
   switch (stopType) {
     case "wide":
-      if (rr !== null && rr >= 1) return isEs ? "Demasiado lejos, RR degradado" : isEn ? "Too far, R/R degraded" : "Trop loin, RR dégradé";
-      return isEs ? "Demasiado lejos, RR roto" : isEn ? "Too far, R/R broken" : "Trop loin, RR cassé";
-    case "liquidity": return isEs ? "En zona de caza" : isEn ? "In a hunt zone" : "Dans une zone de chasse";
+      if (rr !== null && rr >= 1) return isEs ? "Demasiado lejos, R/R degradado" : isEn ? "Too far, R/R degraded" : "Trop loin, R/R dégradé";
+      return isEs ? "Demasiado lejos, R/R roto" : isEn ? "Too far, R/R broken" : "Trop loin, R/R cassé";
+    case "liquidity": return isEs ? "En zona de stop hunt" : isEn ? "In a hunt zone" : "Dans une zone de stop hunt";
     case "tight":     return isEs ? "Demasiado cerca (ruido)" : isEn ? "Too close (noise)" : "Trop près (bruit)";
     case "logical":   return isEs ? "Colocación lógica" : isEn ? "Logical placement" : "Placement logique";  // edge case
   }
@@ -154,7 +154,7 @@ export default function PlaceStopPage() {
         hitCandle:       "Tocado en la vela",
         title:           "Coloca tu Stop",
         heading:         "¿Qué stop va a sobrevivir?",
-        pickerIntro:     "escenarios. Para cada uno, 3 stops loss propuestos (Stop 1, 2, 3). Eliges el mejor según estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.",
+        pickerIntro:     "escenarios. Para cada uno, 3 stop loss propuestos (Stop 1, 2, 3). Eliges el mejor según estructura, liquidity, volatilidad, R/R. El mercado revela después la continuación.",
         summary:         "Resumen",
         stopsChosen:     "stops elegidos",
         logicalStops:    "Stops lógicos",
@@ -239,7 +239,7 @@ export default function PlaceStopPage() {
         hitCandle:       "Touché bougie",
         title:           "Place ton Stop",
         heading:         "Quel stop va survivre ?",
-        pickerIntro:     "scénarios. Pour chacun, 3 stops loss proposés (Stop 1, 2, 3). Tu choisis le meilleur selon structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.",
+        pickerIntro:     "scénarios. Pour chacun, 3 stop loss proposés (Stop 1, 2, 3). Tu choisis le meilleur selon structure, liquidité, volatilité, R/R. Le marché révèle ensuite la suite.",
         summary:         "Bilan",
         stopsChosen:     "stops choisis",
         logicalStops:    "Stops logiques",
@@ -605,10 +605,10 @@ function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Diff
         <h1 className="v2-display v2-h2 font-bold">{locale === "es" ? "¿Qué stop va a sobrevivir?" : locale === "en" ? "Which stop will survive?" : "Quel stop va survivre ?"}</h1>
         <p className="v2-lead text-[color:var(--v2-text-2)]">
           {locale === "es"
-            ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, 3 stops loss propuestos (Stop 1, 2, 3). Eliges el mejor según estructura, liquidez, volatilidad, RR. El mercado revela después la continuación.`
+            ? `${ROUNDS_PER_SESSION} escenarios. Para cada uno, 3 stop loss propuestos (Stop 1, 2, 3). Eliges el mejor según estructura, liquidity, volatilidad, R/R. El mercado revela después la continuación.`
             : locale === "en"
             ? `${ROUNDS_PER_SESSION} scenarios. For each one, 3 stop losses proposed (Stop 1, 2, 3). You pick the best based on structure, liquidity, volatility, R/R. The market then reveals the continuation.`
-            : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, 3 stops loss proposés (Stop 1, 2, 3). Tu choisis le meilleur selon structure, liquidité, volatilité, RR. Le marché révèle ensuite la suite.`}
+            : `${ROUNDS_PER_SESSION} scénarios. Pour chacun, 3 stop loss proposés (Stop 1, 2, 3). Tu choisis le meilleur selon structure, liquidité, volatilité, R/R. Le marché révèle ensuite la suite.`}
         </p>
         <GeneralCasesNote />
       </div>
@@ -684,7 +684,7 @@ function StopChoices({
                 <span className="v2-mono text-[color:var(--v2-text-3)]">{direction === "BUY" ? "−" : "+"}{fmt(dist, asset)}</span>
                 {rr !== null && rr > 0 && (
                   <span className={`v2-mono font-semibold ${rr >= 2 ? "text-emerald-300" : rr >= 1 ? "text-amber-300" : "text-red-300"}`}>
-                    RR 1:{rr.toFixed(1)}
+                    R/R 1:{rr.toFixed(1)}
                   </span>
                 )}
               </span>

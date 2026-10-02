@@ -63,8 +63,8 @@ function bullFvg(ch: BuySellChart): { i: number; gapLo: number; gapHi: number } 
 }
 
 const CHECKS: Record<string, Record<string, Check>> = {
-  breakout_bullish_clean: { "cassure nette (sous la résistance puis bougie de force au-dessus)": (ch) => cleanBreak(ch, "resistance"), direction },
-  breakout_bearish_clean: { "cassure nette (au-dessus du support puis bougie de force en dessous)": (ch) => cleanBreak(ch, "support"), direction },
+  breakout_bullish_clean: { "cassure nette (sous la résistance puis bougie impulsive au-dessus)": (ch) => cleanBreak(ch, "resistance"), direction },
+  breakout_bearish_clean: { "cassure nette (au-dessus du support puis bougie impulsive en dessous)": (ch) => cleanBreak(ch, "support"), direction },
   false_breakout_bullish: {
     "vient de casser au-dessus de la résistance": (ch) => last(ch.past).c > hi(zoneOf(ch, "resistance")) ? null : "dernière clôture pas au-dessus de la résistance",
     direction,

@@ -564,29 +564,29 @@ const ZONE_LABEL_EN: Record<string, string> = {
   "Support HTF":          "HTF Support",
   "Swing high":           "Swing high",
   "Swing low":            "Swing low",
-  "Précédent low":        "Previous low",
-  "Précédent high":       "Previous high",
+  "Dernier creux":        "Previous low",
+  "Dernier sommet":       "Previous high",
   "Liquidité balayée":    "Swept liquidity",
   "FVG haussier":         "Bullish FVG",
-  "Wick fakeout":         "Fakeout wick",
+  "Mèche du fakeout":         "Fakeout wick",
   // V2.1 — zones of the new scenarios
   "Equal lows":           "Equal lows",
-  "Chiffre rond":         "Round number",
-  "Asia high":            "Asia high",
+  "Niveau psychologique":         "Round number",
+  "Haut de la session asiatique":            "Asia high",
   "Order Block":          "Order Block",
   "PDL":                  "PDL",
   "HL H4":                "HL H4",
   "Swing low H1":         "Swing low H1",
   "Swing low 1":          "Swing low 1",
   "Swing low 2":          "Swing low 2",
-  "Bottom range":         "Range bottom",
-  "Top range":            "Range top",
+  "Bas du range":         "Range bottom",
+  "Haut du range":        "Range top",
   // V2.2
   "Swing low évident":    "Obvious swing low",
-  "Zone de chasse":       "Hunt zone",
+  "Zone de stop hunt":       "Hunt zone",
   "Swing low 3":          "Swing low 3",
   "Fakeouts précédents":  "Previous fakeouts",
-  "Niveau magnétique":    "Magnetic level",
+  "Niveau clé":    "Magnetic level",
   // V2.3 — SELL mirrors
   "Swing high évident":   "Obvious swing high",
   "Swing high 1":         "Swing high 1",
@@ -622,17 +622,17 @@ const HIGHVOL_WIDE_FR    = "≈ Il survit, mais même avec un TP étendu en vola
 // V2.1 — rationales of the new scenarios
 const EQUAL_LOWS_TIGHT_FR_NEW   = "✗ Ici, le stop est DANS la zone de liquidité créée par les 2 equal lows. C'est le SL le plus évident, souvent ramassé avant la hausse.";
 const EQUAL_LOWS_LOGICAL_FR_NEW = "✓ Sous la zone de sweep des 2 lows, avec une marge anti-mèche. Ici, c'est l'invalidation réelle du concept, à l'abri de la chasse à la liquidité.";
-const ROUND_LIQUIDITY_FR_NEW    = "✗ Ici, le stop est pile sous le chiffre rond, là où beaucoup de SL s'entassent. Ce niveau est très souvent balayé.";
-const ROUND_LOGICAL_FR_NEW      = "✓ Sous le sweep attendu du chiffre rond, avec une marge. Ici, le SL reste hors de la zone ciblée, et le setup reste valide après la chasse.";
-const ASIA_LIQUIDITY_FR_NEW     = "✗ Ici, le stop est pile au-dessus de l'Asia high, dans la zone que l'ouverture de Londres balaie souvent. C'est un piège fréquent de l'ouverture européenne.";
-const ASIA_LOGICAL_FR_NEW       = "✓ Au-dessus du sweep attendu de l'Asia high, avec une marge. Si le prix revient là après l'ouverture de Londres, le biais baissier est probablement faux.";
+const ROUND_LIQUIDITY_FR_NEW    = "✗ Ici, le stop est pile sous le niveau psychologique, là où beaucoup de SL s'entassent. Ce niveau est très souvent balayé.";
+const ROUND_LOGICAL_FR_NEW      = "✓ Sous le sweep attendu du niveau psychologique, avec une marge. Ici, le SL reste hors de la zone ciblée, et le setup reste valide après la chasse.";
+const ASIA_LIQUIDITY_FR_NEW     = "✗ Ici, le stop est pile au-dessus du haut de la session asiatique, dans la zone que l'ouverture de Londres balaie souvent. C'est un piège fréquent de l'ouverture européenne.";
+const ASIA_LOGICAL_FR_NEW       = "✓ Au-dessus du sweep attendu du haut de la session asiatique, avec une marge. Si le prix revient là après l'ouverture de Londres, le biais baissier est probablement faux.";
 const OB_TIGHT_FR_NEW           = "✗ Ici, le stop est sous le swing low, mais au-dessus du bas de l'Order Block. Le swing risque d'être balayé alors que le concept OB reste valide.";
 const OB_LOGICAL_FR_NEW         = "✓ Sous le bas de l'Order Block, avec une marge. Ici, c'est la VRAIE invalidation du concept : le swing low peut être balayé sans casser le setup.";
-const PDL_LIQUIDITY_FR_NEW      = "✗ Ici, le stop est pile sous le PDL, un niveau quotidien très souvent chassé. Tu exposes ta position à cette chasse.";
-const PDL_LOGICAL_FR_NEW        = "✓ Sous la zone de chasse du PDL, avec une marge. Le sweep attendu peut avoir lieu : ici, le SL reste hors de la zone ciblée.";
-const NEWS_TIGHT_FR_NEW         = "✗ Stop « standard » calibré pour une volatilité normale, alors qu'ici l'ATR du jour a doublé. Ce qui paraît raisonnable est en fait trop serré.";
-const NEWS_LOGICAL_FR_NEW       = "✓ Marge calibrée sur la volatilité réelle du jour (ATR doublé). Ce qui semblerait large en temps normal est ici le stop LOGIQUE : il survit au bruit amplifié.";
-const NEWS_WIDE_FR_NEW          = "≈ Il survit largement, mais la marge est surestimée, même pour un ATR doublé. Ici, le capital est sous-utilisé et le R/R plus faible qu'avec le stop logique.";
+const PDL_LIQUIDITY_FR_NEW      = "✗ Ici, le stop est pile sous le PDL, un niveau quotidien très souvent visé par les stop hunts. Tu exposes ta position à ce stop hunt.";
+const PDL_LOGICAL_FR_NEW        = "✓ Sous la zone de stop hunt du PDL, avec une marge. Le sweep attendu peut avoir lieu : ici, le SL reste hors de la zone ciblée.";
+const NEWS_TIGHT_FR_NEW         = "✗ Stop « standard » calibré pour une volatilité normale, alors qu'ici le marché bouge deux fois plus que d'habitude (ATR, l'amplitude moyenne d'une journée). Ce qui paraît raisonnable est en fait trop serré.";
+const NEWS_LOGICAL_FR_NEW       = "✓ Marge calibrée sur la volatilité réelle du jour, doublée (ATR, l'amplitude moyenne d'une journée). Ce qui semblerait large en temps normal est ici le stop LOGIQUE : il survit au bruit amplifié.";
+const NEWS_WIDE_FR_NEW          = "≈ Il survit largement, mais la marge est surestimée, même pour une volatilité doublée (ATR, l'amplitude moyenne d'une journée). Ici, le capital est sous-utilisé et le R/R plus faible qu'avec le stop logique.";
 const HTF_TIGHT_FR_NEW          = "✗ Ici, le stop est sous le swing low H1, mais le biais H4 n'est pas cassé. Une fluctuation H1 normale risque de te sortir alors que le setup HTF reste valide.";
 const HTF_LOGICAL_FR_NEW        = "✓ Sous le HL H4 pertinent, avec une marge. Ici, c'est la cassure du biais HTF qui invaliderait le setup, pas une simple fluctuation H1.";
 const MULTI_TIGHT_FR_NEW        = "✗ Ici, le stop est sous le 1er swing low (le plus haut), alors que le swing low plus bas tient encore. La structure n'est pas cassée, et le retest du 2e low risque de te sortir.";
@@ -641,18 +641,18 @@ const FAKE2_TIGHT_FR_NEW        = "✗ Ici, le stop est au-dessus du swing high 
 const FAKE2_LOGICAL_FR_NEW      = "✓ Au-dessus de la mèche du fakeout, avec une marge. Ici, la pointe de la mèche est le vrai high à invalider, plutôt que le haut du corps.";
 const TIGHTCONS_TIGHT_FR_NEW    = "✗ Ici, le stop est dans le range serré, en plein bruit de la consolidation. La 1re oscillation du range risque de le balayer.";
 const TIGHTCONS_LOGICAL_FR_NEW  = "✓ Juste sous le bas du range, avec une marge. Le SL respecte ici la structure du range, mais le R/R reste limité par le haut : à arbitrer avec la taille de position.";
-const TIGHTCONS_WIDE_FR_NEW     = "≈ SL très large, mais ici le plafond du range rend le R/R très difficile. Sans expansion, le trade offre peu de marge de gain.";
+const TIGHTCONS_WIDE_FR_NEW     = "≈ SL très large, mais ici le haut du range rend le R/R très difficile. Sans expansion, le trade offre peu de marge de gain.";
 
 // V2.2 — scenarios where "wide" is the correct answer
 const EXTREME_VOL_TIGHT_FR_NEW   = "✗ Ici, le stop est dans le bruit immédiat. La 1re bougie de retest, ample à cause de la volatilité extrême, risque de le balayer très vite.";
-const EXTREME_VOL_LTT_FR_NEW     = "✗ Stop « standard » calibré pour une volatilité normale. Avec un ATR triplé, ce niveau se trouve ici dans le bruit, et risque d'être balayé avant que le setup ait le temps de jouer.";
+const EXTREME_VOL_LTT_FR_NEW     = "✗ Stop « standard » calibré pour une volatilité normale. Avec une volatilité du jour triplée (ATR, l'amplitude moyenne d'une journée), ce niveau se trouve ici dans le bruit, et risque d'être balayé avant que le setup ait le temps de jouer.";
 const EXTREME_VOL_WIDE_FR_NEW    = "✓ Marge calibrée sur la volatilité RÉELLE du jour (3 fois la normale). Ici, c'est le seul stop qui absorbe l'expansion sans casser le setup.";
 const NEWS_IMM_TIGHT_FR_NEW      = "✗ Ici, le stop est dans le bruit immédiat. La bougie d'impact de la news risque de le balayer en quelques secondes.";
 const NEWS_IMM_LTT_FR_NEW        = "✗ Stop « normal », peu adapté à l'amplitude d'une news. Une bougie d'impact (2 à 3 fois plus ample) risque ici de te sortir avant le vrai mouvement directionnel.";
 const NEWS_IMM_WIDE_FR_NEW       = "✓ Marge assez large pour absorber l'amplitude de la news. Ici, c'est ce SL, ou pas de trade pendant la fenêtre de news.";
 const LIQ_HUNT_TIGHT_FR_NEW      = "✗ Ici, le stop est dans le bruit immédiat. Le 1er retest risque de le balayer avant même la chasse principale.";
-const LIQ_HUNT_LTT_FR_NEW        = "✗ Ici, le stop est sous un swing low évident, une zone de chasse fréquente. Le sweep prend très souvent ce niveau avant le vrai retournement.";
-const LIQ_HUNT_WIDE_FR_NEW       = "✓ Sous la zone de chasse, avec une marge ample. Le sweep peut avoir lieu : ici, ton SL reste hors d'atteinte.";
+const LIQ_HUNT_LTT_FR_NEW        = "✗ Ici, le stop est sous un swing low évident, une zone de stop hunt fréquente. Le sweep prend très souvent ce niveau avant le vrai retournement.";
+const LIQ_HUNT_WIDE_FR_NEW       = "✓ Sous la zone de stop hunt, avec une marge ample. Le sweep peut avoir lieu : ici, ton SL reste hors d'atteinte.";
 const MULTI_DEEP_TIGHT_FR_NEW    = "✗ Ici, le stop est sous le 1er swing low (le plus haut). Le pullback structurel descend plus bas, et le SL reste dans le bruit du mouvement.";
 const MULTI_DEEP_LTT_FR_NEW      = "✗ Ici, le stop est sous le 2e swing low. La séquence de lower lows se prolonge jusqu'au 3e : le stop risque d'être balayé avant l'invalidation réelle.";
 const MULTI_DEEP_WIDE_FR_NEW     = "✓ Sous le 3e swing low (le plus bas), avec une marge. C'est ici la vraie invalidation structurelle de la séquence.";
@@ -662,18 +662,18 @@ const FAKEOUT_ZONE_WIDE_FR_NEW   = "✓ Au-dessus de l'amplitude maximale probab
 const WEEKLY_OPEN_TIGHT_FR_NEW   = "✗ Ici, le stop est dans le bruit immédiat. Le gap d'ouverture du lundi risque de le balayer dès la 1re bougie.";
 const WEEKLY_OPEN_LTT_FR_NEW     = "✗ Stop « standard », peu adapté à un gap de weekend qui peut atteindre 2 à 3 fois l'amplitude normale d'une bougie.";
 const WEEKLY_OPEN_WIDE_FR_NEW    = "✓ Marge large pour absorber l'amplitude du gap d'ouverture. Ici, tant que la structure tient, le SL tient aussi.";
-const KEY_MAGNET_TIGHT_FR_NEW    = "✗ Ici, le stop est dans le bruit immédiat, et risque d'être balayé avant même que le niveau magnétique soit atteint.";
-const KEY_MAGNET_LTT_FR_NEW      = "✗ Ici, le stop est juste au-dessus du niveau magnétique. Le test profond risque d'aller plus bas, et le sweep de prendre ce niveau.";
-const KEY_MAGNET_WIDE_FR_NEW     = "✓ Au-delà de l'amplitude du test attendu sur le niveau magnétique. Le sweep peut toucher le niveau : ici, ton SL reste hors d'atteinte.";
+const KEY_MAGNET_TIGHT_FR_NEW    = "✗ Ici, le stop est dans le bruit immédiat, et risque d'être balayé avant même que le niveau clé soit atteint.";
+const KEY_MAGNET_LTT_FR_NEW      = "✗ Ici, le stop est juste au-dessus du niveau clé. Le test profond risque d'aller plus bas, et le sweep de prendre ce niveau.";
+const KEY_MAGNET_WIDE_FR_NEW     = "✓ Au-delà de l'amplitude du test attendu sur le niveau clé. Le sweep peut toucher le niveau : ici, ton SL reste hors d'atteinte.";
 
 // V2.3 — SELL variants: directional reformulations
-const LIQ_HUNT_LTT_SELL_FR_NEW     = "✗ Ici, le stop est au-dessus d'un swing high évident, une zone de chasse fréquente. Le sweep prend très souvent ce niveau avant le vrai retournement.";
-const LIQ_HUNT_WIDE_SELL_FR_NEW    = "✓ Au-dessus de la zone de chasse, avec une marge ample. Le sweep peut avoir lieu : ici, ton SL reste hors d'atteinte.";
+const LIQ_HUNT_LTT_SELL_FR_NEW     = "✗ Ici, le stop est au-dessus d'un swing high évident, une zone de stop hunt fréquente. Le sweep prend très souvent ce niveau avant le vrai retournement.";
+const LIQ_HUNT_WIDE_SELL_FR_NEW    = "✓ Au-dessus de la zone de stop hunt, avec une marge ample. Le sweep peut avoir lieu : ici, ton SL reste hors d'atteinte.";
 const MULTI_DEEP_TIGHT_SELL_FR_NEW = "✗ Ici, le stop est au-dessus du 1er swing high (le plus bas). Le pullback structurel monte plus haut, et le SL reste dans le bruit du mouvement.";
 const MULTI_DEEP_LTT_SELL_FR_NEW   = "✗ Ici, le stop est au-dessus du 2e swing high. La séquence de higher highs se prolonge jusqu'au 3e : le stop risque d'être balayé avant l'invalidation réelle.";
 const MULTI_DEEP_WIDE_SELL_FR_NEW  = "✓ Au-dessus du 3e swing high (le plus haut), avec une marge. C'est ici la vraie invalidation structurelle de la séquence.";
-const KEY_MAGNET_LTT_SELL_FR_NEW   = "✗ Ici, le stop est juste sous le niveau magnétique. Le test profond risque d'aller plus haut, et le sweep de prendre ce niveau.";
-const KEY_MAGNET_WIDE_SELL_FR_NEW  = "✓ Au-delà de l'amplitude du test attendu vers le haut. Le sweep peut toucher le niveau magnétique : ici, ton SL reste hors d'atteinte.";
+const KEY_MAGNET_LTT_SELL_FR_NEW   = "✗ Ici, le stop est juste sous le niveau clé. Le test profond risque d'aller plus haut, et le sweep de prendre ce niveau.";
+const KEY_MAGNET_WIDE_SELL_FR_NEW  = "✓ Au-delà de l'amplitude du test attendu vers le haut. Le sweep peut toucher le niveau clé : ici, ton SL reste hors d'atteinte.";
 
 const RATIONALE_EN: Record<string, string> = {
   [TIGHT_RATIONALE_FR]:   "✗ Too tight: here, the stop sits in the market's normal noise. The 1st retest wick is likely to sweep it before the trade plays out. It's a frequent mistake.",
