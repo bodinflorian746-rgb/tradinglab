@@ -12,6 +12,7 @@ import { hasLocale, type Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary, type Dictionaries } from "@/i18n/dictionaries";
 import { FORMATIONS } from "@/lib/formations";
+import { STRATEGY_MODULES } from "@/lib/strategies";
 import { REVIEWS, type Review } from "@/lib/reviews";
 import Logo from "@/app/components/Logo";
 import { GameChartV2 } from "@/app/components/games/v2/GameChartV2";
@@ -90,16 +91,63 @@ function SectionHead({ eyebrow, title, sub, center }: { eyebrow?: string; title:
   );
 }
 
-/** 3 gros chiffres sur une ligne (leçons, stratégies, jeux), une seule couleur */
-function Numbers({ stats }: { stats: readonly { value: string; label: string }[] }) {
+// ─── Nombre de leçons (vérifié contre les pages du dépôt) ───────────────────
+// Trading : FORMATIONS (débutant 10, intermédiaire 9, avancé 9 = 28).
+// Macro : 16 (6 + 6 + 4), non modélisé dans FORMATIONS : mêmes comptes que
+// app/sitemap.ts et StickyLessonNav. Stratégies : 35 pages de leçons ;
+// STRATEGY_MODULES en annonce 36 (ICT : lessonCount 6 pour 5 pages).
+const MACRO_LESSONS = 16;
+const STRATEGY_LESSONS = 35;
+const GAMES_COUNT = 4;
+/** Couleurs des parts (celles des piliers) */
+const COLOR: Record<string, string> = { trading: "#34d399", macro: "#60a5fa", strategies: "#fbbf24" };
+
+type LessonsStrings = ReturnType<typeof homeStrings>["lessons"];
+
+/** Bloc « 79 leçons » : le chiffre en très grand, la répartition dessous, stratégies et jeux en second plan */
+function LessonsBlock({ l, trading }: { l: LessonsStrings; trading: number }) {
+  const total = trading + MACRO_LESSONS + STRATEGY_LESSONS;
+  const parts = [
+    { key: "trading", n: trading, color: COLOR.trading, label: l.bar.trading },
+    { key: "macro", n: MACRO_LESSONS, color: COLOR.macro, label: l.bar.macro },
+    { key: "strategies", n: STRATEGY_LESSONS, color: COLOR.strategies, label: l.bar.strategies },
+  ];
+  const secondary: Record<string, number> = { strategies: STRATEGY_MODULES.length, games: GAMES_COUNT };
   return (
-    <div className="hv2-nums">
-      {stats.map((st) => (
-        <div key={st.value}>
-          <p className="hv2-num">{st.value}</p>
-          <p className="mt-1 text-[13px] leading-snug text-[color:var(--v2-text-2)]">{st.label}</p>
+    <div className="hv2-lessons">
+      <p className="hv2-lessons-total">
+        <span className="hv2-lessons-n">{total}</span>
+        <span className="hv2-lessons-unit">{l.unit}</span>
+      </p>
+      {/* Répartition des leçons, à l'échelle */}
+      <div className="hv2-lessons-bar" role="img" aria-label={parts.map((p) => `${p.label} ${p.n}`).join(", ")}>
+        {parts.map((p) => <span key={p.key} style={{ flexGrow: p.n, background: p.color }} />)}
+      </div>
+      <dl className="hv2-lessons-detail">
+        <div>
+          <dt><span className="hv2-dot" style={{ background: "linear-gradient(90deg, #34d399 50%, #60a5fa 50%)" }} />{l.trading}</dt>
+          <dd>
+            <span className="hv2-lessons-sub"><span className="hv2-lessons-sub-n">{trading + MACRO_LESSONS}</span> {l.unit}</span>
+            <span className="hv2-lessons-note">
+              {l.tradingDetail(trading, MACRO_LESSONS).map((part, i) => (
+                <span key={i} style={"c" in part && part.c ? { color: COLOR[part.c], fontWeight: 600, whiteSpace: "nowrap" } : undefined}>{part.t}</span>
+              ))}
+            </span>
+          </dd>
         </div>
-      ))}
+        <div>
+          <dt><span className="hv2-dot" style={{ background: COLOR.strategies }} />{l.strategies}</dt>
+          <dd><span className="hv2-lessons-sub"><span className="hv2-lessons-sub-n">{STRATEGY_LESSONS}</span> {l.unit}</span></dd>
+        </div>
+      </dl>
+      <p className="hv2-lessons-secondary">
+        {l.secondary.map((x, i) => (
+          <span key={x.key}>
+            {i > 0 && <span aria-hidden="true" className="px-2 text-[color:var(--v2-text-3)]">·</span>}
+            <span className="v2-mono font-semibold text-[color:var(--v2-text)]">{secondary[x.key]}</span> {x.label}
+          </span>
+        ))}
+      </p>
     </div>
   );
 }
@@ -162,6 +210,7 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
   const subtitle = JOURNAL_OPEN ? s.hero.subtitleJournal : s.hero.subtitle;
 
   const count = (id: string) => FORMATIONS.find((f) => f.id === id)?.lessons.length ?? 0;
+  const tradingLessons = count("debutant") + count("intermediaire") + count("avance");
   const levels = [
     { ...s.progression.levels[0], n: count("debutant"), href: "/formations", color: "#34d399" },
     { ...s.progression.levels[1], n: count("intermediaire"), href: "/formations/intermediaire", color: "#60a5fa" },
@@ -169,7 +218,7 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
   ];
 
   return (
-    <div className="tsx-v2">
+    <div className="tsx-v2 tsx-v2--soft">
       <RevealOnView />
       <noscript>
         <style>{".tsx-v2 [data-reveal]{opacity:1!important;transform:none!important}"}</style>
@@ -197,9 +246,9 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
               {t.hero.ctaSecondary}
             </Link>
           </div>
-          {/* Chiffres (desktop) : à côté du jeu */}
+          {/* 79 leçons (desktop) : à côté du jeu, dans le premier écran */}
           <div className="hidden w-full lg:block" style={css({ "--i": 4 })}>
-            <Numbers stats={s.stats} />
+            <LessonsBlock l={s.lessons} trading={tradingLessons} />
           </div>
         </div>
 
@@ -229,14 +278,14 @@ export default async function HomeV2({ params }: { params: Promise<{ locale: str
             </button>
           </form>
         </div>
-        {/* Chiffres (mobile) : sous l'offre */}
-        <div className="mt-10 lg:hidden">
-          <Numbers stats={s.stats} />
+        {/* 79 leçons (mobile) : bloc dédié sous l'offre */}
+        <div data-reveal className="mt-8 lg:hidden">
+          <LessonsBlock l={s.lessons} trading={tradingLessons} />
         </div>
       </section>
 
       {/* ═══ 2. LES 4 JEUX : couleur signature, aperçus animés ═══ */}
-      <section className="hv2-section hv2-glow" style={css({ "--hv2-glow": "radial-gradient(60% 50% at 80% 30%, rgba(139,92,246,0.10), transparent 70%), radial-gradient(50% 45% at 10% 70%, rgba(59,130,246,0.08), transparent 70%)" })}>
+      <section className="hv2-section hv2-glow" style={css({ "--hv2-glow": "radial-gradient(60% 50% at 80% 40%, rgba(139,92,246,0.10), transparent 70%), radial-gradient(50% 40% at 10% 50%, rgba(59,130,246,0.08), transparent 70%)" })}>
         <div className="hv2-wrap flex flex-col gap-8">
           <SectionHead eyebrow={g.index.eyebrow} title={g.index.title} sub={s.games.sub} />
           <div className="hv2-rail hv2-rail--games">

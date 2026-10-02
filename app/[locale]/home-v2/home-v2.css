@@ -158,8 +158,51 @@
   box-shadow: 0 10px 26px -10px rgba(16, 185, 129, 0.8);
 }
 
-/* 3 gros chiffres sur une ligne, une seule couleur */
-.tsx-v2 .hv2-nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; width: 100%; }
+/* Bloc « 79 leçons » */
+.tsx-v2 .hv2-lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border-radius: 24px;
+  background:
+    radial-gradient(80% 70% at 0% 0%, rgba(16, 185, 129, 0.14), transparent 70%),
+    rgba(10, 14, 20, 0.72);
+  box-shadow: inset 0 0 0 1px var(--v2-edge-strong), 0 30px 80px -40px rgba(16, 185, 129, 0.5);
+}
+.tsx-v2 .hv2-lessons-total { display: flex; align-items: baseline; gap: 12px; line-height: 0.9; }
+.tsx-v2 .hv2-lessons-n {
+  font-family: var(--v2-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: clamp(84px, 6vw + 60px, 128px);
+  letter-spacing: -0.06em;
+  color: #6ee7b7;
+  text-shadow: 0 0 40px rgba(16, 185, 129, 0.35);
+}
+.tsx-v2 .hv2-lessons-unit {
+  font-family: var(--v2-font-display);
+  font-weight: 700;
+  font-size: clamp(26px, 1vw + 22px, 34px);
+  letter-spacing: -0.02em;
+}
+.tsx-v2 .hv2-lessons-bar { display: flex; gap: 3px; height: 10px; border-radius: 999px; overflow: hidden; }
+.tsx-v2 .hv2-lessons-bar > span { flex-basis: 0; }
+.tsx-v2 .hv2-lessons-detail { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 14px; }
+.tsx-v2 .hv2-lessons-detail dt { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--v2-text-2); }
+.tsx-v2 .hv2-lessons-detail dd { margin-top: 2px; }
+.tsx-v2 .hv2-dot { width: 10px; height: 10px; flex-shrink: 0; border-radius: 3px; }
+.tsx-v2 .hv2-lessons-sub { display: block; font-size: 15px; font-weight: 600; color: var(--v2-text-2); }
+.tsx-v2 .hv2-lessons-sub-n {
+  font-family: var(--v2-font-mono);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.03em;
+  color: var(--v2-text);
+}
+.tsx-v2 .hv2-lessons-note { display: block; margin-top: 2px; font-size: 13px; line-height: 1.4; color: var(--v2-text-3); }
+.tsx-v2 .hv2-lessons-secondary { padding-top: 12px; border-top: 1px solid var(--v2-edge); font-size: 13px; color: var(--v2-text-2); }
+
 .tsx-v2 .hv2-num {
   font-family: var(--v2-font-mono);
   font-variant-numeric: tabular-nums;
@@ -203,7 +246,10 @@
   margin-inline: calc(-1 * clamp(16px, 4vw, 32px));
   padding-inline: clamp(16px, 4vw, 32px);
   scroll-padding-inline: clamp(16px, 4vw, 32px);
-  padding-block: 8px 28px;
+  /* marge basse large : la rangée défile, donc coupe tout ce qui dépasse ; le halo des cartes
+     (flou de 80px) doit s’éteindre avant le bord. Compensée par une marge négative. */
+  padding-block: 8px 72px;
+  margin-bottom: -44px;
 }
 .tsx-v2 .hv2-rail::-webkit-scrollbar { display: none; }
 .tsx-v2 .hv2-rail > * { scroll-snap-align: start; }
@@ -217,6 +263,8 @@
     overflow: visible;
     margin-inline: 0;
     padding-inline: 0;
+    padding-bottom: 28px;
+    margin-bottom: 0;
   }
   .tsx-v2 .hv2-rail--reviews {
     grid-auto-columns: 360px;

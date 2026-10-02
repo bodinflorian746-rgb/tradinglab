@@ -46,11 +46,14 @@ const S = {
       replay: "Rejouer",
     },
     offer: { title: "48h gratuites pour tout tester", desc: "Teste la plateforme pendant 48h, sans engagement.", cta: "Recevoir mon code" },
-    stats: [
-      { value: "79", label: "leçons structurées" },
-      { value: "8", label: "stratégies expliquées" },
-      { value: "4", label: "jeux éducatifs" },
-    ],
+    lessons: {
+      unit: "leçons",
+      trading: "Trading",
+      tradingDetail: (trading: number, macro: number) => [{ t: "dont " }, { t: `${trading} de trading`, c: "trading" }, { t: " et " }, { t: `${macro} de macro`, c: "macro" }],
+      strategies: "Stratégies",
+      bar: { trading: "Trading", macro: "Macro", strategies: "Stratégies" },
+      secondary: [{ key: "strategies", label: "stratégies expliquées" }, { key: "games", label: "jeux éducatifs" }],
+    },
     games: {
       sub: "4 jeux sur de vrais graphiques : décider, placer ton stop, repérer l'erreur, construire un trade complet.",
       lines: {
@@ -148,11 +151,14 @@ const S = {
       replay: "Volver a jugar",
     },
     offer: { title: "48h gratis para probarlo todo", desc: "Prueba la plataforma durante 48h, sin compromiso.", cta: "Recibir mi código" },
-    stats: [
-      { value: "79", label: "lecciones estructuradas" },
-      { value: "8", label: "estrategias explicadas" },
-      { value: "4", label: "juegos educativos" },
-    ],
+    lessons: {
+      unit: "lecciones",
+      trading: "Trading",
+      tradingDetail: (trading: number, macro: number) => [{ t: "de las cuales " }, { t: `${trading} de trading`, c: "trading" }, { t: " y " }, { t: `${macro} de macro`, c: "macro" }],
+      strategies: "Estrategias",
+      bar: { trading: "Trading", macro: "Macro", strategies: "Estrategias" },
+      secondary: [{ key: "strategies", label: "estrategias explicadas" }, { key: "games", label: "juegos educativos" }],
+    },
     games: {
       sub: "4 juegos sobre gráficos reales: decidir, colocar tu stop, detectar el error, construir un trade completo.",
       lines: {
