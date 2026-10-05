@@ -4,7 +4,7 @@
 // Chemin du jeu : génération du round (actif, session, volatilité), remise à
 // l'échelle de l'actif (withAssetPrices), bougies passées ET futures (révélées
 // au clic). 500 rounds par scénario et par difficulté, FR et ES ; aperçus du hub
-// et de la home (lib/games/previews.ts). Contrôles :
+// (lib/games/previews.ts), jeu du héros et aperçu de leçon de la home. Contrôles :
 //  - continuité : ouverture = clôture précédente (écart nul à l'arrondi
 //    d'affichage de l'actif près) ;
 //  - arrondi : une rouge clôture sous la clôture précédente, une verte
@@ -26,6 +26,7 @@ import * as BT from "../../lib/games/build-the-trade";
 import * as BTES from "../../lib/games/build-the-trade-es";
 import { buildGamePreviews } from "../../lib/games/previews";
 import { buildHeroRounds } from "../../app/[locale]/_home/hero-rounds";
+import { LESSON_PREVIEW_CANDLES } from "../../app/[locale]/_home/lesson-preview-data";
 import { assetDecimals } from "../../lib/games/price-scale";
 import type { Asset, Candle, ChartZone } from "../../lib/games/shared";
 import { candleBody } from "../../app/components/games/candle-geometry";
@@ -105,6 +106,9 @@ for (const [lang, B, F, P, T] of [["fr", BS, FTM, PS, BT], ["es", BSES, FTMES, P
     record(`Build the Trade|${t.id}|toutes|${lang}`, [...ch.past, ...ch.future], ctx.asset, `seed ${seed} ${vol}`, ch.zones);
   }
 }
+
+// Aperçu de leçon de la home (schéma Order Block)
+record("Aperçu de leçon|order-block|—|—", LESSON_PREVIEW_CANDLES, "EUR/USD", "schéma", [], [230, 330]);
 
 // Aperçus du hub et jeu du héros de la home (passé puis futur révélé)
 for (const lang of ["fr", "es"] as const) {

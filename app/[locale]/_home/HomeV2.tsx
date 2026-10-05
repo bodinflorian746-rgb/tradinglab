@@ -18,6 +18,7 @@ import { buildGamePreviews, type PreviewId } from "@/lib/games/previews";
 import { RevealOnView } from "./RevealOnView";
 import { HeroGame } from "./HeroGame";
 import { TrialCta } from "./TrialCta";
+import { LessonPreview } from "./LessonPreview";
 import { buildHeroRounds } from "./hero-rounds";
 import { homeStrings, JOURNAL_OPEN, type HomeLocale } from "./strings";
 import "./home.css";
@@ -297,6 +298,11 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         {/* 79 leçons (mobile) : bloc dédié sous l'offre */}
         <div data-reveal className="mt-8 lg:hidden">
           <LessonsBlock l={s.lessons} names={nav.links} hrefs={lessonHrefs} trading={tradingLessons} />
+        </div>
+        {/* Juste après le chiffre : à quoi ressemble une leçon (les leçons sont
+            réservées aux membres : le lien mène au parcours Trading) */}
+        <div className="mt-10">
+          <LessonPreview locale={locale} href={lessonHrefs.trading} />
         </div>
       </section>
 

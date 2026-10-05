@@ -366,6 +366,67 @@
   box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.4), 0 30px 80px -34px rgba(16, 185, 129, 0.6);
 }
 
+/* ─── Aperçu de leçon (LessonPreview) ─────────────────────────────────── */
+/* Texte puis schéma (côte à côte sur grand écran) ; pas de quadrillage. Le
+   schéma s'anime une seule fois, quand la carte entre dans l'écran. */
+
+.tsx-v2 .hv2-lp {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+}
+/* Mobile : texte, schéma, lien. Grand écran : texte et lien à gauche, schéma
+   à droite, limité en largeur pour garder des étiquettes à la taille du texte. */
+@media (min-width: 1024px) {
+  .tsx-v2 .hv2-lp {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+    grid-template-areas: "text chart" "cta chart";
+    grid-template-rows: auto 1fr;
+    column-gap: 40px;
+    row-gap: 16px;
+    padding: 28px;
+  }
+  .tsx-v2 .hv2-lp-text { grid-area: text; }
+  .tsx-v2 .hv2-lp-chart { grid-area: chart; align-self: center; }
+  .tsx-v2 .hv2-lp-cta { grid-area: cta; align-self: start; }
+}
+.tsx-v2 .hv2-lp-text { display: flex; flex-direction: column; gap: 12px; }
+.tsx-v2 .hv2-lp-cta { display: flex; flex-direction: column; gap: 4px; }
+.tsx-v2 .hv2-lp-chart {
+  border-radius: 16px;
+  background: var(--v2-surface-2, rgba(255, 255, 255, 0.03));
+  box-shadow: inset 0 0 0 1px var(--v2-edge);
+  padding: 10px 8px;
+}
+.tsx-v2 .hv2-lp-svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* Estompé : tout sauf la zone de l'OB et ses deux bougies (OB, mitigation) */
+.tsx-v2 .hv2-lp-candle { opacity: 0.42; }
+.tsx-v2 .hv2-lp-candle--hero { opacity: 1; }
+
+/* Animation à l'arrivée : bougies une à une, puis la zone, puis les étiquettes */
+.tsx-v2 .hv2-lp:not([data-revealed]) .hv2-lp-candle,
+.tsx-v2 .hv2-lp:not([data-revealed]) .hv2-lp-zone,
+.tsx-v2 .hv2-lp:not([data-revealed]) .hv2-lp-label { opacity: 0; }
+.tsx-v2 .hv2-lp[data-revealed] .hv2-lp-candle { animation: hv2-lp-candle 420ms cubic-bezier(0.2, 0.9, 0.25, 1.1) both; animation-delay: calc(var(--d, 0ms) + 300ms); transform-box: fill-box; transform-origin: 50% 100%; }
+.tsx-v2 .hv2-lp[data-revealed] .hv2-lp-candle--hero { animation-name: hv2-lp-candle-hero; }
+.tsx-v2 .hv2-lp[data-revealed] .hv2-lp-zone,
+.tsx-v2 .hv2-lp[data-revealed] .hv2-lp-label { animation: hv2-lp-fade 400ms ease both; animation-delay: calc(var(--d, 0ms) + 300ms); }
+
+@keyframes hv2-lp-candle { from { opacity: 0; transform: translateY(10px) scaleY(0.5); } to { opacity: 0.42; transform: none; } }
+@keyframes hv2-lp-candle-hero { from { opacity: 0; transform: translateY(10px) scaleY(0.5); } to { opacity: 1; transform: none; } }
+@keyframes hv2-lp-fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .tsx-v2 .hv2-lp .hv2-lp-candle,
+  .tsx-v2 .hv2-lp .hv2-lp-zone,
+  .tsx-v2 .hv2-lp .hv2-lp-label { animation: none !important; transform: none; }
+  .tsx-v2 .hv2-lp:not([data-revealed]) .hv2-lp-zone,
+  .tsx-v2 .hv2-lp:not([data-revealed]) .hv2-lp-label { opacity: 1; }
+  .tsx-v2 .hv2-lp:not([data-revealed]) .hv2-lp-candle { opacity: 0.42; }
+  .tsx-v2 .hv2-lp:not([data-revealed]) .hv2-lp-candle--hero { opacity: 1; }
+}
+
 /* ─── Révélation à l'arrivée dans l'écran (RevealOnView) ─────────────── */
 
 .tsx-v2 [data-reveal] { opacity: 0; transform: translateY(18px); }
