@@ -191,7 +191,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Le prix a piqué au-dessus de la résistance puis a refermé sous. Tu shortes le piège.",
+    context: "Le prix a piqué au-dessus de la résistance puis a refermé sous. Tu vends (SELL) sur ce piège.",
     shortContext: "SELL après fakeout.",
     lessons: {
       intermediate: "Un stop au-dessus du PIC du fakeout (plutôt qu'à l'intérieur) est une option logique : ici, le pic marque l'invalidation réelle du piège.",
@@ -287,8 +287,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Session asiatique terminée, range bien défini. London open dans 10 minutes. Tu shortes le high du range Asia.",
-    shortContext: "Avant London open",
+    context: "Session asiatique terminée, range bien défini. Ouverture de Londres dans 10 minutes. Tu vends (SELL) au haut du range asiatique.",
+    shortContext: "Avant l'ouverture de Londres",
     lessons: {
       beginner:     "L'haut de la session asiatique est souvent balayé à l'ouverture de Londres. Ici, un SL au-dessus du sweep attendu tient mieux qu'un SL pile au high.",
       intermediate: "L'haut de la session asiatique est souvent balayé à l'ouverture de Londres. Vendre avec un stop pile au high, sans anticiper ce sweep, expose fortement à une sortie prématurée.",
@@ -303,8 +303,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Tu entres BUY sur un Order Block bullish identifié. Un swing low récent est visible juste au-dessus du bas du OB.",
-    shortContext: "Order Block bullish",
+    context: "Tu entres BUY sur un Order Block haussier identifié. Un swing low récent est visible juste au-dessus du bas du OB.",
+    shortContext: "Order Block haussier",
     lessons: {
       beginner:     "L'invalidation d'un Order Block se situe plutôt sous son bas que sous le swing low récent. Ici, le SL gagne à en tenir compte.",
       intermediate: "Le bas de l'Order Block définit ici l'invalidation du concept, davantage que le dernier swing. Un SL sous le bas de l'OB, avec une marge, se défend.",
@@ -324,7 +324,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     lessons: {
       beginner:     "Le PDL (Previous Day Low) est souvent une zone de stop hunt. Un SL sous le PDL, avec une marge, tient mieux qu'un SL pile en dessous.",
       intermediate: "Le PDL (Previous Day Low) est un niveau de liquidité quotidien, souvent visé par les stop hunts. Un SL pile en dessous risque fort d'être capturé.",
-      advanced:     "Le PDL fait partie des niveaux clés, avec PDH, PWL, PWH et PML. Un SL placé à 0-5 pips au-delà de l'un d'eux a de fortes chances d'être chassé avant le vrai mouvement.",
+      advanced:     "Le PDL fait partie des niveaux clés, avec le PDH et les plus hauts et plus bas de la semaine ou du mois précédents. Un SL placé à moins de 5 pips au-delà de l'un d'eux a de fortes chances d'être chassé avant le vrai mouvement.",
     },
     difficulties: ["intermediate", "advanced"],
     tag: "piège",
@@ -351,8 +351,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Setup BUY en H1. Mais le dernier Higher Low H4 est nettement plus bas. La structure HTF reste bullish tant que ce HL H4 tient.",
-    shortContext: "Bias H4 plus profond",
+    context: "Setup BUY en H1. Mais le dernier Higher Low H4 est nettement plus bas. La structure HTF reste haussière tant que ce HL H4 tient.",
+    shortContext: "HL H4 nettement plus bas",
     lessons: {
       beginner:     "Quand le setup est en H1 mais le biais HTF en H4, ton SL gagne à respecter le HL H4 plutôt que le swing H1.",
       intermediate: "Le SL se place plutôt à l'échelle du timeframe d'invalidation que du timeframe d'entrée. Ici (setup H1, biais H4), un SL sous le HL H4 est une option logique.",
@@ -432,7 +432,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "dangereux",
-    context: "Aujourd'hui, le marché bouge trois fois plus que sa moyenne des 20 derniers jours (ATR, l'amplitude moyenne d'une journée). Marché en expansion violente. Tu shortes un rejet. Le SL « standard » au-dessus de la mèche ne tiendra pas.",
+    context: "Aujourd'hui, le marché bouge trois fois plus que sa moyenne des 20 derniers jours (ATR, l'amplitude moyenne d'une journée). Marché en expansion violente. Tu vends (SELL) sur un rejet. Le SL « standard » au-dessus de la mèche ne tiendra pas.",
     shortContext: "Le marché bouge 3 fois plus que d'habitude (ATR, l'amplitude moyenne d'une journée) : short en volatilité extrême",
     lessons: {
       beginner:     "En volatilité extrême, ton SL « normal » devient souvent trop serré, y compris en SELL. Une marge proportionnelle à la volatilité du jour (ATR, l'amplitude moyenne d'une journée) est une option logique.",
@@ -448,7 +448,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "dangereux",
-    context: "NFP dans 5 minutes. Tu tiens absolument à entrer maintenant sur ce setup BUY. L'amplitude attendue est x2-3 de la normale. SL standard = stop out garanti.",
+    context: "NFP dans 5 minutes. Tu tiens absolument à entrer maintenant sur ce setup BUY. Le marché peut bouger 2 à 3 fois plus que d'habitude. Un SL standard a de fortes chances d'être touché.",
     shortContext: "NFP imminente",
     lessons: {
       beginner:     "Avant une news majeure, l'amplitude des bougies peut doubler ou tripler. Adapter ton SL, ou ne pas prendre le trade, sont deux options logiques.",
@@ -464,7 +464,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le swing low 'évident' juste sous l'entrée est en réalité une zone de liquidité institutionnelle bien connue. Le SL placé sous = stop out garanti. Il faut s'éloigner.",
+    context: "Le swing low 'évident' juste sous l'entrée est en réalité une zone de liquidité institutionnelle bien connue. Un SL placé juste dessous a de fortes chances d'être touché. Mieux vaut s'éloigner.",
     shortContext: "Zone de stop hunt connue",
     lessons: {
       beginner:     "Les swing lows évidents attirent beaucoup de SL. Placer ton SL bien au-delà de la zone, ou attendre après le sweep, sont deux options logiques.",
@@ -512,7 +512,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "dangereux",
-    context: "Lundi matin, ouverture des marchés FX. Un gap de weekend est possible. Le SL doit absorber cette amplitude exceptionnelle.",
+    context: "Lundi matin, ouverture du marché des devises (forex). Un gap de weekend est possible. Le SL doit absorber cette amplitude exceptionnelle.",
     shortContext: "Open lundi, gap possible",
     lessons: {
       beginner:     "L'ouverture du lundi peut créer un gap qui balaie un SL standard. Une marge large, ou pas de position avant l'ouverture, sont deux options logiques.",
@@ -545,7 +545,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "dangereux",
-    context: "FOMC dans 5 minutes. Tu prends ce SELL sur EUR/USD. L'amplitude attendue est x2-3 de la normale. SL standard = stop out garanti.",
+    context: "FOMC dans 5 minutes. Tu prends ce SELL sur EUR/USD. Le marché peut bouger 2 à 3 fois plus que d'habitude. Un SL standard a de fortes chances d'être touché.",
     shortContext: "FOMC imminent",
     lessons: {
       beginner:     "Avant un FOMC, l'amplitude des bougies peut doubler ou tripler, et un SL standard risque d'être emporté. Adapter la marge, ou ne pas trader, sont deux options logiques.",
@@ -561,7 +561,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Le swing high évident juste au-dessus de l'entrée est en réalité une zone de liquidité institutionnelle bien connue. SL placé au-dessus = stop out garanti.",
+    context: "Le swing high évident juste au-dessus de l'entrée est en réalité une zone de liquidité institutionnelle bien connue. Un SL placé juste au-dessus a de fortes chances d'être touché.",
     shortContext: "Zone de stop hunt au-dessus",
     lessons: {
       beginner:     "Les swing highs évidents attirent beaucoup de SL. Placer ton SL bien au-delà de la zone, ou attendre après le sweep, sont deux options logiques.",
@@ -593,7 +593,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "dangereux",
-    context: "Lundi matin, ouverture des marchés FX. Un gap haussier weekend est possible. Le SL SELL doit absorber cette amplitude.",
+    context: "Lundi matin, ouverture du marché des devises (forex). Un gap haussier weekend est possible. Le SL SELL doit absorber cette amplitude.",
     shortContext: "Open lundi, gap possible",
     lessons: {
       beginner:     "L'ouverture du lundi peut créer un gap haussier qui balaie un SL standard. Une marge large, ou pas de position avant l'ouverture, sont deux options logiques.",

@@ -130,7 +130,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     lessons: {
       beginner:     "Sur un setup dans le sens du HTF, chercher le meilleur prix et viser large est une option logique. Ici, la patience peut payer.",
       intermediate: "Le pullback profond améliore souvent le R/R. Associé à un stop derrière la structure, il offre ici le meilleur avantage.",
-      advanced:     "Une continuation de tendance alignée avec le HTF peut offrir un setup à haute probabilité, avec un R/R de 3:1 ou plus. La taille se décide selon ton plan de risk management ; un TP ambitieux se justifie ici par le momentum probable.",
+      advanced:     "Une continuation de tendance alignée avec le HTF peut offrir un setup à haute probabilité, avec un R/R de 1:3 ou plus. La taille se décide selon ton plan de risk management ; un TP ambitieux se justifie ici par le momentum probable.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
@@ -147,7 +147,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     lessons: {
       beginner:     "Tendance baissière et rebond qui s'essouffle : un SELL reste cohérent avec le scénario, si ça correspond à ton plan, au meilleur prix possible avec un TP large.",
       intermediate: "Ici, le rebond profond donne souvent le meilleur R/R. Un stop au-dessus de la structure permet d'absorber le bruit.",
-      advanced:     "C'est le symétrique de la continuation haussière. Un R/R de 3:1 ou plus reste un objectif logique ici.",
+      advanced:     "C'est le symétrique de la continuation haussière. Un R/R de 1:3 ou plus reste un objectif logique ici.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
@@ -198,7 +198,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     lessons: {
       beginner:     "Sur un support, attendre la bougie verte de confirmation est souvent plus sûr qu'une entrée à l'aveugle.",
       intermediate: "La confirmation peut valider la zone. Ici, le TP équilibré tient compte de la résistance suivante.",
-      advanced:     "Sur un support HTF testé 2 ou 3 fois, la confirmation aide à préserver l'avantage. Un R/R autour de 2 à 2,5:1 est courant dans ce cas.",
+      advanced:     "Sur un support HTF testé 2 ou 3 fois, la confirmation aide à préserver l'avantage. Un R/R autour de 1:2 à 1:2,5 est courant dans ce cas.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
@@ -299,7 +299,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     optimalExplain: "Ici, le FVG peut servir de zone de demand, et la confirmation valide la réaction. Un stop sous le bas du FVG et un TP ambitieux se défendent, car le HTF est aligné et la zone encore intacte.",
     lessons: {
       intermediate: "Le FVG agit souvent comme zone de demand au retest. Ici, la confirmation préserve l'avantage sans rater le mouvement.",
-      advanced:     "FVG haussier, HTF aligné et premier retest : un setup de premier choix. Un R/R de 3:1 ou plus est ici logique.",
+      advanced:     "FVG haussier, HTF aligné et premier retest : un setup de premier choix. Un R/R de 1:3 ou plus est ici logique.",
       beginner:     "Le FVG attire souvent le prix. Ici, la confirmation prend la forme d'une bougie verte qui défend la zone.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -328,7 +328,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le pullback est devenu très profond. Plus de 60% de l'impulsion précédente est retracée.",
+    context: "Le pullback est devenu très profond. Plus de 60 % de l'impulsion précédente est retracée.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
     optimalExplain: "Ici, le pullback profond peut annoncer une cassure de structure. La confirmation préserve l'avantage : une entrée agressive reviendrait à courir après le prix, et un pullback profond à parier sur un niveau secondaire.",
     lessons: {

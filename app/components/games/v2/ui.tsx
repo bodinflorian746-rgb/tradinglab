@@ -191,21 +191,29 @@ export function GeneralCasesNote() {
   return <p className="v2-general-note text-[13px] leading-snug text-[color:var(--v2-text-3)]">{text}</p>;
 }
 
+// ─── R/R ──────────────────────────────────────────────────────────────────────
+
+export /** R/R noté comme dans les leçons (1:N), virgule décimale en français et en espagnol. */
+function rrText(rr: number, locale: string | undefined): string {
+  const n = rr.toFixed(1);
+  return `1:${locale === "en" ? n : n.replace(".", ",")}`;
+}
+
 // ─── Jargon : explication courte à la première apparition ───────────────────
 
 const JARGON_TITLE = { fr: "Lexique", es: "Léxico" } as const;
 // Typographie : espace avant les deux-points en français, pas en espagnol
 
 /**
- * Explications du jargon (niveaux débutant et intermédiaire, FR / ES) : chaque
- * terme du glossaire (lib/games/glossary.ts) est expliqué une seule fois par
- * session, à sa première apparition (question, puis feedback). Le résultat est
+ * Explications du jargon (tous niveaux, FR / ES) : chaque terme du glossaire
+ * (lib/games/glossary.ts) est expliqué une seule fois par session, à sa première
+ * apparition (question, puis feedback) ; en avancé, explication plus courte. Le résultat est
  * mémorisé par clé de bloc (« 3:q », « 3:f ») pour rester stable au rendu.
  */
-export function useJargon(locale: string | undefined, difficulty: string | null, sessionKey: unknown) {
+export function useJargon(locale: string | undefined, sessionKey: unknown) {
   const store = useRef<{ session: unknown; seen: Set<string>; blocks: Map<string, GlossaryEntry[]> }>({ session: undefined, seen: new Set(), blocks: new Map() });
   return useCallback((blockKey: string, texts: (string | undefined | null)[]): GlossaryEntry[] => {
-    if ((locale !== "fr" && locale !== "es") || (difficulty !== "beginner" && difficulty !== "intermediate")) return [];
+    if (locale !== "fr" && locale !== "es") return [];
     const s = store.current;
     if (s.session !== sessionKey) { s.session = sessionKey; s.seen = new Set(); s.blocks = new Map(); }
     const cached = s.blocks.get(blockKey);
@@ -218,10 +226,10 @@ export function useJargon(locale: string | undefined, difficulty: string | null,
     const hints = fresh.filter((g) => !(g.inlineDef && joined.includes(g.inlineDef[locale])));
     s.blocks.set(blockKey, hints);
     return hints;
-  }, [locale, difficulty, sessionKey]);
+  }, [locale, sessionKey]);
 }
 
-export function JargonHints({ entries, locale }: { entries: GlossaryEntry[]; locale: string | undefined }) {
+export function JargonHints({ entries, locale, brief = false }: { entries: GlossaryEntry[]; locale: string | undefined; brief?: boolean }) {
   if (!entries.length) return null;
   const loc = locale === "es" ? "es" : "fr";
   return (
@@ -230,7 +238,7 @@ export function JargonHints({ entries, locale }: { entries: GlossaryEntry[]; loc
       <ul className="mt-1 space-y-1">
         {entries.map((g) => (
           <li key={g.id} data-term={g.id} className="text-[14px] leading-snug text-[color:var(--v2-text-2)]">
-            <strong className="font-semibold text-[color:var(--v2-text)]">{g.term[loc]}</strong>{loc === "es" ? ": " : " : "}{g.def[loc]}
+            <strong className="font-semibold text-[color:var(--v2-text)]">{g.term[loc]}</strong>{loc === "es" ? ": " : " : "}{brief ? g.short[loc] : g.def[loc]}
           </li>
         ))}
       </ul>

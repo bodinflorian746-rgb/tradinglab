@@ -19,7 +19,7 @@ import {
   type TpType,
 } from "@/lib/games/build-the-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, type VerdictState } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, rrText, type VerdictState } from "@/app/components/games/v2/ui";
 
 // Couleur du verdict de setup → état du verdict superposé (icône, titre et points)
 const VERDICT_STATE: Record<"emerald" | "amber" | "red", VerdictState> = { emerald: "good", amber: "partial", red: "bad" };
@@ -235,7 +235,7 @@ export default function BuildTheTradePage() {
   const [seed, setSeed] = useState<number | null>(null);
   const [scenarios, setScenarios] = useState<BuildTradeInstance[]>([]);
   const [idx, setIdx] = useState(0);
-  const jargon = useJargon(locale, difficulty, seed);
+  const jargon = useJargon(locale, seed);
   const [entry, setEntry] = useState<EntryType | null>(null);
   const [stop, setStop] = useState<StopType | null>(null);
   const [tp, setTp] = useState<TpType | null>(null);
@@ -639,7 +639,7 @@ export default function BuildTheTradePage() {
             )}
 
             {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) */}
-            <JargonHints locale={locale} entries={jargon(`${idx}:q`, [T.spread, current.context, ...chart.zones.map((z) => z.label), ...(["entry", "stop", "tp"] as const).flatMap((st) => Object.values(optionLabels[st])), T.htf, MACRO_LABEL[current.macroContext]])} />
+            <JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:q`, [T.spread, current.context, ...chart.zones.map((z) => z.label), ...(["entry", "stop", "tp"] as const).flatMap((st) => Object.values(optionLabels[st])), T.htf, MACRO_LABEL[current.macroContext]])} />
 
             {isReveal && (
               <div className="v2-well flex min-h-[46px] items-center justify-center px-4 py-2 text-center">
@@ -664,7 +664,7 @@ export default function BuildTheTradePage() {
                 setupVerdictFn={G.setupVerdict}
                 onNext={handleNext}
                 isLast={idx + 1 >= ROUNDS_PER_SESSION}
-                jargon={<JargonHints locale={locale} entries={jargon(`${idx}:f`, [current.title, T.rrRealized, T.drawdown, current.optimalExplain, current.lessons[difficulty]])} />}
+                jargon={<JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:f`, [current.title, T.rrRealized, T.drawdown, current.optimalExplain, current.lessons[difficulty]])} />}
                 asset={current.asset}
               />
             )}
@@ -746,6 +746,7 @@ function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Diff
 // ─── R/R du plan ─────────────────────────────────────────────────────────────
 
 function RrPreview({ T, chart, entry, stop, tp, asset }: { T: { [k: string]: string }; chart: BuildTradeChart; entry: EntryType; stop: StopType; tp: TpType; asset: Asset }) {
+  const locale = useParams<{ locale: string }>()?.locale;
   const e = chart.entries[entry];
   const s = chart.stops[stop];
   const t = chart.tps[tp];
@@ -757,7 +758,7 @@ function RrPreview({ T, chart, entry, stop, tp, asset }: { T: { [k: string]: str
     <div className="grid grid-cols-3 gap-2 sm:gap-3">
       <OutcomeTile label={T.risk}   value={formatPrice(asset, risk)}   valueClass="" />
       <OutcomeTile label={T.reward} value={formatPrice(asset, reward)} valueClass="" />
-      <OutcomeTile label={T.rr}     value={rr > 0 ? `1:${rr.toFixed(1)}` : ""} valueClass={rrColor} />
+      <OutcomeTile label={T.rr}     value={rr > 0 ? rrText(rr, locale) : ""} valueClass={rrColor} />
     </div>
   );
 }
@@ -788,6 +789,7 @@ function Feedback({
   jargon?:        ReactNode;
   asset:          Asset;
 }) {
+  const locale = useParams<{ locale: string }>()?.locale;
   const verdict = setupVerdictFn(result);
   const tint = verdict.color === "emerald" ? "#34d399" : verdict.color === "amber" ? "#fcd34d" : "#f87171";
 
@@ -813,7 +815,7 @@ function Feedback({
         />
         <OutcomeTile
           label={T.rrRealized}
-          value={result.rr > 0 ? `1:${result.rr.toFixed(1)}` : "—"}
+          value={result.rr > 0 ? rrText(result.rr, locale) : "—"}
           valueClass={result.rr >= 2 ? "text-emerald-300" : result.rr >= 1 ? "text-amber-300" : "text-[color:var(--v2-text-2)]"}
         />
         {result.entryFilled && (

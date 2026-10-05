@@ -184,7 +184,7 @@ export default function FindTheMistakePage() {
   const [seed, setSeed] = useState<number | null>(null);
   const [scenarios, setScenarios] = useState<MistakeInstance[]>([]);
   const [idx, setIdx] = useState(0);
-  const jargon = useJargon(locale, difficulty, seed);
+  const jargon = useJargon(locale, seed);
   const [chosen, setChosen] = useState<MistakeId | null>(null);
   const [result, setResult] = useState<MistakeScoreResult | null>(null);
   const [score, setScore] = useState(0);
@@ -406,7 +406,7 @@ export default function FindTheMistakePage() {
             />
 
             {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) */}
-            <JargonHints locale={locale} entries={jargon(`${idx}:q`, [T.spread, current.extraInfo, current.context, ...chart.zones.map((z) => z.label), ...current.shuffledChoices.map((c) => G.MISTAKE_LABELS[c])])} />
+            <JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:q`, [T.spread, current.extraInfo, current.context, ...chart.zones.map((z) => z.label), ...current.shuffledChoices.map((c) => G.MISTAKE_LABELS[c])])} />
 
             {isFeedback && result && chosen && (
               <Feedback
@@ -424,7 +424,7 @@ export default function FindTheMistakePage() {
                 mistakeLabels={G.MISTAKE_LABELS}
                 onNext={handleNext}
                 isLast={idx + 1 >= ROUNDS_PER_SESSION}
-                jargon={<JargonHints locale={locale} entries={jargon(`${idx}:f`, [current.title, current.explanation, current.lessons[difficulty]])} />}
+                jargon={<JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:f`, [current.title, current.explanation, current.lessons[difficulty]])} />}
               />
             )}
 

@@ -117,7 +117,7 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
     lessons: {
       beginner:     "En un setup en el sentido del HTF, buscar el mejor precio y apuntar amplio es una opción lógica. Aquí, la paciencia puede dar frutos.",
       intermediate: "El pullback profundo suele mejorar el R/R. Combinado con un stop detrás de la estructura, ofrece aquí la mejor ventaja.",
-      advanced:     "Una continuación de tendencia alineada con el HTF puede ofrecer un setup de alta probabilidad, con un R/R de 3:1 o más. El tamaño se decide según tu plan de risk management; un TP ambicioso se justifica aquí por el momentum probable.",
+      advanced:     "Una continuación de tendencia alineada con el HTF puede ofrecer un setup de alta probabilidad, con un R/R de 1:3 o más. El tamaño se decide según tu plan de risk management; un TP ambicioso se justifica aquí por el momentum probable.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
@@ -134,7 +134,7 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
     lessons: {
       beginner:     "Tendencia bajista y rebote que se agota: un SELL sigue siendo coherente con el escenario, si encaja con tu plan, al mejor precio posible con un TP amplio.",
       intermediate: "Aquí, el rebote profundo suele dar el mejor R/R. Un stop sobre la estructura permite absorber el ruido.",
-      advanced:     "Es el simétrico de la continuación alcista. Un R/R de 3:1 o más sigue siendo aquí un objetivo lógico.",
+      advanced:     "Es el simétrico de la continuación alcista. Un R/R de 1:3 o más sigue siendo aquí un objetivo lógico.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
@@ -185,7 +185,7 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
     lessons: {
       beginner:     "En un soporte, esperar la vela verde de confirmación suele ser más seguro que entrar a ciegas.",
       intermediate: "La confirmación puede validar la zona. Aquí, el TP equilibrado tiene en cuenta la siguiente resistencia.",
-      advanced:     "En un soporte HTF testeado 2 o 3 veces, la confirmación ayuda a preservar la ventaja. Un R/R de 2 a 2,5:1 es habitual en este caso.",
+      advanced:     "En un soporte HTF testeado 2 o 3 veces, la confirmación ayuda a preservar la ventaja. Un R/R de 1:2 a 1:2,5 es habitual en este caso.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
@@ -286,7 +286,7 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
     optimalExplain: "Aquí, el FVG puede servir de zona de demand, y la confirmación valida la reacción. Un stop bajo el bajo del FVG y un TP ambicioso tienen sentido, porque el HTF está alineado y la zona sigue intacta.",
     lessons: {
       intermediate: "El FVG suele actuar como zona de demand en el retest. Aquí, la confirmación preserva la ventaja sin perder el movimiento.",
-      advanced:     "FVG alcista, HTF alineado y primer retest: un setup de primera calidad. Un R/R de 3:1 o más es aquí lógico.",
+      advanced:     "FVG alcista, HTF alineado y primer retest: un setup de primera calidad. Un R/R de 1:3 o más es aquí lógico.",
       beginner:     "El FVG suele atraer al precio. Aquí, la confirmación toma la forma de una vela verde que defiende la zona.",
     },
     difficulties: ["intermediate", "advanced"],

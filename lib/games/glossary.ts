@@ -19,10 +19,14 @@ export interface GlossaryEntry {
   term: Record<GlossaryLocale, string>;
   /** Détection du terme dans un texte affiché */
   match: Record<GlossaryLocale, RegExp>;
-  /** Explication courte, avec les mots des leçons */
+  /** Explication courte, avec les mots des leçons (débutant, intermédiaire) */
   def: Record<GlossaryLocale, string>;
   /** Leçon source (ou « hors leçons ») */
   source: string;
+  /** Explication plus courte (avancé) */
+  short: Record<GlossaryLocale, string>;
+  /** Terme absent des leçons, gardé car courant chez les traders (signalé) */
+  outsideLessons?: true;
   /** Définition déjà portée par les textes, entre parenthèses : gardée à sa
    *  première apparition à l'écran seulement (firstDefinitionOnly) */
   inlineDef?: Record<GlossaryLocale, string>;
@@ -37,6 +41,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "Fair Value Gap, un déséquilibre laissé par une bougie impulsive : un écart de prix que le marché revient souvent combler.",
       es: "Fair Value Gap, un desequilibrio dejado por una vela impulsiva: un hueco de precio que el mercado suele volver a llenar.",
     },
+    short: { fr: "déséquilibre laissé par une bougie impulsive.", es: "desequilibrio dejado por una vela impulsiva." },
   },
   {
     id: "liquidity", source: "Avancé · leçon 1 (Liquidité)",
@@ -46,6 +51,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "la capacité à exécuter un ordre sans faire bouger le prix ; elle s'accumule là où se trouvent beaucoup de stops (sommets, creux).",
       es: "la capacidad de ejecutar una orden sin mover el precio; se acumula donde hay muchos stops (máximos, mínimos).",
     },
+    short: { fr: "les stops accumulés près des sommets et des creux.", es: "los stops acumulados cerca de máximos y mínimos." },
   },
   {
     id: "rr", source: "Débutant · leçon 6 (Le Take Profit)",
@@ -55,6 +61,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "ratio risque/récompense : ce que le trade peut rapporter pour 1 risqué.",
       es: "ratio riesgo/beneficio: lo que el trade puede aportar por cada 1 arriesgado.",
     },
+    short: { fr: "ratio risque/récompense.", es: "ratio riesgo/beneficio." },
   },
   {
     id: "sweep", source: "Avancé · leçon 4 (Killzones)",
@@ -64,6 +71,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "le prix passe brièvement au-delà d'un sommet ou d'un creux pour prendre la liquidité, puis repart.",
       es: "el precio supera brevemente un máximo o un mínimo para tomar la liquidity y luego vuelve.",
     },
+    short: { fr: "passage bref au-delà d'un sommet ou d'un creux pour prendre la liquidité.", es: "paso breve más allá de un máximo o un mínimo para tomar la liquidity." },
   },
   {
     id: "stop-hunt", source: "Avancé · leçon 6 (Stop Hunts)",
@@ -73,6 +81,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "mouvement brusque qui déclenche les stops accumulés avant de repartir en sens inverse.",
       es: "movimiento brusco que activa los stops acumulados antes de girar en sentido contrario.",
     },
+    short: { fr: "mouvement qui déclenche les stops avant de repartir.", es: "movimiento que activa los stops antes de girar." },
   },
   {
     id: "htf", source: "Stratégies · ICT, leçon 1",
@@ -82,6 +91,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "l'unité de temps supérieure (H4, Daily), celle qui donne le biais directionnel.",
       es: "la temporalidad superior (H4, Daily), la que da el sesgo direccional.",
     },
+    short: { fr: "unité de temps supérieure.", es: "temporalidad superior." },
   },
   {
     id: "sl", source: "Débutant · leçon 5 (Le Stop Loss)",
@@ -91,6 +101,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "l'ordre qui coupe la perte si le prix va contre toi.",
       es: "la orden que corta la pérdida si el precio va en tu contra.",
     },
+    short: { fr: "ordre qui coupe la perte.", es: "orden que corta la pérdida." },
   },
   {
     id: "tp", source: "Débutant · leçon 6 (Le Take Profit)",
@@ -100,6 +111,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "l'ordre qui encaisse le gain à l'objectif.",
       es: "la orden que cobra la ganancia en el objetivo.",
     },
+    short: { fr: "ordre qui encaisse le gain.", es: "orden que cobra la ganancia." },
   },
   {
     id: "spread", source: "Débutant · leçon 4 (Spread, Bid et Ask)",
@@ -109,9 +121,10 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "l'écart entre le prix d'achat et le prix de vente, un coût payé à chaque trade.",
       es: "la diferencia entre el precio de compra y el de venta, un coste pagado en cada trade.",
     },
+    short: { fr: "écart entre prix d'achat et prix de vente.", es: "diferencia entre precio de compra y de venta." },
   },
   {
-    id: "atr", source: "hors leçons (terme courant)",
+    id: "atr", source: "hors leçons (terme courant)", outsideLessons: true,
     term: { fr: "ATR", es: "ATR" },
     inlineDef: { fr: "(ATR, l'amplitude moyenne d'une journée)", es: "(ATR, la amplitud media de una jornada)" },
     match: { fr: /\bATR\b/, es: /\bATR\b/ },
@@ -119,15 +132,17 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "l'amplitude moyenne d'une journée, une mesure de la volatilité.",
       es: "la amplitud media de una jornada, una medida de la volatilidad.",
     },
+    short: { fr: "amplitude moyenne d'une journée.", es: "amplitud media de una jornada." },
   },
   {
-    id: "pdl", source: "hors leçons (terme courant)",
+    id: "pdl", source: "hors leçons (terme courant)", outsideLessons: true,
     term: { fr: "PDL / PDH", es: "PDL / PDH" },
     match: { fr: /\bPD[LH]\b/, es: /\bPD[LH]\b/ },
     def: {
       fr: "plus bas / plus haut de la veille (Previous Day Low / High), des niveaux souvent visés par les stop hunts.",
       es: "mínimo / máximo del día anterior (Previous Day Low / High), niveles a menudo buscados por los stop hunts.",
     },
+    short: { fr: "plus bas / plus haut de la veille.", es: "mínimo / máximo del día anterior." },
   },
   {
     id: "equal-lows", source: "Avancé · leçon 1 (Liquidité)",
@@ -137,15 +152,17 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "deux creux au même niveau, cibles favorites des stop hunts.",
       es: "dos mínimos al mismo nivel, objetivos favoritos de los stop hunts.",
     },
+    short: { fr: "creux (ou sommets) au même niveau.", es: "mínimos (o máximos) al mismo nivel." },
   },
   {
     id: "swing", source: "Intermédiaire · leçon 9 (Fibonacci)",
     term: { fr: "Swing low / swing high", es: "Swing low / swing high" },
-    match: { fr: /swing (?:low|high)/i, es: /swing (?:low|high)/i },
+    match: { fr: /\bswings?\b/i, es: /\bswings?\b/i },
     def: {
       fr: "creux / sommet marquant d'un mouvement.",
       es: "mínimo / máximo marcado de un movimiento.",
     },
+    short: { fr: "creux / sommet marquant.", es: "mínimo / máximo marcado." },
   },
   {
     id: "fakeout", source: "Intermédiaire · leçon 6 (Fake Breakout)",
@@ -155,6 +172,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "cassure qui ne tient pas : le prix revient de l'autre côté du niveau.",
       es: "ruptura que no se sostiene: el precio vuelve al otro lado del nivel.",
     },
+    short: { fr: "cassure qui ne tient pas.", es: "ruptura que no se sostiene." },
   },
   {
     id: "pullback", source: "Intermédiaire · leçon 2 (Support & Résistance)",
@@ -164,6 +182,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "retour du prix vers un niveau (souvent le niveau cassé) avant de repartir dans le sens de la tendance.",
       es: "vuelta del precio hacia un nivel (a menudo el nivel roto) antes de seguir en el sentido de la tendencia.",
     },
+    short: { fr: "retour du prix vers un niveau avant de repartir.", es: "vuelta del precio a un nivel antes de seguir." },
   },
   {
     id: "retest", source: "Intermédiaire · leçon 3 (Supply & Demand)",
@@ -173,15 +192,17 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "le prix revient tester un niveau qu'il vient de casser.",
       es: "el precio vuelve a probar un nivel que acaba de romper.",
     },
+    short: { fr: "nouveau test d'un niveau cassé.", es: "nueva prueba de un nivel roto." },
   },
   {
     id: "order-block", source: "Avancé · leçon 3 (Order Blocks)",
     term: { fr: "Order Block", es: "Order Block" },
-    match: { fr: /order block/i, es: /order block/i },
+    match: { fr: /order block|\bOB\b/i, es: /order block|\bOB\b/i },
     def: {
       fr: "la dernière bougie opposée avant un mouvement d'expansion violent.",
       es: "la última vela opuesta antes de un movimiento de expansión violento.",
     },
+    short: { fr: "dernière bougie opposée avant une expansion.", es: "última vela opuesta antes de una expansión." },
   },
   {
     id: "mitigation", source: "Avancé · leçon 3 (Order Blocks)",
@@ -191,6 +212,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "le retour du prix dans une zone (Order Block, FVG) ; une fois mitigée, la zone perd sa force.",
       es: "la vuelta del precio a una zona (Order Block, FVG); una vez mitigada, la zona pierde su fuerza.",
     },
+    short: { fr: "retour du prix dans une zone, qui l'affaiblit.", es: "vuelta del precio a una zona, que la debilita." },
   },
   {
     id: "drawdown", source: "Débutant · leçon 10 (Risk management)",
@@ -200,6 +222,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "la baisse maximale du trade (ou du compte) avant qu'il ne remonte.",
       es: "la caída máxima del trade (o de la cuenta) antes de recuperarse.",
     },
+    short: { fr: "baisse maximale avant de remonter.", es: "caída máxima antes de recuperarse." },
   },
   {
     id: "supply-demand", source: "Intermédiaire · leçon 3 (Supply & Demand)",
@@ -209,6 +232,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "zone d'où le prix est reparti violemment, à la hausse pour une demand, à la baisse pour une supply.",
       es: "zona desde la que el precio salió con violencia, al alza para una demand, a la baja para una supply.",
     },
+    short: { fr: "zone d'où le prix est reparti violemment.", es: "zona desde la que el precio salió con violencia." },
   },
   {
     id: "psychological", source: "Intermédiaire · leçon 5 (Confluences)",
@@ -218,6 +242,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "chiffre rond (ex. 1,1000) très surveillé par les traders.",
       es: "número redondo (ej. 1,1000) muy vigilado por los traders.",
     },
+    short: { fr: "chiffre rond très surveillé.", es: "número redondo muy vigilado." },
   },
   {
     id: "impulse-candle", source: "Avancé · leçon 2 (Fair Value Gap)",
@@ -227,6 +252,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "grande bougie directionnelle, souvent sans mèche.",
       es: "vela grande y direccional, a menudo sin mecha.",
     },
+    short: { fr: "grande bougie directionnelle.", es: "vela grande y direccional." },
   },
   {
     id: "hl", source: "Intermédiaire · leçon 1 (Structure de marché)",
@@ -236,6 +262,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "creux plus haut que le précédent, signe d'une structure haussière.",
       es: "mínimo más alto que el anterior, señal de estructura alcista.",
     },
+    short: { fr: "creux plus haut que le précédent.", es: "mínimo más alto que el anterior." },
   },
   {
     id: "invalidation", source: "Stratégies · ICT, leçon 2",
@@ -245,6 +272,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "le niveau où l'idée de trade n'est plus valable, là où se place le stop.",
       es: "el nivel donde la idea de trade deja de ser válida, donde se coloca el stop.",
     },
+    short: { fr: "niveau où l'idée de trade n'est plus valable.", es: "nivel donde la idea de trade deja de ser válida." },
   },
   {
     id: "range", source: "Intermédiaire · leçon 2 (Support & Résistance)",
@@ -254,6 +282,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "marché qui oscille entre un haut et un bas, sans tendance.",
       es: "mercado que oscila entre un techo y un piso, sin tendencia.",
     },
+    short: { fr: "marché sans tendance, entre un haut et un bas.", es: "mercado sin tendencia, entre un techo y un piso." },
   },
   {
     id: "momentum", source: "Intermédiaire · leçon 6 (Fake Breakout)",
@@ -263,6 +292,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "la force du mouvement en cours.",
       es: "la fuerza del movimiento en curso.",
     },
+    short: { fr: "force du mouvement.", es: "fuerza del movimiento." },
   },
   {
     id: "bias", source: "Intermédiaire · leçon 7 (Analyse Multi-Timeframe)",
@@ -272,6 +302,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "la direction privilégiée, donnée par l'unité de temps supérieure.",
       es: "la dirección favorecida, dada por la temporalidad superior.",
     },
+    short: { fr: "direction privilégiée par l'unité de temps supérieure.", es: "dirección favorecida por la temporalidad superior." },
   },
   {
     id: "macro-news", source: "Macro · Débutant",
@@ -281,6 +312,157 @@ export const GLOSSARY: GlossaryEntry[] = [
       fr: "grandes annonces macro (taux de la Fed, emploi américain, inflation) qui font souvent bondir la volatilité.",
       es: "grandes anuncios macro (tipos de la Fed, empleo estadounidense, inflación) que suelen disparar la volatilidad.",
     },
+    short: { fr: "grandes annonces macro (taux, emploi, inflation).", es: "grandes anuncios macro (tipos, empleo, inflación)." },
+  },
+  {
+    id: "setup", source: "Avancé · leçon 1 (Liquidité)",
+    term: { fr: "Setup", es: "Setup" },
+    match: { fr: /\bsetups?\b/i, es: /\bsetups?\b/i },
+    def: {
+      fr: "configuration de marché qui réunit les conditions d'une entrée.",
+      es: "configuración de mercado que reúne las condiciones de una entrada.",
+    },
+    short: { fr: "configuration d'entrée.", es: "configuración de entrada." },
+  },
+  {
+    id: "breakout", source: "Intermédiaire · leçon 1 (Structure de marché)",
+    term: { fr: "Breakout", es: "Breakout" },
+    match: { fr: /\bbreakouts?\b/i, es: /\bbreakouts?\b/i },
+    def: {
+      fr: "cassure franche d'un niveau, avec une clôture au-delà.",
+      es: "ruptura clara de un nivel, con un cierre más allá.",
+    },
+    short: { fr: "cassure d'un niveau.", es: "ruptura de un nivel." },
+  },
+  {
+    id: "news", source: "Macro · Débutant",
+    term: { fr: "News", es: "News" },
+    match: { fr: /\bnews\b/i, es: /\bnews\b/i },
+    def: {
+      fr: "annonce économique (emploi, inflation, taux) qui peut faire bouger fortement le prix.",
+      es: "anuncio económico (empleo, inflación, tipos) que puede mover mucho el precio.",
+    },
+    short: { fr: "annonce économique.", es: "anuncio económico." },
+  },
+  {
+    id: "gap", source: "Avancé · leçon 2 (Fair Value Gap)",
+    term: { fr: "Gap", es: "Gap" },
+    match: { fr: /(?<!value )\bgaps?\b/i, es: /(?<!value )\bgaps?\b/i },
+    def: {
+      fr: "écart de prix entre deux bougies, souvent à la réouverture du marché après le weekend.",
+      es: "hueco de precio entre dos velas, a menudo en la reapertura tras el fin de semana.",
+    },
+    short: { fr: "écart de prix à la réouverture.", es: "hueco de precio en la reapertura." },
+  },
+  {
+    id: "pips", source: "Intermédiaire · leçon 2 (Support & Résistance)",
+    term: { fr: "Pip", es: "Pip" },
+    match: { fr: /\bpips?\b/i, es: /\bpips?\b/i },
+    def: {
+      fr: "petite unité de variation du prix d'une paire de devises (0,0001 sur EUR/USD).",
+      es: "pequeña unidad de variación del precio de un par de divisas (0,0001 en EUR/USD).",
+    },
+    short: { fr: "petite unité de variation du prix.", es: "pequeña unidad de variación del precio." },
+  },
+  {
+    id: "lot", source: "Débutant · leçon 5 (Le Stop Loss)",
+    term: { fr: "Lot", es: "Lote" },
+    match: { fr: /\blots?\b/i, es: /\blotes?\b/i },
+    def: {
+      fr: "unité de taille de position : plus le lot est gros, plus chaque pip gagne ou perd.",
+      es: "unidad de tamaño de posición: cuanto mayor es el lote, más gana o pierde cada pip.",
+    },
+    short: { fr: "unité de taille de position.", es: "unidad de tamaño de posición." },
+  },
+  {
+    id: "leverage", source: "Débutant · leçon 10 (Risk management)",
+    term: { fr: "Levier", es: "Apalancamiento" },
+    match: { fr: /\blevier\b/i, es: /apalancamiento/i },
+    def: {
+      fr: "multiplicateur qui permet d'ouvrir une position plus grosse que ton capital ; il augmente gains et pertes.",
+      es: "multiplicador que permite abrir una posición mayor que tu capital; aumenta ganancias y pérdidas.",
+    },
+    short: { fr: "multiplicateur de la taille de position.", es: "multiplicador del tamaño de posición." },
+  },
+  {
+    id: "risk-management", source: "Débutant · leçon 10 (Risk management)",
+    term: { fr: "Risk management", es: "Risk management" },
+    match: { fr: /risk management/i, es: /risk management/i },
+    def: {
+      fr: "gestion du risque : combien tu risques par trade et comment tu protèges ton capital.",
+      es: "gestión del riesgo: cuánto arriesgas por operación y cómo proteges tu capital.",
+    },
+    short: { fr: "gestion du risque.", es: "gestión del riesgo." },
+  },
+  {
+    id: "edge", source: "Avancé · leçon 8 (Journaling)",
+    term: { fr: "Edge", es: "Edge" },
+    match: { fr: /\bedge\b/i, es: /\bedge\b/i },
+    def: {
+      fr: "ton avantage statistique : ce qui fait gagner ta méthode sur la durée.",
+      es: "tu ventaja estadística: lo que hace ganar tu método a largo plazo.",
+    },
+    short: { fr: "avantage statistique.", es: "ventaja estadística." },
+  },
+  {
+    id: "bid-ask", source: "Débutant · leçon 4 (Spread, Bid et Ask)",
+    term: { fr: "Bid / ask", es: "Bid / ask" },
+    match: { fr: /bid-ask|\bbid\b/i, es: /bid-ask|\bbid\b/i },
+    def: {
+      fr: "prix de vente (bid) et prix d'achat (ask) ; leur écart est le spread.",
+      es: "precio de venta (bid) y de compra (ask); su diferencia es el spread.",
+    },
+    short: { fr: "prix de vente et d'achat.", es: "precio de venta y de compra." },
+  },
+  {
+    id: "forex", source: "Avancé · leçon 4 (Killzones)",
+    term: { fr: "Forex", es: "Forex" },
+    match: { fr: /\bforex\b/i, es: /\bforex\b/i },
+    def: {
+      fr: "marché des devises (EUR/USD…), fermé le weekend.",
+      es: "mercado de divisas (EUR/USD…), cerrado el fin de semana.",
+    },
+    short: { fr: "marché des devises.", es: "mercado de divisas." },
+  },
+  {
+    id: "ltf", source: "Stratégies · Multi-Timeframe, leçon 1",
+    term: { fr: "LTF", es: "LTF" },
+    match: { fr: /\bLTF\b/, es: /\bLTF\b/ },
+    def: {
+      fr: "unité de temps inférieure (M15, M5), utilisée pour affiner l'entrée.",
+      es: "temporalidad inferior (M15, M5), usada para afinar la entrada.",
+    },
+    short: { fr: "unité de temps inférieure.", es: "temporalidad inferior." },
+  },
+  {
+    id: "ict", source: "Stratégies · ICT, leçon 1",
+    term: { fr: "ICT", es: "ICT" },
+    match: { fr: /\bICT\b/, es: /\bICT\b/ },
+    def: {
+      fr: "méthode Inner Circle Trader : liquidité, FVG, Order Blocks, sessions.",
+      es: "método Inner Circle Trader: liquidity, FVG, Order Blocks, sesiones.",
+    },
+    short: { fr: "méthode Inner Circle Trader.", es: "método Inner Circle Trader." },
+  },
+  {
+    id: "fomo", source: "Intermédiaire · leçon 8 (Plan de trade)",
+    term: { fr: "FOMO", es: "FOMO" },
+    match: { fr: /\bFOMO\b/, es: /\bFOMO\b/ },
+    def: {
+      fr: "peur de rater le mouvement, qui pousse à entrer trop tard.",
+      es: "miedo a perderse el movimiento, que empuja a entrar tarde.",
+    },
+    short: { fr: "peur de rater le mouvement.", es: "miedo a perderse el movimiento." },
+  },
+  {
+    id: "slippage", source: "hors leçons (terme courant)", outsideLessons: true,
+    term: { fr: "Slippage", es: "Slippage" },
+    match: { fr: /slippage/i, es: /slippage/i },
+    def: {
+      fr: "exécution de ton ordre à un prix moins bon que prévu, fréquente quand le marché bouge vite.",
+      es: "ejecución de tu orden a un precio peor del previsto, frecuente cuando el mercado se mueve rápido.",
+    },
+    short: { fr: "exécution à un prix moins bon que prévu.", es: "ejecución a un precio peor del previsto." },
   },
 ];
 
@@ -294,6 +476,24 @@ export function termsIn(texts: string[], locale: string | undefined): GlossaryEn
     .sort((a, b) => a.at - b.at)
     .map((x) => x.g);
 }
+
+/**
+ * Termes de base des premières leçons (Débutant 1 à 3), affichés sans
+ * explication : acheter / vendre, trade, stop, haut / bas…
+ */
+export const BASIC_TERMS = /^(?:BUY|SELL|NO TRADE|NO|TRADE|trades?|trader|stops?|highs?|lows?|long|short|wick|body|timing|trend|USD|EUR|XAU|BTC|NASDAQ)$/i;
+
+/**
+ * Détection du jargon dans les textes affichés (audit) : sigles et mots
+ * techniques anglais ou spécialisés. Chaque terme détecté doit être couvert par
+ * une entrée du glossaire (expliquée) ou faire partie des termes de base.
+ */
+export const JARGON_DETECT: RegExp[] = [
+  // Sigles (casse exacte)
+  /(?<![\p{L}\d])(?:SL|TP|HTF|LTF|FVG|OB|HL|HH|LH|LL|BOS|CHoCH|ATR|PDL|PDH|PWL|PWH|PML|NFP|FOMC|CPI|ICT|OTE|FOMO|RR|FX|EMA|SMA|RSI|MACD|ADR|VWAP|POI|SMC)(?![\p{L}\d])/gu,
+  // Mots techniques (toute casse)
+  /(?<![\p{L}\d])(?:edge|slippage|pumps?|setups?|range|swings?|sweeps?|retests?|pullbacks?|breakouts?|fakeouts?|spread|lots?|lotes?|pips?|news|bias|impulse|displacement|killzones?|overlap|scalp\w*|stop hunts?|equal (?:lows|highs)|liquidity|mitigation|order blocks?|drawdown|momentum|leverage|levier|apalancamiento|risk management|target|backtest\w*|round number|weekly|daily|intraday|gaps?|rally|dump|squeeze|chop\w*|forex|bid|ask)(?![\p{L}\d])/giu,
+];
 
 /**
  * Définitions portées par les textes (ex. « (ATR, l'amplitude moyenne d'une

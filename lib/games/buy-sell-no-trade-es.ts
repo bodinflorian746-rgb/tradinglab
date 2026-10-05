@@ -227,7 +227,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "lecture",
-    context: "El precio acaba de llegar a una resistencia mayor tras un rally. La zona ya rechazó varias veces.",
+    context: "El precio acaba de llegar a una resistencia mayor tras una fuerte subida. La zona ya rechazó varias veces.",
     rationales: {
       BUY: "✗ Comprar bajo una resistencia mayor, con HTF bajista, supone aquí esperar que el nivel que ha rechazado el precio hasta ahora no lo rechace esta vez.",
       SELL: "✓ Aquí, una zona defendida por los vendedores y un HTF bajista pueden señalar una reversión. Un SELL con stop sobre la zona es una opción lógica.",
@@ -311,9 +311,9 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "range",
     macroContext: "dangereux",
     metric: "discipline",
-    context: "Una news macro mayor (NFP / FOMC / CPI) se espera en menos de 30 minutos. El order book está nervioso.",
+    context: "Una news macro mayor (NFP / FOMC / CPI) se espera en menos de 30 minutos. El mercado está nervioso: los precios pueden saltar en cualquier momento.",
     rationales: {
-      BUY: "✗ Operar 30 min antes de un NFP expone aquí tu edge a un riesgo alto: spread x3 a x5, slippage importante, un stop que puede saltar sea cual sea la dirección. En este caso, el setup pesa poco.",
+      BUY: "✗ Operar 30 min antes de un NFP expone aquí tu edge a un riesgo alto: spread de 3 a 5 veces más amplio de lo habitual, slippage importante, un stop que puede saltar sea cual sea la dirección. En este caso, el setup pesa poco.",
       SELL: "✗ Mismo problema: aquí, el sentido cuenta menos que la VOLATILIDAD y el SPREAD. Tu TP puede ser válido, pero es probable que tu stop salte.",
       NO_TRADE: "✓ Decisión de pro. Sin trade, no hay pérdida. Una vez pasada la news, el mercado suele recuperar su estructura, y puedes volver en 1h a un gráfico legible.",
     },
@@ -340,7 +340,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     },
     lessons: {
       beginner:     "Si no puedes explicar en una frase por qué existe el trade, suele ser mejor no tomarlo. Aquí, NO TRADE.",
-      intermediate: "Operar el medio de un range suele suponer arriesgar 1R para unos 0,3R de ganancia. Un range se opera más bien en sus bordes.",
+      intermediate: "Operar el medio de un range suele suponer arriesgar 1 para ganar unos 0,3 (un R/R de aprox. 1:0,3). Un range se opera más bien en sus bordes.",
       advanced:     "La disciplina cuenta más que la actividad. Muchos traders con experiencia filtran mucho sus entradas. No operar también es una decisión en sí misma.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -376,8 +376,8 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "lecture",
-    context: "El FVG alcista se mitigó en 85%+ de su altura. La reacción se demora, los compradores ya no defienden la zona.",
-    shortContext: "FVG mitigado al 85%+, sin reacción.",
+    context: "El FVG alcista se mitigó en más del 85 % de su altura. La reacción se demora, los compradores ya no defienden la zona.",
+    shortContext: "FVG mitigado en más del 85 %, sin reacción.",
     rationales: {
       BUY: "✗ Aquí, apuestas por un rebote que no llega. Una mitigación profunda sin reacción puede señalar un FVG agotado: los compradores ya no parecen defender la zona.",
       SELL: "✗ Prematuro: aún no hay ninguna ruptura estructural confirmada. Aquí, venderías una intuición más que una señal.",
@@ -451,7 +451,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     },
     lessons: {
       intermediate: "Un buen setup en malas condiciones de ejecución no es necesariamente un buen trade. La técnica Y la ejecución funcionan mejor alineadas.",
-      advanced:     "Con un spread x3 y poco volumen, tu R/R real puede dividirse por dos aunque el setup funcione. Muchos traders pro integran la ejecución en su edge.",
+      advanced:     "Con un spread 3 veces más amplio de lo habitual y poco volumen, tu R/R real puede dividirse por dos aunque el setup funcione. Muchos traders pro integran la ejecución en su edge.",
       beginner:     "Revisa la sesión y el spread ANTES de hacer click. En horas muertas, un setup suele merecer un NO TRADE.",
     },
     difficulties: ["intermediate", "advanced"],

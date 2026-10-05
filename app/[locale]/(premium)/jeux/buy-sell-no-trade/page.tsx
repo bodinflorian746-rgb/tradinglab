@@ -226,7 +226,7 @@ export default function BuySellNoTradePage() {
   const [seed, setSeed] = useState<number | null>(null);
   const [scenarios, setScenarios] = useState<ScenarioInstance[]>([]);
   const [idx, setIdx] = useState(0);
-  const jargon = useJargon(locale, difficulty, seed);
+  const jargon = useJargon(locale, seed);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
@@ -498,7 +498,7 @@ export default function BuySellNoTradePage() {
               : <ChoiceRow options={CHOICE_OPTIONS} picked={chosen} />}
 
             {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) */}
-            <JargonHints locale={locale} entries={jargon(`${idx}:q`, [T.htf, MACRO_LABEL[current.macroContext], difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context)), ...zones.map((z) => z.label)])} />
+            <JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:q`, [T.htf, MACRO_LABEL[current.macroContext], difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context)), ...zones.map((z) => z.label)])} />
 
             {isRevealing && (
               <div className="v2-well px-4 py-3 text-center">
@@ -521,7 +521,7 @@ export default function BuySellNoTradePage() {
                 metric={current.metric}
                 onNext={handleNext}
                 isLast={idx + 1 >= ROUNDS_PER_SESSION}
-                jargon={<JargonHints locale={locale} entries={jargon(`${idx}:f`, [current.title, current.rationales.BUY, current.rationales.SELL, current.rationales.NO_TRADE, current.lessons[difficulty]])} />}
+                jargon={<JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:f`, [current.title, current.rationales.BUY, current.rationales.SELL, current.rationales.NO_TRADE, current.lessons[difficulty]])} />}
               />
             )}
           </div>

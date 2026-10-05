@@ -20,7 +20,7 @@ import {
   type TradeDirection,
 } from "@/lib/games/place-stop";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, type VerdictState } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, rrText, type VerdictState } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { formatPrice } from "@/lib/games/price-scale";
 import { firstDefinitionOnly } from "@/lib/games/glossary";
@@ -261,7 +261,7 @@ export default function PlaceStopPage() {
   const [seed, setSeed] = useState<number | null>(null);
   const [scenarios, setScenarios] = useState<PlaceStopInstance[]>([]);
   const [idx, setIdx] = useState(0);
-  const jargon = useJargon(locale, difficulty, seed);
+  const jargon = useJargon(locale, seed);
   const [chosen, setChosen] = useState<StopId | null>(null);
   const [phase, setPhase] = useState<"placing" | "revealing" | "feedback">("placing");
   const [revealed, setRevealed] = useState(0);
@@ -553,13 +553,14 @@ export default function PlaceStopPage() {
               direction={chart.direction}
               spatialLabels={spatialLabels}
               asset={current.asset}
+              locale={locale}
               picked={chosen}
               onChoose={isPlacing ? handleChoose : undefined}
             />
 
             {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) ;
                 « R/R » est affiché dans chaque bouton de stop */}
-            <JargonHints locale={locale} entries={jargon(`${idx}:q`, [T.htf, shownContext, "R/R"])} />
+            <JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:q`, [T.htf, shownContext, "R/R"])} />
 
             {isRevealing && (
               <div className="v2-well px-4 py-3 text-center">
@@ -587,7 +588,7 @@ export default function PlaceStopPage() {
                 locale={locale}
                 onNext={handleNext}
                 isLast={idx + 1 >= ROUNDS_PER_SESSION}
-                jargon={<JargonHints locale={locale} entries={jargon(`${idx}:f`, [current.title, ...shownAfter])} />}
+                jargon={<JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:f`, [current.title, ...shownAfter])} />}
               />
             )}
           </div>
@@ -663,9 +664,10 @@ function DifficultyPicker({ onPick, difficultyMeta, locale }: { onPick: (d: Diff
 // ─── Choix des stops (ordre spatial haut → bas, cohérent avec le graphique) ──
 
 function StopChoices({
-  stops, entry, tp, direction, spatialLabels, picked, onChoose, asset,
+  stops, entry, tp, spatialLabels, picked, onChoose, asset, locale,
 }: {
   asset: Asset;
+  locale: string | undefined;
   stops: StopOption[];
   entry: number;
   tp: number | null;
@@ -701,10 +703,10 @@ function StopChoices({
             <span className="flex min-w-0 flex-col">
               <span className="v2-mono text-[16px] font-bold" style={{ color }}>{fmt(s.price, asset)}</span>
               <span className="flex items-center gap-2 text-[12px]">
-                <span className="v2-mono text-[color:var(--v2-text-3)]">{direction === "BUY" ? "−" : "+"}{fmt(dist, asset)}</span>
+                <span className="text-[color:var(--v2-text-3)]">{locale === "es" ? `a ${fmt(dist, asset)} de la entrada` : locale === "en" ? `${fmt(dist, asset)} from entry` : `à ${fmt(dist, asset)} de l'entrée`}</span>
                 {rr !== null && rr > 0 && (
                   <span className={`v2-mono font-semibold ${rr >= 2 ? "text-emerald-300" : rr >= 1 ? "text-amber-300" : "text-red-300"}`}>
-                    R/R 1:{rr.toFixed(1)}
+                    R/R {rrText(rr, locale)}
                   </span>
                 )}
               </span>
