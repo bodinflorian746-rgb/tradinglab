@@ -9,7 +9,8 @@
 export type HomeLocale = "fr" | "es";
 
 /** Segment de titre ; hl = mot clé mis en avant */
-export type TitlePart = { t: string; hl?: boolean };
+/** hl : mot clé mis en valeur ; tail : fin de l'accroche, plus petite, sur sa propre ligne */
+export type TitlePart = { t: string; hl?: boolean; tail?: boolean };
 
 /**
  * Le journal de trading n'est pas encore ouvert aux utilisateurs (404 en
@@ -21,9 +22,9 @@ export const JOURNAL_OPEN = false;
 const S = {
   fr: {
     hero: {
-      titleJournal: [{ t: "De ta " }, { t: "première leçon", hl: true }, { t: " à ton " }, { t: "journal de trading", hl: true }, { t: "\u00a0: tout pour te former et progresser." }] as TitlePart[],
+      titleJournal: [{ t: "De ta " }, { t: "première leçon", hl: true }, { t: " à ton " }, { t: "journal de trading", hl: true }, { t: "\u00a0:" }, { t: "tout pour te former et progresser.", tail: true }] as TitlePart[],
       subtitleJournal: "Leçons, stratégies et jeux sur de vrais graphiques, puis un journal de trading pour analyser chacun de tes trades.",
-      title: [{ t: "De ta " }, { t: "première leçon", hl: true }, { t: " à ton " }, { t: "premier trade structuré", hl: true }, { t: "\u00a0: tout pour te former et progresser." }] as TitlePart[],
+      title: [{ t: "De ta " }, { t: "première leçon", hl: true }, { t: " à ton " }, { t: "premier trade structuré", hl: true }, { t: "\u00a0:" }, { t: "tout pour te former et progresser.", tail: true }] as TitlePart[],
       subtitle: "Leçons, stratégies et jeux sur de vrais graphiques, à ton rythme.",
     },
     game: {
@@ -126,9 +127,9 @@ const S = {
   },
   es: {
     hero: {
-      titleJournal: [{ t: "De tu " }, { t: "primera lección", hl: true }, { t: " a tu " }, { t: "diario de trading", hl: true }, { t: ": todo para formarte y progresar." }] as TitlePart[],
+      titleJournal: [{ t: "De tu " }, { t: "primera lección", hl: true }, { t: " a tu " }, { t: "diario de trading", hl: true }, { t: ":" }, { t: "todo para formarte y progresar.", tail: true }] as TitlePart[],
       subtitleJournal: "Lecciones, estrategias y juegos sobre gráficos reales, y luego un diario de trading para analizar cada uno de tus trades.",
-      title: [{ t: "De tu " }, { t: "primera lección", hl: true }, { t: " a tu " }, { t: "primer trade estructurado", hl: true }, { t: ": todo para formarte y progresar." }] as TitlePart[],
+      title: [{ t: "De tu " }, { t: "primera lección", hl: true }, { t: " a tu " }, { t: "primer trade estructurado", hl: true }, { t: ":" }, { t: "todo para formarte y progresar.", tail: true }] as TitlePart[],
       subtitle: "Lecciones, estrategias y juegos sobre gráficos reales, a tu ritmo.",
     },
     game: {

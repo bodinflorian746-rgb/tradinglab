@@ -39,18 +39,44 @@
   .tsx-v2 .hv2-hero-side { align-self: center; }
 }
 
+/* Accroche : la proposition principale en très grand (mots clés surlignés),
+   puis la fin, plus petite. Mobile : 2 lignes + 1 ligne pour la fin (3 au
+   plus, mesuré de 360 à 430 px, FR et ES). Desktop : la fin suit la 2e ligne
+   (2 lignes au plus, mesuré de 1024 à 1920 px). Space Grotesk s'arrête à 700 :
+   un contour fin épaissit le trait. */
 .tsx-v2 .hv2-h1 {
   font-family: var(--v2-font-display);
   font-weight: 700;
-  letter-spacing: -0.03em;
-  font-size: clamp(22px, 6.2vw, 30px);
-  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-size: clamp(25px, 7.15vw, 32px);
+  line-height: 1.04;
 }
-@media (min-width: 640px) { .tsx-v2 .hv2-h1 { font-size: clamp(30px, 4.4vw, 48px); line-height: 1.06; } }
-/* Mots clés de l'accroche */
+.tsx-v2 .hv2-h1-main {
+  display: block;
+  -webkit-text-stroke: 0.012em currentColor;
+}
+.tsx-v2 .hv2-h1-tail {
+  display: block;
+  margin-top: 0.3em;
+  font-size: 0.6em;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--v2-text-2);
+}
+@media (min-width: 640px) { .tsx-v2 .hv2-h1 { font-size: clamp(32px, 5.2vw, 48px); } }
+@media (min-width: 1024px) {
+  .tsx-v2 .hv2-h1 { font-size: clamp(44px, 5.9vw, 64px); }
+  .tsx-v2 .hv2-h1-main { display: inline; }
+  .tsx-v2 .hv2-h1-tail { display: inline-block; margin: 0 0 0 0.3em; font-size: 0.42em; }
+}
+/* Mots clés de l'accroche : surlignés */
 .tsx-v2 .hv2-hl {
   color: #6ee7b7;
   text-shadow: 0 0 26px rgba(16, 185, 129, 0.35);
+  background: linear-gradient(transparent 70%, rgba(16, 185, 129, 0.22) 70%, rgba(16, 185, 129, 0.22) 94%, transparent 94%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 .tsx-v2 .hv2-accent {
   background: linear-gradient(92deg, #6ee7b7, #10b981 55%, #34d399);

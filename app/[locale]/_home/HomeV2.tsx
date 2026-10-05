@@ -249,7 +249,11 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         <div className="hv2-hero-head hv2-hero-in flex flex-col items-start gap-4">
           <span className="v2-chip v2-chip--emerald" style={css({ "--i": 0 })}>{t.hero.badge}</span>
           <h1 className="hv2-h1" style={css({ "--i": 1 })}>
-            {title.map((part, i) => (part.hl ? <span key={i} className="hv2-hl">{part.t}</span> : <Fragment key={i}>{part.t}</Fragment>))}
+            {/* Proposition principale (mots clés en valeur), puis la fin, plus petite, sur sa ligne */}
+            <span className="hv2-h1-main">
+              {title.filter((part) => !part.tail).map((part, i) => (part.hl ? <span key={i} className="hv2-hl">{part.t}</span> : <Fragment key={i}>{part.t}</Fragment>))}
+            </span>
+            {title.filter((part) => part.tail).map((part, i) => <Fragment key={i}>{" "}<span className="hv2-h1-tail">{part.t}</span></Fragment>)}
           </h1>
         </div>
 
