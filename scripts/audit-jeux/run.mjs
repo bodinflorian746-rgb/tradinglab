@@ -9,7 +9,8 @@
 //   bougies, énumération des verdicts, textes (français en EN/ES, ton),
 //   glossaire (libellés de zones et termes = vocabulaire des leçons),
 //   bougies (ouverture = clôture précédente, en données et au rendu ; jeux,
-//   aperçus du hub, héros de la home).
+//   aperçus du hub, héros de la home), textes affichés FR / ES des leçons, de la
+//   home, du hub et des jeux (termes interdits, orthographe, typographie ES).
 // Règles « DOM » (Playwright) : troncature 3 langues × 390/1440, sonde
 //   lignes = étiquettes = boutons, cohérence du verdict affiché.
 // Code de sortie 1 dès qu'une règle compte une erreur.
@@ -68,7 +69,7 @@ process.stdout.write("… contexte de marché et prix\n");
 }
 
 // 3. Réalisme, verdicts, textes, glossaire, bougies
-for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (français en EN/ES, ton)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"]]) {
+for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (français en EN/ES, ton)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"]]) {
   process.stdout.write(`… ${rule}\n`);
   const out = viteNode(file);
   const r = resultOf(out);
