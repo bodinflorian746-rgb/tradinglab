@@ -6,9 +6,16 @@
 // 2. Aucun terme retiré (REPLACED : absent des leçons ou doublon d'une même
 //    notion) dans les textes FR / ES des jeux.
 // 3. Une définition portée par le texte (ATR) apparaît une fois par round.
-// 4. Chaque terme du glossaire a une explication FR et ES.
+// 4. Chaque terme du glossaire a une explication FR et ES (complète et courte).
+// 5. Chaque terme technique affiché (sigles connus, mots techniques anglais ou
+//    spécialisés : JARGON_DETECT) est couvert par le glossaire, sauf les termes
+//    de base des premières leçons (BASIC_TERMS).
+// 6. Chaque entrée du glossaire figure dans les leçons FR et ES (Trading, Macro,
+//    Stratégies), sauf celles marquées « hors leçons » (signalées).
 import { auditCtx } from "./market-ctx";
-import { GLOSSARY, REPLACED, ZONE_LABELS } from "../../lib/games/glossary";
+import fs from "node:fs";
+import path from "node:path";
+import { BASIC_TERMS, GLOSSARY, JARGON_DETECT, REPLACED, ZONE_LABELS } from "../../lib/games/glossary";
 import * as BS from "../../lib/games/buy-sell-no-trade";
 import * as BSES from "../../lib/games/buy-sell-no-trade-es";
 import * as FTM from "../../lib/games/find-the-mistake";
@@ -104,7 +111,44 @@ for (const [game, lists, keys] of ROUND_TEXTS) for (const lang of ["fr", "es"] a
 // 4. Glossaire complet
 for (const g of GLOSSARY) for (const lang of ["fr", "es"] as const) {
   if (!g.term[lang] || !g.def[lang] || g.def[lang].length < 15) fail(`glossaire « ${g.id} » : explication ${lang.toUpperCase()} manquante`);
+  if (!g.short?.[lang] || g.short[lang].length < 6) fail(`glossaire « ${g.id} » : explication courte ${lang.toUpperCase()} manquante`);
 }
+
+// 5. Jargon détecté → glossaire (fenêtre autour du terme : « stop hunt », « equal lows »…)
+const jargonSeen: Record<Lang, Set<string>> = { fr: new Set(), es: new Set() };
+for (const t of texts) for (const re of JARGON_DETECT) for (const m of t.text.matchAll(re)) {
+  const tok = m[0];
+  if (BASIC_TERMS.test(tok)) continue;
+  const at = m.index ?? 0;
+  const win = t.text.slice(Math.max(0, at - 25), at + tok.length + 25);
+  const covered = GLOSSARY.some((g) => {
+    const r = new RegExp(g.match[t.lang].source, g.match[t.lang].flags.replace("g", "") + "g");
+    for (const x of win.matchAll(r)) {
+      const start = Math.max(0, at - 25) + (x.index ?? 0);
+      if (start <= at + tok.length && start + x[0].length >= at) return true;
+    }
+    return false;
+  });
+  jargonSeen[t.lang].add(tok.toLowerCase());
+  if (!covered) fail(`terme technique hors glossaire ${t.lang.toUpperCase()} « ${tok} » (${t.where}) : ${t.text.slice(Math.max(0, at - 30), at + 50)}`);
+}
+
+// 6. Entrées du glossaire présentes dans les leçons (FR, ES)
+const L = path.join(__dirname, "..", "..", "app", "[locale]", "(premium)");
+const walk = (d: string): string[] => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
+const lessonFiles = [...walk(path.join(L, "formations")), ...walk(path.join(L, "strategies"))].filter((p) => p.endsWith(".tsx"));
+const read = (p: string) => fs.readFileSync(p, "utf8");
+const corpus: Record<Lang, string> = {
+  fr: lessonFiles.filter((p) => !/_content-(es|en)\.tsx$/.test(p)).map(read).join("\n") + read(path.join(__dirname, "..", "..", "lib", "lessons.ts")),
+  es: lessonFiles.filter((p) => p.endsWith("_content-es.tsx")).map(read).join("\n") + read(path.join(__dirname, "..", "..", "lib", "lessons-es.ts")),
+};
+const outside: string[] = [];
+for (const g of GLOSSARY) {
+  if (g.outsideLessons) { outside.push(g.term.fr); continue; }
+  for (const lang of ["fr", "es"] as const) if (!g.match[lang].test(corpus[lang])) fail(`glossaire « ${g.id} » : terme absent des leçons ${lang.toUpperCase()} (marquer « hors leçons » ou remplacer)`);
+}
+lines.push(`Hors leçons (signalés) : ${outside.join(", ")}`);
+lines.push(`Jargon détecté : FR ${jargonSeen.fr.size}, ES ${jargonSeen.es.size} termes distincts`);
 
 lines.push(`Libellés de zones : FR ${zoneLabels.fr.size}, ES ${zoneLabels.es.size} ; textes contrôlés : ${seen.size} ; glossaire : ${GLOSSARY.length} termes`);
 console.log(lines.join("\n"));
