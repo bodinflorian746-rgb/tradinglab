@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="La entrada es el momento donde todo se juega. Una entrada precisa te da un SL ajustado, un R/R elevado y menos estrés una vez abierto el trade. Aquí está cómo afinar cada entrada."
       duration="25 min"
       lessonNumber={7}
-      prev={{ href: "/formations/avance/lecon6", label: "Lección 6 : Stop Hunts" }}
-      next={{ href: "/formations/avance/lecon8", label: "Lección 8 : Journaling" }}
+      prev={{ href: "/formations/avance/lecon6", label: "Lección 6: Stop Hunts" }}
+      next={{ href: "/formations/avance/lecon8", label: "Lección 8: Journaling" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

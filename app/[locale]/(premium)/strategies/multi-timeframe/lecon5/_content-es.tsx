@@ -160,13 +160,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El Daily (o H4) es el nivel del contexto. Responde a una sola pregunta: ¿en qué sentido evoluciona el mercado durante varios días o semanas? La lectura se hace vía la estructura: Lower Highs / Lower Lows para una tendencia bajista, Higher Highs / Higher Lows para una alcista. Las impulsiones son fuertes y extendidas en el sentido dominante, las correcciones son blandas y limitadas en el sentido opuesto. Este sesgo condiciona todo lo que sigue, solo se tomarán ventas en un contexto HTF bajista, compras solo en un contexto HTF alcista.
+              El Daily (o H4) es el nivel del contexto. Responde a una sola pregunta: ¿en qué sentido evoluciona el mercado durante varios días o semanas? La lectura se hace vía la estructura: Lower Highs / Lower Lows para una tendencia bajista, Higher Highs / Higher Lows para una alcista. Los impulsos son fuertes y extendidas en el sentido dominante, las correcciones son blandas y limitadas en el sentido opuesto. Este sesgo condiciona todo lo que sigue, solo se tomarán ventas en un contexto HTF bajista, compras solo en un contexto HTF alcista.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: en Daily, tres LH consecutivos (1.1860, 1.1830, 1.1780) debajo de la resistencia 1.1860, con impulsiones bajistas claras entre cada corrección. El sesgo es claramente vendedor, toda idea de compra queda descartada de entrada. Se buscarán shorts al regreso del precio a una zona superior.
+                EUR/USD: en Daily, tres LH consecutivos (1.1860, 1.1830, 1.1780) debajo de la resistencia 1.1860, con impulsos bajistas claros entre cada corrección. El sesgo es claramente vendedor, toda idea de compra queda descartada de entrada. Se buscarán shorts al regreso del precio a una zona superior.
               </p>
             </div>
 
@@ -193,7 +193,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: en 1.1750-1.1760, un antiguo soporte roto se superpone a un FVG bearish no mitigado dejado por la última impulsión bajista. La zona se traza en el H1, en el sentido del sesgo Daily. El precio sube progresivamente con velas cada vez más cortas al acercarse a 1.1760, el terreno está listo, se espera la reacción.
+                EUR/USD: en 1.1750-1.1760, un antiguo soporte roto se superpone a un FVG bearish no mitigado dejado por el último impulso bajista. La zona se traza en el H1, en el sentido del sesgo Daily. El precio sube progresivamente con velas cada vez más cortas al acercarse a 1.1760, el terreno está listo, se espera la reacción.
               </p>
             </div>
 
@@ -263,7 +263,7 @@ export default function ContentEs() {
                 <li>- Entrada short: 1.1758</li>
                 <li>- Stop loss: 1.1772 (justo por encima del último máximo de rechazo), o sea 14 pts de risk</li>
                 <li>- Take profit: 1.1695 (al nivel del último LL Daily), o sea 63 pts de ganancia potencial</li>
-                <li>- R/R ≈ 1 : 4,5, setup de alta probabilidad porque está alineado Daily + H1 + M15</li>
+                <li>- R/R ≈ 1: 4,5, setup de alta probabilidad porque está alineado Daily + H1 + M15</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -293,7 +293,7 @@ export default function ContentEs() {
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">2. Saltar la zona H1</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Tener un sesgo Daily y entrar directamente en una señal M15, sin zona H1 trazada con antelación, es operar señales aisladas. La zona da el contexto de la entrada, sin ella, el M15 produce ruido en permanencia.
+                  Tener un sesgo Daily y entrar directamente en una señal M15, sin zona H1 trazada con antelación, es operar señales aisladas. La zona da el contexto de la entrada, sin ella, el M15 produce ruido constante.
                 </p>
               </div>
 

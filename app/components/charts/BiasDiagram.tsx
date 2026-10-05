@@ -74,7 +74,7 @@ function VengeanceChart() {
         <rect x={252} y={97} width={34} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
         <text x={269} y={108} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="700">−3R</text>
         <rect x={78} y={122} width={164} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
-        <text x={160} y={133} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="700">Total : −4R en 2 trades</text>
+        <text x={160} y={133} textAnchor="middle" fontSize="9" fill="#f87171" fontWeight="700">Total: −4R en 2 trades</text>
       </g>
     </svg>
   );

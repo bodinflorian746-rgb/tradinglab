@@ -290,7 +290,7 @@ export default function ContentEs() {
               "Falso. Entrar short en el impulso es precisamente la trampa que el FOMC Fade busca evitar. El impulso emocional puede extenderse sin previo aviso, y entrar en pleno medio expone a un SL muy amplio o a un cambio violento contra la posición.",
               "Correcto. El agotamiento es la condición previa absoluta del setup. Sin señal visible de fin de impulso (mechas de rechazo, pérdida de aceleración, estabilización), no hay entrada. La paciencia es la disciplina estructural del Fade.",
               "Falso. El FOMC Fade no es un trade de cambio inmediato. Entrar long en pleno medio de un impulso bearish es anticipar un cambio que no tiene ninguna base estructural visible, es exactamente lo contrario del modelo.",
-              "Falso. Colocar una orden limit en el extremo del impulso supone que se conoce de antemano el extremo, lo cual es imposible. El mercado puede superarlo varias veces antes de estabilizarse, y la orden limit se gatillaría sin confirmación estructural.",
+              "Falso. Colocar una orden limit en el extremo del impulso supone que se conoce de antemano el extremo, lo cual es imposible. El mercado puede superarlo varias veces antes de estabilizarse, y la orden limit se activaría sin confirmación estructural.",
             ]}
           />
 

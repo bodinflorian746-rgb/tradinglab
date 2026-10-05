@@ -11,11 +11,11 @@ export function DailyContextDiagram({ className = "", locale = "fr" }: DailyCont
     ? {
         annotation: "El Daily define el contexto general",
         mobTitle: "Contexto Daily — dirección vendedora",
-        mobImpulsions: "Impulsiones bajistas fuertes",
+        mobImpulsions: "Impulsos bajistas fuertes",
         mobImpulsionsDesc: "Movimientos direccionales rápidos hacia abajo.",
         mobCorrections: "Correcciones alcistas débiles",
         mobCorrectionsDesc: "Retracements lentos → dirección vendedora confirmada.",
-        legendImpulsions: "Impulsiones bajistas fuertes",
+        legendImpulsions: "Impulsos bajistas fuertes",
         legendCorrections: "Correcciones alcistas débiles = dirección vendedora",
       }
     : locale === "en"

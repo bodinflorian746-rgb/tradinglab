@@ -12,12 +12,12 @@ export function DirectionDominanteDiagram({ className = "", locale = "fr" }: Dir
         rejets: "Rechazos repetidos",
         annotation: "El mercado corrige lentamente, pero cae violentamente",
         mobTitle: "Dirección dominante — XAU/USD H4",
-        mobImpulsions: "Impulsiones bajistas",
+        mobImpulsions: "Impulsos bajistas",
         mobImpulsionsDesc: "Rápidas y fuertes → dirección real del mercado.",
         mobCorrections: "Correcciones alcistas",
         mobCorrectionsDesc: "Lentas y débiles → simples retracements.",
         mobFooter: "Velocidad + amplitud = dirección dominante.",
-        legendImpulsions: "Impulsiones bajistas: rápidas y fuertes",
+        legendImpulsions: "Impulsos bajistas: rápidas y fuertes",
         legendCorrections: "Correcciones alcistas: lentas y débiles",
       }
     : locale === "en"

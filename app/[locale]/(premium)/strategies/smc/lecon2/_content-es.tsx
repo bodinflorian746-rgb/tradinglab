@@ -225,7 +225,7 @@ export default function ContentEs() {
 
           {/* Bloque 6 — FALSO BOS + ERRORES */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Falso BOS : la mecha perfora, el cierre invalida</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Falso BOS: la mecha perfora, el cierre invalida</h2>
 
             <div className="my-8">
               <BOSFakeoutDiagram locale="es" />

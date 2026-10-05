@@ -260,7 +260,7 @@ export default function ContentEs() {
               <p className="text-white font-semibold text-sm mb-2">Etapa 4. Ejecución (M15 durante NY Open)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: en la apertura NY (13h30-14h30 UTC según la estación), el precio sube a testear 1.1780, sweep en 1.1792, reintegración debajo de 1.1780, vela bajista impulsiva M15 que rompe el mínimo local en 1.1762</li>
-                <li>- Conclusión: entrada short en 1.1758 (timing Killzone + setup ICT alineado), SL en 1.1795 (arriba del sweep), TP hacia 1.1695. R/R ≈ 1 : 1,7, setup de alta probabilidad porque está alineado Daily + range Asia + NY Open</li>
+                <li>- Conclusión: entrada short en 1.1758 (timing Killzone + setup ICT alineado), SL en 1.1795 (arriba del sweep), TP hacia 1.1695. R/R ≈ 1: 1,7, setup de alta probabilidad porque está alineado Daily + range Asia + NY Open</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -301,7 +301,7 @@ export default function ContentEs() {
             explanation="La Killzone es un filtro de timing, no un detalle accesorio. Un setup perfecto técnicamente pero que se presenta durante la Asia Session tiene una probabilidad muy baja de reacción franca, al mercado simplemente le falta volumen para producir un verdadero impulso. La disciplina consiste en esperar London Open o NY Open. Si el precio hace sweep del nivel durante la Asia, es a menudo un movimiento falso que será reintegrado cuando llegue el verdadero volumen."
             answerExplanations={[
               "Correcto. La Killzone filtra el timing incluso cuando el setup es técnicamente perfecto. Fuera de Killzone, la probabilidad de reacción franca cae drásticamente. La disciplina ICT consiste en esperar que el timing horario valide el setup antes de entrar.",
-              "Falso. « No importa la hora » es lo opuesto del modelo ICT. El timing es tan estructurante como el setup mismo, un setup perfecto fuera de Killzone es estadísticamente no rentable, sin importar su calidad técnica.",
+              "Falso. « No importa la hora » es lo opuesto del modelo ICT. El timing es tan determinante como el setup mismo, un setup perfecto fuera de Killzone es estadísticamente no rentable, sin importar su calidad técnica.",
               "Falso. Ampliar el SL no corrige el problema de timing: el mercado simplemente no tiene el volumen para impulsar durante la Asia. Solo se tomaría más riesgo en un setup que probablemente no se disparará.",
               "Falso. Tomar el otro sentido únicamente porque la Killzone no es favorable no tiene ningún sentido estructural. El sesgo Daily sigue siendo prioritario, lo único que hay que hacer es esperar la próxima Killzone para ejecutar el escenario alineado.",
             ]}

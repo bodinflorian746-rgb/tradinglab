@@ -95,7 +95,7 @@ function ContentFr() {
         <div className="space-y-2.5">
           {[
             { label: "Hindsight bias (biais rétrospectif)", detail: "Croire que tu aurais 'évidemment' vu le setup parce que tu vois les bougies passées. Le replay bougie par bougie est le seul remède." },
-            { label: "Over-fitting", detail: "Optimiser ta stratégie jusqu'à ce qu'elle performe parfaitement sur le passé. En live, cette stratégie surgénérée sur les données historiques échoue." },
+            { label: "Over-fitting", detail: "Optimiser ta stratégie jusqu'à ce qu'elle performe parfaitement sur le passé. En live, cette stratégie suroptimisée sur les données historiques échoue." },
             { label: "Ignorer les frais", detail: "Chaque trade a un coût (spread, commission). Intègre-les dans ton backtest : ils peuvent transformer un edge positif en edge négatif." },
             { label: "Backtest sur trop peu de conditions", detail: "Un backtest sur 3 mois de hausse ne dit rien de la performance en range ou en baisse. Teste sur au moins 12 mois avec différentes conditions." },
           ].map((r, i) => (

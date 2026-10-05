@@ -54,13 +54,13 @@ export default function ContentEs() {
       lessonId="lecon4"
       lessonNumber={4}
       duration="8 min"
-      prev={{ href: "/formations/debutant/lecon3", label: "Lección 3 : Velas" }}
-      next={{ href: "/formations/debutant/lecon5", label: "Lección 5 : Stop Loss" }}
+      prev={{ href: "/formations/debutant/lecon3", label: "Lección 3: Velas" }}
+      next={{ href: "/formations/debutant/lecon5", label: "Lección 5: Stop Loss" }}
       title="Spread, Bid y Ask"
       hook="Analizas el mercado perfectamente. Entras en el momento justo. Y aun así, ya estás en rojo desde el primer segundo, sin que el precio se haya movido. No es un error. Es el spread. Y todo trader lo paga, en cada trade, sin excepción."
       sections={[
         {
-          title: "Bid y Ask : dos precios en permanencia",
+          title: "Bid y Ask: dos precios en todo momento",
           content: "En cualquier mercado, dos precios se muestran siempre simultáneamente. No es un bug, es el funcionamiento normal. El Bid es el precio al que puedes vender. El Ask es el precio al que puedes comprar. El Ask siempre es ligeramente más alto que el Bid.",
           visual: <SpreadDiagram />,
           items: [
@@ -71,7 +71,7 @@ export default function ContentEs() {
           ],
         },
         {
-          title: "Ejemplo concreto : el impacto del spread en tus trades",
+          title: "Ejemplo concreto: el impacto del spread en tus trades",
           content: "Compras EUR/USD al Ask (1,0805). Para ser rentable, el precio Bid debe superar 1,0805, o sea que el mercado debe moverse al menos 5 puntos en tu dirección antes de que empieces a ganar.",
           visual: <SpreadImpactDiagram />,
           items: [

@@ -2,7 +2,7 @@ export default function FibPullbackChecklistDiagram({ className = "", locale = "
   const labels = locale === "es"
     ? {
         title: "Validar un pullback Fibo en 4 criterios",
-        impulsionTitle: "Impulsión clara",
+        impulsionTitle: "Impulso claro",
         impulsionDesc1: "Movimiento franco, displacement",
         impulsionDesc2: "superior al promedio",
         retracementTitle: "Retracement 30-60%",
@@ -13,14 +13,14 @@ export default function FibPullbackChecklistDiagram({ className = "", locale = "
         rejectDesc2: "reacción inmediata",
         biasTitle: "Bias TF superior alineado",
         biasDesc1: "Daily o H4 en el sentido",
-        biasDesc2: "de la impulsión",
+        biasDesc2: "del impulso",
         footer: "4/4 = setup a privilegiar",
         mobTitle: "Validar un pullback Fibo",
         mob: [
-          { t: "Impulsión clara", d: "Movimiento franco, displacement > promedio" },
+          { t: "Impulso claro", d: "Movimiento franco, displacement > promedio" },
           { t: "Retracement 30-60%", d: "Zona OTE Fibonacci 61.8% a 78.6%" },
           { t: "Señal de rechazo", d: "Pin bar, engulfing, reacción inmediata" },
-          { t: "Bias TF superior alineado", d: "Daily o H4 en el sentido de la impulsión" },
+          { t: "Bias TF superior alineado", d: "Daily o H4 en el sentido del impulso" },
         ],
         mobFooter: "4/4 = setup a privilegiar",
       }

@@ -14,8 +14,8 @@ export default function ContentEs() {
       subtitle="El precio rompe un nivel, entras en el sentido de la ruptura, y el precio vuelve inmediatamente en el otro sentido. Esta trampa pasa varias veces por semana. Acá tienes cómo reconocerla e incluso tradearla."
       duration="18 min"
       lessonNumber={6}
-      prev={{ href: "/formations/intermediaire/lecon5", label: "Lección 5 : Confluencias" }}
-      next={{ href: "/formations/intermediaire/lecon7", label: "Lección 7 : Multi-Timeframe" }}
+      prev={{ href: "/formations/intermediaire/lecon5", label: "Lección 5: Confluencias" }}
+      next={{ href: "/formations/intermediaire/lecon7", label: "Lección 7: Multi-Timeframe" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -72,9 +72,9 @@ export default function ContentEs() {
         <h2 className="text-lg font-semibold text-white mb-3">Cómo reconocer un fake breakout</h2>
         <div className="space-y-2.5">
           {[
-            { label: "La vela cierra del otro lado del nivel", detail: "Señal principal. El precio perfora el nivel pero el cierre queda del otro lado → fake breakout. Espera siempre el cierre : nunca el intrabar." },
+            { label: "La vela cierra del otro lado del nivel", detail: "Señal principal. El precio perfora el nivel pero el cierre queda del otro lado → fake breakout. Espera siempre el cierre: nunca el intrabar." },
             { label: "Mecha larga en la dirección de la ruptura", detail: "Una mecha alta encima de una resistencia con cierre debajo = rechazo fuerte. Es la señal visual número 1 del fake breakout." },
-            { label: "El retorno es rápido y agresivo", detail: "Después de un fake, el reversal es violento. El precio no duda : vuelve con momentum. Es en sí mismo una señal." },
+            { label: "El retorno es rápido y agresivo", detail: "Después de un fake, el reversal es violento. El precio no duda: vuelve con momentum. Es en sí mismo una señal." },
             { label: "La tendencia de fondo contradice la ruptura", detail: "Ruptura alcista en una tendencia bajista fuerte = sospechoso. El mercado busca stops, no una verdadera dirección." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -92,7 +92,7 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Tradear el fake breakout : el setup en sentido inverso</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Tradear el fake breakout: el setup en sentido inverso</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Una vez identificado, puedes tradear el fake breakout en el sentido del reversal. Es uno de los setups más potentes: entras justo después de que los stops fueron barridos.
         </p>

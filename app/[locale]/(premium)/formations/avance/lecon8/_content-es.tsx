@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="Los mejores traders no mejoran por intuición, mejoran por datos. El journal de trading es la herramienta que transforma la experiencia bruta en progresión medible."
       duration="18 min"
       lessonNumber={8}
-      prev={{ href: "/formations/avance/lecon7", label: "Lección 7 : Entradas de precisión" }}
-      next={{ href: "/formations/avance/lecon9", label: "Lección 9 : Backtesting" }}
+      prev={{ href: "/formations/avance/lecon7", label: "Lección 7: Entradas de precisión" }}
+      next={{ href: "/formations/avance/lecon9", label: "Lección 9: Backtesting" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

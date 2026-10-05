@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="Los Fair Value Gaps son desequilibrios dejados por movimientos institucionales rápidos. El mercado busca cerrarlos, y ahí se esconden algunas de las mejores entradas."
       duration="20 min"
       lessonNumber={2}
-      prev={{ href: "/formations/avance/lecon1", label: "Lección 1 : Liquidity" }}
-      next={{ href: "/formations/avance/lecon3", label: "Lección 3 : Order Blocks" }}
+      prev={{ href: "/formations/avance/lecon1", label: "Lección 1: Liquidity" }}
+      next={{ href: "/formations/avance/lecon3", label: "Lección 3: Order Blocks" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -53,7 +53,7 @@ export default function ContentEs() {
             <div className="space-y-2">
               {[
                 { label: "Vela 1", desc: "La vela que precede al movimiento. Retén su mecha superior (para un FVG bullish) o inferior (para un bearish)." },
-                { label: "Vela 2", desc: "La vela impulsiva : grande, direccional, a menudo sin mecha. Crea el desequilibrio." },
+                { label: "Vela 2", desc: "La vela impulsiva: grande, direccional, a menudo sin mecha. Crea el desequilibrio." },
                 { label: "Vela 3", desc: "La vela que sigue. Retén su mecha inferior (bullish) o superior (bearish). Si no se solapa con la mecha de la vela 1, el FVG existe." },
               ].map((b) => (
                 <div key={b.label} className="flex items-start gap-3">

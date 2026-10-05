@@ -205,7 +205,7 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Daily : dernier HH 1.1840, dernier HL 1.1720, biais long</li>
-                <li>- H4 : zone support 1.1750-1.1770, 3 touches en 5 semaines</li>
+                <li>- H4: zone support 1.1750-1.1770, 3 touches en 5 semaines</li>
                 <li>- M15 : pin bar haussière, mèche basse 1.1762, clôture 1.1778</li>
                 <li>- Entrée long : 1.1778 (clôture de la pin bar M15)</li>
                 <li>- Stop loss : 1.1745 (5 pips sous la zone H4)</li>

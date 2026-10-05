@@ -52,7 +52,7 @@
     },
     "rr": {
       "title": "R/R Builder",
-      "description": "Un trade te est présenté avec une entrée et un stop. Tu places l'objectif pour atteindre le ratio R/R demandé.",
+      "description": "Un trade t'est présenté avec une entrée et un stop. Tu places l'objectif pour atteindre le ratio R/R demandé.",
       "duration": "~2 min"
     },
     "structure": {

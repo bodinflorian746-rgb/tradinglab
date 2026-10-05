@@ -221,7 +221,7 @@ export default function ContentFr() {
               Le meilleur exemple récent : <span className="font-semibold text-zinc-200">2022</span>. Le dollar (DXY) a gagné <span className="font-semibold text-zinc-200">+20%</span> sur l&apos;année.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Conséquences en cascade :
+              Conséquences en cascade:
             </p>
             <ul className="space-y-1.5 mb-4">
               {[

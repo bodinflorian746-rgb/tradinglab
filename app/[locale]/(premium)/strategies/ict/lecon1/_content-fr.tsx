@@ -220,7 +220,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily) : biais directionnel</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : EUR/USD Daily en structure LH/LL depuis trois semaines, résistance majeure 1.1860</li>
+                <li>- Observation: EUR/USD Daily en structure LH/LL depuis trois semaines, résistance majeure 1.1860</li>
                 <li>- Conclusion : biais baissier confirmé, on cherchera des shorts sur prise de liquidité haute</li>
               </ul>
 

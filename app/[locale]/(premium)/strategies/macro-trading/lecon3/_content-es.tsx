@@ -165,7 +165,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Una vez identificado el régimen, la disciplina operacional es simple: se tradea en su sentido, nunca en contra. Esto significa privilegiar exclusivamente los longs sobre el oro y los shorts sobre los pares riesgosos mientras la estructura macro siga coherente. Los pullbacks H4 se vuelven entonces oportunidades de entrada, se espera que el precio se reajuste sobre un soporte técnico, que se estabilice, y se entra para aprovechar la continuación. Contratradear un régimen establecido es luchar contra la dirección de fondo, estadísticamente perdedor.
+              Una vez identificado el régimen, la disciplina operacional es simple: se tradea en su sentido, nunca en contra. Esto significa privilegiar exclusivamente los longs sobre el oro y los shorts sobre los pares riesgosos mientras la estructura macro siga coherente. Los pullbacks H4 se vuelven entonces oportunidades de entrada, se espera que el precio se reajuste sobre un soporte técnico, que se estabilice, y se entra para aprovechar la continuación. Operar contra un régimen establecido es luchar contra la dirección de fondo, estadísticamente perdedor.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -179,7 +179,7 @@ export default function ContentEs() {
               <li>- Puntos accionables: longs prioritarios sobre el oro en régimen risk-off, nunca al revés</li>
               <li>- Los pullbacks son entradas, no cambios a anticipar</li>
               <li>- Estructura HH/HL intacta = régimen intacto = continuación probable</li>
-              <li>- Contratradear un régimen establecido = ir contra la estadística</li>
+              <li>- Operar contra un régimen establecido = ir contra la estadística</li>
             </ul>
           </section>
 

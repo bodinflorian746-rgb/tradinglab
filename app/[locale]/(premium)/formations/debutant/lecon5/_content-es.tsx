@@ -127,8 +127,8 @@ export default function ContentEs() {
       lessonId="lecon5"
       lessonNumber={5}
       duration="10 min"
-      prev={{ href: "/formations/debutant/lecon4", label: "Lección 4 : Spread" }}
-      next={{ href: "/formations/debutant/lecon6", label: "Lección 6 : Take Profit" }}
+      prev={{ href: "/formations/debutant/lecon4", label: "Lección 4: Spread" }}
+      next={{ href: "/formations/debutant/lecon6", label: "Lección 6: Take Profit" }}
       title="El Stop Loss"
       hook="Sin Stop Loss, un solo trade puede arruinar meses de trabajo en pocos minutos. No porque analices mal, porque el mercado puede ir mucho más lejos de lo que imaginas, y nada te detiene. El Stop Loss es la regla más importante del trading."
       sections={[
@@ -140,7 +140,7 @@ export default function ContentEs() {
             "Trade Long (compra): tu SL se coloca DEBAJO de tu precio de entrada",
             "Trade Short (venta): tu SL se coloca ENCIMA de tu precio de entrada",
             "Cuando el precio toca el SL, el trade se cierra automáticamente",
-            "Tu pérdida queda topeada y conocida de antemano, su monto exacto en dinero depende del tamaño de tu posición",
+            "Tu pérdida queda limitada y conocida de antemano, su monto exacto en dinero depende del tamaño de tu posición",
           ],
         },
         {
@@ -153,7 +153,7 @@ export default function ContentEs() {
           ],
         },
         {
-          title: "Ejemplo concreto : con y sin Stop Loss",
+          title: "Ejemplo concreto: con y sin Stop Loss",
           content: "Caso 1, con Stop Loss: Entrada Bitcoin a 78 000 $, Stop Loss a 76 500 $. Durante la noche, el mercado cae brutalmente y el Stop Loss cierra automáticamente la posición cerca de 76 500 $. La variación de precio negativa se limita a unos 1 500 $: un riesgo definido de antemano y controlado. Caso 2, sin Stop Loss: misma entrada a 78 000 $, pero sin protección. En la noche, el mercado se derrumba hasta 70 000 $: la variación de precio negativa llega a 8 000 $, un riesgo sin tope. En ambos casos, el monto realmente perdido en dinero depende del tamaño de la posición. El Stop Loss no garantiza un trade ganador, garantiza sobre todo que una mala posición no se transforme en catástrofe.",
           visual: <WithWithoutSLDiagram />,
           items: [

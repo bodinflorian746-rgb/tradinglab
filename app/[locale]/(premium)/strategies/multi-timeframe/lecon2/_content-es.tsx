@@ -150,9 +150,9 @@ export default function ContentEs() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Verifica la dirección HTF antes de toda entrada</li>
-              <li>- Una impulsión local no es un giro global</li>
+              <li>- Un impulso local no es un giro global</li>
               <li>- Evita las compras contra una tendencia bajista clara</li>
-              <li>- Observa qué dirección produce las impulsiones más fuertes</li>
+              <li>- Observa qué dirección produce los impulsos más fuertes</li>
             </ul>
           </section>
 
@@ -165,13 +165,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La dirección dominante se lee en la calidad de las impulsiones y de las correcciones. El objetivo no es contar las velas, es observar qué dirección controla realmente el mercado.
+              La dirección dominante se lee en la calidad de los impulsos y de las correcciones. El objetivo no es contar las velas, es observar qué dirección controla realmente el mercado.
             </p>
 
             <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 mb-6">
               <p className="text-white font-semibold text-sm mb-2">Lo que hay que mirar</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Impulsiones alcistas vs bajistas</li>
+                <li>- Impulsos alcistas vs bajistas</li>
                 <li>- Fuerza de los rechazos</li>
                 <li>- Velocidad de los desplazamientos</li>
                 <li>- Tamaño de las correcciones</li>
@@ -186,7 +186,7 @@ export default function ContentEs() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Compara impulsiones y correcciones</li>
+              <li>- Compara impulsos y correcciones</li>
               <li>- Observa qué dirección « aplasta » a la otra</li>
               <li>- Prioriza los setups en el sentido de la tendencia dominante</li>
               <li>- No confundas un rebote con un giro</li>
@@ -230,7 +230,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Paso 1. Daily</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observación: estructura en LH/LL, resistencia Daily en 1.1760, impulsiones bajistas más fuertes que los rebotes</li>
+                <li>- Observación: estructura en LH/LL, resistencia Daily en 1.1760, impulsos bajistas más fuertes que los rebotes</li>
                 <li>- Conclusión: dirección dominante bajista, prioridad a las ventas</li>
               </ul>
 
@@ -257,8 +257,8 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "El HTF define la dirección dominante del mercado.",
-              "Una impulsión local no cambia necesariamente la tendencia de fondo.",
-              "Las impulsiones más fuertes muestran quién controla realmente el mercado.",
+              "Un impulso local no cambia necesariamente la tendencia de fondo.",
+              "Los impulsos más fuertes muestran quién controla realmente el mercado.",
               "El HTF sirve para filtrar los malos trades antes de buscar una entrada.",
             ]}
           />
@@ -266,7 +266,7 @@ export default function ContentEs() {
           <LessonExercice
             description="Abre EUR/USD en TradingView y aprende a reconocer la verdadera tendencia del mercado antes de toda ejecución."
             steps={[
-              "En Daily: identifica la estructura dominante, compara la fuerza de las impulsiones y las correcciones, y determina la dirección principal del mercado.",
+              "En Daily: identifica la estructura dominante, compara la fuerza de los impulsos y las correcciones, y determina la dirección principal del mercado.",
               "Pasa luego a H4: localiza una zona HTF importante y anota dónde el mercado podría reaccionar.",
               "Escribe finalmente la dirección dominante, los setups a privilegiar y los setups a evitar.",
             ]}
@@ -276,12 +276,12 @@ export default function ContentEs() {
             question="¿Qué elemento permite identificar mejor la dirección dominante del mercado?"
             options={[
               "El número total de velas verdes",
-              "Las impulsiones más fuertes y los rechazos dominantes",
+              "Los impulsos más fuertes y los rechazos dominantes",
               "El timeframe M1 únicamente",
               "Una sola vela impulsiva aislada",
             ]}
             correctIndex={1}
-            explanation="La dirección dominante se lee en la calidad de las impulsiones y las reacciones, no en el número de velas. Un mercado bajista produce en general caídas rápidas, correcciones débiles y rechazos vendedores agresivos. El M1 solo muestra ruido, y una vela aislada nunca basta para definir una tendencia duradera: es la fuerza comparada de los movimientos lo que revela qué dirección controla realmente el mercado."
+            explanation="La dirección dominante se lee en la calidad de los impulsos y las reacciones, no en el número de velas. Un mercado bajista produce en general caídas rápidas, correcciones débiles y rechazos vendedores agresivos. El M1 solo muestra ruido, y una vela aislada nunca basta para definir una tendencia duradera: es la fuerza comparada de los movimientos lo que revela qué dirección controla realmente el mercado."
           />
 
         </div>

@@ -239,7 +239,7 @@ export default function ContentEs() {
               <p className="text-white font-semibold text-sm mb-2">Etapa 4. Reacción (M15): ejecutar</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: la vela siguiente es un gran cuerpo bajista impulsivo (35 pts), ruptura del último mínimo local en 1.1762</li>
-                <li>- Conclusión: entrada short en 1.1758 en la ruptura, SL en 1.1795 (3 pts arriba del máximo del sweep), TP hacia la próxima zona de liquidity baja en 1.1695. R/R ≈ 1 : 1,7, setup de alta probabilidad alineado Daily + sweep + reacción</li>
+                <li>- Conclusión: entrada short en 1.1758 en la ruptura, SL en 1.1795 (3 pts arriba del máximo del sweep), TP hacia la próxima zona de liquidity baja en 1.1695. R/R ≈ 1: 1,7, setup de alta probabilidad alineado Daily + sweep + reacción</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

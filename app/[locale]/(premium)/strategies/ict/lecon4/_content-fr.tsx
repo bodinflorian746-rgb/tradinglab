@@ -249,7 +249,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily) : biais directionnel</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : EUR/USD Daily en LH/LL, résistance Daily 1.1780</li>
+                <li>- Observation: EUR/USD Daily en LH/LL, résistance Daily 1.1780</li>
                 <li>- Conclusion : biais baissier, on cherchera un displacement dans le sens vendeur</li>
               </ul>
 

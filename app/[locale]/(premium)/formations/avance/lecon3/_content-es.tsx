@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="Un Order Block es la última vela antes de un movimiento impulsivo institucional. Ahí es donde las instituciones colocaron sus órdenes, y donde el precio suele volver a buscarlas."
       duration="24 min"
       lessonNumber={3}
-      prev={{ href: "/formations/avance/lecon2", label: "Lección 2 : Fair Value Gap" }}
-      next={{ href: "/formations/avance/lecon4", label: "Lección 4 : Killzones" }}
+      prev={{ href: "/formations/avance/lecon2", label: "Lección 2: Fair Value Gap" }}
+      next={{ href: "/formations/avance/lecon4", label: "Lección 4: Killzones" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -143,7 +143,7 @@ export default function ContentEs() {
         explanation="La última vela bajista antes de un movimiento alcista impulsivo es un Bullish Order Block. Paradójicamente, es una vela bajista la que marca una zona de compra institucional, las instituciones absorbieron la presión vendedora en esa vela antes de lanzar su movimiento alcista."
         answerExplanations={[
           "Falso. La dirección de la vela por sí misma no es la señal, es su contexto. Una vela bajista que precede a un movimiento alcista impulsivo es un Bullish OB, no una señal de venta.",
-          "Correcto. Es precisamente la definición de un Bullish Order Block. La última vela direccionalmente opuesta antes de un movimiento impulsivo marca la zona donde las instituciones ejecutaron sus órdenes.",
+          "Correcto. Es precisamente la definición de un Bullish Order Block. La última vela de dirección opuesta antes de un movimiento impulsivo marca la zona donde las instituciones ejecutaron sus órdenes.",
           "Falso. Un FVG se define en 3 velas y concierne a una zona de precio no intercambiada. El Order Block es la vela en sí (su cuerpo), no un espacio entre velas.",
           "Falso. No es un simple S/R, es una zona institucional con órdenes en espera. La diferencia es fundamental: los OB tienen una lógica de activación que los S/R clásicos no tienen.",
         ]}

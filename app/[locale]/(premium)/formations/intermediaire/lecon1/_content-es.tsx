@@ -16,7 +16,7 @@ export default function ContentEs() {
       duration="20 min"
       lessonNumber={1}
       prev={null}
-      next={{ href: "/formations/intermediaire/lecon2", label: "Lección 2 : Zonas clave" }}
+      next={{ href: "/formations/intermediaire/lecon2", label: "Lección 2: Zonas clave" }}
     >
 
       {/* ── Lo que debes VER ── */}
@@ -76,7 +76,7 @@ export default function ContentEs() {
 
       {/* ── CHoCH ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Change of Character (CHoCH) : la tendencia se quiebra</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Change of Character (CHoCH): la tendencia se quiebra</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           El CHoCH es la primera fisura en la estructura. En tendencia alcista, es cuando el precio rompe debajo del último Higher Low. Todavía no es un reversal confirmado, es una alerta.
         </p>
@@ -197,7 +197,7 @@ export default function ContentEs() {
         question="Miras EUR/USD en H4. El precio está en tendencia alcista (HH/HL). Acaba de romper debajo del último Higher Low a 1.0820. ¿Qué significa?"
         options={[
           "La tendencia alcista está confirmada, es un buen momento para comprar ahora",
-          "Es un CHoCH, la estructura alcista está fragilizada, pasas a observación",
+          "Es un CHoCH, la estructura alcista está debilitada, pasas a observación",
           "La tendencia bajista es oficial, entras en short inmediatamente",
           "Es una información neutra, ninguna acción a tomar",
         ]}
@@ -205,7 +205,7 @@ export default function ContentEs() {
         explanation="Romper el último Higher Low en tendencia alcista es la definición del CHoCH. La estructura alcista está comprometida. Ya no buscas compras, observas si un BOS bajista confirma el reversal."
         answerExplanations={[
           "Falso. Romper el último HL es lo opuesto de una señal de compra. Es la primera ruptura de la estructura alcista, no debes comprar ahora.",
-          "Correcto. CHoCH = Change of Character. La estructura alcista está fragilizada. Pasas a modo observación y esperas un BOS bajista para confirmar el reversal antes de entrar en short.",
+          "Correcto. CHoCH = Change of Character. La estructura alcista está debilitada. Pasas a modo observación y esperas un BOS bajista para confirmar el reversal antes de entrar en short.",
           "Falso. Un CHoCH solo no confirma un reversal. Hace falta un BOS bajista (ruptura del último LL) para oficializar la nueva tendencia. Entrar en short inmediatamente es anticipar sin confirmación.",
           "Falso. Un CHoCH es una información muy importante, es la primera señal de que el contexto cambia. Ignorarlo es perderte un aviso mayor del mercado.",
         ]}

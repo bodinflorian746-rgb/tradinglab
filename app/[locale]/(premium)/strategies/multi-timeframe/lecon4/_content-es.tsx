@@ -144,7 +144,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: la zona H1 está entre 1.1750 y 1.1760. En M5, el precio llega a la banda, imprime tres mechas altas consecutivas por encima de 1.1755, luego una impulsión bajista rompe el último mínimo local en 1.1748. La reacción es visible, el breakout estructural confirma, la señal de entrada es válida.
+                EUR/USD: la zona H1 está entre 1.1750 y 1.1760. En M5, el precio llega a la banda, imprime tres mechas altas consecutivas por encima de 1.1755, luego un impulso bajista rompe el último mínimo local en 1.1748. La reacción es visible, el breakout estructural confirma, la señal de entrada es válida.
               </p>
             </div>
 

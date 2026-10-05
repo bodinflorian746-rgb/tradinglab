@@ -161,7 +161,7 @@ export default function ContentEs() {
               {[
                 { en: "inflation remains elevated", fr: "la inflación sigue elevada" },
                 { en: "further tightening may be appropriate", fr: "un nuevo endurecimiento podría ser apropiado" },
-                { en: "labor market remains tight", fr: "el mercado laboral sigue tensionado" },
+                { en: "labor market remains tight", fr: "el mercado laboral sigue tenso" },
                 { en: "premature easing would be a mistake", fr: "un easing prematuro sería un error" },
                 { en: "higher for longer", fr: "más altas por más tiempo (las tasas se mantienen elevadas)" },
                 { en: "more work to do", fr: "queda trabajo por hacer" },
@@ -284,7 +284,7 @@ export default function ContentEs() {
               </p>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              Antes de cada reunión FOMC, mira lo que está <span className="font-semibold text-zinc-300">priceado</span> por el mercado (la FedWatch Tool de la CME da estas probabilidades). Si la Fed publica EXACTAMENTE lo que se esperaba, poco movimiento. Si publica algo más duro o más suave, movimiento violento en la dirección de la sorpresa.
+              Antes de cada reunión FOMC, mira lo que ya está <span className="font-semibold text-zinc-300">descontado</span> por el mercado (la FedWatch Tool de la CME da estas probabilidades). Si la Fed publica EXACTAMENTE lo que se esperaba, poco movimiento. Si publica algo más duro o más suave, movimiento violento en la dirección de la sorpresa.
             </p>
           </section>
 
@@ -392,10 +392,10 @@ export default function ContentEs() {
               "Powell cometió un error de comunicación",
             ]}
             correctIndex={1}
-            explanation="El mercado no reacciona a la decisión en absoluto, sino a la diferencia entre la decisión y las expectativas. Si la Fed sube 25bps mientras el mercado priceaba 50bps, eso equivale a una señal 'menos hawkish de lo previsto', por lo tanto dovish por contraste. Las opciones A y C son falsas: el mercado sigue una lógica precisa, y el sentido de la reacción siempre depende de las expectativas. La opción D desvía el tema: Powell no comete errores de comunicación, calibra cada palabra. Esta lógica de expectativas vale para todos los activos ligados al dólar: EUR/USD, XAU/USD, Nasdaq y BTC/USD reaccionan todos a la diferencia entre expectativas y realidad."
+            explanation="El mercado no reacciona a la decisión en absoluto, sino a la diferencia entre la decisión y las expectativas. Si la Fed sube 25bps mientras el mercado descontaba 50bps, eso equivale a una señal 'menos hawkish de lo previsto', por lo tanto dovish por contraste. Las opciones A y C son falsas: el mercado sigue una lógica precisa, y el sentido de la reacción siempre depende de las expectativas. La opción D desvía el tema: Powell no comete errores de comunicación, calibra cada palabra. Esta lógica de expectativas vale para todos los activos ligados al dólar: EUR/USD, XAU/USD, Nasdaq y BTC/USD reaccionan todos a la diferencia entre expectativas y realidad."
             answerExplanations={[
               "Falso. El mercado sigue una lógica muy precisa basada en las expectativas. La reacción no es aleatoria, mide la diferencia entre lo que se esperaba y lo que se anunció.",
-              "Correcto. El mercado había priceado 50bps. Una subida de 25bps es entonces 'menos hawkish de lo previsto', es una dovish surprise. El dólar cae porque las expectativas no se confirmaron.",
+              "Correcto. El mercado había descontado 50bps. Una subida de 25bps es entonces 'menos hawkish de lo previsto', es una dovish surprise. El dólar cae porque las expectativas no se confirmaron.",
               "Falso. El dólar puede subir o caer en un anuncio Fed según la dirección de la sorpresa. No hay regla mecánica independiente del tono y de las expectativas.",
               "Falso. Powell calibra cada palabra con precisión. La reacción del mercado refleja la diferencia entre expectativas y realidad, no un error de comunicación.",
             ]}

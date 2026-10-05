@@ -224,7 +224,7 @@ const ES_DIAG_LABELS: DiagLabels = {
     fallbackGain:  "0 $, salida en la entrada",
   },
   risk: {
-    headerTitle:    "Grilla de riesgo : ideal y tope por capital",
+    headerTitle:    "Grilla de riesgo: ideal y tope por capital",
     headerSubtitle: "Zona llena = ideal · Zona transparente = máximo aceptable",
     perTrade:       "/ trade",
     legendIdeal:    "Ideal",

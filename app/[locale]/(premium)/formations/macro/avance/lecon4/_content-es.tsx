@@ -284,7 +284,7 @@ export default function ContentEs() {
               {[
                 {
                   signal: "El oro sube mientras los yields suben",
-                  body: "Normalmente inverso. Si XAU/USD +40 puntos y US10Y +20 puntos al mismo tiempo, el mercado está priceando una inflación persistente.",
+                  body: "Normalmente inverso. Si XAU/USD +40 puntos y US10Y +20 puntos al mismo tiempo, el mercado está descontando una inflación persistente.",
                 },
                 {
                   signal: "Los yields caen pese a un discurso Fed hawkish",
@@ -296,7 +296,7 @@ export default function ContentEs() {
                 },
                 {
                   signal: "Nasdaq diverge del Russell 2000",
-                  body: "Si Nasdaq +120 puntos mientras Russell -80 puntos = mercado que pricea una bajada de yields anticipada (favorable a la tech de larga duración), no una verdadera recuperación económica. Inverso (Russell +80 / Nasdaq -120) = reflation, crecimiento doméstico real favorecido.",
+                  body: "Si Nasdaq +120 puntos mientras Russell -80 puntos = mercado que descuenta una bajada de yields anticipada (favorable a la tech de larga duración), no una verdadera recuperación económica. Inverso (Russell +80 / Nasdaq -120) = reflation, crecimiento doméstico real favorecido.",
                 },
               ].map((item, i) => (
                 <div key={i} className="bg-zinc-800/30 rounded-xl px-4 py-3">

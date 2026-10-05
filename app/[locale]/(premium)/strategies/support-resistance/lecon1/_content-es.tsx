@@ -144,7 +144,7 @@ export default function ContentEs() {
               <li>- Mínimo 2 toques para calificar una zona, 3 toques para una confianza elevada</li>
               <li>- Timeframe de identificación principal: H4 (historial 100-150 velas)</li>
               <li>- En EUR/USD: grosor 10-20 pips. En XAU/USD: grosor 10-20$</li>
-              <li>- Nada de trade en el 1er toque: el toque inicial valida la existencia, no la tradeabilidad</li>
+              <li>- Nada de trade en el 1er toque: el toque inicial valida la existencia del nivel, todavía no una entrada</li>
             </ul>
           </section>
 

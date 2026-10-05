@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="El OTE es una técnica de entrada de precisión basada en los retrocesos de Fibonacci. Te permite entrar al mejor precio posible en el sentido del movimiento institucional."
       duration="22 min"
       lessonNumber={5}
-      prev={{ href: "/formations/avance/lecon4", label: "Lección 4 : Killzones" }}
-      next={{ href: "/formations/avance/lecon6", label: "Lección 6 : Stop Hunts" }}
+      prev={{ href: "/formations/avance/lecon4", label: "Lección 4: Killzones" }}
+      next={{ href: "/formations/avance/lecon6", label: "Lección 6: Stop Hunts" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -86,7 +86,7 @@ export default function ContentEs() {
         <div className="space-y-2.5">
           {[
             { label: "No es una orden automática", detail: "Llegar a la zona OTE no dispara automáticamente una entrada. Es una zona de atención que requiere confirmación." },
-            { label: "No siempre a 61.8%", detail: "El precio puede reaccionar en 63%, 70% o 78%. La zona OTE es un rango : no un nivel único. Usa un OB o FVG para precisar la entrada." },
+            { label: "No siempre a 61.8%", detail: "El precio puede reaccionar en 63%, 70% o 78%. La zona OTE es un rango: no un nivel único. Usa un OB o FVG para precisar la entrada." },
             { label: "No es válido sin BOS", detail: "El OTE solo tiene sentido tras un BOS. Sin ruptura de estructura confirmada, trazar un Fibonacci es un ejercicio sin fundamento institucional." },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">

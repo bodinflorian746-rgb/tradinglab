@@ -144,7 +144,7 @@ export default function ContentFr() {
               <li>- Minimum 2 touches pour qualifier une zone, 3 touches pour une confiance élevée</li>
               <li>- Timeframe d&apos;identification principal : H4 (historique 100-150 bougies)</li>
               <li>- Sur EUR/USD : épaisseur 10-20 pips. Sur XAU/USD : épaisseur 10-20$</li>
-              <li>- Pas de trade sur 1ère touche : la touche initiale valide l&apos;existence, pas la tradabilité</li>
+              <li>- Pas de trade sur 1ère touche : la touche initiale valide l&apos;existence du niveau, pas encore une entrée</li>
             </ul>
           </section>
 

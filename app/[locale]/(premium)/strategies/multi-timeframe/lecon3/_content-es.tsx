@@ -138,13 +138,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Una zona de interés válida no se resume a una línea trazada al azar. Una zona fuerte cuenta una historia: acumula varias razones de reacción en el mismo nivel, un antiguo soporte vuelto resistencia, un FVG dejado por una impulsión, una zona de liquidity aún no tomada. Mientras más razones acumule el nivel, mayor es la probabilidad de reacción.
+              Una zona de interés válida no se resume a una línea trazada al azar. Una zona fuerte cuenta una historia: acumula varias razones de reacción en el mismo nivel, un antiguo soporte vuelto resistencia, un FVG dejado por un impulso, una zona de liquidity aún no tomada. Mientras más razones acumule el nivel, mayor es la probabilidad de reacción.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1: 1.1760 es un antiguo soporte roto durante una caída. El precio luego dejó un FVG bearish entre 1.1750 y 1.1760 en la impulsión bajista. En la subida actual, este nivel acumula entonces dos razones: antiguo soporte vuelto resistencia y FVG no mitigado. La zona concentra varias razones de reacción en el mismo lugar.
+                EUR/USD H1: 1.1760 es un antiguo soporte roto durante una caída. El precio luego dejó un FVG bearish entre 1.1750 y 1.1760 en el impulso bajista. En la subida actual, este nivel acumula entonces dos razones: antiguo soporte vuelto resistencia y FVG no mitigado. La zona concentra varias razones de reacción en el mismo lugar.
               </p>
             </div>
 
@@ -165,18 +165,18 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El mercado no sube ni baja en línea recta. Después de una impulsión fuerte, el precio regresa frecuentemente a las zonas de desequilibrio dejadas en el camino. FVG, Order Block, mecha de rechazo. Este regreso no es un giro: es una mitigation del desequilibrio antes de la reanudación del movimiento inicial.
+              El mercado no sube ni baja en línea recta. Después de un impulso fuerte, el precio regresa frecuentemente a las zonas de desequilibrio dejadas en el camino. FVG, Order Block, mecha de rechazo. Este regreso no es un giro: es una mitigation del desequilibrio antes de la reanudación del movimiento inicial.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD H1: impulsión bearish brutal desde 4 680 $. El movimiento deja un FVG bearish entre 4 648 $ y 4 660 $. Varias horas más tarde, el precio sube progresivamente a esa banda. Al contacto, la mecha atraviesa parcialmente el FVG, luego el rechazo se activa con fuerza hacia abajo. El regreso al desequilibrio precedió a la continuación bajista.
+                XAU/USD H1: impulso bearish brutal desde 4 680 $. El movimiento deja un FVG bearish entre 4 648 $ y 4 660 $. Varias horas más tarde, el precio sube progresivamente a esa banda. Al contacto, la mecha atraviesa parcialmente el FVG, luego el rechazo se activa con fuerza hacia abajo. El regreso al desequilibrio precedió a la continuación bajista.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Localiza los FVG dejados por las impulsiones HTF</li>
+              <li>- Localiza los FVG dejados por los impulsos HTF</li>
               <li>- Espera el regreso del precio a la zona, no anticipes</li>
               <li>- Un regreso no es un giro, es una mitigation</li>
               <li>- Privilegia las zonas coherentes con el sesgo HTF</li>
@@ -198,14 +198,14 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1: sesgo HTF bajista, zona de resistencia amplia entre 1.1750 y 1.1760 trazada con antelación. Al acercarse a la banda, las velas alcistas pierden amplitud, las impulsiones se acortan, las correcciones se alargan. El mercado se queda sin aliento sin que se haya emitido aún ninguna señal de entrada. El escenario está listo: solo queda esperar el disparador en el timeframe de ejecución.
+                EUR/USD H1: sesgo HTF bajista, zona de resistencia amplia entre 1.1750 y 1.1760 trazada con antelación. Al acercarse a la banda, las velas alcistas pierden amplitud, los impulsos se acortan, las correcciones se alargan. El mercado se queda sin aliento sin que se haya emitido aún ninguna señal de entrada. El escenario está listo: solo queda esperar el disparador en el timeframe de ejecución.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Traza la zona ANTES de que el precio la alcance</li>
               <li>- Anota los niveles clave por anticipado</li>
-              <li>- Observa la pérdida de impulsión al acercarse a la zona</li>
+              <li>- Observa la pérdida de impulso al acercarse a la zona</li>
               <li>- No entres en el timeframe intermedio, preparar es todo</li>
             </ul>
           </section>
@@ -232,7 +232,7 @@ export default function ContentEs() {
 
               <p className="text-white font-semibold text-sm mb-2">Paso 3. Preparar el escenario</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Esperado: una subida hacia la banda 1.1750-1.1760, pérdida de impulsión al acercarse, luego confirmación en el timeframe de ejecución (Lección 4)</li>
+                <li>- Esperado: una subida hacia la banda 1.1750-1.1760, pérdida de impulso al acercarse, luego confirmación en el timeframe de ejecución (Lección 4)</li>
                 <li>- Evitado: una entrada anticipada antes del regreso efectivo del precio a la zona</li>
               </ul>
 
@@ -247,7 +247,7 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "Una zona fuerte acumula varias razones de reacción, la confluencia ante todo.",
-              "El mercado regresa a los desequilibrios dejados por las impulsiones HTF.",
+              "El mercado regresa a los desequilibrios dejados por los impulsos HTF.",
               "El timeframe intermedio prepara el escenario, no ejecuta.",
               "Traza la zona antes de que el precio la alcance, nunca después.",
             ]}
@@ -257,7 +257,7 @@ export default function ContentEs() {
             description="Abre EUR/USD en TradingView en H1 y entrénate a identificar una zona que cuente una historia."
             steps={[
               "Localiza un antiguo soporte importante en H1 y trázalo. Verifica si fue roto y luego transformado en resistencia.",
-              "Busca un FVG dejado por la última impulsión bajista. Traza la banda completa, no una simple línea.",
+              "Busca un FVG dejado por el último impulso bajista. Traza la banda completa, no una simple línea.",
               "Anota todas las razones que se acumulan en ese nivel: antiguo S/R, FVG, liquidity, proyección. Si acumulas al menos dos, la zona cuenta una historia.",
             ]}
           />
@@ -271,7 +271,7 @@ export default function ContentEs() {
               "El hecho de que sea el máximo o mínimo absoluto del día",
             ]}
             correctIndex={1}
-            explanation="Una zona fuerte cuenta una historia: un antiguo soporte vuelto resistencia, un FVG dejado por una impulsión, una zona de liquidity aún no tomada. Mientras más razones acumule el nivel, mayor es la probabilidad de reacción. Un simple toque repetido, un número redondo o un extremo diario no bastan por sí solos, es la acumulación de criterios técnicos la que crea una zona realmente explotable."
+            explanation="Una zona fuerte cuenta una historia: un antiguo soporte vuelto resistencia, un FVG dejado por un impulso, una zona de liquidity aún no tomada. Mientras más razones acumule el nivel, mayor es la probabilidad de reacción. Un simple toque repetido, un número redondo o un extremo diario no bastan por sí solos, es la acumulación de criterios técnicos la que crea una zona realmente explotable."
             answerExplanations={[
               "Incorrecto. Un nivel tocado varias veces llama la atención, pero sin contexto (antiguo S/R, FVG, liquidity), sigue siendo frágil. El número de toques no crea confluencia por sí solo.",
               "Correcto. La confluencia, la acumulación de varias razones de reacción en el mismo lugar, es el criterio central. Mientras más argumentos técnicos acumule la zona, más fuerte es la probabilidad de reacción.",

@@ -273,7 +273,7 @@ export default function ContentEs() {
               <p className="text-white font-semibold text-sm mb-2">Etapa 6. Ejecución</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: una vela M15 de rechazo aparece en el FVG, seguida de una vela bajista impulsiva</li>
-                <li>- Conclusión: entrada short en 1.1774, SL en 1.1798 (arriba del extremo del displacement), TP hacia 1.1695. R/R ≈ 1 : 3,3, secuencia ICT completa y alineada</li>
+                <li>- Conclusión: entrada short en 1.1774, SL en 1.1798 (arriba del extremo del displacement), TP hacia 1.1695. R/R ≈ 1: 3,3, secuencia ICT completa y alineada</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

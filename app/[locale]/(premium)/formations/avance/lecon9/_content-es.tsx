@@ -13,7 +13,7 @@ export default function ContentEs() {
       subtitle="Antes de arriesgar dinero real, debes tener la prueba de que tu estrategia funciona. El backtesting es esa prueba, construida sobre datos históricos, no sobre la esperanza."
       duration="22 min"
       lessonNumber={9}
-      prev={{ href: "/formations/avance/lecon8", label: "Lección 8 : Journaling" }}
+      prev={{ href: "/formations/avance/lecon8", label: "Lección 8: Journaling" }}
       next={null}
     >
 
@@ -94,7 +94,7 @@ export default function ContentEs() {
           {[
             { label: "Hindsight bias (sesgo retrospectivo)", detail: "Creer que 'obviamente' habrías visto el setup porque ves las velas pasadas. El replay vela por vela es el único remedio." },
             { label: "Over-fitting", detail: "Optimizar tu estrategia hasta que rinde perfectamente en el pasado. En live, esa estrategia sobreajustada a los datos históricos fracasa." },
-            { label: "Ignorar las comisiones", detail: "Cada trade tiene un costo (spread, comisión). Inclúyelos en tu backtest : pueden transformar un edge positivo en uno negativo." },
+            { label: "Ignorar las comisiones", detail: "Cada trade tiene un costo (spread, comisión). Inclúyelos en tu backtest: pueden transformar un edge positivo en uno negativo." },
             { label: "Backtest en muy pocas condiciones", detail: "Un backtest sobre 3 meses de alza no dice nada sobre la performance en range o en baja. Testea sobre al menos 12 meses con distintas condiciones." },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -147,7 +147,7 @@ export default function ContentEs() {
         correctIndex={1}
         explanation="20 trades representan una muestra demasiado pequeña para sacar conclusiones estadísticamente confiables. Una serie de 20 trades puede ser positiva por pura suerte, incluso con una estrategia sin edge. Se necesitan al menos 50 trades, idealmente 100, para que los resultados reflejen realmente la performance de la estrategia y no la varianza aleatoria."
         answerExplanations={[
-          "Falso. Un win rate del 70% no es irrealista si el R/R es favorable (>1:1). Algunas estrategias de scalping o con muchas confluencias pueden alcanzar esas cifras. No es el problema aquí.",
+          "Falso. Un win rate del 70% puede ser realista si el R/R es favorable (>1:1). Algunas estrategias de scalping o con muchas confluencias pueden alcanzar esas cifras. No es el problema aquí.",
           "Correcto. 20 trades = varianza aleatoria demasiado alta. El mismo backtest con otros 20 trades podría dar 30% de win rate y un profit factor de 0.8. Se necesitan 50 a 100 trades para que las estadísticas sean significativas.",
           "Falso. Un profit factor de 1.8 ya es sólido, por encima de 1.5 suele ser un objetivo válido. 3.0 es excepcional y no es requerido para tradear en live con un edge real.",
           "Falso. Hacer backtest en varios instrumentos puede ser útil pero no es una condición previa obligatoria. La prioridad es tener una muestra lo suficientemente grande en un solo instrumento antes de generalizar.",

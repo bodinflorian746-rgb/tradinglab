@@ -29,7 +29,7 @@ function ContentFr() {
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">En résumé :</span> un OB est une zone où les institutions ont laissé des ordres non exécutés. Le prix y revient pour les combler, c'est une zone d'intérêt potentielle, pas une entrée automatique : une confirmation supplémentaire reste nécessaire, et la décision dépend de ton propre plan de trading.
+            <span className="text-white font-medium">En résumé:</span> un OB est une zone où les institutions ont laissé des ordres non exécutés. Le prix y revient pour les combler, c'est une zone d'intérêt potentielle, pas une entrée automatique : une confirmation supplémentaire reste nécessaire, et la décision dépend de ton propre plan de trading.
           </p>
         </div>
       </section>
@@ -145,7 +145,7 @@ function ContentFr() {
         explanation="La dernière bougie baissière avant un mouvement haussier impulsif est un Bullish Order Block. Paradoxalement, c'est une bougie baissière qui marque une zone d'achat institutionnel, les institutions ont absorbé la pression vendeuse dans cette bougie avant de lancer leur mouvement haussier."
         answerExplanations={[
           "Faux. La direction de la bougie en elle-même n'est pas le signal, c'est son contexte. Une bougie baissière précédant un mouvement haussier impulsif est un Bullish OB, pas un signal de vente.",
-          "Correct. C'est précisément la définition d'un Bullish Order Block. La dernière bougie directionnellement opposée avant un mouvement impulsif marque la zone où les institutions ont exécuté leurs ordres.",
+          "Correct. C'est précisément la définition d'un Bullish Order Block. La dernière bougie de direction opposée avant un mouvement impulsif marque la zone où les institutions ont exécuté leurs ordres.",
           "Faux. Un FVG se définit sur 3 bougies et concerne une zone de prix non échangée. L'Order Block est la bougie elle-même (son corps), pas un espace entre bougies.",
           "Faux. Ce n'est pas un simple S/R, c'est une zone institutionnelle avec des ordres en attente. La différence est fondamentale : les OB ont une logique de déclenchement que les S/R classiques n'ont pas.",
         ]}

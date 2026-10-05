@@ -67,7 +67,7 @@ export default function PullbackContinuationDiagram({ className = "", locale = "
     rejet:         isEs ? "rechazo ↑"        : isEn ? "rejection ↑" : "rejet ↑",
     swingHigh:     isEs ? "Swing High"       : isEn ? "Swing High" : "Swing High",
     footerDesktop: isEs
-      ? "Entrada en OTE + OB, FVG arriba como objetivo : continuación limpia"
+      ? "Entrada en OTE + OB, FVG arriba como objetivo: continuación limpia"
       : isEn
       ? "Entry at OTE + OB, FVG above as target : clean continuation"
       : "Entrée OTE + OB, FVG au-dessus comme cible : continuation propre",

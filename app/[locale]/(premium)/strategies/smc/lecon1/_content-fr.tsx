@@ -148,7 +148,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Amplitude minimale : 50-80 pips EUR/USD H4, 50-100$ XAU/USD H4</li>
               <li>- Bougie de pivot claire avec mèche significative de rejet</li>
-              <li>- Réaction post-swing : retracement ≥ 20% en direction opposée</li>
+              <li>- Réaction post-swing: retracement ≥ 20% en direction opposée</li>
               <li>- Visibilité multi-timeframe : visible Daily et H4</li>
             </ul>
           </section>

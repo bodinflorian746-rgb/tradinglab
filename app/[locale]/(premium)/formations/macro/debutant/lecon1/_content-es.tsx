@@ -311,9 +311,9 @@ export default function ContentEs() {
             </p>
             <ul className="space-y-2 mb-5">
               {[
-                { label: "Impacto bajo", desc: "(1 estrella / verde) : poco movimiento esperado", color: "bg-emerald-400/60" },
-                { label: "Impacto medio", desc: "(2 estrellas / amarillo o naranja) : movimiento moderado posible", color: "bg-amber-400/60" },
-                { label: "Impacto fuerte", desc: "(3 estrellas / rojo) : movimiento violento casi garantizado", color: "bg-red-500/60" },
+                { label: "Impacto bajo", desc: "(1 estrella / verde): poco movimiento esperado", color: "bg-emerald-400/60" },
+                { label: "Impacto medio", desc: "(2 estrellas / amarillo o naranja): movimiento moderado posible", color: "bg-amber-400/60" },
+                { label: "Impacto fuerte", desc: "(3 estrellas / rojo): movimiento violento casi garantizado", color: "bg-red-500/60" },
               ].map((item) => (
                 <li key={item.label} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className={`w-1.5 h-1.5 rounded-full ${item.color} shrink-0 mt-1.5`} />

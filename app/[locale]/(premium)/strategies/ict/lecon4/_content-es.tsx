@@ -274,7 +274,7 @@ export default function ContentEs() {
               <p className="text-white font-semibold text-sm mb-2">Etapa 5. Regreso al FVG: ejecución</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: el precio sube progresivamente hacia 1.1768-1.1780, entra a la banda FVG, y luego vela bajista de rechazo</li>
-                <li>- Conclusión: entrada short al regreso al FVG, SL justo arriba de 1.1780 (extremo del displacement), TP hacia 1.1695. R/R ≈ 1 : 2, setup de alta probabilidad alineado HTF + liquidity + sweep + displacement + FVG</li>
+                <li>- Conclusión: entrada short al regreso al FVG, SL justo arriba de 1.1780 (extremo del displacement), TP hacia 1.1695. R/R ≈ 1: 2, setup de alta probabilidad alineado HTF + liquidity + sweep + displacement + FVG</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

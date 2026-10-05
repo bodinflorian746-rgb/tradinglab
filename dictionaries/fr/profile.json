@@ -8,7 +8,7 @@
     "minRounds": "Joue au moins 10 rounds pour affiner ton profil ({events}/10)."
   },
   "stats": {
-    "events": "Events trackés",
+    "events": "Événements suivis",
     "accuracy": "Précision globale",
     "strengths": "Forces",
     "weaknesses": "À travailler"

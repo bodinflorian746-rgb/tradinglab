@@ -188,7 +188,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Déroulé des 7 étapes</p>
               <ol className="space-y-1 text-sm text-zinc-300 list-decimal pl-5 mb-4">
-                <li>Analyse HTF : Structure H4 en LH/LL · Biais directionnel bearish</li>
+                <li>Analyse HTF: Structure H4 en LH/LL · Biais directionnel bearish</li>
                 <li>Identifier la liquidité : Equal highs à 1.1780 · BSL clairement visible</li>
                 <li>Sweep de liquidité : Mèche à 1.1792 · Réintégration immédiate sous la BSL</li>
                 <li>Confirmation CHoCH : Cassure du creux mineur à 1.1755 · Changement de caractère bearish confirmé</li>

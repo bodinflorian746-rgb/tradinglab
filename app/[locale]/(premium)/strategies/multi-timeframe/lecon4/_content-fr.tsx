@@ -220,7 +220,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily / H4)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : biais baissier en LH/LL, résistance Daily 1.1780, prix actuel 1.1715</li>
+                <li>- Observation: biais baissier en LH/LL, résistance Daily 1.1780, prix actuel 1.1715</li>
                 <li>- Conclusion : direction dominante baissière, ventes prioritaires</li>
               </ul>
 

@@ -178,7 +178,7 @@ export default function ContentEs() {
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Estructura del mercado: HH/HL o LH/LL</li>
                   <li>- Zonas Daily y H4 importantes</li>
-                  <li>- Dirección de las impulsiones dominantes</li>
+                  <li>- Dirección de los impulsos dominantes</li>
                   <li>- Liquidity HTF visible</li>
                 </ul>
               </div>
@@ -220,7 +220,7 @@ export default function ContentEs() {
                   <li>- Soporte / resistencia H1 o H4</li>
                   <li>- Order Block o FVG</li>
                   <li>- Zona de liquidity</li>
-                  <li>- Retest después de una impulsión</li>
+                  <li>- Retest después de un impulso</li>
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">

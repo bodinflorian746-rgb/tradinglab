@@ -109,7 +109,7 @@ function ContentFr() {
           "Faux. La longue mèche basse prouve le contraire d'une domination vendeurs totale. Les acheteurs ont réagi fort depuis les plus bas, c'est de la résistance, pas une confirmation de tendance baissière.",
           "Correct. Corps rouge = vendeurs gagnants sur la période. Longue mèche basse = les acheteurs ont repoussé les prix depuis les plus bas avec force. Il y a eu un combat visible, pas une domination écrasante.",
           "Faux. La longue mèche basse prouve que le prix est descendu très bas PUIS est remonté avant de clôturer. La clôture est donc au-dessus du plus bas, sinon la mèche serait nulle.",
-          "Faux. Aucune bougie seule n'est un signal d'achat suffisant. Pour que cette bougie soit actionnelle, il faudrait qu'elle soit sur un support important, dans un contexte de tendance favorable.",
+          "Faux. Aucune bougie seule n'est un signal d'achat suffisant. Pour que cette bougie soit exploitable, il faudrait qu'elle soit sur un support important, dans un contexte de tendance favorable.",
         ],
       }}
     />

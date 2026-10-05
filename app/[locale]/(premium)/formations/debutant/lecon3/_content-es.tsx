@@ -34,13 +34,13 @@ export default function ContentEs() {
       lessonId="lecon3"
       lessonNumber={3}
       duration="10 min"
-      prev={{ href: "/formations/debutant/lecon2", label: "Lección 2 : Long y Short" }}
-      next={{ href: "/formations/debutant/lecon4", label: "Lección 4 : Spread" }}
+      prev={{ href: "/formations/debutant/lecon2", label: "Lección 2: Long y Short" }}
+      next={{ href: "/formations/debutant/lecon4", label: "Lección 4: Spread" }}
       title="Leer un gráfico de velas"
       hook="Un gráfico de velas es una imagen del combate entre compradores y vendedores. Cada vela te dice quién ganó, con qué fuerza, y si hubo resistencia. Aprender a leerlas es ver lo que la mayoría no ve."
       sections={[
         {
-          title: "Anatomía de una vela : 4 datos en una imagen",
+          title: "Anatomía de una vela: 4 datos en una imagen",
           content: "Cada vela muestra exactamente 4 datos. Juntos, resumen todo lo que pasó durante un período, 1 minuto, 1 hora o 1 día.",
           visual: <CandleAnatomyDiagram locale="es" />,
           items: [
@@ -51,7 +51,7 @@ export default function ContentEs() {
           ],
         },
         {
-          title: "Ejemplo concreto : una vela verde, una vela roja",
+          title: "Ejemplo concreto: una vela verde, una vela roja",
           content: "Vela verde: Bitcoin abre a 78 000 $, sube a 79 000 $, baja a 77 500 $, cierra a 78 600 $. El precio termina más alto que en la apertura: Close (78 600) > Open (78 000). Los compradores ganan entonces la batalla. Vela roja: Bitcoin abre a 78 600 $, sube a 78 900 $, cae a 77 000 $, cierra a 77 400 $. El precio termina más bajo que en la apertura: Close (77 400) < Open (78 600). Los vendedores ganan entonces la batalla.",
           visual: <CandleExampleDiagram />,
           items: [

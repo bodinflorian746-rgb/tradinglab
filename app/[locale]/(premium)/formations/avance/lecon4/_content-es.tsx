@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="El mercado no se mueve de manera uniforme. Existen ventanas horarias precisas donde la actividad institucional es máxima, ahí es donde se forman los mejores setups."
       duration="20 min"
       lessonNumber={4}
-      prev={{ href: "/formations/avance/lecon3", label: "Lección 3 : Order Blocks" }}
-      next={{ href: "/formations/avance/lecon5", label: "Lección 5 : OTE" }}
+      prev={{ href: "/formations/avance/lecon3", label: "Lección 3: Order Blocks" }}
+      next={{ href: "/formations/avance/lecon5", label: "Lección 5: OTE" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

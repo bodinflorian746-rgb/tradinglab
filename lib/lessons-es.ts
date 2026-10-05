@@ -38,7 +38,7 @@ export const LESSONS_ES: LevelData[] = [
             ],
           },
           {
-            heading: "Ejemplo concreto : ganancia y pérdida",
+            heading: "Ejemplo concreto: ganancia y pérdida",
             body: "Caso 1, el precio sube a tu favor: Compras Bitcoin a 78 000 $. Unas horas después, Bitcoin sube a 81 000 $. El precio avanzó 3 000 $ a favor de tu posición. Mantienes tu plan, dejas el trade respirar, después tomas tus ganancias. Caso 2, el precio baja en tu contra: Compras Bitcoin a 78 000 $. Unas horas después, Bitcoin cae a 76 500 $. El precio bajó 1 500 $ en contra de tu posición. Bajo el miedo, cierras la posición en pánico y asumes la pérdida. El trading consiste en intentar anticipar estos movimientos de precio. El monto realmente ganado o perdido en dinero depende después del tamaño de tu posición. El cálculo preciso de ese tamaño se ve en la Lección 8. ¿La diferencia entre los dos casos? No es el análisis, es el comportamiento frente a la pérdida.",
             diagram: "trade",
             items: [
@@ -48,7 +48,7 @@ export const LESSONS_ES: LevelData[] = [
             ],
           },
           {
-            heading: "Trading, inversión, casino : los 3 no son lo mismo",
+            heading: "Trading, inversión, casino: los 3 no son lo mismo",
             body: "Muchos principiantes confunden estos tres conceptos. Esa confusión cuesta plata.",
             table: {
               headers: ["", "Trading", "Inversión", "Casino"],
@@ -109,7 +109,7 @@ export const LESSONS_ES: LevelData[] = [
       {
         id: "lecon-2",
         slug: "lecon2",
-        title: "Comprar / Vender : Long y Short",
+        title: "Comprar / Vender: Long y Short",
         duration: "9 min",
         introduction:
           "En 2022, Bitcoin perdió 70% de su valor en pocos meses. Miles de personas lo perdieron todo. Sin embargo, algunos traders ganaron exactamente con esa caída. ¿Cómo? Sabiendo vender en corto. Esta lección te explica cómo.",
@@ -135,7 +135,7 @@ export const LESSONS_ES: LevelData[] = [
             ],
           },
           {
-            heading: "Long vs Short : la comparación",
+            heading: "Long vs Short: la comparación",
             body: "Las dos direcciones son simétricas. Solo cambia la dirección de la ganancia. El risk management funciona exactamente igual en ambos casos.",
             diagram: "long-short",
             table: {
@@ -209,7 +209,7 @@ export const LESSONS_ES: LevelData[] = [
           "Un gráfico de velas es una imagen del combate entre compradores y vendedores. Cada vela te dice quién ganó, con qué fuerza, y si hubo resistencia. Aprender a leerlas es aprender a ver lo que la mayoría no ve.",
         sections: [
           {
-            heading: "Anatomía de una vela : 4 datos en una imagen",
+            heading: "Anatomía de una vela: 4 datos en una imagen",
             body: "Cada vela muestra exactamente 4 datos. Juntos, resumen todo lo que pasó durante un período dado, ya sea 1 minuto, 1 hora o 1 día.",
             diagram: "candle",
             items: [
@@ -220,7 +220,7 @@ export const LESSONS_ES: LevelData[] = [
             ],
           },
           {
-            heading: "Ejemplo concreto : leer una vela paso a paso",
+            heading: "Ejemplo concreto: leer una vela paso a paso",
             body: "Caso 1, vela verde (compradores ganadores): Bitcoin abre a 20 000 €. Sube hasta 20 800 €. Baja un poco a 19 700 €. Cierra a 20 400 €. Resultado: cuerpo verde de 20 000 a 20 400 (close > open). Mecha alta de 20 400 a 20 800 (los vendedores empujaron a los compradores desde los máximos). Mecha baja de 20 000 a 19 700 (los compradores defendieron los precios bajos).\n\nCaso 2, vela roja (vendedores ganadores): Bitcoin abre a 20 400 €. Sube a 20 600 €. Cae a 19 500 €. Cierra a 19 800 €. Resultado: cuerpo rojo de 20 400 a 19 800 (close < open). Los vendedores dominaron el período.",
             items: [
               "Cuerpo verde = los compradores ganaron (close > open)",
@@ -304,7 +304,7 @@ export const LESSONS_ES: LevelData[] = [
           "Analizas el mercado perfectamente. Entras en el momento justo. Y aun así, ya estás en rojo desde el primer segundo, sin que el precio se haya movido. No es un error. Es el spread. Y todo trader lo paga, en cada trade, sin excepción.",
         sections: [
           {
-            heading: "Bid y Ask : dos precios en permanencia",
+            heading: "Bid y Ask: dos precios en todo momento",
             body: "En cualquier mercado, siempre hay dos precios mostrados al mismo tiempo. No es un bug, es el funcionamiento normal del mercado. El Bid es el precio al que puedes vender. El Ask es el precio al que puedes comprar. El Ask siempre es ligeramente más alto que el Bid.",
             diagram: "spread",
             items: [
@@ -315,7 +315,7 @@ export const LESSONS_ES: LevelData[] = [
             ],
           },
           {
-            heading: "Ejemplo concreto : ganancia y pérdida con el spread",
+            heading: "Ejemplo concreto: ganancia y pérdida con el spread",
             body: "Caso 1, ganas a pesar del spread: Compras EUR/USD al Ask (1,0804). El precio sube a 1,0870. Vendes al Bid (1,0866). Ganas 1,0866 - 1,0804 = 62 euros por 1 euro por punto. El spread redujo tu ganancia en 4 euros, pero sigues ampliamente en positivo.\n\nCaso 2, el spread se vuelve problemático: Compras a 1,0804. El precio solo sube 2 puntos a 1,0806. Vendes al Bid: 1,0802. Pierdes 2 euros a pesar de un movimiento a tu favor. El spread de 4 puntos borró tu ganancia y te dejó en pérdida.",
             items: [
               "El spread se paga a la ENTRADA, no a la salida",
@@ -408,7 +408,7 @@ export const LESSONS_ES: LevelData[] = [
             ],
           },
           {
-            heading: "Ejemplo concreto : con y sin Stop Loss",
+            heading: "Ejemplo concreto: con y sin Stop Loss",
             body: "Caso 1, con Stop Loss: Compras Bitcoin a 30 000 €. Colocas un SL a 28 500 €. El mercado cae a 28 500 €. Tu SL se activa. Pierdes 1 500 € por Bitcoin. Te queda el 98,5% de tu capital. Sigues tradeando.\n\nCaso 2, sin Stop Loss: Compras Bitcoin a 30 000 €. Sin SL. En la noche, una mala noticia hace caer a Bitcoin a 22 000 €. Despiertas con una pérdida de 8 000 € por Bitcoin, 27% de tu capital perdido en una noche. Sin que pudieras reaccionar.",
             diagram: "stoploss",
             items: [
@@ -499,7 +499,7 @@ export const LESSONS_ES: LevelData[] = [
             ],
           },
           {
-            heading: "Ejemplo concreto : con y sin Take Profit",
+            heading: "Ejemplo concreto: con y sin Take Profit",
             body: "Caso 1, con Take Profit: Compras Bitcoin a 78 000 $. Colocas un TP a 84 000 $. El precio sube hasta 84 000 $. El trade se cierra automáticamente en tu objetivo: el precio recorrió 6 000 $ a tu favor. Incluso si el precio baja después a 73 000 $, tu salida ya está hecha, el movimiento está asegurado.\n\nCaso 2, sin Take Profit: Compras Bitcoin a 78 000 $. El precio sube a 84 000 $. Miras y mantienes 'porque sigue subiendo'. El precio baja a 75 000 $. Entras en pánico y cierras. En ese instante, el precio está 3 000 $ ABAJO de tu entrada, mientras que antes estaba 6 000 $ ARRIBA.",
             items: [
               "Con TP: tu salida se activa automáticamente en el objetivo, sin emoción",
@@ -591,7 +591,7 @@ export const LESSONS_ES: LevelData[] = [
             ],
           },
           {
-            heading: "Ejemplo concreto : con y sin Break Even",
+            heading: "Ejemplo concreto: con y sin Break Even",
             body: "Caso 1, con Break Even: Compras Bitcoin a 78 000 $, SL a 75 000 $. El precio sube a 81 000 $, recorrió 3 000 $ a tu favor, o sea 1R. Activas el BE (SL → 78 000 $). El mercado hace una corrección y baja a 78 000 $. Salida automática: sales exactamente en tu precio de entrada, ni ganancia ni pérdida. Y si el precio hubiera seguido hasta 84 000 $, te habrías quedado en carrera por un movimiento de 6 000 $ a tu favor.\n\nCaso 2, sin Break Even: Mismo trade. Bitcoin sube a 81 000 $. No tocas nada. El mercado baja brutalmente a 73 500 $. Tu SL original a 75 000 $ se activa, el precio termina 3 000 $ ABAJO de tu entrada, cuando había estado 3 000 $ ARRIBA.",
             items: [
               "Con BE: el trade ya no puede terminar en pérdida una vez activado",
@@ -666,7 +666,7 @@ export const LESSONS_ES: LevelData[] = [
       {
         id: "lecon-8",
         slug: "lecon8",
-        title: "Risk management : el money management",
+        title: "Risk management: el money management",
         duration: "12 min",
         introduction:
           "Un solo trade puede arruinar semanas enteras de trabajo. No porque el análisis fuera malo, porque el riesgo era demasiado alto. ¿Pero el riesgo adaptado a qué capital? La mayoría de guías habla de '1% por trade' para cuentas de 5 000 €+. Si arrancas con 300 o 700 €, necesitas una grilla diferente.",
@@ -937,7 +937,7 @@ export const LESSONS_ES: LevelData[] = [
             body: "Le retail veut souvent doubler rapidement le compte, accélérer, utiliser beaucoup de levier, augmenter agressivement le lot. Le problème : le marché récompense rarement l'agressivité durablement. Les traders qui survivent longtemps ont généralement un risque faible, une exposition contrôlée, une croissance plus lente, une stabilité émotionnelle supérieure. Le vrai objectif n'est pas de faire +300% rapidement. Le vrai objectif est de rester vivant suffisamment longtemps, accumuler de l'expérience, protéger le capital, éviter la destruction émotionnelle. Parce qu'un trader sans capital ne peut plus exécuter aucun setup.",
           },
           {
-            heading: "Exemple concret XAU/USD : deux RR, deux résultats",
+            heading: "Exemple concret XAU/USD: deux RR, deux résultats",
             body: "Deux traders prennent XAU/USD au même moment, sur le même setup d'entrée. Même capital de 500€, même risque de 15€ (3%). La seule différence : où ils placent leur Take Profit, donc leur RR. Voilà l'impact réel sur 10 trades.",
             table: {
               headers: ["Critère", "Trader RR 1:1", "Trader RR 1:3"],
@@ -962,7 +962,7 @@ export const LESSONS_ES: LevelData[] = [
               "Risque par trade : 3% à 5% du capital (selon ta grille de capital détaillée en leçon 8 : 5% si tu démarres à 200-500€, 3% si tu es à 500-1000€, 2% au-delà)",
               "Maximum 2-3 trades par jour",
               "Stop journalier : 10% à 15% du capital max par jour",
-              "RR minimum acceptable : 1:2",
+              "RR minimum acceptable: 1:2",
               "Arrêt immédiat après une perte qui te fait perdre ta lucidité émotionnelle",
               "Jamais de revenge trading",
               "Jamais déplacer un SL pour « espérer »",
@@ -992,7 +992,7 @@ export const LESSONS_ES: LevelData[] = [
             "Risque par trade : 3% à 5% du capital (selon ta grille de capital détaillée en leçon 8).",
             "Maximum 2-3 trades par jour.",
             "Stop journalier : 10% à 15% du capital max par jour.",
-            "RR minimum acceptable : 1:2.",
+            "RR minimum acceptable: 1:2.",
             "Arrêt immédiat après une perte qui te fait perdre ta lucidité émotionnelle.",
           ],
         },

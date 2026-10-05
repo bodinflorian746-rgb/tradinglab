@@ -253,7 +253,7 @@ export default function ContentEs() {
               "Colocar la entrada long en 4 595$ (cierre del engulfing M15)",
               "Colocar el stop loss en 4 555$ (5$ debajo del límite inferior de la zona H4 en 4 560$)",
               "Colocar el take profit nivel 1 en 4 680$ (HH Daily anterior) o nivel 2 en 4 750$ (proyección de extensión Daily)",
-              "Calcular los R/R: Riesgo 40$, ganancia nivel 1 = 85$ → R/R 2,12 ; ganancia nivel 2 = 155$ → R/R 3,88. Tamaño de posición según el riesgo por trade adaptado al capital",
+              "Calcular los R/R: Riesgo 40$, ganancia nivel 1 = 85$ → R/R 2,12; ganancia nivel 2 = 155$ → R/R 3,88. Tamaño de posición según el riesgo por trade adaptado al capital",
             ]}
           />
 

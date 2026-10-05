@@ -65,7 +65,7 @@ export function ZoneEchecDiagram({ className = "" }: ZoneEchecDiagramProps) {
         <p className="text-[14px] font-bold text-red-400 text-center">Zone qui échoue — setup invalidé</p>
 
         {/* Mini-SVG : zone traversée sans réaction (échec setup) */}
-        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Zone qui echoue" fill="none">
+        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Zone qui échoue" fill="none">
           {/* Zone censée tenir */}
           <rect x="20" y="48" width="240" height="20" fill="#71717a15" stroke="#71717a55" strokeWidth="1" strokeDasharray="3 2" />
           <rect x="100" y="30" width="80" height="13" rx="2" fill="#71717a18" stroke="#52525b" strokeWidth="0.7" />

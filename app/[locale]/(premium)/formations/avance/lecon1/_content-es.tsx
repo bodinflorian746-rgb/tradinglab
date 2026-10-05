@@ -14,7 +14,7 @@ export default function ContentEs() {
       duration="25 min"
       lessonNumber={1}
       prev={null}
-      next={{ href: "/formations/avance/lecon2", label: "Lección 2 : Fair Value Gap" }}
+      next={{ href: "/formations/avance/lecon2", label: "Lección 2: Fair Value Gap" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

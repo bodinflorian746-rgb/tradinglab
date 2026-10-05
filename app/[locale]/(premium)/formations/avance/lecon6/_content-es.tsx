@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="Los stop hunts no son manipulación ilegal, son una mecánica estructural del mercado. Aprender a leerlos te transforma de víctima en observador atento."
       duration="22 min"
       lessonNumber={6}
-      prev={{ href: "/formations/avance/lecon5", label: "Lección 5 : OTE" }}
-      next={{ href: "/formations/avance/lecon7", label: "Lección 7 : Entradas de precisión" }}
+      prev={{ href: "/formations/avance/lecon5", label: "Lección 5: OTE" }}
+      next={{ href: "/formations/avance/lecon7", label: "Lección 7: Entradas de precisión" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

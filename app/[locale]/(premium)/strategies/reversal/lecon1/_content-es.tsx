@@ -134,7 +134,7 @@ export default function ContentEs() {
             <h2 className="text-lg font-semibold text-white mb-3">Por qué funcionan estos patrones</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Cuando el precio toca una resistance, baja y vuelve a testear ese mismo nivel sin romperlo, es una señal clara. Los compradores ya no tienen fuerza suficiente para empujar por encima. El mercado muestra que ese nivel está defendido. En espejo, el double bottom muestra la misma lógica sobre un support.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Un double top no es solo un dibujo en un gráfico. Es la expresión visible de un desequilibrio. En cada test del nivel, vendedores toman sus ganancias o entran nuevos vendedores. En el segundo fallo, los que estaban long en pullback empiezan a salir, lo que acelera la caída.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm">Este patrón sigue siendo accesible al retail porque se lee rápido. A diferencia de los conceptos ICT o las estructuras complejas, un double top se ve en 5 segundos. No necesitás 6 indicadores para detectarlo.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Este patrón sigue siendo accesible al retail porque se lee rápido. A diferencia de los conceptos ICT o las estructuras complejas, un double top se ve en 5 segundos. No necesitas 6 indicadores para detectarlo.</p>
           </section>
 
           {/* Bloque 3 — DOUBLE TOP */}

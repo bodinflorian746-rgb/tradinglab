@@ -143,7 +143,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Le timing exact d&apos;un FOMC</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un FOMC se lit en trois phases :
+              Un FOMC se lit en trois phases:
             </p>
             <div className="space-y-2 mb-6">
               {[

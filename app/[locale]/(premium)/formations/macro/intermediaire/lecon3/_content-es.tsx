@@ -109,7 +109,7 @@ export default function ContentEs() {
 
           {/* Bloque 1 — La cadena de inflación */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">La cadena de inflación : del productor al consumidor</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La cadena de inflación: del productor al consumidor</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               La inflación no cae del cielo. Sigue una <span className="font-semibold text-zinc-200">cadena lógica</span>: del productor hacia el consumidor, con indicadores en cada etapa.
             </p>
@@ -144,7 +144,7 @@ export default function ContentEs() {
 
           {/* Bloque 2 — El PPI, la señal temprana */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">El PPI : la señal temprana que el mercado ignora</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">El PPI: la señal temprana que el mercado ignora</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               El PPI sale aproximadamente <span className="font-semibold text-zinc-200">12 días antes que el CPI</span>. Es el precio que reciben los productores por sus bienes, antes de que la inflación llegue al consumidor.
             </p>
@@ -194,7 +194,7 @@ export default function ContentEs() {
 
           {/* Bloque 3 — CPI Headline vs Core CPI */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">CPI Headline vs Core CPI : por qué lo cambia todo</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">CPI Headline vs Core CPI: por qué lo cambia todo</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               Cuando sale el CPI, ves dos números. La mayoría de los principiantes solo mira el primero.
             </p>
@@ -228,7 +228,7 @@ export default function ContentEs() {
 
           {/* Bloque 4 — Core PCE, el indicador oficial de la Fed */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Core PCE : el indicador oficial de la Fed</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Core PCE: el indicador oficial de la Fed</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               El Core PCE (Personal Consumption Expenditures) es el <span className="font-semibold text-zinc-200">indicador de inflación oficialmente preferido por la Fed</span>. Sale aproximadamente 2 semanas después del CPI.
             </p>
@@ -262,7 +262,7 @@ export default function ContentEs() {
 
           {/* Bloque 5 — Reacción del mercado en la práctica */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Reacción del mercado : lo que pasa en la práctica</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Reacción del mercado: lo que pasa en la práctica</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               El escenario más frecuente el día del CPI:
             </p>
