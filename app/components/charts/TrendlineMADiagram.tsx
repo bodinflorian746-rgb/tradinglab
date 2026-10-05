@@ -1,4 +1,4 @@
-export default function TrendlineMADiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function TrendlineMADiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const labels = locale === "es"
     ? {
         badge: "Trendline + MM = zona defendida",
@@ -13,6 +13,21 @@ export default function TrendlineMADiagram({ className = "", locale = "fr" }: { 
         mobMM50: "MM50",
         mobMM50Desc: "media móvil 50 períodos",
         mobConcl: "Cuando trendline + MM se cruzan en el mismo lugar = entrada pullback de alta probabilidad.",
+      }
+    : locale === "en"
+    ? {
+        badge: "Trendline + MA = defended zone",
+        trendline: "Trendline",
+        confluence: "Confluence",
+        legende: "Trendline (emerald) · MM20 (blue) · MM50 (gray) · Confluence point",
+        mobTitle: "Trendline + MA = defended zone",
+        mobTrendline: "Trendline",
+        mobTrendlineDesc: "line connecting the pivots",
+        mobMM20: "MM20",
+        mobMM20Desc: "20-period moving average",
+        mobMM50: "MM50",
+        mobMM50Desc: "50-period moving average",
+        mobConcl: "When trendline + MA cross at the same spot = high-probability pullback entry.",
       }
     : {
         badge: "Trendline + MM = zone défendue",

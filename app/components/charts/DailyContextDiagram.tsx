@@ -3,7 +3,7 @@
 
 interface DailyContextDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function DailyContextDiagram({ className = "", locale = "fr" }: DailyContextDiagramProps) {
@@ -17,6 +17,17 @@ export function DailyContextDiagram({ className = "", locale = "fr" }: DailyCont
         mobCorrectionsDesc: "Retracements lentos → dirección vendedora confirmada.",
         legendImpulsions: "Impulsiones bajistas fuertes",
         legendCorrections: "Correcciones alcistas débiles = dirección vendedora",
+      }
+    : locale === "en"
+    ? {
+        annotation: "The Daily defines the overall context",
+        mobTitle: "Daily context — bearish direction",
+        mobImpulsions: "Strong bearish impulses",
+        mobImpulsionsDesc: "Fast directional moves to the downside.",
+        mobCorrections: "Weak bullish corrections",
+        mobCorrectionsDesc: "Slow pullbacks → bearish direction confirmed.",
+        legendImpulsions: "Strong bearish impulses",
+        legendCorrections: "Weak bullish corrections = bearish direction",
       }
     : {
         annotation: "Le Daily définit le contexte général",

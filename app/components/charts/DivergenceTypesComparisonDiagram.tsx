@@ -1,21 +1,22 @@
-export default function DivergenceTypesComparisonDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function DivergenceTypesComparisonDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    title:           isEs ? "Los 4 tipos de divergencia RSI" : "Les 4 types de divergence RSI",
-    classicBear:     isEs ? "Clásica bajista" : "Classique baissière",
-    classicBull:     isEs ? "Clásica alcista" : "Classique haussière",
-    hiddenBear:      isEs ? "Oculta bajista" : "Cachée baissière",
-    hiddenBull:      isEs ? "Oculta alcista" : "Cachée haussière",
-    price:           isEs ? "Precio" : "Prix",
+    title:           isEs ? "Los 4 tipos de divergencia RSI" : isEn ? "The 4 types of RSI divergence" : "Les 4 types de divergence RSI",
+    classicBear:     isEs ? "Clásica bajista" : isEn ? "Classic bearish" : "Classique baissière",
+    classicBull:     isEs ? "Clásica alcista" : isEn ? "Classic bullish" : "Classique haussière",
+    hiddenBear:      isEs ? "Oculta bajista" : isEn ? "Hidden bearish" : "Cachée baissière",
+    hiddenBull:      isEs ? "Oculta alcista" : isEn ? "Hidden bullish" : "Cachée haussière",
+    price:           isEs ? "Precio" : isEn ? "Price" : "Prix",
     rsi:             "RSI",
-    mobRegBear:      isEs ? "Regular BAJISTA" : "Régulière BAISSIÈRE",
-    mobRegBull:      isEs ? "Regular ALCISTA" : "Régulière HAUSSIÈRE",
-    mobHidBear:      isEs ? "Oculta BAJISTA" : "Cachée BAISSIÈRE",
-    mobHidBull:      isEs ? "Oculta ALCISTA" : "Cachée HAUSSIÈRE",
-    mobRegBearDesc:  isEs ? "Precio: HH · RSI: LH → reversal bajista" : "Prix : HH · RSI : LH → retournement baissier",
-    mobRegBullDesc:  isEs ? "Precio: LL · RSI: HL → reversal alcista" : "Prix : LL · RSI : HL → retournement haussier",
-    mobHidBearDesc:  isEs ? "Precio: LH · RSI: HH → continuación bajista (en tendencia ↓)" : "Prix : LH · RSI : HH → continuation baissière (dans tendance ↓)",
-    mobHidBullDesc:  isEs ? "Precio: HL · RSI: LL → continuación alcista (en tendencia ↑)" : "Prix : HL · RSI : LL → continuation haussière (dans tendance ↑)",
+    mobRegBear:      isEs ? "Regular BAJISTA" : isEn ? "Regular BEARISH" : "Régulière BAISSIÈRE",
+    mobRegBull:      isEs ? "Regular ALCISTA" : isEn ? "Regular BULLISH" : "Régulière HAUSSIÈRE",
+    mobHidBear:      isEs ? "Oculta BAJISTA" : isEn ? "Hidden BEARISH" : "Cachée BAISSIÈRE",
+    mobHidBull:      isEs ? "Oculta ALCISTA" : isEn ? "Hidden BULLISH" : "Cachée HAUSSIÈRE",
+    mobRegBearDesc:  isEs ? "Precio: HH · RSI: LH → reversal bajista" : isEn ? "Price: HH · RSI: LH → bearish reversal" : "Prix : HH · RSI : LH → retournement baissier",
+    mobRegBullDesc:  isEs ? "Precio: LL · RSI: HL → reversal alcista" : isEn ? "Price: LL · RSI: HL → bullish reversal" : "Prix : LL · RSI : HL → retournement haussier",
+    mobHidBearDesc:  isEs ? "Precio: LH · RSI: HH → continuación bajista (en tendencia ↓)" : isEn ? "Price: LH · RSI: HH → bearish continuation (in ↓ trend)" : "Prix : LH · RSI : HH → continuation baissière (dans tendance ↓)",
+    mobHidBullDesc:  isEs ? "Precio: HL · RSI: LL → continuación alcista (en tendencia ↑)" : isEn ? "Price: HL · RSI: LL → bullish continuation (in ↑ trend)" : "Prix : HL · RSI : LL → continuation haussière (dans tendance ↑)",
   };
   return (
     <div className={className}>

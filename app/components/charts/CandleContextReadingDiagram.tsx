@@ -1,4 +1,4 @@
-export default function CandleContextReadingDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function CandleContextReadingDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Una misma vela verde = 3 lecturas distintas",
@@ -27,6 +27,35 @@ export default function CandleContextReadingDiagram({ className = "", locale = "
         mobileRangeEm: "no significativa",
         mobileRangeDesc2: ".",
         mobileFooter: "El contexto antes/después de la vela lo cambia todo.",
+      }
+    : locale === "en"
+    ? {
+        title: "One same green candle = 3 different readings",
+        panel1: "Potential reversal",
+        panel2: "Likely bearish continuation",
+        panel3: "Noise — no info",
+        sameCandle: "Same candle",
+        line1a: "Green candle at the top =",
+        line1b: "exhaustion",
+        line2a: "Isolated green candle in a drop =",
+        line2b: "noise",
+        line3a: "Green candle in the range =",
+        line3b: "not significant",
+        footer: "The context before/after the candle changes everything",
+        mobileTitle: "One same green candle = 3 different readings",
+        mobileSommetTitle: "Impulse top → Potential reversal",
+        mobileSommetDesc1: "After 5 green candles in a row, a new green candle = ",
+        mobileSommetEm: "exhaustion",
+        mobileSommetDesc2: ".",
+        mobileCreuxTitle: "Bottom of a drop → Likely bearish continuation",
+        mobileCreuxDesc1: "In the middle of a drop, an isolated green candle = ",
+        mobileCreuxEm: "noise",
+        mobileCreuxDesc2: ", not a reversal.",
+        mobileRangeTitle: "Sideways range → Noise (no info)",
+        mobileRangeDesc1: "Within an oscillation, the green candle = ",
+        mobileRangeEm: "not significant",
+        mobileRangeDesc2: ".",
+        mobileFooter: "The context before/after the candle changes everything.",
       }
     : {
         title: "Une même bougie verte = 3 lectures différentes",

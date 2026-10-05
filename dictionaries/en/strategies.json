@@ -1,1 +1,126 @@
-{}
+{
+  "page": {
+    "hero": {
+      "badgeShort":   "8 strategies · 3 levels · Pro level",
+      "badgeLong":    "8 strategies · 3 levels · From retail to institutional level",
+      "titleLine1":   "Learn to trade",
+      "titleLine2":   "with a real method.",
+      "subtitle":     "A structured path, from foundations to institutional techniques, to build a solid and repeatable approach."
+    },
+    "stats": {
+      "strategies": "Strategies",
+      "free":       "Free",
+      "premium":    "Premium",
+      "premiumTBD": "Coming",
+      "levels":     "Levels"
+    },
+    "levels": {
+      "debutant": {
+        "label":       "Beginner",
+        "tagline":     "The foundations",
+        "description": "The essential concepts to read the market and build solid setups."
+      },
+      "intermediaire": {
+        "label":       "Intermediate",
+        "tagline":     "The structure",
+        "description": "The institutional concepts to understand how the market really moves."
+      },
+      "avance": {
+        "label":       "Advanced",
+        "tagline":     "Mastery",
+        "description": "The techniques of professional traders, surgical precision and institutional reading."
+      }
+    },
+    "card": {
+      "lessonsCount":      "{n} lessons",
+      "viewModule":        "View module",
+      "countByLevelShort": "{n} strategies"
+    },
+    "breadcrumb": "Strategies"
+  },
+  "modules": {
+    "price-action": {
+      "title":    "Price Action",
+      "subtitle": "Read the raw market without indicators, candles, pin bars, engulfing and multi-timeframe setups.",
+      "lessons": {
+        "lecon1": { "title": "Reading a candle: body, wick, signal",                  "description": "The basic unit of trading. Understand the anatomy of a Japanese candlestick and what it reveals about the buyers vs sellers battle.", "duration": "12 min" },
+        "lecon2": { "title": "Pin bar: the level rejection",                          "description": "The first real trade setup. Identify a valid pin bar at a key level, trade it with precise entry, SL and TP.",                    "duration": "14 min" },
+        "lecon3": { "title": "Engulfing: the shift in strength",                      "description": "The 2-candle power-shift pattern. The 2nd engulfs the 1st and confirms a clear change of direction.",                        "duration": "14 min" },
+        "lecon4": { "title": "Multi-timeframe setup Daily → H1",                      "description": "The synthesis lesson of Module 1. Combine Daily trend, H4 level and H1 signal to build complete, coherent setups.",            "duration": "15 min" }
+      }
+    },
+    "support-resistance": {
+      "title":    "Support / Resistance & Range",
+      "subtitle": "Identify the price zones that matter and trade ranging markets, polarity, range, breakout vs fakeout.",
+      "lessons": {
+        "lecon1": { "title": "Support and resistance: the zones where the market reacts",      "description": "Understand what support and resistance are, the zones where price regularly bounces or rejects.",                            "duration": "15 min" },
+        "lecon2": { "title": "Identifying a real level (vs a randomly drawn line)",            "description": "The criteria to tell a real level from a random line, multiple touches, visible rejections, recent level.",                  "duration": "15 min" },
+        "lecon3": { "title": "Support↔resistance flip and trading a bounce",                   "description": "Levels don't disappear when they break, they often switch roles. Trade the retests after a flip for classic setups.",       "duration": "18 min" },
+        "lecon4": { "title": "Real breakout vs fake breakout",                                 "description": "Telling real breakouts from traps. Fakes are violent and reject quickly, a setup in their own right.",                       "duration": "17 min" }
+      }
+    },
+    "trend-following": {
+      "title":    "Trend Following",
+      "subtitle": "Trade with the market using disciplined pullbacks, trend, retracement, exit on structure.",
+      "lessons": {
+        "lecon1": { "title": "Recognizing a trend (HH/HL vs LH/LL)",          "description": "The market only does three things: go up, go down, or wait. The visual criteria to tell the three apart.",                                                "duration": "15 min" },
+        "lecon2": { "title": "Trendline and moving averages: drawing the trend", "description": "The HH/HL structure stays the base. Trendlines and MAs give a faster, cleaner read of the market.",                                                       "duration": "15 min" },
+        "lecon3": { "title": "Trading with the trend: pullback and entry",     "description": "A trend doesn't rise in a straight line. It progresses in waves. This lesson shows you how to use these waves to enter with the market at the best price.", "duration": "18 min" },
+        "lecon4": { "title": "When to exit: trend reversal",                   "description": "BOS and CHoCH give you two objective signals to close a position before the trend reverses.",                                                            "duration": "18 min" }
+      }
+    },
+    "smc": {
+      "title":    "SMC: Thinking institutional",
+      "subtitle": "Understand how institutions structure their positions and align with them. Supply/Demand, BOS, CHoCH, confluences.",
+      "lessons": {
+        "lecon1": { "title": "SMC Market Structure: reading market structure like an institution",  "description": "Identifying significant swings, telling internal from external structure, reading the accumulation, expansion, distribution phases.", "duration": "18 min" },
+        "lecon2": { "title": "BOS and CHoCH: reading institutional structural signals",             "description": "Telling BOS from CHoCH, operationally qualifying the break, understanding the 3-step institutional reversal sequence.",            "duration": "18 min" },
+        "lecon3": { "title": "Order Blocks: identifying institutional zones",                        "description": "4-step identification process, qualification criteria, a quantified execution plan and the traps to avoid on Order Blocks.",       "duration": "18 min" },
+        "lecon4": { "title": "FVG and liquidity: trading the institutional imbalance",               "description": "Liquidity, sweep and Fair Value Gap: the complete institutional mechanics.",                                                       "duration": "16 min" },
+        "lecon5": { "title": "The complete SMC trade: from HTF analysis to execution",               "description": "The module synthesis: assembling structure, liquidity, sweep, CHoCH and mitigation into a complete trade.",                       "duration": "18 min" }
+      }
+    },
+    "reversal": {
+      "title":    "Reversal & Turnarounds",
+      "subtitle": "Identify and trade reversals at the extremes. Fibonacci 0.618/0.786, divergences, combined confirmations.",
+      "lessons": {
+        "lecon1": { "title": "Double top / Double bottom: the reversal signature",     "description": "Recognizing the 2 simplest reversal patterns and trading them with a clean 2:1 R/R.",                           "duration": "16 min" },
+        "lecon2": { "title": "Head & Shoulders: the major reversal",                    "description": "The most famous reversal pattern. How to spot it, validate it and trade it with a round 1.5:1 R/R.",            "duration": "18 min" },
+        "lecon3": { "title": "RSI divergence: when momentum betrays the trend",         "description": "The RSI reveals the invisible momentum behind price. How to read and trade classic divergences with a 2:1 R/R.", "duration": "17 min" },
+        "lecon4": { "title": "Trading a reversal: invalidation checklist",              "description": "The practical checklist to identify an invalidation and cut before giving back your account. Module synthesis.",  "duration": "18 min" }
+      }
+    },
+    "multi-timeframe": {
+      "title":    "Multi-timeframe Process",
+      "subtitle": "A disciplined top-down method to turn a macro read into precise execution. Daily → H4 → H1 → entry.",
+      "lessons": {
+        "lecon1": { "title": "Why analyze in multi-timeframe",                          "description": "Why trading a single chart makes you blind, and the role of each level: bias, zone, trigger.",     "duration": "16 min" },
+        "lecon2": { "title": "The higher timeframe: defining context and bias",         "description": "Reading the higher timeframe (H4/Daily): structure, zones, and drawing a clear directional bias from it.", "duration": "18 min" },
+        "lecon3": { "title": "The intermediate timeframe: spotting the zone that matters", "description": "Going down a level: locating the precise zone where the HTF scenario can trigger.",              "duration": "18 min" },
+        "lecon4": { "title": "The execution timeframe: the precise entry",              "description": "The execution timeframe (M5/M15): waiting for the trigger in the zone and entering with precision.", "duration": "18 min" },
+        "lecon5": { "title": "The complete process: from Daily to M5 in one trade",     "description": "Running the full sequence, from Daily to M5, on a real trade from A to Z.",                         "duration": "20 min" }
+      }
+    },
+    "ict": {
+      "title":    "Complete ICT",
+      "subtitle": "The pro institutional arsenal. Order Block, FVG, Liquidity sweeps, Killzones, OTE, Power of 3.",
+      "lessons": {
+        "lecon1": { "title": "Understanding the ICT model: liquidity and manipulation",   "description": "Why the market goes hunting for liquidity before moving, and how to read the sweep + reintegration.", "duration": "18 min" },
+        "lecon2": { "title": "PD Arrays: spotting the zones where the market can react",   "description": "FVG, Order Blocks and confluence: identifying the premium/discount zones where a reaction is likely.", "duration": "18 min" },
+        "lecon3": { "title": "Killzones: when the market really moves",                    "description": "The time windows that concentrate volatility. Asia, London Open, New York Open.",                   "duration": "18 min" },
+        "lecon4": { "title": "Displacement: recognizing real institutional movement",      "description": "Telling a real take-control impulse from a simple volatile candle with no follow-through.",          "duration": "18 min" },
+        "lecon5": { "title": "The complete ICT model: from liquidity to execution",        "description": "Running the full sequence: liquidity → manipulation → displacement → execution.",                    "duration": "20 min" }
+      }
+    },
+    "macro-trading": {
+      "title":    "Macro Trading",
+      "subtitle": "Trade major news and market regimes. FOMC Fade, NFP Overreaction, Risk-off regime, pre-trade macro filter.",
+      "lessons": {
+        "lecon1": { "title": "FOMC Fade: trading the swing-back after the decision",        "description": "Exploiting the overreaction that follows the FOMC decision, entering after it stabilizes, not in the impulse.", "duration": "18 min" },
+        "lecon2": { "title": "NFP Overreaction: trading the overreaction to the US jobs report", "description": "Exploiting the overreaction to the NFP headline number, entering after the repricing, not in the initial move.", "duration": "18 min" },
+        "lecon3": { "title": "Risk-off regime: trading when the market flees risk",         "description": "Identifying a risk-off regime setting in through concordant signals and trading in its direction.",            "duration": "18 min" },
+        "lecon4": { "title": "The pre-trade macro filter: validating context before executing", "description": "Building a systematic macro filter (calendar + regime + setup) to avoid bad trades.",                       "duration": "20 min" }
+      }
+    }
+  }
+}

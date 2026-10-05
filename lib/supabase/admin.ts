@@ -2,6 +2,7 @@
 // Bypasse RLS. À utiliser UNIQUEMENT côté serveur (Route Handlers, Server Actions, webhooks Stripe).
 // Ne jamais importer depuis un composant client.
 
+import "server-only";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 let adminClient: SupabaseClient | null = null;

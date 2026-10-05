@@ -4,7 +4,7 @@
 
 interface MacroFilterRegimeDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -48,6 +48,19 @@ export function MacroFilterRegimeDiagram({ className = "", locale = "fr" }: Macr
         signalBearishLocalDesc: "Tradear contra el régimen macro = a evitar, sin importar el setup local.",
         legend1: "Régimen dominante bullish — la tendencia continúa",
         legend2: "Señal bearish local = trade contra el régimen",
+      }
+    : locale === "en"
+    ? {
+        signalBearishM15: "Bearish signal M15",
+        tradeContreRegime: "Trade against the dominant regime",
+        contexteMacro: "Macro context overrides the local signal",
+        title: "Macro regime filter · XAU/USD H4",
+        regimeDominantBullish: "Dominant bullish regime",
+        regimeDominantBullishDesc: "The macro trend continues — long trades favored.",
+        signalBearishLocal: "⚠ Local bearish signal = counter-regime",
+        signalBearishLocalDesc: "Trading against the macro regime = avoid, no matter the local setup.",
+        legend1: "Dominant bullish regime — the trend continues",
+        legend2: "Local bearish signal = trade against the regime",
       }
     : {
         signalBearishM15: "Signal bearish M15",

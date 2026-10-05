@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { useQuizAnswered } from "./LessonPage";
+import { useLocale } from "./LocaleProvider";
 
 interface Props {
   question: string;
@@ -9,6 +10,7 @@ interface Props {
   correctIndex: number;
   explanation: string;
   answerExplanations?: string[];
+  locale?: "fr" | "es" | "en";
 }
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
@@ -121,7 +123,41 @@ export function LessonQuiz({
   correctIndex,
   explanation,
   answerExplanations,
+  locale,
 }: Props) {
+  const contextLocale = useLocale();
+  const resolvedLocale: "fr" | "es" | "en" = locale ?? contextLocale;
+  const L =
+    resolvedLocale === "es"
+      ? {
+          validationQuiz: "Quiz de validación",
+          correct: "Respuesta correcta",
+          wrong: "Respuesta incorrecta",
+          submit: "Validar mi respuesta",
+          pick: "Elige una respuesta",
+          excellent: "¡Excelente respuesta!",
+          notQuite: "No del todo.",
+        }
+      : resolvedLocale === "en"
+        ? {
+            validationQuiz: "Validation quiz",
+            correct: "Correct answer",
+            wrong: "Wrong answer",
+            submit: "Submit my answer",
+            pick: "Pick an answer",
+            excellent: "Excellent answer!",
+            notQuite: "Not quite.",
+          }
+        : {
+            validationQuiz: "Quiz de validation",
+            correct: "Bonne réponse",
+            wrong: "Mauvaise réponse",
+            submit: "Valider ma réponse",
+            pick: "Choisis une réponse",
+            excellent: "Excellente réponse !",
+            notQuite: "Pas tout à fait.",
+          };
+
   const [selected,  setSelected]  = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [shaking,   setShaking]   = useState(false);
@@ -181,7 +217,7 @@ export function LessonQuiz({
                 <path d="M5 7.5v.5a1.5 1.5 0 003 0v-.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
               </svg>
             </div>
-            <span className="text-sm font-semibold text-white">Quiz de validation</span>
+            <span className="text-sm font-semibold text-white">{L.validationQuiz}</span>
           </div>
 
           {submitted && (
@@ -194,9 +230,9 @@ export function LessonQuiz({
               style={{ animation: "fadeExplain 0.3s ease both" }}
             >
               {isCorrect ? (
-                <><CheckIcon />Bonne réponse</>
+                <><CheckIcon />{L.correct}</>
               ) : (
-                <><CrossIcon />Mauvaise réponse</>
+                <><CrossIcon />{L.wrong}</>
               )}
             </span>
           )}
@@ -233,7 +269,7 @@ export function LessonQuiz({
                 : "bg-zinc-900 border border-zinc-800 text-zinc-700 cursor-not-allowed"
             }`}
           >
-            {selected !== null ? "Valider ma réponse" : "Choisis une réponse"}
+            {selected !== null ? L.submit : L.pick}
           </button>
         )}
 
@@ -255,7 +291,7 @@ export function LessonQuiz({
             </svg>
             <div>
               <p className={`text-sm font-semibold mb-1 ${isCorrect ? "text-emerald-400" : "text-red-400"}`}>
-                {isCorrect ? "Excellente réponse !" : "Pas tout à fait."}
+                {isCorrect ? L.excellent : L.notQuite}
               </p>
               <p className="text-xs text-zinc-400 leading-relaxed">{explanation}</p>
             </div>

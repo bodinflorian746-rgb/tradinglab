@@ -1,22 +1,23 @@
-export default function StopHuntDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function StopHuntDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    title:        isEs ? "Por qué el mercado caza los stops" : "Pourquoi le marché chasse les stops",
-    badge:        isEs ? "Stop hunt — mecánica de la trampa" : "Stop hunt — mécanique du piège",
-    wickAnnot:    isEs ? "La mecha dispara los stops" : "Mèche déclenche les stops",
-    bodyAnnot:    isEs ? "Cuerpo cierra debajo (4 690$)" : "Corps clôture sous (4 690$)",
-    stopsZone:    isEs ? "Zona stops cluster" : "Zone stops cluster",
-    stopsRange:   "(4 720$ - 4 745$)",
-    resistance:   isEs ? "Resistencia 4 720$" : "Résistance 4 720$",
-    footer:       isEs ? "Las instituciones apuntan a las zonas de stops para absorber liquidity antes de invertir" : "Les institutions visent les zones de stops pour absorber la liquidité avant inversion",
-    mobTitle:     isEs ? "Por qué el mercado caza los stops" : "Pourquoi le marché chasse les stops",
-    mob1:         isEs ? "Los SL de los traders se concentran justo encima de las resistencias (o debajo de los soportes)." : "Les SL des traders se concentrent juste au-dessus des résistances (ou sous les supports).",
-    mob2A:        isEs ? "Las instituciones empujan el precio por encima para" : "Les institutions poussent le prix au-dessus pour",
-    mob2Bold:     isEs ? "disparar los stops" : "déclencher les stops",
-    mob2End:      isEs ? "= liquidity masiva." : "= liquidité massive.",
-    mob3A:        isEs ? "Una vez absorbida la liquidity, el precio" : "Une fois la liquidité absorbée, le prix",
-    mob3Bold:     isEs ? "vuelve en el sentido opuesto" : "repart dans le sens opposé",
-    mobFooter:    isEs ? "Las instituciones cazan la liquidity antes de invertir." : "Les institutions chassent la liquidité avant d'inverser.",
+    title:        isEs ? "Por qué el mercado caza los stops" : isEn ? "Why the market hunts stops" : "Pourquoi le marché chasse les stops",
+    badge:        isEs ? "Stop hunt — mecánica de la trampa" : isEn ? "Stop hunt — the trap mechanics" : "Stop hunt — mécanique du piège",
+    wickAnnot:    isEs ? "La mecha dispara los stops" : isEn ? "Wick triggers stops" : "Mèche déclenche les stops",
+    bodyAnnot:    isEs ? "Cuerpo cierra debajo (4 690$)" : isEn ? "Body closes below ($4,690)" : "Corps clôture sous (4 690$)",
+    stopsZone:    isEs ? "Zona stops cluster" : isEn ? "Stops cluster zone" : "Zone stops cluster",
+    stopsRange:   isEs ? "(4 720$ - 4 745$)" : isEn ? "($4,720 - $4,745)" : "(4 720$ - 4 745$)",
+    resistance:   isEs ? "Resistencia 4 720$" : isEn ? "Resistance $4,720" : "Résistance 4 720$",
+    footer:       isEs ? "Las instituciones apuntan a las zonas de stops para absorber liquidity antes de invertir" : isEn ? "Institutions target stop zones to absorb liquidity before reversing" : "Les institutions visent les zones de stops pour absorber la liquidité avant inversion",
+    mobTitle:     isEs ? "Por qué el mercado caza los stops" : isEn ? "Why the market hunts stops" : "Pourquoi le marché chasse les stops",
+    mob1:         isEs ? "Los SL de los traders se concentran justo encima de las resistencias (o debajo de los soportes)." : isEn ? "Traders' SL cluster just above resistances (or below supports)." : "Les SL des traders se concentrent juste au-dessus des résistances (ou sous les supports).",
+    mob2A:        isEs ? "Las instituciones empujan el precio por encima para" : isEn ? "Institutions push price above to" : "Les institutions poussent le prix au-dessus pour",
+    mob2Bold:     isEs ? "disparar los stops" : isEn ? "trigger the stops" : "déclencher les stops",
+    mob2End:      isEs ? "= liquidity masiva." : isEn ? "= massive liquidity." : "= liquidité massive.",
+    mob3A:        isEs ? "Una vez absorbida la liquidity, el precio" : isEn ? "Once liquidity is absorbed, price" : "Une fois la liquidité absorbée, le prix",
+    mob3Bold:     isEs ? "vuelve en el sentido opuesto" : isEn ? "reverses the other way" : "repart dans le sens opposé",
+    mobFooter:    isEs ? "Las instituciones cazan la liquidity antes de invertir." : isEn ? "Institutions hunt liquidity before reversing." : "Les institutions chassent la liquidité avant d'inverser.",
   };
   return (
     <div className={className}>

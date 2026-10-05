@@ -3,7 +3,7 @@
 
 interface RiskoffSignalsDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -77,6 +77,26 @@ export function RiskoffSignalsDiagram({ className = "", locale = "fr" }: Riskoff
         mobileFooter: "4 señales concordantes = régimen risk-off confirmado.",
         legendRegime: "4 señales concordantes = régimen risk-off confirmado",
         legendOr: "El oro sube con el régimen",
+      }
+    : locale === "en"
+    ? {
+        indicesActions: "Equity indices",
+        volatilite: "Volatility (VIX)",
+        dollar: "Dollar",
+        xau: "XAU/USD",
+        annotation: "The regime is confirmed across several markets",
+        mobileTitle: "Risk-off regime — 4 aligned signals",
+        orRefuge: "Gold ↑",
+        orDesc: " · safe haven",
+        dxyFort: "DXY ↑",
+        dxyDesc: " · strong dollar",
+        indicesDown: "Indices ↓",
+        indicesDesc: " · equities under pressure",
+        yieldsDown: "Yields ↓",
+        yieldsDesc: " · flight to bonds",
+        mobileFooter: "4 aligned signals = risk-off regime confirmed.",
+        legendRegime: "4 aligned signals = risk-off regime confirmed",
+        legendOr: "Gold rises with the regime",
       }
     : {
         indicesActions: "Indices actions",

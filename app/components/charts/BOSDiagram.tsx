@@ -1,7 +1,7 @@
 interface BOSDiagramProps {
   trend?: "bullish" | "bearish";
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function BOSDiagram({
@@ -65,6 +65,14 @@ export function BOSDiagram({
         bosDescBreak: "el precio rompe este nivel → confirmación de tendencia",
         legLevel: isBull ? "HH = último Higher High (nivel BOS)" : "LL = último Lower Low (nivel BOS)",
         legBreak: "Break of Structure — confirmación de tendencia",
+      }
+    : locale === "en"
+    ? {
+        bosTitle: isBull ? "BOS — Bullish Break of Structure" : "BOS — Bearish Break of Structure",
+        bosDescStruct: isBull ? "last structural high before the break" : "last structural low before the break",
+        bosDescBreak: "price breaks this level → trend confirmation",
+        legLevel: isBull ? "HH = last Higher High (BOS level)" : "LL = last Lower Low (BOS level)",
+        legBreak: "Break of Structure — trend confirmation",
       }
     : {
         bosTitle: isBull ? "BOS — Break of Structure haussier" : "BOS — Break of Structure baissier",

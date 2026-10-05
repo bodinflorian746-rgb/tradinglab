@@ -1,28 +1,29 @@
 interface TradingSessionsLiquidityDiagramProps {
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export const TradingSessionsLiquidityDiagram = ({ locale = "fr" }: TradingSessionsLiquidityDiagramProps = {}) => {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    title:         isEs ? "Un día forex — dónde se concentra la liquidity" : "Une journée forex — où se concentre la liquidité",
-    subtitle:      isEs ? "No todas las horas valen lo mismo — hora de París" : "Toutes les heures ne se valent pas — heure de Paris",
-    asia:          isEs ? "ASIA" : "ASIE",
-    london:        isEs ? "LONDRES" : "LONDRES",
+    title:         isEs ? "Un día forex — dónde se concentra la liquidity" : isEn ? "A forex day — where liquidity concentrates" : "Une journée forex — où se concentre la liquidité",
+    subtitle:      isEs ? "No todas las horas valen lo mismo — hora de París" : isEn ? "Not all hours are equal — Paris time" : "Toutes les heures ne se valent pas — heure de Paris",
+    asia:          isEs ? "ASIA" : isEn ? "ASIA" : "ASIE",
+    london:        isEs ? "LONDRES" : isEn ? "LONDON" : "LONDRES",
     ny:            "NEW YORK",
     killzone:      "KILLZONE",
-    liquidity:     isEs ? "LIQUIDITY" : "LIQUIDITÉ",
-    newsUS:        isEs ? "News US 14h30" : "News US 14h30",
-    largeSpreads:  isEs ? "Spreads anchos" : "Spreads larges",
-    largeFakeouts: isEs ? "Spreads anchos + fakeouts" : "Spreads larges + fakeouts",
-    realMoves:     isEs ? "Movimientos reales" : "Vrais mouvements",
-    optimal:       isEs ? "PARES ÓPTIMOS POR SESIÓN" : "PAIRES OPTIMALES PAR SESSION",
-    asiaPairs:     isEs ? "Asia: USD/JPY, AUD/JPY, NZD/JPY" : "Asie : USD/JPY, AUD/JPY, NZD/JPY",
-    londonPairs:   isEs ? "Londres + Overlap: EUR/USD, GBP/USD, XAU/USD (oro)" : "Londres + Overlap : EUR/USD, GBP/USD, XAU/USD (or)",
-    nyPairs:       isEs ? "NY: Nasdaq, S&P500, BTC/USD, USD/CAD" : "NY : Nasdaq, S&P500, BTC/USD, USD/CAD",
-    footer:        isEs ? "No todas las horas valen lo mismo. El overlap concentra la verdadera liquidity." : "Toutes les heures ne se valent pas. L'overlap concentre la vraie liquidité.",
-    mobTimeNote:   isEs ? "Hora de París" : "Heure de Paris",
-    mobFooter:     isEs ? "El overlap Londres + NY concentra la verdadera liquidity." : "L'overlap Londres + NY concentre la vraie liquidité.",
+    liquidity:     isEs ? "LIQUIDITY" : isEn ? "LIQUIDITY" : "LIQUIDITÉ",
+    newsUS:        isEs ? "News US 14h30" : isEn ? "US News 14h30" : "News US 14h30",
+    largeSpreads:  isEs ? "Spreads anchos" : isEn ? "Wide spreads" : "Spreads larges",
+    largeFakeouts: isEs ? "Spreads anchos + fakeouts" : isEn ? "Wide spreads + fakeouts" : "Spreads larges + fakeouts",
+    realMoves:     isEs ? "Movimientos reales" : isEn ? "Real moves" : "Vrais mouvements",
+    optimal:       isEs ? "PARES ÓPTIMOS POR SESIÓN" : isEn ? "OPTIMAL PAIRS BY SESSION" : "PAIRES OPTIMALES PAR SESSION",
+    asiaPairs:     isEs ? "Asia: USD/JPY, AUD/JPY, NZD/JPY" : isEn ? "Asia: USD/JPY, AUD/JPY, NZD/JPY" : "Asie : USD/JPY, AUD/JPY, NZD/JPY",
+    londonPairs:   isEs ? "Londres + Overlap: EUR/USD, GBP/USD, XAU/USD (oro)" : isEn ? "London + Overlap: EUR/USD, GBP/USD, XAU/USD (gold)" : "Londres + Overlap : EUR/USD, GBP/USD, XAU/USD (or)",
+    nyPairs:       isEs ? "NY: Nasdaq, S&P500, BTC/USD, USD/CAD" : isEn ? "NY: Nasdaq, S&P500, BTC/USD, USD/CAD" : "NY : Nasdaq, S&P500, BTC/USD, USD/CAD",
+    footer:        isEs ? "No todas las horas valen lo mismo. El overlap concentra la verdadera liquidity." : isEn ? "Not all hours are equal. The overlap concentrates real liquidity." : "Toutes les heures ne se valent pas. L'overlap concentre la vraie liquidité.",
+    mobTimeNote:   isEs ? "Hora de París" : isEn ? "Paris time" : "Heure de Paris",
+    mobFooter:     isEs ? "El overlap Londres + NY concentra la verdadera liquidity." : isEn ? "The London + NY overlap concentrates real liquidity." : "L'overlap Londres + NY concentre la vraie liquidité.",
   };
   const sessions = isEs
     ? [
@@ -30,6 +31,13 @@ export const TradingSessionsLiquidityDiagram = ({ locale = "fr" }: TradingSessio
         { name: "LONDRES", range: "08h – 17h", color: "#34d399", desc: "Verdadero arranque del día — buena liquidity", pairs: "EUR/USD, GBP/USD, XAU/USD", killzone: false as boolean },
         { name: "OVERLAP LONDRES + NY", range: "14h – 17h", color: "#ef4444", desc: "🔴 KILLZONE — verdadera liquidity institucional", pairs: null as string | null, killzone: true as boolean },
         { name: "NEW YORK", range: "14h – 22h", color: "#fbbf24", desc: "Pico de actividad — news US a las 14h30", pairs: "Nasdaq, S&P500, BTC/USD, USD/CAD", killzone: false as boolean },
+      ]
+    : isEn
+    ? [
+        { name: "ASIA", range: "00h – 09h", color: "#60a5fa", desc: "Low liquidity · wide spreads + fakeouts", pairs: "USD/JPY, AUD/JPY, NZD/JPY", killzone: false as boolean },
+        { name: "LONDON", range: "08h – 17h", color: "#34d399", desc: "Real start of the day — good liquidity", pairs: "EUR/USD, GBP/USD, XAU/USD", killzone: false as boolean },
+        { name: "LONDON + NY OVERLAP", range: "14h – 17h", color: "#ef4444", desc: "🔴 KILLZONE — real institutional liquidity", pairs: null as string | null, killzone: true as boolean },
+        { name: "NEW YORK", range: "14h – 22h", color: "#fbbf24", desc: "Peak activity — US news at 14h30", pairs: "Nasdaq, S&P500, BTC/USD, USD/CAD", killzone: false as boolean },
       ]
     : [
         { name: "ASIE", range: "00h – 09h", color: "#60a5fa", desc: "Liquidité faible · spreads larges + fakeouts", pairs: "USD/JPY, AUD/JPY, NZD/JPY", killzone: false as boolean },

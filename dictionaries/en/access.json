@@ -1,1 +1,8 @@
-{}
+{
+  "title": "Partner access",
+  "subtitle": "Enter the code shared in your private group to unlock your TradeScaleX access.",
+  "label": "Access code",
+  "placeholder": "XXXX-XXXX",
+  "submit": "Unlock my access",
+  "comingSoon": "Automatic validation will be available at launch."
+}

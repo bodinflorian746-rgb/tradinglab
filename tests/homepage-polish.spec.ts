@@ -53,8 +53,8 @@ test.describe("Homepage — polish visuel (FR + ES, desktop + mobile)", () => {
       );
       expect(overflow).toBeLessThanOrEqual(4);
 
-      // Navbar + LangSwitcher toujours présent
-      await expect(page.locator('nav a[hrefLang]').first()).toBeVisible();
+      // Navbar + sélecteur de langue (compact) toujours présent
+      await expect(page.getByTestId("nav-lang-trigger")).toBeVisible();
       // H1 du hero
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 

@@ -13,6 +13,13 @@ const ROWS_ES: CalendarRow[] = [
   { time: "16h00", ccy: "EUR", event: "Discurso Lagarde", impact: 3 },
   { time: "20h00", ccy: "USD", event: "Decisión FOMC", impact: 3 },
 ];
+const ROWS_EN: CalendarRow[] = [
+  { time: "08h00", ccy: "EUR", event: "Manufacturing PMI", impact: 2 },
+  { time: "10h00", ccy: "GBP", event: "Industrial production", impact: 1 },
+  { time: "14h30", ccy: "USD", event: "CPI inflation", impact: 3, highlight: true },
+  { time: "16h00", ccy: "EUR", event: "Lagarde speech", impact: 3 },
+  { time: "20h00", ccy: "USD", event: "FOMC decision", impact: 3 },
+];
 
 function ImpactDots({ n }: { n: 1 | 2 | 3 }) {
   return (
@@ -31,8 +38,8 @@ function ImpactDots({ n }: { n: 1 | 2 | 3 }) {
   );
 }
 
-export const MacroCalendarDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
-  const ROWS = locale === "es" ? ROWS_ES : ROWS_FR;
+export const MacroCalendarDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) => {
+  const ROWS = locale === "es" ? ROWS_ES : locale === "en" ? ROWS_EN : ROWS_FR;
   const t = locale === "es"
     ? {
         title: "Un día tipo en el calendario económico",
@@ -68,6 +75,42 @@ export const MacroCalendarDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" }
         mobileIndices: "Índices US",
         mobileCrypto: "Crypto (BTC)",
         mobileFooter: "Una news macro nunca toca un solo mercado.",
+      }
+    : locale === "en"
+    ? {
+        title: "A typical day on the economic calendar",
+        heure: "TIME",
+        devise: "CCY",
+        evenement: "EVENT",
+        impact: "IMPACT",
+        pmi: "Manufacturing PMI",
+        productionInd: "Industrial production",
+        cpiInflation: "CPI inflation",
+        discoursLagarde: "Lagarde speech",
+        decisionFomc: "FOMC decision",
+        cpiTag: "8:30am CPI",
+        reaction: "EUR/USD market reaction",
+        pipsAnnot: "-150 pips in 2 min",
+        synthese: "The calendar tells you WHEN the market will explode. It's up to you not to be in the wrong place at the wrong time.",
+        actifsTitle: "ASSETS HIT BY MACRO NEWS",
+        forexLabel: "Forex (EUR/USD, GBP/USD)",
+        orLabel: "Gold (XAU/USD)",
+        indicesLabel: "US indices (Nasdaq, S&P)",
+        cryptoLabel: "Crypto (BTC/USD)",
+        footer: "Macro news never hits just one market.",
+        mobileHeure: "Time",
+        mobileDevise: "CCY",
+        mobileEvenement: "Event",
+        mobileImpact: "Impact",
+        mobileReaction: "EUR/USD reaction at 8:30am (CPI)",
+        mobileBougiesAria: "CPI reaction candles",
+        mobilePips: "−150 pips in 2 min",
+        mobileActifs: "Assets hit by macro news",
+        mobileForex: "Forex (EUR/USD)",
+        mobileOr: "Gold (XAU/USD)",
+        mobileIndices: "US indices",
+        mobileCrypto: "Crypto (BTC)",
+        mobileFooter: "Macro news never hits just one market.",
       }
     : {
         title: "Une journée type sur le calendrier économique",

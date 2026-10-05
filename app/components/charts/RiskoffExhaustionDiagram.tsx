@@ -4,7 +4,7 @@
 
 interface RiskoffExhaustionDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -64,6 +64,17 @@ export function RiskoffExhaustionDiagram({ className = "", locale = "fr" }: Risk
         sommetsDesc: "Agotamiento progresivo — preparación para una reversión.",
         legendBullish: "Tendencia bullish fuerte al inicio",
         legendSommets: "Cimas más débiles + correcciones más profundas = agotamiento",
+      }
+    : locale === "en"
+    ? {
+        annotation: "The regime is gradually losing strength",
+        mobileTitle: "Risk-off exhaustion · XAU/USD H4",
+        bullishTitle: "Strong bullish trend at the start",
+        bullishDesc: "Risk-off regime active, gold rallies hard.",
+        sommetsTitle: "Weaker highs + deeper pullbacks",
+        sommetsDesc: "Gradual exhaustion — setting up for a reversal.",
+        legendBullish: "Strong bullish trend at the start",
+        legendSommets: "Weaker highs + deeper pullbacks = exhaustion",
       }
     : {
         annotation: "Le régime perd progressivement en force",

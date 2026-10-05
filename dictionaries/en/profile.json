@@ -1,1 +1,105 @@
-{}
+{
+  "page": {
+    "eyebrow": "My trader profile",
+    "reset": "Reset",
+    "resetConfirm": "Reset your entire profile? This action is irreversible.",
+    "loading": "Loading profile…",
+    "profileMain": "Main profile",
+    "minRounds": "Play at least 10 rounds to refine your profile ({events}/10)."
+  },
+  "stats": {
+    "events": "Events tracked",
+    "accuracy": "Overall accuracy",
+    "strengths": "Strengths",
+    "weaknesses": "To work on"
+  },
+  "sections": {
+    "skills": "Skills",
+    "skillsSubtitle": "0-100 rating by category",
+    "strengths": "Your strengths",
+    "strengthsSubtitle": "Keep leveraging these assets",
+    "weaknesses": "To work on",
+    "weaknessesSubtitle": "Your current weak points",
+    "recommendations": "Recommendations",
+    "recommendationsSubtitle": "Games and lessons to improve",
+    "gameActivity": "Activity by game",
+    "recentActivity": "Recent activity",
+    "recentSubtitle": "Your last 8 events"
+  },
+  "stats2": {
+    "winRate": "{rate}% success rate"
+  },
+  "footer": {
+    "tip": "The more you play, the sharper your profile gets.",
+    "cta": "Keep playing"
+  },
+  "empty": {
+    "eyebrow": "My trader profile",
+    "title": "Your profile is built by playing",
+    "subtitle": "Every decision in the TradeScaleX games feeds your profile: skills, strengths, weaknesses, biases. The more you play, the better the system understands how you trade, and recommends what to work on.",
+    "viewGames": "See all games"
+  },
+  "time": {
+    "now": "just now",
+    "minAgo": "{n} min ago",
+    "hourAgo": "{n}h ago",
+    "dayAgo": "{n}d ago"
+  },
+  "skills": {
+    "labels": {
+      "discipline":      "Discipline",
+      "lecture_marche":  "Market reading",
+      "gestion_risque":  "Risk management",
+      "timing":          "Timing",
+      "liquidite":       "Liquidity",
+      "structure":       "Structure",
+      "psychologie":     "Psychology",
+      "execution":       "Execution",
+      "patience":        "Patience",
+      "rr_management":   "R/R management"
+    },
+    "descriptions": {
+      "discipline":      "Turning down mediocre setups, waiting for the right opportunities.",
+      "lecture_marche":  "Identifying direction and HTF context correctly.",
+      "gestion_risque":  "Placing stops at distances consistent with structure.",
+      "timing":          "Choosing the right entry moment, not too early, not too late.",
+      "liquidite":       "Recognizing sweeps, traps and liquidity-hunt zones.",
+      "structure":       "Reading swings, supports, resistances and key levels.",
+      "psychologie":     "Avoiding FOMO, revenge trades, overconfidence.",
+      "execution":       "Accounting for spread, session and volatility.",
+      "patience":        "Waiting for confirmations and letting trades run.",
+      "rr_management":   "Optimizing the risk/reward ratio of each trade."
+    }
+  },
+  "gameLabels": {
+    "buy-sell-no-trade": "BUY / SELL / NO TRADE",
+    "place-stop":        "Which stop will survive?",
+    "find-the-mistake":  "Find the Mistake",
+    "build-the-trade":   "Build the Trade"
+  },
+  "profiles": {
+    "discipline":             { "name": "Disciplined trader",              "description": "You know when not to trade. Your patience and respect for risk are your strengths. Keep filtering out mediocre setups." },
+    "impulsif":               { "name": "Impulsive trader",                "description": "You take too many trades without conviction. You react instead of waiting. Work on patience and discipline." },
+    "structure_reader":       { "name": "Strong structure reader",         "description": "You identify key levels, swings and HTF zones well. Now work on execution and R/R to turn that read into an edge." },
+    "aggressive":             { "name": "Overly aggressive trader",        "description": "You read the market correctly but take too much risk per trade. Your stops are tight, your R/R is poorly managed, your capital suffers." },
+    "risk_manager":           { "name": "Strong risk manager",             "description": "You place your stops at consistent distances and your R/R is solid. Next step: sharpen your reading to multiply good opportunities." },
+    "breakout_hunter":        { "name": "Breakout hunter",                 "description": "You take breakouts with conviction. Beware of fakeouts, the liquidity above/below levels is your enemy." },
+    "emotional":              { "name": "Emotional trader",                "description": "Revenge trades and FOMO cost you dearly. Your emotional decisions weigh on your performance. A break after 2 stops in a row would change everything." },
+    "patient":                { "name": "Patient trader",                  "description": "You wait for the right setups, you don't force anything. Keep cultivating this quality, it's the long-term trader's #1 weapon." },
+    "analyst_no_executor":    { "name": "Good analyst, poor execution",    "description": "You read the market correctly, but spread, session and timing ruin your trades. Technique alone isn't enough, execution is part of the edge." },
+    "liquidity_aware":        { "name": "Liquidity reader",                "description": "You spot sweeps and anticipate institutional traps. Combine this skill with better R/R to turn this edge into performance." },
+    "neutral":                { "name": "Developing trader",               "description": "Not enough signals yet to identify a dominant profile. Keep playing, alternating games and levels, and your profile will sharpen." }
+  },
+  "recommendations": {
+    "discipline":     { "reason": "You accept too many mediocre trades. NO TRADE is a decision too.",                  "gameLabel": "BUY / SELL / NO TRADE, advanced level",        "lessonLabel": "The discipline of waiting" },
+    "lecture_marche": { "reason": "You regularly miss the market direction or the HTF.",                               "gameLabel": "BUY / SELL / NO TRADE, intermediate level",    "lessonLabel": "HTF reading & structure" },
+    "gestion_risque": { "reason": "Your stops are poorly placed, too tight or too wide.",                             "gameLabel": "Which stop will survive?, intermediate level", "lessonLabel": "Stop placement" },
+    "timing":         { "reason": "You enter too early or too late. Timing is crucial.",                              "gameLabel": "Build the Trade, entry selection" },
+    "liquidite":      { "reason": "You miss sweeps or fall into liquidity traps.",                                   "gameLabel": "Find the Mistake, advanced level",             "lessonLabel": "Liquidity & sweeps (ICT)" },
+    "structure":      { "reason": "You misread key levels and HTF structure.",                                        "gameLabel": "Which stop will survive?, learn structure",    "lessonLabel": "Support / Resistance" },
+    "psychologie":    { "reason": "Your decisions are affected by FOMO, revenge trades or overconfidence.",            "gameLabel": "Find the Mistake, psychology focus" },
+    "execution":      { "reason": "You ignore spread, session and volatility. Technique alone isn't enough.",          "gameLabel": "Find the Mistake, execution focus" },
+    "patience":       { "reason": "You chase moves instead of waiting for the right entry.",                           "gameLabel": "Build the Trade, confirmation selection" },
+    "rr_management":  { "reason": "Your risk/reward ratio is too low. You take bad trades on RR.",                     "gameLabel": "Build the Trade, RR balance",                  "lessonLabel": "Risk/reward ratio" }
+  }
+}

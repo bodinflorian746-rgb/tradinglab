@@ -358,7 +358,7 @@ export default function ContentFr() {
                 { n: "2", text: "Note les horaires dans ton agenda" },
                 { n: "3", text: "Ne trade pas dans les 30 minutes avant" },
                 { n: "4", text: "Observe la réaction au moment de la sortie" },
-                { n: "5", text: "Si setup confirmé après réaction → tu peux entrer en suivant le mouvement" },
+                { n: "5", text: "Si setup confirmé après réaction → tu peux entrer en suivant le mouvement, selon ton plan de trading" },
               ].map((item) => (
                 <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
                   <span className="text-xs font-bold text-zinc-500 shrink-0 mt-0.5">{item.n}.</span>
@@ -467,9 +467,15 @@ export default function ContentFr() {
                 </svg>
                 Leçon 2. Les 4 grandes banques centrales
               </Link>
-              <span className="text-sm text-zinc-700 cursor-default">
-                Comprendre l&apos;inflation. Bientôt disponible →
-              </span>
+              <Link
+                href="/formations/macro/debutant/lecon4"
+                className="inline-flex items-center gap-1.5 text-sm text-zinc-600 hover:text-zinc-400 transition-colors"
+              >
+                Leçon 4. Comprendre l&apos;inflation
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

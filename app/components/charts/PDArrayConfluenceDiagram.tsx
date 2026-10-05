@@ -4,7 +4,7 @@
 
 interface PDArrayConfluenceDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -52,6 +52,20 @@ export function PDArrayConfluenceDiagram({ className = "", locale = "fr" }: PDAr
         b2Body: "En cuanto el precio toca la zona confluente, rechazo inmediato = señal short.",
         leg1: "Confluencia (soporte roto + FVG + sweep) = zona fuerte",
         leg2: "Rechazo bajista franco al regreso a la zona",
+      }
+    : locale === "en"
+    ? {
+        ancienSupport: "Broken support",
+        fvgBearish: "Bearish FVG",
+        sweepRecent: "Recent sweep",
+        annotation: "Multiple elements tell the same story",
+        mobileTitle: "PD Array confluence · EUR/USD H1",
+        b1Title: "3 confluences = strong zone",
+        b1Body: "Broken support + FVG + sweep = high-probability execution zone.",
+        b2Title: "Sharp bearish rejection on return",
+        b2Body: "As soon as price taps the confluence zone, instant rejection = short signal.",
+        leg1: "Confluence (broken support + FVG + sweep) = strong zone",
+        leg2: "Sharp bearish rejection on return to the zone",
       }
     : {
         ancienSupport: "Ancien support cassé",

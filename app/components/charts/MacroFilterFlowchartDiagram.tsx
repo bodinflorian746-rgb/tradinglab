@@ -3,7 +3,7 @@
 
 interface MacroFilterFlowchartDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function MacroFilterFlowchartDiagram({ className = "", locale = "fr" }: MacroFilterFlowchartDiagramProps) {
@@ -27,6 +27,27 @@ export function MacroFilterFlowchartDiagram({ className = "", locale = "fr" }: M
         oneRed: "Un solo filtro rojo = sin trade.",
         legendGreen: "Cada filtro pasado acerca a la ejecución",
         legendRed: "Un solo filtro rojo = sin trade",
+      }
+    : locale === "en"
+    ? {
+        q1: "Major news incoming?",
+        oui: "Yes",
+        non: "No",
+        pasDeTrade: "No trade",
+        q2: "Macro regime aligned?",
+        prudence: "Caution",
+        q3: "Valid technical setup?",
+        execution: "Execution possible",
+        annotation: "The setup must pass every filter",
+        mobileTitle: "Pre-trade macro filter flowchart",
+        q1Mobile: "Q1 — Major news incoming?",
+        q1MobileDesc1: "If YES → ",
+        q2Mobile: "Q2 — Macro regime aligned?",
+        q2MobileDesc1: "If NO → ",
+        allGreen: "All filters green = execution allowed ✓",
+        oneRed: "A single red filter = no trade.",
+        legendGreen: "Each filter passed moves closer to execution",
+        legendRed: "A single red filter = no trade",
       }
     : {
         q1: "News majeure imminente ?",

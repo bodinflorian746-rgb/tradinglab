@@ -1,4 +1,4 @@
-export default function MultiTFConflictDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function MultiTFConflictDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
         warning: "⚠ Conflicto multi-TF — Sin trade",
@@ -10,6 +10,19 @@ export default function MultiTFConflictDiagram({ className = "", locale = "fr" }
         mobBajistaSpan: "↓ Bajista",
         mobFooterPre: "Mientras los 3 timeframes no se alineen, ",
         mobFooterBold: "sin entrada",
+        mobFooterPost: ".",
+      }
+    : locale === "en"
+    ? {
+        warning: "⚠ Multi-TF conflict — No trade",
+        haussier: "↑ Bullish",
+        baissier: "↓ Bearish",
+        footer: "Daily ↑ vs H4 ↓ vs M15 ↑: until all 3 timeframes align, no entry",
+        mobWarning: "⚠ Multi-TF conflict — No trade",
+        mobAlcistaSpan: "↑ Bullish",
+        mobBajistaSpan: "↓ Bearish",
+        mobFooterPre: "Until all 3 timeframes align, ",
+        mobFooterBold: "no entry",
         mobFooterPost: ".",
       }
     : {

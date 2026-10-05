@@ -1,5 +1,8 @@
+"use client";
+
 import { type ReactNode } from "react";
 import { LessonPage } from "./LessonPage";
+import { useLocale } from "./LocaleProvider";
 import { LessonKeyPoints } from "./LessonKeyPoints";
 import { LessonExercice } from "./LessonExercice";
 import { LessonQuiz } from "./LessonQuiz";
@@ -35,6 +38,7 @@ export interface LessonTemplateProps {
   exerciseTitle?: string;
   exercise: string[];
   quiz: TemplateQuizData;
+  locale?: "fr" | "es" | "en";
 }
 
 export function LessonTemplate({
@@ -50,10 +54,37 @@ export function LessonTemplate({
   keyPoints,
   errors,
   fatalError,
-  exerciseTitle = "Pratique sur TradingView",
+  exerciseTitle,
   exercise,
   quiz,
+  locale,
 }: LessonTemplateProps) {
+  const contextLocale = useLocale();
+  const resolvedLocale: "fr" | "es" | "en" = locale ?? contextLocale;
+  const L =
+    resolvedLocale === "es"
+      ? {
+          commonMistakes: "Errores frecuentes de los principiantes",
+          fatalError: "El error fatal",
+          review: "Repaso",
+          practiceDefault: "Práctica en TradingView",
+        }
+      : resolvedLocale === "en"
+        ? {
+            commonMistakes: "Common beginner mistakes",
+            fatalError: "The fatal mistake",
+            review: "Review",
+            practiceDefault: "Practice on TradingView",
+          }
+        : {
+            commonMistakes: "Erreurs fréquentes des débutants",
+            fatalError: "L'erreur fatale",
+            review: "Révision",
+            practiceDefault: "Pratique sur TradingView",
+          };
+
+  const resolvedExerciseTitle = exerciseTitle ?? L.practiceDefault;
+
   return (
     <LessonPage
       formationId={formationId}
@@ -93,7 +124,7 @@ export function LessonTemplate({
       {/* ── Erreurs fréquentes ─────────────────────────────────── */}
       {errors.length > 0 && (
         <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-3">Erreurs fréquentes des débutants</h2>
+          <h2 className="text-lg font-semibold text-white mb-3">{L.commonMistakes}</h2>
           <div className="space-y-2.5">
             {errors.map((error, i) => (
               <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -114,7 +145,7 @@ export function LessonTemplate({
             <path d="M8 2L14.5 13H1.5L8 2Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
             <path d="M8 6.5v3M8 11.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
-          <h2 className="text-base font-bold text-red-400">L'erreur fatale</h2>
+          <h2 className="text-base font-bold text-red-400">{L.fatalError}</h2>
         </div>
         <p className="text-sm text-zinc-300 leading-relaxed">{fatalError}</p>
       </section>
@@ -122,13 +153,13 @@ export function LessonTemplate({
       {/* ── Séparateur ─────────────────────────────────────────── */}
       <div className="flex items-center gap-4 py-2">
         <div className="flex-1 h-px bg-zinc-800" />
-        <span className="text-[11px] font-semibold text-zinc-700 uppercase tracking-widest">Révision</span>
+        <span className="text-[11px] font-semibold text-zinc-700 uppercase tracking-widest">{L.review}</span>
         <div className="flex-1 h-px bg-zinc-800" />
       </div>
 
-      <LessonKeyPoints points={keyPoints} />
+      <LessonKeyPoints points={keyPoints} locale={resolvedLocale} />
 
-      <LessonExercice description={exerciseTitle} steps={exercise} />
+      <LessonExercice description={resolvedExerciseTitle} steps={exercise} locale={resolvedLocale} />
 
       <LessonQuiz
         question={quiz.question}
@@ -136,6 +167,7 @@ export function LessonTemplate({
         correctIndex={quiz.correctIndex}
         explanation={quiz.explanation}
         answerExplanations={quiz.answerExplanations}
+        locale={resolvedLocale}
       />
     </LessonPage>
   );

@@ -19,7 +19,7 @@ function Candle({
   );
 }
 
-export function FOMCTimelineDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+export function FOMCTimelineDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
   const t = locale === "es"
     ? {
         volatiliteErratique: "Volatilidad errática",
@@ -46,6 +46,33 @@ export function FOMCTimelineDiagram({ locale = "fr" }: { locale?: "fr" | "es" } 
         phase3DescB: "por fin entrar",
         phase3DescC: ".",
         warning: "⚠ NUNCA tradees entre 20h00 y 21h00",
+      }
+    : locale === "en"
+    ? {
+        volatiliteErratique: "Erratic volatility",
+        tradeIci: "Trade here ✓",
+        decisionFed: "Fed Decision",
+        discoursPowell: "Powell Speech",
+        legendDecision: "Decision (20h00)",
+        legendPowell: "Powell — critical (20h30)",
+        legendTrader: "Trade here (21h00+)",
+        mobileTitle: "Anatomy of an FOMC (Fed Decision)",
+        phase1Title: "20h00 — Fed Decision",
+        phase1Tag: "Phase 1",
+        phase1Desc: "Statement release. Fake bullish spike often seen first.",
+        phase1Pips: "+150 pips initial (common trap)",
+        phase2Title: "20h30 — Powell Speech",
+        phase2Tag: "Phase 2",
+        phase2DescA: "Press conference. ",
+        phase2DescB: "Erratic volatility",
+        phase2DescC: " — the real tone reveals itself.",
+        phase2Pips: "Violent reversal: −350 pips",
+        phase3Title: "21h00+ — Trade here ✓",
+        phase3Tag: "Phase 3",
+        phase3DescA: "Direction confirmed. Trend established — the moment you can ",
+        phase3DescB: "finally enter",
+        phase3DescC: ".",
+        warning: "⚠ NEVER trade between 20h00 and 21h00",
       }
     : {
         volatiliteErratique: "Volatilité erratique",

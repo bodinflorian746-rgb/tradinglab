@@ -161,7 +161,7 @@ export default function ContentEs() {
           "Colocas una orden de compra arriba del pico del spike para seguir el momentum",
         ]}
         correctIndex={2}
-        explanation="Un spike por encima de los Equal Highs con cierre por debajo es la firma de un stop hunt sobre la Buy-side Liquidity (BSL). Las instituciones acaban de tomar la liquidity de los stops de los shorts. El retroceso bajista que sigue está alimentado por las ventas institucionales, ahí es donde se busca una señal de venta."
+        explanation="Un spike por encima de los Equal Highs con cierre por debajo es la firma de un stop hunt sobre la Buy-side Liquidity (BSL). Las instituciones acaban de tomar la liquidity de los stops de los shorts. El retroceso bajista que sigue está alimentado por las ventas institucionales, es una zona donde buscar una confirmación de venta, no una señal en sí misma."
         answerExplanations={[
           "Falso. El cierre debajo de la resistencia invalida la ruptura. No es un breakout, es precisamente un false breakout (stop hunt). Comprar aquí es posicionarte del lado equivocado del movimiento institucional.",
           "Falso. No es ambiguo para alguien que conoce los stop hunts. La firma es clara: spike + mecha larga + cierre del lado opuesto. Es una señal de alerta, no una situación neutra.",

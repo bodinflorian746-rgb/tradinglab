@@ -6,6 +6,7 @@ import { MarketStructureDiagram } from "@/app/components/charts/MarketStructureD
 import { BOSDiagram } from "@/app/components/charts/BOSDiagram";
 import { CHoCHDiagram } from "@/app/components/charts/CHoCHDiagram";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 function ContentFr() {
   return (
@@ -223,5 +224,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

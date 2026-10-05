@@ -1,6 +1,6 @@
 interface OTEDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleData = {
@@ -87,6 +87,21 @@ export function OTEDiagram({ className = "", locale = "fr" }: OTEDiagramProps) {
         leg1: "Zona OTE (61.8–78.6%) — entrada institucional óptima",
         leg2: "Movimiento impulsivo alcista",
         leg3: "Retracement en el OTE",
+      }
+    : locale === "en"
+    ? {
+        entree: "ENTRY",
+        swingHigh: "Swing High",
+        swingLow: "Swing Low",
+        signalRejet: "rejection signal ↑",
+        mobileTitle: "OTE Setup — Optimal Trade Entry",
+        m1BoldStart: "OTE zone (61.8% – 78.6%)",
+        m1Body: " · optimal entry zone after an impulse",
+        m2BoldStart: "Rejection signal ↑",
+        m2Body: " · bullish candle that taps the zone and closes above → long entry",
+        leg1: "OTE zone (61.8–78.6%) — optimal institutional entry",
+        leg2: "Bullish impulsive move",
+        leg3: "Retracement into the OTE",
       }
     : {
         entree: "ENTRÉE",
@@ -219,15 +234,15 @@ export function OTEDiagram({ className = "", locale = "fr" }: OTEDiagramProps) {
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-blue-400/40" />
-          <span className="text-[10px] text-zinc-500">Zone OTE (61.8–78.6%) — entrée institutionnelle optimale</span>
+          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Mouvement impulsif haussier</span>
+          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Retracement dans l'OTE</span>
+          <span className="text-[10px] text-zinc-500">{t.leg3}</span>
         </div>
       </div>
     </div>

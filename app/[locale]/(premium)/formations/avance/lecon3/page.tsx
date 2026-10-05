@@ -4,6 +4,7 @@ import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
 import { OrderBlockDiagram } from "@/app/components/charts/OrderBlockDiagram";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 function ContentFr() {
   return (
@@ -28,7 +29,7 @@ function ContentFr() {
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">En résumé :</span> un OB est une zone où les institutions ont laissé des ordres non exécutés. Le prix y revient pour les combler, et c'est là que tu entres.
+            <span className="text-white font-medium">En résumé :</span> un OB est une zone où les institutions ont laissé des ordres non exécutés. Le prix y revient pour les combler, c'est une zone d'intérêt potentielle, pas une entrée automatique : une confirmation supplémentaire reste nécessaire, et la décision dépend de ton propre plan de trading.
           </p>
         </div>
       </section>
@@ -45,7 +46,7 @@ function ContentFr() {
               <li className="text-xs text-zinc-400 leading-relaxed">— Dernière bougie <span className="text-white">baissière</span> avant un mouvement haussier impulsif</li>
               <li className="text-xs text-zinc-400 leading-relaxed">— Le mouvement qui suit doit créer un BOS (Break of Structure) haussier</li>
               <li className="text-xs text-zinc-400 leading-relaxed">— La zone de l'OB = corps de cette bougie baissière (open → close)</li>
-              <li className="text-xs text-zinc-400 leading-relaxed">— Signal d'achat quand le prix revient dans cette zone en retracement</li>
+              <li className="text-xs text-zinc-400 leading-relaxed">— Zone d'intérêt potentielle à l'achat quand le prix y revient en retracement, pas un signal en soi</li>
             </ul>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-4">
@@ -54,7 +55,7 @@ function ContentFr() {
               <li className="text-xs text-zinc-400 leading-relaxed">— Dernière bougie <span className="text-white">haussière</span> avant un mouvement baissier impulsif</li>
               <li className="text-xs text-zinc-400 leading-relaxed">— Le mouvement qui suit doit créer un BOS baissier</li>
               <li className="text-xs text-zinc-400 leading-relaxed">— La zone de l'OB = corps de cette bougie haussière (open → close)</li>
-              <li className="text-xs text-zinc-400 leading-relaxed">— Signal de vente quand le prix revient dans cette zone</li>
+              <li className="text-xs text-zinc-400 leading-relaxed">— Zone d'intérêt potentielle à la vente quand le prix y revient, pas un signal en soi</li>
             </ul>
           </div>
         </div>
@@ -161,5 +162,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

@@ -1,23 +1,24 @@
-export default function DivergenceWithoutBreakoutDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function DivergenceWithoutBreakoutDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    title:        isEs ? "Divergencia perfecta sin ruptura = trampa" : "Divergence parfaite sans cassure = piège",
-    price:        isEs ? "Precio" : "Prix",
+    title:        isEs ? "Divergencia perfecta sin ruptura = trampa" : isEn ? "Perfect divergence without breakout = trap" : "Divergence parfaite sans cassure = piège",
+    price:        isEs ? "Precio" : isEn ? "Price" : "Prix",
     rsi:          "RSI",
-    creuxLabel:   isEs ? "Mínimo estructural nunca roto — 4 570$" : "Creux structurel jamais cassé — 4 570$",
-    trapBadge:    isEs ? "TRAMPA clásica" : "PIÈGE classique",
-    continuation: isEs ? "Continuación alcista" : "Continuation haussière",
-    divInop:      isEs ? "Divergencia perfecta pero inoperante" : "Divergence parfaite mais inopérante",
-    footer:       isEs ? "Una divergencia solo es válida SI la estructura rompe. Aquí, el mínimo en 4 570$ aguanta → sin short." : "Une divergence n'est valide QUE si la structure casse. Ici, le creux à 4 570$ tient → pas de short.",
-    mobTitle:     isEs ? "Divergencia perfecta sin ruptura = trampa" : "Divergence parfaite sans cassure = piège",
-    mob1:         isEs ? "Divergencia bajista perfecta: precio HH, RSI LH → setup short tentador." : "Divergence baissière parfaite : prix HH, RSI LH → setup short tentant.",
-    mob2Pre:      isEs ? "El mínimo estructural en" : "Le creux structurel à",
-    mob2Bold:     "4 570 $",
-    mob2End:      isEs ? "nunca es roto en cierre." : "n'est jamais cassé en clôture.",
-    mob3Pre:      isEs ? "Sin ruptura →" : "Sans cassure →",
-    mob3Bold:     isEs ? "sin short" : "pas de short",
-    mob3End:      isEs ? ". La divergencia sola no basta." : ". La divergence seule ne suffit pas.",
-    mobFooter:    isEs ? "Una divergencia solo es válida SI la estructura rompe." : "Une divergence n'est valide QUE si la structure casse.",
+    creuxLabel:   isEs ? "Mínimo estructural nunca roto — 4 570$" : isEn ? "Structural low never broken — $4,570" : "Creux structurel jamais cassé — 4 570$",
+    trapBadge:    isEs ? "TRAMPA clásica" : isEn ? "Classic TRAP" : "PIÈGE classique",
+    continuation: isEs ? "Continuación alcista" : isEn ? "Bullish continuation" : "Continuation haussière",
+    divInop:      isEs ? "Divergencia perfecta pero inoperante" : isEn ? "Perfect but inoperative divergence" : "Divergence parfaite mais inopérante",
+    footer:       isEs ? "Una divergencia solo es válida SI la estructura rompe. Aquí, el mínimo en 4 570$ aguanta → sin short." : isEn ? "A divergence is only valid IF the structure breaks. Here, the low at $4,570 holds → no short." : "Une divergence n'est valide QUE si la structure casse. Ici, le creux à 4 570$ tient → pas de short.",
+    mobTitle:     isEs ? "Divergencia perfecta sin ruptura = trampa" : isEn ? "Perfect divergence without breakout = trap" : "Divergence parfaite sans cassure = piège",
+    mob1:         isEs ? "Divergencia bajista perfecta: precio HH, RSI LH → setup short tentador." : isEn ? "Perfect bearish divergence: price HH, RSI LH → tempting short setup." : "Divergence baissière parfaite : prix HH, RSI LH → setup short tentant.",
+    mob2Pre:      isEs ? "El mínimo estructural en" : isEn ? "The structural low at" : "Le creux structurel à",
+    mob2Bold:     isEs ? "4 570 $" : isEn ? "$4,570" : "4 570 $",
+    mob2End:      isEs ? "nunca es roto en cierre." : isEn ? "is never broken on close." : "n'est jamais cassé en clôture.",
+    mob3Pre:      isEs ? "Sin ruptura →" : isEn ? "No breakout →" : "Sans cassure →",
+    mob3Bold:     isEs ? "sin short" : isEn ? "no short" : "pas de short",
+    mob3End:      isEs ? ". La divergencia sola no basta." : isEn ? ". Divergence alone is not enough." : ". La divergence seule ne suffit pas.",
+    mobFooter:    isEs ? "Una divergencia solo es válida SI la estructura rompe." : isEn ? "A divergence is only valid IF the structure breaks." : "Une divergence n'est valide QUE si la structure casse.",
   };
   return (
     <div className={className}>

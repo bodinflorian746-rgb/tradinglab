@@ -1,4 +1,4 @@
-export default function PinBarValidationGridDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function PinBarValidationGridDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Reconocer una pin bar válida en 5 segundos",
@@ -21,6 +21,29 @@ export default function PinBarValidationGridDiagram({ className = "", locale = "
         mobileCorpsLabel: "Cuerpo",
         mobileRatioLabel: "Ratio",
         mobileFooter: "Ratio mecha / cuerpo ≥ 2:1 = pin bar válida",
+      }
+    : locale === "en"
+    ? {
+        title: "Spot a valid pin bar in 5 seconds",
+        cell1: "✓ Valid — Clean rejection pin bar",
+        wickLabel: "Wick:",
+        bodyLabel: "Body:",
+        ratioLabel: "Ratio:",
+        cell2: "✗ Wick = Body",
+        cell3: "✗ Body crushes the wick",
+        cell4: "✗ Negligible wick",
+        footer: "Wick / body ratio ≥ 2:1 = valid pin bar",
+        mobileTitle: "Spot a valid pin bar",
+        mobileCases: [
+          { v: true, label: "Clean rejection", wick: 140, body: 30, ratio: "4.7:1" },
+          { v: false, label: "Wick = Body", wick: 60, body: 60, ratio: "1:1" },
+          { v: false, label: "Body crushes the wick", wick: 30, body: 120, ratio: "1:4" },
+          { v: false, label: "Negligible wick", wick: 10, body: 60, ratio: "0.2:1" },
+        ],
+        mobileMecheLabel: "Wick",
+        mobileCorpsLabel: "Body",
+        mobileRatioLabel: "Ratio",
+        mobileFooter: "Wick / body ratio ≥ 2:1 = valid pin bar",
       }
     : {
         title: "Reconnaître une pin bar valide en 5 secondes",

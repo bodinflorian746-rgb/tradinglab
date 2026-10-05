@@ -1,4 +1,4 @@
-export const InflationChainDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+export const InflationChainDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) => {
   const t = locale === "es"
     ? {
         title: "La cadena que controla TODO el mercado",
@@ -31,6 +31,38 @@ export const InflationChainDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" 
         step3Desc: "Se vuelve más atractiva",
         step4Desc: "Forex / Índices / Oro / Crypto",
         narrativeMobile: "Una sola causa macro hizo mover TODO el mercado.",
+      }
+    : locale === "en"
+    ? {
+        title: "The chain that controls the WHOLE market",
+        subtitle: "Learn it by heart — it's 80% of macro",
+        inflation: "INFLATION",
+        pricesUp: "Prices rise",
+        taux: "RATES",
+        banqueCent: "The central bank",
+        monteTaux: "raises rates",
+        devise: "CURRENCY",
+        devientAttract: "Becomes more",
+        attractive: "attractive",
+        marches: "MARKETS",
+        forexIndices: "Forex / Indices",
+        orCrypto: "Gold / Crypto",
+        force: "drives",
+        renforce: "strengthens",
+        impacte: "impacts",
+        exemple: "EXAMPLE — The chain in action (2022-2023)",
+        inflationUS: "US Inflation",
+        tauxFed: "Fed Rates",
+        dollarDxy: "Dollar (DXY)",
+        nasdaq: "Nasdaq",
+        narrative: "A single macro cause moved the WHOLE market.",
+        footer: "Tracking inflation = understanding 80% of macro moves",
+        mobileExemple: "Example — the chain in action (2022-2023)",
+        step1Desc: "Prices rise",
+        step2Desc: "The central bank raises rates",
+        step3Desc: "Becomes more attractive",
+        step4Desc: "Forex / Indices / Gold / Crypto",
+        narrativeMobile: "A single macro cause moved the WHOLE market.",
       }
     : {
         title: "La chaîne qui contrôle TOUT le marché",

@@ -4,7 +4,7 @@
 
 interface FOMCExhaustionDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -56,6 +56,17 @@ export function FOMCExhaustionDiagram({ className = "", locale = "fr" }: FOMCExh
         perteDesc: "El impulso FOMC se agota → condiciones para un fade bearish.",
         legendMeche: "Mechas de rechazo repetidas en la cima",
         legendPerte: "Pérdida de aceleración = agotamiento",
+      }
+    : locale === "en"
+    ? {
+        annotation: "The impulse slows before the pullback",
+        mobileTitle: "FOMC exhaustion · XAU/USD M15",
+        mecheTitle: "Repeated rejection wicks at the top",
+        mecheDesc: "Several candles show a refusal to push higher.",
+        perteTitle: "Loss of acceleration = exhaustion",
+        perteDesc: "The FOMC impulse runs out of steam → conditions for a bearish fade.",
+        legendMeche: "Repeated rejection wicks at the top",
+        legendPerte: "Loss of acceleration = exhaustion",
       }
     : {
         annotation: "L'impulsion ralentit avant le retour",

@@ -1,4 +1,4 @@
-export default function RiskRegimesQuadrantDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+export default function RiskRegimesQuadrantDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
   const t = locale === "es"
     ? {
         title: "Los 4 regímenes de mercado",
@@ -24,6 +24,32 @@ export default function RiskRegimesQuadrantDiagram({ locale = "fr" }: { locale?:
         ctxReflation: "Crecimiento alto · Inflación alta",
         ctxFlight: "Crecimiento bajo · Inflación baja",
         ctxRiskOff: "Crecimiento bajo · Inflación alta",
+      }
+    : locale === "en"
+    ? {
+        title: "The 4 market regimes",
+        riskOnTitle: "Classic risk-on",
+        riskOnDesc1: "Growth + liquidity,",
+        riskOnDesc2: "capital chases yield",
+        reflationTitle: "Reflation trade",
+        reflationDesc1: "Growth + inflation,",
+        reflationDesc2: "rotation into real assets",
+        flightTitle: "Flight to quality",
+        flightDesc1: "Measured fear, defensive",
+        flightDesc2: "repositioning without panic",
+        riskOffTitle: "Risk-off panic",
+        riskOffDesc1: "Global liquidation,",
+        riskOffDesc2: "rush for cash and safety",
+        infFaible: "Low inflation",
+        infElevee: "High inflation",
+        croisForte: "High growth",
+        croisFaible: "Low growth",
+        legendArrows: "↑ bullish  •  ↓ bearish  •  ~ stable  •  * except long-duration tech",
+        mobileSubtitle: "Defined by growth × inflation",
+        ctxRiskOn: "High growth · Low inflation",
+        ctxReflation: "High growth · High inflation",
+        ctxFlight: "Low growth · Low inflation",
+        ctxRiskOff: "Low growth · High inflation",
       }
     : {
         title: "Les 4 régimes de marché",

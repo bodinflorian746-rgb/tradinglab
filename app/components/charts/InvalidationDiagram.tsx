@@ -1,22 +1,23 @@
-export default function InvalidationDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function InvalidationDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    setupInvalid: isEs ? "Setup invalidado — cortar" : "Setup invalidé — couper",
-    resistance:   isEs ? "Resistencia" : "Résistance",
+    setupInvalid: isEs ? "Setup invalidado — cortar" : isEn ? "Setup invalidated — cut" : "Setup invalidé — couper",
+    resistance:   isEs ? "Resistencia" : isEn ? "Resistance" : "Résistance",
     neckline:     "Neckline",
-    slInit:       isEs ? "SL inicial" : "SL initial",
-    peak1:        isEs ? "Pico 1" : "Sommet 1",
-    peak2:        isEs ? "Pico 2" : "Sommet 2",
-    entryShort:   isEs ? "Entrada short" : "Entrée short",
-    patternInv:   isEs ? "Patrón invalidado" : "Pattern invalidé",
-    violentRej:   isEs ? "Vela de rechazo violenta" : "Bougie de rejet violente",
-    footer:       isEs ? "Double Top → ruptura neckline → re-ruptura por arriba = patrón fallido" : "Double Top → cassure neckline → re-cassure par le haut = pattern échoué",
-    mobInvalid:   isEs ? "⚠ Setup invalidado — cortar" : "⚠ Setup invalidé — couper",
-    mob1:         isEs ? "Double Top formado, ruptura de la neckline → short tomado." : "Double Top formé, cassure de la neckline → short pris.",
-    mob2A:        isEs ? "El precio rebota y" : "Le prix remonte et",
-    mob2Bold:     isEs ? "re-rompe la neckline por arriba" : "re-casse la neckline par le haut",
-    mob2End:      isEs ? "→ patrón fallido." : "→ pattern échoué.",
-    mob3:         isEs ? "Cortar de inmediato — sin esperar el SL." : "Couper immédiatement — sans attendre le SL.",
+    slInit:       isEs ? "SL inicial" : isEn ? "Initial SL" : "SL initial",
+    peak1:        isEs ? "Pico 1" : isEn ? "Peak 1" : "Sommet 1",
+    peak2:        isEs ? "Pico 2" : isEn ? "Peak 2" : "Sommet 2",
+    entryShort:   isEs ? "Entrada short" : isEn ? "Short entry" : "Entrée short",
+    patternInv:   isEs ? "Patrón invalidado" : isEn ? "Pattern invalidated" : "Pattern invalidé",
+    violentRej:   isEs ? "Vela de rechazo violenta" : isEn ? "Violent rejection candle" : "Bougie de rejet violente",
+    footer:       isEs ? "Double Top → ruptura neckline → re-ruptura por arriba = patrón fallido" : isEn ? "Double Top → neckline break → re-break upward = failed pattern" : "Double Top → cassure neckline → re-cassure par le haut = pattern échoué",
+    mobInvalid:   isEs ? "⚠ Setup invalidado — cortar" : isEn ? "⚠ Setup invalidated — cut" : "⚠ Setup invalidé — couper",
+    mob1:         isEs ? "Double Top formado, ruptura de la neckline → short tomado." : isEn ? "Double Top formed, neckline break → short taken." : "Double Top formé, cassure de la neckline → short pris.",
+    mob2A:        isEs ? "El precio rebota y" : isEn ? "Price rebounds and" : "Le prix remonte et",
+    mob2Bold:     isEs ? "re-rompe la neckline por arriba" : isEn ? "re-breaks the neckline upward" : "re-casse la neckline par le haut",
+    mob2End:      isEs ? "→ patrón fallido." : isEn ? "→ failed pattern." : "→ pattern échoué.",
+    mob3:         isEs ? "Cortar de inmediato — sin esperar el SL." : isEn ? "Cut immediately — without waiting for the SL." : "Couper immédiatement — sans attendre le SL.",
   };
   return (
     <div className={className}>

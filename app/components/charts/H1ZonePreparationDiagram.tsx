@@ -4,7 +4,7 @@
 
 interface H1ZonePreparationDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -41,6 +41,18 @@ export function H1ZonePreparationDiagram({ className = "", locale = "fr" }: H1Zo
         mobBougiesDesc: "Velas cada vez más cortas al acercarse = precio que se ralentiza → preparación a un giro.",
         legendZone: "Zona trazada por adelantado — FVG bearish + resistencia",
         legendBougies: "Velas cada vez más cortas = precio que se ralentiza al acercarse",
+      }
+    : locale === "en"
+    ? {
+        fvgBearish: "FVG bearish",
+        annotation: "The zone sets the stage",
+        mobTitle: "H1 zone preparation",
+        mobZoneTitle: "Zone drawn ahead of time",
+        mobZoneDesc: "FVG bearish + H1 resistance = zone of interest mapped before price arrives.",
+        mobBougiesTitle: "Candles shrinking",
+        mobBougiesDesc: "Smaller and smaller candles on approach = price slowing down → setup for a reversal.",
+        legendZone: "Zone drawn ahead of time — FVG bearish + resistance",
+        legendBougies: "Smaller and smaller candles = price slowing on approach",
       }
     : {
         fvgBearish: "FVG bearish",

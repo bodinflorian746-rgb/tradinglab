@@ -1,6 +1,6 @@
 interface PrecisionEntryDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CD = {
@@ -55,23 +55,24 @@ const CANDLES: CD[] = [
 
 export function PrecisionEntryDiagram({ className = "", locale = "fr" }: PrecisionEntryDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    supportHoriz:  isEs ? "Soporte horizontal" : "Support horizontal",
-    support:       isEs ? "Soporte" : "Support",
-    preciseEntry:  isEs ? "ENTRADA PRECISA" : "ENTRÉE PRÉCISE",
-    confluences:   isEs ? "4 confluencias ✓" : "4 confluences ✓",
-    mobTitle:      isEs ? "Entrada de precisión — 4 confluencias ✓" : "Entrée de précision — 4 confluences ✓",
-    mob1desc:      isEs ? "· zona Fibonacci óptima" : "· zone Fibonacci optimale",
-    mob2desc:      isEs ? "· zona de órdenes institucionales" : "· zone d'ordres institutionnels",
-    mob3desc:      isEs ? "· Fair Value Gap (zona de desequilibrio)" : "· Fair Value Gap (zone de déséquilibre)",
-    mob4title:     isEs ? "4 · Soporte horizontal" : "4 · Support horizontal",
-    mob4desc:      isEs ? "· nivel histórico respetado" : "· niveau historique respecté",
-    mobFooter:     isEs ? "→ En la intersección de las 4 zonas:" : "→ À l'intersection des 4 zones :",
-    mobFooterEnd:  isEs ? "en señal de rechazo alcista" : "sur signal de rejet haussier",
-    legendOte:     isEs ? "Zona OTE (61.8–78.6%)" : "Zone OTE (61.8–78.6%)",
-    legendOb:      isEs ? "Order Block (OB)" : "Order Block (OB)",
-    legendFvg:     isEs ? "Fair Value Gap (FVG)" : "Fair Value Gap (FVG)",
-    legendSignal:  isEs ? "Señal de rechazo — entrada de precisión" : "Signal de rejet — entrée de précision",
+    supportHoriz:  isEs ? "Soporte horizontal" : isEn ? "Horizontal support" : "Support horizontal",
+    support:       isEs ? "Soporte" : isEn ? "Support" : "Support",
+    preciseEntry:  isEs ? "ENTRADA PRECISA" : isEn ? "PRECISE ENTRY" : "ENTRÉE PRÉCISE",
+    confluences:   isEs ? "4 confluencias ✓" : isEn ? "4 confluences ✓" : "4 confluences ✓",
+    mobTitle:      isEs ? "Entrada de precisión — 4 confluencias ✓" : isEn ? "Precise entry — 4 confluences ✓" : "Entrée de précision — 4 confluences ✓",
+    mob1desc:      isEs ? "· zona Fibonacci óptima" : isEn ? "· optimal Fibonacci zone" : "· zone Fibonacci optimale",
+    mob2desc:      isEs ? "· zona de órdenes institucionales" : isEn ? "· institutional order zone" : "· zone d'ordres institutionnels",
+    mob3desc:      isEs ? "· Fair Value Gap (zona de desequilibrio)" : isEn ? "· Fair Value Gap (imbalance zone)" : "· Fair Value Gap (zone de déséquilibre)",
+    mob4title:     isEs ? "4 · Soporte horizontal" : isEn ? "4 · Horizontal support" : "4 · Support horizontal",
+    mob4desc:      isEs ? "· nivel histórico respetado" : isEn ? "· respected historical level" : "· niveau historique respecté",
+    mobFooter:     isEs ? "→ En la intersección de las 4 zonas:" : isEn ? "→ At the intersection of the 4 zones:" : "→ À l'intersection des 4 zones :",
+    mobFooterEnd:  isEs ? "en señal de rechazo alcista" : isEn ? "on bullish rejection signal" : "sur signal de rejet haussier",
+    legendOte:     isEs ? "Zona OTE (61.8–78.6%)" : isEn ? "OTE zone (61.8–78.6%)" : "Zone OTE (61.8–78.6%)",
+    legendOb:      isEs ? "Order Block (OB)" : isEn ? "Order Block (OB)" : "Order Block (OB)",
+    legendFvg:     isEs ? "Fair Value Gap (FVG)" : isEn ? "Fair Value Gap (FVG)" : "Fair Value Gap (FVG)",
+    legendSignal:  isEs ? "Señal de rechazo — entrada de precisión" : isEn ? "Rejection signal — precise entry" : "Signal de rejet — entrée de précision",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

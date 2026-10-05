@@ -47,7 +47,7 @@ const TEST_ENTRY: TradeEntry = {
   ai_feedback: null,
   ai_mistakes: null,
   ai_score: null,
-  ai_recommendations: null,
+  ai_strengths: null,
   created_at: "2026-06-16T13:05:00.000Z",
   updated_at: "2026-06-16T13:05:00.000Z",
 };

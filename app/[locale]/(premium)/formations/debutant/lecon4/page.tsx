@@ -2,6 +2,7 @@ import { LessonTemplate } from "@/app/components/LessonTemplate";
 import { SpreadDiagram } from "@/app/components/charts/SpreadDiagram";
 import { SpreadVariationDiagram } from "@/app/components/charts/SpreadVariationDiagram";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 // ── Schéma : gain et perte avec le spread ────────────────────────────────────
 function SpreadImpactDiagram() {
@@ -143,5 +144,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

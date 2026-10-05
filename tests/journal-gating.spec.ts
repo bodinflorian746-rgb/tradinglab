@@ -1,6 +1,11 @@
 import { test, expect, type Page } from "@playwright/test";
 
-const PASSWORD = "DevRecette123!";
+// Mot de passe des comptes de test @dev.local : jamais écrit dans le dépôt,
+// fourni par SMOKE_TEST_PASSWORD (cf. scripts/seed-smoke-test-personas.js).
+const PASSWORD = process.env.SMOKE_TEST_PASSWORD ?? "";
+if (!PASSWORD) {
+  throw new Error("SMOKE_TEST_PASSWORD manquant : définir la variable avant de lancer ces tests.");
+}
 const MEMBER_A = "member.a@dev.local";
 
 async function loginAs(page: Page, email: string) {

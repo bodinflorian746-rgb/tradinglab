@@ -1,33 +1,34 @@
 interface InflationIndicatorsChainDiagramProps {
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export const InflationIndicatorsChainDiagram = ({ locale = "fr" }: InflationIndicatorsChainDiagramProps = {}) => {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    title:        isEs ? "La cadena de inflación que los pros vigilan" : "La chaîne d'inflation que les pros surveillent",
-    subtitle:     isEs ? "Del productor al consumidor — y lo que la Fed mira realmente" : "Du producteur au consommateur — et ce que la Fed regarde vraiment",
-    ppiTitle:     isEs ? "Precios productores" : "Prix producteurs",
-    ppiTime:      isEs ? "D-12 días" : "J-12 jours",
-    ppiNote:      isEs ? "Señal temprana" : "Signal précoce",
-    announces:    isEs ? "anuncia a menudo" : "annonce souvent",
-    cpiPrices:    isEs ? "Precios consumidores" : "Prix consommateurs",
-    cpiTime:      isEs ? "Día D — 14h30" : "Jour J — 14h30",
-    cpiNote:      isEs ? "Choque mediatizado" : "Choc médiatisé",
-    coreTrend:    isEs ? "Tendencia de fondo" : "Tendance de fond",
-    coreNote:     isEs ? "Lo que los pros miran" : "Ce que les pros regardent",
-    interpreted:  isEs ? "interpretado por" : "interprété par",
-    pceFav:       isEs ? "Indicador preferido" : "Indicateur préféré",
-    pceFed:       isEs ? "de la Fed" : "de la Fed",
-    pceRef:       isEs ? "★ Referencia oficial" : "★ Référence officielle",
-    reaction:     isEs ? "REACCIÓN DEL MERCADO SEGÚN EL CORE CPI" : "RÉACTION MARCHÉ SELON LE CORE CPI",
-    above:        isEs ? "Core CPI > expectativas" : "Core CPI > attentes",
-    below:        isEs ? "Core CPI < expectativas" : "Core CPI < attentes",
-    dxyUp:        isEs ? "↑ DXY (dólar fuerte)" : "↑ DXY (dollar fort)",
-    dxyDown:      isEs ? "↓ DXY (dólar débil)" : "↓ DXY (dollar faible)",
-    pairsDown:    isEs ? "↓ EUR/USD, Oro, Crypto" : "↓ EUR/USD, Or, Crypto",
-    pairsUp:      isEs ? "↑ EUR/USD, Oro, Índices" : "↑ EUR/USD, Or, Indices",
-    footer:       isEs ? "El PPI avisa. El CPI dispara. El Core confirma." : "Le PPI prévient. Le CPI déclenche. Le Core confirme.",
+    title:        isEs ? "La cadena de inflación que los pros vigilan" : isEn ? "The inflation chain the pros watch" : "La chaîne d'inflation que les pros surveillent",
+    subtitle:     isEs ? "Del productor al consumidor — y lo que la Fed mira realmente" : isEn ? "From producer to consumer — and what the Fed really watches" : "Du producteur au consommateur — et ce que la Fed regarde vraiment",
+    ppiTitle:     isEs ? "Precios productores" : isEn ? "Producer prices" : "Prix producteurs",
+    ppiTime:      isEs ? "D-12 días" : isEn ? "D-12 days" : "J-12 jours",
+    ppiNote:      isEs ? "Señal temprana" : isEn ? "Early signal" : "Signal précoce",
+    announces:    isEs ? "anuncia a menudo" : isEn ? "often signals" : "annonce souvent",
+    cpiPrices:    isEs ? "Precios consumidores" : isEn ? "Consumer prices" : "Prix consommateurs",
+    cpiTime:      isEs ? "Día D — 14h30" : isEn ? "Day D — 2:30pm" : "Jour J — 14h30",
+    cpiNote:      isEs ? "Choque mediatizado" : isEn ? "Headline shock" : "Choc médiatisé",
+    coreTrend:    isEs ? "Tendencia de fondo" : isEn ? "Underlying trend" : "Tendance de fond",
+    coreNote:     isEs ? "Lo que los pros miran" : isEn ? "What the pros watch" : "Ce que les pros regardent",
+    interpreted:  isEs ? "interpretado por" : isEn ? "interpreted by" : "interprété par",
+    pceFav:       isEs ? "Indicador preferido" : isEn ? "Preferred gauge" : "Indicateur préféré",
+    pceFed:       isEs ? "de la Fed" : isEn ? "of the Fed" : "de la Fed",
+    pceRef:       isEs ? "★ Referencia oficial" : isEn ? "★ Official benchmark" : "★ Référence officielle",
+    reaction:     isEs ? "REACCIÓN DEL MERCADO SEGÚN EL CORE CPI" : isEn ? "MARKET REACTION BY CORE CPI" : "RÉACTION MARCHÉ SELON LE CORE CPI",
+    above:        isEs ? "Core CPI > expectativas" : isEn ? "Core CPI > expectations" : "Core CPI > attentes",
+    below:        isEs ? "Core CPI < expectativas" : isEn ? "Core CPI < expectations" : "Core CPI < attentes",
+    dxyUp:        isEs ? "↑ DXY (dólar fuerte)" : isEn ? "↑ DXY (strong dollar)" : "↑ DXY (dollar fort)",
+    dxyDown:      isEs ? "↓ DXY (dólar débil)" : isEn ? "↓ DXY (weak dollar)" : "↓ DXY (dollar faible)",
+    pairsDown:    isEs ? "↓ EUR/USD, Oro, Crypto" : isEn ? "↓ EUR/USD, Gold, Crypto" : "↓ EUR/USD, Or, Crypto",
+    pairsUp:      isEs ? "↑ EUR/USD, Oro, Índices" : isEn ? "↑ EUR/USD, Gold, Indices" : "↑ EUR/USD, Or, Indices",
+    footer:       isEs ? "El PPI avisa. El CPI dispara. El Core confirma." : isEn ? "PPI warns. CPI triggers. Core confirms." : "Le PPI prévient. Le CPI déclenche. Le Core confirme.",
   };
   const indicators = isEs
     ? [
@@ -35,6 +36,13 @@ export const InflationIndicatorsChainDiagram = ({ locale = "fr" }: InflationIndi
         { name: "CPI HEADLINE", color: "#fbbf24", title: "Precios consumidores", time: "Día D — 14h30", note: "Choque mediatizado" },
         { name: "CORE CPI", color: "#10b981", title: "Tendencia de fondo", time: "Mismo día", note: "★ Lo que los pros miran" },
         { name: "CORE PCE", color: "#60a5fa", title: "Indicador preferido de la Fed", time: "Fin de mes", note: "★ Referencia oficial" },
+      ]
+    : isEn
+    ? [
+        { name: "PPI", color: "#60a5fa", title: "Producer prices", time: "D-12 days", note: "Early signal" },
+        { name: "CPI HEADLINE", color: "#fbbf24", title: "Consumer prices", time: "Day D — 2:30pm", note: "Headline shock" },
+        { name: "CORE CPI", color: "#10b981", title: "Underlying trend", time: "Same day", note: "★ What the pros watch" },
+        { name: "CORE PCE", color: "#60a5fa", title: "Fed's preferred gauge", time: "Month end", note: "★ Official benchmark" },
       ]
     : [
         { name: "PPI", color: "#60a5fa", title: "Prix producteurs", time: "J-12 jours", note: "Signal précoce" },

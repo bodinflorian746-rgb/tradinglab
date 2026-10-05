@@ -53,5 +53,9 @@
     "trialBadge": "48h d'essai gratuit"
   },
   "guarantee": "Aucun engagement · Paiement sécurisé · Annulation en 1 clic",
+  "checkoutDisabled": {
+    "subtitle": "Accès gratuit pour les traders affiliés à un broker partenaire.",
+    "directMessage": "L'accès direct par abonnement n'est pas disponible pour le moment."
+  },
   "trialError": "Une erreur est survenue lors de l'envoi de ton code. Réessaie dans un instant."
 }

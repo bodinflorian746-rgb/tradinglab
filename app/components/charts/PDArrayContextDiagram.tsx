@@ -4,7 +4,7 @@
 
 interface PDArrayContextDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -54,6 +54,20 @@ export function PDArrayContextDiagram({ className = "", locale = "fr" }: PDArray
         b2Body: "El precio regresa a la zona y luego rechazo bajista = PD Array operativo para short.",
         leg1: "FVG creado por el impulso bajista",
         leg2: "Retorno a la zona y luego rechazo = PD Array activo",
+      }
+    : locale === "en"
+    ? {
+        equalHighs: "Equal highs / resistance 1.1780",
+        sweep: "Sweep 1.1792",
+        fvg: "FVG 1.1758-1.1770",
+        annotation: "Price returns to the zone created by the impulse",
+        mobileTitle: "PD Array — FVG context · EUR/USD H1",
+        b1Title: "Bearish FVG created by the impulse",
+        b1Body: "A strong bearish impulse leaves a gap (Fair Value Gap) to fill.",
+        b2Title: "Return + rejection = active PD Array",
+        b2Body: "Price returns to the zone then bearish rejection = PD Array live for short.",
+        leg1: "FVG created by the bearish impulse",
+        leg2: "Return to the zone then rejection = active PD Array",
       }
     : {
         equalHighs: "Equal highs / résistance 1.1780",

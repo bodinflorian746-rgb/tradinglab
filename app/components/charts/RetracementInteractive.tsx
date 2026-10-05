@@ -45,6 +45,36 @@ const CONFIGS_FR = {
   },
 };
 
+const CONFIGS_EN = {
+  fomo: {
+    heading: "FOMO — entry too early",
+    body: "You entered during the retracement, not at the HL. Price kept correcting and hit your Stop Loss. Mid-retracement entries lack precision — always wait for the structure zone.",
+    color: "border-red-500/20 bg-red-500/5 text-red-400",
+    badgeColor: "#ef4444",
+    badgeText: "SL hit ✗",
+    badgeCx: 204,
+    badgeCy: 118,
+  },
+  patience: {
+    heading: "Patience — entry at the HL",
+    body: "You waited for price to return to the structural Higher Low. The retracement stopped there. Bullish pin bar validated. Price continued in the trend direction. Winning trade.",
+    color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
+    badgeColor: "#10b981",
+    badgeText: "Winning trade ✓",
+    badgeCx: 210,
+    badgeCy: 24,
+  },
+  reverse: {
+    heading: "Counter-trend — selling in an uptrend",
+    body: "You sold in a bullish trend. The retracement was a normal correction — not a reversal. Price resumed its rise and hit your Stop Loss. Never short without a clear break of structure.",
+    color: "border-red-500/20 bg-red-500/5 text-red-400",
+    badgeColor: "#ef4444",
+    badgeText: "SL hit ✗",
+    badgeCx: 210,
+    badgeCy: 24,
+  },
+};
+
 const CONFIGS_ES = {
   fomo: {
     heading: "FOMO — entrada demasiado pronto",
@@ -75,10 +105,10 @@ const CONFIGS_ES = {
   },
 };
 
-export function RetracementInteractive({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export function RetracementInteractive({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const [choice, setChoice] = useState<Choice>(null);
 
-  const CONFIGS = locale === "es" ? CONFIGS_ES : CONFIGS_FR;
+  const CONFIGS = locale === "es" ? CONFIGS_ES : locale === "en" ? CONFIGS_EN : CONFIGS_FR;
   const cfg = choice ? CONFIGS[choice] : null;
 
   const labels = locale === "es"
@@ -88,6 +118,14 @@ export function RetracementInteractive({ className = "", locale = "fr" }: { clas
         btnPatience: "Esperar el HL",
         btnReverse: "Vender aquí",
         retry: "Volver a intentar",
+      }
+    : locale === "en"
+    ? {
+        question: "Price retraces to the HL — what do you do?",
+        btnFomo: "Enter now",
+        btnPatience: "Wait for the HL",
+        btnReverse: "Sell here",
+        retry: "Try again",
       }
     : {
         question: "Le prix retrace sur le HL — que fais-tu ?",

@@ -1,23 +1,24 @@
 interface ConfluenceDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function ConfluenceDiagram({ className = "", locale = "fr" }: ConfluenceDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    supportSR:        isEs ? "Soporte S/R" : "Support S/R",
-    zoneDemand:       isEs ? "Zona Demand" : "Zone Demand",
-    confluences:      isEs ? "3 confluencias ✓" : "3 confluences ✓",
-    mobTitle:         isEs ? "3 confluencias en la Zona Demand ✓" : "3 confluences sur la Zone Demand ✓",
-    fibDesc:          isEs ? "· nivel de retroceso clave" : "· niveau de retracement clé",
-    supportHist:      isEs ? "Soporte histórico" : "Support historique",
-    supportHistDesc:  isEs ? "· zona ya respetada por el precio" : "· zone déjà respectée par le prix",
-    psychoLevel:      isEs ? "Nivel psicológico" : "Niveau psychologique",
-    psychoDesc:       isEs ? "· precio redondo (1.1800)" : "· prix rond (1.1800)",
-    rebound:          isEs ? "→ rebote en la intersección de los 3 niveles" : "→ rebond à l'intersection des 3 niveaux",
-    legendDemand:     isEs ? "Zona Demand" : "Zone Demand",
-    legendSupportH:   isEs ? "Soporte histórico" : "Support historique",
+    supportSR:        isEs ? "Soporte S/R" : isEn ? "Support S/R" : "Support S/R",
+    zoneDemand:       isEs ? "Zona Demand" : isEn ? "Demand Zone" : "Zone Demand",
+    confluences:      isEs ? "3 confluencias ✓" : isEn ? "3 confluences ✓" : "3 confluences ✓",
+    mobTitle:         isEs ? "3 confluencias en la Zona Demand ✓" : isEn ? "3 confluences on the Demand Zone ✓" : "3 confluences sur la Zone Demand ✓",
+    fibDesc:          isEs ? "· nivel de retroceso clave" : isEn ? "· key retracement level" : "· niveau de retracement clé",
+    supportHist:      isEs ? "Soporte histórico" : isEn ? "Historical support" : "Support historique",
+    supportHistDesc:  isEs ? "· zona ya respetada por el precio" : isEn ? "· zone already respected by price" : "· zone déjà respectée par le prix",
+    psychoLevel:      isEs ? "Nivel psicológico" : isEn ? "Psychological level" : "Niveau psychologique",
+    psychoDesc:       isEs ? "· precio redondo (1.1800)" : isEn ? "· round number (1.1800)" : "· prix rond (1.1800)",
+    rebound:          isEs ? "→ rebote en la intersección de los 3 niveles" : isEn ? "→ bounce at the intersection of the 3 levels" : "→ rebond à l'intersection des 3 niveaux",
+    legendDemand:     isEs ? "Zona Demand" : isEn ? "Demand Zone" : "Zone Demand",
+    legendSupportH:   isEs ? "Soporte histórico" : isEn ? "Historical support" : "Support historique",
   };
   // Zone Demand — creux de la courbe, centre du diagramme
   const zoneX = 106, zoneY = 102, zoneW = 60, zoneH = 26;

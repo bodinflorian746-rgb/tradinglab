@@ -1,4 +1,4 @@
-export function LiquidityGrabDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export function LiquidityGrabDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Liquidity grab — el sweep antes del verdadero movimiento",
@@ -18,6 +18,26 @@ export function LiquidityGrabDiagram({ className = "", locale = "fr" }: { classN
         m3Bold: "vuelve en sentido opuesto",
         m3Part2: ".",
         mobileFooter: "El sweep barre los stops antes del verdadero movimiento institucional.",
+      }
+    : locale === "en"
+    ? {
+        title: "Liquidity grab — the sweep before the real move",
+        sweep: "Sweep",
+        rejet: "Rejection below the level",
+        retournement: "Reversal",
+        equalHighs: "Equal highs (BSL)",
+        caption: "The sweep takes out stops before the real institutional move",
+        mobileTitle: "Liquidity grab — the sweep before the real move",
+        m1Part1: "Stop cluster forms above the ",
+        m1Bold: "equal highs",
+        m1Part2: " (visible liquidity).",
+        m2Part1: "A wick pierces the level to ",
+        m2Bold: "trigger the stops",
+        m2Part2: " — institutional sweep.",
+        m3Part1: "Once liquidity is absorbed, price ",
+        m3Bold: "reverses the other way",
+        m3Part2: ".",
+        mobileFooter: "The sweep takes out stops before the real institutional move.",
       }
     : {
         title: "Liquidity grab — le sweep avant le vrai mouvement",

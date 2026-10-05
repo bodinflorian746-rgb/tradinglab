@@ -4,7 +4,7 @@
 
 interface KillzonesTimelineDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 const BODY_W = 8;
@@ -64,6 +64,22 @@ export function KillzonesTimelineDiagram({ className = "", locale = "fr" }: Kill
         nyBody: "2da ventana — pico de actividad institucional US.",
         leg1: "Asia Session = baja volatilidad, range estrecho",
         leg2: "London & New York = expansión, impulsos francos",
+      }
+    : locale === "en"
+    ? {
+        asia: "Asia Session",
+        london: "London Open",
+        newYork: "New York Open",
+        annotation: "Volatility clusters in specific time windows",
+        mobileTitle: "Killzones — 24h timeline",
+        asiaTitle: "Asia (00h–07h)",
+        asiaBody: "Low volatility, tight range. Accumulation.",
+        londonTitle: "London (08h–10h)",
+        londonBody: "Expansion + clean impulses. Major killzone.",
+        nyTitle: "New York (2:30pm or 3:30pm Paris)",
+        nyBody: "2nd window — peak US institutional activity.",
+        leg1: "Asia Session = low volatility, tight range",
+        leg2: "London & New York = expansion, clean impulses",
       }
     : {
         asia: "Asia Session",

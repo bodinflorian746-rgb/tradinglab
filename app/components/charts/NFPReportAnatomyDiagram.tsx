@@ -1,4 +1,4 @@
-export const NFPReportAnatomyDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+export const NFPReportAnatomyDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) => {
   const t = locale === "es"
     ? {
         title: "Anatomía de un reporte NFP",
@@ -37,6 +37,45 @@ export const NFPReportAnatomyDiagram = ({ locale = "fr" }: { locale?: "fr" | "es
         niveau3Desc: "Puede anular la sorpresa de la cifra actual — a menudo ignorada",
         niveau4: "Nivel 4 · Reacción multi-activos (DXY fuerte)",
         footerMobile: "El retail tradea el headline. El pro lee los 4 sub-datos + las revisiones.",
+      }
+    : locale === "en"
+    ? {
+        title: "Anatomy of an NFP report",
+        subtitle: "What retail sees vs what the pro reads",
+        headline: "NFP HEADLINE",
+        headlineDesc: "The hyped number everyone watches",
+        nfpCreations: "Job creations",
+        nfpHorsAgri: "(non-farm)",
+        nfpHeadlineLabel: "The headline number",
+        unemployment: "Unemployment rate",
+        signalRalent: "Slowdown",
+        signalRalentLine2: "signal",
+        ahe: "Hourly wages",
+        aheMoyen: "(average)",
+        aheInflation: "★ Future inflation",
+        participationTitle: "Participation rate",
+        qualiteMarche: "Labor market",
+        duTravail: "quality",
+        revisions: "⚠ PRIOR MONTH REVISIONS",
+        revisionsDesc: "Can cancel out the current print's surprise — often ignored",
+        reactionMultiActifs: "MULTI-ASSET REACTION (STRONG DXY)",
+        eurUsdReact: "↓ Stronger dollar",
+        xauReact: "↓ Gold penalized",
+        nasdaqReact: "↓ Tech under pressure",
+        btcReact: "↓ Risk-off",
+        footer: "Retail trades the headline. The pro reads the 4 sub-prints + the revisions.",
+        mobileTitle: "Anatomy of an NFP report",
+        niveau1: "Level 1 · NFP HEADLINE",
+        niveau1Desc: "The hyped number everyone watches",
+        niveau2: "Level 2 · 4 detailed sub-prints",
+        nfpMobile: "Job creations (non-farm)",
+        unemployMobile: "Unemployment rate",
+        aheMobile: "Hourly wages (future inflation)",
+        particMobile: "Labor market quality",
+        niveau3: "⚠ Level 3 · PRIOR MONTH revisions",
+        niveau3Desc: "Can cancel out the current print's surprise — often ignored",
+        niveau4: "Level 4 · Multi-asset reaction (strong DXY)",
+        footerMobile: "Retail trades the headline. The pro reads the 4 sub-prints + the revisions.",
       }
     : {
         title: "Anatomie d'un rapport NFP",

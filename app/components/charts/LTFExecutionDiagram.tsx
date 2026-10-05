@@ -3,25 +3,26 @@
 
 interface LTFExecutionDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function LTFExecutionDiagram({ className = "", locale = "fr" }: LTFExecutionDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    levelLabel:  isEs ? "Nivel ~1.1775" : "Niveau ~1.1775",
-    localLow:    isEs ? "Mínimo local" : "Creux local",
-    slLabel:     isEs ? "SL arriba del sweep" : "SL au-dessus du sweep",
-    entryShort:  isEs ? "Entrada SHORT" : "Entrée SHORT",
-    caption:     isEs ? "Sweep + CHoCH en la zona HTF = disparador de ejecución" : "Sweep + CHoCH dans la zone HTF = déclencheur d'exécution",
-    mobTitle:    isEs ? "Ejecución M5 — sweep + CHoCH" : "Exécution M5 — sweep + CHoCH",
-    mob1:        isEs ? "mecha por encima de ~1.1775 (caza de stops)." : "mèche au-dessus de ~1.1775 (chasse de stops).",
-    mob2:        isEs ? "ruptura del mínimo local M5 = señal de entrada short." : "cassure du creux local M5 = signal d'entrée short.",
-    mob3pre:     isEs ? "SL más allá del sweep" : "SL au-delà du sweep",
-    mob3post:    isEs ? "entrada tras CHoCH." : "entrée après CHoCH.",
-    legend1:     isEs ? "Sweep = mecha por encima del nivel" : "Sweep = mèche au-dessus du niveau",
-    legend2:     isEs ? "CHoCH = ruptura del mínimo local" : "CHoCH = cassure du creux local",
-    legend3:     isEs ? "SL más allá del sweep, entrada tras CHoCH" : "SL au-delà du sweep, entrée après CHoCH",
+    levelLabel:  isEs ? "Nivel ~1.1775" : isEn ? "Level ~1.1775" : "Niveau ~1.1775",
+    localLow:    isEs ? "Mínimo local" : isEn ? "Local low" : "Creux local",
+    slLabel:     isEs ? "SL arriba del sweep" : isEn ? "SL above the sweep" : "SL au-dessus du sweep",
+    entryShort:  isEs ? "Entrada SHORT" : isEn ? "SHORT entry" : "Entrée SHORT",
+    caption:     isEs ? "Sweep + CHoCH en la zona HTF = disparador de ejecución" : isEn ? "Sweep + CHoCH in the HTF zone = execution trigger" : "Sweep + CHoCH dans la zone HTF = déclencheur d'exécution",
+    mobTitle:    isEs ? "Ejecución M5 — sweep + CHoCH" : isEn ? "M5 execution — sweep + CHoCH" : "Exécution M5 — sweep + CHoCH",
+    mob1:        isEs ? "mecha por encima de ~1.1775 (caza de stops)." : isEn ? "wick above ~1.1775 (stop hunt)." : "mèche au-dessus de ~1.1775 (chasse de stops).",
+    mob2:        isEs ? "ruptura del mínimo local M5 = señal de entrada short." : isEn ? "break of M5 local low = short entry signal." : "cassure du creux local M5 = signal d'entrée short.",
+    mob3pre:     isEs ? "SL más allá del sweep" : isEn ? "SL beyond the sweep" : "SL au-delà du sweep",
+    mob3post:    isEs ? "entrada tras CHoCH." : isEn ? "entry after CHoCH." : "entrée après CHoCH.",
+    legend1:     isEs ? "Sweep = mecha por encima del nivel" : isEn ? "Sweep = wick above the level" : "Sweep = mèche au-dessus du niveau",
+    legend2:     isEs ? "CHoCH = ruptura del mínimo local" : isEn ? "CHoCH = break of the local low" : "CHoCH = cassure du creux local",
+    legend3:     isEs ? "SL más allá del sweep, entrada tras CHoCH" : isEn ? "SL beyond the sweep, entry after CHoCH" : "SL au-delà du sweep, entrée après CHoCH",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

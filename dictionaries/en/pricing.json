@@ -1,1 +1,61 @@
-{}
+{
+  "title": "Choose your access",
+  "subtitle": "Free access for traders affiliated with a partner broker, or €19/month for direct access.",
+  "broker": {
+    "badge": "Recommended",
+    "name": "Via partner broker",
+    "price": "€0",
+    "period": "/month",
+    "description": "You open a broker account through our affiliate link (or that of a partner in our network). In return, you get free access to the entire platform.",
+    "features": [
+      "Complete Trading courses (Beginner → Advanced)",
+      "Macro-economics module (FOMC, NFP, key indicators)",
+      "Institutional strategies (SMC, ICT, Price Action)",
+      "Games and simulators (Place your SL, Find the Mistake...)",
+      "Quizzes and exercises on real charts",
+      "Regularly updated content"
+    ],
+    "cta": "Get access via a partner broker",
+    "haveCode": "I already have an access code",
+    "trialBadge": "48h free trial",
+    "deposit": {
+      "lineTitle": "Minimum deposit: €200",
+      "lineSubtitle": "The €200 stays your money and can be withdrawn at any time.",
+      "modal": {
+        "title": "Before you continue",
+        "bullets": [
+          "Minimum deposit required: €200",
+          "This deposit is not a payment to TradeScaleX",
+          "The funds are deposited into your own broker account",
+          "The €200 stays your money",
+          "You can withdraw your funds at any time from your broker client area",
+          "€200 is the recommended minimum to start in good conditions"
+        ],
+        "continueLabel": "I understand and I continue",
+        "cancelLabel": "Cancel"
+      }
+    }
+  },
+  "direct": {
+    "name": "Direct access",
+    "price": "€19",
+    "period": "/month",
+    "description": "For those who prefer direct access, without broker affiliation. Same content, no commitment.",
+    "features": [
+      "Complete Trading courses (Beginner → Advanced)",
+      "Macro-economics module (FOMC, NFP, key indicators)",
+      "Institutional strategies (SMC, ICT, Price Action)",
+      "Games and simulators (Place your SL, Find the Mistake...)",
+      "Quizzes and exercises on real charts",
+      "Regularly updated content"
+    ],
+    "cta": "Start direct access",
+    "trialBadge": "48h free trial"
+  },
+  "guarantee": "No commitment · Secure payment · Cancel in 1 click",
+  "checkoutDisabled": {
+    "subtitle": "Free access for traders affiliated with a partner broker.",
+    "directMessage": "Direct subscription access is not available at the moment."
+  },
+  "trialError": "Something went wrong while sending your code. Please try again in a moment."
+}

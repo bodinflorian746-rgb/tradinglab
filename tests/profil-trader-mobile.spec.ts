@@ -35,20 +35,34 @@ test("mobile — /profil-trader (état vide)", async ({ page }) => {
   expect(consoleErrors, `Erreurs : ${consoleErrors.join("\n")}`).toHaveLength(0);
 });
 
-test("navbar — lien 'Mon profil' présent et fonctionnel", async ({ page }) => {
-  await page.goto("/", { waitUntil: "domcontentloaded" });
+// ⚠️ Comportement changé par le refactor nav "premium minimaliste" : "Mon
+// profil" a été déplacé dans le menu compte (avatar/e-mail), lui-même réservé
+// aux utilisateurs connectés. Pour un visiteur non connecté (le seul état
+// exercé par cette suite E2E, faute de fixture de login), le lien n'apparaît
+// donc plus du tout dans la nav — ce test vérifie ce nouvel état plutôt que
+// l'ancien accès direct. La page /profil-trader reste atteignable par URL
+// directe (state vide géré, cf. test ci-dessus) ; seul le raccourci de nav
+// pour les invités a disparu, conformément à la demande explicite.
+//
+// Navigation explicite vers "/fr" (pas "/") : Playwright Test résout
+// navigator.languages en "en-US" par défaut (comportement du test runner,
+// indépendant de la locale OS — cf. playwright.config.ts qui ne fixe pas
+// `locale: "fr-FR""), ce qui ferait atterrir un `goto("/")` sur /en et
+// invaliderait tout matching de texte français. Ce n'est pas lié au refactor
+// nav ; on le contourne ici en ciblant directement /fr.
+test("navbar — 'Mon profil' n'apparaît plus dans la nav pour un visiteur non connecté", async ({ page }) => {
+  await page.goto("/fr", { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
 
-  // Ouvrir le menu mobile (burger)
-  await page.getByRole("button", { name: /Ouvrir le menu/ }).click();
+  // Ouvrir le menu mobile (burger) — via data-testid, indépendant de la locale.
+  await page.getByTestId("nav-burger").click();
   await page.waitForTimeout(200);
 
-  const profilLink = page.getByRole("link", { name: /Mon profil/i }).first();
-  await expect(profilLink).toBeVisible();
-  await expect(profilLink).toHaveAttribute("href", "/profil-trader");
-
-  await profilLink.click();
-  await page.waitForURL("**/profil-trader", { timeout: 5000 });
+  // Scopé à <nav> : le footer du site a son propre lien "Mon profil" (section
+  // "Compte", hors périmètre de ce refactor) — non concerné par cette règle.
+  await expect(page.locator("nav").getByRole("link", { name: /Mon profil/i })).toHaveCount(0);
+  // Le visiteur voit en revanche Connexion / Créer un compte.
+  await expect(page.locator("nav").getByRole("link", { name: /Connexion/i })).toBeVisible();
 });
 
 test("tracking — jouer un round BUY/SELL/NO TRADE alimente le profil", async ({ page }) => {

@@ -4,7 +4,7 @@
 
 interface FOMCFadeSetupDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -61,6 +61,22 @@ export function FOMCFadeSetupDiagram({ className = "", locale = "fr" }: FOMCFade
         step3b: " hacia un retorno parcial, no una reversión completa.",
         legend1: "Exceso luego estabilización = condición del fade",
         legend2: "Fade hacia retorno parcial, no reversión completa",
+      }
+    : locale === "en"
+    ? {
+        target: "Target $4,638",
+        entreeLong: "Long entry $4,600",
+        sl: "SL $4,578",
+        exces: "Overshoot",
+        stabilisation: "Stabilization",
+        fade: "Fade",
+        mobileTitle: "FOMC fade setup · XAU/USD M15",
+        step1: "Post-FOMC overshoot (violent impulse).",
+        step2: "Stabilization = fade condition.",
+        step3a: "Fade",
+        step3b: " toward a partial pullback, not a full reversal.",
+        legend1: "Overshoot then stabilization = fade condition",
+        legend2: "Fade toward partial pullback, not full reversal",
       }
     : {
         target: "Target 4 638 $",

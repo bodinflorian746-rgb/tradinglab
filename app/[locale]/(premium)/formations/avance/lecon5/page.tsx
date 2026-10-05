@@ -4,6 +4,7 @@ import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
 import { OTEDiagram } from "@/app/components/charts/OTEDiagram";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 function ContentFr() {
   return (
@@ -44,7 +45,7 @@ function ContentFr() {
             { step: "2", text: "Note le swing low (A) et le swing high (B) du mouvement impulsif qui a créé le BOS." },
             { step: "3", text: "Trace le Fibonacci de A (swing low) à B (swing high)." },
             { step: "4", text: "La zone OTE = entre le retracement 61.8% et 78.6%. C'est ta zone d'attention pour l'entrée." },
-            { step: "5", text: "Cherche une confluence dans cette zone : OB, FVG, ou ancien niveau de structure. C'est là qu'on entre." },
+            { step: "5", text: "Cherche une confluence dans cette zone : OB, FVG, ou ancien niveau de structure. C'est un point d'intérêt qui renforce le setup, pas une entrée automatique : une confirmation reste nécessaire, selon ton plan de trading." },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.step}</span>
@@ -158,5 +159,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

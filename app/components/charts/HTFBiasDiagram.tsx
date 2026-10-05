@@ -3,7 +3,7 @@
 
 interface HTFBiasDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function HTFBiasDiagram({ className = "", locale = "fr" }: HTFBiasDiagramProps) {
@@ -30,6 +30,30 @@ export function HTFBiasDiagram({ className = "", locale = "fr" }: HTFBiasDiagram
         mobFooter: "Todo análisis LTF parte de este veredicto.",
         legendStruct: "Estructura H4 LH/LL = bias bajista",
         legendPrice: "Precio actual bajo la resistencia HTF",
+      }
+    : locale === "en"
+    ? {
+        rLabel: "1.1780 — R",
+        prixLabel: "Price 1.1725",
+        verdict: "HTF VERDICT",
+        bias: "Bias",
+        baissier: "BEARISH",
+        ventes: "Sells prioritized",
+        achats: "Buys = against",
+        contexte: "context",
+        analyseLtf1: "All LTF analysis",
+        analyseLtf2: "starts from this verdict",
+        caption: "HTF structure in LH/LL → sells only",
+        mobTitle: "HTF directional bias (H4)",
+        mobVerdict: "HTF verdict",
+        mobBaissier: "BEARISH",
+        mobVentes: "Sells prioritized",
+        mobVentesDesc: " · H4 structure in LH/LL",
+        mobAchats: "Buys = counter-context",
+        mobAchatsDesc: " to avoid",
+        mobFooter: "All LTF analysis starts from this verdict.",
+        legendStruct: "H4 LH/LL structure = bearish bias",
+        legendPrice: "Current price below HTF resistance",
       }
     : {
         rLabel: "1.1780 — R",

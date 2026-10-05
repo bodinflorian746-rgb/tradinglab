@@ -18,7 +18,7 @@ function persistedResult(entry: TradeEntryView): AiAnalysis | null {
   if (entry.ai_status !== "analyzed" || !entry.ai_summary) return null;
   return {
     summary: entry.ai_summary,
-    strengths: Array.isArray(entry.ai_recommendations) ? entry.ai_recommendations : [],
+    strengths: Array.isArray(entry.ai_strengths) ? entry.ai_strengths : [],
     mistakes: Array.isArray(entry.ai_mistakes) ? entry.ai_mistakes : [],
     behavioral_advice: entry.ai_feedback ?? "",
     score: entry.ai_score ?? 0,

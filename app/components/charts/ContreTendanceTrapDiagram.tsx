@@ -3,7 +3,7 @@
 
 interface ContreTendanceTrapDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function ContreTendanceTrapDiagram({ className = "", locale = "fr" }: ContreTendanceTrapDiagramProps) {
@@ -23,6 +23,23 @@ export function ContreTendanceTrapDiagram({ className = "", locale = "fr" }: Con
         warning: "⚠ Comprar aquí = operar contra el HTF → trampa.",
         leg1: "Breakout local M15 — visualmente tentador",
         leg2: "Tendencia HTF bajista + rechazo bajo resistencia",
+      }
+    : locale === "en"
+    ? {
+        structure: "LH / LL structure",
+        tendance: "Bearish background trend",
+        resistance: "H4 resistance  1.1760",
+        breakout: "Breakout  1.1752",
+        rejet: "Rejection  1.1685",
+        bottomNote: "An M15 breakout rising against the Daily downtrend ends in a trap",
+        mobileTitle: "Counter-trend trap",
+        b1Title: "Daily ↘ — LH/LL structure",
+        b1Body: "Bearish HTF trend + price rejected below resistance.",
+        b2Title: "M15 ↗ — Tempting local breakout",
+        b2Body: "Visual bullish breakout on the lower timeframe.",
+        warning: "⚠ Buying here = trading against the HTF → trap.",
+        leg1: "Local M15 breakout — visually tempting",
+        leg2: "Bearish HTF trend + rejection below resistance",
       }
     : {
         structure: "Structure LH / LL",

@@ -1,4 +1,4 @@
-export default function PinBarFailureDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function PinBarFailureDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Pin bar válida pero setup invalidado",
@@ -19,6 +19,27 @@ export default function PinBarFailureDiagram({ className = "", locale = "fr" }: 
         step3: "Ruptura bajista del soporte → SL alcanzado a 4 470 $",
         mobileFooter1: "Incluso una pin bar válida puede fallar. ",
         mobileFooter2: "El SL está ahí para eso.",
+      }
+    : locale === "en"
+    ? {
+        title: "Valid pin bar but invalidated setup",
+        slBadge: "SL hit — pin bar invalid",
+        miniRebound: "Failed mini-bounce",
+        slHit: "SL hit at $4,470",
+        tpLabel: "TP $4,650",
+        entryLabel: "Entry $4,520",
+        supportLabel: "Support $4,500",
+        slLabel: "SL $4,470",
+        footer: "Even a valid pin bar can fail. The SL is there for that.",
+        mobileTitle: "Valid pin bar but invalidated setup",
+        step1Tag: "Step 1",
+        step1: "Bullish pin bar at support $4,500",
+        step2Tag: "Step 2",
+        step2: "Mini-bounce of 2-3 candles → then failure",
+        step3Tag: "Step 3",
+        step3: "Bearish break of support → SL hit at $4,470",
+        mobileFooter1: "Even a valid pin bar can fail. ",
+        mobileFooter2: "The SL is there for that.",
       }
     : {
         title: "Pin bar valide mais setup invalidé",

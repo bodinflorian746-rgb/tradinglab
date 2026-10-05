@@ -5,6 +5,7 @@ import { LessonExercice } from "@/app/components/LessonExercice";
 import { Candle } from "@/app/components/charts/Candle";
 import { SupportResistance } from "@/app/components/charts/SupportResistance";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 function ContentFr() {
   return (
@@ -220,5 +221,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

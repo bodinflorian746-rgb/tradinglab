@@ -4,6 +4,7 @@ import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
 import { StopHuntInteractive } from "@/app/components/charts/StopHuntInteractive";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 function ContentFr() {
   return (
@@ -162,7 +163,7 @@ function ContentFr() {
           "Tu places un ordre d'achat au-dessus du pic du spike pour suivre le momentum",
         ]}
         correctIndex={2}
-        explanation="Un spike au-dessus des Equal Highs avec clôture en dessous est la signature d'un stop hunt sur la Buy-side Liquidity (BSL). Les institutions viennent de prendre la liquidité des stops des shorts. Le retournement baissier qui suit est alimenté par les ventes institutionnelles, c'est là qu'on cherche un signal de vente."
+        explanation="Un spike au-dessus des Equal Highs avec clôture en dessous est la signature d'un stop hunt sur la Buy-side Liquidity (BSL). Les institutions viennent de prendre la liquidité des stops des shorts. Le retournement baissier qui suit est alimenté par les ventes institutionnelles, c'est une zone où chercher une confirmation de vente, pas un signal en soi."
         answerExplanations={[
           "Faux. La clôture sous la résistance invalide la cassure. Ce n'est pas un breakout, c'est précisément un faux breakout (stop hunt). Acheter ici, c'est se positionner du mauvais côté du mouvement institutionnel.",
           "Faux. Ce n'est pas ambigu pour quelqu'un qui connaît les stop hunts. La signature est claire : spike + mèche longue + clôture de l'autre côté. C'est un signal d'alerte, pas une situation neutre.",
@@ -182,5 +183,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

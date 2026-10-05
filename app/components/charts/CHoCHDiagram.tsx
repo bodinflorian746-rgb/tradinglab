@@ -1,7 +1,7 @@
 interface CHoCHDiagramProps {
   trend?: "bullish" | "bearish";
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function CHoCHDiagram({
@@ -73,6 +73,17 @@ export function CHoCHDiagram({
         chochDesc: "1ra señal de reversión de tendencia",
         legStruct: isBull ? "Estructura alcista (HH/HL)" : "Estructura bajista (LH/LL)",
         legChoch: "CHoCH — 1ra señal de reversión",
+      }
+    : locale === "en"
+    ? {
+        title: `CHoCH — Change of Character ${isBull ? "(bearish reversal)" : "(bullish reversal)"}`,
+        trendInitial: "Initial trend ",
+        trendStruct: isBull ? "bullish (HH/HL)" : "bearish (LH/LL)",
+        lvlBroken: ` broken`,
+        lvlDesc: isBull ? "price breaks the previous structural low" : "price breaks the previous structural high",
+        chochDesc: "1st trend reversal signal",
+        legStruct: isBull ? "Bullish structure (HH/HL)" : "Bearish structure (LH/LL)",
+        legChoch: "CHoCH — 1st reversal signal",
       }
     : {
         title: `CHoCH — Change of Character ${isBull ? "(retournement baissier)" : "(retournement haussier)"}`,

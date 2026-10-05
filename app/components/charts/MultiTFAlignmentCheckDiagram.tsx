@@ -1,4 +1,4 @@
-export default function MultiTFAlignmentCheckDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function MultiTFAlignmentCheckDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
         title: "Alinear Daily → H4 → M15 en 4 criterios",
@@ -23,6 +23,31 @@ export default function MultiTFAlignmentCheckDiagram({ className = "", locale = 
           { title: "News clean", desc: "Sin NFP, FOMC, CPI en los próximos 30 minutos" },
         ],
         mobFooter: "4/4 = entrada precisa posible",
+      }
+    : locale === "en"
+    ? {
+        title: "Align Daily → H4 → M15 on 4 criteria",
+        c1: "Daily bias aligned",
+        c1d1: "Major trend HH/HL",
+        c1d2: "or LH/LL confirmed",
+        c2: "Confluent H4 level",
+        c2d1: "S/R, Fibo, MA, OB",
+        c2d2: "crossing the same zone",
+        c3: "M15 signal confirmed",
+        c3d1: "Pin bar, engulfing,",
+        c3d2: "immediate rejection",
+        c4: "News clean",
+        c4d1: "No NFP, FOMC, CPI",
+        c4d2: "in the next 30 minutes",
+        footer: "4/4 = precise entry possible",
+        mobTitle: "4 multi-TF alignment criteria",
+        mob: [
+          { title: "Daily bias aligned", desc: "Major trend HH/HL or LH/LL confirmed" },
+          { title: "Confluent H4 level", desc: "S/R, Fibo, MA, OB crossing the same zone" },
+          { title: "M15 signal confirmed", desc: "Pin bar, engulfing, immediate rejection" },
+          { title: "News clean", desc: "No NFP, FOMC, CPI in the next 30 minutes" },
+        ],
+        mobFooter: "4/4 = precise entry possible",
       }
     : {
         title: "Aligner Daily → H4 → M15 en 4 critères",

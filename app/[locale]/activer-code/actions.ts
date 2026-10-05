@@ -13,6 +13,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { computeAccessPeriodEnd, decideAccessWrite, type ExistingSubscription } from "@/lib/access-codes";
 
 function getStr(formData: FormData, key: string): string {
   const v = formData.get(key);
@@ -40,7 +41,7 @@ export async function activateCode(formData: FormData) {
   // ─── 1. Lecture + validation du code (avec le type) ───────────────────────
   const { data: row, error: readErr } = await admin
     .from("access_codes")
-    .select("code, status, type, expires_at, used_at")
+    .select("code, status, type, expires_at, used_at, duration_days")
     .eq("code", code)
     .maybeSingle();
 
@@ -116,14 +117,44 @@ export async function activateCode(formData: FormData) {
     }
   }
 
-  // ─── 4. Codes 'broker' / 'lifetime' : accès illimité via une subscription ──
+  // ─── 4. Codes 'broker' / 'lifetime' / 'duration' : accès via une subscription
   // premium.ts accorde l'accès si status ∈ {active,trialing} ET
-  // current_period_end > now : on pose donc une date très lointaine (accès à
-  // vie), sans Stripe (stripe_subscription_id null). La distinction
-  // broker/lifetime reste tracée dans access_codes.type (ligne consommée).
-  if (row.type === "broker" || row.type === "lifetime") {
-    const FAR_FUTURE = "2099-12-31T23:59:59.000Z";
-    const nowIso = new Date().toISOString();
+  // current_period_end > now. broker/lifetime posent une date très lointaine
+  // (accès à vie, mécanisme inchangé) ; 'duration' (codes générés par un admin
+  // de groupe, cf. app/[locale]/master/actions.ts) pose now + duration_days
+  // jours. Toujours sans Stripe (stripe_subscription_id null). Le type reste
+  // tracé dans access_codes.type (ligne consommée).
+  //
+  // Règle « ne jamais raccourcir un accès existant » (decideAccessWrite) : un
+  // code durée activé sur un compte à vie ne change rien, et un abonnement
+  // Stripe en cours n'est jamais écrasé (prélèvements orphelins sinon).
+  if (row.type === "broker" || row.type === "lifetime" || row.type === "duration") {
+    const nowMs = Date.now();
+    const nowIso = new Date(nowMs).toISOString();
+    const periodEnd = computeAccessPeriodEnd(row.type, row.duration_days, nowMs);
+
+    const { data: existing, error: existingErr } = await admin
+      .from("subscriptions")
+      .select("status, current_period_end, stripe_subscription_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    // Lecture impossible : on n'écrit que si le nouvel accès est « à vie »
+    // (il ne peut raccourcir aucun accès non Stripe) ; sinon on s'abstient
+    // plutôt que risquer d'écraser un accès plus long.
+    const decision = existingErr
+      ? row.type === "duration" ? "keep_unknown" : "write"
+      : decideAccessWrite(existing as ExistingSubscription, periodEnd, nowMs);
+    if (existingErr) {
+      console.error(`[activate] lecture subscription échouée pour ${user.id}: ${existingErr.message}`);
+    }
+    if (decision !== "write") {
+      // Code déjà consommé, accès existant conservé tel quel. Tracé pour suivi
+      // (ex. remplacement d'un code durée par un code à vie déjà présent).
+      console.warn(`[activate] code ${row.type} sans effet pour ${user.id} : ${decision}`);
+      revalidatePath("/", "layout");
+      redirect(`/${locale}`);
+    }
+
     const { error: subErr } = await admin.from("subscriptions").upsert(
       {
         user_id: user.id,
@@ -132,7 +163,7 @@ export async function activateCode(formData: FormData) {
         stripe_customer_id: null,
         stripe_price_id: null,
         current_period_start: nowIso,
-        current_period_end: FAR_FUTURE,
+        current_period_end: periodEnd,
         cancel_at_period_end: false,
         updated_at: nowIso,
       },

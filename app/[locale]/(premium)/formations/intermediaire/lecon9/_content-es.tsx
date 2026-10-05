@@ -141,7 +141,7 @@ export default function ContentEs() {
             <span className="text-lg">✓</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">Nivel Fib + confluencia + señal de vela</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Entras. Es el setup completo. SL debajo de la zona Fib entera, TP hacia el swing high anterior (o la próxima resistencia).</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Es el setup completo, una confirmación a integrar en tu propio plan de trading, no una entrada automática. SL debajo de la zona Fib entera, TP hacia el swing high anterior (o la próxima resistencia).</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-amber-400/5 border border-amber-400/15 rounded-xl px-4 py-3">

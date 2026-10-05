@@ -4,7 +4,7 @@
 
 interface ICTLiquidityPrepDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -52,6 +52,19 @@ export function ICTLiquidityPrepDiagram({ className = "", locale = "fr" }: ICTLi
         m2b: " = manipulación institucional.",
         leg1: "Equal highs = liquidez visible",
         leg2: "Sweep y reintegración = manipulación",
+      }
+    : locale === "en"
+    ? {
+        equalHighs: "Equal highs 1.1780",
+        sweep: "Sweep 1.1792",
+        annotation: "Liquidity prepares the displacement",
+        mobileTitle: "ICT liquidity prep · EUR/USD H1",
+        m1a: "Equal highs",
+        m1b: " = visible buy-stop liquidity.",
+        m2a: "Sweep + reintegration",
+        m2b: " = institutional manipulation.",
+        leg1: "Equal highs = visible liquidity",
+        leg2: "Sweep then reintegration = manipulation",
       }
     : {
         equalHighs: "Equal highs 1.1780",

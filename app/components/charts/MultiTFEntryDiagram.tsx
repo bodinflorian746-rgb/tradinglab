@@ -1,4 +1,4 @@
-export default function MultiTFEntryDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+export default function MultiTFEntryDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
   const L = locale === "es"
     ? {
         title: "Proceso completo — Tendencia Daily → Nivel H4 → Entrada H1",
@@ -23,6 +23,31 @@ export default function MultiTFEntryDiagram({ locale = "fr" }: { locale?: "fr" |
         mobH4: "Retracement hacia Fibo 0.618 = 4 600 $ → zona a vigilar",
         mobH1: "Bullish engulfing en el Fibo → entrada activada",
         mobEntry: "Entrada",
+      }
+    : locale === "en"
+    ? {
+        title: "Full process — Daily trend → H4 level → H1 entry",
+        contexte: "The context",
+        leNiveau: "The level",
+        declencheur: "The trigger",
+        tendanceHaussiere: "Uptrend ↑",
+        supportHigh: "Support $4,500 → high $4,720",
+        retracementFibo: "Pullback to Fibo",
+        fibo618: "Fibo 0.618 — $4,600",
+        zoneSurveiller: "Zone to watch: $4,600",
+        tp4720: "TP $4,720",
+        sl4590: "SL $4,590",
+        engulfingBullish: "Bullish engulfing",
+        fiboH1: "Fibo $4,600",
+        setupLegend: "Engulfing setup — Entry $4,630 · SL $4,590 · TP $4,720 · R/R 2.25",
+        mobTitle: "Full process Daily → H4 → H1 (XAU/USD)",
+        mobContexte: "The context",
+        mobLeNiveau: "The level",
+        mobDeclencheur: "The trigger",
+        mobDaily: "Uptrend ↑ confirmed · Support $4,500 → high $4,720",
+        mobH4: "Pullback to Fibo 0.618 = $4,600 → zone to watch",
+        mobH1: "Bullish engulfing at the Fibo → entry triggered",
+        mobEntry: "Entry",
       }
     : {
         title: "Process complet — Tendance Daily → Niveau H4 → Entrée H1",

@@ -43,7 +43,7 @@ export default function ContentEs() {
             { step: "2", text: "Anota el swing low (A) y el swing high (B) del movimiento impulsivo que creó el BOS." },
             { step: "3", text: "Traza el Fibonacci de A (swing low) a B (swing high)." },
             { step: "4", text: "La zona OTE = entre el retroceso 61.8% y 78.6%. Es tu zona de atención para la entrada." },
-            { step: "5", text: "Busca una confluencia en esa zona: OB, FVG, o antiguo nivel de estructura. Ahí es donde entras." },
+            { step: "5", text: "Busca una confluencia en esa zona: OB, FVG, o antiguo nivel de estructura. Es un punto de interés que refuerza el setup, no una entrada automática: sigue siendo necesaria una confirmación, según tu propio plan de trading." },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.step}</span>

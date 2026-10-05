@@ -1,6 +1,6 @@
 interface CandleAnatomyDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function CandleAnatomyDiagram({ className = '', locale = "fr" }: CandleAnatomyDiagramProps) {
@@ -22,6 +22,25 @@ export function CandleAnatomyDiagram({ className = '', locale = "fr" }: CandleAn
         openBottom: "apertura en la parte baja del cuerpo",
         openTop: "apertura en la parte alta del cuerpo",
         closeBottom: "cierre en la parte baja del cuerpo",
+      }
+    : locale === "en"
+    ? {
+        header: "Green candle (bullish) · Red candle (bearish)",
+        ariaLabel: "Anatomy of a Japanese candlestick",
+        highPoint: "High — high point",
+        closeLabel: "Close — close",
+        openLabel: "Open — open",
+        lowPoint: "Low — low point",
+        buyers: "Buyers ↑",
+        sellers: "Sellers ↓",
+        mobileGreenTitle: "Green candle — Buyers ↑",
+        mobileRedTitle: "Red candle — Sellers ↓",
+        highest: "highest point reached",
+        lowest: "lowest point reached",
+        closeTop: "close at the top of the body",
+        openBottom: "open at the bottom of the body",
+        openTop: "open at the top of the body",
+        closeBottom: "close at the bottom of the body",
       }
     : {
         header: "Bougie verte (haussière) · Bougie rouge (baissière)",

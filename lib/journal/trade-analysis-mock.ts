@@ -12,7 +12,7 @@
 //  Demain : ces enregistrements seront produits par l'IA réelle, stockés (ex.
 //  colonne jsonb ai_history) et agrégés pour l'analyse GLOBALE du trader. Les
 //  colonnes ai_* existantes (ai_summary/ai_feedback/ai_score/ai_mistakes/
-//  ai_recommendations) portent déjà la dernière analyse individuelle.
+//  ai_strengths) portent déjà la dernière analyse individuelle.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import type { TradeEntryView } from "./types";
@@ -175,8 +175,8 @@ export function buildTradeAnalysis(e: TradeEntryView, t: JournalDict, locale: Lo
     improve.push(TX.backToPlan);
   if (["stressed", "impatient", "fomo", "tired"].includes(e.emotion_before ?? ""))
     improve.push(TX.calmerState);
-  if (Array.isArray(e.ai_recommendations))
-    for (const rec of e.ai_recommendations) if (improve.length < 4) improve.push(rec);
+  if (Array.isArray(e.ai_strengths))
+    for (const rec of e.ai_strengths) if (improve.length < 4) improve.push(rec);
   if (improve.length === 0) improve.push(TX.improveFallback);
 
   // ── Conseil du coach ──

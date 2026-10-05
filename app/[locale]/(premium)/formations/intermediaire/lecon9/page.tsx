@@ -4,6 +4,7 @@ import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
 import { FibonacciDiagram } from "@/app/components/charts/FibonacciDiagram";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 function ContentFr() {
   return (
@@ -142,7 +143,7 @@ function ContentFr() {
             <span className="text-lg">✓</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">Niveau Fib + confluence + signal de bougie</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu entres. C'est le setup complet. SL sous la zone Fib entière, TP vers le swing high précédent (ou la prochaine résistance).</p>
+              <p className="text-xs text-zinc-400 mt-0.5">C'est le setup complet, une confirmation à intégrer dans ton plan de trading, pas une entrée automatique. SL sous la zone Fib entière, TP vers le swing high précédent (ou la prochaine résistance).</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-amber-400/5 border border-amber-400/15 rounded-xl px-4 py-3">
@@ -236,5 +237,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

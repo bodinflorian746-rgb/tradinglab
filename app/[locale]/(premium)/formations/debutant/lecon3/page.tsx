@@ -1,6 +1,7 @@
 import { LessonTemplate } from "@/app/components/LessonTemplate";
 import { CandleAnatomyDiagram } from "@/app/components/charts/CandleAnatomyDiagram";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 // ── Schéma : exemple bougie verte vs rouge ───────────────────────────────────
 function CandleExampleDiagram() {
@@ -122,5 +123,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

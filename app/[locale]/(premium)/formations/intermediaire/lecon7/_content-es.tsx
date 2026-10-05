@@ -147,7 +147,7 @@ export default function ContentEs() {
             <span className="text-lg">✓</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">Daily + H4 + M15 alineados</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Entras. Es el setup de alta probabilidad. Sesgo Daily confirmado por zona H4, señal M15 en el mismo sentido.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Es el setup de alta probabilidad, una confirmación a integrar en tu propio plan de trading, no una orden de entrada automática. Sesgo Daily confirmado por zona H4, señal M15 en el mismo sentido.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-amber-400/5 border border-amber-400/15 rounded-xl px-4 py-3">

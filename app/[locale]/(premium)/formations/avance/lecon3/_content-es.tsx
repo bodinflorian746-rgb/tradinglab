@@ -27,7 +27,7 @@ export default function ContentEs() {
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">En resumen:</span> un OB es una zona donde las instituciones dejaron órdenes sin ejecutar. El precio regresa para completarlas, y ahí es donde tú entras.
+            <span className="text-white font-medium">En resumen:</span> un OB es una zona donde las instituciones dejaron órdenes sin ejecutar. El precio regresa para completarlas, es una zona de interés potencial, no una entrada automática: sigue siendo necesaria una confirmación adicional, y la decisión depende de tu propio plan de trading.
           </p>
         </div>
       </section>
@@ -44,7 +44,7 @@ export default function ContentEs() {
               <li className="text-xs text-zinc-400 leading-relaxed">— Última vela <span className="text-white">bajista</span> antes de un movimiento alcista impulsivo</li>
               <li className="text-xs text-zinc-400 leading-relaxed">— El movimiento que sigue debe crear un BOS (Break of Structure) alcista</li>
               <li className="text-xs text-zinc-400 leading-relaxed">— La zona del OB = cuerpo de esa vela bajista (open → close)</li>
-              <li className="text-xs text-zinc-400 leading-relaxed">— Señal de compra cuando el precio regresa a esa zona en retroceso</li>
+              <li className="text-xs text-zinc-400 leading-relaxed">— Zona de interés potencial de compra cuando el precio regresa a esa zona en retroceso, no una señal en sí misma</li>
             </ul>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-4">
@@ -53,7 +53,7 @@ export default function ContentEs() {
               <li className="text-xs text-zinc-400 leading-relaxed">— Última vela <span className="text-white">alcista</span> antes de un movimiento bajista impulsivo</li>
               <li className="text-xs text-zinc-400 leading-relaxed">— El movimiento que sigue debe crear un BOS bajista</li>
               <li className="text-xs text-zinc-400 leading-relaxed">— La zona del OB = cuerpo de esa vela alcista (open → close)</li>
-              <li className="text-xs text-zinc-400 leading-relaxed">— Señal de venta cuando el precio regresa a esa zona</li>
+              <li className="text-xs text-zinc-400 leading-relaxed">— Zona de interés potencial de venta cuando el precio regresa a esa zona, no una señal en sí misma</li>
             </ul>
           </div>
         </div>

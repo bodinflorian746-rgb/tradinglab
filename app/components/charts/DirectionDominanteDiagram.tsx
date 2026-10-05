@@ -3,7 +3,7 @@
 
 interface DirectionDominanteDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function DirectionDominanteDiagram({ className = "", locale = "fr" }: DirectionDominanteDiagramProps) {
@@ -19,6 +19,19 @@ export function DirectionDominanteDiagram({ className = "", locale = "fr" }: Dir
         mobFooter: "Velocidad + amplitud = dirección dominante.",
         legendImpulsions: "Impulsiones bajistas: rápidas y fuertes",
         legendCorrections: "Correcciones alcistas: lentas y débiles",
+      }
+    : locale === "en"
+    ? {
+        rejets: "Repeated rejections",
+        annotation: "The market corrects slowly, but drops violently",
+        mobTitle: "Dominant direction — XAU/USD H4",
+        mobImpulsions: "Bearish impulses",
+        mobImpulsionsDesc: "Fast and strong → real market direction.",
+        mobCorrections: "Bullish corrections",
+        mobCorrectionsDesc: "Slow and weak → simple pullbacks.",
+        mobFooter: "Speed + amplitude = dominant direction.",
+        legendImpulsions: "Bearish impulses: fast and strong",
+        legendCorrections: "Bullish corrections: slow and weak",
       }
     : {
         rejets: "Rejets répétés",

@@ -4,7 +4,7 @@
 
 interface ConfirmationM5DiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -47,6 +47,19 @@ export function ConfirmationM5Diagram({ className = "", locale = "fr" }: Confirm
         mobCassureDesc: "CHoCH en M5 valida la entrada short con SL más allá de la mecha extrema.",
         legendMeches: "Mechas de rechazo en la zona",
         legendCassure: "Ruptura del valle local = confirmación",
+      }
+    : locale === "en"
+    ? {
+        zoneH1: "H1 zone",
+        creux: "local low",
+        annotation: "The reaction confirms the zone",
+        mobTitle: "M5 confirmation — LTF trigger",
+        mobMeches: "Rejection wicks in the zone",
+        mobMechesDesc: "Price enters the zone and prints rejection wicks — sign of pressure.",
+        mobCassure: "Local low break = confirmation",
+        mobCassureDesc: "M5 CHoCH validates the short entry with SL beyond the extreme wick.",
+        legendMeches: "Rejection wicks in the zone",
+        legendCassure: "Local low break = confirmation",
       }
     : {
         zoneH1: "Zone H1",

@@ -3,30 +3,31 @@
 
 interface ProcessFunnelDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function ProcessFunnelDiagram({ className = "", locale = "fr" }: ProcessFunnelDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    block1:        isEs ? "Daily / H4 — Dirección dominante" : "Daily / H4 — Direction dominante",
-    block2:        isEs ? "H1 — Zona de interés" : "H1 — Zone d'intérêt",
-    block3:        isEs ? "M15 / M30 — Confirmación" : "M15 / M30 — Confirmation",
+    block1:        isEs ? "Daily / H4 — Dirección dominante" : isEn ? "Daily / H4 — Dominant direction" : "Daily / H4 — Direction dominante",
+    block2:        isEs ? "H1 — Zona de interés" : isEn ? "H1 — Zone of interest" : "H1 — Zone d'intérêt",
+    block3:        isEs ? "M15 / M30 — Confirmación" : isEn ? "M15 / M30 — Confirmation" : "M15 / M30 — Confirmation",
     trade:         "TRADE",
-    annot1:        isEs ? "El escenario" : "Le scénario",
-    annot2:        isEs ? "se construye" : "se construit",
-    annot3:        isEs ? "de arriba" : "du haut",
-    annot4:        isEs ? "hacia abajo" : "vers le bas",
-    caption:       isEs ? "Cada etapa reduce las posibilidades antes de la siguiente" : "Chaque étage réduit les possibilités avant le suivant",
-    mobTitle:      isEs ? "Embudo del proceso top-down" : "Entonnoir du process top-down",
-    mobStage1:     isEs ? "Etapa 1: contexto direccional." : "Étage 1 : contexte directionnel.",
-    mobBlock2:     isEs ? "H1 — Zona de interés" : "H1 — Zone d'intérêt",
-    mobStage2:     isEs ? "Etapa 2: preparación táctica." : "Étage 2 : préparation tactique.",
-    mobBlock3:     isEs ? "M15 / M5 — Disparador" : "M15 / M5 — Déclencheur",
-    mobStage3:     isEs ? "Etapa 3: timing de entrada preciso." : "Étage 3 : timing d'entrée précis.",
-    mobFooter:     isEs ? "El trade solo llega al final del embudo." : "Le trade n'arrive qu'au bout de l'entonnoir.",
-    legendStages:  isEs ? "3 etapas de análisis — del contexto al timing" : "3 étages d'analyse — du contexte au timing",
-    legendTrade:   isEs ? "El trade solo llega al final del embudo" : "Le trade n'arrive qu'au bout de l'entonnoir",
+    annot1:        isEs ? "El escenario" : isEn ? "The setup" : "Le scénario",
+    annot2:        isEs ? "se construye" : isEn ? "is built" : "se construit",
+    annot3:        isEs ? "de arriba" : isEn ? "from the top" : "du haut",
+    annot4:        isEs ? "hacia abajo" : isEn ? "down" : "vers le bas",
+    caption:       isEs ? "Cada etapa reduce las posibilidades antes de la siguiente" : isEn ? "Each stage narrows the possibilities before the next" : "Chaque étage réduit les possibilités avant le suivant",
+    mobTitle:      isEs ? "Embudo del proceso top-down" : isEn ? "Top-down process funnel" : "Entonnoir du process top-down",
+    mobStage1:     isEs ? "Etapa 1: contexto direccional." : isEn ? "Stage 1: directional context." : "Étage 1 : contexte directionnel.",
+    mobBlock2:     isEs ? "H1 — Zona de interés" : isEn ? "H1 — Zone of interest" : "H1 — Zone d'intérêt",
+    mobStage2:     isEs ? "Etapa 2: preparación táctica." : isEn ? "Stage 2: tactical setup." : "Étage 2 : préparation tactique.",
+    mobBlock3:     isEs ? "M15 / M5 — Disparador" : isEn ? "M15 / M5 — Trigger" : "M15 / M5 — Déclencheur",
+    mobStage3:     isEs ? "Etapa 3: timing de entrada preciso." : isEn ? "Stage 3: precise entry timing." : "Étage 3 : timing d'entrée précis.",
+    mobFooter:     isEs ? "El trade solo llega al final del embudo." : isEn ? "The trade comes only at the end of the funnel." : "Le trade n'arrive qu'au bout de l'entonnoir.",
+    legendStages:  isEs ? "3 etapas de análisis — del contexto al timing" : isEn ? "3 analysis stages — from context to timing" : "3 étages d'analyse — du contexte au timing",
+    legendTrade:   isEs ? "El trade solo llega al final del embudo" : isEn ? "The trade comes only at the end of the funnel" : "Le trade n'arrive qu'au bout de l'entonnoir",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

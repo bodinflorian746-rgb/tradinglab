@@ -1,4 +1,4 @@
-export default function EngulfingContextDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function EngulfingContextDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Engulfing — la confluencia lo cambia todo",
@@ -14,6 +14,22 @@ export default function EngulfingContextDiagram({ className = "", locale = "fr" 
         mobileInvalidTitle: "✗ Engulfing aislado en pleno impulso",
         mobileInvalidDesc: "Envolvente en medio de una caída, sin nivel estructural → señal hipotética, a ignorar.",
         mobileFooter: "Un engulfing fuera de contexto estructural sigue siendo hipotético.",
+      }
+    : locale === "en"
+    ? {
+        title: "Engulfing — confluence changes everything",
+        validPanel: "✓ VALID setup — Fibo + Engulfing confluence",
+        invalidPanel: "✗ INVALID setup — Off structural level",
+        engulfFibo: "Engulfing AT Fibo 0.618",
+        engulfImpulse: "Isolated engulfing in impulse",
+        fibo: "Fibo 0.618",
+        footer: "An isolated engulfing with no structural context stays a hypothetical signal",
+        mobileTitle: "Why context matters",
+        mobileValidTitle: "✓ Engulfing on Fibo 0.618",
+        mobileValidDesc: "The engulfing candle lands exactly on a Fibonacci level → strong setup, visible confluence.",
+        mobileInvalidTitle: "✗ Isolated engulfing mid-impulse",
+        mobileInvalidDesc: "Engulfing in the middle of a drop, no structural level → hypothetical signal, ignore it.",
+        mobileFooter: "An engulfing with no structural context stays hypothetical.",
       }
     : {
         title: "Engulfing — la confluence change tout",

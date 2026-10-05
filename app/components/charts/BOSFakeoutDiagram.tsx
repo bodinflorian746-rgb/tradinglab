@@ -1,4 +1,4 @@
-export default function BOSFakeoutDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function BOSFakeoutDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Falso BOS — la mecha penetra, el cierre invalida",
@@ -18,6 +18,26 @@ export default function BOSFakeoutDiagram({ className = "", locale = "fr" }: { c
         mobileFooterPrefix: "Siempre esperar el ",
         mobileFooterBold: "cierre",
         mobileFooterSuffix: " para validar un BOS.",
+      }
+    : locale === "en"
+    ? {
+        title: "Fake BOS — the wick pierces, the close invalidates",
+        patternInvalid: "Pattern invalid — cut",
+        hh: "HH $4,720",
+        wickPierces: "Wick pierces → $4,745",
+        closeUnder: "Close below → $4,695",
+        returnUnder: "Clean return below the level",
+        bottomNote: "Wick at $4,745, close at $4,695 → BOS invalid, bearish continuation confirms",
+        mobileTitle: "Fake BOS — wick pierces, close invalidates",
+        step1Title: "Stage 1 — Wick piercing the HH ($4,720)",
+        step1Body: "Price momentarily overshoots the high to $4,745.",
+        step2Title: "Stage 2 — Close below the level ($4,695)",
+        step2Body: "The candle closes below → BOS invalid.",
+        step3Title: "Stage 3 — Bearish continuation confirms",
+        step3Body: "Clean return below the level → bearish continuation confirms the fake signal.",
+        mobileFooterPrefix: "Always wait for the ",
+        mobileFooterBold: "close",
+        mobileFooterSuffix: " to validate a BOS.",
       }
     : {
         title: "Faux BOS — la mèche perce, la clôture invalide",

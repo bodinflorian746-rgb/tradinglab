@@ -4,7 +4,7 @@
 
 interface TimingComparisonDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -61,6 +61,21 @@ export function TimingComparisonDiagram({ className = "", locale = "fr" }: Timin
         b2Body: "Sweep + impulso franco, señales claras.",
         leg1: "Fuera de Killzone = reacción débil, lateralización",
         leg2: "En Killzone = sweep + impulso franco",
+      }
+    : locale === "en"
+    ? {
+        asia: "Asia / 03h UTC",
+        london: "London Open",
+        reactionMolle: "Weak reaction",
+        reactionExplosive: "Explosive reaction",
+        annotation: "Same setup. Different timing.",
+        mobileTitle: "Outside vs In Killzone · EUR/USD M15",
+        b1Title: "✗ Outside Killzone",
+        b1Body: "Weak reaction, chop, unreliable signals.",
+        b2Title: "✓ In Killzone",
+        b2Body: "Sweep + clean push, clear signals.",
+        leg1: "Outside Killzone = weak reaction, chop",
+        leg2: "In Killzone = sweep + clean push",
       }
     : {
         asia: "Asia / 03h UTC",

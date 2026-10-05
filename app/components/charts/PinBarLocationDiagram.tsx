@@ -1,4 +1,4 @@
-export default function PinBarLocationDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function PinBarLocationDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "El nivel, no la vela",
@@ -16,6 +16,24 @@ export default function PinBarLocationDiagram({ className = "", locale = "fr" }:
         mobileInvalidTitle: "✗ Pin bar FUERA DE NIVEL",
         mobileInvalidDesc: "En medio del rango, sin nivel estructural → ignorar",
         mobileFooter: "Pin bar = confirmación en un nivel. Sin nivel, es ruido.",
+      }
+    : locale === "en"
+    ? {
+        title: "The level, not the candle",
+        resistance: "Strong resistance — $4,650",
+        support: "Strong support — $4,500",
+        rangeMid: "Range / middle",
+        tradable: "✓ Tradable",
+        outOfLevel: "✗ Off level",
+        footer: "Pin bar = confirmation signal at a level. Without a level, it's noise.",
+        mobileTitle: "The level, not the candle",
+        mobileBullTitle: "✓ Pin bar AT SUPPORT",
+        mobileBullDesc: "Bullish at the range low ($4,500) → tradable",
+        mobileBearTitle: "✓ Pin bar AT RESISTANCE",
+        mobileBearDesc: "Bearish at the range high ($4,650) → tradable",
+        mobileInvalidTitle: "✗ Pin bar OFF LEVEL",
+        mobileInvalidDesc: "Mid-range, no structural level → ignore",
+        mobileFooter: "Pin bar = confirmation at a level. Without a level, it's noise.",
       }
     : {
         title: "Le niveau, pas la bougie",

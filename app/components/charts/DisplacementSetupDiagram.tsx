@@ -4,7 +4,7 @@
 
 interface DisplacementSetupDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -46,16 +46,17 @@ const BODY_W = 12;
 
 export function DisplacementSetupDiagram({ className = "", locale = "fr" }: DisplacementSetupDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    annot:        isEs ? "El displacement crea la zona de ejecución" : "Le déplacement crée la zone d'exécution",
-    mobTitle:     isEs ? "Displacement setup · EUR/USD H1" : "Displacement setup · EUR/USD H1",
-    mob1A:        isEs ? "Displacement bearish franco crea el" : "Displacement bearish franc crée le",
-    mob1B:        isEs ? "en la caída." : "dans la chute.",
-    mob2:         isEs ? "Regreso del precio al FVG = mitigation." : "Retour du prix dans le FVG = mitigation.",
-    mob3Bold:     isEs ? "Rechazo + reanudación bearish" : "Rejet + reprise bearish",
-    mob3End:      isEs ? "= zona de ejecución short." : "= zone d'exécution short.",
-    legend1:      isEs ? "El displacement crea el FVG en la caída" : "Displacement crée le FVG dans la chute",
-    legend2:      isEs ? "Regreso al FVG y luego reanudación bearish = zona de ejecución" : "Retour dans le FVG puis reprise bearish = zone d'exécution",
+    annot:        isEs ? "El displacement crea la zona de ejecución" : isEn ? "Displacement creates the execution zone" : "Le déplacement crée la zone d'exécution",
+    mobTitle:     isEs ? "Displacement setup · EUR/USD H1" : isEn ? "Displacement setup · EUR/USD H1" : "Displacement setup · EUR/USD H1",
+    mob1A:        isEs ? "Displacement bearish franco crea el" : isEn ? "Clean bearish displacement creates the" : "Displacement bearish franc crée le",
+    mob1B:        isEs ? "en la caída." : isEn ? "in the drop." : "dans la chute.",
+    mob2:         isEs ? "Regreso del precio al FVG = mitigation." : isEn ? "Price returns to the FVG = mitigation." : "Retour du prix dans le FVG = mitigation.",
+    mob3Bold:     isEs ? "Rechazo + reanudación bearish" : isEn ? "Rejection + bearish resumption" : "Rejet + reprise bearish",
+    mob3End:      isEs ? "= zona de ejecución short." : isEn ? "= short execution zone." : "= zone d'exécution short.",
+    legend1:      isEs ? "El displacement crea el FVG en la caída" : isEn ? "Displacement creates the FVG in the drop" : "Displacement crée le FVG dans la chute",
+    legend2:      isEs ? "Regreso al FVG y luego reanudación bearish = zona de ejecución" : isEn ? "Return to FVG then bearish resumption = execution zone" : "Retour dans le FVG puis reprise bearish = zone d'exécution",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

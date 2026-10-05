@@ -1,7 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
-vi.mock("@/lib/auth/admin", () => ({ isAdmin: () => false }));
+const isAdminMock = vi.fn(() => false);
+vi.mock("@/lib/auth/admin", () => ({ isAdmin: () => isAdminMock() }));
 
 const bypassMock = vi.fn();
 vi.mock("@/lib/dev-auth", () => ({
@@ -34,14 +35,47 @@ vi.mock("@/lib/supabase/admin", () => ({
   createAdminClient: () => ({ from: makeFrom() }),
 }));
 
-import { authorizeGroupWrite } from "@/lib/loyalty/access";
+import { authorizeGroupWrite, canManageGroup } from "@/lib/loyalty/access";
 
 beforeEach(() => {
   bypassMock.mockReturnValue(false);
+  isAdminMock.mockReturnValue(false);
   membershipRes = { data: null, error: null };
   groupRes = { data: null, error: null };
 });
 afterEach(() => vi.clearAllMocks());
+
+// canManageGroup est le garde réutilisé par app/[locale]/master/[groupId]/
+// page.tsx pour décider de la visibilité de l'e-mail admin (Super Admin OU
+// admin actif de CE groupe précis) — couverture directe de cette garantie
+// de sécurité, indépendamment du guard de page getGroupAdminUser.
+describe("canManageGroup", () => {
+  it("un simple membre (role='member') du groupe → false (ne voit jamais l'e-mail admin)", async () => {
+    membershipRes = { data: { role: "member" }, error: null };
+    expect(await canManageGroup("u1", "member@test", "g1")).toBe(false);
+  });
+
+  it("aucune adhésion au groupe → false", async () => {
+    membershipRes = { data: null, error: null };
+    expect(await canManageGroup("u1", "stranger@test", "g1")).toBe(false);
+  });
+
+  it("admin actif de CE groupe → true", async () => {
+    membershipRes = { data: { role: "admin" }, error: null };
+    expect(await canManageGroup("u1", "admin@test", "g1")).toBe(true);
+  });
+
+  it("admin d'un AUTRE groupe (isolation multi-tenant) → false", async () => {
+    membershipRes = { data: null, error: null }; // pas d'adhésion sur g2
+    expect(await canManageGroup("admin-of-g1", "admin@test", "g2")).toBe(false);
+  });
+
+  it("Super Admin (ADMIN_EMAILS) → true même sans adhésion au groupe", async () => {
+    isAdminMock.mockReturnValue(true);
+    membershipRes = { data: null, error: null };
+    expect(await canManageGroup("super-admin-id", "superadmin@dev.local", "g1")).toBe(true);
+  });
+});
 
 describe("authorizeGroupWrite — hors bypass (comportement normal)", () => {
   it("non-admin → forbidden", async () => {

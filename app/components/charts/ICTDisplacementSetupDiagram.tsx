@@ -4,7 +4,7 @@
 
 interface ICTDisplacementSetupDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -57,6 +57,18 @@ export function ICTDisplacementSetupDiagram({ className = "", locale = "fr" }: I
         m3b: " = señal de entrada short confirmada.",
         leg1: "Displacement bearish crea el FVG en la caída",
         leg2: "Retorno al FVG y luego rechazo bearish",
+      }
+    : locale === "en"
+    ? {
+        annotation: "Displacement builds the execution zone",
+        mobileTitle: "ICT displacement setup · EUR/USD H1",
+        m1a: "Bearish displacement creates the ",
+        m1b: " on the drop.",
+        m2: "Price returns into the FVG.",
+        m3a: "Bearish rejection",
+        m3b: " = confirmed short entry signal.",
+        leg1: "Bearish displacement creates the FVG on the drop",
+        leg2: "Return into the FVG then bearish rejection",
       }
     : {
         annotation: "Le déplacement construit la zone d'exécution",

@@ -4,7 +4,7 @@
 
 interface NYOpenExpansionDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -53,6 +53,18 @@ export function NYOpenExpansionDiagram({ className = "", locale = "fr" }: NYOpen
         b2Body: "El volumen explota a las 14h30 o 15h30 (París) → sweep + rechazo visible inmediato.",
         leg1: "Pre-market = velas planas, volumen bajo",
         leg2: "NY Open = impulso explosivo y luego sweep y rechazo",
+      }
+    : locale === "en"
+    ? {
+        nyOpen: "NY Open",
+        annotation: "Volume transforms the market",
+        mobileTitle: "NY Open expansion · XAU/USD M15",
+        b1Title: "Pre-market — flat candles",
+        b1Body: "Low volume, tight range.",
+        b2Title: "NY Open — explosive impulse",
+        b2Body: "Volume explodes at 9:30 AM ET → sweep + rejection immediately visible.",
+        leg1: "Pre-market = flat candles, low volume",
+        leg2: "NY Open = explosive impulse then sweep and rejection",
       }
     : {
         nyOpen: "NY Open",

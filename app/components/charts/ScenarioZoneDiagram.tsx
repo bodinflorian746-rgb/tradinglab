@@ -3,7 +3,7 @@
 
 interface ScenarioZoneDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = { cx: number; wickTop: number; bodyH: number };
@@ -25,19 +25,20 @@ const BODY_W = 14;
 
 export function ScenarioZoneDiagram({ className = "", locale = "fr" }: ScenarioZoneDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    zoneRes:       isEs ? "Zona de resistencia" : "Zone de résistance",
-    annot:         isEs ? "La zona prepara el escenario antes de la ejecución" : "La zone prépare le scénario avant l'exécution",
-    mobTitle:      isEs ? "Escenario zona trazada con anticipación" : "Scénario zone tracée à l'avance",
-    mob1A:         isEs ? "Zona trazada" : "Zone tracée",
-    mob1B:         isEs ? "ANTES" : "AVANT",
-    mob1C:         isEs ? "de la llegada del precio." : "l'arrivée du prix.",
-    mob2A:         isEs ? "Las velas alcistas" : "Bougies haussières",
-    mob2B:         isEs ? "se reducen" : "rétrécissent",
-    mob2C:         isEs ? "al acercarse = pérdida de impulso." : "en approchant = perte d'impulsion.",
-    mob3:          isEs ? "Confirmación rejection = entrada short en la zona." : "Confirmation rejection = entrée short à la zone.",
-    legend1:       isEs ? "Zona trazada ANTES de la llegada del precio" : "Zone tracée AVANT l'arrivée du prix",
-    legend2:       isEs ? "Velas alcistas que se reducen al acercarse = pérdida de impulso" : "Bougies haussières qui rétrécissent en approchant = perte d'impulsion",
+    zoneRes:       isEs ? "Zona de resistencia" : isEn ? "Resistance zone" : "Zone de résistance",
+    annot:         isEs ? "La zona prepara el escenario antes de la ejecución" : isEn ? "The zone sets up the scenario before execution" : "La zone prépare le scénario avant l'exécution",
+    mobTitle:      isEs ? "Escenario zona trazada con anticipación" : isEn ? "Scenario zone drawn in advance" : "Scénario zone tracée à l'avance",
+    mob1A:         isEs ? "Zona trazada" : isEn ? "Zone drawn" : "Zone tracée",
+    mob1B:         isEs ? "ANTES" : isEn ? "BEFORE" : "AVANT",
+    mob1C:         isEs ? "de la llegada del precio." : isEn ? "price arrives." : "l'arrivée du prix.",
+    mob2A:         isEs ? "Las velas alcistas" : isEn ? "Bullish candles" : "Bougies haussières",
+    mob2B:         isEs ? "se reducen" : isEn ? "shrink" : "rétrécissent",
+    mob2C:         isEs ? "al acercarse = pérdida de impulso." : isEn ? "on approach = loss of momentum." : "en approchant = perte d'impulsion.",
+    mob3:          isEs ? "Confirmación rejection = entrada short en la zona." : isEn ? "Rejection confirmation = short entry at the zone." : "Confirmation rejection = entrée short à la zone.",
+    legend1:       isEs ? "Zona trazada ANTES de la llegada del precio" : isEn ? "Zone drawn BEFORE price arrives" : "Zone tracée AVANT l'arrivée du prix",
+    legend2:       isEs ? "Velas alcistas que se reducen al acercarse = pérdida de impulso" : isEn ? "Bullish candles shrinking on approach = loss of momentum" : "Bougies haussières qui rétrécissent en approchant = perte d'impulsion",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

@@ -10,6 +10,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import Logo from "@/app/components/Logo";
 import { ReviewsCarousel } from "@/app/components/ReviewsCarousel";
 import { requestTrialCode } from "@/app/[locale]/pricing/actions";
+import { isStripeCheckoutEnabled } from "@/lib/stripe-checkout-flag";
 
 function CheckSmall({ color }: { color: string }) {
   return (
@@ -114,6 +115,8 @@ function renderBold(text: string): React.ReactNode {
 export async function LegacyHome({ locale }: { locale: Locale }) {
   const h = (p: string) => localizedHref(p, locale);
   const t = await getDictionary(locale, "home");
+  // Checkout Stripe désactivé côté serveur → pas de prix ni d'offre payante.
+  const checkoutEnabled = isStripeCheckoutEnabled();
 
   const debutantCount = FORMATIONS.find((f) => f.id === "debutant")?.lessons.length ?? 0;
   const intermediaireCount = FORMATIONS.find((f) => f.id === "intermediaire")?.lessons.length ?? 0;
@@ -246,6 +249,11 @@ export async function LegacyHome({ locale }: { locale: Locale }) {
           : locale === "en"
           ? ["Monthly subscription", "Code generated on payment", "Full access to the platform"]
           : ["Abonnement mensuel", "Code généré au paiement", "Accès complet à la plateforme"],
+        unavailable: locale === "es"
+          ? "El acceso directo por suscripción no está disponible por el momento."
+          : locale === "en"
+          ? "Direct subscription access is not available at the moment."
+          : "L'accès direct par abonnement n'est pas disponible pour le moment.",
       },
       cta: locale === "es" ? "Ver el detalle" : locale === "en" ? "View the details" : "Voir le détail",
     },
@@ -1176,19 +1184,25 @@ export async function LegacyHome({ locale }: { locale: Locale }) {
             {/* Carte B — Accès direct */}
             <div className="bg-gradient-to-b from-zinc-900/80 to-zinc-900/30 border border-zinc-800 rounded-2xl p-6 flex flex-col">
               <h3 className="text-xl font-bold text-white mb-2">{T.access.direct.title}</h3>
-              <div className="flex items-baseline gap-1 mb-3">
-                <span className="text-4xl font-black text-white tabular-nums">{T.access.direct.price}</span>
-                <span className="text-sm text-zinc-500">{T.access.direct.period}</span>
-              </div>
-              <p className="text-[13px] text-zinc-400 leading-relaxed mb-5">{T.access.direct.desc}</p>
-              <ul className="space-y-2.5 mb-6 flex-1">
-                {T.access.direct.bullets.map((b) => (
-                  <li key={b} className="flex items-start gap-2 text-[13px] text-zinc-300">
-                    <CheckSmall color="#a1a1aa" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
+              {checkoutEnabled ? (
+                <>
+                  <div className="flex items-baseline gap-1 mb-3">
+                    <span className="text-4xl font-black text-white tabular-nums">{T.access.direct.price}</span>
+                    <span className="text-sm text-zinc-500">{T.access.direct.period}</span>
+                  </div>
+                  <p className="text-[13px] text-zinc-400 leading-relaxed mb-5">{T.access.direct.desc}</p>
+                  <ul className="space-y-2.5 mb-6 flex-1">
+                    {T.access.direct.bullets.map((b) => (
+                      <li key={b} className="flex items-start gap-2 text-[13px] text-zinc-300">
+                        <CheckSmall color="#a1a1aa" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <p className="text-[13px] text-zinc-400 leading-relaxed mb-6 flex-1">{T.access.direct.unavailable}</p>
+              )}
               <Link
                 href={h("/pricing")}
                 className="inline-flex items-center justify-center gap-1.5 border border-zinc-700 hover:border-zinc-500 hover:bg-zinc-900/40 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm"

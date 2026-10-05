@@ -1,4 +1,4 @@
-export default function StrongVsWeakLevelDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function StrongVsWeakLevelDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
         title: "Reconocer un nivel fuerte vs un nivel débil",
@@ -13,6 +13,21 @@ export default function StrongVsWeakLevelDiagram({ className = "", locale = "fr"
         mobWeak: "✗ Nivel débil — rebotes poco amplios",
         mobWeakDesc: "El precio toca pero duda, rebota débilmente, termina rompiéndose.",
         mobFooter: "Más toques francos = nivel institucional defendido",
+      }
+    : locale === "en"
+    ? {
+        title: "Spotting a strong level vs a weak level",
+        strong: "✓ Strong level — 4 clean touches",
+        strongDesc: "Sharp bounces, sustained range",
+        weak: "⚠ Weak level — 2 soft touches",
+        weakDesc: "Shallow bounces, hesitation",
+        footer: "More clean touches = defended institutional level",
+        mobTitle: "Spotting a strong vs weak level",
+        mobStrong: "✓ Strong level — 4 clean touches",
+        mobStrongDesc: "Price bounces sharply on every contact, no hesitation.",
+        mobWeak: "✗ Weak level — shallow bounces",
+        mobWeakDesc: "Price touches but hesitates, bounces weakly, eventually breaks.",
+        mobFooter: "More clean touches = defended institutional level",
       }
     : {
         title: "Reconnaître un niveau fort vs un niveau faible",

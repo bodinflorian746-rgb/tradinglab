@@ -15,19 +15,30 @@ import { getAdminEmails } from "@/lib/auth/admin";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+// Limites alignées sur app/[locale]/contact/actions.ts.
+const MAX_MESSAGE_LENGTH = 5000;
+const MAX_EMAIL_LENGTH = 200;
+
 type ParsedBody = {
   message: string;
   email: string;
   rating: number | null;
+  website: string;
 };
+
+function isValidEmail(email: string): boolean {
+  return email.length <= MAX_EMAIL_LENGTH && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
 function parseBody(raw: unknown): ParsedBody {
   if (!raw || typeof raw !== "object") {
-    return { message: "", email: "", rating: null };
+    return { message: "", email: "", rating: null, website: "" };
   }
   const r = raw as Record<string, unknown>;
   const message = typeof r.message === "string" ? r.message.trim() : "";
   const email = typeof r.email === "string" ? r.email.trim() : "";
+  // Anti-spam honeypot : champ caché "website" que seuls les bots remplissent.
+  const website = typeof r.website === "string" ? r.website.trim() : "";
   const ratingRaw = r.rating;
   const rating =
     typeof ratingRaw === "number" &&
@@ -36,7 +47,7 @@ function parseBody(raw: unknown): ParsedBody {
     ratingRaw <= 5
       ? ratingRaw
       : null;
-  return { message, email, rating };
+  return { message, email, rating, website };
 }
 
 function escapeHtml(s: string): string {
@@ -70,11 +81,23 @@ function buildHtml(message: string, email: string, rating: number | null): strin
 
 export async function POST(req: NextRequest) {
   const raw: unknown = await req.json().catch(() => null);
-  const { message, email, rating } = parseBody(raw);
+  const { message, email, rating, website } = parseBody(raw);
+
+  // Honeypot rempli → succès silencieux, aucun email envoyé (comme contact).
+  if (website !== "") {
+    return NextResponse.json({ ok: true });
+  }
 
   if (!message) {
     return NextResponse.json(
       { ok: false, error: "empty_message" },
+      { status: 400 },
+    );
+  }
+
+  if (message.length > MAX_MESSAGE_LENGTH || (email !== "" && !isValidEmail(email))) {
+    return NextResponse.json(
+      { ok: false, error: "invalid" },
       { status: 400 },
     );
   }

@@ -1,4 +1,4 @@
-export default function DTBMeasuredMoveProjectionDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function DTBMeasuredMoveProjectionDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Calcular el TP por proyección measured move",
@@ -21,6 +21,30 @@ export default function DTBMeasuredMoveProjectionDiagram({ className = "", local
         step2c: ".",
         step3a: "El nivel obtenido = ",
         step3b: "TP objetivo",
+        step3c: ".",
+      }
+    : locale === "en"
+    ? {
+        title: "Set the TP with a measured move projection",
+        resistanceLabel: "Resistance — 1.1880",
+        necklineLabel: "Neckline — 1.1800",
+        tpLabel: "TP measured move — 1.1720",
+        top1: "Top 1",
+        top2: "Top 2",
+        heightLabel: "Height 80 pips",
+        projLabel: "Projection 80 pips",
+        tpBadge: "TP",
+        necklineBadge: "Neckline",
+        footer: "Pattern height projected from the neckline = target TP level",
+        mobileTitle: "Set the TP with a measured move",
+        step1a: "Measure the ",
+        step1b: "pattern height",
+        step1c: " (from the top to the neckline).",
+        step2a: "Project that same distance ",
+        step2b: "from the neckline break",
+        step2c: ".",
+        step3a: "The level you get = ",
+        step3b: "target TP",
         step3c: ".",
       }
     : {

@@ -60,6 +60,10 @@ export interface ValidationResult {
   errors?: FieldErrors;
 }
 
+// Longueur max du commentaire libre — partagée avec le formulaire
+// (CaptureFirstFlow : maxLength + compteur visible).
+export const USER_COMMENT_MAX_LENGTH = 2000;
+
 const NUMERIC_FIELDS = [
   "account_capital",
   "entry_price",
@@ -140,7 +144,9 @@ export function validateTradeInput(formData: FormData): ValidationResult {
     emotion_after: optEnum(formData, "emotion_after", EMOTIONS_AFTER),
     perceived_mistake: optEnum(formData, "perceived_mistake", MAIN_MISTAKES),
 
-    user_comment: optStr(formData, "user_comment"),
+    // Borné à 2 000 caractères (même principe que asset.slice(0, 40)) : ce
+    // texte est inséré tel quel dans le prompt de l'analyse IA.
+    user_comment: optStr(formData, "user_comment")?.slice(0, USER_COMMENT_MAX_LENGTH) ?? null,
   };
 
   return { data };

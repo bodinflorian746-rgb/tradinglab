@@ -8,6 +8,7 @@ import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary, type Dictionaries } from "@/i18n/dictionaries";
+import { isStripeCheckoutEnabled } from "@/lib/stripe-checkout-flag";
 import { FORMATIONS } from "@/lib/formations";
 import { STRATEGY_MODULES } from "@/lib/strategies";
 import { REVIEWS, type Review } from "@/lib/reviews";
@@ -210,6 +211,8 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
   const t = await getDictionary(locale, "home");
   const g: Dictionaries["games"] = await getDictionary(locale, "games");
   const s = homeStrings(locale);
+  // Checkout Stripe désactivé côté serveur → pas de prix ni d'offre payante.
+  const checkoutEnabled = isStripeCheckoutEnabled();
   const previews = buildGamePreviews(locale);
   const rounds = buildHeroRounds(locale);
   // Aperçu BUY / SELL / NO TRADE de la rangée des jeux : un round lisible du
@@ -494,14 +497,20 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
             {/* Accès direct */}
             <div data-reveal className="v2-card flex flex-col gap-4 p-6" style={css({ "--d": "90ms" })}>
               <p className="v2-display text-[20px] font-bold">{s.access.direct.title}</p>
-              <p className="flex items-baseline gap-1">
-                <span className="v2-mono text-[44px] font-bold leading-none">{s.access.direct.price}</span>
-                <span className="text-[14px] text-[color:var(--v2-text-3)]">{s.access.direct.period}</span>
-              </p>
-              <p className="text-[14.5px] leading-relaxed text-[color:var(--v2-text-2)]">{s.access.direct.desc}</p>
-              <ul className="hv2-list" style={css({ "--accent": "#a1a1aa" })}>
-                {s.access.direct.bullets.map((b) => <li key={b}>{b}</li>)}
-              </ul>
+              {checkoutEnabled ? (
+                <>
+                  <p className="flex items-baseline gap-1">
+                    <span className="v2-mono text-[44px] font-bold leading-none">{s.access.direct.price}</span>
+                    <span className="text-[14px] text-[color:var(--v2-text-3)]">{s.access.direct.period}</span>
+                  </p>
+                  <p className="text-[14.5px] leading-relaxed text-[color:var(--v2-text-2)]">{s.access.direct.desc}</p>
+                  <ul className="hv2-list" style={css({ "--accent": "#a1a1aa" })}>
+                    {s.access.direct.bullets.map((b) => <li key={b}>{b}</li>)}
+                  </ul>
+                </>
+              ) : (
+                <p className="text-[14.5px] leading-relaxed text-[color:var(--v2-text-2)]">{s.access.direct.unavailable}</p>
+              )}
               <Link href={h("/pricing")} className="v2-btn mt-auto w-full">
                 {s.access.cta}
                 <Arrow size={12} />

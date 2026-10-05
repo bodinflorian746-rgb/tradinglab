@@ -1,4 +1,4 @@
-export const HawkishDovishScale = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+export const HawkishDovishScale = ({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) => {
   const t = locale === "es"
     ? {
         subtitle: "El tono de un banco central se lee en un espectro — no en binario.",
@@ -31,6 +31,39 @@ export const HawkishDovishScale = ({ locale = "fr" }: { locale?: "fr" | "es" } =
         hawkishLi1: "↑ Sube las tasas",
         hawkishLi2: "Lucha contra inflación",
         hawkishLi3: "Refuerza la moneda",
+      }
+    : locale === "en"
+    ? {
+        subtitle: "A central bank's tone reads on a spectrum — not binary.",
+        tresDovish: "Very Dovish",
+        dovish: "Dovish",
+        neutre: "Neutral",
+        hawkish: "Hawkish",
+        tresHawkish: "Very Hawkish",
+        dovishLabel: "DOVISH",
+        baisseTaux: "Cuts rates",
+        soutientEconomie: "Supports the economy",
+        affaiblitDevise: "Weakens the currency",
+        hawkishLabel: "HAWKISH",
+        monteTaux: "Hikes rates",
+        lutteInflation: "Fights inflation",
+        renforceDevise: "Strengthens the currency",
+        mobileSubtitle: "A central bank's tone reads on a spectrum — not binary.",
+        leftArrow: "← Dovish",
+        rightArrow: "Hawkish →",
+        positionnementActuel: "Current positioning",
+        bojDesc: "Keeps rates low",
+        bceDesc: "Recent rate cuts",
+        fedDesc: "High rates against inflation",
+        bojPos: "Very Dovish",
+        bcePos: "Dovish",
+        fedPos: "Hawkish",
+        dovishLi1: "↓ Cuts rates",
+        dovishLi2: "Supports the economy",
+        dovishLi3: "Weakens the currency",
+        hawkishLi1: "↑ Hikes rates",
+        hawkishLi2: "Fights inflation",
+        hawkishLi3: "Strengthens the currency",
       }
     : {
         subtitle: "Le ton d'une banque centrale se lit sur un spectre — pas en binaire.",

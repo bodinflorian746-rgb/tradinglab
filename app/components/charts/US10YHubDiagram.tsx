@@ -1,37 +1,38 @@
 interface US10YHubDiagramProps {
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export const US10YHubDiagram = ({ locale = "fr" }: US10YHubDiagramProps = {}) => {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    title:        isEs ? "El ecosistema US10Y" : "L'écosystème US10Y",
-    subtitle:     isEs ? "El rendimiento que dirige todos los demás mercados" : "Le rendement qui dirige tous les autres marchés",
-    rend:         isEs ? "Rendimiento 10 años US" : "Rendement 10 ans US",
-    taux:         isEs ? "Tasa libre de riesgo mundial" : "Taux sans risque mondial",
-    upWhenSold:   isEs ? "↑ cuando se vende" : "↑ quand vendu",
-    or:           isEs ? "Oro" : "Or",
-    techCrois:    isEs ? "Tech / Crecimiento" : "Tech / Croissance",
-    activRisque:  isEs ? "Activo de riesgo" : "Actif risqué",
-    indexDxy:     isEs ? "Índice Dólar US" : "Indice Dollar US",
-    bearPress:    isEs ? "↓ presión bajista" : "↓ pression baissière",
-    valoBaiss:    isEs ? "↓ valoraciones" : "↓ valorisations",
-    riskOff:      isEs ? "↓ risk-off posible" : "↓ risk-off possible",
-    yieldAttract: isEs ? "↑ rendimiento atractivo" : "↑ rendement attractif",
-    corr:         isEs ? "Correlación" : "Corrélation",
-    whenUp:       isEs ? "Cuando US10Y sube..." : "Quand US10Y monte...",
-    thresholds:   isEs ? "UMBRALES PSICOLÓGICOS US10Y" : "SEUILS PSYCHOLOGIQUES US10Y",
-    footer:       isEs ? "El oro, la tech y el Bitcoin reaccionan al mismo número. Y ese número es US10Y." : "L'or, la tech et le Bitcoin réagissent souvent au même chiffre. Et ce chiffre, c'est US10Y.",
-    mobWhenUp:    isEs ? "Cuando US10Y sube ↑" : "Quand US10Y monte ↑",
-    mobThresh:    isEs ? "Umbrales psicológicos US10Y" : "Seuils psychologiques US10Y",
-    mobCorr:      isEs ? "Corr" : "Corr",
-    mobLvlCalm:   isEs ? "Calma" : "Calme",
-    mobLvlWatch:  isEs ? "Vigilancia" : "Vigilance",
-    mobLvlStress: isEs ? "Estrés" : "Stress",
-    mobLvlPanic:  isEs ? "Pánico" : "Panique",
-    mobFooter:    isEs ? "El oro, la tech, el Bitcoin reaccionan al mismo número: US10Y." : "L'or, la tech, le Bitcoin réagissent au même chiffre : US10Y.",
+    title:        isEs ? "El ecosistema US10Y" : isEn ? "The US10Y ecosystem" : "L'écosystème US10Y",
+    subtitle:     isEs ? "El rendimiento que dirige todos los demás mercados" : isEn ? "The yield that drives every other market" : "Le rendement qui dirige tous les autres marchés",
+    rend:         isEs ? "Rendimiento 10 años US" : isEn ? "US 10-year yield" : "Rendement 10 ans US",
+    taux:         isEs ? "Tasa libre de riesgo mundial" : isEn ? "Global risk-free rate" : "Taux sans risque mondial",
+    upWhenSold:   isEs ? "↑ cuando se vende" : isEn ? "↑ when sold" : "↑ quand vendu",
+    or:           isEs ? "Oro" : isEn ? "Gold" : "Or",
+    techCrois:    isEs ? "Tech / Crecimiento" : isEn ? "Tech / Growth" : "Tech / Croissance",
+    activRisque:  isEs ? "Activo de riesgo" : isEn ? "Risk asset" : "Actif risqué",
+    indexDxy:     isEs ? "Índice Dólar US" : isEn ? "US Dollar Index" : "Indice Dollar US",
+    bearPress:    isEs ? "↓ presión bajista" : isEn ? "↓ bearish pressure" : "↓ pression baissière",
+    valoBaiss:    isEs ? "↓ valoraciones" : isEn ? "↓ valuations" : "↓ valorisations",
+    riskOff:      isEs ? "↓ risk-off posible" : isEn ? "↓ risk-off possible" : "↓ risk-off possible",
+    yieldAttract: isEs ? "↑ rendimiento atractivo" : isEn ? "↑ attractive yield" : "↑ rendement attractif",
+    corr:         isEs ? "Correlación" : isEn ? "Correlation" : "Corrélation",
+    whenUp:       isEs ? "Cuando US10Y sube..." : isEn ? "When US10Y rises..." : "Quand US10Y monte...",
+    thresholds:   isEs ? "UMBRALES PSICOLÓGICOS US10Y" : isEn ? "US10Y PSYCHOLOGICAL THRESHOLDS" : "SEUILS PSYCHOLOGIQUES US10Y",
+    footer:       isEs ? "El oro, la tech y el Bitcoin reaccionan al mismo número. Y ese número es US10Y." : isEn ? "Gold, tech and Bitcoin often react to the same number. And that number is US10Y." : "L'or, la tech et le Bitcoin réagissent souvent au même chiffre. Et ce chiffre, c'est US10Y.",
+    mobWhenUp:    isEs ? "Cuando US10Y sube ↑" : isEn ? "When US10Y rises ↑" : "Quand US10Y monte ↑",
+    mobThresh:    isEs ? "Umbrales psicológicos US10Y" : isEn ? "US10Y psychological thresholds" : "Seuils psychologiques US10Y",
+    mobCorr:      isEs ? "Corr" : isEn ? "Corr" : "Corr",
+    mobLvlCalm:   isEs ? "Calma" : isEn ? "Calm" : "Calme",
+    mobLvlWatch:  isEs ? "Vigilancia" : isEn ? "Watch" : "Vigilance",
+    mobLvlStress: isEs ? "Estrés" : isEn ? "Stress" : "Stress",
+    mobLvlPanic:  isEs ? "Pánico" : isEn ? "Panic" : "Panique",
+    mobFooter:    isEs ? "El oro, la tech, el Bitcoin reaccionan al mismo número: US10Y." : isEn ? "Gold, tech, Bitcoin react to the same number: US10Y." : "L'or, la tech, le Bitcoin réagissent au même chiffre : US10Y.",
   };
-  const sats = isEs
+  const sats = isEs || isEn
     ? [
         { name: "XAU/USD", desc: L.or, reaction: L.bearPress, correl: "−0.80", color: "#f87171" },
         { name: "NASDAQ", desc: L.techCrois, reaction: L.valoBaiss, correl: "−0.65", color: "#f87171" },

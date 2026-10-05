@@ -1,4 +1,4 @@
-export default function SRQualificationChecklistDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function SRQualificationChecklistDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
         title: "Calificar un nivel S/R en 4 criterios",
@@ -23,6 +23,31 @@ export default function SRQualificationChecklistDiagram({ className = "", locale
           { t: "Confluencia (Fibo / MM / estructura)", d: "Varias referencias cruzadas en la misma zona" },
         ],
         mobFooter: "4/4 = nivel operacional",
+      }
+    : locale === "en"
+    ? {
+        title: "Qualify an S/R level on 4 criteria",
+        c1: "Multiple touches (≥3)",
+        c1d1: "The level has been tested",
+        c1d2: "at least 3 times",
+        c2: "Horizontality respected",
+        c2d1: "Touches at the same level,",
+        c2d2: "tolerance <10 pips",
+        c3: "Freshness (touched recently)",
+        c3d1: "Last touch within the",
+        c3d2: "last 30 candles",
+        c4: "Confluence (Fibo/MA/structure)",
+        c4d1: "Several references crossing",
+        c4d2: "in the same zone",
+        footer: "4/4 = tradeable level",
+        mobTitle: "4 criteria to qualify an S/R",
+        mob: [
+          { t: "Multiple touches (≥3)", d: "The level has been tested at least 3 times" },
+          { t: "Horizontality respected", d: "Touches at the same level, tolerance < 10 pips" },
+          { t: "Freshness (touched recently)", d: "Last touch within the last 30 candles" },
+          { t: "Confluence (Fibo / MA / structure)", d: "Several references crossing in the same zone" },
+        ],
+        mobFooter: "4/4 = tradeable level",
       }
     : {
         title: "Qualifier un niveau S/R en 4 critères",

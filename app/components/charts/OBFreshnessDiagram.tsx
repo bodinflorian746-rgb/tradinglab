@@ -1,4 +1,4 @@
-export default function OBFreshnessDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function OBFreshnessDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "OB fresh vs OB mitigado",
@@ -22,6 +22,31 @@ export default function OBFreshnessDiagram({ className = "", locale = "fr" }: { 
         rightMobileBody: "Zona OB ya atravesada por el precio → desequilibrio comprometido, señal débil.",
         mobileFooterPart1: "Un OB solo se opera en su ",
         mobileFooterBold: "primer retest",
+        mobileFooterPart2: ".",
+      }
+    : locale === "en"
+    ? {
+        title: "Fresh OB vs mitigated OB",
+        leftTitle: "✓ Fresh OB — never retested",
+        leftSubtitle: "Bullish imbalance confirmed",
+        rightTitle: "✗ Mitigated OB — already retraced",
+        rightSubtitle: "Bullish imbalance compromised",
+        obCree: "OB created",
+        retest: "Retest",
+        leftBottomTitle: "3 candles since formation",
+        leftBottomSub: "No price return into the zone",
+        rightBottomTitle: "Retest + rejection = OB consumed",
+        rightBottomSub: "Institutional orders already filled",
+        infoCaption: "A mitigated OB is consumed: its institutional orders have already been triggered",
+        leftZoneLabel: "OB zone never retested",
+        rightZoneLabel: "OB zone already crossed",
+        mobileTitle: "Fresh OB vs mitigated OB",
+        leftMobileTitle: "✓ Fresh OB — never retested",
+        leftMobileBody: "Bullish imbalance confirmed · OB zone still intact → high-probability entry.",
+        rightMobileTitle: "✗ Mitigated OB — already retraced",
+        rightMobileBody: "OB zone already crossed by price → imbalance compromised, weak signal.",
+        mobileFooterPart1: "An OB is only traded on its ",
+        mobileFooterBold: "first retest",
         mobileFooterPart2: ".",
       }
     : {

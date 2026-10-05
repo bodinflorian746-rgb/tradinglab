@@ -52,3 +52,37 @@ export function computeAccessPeriodEnd(
   }
   return FAR_FUTURE_ISO;
 }
+
+/** Ligne subscriptions existante (colonnes utiles à la décision), ou null. */
+export type ExistingSubscription = {
+  status: string | null;
+  current_period_end: string | null;
+  stripe_subscription_id: string | null;
+} | null;
+
+/**
+ * Décide si l'activation d'un code peut écrire la ligne subscriptions, selon
+ * la règle « ne jamais raccourcir un accès existant » :
+ *   • 'keep_stripe' : abonnement Stripe en cours (active/trialing, non échu)
+ *     → ne jamais l'écraser (sinon prélèvements orphelins côté Stripe) ;
+ *   • 'keep_longer' : accès en cours (active/trialing, non échu) qui finit
+ *     au plus tôt à `newEnd` → rien à changer (ex. code durée sur un compte
+ *     à vie) ;
+ *   • 'write' : aucun accès en cours, accès échu, ou accès plus court.
+ * `nowMs` est injecté pour rester pur/déterministe (testable).
+ */
+export function decideAccessWrite(
+  existing: ExistingSubscription,
+  newEnd: string,
+  nowMs: number,
+): "write" | "keep_longer" | "keep_stripe" {
+  if (!existing) return "write";
+  const endMs = existing.current_period_end ? Date.parse(existing.current_period_end) : NaN;
+  const running =
+    (existing.status === "active" || existing.status === "trialing") &&
+    Number.isFinite(endMs) &&
+    endMs > nowMs;
+  if (!running) return "write";
+  if (existing.stripe_subscription_id) return "keep_stripe";
+  return endMs >= Date.parse(newEnd) ? "keep_longer" : "write";
+}

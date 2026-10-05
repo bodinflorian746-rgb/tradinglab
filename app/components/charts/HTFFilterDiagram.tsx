@@ -3,7 +3,7 @@
 
 interface HTFFilterDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function HTFFilterDiagram({ className = "", locale = "fr" }: HTFFilterDiagramProps) {
@@ -26,6 +26,26 @@ export function HTFFilterDiagram({ className = "", locale = "fr" }: HTFFilterDia
         mobFooter: "El HTF filtra el 90% de las señales falsas LTF.",
         legendAligne: "Setup alineado con el bias HTF — a privilegiar",
         legendContre: "Setup contra el bias HTF — a descartar",
+      }
+    : locale === "en"
+    ? {
+        resistance: "HTF resistance  1.1760",
+        prixActuel: "Current price  1.1715",
+        filtre: "HTF FILTER",
+        setupPriv: "Setup to favor",
+        sens: "with the bias",
+        setupEviter: "Setup to avoid",
+        contre: "against the bias",
+        note: "HTF only keeps aligned trades",
+        caption: "Bearish Daily bias — price below HTF resistance",
+        mobTitle: "HTF filter — EUR/USD H4",
+        mobAligne: "✓ Setup aligned with HTF bias",
+        mobAligneDesc: "To favor — highest probability.",
+        mobContre: "✗ Setup against HTF bias",
+        mobContreDesc: "To discard — even if visually tempting.",
+        mobFooter: "HTF filters 90% of false LTF signals.",
+        legendAligne: "Setup aligned with HTF bias — to favor",
+        legendContre: "Setup against HTF bias — to discard",
       }
     : {
         resistance: "Résistance HTF  1.1760",

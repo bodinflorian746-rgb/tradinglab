@@ -4,7 +4,7 @@
 
 interface M15ValidationDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -46,6 +46,19 @@ export function M15ValidationDiagram({ className = "", locale = "fr" }: M15Valid
         mobCassureDesc: "CHoCH en M15 → entrada short validada, SL más allá de la mecha extrema.",
         legendMeches: "Mechas de rechazo en la zona",
         legendCassure: "Ruptura del valle local = confirmación",
+      }
+    : locale === "en"
+    ? {
+        zoneH1: "H1 zone",
+        creux: "local low",
+        annotation: "The reaction validates the entry",
+        mobTitle: "M15 validation — entry confirmation",
+        mobMeches: "Rejection wicks in the zone",
+        mobMechesDesc: "Rejection wicks = selling pressure present in the H1 zone.",
+        mobCassure: "Break of local low = confirmation",
+        mobCassureDesc: "CHoCH on M15 → short entry validated, SL beyond the extreme wick.",
+        legendMeches: "Rejection wicks in the zone",
+        legendCassure: "Break of local low = confirmation",
       }
     : {
         zoneH1: "Zone H1",

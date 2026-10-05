@@ -1,4 +1,4 @@
-export default function HSNecklineSlopeDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function HSNecklineSlopeDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
         title: "Inclinación de la neckline = ajuste del TP",
@@ -19,6 +19,27 @@ export default function HSNecklineSlopeDiagram({ className = "", locale = "fr" }
         mFlatDesc: "Proyección simétrica de la altura del patrón.",
         mDesc: "Neckline descendente",
         mDescDesc: "Proyección reducida hacia abajo — TP más corto.",
+      }
+    : locale === "en"
+    ? {
+        title: "Neckline slope = TP adjustment",
+        flat: "Flat neckline",
+        asc: "Rising neckline",
+        desc: "Falling neckline",
+        tpStandard: "Standard TP",
+        tpLong: "Extended TP",
+        tpShort: "Shortened TP",
+        projFull: "Full measured move projection",
+        projLong: "Projection extended lower",
+        projShort: "Projection reduced lower",
+        footer: "XAU/USD H&S ~$4,620 - $4,660 — the neckline slope adjusts the TP",
+        mobileTitle: "Neckline slope = TP adjustment",
+        mAsc: "Rising neckline",
+        mAscDesc: "TP extended lower — wider projection.",
+        mFlat: "Horizontal neckline",
+        mFlatDesc: "Symmetric projection of the pattern height.",
+        mDesc: "Falling neckline",
+        mDescDesc: "Projection reduced lower — shorter TP.",
       }
     : {
         title: "Inclinaison de la neckline = ajustement du TP",

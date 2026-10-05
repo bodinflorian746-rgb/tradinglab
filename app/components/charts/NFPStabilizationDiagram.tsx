@@ -4,7 +4,7 @@
 
 interface NFPStabilizationDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -56,6 +56,17 @@ export function NFPStabilizationDiagram({ className = "", locale = "fr" }: NFPSt
         repriseDesc: "Tras estabilización, el mercado rebota lentamente = oportunidad long contra-trend.",
         legendMeche: "Mechas bajas repetidas = absorción compradora",
         legendReprise: "Reanudación bullish progresiva tras estabilización",
+      }
+    : locale === "en"
+    ? {
+        annotation: "Volatility slows before the reversal",
+        mobileTitle: "NFP stabilization · XAU/USD M15",
+        mecheTitle: "Repeated lower wicks",
+        mecheDesc: "Buyer absorption at the level reached — end of the drop.",
+        repriseTitle: "Progressive bullish recovery",
+        repriseDesc: "After stabilization, the market bounces slowly = counter-trend long opportunity.",
+        legendMeche: "Repeated lower wicks = buyer absorption",
+        legendReprise: "Progressive bullish recovery after stabilization",
       }
     : {
         annotation: "La volatilité ralentit avant le retournement",

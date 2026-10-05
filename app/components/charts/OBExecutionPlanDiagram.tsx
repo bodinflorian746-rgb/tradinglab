@@ -1,4 +1,4 @@
-export default function OBExecutionPlanDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function OBExecutionPlanDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Plan de ejecución OB bullish con cifras",
@@ -22,6 +22,30 @@ export default function OBExecutionPlanDiagram({ className = "", locale = "fr" }
         tpTitle: "Take Profit",
         tpBody: "Proyección estructural (HH previo o resistencia mayor).",
         mobileRR: "R/R 2,79 — setup operable",
+      }
+    : locale === "en"
+    ? {
+        title: "Numbered bullish OB execution plan",
+        rrBadge: "R/R 2.79 — tradeable setup",
+        tpLabel: "TP — 1.1858",
+        entryLabel: "Entry — 1.1780",
+        slLabel: "SL — 1.1752",
+        obZone: "Order Block 1.1752-1.1780",
+        riskLabel: "Risk 28 pips",
+        gainLabel: "Gain 78 pips",
+        caption: "Entry at OB body high · SL beyond lower wick · TP structural projection",
+        mobileTitle: "Bullish OB execution plan",
+        entryTitle: "Entry",
+        entryBodyPart1: "Limit order at the ",
+        entryBodyBold: "body high",
+        entryBodyPart2: " of the OB.",
+        slTitle: "Stop Loss",
+        slBodyPart1: "Beyond the ",
+        slBodyBold: "lower wick",
+        slBodyPart2: " of the OB (5-10 pip buffer).",
+        tpTitle: "Take Profit",
+        tpBody: "Structural projection (prior HH or major resistance).",
+        mobileRR: "R/R 2.79 — tradeable setup",
       }
     : {
         title: "Plan d'exécution OB bullish chiffré",

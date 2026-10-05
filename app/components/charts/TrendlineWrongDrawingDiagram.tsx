@@ -1,4 +1,4 @@
-export default function TrendlineWrongDrawingDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function TrendlineWrongDrawingDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const labels = locale === "es"
     ? {
         title: "Trazar una trendline — 3 errores comunes",
@@ -20,6 +20,28 @@ export default function TrendlineWrongDrawingDiagram({ className = "", locale = 
         mobWicksDesc: "Unir mechas aisladas = trazo sesgado. Usa los cuerpos de las velas.",
         mobBreak: "✗ Ruptura ignorada",
         mobBreakDesc: "Una vez rota, abandona la trendline. No la prolongues.",
+      }
+    : locale === "en"
+    ? {
+        title: "Drawing a trendline — 3 common mistakes",
+        good: "✓ Well drawn — 3 HL aligned",
+        bad2pts: "✗ 2 isolated points",
+        hlIgnore: "HL ignored",
+        hl3Ignored: "3 HL ignored under the path",
+        slope: "✗ Unrealistic slope",
+        angleNote: "Angle ~70° vs path at ~30°",
+        breakIgnored: "✗ Break ignored",
+        breakLabel: "Break ignored",
+        prolonged: "Trendline extended despite the break",
+        mobTitle: "Drawing a trendline — good vs mistakes",
+        mobGood: "✓ Well drawn — 3 HL aligned",
+        mobGoodDesc: "At least 3 HL (or LH) pivots connected on the same line.",
+        mob2pts: "✗ 2 isolated points",
+        mob2ptsDesc: "2 pivots aren't enough — any line passes through 2 points. You need at least 3.",
+        mobWicks: "✗ Trendline forced on wicks",
+        mobWicksDesc: "Connecting isolated wicks = skewed drawing. Use the candle bodies.",
+        mobBreak: "✗ Break ignored",
+        mobBreakDesc: "Once broken, drop the trendline. Don't extend it.",
       }
     : {
         title: "Tracer une trendline — 3 erreurs courantes",

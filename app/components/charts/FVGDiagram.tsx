@@ -1,6 +1,6 @@
 interface FVGDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleData = {
@@ -53,6 +53,32 @@ export function FVGDiagram({ className = "", locale = "fr" }: FVGDiagramProps) {
         leg1: "FVG = Fair Value Gap (zona de desequilibrio)",
         leg2: "Vela alcista",
         leg3: "Vela bajista",
+      }
+    : locale === "en"
+    ? {
+        fvgBullish: "Bullish FVG",
+        fvgBearish: "Bearish FVG",
+        b1High: "B1 high",
+        b3Low: "B3 low",
+        b1Low: "B1 low",
+        b3High: "B3 high",
+        retourDown: "return ↓",
+        retourUp: "return ↑",
+        mobileBullTitle: "Bullish FVG (left)",
+        mobileBullBodyPart1: "3 bullish candles in a row → a ",
+        mobileBullBodyBold1: "gap",
+        mobileBullBodyPart2: " forms between B1 high and B3 low. Price returns to fill this gap (",
+        mobileBullBodyBold2: "return ↓",
+        mobileBullBodyPart3: ") before moving on.",
+        mobileBearTitle: "Bearish FVG (right)",
+        mobileBearBodyPart1: "3 bearish candles in a row → a ",
+        mobileBearBodyBold1: "gap",
+        mobileBearBodyPart2: " between B1 low and B3 high. Price rises to mitigate the gap (",
+        mobileBearBodyBold2: "return ↑",
+        mobileBearBodyPart3: ") then resumes lower.",
+        leg1: "FVG = Fair Value Gap (imbalance zone)",
+        leg2: "Bullish candle",
+        leg3: "Bearish candle",
       }
     : {
         fvgBullish: "FVG haussier",

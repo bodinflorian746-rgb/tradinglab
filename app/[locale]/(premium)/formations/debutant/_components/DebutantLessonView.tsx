@@ -1,5 +1,6 @@
 import { LESSONS, type LessonContent } from "@/lib/lessons";
 import { LESSONS_ES } from "@/lib/lessons-es";
+import { LESSONS_EN } from "@/lib/lessons-en";
 import { LessonPage } from "@/app/components/LessonPage";
 import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
@@ -247,8 +248,88 @@ const ES_DIAG_LABELS: DiagLabels = {
   lessonPrefix:  "Lección",
 };
 
+const EN_DIAG_LABELS: DiagLabels = {
+  longShort: {
+    longTitle:        "LONG: Buy ↑",
+    shortTitle:       "SHORT: Sell ↓",
+    entry:            "Entry: $78,000",
+    exit:             "Exit: $81,000",
+    bullishCaption:   "Price rises → favorable move",
+    bearishCaption:   "Price falls → favorable move",
+    longRise:         "+$3,000 rise",
+    shortDrop:        "−$3,000 drop",
+    longBuyMobile:    "LONG. Buy ↑",
+    shortSellMobile:  "SHORT. Sell ↓",
+    profitForYou:     "profit for you",
+    long3kRise:       "+$3,000, price rises ✔",
+    short3kDrop:      "−$3,000, price falls, profit for you ✔",
+  },
+  takeProfit: {
+    headerCaption: "Bitcoin, price action, with and without Take Profit",
+    withTP:        "WITH Take Profit",
+    withoutTP:     "WITHOUT Take Profit",
+    tpLabel:       "TP: $84,000",
+    entryLabel:    "Entry: $78,000",
+    ignored84k:    "$84,000 ignored",
+    plus6k:        "+$6,000",
+    minus3k:       "−$3,000",
+    profitCheck:   "+$6,000 ✔",
+    failureMark:   "−$3,000 ✖",
+    secured:       "+$6,000 secured",
+    erased:        "−$3,000, gain wiped out",
+    entry:         "Entry",
+    tpReached:     "TP reached",
+    ignoredAt:     "+$6,000 ignored",
+    worstExit:     "Exit at the worst point",
+  },
+  breakEven: {
+    headerCaption: "Bitcoin. How to activate Break Even",
+    step1Title:    "Entry at $78,000: initial SL at $75,000",
+    step1Hint:     "Entry → SL distance: $3,000, that's your risk (1R)",
+    step1Tag:      "−$3,000",
+    arrow1:        "↓ price rises to $81,000 (+1R)",
+    step2Title:    "You move the SL from $75,000 → $78,000",
+    step2Hint:     "SL = entry price = Break Even activated",
+    step2Tag:      "BE ✔",
+    arrow2:        "↓ two possible scenarios",
+    continueTitle: "Price keeps going ↑",
+    continueHint:  "TP reached at $84,000",
+    continueGain:  "+$6,000",
+    fallbackTitle: "Price falls back ↓",
+    fallbackHint:  "BE triggered at $78,000",
+    fallbackGain:  "$0, exit at entry",
+  },
+  risk: {
+    headerTitle:    "Risk grid: ideal and cap per account size",
+    headerSubtitle: "Solid zone = ideal · Transparent zone = max acceptable",
+    perTrade:       "/ trade",
+    legendIdeal:    "Ideal",
+    legendMax:      "Max",
+    maxPrefix:      "max",
+    footer:         "The more your capital grows, the more you protect it, it's just math.",
+  },
+  errors: {
+    title:          "The 4 biases that destroy accounts",
+    fomo:           "FOMO",
+    fomoBody:       "You buy in a rush, often at the top, right before the reversal",
+    vengeance:      "Revenge",
+    vengeanceBody:  "You lose → you reopen immediately with less clarity",
+    anchor:         "Anchoring",
+    anchorBody:     "You refuse to close the losing trade, the loss gets worse",
+    overconfidence: "Overconfidence",
+    overconfBody:   "5 wins in a row → you double the size → the next one wipes it all out",
+  },
+  retailReality: "Retail reality",
+  reviewLabel:   "Review",
+  lessonPrefix:  "Lesson",
+};
+
 function getDiagLabels(locale: Locale): DiagLabels {
-  return locale === "es" ? ES_DIAG_LABELS : FR_DIAG_LABELS;
+  return locale === "en"
+    ? EN_DIAG_LABELS
+    : locale === "es"
+      ? ES_DIAG_LABELS
+      : FR_DIAG_LABELS;
 }
 
 // ── Diagramme : Long vs Short ─────────────────────────────────────────────────
@@ -783,7 +864,7 @@ export async function DebutantLessonView({ slug, locale: rawLocale }: Props) {
   const locale: Locale = rawLocale && hasLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
 
   // Source FR (canonique) + override ES si disponible.
-  const sourceArr = locale === "es" ? LESSONS_ES : LESSONS;
+  const sourceArr = locale === "en" ? LESSONS_EN : locale === "es" ? LESSONS_ES : LESSONS;
   const level = sourceArr.find((l) => l.level === "debutant") ?? LESSONS.find((l) => l.level === "debutant");
   if (!level) return null;
 

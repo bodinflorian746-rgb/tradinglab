@@ -4,7 +4,7 @@
 
 interface RiskoffTrendDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -58,6 +58,19 @@ export function RiskoffTrendDiagram({ className = "", locale = "fr" }: RiskoffTr
         pullbackDesc: "Correcciones cortas luego reanudación bullish — entradas en pullbacks.",
         legendStructure: "Estructura HH/HL = régimen intacto",
         legendPullback: "Pullback limitado luego continuación bullish",
+      }
+    : locale === "en"
+    ? {
+        pullback: "Pullback",
+        continuationRegime: "Regime continuation",
+        annotation: "Trade with the regime, not against it",
+        mobileTitle: "Risk-off trend · XAU/USD H4",
+        structureTitle: "HH/HL structure = regime intact",
+        structureDesc: "Gold prints higher highs and higher lows → risk-off regime active.",
+        pullbackTitle: "Limited pullback + continuation",
+        pullbackDesc: "Short corrections then bullish resumption — entries on pullbacks.",
+        legendStructure: "HH/HL structure = regime intact",
+        legendPullback: "Limited pullback then bullish continuation",
       }
     : {
         pullback: "Pullback",

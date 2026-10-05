@@ -4,7 +4,7 @@
 
 interface RiskAffineDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -30,20 +30,21 @@ const BODY_W = 14;
 
 export function RiskAffineDiagram({ className = "", locale = "fr" }: RiskAffineDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    slH4:        isEs ? "SL H4 · 1.1790 · 35 pts" : "SL H4 · 1.1790 · 35 pts",
-    slM5:        isEs ? "SL M5 · 1.1772 · 14 pts" : "SL M5 · 1.1772 · 14 pts",
-    entry:       isEs ? "Entrada 1.1758" : "Entrée 1.1758",
-    annot:       isEs ? "Misma idea. Riesgo diferente." : "Même idée. Risque différent.",
-    mobTitle:    isEs ? "Afinar el riesgo: H4 → M5" : "Affiner le risque : H4 → M5",
-    mobSlH4T:    isEs ? "SL H4 amplio — riesgo no optimizado" : "SL H4 large — risque non optimisé",
-    mobSlH4D:    isEs ? "SL más allá de la mecha H4 = pérdida potencial amplia, tamaño de posición pequeño." : "SL au-delà de la mèche H4 = perte potentielle large, taille position petite.",
-    mobSlM5T:    isEs ? "SL M5 reducido tras confirmación LTF" : "SL M5 réduit après confirmation LTF",
-    mobSlM5D:    isEs ? "Una vez CHoCH M5 confirmado → SL mucho más ajustado, R/R mejorado." : "Une fois CHoCH M5 confirmé → SL beaucoup plus serré, R/R amélioré.",
-    mobFooter:   isEs ? "Entrada común, SL adaptado al timing LTF = R/R maximizado." : "Entrée commune, SL adapté au timing LTF = R/R maximisé.",
-    legendH4:    isEs ? "SL H4 amplio — riesgo no optimizado" : "SL H4 large — risque non optimisé",
-    legendM5:    isEs ? "SL M5 reducido tras confirmación LTF" : "SL M5 réduit après confirmation LTF",
-    legendEntry: isEs ? "Entrada común a los dos escenarios" : "Entrée commune aux deux scénarios",
+    slH4:        isEs ? "SL H4 · 1.1790 · 35 pts" : isEn ? "SL H4 · 1.1790 · 35 pts" : "SL H4 · 1.1790 · 35 pts",
+    slM5:        isEs ? "SL M5 · 1.1772 · 14 pts" : isEn ? "SL M5 · 1.1772 · 14 pts" : "SL M5 · 1.1772 · 14 pts",
+    entry:       isEs ? "Entrada 1.1758" : isEn ? "Entry 1.1758" : "Entrée 1.1758",
+    annot:       isEs ? "Misma idea. Riesgo diferente." : isEn ? "Same idea. Different risk." : "Même idée. Risque différent.",
+    mobTitle:    isEs ? "Afinar el riesgo: H4 → M5" : isEn ? "Refine the risk: H4 → M5" : "Affiner le risque : H4 → M5",
+    mobSlH4T:    isEs ? "SL H4 amplio — riesgo no optimizado" : isEn ? "Wide H4 SL — risk not optimized" : "SL H4 large — risque non optimisé",
+    mobSlH4D:    isEs ? "SL más allá de la mecha H4 = pérdida potencial amplia, tamaño de posición pequeño." : isEn ? "SL beyond the H4 wick = wide potential loss, small position size." : "SL au-delà de la mèche H4 = perte potentielle large, taille position petite.",
+    mobSlM5T:    isEs ? "SL M5 reducido tras confirmación LTF" : isEn ? "Tighter M5 SL after LTF confirmation" : "SL M5 réduit après confirmation LTF",
+    mobSlM5D:    isEs ? "Una vez CHoCH M5 confirmado → SL mucho más ajustado, R/R mejorado." : isEn ? "Once M5 CHoCH confirmed → much tighter SL, improved R/R." : "Une fois CHoCH M5 confirmé → SL beaucoup plus serré, R/R amélioré.",
+    mobFooter:   isEs ? "Entrada común, SL adaptado al timing LTF = R/R maximizado." : isEn ? "Common entry, SL adapted to LTF timing = R/R maximized." : "Entrée commune, SL adapté au timing LTF = R/R maximisé.",
+    legendH4:    isEs ? "SL H4 amplio — riesgo no optimizado" : isEn ? "Wide H4 SL — risk not optimized" : "SL H4 large — risque non optimisé",
+    legendM5:    isEs ? "SL M5 reducido tras confirmación LTF" : isEn ? "Tighter M5 SL after LTF confirmation" : "SL M5 réduit après confirmation LTF",
+    legendEntry: isEs ? "Entrada común a los dos escenarios" : isEn ? "Common entry for both scenarios" : "Entrée commune aux deux scénarios",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

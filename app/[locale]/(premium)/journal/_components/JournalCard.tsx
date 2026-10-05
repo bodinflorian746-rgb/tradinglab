@@ -9,6 +9,7 @@ import { DeleteTradeButton } from "./DeleteTradeButton";
 import { TradeDetails } from "./TradeDetails";
 import { TradeAnalysisModal } from "./TradeAnalysisModal";
 import { EditTradeButton } from "./EditTradeButton";
+import { DuplicateTradeButton } from "./DuplicateTradeButton";
 
 type JournalDict = Dictionaries["journal"];
 
@@ -216,6 +217,7 @@ export function JournalCard({
           {entry.result !== "open" && <TradeAnalysisModal entry={entry} t={t} />}
           <TradeDetails entry={entry} t={t} locale={locale} />
           <EditTradeButton entry={entry} />
+          <DuplicateTradeButton entry={entry} />
           <DeleteTradeButton
             id={entry.id}
             label={t.card.delete}

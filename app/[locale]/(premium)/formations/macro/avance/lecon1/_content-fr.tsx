@@ -419,9 +419,15 @@ export default function ContentFr() {
                 </svg>
                 Retour au module
               </Link>
-              <span className="text-sm text-zinc-700 cursor-default">
-                NFP. Bientôt disponible →
-              </span>
+              <Link
+                href="/formations/macro/avance/lecon2"
+                className="inline-flex items-center gap-1.5 text-sm text-zinc-600 hover:text-zinc-400 transition-colors"
+              >
+                Leçon 2. NFP
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

@@ -1,6 +1,6 @@
 interface TrendDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function TrendDiagram({ className = "", locale = "fr" }: TrendDiagramProps) {
@@ -18,6 +18,21 @@ export function TrendDiagram({ className = "", locale = "fr" }: TrendDiagramProp
         sommetsCreuxPlusHauts: "Picos y valles más altos",
         oscillation: "Oscilación entre 2 niveles",
         sommetsCreuxPlusBas: "Picos y valles más bajos",
+      }
+    : locale === "en"
+    ? {
+        haussier: "BULLISH",
+        range: "RANGE",
+        baissier: "BEARISH",
+        tendanceAcheteuse: "Buyer trend",
+        marcheEquilibre: "Market in balance",
+        tendanceVendeuse: "Seller trend",
+        mobHaussier: "BULLISH ↗",
+        mobRange: "RANGE ↔",
+        mobBaissier: "BEARISH ↘",
+        sommetsCreuxPlusHauts: "Higher highs & lows",
+        oscillation: "Swings between 2 levels",
+        sommetsCreuxPlusBas: "Lower highs & lows",
       }
     : {
         haussier: "HAUSSIER",

@@ -1,13 +1,39 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale } from "./LocaleProvider";
 
 interface Props {
   description: string;
   steps: string[];
+  locale?: "fr" | "es" | "en";
 }
 
-export function LessonExercice({ description, steps }: Props) {
+export function LessonExercice({ description, steps, locale }: Props) {
+  const contextLocale = useLocale();
+  const resolvedLocale: "fr" | "es" | "en" = locale ?? contextLocale;
+  const L =
+    resolvedLocale === "es"
+      ? {
+          practical: "Ejercicio práctico",
+          completed: "Completado",
+          markDone: "Marcar el ejercicio como completado",
+          stepsChecked: "etapas marcadas",
+        }
+      : resolvedLocale === "en"
+        ? {
+            practical: "Practical exercise",
+            completed: "Completed",
+            markDone: "Mark exercise as completed",
+            stepsChecked: "steps checked",
+          }
+        : {
+            practical: "Exercice pratique",
+            completed: "Complété",
+            markDone: "Marquer l'exercice comme complété",
+            stepsChecked: "étapes cochées",
+          };
+
   const [done, setDone] = useState(false);
   const [checked, setChecked] = useState<Set<number>>(new Set());
 
@@ -23,7 +49,7 @@ export function LessonExercice({ description, steps }: Props) {
 
   return (
     <div>
-    <p className="text-[11px] font-semibold text-zinc-600 uppercase tracking-widest mb-2 px-1">Exercice pratique</p>
+    <p className="text-[11px] font-semibold text-zinc-600 uppercase tracking-widest mb-2 px-1">{L.practical}</p>
     <div className={`rounded-2xl border p-6 transition-all duration-300 ${
       done
         ? "bg-zinc-900/30 border-zinc-800/50"
@@ -49,11 +75,11 @@ export function LessonExercice({ description, steps }: Props) {
             )}
           </div>
           <span className={`text-sm font-semibold ${done ? "text-zinc-500" : "text-white"}`}>
-            Exercice pratique
+            {L.practical}
           </span>
         </div>
         {done && (
-          <span className="text-xs text-emerald-400 font-medium">Complété</span>
+          <span className="text-xs text-emerald-400 font-medium">{L.completed}</span>
         )}
       </div>
 
@@ -104,7 +130,7 @@ export function LessonExercice({ description, steps }: Props) {
                 : "bg-zinc-800/40 text-zinc-700 cursor-not-allowed"
             }`}
           >
-            {allChecked ? "Marquer l'exercice comme complété" : `${checked.size}/${steps.length} étapes cochées`}
+            {allChecked ? L.markDone : `${checked.size}/${steps.length} ${L.stepsChecked}`}
           </button>
         </>
       ) : (

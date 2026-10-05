@@ -39,7 +39,7 @@ function Pastille({ x, y, label, color, textColor, arrow }: PastilleProps) {
   );
 }
 
-export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
   const L = locale === "es"
     ? {
         hsTitle: "Head & Shoulders — fin de tendencia alcista",
@@ -58,6 +58,25 @@ export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" 
         invDesc1: "3 mínimos: Hombro I → Cabeza (más bajo) → Hombro D. Ruptura sobre la ",
         invDesc2: " = señal long.",
         footer: "Patrón de reversión mayor, válido tras ruptura de la neckline.",
+      }
+    : locale === "en"
+    ? {
+        hsTitle: "Head & Shoulders — end of uptrend",
+        ihsTitle: "Inverse H&S — end of downtrend",
+        shoulders: "Shoulders",
+        shoulderL: "L shoulder",
+        head: "Head",
+        shoulderR: "R shoulder",
+        neckline: "Neckline",
+        breakout: "Breakout",
+        mobileTitle: "Head & Shoulders — 2 variants",
+        classicTitle: "Classic H&S — BEARISH reversal",
+        classicDesc1: "3 peaks: L shoulder → Head (higher) → R shoulder. Break below the ",
+        classicDesc2: " = short signal.",
+        invTitle: "Inverse H&S — BULLISH reversal",
+        invDesc1: "3 lows: L shoulder → Head (lower) → R shoulder. Break above the ",
+        invDesc2: " = long signal.",
+        footer: "Major reversal pattern, valid after neckline break.",
       }
     : {
         hsTitle: "Head & Shoulders — fin de tendance haussière",

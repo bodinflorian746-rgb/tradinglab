@@ -3,7 +3,7 @@
 
 interface ICTSequenceTimelineDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -65,8 +65,18 @@ const STEPS_ES = [
   { x: 580, label: "Caída final" },
 ];
 
+const STEPS_EN = [
+  { x:  55, label: "HTF bearish" },
+  { x: 115, label: "Equal highs" },
+  { x: 215, label: "Sweep" },
+  { x: 275, label: "Displacement" },
+  { x: 360, label: "FVG" },
+  { x: 460, label: "FVG return" },
+  { x: 580, label: "Final drop" },
+];
+
 export function ICTSequenceTimelineDiagram({ className = "", locale = "fr" }: ICTSequenceTimelineDiagramProps) {
-  const STEPS = locale === "es" ? STEPS_ES : STEPS_FR;
+  const STEPS = locale === "es" ? STEPS_ES : locale === "en" ? STEPS_EN : STEPS_FR;
   const t = locale === "es"
     ? {
         annotation: "El setup se construye etapa por etapa",
@@ -83,6 +93,23 @@ export function ICTSequenceTimelineDiagram({ className = "", locale = "fr" }: IC
         mobileFooter: "Cada etapa construye la siguiente.",
         leg1: "7 etapas — de la liquidez HTF a la ejecución",
         leg2: "Cada etapa construye la siguiente",
+      }
+    : locale === "en"
+    ? {
+        annotation: "The setup builds step by step",
+        mobileTitle: "Full ICT sequence — 7 steps",
+        steps: [
+          { n: 1, t: "HTF liquidity identified", c: "amber" },
+          { n: 2, t: "Liquidity sweep", c: "amber" },
+          { n: 3, t: "Reintegration / CHoCH", c: "red" },
+          { n: 4, t: "Bearish displacement", c: "red" },
+          { n: 5, t: "FVG created", c: "blue" },
+          { n: 6, t: "Return to FVG (mitigation)", c: "blue" },
+          { n: 7, t: "Rejection + resume = execution", c: "emerald" },
+        ],
+        mobileFooter: "Each step builds the next.",
+        leg1: "7 steps — from HTF liquidity to execution",
+        leg2: "Each step builds the next",
       }
     : {
         annotation: "Le setup se construit étape par étape",

@@ -6,6 +6,7 @@
 import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import ResendButton from "./ResendButton";
 
 export default async function CodeSentPage({
   params,
@@ -44,7 +45,7 @@ export default async function CodeSentPage({
           {t.ctaActivate}
         </Link>
 
-        {/* TODO V2 : bouton "Renvoyer le code" (renvoi du mail Resend). */}
+        <ResendButton />
 
         <Link
           href={`/${locale}`}

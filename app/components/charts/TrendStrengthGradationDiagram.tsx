@@ -1,4 +1,4 @@
-export default function TrendStrengthGradationDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function TrendStrengthGradationDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const labels = locale === "es"
     ? {
         title: "Calificar la fuerza de una tendencia",
@@ -21,6 +21,29 @@ export default function TrendStrengthGradationDiagram({ className = "", locale =
         mobStrong: "Fuerte — 400+ pips · pendiente 55°",
         mobStrongDesc: "Setup a privilegiar — R/R estructural máximo.",
         mobFooter: "Cuanto mayor es la amplitud, más favorable es el R/R.",
+      }
+    : locale === "en"
+    ? {
+        title: "Rating the strength of a trend",
+        weak: "Weak — 50 pips",
+        weakSlope: "Slope ~15° / 50 pips",
+        weakDesc1: "Few pivots, soft slope",
+        weakDesc2: "Barely tradable",
+        moderate: "Moderate — 100 pips",
+        moderateDesc1: "Angle ~35° — moderate slope",
+        moderateDesc2: "Tradable with discipline",
+        strong: "Strong — 200 pips",
+        strongDesc1: "Angle ~55° — steep slope",
+        strongDesc2: "Setup to favor",
+        footer: "The wider the amplitude, the more favorable the structural R/R",
+        mobTitle: "Rating the strength of a trend",
+        mobWeak: "Weak — 50 pips · slope 15°",
+        mobWeakDesc: "Small amplitude, limited R/R. Avoid or use smaller sizes.",
+        mobModerate: "Moderate — 150 pips · slope 35°",
+        mobModerateDesc: "Tradable trend with good discipline.",
+        mobStrong: "Strong — 400+ pips · slope 55°",
+        mobStrongDesc: "Setup to favor — maximum structural R/R.",
+        mobFooter: "The wider the amplitude, the more favorable the R/R.",
       }
     : {
         title: "Qualifier la force d'une tendance",

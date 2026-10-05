@@ -4,7 +4,7 @@
 
 interface AsiaRangeSweepDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -56,6 +56,21 @@ export function AsiaRangeSweepDiagram({ className = "", locale = "fr" }: AsiaRan
         m3b: " en sentido opuesto en London Open.",
         leg1: "Range Asia = bolsa de liquidez visible",
         leg2: "Sweep bajo el range y luego expansión violenta",
+      }
+    : locale === "en"
+    ? {
+        asiaSession: "Asia Session",
+        sweep: "Sweep 1.1702",
+        annotation: "The Asian range becomes the target",
+        mobileTitle: "Asia range sweep · EUR/USD M15",
+        m1a: "Asia range",
+        m1b: " = visible liquidity pool.",
+        m2a: "Sweep",
+        m2b: " below the range — triggers stops.",
+        m3a: "Violent expansion",
+        m3b: " in the opposite direction at London Open.",
+        leg1: "Asia range = visible liquidity pool",
+        leg2: "Sweep below the range then violent expansion",
       }
     : {
         asiaSession: "Asia Session",

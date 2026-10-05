@@ -1,4 +1,4 @@
-export default function ZoneVsLineDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function ZoneVsLineDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
         title: "Nivel = zona, no línea",
@@ -19,6 +19,27 @@ export default function ZoneVsLineDiagram({ className = "", locale = "fr" }: { c
         mobZone: "✓ Zona (15-20 pips)",
         mobZoneDesc: "Las mechas son absorbidas en la zona → trade válido mientras el cierre permanezca dentro.",
         mobFooter: "Un nivel institucional = zona, no línea precisa.",
+      }
+    : locale === "en"
+    ? {
+        title: "Level = zone, not line",
+        linePrecise: "✗ Line too precise",
+        depasse: "↑ overshoots",
+        linePreciseDesc1: "Repeated wicks make you believe in",
+        linePreciseDesc2: "a break that doesn't exist",
+        zoneGood: "✓ Zone well drawn",
+        absorbe: "absorbed",
+        zoneGoodDesc1: "The zone absorbs the natural",
+        zoneGoodDesc2: "wicks of the market",
+        lineLabel: "Line 1.1750",
+        zoneLabel: "Zone 1.1740-1.1760",
+        footer: "An institutional level is a 15-20 pip zone, not a precise line",
+        mobTitle: "Zone vs precise line",
+        mobLine: "✗ Line too precise",
+        mobLineDesc: "Price overshoots a few pips then drops back → SL hit even though the level held.",
+        mobZone: "✓ Zone (15-20 pips)",
+        mobZoneDesc: "Wicks are absorbed inside the zone → trade valid as long as the close stays within.",
+        mobFooter: "An institutional level = zone, not a precise line.",
       }
     : {
         title: "Niveau = zone, pas ligne",

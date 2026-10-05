@@ -1,4 +1,4 @@
-export default function TrendIdentificationStepsDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function TrendIdentificationStepsDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const labels = locale === "es"
     ? {
         title: "Identificar una tendencia en 3 pasos",
@@ -23,6 +23,31 @@ export default function TrendIdentificationStepsDiagram({ className = "", locale
         mobStep3DescBold: "≥ 30 pips mínimo",
         mobStep3DescSuffix: " para ser significativo.",
         mobProcess: "Proceso secuencial: pivotes → sucesión → amplitud",
+      }
+    : locale === "en"
+    ? {
+        title: "Identify a trend in 3 steps",
+        step1: "Step 1 — Pivots",
+        step2: "Step 2 — HH/HL staircase",
+        step3: "Step 3 — Amplitude",
+        step1Desc1: "HL 1.1680, HH 1.1760",
+        step1Desc2: "HL 1.1720, HH 1.1820",
+        step2Desc1: "Ascending HH/HL staircase",
+        step2Desc2: "2 HL + 2 HH aligned",
+        amplitudeBadge: "Amplitude 140 pips",
+        step3Desc1: "HH 1.1820 − HL 1.1680",
+        step3Desc2: "≥ 30 pips minimum threshold",
+        process: "Sequential process: pivots → succession → amplitude",
+        mobTitle: "Identify a trend in 3 steps",
+        mobStep1: "Step 1 — Pivots",
+        mobStep1Desc: "Spot the HH/HL pivots (bullish) or LH/LL (bearish).",
+        mobStep2: "Step 2 — Succession",
+        mobStep2Desc: "Check the pivots follow in the right order (each HH higher than the last).",
+        mobStep3: "Step 3 — Amplitude",
+        mobStep3DescPrefix: "Measure the gap between pivots: ",
+        mobStep3DescBold: "≥ 30 pips minimum",
+        mobStep3DescSuffix: " to be significant.",
+        mobProcess: "Sequential process: pivots → succession → amplitude",
       }
     : {
         title: "Identifier une tendance en 3 étapes",

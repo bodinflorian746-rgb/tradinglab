@@ -4,7 +4,7 @@
 interface MarketStructureDiagramProps {
   trend?: "bullish" | "bearish";
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function MarketStructureDiagram({
@@ -13,17 +13,18 @@ export function MarketStructureDiagram({
   locale = "fr",
 }: MarketStructureDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const T = {
-    trendBull:  isEs ? "Tendencia alcista ↗" : "Tendance haussière ↗",
-    trendBear:  isEs ? "Tendencia bajista ↘" : "Tendance baissière ↘",
-    hhDesc:     isEs ? "Higher High — cada máximo más alto que el anterior" : "Higher High — chaque sommet plus haut que le précédent",
-    lhDesc:     isEs ? "Lower High — cada máximo más bajo que el anterior" : "Lower High — chaque sommet plus bas que le précédent",
-    hlDesc:     isEs ? "Higher Low — cada mínimo más alto que el anterior" : "Higher Low — chaque creux plus haut que le précédent",
-    llDesc:     isEs ? "Lower Low — cada mínimo más bajo que el anterior" : "Lower Low — chaque creux plus bas que le précédent",
-    legendHH:   isEs ? "HH = Higher High (máximo más alto)" : "HH = Higher High (sommet plus haut)",
-    legendLH:   isEs ? "LH = Lower High (máximo más bajo)" : "LH = Lower High (sommet plus bas)",
-    legendHL:   isEs ? "HL = Higher Low (mínimo más alto)" : "HL = Higher Low (creux plus haut)",
-    legendLL:   isEs ? "LL = Lower Low (mínimo más bajo)" : "LL = Lower Low (creux plus bas)",
+    trendBull:  isEs ? "Tendencia alcista ↗" : isEn ? "Uptrend ↗" : "Tendance haussière ↗",
+    trendBear:  isEs ? "Tendencia bajista ↘" : isEn ? "Downtrend ↘" : "Tendance baissière ↘",
+    hhDesc:     isEs ? "Higher High — cada máximo más alto que el anterior" : isEn ? "Higher High — each high above the previous" : "Higher High — chaque sommet plus haut que le précédent",
+    lhDesc:     isEs ? "Lower High — cada máximo más bajo que el anterior" : isEn ? "Lower High — each high below the previous" : "Lower High — chaque sommet plus bas que le précédent",
+    hlDesc:     isEs ? "Higher Low — cada mínimo más alto que el anterior" : isEn ? "Higher Low — each low above the previous" : "Higher Low — chaque creux plus haut que le précédent",
+    llDesc:     isEs ? "Lower Low — cada mínimo más bajo que el anterior" : isEn ? "Lower Low — each low below the previous" : "Lower Low — chaque creux plus bas que le précédent",
+    legendHH:   isEs ? "HH = Higher High (máximo más alto)" : isEn ? "HH = Higher High (higher high)" : "HH = Higher High (sommet plus haut)",
+    legendLH:   isEs ? "LH = Lower High (máximo más bajo)" : isEn ? "LH = Lower High (lower high)" : "LH = Lower High (sommet plus bas)",
+    legendHL:   isEs ? "HL = Higher Low (mínimo más alto)" : isEn ? "HL = Higher Low (higher low)" : "HL = Higher Low (creux plus haut)",
+    legendLL:   isEs ? "LL = Lower Low (mínimo más bajo)" : isEn ? "LL = Lower Low (lower low)" : "LL = Lower Low (creux plus bas)",
   };
   const isBull = trend === "bullish";
   const accent = isBull ? "#10b981" : "#ef4444";

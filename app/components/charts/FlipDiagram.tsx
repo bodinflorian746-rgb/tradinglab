@@ -1,4 +1,4 @@
-export default function FlipDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function FlipDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
         header: "Flip de polaridad — el mercado tiene memoria de los precios",
@@ -14,6 +14,22 @@ export default function FlipDiagram({ className = "", locale = "fr" }: { classNa
         mobSupToRes: "Support roto → Resistencia",
         mobSupToResDesc: "El precio rompe un support y luego sube a testearlo por arriba → se convierte en resistencia.",
         mobFooter: "Un nivel roto invierte su polaridad — siempre.",
+      }
+    : locale === "en"
+    ? {
+        header: "Polarity flip — the market has price memory",
+        resistance: "Resistance",
+        support: "Support",
+        cassure: "Breakout",
+        retest: "Retest",
+        title1: "Resistance broken → Support",
+        title2: "Support broken → Resistance",
+        mobTitle: "Polarity flip — price memory",
+        mobResToSup: "Resistance broken → Support",
+        mobResToSupDesc: "Price breaks a resistance then comes back to test it from below → it becomes support.",
+        mobSupToRes: "Support broken → Resistance",
+        mobSupToResDesc: "Price breaks a support then rallies back to test it from above → it becomes resistance.",
+        mobFooter: "A broken level flips its polarity — always.",
       }
     : {
         header: "Flip de polarité — le marché a la mémoire des prix",

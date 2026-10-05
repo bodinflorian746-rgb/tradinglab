@@ -5,6 +5,7 @@ import { LessonExercice } from "@/app/components/LessonExercice";
 import { Candle } from "@/app/components/charts/Candle";
 import { GraphFakeBreakout } from "@/app/components/charts/GraphFakeBreakout";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 function ContentFr() {
   return (
@@ -125,7 +126,7 @@ function ContentFr() {
           {[
             { n: "1", t: "Attends la clôture de la bougie", d: "Règle absolue. Ne jamais juger une cassure sur un prix intrabar. La clôture est le seul juge." },
             { n: "2", t: "La clôture est-elle de l'autre côté du niveau ?", d: "Oui = potentiellement vraie cassure. Non (mèche longue + clôture de l'autre côté) = fake breakout." },
-            { n: "3", t: "Le retournement est-il violent ?", d: "Retour rapide et agressif sous le niveau = confirmation du fake. Tu peux entrer dans le sens inverse." },
+            { n: "3", t: "Le retournement est-il violent ?", d: "Retour rapide et agressif sous le niveau = confirmation du fake. Tu peux entrer dans le sens inverse, si ça correspond à ton plan de trading." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.n}</span>
@@ -154,7 +155,7 @@ function ContentFr() {
             <span className="text-lg">!</span>
             <div>
               <p className="text-sm font-semibold text-amber-400">Fake breakout (mèche + clôture de l'autre côté)</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Ne suis pas la cassure. Tu peux entrer en sens inverse avec SL au-delà du pic, TP vers le prochain niveau.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Ne suis pas la cassure. Tu peux entrer en sens inverse avec SL au-delà du pic, TP vers le prochain niveau, si ton plan de trading le prévoit.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3">
@@ -241,5 +242,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

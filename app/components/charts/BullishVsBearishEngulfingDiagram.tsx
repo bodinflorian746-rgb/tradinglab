@@ -1,4 +1,4 @@
-export default function BullishVsBearishEngulfingDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function BullishVsBearishEngulfingDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Engulfing — siempre sobre un nivel",
@@ -17,6 +17,25 @@ export default function BullishVsBearishEngulfingDiagram({ className = "", local
         mobileBearDesc2: "resistencia",
         mobileBearDesc3: " → caída probable.",
         mobileFooter: "⚠ Sin nivel estructural, el engulfing pierde 70% de su tasa de éxito",
+      }
+    : locale === "en"
+    ? {
+        title: "Engulfing — always on a level",
+        bullPanel: "Bullish engulfing on support",
+        bearPanel: "Bearish engulfing on resistance",
+        support: "Support $4,540",
+        resistance: "Resistance $4,700",
+        footer: "Without a structural level, the engulfing loses 70% of its win rate",
+        mobileTitle: "Engulfing — always on a level",
+        mobileBullTitle: "Bullish engulfing AT SUPPORT",
+        mobileBullDesc1: "After a drop, a large green candle engulfs the prior red one on the ",
+        mobileBullDesc2: "$4,540 support",
+        mobileBullDesc3: " → likely bounce.",
+        mobileBearTitle: "Bearish engulfing AT RESISTANCE",
+        mobileBearDesc1: "After a rally, a large red candle engulfs the prior green one on the ",
+        mobileBearDesc2: "resistance",
+        mobileBearDesc3: " → likely drop.",
+        mobileFooter: "⚠ Without a structural level, the engulfing loses 70% of its win rate",
       }
     : {
         title: "Engulfing — toujours sur un niveau",

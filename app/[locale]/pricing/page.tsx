@@ -2,6 +2,7 @@ import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary } from "@/i18n/dictionaries";
+import { isStripeCheckoutEnabled } from "@/lib/stripe-checkout-flag";
 import CheckoutButton from "./CheckoutButton";
 import BrokerConfirmCTA from "./BrokerConfirmCTA";
 import { requestTrialCode } from "./actions";
@@ -48,6 +49,8 @@ export default async function PricingPage({
   const { trial_error } = await searchParams;
   const t = await getDictionary(locale, "pricing");
   const h = (p: string) => localizedHref(p, locale);
+  // Checkout Stripe désactivé côté serveur → offre payante masquée.
+  const checkoutEnabled = isStripeCheckoutEnabled();
   return (
     <main className="min-h-screen bg-zinc-950 text-white px-6 py-12 md:py-20">
       <div className="max-w-5xl mx-auto">
@@ -57,7 +60,7 @@ export default async function PricingPage({
             {t.title}
           </h1>
           <p className="text-zinc-400 text-lg max-w-xl mx-auto">
-            {t.subtitle}
+            {checkoutEnabled ? t.subtitle : t.checkoutDisabled.subtitle}
           </p>
         </div>
 
@@ -134,6 +137,7 @@ export default async function PricingPage({
           </div>
 
           {/* Accès direct */}
+          {checkoutEnabled ? (
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 flex flex-col">
             <div className="mb-6">
               <h2 className="text-lg font-semibold text-zinc-300 mb-1">
@@ -165,12 +169,24 @@ export default async function PricingPage({
               {t.direct.cta}
             </CheckoutButton>
           </div>
+          ) : (
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 flex flex-col">
+            <h2 className="text-lg font-semibold text-zinc-300 mb-3">
+              {t.direct.name}
+            </h2>
+            <p className="text-sm text-zinc-500">
+              {t.checkoutDisabled.directMessage}
+            </p>
+          </div>
+          )}
         </div>
 
         {/* Guarantee */}
+        {checkoutEnabled && (
         <p className="text-center text-zinc-500 text-sm mt-10">
           {t.guarantee}
         </p>
+        )}
       </div>
     </main>
   );

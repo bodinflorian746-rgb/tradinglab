@@ -1,4 +1,4 @@
-export default function EngulfingSetupDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+export default function EngulfingSetupDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
   const t = locale === "es"
     ? {
         title: "Bullish engulfing en Fibo 0.618 — XAU/USD H4",
@@ -16,6 +16,24 @@ export default function EngulfingSetupDiagram({ locale = "fr" }: { locale?: "fr"
         mobileRisk: "Riesgo 40 $",
         mobileGain: "Ganancia 90 $",
         mobileFooter: "Vela verde que envuelve por completo la roja anterior sobre el Fibo 0.618 = señal de entrada fuerte.",
+      }
+    : locale === "en"
+    ? {
+        title: "Bullish engulfing on Fibo 0.618 — XAU/USD H4",
+        tpResistance: "TP — Resistance $4,720",
+        fiboLabel: "Fibo 0.618 — $4,600",
+        slLabel: "SL $4,590",
+        engulfBull: "Bullish engulfing",
+        bodyEngulf: "Body engulfs the 1st",
+        entry: "Entry $4,630",
+        legend: "Risk $40 · Potential gain $90 · R/R 2.25",
+        mobileTitle: "Bullish engulfing on Fibo 0.618 — XAU/USD H4",
+        mobileTP: "Take Profit",
+        mobileEntry: "Entry",
+        mobileSL: "Stop Loss",
+        mobileRisk: "Risk $40",
+        mobileGain: "Gain $90",
+        mobileFooter: "Green candle fully engulfing the prior red one on Fibo 0.618 = strong entry signal.",
       }
     : {
         title: "Bullish engulfing sur Fibo 0.618 — XAU/USD H4",

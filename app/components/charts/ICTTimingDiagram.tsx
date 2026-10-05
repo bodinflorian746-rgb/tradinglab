@@ -4,7 +4,7 @@
 
 interface ICTTimingDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -55,6 +55,20 @@ export function ICTTimingDiagram({ className = "", locale = "fr" }: ICTTimingDia
         block2Body: "London toma la liquidez de Asia y luego envía un displacement franco = setup ICT clásico.",
         leg1: "Range Asia = bolsa de liquidez visible",
         leg2: "Sweep y displacement en London Open",
+      }
+    : locale === "en"
+    ? {
+        rangeAsia: "Asia Range",
+        londonOpen: "London Open",
+        sweep: "Sweep",
+        annotation: "Timing triggers the move",
+        mobileTitle: "ICT timing · XAU/USD M15",
+        block1Title: "Asia Range — visible liquidity",
+        block1Body: "Stops stacked on both sides of the overnight range.",
+        block2Title: "Sweep + displacement at London Open",
+        block2Body: "London takes Asia's liquidity then fires a clean displacement = classic ICT setup.",
+        leg1: "Asia Range = visible liquidity pool",
+        leg2: "Sweep and displacement at London Open",
       }
     : {
         rangeAsia: "Range Asia",

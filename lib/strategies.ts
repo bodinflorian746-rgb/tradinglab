@@ -71,7 +71,7 @@ export const STRATEGY_MODULES: StrategyModule[] = [
     subtitle:    "L'arsenal institutionnel pro : Order Block, FVG, Liquidity sweeps, Killzones, OTE, Power of 3.",
     level:       "avance",
     order:       7,
-    lessonCount: 6,
+    lessonCount: 5,
     isFree:      true,
   },
   {

@@ -1,4 +1,4 @@
-export default function FibTPProjectionDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function FibTPProjectionDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const labels = locale === "es"
     ? {
         title: "Salir en 2 partes: TP1 en 1.272, TP2 en 1.618",
@@ -17,6 +17,25 @@ export default function FibTPProjectionDiagram({ className = "", locale = "fr" }
         mobPos: "50% de la posición",
         mobStrategy: "Estrategia 50/50",
         mobStrategyDesc: " : asegura la mitad en TP1, deja la mitad correr hacia TP2.",
+      }
+    : locale === "en"
+    ? {
+        title: "Scale out in 2: TP1 at 1.272, TP2 at 1.618",
+        zero: "0%  — $4,540",
+        cinquante: "50% — $4,600 (OTE zone)",
+        cent: "100% — $4,660",
+        tp1: "TP1 — 1.272 — $4,692  ",
+        tp2: "TP2 — 1.618 — $4,734  ",
+        swingLow: "Swing low",
+        swingHigh: "Swing high",
+        rebond: "OTE bounce",
+        footer: "50/50 strategy: take half off at TP1 (1.272), hold the rest for TP2 (1.618)",
+        mobTitle: "Scale out in 2 — Fibo extension",
+        mobTp2: "TP2 — 1.618",
+        mobTp1: "TP1 — 1.272",
+        mobPos: "50% of position",
+        mobStrategy: "50/50 strategy",
+        mobStrategyDesc: " : lock in half at TP1, let half run to TP2.",
       }
     : {
         title: "Sortir en 2 fois : TP1 à 1.272, TP2 à 1.618",

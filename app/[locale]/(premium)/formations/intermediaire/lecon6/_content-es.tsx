@@ -118,7 +118,7 @@ export default function ContentEs() {
           {[
             { n: "1", t: "Espera el cierre de la vela", d: "Regla absoluta. Nunca juzgues una ruptura en un precio intrabar. El cierre es el único juez." },
             { n: "2", t: "¿El cierre está del otro lado del nivel?", d: "Sí = potencialmente ruptura real. No (mecha larga + cierre del otro lado) = fake breakout." },
-            { n: "3", t: "¿El reversal es violento?", d: "Retorno rápido y agresivo bajo el nivel = confirmación del fake. Puedes entrar en sentido inverso." },
+            { n: "3", t: "¿El reversal es violento?", d: "Retorno rápido y agresivo bajo el nivel = confirmación del fake. Puedes entrar en sentido inverso, si encaja con tu plan de trading." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.n}</span>
@@ -146,7 +146,7 @@ export default function ContentEs() {
             <span className="text-lg">!</span>
             <div>
               <p className="text-sm font-semibold text-amber-400">Fake breakout (mecha + cierre del otro lado)</p>
-              <p className="text-xs text-zinc-400 mt-0.5">No sigas la ruptura. Puedes entrar en sentido inverso con SL más allá del pico, TP hacia el próximo nivel.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">No sigas la ruptura. Puedes entrar en sentido inverso con SL más allá del pico, TP hacia el próximo nivel, si tu plan de trading lo permite.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3">

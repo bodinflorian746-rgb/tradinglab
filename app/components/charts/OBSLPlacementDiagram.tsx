@@ -1,4 +1,4 @@
-export default function OBSLPlacementDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function OBSLPlacementDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "3 colocaciones de SL — solo una correcta",
@@ -26,6 +26,34 @@ export default function OBSLPlacementDiagram({ className = "", locale = "fr" }: 
         m3Title: "✗ SL demasiado amplio (50+ pips)",
         m3Body: "Innecesariamente grande → R/R degradado, tamaño de posición muy pequeño.",
         mobileFooter: "Margen 5-10 pips más allá de la mecha extrema.",
+      }
+    : locale === "en"
+    ? {
+        title: "3 SL placements — only one correct",
+        p1Title: "✗ SL inside the zone",
+        p1SL: "SL 1.1770",
+        p1OB: "Order Block 1.1745-1.1780",
+        p1Note: "Wicks trigger the SL",
+        p1Sub: "Classic stop hunt",
+        p2Title: "⚠ SL at the edge",
+        p2SL: "SL 1.1745",
+        p2OB: "Order Block 1.1745-1.1780",
+        p2Note: "Zero tolerance for wicks",
+        p2Sub: "Stop hunt risk",
+        p3Title: "✓ SL with buffer",
+        p3SL: "SL 1.1738 (7 pip buffer)",
+        p3OB: "Order Block 1.1745-1.1780",
+        p3Note: "Absorbs secondary wicks",
+        p3Sub: "Operational placement",
+        caption: "A 5-10 pip buffer beyond the extreme wick absorbs the retest wicks",
+        mobileTitle: "3 SL placements — only one correct",
+        m1Title: "✗ SL hugging the OB body",
+        m1Body: "Too tight, triggered by the slightest retest wick.",
+        m2Title: "✓ SL 5-10 pip buffer beyond the wick",
+        m2Body: "Good buffer — absorbs retest wicks without being too wide.",
+        m3Title: "✗ SL too wide (50+ pips)",
+        m3Body: "Needlessly large → degraded R/R, position size too small.",
+        mobileFooter: "5-10 pip buffer beyond the extreme wick.",
       }
     : {
         title: "3 placements de SL — un seul correct",

@@ -1,1 +1,41 @@
-{}
+{
+  "aria": {
+    "dialog": "Welcome to TradeScaleX",
+    "close": "Close"
+  },
+  "step1": {
+    "eyebrow": "Welcome",
+    "title": "A platform built for the real constraints of retail trading.",
+    "bullets": [
+      "Learn trading step by step",
+      "Practice with real situations",
+      "Build market instincts",
+      "Develop a disciplined approach"
+    ],
+    "progressEyebrow": "Recommended path",
+    "steps": ["Basics", "Games", "Strategies", "Execution"],
+    "next": "Get started",
+    "skip": "Skip"
+  },
+  "step2": {
+    "back": "Back",
+    "eyebrow": "Starting point",
+    "title": "Where do you want to start?",
+    "subtitle": "You can change your mind anytime, every section stays accessible.",
+    "doors": {
+      "bases": {
+        "title": "Start with the basics",
+        "description": "Market structure, R/R, risk management, clear foundations."
+      },
+      "games": {
+        "title": "Try the games",
+        "description": "4 mini-games to build market instincts and a trader profile."
+      },
+      "strategies": {
+        "title": "Explore strategies",
+        "description": "Structured methods: Price Action, SMC, ICT, Multi-TF, Macro."
+      }
+    },
+    "later": "Later"
+  }
+}

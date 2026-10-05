@@ -1,4 +1,4 @@
-export default function FibPullbackChecklistDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function FibPullbackChecklistDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const labels = locale === "es"
     ? {
         title: "Validar un pullback Fibo en 4 criterios",
@@ -23,6 +23,31 @@ export default function FibPullbackChecklistDiagram({ className = "", locale = "
           { t: "Bias TF superior alineado", d: "Daily o H4 en el sentido de la impulsión" },
         ],
         mobFooter: "4/4 = setup a privilegiar",
+      }
+    : locale === "en"
+    ? {
+        title: "Validate a Fib pullback with 4 criteria",
+        impulsionTitle: "Clear impulse",
+        impulsionDesc1: "Clean move, displacement",
+        impulsionDesc2: "above average",
+        retracementTitle: "Retracement 30-60%",
+        retracementDesc1: "Fibonacci OTE zone",
+        retracementDesc2: "61.8% to 78.6%",
+        rejectTitle: "Rejection signal",
+        rejectDesc1: "Pin bar, engulfing,",
+        rejectDesc2: "immediate reaction",
+        biasTitle: "HTF bias aligned",
+        biasDesc1: "Daily or H4 in the",
+        biasDesc2: "direction of the impulse",
+        footer: "4/4 = setup to favor",
+        mobTitle: "Validate a Fib pullback",
+        mob: [
+          { t: "Clear impulse", d: "Clean move, displacement > average" },
+          { t: "Retracement 30-60%", d: "Fibonacci OTE zone 61.8% to 78.6%" },
+          { t: "Rejection signal", d: "Pin bar, engulfing, immediate reaction" },
+          { t: "HTF bias aligned", d: "Daily or H4 in the direction of the impulse" },
+        ],
+        mobFooter: "4/4 = setup to favor",
       }
     : {
         title: "Valider un pullback Fibo en 4 critères",

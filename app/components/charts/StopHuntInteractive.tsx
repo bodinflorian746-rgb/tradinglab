@@ -124,21 +124,55 @@ const CONFIGS_ES = {
   },
 } as const;
 
+const CONFIGS_EN = {
+  sell: {
+    heading: "Stop hunt — you got trapped",
+    body: "The wick was a liquidity grab. Institutions were hunting buyers' stops below support to enter long. Price immediately bounced back up. Selling the wick is exactly what institutions want you to do.",
+    color: "border-red-500/20 bg-red-500/5 text-red-400",
+    badgeColor: "#ef4444",
+    badgeText: "STOP HUNT — trapped ✗",
+    badgeHw: 68,
+    badgeCx: 284,
+    badgeCy: 18,
+  },
+  wait: {
+    heading: "Patience — good call",
+    body: "You waited for the candle close. The candle closed above support — the wick was a stop hunt. By waiting, you avoided the trap and can now look for a long entry with confirmation.",
+    color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
+    badgeColor: "#10b981",
+    badgeText: "Good call ✓",
+    badgeHw: 56,
+    badgeCx: 284,
+    badgeCy: 18,
+  },
+  buy: {
+    heading: "Too early — real break",
+    body: "You bought without confirmation. This time, support truly gave way — your SL got hit. Buying a wick without a reversal signal is as risky as selling the break. Always wait for the close and a signal.",
+    color: "border-amber-400/20 bg-amber-400/5 text-amber-400",
+    badgeColor: "#ef4444",
+    badgeText: "SL hit — real break ✗",
+    badgeHw: 78,
+    badgeCx: 284,
+    badgeCy: 18,
+  },
+} as const;
+
 interface StopHuntInteractiveProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function StopHuntInteractive({ className = "", locale = "fr" }: StopHuntInteractiveProps) {
   const isEs = locale === "es";
-  const CONFIGS = isEs ? CONFIGS_ES : CONFIGS_FR;
+  const isEn = locale === "en";
+  const CONFIGS = isEs ? CONFIGS_ES : isEn ? CONFIGS_EN : CONFIGS_FR;
   const T = {
-    supportKey:    isEs ? "Soporte clave" : "Support clé",
-    question:      isEs ? "El soporte acaba de ser perforado por una mecha larga — ¿qué haces?" : "Le support vient d'être percé par une longue mèche — que fais-tu ?",
-    btnSell:       isEs ? "Vender ahora (el soporte está roto)" : "Vendre maintenant (le support est cassé)",
-    btnWait:       isEs ? "Esperar el cierre de la vela" : "Attendre la clôture de bougie",
-    btnBuy:        isEs ? "Comprar (seguramente es un fakeout)" : "Acheter (c'est sûrement un fakeout)",
-    retry:         isEs ? "Reintentar" : "Réessayer",
+    supportKey:    isEs ? "Soporte clave" : isEn ? "Key support" : "Support clé",
+    question:      isEs ? "El soporte acaba de ser perforado por una mecha larga — ¿qué haces?" : isEn ? "Support was just pierced by a long wick — what do you do?" : "Le support vient d'être percé par une longue mèche — que fais-tu ?",
+    btnSell:       isEs ? "Vender ahora (el soporte está roto)" : isEn ? "Sell now (support is broken)" : "Vendre maintenant (le support est cassé)",
+    btnWait:       isEs ? "Esperar el cierre de la vela" : isEn ? "Wait for the candle close" : "Attendre la clôture de bougie",
+    btnBuy:        isEs ? "Comprar (seguramente es un fakeout)" : isEn ? "Buy (it's probably a fakeout)" : "Acheter (c'est sûrement un fakeout)",
+    retry:         isEs ? "Reintentar" : isEn ? "Retry" : "Réessayer",
   };
   const [choice, setChoice] = useState<Choice>(null);
   const cfg = choice ? CONFIGS[choice] : null;

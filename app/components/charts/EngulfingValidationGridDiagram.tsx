@@ -1,4 +1,4 @@
-export default function EngulfingValidationGridDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function EngulfingValidationGridDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Engulfing válido vs inválido",
@@ -20,6 +20,28 @@ export default function EngulfingValidationGridDiagram({ className = "", locale 
           { v: false, label: "Par engulfing en un rango", desc: "Sin nivel estructural → señal inútil" },
         ],
         mobileFooter: "Cuerpo envolvente + amplitud + contexto de nivel",
+      }
+    : locale === "en"
+    ? {
+        title: "Valid vs invalid engulfing",
+        cell1: "✓ Valid — Fully engulfs",
+        cell1Sub: "Green > Red (×2)",
+        cell2: "✗ Only engulfs 60%",
+        cell2Sub: "Green < Red (60%)",
+        cell3: "✗ Range too small",
+        cell3Sub: "Tiny range",
+        cell4: "✗ Off structural level",
+        rangeLabel: "Sideways range",
+        cell4Sub: "Engulfing pair mid-range",
+        footer: "Engulfing body + sufficient range + level context",
+        mobileTitle: "Spot a valid engulfing",
+        mobileCases: [
+          { v: true, label: "Clear engulfing body", desc: "Green candle fully engulfs the prior red one + sufficient range" },
+          { v: false, label: "Candle B misses candle A", desc: "Body too short → not a true engulfing" },
+          { v: false, label: "Tiny range", desc: "Engulfing but only 20 px → weak signal" },
+          { v: false, label: "Engulfing pair in a range", desc: "No structural level → useless signal" },
+        ],
+        mobileFooter: "Engulfing body + range + level context",
       }
     : {
         title: "Engulfing valide vs invalide",

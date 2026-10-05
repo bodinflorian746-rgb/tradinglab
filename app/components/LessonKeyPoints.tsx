@@ -1,12 +1,35 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale } from "./LocaleProvider";
 
 interface Props {
   points: string[];
+  locale?: "fr" | "es" | "en";
 }
 
-export function LessonKeyPoints({ points }: Props) {
+export function LessonKeyPoints({ points, locale }: Props) {
+  const contextLocale = useLocale();
+  const resolvedLocale: "fr" | "es" | "en" = locale ?? contextLocale;
+  const L =
+    resolvedLocale === "es"
+      ? {
+          keyTakeaway: "Para recordar",
+          allMastered: "Todo dominado ✓",
+          checkHint: "Marca cada punto para confirmar que lo has asimilado",
+        }
+      : resolvedLocale === "en"
+        ? {
+            keyTakeaway: "Key takeaway",
+            allMastered: "All mastered ✓",
+            checkHint: "Check off each point to confirm you've absorbed it",
+          }
+        : {
+            keyTakeaway: "À retenir",
+            allMastered: "Tout maîtrisé ✓",
+            checkHint: "Coche chaque point pour confirmer que tu l'as assimilé",
+          };
+
   const [checked, setChecked] = useState<Set<number>>(new Set());
 
   function toggle(i: number) {
@@ -21,7 +44,7 @@ export function LessonKeyPoints({ points }: Props) {
 
   return (
     <div>
-    <p className="text-[11px] font-semibold text-zinc-600 uppercase tracking-widest mb-2 px-1">À retenir</p>
+    <p className="text-[11px] font-semibold text-zinc-600 uppercase tracking-widest mb-2 px-1">{L.keyTakeaway}</p>
     <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2.5">
@@ -30,11 +53,11 @@ export function LessonKeyPoints({ points }: Props) {
               <path d="M6.5 1.5l1.2 3.6H11l-2.9 2.1 1.1 3.6L6.5 9 3.8 10.8l1.1-3.6L2 5.1h3.3L6.5 1.5z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
             </svg>
           </div>
-          <span className="text-sm font-semibold text-white">À retenir</span>
+          <span className="text-sm font-semibold text-white">{L.keyTakeaway}</span>
         </div>
         {allChecked && (
           <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">
-            Tout maîtrisé ✓
+            {L.allMastered}
           </span>
         )}
       </div>
@@ -76,7 +99,7 @@ export function LessonKeyPoints({ points }: Props) {
 
       {!allChecked && (
         <p className="mt-3 text-center text-xs text-zinc-600">
-          Coche chaque point pour confirmer que tu l'as assimilé
+          {L.checkHint}
         </p>
       )}
     </div>

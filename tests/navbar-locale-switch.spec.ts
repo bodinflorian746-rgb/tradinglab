@@ -34,7 +34,9 @@ test.describe("Navbar — language switcher FR ↔ ES", () => {
       await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
       expect(await readLang(page)).toBe("fr");
 
-      // Click ES in switcher
+      // Le sélecteur de langue est désormais compact ("FR ▾") : on l'ouvre
+      // avant d'atteindre les liens hrefLang.
+      await page.getByTestId("nav-lang-trigger").first().click();
       const esLink = page.locator('nav a[hrefLang="es"]').first();
       await expect(esLink).toBeVisible();
       await Promise.all([
@@ -47,7 +49,8 @@ test.describe("Navbar — language switcher FR ↔ ES", () => {
       expect(new URL(page.url()).pathname).toBe(expected);
       expect(await readLang(page)).toBe("es");
 
-      // Active state : ES becomes white, FR becomes muted
+      // Active state : rouvrir le menu (fermé après navigation) — ES actif, FR non.
+      await page.getByTestId("nav-lang-trigger").first().click();
       const esAfter = page.locator('nav a[hrefLang="es"]').first();
       const frAfter = page.locator('nav a[hrefLang="fr"]').first();
       await expect(esAfter).toHaveAttribute("aria-current", "true");
@@ -72,20 +75,18 @@ test.describe("Navbar — language switcher FR ↔ ES", () => {
     await page.goto("/fr/formations", { waitUntil: "domcontentloaded" });
     await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
 
-    // Switcher déjà visible dans le top bar (right cluster) en mobile
-    const esTop = page.locator('nav a[hrefLang="es"]').first();
-    await expect(esTop).toBeVisible();
+    // Déclencheur compact déjà visible dans le top bar en mobile
+    await expect(page.getByTestId("nav-lang-trigger").first()).toBeVisible();
 
     // Open burger
-    const burger = page.locator('nav button[aria-label]').first();
-    await burger.click();
+    await page.getByTestId("nav-burger").click();
 
-    // Both FR and ES links should now be present (top + mobile panel = 2 each)
-    await expect(page.locator('nav a[hrefLang="es"]')).toHaveCount(2);
-    await expect(page.locator('nav a[hrefLang="fr"]')).toHaveCount(2);
+    // Le panneau mobile a sa propre instance du sélecteur (top + panneau = 2)
+    await expect(page.getByTestId("nav-lang-trigger")).toHaveCount(2);
 
-    // Click ES from mobile panel (the second one — inside burger)
-    const esInPanel = page.locator('nav a[hrefLang="es"]').nth(1);
+    // Ouvrir le sélecteur du panneau (le second) puis cliquer ES
+    await page.getByTestId("nav-lang-trigger").nth(1).click();
+    const esInPanel = page.locator('nav a[hrefLang="es"]').first();
     await Promise.all([
       page.waitForURL((u) => u.pathname.startsWith("/es"), { timeout: 10_000 }),
       esInPanel.click(),

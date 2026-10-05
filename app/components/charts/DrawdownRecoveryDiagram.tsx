@@ -1,6 +1,6 @@
 interface DrawdownRecoveryDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 interface DataPoint {
@@ -42,20 +42,21 @@ const FILL_AREA = `M${ORIGIN_X},${ORIGIN_Y} L169,528 L268,512 L366,492 L465,465 
 
 export default function DrawdownRecoveryDiagram({ className = "", locale = "fr" }: DrawdownRecoveryDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    title:        isEs ? "Cuanto más pierdes, más debes rendir para volver" : "Plus tu perds, plus il faut performer pour revenir",
-    subtitle:     isEs ? "El coste matemático del drawdown" : "Le coût mathématique du drawdown",
-    axisX:        isEs ? "Drawdown sufrido (%)" : "Drawdown subi (%)",
-    axisY:        isEs ? "Ganancia necesaria (%)" : "Gain nécessaire (%)",
-    zoneSurvival: isEs ? "Zona de supervivencia" : "Zone de survie",
-    zoneDanger:   isEs ? "Zona peligrosa" : "Zone dangereuse",
-    zoneCritical: isEs ? "Zona crítica" : "Zone critique",
-    footer:       isEs ? "Una pérdida del 50% exige +100% para volver. Una del 70% exige +233%." : "Une perte de 50% impose +100% pour revenir. Une de 70% impose +233%.",
-    mobTitle:     isEs ? "Cuanto más pierdes, más debes rendir para volver" : "Plus tu perds, plus il faut performer pour revenir",
-    mobSubtitle:  isEs ? "El coste matemático del drawdown" : "Le coût mathématique du drawdown",
-    mobDdHeader:  isEs ? "Drawdown" : "Drawdown",
-    mobRecHeader: isEs ? "Ganancia necesaria" : "Gain nécessaire",
-    mobFooter:    isEs ? "La curva explota: cada punto perdido cuesta cada vez más para recuperar." : "La courbe explose : chaque point perdu coûte de plus en plus à récupérer.",
+    title:        isEs ? "Cuanto más pierdes, más debes rendir para volver" : isEn ? "The more you lose, the more you must perform to recover" : "Plus tu perds, plus il faut performer pour revenir",
+    subtitle:     isEs ? "El coste matemático del drawdown" : isEn ? "The mathematical cost of drawdown" : "Le coût mathématique du drawdown",
+    axisX:        isEs ? "Drawdown sufrido (%)" : isEn ? "Drawdown taken (%)" : "Drawdown subi (%)",
+    axisY:        isEs ? "Ganancia necesaria (%)" : isEn ? "Gain needed (%)" : "Gain nécessaire (%)",
+    zoneSurvival: isEs ? "Zona de supervivencia" : isEn ? "Survival zone" : "Zone de survie",
+    zoneDanger:   isEs ? "Zona peligrosa" : isEn ? "Danger zone" : "Zone dangereuse",
+    zoneCritical: isEs ? "Zona crítica" : isEn ? "Critical zone" : "Zone critique",
+    footer:       isEs ? "Una pérdida del 50% exige +100% para volver. Una del 70% exige +233%." : isEn ? "A 50% loss requires +100% to recover. A 70% loss requires +233%." : "Une perte de 50% impose +100% pour revenir. Une de 70% impose +233%.",
+    mobTitle:     isEs ? "Cuanto más pierdes, más debes rendir para volver" : isEn ? "The more you lose, the more you must perform to recover" : "Plus tu perds, plus il faut performer pour revenir",
+    mobSubtitle:  isEs ? "El coste matemático del drawdown" : isEn ? "The mathematical cost of drawdown" : "Le coût mathématique du drawdown",
+    mobDdHeader:  isEs ? "Drawdown" : isEn ? "Drawdown" : "Drawdown",
+    mobRecHeader: isEs ? "Ganancia necesaria" : isEn ? "Gain needed" : "Gain nécessaire",
+    mobFooter:    isEs ? "La curva explota: cada punto perdido cuesta cada vez más para recuperar." : isEn ? "The curve explodes: each point lost costs more and more to recover." : "La courbe explose : chaque point perdu coûte de plus en plus à récupérer.",
   };
 
   return (

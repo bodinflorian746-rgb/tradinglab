@@ -16,7 +16,12 @@ import { test, expect, type Page } from "@playwright/test";
 // Groupe de test « legacy » (bypass) : a0000000-0000-4000-8000-000000000001.
 const GROUP_ID = "a0000000-0000-4000-8000-000000000001";
 
-const PASSWORD = "DevRecette123!";
+// Mot de passe des comptes de test @dev.local : jamais écrit dans le dépôt,
+// fourni par SMOKE_TEST_PASSWORD (cf. scripts/seed-smoke-test-personas.js).
+const PASSWORD = process.env.SMOKE_TEST_PASSWORD ?? "";
+if (!PASSWORD) {
+  throw new Error("SMOKE_TEST_PASSWORD manquant : définir la variable avant de lancer ces tests.");
+}
 
 // Modale d'onboarding globale ("Bienvenue sur TradeScaleX", app/components/
 // OnboardingOverlay.tsx) affichée à toute session fraîche tant que

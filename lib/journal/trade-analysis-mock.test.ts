@@ -45,7 +45,7 @@ function makeEntry(overrides: Partial<TradeEntryView> = {}): TradeEntryView {
     ai_feedback: null,
     ai_mistakes: null,
     ai_score: null,
-    ai_recommendations: null,
+    ai_strengths: null,
     created_at: "2026-06-18T07:46:00.000Z",
     updated_at: "2026-06-18T07:46:00.000Z",
     screenshot_signed_url: null,

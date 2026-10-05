@@ -1,20 +1,21 @@
 interface CentralBanksHierarchyProps {
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export const CentralBanksHierarchy = ({ locale = "fr" }: CentralBanksHierarchyProps = {}) => {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    subtitle:    isEs ? "El mercado es influenciado por varios bancos — pero uno domina." : "Le marché est influencé par plusieurs banques — mais une domine.",
-    fedFull:     isEs ? "Reserva federal" : "Réserve fédérale",
-    bceFull:     isEs ? "Banco central europeo" : "Banque centrale européenne",
+    subtitle:    isEs ? "El mercado es influenciado por varios bancos — pero uno domina." : isEn ? "The market is driven by several banks — but one dominates." : "Le marché est influencé par plusieurs banques — mais une domine.",
+    fedFull:     isEs ? "Reserva federal" : isEn ? "Federal Reserve" : "Réserve fédérale",
+    bceFull:     isEs ? "Banco central europeo" : isEn ? "European Central Bank" : "Banque centrale européenne",
     boeFull:     "Bank of England",
-    bojFull:     isEs ? "Banco de Japón" : "Banque du Japon",
-    boss:        isEs ? "El jefe del juego" : "Le boss du jeu",
-    bossPlus:    isEs ? "★ El jefe del juego" : "★ Le boss du jeu",
-    influence:   isEs ? "↓ influencia ↓" : "↓ influence ↓",
-    footer:      isEs ? "Todos los activos mayores dependen del dólar: forex, oro, crypto, índices US." : "Tous les actifs majeurs dépendent du dollar : forex, or, crypto, indices US.",
-    mobFooter:   isEs ? "Todos los activos mayores (forex, oro, crypto, índices US) dependen del dólar." : "Tous les actifs majeurs (forex, or, crypto, indices US) dépendent du dollar.",
+    bojFull:     isEs ? "Banco de Japón" : isEn ? "Bank of Japan" : "Banque du Japon",
+    boss:        isEs ? "El jefe del juego" : isEn ? "The boss of the game" : "Le boss du jeu",
+    bossPlus:    isEs ? "★ El jefe del juego" : isEn ? "★ The boss of the game" : "★ Le boss du jeu",
+    influence:   isEs ? "↓ influencia ↓" : isEn ? "↓ influence ↓" : "↓ influence ↓",
+    footer:      isEs ? "Todos los activos mayores dependen del dólar: forex, oro, crypto, índices US." : isEn ? "Every major asset depends on the dollar: forex, gold, crypto, US indices." : "Tous les actifs majeurs dépendent du dollar : forex, or, crypto, indices US.",
+    mobFooter:   isEs ? "Todos los activos mayores (forex, oro, crypto, índices US) dependen del dólar." : isEn ? "Every major asset (forex, gold, crypto, US indices) depends on the dollar." : "Tous les actifs majeurs (forex, or, crypto, indices US) dépendent du dollar.",
   };
   return (
     <div>

@@ -148,7 +148,7 @@ export interface TradeEntry {
   ai_feedback: string | null;
   ai_mistakes: string[] | null;
   ai_score: number | null;
-  ai_recommendations: string[] | null;
+  ai_strengths: string[] | null;
 
   created_at: string;
   updated_at: string;

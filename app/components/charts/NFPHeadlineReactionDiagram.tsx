@@ -4,7 +4,7 @@
 
 interface NFPHeadlineReactionDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -58,6 +58,20 @@ export function NFPHeadlineReactionDiagram({ className = "", locale = "fr" }: NF
         mobileReevalDesc: "El mercado digiere los sub-datos y revisa el movimiento inicial.",
         legendHeadline: "Reacción headline excesiva, ruptura del soporte",
         legendReeval: "Reevaluación del mercado tras estabilización",
+      }
+    : locale === "en"
+    ? {
+        support: "Support $4,600",
+        avantNfp: "$4,640 — before NFP",
+        reactionHeadline: "Headline reaction",
+        reevaluation: "Market re-evaluation",
+        mobileTitle: "NFP headline reaction · XAU/USD M15",
+        mobileExcess: "Excessive headline reaction",
+        mobileExcessDesc: "Immediate violent move → support broken within minutes.",
+        mobileReeval: "Re-evaluation after stabilization",
+        mobileReevalDesc: "The market digests the sub-data and revises the initial move.",
+        legendHeadline: "Excessive headline reaction, support broken",
+        legendReeval: "Market re-evaluation after stabilization",
       }
     : {
         support: "Support 4 600 $",

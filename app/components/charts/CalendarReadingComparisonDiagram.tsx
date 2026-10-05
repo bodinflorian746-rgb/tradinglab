@@ -1,4 +1,4 @@
-export const CalendarReadingComparisonDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+export const CalendarReadingComparisonDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) => {
   const t = locale === "es"
     ? {
         title: "Leer un calendario — principiante vs pro",
@@ -17,6 +17,25 @@ export const CalendarReadingComparisonDiagram = ({ locale = "fr" }: { locale?: "
         revisionForte: "REVISIÓN FUERTE",
         footer: "El calendario no te da una alerta. Te da un mapa.",
         mobileFleche: "↓ Pasar de la alerta al escenario completo ↓",
+      }
+    : locale === "en"
+    ? {
+        title: "Reading a calendar — beginner vs pro",
+        subtitle: "The same event, read in 2 radically different ways",
+        lectureDebutant: "BEGINNER READING",
+        lecturePro: "PRO READING",
+        jeVoisNews: "I see an important news.",
+        jeSaisRisque: "→ I just know there's a risk.",
+        consensus: "Consensus:",
+        precedent: "Previous:",
+        reviseA: "Revised to:",
+        jeLisContexte: "I read the full context.",
+        revisionChange: "→ I know the revision changes everything.",
+        passerAlerte: "Go from the alert",
+        auScenario: "to the full scenario",
+        revisionForte: "STRONG REVISION",
+        footer: "The calendar doesn't give you an alert. It gives you a map.",
+        mobileFleche: "↓ Go from the alert to the full scenario ↓",
       }
     : {
         title: "Lire un calendrier — débutant vs pro",

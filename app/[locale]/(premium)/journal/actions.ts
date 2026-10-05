@@ -5,6 +5,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { requireJournalAccess } from "@/lib/journal/access";
 import { validateTradeInput, type FieldErrors } from "@/lib/journal/validation";
 import { isMockEnvEnabled } from "@/lib/journal/mock";
 import { analyzeTrade, isAiConfigured, type AiAnalysis } from "@/lib/journal/ai";
@@ -24,6 +25,12 @@ export async function createTradeEntry(
   _prev: CreateTradeState,
   formData: FormData,
 ): Promise<CreateTradeState> {
+  // Contrôle d'accès serveur (connecté + premium + JOURNAL_EMAILS) AVANT tout.
+  const access = await requireJournalAccess();
+  if (!access.ok) {
+    return { ok: false, error: access.reason === "notLoggedIn" ? "notLoggedIn" : "generic" };
+  }
+
   // ── Mode démo local (DEV uniquement) ──
   // On valide quand même le formulaire (pour tester l'UX d'erreurs) mais on
   // n'écrit RIEN en base et on n'upload AUCUNE image : succès simulé.
@@ -34,10 +41,7 @@ export async function createTradeEntry(
   }
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return { ok: false, error: "notLoggedIn" };
+  const { user } = access;
 
   const { data, errors } = validateTradeInput(formData);
   if (errors || !data) return { ok: false, errors };
@@ -88,14 +92,14 @@ export async function createTradeEntry(
 }
 
 export async function deleteTradeEntry(formData: FormData): Promise<void> {
+  // Contrôle d'accès serveur (connecté + premium + JOURNAL_EMAILS) AVANT tout.
+  const access = await requireJournalAccess();
+  if (!access.ok) return;
+
   // Mode démo local (DEV) : pas de suppression réelle en base.
   if (isMockEnvEnabled()) return;
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return;
 
   const id = formData.get("id");
   if (typeof id !== "string" || !id) return;
@@ -126,6 +130,12 @@ export async function deleteTradeEntry(formData: FormData): Promise<void> {
 }
 
 export async function updateTradeEntry(formData: FormData): Promise<CreateTradeState> {
+  // Contrôle d'accès serveur (connecté + premium + JOURNAL_EMAILS) AVANT tout.
+  const access = await requireJournalAccess();
+  if (!access.ok) {
+    return { ok: false, error: access.reason === "notLoggedIn" ? "notLoggedIn" : "generic" };
+  }
+
   // ── Mode démo local (DEV) : succès simulé, aucune écriture réelle ──
   if (isMockEnvEnabled()) {
     const { errors } = validateTradeInput(formData);
@@ -134,10 +144,7 @@ export async function updateTradeEntry(formData: FormData): Promise<CreateTradeS
   }
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return { ok: false, error: "notLoggedIn" };
+  const { user } = access;
 
   const id = formData.get("id");
   if (typeof id !== "string" || !id) return { ok: false, error: "generic" };
@@ -226,14 +233,17 @@ export interface AnalyzeTradeAiState {
 // Idempotente : si le trade est déjà analysé, renvoie le résultat déjà
 // persisté sans ré-appeler l'IA (coût + latence évités).
 export async function analyzeTradeWithAiAction(tradeId: string): Promise<AnalyzeTradeAiState> {
+  // Contrôle d'accès serveur (connecté + premium + JOURNAL_EMAILS) AVANT tout,
+  // y compris avant tout appel IA (coût).
+  const access = await requireJournalAccess();
+  if (!access.ok) {
+    return { ok: false, error: access.reason === "notLoggedIn" ? "notLoggedIn" : "generic" };
+  }
+
   // Mode démo local (dev) : pas de trade réel en base, pas d'appel IA possible.
   if (isMockEnvEnabled()) return { ok: false, error: "notConfigured" };
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return { ok: false, error: "notLoggedIn" };
 
   // RLS garantit qu'un user ne peut lire que ses propres trades.
   const { data: row, error: readErr } = await supabase
@@ -255,7 +265,7 @@ export async function analyzeTradeWithAiAction(tradeId: string): Promise<Analyze
       ok: true,
       data: {
         summary: entry.ai_summary,
-        strengths: Array.isArray(entry.ai_recommendations) ? entry.ai_recommendations : [],
+        strengths: Array.isArray(entry.ai_strengths) ? entry.ai_strengths : [],
         mistakes: Array.isArray(entry.ai_mistakes) ? entry.ai_mistakes : [],
         behavioral_advice: entry.ai_feedback ?? "",
         score: entry.ai_score ?? 0,
@@ -278,9 +288,7 @@ export async function analyzeTradeWithAiAction(tradeId: string): Promise<Analyze
   }
 
   // Persistance du JSON validé + filtré uniquement (jamais de texte brut non
-  // vérifié). Mapping vers les colonnes existantes (aucune migration) :
-  // ai_recommendations stocke ici "strengths" (le nom de colonne est
-  // historique — cf. lib/journal/ai.ts sur le choix du schéma de sortie).
+  // vérifié).
   const { error: updateErr } = await supabase
     .from("trading_journal_entries")
     .update({
@@ -289,7 +297,7 @@ export async function analyzeTradeWithAiAction(tradeId: string): Promise<Analyze
       ai_feedback: result.data.behavioral_advice,
       ai_mistakes: result.data.mistakes,
       ai_score: result.data.score,
-      ai_recommendations: result.data.strengths,
+      ai_strengths: result.data.strengths,
     })
     .eq("id", tradeId);
 

@@ -4,6 +4,7 @@ import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
 import { MultiTimeframeDiagram } from "@/app/components/charts/MultiTimeframeDiagram";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 function ContentFr() {
   return (
@@ -154,7 +155,7 @@ function ContentFr() {
             <span className="text-lg">✓</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">Daily + H4 + M15 alignés</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu entres. C'est le setup à haute probabilité. Biais Daily confirmé par zone H4, signal M15 dans le même sens.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">C'est le setup à haute probabilité, une confirmation à intégrer dans ton plan de trading, pas un ordre d'entrée automatique. Biais Daily confirmé par zone H4, signal M15 dans le même sens.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-amber-400/5 border border-amber-400/15 rounded-xl px-4 py-3">
@@ -248,5 +249,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

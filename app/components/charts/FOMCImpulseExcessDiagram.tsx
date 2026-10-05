@@ -4,7 +4,7 @@
 
 interface FOMCImpulseExcessDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -57,6 +57,20 @@ export function FOMCImpulseExcessDiagram({ className = "", locale = "fr" }: FOMC
         retourDesc: "El mercado corrige el exceso → posible oportunidad de fade.",
         legendImpulsion: "Impulso FOMC excesivo, ruptura del soporte",
         legendRetour: "Retorno de péndulo tras el exceso",
+      }
+    : locale === "en"
+    ? {
+        support: "Support $4,620",
+        avantFomc: "$4,660 — pre-FOMC",
+        impulsionEmot: "Emotional move",
+        retourBalancier: "Swing back",
+        mobileTitle: "FOMC excessive move · XAU/USD M15",
+        impulsionTitle: "Excessive FOMC move",
+        impulsionDesc: "Violent break of support on the release → price moves too far too fast.",
+        retourTitle: "Swing back",
+        retourDesc: "Market corrects the excess → potential fade opportunity.",
+        legendImpulsion: "Excessive FOMC move, support break",
+        legendRetour: "Swing back after the excess",
       }
     : {
         support: "Support 4 620 $",

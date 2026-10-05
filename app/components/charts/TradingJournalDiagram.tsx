@@ -1,6 +1,6 @@
 interface TradingJournalDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type Trade = {
@@ -41,47 +41,48 @@ const ROW_DY = 28;
 
 export function TradingJournalDiagram({ className = "", locale = "fr" }: TradingJournalDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    winRate:      isEs ? "Win Rate 60%" : "Win Rate 60%",
-    netR:         isEs ? "+5.5R neto" : "+5.5R net",
-    hdrDate:      isEs ? "FECHA" : "DATE",
+    winRate:      isEs ? "Win Rate 60%" : isEn ? "Win Rate 60%" : "Win Rate 60%",
+    netR:         isEs ? "+5.5R neto" : isEn ? "+5.5R net" : "+5.5R net",
+    hdrDate:      isEs ? "FECHA" : isEn ? "DATE" : "DATE",
     hdrSetup:     "SETUP",
     hdrRR:        "R/R",
-    hdrResult:    isEs ? "RESULTADO" : "RÉSULTAT",
-    equityCap:    isEs ? "Equity — capital acumulado (en R)" : "Equity — capital cumulé (en R)",
-    tradeNum:     isEs ? "Trade #" : "Trade #",
-    bestStreak:   isEs ? "Best streak +5R" : "Best streak +5R",
-    worstDd:      isEs ? "Worst drawdown -2R" : "Worst drawdown -2R",
-    bestSetup:    isEs ? "✓  Setup más rentable" : "✓  Setup le plus rentable",
-    bestSetupVal: isEs ? "OB Bullish — 3 / 3 ganadores" : "OB Bullish — 3 / 3 gagnants",
-    bestSetupSub: isEs ? "Ratio promedio: +1.83R / trade" : "Ratio moyen : +1.83R / trade",
-    avoidSetup:   isEs ? "✗  Setup a evitar" : "✗  Setup à éviter",
-    avoidVal:     isEs ? "Range Break — 0 / 2 ganadores" : "Range Break — 0 / 2 gagnants",
-    avoidSub:     isEs ? "Eliminar de tu plan de trading" : "Supprimer de ton plan de trading",
-    recError:     isEs ? "⚠  Error recurrente" : "⚠  Erreur récurrente",
-    recVal:       isEs ? "SL muy ajustado en 3 trades" : "SL trop serré sur 3 trades",
-    recSub:       isEs ? "Revisar sizing y colocación del SL" : "Revoir sizing et placement du SL",
-    mobEqCap:     isEs ? "Equity acumulada (en R)" : "Equity cumulée (en R)",
-    mobWinRate:   isEs ? "Win rate" : "Win rate",
-    mobWinRateD:  isEs ? "6 / 10 trades" : "6 / 10 trades",
-    mobNet:       isEs ? "Net" : "Net",
-    mobNetD:      isEs ? "capital acumulado" : "capital cumulé",
-    mobResult:    isEs ? "Result." : "Résult.",
-    mobBest:      isEs ? "Best +5R" : "Best +5R",
-    mobDd:        isEs ? "Drawdown −2R" : "Drawdown −2R",
-    mobOBVal:     isEs ? "3/3 ganadores" : "3/3 gagnants",
-    mobRangeVal:  isEs ? "0/2 ganadores" : "0/2 gagnants",
-    mobSlTrades:  isEs ? "3 trades" : "3 trades",
-    mobSlVal:     isEs ? "SL muy ajustado —" : "SL trop serré —",
-    mobSlValEnd:  isEs ? "detenidos" : "stoppés",
-    mobObTitle:   isEs ? "OB Bullish —" : "OB Bullish —",
-    mobRangeT:    isEs ? "Range Break —" : "Range Break —",
-    mobAvoidSub:  isEs ? "A eliminar del plan de trading" : "À supprimer du plan de trading",
-    mobRecSub:    isEs ? "Revisar sizing y colocación del SL" : "Revoir sizing et placement du SL",
-    mobBestSub:   isEs ? "Ratio promedio: +1.83R / trade" : "Ratio moyen : +1.83R / trade",
-    mobBestTitle: isEs ? "✓ Setup más rentable" : "✓ Setup le plus rentable",
-    mobAvoidTitle:isEs ? "✗ Setup a evitar" : "✗ Setup à éviter",
-    mobRecTitle:  isEs ? "⚠ Error recurrente" : "⚠ Erreur récurrente",
+    hdrResult:    isEs ? "RESULTADO" : isEn ? "RESULT" : "RÉSULTAT",
+    equityCap:    isEs ? "Equity — capital acumulado (en R)" : isEn ? "Equity — cumulative capital (in R)" : "Equity — capital cumulé (en R)",
+    tradeNum:     isEs ? "Trade #" : isEn ? "Trade #" : "Trade #",
+    bestStreak:   isEs ? "Best streak +5R" : isEn ? "Best streak +5R" : "Best streak +5R",
+    worstDd:      isEs ? "Worst drawdown -2R" : isEn ? "Worst drawdown -2R" : "Worst drawdown -2R",
+    bestSetup:    isEs ? "✓  Setup más rentable" : isEn ? "✓  Most profitable setup" : "✓  Setup le plus rentable",
+    bestSetupVal: isEs ? "OB Bullish — 3 / 3 ganadores" : isEn ? "OB Bullish — 3 / 3 wins" : "OB Bullish — 3 / 3 gagnants",
+    bestSetupSub: isEs ? "Ratio promedio: +1.83R / trade" : isEn ? "Average ratio: +1.83R / trade" : "Ratio moyen : +1.83R / trade",
+    avoidSetup:   isEs ? "✗  Setup a evitar" : isEn ? "✗  Setup to avoid" : "✗  Setup à éviter",
+    avoidVal:     isEs ? "Range Break — 0 / 2 ganadores" : isEn ? "Range Break — 0 / 2 wins" : "Range Break — 0 / 2 gagnants",
+    avoidSub:     isEs ? "Eliminar de tu plan de trading" : isEn ? "Remove from your trading plan" : "Supprimer de ton plan de trading",
+    recError:     isEs ? "⚠  Error recurrente" : isEn ? "⚠  Recurring mistake" : "⚠  Erreur récurrente",
+    recVal:       isEs ? "SL muy ajustado en 3 trades" : isEn ? "SL too tight on 3 trades" : "SL trop serré sur 3 trades",
+    recSub:       isEs ? "Revisar sizing y colocación del SL" : isEn ? "Review sizing and SL placement" : "Revoir sizing et placement du SL",
+    mobEqCap:     isEs ? "Equity acumulada (en R)" : isEn ? "Cumulative equity (in R)" : "Equity cumulée (en R)",
+    mobWinRate:   isEs ? "Win rate" : isEn ? "Win rate" : "Win rate",
+    mobWinRateD:  isEs ? "6 / 10 trades" : isEn ? "6 / 10 trades" : "6 / 10 trades",
+    mobNet:       isEs ? "Net" : isEn ? "Net" : "Net",
+    mobNetD:      isEs ? "capital acumulado" : isEn ? "cumulative capital" : "capital cumulé",
+    mobResult:    isEs ? "Result." : isEn ? "Result" : "Résult.",
+    mobBest:      isEs ? "Best +5R" : isEn ? "Best +5R" : "Best +5R",
+    mobDd:        isEs ? "Drawdown −2R" : isEn ? "Drawdown −2R" : "Drawdown −2R",
+    mobOBVal:     isEs ? "3/3 ganadores" : isEn ? "3/3 wins" : "3/3 gagnants",
+    mobRangeVal:  isEs ? "0/2 ganadores" : isEn ? "0/2 wins" : "0/2 gagnants",
+    mobSlTrades:  isEs ? "3 trades" : isEn ? "3 trades" : "3 trades",
+    mobSlVal:     isEs ? "SL muy ajustado —" : isEn ? "SL too tight —" : "SL trop serré —",
+    mobSlValEnd:  isEs ? "detenidos" : isEn ? "stopped out" : "stoppés",
+    mobObTitle:   isEs ? "OB Bullish —" : isEn ? "OB Bullish —" : "OB Bullish —",
+    mobRangeT:    isEs ? "Range Break —" : isEn ? "Range Break —" : "Range Break —",
+    mobAvoidSub:  isEs ? "A eliminar del plan de trading" : isEn ? "Remove from the trading plan" : "À supprimer du plan de trading",
+    mobRecSub:    isEs ? "Revisar sizing y colocación del SL" : isEn ? "Review sizing and SL placement" : "Revoir sizing et placement du SL",
+    mobBestSub:   isEs ? "Ratio promedio: +1.83R / trade" : isEn ? "Average ratio: +1.83R / trade" : "Ratio moyen : +1.83R / trade",
+    mobBestTitle: isEs ? "✓ Setup más rentable" : isEn ? "✓ Most profitable setup" : "✓ Setup le plus rentable",
+    mobAvoidTitle:isEs ? "✗ Setup a evitar" : isEn ? "✗ Setup to avoid" : "✗ Setup à éviter",
+    mobRecTitle:  isEs ? "⚠ Error recurrente" : isEn ? "⚠ Recurring mistake" : "⚠ Erreur récurrente",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
@@ -281,7 +282,7 @@ export function TradingJournalDiagram({ className = "", locale = "fr" }: Trading
         {/* Table 10 trades — colonnes optimisées, noms complets */}
         <div className="rounded-xl border border-zinc-800 overflow-hidden">
           <div className="grid grid-cols-[48px_1fr_40px_56px] gap-1.5 px-2.5 py-2.5 bg-zinc-900 border-b border-zinc-800 text-[11px] font-bold text-zinc-500 uppercase tracking-wide">
-            <span>{isEs ? "Fecha" : "Date"}</span>
+            <span>{isEs ? "Fecha" : isEn ? "Date" : "Date"}</span>
             <span>Setup</span>
             <span className="text-center">R/R</span>
             <span className="text-right">{L.mobResult}</span>

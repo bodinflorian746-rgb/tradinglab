@@ -4,7 +4,7 @@
 
 interface IctLiquidityGrabDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -53,6 +53,22 @@ export function IctLiquidityGrabDiagram({ className = "", locale = "fr" }: IctLi
         m3b: " = movimiento institucional real.",
         leg1: "Equal highs = liquidez visible por encima",
         leg2: "Sweep y luego rechazo = movimiento real",
+      }
+    : locale === "en"
+    ? {
+        equalHighs: "Equal highs 1.1780",
+        sweep: "Sweep 1.1792",
+        rejet: "Rejection 1.1720",
+        annotation: "The market takes liquidity before the displacement",
+        mobileTitle: "Liquidity grab on equal highs · EUR/USD H1",
+        m1a: "Equal highs",
+        m1b: " at 1.1780 = visible liquidity.",
+        m2a: "Sweep at 1.1792",
+        m2b: " · wick triggers the stops.",
+        m3a: "Rejection toward 1.1720",
+        m3b: " = real institutional move.",
+        leg1: "Equal highs = visible liquidity above",
+        leg2: "Sweep then rejection = real move",
       }
     : {
         equalHighs: "Equal highs 1.1780",

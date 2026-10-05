@@ -1,6 +1,6 @@
 interface LiquidityPoolsDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function LiquidityPoolsDiagram({ className = "", locale = "fr" }: LiquidityPoolsDiagramProps) {
@@ -17,6 +17,20 @@ export function LiquidityPoolsDiagram({ className = "", locale = "fr" }: Liquidi
         leg1: "Buy-side liquidity — stops por encima de los EQH",
         leg2: "Sell-side liquidity — stops bajo los EQL",
         leg3: "Stop hunt = caza de liquidez",
+      }
+    : locale === "en"
+    ? {
+        bslLabel: "Buy-side liquidity (BSL)",
+        sslLabel: "Sell-side liquidity (SSL)",
+        stopHunt: "stop hunt",
+        bslTaken: "BSL taken ↑",
+        bslMobileDesc: " · buy stops above equal highs (EQH)",
+        sslMobileDesc: " · sell stops below equal lows (EQL)",
+        stopHuntMobileDesc: " · price dips to hunt stops below EQL before reversing up",
+        bslTakenMobileDesc: " · then breaks the highs to grab the opposite liquidity",
+        leg1: "Buy-side liquidity — stops above the EQH",
+        leg2: "Sell-side liquidity — stops below the EQL",
+        leg3: "Stop hunt = liquidity grab",
       }
     : {
         bslLabel: "Buy-side liquidity (BSL)",

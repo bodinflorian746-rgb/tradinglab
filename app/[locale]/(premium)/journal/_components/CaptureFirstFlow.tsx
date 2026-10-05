@@ -34,6 +34,7 @@ import {
   EMOTIONS_AFTER,
   type TradeEntryView,
 } from "@/lib/journal/types";
+import { USER_COMMENT_MAX_LENGTH } from "@/lib/journal/validation";
 import { createTradeEntry, updateTradeEntry } from "../actions";
 
 type TradeForm = {
@@ -118,14 +119,25 @@ function BlockTitle({ children }: { children: ReactNode }) {
   return <p className="text-[11px] font-semibold uppercase tracking-wide text-emerald-400/80">{children}</p>;
 }
 
-export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; initial?: TradeEntryView | null }) {
+export function CaptureFirstFlow({
+  onClose,
+  initial,
+  asNew,
+}: {
+  onClose: () => void;
+  initial?: TradeEntryView | null;
+  // asNew : pré-remplit le formulaire à partir de `initial` MAIS enregistre en
+  // CRÉATION (duplication d'un trade). Sans ce flag, `initial` = édition.
+  asNew?: boolean;
+}) {
   const t = useDict("journal");
   const c = t.capture;
-  const isEdit = !!initial;
+  const isEdit = !!initial && !asNew;
+  const prefill = !!initial; // édition OU duplication → on ouvre pré-rempli
   const editMode: Mode = initial?.screenshot_url ? "capture" : "manual";
 
-  const [mode, setMode] = useState<Mode>(isEdit ? editMode : "capture");
-  const [step, setStep] = useState<StepId>(isEdit ? (editMode === "manual" ? "manual" : "details") : "capture");
+  const [mode, setMode] = useState<Mode>(prefill ? editMode : "capture");
+  const [step, setStep] = useState<StepId>(prefill ? (editMode === "manual" ? "manual" : "details") : "capture");
   const [form, setForm] = useState<TradeForm>(() =>
     initial ? entryToForm(initial) : { ...BASE_FORM, trade_date: nowLocalValue() },
   );
@@ -200,6 +212,7 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
     }
     window.addEventListener("paste", onPaste);
     return () => window.removeEventListener("paste", onPaste);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
   useEffect(() => {
@@ -207,7 +220,7 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
     return () => { document.body.style.overflow = ""; };
   }, []);
 
-  const flow: StepId[] = isEdit
+  const flow: StepId[] = prefill
     ? (mode === "manual" ? ["manual", "summary"] : ["details", "ressenti", "summary"])
     : (mode === "manual" ? ["capture", "manual", "summary"] : ["capture", "details", "ressenti", "summary"]);
   const idx = Math.max(0, flow.indexOf(step));
@@ -420,7 +433,7 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
                   {msg("followed_plan")}
                 </div>
                 <div><label className={labelClass}>{t.form.perceivedMistake} <span className="text-zinc-600">· {c.s3.optional}</span></label><select value={form.perceived_mistake} onChange={(e) => set({ perceived_mistake: e.target.value })} className={inputClass}><option value="">—</option>{opt(MAIN_MISTAKES, t.options.main_mistake)}</select></div>
-                <div><label className={labelClass}>{t.form.userComment} <span className="text-zinc-600">· {c.s3.optional}</span></label><textarea rows={3} value={form.user_comment} onChange={(e) => set({ user_comment: e.target.value })} placeholder={t.form.userCommentPlaceholder} className={`${inputClass} resize-none`} /></div>
+                <div><label className={labelClass}>{t.form.userComment} <span className="text-zinc-600">· {c.s3.optional}</span></label><textarea rows={3} value={form.user_comment} onChange={(e) => set({ user_comment: e.target.value })} maxLength={USER_COMMENT_MAX_LENGTH} placeholder={t.form.userCommentPlaceholder} className={`${inputClass} resize-none`} /><p className="mt-1 text-right text-[11px] text-zinc-600 tabular-nums">{form.user_comment.length} / {USER_COMMENT_MAX_LENGTH}</p></div>
               </div>
             </div>
           )}
@@ -462,7 +475,7 @@ export function CaptureFirstFlow({ onClose, initial }: { onClose: () => void; in
                 {msg("followed_plan")}
               </div>
               <div><label className={labelClass}>{c.s3.mistake} <span className="text-zinc-600">· {c.s3.optional}</span></label><select value={form.perceived_mistake} onChange={(e) => set({ perceived_mistake: e.target.value })} className={inputClass}><option value="">—</option>{opt(MAIN_MISTAKES, t.options.main_mistake)}</select></div>
-              <div><label className={labelClass}>{c.s3.comment} <span className="text-zinc-600">· {c.s3.optional}</span></label><textarea rows={3} value={form.user_comment} onChange={(e) => set({ user_comment: e.target.value })} placeholder={c.s3.commentPlaceholder} className={`${inputClass} resize-none`} /></div>
+              <div><label className={labelClass}>{c.s3.comment} <span className="text-zinc-600">· {c.s3.optional}</span></label><textarea rows={3} value={form.user_comment} onChange={(e) => set({ user_comment: e.target.value })} maxLength={USER_COMMENT_MAX_LENGTH} placeholder={c.s3.commentPlaceholder} className={`${inputClass} resize-none`} /><p className="mt-1 text-right text-[11px] text-zinc-600 tabular-nums">{form.user_comment.length} / {USER_COMMENT_MAX_LENGTH}</p></div>
             </div>
           )}
 

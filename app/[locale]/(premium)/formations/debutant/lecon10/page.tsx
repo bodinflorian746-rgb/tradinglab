@@ -1,6 +1,7 @@
 import { LessonPage } from "@/app/components/LessonPage";
 import { LessonQuiz } from "@/app/components/LessonQuiz";
 import RRComparisonDiagram from "@/app/components/charts/RRComparisonDiagram";
+import ContentEn from "./_content-en";
 
 export default async function Page({
   params,
@@ -9,7 +10,8 @@ export default async function Page({
 }) {
   // locale lue pour conformité au pattern de routage, mais le contenu de cette
   // leçon est en français uniquement pour ce sprint (pas de _content-es prévu).
-  await params;
+  const { locale } = await params;
+  if (locale === "en") return <ContentEn />;
   return (
     <LessonPage
       formationId="debutant"

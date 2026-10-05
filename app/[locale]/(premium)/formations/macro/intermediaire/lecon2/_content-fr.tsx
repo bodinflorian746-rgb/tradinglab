@@ -511,9 +511,15 @@ export default function ContentFr() {
                 </svg>
                 Leçon 1. Hawkish vs Dovish
               </Link>
-              <span className="text-sm text-zinc-700 cursor-default">
-                CPI, PPI et inflation. Bientôt disponible →
-              </span>
+              <Link
+                href="/formations/macro/intermediaire/lecon3"
+                className="inline-flex items-center gap-1.5 text-sm text-zinc-600 hover:text-zinc-400 transition-colors"
+              >
+                Leçon 3. CPI, PPI et inflation
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

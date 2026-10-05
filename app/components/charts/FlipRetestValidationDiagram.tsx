@@ -1,4 +1,4 @@
-export default function FlipRetestValidationDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function FlipRetestValidationDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
         title: "3 señales que validan un retest de flip",
@@ -21,6 +21,29 @@ export default function FlipRetestValidationDiagram({ className = "", locale = "
         mob3: "3 · Sin penetración profunda",
         mob3Desc: "El precio no atraviesa en cierre → el nivel aguanta.",
         mobFooter: "Sin señal de rechazo en el contacto, el flip no está validado.",
+      }
+    : locale === "en"
+    ? {
+        title: "3 signals that validate a flip retest",
+        exResLabel: "Ex-resistance → Support — 1.1850",
+        mecheTraverse: "Wick pierces + rejection",
+        pinBar: "Rejection pin bar",
+        pinBarDesc: "Long wick below the level",
+        engulfingDesc: "Green candle engulfs the red",
+        engulfing: "Bullish engulfing",
+        engulfingSub: "Green engulfs the red",
+        noPenetration: "No penetration, clean bounce",
+        reaction: "Immediate reaction",
+        reactionSub: "No deep penetration",
+        footer: "Without a rejection signal on contact, the flip isn't validated",
+        mobTitle: "3 signals that validate a flip retest",
+        mob1: "1 · Wick pierces + rejection",
+        mob1Desc: "Long wick that taps the level and closes on the right side → clean rejection.",
+        mob2: "2 · Signal candle (pin bar / engulfing)",
+        mob2Desc: "Clear reversal pattern on contact with the ex-level.",
+        mob3: "3 · No deep penetration",
+        mob3Desc: "Price doesn't pierce on close → the level holds.",
+        mobFooter: "Without a rejection signal on contact, the flip isn't validated.",
       }
     : {
         title: "3 signaux qui valident un retest de flip",

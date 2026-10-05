@@ -1,17 +1,18 @@
 interface TradePlanDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function TradePlanDiagram({ className = "", locale = "fr" }: TradePlanDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    entry:        isEs ? "ENTRADA" : "ENTRÉE",
-    entryLabel:   isEs ? "Entrada" : "Entrée",
-    entryPrice:   isEs ? "Precio de compra" : "Prix d'achat",
-    footer:       isEs ? "Todo definido ANTES de la entrada: riesgo conocido, objetivo claro." : "Tout défini AVANT l'entrée : risque connu, objectif clair.",
-    legendEntry:  isEs ? "Entrada / Take Profit" : "Entrée / Take Profit",
-    legendPrice:  isEs ? "Precio" : "Prix",
+    entry:        isEs ? "ENTRADA" : isEn ? "ENTRY" : "ENTRÉE",
+    entryLabel:   isEs ? "Entrada" : isEn ? "Entry" : "Entrée",
+    entryPrice:   isEs ? "Precio de compra" : isEn ? "Buy price" : "Prix d'achat",
+    footer:       isEs ? "Todo definido ANTES de la entrada: riesgo conocido, objetivo claro." : isEn ? "Everything set BEFORE entry: known risk, clear target." : "Tout défini AVANT l'entrée : risque connu, objectif clair.",
+    legendEntry:  isEs ? "Entrada / Take Profit" : isEn ? "Entry / Take Profit" : "Entrée / Take Profit",
+    legendPrice:  isEs ? "Precio" : isEn ? "Price" : "Prix",
   };
   // Price descends to creux at (110, 108), then rises
   const descent = "M10,38 L46,58 L78,82 L110,108";

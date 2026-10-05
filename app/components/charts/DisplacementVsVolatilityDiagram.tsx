@@ -4,7 +4,7 @@
 
 interface DisplacementVsVolatilityDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -50,19 +50,20 @@ const BODY_W = 12;
 
 export function DisplacementVsVolatilityDiagram({ className = "", locale = "fr" }: DisplacementVsVolatilityDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    leftLabel:   isEs ? "Volatilidad sin secuela" : "Volatilité sans suite",
-    rightLabel:  isEs ? "Verdadero displacement" : "Vrai displacement",
-    rejection:   isEs ? "Rechazo" : "Rejet",
-    continuity:  isEs ? "Continuidad" : "Continuité",
-    pill:        isEs ? "Volatilidad ≠ displacement" : "Volatilité ≠ displacement",
-    mobTitle:    isEs ? "Displacement vs volatilidad · EUR/USD M15" : "Displacement vs volatilité · EUR/USD M15",
-    leftCardT:   isEs ? "Volatilidad aislada — no es displacement" : "Volatilité isolée — pas displacement",
-    leftCardD:   isEs ? "Gran vela aislada + rechazo inmediato = sin continuidad." : "Grande bougie isolée + rejet immédiat = pas de continuité.",
-    rightCardT:  isEs ? "Displacement = verdadera ruptura" : "Displacement = vraie cassure",
-    rightCardD:  isEs ? "Ruptura de estructura + continuación = verdadero cambio de control institucional." : "Cassure de structure + continuation = vrai changement de contrôle institutionnel.",
-    legend1:     isEs ? "Gran vela aislada + rechazo = sin continuidad" : "Grande bougie isolée + rejet = pas de continuité",
-    legend2:     isEs ? "Displacement = ruptura de estructura + continuación" : "Displacement = cassure de structure + continuation",
+    leftLabel:   isEs ? "Volatilidad sin secuela" : isEn ? "Volatility with no follow-through" : "Volatilité sans suite",
+    rightLabel:  isEs ? "Verdadero displacement" : isEn ? "True displacement" : "Vrai displacement",
+    rejection:   isEs ? "Rechazo" : isEn ? "Rejection" : "Rejet",
+    continuity:  isEs ? "Continuidad" : isEn ? "Continuation" : "Continuité",
+    pill:        isEs ? "Volatilidad ≠ displacement" : isEn ? "Volatility ≠ displacement" : "Volatilité ≠ displacement",
+    mobTitle:    isEs ? "Displacement vs volatilidad · EUR/USD M15" : isEn ? "Displacement vs volatility · EUR/USD M15" : "Displacement vs volatilité · EUR/USD M15",
+    leftCardT:   isEs ? "Volatilidad aislada — no es displacement" : isEn ? "Isolated volatility — not displacement" : "Volatilité isolée — pas displacement",
+    leftCardD:   isEs ? "Gran vela aislada + rechazo inmediato = sin continuidad." : isEn ? "Large isolated candle + immediate rejection = no continuation." : "Grande bougie isolée + rejet immédiat = pas de continuité.",
+    rightCardT:  isEs ? "Displacement = verdadera ruptura" : isEn ? "Displacement = real breakout" : "Displacement = vraie cassure",
+    rightCardD:  isEs ? "Ruptura de estructura + continuación = verdadero cambio de control institucional." : isEn ? "Structure break + continuation = real shift in institutional control." : "Cassure de structure + continuation = vrai changement de contrôle institutionnel.",
+    legend1:     isEs ? "Gran vela aislada + rechazo = sin continuidad" : isEn ? "Large isolated candle + rejection = no continuation" : "Grande bougie isolée + rejet = pas de continuité",
+    legend2:     isEs ? "Displacement = ruptura de estructura + continuación" : isEn ? "Displacement = structure break + continuation" : "Displacement = cassure de structure + continuation",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

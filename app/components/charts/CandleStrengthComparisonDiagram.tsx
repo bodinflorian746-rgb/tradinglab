@@ -1,4 +1,4 @@
-export default function CandleStrengthComparisonDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function CandleStrengthComparisonDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Leer la fuerza de una vela en 5 segundos",
@@ -18,6 +18,26 @@ export default function CandleStrengthComparisonDiagram({ className = "", locale
         engulfDesc: "Vela que envuelve por completo la anterior",
         engulfVerdict: "Cambio ↑",
         mobileFooter: "4 patrones clave a identificar visualmente",
+      }
+    : locale === "en"
+    ? {
+        title: "Read candle strength in 5 seconds",
+        conviction: "Strong conviction",
+        rejet: "Clear rejection",
+        indecision: "Indecision",
+        bascule: "Reversal",
+        bodyRef: "Average body reference",
+        footer: "4 key patterns to spot visually",
+        mobileTitle: "Read candle strength in 5 seconds",
+        marubozuDesc: "Long full body, no wick",
+        marubozuVerdict: "Strong conviction ↑",
+        pinDesc: "Small body + very long wick on one side",
+        pinVerdict: "Clear rejection ↑",
+        dojiDesc: "Near-zero body, wicks on both sides",
+        dojiVerdict: "Indecision ↔",
+        engulfDesc: "Candle that fully engulfs the previous one",
+        engulfVerdict: "Reversal ↑",
+        mobileFooter: "4 key patterns to spot visually",
       }
     : {
         title: "Lire la force d'une bougie en 5 secondes",

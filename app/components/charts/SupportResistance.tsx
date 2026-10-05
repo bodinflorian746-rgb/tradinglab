@@ -2,7 +2,7 @@ interface SupportResistanceProps {
   supportPrice?: string;
   resistancePrice?: string;
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function SupportResistance({
@@ -18,6 +18,14 @@ export function SupportResistance({
         rDesc: " · zona donde el precio es rechazado hacia abajo ",
         sDesc: " · zona donde el precio rebota hacia arriba ",
         arrow: "Los puntos rojos/verdes marcan cada rebote del precio en estos niveles",
+      }
+    : locale === 'en'
+    ? {
+        resistance: "Resistance",
+        support: "Support",
+        rDesc: " · zone where price is pushed back down ",
+        sDesc: " · zone where price bounces back up ",
+        arrow: "Red/green dots mark each price bounce on these levels",
       }
     : {
         resistance: "Résistance",

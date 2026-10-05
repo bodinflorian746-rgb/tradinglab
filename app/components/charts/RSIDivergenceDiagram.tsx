@@ -67,33 +67,34 @@ function SignalPastille({ x, y, label, color }: { x: number; y: number; label: s
   );
 }
 
-export default function RSIDivergenceDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+export default function RSIDivergenceDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    titleBear:     isEs ? "Divergencia bajista — precio HH + RSI LH" : "Divergence baissière — prix HH + RSI LH",
-    titleBull:     isEs ? "Divergencia alcista — precio LL + RSI HL" : "Divergence haussière — prix LL + RSI HL",
-    price:         isEs ? "Precio" : "Prix",
+    titleBear:     isEs ? "Divergencia bajista — precio HH + RSI LH" : isEn ? "Bearish divergence — price HH + RSI LH" : "Divergence baissière — prix HH + RSI LH",
+    titleBull:     isEs ? "Divergencia alcista — precio LL + RSI HL" : isEn ? "Bullish divergence — price LL + RSI HL" : "Divergence haussière — prix LL + RSI HL",
+    price:         isEs ? "Precio" : isEn ? "Price" : "Prix",
     rsi:           "RSI",
-    peak1:         isEs ? "Pico 1" : "Sommet 1",
-    peak2HH:       isEs ? "Pico 2 (HH)" : "Sommet 2 (HH)",
-    rsiPeak1:      isEs ? "RSI Pico 1" : "RSI Sommet 1",
-    rsiPeak2LH:    isEs ? "RSI Pico 2 (LH)" : "RSI Sommet 2 (LH)",
-    bottom1:       isEs ? "Mínimo 1" : "Creux 1",
-    bottom2LL:     isEs ? "Mínimo 2 (LL)" : "Creux 2 (LL)",
-    rsiBottom1:    isEs ? "RSI Mínimo 1" : "RSI Creux 1",
-    rsiBottom2HL:  isEs ? "RSI Mínimo 2 (HL)" : "RSI Creux 2 (HL)",
-    signalBear:    isEs ? "DIVERGENCIA BAJISTA" : "DIVERGENCE BAISSIÈRE",
-    signalBull:    isEs ? "DIVERGENCIA ALCISTA" : "DIVERGENCE HAUSSIÈRE",
-    mobTitle:      isEs ? "Divergencia RSI / Precio" : "Divergence RSI / Prix",
-    mobBear:       isEs ? "Divergencia BAJISTA" : "Divergence BAISSIÈRE",
-    mobBull:       isEs ? "Divergencia ALCISTA" : "Divergence HAUSSIÈRE",
-    mobBearPre:    isEs ? "El precio hace un nuevo" : "Prix fait un nouveau",
-    mobBearMid:    isEs ? ", pero el RSI hace un" : ", mais le RSI fait un",
-    mobBearEnd:    isEs ? "(más bajo). El movimiento alcista se agota." : "(plus bas). Le mouvement haussier s'essouffle.",
-    mobBullPre:    isEs ? "El precio hace un nuevo" : "Prix fait un nouveau",
-    mobBullMid:    isEs ? ", pero el RSI hace un" : ", mais le RSI fait un",
-    mobBullEnd:    isEs ? "(más alto). El movimiento bajista se agota." : "(plus haut). Le mouvement baissier s'essouffle.",
-    mobFooter:     isEs ? "Señal de reversal potencial — esperar confirmación del precio." : "Signal de retournement potentiel — attendre confirmation prix.",
+    peak1:         isEs ? "Pico 1" : isEn ? "Peak 1" : "Sommet 1",
+    peak2HH:       isEs ? "Pico 2 (HH)" : isEn ? "Peak 2 (HH)" : "Sommet 2 (HH)",
+    rsiPeak1:      isEs ? "RSI Pico 1" : isEn ? "RSI Peak 1" : "RSI Sommet 1",
+    rsiPeak2LH:    isEs ? "RSI Pico 2 (LH)" : isEn ? "RSI Peak 2 (LH)" : "RSI Sommet 2 (LH)",
+    bottom1:       isEs ? "Mínimo 1" : isEn ? "Low 1" : "Creux 1",
+    bottom2LL:     isEs ? "Mínimo 2 (LL)" : isEn ? "Low 2 (LL)" : "Creux 2 (LL)",
+    rsiBottom1:    isEs ? "RSI Mínimo 1" : isEn ? "RSI Low 1" : "RSI Creux 1",
+    rsiBottom2HL:  isEs ? "RSI Mínimo 2 (HL)" : isEn ? "RSI Low 2 (HL)" : "RSI Creux 2 (HL)",
+    signalBear:    isEs ? "DIVERGENCIA BAJISTA" : isEn ? "BEARISH DIVERGENCE" : "DIVERGENCE BAISSIÈRE",
+    signalBull:    isEs ? "DIVERGENCIA ALCISTA" : isEn ? "BULLISH DIVERGENCE" : "DIVERGENCE HAUSSIÈRE",
+    mobTitle:      isEs ? "Divergencia RSI / Precio" : isEn ? "RSI / Price divergence" : "Divergence RSI / Prix",
+    mobBear:       isEs ? "Divergencia BAJISTA" : isEn ? "BEARISH divergence" : "Divergence BAISSIÈRE",
+    mobBull:       isEs ? "Divergencia ALCISTA" : isEn ? "BULLISH divergence" : "Divergence HAUSSIÈRE",
+    mobBearPre:    isEs ? "El precio hace un nuevo" : isEn ? "Price makes a new" : "Prix fait un nouveau",
+    mobBearMid:    isEs ? ", pero el RSI hace un" : isEn ? ", but RSI makes a" : ", mais le RSI fait un",
+    mobBearEnd:    isEs ? "(más bajo). El movimiento alcista se agota." : isEn ? "(lower). The bullish move is running out of steam." : "(plus bas). Le mouvement haussier s'essouffle.",
+    mobBullPre:    isEs ? "El precio hace un nuevo" : isEn ? "Price makes a new" : "Prix fait un nouveau",
+    mobBullMid:    isEs ? ", pero el RSI hace un" : isEn ? ", but RSI makes a" : ", mais le RSI fait un",
+    mobBullEnd:    isEs ? "(más alto). El movimiento bajista se agota." : isEn ? "(higher). The bearish move is running out of steam." : "(plus haut). Le mouvement baissier s'essouffle.",
+    mobFooter:     isEs ? "Señal de reversal potencial — esperar confirmación del precio." : isEn ? "Potential reversal signal — wait for price confirmation." : "Signal de retournement potentiel — attendre confirmation prix.",
   };
   const priceBearPts: [number, number][] = [
     [40, 215],

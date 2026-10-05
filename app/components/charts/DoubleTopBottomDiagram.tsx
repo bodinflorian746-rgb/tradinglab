@@ -39,7 +39,7 @@ function Pastille({ x, y, label, color, textColor, arrow }: PastilleProps) {
   );
 }
 
-export default function DoubleTopBottomDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+export default function DoubleTopBottomDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
   const t = locale === "es"
     ? {
         dtTitle: "Double Top — fin de tendencia alcista",
@@ -58,6 +58,25 @@ export default function DoubleTopBottomDiagram({ locale = "fr" }: { locale?: "fr
         mobileDBTitle: "Double Bottom — Inversión ALCISTA",
         mobileDBDesc: "2 valles casi iguales separados por una cumbre (neckline). Ruptura por encima de la neckline = señal long.",
         mobileFooter: "Patrón de inversión, validado por la ruptura de la neckline.",
+      }
+    : locale === "en"
+    ? {
+        dtTitle: "Double Top — end of uptrend",
+        dbTitle: "Double Bottom — end of downtrend",
+        resistance: "Resistance",
+        support: "Support",
+        top1: "Top 1",
+        top2: "Top 2",
+        bottom1: "Bottom 1",
+        bottom2: "Bottom 2",
+        neckline: "Neckline",
+        breakLabel: "Break",
+        mobileTitle: "Double Top / Double Bottom",
+        mobileDTTitle: "Double Top — BEARISH reversal",
+        mobileDTDesc: "2 nearly equal peaks split by a trough (neckline). Break below the neckline = short signal.",
+        mobileDBTitle: "Double Bottom — BULLISH reversal",
+        mobileDBDesc: "2 nearly equal troughs split by a peak (neckline). Break above the neckline = long signal.",
+        mobileFooter: "Reversal pattern, confirmed by the neckline break.",
       }
     : {
         dtTitle: "Double Top — fin de tendance haussière",

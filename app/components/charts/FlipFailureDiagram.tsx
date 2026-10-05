@@ -1,4 +1,4 @@
-export default function FlipFailureDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function FlipFailureDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
         title: "Flip que falla — el nivel no aguanta",
@@ -15,6 +15,23 @@ export default function FlipFailureDiagram({ className = "", locale = "fr" }: { 
         mobStep2Desc: "En lugar de rebotar, el precio cae bajo 1.1850 en cierre.",
         mobStep3: "Paso 3 — Salida inmediata",
         mobStep3Desc: "Flip inválido. Corta la posición sin esperar a que el SL sea tocado.",
+      }
+    : locale === "en"
+    ? {
+        title: "Failed flip — the level doesn't hold",
+        invalid: "✗ Flip invalidated",
+        miniSommet: "Mini-top 1.1880",
+        cassure: "Breakout 1.1875",
+        returnLabel: "Back below level",
+        resistance: "Resistance 1.1850",
+        footer: "A fast move back below the level invalidates the flip — exit now",
+        mobTitle: "Failed flip — level doesn't hold",
+        mobStep1: "Step 1 — Breakout of resistance 1.1850",
+        mobStep1Desc: "Price breaks the resistance → you wait for the retest to go long.",
+        mobStep2: "Step 2 — Clean move back below the level",
+        mobStep2Desc: "Instead of bouncing, price closes back below 1.1850.",
+        mobStep3: "Step 3 — Exit now",
+        mobStep3Desc: "Flip invalid. Cut the position without waiting for the SL to be hit.",
       }
     : {
         title: "Flip qui échoue — le niveau ne tient pas",

@@ -1,4 +1,4 @@
-export const MacroDangerWindowsDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+export const MacroDangerWindowsDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) => {
   const t = locale === "es"
     ? {
         title: "Las ventanas de peligro macro — día tipo",
@@ -34,6 +34,42 @@ export const MacroDangerWindowsDiagram = ({ locale = "fr" }: { locale?: "fr" | "
         unHApresMobile: "1H DESPUÉS",
         attendsConfMobile: "Espera confirmación de dirección",
         mobileFooter: "El riesgo depende de la hora. Lee el día como una meteorología macro.",
+      }
+    : locale === "en"
+    ? {
+        title: "The macro danger windows — typical day",
+        subtitle: "Spot when to avoid, when to watch, when to trade",
+        sessionEU: "EU Session",
+        sessionUS: "US Session",
+        regleDor: "GOLDEN RULE",
+        avantLabel: "30 MIN BEFORE",
+        eviteEntrer: "Avoid entering",
+        enPosition: "a position",
+        pendant: "DURING",
+        neTradePas: "Don't trade",
+        observe: "Watch",
+        unHApres: "1H AFTER",
+        attends: "Wait for",
+        confirmation: "confirmation",
+        footer: "Risk depends on the hour. Learn to read the day like a macro weather forecast.",
+        mobileTitle: "Macro danger windows — typical day",
+        timeline: [
+          { range: "08h – 12h30", session: "EU Session", danger: false, label: "Quiet zone", events: null },
+          { range: "12h30 – 13h", session: null, danger: true, label: "⚠ BoE 13h", events: "Bank of England speech" },
+          { range: "14h15", session: null, danger: true, label: "⚠ ECB 14h15", events: "ECB decision" },
+          { range: "14h30", session: null, danger: true, label: "🔴 NFP / CPI 14h30", events: "Biggest US news of the day" },
+          { range: "16h – 19h30", session: "US Session", danger: false, label: "Quiet zone", events: null },
+          { range: "20h", session: null, danger: true, label: "🔴 FOMC 20h", events: "Federal Reserve decision" },
+          { range: "21h – 22h", session: null, danger: false, label: "End of day", events: null },
+        ] as { range: string; session: string | null; danger: boolean; label: string; events: string | null }[],
+        regleMobile: "⚡ Golden rule",
+        avantMobile: "30 min BEFORE",
+        eviteEntrerMobile: "Avoid entering a position",
+        pendantMobile: "DURING",
+        neTradePasMobile: "Don't trade — just watch",
+        unHApresMobile: "1H AFTER",
+        attendsConfMobile: "Wait for directional confirmation",
+        mobileFooter: "Risk depends on the hour. Read the day like a macro weather forecast.",
       }
     : {
         title: "Les fenêtres de danger macro — journée type",

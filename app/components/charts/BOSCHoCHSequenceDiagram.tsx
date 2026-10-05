@@ -1,4 +1,4 @@
-export default function BOSCHoCHSequenceDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function BOSCHoCHSequenceDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "Secuencia de reversión estructural en 3 etapas",
@@ -19,6 +19,27 @@ export default function BOSCHoCHSequenceDiagram({ className = "", locale = "fr" 
         m2Body: "El precio construye una nueva estructura (LH/LL en sentido opuesto).",
         m3Title: "Etapa 3 — CHoCH confirmado",
         m3Body: "El CHoCH en la nueva dirección confirma la reversión definitiva.",
+      }
+    : locale === "en"
+    ? {
+        title: "3-stage structural reversal sequence",
+        etape1: "Stage 1",
+        etape2: "Stage 2",
+        etape3: "Stage 3",
+        bosCounterTrend: "Counter-trend BOS",
+        firstSignal: "First reversal signal",
+        newStructure: "New structure",
+        noCHoCH: "No CHoCH yet",
+        chochConfirmed: "CHoCH confirmed",
+        reversalValidated: "Reversal validated",
+        bottomNote: "Counter-trend BOS → New structure → CHoCH confirmed",
+        mobileTitle: "3-stage reversal sequence",
+        m1Title: "Stage 1 — Counter-trend BOS",
+        m1Body: "First sign of exhaustion: break of structure against the major trend.",
+        m2Title: "Stage 2 — New structure",
+        m2Body: "Price builds a new structure (LH/LL in the opposite direction).",
+        m3Title: "Stage 3 — CHoCH confirmed",
+        m3Body: "The CHoCH in the new direction confirms the definitive reversal.",
       }
     : {
         title: "Séquence de retournement structurel en 3 étapes",

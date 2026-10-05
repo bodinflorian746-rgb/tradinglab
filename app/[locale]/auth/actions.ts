@@ -14,6 +14,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendTrialCodeForUser } from "@/lib/auth/send-trial-code-flow";
+import { isStripeCheckoutEnabled } from "@/lib/stripe-checkout-flag";
 
 function getStr(formData: FormData, key: string): string {
   const v = formData.get(key);
@@ -125,7 +126,9 @@ export async function signUp(formData: FormData) {
   if (from === "pricing") {
     // Le user vient du CheckoutButton (intention abonnement) : on relance le
     // checkout Stripe automatiquement au mount via le paramètre auto_checkout=1
-    // (lu par app/[locale]/pricing/CheckoutButton.tsx).
+    // (lu par app/[locale]/pricing/CheckoutButton.tsx). Checkout désactivé
+    // côté serveur → simple retour sur /pricing, sans relance automatique.
+    if (!isStripeCheckoutEnabled()) redirect(`/${locale}/pricing`);
     redirect(`/${locale}/pricing?auto_checkout=1`);
   }
 
@@ -154,6 +157,8 @@ export async function signIn(formData: FormData) {
   // et déclenche fetch /api/stripe/checkout au mount. Toute autre valeur de
   // `from` (ou aucune) → home, comportement historique inchangé.
   if (from === "pricing") {
+    // Checkout désactivé côté serveur → retour /pricing sans relance auto.
+    if (!isStripeCheckoutEnabled()) redirect(`/${locale}/pricing`);
     redirect(`/${locale}/pricing?auto_checkout=1`);
   }
   redirect(`/${locale}`);

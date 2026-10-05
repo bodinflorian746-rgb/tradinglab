@@ -3,7 +3,7 @@
 
 interface SingleTimeframeTrapDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function SingleTimeframeTrapDiagram({ className = "", locale = "fr" }: SingleTimeframeTrapDiagramProps) {
@@ -24,6 +24,24 @@ export function SingleTimeframeTrapDiagram({ className = "", locale = "fr" }: Si
         leg1: "HTF Daily = tendencia bajista",
         leg2: "LTF M15 = señal engañosa aislada",
         leg3: "Leer un solo TF = trampa",
+      }
+    : locale === "en"
+    ? {
+        resistanceDaily: "Daily resistance",
+        tendance: "Clear downtrend",
+        niveauM15: "Local M15 level",
+        breakoutLocal: "Local bullish breakout",
+        annotation: "Local buy signal — AGAINST the Daily trend",
+        mobileTitle: "Same market, 2 opposing timeframes",
+        b1Title: "Daily — Clear downtrend ↘",
+        b1Body: "On Daily, price forms a clear LH/LL sequence under resistance.",
+        b2Title: "M15 — Local bullish breakout ↗",
+        b2Body: "On M15, price breaks a mini-level → temptation to buy.",
+        warning: "⚠ Local signal AGAINST the Daily trend = trap",
+        mobileFooter: "Reading a single timeframe = ignoring the real direction.",
+        leg1: "HTF Daily = downtrend",
+        leg2: "LTF M15 = isolated misleading signal",
+        leg3: "Reading a single TF = trap",
       }
     : {
         resistanceDaily: "Résistance Daily",

@@ -1,6 +1,6 @@
 interface KillzonesDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 const hx = (h: number) => 40 + h * 35;
@@ -38,6 +38,24 @@ export function KillzonesDiagram({ className = "", locale = "fr" }: KillzonesDia
         leg1: "Killzone London / NY — alta volatilidad institucional",
         leg2: "NY Close (PM session)",
         leg3: "Asian Range — acumulación nocturna",
+      }
+    : locale === "en"
+    ? {
+        londonOpen8: "London Open — 08h",
+        nyOpen1330: "NY Open · 14h30/15h30",
+        mobileTitle: "Killzones · Paris time",
+        kz: [
+          { start: "00h", end: "07h", title: "Asian Range", desc: "Overnight accumulation, low volatility.", accent: "#71717a", highlight: false },
+          { start: "07h", end: "10h", title: "London Killzone", desc: "London Open at 08h — first strong volatility.", accent: "#10b981", highlight: true },
+          { start: "12h", end: "15h", title: "NY AM Killzone", desc: "NY Open at 14h30 or 15h30 (Paris) — peak institutional activity.", accent: "#10b981", highlight: true },
+          { start: "18h", end: "20h", title: "NY PM Killzone", desc: "Last window — US close.", accent: "#60a5fa", highlight: false },
+        ],
+        mobileFooterPrefix: "Trading the killzones ",
+        mobileFooterBold: "London + NY",
+        mobileFooterSuffix: " = peak institutional activity",
+        leg1: "London / NY Killzone — high institutional volatility",
+        leg2: "NY Close (PM session)",
+        leg3: "Asian Range — overnight accumulation",
       }
     : {
         londonOpen8: "London Open — 08h",

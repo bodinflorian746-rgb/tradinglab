@@ -1,6 +1,6 @@
 interface FibonacciDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function FibonacciDiagram({ className = "", locale = "fr" }: FibonacciDiagramProps) {
@@ -15,6 +15,19 @@ export function FibonacciDiagram({ className = "", locale = "fr" }: FibonacciDia
         mobRebond: "Rebote del precio en la zona OTE → reanudación de la impulsión",
         legendImpulsif: "Movimiento impulsivo",
         legendOte: "Zona OTE (61.8–78.6%)",
+        legendRetracement: "Retracement",
+      }
+    : locale === "en"
+    ? {
+        swingLow: "Swing Low",
+        swingHigh: "Swing High",
+        impulsif: "impulse ↑",
+        mobTitle: "Fibonacci retracement on the impulse ↑",
+        mobOte: "OTE zone (61.8% – 78.6%)",
+        mobOteDesc: " · prime zone to enter with the trend",
+        mobRebond: "Price bounces in the OTE zone → impulse resumes",
+        legendImpulsif: "Impulse move",
+        legendOte: "OTE zone (61.8–78.6%)",
         legendRetracement: "Retracement",
       }
     : {

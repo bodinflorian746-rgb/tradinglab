@@ -1,4 +1,4 @@
-export const DollarHubDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+export const DollarHubDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) => {
   const t = locale === "es"
     ? {
         title: "El dólar en el centro del sistema financiero",
@@ -16,6 +16,24 @@ export const DollarHubDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {
         footer: "El dólar está en el centro. Cuando se mueve, todo reacciona.",
         mobileEffectUp: "= presión",
         mobileEffectDown: "= respiro",
+      }
+    : locale === "en"
+    ? {
+        title: "The dollar at the center of the financial system",
+        subtitle: "5 major markets, 1 single pivot currency",
+        forex: "FOREX",
+        or: "GOLD",
+        crypto: "CRYPTO",
+        indices: "INDICES",
+        matieresPrem: "COMMODITIES",
+        matieresPremFull: "COMMODITIES",
+        petroleCuivre: "Oil, copper",
+        forceDollar: "Dollar strength",
+        dxyUp: "DXY ↑ = pressure",
+        dxyDown: "DXY ↓ = relief",
+        footer: "The dollar is at the center. When it moves, everything reacts.",
+        mobileEffectUp: "= pressure",
+        mobileEffectDown: "= relief",
       }
     : {
         title: "Le dollar au centre du système financier",

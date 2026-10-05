@@ -77,6 +77,8 @@ export function ReviewForm({ locale }: { locale: Lang }) {
   const [rating, setRating] = useState<number | null>(null);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  // Honeypot anti-spam (cf. /api/avis) : reste vide pour un humain.
+  const [website, setWebsite] = useState("");
   const [state, setState] = useState<State>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -100,6 +102,7 @@ export function ReviewForm({ locale }: { locale: Lang }) {
           rating,
           email: email.trim() || undefined,
           message: trimmed,
+          website,
         }),
       });
       const data: unknown = await res.json().catch(() => ({}));
@@ -173,6 +176,18 @@ export function ReviewForm({ locale }: { locale: Lang }) {
         </header>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+
+          {/* Honeypot anti-spam : caché aux humains, rempli par les bots. */}
+          <input
+            type="text"
+            name="website"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
 
           {/* Note 1-5 */}
           <div>

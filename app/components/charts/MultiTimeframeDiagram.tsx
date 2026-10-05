@@ -1,6 +1,6 @@
 interface MultiTimeframeDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function MultiTimeframeDiagram({ className = "", locale = "fr" }: MultiTimeframeDiagramProps) {
@@ -20,6 +20,23 @@ export function MultiTimeframeDiagram({ className = "", locale = "fr" }: MultiTi
         legendDaily: "Daily — bias direccional",
         legendH4: "H4 — zona de entrada",
         legendM15: "M15 — señal de disparo",
+      }
+    : locale === "en"
+    ? {
+        biais: "Bias ↗",
+        zone: "Zone",
+        signal: "Signal",
+        pinBar: "Pin bar ↑",
+        mobBias: "Bias ↗",
+        mobZone: "Zone",
+        mobPinBar: "Pin bar ↑",
+        mobReadPre: " Reading: from the ",
+        mobReadGrand: "higher timeframe (bias)",
+        mobReadMid: " to the ",
+        mobReadPetit: "lower timeframe (trigger)",
+        legendDaily: "Daily — directional bias",
+        legendH4: "H4 — entry zone",
+        legendM15: "M15 — trigger signal",
       }
     : {
         biais: "Biais ↗",

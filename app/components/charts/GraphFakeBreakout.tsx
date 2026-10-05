@@ -27,23 +27,24 @@ function MiniCandle({ cx, bodyTop, bodyBot, wickTop, wickBot, bullish }: MiniCan
 
 interface GraphFakeBreakoutProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function GraphFakeBreakout({ className = '', locale = "fr" }: GraphFakeBreakoutProps) {
   const rY = 62;
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    wick:           isEs ? "mecha ↑" : "mèche ↑",
-    close:          isEs ? "cierre ↓" : "clôture ↓",
-    resistance:     isEs ? "Resistencia" : "Résistance",
-    mobTitle:       isEs ? "Fake Breakout — trampa clásica ✗" : "Fake Breakout — piège classique ✗",
-    resistanceLine: isEs ? "línea alta, rechazada varias veces" : "ligne haute, repoussée plusieurs fois",
-    wickAbove:      isEs ? "rebasa la resistencia — parece validar la ruptura" : "dépasse la résistance — semble valider la cassure",
-    closeBelow:     isEs ? "debajo de la resistencia — la trampa se cierra" : "sous la résistance — le piège se referme",
-    waitClose:      isEs ? "Siempre espera un cierre para validar una ruptura" : "Toujours attendre une clôture pour valider une cassure",
-    legendWick:     isEs ? "Mecha por encima de la resistencia" : "Mèche au-dessus de la résistance",
-    legendTrap:     isEs ? "Cierre debajo de la resistencia = trampa" : "Clôture sous la résistance = piège",
+    wick:           isEs ? "mecha ↑" : isEn ? "wick ↑" : "mèche ↑",
+    close:          isEs ? "cierre ↓" : isEn ? "close ↓" : "clôture ↓",
+    resistance:     isEs ? "Resistencia" : isEn ? "Resistance" : "Résistance",
+    mobTitle:       isEs ? "Fake Breakout — trampa clásica ✗" : isEn ? "Fake Breakout — classic trap ✗" : "Fake Breakout — piège classique ✗",
+    resistanceLine: isEs ? "línea alta, rechazada varias veces" : isEn ? "upper line, rejected several times" : "ligne haute, repoussée plusieurs fois",
+    wickAbove:      isEs ? "rebasa la resistencia — parece validar la ruptura" : isEn ? "breaks above resistance — looks like a valid breakout" : "dépasse la résistance — semble valider la cassure",
+    closeBelow:     isEs ? "debajo de la resistencia — la trampa se cierra" : isEn ? "below resistance — the trap closes" : "sous la résistance — le piège se referme",
+    waitClose:      isEs ? "Siempre espera un cierre para validar una ruptura" : isEn ? "Always wait for a close to validate a breakout" : "Toujours attendre une clôture pour valider une cassure",
+    legendWick:     isEs ? "Mecha por encima de la resistencia" : isEn ? "Wick above resistance" : "Mèche au-dessus de la résistance",
+    legendTrap:     isEs ? "Cierre debajo de la resistencia = trampa" : isEn ? "Close below resistance = trap" : "Clôture sous la résistance = piège",
   };
 
   return (

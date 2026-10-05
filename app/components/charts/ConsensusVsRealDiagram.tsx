@@ -1,4 +1,4 @@
-export const ConsensusVsRealDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" } = {}) => {
+export const ConsensusVsRealDiagram = ({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) => {
   const t = locale === "es"
     ? {
         title: "El mercado reacciona a la SORPRESA, no a la cifra",
@@ -20,6 +20,28 @@ export const ConsensusVsRealDiagram = ({ locale = "fr" }: { locale?: "fr" | "es"
         footer: "Cuanto mayor sea la diferencia entre previsión y realidad, más violento es el movimiento.",
         pipsSec: "/ 30 seg",
         mobilePips30sec: "/ 30 seg",
+      }
+    : locale === "en"
+    ? {
+        title: "The market reacts to the SURPRISE, not the number",
+        col1Header: "ACTUAL = CONSENSUS",
+        col1Line1: "NFP 200k expected",
+        col1Line2: "200k actual",
+        col2Header: "ACTUAL > CONSENSUS",
+        col2Line1: "NFP 350k actual",
+        col2Line2: "200k expected",
+        col3Header: "ACTUAL < CONSENSUS",
+        col3Line1: "NFP 100k actual",
+        col3Line2: "200k expected",
+        verdictCol1a: "No surprise",
+        verdictCol1b: "→ stable market",
+        verdictCol2a: "Positive surprise",
+        verdictCol2b: "→ bullish spike",
+        verdictCol3a: "Negative surprise",
+        verdictCol3b: "→ bearish spike",
+        footer: "The bigger the gap between forecast and reality, the more violent the move.",
+        pipsSec: "/ 30 sec",
+        mobilePips30sec: "/ 30 sec",
       }
     : {
         title: "Le marché réagit à la SURPRISE, pas au chiffre",

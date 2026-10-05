@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "audit:jeux": "node scripts/audit-jeux/run.mjs",
-    "visual:check": "playwright test -c scripts/visual-check/visual.config.ts"
+    "visual:check": "playwright test -c scripts/visual-check/visual.config.ts",
+    "test": "vitest run"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
@@ -30,6 +31,7 @@
     "eslint-config-next": "16.2.4",
     "playwright": "1.60.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^2.1.9"
   }
 }

@@ -4,7 +4,7 @@
 
 interface NFPReversalDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -59,6 +59,20 @@ export function NFPReversalDiagram({ className = "", locale = "fr" }: NFPReversa
         step3b: " sobre el nivel pre-NFP.",
         legend1: "Caída inicial luego base de estabilización",
         legend2: "Ruptura y reversión completa sobre el pre-NFP",
+      }
+    : locale === "en"
+    ? {
+        preNfp: "$4,640 pre-NFP",
+        paniqueInit: "Initial panic",
+        reevaluation: "Reassessment",
+        renversement: "Reversal",
+        mobileTitle: "Full NFP reversal · XAU/USD M15",
+        step1: "Violent initial drop on the headline.",
+        step2: "Stabilization base = digesting the sub-prints.",
+        step3a: "Breakout + reversal",
+        step3b: " above the pre-NFP level.",
+        legend1: "Initial drop then stabilization base",
+        legend2: "Breakout and full reversal above the pre-NFP",
       }
     : {
         preNfp: "4 640 $ pré-NFP",

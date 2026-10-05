@@ -1,4 +1,4 @@
-export default function PinBarSetupDiagram({ locale = "fr" }: { locale?: "fr" | "es" } = {}) {
+export default function PinBarSetupDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
   const t = locale === "es"
     ? {
         title: "Pin bar bullish en el soporte — XAU/USD H4",
@@ -17,6 +17,25 @@ export default function PinBarSetupDiagram({ locale = "fr" }: { locale?: "fr" | 
         mobileRisk: "Riesgo 50 $",
         mobileGain: "Ganancia 130 $",
         mobileFooter: "Mecha larga debajo del soporte = rechazo vendedores → entrada en regreso por encima del soporte.",
+      }
+    : locale === "en"
+    ? {
+        title: "Bullish pin bar at support — XAU/USD H4",
+        tpResistance: "TP — Resistance $4,650",
+        supportLabel: "Support $4,500",
+        slLabel: "SL $4,470",
+        pinBar: "Pin bar",
+        entry: "Entry $4,520",
+        wickLong: "Long wick = sellers rejected",
+        legend: "Risk $50 · Potential gain $130 · R/R 2.6",
+        mobileTitle: "Bullish pin bar at support — XAU/USD H4",
+        mobileTP: "Take Profit",
+        mobileEntry: "Entry",
+        mobileSupport: "Support",
+        mobileSL: "Stop Loss",
+        mobileRisk: "Risk $50",
+        mobileGain: "Gain $130",
+        mobileFooter: "Long wick below support = sellers rejected → entry on return above support.",
       }
     : {
         title: "Pin bar bullish au support — XAU/USD H4",

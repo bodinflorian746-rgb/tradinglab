@@ -410,9 +410,15 @@ export default function ContentFr() {
                 </svg>
                 Leçon 1. C&apos;est quoi la macro
               </Link>
-              <span className="text-sm text-zinc-700 cursor-default">
-                Les chiffres macro à surveiller. Bientôt disponible →
-              </span>
+              <Link
+                href="/formations/macro/debutant/lecon3"
+                className="inline-flex items-center gap-1.5 text-sm text-zinc-600 hover:text-zinc-400 transition-colors"
+              >
+                Leçon 3. Les chiffres macro à surveiller
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

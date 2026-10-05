@@ -12,7 +12,7 @@
 
 interface FVGMitigationScenariosDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 interface ScenarioConfig {
@@ -81,6 +81,36 @@ const SCENARIOS_ES: ScenarioConfig[] = [
     title:        "Invalidación real",
     description:  "El precio atraviesa, cierra más allá, estructura rota. Sin reacción.",
     verdict:      "FVG invalidado — no operar",
+    verdictColor: "red",
+  },
+];
+
+const SCENARIOS_EN: ScenarioConfig[] = [
+  {
+    id:           "rebond",
+    badge:        "A",
+    badgeClass:   "bg-emerald-500/15 border-emerald-500/40 text-emerald-400",
+    title:        "Immediate bounce",
+    description:  "Price grazes the top of the FVG. Clean reaction, strong momentum.",
+    verdict:      "FVG fresh — A+ setup",
+    verdictColor: "emerald",
+  },
+  {
+    id:           "deep",
+    badge:        "B",
+    badgeClass:   "bg-amber-500/15 border-amber-500/40 text-amber-400",
+    title:        "Deep mitigation + reaction",
+    description:  "Price fills most of the zone, then rejects sharply.",
+    verdict:      "FVG mitigated but valid",
+    verdictColor: "amber",
+  },
+  {
+    id:           "invalidation",
+    badge:        "C",
+    badgeClass:   "bg-red-500/15 border-red-500/40 text-red-400",
+    title:        "Real invalidation",
+    description:  "Price runs through, closes beyond, structure broken. No reaction.",
+    verdict:      "FVG invalidated — no trade",
     verdictColor: "red",
   },
 ];
@@ -210,13 +240,20 @@ function ScenarioSvg({ id }: { id: ScenarioConfig["id"] }) {
 // ─── Composant principal ─────────────────────────────────────────────────────
 
 export function FVGMitigationScenariosDiagram({ className = "", locale = "fr" }: FVGMitigationScenariosDiagramProps) {
-  const SCENARIOS = locale === "es" ? SCENARIOS_ES : SCENARIOS_FR;
+  const SCENARIOS = locale === "es" ? SCENARIOS_ES : locale === "en" ? SCENARIOS_EN : SCENARIOS_FR;
   const t = locale === "es"
     ? {
         title: "FVG alcista — 3 retornos posibles en la zona",
         legZone: "Zona FVG",
         legBull: "Vela alcista",
         legBear: "Vela bajista",
+      }
+    : locale === "en"
+    ? {
+        title: "Bullish FVG — 3 possible returns into the zone",
+        legZone: "FVG zone",
+        legBull: "Bullish candle",
+        legBear: "Bearish candle",
       }
     : {
         title: "FVG haussier — 3 retours possibles dans la zone",

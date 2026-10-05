@@ -1,21 +1,22 @@
-export default function MitigationZoneEntryDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function MitigationZoneEntryDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    title:        isEs ? "Tradear la zona de mitigation tras CHoCH" : "Trader la zone de mitigation après CHoCH",
-    badge:        isEs ? "Setup mitigation tras CHoCH" : "Setup mitigation après CHoCH",
-    exHL:         isEs ? "Ex-HL → Zona mitigation — 1.1720" : "Ex-HL → Zone mitigation — 1.1720",
-    entryShort:   isEs ? "Entrada short — 1.1718" : "Entrée short — 1.1718",
-    pinBar:       isEs ? "Pin bar de rechazo" : "Pin bar de rejet",
-    footer:       isEs ? "Tras un CHoCH, el ex-HL se vuelve resistencia. Entrada en retest + señal de rechazo." : "Après CHoCH, l'ex-HL devient résistance. Entrée sur retest + signal de rejet.",
-    mobTitle:     isEs ? "Tradear la zona de mitigation tras CHoCH" : "Trader la zone de mitigation après CHoCH",
-    mob1:         isEs ? "Se forma un CHoCH — el mercado rompe el último HL (tendencia bajista confirmada)." : "CHoCH se forme — le marché casse le dernier HL (tendance baissière confirmée).",
-    mob2A:        isEs ? "El" : "L'",
+    title:        isEs ? "Tradear la zona de mitigation tras CHoCH" : isEn ? "Trading the mitigation zone after CHoCH" : "Trader la zone de mitigation après CHoCH",
+    badge:        isEs ? "Setup mitigation tras CHoCH" : isEn ? "Mitigation setup after CHoCH" : "Setup mitigation après CHoCH",
+    exHL:         isEs ? "Ex-HL → Zona mitigation — 1.1720" : isEn ? "Ex-HL → Mitigation zone — 1.1720" : "Ex-HL → Zone mitigation — 1.1720",
+    entryShort:   isEs ? "Entrada short — 1.1718" : isEn ? "Short entry — 1.1718" : "Entrée short — 1.1718",
+    pinBar:       isEs ? "Pin bar de rechazo" : isEn ? "Rejection pin bar" : "Pin bar de rejet",
+    footer:       isEs ? "Tras un CHoCH, el ex-HL se vuelve resistencia. Entrada en retest + señal de rechazo." : isEn ? "After a CHoCH, the ex-HL becomes resistance. Entry on retest + rejection signal." : "Après CHoCH, l'ex-HL devient résistance. Entrée sur retest + signal de rejet.",
+    mobTitle:     isEs ? "Tradear la zona de mitigation tras CHoCH" : isEn ? "Trading the mitigation zone after CHoCH" : "Trader la zone de mitigation après CHoCH",
+    mob1:         isEs ? "Se forma un CHoCH — el mercado rompe el último HL (tendencia bajista confirmada)." : isEn ? "A CHoCH forms — price breaks the last HL (downtrend confirmed)." : "CHoCH se forme — le marché casse le dernier HL (tendance baissière confirmée).",
+    mob2A:        isEs ? "El" : isEn ? "The" : "L'",
     mob2Bold1:    "ex-HL",
-    mob2B:        isEs ? "(zona de origen) se vuelve" : "(zone d'origine) devient",
-    mob2Bold2:    isEs ? "resistencia" : "résistance",
-    mob3Pre:      isEs ? "Entrada short en el" : "Entrée short sur le",
-    mob3Bold:     isEs ? "retest + señal de rechazo" : "retest + signal de rejet",
-    mob3End:      isEs ? "(pin bar, engulfing)." : "(pin bar, engulfing).",
+    mob2B:        isEs ? "(zona de origen) se vuelve" : isEn ? "(origin zone) becomes" : "(zone d'origine) devient",
+    mob2Bold2:    isEs ? "resistencia" : isEn ? "resistance" : "résistance",
+    mob3Pre:      isEs ? "Entrada short en el" : isEn ? "Short entry on the" : "Entrée short sur le",
+    mob3Bold:     isEs ? "retest + señal de rechazo" : isEn ? "retest + rejection signal" : "retest + signal de rejet",
+    mob3End:      isEs ? "(pin bar, engulfing)." : isEn ? "(pin bar, engulfing)." : "(pin bar, engulfing).",
   };
   return (
     <div className={className}>

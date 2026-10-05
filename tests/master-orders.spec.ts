@@ -10,7 +10,12 @@ import { test, expect, type Page } from "@playwright/test";
 // cf. tests/loyalty-shop.spec.ts) : toutes les sessions ici sont de vraies
 // connexions par persona @dev.local.
 
-const PASSWORD = "DevRecette123!";
+// Mot de passe des comptes de test @dev.local : jamais écrit dans le dépôt,
+// fourni par SMOKE_TEST_PASSWORD (cf. scripts/seed-smoke-test-personas.js).
+const PASSWORD = process.env.SMOKE_TEST_PASSWORD ?? "";
+if (!PASSWORD) {
+  throw new Error("SMOKE_TEST_PASSWORD manquant : définir la variable avant de lancer ces tests.");
+}
 
 const REST_URL = process.env.NEW_SUPABASE_URL || "http://127.0.0.1:54321";
 const SERVICE_KEY =

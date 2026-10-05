@@ -1,6 +1,7 @@
 import { LessonTemplate } from "@/app/components/LessonTemplate";
 import { StopLossChartDiagram } from "@/app/components/charts/StopLossChartDiagram";
 import ContentEs from "./_content-es";
+import ContentEn from "./_content-en";
 
 // ── Schéma : Trade avec SL et TP ─────────────────────────────────────────────
 function StopLossDiagram() {
@@ -224,5 +225,6 @@ export default async function Page({
 }) {
   const { locale } = await params;
   if (locale === "es") return <ContentEs />;
+  if (locale === "en") return <ContentEn />;
   return <ContentFr />;
 }

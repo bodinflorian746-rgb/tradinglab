@@ -1,4 +1,4 @@
-export default function BOSvsCHoCHComparisonDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function BOSvsCHoCHComparisonDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
         title: "BOS vs CHoCH — misma estructura, sentido de ruptura opuesto",
@@ -17,6 +17,25 @@ export default function BOSvsCHoCHComparisonDiagram({ className = "", locale = "
         chochMobileBodyBold: "CONTRA",
         chochMobileBodyPart2: " el sentido de la tendencia (HL2 roto a la baja). 1ra señal de reversión.",
         mobileFooter: "Misma estructura. Sentido de la ruptura = sentido de la señal.",
+      }
+    : locale === "en"
+    ? {
+        title: "BOS vs CHoCH — same structure, opposite break direction",
+        bosContinuation: "BOS — Continuation",
+        chochReversal: "CHoCH — Reversal",
+        bosBreakNote: "Break in the direction of the trend",
+        chochBreakNote: "Break against the direction of the trend",
+        bottom: "Same starting structure. Break direction = signal direction.",
+        mobileTitle: "BOS vs CHoCH — same structure, opposite directions",
+        bosMobileTitle: "BOS — Continuation",
+        bosMobileBodyPart1: "Break ",
+        bosMobileBodyBold: "WITH",
+        bosMobileBodyPart2: " the trend (HH2 broken upward). Confirms the trend.",
+        chochMobileTitle: "CHoCH — Reversal",
+        chochMobileBodyPart1: "Break ",
+        chochMobileBodyBold: "AGAINST",
+        chochMobileBodyPart2: " the trend (HL2 broken downward). 1st reversal signal.",
+        mobileFooter: "Same structure. Break direction = signal direction.",
       }
     : {
         title: "BOS vs CHoCH — même structure, sens de cassure opposé",

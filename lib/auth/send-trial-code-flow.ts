@@ -53,13 +53,87 @@ export async function sendTrialCodeForUser(
   const sent = await sendTrialCodeEmail(user.email, code, locale, activateUrl);
   if (!sent.ok) return { ok: false, error: sent.error ?? "mail send failed" };
 
-  // 4. Marque la demande (non bloquant si échoue)
+  // 4. Marque la demande (non bloquant si échoue).
+  // trial_code : stocké pour permettre le renvoi À L'IDENTIQUE
+  // (resendTrialCodeForUser). ⚠ app_metadata est inclus dans le JWT Supabase →
+  // lisible par l'utilisateur lui-même côté client (« own-code », déjà envoyé
+  // dans son email). Exposition assumée (choix produit). Aucun autre effet :
+  // le control-flow, l'anti-spam et les valeurs de retour ci-dessus sont
+  // inchangés → 1er envoi identique pour signUp(from=trial) + requestTrialCode.
   const { error: metaErr } = await admin.auth.admin.updateUserById(user.id, {
-    app_metadata: { ...meta, trial_code_requested_at: new Date().toISOString() },
+    app_metadata: { ...meta, trial_code_requested_at: new Date().toISOString(), trial_code: code },
   });
   if (metaErr) {
     console.error(`[trial-flow] app_metadata update échoué pour ${user.id}: ${metaErr.message}`);
   }
 
   return { ok: true, alreadyRequested: false };
+}
+
+// ─── Renvoi du MÊME code (jamais un nouveau) ─────────────────────────────────
+// Utilisé UNIQUEMENT par le bouton « Renvoyer le code » de /code-envoye (via
+// la Server Action resendTrialCode). Ne génère jamais de code : relit
+// app_metadata.trial_code (posé au 1er envoi) et le ré-émet.
+//
+// Rate-limit anti-spam : renvoi possible seulement si le trial n'est pas
+// consommé, avec max 3 renvois et un cooldown de 60 s entre deux.
+
+export const MAX_TRIAL_RESENDS = 3;
+export const TRIAL_RESEND_COOLDOWN_MS = 60_000;
+
+export type ResendCodeResult =
+  | { ok: true }
+  | {
+      ok: false;
+      reason: "consumed" | "no_stored_code" | "rate_limited" | "mail_failed" | "error";
+    };
+
+export async function resendTrialCodeForUser(
+  admin: SupabaseClient,
+  user: User,
+  locale: string,
+): Promise<ResendCodeResult> {
+  if (!user.email) return { ok: false, reason: "error" };
+
+  const { data: full, error: getErr } = await admin.auth.admin.getUserById(user.id);
+  if (getErr) return { ok: false, reason: "error" };
+  const meta = (full.user?.app_metadata ?? {}) as Record<string, unknown>;
+
+  // Trial déjà consommé → plus de renvoi.
+  if (meta.trial_consumed_at) return { ok: false, reason: "consumed" };
+
+  // On renvoie EXACTEMENT le code stocké au 1er envoi. Absent (user antérieur à
+  // cette feature) → on ne régénère pas, on signale.
+  const code = typeof meta.trial_code === "string" ? meta.trial_code : "";
+  if (!code) return { ok: false, reason: "no_stored_code" };
+
+  // Rate-limit : max N renvois + cooldown.
+  const resends = typeof meta.trial_resends === "number" ? meta.trial_resends : 0;
+  const lastAt =
+    typeof meta.trial_last_resent_at === "string" ? Date.parse(meta.trial_last_resent_at) : 0;
+  const now = Date.now();
+  if (resends >= MAX_TRIAL_RESENDS) return { ok: false, reason: "rate_limited" };
+  if (lastAt && now - lastAt < TRIAL_RESEND_COOLDOWN_MS) {
+    return { ok: false, reason: "rate_limited" };
+  }
+
+  // Ré-émission du MÊME code (réutilise la primitive d'envoi, pas de duplication
+  // du template email).
+  const activateUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/activer-code`;
+  const sent = await sendTrialCodeEmail(user.email, code, locale, activateUrl);
+  if (!sent.ok) return { ok: false, reason: "mail_failed" };
+
+  // Incrémente le compteur de renvois (non bloquant).
+  const { error: metaErr } = await admin.auth.admin.updateUserById(user.id, {
+    app_metadata: {
+      ...meta,
+      trial_resends: resends + 1,
+      trial_last_resent_at: new Date().toISOString(),
+    },
+  });
+  if (metaErr) {
+    console.error(`[trial-flow] resend metadata update échoué pour ${user.id}: ${metaErr.message}`);
+  }
+
+  return { ok: true };
 }

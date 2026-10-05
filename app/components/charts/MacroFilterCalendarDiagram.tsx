@@ -4,7 +4,7 @@
 
 interface MacroFilterCalendarDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -50,6 +50,22 @@ export function MacroFilterCalendarDiagram({ className = "", locale = "fr" }: Ma
         mobileNewsDesc: "FOMC / NFP / CPI en los próximos 30 min → sin trade, sin importar el setup.",
         legendSetup: "Setup técnico limpio",
         legendNews: "News inminente = filtro macro rojo, sin trade",
+      }
+    : locale === "en"
+    ? {
+        checklist: "Checklist",
+        setupTechValide: "Valid technical setup",
+        newsImminente: "Major news imminent",
+        filtreMacro: "Macro filter",
+        rouge: "RED",
+        annotation: "A good setup can turn bad at the wrong time",
+        mobileTitle: "Macro calendar filter",
+        mobileSetupTitle: "Clean technical setup",
+        mobileSetupDesc: "The technical pattern is valid on its own.",
+        mobileNewsTitle: "⚠ Imminent news = red filter",
+        mobileNewsDesc: "FOMC / NFP / CPI within 30 min → no trade, no matter the setup.",
+        legendSetup: "Clean technical setup",
+        legendNews: "Imminent news = red macro filter, no trade",
       }
     : {
         checklist: "Checklist",

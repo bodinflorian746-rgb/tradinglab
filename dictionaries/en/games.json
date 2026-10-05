@@ -1,1 +1,69 @@
-{}
+{
+  "index": {
+    "eyebrow": "Mini games",
+    "title": "Practice",
+    "subtitle": "Short exercises to anchor concepts in practice. Each game targets a specific trader skill.",
+    "available": "Available now",
+    "upcoming": "Coming soon",
+    "availableBadge": "Available",
+    "upcomingBadge": "Soon",
+    "unavailable": "Unavailable",
+    "playNow": "Play now",
+    "bottomTip": "You can also keep going through the lessons in parallel.",
+    "bottomCta": "See beginner lessons",
+    "levels": {
+      "allLevels": "All levels",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate"
+    }
+  },
+  "available": {
+    "buy-sell-no-trade": {
+      "title": "BUY / SELL / NO TRADE",
+      "description": "12 scenarios to analyze. Mini chart, context, news. You make your call and the system rates your read, your discipline and your trap detection.",
+      "duration": "~6 min"
+    },
+    "place-stop": {
+      "title": "Place your Stop",
+      "description": "Which stop will survive? 10 setups, 3 stop losses offered each time (A / B / C). You pick the most logical one, structure, liquidity, RR. The market reveals what happens next.",
+      "duration": "~7 min"
+    },
+    "find-the-mistake": {
+      "title": "Find the Mistake",
+      "description": "10 setups with a hidden mistake. You spot the main error among 4 choices. Retail psychology, discipline, liquidity, RR, learn to see the classic traps.",
+      "duration": "~5 min"
+    },
+    "build-the-trade": {
+      "title": "Build the Trade",
+      "description": "Build a complete setup: entry, stop, take profit. 8 scenarios, the market then reveals the outcome. RR, drawdown, verdict. The most strategic game.",
+      "duration": "~8 min"
+    }
+  },
+  "upcoming": {
+    "risk": {
+      "title": "Risk Calculator",
+      "description": "Quick calculation questions: position size, R/R ratio, amount risked. 30 seconds per question.",
+      "duration": "~2 min"
+    },
+    "zone": {
+      "title": "Bounce or Break?",
+      "description": "Price reaches a key zone. You call it: bounce or break? Real historical data, 10 rounds.",
+      "duration": "~3 min"
+    },
+    "rr": {
+      "title": "R/R Builder",
+      "description": "A trade is presented to you with an entry and a stop. You place the target to reach the requested R/R ratio.",
+      "duration": "~2 min"
+    },
+    "structure": {
+      "title": "Read the Structure",
+      "description": "A chart appears. You identify the last BOS, the CHoCH, and the next zone of interest. 8 rounds.",
+      "duration": "~4 min"
+    },
+    "sizing": {
+      "title": "Position Sizing",
+      "description": "Capital, risk in %, stop in pips, calculate the right lot size in under 20 seconds. 10 questions.",
+      "duration": "~3 min"
+    }
+  }
+}

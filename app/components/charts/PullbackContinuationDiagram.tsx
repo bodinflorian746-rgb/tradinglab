@@ -1,6 +1,6 @@
 interface PullbackContinuationDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CD = {
@@ -58,30 +58,33 @@ const CONTINUATION: CD[] = [
 
 export default function PullbackContinuationDiagram({ className = "", locale = "fr" }: PullbackContinuationDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    supportLabel:  isEs ? "Soporte H4/Daily" : "Support H4/Daily",
-    oteLabel:      isEs ? "OTE 61.8–78.6%"   : "OTE 61.8–78.6%",
-    obLabel:       isEs ? "OB (entrada)"     : "OB (entrée)",
-    fvgLabel:      isEs ? "FVG (objetivo)"   : "FVG (cible)",
-    rejet:         isEs ? "rechazo ↑"        : "rejet ↑",
-    swingHigh:     isEs ? "Swing High"       : "Swing High",
+    supportLabel:  isEs ? "Soporte H4/Daily" : isEn ? "Support H4/Daily" : "Support H4/Daily",
+    oteLabel:      isEs ? "OTE 61.8–78.6%"   : isEn ? "OTE 61.8–78.6%" : "OTE 61.8–78.6%",
+    obLabel:       isEs ? "OB (entrada)"     : isEn ? "OB (entry)" : "OB (entrée)",
+    fvgLabel:      isEs ? "FVG (objetivo)"   : isEn ? "FVG (target)" : "FVG (cible)",
+    rejet:         isEs ? "rechazo ↑"        : isEn ? "rejection ↑" : "rejet ↑",
+    swingHigh:     isEs ? "Swing High"       : isEn ? "Swing High" : "Swing High",
     footerDesktop: isEs
       ? "Entrada en OTE + OB, FVG arriba como objetivo : continuación limpia"
+      : isEn
+      ? "Entry at OTE + OB, FVG above as target : clean continuation"
       : "Entrée OTE + OB, FVG au-dessus comme cible : continuation propre",
     // Mobile
-    mobileTitle:   isEs ? "Pullback OTE — continuación hacia FVG" : "Pullback OTE — continuation vers FVG",
-    m1bold:        isEs ? "1 · Soporte H4/Daily"                  : "1 · Support H4/Daily",
-    m1desc:        isEs ? "· ancla estructural en la base"        : "· ancrage structurel en bas",
-    m2bold:        isEs ? "2 · Pullback en OTE 61.8–78.6%"        : "2 · Pullback vers OTE 61.8–78.6%",
-    m2desc:        isEs ? "· zona de retracement óptima"          : "· zone de retracement optimale",
-    m3bold:        isEs ? "3 · Order Block en OTE"                : "3 · Order Block dans l'OTE",
-    m3desc:        isEs ? "· huella institucional, punto de entrada" : "· trace institutionnelle, point d'entrée",
-    m4bold:        isEs ? "4 · FVG arriba"                        : "4 · FVG au-dessus",
-    m4desc:        isEs ? "· desequilibrio a llenar, objetivo de continuación" : "· déséquilibre à combler, cible de continuation",
-    leg1:          isEs ? "Soporte H4/Daily"                      : "Support H4/Daily",
-    leg2:          isEs ? "Zona OTE (61.8–78.6%)"                 : "Zone OTE (61.8–78.6%)",
-    leg3:          isEs ? "Order Block (entrada)"                 : "Order Block (entrée)",
-    leg4:          isEs ? "FVG (objetivo de continuación)"        : "FVG (cible de continuation)",
+    mobileTitle:   isEs ? "Pullback OTE — continuación hacia FVG" : isEn ? "OTE pullback — continuation to FVG" : "Pullback OTE — continuation vers FVG",
+    m1bold:        isEs ? "1 · Soporte H4/Daily"                  : isEn ? "1 · Support H4/Daily" : "1 · Support H4/Daily",
+    m1desc:        isEs ? "· ancla estructural en la base"        : isEn ? "· structural anchor at the base" : "· ancrage structurel en bas",
+    m2bold:        isEs ? "2 · Pullback en OTE 61.8–78.6%"        : isEn ? "2 · Pullback to OTE 61.8–78.6%" : "2 · Pullback vers OTE 61.8–78.6%",
+    m2desc:        isEs ? "· zona de retracement óptima"          : isEn ? "· optimal retracement zone" : "· zone de retracement optimale",
+    m3bold:        isEs ? "3 · Order Block en OTE"                : isEn ? "3 · Order Block in OTE" : "3 · Order Block dans l'OTE",
+    m3desc:        isEs ? "· huella institucional, punto de entrada" : isEn ? "· institutional footprint, entry point" : "· trace institutionnelle, point d'entrée",
+    m4bold:        isEs ? "4 · FVG arriba"                        : isEn ? "4 · FVG above" : "4 · FVG au-dessus",
+    m4desc:        isEs ? "· desequilibrio a llenar, objetivo de continuación" : isEn ? "· imbalance to fill, continuation target" : "· déséquilibre à combler, cible de continuation",
+    leg1:          isEs ? "Soporte H4/Daily"                      : isEn ? "Support H4/Daily" : "Support H4/Daily",
+    leg2:          isEs ? "Zona OTE (61.8–78.6%)"                 : isEn ? "OTE zone (61.8–78.6%)" : "Zone OTE (61.8–78.6%)",
+    leg3:          isEs ? "Order Block (entrada)"                 : isEn ? "Order Block (entry)" : "Order Block (entrée)",
+    leg4:          isEs ? "FVG (objetivo de continuación)"        : isEn ? "FVG (continuation target)" : "FVG (cible de continuation)",
   };
 
   // Zones (en coordonnées SVG y, où small y = high price)

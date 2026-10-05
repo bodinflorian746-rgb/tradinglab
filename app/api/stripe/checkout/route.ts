@@ -17,6 +17,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { getStripePriceId } from "@/lib/stripe-config";
+import { isStripeCheckoutEnabled } from "@/lib/stripe-checkout-flag";
 import { createClient } from "@/lib/supabase/server";
 
 // Types extraits via Parameters<> pour éviter les chemins de namespace
@@ -46,6 +47,15 @@ function parseBody(raw: unknown): CheckoutBody {
 }
 
 export async function POST(request: NextRequest) {
+  // Interrupteur serveur (cf. lib/stripe-checkout-flag) : refus avant toute
+  // autre opération (auth, lecture du body, appel Stripe).
+  if (!isStripeCheckoutEnabled()) {
+    return NextResponse.json(
+      { error: "checkout_disabled" },
+      { status: 503 },
+    );
+  }
+
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (!siteUrl) {
     return NextResponse.json(

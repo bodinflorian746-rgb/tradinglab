@@ -1,6 +1,6 @@
 interface OrderBlockDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleData = {
@@ -48,6 +48,26 @@ export function OrderBlockDiagram({ className = "", locale = "fr" }: OrderBlockD
         leg1: "Bullish OB — última bajista antes de alza impulsiva",
         leg2: "Bearish OB — última alcista antes de baja impulsiva",
         leg3: "Zona OB = zona de órdenes institucionales",
+      }
+    : locale === "en"
+    ? {
+        bullishOb: "Bullish OB",
+        bearishOb: "Bearish OB",
+        rejetUp: "rejection ↑",
+        rejetDown: "rejection ↓",
+        bullMobileTitle: "Bullish OB (left)",
+        bullMobileBoldStart: "Last bearish candle",
+        bullMobileBodyPart1: " before a strong bullish impulse. Price returns to test this zone (",
+        bullMobileBodyBold: "rejection ↑",
+        bullMobileBodyPart2: ") then continues higher.",
+        bearMobileTitle: "Bearish OB (right)",
+        bearMobileBoldStart: "Last bullish candle",
+        bearMobileBodyPart1: " before a strong bearish impulse. Price returns to test this zone (",
+        bearMobileBodyBold: "rejection ↓",
+        bearMobileBodyPart2: ") then drops.",
+        leg1: "Bullish OB — last bearish before impulsive rally",
+        leg2: "Bearish OB — last bullish before impulsive drop",
+        leg3: "OB zone = institutional order zone",
       }
     : {
         bullishOb: "Bullish OB",

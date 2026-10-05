@@ -4,7 +4,7 @@
 
 interface FVGMitigationDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 type CandleSpec = {
@@ -60,6 +60,21 @@ export function FVGMitigationDiagram({ className = "", locale = "fr" }: FVGMitig
         m3Part2: " = mitigation exitosa.",
         leg1: "Impulso bajista que deja un FVG",
         leg2: "Retorno al FVG y luego continuación = mitigation",
+      }
+    : locale === "en"
+    ? {
+        annotation: "Mitigation before continuation",
+        mobileTitle: "FVG mitigation · XAU/USD H1",
+        m1Part1: "Strong bearish impulse leaves a ",
+        m1Bold: "FVG",
+        m1Part2: " (unfilled zone).",
+        m2Part1: "Price returns into the FVG (",
+        m2Bold: "mitigation",
+        m2Part2: ") then rejects.",
+        m3Bold: "Bearish continuation",
+        m3Part2: " = successful mitigation.",
+        leg1: "Bearish impulse leaving a FVG",
+        leg2: "Return into the FVG then continuation = mitigation",
       }
     : {
         annotation: "Mitigation avant continuation",

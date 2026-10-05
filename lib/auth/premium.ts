@@ -12,6 +12,7 @@
 import "server-only";
 import { cache } from "react";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { isDevAuthBypass } from "@/lib/dev-auth";
 
 const TRIAL_DURATION_MS = 48 * 60 * 60 * 1000;
 
@@ -33,6 +34,11 @@ export type PremiumStatus = {
 export const isPremium = cache(async function isPremium(
   userId: string,
 ): Promise<PremiumStatus> {
+  // Dev local uniquement : accès premium illimité sans abonnement/trial réel.
+  if (isDevAuthBypass()) {
+    return { isPremium: true, reason: "subscription" };
+  }
+
   const supabase = createAdminClient();
   const now = new Date();
 

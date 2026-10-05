@@ -1,4 +1,4 @@
-export default function DTBValidationGridDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function DTBValidationGridDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const labels = locale === "es"
     ? {
         title: "Reconocer un Double Top válido vs una trampa",
@@ -14,6 +14,23 @@ export default function DTBValidationGridDiagram({ className = "", locale = "fr"
           { v: false, t: "2ª cima demasiado baja", d: "Falta de simetría — patrón débil" },
           { v: false, t: "2ª cima demasiado alta", d: "No es un double top, es una ruptura de rango" },
           { v: false, t: "Mecha, no cierre", d: "La ruptura de la neckline debe ser en cierre, no una simple mecha" },
+        ],
+      }
+    : locale === "en"
+    ? {
+        title: "Tell a valid Double Top from a trap",
+        valid: "✓ Valid — 0.2% gap, clean break",
+        invalidGap: "✗ Gap too wide — 0.5%",
+        invalidNoTrend: "✗ No prior trend",
+        invalidWick: "✗ Wick, not close",
+        rangeNote: "Sideways range — not a reversal",
+        wickOnly: "wick only",
+        mobileTitle: "Valid Double Top vs trap",
+        items: [
+          { v: true, t: "Near-equal tops", d: "Tolerance < 0.5%, clear symmetry" },
+          { v: false, t: "2nd top too low", d: "Lack of symmetry — weak pattern" },
+          { v: false, t: "2nd top too high", d: "Not a double top, it's a range breakout" },
+          { v: false, t: "Wick, not close", d: "The neckline break must be on close, not just a wick" },
         ],
       }
     : {

@@ -91,12 +91,7 @@ export const LESSONS: LevelData[] = [
               "Confondre trading et investissement, un trader qui 'garde sa position parce qu'il croit au projet' n'est plus un trader, c'est un investisseur",
               "Croire qu'il faut avoir raison souvent pour être rentable, faux : un bon ratio risque/récompense suffit",
               "Suivre des conseils de trading sans comprendre pourquoi, tu ne peux pas apprendre à cuisiner en regardant quelqu'un d'autre manger",
-              "Commencer avec de l'argent réel sans période d'entraînement, le stress de l'argent réel change entièrement les décisions",
             ],
-          },
-          {
-            heading: "L'erreur fatale",
-            body: "Ouvrir un compte réel et déposer de l'argent sans avoir passé au minimum 4 à 6 semaines sur un compte démo. En démo, tu apprends les mécanismes sans rien risquer. En réel, sans cette base, les émotions prennent le dessus dès le premier trade perdant, et elles ne te lâchent plus.",
           },
         ],
         keyPoints: [
@@ -104,7 +99,6 @@ export const LESSONS: LevelData[] = [
           "Tu peux gagner dans les deux sens, quand ça monte et quand ça baisse",
           "Trading ≠ investissement ≠ casino, ce sont trois activités différentes",
           "Ce qui compte : la méthode et la discipline, pas le résultat de chaque trade",
-          "Commence toujours sur compte démo avant de risquer de l'argent réel",
         ],
         exercise: {
           title: "Observer les marchés sur TradingView",
@@ -789,7 +783,7 @@ export const LESSONS: LevelData[] = [
         exercise: {
           title: "Calculer ton risque adapté à ton capital",
           steps: [
-            "Note ton capital de démo (ou le capital que tu prévois d'utiliser). Identifie ta tranche dans la grille : 200-500 € → 5%, 500-1000 € → 3%, 1000-5000 € → 2%.",
+            "Note ton capital. Identifie ta tranche dans la grille : 200-500 € → 5%, 500-1000 € → 3%, 1000-5000 € → 2%.",
             "Calcule ton risque maximum par trade. Exemple : 700 € × 3% = 21 € maximum par trade.",
             "Sur TradingView (EUR/USD, H1), identifie un setup Long. Où mettras-tu ton Stop Loss ? Estime la perte en euros si le SL se déclenche avec 0,1 lot.",
             "Compare ce montant à ton risque adapté. Si tu dépasses ton max, réduis la taille de position jusqu'à respecter le montant calculé.",
@@ -830,19 +824,17 @@ export const LESSONS: LevelData[] = [
             items: [
               "Les erreurs comportementales coûtent plus cher que les erreurs d'analyse",
               "Ces erreurs sont universelles, expérimentés et débutants en font tous",
-              "Les connaître ne suffit pas, il faut les avoir vécues sur compte démo pour vraiment les éviter",
               "Un journal de trading est le seul outil qui permet de les repérer et de corriger",
             ],
           },
           {
-            heading: "Les 5 erreurs qui détruisent les comptes",
+            heading: "Les 4 erreurs qui détruisent les comptes",
             body: "Ces erreurs ne semblent pas dangereuses sur le moment. C'est exactement pour ça qu'elles font autant de dégâts.",
             items: [
               "1. Trader sans Stop Loss — 'Je surveille le trade.' Une annonce économique, une connexion perdue, et tu perds 40% du compte en 10 minutes.",
               "2. Sur-trader, ouvrir 15 trades par jour parce que tu t'ennuies. Plus de trades = plus de spreads payés = compte qui fond lentement.",
               "3. Risquer trop, 10, 20% du capital sur un trade 'certain'. Il n'existe pas de trade certain. Une série de 3 pertes à 20% = 49% du compte perdu.",
               "4. Ne pas respecter son plan, entrer trop tôt, déplacer le SL, fermer le TP à mi-chemin. L'émotion reprend le contrôle.",
-              "5. Trader directement avec de l'argent réel, sans s'être entraîné sur compte démo. Le stress de l'argent réel change tout.",
             ],
           },
           {
@@ -868,21 +860,14 @@ export const LESSONS: LevelData[] = [
             heading: "Erreurs fréquentes sur cette dernière leçon",
             body: "Il y a une erreur spécifique à cette étape du parcours : lire ces erreurs, hocher la tête, et penser qu'elles ne s'appliquent pas à toi.",
             items: [
-              "Penser 'je ne ferai pas ces erreurs', si tu ne les expérimentes pas sur compte démo, tu les feras sur compte réel",
               "Ignorer le journal de trading parce que 'ça prend du temps', c'est exactement ce qui sépare les traders qui progressent des autres",
-              "Passer au compte réel trop tôt : 3 semaines de démo ne suffisent pas. La discipline ça se construit.",
               "Sous-estimer la psychologie : la gestion des émotions est aussi importante, voire plus, que la stratégie technique",
             ],
-          },
-          {
-            heading: "L'erreur fatale",
-            body: "Passer au compte réel après seulement 2 semaines de démo parce que 'ça se passe bien'. En démo, tu prends de bonnes décisions parce qu'il n'y a pas d'enjeu. En réel, à la première perte de 100 €, ta psychologie change complètement. Tu paniques. Tu fermes trop tôt. Tu déplaces ton Stop Loss. Tu ouvres par vengeance. Tout ce que tu avais appris disparaît sous la pression de l'argent réel. Minimum 1 mois de démo rentable, sans exception.",
           },
         ],
         keyPoints: [
           "Stop Loss obligatoire sur chaque trade, sans exception, sans justification",
           "Adapte ton % de risque à ton capital (cf. leçon 8), jamais sur-risquer même sur un trade 'sûr'",
-          "S'entraîner sur compte démo avant de passer à l'argent réel, minimum 1 mois",
           "Tenir un journal de trading, c'est le seul outil qui permet de vraiment progresser",
           "Si tu perds 2 trades d'affilée : arrête-toi, analyse, reprends frais le lendemain",
         ],
@@ -891,8 +876,6 @@ export const LESSONS: LevelData[] = [
           steps: [
             "Écris tes 3 règles non-négociables : par exemple 'Stop Loss obligatoire, risque adapté à mon capital (cf. grille leçon 8), jamais entrer sur le FOMO'",
             "Définis ta règle de stop journalier : à quel % de perte tu t'arrêtes pour la journée ?",
-            "Ouvre un compte démo sur MetaTrader 5 si ce n'est pas encore fait. Commence à appliquer ces règles maintenant.",
-            "Passe tes 5 prochains trades sur compte démo. Pour chaque trade, note : entrée, SL, TP, résultat, et comment tu t'es senti pendant le trade.",
           ],
         },
         quiz: {
@@ -911,6 +894,141 @@ export const LESSONS: LevelData[] = [
             "Faux. Augmenter la taille de position après des pertes est exactement l'inverse de ce qu'il faut faire. Tu es dans le pire état émotionnel possible. Si tu perds encore avec une taille augmentée, les dégâts sont exponentiellement plus importants.",
             "Correct. S'arrêter et analyser dans le journal : les deux trades suivaient-ils le plan ? Y avait-il des erreurs d'exécution ? C'est calme, c'est factuel, et c'est ce qui permet de progresser. Reprendre demain, reposé, avec un plan clair.",
             "Faux. Enlever le Stop Loss après des pertes dans un état de stress, c'est la décision la plus dangereuse possible. Tu augmentes ton exposition au risque au moment où tu es le moins en état de gérer une mauvaise situation.",
+          ],
+        },
+      },
+
+      // ─── Leçon 10 ───────────────────────────────────────────────────────────
+      {
+        id: "lecon-10",
+        slug: "lecon10",
+        title: "Risk management : pourquoi 90% des traders perdent",
+        duration: "13 min",
+        introduction:
+          "Le problème du retail n'est généralement pas l'entrée. Il vient de ce qui se passe AUTOUR du trade : risque trop élevé, mauvais RR, levier excessif, revenge trading. Deux traders avec le même setup : l'un finit rentable, l'autre détruit son compte. La différence ne vient pas de la stratégie. Elle vient du risk management.",
+        sections: [
+          {
+            heading: "Le plus grand mensonge du retail",
+            body: "Le retail pense souvent : « Si je trouve la bonne stratégie, je deviendrai rentable. » C'est faux. Une bonne stratégie avec un mauvais risk management finit presque toujours par mourir. Aucune stratégie ne gagne 100% du temps. Même une excellente stratégie prend des pertes, subit des drawdowns, traverse des périodes compliquées, enchaîne parfois plusieurs stops d'affilée. Le problème du retail, c'est qu'il construit son trading comme si les pertes ne devaient jamais arriver. Donc dès qu'elles arrivent, il augmente le risque, force des setups, déplace le stop, supprime le SL, veut récupérer immédiatement. Et c'est là que le compte commence réellement à mourir.",
+          },
+          {
+            heading: "Comment un compte meurt vraiment",
+            body: "Un compte ne meurt généralement pas à cause d'un seul trade. Il meurt à cause d'une accumulation de mauvaises décisions, d'un risque trop élevé, et d'une incapacité à gérer émotionnellement les pertes.",
+            table: {
+              headers: ["", "Scénario A. Risque 3%", "Scénario B. Risque 10%"],
+              rows: [
+                ["Compte", "500 €", "500 €"],
+                ["Risque par trade", "15 € (3%)", "50 € (10%)"],
+                ["5 pertes consécutives", "−75 €", "−250 €"],
+                ["Compte restant", "425 €", "250 €"],
+                ["Verdict", "Le trader est encore vivant, il peut continuer à trader normalement.", "Le compte est détruit psychologiquement, il faut désormais +100% pour revenir à 500 €."],
+              ],
+            },
+          },
+          {
+            heading: "Le piège psychologique du retail",
+            body: "Le retail veut souvent récupérer rapidement. Et c'est précisément ce qui accélère la destruction du compte. Voici le cycle classique du compte qui meurt :",
+            items: [
+              "Une perte normale arrive (ça fait partie du jeu)",
+              "Frustration → augmentation du lot pour « rattraper »",
+              "Nouvelle perte, plus grosse → suppression du SL pour « laisser respirer »",
+              "Le marché continue contre lui → revenge trading",
+              "Compte brûlé en quelques heures",
+            ],
+            note: "Le problème devient alors psychologique. Le trader ne trade plus pour exécuter un setup. Il trade pour récupérer, soulager une frustration, effacer une perte, se « venger » du marché. Et dans cet état, la qualité des décisions s'effondre.",
+          },
+          {
+            heading: "Pourquoi le RR change tout",
+            body: "Situation 1 : tu risques 20€ pour en gagner 10€. Situation 2 : tu risques 20€ pour en gagner 40€. Laquelle est la plus intelligente ? Évidemment la situation 2, tu gagnes 4 fois plus pour exactement le même risque. Et pourtant, 90% des retails passent leur temps à prendre des trades de type Situation 1 sans s'en rendre compte, soit parce qu'ils placent leur Take Profit trop tôt « pour sécuriser », soit parce qu'ils acceptent des trades médiocres où le potentiel de gain est minuscule par rapport au risque. Le RR (risk/reward) est le rapport entre ce que tu RISQUES et ce que tu peux GAGNER sur un trade. Tu n'as PAS besoin d'avoir raison souvent pour gagner en bourse. Tu as besoin que tes trades gagnants rapportent beaucoup plus que ce que tes trades perdants te coûtent.",
+            items: [
+              "Si tu risques 20€ et que tu vises 40€ → ton RR est de 1:2",
+              "Si tu risques 20€ et que tu vises 60€ → ton RR est de 1:3",
+              "Si tu risques 20€ et que tu vises 10€ → ton RR est de 1:0,5 (catastrophique)",
+            ],
+            table: {
+              headers: ["Trader", "Winrate", "RR", "Risque/trade", "Sur 10 trades"],
+              rows: [
+                ["Trader A", "70%", "1:0,7", "15€", "+28,50€"],
+                ["Trader B", "45%", "1:3", "15€", "+120€"],
+              ],
+            },
+            note: "Le marché ne récompense pas « celui qui gagne souvent ». Il récompense « celui qui perd peu quand il a tort, et gagne suffisamment quand il a raison ». Le trader A a tort 30% du temps, le trader B a tort 55% du temps. Et pourtant, le trader B finit plus de 4x plus rentable, parce que chaque fois qu'il a raison, il encaisse 45€, contre seulement 10,50€ pour le trader A.",
+          },
+          {
+            heading: "Survivre est plus important que gagner vite",
+            body: "Le retail veut souvent doubler rapidement le compte, accélérer, utiliser beaucoup de levier, augmenter agressivement le lot. Le problème : le marché récompense rarement l'agressivité durablement. Les traders qui survivent longtemps ont généralement un risque faible, une exposition contrôlée, une croissance plus lente, une stabilité émotionnelle supérieure. Le vrai objectif n'est pas de faire +300% rapidement. Le vrai objectif est de rester vivant suffisamment longtemps, accumuler de l'expérience, protéger le capital, éviter la destruction émotionnelle. Parce qu'un trader sans capital ne peut plus exécuter aucun setup.",
+          },
+          {
+            heading: "Exemple concret XAU/USD : deux RR, deux résultats",
+            body: "Deux traders prennent XAU/USD au même moment, sur le même setup d'entrée. Même capital de 500€, même risque de 15€ (3%). La seule différence : où ils placent leur Take Profit, donc leur RR. Voilà l'impact réel sur 10 trades.",
+            table: {
+              headers: ["Critère", "Trader RR 1:1", "Trader RR 1:3"],
+              rows: [
+                ["Capital départ", "500€", "500€"],
+                ["Risque par trade", "15€ (3%)", "15€ (3%)"],
+                ["Entrée XAU/USD", "4 320", "4 320"],
+                ["SL", "4 300 (20 pts)", "4 300 (20 pts)"],
+                ["TP", "4 340 (20 pts, RR 1:1)", "4 380 (60 pts, RR 1:3)"],
+                ["Winrate sur 10 trades", "60%", "40%"],
+                ["Trades gagnés", "6 × +15€ = +90€", "4 × +45€ = +180€"],
+                ["Trades perdus", "4 × -15€ = -60€", "6 × -15€ = -90€"],
+                ["Résultat net", "+30€", "+90€"],
+              ],
+            },
+            note: "Le trader RR 1:1 gagne plus souvent (60% des trades) mais finit à +30€. Le trader RR 1:3 perd plus souvent (60% des trades) mais finit à +90€, soit 3x plus rentable avec moins de trades gagnants. C'est ça, la puissance du RR : tu peux te tromper plus de la moitié du temps et être quand même beaucoup plus rentable que celui qui a raison plus souvent.",
+          },
+          {
+            heading: "Ce que le retail devrait faire",
+            body: "Règles simples à appliquer dès aujourd'hui :",
+            items: [
+              "Risque par trade : 3% à 5% du capital (selon ta grille de capital détaillée en leçon 8 : 5% si tu démarres à 200-500€, 3% si tu es à 500-1000€, 2% au-delà)",
+              "Maximum 2-3 trades par jour",
+              "Stop journalier : 10% à 15% du capital max par jour",
+              "RR minimum acceptable : 1:2",
+              "Arrêt immédiat après une perte qui te fait perdre ta lucidité émotionnelle",
+              "Jamais de revenge trading",
+              "Jamais déplacer un SL pour « espérer »",
+            ],
+            note: "Le but n'est pas de gagner énormément aujourd'hui. Le but est de pouvoir encore trader dans 6 mois.",
+          },
+          {
+            heading: "À retenir",
+            body: "Le trader rentable n'a pas une meilleure stratégie que les autres. Il a une meilleure hiérarchie mentale :",
+            items: [
+              "1. Survivre d'abord.",
+              "2. Protéger le capital ensuite.",
+              "3. Performer en dernier.",
+            ],
+            note: "Le retail inverse cette hiérarchie. Il veut performer vite, sans protéger, sans survivre. Et c'est précisément pour ça qu'il perd.",
+          },
+        ],
+        keyPoints: [
+          "Une bonne stratégie avec un mauvais risk management finit presque toujours par mourir.",
+          "Adapte ton risque par trade à ton capital et vise un RR minimum de 1:2.",
+          "Le RR compte plus que le winrate : un trader à 45% de réussite avec un bon RR bat un trader à 70% avec un mauvais RR.",
+          "Hiérarchie du trader rentable : survivre d'abord, protéger le capital ensuite, performer en dernier.",
+        ],
+        exercise: {
+          title: "Règles simples à appliquer dès aujourd'hui",
+          steps: [
+            "Risque par trade : 3% à 5% du capital (selon ta grille de capital détaillée en leçon 8).",
+            "Maximum 2-3 trades par jour.",
+            "Stop journalier : 10% à 15% du capital max par jour.",
+            "RR minimum acceptable : 1:2.",
+            "Arrêt immédiat après une perte qui te fait perdre ta lucidité émotionnelle.",
+          ],
+        },
+        quiz: {
+          question: "Tu risques 20€ pour gagner 60€ sur un trade. Quel est ton RR ?",
+          answers: ["1:0,3", "1:2", "1:3", "1:60"],
+          correct: 2,
+          explanation:
+            "RR = gain potentiel / risque. Ici 60€ / 20€ = 3. Donc le RR est de 1:3. Tu risques 1 pour gagner 3.",
+          answerExplanations: [
+            "Faux. 1:0,3 signifierait risquer plus que ce que tu vises, ce n'est pas le cas ici.",
+            "Faux. Un RR de 1:2 correspondrait à viser 40€ pour un risque de 20€, pas 60€.",
+            "Correct. 60€ / 20€ = 3, ton RR est de 1:3. Tu risques 1 pour gagner 3.",
+            "Faux. 1:60 impliquerait un gain 60 fois supérieur au risque, ce qui n'est pas le cas ici.",
           ],
         },
       },

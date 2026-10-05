@@ -3,22 +3,23 @@
 
 interface RetourDesequilibreDiagramProps {
   className?: string;
-  locale?: "fr" | "es";
+  locale?: "fr" | "es" | "en";
 }
 
 export function RetourDesequilibreDiagram({ className = "", locale = "fr" }: RetourDesequilibreDiagramProps) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    fvgLabel:  isEs ? "FVG bearish" : "FVG bearish",
-    rejection: isEs ? "Rechazo del FVG" : "Rejet du FVG",
-    annot:     isEs ? "Regreso al desequilibrio antes de la continuación" : "Retour dans le déséquilibre avant continuation",
-    mobTitle:  isEs ? "Regreso al desequilibrio HTF" : "Retour sur déséquilibre HTF",
-    mob1:      isEs ? "El impulso HTF crea un desequilibrio (FVG)." : "Impulsion HTF crée un déséquilibre (FVG).",
-    mob2:      isEs ? "FVG = zona no mitigada → el mercado regresará." : "FVG = zone non mitigée → le marché y reviendra.",
-    mob3:      isEs ? "Regreso del precio → mitigation y luego reanudación en el sentido inicial." : "Retour du prix → mitigation puis reprise dans le sens initial.",
-    legend1:   isEs ? "Impulso HTF — deja un desequilibrio" : "Impulsion HTF — laisse un déséquilibre",
-    legend2:   isEs ? "FVG = zona no mitigada" : "FVG = zone non mitigée",
-    legend3:   isEs ? "Regreso del precio → mitigation y reanudación" : "Retour du prix → mitigation puis reprise",
+    fvgLabel:  isEs ? "FVG bearish" : isEn ? "FVG bearish" : "FVG bearish",
+    rejection: isEs ? "Rechazo del FVG" : isEn ? "FVG rejection" : "Rejet du FVG",
+    annot:     isEs ? "Regreso al desequilibrio antes de la continuación" : isEn ? "Return into the imbalance before continuation" : "Retour dans le déséquilibre avant continuation",
+    mobTitle:  isEs ? "Regreso al desequilibrio HTF" : isEn ? "Return to HTF imbalance" : "Retour sur déséquilibre HTF",
+    mob1:      isEs ? "El impulso HTF crea un desequilibrio (FVG)." : isEn ? "HTF impulse creates an imbalance (FVG)." : "Impulsion HTF crée un déséquilibre (FVG).",
+    mob2:      isEs ? "FVG = zona no mitigada → el mercado regresará." : isEn ? "FVG = unmitigated zone → price will return." : "FVG = zone non mitigée → le marché y reviendra.",
+    mob3:      isEs ? "Regreso del precio → mitigation y luego reanudación en el sentido inicial." : isEn ? "Price returns → mitigation then resumes in the initial direction." : "Retour du prix → mitigation puis reprise dans le sens initial.",
+    legend1:   isEs ? "Impulso HTF — deja un desequilibrio" : isEn ? "HTF impulse — leaves an imbalance" : "Impulsion HTF — laisse un déséquilibre",
+    legend2:   isEs ? "FVG = zona no mitigada" : isEn ? "FVG = unmitigated zone" : "FVG = zone non mitigée",
+    legend3:   isEs ? "Regreso del precio → mitigation y reanudación" : isEn ? "Price returns → mitigation then resumes" : "Retour du prix → mitigation puis reprise",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

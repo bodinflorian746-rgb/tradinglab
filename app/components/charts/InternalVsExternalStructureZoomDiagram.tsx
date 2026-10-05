@@ -1,22 +1,23 @@
-export default function InternalVsExternalStructureZoomDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" }) {
+export default function InternalVsExternalStructureZoomDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const isEs = locale === "es";
+  const isEn = locale === "en";
   const L = {
-    title:      isEs ? "Estructura externa Daily ↔ Estructura interna H4" : "Structure externe Daily ↔ Structure interne H4",
+    title:      isEs ? "Estructura externa Daily ↔ Estructura interna H4" : isEn ? "External Daily structure ↔ Internal H4 structure" : "Structure externe Daily ↔ Structure interne H4",
     daily:      "DAILY",
-    swingHigh:  isEs ? "Swing high 4 720$" : "Swing high 4 720$",
-    swingLow:   isEs ? "Swing low 4 460$" : "Swing low 4 460$",
-    zoomH4:     isEs ? "Zoom H4" : "Zoom H4",
-    footer:     isEs ? "La estructura externa Daily dicta el sesgo. La estructura interna H4 sirve al timing fino." : "Structure externe Daily dicte le biais. Structure interne H4 sert au timing fin.",
-    mobTitle:   isEs ? "Estructura externa Daily ↔ interna H4" : "Structure externe Daily ↔ interne H4",
-    extTitle:   isEs ? "Estructura externa — Daily" : "Structure externe — Daily",
-    extDescA:   isEs ? "Dicta el" : "Dicte le",
-    extDescBold:isEs ? "sesgo direccional" : "biais directionnel",
-    extDescB:   isEs ? "mayor. Tendencia HH/HL o LH/LL en Daily." : "majeur. Tendance HH/HL ou LH/LL sur Daily.",
-    intTitle:   isEs ? "Estructura interna — H4" : "Structure interne — H4",
-    intDescA:   isEs ? "Sirve para el" : "Sert au",
-    intDescBold:isEs ? "timing fino de entrada" : "timing fin d'entrée",
-    intDescB:   isEs ? ". Mini-estructuras dentro de la gran tendencia Daily." : ". Mini-structures dans la grande tendance Daily.",
-    mobFooter:  isEs ? "Daily = sesgo · H4 = timing." : "Daily = biais · H4 = timing.",
+    swingHigh:  isEs ? "Swing high 4 720$" : isEn ? "Swing high $4,720" : "Swing high 4 720$",
+    swingLow:   isEs ? "Swing low 4 460$" : isEn ? "Swing low $4,460" : "Swing low 4 460$",
+    zoomH4:     isEs ? "Zoom H4" : isEn ? "Zoom H4" : "Zoom H4",
+    footer:     isEs ? "La estructura externa Daily dicta el sesgo. La estructura interna H4 sirve al timing fino." : isEn ? "External Daily structure dictates the bias. Internal H4 structure serves fine timing." : "Structure externe Daily dicte le biais. Structure interne H4 sert au timing fin.",
+    mobTitle:   isEs ? "Estructura externa Daily ↔ interna H4" : isEn ? "External Daily ↔ Internal H4 structure" : "Structure externe Daily ↔ interne H4",
+    extTitle:   isEs ? "Estructura externa — Daily" : isEn ? "External structure — Daily" : "Structure externe — Daily",
+    extDescA:   isEs ? "Dicta el" : isEn ? "Dictates the" : "Dicte le",
+    extDescBold:isEs ? "sesgo direccional" : isEn ? "major directional bias" : "biais directionnel",
+    extDescB:   isEs ? "mayor. Tendencia HH/HL o LH/LL en Daily." : isEn ? ". HH/HL or LH/LL trend on Daily." : "majeur. Tendance HH/HL ou LH/LL sur Daily.",
+    intTitle:   isEs ? "Estructura interna — H4" : isEn ? "Internal structure — H4" : "Structure interne — H4",
+    intDescA:   isEs ? "Sirve para el" : isEn ? "Serves the" : "Sert au",
+    intDescBold:isEs ? "timing fino de entrada" : isEn ? "fine entry timing" : "timing fin d'entrée",
+    intDescB:   isEs ? ". Mini-estructuras dentro de la gran tendencia Daily." : isEn ? ". Mini-structures within the larger Daily trend." : ". Mini-structures dans la grande tendance Daily.",
+    mobFooter:  isEs ? "Daily = sesgo · H4 = timing." : isEn ? "Daily = bias · H4 = timing." : "Daily = biais · H4 = timing.",
   };
   return (
     <div className={className}>
