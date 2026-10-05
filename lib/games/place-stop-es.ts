@@ -58,7 +58,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Tendencia alcista, el precio corrige en la zona de demand. Entraste al rebote.",
+    context: "Tendencia alcista, el precio corrige en el soporte. Entraste al rebote.",
     shortContext: "Pullback BUY en un uptrend.",
     lessons: {
       beginner:     "El stop lógico se coloca más bien DETRÁS del swing low, con margen: dentro, queda en el ruido; demasiado lejos, degrada el R/R.",
@@ -74,7 +74,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Tendencia bajista, el precio rebota en una zona de supply. Entraste en corto.",
+    context: "Tendencia bajista, el precio rebota en una resistencia. Entraste en corto.",
     shortContext: "Pullback SELL en un downtrend.",
     lessons: {
       beginner:     "El stop lógico se coloca más bien POR ENCIMA del swing high, con margen: por debajo, queda expuesto; demasiado lejos, degrada el R/R.",
@@ -118,7 +118,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
   },
   {
     id: "fakeout_above_resistance",
-    title: "Fakeout : short tras rechazo",
+    title: "Fakeout: short tras rechazo",
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
@@ -138,7 +138,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "El precio acaba de barrer la liquidity bajo el último mínimo y luego dio media vuelta.",
+    context: "El precio acaba de barrer la liquidity bajo el mínimo anterior y luego dio media vuelta.",
     shortContext: "BUY tras sweep low.",
     lessons: {
       intermediate: "Un stop bajo el LOW del sweep, más que en la zona que acaba de ser tomada, es una opción lógica. Aquí, el sweep pasa a ser la nueva invalidación.",
@@ -564,8 +564,8 @@ const ZONE_LABEL_ES: Record<string, string> = {
   "Support HTF":          "Soporte HTF",
   "Swing high":           "Swing high",
   "Swing low":            "Swing low",
-  "Dernier creux":        "Último mínimo",
-  "Dernier sommet":       "Último máximo",
+  "Plus bas précédent":        "Mínimo anterior",
+  "Plus haut précédent":       "Máximo anterior",
   "Liquidité balayée":    "Liquidity barrida",
   "FVG haussier":         "FVG alcista",
   "Mèche du fakeout":         "Mecha del fakeout",

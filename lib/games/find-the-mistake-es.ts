@@ -57,7 +57,7 @@ const ZONE_LABEL_ES: Record<string, string> = {
   "Support":            "Soporte",
   "Haut du range":      "Techo del rango",
   "Bas du range":     "Piso del rango",
-  "Dernier creux":      "Último mínimo",
+  "Plus bas précédent":      "Mínimo anterior",
   "Liquidité balayée":  "Liquidity barrida",
   "FVG haussier":       "FVG alcista",
 };
@@ -117,7 +117,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     lessons: {
       beginner:     "Comprar bajo una resistencia que rechaza en cada test rara vez es buena idea. Esperar una ruptura o una reversión suele ser más lógico.",
       intermediate: "La ubicación suele contar más que el pattern. Incluso un setup técnicamente bueno puede volverse malo si la entrada está en una zona hostil.",
-      advanced:     "Una resistencia HTF tocada 3 veces o más puede señalar una zona de supply sólida. Aquí, la ventaja está más bien en un SELL en el retest que en un BUY en el pullback.",
+      advanced:     "Una resistencia HTF tocada 3 veces o más suele ser una resistencia sólida. Aquí, la ventaja está más bien en un SELL en el retest que en un BUY en el pullback.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     showLines: "buy_entry",
@@ -136,8 +136,8 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     explanation: "Aquí, el soporte HTF aguantó en cada test. Un SELL justo encima sitúa la entrada en el peor sitio: el TP queda limitado por el soporte inmediato y el R/R se vuelve muy desfavorable.",
     lessons: {
       beginner:     "Vender sobre un soporte que rebota rara vez es buena idea. Esperar la ruptura del soporte, o un rebote en resistencia, suele ser más lógico.",
-      intermediate: "La ubicación suele contar más que el pattern. Vender en una zona de demand HTF supone aquí ponerse contra la ventaja.",
-      advanced:     "Un soporte HTF con 3 rebotes o más puede señalar una zona de demand sólida. Aquí, la ventaja está más bien en un BUY en el rebote que en un SELL.",
+      intermediate: "La ubicación suele contar más que el pattern. Vender sobre un soporte HTF supone aquí ponerse contra la ventaja.",
+      advanced:     "Un soporte HTF con 3 rebotes o más suele ser un soporte sólido. Aquí, la ventaja está más bien en un BUY en el rebote que en un SELL.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     showLines: "sell_entry",
@@ -395,7 +395,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     direction: "SELL",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "El precio acaba de barrer la liquidity bajo el último mínimo con una mecha grande. Vendes ahora.",
+    context: "El precio acaba de barrer la liquidity bajo el mínimo anterior con una mecha grande. Vendes ahora.",
     correctMistake: "sweep_ignored",
     decoyMistakes: ["trade_against_htf", "bad_rr", "stop_too_tight"],
     explanation: "Aquí, el sweep acaba de producirse y puede señalar una reversión alcista. Un SELL supone vender el suelo que los compradores acaban de usar para entrar: la lectura parece invertida.",

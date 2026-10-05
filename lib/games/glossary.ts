@@ -185,7 +185,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "retour du prix vers un niveau avant de repartir.", es: "vuelta del precio a un nivel antes de seguir." },
   },
   {
-    id: "retest", source: "Intermédiaire · leçon 3 (Supply & Demand)",
+    id: "retest", source: "Intermédiaire · leçon 3 (Support et résistance)",
     term: { fr: "Retest", es: "Retest" },
     match: { fr: /retest/i, es: /retest/i },
     def: {
@@ -225,14 +225,14 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "baisse maximale avant de remonter.", es: "caída máxima antes de recuperarse." },
   },
   {
-    id: "supply-demand", source: "Intermédiaire · leçon 3 (Supply & Demand)",
-    term: { fr: "Zone de demand / supply", es: "Zona de demand / supply" },
-    match: { fr: /zones? de (?:demand|supply)/i, es: /zonas? de (?:demand|supply)/i },
+    id: "support-resistance", source: "Intermédiaire · leçons 2 et 3 (Support et résistance)",
+    term: { fr: "Support / résistance", es: "Soporte / resistencia" },
+    match: { fr: /\bsupports?\b|\brésistances?\b/i, es: /\bsoportes?\b|\bresistencias?\b/i },
     def: {
-      fr: "zone d'où le prix est reparti violemment, à la hausse pour une demand, à la baisse pour une supply.",
-      es: "zona desde la que el precio salió con violencia, al alza para una demand, a la baja para una supply.",
+      fr: "niveau sous le prix où les acheteurs ont déjà fait rebondir le prix (support), ou au-dessus où les vendeurs l'ont repoussé (résistance).",
+      es: "nivel bajo el precio donde los compradores ya lo hicieron rebotar (soporte), o encima donde los vendedores lo rechazaron (resistencia).",
     },
-    short: { fr: "zone d'où le prix est reparti violemment.", es: "zona desde la que el precio salió con violencia." },
+    short: { fr: "niveau où le prix a déjà rebondi ou été repoussé.", es: "nivel donde el precio ya rebotó o fue rechazado." },
   },
   {
     id: "psychological", source: "Intermédiaire · leçon 5 (Confluences)",
@@ -514,14 +514,32 @@ export function firstDefinitionOnly(texts: string[], locale: string | undefined)
 }
 
 /**
+ * Termes interdits PARTOUT (jeux, leçons, home, hub), toutes variantes : avec
+ * ou sans « e », majuscules, pluriels, anglais. Les traders disent « support »
+ * et « résistance » ; « plus bas / plus haut précédent » (FR), « mínimo /
+ * máximo anterior » (ES). Bornes Unicode : « demandé » n'est pas « demand ».
+ */
+const NL = "(?<![\\p{L}\\d])";
+const NR = "(?![\\p{L}\\d])";
+const re = (src: string) => new RegExp(src, "iu");
+export const FORBIDDEN: Record<GlossaryLocale, { from: RegExp; to: string; source: string }[]> = {
+  fr: [
+    { from: re(`zones?\\s+d['’]\\s*offres?|zones?\\s+de\\s+demandes?|zones?\\s+de\\s+demands?|zones?\\s+de\\s+suppl(?:y|ies)|zones?\\s+(?:demand|supply)${NR}|${NL}(?:demand|supply)\\s+zones?|${NL}(?:supply|demand)s?${NR}`), to: "support / résistance", source: "Intermédiaire · leçons 2 et 3" },
+    { from: re(`${NL}pr[ée]c[ée]dents?\\s+(?:low|high)s?${NR}|${NL}(?:low|high)s?\\s+pr[ée]c[ée]dents?${NR}`), to: "plus bas précédent / plus haut précédent", source: "Intermédiaire · leçon 1" },
+  ],
+  es: [
+    { from: re(`zonas?\\s+de\\s+ofertas?|zonas?\\s+de\\s+demandas?|zonas?\\s+de\\s+demands?|zonas?\\s+de\\s+suppl(?:y|ies)|zonas?\\s+(?:demand|supply)${NR}|${NL}(?:demand|supply)\\s+zones?|${NL}(?:supply|demand)s?${NR}`), to: "soporte / resistencia", source: "Intermedio · lecciones 2 y 3" },
+    { from: re(`${NL}(?:low|high)s?\\s+(?:previos?|anterior(?:es)?)${NR}`), to: "mínimo anterior / máximo anterior", source: "Intermedio · lección 1" },
+  ],
+};
+
+/**
  * Termes retirés des jeux → terme retenu, et leçon source. Les motifs
  * vérifiés par l'audit sont ceux de la colonne « from ».
  */
 export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source: string }[]> = {
   fr: [
-    { from: /zones? d'offre/i, to: "zone de supply", source: "Intermédiaire · leçon 3" },
-    { from: /zones? de demande/i, to: "zone de demand", source: "Intermédiaire · leçon 3" },
-    { from: /précédent (?:low|high)/i, to: "dernier creux / dernier sommet", source: "Intermédiaire · leçon 1" },
+    ...FORBIDDEN.fr,
     { from: /plafond|plancher/i, to: "haut du range / bas du range", source: "Intermédiaire · leçon 2" },
     { from: /chasses? aux stops|zone de chasse/i, to: "stop hunt / zone de stop hunt", source: "Avancé · leçon 6" },
     { from: /round number/i, to: "niveau psychologique", source: "Intermédiaire · leçon 5" },
@@ -538,9 +556,7 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
     { from: /\bRR\b/, to: "R/R", source: "Débutant · leçon 6" },
   ],
   es: [
-    { from: /zonas? de oferta/i, to: "zona de supply", source: "Intermedio · lección 3" },
-    { from: /zonas? de demanda/i, to: "zona de demand", source: "Intermedio · lección 3" },
-    { from: /(?:low|high) (?:previo|anterior)/i, to: "último mínimo / último máximo", source: "Intermedio · lección 1" },
+    ...FORBIDDEN.es,
     { from: /cazas? de stops|zona de caza/i, to: "stop hunt / zona de stop hunt", source: "Avanzado · lección 6" },
     { from: /round number/i, to: "nivel psicológico", source: "Intermedio · lección 5" },
     { from: /tight stop/i, to: "stop ajustado", source: "Principiante · lección 5" },
@@ -564,9 +580,9 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
 export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
   fr: [
     "FVG haussier", "Order Block", "Liquidité au-dessus", "Liquidité en-dessous", "Liquidité balayée",
-    "Dernier sommet", "Dernier creux", "Sweep haut", "Sweep bas", "Haut du range", "Bas du range",
+    "Plus haut précédent", "Plus bas précédent", "Sweep haut", "Sweep bas", "Haut du range", "Bas du range",
     "Résistance", "Résistance HTF", "Résistance cassée", "Support", "Support HTF", "Support cassé",
-    "Zone de supply", "Zone de demand", "Niveau secondaire", "Mèche du fakeout", "Swing high", "Swing low",
+    "Niveau secondaire", "Mèche du fakeout", "Swing high", "Swing low",
     "Fakeouts précédents", "Zone de stop hunt", "Equal lows", "Haut de la session asiatique", "Niveau clé",
     "Niveau psychologique", "HL H4", "PDL", "Swing high 1", "Swing high 2", "Swing high 3", "Swing low 1",
     "Swing low 2", "Swing low 3", "Swing high évident", "Swing low évident", "Swing low H1",
@@ -575,9 +591,9 @@ export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
   ],
   es: [
     "FVG alcista", "Order Block", "Liquidity arriba", "Liquidity abajo", "Liquidity barrida",
-    "Último máximo", "Último mínimo", "Sweep arriba", "Sweep abajo", "Techo del rango", "Piso del rango",
+    "Máximo anterior", "Mínimo anterior", "Sweep arriba", "Sweep abajo", "Techo del rango", "Piso del rango",
     "Resistencia", "Resistencia HTF", "Resistencia rota", "Soporte", "Soporte HTF", "Soporte roto",
-    "Zona de supply", "Zona de demand", "Nivel secundario", "Mecha del fakeout", "Swing high", "Swing low",
+    "Nivel secundario", "Mecha del fakeout", "Swing high", "Swing low",
     "Fakeouts anteriores", "Zona de stop hunt", "Equal lows", "Máximo de la sesión asiática", "Nivel clave",
     "Nivel psicológico", "HL H4", "PDL", "Swing high 1", "Swing high 2", "Swing high 3", "Swing low 1",
     "Swing low 2", "Swing low 3", "Swing high evidente", "Swing low evidente", "Swing low H1",

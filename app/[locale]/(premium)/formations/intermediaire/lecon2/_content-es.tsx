@@ -14,8 +14,8 @@ export default function ContentEs() {
       subtitle="Las zonas clave son los niveles donde el precio ya se detuvo. Son los únicos lugares donde debes tradear, el resto es ruido."
       duration="22 min"
       lessonNumber={2}
-      prev={{ href: "/formations/intermediaire/lecon1", label: "Lección 1 : Estructura" }}
-      next={{ href: "/formations/intermediaire/lecon3", label: "Lección 3 : Supply & Demand" }}
+      prev={{ href: "/formations/intermediaire/lecon1", label: "Lección 1: Estructura" }}
+      next={{ href: "/formations/intermediaire/lecon3", label: "Lección 3: Soporte y resistencia: el origen del movimiento" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -52,7 +52,7 @@ export default function ContentEs() {
       </div>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Polaridad : cuando el rol se invierte</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Polaridad: cuando el rol se invierte</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Cuando un soporte se rompe con convicción, se vuelve resistencia. Cuando una resistencia se rompe, se vuelve soporte. Es una de las dinámicas más fiables del mercado.
         </p>
@@ -71,7 +71,7 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Order Blocks : donde actuaron las instituciones</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Order Blocks: donde actuaron las instituciones</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Un Order Block (OB) es la última vela de dirección opuesta antes de un movimiento impulsivo. Es donde una institución colocó una orden grande. El precio suele volver ahí para completar la ejecución.
         </p>

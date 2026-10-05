@@ -127,7 +127,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Tendance haussière, le prix corrige sur la zone de demand. Tu es entré au rebond.",
+    context: "Tendance haussière, le prix corrige sur le support. Tu es entré au rebond.",
     shortContext: "Pullback BUY dans un uptrend.",
     lessons: {
       beginner:     "Le stop logique se place plutôt DERRIÈRE le swing low, avec une marge : dedans, il reste dans le bruit ; trop loin, il dégrade le R/R.",
@@ -143,7 +143,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Tendance baissière, le prix rebondit sur une zone de supply. Tu es entré court.",
+    context: "Tendance baissière, le prix rebondit sur une résistance. Tu es entré court.",
     shortContext: "Pullback SELL dans un downtrend.",
     lessons: {
       beginner:     "Le stop logique se place plutôt AU-DESSUS du swing high, avec une marge : en dessous, il reste exposé ; trop loin, il dégrade le R/R.",
@@ -207,7 +207,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de balayer la liquidité sous le dernier creux puis a fait demi-tour.",
+    context: "Le prix vient de balayer la liquidité sous le plus bas précédent puis a fait demi-tour.",
     shortContext: "BUY après sweep low.",
     lessons: {
       intermediate: "Un stop sous le LOW du sweep, plutôt que dans la zone qui vient d'être prise, est une option logique. Ici, le sweep devient la nouvelle invalidation.",
@@ -1207,7 +1207,7 @@ function scnSweepLowReversal(rng: () => number, m: number, d: Difficulty, mode: 
   return finalize({
     past, fut,
     zones: [
-      { kind: "support",       y1: L - 0.1,        y2: L + 0.1,        label: "Dernier creux"     },
+      { kind: "support",       y1: L - 0.1,        y2: L + 0.1,        label: "Plus bas précédent"     },
       { kind: "liquidity_low", y1: sweepLow,       y2: L - 0.15,       label: "Liquidité balayée" },
     ],
     entry,

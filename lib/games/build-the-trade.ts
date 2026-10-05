@@ -277,7 +277,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de balayer la liquidité sous le dernier creux puis a refermé au-dessus.",
+    context: "Le prix vient de balayer la liquidité sous le plus bas précédent puis a refermé au-dessus.",
     optimal: { entry: "aggressive", stop: "logical", tp: "balanced" },
     optimalExplain: "Ici, le sweep peut signaler un retournement. Dans ce cas précis, une entrée agressive se défend, car le sweep sert déjà de première confirmation. Un stop sous le low du sweep est une option logique.",
     lessons: {
@@ -296,9 +296,9 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Le prix revient tester un FVG haussier. La réaction est en cours.",
     optimal: { entry: "confirmation", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Ici, le FVG peut servir de zone de demand, et la confirmation valide la réaction. Un stop sous le bas du FVG et un TP ambitieux se défendent, car le HTF est aligné et la zone encore intacte.",
+    optimalExplain: "Ici, le FVG peut servir de support, et la confirmation valide la réaction. Un stop sous le bas du FVG et un TP ambitieux se défendent, car le HTF est aligné et la zone encore intacte.",
     lessons: {
-      intermediate: "Le FVG agit souvent comme zone de demand au retest. Ici, la confirmation préserve l'avantage sans rater le mouvement.",
+      intermediate: "Le FVG agit souvent comme un support au retest. Ici, la confirmation préserve l'avantage sans rater le mouvement.",
       advanced:     "FVG haussier, HTF aligné et premier retest : un setup de premier choix. Un R/R de 1:3 ou plus est ici logique.",
       beginner:     "Le FVG attire souvent le prix. Ici, la confirmation prend la forme d'une bougie verte qui défend la zone.",
     },
@@ -306,7 +306,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
   },
   {
     id: "weak_breakout_setup",
-    title: "Cassure faible : édge réduit",
+    title: "Cassure faible : edge réduit",
     chartShape: "weak_breakout",
     direction: "BUY",
     htfBias: "range",
@@ -856,7 +856,7 @@ function shapeSweepLowReversal(rng: () => number, m: number): ShapeOutput {
     past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
     p = c;
   }
-  // Le « dernier creux » : le creux de la consolidation touche le niveau L
+  // Le « plus bas précédent » : le creux de la consolidation touche le niveau L
   const consol = past.slice(-3);
   const prevLow = consol.reduce((a, k) => (k.l < a.l ? k : a));
   prevLow.l = Math.min(prevLow.l, L + 0.02);
@@ -877,7 +877,7 @@ function shapeSweepLowReversal(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "support",       y1: L - 0.1,    y2: L + 0.1,    label: "Dernier creux"     },
+    { kind: "support",       y1: L - 0.1,    y2: L + 0.1,    label: "Plus bas précédent"     },
     { kind: "liquidity_low", y1: sweepLow,   y2: L - 0.15,   label: "Liquidité balayée" },
   ], ref: { swingLow: sweepLow, swingHigh: entryRef + 4 * m, entryRef } };
 }
@@ -983,7 +983,7 @@ function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
   }
   return { past, future: fut, zones: [
     { kind: "support",        y1: swingLow - 0.04,    y2: swingLow + 0.04,    label: "Niveau secondaire" },
-    { kind: "liquidity_high", y1: topHigh - 0.05,      y2: topHigh + 0.05,     label: "Dernier sommet" },
+    { kind: "liquidity_high", y1: topHigh - 0.05,      y2: topHigh + 0.05,     label: "Plus haut précédent" },
   ], ref: { swingLow, swingHigh: peak, entryRef } };
 }
 

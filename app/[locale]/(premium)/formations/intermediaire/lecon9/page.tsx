@@ -82,7 +82,7 @@ function ContentFr() {
             { step: "1", text: "Identifie un mouvement impulsif clair : un swing low et un swing high nets sur le graphique." },
             { step: "2", text: "En tendance haussière : clique d'abord sur le swing low, puis sur le swing high. Les niveaux s'affichent entre les deux." },
             { step: "3", text: "Le prix retrace depuis le swing high → surveille les zones 38.2%, 50% et 61.8% en priorité." },
-            { step: "4", text: "Cherche une confluence sur ces zones : S/R historique, zone SD, niveau psychologique (1.0850, 1.0900…). C'est là que tu prépares ton entrée." },
+            { step: "4", text: "Cherche une confluence sur ces zones : support ou résistance historique, niveau psychologique (1.0850, 1.0900…). C'est là que tu prépares ton entrée." },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.step}</span>
@@ -102,7 +102,7 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-medium text-emerald-400 mb-1">Setup idéal, 3 confluences + signal</p>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              EUR/USD Daily haussier → 61.8% Fib à 1.0869 → ancien support historique à 1.0870 → zone de Demand non-retestée sur la même zone. Le prix arrive. Pin bar haussière. Tu entres en achat. SL sous la zone (1.0848), TP vers 1.0980.
+              EUR/USD Daily haussier → 61.8% Fib à 1.0869 → ancien support historique à 1.0870 → support H4 non retesté au même niveau. Le prix arrive. Pin bar haussière. Tu entres en achat. SL sous la zone (1.0848), TP vers 1.0980.
             </p>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
@@ -120,7 +120,7 @@ function ContentFr() {
         <div className="space-y-2">
           {[
             { n: "1", t: "Y a-t-il un mouvement impulsif clair récent ?", d: "Si oui, trace Fibonacci dessus (swing low → swing high en haussier). Sinon → pas de Fibonacci utilisable." },
-            { n: "2", t: "Y a-t-il une confluence sur le 61.8% ou le 50% ?", d: "S/R historique, zone SD, niveau psychologique au même niveau ? Si oui → zone d'or à surveiller." },
+            { n: "2", t: "Y a-t-il une confluence sur le 61.8% ou le 50% ?", d: "Support ou résistance historique, niveau psychologique au même niveau ? Si oui → zone d'or à surveiller." },
             { n: "3", t: "Attends le signal de bougie dans la zone", d: "Pin bar ou engulfing dans le sens de la tendance Daily sur la zone Fib = entrée. Sans signal = rien à faire." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -143,7 +143,7 @@ function ContentFr() {
             <span className="text-lg">✓</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">Niveau Fib + confluence + signal de bougie</p>
-              <p className="text-xs text-zinc-400 mt-0.5">C'est le setup complet, une confirmation à intégrer dans ton plan de trading, pas une entrée automatique. SL sous la zone Fib entière, TP vers le swing high précédent (ou la prochaine résistance).</p>
+              <p className="text-xs text-zinc-400 mt-0.5">C'est le setup complet, une confirmation à intégrer dans ton plan de trading, pas une entrée automatique. SL sous la zone Fib entière, TP vers le dernier swing high (ou la prochaine résistance).</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-amber-400/5 border border-amber-400/15 rounded-xl px-4 py-3">
@@ -176,7 +176,7 @@ function ContentFr() {
       <div className="border border-zinc-700/40 rounded-2xl p-5 bg-zinc-900/30">
         <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-3">Résumé en 3 secondes</p>
         <div className="space-y-2 text-sm">
-          <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>61.8% + confluence (S/R, SD) + signal de bougie → tu entres</p>
+          <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>61.8% + confluence (support ou résistance) + signal de bougie → tu entres</p>
           <p className="text-zinc-200"><span className="text-amber-400 font-bold mr-2">~</span>Niveau Fib sans confluence → tu surveilles seulement</p>
           <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Prix touche le Fib sans signal → tu n'entres pas</p>
         </div>
@@ -193,7 +193,7 @@ function ContentFr() {
           "Fibonacci identifie les zones de retracement probabilistes : 38.2%, 50%, 61.8% sont les plus utilisées.",
           "Trace Fibonacci sur un mouvement impulsif complet : swing low → swing high (tendance haussière).",
           "Le 61.8% (golden ratio) est le niveau le plus respecté, mais jamais infaillible.",
-          "Fibonacci seul n'est pas un signal, attends une confluence (S/R, SD zone) ET un signal de bougie.",
+          "Fibonacci seul n'est pas un signal, attends une confluence (support ou résistance) ET un signal de bougie.",
           "Les 'zones d'or' = intersection de plusieurs confluences incluant un niveau Fib clé.",
         ]}
       />
@@ -204,7 +204,7 @@ function ContentFr() {
           "Ouvre EUR/USD en H4. Utilise l'outil Fibonacci Retracement dans les outils de tracé de TradingView.",
           "Identifie le dernier grand mouvement haussier. Trace ton Fib du swing low au swing high.",
           "Le prix a-t-il retracé ? Sur quel niveau Fib s'est-il arrêté (38.2%, 50%, 61.8%) ? Y a-t-il eu un signal de bougie sur ce niveau ?",
-          "Y a-t-il d'autres confluences sur ce niveau (S/R historique, zone SD, niveau psychologique) ? Si oui, note pourquoi c'était une zone d'or.",
+          "Y a-t-il d'autres confluences sur ce niveau (support ou résistance historique, niveau psychologique) ? Si oui, note pourquoi c'était une zone d'or.",
         ]}
       />
 

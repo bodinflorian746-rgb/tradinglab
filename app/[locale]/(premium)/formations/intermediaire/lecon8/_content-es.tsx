@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="Un trade sin plan es una decisión emocional. El plan de trading transforma tu análisis en acciones precisas, y elimina la improvisación en el peor momento."
       duration="20 min"
       lessonNumber={8}
-      prev={{ href: "/formations/intermediaire/lecon7", label: "Lección 7 : Multi-Timeframe" }}
-      next={{ href: "/formations/intermediaire/lecon9", label: "Lección 9 : Fibonacci" }}
+      prev={{ href: "/formations/intermediaire/lecon7", label: "Lección 7: Multi-Timeframe" }}
+      next={{ href: "/formations/intermediaire/lecon9", label: "Lección 9: Fibonacci" }}
     >
 
       {/* ── Lo que debes VER ── */}
@@ -59,7 +59,7 @@ export default function ContentEs() {
         <div className="space-y-2.5">
           {[
             { q: "¿Cuál es mi sesgo?", r: "Alcista, bajista o neutro (no hay trade). Basado en el análisis Daily." },
-            { q: "¿Cuáles son mis niveles clave?", r: "Las zonas de soporte/resistencia, zonas SD y estructuras importantes para la sesión." },
+            { q: "¿Cuáles son mis niveles clave?", r: "Los soportes, resistencias y estructuras importantes para la sesión." },
             { q: "¿En qué condición entro?", r: "El disparador preciso: 'Si el precio vuelve a 1.0850 y forma un rechazo, compro'." },
             { q: "¿Dónde está mi Stop Loss?", r: "Nivel definido de antemano, lógico en el gráfico, no modificable una vez abierto el trade." },
             { q: "¿Dónde está mi Take Profit?", r: "Objetivo basado en la estructura del mercado. R/R de al menos 1:2." },
@@ -79,7 +79,7 @@ export default function ContentEs() {
 
       {/* ── Journal de trading ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">El journal de trading : lo que realmente te hace progresar</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">El journal de trading: lo que realmente te hace progresar</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           El journal es el registro de cada trade. Permite identificar tus patrones de éxito, tus errores recurrentes, y progresar de forma estructurada.
         </p>

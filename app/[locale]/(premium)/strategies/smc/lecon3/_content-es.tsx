@@ -185,7 +185,7 @@ export default function ContentEs() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Nivel de entrada.</span> <span className="text-zinc-300">Límite externo del cuerpo del OB: límite alto (bullish), límite bajo (bearish). Señal de rechazo M15 confirma.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Posición del stop loss.</span> <span className="text-zinc-300">Más allá de la mecha extrema, margen 5-10 pips EUR/USD o 5-10$ XAU/USD. JAMÁS dentro del cuerpo.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Posición del take profit.</span> <span className="text-zinc-300">Ratio R/R 1:2 mínimo. Objetivo: próximo HH, zona de supply, o proyección medida del impulso inicial.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Posición del take profit.</span> <span className="text-zinc-300">Ratio R/R 1:2 mínimo. Objetivo: próximo HH, próxima resistencia, o proyección medida del impulso inicial.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Tamaño de posición.</span> <span className="text-zinc-300">Riesgo por trade: 5% para 300€, 3% para 500€, 2% para 1 000€+. Lote calculado sobre distancia entrada-SL.</span></div>
             </div>
           </section>

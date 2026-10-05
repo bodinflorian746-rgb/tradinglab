@@ -75,7 +75,7 @@ const SPECIFIC: Record<string, Check> = {
   rejection_resistance: (ch) => { const z = ch.zones[0]; if (!z) return "pas de zone résistance"; return ch.past.slice(-3).some((k) => k.h >= lo(z) - E) && last(ch.past).c < lo(z) ? null : "pas de rejet de la résistance (mèche dans la zone puis clôture dessous)"; },
   fakeout_above_resistance: (ch) => { const z = zone(ch, /sist/i) ?? ch.zones[0]; if (!z) return "pas de zone"; return ch.past.slice(-4).some((k) => k.h > hi(z) && k.c < hi(z)) && last(ch.past).c < hi(z) ? null : "pas de piqûre au-dessus de la résistance refermée dessous"; },
   sweep_low_reversal: (ch) => {
-    const z = zone(ch, /Dernier creux/); if (!z) return "pas de zone dernier creux";
+    const z = zone(ch, /Plus bas précédent/); if (!z) return "pas de zone plus bas précédent";
     const i = ch.past.findIndex((k) => k.l < lo(z) - E);
     if (i < 0) return "aucune mèche sous le précédent low";
     if (ch.past.slice(0, i).some((k) => k.c < lo(z))) return "clôture sous le low avant le sweep";

@@ -207,9 +207,9 @@ function audit(setup: SetupKey, difficulty: Difficulty, seed: number): QACheck {
 
   if (setup === "setup_toxic_execution") {
     // Le past doit ressembler à un pullback bull (uptrend visible puis pullback).
-    // On vérifie juste qu'il y a une zone de demande et que le past finit au point bas du pullback.
+    // On vérifie juste qu'il y a un support et que le past finit au point bas du pullback.
     const support = chart.zones.find((z) => z.kind === "support");
-    if (!support) issues.push(`setup_toxic_execution: zone "Zone de demand" manquante`);
+    if (!support) issues.push(`setup_toxic_execution: zone "Support" manquante`);
   }
 
   return { setup, difficulty, chart, issues };

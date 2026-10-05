@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="El mercado cuenta la misma historia a distintas escalas. Aprender a leer estos niveles en el orden correcto es una de las habilidades más potentes del trader."
       duration="22 min"
       lessonNumber={7}
-      prev={{ href: "/formations/intermediaire/lecon6", label: "Lección 6 : Fake Breakout" }}
-      next={{ href: "/formations/intermediaire/lecon8", label: "Lección 8 : Plan de trade" }}
+      prev={{ href: "/formations/intermediaire/lecon6", label: "Lección 6: Fake Breakout" }}
+      next={{ href: "/formations/intermediaire/lecon8", label: "Lección 8: Plan de trade" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -77,7 +77,7 @@ export default function ContentEs() {
               {[
                 ["Weekly", "Contexto de fondo", "Tendencia largo plazo, zonas mayores"],
                 ["Daily", "Sesgo direccional", "Tendencia actual, zonas clave importantes"],
-                ["H4", "Zonas de interés", "Estructuras intermedias, zonas SD"],
+                ["H4", "Zonas de interés", "Estructuras intermedias, soportes y resistencias"],
                 ["H1", "Confirmación de setup", "Patrón de continuación, señal de entrada"],
                 ["M15 / M5", "Timing preciso", "Entrada en señal de vela, timing final"],
               ].map((row, i) => (
@@ -102,7 +102,7 @@ export default function ContentEs() {
         <div className="space-y-2">
           {[
             { tf: "Daily", action: "Identifica la tendencia: alcista, bajista o range? Define tu sesgo para la semana." },
-            { tf: "H4", action: "Ubica las zonas clave: soporte, resistencia, zonas SD. ¿Dónde reaccionó históricamente el precio?" },
+            { tf: "H4", action: "Ubica las zonas clave: soportes y resistencias. ¿Dónde reaccionó históricamente el precio?" },
             { tf: "H1", action: "Espera que el precio llegue a una zona H4. ¿Hay un setup en el sentido de la tendencia Daily?" },
             { tf: "M15", action: "Busca la señal de disparo: rechazo, engulfing, pin bar en la zona H4." },
           ].map((item, i) => (

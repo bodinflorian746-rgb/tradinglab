@@ -41,7 +41,7 @@ export const STRATEGY_MODULES: StrategyModule[] = [
   {
     id:          "smc",
     title:       "SMC : Penser institutionnel",
-    subtitle:    "Comprends comment les institutions structurent leurs positions et aligne-toi : Supply/Demand, BOS, CHoCH, confluences.",
+    subtitle:    "Comprends comment les institutions structurent leurs positions et aligne-toi : supports et résistances, BOS, CHoCH, confluences.",
     level:       "intermediaire",
     order:       4,
     lessonCount: 5,

@@ -46,7 +46,7 @@ function ContentFr() {
         <div className="space-y-2.5">
           {[
             { label: "Tendance (structure de marché)", detail: "La direction dominante : haussière ou baissière. C'est la base. Vérifier en Daily en premier.", color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400" },
-            { label: "Zone S/R ou SD", detail: "Un niveau où le prix a déjà réagi. Un ancien support, une résistance, ou une zone de Demand/Supply.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
+            { label: "Support ou résistance", detail: "Un niveau où le prix a déjà réagi : un ancien support, une résistance, ou la zone de départ d'un mouvement impulsif.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
             { label: "Niveau Fibonacci", detail: "38.2%, 50% ou 61.8% du dernier mouvement impulsif. Souvent coïncide avec un S/R : c'est la puissance.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
             { label: "Niveau psychologique", detail: "1.1000, 45 000$, 2 000$... Les traders placent naturellement stops et ordres sur les niveaux ronds.", color: "bg-amber-400/5 border-amber-400/15 text-amber-400" },
             { label: "Signal de bougie (déclencheur)", detail: "Pin bar, engulfing, rejet. C'est la gâchette : pas la raison d'entrer. La raison, c'est les confluences au-dessus.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
@@ -93,7 +93,7 @@ function ContentFr() {
         <div className="space-y-2">
           {[
             { n: "1", t: "Quelle est la tendance ?", d: "Daily haussier → achats. Baissier → ventes. Pas de tendance → pas de trade." },
-            { n: "2", t: "Y a-t-il un niveau de structure sur ma zone ?", d: "S/R, Higher Low, zone SD ? Si oui, première confluence validée." },
+            { n: "2", t: "Y a-t-il un niveau de structure sur ma zone ?", d: "Support, résistance, Higher Low ? Si oui, première confluence validée." },
             { n: "3", t: "Y a-t-il une deuxième confluence indépendante ?", d: "Fibonacci ? Niveau psychologique ? Si oui, le trade est qualifié. Si non, on attend." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -164,7 +164,7 @@ function ContentFr() {
       <LessonKeyPoints
         points={[
           "Confluence = une raison indépendante qui soutient ton trade. Minimum 2-3 avant d'entrer.",
-          "Les 5 principales : tendance, S/R, SD zone, Fibonacci, niveau psychologique.",
+          "Les 5 principales : tendance, support ou résistance, Fibonacci, niveau psychologique, signal de bougie.",
           "Le signal de bougie est le déclencheur, pas la raison principale d'entrer.",
           "Les indicateurs (RSI, MACD) ne sont pas des confluences indépendantes entre eux.",
           "Qualité prime sur quantité : 3 confluences solides valent mieux que 6 médiocres.",
@@ -176,7 +176,7 @@ function ContentFr() {
         steps={[
           "Analyse EUR/USD en Daily, quelle est la tendance ? Note ton biais (achat ou vente uniquement).",
           "Descends en H4, identifie le prochain niveau de structure clé (HL en haussier, LH en baissier).",
-          "Vérifie : y a-t-il un S/R historique ou une zone SD qui coïncide avec ce niveau ? Note la confluence.",
+          "Vérifie : y a-t-il un support ou une résistance historique qui coïncide avec ce niveau ? Note la confluence.",
           "Trace Fibonacci sur le dernier mouvement impulsif, un niveau Fib coïncide-t-il avec ta zone ? Si oui, 3 confluences alignées. Note l'entrée, le SL et le TP avec le R/R.",
         ]}
       />

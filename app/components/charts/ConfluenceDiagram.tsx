@@ -8,19 +8,19 @@ export function ConfluenceDiagram({ className = "", locale = "fr" }: ConfluenceD
   const isEn = locale === "en";
   const L = {
     supportSR:        isEs ? "Soporte S/R" : isEn ? "Support S/R" : "Support S/R",
-    zoneDemand:       isEs ? "Zona Demand" : isEn ? "Demand Zone" : "Zone Demand",
+    zoneDemand:       isEs ? "Zona de confluencia" : isEn ? "Demand Zone" : "Zone de confluence",
     confluences:      isEs ? "3 confluencias ✓" : isEn ? "3 confluences ✓" : "3 confluences ✓",
-    mobTitle:         isEs ? "3 confluencias en la Zona Demand ✓" : isEn ? "3 confluences on the Demand Zone ✓" : "3 confluences sur la Zone Demand ✓",
+    mobTitle:         isEs ? "3 confluencias en el mismo lugar ✓" : isEn ? "3 confluences on the Demand Zone ✓" : "3 confluences au même endroit ✓",
     fibDesc:          isEs ? "· nivel de retroceso clave" : isEn ? "· key retracement level" : "· niveau de retracement clé",
     supportHist:      isEs ? "Soporte histórico" : isEn ? "Historical support" : "Support historique",
     supportHistDesc:  isEs ? "· zona ya respetada por el precio" : isEn ? "· zone already respected by price" : "· zone déjà respectée par le prix",
     psychoLevel:      isEs ? "Nivel psicológico" : isEn ? "Psychological level" : "Niveau psychologique",
-    psychoDesc:       isEs ? "· precio redondo (1.1800)" : isEn ? "· round number (1.1800)" : "· prix rond (1.1800)",
+    psychoDesc:       isEs ? "· número redondo (1.1800)" : isEn ? "· round number (1.1800)" : "· chiffre rond (1.1800)",
     rebound:          isEs ? "→ rebote en la intersección de los 3 niveles" : isEn ? "→ bounce at the intersection of the 3 levels" : "→ rebond à l'intersection des 3 niveaux",
-    legendDemand:     isEs ? "Zona Demand" : isEn ? "Demand Zone" : "Zone Demand",
+    legendDemand:     isEs ? "Zona de confluencia" : isEn ? "Demand Zone" : "Zone de confluence",
     legendSupportH:   isEs ? "Soporte histórico" : isEn ? "Historical support" : "Support historique",
   };
-  // Zone Demand — creux de la courbe, centre du diagramme
+  // Zone de confluence — creux de la courbe, centre du diagramme
   const zoneX = 106, zoneY = 102, zoneW = 60, zoneH = 26;
   const zoneCX = zoneX + zoneW / 2; // 136
 
@@ -68,7 +68,7 @@ export function ConfluenceDiagram({ className = "", locale = "fr" }: ConfluenceD
           </marker>
         </defs>
 
-        {/* Zone Demand */}
+        {/* Zone de confluence */}
         <rect
           x={zoneX} y={zoneY} width={zoneW} height={zoneH} rx="3"
           fill="#10b98112" stroke="#10b98148" strokeWidth="1.2" strokeDasharray="4 3"
@@ -92,7 +92,7 @@ export function ConfluenceDiagram({ className = "", locale = "fr" }: ConfluenceD
           stroke="#52525b" strokeWidth="1" strokeDasharray="2 4" opacity="0.75"
         />
 
-        {/* Flèches de convergence vers la Zone Demand */}
+        {/* Flèches de convergence vers la zone de confluence */}
         <line
           x1={lineEndX} y1={fibY} x2={fibArr.x} y2={fibArr.y}
           stroke="#60a5fa" strokeWidth="1.2" opacity="0.75"
@@ -123,7 +123,7 @@ export function ConfluenceDiagram({ className = "", locale = "fr" }: ConfluenceD
           <rect x="8" y="33" width="56" height="13" rx="3" fill="#71717a14" stroke="#71717a38" strokeWidth="0.8" />
           <text x="36" y="43" fontSize="8" fill="#71717a" textAnchor="middle" fontWeight="700">{L.supportSR}</text>
 
-          <rect x="104" y="130" width="64" height="13" rx="3" fill="#10b98118" stroke="#10b98138" strokeWidth="0.8" />
+          <rect x="91" y="130" width="90" height="13" rx="3" fill="#10b98118" stroke="#10b98138" strokeWidth="0.8" />
           <text x={zoneCX} y="140" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">{L.zoneDemand}</text>
 
           <rect x="186" y="8" width="76" height="16" rx="4" fill="#10b98118" stroke="#10b98140" strokeWidth="0.8" />

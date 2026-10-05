@@ -185,7 +185,7 @@ export default function ContentFr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Niveau d&apos;entrée.</span> <span className="text-zinc-300">Limite externe du corps de l&apos;OB : limite haute (bullish), limite basse (bearish). Signal de rejet M15 confirme.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Position du stop loss.</span> <span className="text-zinc-300">Au-delà de la mèche extrême, marge 5-10 pips EUR/USD ou 5-10$ XAU/USD. JAMAIS à l&apos;intérieur du corps.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Position du take profit.</span> <span className="text-zinc-300">Ratio R/R 1:2 minimum. Cible : prochain HH, zone de supply, ou projection mesurée de l&apos;impulsion initiale.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Position du take profit.</span> <span className="text-zinc-300">Ratio R/R 1:2 minimum. Cible : prochain HH, prochaine résistance, ou projection mesurée de l&apos;impulsion initiale.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Taille de position.</span> <span className="text-zinc-300">Risque par trade : 5% pour 300€, 3% pour 500€, 2% pour 1 000€+. Lot calculé sur distance entrée-SL.</span></div>
             </div>
           </section>

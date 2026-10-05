@@ -57,7 +57,7 @@ const ZONE_LABEL_EN: Record<string, string> = {
   "Support":            "Support",
   "Haut du range":      "Range top",
   "Bas du range":     "Range bottom",
-  "Dernier creux":      "Previous low",
+  "Plus bas précédent":      "Previous low",
   "Liquidité balayée":  "Liquidity swept",
   "FVG haussier":       "Bullish FVG",
 };

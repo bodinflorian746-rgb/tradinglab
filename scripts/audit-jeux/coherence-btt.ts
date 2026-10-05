@@ -173,7 +173,7 @@ const SPECIFIC: Record<string, Check> = {
     const ret = (peak - last(ch.past).c) / (peak - start);
     if (!(ret > 0.6)) return "retracement ≤ 60 % de l'impulsion";
     const h = zone(ch, "liquidity_high")!;
-    if (!(maxH(ch.past) <= hi(h) + E && maxH(ch.past) >= lo(h) - E)) return "« Dernier sommet » ne contient pas le sommet";
+    if (!(maxH(ch.past) <= hi(h) + E && maxH(ch.past) >= lo(h) - E)) return "« Plus haut précédent » ne contient pas le sommet";
     if (ret >= 1) return "retracement ≥ 100 % (plus un pullback)";
     return null;
   },

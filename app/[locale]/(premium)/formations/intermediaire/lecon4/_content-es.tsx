@@ -14,8 +14,8 @@ export default function ContentEs() {
       subtitle="El 90% de los traders perdedores tradean contra la tendencia sin saberlo. Aprender a leer la dirección dominante es poner las probabilidades de tu lado antes incluso de abrir un trade."
       duration="18 min"
       lessonNumber={4}
-      prev={{ href: "/formations/intermediaire/lecon3", label: "Lección 3 : Supply & Demand" }}
-      next={{ href: "/formations/intermediaire/lecon5", label: "Lección 5 : Confluencias" }}
+      prev={{ href: "/formations/intermediaire/lecon3", label: "Lección 3: Soporte y resistencia: el origen del movimiento" }}
+      next={{ href: "/formations/intermediaire/lecon5", label: "Lección 5: Confluencias" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -63,9 +63,9 @@ export default function ContentEs() {
         </p>
         <div className="space-y-2.5">
           {[
-            { label: "Daily o H4 : el sesgo principal", detail: "Es la tendencia que debes respetar. Si Daily es alcista, buscas únicamente compras." },
-            { label: "H1 : las zonas de entrada", detail: "En tendencia alcista Daily, el H1 muestra los retrocesos (correcciones). Son tus ventanas de entrada." },
-            { label: "M15 : el timing preciso", detail: "En M15, buscas la señal final (rechazo, pin bar, engulfing). Es el disparador de la entrada." },
+            { label: "Daily o H4: el sesgo principal", detail: "Es la tendencia que debes respetar. Si Daily es alcista, buscas únicamente compras." },
+            { label: "H1: las zonas de entrada", detail: "En tendencia alcista Daily, el H1 muestra los retrocesos (correcciones). Son tus ventanas de entrada." },
+            { label: "M15: el timing preciso", detail: "En M15, buscas la señal final (rechazo, pin bar, engulfing). Es el disparador de la entrada." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
@@ -81,7 +81,7 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Escenario real : tradear el retroceso</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Escenario real: tradear el retroceso</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Es el setup básico en tendencia: esperar que el precio vuelva a un nivel de estructura, luego entrar en el sentido de la tendencia.
         </p>

@@ -41,7 +41,7 @@ export default function ContentEn() {
       </section>
 
       <div className="border border-zinc-800 rounded-2xl p-5 space-y-4">
-        <SupplyDemandDiagram />
+        <SupplyDemandDiagram locale="en" />
       </div>
 
       <div className="border border-zinc-800 rounded-2xl p-5">

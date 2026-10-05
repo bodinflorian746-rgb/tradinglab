@@ -75,7 +75,7 @@ const CHECKS: Record<string, Record<string, Check>> = {
   },
   pullback_bullish_trend: {
     "tendance haussière établie": (ch) => { const t = ch.past.slice(0, 8); return last(t).c > t[0].o && t.filter((k) => k.c > k.o).length >= 6 ? null : "pas de tendance haussière nette"; },
-    "corrige jusqu'à la zone de demande": (ch) => { const z = zoneOf(ch, "support"); return ch.past.slice(8).some((k) => k.l <= hi(z)) ? null : "la correction n'atteint pas la zone de demande"; },
+    "corrige jusqu'au support": (ch) => { const z = zoneOf(ch, "support"); return ch.past.slice(8).some((k) => k.l <= hi(z)) ? null : "la correction n'atteint pas la zone de demande"; },
     direction,
   },
   pullback_bearish_trend: {
@@ -165,7 +165,7 @@ const CHECKS: Record<string, Record<string, Check>> = {
     },
   },
   setup_toxic_execution: {
-    "setup technique valide (pullback haussier jusqu'à la zone de demande)": (ch) => {
+    "setup technique valide (pullback haussier jusqu'au support)": (ch) => {
       const t = ch.past.slice(0, 8); const z = zoneOf(ch, "support");
       return last(t).c > t[0].o && ch.past.slice(8).some((k) => k.l <= hi(z)) ? null : "pullback haussier non valide";
     },

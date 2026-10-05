@@ -71,7 +71,7 @@
     },
     "smc": {
       "title":    "SMC: Pensar como institucional",
-      "subtitle": "Entiende cómo estructuran sus posiciones las instituciones y alíneate. Supply/Demand, BOS, CHoCH, confluencias.",
+      "subtitle": "Entiende cómo estructuran sus posiciones las instituciones y alíneate. Soportes y resistencias, BOS, CHoCH, confluencias.",
       "lessons": {
         "lecon1": { "title": "Market Structure SMC: leer la estructura del mercado como una institución",   "description": "Identificar los swings significativos, distinguir estructura interna y externa, leer las fases de acumulación, expansión y distribución." },
         "lecon2": { "title": "BOS y CHoCH: leer las señales estructurales institucionales",                 "description": "Distinguir BOS y CHoCH, calificar operativamente la ruptura, entender la secuencia de reversal institucional en 3 etapas." },
@@ -108,7 +108,7 @@
         "lecon1": { "title": "Entender el modelo ICT: liquidity y manipulación",                    "description": "Por qué el mercado va a buscar la liquidity antes de moverse, y cómo leer el sweep + reintegración." },
         "lecon2": { "title": "PD Arrays: detectar las zonas donde el mercado puede reaccionar",     "description": "FVG, Order Blocks y confluencia: identificar las zonas premium/discount donde la reacción es probable." },
         "lecon3": { "title": "Killzones: cuándo se mueve de verdad el mercado",                      "description": "Las ventanas horarias que concentran la volatilidad. Asia, London Open, New York Open." },
-        "lecon4": { "title": "El displacement: reconocer el verdadero desplazamiento institucional", "description": "Distinguir una impulsión real de toma de control de una simple vela volátil sin continuación." },
+        "lecon4": { "title": "El displacement: reconocer el verdadero desplazamiento institucional", "description": "Distinguir un impulso real de toma de control de una simple vela volátil sin continuación." },
         "lecon5": { "title": "El modelo ICT completo: de la liquidity a la ejecución",              "description": "Desarrollar la secuencia completa: liquidity → manipulación → desplazamiento → ejecución." }
       }
     },

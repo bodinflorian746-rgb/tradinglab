@@ -184,7 +184,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "L'erreur fatale",
-            body: "Ouvrir un Short sans Stop Loss. Un actif qui baisse a une limite naturelle : le prix ne peut pas descendre sous 0. Mais un actif qui monte n'a théoriquement pas de limite. Si tu shories et que le prix explose à la hausse, ta perte peut dépasser ta mise initiale. Sans SL, un Short incontrôlé peut ruiner un compte entier en quelques heures.",
+            body: "Ouvrir un Short sans Stop Loss. Un actif qui baisse a une limite naturelle : le prix ne peut pas descendre sous 0. Mais un actif qui monte n'a théoriquement pas de limite. Si tu es short et que le prix explose à la hausse, ta perte peut dépasser ta mise initiale. Sans SL, un Short incontrôlé peut ruiner un compte entier en quelques heures.",
           },
         ],
         keyPoints: [
@@ -1187,7 +1187,7 @@ export const LESSONS: LevelData[] = [
           },
         ],
         keyPoints: [
-          "Support = zone de demande où le prix rebondit. Résistance = zone d'offre où le prix est repoussé.",
+          "Support : niveau où le prix rebondit. Résistance : niveau où le prix est repoussé.",
           "Trace des ZONES, pas des lignes, le marché n'est pas précis au point près",
           "Polarité : une résistance cassée devient support, et vice versa",
           "Plus un niveau a été testé, plus il est significatif, et plus sa cassure sera puissante",
@@ -1226,10 +1226,10 @@ export const LESSONS: LevelData[] = [
       {
         id: "lecon-3",
         slug: "lecon3",
-        title: "Supply & Demand",
+        title: "Support et résistance : l'origine du mouvement",
         duration: "20 min",
         introduction:
-          "Pourquoi le prix revient-il parfois exactement au même endroit après des heures ou des jours ? Parce que des institutions y ont laissé des ordres non-exécutés. Ces zones s'appellent Supply et Demand. Elles sont l'empreinte des gros acteurs sur le marché.",
+          "Pourquoi le prix revient-il parfois exactement au même endroit après des heures ou des jours ? Parce que des institutions y ont laissé des ordres non-exécutés. Ces zones deviennent des supports et des résistances. Elles sont l'empreinte des gros acteurs sur le marché.",
         sections: [
           {
             heading: "La logique institutionnelle",
@@ -1237,33 +1237,33 @@ export const LESSONS: LevelData[] = [
             items: [
               "Les institutions ont des ordres si massifs qu'ils ne peuvent pas tous être exécutés en une seule fois",
               "Elles laissent des ordres pendants à des niveaux précis, le prix réagit en y revenant",
-              "Supply et Demand ne sont pas identiques aux supports/résistances, ce sont des zones d'origine de mouvement fort",
+              "Ces supports et résistances ne viennent pas de réactions répétées : ce sont des zones d'origine de mouvement fort",
               "La zone est valide si elle a généré un mouvement impulsif bref et fort dans une direction",
             ],
           },
           {
-            heading: "Zone de Demand : où les institutions achètent",
-            body: "Une zone de Demand (demande) est l'origine d'un mouvement haussier fort. Le prix y est passé rapidement, laissant une zone non-revisitée. Quand le prix y revient, les ordres institutionnels résiduels achètent, et le prix repart à la hausse.",
+            heading: "Support : où les institutions achètent",
+            body: "Ce support est l'origine d'un mouvement haussier fort. Le prix y est passé rapidement, laissant une zone non-revisitée. Quand le prix y revient, les ordres institutionnels résiduels achètent, et le prix repart à la hausse.",
             items: [
               "Origine : le prix était à ce niveau, a explosé à la hausse rapidement (peu de bougies, corps larges)",
               "La zone est la base du mouvement, les corps des dernières bougies baissières avant l'impulsion",
-              "Exemple : BTC à 28 000 €, explose à 35 000 € en 3 bougies journalières → Demand zone à 27 500 – 28 500 €",
+              "Exemple : BTC à 28 000 €, explose à 35 000 € en 3 bougies journalières → support à 27 500 – 28 500 €",
               "Validité : plus le mouvement de départ est fort, plus la zone est institutionnelle",
             ],
           },
           {
-            heading: "Zone de Supply : où les institutions vendent",
-            body: "Une zone de Supply (offre) est l'origine d'un mouvement baissier fort. C'est là que les institutions ont vendu massivement et laissé des ordres pendants à la vente. Le prix en retournant dans cette zone déclenche ces ventes résiduelles.",
+            heading: "Résistance : où les institutions vendent",
+            body: "Cette résistance est l'origine d'un mouvement baissier fort. C'est là que les institutions ont vendu massivement et laissé des ordres pendants à la vente. Le prix en retournant dans cette zone déclenche ces ventes résiduelles.",
             items: [
               "Origine : le prix était à ce niveau, a chuté rapidement (mouvement impulsif baissier)",
               "La zone est le plafond du mouvement, les corps des dernières bougies haussières avant l'impulsion baissière",
-              "Exemple : EUR/USD à 1,0950, chute à 1,0800 en 2 jours → Supply zone à 1,0920 – 1,0960",
-              "Une Supply zone non-revisitée depuis longtemps reste valide jusqu'à ce que le prix y retourne",
+              "Exemple : EUR/USD à 1,0950, chute à 1,0800 en 2 jours → résistance à 1,0920 – 1,0960",
+              "Une résistance non revisitée depuis longtemps reste valide jusqu'à ce que le prix y retourne",
             ],
           },
           {
             heading: "Identifier une zone valide",
-            body: "Toutes les zones ne se valent pas. Une zone Supply & Demand de haute qualité a des caractéristiques précises. Plus ces critères sont remplis, plus la probabilité de réaction est élevée.",
+            body: "Toutes les zones ne se valent pas. Un support ou une résistance de haute qualité a des caractéristiques précises. Plus ces critères sont remplis, plus la probabilité de réaction est élevée.",
             table: {
               headers: ["Critère", "Zone faible", "Zone forte"],
               rows: [
@@ -1276,14 +1276,14 @@ export const LESSONS: LevelData[] = [
           },
         ],
         keyPoints: [
-          "Supply = zone d'origine d'un mouvement baissier fort, les institutions y vendent",
-          "Demand = zone d'origine d'un mouvement haussier fort, les institutions y achètent",
+          "Résistance : zone d'origine d'un mouvement baissier fort, les institutions y vendent",
+          "Support : zone d'origine d'un mouvement haussier fort, les institutions y achètent",
           "Une zone valide = mouvement impulsif bref + zone jamais revisitée",
           "La zone perd sa validité quand le prix y revient et la consomme sans réaction forte",
           "Préfère les zones dans le sens de la tendance HTF, elles ont les meilleures probabilités",
         ],
         exercise: {
-          title: "Identifier des zones Supply & Demand sur EUR/USD",
+          title: "Identifier ces supports et résistances sur EUR/USD",
           steps: [
             "Sur TradingView, ouvre EUR/USD en H1. Cherche les 3 derniers mouvements impulsifs (hausse ou baisse rapide).",
             "Pour chaque mouvement impulsif, identifie son origine (la base du mouvement). Trace une zone autour des corps des bougies juste avant l'impulsion.",
@@ -1292,20 +1292,20 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "EUR/USD se trouve à 1,0800. Il monte à 1,1050 en 4 bougies H4. Où se situe la zone de Demand ?",
+          question: "EUR/USD se trouve à 1,0800. Il monte à 1,1050 en 4 bougies H4. Où se situe le support ?",
           answers: [
             "À 1,1050, au sommet du mouvement haussier",
             "À 1,0800, à l'origine du mouvement impulsif haussier",
             "À mi-chemin, vers 1,0925",
-            "Il n'y a pas de zone de Demand ici, le prix monte trop vite",
+            "Il n'y a pas de support ici, le prix monte trop vite",
           ],
           correct: 1,
           explanation:
-            "La zone de Demand se situe à l'ORIGINE du mouvement impulsif, là où les institutions ont commencé à acheter. Ici, le mouvement part de 1,0800 → la Demand zone est autour de 1,0800 (les corps des bougies juste avant l'impulsion). C'est là que les ordres résiduels attendent le retour du prix.",
+            "Le support se situe à l'ORIGINE du mouvement impulsif, là où les institutions ont commencé à acheter. Ici, le mouvement part de 1,0800 → le support est autour de 1,0800 (les corps des bougies juste avant l'impulsion). C'est là que les ordres résiduels attendent le retour du prix.",
           answerExplanations: [
-            "Faux. 1,1050 est le sommet du mouvement, c'est la destination, pas l'origine. C'est plutôt une zone de Supply potentielle, pas de Demand.",
-            "Correct. La Demand zone se place à l'ORIGINE du mouvement haussier impulsif, ici autour de 1,0800. Quand le prix reviendra dans cette zone, les ordres institutionnels résiduels devraient acheter à nouveau.",
-            "Faux. Le milieu du mouvement n'a pas de signification institutionnelle particulière. La zone Supply/Demand est toujours à l'origine ou à la destination du mouvement, pas entre les deux.",
+            "Faux. 1,1050 est le sommet du mouvement, c'est la destination, pas l'origine. C'est plutôt une résistance potentielle, pas un support.",
+            "Correct. Le support se place à l'ORIGINE du mouvement haussier impulsif, ici autour de 1,0800. Quand le prix reviendra dans cette zone, les ordres institutionnels résiduels devraient acheter à nouveau.",
+            "Faux. Le milieu du mouvement n'a pas de signification institutionnelle particulière. Le support ou la résistance se trouve à l'origine ou à la destination du mouvement, pas entre les deux.",
             "Faux. C'est exactement le contraire : un mouvement impulsif rapide (4 bougies H4) est le signe le plus fort d'une présence institutionnelle. Plus c'est rapide et fort, plus la zone d'origine est valide.",
           ],
         },
@@ -1356,8 +1356,8 @@ export const LESSONS: LevelData[] = [
             heading: "Le pullback : l'entrée en tendance",
             body: "En tendance, le prix ne monte pas en ligne droite. Il avance, recule partiellement (pullback), puis reprend sa direction. Les pullbacks sur des niveaux clés sont les meilleures entrées en tendance.",
             items: [
-              "Pullback haussier : le prix monte, recule temporairement sur un support ou une zone de Demand, puis reprend",
-              "Pullback baissier : le prix descend, remonte temporairement sur une résistance ou zone de Supply, puis reprend",
+              "Pullback haussier : le prix monte, recule temporairement sur un support, puis reprend",
+              "Pullback baissier : le prix descend, remonte temporairement sur une résistance, puis reprend",
               "Exemple : BTC en tendance haussière. Il monte de 30 000 → 35 000 €, puis recule à 32 000 € (pullback sur support). Entrée Long à 32 000 €.",
               "Le pullback idéal recule de 38% à 62% du mouvement précédent (niveaux Fibonacci, voir leçon 9)",
             ],
@@ -1366,7 +1366,7 @@ export const LESSONS: LevelData[] = [
         keyPoints: [
           "Tendance haussière = HH/HL. Tendance baissière = LL/LH. En range = pas de structure claire.",
           "Trader dans le sens de la tendance = probabilités en ta faveur. Contre la tendance = probabilités contre toi.",
-          "Le pullback sur un niveau clé (support, zone de Demand) est l'entrée optimale en tendance.",
+          "Le pullback sur un niveau clé (support) est l'entrée optimale en tendance.",
           "Pas de tendance claire = rester hors du marché. Attendre n'est pas perdre.",
           "Identifie d'abord la tendance sur le HTF, puis cherche des entrées sur le LTF.",
         ],
@@ -1374,7 +1374,7 @@ export const LESSONS: LevelData[] = [
           title: "Identifier la tendance et le prochain pullback",
           steps: [
             "Sur TradingView, ouvre EUR/USD en H4. Quelle est la tendance actuelle ? (haussière, baissière, ou range ?)",
-            "Si tendance claire : identifie le dernier pullback. Quel niveau a-t-il respecté ? (support, zone de Demand…)",
+            "Si tendance claire : identifie le dernier pullback. Quel niveau a-t-il respecté ? (support, résistance…)",
             "Anticipe le prochain pullback : à quel niveau t'attendrais-tu à voir le prix reculer avant de reprendre sa direction ?",
             "Si le marché est en range : identifie les bornes haute et basse. Quel serait le signal de sortie du range ?",
           ],
@@ -1384,12 +1384,12 @@ export const LESSONS: LevelData[] = [
           answers: [
             "Entrer Short, le prix baisse, c'est une opportunité de vente",
             "Ignorer, les pullbacks sont des pièges, attendre une nouvelle cassure haute",
-            "Chercher une entrée Long sur le pullback si 1,0870 est un niveau de support ou Demand valide",
+            "Chercher une entrée Long sur le pullback si 1,0870 est un support valide",
             "Passer en mode neutre, la tendance haussière est annulée par ce recul",
           ],
           correct: 2,
           explanation:
-            "Un pullback en tendance haussière est une opportunité d'achat, pas un signal de vente. Le prix recule pour trouver un niveau de support ou une zone de Demand, puis reprendre sa direction haussière. Si 1,0870 est un niveau validé, c'est l'entrée Long idéale, dans le sens de la tendance, au meilleur prix.",
+            "Un pullback en tendance haussière est une opportunité d'achat, pas un signal de vente. Le prix recule pour trouver un support, puis reprendre sa direction haussière. Si 1,0870 est un niveau validé, c'est l'entrée Long idéale, dans le sens de la tendance, au meilleur prix.",
           answerExplanations: [
             "Faux. Entrer Short dans une tendance haussière sur un simple pullback, c'est aller contre la force dominante. Les probabilités sont contre toi, et ton SL devrait être placé très loin pour éviter les faux signaux.",
             "Faux. Les pullbacks ne sont pas des pièges, ils sont les meilleures opportunités d'entrée en tendance. Attendre une cassure haute signifie entrer en retard, avec un R/R moins favorable.",
@@ -1423,19 +1423,19 @@ export const LESSONS: LevelData[] = [
             body: "Toutes les confluences ne se valent pas. Certaines combinaisons sont statistiquement plus fiables que d'autres. Voici les confluences à rechercher par ordre de puissance.",
             items: [
               "Tendance HTF + niveau clé + signal de bougie = setup de haute qualité",
-              "Zone de Supply/Demand + structure BOS + Fibonacci 61.8% = entrée institutionnelle",
+              "Support ou résistance + structure BOS + Fibonacci 61.8% = entrée institutionnelle",
               "Support/résistance + volume élevé au rebond + engulfing = confirmation forte",
               "Confluence temporelle : niveau testé lors d'une Killzone (session London/NY) = signal renforcé",
             ],
           },
           {
             heading: "Exemple concret : empiler les confirmations",
-            body: "EUR/USD : tendance haussière en H4 (contexte). Le prix pullback vers 1,0820 (support + zone de Demand en H1). Une pin bar haussière se forme en M15. C'est 3 confluences alignées : tendance, niveau institutionnel, signal de rejet. Entrée Long à la clôture de la pin bar.",
+            body: "EUR/USD : tendance haussière en H4 (contexte). Le prix revient vers 1,0820 (support H4 et support H1). Une pin bar haussière se forme en M15. C'est 3 confluences alignées : tendance, niveau institutionnel, signal de rejet. Entrée Long à la clôture de la pin bar.",
             table: {
               headers: ["Confluence", "Présente ?", "Poids"],
               rows: [
                 ["Tendance haussière HTF (H4)", "✓ Oui", "Élevé, contexte global favorable"],
-                ["Zone de Demand H1 à 1,0820", "✓ Oui", "Élevé, niveau institutionnel non-revisité"],
+                ["Support H1 à 1,0820", "✓ Oui", "Élevé, niveau institutionnel non-revisité"],
                 ["Signal de rejet (pin bar M15)", "✓ Oui", "Moyen, confirmation d'entrée"],
                 ["Fibonacci 61.8% à 1,0815", "✓ Oui", "Bonus, confluence supplémentaire"],
                 ["Session Killzone London", "✗ Non", "Absent, timing pas idéal"],
@@ -1464,7 +1464,7 @@ export const LESSONS: LevelData[] = [
           title: "Analyser et scorer un setup avec confluences",
           steps: [
             "Sur TradingView, ouvre EUR/USD. Identifie la tendance sur H4, puis descends en H1.",
-            "Le prix est-il proche d'un niveau clé (support, résistance, zone Supply/Demand) ?",
+            "Le prix est-il proche d'un niveau clé (support, résistance) ?",
             "Cherche un signal de bougie sur ce niveau : pin bar, engulfing, doji suivi d'une bougie directionnelle.",
             "Score ton setup de 0 à 5 : tendance HTF (1pt) + niveau clé (1pt) + signal bougie (1pt) + Fibonacci (1pt) + Killzone (1pt). Entre seulement si tu as 3/5 minimum.",
           ],
@@ -1538,7 +1538,7 @@ export const LESSONS: LevelData[] = [
               "Faux breakout haussier (Stop Hunt sur résistance) : attend le retour sous la résistance → entre Short",
               "Faux breakout baissier (Stop Hunt sur support) : attend le retour au-dessus du support → entre Long",
               "SL : juste au-delà du pic du faux breakout (très proche)",
-              "TP : vers le niveau de liquidité opposé (Equal Highs ou Equal Lows, zone de Supply/Demand)",
+              "TP : vers le niveau de liquidité opposé (Equal Highs ou Equal Lows, support ou résistance)",
             ],
           },
         ],
@@ -1598,23 +1598,23 @@ export const LESSONS: LevelData[] = [
             ],
           },
           {
-            heading: "Top-Down Analysis : lire de haut en bas",
+            heading: "Top-Down Analysis: lire de haut en bas",
             body: "L'analyse top-down consiste à commencer par le timeframe le plus haut pour établir le contexte global, puis descendre progressivement vers les petits timeframes pour trouver l'entrée. C'est la méthode des traders professionnels.",
             items: [
               "Étape 1. Daily : quelle est la tendance principale ? Quels sont les grands niveaux ?",
-              "Étape 2. H4 : la tendance Daily se confirme-t-elle ? Suis-je dans une zone de Supply/Demand ?",
+              "Étape 2. H4 : la tendance Daily se confirme-t-elle ? Suis-je sur un support ou une résistance ?",
               "Étape 3. H1 : y a-t-il une structure claire dans le sens du HTF ? Où est le prochain niveau clé ?",
               "Étape 4. M15 : quel est le signal d'entrée précis ? Pin bar, engulfing, BOS micro-structure ?",
             ],
           },
           {
             heading: "Exemple concret : EUR/USD top-down",
-            body: "Daily : tendance haussière (HH/HL). Grand support à 1,0820. H4 : pullback vers 1,0820, zone de Demand H4 actif. H1 : CHoCH haussier, la structure mini baissière du pullback est cassée. M15 : pin bar haussière au contact du support. Résultat : 4 timeframes alignés → entrée Long à la clôture de la pin bar M15, SL sous le Low de la mèche.",
+            body: "Daily : tendance haussière (HH/HL). Grand support à 1,0820. H4 : pullback vers 1,0820, support H4 actif. H1 : CHoCH haussier, la structure mini baissière du pullback est cassée. M15 : pin bar haussière au contact du support. Résultat : 4 timeframes alignés → entrée Long à la clôture de la pin bar M15, SL sous le Low de la mèche.",
             table: {
               headers: ["Timeframe", "Biais", "Signal"],
               rows: [
                 ["Daily", "Haussier (HH/HL intact)", "Support majeur à 1,0820 non cassé"],
-                ["H4", "Haussier (pullback en cours)", "Zone de Demand H4 touchée"],
+                ["H4", "Haussier (pullback en cours)", "Support H4 touché"],
                 ["H1", "Haussier (CHoCH vers la hausse)", "Structure mini-baissière cassée à la hausse"],
                 ["M15", "Signal d'entrée", "Pin bar haussière → ENTRÉE LONG"],
               ],
@@ -1626,7 +1626,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Trader uniquement en M5 : signal correct mais dans le sens contraire du H4 → probabilité faible",
               "Trader uniquement en Daily : biais correct mais SL trop large, R/R médiocre",
-              "Ignorer le contexte HTF : une belle structure M15 dans une Supply zone Daily = setup piège",
+              "Ignorer le contexte HTF : une belle structure M15 sous une résistance Daily = setup piège",
               "Solution : 3 timeframes minimum. HTF pour le contexte, intermédiaire pour la structure, LTF pour l'entrée",
             ],
           },
@@ -1642,7 +1642,7 @@ export const LESSONS: LevelData[] = [
           title: "Analyse top-down complète sur EUR/USD",
           steps: [
             "Ouvre EUR/USD sur TradingView. Commence par le Daily : quelle est la tendance ? Note le biais (haussier/baissier/neutre).",
-            "Descends en H4 : le biais Daily se confirme-t-il ? Identifies-tu un pullback ou une zone de Supply/Demand ?",
+            "Descends en H4 : le biais Daily se confirme-t-il ? Identifies-tu un pullback, un support ou une résistance ?",
             "Descends en H1 : y a-t-il une structure dans le sens du Daily ? Où est le prochain niveau H1 clé ?",
             "Descends en M15 : y a-t-il un signal de bougie (pin bar, engulfing) aligné avec le biais du Daily ? Note ton setup complet.",
           ],
@@ -1771,7 +1771,7 @@ export const LESSONS: LevelData[] = [
             body: "Fibonacci est un outil de mesure des retracements. Après un mouvement impulsif, le marché recule souvent d'une fraction prévisible avant de reprendre sa direction. Ces fractions correspondent aux ratios de Fibonacci.",
             items: [
               "23.6% : retracement faible, tendance très forte, le prix revient vite",
-              "38.2% : retracement modéré, courant en tendance forte",
+              "38.2%: retracement modéré, courant en tendance forte",
               "50% : retracement moyen, le niveau psychologique le plus observé par les traders",
               "61.8% : le 'Golden Ratio', le retracement le plus puissant et le plus fiable",
               "78.6% : retracement profond, souvent le dernier niveau avant invalidation de la structure",
@@ -1794,7 +1794,7 @@ export const LESSONS: LevelData[] = [
               headers: ["Niveau", "Fiabilité", "Contexte idéal"],
               rows: [
                 ["50%", "Élevée", "Tendance forte, pullback dans le calme, pas de nouvelles majeures"],
-                ["61.8% (Golden Ratio)", "Très élevée", "Confluence avec support/résistance ou zone de Demand/Supply"],
+                ["61.8% (Golden Ratio)", "Très élevée", "Confluence avec un support ou une résistance"],
                 ["78.6%", "Modérée (risqué)", "Tendance encore intacte mais affaiblie, surveiller CHoCH"],
                 ["38.2%", "Modérée", "Tendance très forte, seul, insuffisant pour une entrée"],
               ],
@@ -1802,10 +1802,10 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Confluence Fibonacci + structure : l'entrée de précision",
-            body: "Fibonacci seul n'est pas suffisant. Sa puissance vient de la confluence avec d'autres éléments. Quand le 61.8% coïncide avec une zone de Demand, un support ou un BOS, c'est le setup optimal.",
+            body: "Fibonacci seul n'est pas suffisant. Sa puissance vient de la confluence avec d'autres éléments. Quand le 61.8% coïncide avec un support ou un BOS, c'est le setup optimal.",
             items: [
               "Exemple : EUR/USD monte de 1,0700 à 1,0950 (HH). Le 61.8% se situe à 1,0795.",
-              "Si 1,0795 correspond aussi à un support H4 ou une zone de Demand → confluence forte",
+              "Si 1,0795 correspond aussi à un support H4 → confluence forte",
               "Attends le prix à 1,0795 : signal de bougie (pin bar, engulfing) → entrée Long",
               "SL sous le 78.6% ou sous le Low du mouvement (selon la structure). TP au dernier High ou au niveau suivant.",
             ],
@@ -1815,7 +1815,7 @@ export const LESSONS: LevelData[] = [
           "50% et 61.8% sont les niveaux Fibonacci les plus fiables en trading pratique",
           "Trace toujours du Low vers le High (haussier) ou du High vers le Low (baissier) sur un swing significatif",
           "Fibonacci seul = outil de mesure. Fibonacci + niveau clé = confluence puissante",
-          "Le 61.8% (Golden Ratio) coïncidant avec une zone de Demand est l'un des setups les plus solides",
+          "Le 61.8% (Golden Ratio) coïncidant avec un support est l'un des setups les plus solides",
           "N'entre jamais sur un niveau Fibonacci sans confirmation de bougie",
         ],
         exercise: {
@@ -1824,7 +1824,7 @@ export const LESSONS: LevelData[] = [
             "Sur TradingView, ouvre BTC/USD en H4. Identifie le dernier mouvement impulsif haussier (Low → High évidents).",
             "Utilise l'outil 'Fibonacci Retracement' : clique sur le Low, tire jusqu'au High. Les niveaux s'affichent.",
             "Le prix est-il en pullback actuellement ? Quel niveau Fibonacci a-t-il atteint (50%, 61.8%, 78.6%) ?",
-            "Y a-t-il un niveau de support ou une zone de Demand qui coïncide avec le 50% ou 61.8% ? Si oui, c'est une confluence à surveiller pour une entrée.",
+            "Y a-t-il un support qui coïncide avec le 50% ou 61.8% ? Si oui, c'est une confluence à surveiller pour une entrée.",
           ],
         },
         quiz: {

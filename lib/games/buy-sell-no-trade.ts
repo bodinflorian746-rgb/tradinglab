@@ -201,7 +201,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Tendance haussière établie, le prix corrige vers une zone de demand visible.",
+    context: "Tendance haussière établie, le prix corrige vers un support visible.",
     rationales: {
       BUY: "✓ Ici, le pullback dans la tendance offre une opportunité d'achat à meilleur prix. Tu rejoins la tendance au lieu de la poursuivre, avec souvent un meilleur R/R.",
       SELL: "✗ Vendre dans une tendance haussière revient souvent à ramer contre le courant. Ici, le pullback ressemble plus à une opportunité d'achat qu'à un signal de vente.",
@@ -209,7 +209,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     },
     lessons: {
       beginner:     "Dans une tendance haussière, les replis sont souvent les meilleurs moments pour acheter, plutôt que l'inverse. C'est l'un des trades les plus courants chez les traders de tendance.",
-      intermediate: "Un pullback dans le sens du HTF, sur une zone de demand visible, compte souvent parmi les setups les plus solides.",
+      intermediate: "Un pullback dans le sens du HTF, sur un support visible, compte souvent parmi les setups les plus solides.",
       advanced:     "Un pullback profond n'invalide pas forcément le scénario. Tant que le HTF tient et que la structure n'est pas cassée, le pullback peut rester une opportunité.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -222,16 +222,16 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Tendance baissière établie, le prix rebondit vers une zone de supply.",
+    context: "Tendance baissière établie, le prix rebondit vers une résistance.",
     rationales: {
       BUY: "✗ Acheter le rebond dans une tendance baissière revient ici à chercher le point bas. Ce type de trade est souvent perdant.",
-      SELL: "✓ Ici, le rebond ramène le prix sur une zone de supply visible. Vendre dans le sens du HTF baissier, à un meilleur prix, est une option logique.",
+      SELL: "✓ Ici, le rebond ramène le prix sur une résistance visible. Vendre dans le sens du HTF baissier, à un meilleur prix, est une option logique.",
       NO_TRADE: "≈ Pas faux, mais ici le HTF et la zone sont alignés. La discipline consiste à filtrer les trades, pas à tous les éviter.",
     },
     lessons: {
       beginner:     "En tendance baissière, on cherche plutôt les rebonds pour vendre. Acheter en espérant une remontée va souvent contre le marché.",
-      intermediate: "Ici, un pullback sur zone de supply dans une tendance baissière peut constituer un setup à bonne probabilité, à considérer selon ton plan de trading.",
-      advanced:     "Si la zone de supply est retestée proprement et que le HTF reste intact, le SELL se défend. Si la structure casse pendant le pullback, NO TRADE devient l'option logique.",
+      intermediate: "Ici, un pullback sur une résistance dans une tendance baissière peut constituer un setup à bonne probabilité, à considérer selon ton plan de trading.",
+      advanced:     "Si la résistance est retestée proprement et que le HTF reste intact, le SELL se défend. Si la structure casse pendant le pullback, NO TRADE devient l'option logique.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["lecture", "pullback", "trend"],
@@ -285,7 +285,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "piege",
-    context: "Le prix vient de balayer la liquidité sous le dernier creux avec une grosse mèche, puis a refermé au-dessus.",
+    context: "Le prix vient de balayer la liquidité sous le plus bas précédent avec une grosse mèche, puis a refermé au-dessus.",
     rationales: {
       BUY: "✓ Ici, le sweep a pris la liquidité des vendeurs piégés. Le marché dispose peut-être du carburant pour monter. Un BUY sur le retournement se défend.",
       SELL: "✗ Vendre APRÈS le sweep revient ici à vendre là où les gros acheteurs entrent souvent. Tu risques de rejoindre les vendeurs piégés.",
@@ -308,12 +308,12 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     metric: "lecture",
     context: "Un FVG haussier laissé après l'impulsion. Le prix revient le tester pour la première fois.",
     rationales: {
-      BUY: "✓ Ici, un FVG haussier, un HTF aligné et un premier retest peuvent former une zone de demand solide. C'est un setup ICT classique.",
+      BUY: "✓ Ici, un FVG haussier, un HTF aligné et un premier retest peuvent former un support solide. C'est un setup ICT classique.",
       SELL: "✗ Vendre sur un FVG haussier encore valide revient ici à se placer contre une zone que les acheteurs défendent souvent.",
       NO_TRADE: "≈ Si tu doutes de la mitigation, attendre la réaction se défend. Mais ici, un HTF aligné et une zone encore intacte donnent un avantage.",
     },
     lessons: {
-      beginner:     "Le FVG agit souvent comme un aimant pour le prix, puis comme une zone de demand au retest. Si le HTF est aligné, un BUY est une option logique.",
+      beginner:     "Le FVG agit souvent comme un aimant pour le prix, puis comme un support au retest. Si le HTF est aligné, un BUY est une option logique.",
       intermediate: "Une zone entièrement remplie n'est pas forcément invalidée. Ici, c'est la réaction au retest qui compte. Avec une réaction visible et un HTF aligné, un BUY se défend.",
       advanced:     "Fais la différence : une mitigation partielle (zone intacte) peut soutenir un BUY à bonne probabilité. Une mitigation profonde (plus de 75 %) sans réaction oriente plutôt vers NO TRADE ou un retournement.",
     },
@@ -773,8 +773,8 @@ function genPullbackBull(rng: () => number, m: number, d: Difficulty): BuySellCh
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "support",        y1: demandLow,         y2: demandHigh,         label: "Zone de demand" },
-      { kind: "liquidity_high", y1: peak - 0.15,       y2: peak + 0.15,        label: "Dernier sommet"   },
+      { kind: "support",        y1: demandLow,         y2: demandHigh,         label: "Support" },
+      { kind: "liquidity_high", y1: peak - 0.15,       y2: peak + 0.15,        label: "Plus haut précédent"   },
     ],
   });
 }
@@ -814,8 +814,8 @@ function genPullbackBear(rng: () => number, m: number, d: Difficulty): BuySellCh
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "resistance",    y1: offerLow,          y2: offerHigh,         label: "Zone de supply" },
-      { kind: "liquidity_low", y1: bottom - 0.15,     y2: bottom + 0.15,     label: "Dernier creux" },
+      { kind: "resistance",    y1: offerLow,          y2: offerHigh,         label: "Résistance" },
+      { kind: "liquidity_low", y1: bottom - 0.15,     y2: bottom + 0.15,     label: "Plus bas précédent" },
     ],
   });
 }
@@ -904,7 +904,7 @@ function genLiquiditySweep(rng: () => number, m: number, d: Difficulty): BuySell
     const o = p;
     const c = clamp(o - (0.3 + rng() * 0.5) * m, L + 0.4, 4.5);
     const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.25) * m);
-    k.l = Math.max(k.l, L - 0.12); // le dernier creux n'est pas balayé avant le sweep
+    k.l = Math.max(k.l, L - 0.12); // le plus bas précédent n'est pas balayé avant le sweep
     past.push(k);
     p = c;
   }
@@ -912,7 +912,7 @@ function genLiquiditySweep(rng: () => number, m: number, d: Difficulty): BuySell
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 0.8 * m, L + 0.5, L + 1.6);
     const k = candle(o, c, (0.25 + rng() * 0.22) * m, (0.25 + rng() * 0.22) * m);
-    k.l = Math.max(k.l, L - 0.12); // le dernier creux n'est pas balayé avant le sweep
+    k.l = Math.max(k.l, L - 0.12); // le plus bas précédent n'est pas balayé avant le sweep
     past.push(k);
     p = c;
   }
@@ -940,7 +940,7 @@ function genLiquiditySweep(rng: () => number, m: number, d: Difficulty): BuySell
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "support",       y1: L - 0.15,             y2: L + 0.15,             label: "Dernier creux"     },
+      { kind: "support",       y1: L - 0.15,             y2: L + 0.15,             label: "Plus bas précédent"     },
       { kind: "liquidity_low", y1: L - 1.5 * m,          y2: L - 0.25,             label: "Liquidité balayée" },
     ],
   });
@@ -1321,7 +1321,7 @@ function genToxicExecution(rng: () => number, m: number, d: Difficulty): BuySell
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "support", y1: pullbackLow - 0.35 * m, y2: pullbackLow + 0.2 * m, label: "Zone de demand" },
+      { kind: "support", y1: pullbackLow - 0.35 * m, y2: pullbackLow + 0.2 * m, label: "Support" },
     ],
   });
 }

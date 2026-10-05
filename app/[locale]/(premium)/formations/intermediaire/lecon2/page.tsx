@@ -17,7 +17,7 @@ function ContentFr() {
       duration="22 min"
       lessonNumber={2}
       prev={{ href: "/formations/intermediaire/lecon1", label: "Leçon 1 : Structure" }}
-      next={{ href: "/formations/intermediaire/lecon3", label: "Leçon 3 : Supply & Demand" }}
+      next={{ href: "/formations/intermediaire/lecon3", label: "Leçon 3 : Support et résistance : l'origine du mouvement" }}
     >
 
       {/* ── Ce que tu dois VOIR ── */}

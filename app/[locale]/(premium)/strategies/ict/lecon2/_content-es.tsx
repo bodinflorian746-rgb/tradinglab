@@ -268,7 +268,7 @@ export default function ContentEs() {
                   <span className="text-amber-400 font-semibold">Caso B. Mitigation profunda:</span> el precio baja a 1.0842 (casi todo el FVG), larga mecha de compra, close en 1.0855 y luego reanudación. El FVG está mitigado pero el rechazo es nítido, el setup sigue activo. Stop en 1.0838.
                 </li>
                 <li>
-                  <span className="text-red-400 font-semibold">Caso C. Invalidación:</span> el precio atraviesa el FVG sin reacción, close en 1.0825, rompe el swing low anterior. Sin mecha de compra, momentum continuo bajista. El FVG está muerto, sin trade, se espera una nueva estructura.
+                  <span className="text-red-400 font-semibold">Caso C. Invalidación:</span> el precio atraviesa el FVG sin reacción, close en 1.0825, rompe el último swing low. Sin mecha de compra, momentum continuo bajista. El FVG está muerto, sin trade, se espera una nueva estructura.
                 </li>
               </ul>
             </div>

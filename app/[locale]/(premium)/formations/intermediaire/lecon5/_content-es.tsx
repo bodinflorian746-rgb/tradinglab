@@ -13,8 +13,8 @@ export default function ContentEs() {
       subtitle="Una sola señal es una apuesta. Tres señales alineadas en el mismo nivel es un trade construido. La diferencia es tu probabilidad de éxito."
       duration="20 min"
       lessonNumber={5}
-      prev={{ href: "/formations/intermediaire/lecon4", label: "Lección 4 : Tendencias" }}
-      next={{ href: "/formations/intermediaire/lecon6", label: "Lección 6 : Fake Breakout" }}
+      prev={{ href: "/formations/intermediaire/lecon4", label: "Lección 4: Tendencias" }}
+      next={{ href: "/formations/intermediaire/lecon6", label: "Lección 6: Fake Breakout" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -41,11 +41,11 @@ export default function ContentEs() {
         </p>
         <div className="space-y-2.5">
           {[
-            { label: "Tendencia (estructura de mercado)", detail: "La dirección dominante : alcista o bajista. Es la base. Verifica en Daily primero.", color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400" },
-            { label: "Zona S/R o SD", detail: "Un nivel donde el precio ya reaccionó. Un viejo soporte, una resistencia, o una zona de Demand/Supply.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
-            { label: "Nivel Fibonacci", detail: "38.2%, 50% o 61.8% del último movimiento impulsivo. Suele coincidir con un S/R : ahí está la potencia.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
+            { label: "Tendencia (estructura de mercado)", detail: "La dirección dominante: alcista o bajista. Es la base. Verifica en Daily primero.", color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400" },
+            { label: "Soporte o resistencia", detail: "Un nivel donde el precio ya reaccionó: un antiguo soporte, una resistencia, o la zona de salida de un movimiento impulsivo.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
+            { label: "Nivel Fibonacci", detail: "38.2%, 50% o 61.8% del último movimiento impulsivo. Suele coincidir con un S/R: ahí está la potencia.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
             { label: "Nivel psicológico", detail: "1.1000, 45 000$, 2 000$... Los traders colocan naturalmente stops y órdenes en los números redondos.", color: "bg-amber-400/5 border-amber-400/15 text-amber-400" },
-            { label: "Señal de vela (disparador)", detail: "Pin bar, engulfing, rechazo. Es el gatillo : no la razón de entrar. La razón son las confluencias de arriba.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
+            { label: "Señal de vela (disparador)", detail: "Pin bar, engulfing, rechazo. Es el gatillo: no la razón de entrar. La razón son las confluencias de arriba.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
           ].map((item, i) => (
             <div key={i} className={`rounded-xl px-4 py-3 border ${item.color}`}>
               <p className="text-sm font-semibold mb-1">{item.label}</p>
@@ -56,7 +56,7 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Escenario completo : 4 confluencias alineadas</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Escenario completo: 4 confluencias alineadas</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Acá tienes cómo construir un trade de alta probabilidad, paso a paso.
         </p>
@@ -87,7 +87,7 @@ export default function ContentEs() {
         <div className="space-y-2">
           {[
             { n: "1", t: "¿Cuál es la tendencia?", d: "Daily alcista → compras. Bajista → ventas. Sin tendencia → sin trade." },
-            { n: "2", t: "¿Hay un nivel de estructura en mi zona?", d: "¿S/R, Higher Low, zona SD? Si sí, primera confluencia validada." },
+            { n: "2", t: "¿Hay un nivel de estructura en mi zona?", d: "¿Soporte, resistencia, Higher Low? Si sí, primera confluencia validada." },
             { n: "3", t: "¿Hay una segunda confluencia independiente?", d: "¿Fibonacci? ¿Nivel psicológico? Si sí, el trade está calificado. Si no, esperamos." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -155,7 +155,7 @@ export default function ContentEs() {
       <LessonKeyPoints
         points={[
           "Confluencia = una razón independiente que sostiene tu trade. Mínimo 2-3 antes de entrar.",
-          "Las 5 principales: tendencia, S/R, zona SD, Fibonacci, nivel psicológico.",
+          "Las 5 principales: tendencia, soporte o resistencia, Fibonacci, nivel psicológico, señal de vela.",
           "La señal de vela es el disparador, no la razón principal de entrar.",
           "Los indicadores (RSI, MACD) no son confluencias independientes entre ellos.",
           "Calidad prima sobre cantidad: 3 confluencias sólidas valen más que 6 mediocres.",
@@ -167,7 +167,7 @@ export default function ContentEs() {
         steps={[
           "Analiza EUR/USD en Daily — ¿cuál es la tendencia? Anota tu sesgo (compra o venta únicamente).",
           "Baja a H4, identifica el próximo nivel de estructura clave (HL en alcista, LH en bajista).",
-          "Verifica: ¿hay un S/R histórico o una zona SD que coincida con ese nivel? Anota la confluencia.",
+          "Verifica: ¿hay un soporte o una resistencia histórica que coincida con ese nivel? Anota la confluencia.",
           "Marca Fibonacci en el último movimiento impulsivo — ¿un nivel Fib coincide con tu zona? Si sí, 3 confluencias alineadas. Anota la entrada, el SL y el TP con el R/R.",
         ]}
       />

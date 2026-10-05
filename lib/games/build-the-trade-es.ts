@@ -66,8 +66,8 @@ const ZONE_LABEL_ES: Record<string, string> = {
   "Haut du range":      "Techo del rango",
   "Bas du range":     "Piso del rango",
   "Mèche du fakeout":       "Mecha del fakeout",
-  "Dernier creux":      "Último mínimo",
-  "Dernier sommet":     "Último máximo",
+  "Plus bas précédent":      "Mínimo anterior",
+  "Plus haut précédent":     "Máximo anterior",
   "Liquidité balayée":  "Liquidity barrida",
   "FVG haussier":       "FVG alcista",
   "Niveau secondaire":  "Nivel secundario",
@@ -242,7 +242,7 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
   },
   {
     id: "fake_breakout_short",
-    title: "Fakeout : SELL después de la trampa",
+    title: "Fakeout: SELL después de la trampa",
     chartShape: "fakeout_above",
     direction: "SELL",
     htfBias: "bearish",
@@ -264,7 +264,7 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "El precio acaba de barrer la liquidity bajo el último mínimo y cerró por encima.",
+    context: "El precio acaba de barrer la liquidity bajo el mínimo anterior y cerró por encima.",
     optimal: { entry: "aggressive", stop: "logical", tp: "balanced" },
     optimalExplain: "Aquí, el sweep puede señalar una reversión. En este caso concreto, una entrada agresiva tiene sentido, porque el sweep ya sirve como primera confirmación. Un stop bajo el low del sweep es una opción lógica.",
     lessons: {
@@ -283,9 +283,9 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "El precio vuelve a testear un FVG alcista. La reacción está en curso.",
     optimal: { entry: "confirmation", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Aquí, el FVG puede servir de zona de demand, y la confirmación valida la reacción. Un stop bajo el bajo del FVG y un TP ambicioso tienen sentido, porque el HTF está alineado y la zona sigue intacta.",
+    optimalExplain: "Aquí, el FVG puede servir de soporte, y la confirmación valida la reacción. Un stop bajo el bajo del FVG y un TP ambicioso tienen sentido, porque el HTF está alineado y la zona sigue intacta.",
     lessons: {
-      intermediate: "El FVG suele actuar como zona de demand en el retest. Aquí, la confirmación preserva la ventaja sin perder el movimiento.",
+      intermediate: "El FVG suele actuar como soporte en el retest. Aquí, la confirmación preserva la ventaja sin perder el movimiento.",
       advanced:     "FVG alcista, HTF alineado y primer retest: un setup de primera calidad. Un R/R de 1:3 o más es aquí lógico.",
       beginner:     "El FVG suele atraer al precio. Aquí, la confirmación toma la forma de una vela verde que defiende la zona.",
     },
@@ -293,7 +293,7 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
   },
   {
     id: "weak_breakout_setup",
-    title: "Ruptura débil : edge reducido",
+    title: "Ruptura débil: edge reducido",
     chartShape: "weak_breakout",
     direction: "BUY",
     htfBias: "range",
@@ -310,12 +310,12 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
   },
   {
     id: "deep_pullback_risky",
-    title: "Pullback muy profundo : riesgo de breakdown",
+    title: "Pullback muy profundo: riesgo de breakdown",
     chartShape: "deep_pullback_risky",
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "El pullback se volvió muy profundo. Más del 60% del impulso previo está retrazado.",
+    context: "El pullback se volvió muy profundo. El precio ya retrocedió más del 60 % del impulso previo.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
     optimalExplain: "Aquí, el pullback profundo puede anunciar una ruptura de estructura. La confirmación preserva la ventaja: una entrada agresiva supondría perseguir el precio, y un pullback profundo apostar por un nivel secundario.",
     lessons: {
@@ -344,7 +344,7 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
   },
   {
     id: "counter_trend_local",
-    title: "Setup local contra HTF : defensivo",
+    title: "Setup local contra HTF: defensivo",
     chartShape: "counter_trend_local",
     direction: "BUY",
     htfBias: "bearish",

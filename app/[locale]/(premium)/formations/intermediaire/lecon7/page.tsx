@@ -82,7 +82,7 @@ function ContentFr() {
               {[
                 ["Weekly", "Contexte de fond", "Tendance long terme, zones majeures"],
                 ["Daily", "Biais directionnel", "Tendance courante, zones clés importantes"],
-                ["H4", "Zones d'intérêt", "Structures intermédiaires, SD zones"],
+                ["H4", "Zones d'intérêt", "Structures intermédiaires, supports et résistances"],
                 ["H1", "Confirmation de setup", "Pattern de continuation, signal d'entrée"],
                 ["M15 / M5", "Timing précis", "Entrée sur signal de bougie, timing final"],
               ].map((row, i) => (
@@ -108,7 +108,7 @@ function ContentFr() {
         <div className="space-y-2">
           {[
             { tf: "Daily", action: "Identifie la tendance : haussière, baissière ou range ? Définis ton biais pour la semaine." },
-            { tf: "H4", action: "Localise les zones clés : support, résistance, SD zones. Où le prix a-t-il historiquement réagi ?" },
+            { tf: "H4", action: "Localise les zones clés : supports et résistances. Où le prix a-t-il historiquement réagi ?" },
             { tf: "H1", action: "Attends que le prix arrive sur une zone H4. Y a-t-il un setup dans le sens de la tendance Daily ?" },
             { tf: "M15", action: "Cherche le signal de déclenchement : rejet, engulfing, pin bar dans la zone H4." },
           ].map((item, i) => (

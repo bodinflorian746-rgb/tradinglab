@@ -167,7 +167,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     lessons: {
       beginner:     "Acheter sous une résistance qui rejette à chaque test est rarement une bonne idée. Attendre une cassure ou un retournement est souvent plus logique.",
       intermediate: "L'emplacement compte souvent plus que le pattern. Même un setup techniquement bon peut devenir mauvais si l'entrée se situe dans une zone hostile.",
-      advanced:     "Une résistance HTF touchée 3 fois ou plus peut signaler une zone de supply solide. Ici, l'avantage se trouve plutôt dans un SELL sur le retest que dans un BUY sur le pullback.",
+      advanced:     "Une résistance HTF touchée 3 fois ou plus est souvent une résistance solide. Ici, l'avantage se trouve plutôt dans un SELL sur le retest que dans un BUY sur le pullback.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     showLines: "buy_entry",
@@ -186,8 +186,8 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     explanation: "Ici, le support HTF a tenu à chaque test. Un SELL juste au-dessus place l'entrée au pire endroit : le TP est limité par le support immédiat, et le R/R devient très défavorable.",
     lessons: {
       beginner:     "Vendre au-dessus d'un support qui rebondit est rarement une bonne idée. Attendre la cassure du support, ou un rebond sur résistance, est souvent plus logique.",
-      intermediate: "L'emplacement compte souvent plus que le pattern. Vendre dans une zone de demand HTF revient ici à se placer contre l'avantage.",
-      advanced:     "Un support HTF avec 3 rebonds ou plus peut signaler une zone de demand solide. Ici, l'avantage se trouve plutôt dans un BUY sur le rebond que dans un SELL.",
+      intermediate: "L'emplacement compte souvent plus que le pattern. Vendre sur un support HTF revient ici à se placer contre l'avantage.",
+      advanced:     "Un support HTF avec 3 rebonds ou plus est souvent un support solide. Ici, l'avantage se trouve plutôt dans un BUY sur le rebond que dans un SELL.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     showLines: "sell_entry",
@@ -445,7 +445,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     direction: "SELL",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de balayer la liquidité sous le dernier creux avec une grosse mèche. Tu SELL maintenant.",
+    context: "Le prix vient de balayer la liquidité sous le plus bas précédent avec une grosse mèche. Tu SELL maintenant.",
     correctMistake: "sweep_ignored",
     decoyMistakes: ["trade_against_htf", "bad_rr", "stop_too_tight"],
     explanation: "Ici, le sweep vient d'avoir lieu et peut signaler un retournement haussier. Un SELL revient à vendre le creux que les acheteurs viennent d'utiliser pour entrer : la lecture semble inversée.",
@@ -852,7 +852,7 @@ function shSweepLowDone(rng: () => number, m: number): { chart: ScenarioChart; e
   p = past[past.length - 1].c;
   const entry = p;
   return { chart: finishChart(past, [], [
-    { kind: "support",       y1: L - 0.1,    y2: L + 0.1,    label: "Dernier creux"     },
+    { kind: "support",       y1: L - 0.1,    y2: L + 0.1,    label: "Plus bas précédent"     },
     { kind: "liquidity_low", y1: sweepLow,   y2: L - 0.15,   label: "Liquidité balayée" },
   ], [entry]), entry, sweepLow, L };
 }

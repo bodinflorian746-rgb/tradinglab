@@ -13,7 +13,7 @@ export default function ContentEs() {
       subtitle="La herramienta Fibonacci identifica las zonas de retroceso probabilísticas en un movimiento. Combinada con otras confluencias, mejora considerablemente la precisión de entrada."
       duration="20 min"
       lessonNumber={9}
-      prev={{ href: "/formations/intermediaire/lecon8", label: "Lección 8 : Plan de trading" }}
+      prev={{ href: "/formations/intermediaire/lecon8", label: "Lección 8: Plan de trading" }}
       next={null}
     >
 
@@ -80,7 +80,7 @@ export default function ContentEs() {
             { step: "1", text: "Identifica un movimiento impulsivo claro: un swing low y un swing high nítidos en el gráfico." },
             { step: "2", text: "En tendencia alcista: haz clic primero en el swing low, luego en el swing high. Los niveles aparecen entre ambos." },
             { step: "3", text: "El precio retrocede desde el swing high → vigila las zonas 38.2%, 50% y 61.8% en prioridad." },
-            { step: "4", text: "Busca una confluencia en esas zonas: S/R histórico, zona SD, nivel psicológico (1.0850, 1.0900…). Ahí es donde preparas tu entrada." },
+            { step: "4", text: "Busca una confluencia en esas zonas: soporte o resistencia histórica, nivel psicológico (1.0850, 1.0900…). Ahí es donde preparas tu entrada." },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.step}</span>
@@ -100,7 +100,7 @@ export default function ContentEs() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-medium text-emerald-400 mb-1">Setup ideal, 3 confluencias + señal</p>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              EUR/USD Daily alcista → 61.8% Fib en 1.0869 → antiguo soporte histórico en 1.0870 → zona de Demand sin retest en la misma zona. El precio llega. Pin bar alcista. Entras en compra. SL debajo de la zona (1.0848), TP hacia 1.0980.
+              EUR/USD Daily alcista → 61.8% Fib en 1.0869 → antiguo soporte histórico en 1.0870 → soporte H4 sin retest en el mismo nivel. El precio llega. Pin bar alcista. Entras en compra. SL debajo de la zona (1.0848), TP hacia 1.0980.
             </p>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
@@ -118,7 +118,7 @@ export default function ContentEs() {
         <div className="space-y-2">
           {[
             { n: "1", t: "¿Hay un movimiento impulsivo claro y reciente?", d: "Si sí, traza Fibonacci sobre él (swing low → swing high en alcista). Si no → no hay Fibonacci utilizable." },
-            { n: "2", t: "¿Hay una confluencia en el 61.8% o el 50%?", d: "¿S/R histórico, zona SD, nivel psicológico en el mismo nivel? Si sí → zona de oro a vigilar." },
+            { n: "2", t: "¿Hay una confluencia en el 61.8% o el 50%?", d: "¿Soporte o resistencia histórica, nivel psicológico en el mismo nivel? Si sí → zona de oro a vigilar." },
             { n: "3", t: "Espera la señal de vela en la zona", d: "Pin bar o engulfing en el sentido de la tendencia Daily sobre la zona Fib = entrada. Sin señal = nada que hacer." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -141,7 +141,7 @@ export default function ContentEs() {
             <span className="text-lg">✓</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">Nivel Fib + confluencia + señal de vela</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Es el setup completo, una confirmación a integrar en tu propio plan de trading, no una entrada automática. SL debajo de la zona Fib entera, TP hacia el swing high anterior (o la próxima resistencia).</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Es el setup completo, una confirmación a integrar en tu propio plan de trading, no una entrada automática. SL debajo de la zona Fib entera, TP hacia el último swing high (o la próxima resistencia).</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-amber-400/5 border border-amber-400/15 rounded-xl px-4 py-3">
@@ -174,7 +174,7 @@ export default function ContentEs() {
       <div className="border border-zinc-700/40 rounded-2xl p-5 bg-zinc-900/30">
         <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-3">Resumen en 3 segundos</p>
         <div className="space-y-2 text-sm">
-          <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>61.8% + confluencia (S/R, SD) + señal de vela → entras</p>
+          <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>61.8% + confluencia (soporte o resistencia) + señal de vela → entras</p>
           <p className="text-zinc-200"><span className="text-amber-400 font-bold mr-2">~</span>Nivel Fib sin confluencia → solo vigilas</p>
           <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Precio toca el Fib sin señal → no entras</p>
         </div>
@@ -191,7 +191,7 @@ export default function ContentEs() {
           "Fibonacci identifica zonas de retroceso probabilísticas: 38.2%, 50%, 61.8% son las más usadas.",
           "Traza Fibonacci sobre un movimiento impulsivo completo: swing low → swing high (tendencia alcista).",
           "El 61.8% (golden ratio) es el nivel más respetado, pero jamás infalible.",
-          "Fibonacci solo no es una señal, espera una confluencia (S/R, zona SD) Y una señal de vela.",
+          "Fibonacci solo no es una señal, espera una confluencia (soporte o resistencia) Y una señal de vela.",
           "Las 'zonas de oro' = intersección de varias confluencias incluyendo un nivel Fib clave.",
         ]}
       />
@@ -202,7 +202,7 @@ export default function ContentEs() {
           "Abre EUR/USD en H4. Usa la herramienta Fibonacci Retracement en las herramientas de dibujo de TradingView.",
           "Identifica el último gran movimiento alcista. Traza tu Fib del swing low al swing high.",
           "¿El precio retrocedió? ¿En qué nivel Fib se detuvo (38.2%, 50%, 61.8%)? ¿Hubo una señal de vela en ese nivel?",
-          "¿Hay otras confluencias en ese nivel (S/R histórico, zona SD, nivel psicológico)? Si sí, anota por qué era una zona de oro.",
+          "¿Hay otras confluencias en ese nivel (soporte o resistencia histórica, nivel psicológico)? Si sí, anota por qué era una zona de oro.",
         ]}
       />
 
