@@ -86,10 +86,15 @@ export default async function PricingPage({
               <h2 className="text-lg font-semibold text-white mb-1">
                 {t.broker.name}
               </h2>
-              <div className="flex items-end gap-1 mb-3">
-                <span className="text-5xl font-bold">{t.broker.price}</span>
-                <span className="text-zinc-400 mb-2">{t.broker.period}</span>
-              </div>
+              {/* Prix chiffré (EN) ou accès décrit en toutes lettres (FR, ES) */}
+              {/\d/.test(t.broker.price) ? (
+                <div className="flex items-end gap-1 mb-3">
+                  <span className="text-5xl font-bold">{t.broker.price}</span>
+                  <span className="text-zinc-400 mb-2">{t.broker.period}</span>
+                </div>
+              ) : (
+                <p className="mb-3 text-xl font-bold leading-snug text-emerald-300">{t.broker.price}</p>
+              )}
               <p className="text-sm text-zinc-400">
                 {t.broker.description}
               </p>

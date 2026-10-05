@@ -4,8 +4,8 @@
   "broker": {
     "badge": "Recomendado",
     "name": "Vía broker partner",
-    "price": "0€",
-    "period": "/mes",
+    "price": "Acceso mediante un depósito en un broker partner",
+    "period": "",
     "description": "Abres una cuenta broker vía nuestro enlace de afiliación (o el de un partner de nuestra red). A cambio, accedes gratuitamente a toda la plataforma.",
     "features": [
       "Formaciones de Trading completas (Principiante → Avanzado)",
