@@ -26,6 +26,7 @@ import {
 } from "react";
 import type { Candle, ChartData, ChartZone, ZoneKind } from "@/lib/games/shared";
 import type { MiniChartOverlay } from "@/app/components/games/MiniChart";
+import { candleBody } from "@/app/components/games/candle-geometry";
 
 // ─── Outils partagés (réutilisés par ui.tsx et les autres jeux v2) ──────────
 
@@ -123,15 +124,15 @@ export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still
   const up = c > o || (c === o && (prevClose === undefined || c >= prevClose));
   const body = up ? "var(--v2-bull)" : "var(--v2-bear)";
   const wick = up ? "var(--v2-bull-wick)" : "var(--v2-bear-wick)";
-  const yTop = toY(Math.max(o, c));
-  const yBot = toY(Math.min(o, c));
+  // Corps exact entre ouverture et clôture (barre fine centrée pour un doji)
+  const bodyBox = candleBody(o, c, toY);
   const dimClass = dim === "anim" ? "v2-dim" : dim === "now" ? "v2-dim--now" : undefined;
 
   return (
     <g className={dimClass}>
       <g className={still ? "v2-candle v2-candle--static" : "v2-candle"} style={cssVars({ "--i": index })}>
         <line x1={x} x2={x} y1={toY(h)} y2={toY(l)} stroke={wick} strokeWidth={3} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-        <rect x={x - width / 2} y={yTop} width={width} height={Math.max(yBot - yTop, 3)} rx={3} fill={body} />
+        <rect x={x - width / 2} y={bodyBox.y} width={width} height={bodyBox.h} rx={Math.min(3, bodyBox.h / 2)} fill={body} />
       </g>
     </g>
   );

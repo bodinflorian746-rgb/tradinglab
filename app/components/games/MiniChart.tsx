@@ -7,6 +7,7 @@
 // sous le graphique (ou dans le UI du jeu autour).
 
 import type { ChartData, ChartZone, ZoneKind } from "@/lib/games/shared";
+import { candleBody } from "@/app/components/games/candle-geometry";
 
 export interface MiniChartOverlay {
   // label : étiquette de la ligne d'entrée (GameChartV2, étiquettes en ligne)
@@ -126,13 +127,11 @@ export function MiniChart({ data, overlay, height = 170 }: MiniChartProps) {
           const cx = padX + slotW * (i + 0.5);
           const isGreen = k.c >= k.o;
           const color = isGreen ? "#10b981" : "#ef4444";
-          const bodyTop = y(Math.max(k.o, k.c));
-          const bodyBottom = y(Math.min(k.o, k.c));
-          const bodyH = Math.max(3, bodyBottom - bodyTop);
+          const body = candleBody(k.o, k.c, y);
           return (
             <g key={i}>
               <line x1={cx} y1={y(k.h)} x2={cx} y2={y(k.l)} stroke={color} strokeWidth="1" strokeLinecap="round" />
-              <rect x={cx - bodyW / 2} y={bodyTop} width={bodyW} height={bodyH} fill={color} rx="0.5" />
+              <rect x={cx - bodyW / 2} y={body.y} width={bodyW} height={body.h} fill={color} rx="0.5" />
             </g>
           );
         })}

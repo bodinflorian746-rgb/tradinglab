@@ -7,7 +7,9 @@
 //   cohérence texte ↔ graphique (4 jeux), contexte de marché et prix (K1),
 //   distribution du bon stop ≤ 50 %, R/R des bonnes réponses, réalisme des
 //   bougies, énumération des verdicts, textes (français en EN/ES, ton),
-//   glossaire (libellés de zones et termes = vocabulaire des leçons).
+//   glossaire (libellés de zones et termes = vocabulaire des leçons),
+//   bougies (ouverture = clôture précédente, en données et au rendu ; jeux,
+//   aperçus du hub, héros de la home).
 // Règles « DOM » (Playwright) : troncature 3 langues × 390/1440, sonde
 //   lignes = étiquettes = boutons, cohérence du verdict affiché.
 // Code de sortie 1 dès qu'une règle compte une erreur.
@@ -25,7 +27,8 @@ function run(cmd, args, env = {}) {
   const r = spawnSync(cmd, args, { cwd: ROOT, env: { ...process.env, ...env }, encoding: "utf8", shell: process.platform === "win32", maxBuffer: 64 * 1024 * 1024 });
   return `${r.stdout ?? ""}${r.stderr ?? ""}`;
 }
-const viteNode = (file, args = [], env = {}) => run("npx", ["--yes", "vite-node", join("scripts", "audit-jeux", file), ...args], env);
+// Alias « @/ » (aperçus, home) résolus par la config de vitest
+const viteNode = (file, args = [], env = {}) => run("npx", ["--yes", "vite-node", "-c", "vitest.config.ts", join("scripts", "audit-jeux", file), ...args], env);
 const resultOf = (out) => { const m = out.match(/RESULTAT erreurs=(\d+) avertissements=(\d+)/); return m ? { e: +m[1], w: +m[2] } : null; };
 
 const table = [];
@@ -64,8 +67,8 @@ process.stdout.write("… contexte de marché et prix\n");
   record("Contexte de marché, sessions, prix", /K1 —/.test(out) ? (ok ? 0 : n || 1) : null, ok ? "" : out.split("\n").slice(-6).join(" | "));
 }
 
-// 3. Réalisme, verdicts, textes, glossaire
-for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (français en EN/ES, ton)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"]]) {
+// 3. Réalisme, verdicts, textes, glossaire, bougies
+for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (français en EN/ES, ton)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"]]) {
   process.stdout.write(`… ${rule}\n`);
   const out = viteNode(file);
   const r = resultOf(out);
