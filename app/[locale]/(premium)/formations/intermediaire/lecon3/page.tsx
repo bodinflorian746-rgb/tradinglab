@@ -12,7 +12,7 @@ function ContentFr() {
     <LessonPage
       formationId="intermediaire"
       lessonId="lecon3"
-      title="Support et résistance : l'origine du mouvement"
+      title="Support et résistance : l'origine du mouvement"
       subtitle="Un support ou une résistance n'est pas une ligne magique : c'est souvent la trace laissée par les institutions quand elles ont passé de gros ordres. Le prix y revient souvent pour exécuter le reste."
       duration="20 min"
       lessonNumber={3}

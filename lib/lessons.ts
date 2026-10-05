@@ -1226,7 +1226,7 @@ export const LESSONS: LevelData[] = [
       {
         id: "lecon-3",
         slug: "lecon3",
-        title: "Support et résistance : l'origine du mouvement",
+        title: "Support et résistance : l'origine du mouvement",
         duration: "20 min",
         introduction:
           "Pourquoi le prix revient-il parfois exactement au même endroit après des heures ou des jours ? Parce que des institutions y ont laissé des ordres non-exécutés. Ces zones deviennent des supports et des résistances. Elles sont l'empreinte des gros acteurs sur le marché.",
