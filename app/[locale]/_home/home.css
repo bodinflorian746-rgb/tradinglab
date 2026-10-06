@@ -7,7 +7,11 @@
   margin-inline: auto;
   padding-inline: clamp(16px, 4vw, 32px);
 }
-.tsx-v2 .hv2-section { padding-block: clamp(56px, 7vw, 96px); }
+.tsx-v2 .hv2-section { padding-block: clamp(64px, 7.5vw, 116px); }
+/* Espace entre l'en-tête d'une section et son contenu, et entre ses blocs */
+.tsx-v2 .hv2-stack { gap: clamp(36px, 3.6vw, 56px); }
+/* Ancres (Comment ça marche → étapes) : sous la barre de navigation fixe */
+.tsx-v2 .hv2-anchor { scroll-margin-top: 72px; }
 
 /* Halos de section (en plus du fond .tsx-v2) */
 .tsx-v2 .hv2-glow { position: relative; isolation: isolate; }
@@ -24,20 +28,27 @@
 
 .tsx-v2 .hv2-hero {
   display: grid;
-  gap: 24px;
-  padding-top: clamp(20px, 4vw, 56px);
-  padding-bottom: clamp(40px, 5vw, 72px);
+  gap: 28px;
+  padding-top: clamp(24px, 4vw, 56px);
+  padding-bottom: clamp(56px, 6vw, 96px);
 }
+/* Laptop et plus : accroche et texte à gauche, jeu à droite, dans le premier
+   écran ; tailles indexées sur la hauteur de l'écran (1280×720 à 1920×1080) */
 @media (min-width: 1024px) {
   .tsx-v2 .hv2-hero {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
-    column-gap: 56px;
-    row-gap: 28px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+    grid-template-areas: "head game" "side game";
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(40px, 4.5vw, 80px);
+    row-gap: clamp(20px, 3vh, 32px);
     align-items: start;
+    padding-top: clamp(24px, 5vh, 64px);
   }
-  .tsx-v2 .hv2-hero-head { grid-column: 1 / -1; }
-  .tsx-v2 .hv2-hero-side { align-self: center; }
+  .tsx-v2 .hv2-hero-head { grid-area: head; }
+  .tsx-v2 .hv2-hero-side { grid-area: side; }
+  .tsx-v2 .hv2-hero > .hv2-game { grid-area: game; }
 }
+.tsx-v2 .hv2-hero-audience { font-size: 15px; line-height: 1.55; color: var(--v2-text-2); }
 
 /* Accroche : la proposition principale en très grand (mots clés surlignés),
    puis la fin, plus petite. Mobile : 2 lignes + 1 ligne pour la fin (3 au
@@ -66,9 +77,8 @@
 }
 @media (min-width: 640px) { .tsx-v2 .hv2-h1 { font-size: clamp(32px, 5.2vw, 48px); } }
 @media (min-width: 1024px) {
-  .tsx-v2 .hv2-h1 { font-size: clamp(44px, 5.9vw, 64px); }
-  .tsx-v2 .hv2-h1-main { display: inline; }
-  .tsx-v2 .hv2-h1-tail { display: inline-block; margin: 0 0 0 0.3em; font-size: 0.42em; }
+  .tsx-v2 .hv2-h1 { font-size: clamp(38px, min(3.5vw, 6.6vh), 60px); line-height: 1.06; }
+  .tsx-v2 .hv2-h1-tail { margin-top: 0.4em; font-size: 0.5em; }
 }
 /* Mots clés de l'accroche : surlignés */
 .tsx-v2 .hv2-hl {
@@ -150,7 +160,7 @@
 .tsx-v2 .hv2-actions .v2-btn { width: 100%; height: 46px; padding-block: 0; padding-inline: 10px; }
 .tsx-v2 .hv2-verdict { animation: hv2-rise 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 @media (min-width: 1024px) {
-  .tsx-v2 .hv2-game .v2-chart--preview { height: 220px; }
+  .tsx-v2 .hv2-game .v2-chart--preview { height: clamp(168px, 25vh, 240px); }
   .tsx-v2 .hv2-game-slot { min-height: 100px; }
 }
 
@@ -158,8 +168,8 @@
 .tsx-v2 .hv2-offer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 18px;
+  gap: 20px;
+  padding: 22px;
   border-radius: 22px;
   background:
     linear-gradient(100deg, rgba(16, 185, 129, 0.16), rgba(16, 185, 129, 0.04) 60%),
@@ -167,7 +177,7 @@
   box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.35), 0 24px 60px -30px rgba(16, 185, 129, 0.55);
 }
 @media (min-width: 640px) {
-  .tsx-v2 .hv2-offer { flex-direction: row; align-items: center; justify-content: space-between; padding: 20px 24px; }
+  .tsx-v2 .hv2-offer { flex-direction: row; align-items: center; justify-content: space-between; padding: 28px 32px; }
 }
 .tsx-v2 .hv2-offer-badge {
   display: grid;
@@ -188,8 +198,8 @@
 .tsx-v2 .hv2-lessons {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 20px;
+  gap: 20px;
+  padding: clamp(22px, 2.4vw, 32px);
   border-radius: 24px;
   background:
     radial-gradient(80% 70% at 0% 0%, rgba(16, 185, 129, 0.14), transparent 70%),
@@ -268,19 +278,19 @@
 }
 
 /* Approche : un énoncé en grand, les 5 objections en liste compacte */
-.tsx-v2 .hv2-approach { display: grid; gap: 20px; }
-@media (min-width: 1024px) { .tsx-v2 .hv2-approach { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 40px; align-items: start; } }
+.tsx-v2 .hv2-approach { display: grid; gap: 28px; }
+@media (min-width: 1024px) { .tsx-v2 .hv2-approach { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 56px; align-items: start; } }
 .tsx-v2 .hv2-approach-hero {
-  padding: 24px;
+  padding: clamp(24px, 2.6vw, 36px);
   border-radius: 24px;
   background: radial-gradient(90% 80% at 0% 0%, rgba(16, 185, 129, 0.18), transparent 70%), var(--v2-surface);
   box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.35), 0 30px 80px -36px rgba(16, 185, 129, 0.6);
 }
 .tsx-v2 .hv2-approach-list { display: grid; gap: 0; }
-.tsx-v2 .hv2-approach-list li { padding-block: 14px; border-bottom: 1px solid var(--v2-edge); }
+.tsx-v2 .hv2-approach-list li { padding-block: 20px; border-bottom: 1px solid var(--v2-edge); }
 .tsx-v2 .hv2-approach-list li:first-child { padding-top: 0; }
 @media (min-width: 640px) {
-  .tsx-v2 .hv2-approach-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+  .tsx-v2 .hv2-approach-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
   .tsx-v2 .hv2-approach-list li:nth-child(2) { padding-top: 0; }
 }
 
@@ -291,7 +301,7 @@
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: min(84%, 340px);
-  gap: 14px;
+  gap: 20px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;
@@ -327,6 +337,74 @@
     -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent);
   }
 }
+
+/* ─── Comment ça marche : 3 étapes ───────────────────────────────────── */
+
+.tsx-v2 .hv2-how { display: grid; gap: 20px; }
+@media (min-width: 768px) { .tsx-v2 .hv2-how { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; } }
+.tsx-v2 .hv2-how-step {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(24px, 2.4vw, 32px);
+  border-radius: 24px;
+  background: radial-gradient(90% 70% at 0% 0%, color-mix(in srgb, var(--c) 14%, transparent), transparent 70%), var(--v2-surface);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 32%, transparent), 0 30px 80px -44px color-mix(in srgb, var(--c) 70%, transparent);
+}
+.tsx-v2 .hv2-how-n {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  font-family: var(--v2-font-mono);
+  font-weight: 700;
+  font-size: 17px;
+  color: #04060a;
+  background: var(--c);
+}
+.tsx-v2 .hv2-how-verb { font-family: var(--v2-font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c); }
+.tsx-v2 .hv2-how-text { flex: 1; font-size: 15px; line-height: 1.6; color: var(--v2-text-2); }
+.tsx-v2 .hv2-how-meta { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 14px; font-weight: 700; color: var(--c); }
+.tsx-v2 .hv2-how-meta:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ─── Étape 1 : 79 leçons à gauche, les 3 niveaux à droite ───────────── */
+
+.tsx-v2 .hv2-lessons-row { display: grid; gap: 24px; }
+@media (min-width: 1024px) { .tsx-v2 .hv2-lessons-row { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px; align-items: stretch; } }
+.tsx-v2 .hv2-lessons-row > div > .hv2-lessons { height: 100%; }
+.tsx-v2 .hv2-levels {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: clamp(22px, 2.4vw, 32px);
+  border-radius: 24px;
+  background: var(--v2-surface);
+  box-shadow: inset 0 0 0 1px var(--v2-edge-strong);
+}
+.tsx-v2 .hv2-levels .hv2-steps { gap: 12px; }
+.tsx-v2 .hv2-levels .hv2-step { padding: 14px 16px; }
+
+/* ─── Étape 3 : les 8 stratégies ─────────────────────────────────────── */
+
+.tsx-v2 .hv2-strats { display: grid; gap: 16px; }
+@media (min-width: 640px) { .tsx-v2 .hv2-strats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
+@media (min-width: 1024px) { .tsx-v2 .hv2-strats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.tsx-v2 .hv2-strat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px;
+  border-radius: 20px;
+  background: var(--v2-surface);
+  box-shadow: inset 0 0 0 1px var(--v2-edge-strong);
+  transition: box-shadow 200ms ease, background 200ms ease;
+}
+.tsx-v2 .hv2-strat:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); background: color-mix(in srgb, var(--c) 5%, var(--v2-surface)); }
+.tsx-v2 .hv2-strat-level { font-family: var(--v2-font-mono); font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); }
+@media (prefers-reduced-motion: reduce) { .tsx-v2 .hv2-strat { transition: none; } }
 
 /* ─── Piliers ─────────────────────────────────────────────────────────── */
 
@@ -473,3 +551,7 @@
   .tsx-v2 .hv2-btn-main,
   .tsx-v2 .hv2-step { transition: none; }
 }
+
+/* Titres équilibrés : pas de mot seul en fin de ligne */
+
+.tsx-v2 .hv2-h2 { text-wrap: balance; }

@@ -33,19 +33,10 @@ const GAMES: { id: PreviewId; accent: string; level: "allLevels" | "intermediate
   { id: "build-the-trade",   accent: "v2-accent--blue",    level: "intermediate" },
 ];
 
-// Couleur de chaque pilier (charte v2)
-const PILLAR_ACCENT: Record<string, string> = {
-  trading: "#10b981",
-  macro: "#3b82f6",
-  strategies: "#f59e0b",
-  games: "#8b5cf6",
-};
-const PILLAR_HREF: Record<string, string> = {
-  trading: "/formations",
-  macro: "/formations/macro",
-  strategies: "/strategies",
-  games: "/jeux",
-};
+// « Comment ça marche » : leçons (vert), jeux (violet, comme le hub), stratégies (ambre)
+const HOW_COLORS = ["#34d399", "#a78bfa", "#fbbf24"];
+// Niveau d'une stratégie : mêmes couleurs que le parcours débutant / intermédiaire / avancé
+const LEVEL_COLOR: Record<string, string> = { debutant: "#34d399", intermediaire: "#60a5fa", avance: "#fbbf24" };
 
 const Arrow = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -230,6 +221,7 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
   const tradingLessons = count("debutant") + count("intermediaire") + count("avance");
   // Noms et liens du menu du site
   const nav = await getDictionary(locale, "nav");
+  const sd = await getDictionary(locale, "strategies");
   const lessonHrefs = { trading: h("/formations"), macro: h("/formations/macro"), strategies: h("/strategies") };
   const levels = [
     { ...s.progression.levels[0], n: count("debutant"), href: "/formations", color: "#34d399" },
@@ -257,8 +249,11 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
           </h1>
         </div>
 
-        <div className="hv2-hero-side hv2-hero-in flex flex-col items-start gap-5">
-          <p className="v2-lead max-w-xl text-[color:var(--v2-text-2)]" style={css({ "--i": 2 })}>{subtitle}</p>
+        <div className="hv2-hero-side hv2-hero-in flex flex-col items-start gap-6">
+          <div className="flex max-w-xl flex-col gap-3" style={css({ "--i": 2 })}>
+            <p className="v2-lead text-[color:var(--v2-text)]">{subtitle}</p>
+            <p className="hv2-hero-audience">{s.hero.audience}</p>
+          </div>
           {/* Un seul bouton plein ; « J'ai déjà un code » en lien discret à côté */}
           <div className="hv2-cta-row flex w-full flex-wrap items-center gap-x-5 gap-y-3" style={css({ "--i": 3 })}>
             <Link href={h("/pricing")} className="hv2-btn-main">
@@ -269,10 +264,6 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
               <Lock />
               {t.hero.ctaSecondary}
             </Link>
-          </div>
-          {/* 79 leçons (desktop) : à côté du jeu, dans le premier écran */}
-          <div className="hidden w-full lg:block" style={css({ "--i": 4 })}>
-            <LessonsBlock l={s.lessons} names={nav.links} hrefs={lessonHrefs} trading={tradingLessons} />
           </div>
         </div>
 
@@ -299,21 +290,67 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
             <Arrow />
           </TrialCta>
         </div>
-        {/* 79 leçons (mobile) : bloc dédié sous l'offre */}
-        <div data-reveal className="mt-8 lg:hidden">
-          <LessonsBlock l={s.lessons} names={nav.links} hrefs={lessonHrefs} trading={tradingLessons} />
+      </section>
+
+      {/* ═══ 2. COMMENT ÇA MARCHE : leçons, puis jeux, puis stratégies ═══ */}
+      <section className="hv2-section">
+        <div className="hv2-wrap flex flex-col hv2-stack">
+          <SectionHead eyebrow={s.how.eyebrow} title={s.how.title} sub={s.how.sub} />
+          <ol className="hv2-how">
+            {s.how.steps.map((st, i) => {
+              const meta = i === 0 ? s.how.lessonsMeta(tradingLessons + MACRO_LESSONS) : i === 1 ? s.how.gamesMeta : s.how.strategiesMeta(STRATEGY_MODULES.length, STRATEGY_LESSONS);
+              const href = i === 0 ? "#hv2-lecons" : i === 1 ? "#hv2-jeux" : "#hv2-strategies";
+              return (
+                <li key={st.name} data-reveal className="hv2-how-step" style={css({ "--d": `${i * 90}ms`, "--c": HOW_COLORS[i] })}>
+                  <span className="hv2-how-n" aria-hidden="true">{i + 1}</span>
+                  <p className="hv2-how-verb">{st.verb}</p>
+                  <h3 className="v2-display text-[22px] font-bold leading-tight">{st.name}</h3>
+                  <p className="hv2-how-text">{st.text}</p>
+                  <a href={href} className="hv2-how-meta">
+                    {meta}
+                    <Arrow size={12} />
+                  </a>
+                </li>
+              );
+            })}
+          </ol>
         </div>
-        {/* Juste après le chiffre : à quoi ressemble une leçon (les leçons sont
-            réservées aux membres : le lien mène au parcours Trading) */}
-        <div className="mt-10">
+      </section>
+
+      {/* ═══ 3. ÉTAPE 1, LES LEÇONS : 79 leçons, les niveaux, l'aperçu d'une leçon ═══ */}
+      <section id="hv2-lecons" className="hv2-section hv2-anchor">
+        <div className="hv2-wrap flex flex-col hv2-stack">
+          <SectionHead eyebrow={s.lessonsSection.eyebrow} title={s.lessonsSection.title} sub={s.lessonsSection.sub} />
+          <div className="hv2-lessons-row">
+            <div data-reveal>
+              <LessonsBlock l={s.lessons} names={nav.links} hrefs={lessonHrefs} trading={tradingLessons} />
+            </div>
+            <div data-reveal className="hv2-levels" style={css({ "--d": "90ms" })}>
+              <p className="text-[15px] font-semibold text-[color:var(--v2-text-2)]">{s.progression.title}</p>
+              <div className="hv2-steps">
+                {levels.map((lv, k) => (
+                  <Link key={lv.href} href={h(lv.href)} className="hv2-step" style={css({ "--step": lv.color })}>
+                    <span className="hv2-step-n">{k + 1}</span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[15px] font-semibold" style={{ color: lv.color }}>{lv.label}</span>
+                      <span className="block text-[14px] text-[color:var(--v2-text-2)]">{lv.desc}</span>
+                    </span>
+                    <span className="v2-mono shrink-0 text-[12px] text-[color:var(--v2-text-3)]">{lv.n} {s.progression.lessons}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+          {/* À quoi ressemble une leçon (les leçons sont réservées aux membres :
+              le lien mène au parcours Trading) */}
           <LessonPreview locale={locale} href={lessonHrefs.trading} />
         </div>
       </section>
 
-      {/* ═══ 2. LES 4 JEUX : couleur signature, aperçus animés ═══ */}
-      <section className="hv2-section hv2-glow" style={css({ "--hv2-glow": "radial-gradient(60% 50% at 80% 40%, rgba(139,92,246,0.10), transparent 70%), radial-gradient(50% 40% at 10% 50%, rgba(59,130,246,0.08), transparent 70%)" })}>
-        <div className="hv2-wrap flex flex-col gap-8">
-          <SectionHead eyebrow={g.index.eyebrow} title={g.index.title} sub={s.games.sub} />
+      {/* ═══ 4. ÉTAPE 2, LES 4 JEUX : couleur signature, aperçus animés ═══ */}
+      <section id="hv2-jeux" className="hv2-section hv2-anchor hv2-glow" style={css({ "--hv2-glow": "radial-gradient(60% 50% at 80% 40%, rgba(139,92,246,0.10), transparent 70%), radial-gradient(50% 40% at 10% 50%, rgba(59,130,246,0.08), transparent 70%)" })}>
+        <div className="hv2-wrap flex flex-col hv2-stack">
+          <SectionHead eyebrow={s.gamesEyebrow} title={g.index.title} sub={s.games.sub} />
           <div className="hv2-rail hv2-rail--games">
             {GAMES.map((gm, i) => {
               const game = g.available[gm.id];
@@ -350,73 +387,36 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         </div>
       </section>
 
-      {/* ═══ 3. LES 4 PILIERS + PARCOURS PROGRESSIF ═══ */}
-      <section className="hv2-section">
-        <div className="hv2-wrap flex flex-col gap-8">
-          <SectionHead title={t.piliers.title} sub={t.piliers.subtitle} />
-          <div className="hv2-bento">
-            {t.piliers.items.map((p, i) => {
-              const accent = PILLAR_ACCENT[p.key] ?? "#10b981";
-              const metric = p.bullets[p.bullets.length - 1];
-              const isTrading = p.key === "trading";
-              const intro = (
-                <>
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="v2-display text-[22px] font-bold" style={{ color: accent }}>{p.title}</h3>
-                    <span className="v2-mono rounded-full px-2.5 py-1 text-[12px] font-semibold" style={{ color: accent, background: `${accent}1f`, boxShadow: `inset 0 0 0 1px ${accent}59` }}>
-                      {metric}
-                    </span>
-                  </div>
-                  <p className="v2-body text-[color:var(--v2-text)]">{s.pillarDesc[p.key] ?? p.description}</p>
-                  {isTrading && (
-                    <ul className="hv2-list">
-                      {p.bullets.slice(0, -1).map((b) => <li key={b}>{b}</li>)}
-                    </ul>
-                  )}
-                </>
-              );
+      {/* ═══ 5. ÉTAPE 3, LES STRATÉGIES : les 8 modules réels ═══ */}
+      <section id="hv2-strategies" className="hv2-section hv2-anchor">
+        <div className="hv2-wrap flex flex-col hv2-stack">
+          <SectionHead eyebrow={s.strategiesSection.eyebrow} title={s.strategiesSection.title} sub={s.strategiesSection.sub} />
+          <div className="hv2-strats">
+            {STRATEGY_MODULES.map((m, i) => {
+              const d = sd.modules[m.id as keyof typeof sd.modules] as { title: string; subtitle: string } | undefined;
               return (
-                <div
-                  key={p.key}
-                  data-reveal
-                  className={`v2-card p-5 sm:p-6 ${isTrading ? "hv2-pillar-main" : "flex flex-col gap-4"}`}
-                  style={css({ "--d": `${i * 80}ms`, "--accent": accent, boxShadow: `inset 0 0 0 1px ${accent}33, inset 0 1px 0 rgba(255,255,255,0.07), 0 30px 80px -36px ${accent}88, 0 12px 32px -16px rgba(0,0,0,0.9)` })}
-                >
-                  {isTrading ? <div className="flex flex-col gap-4">{intro}</div> : intro}
-
-                  {isTrading ? (
-                    <div className="hv2-pillar-path flex flex-col gap-3">
-                      <p className="text-[13px] font-semibold text-[color:var(--v2-text-2)]">{s.progression.title}</p>
-                      <div className="hv2-steps">
-                        {levels.map((lv, k) => (
-                          <Link key={lv.href} href={h(lv.href)} className="hv2-step" style={css({ "--step": lv.color })}>
-                            <span className="hv2-step-n">{k + 1}</span>
-                            <span className="min-w-0 flex-1">
-                              <span className="block text-[14px] font-semibold" style={{ color: lv.color }}>{lv.label}</span>
-                              <span className="block text-[13px] text-[color:var(--v2-text-2)]">{lv.desc}</span>
-                            </span>
-                            <span className="v2-mono shrink-0 text-[12px] text-[color:var(--v2-text-3)]">{lv.n} {s.progression.lessons}</span>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <Link href={h(PILLAR_HREF[p.key] ?? "/")} className="mt-auto inline-flex items-center gap-1.5 text-[14px] font-semibold" style={{ color: accent }}>
-                      {s.discover}
-                      <Arrow size={12} />
-                    </Link>
-                  )}
-                </div>
+                <Link key={m.id} href={h(`/strategies/${m.id}`)} data-reveal className="hv2-strat" style={css({ "--d": `${(i % 4) * 70}ms`, "--c": LEVEL_COLOR[m.level] })}>
+                  <span className="flex items-center justify-between gap-2">
+                    <span className="hv2-strat-level">{s.strategiesSection.levels[m.level]}</span>
+                    <span className="v2-mono text-[12px] text-[color:var(--v2-text-3)]">{m.lessonCount} {s.strategiesSection.lessons}</span>
+                  </span>
+                  <span className="v2-display text-[18px] font-bold leading-snug">{d?.title ?? m.title}</span>
+                  <span className="text-[14px] leading-relaxed text-[color:var(--v2-text-2)]">{d?.subtitle ?? m.subtitle}</span>
+                </Link>
               );
             })}
           </div>
+          <Link href={h("/strategies")} data-reveal className="inline-flex items-center gap-1.5 self-start text-[15px] font-semibold text-[color:var(--v2-emerald)]">
+            {s.strategiesSection.all}
+            <Arrow size={12} />
+          </Link>
         </div>
       </section>
 
-      {/* ═══ 4. L'APPROCHE : les objections, sans promesse ═══ */}
+      {/* ═══ 6. L'APPROCHE : les objections, sans promesse ═══ */}
       <section className="hv2-section hv2-glow" style={css({ "--hv2-glow": "radial-gradient(55% 45% at 50% 40%, rgba(16,185,129,0.09), transparent 70%)" })}>
-        <div className="hv2-wrap flex flex-col gap-8">
-          <SectionHead eyebrow={t.approche.eyebrow} title={<>{t.approche.titleLine1} <span className="hv2-accent">{t.approche.titleLine2}</span></>} />
+        <div className="hv2-wrap flex flex-col hv2-stack">
+          <SectionHead eyebrow={t.approche.eyebrow} title={<>{t.approche.titleLine1} <span className="hv2-accent">{t.approche.titleLine2}</span></>} sub={s.approcheSub} />
           {(() => {
             const feats = t.approche.features;
             const hero = feats[feats.length - 1];
@@ -440,12 +440,13 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         </div>
       </section>
 
-      {/* ═══ 5. TÉMOIGNAGES (tels quels) ═══ */}
+      {/* ═══ 7. TÉMOIGNAGES (tels quels) ═══ */}
       <section className="hv2-section">
-        <div className="hv2-wrap flex flex-col gap-8">
+        <div className="hv2-wrap flex flex-col hv2-stack">
           <div data-reveal className="flex flex-col items-start gap-4">
             <p className="v2-eyebrow">{t.testimonialsSection.eyebrow}</p>
             <h2 className="hv2-h2">{t.testimonialsSection.title}</h2>
+            <p className="v2-lead max-w-2xl text-[color:var(--v2-text-2)]">{s.reviewsSub}</p>
             <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
               <p className="hv2-num leading-none">{t.testimonialsSection.trustRating}</p>
               <div className="pb-1">
@@ -470,12 +471,12 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         </div>
       </section>
 
-      {/* ═══ 6. COMMENT ACCÉDER ═══ */}
+      {/* ═══ 8. COMMENT ACCÉDER : essai 48h, broker partenaire, abonnement ═══ */}
       <section className="hv2-section hv2-glow" style={css({ "--hv2-glow": "radial-gradient(60% 50% at 50% 55%, rgba(16,185,129,0.12), transparent 70%)" })}>
-        <div className="hv2-wrap flex flex-col gap-8">
-          <SectionHead title={s.access.title} sub={s.access.subtitle} center />
+        <div className="hv2-wrap flex flex-col hv2-stack">
+          <SectionHead title={s.access.title} sub={checkoutEnabled ? s.accessSub.open : s.accessSub.closed} center />
 
-          <div data-reveal className="v2-card v2-card--accent v2-accent--emerald mx-auto flex w-full max-w-4xl flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+          <div data-reveal className="v2-card v2-card--accent v2-accent--emerald mx-auto flex w-full max-w-4xl flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
             <div>
               <p className="v2-display text-[22px] font-bold">{s.access.trial.title}</p>
               <p className="text-[14.5px] text-[color:var(--v2-text-2)]">{s.access.trial.desc}</p>
@@ -486,9 +487,9 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
             </TrialCta>
           </div>
 
-          <div className="mx-auto grid w-full max-w-4xl gap-4 md:grid-cols-2">
+          <div className="mx-auto grid w-full max-w-4xl gap-6 md:grid-cols-2" style={checkoutEnabled ? undefined : { alignItems: "start" }}>
             {/* Via broker partenaire (recommandé) */}
-            <div data-reveal className="v2-card v2-card--accent v2-accent--emerald relative flex flex-col gap-4 p-6">
+            <div data-reveal className="v2-card v2-card--accent v2-accent--emerald relative flex flex-col gap-5 p-6 sm:p-8">
               <span className="v2-chip v2-chip--emerald absolute -top-3 left-6 bg-[color:var(--v2-surface)]">{s.access.broker.badge}</span>
               <p className="v2-display text-[20px] font-bold">{s.access.broker.title}</p>
               {/* Accès décrit en toutes lettres (comme sur /pricing), pas de prix chiffré */}
@@ -506,7 +507,7 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
               </Link>
             </div>
             {/* Accès direct */}
-            <div data-reveal className="v2-card flex flex-col gap-4 p-6" style={css({ "--d": "90ms" })}>
+            <div data-reveal className="v2-card flex flex-col gap-5 p-6 sm:p-8" style={css({ "--d": "90ms" })}>
               <p className="v2-display text-[20px] font-bold">{s.access.direct.title}</p>
               {checkoutEnabled ? (
                 <>
@@ -531,10 +532,10 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         </div>
       </section>
 
-      {/* ═══ 7. LE MOMENT DE DÉCIDER ═══ */}
+      {/* ═══ 9. LE MOMENT DE DÉCIDER ═══ */}
       <section className="hv2-section">
         <div className="hv2-wrap">
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-10 text-center">
           <div data-reveal className="flex flex-col items-center gap-3">
             <p className="v2-eyebrow">{t.transformation.label}</p>
             <h2 className="hv2-h2">
@@ -565,7 +566,7 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         </div>
       </section>
 
-      {/* ═══ 8. FOOTER (mêmes liens que la home actuelle) ═══ */}
+      {/* ═══ 10. FOOTER (mêmes liens que la home actuelle) ═══ */}
       <footer className="border-t border-[color:var(--v2-edge)] bg-[color:rgba(4,6,10,0.7)] pt-14 pb-8">
         <div className="hv2-wrap">
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">

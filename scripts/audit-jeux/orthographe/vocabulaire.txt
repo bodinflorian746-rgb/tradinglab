@@ -697,6 +697,7 @@ aprende
 apréndela
 apréndelos
 aprender
+aprendes
 aprendiste
 aprendizaje
 après
@@ -957,12 +958,14 @@ avalements
 avance
 avancé
 avancée
+avancées
 avances
 avant
 avantage
 avantageux
 avanza
 avanzada
+avanzadas
 avanzado
 avanzar
 avanzas
@@ -2550,6 +2553,7 @@ cuestan
 cuesten
 cuestión
 cuestionado
+cuestionarios
 cuidado
 cuisiner
 cuivre
@@ -3909,6 +3913,7 @@ espéré
 espérer
 espero
 esquema
+esquemas
 esquina
 essai
 essayé
@@ -4216,6 +4221,7 @@ explicite
 explicitement
 explique
 expliqué
+expliquée
 expliquer
 exploitable
 exploitables
@@ -4461,8 +4467,6 @@ fixés
 flat
 flecha
 flèche
-flex
-flex-col
 flexibilidad
 flexibilité
 flexible
@@ -5654,6 +5658,7 @@ killzones
 kong
 l-shoulder
 l'a
+l'abonnement
 l'aboutissement
 l'abri
 l'absence
@@ -6687,7 +6692,6 @@ multi-activos
 multi-elemento
 multi-éléments
 multi-fakeouts
-multi-tf
 multi-unités
 multiples
 múltiples
@@ -7010,6 +7014,7 @@ ofrece
 ofrecen
 ofrecer
 ofrecido
+oímos
 ojo
 ok
 ola
@@ -7060,6 +7065,7 @@ opèrent
 operes
 opinion
 opinión
+opiniones
 oportunidad
 oportunidades
 opportunité
@@ -8207,6 +8213,7 @@ publica
 publicación
 publicaciones
 publicada
+publicadas
 publicado
 publican
 publicaron
@@ -8597,6 +8604,7 @@ recordar
 recorre
 recorrer
 recorrido
+recorridos
 recorrió
 recortado
 recorte
@@ -9461,6 +9469,7 @@ scénario
 scenarios
 scénarios
 schéma
+schémas
 score
 scorer
 scores
@@ -10035,7 +10044,6 @@ superficiel
 supérieur
 supérieure
 supérieures
-supérieurs
 superior
 superiores
 superpone
@@ -10161,6 +10169,7 @@ taille
 tailles
 take
 takeprofit
+tal
 tamaño
 tamaños
 también
@@ -10195,6 +10204,7 @@ telegram
 téléphone
 telle
 tellement
+tels
 tema
 temblar
 tempête
