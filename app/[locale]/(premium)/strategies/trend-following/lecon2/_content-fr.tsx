@@ -122,7 +122,7 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Reconnaître une tendance → cf. Stratégie TF L1</li>
+              <li>- Reconnaître une tendance → cf. Stratégie Trend Following L1</li>
               <li>- Notion de trendline → cf. Formation Trading L3</li>
               <li>- MM20 / MM50 / MM200 → cf. Formation Trading L4</li>
             </ul>

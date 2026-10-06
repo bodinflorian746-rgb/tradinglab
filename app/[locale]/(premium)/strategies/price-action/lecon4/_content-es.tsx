@@ -172,7 +172,7 @@ export default function ContentEs() {
 
           {/* Bloque 5 — CONFLICTO MULTI-TF */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Conflicto multi-TF (no tradear)</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Conflicto multitemporal (no tradear)</h2>
 
             <div className="my-8">
               <MultiTFConflictDiagram locale="es" />

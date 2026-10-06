@@ -1,11 +1,11 @@
 export default function MultiTFConflictDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
-        warning: "⚠ Conflicto multi-TF — Sin trade",
+        warning: "⚠ Conflicto multitemporal — Sin trade",
         haussier: "↑ Alcista",
         baissier: "↓ Bajista",
         footer: "Daily ↑ vs H4 ↓ vs M15 ↑: mientras las 3 temporalidades no se alineen, sin entrada",
-        mobWarning: "⚠ Conflicto multi-TF — Sin trade",
+        mobWarning: "⚠ Conflicto multitemporal — Sin trade",
         mobAlcistaSpan: "↑ Alcista",
         mobBajistaSpan: "↓ Bajista",
         mobFooterPre: "Mientras las 3 temporalidades no se alineen, ",
@@ -26,11 +26,11 @@ export default function MultiTFConflictDiagram({ className = "", locale = "fr" }
         mobFooterPost: ".",
       }
     : {
-        warning: "⚠ Conflit multi-TF — Pas de trade",
+        warning: "⚠ Conflit entre unités de temps — Pas de trade",
         haussier: "↑ Haussier",
         baissier: "↓ Baissier",
         footer: "Daily ↑ vs H4 ↓ vs M15 ↑ : tant que les 3 unités de temps ne s'alignent pas, pas d'entrée",
-        mobWarning: "⚠ Conflit multi-TF — Pas de trade",
+        mobWarning: "⚠ Conflit entre unités de temps — Pas de trade",
         mobAlcistaSpan: "↑ Haussier",
         mobBajistaSpan: "↓ Baissier",
         mobFooterPre: "Tant que les 3 unités de temps ne s'alignent pas, ",

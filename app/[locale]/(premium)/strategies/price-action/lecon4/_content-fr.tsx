@@ -172,7 +172,7 @@ export default function ContentFr() {
 
           {/* Bloc 5 — CONFLIT MULTI-TF */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Conflit multi-TF (à ne pas trader)</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Conflit entre unités de temps (à ne pas trader)</h2>
 
             <div className="my-8">
               <MultiTFConflictDiagram />

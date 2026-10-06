@@ -165,7 +165,7 @@ export default function ContentFr() {
               <li>- Pin bar au support fort = tradable (rebond institutionnel attendu)</li>
               <li>- Pin bar à la résistance forte = tradable (rejet institutionnel attendu)</li>
               <li>- Pin bar en milieu de range = hors niveau, signal disqualifié</li>
-              <li>- Conditions externes : alignement TF supérieur, absence d&apos;annonce majeure dans les 60 min</li>
+              <li>- Conditions externes : alignement sur l&apos;UT supérieure, absence d&apos;annonce majeure dans les 60 min</li>
             </ul>
           </section>
 

@@ -15,7 +15,7 @@ export default function MultiTFAlignmentCheckDiagram({ className = "", locale = 
         c4d1: "Sin NFP, FOMC, CPI",
         c4d2: "en los próximos 30 minutos",
         footer: "4/4 = entrada precisa posible",
-        mobTitle: "4 criterios de alineación multi-TF",
+        mobTitle: "4 criterios de alineación multitemporal",
         mob: [
           { title: "Sesgo Daily alineado", desc: "Tendencia mayor HH/HL o LH/LL confirmada" },
           { title: "Nivel H4 confluente", desc: "S/R, Fibo, MM, OB cruzados en la misma zona" },
@@ -64,7 +64,7 @@ export default function MultiTFAlignmentCheckDiagram({ className = "", locale = 
         c4d1: "Pas de NFP, FOMC, CPI",
         c4d2: "dans les 30 minutes",
         footer: "4/4 = entrée précise possible",
-        mobTitle: "4 critères d'alignement multi-TF",
+        mobTitle: "4 critères d'alignement multi-unités de temps",
         mob: [
           { title: "Biais Daily aligné", desc: "Tendance majeure HH/HL ou LH/LL confirmée" },
           { title: "Niveau H4 confluent", desc: "S/R, Fibo, MM, OB croisés à la même zone" },

@@ -122,7 +122,7 @@ export default function ContentEs() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Reconocer una tendencia → ver Estrategia TF L1</li>
+              <li>- Reconocer una tendencia → ver Estrategia Trend Following L1</li>
               <li>- Noción de trendline → ver Curso de Trading L3</li>
               <li>- MM20 / MM50 / MM200 → ver Curso de Trading L4</li>
             </ul>

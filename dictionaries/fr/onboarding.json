@@ -33,7 +33,7 @@
       },
       "strategies": {
         "title": "Explorer les stratégies",
-        "description": "Méthodes structurées : Price Action, SMC, ICT, Multi-TF, Macro."
+        "description": "Méthodes structurées : Price Action, SMC, ICT, multi-unités de temps, Macro."
       }
     },
     "later": "Plus tard"

@@ -286,7 +286,7 @@ export default function ContentEs() {
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">1. Empezar directamente por M15</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Localizar un setup en M15 y luego buscar justificarlo en los TF superiores es invertir el proceso. Se acaba validando mentalmente un trade que ya se decidió tomar. El HTF debe siempre venir primero.
+                  Localizar un setup en M15 y luego buscar justificarlo en las temporalidades superiores es invertir el proceso. Se acaba validando mentalmente un trade que ya se decidió tomar. El HTF debe siempre venir primero.
                 </p>
               </div>
 

@@ -73,7 +73,7 @@
         "description": "Les vraies méthodes utilisées par les traders rentables.",
         "bullets": [
           "Price Action, SMC, ICT",
-          "Multi-TF, Trend Following",
+          "Multi-unités de temps, Trend Following",
           "Backtests et cas concrets",
           "8 stratégies complètes"
         ]
@@ -120,7 +120,7 @@
       {
         "icon": "🔬",
         "title": "\"Je suis déjà intermédiaire\"",
-        "description": "Modules SMC, ICT, Multi-TF, macro avancée. Tu approfondis exactement ce qui te manque."
+        "description": "Modules SMC, ICT, multi-unités de temps, macro avancée. Tu approfondis exactement ce qui te manque."
       },
       {
         "icon": "🛡️",

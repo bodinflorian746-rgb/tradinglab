@@ -124,7 +124,7 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Pullback en tendance → cf. Stratégie TF L1</li>
+              <li>- Pullback en tendance → cf. Stratégie Trend Following L1</li>
               <li>- Fibonacci retracement → cf. Formation Trading L4</li>
               <li>- Order Block / FVG → cf. Stratégie SMC L3 (mention rapide)</li>
             </ul>
@@ -166,7 +166,7 @@ export default function ContentFr() {
               <li>- Impulsion claire : displacement directionnel marqué (corps significatifs)</li>
               <li>- Retracement 30-60% (idéalement 0.5 à 0.618) : profondeur tradable</li>
               <li>- Signal de rejet au contact (pin bar, avalement, réaction immédiate)</li>
-              <li>- Biais TF supérieur (H4 ou Daily) aligné avec le sens de l&apos;impulsion</li>
+              <li>- Biais de l&apos;UT supérieure (H4 ou Daily) aligné avec le sens de l&apos;impulsion</li>
             </ul>
           </section>
 

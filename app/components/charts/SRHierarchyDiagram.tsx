@@ -15,7 +15,7 @@ export default function SRHierarchyDiagram({ className = "", locale = "fr" }: { 
         mobH4Desc: "Toques moderados, nivel activo en el contexto corto plazo.",
         mobM15: "M15 — ★ Nivel marginal",
         mobM15Desc: "Muchos toques débiles, perforaciones frecuentes → poca fiabilidad.",
-        mobFooter: "Cuanto más alta la TF, más fuerte el nivel.",
+        mobFooter: "Cuanto más alta la temporalidad, más fuerte el nivel.",
       }
     : locale === "en"
     ? {
@@ -50,7 +50,7 @@ export default function SRHierarchyDiagram({ className = "", locale = "fr" }: { 
         mobH4Desc: "Touches modérées, niveau actif sur le contexte court terme.",
         mobM15: "M15 — ★ Niveau marginal",
         mobM15Desc: "Beaucoup de touches faibles, perforations fréquentes → faible fiabilité.",
-        mobFooter: "Plus la TF est haute, plus le niveau est fort.",
+        mobFooter: "Plus l'UT est haute, plus le niveau est fort.",
       };
   return (
     <div className={className}>

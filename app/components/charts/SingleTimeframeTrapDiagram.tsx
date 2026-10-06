@@ -23,7 +23,7 @@ export function SingleTimeframeTrapDiagram({ className = "", locale = "fr" }: Si
         mobileFooter: "Leer una sola temporalidad = ignorar la verdadera dirección.",
         leg1: "HTF Daily = tendencia bajista",
         leg2: "LTF M15 = señal engañosa aislada",
-        leg3: "Leer un solo TF = trampa",
+        leg3: "Leer una sola temporalidad = trampa",
       }
     : locale === "en"
     ? {
@@ -58,7 +58,7 @@ export function SingleTimeframeTrapDiagram({ className = "", locale = "fr" }: Si
         mobileFooter: "Lire une seule unité de temps = ignorer la vraie direction.",
         leg1: "UT supérieure Daily = tendance baissière",
         leg2: "UT inférieure M15 = signal trompeur isolé",
-        leg3: "Lire un seul TF = piège",
+        leg3: "Lire une seule UT = piège",
       };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

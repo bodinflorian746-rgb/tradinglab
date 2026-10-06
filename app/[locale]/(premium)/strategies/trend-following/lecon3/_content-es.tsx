@@ -124,7 +124,7 @@ export default function ContentEs() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Pullback en tendencia → ver Estrategia TF L1</li>
+              <li>- Pullback en tendencia → ver Estrategia Trend Following L1</li>
               <li>- Fibonacci retracement → ver Curso de Trading L4</li>
               <li>- Order Block / FVG → ver Estrategia SMC L3 (mención rápida)</li>
             </ul>
@@ -166,7 +166,7 @@ export default function ContentEs() {
               <li>- Impulso claro: displacement direccional marcado (cuerpos significativos)</li>
               <li>- Retracement 30-60% (idealmente 0.5 a 0.618): profundidad tradeable</li>
               <li>- Señal de rechazo al contacto (pin bar, envolvente, reacción inmediata)</li>
-              <li>- Sesgo de TF superior (H4 o Daily) alineado con el sentido del impulso</li>
+              <li>- Sesgo de la temporalidad superior (H4 o Daily) alineado con el sentido del impulso</li>
             </ul>
           </section>
 

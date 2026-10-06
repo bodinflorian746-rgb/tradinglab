@@ -286,7 +286,7 @@ export default function ContentFr() {
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">1. Commencer directement par M15</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Repérer un setup sur M15 puis chercher à le justifier sur les TF supérieurs, c&apos;est inverser le process. On finit par valider mentalement un trade qu&apos;on a déjà décidé de prendre. L&apos;UT supérieure doit toujours venir en premier.
+                  Repérer un setup sur M15 puis chercher à le justifier sur les UT supérieures, c&apos;est inverser le process. On finit par valider mentalement un trade qu&apos;on a déjà décidé de prendre. L&apos;UT supérieure doit toujours venir en premier.
                 </p>
               </div>
 
