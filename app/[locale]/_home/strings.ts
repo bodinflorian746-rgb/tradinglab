@@ -86,7 +86,7 @@ const S = {
       broker: {
         badge: "Recommandé",
         title: "Via broker partenaire",
-        price: "0€",
+        price: "Accès via un dépôt chez un broker partenaire",
         desc: "Tu ouvres un compte broker via notre lien d'affiliation. Tu reçois ensuite ton code d'accès par email.",
         bullets: ["Ouverture compte broker partenaire", "Code envoyé après vérification", "Accès complet à la plateforme"],
         depositNote: "Dépôt 200 € sur ton compte broker · ton argent, retirable à tout moment",
@@ -188,7 +188,7 @@ const S = {
       broker: {
         badge: "Recomendado",
         title: "Vía broker partner",
-        price: "0€",
+        price: "Acceso mediante un depósito en un broker partner",
         desc: "Abre una cuenta broker vía nuestro enlace de afiliación. Recibes después tu código de acceso por email.",
         bullets: ["Apertura de cuenta broker partner", "Código enviado tras verificación", "Acceso completo a la plataforma"],
         depositNote: "Depósito 200 € en tu cuenta broker · tu dinero, retirable cuando quieras",

@@ -491,7 +491,8 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
             <div data-reveal className="v2-card v2-card--accent v2-accent--emerald relative flex flex-col gap-4 p-6">
               <span className="v2-chip v2-chip--emerald absolute -top-3 left-6 bg-[color:var(--v2-surface)]">{s.access.broker.badge}</span>
               <p className="v2-display text-[20px] font-bold">{s.access.broker.title}</p>
-              <p className="v2-mono text-[44px] font-bold leading-none text-[color:var(--v2-emerald)]">{s.access.broker.price}</p>
+              {/* Accès décrit en toutes lettres (comme sur /pricing), pas de prix chiffré */}
+              <p className="v2-display text-[22px] font-bold leading-snug text-[color:var(--v2-emerald)]">{s.access.broker.price}</p>
               <p className="text-[14.5px] leading-relaxed text-[color:var(--v2-text-2)]">{s.access.broker.desc}</p>
               <ul className="hv2-list" style={css({ "--accent": "#34d399" })}>
                 {s.access.broker.bullets.map((b) => <li key={b}>{b}</li>)}
