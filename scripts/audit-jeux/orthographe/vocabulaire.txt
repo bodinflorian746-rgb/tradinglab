@@ -547,11 +547,9 @@ anim
 animation
 année
 années
-annonce
 annoncé
 annoncent
 annoncer
-annonces
 annotations
 annuel
 annulait
@@ -953,8 +951,6 @@ avait
 avait-il
 aval
 avale
-avalement
-avalements
 avance
 avancé
 avancée
@@ -1087,6 +1083,7 @@ bearish
 beau
 beaucoup
 beginner
+bel
 belle
 belles
 benchmark
@@ -1444,7 +1441,6 @@ casser
 casseront
 cassés
 cassure
-cassures
 casualidad
 catalizador
 catalizadores
@@ -2026,7 +2022,6 @@ configuración
 configuraciones
 configurar
 configuration
-configurations
 confirma
 confirmación
 confirmaciones
@@ -2609,8 +2604,6 @@ d'amplitude
 d'analyse
 d'analyser
 d'angleterre
-d'annonce
-d'annonces
 d'anticipations
 d'anticiper
 d'appât
@@ -2630,7 +2623,6 @@ d'au
 d'aujourd'hui
 d'autre
 d'autres
-d'avalement
 d'avance
 d'avant
 d'avantage
@@ -2645,6 +2637,7 @@ d'empiler
 d'emploi
 d'emplois
 d'en
+d'engulfing
 d'ensemble
 d'entrée
 d'entreprises
@@ -3722,6 +3715,8 @@ englobant
 englobante
 englobe
 engloutit
+engulfing
+engulfings
 engulle
 enlace
 enlaza
@@ -4335,7 +4330,6 @@ falló
 falls
 falsa
 falsas
-false
 falso
 falsos
 falta
@@ -4596,6 +4590,7 @@ franchement
 franches
 franchi
 franchie
+franchissement
 franco
 francos
 franja
@@ -5185,7 +5180,6 @@ impulsions
 impulsiva
 impulsivas
 impulsive
-impulsives
 impulsividad
 impulsivo
 impulsivos
@@ -5685,7 +5679,6 @@ l'analyse
 l'anatomie
 l'ancien
 l'année
-l'annonce
 l'annule
 l'anticiper
 l'anticipes
@@ -5714,7 +5707,6 @@ l'attention
 l'audace
 l'autoroute
 l'autre
-l'avalement
 l'avance
 l'avancé
 l'avantage
@@ -5735,6 +5727,7 @@ l'emploi
 l'empreinte
 l'enchaînement
 l'endroit
+l'engulfing
 l'enregistrement
 l'ensemble
 l'entonnoir
@@ -6237,7 +6230,6 @@ mantén
 mantener
 mantenerse
 mantenga
-mantenida
 mantenidas
 mantenido
 mantenimiento
@@ -6830,6 +6822,7 @@ neutralizar
 neutre
 neutro
 new
+news
 ni
 niega
 niegas
@@ -7695,15 +7688,15 @@ possibilités
 possible
 possibles
 post
-post-annonce
 post-barrido
-post-cassure
+post-breakout
 post-confirmación
 post-confirmation
 post-estabilización
 post-fomc
 post-liquidez
 post-liquidité
+post-news
 post-nfp
 post-noticia
 post-pin
@@ -7711,7 +7704,6 @@ post-rebond
 post-rebote
 post-rechazo
 post-rejet
-post-ruptura
 post-stabilisation
 post-stop-hunt
 post-sweep
@@ -7763,7 +7755,6 @@ pratique
 pratiquement
 pratiquer
 pratiques
-pré-annonce
 pre-fomc
 pré-fomc
 pre-identificar
@@ -7772,6 +7763,7 @@ pré-marché
 pre-market
 pré-market
 pre-mercado
+pré-news
 pre-nfp
 pré-nfp
 pre-posicionamiento
@@ -8222,6 +8214,7 @@ publications
 publicidad
 publicité
 público
+publie
 publié
 publient
 publiés
@@ -8435,7 +8428,6 @@ re-abres
 re-breakout
 re-casse
 re-cassé
-re-cassure
 re-cierra
 re-cierre
 re-clôture
@@ -8447,7 +8439,6 @@ ré-entrer
 ré-entres
 ré-ouvres
 re-rompe
-re-ruptura
 re-teste
 re-testee
 re-tester
@@ -9137,6 +9128,7 @@ retrouver
 retrouves
 reúne
 reunidos
+réunies
 reunión
 réunion
 reuniones
@@ -9301,7 +9293,6 @@ ruine
 ruinent
 ruiner
 ruptura
-rupturas
 rupture
 russell
 ruta
@@ -9840,7 +9831,6 @@ sortie
 sortir
 sortirais
 sortirait
-sospechosa
 sospechoso
 sostener
 sostenga
@@ -10118,7 +10108,6 @@ survivre
 sus
 suscripción
 suspect
-suspecte
 suspendido
 suspendu
 sutileza

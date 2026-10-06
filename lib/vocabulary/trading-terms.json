@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "date": "2026-10-06",
-  "regle": "Pour chaque notion, la forme anglaise et la ou les formes françaises (puis espagnoles) sont comparées sur au moins 3 sources indépendantes (pages pédagogiques de brokers régulés, sites et formations de traders, forums, titres de vidéos ; le site lui-même n'est jamais une source). Si au moins 3 sources sur 4 emploient la même forme, elle est retenue et appliquée partout, leçons comprises ; sinon rien ne change et la notion va dans « à trancher ». npm run audit:jeux vérifie que les formes interdites n'apparaissent dans aucun texte affiché FR / ES.",
+  "regle": "Pour chaque notion, la forme anglaise et la ou les formes françaises (puis espagnoles) sont comparées sur au moins 3 sources indépendantes (pages pédagogiques de brokers régulés, sites et formations de traders, forums, titres de vidéos ; le site lui-même n'est jamais une source). Si au moins 3 sources sur 4 emploient la même forme, elle est retenue et appliquée partout, leçons comprises ; sinon rien ne change et la notion va dans « à trancher ». npm run audit:jeux vérifie que les formes interdites n'apparaissent dans aucun texte affiché FR / ES. Les cas sans majorité nette sont tranchés par le PO (champ « decision ») ; les sources consultées restent listées.",
   "acquis": [
     {
       "lang": "fr",
@@ -236,10 +236,10 @@
       },
       {
         "notion": "news",
-        "retenu": "annonce (économique)",
-        "occurrences": 148,
+        "retenu": "news",
+        "occurrences": 176,
         "interdit": [
-          "news"
+          "annonces?"
         ],
         "sources": [
           {
@@ -262,7 +262,8 @@
             "url": "https://www.oanda.com/eu-fr/blog/news-trading-actualites",
             "forme": "news trading / actualités"
           }
-        ]
+        ],
+        "decision": "PO, 2026-10-06 : « news », les traders français disent « news » ; le verbe « annoncer » est reformulé (indique, publie, prévoit, signale)"
       },
       {
         "notion": "niveau psychologique",
@@ -296,10 +297,10 @@
       },
       {
         "notion": "engulfing",
-        "retenu": "avalement (haussier / baissier)",
-        "occurrences": 131,
+        "retenu": "engulfing (haussier / baissier)",
+        "occurrences": 140,
         "interdit": [
-          "engulfings?"
+          "avalements?"
         ],
         "sources": [
           {
@@ -322,7 +323,8 @@
             "url": "https://rankia.fr/chandelier-japonais-avalement-haussier/",
             "forme": "avalement haussier"
           }
-        ]
+        ],
+        "decision": "PO, 2026-10-06 : « engulfing », les traders français disent « engulfing » (les sources penchaient pour « avalement »)"
       },
       {
         "notion": "head & shoulders",
@@ -474,6 +476,119 @@
             "forme": "directional bias"
           }
         ]
+      },
+      {
+        "notion": "breakout / cassure",
+        "retenu": "breakout (faux breakout)",
+        "occurrences": 248,
+        "interdit": [
+          "cassures?(?!\\s+(?:(?:franche|nette|claire|confirmée|baissière|haussière|propre|locale)\\s+)?(?:du\\s+(?:HL|LH|HH|LL|biais|higher|lower|swing|dernier|creux|sommet|plus)|de\\s+(?:la\\s+)?structure|structurelles?|des\\s+(?:derniers?|creux|sommets|plus)|de\\s+(?:creux|sommet|corrélation|tendance)|d['’]un\\s+(?:creux|sommet)|BOS|CHoCH))"
+        ],
+        "decision": "PO, 2026-10-06 : terme anglais retenu",
+        "distinct": "« cassure de structure » (BOS / CHoCH, cassure du dernier creux / sommet) est une autre notion : elle est gardée",
+        "sources": [
+          {
+            "site": "ig.com",
+            "url": "https://www.ig.com/fr/strategies-de-trading/qu_est-ce-que-le-breakout-en-trading-et-comment-lutiliser---230904",
+            "forme": "breakout"
+          },
+          {
+            "site": "oanda.com",
+            "url": "https://www.oanda.com/eu-fr/blog/cassure-breakout-strategie",
+            "forme": "cassure (breakout)"
+          },
+          {
+            "site": "invest-aide.fr",
+            "url": "https://www.invest-aide.fr/groupe/actualites/definition-breakout-deux-facons-trader/",
+            "forme": "breakout"
+          }
+        ]
+      },
+      {
+        "notion": "sweep / balayage de liquidité",
+        "retenu": "sweep (de liquidité)",
+        "occurrences": 2,
+        "interdit": [
+          "balayages?"
+        ],
+        "decision": "PO, 2026-10-06 : terme anglais retenu",
+        "sources": [
+          {
+            "site": "bobbycarottes.com",
+            "url": "https://www.bobbycarottes.com/figures-chartistes/balayage-liquidite",
+            "forme": "balayage de liquidité"
+          },
+          {
+            "site": "edolab.io",
+            "url": "https://www.edolab.io/fr/blog/what-is-a-liquidity-sweep",
+            "forme": "liquidity sweep"
+          },
+          {
+            "site": "fxnx.com",
+            "url": "https://fxnx.com/fr/blog/inducement-en-trading-comment-les-pieges-de-liquidite-sont-crees-avant-un-sweep",
+            "forme": "sweep"
+          }
+        ]
+      },
+      {
+        "notion": "bougie impulsive / displacement",
+        "retenu": "displacement (bougie de displacement)",
+        "occurrences": 33,
+        "interdit": [
+          "bougies? impulsives?"
+        ],
+        "decision": "PO, 2026-10-06 : terme anglais retenu",
+        "sources": [
+          {
+            "site": "broker-forex.fr",
+            "url": "https://www.broker-forex.fr/displacement-SMC.php",
+            "forme": "displacement"
+          }
+        ]
+      },
+      {
+        "notion": "win rate / taux de réussite",
+        "retenu": "winrate",
+        "occurrences": 38,
+        "interdit": [
+          "taux de réussite",
+          "win[ -]rates?"
+        ],
+        "decision": "PO, 2026-10-06 : terme anglais retenu, écrit « winrate »",
+        "sources": []
+      },
+      {
+        "notion": "setup / configuration",
+        "retenu": "setup",
+        "occurrences": 12,
+        "interdit": [
+          "(?!^configurations?$)configurations?"
+        ],
+        "decision": "PO, 2026-10-06 : terme anglais retenu (« Configuration », titre de section des réglages, n'est pas visé)",
+        "sources": []
+      },
+      {
+        "notion": "swing high / swing low",
+        "retenu": "swing high / swing low",
+        "occurrences": 36,
+        "interdit": [
+          "sommets? de swing",
+          "creux de swing",
+          "points? (?:hauts?|bas)"
+        ],
+        "decision": "PO, 2026-10-06 : termes anglais retenus ; « point haut / bas » au sens de plus haut atteint est reformulé (« plus haut », « plus bas »)",
+        "sources": []
+      },
+      {
+        "notion": "higher low / higher high / lower high / lower low",
+        "retenu": "higher low, higher high, lower high, lower low",
+        "occurrences": 10,
+        "interdit": [
+          "creux plus (?:hauts?|bas)(?!\\s+que)",
+          "sommets? plus (?:hauts?|bas)(?!\\s+(?:que|appelé))"
+        ],
+        "decision": "PO, 2026-10-06 : termes anglais retenus ; les comparaisons (« un creux plus haut que le précédent ») restent en français",
+        "sources": []
       }
     ],
     "es": [
@@ -827,6 +942,128 @@
             "forme": "rango (mercado lateral)"
           }
         ]
+      },
+      {
+        "notion": "breakout / ruptura",
+        "retenu": "breakout",
+        "occurrences": 188,
+        "interdit": [
+          "rupturas?(?!\\s+(?:(?:franca|clara|limpia|confirmada|bajista|alcista|local)\\s+)?(?:del\\s+(?:HL|LH|HH|LL|sesgo|higher|lower|swing|último|valle|mínimo|máximo|pico)|de\\s+(?:la\\s+)?estructura|estructural(?:es)?|de\\s+(?:valle|mínimo|máximo|pico|correlación|tendencia)|de\\s+la\\s+(?:tendencia|correlación)|BOS|CHoCH))"
+        ],
+        "decision": "PO, 2026-10-06 : término inglés retenido",
+        "distinct": "« ruptura de estructura » (BOS / CHoCH) es otra noción: se mantiene",
+        "sources": [
+          {
+            "site": "babypips.com",
+            "url": "https://www.babypips.com/es/forexpedia/breakout-trading",
+            "forme": "ruptura"
+          },
+          {
+            "site": "rankia.mx",
+            "url": "https://www.rankia.mx/blog/como-comenzar-invertir-bolsa/4149541-que-breakout-rompimiento-alza-patron-grafico",
+            "forme": "breakout (rompimiento)"
+          },
+          {
+            "site": "lacryptoguia.com",
+            "url": "https://lacryptoguia.com/glossary/breakout/",
+            "forme": "breakout"
+          }
+        ]
+      },
+      {
+        "notion": "fakeout",
+        "retenu": "fakeout",
+        "occurrences": 52,
+        "interdit": [
+          "falsos? breakouts?",
+          "breakouts? falsos?",
+          "falsas? rupturas?",
+          "rupturas? falsas?",
+          "false breakouts?",
+          "fake breakouts?"
+        ],
+        "decision": "PO, 2026-10-06 : término inglés retenido",
+        "sources": [
+          {
+            "site": "rankia.com",
+            "url": "https://www.rankia.com/blog/sistemas-de-trading/7353934-breakouts-falsos-como-dinero-inteligente-usa-tus-ordenes-carnada",
+            "forme": "breakouts falsos"
+          },
+          {
+            "site": "mdctradingacademy.com",
+            "url": "https://www.mdctradingacademy.com/blog/breakout-falso-en-trading-que-es/",
+            "forme": "breakout falso"
+          },
+          {
+            "site": "fortraders.com",
+            "url": "https://www.fortraders.com/es/blog/falsos-rupturas-por-que-ocurren-y-como-operarlas",
+            "forme": "falsas rupturas"
+          },
+          {
+            "site": "es.tradingview.com",
+            "url": "https://es.tradingview.com/script/N3kkuEHq-Fakeouts",
+            "forme": "fakeouts"
+          }
+        ]
+      },
+      {
+        "notion": "stop hunt",
+        "retenu": "stop hunt",
+        "occurrences": 2,
+        "interdit": [
+          "cazas? de stops?",
+          "barrid[oa]s? de stops?"
+        ],
+        "decision": "PO, 2026-10-06 : término inglés retenido",
+        "sources": [
+          {
+            "site": "mentoriaentrading.com",
+            "url": "https://mentoriaentrading.com/que-son-las-barridas-de-stop-como-evitarlas/",
+            "forme": "barridas de stop"
+          },
+          {
+            "site": "slowinver.com",
+            "url": "https://slowinver.com/como-evitar-los-barridos-de-stops/",
+            "forme": "barridos de stops"
+          },
+          {
+            "site": "tradingdefuturos.com",
+            "url": "https://www.tradingdefuturos.com/blog/la-caza-de-stops",
+            "forme": "caza de stops"
+          },
+          {
+            "site": "vtmarkets.com",
+            "url": "https://www.vtmarkets.com/es-eu/discover/liquidity-sweeps-stop-hunts-explained-for-cfd-trading-2/",
+            "forme": "caza de stops / stop hunts"
+          }
+        ]
+      },
+      {
+        "notion": "HTF / LTF",
+        "retenu": "HTF / LTF",
+        "occurrences": 26,
+        "interdit": [
+          "temporalidad(?:es)? (?:superior|inferior)(?:es)?",
+          "marcos? temporal(?:es)? (?:superior|inferior|alto|bajo)(?:es)?"
+        ],
+        "decision": "PO, 2026-10-06 : término inglés retenido",
+        "sources": [
+          {
+            "site": "jorditrading.substack.com",
+            "url": "https://jorditrading.substack.com/p/como-usar-multiples-temporalidades",
+            "forme": "HTF (marco temporal alto)"
+          },
+          {
+            "site": "quantum-algo.com",
+            "url": "https://www.quantum-algo.com/es/academy/timeframes-explained/",
+            "forme": "marco temporal superior"
+          },
+          {
+            "site": "vtmarkets.com",
+            "url": "https://www.vtmarkets.com/es-eu/discover/top-down-analysis-in-trading-a-cfd-traders-guide/",
+            "forme": "temporalidad superior"
+          }
+        ]
       }
     ]
   },
@@ -979,216 +1216,21 @@
           "https://admiralmarkets.com/es/education/articles/forex-basics/pullback",
           "https://www.mdctradingacademy.com/blog/que-es-pull-back-en-trading/"
         ]
+      },
+      {
+        "forme": "nivel psicológico",
+        "decision": "PO, 2026-10-06 : se mantiene tal cual",
+        "sources": [
+          "https://www.babypips.com/es/learn/forex/psychological-level",
+          "https://www.fx-trading.online/numeros-redondos",
+          "https://opcionesbinariastop.com/estrategias/nivel-psicologico/"
+        ]
       }
     ]
   },
   "a_trancher": {
-    "fr": [
-      {
-        "notion": "breakout / cassure",
-        "formes": [
-          "breakout",
-          "cassure"
-        ],
-        "sources": [
-          {
-            "url": "https://www.ig.com/fr/strategies-de-trading/qu_est-ce-que-le-breakout-en-trading-et-comment-lutiliser---230904",
-            "forme": "breakout"
-          },
-          {
-            "url": "https://www.oanda.com/eu-fr/blog/cassure-breakout-strategie",
-            "forme": "cassure (breakout)"
-          },
-          {
-            "url": "https://www.invest-aide.fr/groupe/actualites/definition-breakout-deux-facons-trader/",
-            "forme": "breakout"
-          }
-        ]
-      },
-      {
-        "notion": "sweep / balayage de liquidité",
-        "formes": [
-          "sweep",
-          "balayage de liquidité"
-        ],
-        "sources": [
-          {
-            "url": "https://www.bobbycarottes.com/figures-chartistes/balayage-liquidite",
-            "forme": "balayage de liquidité"
-          },
-          {
-            "url": "https://www.edolab.io/fr/blog/what-is-a-liquidity-sweep",
-            "forme": "liquidity sweep"
-          },
-          {
-            "url": "https://fxnx.com/fr/blog/inducement-en-trading-comment-les-pieges-de-liquidite-sont-crees-avant-un-sweep",
-            "forme": "sweep"
-          }
-        ]
-      },
-      {
-        "notion": "win rate / taux de réussite",
-        "formes": [
-          "win rate",
-          "taux de réussite"
-        ],
-        "sources": []
-      },
-      {
-        "notion": "setup / configuration",
-        "formes": [
-          "setup",
-          "configuration"
-        ],
-        "sources": []
-      },
-      {
-        "notion": "swing high / sommet de swing",
-        "formes": [
-          "swing high",
-          "sommet de swing"
-        ],
-        "sources": []
-      },
-      {
-        "notion": "higher low / creux plus haut",
-        "formes": [
-          "Higher Low (HL)",
-          "creux plus haut"
-        ],
-        "sources": []
-      },
-      {
-        "notion": "bougie impulsive / displacement",
-        "formes": [
-          "bougie impulsive",
-          "displacement"
-        ],
-        "sources": [
-          {
-            "url": "https://www.broker-forex.fr/displacement-SMC.php",
-            "forme": "displacement"
-          }
-        ]
-      }
-    ],
-    "es": [
-      {
-        "notion": "fakeout",
-        "formes": [
-          "falso breakout",
-          "falsa ruptura",
-          "fakeout"
-        ],
-        "sources": [
-          {
-            "url": "https://www.rankia.com/blog/sistemas-de-trading/7353934-breakouts-falsos-como-dinero-inteligente-usa-tus-ordenes-carnada",
-            "forme": "breakouts falsos"
-          },
-          {
-            "url": "https://www.mdctradingacademy.com/blog/breakout-falso-en-trading-que-es/",
-            "forme": "breakout falso"
-          },
-          {
-            "url": "https://www.fortraders.com/es/blog/falsos-rupturas-por-que-ocurren-y-como-operarlas",
-            "forme": "falsas rupturas"
-          },
-          {
-            "url": "https://es.tradingview.com/script/N3kkuEHq-Fakeouts",
-            "forme": "fakeouts"
-          }
-        ]
-      },
-      {
-        "notion": "stop hunt",
-        "formes": [
-          "barrido de stops",
-          "caza de stops",
-          "stop hunt"
-        ],
-        "sources": [
-          {
-            "url": "https://mentoriaentrading.com/que-son-las-barridas-de-stop-como-evitarlas/",
-            "forme": "barridas de stop"
-          },
-          {
-            "url": "https://slowinver.com/como-evitar-los-barridos-de-stops/",
-            "forme": "barridos de stops"
-          },
-          {
-            "url": "https://www.tradingdefuturos.com/blog/la-caza-de-stops",
-            "forme": "caza de stops"
-          },
-          {
-            "url": "https://www.vtmarkets.com/es-eu/discover/liquidity-sweeps-stop-hunts-explained-for-cfd-trading-2/",
-            "forme": "caza de stops / stop hunts"
-          }
-        ]
-      },
-      {
-        "notion": "breakout / ruptura",
-        "formes": [
-          "breakout",
-          "ruptura"
-        ],
-        "sources": [
-          {
-            "url": "https://www.babypips.com/es/forexpedia/breakout-trading",
-            "forme": "ruptura"
-          },
-          {
-            "url": "https://www.rankia.mx/blog/como-comenzar-invertir-bolsa/4149541-que-breakout-rompimiento-alza-patron-grafico",
-            "forme": "breakout (rompimiento)"
-          },
-          {
-            "url": "https://lacryptoguia.com/glossary/breakout/",
-            "forme": "breakout"
-          }
-        ]
-      },
-      {
-        "notion": "HTF / LTF",
-        "formes": [
-          "HTF",
-          "temporalidad superior",
-          "marco temporal superior"
-        ],
-        "sources": [
-          {
-            "url": "https://jorditrading.substack.com/p/como-usar-multiples-temporalidades",
-            "forme": "HTF (marco temporal alto)"
-          },
-          {
-            "url": "https://www.quantum-algo.com/es/academy/timeframes-explained/",
-            "forme": "marco temporal superior"
-          },
-          {
-            "url": "https://www.vtmarkets.com/es-eu/discover/top-down-analysis-in-trading-a-cfd-traders-guide/",
-            "forme": "temporalidad superior"
-          }
-        ]
-      },
-      {
-        "notion": "nivel psicológico / número redondo",
-        "formes": [
-          "nivel psicológico",
-          "número redondo"
-        ],
-        "sources": [
-          {
-            "url": "https://www.babypips.com/es/learn/forex/psychological-level",
-            "forme": "niveles psicológicos"
-          },
-          {
-            "url": "https://www.fx-trading.online/numeros-redondos",
-            "forme": "números redondos"
-          },
-          {
-            "url": "https://opcionesbinariastop.com/estrategias/nivel-psicologico/",
-            "forme": "nivel psicológico / números redondos"
-          }
-        ]
-      }
-    ]
+    "fr": [],
+    "es": [],
+    "note": "Tous les cas ont été tranchés par le PO le 2026-10-06."
   }
 }

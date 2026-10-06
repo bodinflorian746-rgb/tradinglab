@@ -10,7 +10,7 @@ import path from "node:path";
 import { collectContentTexts } from "./content-texts";
 
 type Lang = "fr" | "es";
-interface Term { notion: string; retenu: string; interdit: string[]; casse?: boolean; sources: { url: string }[] }
+interface Term { notion: string; retenu: string; interdit: string[]; casse?: boolean; decision?: string; sources: { url: string }[] }
 const REF = path.join(__dirname, "..", "..", "lib", "vocabulary", "trading-terms.json");
 const ref = JSON.parse(fs.readFileSync(REF, "utf8")) as { termes: Record<Lang, Term[]> };
 
@@ -18,10 +18,10 @@ let errors = 0;
 const lines: string[] = [];
 const fail = (m: string) => { errors++; if (errors <= 40) lines.push(`  ERREUR ${m}`); };
 
-// Contrôle du fichier lui-même : au moins 3 sources par terme retenu
+// Contrôle du fichier lui-même : au moins 3 sources par terme retenu, sauf décision du PO (champ « decision »)
 const rules: Record<Lang, { re: RegExp; t: Term }[]> = { fr: [], es: [] };
 for (const lang of ["fr", "es"] as Lang[]) for (const t of ref.termes[lang]) {
-  if (t.sources.length < 3) fail(`${lang} « ${t.retenu} » : ${t.sources.length} source(s), 3 au minimum`);
+  if (t.sources.length < 3 && !t.decision) fail(`${lang} « ${t.retenu} » : ${t.sources.length} source(s), 3 au minimum`);
   for (const src of t.interdit) rules[lang].push({ re: new RegExp(`(?<![\\p{L}\\d])(?:${src})(?![\\p{L}\\d])`, t.casse ? "u" : "iu"), t });
 }
 
