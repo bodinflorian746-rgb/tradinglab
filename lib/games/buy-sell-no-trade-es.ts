@@ -397,7 +397,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     macroContext: "normal",
     metric: "discipline",
     context: "HTF bajista nítido. El precio rebota localmente sobre un nivel secundario, pero la tendencia sigue en contra tuya.",
-    shortContext: "Rebote local en un downtrend HTF.",
+    shortContext: "Rebote local en una tendencia bajista HTF.",
     rationales: {
       BUY: "✗ Operar contra la tendencia HTF apostando por un nivel secundario supone aquí jugar una probabilidad baja. Las estadísticas suelen ir en tu contra antes incluso del click.",
       SELL: "✗ No es el momento: aquí, el rebote local aún no muestra signos de agotamiento. Si vendes ahora, 2-3 velas verdes pueden sacarte antes de la reanudación.",

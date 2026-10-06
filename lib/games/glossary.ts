@@ -540,6 +540,7 @@ export const FORBIDDEN: Record<GlossaryLocale, { from: RegExp; to: string; sourc
 export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source: string }[]> = {
   fr: [
     ...FORBIDDEN.fr,
+    { from: /(?<![\p{L}])(?:up|down)-?trends?(?![\p{L}])/iu, to: "tendance haussière / baissière", source: "Intermédiaire · leçon 4" },
     { from: /plafond|plancher/i, to: "haut du range / bas du range", source: "Intermédiaire · leçon 2" },
     { from: /chasses? aux stops|zone de chasse/i, to: "stop hunt / zone de stop hunt", source: "Avancé · leçon 6" },
     { from: /round number/i, to: "niveau psychologique", source: "Intermédiaire · leçon 5" },
@@ -557,6 +558,7 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
   ],
   es: [
     ...FORBIDDEN.es,
+    { from: /(?<![\p{L}])(?:up|down)-?trends?(?![\p{L}])/iu, to: "tendencia alcista / bajista", source: "Intermedio · lección 4" },
     { from: /cazas? de stops|zona de caza/i, to: "stop hunt / zona de stop hunt", source: "Avanzado · lección 6" },
     { from: /round number/i, to: "nivel psicológico", source: "Intermedio · lección 5" },
     { from: /tight stop/i, to: "stop ajustado", source: "Principiante · lección 5" },

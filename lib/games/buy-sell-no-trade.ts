@@ -415,7 +415,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     macroContext: "normal",
     metric: "discipline",
     context: "HTF baissier net. Le prix rebondit localement sur un niveau secondaire, mais la tendance reste contre toi.",
-    shortContext: "Rebond local dans un downtrend HTF.",
+    shortContext: "Rebond local dans une tendance baissière HTF.",
     rationales: {
       BUY: "✗ Trader contre la tendance HTF en misant sur un niveau secondaire revient ici à jouer une probabilité faible. Les statistiques jouent souvent contre toi avant même le clic.",
       SELL: "✗ Pas le bon moment : ici, le rebond local ne montre pas encore de signe d'épuisement. En vendant maintenant, 2-3 bougies vertes peuvent te sortir avant la reprise.",

@@ -144,7 +144,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
   },
   {
     id: "trade_against_htf",
-    title: "BUY en un downtrend HTF",
+    title: "BUY en una tendencia bajista HTF",
     category: "technique",
     chartShape: "downtrend_pullback",
     direction: "BUY",

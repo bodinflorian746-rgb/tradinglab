@@ -128,7 +128,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     context: "Tendance haussière, le prix corrige sur le support. Tu es entré au rebond.",
-    shortContext: "Pullback BUY dans un uptrend.",
+    shortContext: "Pullback BUY dans une tendance haussière.",
     lessons: {
       beginner:     "Le stop logique se place plutôt DERRIÈRE le swing low, avec une marge : dedans, il reste dans le bruit ; trop loin, il dégrade le R/R.",
       intermediate: "Pendant un pullback, le prix revient souvent tester le low avant la continuation. Ici, une marge derrière le low protège contre ce sweep classique.",
@@ -144,7 +144,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     context: "Tendance baissière, le prix rebondit sur une résistance. Tu es entré court.",
-    shortContext: "Pullback SELL dans un downtrend.",
+    shortContext: "Pullback SELL dans une tendance baissière.",
     lessons: {
       beginner:     "Le stop logique se place plutôt AU-DESSUS du swing high, avec une marge : en dessous, il reste exposé ; trop loin, il dégrade le R/R.",
       intermediate: "Le rebond peut retester son high avant de retomber. Coller le stop au high expose ici fortement à un stop hunt.",

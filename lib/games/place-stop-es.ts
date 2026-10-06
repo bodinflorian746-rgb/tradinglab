@@ -59,7 +59,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     context: "Tendencia alcista, el precio corrige en el soporte. Entraste al rebote.",
-    shortContext: "Pullback BUY en un uptrend.",
+    shortContext: "Pullback BUY en una tendencia alcista.",
     lessons: {
       beginner:     "El stop lógico se coloca más bien DETRÁS del swing low, con margen: dentro, queda en el ruido; demasiado lejos, degrada el R/R.",
       intermediate: "El ruido del pullback suele retestear el low antes de la continuación. Aquí, un margen detrás del low protege contra ese sweep clásico.",
@@ -75,7 +75,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     context: "Tendencia bajista, el precio rebota en una resistencia. Entraste en corto.",
-    shortContext: "Pullback SELL en un downtrend.",
+    shortContext: "Pullback SELL en una tendencia bajista.",
     lessons: {
       beginner:     "El stop lógico se coloca más bien POR ENCIMA del swing high, con margen: por debajo, queda expuesto; demasiado lejos, degrada el R/R.",
       intermediate: "El rebote puede retestear su high antes de caer. Pegar el stop al high te expone aquí claramente a un stop hunt.",
