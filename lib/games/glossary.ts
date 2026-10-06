@@ -565,7 +565,7 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
     { from: /weekly (?:high|low)/i, to: "máximo / mínimo de la semana", source: "hors leçons" },
     { from: /n[úu]meros? redondos?/i, to: "nivel psicológico", source: "Intermedio · lección 5" },
     { from: /nivel magnético/i, to: "nivel clave", source: "Intermedio · lecciones 2 y 5" },
-    { from: /asia high/i, to: "máximo de la sesión asiática", source: "hors leçons (sesiones : Avanzado · lección 4)" },
+    { from: /asia high/i, to: "máximo de la sesión asiática", source: "hors leçons (sesiones: Avanzado · lección 4)" },
     { from: /velas? de fuerza/i, to: "vela impulsiva", source: "Avanzado · lección 2" },
     { from: /zona dudosa/i, to: "nivel secundario", source: "Intermedio · lección 2" },
     { from: /position sizing/i, to: "tamaño de posición", source: "Principiante · lección 8" },

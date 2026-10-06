@@ -55,7 +55,7 @@ export default function ContentEs() {
 
       {/* ── BOS ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Break of Structure (BOS) : la tendencia confirma</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Break of Structure (BOS): la tendencia confirma</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Un BOS es cuando el precio rompe el último máximo (en alcista) o el último mínimo (en bajista). Confirma que la tendencia sigue. Es una información, no una señal de entrada.
         </p>
