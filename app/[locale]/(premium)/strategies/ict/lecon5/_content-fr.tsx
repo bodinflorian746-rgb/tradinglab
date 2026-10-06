@@ -140,7 +140,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le modèle ICT ne se trade pas par signal isolé : il se trade par séquence. La majorité des trades à haute probabilité enchaînent une suite d'événements structurels qui se construisent les uns sur les autres : un biais HTF qui pose la direction, une liquidité repérée comme cible probable, un sweep qui la prend, un displacement qui valide l'intention, un FVG qui ouvre une fenêtre d'entrée, puis l'exécution sur le retour. Lire la séquence, c'est anticiper le trade, pas le subir.
+              Le modèle ICT ne se trade pas par signal isolé : il se trade par séquence. La majorité des trades à haute probabilité enchaînent une suite d'événements structurels qui se construisent les uns sur les autres : un biais de l'UT supérieure qui pose la direction, une liquidité repérée comme cible probable, un sweep qui la prend, un displacement qui valide l'intention, un FVG qui ouvre une fenêtre d'entrée, puis l'exécution sur le retour. Lire la séquence, c'est anticiper le trade, pas le subir.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -187,7 +187,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une fois la liquidité prise par le sweep, l'étape critique est le displacement : la séquence de bougies impulsives qui montre que le marché s'est vraiment retourné dans la direction du biais HTF. Sans displacement, le sweep peut être un faux mouvement, le prix sweep, hésite, puis repart dans la direction initiale. AVEC displacement, l'intention institutionnelle est claire et le FVG laissé dans la chute (ou la montée) devient la zone d'exécution. L'entrée se prend au retour du prix dans ce FVG.
+              Une fois la liquidité prise par le sweep, l'étape critique est le displacement : la séquence de bougies impulsives qui montre que le marché s'est vraiment retourné dans la direction du biais de l'UT supérieure. Sans displacement, le sweep peut être un faux mouvement, le prix sweep, hésite, puis repart dans la direction initiale. AVEC displacement, l'intention institutionnelle est claire et le FVG laissé dans la chute (ou la montée) devient la zone d'exécution. L'entrée se prend au retour du prix dans ce FVG.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -240,7 +240,7 @@ export default function ContentFr() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily) : biais directionnel</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. UT supérieure (Daily) : biais directionnel</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : EUR/USD Daily en LH/LL, résistance Daily à 1.1780</li>
                 <li>- Conclusion : biais baissier, toute la séquence cherchera un short</li>
@@ -278,7 +278,7 @@ export default function ContentFr() {
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = biais · Liquidité = cible · Sweep = condition · Displacement = confirmation · FVG = exécution
+                  UT supérieure = biais · Liquidité = cible · Sweep = condition · Displacement = confirmation · FVG = exécution
                 </p>
               </div>
             </div>
@@ -301,9 +301,9 @@ export default function ContentFr() {
               </div>
 
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
-                <p className="text-white font-semibold text-sm mb-1.5">2. Sauter le HTF</p>
+                <p className="text-white font-semibold text-sm mb-1.5">2. Sauter l'UT supérieure</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Repérer un sweep et un displacement sans avoir d'abord posé le biais Daily / H4, c'est confondre setup local et trade. Le HTF dicte la direction des trades autorisés, sans cette lecture, la séquence peut bouger correctement et te placer du mauvais côté du mouvement réel.
+                  Repérer un sweep et un displacement sans avoir d'abord posé le biais Daily / H4, c'est confondre setup local et trade. L'UT supérieure dicte la direction des trades autorisés, sans cette lecture, la séquence peut bouger correctement et te placer du mauvais côté du mouvement réel.
                 </p>
               </div>
 
@@ -335,7 +335,7 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur TradingView, déroule une séquence ICT complète sur la paire de ton choix, du Daily à l'exécution."
             steps={[
-              "HTF (Daily) : conclus un biais directionnel clair. Repère sur H1 une poche de liquidité visible dans le sens du biais (equal highs/lows, dernier sommet/creux).",
+              "UT supérieure (Daily) : conclus un biais directionnel clair. Repère sur H1 une poche de liquidité visible dans le sens du biais (equal highs/lows, dernier sommet/creux).",
               "Attends une Killzone (London ou NY Open). Surveille le sweep de la liquidité repérée, puis le displacement qui suit. Si la séquence s'arrête au sweep sans displacement, c'est un faux mouvement, pas de trade.",
               "Trace le FVG laissé par le displacement. Attends le retour du prix dans la bande. Si la réaction confirme (bougie de rejet + impulsion), note l'entrée, le SL au-dessus de l'extrémité du displacement, le TP vers la prochaine liquidité.",
             ]}
@@ -354,7 +354,7 @@ export default function ContentFr() {
             answerExplanations={[
               "Faux. Entrer sur le sweep seul, c'est exactement le piège que la séquence ICT cherche à éviter. Le sweep est une condition, pas un signal, sans displacement, rien ne confirme l'intention vendeuse.",
               "Correct. La séquence ICT exige sweep + displacement + FVG + retour. Si le displacement ne se matérialise pas après le sweep, l'étape suivante manque, la séquence n'est pas validée. La discipline est de ne pas entrer.",
-              "Faux. Anticiper la direction d'une consolidation sans signal structurel est de la spéculation pure. Et trader long contre le biais HTF baissier supposé est doublement risqué.",
+              "Faux. Anticiper la direction d'une consolidation sans signal structurel est de la spéculation pure. Et trader long contre le biais baissier supposé de l'UT supérieure est doublement risqué.",
               "Faux. Placer un ordre limite transforme un setup non confirmé en pari automatique. C'est l'une des pires habitudes, on prend le risque sans avoir vérifié que la séquence se déroule réellement.",
             ]}
           />

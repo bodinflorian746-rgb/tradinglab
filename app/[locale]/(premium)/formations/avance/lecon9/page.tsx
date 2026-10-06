@@ -38,7 +38,7 @@ function ContentFr() {
         <h2 className="text-lg font-semibold text-white mb-3">Comment faire un backtest rigoureux</h2>
         <div className="space-y-2">
           {[
-            { step: "1", text: "Définis ta stratégie précisément : quelles confluences sont requises ? Sur quel timeframe ? Dans quelles Killzones ? Sois spécifique, une stratégie vague donne un backtest vague." },
+            { step: "1", text: "Définis ta stratégie précisément : quelles confluences sont requises ? Sur quelle unité de temps ? Dans quelles Killzones ? Sois spécifique, une stratégie vague donne un backtest vague." },
             { step: "2", text: "Utilise TradingView en mode Replay (flèche 'play' en haut) ou Forex Tester. Remonte 6 à 12 mois en arrière et avance bougie par bougie." },
             { step: "3", text: "Applique ta stratégie exactement comme tu le ferais en live : identifie les setups, marque l'entrée, le SL et le TP avant que la bougie suivante se forme." },
             { step: "4", text: "Enregistre chaque trade dans ton journal : confluences présentes, résultat en R, screenshot." },
@@ -94,7 +94,7 @@ function ContentFr() {
         <h2 className="text-lg font-semibold text-white mb-3">Les erreurs de backtesting à éviter</h2>
         <div className="space-y-2.5">
           {[
-            { label: "Hindsight bias (biais rétrospectif)", detail: "Croire que tu aurais 'évidemment' vu le setup parce que tu vois les bougies passées. Le replay bougie par bougie est le seul remède." },
+            { label: "Biais rétrospectif", detail: "Croire que tu aurais 'évidemment' vu le setup parce que tu vois les bougies passées. Le replay bougie par bougie est le seul remède." },
             { label: "Over-fitting", detail: "Optimiser ta stratégie jusqu'à ce qu'elle performe parfaitement sur le passé. En live, cette stratégie suroptimisée sur les données historiques échoue." },
             { label: "Ignorer les frais", detail: "Chaque trade a un coût (spread, commission). Intègre-les dans ton backtest : ils peuvent transformer un edge positif en edge négatif." },
             { label: "Backtest sur trop peu de conditions", detail: "Un backtest sur 3 mois de hausse ne dit rien de la performance en range ou en baisse. Teste sur au moins 12 mois avec différentes conditions." },

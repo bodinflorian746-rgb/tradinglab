@@ -137,7 +137,7 @@ export default function ContentEs() {
               <div>
                 <p className="text-sm font-semibold text-zinc-200 mb-1">Sesión New York, 14:00 a 22:00 hora de París</p>
                 <p className="text-sm text-zinc-300 mb-0.5">
-                  Wall Street, índices US, news americanas. Representa aproximadamente el{" "}
+                  Wall Street, índices US, noticias americanas. Representa aproximadamente el{" "}
                   <span className="font-semibold text-zinc-200">20-25% del volumen forex mundial</span>.
                 </p>
                 <p className="text-sm text-zinc-400">Pares activos: EUR/USD, GBP/USD, USD/JPY, USD/CAD, XAU/USD, índices US.</p>
@@ -160,7 +160,7 @@ export default function ContentEs() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">El overlap Londres-New York</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La mejor ventana de liquidity suele estar entre las{" "}
+              La mejor ventana de liquidez suele estar entre las{" "}
               <span className="font-semibold text-zinc-200">14:00 y las 17:00 hora de París</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
@@ -172,7 +172,7 @@ export default function ContentEs() {
               {[
                 "las instituciones europeas están activas",
                 "las instituciones americanas llegan",
-                "las news US salen a menudo a las 14:30",
+                "las noticias US salen a menudo a las 14:30",
                 "los volúmenes explotan",
                 "los movimientos reales se forman",
               ].map((item, i) => (
@@ -233,7 +233,7 @@ export default function ContentEs() {
               {[
                 "liquidez baja",
                 "spreads más amplios",
-                "ranges frecuentes",
+                "rangos frecuentes",
                 "fakeouts más numerosos",
                 "menos catalizadores macro",
               ].map((item, i) => (
@@ -328,7 +328,7 @@ export default function ContentEs() {
                 { bold: "Scalping", rest: ": necesita liquidez. Solo Londres y overlap." },
                 { bold: "Day trading", rest: ": overlap Londres-New York ideal. Es donde los movimientos son más limpios." },
                 { bold: "Swing trading", rest: ": puedes usar Londres para identificar las rupturas importantes." },
-                { bold: "News trading", rest: ": a menudo alrededor de las 14:30 o 20:00. Pero solo con preparación." },
+                { bold: "Trading de noticias", rest: ": a menudo alrededor de las 14:30 o 20:00. Pero solo con preparación." },
               ].map((item, i) => (
                 <p key={i} className="text-zinc-300 leading-relaxed text-sm">
                   <span className="font-semibold text-zinc-200">{item.bold}</span>{item.rest}

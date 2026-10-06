@@ -20,7 +20,7 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">¿Qué es un Order Block?</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Cuando una institución coloca una orden masiva (de compra o venta), no puede ejecutarla de una sola vez, el mercado no tiene suficiente liquidity. Fracciona sus órdenes en varias velas y luego lanza el movimiento. La última vela antes de ese movimiento impulsivo se llama <span className="text-white font-medium">Order Block (OB)</span>.
+          Cuando una institución coloca una orden masiva (de compra o venta), no puede ejecutarla de una sola vez, el mercado no tiene suficiente liquidez. Fracciona sus órdenes en varias velas y luego lanza el movimiento. La última vela antes de ese movimiento impulsivo se llama <span className="text-white font-medium">Order Block (OB)</span>.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Cuando el precio regresa a la zona de ese OB durante un retroceso, las órdenes institucionales restantes se activan, lo que suele crear un rebote potente.
@@ -90,9 +90,9 @@ export default function ContentEs() {
         <div className="space-y-2.5">
           {[
             { label: "OB + FVG en la misma zona", detail: "Si un Fair Value Gap se ubica dentro de la zona del Order Block, la confluencia es extremadamente potente." },
-            { label: "OB + nivel de liquidity", detail: "Un OB situado justo debajo de un pool de liquidity BSL o SSL aumenta drásticamente la probabilidad de una reacción." },
+            { label: "OB + nivel de liquidez", detail: "Un OB situado justo debajo de un pool de liquidez BSL o SSL aumenta drásticamente la probabilidad de una reacción." },
             { label: "OB + sesgo de estructura", detail: "En tendencia alcista, solo tradea los Bullish OB. El OB debe ir en el sentido del mercado dominante." },
-            { label: "Confirmación de vela", detail: "Espera un rechazo en el OB (pin bar, engulfing) antes de entrar. No entres ciegamente en la zona." },
+            { label: "Confirmación de vela", detail: "Espera un rechazo en el OB (pin bar, envolvente) antes de entrar. No entres ciegamente en la zona." },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <div className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5" />

@@ -61,7 +61,7 @@ export default function ContentEs() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Esta lección te enseña a leer rápidamente el balance de fuerzas de una vela y a reconocer los 4 patrones clave (Marubozu, pin bar, doji, engulfing) que estructuran toda la price action.
+              Esta lección te enseña a leer rápidamente el balance de fuerzas de una vela y a reconocer los 4 patrones clave (Marubozu, pin bar, doji, envolvente) que estructuran toda la price action.
             </p>
           </div>
 
@@ -164,7 +164,7 @@ export default function ContentEs() {
               <li>- <span className="font-semibold text-zinc-100">Marubozu</span>: cuerpo grande, sin mecha = convicción máxima, señal de continuación</li>
               <li>- <span className="font-semibold text-zinc-100">Pin bar</span>: cuerpo reducido + mecha larga de un lado = rechazo de nivel, señal de reversión local</li>
               <li>- <span className="font-semibold text-zinc-100">Doji</span>: cuerpo casi inexistente = indecisión, señal de espera o reversión potencial en zona extrema</li>
-              <li>- <span className="font-semibold text-zinc-100">Engulfing</span>: cuerpo que envuelve a la vela anterior en sentido opuesto = cambio claro de poder</li>
+              <li>- <span className="font-semibold text-zinc-100">Envolvente</span>: cuerpo que envuelve a la vela anterior en sentido opuesto = cambio claro de poder</li>
             </ul>
           </section>
 
@@ -183,7 +183,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Vela verde en la cima de un impulso = agotamiento, reversión potencial</li>
               <li>- Vela verde aislada en medio de una caída = ruido, continuación bajista probable</li>
-              <li>- Vela verde en un range lateral = sin señal, oscilación normal</li>
+              <li>- Vela verde en un rango lateral = sin señal, oscilación normal</li>
               <li>- La vela analizada debe estar conectada con un nivel estructural para volverse una señal operativa</li>
             </ul>
           </section>
@@ -191,7 +191,7 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "Una vela se lee con 4 elementos: tamaño del cuerpo, mechas, posición del cierre, contexto adyacente.",
-              "4 patrones clave: Marubozu (convicción), pin bar (rechazo), doji (indecisión), engulfing (cambio de poder).",
+              "4 patrones clave: Marubozu (convicción), pin bar (rechazo), doji (indecisión), envolvente (cambio de poder).",
               "Lectura únicamente sobre velas completamente cerradas. La vela en curso queda provisional.",
               "El contexto estructural determina el valor de una señal: mismo patrón, valor distinto según su posición.",
             ]}
@@ -214,7 +214,7 @@ export default function ContentEs() {
               "Doji de indecisión, equilibrio entre los bandos",
               "Pin bar alcista, rechazo a la baja confirmado",
               "Marubozu bajista, dominación total de los vendedores",
-              "Engulfing bajista, cambio de poder hacia los vendedores",
+              "Envolvente bajista, cambio de poder hacia los vendedores",
             ]}
             correctIndex={1}
             explanation="Cuerpo reducido + mecha inferior 3 veces más larga que el cuerpo + cierre en el tercio superior = firma exacta de una pin bar alcista. El mensaje del mercado: intento de extensión bajista rápidamente rechazado por los compradores, que retoman el control antes del cierre. Señal de rechazo a la baja particularmente operativa si aparece al contacto con un nivel estructural."

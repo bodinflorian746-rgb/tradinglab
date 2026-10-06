@@ -165,7 +165,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Impulso claro: displacement direccional marcado (cuerpos significativos)</li>
               <li>- Retracement 30-60% (idealmente 0.5 a 0.618): profundidad tradeable</li>
-              <li>- Señal de rechazo al contacto (pin bar, engulfing, reacción inmediata)</li>
+              <li>- Señal de rechazo al contacto (pin bar, envolvente, reacción inmediata)</li>
               <li>- Sesgo de TF superior (H4 o Daily) alineado con el sentido del impulso</li>
             </ul>
           </section>
@@ -254,7 +254,7 @@ export default function ContentEs() {
               "Medir el impulso: 1.1820 - 1.1720 = 100 pips",
               "Calcular la posición del retroceso: 1.1820 - 1.1760 = 60 pips bajo el HH, o sea 60% del impulso",
               "Identificar el nivel Fibonacci: 60% corresponde a un nivel entre 0.5 (1.1770) y 0.618 (1.1758). El precio actual en 1.1760 se ubica prácticamente en el nivel 0.618, zona de entrada óptima",
-              "Esperar la señal de rechazo (pin bar, engulfing) al contacto de 1.1758-1.1760 para validar el setup",
+              "Esperar la señal de rechazo (pin bar, envolvente) al contacto de 1.1758-1.1760 para validar el setup",
               "Armar el plan: entrada long al cierre de la señal, stop loss bajo 1.1741 (nivel 0.786 + margen 10 pips), take profit en 1.1820 (HH anterior) o 1.1858 (extensión 138%). Tamaño de posición según el riesgo por trade adaptado al capital",
             ]}
           />

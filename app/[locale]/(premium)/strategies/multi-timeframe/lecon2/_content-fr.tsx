@@ -11,10 +11,10 @@ import { DirectionDominanteDiagram } from "@/app/components/charts/DirectionDomi
 import { HTFFilterDiagram } from "@/app/components/charts/HTFFilterDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Pourquoi analyser en multi-timeframe", disabled: false },
-  { id: "lecon2", title: "Le timeframe supérieur : le biais", disabled: false },
-  { id: "lecon3", title: "Le timeframe intermédiaire : la zone", disabled: false },
-  { id: "lecon4", title: "Le timeframe d'exécution : l'entrée", disabled: false },
+  { id: "lecon1", title: "Pourquoi faire une analyse multi-unités de temps", disabled: false },
+  { id: "lecon2", title: "L'unité de temps supérieure : le biais", disabled: false },
+  { id: "lecon3", title: "L'unité de temps intermédiaire : la zone", disabled: false },
+  { id: "lecon4", title: "L'unité de temps d'exécution : l'entrée", disabled: false },
   { id: "lecon5", title: "Le process complet", disabled: false },
 ];
 
@@ -33,7 +33,7 @@ export default function ContentFr() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Stratégies</Link>
           <span>/</span>
-          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Multi-timeframe Process</Link>
+          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Process multi-unités de temps</Link>
           <span>/</span>
           <span className="text-zinc-500">Leçon 2</span>
         </nav>
@@ -57,12 +57,12 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Le timeframe supérieur : définir la direction dominante
+            L&apos;unité de temps supérieure : définir la direction dominante
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Le timeframe supérieur construit le contexte avant toute exécution : il identifie la direction dominante, repère les zones importantes et montre où le marché pousse réellement. Il ne sert pas à entrer en position, il sert à éviter les trades pris contre la tendance de fond.
+              L&apos;unité de temps supérieure construit le contexte avant toute exécution : il identifie la direction dominante, repère les zones importantes et montre où le marché pousse réellement. Il ne sert pas à entrer en position, il sert à éviter les trades pris contre la tendance de fond.
             </p>
           </div>
 
@@ -114,7 +114,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-blue-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « Le M5 montre une bougie. Le HTF, lui, montre la direction réelle du marché. »
+                « Le M5 montre une bougie. L&apos;UT supérieure, elle, montre la direction réelle du marché. »
               </p>
             </div>
           </section>
@@ -123,9 +123,9 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Lecture multi-timeframe → cf. Leçon 1</li>
+              <li>- Lecture multi-unités de temps → cf. Leçon 1</li>
               <li>- Structure de marché, HH/HL et LH/LL → cf. module SMC</li>
-              <li>- Supports et résistances HTF → cf. module Support/Résistance</li>
+              <li>- Supports et résistances UT supérieure → cf. module Support/Résistance</li>
             </ul>
           </div>
 
@@ -138,7 +138,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un setup propre sur M15 peut échouer pour une seule raison : il va contre la direction dominante du HTF. Le petit timeframe montre souvent un simple retracement local. Le timeframe supérieur, lui, montre si le marché pousse réellement vers le haut... ou vers le bas.
+              Un setup propre sur M15 peut échouer pour une seule raison : il va contre la direction dominante de l&apos;UT supérieure. La petite unité de temps montre souvent un simple retracement local. L&apos;unité de temps supérieure, elle, montre si le marché pousse réellement vers le haut... ou vers le bas.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -149,7 +149,7 @@ export default function ContentFr() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Vérifier la direction HTF avant toute entrée</li>
+              <li>- Vérifier la direction de l&apos;UT supérieure avant toute entrée</li>
               <li>- Une impulsion locale n&apos;est pas un retournement global</li>
               <li>- Éviter les achats contre une tendance baissière claire</li>
               <li>- Observer quelle direction produit les impulsions les plus fortes</li>
@@ -195,27 +195,27 @@ export default function ContentFr() {
 
           {/* Bloc 5 — LE HTF SERT À FILTRER */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Le HTF sert à filtrer</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">L&apos;UT supérieure sert à filtrer</h2>
 
             <div className="my-8">
               <HTFFilterDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le HTF élimine les setups faibles avant même de chercher une entrée. Le trader ne cherche pas « un trade », il cherche un trade aligné avec la direction dominante.
+              L&apos;UT supérieure élimine les setups faibles avant même de chercher une entrée. Le trader ne cherche pas « un trade », il cherche un trade aligné avec la direction dominante.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : le Daily est baissier, la résistance Daily/H4 est à 1.1760, le prix actuel à 1.1715. Ce qui est recherché : un retour vers 1.1760, un rejet local, puis une continuation baissière. Ce qui est évité : un achat impulsif placé directement sous la résistance HTF.
+                EUR/USD : le Daily est baissier, la résistance Daily/H4 est à 1.1760, le prix actuel à 1.1715. Ce qui est recherché : un retour vers 1.1760, un rejet local, puis une continuation baissière. Ce qui est évité : un achat impulsif placé directement sous la résistance de l&apos;UT supérieure.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Commencer toujours par le HTF</li>
+              <li>- Commencer toujours par l&apos;UT supérieure</li>
               <li>- Identifier la direction dominante avant le setup</li>
-              <li>- Noter les zones HTF avant de descendre de timeframe</li>
+              <li>- Noter les zones de l&apos;UT supérieure avant de descendre d&apos;unité de temps</li>
               <li>- Filtrer les trades pris contre la tendance</li>
             </ul>
           </section>
@@ -224,7 +224,7 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan d&apos;application : un cas EUR/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le HTF se lit du plus grand vers le plus petit. Voici la séquence sur un cas EUR/USD, sans chercher d&apos;entrée, l&apos;objectif est seulement de poser le contexte.
+              L&apos;UT supérieure se lit du plus grand vers le plus petit. Voici la séquence sur un cas EUR/USD, sans chercher d&apos;entrée, l&apos;objectif est seulement de poser le contexte.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -242,13 +242,13 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 3. Préparer le scénario</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Attendu : une remontée vers la résistance, un rejet local, puis une confirmation plus tard sur le timeframe d&apos;exécution</li>
+                <li>- Attendu : une remontée vers la résistance, un rejet local, puis une confirmation plus tard sur l&apos;unité de temps d&apos;exécution</li>
                 <li>- Évité : un achat impulsif contre la tendance Daily</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  Daily = direction dominante · H4 = zone de réaction · LTF = exécution (Leçon 4)
+                  Daily = direction dominante · H4 = zone de réaction · UT inférieure = exécution (Leçon 4)
                 </p>
               </div>
             </div>
@@ -256,10 +256,10 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Le HTF définit la direction dominante du marché.",
+              "L'UT supérieure définit la direction dominante du marché.",
               "Une impulsion locale ne change pas forcément la tendance de fond.",
               "Les impulsions les plus fortes montrent qui contrôle réellement le marché.",
-              "Le HTF sert à filtrer les mauvais trades avant de chercher une entrée.",
+              "L'UT supérieure sert à filtrer les mauvais trades avant de chercher une entrée.",
             ]}
           />
 
@@ -267,7 +267,7 @@ export default function ContentFr() {
             description="Ouvre EUR/USD sur TradingView et apprends à reconnaître la vraie tendance du marché avant toute exécution."
             steps={[
               "Sur Daily : identifie la structure dominante, compare la force des impulsions et des corrections, et détermine la direction principale du marché.",
-              "Passe ensuite sur H4 : repère une zone HTF importante et note où le marché pourrait réagir.",
+              "Passe ensuite sur H4 : repère une zone importante de l'UT supérieure et note où le marché pourrait réagir.",
               "Écris enfin la direction dominante, les setups à privilégier et les setups à éviter.",
             ]}
           />
@@ -277,7 +277,7 @@ export default function ContentFr() {
             options={[
               "Le nombre total de bougies vertes",
               "Les impulsions les plus fortes et les rejets dominants",
-              "Le timeframe M1 uniquement",
+              "L'unité de temps M1 uniquement",
               "Une seule bougie impulsive isolée",
             ]}
             correctIndex={1}
@@ -313,7 +313,7 @@ export default function ContentFr() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Leçon 2 du module Multi-timeframe Process complétée.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Leçon 2 du module Process multi-unités de temps complétée.</p>
                 </div>
               </div>
             )}

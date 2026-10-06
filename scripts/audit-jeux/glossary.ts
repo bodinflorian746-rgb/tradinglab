@@ -55,7 +55,7 @@ for (const lang of ["fr", "es"] as const) {
 
 // 2. Termes retirés : textes FR / ES des modules (hors champs internes)
 const INTERNAL = new Set(["id", "macroContext", "htfBias", "direction", "chartShape", "category", "correctMistake", "decoyMistakes",
-  "difficulties", "showLines", "metric", "correctAnswer", "kind", "optimal", "metaOverride", "tag", "dotClass", "textClass", "color", "type"]);
+  "difficulties", "showLines", "metric", "correctAnswer", "kind", "optimal", "metaOverride", "tag", "tags", "dotClass", "textClass", "color", "type"]);
 const texts: { lang: Lang; where: string; text: string }[] = [];
 const collect = (lang: Lang, where: string, v: unknown) => {
   if (typeof v === "string") { texts.push({ lang, where, text: v }); return; }

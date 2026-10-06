@@ -22,7 +22,7 @@ export function IntermediateZoneDiagram({ className = "" }: IntermediateZoneDiag
 
         {/* Mini-encart HTF (haut droite) */}
         <rect x="540" y="20" width="140" height="46" rx="6" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
-        <text x="610" y="36" fill="#71717a" fontSize="8" fontWeight="700" textAnchor="middle" letterSpacing="1.5">HTF (H4)</text>
+        <text x="610" y="36" fill="#71717a" fontSize="8" fontWeight="700" textAnchor="middle" letterSpacing="1.5">UT supérieure (H4)</text>
         {/* Mini path baissier */}
         <path d="M555,52 L575,46 L595,57 L612,50 L630,60 L650,55 L668,62"
           stroke="#ef4444" strokeWidth="1.4" fill="none" strokeLinejoin="round" />
@@ -54,7 +54,7 @@ export function IntermediateZoneDiagram({ className = "" }: IntermediateZoneDiag
         <rect x="280" y="220" width="260" height="20" rx="10" fill="#09090b" />
         <rect x="280" y="220" width="260" height="20" rx="10" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
         <text x="410" y="233" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          Zone d&apos;intérêt — préparée depuis le HTF
+          Zone d&apos;intérêt — préparée depuis l&apos;UT supérieure
         </text>
 
         {/* Trait pointillé reliant l'encart HTF à la zone */}
@@ -74,7 +74,7 @@ export function IntermediateZoneDiagram({ className = "" }: IntermediateZoneDiag
           <p className="text-[12px] text-zinc-300 leading-snug mt-1 font-mono">1.1765 → 1.1780</p>
         </div>
         <p className="text-[13px] text-zinc-300 leading-snug text-center">
-          Zone héritée du contexte HTF — préparation tactique avant l'arrivée du prix.
+          Zone héritée du contexte de l&apos;UT supérieure — préparation tactique avant l&apos;arrivée du prix.
         </p>
       </div>
 
@@ -86,7 +86,7 @@ export function IntermediateZoneDiagram({ className = "" }: IntermediateZoneDiag
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">Zone héritée du contexte HTF</span>
+          <span className="text-[10px] text-zinc-500">Zone héritée du contexte de l&apos;UT supérieure</span>
         </div>
       </div>
     </div>

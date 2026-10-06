@@ -15,7 +15,7 @@ function ContentFr() {
       subtitle="Un trade sans plan, c'est une décision émotionnelle. Le plan de trade transforme ton analyse en actions précises, et élimine l'improvisation au pire moment."
       duration="20 min"
       lessonNumber={8}
-      prev={{ href: "/formations/intermediaire/lecon7", label: "Leçon 7 : Multi-Timeframe" }}
+      prev={{ href: "/formations/intermediaire/lecon7", label: "Leçon 7 : Multi-unités de temps" }}
       next={{ href: "/formations/intermediaire/lecon9", label: "Leçon 9 : Fibonacci" }}
     >
 

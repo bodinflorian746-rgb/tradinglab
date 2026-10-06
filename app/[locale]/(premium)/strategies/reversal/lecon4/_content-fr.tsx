@@ -12,7 +12,7 @@ import SLManagementProgressionDiagram from "@/app/components/charts/SLManagement
 
 const LESSONS = [
   { id: "lecon1", slug: "lecon1", title: "Double top / Double bottom : la signature du retournement", duration: "16 min", disabled: false },
-  { id: "lecon2", slug: "lecon2", title: "Head & Shoulders : le retournement majeur", duration: "18 min", disabled: false },
+  { id: "lecon2", slug: "lecon2", title: "Épaule-tête-épaule : le retournement majeur", duration: "18 min", disabled: false },
   { id: "lecon3", slug: "lecon3", title: "Divergence RSI : quand le momentum trahit la tendance", duration: "17 min", disabled: false },
   { id: "lecon4", slug: "lecon4", title: "Trader un reversal : checklist d’invalidation", duration: "18 min", disabled: false },
 ];
@@ -61,7 +61,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Entrer sur un reversal est relativement simple : trois patterns sont disponibles, Double top, H&amp;S et Divergence RSI. Le vrai problème : savoir quand le pattern a échoué. Cette leçon fournit une checklist pratique pour identifier une invalidation et couper avant de rendre le compte.
+              Entrer sur un reversal est relativement simple : trois patterns sont disponibles, Double top, ETE et Divergence RSI. Le vrai problème : savoir quand le pattern a échoué. Cette leçon fournit une checklist pratique pour identifier une invalidation et couper avant de rendre le compte.
             </p>
           </div>
 
@@ -124,7 +124,7 @@ export default function ContentFr() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Double Top / Double Bottom → cf. Stratégie Reversal L1</li>
-              <li>- Head &amp; Shoulders → cf. Stratégie Reversal L2</li>
+              <li>- Épaule-tête-épaule → cf. Stratégie Reversal L2</li>
               <li>- Divergence RSI → cf. Stratégie Reversal L3</li>
             </ul>
           </div>
@@ -132,8 +132,8 @@ export default function ContentFr() {
           {/* Bloc 3 — POURQUOI 70% ÉCHOUENT */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Pourquoi 70% des reversals échouent pour les retails</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Les patterns de retournement comme le Double top, le H&amp;S ou la divergence RSI ont un taux de réussite réel autour de 55-65% quand ils sont propres. Pour la majorité des retails, ce taux tombe à 30-40%. Pas parce que les patterns sont mauvais. Parce que les retails ne savent pas reconnaître quand le pattern a foiré.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Lors d&apos;une entrée sur un double top où le prix remonte au-dessus de la neckline, le cerveau humain présente deux réactions possibles. Soit la sortie est immédiate et la petite perte est encaissée. Soit le retail se dit : &apos;ça va revenir, j&apos;ai vu le pattern&apos;. Le retail moyen choisit la deuxième option. Sur 10 trades comme ça, il en sauve peut-être 2 et il rend 8 avec des pertes 3 à 5 fois plus grosses que prévu.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Les patterns de retournement comme le Double top, l&apos;ETE ou la divergence RSI ont un taux de réussite réel autour de 55-65% quand ils sont propres. Pour la majorité des retails, ce taux tombe à 30-40%. Pas parce que les patterns sont mauvais. Parce que les retails ne savent pas reconnaître quand le pattern a foiré.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Lors d&apos;une entrée sur un double top où le prix remonte au-dessus de la ligne de cou, le cerveau humain présente deux réactions possibles. Soit la sortie est immédiate et la petite perte est encaissée. Soit le retail se dit : &apos;ça va revenir, j&apos;ai vu le pattern&apos;. Le retail moyen choisit la deuxième option. Sur 10 trades comme ça, il en sauve peut-être 2 et il rend 8 avec des pertes 3 à 5 fois plus grosses que prévu.</p>
             <p className="text-zinc-300 leading-relaxed text-sm">Un trader pro a une checklist d&apos;invalidation. Pas une intuition. Pas un feeling. Une liste mécanique de critères qui déclenchent la coupe dès qu&apos;ils s&apos;allument. Pas de débat. Pas de &apos;j&apos;attends une bougie de plus&apos;. La sortie est immédiate, la perte est actée, le trade suivant est étudié. Cette leçon présente cette checklist.</p>
           </section>
 
@@ -146,11 +146,11 @@ export default function ContentFr() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Une seule de ces 5 conditions allumée suffit à déclencher la sortie immédiate. Pas de débat, pas d&apos;attente d&apos;une bougie supplémentaire.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Cassure rejetée.</span> <span className="text-zinc-300">Le prix re-clôture au-dessus (ou au-dessous) de la neckline dans les 1-3 bougies suivant l&apos;entrée. Pattern invalidé, sortie immédiate.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Bougie de rejet violente.</span> <span className="text-zinc-300">Une grosse bougie verte englobant les 2-3 bougies baissières précédentes = signal d&apos;absorption. Sortie immédiate même sans re-cassure de neckline.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Cassure rejetée.</span> <span className="text-zinc-300">Le prix re-clôture au-dessus (ou au-dessous) de la ligne de cou dans les 1-3 bougies suivant l&apos;entrée. Pattern invalidé, sortie immédiate.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Bougie de rejet violente.</span> <span className="text-zinc-300">Une grosse bougie verte englobant les 2-3 bougies baissières précédentes = signal d&apos;absorption. Sortie immédiate même sans re-cassure de ligne de cou.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Volume incohérent.</span> <span className="text-zinc-300">Cassure initiale sans volume particulier + reprise avec gros volume = lecture inversée. Pattern faible, sortie immédiate.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. News imprévue dans la fenêtre.</span> <span className="text-zinc-300">News macro qui sort pendant le trade (Fed minutes, géopolitique, données inattendues). Sortie par précaution requise, les news détruisent les patterns.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm md:col-span-2"><span className="text-white font-semibold">5. Temps écoulé sans confirmation.</span> <span className="text-zinc-300">Après 5-8 bougies sur le timeframe d&apos;entrée (H1 ou H4) sans progression vers le TP, pattern faible. Sortie pas obligatoire, mais SL resserré au break-even minimum. Si le pattern fonctionnait, ça serait déjà parti.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Annonce imprévue dans la fenêtre.</span> <span className="text-zinc-300">Annonce macro qui sort pendant le trade (Fed minutes, géopolitique, données inattendues). Sortie par précaution requise, les annonces détruisent les patterns.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm md:col-span-2"><span className="text-white font-semibold">5. Temps écoulé sans confirmation.</span> <span className="text-zinc-300">Après 5-8 bougies sur l&apos;unité de temps d&apos;entrée (H1 ou H4) sans progression vers le TP, pattern faible. Sortie pas obligatoire, mais SL resserré au break-even minimum. Si le pattern fonctionnait, ça serait déjà parti.</span></div>
             </div>
           </section>
 
@@ -177,8 +177,8 @@ export default function ContentFr() {
             {/* Cas 1 */}
             <div className="mb-6 last:mb-0">
               <h3 className="text-base font-semibold text-zinc-100 mb-2">Cas 1 : Double top sur EUR/USD qui s&apos;invalide</h3>
-              <p className="text-zinc-300 leading-relaxed text-sm mb-2">Entrée short EUR/USD prise à 1.1795 après cassure de la neckline, scénario de la Leçon 4.1. SL à 1.1835, TP à 1.1715. Position ouverte depuis 30 minutes. Le prix descend d&apos;abord à 1.1780, puis remonte vivement. Bougie H1 qui clôture à 1.1810.</p>
-              <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le prix a re-cassé la neckline à 1.1800 vers le haut. Le double top est invalidé, critère 1. La bougie de remontée est large et englobe les 2 bougies baissières précédentes, critère 2. Pas de news imminente. 2 critères sur 5 sont allumés.</p>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-2">Entrée short EUR/USD prise à 1.1795 après cassure de la ligne de cou, scénario de la Leçon 4.1. SL à 1.1835, TP à 1.1715. Position ouverte depuis 30 minutes. Le prix descend d&apos;abord à 1.1780, puis remonte vivement. Bougie H1 qui clôture à 1.1810.</p>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le prix a re-cassé la ligne de cou à 1.1800 vers le haut. Le double top est invalidé, critère 1. La bougie de remontée est large et englobe les 2 bougies baissières précédentes, critère 2. Pas d&apos;annonce imminente. 2 critères sur 5 sont allumés.</p>
               <p className="text-sm text-zinc-300 leading-relaxed border-l-2 border-emerald-500/50 pl-3 py-1">
                 <span className="font-semibold text-emerald-400">Action :</span> la position est coupée à 1.1810. Perte : 15 pips au lieu des 40 pips prévus en cas d&apos;attente du SL. 25 pips sauvés.
               </p>
@@ -188,9 +188,9 @@ export default function ContentFr() {
 
             {/* Cas 2 */}
             <div className="mb-6 last:mb-0">
-              <h3 className="text-base font-semibold text-zinc-100 mb-2">Cas 2 : H&amp;S sur XAU qui se transforme en continuation</h3>
-              <p className="text-zinc-300 leading-relaxed text-sm mb-2">Entrée short XAU/USD prise à 4 570$ après cassure neckline d&apos;un H&amp;S, scénario Leçon 4.2. SL à 4 630$, TP à 4 480$. Le prix descend bien à 4 540$ pendant 2 bougies, puis remonte fortement.</p>
-              <p className="text-zinc-300 leading-relaxed text-sm mb-3">Bougie H1 qui clôture à 4 595$, au-dessus de la neckline mais sous l&apos;épaule droite. Vérification : cassure rejetée, critère 1, volume cohérent sur la remontée, critère 3. Le pattern H&amp;S est en train de se transformer en simple pause dans la tendance haussière. Pas d&apos;attente que le prix re-teste l&apos;épaule droite à 4 625$.</p>
+              <h3 className="text-base font-semibold text-zinc-100 mb-2">Cas 2 : ETE sur XAU qui se transforme en continuation</h3>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-2">Entrée short XAU/USD prise à 4 570$ après cassure ligne de cou d&apos;un ETE, scénario Leçon 4.2. SL à 4 630$, TP à 4 480$. Le prix descend bien à 4 540$ pendant 2 bougies, puis remonte fortement.</p>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-3">Bougie H1 qui clôture à 4 595$, au-dessus de la ligne de cou mais sous l&apos;épaule droite. Vérification : cassure rejetée, critère 1, volume cohérent sur la remontée, critère 3. Le pattern ETE est en train de se transformer en simple pause dans la tendance haussière. Pas d&apos;attente que le prix re-teste l&apos;épaule droite à 4 625$.</p>
               <p className="text-sm text-zinc-300 leading-relaxed border-l-2 border-emerald-500/50 pl-3 py-1">
                 <span className="font-semibold text-emerald-400">Action :</span> la position est coupée à 4 595$. Perte : 25$ par unité au lieu des 60$ prévus. Plus de la moitié du risque est sauvée.
               </p>
@@ -215,9 +215,9 @@ export default function ContentFr() {
             <div className="my-8">
               <SLManagementProgressionDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Lorsqu&apos;un critère de la checklist s&apos;active, la sortie est immédiate, manuelle, à la clôture de la bougie en cours sur le timeframe d&apos;entrée, H1 ou H4. Pas avant la clôture, sinon une sortie trop précoce reste possible sur un faux signal. Pas la bougie d&apos;après, sinon trop de risque est rendu. À la clôture confirmée.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Lorsqu&apos;un critère de la checklist s&apos;active, la sortie est immédiate, manuelle, à la clôture de la bougie en cours sur l&apos;unité de temps d&apos;entrée, H1 ou H4. Pas avant la clôture, sinon une sortie trop précoce reste possible sur un faux signal. Pas la bougie d&apos;après, sinon trop de risque est rendu. À la clôture confirmée.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le piège émotionnel à éviter : &apos;j&apos;attends une bougie de plus pour confirmer&apos;. NON. Le SL est déjà placé dès l&apos;entrée, donc la perte max est limitée. Mais si une bougie supplémentaire est attendue à chaque invalidation, une coupe à -0,5R (à la moitié du SL) se transforme en perte complète à -1R (au SL). Sur 10 trades qui foirent, c&apos;est la différence entre -5R et -10R. La règle pro : la première confirmation déclenche l&apos;action.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm">En l&apos;absence de surveillance active, le SL doit être resserré après l&apos;entrée. Pour Double top ou H&amp;S, le SL se déplace de sa position classique (au-dessus de la tête ou de l&apos;épaule) vers la neckline elle-même. Pour divergence RSI, il se déplace au dernier creux structurel. Le marché coupera automatiquement si le pattern s&apos;invalide. Un peu de marge est sacrifiée en échange de la paix mentale, mais le SL initial reste TOUJOURS en place dès l&apos;entrée.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">En l&apos;absence de surveillance active, le SL doit être resserré après l&apos;entrée. Pour Double top ou ETE, le SL se déplace de sa position classique (au-dessus de la tête ou de l&apos;épaule) vers la ligne de cou elle-même. Pour divergence RSI, il se déplace au dernier creux structurel. Le marché coupera automatiquement si le pattern s&apos;invalide. Un peu de marge est sacrifiée en échange de la paix mentale, mais le SL initial reste TOUJOURS en place dès l&apos;entrée.</p>
           </section>
 
           {/* Bloc 8 — CALCUL RETAIL META */}
@@ -247,7 +247,7 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "70% des reversals retails échouent parce que le trader ne sait pas reconnaître une invalidation. Pas parce que le pattern est mauvais.",
-              "La checklist 5 critères : cassure rejetée, bougie de rejet violente, volume incohérent, news imprévue, temps écoulé.",
+              "La checklist 5 critères : cassure rejetée, bougie de rejet violente, volume incohérent, annonce imprévue, temps écoulé.",
               "La sortie se fait à la clôture de la bougie en cours. Pas avant. Pas la bougie d’après. À la clôture.",
               "Couper à l’invalidation = réduire la perte de 50% par rapport au SL initial. Sur 100 trades, ça change la rentabilité globale.",
             ]}
@@ -256,7 +256,7 @@ export default function ContentFr() {
           <LessonExercice
             description="Tu es entré short XAU/USD à 4 720$ sur un double top. SL à 4 760$, TP à 4 640$. Position ouverte depuis 1 heure. Le prix descend à 4 705$, puis remonte fortement. Bougie H1 qui clôture à 4 745$ avec un volume 2x supérieur à la moyenne. Que fais-tu ?"
             steps={[
-              "Vérifier le critère 1, cassure rejetée : le prix a re-cassé la neckline à 4 720$ vers le haut, OUI",
+              "Vérifier le critère 1, cassure rejetée : le prix a re-cassé la ligne de cou à 4 720$ vers le haut, OUI",
               "Vérifier le critère 2, bougie de rejet violente : large bougie verte qui clôture à 4 745$, OUI",
               "Vérifier le critère 3, volume incohérent : volume 2x supérieur pendant la remontée, OUI",
               "3 critères sur 5 allumés : aucun débat, tu coupes immédiatement à la clôture",
@@ -265,15 +265,15 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Quel est le critère principal d’invalidation d’un double top ou d’un H&S après l’entrée ?"
+            question="Quel est le critère principal d’invalidation d’un double top ou d’un ETE après l’entrée ?"
             options={[
               "Le prix descend trop vite vers le TP",
-              "Le prix re-clôture au-dessus de la neckline dans les 1-3 bougies suivantes",
+              "Le prix re-clôture au-dessus de la ligne de cou dans les 1-3 bougies suivantes",
               "Le volume baisse",
               "Le RSI repasse au-dessus de 50",
             ]}
             correctIndex={1}
-            explanation="Le critère 1, cassure rejetée, est le déclencheur principal. Si le prix re-clôture au-dessus de la neckline dans les 1-3 bougies qui suivent l’entrée, le pattern est invalidé. Le marché signale littéralement l’invalidation. La sortie est immédiate."
+            explanation="Le critère 1, cassure rejetée, est le déclencheur principal. Si le prix re-clôture au-dessus de la ligne de cou dans les 1-3 bougies qui suivent l’entrée, le pattern est invalidé. Le marché signale littéralement l’invalidation. La sortie est immédiate."
           />
 
           <LessonQuiz
@@ -285,7 +285,7 @@ export default function ContentFr() {
               "Au SL initial sans rien changer",
             ]}
             correctIndex={1}
-            explanation="La sortie se fait à la clôture de la bougie en cours sur le timeframe d’entrée. Avant la clôture = risque de sortir sur un faux signal. La bougie d’après = trop de risque rendu. La règle pro : première confirmation déclenche l’action."
+            explanation="La sortie se fait à la clôture de la bougie en cours sur l’unité de temps d’entrée. Avant la clôture = risque de sortir sur un faux signal. La bougie d’après = trop de risque rendu. La règle pro : première confirmation déclenche l’action."
           />
 
           <LessonQuiz

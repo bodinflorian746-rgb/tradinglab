@@ -36,7 +36,7 @@ export default function ContentEs() {
         <h2 className="text-lg font-semibold text-white mb-3">Cómo hacer un backtest riguroso</h2>
         <div className="space-y-2">
           {[
-            { step: "1", text: "Define tu estrategia con precisión: ¿qué confluencias se requieren? ¿En qué timeframe? ¿En qué Killzones? Sé específico, una estrategia vaga produce un backtest vago." },
+            { step: "1", text: "Define tu estrategia con precisión: ¿qué confluencias se requieren? ¿En qué temporalidad? ¿En qué Killzones? Sé específico, una estrategia vaga produce un backtest vago." },
             { step: "2", text: "Usa TradingView en modo Replay (flecha 'play' arriba) o Forex Tester. Retrocede 6 a 12 meses y avanza vela por vela." },
             { step: "3", text: "Aplica tu estrategia exactamente como lo harías en live: identifica los setups, marca la entrada, el SL y el TP antes de que se forme la siguiente vela." },
             { step: "4", text: "Registra cada trade en tu journal: confluencias presentes, resultado en R, screenshot." },
@@ -56,7 +56,7 @@ export default function ContentEs() {
           <span className="text-sm font-bold text-amber-400 tracking-wide">Realidad del retail</span>
         </div>
         <p className="text-base text-zinc-300 leading-relaxed">
-          Si haces backtest con un capital de 200 a 1 000 €, usa los % reales de tu grilla de risk management (cf. Debutante lección 8), no la regla teórica del 1%. Backtestear con 1% en una cuenta de 300 € equivale a arriesgar 3 € por trade, inaplicable con los lotes disponibles. Un backtest calibrado a tu capital real te dará resultados explotables en live, no cifras desconectadas de tu realidad.
+          Si haces backtest con un capital de 200 a 1 000 €, usa los % reales de tu grilla de gestión de riesgos (cf. Debutante lección 8), no la regla teórica del 1%. Backtestear con 1% en una cuenta de 300 € equivale a arriesgar 3 € por trade, inaplicable con los lotes disponibles. Un backtest calibrado a tu capital real te dará resultados explotables en live, no cifras desconectadas de tu realidad.
         </p>
       </div>
 
@@ -92,10 +92,10 @@ export default function ContentEs() {
         <h2 className="text-lg font-semibold text-white mb-3">Los errores de backtesting a evitar</h2>
         <div className="space-y-2.5">
           {[
-            { label: "Hindsight bias (sesgo retrospectivo)", detail: "Creer que 'obviamente' habrías visto el setup porque ves las velas pasadas. El replay vela por vela es el único remedio." },
+            { label: "Sesgo retrospectivo", detail: "Creer que 'obviamente' habrías visto el setup porque ves las velas pasadas. El replay vela por vela es el único remedio." },
             { label: "Over-fitting", detail: "Optimizar tu estrategia hasta que rinde perfectamente en el pasado. En live, esa estrategia sobreajustada a los datos históricos fracasa." },
             { label: "Ignorar las comisiones", detail: "Cada trade tiene un costo (spread, comisión). Inclúyelos en tu backtest: pueden transformar un edge positivo en uno negativo." },
-            { label: "Backtest en muy pocas condiciones", detail: "Un backtest sobre 3 meses de alza no dice nada sobre la performance en range o en baja. Testea sobre al menos 12 meses con distintas condiciones." },
+            { label: "Backtest en muy pocas condiciones", detail: "Un backtest sobre 3 meses de alza no dice nada sobre la performance en rango o en baja. Testea sobre al menos 12 meses con distintas condiciones." },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-red-400 shrink-0 mt-0.5">

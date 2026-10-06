@@ -12,7 +12,7 @@ const LESSONS = [
   { id: "lecon1", title: "Hawkish vs Dovish",                       href: "/formations/macro/intermediaire/lecon1", disabled: false },
   { id: "lecon2", title: "Entender el calendario económico",         href: "/formations/macro/intermediaire/lecon2", disabled: false },
   { id: "lecon3", title: "CPI, PPI e inflación",                     href: "/formations/macro/intermediaire/lecon3", disabled: false },
-  { id: "lecon4", title: "Sesiones de trading y liquidity",          href: "/formations/macro/intermediaire/lecon4", disabled: false },
+  { id: "lecon4", title: "Sesiones de trading y liquidez",          href: "/formations/macro/intermediaire/lecon4", disabled: false },
   { id: "lecon5", title: "Las correlaciones",                        href: "/formations/macro/intermediaire/lecon5", disabled: false },
   { id: "lecon6", title: "Construir tu sesgo semanal",               href: "/formations/macro/intermediaire/lecon6", disabled: false },
 ];
@@ -203,9 +203,9 @@ export default function ContentEs() {
             </p>
             <div className="space-y-3 mb-5">
               {[
-                { bold: "Paso 1. Calendario (5 min)", rest: "Abres la semana. Anotas las news 3 estrellas. Identificas los clusters." },
+                { bold: "Paso 1. Calendario (5 min)", rest: "Abres la semana. Anotas las noticias 3 estrellas. Identificas los clusters." },
                 { bold: "Paso 2. Tono macro (5 min)", rest: "Miras la última comunicación Fed / BCE. ¿Hawkish, dovish o neutral?" },
-                { bold: "Paso 3. DXY (3 min)", rest: "¿El dólar está alcista, bajista o en range?" },
+                { bold: "Paso 3. DXY (3 min)", rest: "¿El dólar está alcista, bajista o en rango?" },
                 { bold: "Paso 4. Correlaciones (3 min)", rest: "¿XAU/USD confirma al DXY? ¿BTC/USD sigue al Nasdaq? ¿Se está rompiendo alguna correlación?" },
                 { bold: "Paso 5. Sesgo por activo (4 min)", rest: "Para cada activo que operas: long / short / neutral." },
               ].map((item, i) => (
@@ -253,7 +253,7 @@ export default function ContentEs() {
                 "CPI miércoles a las 14h30",
                 "NFP viernes a las 14h30",
                 "DXY alcista desde hace 3 semanas",
-                "XAU/USD en range",
+                "XAU/USD en rango",
                 "BTC/USD correlacionado con el Nasdaq, pero sin dirección clara",
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
@@ -268,7 +268,7 @@ export default function ContentEs() {
             <div className="space-y-2 mb-5">
               {[
                 { asset: "EUR/USD", biais: "sesgo short", detail: "DXY fuerte + Fed hawkish." },
-                { asset: "XAU/USD", biais: "sesgo neutral / short ligero", detail: "Dólar fuerte, pero range técnico." },
+                { asset: "XAU/USD", biais: "sesgo neutral / short ligero", detail: "Dólar fuerte, pero rango técnico." },
                 { asset: "Nasdaq", biais: "sesgo short", detail: "Tasas altas = presión sobre la tech." },
                 { asset: "BTC/USD", biais: "sesgo neutral", detail: "Correlación Nasdaq, pero estructura no clara." },
               ].map((item) => (
@@ -329,7 +329,7 @@ export default function ContentEs() {
               <span className="font-semibold text-zinc-200">A la inversa</span>:
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              XAU/USD baja 20$ el lunes sin news mayor. Tu sesgo no está necesariamente invalidado. Quizás sea solo un pullback.
+              XAU/USD baja 20$ el lunes sin noticia mayor. Tu sesgo no está necesariamente invalidado. Quizás sea solo un pullback.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               <span className="font-semibold text-zinc-200">La diferencia</span>:
@@ -360,7 +360,7 @@ export default function ContentEs() {
                 {
                   bold: "Trampa 1",
                   desc: ": construir un sesgo sin mirar el calendario.",
-                  consequence: "Te sorprenderán las news.",
+                  consequence: "Te sorprenderán las noticias.",
                 },
                 {
                   bold: "Trampa 2",

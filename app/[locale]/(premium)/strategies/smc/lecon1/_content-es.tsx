@@ -149,7 +149,7 @@ export default function ContentEs() {
               <li>- Amplitud mínima: 50-80 pips EUR/USD H4, 50-100$ XAU/USD H4</li>
               <li>- Vela de pivote clara con mecha significativa de rechazo</li>
               <li>- Reacción post-swing: retroceso ≥ 20% en dirección opuesta</li>
-              <li>- Visibilidad multi-timeframe: visible Daily y H4</li>
+              <li>- Visibilidad multitemporal: visible Daily y H4</li>
             </ul>
           </section>
 
@@ -169,7 +169,7 @@ export default function ContentEs() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-white font-semibold text-sm mb-2">Estructura interna (M15 - H1)</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- Movimientos visibles en timeframes cortos</li>
+                  <li>- Movimientos visibles en temporalidades cortas</li>
                   <li>- Puede mostrar HH/HL dentro de un LL/LH externo</li>
                   <li>- Tradear en el sentido externo = alineación institucional</li>
                 </ul>
@@ -177,7 +177,7 @@ export default function ContentEs() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-white font-semibold text-sm mb-2">Estructura externa (H4 - Daily)</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- Swings mayores visibles en timeframes largos</li>
+                  <li>- Swings mayores visibles en temporalidades largas</li>
                   <li>- Da el sesgo direccional a varios días/semanas</li>
                   <li>- Ninguna posición institucional va en contra sin BOS + CHoCH</li>
                 </ul>
@@ -201,16 +201,16 @@ export default function ContentEs() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-emerald-400 font-semibold text-sm mb-2">Acumulación</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- Range lateral tras tendencia bajista</li>
+                  <li>- Rango lateral tras tendencia bajista</li>
                   <li>- Amplitud reducida, false breakouts frecuentes</li>
-                  <li>- Setups range + breakout alcista post-confirmación</li>
+                  <li>- Setups rango + breakout alcista post-confirmación</li>
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-amber-400 font-semibold text-sm mb-2">Manipulación (falso breakout)</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- Sweep de liquidity por encima o debajo del range</li>
-                  <li>- Mecha rompe, retorno brutal al interior del range</li>
+                  <li>- Barrido de liquidez por encima o debajo del rango</li>
+                  <li>- Mecha rompe, retorno brutal al interior del rango</li>
                   <li>- Trampa para recoger los stops retail antes del movimiento real</li>
                 </ul>
               </div>
@@ -235,7 +235,7 @@ export default function ContentEs() {
               <li><span className="font-semibold text-white">Daily o Weekly</span>, identificar los 3-5 últimos swings mayores (estructura externa)</li>
               <li><span className="font-semibold text-white">Clasificar la fase</span>, acumulación, expansión, o distribución</li>
               <li><span className="font-semibold text-white">H4</span>, verificar la alineación de la estructura interna con la estructura externa</li>
-              <li><span className="font-semibold text-white">H1 o M15</span>, pre-identificar zonas de interés (HL, liquidity, OB potenciales)</li>
+              <li><span className="font-semibold text-white">H1 o M15</span>, pre-identificar zonas de interés (HL, liquidez, OB potenciales)</li>
             </ol>
           </section>
 
@@ -315,7 +315,7 @@ export default function ContentEs() {
           />
 
           <LessonQuiz
-            question="En un setup SMC, ¿qué timeframe dicta la dirección global del trade?"
+            question="En un setup SMC, ¿qué temporalidad dicta la dirección global del trade?"
             options={[
               "M15, que da la señal más reciente",
               "H4, que combina dirección y timing",

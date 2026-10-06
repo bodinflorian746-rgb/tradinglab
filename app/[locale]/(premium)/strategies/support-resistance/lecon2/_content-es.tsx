@@ -33,7 +33,7 @@ export default function ContentEs() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Estrategias</Link>
           <span>/</span>
-          <Link href="/strategies/support-resistance" className="hover:text-zinc-400 transition-colors">Support / Resistance &amp; Range</Link>
+          <Link href="/strategies/support-resistance" className="hover:text-zinc-400 transition-colors">Support / Resistance &amp; rango</Link>
           <span>/</span>
           <span className="text-zinc-500">Lección 2</span>
         </nav>
@@ -62,7 +62,7 @@ export default function ContentEs() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Esta lección enseña a distinguir un nivel real de una línea decorativa mediante 4 criterios de calificación, la jerarquía multi-timeframe y la búsqueda de confluencias.
+              Esta lección enseña a distinguir un nivel real de una línea decorativa mediante 4 criterios de calificación, la jerarquía multitemporal y la búsqueda de confluencias.
             </p>
           </div>
 
@@ -125,7 +125,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Identificación de zonas S/R → ver Estrategia SR L1</li>
               <li>- Noción de confluencia → ver Formación Trading L3</li>
-              <li>- Timeframes → ver Formación Trading L1</li>
+              <li>- Temporalidades → ver Formación Trading L1</li>
             </ul>
           </div>
 
@@ -171,14 +171,14 @@ export default function ContentEs() {
 
           {/* Bloc 5 — HIÉRARCHIE MULTI-TIMEFRAME */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Jerarquía multi-timeframe</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Jerarquía multitemporal</h2>
 
             <div className="my-8">
               <SRHierarchyDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La fuerza de un nivel también depende del timeframe en el que está trazado. Cuanto más elevado es el timeframe, más defendida está la zona institucionalmente.
+              La fuerza de un nivel también depende de la temporalidad en la que está trazado. Cuanto más elevada es la temporalidad, más defendida está la zona institucionalmente.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -192,7 +192,7 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "Una zona tradeable valida 4 criterios: 2 toques mínimo, reacciones claras, frescura reciente, confluencia con otros elementos estructurales.",
-              "Jerarquía de fuerza por timeframe: Daily > H4 > H1 > M30/M15.",
+              "Jerarquía de fuerza por temporalidad: Daily > H4 > H1 > M30/M15.",
               "Las confluencias (nivel redondo, Fibonacci, MM, Order Block) multiplican la fuerza. 2 confluencias o más = prioridad.",
               "Un nivel M15 aislado no aguanta solo. Sirve para el timing de entrada al contacto con un nivel superior.",
             ]}
@@ -212,13 +212,13 @@ export default function ContentEs() {
           <LessonQuiz
             question="Una zona visible únicamente en M15, tocada 2 veces en el último día, sin alineación con H4 o Daily, ¿puede constituir una referencia principal para un setup?"
             options={[
-              "Sí, 2 toques bastan sin importar el timeframe",
+              "Sí, 2 toques bastan sin importar la temporalidad",
               "No, los niveles M15 aislados sirven únicamente para el timing de entrada al contacto con un nivel superior",
               "Sí, siempre que haya una confluencia Fibonacci",
               "No, hace falta mínimo 5 toques en M15",
             ]}
             correctIndex={1}
-            explanation="Los niveles M15 aislados tienen una vida útil reducida y pueden ser ignorados o rotos por el mercado sin verdadera contestación. La jerarquía por timeframe coloca Daily > H4 > H1 > M30/M15. Un nivel M15 sirve únicamente como punto de timing de entrada al contacto con una zona superior, nunca como referencia principal, incluso con 2 toques recientes."
+            explanation="Los niveles M15 aislados tienen una vida útil reducida y pueden ser ignorados o rotos por el mercado sin verdadera contestación. La jerarquía por temporalidad coloca Daily > H4 > H1 > M30/M15. Un nivel M15 sirve únicamente como punto de timing de entrada al contacto con una zona superior, nunca como referencia principal, incluso con 2 toques recientes."
           />
 
         </div>
@@ -250,7 +250,7 @@ export default function ContentEs() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Lección terminada</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Lección 2 del módulo Support / Resistance &amp; Range completada.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Lección 2 del módulo Support / Resistance &amp; rango completada.</p>
                 </div>
               </div>
             )}

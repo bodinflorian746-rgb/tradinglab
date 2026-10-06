@@ -7,13 +7,13 @@ export function TrendDiagram({ className = "", locale = "fr" }: TrendDiagramProp
   const labels = locale === "es"
     ? {
         haussier: "ALCISTA",
-        range: "RANGE",
+        range: "RANGO",
         baissier: "BAJISTA",
         tendanceAcheteuse: "Tendencia compradora",
         marcheEquilibre: "Mercado en equilibrio",
         tendanceVendeuse: "Tendencia vendedora",
         mobHaussier: "ALCISTA ↗",
-        mobRange: "RANGE ↔",
+        mobRange: "RANGO ↔",
         mobBaissier: "BAJISTA ↘",
         sommetsCreuxPlusHauts: "Picos y valles más altos",
         oscillation: "Oscilación entre 2 niveles",

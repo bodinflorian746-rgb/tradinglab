@@ -12,10 +12,10 @@ import { IntermediateZoneDiagram } from "@/app/components/charts/IntermediateZon
 import { LTFExecutionDiagram } from "@/app/components/charts/LTFExecutionDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Por qué analizar en multi-timeframe", disabled: false },
-  { id: "lecon2", title: "El timeframe superior: el sesgo", disabled: false },
-  { id: "lecon3", title: "El timeframe intermedio: la zona", disabled: false },
-  { id: "lecon4", title: "El timeframe de ejecución: la entrada", disabled: false },
+  { id: "lecon1", title: "Por qué hacer un análisis multitemporal", disabled: false },
+  { id: "lecon2", title: "La temporalidad superior: el sesgo", disabled: false },
+  { id: "lecon3", title: "La temporalidad intermedia: la zona", disabled: false },
+  { id: "lecon4", title: "La temporalidad de ejecución: la entrada", disabled: false },
   { id: "lecon5", title: "El proceso completo", disabled: false },
 ];
 
@@ -34,7 +34,7 @@ export default function ContentEs() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Estrategias</Link>
           <span>/</span>
-          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Multi-timeframe Process</Link>
+          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Process multitemporal</Link>
           <span>/</span>
           <span className="text-zinc-500">Lección 1</span>
         </nav>
@@ -58,12 +58,12 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Por qué analizar en multi-timeframe
+            Por qué hacer un análisis multitemporal
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Esta lección establece la lógica del multi-timeframe: por qué operar un solo gráfico te deja ciego, y el rol concreto de cada nivel, el timeframe superior da el sesgo, el timeframe intermedio localiza la zona, el timeframe de ejecución dispara la entrada.
+              Esta lección establece la lógica del análisis multitemporal: por qué operar un solo gráfico te deja ciego, y el rol concreto de cada nivel, la temporalidad superior da el sesgo, la temporalidad intermedia localiza la zona, la temporalidad de ejecución dispara la entrada.
             </p>
           </div>
 
@@ -142,7 +142,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un solo timeframe muestra apenas una parte del mercado, nunca el conjunto. Un gráfico M15 puede mostrar un rebote limpio mientras el Daily sigue en una tendencia bajista pesada. El resultado: una « compra obvia » en el timeframe pequeño se transforma en simple retroceso antes de la reanudación bajista.
+              Una sola temporalidad muestra apenas una parte del mercado, nunca el conjunto. Un gráfico M15 puede mostrar un rebote limpio mientras el Daily sigue en una tendencia bajista pesada. El resultado: una « compra obvia » en la temporalidad pequeña se transforma en simple retroceso antes de la reanudación bajista.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -155,14 +155,14 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Siempre verifica el sentido del HTF antes de entrar</li>
               <li>- Una señal LTF contra el HTF = probabilidad reducida</li>
-              <li>- El timeframe pequeño muestra a menudo un retroceso, no un giro</li>
+              <li>- La temporalidad pequeña muestra a menudo un retroceso, no un giro</li>
               <li>- El contexto HTF prima sobre la señal local</li>
             </ul>
           </section>
 
           {/* Bloc 4 — HTF : TROUVER LE BIAIS */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">El timeframe superior: encontrar el sesgo</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La temporalidad superior: encontrar el sesgo</h2>
 
             <div className="my-8">
               <HTFBiasDiagram locale="es" />
@@ -179,7 +179,7 @@ export default function ContentEs() {
                   <li>- Estructura del mercado: HH/HL o LH/LL</li>
                   <li>- Zonas Daily y H4 importantes</li>
                   <li>- Dirección de los impulsos dominantes</li>
-                  <li>- Liquidity HTF visible</li>
+                  <li>- Liquidez HTF visible</li>
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
@@ -197,20 +197,20 @@ export default function ContentEs() {
               <li>- Empieza siempre por el HTF</li>
               <li>- Identifica una dirección antes de buscar una entrada</li>
               <li>- Ignora las señales opuestas al sesgo principal</li>
-              <li>- Anota las zonas HTF antes de bajar de timeframe</li>
+              <li>- Anota las zonas HTF antes de bajar de temporalidad</li>
             </ul>
           </section>
 
           {/* Bloc 5 — TIMEFRAME INTERMÉDIAIRE : ZONE */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">El timeframe intermedio: encontrar la zona</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La temporalidad intermedia: encontrar la zona</h2>
 
             <div className="my-8">
               <IntermediateZoneDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El timeframe intermedio localiza la zona donde el mercado puede reaccionar. Es el nivel que transforma una idea general del HTF en un escenario explotable. El HTF dice « vender »; el timeframe intermedio dice « dónde ».
+              La temporalidad intermedia localiza la zona donde el mercado puede reaccionar. Es el nivel que transforma una idea general del HTF en un escenario explotable. El HTF dice « vender »; la temporalidad intermedia dice « dónde ».
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -219,7 +219,7 @@ export default function ContentEs() {
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Soporte / resistencia H1 o H4</li>
                   <li>- Order Block o FVG</li>
-                  <li>- Zona de liquidity</li>
+                  <li>- Zona de liquidez</li>
                   <li>- Retest después de un impulso</li>
                 </ul>
               </div>
@@ -250,14 +250,14 @@ export default function ContentEs() {
 
           {/* Bloc 6 — LTF : EXÉCUTION */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">El timeframe de ejecución: disparar el trade</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La temporalidad de ejecución: disparar el trade</h2>
 
             <div className="my-8">
               <LTFExecutionDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El LTF sirve únicamente para ejecutar. Es el timeframe del timing, no el del sesgo. Su rol es mostrar que el mercado reacciona realmente en la zona preparada en los timeframes superiores.
+              El LTF sirve únicamente para ejecutar. Es la temporalidad del timing, no la del sesgo. Su rol es mostrar que el mercado reacciona realmente en la zona preparada en las temporalidades superiores.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -266,7 +266,7 @@ export default function ContentEs() {
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- CHoCH o BOS local</li>
                   <li>- Rechazo violento</li>
-                  <li>- Sweep de liquidity</li>
+                  <li>- Barrido de liquidez</li>
                   <li>- Vela impulsiva de salida de zona</li>
                 </ul>
               </div>
@@ -283,7 +283,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: la zona H1 está en 1.1765-1.1780. En M15, un sweep alcista busca la liquidity hasta 1.1778. Un CHoCH bajista se forma en M5. La entrada short se dispara después del rechazo.
+                EUR/USD: la zona H1 está en 1.1765-1.1780. En M15, un barrido alcista busca la liquidez hasta 1.1778. Un CHoCH bajista se forma en M5. La entrada short se dispara después del rechazo.
               </p>
             </div>
 
@@ -309,7 +309,7 @@ export default function ContentEs() {
                 <li>- Conclusión: prioridad a las ventas, ninguna compra agresiva buscada</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Paso 2. Timeframe intermedio (H1)</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 2. Temporalidad intermedia (H1)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: zona de resistencia entre 1.1765 y 1.1780, antiguo soporte vuelto resistencia, rechazo ya observado</li>
                 <li>- Conclusión: zona ideal para esperar una reacción bajista</li>
@@ -317,13 +317,13 @@ export default function ContentEs() {
 
               <p className="text-white font-semibold text-sm mb-2">Paso 3. LTF (M5 / M15)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observación: sweep alcista hasta 1.1778, CHoCH bajista en M5, vela impulsiva de rechazo</li>
+                <li>- Observación: barrido alcista hasta 1.1778, CHoCH bajista en M5, vela impulsiva de rechazo</li>
                 <li>- Conclusión: confirmación vendedora válida, entrada short posible después del breakout local</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = dirección · Timeframe intermedio = zona · LTF = timing
+                  HTF = dirección · Temporalidad intermedia = zona · LTF = timing
                 </p>
               </div>
             </div>
@@ -331,25 +331,25 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "Un solo timeframe da una visión incompleta del mercado.",
+              "Una sola temporalidad da una visión incompleta del mercado.",
               "El HTF define el sesgo principal, la dirección del trade.",
-              "El timeframe intermedio localiza la zona de interés donde actuar.",
+              "La temporalidad intermedia localiza la zona de interés donde actuar.",
               "El LTF sirve únicamente para el disparo: da el timing, no el sesgo.",
             ]}
           />
 
           <LessonExercice
-            description="Abre EUR/USD en TradingView y recorre el proceso multi-timeframe por ti mismo, del timeframe grande al pequeño. El objetivo: ver concretamente lo que cada nivel aporta a la decisión."
+            description="Abre EUR/USD en TradingView y recorre el proceso multitemporal por ti mismo, de la temporalidad grande a la pequeña. El objetivo: ver concretamente lo que cada nivel aporta a la decisión."
             steps={[
               "En H4, identifica la estructura dominante (HH/HL o LH/LL), el último swing mayor, y una zona importante.",
               "Baja a H1: localiza una zona donde el precio podría reaccionar en el sentido del sesgo H4, y trázala.",
-              "Termina en M5 o M15: espera un disparador en la zona (rechazo, CHoCH o sweep) y anota precisamente lo que validaría una entrada.",
+              "Termina en M5 o M15: espera un disparador en la zona (rechazo, CHoCH o barrido) y anota precisamente lo que validaría una entrada.",
               "Compara: ¿qué te decía el H4 que el M5 no mostraba? ¿Qué precisa el M5 que el H4 no podía dar?",
             ]}
           />
 
           <LessonQuiz
-            question="¿Cuál es el rol principal del timeframe de ejecución (LTF) en un proceso multi-timeframe?"
+            question="¿Cuál es el rol principal de la temporalidad de ejecución (LTF) en un proceso multitemporal?"
             options={[
               "Determinar el sesgo principal del mercado",
               "Identificar las zonas Daily mayores",
@@ -357,7 +357,7 @@ export default function ContentEs() {
               "Reemplazar completamente el análisis HTF",
             ]}
             correctIndex={2}
-            explanation="El LTF sirve para confirmar la ejecución en una zona ya preparada por los timeframes superiores. El sesgo viene del HTF, la zona viene del timeframe intermedio; el LTF interviene solo para afinar el timing y reducir el risk. Complementa el análisis HTF, nunca lo reemplaza."
+            explanation="El LTF sirve para confirmar la ejecución en una zona ya preparada por las temporalidades superiores. El sesgo viene del HTF, la zona viene de la temporalidad intermedia; el LTF interviene solo para afinar el timing y reducir el risk. Complementa el análisis HTF, nunca lo reemplaza."
           />
 
         </div>
@@ -389,7 +389,7 @@ export default function ContentEs() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Lección terminada</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Lección 1 del módulo Multi-timeframe Process completada.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Lección 1 del módulo Process multitemporal completada.</p>
                 </div>
               </div>
             )}
@@ -399,7 +399,7 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Módulo Multi-timeframe. Vista general
+                Módulo Process multitemporal. Vista general
               </Link>
               <Link href="/strategies/multi-timeframe/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Lección siguiente

@@ -126,7 +126,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Liquidité et manipulation → cf. module ICT, Leçon 1</li>
               <li>- PD Arrays et FVG → cf. module ICT, Leçon 2</li>
-              <li>- Multi-timeframe → cf. module Multi-timeframe Process</li>
+              <li>- Multi-unités de temps → cf. module Process multi-unités de temps</li>
             </ul>
           </div>
 
@@ -198,7 +198,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- NY Open = superposition London + flux US = pic de volatilité</li>
-              <li>- Les setups préparés en HTF se résolvent souvent dans cette fenêtre</li>
+              <li>- Les setups préparés en UT supérieure se résolvent souvent dans cette fenêtre</li>
               <li>- Sweep + retournement franc est le pattern le plus fréquent</li>
               <li>- Trader avant NY Open sans plan = trader le bruit qui précède</li>
             </ul>
@@ -239,7 +239,7 @@ export default function ContentFr() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily) : biais directionnel</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. UT supérieure (Daily) : biais directionnel</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : EUR/USD Daily en LH/LL, résistance Daily à 1.1780</li>
                 <li>- Conclusion : biais baissier, on cherchera des shorts au prochain test de zone supérieure</li>
@@ -265,7 +265,7 @@ export default function ContentFr() {
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = biais · Asia = liquidité · London/NY = exécution · Hors Killzone = on attend
+                  UT supérieure = biais · Asia = liquidité · London/NY = exécution · Hors Killzone = on attend
                 </p>
               </div>
             </div>

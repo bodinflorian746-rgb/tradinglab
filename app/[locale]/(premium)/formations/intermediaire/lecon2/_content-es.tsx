@@ -119,21 +119,21 @@ export default function ContentEs() {
             <span className="text-lg">↑</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">El precio llega a un soporte</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Esperas una señal de rechazo (pin bar, engulfing alcista). Si la señal está + la tendencia es alcista → compra con SL bajo la zona.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Esperas una señal de rechazo (pin bar, envolvente alcista). Si la señal está + la tendencia es alcista → compra con SL bajo la zona.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <span className="text-lg">↓</span>
             <div>
               <p className="text-sm font-semibold text-red-400">El precio llega a una resistencia</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Esperas un rechazo (mecha alta, engulfing bajista). Si la señal está + la tendencia es bajista → venta con SL encima de la zona.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Esperas un rechazo (mecha alta, envolvente bajista). Si la señal está + la tendencia es bajista → venta con SL encima de la zona.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3">
             <span className="text-lg">—</span>
             <div>
               <p className="text-sm font-semibold text-zinc-300">Precio en medio entre dos zonas</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Nada que hacer. Nunca entras en medio del range. Esperas que el precio llegue a una zona clave.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Nada que hacer. Nunca entras en medio del rango. Esperas que el precio llegue a una zona clave.</p>
             </div>
           </div>
         </div>

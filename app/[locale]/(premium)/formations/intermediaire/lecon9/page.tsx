@@ -55,7 +55,7 @@ function ContentFr() {
           {[
             { level: "23.6%", desc: "Retracement superficiel, tendance très forte, peu de correction. Rare.", color: "text-zinc-400" },
             { level: "38.2%", desc: "Retracement modéré, courant en tendance solide. Bon ratio risque/récompense.", color: "text-blue-400" },
-            { level: "50%", desc: "Niveau psychologique fort, pas un Fibonacci pur, mais très respecté par les traders.", color: "text-blue-400" },
+            { level: "50%", desc: "Chiffre rond fort, pas un Fibonacci pur, mais très respecté par les traders.", color: "text-blue-400" },
             { level: "61.8%", desc: "Le 'golden ratio', zone de retracement la plus utilisée et la plus puissante. À surveiller en priorité.", color: "text-emerald-400" },
             { level: "78.6%", desc: "Retracement profond, utile pour les entrées agressives près du swing low. Risqué sans confluence.", color: "text-red-400" },
           ].map((item, i) => (
@@ -82,7 +82,7 @@ function ContentFr() {
             { step: "1", text: "Identifie un mouvement impulsif clair : un swing low et un swing high nets sur le graphique." },
             { step: "2", text: "En tendance haussière : clique d'abord sur le swing low, puis sur le swing high. Les niveaux s'affichent entre les deux." },
             { step: "3", text: "Le prix retrace depuis le swing high → surveille les zones 38.2%, 50% et 61.8% en priorité." },
-            { step: "4", text: "Cherche une confluence sur ces zones : support ou résistance historique, niveau psychologique (1.0850, 1.0900…). C'est là que tu prépares ton entrée." },
+            { step: "4", text: "Cherche une confluence sur ces zones : support ou résistance historique, chiffre rond (1.0850, 1.0900…). C'est là que tu prépares ton entrée." },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.step}</span>
@@ -204,7 +204,7 @@ function ContentFr() {
           "Ouvre EUR/USD en H4. Utilise l'outil Fibonacci Retracement dans les outils de tracé de TradingView.",
           "Identifie le dernier grand mouvement haussier. Trace ton Fib du swing low au swing high.",
           "Le prix a-t-il retracé ? Sur quel niveau Fib s'est-il arrêté (38.2%, 50%, 61.8%) ? Y a-t-il eu un signal de bougie sur ce niveau ?",
-          "Y a-t-il d'autres confluences sur ce niveau (support ou résistance historique, niveau psychologique) ? Si oui, note pourquoi c'était une zone d'or.",
+          "Y a-t-il d'autres confluences sur ce niveau (support ou résistance historique, chiffre rond) ? Si oui, note pourquoi c'était une zone d'or.",
         ]}
       />
 
@@ -212,15 +212,15 @@ function ContentFr() {
         question="Tu traces Fibonacci sur un mouvement haussier EUR/USD (1.0800 → 1.0980). Le prix retrace jusqu'au 61.8% à 1.0869. Ce niveau coïncide avec un support historique respecté 2×. Que fais-tu ?"
         options={[
           "Tu entres immédiatement en achat, le golden ratio + support, c'est assez",
-          "Tu attends un signal de bougie (pin bar ou engulfing haussier) sur la zone avant d'entrer",
+          "Tu attends un signal de bougie (pin bar ou avalement haussier) sur la zone avant d'entrer",
           "Tu passes un ordre de vente, le retracement va probablement continuer jusqu'au 78.6%",
           "Tu ignores le 61.8%, le support a déjà été touché 2×, il est affaibli",
         ]}
         correctIndex={1}
-        explanation="Tu as 2 confluences solides : 61.8% Fib + support historique. C'est une zone d'or à surveiller. Mais le signal de bougie manque encore. Attends qu'une pin bar ou un engulfing haussier confirme que le prix réagit à la zone, puis tu entres avec SL sous 1.0848 et TP vers 1.0980."
+        explanation="Tu as 2 confluences solides : 61.8% Fib + support historique. C'est une zone d'or à surveiller. Mais le signal de bougie manque encore. Attends qu'une pin bar ou un avalement haussier confirme que le prix réagit à la zone, puis tu entres avec SL sous 1.0848 et TP vers 1.0980."
         answerExplanations={[
           "Trop hâtif. Tu as 2 confluences solides, mais sans signal de bougie, tu entres sur un prix qui peut continuer à baisser vers 1.0840 ou moins. La confluence te dit 'regarde ici', pas 'entre maintenant'.",
-          "Correct. Le 61.8% + support est une zone d'or. Mais la confirmation reste nécessaire. Une pin bar haussière ou un engulfing sur cette zone te dit que les acheteurs réagissent. Tu entres alors avec SL sous la zone (1.0848) et TP vers le swing high (1.0980).",
+          "Correct. Le 61.8% + support est une zone d'or. Mais la confirmation reste nécessaire. Une pin bar haussière ou un avalement sur cette zone te dit que les acheteurs réagissent. Tu entres alors avec SL sous la zone (1.0848) et TP vers le swing high (1.0980).",
           "Faux. En tendance haussière Daily, le retracement vers le 61.8% est une opportunité d'achat, pas de vente. Shorter ici, c'est trader contre la tendance de fond et contre 2 confluences haussières.",
           "Partiellement. Un support touché 2× est moins fort qu'un support vierge, mais il reste valide, surtout combiné au 61.8% Fib. La coïncidence des deux niveaux renforce la zone, elle ne l'annule pas.",
         ]}

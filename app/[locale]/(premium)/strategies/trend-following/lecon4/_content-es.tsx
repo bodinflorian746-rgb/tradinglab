@@ -197,12 +197,12 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Una mecha que perfora el nivel estructural sin cierre claro no es un BOS. Es a menudo un liquidity grab institucional.
+              Una mecha que perfora el nivel estructural sin cierre claro no es un BOS. Es a menudo una toma de liquidez institucional.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- La mecha supera el HH/LL, pero el cuerpo cierra por debajo/encima = BOS inválido</li>
-              <li>- Liquidity grab: las instituciones apuntan a los stops acumulados más allá del nivel</li>
+              <li>- Toma de liquidez: las instituciones apuntan a los stops acumulados más allá del nivel</li>
               <li>- Esperar el cierre completo de la vela antes de cualquier lectura de BOS</li>
             </ul>
           </section>
@@ -248,7 +248,7 @@ export default function ContentEs() {
               "BOS = ruptura del último extremo estructural en el sentido de la tendencia (continuación).",
               "CHoCH = ruptura del último mínimo/máximo de estructura inversa (reversión).",
               "La salida de una posición se dispara apenas el BOS quede validado. La inversión exige el CHoCH confirmado.",
-              "Sin cierre claro (solo mecha), no hay BOS, es un liquidity grab.",
+              "Sin cierre claro (solo mecha), no hay BOS, es una toma de liquidez.",
             ]}
           />
 
@@ -272,7 +272,7 @@ export default function ContentEs() {
               "Un volumen elevado en 5 velas",
             ]}
             correctIndex={1}
-            explanation="Una tendencia explotable exige mínimo 2 HL + 2 HH sucesivos en el timeframe H4. Por debajo de ese umbral, el mercado se mantiene en range o consolidación, no en tendencia estructuralmente confirmada."
+            explanation="Una tendencia explotable exige mínimo 2 HL + 2 HH sucesivos en la temporalidad H4. Por debajo de ese umbral, el mercado se mantiene en rango o consolidación, no en tendencia estructuralmente confirmada."
           />
 
           <LessonQuiz

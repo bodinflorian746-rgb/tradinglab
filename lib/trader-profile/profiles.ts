@@ -30,7 +30,7 @@ export const PROFILES: ProfileTemplate[] = [
   {
     id: "structure_reader",
     name: "Bon lecteur de structure",
-    description: "Tu identifies bien les niveaux clés, swings et zones HTF. Travaille maintenant l'exécution et le R/R pour transformer cette lecture en edge.",
+    description: "Tu identifies bien les niveaux clés, swings et zones de l'UT supérieure. Travaille maintenant l'exécution et le R/R pour transformer cette lecture en edge.",
     match: (s) => high(s.structure) + high(s.lecture_marche) - low(s.execution) * 0.3,
   },
   {
@@ -48,7 +48,7 @@ export const PROFILES: ProfileTemplate[] = [
   {
     id: "breakout_hunter",
     name: "Chasseur de breakout",
-    description: "Tu prends les cassures avec conviction. Méfie-toi des fakeouts, la liquidité au-dessus/dessous des niveaux est ton ennemie.",
+    description: "Tu prends les cassures avec conviction. Méfie-toi des faux breakouts, la liquidité au-dessus/dessous des niveaux est ton ennemie.",
     match: (s) => high(s.lecture_marche) + high(s.timing) - low(s.liquidite),
   },
   {
@@ -105,11 +105,11 @@ export const RECOMMENDATIONS_BY_SKILL: Record<SkillId, {
     lessonLabel: "La discipline de l'attente",
   },
   lecture_marche: {
-    reason:      "Tu manques régulièrement le sens du marché ou le HTF.",
+    reason:      "Tu manques régulièrement le sens du marché ou l'UT supérieure.",
     gameUrl:     "/jeux/buy-sell-no-trade",
     gameLabel:   "BUY / SELL / NO TRADE : niveau intermédiaire",
     lessonUrl:   "/formations/intermediaire/lecon1",
-    lessonLabel: "Lecture HTF & structure",
+    lessonLabel: "Lecture de l'UT supérieure & structure",
   },
   gestion_risque: {
     reason:      "Tes stops sont mal placés, trop serrés ou trop larges.",
@@ -131,7 +131,7 @@ export const RECOMMENDATIONS_BY_SKILL: Record<SkillId, {
     lessonLabel: "Liquidité & sweeps (ICT)",
   },
   structure: {
-    reason:      "Tu lis mal les niveaux clés et la structure HTF.",
+    reason:      "Tu lis mal les niveaux clés et la structure de l'UT supérieure.",
     gameUrl:     "/jeux/place-stop",
     gameLabel:   "Quel stop va survivre ? : apprend la structure",
     lessonUrl:   "/strategies/support-resistance/lecon1",

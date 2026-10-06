@@ -125,7 +125,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Structure de marché, BOS et CHoCH → cf. module SMC, leçon « BOS et CHoCH : lire les signaux structurels institutionnels »</li>
               <li>- FVG et liquidité → cf. module SMC, leçon « FVG et liquidité : trader le déséquilibre institutionnel »</li>
-              <li>- Multi-timeframe → cf. module Multi-timeframe Process</li>
+              <li>- Multi-unités de temps → cf. module Process multi-unités de temps</li>
             </ul>
           </div>
 
@@ -214,11 +214,11 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan d&apos;application : un sweep EUR/USD complet</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Voici la séquence complète HTF → Liquidité → Sweep → Réaction sur un cas EUR/USD. Quatre étapes, chacune avec son rôle.
+              Voici la séquence complète UT supérieure → Liquidité → Sweep → Réaction sur un cas EUR/USD. Quatre étapes, chacune avec son rôle.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily) : biais directionnel</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. UT supérieure (Daily) : biais directionnel</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation: EUR/USD Daily en structure LH/LL depuis trois semaines, résistance majeure 1.1860</li>
                 <li>- Conclusion : biais baissier confirmé, on cherchera des shorts sur prise de liquidité haute</li>
@@ -244,7 +244,7 @@ export default function ContentFr() {
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = biais · Liquidité = cible · Sweep = condition · Réaction = signal
+                  UT supérieure = biais · Liquidité = cible · Sweep = condition · Réaction = signal
                 </p>
               </div>
             </div>
@@ -260,9 +260,9 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur TradingView, repère un sweep complet sur la paire de ton choix et trace la séquence HTF → Liquidité → Sweep → Réaction."
+            description="Sur TradingView, repère un sweep complet sur la paire de ton choix et trace la séquence UT supérieure → Liquidité → Sweep → Réaction."
             steps={[
-              "HTF (Daily ou H4) : identifie la structure et conclus un biais directionnel clair. Sans biais HTF net, ne descends pas plus bas.",
+              "UT supérieure (Daily ou H4) : identifie la structure et conclus un biais directionnel clair. Sans biais de l'UT supérieure net, ne descends pas plus bas.",
               "H1 : repère deux sommets quasi identiques (equal highs) ou deux creux quasi identiques (equal lows) dans le sens du biais. Trace une ligne horizontale à ce niveau, c’est la zone de liquidité visée.",
               "M15 : attends que le prix vienne sweep ce niveau (mèche qui dépasse, corps qui referme du bon côté). Puis cherche la réintégration et la bougie impulsive. Si la séquence est complète, note l’entrée, le SL au-dessus/sous le sommet/creux du sweep, et le TP vers la prochaine zone de liquidité.",
             ]}

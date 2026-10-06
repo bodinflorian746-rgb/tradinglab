@@ -62,7 +62,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Cette leçon enseigne à distinguer un vrai niveau d&apos;une ligne décorative via 4 critères de qualification, la hiérarchie multi-timeframe, et la recherche de confluences.
+              Cette leçon enseigne à distinguer un vrai niveau d&apos;une ligne décorative via 4 critères de qualification, la hiérarchie multi-unités de temps, et la recherche de confluences.
             </p>
           </div>
 
@@ -125,7 +125,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Identification zones S/R → cf. Stratégie SR L1</li>
               <li>- Notion de confluence → cf. Formation Trading L3</li>
-              <li>- Timeframes → cf. Formation Trading L1</li>
+              <li>- Unités de temps → cf. Formation Trading L1</li>
             </ul>
           </div>
 
@@ -171,14 +171,14 @@ export default function ContentFr() {
 
           {/* Bloc 5 — HIÉRARCHIE MULTI-TIMEFRAME */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Hiérarchie multi-timeframe</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Hiérarchie multi-unités de temps</h2>
 
             <div className="my-8">
               <SRHierarchyDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La force d&apos;un niveau dépend aussi du timeframe sur lequel il est tracé. Plus le timeframe est élevé, plus la zone est défendue institutionnellement.
+              La force d&apos;un niveau dépend aussi de l&apos;unité de temps sur laquelle il est tracé. Plus l&apos;unité de temps est élevée, plus la zone est défendue institutionnellement.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -192,19 +192,19 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "Une zone tradable valide 4 critères : 2 touches minimum, réactions claires, fraîcheur récente, confluence avec d’autres éléments structurels.",
-              "Hiérarchie de force par timeframe : Daily > H4 > H1 > M30/M15.",
+              "Hiérarchie de force par unité de temps : Daily > H4 > H1 > M30/M15.",
               "Les confluences (niveau rond, Fibonacci, MM, Order Block) multiplient la force. 2 confluences ou plus = priorité.",
               "Un niveau M15 isolé ne tient pas seul. Il sert au timing d’entrée au contact d’un niveau supérieur.",
             ]}
           />
 
           <LessonExercice
-            description="Une zone de résistance EUR/USD entre 1.1880 et 1.1900 a été touchée 2 fois dans les 8 dernières semaines avec rejets nets (mèches de 30 à 40 pips). Le niveau psychologique 1.1900 est au sommet de la zone. La MM50 H4 passe actuellement à 1.1875. Quel est le verdict de qualification ?"
+            description="Une zone de résistance EUR/USD entre 1.1880 et 1.1900 a été touchée 2 fois dans les 8 dernières semaines avec rejets nets (mèches de 30 à 40 pips). Le chiffre rond 1.1900 est au sommet de la zone. La MM50 H4 passe actuellement à 1.1875. Quel est le verdict de qualification ?"
             steps={[
               "Critère 1. Touches : 2 touches confirmées dans les 8 dernières semaines = minimum requis validé",
               "Critère 2. Réactions : rejets nets avec mèches de 30 à 40 pips = réactions claires proportionnées",
               "Critère 3. Fraîcheur : zone touchée dans les 8 dernières semaines = fraîcheur acceptable",
-              "Critère 4. Confluences : niveau psychologique 1.1900 au sommet de la zone (confluence 1) + MM50 H4 à 1.1875 dans la zone (confluence 2) = 2 confluences identifiées",
+              "Critère 4. Confluences : chiffre rond 1.1900 au sommet de la zone (confluence 1) + MM50 H4 à 1.1875 dans la zone (confluence 2) = 2 confluences identifiées",
               "Verdict : zone tradable confirmée. 3 critères validés franchement + 2 confluences. Note opérationnelle élevée. La zone entre dans la sélection prioritaire pour un setup short sur retracement avec signal de rejet confirmé",
             ]}
           />
@@ -212,13 +212,13 @@ export default function ContentFr() {
           <LessonQuiz
             question="Une zone visible uniquement sur M15, touchée 2 fois dans la dernière journée, sans alignement avec H4 ou Daily, peut-elle constituer une référence principale pour un setup ?"
             options={[
-              "Oui, 2 touches suffisent quel que soit le timeframe",
+              "Oui, 2 touches suffisent quelle que soit l'unité de temps",
               "Non, les niveaux M15 isolés servent uniquement au timing d’entrée au contact d’un niveau supérieur",
               "Oui, à condition qu’il y ait une confluence Fibonacci",
               "Non, il faut minimum 5 touches sur M15",
             ]}
             correctIndex={1}
-            explanation="Les niveaux M15 isolés ont une durée de vie réduite et peuvent être ignorés ou cassés par le marché sans réelle contestation. La hiérarchie par timeframe place Daily > H4 > H1 > M30/M15. Un niveau M15 sert uniquement comme point de timing d’entrée au contact d’une zone supérieure, jamais comme référence principale, même avec 2 touches récentes."
+            explanation="Les niveaux M15 isolés ont une durée de vie réduite et peuvent être ignorés ou cassés par le marché sans réelle contestation. La hiérarchie par unité de temps place Daily > H4 > H1 > M30/M15. Un niveau M15 sert uniquement comme point de timing d’entrée au contact d’une zone supérieure, jamais comme référence principale, même avec 2 touches récentes."
           />
 
         </div>

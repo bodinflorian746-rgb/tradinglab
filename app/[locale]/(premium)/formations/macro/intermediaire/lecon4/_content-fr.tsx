@@ -137,7 +137,7 @@ export default function ContentFr() {
               <div>
                 <p className="text-sm font-semibold text-zinc-200 mb-1">Session New York, 14h à 22h Paris</p>
                 <p className="text-sm text-zinc-300 mb-0.5">
-                  Wall Street, indices US, news américaines. Elle représente environ{" "}
+                  Wall Street, indices US, annonces américaines. Elle représente environ{" "}
                   <span className="font-semibold text-zinc-200">20-25% du volume forex mondial</span>.
                 </p>
                 <p className="text-sm text-zinc-400">Paires actives : EUR/USD, GBP/USD, USD/JPY, USD/CAD, XAU/USD, indices US.</p>
@@ -172,7 +172,7 @@ export default function ContentFr() {
               {[
                 "les institutions européennes sont actives",
                 "les institutions américaines arrivent",
-                "les news US sortent souvent à 14h30",
+                "les annonces US sortent souvent à 14h30",
                 "les volumes explosent",
                 "les vrais mouvements se forment",
               ].map((item, i) => (
@@ -234,7 +234,7 @@ export default function ContentFr() {
                 "liquidité faible",
                 "spreads plus larges",
                 "ranges fréquents",
-                "fakeouts plus nombreux",
+                "faux breakouts plus nombreux",
                 "moins de catalyseurs macro",
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
@@ -328,7 +328,7 @@ export default function ContentFr() {
                 { bold: "Scalping", rest: " : besoin de liquidité. Londres et overlap uniquement." },
                 { bold: "Day trading", rest: " : overlap Londres-New York idéal. C'est là que les mouvements sont les plus propres." },
                 { bold: "Swing trading", rest: " : tu peux utiliser Londres pour repérer les cassures importantes." },
-                { bold: "News trading", rest: " : souvent autour de 14h30 ou 20h00. Mais seulement avec préparation." },
+                { bold: "Trading des annonces", rest: " : souvent autour de 14h30 ou 20h00. Mais seulement avec préparation." },
               ].map((item, i) => (
                 <p key={i} className="text-zinc-300 leading-relaxed text-sm">
                   <span className="font-semibold text-zinc-200">{item.bold}</span>{item.rest}
@@ -426,7 +426,7 @@ export default function ContentFr() {
             question="Tu trades EUR/USD à 23h heure de Paris. Le prix casse une résistance, puis revient immédiatement dans le range et te sort sur ton stop loss. Quelle est l'explication la plus probable ?"
             options={[
               "Ta stratégie ne fonctionne plus, il faut tout revoir",
-              "La session est peu liquide, donc les fakeouts sont plus fréquents sur EUR/USD à cette heure",
+              "La session est peu liquide, donc les faux breakouts sont plus fréquents sur EUR/USD à cette heure",
               "EUR/USD ne respecte jamais les résistances",
               "Le marché forex est fermé à 23h",
             ]}

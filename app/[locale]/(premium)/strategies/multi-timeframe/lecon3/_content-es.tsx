@@ -11,10 +11,10 @@ import { RetourDesequilibreDiagram } from "@/app/components/charts/RetourDesequi
 import { ScenarioZoneDiagram } from "@/app/components/charts/ScenarioZoneDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Por qué analizar en multi-timeframe", disabled: false },
-  { id: "lecon2", title: "El timeframe superior: el sesgo", disabled: false },
-  { id: "lecon3", title: "El timeframe intermedio: la zona", disabled: false },
-  { id: "lecon4", title: "El timeframe de ejecución: la entrada", disabled: false },
+  { id: "lecon1", title: "Por qué hacer un análisis multitemporal", disabled: false },
+  { id: "lecon2", title: "La temporalidad superior: el sesgo", disabled: false },
+  { id: "lecon3", title: "La temporalidad intermedia: la zona", disabled: false },
+  { id: "lecon4", title: "La temporalidad de ejecución: la entrada", disabled: false },
   { id: "lecon5", title: "El proceso completo", disabled: false },
 ];
 
@@ -33,7 +33,7 @@ export default function ContentEs() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Estrategias</Link>
           <span>/</span>
-          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Multi-timeframe Process</Link>
+          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Process multitemporal</Link>
           <span>/</span>
           <span className="text-zinc-500">Lección 3</span>
         </nav>
@@ -57,12 +57,12 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            El timeframe intermedio: localizar la zona que cuenta
+            La temporalidad intermedia: localizar la zona que cuenta
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              El HTF da la dirección. El timeframe intermedio muestra dónde el mercado tiene una verdadera razón para reaccionar.
+              El HTF da la dirección. La temporalidad intermedia muestra dónde el mercado tiene una verdadera razón para reaccionar.
             </p>
           </div>
 
@@ -125,7 +125,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Dirección dominante HTF → ver Lección 2</li>
               <li>- Soportes y resistencias → ver módulo Soporte/Resistencia</li>
-              <li>- FVG, liquidity, sweep → ver módulo SMC</li>
+              <li>- FVG, liquidez, barrido → ver módulo SMC</li>
             </ul>
           </div>
 
@@ -138,7 +138,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Una zona de interés válida no se resume a una línea trazada al azar. Una zona fuerte cuenta una historia: acumula varias razones de reacción en el mismo nivel, un antiguo soporte vuelto resistencia, un FVG dejado por un impulso, una zona de liquidity aún no tomada. Mientras más razones acumule el nivel, mayor es la probabilidad de reacción.
+              Una zona de interés válida no se resume a una línea trazada al azar. Una zona fuerte cuenta una historia: acumula varias razones de reacción en el mismo nivel, un antiguo soporte vuelto resistencia, un FVG dejado por un impulso, una zona de liquidez aún no tomada. Mientras más razones acumule el nivel, mayor es la probabilidad de reacción.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -150,7 +150,7 @@ export default function ContentEs() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Busca la confluencia antes de trazar una zona</li>
-              <li>- Acumula las razones: antiguo S/R, FVG, liquidity, proyección</li>
+              <li>- Acumula las razones: antiguo S/R, FVG, liquidez, proyección</li>
               <li>- Privilegia las zonas que acumulan al menos dos criterios</li>
               <li>- Ignora los niveles aislados sin contexto técnico</li>
             </ul>
@@ -185,20 +185,20 @@ export default function ContentEs() {
 
           {/* Bloc 5 — LE TIMEFRAME INTERMÉDIAIRE PRÉPARE LE SCÉNARIO */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">El timeframe intermedio prepara el escenario</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La temporalidad intermedia prepara el escenario</h2>
 
             <div className="my-8">
               <ScenarioZoneDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El timeframe intermedio no sirve para entrar, sirve para preparar el terreno. Es el nivel que transforma la dirección HTF en un plan explotable. Aquí se traza la zona, se anotan los niveles, se prepara lo que se va a esperar después en el timeframe de ejecución. El escenario se establece mucho antes de que aparezca una señal.
+              La temporalidad intermedia no sirve para entrar, sirve para preparar el terreno. Es el nivel que transforma la dirección HTF en un plan explotable. Aquí se traza la zona, se anotan los niveles, se prepara lo que se va a esperar después en la temporalidad de ejecución. El escenario se establece mucho antes de que aparezca una señal.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1: sesgo HTF bajista, zona de resistencia amplia entre 1.1750 y 1.1760 trazada con antelación. Al acercarse a la banda, las velas alcistas pierden amplitud, los impulsos se acortan, las correcciones se alargan. El mercado se queda sin aliento sin que se haya emitido aún ninguna señal de entrada. El escenario está listo: solo queda esperar el disparador en el timeframe de ejecución.
+                EUR/USD H1: sesgo HTF bajista, zona de resistencia amplia entre 1.1750 y 1.1760 trazada con antelación. Al acercarse a la banda, las velas alcistas pierden amplitud, los impulsos se acortan, las correcciones se alargan. El mercado se queda sin aliento sin que se haya emitido aún ninguna señal de entrada. El escenario está listo: solo queda esperar el disparador en la temporalidad de ejecución.
               </p>
             </div>
 
@@ -206,7 +206,7 @@ export default function ContentEs() {
               <li>- Traza la zona ANTES de que el precio la alcance</li>
               <li>- Anota los niveles clave por anticipado</li>
               <li>- Observa la pérdida de impulso al acercarse a la zona</li>
-              <li>- No entres en el timeframe intermedio, preparar es todo</li>
+              <li>- No entres en la temporalidad intermedia, preparar es todo</li>
             </ul>
           </section>
 
@@ -214,7 +214,7 @@ export default function ContentEs() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de aplicación: un caso EUR/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El timeframe intermedio se lee después del HTF y antes del LTF. Así se establece la zona sobre un caso EUR/USD, el objetivo no es entrar, sino preparar el escenario.
+              La temporalidad intermedia se lee después del HTF y antes del LTF. Así se establece la zona sobre un caso EUR/USD, el objetivo no es entrar, sino preparar el escenario.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -224,7 +224,7 @@ export default function ContentEs() {
                 <li>- Conclusión: dirección dominante bajista, ventas prioritarias</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Paso 2. Timeframe intermedio (H1)</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 2. Temporalidad intermedia (H1)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: antiguo soporte en 1.1760 vuelto resistencia, FVG bearish 1.1750-1.1760 no mitigado</li>
                 <li>- Conclusión: zona confluente a vigilar, prepara un escenario short al regreso del precio</li>
@@ -232,13 +232,13 @@ export default function ContentEs() {
 
               <p className="text-white font-semibold text-sm mb-2">Paso 3. Preparar el escenario</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Esperado: una subida hacia la banda 1.1750-1.1760, pérdida de impulso al acercarse, luego confirmación en el timeframe de ejecución (Lección 4)</li>
+                <li>- Esperado: una subida hacia la banda 1.1750-1.1760, pérdida de impulso al acercarse, luego confirmación en la temporalidad de ejecución (Lección 4)</li>
                 <li>- Evitado: una entrada anticipada antes del regreso efectivo del precio a la zona</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = dirección · Timeframe intermedio = zona · LTF = ejecución (Lección 4)
+                  HTF = dirección · Temporalidad intermedia = zona · LTF = ejecución (Lección 4)
                 </p>
               </div>
             </div>
@@ -248,7 +248,7 @@ export default function ContentEs() {
             points={[
               "Una zona fuerte acumula varias razones de reacción, la confluencia ante todo.",
               "El mercado regresa a los desequilibrios dejados por los impulsos HTF.",
-              "El timeframe intermedio prepara el escenario, no ejecuta.",
+              "La temporalidad intermedia prepara el escenario, no ejecuta.",
               "Traza la zona antes de que el precio la alcance, nunca después.",
             ]}
           />
@@ -258,12 +258,12 @@ export default function ContentEs() {
             steps={[
               "Localiza un antiguo soporte importante en H1 y trázalo. Verifica si fue roto y luego transformado en resistencia.",
               "Busca un FVG dejado por el último impulso bajista. Traza la banda completa, no una simple línea.",
-              "Anota todas las razones que se acumulan en ese nivel: antiguo S/R, FVG, liquidity, proyección. Si acumulas al menos dos, la zona cuenta una historia.",
+              "Anota todas las razones que se acumulan en ese nivel: antiguo S/R, FVG, liquidez, proyección. Si acumulas al menos dos, la zona cuenta una historia.",
             ]}
           />
 
           <LessonQuiz
-            question="¿Qué hace que una zona de interés sea particularmente fuerte en el timeframe intermedio?"
+            question="¿Qué hace que una zona de interés sea particularmente fuerte en la temporalidad intermedia?"
             options={[
               "El simple hecho de que el precio ya la haya tocado varias veces",
               "La confluencia, varias razones de reacción acumuladas en el mismo nivel",
@@ -271,12 +271,12 @@ export default function ContentEs() {
               "El hecho de que sea el máximo o mínimo absoluto del día",
             ]}
             correctIndex={1}
-            explanation="Una zona fuerte cuenta una historia: un antiguo soporte vuelto resistencia, un FVG dejado por un impulso, una zona de liquidity aún no tomada. Mientras más razones acumule el nivel, mayor es la probabilidad de reacción. Un simple toque repetido, un número redondo o un extremo diario no bastan por sí solos, es la acumulación de criterios técnicos la que crea una zona realmente explotable."
+            explanation="Una zona fuerte cuenta una historia: un antiguo soporte vuelto resistencia, un FVG dejado por un impulso, una zona de liquidez aún no tomada. Mientras más razones acumule el nivel, mayor es la probabilidad de reacción. Un simple toque repetido, un número redondo o un extremo diario no bastan por sí solos, es la acumulación de criterios técnicos la que crea una zona realmente explotable."
             answerExplanations={[
-              "Incorrecto. Un nivel tocado varias veces llama la atención, pero sin contexto (antiguo S/R, FVG, liquidity), sigue siendo frágil. El número de toques no crea confluencia por sí solo.",
+              "Incorrecto. Un nivel tocado varias veces llama la atención, pero sin contexto (antiguo S/R, FVG, liquidez), sigue siendo frágil. El número de toques no crea confluencia por sí solo.",
               "Correcto. La confluencia, la acumulación de varias razones de reacción en el mismo lugar, es el criterio central. Mientras más argumentos técnicos acumule la zona, más fuerte es la probabilidad de reacción.",
               "Incorrecto. Los números redondos atraen la atención psicológica de los participantes, pero no crean, por sí solos, una zona de interés institucional. Sin confluencia técnica real, son niveles débiles.",
-              "Incorrecto. El máximo o mínimo del día solo es una referencia estadística. Sin alineación con una zona estructural, un FVG o liquidity, ese nivel no cuenta ninguna historia explotable.",
+              "Incorrecto. El máximo o mínimo del día solo es una referencia estadística. Sin alineación con una zona estructural, un FVG o liquidez, ese nivel no cuenta ninguna historia explotable.",
             ]}
           />
 
@@ -309,7 +309,7 @@ export default function ContentEs() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Lección terminada</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Lección 3 del módulo Multi-timeframe Process completada.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Lección 3 del módulo Process multitemporal completada.</p>
                 </div>
               </div>
             )}

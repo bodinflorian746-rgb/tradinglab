@@ -144,7 +144,7 @@ export default function ContentFr() {
               <li>- Tendance haussière : succession HH/HL ascendante → trade long sur pullback</li>
               <li>- Range latéral : oscillation entre 2 niveaux → trade range ou attente cassure</li>
               <li>- Tendance baissière : succession LL/LH descendante → trade short sur pullback</li>
-              <li>- Timeframe principal d&apos;identification : H4. Confirmation Daily renforce le biais</li>
+              <li>- Unité de temps principale d&apos;identification : H4. Confirmation Daily renforce le biais</li>
             </ul>
           </section>
 
@@ -253,7 +253,7 @@ export default function ContentFr() {
               "Aucun stop loss, gestion manuelle",
             ]}
             correctIndex={1}
-            explanation="Le stop loss se place au-delà du dernier creux structurel (HL en tendance haussière) avec une marge de 5-10 pips pour absorber les wicks. Cette position invalide structurellement la tendance : si le prix casse le dernier HL, la structure HL/HH est rompue. Un stop placé à mi-chemin est déclenché par le pullback normal."
+            explanation="Le stop loss se place au-delà du dernier creux structurel (HL en tendance haussière) avec une marge de 5-10 pips pour absorber les mèches. Cette position invalide structurellement la tendance : si le prix casse le dernier HL, la structure HL/HH est rompue. Un stop placé à mi-chemin est déclenché par le pullback normal."
           />
 
         </div>

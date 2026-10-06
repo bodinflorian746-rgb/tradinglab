@@ -227,7 +227,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Sur EUR/USD, une bougie M15 imprime brutalement 18 pips à la hausse suite à une news mineure, puis la bougie suivante referme entièrement le mouvement, pas de cassure structurelle, pas de continuation. C'est de la volatilité, pas un displacement. À l'inverse, une séquence de 4 bougies baissières de 10-12 pips chacune qui casse un creux local et enchaîne dans la même direction est un displacement, même si aucune bougie ne dépasse 12 pips.
+                Sur EUR/USD, une bougie M15 imprime brutalement 18 pips à la hausse suite à une annonce mineure, puis la bougie suivante referme entièrement le mouvement, pas de cassure structurelle, pas de continuation. C'est de la volatilité, pas un displacement. À l'inverse, une séquence de 4 bougies baissières de 10-12 pips chacune qui casse un creux local et enchaîne dans la même direction est un displacement, même si aucune bougie ne dépasse 12 pips.
               </p>
             </div>
 
@@ -247,7 +247,7 @@ export default function ContentFr() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily) : biais directionnel</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. UT supérieure (Daily) : biais directionnel</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation: EUR/USD Daily en LH/LL, résistance Daily 1.1780</li>
                 <li>- Conclusion : biais baissier, on cherchera un displacement dans le sens vendeur</li>
@@ -274,12 +274,12 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Étape 5. Retour dans le FVG : exécution</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : le prix remonte progressivement vers 1.1768-1.1780, rentre dans la bande FVG, puis bougie baissière de rejet</li>
-                <li>- Conclusion : entrée short au retour dans le FVG, SL juste au-dessus de 1.1780 (extrémité du displacement), TP vers 1.1695. R/R ≈ 1 : 2, setup haute probabilité car aligné HTF + liquidité + sweep + displacement + FVG</li>
+                <li>- Conclusion : entrée short au retour dans le FVG, SL juste au-dessus de 1.1780 (extrémité du displacement), TP vers 1.1695. R/R ≈ 1 : 2, setup haute probabilité car aligné sur l'UT supérieure + liquidité + sweep + displacement + FVG</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = biais · Liquidité = cible · Sweep = condition · Displacement = confirmation · FVG = exécution
+                  UT supérieure = biais · Liquidité = cible · Sweep = condition · Displacement = confirmation · FVG = exécution
                 </p>
               </div>
             </div>

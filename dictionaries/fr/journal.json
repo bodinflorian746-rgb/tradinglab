@@ -75,7 +75,7 @@
   "filters": {
     "asset": "Actif",
     "result": "Résultat",
-    "timeframe": "Timeframe",
+    "timeframe": "Unité de temps",
     "setup": "Setup",
     "period": "Période",
     "periodAll": "Toute période",
@@ -152,7 +152,7 @@
     "asset": "Actif tradé",
     "assetPlaceholder": "EURUSD, XAUUSD, NASDAQ, BTC…",
     "direction": "Direction",
-    "timeframe": "Timeframe",
+    "timeframe": "Unité de temps",
     "tradeType": "Type de trade",
     "result": "Résultat",
     "tradeDate": "Date du trade",
@@ -198,7 +198,7 @@
     "req": {
       "asset": "Actif requis",
       "direction": "Direction requise",
-      "timeframe": "Timeframe requis",
+      "timeframe": "Unité de temps requise",
       "trade_type": "Type de trade requis",
       "result": "Résultat requis",
       "setup": "Stratégie requise",
@@ -222,7 +222,7 @@
         "title": "Pour une meilleure analyse, ta capture doit montrer :",
         "items": [
           "L'actif tradé (si possible)",
-          "Le timeframe (si possible)",
+          "L'unité de temps (si possible)",
           "Ta zone d'entrée",
           "Ton stop loss",
           "Ton take profit",
@@ -342,13 +342,13 @@
     "setup": {
       "order_block": "Order Block",
       "fair_value_gap": "Fair Value Gap",
-      "liquidity_sweep": "Liquidity Sweep",
+      "liquidity_sweep": "Sweep de liquidité",
       "breakout": "Breakout",
       "retest": "Retest",
       "support_resistance": "Support / Résistance",
       "trend_following": "Trend Following",
       "reversal": "Reversal",
-      "news_macro": "News / Macro",
+      "news_macro": "Annonce / Macro",
       "other": "Autre"
     },
     "market_trend": {
@@ -416,7 +416,7 @@
   "errors": {
     "asset": "Indique l'actif tradé.",
     "direction": "Choisis une direction.",
-    "timeframe": "Choisis un timeframe.",
+    "timeframe": "Choisis une unité de temps.",
     "trade_type": "Choisis un type de trade.",
     "result": "Choisis un résultat.",
     "trade_date": "Indique la date du trade.",

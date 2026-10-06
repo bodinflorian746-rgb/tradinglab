@@ -49,7 +49,7 @@ export default function ZoneVsLineDiagram({ className = "", locale = "fr" }: { c
         linePreciseDesc2: "une cassure qui n'existe pas",
         zoneGood: "✓ Zone bien dessinée",
         absorbe: "absorbé",
-        zoneGoodDesc1: "La zone absorbe les wicks",
+        zoneGoodDesc1: "La zone absorbe les mèches",
         zoneGoodDesc2: "naturels du marché",
         lineLabel: "Ligne 1.1750",
         zoneLabel: "Zone 1.1740-1.1760",

@@ -45,7 +45,7 @@ export default function ContentEs() {
             { label: "Soporte o resistencia", detail: "Un nivel donde el precio ya reaccionó: un antiguo soporte, una resistencia, o la zona de salida de un movimiento impulsivo.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
             { label: "Nivel Fibonacci", detail: "38.2%, 50% o 61.8% del último movimiento impulsivo. Suele coincidir con un S/R: ahí está la potencia.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
             { label: "Nivel psicológico", detail: "1.1000, 45 000$, 2 000$... Los traders colocan naturalmente stops y órdenes en los números redondos.", color: "bg-amber-400/5 border-amber-400/15 text-amber-400" },
-            { label: "Señal de vela (disparador)", detail: "Pin bar, engulfing, rechazo. Es el gatillo: no la razón de entrar. La razón son las confluencias de arriba.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
+            { label: "Señal de vela (disparador)", detail: "Pin bar, envolvente, rechazo. Es el gatillo: no la razón de entrar. La razón son las confluencias de arriba.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
           ].map((item, i) => (
             <div key={i} className={`rounded-xl px-4 py-3 border ${item.color}`}>
               <p className="text-sm font-semibold mb-1">{item.label}</p>

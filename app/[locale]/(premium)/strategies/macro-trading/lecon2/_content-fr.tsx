@@ -125,7 +125,7 @@ export default function ContentFr() {
               <li>- NFP et calendrier économique → cf. module Macro</li>
               <li>- Consensus vs chiffre réel → cf. module Macro</li>
               <li>- Supports, résistances et liquidité → cf. module Stratégies</li>
-              <li>- Multi-timeframe → cf. module Multi-timeframe Process</li>
+              <li>- Multi-unités de temps → cf. module Process multi-unités de temps</li>
             </ul>
           </div>
 
@@ -176,7 +176,7 @@ export default function ContentFr() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Points actionnables : la stabilisation se lit sur le M15, pas sur les timeframes plus rapides</li>
+              <li>- Points actionnables : la stabilisation se lit sur le M15, pas sur les unités de temps plus rapides</li>
               <li>- Série de mèches répétées + perte d'accélération = signal de fin d'impulsion</li>
               <li>- Pas de stabilisation = pas de setup, peu importe l'amplitude initiale</li>
               <li>- L'exécution se prend après confirmation, jamais en anticipation</li>

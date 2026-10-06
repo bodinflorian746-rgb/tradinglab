@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon3", title: "Los datos macro a vigilar",             href: null,                                disabled: true  },
   { id: "lecon4", title: "Entender la inflación",                 href: null,                                disabled: true  },
   { id: "lecon5", title: "El rol del dólar en el mundo",          href: null,                                disabled: true  },
-  { id: "lecon6", title: "Macro y risk management",               href: null,                                disabled: true  },
+  { id: "lecon6", title: "Macro y gestión de riesgos",               href: null,                                disabled: true  },
 ];
 
 export default function ContentEs() {
@@ -189,7 +189,7 @@ export default function ContentEs() {
             <div className="space-y-3 mb-5">
               {[
                 { n: "1", label: "Las tasas de interés",  text: "cuánto cuesta el dinero prestado" },
-                { n: "2", label: "La liquidity",          text: "inyectar o retirar dinero del sistema" },
+                { n: "2", label: "La liquidez",          text: "inyectar o retirar dinero del sistema" },
                 { n: "3", label: "La comunicación",       text: "discursos, decisiones, proyecciones futuras" },
               ].map((item) => (
                 <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -331,7 +331,7 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "4 bancos centrales dominan el mercado: Fed, ECB, BoE, BoJ",
-              "Controlan las tasas, la liquidity y la dirección de los mercados",
+              "Controlan las tasas, la liquidez y la dirección de los mercados",
               "La Fed es la más importante (USD = divisa mundial, 80% de los pares mayores)",
               "Sus decisiones crean los mayores movimientos, conocer el calendario es indispensable",
             ]}

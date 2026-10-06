@@ -43,14 +43,14 @@ export function PDArrayConfluenceDiagram({ className = "", locale = "fr" }: PDAr
     ? {
         ancienSupport: "Antiguo soporte roto",
         fvgBearish: "FVG bearish",
-        sweepRecent: "Sweep reciente",
+        sweepRecent: "Barrido reciente",
         annotation: "Varios elementos cuentan la misma historia",
         mobileTitle: "Confluencia PD Array · EUR/USD H1",
         b1Title: "3 confluencias = zona fuerte",
-        b1Body: "Soporte roto + FVG + sweep = zona de alta probabilidad de ejecución.",
+        b1Body: "Soporte roto + FVG + barrido = zona de alta probabilidad de ejecución.",
         b2Title: "Rechazo bajista franco al regreso",
         b2Body: "En cuanto el precio toca la zona confluente, rechazo inmediato = señal short.",
-        leg1: "Confluencia (soporte roto + FVG + sweep) = zona fuerte",
+        leg1: "Confluencia (soporte roto + FVG + barrido) = zona fuerte",
         leg2: "Rechazo bajista franco al regreso a la zona",
       }
     : locale === "en"

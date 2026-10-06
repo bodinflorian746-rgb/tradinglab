@@ -11,10 +11,10 @@ import { RetourDesequilibreDiagram } from "@/app/components/charts/RetourDesequi
 import { ScenarioZoneDiagram } from "@/app/components/charts/ScenarioZoneDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Pourquoi analyser en multi-timeframe", disabled: false },
-  { id: "lecon2", title: "Le timeframe supérieur : le biais", disabled: false },
-  { id: "lecon3", title: "Le timeframe intermédiaire : la zone", disabled: false },
-  { id: "lecon4", title: "Le timeframe d’exécution : l’entrée", disabled: false },
+  { id: "lecon1", title: "Pourquoi faire une analyse multi-unités de temps", disabled: false },
+  { id: "lecon2", title: "L'unité de temps supérieure : le biais", disabled: false },
+  { id: "lecon3", title: "L'unité de temps intermédiaire : la zone", disabled: false },
+  { id: "lecon4", title: "L’unité de temps d’exécution : l’entrée", disabled: false },
   { id: "lecon5", title: "Le process complet", disabled: false },
 ];
 
@@ -33,7 +33,7 @@ export default function ContentFr() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Stratégies</Link>
           <span>/</span>
-          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Multi-timeframe Process</Link>
+          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Process multi-unités de temps</Link>
           <span>/</span>
           <span className="text-zinc-500">Leçon 3</span>
         </nav>
@@ -57,12 +57,12 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Le timeframe intermédiaire : repérer la zone qui compte
+            L&apos;unité de temps intermédiaire : repérer la zone qui compte
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Le HTF donne la direction. Le timeframe intermédiaire montre où le marché a une vraie raison de réagir.
+              L&apos;UT supérieure donne la direction. L&apos;unité de temps intermédiaire montre où le marché a une vraie raison de réagir.
             </p>
           </div>
 
@@ -123,7 +123,7 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Direction dominante HTF → cf. Leçon 2</li>
+              <li>- Direction dominante UT supérieure → cf. Leçon 2</li>
               <li>- Supports et résistances → cf. module Support/Résistance</li>
               <li>- FVG, liquidité, sweep → cf. module SMC</li>
             </ul>
@@ -176,29 +176,29 @@ export default function ContentFr() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Repérer les FVG laissés par les impulsions HTF</li>
+              <li>- Repérer les FVG laissés par les impulsions de l&apos;UT supérieure</li>
               <li>- Attendre le retour du prix dans la zone, ne pas anticiper</li>
               <li>- Un retour n&apos;est pas un retournement, c&apos;est une mitigation</li>
-              <li>- Privilégier les zones cohérentes avec le biais HTF</li>
+              <li>- Privilégier les zones cohérentes avec le biais de l&apos;UT supérieure</li>
             </ul>
           </section>
 
           {/* Bloc 5 — LE TIMEFRAME INTERMÉDIAIRE PRÉPARE LE SCÉNARIO */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Le timeframe intermédiaire prépare le scénario</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">L&apos;unité de temps intermédiaire prépare le scénario</h2>
 
             <div className="my-8">
               <ScenarioZoneDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le timeframe intermédiaire ne sert pas à entrer, il sert à préparer le terrain. C&apos;est l&apos;étage qui transforme la direction HTF en plan exploitable. On y trace la zone, on y note les niveaux, on y prépare ce qu&apos;on attendra ensuite sur le timeframe d&apos;exécution. Le scénario est posé bien avant qu&apos;un signal apparaisse.
+              L&apos;unité de temps intermédiaire ne sert pas à entrer, elle sert à préparer le terrain. C&apos;est l&apos;étage qui transforme la direction de l&apos;UT supérieure en plan exploitable. On y trace la zone, on y note les niveaux, on y prépare ce qu&apos;on attendra ensuite sur l&apos;unité de temps d&apos;exécution. Le scénario est posé bien avant qu&apos;un signal apparaisse.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1 : biais HTF baissier, zone de résistance large entre 1.1750 et 1.1760 tracée à l&apos;avance. À l&apos;approche de la bande, les bougies haussières perdent en amplitude, les impulsions se raccourcissent, les corrections s&apos;allongent. Le marché s&apos;essouffle sans qu&apos;aucun signal d&apos;entrée n&apos;ait encore été émis. Le scénario est prêt : il ne reste qu&apos;à attendre le déclencheur sur le timeframe d&apos;exécution.
+                EUR/USD H1 : biais baissier de l&apos;UT supérieure, zone de résistance large entre 1.1750 et 1.1760 tracée à l&apos;avance. À l&apos;approche de la bande, les bougies haussières perdent en amplitude, les impulsions se raccourcissent, les corrections s&apos;allongent. Le marché s&apos;essouffle sans qu&apos;aucun signal d&apos;entrée n&apos;ait encore été émis. Le scénario est prêt : il ne reste qu&apos;à attendre le déclencheur sur l&apos;unité de temps d&apos;exécution.
               </p>
             </div>
 
@@ -206,7 +206,7 @@ export default function ContentFr() {
               <li>- Tracer la zone AVANT que le prix l&apos;atteigne</li>
               <li>- Noter les niveaux clés en amont</li>
               <li>- Observer la perte d&apos;impulsion à l&apos;approche de la zone</li>
-              <li>- Ne pas entrer sur le timeframe intermédiaire, préparer, c&apos;est tout</li>
+              <li>- Ne pas entrer sur l&apos;unité de temps intermédiaire, préparer, c&apos;est tout</li>
             </ul>
           </section>
 
@@ -214,17 +214,17 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan d&apos;application : un cas EUR/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le timeframe intermédiaire se lit après le HTF et avant le LTF. Voici comment poser la zone sur un cas EUR/USD, l&apos;objectif n&apos;est pas d&apos;entrer, mais de préparer le scénario.
+              L&apos;unité de temps intermédiaire se lit après l&apos;UT supérieure et avant l&apos;UT inférieure. Voici comment poser la zone sur un cas EUR/USD, l&apos;objectif n&apos;est pas d&apos;entrer, mais de préparer le scénario.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (Daily/H4)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. UT supérieure (Daily/H4)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : structure en LH/LL, biais baissier déjà identifié (cf. Leçon 2)</li>
                 <li>- Conclusion : direction dominante baissière, ventes prioritaires</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 2. Timeframe intermédiaire (H1)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 2. Unité de temps intermédiaire (H1)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : ancien support à 1.1760 devenu résistance, FVG bearish 1.1750-1.1760 non mitigé</li>
                 <li>- Conclusion : zone confluente à surveiller, préparer un scénario short au retour du prix</li>
@@ -232,13 +232,13 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 3. Préparer le scénario</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Attendu : une remontée vers la bande 1.1750-1.1760, perte d&apos;impulsion à l&apos;approche, puis confirmation sur le timeframe d&apos;exécution (Leçon 4)</li>
+                <li>- Attendu : une remontée vers la bande 1.1750-1.1760, perte d&apos;impulsion à l&apos;approche, puis confirmation sur l&apos;unité de temps d&apos;exécution (Leçon 4)</li>
                 <li>- Évité : une entrée anticipée avant le retour effectif du prix dans la zone</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = direction · Timeframe intermédiaire = zone · LTF = exécution (Leçon 4)
+                  UT supérieure = direction · Unité de temps intermédiaire = zone · UT inférieure = exécution (Leçon 4)
                 </p>
               </div>
             </div>
@@ -247,8 +247,8 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "Une zone forte cumule plusieurs raisons de réaction, la confluence avant tout.",
-              "Le marché revient dans les déséquilibres laissés par les impulsions HTF.",
-              "Le timeframe intermédiaire prépare le scénario, il n’exécute pas.",
+              "Le marché revient dans les déséquilibres laissés par les impulsions de l'UT supérieure.",
+              "L’unité de temps intermédiaire prépare le scénario, il n’exécute pas.",
               "Tracer la zone avant que le prix l’atteigne, jamais après.",
             ]}
           />
@@ -263,7 +263,7 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Qu'est-ce qui rend une zone d'intérêt particulièrement forte sur le timeframe intermédiaire ?"
+            question="Qu'est-ce qui rend une zone d'intérêt particulièrement forte sur l'unité de temps intermédiaire ?"
             options={[
               "Le simple fait que le prix l’ait déjà touchée plusieurs fois",
               "La confluence, plusieurs raisons de réaction empilées au même niveau",
@@ -309,7 +309,7 @@ export default function ContentFr() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Leçon 3 du module Multi-timeframe Process complétée.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Leçon 3 du module Process multi-unités de temps complétée.</p>
                 </div>
               </div>
             )}

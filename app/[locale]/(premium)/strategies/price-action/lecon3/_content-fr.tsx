@@ -14,7 +14,7 @@ import { LessonQuiz } from "@/app/components/LessonQuiz";
 const LESSONS = [
   { id: "lecon1", title: "Lire une bougie", disabled: false },
   { id: "lecon2", title: "Pin bar",          disabled: false },
-  { id: "lecon3", title: "Engulfing",        disabled: false },
+  { id: "lecon3", title: "Avalement",        disabled: false },
   { id: "lecon4", title: "Leçon 4",          disabled: true },
 ];
 
@@ -57,7 +57,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Engulfing : le retournement de force
+            Avalement : le retournement de force
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -114,7 +114,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « L&apos;engulfing ne propose pas. Il impose. La 2ème bougie est si forte qu&apos;elle efface la première. »
+                « L&apos;avalement ne propose pas. Il impose. La 2ème bougie est si forte qu&apos;elle efface la première. »
               </p>
             </div>
           </section>
@@ -124,40 +124,40 @@ export default function ContentFr() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Anatomie d&apos;une bougie → cf. Stratégie PA L1</li>
-              <li>- Concept d&apos;avalement / engulfing → cf. Formation Trading L2</li>
+              <li>- Concept d&apos;avalement → cf. Formation Trading L2</li>
               <li>- Niveaux support/résistance → cf. Formation Trading L3</li>
             </ul>
           </div>
 
           {/* Bloc 3 — BULLISH VS BEARISH */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Bullish vs Bearish engulfing</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Avalement haussier vs baissier</h2>
 
             <div className="my-8">
               <BullishVsBearishEngulfingDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un engulfing = bascule de pouvoir en 2 bougies. La 2ème englobe le corps de la 1ère dans le sens opposé.
+              Un avalement = bascule de pouvoir en 2 bougies. La 2ème englobe le corps de la 1ère dans le sens opposé.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="font-semibold text-zinc-100">Bullish engulfing</span> : 1ère bougie rouge + 2ème bougie verte qui englobe le corps rouge, sur un support clé</li>
-              <li>- <span className="font-semibold text-zinc-100">Bearish engulfing</span> : 1ère bougie verte + 2ème bougie rouge qui englobe le corps vert, sur une résistance clé</li>
+              <li>- <span className="font-semibold text-zinc-100">Avalement haussier</span> : 1ère bougie rouge + 2ème bougie verte qui englobe le corps rouge, sur un support clé</li>
+              <li>- <span className="font-semibold text-zinc-100">Avalement baissier</span> : 1ère bougie verte + 2ème bougie rouge qui englobe le corps vert, sur une résistance clé</li>
               <li>- Le sens du signal suit la direction de la 2ème bougie (celle qui englobe)</li>
             </ul>
           </section>
 
           {/* Bloc 4 — VALIDER UN ENGULFING */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Valider un engulfing</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Valider un avalement</h2>
 
             <div className="my-8">
               <EngulfingValidationGridDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Toutes les bougies qui se chevauchent ne sont pas des engulfings valides. 4 critères qualifient le pattern comme tradable.
+              Toutes les bougies qui se chevauchent ne sont pas des avalements valides. 4 critères qualifient le pattern comme tradable.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -177,27 +177,27 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un engulfing isolé hors contexte structurel n&apos;est qu&apos;une grosse bougie. La confluence donne la valeur opérationnelle.
+              Un avalement isolé hors contexte structurel n&apos;est qu&apos;une grosse bougie. La confluence donne la valeur opérationnelle.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Engulfing au support / résistance qualifié = setup tradable</li>
-              <li>- Engulfing sur retracement Fibonacci 0.5 / 0.618 / 0.786 en tendance = setup tradable</li>
-              <li>- Engulfing en confluence MM50 ou MM200 = renforcement du signal</li>
-              <li>- Engulfing isolé en pleine impulsion = bruit, pas de setup</li>
+              <li>- Avalement au support / résistance qualifié = setup tradable</li>
+              <li>- Avalement sur retracement Fibonacci 0.5 / 0.618 / 0.786 en tendance = setup tradable</li>
+              <li>- Avalement en confluence MM50 ou MM200 = renforcement du signal</li>
+              <li>- Avalement isolé en pleine impulsion = bruit, pas de setup</li>
             </ul>
           </section>
 
           {/* Bloc 6 — PLAN DE TRADE CHIFFRÉ */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : engulfing bullish XAU/USD H4</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : avalement haussier XAU/USD H4</h2>
 
             <div className="my-8">
               <EngulfingSetupDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD rebondit depuis 4 500$ vers 4 720$, puis corrige sur Fibonacci 0.618 à 4 600$. Bullish engulfing au contact du Fibo dans une tendance H4 haussière.
+              XAU/USD rebondit depuis 4 500$ vers 4 720$, puis corrige sur Fibonacci 0.618 à 4 600$. Avalement haussier au contact du Fibo dans une tendance H4 haussière.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -233,8 +233,8 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Engulfing = 2 bougies de sens opposé, la 2ème englobe ENTIÈREMENT le corps de la 1ère.",
-              "Pin bar = signal de rejet, Engulfing = signal de bascule : complémentaires, pas concurrents.",
+              "Avalement = 2 bougies de sens opposé, la 2ème englobe ENTIÈREMENT le corps de la 1ère.",
+              "Pin bar = signal de rejet, avalement = signal de bascule : complémentaires, pas concurrents.",
               "Toujours sur un niveau clé ou un retracement, jamais au milieu de nulle part.",
               "SL sous le low de la bougie englobante (bullish) ou au-dessus du high (bearish), R/R minimum 1:2.",
             ]}
@@ -243,24 +243,24 @@ export default function ContentFr() {
           <LessonExercice
             description="Mets en pratique la lecture des bougies sur un graphique réel."
             steps={[
-              "Ouvrir un graphique XAU/USD ou EUR/USD en timeframe H4",
-              "Identifier 2 engulfings valides sur l'historique des 30 derniers jours et noter le contexte : support, résistance ou Fibo",
-              "Pour chaque engulfing, vérifier que le corps de la 2ème bougie englobe entièrement le corps de la 1ère",
-              "Calculer le R/R potentiel pour 1 engulfing valide : entrée à la cassure, SL sous le low de la bougie engulfing, TP au prochain niveau",
-              "Repérer 1 cas où une pin bar et un engulfing apparaissent au même niveau, puis observer ce qui s'est passé après",
+              "Ouvrir un graphique XAU/USD ou EUR/USD en unité de temps H4",
+              "Identifier 2 avalements valides sur l'historique des 30 derniers jours et noter le contexte : support, résistance ou Fibo",
+              "Pour chaque avalement, vérifier que le corps de la 2ème bougie englobe entièrement le corps de la 1ère",
+              "Calculer le R/R potentiel pour 1 avalement valide : entrée à la cassure, SL sous le low de la bougie d'avalement, TP au prochain niveau",
+              "Repérer 1 cas où une pin bar et un avalement apparaissent au même niveau, puis observer ce qui s'est passé après",
             ]}
           />
 
           <LessonQuiz
-            question="Sur EUR/USD H4, une bougie bearish engulfing apparaît au milieu d’un range, sans support ou résistance proche, sans tendance claire, sans confluence Fibonacci. Quel est le verdict opérationnel ?"
+            question="Sur EUR/USD H4, une bougie d’avalement baissier apparaît au milieu d’un range, sans support ou résistance proche, sans tendance claire, sans confluence Fibonacci. Quel est le verdict opérationnel ?"
             options={[
-              "Setup exploitable, l’engulfing est un signal autonome",
+              "Setup exploitable, l’avalement est un signal autonome",
               "Setup invalide, l’absence de contexte structurel disqualifie le signal",
               "Setup exploitable à condition d’un volume élevé",
-              "Indéterminé sans confirmation multi-timeframe",
+              "Indéterminé sans confirmation multi-unités de temps",
             ]}
             correctIndex={1}
-            explanation="Une bougie engulfing isolée hors contexte structurel ne constitue pas un signal opérationnel. Le contact avec un niveau structurel qualifié (support, résistance, Fibonacci, tendance claire) est indispensable. Sans contexte, la bougie engulfing reste informative mais ne déclenche pas de setup."
+            explanation="Une bougie d'avalement isolée hors contexte structurel ne constitue pas un signal opérationnel. Le contact avec un niveau structurel qualifié (support, résistance, Fibonacci, tendance claire) est indispensable. Sans contexte, la bougie d'avalement reste informative mais ne déclenche pas de setup."
           />
 
         </div>
@@ -308,7 +308,7 @@ export default function ContentFr() {
                 Leçon 2. Pin bar : le rejet de niveau
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 4. Setup multi-timeframe Daily → H1
+                Leçon 4. Setup multi-unités de temps Daily → H1
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

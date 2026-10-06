@@ -12,7 +12,7 @@ import { DisplacementSetupDiagram } from "@/app/components/charts/DisplacementSe
 import { DisplacementVsVolatilityDiagram } from "@/app/components/charts/DisplacementVsVolatilityDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Liquidity y manipulación", disabled: false },
+  { id: "lecon1", title: "Liquidez y manipulación", disabled: false },
   { id: "lecon2", title: "PD Arrays", disabled: false },
   { id: "lecon3", title: "Killzones", disabled: false },
   { id: "lecon4", title: "Displacement", disabled: false },
@@ -124,7 +124,7 @@ export default function ContentEs() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Liquidity y manipulación → ver módulo ICT, Lección 1</li>
+              <li>- Liquidez y manipulación → ver módulo ICT, Lección 1</li>
               <li>- PD Arrays y FVG → ver módulo ICT, Lección 2</li>
               <li>- Killzones → ver módulo ICT, Lección 3</li>
               <li>- BOS y CHoCH → ver módulo SMC, lección « BOS y CHoCH: leer las señales estructurales institucionales »</li>
@@ -146,7 +146,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Gráfico M15 EUR/USD: desde 1.1780, el precio imprime una mecha de sweep en 1.1792 y luego encadena 4 velas bajistas consecutivas, cada una con un cuerpo de 12-15 pips, sin ninguna mecha superior notable. El precio cae hasta 1.1748 en menos de una hora, dejando dos FVG bearish visibles en la caída. Es un displacement característico, no una volatilidad pasajera, sino una secuencia orientada.
+                Gráfico M15 EUR/USD: desde 1.1780, el precio imprime una mecha de barrido en 1.1792 y luego encadena 4 velas bajistas consecutivas, cada una con un cuerpo de 12-15 pips, sin ninguna mecha superior notable. El precio cae hasta 1.1748 en menos de una hora, dejando dos FVG bearish visibles en la caída. Es un displacement característico, no una volatilidad pasajera, sino una secuencia orientada.
               </p>
             </div>
 
@@ -173,7 +173,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD M15: el precio consolida alrededor de 4 650 $ durante 3 horas, velas planas, mercado equilibrado. A las 14h UTC, una vela hace sweep de un máximo en 4 668 $, seguida de inmediato por 5 velas bajistas con cuerpos grandes que regresan el precio a 4 608 $. El equilibrio está roto: son los vendedores los que toman el control. El sesgo de las horas siguientes está definido, ya no se buscan longs hasta nueva orden.
+                XAU/USD M15: el precio consolida alrededor de 4 650 $ durante 3 horas, velas planas, mercado equilibrado. A las 14h UTC, una vela hace barrido de un máximo en 4 668 $, seguida de inmediato por 5 velas bajistas con cuerpos grandes que regresan el precio a 4 608 $. El equilibrio está roto: son los vendedores los que toman el control. El sesgo de las horas siguientes está definido, ya no se buscan longs hasta nueva orden.
             </p>
             </div>
 
@@ -194,13 +194,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un displacement deja tras de sí una zona explotable: el FVG creado por las grandes velas de la secuencia. El mercado suele venir a revisitar esa zona antes de continuar en la dirección del displacement, es el escenario de mitigation ya visto en la Lección 2, pero aquí en un contexto particularmente confiable porque el FVG nació de una intención institucional visible. El regreso al FVG ofrece una entrada ajustada, con un SL arriba del extremo del displacement y un TP hacia la próxima zona de liquidity en la dirección del movimiento.
+              Un displacement deja tras de sí una zona explotable: el FVG creado por las grandes velas de la secuencia. El mercado suele venir a revisitar esa zona antes de continuar en la dirección del displacement, es el escenario de mitigation ya visto en la Lección 2, pero aquí en un contexto particularmente confiable porque el FVG nació de una intención institucional visible. El regreso al FVG ofrece una entrada ajustada, con un SL arriba del extremo del displacement y un TP hacia la próxima zona de liquidez en la dirección del movimiento.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1: el sweep en 1.1792 y el displacement bearish hasta 1.1748 dejan un FVG visible entre 1.1768 y 1.1780. En las horas siguientes, el precio sube progresivamente, entra a la banda FVG, y luego una vela bajista franca relanza la baja. Entrada short al regreso al FVG, SL justo arriba de 1.1780, TP hacia la próxima zona de liquidity baja, el displacement inicial creó por sí solo la entrada y el SL.
+                EUR/USD H1: el barrido en 1.1792 y el displacement bearish hasta 1.1748 dejan un FVG visible entre 1.1768 y 1.1780. En las horas siguientes, el precio sube progresivamente, entra a la banda FVG, y luego una vela bajista franca relanza la baja. Entrada short al regreso al FVG, SL justo arriba de 1.1780, TP hacia la próxima zona de liquidez baja, el displacement inicial creó por sí solo la entrada y el SL.
               </p>
             </div>
 
@@ -227,7 +227,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                En EUR/USD, una vela M15 imprime brutalmente 18 pips al alza tras una news menor, y luego la siguiente vela cierra completamente el movimiento, sin ruptura estructural, sin continuación. Es volatilidad, no un displacement. Al contrario, una secuencia de 4 velas bajistas de 10-12 pips cada una que rompe un mínimo local y encadena en la misma dirección es un displacement, aunque ninguna vela supere los 12 pips.
+                En EUR/USD, una vela M15 imprime brutalmente 18 pips al alza tras una noticia menor, y luego la siguiente vela cierra completamente el movimiento, sin ruptura estructural, sin continuación. Es volatilidad, no un displacement. Al contrario, una secuencia de 4 velas bajistas de 10-12 pips cada una que rompe un mínimo local y encadena en la misma dirección es un displacement, aunque ninguna vela supere los 12 pips.
               </p>
             </div>
 
@@ -253,16 +253,16 @@ export default function ContentEs() {
                 <li>- Conclusión: sesgo bajista, se buscará un displacement en el sentido vendedor</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Liquidity (H1): identificar el objetivo</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Liquidez (H1): identificar el objetivo</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: equal highs recientes en 1.1780, stops acumulados arriba</li>
-                <li>- Conclusión: la liquidity arriba de 1.1780 es el objetivo probable antes de cualquier verdadero movimiento bearish</li>
+                <li>- Conclusión: la liquidez arriba de 1.1780 es el objetivo probable antes de cualquier verdadero movimiento bearish</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 3. Sweep (M15 en Killzone)</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 3. Barrido (M15 en Killzone)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observación: en la apertura NY, el precio hace sweep en 1.1792 y luego se reintegra debajo de 1.1780</li>
-                <li>- Conclusión: la liquidity está tomada. Ahora se vigila el displacement</li>
+                <li>- Observación: en la apertura NY, el precio hace barrido en 1.1792 y luego se reintegra debajo de 1.1780</li>
+                <li>- Conclusión: la liquidez está tomada. Ahora se vigila el displacement</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Etapa 4. Displacement bearish</p>
@@ -274,12 +274,12 @@ export default function ContentEs() {
               <p className="text-white font-semibold text-sm mb-2">Etapa 5. Regreso al FVG: ejecución</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: el precio sube progresivamente hacia 1.1768-1.1780, entra a la banda FVG, y luego vela bajista de rechazo</li>
-                <li>- Conclusión: entrada short al regreso al FVG, SL justo arriba de 1.1780 (extremo del displacement), TP hacia 1.1695. R/R ≈ 1: 2, setup de alta probabilidad alineado HTF + liquidity + sweep + displacement + FVG</li>
+                <li>- Conclusión: entrada short al regreso al FVG, SL justo arriba de 1.1780 (extremo del displacement), TP hacia 1.1695. R/R ≈ 1: 2, setup de alta probabilidad alineado HTF + liquidez + barrido + displacement + FVG</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = sesgo · Liquidity = objetivo · Sweep = condición · Displacement = confirmación · FVG = ejecución
+                  HTF = sesgo · Liquidez = objetivo · Barrido = condición · Displacement = confirmación · FVG = ejecución
                 </p>
               </div>
             </div>
@@ -299,7 +299,7 @@ export default function ContentEs() {
             steps={[
               "Identifica una secuencia de 3-5 velas M15 o H1 consecutivas, todas en la misma dirección, con cuerpos más grandes que el promedio de las 10 velas anteriores y pocas o ninguna mecha contraria.",
               "Verifica que la secuencia rompe una estructura local (mínimo o máximo reciente) y deja al menos un FVG visible. Si es así, es un displacement calificado.",
-              "Traza el FVG en el gráfico. Espera que el precio regrese ahí. Si la reacción al regreso confirma la dirección del displacement (vela de rechazo, ruptura en el sentido), anota la entrada, el SL arriba del extremo del displacement y el TP hacia la próxima liquidity.",
+              "Traza el FVG en el gráfico. Espera que el precio regrese ahí. Si la reacción al regreso confirma la dirección del displacement (vela de rechazo, ruptura en el sentido), anota la entrada, el SL arriba del extremo del displacement y el TP hacia la próxima liquidez.",
             ]}
           />
 
@@ -308,7 +308,7 @@ export default function ContentEs() {
             options={[
               "Es un displacement alcista, 18 pips en una vela es una señal fuerte",
               "Es volatilidad sin secuela, no un displacement, sin ruptura ni continuación",
-              "Es un sweep, así que el escenario inverso queda validado para entrar short de inmediato",
+              "Es un barrido, así que el escenario inverso queda validado para entrar short de inmediato",
               "Es una señal indeterminada, hay que esperar 1h para decidir",
             ]}
             correctIndex={1}
@@ -316,7 +316,7 @@ export default function ContentEs() {
             answerExplanations={[
               "Falso. El tamaño de una vela no tiene ningún valor sin ruptura de estructura y continuación. 18 pips aislados e inmediatamente rechazados = volatilidad puntual, exactamente la trampa que el concepto de displacement busca evitar.",
               "Correcto. Sin ruptura estructural ni continuación, es una vela aislada, entonces volatilidad, no un displacement. La regla del ICT es clara: un displacement solo se valida con una secuencia orientada que rompe una estructura y continúa.",
-              "Falso. Un sweep es solo una condición previa, jamás una señal de entrada por sí sola. Entrar short de inmediato sobre la base de una vela alcista aislada no tiene ninguna lógica estructural, hay que esperar la confirmación (reintegración + vela impulsiva opuesta).",
+              "Falso. Un barrido es solo una condición previa, jamás una señal de entrada por sí sola. Entrar short de inmediato sobre la base de una vela alcista aislada no tiene ninguna lógica estructural, hay que esperar la confirmación (reintegración + vela impulsiva opuesta).",
               "Falso. Esperar 1h arbitrariamente no cambia la lectura. El movimiento ya está calificado de volatilidad por los criterios estructurales (sin ruptura, rechazo inmediato). No se necesita un timer, solo hay que leer correctamente lo que se ve.",
             ]}
           />

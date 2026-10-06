@@ -57,12 +57,12 @@ export function KillzonesTimelineDiagram({ className = "", locale = "fr" }: Kill
         annotation: "La volatilidad se concentra en ciertas ventanas horarias",
         mobileTitle: "Killzones — timeline 24h",
         asiaTitle: "Asia (00h–07h)",
-        asiaBody: "Baja volatilidad, range estrecho. Acumulación.",
+        asiaBody: "Baja volatilidad, rango estrecho. Acumulación.",
         londonTitle: "London (08h–10h)",
         londonBody: "Expansión + impulsos francos. Killzone mayor.",
         nyTitle: "New York (14h30 o 15h30 París)",
         nyBody: "2da ventana — pico de actividad institucional US.",
-        leg1: "Asia Session = baja volatilidad, range estrecho",
+        leg1: "Asia Session = baja volatilidad, rango estrecho",
         leg2: "London & New York = expansión, impulsos francos",
       }
     : locale === "en"

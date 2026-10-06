@@ -280,7 +280,7 @@ export default function ContentEs() {
             </p>
             <div className="bg-zinc-900/40 border border-red-500/15 rounded-xl px-4 py-3 mb-4">
               <p className="text-sm text-zinc-400 italic leading-relaxed">
-                En las news macro, el mercado no reacciona a la decisión en sí, reacciona a la diferencia entre la decisión y lo que se había anticipado.
+                En las noticias macro, el mercado no reacciona a la decisión en sí, reacciona a la diferencia entre la decisión y lo que se había anticipado.
               </p>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
@@ -292,7 +292,7 @@ export default function ContentEs() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Cómo operar con esto: ajustar tu sesgo semanal</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              No vas a operar la news misma en el momento en que sale (ver lección FOMC para la técnica del timing exacto). Pero vas a usar el tono para <span className="font-semibold text-zinc-200">ajustar tu tesis macro de la semana</span>.
+              No vas a operar la noticia misma en el momento en que sale (ver lección FOMC para la técnica del timing exacto). Pero vas a usar el tono para <span className="font-semibold text-zinc-200">ajustar tu tesis macro de la semana</span>.
             </p>
 
             <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Método simple en 3 pasos</p>
@@ -339,7 +339,7 @@ export default function ContentEs() {
             </div>
             <div className="space-y-2">
               {[
-                "Operar la news en vivo sin experiencia",
+                "Operar la noticia en vivo sin experiencia",
                 "Ignorar las expectativas del mercado",
                 "Mantener un sesgo de hace 2 meses",
                 "Confundir decisión con tono",

@@ -12,7 +12,7 @@ const LESSONS = [
   { id: "lecon1", title: "Hawkish vs Dovish",                       href: "/formations/macro/intermediaire/lecon1", disabled: false },
   { id: "lecon2", title: "Entender el calendario económico",         href: "/formations/macro/intermediaire/lecon2", disabled: false },
   { id: "lecon3", title: "CPI, PPI e inflación",                     href: "/formations/macro/intermediaire/lecon3", disabled: false },
-  { id: "lecon4", title: "Sesiones de trading y liquidity",          href: "/formations/macro/intermediaire/lecon4", disabled: false },
+  { id: "lecon4", title: "Sesiones de trading y liquidez",          href: "/formations/macro/intermediaire/lecon4", disabled: false },
   { id: "lecon5", title: "Las correlaciones",                        href: "/formations/macro/intermediaire/lecon5", disabled: false },
   { id: "lecon6", title: "Construir tu sesgo semanal",               href: null,                                     disabled: true  },
 ];
@@ -238,7 +238,7 @@ export default function ContentEs() {
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               Resultado:{" "}
-              <span className="font-semibold text-zinc-200">-6% de la cuenta en una sola news</span>. Gestionaste bien tu riesgo por trade. Pero no viste que tus 3 trades eran{" "}
+              <span className="font-semibold text-zinc-200">-6% de la cuenta en una sola noticia</span>. Gestionaste bien tu riesgo por trade. Pero no viste que tus 3 trades eran{" "}
               <span className="font-semibold text-zinc-200">el mismo trade</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
@@ -352,7 +352,7 @@ export default function ContentEs() {
               {[
                 { bold: "BTC/USD sube mientras el Nasdaq baja", rest: " → posible compra específica en crypto o flujo institucional" },
                 { bold: "XAU/USD sube mientras el DXY sube", rest: " → posible estrés geopolítico o búsqueda de safe-haven extrema" },
-                { bold: "EUR/USD baja pero GBP/USD se mantiene", rest: " → posible news específica al euro o a la libra" },
+                { bold: "EUR/USD baja pero GBP/USD se mantiene", rest: " → posible noticia específica al euro o a la libra" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
@@ -373,7 +373,7 @@ export default function ContentEs() {
 
           {/* Bloque 6 — La regla pro de risk management */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">La regla pro de risk management</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La regla pro de gestión de riesgos</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               <span className="font-semibold text-zinc-200">Regla simple</span>: nunca demasiados trades fuertemente correlacionados abiertos al mismo tiempo.
             </p>
@@ -509,7 +509,7 @@ export default function ContentEs() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Lección 4. Sesiones de trading y liquidity
+                Lección 4. Sesiones de trading y liquidez
               </Link>
               <Link
                 href="/formations/macro/intermediaire/lecon6"

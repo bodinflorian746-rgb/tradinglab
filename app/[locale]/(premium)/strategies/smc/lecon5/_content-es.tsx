@@ -62,7 +62,7 @@ export default function ContentEs() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Esta lección integra el conjunto del módulo SMC en un desarrollo operativo completo. La lógica institucional se reconstruye paso a paso: lectura HTF, identificación de la liquidity, sweep, confirmación estructural, mitigation y ejecución.
+              Esta lección integra el conjunto del módulo SMC en un desarrollo operativo completo. La lógica institucional se reconstruye paso a paso: lectura HTF, identificación de la liquidez, barrido, confirmación estructural, mitigation y ejecución.
             </p>
           </div>
 
@@ -115,7 +115,7 @@ export default function ContentEs() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-blue-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « Un trade SMC no es una señal aislada. Es una secuencia: liquidity → sweep → displacement → mitigation → ejecución. »
+                « Un trade SMC no es una señal aislada. Es una secuencia: liquidez → barrido → displacement → mitigation → ejecución. »
               </p>
             </div>
           </section>
@@ -127,7 +127,7 @@ export default function ContentEs() {
               <li>- Market Structure → ver Estrategia SMC L1</li>
               <li>- BOS / CHoCH → ver Estrategia SMC L2</li>
               <li>- Order Blocks → ver Estrategia SMC L3</li>
-              <li>- FVG &amp; Liquidity → ver Estrategia SMC L4</li>
+              <li>- FVG &amp; liquidez → ver Estrategia SMC L4</li>
             </ul>
           </div>
 
@@ -141,27 +141,27 @@ export default function ContentEs() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Las 7 etapas del trade SMC</p>
             <ol className="space-y-1 text-sm text-zinc-300 list-decimal pl-5">
               <li>Análisis HTF: determinar el sesgo direccional vía la estructura de mercado</li>
-              <li>Identificar la liquidity (BSL/SSL) que será el objetivo</li>
-              <li>Esperar el sweep de la liquidity opuesta</li>
-              <li>Confirmar el CHoCH en el timeframe de entrada</li>
+              <li>Identificar la liquidez (BSL/SSL) que será el objetivo</li>
+              <li>Esperar el barrido de la liquidez opuesta</li>
+              <li>Confirmar el CHoCH en la temporalidad de entrada</li>
               <li>Identificar el Order Block o el FVG en el displacement</li>
               <li>Entrar en la mitigation de esa zona</li>
-              <li>Gestionar: SL más allá de la zona, TP en la liquidity objetivo</li>
+              <li>Gestionar: SL más allá de la zona, TP en la liquidez objetivo</li>
             </ol>
           </section>
 
           {/* Bloque 4 — LEER LA ESTRUCTURA Y LA LIQUIDITY */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Leer la estructura y la liquidity</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Leer la estructura y la liquidez</h2>
             <div className="my-8">
               <LiquidityGrabDiagram locale="es" />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El sesgo HTF da la dirección prioritaria del trade. La liquidity identifica luego las zonas donde los institucionales buscarán provocar el movimiento antes del impulso real. El sweep suele aparecer en forma de mecha agresiva seguida de una reintegración rápida.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El sesgo HTF da la dirección prioritaria del trade. La liquidez identifica luego las zonas donde los institucionales buscarán provocar el movimiento antes del impulso real. El barrido suele aparecer en forma de mecha agresiva seguida de una reintegración rápida.</p>
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Puntos a vigilar</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Estructura HTF en LH/LL = sesgo bearish</li>
-              <li>- Equal highs/lows = liquidity explotable</li>
-              <li>- Sweep = toma de stops + rechazo rápido</li>
+              <li>- Equal highs/lows = liquidez explotable</li>
+              <li>- Barrido = toma de stops + rechazo rápido</li>
             </ul>
           </section>
 
@@ -171,7 +171,7 @@ export default function ContentEs() {
             <div className="my-8">
               <MitigationZoneEntryDiagram locale="es" />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El CHoCH confirma que el control del mercado cambia de bando en el timeframe de entrada. El displacement luego deja un Order Block o un FVG que servirá de zona de mitigation. La entrada interviene cuando el precio regresa a esta zona antes de la reanudación impulsiva.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El CHoCH confirma que el control del mercado cambia de bando en la temporalidad de entrada. El displacement luego deja un Order Block o un FVG que servirá de zona de mitigation. La entrada interviene cuando el precio regresa a esta zona antes de la reanudación impulsiva.</p>
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Lógica de ejecución</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- CHoCH = confirmación estructural</li>
@@ -183,18 +183,18 @@ export default function ContentEs() {
           {/* Bloque 6 — PLAN DE TRADE EUR/USD H4 */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade completo con cifras (EUR/USD H4)</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD H4. Sesgo HTF bajista con estructura en LH/LL. Equal highs en 1.1780 = BSL identificada. Objetivo final: SSL debajo del mínimo 1.1690. Una vela H4 hace sweep de la BSL imprimiendo una mecha en 1.1792 y luego cierra en 1.1772. El precio rompe a continuación el último mínimo menor en 1.1755: CHoCH bearish confirmado. El displacement deja un FVG bearish entre 1.1758 y 1.1770 con un Order Block justo encima.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD H4. Sesgo HTF bajista con estructura en LH/LL. Equal highs en 1.1780 = BSL identificada. Objetivo final: SSL debajo del mínimo 1.1690. Una vela H4 hace barrido de la BSL imprimiendo una mecha en 1.1792 y luego cierra en 1.1772. El precio rompe a continuación el último mínimo menor en 1.1755: CHoCH bearish confirmado. El displacement deja un FVG bearish entre 1.1758 y 1.1770 con un Order Block justo encima.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Desarrollo de las 7 etapas</p>
               <ol className="space-y-1 text-sm text-zinc-300 list-decimal pl-5 mb-4">
                 <li>Análisis HTF: Estructura H4 en LH/LL · Sesgo direccional bearish</li>
-                <li>Identificar la liquidity: Equal highs en 1.1780 · BSL claramente visible</li>
-                <li>Sweep de liquidity: Mecha en 1.1792 · Reintegración inmediata debajo de la BSL</li>
+                <li>Identificar la liquidez: Equal highs en 1.1780 · BSL claramente visible</li>
+                <li>Barrido de liquidez: Mecha en 1.1792 · Reintegración inmediata debajo de la BSL</li>
                 <li>Confirmación CHoCH: Ruptura del mínimo menor en 1.1755 · Cambio de carácter bearish confirmado</li>
                 <li>Identificar la zona de entrada: FVG bearish 1.1758 → 1.1770 · Order Block justo encima</li>
                 <li>Entrada en mitigation: Regreso del precio al FVG · Entrada short en mitigation</li>
-                <li>Gestión: SL arriba de la mecha del sweep · TP en la SSL en 1.1690</li>
+                <li>Gestión: SL arriba de la mecha del barrido · TP en la SSL en 1.1690</li>
               </ol>
 
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
@@ -228,54 +228,54 @@ export default function ContentEs() {
             <h2 className="text-lg font-semibold text-white mb-3">Los errores que rompen el trade SMC</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Error 1: Entrar antes del CHoCH</span> <span className="text-zinc-300">= ausencia de confirmación estructural.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Error 2: Confundir sweep y breakout</span> <span className="text-zinc-300">= compra/venta directa dentro de la toma de liquidity.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Error 2: Confundir barrido y breakout</span> <span className="text-zinc-300">= compra/venta directa dentro de la toma de liquidez.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Error 3: Ignorar el sesgo HTF</span> <span className="text-zinc-300">= ejecución contra la estructura dominante.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Error 4: Apuntar a una liquidity ya tomada</span> <span className="text-zinc-300">= ausencia de objetivo institucional claro.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Error 4: Apuntar a una liquidez ya tomada</span> <span className="text-zinc-300">= ausencia de objetivo institucional claro.</span></div>
             </div>
           </section>
 
           <LessonKeyPoints
             points={[
               "La estructura HTF define el sesgo.",
-              "El sweep suele preceder el verdadero movimiento.",
+              "El barrido suele preceder el verdadero movimiento.",
               "El CHoCH confirma el cambio de control.",
               "El FVG/OB provee la zona de ejecución.",
             ]}
           />
 
           <LessonExercice
-            description="En XAU/USD H4, el mercado evoluciona en un sesgo bajista. Los equal highs en 4 720$ representan una BSL visible, y el objetivo principal de liquidity se sitúa en la SSL del mínimo 4 600$. Una vela H4 hace sweep de la BSL con una mecha en 4 735$ y luego cierra en 4 705$. El mercado rompe enseguida el mínimo menor en 4 680$ y crea un FVG bearish entre 4 685$ y 4 700$. El precio regresa después a la zona. ¿Cómo se reconstruye el trade SMC completo en este setup?"
+            description="En XAU/USD H4, el mercado evoluciona en un sesgo bajista. Los equal highs en 4 720$ representan una BSL visible, y el objetivo principal de liquidez se sitúa en la SSL del mínimo 4 600$. Una vela H4 hace barrido de la BSL con una mecha en 4 735$ y luego cierra en 4 705$. El mercado rompe enseguida el mínimo menor en 4 680$ y crea un FVG bearish entre 4 685$ y 4 700$. El precio regresa después a la zona. ¿Cómo se reconstruye el trade SMC completo en este setup?"
             steps={[
               "Plantear el sesgo HTF: la estructura H4 es bajista (LH/LL). El sesgo orienta hacia setups vendedores en prioridad.",
-              "Identificar la liquidity: los equal highs en 4 720$ forman la BSL. La SSL del mínimo 4 600$ se convierte en el objetivo final del trade.",
-              "Validar el sweep: la mecha en 4 735$ toma la liquidity por encima de 4 720$, y el cierre en 4 705$ confirma la reintegración debajo de la BSL.",
-              "Confirmar el CHoCH: la ruptura del mínimo menor en 4 680$ valida el cambio de carácter bajista en el timeframe de entrada.",
-              "Construir el plan: entrada short 4 692$ (mitigation del FVG 4 685$-4 700$), stop loss 4 740$ (por encima de la mecha del sweep), take profit 4 600$ (objetivo la SSL). Riesgo 48$, ganancia 92$, R/R ≈ 1,9.",
+              "Identificar la liquidez: los equal highs en 4 720$ forman la BSL. La SSL del mínimo 4 600$ se convierte en el objetivo final del trade.",
+              "Validar el barrido: la mecha en 4 735$ toma la liquidez por encima de 4 720$, y el cierre en 4 705$ confirma la reintegración debajo de la BSL.",
+              "Confirmar el CHoCH: la ruptura del mínimo menor en 4 680$ valida el cambio de carácter bajista en la temporalidad de entrada.",
+              "Construir el plan: entrada short 4 692$ (mitigation del FVG 4 685$-4 700$), stop loss 4 740$ (por encima de la mecha del barrido), take profit 4 600$ (objetivo la SSL). Riesgo 48$, ganancia 92$, R/R ≈ 1,9.",
             ]}
           />
 
           <LessonQuiz
             question="¿Qué secuencia corresponde al desarrollo lógico de un trade SMC completo?"
             options={[
-              "Sweep → mitigation → BOS → liquidity → entrada",
-              "Análisis HTF → sweep → entrada → CHoCH → liquidity",
-              "Análisis HTF → liquidity → sweep → CHoCH → mitigation → ejecución",
-              "Liquidity → breakout → entrada → mitigation → BOS",
+              "Barrido → mitigation → BOS → liquidez → entrada",
+              "Análisis HTF → barrido → entrada → CHoCH → liquidez",
+              "Análisis HTF → liquidez → barrido → CHoCH → mitigation → ejecución",
+              "Liquidez → breakout → entrada → mitigation → BOS",
             ]}
             correctIndex={2}
             explanation="La estructura (BOS/CHoCH) da el sesgo y el contexto, luego la mitigación del FVG o del Order Block provee la entrada."
           />
 
           <LessonQuiz
-            question="¿Qué elemento distingue con mayor frecuencia un sweep de un verdadero breakout impulsivo?"
+            question="¿Qué elemento distingue con mayor frecuencia un barrido de un verdadero breakout impulsivo?"
             options={[
               "El precio cierra por encima del nivel con continuación inmediata",
-              "El precio reintegra rápidamente la zona tras haber tomado la liquidity",
-              "El sweep nunca deja una mecha",
-              "El breakout solo aparece en timeframe Daily",
+              "El precio reintegra rápidamente la zona tras haber tomado la liquidez",
+              "El barrido nunca deja una mecha",
+              "El breakout solo aparece en temporalidad Daily",
             ]}
             correctIndex={1}
-            explanation="El sweep busca principalmente tomar los stops antes del verdadero movimiento. La característica principal sigue siendo la reintegración rápida del nivel barrido. Un verdadero breakout conserva en general el cierre más allá del nivel roto con continuación inmediata."
+            explanation="El barrido busca principalmente tomar los stops antes del verdadero movimiento. La característica principal sigue siendo la reintegración rápida del nivel barrido. Un verdadero breakout conserva en general el cierre más allá del nivel roto con continuación inmediata."
           />
 
           <LessonQuiz
@@ -284,10 +284,10 @@ export default function ContentEs() {
               "En medio del FVG",
               "Directamente en el nivel de entrada",
               "Debajo de la SSL objetivo",
-              "Por encima de la mecha que hizo sweep de la liquidity",
+              "Por encima de la mecha que hizo barrido de la liquidez",
             ]}
             correctIndex={3}
-            explanation="La mecha del sweep suele representar el extremo del movimiento de toma de liquidity. Colocar el stop loss más allá de esa zona permite dar aire al trade y al mismo tiempo invalida claramente el escenario institucional si el nivel es recuperado."
+            explanation="La mecha del barrido suele representar el extremo del movimiento de toma de liquidez. Colocar el stop loss más allá de esa zona permite dar aire al trade y al mismo tiempo invalida claramente el escenario institucional si el nivel es recuperado."
           />
 
         </div>

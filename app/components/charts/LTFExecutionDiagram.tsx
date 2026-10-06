@@ -12,17 +12,17 @@ export function LTFExecutionDiagram({ className = "", locale = "fr" }: LTFExecut
   const L = {
     levelLabel:  isEs ? "Nivel ~1.1775" : isEn ? "Level ~1.1775" : "Niveau ~1.1775",
     localLow:    isEs ? "Mínimo local" : isEn ? "Local low" : "Creux local",
-    slLabel:     isEs ? "SL arriba del sweep" : isEn ? "SL above the sweep" : "SL au-dessus du sweep",
+    slLabel:     isEs ? "SL arriba del barrido" : isEn ? "SL above the sweep" : "SL au-dessus du sweep",
     entryShort:  isEs ? "Entrada SHORT" : isEn ? "SHORT entry" : "Entrée SHORT",
-    caption:     isEs ? "Sweep + CHoCH en la zona HTF = disparador de ejecución" : isEn ? "Sweep + CHoCH in the HTF zone = execution trigger" : "Sweep + CHoCH dans la zone HTF = déclencheur d'exécution",
-    mobTitle:    isEs ? "Ejecución M5 — sweep + CHoCH" : isEn ? "M5 execution — sweep + CHoCH" : "Exécution M5 — sweep + CHoCH",
+    caption:     isEs ? "Barrido + CHoCH en la zona HTF = disparador de ejecución" : isEn ? "Sweep + CHoCH in the HTF zone = execution trigger" : "Sweep + CHoCH dans la zone de l'UT supérieure = déclencheur d'exécution",
+    mobTitle:    isEs ? "Ejecución M5 — barrido + CHoCH" : isEn ? "M5 execution — sweep + CHoCH" : "Exécution M5 — sweep + CHoCH",
     mob1:        isEs ? "mecha por encima de ~1.1775 (caza de stops)." : isEn ? "wick above ~1.1775 (stop hunt)." : "mèche au-dessus de ~1.1775 (chasse de stops).",
     mob2:        isEs ? "ruptura del mínimo local M5 = señal de entrada short." : isEn ? "break of M5 local low = short entry signal." : "cassure du creux local M5 = signal d'entrée short.",
-    mob3pre:     isEs ? "SL más allá del sweep" : isEn ? "SL beyond the sweep" : "SL au-delà du sweep",
+    mob3pre:     isEs ? "SL más allá del barrido" : isEn ? "SL beyond the sweep" : "SL au-delà du sweep",
     mob3post:    isEs ? "entrada tras CHoCH." : isEn ? "entry after CHoCH." : "entrée après CHoCH.",
-    legend1:     isEs ? "Sweep = mecha por encima del nivel" : isEn ? "Sweep = wick above the level" : "Sweep = mèche au-dessus du niveau",
+    legend1:     isEs ? "Barrido = mecha por encima del nivel" : isEn ? "Sweep = wick above the level" : "Sweep = mèche au-dessus du niveau",
     legend2:     isEs ? "CHoCH = ruptura del mínimo local" : isEn ? "CHoCH = break of the local low" : "CHoCH = cassure du creux local",
-    legend3:     isEs ? "SL más allá del sweep, entrada tras CHoCH" : isEn ? "SL beyond the sweep, entry after CHoCH" : "SL au-delà du sweep, entrée après CHoCH",
+    legend3:     isEs ? "SL más allá del barrido, entrada tras CHoCH" : isEn ? "SL beyond the sweep, entry after CHoCH" : "SL au-delà du sweep, entrée après CHoCH",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
@@ -64,7 +64,7 @@ export function LTFExecutionDiagram({ className = "", locale = "fr" }: LTFExecut
 
         <line x1="450" y1="78" x2="244" y2="78" stroke="#ef4444" strokeDasharray="3 2" strokeWidth="1" strokeOpacity="0.6" />
         <rect x="450" y="67" width="60" height="22" rx="10" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-        <text x="480" y="82" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">Sweep</text>
+        <text x="480" y="82" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{locale === "es" ? "Barrido" : locale === "en" ? "Sweep" : "Sweep"}</text>
 
         <line x1="450" y1="200" x2="320" y2="195" stroke="#f59e0b" strokeDasharray="3 2" strokeWidth="1" strokeOpacity="0.7" />
         <rect x="450" y="189" width="60" height="22" rx="10" fill="#f59e0b22" stroke="#f59e0b" strokeWidth="1" />
@@ -89,7 +89,7 @@ export function LTFExecutionDiagram({ className = "", locale = "fr" }: LTFExecut
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">1</span>
-            <span className="text-zinc-300"><span className="font-bold text-amber-400">Sweep</span> · {L.mob1}</span>
+            <span className="text-zinc-300"><span className="font-bold text-amber-400">{locale === "es" ? "Barrido" : locale === "en" ? "Sweep" : "Sweep"}</span> · {L.mob1}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">2</span>

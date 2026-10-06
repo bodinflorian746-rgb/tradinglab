@@ -32,7 +32,7 @@ export default function ContentEs() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Estrategias</Link>
           <span>/</span>
-          <Link href="/strategies/support-resistance" className="hover:text-zinc-400 transition-colors">Support / Resistance &amp; Range</Link>
+          <Link href="/strategies/support-resistance" className="hover:text-zinc-400 transition-colors">Support / Resistance &amp; rango</Link>
           <span>/</span>
           <span className="text-zinc-500">Lección 1</span>
         </nav>
@@ -142,7 +142,7 @@ export default function ContentEs() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Mínimo 2 toques para calificar una zona, 3 toques para una confianza elevada</li>
-              <li>- Timeframe de identificación principal: H4 (historial 100-150 velas)</li>
+              <li>- Temporalidad de identificación principal: H4 (historial 100-150 velas)</li>
               <li>- En EUR/USD: grosor 10-20 pips. En XAU/USD: grosor 10-20$</li>
               <li>- Nada de trade en el 1er toque: el toque inicial valida la existencia del nivel, todavía no una entrada</li>
             </ul>
@@ -249,7 +249,7 @@ export default function ContentEs() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Lección terminada</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Lección 1 del módulo Support / Resistance &amp; Range completada.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Lección 1 del módulo Support / Resistance &amp; rango completada.</p>
                 </div>
               </div>
             )}

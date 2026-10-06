@@ -126,11 +126,11 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Tendance haussière nette. Le prix vient de finir un pullback.",
     optimal: { entry: "deep_pullback", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Ici, la tendance HTF est claire : chercher le meilleur prix (pullback profond) se défend, avec un stop derrière la structure et un objectif large dans le sens du momentum.",
+    optimalExplain: "Ici, la tendance de l'UT supérieure est claire : chercher le meilleur prix (pullback profond) se défend, avec un stop derrière la structure et un objectif large dans le sens du momentum.",
     lessons: {
-      beginner:     "Sur un setup dans le sens du HTF, chercher le meilleur prix et viser large est une option logique. Ici, la patience peut payer.",
+      beginner:     "Sur un setup dans le sens de l'UT supérieure, chercher le meilleur prix et viser large est une option logique. Ici, la patience peut payer.",
       intermediate: "Le pullback profond améliore souvent le R/R. Associé à un stop derrière la structure, il offre ici le meilleur avantage.",
-      advanced:     "Une continuation de tendance alignée avec le HTF peut offrir un setup à haute probabilité, avec un R/R de 1:3 ou plus. La taille se décide selon ton plan de risk management ; un TP ambitieux se justifie ici par le momentum probable.",
+      advanced:     "Une continuation de tendance alignée avec l'UT supérieure peut offrir un setup à haute probabilité, avec un R/R de 1:3 ou plus. La taille se décide selon ton plan de gestion du risque ; un TP ambitieux se justifie ici par le momentum probable.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
@@ -143,7 +143,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Tendance baissière nette. Le prix vient de finir un rebond.",
     optimal: { entry: "deep_pullback", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Ici, avec un HTF baissier et un rebond qui s'essouffle, une entrée au meilleur prix se défend, avec un stop au-dessus du swing high et un TP ambitieux dans le sens du momentum.",
+    optimalExplain: "Ici, avec une UT supérieure baissière et un rebond qui s'essouffle, une entrée au meilleur prix se défend, avec un stop au-dessus du swing high et un TP ambitieux dans le sens du momentum.",
     lessons: {
       beginner:     "Tendance baissière et rebond qui s'essouffle : un SELL reste cohérent avec le scénario, si ça correspond à ton plan, au meilleur prix possible avec un TP large.",
       intermediate: "Ici, le rebond profond donne souvent le meilleur R/R. Un stop au-dessus de la structure permet d'absorber le bruit.",
@@ -158,13 +158,13 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de casser une résistance HTF avec une bougie impulsive.",
+    context: "Le prix vient de casser une résistance de l'UT supérieure avec une bougie impulsive.",
     optimal: { entry: "aggressive", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Ici, le breakout aligné avec le HTF peut signaler un momentum immédiat. Attendre un pullback profond risque de faire rater le mouvement. Une entrée agressive, un stop sous le niveau cassé et un TP ambitieux forment une option logique.",
+    optimalExplain: "Ici, le breakout aligné avec l'UT supérieure peut signaler un momentum immédiat. Attendre un pullback profond risque de faire rater le mouvement. Une entrée agressive, un stop sous le niveau cassé et un TP ambitieux forment une option logique.",
     lessons: {
-      beginner:     "Sur un breakout aligné avec le HTF, la fenêtre d'entrée est souvent courte : le marché n'attend pas le retardataire. À toi de juger selon ton plan si tu embarques.",
+      beginner:     "Sur un breakout aligné avec l'UT supérieure, la fenêtre d'entrée est souvent courte : le marché n'attend pas le retardataire. À toi de juger selon ton plan si tu embarques.",
       intermediate: "Sur un breakout fort, attendre un pullback profond peut faire rater le mouvement. Dans ce cas, une entrée agressive se défend.",
-      advanced:     "Un breakout HTF avec une bougie impulsive apporte une confirmation forte. Le pullback peut être léger, voire absent : à intégrer dans ton plan.",
+      advanced:     "Un breakout de l'UT supérieure avec une bougie impulsive apporte une confirmation forte. Le pullback peut être léger, voire absent : à intégrer dans ton plan.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
@@ -175,11 +175,11 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Le prix vient de casser un support HTF avec une bougie impulsive.",
+    context: "Le prix vient de casser un support de l'UT supérieure avec une bougie impulsive.",
     optimal: { entry: "aggressive", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Ici, la cassure alignée avec le HTF peut signaler un momentum vendeur. Une entrée rapide avec un stop au-dessus du support cassé est une option logique.",
+    optimalExplain: "Ici, la cassure alignée avec l'UT supérieure peut signaler un momentum vendeur. Une entrée rapide avec un stop au-dessus du support cassé est une option logique.",
     lessons: {
-      beginner:     "Cassure du support avec un HTF baissier : un SELL reste cohérent avec le scénario, si ça correspond à ton plan de trading.",
+      beginner:     "Cassure du support avec une UT supérieure baissière : un SELL reste cohérent avec le scénario, si ça correspond à ton plan de trading.",
       intermediate: "Un stop juste au-dessus du niveau cassé (devenu résistance) est une option logique. Ici, le momentum peut justifier une entrée agressive.",
       advanced:     "C'est le miroir du breakout haussier. Un stop technique au-dessus du support cassé, avec une marge, se défend.",
     },
@@ -192,13 +192,13 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de rebondir sur un support HTF avec une mèche claire.",
+    context: "Le prix vient de rebondir sur un support de l'UT supérieure avec une mèche claire.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
     optimalExplain: "Sur un support testé, attendre la confirmation du rebond avant d'entrer se défend. Un stop sous le support et un TP équilibré sont ici logiques, car la résistance suivante limite la course.",
     lessons: {
       beginner:     "Sur un support, attendre la bougie verte de confirmation est souvent plus sûr qu'une entrée à l'aveugle.",
       intermediate: "La confirmation peut valider la zone. Ici, le TP équilibré tient compte de la résistance suivante.",
-      advanced:     "Sur un support HTF testé 2 ou 3 fois, la confirmation aide à préserver l'avantage. Un R/R autour de 1:2 à 1:2,5 est courant dans ce cas.",
+      advanced:     "Sur un support de l'UT supérieure testé 2 ou 3 fois, la confirmation aide à préserver l'avantage. Un R/R autour de 1:2 à 1:2,5 est courant dans ce cas.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
   },
@@ -209,7 +209,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Le prix vient de rejeter une résistance HTF avec une mèche.",
+    context: "Le prix vient de rejeter une résistance de l'UT supérieure avec une mèche.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
     optimalExplain: "Sur une résistance testée, attendre la confirmation du rejet avant d'entrer se défend. Un stop au-dessus du high et un TP équilibré (le support suivant) sont ici logiques.",
     lessons: {
@@ -255,17 +255,17 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
   },
   {
     id: "fake_breakout_short",
-    title: "Fakeout : SELL après le piège",
+    title: "Faux breakout : SELL après le piège",
     chartShape: "fakeout_above",
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
     context: "Le prix a piqué au-dessus de la résistance puis refermé en dessous. Piège classique.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
-    optimalExplain: "Après un fakeout, attendre la confirmation (une bougie qui valide le retour sous la résistance) se défend. Un stop au-dessus du pic du fakeout et un TP équilibré jusqu'au support suivant sont ici logiques.",
+    optimalExplain: "Après un faux breakout, attendre la confirmation (une bougie qui valide le retour sous la résistance) se défend. Un stop au-dessus du pic du faux breakout et un TP équilibré jusqu'au support suivant sont ici logiques.",
     lessons: {
-      intermediate: "Un fakeout peut offrir un signal d'entrée, de préférence avec confirmation. Sans elle, le retest peut provoquer un 2e sweep.",
-      advanced:     "Un stop au-dessus de la mèche du fakeout correspond ici à la vraie invalidation, plutôt que dans la zone du piège.",
+      intermediate: "Un faux breakout peut offrir un signal d'entrée, de préférence avec confirmation. Sans elle, le retest peut provoquer un 2e sweep.",
+      advanced:     "Un stop au-dessus de la mèche du faux breakout correspond ici à la vraie invalidation, plutôt que dans la zone du piège.",
       beginner:     "Après un piège visible, attendre la suite est souvent plus sage que d'agir par FOMO.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -296,10 +296,10 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Le prix revient tester un FVG haussier. La réaction est en cours.",
     optimal: { entry: "confirmation", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Ici, le FVG peut servir de support, et la confirmation valide la réaction. Un stop sous le bas du FVG et un TP ambitieux se défendent, car le HTF est aligné et la zone encore intacte.",
+    optimalExplain: "Ici, le FVG peut servir de support, et la confirmation valide la réaction. Un stop sous le bas du FVG et un TP ambitieux se défendent, car l'UT supérieure est alignée et la zone encore intacte.",
     lessons: {
       intermediate: "Le FVG agit souvent comme un support au retest. Ici, la confirmation préserve l'avantage sans rater le mouvement.",
-      advanced:     "FVG haussier, HTF aligné et premier retest : un setup de premier choix. Un R/R de 1:3 ou plus est ici logique.",
+      advanced:     "FVG haussier, UT supérieure alignée et premier retest : un setup de premier choix. Un R/R de 1:3 ou plus est ici logique.",
       beginner:     "Le FVG attire souvent le prix. Ici, la confirmation prend la forme d'une bougie verte qui défend la zone.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -345,7 +345,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Volatilité élevée. Les bougies sont larges, les wicks profondes.",
+    context: "Volatilité élevée. Les bougies sont larges, les mèches profondes.",
     optimal: { entry: "confirmation", stop: "wide", tp: "balanced" },
     optimalExplain: "En volatilité élevée, le bruit est amplifié et un stop standard risque d'être balayé. Ici, le « stop large » devient le stop LOGIQUE. Un TP équilibré se défend, car le mouvement potentiel est aussi plus étendu.",
     lessons: {
@@ -357,16 +357,16 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
   },
   {
     id: "counter_trend_local",
-    title: "Setup local contre HTF : défensif",
+    title: "Setup local contre l'UT supérieure : défensif",
     chartShape: "counter_trend_local",
     direction: "BUY",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "HTF baissier. Un setup BUY apparaît localement (LTF), risqué mais tradable.",
+    context: "UT supérieure baissière. Un setup BUY apparaît localement (UT inférieure), risqué mais tradable.",
     optimal: { entry: "confirmation", stop: "logical", tp: "fast" },
-    optimalExplain: "Contre le HTF, la probabilité est souvent défavorable. Ici, une confirmation et un TP rapide permettent de sécuriser ce qui peut l'être ; viser loin contre la tendance majeure se défend mal.",
+    optimalExplain: "Contre l'UT supérieure, la probabilité est souvent défavorable. Ici, une confirmation et un TP rapide permettent de sécuriser ce qui peut l'être ; viser loin contre la tendance majeure se défend mal.",
     lessons: {
-      advanced:     "Trader contre le HTF revient souvent à accepter une probabilité défavorable. Ici, le TP rapide capte l'avantage avant un éventuel retournement.",
+      advanced:     "Trader contre l'UT supérieure revient souvent à accepter une probabilité défavorable. Ici, le TP rapide capte l'avantage avant un éventuel retournement.",
       intermediate: "Un setup contre-tendance appelle plutôt une approche défensive. Une confirmation et une sortie rapide limitent ici l'exposition.",
       beginner:     "Si tu trades contre la tendance, viser petit et sortir vite est souvent l'option la plus prudente.",
     },
@@ -678,7 +678,7 @@ function shapeBounceSupport(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "support", y1: S - 0.1, y2: S + 0.1, label: "Support HTF" },
+    { kind: "support", y1: S - 0.1, y2: S + 0.1, label: "Support UT supérieure" },
   ], ref: { swingLow: S, swingHigh: entryRef + 4 * m, entryRef } };
 }
 
@@ -720,7 +720,7 @@ function shapeRejectionResistance(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance HTF" },
+    { kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance UT supérieure" },
   ], ref: { swingLow: entryRef - 4 * m, swingHigh: R, entryRef } };
 }
 
@@ -835,7 +835,7 @@ function shapeFakeoutAbove(rng: () => number, m: number): ShapeOutput {
   }
   return { past, future: fut, zones: [
     { kind: "resistance",     y1: R - 0.1, y2: R + 0.1, label: "Résistance" },
-    { kind: "liquidity_high", y1: R + 0.15, y2: fakeoutHigh, label: "Mèche du fakeout" },
+    { kind: "liquidity_high", y1: R + 0.15, y2: fakeoutHigh, label: "Mèche du faux breakout" },
   ], ref: { swingLow: entryRef - 4 * m, swingHigh: fakeoutHigh, entryRef } };
 }
 

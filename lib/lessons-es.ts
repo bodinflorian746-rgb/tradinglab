@@ -136,7 +136,7 @@ export const LESSONS_ES: LevelData[] = [
           },
           {
             heading: "Long vs Short: la comparación",
-            body: "Las dos direcciones son simétricas. Solo cambia la dirección de la ganancia. El risk management funciona exactamente igual en ambos casos.",
+            body: "Las dos direcciones son simétricas. Solo cambia la dirección de la ganancia. La gestión de riesgos funciona exactamente igual en ambos casos.",
             diagram: "long-short",
             table: {
               headers: ["", "Long (Buy, Compra)", "Short (Sell. Venta)"],
@@ -238,8 +238,8 @@ export const LESSONS_ES: LevelData[] = [
                 ["Martillo", "Cuerpo chico arriba, mecha larga abajo", "Los vendedores fracasaron en bajar, los compradores defendieron"],
                 ["Estrella fugaz", "Cuerpo chico abajo, mecha larga arriba", "Los compradores fracasaron en subir, los vendedores rechazaron"],
                 ["Doji", "Cuerpo casi nulo, mechas de ambos lados", "Indecisión total, ni compradores ni vendedores ganan"],
-                ["Engulfing alcista", "Gran vela verde que engulle a la roja anterior", "Los compradores tomaron el control de forma decisiva"],
-                ["Engulfing bajista", "Gran vela roja que engulle a la verde anterior", "Los vendedores tomaron el control de forma decisiva"],
+                ["Envolvente alcista", "Gran vela verde que engulle a la roja anterior", "Los compradores tomaron el control de forma decisiva"],
+                ["Envolvente bajista", "Gran vela roja que engulle a la verde anterior", "Los vendedores tomaron el control de forma decisiva"],
               ],
             },
           },
@@ -262,16 +262,16 @@ export const LESSONS_ES: LevelData[] = [
           "Cada vela = 4 datos: Open, High, Low, Close",
           "Cuerpo verde = compradores ganadores. Cuerpo rojo = vendedores ganadores.",
           "Las mechas = intentos fallidos, muestran la resistencia del bando opuesto",
-          "Doji = indecisión. Martillo = rechazo de precios bajos. Engulfing = toma de control clara.",
+          "Doji = indecisión. Martillo = rechazo de precios bajos. Envolvente = toma de control clara.",
           "Un patrón de vela solo no significa nada, el contexto (zona, tendencia) le da valor",
         ],
         exercise: {
           title: "Leer velas en un gráfico real",
           steps: [
-            "En TradingView, abre EUR/USD en timeframe Daily",
+            "En TradingView, abre EUR/USD en temporalidad Daily",
             "Encuentra una vela verde con una mecha alta larga — ¿qué pasó en los días siguientes?",
             "Encuentra un Doji — ¿el mercado eligió una dirección clara en las velas siguientes?",
-            "Identifica un Engulfing (una gran vela que engulle a la anterior) — ¿qué impacto tuvo en lo que siguió?",
+            "Identifica una envolvente (una gran vela que engulle a la anterior) — ¿qué impacto tuvo en lo que siguió?",
           ],
         },
         quiz: {
@@ -326,7 +326,7 @@ export const LESSONS_ES: LevelData[] = [
           },
           {
             heading: "El spread varía según las condiciones",
-            body: "El spread no es fijo. Depende de la liquidity del mercado, cuántos compradores y vendedores están activos en ese momento. Mientras más actividad, más ajustado es el spread.\n\nMás allá de la liquidez, los brokers e intermediarios añaden a menudo su propio margen al spread: es una de sus fuentes de ingresos. Un spread más amplio significa un coste de entrada más alto para ti.",
+            body: "El spread no es fijo. Depende de la liquidez del mercado, cuántos compradores y vendedores están activos en ese momento. Mientras más actividad, más ajustado es el spread.\n\nMás allá de la liquidez, los brokers e intermediarios añaden a menudo su propio margen al spread: es una de sus fuentes de ingresos. Un spread más amplio significa un coste de entrada más alto para ti.",
             table: {
               headers: ["Situación", "Spread típico", "Impacto"],
               rows: [
@@ -509,7 +509,7 @@ export const LESSONS_ES: LevelData[] = [
           },
           {
             heading: "El ratio Riesgo / Recompensa (R/R)",
-            body: "El R/R compara dos distancias: la que separa tu entrada de tu Stop Loss (el riesgo), y la que separa tu entrada de tu Take Profit (el objetivo). Es una relación, no depende del tamaño de tu posición. Es la métrica más importante en risk management: determina si tu estrategia es rentable a largo plazo, independientemente de tu winrate.",
+            body: "El R/R compara dos distancias: la que separa tu entrada de tu Stop Loss (el riesgo), y la que separa tu entrada de tu Take Profit (el objetivo). Es una relación, no depende del tamaño de tu posición. Es la métrica más importante en gestión de riesgos: determina si tu estrategia es rentable a largo plazo, independientemente de tu winrate.",
             table: {
               headers: ["Ratio R/R", "Ejemplo concreto", "Lo que permite"],
               rows: [
@@ -666,7 +666,7 @@ export const LESSONS_ES: LevelData[] = [
       {
         id: "lecon-8",
         slug: "lecon8",
-        title: "Risk management: el money management",
+        title: "Gestión de riesgos: el money management",
         duration: "12 min",
         introduction:
           "Un solo trade puede arruinar semanas enteras de trabajo. No porque el análisis fuera malo, porque el riesgo era demasiado alto. ¿Pero el riesgo adaptado a qué capital? La mayoría de guías habla de '1% por trade' para cuentas de 5 000 €+. Si arrancas con 300 o 700 €, necesitas una grilla diferente.",
@@ -736,7 +736,7 @@ export const LESSONS_ES: LevelData[] = [
           },
           {
             heading: "Errores frecuentes del principiante",
-            body: "Estos errores de risk management son los más destructivos, actúan en silencio hasta el momento en que todo se derrumba.",
+            body: "Estos errores de gestión de riesgos son los más destructivos, actúan en silencio hasta el momento en que todo se derrumba.",
             items: [
               "Arriesgar más después de una victoria: 'Tradeé bien, me puedo permitir arriesgar más.' Es el overconfidence, siempre precede a las grandes pérdidas.",
               "Arriesgar más después de una pérdida para recuperar: exactamente lo opuesto de lo que hay que hacer.",
@@ -880,14 +880,14 @@ export const LESSONS_ES: LevelData[] = [
       {
         id: "lecon-10",
         slug: "lecon10",
-        title: "Risk management : pourquoi 90% des traders perdent",
+        title: "Gestion du risque : pourquoi 90% des traders perdent",
         duration: "13 min",
         introduction:
-          "Le problème du retail n'est généralement pas l'entrée. Il vient de ce qui se passe AUTOUR du trade : risque trop élevé, mauvais RR, levier excessif, revenge trading. Deux traders avec le même setup : l'un finit rentable, l'autre détruit son compte. La différence ne vient pas de la stratégie. Elle vient du risk management.",
+          "Le problème du retail n'est généralement pas l'entrée. Il vient de ce qui se passe AUTOUR du trade : risque trop élevé, mauvais RR, levier excessif, revenge trading. Deux traders avec le même setup : l'un finit rentable, l'autre détruit son compte. La différence ne vient pas de la stratégie. Elle vient de la gestion du risque.",
         sections: [
           {
             heading: "Le plus grand mensonge du retail",
-            body: "Le retail pense souvent : « Si je trouve la bonne stratégie, je deviendrai rentable. » C'est faux. Une bonne stratégie avec un mauvais risk management finit presque toujours par mourir. Aucune stratégie ne gagne 100% du temps. Même une excellente stratégie prend des pertes, subit des drawdowns, traverse des périodes compliquées, enchaîne parfois plusieurs stops d'affilée. Le problème du retail, c'est qu'il construit son trading comme si les pertes ne devaient jamais arriver. Donc dès qu'elles arrivent, il augmente le risque, force des setups, déplace le stop, supprime le SL, veut récupérer immédiatement. Et c'est là que le compte commence réellement à mourir.",
+            body: "Le retail pense souvent : « Si je trouve la bonne stratégie, je deviendrai rentable. » C'est faux. Une bonne stratégie avec une mauvaise gestion du risque finit presque toujours par mourir. Aucune stratégie ne gagne 100% du temps. Même une excellente stratégie prend des pertes, subit des drawdowns, traverse des périodes compliquées, enchaîne parfois plusieurs stops d'affilée. Le problème du retail, c'est qu'il construit son trading comme si les pertes ne devaient jamais arriver. Donc dès qu'elles arrivent, il augmente le risque, force des setups, déplace le stop, supprime le SL, veut récupérer immédiatement. Et c'est là que le compte commence réellement à mourir.",
           },
           {
             heading: "Comment un compte meurt vraiment",
@@ -917,7 +917,7 @@ export const LESSONS_ES: LevelData[] = [
           },
           {
             heading: "Pourquoi le RR change tout",
-            body: "Situation 1 : tu risques 20€ pour en gagner 10€. Situation 2 : tu risques 20€ pour en gagner 40€. Laquelle est la plus intelligente ? Évidemment la situation 2, tu gagnes 4 fois plus pour exactement le même risque. Et pourtant, 90% des retails passent leur temps à prendre des trades de type Situation 1 sans s'en rendre compte, soit parce qu'ils placent leur Take Profit trop tôt « pour sécuriser », soit parce qu'ils acceptent des trades médiocres où le potentiel de gain est minuscule par rapport au risque. Le RR (risk/reward) est le rapport entre ce que tu RISQUES et ce que tu peux GAGNER sur un trade. Tu n'as PAS besoin d'avoir raison souvent pour gagner en bourse. Tu as besoin que tes trades gagnants rapportent beaucoup plus que ce que tes trades perdants te coûtent.",
+            body: "Situation 1 : tu risques 20€ pour en gagner 10€. Situation 2 : tu risques 20€ pour en gagner 40€. Laquelle est la plus intelligente ? Évidemment la situation 2, tu gagnes 4 fois plus pour exactement le même risque. Et pourtant, 90% des retails passent leur temps à prendre des trades de type Situation 1 sans s'en rendre compte, soit parce qu'ils placent leur Take Profit trop tôt « pour sécuriser », soit parce qu'ils acceptent des trades médiocres où le potentiel de gain est minuscule par rapport au risque. Le RR (ratio risque/rendement) est le rapport entre ce que tu RISQUES et ce que tu peux GAGNER sur un trade. Tu n'as PAS besoin d'avoir raison souvent pour gagner en bourse. Tu as besoin que tes trades gagnants rapportent beaucoup plus que ce que tes trades perdants te coûtent.",
             items: [
               "Si tu risques 20€ et que tu vises 40€ → ton RR est de 1:2",
               "Si tu risques 20€ et que tu vises 60€ → ton RR est de 1:3",
@@ -981,7 +981,7 @@ export const LESSONS_ES: LevelData[] = [
           },
         ],
         keyPoints: [
-          "Une bonne stratégie avec un mauvais risk management finit presque toujours par mourir.",
+          "Une bonne stratégie avec une mauvaise gestion du risque finit presque toujours par mourir.",
           "Adapte ton risque par trade à ton capital et vise un RR minimum de 1:2.",
           "Le RR compte plus que le winrate : un trader à 45% de réussite avec un bon RR bat un trader à 70% avec un mauvais RR.",
           "Hiérarchie du trader rentable : survivre d'abord, protéger le capital ensuite, performer en dernier.",

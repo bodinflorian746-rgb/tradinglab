@@ -12,7 +12,7 @@ export function HTFBiasDiagram({ className = "", locale = "fr" }: HTFBiasDiagram
         rLabel: "1.1780 — R",
         prixLabel: "Precio 1.1725",
         verdict: "VEREDICTO HTF",
-        bias: "Bias",
+        bias: "Sesgo",
         baissier: "BAJISTA",
         ventes: "Ventas prioritarias",
         achats: "Compras = contra",
@@ -20,7 +20,7 @@ export function HTFBiasDiagram({ className = "", locale = "fr" }: HTFBiasDiagram
         analyseLtf1: "Todo análisis LTF",
         analyseLtf2: "parte de este veredicto",
         caption: "Estructura HTF en LH/LL → solo ventas",
-        mobTitle: "Bias direccional HTF (H4)",
+        mobTitle: "Sesgo direccional HTF (H4)",
         mobVerdict: "Veredicto HTF",
         mobBaissier: "BAJISTA",
         mobVentes: "Ventas prioritarias",
@@ -28,7 +28,7 @@ export function HTFBiasDiagram({ className = "", locale = "fr" }: HTFBiasDiagram
         mobAchats: "Compras = contra-contexto",
         mobAchatsDesc: " a evitar",
         mobFooter: "Todo análisis LTF parte de este veredicto.",
-        legendStruct: "Estructura H4 LH/LL = bias bajista",
+        legendStruct: "Estructura H4 LH/LL = sesgo bajista",
         legendPrice: "Precio actual bajo la resistencia HTF",
       }
     : locale === "en"
@@ -58,25 +58,25 @@ export function HTFBiasDiagram({ className = "", locale = "fr" }: HTFBiasDiagram
     : {
         rLabel: "1.1780 — R",
         prixLabel: "Prix 1.1725",
-        verdict: "VERDICT HTF",
+        verdict: "VERDICT UT SUPÉRIEURE",
         bias: "Biais",
         baissier: "BAISSIER",
         ventes: "Ventes prioritaires",
         achats: "Achats = contre",
         contexte: "contexte",
-        analyseLtf1: "Toute analyse LTF",
+        analyseLtf1: "Toute analyse de l'UT inférieure",
         analyseLtf2: "part de ce verdict",
-        caption: "Structure HTF en LH/LL → ventes seulement",
-        mobTitle: "Biais directionnel HTF (H4)",
-        mobVerdict: "Verdict HTF",
+        caption: "Structure de l'UT supérieure en LH/LL → ventes seulement",
+        mobTitle: "Biais directionnel de l'UT supérieure (H4)",
+        mobVerdict: "Verdict de l'UT supérieure",
         mobBaissier: "BAISSIER",
         mobVentes: "Ventes prioritaires",
         mobVentesDesc: " · structure H4 en LH/LL",
         mobAchats: "Achats = contre-contexte",
         mobAchatsDesc: " à éviter",
-        mobFooter: "Toute analyse LTF part de ce verdict.",
+        mobFooter: "Toute analyse de l'UT inférieure part de ce verdict.",
         legendStruct: "Structure H4 LH/LL = biais baissier",
-        legendPrice: "Prix actuel sous la résistance HTF",
+        legendPrice: "Prix actuel sous la résistance de l'UT supérieure",
       };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
@@ -176,19 +176,19 @@ export function HTFBiasDiagram({ className = "", locale = "fr" }: HTFBiasDiagram
         <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
 
         {/* Mini-SVG : 2 panels — HTF bias bearish dicte la direction, LTF aligné dans le sens */}
-        <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="HTF bias" fill="none">
+        <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label={locale === "es" ? "Sesgo HTF" : locale === "en" ? "HTF bias" : "Biais de l'UT supérieure"} fill="none">
           <line x1="138" y1="10" x2="138" y2="110" stroke="#3f3f46" strokeWidth="0.8" />
           {/* Panel HTF — tendance baissière nette */}
           <path d="M15,28 L40,45 L60,38 L85,65 L100,58 L120,90" stroke="#ef4444" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
           <circle cx="120" cy="90" r="3" fill="#ef4444" />
           <rect x="35" y="6" width="70" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
-          <text x="70" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">HTF ↘ BEARISH</text>
+          <text x="70" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">{locale === "es" ? "HTF ↘ BEARISH" : locale === "en" ? "HTF ↘ BEARISH" : "UT supérieure ↘ BEARISH"}</text>
           {/* Panel LTF — micro pullback puis continuation dans le sens HTF baissier */}
           <path d="M155,30 L170,40 L185,28 L200,48 L215,38 L230,60 L245,55 L262,82" stroke="#ef4444" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
           <circle cx="262" cy="82" r="3" fill="#ef4444" />
           <rect x="178" y="6" width="60" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
-          <text x="208" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">LTF ↘</text>
-          <text x="208" y="105" fontSize="8" fill="#a1a1aa" textAnchor="middle" fontStyle="italic">aligné HTF</text>
+          <text x="208" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">{locale === "es" ? "LTF ↘" : locale === "en" ? "LTF ↘" : "UT inférieure ↘"}</text>
+          <text x="208" y="105" fontSize="8" fill="#a1a1aa" textAnchor="middle" fontStyle="italic">{locale === "es" ? "alineado HTF" : locale === "en" ? "aligné HTF" : "aligné sur l'UT supérieure"}</text>
         </svg>
 
         <div className="rounded-xl border-2 border-red-500 bg-red-500/8 p-4 text-center">

@@ -48,11 +48,11 @@ export function NYOpenExpansionDiagram({ className = "", locale = "fr" }: NYOpen
         annotation: "El volumen transforma el mercado",
         mobileTitle: "NY Open expansion · XAU/USD M15",
         b1Title: "Pre-market — velas planas",
-        b1Body: "Volumen bajo, range estrecho.",
+        b1Body: "Volumen bajo, rango estrecho.",
         b2Title: "NY Open — impulso explosivo",
-        b2Body: "El volumen explota a las 14h30 o 15h30 (París) → sweep + rechazo visible inmediato.",
+        b2Body: "El volumen explota a las 14h30 o 15h30 (París) → barrido + rechazo visible inmediato.",
         leg1: "Pre-market = velas planas, volumen bajo",
-        leg2: "NY Open = impulso explosivo y luego sweep y rechazo",
+        leg2: "NY Open = impulso explosivo y luego barrido y rechazo",
       }
     : locale === "en"
     ? {

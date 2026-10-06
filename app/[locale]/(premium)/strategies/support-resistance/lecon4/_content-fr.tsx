@@ -61,7 +61,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Cette leçon enseigne à reconnaître un faux breakout et trader le retour : distinction vrai/faux, mécanique du stop hunt institutionnel, plan d&apos;exécution chiffré.
+              Cette leçon enseigne à reconnaître un faux breakout et trader le retour : distinction vrai/faux, mécanique de la chasse aux stops institutionnelle, plan d&apos;exécution chiffré.
             </p>
           </div>
 
@@ -124,7 +124,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Identification S/R → cf. Stratégie SR L1</li>
               <li>- Concept de clôture vs mèche → cf. Formation Trading L2</li>
-              <li>- Notion de stop hunt / liquidity → cf. Formation Trading L4</li>
+              <li>- Notion de chasse aux stops / liquidité → cf. Formation Trading L4</li>
             </ul>
           </div>
 
@@ -144,7 +144,7 @@ export default function ContentFr() {
               <li>- Vrai breakout : clôture nette au-delà du niveau + follow-through sur 3-5 bougies</li>
               <li>- Faux breakout : mèche dépasse le niveau, mais clôture revient dans la zone</li>
               <li>- Réintégration en 1-3 bougies après la mèche = fake confirmé</li>
-              <li>- Zone forte (3+ touches, niveau psychologique) = terrain favorable aux fakes</li>
+              <li>- Zone forte (3+ touches, chiffre rond) = terrain favorable aux fakes</li>
             </ul>
           </section>
 
@@ -164,20 +164,20 @@ export default function ContentFr() {
               <li>- Mèche d&apos;au moins 50% du corps de la bougie, ressortant côté cassure</li>
               <li>- Réintégration franche dans la zone en 1-3 bougies suivantes</li>
               <li>- Volume relatif élevé sur la mèche, puis effondrement post-rejet</li>
-              <li>- Contexte de zone forte (3+ touches, niveau psychologique, OB visible)</li>
+              <li>- Contexte de zone forte (3+ touches, chiffre rond, OB visible)</li>
             </ul>
           </section>
 
           {/* Bloc 5 — LE STOP HUNT INSTITUTIONNEL */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Le stop hunt institutionnel</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La chasse aux stops institutionnelle</h2>
 
             <div className="my-8">
               <StopHuntDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le fake breakout est souvent un stop hunt institutionnel : les ordres stops sont ciblés et déclenchés, puis le prix revient à sa direction d&apos;origine.
+              Le fake breakout est souvent une chasse aux stops institutionnelle : les ordres stops sont ciblés et déclenchés, puis le prix revient à sa direction d&apos;origine.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -193,7 +193,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : fake breakout XAU/USD H1</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Résistance 4 650$ touchée 3 fois en 2 mois (niveau psychologique fort). 4e approche provoque une cassure suspecte. Bougie 1 : mèche jusqu&apos;à 4 680$ + clôture à 4 655$. Bougie 2 : clôture à 4 640$.
+              Résistance 4 650$ touchée 3 fois en 2 mois (chiffre rond fort). 4e approche provoque une cassure suspecte. Bougie 1 : mèche jusqu&apos;à 4 680$ + clôture à 4 655$. Bougie 2 : clôture à 4 640$.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -202,7 +202,7 @@ export default function ContentFr() {
                 <li>- Bougie 1 : mèche 25$ au-dessus, corps 5$, clôture à la limite</li>
                 <li>- Bougie 2 : clôture franche à 4 640$ (réintégration confirmée)</li>
                 <li>- Entrée short : 4 640$ (clôture de la bougie de confirmation)</li>
-                <li>- Stop loss : 4 685$ (5$ au-dessus du wick à 4 680$)</li>
+                <li>- Stop loss : 4 685$ (5$ au-dessus de la mèche à 4 680$)</li>
                 <li>- Take profit : 4 540$ (zone support identifiée plus bas)</li>
               </ul>
 
@@ -228,20 +228,20 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Un fake breakout combine 4 critères : wick long sans clôture franche, réintégration rapide, volume disproportionné, zone forte.",
+              "Un fake breakout combine 4 critères : mèche longue sans clôture franche, réintégration rapide, volume disproportionné, zone forte.",
               "Le trade se prend dans le sens opposé à la cassure rejetée, après double confirmation (clôture + 2ème bougie).",
-              "Le stop loss se place au-delà du wick initial avec marge 3-5 pips.",
-              "Les fake breakouts s’observent préférentiellement sur des zones fortes (3+ touches, niveaux psychologiques).",
+              "Le stop loss se place au-delà de la mèche initiale avec marge 3-5 pips.",
+              "Les fake breakouts s’observent préférentiellement sur des zones fortes (3+ touches, chiffres ronds).",
             ]}
           />
 
           <LessonExercice
             description="Sur XAU/USD H1, la résistance 4 650$ a été touchée 3 fois en 2 mois. Une bougie imprime une mèche jusqu’à 4 680$ puis clôture à 4 655$. La bougie suivante clôture à 4 640$. Comment se construit le plan de trade fake breakout ?"
             steps={[
-              "Valider les 4 critères de détection : wick de 25$ au-dessus de la zone sans clôture franche, réintégration en 1 bougie, zone forte (3 touches + niveau psychologique 4 650$)",
+              "Valider les 4 critères de détection : mèche de 25$ au-dessus de la zone sans clôture franche, réintégration en 1 bougie, zone forte (3 touches + chiffre rond 4 650$)",
               "Valider la double confirmation : bougie 1 clôture à 4 655$ (à la limite), bougie 2 clôture à 4 640$ (réintégration franche)",
               "Placer l’entrée short à 4 640$ (clôture de la bougie de confirmation)",
-              "Placer le stop loss à 4 685$ (5$ au-dessus du wick initial à 4 680$)",
+              "Placer le stop loss à 4 685$ (5$ au-dessus de la mèche initiale à 4 680$)",
               "Placer le take profit à 4 560$ (zone support identifiée plus bas, ratio R/R 1:1,8), taille de position selon le risque par trade adapté au capital",
             ]}
           />
@@ -262,24 +262,24 @@ export default function ContentFr() {
             question="Une résistance vient d’être cassée à la hausse avec une clôture franche. Le prix retrace ensuite vers la zone. Quel signal valide le flip et autorise une entrée long sur la zone devenue support ?"
             options={[
               "Le simple retour du prix à la zone suffit",
-              "Un signal de rejet (pin bar, engulfing, réaction nette) au contact de la zone",
+              "Un signal de rejet (pin bar, avalement, réaction nette) au contact de la zone",
               "Une cassure de la zone suivante",
               "Aucun signal requis, l’entrée est mécanique",
             ]}
             correctIndex={1}
-            explanation="Sans signal de rejet au contact de la zone inversée, le flip n’est pas validé. Une pin bar, un engulfing ou une réaction nette confirment que la zone joue son nouveau rôle de support."
+            explanation="Sans signal de rejet au contact de la zone inversée, le flip n’est pas validé. Une pin bar, un avalement ou une réaction nette confirment que la zone joue son nouveau rôle de support."
           />
 
           <LessonQuiz
             question="Une bougie imprime une mèche au-delà d’une résistance forte, puis clôture sous la limite. Quelle confirmation supplémentaire est requise avant d’envisager un trade short fake breakout ?"
             options={[
               "Une seconde bougie qui maintient ou renforce la réintégration dans la zone",
-              "Aucune confirmation, l’entrée se fait sur le wick rejeté",
+              "Aucune confirmation, l’entrée se fait sur la mèche rejetée",
               "Une cassure de la zone suivante",
               "Un retracement complet vers la zone opposée",
             ]}
             correctIndex={0}
-            explanation="La double confirmation (clôture de la bougie de rejet dans la zone + seconde bougie qui maintient la réintégration) filtre les rejets ponctuels qui se transforment finalement en cassure valide. Entrer dès le wick initial expose à un risque élevé."
+            explanation="La double confirmation (clôture de la bougie de rejet dans la zone + seconde bougie qui maintient la réintégration) filtre les rejets ponctuels qui se transforment finalement en cassure valide. Entrer dès la mèche initiale expose à un risque élevé."
           />
 
         </div>

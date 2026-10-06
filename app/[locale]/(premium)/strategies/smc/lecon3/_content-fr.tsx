@@ -169,7 +169,7 @@ export default function ContentFr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Fraîcheur de l&apos;OB.</span> <span className="text-zinc-300">Moins de 20 bougies H4 depuis formation. Au-delà, l&apos;institutionnel a pu accumuler ailleurs.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. FVG associé dans l&apos;impulsion.</span> <span className="text-zinc-300">Écart entre mèches sans recouvrement. Signale une impulsion violente. Augmente la probabilité de réaction au retest.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Alignement multi-timeframe.</span> <span className="text-zinc-300">OB H4 + biais Daily aligné. Prix au-dessus MM200 pour OB bullish, en dessous pour OB bearish.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Alignement multi-unités de temps.</span> <span className="text-zinc-300">OB H4 + biais Daily aligné. Prix au-dessus MM200 pour OB bullish, en dessous pour OB bearish.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Non-mitigation préalable.</span> <span className="text-zinc-300">Le prix n&apos;a pas encore retraversé entièrement la zone. Mitigation complète consomme l&apos;OB.</span></div>
             </div>
           </section>
@@ -198,9 +198,9 @@ export default function ContentFr() {
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le placement du SL conditionne la survie du trade. 3 positions possibles, une seule est correcte.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="text-red-400 font-semibold">SL dans la zone</span> : wick normal au retest déclenche le SL avant la réaction. Setup tué par stop hunt.</li>
-              <li>- <span className="text-amber-400 font-semibold">SL à la limite</span> : tolérance zéro pour les wicks de retest. Risque élevé d&apos;invalidation prématurée.</li>
-              <li>- <span className="text-emerald-400 font-semibold">SL avec marge (correct)</span> : 5-10 pips au-delà de la mèche extrême. Absorbe les wicks secondaires.</li>
+              <li>- <span className="text-red-400 font-semibold">SL dans la zone</span> : mèche normale au retest déclenche le SL avant la réaction. Setup tué par chasse aux stops.</li>
+              <li>- <span className="text-amber-400 font-semibold">SL à la limite</span> : tolérance zéro pour les mèches de retest. Risque élevé d&apos;invalidation prématurée.</li>
+              <li>- <span className="text-emerald-400 font-semibold">SL avec marge (correct)</span> : 5-10 pips au-delà de la mèche extrême. Absorbe les mèches secondaires.</li>
             </ul>
           </section>
 
@@ -232,7 +232,7 @@ export default function ContentFr() {
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-red-400 font-semibold text-sm mb-1">3. SL placé dans la zone de l&apos;OB</p>
-                <p className="text-zinc-300 text-sm">Wick normal sur retest déclenche le SL. Placer au-delà de la mèche extrême avec marge 5-10 pips, jamais dans le corps.</p>
+                <p className="text-zinc-300 text-sm">Mèche normale sur retest déclenche le SL. Placer au-delà de la mèche extrême avec marge 5-10 pips, jamais dans le corps.</p>
               </div>
             </div>
           </section>
@@ -276,7 +276,7 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "Un Order Block est la dernière bougie de sens opposé précédant une impulsion validée par un BOS. La procédure d’identification suit 4 étapes strictes.",
-              "4 critères qualifient un OB tradable : fraîcheur (moins de 20 bougies H4), FVG associé, alignement multi-timeframe, non-mitigation préalable.",
+              "4 critères qualifient un OB tradable : fraîcheur (moins de 20 bougies H4), FVG associé, alignement multi-unités de temps, non-mitigation préalable.",
               "L’entrée se place à la limite externe du corps de l’OB avec signal de rejet M15. Le SL au-delà de la mèche extrême, jamais à l’intérieur du corps.",
               "Le R/R minimum est 1:2. Le TP cible la prochaine zone structurelle ou la projection mesurée de l’impulsion initiale.",
             ]}
@@ -286,7 +286,7 @@ export default function ContentFr() {
             description="Sur XAU/USD H4, tendance haussière confirmée (prix au-dessus de la MM200 Daily à 4 320$). Une impulsion haussière de 5 bougies a porté le prix de 4 540$ à 4 660$, validée par un BOS au-dessus du HH précédent à 4 650$. La dernière bougie baissière avant l’impulsion présente un corps entre 4 562$ (open) et 4 555$ (close), avec mèche basse à 4 547$. Aucune mitigation depuis la formation (8 bougies H4 écoulées). Le prix retrace actuellement vers la zone. Construis le plan complet et calcule deux variantes de R/R : variante naïve (TP éloigné) et variante réaliste (TP partiel intermédiaire)."
             steps={[
               "Délimiter l’Order Block bullish : corps de la bougie opposée entre 4 555$ et 4 562$, mèche basse à 4 547$. OB frais (8 bougies écoulées), aligné Daily haussier, non mitigé.",
-              "Placer l’entrée à 4 562$ (limite haute du corps de l’OB) avec attente du signal de rejet M15 (pin bar, engulfing bullish).",
+              "Placer l’entrée à 4 562$ (limite haute du corps de l’OB) avec attente du signal de rejet M15 (pin bar, avalement haussier).",
               "Placer le stop loss à 4 549$ (13$ sous l’entrée, au-delà de la mèche basse 4 547$ avec marge 2$). Risque = 13$ par unité.",
               "Variante naïve. TP éloigné à 4 720$ (projection extension complète de l’impulsion initiale) : Gain = 4 720 - 4 562 = 158$. R/R = 158 / 13 = 12,3. Ratio attractif sur le papier mais trop optimiste : la probabilité d’atteindre une cible à 12:1 sans pullback intermédiaire reste faible.",
               "Variante réaliste. TP partiel à 4 632$ (premier HH intermédiaire identifié, prise de profit partielle) : Gain = 4 632 - 4 562 = 70$. R/R = 70 / 13 = 5,4. Cible structurelle réaliste, atteignable sans détour. Le R/R 5,4 reste excellent pour un setup OB et permet de sécuriser la position avant le HH précédent à 4 650$, où le marché risque de produire une réaction technique avant le TP final.",

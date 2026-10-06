@@ -60,18 +60,18 @@ const REVEALED: Record<"sell" | "wait" | "buy", CD[]> = {
 
 const CONFIGS_FR = {
   sell: {
-    heading: "Stop hunt — tu t'es fait piéger",
+    heading: "Chasse aux stops — tu t'es fait piéger",
     body: "La mèche était une chasse de liquidité. Les institutions cherchaient les stops des acheteurs sous le support pour entrer long. Le prix est immédiatement remonté. Vendre sur la mèche, c'est exactement ce que les institutions veulent que tu fasses.",
     color: "border-red-500/20 bg-red-500/5 text-red-400",
     badgeColor: "#ef4444",
-    badgeText: "STOP HUNT — piégé ✗",
+    badgeText: "CHASSE AUX STOPS — piégé ✗",
     badgeHw: 68,
     badgeCx: 284,
     badgeCy: 18,
   },
   wait: {
     heading: "Patience — bonne décision",
-    body: "Tu as attendu la clôture de bougie. La bougie a clôturé au-dessus du support — la mèche était un stop hunt. En patientant, tu as évité le piège et tu peux maintenant chercher une entrée longue avec confirmation.",
+    body: "Tu as attendu la clôture de bougie. La bougie a clôturé au-dessus du support — la mèche était une chasse aux stops. En patientant, tu as évité le piège et tu peux maintenant chercher une entrée longue avec confirmation.",
     color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
     badgeColor: "#10b981",
     badgeText: "Bonne décision ✓",
@@ -94,7 +94,7 @@ const CONFIGS_FR = {
 const CONFIGS_ES = {
   sell: {
     heading: "Stop hunt — caíste en la trampa",
-    body: "La mecha era una caza de liquidity. Las instituciones buscaban los stops de los compradores debajo del soporte para entrar long. El precio rebotó de inmediato. Vender en la mecha es exactamente lo que las instituciones quieren que hagas.",
+    body: "La mecha era una caza de liquidez. Las instituciones buscaban los stops de los compradores debajo del soporte para entrar long. El precio rebotó de inmediato. Vender en la mecha es exactamente lo que las instituciones quieren que hagas.",
     color: "border-red-500/20 bg-red-500/5 text-red-400",
     badgeColor: "#ef4444",
     badgeText: "STOP HUNT — atrapado ✗",
@@ -171,7 +171,7 @@ export function StopHuntInteractive({ className = "", locale = "fr" }: StopHuntI
     question:      isEs ? "El soporte acaba de ser perforado por una mecha larga — ¿qué haces?" : isEn ? "Support was just pierced by a long wick — what do you do?" : "Le support vient d'être percé par une longue mèche — que fais-tu ?",
     btnSell:       isEs ? "Vender ahora (el soporte está roto)" : isEn ? "Sell now (support is broken)" : "Vendre maintenant (le support est cassé)",
     btnWait:       isEs ? "Esperar el cierre de la vela" : isEn ? "Wait for the candle close" : "Attendre la clôture de bougie",
-    btnBuy:        isEs ? "Comprar (seguramente es un fakeout)" : isEn ? "Buy (it's probably a fakeout)" : "Acheter (c'est sûrement un fakeout)",
+    btnBuy:        isEs ? "Comprar (seguramente es un fakeout)" : isEn ? "Buy (it's probably a fakeout)" : "Acheter (c'est sûrement un faux breakout)",
     retry:         isEs ? "Reintentar" : isEn ? "Retry" : "Réessayer",
   };
   const [choice, setChoice] = useState<Choice>(null);

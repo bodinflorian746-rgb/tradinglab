@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon3", title: "Las cifras macro a vigilar",             href: "/formations/macro/debutant/lecon3", disabled: false },
   { id: "lecon4", title: "Entender la inflación",                  href: "/formations/macro/debutant/lecon4", disabled: false },
   { id: "lecon5", title: "El rol del dólar en el mundo",           href: "/formations/macro/debutant/lecon5", disabled: false },
-  { id: "lecon6", title: "Macro y risk management",                href: null,                                disabled: true  },
+  { id: "lecon6", title: "Macro y gestión de riesgos",                href: null,                                disabled: true  },
 ];
 
 export default function ContentEs() {
@@ -296,7 +296,7 @@ export default function ContentEs() {
                   {[
                     { bold: "DXY alcista fuerte", rest: " → dólar fuerte → contexto risk-off" },
                     { bold: "DXY bajista", rest: " → dólar débil → contexto risk-on" },
-                    { bold: "DXY en range", rest: " → contexto neutro, el análisis técnico clásico prima" },
+                    { bold: "DXY en rango", rest: " → contexto neutro, el análisis técnico clásico prima" },
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                       <div className="w-1 h-1 rounded-full bg-zinc-600 shrink-0 mt-2" />
@@ -354,7 +354,7 @@ export default function ContentEs() {
             description="Antes de tu próxima sesión, agrega el DXY a tu rutina."
             steps={[
               "Abre el gráfico del DXY (en TradingView o Investing.com).",
-              "Anota la tendencia: alcista, bajista o range en los últimos 3 días.",
+              "Anota la tendencia: alcista, bajista o rango en los últimos 3 días.",
               "Compara con el gráfico de EUR/USD en el mismo período.",
               "Compara con XAU/USD o BTC/USD en el mismo período.",
               "Anota si los movimientos son coherentes con la fuerza del dólar (DXY alto = otros bajos, y viceversa).",
@@ -407,7 +407,7 @@ export default function ContentEs() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Lección completada</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">La próxima lección (Macro y risk management) estará disponible pronto.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">La próxima lección (Macro y gestión de riesgos) estará disponible pronto.</p>
                 </div>
               </div>
             )}
@@ -427,7 +427,7 @@ export default function ContentEs() {
                 href="/formations/macro/debutant/lecon6"
                 className="inline-flex items-center gap-1.5 text-sm text-zinc-600 hover:text-zinc-400 transition-colors"
               >
-                Lección 6. Macro y risk management
+                Lección 6. Macro y gestión de riesgos
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

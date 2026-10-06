@@ -158,13 +158,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El contacto con un nivel estructural es el criterio más discriminante. Una pin bar perfecta en medio de un range no vale nada.
+              El contacto con un nivel estructural es el criterio más discriminante. Una pin bar perfecta en medio de un rango no vale nada.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Pin bar en support fuerte = tradable (rebote institucional esperado)</li>
               <li>- Pin bar en resistance fuerte = tradable (rechazo institucional esperado)</li>
-              <li>- Pin bar en medio de range = fuera de nivel, señal descalificada</li>
+              <li>- Pin bar en medio de rango = fuera de nivel, señal descalificada</li>
               <li>- Condiciones externas: alineación TF superior, ausencia de noticia mayor en los 60 min</li>
             </ul>
           </section>
@@ -244,12 +244,12 @@ export default function ContentEs() {
               "Verificar la dirección y el contacto: mecha larga arriba, pin bar bajista al contacto con la resistance 1.1820, criterios 2 y 4 validados",
               "Posición del cierre: 1.1803 dentro del rango 1.1803-1.1835, en el mínimo absoluto, cierre en el tercio inferior, criterio 3 validado",
               "Confluence: MM50 H4 en 1.1815 dentro de la zona = refuerzo de la señal",
-              "Plan: entrada short en 1.1803 (cierre pin bar), stop loss en 1.1843 (8 pips por encima del wick en 1.1835), take profit en 1.1720 (siguiente support H4). Riesgo 40 pips, ganancia 83 pips, R/R 2,07. Tamaño de posición según el riesgo por trade adaptado al capital",
+              "Plan: entrada short en 1.1803 (cierre pin bar), stop loss en 1.1843 (8 pips por encima de la mecha en 1.1835), take profit en 1.1720 (siguiente support H4). Riesgo 40 pips, ganancia 83 pips, R/R 2,07. Tamaño de posición según el riesgo por trade adaptado al capital",
             ]}
           />
 
           <LessonQuiz
-            question="Una pin bar alcista imprime una mecha inferior 3 veces más grande que su cuerpo y cierra en el tercio superior, pero aparece en medio de un range lateral sin nivel estructural cercano. ¿Cuál es el veredicto operativo?"
+            question="Una pin bar alcista imprime una mecha inferior 3 veces más grande que su cuerpo y cierra en el tercio superior, pero aparece en medio de un rango lateral sin nivel estructural cercano. ¿Cuál es el veredicto operativo?"
             options={[
               "Setup explotable, la calidad de la pin bar es suficiente",
               "Setup inválido, la ausencia de contacto con un nivel estructural descalifica la señal",
@@ -305,7 +305,7 @@ export default function ContentEs() {
                 Lección 1. Leer una vela: cuerpo, mecha, señal
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 3, Engulfing, la reversión de fuerza
+                Lección 3, envolvente, la reversión de fuerza
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

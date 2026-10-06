@@ -142,7 +142,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Minimum 2 touches pour qualifier une zone, 3 touches pour une confiance élevée</li>
-              <li>- Timeframe d&apos;identification principal : H4 (historique 100-150 bougies)</li>
+              <li>- Unité de temps d&apos;identification principal : H4 (historique 100-150 bougies)</li>
               <li>- Sur EUR/USD : épaisseur 10-20 pips. Sur XAU/USD : épaisseur 10-20$</li>
               <li>- Pas de trade sur 1ère touche : la touche initiale valide l&apos;existence du niveau, pas encore une entrée</li>
             </ul>
@@ -177,12 +177,12 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un niveau institutionnel est une zone d&apos;intérêt, pas une ligne précise. Le tracé doit absorber les wicks naturels du marché.
+              Un niveau institutionnel est une zone d&apos;intérêt, pas une ligne précise. Le tracé doit absorber les mèches naturelles du marché.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Tracé en ligne fine = wicks répétés font croire à une cassure inexistante</li>
-              <li>- Tracé en zone (rectangle 10-20 pips) = wicks naturels absorbés, lecture fiable</li>
+              <li>- Tracé en ligne fine = mèches répétées font croire à une cassure inexistante</li>
+              <li>- Tracé en zone (rectangle 10-20 pips) = mèches naturelles absorbés, lecture fiable</li>
               <li>- Le tracé englobe corps + mèches, jamais limité aux corps seuls</li>
               <li>- Outil rectangle de la plateforme, coloration translucide (40% opacité)</li>
             </ul>
@@ -192,7 +192,7 @@ export default function ContentFr() {
             points={[
               "Une zone valide comporte minimum 2 touches confirmées, idéalement 3 (mémoire collective).",
               "L’épaisseur d’une zone : 10-20 pips sur EUR/USD, 10-20$ sur XAU/USD.",
-              "Le tracé en zone (pas en ligne) absorbe les wicks naturels et évite les faux signaux.",
+              "Le tracé en zone (pas en ligne) absorbe les mèches naturelles et évite les faux signaux.",
               "Une zone fraîche (touchée dans les 30 derniers jours) prime sur une zone ancienne.",
             ]}
           />
@@ -217,7 +217,7 @@ export default function ContentFr() {
               "Aucun seuil défini, jugement à l’œil",
             ]}
             correctIndex={1}
-            explanation="La règle opérationnelle : 2 touches minimum au même niveau pour qualifier une zone tradable. 3 touches élèvent la confiance et confirment la mémoire collective. Une seule touche, même sur un niveau psychologique, reste un niveau ponctuel non confirmé."
+            explanation="La règle opérationnelle : 2 touches minimum au même niveau pour qualifier une zone tradable. 3 touches élèvent la confiance et confirment la mémoire collective. Une seule touche, même sur un chiffre rond, reste un niveau ponctuel non confirmé."
           />
 
         </div>

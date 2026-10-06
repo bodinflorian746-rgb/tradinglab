@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon3", title: "Les chiffres macro à surveiller",  href: "/formations/macro/debutant/lecon3", disabled: false },
   { id: "lecon4", title: "Comprendre l'inflation",           href: "/formations/macro/debutant/lecon4", disabled: false },
   { id: "lecon5", title: "Le rôle du dollar dans le monde",  href: null,                                disabled: true  },
-  { id: "lecon6", title: "Macro et risk management",         href: null,                                disabled: true  },
+  { id: "lecon6", title: "Macro et gestion du risque",         href: null,                                disabled: true  },
 ];
 
 export default function ContentFr() {

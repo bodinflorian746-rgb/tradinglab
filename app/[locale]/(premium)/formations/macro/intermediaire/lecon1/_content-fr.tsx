@@ -280,7 +280,7 @@ export default function ContentFr() {
             </p>
             <div className="bg-zinc-900/40 border border-red-500/15 rounded-xl px-4 py-3 mb-4">
               <p className="text-sm text-zinc-400 italic leading-relaxed">
-                Sur les news macro, le marché ne réagit pas à la décision elle-même, il réagit à l&apos;écart entre la décision et ce qui était anticipé.
+                Sur les annonces macro, le marché ne réagit pas à la décision elle-même, il réagit à l&apos;écart entre la décision et ce qui était anticipé.
               </p>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
@@ -292,7 +292,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Comment trader avec : ajuster ton biais hebdomadaire</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Tu ne traderas pas la news elle-même au moment où elle tombe (cf leçon FOMC pour la technique du timing exact). Mais tu vas utiliser le ton pour <span className="font-semibold text-zinc-200">ajuster ta thèse macro de la semaine</span>.
+              Tu ne traderas pas l&apos;annonce elle-même au moment où elle tombe (cf leçon FOMC pour la technique du timing exact). Mais tu vas utiliser le ton pour <span className="font-semibold text-zinc-200">ajuster ta thèse macro de la semaine</span>.
             </p>
 
             <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Méthode simple en 3 étapes</p>
@@ -339,7 +339,7 @@ export default function ContentFr() {
             </div>
             <div className="space-y-2">
               {[
-                "Trader la news en direct sans expérience",
+                "Trader l'annonce en direct sans expérience",
                 "Ignorer les attentes du marché",
                 "Garder un biais d'il y a 2 mois",
                 "Confondre décision et ton",

@@ -87,7 +87,7 @@ export function DirectionDominanteDiagram({ className = "", locale = "fr" }: Dir
           {/* Flèche HTF directionnelle baissière */}
           <path d="M20,20 L260,80 M250,82 L260,80 L255,72" stroke="#ef4444" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
           <rect x="60" y="6" width="80" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
-          <text x="100" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">HTF ↘ dominant</text>
+          <text x="100" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">{locale === "es" ? "HTF ↘ dominante" : locale === "en" ? "HTF ↘ dominant" : "UT supérieure ↘ dominante"}</text>
           {/* Petites flèches LTF alignées (toutes baissières) */}
           {[40, 90, 140, 190, 240].map((x, i) => {
             const y = 30 + i * 8;
@@ -97,7 +97,7 @@ export function DirectionDominanteDiagram({ className = "", locale = "fr" }: Dir
               </g>
             );
           })}
-          <text x="140" y="95" fontSize="8" fill="#a1a1aa" textAnchor="middle" fontStyle="italic">LTF dans le sens HTF</text>
+          <text x="140" y="95" fontSize="8" fill="#a1a1aa" textAnchor="middle" fontStyle="italic">UT inférieure dans le sens de l'UT supérieure</text>
         </svg>
 
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">

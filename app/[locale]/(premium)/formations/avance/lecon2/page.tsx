@@ -36,7 +36,7 @@ function ContentFr() {
           </p>
         </div>
         <p className="text-zinc-300 text-sm leading-relaxed">
-          En pratique, les FVG apparaissent après des news économiques importantes,
+          En pratique, les FVG apparaissent après des annonces économiques importantes,
           des ouvertures de session avec gap, ou des mouvements impulsifs
           institutionnels. Ils représentent des zones de déséquilibre que le marché
           cherche naturellement à réintégrer.

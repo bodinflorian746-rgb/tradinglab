@@ -42,14 +42,14 @@ function ContentFr() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Buy-side et Sell-side Liquidity</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Liquidité buy-side et sell-side</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Les pools de liquidité se forment autour des niveaux évidents que tout
           le monde surveille, c'est précisément là que s'accumulent les stops.
         </p>
         <div className="space-y-3 mb-4">
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl p-4">
-            <p className="font-semibold text-emerald-400 text-sm mb-2">Buy-side Liquidity (BSL)</p>
+            <p className="font-semibold text-emerald-400 text-sm mb-2">Liquidité buy-side (BSL)</p>
             <p className="text-xs text-zinc-400 leading-relaxed mb-2">
               Se trouve <span className="text-white">au-dessus</span> des résistances
               et des Equal Highs (EQH). Les traders short y ont placé leurs stops.
@@ -61,7 +61,7 @@ function ContentFr() {
             </p>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-4">
-            <p className="font-semibold text-red-400 text-sm mb-2">Sell-side Liquidity (SSL)</p>
+            <p className="font-semibold text-red-400 text-sm mb-2">Liquidité sell-side (SSL)</p>
             <p className="text-xs text-zinc-400 leading-relaxed mb-2">
               Se trouve <span className="text-white">en dessous</span> des supports
               et des Equal Lows (EQL). Les traders long y ont placé leurs stops.
@@ -81,7 +81,7 @@ function ContentFr() {
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Ces zones de liquidité sont précisément ce que visent les stop hunts :
+          Ces zones de liquidité sont précisément ce que visent les chasses aux stops :
           des mouvements brusques qui déclenchent les stops accumulés avant de
           repartir dans l&apos;autre sens. On les étudie en détail en leçon 6.
         </p>
@@ -105,7 +105,7 @@ function ContentFr() {
             },
             {
               label: "Confirme le rejet avant d'entrer",
-              detail: "Une bougie de rejet (pin bar, engulfing) après le stop hunt est ton signal d'entrée.",
+              detail: "Une bougie de rejet (pin bar, avalement) après la chasse aux stops est ton signal d'entrée.",
             },
             {
               label: "Cible la liquidité opposée comme objectif",
@@ -134,7 +134,7 @@ function ContentFr() {
       <LessonKeyPoints
         points={[
           "Les institutions ont besoin de liquidité pour exécuter leurs ordres, elles vont la chercher là où se trouvent les stops.",
-          "Buy-side Liquidity = au-dessus des Equal Highs. Sell-side Liquidity = en dessous des Equal Lows.",
+          "Liquidité buy-side = au-dessus des Equal Highs. Liquidité sell-side = en dessous des Equal Lows.",
           "Le prix se déplace vers la liquidité avant de partir dans sa vraie direction, anticipe ce mouvement.",
         ]}
       />
@@ -144,7 +144,7 @@ function ContentFr() {
         steps={[
           "Identifie au moins un ensemble d'Equal Highs (EQH), deux ou plusieurs sommets alignés au même niveau.",
           "Identifie au moins un ensemble d'Equal Lows (EQL), deux ou plusieurs creux alignés au même niveau.",
-          "Le prix est-il récemment allé prendre l'un de ces niveaux avant de repartir dans l'autre sens ? Tu viens d'identifier un stop hunt.",
+          "Le prix est-il récemment allé prendre l'un de ces niveaux avant de repartir dans l'autre sens ? Tu viens d'identifier une chasse aux stops.",
         ]}
       />
 

@@ -42,7 +42,7 @@ export default function ContentEs() {
               title: "1. Entrada en rechazo de vela (M5/M15)",
               color: "bg-blue-500/5 border-blue-500/15",
               accentColor: "text-blue-400",
-              detail: "Cuando el precio llega a la zona (OB, FVG, OTE), baja a M5 o M15. Espera una vela de rechazo: pin bar con mecha larga dentro de la zona, o engulfing en sentido opuesto. Entra al cierre de esa vela. SL debajo del extremo de la mecha.",
+              detail: "Cuando el precio llega a la zona (OB, FVG, OTE), baja a M5 o M15. Espera una vela de rechazo: pin bar con mecha larga dentro de la zona, o envolvente en sentido opuesto. Entra al cierre de esa vela. SL debajo del extremo de la mecha.",
             },
             {
               title: "2. Entrada en retest de un nivel roto",
@@ -51,10 +51,10 @@ export default function ContentEs() {
               detail: "Después de un BOS, el precio suele regresar a testear el antiguo nivel roto (ahora soporte o resistencia). Es una entrada clásica: precisa, con un contexto fuerte. Entra en el rechazo del regreso sobre el nivel roto.",
             },
             {
-              title: "3. Entrada en sweep + retroceso",
+              title: "3. Entrada en barrido + retroceso",
               color: "bg-amber-400/5 border-amber-400/15",
               accentColor: "text-amber-400",
-              detail: "Después de un stop hunt (sweep de un EQH o EQL), el retroceso suele ser rápido y fuerte. Entra apenas la primera vela que confirma el retroceso en M5. SL más allá del pico del sweep. Es la entrada post-stop-hunt.",
+              detail: "Después de un stop hunt (barrido de un EQH o EQL), el retroceso suele ser rápido y fuerte. Entra apenas la primera vela que confirma el retroceso en M5. SL más allá del pico del barrido. Es la entrada post-stop-hunt.",
             },
           ].map((m, i) => (
             <div key={i} className={`rounded-xl p-4 border ${m.color}`}>
@@ -77,7 +77,7 @@ export default function ContentEs() {
         <div className="space-y-2.5">
           {[
             { rule: "Debajo del extremo de la zona (OB o FVG)", detail: "Si el precio cruza por completo el OB o el FVG, el nivel institucional queda consumido, la idea de trade queda invalidada." },
-            { rule: "Debajo del swing low de la entrada", detail: "Si entras en un rechazo en M15, el SL va debajo del extremo inferior de la pin bar o del engulfing." },
+            { rule: "Debajo del swing low de la entrada", detail: "Si entras en un rechazo en M15, el SL va debajo del extremo inferior de la pin bar o de la envolvente." },
             { rule: "Algunos pips de margen", detail: "Deja 2 a 5 pips (según el instrumento) debajo del nivel exacto para evitar ser stopeado por el spread o el ruido natural del mercado." },
             { rule: "Jamás un monto fijo", detail: "Un SL de 20 pips 'porque es tu costumbre' no tiene ningún sentido estructural. El SL debe reflejar la geografía del gráfico." },
           ].map((r, i) => (
@@ -101,7 +101,7 @@ export default function ContentEs() {
       <LessonKeyPoints
         points={[
           "La entrada precisa = esperar una señal de confirmación en M5/M15 dentro de la zona institucional.",
-          "Los 3 métodos: rechazo de vela, retest del nivel roto, sweep + retroceso.",
+          "Los 3 métodos: rechazo de vela, retest del nivel roto, barrido + retroceso.",
           "Un SL preciso se basa en la estructura del gráfico, jamás en un monto fijo arbitrario.",
           "Bajar a M5 para afinar la entrada permite un SL más ajustado y un R/R significativamente mejor.",
           "La espera de una confirmación reduce el número de trades, pero mejora la calidad de cada uno.",
@@ -109,11 +109,11 @@ export default function ContentEs() {
       />
 
       <LessonExercice
-        description="En un setup que hayas identificado, practica afinando la entrada en un timeframe pequeño."
+        description="En un setup que hayas identificado, practica afinando la entrada en una temporalidad pequeña."
         steps={[
           "Identifica un Bullish Order Block activo en H1. Marca la zona (open → close de la vela OB).",
-          "Baja a M5. Si el precio está en la zona, observa: ¿hay un rechazo (pin bar, engulfing alcista)?",
-          "Si la señal está: anota el precio de entrada (cierre de la pin bar/engulfing), el SL (debajo de la mecha inferior) y el TP (próximo nivel de resistencia o liquidity).",
+          "Baja a M5. Si el precio está en la zona, observa: ¿hay un rechazo (pin bar, envolvente alcista)?",
+          "Si la señal está: anota el precio de entrada (cierre de la pin bar/envolvente), el SL (debajo de la mecha inferior) y el TP (próximo nivel de resistencia o liquidez).",
           "Calcula tu R/R. ¿Es superior a 1:3? Si no, ¿el setup es realmente válido?",
         ]}
       />
@@ -123,7 +123,7 @@ export default function ContentEs() {
         options={[
           "Entrar de inmediato al precio del mercado apenas el precio toca el extremo inferior del OB",
           "Colocar una orden limit en medio del OB para no perder el movimiento",
-          "Bajar a M5/M15 y esperar una señal de rechazo (pin bar o engulfing alcista) antes de entrar",
+          "Bajar a M5/M15 y esperar una señal de rechazo (pin bar o envolvente alcista) antes de entrar",
           "Entrar en compra en la próxima vela M15 que cierre alcista dentro del OB",
         ]}
         correctIndex={2}
@@ -132,7 +132,7 @@ export default function ContentEs() {
           "Demasiado apresurado. El precio puede cruzar el extremo inferior del OB y regresar, o cruzarlo por completo. Entrar al toque sin confirmación expone a un SL amplio o a un stop prematuro.",
           "Mejor que el toque, pero todavía impreciso. El medio del OB no tiene una lógica estructural particular. Una orden limit aquí puede también ser activada sin que el precio reaccione.",
           "Correcto. Es la entrada de precisión: bajar a M5/M15, esperar un rechazo dentro de la zona OB, entrar al cierre de la señal con un SL debajo del extremo de la mecha. Es el balance óptimo entre confirmación y timing.",
-          "No es lo bastante preciso. 'La próxima vela alcista' dentro del OB puede ser cualquier pequeña vela verde, no es necesariamente una señal de rechazo fuerte. Una pin bar o un engulfing es requerido para una confirmación institucional.",
+          "No es lo bastante preciso. 'La próxima vela alcista' dentro del OB puede ser cualquier pequeña vela verde, no es necesariamente una señal de rechazo fuerte. Una pin bar o una envolvente es requerida para una confirmación institucional.",
         ]}
       />
 

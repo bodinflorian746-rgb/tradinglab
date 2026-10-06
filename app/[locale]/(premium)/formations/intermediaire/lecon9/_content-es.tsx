@@ -210,15 +210,15 @@ export default function ContentEs() {
         question="Trazas Fibonacci sobre un movimiento alcista EUR/USD (1.0800 → 1.0980). El precio retrocede hasta el 61.8% en 1.0869. Este nivel coincide con un soporte histórico respetado 2 veces. ¿Qué haces?"
         options={[
           "Entras de inmediato en compra, el golden ratio + soporte es suficiente",
-          "Esperas una señal de vela (pin bar o engulfing alcista) en la zona antes de entrar",
+          "Esperas una señal de vela (pin bar o envolvente alcista) en la zona antes de entrar",
           "Lanzas una orden de venta, el retroceso probablemente continuará hasta el 78.6%",
           "Ignoras el 61.8%, el soporte ya fue tocado 2 veces, está debilitado",
         ]}
         correctIndex={1}
-        explanation="Tienes 2 confluencias sólidas: 61.8% Fib + soporte histórico. Es una zona de oro a vigilar. Pero la señal de vela aún falta. Espera que una pin bar o un engulfing alcista confirme que el precio reacciona a la zona, luego entras con SL debajo de 1.0848 y TP hacia 1.0980."
+        explanation="Tienes 2 confluencias sólidas: 61.8% Fib + soporte histórico. Es una zona de oro a vigilar. Pero la señal de vela aún falta. Espera que una pin bar o una envolvente alcista confirme que el precio reacciona a la zona, luego entras con SL debajo de 1.0848 y TP hacia 1.0980."
         answerExplanations={[
           "Demasiado apresurado. Tienes 2 confluencias sólidas, pero sin señal de vela, entras en un precio que puede seguir bajando hacia 1.0840 o menos. La confluencia te dice 'mira aquí', no 'entra ahora'.",
-          "Correcto. El 61.8% + soporte es una zona de oro. Pero la confirmación sigue siendo necesaria. Una pin bar alcista o un engulfing en esta zona te dice que los compradores reaccionan. Entonces entras con SL debajo de la zona (1.0848) y TP hacia el swing high (1.0980).",
+          "Correcto. El 61.8% + soporte es una zona de oro. Pero la confirmación sigue siendo necesaria. Una pin bar alcista o una envolvente en esta zona te dice que los compradores reaccionan. Entonces entras con SL debajo de la zona (1.0848) y TP hacia el swing high (1.0980).",
           "Falso. En tendencia alcista Daily, el retroceso hacia el 61.8% es una oportunidad de compra, no de venta. Hacer short aquí es tradear contra la tendencia de fondo y contra 2 confluencias alcistas.",
           "Parcialmente. Un soporte tocado 2 veces es menos fuerte que un soporte virgen, pero sigue siendo válido, sobre todo combinado con el 61.8% Fib. La coincidencia de los dos niveles refuerza la zona, no la anula.",
         ]}

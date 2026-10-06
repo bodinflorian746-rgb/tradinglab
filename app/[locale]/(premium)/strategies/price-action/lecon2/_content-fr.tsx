@@ -165,7 +165,7 @@ export default function ContentFr() {
               <li>- Pin bar au support fort = tradable (rebond institutionnel attendu)</li>
               <li>- Pin bar à la résistance forte = tradable (rejet institutionnel attendu)</li>
               <li>- Pin bar en milieu de range = hors niveau, signal disqualifié</li>
-              <li>- Conditions externes : alignement TF supérieur, absence de news majeure dans les 60 min</li>
+              <li>- Conditions externes : alignement TF supérieur, absence d&apos;annonce majeure dans les 60 min</li>
             </ul>
           </section>
 
@@ -233,7 +233,7 @@ export default function ContentFr() {
               "Une pin bar tradable valide 4 critères : ratio mèche/corps ≥ 2:1, direction cohérente, clôture dans le tiers opposé, contact avec un niveau structurel.",
               "Le contact avec un niveau structurel est le critère le plus discriminant. Pin bar isolée hors contexte = pas de setup.",
               "Stop loss au-delà de la mèche avec marge 5-10 pips/$. Jamais à la clôture ou dans le corps.",
-              "Pas de trade dans les 60 minutes autour d’une news majeure (NFP, FOMC, CPI).",
+              "Pas de trade dans les 60 minutes autour d’une annonce majeure (NFP, FOMC, CPI).",
             ]}
           />
 
@@ -244,7 +244,7 @@ export default function ContentFr() {
               "Vérifier la direction et le contact : mèche longue en haut, pin bar baissière au contact de la résistance 1.1820, critères 2 et 4 validés",
               "Position de la clôture : 1.1803 dans la fourchette 1.1803-1.1835, au plus bas absolu, clôture dans le tiers inférieur, critère 3 validé",
               "Confluence : MM50 H4 à 1.1815 dans la zone = renforcement du signal",
-              "Plan : entrée short à 1.1803 (clôture pin bar), stop loss à 1.1843 (8 pips au-dessus du wick à 1.1835), take profit à 1.1720 (support H4 suivant). Risque 40 pips, gain 83 pips, R/R 2,07. Taille de position selon le risque par trade adapté au capital",
+              "Plan : entrée short à 1.1803 (clôture pin bar), stop loss à 1.1843 (8 pips au-dessus de la mèche à 1.1835), take profit à 1.1720 (support H4 suivant). Risque 40 pips, gain 83 pips, R/R 2,07. Taille de position selon le risque par trade adapté au capital",
             ]}
           />
 
@@ -305,7 +305,7 @@ export default function ContentFr() {
                 Leçon 1. Lire une bougie : corps, mèche, signal
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 3, Engulfing, le retournement de force
+                Leçon 3, avalement, le retournement de force
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

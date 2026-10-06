@@ -149,7 +149,7 @@ export default function ContentFr() {
               <li>- Amplitude minimale : 50-80 pips EUR/USD H4, 50-100$ XAU/USD H4</li>
               <li>- Bougie de pivot claire avec mèche significative de rejet</li>
               <li>- Réaction post-swing: retracement ≥ 20% en direction opposée</li>
-              <li>- Visibilité multi-timeframe : visible Daily et H4</li>
+              <li>- Visibilité multi-unités de temps : visible Daily et H4</li>
             </ul>
           </section>
 
@@ -169,7 +169,7 @@ export default function ContentFr() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-white font-semibold text-sm mb-2">Structure interne (M15 - H1)</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- Mouvements visibles sur timeframes courts</li>
+                  <li>- Mouvements visibles sur unités de temps courtes</li>
                   <li>- Peut afficher HH/HL à l&apos;intérieur d&apos;un LL/LH externe</li>
                   <li>- Trader dans le sens externe = alignement institutionnel</li>
                 </ul>
@@ -177,7 +177,7 @@ export default function ContentFr() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-white font-semibold text-sm mb-2">Structure externe (H4 - Daily)</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- Swings majeurs visibles sur timeframes longs</li>
+                  <li>- Swings majeurs visibles sur unités de temps longues</li>
                   <li>- Donne le biais directionnel à plusieurs jours/semaines</li>
                   <li>- Aucune position institutionnelle ne va contre sans BOS + CHoCH</li>
                 </ul>
@@ -235,7 +235,7 @@ export default function ContentFr() {
               <li><span className="font-semibold text-white">Daily ou Weekly</span>, identifier les 3-5 derniers swings majeurs (structure externe)</li>
               <li><span className="font-semibold text-white">Classifier la phase</span>, accumulation, expansion, ou distribution</li>
               <li><span className="font-semibold text-white">H4</span>, vérifier l&apos;alignement de la structure interne avec la structure externe</li>
-              <li><span className="font-semibold text-white">H1 ou M15</span>, pré-identifier zones d&apos;intérêt (HL, liquidity, OB potentiels)</li>
+              <li><span className="font-semibold text-white">H1 ou M15</span>, pré-identifier zones d&apos;intérêt (HL, liquidité, OB potentiels)</li>
             </ol>
           </section>
 
@@ -278,7 +278,7 @@ export default function ContentFr() {
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
-                <p className="text-red-400 font-semibold text-sm mb-2">2. Lire le M15 sans contexte HTF</p>
+                <p className="text-red-400 font-semibold text-sm mb-2">2. Lire le M15 sans contexte de l&apos;UT supérieure</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Chaque oscillation devient un signal sans cohérence</li>
                   <li>- Procédure top-down obligatoire : Daily → M15</li>
@@ -315,7 +315,7 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Sur un setup SMC, quel timeframe dicte la direction globale du trade ?"
+            question="Sur un setup SMC, quelle unité de temps dicte la direction globale du trade ?"
             options={[
               "M15, qui donne le signal le plus récent",
               "H4, qui combine direction et timing",

@@ -87,7 +87,7 @@ const SPECIFIC: Record<string, Check> = {
     return swingLows(ch.past).filter((x) => x.l >= lo(z) - E && x.l <= hi(z) + E).length >= 2 ? null : "pas deux lows quasi égaux dans la zone";
   },
   asia_high_sweep: (ch) => { const z = zone(ch, /session asiatique/); if (!z) return "pas de zone"; return ch.past.every((k) => k.h <= hi(z) + E) ? null : "le range Asia est déjà cassé (high au-dessus de l'Asia high)"; },
-  round_number_sweep: (ch) => { const z = zone(ch, /Niveau psychologique/); if (!z) return "pas de zone"; return ch.past.slice(-3).every((k) => k.l >= lo(z) - E) && last(ch.past).c > hi(z) ? null : "le prix ne flotte pas au-dessus du chiffre rond"; },
+  round_number_sweep: (ch) => { const z = zone(ch, /Chiffre rond/); if (!z) return "pas de zone"; return ch.past.slice(-3).every((k) => k.l >= lo(z) - E) && last(ch.past).c > hi(z) ? null : "le prix ne flotte pas au-dessus du chiffre rond"; },
   prev_day_low_trap: (ch) => { const z = zone(ch, /PDL/); if (!z) return "pas de zone"; return ch.past.every((k) => k.l >= lo(z) - E) && last(ch.past).c > hi(z) ? null : "le PDL est déjà balayé dans le passé"; },
   multi_swing_low: (ch) => { const s = swingLows(ch.past.slice(-15)); return s.length >= 2 && s.some((a, i) => s.slice(i + 1).some((b) => b.l < a.l)) ? null : "pas 2 swing lows dont le second plus bas"; },
   multi_swing_deep: (ch) => { const s = swingLows(ch.past.slice(-15)).map((x) => x.l); for (let i = 0; i + 2 < s.length; i++) if (s[i + 1] < s[i] && s[i + 2] < s[i + 1]) return null; return "pas 3 swing lows successivement plus bas"; },

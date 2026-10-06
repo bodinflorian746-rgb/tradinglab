@@ -12,7 +12,7 @@ import DivergenceWithoutBreakoutDiagram from "@/app/components/charts/Divergence
 
 const LESSONS = [
   { id: "lecon1", slug: "lecon1", title: "Double top / Double bottom: la firma de la inversión", duration: "16 min", disabled: false },
-  { id: "lecon2", slug: "lecon2", title: "Head & Shoulders: la inversión mayor", duration: "18 min", disabled: false },
+  { id: "lecon2", slug: "lecon2", title: "Hombro-cabeza-hombro: la inversión mayor", duration: "18 min", disabled: false },
   { id: "lecon3", slug: "lecon3", title: "Divergencia RSI: cuando el momentum traiciona la tendencia", duration: "17 min", disabled: false },
   { id: "lecon4", slug: "lecon4", title: "Lección 4", duration: "", disabled: true },
 ];
@@ -125,7 +125,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Estructura de mercado HH/HL/LL/LH → ver Curso Trading L3</li>
               <li>- Indicador RSI, oscilador de momentum → ver Curso Trading L4</li>
-              <li>- Double Top / Head &amp; Shoulders → ver Estrategia Reversal L1 o L2</li>
+              <li>- Double Top / Hombro-cabeza-hombro → ver Estrategia Reversal L1 o L2</li>
             </ul>
           </div>
 
@@ -242,9 +242,9 @@ export default function ContentEs() {
             <h2 className="text-lg font-semibold text-white mb-3">Filtros: cuándo no tomar el setup</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Divergencia sin breakout de estructura.</span> <span className="text-zinc-300">Una divergencia sola nunca alcanza. Mientras el precio siga haciendo HH/HL o LH/LL, la tendencia sigue válida. Se espera el breakout del último mínimo o máximo estructural.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Divergencia en timeframe pequeño (M5 o M15).</span> <span className="text-zinc-300">Las divergencias en timeframes muy pequeños producen muchísimo ruido. Timeframe mínimo: H1. H4 sigue siendo el más limpio.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Divergencia en temporalidad pequeña (M5 o M15).</span> <span className="text-zinc-300">Las divergencias en temporalidades muy pequeñas producen muchísimo ruido. Temporalidad mínima: H1. H4 sigue siendo el más limpio.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Divergencia oculta confundida con clásica.</span> <span className="text-zinc-300">Las divergencias ocultas sirven para detectar una continuación, no una inversión. Las clásicas son las que se priorizan por su lectura superior.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. News mayor en la ventana.</span> <span className="text-zinc-300">Si FOMC, NFP o CPI sale en los próximos 30 minutos, el setup no se toma. Una news puede romper completamente la divergencia.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. Noticia mayor en la ventana.</span> <span className="text-zinc-300">Si FOMC, NFP o CPI sale en los próximos 30 minutos, el setup no se toma. Una noticia puede romper completamente la divergencia.</span></div>
             </div>
           </section>
 
@@ -252,7 +252,7 @@ export default function ContentEs() {
             points={[
               "Divergencia = precio y RSI apuntan en direcciones opuestas. Divergencia bajista = precio HH + RSI LH. Divergencia alcista = precio LL + RSI HL.",
               "Una divergencia sola NUNCA alcanza. Se espera el breakout del último mínimo/máximo estructural para confirmar.",
-              "Mínimo H1, idealmente H4. Las divergencias en timeframes pequeños son ruido.",
+              "Mínimo H1, idealmente H4. Las divergencias en temporalidades pequeñas son ruido.",
               "La divergencia clásica (inversión) se distingue de la divergencia oculta (continuación). Para arrancar, solo las clásicas se tradean.",
             ]}
           />
@@ -263,7 +263,7 @@ export default function ContentEs() {
               "Verifica que el precio forme un HH: 4 740$ > 4 720$, OK",
               "Verifica que el RSI forme un LH: 72 < 78, OK, divergencia bajista confirmada",
               "Confirma el breakout estructural: cierre en 4 685$ debajo del mínimo 4 690$, OK",
-              "Verifica que no haya news mayor prevista en los próximos 30 minutos",
+              "Verifica que no haya noticia mayor prevista en los próximos 30 minutos",
               "Toma la entrada short en 4 685$, SL por encima de la mecha del máximo 2 (por ejemplo 4 750$), TP measured move extendido hacia 4 585$ para apuntar a un R/R 1,5 a 2:1",
             ]}
           />

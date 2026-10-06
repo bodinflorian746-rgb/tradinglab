@@ -6,31 +6,31 @@ export const TradingSessionsLiquidityDiagram = ({ locale = "fr" }: TradingSessio
   const isEs = locale === "es";
   const isEn = locale === "en";
   const L = {
-    title:         isEs ? "Un día forex — dónde se concentra la liquidity" : isEn ? "A forex day — where liquidity concentrates" : "Une journée forex — où se concentre la liquidité",
+    title:         isEs ? "Un día forex — dónde se concentra la liquidez" : isEn ? "A forex day — where liquidity concentrates" : "Une journée forex — où se concentre la liquidité",
     subtitle:      isEs ? "No todas las horas valen lo mismo — hora de París" : isEn ? "Not all hours are equal — Paris time" : "Toutes les heures ne se valent pas — heure de Paris",
     asia:          isEs ? "ASIA" : isEn ? "ASIA" : "ASIE",
     london:        isEs ? "LONDRES" : isEn ? "LONDON" : "LONDRES",
     ny:            "NEW YORK",
     killzone:      "KILLZONE",
-    liquidity:     isEs ? "LIQUIDITY" : isEn ? "LIQUIDITY" : "LIQUIDITÉ",
-    newsUS:        isEs ? "News US 14h30" : isEn ? "US News 14h30" : "News US 14h30",
+    liquidity:     isEs ? "LIQUIDEZ" : isEn ? "LIQUIDITY" : "LIQUIDITÉ",
+    newsUS:        isEs ? "Noticia US 14h30" : isEn ? "US News 14h30" : "Annonce US 14h30",
     largeSpreads:  isEs ? "Spreads anchos" : isEn ? "Wide spreads" : "Spreads larges",
-    largeFakeouts: isEs ? "Spreads anchos + fakeouts" : isEn ? "Wide spreads + fakeouts" : "Spreads larges + fakeouts",
+    largeFakeouts: isEs ? "Spreads anchos + fakeouts" : isEn ? "Wide spreads + fakeouts" : "Spreads larges + faux breakouts",
     realMoves:     isEs ? "Movimientos reales" : isEn ? "Real moves" : "Vrais mouvements",
     optimal:       isEs ? "PARES ÓPTIMOS POR SESIÓN" : isEn ? "OPTIMAL PAIRS BY SESSION" : "PAIRES OPTIMALES PAR SESSION",
     asiaPairs:     isEs ? "Asia: USD/JPY, AUD/JPY, NZD/JPY" : isEn ? "Asia: USD/JPY, AUD/JPY, NZD/JPY" : "Asie : USD/JPY, AUD/JPY, NZD/JPY",
     londonPairs:   isEs ? "Londres + Overlap: EUR/USD, GBP/USD, XAU/USD (oro)" : isEn ? "London + Overlap: EUR/USD, GBP/USD, XAU/USD (gold)" : "Londres + Overlap : EUR/USD, GBP/USD, XAU/USD (or)",
     nyPairs:       isEs ? "NY: Nasdaq, S&P500, BTC/USD, USD/CAD" : isEn ? "NY: Nasdaq, S&P500, BTC/USD, USD/CAD" : "NY : Nasdaq, S&P500, BTC/USD, USD/CAD",
-    footer:        isEs ? "No todas las horas valen lo mismo. El overlap concentra la verdadera liquidity." : isEn ? "Not all hours are equal. The overlap concentrates real liquidity." : "Toutes les heures ne se valent pas. L'overlap concentre la vraie liquidité.",
+    footer:        isEs ? "No todas las horas valen lo mismo. El overlap concentra la verdadera liquidez." : isEn ? "Not all hours are equal. The overlap concentrates real liquidity." : "Toutes les heures ne se valent pas. L'overlap concentre la vraie liquidité.",
     mobTimeNote:   isEs ? "Hora de París" : isEn ? "Paris time" : "Heure de Paris",
-    mobFooter:     isEs ? "El overlap Londres + NY concentra la verdadera liquidity." : isEn ? "The London + NY overlap concentrates real liquidity." : "L'overlap Londres + NY concentre la vraie liquidité.",
+    mobFooter:     isEs ? "El overlap Londres + NY concentra la verdadera liquidez." : isEn ? "The London + NY overlap concentrates real liquidity." : "L'overlap Londres + NY concentre la vraie liquidité.",
   };
   const sessions = isEs
     ? [
-        { name: "ASIA", range: "00h – 09h", color: "#60a5fa", desc: "Liquidity baja · spreads anchos + fakeouts", pairs: "USD/JPY, AUD/JPY, NZD/JPY", killzone: false as boolean },
-        { name: "LONDRES", range: "08h – 17h", color: "#34d399", desc: "Verdadero arranque del día — buena liquidity", pairs: "EUR/USD, GBP/USD, XAU/USD", killzone: false as boolean },
-        { name: "OVERLAP LONDRES + NY", range: "14h – 17h", color: "#ef4444", desc: "🔴 KILLZONE — verdadera liquidity institucional", pairs: null as string | null, killzone: true as boolean },
-        { name: "NEW YORK", range: "14h – 22h", color: "#fbbf24", desc: "Pico de actividad — news US a las 14h30", pairs: "Nasdaq, S&P500, BTC/USD, USD/CAD", killzone: false as boolean },
+        { name: "ASIA", range: "00h – 09h", color: "#60a5fa", desc: "Liquidez baja · spreads anchos + fakeouts", pairs: "USD/JPY, AUD/JPY, NZD/JPY", killzone: false as boolean },
+        { name: "LONDRES", range: "08h – 17h", color: "#34d399", desc: "Verdadero arranque del día — buena liquidez", pairs: "EUR/USD, GBP/USD, XAU/USD", killzone: false as boolean },
+        { name: "OVERLAP LONDRES + NY", range: "14h – 17h", color: "#ef4444", desc: "🔴 KILLZONE — verdadera liquidez institucional", pairs: null as string | null, killzone: true as boolean },
+        { name: "NEW YORK", range: "14h – 22h", color: "#fbbf24", desc: "Pico de actividad — noticia US a las 14h30", pairs: "Nasdaq, S&P500, BTC/USD, USD/CAD", killzone: false as boolean },
       ]
     : isEn
     ? [
@@ -40,10 +40,10 @@ export const TradingSessionsLiquidityDiagram = ({ locale = "fr" }: TradingSessio
         { name: "NEW YORK", range: "14h – 22h", color: "#fbbf24", desc: "Peak activity — US news at 14h30", pairs: "Nasdaq, S&P500, BTC/USD, USD/CAD", killzone: false as boolean },
       ]
     : [
-        { name: "ASIE", range: "00h – 09h", color: "#60a5fa", desc: "Liquidité faible · spreads larges + fakeouts", pairs: "USD/JPY, AUD/JPY, NZD/JPY", killzone: false as boolean },
+        { name: "ASIE", range: "00h – 09h", color: "#60a5fa", desc: "Liquidité faible · spreads larges + faux breakouts", pairs: "USD/JPY, AUD/JPY, NZD/JPY", killzone: false as boolean },
         { name: "LONDRES", range: "08h – 17h", color: "#34d399", desc: "Vrai départ de la journée — bonne liquidité", pairs: "EUR/USD, GBP/USD, XAU/USD", killzone: false as boolean },
         { name: "OVERLAP LONDRES + NY", range: "14h – 17h", color: "#ef4444", desc: "🔴 KILLZONE — vraie liquidité institutionnelle", pairs: null as string | null, killzone: true as boolean },
-        { name: "NEW YORK", range: "14h – 22h", color: "#fbbf24", desc: "Pic d'activité — news US à 14h30", pairs: "Nasdaq, S&P500, BTC/USD, USD/CAD", killzone: false as boolean },
+        { name: "NEW YORK", range: "14h – 22h", color: "#fbbf24", desc: "Pic d'activité — annonce US à 14h30", pairs: "Nasdaq, S&P500, BTC/USD, USD/CAD", killzone: false as boolean },
       ];
   return (
     <div>

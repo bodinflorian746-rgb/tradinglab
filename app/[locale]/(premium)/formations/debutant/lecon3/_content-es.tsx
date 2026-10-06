@@ -68,7 +68,7 @@ export default function ContentEs() {
             "Martillo: cuerpo chico arriba, mecha baja larga → los vendedores intentaron bajar, los compradores resistieron fuerte",
             "Estrella fugaz: cuerpo chico abajo, mecha alta larga → los compradores intentaron subir, los vendedores rechazaron",
             "Doji: cuerpo casi nulo, mechas de ambos lados → indecisión total entre compradores y vendedores",
-            "Engulfing alcista: gran vela verde que engulle a la roja anterior → los compradores toman el control",
+            "Envolvente alcista: gran vela verde que engulle a la roja anterior → los compradores toman el control",
           ],
         },
       ]}
@@ -83,15 +83,15 @@ export default function ContentEs() {
         "Cada vela = 4 datos: Open, High, Low, Close",
         "Cuerpo verde = compradores ganadores. Cuerpo rojo = vendedores ganadores.",
         "Las mechas = intentos fallidos, muestran la resistencia del bando opuesto",
-        "Doji = indecisión. Martillo = rechazo de precios bajos. Engulfing = toma de control clara.",
+        "Doji = indecisión. Martillo = rechazo de precios bajos. Envolvente = toma de control clara.",
         "Un patrón de vela solo no significa nada, el contexto le da valor",
       ]}
       exerciseTitle="Leer velas en un gráfico real"
       exercise={[
-        "En TradingView.com, abre EUR/USD en timeframe Daily",
+        "En TradingView.com, abre EUR/USD en temporalidad Daily",
         "Encuentra una vela verde con una mecha alta larga — ¿qué pasó en los días siguientes?",
         "Encuentra un Doji — ¿el mercado eligió una dirección clara en las velas siguientes?",
-        "Identifica un Engulfing (una gran vela que engulle a la anterior) — ¿qué impacto tuvo en lo que siguió?",
+        "Identifica una envolvente (una gran vela que engulle a la anterior) — ¿qué impacto tuvo en lo que siguió?",
       ]}
       quiz={{
         question: "Ves una vela roja con una mecha baja muy larga. ¿Qué indica esto con mayor precisión?",

@@ -126,7 +126,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Liquidité et manipulation → cf. module ICT, Leçon 1</li>
               <li>- FVG et Order Blocks → cf. module SMC, leçons « Order Blocks : identifier les zones institutionnelles » et « FVG et liquidité : trader le déséquilibre institutionnel »</li>
-              <li>- Multi-timeframe → cf. module Multi-timeframe Process</li>
+              <li>- Multi-unités de temps → cf. module Process multi-unités de temps</li>
             </ul>
           </div>
 
@@ -195,7 +195,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Rebond, mitigation profonde ou invalidation : ne pas confondre</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Quand le prix revient dans un FVG, il y a un piège classique : croire qu'un FVG « rempli » est automatiquement mort. C'est faux. Un FVG peut être traversé profondément, presque entièrement, et continuer à réagir parfaitement au test suivant. Ce qui invalide réellement un FVG, ce n'est pas le remplissage, c'est la <span className="text-white font-semibold">cassure structurelle propre</span> au-delà de la zone, accompagnée d'une absence de réaction et d'un contexte HTF qui ne soutient plus le scénario.
+              Quand le prix revient dans un FVG, il y a un piège classique : croire qu'un FVG « rempli » est automatiquement mort. C'est faux. Un FVG peut être traversé profondément, presque entièrement, et continuer à réagir parfaitement au test suivant. Ce qui invalide réellement un FVG, ce n'est pas le remplissage, c'est la <span className="text-white font-semibold">cassure structurelle propre</span> au-delà de la zone, accompagnée d'une absence de réaction et d'un contexte de l'UT supérieure qui ne soutient plus le scénario.
             </p>
 
             <div className="my-6">
@@ -232,7 +232,7 @@ export default function ContentFr() {
                   <li>- Le prix remplit 70-95% de la zone, parfois jusqu'au bas</li>
                   <li>- <span className="text-amber-400 font-semibold">Pas automatiquement une invalidation</span></li>
                   <li>- Ce qui compte : la réaction qui suit (mèche de rejet, bougie de reprise nette)</li>
-                  <li>- Si la structure HTF tient et que la réaction arrive, le FVG est mitigé mais valide</li>
+                  <li>- Si la structure de l'UT supérieure tient et que la réaction arrive, le FVG est mitigé mais valide</li>
                 </ul>
               </div>
 
@@ -244,7 +244,7 @@ export default function ContentFr() {
                   <li>- Close net au-delà du FVG, pas juste une mèche</li>
                   <li>- Absence totale de réaction sur plusieurs bougies</li>
                   <li>- Déplacement opposé propre, momentum continu dans le sens contraire</li>
-                  <li>- Contexte HTF qui ne soutient plus le scénario (BOS / CHoCH contraire)</li>
+                  <li>- Contexte de l'UT supérieure qui ne soutient plus le scénario (BOS / CHoCH contraire)</li>
                 </ul>
               </div>
             </div>
@@ -277,7 +277,7 @@ export default function ContentFr() {
               <li>- Avant de dire « FVG mort », vérifie : y a-t-il eu une bougie de réaction ?</li>
               <li>- Une mèche profonde sans close au-delà = mitigation, pas invalidation</li>
               <li>- L'invalidation se confirme dans la suite, pas dans la touche elle-même</li>
-              <li>- Si HTF tient et structure intacte, un FVG profondément mitigé peut donner le meilleur signal de la session</li>
+              <li>- Si l'UT supérieure tient et structure intacte, un FVG profondément mitigé peut donner le meilleur signal de la session</li>
             </ul>
           </section>
 
@@ -360,7 +360,7 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur TradingView, repère un PD Array confluent sur la paire de ton choix et qualifie-le étape par étape."
             steps={[
-              "HTF (Daily/H4) : conclus un biais directionnel clair. Sans biais, ne descends pas plus bas, un PD Array hors biais est très peu fiable.",
+              "UT supérieure (Daily/H4) : conclus un biais directionnel clair. Sans biais, ne descends pas plus bas, un PD Array hors biais est très peu fiable.",
               "H1 : recherche un FVG dans le sens du biais, créé par une impulsion juste après un sweep ou un BOS. Vérifie qu'il coïncide avec un ancien support/résistance cassé. Si oui, tu as une confluence.",
               "Attends le retour du prix dans le PD Array. Sur M15, observe la réaction : mèches de rejet + bougie impulsive = entrée validée. Si la zone est traversée sans réaction, le setup est invalidé, passe à la prochaine.",
             ]}

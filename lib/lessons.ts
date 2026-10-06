@@ -89,7 +89,7 @@ export const LESSONS: LevelData[] = [
             body: "Ces erreurs sont universelles. Presque tous les nouveaux traders en commettent au moins une dans les premières semaines.",
             items: [
               "Confondre trading et investissement, un trader qui 'garde sa position parce qu'il croit au projet' n'est plus un trader, c'est un investisseur",
-              "Croire qu'il faut avoir raison souvent pour être rentable, faux : un bon ratio risque/récompense suffit",
+              "Croire qu'il faut avoir raison souvent pour être rentable, faux : un bon ratio risque/rendement suffit",
               "Suivre des conseils de trading sans comprendre pourquoi, tu ne peux pas apprendre à cuisiner en regardant quelqu'un d'autre manger",
             ],
           },
@@ -262,8 +262,8 @@ export const LESSONS: LevelData[] = [
                 ["Marteau", "Petit corps en haut, longue mèche basse", "Vendeurs ont échoué à faire baisser, les acheteurs ont défendu"],
                 ["Étoile filante", "Petit corps en bas, longue mèche haute", "Acheteurs ont échoué à faire monter, les vendeurs ont rejeté"],
                 ["Doji", "Corps quasi nul, mèches des deux côtés", "Indécision totale, ni les acheteurs ni les vendeurs ne gagnent"],
-                ["Engulfing haussier", "Grande bougie verte qui avale la rouge précédente", "Les acheteurs ont pris le contrôle de façon décisive"],
-                ["Engulfing baissier", "Grande bougie rouge qui avale la verte précédente", "Les vendeurs ont pris le contrôle de façon décisive"],
+                ["Avalement haussier", "Grande bougie verte qui avale la rouge précédente", "Les acheteurs ont pris le contrôle de façon décisive"],
+                ["Avalement baissier", "Grande bougie rouge qui avale la verte précédente", "Les vendeurs ont pris le contrôle de façon décisive"],
               ],
             },
           },
@@ -286,16 +286,16 @@ export const LESSONS: LevelData[] = [
           "Chaque bougie = 4 données : Open, High, Low, Close",
           "Corps vert = acheteurs gagnants. Corps rouge = vendeurs gagnants.",
           "Les mèches = tentatives échouées, elles montrent la résistance du camp adverse",
-          "Doji = indécision. Marteau = rejet des prix bas. Engulfing = prise de contrôle franche.",
+          "Doji = indécision. Marteau = rejet des prix bas. Avalement = prise de contrôle franche.",
           "Un pattern de bougie seul ne signifie rien, le contexte (zone, tendance) lui donne de la valeur",
         ],
         exercise: {
           title: "Lire des bougies sur un graphique réel",
           steps: [
-            "Sur TradingView, ouvre EUR/USD en timeframe Daily",
+            "Sur TradingView, ouvre EUR/USD en unité de temps Daily",
             "Trouve une bougie verte avec une longue mèche haute, qu'est-il arrivé dans les jours suivants ?",
             "Trouve un Doji, le marché a-t-il choisi une direction claire dans les bougies suivantes ?",
-            "Identifie un Engulfing (une grande bougie qui avale la précédente), quel a été l'impact sur la suite ?",
+            "Identifie un avalement (une grande bougie qui avale la précédente), quel a été l'impact sur la suite ?",
           ],
         },
         quiz: {
@@ -532,7 +532,7 @@ export const LESSONS: LevelData[] = [
             ],
           },
           {
-            heading: "Le ratio Risque / Récompense (R/R)",
+            heading: "Le ratio risque/rendement (R/R)",
             body: "Le R/R compare deux distances : celle qui sépare ton entrée de ton Stop Loss (le risque), et celle qui sépare ton entrée de ton Take Profit (l'objectif). C'est un rapport, il ne dépend pas de la taille de ta position. C'est la métrique la plus importante en gestion du risque : elle détermine si ta stratégie est rentable sur le long terme, indépendamment de ton taux de réussite.",
             table: {
               headers: ["Ratio R/R", "Exemple concret", "Ce que ça permet"],
@@ -902,14 +902,14 @@ export const LESSONS: LevelData[] = [
       {
         id: "lecon-10",
         slug: "lecon10",
-        title: "Risk management : pourquoi 90% des traders perdent",
+        title: "Gestion du risque : pourquoi 90% des traders perdent",
         duration: "13 min",
         introduction:
-          "Le problème du retail n'est généralement pas l'entrée. Il vient de ce qui se passe AUTOUR du trade : risque trop élevé, mauvais RR, levier excessif, revenge trading. Deux traders avec le même setup : l'un finit rentable, l'autre détruit son compte. La différence ne vient pas de la stratégie. Elle vient du risk management.",
+          "Le problème du retail n'est généralement pas l'entrée. Il vient de ce qui se passe AUTOUR du trade : risque trop élevé, mauvais RR, levier excessif, revenge trading. Deux traders avec le même setup : l'un finit rentable, l'autre détruit son compte. La différence ne vient pas de la stratégie. Elle vient de la gestion du risque.",
         sections: [
           {
             heading: "Le plus grand mensonge du retail",
-            body: "Le retail pense souvent : « Si je trouve la bonne stratégie, je deviendrai rentable. » C'est faux. Une bonne stratégie avec un mauvais risk management finit presque toujours par mourir. Aucune stratégie ne gagne 100% du temps. Même une excellente stratégie prend des pertes, subit des drawdowns, traverse des périodes compliquées, enchaîne parfois plusieurs stops d'affilée. Le problème du retail, c'est qu'il construit son trading comme si les pertes ne devaient jamais arriver. Donc dès qu'elles arrivent, il augmente le risque, force des setups, déplace le stop, supprime le SL, veut récupérer immédiatement. Et c'est là que le compte commence réellement à mourir.",
+            body: "Le retail pense souvent : « Si je trouve la bonne stratégie, je deviendrai rentable. » C'est faux. Une bonne stratégie avec une mauvaise gestion du risque finit presque toujours par mourir. Aucune stratégie ne gagne 100% du temps. Même une excellente stratégie prend des pertes, subit des drawdowns, traverse des périodes compliquées, enchaîne parfois plusieurs stops d'affilée. Le problème du retail, c'est qu'il construit son trading comme si les pertes ne devaient jamais arriver. Donc dès qu'elles arrivent, il augmente le risque, force des setups, déplace le stop, supprime le SL, veut récupérer immédiatement. Et c'est là que le compte commence réellement à mourir.",
           },
           {
             heading: "Comment un compte meurt vraiment",
@@ -939,7 +939,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Pourquoi le RR change tout",
-            body: "Situation 1 : tu risques 20€ pour en gagner 10€. Situation 2 : tu risques 20€ pour en gagner 40€. Laquelle est la plus intelligente ? Évidemment la situation 2, tu gagnes 4 fois plus pour exactement le même risque. Et pourtant, 90% des retails passent leur temps à prendre des trades de type Situation 1 sans s'en rendre compte, soit parce qu'ils placent leur Take Profit trop tôt « pour sécuriser », soit parce qu'ils acceptent des trades médiocres où le potentiel de gain est minuscule par rapport au risque. Le RR (risk/reward) est le rapport entre ce que tu RISQUES et ce que tu peux GAGNER sur un trade. Tu n'as PAS besoin d'avoir raison souvent pour gagner en bourse. Tu as besoin que tes trades gagnants rapportent beaucoup plus que ce que tes trades perdants te coûtent.",
+            body: "Situation 1 : tu risques 20€ pour en gagner 10€. Situation 2 : tu risques 20€ pour en gagner 40€. Laquelle est la plus intelligente ? Évidemment la situation 2, tu gagnes 4 fois plus pour exactement le même risque. Et pourtant, 90% des retails passent leur temps à prendre des trades de type Situation 1 sans s'en rendre compte, soit parce qu'ils placent leur Take Profit trop tôt « pour sécuriser », soit parce qu'ils acceptent des trades médiocres où le potentiel de gain est minuscule par rapport au risque. Le RR (risque/rendement) est le rapport entre ce que tu RISQUES et ce que tu peux GAGNER sur un trade. Tu n'as PAS besoin d'avoir raison souvent pour gagner en bourse. Tu as besoin que tes trades gagnants rapportent beaucoup plus que ce que tes trades perdants te coûtent.",
             items: [
               "Si tu risques 20€ et que tu vises 40€ → ton RR est de 1:2",
               "Si tu risques 20€ et que tu vises 60€ → ton RR est de 1:3",
@@ -1003,7 +1003,7 @@ export const LESSONS: LevelData[] = [
           },
         ],
         keyPoints: [
-          "Une bonne stratégie avec un mauvais risk management finit presque toujours par mourir.",
+          "Une bonne stratégie avec une mauvaise gestion du risque finit presque toujours par mourir.",
           "Adapte ton risque par trade à ton capital et vise un RR minimum de 1:2.",
           "Le RR compte plus que le winrate : un trader à 45% de réussite avec un bon RR bat un trader à 70% avec un mauvais RR.",
           "Hiérarchie du trader rentable : survivre d'abord, protéger le capital ensuite, performer en dernier.",
@@ -1270,7 +1270,7 @@ export const LESSONS: LevelData[] = [
                 ["Origine du mouvement", "Mouvement lent, progressif", "Mouvement rapide, impulsif (1–3 bougies)"],
                 ["Nombre de touches", "Déjà visité plusieurs fois", "Encore vierge (jamais revisitée)"],
                 ["Taille de la zone", "Très large (> 100 points)", "Compacte (30–60 points)"],
-                ["Contexte", "Contre la tendance HTF", "Dans le sens de la tendance HTF"],
+                ["Contexte", "Contre la tendance de l'UT supérieure", "Dans le sens de la tendance de l'UT supérieure"],
               ],
             },
           },
@@ -1280,7 +1280,7 @@ export const LESSONS: LevelData[] = [
           "Support : zone d'origine d'un mouvement haussier fort, les institutions y achètent",
           "Une zone valide = mouvement impulsif bref + zone jamais revisitée",
           "La zone perd sa validité quand le prix y revient et la consomme sans réaction forte",
-          "Préfère les zones dans le sens de la tendance HTF, elles ont les meilleures probabilités",
+          "Préfère les zones dans le sens de la tendance de l'UT supérieure, elles ont les meilleures probabilités",
         ],
         exercise: {
           title: "Identifier ces supports et résistances sur EUR/USD",
@@ -1332,7 +1332,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Pourquoi trader dans le sens de la tendance",
-            body: "La tendance représente la force dominante du marché. Aller contre elle, c'est comme nager à contre-courant. Même avec la meilleure analyse, le ratio risque/récompense devient défavorable quand on va contre la direction principale.",
+            body: "La tendance représente la force dominante du marché. Aller contre elle, c'est comme nager à contre-courant. Même avec la meilleure analyse, le ratio risque/rendement devient défavorable quand on va contre la direction principale.",
             table: {
               headers: ["Position", "Tendance haussière", "Tendance baissière"],
               rows: [
@@ -1368,7 +1368,7 @@ export const LESSONS: LevelData[] = [
           "Trader dans le sens de la tendance = probabilités en ta faveur. Contre la tendance = probabilités contre toi.",
           "Le pullback sur un niveau clé (support) est l'entrée optimale en tendance.",
           "Pas de tendance claire = rester hors du marché. Attendre n'est pas perdre.",
-          "Identifie d'abord la tendance sur le HTF, puis cherche des entrées sur le LTF.",
+          "Identifie d'abord la tendance sur l'UT supérieure, puis cherche des entrées sur l'UT inférieure.",
         ],
         exercise: {
           title: "Identifier la tendance et le prochain pullback",
@@ -1422,9 +1422,9 @@ export const LESSONS: LevelData[] = [
             heading: "Les confluences les plus puissantes",
             body: "Toutes les confluences ne se valent pas. Certaines combinaisons sont statistiquement plus fiables que d'autres. Voici les confluences à rechercher par ordre de puissance.",
             items: [
-              "Tendance HTF + niveau clé + signal de bougie = setup de haute qualité",
+              "Tendance de l'UT supérieure + niveau clé + signal de bougie = setup de haute qualité",
               "Support ou résistance + structure BOS + Fibonacci 61.8% = entrée institutionnelle",
-              "Support/résistance + volume élevé au rebond + engulfing = confirmation forte",
+              "Support/résistance + volume élevé au rebond + avalement = confirmation forte",
               "Confluence temporelle : niveau testé lors d'une Killzone (session London/NY) = signal renforcé",
             ],
           },
@@ -1434,7 +1434,7 @@ export const LESSONS: LevelData[] = [
             table: {
               headers: ["Confluence", "Présente ?", "Poids"],
               rows: [
-                ["Tendance haussière HTF (H4)", "✓ Oui", "Élevé, contexte global favorable"],
+                ["Tendance haussière de l'UT supérieure (H4)", "✓ Oui", "Élevé, contexte global favorable"],
                 ["Support H1 à 1,0820", "✓ Oui", "Élevé, niveau institutionnel non-revisité"],
                 ["Signal de rejet (pin bar M15)", "✓ Oui", "Moyen, confirmation d'entrée"],
                 ["Fibonacci 61.8% à 1,0815", "✓ Oui", "Bonus, confluence supplémentaire"],
@@ -1448,7 +1448,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Setup valide : tendance claire + niveau clé respecté + signal de confirmation = ENTRÉE",
               "Setup insuffisant : signal de bougie seul, sans niveau et sans tendance = IGNORER",
-              "Setup invalide : bon signal sur un niveau mais contre la tendance HTF = ÉVITER",
+              "Setup invalide : bon signal sur un niveau mais contre la tendance de l'UT supérieure = ÉVITER",
               "Règle d'or : si tu dois te convaincre que c'est un bon trade, ce n'en est probablement pas un",
             ],
           },
@@ -1456,7 +1456,7 @@ export const LESSONS: LevelData[] = [
         keyPoints: [
           "Plus les confirmations s'accumulent dans la même direction, plus la probabilité est élevée",
           "Minimum 2 à 3 confluences avant d'entrer, jamais sur un signal isolé",
-          "La confluence la plus puissante : tendance HTF + niveau institutionnel + signal de bougie",
+          "La confluence la plus puissante : tendance de l'UT supérieure + niveau institutionnel + signal de bougie",
           "Crée une checklist et valide chaque point AVANT d'ouvrir un trade",
           "Si tu te convaincs d'un trade = signal d'alarme. Un bon setup est évident.",
         ],
@@ -1465,25 +1465,25 @@ export const LESSONS: LevelData[] = [
           steps: [
             "Sur TradingView, ouvre EUR/USD. Identifie la tendance sur H4, puis descends en H1.",
             "Le prix est-il proche d'un niveau clé (support, résistance) ?",
-            "Cherche un signal de bougie sur ce niveau : pin bar, engulfing, doji suivi d'une bougie directionnelle.",
-            "Score ton setup de 0 à 5 : tendance HTF (1pt) + niveau clé (1pt) + signal bougie (1pt) + Fibonacci (1pt) + Killzone (1pt). Entre seulement si tu as 3/5 minimum.",
+            "Cherche un signal de bougie sur ce niveau : pin bar, avalement, doji suivi d'une bougie directionnelle.",
+            "Score ton setup de 0 à 5 : tendance de l'UT supérieure (1pt) + niveau clé (1pt) + signal bougie (1pt) + Fibonacci (1pt) + Killzone (1pt). Entre seulement si tu as 3/5 minimum.",
           ],
         },
         quiz: {
-          question: "Tu vois une grande bougie engulfing haussière sur un graphique en M5. Il n'y a pas de tendance claire et pas de niveau clé identifié. Que fais-tu ?",
+          question: "Tu vois une grande bougie d'avalement haussier sur un graphique en M5. Il n'y a pas de tendance claire et pas de niveau clé identifié. Que fais-tu ?",
           answers: [
-            "Tu entres Long immédiatement, une grande bougie engulfing est un signal fort",
+            "Tu entres Long immédiatement, une grande bougie d'avalement est un signal fort",
             "Tu attends une deuxième bougie haussière pour confirmation, puis tu entres",
             "Tu ignores ce signal, une seule confluence sans contexte n'est pas suffisante",
             "Tu entres Short, une grande hausse sera toujours suivie d'une baisse",
           ],
           correct: 2,
           explanation:
-            "Une bougie engulfing sans tendance claire ni niveau clé est un signal isolé, sans confluence. Les signaux de bougie sans contexte ont une probabilité proche de 50/50. Ce n'est pas suffisant pour risquer du capital. Un bon setup nécessite au minimum 2 à 3 confluences.",
+            "Une bougie d'avalement sans tendance claire ni niveau clé est un signal isolé, sans confluence. Les signaux de bougie sans contexte ont une probabilité proche de 50/50. Ce n'est pas suffisant pour risquer du capital. Un bon setup nécessite au minimum 2 à 3 confluences.",
           answerExplanations: [
-            "Faux. Une grande bougie engulfing seule sur M5, sans tendance ni niveau, c'est une confluence sur 3 minimum requises. La probabilité est insuffisante pour justifier un trade.",
+            "Faux. Une grande bougie d'avalement seule sur M5, sans tendance ni niveau, c'est une confluence sur 3 minimum requises. La probabilité est insuffisante pour justifier un trade.",
             "Faux. Attendre une deuxième bougie haussière ne résout pas le problème fondamental : il n'y a toujours pas de tendance claire ni de niveau clé. Tu ajoutes une confirmation faible à une base déjà insuffisante.",
-            "Correct. Sans tendance et sans niveau clé, même un engulfing puissant ne justifie pas une entrée. Les confluences manquent. Passer au trade suivant est la bonne décision, la discipline prime sur l'impulsion.",
+            "Correct. Sans tendance et sans niveau clé, même un avalement puissant ne justifie pas une entrée. Les confluences manquent. Passer au trade suivant est la bonne décision, la discipline prime sur l'impulsion.",
             "Faux. Entrer Short sur une grande bougie haussière sans raison structurelle, c'est spéculer à pile ou face. Ce n'est pas du trading, c'est du jeu.",
           ],
         },
@@ -1535,8 +1535,8 @@ export const LESSONS: LevelData[] = [
             heading: "Exploiter un faux breakout",
             body: "Une fois le faux breakout identifié, il devient l'un des setups les plus puissants. Tu entres dans le sens du retour, avec un Stop Loss logique au-delà du pic du faux break, très serré, avec un fort potentiel.",
             items: [
-              "Faux breakout haussier (Stop Hunt sur résistance) : attend le retour sous la résistance → entre Short",
-              "Faux breakout baissier (Stop Hunt sur support) : attend le retour au-dessus du support → entre Long",
+              "Faux breakout haussier (Chasse aux stops sur résistance) : attend le retour sous la résistance → entre Short",
+              "Faux breakout baissier (Chasse aux stops sur support) : attend le retour au-dessus du support → entre Long",
               "SL : juste au-delà du pic du faux breakout (très proche)",
               "TP : vers le niveau de liquidité opposé (Equal Highs ou Equal Lows, support ou résistance)",
             ],
@@ -1572,7 +1572,7 @@ export const LESSONS: LevelData[] = [
           answerExplanations: [
             "Faux. La clôture sous la résistance invalide la cassure. Ce n'est pas un vrai breakout, c'est exactement un faux breakout. Acheter ici, c'est se positionner du mauvais côté du mouvement institutionnel.",
             "Faux. Cette configuration n'est pas du tout ambiguë, c'est la signature précise d'un faux breakout. Mèche longue + clôture de l'autre côté = signal d'alerte clair pour un trader structuré.",
-            "Correct. Spike sur résistance + clôture en dessous = faux breakout sur la résistance. Les institutions ont vendu dans ce pic. La probabilité de continuation baissière est élevée, cherche un engulfing ou pin bar baissier pour entrer.",
+            "Correct. Spike sur résistance + clôture en dessous = faux breakout sur la résistance. Les institutions ont vendu dans ce pic. La probabilité de continuation baissière est élevée, cherche un avalement ou pin bar baissier pour entrer.",
             "Faux. Placer un achat au-dessus du spike, c'est espérer que la cassure soit réelle, mais tous les signaux indiquent le contraire. Tu t'apprêterais à entrer dans la direction du piège, pas dans la direction institutionnelle.",
           ],
         },
@@ -1582,36 +1582,36 @@ export const LESSONS: LevelData[] = [
       {
         id: "lecon-7",
         slug: "lecon7",
-        title: "Analyse Multi-Timeframe",
+        title: "Analyse multi-unités de temps",
         duration: "22 min",
         introduction:
-          "Tu peux avoir raison sur le M5 et te faire détruire par le Daily. La direction sur un petit timeframe ne compte que si elle s'aligne avec le contexte sur un grand timeframe. Lire plusieurs timeframes, c'est voir le même marché avec deux niveaux de zoom.",
+          "Tu peux avoir raison sur le M5 et te faire détruire par le Daily. La direction sur une petite unité de temps ne compte que si elle s'aligne avec le contexte sur une grande unité de temps. Lire plusieurs unités de temps, c'est voir le même marché avec deux niveaux de zoom.",
         sections: [
           {
-            heading: "HTF vs LTF : deux rôles distincts",
-            body: "Le High Timeframe (HTF) donne le contexte et la direction. Le Low Timeframe (LTF) donne le timing et l'entrée précise. Les deux sont indispensables, mais ils jouent des rôles différents.",
+            heading: "UT supérieure vs UT inférieure : deux rôles distincts",
+            body: "l'unité de temps supérieure (UT supérieure) donne le contexte et la direction. l'unité de temps inférieure (UT inférieure) donne le timing et l'entrée précise. Les deux sont indispensables, mais ils jouent des rôles différents.",
             items: [
-              "HTF (H4, Daily, Weekly) : identifier la tendance, les niveaux majeurs, le biais directionnel",
-              "LTF (M15, M5, H1) : affiner l'entrée, définir le SL précis, lire le signal de déclenchement",
-              "Règle : le HTF commande. L'entrée se fait sur le LTF, DANS le sens du HTF.",
+              "UT supérieure (H4, Daily, Weekly) : identifier la tendance, les niveaux majeurs, le biais directionnel",
+              "UT inférieure (M15, M5, H1) : affiner l'entrée, définir le SL précis, lire le signal de déclenchement",
+              "Règle : l'UT supérieure commande. L'entrée se fait sur l'UT inférieure, DANS le sens de l'UT supérieure.",
               "Erreur classique : voir un signal Long sur M5 alors que le Daily est en tendance baissière, 80% de chance de perdre",
             ],
           },
           {
             heading: "Top-Down Analysis: lire de haut en bas",
-            body: "L'analyse top-down consiste à commencer par le timeframe le plus haut pour établir le contexte global, puis descendre progressivement vers les petits timeframes pour trouver l'entrée. C'est la méthode des traders professionnels.",
+            body: "L'analyse top-down consiste à commencer par l'unité de temps la plus haute pour établir le contexte global, puis descendre progressivement vers les petites unités de temps pour trouver l'entrée. C'est la méthode des traders professionnels.",
             items: [
               "Étape 1. Daily : quelle est la tendance principale ? Quels sont les grands niveaux ?",
               "Étape 2. H4 : la tendance Daily se confirme-t-elle ? Suis-je sur un support ou une résistance ?",
-              "Étape 3. H1 : y a-t-il une structure claire dans le sens du HTF ? Où est le prochain niveau clé ?",
-              "Étape 4. M15 : quel est le signal d'entrée précis ? Pin bar, engulfing, BOS micro-structure ?",
+              "Étape 3. H1 : y a-t-il une structure claire dans le sens de l'UT supérieure ? Où est le prochain niveau clé ?",
+              "Étape 4. M15 : quel est le signal d'entrée précis ? Pin bar, avalement, BOS micro-structure ?",
             ],
           },
           {
             heading: "Exemple concret : EUR/USD top-down",
-            body: "Daily : tendance haussière (HH/HL). Grand support à 1,0820. H4 : pullback vers 1,0820, support H4 actif. H1 : CHoCH haussier, la structure mini baissière du pullback est cassée. M15 : pin bar haussière au contact du support. Résultat : 4 timeframes alignés → entrée Long à la clôture de la pin bar M15, SL sous le Low de la mèche.",
+            body: "Daily : tendance haussière (HH/HL). Grand support à 1,0820. H4 : pullback vers 1,0820, support H4 actif. H1 : CHoCH haussier, la structure mini baissière du pullback est cassée. M15 : pin bar haussière au contact du support. Résultat : 4 unités de temps alignées → entrée Long à la clôture de la pin bar M15, SL sous le Low de la mèche.",
             table: {
-              headers: ["Timeframe", "Biais", "Signal"],
+              headers: ["Unité de temps", "Biais", "Signal"],
               rows: [
                 ["Daily", "Haussier (HH/HL intact)", "Support majeur à 1,0820 non cassé"],
                 ["H4", "Haussier (pullback en cours)", "Support H4 touché"],
@@ -1621,22 +1621,22 @@ export const LESSONS: LevelData[] = [
             },
           },
           {
-            heading: "Les erreurs du trader mono-timeframe",
-            body: "Trader sur un seul timeframe, c'est voir l'arbre sans la forêt, ou la forêt sans les arbres. Les deux perspectives sont nécessaires.",
+            heading: "Les erreurs du trader sur une seule unité de temps",
+            body: "Trader sur une seule unité de temps, c'est voir l'arbre sans la forêt, ou la forêt sans les arbres. Les deux perspectives sont nécessaires.",
             items: [
               "Trader uniquement en M5 : signal correct mais dans le sens contraire du H4 → probabilité faible",
               "Trader uniquement en Daily : biais correct mais SL trop large, R/R médiocre",
-              "Ignorer le contexte HTF : une belle structure M15 sous une résistance Daily = setup piège",
-              "Solution : 3 timeframes minimum. HTF pour le contexte, intermédiaire pour la structure, LTF pour l'entrée",
+              "Ignorer le contexte de l'UT supérieure : une belle structure M15 sous une résistance Daily = setup piège",
+              "Solution : 3 unités de temps minimum. UT supérieure pour le contexte, intermédiaire pour la structure, UT inférieure pour l'entrée",
             ],
           },
         ],
         keyPoints: [
-          "HTF = direction et contexte. LTF = timing et entrée. Les deux sont indispensables.",
+          "UT supérieure = direction et contexte. UT inférieure = timing et entrée. Les deux sont indispensables.",
           "Top-down : analyse du Daily → H4 → H1 → M15. Toujours de haut en bas.",
-          "N'entre sur LTF que si le signal va DANS le sens du HTF, pas contre.",
+          "N'entre sur l'UT inférieure que si le signal va DANS le sens de l'UT supérieure, pas contre.",
           "Un signal parfait sur M5 contre la tendance Daily a peu de chance de réussir.",
-          "Plus les timeframes s'alignent, plus la probabilité est élevée.",
+          "Plus les unités de temps s'alignent, plus la probabilité est élevée.",
         ],
         exercise: {
           title: "Analyse top-down complète sur EUR/USD",
@@ -1644,7 +1644,7 @@ export const LESSONS: LevelData[] = [
             "Ouvre EUR/USD sur TradingView. Commence par le Daily : quelle est la tendance ? Note le biais (haussier/baissier/neutre).",
             "Descends en H4 : le biais Daily se confirme-t-il ? Identifies-tu un pullback, un support ou une résistance ?",
             "Descends en H1 : y a-t-il une structure dans le sens du Daily ? Où est le prochain niveau H1 clé ?",
-            "Descends en M15 : y a-t-il un signal de bougie (pin bar, engulfing) aligné avec le biais du Daily ? Note ton setup complet.",
+            "Descends en M15 : y a-t-il un signal de bougie (pin bar, avalement) aligné avec le biais du Daily ? Note ton setup complet.",
           ],
         },
         quiz: {
@@ -1657,11 +1657,11 @@ export const LESSONS: LevelData[] = [
           ],
           correct: 1,
           explanation:
-            "Une pin bar haussière sur support H1, dans un contexte Daily baissier, est un signal contre la tendance principale. Même si la configuration LTF est belle, le HTF commande. La probabilité de succès est significativement réduite. La bonne décision : ignorer ce setup et attendre un signal dans le sens du Daily.",
+            "Une pin bar haussière sur support H1, dans un contexte Daily baissier, est un signal contre la tendance principale. Même si la configuration de l'UT inférieure est belle, l'UT supérieure commande. La probabilité de succès est significativement réduite. La bonne décision : ignorer ce setup et attendre un signal dans le sens du Daily.",
           answerExplanations: [
-            "Faux. Entrer Long contre une tendance Daily baissière, même sur un signal LTF propre, c'est nager à contre-courant. Statistiquement, ces trades ont une probabilité de succès bien inférieure à 50%.",
-            "Correct. Quand le HTF et le LTF sont en conflit, le HTF gagne. Le Daily baissier invalide les signaux Long sur H1. Attendre un signal Short aligné avec le contexte Daily est la bonne approche.",
-            "Faux. Augmenter le SL ne résout pas le problème fondamental : la direction du trade est contre le contexte HTF. Un SL plus large amplifie juste la perte si le trade échoue.",
+            "Faux. Entrer Long contre une tendance Daily baissière, même sur un signal de l'UT inférieure propre, c'est nager à contre-courant. Statistiquement, ces trades ont une probabilité de succès bien inférieure à 50%.",
+            "Correct. Quand l'UT supérieure et l'UT inférieure sont en conflit, l'UT supérieure gagne. Le Daily baissier invalide les signaux Long sur H1. Attendre un signal Short aligné avec le contexte Daily est la bonne approche.",
+            "Faux. Augmenter le SL ne résout pas le problème fondamental : la direction du trade est contre le contexte de l'UT supérieure. Un SL plus large amplifie juste la perte si le trade échoue.",
             "Faux. Entrer Short sur une pin bar haussière sans signal Short propre, c'est forcer un trade. Le signal est haussier sur H1, la réponse n'est pas d'entrer Short, c'est d'attendre un meilleur setup Short aligné avec le Daily.",
           ],
         },
@@ -1680,7 +1680,7 @@ export const LESSONS: LevelData[] = [
             heading: "Les 5 questions avant chaque trade",
             body: "Avant d'ouvrir une position, ces 5 questions doivent avoir une réponse claire. Si l'une est sans réponse, le trade n'est pas prêt.",
             items: [
-              "1. Quel est mon biais directionnel ? (Haussier / Baissier selon le HTF)",
+              "1. Quel est mon biais directionnel ? (Haussier / Baissier selon l'UT supérieure)",
               "2. Pourquoi entrer ici ? (Niveau clé + confluence + signal de bougie)",
               "3. Où est mon Stop Loss ? (Niveau logique qui invalide mon analyse)",
               "4. Où est mon Take Profit ? (Prochain niveau de liquidité ou résistance/support)",
@@ -1692,14 +1692,14 @@ export const LESSONS: LevelData[] = [
             body: "L'entrée est le moment où tout se joue. Entrer trop tôt = SL large et R/R mauvais. Entrer trop tard = R/R trop petit. L'entrée optimale se fait sur confirmation, pas sur anticipation.",
             items: [
               "Ne jamais entrer 'parce que ça semble monter', attendre un signal de bougie de confirmation",
-              "Entrée précise : clôture d'une bougie de signal (pin bar, engulfing) sur un niveau clé",
+              "Entrée précise : clôture d'une bougie de signal (pin bar, avalement) sur un niveau clé",
               "Limite order vs Market order : un ordre limit te donne un meilleur prix mais peut ne jamais être déclenché",
               "Si le prix a déjà parcouru 70% du mouvement attendu : le setup est raté. Ne pas chasser.",
             ],
           },
           {
             heading: "Stop Loss et Take Profit : la règle du R:R",
-            body: "Le ratio risque/récompense (R:R) est le fondement de toute stratégie rentable. Il détermine combien tu peux perdre de trades et rester profitable sur le long terme.",
+            body: "Le ratio risque/rendement (R:R) est le fondement de toute stratégie rentable. Il détermine combien tu peux perdre de trades et rester profitable sur le long terme.",
             table: {
               headers: ["Ratio R:R", "Win Rate minimum pour être rentable", "Exemple concret"],
               rows: [
@@ -1772,7 +1772,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "23.6% : retracement faible, tendance très forte, le prix revient vite",
               "38.2%: retracement modéré, courant en tendance forte",
-              "50% : retracement moyen, le niveau psychologique le plus observé par les traders",
+              "50% : retracement moyen, le chiffre rond le plus observé par les traders",
               "61.8% : le 'Golden Ratio', le retracement le plus puissant et le plus fiable",
               "78.6% : retracement profond, souvent le dernier niveau avant invalidation de la structure",
             ],
@@ -1806,7 +1806,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Exemple : EUR/USD monte de 1,0700 à 1,0950 (HH). Le 61.8% se situe à 1,0795.",
               "Si 1,0795 correspond aussi à un support H4 → confluence forte",
-              "Attends le prix à 1,0795 : signal de bougie (pin bar, engulfing) → entrée Long",
+              "Attends le prix à 1,0795 : signal de bougie (pin bar, avalement) → entrée Long",
               "SL sous le 78.6% ou sous le Low du mouvement (selon la structure). TP au dernier High ou au niveau suivant.",
             ],
           },
@@ -1837,11 +1837,11 @@ export const LESSONS: LevelData[] = [
           ],
           correct: 2,
           explanation:
-            "Le niveau 61.8% de Fibonacci qui coïncide avec un support H4 est une confluence puissante, mais elle ne justifie pas une entrée immédiate au toucher. Il faut attendre un signal de confirmation (pin bar, engulfing haussier) pour valider que le prix réagit vraiment à ce niveau. Le toucher sans confirmation peut être un transit vers des niveaux plus bas.",
+            "Le niveau 61.8% de Fibonacci qui coïncide avec un support H4 est une confluence puissante, mais elle ne justifie pas une entrée immédiate au toucher. Il faut attendre un signal de confirmation (pin bar, avalement haussier) pour valider que le prix réagit vraiment à ce niveau. Le toucher sans confirmation peut être un transit vers des niveaux plus bas.",
           answerExplanations: [
             "Faux. Entrer au toucher d'un niveau Fibonacci sans confirmation de bougie, c'est anticiper sans preuve. Le prix peut transiter par 28 820 € vers 27 500 € (78.6%) sans réagir. Attends toujours le signal.",
             "Faux. Fibonacci seul n'est pas fiable, c'est vrai. Mais ici, il y a une CONFLUENCE : 61.8% + support H4. Cette confluence est précisément ce qui rend le setup valide. L'erreur serait de ne pas avoir de confirmation de bougie.",
-            "Correct. Confluence 61.8% + support H4 = zone d'intérêt forte. Mais tu attends le signal de bougie (pin bar ou engulfing haussier) pour confirmer que le prix réagit à ce niveau. C'est l'entrée optimale : niveau fort + confirmation = setup complet.",
+            "Correct. Confluence 61.8% + support H4 = zone d'intérêt forte. Mais tu attends le signal de bougie (pin bar ou avalement haussier) pour confirmer que le prix réagit à ce niveau. C'est l'entrée optimale : niveau fort + confirmation = setup complet.",
             "Faux. Un retracement de 61.8% en tendance haussière est un pullback profond mais normal. La tendance n'est pas terminée tant que le dernier Low significatif n'est pas cassé. 61.8% = zone d'achat potentielle, pas signal de vente.",
           ],
         },

@@ -154,7 +154,7 @@ function ContentFr() {
         answerExplanations={[
           "Faux. Le marché est ouvert, mais ce n'est pas suffisant pour trader. Les heures creuses (10h–13h) ont une liquidité institutionnelle très faible, les mouvements manquent de direction et les faux signaux pullulent.",
           "Correct. En attendant la NY Killzone, tu t'assures d'opérer dans une fenêtre où l'activité institutionnelle est forte, les mouvements directionnels et les setups plus fiables.",
-          "Faux. Descendre en M5 pendant les heures creuses amplifie le problème, le bruit est encore plus fort sur les petits timeframes quand la liquidité est faible.",
+          "Faux. Descendre en M5 pendant les heures creuses amplifie le problème, le bruit est encore plus fort sur les petites unités de temps quand la liquidité est faible.",
           "Faux. Les heures creuses ne sont pas idéales pour les breakouts, elles sont connues pour les faux breakouts précisément parce que le volume institutionnel manque pour confirmer les cassures.",
         ]}
       />

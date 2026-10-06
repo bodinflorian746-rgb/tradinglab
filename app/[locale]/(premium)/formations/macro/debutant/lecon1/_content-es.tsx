@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon3", title: "Los datos macro a vigilar",             href: null,                                disabled: true  },
   { id: "lecon4", title: "Entender la inflación",                 href: null,                                disabled: true  },
   { id: "lecon5", title: "El rol del dólar en el mundo",          href: null,                                disabled: true  },
-  { id: "lecon6", title: "Macro y risk management",               href: null,                                disabled: true  },
+  { id: "lecon6", title: "Macro y gestión de riesgos",               href: null,                                disabled: true  },
 ];
 
 export default function ContentEs() {
@@ -450,15 +450,15 @@ export default function ContentEs() {
               "Entro igual, mi análisis técnico es sólido",
               "Espero 30 minutos después de la publicación para ver cómo reacciona el mercado, y luego reevalúo mi setup",
               "Hago short en EUR/USD porque el CPI siempre baja el euro",
-              "Cambio a H4 para ignorar el ruido de la news",
+              "Cambio a H4 para ignorar el ruido de la noticia",
             ]}
             correctIndex={1}
-            explanation="Una publicación de 3 estrellas puede mover EUR/USD de 80-150 pips en pocos minutos, en una dirección imprevisible. Entrar justo antes (opción A) equivale a apostar a cara o cruz. La opción C es falsa: el CPI puede subir o bajar el euro según los datos sorprendan al alza o a la baja. La opción D es una fuga, cambiar de timeframe no te protege del movimiento violento. La buena práctica: espera a que pase la news, observa la reacción del mercado, y opera después con la nueva información. Este principio aplica a todos los activos: forex, oro, índices, crypto."
+            explanation="Una publicación de 3 estrellas puede mover EUR/USD de 80-150 pips en pocos minutos, en una dirección imprevisible. Entrar justo antes (opción A) equivale a apostar a cara o cruz. La opción C es falsa: el CPI puede subir o bajar el euro según los datos sorprendan al alza o a la baja. La opción D es una fuga, cambiar de temporalidad no te protege del movimiento violento. La buena práctica: espera a que pase la noticia, observa la reacción del mercado, y opera después con la nueva información. Este principio aplica a todos los activos: forex, oro, índices, crypto."
             answerExplanations={[
               "Falso. Entrar justo antes de una publicación de 3 estrellas equivale a apostar a cara o cruz. EUR/USD puede moverse 80-150 pips en pocos minutos en una dirección imprevisible. Tu análisis técnico ya no cuenta, la macro lo aplasta todo.",
-              "Correcto. La buena práctica: espera a que pase la news, observa la reacción del mercado, y opera después con la nueva información. Conservas tu setup Y sabes en qué dirección el mercado decidió ir.",
+              "Correcto. La buena práctica: espera a que pase la noticia, observa la reacción del mercado, y opera después con la nueva información. Conservas tu setup Y sabes en qué dirección el mercado decidió ir.",
               "Falso. El CPI puede subir o bajar el euro según los datos sorprendan al alza o a la baja. No hay una dirección sistemática, lo que cuenta es la diferencia respecto a las expectativas.",
-              "Falso. Cambiar de timeframe no te protege del movimiento violento. Un movimiento de 80-150 pips en M5 es un movimiento de 80-150 pips en H4 también. El timeframe no cambia la amplitud real.",
+              "Falso. Cambiar de temporalidad no te protege del movimiento violento. Un movimiento de 80-150 pips en M5 es un movimiento de 80-150 pips en H4 también. La temporalidad no cambia la amplitud real.",
             ]}
           />
 

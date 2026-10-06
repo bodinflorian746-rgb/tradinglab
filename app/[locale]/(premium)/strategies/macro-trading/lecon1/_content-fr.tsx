@@ -125,7 +125,7 @@ export default function ContentFr() {
               <li>- Décisions FOMC et conférence Powell → cf. module Macro</li>
               <li>- Hawkish vs dovish → cf. module Macro</li>
               <li>- Supports, résistances et liquidité → cf. module Stratégies</li>
-              <li>- Multi-timeframe → cf. module Multi-timeframe Process</li>
+              <li>- Multi-unités de temps → cf. module Process multi-unités de temps</li>
             </ul>
           </div>
 

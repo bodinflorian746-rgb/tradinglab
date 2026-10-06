@@ -45,8 +45,8 @@ export const GLOSSARY: GlossaryEntry[] = [
   },
   {
     id: "liquidity", source: "Avancé · leçon 1 (Liquidité)",
-    term: { fr: "Liquidité", es: "Liquidity" },
-    match: { fr: /liquidit[ée]/i, es: /\bliquidity\b/i },
+    term: { fr: "Liquidité", es: "Liquidez" },
+    match: { fr: /liquidit[ée]/i, es: /\bliquidez\b/i },
     def: {
       fr: "la capacité à exécuter un ordre sans faire bouger le prix ; elle s'accumule là où se trouvent beaucoup de stops (sommets, creux).",
       es: "la capacidad de ejecutar una orden sin mover el precio; se acumula donde hay muchos stops (máximos, mínimos).",
@@ -58,25 +58,25 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: { fr: "R/R", es: "R/R" },
     match: { fr: /\bR\/R\b/, es: /\bR\/R\b/ },
     def: {
-      fr: "ratio risque/récompense : ce que le trade peut rapporter pour 1 risqué.",
+      fr: "ratio risque/rendement : ce que le trade peut rapporter pour 1 risqué.",
       es: "ratio riesgo/beneficio: lo que el trade puede aportar por cada 1 arriesgado.",
     },
-    short: { fr: "ratio risque/récompense.", es: "ratio riesgo/beneficio." },
+    short: { fr: "ratio risque/rendement.", es: "ratio riesgo/beneficio." },
   },
   {
     id: "sweep", source: "Avancé · leçon 4 (Killzones)",
-    term: { fr: "Sweep", es: "Sweep" },
-    match: { fr: /\bsweep/i, es: /\bsweep/i },
+    term: { fr: "Sweep", es: "Barrido" },
+    match: { fr: /\bsweep/i, es: /\bbarridos?\b/i },
     def: {
       fr: "le prix passe brièvement au-delà d'un sommet ou d'un creux pour prendre la liquidité, puis repart.",
-      es: "el precio supera brevemente un máximo o un mínimo para tomar la liquidity y luego vuelve.",
+      es: "el precio supera brevemente un máximo o un mínimo para tomar la liquidez y luego vuelve.",
     },
-    short: { fr: "passage bref au-delà d'un sommet ou d'un creux pour prendre la liquidité.", es: "paso breve más allá de un máximo o un mínimo para tomar la liquidity." },
+    short: { fr: "passage bref au-delà d'un sommet ou d'un creux pour prendre la liquidité.", es: "paso breve más allá de un máximo o un mínimo para tomar la liquidez." },
   },
   {
-    id: "stop-hunt", source: "Avancé · leçon 6 (Stop Hunts)",
-    term: { fr: "Stop hunt", es: "Stop hunt" },
-    match: { fr: /stop hunt/i, es: /stop hunt/i },
+    id: "stop-hunt", source: "Avancé · leçon 6 (Chasses aux stops)",
+    term: { fr: "Chasse aux stops", es: "Stop hunt" },
+    match: { fr: /chasses? aux stops/i, es: /stop hunt/i },
     def: {
       fr: "mouvement brusque qui déclenche les stops accumulés avant de repartir en sens inverse.",
       es: "movimiento brusco que activa los stops acumulados antes de girar en sentido contrario.",
@@ -85,8 +85,8 @@ export const GLOSSARY: GlossaryEntry[] = [
   },
   {
     id: "htf", source: "Stratégies · ICT, leçon 1",
-    term: { fr: "HTF", es: "HTF" },
-    match: { fr: /\bHTF\b/, es: /\bHTF\b/ },
+    term: { fr: "UT supérieure", es: "HTF" },
+    match: { fr: /UT supérieure/, es: /\bHTF\b/ },
     def: {
       fr: "l'unité de temps supérieure (H4, Daily), celle qui donne le biais directionnel.",
       es: "la temporalidad superior (H4, Daily), la que da el sesgo direccional.",
@@ -139,7 +139,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: { fr: "PDL / PDH", es: "PDL / PDH" },
     match: { fr: /\bPD[LH]\b/, es: /\bPD[LH]\b/ },
     def: {
-      fr: "plus bas / plus haut de la veille (Previous Day Low / High), des niveaux souvent visés par les stop hunts.",
+      fr: "plus bas / plus haut de la veille (Previous Day Low / High), des niveaux souvent visés par les chasses aux stops.",
       es: "mínimo / máximo del día anterior (Previous Day Low / High), niveles a menudo buscados por los stop hunts.",
     },
     short: { fr: "plus bas / plus haut de la veille.", es: "mínimo / máximo del día anterior." },
@@ -149,7 +149,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: { fr: "Equal lows", es: "Equal lows" },
     match: { fr: /equal (?:lows|highs)/i, es: /equal (?:lows|highs)/i },
     def: {
-      fr: "deux creux au même niveau, cibles favorites des stop hunts.",
+      fr: "deux creux au même niveau, cibles favorites des chasses aux stops.",
       es: "dos mínimos al mismo nivel, objetivos favoritos de los stop hunts.",
     },
     short: { fr: "creux (ou sommets) au même niveau.", es: "mínimos (o máximos) al mismo nivel." },
@@ -166,8 +166,8 @@ export const GLOSSARY: GlossaryEntry[] = [
   },
   {
     id: "fakeout", source: "Intermédiaire · leçon 6 (Fake Breakout)",
-    term: { fr: "Fakeout", es: "Fakeout" },
-    match: { fr: /fakeout/i, es: /fakeout/i },
+    term: { fr: "Faux breakout", es: "Fakeout" },
+    match: { fr: /faux breakouts?/i, es: /fakeout/i },
     def: {
       fr: "cassure qui ne tient pas : le prix revient de l'autre côté du niveau.",
       es: "ruptura que no se sostiene: el precio vuelve al otro lado del nivel.",
@@ -215,7 +215,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "retour du prix dans une zone, qui l'affaiblit.", es: "vuelta del precio a una zona, que la debilita." },
   },
   {
-    id: "drawdown", source: "Débutant · leçon 10 (Risk management)",
+    id: "drawdown", source: "Débutant · leçon 10 (Gestion du risque)",
     term: { fr: "Drawdown", es: "Drawdown" },
     match: { fr: /drawdown/i, es: /drawdown/i },
     def: {
@@ -236,13 +236,13 @@ export const GLOSSARY: GlossaryEntry[] = [
   },
   {
     id: "psychological", source: "Intermédiaire · leçon 5 (Confluences)",
-    term: { fr: "Niveau psychologique", es: "Nivel psicológico" },
-    match: { fr: /niveaux? psychologiques?/i, es: /nivel(?:es)? psicol[óo]gicos?/i },
+    term: { fr: "Chiffre rond", es: "Nivel psicológico" },
+    match: { fr: /chiffres? ronds?/i, es: /nivel(?:es)? psicol[óo]gicos?/i },
     def: {
-      fr: "chiffre rond (ex. 1,1000) très surveillé par les traders.",
+      fr: "prix rond (ex. 1,1000), très surveillé par les traders.",
       es: "número redondo (ej. 1,1000) muy vigilado por los traders.",
     },
-    short: { fr: "chiffre rond très surveillé.", es: "número redondo muy vigilado." },
+    short: { fr: "prix rond très surveillé.", es: "número redondo muy vigilado." },
   },
   {
     id: "impulse-candle", source: "Avancé · leçon 2 (Fair Value Gap)",
@@ -276,8 +276,8 @@ export const GLOSSARY: GlossaryEntry[] = [
   },
   {
     id: "range", source: "Intermédiaire · leçon 2 (Support & Résistance)",
-    term: { fr: "Range", es: "Rango (range)" },
-    match: { fr: /\brange\b/i, es: /\brango\b|\brange\b/i },
+    term: { fr: "Range", es: "Rango" },
+    match: { fr: /\brange\b/i, es: /\brangos?\b/i },
     def: {
       fr: "marché qui oscille entre un haut et un bas, sans tendance.",
       es: "mercado que oscila entre un techo y un piso, sin tendencia.",
@@ -295,7 +295,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "force du mouvement.", es: "fuerza del movimiento." },
   },
   {
-    id: "bias", source: "Intermédiaire · leçon 7 (Analyse Multi-Timeframe)",
+    id: "bias", source: "Intermédiaire · leçon 7 (Analyse multi-unités de temps)",
     term: { fr: "Biais", es: "Sesgo" },
     match: { fr: /\bbiais\b/i, es: /\bsesgo\b/i },
     def: {
@@ -310,9 +310,9 @@ export const GLOSSARY: GlossaryEntry[] = [
     match: { fr: /\b(?:FOMC|NFP|CPI)\b/, es: /\b(?:FOMC|NFP|CPI)\b/ },
     def: {
       fr: "grandes annonces macro (taux de la Fed, emploi américain, inflation) qui font souvent bondir la volatilité.",
-      es: "grandes anuncios macro (tipos de la Fed, empleo estadounidense, inflación) que suelen disparar la volatilidad.",
+      es: "grandes noticias macro (tipos de la Fed, empleo estadounidense, inflación) que suelen disparar la volatilidad.",
     },
-    short: { fr: "grandes annonces macro (taux, emploi, inflation).", es: "grandes anuncios macro (tipos, empleo, inflación)." },
+    short: { fr: "grandes annonces macro (taux, emploi, inflation).", es: "grandes noticias macro (tipos, empleo, inflación)." },
   },
   {
     id: "setup", source: "Avancé · leçon 1 (Liquidité)",
@@ -336,13 +336,13 @@ export const GLOSSARY: GlossaryEntry[] = [
   },
   {
     id: "news", source: "Macro · Débutant",
-    term: { fr: "News", es: "News" },
-    match: { fr: /\bnews\b/i, es: /\bnews\b/i },
+    term: { fr: "Annonce", es: "Noticia" },
+    match: { fr: /\bannonces?\b/i, es: /\bnoticias?\b/i },
     def: {
       fr: "annonce économique (emploi, inflation, taux) qui peut faire bouger fortement le prix.",
-      es: "anuncio económico (empleo, inflación, tipos) que puede mover mucho el precio.",
+      es: "noticia económica (empleo, inflación, tipos) que puede mover mucho el precio.",
     },
-    short: { fr: "annonce économique.", es: "anuncio económico." },
+    short: { fr: "annonce économique.", es: "noticia económica." },
   },
   {
     id: "gap", source: "Avancé · leçon 2 (Fair Value Gap)",
@@ -375,7 +375,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "unité de taille de position.", es: "unidad de tamaño de posición." },
   },
   {
-    id: "leverage", source: "Débutant · leçon 10 (Risk management)",
+    id: "leverage", source: "Débutant · leçon 10 (Gestion du risque)",
     term: { fr: "Levier", es: "Apalancamiento" },
     match: { fr: /\blevier\b/i, es: /apalancamiento/i },
     def: {
@@ -385,14 +385,14 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "multiplicateur de la taille de position.", es: "multiplicador del tamaño de posición." },
   },
   {
-    id: "risk-management", source: "Débutant · leçon 10 (Risk management)",
-    term: { fr: "Risk management", es: "Risk management" },
-    match: { fr: /risk management/i, es: /risk management/i },
+    id: "risk-management", source: "Débutant · leçon 10 (Gestion du risque)",
+    term: { fr: "Gestion du risque", es: "Gestión de riesgos" },
+    match: { fr: /gestion du risque/i, es: /gesti[óo]n de riesgos/i },
     def: {
       fr: "gestion du risque : combien tu risques par trade et comment tu protèges ton capital.",
-      es: "gestión del riesgo: cuánto arriesgas por operación y cómo proteges tu capital.",
+      es: "gestión de riesgos: cuánto arriesgas por operación y cómo proteges tu capital.",
     },
-    short: { fr: "gestion du risque.", es: "gestión del riesgo." },
+    short: { fr: "gestion du risque.", es: "gestión de riesgos." },
   },
   {
     id: "edge", source: "Avancé · leçon 8 (Journaling)",
@@ -425,9 +425,9 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "marché des devises.", es: "mercado de divisas." },
   },
   {
-    id: "ltf", source: "Stratégies · Multi-Timeframe, leçon 1",
-    term: { fr: "LTF", es: "LTF" },
-    match: { fr: /\bLTF\b/, es: /\bLTF\b/ },
+    id: "ltf", source: "Stratégies · Multi-unités de temps, leçon 1",
+    term: { fr: "UT inférieure", es: "LTF" },
+    match: { fr: /UT inférieure/, es: /\bLTF\b/ },
     def: {
       fr: "unité de temps inférieure (M15, M5), utilisée pour affiner l'entrée.",
       es: "temporalidad inferior (M15, M5), usada para afinar la entrada.",
@@ -440,7 +440,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     match: { fr: /\bICT\b/, es: /\bICT\b/ },
     def: {
       fr: "méthode Inner Circle Trader : liquidité, FVG, Order Blocks, sessions.",
-      es: "método Inner Circle Trader: liquidity, FVG, Order Blocks, sesiones.",
+      es: "método Inner Circle Trader: liquidez, FVG, Order Blocks, sesiones.",
     },
     short: { fr: "méthode Inner Circle Trader.", es: "método Inner Circle Trader." },
   },
@@ -542,18 +542,18 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
     ...FORBIDDEN.fr,
     { from: /(?<![\p{L}])(?:up|down)-?trends?(?![\p{L}])/iu, to: "tendance haussière / baissière", source: "Intermédiaire · leçon 4" },
     { from: /plafond|plancher/i, to: "haut du range / bas du range", source: "Intermédiaire · leçon 2" },
-    { from: /chasses? aux stops|zone de chasse/i, to: "stop hunt / zone de stop hunt", source: "Avancé · leçon 6" },
-    { from: /round number/i, to: "niveau psychologique", source: "Intermédiaire · leçon 5" },
+    { from: /stop[- ]hunts?/i, to: "chasse aux stops / zone de chasse aux stops", source: "Avancé · leçon 6" },
+    { from: /round number/i, to: "chiffre rond", source: "Intermédiaire · leçon 5" },
     { from: /tight stop/i, to: "stop serré", source: "Débutant · leçon 5" },
     { from: /weekly (?:high|low)/i, to: "plus haut / plus bas de la semaine", source: "hors leçons" },
-    { from: /chiffres? ronds?/i, to: "niveau psychologique", source: "Intermédiaire · leçon 5" },
+    { from: /niveaux? psychologiques?/i, to: "chiffre rond", source: "Intermédiaire · leçon 5" },
     { from: /niveau magnétique/i, to: "niveau clé", source: "Intermédiaire · leçons 2 et 5" },
     { from: /asia high/i, to: "haut de la session asiatique", source: "hors leçons (sessions : Avancé · leçon 4)" },
     { from: /bougies? de force/i, to: "bougie impulsive", source: "Avancé · leçon 2" },
     { from: /zone douteuse/i, to: "niveau secondaire", source: "Intermédiaire · leçon 2" },
     { from: /position sizing/i, to: "taille de position", source: "Débutant · leçon 8" },
-    { from: /wick fakeout/i, to: "mèche du fakeout", source: "Intermédiaire · leçon 6" },
-    { from: /faux breakout/i, to: "fakeout", source: "Intermédiaire · leçon 6" },
+    { from: /wick fakeout/i, to: "mèche du faux breakout", source: "Intermédiaire · leçon 6" },
+    { from: /fakeouts?/i, to: "faux breakout", source: "Intermédiaire · leçon 6" },
     { from: /\bRR\b/, to: "R/R", source: "Débutant · leçon 6" },
   ],
   es: [
@@ -573,7 +573,7 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
     { from: /falso breakout/i, to: "fakeout", source: "Intermedio · lección 6" },
     { from: /\bimbalance\b/i, to: "desequilibrio", source: "Estrategias · ICT, lección 2" },
     { from: /\bbias\b/i, to: "sesgo", source: "Intermedio · lección 7" },
-    { from: /\bliquidez\b/i, to: "liquidity", source: "Avanzado · lección 1" },
+    { from: /\bliquidity\b/i, to: "liquidez", source: "Avanzado · lección 1" },
     { from: /\bRR\b/, to: "R/R", source: "Principiante · lección 6" },
   ],
 };
@@ -583,22 +583,22 @@ export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
   fr: [
     "FVG haussier", "Order Block", "Liquidité au-dessus", "Liquidité en-dessous", "Liquidité balayée",
     "Plus haut précédent", "Plus bas précédent", "Sweep haut", "Sweep bas", "Haut du range", "Bas du range",
-    "Résistance", "Résistance HTF", "Résistance cassée", "Support", "Support HTF", "Support cassé",
-    "Niveau secondaire", "Mèche du fakeout", "Swing high", "Swing low",
-    "Fakeouts précédents", "Zone de stop hunt", "Equal lows", "Haut de la session asiatique", "Niveau clé",
-    "Niveau psychologique", "HL H4", "PDL", "Swing high 1", "Swing high 2", "Swing high 3", "Swing low 1",
+    "Résistance", "Résistance UT supérieure", "Résistance cassée", "Support", "Support UT supérieure", "Support cassé",
+    "Niveau secondaire", "Mèche du faux breakout", "Swing high", "Swing low",
+    "Faux breakouts précédents", "Zone de chasse aux stops", "Equal lows", "Haut de la session asiatique", "Niveau clé",
+    "Chiffre rond", "HL H4", "PDL", "Swing high 1", "Swing high 2", "Swing high 3", "Swing low 1",
     "Swing low 2", "Swing low 3", "Swing high évident", "Swing low évident", "Swing low H1",
     // niveau avancé : libellés génériques
     "Niveau bas", "Niveau haut", "Déséquilibre", "Liquidité",
   ],
   es: [
-    "FVG alcista", "Order Block", "Liquidity arriba", "Liquidity abajo", "Liquidity barrida",
-    "Máximo anterior", "Mínimo anterior", "Sweep arriba", "Sweep abajo", "Techo del rango", "Piso del rango",
+    "FVG alcista", "Order Block", "Liquidez arriba", "Liquidez abajo", "Liquidez barrida",
+    "Máximo anterior", "Mínimo anterior", "Barrido arriba", "Barrido abajo", "Techo del rango", "Piso del rango",
     "Resistencia", "Resistencia HTF", "Resistencia rota", "Soporte", "Soporte HTF", "Soporte roto",
     "Nivel secundario", "Mecha del fakeout", "Swing high", "Swing low",
     "Fakeouts anteriores", "Zona de stop hunt", "Equal lows", "Máximo de la sesión asiática", "Nivel clave",
     "Nivel psicológico", "HL H4", "PDL", "Swing high 1", "Swing high 2", "Swing high 3", "Swing low 1",
     "Swing low 2", "Swing low 3", "Swing high evidente", "Swing low evidente", "Swing low H1",
-    "Nivel bajo", "Nivel alto", "Desequilibrio", "Liquidity",
+    "Nivel bajo", "Nivel alto", "Desequilibrio", "Liquidez",
   ],
 };

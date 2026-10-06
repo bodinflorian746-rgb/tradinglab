@@ -48,8 +48,8 @@ function ContentFr() {
             { label: "Tendance (structure de marché)", detail: "La direction dominante : haussière ou baissière. C'est la base. Vérifier en Daily en premier.", color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400" },
             { label: "Support ou résistance", detail: "Un niveau où le prix a déjà réagi : un ancien support, une résistance, ou la zone de départ d'un mouvement impulsif.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
             { label: "Niveau Fibonacci", detail: "38.2%, 50% ou 61.8% du dernier mouvement impulsif. Souvent coïncide avec un S/R : c'est la puissance.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
-            { label: "Niveau psychologique", detail: "1.1000, 45 000$, 2 000$... Les traders placent naturellement stops et ordres sur les niveaux ronds.", color: "bg-amber-400/5 border-amber-400/15 text-amber-400" },
-            { label: "Signal de bougie (déclencheur)", detail: "Pin bar, engulfing, rejet. C'est la gâchette : pas la raison d'entrer. La raison, c'est les confluences au-dessus.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
+            { label: "Chiffre rond", detail: "1.1000, 45 000$, 2 000$... Les traders placent naturellement stops et ordres sur les niveaux ronds.", color: "bg-amber-400/5 border-amber-400/15 text-amber-400" },
+            { label: "Signal de bougie (déclencheur)", detail: "Pin bar, avalement, rejet. C'est la gâchette : pas la raison d'entrer. La raison, c'est les confluences au-dessus.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
           ].map((item, i) => (
             <div key={i} className={`rounded-xl px-4 py-3 border ${item.color}`}>
               <p className="text-sm font-semibold mb-1">{item.label}</p>
@@ -141,7 +141,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Erreur classique</p>
         <p className="text-sm font-semibold text-white mb-2">Compter des confluences redondantes comme des confluences indépendantes</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Tu vois : RSI en survente + MACD croisé + Stochastique bas. Tu penses "3 confluences". Mais ces 3 indicateurs utilisent les mêmes données de prix, ils disent tous la même chose de 3 façons différentes. 3 indicateurs = 1 seule confluence. Les vraies confluences sont indépendantes : tendance, S/R, Fibonacci, niveau psychologique.
+          Tu vois : RSI en survente + MACD croisé + Stochastique bas. Tu penses "3 confluences". Mais ces 3 indicateurs utilisent les mêmes données de prix, ils disent tous la même chose de 3 façons différentes. 3 indicateurs = 1 seule confluence. Les vraies confluences sont indépendantes : tendance, S/R, Fibonacci, chiffre rond.
         </p>
       </section>
 
@@ -164,7 +164,7 @@ function ContentFr() {
       <LessonKeyPoints
         points={[
           "Confluence = une raison indépendante qui soutient ton trade. Minimum 2-3 avant d'entrer.",
-          "Les 5 principales : tendance, support ou résistance, Fibonacci, niveau psychologique, signal de bougie.",
+          "Les 5 principales : tendance, support ou résistance, Fibonacci, chiffre rond, signal de bougie.",
           "Le signal de bougie est le déclencheur, pas la raison principale d'entrer.",
           "Les indicateurs (RSI, MACD) ne sont pas des confluences indépendantes entre eux.",
           "Qualité prime sur quantité : 3 confluences solides valent mieux que 6 médiocres.",
@@ -186,15 +186,15 @@ function ContentFr() {
         options={[
           "Tu achètes immédiatement, 2 confluences (tendance + support) suffisent amplement",
           "Tu attends un signal de bougie de rejet sur 1.0850 avant d'entrer",
-          "Tu cherches une 3ème confluence (Fibonacci, niveau psychologique) puis un signal de bougie",
+          "Tu cherches une 3ème confluence (Fibonacci, chiffre rond) puis un signal de bougie",
           "Tu n'entres pas, 2 confluences, c'est trop peu pour un trade",
         ]}
         correctIndex={2}
-        explanation="2 confluences sont un début, mais pas encore suffisant pour entrer avec confiance. Tu cherches une 3ème confluence (Fibonacci 61.8% ? Niveau psychologique 1.0850 ?) puis tu attends un signal de bougie sur la zone. C'est le processus complet."
+        explanation="2 confluences sont un début, mais pas encore suffisant pour entrer avec confiance. Tu cherches une 3ème confluence (Fibonacci 61.8% ? Chiffre rond 1.0850 ?) puis tu attends un signal de bougie sur la zone. C'est le processus complet."
         answerExplanations={[
           "Trop hâtif. 2 confluences sans signal de confirmation, c'est entrer trop tôt. Le prix peut continuer à baisser dans la zone. Attends au minimum un signal de bougie sur le niveau.",
           "Mieux, mais incomplet. Attendre le signal est une bonne pratique, mais chercher une 3ème confluence avant renforce encore le trade. La combinaison des deux est la méthode optimale.",
-          "Correct. Tu as 2 confluences solides. Cherche si un niveau Fibonacci (61.8% du mouvement) ou un niveau psychologique coïncide avec 1.0850, si oui, tu as 3 confluences. Ensuite tu attends le signal de bougie. C'est le processus complet.",
+          "Correct. Tu as 2 confluences solides. Cherche si un niveau Fibonacci (61.8% du mouvement) ou un chiffre rond coïncide avec 1.0850, si oui, tu as 3 confluences. Ensuite tu attends le signal de bougie. C'est le processus complet.",
           "Pas tout à fait. 2 confluences peuvent justifier un trade avec une taille réduite. 3 confluences + signal = taille normale. Ce n'est pas l'absence de trade qui est recommandée, mais l'ajout d'une 3ème confirmation.",
         ]}
       />

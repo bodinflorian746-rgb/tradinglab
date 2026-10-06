@@ -51,7 +51,7 @@ const METRIC_DOT: Record<Metric, string> = {
 };
 
 const BIAS_LABEL_FR = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
-const BIAS_LABEL_ES = { bullish: "Alcista", bearish: "Bajista", range: "Range" } as const;
+const BIAS_LABEL_ES = { bullish: "Alcista", bearish: "Bajista", range: "Rango" } as const;
 const BIAS_LABEL_EN = { bullish: "Bullish", bearish: "Bearish", range: "Range" } as const;
 const MACRO_LABEL_FR = { normal: "Normal", dangereux: "Dangereux" } as const;
 const MACRO_LABEL_ES = { normal: "Normal", dangereux: "Peligroso" } as const;
@@ -182,8 +182,8 @@ export default function BuySellNoTradePage() {
         ofStreak:        "de série",
         skills:          "Compétences",
         loading:         "Chargement…",
-        newsWarning:     "News macro majeure dans < 30 min, volatilité et spread imprévisibles.",
-        htf:             "HTF",
+        newsWarning:     "Annonce macro majeure dans < 30 min, volatilité et spread imprévisibles.",
+        htf:             "UT supérieure",
         macro:           "Macro",
         volatility:      "Volatilité",
         revelation:      "Révélation",
@@ -840,7 +840,7 @@ function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, loc
       ? (z.kind === "support"        ? "Nivel bajo"
        : z.kind === "resistance"     ? "Nivel alto"
        : z.kind === "fvg"            ? "Desequilibrio"
-       :                                "Liquidity")
+       :                                "Liquidez")
       : locale === "en"
       ? (z.kind === "support"        ? "Low level"
        : z.kind === "resistance"     ? "High level"

@@ -43,12 +43,12 @@ export function PostSweepReactionDiagram({ className = "", locale = "fr" }: Post
   const L = {
     impulsive:    isEs ? "Vela impulsiva" : isEn ? "Impulsive candle" : "Bougie impulsive",
     annot:        isEs ? "La reacción cuenta más que la ruptura" : isEn ? "The reaction matters more than the break" : "La réaction compte plus que la cassure",
-    mobTitle:     isEs ? "Reacción post-sweep · EUR/USD M15" : isEn ? "Post-sweep reaction · EUR/USD M15" : "Réaction post-sweep · EUR/USD M15",
+    mobTitle:     isEs ? "Reacción post-barrido · EUR/USD M15" : isEn ? "Post-sweep reaction · EUR/USD M15" : "Réaction post-sweep · EUR/USD M15",
     mob1End:      isEs ? "· mecha por encima de la resistencia." : isEn ? "· wick above resistance." : "· mèche au-dessus de la résistance.",
     mob2Bold:     isEs ? "Reintegración" : isEn ? "Reintegration" : "Réintégration",
     mob2End:      isEs ? "debajo del nivel (cierre debajo)." : isEn ? "below the level (close below)." : "sous le niveau (clôture sous).",
     mob3End:      isEs ? "= verdadera señal de entrada short." : isEn ? "= real short entry signal." : "= vrai signal d'entrée short.",
-    legend1:      isEs ? "Sweep + reintegración debajo de la resistencia" : isEn ? "Sweep + reintegration below resistance" : "Sweep + réintégration sous la résistance",
+    legend1:      isEs ? "Barrido + reintegración debajo de la resistencia" : isEn ? "Sweep + reintegration below resistance" : "Sweep + réintégration sous la résistance",
     legend2:      isEs ? "Vela impulsiva = verdadera señal de entrada" : isEn ? "Impulsive candle = real entry signal" : "Bougie impulsive = vrai signal d'entrée",
   };
   return (
@@ -98,7 +98,7 @@ export function PostSweepReactionDiagram({ className = "", locale = "fr" }: Post
         <ul className="space-y-2 text-[13px]">
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">1</span>
-            <span className="text-zinc-300"><span className="font-bold text-amber-400">Sweep</span> {L.mob1End}</span>
+            <span className="text-zinc-300"><span className="font-bold text-amber-400">{locale === "es" ? "Barrido" : locale === "en" ? "Sweep" : "Sweep"}</span> {L.mob1End}</span>
           </li>
           <li className="flex items-start gap-2.5">
             <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">2</span>

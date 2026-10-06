@@ -70,7 +70,7 @@ function ContentFr() {
             "Marteau : petit corps en haut, longue mèche basse → les vendeurs ont essayé de faire baisser, les acheteurs ont résisté fort",
             "Étoile filante : petit corps en bas, longue mèche haute → les acheteurs ont essayé de faire monter, les vendeurs ont rejeté",
             "Doji : corps quasi nul, mèches des deux côtés → indécision totale entre acheteurs et vendeurs",
-            "Engulfing haussier : grande bougie verte qui avale la rouge précédente → les acheteurs prennent le contrôle",
+            "Avalement haussier : grande bougie verte qui avale la rouge précédente → les acheteurs prennent le contrôle",
           ],
         },
       ]}
@@ -85,15 +85,15 @@ function ContentFr() {
         "Chaque bougie = 4 données : Open, High, Low, Close",
         "Corps vert = acheteurs gagnants. Corps rouge = vendeurs gagnants.",
         "Les mèches = tentatives échouées, elles montrent la résistance du camp adverse",
-        "Doji = indécision. Marteau = rejet des prix bas. Engulfing = prise de contrôle franche.",
+        "Doji = indécision. Marteau = rejet des prix bas. Avalement = prise de contrôle franche.",
         "Un pattern de bougie seul ne signifie rien, le contexte lui donne de la valeur",
       ]}
       exerciseTitle="Lire des bougies sur un graphique réel"
       exercise={[
-        "Sur TradingView.com, ouvre EUR/USD en timeframe Daily",
+        "Sur TradingView.com, ouvre EUR/USD en unité de temps Daily",
         "Trouve une bougie verte avec une longue mèche haute, qu'est-il arrivé dans les jours suivants ?",
         "Trouve un Doji, le marché a-t-il choisi une direction claire dans les bougies suivantes ?",
-        "Identifie un Engulfing (une grande bougie qui avale la précédente), quel a été l'impact sur la suite ?",
+        "Identifie un avalement (une grande bougie qui avale la précédente), quel a été l'impact sur la suite ?",
       ]}
       quiz={{
         question: "Tu vois une bougie rouge avec une très longue mèche basse. Qu'est-ce que cela indique le plus précisément ?",

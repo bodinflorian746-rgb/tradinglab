@@ -124,8 +124,8 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- NFP y calendario económico → ver módulo Macro</li>
               <li>- Consenso vs dato real → ver módulo Macro</li>
-              <li>- Soportes, resistencias y liquidity → ver módulo Estrategias</li>
-              <li>- Multi-timeframe → ver módulo Multi-timeframe Process</li>
+              <li>- Soportes, resistencias y liquidez → ver módulo Estrategias</li>
+              <li>- Análisis multitemporal → ver módulo Process multitemporal</li>
             </ul>
           </div>
 
@@ -165,7 +165,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La ventana de ejecución del setup NFP se abre cuando el movimiento inicial deja de avanzar. Visualmente, esto se traduce en una SERIE de velas M15 con mechas repetidas en el sentido contrario del impulso, mechas inferiores si el impulso era bearish, mechas superiores si era bullish. El precio se comprime alrededor de un nivel, ya no logra hacer nuevos extremos. Es la huella visible de que los vendedores (o compradores) iniciales terminaron de actuar, y que la liquidity contraria empieza a absorber. Sin esa estabilización visible, el setup no está activado.
+              La ventana de ejecución del setup NFP se abre cuando el movimiento inicial deja de avanzar. Visualmente, esto se traduce en una SERIE de velas M15 con mechas repetidas en el sentido contrario del impulso, mechas inferiores si el impulso era bearish, mechas superiores si era bullish. El precio se comprime alrededor de un nivel, ya no logra hacer nuevos extremos. Es la huella visible de que los vendedores (o compradores) iniciales terminaron de actuar, y que la liquidez contraria empieza a absorber. Sin esa estabilización visible, el setup no está activado.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -176,7 +176,7 @@ export default function ContentEs() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Puntos accionables: la estabilización se lee en el M15, no en timeframes más rápidos</li>
+              <li>- Puntos accionables: la estabilización se lee en el M15, no en temporalidades más rápidas</li>
               <li>- Serie de mechas repetidas + pérdida de aceleración = señal de fin del impulso</li>
               <li>- Sin estabilización = sin setup, sin importar la amplitud inicial</li>
               <li>- La ejecución se toma después de la confirmación, nunca en anticipación</li>
@@ -214,7 +214,7 @@ export default function ContentEs() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de aplicación: un NFP Overreaction completo en XAU/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Esta es la secuencia completa de un trade NFP Overreaction, desde el contexto pre-NFP hasta la gestión del riesgo. Seis etapas, cada una con su rol.
+              Esta es la secuencia completa de un trade NFP Overreaction, desde el contexto pre-NFP hasta la gestión de riesgos. Seis etapas, cada una con su rol.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -249,7 +249,7 @@ export default function ContentEs() {
                 <li>- Target: 4 655 $ (cerca del nivel pre-NFP)</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 6. Gestión del riesgo</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 6. Gestión de riesgos</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Volatilidad post-NFP superior a la normal → tamaño de posición prudente</li>
                 <li>- Ejecución únicamente después de estabilización visible, nunca en el impulso</li>

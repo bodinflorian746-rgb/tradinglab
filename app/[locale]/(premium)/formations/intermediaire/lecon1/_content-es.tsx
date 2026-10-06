@@ -37,7 +37,7 @@ export default function ContentEs() {
             </p>
           </div>
           <div className="bg-zinc-800/50 border border-zinc-700/50 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-zinc-300 mb-1">Range (consolidación)</p>
+            <p className="text-sm font-semibold text-zinc-300 mb-1">Rango (consolidación)</p>
             <p className="text-sm text-zinc-400 leading-relaxed">
               El precio oscila entre dos niveles horizontales. Sin nuevos máximos ni mínimos significativos. Ningún bando domina.
             </p>
@@ -141,7 +141,7 @@ export default function ContentEs() {
           <div className="flex items-start gap-3 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3">
             <span className="text-lg">—</span>
             <div>
-              <p className="text-sm font-semibold text-zinc-300">Range / Sin estructura clara</p>
+              <p className="text-sm font-semibold text-zinc-300">Rango / Sin estructura clara</p>
               <p className="text-xs text-zinc-400 mt-0.5">No haces nada. Sin tendencia definida no hay trade. Espera que la estructura se aclare.</p>
             </div>
           </div>
@@ -163,7 +163,7 @@ export default function ContentEs() {
         <div className="space-y-2 text-sm">
           <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>HH + HL → tendencia alcista → compras en los HL</p>
           <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>LH + LL → tendencia bajista → vendes en los LH</p>
-          <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Sin estructura clara → range → no haces nada</p>
+          <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Sin estructura clara → rango → no haces nada</p>
         </div>
       </div>
 
@@ -175,11 +175,11 @@ export default function ContentEs() {
 
       <LessonKeyPoints
         points={[
-          "HH + HL = tendencia alcista. LH + LL = tendencia bajista. Estancado = range.",
+          "HH + HL = tendencia alcista. LH + LL = tendencia bajista. Estancado = rango.",
           "BOS = el precio rompe un máximo/mínimo previo → la tendencia sigue.",
           "CHoCH = primera señal de reversal → alerta, todavía no un trade.",
           "CHoCH + BOS opuesto = reversal confirmado.",
-          "En range, no tradeas, esperas una estructura clara.",
+          "En rango, no tradeas, esperas una estructura clara.",
         ]}
       />
 

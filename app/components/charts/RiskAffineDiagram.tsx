@@ -39,11 +39,11 @@ export function RiskAffineDiagram({ className = "", locale = "fr" }: RiskAffineD
     mobTitle:    isEs ? "Afinar el riesgo: H4 → M5" : isEn ? "Refine the risk: H4 → M5" : "Affiner le risque : H4 → M5",
     mobSlH4T:    isEs ? "SL H4 amplio — riesgo no optimizado" : isEn ? "Wide H4 SL — risk not optimized" : "SL H4 large — risque non optimisé",
     mobSlH4D:    isEs ? "SL más allá de la mecha H4 = pérdida potencial amplia, tamaño de posición pequeño." : isEn ? "SL beyond the H4 wick = wide potential loss, small position size." : "SL au-delà de la mèche H4 = perte potentielle large, taille position petite.",
-    mobSlM5T:    isEs ? "SL M5 reducido tras confirmación LTF" : isEn ? "Tighter M5 SL after LTF confirmation" : "SL M5 réduit après confirmation LTF",
+    mobSlM5T:    isEs ? "SL M5 reducido tras confirmación LTF" : isEn ? "Tighter M5 SL after LTF confirmation" : "SL M5 réduit après confirmation de l'UT inférieure",
     mobSlM5D:    isEs ? "Una vez CHoCH M5 confirmado → SL mucho más ajustado, R/R mejorado." : isEn ? "Once M5 CHoCH confirmed → much tighter SL, improved R/R." : "Une fois CHoCH M5 confirmé → SL beaucoup plus serré, R/R amélioré.",
-    mobFooter:   isEs ? "Entrada común, SL adaptado al timing LTF = R/R maximizado." : isEn ? "Common entry, SL adapted to LTF timing = R/R maximized." : "Entrée commune, SL adapté au timing LTF = R/R maximisé.",
+    mobFooter:   isEs ? "Entrada común, SL adaptado al timing LTF = R/R maximizado." : isEn ? "Common entry, SL adapted to LTF timing = R/R maximized." : "Entrée commune, SL adapté au timing de l'UT inférieure = R/R maximisé.",
     legendH4:    isEs ? "SL H4 amplio — riesgo no optimizado" : isEn ? "Wide H4 SL — risk not optimized" : "SL H4 large — risque non optimisé",
-    legendM5:    isEs ? "SL M5 reducido tras confirmación LTF" : isEn ? "Tighter M5 SL after LTF confirmation" : "SL M5 réduit après confirmation LTF",
+    legendM5:    isEs ? "SL M5 reducido tras confirmación LTF" : isEn ? "Tighter M5 SL after LTF confirmation" : "SL M5 réduit après confirmation de l'UT inférieure",
     legendEntry: isEs ? "Entrada común a los dos escenarios" : isEn ? "Common entry for both scenarios" : "Entrée commune aux deux scénarios",
   };
   return (

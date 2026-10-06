@@ -4,18 +4,18 @@ export default function InvalidationDiagram({ className = "", locale = "fr" }: {
   const L = {
     setupInvalid: isEs ? "Setup invalidado — cortar" : isEn ? "Setup invalidated — cut" : "Setup invalidé — couper",
     resistance:   isEs ? "Resistencia" : isEn ? "Resistance" : "Résistance",
-    neckline:     "Neckline",
+    neckline:     "Ligne de cou",
     slInit:       isEs ? "SL inicial" : isEn ? "Initial SL" : "SL initial",
     peak1:        isEs ? "Pico 1" : isEn ? "Peak 1" : "Sommet 1",
     peak2:        isEs ? "Pico 2" : isEn ? "Peak 2" : "Sommet 2",
     entryShort:   isEs ? "Entrada short" : isEn ? "Short entry" : "Entrée short",
     patternInv:   isEs ? "Patrón invalidado" : isEn ? "Pattern invalidated" : "Pattern invalidé",
     violentRej:   isEs ? "Vela de rechazo violenta" : isEn ? "Violent rejection candle" : "Bougie de rejet violente",
-    footer:       isEs ? "Double Top → ruptura neckline → re-ruptura por arriba = patrón fallido" : isEn ? "Double Top → neckline break → re-break upward = failed pattern" : "Double Top → cassure neckline → re-cassure par le haut = pattern échoué",
+    footer:       isEs ? "Double Top → ruptura línea clavicular → re-ruptura por arriba = patrón fallido" : isEn ? "Double Top → neckline break → re-break upward = failed pattern" : "Double Top → cassure ligne de cou → re-cassure par le haut = pattern échoué",
     mobInvalid:   isEs ? "⚠ Setup invalidado — cortar" : isEn ? "⚠ Setup invalidated — cut" : "⚠ Setup invalidé — couper",
-    mob1:         isEs ? "Double Top formado, ruptura de la neckline → short tomado." : isEn ? "Double Top formed, neckline break → short taken." : "Double Top formé, cassure de la neckline → short pris.",
+    mob1:         isEs ? "Double Top formado, ruptura de la línea clavicular → short tomado." : isEn ? "Double Top formed, neckline break → short taken." : "Double Top formé, cassure de la ligne de cou → short pris.",
     mob2A:        isEs ? "El precio rebota y" : isEn ? "Price rebounds and" : "Le prix remonte et",
-    mob2Bold:     isEs ? "re-rompe la neckline por arriba" : isEn ? "re-breaks the neckline upward" : "re-casse la neckline par le haut",
+    mob2Bold:     isEs ? "re-rompe la línea clavicular por arriba" : isEn ? "re-breaks the neckline upward" : "re-casse la ligne de cou par le haut",
     mob2End:      isEs ? "→ patrón fallido." : isEn ? "→ failed pattern." : "→ pattern échoué.",
     mob3:         isEs ? "Cortar de inmediato — sin esperar el SL." : isEn ? "Cut immediately — without waiting for the SL." : "Couper immédiatement — sans attendre le SL.",
   };
@@ -109,7 +109,7 @@ export default function InvalidationDiagram({ className = "", locale = "fr" }: {
       <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="Setup invalidation" fill="none">
         {/* Neckline */}
         <line x1="15" y1="55" x2="265" y2="55" stroke="#a1a1aa" strokeWidth="0.8" strokeDasharray="3 3" />
-        <text x="20" y="50" fontSize="8" fill="#a1a1aa" fontWeight="600">Neckline</text>
+        <text x="20" y="50" fontSize="8" fill="#a1a1aa" fontWeight="600">{locale === "es" ? "Línea clavicular" : locale === "en" ? "Neckline" : "Ligne de cou"}</text>
         {/* SL initial line */}
         <line x1="15" y1="28" x2="265" y2="28" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
         <text x="262" y="24" fontSize="8" fill="#ef4444" fontWeight="600" textAnchor="end">SL</text>

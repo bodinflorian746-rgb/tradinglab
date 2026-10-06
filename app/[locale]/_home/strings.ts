@@ -31,7 +31,7 @@ const S = {
       question: "Question",
       stepChoice: "Choix fait",
       stepVerdict: "Verdict",
-      htf: "HTF",
+      htf: "UT supérieure",
       macro: "Macro",
       bias: { bullish: "Haussier", bearish: "Baissier", range: "Range" },
       macroLabel: { normal: "Normal", dangereux: "Dangereux" },
@@ -57,7 +57,7 @@ const S = {
     games: {
       sub: "4 jeux sur de vrais graphiques : décider, placer ton stop, repérer l'erreur, construire un trade complet.",
       lines: {
-        "buy-sell-no-trade": "Mini graphique, contexte, news : tu prends ta décision.",
+        "buy-sell-no-trade": "Mini graphique, contexte, annonces : tu prends ta décision.",
         "place-stop": "Quel stop va survivre ? Stop 1, 2 ou 3.",
         "find-the-mistake": "10 setups, une erreur cachée à repérer parmi 4 choix.",
         "build-the-trade": "Entrée, stop, take profit : tu construis le trade complet.",
@@ -138,7 +138,7 @@ const S = {
       stepVerdict: "Veredicto",
       htf: "HTF",
       macro: "Macro",
-      bias: { bullish: "Alcista", bearish: "Bajista", range: "Range" },
+      bias: { bullish: "Alcista", bearish: "Bajista", range: "Rango" },
       macroLabel: { normal: "Normal", dangereux: "Peligroso" },
       revelation: "Revelación",
       revealText: "Veamos lo que pasó después de tu decisión…",

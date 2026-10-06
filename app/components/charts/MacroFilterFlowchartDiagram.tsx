@@ -9,7 +9,7 @@ interface MacroFilterFlowchartDiagramProps {
 export function MacroFilterFlowchartDiagram({ className = "", locale = "fr" }: MacroFilterFlowchartDiagramProps) {
   const t = locale === "es"
     ? {
-        q1: "¿News mayor inminente?",
+        q1: "¿noticia mayor inminente?",
         oui: "Sí",
         non: "No",
         pasDeTrade: "Sin trade",
@@ -19,7 +19,7 @@ export function MacroFilterFlowchartDiagram({ className = "", locale = "fr" }: M
         execution: "Ejecución posible",
         annotation: "El setup debe pasar todos los filtros",
         mobileTitle: "Flowchart filtro macro pre-trade",
-        q1Mobile: "Q1 — ¿News mayor inminente?",
+        q1Mobile: "Q1 — ¿noticia mayor inminente?",
         q1MobileDesc1: "Si SÍ → ",
         q2Mobile: "Q2 — ¿Régimen macro alineado?",
         q2MobileDesc1: "Si NO → ",
@@ -50,7 +50,7 @@ export function MacroFilterFlowchartDiagram({ className = "", locale = "fr" }: M
         legendRed: "A single red filter = no trade",
       }
     : {
-        q1: "News majeure imminente ?",
+        q1: "Annonce majeure imminente ?",
         oui: "Oui",
         non: "Non",
         pasDeTrade: "Pas de trade",
@@ -60,7 +60,7 @@ export function MacroFilterFlowchartDiagram({ className = "", locale = "fr" }: M
         execution: "Exécution possible",
         annotation: "Le setup doit passer tous les filtres",
         mobileTitle: "Flowchart filtre macro pré-trade",
-        q1Mobile: "Q1 — News majeure imminente ?",
+        q1Mobile: "Q1 — Annonce majeure imminente ?",
         q1MobileDesc1: "Si OUI → ",
         q2Mobile: "Q2 — Régime macro aligné ?",
         q2MobileDesc1: "Si NON → ",

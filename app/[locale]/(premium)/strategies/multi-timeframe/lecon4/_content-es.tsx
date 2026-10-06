@@ -11,10 +11,10 @@ import { RiskAffineDiagram } from "@/app/components/charts/RiskAffineDiagram";
 import { ZoneEchecDiagram } from "@/app/components/charts/ZoneEchecDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Por qué analizar en multi-timeframe", disabled: false },
-  { id: "lecon2", title: "El timeframe superior: el sesgo", disabled: false },
-  { id: "lecon3", title: "El timeframe intermedio: la zona", disabled: false },
-  { id: "lecon4", title: "El timeframe de ejecución: la entrada", disabled: false },
+  { id: "lecon1", title: "Por qué hacer un análisis multitemporal", disabled: false },
+  { id: "lecon2", title: "La temporalidad superior: el sesgo", disabled: false },
+  { id: "lecon3", title: "La temporalidad intermedia: la zona", disabled: false },
+  { id: "lecon4", title: "La temporalidad de ejecución: la entrada", disabled: false },
   { id: "lecon5", title: "El proceso completo", disabled: false },
 ];
 
@@ -33,7 +33,7 @@ export default function ContentEs() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Estrategias</Link>
           <span>/</span>
-          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Multi-timeframe Process</Link>
+          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Process multitemporal</Link>
           <span>/</span>
           <span className="text-zinc-500">Lección 4</span>
         </nav>
@@ -57,7 +57,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            El timeframe de ejecución: esperar la confirmación
+            La temporalidad de ejecución: esperar la confirmación
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -138,7 +138,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El timeframe de ejecución (M1/M5/M15) es el timeframe del timing, no el del análisis. Su rol es confirmar que el mercado reacciona físicamente en la zona preparada en el nivel superior. Una reacción nítida dispara la entrada; ninguna reacción = no hay trade. El LTF no predice nada, verifica.
+              La temporalidad de ejecución (M1/M5/M15) es la temporalidad del timing, no la del análisis. Su rol es confirmar que el mercado reacciona físicamente en la zona preparada en el nivel superior. Una reacción nítida dispara la entrada; ninguna reacción = no hay trade. El LTF no predice nada, verifica.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -224,7 +224,7 @@ export default function ContentEs() {
                 <li>- Conclusión: dirección dominante bajista, ventas prioritarias</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Paso 2. Timeframe intermedio (H1)</p>
+              <p className="text-white font-semibold text-sm mb-2">Paso 2. Temporalidad intermedia (H1)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: zona confluente 1.1750-1.1760 (antiguo soporte roto + FVG bearish no mitigado)</li>
                 <li>- Conclusión: prepara un escenario short al regreso del precio a la zona</li>
@@ -238,7 +238,7 @@ export default function ContentEs() {
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = dirección · Timeframe intermedio = zona · LTF = timing + risk reducido
+                  HTF = dirección · Temporalidad intermedia = zona · LTF = timing + risk reducido
                 </p>
               </div>
             </div>
@@ -309,7 +309,7 @@ export default function ContentEs() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Lección terminada</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Lección 4 del módulo Multi-timeframe Process completada.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Lección 4 del módulo Process multitemporal completada.</p>
                 </div>
               </div>
             )}

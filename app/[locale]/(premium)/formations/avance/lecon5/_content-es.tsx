@@ -67,15 +67,15 @@ export default function ContentEs() {
             <p className="font-semibold text-emerald-400 text-sm mb-2">Setup OTE completo (alcista)</p>
             <ul className="space-y-1.5">
               <li className="text-xs text-zinc-400 leading-relaxed">1. Sesgo alcista confirmado (HH/HL en Daily)</li>
-              <li className="text-xs text-zinc-400 leading-relaxed">2. BOS alcista en el timeframe de trabajo (H1/H4)</li>
+              <li className="text-xs text-zinc-400 leading-relaxed">2. BOS alcista en la temporalidad de trabajo (H1/H4)</li>
               <li className="text-xs text-zinc-400 leading-relaxed">3. Retroceso dentro de la zona OTE (61.8%–78.6%)</li>
               <li className="text-xs text-zinc-400 leading-relaxed">4. Confluencia en el OTE: Bullish OB o Bullish FVG</li>
-              <li className="text-xs text-zinc-400 leading-relaxed">5. Señal de vela en M15 (pin bar, engulfing alcista) → entrada</li>
+              <li className="text-xs text-zinc-400 leading-relaxed">5. Señal de vela en M15 (pin bar, envolvente alcista) → entrada</li>
             </ul>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
             <p className="text-sm text-zinc-400 leading-relaxed">
-              <span className="text-white font-medium">SL y TP:</span> el stop loss se coloca debajo del swing low (punto A) con un pequeño margen. El take profit apunta al próximo pool de liquidity o nivel de resistencia por encima del BOS.
+              <span className="text-white font-medium">SL y TP:</span> el stop loss se coloca debajo del swing low (punto A) con un pequeño margen. El take profit apunta al próximo pool de liquidez o nivel de resistencia por encima del BOS.
             </p>
           </div>
         </div>
@@ -113,7 +113,7 @@ export default function ContentEs() {
           "OTE = zona de retroceso 61.8%–78.6% de un swing tras un BOS confirmado.",
           "El OTE es una zona de timing, no una señal, necesitas una confluencia (OB o FVG) para entrar.",
           "El setup OTE completo: sesgo → BOS → retroceso OTE → OB/FVG → señal de vela → entrada.",
-          "El SL se coloca bajo el swing low (punto A), el TP apunta al próximo pool de liquidity.",
+          "El SL se coloca bajo el swing low (punto A), el TP apunta al próximo pool de liquidez.",
           "Sin BOS previo, trazar el OTE no tiene sentido institucional.",
         ]}
       />

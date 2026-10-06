@@ -143,13 +143,13 @@ export default function ContentEs() {
             <div className="my-8">
               <DoubleTopBottomDiagram locale="es" />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Un double top se forma al final de una tendencia alcista. El precio toca una resistance, baja un poco y forma un mínimo llamado neckline. Vuelve a subir para testear el mismo nivel de resistance. Si falla en romperlo y baja, el patrón está completo. La confirmación llega cuando el precio rompe la neckline por debajo del mínimo intermedio.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Un double top se forma al final de una tendencia alcista. El precio toca una resistance, baja un poco y forma un mínimo llamado línea clavicular. Vuelve a subir para testear el mismo nivel de resistance. Si falla en romperlo y baja, el patrón está completo. La confirmación llega cuando el precio rompe la línea clavicular por debajo del mínimo intermedio.</p>
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Las 3 condiciones para que un double top sea válido:</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Una tendencia alcista previa clara (HH/HL)</li>
               <li>- Dos máximos casi iguales (diferencia tolerada: 0,2% máximo)</li>
-              <li>- Un breakout confirmado de la neckline (cierre, no una simple mecha)</li>
+              <li>- Un breakout confirmado de la línea clavicular (cierre, no una simple mecha)</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm">Ejemplo en EUR/USD. El mercado está alcista desde hace varios días. Toca una resistance en 1.1880 y baja hacia 1.1800. Vuelve a subir y testea 1.1895, casi igual al primer máximo, y falla. Baja y cierra una vela debajo de 1.1800. Double top confirmado.</p>
@@ -164,23 +164,23 @@ export default function ContentEs() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">La validación de un double top o bottom sigue 4 criterios estrictos. Una sola ausencia invalida estructuralmente el patrón.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Tendencia previa clara.</span> <span className="text-zinc-300">Sin range antes de los máximos/mínimos. La estructura HH/HL o LH/LL debe ser nítida.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Tendencia previa clara.</span> <span className="text-zinc-300">Sin rango antes de los máximos/mínimos. La estructura HH/HL o LH/LL debe ser nítida.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Diferencia ≤ 0,3%.</span> <span className="text-zinc-300">En EUR/USD: 30 pips máximo entre los 2 máximos/mínimos. Más allá: patrón no válido.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Breakout por cierre.</span> <span className="text-zinc-300">Cierre franco de vela debajo (o por encima) de la neckline. Mecha sola = test, no confirmación.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Ausencia de news mayor.</span> <span className="text-zinc-300">FOMC, NFP, CPI dentro de los 30 minutos: el patrón puede romperse en cualquier dirección.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Breakout por cierre.</span> <span className="text-zinc-300">Cierre franco de vela debajo (o por encima) de la línea clavicular. Mecha sola = test, no confirmación.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Ausencia de noticia mayor.</span> <span className="text-zinc-300">FOMC, NFP, CPI dentro de los 30 minutos: el patrón puede romperse en cualquier dirección.</span></div>
             </div>
           </section>
 
           {/* Bloque 5 — DOUBLE BOTTOM */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Double Bottom: fin de tendencia bajista</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El double bottom es el espejo perfecto del double top. El precio toca un support, sube un poco y forma una neckline. Baja de nuevo a testear el mismo support. Si falla en romperlo y sube, el patrón está completo. La confirmación llega cuando el precio rompe la neckline por encima del máximo intermedio.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El double bottom es el espejo perfecto del double top. El precio toca un support, sube un poco y forma una línea clavicular. Baja de nuevo a testear el mismo support. Si falla en romperlo y sube, el patrón está completo. La confirmación llega cuando el precio rompe la línea clavicular por encima del máximo intermedio.</p>
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Las 3 condiciones, en espejo:</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Una tendencia bajista previa clara (LH/LL)</li>
               <li>- Dos mínimos casi iguales</li>
-              <li>- Un breakout confirmado de la neckline (cierre por encima)</li>
+              <li>- Un breakout confirmado de la línea clavicular (cierre por encima)</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm">Ejemplo en XAU/USD. El mercado está bajista desde hace 2 días. Toca un support en 4 480$ y sube hacia 4 520$. Baja a testear 4 478$ y rechaza. Sube y cierra una vela por encima de 4 520$. Double bottom confirmado.</p>
@@ -192,10 +192,10 @@ export default function ContentEs() {
             <div className="my-8">
               <DTBMeasuredMoveProjectionDiagram locale="es" />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El take profit de un double top/bottom sigue el principio del measured move: la altura del patrón (del máximo a la neckline) se proyecta desde la neckline en el sentido del breakout.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El take profit de un double top/bottom sigue el principio del measured move: la altura del patrón (del máximo a la línea clavicular) se proyecta desde la línea clavicular en el sentido del breakout.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Altura del patrón = distancia máximo (o mínimo) → neckline.</li>
-              <li>- TP teórico = neckline ± altura del patrón, según el sentido del breakout.</li>
+              <li>- Altura del patrón = distancia máximo (o mínimo) → línea clavicular.</li>
+              <li>- TP teórico = línea clavicular ± altura del patrón, según el sentido del breakout.</li>
               <li>- TP ajustado unos pips para obtener un RR redondo (2:1 o 3:1).</li>
             </ul>
           </section>
@@ -203,14 +203,14 @@ export default function ContentEs() {
           {/* Bloque 7 — PLAN DE TRADE EUR/USD H1 */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade: Double Top EUR/USD H1</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Se retoma el contexto del double top EUR/USD del Bloque 3. Tendencia alcista previa, dos máximos en 1.1880 y 1.1895, neckline en 1.1800. El precio acaba de cerrar una vela H1 en 1.1795, debajo de la neckline. Patrón confirmado.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">La entrada se hace short justo debajo de la neckline para tomar el breakdown. A un precio que ya cae no se le persigue. Se requiere una confirmación limpia con un cierre debajo de la neckline. El stop loss va por encima del último máximo para invalidar correctamente el patrón. El TP sigue el measured move: la altura del patrón, del máximo a la neckline, se proyecta desde la neckline hacia abajo.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Altura del patrón: 1.1880 - 1.1800 = 80 pips. Proyección teórica debajo de la neckline: 1.1720. El TP se toma 5 pips más abajo en 1.1715 para obtener un RR redondo de 2:1 (40 pips de riesgo, 80 pips de ganancia).</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Se retoma el contexto del double top EUR/USD del Bloque 3. Tendencia alcista previa, dos máximos en 1.1880 y 1.1895, línea clavicular en 1.1800. El precio acaba de cerrar una vela H1 en 1.1795, debajo de la línea clavicular. Patrón confirmado.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">La entrada se hace short justo debajo de la línea clavicular para tomar el breakdown. A un precio que ya cae no se le persigue. Se requiere una confirmación limpia con un cierre debajo de la línea clavicular. El stop loss va por encima del último máximo para invalidar correctamente el patrón. El TP sigue el measured move: la altura del patrón, del máximo a la línea clavicular, se proyecta desde la línea clavicular hacia abajo.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Altura del patrón: 1.1880 - 1.1800 = 80 pips. Proyección teórica debajo de la línea clavicular: 1.1720. El TP se toma 5 pips más abajo en 1.1715 para obtener un RR redondo de 2:1 (40 pips de riesgo, 80 pips de ganancia).</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrada short: 1.1795 (cierre debajo de neckline)</li>
+                <li>- Entrada short: 1.1795 (cierre debajo de línea clavicular)</li>
                 <li>- Stop loss: 1.1835 (40 pips por encima de la mecha del 2do máximo)</li>
                 <li>- Take profit: 1.1715 (80 pips, measured move ajustado)</li>
               </ul>
@@ -242,29 +242,29 @@ export default function ContentEs() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Filtros: cuándo no tomar el setup</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Sin tendencia previa clara.</span> <span className="text-zinc-300">Si el mercado estaba en range antes de los 2 máximos/mínimos, no es una inversión. Setup a ignorar.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Sin tendencia previa clara.</span> <span className="text-zinc-300">Si el mercado estaba en rango antes de los 2 máximos/mínimos, no es una inversión. Setup a ignorar.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Diferencia muy grande entre máximos/mínimos.</span> <span className="text-zinc-300">Más allá de 0,3% (30 pips en EUR/USD), la mecánica ya no es la del double top. Patrón no válido.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Breakout por mecha, sin cierre.</span> <span className="text-zinc-300">Una mecha que pincha debajo de la neckline y vuelve por encima no confirma nada. Espera el cierre franco.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. News mayor en la ventana.</span> <span className="text-zinc-300">FOMC, NFP, CPI dentro de los 30 minutos: el setup no se toma. La news puede romper el patrón en cualquier dirección.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Breakout por mecha, sin cierre.</span> <span className="text-zinc-300">Una mecha que pincha debajo de la línea clavicular y vuelve por encima no confirma nada. Espera el cierre franco.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. Noticia mayor en la ventana.</span> <span className="text-zinc-300">FOMC, NFP, CPI dentro de los 30 minutos: el setup no se toma. La noticia puede romper el patrón en cualquier dirección.</span></div>
             </div>
           </section>
 
           <LessonKeyPoints
             points={[
               "Double top = 2 máximos casi iguales en una resistance después de tendencia alcista. Double bottom = espejo en un support.",
-              "Confirmación = cierre (no mecha) del otro lado de la neckline.",
+              "Confirmación = cierre (no mecha) del otro lado de la línea clavicular.",
               "Entrada justo después del breakout. SL más allá del último máximo/mínimo. TP = measured move (altura del patrón proyectada).",
-              "Setup ignorado si la tendencia previa no es clara, si la diferencia supera 0,3%, o si una news mayor está por salir.",
+              "Setup ignorado si la tendencia previa no es clara, si la diferencia supera 0,3%, o si una noticia mayor está por salir.",
             ]}
           />
 
           <LessonExercice
-            description="En EUR/USD H1, ves un double top con un primer máximo en 1.1850 y un segundo en 1.1825. Diferencia: 25 pips, aproximadamente 0,23%. La neckline está en 1.1750. El precio cierra en 1.1745. ¿Tomas el setup?"
+            description="En EUR/USD H1, ves un double top con un primer máximo en 1.1850 y un segundo en 1.1825. Diferencia: 25 pips, aproximadamente 0,23%. La línea clavicular está en 1.1750. El precio cierra en 1.1745. ¿Tomas el setup?"
             steps={[
               "Verifica que la diferencia entre los 2 máximos esté bajo el límite: 0,23% < 0,3%. OK",
               "Confirma que el breakout sea por cierre debajo de 1.1750, no una simple mecha. OK",
               "Verifica que la tendencia alcista previa sea clara (HH/HL)",
-              "Verifica que no haya news mayor prevista en los próximos 30 minutos",
+              "Verifica que no haya noticia mayor prevista en los próximos 30 minutos",
               "Toma la entrada short en 1.1745, SL por encima del 2do máximo, TP measured move",
             ]}
           />
@@ -273,12 +273,12 @@ export default function ContentEs() {
             question="¿Qué confirma un double top?"
             options={[
               "El segundo máximo que toca la resistance",
-              "Una mecha que pincha debajo de la neckline",
-              "Un cierre de vela debajo de la neckline",
+              "Una mecha que pincha debajo de la línea clavicular",
+              "Un cierre de vela debajo de la línea clavicular",
               "Un volumen muy elevado",
             ]}
             correctIndex={2}
-            explanation="La confirmación de un double top llega únicamente cuando el precio cierra una vela debajo de la neckline. Una simple mecha que pincha debajo y vuelve por encima no valida nada, esperar un cierre franco sigue siendo indispensable para evitar las señales falsas."
+            explanation="La confirmación de un double top llega únicamente cuando el precio cierra una vela debajo de la línea clavicular. Una simple mecha que pincha debajo y vuelve por encima no valida nada, esperar un cierre franco sigue siendo indispensable para evitar las señales falsas."
           />
 
         </div>

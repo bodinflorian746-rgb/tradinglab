@@ -13,19 +13,19 @@ export function HTFFilterDiagram({ className = "", locale = "fr" }: HTFFilterDia
         prixActuel: "Precio actual  1.1715",
         filtre: "FILTRO HTF",
         setupPriv: "Setup a privilegiar",
-        sens: "en el sentido del bias",
+        sens: "en el sentido del sesgo",
         setupEviter: "Setup a evitar",
-        contre: "contra el bias",
+        contre: "contra el sesgo",
         note: "El HTF solo conserva los trades alineados",
-        caption: "Bias Daily bajista — el precio bajo la resistencia HTF",
+        caption: "Sesgo Daily bajista — el precio bajo la resistencia HTF",
         mobTitle: "Filtro HTF — EUR/USD H4",
-        mobAligne: "✓ Setup alineado con bias HTF",
+        mobAligne: "✓ Setup alineado con sesgo HTF",
         mobAligneDesc: "A privilegiar — probabilidad máxima.",
-        mobContre: "✗ Setup contra el bias HTF",
+        mobContre: "✗ Setup contra el sesgo HTF",
         mobContreDesc: "A descartar — aunque sea visualmente tentador.",
         mobFooter: "El HTF filtra el 90% de las señales falsas LTF.",
-        legendAligne: "Setup alineado con el bias HTF — a privilegiar",
-        legendContre: "Setup contra el bias HTF — a descartar",
+        legendAligne: "Setup alineado con el sesgo HTF — a privilegiar",
+        legendContre: "Setup contra el sesgo HTF — a descartar",
       }
     : locale === "en"
     ? {
@@ -48,23 +48,23 @@ export function HTFFilterDiagram({ className = "", locale = "fr" }: HTFFilterDia
         legendContre: "Setup against HTF bias — to discard",
       }
     : {
-        resistance: "Résistance HTF  1.1760",
+        resistance: "Résistance de l'UT supérieure  1.1760",
         prixActuel: "Prix actuel  1.1715",
-        filtre: "FILTRE HTF",
+        filtre: "FILTRE UT SUPÉRIEURE",
         setupPriv: "Setup à privilégier",
         sens: "dans le sens du biais",
         setupEviter: "Setup à éviter",
         contre: "contre le biais",
-        note: "Le HTF ne garde que les trades alignés",
-        caption: "Biais Daily baissier — le prix sous la résistance HTF",
-        mobTitle: "Filtre HTF — EUR/USD H4",
-        mobAligne: "✓ Setup aligné avec biais HTF",
+        note: "L'UT supérieure ne garde que les trades alignés",
+        caption: "Biais Daily baissier — le prix sous la résistance de l'UT supérieure",
+        mobTitle: "Filtre de l'UT supérieure — EUR/USD H4",
+        mobAligne: "✓ Setup aligné avec biais de l'UT supérieure",
         mobAligneDesc: "À privilégier — probabilité maximale.",
-        mobContre: "✗ Setup contre le biais HTF",
+        mobContre: "✗ Setup contre le biais de l'UT supérieure",
         mobContreDesc: "À écarter — même si visuellement tentant.",
-        mobFooter: "Le HTF filtre 90% des faux signaux LTF.",
-        legendAligne: "Setup aligné avec le biais HTF — à privilégier",
-        legendContre: "Setup contre le biais HTF — à écarter",
+        mobFooter: "L'UT supérieure filtre 90% des faux signaux de l'UT inférieure.",
+        legendAligne: "Setup aligné avec le biais de l'UT supérieure — à privilégier",
+        legendContre: "Setup contre le biais de l'UT supérieure — à écarter",
       };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
@@ -128,11 +128,11 @@ export function HTFFilterDiagram({ className = "", locale = "fr" }: HTFFilterDia
       <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">Setup aligné avec le biais HTF — à privilégier</span>
+          <span className="text-[10px] text-zinc-500">Setup aligné avec le biais de l'UT supérieure — à privilégier</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">Setup contre le biais HTF — à écarter</span>
+          <span className="text-[10px] text-zinc-500">Setup contre le biais de l'UT supérieure — à écarter</span>
         </div>
       </div>
     </div>

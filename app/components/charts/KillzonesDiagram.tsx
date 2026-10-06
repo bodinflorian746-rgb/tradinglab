@@ -27,7 +27,7 @@ export function KillzonesDiagram({ className = "", locale = "fr" }: KillzonesDia
         nyOpen1330: "NY Open · 14h30/15h30",
         mobileTitle: "Killzones · hora de París",
         kz: [
-          { start: "00h", end: "07h", title: "Asian Range", desc: "Acumulación nocturna, baja volatilidad.", accent: "#71717a", highlight: false },
+          { start: "00h", end: "07h", title: "Rango asiático", desc: "Acumulación nocturna, baja volatilidad.", accent: "#71717a", highlight: false },
           { start: "07h", end: "10h", title: "London Killzone", desc: "Open London a las 08h — primera fuerte volatilidad.", accent: "#10b981", highlight: true },
           { start: "12h", end: "15h", title: "NY AM Killzone", desc: "Open NY a las 14h30 o 15h30 (París) — pico de actividad institucional.", accent: "#10b981", highlight: true },
           { start: "18h", end: "20h", title: "NY PM Killzone", desc: "Última ventana — cierre americano.", accent: "#60a5fa", highlight: false },
@@ -37,7 +37,7 @@ export function KillzonesDiagram({ className = "", locale = "fr" }: KillzonesDia
         mobileFooterSuffix: " = actividad institucional máxima",
         leg1: "Killzone London / NY — alta volatilidad institucional",
         leg2: "NY Close (PM session)",
-        leg3: "Asian Range — acumulación nocturna",
+        leg3: "Asian rango — acumulación nocturna",
       }
     : locale === "en"
     ? {
@@ -116,7 +116,7 @@ export function KillzonesDiagram({ className = "", locale = "fr" }: KillzonesDia
 
         {/* Zone badge — Asian Range */}
         <rect x={118} y={18} width={90} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />
-        <text x={163} y={28} fontSize="9" fill="#71717a" textAnchor="middle" fontWeight="600">Asian Range</text>
+        <text x={163} y={28} fontSize="9" fill="#71717a" textAnchor="middle" fontWeight="600">{locale === "es" ? "Rango asiático" : locale === "en" ? "Asian Range" : "Asian Range"}</text>
 
         {/* Zone badge — London Open */}
         <rect x={298} y={18} width={80} height={14} rx="2" fill="#09090b" fillOpacity="0.85" />

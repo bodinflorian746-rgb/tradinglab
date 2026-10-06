@@ -75,7 +75,7 @@
   "filters": {
     "asset": "Activo",
     "result": "Resultado",
-    "timeframe": "Timeframe",
+    "timeframe": "Temporalidad",
     "setup": "Setup",
     "period": "Período",
     "periodAll": "Todo el período",
@@ -145,7 +145,7 @@
     "sections": {
       "essential": "Esencial",
       "setup": "Análisis del setup",
-      "risk": "Gestión del riesgo",
+      "risk": "Gestión de riesgos",
       "psychology": "Psicología",
       "notes": "Notas y captura"
     },
@@ -342,7 +342,7 @@
     "setup": {
       "order_block": "Order Block",
       "fair_value_gap": "Fair Value Gap",
-      "liquidity_sweep": "Liquidity Sweep",
+      "liquidity_sweep": "Barrido de liquidez",
       "breakout": "Breakout",
       "retest": "Retest",
       "support_resistance": "Soporte / Resistencia",

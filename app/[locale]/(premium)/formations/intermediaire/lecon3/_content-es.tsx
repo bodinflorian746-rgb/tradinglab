@@ -119,14 +119,14 @@ export default function ContentEs() {
             <span className="text-lg">↑</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">El precio vuelve a un soporte</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Esperas una señal de rechazo en la zona (pin bar, engulfing alcista). Si la tendencia Daily es alcista → compra. SL bajo la zona entera.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Esperas una señal de rechazo en la zona (pin bar, envolvente alcista). Si la tendencia Daily es alcista → compra. SL bajo la zona entera.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <span className="text-lg">↓</span>
             <div>
               <p className="text-sm font-semibold text-red-400">El precio sube a una resistencia</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Esperas un rechazo en la zona (mecha alta, engulfing bajista). Si la tendencia Daily es bajista → venta. SL encima de la zona.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Esperas un rechazo en la zona (mecha alta, envolvente bajista). Si la tendencia Daily es bajista → venta. SL encima de la zona.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3">
@@ -186,15 +186,15 @@ export default function ContentEs() {
         question="Marcas un soporte en EUR/USD H4. El precio baja hacia él. ¿Qué haces?"
         options={[
           "Compras inmediatamente apenas el precio entra a la zona",
-          "Esperas una señal de rechazo en la zona (pin bar o engulfing alcista), luego entras",
+          "Esperas una señal de rechazo en la zona (pin bar o envolvente alcista), luego entras",
           "Ignoras la zona, el precio baja, es señal de debilidad",
           "Colocas una orden limit en el bottom de la zona sin esperar señal",
         ]}
         correctIndex={1}
-        explanation="La zona te dice dónde mirar, la señal de vela te dice cuándo entrar. Esperar un rechazo (pin bar, engulfing alcista) en el soporte confirma que los compradores institucionales están activos. Sin señal, anticipas sin prueba."
+        explanation="La zona te dice dónde mirar, la señal de vela te dice cuándo entrar. Esperar un rechazo (pin bar, envolvente alcista) en el soporte confirma que los compradores institucionales están activos. Sin señal, anticipas sin prueba."
         answerExplanations={[
           "Demasiado apurado. El precio puede atravesar la zona y seguir bajando. Entrar sin señal de confirmación es tomar el riesgo de entrar en una zona que no aguanta. La zona es de atención, no un disparador de compra automático.",
-          "Correcto. Es el método en dos tiempos: la zona define el nivel de interés, la señal de vela confirma que los compradores reaccionan. Pin bar = rechazo de precios bajos. Engulfing alcista = los compradores toman el control. Entras con SL bajo la zona.",
+          "Correcto. Es el método en dos tiempos: la zona define el nivel de interés, la señal de vela confirma que los compradores reaccionan. Pin bar = rechazo de precios bajos. Envolvente alcista = los compradores toman el control. Entras con SL bajo la zona.",
           "Falso. El precio que baja hacia un soporte es exactamente el escenario esperado. Es el retroceso que crea la oportunidad de compra. El precio debe bajar a la zona para que el setup sea válido.",
           "Riesgoso. Una orden limit en el bottom de la zona puede funcionar, pero entras sin confirmación. El precio puede atravesar el bottom de la zona y seguir. Esperar la señal de vela te da una ventaja adicional.",
         ]}

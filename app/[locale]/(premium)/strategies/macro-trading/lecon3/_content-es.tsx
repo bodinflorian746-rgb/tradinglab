@@ -125,7 +125,7 @@ export default function ContentEs() {
               <li>- Risk-on / risk-off → ver módulo Macro</li>
               <li>- Correlaciones macro y activos safe-haven → ver módulo Macro</li>
               <li>- Estructuras de mercado y tendencias → ver módulo Estrategias</li>
-              <li>- Multi-timeframe → ver módulo Multi-timeframe Process</li>
+              <li>- Análisis multitemporal → ver módulo Process multitemporal</li>
             </ul>
           </div>
 

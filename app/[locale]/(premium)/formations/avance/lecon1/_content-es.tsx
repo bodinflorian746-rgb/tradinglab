@@ -9,8 +9,8 @@ export default function ContentEs() {
     <LessonPage
       formationId="avance"
       lessonId="lecon1"
-      title="Liquidity"
-      subtitle="Las instituciones necesitan liquidity para ejecutar sus órdenes. Entender dónde se encuentra es entender hacia dónde va realmente el mercado."
+      title="Liquidez"
+      subtitle="Las instituciones necesitan liquidez para ejecutar sus órdenes. Entender dónde se encuentra es entender hacia dónde va realmente el mercado."
       duration="25 min"
       lessonNumber={1}
       prev={null}
@@ -18,35 +18,35 @@ export default function ContentEs() {
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">¿Qué es la liquidity?</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">¿Qué es la liquidez?</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          La liquidity es la capacidad de ejecutar una orden sin mover el precio.
+          La liquidez es la capacidad de ejecutar una orden sin mover el precio.
           Para una institución que coloca una orden de varios millones, necesita una
           contraparte, alguien que venda cuando ella compra, y viceversa.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Esas contrapartes se encuentran donde los demás traders han colocado sus
-          stops. Los stops son órdenes en espera, forman un pool de liquidity que
+          stops. Los stops son órdenes en espera, forman un pool de liquidez que
           las instituciones explotan.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Para recordar:</span> el mercado
-            se mueve hacia la liquidity, no al revés. Antes de cualquier gran movimiento,
+            se mueve hacia la liquidez, no al revés. Antes de cualquier gran movimiento,
             el precio suele ir a buscar los stops para alimentar el siguiente movimiento.
           </p>
         </div>
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Buy-side y Sell-side Liquidity</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Liquidez buy-side y sell-side</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Los pools de liquidity se forman alrededor de los niveles evidentes que todo
+          Los pools de liquidez se forman alrededor de los niveles evidentes que todo
           el mundo vigila, es precisamente ahí donde se acumulan los stops.
         </p>
         <div className="space-y-3 mb-4">
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl p-4">
-            <p className="font-semibold text-emerald-400 text-sm mb-2">Buy-side Liquidity (BSL)</p>
+            <p className="font-semibold text-emerald-400 text-sm mb-2">Liquidez buy-side (BSL)</p>
             <p className="text-xs text-zinc-400 leading-relaxed mb-2">
               Se encuentra <span className="text-white">por encima</span> de las resistencias
               y de los Equal Highs (EQH). Los traders en short han puesto ahí sus stops.
@@ -54,11 +54,11 @@ export default function ContentEs() {
               que alimentan una venta institucional.
             </p>
             <p className="text-xs text-zinc-500">
-              EQH = Equal Highs: dos máximos al mismo nivel. Señal clásica de liquidity acumulada.
+              EQH = Equal Highs: dos máximos al mismo nivel. Señal clásica de liquidez acumulada.
             </p>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-4">
-            <p className="font-semibold text-red-400 text-sm mb-2">Sell-side Liquidity (SSL)</p>
+            <p className="font-semibold text-red-400 text-sm mb-2">Liquidez sell-side (SSL)</p>
             <p className="text-xs text-zinc-400 leading-relaxed mb-2">
               Se encuentra <span className="text-white">debajo</span> de los soportes
               y de los Equal Lows (EQL). Los traders en long han puesto ahí sus stops.
@@ -66,7 +66,7 @@ export default function ContentEs() {
               que alimentan una compra institucional.
             </p>
             <p className="text-xs text-zinc-500">
-              EQL = Equal Lows: dos mínimos al mismo nivel. Zona típica de liquidity vendedora.
+              EQL = Equal Lows: dos mínimos al mismo nivel. Zona típica de liquidez vendedora.
             </p>
           </div>
         </div>
@@ -85,9 +85,9 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Explotar la liquidity en tus setups</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Explotar la liquidez en tus setups</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Una vez que identificas los pools de liquidity, puedes anticipar a dónde
+          Una vez que identificas los pools de liquidez, puedes anticipar a dónde
           va a ir el precio a buscar antes de invertirse, y posicionar tu entrada en consecuencia.
         </p>
         <div className="space-y-2.5">
@@ -98,14 +98,14 @@ export default function ContentEs() {
             },
             {
               label: "Espera a que el precio llegue",
-              detail: "No sigas la mecha. Observa el comportamiento al llegar a la zona de liquidity.",
+              detail: "No sigas la mecha. Observa el comportamiento al llegar a la zona de liquidez.",
             },
             {
               label: "Confirma el rechazo antes de entrar",
-              detail: "Una vela de rechazo (pin bar, engulfing) después del stop hunt es tu señal de entrada.",
+              detail: "Una vela de rechazo (pin bar, envolvente) después del stop hunt es tu señal de entrada.",
             },
             {
-              label: "Apunta a la liquidity opuesta como objetivo",
+              label: "Apunta a la liquidez opuesta como objetivo",
               detail: "Si entras tras una toma de SSL, apunta al BSL de arriba como take profit.",
             },
           ].map((r, i) => (
@@ -130,14 +130,14 @@ export default function ContentEs() {
 
       <LessonKeyPoints
         points={[
-          "Las instituciones necesitan liquidity para ejecutar sus órdenes, van a buscarla donde están los stops.",
-          "Buy-side Liquidity = por encima de los Equal Highs. Sell-side Liquidity = debajo de los Equal Lows.",
-          "El precio se mueve hacia la liquidity antes de irse en su verdadera dirección, anticipa ese movimiento.",
+          "Las instituciones necesitan liquidez para ejecutar sus órdenes, van a buscarla donde están los stops.",
+          "Liquidez buy-side = por encima de los Equal Highs. Liquidez sell-side = debajo de los Equal Lows.",
+          "El precio se mueve hacia la liquidez antes de irse en su verdadera dirección, anticipa ese movimiento.",
         ]}
       />
 
       <LessonExercice
-        description="En cualquier gráfico en H1, sal a cazar los pools de liquidity. Es el análisis más importante antes de cualquier trade."
+        description="En cualquier gráfico en H1, sal a cazar los pools de liquidez. Es el análisis más importante antes de cualquier trade."
         steps={[
           "Identifica al menos un conjunto de Equal Highs (EQH), dos o más máximos alineados al mismo nivel.",
           "Identifica al menos un conjunto de Equal Lows (EQL), dos o más mínimos alineados al mismo nivel.",
@@ -149,11 +149,11 @@ export default function ContentEs() {
         question="¿Por qué las instituciones cazan los stops de los traders retail?"
         options={[
           "Para manipular el mercado de forma ilegal y aprovechar solas",
-          "Para generar la liquidity necesaria para la ejecución de sus propias órdenes",
+          "Para generar la liquidez necesaria para la ejecución de sus propias órdenes",
           "Para disparar señales técnicas y atraer nuevos compradores",
         ]}
         correctIndex={1}
-        explanation="Las instituciones colocan órdenes masivas que requieren una contraparte equivalente. Los stop loss de los traders retail son órdenes en espera, al empujar el precio hacia esos niveles, las instituciones disparan esos stops y obtienen la liquidity que necesitan para entrar o salir del mercado a gran escala."
+        explanation="Las instituciones colocan órdenes masivas que requieren una contraparte equivalente. Los stop loss de los traders retail son órdenes en espera, al empujar el precio hacia esos niveles, las instituciones disparan esos stops y obtienen la liquidez que necesitan para entrar o salir del mercado a gran escala."
       />
 
     </LessonPage>

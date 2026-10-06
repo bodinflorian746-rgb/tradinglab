@@ -46,13 +46,13 @@ export default function ContentEs() {
               name: "London Killzone",
               hours: "07h00 – 10h00",
               color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400",
-              detail: "Apertura de Londres, una de las ventanas más potentes. Las instituciones europeas entran al mercado. Es común ver un sweep de liquidity seguido de un movimiento direccional fuerte. Aquí se forman los highs o lows del día.",
+              detail: "Apertura de Londres, una de las ventanas más potentes. Las instituciones europeas entran al mercado. Es común ver un barrido de liquidez seguido de un movimiento direccional fuerte. Aquí se forman los highs o lows del día.",
             },
             {
               name: "New York Killzone",
               hours: "13h00 – 16h00",
               color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400",
-              detail: "Apertura de Nueva York, la más volátil. Solapamiento con Londres durante 1 a 2 horas: liquidity máxima. Los anuncios económicos mayores caen a las 13h30 o 15h00. Los movimientos aquí son rápidos y potentes.",
+              detail: "Apertura de Nueva York, la más volátil. Solapamiento con Londres durante 1 a 2 horas: liquidez máxima. Los anuncios económicos mayores caen a las 13h30 o 15h00. Los movimientos aquí son rápidos y potentes.",
             },
             {
               name: "London Close",
@@ -85,11 +85,11 @@ export default function ContentEs() {
           {[
             {
               label: "Análisis antes de la Killzone",
-              detail: "Identifica tus zonas clave (OB, FVG, liquidity) ANTES de la apertura. Entra en la Killzone con un plan ya definido.",
+              detail: "Identifica tus zonas clave (OB, FVG, liquidez) ANTES de la apertura. Entra en la Killzone con un plan ya definido.",
             },
             {
               label: "Observa los primeros 15 minutos",
-              detail: "La primera vela de la sesión suele dar la orientación. Un sweep de liquidity seguido de un retroceso en los primeros 15 min es una señal clásica.",
+              detail: "La primera vela de la sesión suele dar la orientación. Un barrido de liquidez seguido de un retroceso en los primeros 15 min es una señal clásica.",
             },
             {
               label: "No entres a media Killzone",
@@ -97,7 +97,7 @@ export default function ContentEs() {
             },
             {
               label: "Evita las horas muertas",
-              detail: "Entre las 10h y las 13h (después de Londres y antes de NY), la liquidity cae. Las señales falsas son mucho más frecuentes.",
+              detail: "Entre las 10h y las 13h (después de Londres y antes de NY), la liquidez cae. Las señales falsas son mucho más frecuentes.",
             },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -124,7 +124,7 @@ export default function ContentEs() {
           "Las Killzones son las ventanas horarias de actividad institucional máxima.",
           "London Killzone (07h–10h) y NY Killzone (13h–16h) son las más importantes para el Forex.",
           "Analiza y planifica ANTES de la apertura, entra en la Killzone con un plan, no con preguntas.",
-          "Las horas muertas (10h–13h) son traicioneras: liquidity baja, movimientos aleatorios.",
+          "Las horas muertas (10h–13h) son traicioneras: liquidez baja, movimientos aleatorios.",
           "La Asian Session (01h–04h) suele formar los niveles que Londres y NY vienen a buscar.",
         ]}
       />
@@ -133,8 +133,8 @@ export default function ContentEs() {
         description="Observa un día completo de trading en tiempo real concentrándote en las Killzones."
         steps={[
           "En TradingView, abre EUR/USD en M15. Añade líneas verticales a las 07h00 y 10h00 (London KZ) y a las 13h00 y 16h00 (NY KZ).",
-          "Identifica los niveles de liquidity de la noche anterior (EQH, EQL, OB). Anótalos en el gráfico.",
-          "Al abrir la London KZ (07h00), observa: ¿hay un sweep de algún nivel nocturno? ¿Seguido de un retroceso?",
+          "Identifica los niveles de liquidez de la noche anterior (EQH, EQL, OB). Anótalos en el gráfico.",
+          "Al abrir la London KZ (07h00), observa: ¿hay un barrido de algún nivel nocturno? ¿Seguido de un retroceso?",
           "Repite a las 13h00 con la NY KZ. Anota la diferencia de volatilidad entre las Killzones y las horas muertas.",
         ]}
       />
@@ -143,16 +143,16 @@ export default function ContentEs() {
         question="Quieres tradear EUR/USD. Son las 11h30 (hora de París). ¿Qué haces?"
         options={[
           "Tradeas normalmente, el mercado sigue abierto y activo",
-          "Esperas la NY Killzone (13h00), la liquidity actual es demasiado baja para setups confiables",
+          "Esperas la NY Killzone (13h00), la liquidez actual es demasiado baja para setups confiables",
           "Bajas a M5 para captar los micromovimientos de esta hora muerta",
-          "Tradeas en breakout de range, las horas muertas son ideales para los breakouts",
+          "Tradeas en breakout de rango, las horas muertas son ideales para los breakouts",
         ]}
         correctIndex={1}
-        explanation="11h30 está en plena hora muerta, tras el cierre de la London Killzone y antes de la apertura de Nueva York. La liquidity institucional es mínima, los movimientos son aleatorios y las señales falsas abundan. La decisión disciplinada es esperar la NY Killzone a las 13h00."
+        explanation="11h30 está en plena hora muerta, tras el cierre de la London Killzone y antes de la apertura de Nueva York. La liquidez institucional es mínima, los movimientos son aleatorios y las señales falsas abundan. La decisión disciplinada es esperar la NY Killzone a las 13h00."
         answerExplanations={[
-          "Falso. El mercado está abierto, pero no es suficiente para tradear. Las horas muertas (10h–13h) tienen una liquidity institucional muy baja, los movimientos carecen de dirección y abundan las señales falsas.",
+          "Falso. El mercado está abierto, pero no es suficiente para tradear. Las horas muertas (10h–13h) tienen una liquidez institucional muy baja, los movimientos carecen de dirección y abundan las señales falsas.",
           "Correcto. Esperando la NY Killzone te aseguras de operar en una ventana donde la actividad institucional es fuerte, los movimientos son direccionales y los setups más confiables.",
-          "Falso. Bajar a M5 durante las horas muertas amplifica el problema, el ruido es aún más fuerte en timeframes pequeños cuando la liquidity es baja.",
+          "Falso. Bajar a M5 durante las horas muertas amplifica el problema, el ruido es aún más fuerte en temporalidades pequeñas cuando la liquidez es baja.",
           "Falso. Las horas muertas no son ideales para los breakouts, son conocidas por los false breakouts, precisamente porque falta volumen institucional para confirmar las rupturas.",
         ]}
       />

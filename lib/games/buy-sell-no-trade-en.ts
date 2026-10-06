@@ -58,8 +58,8 @@ export { ROUNDS_PER_SESSION, scoreChoice, mulberry32 };
 const ZONE_LABEL_EN: Record<string, string> = {
   "Résistance":           "Resistance",
   "Support":              "Support",
-  "Résistance HTF":       "HTF Resistance",
-  "Support HTF":          "HTF Support",
+  "Résistance UT supérieure":       "HTF Resistance",
+  "Support UT supérieure":          "HTF Support",
   "Plus bas précédent":        "Previous low",
   "Plus haut précédent":       "Previous high",
   "Liquidité au-dessus":  "Liquidity above",

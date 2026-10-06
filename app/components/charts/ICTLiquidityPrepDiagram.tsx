@@ -43,15 +43,15 @@ export function ICTLiquidityPrepDiagram({ className = "", locale = "fr" }: ICTLi
   const t = locale === "es"
     ? {
         equalHighs: "Equal highs 1.1780",
-        sweep: "Sweep 1.1792",
+        sweep: "Barrido 1.1792",
         annotation: "La liquidez prepara el displacement",
-        mobileTitle: "ICT liquidity prep · EUR/USD H1",
+        mobileTitle: "Preparación de la liquidez (ICT) · EUR/USD H1",
         m1a: "Equal highs",
         m1b: " = liquidez visible de stops de compra.",
-        m2a: "Sweep + reintegración",
+        m2a: "Barrido + reintegración",
         m2b: " = manipulación institucional.",
         leg1: "Equal highs = liquidez visible",
-        leg2: "Sweep y reintegración = manipulación",
+        leg2: "Barrido y reintegración = manipulación",
       }
     : locale === "en"
     ? {
@@ -70,7 +70,7 @@ export function ICTLiquidityPrepDiagram({ className = "", locale = "fr" }: ICTLi
         equalHighs: "Equal highs 1.1780",
         sweep: "Sweep 1.1792",
         annotation: "La liquidité prépare le déplacement",
-        mobileTitle: "ICT liquidity prep · EUR/USD H1",
+        mobileTitle: "Préparation de la liquidité (ICT) · EUR/USD H1",
         m1a: "Equal highs",
         m1b: " = liquidité visible des stops d'achat.",
         m2a: "Sweep + réintégration",
@@ -120,7 +120,7 @@ export function ICTLiquidityPrepDiagram({ className = "", locale = "fr" }: ICTLi
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
 
         {/* Mini-SVG : pool de liquidité (stops retail) au-dessus du HH, ciblé par smart money */}
-        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Liquidity prep" fill="none">
+        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label={locale === "es" ? "Preparación de la liquidez" : locale === "en" ? "Liquidity prep" : "Préparation de la liquidité"} fill="none">
           {/* Niveau HH (avec stops retail clustered) */}
           <line x1="10" y1="35" x2="270" y2="35" stroke="#ef4444" strokeWidth="1" strokeDasharray="3 3" />
           {/* Cluster d'icônes "stops" au-dessus du HH (petits triangles rouges) */}
@@ -136,7 +136,7 @@ export function ICTLiquidityPrepDiagram({ className = "", locale = "fr" }: ICTLi
           {/* Sweep arrow upward */}
           <path d="M125,55 L170,28 M170,28 L162,30 M170,28 L168,36" stroke="#f59e0b" strokeWidth="1.4" fill="none" strokeLinecap="round" />
           <rect x="170" y="65" width="50" height="12" rx="2" fill="#f59e0b18" stroke="#f59e0b55" strokeWidth="0.7" />
-          <text x="195" y="73" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Sweep ciblé</text>
+          <text x="195" y="73" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">{locale === "es" ? "Barrido dirigido" : locale === "en" ? "Sweep ciblé" : "Sweep ciblé"}</text>
         </svg>
 
         <ul className="space-y-2 text-[13px]">

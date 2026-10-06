@@ -14,7 +14,7 @@ export const STRATEGY_MODULES: StrategyModule[] = [
   {
     id:          "price-action",
     title:       "Price Action",
-    subtitle:    "Lis le marché brut sans indicateurs : bougies, pin bars, engulfing et setup multi-timeframe.",
+    subtitle:    "Lis le marché brut sans indicateurs : bougies, pin bars, avalement et setup multi-unités de temps.",
     level:       "debutant",
     order:       1,
     lessonCount: 4,
@@ -23,7 +23,7 @@ export const STRATEGY_MODULES: StrategyModule[] = [
   {
     id:          "support-resistance",
     title:       "Support / Résistance & Range",
-    subtitle:    "Identifie les zones de prix qui comptent et trade les marchés latéraux : polarité, range, breakout vs fakeout.",
+    subtitle:    "Identifie les zones de prix qui comptent et trade les marchés latéraux : polarité, range, breakout vs faux breakout.",
     level:       "debutant",
     order:       2,
     lessonCount: 4,
@@ -58,7 +58,7 @@ export const STRATEGY_MODULES: StrategyModule[] = [
   },
   {
     id:          "multi-timeframe",
-    title:       "Multi-timeframe Process",
+    title:       "Process multi-unités de temps",
     subtitle:    "Méthode top-down disciplinée pour transformer une lecture macro en exécution précise : Daily → H4 → H1 → entrée.",
     level:       "intermediaire",
     order:       6,
@@ -77,7 +77,7 @@ export const STRATEGY_MODULES: StrategyModule[] = [
   {
     id:          "macro-trading",
     title:       "Macro Trading",
-    subtitle:    "Trade les news majeures et les régimes de marché : FOMC Fade, NFP Overreaction, Régime Risk-off, filtre macro pré-trade.",
+    subtitle:    "Trade les annonces majeures et les régimes de marché : FOMC Fade, NFP Overreaction, Régime Risk-off, filtre macro pré-trade.",
     level:       "avance",
     order:       8,
     lessonCount: 4,

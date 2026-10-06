@@ -12,7 +12,7 @@ import HSTradeExecutionDiagram from "@/app/components/charts/HSTradeExecutionDia
 
 const LESSONS = [
   { id: "lecon1", slug: "lecon1", title: "Double top / Double bottom: la firma de la inversión", duration: "16 min", disabled: false },
-  { id: "lecon2", slug: "lecon2", title: "Head & Shoulders: la inversión mayor", duration: "18 min", disabled: false },
+  { id: "lecon2", slug: "lecon2", title: "Hombro-cabeza-hombro: la inversión mayor", duration: "18 min", disabled: false },
   { id: "lecon3", slug: "lecon3", title: "Lección 3", duration: "", disabled: true },
   { id: "lecon4", slug: "lecon4", title: "Lección 4", duration: "", disabled: true },
 ];
@@ -56,12 +56,12 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Head &amp; Shoulders: la inversión mayor
+            Hombro-cabeza-hombro: la inversión mayor
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              El Head &amp; Shoulders es el patrón de inversión más reconocido del trading técnico. Más complejo que un double top, se vuelve más confiable cuando se forma de manera limpia. Esta lección muestra cómo detectarlo, validarlo y tradearlo con un R/R modesto pero un win rate elevado.
+              El hombro-cabeza-hombro es el patrón de inversión más reconocido del trading técnico. Más complejo que un double top, se vuelve más confiable cuando se forma de manera limpia. Esta lección muestra cómo detectarlo, validarlo y tradearlo con un R/R modesto pero un win rate elevado.
             </p>
           </div>
 
@@ -131,57 +131,57 @@ export default function ContentEs() {
 
           {/* Bloque 3 — POR QUÉ FUNCIONA EL H&S */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Por qué funciona el Head &amp; Shoulders</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Un H&amp;S se forma al final de una tendencia alcista. El precio crea tres máximos: un primer máximo llamado hombro izquierdo, un máximo más alto llamado cabeza, y un tercer máximo más bajo que la cabeza llamado hombro derecho. Los dos mínimos entre los máximos forman la neckline. Cuando esa neckline se rompe, la inversión queda confirmada.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Cada máximo sucesivo muestra una pérdida de fuerza de los compradores. La cabeza representa el último movimiento alcista verdadero. Cuando el hombro derecho falla en volver al nivel de la cabeza, el mercado muestra que los compradores están llegando al límite del movimiento. El breakout de la neckline luego dispara los stops de los compradores y acelera la caída.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm">El H&amp;S sigue siendo un patrón muy accesible para un retail. No hace falta ningún indicador complicado ni cálculo avanzado. Se ve directamente en el chart, sin importar el activo o el timeframe. Es el patrón de inversión más enseñado desde hace más de 100 años, y sigue funcionando.</p>
+            <h2 className="text-lg font-semibold text-white mb-3">Por qué funciona el hombro-cabeza-hombro</h2>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Un HCH se forma al final de una tendencia alcista. El precio crea tres máximos: un primer máximo llamado hombro izquierdo, un máximo más alto llamado cabeza, y un tercer máximo más bajo que la cabeza llamado hombro derecho. Los dos mínimos entre los máximos forman la línea clavicular. Cuando esa línea clavicular se rompe, la inversión queda confirmada.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Cada máximo sucesivo muestra una pérdida de fuerza de los compradores. La cabeza representa el último movimiento alcista verdadero. Cuando el hombro derecho falla en volver al nivel de la cabeza, el mercado muestra que los compradores están llegando al límite del movimiento. El breakout de la línea clavicular luego dispara los stops de los compradores y acelera la caída.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">El HCH sigue siendo un patrón muy accesible para un retail. No hace falta ningún indicador complicado ni cálculo avanzado. Se ve directamente en el chart, sin importar el activo o la temporalidad. Es el patrón de inversión más enseñado desde hace más de 100 años, y sigue funcionando.</p>
           </section>
 
           {/* Bloque 4 — H&S CLÁSICO */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Head &amp; Shoulders: fin de tendencia alcista</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Hombro-cabeza-hombro: fin de tendencia alcista</h2>
             <div className="my-8">
               <HeadShouldersDiagram locale="es" />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El H&amp;S clásico aparece al final de una tendencia alcista. Forma tres máximos: un hombro izquierdo con un máximo moderado, una cabeza con un máximo más alto, y un hombro derecho con un máximo cercano al del hombro izquierdo. Los dos mínimos entre esos máximos definen la neckline.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El HCH clásico aparece al final de una tendencia alcista. Forma tres máximos: un hombro izquierdo con un máximo moderado, una cabeza con un máximo más alto, y un hombro derecho con un máximo cercano al del hombro izquierdo. Los dos mínimos entre esos máximos definen la línea clavicular.</p>
 
-            <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Las 3 condiciones para que un H&amp;S sea válido:</p>
+            <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Las 3 condiciones para que un HCH sea válido:</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Una tendencia alcista previa clara</li>
               <li>- La cabeza debe estar estrictamente más alta que los 2 hombros</li>
-              <li>- Un breakout confirmado de la neckline (cierre, no mecha)</li>
+              <li>- Un breakout confirmado de la línea clavicular (cierre, no mecha)</li>
             </ul>
 
-            <p className="text-zinc-300 leading-relaxed text-sm">Ejemplo en XAU/USD. El mercado está alcista desde hace varias sesiones. Sube hacia 4 620$ para formar el hombro izquierdo, baja a 4 580$, vuelve a subir hacia 4 660$ para formar la cabeza, y luego baja a 4 575$. Después sube hacia 4 625$ para formar el hombro derecho, al mismo nivel que el hombro izquierdo. La neckline conecta los dos mínimos en torno a 4 578$. Cuando el precio cierra debajo de 4 575$, el H&amp;S queda confirmado.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Ejemplo en XAU/USD. El mercado está alcista desde hace varias sesiones. Sube hacia 4 620$ para formar el hombro izquierdo, baja a 4 580$, vuelve a subir hacia 4 660$ para formar la cabeza, y luego baja a 4 575$. Después sube hacia 4 625$ para formar el hombro derecho, al mismo nivel que el hombro izquierdo. La línea clavicular conecta los dos mínimos en torno a 4 578$. Cuando el precio cierra debajo de 4 575$, el HCH queda confirmado.</p>
           </section>
 
           {/* Bloque 5 — VARIANTES DE NECKLINE */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Variantes de neckline</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Variantes de línea clavicular</h2>
             <div className="my-8">
               <HSNecklineSlopeDiagram locale="es" />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">La neckline de un H&amp;S no siempre es estrictamente horizontal. Su pendiente condiciona el measured move y por lo tanto el objetivo de TP.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">La línea clavicular de un HCH no siempre es estrictamente horizontal. Su pendiente condiciona el measured move y por lo tanto el objetivo de TP.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="text-white font-semibold">Neckline horizontal</span>, measured move estándar, TP pleno conservado.</li>
-              <li>- <span className="text-white font-semibold">Neckline ascendente</span>, measured move extendido, el TP gana algunos pips adicionales.</li>
-              <li>- <span className="text-white font-semibold">Neckline descendente</span>, measured move reducido, TP más ajustado, R/R a menudo menos favorable.</li>
+              <li>- <span className="text-white font-semibold">Línea clavicular horizontal</span>, measured move estándar, TP pleno conservado.</li>
+              <li>- <span className="text-white font-semibold">Línea clavicular ascendente</span>, measured move extendido, el TP gana algunos pips adicionales.</li>
+              <li>- <span className="text-white font-semibold">Línea clavicular descendente</span>, measured move reducido, TP más ajustado, R/R a menudo menos favorable.</li>
             </ul>
           </section>
 
           {/* Bloque 6 — H&S INVERSO */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Head &amp; Shoulders Inverso: fin de tendencia bajista</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El H&amp;S inverso es el espejo del H&amp;S clásico. Aparece al final de una tendencia bajista. El precio forma tres mínimos: un hombro izquierdo con un mínimo moderado, una cabeza con un mínimo más bajo, y un hombro derecho con un mínimo cercano al del hombro izquierdo. La neckline conecta los dos máximos entre los mínimos.</p>
+            <h2 className="text-lg font-semibold text-white mb-3">Hombro-cabeza-hombro invertido: fin de tendencia bajista</h2>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El HCH inverso es el espejo del HCH clásico. Aparece al final de una tendencia bajista. El precio forma tres mínimos: un hombro izquierdo con un mínimo moderado, una cabeza con un mínimo más bajo, y un hombro derecho con un mínimo cercano al del hombro izquierdo. La línea clavicular conecta los dos máximos entre los mínimos.</p>
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Las 3 condiciones se mantienen, en espejo:</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Una tendencia bajista previa clara</li>
               <li>- La cabeza debe estar estrictamente más baja que los 2 hombros</li>
-              <li>- Un breakout confirmado de la neckline hacia arriba (cierre)</li>
+              <li>- Un breakout confirmado de la línea clavicular hacia arriba (cierre)</li>
             </ul>
 
-            <p className="text-zinc-300 leading-relaxed text-sm">Ejemplo en XAU/USD. El mercado está bajista desde hace varias sesiones. Baja hacia 4 470$ para formar el hombro izquierdo, sube a 4 510$, vuelve a bajar hacia 4 430$ para formar la cabeza, y luego sube a 4 515$. Después baja hacia 4 475$ para formar el hombro derecho. La neckline conecta los dos máximos en torno a 4 512$. Cuando el precio cierra por encima de 4 515$, el H&amp;S inverso queda confirmado.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Ejemplo en XAU/USD. El mercado está bajista desde hace varias sesiones. Baja hacia 4 470$ para formar el hombro izquierdo, sube a 4 510$, vuelve a bajar hacia 4 430$ para formar la cabeza, y luego sube a 4 515$. Después baja hacia 4 475$ para formar el hombro derecho. La línea clavicular conecta los dos máximos en torno a 4 512$. Cuando el precio cierra por encima de 4 515$, el HCH inverso queda confirmado.</p>
           </section>
 
           {/* Bloque 7 — PLAN DE EJECUCIÓN DEL TRADE */}
@@ -190,21 +190,21 @@ export default function ContentEs() {
             <div className="my-8">
               <HSTradeExecutionDiagram locale="es" />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">La entrada se hace short justo debajo de la neckline para tomar el breakdown. Al precio no se le persigue durante la caída. Se requiere un cierre limpio debajo de la neckline.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm">El stop loss clásico se coloca por encima de la cabeza para una invalidación máxima, pero eso muchas veces da un R/R demasiado bajo. El stop loss táctico más ajustado se coloca por encima del hombro derecho: menos seguro, pero más explotable. El TP sigue el measured move: altura del patrón entre la cabeza y la neckline, proyectada debajo de la neckline.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">La entrada se hace short justo debajo de la línea clavicular para tomar el breakdown. Al precio no se le persigue durante la caída. Se requiere un cierre limpio debajo de la línea clavicular.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">El stop loss clásico se coloca por encima de la cabeza para una invalidación máxima, pero eso muchas veces da un R/R demasiado bajo. El stop loss táctico más ajustado se coloca por encima del hombro derecho: menos seguro, pero más explotable. El TP sigue el measured move: altura del patrón entre la cabeza y la línea clavicular, proyectada debajo de la línea clavicular.</p>
           </section>
 
           {/* Bloque 8 — PLAN DE TRADE XAU/USD H1 */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade: H&amp;S XAU/USD H1</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Se retoma el contexto del H&amp;S clásico del Bloque 4. La tendencia alcista ya estaba en marcha. El hombro izquierdo se forma en 4 620$, la cabeza en 4 660$, el hombro derecho en 4 625$, con una neckline en torno a 4 578$. El precio acaba de cerrar una vela H1 en 4 570$, debajo de la neckline. El patrón está confirmado.</p>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade: HCH XAU/USD H1</h2>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Se retoma el contexto del HCH clásico del Bloque 4. La tendencia alcista ya estaba en marcha. El hombro izquierdo se forma en 4 620$, la cabeza en 4 660$, el hombro derecho en 4 625$, con una línea clavicular en torno a 4 578$. El precio acaba de cerrar una vela H1 en 4 570$, debajo de la línea clavicular. El patrón está confirmado.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">El stop loss táctico se coloca justo por encima del hombro derecho en 4 630$. El stop loss clásico por encima de la cabeza en 4 670$ daría un R/R demasiado bajo: la opción táctica es la que se mantiene para este setup.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El TP sigue el measured move: altura del patrón entre la cabeza en 4 660$ y la neckline en 4 578$, o sea 82$. Esa altura se proyecta debajo de la neckline hacia 4 496$. El objetivo se extiende levemente a 4 480$ para obtener un R/R redondo de 1,5:1.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">El TP sigue el measured move: altura del patrón entre la cabeza en 4 660$ y la línea clavicular en 4 578$, o sea 82$. Esa altura se proyecta debajo de la línea clavicular hacia 4 496$. El objetivo se extiende levemente a 4 480$ para obtener un R/R redondo de 1,5:1.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrada short: 4 570$ (cierre debajo de neckline)</li>
+                <li>- Entrada short: 4 570$ (cierre debajo de línea clavicular)</li>
                 <li>- Stop loss: 4 630$ (60$ por encima del hombro derecho en 4 625$)</li>
                 <li>- Take profit: 4 480$ (90$, measured move extendido)</li>
               </ul>
@@ -229,7 +229,7 @@ export default function ContentEs() {
               <li>- Cuenta 1 000€ → 2% = riesgo 20€, ganancia potencial aprox. 30€</li>
               <li>- Cuenta 2 500€ → 2% = riesgo 50€, ganancia potencial aprox. 75€</li>
             </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm">El R/R 1,5:1 sigue siendo modesto comparado con un Pin bar o un pullback de tendencia, pero el H&amp;S tiene un win rate más elevado cuando el patrón es limpio. Sobre 100 trades, la rentabilidad se alcanza incluso con un R/R modesto si el win rate supera el 50%.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">El R/R 1,5:1 sigue siendo modesto comparado con un Pin bar o un pullback de tendencia, pero el HCH tiene un win rate más elevado cuando el patrón es limpio. Sobre 100 trades, la rentabilidad se alcanza incluso con un R/R modesto si el win rate supera el 50%.</p>
           </section>
 
           {/* Bloque 10 — FILTROS: CUÁNDO NO TOMAR EL SETUP */}
@@ -238,33 +238,33 @@ export default function ContentEs() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Cabeza poco marcada.</span> <span className="text-zinc-300">Si la cabeza apenas supera los hombros, menos de 0,3% por encima, el patrón se vuelve débil. El mercado duda sin un breakout estructural franco. Setup a ignorar.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Hombros muy asimétricos.</span> <span className="text-zinc-300">Si el hombro derecho es mucho más alto o más bajo que el izquierdo, con más de 0,5% de diferencia, el patrón pierde su lógica clásica. La estructura se vuelve menos confiable.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Breakout por mecha, sin cierre.</span> <span className="text-zinc-300">Una mecha que rompe brevemente la neckline y vuelve no valida nada. Se espera un verdadero cierre franco. En H&amp;S, la paciencia es crítica.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. News mayor en la ventana.</span> <span className="text-zinc-300">Si FOMC, NFP o CPI sale en los próximos 30 minutos, el setup no se toma. Una news puede invalidar el patrón al instante.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Breakout por mecha, sin cierre.</span> <span className="text-zinc-300">Una mecha que rompe brevemente la línea clavicular y vuelve no valida nada. Se espera un verdadero cierre franco. En HCH, la paciencia es crítica.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. Noticia mayor en la ventana.</span> <span className="text-zinc-300">Si FOMC, NFP o CPI sale en los próximos 30 minutos, el setup no se toma. Una noticia puede invalidar el patrón al instante.</span></div>
             </div>
           </section>
 
           <LessonKeyPoints
             points={[
-              "Head & Shoulders = 3 máximos después de una tendencia alcista. La cabeza está más alta que los 2 hombros. H&S Inverso = espejo en tendencia bajista.",
-              "Confirmación = cierre franco debajo o por encima de la neckline. Nada de mecha.",
-              "SL clásico por encima de la cabeza, SL táctico por encima del hombro derecho para un R/R más explotable. TP = measured move (altura cabeza → neckline proyectada).",
-              "El R/R del H&S es modesto, a menudo en torno a 1,5:1, pero el win rate se mantiene elevado cuando el patrón es limpio.",
+              "Hombro-cabeza-hombro = 3 máximos después de una tendencia alcista. La cabeza está más alta que los 2 hombros. HCH Inverso = espejo en tendencia bajista.",
+              "Confirmación = cierre franco debajo o por encima de la línea clavicular. Nada de mecha.",
+              "SL clásico por encima de la cabeza, SL táctico por encima del hombro derecho para un R/R más explotable. TP = measured move (altura cabeza → línea clavicular proyectada).",
+              "El R/R del HCH es modesto, a menudo en torno a 1,5:1, pero el win rate se mantiene elevado cuando el patrón es limpio.",
             ]}
           />
 
           <LessonExercice
-            description="En XAU/USD H1, ves un H&S con hombro izquierdo en 4 650$, cabeza en 4 680$, hombro derecho en 4 658$. Neckline en 4 620$. La cabeza está 30 pips por encima de los hombros (0,65%). El precio acaba de cerrar en 4 615$. ¿Tomas el setup?"
+            description="En XAU/USD H1, ves un HCH con hombro izquierdo en 4 650$, cabeza en 4 680$, hombro derecho en 4 658$. Línea clavicular en 4 620$. La cabeza está 30 pips por encima de los hombros (0,65%). El precio acaba de cerrar en 4 615$. ¿Tomas el setup?"
             steps={[
               "Verifica que la cabeza (4 680$) esté estrictamente más alta que los 2 hombros: 30 pips por encima, o sea 0,65%, superior al umbral de 0,3%, OK",
               "Confirma que los hombros sean simétricos: 4 650$ vs 4 658$, diferencia de 8 pips (0,17%), debajo del umbral de 0,5%, OK",
-              "Confirma el breakout: cierre en 4 615$ debajo de la neckline en 4 620$, no una simple mecha",
-              "Verifica que no haya news mayor prevista en los próximos 30 minutos",
+              "Confirma el breakout: cierre en 4 615$ debajo de la línea clavicular en 4 620$, no una simple mecha",
+              "Verifica que no haya noticia mayor prevista en los próximos 30 minutos",
               "Toma la entrada short en 4 615$, SL por encima del hombro derecho en 4 668$, TP measured move extendido a 4 540$ para un R/R redondo de 1,5:1",
             ]}
           />
 
           <LessonQuiz
-            question="¿Qué caracteriza a un Head & Shoulders?"
+            question="¿Qué caracteriza a un hombro-cabeza-hombro?"
             options={[
               "Dos máximos casi iguales",
               "Tres máximos donde el central es el más alto",
@@ -272,7 +272,7 @@ export default function ContentEs() {
               "Un cruce de medias móviles",
             ]}
             correctIndex={1}
-            explanation="El H&S se define por 3 máximos: hombro izquierdo, cabeza (el más alto), hombro derecho. La cabeza debe estar estrictamente más alta que los 2 hombros para que el patrón sea válido. Los dos mínimos entre esos máximos forman la neckline."
+            explanation="El HCH se define por 3 máximos: hombro izquierdo, cabeza (el más alto), hombro derecho. La cabeza debe estar estrictamente más alta que los 2 hombros para que el patrón sea válido. Los dos mínimos entre esos máximos forman la línea clavicular."
           />
 
         </div>

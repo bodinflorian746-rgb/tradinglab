@@ -12,7 +12,7 @@ import { ICTDisplacementSetupDiagram } from "@/app/components/charts/ICTDisplace
 import { ICTTimingDiagram } from "@/app/components/charts/ICTTimingDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Liquidity y manipulación", disabled: false },
+  { id: "lecon1", title: "Liquidez y manipulación", disabled: false },
   { id: "lecon2", title: "PD Arrays", disabled: false },
   { id: "lecon3", title: "Killzones", disabled: false },
   { id: "lecon4", title: "Displacement", disabled: false },
@@ -58,12 +58,12 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            El modelo ICT completo: de la liquidity a la ejecución
+            El modelo ICT completo: de la liquidez a la ejecución
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              El mercado no produce los verdaderos movimientos al azar. La mayoría de los setups ICT siguen una secuencia precisa: liquidity → manipulación → displacement → ejecución.
+              El mercado no produce los verdaderos movimientos al azar. La mayoría de los setups ICT siguen una secuencia precisa: liquidez → manipulación → displacement → ejecución.
             </p>
           </div>
 
@@ -124,7 +124,7 @@ export default function ContentEs() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Liquidity y manipulación → ver módulo ICT, Lección 1</li>
+              <li>- Liquidez y manipulación → ver módulo ICT, Lección 1</li>
               <li>- PD Arrays y FVG → ver módulo ICT, Lección 2</li>
               <li>- Killzones → ver módulo ICT, Lección 3</li>
               <li>- Displacement → ver módulo ICT, Lección 4</li>
@@ -140,7 +140,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El modelo ICT no se tradea por señal aislada: se tradea por secuencia. La mayoría de los trades de alta probabilidad encadenan una serie de eventos estructurales que se construyen unos sobre otros: un sesgo HTF que define la dirección, una liquidity identificada como objetivo probable, un sweep que la toma, un displacement que valida la intención, un FVG que abre una ventana de entrada, y luego la ejecución al regreso. Leer la secuencia es anticipar el trade, no padecerlo.
+              El modelo ICT no se tradea por señal aislada: se tradea por secuencia. La mayoría de los trades de alta probabilidad encadenan una serie de eventos estructurales que se construyen unos sobre otros: un sesgo HTF que define la dirección, una liquidez identificada como objetivo probable, un barrido que la toma, un displacement que valida la intención, un FVG que abre una ventana de entrada, y luego la ejecución al regreso. Leer la secuencia es anticipar el trade, no padecerlo.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -153,28 +153,28 @@ export default function ContentEs() {
 
           {/* Bloque 4 — LA LIQUIDITY PREPARA EL MOVIMIENTO */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">La liquidity prepara el movimiento</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La liquidez prepara el movimiento</h2>
 
             <div className="my-8">
               <ICTLiquidityPrepDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La primera etapa de toda secuencia ICT es la liquidity. Antes de que llegue un verdadero movimiento institucional, hay que identificar DÓNDE se encuentra la liquidity visible, equal highs, equal lows, últimos máximos / mínimos claramente identificables. Esa liquidity es el objetivo probable del próximo sweep. La secuencia no arranca antes de que esa bolsa sea tomada: si el precio gira a su alrededor sin tocarla, se espera.
+              La primera etapa de toda secuencia ICT es la liquidez. Antes de que llegue un verdadero movimiento institucional, hay que identificar DÓNDE se encuentra la liquidez visible, equal highs, equal lows, últimos máximos / mínimos claramente identificables. Esa liquidez es el objetivo probable del próximo barrido. La secuencia no arranca antes de que esa bolsa sea tomada: si el precio gira a su alrededor sin tocarla, se espera.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1: precio actual 1.1745, sesgo Daily bajista, resistencia Daily en 1.1780. Dos equal highs visibles en 1.1780 en las horas anteriores, la liquidity arriba de esos máximos es el objetivo. El escenario completo espera a que esa liquidity sea tomada (mecha arriba de 1.1780) antes de buscar la ejecución short. Sin sweep, sin secuencia, se espera.
+                EUR/USD H1: precio actual 1.1745, sesgo Daily bajista, resistencia Daily en 1.1780. Dos equal highs visibles en 1.1780 en las horas anteriores, la liquidez arriba de esos máximos es el objetivo. El escenario completo espera a que esa liquidez sea tomada (mecha arriba de 1.1780) antes de buscar la ejecución short. Sin barrido, sin secuencia, se espera.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- La liquidity = equivalente estructural del objetivo probable</li>
+              <li>- La liquidez = equivalente estructural del objetivo probable</li>
               <li>- Equal highs / equal lows / últimos máximos-mínimos = bolsas visibles</li>
-              <li>- Sin sweep = sin secuencia; no se anticipa la toma</li>
-              <li>- La toma de liquidity es el disparador de la fase siguiente (manipulación)</li>
+              <li>- Sin barrido = sin secuencia; no se anticipa la toma</li>
+              <li>- La toma de liquidez es el disparador de la fase siguiente (manipulación)</li>
             </ul>
           </section>
 
@@ -187,18 +187,18 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Una vez la liquidity tomada por el sweep, la etapa crítica es el displacement: la secuencia de velas impulsivas que muestra que el mercado se ha invertido realmente en la dirección del sesgo HTF. Sin displacement, el sweep puede ser un movimiento falso, el precio hace sweep, duda, y luego se va en la dirección inicial. CON displacement, la intención institucional es clara y el FVG dejado en la caída (o el alza) se convierte en la zona de ejecución. La entrada se toma al regreso del precio a ese FVG.
+              Una vez la liquidez tomada por el barrido, la etapa crítica es el displacement: la secuencia de velas impulsivas que muestra que el mercado se ha invertido realmente en la dirección del sesgo HTF. Sin displacement, el barrido puede ser un movimiento falso, el precio hace barrido, duda, y luego se va en la dirección inicial. CON displacement, la intención institucional es clara y el FVG dejado en la caída (o el alza) se convierte en la zona de ejecución. La entrada se toma al regreso del precio a ese FVG.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: después del sweep en 1.1792, 4 velas bajistas consecutivas con cuerpos grandes regresan el precio a 1.1748. Se deja un FVG entre 1.1768 y 1.1780. El displacement valida la intención vendedora. El precio sube luego progresivamente hacia el FVG: entrada short al regreso a la banda, SL arriba de 1.1780 (extremo del displacement), TP hacia la próxima liquidity baja.
+                EUR/USD: después del barrido en 1.1792, 4 velas bajistas consecutivas con cuerpos grandes regresan el precio a 1.1748. Se deja un FVG entre 1.1768 y 1.1780. El displacement valida la intención vendedora. El precio sube luego progresivamente hacia el FVG: entrada short al regreso a la banda, SL arriba de 1.1780 (extremo del displacement), TP hacia la próxima liquidez baja.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Sweep sin displacement = movimiento falso, no se entra</li>
+              <li>- Barrido sin displacement = movimiento falso, no se entra</li>
               <li>- El displacement valida la intención y crea el FVG (zona de ejecución)</li>
               <li>- La entrada se toma al REGRESO al FVG, no durante el displacement</li>
               <li>- SL arriba del extremo del displacement = estructura de invalidación clara</li>
@@ -214,13 +214,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La secuencia ICT solo tiene todo su valor en Killzone. El mismo encadenamiento liquidity → sweep → displacement → FVG puede producirse técnicamente en Asia Session, pero con una probabilidad de continuación baja, falta volumen para sostener el movimiento. Las secuencias de alta probabilidad siempre combinan setup ICT Y timing: sweep de un range Asia en London Open, sweep de un equal high en NY Open, displacement en la apertura de una Killzone. Sin timing favorable, se espera la próxima ventana.
+              La secuencia ICT solo tiene todo su valor en Killzone. El mismo encadenamiento liquidez → barrido → displacement → FVG puede producirse técnicamente en Asia Session, pero con una probabilidad de continuación baja, falta volumen para sostener el movimiento. Las secuencias de alta probabilidad siempre combinan setup ICT Y timing: barrido de un rango Asia en London Open, barrido de un equal high en NY Open, displacement en la apertura de una Killzone. Sin timing favorable, se espera la próxima ventana.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD: range Asia entre 4 642 y 4 655 $. En la apertura de London, mecha de sweep arriba de 4 655 $, luego displacement bearish de 38 $ que crea un FVG en la caída. Setup completo Y en Killzone = setup premium. La misma secuencia a las 03h UTC probablemente habría fracasado, al mercado le faltaba volumen para sostener el displacement.
+                XAU/USD: rango Asia entre 4 642 y 4 655 $. En la apertura de London, mecha de barrido arriba de 4 655 $, luego displacement bearish de 38 $ que crea un FVG en la caída. Setup completo Y en Killzone = setup premium. La misma secuencia a las 03h UTC probablemente habría fracasado, al mercado le faltaba volumen para sostener el displacement.
               </p>
             </div>
 
@@ -246,16 +246,16 @@ export default function ContentEs() {
                 <li>- Conclusión: sesgo bajista, toda la secuencia buscará un short</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Liquidity (H1): identificar el objetivo</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Liquidez (H1): identificar el objetivo</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: dos equal highs visibles en 1.1780, stops acumulados arriba</li>
-                <li>- Conclusión: la liquidity arriba de 1.1780 es el objetivo probable del próximo sweep</li>
+                <li>- Conclusión: la liquidez arriba de 1.1780 es el objetivo probable del próximo barrido</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 3. Sweep (M15 en Killzone)</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 3. Barrido (M15 en Killzone)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: en la apertura NY, mecha en 1.1792 y luego reintegración debajo de 1.1780</li>
-                <li>- Conclusión: la liquidity está tomada. Ahora se espera el displacement</li>
+                <li>- Conclusión: la liquidez está tomada. Ahora se espera el displacement</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Etapa 4. Displacement bearish</p>
@@ -278,7 +278,7 @@ export default function ContentEs() {
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = sesgo · Liquidity = objetivo · Sweep = condición · Displacement = confirmación · FVG = ejecución
+                  HTF = sesgo · Liquidez = objetivo · Barrido = condición · Displacement = confirmación · FVG = ejecución
                 </p>
               </div>
             </div>
@@ -294,16 +294,16 @@ export default function ContentEs() {
 
             <div className="grid gap-3 my-6">
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
-                <p className="text-white font-semibold text-sm mb-1.5">1. Entrar en el sweep solo</p>
+                <p className="text-white font-semibold text-sm mb-1.5">1. Entrar en el barrido solo</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Ver una mecha rebasar un equal high y entrar de inmediato, sin esperar el displacement, es tradear la mecha, exactamente la trampa que la secuencia busca evitar. El sweep es solo una condición previa; sin displacement que siga, es apenas un movimiento falso.
+                  Ver una mecha rebasar un equal high y entrar de inmediato, sin esperar el displacement, es tradear la mecha, exactamente la trampa que la secuencia busca evitar. El barrido es solo una condición previa; sin displacement que siga, es apenas un movimiento falso.
                 </p>
               </div>
 
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">2. Saltar el HTF</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Identificar un sweep y un displacement sin haber puesto antes el sesgo Daily / H4 es confundir setup local con trade. El HTF dicta la dirección de los trades autorizados, sin esa lectura, la secuencia puede moverse correctamente y posicionarte del lado equivocado del movimiento real.
+                  Identificar un barrido y un displacement sin haber puesto antes el sesgo Daily / H4 es confundir setup local con trade. El HTF dicta la dirección de los trades autorizados, sin esa lectura, la secuencia puede moverse correctamente y posicionarte del lado equivocado del movimiento real.
                 </p>
               </div>
 
@@ -325,7 +325,7 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "El modelo ICT es una SECUENCIA, liquidity, manipulación, displacement, ejecución, no una señal aislada.",
+              "El modelo ICT es una SECUENCIA, liquidez, manipulación, displacement, ejecución, no una señal aislada.",
               "Cada etapa construye la siguiente: saltar o invertir el orden rompe la lectura del mercado.",
               "El FVG creado por el displacement es la zona de ejecución, se entra al regreso, jamás durante el impulso.",
               "El timing (Killzones) sigue siendo esencial: un setup ICT fuera de Killzone es estadísticamente no rentable.",
@@ -335,35 +335,35 @@ export default function ContentEs() {
           <LessonExercice
             description="En TradingView, desarrolla una secuencia ICT completa en el par de tu elección, del Daily a la ejecución."
             steps={[
-              "HTF (Daily): concluye un sesgo direccional claro. Identifica en H1 una bolsa de liquidity visible en el sentido del sesgo (equal highs/lows, último máximo/mínimo).",
-              "Espera una Killzone (London o NY Open). Vigila el sweep de la liquidity identificada, y luego el displacement que sigue. Si la secuencia se detiene en el sweep sin displacement, es un movimiento falso, sin trade.",
-              "Traza el FVG dejado por el displacement. Espera el regreso del precio a la banda. Si la reacción confirma (vela de rechazo + impulso), anota la entrada, el SL arriba del extremo del displacement, el TP hacia la próxima liquidity.",
+              "HTF (Daily): concluye un sesgo direccional claro. Identifica en H1 una bolsa de liquidez visible en el sentido del sesgo (equal highs/lows, último máximo/mínimo).",
+              "Espera una Killzone (London o NY Open). Vigila el barrido de la liquidez identificada, y luego el displacement que sigue. Si la secuencia se detiene en el barrido sin displacement, es un movimiento falso, sin trade.",
+              "Traza el FVG dejado por el displacement. Espera el regreso del precio a la banda. Si la reacción confirma (vela de rechazo + impulso), anota la entrada, el SL arriba del extremo del displacement, el TP hacia la próxima liquidez.",
             ]}
           />
 
           <LessonQuiz
-            question="Ves en EUR/USD una mecha que hace sweep de equal highs en 1.1780, subiendo hasta 1.1792. Ninguna vela de displacement bearish sigue, el precio consolida alrededor de 1.1782 durante 6 velas. ¿Qué haces?"
+            question="Ves en EUR/USD una mecha que hace barrido de equal highs en 1.1780, subiendo hasta 1.1792. Ninguna vela de displacement bearish sigue, el precio consolida alrededor de 1.1782 durante 6 velas. ¿Qué haces?"
             options={[
-              "Entras short de inmediato: el sweep solo es la señal de entrada del modelo ICT",
-              "No entras: sin displacement después del sweep, la secuencia ICT no está validada",
+              "Entras short de inmediato: el barrido solo es la señal de entrada del modelo ICT",
+              "No entras: sin displacement después del barrido, la secuencia ICT no está validada",
               "Entras long suponiendo que la consolidación va a romper al alza",
               "Colocas una orden limit en 1.1780 y dejas que se ejecute automáticamente",
             ]}
             correctIndex={1}
-            explanation="El sweep es solo una condición previa de la secuencia ICT, no una señal de entrada. Sin el displacement bearish que sigue, la intención institucional no está confirmada, la consolidación arriba del nivel barrido incluso sugiere que el sweep podría ser un movimiento falso. La disciplina del modelo es clara: sin displacement, sin secuencia, sin entrada. Se espera a que el mercado hable más claro antes de actuar."
+            explanation="El barrido es solo una condición previa de la secuencia ICT, no una señal de entrada. Sin el displacement bearish que sigue, la intención institucional no está confirmada, la consolidación arriba del nivel barrido incluso sugiere que el barrido podría ser un movimiento falso. La disciplina del modelo es clara: sin displacement, sin secuencia, sin entrada. Se espera a que el mercado hable más claro antes de actuar."
             answerExplanations={[
-              "Falso. Entrar en el sweep solo es exactamente la trampa que la secuencia ICT busca evitar. El sweep es una condición, no una señal, sin displacement, nada confirma la intención vendedora.",
-              "Correcto. La secuencia ICT exige sweep + displacement + FVG + regreso. Si el displacement no se materializa tras el sweep, falta la etapa siguiente, la secuencia no está validada. La disciplina es no entrar.",
+              "Falso. Entrar en el barrido solo es exactamente la trampa que la secuencia ICT busca evitar. El barrido es una condición, no una señal, sin displacement, nada confirma la intención vendedora.",
+              "Correcto. La secuencia ICT exige barrido + displacement + FVG + regreso. Si el displacement no se materializa tras el barrido, falta la etapa siguiente, la secuencia no está validada. La disciplina es no entrar.",
               "Falso. Anticipar la dirección de una consolidación sin señal estructural es especulación pura. Y tradear long contra el sesgo HTF bajista supuesto es doblemente riesgoso.",
               "Falso. Colocar una orden limit transforma un setup no confirmado en una apuesta automática. Es uno de los peores hábitos, se asume el riesgo sin haber verificado que la secuencia se desarrolle realmente.",
             ]}
           />
 
           <LessonQuiz
-            question="Tienes un setup ICT técnicamente completo (sweep, displacement, FVG) en EUR/USD a las 04h UTC en plena Asia Session. El precio acaba de entrar al FVG. ¿Qué haces?"
+            question="Tienes un setup ICT técnicamente completo (barrido, displacement, FVG) en EUR/USD a las 04h UTC en plena Asia Session. El precio acaba de entrar al FVG. ¿Qué haces?"
             options={[
               "Entras: el setup está técnicamente validado, no importa la hora",
-              "Entras con un SL ampliado para absorber la baja liquidity de Asia",
+              "Entras con un SL ampliado para absorber la baja liquidez de Asia",
               "No entras: sin Killzone, el setup ICT tiene una probabilidad de continuación muy baja",
               "Esperas a que el precio salga del FVG y tomas la ruptura",
             ]}
@@ -373,7 +373,7 @@ export default function ContentEs() {
               "Falso. « No importa la hora » contradice el modelo ICT, que integra el timing como una condición estructural. Un setup técnicamente perfecto sin timing favorable es estadísticamente no rentable.",
               "Falso. Ampliar el SL no corrige el problema de fondo: al mercado le falta volumen para ejecutar el escenario. Solo se asume más riesgo en un setup que probablemente no se disparará.",
               "Correcto. La secuencia ICT exige timing Y setup. Fuera de Killzone, la probabilidad de que el FVG sea respetado y de que la continuación se produzca cae drásticamente. La disciplina es esperar London o NY para ejecutar.",
-              "Falso. « Salir del FVG » y « tomar la ruptura » es una lectura mecánica sin lógica estructural. El FVG no es un range que se tradea en breakout, es una zona de entrada por rechazo, no por salida.",
+              "Falso. « Salir del FVG » y « tomar la ruptura » es una lectura mecánica sin lógica estructural. El FVG no es un rango que se tradea en breakout, es una zona de entrada por rechazo, no por salida.",
             ]}
           />
 

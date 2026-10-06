@@ -12,10 +12,10 @@ import { IntermediateZoneDiagram } from "@/app/components/charts/IntermediateZon
 import { LTFExecutionDiagram } from "@/app/components/charts/LTFExecutionDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Pourquoi analyser en multi-timeframe", disabled: false },
-  { id: "lecon2", title: "Le timeframe supérieur : le biais", disabled: false },
-  { id: "lecon3", title: "Le timeframe intermédiaire : la zone", disabled: false },
-  { id: "lecon4", title: "Le timeframe d’exécution : l’entrée", disabled: false },
+  { id: "lecon1", title: "Pourquoi faire une analyse multi-unités de temps", disabled: false },
+  { id: "lecon2", title: "L'unité de temps supérieure : le biais", disabled: false },
+  { id: "lecon3", title: "L'unité de temps intermédiaire : la zone", disabled: false },
+  { id: "lecon4", title: "L’unité de temps d’exécution : l’entrée", disabled: false },
   { id: "lecon5", title: "Le process complet", disabled: false },
 ];
 
@@ -34,7 +34,7 @@ export default function ContentFr() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Stratégies</Link>
           <span>/</span>
-          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Multi-timeframe Process</Link>
+          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Process multi-unités de temps</Link>
           <span>/</span>
           <span className="text-zinc-500">Leçon 1</span>
         </nav>
@@ -58,12 +58,12 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Pourquoi analyser en multi-timeframe
+            Pourquoi faire une analyse multi-unités de temps
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Cette leçon pose la logique du multi-timeframe : pourquoi trader un seul graphique rend aveugle, et le rôle concret de chaque étage, le timeframe supérieur donne le biais, le timeframe intermédiaire localise la zone, le timeframe d&apos;exécution déclenche l&apos;entrée.
+              Cette leçon pose la logique de l&apos;analyse multi-unités de temps : pourquoi trader un seul graphique rend aveugle, et le rôle concret de chaque étage, l&apos;unité de temps supérieure donne le biais, l&apos;unité de temps intermédiaire localise la zone, l&apos;unité de temps d&apos;exécution déclenche l&apos;entrée.
             </p>
           </div>
 
@@ -138,14 +138,14 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">La fractalité des marchés</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Les marchés sont fractals : les mêmes patterns se répètent à toutes les échelles temporelles. Un mouvement impulsif sur H4 ressemble à un mouvement impulsif sur M15. Une consolidation Daily a la même forme qu&apos;une consolidation H1. C&apos;est précisément cette propriété qui justifie l&apos;analyse multi-timeframe : ce qui paraît être un retournement clair sur M15 peut n&apos;être qu&apos;un simple retracement à l&apos;intérieur d&apos;une impulsion Daily.
+              Les marchés sont fractals : les mêmes patterns se répètent à toutes les échelles temporelles. Un mouvement impulsif sur H4 ressemble à un mouvement impulsif sur M15. Une consolidation Daily a la même forme qu&apos;une consolidation H1. C&apos;est précisément cette propriété qui justifie l&apos;analyse multi-unités de temps : ce qui paraît être un retournement clair sur M15 peut n&apos;être qu&apos;un simple retracement à l&apos;intérieur d&apos;une impulsion Daily.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Les structures (BOS, CHoCH, ranges, impulsions) se forment à toutes les échelles</li>
               <li>- Un swing M15 entier peut n&apos;être qu&apos;une seule bougie sur H4</li>
               <li>- Sans relier les échelles, on prend un fragment pour le tout</li>
-              <li>- La fractalité explique pourquoi le HTF contient toujours le LTF</li>
+              <li>- La fractalité explique pourquoi l&apos;UT supérieure contient toujours l&apos;UT inférieure</li>
             </ul>
           </section>
 
@@ -158,34 +158,34 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un seul timeframe ne montre qu&apos;une partie du marché, jamais l&apos;ensemble. Un graphique M15 peut afficher un rebond propre alors que le Daily reste dans une tendance baissière lourde. Le résultat : un « achat évident » sur le petit timeframe se transforme en simple retracement avant la reprise baissière.
+              Une seule unité de temps ne montre qu&apos;une partie du marché, jamais l&apos;ensemble. Un graphique M15 peut afficher un rebond propre alors que le Daily reste dans une tendance baissière lourde. Le résultat : un « achat évident » sur la petite unité de temps se transforme en simple retracement avant la reprise baissière.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : le Daily affiche une structure baissière en LH/LL, avec une résistance majeure autour de 1.1820. Sur M15, un breakout haussier local se forme vers 1.1760. Le prix monte jusqu&apos;à 1.1775, puis replonge vers 1.1700. Le signal M15 était techniquement valide ; le problème venait du contexte HTF.
+                EUR/USD : le Daily affiche une structure baissière en LH/LL, avec une résistance majeure autour de 1.1820. Sur M15, un breakout haussier local se forme vers 1.1760. Le prix monte jusqu&apos;à 1.1775, puis replonge vers 1.1700. Le signal M15 était techniquement valide ; le problème venait du contexte de l&apos;UT supérieure.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Toujours vérifier le sens du HTF avant d&apos;entrer</li>
-              <li>- Un signal LTF contre le HTF = probabilité réduite</li>
-              <li>- Le petit timeframe montre souvent un retracement, pas un retournement</li>
-              <li>- Le contexte HTF prime sur le signal local</li>
+              <li>- Toujours vérifier le sens de l&apos;UT supérieure avant d&apos;entrer</li>
+              <li>- Un signal de l&apos;UT inférieure contre l&apos;UT supérieure = probabilité réduite</li>
+              <li>- La petite unité de temps montre souvent un retracement, pas un retournement</li>
+              <li>- Le contexte de l&apos;UT supérieure prime sur le signal local</li>
             </ul>
           </section>
 
           {/* Bloc 4 — HTF : TROUVER LE BIAIS */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Le timeframe supérieur : trouver le biais</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">L&apos;unité de temps supérieure : trouver le biais</h2>
 
             <div className="my-8">
               <HTFBiasDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le HTF répond à une seule question : dans quel sens le marché a-t-il statistiquement le plus de chances de continuer ? Il ne sert pas à entrer, il sert à filtrer les mauvais trades avant même de chercher un setup.
+              L&apos;UT supérieure répond à une seule question : dans quel sens le marché a-t-il statistiquement le plus de chances de continuer ? Il ne sert pas à entrer, il sert à filtrer les mauvais trades avant même de chercher un setup.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -195,7 +195,7 @@ export default function ContentFr() {
                   <li>- Structure du marché : HH/HL ou LH/LL</li>
                   <li>- Zones Daily et H4 importantes</li>
                   <li>- Direction des impulsions dominantes</li>
-                  <li>- Liquidité HTF visible</li>
+                  <li>- Liquidité de l&apos;UT supérieure visible</li>
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
@@ -203,30 +203,30 @@ export default function ContentFr() {
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Biais haussier = priorité aux achats</li>
                   <li>- Biais baissier = priorité aux ventes</li>
-                  <li>- Zone HTF proche = prudence</li>
+                  <li>- Zone de l&apos;UT supérieure proche = prudence</li>
                   <li>- Marché sans structure claire = éviter les setups agressifs</li>
                 </ul>
               </div>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Commencer toujours par le HTF</li>
+              <li>- Commencer toujours par l&apos;UT supérieure</li>
               <li>- Identifier une direction avant de chercher une entrée</li>
               <li>- Ignorer les signaux opposés au biais principal</li>
-              <li>- Noter les zones HTF avant de descendre de timeframe</li>
+              <li>- Noter les zones de l&apos;UT supérieure avant de descendre d&apos;unité de temps</li>
             </ul>
           </section>
 
           {/* Bloc 5 — TIMEFRAME INTERMÉDIAIRE : ZONE */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Le timeframe intermédiaire : trouver la zone</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">L&apos;unité de temps intermédiaire : trouver la zone</h2>
 
             <div className="my-8">
               <IntermediateZoneDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le timeframe intermédiaire localise la zone où le marché peut réagir. C&apos;est l&apos;étage qui transforme une idée générale du HTF en scénario exploitable. Le HTF dit « vendre » ; le timeframe intermédiaire dit « où ».
+              L&apos;unité de temps intermédiaire localise la zone où le marché peut réagir. C&apos;est l&apos;étage qui transforme une idée générale de l&apos;UT supérieure en scénario exploitable. L&apos;UT supérieure dit « vendre » ; l&apos;unité de temps intermédiaire dit « où ».
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -252,7 +252,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : le HTF est baissier. Sur H1, une zone de résistance se dessine entre 1.1765 et 1.1780. Le prix y revient, on surveille alors un signal vendeur sur le LTF.
+                EUR/USD : l&apos;UT supérieure est baissière. Sur H1, une zone de résistance se dessine entre 1.1765 et 1.1780. Le prix y revient, on surveille alors un signal vendeur sur l&apos;UT inférieure.
               </p>
             </div>
 
@@ -260,20 +260,20 @@ export default function ContentFr() {
               <li>- Travailler depuis des zones précises</li>
               <li>- Attendre le retour du prix dans la zone</li>
               <li>- Préparer le scénario avant le déclenchement</li>
-              <li>- Une zone HTF + H1 alignée = réaction plus propre</li>
+              <li>- Une zone de l&apos;UT supérieure + H1 alignée = réaction plus propre</li>
             </ul>
           </section>
 
           {/* Bloc 6 — LTF : EXÉCUTION */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Le timeframe d&apos;exécution : déclencher le trade</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">L&apos;unité de temps d&apos;exécution : déclencher le trade</h2>
 
             <div className="my-8">
               <LTFExecutionDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le LTF sert uniquement à exécuter. C&apos;est le timeframe du timing, pas celui du biais. Son rôle est de montrer que le marché réagit réellement dans la zone préparée sur les timeframes supérieurs.
+              L&apos;UT inférieure sert uniquement à exécuter. C&apos;est l&apos;unité de temps du timing, pas celle du biais. Son rôle est de montrer que le marché réagit réellement dans la zone préparée sur les unités de temps supérieures.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -291,7 +291,7 @@ export default function ContentFr() {
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Entrer après confirmation</li>
                   <li>- Placer le SL derrière la structure locale</li>
-                  <li>- Exécuter dans le sens du HTF</li>
+                  <li>- Exécuter dans le sens de l&apos;UT supérieure</li>
                 </ul>
               </div>
             </div>
@@ -304,10 +304,10 @@ export default function ContentFr() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Le LTF sert au timing, pas au contexte</li>
+              <li>- L&apos;UT inférieure sert au timing, pas au contexte</li>
               <li>- Attendre une réaction claire dans la zone</li>
               <li>- Éviter les entrées anticipées</li>
-              <li>- Exécuter uniquement dans le sens préparé par le HTF</li>
+              <li>- Exécuter uniquement dans le sens préparé par l&apos;UT supérieure</li>
             </ul>
           </section>
 
@@ -319,19 +319,19 @@ export default function ContentFr() {
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Étape 1. HTF (H4)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 1. UT supérieure (H4)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : structure baissière en LH/LL, résistance importante à 1.1780, prix actuel à 1.1725</li>
                 <li>- Conclusion : priorité aux ventes, aucun achat agressif recherché</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 2. Timeframe intermédiaire (H1)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 2. Unité de temps intermédiaire (H1)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : zone de résistance entre 1.1765 et 1.1780, ancien support devenu résistance, rejet déjà observé</li>
                 <li>- Conclusion : zone idéale pour attendre une réaction baissière</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Étape 3. LTF (M5 / M15)</p>
+              <p className="text-white font-semibold text-sm mb-2">Étape 3. UT inférieure (M5 / M15)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : sweep haussier jusqu&apos;à 1.1778, CHoCH baissier sur M5, bougie impulsive de rejet</li>
                 <li>- Conclusion : confirmation vendeuse valide, entrée short possible après la cassure locale</li>
@@ -339,7 +339,7 @@ export default function ContentFr() {
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = direction · Timeframe intermédiaire = zone · LTF = timing
+                  UT supérieure = direction · Unité de temps intermédiaire = zone · UT inférieure = timing
                 </p>
               </div>
             </div>
@@ -347,15 +347,15 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Un seul timeframe donne une vision incomplète du marché.",
-              "Le HTF définit le biais principal, la direction du trade.",
-              "Le timeframe intermédiaire localise la zone d’intérêt où agir.",
-              "Le LTF sert uniquement au déclenchement : il donne le timing, pas le biais.",
+              "Une seule unité de temps donne une vision incomplète du marché.",
+              "L'UT supérieure définit le biais principal, la direction du trade.",
+              "L’unité de temps intermédiaire localise la zone d’intérêt où agir.",
+              "L'UT inférieure sert uniquement au déclenchement : il donne le timing, pas le biais.",
             ]}
           />
 
           <LessonExercice
-            description="Ouvre EUR/USD sur TradingView et déroule le process multi-timeframe par toi-même, du grand timeframe vers le petit. L’objectif : voir concrètement ce que chaque étage apporte à la décision."
+            description="Ouvre EUR/USD sur TradingView et déroule le process multi-unités de temps par toi-même, de la grande unité de temps vers la petite. L’objectif : voir concrètement ce que chaque étage apporte à la décision."
             steps={[
               "Sur H4, identifie la structure dominante (HH/HL ou LH/LL), le dernier swing majeur, et une zone importante.",
               "Descends sur H1 : repère une zone où le prix pourrait réagir dans le sens du biais H4, et trace-la.",
@@ -365,15 +365,15 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Quel est le rôle principal du timeframe d’exécution (LTF) dans un processus multi-timeframe ?"
+            question="Quel est le rôle principal de l’unité de temps d’exécution (UT inférieure) dans un processus multi-unités de temps ?"
             options={[
               "Déterminer le biais principal du marché",
               "Identifier les zones Daily majeures",
               "Donner le timing précis de l’entrée",
-              "Remplacer complètement l’analyse HTF",
+              "Remplacer complètement l’analyse de l’UT supérieure",
             ]}
             correctIndex={2}
-            explanation="Le LTF sert à confirmer l’exécution dans une zone déjà préparée par les timeframes supérieurs. Le biais vient du HTF, la zone vient du timeframe intermédiaire ; le LTF intervient seulement pour affiner le timing et réduire le risque. Il complète l’analyse HTF, il ne la remplace jamais."
+            explanation="L’UT inférieure sert à confirmer l’exécution dans une zone déjà préparée par les unités de temps supérieures. Le biais vient de l’UT supérieure, la zone vient de l’unité de temps intermédiaire ; l’UT inférieure intervient seulement pour affiner le timing et réduire le risque. Il complète l’analyse de l’UT supérieure, il ne la remplace jamais."
           />
 
         </div>
@@ -405,7 +405,7 @@ export default function ContentFr() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Leçon 1 du module Multi-timeframe Process complétée.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Leçon 1 du module Process multi-unités de temps complétée.</p>
                 </div>
               </div>
             )}
@@ -415,7 +415,7 @@ export default function ContentFr() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M8 10l-4-3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Module Multi-timeframe. Vue d&apos;ensemble
+                Module Process multi-unités de temps. Vue d&apos;ensemble
               </Link>
               <Link href="/strategies/multi-timeframe/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
                 Leçon suivante

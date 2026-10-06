@@ -12,7 +12,7 @@ import { NYOpenExpansionDiagram } from "@/app/components/charts/NYOpenExpansionD
 import { TimingComparisonDiagram } from "@/app/components/charts/TimingComparisonDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Liquidity y manipulación", disabled: false },
+  { id: "lecon1", title: "Liquidez y manipulación", disabled: false },
   { id: "lecon2", title: "PD Arrays", disabled: false },
   { id: "lecon3", title: "Killzones", disabled: false },
   { id: "lecon4", title: "Displacement", disabled: false },
@@ -124,9 +124,9 @@ export default function ContentEs() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Liquidity y manipulación → ver módulo ICT, Lección 1</li>
+              <li>- Liquidez y manipulación → ver módulo ICT, Lección 1</li>
               <li>- PD Arrays y FVG → ver módulo ICT, Lección 2</li>
-              <li>- Multi-timeframe → ver módulo Multi-timeframe Process</li>
+              <li>- Análisis multitemporal → ver módulo Process multitemporal</li>
             </ul>
           </div>
 
@@ -139,12 +139,12 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La volatilidad del mercado no se distribuye uniformemente a lo largo de 24 horas. Ciertas ventanas horarias, llamadas Killzones por la metodología ICT, concentran casi la totalidad de los movimientos significativos: impulsos, tomas de liquidity, expansiones de range, retrocesos estructurales. Fuera de las Killzones, el mercado suele estar plano, velas planas, lateralización, señales falsas. Reconocer estas ventanas es traducir el timing en ventaja estadística.
+              La volatilidad del mercado no se distribuye uniformemente a lo largo de 24 horas. Ciertas ventanas horarias, llamadas Killzones por la metodología ICT, concentran casi la totalidad de los movimientos significativos: impulsos, tomas de liquidez, expansiones de rango, retrocesos estructurales. Fuera de las Killzones, el mercado suele estar plano, velas planas, lateralización, señales falsas. Reconocer estas ventanas es traducir el timing en ventaja estadística.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- 80 % de los movimientos significativos se producen en el 20 % de las horas</li>
-              <li>- Fuera de Killzone: range estrecho, velas planas, sweeps lentos</li>
+              <li>- Fuera de Killzone: rango estrecho, velas planas, barridos lentos</li>
               <li>- En Killzone: expansión, impulsos francos, verdaderos desplazamientos</li>
               <li>- Tradear sin mirar la hora es tradear a ciegas</li>
             </ul>
@@ -152,28 +152,28 @@ export default function ContentEs() {
 
           {/* Bloque 4 — LA ASIA SESSION SUELE SERVIR DE LIQUIDITY */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">La Asia Session suele servir de liquidity</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La Asia Session suele servir de liquidez</h2>
 
             <div className="my-8">
               <AsiaRangeSweepDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La sesión asiática (aproximadamente 00h-07h UTC) rara vez produce grandes movimientos direccionales. Suele dibujar un range estrecho, con velas de baja amplitud y poco volumen. Pero ese range tiene una función estructural mayor: sirve de objetivo de liquidity para las sesiones siguientes. El máximo y el mínimo del range Asia concentran los stops depositados por los traders que posicionaron su SL « justo arriba » o « justo debajo » de la sesión tranquila. Londres o Nueva York suelen venir a hacer sweep de esos niveles desde la apertura, y luego impulsan en la dirección opuesta.
+              La sesión asiática (aproximadamente 00h-07h UTC) rara vez produce grandes movimientos direccionales. Suele dibujar un rango estrecho, con velas de baja amplitud y poco volumen. Pero ese rango tiene una función estructural mayor: sirve de objetivo de liquidez para las sesiones siguientes. El máximo y el mínimo del rango Asia concentran los stops depositados por los traders que posicionaron su SL « justo arriba » o « justo debajo » de la sesión tranquila. Londres o Nueva York suelen venir a hacer barrido de esos niveles desde la apertura, y luego impulsan en la dirección opuesta.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD M15: durante la sesión asiática, el precio oscila en un range estrecho entre 1.1710 y 1.1725. En la apertura de Londres, una vela rompe debajo de 1.1710, baja hasta 1.1702, los stops debajo del range Asia se disparan. De inmediato, el precio sale disparado hacia 1.1750 en una secuencia alcista impulsiva. El objetivo no era la ruptura bajista, era la liquidity.
+                EUR/USD M15: durante la sesión asiática, el precio oscila en un rango estrecho entre 1.1710 y 1.1725. En la apertura de Londres, una vela rompe debajo de 1.1710, baja hasta 1.1702, los stops debajo del rango Asia se disparan. De inmediato, el precio sale disparado hacia 1.1750 en una secuencia alcista impulsiva. El objetivo no era la ruptura bajista, era la liquidez.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- El range Asia = bolsa de liquidity visible</li>
-              <li>- Los stops acumulados arriba y debajo de ese range son el objetivo de London / NY</li>
-              <li>- Sweep del range Asia + reintegración = señal clásica de expansión</li>
-              <li>- Tradear Asia sin contexto de sesión = sufrir los sweeps que vendrán</li>
+              <li>- El rango Asia = bolsa de liquidez visible</li>
+              <li>- Los stops acumulados arriba y debajo de ese rango son el objetivo de London / NY</li>
+              <li>- Barrido del rango Asia + reintegración = señal clásica de expansión</li>
+              <li>- Tradear Asia sin contexto de sesión = sufrir los barridos que vendrán</li>
             </ul>
           </section>
 
@@ -186,20 +186,20 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La apertura de Nueva York (13h30-14h30 UTC según la estación) coincide con la llegada masiva del volumen institucional americano, además de la sesión de Londres ya activa. Esta superposición produce frecuentemente las expansiones más violentas del día: impulso explosivo en una dirección, sweep de un máximo o un mínimo reciente, y luego retroceso franco en el otro sentido. Los setups SMC/ICT preparados con antelación (PD Arrays, equal highs/lows) suelen « resolverse » en pocas velas en la apertura de NY.
+              La apertura de Nueva York (13h30-14h30 UTC según la estación) coincide con la llegada masiva del volumen institucional americano, además de la sesión de Londres ya activa. Esta superposición produce frecuentemente las expansiones más violentas del día: impulso explosivo en una dirección, barrido de un máximo o un mínimo reciente, y luego retroceso franco en el otro sentido. Los setups SMC/ICT preparados con antelación (PD Arrays, equal highs/lows) suelen « resolverse » en pocas velas en la apertura de NY.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Gráfico M15 XAU/USD: justo antes de la apertura de Nueva York, el precio consolida alrededor de 4 640 $ en velas planas de baja amplitud. En la apertura, después de 13h30-14h30 UTC según la estación, una vela explosiva alcista de 28 $ proyecta el precio a 4 668 $, donde una mecha de sweep marca el máximo. En los minutos que siguen, una cascada roja regresa el precio a 4 610 $, una amplitud de 58 $ total en la primera hora de NY, es decir más que toda la víspera.
+                Gráfico M15 XAU/USD: justo antes de la apertura de Nueva York, el precio consolida alrededor de 4 640 $ en velas planas de baja amplitud. En la apertura, después de 13h30-14h30 UTC según la estación, una vela explosiva alcista de 28 $ proyecta el precio a 4 668 $, donde una mecha de barrido marca el máximo. En los minutos que siguen, una cascada roja regresa el precio a 4 610 $, una amplitud de 58 $ total en la primera hora de NY, es decir más que toda la víspera.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- NY Open = superposición London + flujo US = pico de volatilidad</li>
               <li>- Los setups preparados en HTF suelen resolverse en esta ventana</li>
-              <li>- Sweep + retroceso franco es el patrón más frecuente</li>
+              <li>- Barrido + retroceso franco es el patrón más frecuente</li>
               <li>- Tradear antes de NY Open sin plan = tradear el ruido que lo precede</li>
             </ul>
           </section>
@@ -213,20 +213,20 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El mismo setup técnico, una resistencia H1 testeada, producirá reacciones radicalmente diferentes según el momento en que llega el test. En plena Asia Session, la resistencia puede ser tocada y solo generar una lateralización floja; en London Open, el mismo nivel puede producir un sweep franco seguido de un impulso bajista de 30 pips. La Killzone no es un disparador en sí, es un FILTRO de timing: se espera que el contexto horario sea propicio antes de tomar un setup, aunque esté bien preparado técnicamente.
+              El mismo setup técnico, una resistencia H1 testeada, producirá reacciones radicalmente diferentes según el momento en que llega el test. En plena Asia Session, la resistencia puede ser tocada y solo generar una lateralización floja; en London Open, el mismo nivel puede producir un barrido franco seguido de un impulso bajista de 30 pips. La Killzone no es un disparador en sí, es un FILTRO de timing: se espera que el contexto horario sea propicio antes de tomar un setup, aunque esté bien preparado técnicamente.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD: la resistencia H1 en 1.1780 es testeada dos veces el mismo día. Primer test a las 03h UTC en plena Asia: el precio toca, produce una vela de rechazo de 4 pips, y luego se cala en lateralización durante 2h sin desplazamiento. Segundo test en la apertura de London: el precio toca, sweep en 1.1792, y luego cascada bajista de 35 pips en 4 velas. Mismo setup, dos resultados, la diferencia es únicamente el timing.
+                EUR/USD: la resistencia H1 en 1.1780 es testeada dos veces el mismo día. Primer test a las 03h UTC en plena Asia: el precio toca, produce una vela de rechazo de 4 pips, y luego se cala en lateralización durante 2h sin desplazamiento. Segundo test en la apertura de London: el precio toca, barrido en 1.1792, y luego cascada bajista de 35 pips en 4 velas. Mismo setup, dos resultados, la diferencia es únicamente el timing.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Un setup ICT solo vale si el timing también lo es</li>
               <li>- Fuera de Killzone: reacción floja, lateralización, señales falsas</li>
-              <li>- En Killzone: sweep franco, impulso, desplazamiento real</li>
+              <li>- En Killzone: barrido franco, impulso, desplazamiento real</li>
               <li>- El filtro horario elimina el 80 % de los « setups correctos » no rentables</li>
             </ul>
           </section>
@@ -245,27 +245,27 @@ export default function ContentEs() {
                 <li>- Conclusión: sesgo bajista, se buscarán shorts en el próximo test de zona superior</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Asia Session (00h-07h UTC): identificar el range</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Asia Session (00h-07h UTC): identificar el rango</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: el precio oscila entre 1.1710 y 1.1725 durante la sesión asiática</li>
-                <li>- Conclusión: range Asia trazado, niveles anotados. Los stops debajo de 1.1710 y arriba de 1.1725 son objetivos potenciales para London / NY</li>
+                <li>- Conclusión: rango Asia trazado, niveles anotados. Los stops debajo de 1.1710 y arriba de 1.1725 son objetivos potenciales para London / NY</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 3. London Open (07h-10h UTC): esperar el sweep</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 3. London Open (07h-10h UTC): esperar el barrido</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observación: a las 08h15, el precio rompe debajo de 1.1710, baja a 1.1702 (sweep de los stops debajo del range Asia), y luego un impulso alcista arranca</li>
-                <li>- Conclusión: sweep completo, pero el sesgo Daily sigue vendedor. Se espera el siguiente objetivo: la resistencia 1.1780</li>
+                <li>- Observación: a las 08h15, el precio rompe debajo de 1.1710, baja a 1.1702 (barrido de los stops debajo del rango Asia), y luego un impulso alcista arranca</li>
+                <li>- Conclusión: barrido completo, pero el sesgo Daily sigue vendedor. Se espera el siguiente objetivo: la resistencia 1.1780</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Etapa 4. Ejecución (M15 durante NY Open)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observación: en la apertura NY (13h30-14h30 UTC según la estación), el precio sube a testear 1.1780, sweep en 1.1792, reintegración debajo de 1.1780, vela bajista impulsiva M15 que rompe el mínimo local en 1.1762</li>
-                <li>- Conclusión: entrada short en 1.1758 (timing Killzone + setup ICT alineado), SL en 1.1795 (arriba del sweep), TP hacia 1.1695. R/R ≈ 1: 1,7, setup de alta probabilidad porque está alineado Daily + range Asia + NY Open</li>
+                <li>- Observación: en la apertura NY (13h30-14h30 UTC según la estación), el precio sube a testear 1.1780, barrido en 1.1792, reintegración debajo de 1.1780, vela bajista impulsiva M15 que rompe el mínimo local en 1.1762</li>
+                <li>- Conclusión: entrada short en 1.1758 (timing Killzone + setup ICT alineado), SL en 1.1795 (arriba del barrido), TP hacia 1.1695. R/R ≈ 1: 1,7, setup de alta probabilidad porque está alineado Daily + rango Asia + NY Open</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = sesgo · Asia = liquidity · London/NY = ejecución · Fuera de Killzone = se espera
+                  HTF = sesgo · Asia = liquidez · London/NY = ejecución · Fuera de Killzone = se espera
                 </p>
               </div>
             </div>
@@ -274,7 +274,7 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "El mercado solo produce sus verdaderos movimientos en ciertas ventanas horarias (Killzones), no de forma continua.",
-              "La Asia Session suele servir de bolsa de liquidity; Londres y NY vienen a hacer sweep antes de impulsar.",
+              "La Asia Session suele servir de bolsa de liquidez; Londres y NY vienen a hacer barrido antes de impulsar.",
               "El mismo setup técnico produce reacciones radicalmente distintas según el timing horario.",
               "La Killzone es un filtro, no un disparador: sin timing favorable, se espera incluso ante un setup perfecto.",
             ]}
@@ -283,8 +283,8 @@ export default function ContentEs() {
           <LessonExercice
             description="En TradingView, observa un día completo en un par mayor e identifica dónde las Killzones producen los verdaderos movimientos."
             steps={[
-              "Identifica visualmente la sesión asiática (00h-07h UTC) en M15: anota la amplitud del range y el tamaño de las velas.",
-              "Marca la apertura de London (07h UTC) y de NY (13h30-14h30 UTC según la estación). Observa las 1-2 primeras horas de cada Killzone: ¿sweep del range Asia? ¿impulso franco? ¿amplitud comparada con la sesión asiática?",
+              "Identifica visualmente la sesión asiática (00h-07h UTC) en M15: anota la amplitud del rango y el tamaño de las velas.",
+              "Marca la apertura de London (07h UTC) y de NY (13h30-14h30 UTC según la estación). Observa las 1-2 primeras horas de cada Killzone: ¿barrido del rango Asia? ¿impulso franco? ¿amplitud comparada con la sesión asiática?",
               "El mismo día, identifica un setup técnico (test de resistencia, FVG, equal highs) que se haya jugado EN Killzone y otro que se haya jugado FUERA de Killzone. Compara la calidad de la reacción.",
             ]}
           />
@@ -298,7 +298,7 @@ export default function ContentEs() {
               "Tomas el otro sentido suponiendo que la Asia va a romper el sesgo Daily",
             ]}
             correctIndex={0}
-            explanation="La Killzone es un filtro de timing, no un detalle accesorio. Un setup perfecto técnicamente pero que se presenta durante la Asia Session tiene una probabilidad muy baja de reacción franca, al mercado simplemente le falta volumen para producir un verdadero impulso. La disciplina consiste en esperar London Open o NY Open. Si el precio hace sweep del nivel durante la Asia, es a menudo un movimiento falso que será reintegrado cuando llegue el verdadero volumen."
+            explanation="La Killzone es un filtro de timing, no un detalle accesorio. Un setup perfecto técnicamente pero que se presenta durante la Asia Session tiene una probabilidad muy baja de reacción franca, al mercado simplemente le falta volumen para producir un verdadero impulso. La disciplina consiste en esperar London Open o NY Open. Si el precio hace barrido del nivel durante la Asia, es a menudo un movimiento falso que será reintegrado cuando llegue el verdadero volumen."
             answerExplanations={[
               "Correcto. La Killzone filtra el timing incluso cuando el setup es técnicamente perfecto. Fuera de Killzone, la probabilidad de reacción franca cae drásticamente. La disciplina ICT consiste en esperar que el timing horario valide el setup antes de entrar.",
               "Falso. « No importa la hora » es lo opuesto del modelo ICT. El timing es tan determinante como el setup mismo, un setup perfecto fuera de Killzone es estadísticamente no rentable, sin importar su calidad técnica.",

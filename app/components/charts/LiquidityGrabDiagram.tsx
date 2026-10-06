@@ -1,23 +1,23 @@
 export function LiquidityGrabDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const t = locale === "es"
     ? {
-        title: "Liquidity grab — el sweep antes del verdadero movimiento",
-        sweep: "Sweep",
+        title: "Toma de liquidez — el barrido antes del verdadero movimiento",
+        sweep: "Barrido",
         rejet: "Rechazo bajo el nivel",
         retournement: "Reversión",
         equalHighs: "Equal highs (BSL)",
-        caption: "El sweep barre los stops antes del verdadero movimiento institucional",
-        mobileTitle: "Liquidity grab — el sweep antes del verdadero movimiento",
+        caption: "El barrido barre los stops antes del verdadero movimiento institucional",
+        mobileTitle: "Toma de liquidez — el barrido antes del verdadero movimiento",
         m1Part1: "Cluster de stops formado por encima de los ",
         m1Bold: "equal highs",
         m1Part2: " (liquidez visible).",
         m2Part1: "Una mecha penetra el nivel para ",
         m2Bold: "disparar los stops",
-        m2Part2: " — sweep institucional.",
+        m2Part2: " — barrido institucional.",
         m3Part1: "Una vez absorbida la liquidez, el precio ",
         m3Bold: "vuelve en sentido opuesto",
         m3Part2: ".",
-        mobileFooter: "El sweep barre los stops antes del verdadero movimiento institucional.",
+        mobileFooter: "El barrido barre los stops antes del verdadero movimiento institucional.",
       }
     : locale === "en"
     ? {
@@ -40,13 +40,13 @@ export function LiquidityGrabDiagram({ className = "", locale = "fr" }: { classN
         mobileFooter: "The sweep takes out stops before the real institutional move.",
       }
     : {
-        title: "Liquidity grab — le sweep avant le vrai mouvement",
+        title: "Prise de liquidité — le sweep avant le vrai mouvement",
         sweep: "Sweep",
         rejet: "Rejet sous le niveau",
         retournement: "Retournement",
         equalHighs: "Equal highs (BSL)",
         caption: "Le sweep balaie les stops avant le vrai mouvement institutionnel",
-        mobileTitle: "Liquidity grab — le sweep avant le vrai mouvement",
+        mobileTitle: "Prise de liquidité — le sweep avant le vrai mouvement",
         m1Part1: "Cluster de stops formé au-dessus des ",
         m1Bold: "equal highs",
         m1Part2: " (liquidité visible).",
@@ -144,7 +144,7 @@ export function LiquidityGrabDiagram({ className = "", locale = "fr" }: { classN
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
       <p className="text-[14px] font-bold text-red-400 text-center">{t.mobileTitle}</p>
       {/* Mini-SVG : equal highs + stops cluster + mèche sweep + retournement bearish */}
-      <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="Liquidity grab" fill="none">
+      <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label={locale === "es" ? "Toma de liquidez" : locale === "en" ? "Liquidity grab" : "Prise de liquidité"} fill="none">
         {/* Ligne equal highs */}
         <line x1="15" y1="40" x2="265" y2="40" stroke="#ef4444" strokeWidth="0.9" strokeDasharray="3 2" />
         <text x="20" y="35" fontSize="8" fill="#ef4444" fontWeight="600">Equal highs</text>
@@ -161,7 +161,7 @@ export function LiquidityGrabDiagram({ className = "", locale = "fr" }: { classN
         {/* Flèche sweep amber pointant la mèche */}
         <line x1="180" y1="20" x2="148" y2="18" stroke="#f59e0b" strokeWidth="1" strokeDasharray="2 2" />
         <rect x="180" y="13" width="50" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.6" />
-        <text x="205" y="22" fontSize="8" fill="#f59e0b" textAnchor="middle" fontWeight="700">Sweep</text>
+        <text x="205" y="22" fontSize="8" fill="#f59e0b" textAnchor="middle" fontWeight="700">{locale === "es" ? "Barrido" : locale === "en" ? "Sweep" : "Sweep"}</text>
         {/* Retournement bearish après sweep */}
         <path d="M145,60 L170,80 L195,100 L225,118 L260,125"
           stroke="#ef4444" strokeWidth="1.8" fill="none" strokeLinejoin="round" strokeLinecap="round" />

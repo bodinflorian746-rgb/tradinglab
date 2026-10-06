@@ -13,7 +13,7 @@ export default function ContentEs() {
       subtitle="Un trade sin plan es una decisión emocional. El plan de trading transforma tu análisis en acciones precisas, y elimina la improvisación en el peor momento."
       duration="20 min"
       lessonNumber={8}
-      prev={{ href: "/formations/intermediaire/lecon7", label: "Lección 7: Multi-Timeframe" }}
+      prev={{ href: "/formations/intermediaire/lecon7", label: "Lección 7: Análisis multitemporal" }}
       next={{ href: "/formations/intermediaire/lecon9", label: "Lección 9: Fibonacci" }}
     >
 

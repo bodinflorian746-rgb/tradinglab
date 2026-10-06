@@ -49,7 +49,7 @@ const lessons = [
   {
     id: "lecon6",
     number: 6,
-    title: "Macro et risk management",
+    title: "Macro et gestion du risque",
     duration: "12 min",
     description: "Adapter ton risque au contexte macro, fenêtres dangereuses, grille de décision et règles d'or.",
     href: "/formations/macro/debutant/lecon6",

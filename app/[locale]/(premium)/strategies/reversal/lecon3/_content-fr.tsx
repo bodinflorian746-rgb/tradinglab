@@ -12,7 +12,7 @@ import DivergenceWithoutBreakoutDiagram from "@/app/components/charts/Divergence
 
 const LESSONS = [
   { id: "lecon1", slug: "lecon1", title: "Double top / Double bottom : la signature du retournement", duration: "16 min", disabled: false },
-  { id: "lecon2", slug: "lecon2", title: "Head & Shoulders : le retournement majeur", duration: "18 min", disabled: false },
+  { id: "lecon2", slug: "lecon2", title: "Épaule-tête-épaule : le retournement majeur", duration: "18 min", disabled: false },
   { id: "lecon3", slug: "lecon3", title: "Divergence RSI : quand le momentum trahit la tendance", duration: "17 min", disabled: false },
   { id: "lecon4", slug: "lecon4", title: "Leçon 4", duration: "", disabled: true },
 ];
@@ -125,7 +125,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Structure de marché HH/HL/LL/LH → cf. Formation Trading L3</li>
               <li>- Indicateur RSI, oscillateur de momentum → cf. Formation Trading L4</li>
-              <li>- Double Top / Head &amp; Shoulders → cf. Stratégie Reversal L1 ou L2</li>
+              <li>- Double Top / Épaule-tête-épaule → cf. Stratégie Reversal L1 ou L2</li>
             </ul>
           </div>
 
@@ -242,9 +242,9 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Filtres : quand ne pas prendre le setup</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Divergence sans cassure de structure.</span> <span className="text-zinc-300">Une divergence seule ne suffit jamais. Tant que le prix continue à faire des HH/HL ou des LH/LL, la tendance reste valide. La cassure du dernier creux ou sommet structurel est attendue.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Divergence sur petit timeframe (M5 ou M15).</span> <span className="text-zinc-300">Les divergences sur très petits timeframes produisent énormément de bruit. Timeframe minimum : H1. H4 reste le plus propre.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Divergence sur petite unité de temps (M5 ou M15).</span> <span className="text-zinc-300">Les divergences sur très petites unités de temps produisent énormément de bruit. Unité de temps minimum : H1. H4 reste le plus propre.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Divergence cachée confondue avec classique.</span> <span className="text-zinc-300">Les divergences cachées servent à détecter une continuation, pas un retournement. Les classiques sont à privilégier en priorité pour leur lisibilité supérieure.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. News majeure dans la fenêtre.</span> <span className="text-zinc-300">Si FOMC, NFP ou CPI arrive dans les 30 minutes, le setup n&apos;est pas pris. Une news peut casser complètement la divergence.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. Annonce majeure dans la fenêtre.</span> <span className="text-zinc-300">Si FOMC, NFP ou CPI arrive dans les 30 minutes, le setup n&apos;est pas pris. Une annonce peut casser complètement la divergence.</span></div>
             </div>
           </section>
 
@@ -252,7 +252,7 @@ export default function ContentFr() {
             points={[
               "Divergence = prix et RSI pointent dans des directions opposées. Divergence baissière = prix HH + RSI LH. Divergence haussière = prix LL + RSI HL.",
               "Une divergence seule ne suffit JAMAIS. La cassure du dernier creux/sommet structurel est attendue pour confirmer.",
-              "Minimum H1, idéalement H4. Les divergences sur petits timeframes sont du bruit.",
+              "Minimum H1, idéalement H4. Les divergences sur petites unités de temps sont du bruit.",
               "La divergence classique (retournement) se distingue de la divergence cachée (continuation). Pour débuter, seules les classiques sont à trader.",
             ]}
           />
@@ -263,7 +263,7 @@ export default function ContentFr() {
               "Vérifier que le prix forme un HH : 4 740$ > 4 720$, OK",
               "Vérifier que le RSI forme un LH : 72 < 78, OK, divergence baissière confirmée",
               "Confirmer la cassure structurelle : clôture à 4 685$ sous le creux 4 690$, OK",
-              "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
+              "Vérifier qu’aucune annonce majeure n’est prévue dans les 30 prochaines minutes",
               "Prendre l’entrée short à 4 685$, SL au-dessus de la mèche du sommet 2 (par exemple 4 750$), TP measured move étendu vers 4 585$ pour viser un R/R 1,5 à 2:1",
             ]}
           />

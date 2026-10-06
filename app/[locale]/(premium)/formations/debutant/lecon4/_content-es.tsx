@@ -83,7 +83,7 @@ export default function ContentEs() {
         },
         {
           title: "El spread varía según las condiciones",
-          content: "El spread no es fijo. Depende de la liquidity del mercado, cuántos compradores y vendedores están activos en ese momento. Mientras más actividad, más ajustado es el spread y menos pagas.",
+          content: "El spread no es fijo. Depende de la liquidez del mercado, cuántos compradores y vendedores están activos en ese momento. Mientras más actividad, más ajustado es el spread y menos pagas.",
           visual: <SpreadVariationDiagram />,
           items: [
             "EUR/USD en horas pico (9h–17h): 1–2 puntos, costo mínimo",

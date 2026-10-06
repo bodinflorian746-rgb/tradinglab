@@ -142,9 +142,9 @@ export default function ContentEs() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Tendencia alcista: sucesión HH/HL ascendente → trade long en pullback</li>
-              <li>- Range lateral: oscilación entre 2 niveles → trade en range o esperar el breakout</li>
+              <li>- Rango lateral: oscilación entre 2 niveles → trade en rango o esperar el breakout</li>
               <li>- Tendencia bajista: sucesión LL/LH descendente → trade short en pullback</li>
-              <li>- Timeframe principal de identificación: H4. La confirmación en Daily refuerza el sesgo</li>
+              <li>- Temporalidad principal de identificación: H4. La confirmación en Daily refuerza el sesgo</li>
             </ul>
           </section>
 

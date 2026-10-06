@@ -14,7 +14,7 @@ export function ConfluenceDiagram({ className = "", locale = "fr" }: ConfluenceD
     fibDesc:          isEs ? "· nivel de retroceso clave" : isEn ? "· key retracement level" : "· niveau de retracement clé",
     supportHist:      isEs ? "Soporte histórico" : isEn ? "Historical support" : "Support historique",
     supportHistDesc:  isEs ? "· zona ya respetada por el precio" : isEn ? "· zone already respected by price" : "· zone déjà respectée par le prix",
-    psychoLevel:      isEs ? "Nivel psicológico" : isEn ? "Psychological level" : "Niveau psychologique",
+    psychoLevel:      isEs ? "Nivel psicológico" : isEn ? "Psychological level" : "Chiffre rond",
     psychoDesc:       isEs ? "· número redondo (1.1800)" : isEn ? "· round number (1.1800)" : "· chiffre rond (1.1800)",
     rebound:          isEs ? "→ rebote en la intersección de los 3 niveles" : isEn ? "→ bounce at the intersection of the 3 levels" : "→ rebond à l'intersection des 3 niveaux",
     legendDemand:     isEs ? "Zona de confluencia" : isEn ? "Demand Zone" : "Zone de confluence",

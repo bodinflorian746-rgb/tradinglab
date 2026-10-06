@@ -41,7 +41,7 @@ export default function ContentEs() {
           {[
             {
               phase: "Antes del trade",
-              items: ["Instrumento & timeframe", "Sesgo de mercado (alcista / bajista / neutro)", "Confluencias identificadas (OB, FVG, liquidity, OTE...)", "Entrada prevista, SL, TP", "Ratio R/R calculado", "Screenshot del setup"],
+              items: ["Instrumento & temporalidad", "Sesgo de mercado (alcista / bajista / neutro)", "Confluencias identificadas (OB, FVG, liquidez, OTE...)", "Entrada prevista, SL, TP", "Ratio R/R calculado", "Screenshot del setup"],
             },
             {
               phase: "Después del trade",

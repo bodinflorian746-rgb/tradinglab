@@ -163,7 +163,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Golden cross: MM20 &gt; MM50 &gt; MM200, ascendentes → sesgo long, setups long únicamente</li>
               <li>- Death cross: MM20 &lt; MM50 &lt; MM200, descendentes → sesgo short, setups short únicamente</li>
-              <li>- Range: 3 MM entrelazadas, pendiente nula → sin sesgo, esperar clarificación</li>
+              <li>- Rango: 3 MM entrelazadas, pendiente nula → sin sesgo, esperar clarificación</li>
               <li>- Setup contrario al sesgo MM200 = tasa de éxito reducida, evitar sin confluencia excepcional</li>
             </ul>
           </section>
@@ -239,13 +239,13 @@ export default function ContentEs() {
               "Validar la trendline bajista: 3 LH confirmados en 4 680$, 4 650$, 4 620$, trendline tradeable",
               "Identificar la confluencia: MM50 H4 en 4 605$ + trendline que pasa por 4 600$ = zona de confluencia 4 600$-4 605$",
               "Verificar el sesgo MM200 H4: precio bajo 4 720$ = sesgo short alineado, setup conforme",
-              "Esperar la señal de rechazo bajista (pin bar alta, engulfing bajista) al contacto de la zona 4 600$-4 605$ para validar la entrada",
+              "Esperar la señal de rechazo bajista (pin bar alta, envolvente bajista) al contacto de la zona 4 600$-4 605$ para validar la entrada",
               "Armar el plan: entrada short al cierre de la señal, stop loss en 4 615$ (10$ por encima de la MM50), take profit en 4 555$ (LL anterior, nivel 1) o 4 510$ (extensión bajista, nivel 2). Tamaño de posición según el riesgo por trade adaptado al capital",
             ]}
           />
 
           <LessonQuiz
-            question="El precio toca la MM50 H4 en EUR/USD sin señal de rechazo explícita (sin pin bar, sin engulfing), en una tendencia alcista confirmada. ¿Cuál es el veredicto operativo?"
+            question="El precio toca la MM50 H4 en EUR/USD sin señal de rechazo explícita (sin pin bar, sin envolvente), en una tendencia alcista confirmada. ¿Cuál es el veredicto operativo?"
             options={[
               "Setup explotable, el simple contacto con la MM50 basta",
               "Setup inválido, la ausencia de señal de rechazo descalifica la entrada",
@@ -253,7 +253,7 @@ export default function ContentEs() {
               "Indeterminado sin confirmación Fibonacci",
             ]}
             correctIndex={1}
-            explanation="El contacto con una MM no dispara automáticamente una entrada. Una señal de price action explícita (pin bar de rechazo, engulfing en el sentido de la tendencia, o reacción inmediata sin penetración significativa) debe confirmar el rebote. Sin señal, la MM puede atravesarse sin rebote significativo, sobre todo en tendencia moderada. El trade tomado por simple contacto termina frecuentemente en pérdida."
+            explanation="El contacto con una MM no dispara automáticamente una entrada. Una señal de price action explícita (pin bar de rechazo, envolvente en el sentido de la tendencia, o reacción inmediata sin penetración significativa) debe confirmar el rebote. Sin señal, la MM puede atravesarse sin rebote significativo, sobre todo en tendencia moderada. El trade tomado por simple contacto termina frecuentemente en pérdida."
           />
 
         </div>

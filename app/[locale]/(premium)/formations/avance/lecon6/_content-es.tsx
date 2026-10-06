@@ -23,7 +23,7 @@ export default function ContentEs() {
           Un stop hunt ocurre cuando el precio rebasa brevemente un nivel clave, soporte, resistencia, Equal High o Equal Low, solo para disparar los stops de los traders posicionados en ese nivel. Una vez ejecutados los stops, el precio regresa de inmediato en dirección opuesta.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          No es una conspiración. Es una mecánica natural: los stops de los traders retail constituyen <span className="text-white font-medium">pools de liquidity</span> que las instituciones deben consumir para ejecutar sus propias órdenes masivas.
+          No es una conspiración. Es una mecánica natural: los stops de los traders retail constituyen <span className="text-white font-medium">pools de liquidez</span> que las instituciones deben consumir para ejecutar sus propias órdenes masivas.
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-4">
@@ -54,7 +54,7 @@ export default function ContentEs() {
             },
             {
               label: "Retroceso brutal y rápido",
-              detail: "Tras el spike, el precio se va con violencia en el otro sentido. Ese movimiento está alimentado por las posiciones de las instituciones que acaban de obtener su liquidity.",
+              detail: "Tras el spike, el precio se va con violencia en el otro sentido. Ese movimiento está alimentado por las posiciones de las instituciones que acaban de obtener su liquidez.",
             },
             {
               label: "Niveles a evitar: EQH y EQL",
@@ -84,8 +84,8 @@ export default function ContentEs() {
           {[
             { step: "1", text: "Identifica un nivel con acumulación de stops: EQH, EQL, resistencia o soporte evidente." },
             { step: "2", text: "Espera que el precio haga spike más allá del nivel pero no cierre del lado opuesto." },
-            { step: "3", text: "Confirma el retroceso: vela de rechazo (pin bar, engulfing) que regresa a la zona." },
-            { step: "4", text: "Entra en el sentido del retroceso. SL más allá del pico del spike. TP hacia el nivel de liquidity opuesto." },
+            { step: "3", text: "Confirma el retroceso: vela de rechazo (pin bar, envolvente) que regresa a la zona." },
+            { step: "4", text: "Entra en el sentido del retroceso. SL más allá del pico del spike. TP hacia el nivel de liquidez opuesto." },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-emerald-400 shrink-0 mt-0.5 w-4">{item.step}</span>
@@ -115,13 +115,13 @@ export default function ContentEs() {
         <p className="text-emerald-400 uppercase tracking-widest text-xs font-bold mb-4">¿Y TÚ, RETAIL?</p>
         <div className="text-zinc-300 leading-relaxed space-y-3">
           <p>
-            Martes en la noche, 20h. Capital 700€. Tienes 30 minutos antes de cenar. Abres tu chart XAU/USD H1. Ves una resistencia que ya fue testeada 3 veces estas últimas semanas en 4 650$. Una zona demasiado evidente. Exactamente el tipo de nivel donde las instituciones saben que hay liquidity arriba de los highs.
+            Martes en la noche, 20h. Capital 700€. Tienes 30 minutos antes de cenar. Abres tu chart XAU/USD H1. Ves una resistencia que ya fue testeada 3 veces estas últimas semanas en 4 650$. Una zona demasiado evidente. Exactamente el tipo de nivel donde las instituciones saben que hay liquidez arriba de los highs.
           </p>
           <p>
-            Una vela H1 hace spike hasta 4 670$, con una larga mecha por encima de la resistencia, y luego cierra debajo de los 4 650$. La vela siguiente es bearish y confirma el rechazo. La BSL acaba de ser tomada. Los stops de los vendedores saltaron, la liquidity fue recuperada y el mercado se niega a aguantar arriba de la zona. La trampa terminó.
+            Una vela H1 hace spike hasta 4 670$, con una larga mecha por encima de la resistencia, y luego cierra debajo de los 4 650$. La vela siguiente es bearish y confirma el rechazo. La BSL acaba de ser tomada. Los stops de los vendedores saltaron, la liquidez fue recuperada y el mercado se niega a aguantar arriba de la zona. La trampa terminó.
           </p>
           <p>
-            En concreto: entrada short a 4 645$, SL en 4 680$ por encima del spike, TP en 4 580$ hacia la próxima liquidity baja. Arriesgas 21€ (3% de 700€, adaptado a tu capital), puedes ganar unos 39€. Cierras tu chart, te vas a cenar. Lo revisarás antes de dormir.
+            En concreto: entrada short a 4 645$, SL en 4 680$ por encima del spike, TP en 4 580$ hacia la próxima liquidez baja. Arriesgas 21€ (3% de 700€, adaptado a tu capital), puedes ganar unos 39€. Cierras tu chart, te vas a cenar. Lo revisarás antes de dormir.
           </p>
         </div>
       </div>
@@ -138,7 +138,7 @@ export default function ContentEs() {
           "Los EQH y EQL son los blancos favoritos de los stop hunts, desconfía de los niveles 'demasiado evidentes'.",
           "Señal: mecha larga que perfora un nivel + cierre del lado opuesto + retroceso violento.",
           "Nunca sigas la mecha de un spike, espera la confirmación del retroceso antes de entrar.",
-          "Después de un stop hunt confirmado: SL ajustado más allá del pico, TP hacia la liquidity opuesta.",
+          "Después de un stop hunt confirmado: SL ajustado más allá del pico, TP hacia la liquidez opuesta.",
         ]}
       />
 
@@ -161,11 +161,11 @@ export default function ContentEs() {
           "Colocas una orden de compra arriba del pico del spike para seguir el momentum",
         ]}
         correctIndex={2}
-        explanation="Un spike por encima de los Equal Highs con cierre por debajo es la firma de un stop hunt sobre la Buy-side Liquidity (BSL). Las instituciones acaban de tomar la liquidity de los stops de los shorts. El retroceso bajista que sigue está alimentado por las ventas institucionales, es una zona donde buscar una confirmación de venta, no una señal en sí misma."
+        explanation="Un spike por encima de los Equal Highs con cierre por debajo es la firma de un stop hunt sobre la liquidez buy-side (BSL). Las instituciones acaban de tomar la liquidez de los stops de los shorts. El retroceso bajista que sigue está alimentado por las ventas institucionales, es una zona donde buscar una confirmación de venta, no una señal en sí misma."
         answerExplanations={[
           "Falso. El cierre debajo de la resistencia invalida la ruptura. No es un breakout, es precisamente un false breakout (stop hunt). Comprar aquí es posicionarte del lado equivocado del movimiento institucional.",
           "Falso. No es ambiguo para alguien que conoce los stop hunts. La firma es clara: spike + mecha larga + cierre del lado opuesto. Es una señal de alerta, no una situación neutra.",
-          "Correcto. Un spike en los EQH con regreso debajo de la resistencia = stop hunt sobre la BSL. Las instituciones vendieron en ese spike. La probabilidad de una continuación bajista es alta, vigila un engulfing o pin bar bajista para entrar.",
+          "Correcto. Un spike en los EQH con regreso debajo de la resistencia = stop hunt sobre la BSL. Las instituciones vendieron en ese spike. La probabilidad de una continuación bajista es alta, vigila una envolvente o pin bar bajista para entrar.",
           "Falso. Colocar una orden por encima del spike es esperar que la ruptura sea real. Pero la señal es exactamente la opuesta: el precio rechazó ese nivel con fuerza. Te dispondrías a entrar en la dirección del stop hunt, no en la dirección institucional.",
         ]}
       />

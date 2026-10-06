@@ -42,22 +42,22 @@ function Pastille({ x, y, label, color, textColor, arrow }: PastilleProps) {
 export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
   const L = locale === "es"
     ? {
-        hsTitle: "Head & Shoulders — fin de tendencia alcista",
-        ihsTitle: "H&S Invertido — fin de tendencia bajista",
+        hsTitle: "Hombro-cabeza-hombro — fin de tendencia alcista",
+        ihsTitle: "HCH Invertido — fin de tendencia bajista",
         shoulders: "Hombros",
         shoulderL: "Hombro I",
         head: "Cabeza",
         shoulderR: "Hombro D",
-        neckline: "Neckline",
+        neckline: "Línea clavicular",
         breakout: "Ruptura",
-        mobileTitle: "Head & Shoulders — 2 variantes",
-        classicTitle: "H&S clásico — Reversión BAJISTA",
+        mobileTitle: "Hombro-cabeza-hombro — 2 variantes",
+        classicTitle: "HCH clásico — Reversión BAJISTA",
         classicDesc1: "3 cimas: Hombro I → Cabeza (más alta) → Hombro D. Ruptura bajo la ",
         classicDesc2: " = señal short.",
-        invTitle: "H&S invertido — Reversión ALCISTA",
+        invTitle: "HCH invertido — Reversión ALCISTA",
         invDesc1: "3 mínimos: Hombro I → Cabeza (más bajo) → Hombro D. Ruptura sobre la ",
         invDesc2: " = señal long.",
-        footer: "Patrón de reversión mayor, válido tras ruptura de la neckline.",
+        footer: "Patrón de reversión mayor, válido tras ruptura de la línea clavicular.",
       }
     : locale === "en"
     ? {
@@ -79,22 +79,22 @@ export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" 
         footer: "Major reversal pattern, valid after neckline break.",
       }
     : {
-        hsTitle: "Head & Shoulders — fin de tendance haussière",
-        ihsTitle: "H&S Inversé — fin de tendance baissière",
+        hsTitle: "Épaule-tête-épaule — fin de tendance haussière",
+        ihsTitle: "ETE inversé — fin de tendance baissière",
         shoulders: "Épaules",
         shoulderL: "Épaule G",
         head: "Tête",
         shoulderR: "Épaule D",
-        neckline: "Neckline",
+        neckline: "Ligne de cou",
         breakout: "Cassure",
-        mobileTitle: "Head & Shoulders — 2 variantes",
-        classicTitle: "H&S classique — Retournement BAISSIER",
+        mobileTitle: "Épaule-tête-épaule — 2 variantes",
+        classicTitle: "ETE classique — Retournement BAISSIER",
         classicDesc1: "3 sommets : Épaule G → Tête (plus haut) → Épaule D. Cassure sous la ",
         classicDesc2: " = signal short.",
-        invTitle: "H&S inversé — Retournement HAUSSIER",
+        invTitle: "ETE inversé — Retournement HAUSSIER",
         invDesc1: "3 creux : Épaule G → Tête (plus bas) → Épaule D. Cassure au-dessus de la ",
         invDesc2: " = signal long.",
-        footer: "Pattern de retournement majeur, valide après cassure de la neckline.",
+        footer: "Pattern de retournement majeur, valide après cassure de la ligne de cou.",
       };
   // ─── Head & Shoulders classique (bearish reversal) ─── x = 30 → 380
   const hsPts: [number, number][] = [
@@ -222,7 +222,7 @@ export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" 
           {/* Neckline */}
           <line x1="15" y1="85" x2="265" y2="85" stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
           <rect x="100" y="92" width="80" height="13" rx="2" fill="#71717a18" stroke="#52525b" strokeWidth="0.6" />
-          <text x="140" y="101" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">Neckline</text>
+          <text x="140" y="101" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">{locale === "es" ? "Línea clavicular" : locale === "en" ? "Neckline" : "Ligne de cou"}</text>
           {/* Pattern H&S — left shoulder, head, right shoulder */}
           <path d="M15,100 L55,55 L85,85 L140,20 L195,85 L225,55 L265,100" stroke="#ef4444" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
           <circle cx="55" cy="55" r="3" fill="#ef4444" opacity="0.7" />
@@ -239,11 +239,11 @@ export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" 
 
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">{L.classicTitle}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.classicDesc1}<span className="font-bold">neckline</span>{L.classicDesc2}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.classicDesc1}<span className="font-bold">{locale === "es" ? "línea clavicular" : locale === "en" ? "neckline" : "ligne de cou"}</span>{L.classicDesc2}</p>
         </div>
         <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
           <p className="text-[13px] font-bold text-emerald-400">{L.invTitle}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.invDesc1}<span className="font-bold">neckline</span>{L.invDesc2}</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.invDesc1}<span className="font-bold">{locale === "es" ? "línea clavicular" : locale === "en" ? "neckline" : "ligne de cou"}</span>{L.invDesc2}</p>
         </div>
         <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
           {L.footer}

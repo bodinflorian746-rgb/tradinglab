@@ -63,13 +63,13 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Identifier la tendance correctement</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          La tendance dépend du timeframe. Un marché peut être haussier en Daily et baissier en H1. La règle : le grand timeframe définit le biais. Tu trades dans son sens.
+          La tendance dépend de l'unité de temps. Un marché peut être haussier en Daily et baissier en H1. La règle : la grande unité de temps définit le biais. Tu trades dans son sens.
         </p>
         <div className="space-y-2.5">
           {[
             { label: "Daily ou H4 : le biais principal", detail: "C'est la tendance que tu dois respecter. Si Daily est haussier, tu cherches uniquement des achats." },
             { label: "H1 : les zones d'entrée", detail: "En tendance haussière Daily, le H1 montre les retracements (corrections). Ce sont tes fenêtres d'entrée." },
-            { label: "M15 : le timing précis", detail: "Sur M15, tu cherches le signal final (rejet, pin bar, engulfing). C'est le déclencheur de l'entrée." },
+            { label: "M15 : le timing précis", detail: "Sur M15, tu cherches le signal final (rejet, pin bar, avalement). C'est le déclencheur de l'entrée." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">

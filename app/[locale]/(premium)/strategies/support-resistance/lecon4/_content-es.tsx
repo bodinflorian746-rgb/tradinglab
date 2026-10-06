@@ -32,7 +32,7 @@ export default function ContentEs() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Estrategias</Link>
           <span>/</span>
-          <Link href="/strategies/support-resistance" className="hover:text-zinc-400 transition-colors">Support / Resistance &amp; Range</Link>
+          <Link href="/strategies/support-resistance" className="hover:text-zinc-400 transition-colors">Support / Resistance &amp; rango</Link>
           <span>/</span>
           <span className="text-zinc-500">Lección 4</span>
         </nav>
@@ -124,7 +124,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Identificación S/R → ver Estrategia SR L1</li>
               <li>- Concepto de cierre vs mecha → ver Formación Trading L2</li>
-              <li>- Noción de stop hunt / liquidity → ver Formación Trading L4</li>
+              <li>- Noción de stop hunt / liquidez → ver Formación Trading L4</li>
             </ul>
           </div>
 
@@ -183,7 +183,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Zona de cluster de stops situada justo más allá del nivel estructural (4 720$ → 4 745$)</li>
               <li>- La mecha pincha en la zona, dispara los stops, luego cierra bajo el nivel</li>
-              <li>- Continuación bajista rápida tras la absorción de la liquidity</li>
+              <li>- Continuación bajista rápida tras la absorción de la liquidez</li>
               <li>- El trade se toma en el sentido opuesto a la ruptura rechazada</li>
             </ul>
           </section>
@@ -202,7 +202,7 @@ export default function ContentEs() {
                 <li>- Vela 1: mecha 25$ por encima, cuerpo 5$, cierre en el límite</li>
                 <li>- Vela 2: cierre claro en 4 640$ (reintegración confirmada)</li>
                 <li>- Entrada short: 4 640$ (cierre de la vela de confirmación)</li>
-                <li>- Stop loss: 4 685$ (5$ por encima del wick en 4 680$)</li>
+                <li>- Stop loss: 4 685$ (5$ por encima de la mecha en 4 680$)</li>
                 <li>- Take profit: 4 540$ (zona de soporte identificada más abajo)</li>
               </ul>
 
@@ -228,9 +228,9 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "Un fake breakout combina 4 criterios: wick largo sin cierre claro, reintegración rápida, volumen desproporcionado, zona fuerte.",
+              "Un fake breakout combina 4 criterios: mecha larga sin cierre claro, reintegración rápida, volumen desproporcionado, zona fuerte.",
               "El trade se toma en el sentido opuesto a la ruptura rechazada, tras doble confirmación (cierre + 2ª vela).",
-              "El stop loss se coloca más allá del wick inicial con margen 3-5 pips.",
+              "El stop loss se coloca más allá de la mecha inicial con margen 3-5 pips.",
               "Los fake breakouts se observan preferentemente en zonas fuertes (3+ toques, niveles psicológicos).",
             ]}
           />
@@ -238,11 +238,11 @@ export default function ContentEs() {
           <LessonExercice
             description="En XAU/USD H1, la resistencia 4 650$ ha sido tocada 3 veces en 2 meses. Una vela imprime una mecha hasta 4 680$ y luego cierra en 4 655$. La vela siguiente cierra en 4 640$. ¿Cómo se construye el plan de trade fake breakout?"
             steps={[
-              "Validar los 4 criterios de detección: wick de 25$ por encima de la zona sin cierre claro, reintegración en 1 vela, zona fuerte (3 toques + nivel psicológico 4 650$)",
+              "Validar los 4 criterios de detección: mecha de 25$ por encima de la zona sin cierre claro, reintegración en 1 vela, zona fuerte (3 toques + nivel psicológico 4 650$)",
               "Validar la doble confirmación: vela 1 cierra en 4 655$ (en el límite), vela 2 cierra en 4 640$ (reintegración clara)",
               "Colocar la entrada short en 4 640$ (cierre de la vela de confirmación)",
-              "Colocar el stop loss en 4 685$ (5$ por encima del wick inicial en 4 680$)",
-              "Colocar el take profit en 4 560$ (zona de soporte identificada más abajo, ratio R/R 1:1,8), tamaño de posición según el risk management adaptado al capital",
+              "Colocar el stop loss en 4 685$ (5$ por encima de la mecha inicial en 4 680$)",
+              "Colocar el take profit en 4 560$ (zona de soporte identificada más abajo, ratio R/R 1:1,8), tamaño de posición según la gestión de riesgos adaptada al capital",
             ]}
           />
 
@@ -262,24 +262,24 @@ export default function ContentEs() {
             question="Una resistencia acaba de romperse al alza con un cierre claro. El precio retrocede luego hacia la zona. ¿Qué señal valida el flip y autoriza una entrada long sobre la zona convertida en soporte?"
             options={[
               "El simple retorno del precio a la zona basta",
-              "Una señal de rechazo (pin bar, engulfing, reacción neta) al contacto con la zona",
+              "Una señal de rechazo (pin bar, envolvente, reacción neta) al contacto con la zona",
               "Una ruptura de la siguiente zona",
               "Ninguna señal requerida, la entrada es mecánica",
             ]}
             correctIndex={1}
-            explanation="Sin señal de rechazo al contacto con la zona invertida, el flip no se valida. Una pin bar, un engulfing o una reacción neta confirman que la zona cumple su nuevo rol de soporte."
+            explanation="Sin señal de rechazo al contacto con la zona invertida, el flip no se valida. Una pin bar, una envolvente o una reacción neta confirman que la zona cumple su nuevo rol de soporte."
           />
 
           <LessonQuiz
             question="Una vela imprime una mecha más allá de una resistencia fuerte, luego cierra bajo el límite. ¿Qué confirmación adicional se requiere antes de considerar un trade short fake breakout?"
             options={[
               "Una segunda vela que mantiene o refuerza la reintegración en la zona",
-              "Ninguna confirmación, la entrada se hace en el wick rechazado",
+              "Ninguna confirmación, la entrada se hace en la mecha rechazada",
               "Una ruptura de la siguiente zona",
               "Un retroceso completo hacia la zona opuesta",
             ]}
             correctIndex={0}
-            explanation="La doble confirmación (cierre de la vela de rechazo en la zona + segunda vela que mantiene la reintegración) filtra los rechazos puntuales que finalmente se transforman en ruptura válida. Entrar en el wick inicial expone a un riesgo elevado."
+            explanation="La doble confirmación (cierre de la vela de rechazo en la zona + segunda vela que mantiene la reintegración) filtra los rechazos puntuales que finalmente se transforman en ruptura válida. Entrar en la mecha inicial expone a un riesgo elevado."
           />
 
         </div>
@@ -311,7 +311,7 @@ export default function ContentEs() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Lección terminada</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Lección 4 del módulo Support / Resistance &amp; Range completada.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Lección 4 del módulo Support / Resistance &amp; rango completada.</p>
                 </div>
               </div>
             )}

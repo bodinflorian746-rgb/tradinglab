@@ -126,7 +126,7 @@ export default function ContentEs() {
               <li>- NFP Overreaction → ver módulo Macro Trading, Lección 2</li>
               <li>- Régimen Risk-off → ver módulo Macro Trading, Lección 3</li>
               <li>- Calendario económico → ver módulo Macro</li>
-              <li>- Multi-timeframe → ver módulo Multi-timeframe Process</li>
+              <li>- Análisis multitemporal → ver módulo Process multitemporal</li>
             </ul>
           </div>
 
@@ -139,7 +139,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Antes de cualquier setup, la primera pregunta a hacerse es simple: hay una publicación económica mayor en la ventana que viene? FOMC, NFP, CPI, datos de empleo, conferencia de Powell, estos eventos provocan volatilidades extremas e imprevisibles que desorganizan completamente las estructuras técnicas. Un setup técnicamente perfecto a las 10h UTC puede ser arrasado por una vela de 70 $ a las 13h30 UTC en la publicación del NFP. El calendario económico es por lo tanto el filtro más simple y más eficaz: si una news mayor está en la ventana del trade, no se toma el trade, sin importar la calidad técnica del setup.
+              Antes de cualquier setup, la primera pregunta a hacerse es simple: hay una publicación económica mayor en la ventana que viene? FOMC, NFP, CPI, datos de empleo, conferencia de Powell, estos eventos provocan volatilidades extremas e imprevisibles que desorganizan completamente las estructuras técnicas. Un setup técnicamente perfecto a las 10h UTC puede ser arrasado por una vela de 70 $ a las 13h30 UTC en la publicación del NFP. El calendario económico es por lo tanto el filtro más simple y más eficaz: si una noticia mayor está en la ventana del trade, no se toma el trade, sin importar la calidad técnica del setup.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -151,8 +151,8 @@ export default function ContentEs() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Puntos accionables: consultar el calendario económico ANTES de analizar el gráfico</li>
-              <li>- News mayor en los próximos 30 minutos = filtro rojo, sin ejecución</li>
-              <li>- News mayor en la última hora = esperar la digestión antes de cualquier trade</li>
+              <li>- Noticia mayor en los próximos 30 minutos = filtro rojo, sin ejecución</li>
+              <li>- Noticia mayor en la última hora = esperar la digestión antes de cualquier trade</li>
               <li>- Ningún setup técnico justifica tradear a ciegas sobre una publicación mayor</li>
             </ul>
           </section>
@@ -193,13 +193,13 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El filtro macro NO es una herramienta para encontrar trades. Es una herramienta para evitarlos. Su lógica es negativa: en cada etapa, se busca una razón para NO tomar el trade. News mayor inminente? Rechazo. Régimen contrario? Rechazo. Setup débil? Rechazo. Solo los setups que pasan los tres filtros merecen la ejecución. Esta lógica inversa, buscar razones para rechazar en lugar de razones para entrar, es exactamente lo que separa a los traders rentables de los demás: toman pocos trades, pero los que toman han pasado todos los controles.
+              El filtro macro NO es una herramienta para encontrar trades. Es una herramienta para evitarlos. Su lógica es negativa: en cada etapa, se busca una razón para NO tomar el trade. Noticia mayor inminente? Rechazo. Régimen contrario? Rechazo. Setup débil? Rechazo. Solo los setups que pasan los tres filtros merecen la ejecución. Esta lógica inversa, buscar razones para rechazar en lugar de razones para entrar, es exactamente lo que separa a los traders rentables de los demás: toman pocos trades, pero los que toman han pasado todos los controles.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                En una semana de trading, un trader disciplinado puede identificar 15 setups técnicos. Aplicando el filtro macro: 5 son rechazados por news mayores en la ventana, 4 son rechazados porque van contra el régimen dominante, 2 son rechazados porque al setup técnico le falta una confluencia clara. Quedan 4, que se ejecutan. Esa selectividad, percibida como «tradear menos», es en realidad el principal multiplicador de performance.
+                En una semana de trading, un trader disciplinado puede identificar 15 setups técnicos. Aplicando el filtro macro: 5 son rechazados por noticias mayores en la ventana, 4 son rechazados porque van contra el régimen dominante, 2 son rechazados porque al setup técnico le falta una confluencia clara. Quedan 4, que se ejecutan. Esa selectividad, percibida como «tradear menos», es en realidad el principal multiplicador de performance.
               </p>
             </div>
 
@@ -254,7 +254,7 @@ export default function ContentEs() {
               </ul>
 
               <p className="text-sm text-zinc-400 italic leading-relaxed mb-1">
-                Nota: no se van a verificar los otros filtros. Un solo filtro rojo basta para rechazar. El setup técnico puede ser excelente, el régimen puede estar alineado, la news inminente hace que la ejecución sea demasiado riesgosa. Se espera la publicación digerida para reevaluar.
+                Nota: no se van a verificar los otros filtros. Un solo filtro rojo basta para rechazar. El setup técnico puede ser excelente, el régimen puede estar alineado, la noticia inminente hace que la ejecución sea demasiado riesgosa. Se espera la publicación digerida para reevaluar.
               </p>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -277,7 +277,7 @@ export default function ContentEs() {
           <LessonExercice
             description="Durante una semana, aplica el filtro macro a cada setup que identifiques. Anota los rechazos y las ejecuciones."
             steps={[
-              "Para cada setup técnico detectado, consulta primero el calendario económico para las 2 horas siguientes. Si una news mayor está en esa ventana, marca el setup RECHAZADO por calendario.",
+              "Para cada setup técnico detectado, consulta primero el calendario económico para las 2 horas siguientes. Si una noticia mayor está en esa ventana, marca el setup RECHAZADO por calendario.",
               "Si el calendario está verde, verifica el régimen macro y la estructura HTF. Si el setup va contra el régimen dominante, márcalo RECHAZADO por régimen.",
               "Si los dos primeros filtros pasan, evalúa la calidad técnica del setup (confluencia, estructura, niveles). Si es insuficiente, marca RECHAZADO por setup débil. Si no, marca EJECUTADO. Al final de la semana, compara el número de setups identificados con el número de setups ejecutados, esa es tu selectividad.",
             ]}
@@ -299,7 +299,7 @@ export default function ContentEs() {
             question="Identificas un setup short H4 técnicamente perfecto en XAU/USD a las 13h00 UTC. El calendario indica una publicación NFP a las 13h30 UTC. El régimen macro es neutro. Qué haces?"
             options={[
               "Ejecutas: el setup técnico es sólido, eso es lo que cuenta",
-              "No ejecutas: la news inminente es un filtro rojo, sin importar la calidad del setup",
+              "No ejecutas: la noticia inminente es un filtro rojo, sin importar la calidad del setup",
               "Ejecutas con tamaño reducido para limitar el riesgo",
               "Colocas una orden limit más lejos para evitar la volatilidad inicial",
             ]}

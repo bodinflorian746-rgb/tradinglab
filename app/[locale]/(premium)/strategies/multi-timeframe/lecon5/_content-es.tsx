@@ -12,10 +12,10 @@ import { H1ZonePreparationDiagram } from "@/app/components/charts/H1ZonePreparat
 import { M15ValidationDiagram } from "@/app/components/charts/M15ValidationDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Por qué analizar en multi-timeframe", disabled: false },
-  { id: "lecon2", title: "El timeframe superior: el sesgo", disabled: false },
-  { id: "lecon3", title: "El timeframe intermedio: la zona", disabled: false },
-  { id: "lecon4", title: "El timeframe de ejecución: la entrada", disabled: false },
+  { id: "lecon1", title: "Por qué hacer un análisis multitemporal", disabled: false },
+  { id: "lecon2", title: "La temporalidad superior: el sesgo", disabled: false },
+  { id: "lecon3", title: "La temporalidad intermedia: la zona", disabled: false },
+  { id: "lecon4", title: "La temporalidad de ejecución: la entrada", disabled: false },
   { id: "lecon5", title: "El proceso completo", disabled: false },
 ];
 
@@ -34,7 +34,7 @@ export default function ContentEs() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Estrategias</Link>
           <span>/</span>
-          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Multi-timeframe Process</Link>
+          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Process multitemporal</Link>
           <span>/</span>
           <span className="text-zinc-500">Lección 5</span>
         </nav>
@@ -58,7 +58,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            El proceso multi-timeframe completo: del Daily a la ejecución
+            El proceso multitemporal completo: del Daily a la ejecución
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -124,7 +124,7 @@ export default function ContentEs() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Introducción multi-timeframe → ver Lección 1</li>
+              <li>- Introducción multitemporal → ver Lección 1</li>
               <li>- Dirección dominante HTF → ver Lección 2</li>
               <li>- Zonas de interés H1-H4 → ver Lección 3</li>
               <li>- Confirmación LTF → ver Lección 4</li>
@@ -140,7 +140,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El proceso multi-timeframe funciona como un embudo: cada nivel filtra al siguiente y reduce las posibilidades. Daily / H4 → dar la dirección; H1 → identificar la zona de interés; M15 / M30 → esperar la reacción y confirmar. El trade solo llega al final, es la culminación de una cadena lógica, no una señal aislada que se atrapa al vuelo.
+              El proceso multitemporal funciona como un embudo: cada nivel filtra al siguiente y reduce las posibilidades. Daily / H4 → dar la dirección; H1 → identificar la zona de interés; M15 / M30 → esperar la reacción y confirmar. El trade solo llega al final, es la culminación de una cadena lógica, no una señal aislada que se atrapa al vuelo.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -323,7 +323,7 @@ export default function ContentEs() {
           />
 
           <LessonExercice
-            description="En TradingView, recorre un proceso multi-timeframe completo sobre el par de tu elección, del Daily al M15."
+            description="En TradingView, recorre un proceso multitemporal completo sobre el par de tu elección, del Daily al M15."
             steps={[
               "Daily: identifica la estructura (LH/LL o HH/HL) y concluye un sesgo direccional claro. Si la estructura es ambigua, cambia de par, sin un sesgo HTF nítido, el proceso no arranca.",
               "H1: traza con antelación la zona de interés más confluente en el sentido del sesgo (antiguo soporte/resistencia, FVG, Order Block). Anota los niveles exactos arriba y abajo de la zona.",
@@ -340,7 +340,7 @@ export default function ContentEs() {
               "No entras: una señal M15 fuera de proceso no es un setup válido",
             ]}
             correctIndex={3}
-            explanation="Una señal LTF aislada, sin zona H1 preparada y sin sesgo Daily alineado, no es un setup multi-timeframe, es solo ruido que se notó al vuelo. El proceso exige que los tres niveles sean coherentes ANTES de la señal de ejecución. Operar una señal M15 fuera de contexto es exactamente aquello contra lo que el proceso fue diseñado: la impulsividad."
+            explanation="Una señal LTF aislada, sin zona H1 preparada y sin sesgo Daily alineado, no es un setup multitemporal, es solo ruido que se notó al vuelo. El proceso exige que los tres niveles sean coherentes ANTES de la señal de ejecución. Operar una señal M15 fuera de contexto es exactamente aquello contra lo que el proceso fue diseñado: la impulsividad."
             answerExplanations={[
               "Falso. Bajar aún más (M5) no añade el contexto HTF que falta. Afinar una señal aislada no la transforma en setup, solo aumenta la precisión de una decisión mal encuadrada.",
               "Falso. Reducir el tamaño no corrige el problema de fondo: la ausencia de contexto HTF. No se reduce un mal setup arriesgando menos, se elimina.",
@@ -368,7 +368,7 @@ export default function ContentEs() {
           />
 
           <LessonQuiz
-            question="¿Cuál es el rol exacto del Daily en el proceso multi-timeframe?"
+            question="¿Cuál es el rol exacto del Daily en el proceso multitemporal?"
             options={[
               "Dar el punto de entrada preciso gracias a su legibilidad",
               "Afinar el timing al nivel M1 y completar la señal de ejecución",
@@ -413,8 +413,8 @@ export default function ContentEs() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-emerald-400">Módulo Multi-timeframe terminado</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Has completado las 5 lecciones del módulo Multi-timeframe Process.</p>
+                  <p className="text-sm font-semibold text-emerald-400">Módulo Process multitemporal terminado</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Has completado las 5 lecciones del módulo Process multitemporal.</p>
                 </div>
               </div>
             )}

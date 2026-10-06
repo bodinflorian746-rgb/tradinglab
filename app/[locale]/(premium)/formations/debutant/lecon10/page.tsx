@@ -16,8 +16,8 @@ export default async function Page({
     <LessonPage
       formationId="debutant"
       lessonId="lecon10"
-      title="Risk management : pourquoi 90% des traders perdent"
-      subtitle="Le problème du retail n&apos;est généralement pas l&apos;entrée. Il vient de ce qui se passe AUTOUR du trade : risque trop élevé, mauvais RR, levier excessif, revenge trading. Deux traders avec le même setup : l&apos;un finit rentable, l&apos;autre détruit son compte. La différence ne vient pas de la stratégie. Elle vient du risk management."
+      title="Gestion du risque : pourquoi 90% des traders perdent"
+      subtitle="Le problème du retail n&apos;est généralement pas l&apos;entrée. Il vient de ce qui se passe AUTOUR du trade : risque trop élevé, mauvais RR, levier excessif, revenge trading. Deux traders avec le même setup : l&apos;un finit rentable, l&apos;autre détruit son compte. La différence ne vient pas de la stratégie. Elle vient de la gestion du risque."
       duration="13 min"
       lessonNumber={10}
       prev={{ href: "/formations/debutant/lecon9", label: "Leçon 9" }}
@@ -27,7 +27,7 @@ export default async function Page({
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Le plus grand mensonge du retail</h2>
         <p className="text-zinc-300 leading-relaxed text-sm">
-          Le retail pense souvent : «&nbsp;Si je trouve la bonne stratégie, je deviendrai rentable.&nbsp;» C&apos;est faux. Une bonne stratégie avec un mauvais risk management finit presque toujours par mourir. Aucune stratégie ne gagne 100% du temps. Même une excellente stratégie prend des pertes, subit des drawdowns, traverse des périodes compliquées, enchaîne parfois plusieurs stops d&apos;affilée.
+          Le retail pense souvent : «&nbsp;Si je trouve la bonne stratégie, je deviendrai rentable.&nbsp;» C&apos;est faux. Une bonne stratégie avec une mauvaise gestion du risque finit presque toujours par mourir. Aucune stratégie ne gagne 100% du temps. Même une excellente stratégie prend des pertes, subit des drawdowns, traverse des périodes compliquées, enchaîne parfois plusieurs stops d&apos;affilée.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mt-3">
           Le problème du retail, c&apos;est qu&apos;il construit son trading comme si les pertes ne devaient jamais arriver. Donc dès qu&apos;elles arrivent, il augmente le risque, force des setups, déplace le stop, supprime le SL, veut récupérer immédiatement. Et c&apos;est là que le compte commence réellement à mourir.
@@ -125,7 +125,7 @@ export default async function Page({
 
         <h3 className="text-base font-semibold text-white mt-6 mb-3">Le RR, c&apos;est quoi exactement ?</h3>
         <p className="text-zinc-300 leading-relaxed text-sm">
-          Le RR (risk/reward) est le rapport entre ce que tu RISQUES et ce que tu peux GAGNER sur un trade.
+          Le RR (ratio risque/rendement) est le rapport entre ce que tu RISQUES et ce que tu peux GAGNER sur un trade.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mt-3">
           Si tu risques 20€ et que tu vises 40€ → ton RR est de 1:2.<br />

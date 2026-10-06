@@ -44,7 +44,7 @@ export function PDArrayContextDiagram({ className = "", locale = "fr" }: PDArray
   const t = locale === "es"
     ? {
         equalHighs: "Equal highs / resistencia 1.1780",
-        sweep: "Sweep 1.1792",
+        sweep: "Barrido 1.1792",
         fvg: "FVG 1.1758-1.1770",
         annotation: "El precio regresa a la zona creada por el impulso",
         mobileTitle: "PD Array — contexto FVG · EUR/USD H1",

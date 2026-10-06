@@ -9,7 +9,7 @@ export default function ContentEs() {
     <LessonPage
       formationId="intermediaire"
       lessonId="lecon7"
-      title="Análisis Multi-Timeframe"
+      title="Análisis multitemporal"
       subtitle="El mercado cuenta la misma historia a distintas escalas. Aprender a leer estos niveles en el orden correcto es una de las habilidades más potentes del trader."
       duration="22 min"
       lessonNumber={7}
@@ -36,7 +36,7 @@ export default function ContentEs() {
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD. M15 (disparador)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Pasas a M15 cuando el precio toca la zona. Una pin bar alcista se forma. <strong className="text-white">Es la señal.</strong> Entras en compra en el sentido del Daily. Los 3 timeframes cuentan la misma historia.
+              Pasas a M15 cuando el precio toca la zona. Una pin bar alcista se forma. <strong className="text-white">Es la señal.</strong> Entras en compra en el sentido del Daily. Las 3 temporalidades cuentan la misma historia.
             </p>
           </div>
         </div>
@@ -47,7 +47,7 @@ export default function ContentEs() {
       </div>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Por qué los timeframes parecen contradecirse</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Por qué las temporalidades parecen contradecirse</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           El mismo mercado puede mostrar una tendencia alcista en Daily y una tendencia bajista en H1 simultáneamente. No es un error, son dos niveles de lectura distintos. El Daily muestra el contexto. El H1 muestra el movimiento en curso dentro de ese contexto.
         </p>
@@ -60,15 +60,15 @@ export default function ContentEs() {
       </section>
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">El rol de cada timeframe</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">El rol de cada temporalidad</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Cada timeframe tiene una función precisa. No lo usas por las mismas razones.
+          Cada temporalidad tiene una función precisa. No lo usas por las mismas razones.
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr>
-                {["Timeframe", "Rol", "Lo que buscas"].map((h, i) => (
+                {["Temporalidad", "Rol", "Lo que buscas"].map((h, i) => (
                   <th key={i} className="text-left text-[10px] font-semibold text-zinc-500 uppercase tracking-widest pb-2.5 pr-6">{h}</th>
                 ))}
               </tr>
@@ -97,14 +97,14 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">El método Top-Down en la práctica</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          El método top-down consiste en analizar del timeframe grande al chico, nunca al revés. Cada nivel valida o invalida lo que ves en el nivel inferior.
+          El método top-down consiste en analizar de la temporalidad grande a la chica, nunca al revés. Cada nivel valida o invalida lo que ves en el nivel inferior.
         </p>
         <div className="space-y-2">
           {[
-            { tf: "Daily", action: "Identifica la tendencia: alcista, bajista o range? Define tu sesgo para la semana." },
+            { tf: "Daily", action: "Identifica la tendencia: alcista, bajista o rango? Define tu sesgo para la semana." },
             { tf: "H4", action: "Ubica las zonas clave: soportes y resistencias. ¿Dónde reaccionó históricamente el precio?" },
             { tf: "H1", action: "Espera que el precio llegue a una zona H4. ¿Hay un setup en el sentido de la tendencia Daily?" },
-            { tf: "M15", action: "Busca la señal de disparo: rechazo, engulfing, pin bar en la zona H4." },
+            { tf: "M15", action: "Busca la señal de disparo: rechazo, envolvente, pin bar en la zona H4." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-6">{item.tf}</span>
@@ -121,7 +121,7 @@ export default function ContentEs() {
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-3">Cómo analizar en 5 segundos</p>
-        <h2 className="text-lg font-semibold text-white mb-4">Verificar el alineamiento de los timeframes</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">Verificar el alineamiento de las temporalidades</h2>
         <div className="space-y-2">
           {[
             { n: "1", t: "Daily — ¿cuál es la tendencia?", d: "Alcista = busca compras. Bajista = busca ventas. Range = sin trade direccional." },
@@ -141,7 +141,7 @@ export default function ContentEs() {
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <p className="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-3">Lo que debes hacer</p>
-        <h2 className="text-lg font-semibold text-white mb-4">Según el alineamiento de los timeframes</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">Según el alineamiento de las temporalidades</h2>
         <div className="space-y-2.5">
           <div className="flex items-start gap-3 bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <span className="text-lg">✓</span>
@@ -161,7 +161,7 @@ export default function ContentEs() {
             <span className="text-lg">✗</span>
             <div>
               <p className="text-sm font-semibold text-red-400">Señal M15 contra el Daily</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Ignoras. El timeframe chico que va contra el grande es un retroceso, no un reversal. Nunca tradees contra el sesgo Daily.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Ignoras. La temporalidad chica que va contra el grande es un retroceso, no un reversal. Nunca tradees contra el sesgo Daily.</p>
             </div>
           </div>
         </div>
@@ -171,7 +171,7 @@ export default function ContentEs() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Error clásico</p>
         <p className="text-sm font-semibold text-white mb-2">Entrar en una señal M15 sin verificar el Daily</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Miras EUR/USD en M15. Ves un engulfing bajista lindo. Vendes. Excepto que el Daily es alcista y el precio está en un soporte H4. Acabas de entrar exactamente a contracorriente. El precio retoma al alza y pierdes. La regla: antes de cualquier señal, siempre mirar el Daily primero. Siempre.
+          Miras EUR/USD en M15. Ves una envolvente bajista linda. Vendes. Excepto que el Daily es alcista y el precio está en un soporte H4. Acabas de entrar exactamente a contracorriente. El precio retoma al alza y pierdes. La regla: antes de cualquier señal, siempre mirar el Daily primero. Siempre.
         </p>
       </section>
 
@@ -192,26 +192,26 @@ export default function ContentEs() {
 
       <LessonKeyPoints
         points={[
-          "Siempre analizar del timeframe grande al chico, el Daily define el sesgo, el M15 afina la entrada.",
-          "Una señal en el timeframe chico que contradice el grande hay que ignorarla.",
+          "Siempre analizar de la temporalidad grande a la chica, el Daily define el sesgo, el M15 afina la entrada.",
+          "Una señal en la temporalidad chica que contradice la grande hay que ignorarla.",
           "Weekly/Daily = contexto y tendencia. H4 = zonas. H1/M15 = timing y señal.",
-          "Los 3 timeframes deben contar la misma historia para que un setup sea de alta probabilidad.",
-          "Mientras más bajas en los timeframes, más ganas precisión, pero el sesgo siempre viene del grande.",
+          "Las 3 temporalidades deben contar la misma historia para que un setup sea de alta probabilidad.",
+          "Mientras más bajas en las temporalidades, más ganas precisión, pero el sesgo siempre viene del grande.",
         ]}
       />
 
       <LessonExercice
         description="En TradingView, realiza un análisis top-down completo en EUR/USD."
         steps={[
-          "Abre EUR/USD en Daily — ¿cuál es la tendencia? ¿Alcista, bajista o range? Anota tu sesgo.",
+          "Abre EUR/USD en Daily — ¿cuál es la tendencia? ¿Alcista, bajista o rango? Anota tu sesgo.",
           "Baja a H4, identifica las 2 zonas más importantes (soporte o resistencia según la tendencia). Anota los precios exactos.",
           "Baja a H1 — ¿el precio está cerca de una de esas zonas H4? ¿Hay una señal naciente en el sentido del Daily?",
-          "Baja a M15, si la señal H1 está presente, ¿el M15 la confirma? Anota si los 3 timeframes se alinean o se contradicen.",
+          "Baja a M15, si la señal H1 está presente, ¿el M15 la confirma? Anota si las 3 temporalidades se alinean o se contradicen.",
         ]}
       />
 
       <LessonQuiz
-        question="EUR/USD es claramente alcista en Daily. Pasas a H1 y ves un engulfing bajista nítido en una resistencia H1. ¿Qué haces?"
+        question="EUR/USD es claramente alcista en Daily. Pasas a H1 y ves una envolvente bajista nítida en una resistencia H1. ¿Qué haces?"
         options={[
           "Tomas el Short en H1, la señal es limpia y reciente",
           "Ignoras la señal H1, va contra la tendencia Daily, esperas una señal de compra alineada",
@@ -219,7 +219,7 @@ export default function ContentEs() {
           "Tomas el Short pero con una posición la mitad para limitar el riesgo",
         ]}
         correctIndex={1}
-        explanation="En análisis multi-timeframe, el timeframe grande siempre prima. Si el Daily es alcista, buscas compras, no ventas. La señal H1 bajista probablemente es un retroceso en la tendencia Daily alcista, exactamente donde podrías buscar un Long."
+        explanation="En análisis multitemporal, la temporalidad grande siempre prima. Si el Daily es alcista, buscas compras, no ventas. La señal H1 bajista probablemente es un retroceso en la tendencia Daily alcista, exactamente donde podrías buscar un Long."
         answerExplanations={[
           "Falso. Tradear una señal H1 contra una tendencia Daily fuerte es estadísticamente desfavorable. Vas a contracorriente de la dirección dominante, aunque la señal técnica parezca limpia.",
           "Correcto. La regla top-down es clara: el Daily define el sesgo. Si Daily = alcista, solo buscas compras. La señal H1 bajista significa que el precio está en retroceso. Es justamente donde buscas una compra, no una venta.",

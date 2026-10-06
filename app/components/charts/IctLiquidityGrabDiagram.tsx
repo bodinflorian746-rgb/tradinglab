@@ -41,18 +41,18 @@ export function IctLiquidityGrabDiagram({ className = "", locale = "fr" }: IctLi
   const t = locale === "es"
     ? {
         equalHighs: "Equal highs 1.1780",
-        sweep: "Sweep 1.1792",
+        sweep: "Barrido 1.1792",
         rejet: "Rechazo 1.1720",
         annotation: "El mercado toma la liquidez antes del displacement",
-        mobileTitle: "Liquidity grab en equal highs · EUR/USD H1",
+        mobileTitle: "Toma de liquidez en equal highs · EUR/USD H1",
         m1a: "Equal highs",
         m1b: " en 1.1780 = liquidez visible.",
-        m2a: "Sweep en 1.1792",
+        m2a: "Barrido en 1.1792",
         m2b: " · la mecha dispara los stops.",
         m3a: "Rechazo hacia 1.1720",
         m3b: " = movimiento institucional real.",
         leg1: "Equal highs = liquidez visible por encima",
-        leg2: "Sweep y luego rechazo = movimiento real",
+        leg2: "Barrido y luego rechazo = movimiento real",
       }
     : locale === "en"
     ? {
@@ -75,7 +75,7 @@ export function IctLiquidityGrabDiagram({ className = "", locale = "fr" }: IctLi
         sweep: "Sweep 1.1792",
         rejet: "Rejet 1.1720",
         annotation: "Le marché prend la liquidité avant le déplacement",
-        mobileTitle: "Liquidity grab sur equal highs · EUR/USD H1",
+        mobileTitle: "Prise de liquidité sur equal highs · EUR/USD H1",
         m1a: "Equal highs",
         m1b: " à 1.1780 = liquidité visible.",
         m2a: "Sweep à 1.1792",
@@ -131,7 +131,7 @@ export function IctLiquidityGrabDiagram({ className = "", locale = "fr" }: IctLi
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
 
         {/* Mini-SVG : pool de stops au HH → sweep amber par smart money → reversal */}
-        <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="Liquidity grab" fill="none">
+        <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label={locale === "es" ? "Toma de liquidez" : locale === "en" ? "Liquidity grab" : "Prise de liquidité"} fill="none">
           <line x1="10" y1="40" x2="270" y2="40" stroke="#ef4444" strokeWidth="1" strokeDasharray="3 3" />
           {[145, 162, 179, 196, 213].map((x) => (
             <path key={x} d={`M${x},30 L${x - 4},37 L${x + 4},37 Z`} fill="#ef4444" opacity="0.7" />
@@ -141,7 +141,7 @@ export function IctLiquidityGrabDiagram({ className = "", locale = "fr" }: IctLi
           <path d="M15,85 L40,75 L70,65 L100,52 L130,42 L160,30 L180,16" stroke="#71717a" strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
           <circle cx="180" cy="16" r="3.5" fill="#f59e0b" />
           <rect x="155" y="50" width="60" height="13" rx="2" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.7" />
-          <text x="185" y="59" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Sweep ↑</text>
+          <text x="185" y="59" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">{locale === "es" ? "Barrido ↑" : locale === "en" ? "Sweep ↑" : "Sweep ↑"}</text>
           <path d="M180,16 L200,40 L225,68 L250,90 L268,105" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
           <circle cx="268" cy="105" r="3" fill="#ef4444" />
         </svg>

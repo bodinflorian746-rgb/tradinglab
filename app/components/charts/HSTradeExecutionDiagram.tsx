@@ -2,17 +2,17 @@ export default function HSTradeExecutionDiagram({ className = "", locale = "fr" 
   const isEs = locale === "es";
   const isEn = locale === "en";
   const L = {
-    title:        isEs ? "2 estrategias de entrada en Head & Shoulders" : isEn ? "2 entry strategies on Head & Shoulders" : "2 stratégies d'entrée sur Head & Shoulders",
+    title:        isEs ? "2 estrategias de entrada en hombro-cabeza-hombro" : isEn ? "2 entry strategies on Head & Shoulders" : "2 stratégies d'entrée sur épaule-tête-épaule",
     breakoutBadge: isEs ? "Entrada en ruptura — R/R 2,5" : isEn ? "Breakout entry — R/R 2.5" : "Entrée à la cassure — R/R 2,5",
     retestBadge:   isEs ? "Entrada en retest — R/R 4,4" : isEn ? "Retest entry — R/R 4.4" : "Entrée au retest — R/R 4,4",
     shoulders:    isEs ? "Hombros" : isEn ? "Shoulders" : "Épaules",
     entryShort:   isEs ? "Entrada short" : isEn ? "Short entry" : "Entrée short",
     footer:       isEs ? "Ruptura = ejecución rápida. Retest = entrada tardía con mejor R/R." : isEn ? "Breakout = fast execution. Retest = late entry with better R/R." : "Cassure = exécution rapide. Retest = entrée tardive avec meilleur R/R.",
-    mobileTitle:  isEs ? "2 estrategias de entrada H&S" : isEn ? "2 entry strategies on H&S" : "2 stratégies d'entrée H&S",
+    mobileTitle:  isEs ? "2 estrategias de entrada HCH" : isEn ? "2 entry strategies on H&S" : "2 stratégies d'entrée ETE",
     mobBreakoutT: isEs ? "Entrada en ruptura" : isEn ? "Breakout entry" : "Entrée sur cassure",
-    mobBreakoutD: isEs ? "Ejecución rápida cuando el precio rompe la neckline. R/R medio, pero entrada inmediata." : isEn ? "Fast execution as soon as price breaks the neckline. Average R/R, but immediate entry." : "Exécution rapide dès que le prix casse la neckline. R/R moyen, mais entrée immédiate.",
+    mobBreakoutD: isEs ? "Ejecución rápida cuando el precio rompe la línea clavicular. R/R medio, pero entrada inmediata." : isEn ? "Fast execution as soon as price breaks the neckline. Average R/R, but immediate entry." : "Exécution rapide dès que le prix casse la ligne de cou. R/R moyen, mais entrée immédiate.",
     mobRetestT:   isEs ? "Entrada en retest" : isEn ? "Retest entry" : "Entrée sur retest",
-    mobRetestD:   isEs ? "Esperar a que el precio vuelva a testear la neckline rota. Tardía pero" : isEn ? "Wait for price to come back and test the broken neckline. Late but" : "Attendre que le prix revienne tester la neckline cassée. Tardive mais",
+    mobRetestD:   isEs ? "Esperar a que el precio vuelva a testear la línea clavicular rota. Tardía pero" : isEn ? "Wait for price to come back and test the broken neckline. Late but" : "Attendre que le prix revienne tester la ligne de cou cassée. Tardive mais",
     mobRetestBold:isEs ? "mejor R/R" : isEn ? "better R/R" : "meilleur R/R",
     mobRetestEnd: isEs ? "(entrada 4 580 $)" : isEn ? "(entry $4,580)" : "(entrée 4 580 $)",
   };
@@ -39,7 +39,7 @@ export default function HSTradeExecutionDiagram({ className = "", locale = "fr" 
       <text x="350" y="135" fill="#a1a1aa" fontSize="8" textAnchor="end">{L.shoulders}</text>
       <line x1="50" y1="200" x2="380" y2="200" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="4 3" />
       <rect x="52" y="205" width="98" height="12" rx="2" fill="#09090b" />
-      <text x="55" y="214" fill="#a1a1aa" fontSize="9" fontWeight="600">Neckline 4 580$</text>
+      <text x="55" y="214" fill="#a1a1aa" fontSize="9" fontWeight="600">{locale === "es" ? "Línea clavicular 4 580$" : locale === "en" ? "Neckline 4 580$" : "Ligne de cou 4 580$"}</text>
       <line x1="50" y1="140" x2="380" y2="140" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.4" />
 
       <path d="M60,280 L100,200 L130,140 L170,200 L210,90 L260,200 L300,140 L340,250 L375,290" stroke="#71717a" strokeWidth="1.8" fill="none" strokeLinejoin="round" />
@@ -69,7 +69,7 @@ export default function HSTradeExecutionDiagram({ className = "", locale = "fr" 
       <text x="750" y="135" fill="#a1a1aa" fontSize="8" textAnchor="end">{L.shoulders}</text>
       <line x1="450" y1="200" x2="780" y2="200" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="4 3" />
       <rect x="452" y="205" width="98" height="12" rx="2" fill="#09090b" />
-      <text x="455" y="214" fill="#a1a1aa" fontSize="9" fontWeight="600">Neckline 4 580$</text>
+      <text x="455" y="214" fill="#a1a1aa" fontSize="9" fontWeight="600">{locale === "es" ? "Línea clavicular 4 580$" : locale === "en" ? "Neckline 4 580$" : "Ligne de cou 4 580$"}</text>
 
       {/* H&S + retest */}
       <path d="M460,280 L500,200 L530,140 L570,200 L610,90 L660,200 L700,140 L730,230 L745,250 L765,210 L778,200" stroke="#71717a" strokeWidth="1.8" fill="none" strokeLinejoin="round" />

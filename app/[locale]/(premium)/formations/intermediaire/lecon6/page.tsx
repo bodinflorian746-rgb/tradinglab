@@ -17,7 +17,7 @@ function ContentFr() {
       duration="18 min"
       lessonNumber={6}
       prev={{ href: "/formations/intermediaire/lecon5", label: "Leçon 5 : Confluences" }}
-      next={{ href: "/formations/intermediaire/lecon7", label: "Leçon 7 : Multi-Timeframe" }}
+      next={{ href: "/formations/intermediaire/lecon7", label: "Leçon 7 : Multi-unités de temps" }}
     >
 
       {/* ── Ce que tu dois VOIR ── */}

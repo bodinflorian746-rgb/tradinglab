@@ -65,7 +65,7 @@ export function ConfirmationM5Diagram({ className = "", locale = "fr" }: Confirm
         zoneH1: "Zone H1",
         creux: "creux local",
         annotation: "La réaction confirme la zone",
-        mobTitle: "Confirmation M5 — déclencheur LTF",
+        mobTitle: "Confirmation M5 — déclencheur de l'UT inférieure",
         mobMeches: "Mèches de rejet dans la zone",
         mobMechesDesc: "Le prix entre dans la zone et fait des mèches de refus — signal de pression.",
         mobCassure: "Cassure du creux local = confirmation",

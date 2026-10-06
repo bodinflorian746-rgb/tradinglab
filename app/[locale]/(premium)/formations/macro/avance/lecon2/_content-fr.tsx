@@ -56,7 +56,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            NFP, la news mensuelle qui fait trembler tous les actifs
+            NFP, l&apos;annonce mensuelle qui fait trembler tous les actifs
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">

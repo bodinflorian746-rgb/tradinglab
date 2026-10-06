@@ -125,7 +125,7 @@ export default function ContentFr() {
               <li>- Risk-on / risk-off → cf. module Macro</li>
               <li>- Corrélations macro et actifs refuges → cf. module Macro</li>
               <li>- Structures de marché et tendances → cf. module Stratégies</li>
-              <li>- Multi-timeframe → cf. module Multi-timeframe Process</li>
+              <li>- Multi-unités de temps → cf. module Process multi-unités de temps</li>
             </ul>
           </div>
 

@@ -6,16 +6,16 @@ interface LiquidityPoolsDiagramProps {
 export function LiquidityPoolsDiagram({ className = "", locale = "fr" }: LiquidityPoolsDiagramProps) {
   const t = locale === "es"
     ? {
-        bslLabel: "Buy-side liquidity (BSL)",
-        sslLabel: "Sell-side liquidity (SSL)",
+        bslLabel: "Liquidez buy-side (BSL)",
+        sslLabel: "Liquidez sell-side (SSL)",
         stopHunt: "stop hunt",
         bslTaken: "BSL tomada ↑",
         bslMobileDesc: " · stops de compra por encima de máximos iguales (EQH)",
         sslMobileDesc: " · stops de venta bajo mínimos iguales (EQL)",
         stopHuntMobileDesc: " · el precio baja a cazar los stops bajo el EQL antes de subir",
         bslTakenMobileDesc: " · luego ruptura de máximos para tomar la liquidez opuesta",
-        leg1: "Buy-side liquidity — stops por encima de los EQH",
-        leg2: "Sell-side liquidity — stops bajo los EQL",
+        leg1: "Liquidez buy-side — stops por encima de los EQH",
+        leg2: "Liquidez sell-side — stops bajo los EQL",
         leg3: "Stop hunt = caza de liquidez",
       }
     : locale === "en"
@@ -33,17 +33,17 @@ export function LiquidityPoolsDiagram({ className = "", locale = "fr" }: Liquidi
         leg3: "Stop hunt = liquidity grab",
       }
     : {
-        bslLabel: "Buy-side liquidity (BSL)",
-        sslLabel: "Sell-side liquidity (SSL)",
-        stopHunt: "stop hunt",
+        bslLabel: "Liquidité buy-side (BSL)",
+        sslLabel: "Liquidité sell-side (SSL)",
+        stopHunt: "chasse aux stops",
         bslTaken: "BSL pris ↑",
         bslMobileDesc: " · stops d’achat au-dessus des sommets égaux (EQH)",
         sslMobileDesc: " · stops de vente sous les creux égaux (EQL)",
         stopHuntMobileDesc: " · le prix descend chasser les stops sous l’EQL avant de repartir",
         bslTakenMobileDesc: " · puis cassure des sommets pour prendre la liquidité opposée",
-        leg1: "Buy-side liquidity — stops au-dessus des EQH",
-        leg2: "Sell-side liquidity — stops sous les EQL",
-        leg3: "Stop hunt = chasse de liquidité",
+        leg1: "Liquidité buy-side — stops au-dessus des EQH",
+        leg2: "Liquidité sell-side — stops sous les EQL",
+        leg3: "Chasse aux stops = chasse de liquidité",
       };
   const BSL_Y = 24;   // buy-side liquidity line — red
   const SSL_Y = 128;  // sell-side liquidity line — emerald
@@ -143,21 +143,21 @@ export function LiquidityPoolsDiagram({ className = "", locale = "fr" }: Liquidi
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-3 h-1 rounded-sm bg-red-400 mt-2" />
             <span className="text-white">
-              <span className="font-bold text-red-400">BSL (Buy-Side Liquidity)</span>
+              <span className="font-bold text-red-400">{locale === "es" ? "BSL (Liquidez buy-side)" : locale === "en" ? "BSL (Buy-Side Liquidity)" : "BSL (Liquidité buy-side)"}</span>
               <span className="text-zinc-300">{t.bslMobileDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-3 h-1 rounded-sm bg-emerald-400 mt-2" />
             <span className="text-white">
-              <span className="font-bold text-emerald-400">SSL (Sell-Side Liquidity)</span>
+              <span className="font-bold text-emerald-400">{locale === "es" ? "SSL (Liquidez sell-side)" : locale === "en" ? "SSL (Sell-Side Liquidity)" : "SSL (Liquidité sell-side)"}</span>
               <span className="text-zinc-300">{t.sslMobileDesc}</span>
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
             <span className="text-white">
-              <span className="font-bold text-red-400">Stop hunt</span>
+              <span className="font-bold text-red-400">{locale === "es" ? "Stop hunt" : locale === "en" ? "Stop hunt" : "Chasse aux stops"}</span>
               <span className="text-zinc-300">{t.stopHuntMobileDesc}</span>
             </span>
           </li>

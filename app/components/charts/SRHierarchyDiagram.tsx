@@ -1,14 +1,14 @@
 export default function SRHierarchyDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
-        title: "Jerarquía de un nivel según el timeframe",
+        title: "Jerarquía de un nivel según la temporalidad",
         major: "★★★ Nivel mayor",
         majorDesc: "3 toques francos",
         secondary: "★★ Nivel secundario",
         secondaryDesc: "5 toques medios",
         marginal: "★ Nivel marginal",
         marginalDesc: "8 toques débiles, perforaciones frecuentes",
-        mobTitle: "Jerarquía de S/R por timeframe",
+        mobTitle: "Jerarquía de S/R por temporalidad",
         mobDaily: "Daily — ★★★ Nivel mayor",
         mobDailyDesc: "Pocos toques pero francos, rebotes amplios → nivel institucional respetado.",
         mobH4: "H4 — ★★ Nivel intermedio",
@@ -36,14 +36,14 @@ export default function SRHierarchyDiagram({ className = "", locale = "fr" }: { 
         mobFooter: "The higher the TF, the stronger the level.",
       }
     : {
-        title: "Hiérarchie d'un niveau selon le timeframe",
+        title: "Hiérarchie d'un niveau selon l'unité de temps",
         major: "★★★ Niveau majeur",
         majorDesc: "3 touches franches",
         secondary: "★★ Niveau secondaire",
         secondaryDesc: "5 touches moyennes",
         marginal: "★ Niveau marginal",
         marginalDesc: "8 touches faibles, perforations fréquentes",
-        mobTitle: "Hiérarchie des S/R par timeframe",
+        mobTitle: "Hiérarchie des S/R par unité de temps",
         mobDaily: "Daily — ★★★ Niveau majeur",
         mobDailyDesc: "Peu de touches mais franches, rebonds amples → niveau institutionnel respecté.",
         mobH4: "H4 — ★★ Niveau intermédiaire",

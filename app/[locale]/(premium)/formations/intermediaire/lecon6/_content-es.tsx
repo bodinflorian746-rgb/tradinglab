@@ -15,7 +15,7 @@ export default function ContentEs() {
       duration="18 min"
       lessonNumber={6}
       prev={{ href: "/formations/intermediaire/lecon5", label: "Lección 5: Confluencias" }}
-      next={{ href: "/formations/intermediaire/lecon7", label: "Lección 7: Multi-Timeframe" }}
+      next={{ href: "/formations/intermediaire/lecon7", label: "Lección 7: Análisis multitemporal" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -51,7 +51,7 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Por qué pasan los fake breakouts</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Los niveles obvios concentran naturalmente órdenes. Encima de una resistencia → stops de compradores en short + órdenes de entrada de compradores breakout. El mercado va a buscar esa liquidity, activa todas esas órdenes, y luego retoma en el otro sentido.
+          Los niveles obvios concentran naturalmente órdenes. Encima de una resistencia → stops de compradores en short + órdenes de entrada de compradores breakout. El mercado va a buscar esa liquidez, activa todas esas órdenes, y luego retoma en el otro sentido.
         </p>
         <div className="space-y-2.5">
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">

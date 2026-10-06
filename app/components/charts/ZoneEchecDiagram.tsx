@@ -84,7 +84,7 @@ export function ZoneEchecDiagram({ className = "" }: ZoneEchecDiagramProps) {
 
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">Prix traverse la zone sans réaction</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Pas de mèche de rejet, pas de signal LTF → la zone ne tient pas.</p>
+          <p className="text-[12px] text-zinc-300 leading-snug mt-1">Pas de mèche de rejet, pas de signal UT inférieure → la zone ne tient pas.</p>
         </div>
         <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
           <p className="text-[13px] font-bold text-red-400">Continuation bearish = setup invalidé</p>

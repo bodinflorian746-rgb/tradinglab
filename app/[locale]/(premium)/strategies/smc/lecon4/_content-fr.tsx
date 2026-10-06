@@ -141,7 +141,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Equal highs = BSL potentielle</li>
               <li>- Equal lows = SSL potentielle</li>
-              <li>- Sommets/creux HTF = liquidité majeure</li>
+              <li>- Sommets/creux de l&apos;UT supérieure = liquidité majeure</li>
             </ul>
           </section>
 
@@ -237,8 +237,8 @@ export default function ContentFr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Sweep sans FVG clair</span> <span className="text-zinc-300">= manque de déséquilibre exploitable.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">FVG déjà totalement mitigé</span> <span className="text-zinc-300">= inefficience déjà comblée.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Contexte sans biais directionnel</span> <span className="text-zinc-300">= absence de direction HTF.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">News macro majeure imminente</span> <span className="text-zinc-300">= volatilité imprévisible.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Contexte sans biais directionnel</span> <span className="text-zinc-300">= absence de direction de l&apos;UT supérieure.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Annonce macro majeure imminente</span> <span className="text-zinc-300">= volatilité imprévisible.</span></div>
             </div>
           </section>
 
@@ -268,7 +268,7 @@ export default function ContentFr() {
               "Le marché clôture au-dessus du niveau cassé avec continuation forte",
               "Le sweep laisse rarement une mèche visible",
               "Le prix réintègre rapidement le niveau sweepé après avoir pris la liquidité",
-              "Un sweep apparaît uniquement pendant les news macro",
+              "Un sweep apparaît uniquement pendant les annonces macro",
             ]}
             correctIndex={2}
             explanation="Le sweep se reconnaît à la réintégration rapide du niveau sweepé après que la liquidité a été prise. La mèche perce, les stops sont déclenchés, puis le prix revient sous (ou au-dessus) du niveau et rejette le mouvement. Un vrai breakout institutionnel se traduirait au contraire par une clôture franche au-delà du niveau avec continuation directionnelle."

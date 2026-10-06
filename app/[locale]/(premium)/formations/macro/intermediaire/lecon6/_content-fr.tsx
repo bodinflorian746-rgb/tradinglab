@@ -203,7 +203,7 @@ export default function ContentFr() {
             </p>
             <div className="space-y-3 mb-5">
               {[
-                { bold: "Étape 1. Calendrier (5 min)", rest: "Tu ouvres la semaine. Tu notes les news 3 étoiles. Tu repères les clusters." },
+                { bold: "Étape 1. Calendrier (5 min)", rest: "Tu ouvres la semaine. Tu notes les annonces 3 étoiles. Tu repères les clusters." },
                 { bold: "Étape 2. Ton macro (5 min)", rest: "Tu regardes la dernière communication Fed / BCE. Hawkish, dovish ou neutre ?" },
                 { bold: "Étape 3. DXY (3 min)", rest: "Le dollar est-il haussier, baissier ou en range ?" },
                 { bold: "Étape 4. Corrélations (3 min)", rest: "XAU/USD confirme-t-il le DXY ? BTC/USD suit-il le Nasdaq ? Une corrélation casse-t-elle ?" },
@@ -329,7 +329,7 @@ export default function ContentFr() {
               <span className="font-semibold text-zinc-200">À l&apos;inverse</span> :
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              XAU/USD baisse de 20$ lundi sans news majeure. Ton biais n&apos;est pas forcément invalidé. C&apos;est peut-être juste un pullback.
+              XAU/USD baisse de 20$ lundi sans annonce majeure. Ton biais n&apos;est pas forcément invalidé. C&apos;est peut-être juste un pullback.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               <span className="font-semibold text-zinc-200">La différence</span> :
@@ -360,7 +360,7 @@ export default function ContentFr() {
                 {
                   bold: "Piège 1",
                   desc: " : construire un biais sans regarder le calendrier.",
-                  consequence: "Tu seras surpris par les news.",
+                  consequence: "Tu seras surpris par les annonces.",
                 },
                 {
                   bold: "Piège 2",

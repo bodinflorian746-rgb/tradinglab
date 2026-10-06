@@ -197,12 +197,12 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une mèche qui perce le niveau structurel sans clôture franche n&apos;est pas un BOS. C&apos;est souvent un liquidity grab institutionnel.
+              Une mèche qui perce le niveau structurel sans clôture franche n&apos;est pas un BOS. C&apos;est souvent une prise de liquidité institutionnelle.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Mèche dépasse le HH/LL, mais corps clôture en deçà = BOS invalide</li>
-              <li>- Liquidity grab : les institutions ciblent les stops accumulés au-delà du niveau</li>
+              <li>- Prise de liquidité : les institutions ciblent les stops accumulés au-delà du niveau</li>
               <li>- Attendre la clôture complète de la bougie avant toute lecture de BOS</li>
             </ul>
           </section>
@@ -248,7 +248,7 @@ export default function ContentFr() {
               "BOS = cassure du dernier extrême structurel dans le sens de la tendance (continuation).",
               "CHoCH = cassure du dernier creux/sommet de structure inverse (retournement).",
               "La sortie d’une position se déclenche dès le BOS validé. L’inversion exige le CHoCH confirmé.",
-              "Sans clôture franche (mèche seulement), pas de BOS, c’est un liquidity grab.",
+              "Sans clôture franche (mèche seulement), pas de BOS, c’est une prise de liquidité.",
             ]}
           />
 
@@ -272,7 +272,7 @@ export default function ContentFr() {
               "Un volume élevé sur 5 bougies",
             ]}
             correctIndex={1}
-            explanation="Une tendance exploitable exige minimum 2 HL + 2 HH successifs sur le timeframe H4. En dessous de ce seuil, le marché reste en range ou en consolidation, pas en tendance structurellement confirmée."
+            explanation="Une tendance exploitable exige minimum 2 HL + 2 HH successifs sur l'unité de temps H4. En dessous de ce seuil, le marché reste en range ou en consolidation, pas en tendance structurellement confirmée."
           />
 
           <LessonQuiz

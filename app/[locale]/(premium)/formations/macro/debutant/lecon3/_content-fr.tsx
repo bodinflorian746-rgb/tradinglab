@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon3", title: "Les chiffres macro à surveiller",  href: "/formations/macro/debutant/lecon3", disabled: false },
   { id: "lecon4", title: "Comprendre l'inflation",           href: null,                                disabled: true  },
   { id: "lecon5", title: "Le rôle du dollar dans le monde",  href: null,                                disabled: true  },
-  { id: "lecon6", title: "Macro et risk management",         href: null,                                disabled: true  },
+  { id: "lecon6", title: "Macro et gestion du risque",         href: null,                                disabled: true  },
 ];
 
 export default function ContentFr() {
@@ -368,12 +368,12 @@ export default function ContentFr() {
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-5">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">Méthode du trader expérimenté</span> : tu ne traderas <span className="font-semibold text-zinc-300">jamais</span> la news en direct. Tu attends 15-30 minutes après, le marché se calme, la nouvelle direction se dessine, et tu entres avec confluence technique.
+                <span className="text-white font-medium">Méthode du trader expérimenté</span> : tu ne traderas <span className="font-semibold text-zinc-300">jamais</span> l&apos;annonce en direct. Tu attends 15-30 minutes après, le marché se calme, la nouvelle direction se dessine, et tu entres avec confluence technique.
               </p>
             </div>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                Tu ne trades pas la news. Tu trades la réaction.
+                Tu ne trades pas l&apos;annonce. Tu trades la réaction.
               </p>
             </div>
           </section>

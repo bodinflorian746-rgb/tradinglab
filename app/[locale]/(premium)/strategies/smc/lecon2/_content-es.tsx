@@ -130,7 +130,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Market Structure SMC, HH/HL/LL/LH → ver Estrategia SMC L1</li>
               <li>- Vela de ruptura, displacement → ver Formación Trading L2</li>
-              <li>- Tendencia direccional multi-timeframe → ver Formación Trading L3</li>
+              <li>- Tendencia direccional multitemporal → ver Formación Trading L3</li>
             </ul>
           </div>
 
@@ -179,7 +179,7 @@ export default function ContentEs() {
                 <p className="text-white font-semibold text-sm mb-2">1. Cierre nítido más allá del nivel</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- La vela cierra completamente más allá del HH/LL, mecha sola = test</li>
-                  <li>- Validación en el cierre del timeframe de análisis (H4 o Daily)</li>
+                  <li>- Validación en el cierre de la temporalidad de análisis (H4 o Daily)</li>
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
@@ -197,7 +197,7 @@ export default function ContentEs() {
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
-                <p className="text-white font-semibold text-sm mb-2">4. Alineación multi-timeframe</p>
+                <p className="text-white font-semibold text-sm mb-2">4. Alineación multitemporal</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- BOS H4 coherente con sesgo Daily (HTF)</li>
                   <li>- BOS alcista por encima MM200, bajista por debajo</li>
@@ -256,7 +256,7 @@ export default function ContentEs() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade: BOS alcista EUR/USD H4</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              EUR/USD en tendencia alcista H4 desde hace 4 semanas. Estructura: 3 HL en 1.1620, 1.1680, 1.1720, y 3 HH en 1.1700, 1.1760, 1.1820. MM200 Daily en 1.1500, precio por encima. La vela H4 acaba de cerrar en 1.1858, es decir 38 pips por encima del HH 1.1820, displacement marcado. 5 velas mantienen su cierre por encima de 1.1820 sin reintegración. Sin news macro en la ventana. El último HL 1.1720 no ha sido roto: sin CHoCH, BOS alcista validado.
+              EUR/USD en tendencia alcista H4 desde hace 4 semanas. Estructura: 3 HL en 1.1620, 1.1680, 1.1720, y 3 HH en 1.1700, 1.1760, 1.1820. MM200 Daily en 1.1500, precio por encima. La vela H4 acaba de cerrar en 1.1858, es decir 38 pips por encima del HH 1.1820, displacement marcado. 5 velas mantienen su cierre por encima de 1.1820 sin reintegración. Sin noticia macro en la ventana. El último HL 1.1720 no ha sido roto: sin CHoCH, BOS alcista validado.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -297,14 +297,14 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "BOS confirma la tendencia por la ruptura de un extremo estructural (HH o LL). CHoCH la pone en duda por la ruptura de un mínimo o máximo inverso (HL o LH). El nivel roto dicta la señal.",
-              "4 criterios califican un BOS válido: cierre nítido, displacement marcado, ausencia de reintegración, alineación multi-timeframe.",
+              "4 criterios califican un BOS válido: cierre nítido, displacement marcado, ausencia de reintegración, alineación multitemporal.",
               "La secuencia de retroceso sigue 3 etapas: BOS contratendencia, formación de la nueva estructura, CHoCH confirmado.",
               "La entrada de inversión solo se toma tras CHoCH confirmado, en la zona de mitigation con señal de rechazo.",
             ]}
           />
 
           <LessonExercice
-            description="En XAU/USD H4, la tendencia bajista en curso muestra 3 LH sucesivos en 4 720$, 4 660$ y 4 620$, y 3 LL sucesivos en 4 660$, 4 600$ y 4 540$. Una vela H4 acaba de cerrar en 4 670$, es decir 50$ por encima del último LH en 4 620$. 4 velas siguientes mantienen su cierre por encima de 4 620$. Sin news macro en la ventana. ¿Cómo se construye la lectura BOS/CHoCH?"
+            description="En XAU/USD H4, la tendencia bajista en curso muestra 3 LH sucesivos en 4 720$, 4 660$ y 4 620$, y 3 LL sucesivos en 4 660$, 4 600$ y 4 540$. Una vela H4 acaba de cerrar en 4 670$, es decir 50$ por encima del último LH en 4 620$. 4 velas siguientes mantienen su cierre por encima de 4 620$. Sin noticia macro en la ventana. ¿Cómo se construye la lectura BOS/CHoCH?"
             steps={[
               "Identificar la naturaleza del nivel roto: 4 620$ es el último LH (máximo de estructura bajista inversa), se trata de una señal de retroceso potencial, no de continuación.",
               "Calificar la ruptura: cierre franco en 4 670$ (50$ por encima del LH), displacement superior al promedio reciente, sin reintegración en 4 velas, ruptura validada estructuralmente.",

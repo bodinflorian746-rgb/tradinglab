@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon3", title: "Las cifras macro a vigilar",        href: "/formations/macro/debutant/lecon3", disabled: false },
   { id: "lecon4", title: "Entender la inflación",             href: "/formations/macro/debutant/lecon4", disabled: false },
   { id: "lecon5", title: "El rol del dólar en el mundo",      href: "/formations/macro/debutant/lecon5", disabled: false },
-  { id: "lecon6", title: "Macro y risk management",           href: "/formations/macro/debutant/lecon6", disabled: false },
+  { id: "lecon6", title: "Macro y gestión de riesgos",           href: "/formations/macro/debutant/lecon6", disabled: false },
 ];
 
 export default function ContentEs() {
@@ -58,7 +58,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Macro y risk management, adapta tu riesgo al contexto
+            Macro y gestión de riesgos, adapta tu riesgo al contexto
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -66,7 +66,7 @@ export default function ContentEs() {
               Tu stop loss puede ser perfecto. Tu análisis también.
             </p>
             <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
-              Pero si una news mayor sale en 5 minutos, tu SL puede saltar como si no existiera.
+              Pero si una noticia mayor sale en 5 minutos, tu SL puede saltar como si no existiera.
             </p>
           </div>
 
@@ -114,7 +114,7 @@ export default function ContentEs() {
               En tiempo normal, tu stop loss técnico tiene sentido. Si tu análisis prevé un SL a 30 pips, el mercado puede respetar esa zona.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Pero durante una news mayor:
+              Pero durante una noticia mayor:
             </p>
             <ul className="space-y-2 mb-4">
               {[
@@ -133,7 +133,7 @@ export default function ContentEs() {
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                Durante una news macro, tu riesgo ya no está en el papel. Está en la velocidad del mercado.
+                Durante una noticia macro, tu riesgo ya no está en el papel. Está en la velocidad del mercado.
               </p>
             </div>
           </section>
@@ -147,14 +147,14 @@ export default function ContentEs() {
 
             <div className="space-y-5 mb-5">
               <div>
-                <p className="text-sm font-semibold text-zinc-200 mb-2">Regla 1. Ninguna posición abierta en news 3 estrellas</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-2">Regla 1. Ninguna posición abierta en noticias 3 estrellas</p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
-                  Si una news mayor llega, verificas tus posiciones. Cierras, reduces, o asumes conscientemente el riesgo. Pero <span className="font-semibold text-zinc-200">nunca descubres</span> la news después de los hechos.
+                  Si una noticia mayor llega, verificas tus posiciones. Cierras, reduces, o asumes conscientemente el riesgo. Pero <span className="font-semibold text-zinc-200">nunca descubres</span> la noticia después de los hechos.
                 </p>
               </div>
 
               <div>
-                <p className="text-sm font-semibold text-zinc-200 mb-2">Regla 2. Tamaño dividido por 2 después de la news</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-2">Regla 2. Tamaño dividido por 2 después de la noticia</p>
                 <p className="text-sm text-zinc-300 leading-relaxed mb-2">
                   Si operas después de la reacción (método visto en la lección 3):
                 </p>
@@ -165,7 +165,7 @@ export default function ContentEs() {
                   </li>
                   <li className="flex items-center gap-2.5 text-sm text-zinc-300">
                     <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0" />
-                    <span>tamaño post-news: <span className="font-semibold text-zinc-200">0.05 lote</span></span>
+                    <span>tamaño post-noticia: <span className="font-semibold text-zinc-200">0.05 lote</span></span>
                   </li>
                 </ul>
                 <p className="text-sm text-zinc-300 leading-relaxed">
@@ -176,7 +176,7 @@ export default function ContentEs() {
               <div>
                 <p className="text-sm font-semibold text-zinc-200 mb-2">Regla 3. SL más amplio o no operar</p>
                 <p className="text-sm text-zinc-300 leading-relaxed mb-2">
-                  Si el mercado todavía se mueve demasiado rápido después de la news:
+                  Si el mercado todavía se mueve demasiado rápido después de la noticia:
                 </p>
                 <ul className="space-y-1.5">
                   <li className="flex items-start gap-2.5 text-sm text-zinc-300">
@@ -241,9 +241,9 @@ export default function ContentEs() {
               <ul className="space-y-1.5">
                 {[
                   { bold: "Forex", rest: ": EUR/USD, GBP/USD (volatilidad máxima)" },
-                  { bold: "Oro (XAU/USD)", rest: ": muy reactivo a las news US (dólar / tasas)" },
+                  { bold: "Oro (XAU/USD)", rest: ": muy reactivo a las noticias US (dólar / tasas)" },
                   { bold: "Índices US", rest: ": Nasdaq, S&P500 reaccionan inmediatamente" },
-                  { bold: "BTC/USD", rest: ": sensible a las news macro desde 2022" },
+                  { bold: "BTC/USD", rest: ": sensible a las noticias macro desde 2022" },
                 ].map((item) => (
                   <li key={item.bold} className="flex items-start gap-2 text-xs text-zinc-400">
                     <div className="w-1 h-1 rounded-full bg-zinc-600 shrink-0 mt-1.5" />
@@ -339,7 +339,7 @@ export default function ContentEs() {
               <span className="font-semibold text-zinc-200">80€ sobre 500€ = 16% de la cuenta en 30 segundos.</span>
             </p>
             <div className="bg-zinc-900/60 rounded-xl px-4 py-3 mb-5">
-              <p className="text-xs font-semibold text-zinc-400 mb-2">Y no es solo un riesgo en EUR/USD. Con una cuenta de 500€ y una posición dimensionada según las reglas de risk management (2% por trade), una mala news macro puede borrar el mismo porcentaje de la cuenta en todos los activos:</p>
+              <p className="text-xs font-semibold text-zinc-400 mb-2">Y no es solo un riesgo en EUR/USD. Con una cuenta de 500€ y una posición dimensionada según las reglas de gestión de riesgos (2% por trade), una mala noticia macro puede borrar el mismo porcentaje de la cuenta en todos los activos:</p>
               <div className="space-y-1.5">
                 {[
                   { asset: "EUR/USD", detail: "-80 pips → -80€", pct: "16% de la cuenta" },
@@ -354,7 +354,7 @@ export default function ContentEs() {
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-zinc-500 mt-2 italic">Nota: estas equivalencias se calculan a tamaño de riesgo similar (no a mismo número de lotes). El objetivo es mostrar que sin importar el activo operado, un mal risk management en news macro puede borrar 15-25% de la cuenta en pocos minutos.</p>
+              <p className="text-xs text-zinc-500 mt-2 italic">Nota: estas equivalencias se calculan a tamaño de riesgo similar (no a mismo número de lotes). El objetivo es mostrar que sin importar el activo operado, una mala gestión de riesgos en noticias macro puede borrar 15-25% de la cuenta en pocos minutos.</p>
             </div>
 
             {/* Encadré 💰 Realidad del retail */}
@@ -371,9 +371,9 @@ export default function ContentEs() {
 
           {/* Bloque 6 — Cómo adaptar tu risk management */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Cómo adaptar tu risk management</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Cómo adaptar tu gestión de riesgos</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Ya aprendiste a adaptar tu riesgo a tu capital (cf lección Trading &apos;Gestión del riesgo&apos;):
+              Ya aprendiste a adaptar tu riesgo a tu capital (cf lección Trading &apos;gestión de riesgos&apos;):
             </p>
             <ul className="space-y-1.5 mb-4">
               {[
@@ -403,7 +403,7 @@ export default function ContentEs() {
               <div className="divide-y divide-zinc-800/60">
                 {[
                   { ctx: "Macro tranquila", action: "Reglas estándar (% según tu capital)" },
-                  { ctx: "News 3 estrellas en <2h", action: "Cerrar / reducir / esperar" },
+                  { ctx: "Noticia 3 estrellas en <2h", action: "Cerrar / reducir / esperar" },
                   { ctx: "Macro contra tu setup", action: "Dividir el tamaño por 2 o pasar" },
                   { ctx: "Macro confirma tu setup", action: "Setup estándar con confluencia reforzada" },
                 ].map((row, i) => (
@@ -438,9 +438,9 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "Una news macro puede multiplicar tu riesgo real por 2 a 5 veces",
-              "Las ventanas peligrosas: 30 min antes hasta 1h después de las news 3 estrellas",
-              "En news 3 estrellas: cerrar, reducir o esperar (nunca ignorar)",
+              "Una noticia macro puede multiplicar tu riesgo real por 2 a 5 veces",
+              "Las ventanas peligrosas: 30 min antes hasta 1h después de las noticias 3 estrellas",
+              "En noticias 3 estrellas: cerrar, reducir o esperar (nunca ignorar)",
               "La grilla de decisión: macro favorable + técnica limpia = mejor contexto",
             ]}
           />
@@ -450,13 +450,13 @@ export default function ContentEs() {
             steps={[
               "Abre el calendario económico del día (Investing.com o Forex Factory).",
               "Identifica todos los eventos 3 estrellas en tu sesión de trading.",
-              "Anota las horas peligrosas en tu planificación (30 min antes + 1h después de cada news).",
-              "Decide con antelación para cada news: ¿cierras, reduces o esperas?",
-              "Después de cada news, observa si el mercado se vuelve tradable o sigue caótico.",
+              "Anota las horas peligrosas en tu planificación (30 min antes + 1h después de cada noticia).",
+              "Decide con antelación para cada noticia: ¿cierras, reduces o esperas?",
+              "Después de cada noticia, observa si el mercado se vuelve tradable o sigue caótico.",
             ]}
           />
           <p className="text-sm text-zinc-500 leading-relaxed px-1">
-            El objetivo: <span className="font-semibold text-zinc-400">nunca descubrir una news después de haber tomado posición</span>.
+            El objetivo: <span className="font-semibold text-zinc-400">nunca descubrir una noticia después de haber tomado posición</span>.
           </p>
 
           <LessonQuiz
@@ -470,7 +470,7 @@ export default function ContentEs() {
             correctIndex={2}
             explanation="Un NFP puede crear un movimiento violento e imprevisible (200-500 pips de movimiento total posible). Aunque tu setup esté técnicamente limpio, el riesgo real es demasiado alto justo antes de la publicación. La opción A ignora completamente el contexto macro y te hace sufrir la volatilidad. La opción B es aún peor, aumentas tu riesgo en la ventana más peligrosa. La opción D es catastrófica: retirar tu SL transforma una pérdida limitada en una pérdida potencialmente enorme. La única respuesta pro: esperar, observar, reevaluar. Este principio vale en todos los activos sensibles a la macro: EUR/USD, XAU/USD, Nasdaq, BTC/USD."
             answerExplanations={[
-              "Falso. Ignorar una news 3 estrellas a 20 minutos es sufrir la volatilidad. Un NFP puede crear un movimiento de 200-500 pips, tu setup técnico no se sostiene frente a esta realidad.",
+              "Falso. Ignorar una noticia 3 estrellas a 20 minutos es sufrir la volatilidad. Un NFP puede crear un movimiento de 200-500 pips, tu setup técnico no se sostiene frente a esta realidad.",
               "Falso. Aumentar el tamaño en la ventana de peligro máximo es un error grave. Maximizas tu riesgo en el peor momento posible.",
               "Correcto. Un NFP puede crear un movimiento violento e imprevisible. Esperar, observar la reacción, luego reevaluar el setup es el único enfoque profesional.",
               "Falso. Retirar tu SL es catastrófico: transforma una pérdida limitada en una pérdida potencialmente enorme si el mercado se va en la dirección equivocada.",

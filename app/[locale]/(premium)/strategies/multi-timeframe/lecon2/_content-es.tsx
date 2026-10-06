@@ -11,10 +11,10 @@ import { DirectionDominanteDiagram } from "@/app/components/charts/DirectionDomi
 import { HTFFilterDiagram } from "@/app/components/charts/HTFFilterDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Por qué analizar en multi-timeframe", disabled: false },
-  { id: "lecon2", title: "El timeframe superior: el sesgo", disabled: false },
-  { id: "lecon3", title: "El timeframe intermedio: la zona", disabled: false },
-  { id: "lecon4", title: "El timeframe de ejecución: la entrada", disabled: false },
+  { id: "lecon1", title: "Por qué hacer un análisis multitemporal", disabled: false },
+  { id: "lecon2", title: "La temporalidad superior: el sesgo", disabled: false },
+  { id: "lecon3", title: "La temporalidad intermedia: la zona", disabled: false },
+  { id: "lecon4", title: "La temporalidad de ejecución: la entrada", disabled: false },
   { id: "lecon5", title: "El proceso completo", disabled: false },
 ];
 
@@ -33,7 +33,7 @@ export default function ContentEs() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Estrategias</Link>
           <span>/</span>
-          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Multi-timeframe Process</Link>
+          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Process multitemporal</Link>
           <span>/</span>
           <span className="text-zinc-500">Lección 2</span>
         </nav>
@@ -57,12 +57,12 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            El timeframe superior: definir la dirección dominante
+            La temporalidad superior: definir la dirección dominante
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              El timeframe superior construye el contexto antes de toda ejecución: identifica la dirección dominante, localiza las zonas importantes y muestra hacia dónde empuja realmente el mercado. No sirve para entrar en posición, sirve para evitar los trades tomados contra la tendencia de fondo.
+              La temporalidad superior construye el contexto antes de toda ejecución: identifica la dirección dominante, localiza las zonas importantes y muestra hacia dónde empuja realmente el mercado. No sirve para entrar en posición, sirve para evitar los trades tomados contra la tendencia de fondo.
             </p>
           </div>
 
@@ -123,7 +123,7 @@ export default function ContentEs() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Lectura multi-timeframe → ver Lección 1</li>
+              <li>- Lectura multitemporal → ver Lección 1</li>
               <li>- Estructura de mercado, HH/HL y LH/LL → ver módulo SMC</li>
               <li>- Soportes y resistencias HTF → ver módulo Soporte/Resistencia</li>
             </ul>
@@ -138,7 +138,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un setup limpio en M15 puede fracasar por una sola razón: va contra la dirección dominante del HTF. El timeframe pequeño muestra a menudo un simple retroceso local. El timeframe superior, en cambio, muestra si el mercado empuja realmente hacia arriba... o hacia abajo.
+              Un setup limpio en M15 puede fracasar por una sola razón: va contra la dirección dominante del HTF. La temporalidad pequeña muestra a menudo un simple retroceso local. La temporalidad superior, en cambio, muestra si el mercado empuja realmente hacia arriba... o hacia abajo.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -215,7 +215,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Empieza siempre por el HTF</li>
               <li>- Identifica la dirección dominante antes del setup</li>
-              <li>- Anota las zonas HTF antes de bajar de timeframe</li>
+              <li>- Anota las zonas HTF antes de bajar de temporalidad</li>
               <li>- Filtra los trades tomados contra la tendencia</li>
             </ul>
           </section>
@@ -242,7 +242,7 @@ export default function ContentEs() {
 
               <p className="text-white font-semibold text-sm mb-2">Paso 3. Preparar el escenario</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Esperado: una subida hacia la resistencia, un rechazo local, luego una confirmación más tarde en el timeframe de ejecución</li>
+                <li>- Esperado: una subida hacia la resistencia, un rechazo local, luego una confirmación más tarde en la temporalidad de ejecución</li>
                 <li>- Evitado: una compra impulsiva contra la tendencia Daily</li>
               </ul>
 
@@ -277,7 +277,7 @@ export default function ContentEs() {
             options={[
               "El número total de velas verdes",
               "Los impulsos más fuertes y los rechazos dominantes",
-              "El timeframe M1 únicamente",
+              "La temporalidad M1 únicamente",
               "Una sola vela impulsiva aislada",
             ]}
             correctIndex={1}
@@ -313,7 +313,7 @@ export default function ContentEs() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Lección terminada</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Lección 2 del módulo Multi-timeframe Process completada.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Lección 2 del módulo Process multitemporal completada.</p>
                 </div>
               </div>
             )}

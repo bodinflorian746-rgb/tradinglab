@@ -78,17 +78,17 @@ export function ProcessFunnelDiagram({ className = "", locale = "fr" }: ProcessF
         <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
 
         {/* Mini-SVG : funnel HTF → MTF → LTF (entonnoir vertical) */}
-        <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="Process funnel HTF/MTF/LTF" fill="none">
+        <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label={locale === "es" ? "Embudo del proceso: HTF, MTF, LTF" : locale === "en" ? "Process funnel HTF/MTF/LTF" : "Entonnoir : UT supérieure, intermédiaire, inférieure"} fill="none">
           {/* Trapèze funnel */}
           <path d="M40,10 L240,10 L200,55 L80,55 Z" fill="#10b98115" stroke="#10b98155" strokeWidth="1" />
-          <text x="140" y="35" fontSize="11" fill="#10b981" textAnchor="middle" fontWeight="700">D / W bias</text>
-          <text x="140" y="48" fontSize="8" fill="#a1a1aa" textAnchor="middle">HTF</text>
+          <text x="140" y="35" fontSize="11" fill="#10b981" textAnchor="middle" fontWeight="700">{locale === "es" ? "Sesgo D / W" : locale === "en" ? "D / W bias" : "Biais D / W"}</text>
+          <text x="140" y="48" fontSize="8" fill="#a1a1aa" textAnchor="middle">{locale === "es" ? "HTF" : locale === "en" ? "HTF" : "UT supérieure"}</text>
           <path d="M80,60 L200,60 L170,90 L110,90 Z" fill="#60a5fa15" stroke="#60a5fa55" strokeWidth="1" />
           <text x="140" y="78" fontSize="11" fill="#60a5fa" textAnchor="middle" fontWeight="700">H4 / H1 zone</text>
-          <text x="140" y="88" fontSize="8" fill="#a1a1aa" textAnchor="middle">MTF</text>
+          <text x="140" y="88" fontSize="8" fill="#a1a1aa" textAnchor="middle">{locale === "es" ? "MTF" : locale === "en" ? "MTF" : "UT intermédiaire"}</text>
           <path d="M110,95 L170,95 L155,120 L125,120 Z" fill="#f59e0b15" stroke="#f59e0b55" strokeWidth="1" />
           <text x="140" y="111" fontSize="11" fill="#f59e0b" textAnchor="middle" fontWeight="700">M15 entry</text>
-          <text x="140" y="119" fontSize="7" fill="#a1a1aa" textAnchor="middle">LTF</text>
+          <text x="140" y="119" fontSize="7" fill="#a1a1aa" textAnchor="middle">{locale === "es" ? "LTF" : locale === "en" ? "LTF" : "UT inférieure"}</text>
         </svg>
 
         <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3 text-center">

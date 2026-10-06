@@ -11,7 +11,7 @@ import { FalseBreakoutTrapDiagram } from "@/app/components/charts/FalseBreakoutT
 import { PostSweepReactionDiagram } from "@/app/components/charts/PostSweepReactionDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Liquidity y manipulación", disabled: false },
+  { id: "lecon1", title: "Liquidez y manipulación", disabled: false },
   { id: "lecon2", title: "PD Arrays", disabled: false },
   { id: "lecon3", title: "Killzones", disabled: false },
   { id: "lecon4", title: "Displacement", disabled: false },
@@ -57,12 +57,12 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Entender el modelo ICT: liquidity y manipulación
+            Entender el modelo ICT: liquidez y manipulación
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              El mercado no rompe los máximos por casualidad. Suele ir a buscar la liquidity antes del verdadero desplazamiento.
+              El mercado no rompe los máximos por casualidad. Suele ir a buscar la liquidez antes del verdadero desplazamiento.
             </p>
           </div>
 
@@ -124,8 +124,8 @@ export default function ContentEs() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Estructura de mercado, BOS y CHoCH → ver módulo SMC, lección « BOS y CHoCH: leer las señales estructurales institucionales »</li>
-              <li>- FVG y liquidity → ver módulo SMC, lección « FVG y liquidity: tradear el desequilibrio institucional »</li>
-              <li>- Multi-timeframe → ver módulo Multi-timeframe Process</li>
+              <li>- FVG y liquidez → ver módulo SMC, lección « FVG y liquidez: tradear el desequilibrio institucional »</li>
+              <li>- Análisis multitemporal → ver módulo Process multitemporal</li>
             </ul>
           </div>
 
@@ -138,18 +138,18 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La grilla de lectura ICT parte de una constatación simple: los niveles más obvios, equal highs, equal lows, últimos máximos o mínimos claramente visibles en el gráfico, concentran las órdenes stop de los participantes retail. Stop loss arriba de un máximo, stop loss debajo de un mínimo: estas zonas forman bolsas de liquidity visibles a simple vista en el gráfico. El mercado va a ir ahí, mecánicamente, porque es donde duermen las órdenes que hacen funcionar los algoritmos institucionales.
+              La grilla de lectura ICT parte de una constatación simple: los niveles más obvios, equal highs, equal lows, últimos máximos o mínimos claramente visibles en el gráfico, concentran las órdenes stop de los participantes retail. Stop loss arriba de un máximo, stop loss debajo de un mínimo: estas zonas forman bolsas de liquidez visibles a simple vista en el gráfico. El mercado va a ir ahí, mecánicamente, porque es donde duermen las órdenes que hacen funcionar los algoritmos institucionales.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1: dos máximos casi idénticos se forman en 1.1780 durante algunas horas. Todos los traders en short ven esta resistencia y colocan su SL justo encima, hacia 1.1790-1.1795. El mercado sube por tercera vez, atraviesa 1.1780, alcanza 1.1792, todos los stops se disparan, y luego cae violentamente hacia 1.1720. La liquidity fue tomada, el movimiento real comienza después.
+                EUR/USD H1: dos máximos casi idénticos se forman en 1.1780 durante algunas horas. Todos los traders en short ven esta resistencia y colocan su SL justo encima, hacia 1.1790-1.1795. El mercado sube por tercera vez, atraviesa 1.1780, alcanza 1.1792, todos los stops se disparan, y luego cae violentamente hacia 1.1720. La liquidez fue tomada, el movimiento real comienza después.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Equal highs / equal lows = liquidity visible a simple vista</li>
+              <li>- Equal highs / equal lows = liquidez visible a simple vista</li>
               <li>- Mientras más obvio sea un nivel, más stops concentra</li>
               <li>- El mercado va a buscar esas zonas, no es casualidad, es ejecución de órdenes</li>
               <li>- Tradear el breakout ingenuo de esos niveles = posicionarte del lado equivocado</li>
@@ -185,66 +185,66 @@ export default function ContentEs() {
 
           {/* Bloque 5 — LA VERDADERA SEÑAL = LA REACCIÓN DESPUÉS DE LA LIQUIDITY */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">La verdadera señal = la reacción después de la liquidity</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">La verdadera señal = la reacción después de la liquidez</h2>
 
             <div className="my-8">
               <PostSweepReactionDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El corazón del modelo ICT cabe en una frase: no se tradea la toma de liquidity, se tradea la REACCIÓN que sigue. El sweep en sí mismo no es una señal, es una condición previa. La señal llega justo después: el precio debe reintegrarse debajo (o arriba, según el sentido) del nivel barrido, y luego una vela impulsiva franca debe confirmar el retroceso. Es esa secuencia sweep → reintegración → impulso la que valida una entrada, no la mecha del sweep sola.
+              El corazón del modelo ICT cabe en una frase: no se tradea la toma de liquidez, se tradea la REACCIÓN que sigue. El barrido en sí mismo no es una señal, es una condición previa. La señal llega justo después: el precio debe reintegrarse debajo (o arriba, según el sentido) del nivel barrido, y luego una vela impulsiva franca debe confirmar el retroceso. Es esa secuencia barrido → reintegración → impulso la que valida una entrada, no la mecha del barrido sola.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Gráfico M15 EUR/USD: el precio acaba de imprimir una mecha arriba de 1.1780 (sweep). En la siguiente vela, cierra debajo de 1.1780 (reintegración). En la vela siguiente, gran cuerpo bajista de 35 pts (impulso). Es esa secuencia la que autoriza un short, entrada en la ruptura del último mínimo local, SL justo arriba del máximo del sweep, TP hacia la próxima zona de liquidity más abajo.
+                Gráfico M15 EUR/USD: el precio acaba de imprimir una mecha arriba de 1.1780 (barrido). En la siguiente vela, cierra debajo de 1.1780 (reintegración). En la vela siguiente, gran cuerpo bajista de 35 pts (impulso). Es esa secuencia la que autoriza un short, entrada en la ruptura del último mínimo local, SL justo arriba del máximo del barrido, TP hacia la próxima zona de liquidez más abajo.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- El sweep solo no dispara nada, es una condición, no una señal</li>
+              <li>- El barrido solo no dispara nada, es una condición, no una señal</li>
               <li>- La reintegración debajo del nivel barrido es la primera confirmación</li>
               <li>- Una vela impulsiva franca en la nueva dirección valida la entrada</li>
-              <li>- SL ajustado arriba del máximo del sweep, la estructura invalida el escenario</li>
+              <li>- SL ajustado arriba del máximo del barrido, la estructura invalida el escenario</li>
             </ul>
           </section>
 
           {/* Bloque 6 — PLAN DE APLICACIÓN */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de aplicación: un sweep EUR/USD completo</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de aplicación: un barrido EUR/USD completo</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Aquí está la secuencia completa HTF → Liquidity → Sweep → Reacción en un caso EUR/USD. Cuatro etapas, cada una con su rol.
+              Aquí está la secuencia completa HTF → Liquidez → Barrido → Reacción en un caso EUR/USD. Cuatro etapas, cada una con su rol.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Etapa 1. HTF (Daily): sesgo direccional</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: EUR/USD Daily en estructura LH/LL desde hace tres semanas, resistencia mayor 1.1860</li>
-                <li>- Conclusión: sesgo bajista confirmado, se buscarán shorts en toma de liquidity alta</li>
+                <li>- Conclusión: sesgo bajista confirmado, se buscarán shorts en toma de liquidez alta</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Liquidity (H1): identificar el objetivo</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 2. Liquidez (H1): identificar el objetivo</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: dos máximos casi idénticos formados en 1.1780 en la última sesión</li>
-                <li>- Conclusión: equal highs en 1.1780 = liquidity visible. Los stops short duermen arriba, hacia 1.1790-1.1795</li>
+                <li>- Conclusión: equal highs en 1.1780 = liquidez visible. Los stops short duermen arriba, hacia 1.1790-1.1795</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 3. Sweep (M15): esperar la toma</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 3. Barrido (M15): esperar la toma</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: una vela M15 imprime una mecha arriba de 1.1780, alcanza 1.1792, y cierra debajo de 1.1780</li>
-                <li>- Conclusión: la liquidity fue tomada. Pasamos en modo « vigilancia » para la reacción, sin entrada todavía</li>
+                <li>- Conclusión: la liquidez fue tomada. Pasamos en modo « vigilancia » para la reacción, sin entrada todavía</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Etapa 4. Reacción (M15): ejecutar</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: la vela siguiente es un gran cuerpo bajista impulsivo (35 pts), ruptura del último mínimo local en 1.1762</li>
-                <li>- Conclusión: entrada short en 1.1758 en la ruptura, SL en 1.1795 (3 pts arriba del máximo del sweep), TP hacia la próxima zona de liquidity baja en 1.1695. R/R ≈ 1: 1,7, setup de alta probabilidad alineado Daily + sweep + reacción</li>
+                <li>- Conclusión: entrada short en 1.1758 en la ruptura, SL en 1.1795 (3 pts arriba del máximo del barrido), TP hacia la próxima zona de liquidez baja en 1.1695. R/R ≈ 1: 1,7, setup de alta probabilidad alineado Daily + barrido + reacción</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
                 <p className="text-sm text-zinc-300 italic text-center">
-                  HTF = sesgo · Liquidity = objetivo · Sweep = condición · Reacción = señal
+                  HTF = sesgo · Liquidez = objetivo · Barrido = condición · Reacción = señal
                 </p>
               </div>
             </div>
@@ -252,37 +252,37 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "El mercado va a buscar las zonas de liquidity obvias, equal highs/lows, últimos máximos/mínimos visibles.",
+              "El mercado va a buscar las zonas de liquidez obvias, equal highs/lows, últimos máximos/mínimos visibles.",
               "Una ruptura no es una continuación mientras no se mantenga. La reintegración debajo del nivel roto es señal de manipulación.",
-              "La verdadera señal de entrada llega DESPUÉS del sweep: reintegración + vela impulsiva en la dirección opuesta.",
-              "Sin reacción franca, el sweep solo no basta, la paciencia prima sobre la necesidad de tradear la mecha.",
+              "La verdadera señal de entrada llega DESPUÉS del barrido: reintegración + vela impulsiva en la dirección opuesta.",
+              "Sin reacción franca, el barrido solo no basta, la paciencia prima sobre la necesidad de tradear la mecha.",
             ]}
           />
 
           <LessonExercice
-            description="En TradingView, identifica un sweep completo en el par de tu elección y traza la secuencia HTF → Liquidity → Sweep → Reacción."
+            description="En TradingView, identifica un barrido completo en el par de tu elección y traza la secuencia HTF → Liquidez → Barrido → Reacción."
             steps={[
               "HTF (Daily o H4): identifica la estructura y concluye un sesgo direccional claro. Sin sesgo HTF nítido, no bajes más.",
-              "H1: identifica dos máximos casi idénticos (equal highs) o dos mínimos casi idénticos (equal lows) en el sentido del sesgo. Traza una línea horizontal en ese nivel, es la zona de liquidity objetivo.",
-              "M15: espera a que el precio venga a hacer sweep de ese nivel (mecha que rebasa, cuerpo que cierra del lado correcto). Luego busca la reintegración y la vela impulsiva. Si la secuencia está completa, anota la entrada, el SL arriba/debajo del máximo/mínimo del sweep, y el TP hacia la próxima zona de liquidity.",
+              "H1: identifica dos máximos casi idénticos (equal highs) o dos mínimos casi idénticos (equal lows) en el sentido del sesgo. Traza una línea horizontal en ese nivel, es la zona de liquidez objetivo.",
+              "M15: espera a que el precio venga a hacer barrido de ese nivel (mecha que rebasa, cuerpo que cierra del lado correcto). Luego busca la reintegración y la vela impulsiva. Si la secuencia está completa, anota la entrada, el SL arriba/debajo del máximo/mínimo del barrido, y el TP hacia la próxima zona de liquidez.",
             ]}
           />
 
           <LessonQuiz
             question="El precio acaba de imprimir una mecha arriba de un equal high en 1.1780, alcanza 1.1792 y luego cierra debajo de 1.1780. ¿Qué buscas para validar una entrada short?"
             options={[
-              "Entras de inmediato: el sweep solo es la señal de entrada",
+              "Entras de inmediato: el barrido solo es la señal de entrada",
               "Esperas una vela bajista impulsiva después de la reintegración debajo del nivel",
               "Esperas una vela verde en M1 que confirme la reanudación alcista",
               "Esperas que el precio retoque exactamente el máximo de la mecha en 1.1792 antes de entrar",
             ]}
             correctIndex={1}
-            explanation="El sweep solo es una condición previa, no una señal. El modelo ICT exige una SECUENCIA completa: sweep → reintegración debajo del nivel → vela impulsiva en la nueva dirección. Sin esa vela impulsiva de confirmación, no se entra, la paciencia permite evitar las señales falsas donde el sweep va seguido de una consolidación lateral o de otro push alcista."
+            explanation="El barrido solo es una condición previa, no una señal. El modelo ICT exige una SECUENCIA completa: barrido → reintegración debajo del nivel → vela impulsiva en la nueva dirección. Sin esa vela impulsiva de confirmación, no se entra, la paciencia permite evitar las señales falsas donde el barrido va seguido de una consolidación lateral o de otro push alcista."
             answerExplanations={[
-              "Falso. Entrar en el sweep solo, sin esperar la reacción, es tradear la mecha, exactamente lo que el modelo ICT busca evitar. El sweep puede ir seguido de una consolidación, de otro push alcista, o de nada. Sin confirmación, es una apuesta.",
-              "Correcto. La secuencia ICT completa exige sweep → reintegración → vela impulsiva. Es el impulso bajista el que confirma que la toma de liquidity se tradujo en movimiento real. La entrada se hace en la ruptura del último mínimo local, SL ajustado arriba del máximo del sweep.",
+              "Falso. Entrar en el barrido solo, sin esperar la reacción, es tradear la mecha, exactamente lo que el modelo ICT busca evitar. El barrido puede ir seguido de una consolidación, de otro push alcista, o de nada. Sin confirmación, es una apuesta.",
+              "Correcto. La secuencia ICT completa exige barrido → reintegración → vela impulsiva. Es el impulso bajista el que confirma que la toma de liquidez se tradujo en movimiento real. La entrada se hace en la ruptura del último mínimo local, SL ajustado arriba del máximo del barrido.",
               "Falso. Una vela verde indicaría la reanudación alcista, es decir la invalidación del escenario short. Para validar un short, se busca una vela ROJA impulsiva, no verde. Además, bajar hasta M1 para buscar una confirmación va en contra del modelo, que se ejecuta en M15.",
-              "Falso. Un sweep nunca se vuelve a jugar exactamente al pip. Esperar la retocada del máximo de la mecha es esperar un evento que no llegará, el precio se va en la dirección opuesta mientras miras en el lugar equivocado.",
+              "Falso. Un barrido nunca se vuelve a jugar exactamente al pip. Esperar la retocada del máximo de la mecha es esperar un evento que no llegará, el precio se va en la dirección opuesta mientras miras en el lugar equivocado.",
             ]}
           />
 

@@ -58,9 +58,9 @@ export function TimingComparisonDiagram({ className = "", locale = "fr" }: Timin
         b1Title: "✗ Fuera de Killzone",
         b1Body: "Reacción débil, lateralización, señales poco fiables.",
         b2Title: "✓ En Killzone",
-        b2Body: "Sweep + impulso franco, señales claras.",
+        b2Body: "Barrido + impulso franco, señales claras.",
         leg1: "Fuera de Killzone = reacción débil, lateralización",
-        leg2: "En Killzone = sweep + impulso franco",
+        leg2: "En Killzone = barrido + impulso franco",
       }
     : locale === "en"
     ? {

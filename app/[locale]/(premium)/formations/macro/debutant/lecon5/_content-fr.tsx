@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon3", title: "Les chiffres macro à surveiller",  href: "/formations/macro/debutant/lecon3", disabled: false },
   { id: "lecon4", title: "Comprendre l'inflation",           href: "/formations/macro/debutant/lecon4", disabled: false },
   { id: "lecon5", title: "Le rôle du dollar dans le monde",  href: "/formations/macro/debutant/lecon5", disabled: false },
-  { id: "lecon6", title: "Macro et risk management",         href: null,                                disabled: true  },
+  { id: "lecon6", title: "Macro et gestion du risque",         href: null,                                disabled: true  },
 ];
 
 export default function ContentFr() {
@@ -407,7 +407,7 @@ export default function ContentFr() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">La prochaine leçon (Macro et risk management) sera bientôt disponible.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">La prochaine leçon (Macro et gestion du risque) sera bientôt disponible.</p>
                 </div>
               </div>
             )}
@@ -427,7 +427,7 @@ export default function ContentFr() {
                 href="/formations/macro/debutant/lecon6"
                 className="inline-flex items-center gap-1.5 text-sm text-zinc-600 hover:text-zinc-400 transition-colors"
               >
-                Leçon 6. Macro et risk management
+                Leçon 6. Macro et gestion du risque
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

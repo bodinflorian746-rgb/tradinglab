@@ -139,7 +139,7 @@ export function ICTDisplacementSetupDiagram({ className = "", locale = "fr" }: I
         <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="ICT setup displacement" fill="none">
           {/* Niveau liquidité (HH retail) */}
           <line x1="10" y1="35" x2="270" y2="35" stroke="#71717a" strokeWidth="0.8" strokeDasharray="3 3" />
-          <text x="14" y="32" fontSize="8" fill="#a1a1aa">Liquidity</text>
+          <text x="14" y="32" fontSize="8" fill="#a1a1aa">{locale === "es" ? "Liquidez" : locale === "en" ? "Liquidity" : "Liquidité"}</text>
           {/* FVG zone */}
           <rect x="115" y="55" width="40" height="14" fill="#60a5fa18" stroke="#60a5fa55" strokeWidth="0.9" strokeDasharray="2 2" />
           <text x="135" y="52" fontSize="9" fill="#60a5fa" textAnchor="middle" fontWeight="700">FVG</text>

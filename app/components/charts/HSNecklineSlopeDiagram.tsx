@@ -1,23 +1,23 @@
 export default function HSNecklineSlopeDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const L = locale === "es"
     ? {
-        title: "Inclinación de la neckline = ajuste del TP",
-        flat: "Neckline plana",
-        asc: "Neckline ascendente",
-        desc: "Neckline descendente",
+        title: "Inclinación de la línea clavicular = ajuste del TP",
+        flat: "Línea clavicular plana",
+        asc: "Línea clavicular ascendente",
+        desc: "Línea clavicular descendente",
         tpStandard: "TP estándar",
         tpLong: "TP extendido",
         tpShort: "TP recortado",
         projFull: "Proyección measured move completa",
         projLong: "Proyección extendida hacia abajo",
         projShort: "Proyección reducida hacia abajo",
-        footer: "XAU/USD H&S ~4 620$ - 4 660$ — la inclinación de la neckline ajusta el TP",
-        mobileTitle: "Inclinación de la neckline = ajuste del TP",
-        mAsc: "Neckline ascendente",
+        footer: "XAU/USD HCH ~4 620$ - 4 660$ — la inclinación de la línea clavicular ajusta el TP",
+        mobileTitle: "Inclinación de la línea clavicular = ajuste del TP",
+        mAsc: "Línea clavicular ascendente",
         mAscDesc: "TP extendido hacia abajo — proyección más amplia.",
-        mFlat: "Neckline horizontal",
+        mFlat: "Línea clavicular horizontal",
         mFlatDesc: "Proyección simétrica de la altura del patrón.",
-        mDesc: "Neckline descendente",
+        mDesc: "Línea clavicular descendente",
         mDescDesc: "Proyección reducida hacia abajo — TP más corto.",
       }
     : locale === "en"
@@ -42,23 +42,23 @@ export default function HSNecklineSlopeDiagram({ className = "", locale = "fr" }
         mDescDesc: "Projection reduced lower — shorter TP.",
       }
     : {
-        title: "Inclinaison de la neckline = ajustement du TP",
-        flat: "Neckline plate",
-        asc: "Neckline ascendante",
-        desc: "Neckline descendante",
+        title: "Inclinaison de la ligne de cou = ajustement du TP",
+        flat: "Ligne de cou plate",
+        asc: "Ligne de cou ascendante",
+        desc: "Ligne de cou descendante",
         tpStandard: "TP standard",
         tpLong: "TP rallongé",
         tpShort: "TP raccourci",
         projFull: "Projection measured move pleine",
         projLong: "Projection prolongée vers le bas",
         projShort: "Projection réduite vers le bas",
-        footer: "XAU/USD H&S ~4 620$ - 4 660$ — l'inclinaison de la neckline ajuste le TP",
-        mobileTitle: "Inclinaison de la neckline = ajustement du TP",
-        mAsc: "Neckline ascendante",
+        footer: "XAU/USD ETE ~4 620$ - 4 660$ — l'inclinaison de la ligne de cou ajuste le TP",
+        mobileTitle: "Inclinaison de la ligne de cou = ajustement du TP",
+        mAsc: "Ligne de cou ascendante",
         mAscDesc: "TP étendu vers le bas — projection plus large.",
-        mFlat: "Neckline horizontale",
+        mFlat: "Ligne de cou horizontale",
         mFlatDesc: "Projection symétrique de la hauteur du pattern.",
-        mDesc: "Neckline descendante",
+        mDesc: "Ligne de cou descendante",
         mDescDesc: "Projection réduite vers le bas — TP plus court.",
       };
   return (
@@ -96,7 +96,7 @@ export default function HSNecklineSlopeDiagram({ className = "", locale = "fr" }
 
       {/* ═══ PANEL 2 — Neckline ascendante ═══ */}
       <rect x="320" y="50" width="270" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-      <text x="455" y="65" fill="#f59e0b" fontSize="10" fontWeight="600" textAnchor="middle">Neckline ascendante</text>
+      <text x="455" y="65" fill="#f59e0b" fontSize="10" fontWeight="600" textAnchor="middle">{locale === "es" ? "Línea clavicular ascendante" : locale === "en" ? "Neckline ascendante" : "Ligne de cou ascendante"}</text>
 
       {/* H&S avec neckline qui monte */}
       <line x1="330" y1="230" x2="580" y2="195" stroke="#a1a1aa" strokeWidth="1.2" strokeDasharray="4 3" />
@@ -115,7 +115,7 @@ export default function HSNecklineSlopeDiagram({ className = "", locale = "fr" }
 
       {/* ═══ PANEL 3 — Neckline descendante ═══ */}
       <rect x="620" y="50" width="270" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-      <text x="755" y="65" fill="#f59e0b" fontSize="10" fontWeight="600" textAnchor="middle">Neckline descendante</text>
+      <text x="755" y="65" fill="#f59e0b" fontSize="10" fontWeight="600" textAnchor="middle">{locale === "es" ? "Línea clavicular descendante" : locale === "en" ? "Neckline descendante" : "Ligne de cou descendante"}</text>
 
       {/* H&S avec neckline qui descend */}
       <line x1="630" y1="200" x2="880" y2="240" stroke="#a1a1aa" strokeWidth="1.2" strokeDasharray="4 3" />
@@ -133,23 +133,23 @@ export default function HSNecklineSlopeDiagram({ className = "", locale = "fr" }
       <text x="755" y="358" fill="#a1a1aa" fontSize="8" textAnchor="middle">Projection réduite vers le bas</text>
 
       <text x="450" y="390" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        XAU/USD H&amp;S ~4 620$ - 4 660$ — l&apos;inclinaison de la neckline ajuste le TP
+        XAU/USD ETE ~4 620$ - 4 660$ — l&apos;inclinaison de la ligne de cou ajuste le TP
       </text>
     </svg>
 
     {/* MOBILE : inclinaison neckline ─────────────────────────── */}
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">Inclinaison de la neckline = ajustement du TP</p>
+      <p className="text-[14px] font-bold text-white text-center">Inclinaison de la ligne de cou = ajustement du TP</p>
       <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">Neckline ascendante</p>
+        <p className="text-[13px] font-bold text-emerald-400">{locale === "es" ? "Línea clavicular ascendante" : locale === "en" ? "Neckline ascendante" : "Ligne de cou ascendante"}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">TP étendu vers le bas — projection plus large.</p>
       </div>
       <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-        <p className="text-[13px] font-bold text-zinc-300">Neckline horizontale</p>
+        <p className="text-[13px] font-bold text-zinc-300">{locale === "es" ? "Línea clavicular horizontale" : locale === "en" ? "Neckline horizontale" : "Ligne de cou horizontale"}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">Projection symétrique de la hauteur du pattern.</p>
       </div>
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">Neckline descendante</p>
+        <p className="text-[13px] font-bold text-red-400">{locale === "es" ? "Línea clavicular descendante" : locale === "en" ? "Neckline descendante" : "Ligne de cou descendante"}</p>
         <p className="text-[12px] text-zinc-300 leading-snug mt-1">Projection réduite vers le bas — TP plus court.</p>
       </div>
     </div>

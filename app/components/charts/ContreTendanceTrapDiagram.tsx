@@ -19,7 +19,7 @@ export function ContreTendanceTrapDiagram({ className = "", locale = "fr" }: Con
         b1Title: "Daily ↘ — Estructura LH/LL",
         b1Body: "Tendencia HTF bajista + precio rechazado bajo resistencia.",
         b2Title: "M15 ↗ — Breakout local tentador",
-        b2Body: "Ruptura visual alcista en timeframe pequeño.",
+        b2Body: "Ruptura visual alcista en temporalidad pequeña.",
         warning: "⚠ Comprar aquí = operar contra el HTF → trampa.",
         leg1: "Breakout local M15 — visualmente tentador",
         leg2: "Tendencia HTF bajista + rechazo bajo resistencia",
@@ -50,12 +50,12 @@ export function ContreTendanceTrapDiagram({ className = "", locale = "fr" }: Con
         bottomNote: "Un breakout M15 qui monte contre la baisse du Daily finit en piège",
         mobileTitle: "Piège contre-tendance",
         b1Title: "Daily ↘ — Structure LH/LL",
-        b1Body: "Tendance HTF baissière + prix rejeté sous résistance.",
+        b1Body: "Tendance baissière de l'UT supérieure + prix rejeté sous résistance.",
         b2Title: "M15 ↗ — Breakout local tentant",
-        b2Body: "Cassure visuelle haussière sur petit timeframe.",
-        warning: "⚠ Acheter ici = trader contre le HTF → piège.",
+        b2Body: "Cassure visuelle haussière sur petite unité de temps.",
+        warning: "⚠ Acheter ici = trader contre l'UT supérieure → piège.",
         leg1: "Breakout local M15 — visuellement tentant",
-        leg2: "Tendance HTF baissière + rejet sous résistance",
+        leg2: "Tendance baissière de l'UT supérieure + rejet sous résistance",
       };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

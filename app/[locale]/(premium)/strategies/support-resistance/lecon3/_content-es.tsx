@@ -32,7 +32,7 @@ export default function ContentEs() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Estrategias</Link>
           <span>/</span>
-          <Link href="/strategies/support-resistance" className="hover:text-zinc-400 transition-colors">Support / Resistance &amp; Range</Link>
+          <Link href="/strategies/support-resistance" className="hover:text-zinc-400 transition-colors">Support / Resistance &amp; rango</Link>
           <span>/</span>
           <span className="text-zinc-500">Lección 3</span>
         </nav>
@@ -144,7 +144,7 @@ export default function ContentEs() {
               <li>- Ruptura clara: cierre neto + distancia ≥ 15-20 pips/$ más allá del nivel</li>
               <li>- Sin reintegración en las 3-5 velas siguientes (si no, flip invalidado)</li>
               <li>- Retest: vuelta del precio hacia el nivel roto por el lado opuesto</li>
-              <li>- Rebote confirmado por una señal de rechazo (pin bar, engulfing, reacción neta)</li>
+              <li>- Rebote confirmado por una señal de rechazo (pin bar, envolvente, reacción neta)</li>
             </ul>
           </section>
 
@@ -162,7 +162,7 @@ export default function ContentEs() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Pin bar de rechazo (mecha larga del lado de la zona, cuerpo reducido del lado opuesto)</li>
-              <li>- Engulfing en el sentido del flip (engloba la vela anterior)</li>
+              <li>- Envolvente en el sentido del flip (engloba la vela anterior)</li>
               <li>- Reacción inmediata (rebote neto en 1-2 velas sin penetración profunda)</li>
               <li>- Señal ausente = zona no confirmada, esperar otra oportunidad</li>
             </ul>
@@ -183,7 +183,7 @@ export default function ContentEs() {
                 <li>- Validación: 4 velas sin reintegración bajo 1.1850</li>
                 <li>- Retest: pin bar con mecha baja en 1.1842 y cierre en 1.1858</li>
                 <li>- Entrada long: 1.1858 (cierre de la pin bar)</li>
-                <li>- Stop loss: 1.1830 (28 pips bajo el wick, margen 12 pips)</li>
+                <li>- Stop loss: 1.1830 (28 pips baja la mecha, margen 12 pips)</li>
                 <li>- Take profit: 1.1950 (próxima resistencia H4)</li>
               </ul>
 
@@ -230,7 +230,7 @@ export default function ContentEs() {
             points={[
               "Un flip exige una ruptura calificada: cierre claro, distancia suficiente, sin retorno inmediato.",
               "La zona rota invierte su rol en el retest: soporte roto → resistencia, resistencia rota → soporte.",
-              "El retest se valida únicamente por una señal de rechazo al contacto (pin bar, engulfing, reacción neta).",
+              "El retest se valida únicamente por una señal de rechazo al contacto (pin bar, envolvente, reacción neta).",
               "El stop loss se coloca al otro lado de la zona con margen 5-10 pips. Sin señal de rechazo, no hay entrada.",
             ]}
           />
@@ -242,7 +242,7 @@ export default function ContentEs() {
               "Constatar la inversión del rol: la resistencia 1.1850 se convierte en soporte",
               "Identificar la señal de rechazo: la pin bar al contacto con la zona valida el flip",
               "Colocar la entrada long en el cierre de la pin bar, stop loss en 1.1830 (20 pips bajo la zona para absorber las mechas)",
-              "Definir el take profit en la próxima resistencia mayor identificada en el chart H4 (ratio mínimo 1:2), tamaño de posición según el risk management adaptado al capital",
+              "Definir el take profit en la próxima resistencia mayor identificada en el chart H4 (ratio mínimo 1:2), tamaño de posición según la gestión de riesgos adaptada al capital",
             ]}
           />
 
@@ -250,12 +250,12 @@ export default function ContentEs() {
             question="Una resistencia acaba de romperse al alza con un cierre claro. El precio retrocede luego hacia la zona. ¿Qué señal valida el flip y autoriza una entrada long?"
             options={[
               "El simple retorno del precio a la zona basta",
-              "Una señal de rechazo (pin bar, engulfing, reacción neta) al contacto con la zona",
+              "Una señal de rechazo (pin bar, envolvente, reacción neta) al contacto con la zona",
               "Una ruptura de la siguiente zona",
               "Ninguna señal necesaria, la entrada es mecánica",
             ]}
             correctIndex={1}
-            explanation="Sin señal de rechazo, el flip no se valida. Una pin bar, un engulfing o una reacción neta al contacto con la zona confirman que la zona invertida cumple su nuevo rol. Sin esa señal, el precio puede atravesar la zona e invalidar el flip."
+            explanation="Sin señal de rechazo, el flip no se valida. Una pin bar, una envolvente o una reacción neta al contacto con la zona confirman que la zona invertida cumple su nuevo rol. Sin esa señal, el precio puede atravesar la zona e invalidar el flip."
           />
 
         </div>
@@ -287,7 +287,7 @@ export default function ContentEs() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Lección terminada</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Lección 3 del módulo Support / Resistance &amp; Range completada.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Lección 3 del módulo Support / Resistance &amp; rango completada.</p>
                 </div>
               </div>
             )}

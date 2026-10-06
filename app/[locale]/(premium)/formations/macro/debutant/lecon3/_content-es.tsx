@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon3", title: "Los datos macro a vigilar",             href: "/formations/macro/debutant/lecon3", disabled: false },
   { id: "lecon4", title: "Entender la inflación",                 href: null,                                disabled: true  },
   { id: "lecon5", title: "El rol del dólar en el mundo",          href: null,                                disabled: true  },
-  { id: "lecon6", title: "Macro y risk management",               href: null,                                disabled: true  },
+  { id: "lecon6", title: "Macro y gestión de riesgos",               href: null,                                disabled: true  },
 ];
 
 export default function ContentEs() {
@@ -368,12 +368,12 @@ export default function ContentEs() {
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-5">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">Método del trader experimentado</span>: <span className="font-semibold text-zinc-300">nunca</span> operarás la news en directo. Esperas 15-30 minutos después, el mercado se calma, la nueva dirección se dibuja, y entras con confluencia técnica.
+                <span className="text-white font-medium">Método del trader experimentado</span>: <span className="font-semibold text-zinc-300">nunca</span> operarás la noticia en directo. Esperas 15-30 minutos después, el mercado se calma, la nueva dirección se dibuja, y entras con confluencia técnica.
               </p>
             </div>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                No operas la news. Operas la reacción.
+                No operas la noticia. Operas la reacción.
               </p>
             </div>
           </section>

@@ -12,7 +12,7 @@ import SLManagementProgressionDiagram from "@/app/components/charts/SLManagement
 
 const LESSONS = [
   { id: "lecon1", slug: "lecon1", title: "Double top / Double bottom: la firma de la inversión", duration: "16 min", disabled: false },
-  { id: "lecon2", slug: "lecon2", title: "Head & Shoulders: la inversión mayor", duration: "18 min", disabled: false },
+  { id: "lecon2", slug: "lecon2", title: "Hombro-cabeza-hombro: la inversión mayor", duration: "18 min", disabled: false },
   { id: "lecon3", slug: "lecon3", title: "Divergencia RSI: cuando el momentum traiciona la tendencia", duration: "17 min", disabled: false },
   { id: "lecon4", slug: "lecon4", title: "Tradear un reversal: checklist de invalidación", duration: "18 min", disabled: false },
 ];
@@ -61,7 +61,7 @@ export default function ContentEs() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Entrar en un reversal es relativamente simple: hay tres patrones disponibles, Double top, H&amp;S y Divergencia RSI. El verdadero problema: saber cuándo el patrón falló. Esta lección entrega una checklist práctica para identificar una invalidación y cortar antes de devolver la cuenta.
+              Entrar en un reversal es relativamente simple: hay tres patrones disponibles, Double top, HCH y Divergencia RSI. El verdadero problema: saber cuándo el patrón falló. Esta lección entrega una checklist práctica para identificar una invalidación y cortar antes de devolver la cuenta.
             </p>
           </div>
 
@@ -124,7 +124,7 @@ export default function ContentEs() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Double Top / Double Bottom → ver Estrategia Reversal L1</li>
-              <li>- Head &amp; Shoulders → ver Estrategia Reversal L2</li>
+              <li>- Hombro-cabeza-hombro → ver Estrategia Reversal L2</li>
               <li>- Divergencia RSI → ver Estrategia Reversal L3</li>
             </ul>
           </div>
@@ -132,8 +132,8 @@ export default function ContentEs() {
           {/* Bloque 3 — POR QUÉ 70% FALLAN */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Por qué el 70% de los reversals fallan para los retails</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Los patrones de inversión como el Double top, el H&amp;S o la divergencia RSI tienen un win rate real en torno al 55-65% cuando son limpios. Para la mayoría de los retails, ese ratio cae al 30-40%. No porque los patrones sean malos. Porque los retails no saben reconocer cuándo el patrón falló.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">En una entrada en un double top donde el precio vuelve por encima de la neckline, el cerebro humano tiene dos reacciones posibles. O la salida es inmediata y se asume la pérdida chica. O el retail se dice: &apos;ya va a volver, vi el patrón&apos;. El retail promedio elige la segunda opción. En 10 trades así, salva quizás 2 y devuelve 8 con pérdidas 3 a 5 veces más grandes que lo previsto.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Los patrones de inversión como el Double top, el HCH o la divergencia RSI tienen un win rate real en torno al 55-65% cuando son limpios. Para la mayoría de los retails, ese ratio cae al 30-40%. No porque los patrones sean malos. Porque los retails no saben reconocer cuándo el patrón falló.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">En una entrada en un double top donde el precio vuelve por encima de la línea clavicular, el cerebro humano tiene dos reacciones posibles. O la salida es inmediata y se asume la pérdida chica. O el retail se dice: &apos;ya va a volver, vi el patrón&apos;. El retail promedio elige la segunda opción. En 10 trades así, salva quizás 2 y devuelve 8 con pérdidas 3 a 5 veces más grandes que lo previsto.</p>
             <p className="text-zinc-300 leading-relaxed text-sm">Un trader pro tiene una checklist de invalidación. Sin intuición. Sin feeling. Una lista mecánica de criterios que disparan el corte apenas se encienden. Sin debate. Sin &apos;espero una vela más&apos;. La salida es inmediata, la pérdida se asume, el siguiente trade se analiza. Esta lección presenta esa checklist.</p>
           </section>
 
@@ -146,11 +146,11 @@ export default function ContentEs() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Una sola de estas 5 condiciones encendida alcanza para disparar la salida inmediata. Sin debate, sin esperar una vela adicional.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Breakout rechazado.</span> <span className="text-zinc-300">El precio vuelve a cerrar por encima (o por debajo) de la neckline en las 1-3 velas siguientes a la entrada. Patrón invalidado, salida inmediata.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Vela de rechazo violenta.</span> <span className="text-zinc-300">Una vela verde grande englobando las 2-3 velas bajistas previas = señal de absorción. Salida inmediata incluso sin re-breakout de la neckline.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Breakout rechazado.</span> <span className="text-zinc-300">El precio vuelve a cerrar por encima (o por debajo) de la línea clavicular en las 1-3 velas siguientes a la entrada. Patrón invalidado, salida inmediata.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Vela de rechazo violenta.</span> <span className="text-zinc-300">Una vela verde grande englobando las 2-3 velas bajistas previas = señal de absorción. Salida inmediata incluso sin re-breakout de la línea clavicular.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Volumen incoherente.</span> <span className="text-zinc-300">Breakout inicial sin volumen particular + recuperación con volumen grande = lectura invertida. Patrón débil, salida inmediata.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. News imprevista en la ventana.</span> <span className="text-zinc-300">News macro que sale durante el trade (Fed minutes, geopolítica, datos inesperados). Salida por precaución requerida, las news destruyen los patrones.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm md:col-span-2"><span className="text-white font-semibold">5. Tiempo transcurrido sin confirmación.</span> <span className="text-zinc-300">Después de 5-8 velas en el timeframe de entrada (H1 o H4) sin progresión hacia el TP, patrón débil. La salida no es obligatoria, pero SL ajustado al break-even como mínimo. Si el patrón funcionaba, ya habría arrancado.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Noticia imprevista en la ventana.</span> <span className="text-zinc-300">Noticia macro que sale durante el trade (Fed minutes, geopolítica, datos inesperados). Salida por precaución requerida, las noticias destruyen los patrones.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm md:col-span-2"><span className="text-white font-semibold">5. Tiempo transcurrido sin confirmación.</span> <span className="text-zinc-300">Después de 5-8 velas en la temporalidad de entrada (H1 o H4) sin progresión hacia el TP, patrón débil. La salida no es obligatoria, pero SL ajustado al break-even como mínimo. Si el patrón funcionaba, ya habría arrancado.</span></div>
             </div>
           </section>
 
@@ -177,8 +177,8 @@ export default function ContentEs() {
             {/* Caso 1 */}
             <div className="mb-6 last:mb-0">
               <h3 className="text-base font-semibold text-zinc-100 mb-2">Caso 1: Double top en EUR/USD que se invalida</h3>
-              <p className="text-zinc-300 leading-relaxed text-sm mb-2">Entrada short EUR/USD tomada en 1.1795 después del breakout de la neckline, escenario de la Lección 4.1. SL en 1.1835, TP en 1.1715. Posición abierta desde hace 30 minutos. El precio baja primero a 1.1780, y luego sube con fuerza. Vela H1 que cierra en 1.1810.</p>
-              <p className="text-zinc-300 leading-relaxed text-sm mb-3">El precio rompió de nuevo la neckline en 1.1800 hacia arriba. El double top queda invalidado, criterio 1. La vela de subida es ancha y engloba las 2 velas bajistas previas, criterio 2. Sin news inminente. 2 criterios sobre 5 están encendidos.</p>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-2">Entrada short EUR/USD tomada en 1.1795 después del breakout de la línea clavicular, escenario de la Lección 4.1. SL en 1.1835, TP en 1.1715. Posición abierta desde hace 30 minutos. El precio baja primero a 1.1780, y luego sube con fuerza. Vela H1 que cierra en 1.1810.</p>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-3">El precio rompió de nuevo la línea clavicular en 1.1800 hacia arriba. El double top queda invalidado, criterio 1. La vela de subida es ancha y engloba las 2 velas bajistas previas, criterio 2. Sin noticia inminente. 2 criterios sobre 5 están encendidos.</p>
               <p className="text-sm text-zinc-300 leading-relaxed border-l-2 border-emerald-500/50 pl-3 py-1">
                 <span className="font-semibold text-emerald-400">Acción:</span> la posición se corta en 1.1810. Pérdida: 15 pips en vez de los 40 pips previstos si se hubiera esperado el SL. 25 pips salvados.
               </p>
@@ -188,9 +188,9 @@ export default function ContentEs() {
 
             {/* Caso 2 */}
             <div className="mb-6 last:mb-0">
-              <h3 className="text-base font-semibold text-zinc-100 mb-2">Caso 2: H&amp;S en XAU que se transforma en continuación</h3>
-              <p className="text-zinc-300 leading-relaxed text-sm mb-2">Entrada short XAU/USD tomada en 4 570$ después del breakout de la neckline de un H&amp;S, escenario Lección 4.2. SL en 4 630$, TP en 4 480$. El precio baja bien a 4 540$ durante 2 velas, y luego sube con fuerza.</p>
-              <p className="text-zinc-300 leading-relaxed text-sm mb-3">Vela H1 que cierra en 4 595$, por encima de la neckline pero debajo del hombro derecho. Verificación: breakout rechazado, criterio 1, volumen coherente en la subida, criterio 3. El patrón H&amp;S se está transformando en una simple pausa en la tendencia alcista. No se espera que el precio re-testee el hombro derecho en 4 625$.</p>
+              <h3 className="text-base font-semibold text-zinc-100 mb-2">Caso 2: HCH en XAU que se transforma en continuación</h3>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-2">Entrada short XAU/USD tomada en 4 570$ después del breakout de la línea clavicular de un HCH, escenario Lección 4.2. SL en 4 630$, TP en 4 480$. El precio baja bien a 4 540$ durante 2 velas, y luego sube con fuerza.</p>
+              <p className="text-zinc-300 leading-relaxed text-sm mb-3">Vela H1 que cierra en 4 595$, por encima de la línea clavicular pero debajo del hombro derecho. Verificación: breakout rechazado, criterio 1, volumen coherente en la subida, criterio 3. El patrón HCH se está transformando en una simple pausa en la tendencia alcista. No se espera que el precio re-testee el hombro derecho en 4 625$.</p>
               <p className="text-sm text-zinc-300 leading-relaxed border-l-2 border-emerald-500/50 pl-3 py-1">
                 <span className="font-semibold text-emerald-400">Acción:</span> la posición se corta en 4 595$. Pérdida: 25$ por unidad en vez de los 60$ previstos. Más de la mitad del riesgo está salvado.
               </p>
@@ -215,9 +215,9 @@ export default function ContentEs() {
             <div className="my-8">
               <SLManagementProgressionDiagram locale="es" />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Cuando un criterio de la checklist se activa, la salida es inmediata, manual, al cierre de la vela en curso en el timeframe de entrada, H1 o H4. No antes del cierre, sino una salida demasiado temprana sigue siendo posible sobre una señal falsa. No la vela siguiente, sino se devuelve demasiado riesgo. Al cierre confirmado.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Cuando un criterio de la checklist se activa, la salida es inmediata, manual, al cierre de la vela en curso en la temporalidad de entrada, H1 o H4. No antes del cierre, sino una salida demasiado temprana sigue siendo posible sobre una señal falsa. No la vela siguiente, sino se devuelve demasiado riesgo. Al cierre confirmado.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">La trampa emocional a evitar: &apos;espero una vela más para confirmar&apos;. NO. El stop loss ya está colocado desde la entrada, así que la pérdida máxima está limitada. Pero si se espera una vela adicional en cada invalidación, un corte a -0,5R (a la mitad del SL) se transforma en pérdida completa a -1R (al SL). Sobre 10 trades que fallan, es la diferencia entre -5R y -10R. La regla pro: la primera confirmación dispara la acción.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm">En ausencia de supervisión activa, el stop loss debe ajustarse después de la entrada. Para Double top o H&amp;S, el stop loss se desplaza de su posición clásica (por encima de la cabeza o del hombro) hacia la neckline misma. Para divergencia RSI, se desplaza al último mínimo estructural. El mercado cortará automáticamente si el patrón se invalida. Se sacrifica un poco de margen a cambio de la paz mental, pero el stop loss inicial queda SIEMPRE en su lugar desde la entrada.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">En ausencia de supervisión activa, el stop loss debe ajustarse después de la entrada. Para Double top o HCH, el stop loss se desplaza de su posición clásica (por encima de la cabeza o del hombro) hacia la línea clavicular misma. Para divergencia RSI, se desplaza al último mínimo estructural. El mercado cortará automáticamente si el patrón se invalida. Se sacrifica un poco de margen a cambio de la paz mental, pero el stop loss inicial queda SIEMPRE en su lugar desde la entrada.</p>
           </section>
 
           {/* Bloque 8 — CÁLCULO RETAIL META */}
@@ -247,7 +247,7 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "El 70% de los reversals retails fallan porque el trader no sabe reconocer una invalidación. No porque el patrón sea malo.",
-              "La checklist 5 criterios: breakout rechazado, vela de rechazo violenta, volumen incoherente, news imprevista, tiempo transcurrido.",
+              "La checklist 5 criterios: breakout rechazado, vela de rechazo violenta, volumen incoherente, noticia imprevista, tiempo transcurrido.",
               "La salida se hace al cierre de la vela en curso. No antes. No la vela siguiente. Al cierre.",
               "Cortar en la invalidación = reducir la pérdida un 50% respecto al SL inicial. Sobre 100 trades, cambia la rentabilidad global.",
             ]}
@@ -256,7 +256,7 @@ export default function ContentEs() {
           <LessonExercice
             description="Entraste short XAU/USD en 4 720$ en un double top. SL en 4 760$, TP en 4 640$. Posición abierta desde hace 1 hora. El precio baja a 4 705$, y luego sube con fuerza. Vela H1 que cierra en 4 745$ con un volumen 2x superior al promedio. ¿Qué haces?"
             steps={[
-              "Verifica el criterio 1, breakout rechazado: el precio rompió de nuevo la neckline en 4 720$ hacia arriba, SÍ",
+              "Verifica el criterio 1, breakout rechazado: el precio rompió de nuevo la línea clavicular en 4 720$ hacia arriba, SÍ",
               "Verifica el criterio 2, vela de rechazo violenta: vela verde ancha que cierra en 4 745$, SÍ",
               "Verifica el criterio 3, volumen incoherente: volumen 2x superior durante la subida, SÍ",
               "3 criterios sobre 5 encendidos: ningún debate, cortas de inmediato al cierre",
@@ -265,15 +265,15 @@ export default function ContentEs() {
           />
 
           <LessonQuiz
-            question="¿Cuál es el criterio principal de invalidación de un double top o de un H&S después de la entrada?"
+            question="¿Cuál es el criterio principal de invalidación de un double top o de un HCH después de la entrada?"
             options={[
               "El precio baja demasiado rápido hacia el TP",
-              "El precio vuelve a cerrar por encima de la neckline en las 1-3 velas siguientes",
+              "El precio vuelve a cerrar por encima de la línea clavicular en las 1-3 velas siguientes",
               "El volumen baja",
               "El RSI vuelve por encima de 50",
             ]}
             correctIndex={1}
-            explanation="El criterio 1, breakout rechazado, es el disparador principal. Si el precio vuelve a cerrar por encima de la neckline en las 1-3 velas que siguen a la entrada, el patrón queda invalidado. El mercado señala literalmente la invalidación. La salida es inmediata."
+            explanation="El criterio 1, breakout rechazado, es el disparador principal. Si el precio vuelve a cerrar por encima de la línea clavicular en las 1-3 velas que siguen a la entrada, el patrón queda invalidado. El mercado señala literalmente la invalidación. La salida es inmediata."
           />
 
           <LessonQuiz
@@ -285,7 +285,7 @@ export default function ContentEs() {
               "En el SL inicial sin cambiar nada",
             ]}
             correctIndex={1}
-            explanation="La salida se hace al cierre de la vela en curso en el timeframe de entrada. Antes del cierre = riesgo de salir sobre una señal falsa. La vela siguiente = demasiado riesgo devuelto. La regla pro: la primera confirmación dispara la acción."
+            explanation="La salida se hace al cierre de la vela en curso en la temporalidad de entrada. Antes del cierre = riesgo de salir sobre una señal falsa. La vela siguiente = demasiado riesgo devuelto. La regla pro: la primera confirmación dispara la acción."
           />
 
           <LessonQuiz

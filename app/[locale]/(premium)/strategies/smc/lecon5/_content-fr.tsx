@@ -15,7 +15,7 @@ const LESSONS = [
   { id: "lecon2", title: "Leçon 2", disabled: false },
   { id: "lecon3", title: "Leçon 3", disabled: false },
   { id: "lecon4", title: "Leçon 4", disabled: false },
-  { id: "lecon5", title: "Le trade SMC complet : de l’analyse HTF à l’exécution", disabled: false },
+  { id: "lecon5", title: "Le trade SMC complet : de l’analyse de l’UT supérieure à l’exécution", disabled: false },
 ];
 
 export default function ContentFr() {
@@ -57,12 +57,12 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Le trade SMC complet : de l&apos;analyse HTF à l&apos;exécution
+            Le trade SMC complet : de l&apos;analyse de l&apos;UT supérieure à l&apos;exécution
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Cette leçon assemble l&apos;ensemble du module SMC dans un déroulé opérationnel complet. La logique institutionnelle est reconstruite étape par étape : lecture HTF, identification de la liquidité, sweep, confirmation structurelle, mitigation et exécution.
+              Cette leçon assemble l&apos;ensemble du module SMC dans un déroulé opérationnel complet. La logique institutionnelle est reconstruite étape par étape : lecture de l&apos;UT supérieure, identification de la liquidité, sweep, confirmation structurelle, mitigation et exécution.
             </p>
           </div>
 
@@ -140,10 +140,10 @@ export default function ContentFr() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le modèle SMC repose sur une succession d&apos;étapes cohérentes. La structure (BOS/CHoCH) donne le biais et le contexte, puis la mitigation du FVG ou de l&apos;Order Block fournit l&apos;entrée.</p>
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Les 7 étapes du trade SMC</p>
             <ol className="space-y-1 text-sm text-zinc-300 list-decimal pl-5">
-              <li>Analyse HTF : déterminer le biais directionnel via la structure de marché</li>
+              <li>Analyse de l&apos;UT supérieure : déterminer le biais directionnel via la structure de marché</li>
               <li>Identifier la liquidité (BSL/SSL) qui sera la cible</li>
               <li>Attendre le sweep de la liquidité opposée</li>
-              <li>Confirmer le CHoCH sur le timeframe d&apos;entrée</li>
+              <li>Confirmer le CHoCH sur l&apos;unité de temps d&apos;entrée</li>
               <li>Repérer l&apos;Order Block ou le FVG dans le displacement</li>
               <li>Entrer sur la mitigation de cette zone</li>
               <li>Gérer : SL au-delà de la zone, TP sur la liquidité ciblée</li>
@@ -156,10 +156,10 @@ export default function ContentFr() {
             <div className="my-8">
               <LiquidityGrabDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le biais HTF donne la direction prioritaire du trade. La liquidité identifie ensuite les zones où les institutionnels chercheront à provoquer le mouvement avant l&apos;impulsion réelle. Le sweep apparaît généralement sous la forme d&apos;une mèche agressive suivie d&apos;une réintégration rapide.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le biais de l&apos;UT supérieure donne la direction prioritaire du trade. La liquidité identifie ensuite les zones où les institutionnels chercheront à provoquer le mouvement avant l&apos;impulsion réelle. Le sweep apparaît généralement sous la forme d&apos;une mèche agressive suivie d&apos;une réintégration rapide.</p>
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Points à surveiller</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Structure HTF en LH/LL = biais bearish</li>
+              <li>- Structure de l&apos;UT supérieure en LH/LL = biais bearish</li>
               <li>- Equal highs/lows = liquidité exploitable</li>
               <li>- Sweep = prise de stops + rejet rapide</li>
             </ul>
@@ -171,7 +171,7 @@ export default function ContentFr() {
             <div className="my-8">
               <MitigationZoneEntryDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le CHoCH confirme que le contrôle du marché change de camp sur le timeframe d&apos;entrée. Le displacement laisse ensuite un Order Block ou un FVG qui servira de zone de mitigation. L&apos;entrée intervient lorsque le prix revient dans cette zone avant reprise impulsive.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le CHoCH confirme que le contrôle du marché change de camp sur l&apos;unité de temps d&apos;entrée. Le displacement laisse ensuite un Order Block ou un FVG qui servira de zone de mitigation. L&apos;entrée intervient lorsque le prix revient dans cette zone avant reprise impulsive.</p>
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Logique d&apos;exécution</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- CHoCH = confirmation structurelle</li>
@@ -183,12 +183,12 @@ export default function ContentFr() {
           {/* Bloc 6 — PLAN DE TRADE EUR/USD H4 */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade chiffré complet (EUR/USD H4)</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD H4. Biais HTF baissier avec structure en LH/LL. Equal highs à 1.1780 = BSL identifiée. Cible finale : SSL sous le creux 1.1690. Une bougie H4 sweep la BSL en imprimant une mèche à 1.1792 puis clôture à 1.1772. Le prix casse ensuite le dernier creux mineur à 1.1755 : CHoCH bearish confirmé. Le displacement laisse un FVG bearish entre 1.1758 et 1.1770 avec un Order Block juste au-dessus.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD H4. Biais baissier de l&apos;UT supérieure avec structure en LH/LL. Equal highs à 1.1780 = BSL identifiée. Cible finale : SSL sous le creux 1.1690. Une bougie H4 sweep la BSL en imprimant une mèche à 1.1792 puis clôture à 1.1772. Le prix casse ensuite le dernier creux mineur à 1.1755 : CHoCH bearish confirmé. Le displacement laisse un FVG bearish entre 1.1758 et 1.1770 avec un Order Block juste au-dessus.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Déroulé des 7 étapes</p>
               <ol className="space-y-1 text-sm text-zinc-300 list-decimal pl-5 mb-4">
-                <li>Analyse HTF: Structure H4 en LH/LL · Biais directionnel bearish</li>
+                <li>Analyse de l&apos;UT supérieure: Structure H4 en LH/LL · Biais directionnel bearish</li>
                 <li>Identifier la liquidité : Equal highs à 1.1780 · BSL clairement visible</li>
                 <li>Sweep de liquidité : Mèche à 1.1792 · Réintégration immédiate sous la BSL</li>
                 <li>Confirmation CHoCH : Cassure du creux mineur à 1.1755 · Changement de caractère bearish confirmé</li>
@@ -229,14 +229,14 @@ export default function ContentFr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Erreur 1 : Entrer avant le CHoCH</span> <span className="text-zinc-300">= absence de confirmation structurelle.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Erreur 2 : Confondre sweep et breakout</span> <span className="text-zinc-300">= achat/vente directement dans la prise de liquidité.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Erreur 3 : Ignorer le biais HTF</span> <span className="text-zinc-300">= exécution contre la structure dominante.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Erreur 3 : Ignorer le biais de l&apos;UT supérieure</span> <span className="text-zinc-300">= exécution contre la structure dominante.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Erreur 4 : Viser une liquidité déjà prise</span> <span className="text-zinc-300">= absence de cible institutionnelle claire.</span></div>
             </div>
           </section>
 
           <LessonKeyPoints
             points={[
-              "La structure HTF définit le biais.",
+              "La structure de l'UT supérieure définit le biais.",
               "Le sweep précède souvent le vrai mouvement.",
               "Le CHoCH confirme le changement de contrôle.",
               "Le FVG/OB fournit la zone d’exécution.",
@@ -246,10 +246,10 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur XAU/USD H4, le marché évolue dans un biais baissier. Les equal highs à 4 720$ représentent une BSL visible, et la cible de liquidité principale se situe sur la SSL du creux 4 600$. Une bougie H4 sweep la BSL avec une mèche à 4 735$ puis clôture à 4 705$. Le marché casse ensuite le creux mineur à 4 680$ et crée un FVG bearish entre 4 685$ et 4 700$. Le prix revient ensuite dans la zone. Comment se reconstruit le trade SMC complet sur ce setup ?"
             steps={[
-              "Poser le biais HTF : la structure H4 est baissière (LH/LL). Le biais oriente vers des setups vendeurs en priorité.",
+              "Poser le biais de l'UT supérieure : la structure H4 est baissière (LH/LL). Le biais oriente vers des setups vendeurs en priorité.",
               "Identifier la liquidité : les equal highs à 4 720$ forment la BSL. La SSL du creux 4 600$ devient la cible finale du trade.",
               "Valider le sweep : la mèche à 4 735$ prend la liquidité au-dessus de 4 720$, et la clôture à 4 705$ confirme la réintégration sous la BSL.",
-              "Confirmer le CHoCH : la cassure du creux mineur à 4 680$ valide le changement de caractère baissier sur le timeframe d’entrée.",
+              "Confirmer le CHoCH : la cassure du creux mineur à 4 680$ valide le changement de caractère baissier sur l’unité de temps d’entrée.",
               "Construire le plan : entrée short 4 692$ (mitigation du FVG 4 685$-4 700$), stop loss 4 740$ (au-dessus de la mèche du sweep), take profit 4 600$ (cible la SSL). Risque 48$, gain 92$, R/R ≈ 1,9.",
             ]}
           />
@@ -258,12 +258,12 @@ export default function ContentFr() {
             question="Quelle séquence correspond au déroulé logique d’un trade SMC complet ?"
             options={[
               "Sweep → mitigation → BOS → liquidité → entrée",
-              "Analyse HTF → sweep → entrée → CHoCH → liquidité",
-              "Analyse HTF → liquidité → sweep → CHoCH → mitigation → exécution",
+              "Analyse UT supérieure → sweep → entrée → CHoCH → liquidité",
+              "Analyse UT supérieure → liquidité → sweep → CHoCH → mitigation → exécution",
               "Liquidité → breakout → entrée → mitigation → BOS",
             ]}
             correctIndex={2}
-            explanation="Le modèle SMC repose sur une logique séquentielle. Le biais HTF définit la direction prioritaire. La liquidité attire ensuite le prix avant le sweep. La structure (BOS/CHoCH) donne le biais et le contexte, puis la mitigation du FVG ou de l'Order Block fournit l'entrée."
+            explanation="Le modèle SMC repose sur une logique séquentielle. Le biais de l'UT supérieure définit la direction prioritaire. La liquidité attire ensuite le prix avant le sweep. La structure (BOS/CHoCH) donne le biais et le contexte, puis la mitigation du FVG ou de l'Order Block fournit l'entrée."
           />
 
           <LessonQuiz
@@ -272,7 +272,7 @@ export default function ContentFr() {
               "Le prix clôture au-dessus du niveau avec continuation immédiate",
               "Le prix réintègre rapidement la zone après avoir pris la liquidité",
               "Le sweep ne laisse jamais de mèche",
-              "Le breakout apparaît uniquement sur timeframe Daily",
+              "Le breakout apparaît uniquement sur unité de temps Daily",
             ]}
             correctIndex={1}
             explanation="Le sweep cherche principalement à prendre les stops avant le vrai mouvement. La caractéristique principale reste donc la réintégration rapide du niveau sweepé. Un vrai breakout conserve généralement la clôture au-delà du niveau cassé avec continuation immédiate."

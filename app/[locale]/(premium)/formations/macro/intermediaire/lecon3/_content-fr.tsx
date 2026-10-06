@@ -300,7 +300,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Mais attention au premier mouvement</span>. Souvent appelé le &apos;fakeout&apos; : le marché spike dans un sens, puis inverse quelques minutes après quand les algos et les traders institutionnels absorbent l&apos;ensemble du rapport.
+              <span className="font-semibold text-zinc-200">Mais attention au premier mouvement</span>. Souvent appelé le &apos;faux breakout&apos; : le marché spike dans un sens, puis inverse quelques minutes après quand les algos et les traders institutionnels absorbent l&apos;ensemble du rapport.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               <span className="font-semibold text-zinc-200">Règle pratique</span> : attendre <span className="font-semibold text-zinc-200">2 à 5 minutes</span> après la publication pour voir la direction réelle se confirmer. Le premier tick n&apos;est souvent pas le vrai mouvement.
@@ -372,7 +372,7 @@ export default function ContentFr() {
               "Le PPI sort 12 jours avant le CPI, c'est le signal précoce que le marché sous-estime",
               "Le Core CPI (hors énergie et alimentation) est ce que les pros regardent vraiment",
               "Le Core PCE est l'indicateur officiel de la Fed, avec une cible à 2% annuel",
-              "Attendre 2-5 minutes après la publication pour éviter le fakeout du premier tick",
+              "Attendre 2-5 minutes après la publication pour éviter le faux breakout du premier tick",
             ]}
           />
 

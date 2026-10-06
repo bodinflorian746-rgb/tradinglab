@@ -14,7 +14,7 @@ import { LessonQuiz } from "@/app/components/LessonQuiz";
 const LESSONS = [
   { id: "lecon1", title: "Leer una vela",   disabled: false },
   { id: "lecon2", title: "Pin bar",          disabled: false },
-  { id: "lecon3", title: "Engulfing",        disabled: false },
+  { id: "lecon3", title: "Envolvente",        disabled: false },
   { id: "lecon4", title: "Lección 4",        disabled: true },
 ];
 
@@ -57,7 +57,7 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Engulfing: la reversión de fuerza
+            Envolvente: la reversión de fuerza
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -114,7 +114,7 @@ export default function ContentEs() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « El engulfing no propone. Impone. La 2ª vela es tan fuerte que borra a la primera. »
+                « La envolvente no propone. Impone. La 2ª vela es tan fuerte que borra a la primera. »
               </p>
             </div>
           </section>
@@ -124,40 +124,40 @@ export default function ContentEs() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Anatomía de una vela → cf. Estrategia PA L1</li>
-              <li>- Concepto de envolvente / engulfing → cf. Formación Trading L2</li>
+              <li>- Concepto de envolvente → cf. Formación Trading L2</li>
               <li>- Niveles support/resistance → cf. Formación Trading L3</li>
             </ul>
           </div>
 
           {/* Bloque 3 — BULLISH VS BEARISH */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Bullish vs Bearish engulfing</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Envolvente alcista vs bajista</h2>
 
             <div className="my-8">
               <BullishVsBearishEngulfingDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un engulfing = cambio de poder en 2 velas. La 2ª envuelve el cuerpo de la 1ª en sentido opuesto.
+              Una envolvente = cambio de poder en 2 velas. La 2ª envuelve el cuerpo de la 1ª en sentido opuesto.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="font-semibold text-zinc-100">Bullish engulfing</span>: 1ª vela roja + 2ª vela verde que envuelve el cuerpo rojo, en un support clave</li>
-              <li>- <span className="font-semibold text-zinc-100">Bearish engulfing</span>: 1ª vela verde + 2ª vela roja que envuelve el cuerpo verde, en una resistance clave</li>
+              <li>- <span className="font-semibold text-zinc-100">Envolvente alcista</span>: 1ª vela roja + 2ª vela verde que envuelve el cuerpo rojo, en un support clave</li>
+              <li>- <span className="font-semibold text-zinc-100">Envolvente bajista</span>: 1ª vela verde + 2ª vela roja que envuelve el cuerpo verde, en una resistance clave</li>
               <li>- El sentido de la señal sigue la dirección de la 2ª vela (la que envuelve)</li>
             </ul>
           </section>
 
           {/* Bloque 4 — VALIDAR UN ENGULFING */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Validar un engulfing</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Validar una envolvente</h2>
 
             <div className="my-8">
               <EngulfingValidationGridDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              No todas las velas que se solapan son engulfings válidos. 4 criterios califican el patrón como tradable.
+              No todas las velas que se solapan son envolventes válidas. 4 criterios califican el patrón como tradable.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -177,27 +177,27 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un engulfing aislado fuera del contexto estructural es sólo una vela grande. La confluence le da el valor operativo.
+              Una envolvente aislada fuera del contexto estructural es sólo una vela grande. La confluence le da el valor operativo.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Engulfing en support / resistance calificado = setup tradable</li>
-              <li>- Engulfing sobre retroceso Fibonacci 0.5 / 0.618 / 0.786 en tendencia = setup tradable</li>
-              <li>- Engulfing en confluence con MM50 o MM200 = refuerzo de la señal</li>
-              <li>- Engulfing aislado en pleno impulso = ruido, sin setup</li>
+              <li>- Envolvente en support / resistance calificado = setup tradable</li>
+              <li>- Envolvente sobre retroceso Fibonacci 0.5 / 0.618 / 0.786 en tendencia = setup tradable</li>
+              <li>- Envolvente en confluence con MM50 o MM200 = refuerzo de la señal</li>
+              <li>- Envolvente aislada en pleno impulso = ruido, sin setup</li>
             </ul>
           </section>
 
           {/* Bloque 6 — PLAN DE TRADE CON NÚMEROS */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade: engulfing bullish XAU/USD H4</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade: envolvente alcista XAU/USD H4</h2>
 
             <div className="my-8">
               <EngulfingSetupDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD rebota desde 4 500$ hacia 4 720$, luego corrige sobre Fibonacci 0.618 en 4 600$. Bullish engulfing al contacto con el Fibo en una tendencia H4 alcista.
+              XAU/USD rebota desde 4 500$ hacia 4 720$, luego corrige sobre Fibonacci 0.618 en 4 600$. Envolvente alcista al contacto con el Fibo en una tendencia H4 alcista.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -233,8 +233,8 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "Engulfing = 2 velas de sentido opuesto, la 2ª envuelve POR COMPLETO el cuerpo de la 1ª.",
-              "Pin bar = señal de rechazo, Engulfing = señal de cambio de poder: complementarios, no competidores.",
+              "Envolvente = 2 velas de sentido opuesto, la 2ª envuelve POR COMPLETO el cuerpo de la 1ª.",
+              "Pin bar = señal de rechazo, envolvente = señal de cambio de poder: complementarios, no competidores.",
               "Siempre en un nivel clave o un retroceso, nunca en medio de la nada.",
               "SL debajo del low de la vela envolvente (bullish) o por encima del high (bearish), R/R mínimo 1:2.",
             ]}
@@ -243,24 +243,24 @@ export default function ContentEs() {
           <LessonExercice
             description="Aplica la lectura de velas en un gráfico real."
             steps={[
-              "Abrir un gráfico XAU/USD o EUR/USD en timeframe H4",
-              "Identificar 2 engulfings válidos en el histórico de los últimos 30 días y anotar el contexto: support, resistance o Fibo",
-              "Para cada engulfing, verificar que el cuerpo de la 2ª vela envuelve por completo el cuerpo de la 1ª",
-              "Calcular el R/R potencial para 1 engulfing válido: entrada en la ruptura, SL debajo del low de la vela engulfing, TP en el próximo nivel",
-              "Detectar 1 caso donde una pin bar y un engulfing aparecen en el mismo nivel, y observar lo que pasó después",
+              "Abrir un gráfico XAU/USD o EUR/USD en temporalidad H4",
+              "Identificar 2 envolventes válidas en el histórico de los últimos 30 días y anotar el contexto: support, resistance o Fibo",
+              "Para cada envolvente, verificar que el cuerpo de la 2ª vela envuelve por completo el cuerpo de la 1ª",
+              "Calcular el R/R potencial para 1 envolvente válida: entrada en la ruptura, SL debajo del low de la vela envolvente, TP en el próximo nivel",
+              "Detectar 1 caso donde una pin bar y una envolvente aparecen en el mismo nivel, y observar lo que pasó después",
             ]}
           />
 
           <LessonQuiz
-            question="En EUR/USD H4, una vela bearish engulfing aparece en medio de un range, sin support o resistance cercano, sin tendencia clara, sin confluence Fibonacci. ¿Cuál es el veredicto operativo?"
+            question="En EUR/USD H4, una vela envolvente bajista aparece en medio de un rango, sin support o resistance cercano, sin tendencia clara, sin confluence Fibonacci. ¿Cuál es el veredicto operativo?"
             options={[
-              "Setup explotable, el engulfing es una señal autónoma",
+              "Setup explotable, la envolvente es una señal autónoma",
               "Setup inválido, la ausencia de contexto estructural descalifica la señal",
               "Setup explotable a condición de un volumen elevado",
-              "Indeterminado sin confirmación multi-timeframe",
+              "Indeterminado sin confirmación multitemporal",
             ]}
             correctIndex={1}
-            explanation="Una vela engulfing aislada fuera del contexto estructural no constituye una señal operativa. El contacto con un nivel estructural calificado (support, resistance, Fibonacci, tendencia clara) es indispensable. Sin contexto, la vela engulfing queda informativa pero no dispara setup."
+            explanation="Una vela envolvente aislada fuera del contexto estructural no constituye una señal operativa. El contacto con un nivel estructural calificado (support, resistance, Fibonacci, tendencia clara) es indispensable. Sin contexto, la vela envolvente queda informativa pero no dispara setup."
           />
 
         </div>
@@ -308,7 +308,7 @@ export default function ContentEs() {
                 Lección 2. Pin bar: el rechazo de nivel
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Lección 4. Setup multi-timeframe Daily → H1
+                Lección 4. Setup multitemporal Daily → H1
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Pronto
                 </span>

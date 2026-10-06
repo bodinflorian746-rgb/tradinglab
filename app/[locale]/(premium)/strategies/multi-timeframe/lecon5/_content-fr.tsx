@@ -12,10 +12,10 @@ import { H1ZonePreparationDiagram } from "@/app/components/charts/H1ZonePreparat
 import { M15ValidationDiagram } from "@/app/components/charts/M15ValidationDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Pourquoi analyser en multi-timeframe", disabled: false },
-  { id: "lecon2", title: "Le timeframe supérieur : le biais", disabled: false },
-  { id: "lecon3", title: "Le timeframe intermédiaire : la zone", disabled: false },
-  { id: "lecon4", title: "Le timeframe d’exécution : l’entrée", disabled: false },
+  { id: "lecon1", title: "Pourquoi faire une analyse multi-unités de temps", disabled: false },
+  { id: "lecon2", title: "L'unité de temps supérieure : le biais", disabled: false },
+  { id: "lecon3", title: "L'unité de temps intermédiaire : la zone", disabled: false },
+  { id: "lecon4", title: "L’unité de temps d’exécution : l’entrée", disabled: false },
   { id: "lecon5", title: "Le process complet", disabled: false },
 ];
 
@@ -34,7 +34,7 @@ export default function ContentFr() {
         <nav className="flex items-center gap-2 text-xs text-zinc-600 mb-8">
           <Link href="/strategies" className="hover:text-zinc-400 transition-colors">Stratégies</Link>
           <span>/</span>
-          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Multi-timeframe Process</Link>
+          <Link href="/strategies/multi-timeframe" className="hover:text-zinc-400 transition-colors">Process multi-unités de temps</Link>
           <span>/</span>
           <span className="text-zinc-500">Leçon 5</span>
         </nav>
@@ -58,7 +58,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Le process multi-timeframe complet : du Daily à l&apos;exécution
+            Le process multi-unités de temps complet : du Daily à l&apos;exécution
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -124,10 +124,10 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Introduction multi-timeframe → cf. Leçon 1</li>
-              <li>- Direction dominante HTF → cf. Leçon 2</li>
+              <li>- Introduction multi-unités de temps → cf. Leçon 1</li>
+              <li>- Direction dominante UT supérieure → cf. Leçon 2</li>
               <li>- Zones d&apos;intérêt H1-H4 → cf. Leçon 3</li>
-              <li>- Confirmation LTF → cf. Leçon 4</li>
+              <li>- Confirmation UT inférieure → cf. Leçon 4</li>
             </ul>
           </div>
 
@@ -140,11 +140,11 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le process multi-timeframe fonctionne comme un entonnoir : chaque étage filtre le suivant et réduit les possibilités. Daily / H4 → donner la direction ; H1 → identifier la zone d&apos;intérêt ; M15 / M30 → attendre la réaction et confirmer. Le trade n&apos;arrive qu&apos;au bout, c&apos;est l&apos;aboutissement d&apos;une chaîne logique, pas un signal isolé qu&apos;on attrape au vol.
+              Le process multi-unités de temps fonctionne comme un entonnoir : chaque étage filtre le suivant et réduit les possibilités. Daily / H4 → donner la direction ; H1 → identifier la zone d&apos;intérêt ; M15 / M30 → attendre la réaction et confirmer. Le trade n&apos;arrive qu&apos;au bout, c&apos;est l&apos;aboutissement d&apos;une chaîne logique, pas un signal isolé qu&apos;on attrape au vol.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- L&apos;analyse descend toujours du HTF vers le LTF, jamais l&apos;inverse</li>
+              <li>- L&apos;analyse descend toujours de l&apos;UT supérieure vers l&apos;UT inférieure, jamais l&apos;inverse</li>
               <li>- Chaque étage répond à une question précise : où va le marché, où il peut réagir, quand entrer</li>
               <li>- Un trade aligné sur les trois étages est rare, mais c&apos;est précisément ce qui en fait un setup haute probabilité</li>
               <li>- Sauter un étage = improviser ; le process protège contre l&apos;impulsivité</li>
@@ -160,7 +160,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le Daily (ou H4) est l&apos;étage du contexte. Il répond à une seule question : dans quel sens le marché évolue-t-il sur plusieurs jours ou semaines ? La lecture se fait via la structure : Lower Highs / Lower Lows pour une tendance baissière, Higher Highs / Higher Lows pour une hausse. Les impulsions sont fortes et étendues dans le sens dominant, les corrections sont molles et limitées dans le sens opposé. Ce biais conditionne tout ce qui suit, on ne prendra des ventes que dans un contexte HTF baissier, des achats que dans un contexte HTF haussier.
+              Le Daily (ou H4) est l&apos;étage du contexte. Il répond à une seule question : dans quel sens le marché évolue-t-il sur plusieurs jours ou semaines ? La lecture se fait via la structure : Lower Highs / Lower Lows pour une tendance baissière, Higher Highs / Higher Lows pour une hausse. Les impulsions sont fortes et étendues dans le sens dominant, les corrections sont molles et limitées dans le sens opposé. Ce biais conditionne tout ce qui suit, on ne prendra des ventes que dans un contexte baissier de l&apos;UT supérieure, des achats que dans un contexte haussier de l&apos;UT supérieure.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -171,10 +171,10 @@ export default function ContentFr() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Le HTF (Daily / H4) impose la direction des trades possibles</li>
+              <li>- L&apos;UT supérieure (Daily / H4) impose la direction des trades possibles</li>
               <li>- Structure LH/LL = vente uniquement ; HH/HL = achat uniquement</li>
-              <li>- Tant que la structure HTF n&apos;est pas cassée, le biais reste le même</li>
-              <li>- Trader contre le biais HTF = trader à contre-courant sans nécessité</li>
+              <li>- Tant que la structure de l&apos;UT supérieure n&apos;est pas cassée, le biais reste le même</li>
+              <li>- Trader contre le biais de l&apos;UT supérieure = trader à contre-courant sans nécessité</li>
             </ul>
           </section>
 
@@ -214,7 +214,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le M15 est l&apos;étage du timing. Quand le prix entre dans la zone H1, on descend sur le LTF pour observer la réaction : mèches de rejet successives, formation d&apos;un sommet local, puis cassure structurelle d&apos;un creux récent en faveur du biais. Ce sont ces signaux concrets qui valident l&apos;entrée, pas la simple présence du prix dans la zone. L&apos;exécution se fait à la cassure, le SL est calé serré juste au-dessus du dernier sommet de rejet.
+              Le M15 est l&apos;étage du timing. Quand le prix entre dans la zone H1, on descend sur l&apos;UT inférieure pour observer la réaction : mèches de rejet successives, formation d&apos;un sommet local, puis cassure structurelle d&apos;un creux récent en faveur du biais. Ce sont ces signaux concrets qui valident l&apos;entrée, pas la simple présence du prix dans la zone. L&apos;exécution se fait à la cassure, le SL est calé serré juste au-dessus du dernier sommet de rejet.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -286,7 +286,7 @@ export default function ContentFr() {
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">1. Commencer directement par M15</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Repérer un setup sur M15 puis chercher à le justifier sur les TF supérieurs, c&apos;est inverser le process. On finit par valider mentalement un trade qu&apos;on a déjà décidé de prendre. Le HTF doit toujours venir en premier.
+                  Repérer un setup sur M15 puis chercher à le justifier sur les TF supérieurs, c&apos;est inverser le process. On finit par valider mentalement un trade qu&apos;on a déjà décidé de prendre. L&apos;UT supérieure doit toujours venir en premier.
                 </p>
               </div>
 
@@ -300,14 +300,14 @@ export default function ContentFr() {
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">3. Entrer sans réaction M15</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Le prix touche la zone H1, on entre par anticipation parce que « tout le reste est aligné ». C&apos;est exactement là que la zone échoue le plus souvent. Sans signal LTF clair, l&apos;entrée n&apos;est pas validée, on attend ou on passe.
+                  Le prix touche la zone H1, on entre par anticipation parce que « tout le reste est aligné ». C&apos;est exactement là que la zone échoue le plus souvent. Sans signal clair de l&apos;UT inférieure, l&apos;entrée n&apos;est pas validée, on attend ou on passe.
                 </p>
               </div>
 
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
-                <p className="text-white font-semibold text-sm mb-1.5">4. Trader contre le biais HTF selon le dernier mouvement M15</p>
+                <p className="text-white font-semibold text-sm mb-1.5">4. Trader contre le biais de l&apos;UT supérieure selon le dernier mouvement M15</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Biais Daily baissier, mais une « belle » zone de support H1 et un dernier mouvement M15 haussier invitent à un long. Trader contre-tendance sur la base d&apos;un mouvement LTF récent, sans raison structurelle HTF (CHoCH, retournement majeur), revient à parier sur le bruit. Le biais HTF reste prioritaire tant qu&apos;il n&apos;est pas cassé.
+                  Biais Daily baissier, mais une « belle » zone de support H1 et un dernier mouvement M15 haussier invitent à un long. Trader contre-tendance sur la base d&apos;un mouvement récent de l&apos;UT inférieure, sans raison structurelle de l&apos;UT supérieure (CHoCH, retournement majeur), revient à parier sur le bruit. Le biais de l&apos;UT supérieure reste prioritaire tant qu&apos;il n&apos;est pas cassé.
                 </p>
               </div>
             </div>
@@ -315,7 +315,7 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Le process descend toujours du HTF vers le LTF, jamais l’inverse.",
+              "Le process descend toujours de l’UT supérieure vers l’UT inférieure, jamais l’inverse.",
               "Chaque étage a un rôle distinct : Daily = direction, H1 = zone, M15 = timing.",
               "Le M15 valide l’exécution, il confirme la réaction, il ne la prédit pas.",
               "Sauter un étage = retomber dans le trading impulsif : le process protège contre l’improvisation.",
@@ -323,9 +323,9 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur TradingView, déroule un process multi-timeframe complet sur la paire de ton choix, du Daily au M15."
+            description="Sur TradingView, déroule un process multi-unités de temps complet sur la paire de ton choix, du Daily au M15."
             steps={[
-              "Daily : identifie la structure (LH/LL ou HH/HL) et conclus un biais directionnel clair. Si la structure est ambiguë, change de paire, sans biais HTF net, le process ne démarre pas.",
+              "Daily : identifie la structure (LH/LL ou HH/HL) et conclus un biais directionnel clair. Si la structure est ambiguë, change de paire, sans biais de l'UT supérieure net, le process ne démarre pas.",
               "H1 : trace à l’avance la zone d’intérêt la plus confluente dans le sens du biais (ancien support/résistance, FVG, bloc d’ordres). Note les niveaux exacts en haut et en bas de la zone.",
               "M15 : attends que le prix entre dans la zone, puis observe la réaction. Si une mèche de rejet apparaît suivie d’une cassure structurelle, note l’entrée, le SL serré et le TP visé. Si rien ne se passe, ne force pas, note simplement que la zone a échoué.",
             ]}
@@ -340,11 +340,11 @@ export default function ContentFr() {
               "Tu n'entres pas : un signal M15 hors process n'est pas un setup valide",
             ]}
             correctIndex={3}
-            explanation="Un signal LTF isolé, sans zone H1 préparée et sans biais Daily aligné, n'est pas un setup multi-timeframe, c'est juste du bruit qu'on a remarqué au vol. Le process exige que les trois étages soient cohérents AVANT le signal d'exécution. Trader un signal M15 hors contexte revient exactement à ce contre quoi le process est conçu : l'impulsivité."
+            explanation="Un signal de l'UT inférieure isolé, sans zone H1 préparée et sans biais Daily aligné, n'est pas un setup multi-unités de temps, c'est juste du bruit qu'on a remarqué au vol. Le process exige que les trois étages soient cohérents AVANT le signal d'exécution. Trader un signal M15 hors contexte revient exactement à ce contre quoi le process est conçu : l'impulsivité."
             answerExplanations={[
-              "Faux. Descendre encore plus bas (M5) n'ajoute pas le contexte HTF qui manque. Affiner un signal isolé ne le transforme pas en setup, ça augmente juste la précision d'une décision mal cadrée.",
-              "Faux. Réduire la taille ne corrige pas le problème de fond : l'absence de contexte HTF. On ne diminue pas un mauvais setup en risquant moins, on le supprime.",
-              "Faux. Prendre l'autre sens sur la base d'un seul signal LTF, sans biais structurel ni zone, c'est trader le bruit dans l'autre direction, exactement le même problème.",
+              "Faux. Descendre encore plus bas (M5) n'ajoute pas le contexte de l'UT supérieure qui manque. Affiner un signal isolé ne le transforme pas en setup, ça augmente juste la précision d'une décision mal cadrée.",
+              "Faux. Réduire la taille ne corrige pas le problème de fond : l'absence de contexte de l'UT supérieure. On ne diminue pas un mauvais setup en risquant moins, on le supprime.",
+              "Faux. Prendre l'autre sens sur la base d'un seul signal de l'UT inférieure, sans biais structurel ni zone, c'est trader le bruit dans l'autre direction, exactement le même problème.",
               "Correct. Le process exige l'alignement Daily + H1 + M15. Un signal M15 hors process est par définition un signal isolé, qu'on a repéré sans préparation. La discipline est de ne pas trader hors process, la patience permet d'attendre un setup vraiment construit.",
             ]}
           />
@@ -361,14 +361,14 @@ export default function ContentFr() {
             explanation="Sans confirmation M15, le process n'est pas complet, peu importe la qualité du Daily et de la zone H1. La consolidation latérale dans la zone n'est ni un rejet ni une cassure ; elle ne valide rien. Le rôle du M15 est précisément de filtrer ce genre de zone qui « aurait pu » fonctionner mais qui ne montre aucun signal concret. Patience."
             answerExplanations={[
               "Faux. « Finira par casser » est une prédiction, pas une observation. Le process se construit sur des signaux concrets, pas sur des projections.",
-              "Faux. Entrer au milieu de la zone sans signal LTF est un pari sur la moyenne, exactement le contraire d'un setup confirmé. C'est ce qu'on évite.",
+              "Faux. Entrer au milieu de la zone sans signal de l'UT inférieure est un pari sur la moyenne, exactement le contraire d'un setup confirmé. C'est ce qu'on évite.",
               "Correct. Le M15 doit valider la réaction (mèche de rejet + cassure structurelle). Sans ces signaux, l'étage d'exécution n'est pas franchi, pas d'entrée. Cette discipline protège des zones qui paraissent fortes mais ne réagissent pas.",
               "Faux. Un ordre limite passif transforme un setup non confirmé en automatisme, c'est le pire compromis : on prend le risque sans avoir validé le déclencheur.",
             ]}
           />
 
           <LessonQuiz
-            question="Quel est le rôle exact du Daily dans le process multi-timeframe ?"
+            question="Quel est le rôle exact du Daily dans le process multi-unités de temps ?"
             options={[
               "Donner le point d'entrée précis grâce à sa lisibilité",
               "Affiner le timing au niveau M1 et compléter le signal d'exécution",
@@ -379,7 +379,7 @@ export default function ContentFr() {
             explanation="Le Daily (ou H4) est l'étage du contexte. Son rôle unique est de définir la direction dominante via la structure (LH/LL ou HH/HL). Cette direction conditionne ensuite quels types de trades sont autorisés sur les étages inférieurs. Le Daily ne donne ni point d'entrée précis (trop large), ni la zone d'exécution (c'est le H1), ni le SL serré (c'est le M15)."
             answerExplanations={[
               "Faux. Le Daily est trop large pour fournir un point d'entrée précis, une bougie Daily représente une amplitude de plusieurs dizaines de pts. L'entrée se prépare sur H1 et se déclenche sur M15.",
-              "Faux. Le Daily n'a rien à voir avec le timing fin. Affiner sur M1 relèverait du LTF, et le Daily est précisément à l'opposé de cet étage, il pose le contexte général, pas le déclencheur.",
+              "Faux. Le Daily n'a rien à voir avec le timing fin. Affiner sur M1 relèverait de l'UT inférieure, et le Daily est précisément à l'opposé de cet étage, il pose le contexte général, pas le déclencheur.",
               "Correct. Le Daily donne le contexte général : structure LH/LL = ventes uniquement, structure HH/HL = achats uniquement. C'est cette direction qui conditionne l'ensemble du process en aval.",
               "Faux. Le SL serré se construit sur la structure locale du M15 (sommet ou creux de rejet). Un SL calé sur une structure Daily serait beaucoup trop large et tuerait le R/R.",
             ]}
@@ -413,8 +413,8 @@ export default function ContentFr() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-emerald-400">Module Multi-timeframe terminé</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Tu as complété les 5 leçons du module Multi-timeframe Process.</p>
+                  <p className="text-sm font-semibold text-emerald-400">Module Process multi-unités de temps terminé</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Tu as complété les 5 leçons du module Process multi-unités de temps.</p>
                 </div>
               </div>
             )}

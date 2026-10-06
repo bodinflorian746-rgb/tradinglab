@@ -16,7 +16,7 @@ function ContentFr() {
       duration="22 min"
       lessonNumber={5}
       prev={{ href: "/formations/avance/lecon4", label: "Leçon 4 : Killzones" }}
-      next={{ href: "/formations/avance/lecon6", label: "Leçon 6 : Stop Hunts" }}
+      next={{ href: "/formations/avance/lecon6", label: "Leçon 6 : Chasses aux stops" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -69,10 +69,10 @@ function ContentFr() {
             <p className="font-semibold text-emerald-400 text-sm mb-2">Setup OTE complet (haussier)</p>
             <ul className="space-y-1.5">
               <li className="text-xs text-zinc-400 leading-relaxed">1. Biais haussier confirmé (HH/HL en Daily)</li>
-              <li className="text-xs text-zinc-400 leading-relaxed">2. BOS haussier sur le timeframe de travail (H1/H4)</li>
+              <li className="text-xs text-zinc-400 leading-relaxed">2. BOS haussier sur l'unité de temps de travail (H1/H4)</li>
               <li className="text-xs text-zinc-400 leading-relaxed">3. Retracement dans la zone OTE (61.8%–78.6%)</li>
               <li className="text-xs text-zinc-400 leading-relaxed">4. Confluence dans l'OTE : Bullish OB ou Bullish FVG</li>
-              <li className="text-xs text-zinc-400 leading-relaxed">5. Signal de bougie sur M15 (pin bar, engulfing haussier) → entrée</li>
+              <li className="text-xs text-zinc-400 leading-relaxed">5. Signal de bougie sur M15 (pin bar, avalement haussier) → entrée</li>
             </ul>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">

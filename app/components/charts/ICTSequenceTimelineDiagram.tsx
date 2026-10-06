@@ -46,7 +46,7 @@ const CANDLES: CandleSpec[] = [
 const BODY_W = 10;
 
 const STEPS_FR = [
-  { x:  55, label: "HTF bearish" },
+  { x:  55, label: "UT supérieure baissière" },
   { x: 115, label: "Equal highs" },
   { x: 215, label: "Sweep" },
   { x: 275, label: "Displacement" },
@@ -58,7 +58,7 @@ const STEPS_FR = [
 const STEPS_ES = [
   { x:  55, label: "HTF bearish" },
   { x: 115, label: "Equal highs" },
-  { x: 215, label: "Sweep" },
+  { x: 215, label: "Barrido" },
   { x: 275, label: "Displacement" },
   { x: 360, label: "FVG" },
   { x: 460, label: "Retorno FVG" },
@@ -83,7 +83,7 @@ export function ICTSequenceTimelineDiagram({ className = "", locale = "fr" }: IC
         mobileTitle: "Secuencia ICT completa — 7 etapas",
         steps: [
           { n: 1, t: "Liquidez HTF identificada", c: "amber" },
-          { n: 2, t: "Sweep de la liquidez", c: "amber" },
+          { n: 2, t: "Barrido de la liquidez", c: "amber" },
           { n: 3, t: "Reintegración / CHoCH", c: "red" },
           { n: 4, t: "Displacement bearish", c: "red" },
           { n: 5, t: "FVG creado", c: "blue" },
@@ -115,7 +115,7 @@ export function ICTSequenceTimelineDiagram({ className = "", locale = "fr" }: IC
         annotation: "Le setup se construit étape par étape",
         mobileTitle: "Séquence ICT complète — 7 étapes",
         steps: [
-          { n: 1, t: "Liquidité HTF identifiée", c: "amber" },
+          { n: 1, t: "Liquidité de l'UT supérieure identifiée", c: "amber" },
           { n: 2, t: "Sweep de la liquidité", c: "amber" },
           { n: 3, t: "Réintégration / CHoCH", c: "red" },
           { n: 4, t: "Displacement bearish", c: "red" },
@@ -124,7 +124,7 @@ export function ICTSequenceTimelineDiagram({ className = "", locale = "fr" }: IC
           { n: 7, t: "Rejet + reprise = exécution", c: "emerald" },
         ],
         mobileFooter: "Chaque étape construit la suivante.",
-        leg1: "7 étapes — de la liquidité HTF à l'exécution",
+        leg1: "7 étapes — de la liquidité de l'UT supérieure à l'exécution",
         leg2: "Chaque étape construit la suivante",
       };
   return (
@@ -200,7 +200,7 @@ export function ICTSequenceTimelineDiagram({ className = "", locale = "fr" }: IC
             </g>
           ))}
           <text x="35" y="60" fontSize="9" fill="#a1a1aa" textAnchor="middle">Prep</text>
-          <text x="105" y="60" fontSize="9" fill="#f59e0b" textAnchor="middle">Sweep</text>
+          <text x="105" y="60" fontSize="9" fill="#f59e0b" textAnchor="middle">{locale === "es" ? "Barrido" : locale === "en" ? "Sweep" : "Sweep"}</text>
           <text x="175" y="60" fontSize="9" fill="#10b981" textAnchor="middle">Disp</text>
           <text x="245" y="60" fontSize="9" fill="#10b981" textAnchor="middle">Entry</text>
         </svg>

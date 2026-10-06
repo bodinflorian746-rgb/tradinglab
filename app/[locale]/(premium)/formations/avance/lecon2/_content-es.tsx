@@ -13,7 +13,7 @@ export default function ContentEs() {
       subtitle="Los Fair Value Gaps son desequilibrios dejados por movimientos institucionales rápidos. El mercado busca cerrarlos, y ahí se esconden algunas de las mejores entradas."
       duration="20 min"
       lessonNumber={2}
-      prev={{ href: "/formations/avance/lecon1", label: "Lección 1: Liquidity" }}
+      prev={{ href: "/formations/avance/lecon1", label: "Lección 1: Liquidez" }}
       next={{ href: "/formations/avance/lecon3", label: "Lección 3: Order Blocks" }}
     >
 
@@ -34,7 +34,7 @@ export default function ContentEs() {
           </p>
         </div>
         <p className="text-zinc-300 text-sm leading-relaxed">
-          En la práctica, los FVG aparecen después de news económicas importantes,
+          En la práctica, los FVG aparecen después de noticias económicas importantes,
           aperturas de sesión con gap, o movimientos impulsivos institucionales.
           Representan zonas de desequilibrio que el mercado busca reintegrar
           naturalmente.
@@ -90,7 +90,7 @@ export default function ContentEs() {
                . Cuando el precio regresa a esa zona, es un potencial punto de compra
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-               . Stop: debajo de la zona. Target: próximo nivel de resistencia o liquidity
+               . Stop: debajo de la zona. Target: próximo nivel de resistencia o liquidez
               </li>
             </ul>
           </div>
@@ -107,7 +107,7 @@ export default function ContentEs() {
                . Cuando el precio sube a esa zona, es un potencial punto de venta
               </li>
               <li className="text-xs text-zinc-400 leading-relaxed">
-               . Stop: por encima de la zona. Target: próximo soporte o pool de liquidity
+               . Stop: por encima de la zona. Target: próximo soporte o pool de liquidez
               </li>
             </ul>
           </div>
@@ -155,7 +155,7 @@ export default function ContentEs() {
         <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Workflow completo:</span> estructura
-            → liquidity → FVG + confluencia → entrada en rechazo dentro de la zona. Esos
+            → liquidez → FVG + confluencia → entrada en rechazo dentro de la zona. Esos
             4 pasos combinados definen un setup institucional completo.
           </p>
         </div>

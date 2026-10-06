@@ -45,17 +45,17 @@ export function AsiaRangeSweepDiagram({ className = "", locale = "fr" }: AsiaRan
   const t = locale === "es"
     ? {
         asiaSession: "Asia Session",
-        sweep: "Sweep 1.1702",
-        annotation: "El range asiático se vuelve el objetivo",
-        mobileTitle: "Asia range sweep · EUR/USD M15",
-        m1a: "Range Asia",
+        sweep: "Barrido 1.1702",
+        annotation: "El rango asiático se vuelve el objetivo",
+        mobileTitle: "Asia rango barrido · EUR/USD M15",
+        m1a: "Rango Asia",
         m1b: " = bolsa de liquidez visible.",
-        m2a: "Sweep",
-        m2b: " bajo el range — dispara los stops.",
+        m2a: "Barrido",
+        m2b: " bajo el rango — dispara los stops.",
         m3a: "Expansión violenta",
         m3b: " en sentido opuesto en London Open.",
-        leg1: "Range Asia = bolsa de liquidez visible",
-        leg2: "Sweep bajo el range y luego expansión violenta",
+        leg1: "Rango Asia = bolsa de liquidez visible",
+        leg2: "Barrido bajo el rango y luego expansión violenta",
       }
     : locale === "en"
     ? {
@@ -140,12 +140,12 @@ export function AsiaRangeSweepDiagram({ className = "", locale = "fr" }: AsiaRan
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
 
         {/* Mini-SVG : Asia range étroit puis sweep au London Open */}
-        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Asia range sweep" fill="none">
+        <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label={locale === "es" ? "Barrido del rango asiático" : locale === "en" ? "Asia range sweep" : "Asia range sweep"} fill="none">
           {/* Range Asia (rectangle horizontal) */}
           <rect x="15" y="48" width="150" height="22" fill="#71717a18" stroke="#71717a55" strokeWidth="1" strokeDasharray="3 2" />
           <line x1="15" y1="48" x2="165" y2="48" stroke="#71717a" strokeWidth="0.7" strokeDasharray="2 2" />
           <line x1="15" y1="70" x2="165" y2="70" stroke="#71717a" strokeWidth="0.7" strokeDasharray="2 2" />
-          <text x="90" y="42" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">Asia range</text>
+          <text x="90" y="42" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">{locale === "es" ? "Rango asiático" : locale === "en" ? "Asia range" : "Asia range"}</text>
           {/* Oscillation dans le range */}
           <path d="M20,60 L40,52 L60,65 L80,55 L100,62 L120,55 L140,65 L160,58" stroke="#71717a" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
           {/* Ligne verticale London Open */}
@@ -155,7 +155,7 @@ export function AsiaRangeSweepDiagram({ className = "", locale = "fr" }: AsiaRan
           {/* Sweep : mèche perce au-dessus du high range puis reversal */}
           <path d="M175,58 L195,18 L210,32" stroke="#f59e0b" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
           <rect x="195" y="2" width="58" height="12" rx="2" fill="#f59e0b18" stroke="#f59e0b55" strokeWidth="0.7" />
-          <text x="224" y="11" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Sweep ↑</text>
+          <text x="224" y="11" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">{locale === "es" ? "Barrido ↑" : locale === "en" ? "Sweep ↑" : "Sweep ↑"}</text>
           {/* Reversal bearish */}
           <path d="M210,32 L235,60 L255,80 L270,92" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
         </svg>

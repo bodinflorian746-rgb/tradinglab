@@ -150,7 +150,7 @@ const CHECKS: Record<string, Record<string, Check>> = {
     },
   },
   counter_trend_bounce: {
-    "HTF baissier net": (ch) => { const t = ch.past.slice(0, 8); return last(t).c < t[0].o && t.filter((k) => k.c < k.o).length >= 6 ? null : "pas de tendance baissière nette"; },
+    "UT supérieure baissière nette": (ch) => { const t = ch.past.slice(0, 8); return last(t).c < t[0].o && t.filter((k) => k.c < k.o).length >= 6 ? null : "pas de tendance baissière nette"; },
     "rebond local sur le niveau secondaire": (ch) => {
       const z = zoneOf(ch, "support"); const b = ch.past.slice(8);
       return b.some((k) => k.l <= hi(z)) && last(ch.past).c > hi(z) ? null : "pas de rebond depuis le niveau (ou retombé dessous)";

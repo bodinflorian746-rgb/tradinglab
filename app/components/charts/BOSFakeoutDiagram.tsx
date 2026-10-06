@@ -138,7 +138,7 @@ export default function BOSFakeoutDiagram({ className = "", locale = "fr" }: { c
       <p className="text-[14px] font-bold text-red-400 text-center">{t.mobileTitle}</p>
 
       {/* Mini-SVG : fakeout BOS — spike au-dessus du HH puis retour brutal */}
-      <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="BOS fakeout" fill="none">
+      <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label={locale === "es" ? "BOS fakeout" : locale === "en" ? "BOS fakeout" : "BOS faux breakout"} fill="none">
         {/* Niveau HH cible */}
         <line x1="10" y1="40" x2="270" y2="40" stroke="#71717a" strokeWidth="0.8" strokeDasharray="3 3" />
         <rect x="10" y="26" width="38" height="12" rx="2" fill="#09090b" />
@@ -150,7 +150,7 @@ export default function BOSFakeoutDiagram({ className = "", locale = "fr" }: { c
         <circle cx="140" cy="18" r="3" fill="#10b981" />
         {/* Fakeout label */}
         <rect x="125" y="2" width="60" height="12" rx="2" fill="#ef444418" stroke="#ef444455" strokeWidth="0.8" />
-        <text x="155" y="10" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Fakeout</text>
+        <text x="155" y="10" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">{locale === "es" ? "Fakeout" : locale === "en" ? "Fakeout" : "Faux breakout"}</text>
         {/* Reversal violent — retombée sous le niveau */}
         <path d="M150,30 L170,55 L195,75 L220,90 L260,98" stroke="#ef4444" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
         <circle cx="260" cy="98" r="3" fill="#ef4444" />

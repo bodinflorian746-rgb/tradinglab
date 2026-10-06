@@ -220,7 +220,7 @@ export default function ContentEs() {
             </p>
             <div className="bg-zinc-900/40 border border-red-500/15 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 italic leading-relaxed">
-                El primer impulso suele servir para barrer la liquidity, no para dar una dirección.
+                El primer impulso suele servir para barrer la liquidez, no para dar una dirección.
               </p>
             </div>
           </section>
@@ -343,7 +343,7 @@ export default function ContentEs() {
               "El FOMC decide las tasas y la política monetaria estadounidense.",
               "El discurso de Powell es determinante, es él quien da la dirección real.",
               "20h00–21h00 = zona inestable; la dirección real aparece después de las 21h.",
-              "El primer impulso es inestable y suele servir como trampa de liquidity.",
+              "El primer impulso es inestable y suele servir como trampa de liquidez.",
               "El FOMC impacta simultáneamente EUR/USD, XAU/USD, Nasdaq y BTC/USD, vigila la coherencia entre ellos.",
             ]}
           />
@@ -369,9 +369,9 @@ export default function ContentEs() {
               "Entras en ambos sentidos con dos órdenes opuestas",
             ]}
             correctIndex={1}
-            explanation="El primer impulso de un FOMC es inestable y suele servir para tomar la liquidity antes de que Powell hable. Esperar un cierre confirmado después de las 21h00 evita esa trampa y te permite entrar en la dirección real con una confluencia técnica. Este principio aplica a todos los activos tocados por el FOMC: la misma trampa se produce en XAU/USD, el Nasdaq y BTC/USD al mismo tiempo."
+            explanation="El primer impulso de un FOMC es inestable y suele servir para tomar la liquidez antes de que Powell hable. Esperar un cierre confirmado después de las 21h00 evita esa trampa y te permite entrar en la dirección real con una confluencia técnica. Este principio aplica a todos los activos tocados por el FOMC: la misma trampa se produce en XAU/USD, el Nasdaq y BTC/USD al mismo tiempo."
             answerExplanations={[
-              "Falso. Ese impulso a las 20h00 es muy a menudo una trampa, el mercado caza la liquidity de los stops antes de invertirse a las 20h30 cuando Powell habla. Comprar inmediatamente es entrar en la zona más inestable del FOMC.",
+              "Falso. Ese impulso a las 20h00 es muy a menudo una trampa, el mercado caza la liquidez de los stops antes de invertirse a las 20h30 cuando Powell habla. Comprar inmediatamente es entrar en la zona más inestable del FOMC.",
               "Correcto. La dirección real se confirma después de las 21h00. Esperando un cierre M5 con una confluencia técnica (OB, resistencia rota), evitas el ruido y entras con una probabilidad muy superior.",
               "Demasiado agresivo y sin lógica. No hay ninguna señal de reversión confirmada en esta etapa, no sabes si la resistencia va a aguantar o ceder. Vender a ciegas en un breakout es apostar, no tradear.",
               "Falso. Entrar en ambos sentidos es un error, pagas el spread de los dos lados y no tienes ningún sesgo direccional. El método correcto es esperar la confirmación, no cubrirse a ciegas.",

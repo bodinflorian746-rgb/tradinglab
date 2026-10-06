@@ -51,8 +51,8 @@ export { ROUNDS_PER_SESSION, scoreMistakeChoice };
 const ZONE_LABEL_EN: Record<string, string> = {
   "Swing low":          "Swing low",
   "Swing high":         "Swing high",
-  "Résistance HTF":     "HTF resistance",
-  "Support HTF":        "HTF support",
+  "Résistance UT supérieure":     "HTF resistance",
+  "Support UT supérieure":        "HTF support",
   "Résistance":         "Resistance",
   "Support":            "Support",
   "Haut du range":      "Range top",

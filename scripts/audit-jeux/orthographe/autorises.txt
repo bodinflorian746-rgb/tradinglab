@@ -300,3 +300,5 @@ vigílalos
 Winrate
 xpPop
 ème
+ETE
+multitemporal

@@ -34,7 +34,7 @@ export const SKILL_LABELS: Record<SkillId, string> = {
 
 export const SKILL_DESCRIPTIONS: Record<SkillId, string> = {
   discipline:      "Refuser les setups médiocres, attendre les bonnes opportunités.",
-  lecture_marche:  "Identifier la direction et le contexte HTF correctement.",
+  lecture_marche:  "Identifier la direction et le contexte de l'UT supérieure correctement.",
   gestion_risque:  "Placer les stops à des distances cohérentes avec la structure.",
   timing:          "Choisir le bon moment d'entrée, pas trop tôt, pas trop tard.",
   liquidite:       "Reconnaître les sweeps, traps et zones de chasse à liquidité.",

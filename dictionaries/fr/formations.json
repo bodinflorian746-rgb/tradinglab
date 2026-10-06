@@ -32,7 +32,7 @@
       "lecon4": { "title": "Tendances, trader dans le sens du marché",    "duration": "18 min" },
       "lecon5": { "title": "Confluences et probabilité",                   "duration": "20 min" },
       "lecon6": { "title": "Fake Breakout, ne pas se faire piéger",       "duration": "18 min" },
-      "lecon7": { "title": "Analyse Multi-Timeframe",                      "duration": "22 min" },
+      "lecon7": { "title": "Analyse multi-unités de temps",                      "duration": "22 min" },
       "lecon8": { "title": "Plan de trade",                                "duration": "20 min" },
       "lecon9": { "title": "Fibonacci, retracements et confluences",      "duration": "20 min" }
     }
@@ -47,7 +47,7 @@
       "lecon3": { "title": "Order Blocks",                               "duration": "24 min" },
       "lecon4": { "title": "Killzones, les sessions qui comptent",      "duration": "20 min" },
       "lecon5": { "title": "OTE. Optimal Trade Entry",                  "duration": "22 min" },
-      "lecon6": { "title": "Stop Hunts, la chasse aux stops",           "duration": "22 min" },
+      "lecon6": { "title": "Chasses aux stops, la chasse aux stops",           "duration": "22 min" },
       "lecon7": { "title": "Entrées de précision",                       "duration": "25 min" },
       "lecon8": { "title": "Journaling, analyser pour progresser",      "duration": "18 min" },
       "lecon9": { "title": "Backtesting, valider sa stratégie",         "duration": "22 min" }
@@ -86,7 +86,7 @@
       },
       "avance": {
         "label": "Avancé",
-        "description": "FOMC, NFP, rendements obligataires US et régimes de marché, comprendre les news qui font bouger les marchés",
+        "description": "FOMC, NFP, rendements obligataires US et régimes de marché, comprendre les annonces qui font bouger les marchés",
         "count": "4 leçons"
       }
     },

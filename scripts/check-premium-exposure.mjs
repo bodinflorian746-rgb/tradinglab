@@ -112,7 +112,7 @@ const ROUTES = [
   { path: "/fr/strategies/smc/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/smc/lecon2/_content-fr.tsx", marker: "4 critères qualifient un BOS valide : clôture nette, displacement" },
   { path: "/fr/strategies/smc/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/smc/lecon3/_content-fr.tsx", marker: "Le R/R minimum est 1:2. Le TP cible la prochaine zone structurelle ou" },
   { path: "/fr/strategies/smc/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/smc/lecon4/_content-fr.tsx", marker: "La liquidité se concentre au-dessus des sommets et sous les creux" },
-  { path: "/fr/strategies/smc/lecon5", type: "client", source: "app/[locale]/(premium)/strategies/smc/lecon5/_content-fr.tsx", marker: "Le trade SMC complet : de l’analyse HTF à l’exécution" },
+  { path: "/fr/strategies/smc/lecon5", type: "client", source: "app/[locale]/(premium)/strategies/smc/lecon5/_content-fr.tsx", marker: "Le trade SMC complet : de l’analyse de l’UT supérieure à l’exécution" },
   { path: "/fr/strategies/support-resistance/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/support-resistance/lecon1/_content-fr.tsx", marker: "Une zone valide comporte minimum 2 touches confirmées, idéalement 3" },
   { path: "/fr/strategies/support-resistance/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/support-resistance/lecon2/_content-fr.tsx", marker: "Les confluences (niveau rond, Fibonacci, MM, Order Block) multiplient" },
   { path: "/fr/strategies/support-resistance/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/support-resistance/lecon3/_content-fr.tsx", marker: "Un flip exige une cassure qualifiée : clôture franche, distance" },

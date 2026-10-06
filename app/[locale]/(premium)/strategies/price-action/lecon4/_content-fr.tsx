@@ -15,8 +15,8 @@ import { LessonQuiz } from "@/app/components/LessonQuiz";
 const LESSONS = [
   { id: "lecon1", title: "Lire une bougie", disabled: false },
   { id: "lecon2", title: "Pin bar",          disabled: false },
-  { id: "lecon3", title: "Engulfing",        disabled: false },
-  { id: "lecon4", title: "Setup MTF",        disabled: false },
+  { id: "lecon3", title: "Avalement",        disabled: false },
+  { id: "lecon4", title: "Setup multi-unités de temps",        disabled: false },
 ];
 
 export default function ContentFr() {
@@ -58,12 +58,12 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Setup multi-timeframe : aligner 3 horizons
+            Setup multi-unités de temps : aligner 3 horizons
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Cette leçon enseigne à construire une entrée précise en alignant 3 timeframes : Daily (biais), H4 (zone), M15 (signal). Sans alignement, pas de setup.
+              Cette leçon enseigne à construire une entrée précise en alignant 3 unités de temps : Daily (biais), H4 (zone), M15 (signal). Sans alignement, pas de setup.
             </p>
           </div>
 
@@ -125,8 +125,8 @@ export default function ContentFr() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Lecture de bougie → cf. Stratégie PA L1</li>
-              <li>- Pin bar et engulfing → cf. Stratégie PA L2 et L3</li>
-              <li>- Concept de timeframes → cf. Formation Trading L1</li>
+              <li>- Pin bar et avalement → cf. Stratégie PA L2 et L3</li>
+              <li>- Concept d&apos;unités de temps → cf. Formation Trading L1</li>
             </ul>
           </div>
 
@@ -139,14 +139,14 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Chaque timeframe joue un rôle distinct et non interchangeable. La séquence top-down garantit que les entrées s&apos;alignent toujours sur le biais majeur.
+              Chaque unité de temps joue un rôle distinct et non interchangeable. La séquence top-down garantit que les entrées s&apos;alignent toujours sur le biais majeur.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- <span className="font-semibold text-zinc-100">Daily</span> = biais directionnel global (HH/HL haussier ou LH/LL baissier)</li>
               <li>- <span className="font-semibold text-zinc-100">H4</span> = zones majeures de support / résistance, lieux potentiels d&apos;entrée</li>
               <li>- <span className="font-semibold text-zinc-100">H1</span> = confirmation structurelle de l&apos;alignement avec le Daily</li>
-              <li>- <span className="font-semibold text-zinc-100">M15</span> = timing fin via signal de price action (pin bar, engulfing)</li>
+              <li>- <span className="font-semibold text-zinc-100">M15</span> = timing fin via signal de price action (pin bar, avalement)</li>
             </ul>
           </section>
 
@@ -159,14 +159,14 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un setup multi-timeframe est validé uniquement lorsque les 4 critères d&apos;alignement sont réunis. Un seul manquant invalide le setup.
+              Un setup multi-unités de temps est validé uniquement lorsque les 4 critères d&apos;alignement sont réunis. Un seul manquant invalide le setup.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Tendance Daily clairement orientée (HH/HL ou LH/LL sur 30-50 dernières bougies)</li>
               <li>- Zone H4 identifiée et tradable à proximité du prix (distance ≤ 100 pips/$ du prix actuel)</li>
               <li>- Structure H1 alignée avec la tendance Daily (pas de correction temporaire en cours)</li>
-              <li>- Signal M15 explicite au contact de la zone H4 (pin bar, engulfing, réaction immédiate)</li>
+              <li>- Signal M15 explicite au contact de la zone H4 (pin bar, avalement, réaction immédiate)</li>
             </ul>
           </section>
 
@@ -179,7 +179,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Lorsque les timeframes affichent des biais conflictuels, aucun setup n&apos;est exploitable. La discipline consiste à ne pas trader tant que l&apos;alignement n&apos;est pas rétabli.
+              Lorsque les unités de temps affichent des biais conflictuels, aucun setup n&apos;est exploitable. La discipline consiste à ne pas trader tant que l&apos;alignement n&apos;est pas rétabli.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -191,7 +191,7 @@ export default function ContentFr() {
 
           {/* Bloc 6 — PLAN DE TRADE CHIFFRÉ */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : setup MTF EUR/USD</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : setup multi-unités de temps EUR/USD</h2>
 
             <div className="my-8">
               <MultiTFEntryDiagram />
@@ -247,10 +247,10 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD, le Daily est en tendance haussière avec dernier HH à 4 680$ et dernier HL à 4 520$. Une zone de support H4 est identifiée entre 4 560$ et 4 580$ (3 touches en 5 semaines). Le prix actuel est à 4 595$. La structure H1 est alignée haussière. Le prix descend toucher 4 575$ puis imprime une engulfing haussière M15 avec clôture à 4 595$. Comment se construit le plan de trade ?"
+            description="Sur XAU/USD, le Daily est en tendance haussière avec dernier HH à 4 680$ et dernier HL à 4 520$. Une zone de support H4 est identifiée entre 4 560$ et 4 580$ (3 touches en 5 semaines). Le prix actuel est à 4 595$. La structure H1 est alignée haussière. Le prix descend toucher 4 575$ puis imprime un avalement haussier M15 avec clôture à 4 595$. Comment se construit le plan de trade ?"
             steps={[
-              "Valider les 4 critères d’alignement : tendance Daily haussière confirmée, zone H4 4 560$-4 580$ tradable (3 touches, fraîche), structure H1 alignée haussière, signal M15 engulfing haussière au contact de la zone H4",
-              "Placer l’entrée long à 4 595$ (clôture de l’engulfing M15)",
+              "Valider les 4 critères d’alignement : tendance Daily haussière confirmée, zone H4 4 560$-4 580$ tradable (3 touches, fraîche), structure H1 alignée haussière, signal M15 avalement haussier au contact de la zone H4",
+              "Placer l’entrée long à 4 595$ (clôture de l’avalement M15)",
               "Placer le stop loss à 4 555$ (5$ sous le bas de la zone H4 à 4 560$)",
               "Placer le take profit niveau 1 à 4 680$ (HH Daily précédent) ou niveau 2 à 4 750$ (projection extension Daily)",
               "Calculer les R/R : Risque 40$, gain niveau 1 = 85$ → R/R 2,12 ; gain niveau 2 = 155$ → R/R 3,88. Taille de position selon le risque par trade adapté au capital",
@@ -263,25 +263,25 @@ export default function ContentFr() {
               "Doji d’indécision, équilibre entre les camps",
               "Pin bar haussière, rejet à la baisse confirmé",
               "Marubozu baissier, domination totale des vendeurs",
-              "Engulfing baissier, bascule de pouvoir vers les vendeurs",
+              "Avalement baissier, bascule de pouvoir vers les vendeurs",
             ]}
             correctIndex={1}
             explanation="Corps réduit + mèche basse 3 fois plus longue que le corps + clôture dans le tiers supérieur = signature exacte d’une pin bar haussière. Le message du marché : tentative d’extension baissière rapidement rejetée par les acheteurs, qui reprennent le contrôle avant la clôture. Signal de rejet à la baisse particulièrement opérationnel s’il apparaît au contact d’un niveau structurel."
           />
 
           <LessonQuiz
-            question="Ton setup est propre et le prix réagit sur une bonne zone, mais ton biais en unité de temps supérieure (HTF) pointe dans le sens inverse. Que fais-tu ?"
+            question="Ton setup est propre et le prix réagit sur une bonne zone, mais ton biais en unité de temps supérieure (UT supérieure) pointe dans le sens inverse. Que fais-tu ?"
             options={[
               "Je prends le trade : setup et zone valides suffisent.",
-              "Je m'abstiens : sans le biais HTF dans mon sens, la probabilité chute trop.",
+              "Je m'abstiens : sans le biais de l'UT supérieure dans mon sens, la probabilité chute trop.",
               "Je prends en réduisant fortement ma taille pour tester.",
             ]}
             correctIndex={1}
-            explanation="Un setup propre sur une bonne zone ne compense pas un contexte qui joue contre toi. Le biais HTF est un filtre : à contre-courant, tu nages contre le marché. Le bon réflexe est de laisser passer et d'attendre un trade aligné."
+            explanation="Un setup propre sur une bonne zone ne compense pas un contexte qui joue contre toi. Le biais de l'UT supérieure est un filtre : à contre-courant, tu nages contre le marché. Le bon réflexe est de laisser passer et d'attendre un trade aligné."
           />
 
           <LessonQuiz
-            question="Dans la procédure top-down multi-timeframe, quel est le rôle exclusif du M15 ?"
+            question="Dans la procédure top-down multi-unités de temps, quel est le rôle exclusif du M15 ?"
             options={[
               "Fournir le biais directionnel global",
               "Identifier les zones majeures de support et résistance",
@@ -289,7 +289,7 @@ export default function ContentFr() {
               "Confirmer la tendance Daily",
             ]}
             correctIndex={2}
-            explanation="Le M15 est exclusivement un outil de timing fin. Le biais directionnel vient du Daily. Les zones viennent du H4. L’alignement structurel vient du H1. Le M15 fournit uniquement le signal de price action (pin bar, engulfing, réaction nette) qui confirme l’entrée au contact de la zone H4."
+            explanation="Le M15 est exclusivement un outil de timing fin. Le biais directionnel vient du Daily. Les zones viennent du H4. L’alignement structurel vient du H1. Le M15 fournit uniquement le signal de price action (pin bar, avalement, réaction nette) qui confirme l’entrée au contact de la zone H4."
           />
 
         </div>
@@ -334,7 +334,7 @@ export default function ContentFr() {
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" className="text-zinc-600">
                   <path d="M9.5 3.5l-4 4 4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Leçon 3. Engulfing : le retournement de force
+                Leçon 3. Avalement : le retournement de force
               </Link>
               <Link
                 href="/strategies/price-action"

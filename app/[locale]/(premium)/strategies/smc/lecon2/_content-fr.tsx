@@ -130,7 +130,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Market Structure SMC, HH/HL/LL/LH → cf. Stratégie SMC L1</li>
               <li>- Bougie de cassure, displacement → cf. Formation Trading L2</li>
-              <li>- Tendance directionnelle multi-timeframe → cf. Formation Trading L3</li>
+              <li>- Tendance directionnelle multi-unités de temps → cf. Formation Trading L3</li>
             </ul>
           </div>
 
@@ -179,7 +179,7 @@ export default function ContentFr() {
                 <p className="text-white font-semibold text-sm mb-2">1. Clôture nette au-delà du niveau</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Bougie clôt complètement au-delà du HH/LL, mèche seule = test</li>
-                  <li>- Validation sur clôture du timeframe d&apos;analyse (H4 ou Daily)</li>
+                  <li>- Validation sur clôture de l&apos;unité de temps d&apos;analyse (H4 ou Daily)</li>
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
@@ -197,9 +197,9 @@ export default function ContentFr() {
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
-                <p className="text-white font-semibold text-sm mb-2">4. Alignement multi-timeframe</p>
+                <p className="text-white font-semibold text-sm mb-2">4. Alignement multi-unités de temps</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- BOS H4 cohérent avec biais Daily (HTF)</li>
+                  <li>- BOS H4 cohérent avec biais Daily (UT supérieure)</li>
                   <li>- BOS haussier au-dessus MM200, baissier en dessous</li>
                 </ul>
               </div>
@@ -256,7 +256,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : BOS haussier EUR/USD H4</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              EUR/USD en tendance haussière H4 depuis 4 semaines. Structure : 3 HL à 1.1620, 1.1680, 1.1720, et 3 HH à 1.1700, 1.1760, 1.1820. MM200 Daily à 1.1500, prix au-dessus. Bougie H4 vient de clôturer à 1.1858, soit 38 pips au-dessus du HH 1.1820, displacement marqué. 5 bougies maintiennent leur clôture au-dessus de 1.1820 sans réintégration. Aucune news macro dans la fenêtre. Le dernier HL 1.1720 n&apos;a pas été cassé : aucun CHoCH, BOS haussier validé.
+              EUR/USD en tendance haussière H4 depuis 4 semaines. Structure : 3 HL à 1.1620, 1.1680, 1.1720, et 3 HH à 1.1700, 1.1760, 1.1820. MM200 Daily à 1.1500, prix au-dessus. Bougie H4 vient de clôturer à 1.1858, soit 38 pips au-dessus du HH 1.1820, displacement marqué. 5 bougies maintiennent leur clôture au-dessus de 1.1820 sans réintégration. Aucune annonce macro dans la fenêtre. Le dernier HL 1.1720 n&apos;a pas été cassé : aucun CHoCH, BOS haussier validé.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -297,14 +297,14 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "BOS confirme la tendance par la cassure d’un extrême structurel (HH ou LL). CHoCH la remet en cause par la cassure d’un creux ou sommet inverse (HL ou LH). Le niveau cassé dicte le signal.",
-              "4 critères qualifient un BOS valide : clôture nette, displacement marqué, absence de réintégration, alignement multi-timeframe.",
+              "4 critères qualifient un BOS valide : clôture nette, displacement marqué, absence de réintégration, alignement multi-unités de temps.",
               "La séquence de retournement suit 3 étapes : BOS contre-tendance, formation de la nouvelle structure, CHoCH confirmé.",
               "L’entrée d’inversion se prend uniquement après CHoCH confirmé, sur la zone de mitigation avec signal de rejet.",
             ]}
           />
 
           <LessonExercice
-            description="Sur XAU/USD H4, la tendance baissière en cours affiche 3 LH successifs à 4 720$, 4 660$ et 4 620$, et 3 LL successifs à 4 660$, 4 600$ et 4 540$. Une bougie H4 vient de clôturer à 4 670$, soit 50$ au-dessus du dernier LH à 4 620$. 4 bougies suivantes maintiennent leur clôture au-dessus de 4 620$. Aucune news macro dans la fenêtre. Comment se construit la lecture BOS/CHoCH ?"
+            description="Sur XAU/USD H4, la tendance baissière en cours affiche 3 LH successifs à 4 720$, 4 660$ et 4 620$, et 3 LL successifs à 4 660$, 4 600$ et 4 540$. Une bougie H4 vient de clôturer à 4 670$, soit 50$ au-dessus du dernier LH à 4 620$. 4 bougies suivantes maintiennent leur clôture au-dessus de 4 620$. Aucune annonce macro dans la fenêtre. Comment se construit la lecture BOS/CHoCH ?"
             steps={[
               "Identifier la nature du niveau cassé : 4 620$ est le dernier LH (sommet de structure baissière inverse), il s’agit d’un signal de retournement potentiel, pas d’une continuation.",
               "Qualifier la cassure : clôture franche à 4 670$ (50$ au-dessus du LH), displacement supérieur à la moyenne récente, aucune réintégration sur 4 bougies, cassure validée structurellement.",

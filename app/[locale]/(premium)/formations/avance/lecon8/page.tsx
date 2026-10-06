@@ -43,7 +43,7 @@ function ContentFr() {
           {[
             {
               phase: "Avant le trade",
-              items: ["Instrument & timeframe", "Biais de marché (haussier / baissier / neutre)", "Confluences identifiées (OB, FVG, liquidité, OTE...)", "Entrée prévue, SL, TP", "Ratio R/R calculé", "Screenshot du setup"],
+              items: ["Instrument & unité de temps", "Biais de marché (haussier / baissier / neutre)", "Confluences identifiées (OB, FVG, liquidité, OTE...)", "Entrée prévue, SL, TP", "Ratio R/R calculé", "Screenshot du setup"],
             },
             {
               phase: "Après le trade",
@@ -76,7 +76,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Analyser en R, pas en euros</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Le R (Risk/Reward) est l'unité standard pour mesurer la performance de trading. Analyser en euros biaise l'analyse, un trade gagné de 50€ peut être un mauvais trade si le R/R était 1:0.5. Un trade perdu de 20€ peut être un bon trade si le plan était respecté.
+          Le R (risque/rendement) est l&apos;unité standard pour mesurer la performance de trading. Analyser en euros biaise l&apos;analyse, un trade gagné de 50€ peut être un mauvais trade si le R/R était 1:0.5. Un trade perdu de 20€ peut être un bon trade si le plan était respecté.
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">

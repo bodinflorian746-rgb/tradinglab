@@ -124,8 +124,8 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Decisiones FOMC y conferencia de Powell → ver módulo Macro</li>
               <li>- Hawkish vs dovish → ver módulo Macro</li>
-              <li>- Soportes, resistencias y liquidity → ver módulo Estrategias</li>
-              <li>- Multi-timeframe → ver módulo Multi-timeframe Process</li>
+              <li>- Soportes, resistencias y liquidez → ver módulo Estrategias</li>
+              <li>- Análisis multitemporal → ver módulo Process multitemporal</li>
             </ul>
           </div>
 
@@ -214,7 +214,7 @@ export default function ContentEs() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de aplicación: un FOMC Fade completo en XAU/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Esta es la secuencia completa de un setup FOMC Fade, desde el contexto pre-FOMC hasta la gestión del riesgo. Cinco etapas, cada una con su rol.
+              Esta es la secuencia completa de un setup FOMC Fade, desde el contexto pre-FOMC hasta la gestión de riesgos. Cinco etapas, cada una con su rol.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -243,7 +243,7 @@ export default function ContentEs() {
                 <li>- Target: 4 638 $ (retorno parcial hacia el nivel pre-FOMC)</li>
               </ul>
 
-              <p className="text-white font-semibold text-sm mb-2">Etapa 5. Gestión del riesgo</p>
+              <p className="text-white font-semibold text-sm mb-2">Etapa 5. Gestión de riesgos</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Volatilidad superior a la normal → tamaño de posición prudente</li>
                 <li>- Ejecución únicamente después de la estabilización, no durante el impulso</li>

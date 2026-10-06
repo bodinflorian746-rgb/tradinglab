@@ -108,7 +108,7 @@ export default function CandleStrengthComparisonDiagram({ className = "", locale
       <rect x="707" y="160" width="25" height="50" fill="#10b981" stroke="#059669" strokeWidth="1.5" rx="2" />
       <rect x="625" y="305" width="120" height="20" rx="4" fill="#27272a" stroke="#10b981" strokeWidth="0.8" />
       <text x="685" y="319" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">{t.bascule}</text>
-      <text x="685" y="345" fill="#d4d4d8" fontSize="9" textAnchor="middle">Engulfing</text>
+      <text x="685" y="345" fill="#d4d4d8" fontSize="9" textAnchor="middle">{locale === "es" ? "Envolvente" : locale === "en" ? "Engulfing" : "Avalement"}</text>
       <text x="685" y="362" fill="#10b981" fontSize="14" textAnchor="middle">↑</text>
 
       {/* Halo + label Référence corps moyen — déplacé après tous les paths pour rester au-dessus */}

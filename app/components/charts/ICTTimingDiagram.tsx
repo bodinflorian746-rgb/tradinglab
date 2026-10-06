@@ -44,17 +44,17 @@ const BODY_W = 12;
 export function ICTTimingDiagram({ className = "", locale = "fr" }: ICTTimingDiagramProps) {
   const t = locale === "es"
     ? {
-        rangeAsia: "Range Asia",
+        rangeAsia: "Rango Asia",
         londonOpen: "London Open",
-        sweep: "Sweep",
+        sweep: "Barrido",
         annotation: "El timing activa el movimiento",
         mobileTitle: "ICT timing · XAU/USD M15",
-        block1Title: "Range Asia — liquidez visible",
-        block1Body: "Stops acumulados a los 2 lados del range nocturno.",
-        block2Title: "Sweep + displacement en London Open",
+        block1Title: "Rango Asia — liquidez visible",
+        block1Body: "Stops acumulados a los 2 lados del rango nocturno.",
+        block2Title: "Barrido + displacement en London Open",
         block2Body: "London toma la liquidez de Asia y luego envía un displacement franco = setup ICT clásico.",
-        leg1: "Range Asia = bolsa de liquidez visible",
-        leg2: "Sweep y displacement en London Open",
+        leg1: "Rango Asia = bolsa de liquidez visible",
+        leg2: "Barrido y displacement en London Open",
       }
     : locale === "en"
     ? {

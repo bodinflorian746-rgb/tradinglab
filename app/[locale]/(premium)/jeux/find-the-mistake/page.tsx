@@ -31,7 +31,7 @@ const CATEGORY_TO_SKILL: Record<"technique" | "psychologique" | "execution" | "r
 };
 
 const BIAS_LABEL_FR  = { bullish: "Haussier", bearish: "Baissier", range: "Range" } as const;
-const BIAS_LABEL_ES  = { bullish: "Alcista", bearish: "Bajista", range: "Range" } as const;
+const BIAS_LABEL_ES  = { bullish: "Alcista", bearish: "Bajista", range: "Rango" } as const;
 const BIAS_LABEL_EN  = { bullish: "Bullish", bearish: "Bearish", range: "Range" } as const;
 const MACRO_LABEL_FR = { normal: "Normal", dangereux: "Dangereux" } as const;
 const MACRO_LABEL_ES = { normal: "Normal", dangereux: "Peligroso" } as const;
@@ -144,8 +144,8 @@ export default function FindTheMistakePage() {
         score:           "Score",
         ofStreak:        "de série",
         loading:         "Chargement…",
-        newsWarning:     "News macro majeure dans < 30 min.",
-        htf:             "HTF",
+        newsWarning:     "Annonce macro majeure dans < 30 min.",
+        htf:             "UT supérieure",
         macro:           "Macro",
         volatility:      "Volatilité",
         question:        "Quelle est l'erreur principale ?",

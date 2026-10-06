@@ -35,7 +35,7 @@ export default function ContentEs() {
             </p>
           </div>
           <div className="bg-zinc-800/50 border border-zinc-700/50 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-zinc-300 mb-2">Range</p>
+            <p className="text-sm font-semibold text-zinc-300 mb-2">Rango</p>
             <p className="text-sm text-zinc-400 leading-relaxed">
               El precio va y viene entre dos niveles horizontales. Ni los compradores ni los vendedores ganan claramente. Sin trade direccional, esperar.
             </p>
@@ -59,13 +59,13 @@ export default function ContentEs() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Identificar la tendencia correctamente</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          La tendencia depende del timeframe. Un mercado puede ser alcista en Daily y bajista en H1. La regla: el timeframe alto define el sesgo. Tradeas en su sentido.
+          La tendencia depende de la temporalidad. Un mercado puede ser alcista en Daily y bajista en H1. La regla: la temporalidad alta define el sesgo. Tradeas en su sentido.
         </p>
         <div className="space-y-2.5">
           {[
             { label: "Daily o H4: el sesgo principal", detail: "Es la tendencia que debes respetar. Si Daily es alcista, buscas únicamente compras." },
             { label: "H1: las zonas de entrada", detail: "En tendencia alcista Daily, el H1 muestra los retrocesos (correcciones). Son tus ventanas de entrada." },
-            { label: "M15: el timing preciso", detail: "En M15, buscas la señal final (rechazo, pin bar, engulfing). Es el disparador de la entrada." },
+            { label: "M15: el timing preciso", detail: "En M15, buscas la señal final (rechazo, pin bar, envolvente). Es el disparador de la entrada." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
@@ -141,8 +141,8 @@ export default function ContentEs() {
           <div className="flex items-start gap-3 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3">
             <span className="text-lg">—</span>
             <div>
-              <p className="text-sm font-semibold text-zinc-300">Range</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Sin trade direccional. Si quieres tradear el range, compras el bottom y vendes el top, pero es avanzado. Por ahora, evítalo.</p>
+              <p className="text-sm font-semibold text-zinc-300">Rango</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Sin trade direccional. Si quieres tradear el rango, compras el bottom y vendes el top, pero es avanzado. Por ahora, evítalo.</p>
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@ export default function ContentEs() {
         <div className="space-y-2 text-sm">
           <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>Daily alcista → compras únicamente en los retrocesos (HL)</p>
           <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>Daily bajista → vendes únicamente en los rebotes (LH)</p>
-          <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Range / dirección incierta → ningún trade direccional</p>
+          <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Rango / dirección incierta → ningún trade direccional</p>
         </div>
       </div>
 
@@ -184,7 +184,7 @@ export default function ContentEs() {
       <LessonExercice
         description="En TradingView, identifica la tendencia en 3 mercados diferentes y planifica una entrada."
         steps={[
-          "Abre EUR/USD, GBP/USD y BTC/USD en Daily. Para cada uno, anota: ¿alcista, bajista o range?",
+          "Abre EUR/USD, GBP/USD y BTC/USD en Daily. Para cada uno, anota: ¿alcista, bajista o rango?",
           "En el par alcista: identifica los 3 últimos Higher Lows. Ahí es donde buscarías comprar.",
           "Baja a H4 en ese par. ¿El precio está actualmente en retroceso o en impulso?",
           "Si el precio está en retroceso en un HL, baja a H1 y espera una señal de vela. Anota la zona, el SL lógico y el TP.",
@@ -205,7 +205,7 @@ export default function ContentEs() {
           "Demasiado prudente. Tienes 3 elementos alineados: tendencia, nivel de estructura, señal. Es exactamente el setup que esperabas. Esperar más sin razón es dejar pasar una oportunidad válida.",
           "Correcto. Tendencia alcista + retroceso en HL + señal pin bar = setup de alta probabilidad. SL a 1.0810 (bajo el HL a 1.0860), TP hacia el próximo HH (1.0960). R/R aproximado 1:2.",
           "Falso. El precio que baja hacia un HL en tendencia alcista es un retroceso normal, una corrección. No es debilidad. Es la oportunidad de compra que esperabas.",
-          "Falso. La incertidumbre no justifica la inacción cuando el setup está claramente definido. Tendencia + estructura + señal = trade válido. La incertidumbre siempre está presente, el risk management (SL + tamaño) se encarga.",
+          "Falso. La incertidumbre no justifica la inacción cuando el setup está claramente definido. Tendencia + estructura + señal = trade válido. La incertidumbre siempre está presente, la gestión de riesgos (SL + tamaño) se encarga.",
         ]}
       />
 

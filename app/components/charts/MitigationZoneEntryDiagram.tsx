@@ -16,7 +16,7 @@ export default function MitigationZoneEntryDiagram({ className = "", locale = "f
     mob2Bold2:    isEs ? "resistencia" : isEn ? "resistance" : "résistance",
     mob3Pre:      isEs ? "Entrada short en el" : isEn ? "Short entry on the" : "Entrée short sur le",
     mob3Bold:     isEs ? "retest + señal de rechazo" : isEn ? "retest + rejection signal" : "retest + signal de rejet",
-    mob3End:      isEs ? "(pin bar, engulfing)." : isEn ? "(pin bar, engulfing)." : "(pin bar, engulfing).",
+    mob3End:      isEs ? "(pin bar, envolvente)." : isEn ? "(pin bar, engulfing)." : "(pin bar, avalement).",
   };
   return (
     <div className={className}>

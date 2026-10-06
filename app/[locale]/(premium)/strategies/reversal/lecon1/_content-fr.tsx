@@ -143,13 +143,13 @@ export default function ContentFr() {
             <div className="my-8">
               <DoubleTopBottomDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Un double top se forme à la fin d&apos;une tendance haussière. Le prix touche une résistance, redescend légèrement et forme un creux appelé neckline. Il remonte tester le même niveau de résistance. S&apos;il échoue à le casser et redescend, le pattern est complet. La confirmation arrive quand le prix casse la neckline sous le creux intermédiaire.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Un double top se forme à la fin d&apos;une tendance haussière. Le prix touche une résistance, redescend légèrement et forme un creux appelé ligne de cou. Il remonte tester le même niveau de résistance. S&apos;il échoue à le casser et redescend, le pattern est complet. La confirmation arrive quand le prix casse la ligne de cou sous le creux intermédiaire.</p>
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Les 3 conditions pour qu&apos;un double top soit valide :</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Une tendance haussière préalable claire (HH/HL)</li>
               <li>- Deux sommets quasi égaux (écart toléré : 0,2% maximum)</li>
-              <li>- Une cassure confirmée de la neckline (clôture, pas une simple mèche)</li>
+              <li>- Une cassure confirmée de la ligne de cou (clôture, pas une simple mèche)</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur EUR/USD. Le marché est haussier depuis plusieurs jours. Il touche une résistance à 1.1880 et redescend vers 1.1800. Il remonte tester 1.1895, quasi égal au premier sommet, puis échoue. Il redescend et clôture une bougie sous 1.1800. Double top confirmé.</p>
@@ -166,21 +166,21 @@ export default function ContentFr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Tendance préalable claire.</span> <span className="text-zinc-300">Pas de range avant les sommets/creux. La structure HH/HL ou LH/LL doit être nette.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Écart ≤ 0,3%.</span> <span className="text-zinc-300">Sur EUR/USD : 30 pips maximum entre les 2 sommets/creux. Au-delà : pattern non valide.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Cassure par clôture.</span> <span className="text-zinc-300">Clôture franche de bougie sous (ou au-dessus) de la neckline. Mèche seule = test, pas confirmation.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Absence de news majeure.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le pattern peut être cassé dans n&apos;importe quel sens.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Cassure par clôture.</span> <span className="text-zinc-300">Clôture franche de bougie sous (ou au-dessus) de la ligne de cou. Mèche seule = test, pas confirmation.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Absence d&apos;annonce majeure.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le pattern peut être cassé dans n&apos;importe quel sens.</span></div>
             </div>
           </section>
 
           {/* Bloc 5 — DOUBLE BOTTOM */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Double Bottom : fin de tendance baissière</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le double bottom est le miroir parfait du double top. Le prix touche un support, remonte légèrement et forme une neckline. Il redescend tester le même support. S&apos;il échoue à le casser et remonte, le pattern est complet. La confirmation arrive quand le prix casse la neckline au-dessus du sommet intermédiaire.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le double bottom est le miroir parfait du double top. Le prix touche un support, remonte légèrement et forme une ligne de cou. Il redescend tester le même support. S&apos;il échoue à le casser et remonte, le pattern est complet. La confirmation arrive quand le prix casse la ligne de cou au-dessus du sommet intermédiaire.</p>
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Les 3 conditions, en miroir :</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Une tendance baissière préalable claire (LH/LL)</li>
               <li>- Deux creux quasi égaux</li>
-              <li>- Une cassure confirmée de la neckline (clôture au-dessus)</li>
+              <li>- Une cassure confirmée de la ligne de cou (clôture au-dessus)</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur XAU/USD. Le marché est baissier depuis 2 jours. Il touche un support à 4 480$ et remonte vers 4 520$. Il redescend tester 4 478$ et rejette. Il remonte et clôture une bougie au-dessus de 4 520$. Double bottom confirmé.</p>
@@ -192,10 +192,10 @@ export default function ContentFr() {
             <div className="my-8">
               <DTBMeasuredMoveProjectionDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le take profit d&apos;un double top/bottom suit le principe du measured move : la hauteur du pattern (du sommet à la neckline) se projette depuis la neckline dans le sens de la cassure.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le take profit d&apos;un double top/bottom suit le principe du measured move : la hauteur du pattern (du sommet à la ligne de cou) se projette depuis la ligne de cou dans le sens de la cassure.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Hauteur pattern = distance sommet (ou creux) → neckline.</li>
-              <li>- TP théorique = neckline ± hauteur du pattern, selon le sens de la cassure.</li>
+              <li>- Hauteur pattern = distance sommet (ou creux) → ligne de cou.</li>
+              <li>- TP théorique = ligne de cou ± hauteur du pattern, selon le sens de la cassure.</li>
               <li>- TP ajusté de quelques pips pour obtenir un R/R rond (2:1 ou 3:1).</li>
             </ul>
           </section>
@@ -203,14 +203,14 @@ export default function ContentFr() {
           {/* Bloc 7 — PLAN DE TRADE EUR/USD H1 */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : Double Top EUR/USD H1</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte du double top EUR/USD du Bloc 3 est repris. Tendance haussière préalable, deux sommets à 1.1880 et 1.1895, neckline à 1.1800. Le prix vient de clôturer une bougie H1 à 1.1795, sous la neckline. Pattern confirmé.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée se fait short juste sous la neckline pour saisir le breakdown. Un prix qui plonge déjà ne se chasse pas. Une confirmation propre avec une clôture sous la neckline est requise. Le SL va au-dessus du dernier sommet pour invalider proprement le pattern. Le TP suit la measured move : la hauteur du pattern, du sommet à la neckline, se projette depuis la neckline vers le bas.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Hauteur du pattern : 1.1880 - 1.1800 = 80 pips. Projection théorique sous la neckline : 1.1720. Le TP est pris 5 pips plus bas à 1.1715 pour obtenir un R/R rond de 2:1 (40 pips de risque, 80 pips de gain).</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte du double top EUR/USD du Bloc 3 est repris. Tendance haussière préalable, deux sommets à 1.1880 et 1.1895, ligne de cou à 1.1800. Le prix vient de clôturer une bougie H1 à 1.1795, sous la ligne de cou. Pattern confirmé.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée se fait short juste sous la ligne de cou pour saisir le breakdown. Un prix qui plonge déjà ne se chasse pas. Une confirmation propre avec une clôture sous la ligne de cou est requise. Le SL va au-dessus du dernier sommet pour invalider proprement le pattern. Le TP suit la measured move : la hauteur du pattern, du sommet à la ligne de cou, se projette depuis la ligne de cou vers le bas.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Hauteur du pattern : 1.1880 - 1.1800 = 80 pips. Projection théorique sous la ligne de cou : 1.1720. Le TP est pris 5 pips plus bas à 1.1715 pour obtenir un R/R rond de 2:1 (40 pips de risque, 80 pips de gain).</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée short : 1.1795 (clôture sous neckline)</li>
+                <li>- Entrée short : 1.1795 (clôture sous ligne de cou)</li>
                 <li>- Stop loss : 1.1835 (40 pips au-dessus de la mèche du 2ème sommet)</li>
                 <li>- Take profit : 1.1715 (80 pips, measured move ajusté)</li>
               </ul>
@@ -244,27 +244,27 @@ export default function ContentFr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Pas de tendance préalable claire.</span> <span className="text-zinc-300">Si le marché était en range avant les 2 sommets/creux, ce n&apos;est pas un retournement. Setup à ignorer.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Écart trop grand entre sommets/creux.</span> <span className="text-zinc-300">Au-delà de 0,3% (30 pips sur EUR/USD), la mécanique n&apos;est plus celle du double top. Pattern non valide.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Cassure sur mèche, sans clôture.</span> <span className="text-zinc-300">Une mèche qui pique sous la neckline puis revient au-dessus ne confirme rien. Attendre la clôture franche.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. News majeure dans la fenêtre.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le setup n&apos;est pas pris. La news peut casser le pattern dans n&apos;importe quel sens.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Cassure sur mèche, sans clôture.</span> <span className="text-zinc-300">Une mèche qui pique sous la ligne de cou puis revient au-dessus ne confirme rien. Attendre la clôture franche.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. Annonce majeure dans la fenêtre.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le setup n&apos;est pas pris. L&apos;annonce peut casser le pattern dans n&apos;importe quel sens.</span></div>
             </div>
           </section>
 
           <LessonKeyPoints
             points={[
               "Double top = 2 sommets quasi égaux sur une résistance après tendance haussière. Double bottom = miroir sur un support.",
-              "Confirmation = clôture (pas mèche) de l’autre côté de la neckline.",
+              "Confirmation = clôture (pas mèche) de l’autre côté de la ligne de cou.",
               "Entrée juste après la cassure. SL au-delà du dernier sommet/creux. TP = measured move (hauteur du pattern projetée).",
-              "Setup ignoré si la tendance préalable n’est pas claire, si l’écart dépasse 0,3%, ou si une news majeure arrive.",
+              "Setup ignoré si la tendance préalable n’est pas claire, si l’écart dépasse 0,3%, ou si une annonce majeure arrive.",
             ]}
           />
 
           <LessonExercice
-            description="Sur EUR/USD H1, tu vois un double top avec un premier sommet à 1.1850 et un deuxième à 1.1825. Écart : 25 pips, soit environ 0,23%. La neckline est à 1.1750. Le prix clôture à 1.1745. Tu prends le setup ?"
+            description="Sur EUR/USD H1, tu vois un double top avec un premier sommet à 1.1850 et un deuxième à 1.1825. Écart : 25 pips, soit environ 0,23%. La ligne de cou est à 1.1750. Le prix clôture à 1.1745. Tu prends le setup ?"
             steps={[
               "Vérifier que l’écart entre les 2 sommets reste sous la limite : 0,23% < 0,3%. OK",
               "Confirmer que la cassure est par clôture sous 1.1750, pas une simple mèche. OK",
               "Vérifier que la tendance haussière préalable est claire (HH/HL)",
-              "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
+              "Vérifier qu’aucune annonce majeure n’est prévue dans les 30 prochaines minutes",
               "Prendre l’entrée short à 1.1745, SL au-dessus du 2ème sommet, TP measured move",
             ]}
           />
@@ -273,12 +273,12 @@ export default function ContentFr() {
             question="Qu’est-ce qui confirme un double top ?"
             options={[
               "Le deuxième sommet qui touche la résistance",
-              "Une mèche qui pique sous la neckline",
-              "Une clôture de bougie sous la neckline",
+              "Une mèche qui pique sous la ligne de cou",
+              "Une clôture de bougie sous la ligne de cou",
               "Un volume très élevé",
             ]}
             correctIndex={2}
-            explanation="La confirmation d’un double top arrive uniquement quand le prix clôture une bougie sous la neckline. Une simple mèche qui pique sous puis revient au-dessus ne valide rien, attendre une clôture franche reste indispensable pour éviter les faux signaux."
+            explanation="La confirmation d’un double top arrive uniquement quand le prix clôture une bougie sous la ligne de cou. Une simple mèche qui pique sous puis revient au-dessus ne valide rien, attendre une clôture franche reste indispensable pour éviter les faux signaux."
           />
 
         </div>

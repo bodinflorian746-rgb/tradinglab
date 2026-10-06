@@ -144,7 +144,7 @@ export default function ContentFr() {
               <li>- Cassure franche : clôture nette + distance ≥ 15-20 pips/$ au-delà du niveau</li>
               <li>- Pas de réintégration dans les 3-5 bougies suivantes (sinon flip invalidé)</li>
               <li>- Retest : retour du prix vers le niveau cassé par le côté opposé</li>
-              <li>- Rebond confirmé par un signal de rejet (pin bar, engulfing, réaction nette)</li>
+              <li>- Rebond confirmé par un signal de rejet (pin bar, avalement, réaction nette)</li>
             </ul>
           </section>
 
@@ -162,7 +162,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Pin bar de rejet (mèche longue côté zone, corps réduit côté opposé)</li>
-              <li>- Engulfing dans le sens du flip (englobe la bougie précédente)</li>
+              <li>- Avalement dans le sens du flip (englobe la bougie précédente)</li>
               <li>- Réaction immédiate (rebond net en 1-2 bougies sans pénétration profonde)</li>
               <li>- Signal absent = zone non confirmée, attendre une autre opportunité</li>
             </ul>
@@ -183,7 +183,7 @@ export default function ContentFr() {
                 <li>- Validation : 4 bougies sans réintégration sous 1.1850</li>
                 <li>- Retest : pin bar avec mèche basse à 1.1842 et clôture à 1.1858</li>
                 <li>- Entrée long : 1.1858 (clôture de la pin bar)</li>
-                <li>- Stop loss : 1.1830 (28 pips sous le wick, marge 12 pips)</li>
+                <li>- Stop loss : 1.1830 (28 pips sous la mèche, marge 12 pips)</li>
                 <li>- Take profit : 1.1950 (prochaine résistance H4)</li>
               </ul>
 
@@ -230,7 +230,7 @@ export default function ContentFr() {
             points={[
               "Un flip exige une cassure qualifiée : clôture franche, distance suffisante, pas de retour immédiat.",
               "La zone cassée inverse son rôle au retest : support cassé → résistance, résistance cassée → support.",
-              "Le retest se valide uniquement par un signal de rejet au contact (pin bar, engulfing, réaction nette).",
+              "Le retest se valide uniquement par un signal de rejet au contact (pin bar, avalement, réaction nette).",
               "Le stop loss se place de l’autre côté de la zone avec marge 5-10 pips. Sans signal de rejet, pas d’entrée.",
             ]}
           />
@@ -241,7 +241,7 @@ export default function ContentFr() {
               "Qualifier la cassure : clôture à 1.1875, distance 25 pips au-dessus de la zone, corps significatif, pas de retour immédiat sur 4 bougies, cassure validée",
               "Constater l’inversion du rôle : la résistance 1.1850 devient un support",
               "Identifier le signal de rejet : la pin bar au contact de la zone valide le flip",
-              "Placer l’entrée long à la clôture de la pin bar, stop loss à 1.1830 (20 pips sous la zone pour absorber les wicks)",
+              "Placer l’entrée long à la clôture de la pin bar, stop loss à 1.1830 (20 pips sous la zone pour absorber les mèches)",
               "Définir le take profit à la prochaine résistance majeure identifiée sur le chart H4 (ratio minimum 1:2), taille de position selon le risque par trade adapté au capital",
             ]}
           />
@@ -250,12 +250,12 @@ export default function ContentFr() {
             question="Une résistance vient d’être cassée à la hausse avec une clôture franche. Le prix retrace ensuite vers la zone. Quel signal valide le flip et autorise une entrée long ?"
             options={[
               "Le simple retour du prix à la zone suffit",
-              "Un signal de rejet (pin bar, engulfing, réaction nette) au contact de la zone",
+              "Un signal de rejet (pin bar, avalement, réaction nette) au contact de la zone",
               "Une cassure de la zone suivante",
               "Aucun signal nécessaire, l’entrée est mécanique",
             ]}
             correctIndex={1}
-            explanation="Sans signal de rejet, le flip n’est pas validé. Une pin bar, un engulfing ou une réaction nette au contact de la zone confirment que la zone inversée joue son nouveau rôle. Sans ce signal, le prix peut traverser la zone et invalider le flip."
+            explanation="Sans signal de rejet, le flip n’est pas validé. Une pin bar, un avalement ou une réaction nette au contact de la zone confirment que la zone inversée joue son nouveau rôle. Sans ce signal, le prix peut traverser la zone et invalider le flip."
           />
 
         </div>
