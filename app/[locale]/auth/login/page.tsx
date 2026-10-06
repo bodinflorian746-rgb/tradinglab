@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLocale } from "@/app/components/LocaleProvider";
 import { localizedHref } from "@/lib/i18n/href";
+import { PasswordInput } from "@/app/components/PasswordInput";
 
 export const dynamic = "force-dynamic";
 
@@ -89,9 +90,8 @@ function LoginForm() {
                 Mot de passe
               </label>
             </div>
-            <input
+            <PasswordInput
               id="password"
-              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

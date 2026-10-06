@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLocale } from "@/app/components/LocaleProvider";
 import { localizedHref } from "@/lib/i18n/href";
+import { PasswordInput } from "@/app/components/PasswordInput";
 
 function frenchError(msg: string): string {
   if (msg.includes("User already registered"))
@@ -111,9 +112,8 @@ export default function SignupPage() {
             <label className="text-sm text-zinc-400 block mb-1.5" htmlFor="password">
               Mot de passe
             </label>
-            <input
+            <PasswordInput
               id="password"
-              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

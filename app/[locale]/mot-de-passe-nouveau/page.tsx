@@ -10,6 +10,7 @@ import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { createClient } from "@/lib/supabase/server";
 import { updatePassword } from "./actions";
+import { PasswordInput } from "@/app/components/PasswordInput";
 
 export default async function NewPasswordPage({
   params,
@@ -54,9 +55,8 @@ export default async function NewPasswordPage({
               <label htmlFor="password" className="block text-xs font-medium text-zinc-400 mb-1.5">
                 {t.passwordLabel}
               </label>
-              <input
+              <PasswordInput
                 id="password"
-                type="password"
                 name="password"
                 required
                 minLength={6}
@@ -70,9 +70,8 @@ export default async function NewPasswordPage({
               <label htmlFor="confirm" className="block text-xs font-medium text-zinc-400 mb-1.5">
                 {t.passwordConfirmLabel}
               </label>
-              <input
+              <PasswordInput
                 id="confirm"
-                type="password"
                 name="confirm"
                 required
                 minLength={6}
