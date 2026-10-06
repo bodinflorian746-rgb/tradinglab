@@ -33,6 +33,7 @@ export function contentFiles(): string[] {
     ...["LessonPage.tsx", "LessonQuiz.tsx", "LessonKeyPoints.tsx", "LessonExercice.tsx", "LessonTemplate.tsx", "StrategyModuleIndex.tsx"].map((f) => path.join(ROOT, "app", "components", f)),
     ...["lessons.ts", "lessons-es.ts", "formations.ts", "strategies.ts"].map((f) => path.join(ROOT, "lib", f)),
     ...walk(path.join(ROOT, "lib", "games")).filter((f) => !/-en\.ts$/.test(f)),
+    ...walk(path.join(ROOT, "lib", "trader-profile")),
     ...walk(path.join(ROOT, "dictionaries", "fr")),
     ...walk(path.join(ROOT, "dictionaries", "es")),
   ];
@@ -69,7 +70,7 @@ const CODE_KEYS = new Set(["className", "class", "href", "src", "d", "fill", "st
   "variant", "size", "kind", "tone", "accent", "dir", "dotClass", "textClass", "valueClass", "colorClass", "slug", "path", "url", "mode",
   "direction", "htfBias", "macroContext", "chartShape", "category", "correctMistake", "decoyMistakes", "difficulties", "showLines", "metric",
   "correctAnswer", "optimal", "metaOverride", "level", "duration", "session", "asset", "volatility", "spread", "outcome", "result", "state",
-  "data-reveal", "data-pick", "data-choice", "data-line", "data-label-for", "aria-hidden", "transform", "transformOrigin", "fontSize", "opacity"]);
+  "data-reveal", "data-pick", "data-choice", "data-line", "data-label-for", "aria-hidden", "transform", "transformOrigin", "fontSize", "opacity", "tags", "moduleId"]);
 const looksLikeCode = (s: string) => {
   const t = s.trim();
   if (!/\p{L}{2}/u.test(t)) return true;
@@ -81,18 +82,74 @@ const looksLikeCode = (s: string) => {
   return false;
 };
 
+/** Langue imposée par le code autour de la chaîne : ternaires sur la locale,
+ *  propriétés fr / es / en, constantes nommées …_FR / …_ES / …_EN. */
+let varLang: Lang | null = null;
+function branchLang(node: ts.Node, sf: ts.SourceFile): Lang | "en" | null {
+  varLang = null;
+  let cur: ts.Node = node;
+  let notEs = false, notEn = false;
+  while (cur.parent) {
+    const p = cur.parent;
+    if (ts.isConditionalExpression(p) && (p.whenTrue === cur || p.whenFalse === cur)) {
+      const c = p.condition.getText(sf);
+      const yes = (p.whenTrue === cur) !== (/^\s*!/.test(c) || /!==/.test(c));
+      if (/\bisEs\b|["']es["']/.test(c)) { if (yes) return "es"; notEs = true; }
+      else if (/\bisEn\b|["']en["']/.test(c)) { if (yes) return "en"; notEn = true; }
+      else if (/\bisFr\b|["']fr["']/.test(c)) { if (yes) return "fr"; }
+      if (notEs && notEn) return "fr";
+    }
+    if (ts.isPropertyAssignment(p) && p.initializer === cur) {
+      const n = p.name.getText(sf).replace(/["']/g, "");
+      if (n === "fr" || n === "es") return n;
+      if (n === "en") return "en";
+    }
+    if (ts.isVariableDeclaration(p) && ts.isIdentifier(p.name)) {
+      const v = p.name.text;
+      if (/_FR$|[a-z0-9]Fr$/.test(v)) varLang ??= "fr"; // indice faible : un texte non traduit peut y figurer
+      else if (/_ES$|[a-z0-9]Es$/.test(v)) varLang ??= "es";
+      if (/_EN$|[a-z0-9]En$/.test(v)) return "en";
+    }
+    cur = p;
+  }
+  return null;
+}
+// Indices nets d'une langue (mots outils propres à chacune) : texte non traduit dans un fichier de l'autre langue
+const FR_ONLY = /(?<![\p{L}])(le|les|des|est|du|et|pour|dans|avec|qui|pas|sur|au|aux|ce|cette|tu|ton|ta|tes|ou|mais|sont|être|à|où|très|après|il|elle|on|ne|nous|vous|quand|sous|vers)(?![\p{L}])/giu;
+const ES_ONLY = /(?<![\p{L}])(el|los|las|del|es|y|para|con|por|al|este|esta|tus|pero|muy|más|ya|está|cuando|qué|cómo|lo|su|sus|una|unos|unas|como|hacia|sobre|bajo|sin|entre|desde|hasta)(?![\p{L}])/giu;
+function strongly(t: string, d: Lang): boolean {
+  // Lettres propres à chaque langue (è ê à ç ù… / ñ ¿ ¡) : 2 points
+  const fr = (t.match(FR_ONLY) || []).length + (/[èêàçùûîôœ]/i.test(t) ? 2 : 0);
+  const es = (t.match(ES_ONLY) || []).length + (/[ñ¿¡]/.test(t) ? 2 : 0);
+  const [a, b] = d === "fr" ? [fr, es] : [es, fr];
+  return a >= b + 3 || (b === 0 && a >= 2);
+}
+
 function extractTs(file: string): ContentText[] {
   const raw = fs.readFileSync(file, "utf8");
   const sf = ts.createSourceFile(file, raw, ts.ScriptTarget.Latest, true, file.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+  const keyLits = new Set<string>();
+  const collectKeys = (n: ts.Node) => { if (ts.isElementAccessExpression(n) && ts.isStringLiteral(n.argumentExpression)) keyLits.add(n.argumentExpression.text); ts.forEachChild(n, collectKeys); };
+  collectKeys(sf);
   const fixed = fileLang(file);
   const out: ContentText[] = [];
   const push = (text: string, node: ts.Node) => {
     const t = text.replace(/\s+/g, " ").replace(/&apos;|&#39;/g, "'").replace(/&quot;/g, "\"").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&gt;/g, ">").replace(/&lt;/g, "<").trim();
     if (!t || looksLikeCode(t)) return;
-    const d = detectLang(t);
-    if (d === "en") return;
-    // Chaîne courte sans indice : langue du fichier ; sinon détection
-    const lang = d === "?" ? (fixed ?? "?") : d;
+    // 1. Branche de langue dans le code (isEs ? … : isEn ? … : …, { fr, es, en }, LABELS_ES…)
+    const b = branchLang(node, sf);
+    if (b === "en") return;
+    let lang: Lang | "?";
+    if (b) lang = b;
+    else {
+      const d = detectLang(t);
+      if (d === "en") return;
+      // 2. Fichier d'une seule langue : sa langue, sauf indices nettement contraires
+      const fx = varLang ?? fixed;
+      if (fx && d !== "?" && d !== fx) lang = strongly(t, d) ? d : fx;
+      // 3. Chaîne courte sans indice : langue du fichier ; sinon détection
+      else lang = d === "?" ? (fx ?? "?") : d;
+    }
     out.push({ lang, file: rel(file), line: sf.getLineAndCharacterOfPosition(node.getStart()).line + 1, text: t });
   };
   const isEnglishBranch = (node: ts.Node): boolean => {
@@ -115,8 +172,13 @@ function extractTs(file: string): ContentText[] {
     if (ts.isPropertyAssignment(p) && p.name === node) return true;           // clé d'objet
     if (ts.isImportDeclaration(p) || ts.isExportDeclaration(p) || ts.isExternalModuleReference(p)) return true;
     if (ts.isElementAccessExpression(p) || ts.isLiteralTypeNode(p)) return true;
+    // Valeur utilisée ailleurs dans le fichier comme clé (seqs["pré-news"]) : identifiant de données
+    if ((ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) && keyLits.has(node.text)) return true;
     if (ts.isBinaryExpression(p) && /^(===|!==|==|!=)$/.test(p.operatorToken.getText(sf))) return true; // comparaisons
     if (ts.isCaseClause(p)) return true;
+    // Listes techniques ({ tags: ["fakeout", …] }) et identifiants passés en argument (markLessonComplete(p, "multi-timeframe", …))
+    if (ts.isArrayLiteralExpression(p) && ts.isPropertyAssignment(p.parent) && CODE_KEYS.has(p.parent.name.getText(sf).replace(/["']/g, ""))) return true;
+    if (ts.isCallExpression(p) && (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(node.text)) return true;
     if (ts.isCallExpression(p) && /\b(?:includes|startsWith|endsWith|test|match|replace|split|get|set|has|querySelector\w*|getAttribute|setAttribute|addEventListener|logGameEvent|useState)$/.test(p.expression.getText(sf))) return true;
     return false;
   };

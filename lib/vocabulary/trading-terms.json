@@ -1,0 +1,342 @@
+{
+  "version": 1,
+  "date": "2026-10-06",
+  "regle": "Pour chaque notion, la forme anglaise et la ou les formes françaises (puis espagnoles) sont comparées sur au moins 3 sources indépendantes (pages pédagogiques de brokers régulés, sites et formations de traders, forums, titres de vidéos ; le site lui-même n'est jamais une source). Si au moins 3 sources sur 4 emploient la même forme, elle est retenue et appliquée partout, leçons comprises ; sinon rien ne change et la notion va dans « à trancher ». npm run audit:jeux vérifie que les formes interdites n'apparaissent dans aucun texte affiché FR / ES.",
+  "acquis": [
+    { "lang": "fr", "notion": "zone d'offre / de demande", "retenu": "support / résistance", "decision": "PO" },
+    { "lang": "fr", "notion": "uptrend / downtrend", "retenu": "tendance haussière / baissière", "decision": "PO" },
+    { "lang": "fr", "notion": "précédent low / high", "retenu": "plus bas / plus haut précédent", "decision": "PO" },
+    { "lang": "es", "notion": "zona de oferta / de demanda", "retenu": "soporte / resistencia", "decision": "PO" },
+    { "lang": "es", "notion": "uptrend / downtrend", "retenu": "tendencia alcista / bajista", "decision": "PO" }
+  ],
+  "termes": {
+    "fr": [
+      {
+        "notion": "fakeout", "retenu": "faux breakout", "occurrences": 62,
+        "interdit": ["fakeouts?"],
+        "sources": [
+          { "site": "IG France", "url": "https://www.ig.com/fr/strategies-de-trading/qu-est-ce-qu-un-faux-breakout--comment-l-eviter---230428", "forme": "faux breakout" },
+          { "site": "Crypto.com (glossaire FR)", "url": "https://crypto.com/fr-fr/glossary/false-breakout", "forme": "faux breakout" },
+          { "site": "ActivTrades FR", "url": "https://www.activtrades.co.uk/fr/news/breakout-en-trading-identifier-les-vrais-et-faux-breakouts", "forme": "faux breakout" },
+          { "site": "ATAS FR", "url": "https://atas.net/volume-analysis/strategies-and-trading-patterns/false-breakout-trading-strategy/", "forme": "faux breakout" },
+          { "site": "TradingView FR (idées)", "url": "https://fr.tradingview.com/ideas/fakeout/", "forme": "fakeout" }
+        ]
+      },
+      {
+        "notion": "stop hunt", "retenu": "chasse aux stops", "occurrences": 85,
+        "interdit": ["stop[- ]hunts?", "stop[- ]hunting"],
+        "sources": [
+          { "site": "Esprit Forex", "url": "https://espritforex.com/chasse-aux-stops-forex/", "forme": "chasse aux stops" },
+          { "site": "TradeBourse", "url": "https://www.tradebourse.fr/la-chasse-au-stop-au-forex-et-en-bourse.html", "forme": "chasse au stop" },
+          { "site": "FXNX (FR)", "url": "https://fxnx.com/fr/blog/stops-et-liquidite-facteurs-cles-de-la-volatilite-du-marche", "forme": "chasse aux stops" },
+          { "site": "Broker-Forex", "url": "https://www.broker-forex.fr/banques-manipulation-stop-loss.php", "forme": "chasse aux stops" }
+        ]
+      },
+      {
+        "notion": "timeframe (et multi-timeframe)", "retenu": "unité de temps (UT) ; analyse multi-unités de temps", "occurrences": 236,
+        "interdit": ["time ?frames?", "multi-?timeframes?", "MTF"],
+        "sources": [
+          { "site": "Cercle PPM", "url": "https://cercleppm.fr/unite-de-temps/", "forme": "unité de temps" },
+          { "site": "NewTrading", "url": "https://newtrading.fr/unites-temps-trading", "forme": "unités de temps" },
+          { "site": "VT Markets FR", "url": "https://www.vtmarketsfr.com/discover/analyse-multi-unites-de-temps-le-guide-complet-du-trading/", "forme": "analyse multi-unités de temps" },
+          { "site": "Trading Attitude", "url": "https://www.trading-attitude.com/quelle-unite-de-temps-utiliser-pour-bien-trader", "forme": "unité de temps" },
+          { "site": "TradingView FR (idées)", "url": "https://fr.tradingview.com/ideas/multi-timeframe/", "forme": "multi-timeframe" }
+        ]
+      },
+      {
+        "notion": "HTF / LTF", "retenu": "UT supérieure / UT inférieure", "occurrences": 354,
+        "interdit": ["HTF", "LTF"],
+        "casse": true,
+        "sources": [
+          { "site": "NewTrading", "url": "https://newtrading.fr/unites-temps-trading", "forme": "unité de temps supérieure / inférieure" },
+          { "site": "VT Markets FR", "url": "https://www.vtmarketsfr.com/discover/analyse-multi-unites-de-temps-le-guide-complet-du-trading/", "forme": "UT supérieure" },
+          { "site": "Capstellar", "url": "https://www.capstellar.fr/unite-de-temps-en-trading-tout-savoir/", "forme": "unité de temps supérieure" },
+          { "site": "Alti Trading", "url": "https://www.alti-trading.fr/guides/formation-investissement-trading/comment-bien-choisir-ses-unites-de-temps-en-trading/", "forme": "unité de temps supérieure" }
+        ]
+      },
+      {
+        "notion": "risk management", "retenu": "gestion du risque", "occurrences": 34,
+        "interdit": ["risk management"],
+        "sources": [
+          { "site": "XTB France", "url": "https://www.xtb.com/fr/formation/gestion-de-risque-en-trading-lessentiel-a-connaitre", "forme": "gestion de risque" },
+          { "site": "HubTrading", "url": "https://hubtrading.fr/blog/gestion-risque-trading-guide", "forme": "gestion du risque" },
+          { "site": "Finova Trading", "url": "https://finovatrading.fr/blog/gestion-du-risque-en-trading-stop-loss-position-sizing", "forme": "gestion du risque" },
+          { "site": "DailyTrading", "url": "https://www.dailytrading.fr/blog/risk-management-trading-guide-complet-debutant", "forme": "risk management" }
+        ]
+      },
+      {
+        "notion": "risk/reward, ratio risque/récompense", "retenu": "ratio risque/rendement (abrégé R/R)", "occurrences": 10,
+        "interdit": ["risk[ /-]rewards?", "ratio risque ?/ ?récompense"],
+        "sources": [
+          { "site": "DailyTrading", "url": "https://www.dailytrading.fr/blog/ratio-risque-rendement-trading-debutant-2026", "forme": "ratio risque/rendement" },
+          { "site": "Cercle PPM", "url": "https://cercleppm.fr/ratio-risque-rendement/", "forme": "ratio risque/rendement" },
+          { "site": "Trading Compendium", "url": "https://tradingcompendium.com/fr/gestion-risque-capital/ratio-risque-rendement", "forme": "ratio risque/rendement" },
+          { "site": "Boursinet", "url": "https://boursinet.com/blog/ratio-risque-rendement-trade-rentable-2026/", "forme": "ratio risque/rendement" }
+        ]
+      },
+      {
+        "notion": "news", "retenu": "annonce (économique)", "occurrences": 148,
+        "interdit": ["news"],
+        "sources": [
+          { "site": "École de la cotation", "url": "https://ecole-cotation.com/annonces-economiques/", "forme": "annonces économiques" },
+          { "site": "World Trading Skool", "url": "https://worldtradingskool.com/trader-les-annonces-economiques/", "forme": "annonces économiques" },
+          { "site": "XTB France", "url": "https://www.xtb.com/fr/formation/comment-utiliser-le-rapport-des-NFP-dans-votre-trading", "forme": "annonce (NFP)" },
+          { "site": "OANDA (FR)", "url": "https://www.oanda.com/eu-fr/blog/news-trading-actualites", "forme": "news trading / actualités" }
+        ]
+      },
+      {
+        "notion": "niveau psychologique", "retenu": "chiffre rond", "occurrences": 39,
+        "interdit": ["niveaux? psychologiques?"],
+        "sources": [
+          { "site": "Trading-Ox", "url": "https://trading-ox.com/psychologie-chiffres-trading-niveaux-cles/", "forme": "chiffres ronds" },
+          { "site": "Mataf", "url": "https://www.mataf.net/fr/forex/edu/apprendre-le-forex/apprendre-forex-importance-chiffres-ronds", "forme": "chiffres ronds" },
+          { "site": "Broker-Forex (forum)", "url": "https://www.broker-forex.fr/forum/viewtopic.php?id=6237", "forme": "chiffres ronds" },
+          { "site": "Objectif Trader", "url": "https://objectiftrader.com/2018/03/29/les-niveaux-psychologiques-en-trading/", "forme": "niveaux psychologiques" }
+        ]
+      },
+      {
+        "notion": "engulfing", "retenu": "avalement (haussier / baissier)", "occurrences": 131,
+        "interdit": ["engulfings?"],
+        "sources": [
+          { "site": "HelpTrade", "url": "https://helptrade.org/04.-Avalement-haussier.htm", "forme": "avalement haussier" },
+          { "site": "Tradosaure", "url": "https://tradingacademy-tradosaure.blogspot.com/2020/05/chandeliers-japonais-avalement-tutoriel-tradosaure.html", "forme": "avalement" },
+          { "site": "Mataf", "url": "https://www.mataf.net/fr/forex/edu/analyse-technique/analyse-technique-avalement-haussier", "forme": "avalement haussier" },
+          { "site": "Rankia France", "url": "https://rankia.fr/chandelier-japonais-avalement-haussier/", "forme": "avalement haussier" }
+        ]
+      },
+      {
+        "notion": "head & shoulders", "retenu": "épaule-tête-épaule (ETE)", "occurrences": 22,
+        "interdit": ["head ?(?:&|and) ?shoulders", "H&S"],
+        "sources": [
+          { "site": "NewTrading", "url": "https://newtrading.fr/epaule-tete-epaule-ete-trading", "forme": "épaule-tête-épaule (ETE)" },
+          { "site": "DailyForex FR", "url": "https://fr.dailyforex.com/forex-articles/epaule-tete-epaule-trading/231395", "forme": "épaule-tête-épaule" },
+          { "site": "Bobby Carottes", "url": "https://www.bobbycarottes.com/figures-chartistes/epaule-tete-epaule", "forme": "épaule-tête-épaule" },
+          { "site": "Broker-Forex", "url": "https://www.broker-forex.fr/figures-chartistes/epaule-tete-epaule-E-T-E.php", "forme": "épaule-tête-épaule (ETE)" }
+        ]
+      },
+      {
+        "notion": "neckline", "retenu": "ligne de cou", "occurrences": 90,
+        "interdit": ["necklines?"],
+        "sources": [
+          { "site": "DT Expert", "url": "https://dtexpert.com/glossaire/la-ligne-de-cou-en-quelques-lignes/", "forme": "ligne de cou" },
+          { "site": "Finance Héros", "url": "https://finance-heros.fr/epaule-tete-epaule/", "forme": "ligne de cou" },
+          { "site": "Spéculateur Malin", "url": "https://speculateurmalin.fr/analyse-technique/figures-chartistes-trading/figure-epaule-tete-epaule-trading/", "forme": "ligne de cou" },
+          { "site": "Wikipédia (Tête et épaules)", "url": "https://fr.wikipedia.org/wiki/T%C3%AAte_et_%C3%A9paules", "forme": "ligne de cou" }
+        ]
+      },
+      {
+        "notion": "wick", "retenu": "mèche", "occurrences": 32,
+        "interdit": ["wicks?"],
+        "sources": [
+          { "site": "Forex Club (FR)", "url": "https://fr.forexclub.pl/m%C3%A8ches-bougie-fa%C3%A7ons-de-jouer-et-d'utiliser/", "forme": "mèche" },
+          { "site": "Andlil (forum)", "url": "https://www.andlil.com/forum/methode-d-entree-sur-extremite-de-meche-et-risk-reward-t43433.html", "forme": "mèche" },
+          { "site": "Libertex FR", "url": "https://libertex.com/fr/blog/chandeliers-japonais", "forme": "mèche" },
+          { "site": "Le Guide Boursier", "url": "https://www.leguideboursier.com/apprendre-bourse/chandelier/la-longue-ombre-haute.php", "forme": "ombre" }
+        ]
+      },
+      {
+        "notion": "liquidity", "retenu": "liquidité", "occurrences": 33,
+        "interdit": ["liquidity"],
+        "sources": [
+          { "site": "Bobby Carottes", "url": "https://www.bobbycarottes.com/figures-chartistes/balayage-liquidite", "forme": "liquidité" },
+          { "site": "Trading SMC", "url": "https://trading-smc.fr/liquidite-pd-pw-pm", "forme": "liquidité" },
+          { "site": "FXNX (FR)", "url": "https://fxnx.com/fr/blog/maitriser-les-types-de-liquidite-dans-le-trading-forex", "forme": "liquidité" },
+          { "site": "Edolab (FR)", "url": "https://www.edolab.io/fr/blog/what-is-a-liquidity-sweep", "forme": "liquidité" }
+        ]
+      },
+      {
+        "notion": "bias", "retenu": "biais", "occurrences": 28,
+        "interdit": ["bias"],
+        "sources": [
+          { "site": "Objectif Éco", "url": "https://www.objectifeco.com/bourse/trading/psychologie/le-biais-directionnel-des-traders.html", "forme": "biais directionnel" },
+          { "site": "Café du Forex", "url": "https://www.cafeduforex.com/dossiers/article/biais-directionnel-biais-non-directionnel", "forme": "biais directionnel" },
+          { "site": "Trading Attitude", "url": "https://www.trading-attitude.com/biais-haussier-dissymetrie-cours-bourse", "forme": "biais haussier" },
+          { "site": "ICT-FR", "url": "https://ict-fr.fr/directional-bias-comprendre-lorientation-du-marche-en-trading/", "forme": "directional bias" }
+        ]
+      }
+    ],
+    "es": [
+      {
+        "notion": "liquidity", "retenu": "liquidez", "occurrences": 280,
+        "interdit": ["liquidity"],
+        "sources": [
+          { "site": "Meebox Trading", "url": "https://meeboxtrading.com/liquidez-interna-vs-liquidez-externa/", "forme": "liquidez" },
+          { "site": "Bolsa Trading", "url": "https://bolsa-trading.com/sistemas-smc-liquidez-inducement-sweeps/", "forme": "liquidez" },
+          { "site": "Jordi Trading", "url": "https://jorditrading.com/smart-money-trading-institucionales-liquidez/", "forme": "liquidez" },
+          { "site": "TradingView ES (ideas)", "url": "https://es.tradingview.com/ideas/barridodeliquidez/", "forme": "liquidez" }
+        ]
+      },
+      {
+        "notion": "timeframe (y multi-timeframe)", "retenu": "temporalidad ; análisis multitemporal", "occurrences": 216,
+        "interdit": ["time ?frames?", "multi-?timeframes?"],
+        "sources": [
+          { "site": "Mentalidad del Trader Exitoso", "url": "https://mentalidaddeltraderexitoso.substack.com/p/que-temporalidad-debo-utilizar-en", "forme": "temporalidad" },
+          { "site": "MDT Academy", "url": "https://mdtacademy.com/combinacion-temporalidades-trading/", "forme": "temporalidades" },
+          { "site": "Inversiones Alpha", "url": "https://inversionesalpha.com/criptomonedas/las-temporalidades-en-el-trading-como-elegir-el-marco-de-tiempo-y-la-estrategia-adecuada/", "forme": "temporalidades" },
+          { "site": "VT Markets ES", "url": "https://www.vtmarkets.com/es-latam/discover/analisis-multitemporal-la-guia-completa-de-trading/", "forme": "análisis multitemporal" },
+          { "site": "TradingView ES (ideas)", "url": "https://es.tradingview.com/ideas/timeframes/", "forme": "timeframes" }
+        ]
+      },
+      {
+        "notion": "engulfing", "retenu": "envolvente (alcista / bajista)", "occurrences": 111,
+        "interdit": ["engulfings?"],
+        "sources": [
+          { "site": "Rankia", "url": "https://www.rankia.com/diccionario/trading/vela-envolvente-alcista", "forme": "vela envolvente alcista" },
+          { "site": "IG España", "url": "https://www.ig.com/es/estrategias-de-trading/velas-japonesas-envolventes--que-son-y-tipos-de-patrones-221118", "forme": "vela envolvente (engulfing)" },
+          { "site": "Skilling ES", "url": "https://skilling.com/eu/es/blog/trading-indicators-and-tools/bullish-engulfing-pattern/", "forme": "patrón envolvente alcista" },
+          { "site": "Wall Street Easy", "url": "https://wallstreeteasy.com/bullish-engulfing-candles-vela-envolvente-alcista/", "forme": "vela envolvente alcista" }
+        ]
+      },
+      {
+        "notion": "neckline", "retenu": "línea clavicular", "occurrences": 75,
+        "interdit": ["necklines?"],
+        "sources": [
+          { "site": "Estrategias de Inversión", "url": "https://www.estrategiasdeinversion.com/herramientas/diccionario/analisis-tecnico/neck-line-linea-clavicular-t-263", "forme": "línea clavicular" },
+          { "site": "Economipedia", "url": "https://economipedia.com/definiciones/hombro-cabeza-hombro.html", "forme": "línea clavicular" },
+          { "site": "El Economista", "url": "https://www.eleconomista.es/diccionario-de-economia/hombrocabezahombro", "forme": "línea clavicular" },
+          { "site": "Radio Fueguina", "url": "https://www.radiofueguina.com/2026/02/patron-cabeza-y-hombros-linea-de-cuello/", "forme": "línea de cuello" }
+        ]
+      },
+      {
+        "notion": "head & shoulders", "retenu": "hombro-cabeza-hombro (HCH)", "occurrences": 20,
+        "interdit": ["head ?(?:&|and) ?shoulders", "H&S"],
+        "sources": [
+          { "site": "Self Bank", "url": "https://www.selfbank.es/blog/hombro-cabeza-hombro/", "forme": "hombro-cabeza-hombro" },
+          { "site": "Rankia", "url": "https://www.rankia.com/diccionario/trading/hombro-cabeza-invertido-hch", "forme": "hombro-cabeza-hombro (HCH)" },
+          { "site": "Pablo Gil Trader", "url": "https://pablogiltrader.com/blog/articulos/hombro-cabeza-hombro/", "forme": "hombro-cabeza-hombro" },
+          { "site": "Acciones y Valores", "url": "https://accionesyvalores.es/hombro-cabeza-hombro-analisis-tecnico/", "forme": "hombro cabeza hombro (HCH)" }
+        ]
+      },
+      {
+        "notion": "wick", "retenu": "mecha", "occurrences": 18,
+        "interdit": ["wicks?"],
+        "sources": [
+          { "site": "Novatos Trading Club", "url": "https://www.novatostradingclub.com/blog/anatomia-vela-japonesa/", "forme": "mecha" },
+          { "site": "Aleph", "url": "https://aleph.org.mx/que-significan-las-mechas-de-las-velas-japonesas", "forme": "mechas" },
+          { "site": "Wilkinson (Wilkipedia)", "url": "https://dolar.wilkinsonpc.com.co/wilkipedia/guia-definitiva-velas-japonesas-trading.html", "forme": "mecha (sombra)" },
+          { "site": "Tu Plan a Bolsa y Trading", "url": "https://www.tuplanabolsaytrading.com/como-leer-velas-japonesas-trading/", "forme": "mecha" }
+        ]
+      },
+      {
+        "notion": "risk management", "retenu": "gestión de riesgos", "occurrences": 37,
+        "interdit": ["risk management", "gestión del riesgo"],
+        "sources": [
+          { "site": "MDC Trading Academy", "url": "https://www.mdctradingacademy.com/blog/gestion-de-riesgos-para-principiantes/", "forme": "gestión de riesgos" },
+          { "site": "EBC ES", "url": "https://www.ebc.com/es/forex/forex-y-cfds-guia-para-principiantes-sobre-gestion-de-riesgos", "forme": "gestión de riesgos" },
+          { "site": "Exness ES", "url": "https://insights.exness.com/es/trading-basics/forex-risk-management-tips/", "forme": "gestión de riesgos" },
+          { "site": "FBS ES", "url": "https://esfbs.com/es/fbs-academy/traders-blog/risk-management-in-forex", "forme": "gestión de riesgos" },
+          { "site": "FxPro ES", "url": "https://www.fxpro.es/help-section/education/beginners/articles/guia-para-principiantes-sobre-la-gestion-del-riesgo-en-forex", "forme": "gestión del riesgo" }
+        ]
+      },
+      {
+        "notion": "news", "retenu": "noticia(s)", "occurrences": 120,
+        "interdit": ["news"],
+        "sources": [
+          { "site": "DailyForex ES", "url": "https://es.dailyforex.com/forex-articles/rol-de-noticias-economicas-en-forex/207740", "forme": "noticias económicas" },
+          { "site": "MVD Trading", "url": "https://www.mvdtrading.com/como-operar-noticias-en-forex/", "forme": "noticias" },
+          { "site": "FXSSI (ES)", "url": "https://fxssi.com/high-impact-forex-news", "forme": "noticias de alto impacto" },
+          { "site": "FBS ES", "url": "https://esfbs.com/es/fbs-academy/trading-tutorials/trading-handbook/trading-forex-news", "forme": "noticias" }
+        ]
+      },
+      {
+        "notion": "bias", "retenu": "sesgo", "occurrences": 37,
+        "interdit": ["bias"],
+        "sources": [
+          { "site": "Jordi Trading", "url": "https://jorditrading.substack.com/p/como-usar-multiples-temporalidades", "forme": "sesgo" },
+          { "site": "LiquidityScan ES", "url": "https://liquidityscan.io/es/blog/como-construir-un-modelo-de-trading-ict-completo-paso-a-paso", "forme": "sesgo" },
+          { "site": "Quantum Algo ES", "url": "https://www.quantum-algo.com/es/academy/timeframes-explained/", "forme": "sesgo" },
+          { "site": "Day Trader Latino", "url": "https://daytraderlatino.com/2020/07/09/day-trading-bias-y-el-sesgo-de-informacion/", "forme": "bias / sesgo" }
+        ]
+      },
+      {
+        "notion": "sweep", "retenu": "barrido (de liquidez)", "occurrences": 251,
+        "interdit": ["sweeps?"],
+        "sources": [
+          { "site": "KuCoin ES", "url": "https://www.kucoin.com/es/blog/es-the-ultimate-guide-to-liquidity-sweep-decoding-institutional-manipulation-in-crypto-trading", "forme": "barrido de liquidez" },
+          { "site": "Bolsa Trading", "url": "https://bolsa-trading.com/sistemas-smc-liquidez-inducement-sweeps/", "forme": "barridos de stops" },
+          { "site": "TradingView ES (ideas)", "url": "https://es.tradingview.com/ideas/barridodeliquidez/", "forme": "barrido de liquidez" },
+          { "site": "Gate (Crypto Wiki)", "url": "https://www.gate.com/crypto-wiki/article/what-is-a-liquidity-sweep", "forme": "barrido de liquidez" },
+          { "site": "ATAS", "url": "https://atas.net/blog/what-is-liquidity-sweep-how-to-trade-it/", "forme": "liquidity sweep" }
+        ]
+      },
+      {
+        "notion": "range", "retenu": "rango", "occurrences": 121,
+        "interdit": ["ranges?"],
+        "sources": [
+          { "site": "Trading Activo", "url": "https://www.tradingactivo.org/2018/02/mercado-lateral-o-en-rango.html", "forme": "mercado en rango" },
+          { "site": "EBC ES", "url": "https://www.ebc.com/es/forex/estudio-de-rango-de-mercado-aprende-a-operar-la-lateralidad", "forme": "rango de mercado" },
+          { "site": "El Español (Invertia)", "url": "https://www.elespanol.com/invertia/mercados/20261006/banco-sabadell-recupera-rango-lateral-superar-euros-mejora-aspecto-tecnico/1003744409884_0.html", "forme": "rango lateral" },
+          { "site": "Skilling ES", "url": "https://skilling.com/eu/es/blog/trading-terms/sideways-market/", "forme": "rango (mercado lateral)" }
+        ]
+      }
+    ]
+  },
+  "conserves": {
+    "fr": [
+      { "forme": "pullback", "sources": ["https://newtrading.fr/pullbacks-trading", "https://libertex.com/fr/blog/quest-ce-que-pullback", "https://rankia.fr/pullback-quest-ce-que-cest/"] },
+      { "forme": "retest", "sources": ["https://captain-trading.com/glossaire/retest", "https://fr.tradingview.com/scripts/retest/"] },
+      { "forme": "range", "sources": ["https://apprendrelabourse.substack.com/p/comment-trader-un-range-concretement", "https://www.vtmarkets.com/fr-ca/discover/operations-de-marche-en-range-expliquees-strategie-indicateurs-et-conseils-de-gestion-du-risque/"] },
+      { "forme": "take profit", "sources": ["https://www.xtb.com/fr/formation/les-ordres-take-profit-en-trading-maitrisez-votre-sortie-de-position", "https://www.newtrading.fr/ordre-take-profit", "https://formationtrading.fr/trading/gestion-risque/money-management/take-profit/"] },
+      { "forme": "break even", "sources": ["https://sanscravate.fr/breakeven-trading-risques/"] },
+      { "forme": "drawdown", "sources": ["https://www.xtb.com/fr/formation/quest-ce-que-le-drawdown-en-trading-et-comment-le-comprendre"] },
+      { "forme": "money management", "sources": ["https://www.ig.com/fr/glossaire-trading/money-management-definition", "https://speculateurmalin.fr/blog-money-management-bourse/"] },
+      { "forme": "slippage", "sources": ["https://www.ig.com/fr/glossaire-trading/slippage-definition", "https://www.alti-trading.fr/blog/quest-ce-que-le-slippage/", "https://www.broker-forex.fr/slippage.php"] },
+      { "forme": "Order Block", "sources": ["https://cercleppm.fr/order-block/", "https://www.broker-forex.fr/order-blocks.php"] },
+      { "forme": "FVG (Fair Value Gap)", "sources": ["https://cercleppm.fr/fvg-fair-value-gap/", "https://www.broker-forex.fr/strategie-fair-value-gap.php"] },
+      { "forme": "momentum", "sources": ["https://www.newtrading.fr/momentum-trading", "https://www.oanda.com/eu-fr/blog/momentum-trading-strategie-guide", "https://www.mataf.net/fr/edu/glossaire/momentum"] },
+      { "forme": "killzone", "sources": ["https://cercleppm.fr/killzone", "https://www.broker-forex.fr/ICT-Kill-Zones.php"] },
+      { "forme": "BOS", "sources": ["https://cercleppm.fr/break-of-structure/", "https://www.broker-forex.fr/rupture-de-structure-BOS.php"] },
+      { "forme": "CHoCH", "sources": ["https://cercleppm.fr/change-of-character/"] },
+      { "forme": "double top / double bottom", "sources": ["https://cercleppm.fr/figure-chartiste-double-top/", "https://finance-heros.fr/les-figures-en-double-top-et-double-bottom/", "https://www.bobbycarottes.com/figures-chartistes/double-bottom"] },
+      { "forme": "pin bar", "sources": ["https://fr.dailyforex.com/forex-articles/pin-bar-trading/231149"] },
+      { "forme": "mitigation", "sources": ["https://cercleppm.fr/mitigation-block/", "https://ict-fr.fr/mitigation-block-un-outil-pour-gerer-les-positions-en-trading/"] },
+      { "forme": "effet de levier", "sources": ["https://www.ig.com/fr/formation-trading/qu-est-ce-que-l-effet-de-levier", "https://www.activtrades.com/fr/news/quest-ce-que-leffet-de-levier-en-trading"] },
+      { "forme": "backtest", "sources": ["https://www.ig.com/fr/strategies-de-trading/qu-est-ce-que-le-backtesting-et-comment-l-applique-t-on-a-une-st-220601"] },
+      { "forme": "edge, trendline, equal highs / lows", "sources": [] }
+    ],
+    "es": [
+      { "forme": "pullback", "sources": ["https://www.rankia.mx/blog/como-comenzar-invertir-bolsa/3987631-tecnicas-trading-pullback", "https://pablogiltrader.com/blog/articulos/pullback-trading/", "https://admiralmarkets.com/es/education/articles/forex-basics/pullback", "https://www.mdctradingacademy.com/blog/que-es-pull-back-en-trading/"] }
+    ]
+  },
+  "a_trancher": {
+    "fr": [
+      { "notion": "breakout / cassure", "formes": ["breakout", "cassure"], "sources": [
+        { "url": "https://www.ig.com/fr/strategies-de-trading/qu_est-ce-que-le-breakout-en-trading-et-comment-lutiliser---230904", "forme": "breakout" },
+        { "url": "https://www.oanda.com/eu-fr/blog/cassure-breakout-strategie", "forme": "cassure (breakout)" },
+        { "url": "https://www.invest-aide.fr/groupe/actualites/definition-breakout-deux-facons-trader/", "forme": "breakout" } ] },
+      { "notion": "sweep / balayage de liquidité", "formes": ["sweep", "balayage de liquidité"], "sources": [
+        { "url": "https://www.bobbycarottes.com/figures-chartistes/balayage-liquidite", "forme": "balayage de liquidité" },
+        { "url": "https://www.edolab.io/fr/blog/what-is-a-liquidity-sweep", "forme": "liquidity sweep" },
+        { "url": "https://fxnx.com/fr/blog/inducement-en-trading-comment-les-pieges-de-liquidite-sont-crees-avant-un-sweep", "forme": "sweep" } ] },
+      { "notion": "win rate / taux de réussite", "formes": ["win rate", "taux de réussite"], "sources": [] },
+      { "notion": "setup / configuration", "formes": ["setup", "configuration"], "sources": [] },
+      { "notion": "swing high / sommet de swing", "formes": ["swing high", "sommet de swing"], "sources": [] },
+      { "notion": "higher low / creux plus haut", "formes": ["Higher Low (HL)", "creux plus haut"], "sources": [] },
+      { "notion": "bougie impulsive / displacement", "formes": ["bougie impulsive", "displacement"], "sources": [{ "url": "https://www.broker-forex.fr/displacement-SMC.php", "forme": "displacement" }] }
+    ],
+    "es": [
+      { "notion": "fakeout", "formes": ["falso breakout", "falsa ruptura", "fakeout"], "sources": [
+        { "url": "https://www.rankia.com/blog/sistemas-de-trading/7353934-breakouts-falsos-como-dinero-inteligente-usa-tus-ordenes-carnada", "forme": "breakouts falsos" },
+        { "url": "https://www.mdctradingacademy.com/blog/breakout-falso-en-trading-que-es/", "forme": "breakout falso" },
+        { "url": "https://www.fortraders.com/es/blog/falsos-rupturas-por-que-ocurren-y-como-operarlas", "forme": "falsas rupturas" },
+        { "url": "https://es.tradingview.com/script/N3kkuEHq-Fakeouts", "forme": "fakeouts" } ] },
+      { "notion": "stop hunt", "formes": ["barrido de stops", "caza de stops", "stop hunt"], "sources": [
+        { "url": "https://mentoriaentrading.com/que-son-las-barridas-de-stop-como-evitarlas/", "forme": "barridas de stop" },
+        { "url": "https://slowinver.com/como-evitar-los-barridos-de-stops/", "forme": "barridos de stops" },
+        { "url": "https://www.tradingdefuturos.com/blog/la-caza-de-stops", "forme": "caza de stops" },
+        { "url": "https://www.vtmarkets.com/es-eu/discover/liquidity-sweeps-stop-hunts-explained-for-cfd-trading-2/", "forme": "caza de stops / stop hunts" } ] },
+      { "notion": "breakout / ruptura", "formes": ["breakout", "ruptura"], "sources": [
+        { "url": "https://www.babypips.com/es/forexpedia/breakout-trading", "forme": "ruptura" },
+        { "url": "https://www.rankia.mx/blog/como-comenzar-invertir-bolsa/4149541-que-breakout-rompimiento-alza-patron-grafico", "forme": "breakout (rompimiento)" },
+        { "url": "https://lacryptoguia.com/glossary/breakout/", "forme": "breakout" } ] },
+      { "notion": "HTF / LTF", "formes": ["HTF", "temporalidad superior", "marco temporal superior"], "sources": [
+        { "url": "https://jorditrading.substack.com/p/como-usar-multiples-temporalidades", "forme": "HTF (marco temporal alto)" },
+        { "url": "https://www.quantum-algo.com/es/academy/timeframes-explained/", "forme": "marco temporal superior" },
+        { "url": "https://www.vtmarkets.com/es-eu/discover/top-down-analysis-in-trading-a-cfd-traders-guide/", "forme": "temporalidad superior" } ] },
+      { "notion": "nivel psicológico / número redondo", "formes": ["nivel psicológico", "número redondo"], "sources": [
+        { "url": "https://www.babypips.com/es/learn/forex/psychological-level", "forme": "niveles psicológicos" },
+        { "url": "https://www.fx-trading.online/numeros-redondos", "forme": "números redondos" },
+        { "url": "https://opcionesbinariastop.com/estrategias/nivel-psicologico/", "forme": "nivel psicológico / números redondos" } ] }
+    ]
+  }
+}
