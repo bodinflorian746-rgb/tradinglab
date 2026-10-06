@@ -140,7 +140,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un displacement est une séquence de bougies impulsives, à grands corps, qui se déplace dans une direction sans correction significative, pas une simple grande bougie isolée. La séquence se reconnaît à trois caractéristiques : amplitude des corps anormalement supérieure aux bougies précédentes, absence de mèches significatives dans le sens contraire (le marché ne reprend pas son souffle), et création quasi-systématique d'un ou plusieurs FVG dans la chute ou la montée. C'est cette combinaison qui distingue le displacement d'une simple volatilité.
+              Un displacement est une séquence de bougies directionnelles à grands corps qui se déplace dans une direction sans correction significative, pas une simple grande bougie isolée. La séquence se reconnaît à trois caractéristiques : amplitude des corps anormalement supérieure aux bougies précédentes, absence de mèches significatives dans le sens contraire (le marché ne reprend pas son souffle), et création quasi-systématique d'un ou plusieurs FVG dans la chute ou la montée. C'est cette combinaison qui distingue le displacement d'une simple volatilité.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -151,7 +151,7 @@ export default function ContentFr() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Displacement = séquence de bougies impulsives à grands corps, pas une bougie isolée</li>
+              <li>- Displacement = séquence de bougies directionnelles à grands corps, pas une bougie isolée</li>
               <li>- Absence de mèches dans le sens contraire = le marché ne respire pas</li>
               <li>- Création de FVG dans le mouvement = trace structurelle du déséquilibre</li>
               <li>- Amplitude des corps nettement supérieure à la moyenne des dernières bougies</li>
@@ -221,13 +221,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le piège classique est de confondre toute grande bougie avec un displacement. Une bougie isolée, même très grande, qui n'est ni précédée d'une structure exploitée ni suivie d'une continuité, est simplement de la volatilité, un événement ponctuel sans suite. Le vrai displacement se distingue par deux éléments : il casse une structure locale (BOS dans le sens du mouvement) et il est suivi d'une continuation, pas d'un rejet immédiat. Sans ces deux conditions, c'est juste une mèche que le marché va effacer dans les minutes qui suivent. La taille de 18 pips n'est jamais en soi un critère, c'est la cassure et la continuité qui le sont.
+              Le piège classique est de confondre toute grande bougie avec un displacement. Une bougie isolée, même très grande, qui n'est ni précédée d'une structure exploitée ni suivie d'une continuité, est simplement de la volatilité, un événement ponctuel sans suite. Le vrai displacement se distingue par deux éléments : il casse une structure locale (BOS dans le sens du mouvement) et il est suivi d'une continuation, pas d'un rejet immédiat. Sans ces deux conditions, c'est juste une mèche que le marché va effacer dans les minutes qui suivent. La taille de 18 pips n'est jamais en soi un critère, c'est le breakout et la continuité qui le sont.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Sur EUR/USD, une bougie M15 imprime brutalement 18 pips à la hausse suite à une annonce mineure, puis la bougie suivante referme entièrement le mouvement, pas de cassure structurelle, pas de continuation. C'est de la volatilité, pas un displacement. À l'inverse, une séquence de 4 bougies baissières de 10-12 pips chacune qui casse un creux local et enchaîne dans la même direction est un displacement, même si aucune bougie ne dépasse 12 pips.
+                Sur EUR/USD, une bougie M15 imprime brutalement 18 pips à la hausse suite à une news mineure, puis la bougie suivante referme entièrement le mouvement, pas de cassure structurelle, pas de continuation. C'est de la volatilité, pas un displacement. À l'inverse, une séquence de 4 bougies baissières de 10-12 pips chacune qui casse un creux local et enchaîne dans la même direction est un displacement, même si aucune bougie ne dépasse 12 pips.
               </p>
             </div>
 
@@ -287,10 +287,10 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Un displacement est une séquence de bougies impulsives, pas une bougie isolée, corps grands, peu de mèches contraires, FVG laissés derrière.",
+              "Un displacement est une séquence de bougies directionnelles, pas une bougie isolée, corps grands, peu de mèches contraires, FVG laissés derrière.",
               "Le displacement marque le passage de l’équilibre à la prise de contrôle institutionnelle.",
               "Le FVG créé par un displacement est une zone d’entrée premium, l’entrée se prend au retour, pas dans le displacement lui-même.",
-              "Une grande bougie isolée sans cassure ni continuation est de la volatilité, pas un displacement.",
+              "Une grande bougie isolée sans breakout ni continuation est de la volatilité, pas un displacement.",
             ]}
           />
 
@@ -299,7 +299,7 @@ export default function ContentFr() {
             steps={[
               "Repère une séquence de 3-5 bougies M15 ou H1 consécutives, toutes dans la même direction, avec des corps plus grands que la moyenne des 10 bougies précédentes et peu ou pas de mèches contraires.",
               "Vérifie que la séquence casse une structure locale (creux ou sommet récent) et qu'elle laisse au moins un FVG visible. Si oui, c'est un displacement qualifié.",
-              "Trace le FVG sur le graphique. Attends que le prix y revienne. Si la réaction au retour confirme la direction du displacement (bougie de rejet, cassure dans le sens), note l'entrée, le SL au-dessus de l'extrémité du displacement et le TP vers la prochaine liquidité.",
+              "Trace le FVG sur le graphique. Attends que le prix y revienne. Si la réaction au retour confirme la direction du displacement (bougie de rejet, breakout dans le sens), note l'entrée, le SL au-dessus de l'extrémité du displacement et le TP vers la prochaine liquidité.",
             ]}
           />
 
@@ -307,17 +307,17 @@ export default function ContentFr() {
             question="Sur EUR/USD, une bougie M15 imprime brutalement 18 pips à la hausse, puis la bougie suivante referme entièrement le mouvement. Aucune cassure structurelle n'est visible. Comment qualifies-tu ce mouvement ?"
             options={[
               "C'est un displacement haussier, 18 pips en une bougie est un signal fort",
-              "C'est de la volatilité sans suite, pas un displacement, pas de cassure ni de continuation",
+              "C'est de la volatilité sans suite, pas un displacement, pas de breakout ni de continuation",
               "C'est un sweep, donc le scénario inverse est validé pour entrer short immédiatement",
               "C'est un signal indéterminé, il faut attendre 1h pour décider",
             ]}
             correctIndex={1}
-            explanation="Un displacement n'est jamais défini par la taille d'une seule bougie. Les deux critères structurels sont : une cassure de structure locale (BOS) ET une continuation dans la direction. Ici, la bougie suivante referme intégralement le mouvement et il n'y a pas de cassure, c'est exactement la définition de la volatilité sans suite, pas un displacement. Trader cette bougie comme un signal d'achat reviendrait à acheter le sommet du faux mouvement."
+            explanation="Un displacement n'est jamais défini par la taille d'une seule bougie. Les deux critères structurels sont : une cassure de structure locale (BOS) ET une continuation dans la direction. Ici, la bougie suivante referme intégralement le mouvement et il n'y a pas de breakout, c'est exactement la définition de la volatilité sans suite, pas un displacement. Trader cette bougie comme un signal d'achat reviendrait à acheter le sommet du faux mouvement."
             answerExplanations={[
               "Faux. La taille d'une bougie n'a aucune valeur sans cassure de structure et continuation. 18 pips isolés et immédiatement rejetés = volatilité ponctuelle, exactement le piège que le concept de displacement vise à éviter.",
               "Correct. Sans cassure structurelle ni continuation, c'est une bougie isolée, donc de la volatilité, pas un displacement. La règle de l'ICT est claire : un displacement n'est validé que par une séquence orientée qui casse une structure et continue.",
-              "Faux. Un sweep n'est qu'une condition préalable, jamais un signal d'entrée seul. Entrer short immédiatement sur la base d'une bougie haussière isolée n'a aucune logique structurelle, il faut attendre la confirmation (réintégration + bougie impulsive opposée).",
-              "Faux. Attendre 1h arbitrairement ne change pas la lecture. Le mouvement est déjà qualifié de volatilité par les critères structurels (pas de cassure, rejet immédiat). Pas besoin de timer, il faut juste lire correctement ce qu'on voit.",
+              "Faux. Un sweep n'est qu'une condition préalable, jamais un signal d'entrée seul. Entrer short immédiatement sur la base d'une bougie haussière isolée n'a aucune logique structurelle, il faut attendre la confirmation (réintégration + bougie de displacement opposée).",
+              "Faux. Attendre 1h arbitrairement ne change pas la lecture. Le mouvement est déjà qualifié de volatilité par les critères structurels (pas de breakout, rejet immédiat). Pas besoin de timer, il faut juste lire correctement ce qu'on voit.",
             ]}
           />
 

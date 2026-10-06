@@ -41,15 +41,15 @@ export function PostSweepReactionDiagram({ className = "", locale = "fr" }: Post
   const isEs = locale === "es";
   const isEn = locale === "en";
   const L = {
-    impulsive:    isEs ? "Vela impulsiva" : isEn ? "Impulsive candle" : "Bougie impulsive",
-    annot:        isEs ? "La reacción cuenta más que la ruptura" : isEn ? "The reaction matters more than the break" : "La réaction compte plus que la cassure",
+    impulsive:    isEs ? "Vela impulsiva" : isEn ? "Impulsive candle" : "Bougie de displacement",
+    annot:        isEs ? "La reacción cuenta más que el breakout" : isEn ? "The reaction matters more than the break" : "La réaction compte plus que le breakout",
     mobTitle:     isEs ? "Reacción post-barrido · EUR/USD M15" : isEn ? "Post-sweep reaction · EUR/USD M15" : "Réaction post-sweep · EUR/USD M15",
     mob1End:      isEs ? "· mecha por encima de la resistencia." : isEn ? "· wick above resistance." : "· mèche au-dessus de la résistance.",
     mob2Bold:     isEs ? "Reintegración" : isEn ? "Reintegration" : "Réintégration",
     mob2End:      isEs ? "debajo del nivel (cierre debajo)." : isEn ? "below the level (close below)." : "sous le niveau (clôture sous).",
     mob3End:      isEs ? "= verdadera señal de entrada short." : isEn ? "= real short entry signal." : "= vrai signal d'entrée short.",
     legend1:      isEs ? "Barrido + reintegración debajo de la resistencia" : isEn ? "Sweep + reintegration below resistance" : "Sweep + réintégration sous la résistance",
-    legend2:      isEs ? "Vela impulsiva = verdadera señal de entrada" : isEn ? "Impulsive candle = real entry signal" : "Bougie impulsive = vrai signal d'entrée",
+    legend2:      isEs ? "Vela impulsiva = verdadera señal de entrada" : isEn ? "Impulsive candle = real entry signal" : "Bougie de displacement = vrai signal d'entrée",
   };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

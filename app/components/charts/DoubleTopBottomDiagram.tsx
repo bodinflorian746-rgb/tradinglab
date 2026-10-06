@@ -51,13 +51,13 @@ export default function DoubleTopBottomDiagram({ locale = "fr" }: { locale?: "fr
         bottom1: "Bottom 1",
         bottom2: "Bottom 2",
         neckline: "Línea clavicular",
-        breakLabel: "Ruptura",
+        breakLabel: "Breakout",
         mobileTitle: "Double Top / Double Bottom",
         mobileDTTitle: "Double Top — Inversión BAJISTA",
-        mobileDTDesc: "2 cumbres casi iguales separadas por un valle (línea clavicular). Ruptura debajo de la línea clavicular = señal short.",
+        mobileDTDesc: "2 cumbres casi iguales separadas por un valle (línea clavicular). Breakout debajo de la línea clavicular = señal short.",
         mobileDBTitle: "Double Bottom — Inversión ALCISTA",
-        mobileDBDesc: "2 valles casi iguales separados por una cumbre (línea clavicular). Ruptura por encima de la línea clavicular = señal long.",
-        mobileFooter: "Patrón de inversión, validado por la ruptura de la línea clavicular.",
+        mobileDBDesc: "2 valles casi iguales separados por una cumbre (línea clavicular). Breakout por encima de la línea clavicular = señal long.",
+        mobileFooter: "Patrón de inversión, validado por el breakout de la línea clavicular.",
       }
     : locale === "en"
     ? {
@@ -88,13 +88,13 @@ export default function DoubleTopBottomDiagram({ locale = "fr" }: { locale?: "fr
         bottom1: "Bottom 1",
         bottom2: "Bottom 2",
         neckline: "Ligne de cou",
-        breakLabel: "Cassure",
+        breakLabel: "Breakout",
         mobileTitle: "Double Top / Double Bottom",
         mobileDTTitle: "Double Top — Retournement BAISSIER",
-        mobileDTDesc: "2 sommets quasi égaux séparés par un creux (ligne de cou). Cassure sous la ligne de cou = signal short.",
+        mobileDTDesc: "2 sommets quasi égaux séparés par un creux (ligne de cou). Breakout sous la ligne de cou = signal short.",
         mobileDBTitle: "Double Bottom — Retournement HAUSSIER",
-        mobileDBDesc: "2 creux quasi égaux séparés par un sommet (ligne de cou). Cassure au-dessus de la ligne de cou = signal long.",
-        mobileFooter: "Pattern de retournement, validé par la cassure de la ligne de cou.",
+        mobileDBDesc: "2 creux quasi égaux séparés par un sommet (ligne de cou). Breakout au-dessus de la ligne de cou = signal long.",
+        mobileFooter: "Pattern de retournement, validé par le breakout de la ligne de cou.",
       };
 
   // ─── Double Top (bearish reversal) ─── x = 30 → 380

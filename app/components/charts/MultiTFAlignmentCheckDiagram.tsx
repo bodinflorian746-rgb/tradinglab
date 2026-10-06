@@ -58,9 +58,9 @@ export default function MultiTFAlignmentCheckDiagram({ className = "", locale = 
         c2d1: "S/R, Fibo, MM, OB",
         c2d2: "croisés à la même zone",
         c3: "Signal M15 confirmé",
-        c3d1: "Pin bar, avalement,",
+        c3d1: "Pin bar, engulfing,",
         c3d2: "rejet immédiat",
-        c4: "Pas d'annonce",
+        c4: "Pas de news",
         c4d1: "Pas de NFP, FOMC, CPI",
         c4d2: "dans les 30 minutes",
         footer: "4/4 = entrée précise possible",
@@ -68,8 +68,8 @@ export default function MultiTFAlignmentCheckDiagram({ className = "", locale = 
         mob: [
           { title: "Biais Daily aligné", desc: "Tendance majeure HH/HL ou LH/LL confirmée" },
           { title: "Niveau H4 confluent", desc: "S/R, Fibo, MM, OB croisés à la même zone" },
-          { title: "Signal M15 confirmé", desc: "Pin bar, avalement, rejet immédiat" },
-          { title: "Pas d'annonce", desc: "Pas de NFP, FOMC, CPI dans les 30 minutes" },
+          { title: "Signal M15 confirmé", desc: "Pin bar, engulfing, rejet immédiat" },
+          { title: "Pas de news", desc: "Pas de NFP, FOMC, CPI dans les 30 minutes" },
         ],
         mobFooter: "4/4 = entrée précise possible",
       };

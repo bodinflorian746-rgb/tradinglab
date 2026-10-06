@@ -66,7 +66,7 @@ export default function ContentFr() {
               Ton stop loss peut être parfait. Ton analyse aussi.
             </p>
             <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
-              Mais si une annonce majeure sort dans 5 minutes, ton SL peut sauter comme s&apos;il n&apos;existait pas.
+              Mais si une news majeure sort dans 5 minutes, ton SL peut sauter comme s&apos;il n&apos;existait pas.
             </p>
           </div>
 
@@ -114,7 +114,7 @@ export default function ContentFr() {
               En temps normal, ton stop loss technique a du sens. Si ton analyse prévoit un SL à 30 pips, le marché peut respecter cette zone.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Mais pendant une annonce majeure :
+              Mais pendant une news majeure :
             </p>
             <ul className="space-y-2 mb-4">
               {[
@@ -133,7 +133,7 @@ export default function ContentFr() {
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                Pendant une annonce macro, ton risque n&apos;est plus sur le papier. Il est dans la vitesse du marché.
+                Pendant une news macro, ton risque n&apos;est plus sur le papier. Il est dans la vitesse du marché.
               </p>
             </div>
           </section>
@@ -147,14 +147,14 @@ export default function ContentFr() {
 
             <div className="space-y-5 mb-5">
               <div>
-                <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 1. Pas de position ouverte sur annonces 3 étoiles</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 1. Pas de position ouverte sur news 3 étoiles</p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
-                  Si une annonce majeure arrive, tu vérifies tes positions. Tu fermes, tu réduis, ou tu assumes consciemment le risque. Mais tu ne <span className="font-semibold text-zinc-200">découvres jamais</span> l&apos;annonce après coup.
+                  Si une news majeure arrive, tu vérifies tes positions. Tu fermes, tu réduis, ou tu assumes consciemment le risque. Mais tu ne <span className="font-semibold text-zinc-200">découvres jamais</span> la news après coup.
                 </p>
               </div>
 
               <div>
-                <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 2. Taille divisée par 2 après l&apos;annonce</p>
+                <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 2. Taille divisée par 2 après la news</p>
                 <p className="text-sm text-zinc-300 leading-relaxed mb-2">
                   Si tu trades après la réaction (méthode vue en leçon 3) :
                 </p>
@@ -165,7 +165,7 @@ export default function ContentFr() {
                   </li>
                   <li className="flex items-center gap-2.5 text-sm text-zinc-300">
                     <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0" />
-                    <span>taille post-annonce : <span className="font-semibold text-zinc-200">0.05 lot</span></span>
+                    <span>taille post-news : <span className="font-semibold text-zinc-200">0.05 lot</span></span>
                   </li>
                 </ul>
                 <p className="text-sm text-zinc-300 leading-relaxed">
@@ -176,7 +176,7 @@ export default function ContentFr() {
               <div>
                 <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 3. SL plus large ou pas de trade</p>
                 <p className="text-sm text-zinc-300 leading-relaxed mb-2">
-                  Si le marché bouge encore trop vite après l&apos;annonce :
+                  Si le marché bouge encore trop vite après la news :
                 </p>
                 <ul className="space-y-1.5">
                   <li className="flex items-start gap-2.5 text-sm text-zinc-300">
@@ -241,9 +241,9 @@ export default function ContentFr() {
               <ul className="space-y-1.5">
                 {[
                   { bold: "Forex", rest: " : EUR/USD, GBP/USD (volatilité maximale)" },
-                  { bold: "Or (XAU/USD)", rest: " : très réactif aux annonces US (dollar / taux)" },
+                  { bold: "Or (XAU/USD)", rest: " : très réactif aux news US (dollar / taux)" },
                   { bold: "Indices US", rest: " : Nasdaq, S&P500 réagissent immédiatement" },
-                  { bold: "BTC/USD", rest: " : sensible aux annonces macro depuis 2022" },
+                  { bold: "BTC/USD", rest: " : sensible aux news macro depuis 2022" },
                 ].map((item) => (
                   <li key={item.bold} className="flex items-start gap-2 text-xs text-zinc-400">
                     <div className="w-1 h-1 rounded-full bg-zinc-600 shrink-0 mt-1.5" />
@@ -339,7 +339,7 @@ export default function ContentFr() {
               <span className="font-semibold text-zinc-200">80€ sur 500€ = 16% du compte en 30 secondes.</span>
             </p>
             <div className="bg-zinc-900/60 rounded-xl px-4 py-3 mb-5">
-              <p className="text-xs font-semibold text-zinc-400 mb-2">Et ce n&apos;est pas qu&apos;un risque sur EUR/USD. Avec un compte de 500€ et une position dimensionnée selon les règles de gestion du risque (2% par trade), une mauvaise annonce macro peut effacer le même pourcentage du compte sur tous les actifs :</p>
+              <p className="text-xs font-semibold text-zinc-400 mb-2">Et ce n&apos;est pas qu&apos;un risque sur EUR/USD. Avec un compte de 500€ et une position dimensionnée selon les règles de gestion du risque (2% par trade), une mauvaise news macro peut effacer le même pourcentage du compte sur tous les actifs :</p>
               <div className="space-y-1.5">
                 {[
                   { asset: "EUR/USD", detail: "-80 pips → -80€", pct: "16% du compte" },
@@ -354,7 +354,7 @@ export default function ContentFr() {
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-zinc-500 mt-2 italic">Note : ces équivalences sont calculées à taille de risque similaire (pas à même nombre de lots). Le but est de montrer que peu importe l&apos;actif tradé, une mauvaise gestion du risque sur annonces macro peut effacer 15-25% du compte en quelques minutes.</p>
+              <p className="text-xs text-zinc-500 mt-2 italic">Note : ces équivalences sont calculées à taille de risque similaire (pas à même nombre de lots). Le but est de montrer que peu importe l&apos;actif tradé, une mauvaise gestion du risque sur news macro peut effacer 15-25% du compte en quelques minutes.</p>
             </div>
 
             {/* Encadré 💰 Réalité du retail */}
@@ -403,7 +403,7 @@ export default function ContentFr() {
               <div className="divide-y divide-zinc-800/60">
                 {[
                   { ctx: "Macro calme", action: "Règles standard (% selon ton capital)" },
-                  { ctx: "Annonce 3 étoiles dans <2h", action: "Fermer / réduire / attendre" },
+                  { ctx: "News 3 étoiles dans <2h", action: "Fermer / réduire / attendre" },
                   { ctx: "Macro contre ton setup", action: "Diviser la taille par 2 ou passer" },
                   { ctx: "Macro confirme ton setup", action: "Setup standard avec confluence renforcée" },
                 ].map((row, i) => (
@@ -438,9 +438,9 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Une annonce macro peut multiplier ton risque réel par 2 à 5 fois",
-              "Les fenêtres dangereuses : 30 min avant jusqu'à 1h après les annonces 3 étoiles",
-              "Sur annonces 3 étoiles : fermer, réduire ou attendre (jamais ignorer)",
+              "Une news macro peut multiplier ton risque réel par 2 à 5 fois",
+              "Les fenêtres dangereuses : 30 min avant jusqu'à 1h après les news 3 étoiles",
+              "Sur news 3 étoiles : fermer, réduire ou attendre (jamais ignorer)",
               "La grille de décision : macro favorable + technique propre = meilleur contexte",
             ]}
           />
@@ -450,13 +450,13 @@ export default function ContentFr() {
             steps={[
               "Ouvre le calendrier économique du jour (Investing.com ou Forex Factory).",
               "Repère tous les événements 3 étoiles sur ta session de trading.",
-              "Note les heures dangereuses dans ton planning (30 min avant + 1h après chaque annonce).",
-              "Décide à l'avance pour chaque annonce : tu fermes, tu réduis, ou tu attends ?",
-              "Après chaque annonce, observe si le marché devient tradable ou reste chaotique.",
+              "Note les heures dangereuses dans ton planning (30 min avant + 1h après chaque news).",
+              "Décide à l'avance pour chaque news : tu fermes, tu réduis, ou tu attends ?",
+              "Après chaque news, observe si le marché devient tradable ou reste chaotique.",
             ]}
           />
           <p className="text-sm text-zinc-500 leading-relaxed px-1">
-            L&apos;objectif : <span className="font-semibold text-zinc-400">ne jamais découvrir une annonce après avoir pris position</span>.
+            L&apos;objectif : <span className="font-semibold text-zinc-400">ne jamais découvrir une news après avoir pris position</span>.
           </p>
 
           <LessonQuiz
@@ -470,7 +470,7 @@ export default function ContentFr() {
             correctIndex={2}
             explanation="Un NFP peut créer un mouvement violent et imprévisible (200-500 pips de mouvement total possible). Même si ton setup est techniquement propre, le risque réel est trop élevé juste avant la publication. L'option A ignore complètement le contexte macro et te fait subir la volatilité. L'option B est encore pire, tu augmentes ton risque dans la fenêtre la plus dangereuse. L'option D est catastrophique : retirer ton SL transforme une perte limitée en perte potentiellement énorme. La seule réponse pro : attendre, observer, réévaluer. Ce principe vaut sur tous les actifs sensibles à la macro : EUR/USD, XAU/USD, Nasdaq, BTC/USD."
             answerExplanations={[
-              "Faux. Ignorer une annonce 3 étoiles à 20 minutes, c'est subir la volatilité. Un NFP peut créer un mouvement de 200-500 pips, ton setup technique ne tient pas face à cette réalité.",
+              "Faux. Ignorer une news 3 étoiles à 20 minutes, c'est subir la volatilité. Un NFP peut créer un mouvement de 200-500 pips, ton setup technique ne tient pas face à cette réalité.",
               "Faux. Augmenter la taille dans la fenêtre de danger maximale est une erreur grave. Tu maximises ton risque au pire moment possible.",
               "Correct. Un NFP peut créer un mouvement violent et imprévisible. Attendre, observer la réaction, puis réévaluer le setup est la seule approche professionnelle.",
               "Faux. Retirer ton SL est catastrophique : cela transforme une perte limitée en perte potentiellement énorme si le marché part dans le mauvais sens.",

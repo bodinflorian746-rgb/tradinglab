@@ -48,7 +48,7 @@ export const PROFILES: ProfileTemplate[] = [
   {
     id: "breakout_hunter",
     name: "Chasseur de breakout",
-    description: "Tu prends les cassures avec conviction. Méfie-toi des faux breakouts, la liquidité au-dessus/dessous des niveaux est ton ennemie.",
+    description: "Tu prends les breakouts avec conviction. Méfie-toi des faux breakouts, la liquidité au-dessus/dessous des niveaux est ton ennemie.",
     match: (s) => high(s.lecture_marche) + high(s.timing) - low(s.liquidite),
   },
   {

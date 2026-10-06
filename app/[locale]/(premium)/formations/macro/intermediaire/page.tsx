@@ -42,7 +42,7 @@ const lessons = [
     number: 5,
     title: "Les corrélations : comment les marchés bougent ensemble",
     duration: "14 min",
-    description: "Corrélations positives, négatives, cassures : comment éviter d'empiler le même risque macro sur plusieurs actifs.",
+    description: "Corrélations positives, négatives, breakouts : comment éviter d'empiler le même risque macro sur plusieurs actifs.",
     href: "/formations/macro/intermediaire/lecon5",
     disabled: false,
   },

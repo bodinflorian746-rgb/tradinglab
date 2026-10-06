@@ -142,7 +142,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Tendance haussière : succession HH/HL ascendante → trade long sur pullback</li>
-              <li>- Range latéral : oscillation entre 2 niveaux → trade range ou attente cassure</li>
+              <li>- Range latéral : oscillation entre 2 niveaux → trade range ou attente breakout</li>
               <li>- Tendance baissière : succession LL/LH descendante → trade short sur pullback</li>
               <li>- Unité de temps principale d&apos;identification : H4. Confirmation Daily renforce le biais</li>
             </ul>

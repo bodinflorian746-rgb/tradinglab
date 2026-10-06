@@ -404,7 +404,7 @@ export default function ContentFr() {
               "Faux. PPI et CPI sont liés par la chaîne de transmission de l'inflation. Les hausses de coût des producteurs remontent vers les consommateurs dans les semaines suivantes.",
               "Correct. Un PPI élevé signale une pression inflationniste en amont. Ces coûts supplémentaires finissent généralement par être répercutés, ce qui peut faire monter le prochain CPI.",
               "Faux. La réaction du dollar dépend du contexte global, des attentes de la Fed, et d'autres facteurs. Un PPI élevé seul ne garantit pas une baisse immédiate du dollar.",
-              "Faux. La Fed observe plusieurs publications sur la durée avant de modifier sa politique. Un seul chiffre PPI ne déclenche pas une annonce de hausse de taux.",
+              "Faux. La Fed observe plusieurs publications sur la durée avant de modifier sa politique. Un seul chiffre PPI ne déclenche pas une news de hausse de taux.",
             ]}
           />
 

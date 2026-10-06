@@ -44,7 +44,7 @@ export default function EngulfingValidationGridDiagram({ className = "", locale 
         mobileFooter: "Engulfing body + range + level context",
       }
     : {
-        title: "Avalement valide vs invalide",
+        title: "Engulfing valide vs invalide",
         cell1: "✓ Valide — Englobe complètement",
         cell1Sub: "Verte > Rouge (×2)",
         cell2: "✗ N'englobe que 60%",
@@ -53,14 +53,14 @@ export default function EngulfingValidationGridDiagram({ className = "", locale 
         cell3Sub: "Amplitude minuscule",
         cell4: "✗ Hors niveau structurel",
         rangeLabel: "Range latéral",
-        cell4Sub: "Paire avalement au milieu d'un range",
+        cell4Sub: "Paire engulfing au milieu d'un range",
         footer: "Corps englobant + amplitude suffisante + contexte de niveau",
-        mobileTitle: "Reconnaître un avalement valide",
+        mobileTitle: "Reconnaître un engulfing valide",
         mobileCases: [
           { v: true, label: "Corps englobant net", desc: "Bougie verte avale entièrement la rouge précédente + amplitude suffisante" },
-          { v: false, label: "Bougie B ne couvre pas la A", desc: "Corps trop court → pas un vrai avalement" },
+          { v: false, label: "Bougie B ne couvre pas la A", desc: "Corps trop court → pas un vrai engulfing" },
           { v: false, label: "Amplitude minuscule", desc: "Englobante mais 20 px seulement → signal faible" },
-          { v: false, label: "Paire avalement dans un range", desc: "Sans niveau structurel → signal inutile" },
+          { v: false, label: "Paire engulfing dans un range", desc: "Sans niveau structurel → signal inutile" },
         ],
         mobileFooter: "Corps englobant + amplitude + contexte de niveau",
       };

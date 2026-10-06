@@ -167,7 +167,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Antes de un displacement, el mercado suele estar en equilibrio, velas de baja amplitud, alternancia verde/rojo, lateralización. Cuando llega el displacement, es el equilibrio el que se rompe: un lado toma bruscamente la ventaja e impone la dirección. Esa ruptura es la firma de una intención institucional. Leer un displacement es leer quién, vendedores o compradores, acaba de ganar la batalla en curso. La dirección del displacement define el sesgo inmediato de los minutos / horas que siguen.
+              Antes de un displacement, el mercado suele estar en equilibrio, velas de baja amplitud, alternancia verde/rojo, lateralización. Cuando llega el displacement, es el equilibrio el que se rompe: un lado toma bruscamente la ventaja e impone la dirección. Ese breakout es la firma de una intención institucional. Leer un displacement es leer quién, vendedores o compradores, acaba de ganar la batalla en curso. La dirección del displacement define el sesgo inmediato de los minutos / horas que siguen.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -221,7 +221,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La trampa clásica es confundir cualquier vela grande con un displacement. Una vela aislada, incluso muy grande, que no esté precedida de una estructura explotada ni seguida de una continuidad, es simplemente volatilidad, un evento puntual sin secuela. El verdadero displacement se distingue por dos elementos: rompe una estructura local (BOS en el sentido del movimiento) y va seguido de una continuación, no de un rechazo inmediato. Sin estas dos condiciones, es solo una mecha que el mercado va a borrar en los minutos siguientes. El tamaño de 18 pips nunca es en sí mismo un criterio, la ruptura y la continuidad sí lo son.
+              La trampa clásica es confundir cualquier vela grande con un displacement. Una vela aislada, incluso muy grande, que no esté precedida de una estructura explotada ni seguida de una continuidad, es simplemente volatilidad, un evento puntual sin secuela. El verdadero displacement se distingue por dos elementos: rompe una estructura local (BOS en el sentido del movimiento) y va seguido de una continuación, no de un rechazo inmediato. Sin estas dos condiciones, es solo una mecha que el mercado va a borrar en los minutos siguientes. El tamaño de 18 pips nunca es en sí mismo un criterio, el breakout y la continuidad sí lo son.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -290,7 +290,7 @@ export default function ContentEs() {
               "Un displacement es una secuencia de velas impulsivas, no una vela aislada, cuerpos grandes, pocas mechas contrarias, FVG dejados atrás.",
               "El displacement marca el paso del equilibrio a la toma de control institucional.",
               "El FVG creado por un displacement es una zona de entrada premium, la entrada se toma al regreso, no dentro del displacement mismo.",
-              "Una gran vela aislada sin ruptura ni continuación es volatilidad, no un displacement.",
+              "Una gran vela aislada sin breakout ni continuación es volatilidad, no un displacement.",
             ]}
           />
 
@@ -299,7 +299,7 @@ export default function ContentEs() {
             steps={[
               "Identifica una secuencia de 3-5 velas M15 o H1 consecutivas, todas en la misma dirección, con cuerpos más grandes que el promedio de las 10 velas anteriores y pocas o ninguna mecha contraria.",
               "Verifica que la secuencia rompe una estructura local (mínimo o máximo reciente) y deja al menos un FVG visible. Si es así, es un displacement calificado.",
-              "Traza el FVG en el gráfico. Espera que el precio regrese ahí. Si la reacción al regreso confirma la dirección del displacement (vela de rechazo, ruptura en el sentido), anota la entrada, el SL arriba del extremo del displacement y el TP hacia la próxima liquidez.",
+              "Traza el FVG en el gráfico. Espera que el precio regrese ahí. Si la reacción al regreso confirma la dirección del displacement (vela de rechazo, breakout en el sentido), anota la entrada, el SL arriba del extremo del displacement y el TP hacia la próxima liquidez.",
             ]}
           />
 
@@ -307,17 +307,17 @@ export default function ContentEs() {
             question="En EUR/USD, una vela M15 imprime brutalmente 18 pips al alza, y luego la siguiente vela cierra completamente el movimiento. No hay ruptura estructural visible. ¿Cómo calificas este movimiento?"
             options={[
               "Es un displacement alcista, 18 pips en una vela es una señal fuerte",
-              "Es volatilidad sin secuela, no un displacement, sin ruptura ni continuación",
+              "Es volatilidad sin secuela, no un displacement, sin breakout ni continuación",
               "Es un barrido, así que el escenario inverso queda validado para entrar short de inmediato",
               "Es una señal indeterminada, hay que esperar 1h para decidir",
             ]}
             correctIndex={1}
-            explanation="Un displacement nunca se define por el tamaño de una sola vela. Los dos criterios estructurales son: una ruptura de estructura local (BOS) Y una continuación en la dirección. Aquí, la siguiente vela cierra íntegramente el movimiento y no hay ruptura, es exactamente la definición de volatilidad sin secuela, no un displacement. Tradear esa vela como una señal de compra equivaldría a comprar el máximo del movimiento falso."
+            explanation="Un displacement nunca se define por el tamaño de una sola vela. Los dos criterios estructurales son: una ruptura de estructura local (BOS) Y una continuación en la dirección. Aquí, la siguiente vela cierra íntegramente el movimiento y no hay breakout, es exactamente la definición de volatilidad sin secuela, no un displacement. Tradear esa vela como una señal de compra equivaldría a comprar el máximo del movimiento falso."
             answerExplanations={[
               "Falso. El tamaño de una vela no tiene ningún valor sin ruptura de estructura y continuación. 18 pips aislados e inmediatamente rechazados = volatilidad puntual, exactamente la trampa que el concepto de displacement busca evitar.",
               "Correcto. Sin ruptura estructural ni continuación, es una vela aislada, entonces volatilidad, no un displacement. La regla del ICT es clara: un displacement solo se valida con una secuencia orientada que rompe una estructura y continúa.",
               "Falso. Un barrido es solo una condición previa, jamás una señal de entrada por sí sola. Entrar short de inmediato sobre la base de una vela alcista aislada no tiene ninguna lógica estructural, hay que esperar la confirmación (reintegración + vela impulsiva opuesta).",
-              "Falso. Esperar 1h arbitrariamente no cambia la lectura. El movimiento ya está calificado de volatilidad por los criterios estructurales (sin ruptura, rechazo inmediato). No se necesita un timer, solo hay que leer correctamente lo que se ve.",
+              "Falso. Esperar 1h arbitrariamente no cambia la lectura. El movimiento ya está calificado de volatilidad por los criterios estructurales (sin breakout, rechazo inmediato). No se necesita un timer, solo hay que leer correctamente lo que se ve.",
             ]}
           />
 

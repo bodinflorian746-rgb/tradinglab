@@ -38,22 +38,22 @@ export default function BullishVsBearishEngulfingDiagram({ className = "", local
         mobileFooter: "⚠ Without a structural level, the engulfing loses 70% of its win rate",
       }
     : {
-        title: "Avalement — toujours sur un niveau",
-        bullPanel: "Avalement haussier sur support",
-        bearPanel: "Avalement baissier sur résistance",
+        title: "Engulfing — toujours sur un niveau",
+        bullPanel: "Engulfing haussier sur support",
+        bearPanel: "Engulfing baissier sur résistance",
         support: "Support 4 540$",
         resistance: "Résistance 4 700$",
-        footer: "Sans niveau structurel, l'avalement perd 70% de son taux de réussite",
-        mobileTitle: "Avalement — toujours sur un niveau",
-        mobileBullTitle: "Avalement haussier AU SUPPORT",
+        footer: "Sans niveau structurel, l'engulfing perd 70% de son winrate",
+        mobileTitle: "Engulfing — toujours sur un niveau",
+        mobileBullTitle: "Engulfing haussier AU SUPPORT",
         mobileBullDesc1: "Après une chute, une grosse bougie verte avale la rouge précédente sur le ",
         mobileBullDesc2: "support 4 540 $",
         mobileBullDesc3: " → rebond probable.",
-        mobileBearTitle: "Avalement baissier À LA RÉSISTANCE",
+        mobileBearTitle: "Engulfing baissier À LA RÉSISTANCE",
         mobileBearDesc1: "Après une hausse, une grosse bougie rouge avale la verte précédente sur la ",
         mobileBearDesc2: "résistance",
         mobileBearDesc3: " → chute probable.",
-        mobileFooter: "⚠ Sans niveau structurel, l'avalement perd 70% de son taux de réussite",
+        mobileFooter: "⚠ Sans niveau structurel, l'engulfing perd 70% de son winrate",
       };
 
   return (

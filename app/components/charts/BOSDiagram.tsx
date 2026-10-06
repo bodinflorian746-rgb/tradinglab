@@ -61,7 +61,7 @@ export function BOSDiagram({
   const t = locale === "es"
     ? {
         bosTitle: isBull ? "BOS — Break of Structure alcista" : "BOS — Break of Structure bajista",
-        bosDescStruct: isBull ? "último máximo estructural antes de la ruptura" : "último mínimo estructural antes de la ruptura",
+        bosDescStruct: isBull ? "último máximo estructural antes del breakout" : "último mínimo estructural antes del breakout",
         bosDescBreak: "el precio rompe este nivel → confirmación de tendencia",
         legLevel: isBull ? "HH = último Higher High (nivel BOS)" : "LL = último Lower Low (nivel BOS)",
         legBreak: "Break of Structure — confirmación de tendencia",
@@ -76,7 +76,7 @@ export function BOSDiagram({
       }
     : {
         bosTitle: isBull ? "BOS — Break of Structure haussier" : "BOS — Break of Structure baissier",
-        bosDescStruct: isBull ? "dernier sommet structurel avant la cassure" : "dernier creux structurel avant la cassure",
+        bosDescStruct: isBull ? "dernier sommet structurel avant le breakout" : "dernier creux structurel avant le breakout",
         bosDescBreak: "le prix casse ce niveau → confirmation de tendance",
         legLevel: isBull ? "HH = dernier Higher High (niveau BOS)" : "LL = dernier Lower Low (niveau BOS)",
         legBreak: "Break of Structure — confirmation de tendance",

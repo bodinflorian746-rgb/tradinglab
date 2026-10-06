@@ -280,7 +280,7 @@ export default function ContentFr() {
             </p>
             <div className="bg-zinc-900/40 border border-red-500/15 rounded-xl px-4 py-3 mb-4">
               <p className="text-sm text-zinc-400 italic leading-relaxed">
-                Sur les annonces macro, le marché ne réagit pas à la décision elle-même, il réagit à l&apos;écart entre la décision et ce qui était anticipé.
+                Sur les news macro, le marché ne réagit pas à la décision elle-même, il réagit à l&apos;écart entre la décision et ce qui était anticipé.
               </p>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
@@ -292,7 +292,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Comment trader avec : ajuster ton biais hebdomadaire</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Tu ne traderas pas l&apos;annonce elle-même au moment où elle tombe (cf leçon FOMC pour la technique du timing exact). Mais tu vas utiliser le ton pour <span className="font-semibold text-zinc-200">ajuster ta thèse macro de la semaine</span>.
+              Tu ne traderas pas la news elle-même au moment où elle tombe (cf leçon FOMC pour la technique du timing exact). Mais tu vas utiliser le ton pour <span className="font-semibold text-zinc-200">ajuster ta thèse macro de la semaine</span>.
             </p>
 
             <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Méthode simple en 3 étapes</p>
@@ -339,7 +339,7 @@ export default function ContentFr() {
             </div>
             <div className="space-y-2">
               {[
-                "Trader l'annonce en direct sans expérience",
+                "Trader la news en direct sans expérience",
                 "Ignorer les attentes du marché",
                 "Garder un biais d'il y a 2 mois",
                 "Confondre décision et ton",
@@ -384,11 +384,11 @@ export default function ContentFr() {
           </p>
 
           <LessonQuiz
-            question="La Fed monte ses taux de 25bps. Tu lis le communiqué et le ton est globalement hawkish. Pourtant, le dollar BAISSE après l'annonce. Quelle est l'explication la plus probable ?"
+            question="La Fed monte ses taux de 25bps. Tu lis le communiqué et le ton est globalement hawkish. Pourtant, le dollar BAISSE après la news. Quelle est l'explication la plus probable ?"
             options={[
               "Le marché ne suit pas toujours la logique fondamentale, c'est aléatoire",
               "Le marché avait anticipé une hausse plus importante (50bps) ou un ton encore plus dur, c'est une \"dovish surprise\"",
-              "Le dollar baisse toujours sur les annonces de la Fed, peu importe le ton",
+              "Le dollar baisse toujours sur les news de la Fed, peu importe le ton",
               "Powell a fait une erreur de communication",
             ]}
             correctIndex={1}
@@ -396,7 +396,7 @@ export default function ContentFr() {
             answerExplanations={[
               "Faux. Le marché suit une logique très précise basée sur les anticipations. La réaction n'est pas aléatoire, elle mesure l'écart entre ce qui était attendu et ce qui a été annoncé.",
               "Correct. Le marché avait pricé 50bps. Une hausse de 25bps est donc 'moins hawkish que prévu', c'est une dovish surprise. Le dollar baisse parce que les attentes n'ont pas été confirmées.",
-              "Faux. Le dollar peut monter ou baisser sur une annonce Fed selon la direction de la surprise. Il n'y a pas de règle mécanique indépendante du ton et des anticipations.",
+              "Faux. Le dollar peut monter ou baisser sur une news Fed selon la direction de la surprise. Il n'y a pas de règle mécanique indépendante du ton et des anticipations.",
               "Faux. Powell calibre chaque mot avec précision. La réaction du marché reflète l'écart entre anticipations et réalité, pas une erreur de communication.",
             ]}
           />

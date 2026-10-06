@@ -181,7 +181,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Tracé en ligne fine = mèches répétées font croire à une cassure inexistante</li>
+              <li>- Tracé en ligne fine = mèches répétées font croire à un breakout inexistant</li>
               <li>- Tracé en zone (rectangle 10-20 pips) = mèches naturelles absorbés, lecture fiable</li>
               <li>- Le tracé englobe corps + mèches, jamais limité aux corps seuls</li>
               <li>- Outil rectangle de la plateforme, coloration translucide (40% opacité)</li>

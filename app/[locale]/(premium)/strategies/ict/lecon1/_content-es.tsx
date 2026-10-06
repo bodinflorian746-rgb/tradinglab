@@ -158,28 +158,28 @@ export default function ContentEs() {
 
           {/* Bloque 4 — UNA RUPTURA NO ES SIEMPRE UNA CONTINUACIÓN */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Una ruptura no siempre es una continuación</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Un breakout no siempre es una continuación</h2>
 
             <div className="my-8">
               <FalseBreakoutTrapDiagram locale="es" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El reflejo natural de un trader principiante frente a una ruptura de resistencia es comprar el breakout. El reflejo ICT es preguntarse si esa ruptura se mantiene o si es una simple manipulación. Una ruptura que no se confirma, es decir que no es seguida de una continuación franca en la nueva dirección, es casi siempre una trampa. El precio regresa debajo de la resistencia, y todos los que compraron el breakout se encuentran en pérdida al instante.
+              El reflejo natural de un trader principiante frente a un breakout de resistencia es comprar el breakout. El reflejo ICT es preguntarse si ese breakout se mantiene o si es una simple manipulación. Un breakout que no se confirma, es decir que no es seguida de una continuación franca en la nueva dirección, es casi siempre una trampa. El precio regresa debajo de la resistencia, y todos los que compraron el breakout se encuentran en pérdida al instante.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD M15: la resistencia está en 4 680 $, testeada varias veces. Una vela rompe arriba, alcanza 4 695 $, los traders breakout entran en compra con su SL debajo de 4 680. Algunas velas después, el precio regresa debajo de 4 680, baja rápido hacia 4 650. La ruptura no se mantuvo, solo servía para disparar las órdenes breakout y alimentar la caída.
+                XAU/USD M15: la resistencia está en 4 680 $, testeada varias veces. Una vela rompe arriba, alcanza 4 695 $, los traders breakout entran en compra con su SL debajo de 4 680. Algunas velas después, el precio regresa debajo de 4 680, baja rápido hacia 4 650. El breakout no se mantuvo, solo servía para disparar las órdenes breakout y alimentar la caída.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Una ruptura solo tiene valor si se mantiene y va seguida de una continuación</li>
+              <li>- Un breakout solo tiene valor si se mantiene y va seguida de una continuación</li>
               <li>- Reintegración inmediata debajo del nivel roto = trampa, se invierte mentalmente el escenario</li>
               <li>- El breakout ingenuo es una de las configuraciones más caras para los traders retail</li>
-              <li>- El ICT no tradea la ruptura, tradea lo que pasa DESPUÉS</li>
+              <li>- El ICT no tradea el breakout, tradea lo que pasa DESPUÉS</li>
             </ul>
           </section>
 
@@ -239,7 +239,7 @@ export default function ContentEs() {
               <p className="text-white font-semibold text-sm mb-2">Etapa 4. Reacción (M15): ejecutar</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: la vela siguiente es un gran cuerpo bajista impulsivo (35 pts), ruptura del último mínimo local en 1.1762</li>
-                <li>- Conclusión: entrada short en 1.1758 en la ruptura, SL en 1.1795 (3 pts arriba del máximo del barrido), TP hacia la próxima zona de liquidez baja en 1.1695. R/R ≈ 1: 1,7, setup de alta probabilidad alineado Daily + barrido + reacción</li>
+                <li>- Conclusión: entrada short en 1.1758 en el breakout, SL en 1.1795 (3 pts arriba del máximo del barrido), TP hacia la próxima zona de liquidez baja en 1.1695. R/R ≈ 1: 1,7, setup de alta probabilidad alineado Daily + barrido + reacción</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -253,7 +253,7 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "El mercado va a buscar las zonas de liquidez obvias, equal highs/lows, últimos máximos/mínimos visibles.",
-              "Una ruptura no es una continuación mientras no se mantenga. La reintegración debajo del nivel roto es señal de manipulación.",
+              "Un breakout no es una continuación mientras no se mantenga. La reintegración debajo del nivel roto es señal de manipulación.",
               "La verdadera señal de entrada llega DESPUÉS del barrido: reintegración + vela impulsiva en la dirección opuesta.",
               "Sin reacción franca, el barrido solo no basta, la paciencia prima sobre la necesidad de tradear la mecha.",
             ]}

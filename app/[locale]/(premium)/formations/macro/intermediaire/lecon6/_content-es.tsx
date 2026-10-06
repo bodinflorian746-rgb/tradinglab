@@ -441,11 +441,11 @@ export default function ContentEs() {
               "Pasas inmediatamente a short sin otra confirmación",
             ]}
             correctIndex={2}
-            explanation="Un sesgo debe respetarse, pero solo mientras sus condiciones sigan válidas. Aquí, el CPI más alto que lo esperado + el DXY que explota + la ruptura técnica forman una invalidación macro completa. Cierras la idea y esperas una nueva estructura. La opción A confunde disciplina y terquedad (un sesgo invalidado ya no se respeta). La opción B agrava el riesgo sobre una tesis rota. La opción D reacciona demasiado rápido sin reconstruir un plan, hay que esperar una nueva confirmación, no flippear directamente."
+            explanation="Un sesgo debe respetarse, pero solo mientras sus condiciones sigan válidas. Aquí, el CPI más alto que lo esperado + el DXY que explota + el breakout técnico forman una invalidación macro completa. Cierras la idea y esperas una nueva estructura. La opción A confunde disciplina y terquedad (un sesgo invalidado ya no se respeta). La opción B agrava el riesgo sobre una tesis rota. La opción D reacciona demasiado rápido sin reconstruir un plan, hay que esperar una nueva confirmación, no flippear directamente."
             answerExplanations={[
               "Falso. Respetar tu plan no significa ignorar una invalidación macro completa. Cuando las condiciones que fundaban tu sesgo cambian radicalmente, el sesgo también debe cambiar.",
               "Falso. Doblar una posición sobre una tesis invalidada por la macro agrava el riesgo. Es una de las trampas más costosas en trading.",
-              "Correcto. El CPI más alto que lo esperado + el DXY que explota + la ruptura técnica forman una invalidación macro completa. Cierras la idea y esperas una nueva estructura antes de reposicionarte.",
+              "Correcto. El CPI más alto que lo esperado + el DXY que explota + el breakout técnico forman una invalidación macro completa. Cierras la idea y esperas una nueva estructura antes de reposicionarte.",
               "Falso. Pasar directamente a short tras una invalidación, sin rebuscar un plan, es reemplazar una reacción por otra. Hace falta primero una nueva confirmación, no un flip inmediato.",
             ]}
           />

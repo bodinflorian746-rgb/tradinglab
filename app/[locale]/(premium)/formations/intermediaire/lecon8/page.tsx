@@ -89,7 +89,7 @@ function ContentFr() {
           {[
             { label: "Avant le trade", detail: "Biais, niveaux, déclencheur attendu, SL/TP, confluences. Pourquoi tu prends ce trade." },
             { label: "Après le trade", detail: "Résultat en R (gain/perte), ce qui s'est passé, as-tu respecté le plan, qu'aurais-tu fait différemment ?" },
-            { label: "Révision hebdomadaire", detail: "Analyse de tous les trades de la semaine : taux de réussite, R moyen, erreurs répétées, pattern de réussite." },
+            { label: "Révision hebdomadaire", detail: "Analyse de tous les trades de la semaine : winrate, R moyen, erreurs répétées, pattern de réussite." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-blue-400 shrink-0 mt-0.5">

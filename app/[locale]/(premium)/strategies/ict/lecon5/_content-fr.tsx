@@ -187,7 +187,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une fois la liquidité prise par le sweep, l'étape critique est le displacement : la séquence de bougies impulsives qui montre que le marché s'est vraiment retourné dans la direction du biais de l'UT supérieure. Sans displacement, le sweep peut être un faux mouvement, le prix sweep, hésite, puis repart dans la direction initiale. AVEC displacement, l'intention institutionnelle est claire et le FVG laissé dans la chute (ou la montée) devient la zone d'exécution. L'entrée se prend au retour du prix dans ce FVG.
+              Une fois la liquidité prise par le sweep, l'étape critique est le displacement : la séquence de bougies directionnelles qui montre que le marché s'est vraiment retourné dans la direction du biais de l'UT supérieure. Sans displacement, le sweep peut être un faux mouvement, le prix sweep, hésite, puis repart dans la direction initiale. AVEC displacement, l'intention institutionnelle est claire et le FVG laissé dans la chute (ou la montée) devient la zone d'exécution. L'entrée se prend au retour du prix dans ce FVG.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -365,7 +365,7 @@ export default function ContentFr() {
               "Tu entres : le setup est techniquement validé, peu importe l'heure",
               "Tu entres avec un SL élargi pour absorber la faible liquidité d'Asia",
               "Tu n'entres pas : sans Killzone, le setup ICT a une probabilité de continuation très faible",
-              "Tu attends que le prix sorte du FVG puis tu prends la cassure",
+              "Tu attends que le prix sorte du FVG puis tu prends le breakout",
             ]}
             correctIndex={2}
             explanation="Le timing est une composante structurelle du modèle ICT, pas un détail secondaire. Une séquence ICT techniquement parfaite hors Killzone manque de volume institutionnel pour soutenir la continuation, le prix dans le FVG peut très bien rester latéral plusieurs heures sans déclencher quoi que ce soit. La discipline ICT consiste à filtrer par timing AVANT d'exécuter, pas à exécuter tout setup techniquement valide. On attend la prochaine Killzone."
@@ -373,7 +373,7 @@ export default function ContentFr() {
               "Faux. « Peu importe l'heure » contredit le modèle ICT, qui intègre le timing comme une condition structurelle. Un setup techniquement parfait sans timing favorable est statistiquement non rentable.",
               "Faux. Élargir le SL ne corrige pas le problème de fond : le marché manque de volume pour exécuter le scénario. On prend juste plus de risque sur un setup qui ne se déclenchera probablement pas.",
               "Correct. La séquence ICT exige timing ET setup. Hors Killzone, la probabilité que le FVG soit respecté et que la continuation se produise chute drastiquement. La discipline est d'attendre London ou NY pour exécuter.",
-              "Faux. « Sortir du FVG » et « prendre la cassure » est une lecture mécanique sans logique structurelle. Le FVG n'est pas un range qu'on trade en cassure, c'est une zone d'entrée sur rejet, pas sur sortie.",
+              "Faux. « Sortir du FVG » et « prendre le breakout » est une lecture mécanique sans logique structurelle. Le FVG n'est pas un range qu'on trade en breakout, c'est une zone d'entrée sur rejet, pas sur sortie.",
             ]}
           />
 

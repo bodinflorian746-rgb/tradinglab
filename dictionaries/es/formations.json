@@ -31,7 +31,7 @@
       "lecon3": { "title": "Soporte y resistencia: el origen del movimiento", "duration": "20 min" },
       "lecon4": { "title": "Tendencias, tradear en el sentido del mercado", "duration": "18 min" },
       "lecon5": { "title": "Confluencias y probabilidad",                  "duration": "20 min" },
-      "lecon6": { "title": "Fake Breakout, no caer en la trampa",         "duration": "18 min" },
+      "lecon6": { "title": "Fakeout, no caer en la trampa",         "duration": "18 min" },
       "lecon7": { "title": "Análisis multitemporal",                     "duration": "22 min" },
       "lecon8": { "title": "Plan de trade",                                "duration": "20 min" },
       "lecon9": { "title": "Fibonacci, retrocesos y confluencias",        "duration": "20 min" }
@@ -47,7 +47,7 @@
       "lecon3": { "title": "Order Blocks",                                 "duration": "24 min" },
       "lecon4": { "title": "Killzones, las sesiones que cuentan",         "duration": "20 min" },
       "lecon5": { "title": "OTE. Optimal Trade Entry",                    "duration": "22 min" },
-      "lecon6": { "title": "Stop Hunts, la caza de stops",                "duration": "22 min" },
+      "lecon6": { "title": "Stop Hunts, el stop hunt",                "duration": "22 min" },
       "lecon7": { "title": "Entradas de precisión",                        "duration": "25 min" },
       "lecon8": { "title": "Journaling, analizar para progresar",         "duration": "18 min" },
       "lecon9": { "title": "Backtesting, validar tu estrategia",          "duration": "22 min" }

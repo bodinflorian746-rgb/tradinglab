@@ -255,15 +255,15 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Patterns de bougies à connaître",
-            body: "Ces configurations reviennent souvent. Elles donnent des informations, mais elles ne sont jamais des signaux seuls. Leur valeur dépend entièrement de l'endroit où elles apparaissent.",
+            body: "Ces setups reviennent souvent. Ils donnent des informations, mais ils ne sont jamais des signaux seuls. Leur valeur dépend entièrement de l'endroit où ils apparaissent.",
             table: {
               headers: ["Pattern", "À quoi ça ressemble", "Ce que ça dit"],
               rows: [
                 ["Marteau", "Petit corps en haut, longue mèche basse", "Vendeurs ont échoué à faire baisser, les acheteurs ont défendu"],
                 ["Étoile filante", "Petit corps en bas, longue mèche haute", "Acheteurs ont échoué à faire monter, les vendeurs ont rejeté"],
                 ["Doji", "Corps quasi nul, mèches des deux côtés", "Indécision totale, ni les acheteurs ni les vendeurs ne gagnent"],
-                ["Avalement haussier", "Grande bougie verte qui avale la rouge précédente", "Les acheteurs ont pris le contrôle de façon décisive"],
-                ["Avalement baissier", "Grande bougie rouge qui avale la verte précédente", "Les vendeurs ont pris le contrôle de façon décisive"],
+                ["Engulfing haussier", "Grande bougie verte qui avale la rouge précédente", "Les acheteurs ont pris le contrôle de façon décisive"],
+                ["Engulfing baissier", "Grande bougie rouge qui avale la verte précédente", "Les vendeurs ont pris le contrôle de façon décisive"],
               ],
             },
           },
@@ -286,7 +286,7 @@ export const LESSONS: LevelData[] = [
           "Chaque bougie = 4 données : Open, High, Low, Close",
           "Corps vert = acheteurs gagnants. Corps rouge = vendeurs gagnants.",
           "Les mèches = tentatives échouées, elles montrent la résistance du camp adverse",
-          "Doji = indécision. Marteau = rejet des prix bas. Avalement = prise de contrôle franche.",
+          "Doji = indécision. Marteau = rejet des prix bas. Engulfing = prise de contrôle franche.",
           "Un pattern de bougie seul ne signifie rien, le contexte (zone, tendance) lui donne de la valeur",
         ],
         exercise: {
@@ -295,7 +295,7 @@ export const LESSONS: LevelData[] = [
             "Sur TradingView, ouvre EUR/USD en unité de temps Daily",
             "Trouve une bougie verte avec une longue mèche haute, qu'est-il arrivé dans les jours suivants ?",
             "Trouve un Doji, le marché a-t-il choisi une direction claire dans les bougies suivantes ?",
-            "Identifie un avalement (une grande bougie qui avale la précédente), quel a été l'impact sur la suite ?",
+            "Identifie un engulfing (une grande bougie qui avale la précédente), quel a été l'impact sur la suite ?",
           ],
         },
         quiz: {
@@ -445,9 +445,9 @@ export const LESSONS: LevelData[] = [
             heading: "Où placer son Stop Loss ?",
             body: "Un bon SL ne se place pas au hasard. Il se place à un endroit logique sur le graphique, là où ton analyse serait clairement fausse si le prix l'atteignait.",
             items: [
-              "Long : SL juste en dessous du dernier point bas significatif (le support)",
-              "Short : SL juste au-dessus du dernier point haut significatif (la résistance)",
-              "Exemple : tu achètes au rebond d'un support à 30 000 €. Le dernier point bas est à 29 200 €. Ton SL va à 29 100 €.",
+              "Long : SL juste en dessous du dernier swing low significatif (le support)",
+              "Short : SL juste au-dessus du dernier swing high significatif (la résistance)",
+              "Exemple : tu achètes au rebond d'un support à 30 000 €. Le dernier swing low est à 29 200 €. Ton SL va à 29 100 €.",
               "Règle : si le prix atteint mon SL, mon analyse était fausse. La perte est normale.",
             ],
           },
@@ -477,26 +477,26 @@ export const LESSONS: LevelData[] = [
           title: "Identifier des placements de Stop Loss logiques",
           steps: [
             "Sur TradingView, ouvre Bitcoin (BTC/USD) en H1",
-            "Repère le dernier mouvement haussier. Identifie le dernier point bas avant cette hausse.",
-            "Si tu achetais au prix actuel, ton SL irait juste en dessous de ce point bas. Note le prix exact.",
+            "Repère le dernier mouvement haussier. Identifie le dernier swing low avant cette hausse.",
+            "Si tu achetais au prix actuel, ton SL irait juste en dessous de ce swing low. Note le prix exact.",
             "Calcule la différence en euros entre ce SL et le prix actuel. C'est le risque maximum de ce trade.",
           ],
         },
         quiz: {
-          question: "Tu achètes Bitcoin à 30 000 €. Le dernier point bas sur le graphique est à 29 000 €. Où places-tu ton Stop Loss ?",
+          question: "Tu achètes Bitcoin à 30 000 €. Le dernier swing low sur le graphique est à 29 000 €. Où places-tu ton Stop Loss ?",
           answers: [
             "À 31 000 €, au-dessus de l'entrée pour ne pas perdre d'argent",
             "À 29 950 €, juste 50 € sous l'entrée, pour minimiser la perte",
-            "À 28 900 €, juste sous le point bas logique, là où ton analyse serait fausse",
+            "À 28 900 €, juste sous le swing low logique, là où ton analyse serait fausse",
             "Pas de Stop Loss, le Bitcoin finit toujours par remonter",
           ],
           correct: 2,
           explanation:
-            "Le SL d'un Long va en dessous de l'entrée, à un niveau logique. Le dernier point bas à 29 000 € est le niveau qui invalide ton scénario haussier. En plaçant le SL à 28 900 € (juste en dessous), si le prix y arrive, ton analyse était fausse. La perte = 1 100 € par Bitcoin, connue et acceptée à l'avance.",
+            "Le SL d'un Long va en dessous de l'entrée, à un niveau logique. Le dernier swing low à 29 000 € est le niveau qui invalide ton scénario haussier. En plaçant le SL à 28 900 € (juste en dessous), si le prix y arrive, ton analyse était fausse. La perte = 1 100 € par Bitcoin, connue et acceptée à l'avance.",
           answerExplanations: [
             "Faux. Un SL au-dessus de l'entrée sur un Long ferme la position quand le prix monte, quand tu gagnes. C'est complètement inversé. Le SL d'un Long va toujours EN DESSOUS de l'entrée pour te protéger d'une baisse.",
             "Faux. 50 € de SL sur Bitcoin, c'est beaucoup trop serré. Bitcoin fluctue normalement de plusieurs centaines d'euros par heure. Tu seras sorti automatiquement par le simple bruit du marché, avant même que le trade puisse se développer.",
-            "Correct. Le SL logique se place juste sous le niveau qui invalide ton analyse. Le point bas à 29 000 € est ce niveau. À 28 900 €, si le prix y arrive, la structure haussière est brisée, tu avais tort. La perte est de 1 100 € : définie et acceptée dès le départ.",
+            "Correct. Le SL logique se place juste sous le niveau qui invalide ton analyse. Le swing low à 29 000 € est ce niveau. À 28 900 €, si le prix y arrive, la structure haussière est brisée, tu avais tort. La perte est de 1 100 € : définie et acceptée dès le départ.",
             "Faux. 'Le Bitcoin finit toujours par remonter' est vrai sur 10 ans, mais sur une position ouverte sans SL, une chute de 30% peut arriver en quelques jours. Sans SL, 30% de perte sur une position = potentiellement tout le capital engagé. Un SL n'empêche pas le rebond, il limite la perte si le rebond tarde trop.",
           ],
         },
@@ -533,7 +533,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Le ratio risque/rendement (R/R)",
-            body: "Le R/R compare deux distances : celle qui sépare ton entrée de ton Stop Loss (le risque), et celle qui sépare ton entrée de ton Take Profit (l'objectif). C'est un rapport, il ne dépend pas de la taille de ta position. C'est la métrique la plus importante en gestion du risque : elle détermine si ta stratégie est rentable sur le long terme, indépendamment de ton taux de réussite.",
+            body: "Le R/R compare deux distances : celle qui sépare ton entrée de ton Stop Loss (le risque), et celle qui sépare ton entrée de ton Take Profit (l'objectif). C'est un rapport, il ne dépend pas de la taille de ta position. C'est la métrique la plus importante en gestion du risque : elle détermine si ta stratégie est rentable sur le long terme, indépendamment de ton winrate.",
             table: {
               headers: ["Ratio R/R", "Exemple concret", "Ce que ça permet"],
               rows: [
@@ -555,7 +555,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "L'erreur fatale",
-            body: "Ne pas avoir de Take Profit et laisser une position gagnante ouverte indéfiniment. Le marché ne monte jamais en ligne droite. Sans TP, tu regardes le prix s'éroder depuis son point haut : il était 6 000 $ au-dessus de ton entrée, puis 4 500 $, puis 2 500 $, puis 800 $. Tu attends le rebond. Le rebond ne vient pas. Le prix repasse 3 000 $ sous ton entrée. Un trade qui était excellent devient perdant, uniquement parce qu'il n'y avait pas d'ordre pour figer la sortie au bon niveau.",
+            body: "Ne pas avoir de Take Profit et laisser une position gagnante ouverte indéfiniment. Le marché ne monte jamais en ligne droite. Sans TP, tu regardes le prix s'éroder depuis son plus haut : il était 6 000 $ au-dessus de ton entrée, puis 4 500 $, puis 2 500 $, puis 800 $. Tu attends le rebond. Le rebond ne vient pas. Le prix repasse 3 000 $ sous ton entrée. Un trade qui était excellent devient perdant, uniquement parce qu'il n'y avait pas d'ordre pour figer la sortie au bon niveau.",
           },
         ],
         keyPoints: [
@@ -661,7 +661,7 @@ export const LESSONS: LevelData[] = [
           title: "Simuler le Break Even sur des trades historiques",
           steps: [
             "Sur TradingView, ouvre Bitcoin (BTC/USD) en H1. Repère un trade Long que tu aurais pu ouvrir il y a 2 semaines.",
-            "Note l'entrée et le SL logique (juste sous le dernier point bas). Mesure la distance entre les deux : c'est ton 1R.",
+            "Note l'entrée et le SL logique (juste sous le dernier swing low). Mesure la distance entre les deux : c'est ton 1R.",
             "À quel moment le prix avait-il parcouru +1R en ta faveur (la distance que tu viens de mesurer) ? Note ce niveau, c'est là que tu aurais activé le BE.",
             "Qu'aurait donné le BE activé à ce moment : sortie à zéro ou continuation en profit ?",
           ],
@@ -831,7 +831,7 @@ export const LESSONS: LevelData[] = [
             heading: "Les 4 erreurs qui détruisent les comptes",
             body: "Ces erreurs ne semblent pas dangereuses sur le moment. C'est exactement pour ça qu'elles font autant de dégâts.",
             items: [
-              "1. Trader sans Stop Loss — 'Je surveille le trade.' Une annonce économique, une connexion perdue, et tu perds 40% du compte en 10 minutes.",
+              "1. Trader sans Stop Loss — 'Je surveille le trade.' Une news économique, une connexion perdue, et tu perds 40% du compte en 10 minutes.",
               "2. Sur-trader, ouvrir 15 trades par jour parce que tu t'ennuies. Plus de trades = plus de spreads payés = compte qui fond lentement.",
               "3. Risquer trop, 10, 20% du capital sur un trade 'certain'. Il n'existe pas de trade certain. Une série de 3 pertes à 20% = 49% du compte perdu.",
               "4. Ne pas respecter son plan, entrer trop tôt, déplacer le SL, fermer le TP à mi-chemin. L'émotion reprend le contrôle.",
@@ -1055,7 +1055,7 @@ export const LESSONS: LevelData[] = [
         sections: [
           {
             heading: "Higher High / Lower Low : les bases",
-            body: "Toute tendance se résume à une séquence de points hauts et de points bas. En tendance haussière, chaque nouveau sommet est plus haut que le précédent (Higher High), et chaque creux est plus haut que le précédent (Higher Low). En tendance baissière, c'est l'inverse.",
+            body: "Toute tendance se résume à une séquence de swing highs et de swing lows. En tendance haussière, chaque nouveau sommet est plus haut que le précédent (Higher High), et chaque creux est plus haut que le précédent (Higher Low). En tendance baissière, c'est l'inverse.",
             items: [
               "Higher High (HH) + Higher Low (HL) = tendance haussière, les acheteurs sont en contrôle",
               "Lower Low (LL) + Lower High (LH) = tendance baissière, les vendeurs dominent",
@@ -1065,7 +1065,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Break of Structure (BOS) : la tendance confirmée",
-            body: "Un Break of Structure, c'est quand le prix casse le dernier point haut (en tendance haussière) ou le dernier point bas (en tendance baissière). Le BOS confirme que la tendance continue. C'est une information, pas un signal d'entrée.",
+            body: "Un Break of Structure, c'est quand le prix casse le dernier swing high (en tendance haussière) ou le dernier swing low (en tendance baissière). Le BOS confirme que la tendance continue. C'est une information, pas un signal d'entrée.",
             items: [
               "BOS haussier : le prix casse au-dessus du dernier HH → la tendance haussière se confirme",
               "BOS baissier : le prix casse en dessous du dernier LL → la tendance baissière se confirme",
@@ -1127,7 +1127,7 @@ export const LESSONS: LevelData[] = [
           answerExplanations: [
             "Faux. La cassure du dernier HL est exactement l'inverse d'une confirmation haussière. C'est une rupture de la structure, pas un signal d'achat.",
             "Correct. La cassure du dernier Higher Low = CHoCH. La structure haussière est fragilisée. Ce n'est pas un signal d'entrée short immédiat, mais un avertissement fort qu'un retournement est possible.",
-            "Faux. Un CHoCH seul ne confirme pas un retournement. Il faut également un BOS baissier (cassure du dernier point bas) pour avoir une tendance baissière confirmée.",
+            "Faux. Un CHoCH seul ne confirme pas un retournement. Il faut également un BOS baissier (cassure du dernier swing low) pour avoir une tendance baissière confirmée.",
             "Faux. Le CHoCH est une information très précieuse, il signale la fin possible de la structure en cours. Ignorer ce signal, c'est rater un avertissement majeur du marché.",
           ],
         },
@@ -1149,7 +1149,7 @@ export const LESSONS: LevelData[] = [
               "Un support est VALIDÉ quand le prix l'a touché ET rebondi au moins une fois",
               "Plus le prix rebondit sur une zone, plus elle est significative, et plus elle risque de céder quand elle est finalement cassée",
               "Exemple : BTC a rebondi à 25 000 € trois fois sur 6 mois → support majeur à ce niveau",
-              "Sur le graphique : cherche les zones de creux alignés, pas juste un seul point bas",
+              "Sur le graphique : cherche les zones de creux alignés, pas juste un seul swing low",
             ],
           },
           {
@@ -1179,8 +1179,8 @@ export const LESSONS: LevelData[] = [
               headers: ["Réaction", "Ce qu'on voit", "Stratégie"],
               rows: [
                 ["Rebond propre", "Mèche longue + rejet franc sur la zone", "Chercher une entrée dans le sens du rebond"],
-                ["Cassure propre", "Grande bougie qui clôture clairement de l'autre côté", "Trader la cassure dans le sens de la cassure"],
-                ["Faux breakout", "Le prix passe le niveau puis revient immédiatement", "Attendre la clôture de bougie avant de trader la cassure"],
+                ["Breakout propre", "Grande bougie qui clôture clairement de l'autre côté", "Trader le breakout dans le sens du breakout"],
+                ["Faux breakout", "Le prix passe le niveau puis revient immédiatement", "Attendre la clôture de bougie avant de trader le breakout"],
                 ["Consolidation", "Le prix range autour du niveau pendant plusieurs bougies", "Attendre une résolution claire avant d'entrer"],
               ],
             },
@@ -1190,8 +1190,8 @@ export const LESSONS: LevelData[] = [
           "Support : niveau où le prix rebondit. Résistance : niveau où le prix est repoussé.",
           "Trace des ZONES, pas des lignes, le marché n'est pas précis au point près",
           "Polarité : une résistance cassée devient support, et vice versa",
-          "Plus un niveau a été testé, plus il est significatif, et plus sa cassure sera puissante",
-          "Attends la clôture de bougie avant de réagir à une cassure, les faux breakouts sont fréquents",
+          "Plus un niveau a été testé, plus il est significatif, et plus son breakout sera puissant",
+          "Attends la clôture de bougie avant de réagir à un breakout, les faux breakouts sont fréquents",
         ],
         exercise: {
           title: "Tracer les zones clés sur BTC/USD",
@@ -1207,7 +1207,7 @@ export const LESSONS: LevelData[] = [
           answers: [
             "Il reste une résistance, le prix va rebondir dessus à la prochaine visite",
             "Il devient un support, le principe de polarité s'applique",
-            "Le niveau perd toute signification après une cassure",
+            "Le niveau perd toute signification après un breakout",
             "Il devient une nouvelle résistance encore plus forte qu'avant",
           ],
           correct: 1,
@@ -1215,9 +1215,9 @@ export const LESSONS: LevelData[] = [
             "C'est le principe de polarité : quand un niveau de résistance est cassé proprement, il change de nature et devient un support. La logique : les vendeurs qui avaient leurs ordres à ce niveau ont été stoppés, ils vont souvent racheter sur ce même niveau lors du retour du prix.",
           answerExplanations: [
             "Faux. Une résistance cassée ne reste pas résistance, c'est exactement le principe de polarité qui dit le contraire. Le niveau change de nature.",
-            "Correct. Polarité = résistance cassée → support. Le prix revient souvent tester l'ancien niveau après la cassure. C'est une des configurations les plus fiables en trading.",
+            "Correct. Polarité = résistance cassée → support. Le prix revient souvent tester l'ancien niveau après le breakout. C'est un des setups les plus fiables en trading.",
             "Faux. Un niveau cassé ne perd pas sa signification, il la change. Il était résistance, il devient support. C'est l'un des concepts les plus puissants de l'analyse technique.",
-            "Faux. La résistance n'est pas renforcée après la cassure, elle est transformée en support. Plus elle a été testée AVANT la cassure (3 fois ici), plus le support formé après sera solide.",
+            "Faux. La résistance n'est pas renforcée après le breakout, elle est transformée en support. Plus elle a été testée AVANT le breakout (3 fois ici), plus le support formé après sera solide.",
           ],
         },
       },
@@ -1322,7 +1322,7 @@ export const LESSONS: LevelData[] = [
         sections: [
           {
             heading: "Identifier une tendance claire",
-            body: "Une tendance n'est pas juste 'le prix monte'. C'est une séquence structurée de points hauts et de points bas dans une direction. Voici comment la reconnaître clairement, sans ambiguïté.",
+            body: "Une tendance n'est pas juste 'le prix monte'. C'est une séquence structurée de swing highs et de swing lows dans une direction. Voici comment la reconnaître clairement, sans ambiguïté.",
             items: [
               "Tendance haussière : chaque sommet est plus haut que le précédent, chaque creux est plus haut que le précédent (HH/HL)",
               "Tendance baissière : chaque sommet est plus bas que le précédent, chaque creux est plus bas que le précédent (LH/LL)",
@@ -1383,7 +1383,7 @@ export const LESSONS: LevelData[] = [
           question: "EUR/USD est en tendance haussière (séquence HH/HL). Le prix recule de 1,0950 à 1,0870. Quelle est la stratégie optimale ?",
           answers: [
             "Entrer Short, le prix baisse, c'est une opportunité de vente",
-            "Ignorer, les pullbacks sont des pièges, attendre une nouvelle cassure haute",
+            "Ignorer, les pullbacks sont des pièges, attendre un nouveau breakout par le haut",
             "Chercher une entrée Long sur le pullback si 1,0870 est un support valide",
             "Passer en mode neutre, la tendance haussière est annulée par ce recul",
           ],
@@ -1392,7 +1392,7 @@ export const LESSONS: LevelData[] = [
             "Un pullback en tendance haussière est une opportunité d'achat, pas un signal de vente. Le prix recule pour trouver un support, puis reprendre sa direction haussière. Si 1,0870 est un niveau validé, c'est l'entrée Long idéale, dans le sens de la tendance, au meilleur prix.",
           answerExplanations: [
             "Faux. Entrer Short dans une tendance haussière sur un simple pullback, c'est aller contre la force dominante. Les probabilités sont contre toi, et ton SL devrait être placé très loin pour éviter les faux signaux.",
-            "Faux. Les pullbacks ne sont pas des pièges, ils sont les meilleures opportunités d'entrée en tendance. Attendre une cassure haute signifie entrer en retard, avec un R/R moins favorable.",
+            "Faux. Les pullbacks ne sont pas des pièges, ils sont les meilleures opportunités d'entrée en tendance. Attendre un breakout par le haut signifie entrer en retard, avec un R/R moins favorable.",
             "Correct. Le pullback sur un niveau validé est l'entrée en tendance par excellence. La tendance reste haussière (structure HH/HL intacte), et le pullback offre un prix d'entrée avantageux avec un SL logique sous le support.",
             "Faux. Un pullback normal en tendance haussière ne change pas la structure tant que le dernier Higher Low n'est pas cassé. La tendance reste valide jusqu'à un CHoCH confirmé.",
           ],
@@ -1424,7 +1424,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Tendance de l'UT supérieure + niveau clé + signal de bougie = setup de haute qualité",
               "Support ou résistance + structure BOS + Fibonacci 61.8% = entrée institutionnelle",
-              "Support/résistance + volume élevé au rebond + avalement = confirmation forte",
+              "Support/résistance + volume élevé au rebond + engulfing = confirmation forte",
               "Confluence temporelle : niveau testé lors d'une Killzone (session London/NY) = signal renforcé",
             ],
           },
@@ -1465,25 +1465,25 @@ export const LESSONS: LevelData[] = [
           steps: [
             "Sur TradingView, ouvre EUR/USD. Identifie la tendance sur H4, puis descends en H1.",
             "Le prix est-il proche d'un niveau clé (support, résistance) ?",
-            "Cherche un signal de bougie sur ce niveau : pin bar, avalement, doji suivi d'une bougie directionnelle.",
+            "Cherche un signal de bougie sur ce niveau : pin bar, engulfing, doji suivi d'une bougie directionnelle.",
             "Score ton setup de 0 à 5 : tendance de l'UT supérieure (1pt) + niveau clé (1pt) + signal bougie (1pt) + Fibonacci (1pt) + Killzone (1pt). Entre seulement si tu as 3/5 minimum.",
           ],
         },
         quiz: {
-          question: "Tu vois une grande bougie d'avalement haussier sur un graphique en M5. Il n'y a pas de tendance claire et pas de niveau clé identifié. Que fais-tu ?",
+          question: "Tu vois une grande bougie engulfing haussière sur un graphique en M5. Il n'y a pas de tendance claire et pas de niveau clé identifié. Que fais-tu ?",
           answers: [
-            "Tu entres Long immédiatement, une grande bougie d'avalement est un signal fort",
+            "Tu entres Long immédiatement, une grande bougie engulfing est un signal fort",
             "Tu attends une deuxième bougie haussière pour confirmation, puis tu entres",
             "Tu ignores ce signal, une seule confluence sans contexte n'est pas suffisante",
             "Tu entres Short, une grande hausse sera toujours suivie d'une baisse",
           ],
           correct: 2,
           explanation:
-            "Une bougie d'avalement sans tendance claire ni niveau clé est un signal isolé, sans confluence. Les signaux de bougie sans contexte ont une probabilité proche de 50/50. Ce n'est pas suffisant pour risquer du capital. Un bon setup nécessite au minimum 2 à 3 confluences.",
+            "Une bougie engulfing sans tendance claire ni niveau clé est un signal isolé, sans confluence. Les signaux de bougie sans contexte ont une probabilité proche de 50/50. Ce n'est pas suffisant pour risquer du capital. Un bon setup nécessite au minimum 2 à 3 confluences.",
           answerExplanations: [
-            "Faux. Une grande bougie d'avalement seule sur M5, sans tendance ni niveau, c'est une confluence sur 3 minimum requises. La probabilité est insuffisante pour justifier un trade.",
+            "Faux. Une grande bougie engulfing seule sur M5, sans tendance ni niveau, c'est une confluence sur 3 minimum requises. La probabilité est insuffisante pour justifier un trade.",
             "Faux. Attendre une deuxième bougie haussière ne résout pas le problème fondamental : il n'y a toujours pas de tendance claire ni de niveau clé. Tu ajoutes une confirmation faible à une base déjà insuffisante.",
-            "Correct. Sans tendance et sans niveau clé, même un avalement puissant ne justifie pas une entrée. Les confluences manquent. Passer au trade suivant est la bonne décision, la discipline prime sur l'impulsion.",
+            "Correct. Sans tendance et sans niveau clé, même un engulfing puissant ne justifie pas une entrée. Les confluences manquent. Passer au trade suivant est la bonne décision, la discipline prime sur l'impulsion.",
             "Faux. Entrer Short sur une grande bougie haussière sans raison structurelle, c'est spéculer à pile ou face. Ce n'est pas du trading, c'est du jeu.",
           ],
         },
@@ -1496,11 +1496,11 @@ export const LESSONS: LevelData[] = [
         title: "Fake Breakout : ne pas se faire piéger",
         duration: "18 min",
         introduction:
-          "Le marché semble casser un niveau important. Tu entres dans le sens de la cassure. Et puis le prix revient en arrière et te stoppe. Ce n'est pas de la malchance, c'est un piège mécanique que tu peux apprendre à reconnaître, et même à exploiter.",
+          "Le marché semble casser un niveau important. Tu entres dans le sens du breakout. Et puis le prix revient en arrière et te stoppe. Ce n'est pas de la malchance, c'est un piège mécanique que tu peux apprendre à reconnaître, et même à exploiter.",
         sections: [
           {
             heading: "La mécanique du Fake Breakout",
-            body: "Un Fake Breakout (faux breakout) se produit quand le prix passe brièvement au-delà d'un niveau clé, support, résistance, point haut, point bas, puis revient immédiatement de l'autre côté. L'objectif : déclencher les stops des traders positionnés à ce niveau et collecter leur liquidité.",
+            body: "Un Fake Breakout (faux breakout) se produit quand le prix passe brièvement au-delà d'un niveau clé, support, résistance, swing high, swing low, puis revient immédiatement de l'autre côté. L'objectif : déclencher les stops des traders positionnés à ce niveau et collecter leur liquidité.",
             items: [
               "Le prix dépasse un niveau évident (support ou résistance visible de tous)",
               "Les stops des traders sont déclenchés, les longs sous le support, les shorts au-dessus de la résistance",
@@ -1525,9 +1525,9 @@ export const LESSONS: LevelData[] = [
               headers: ["Signe", "Description", "Action"],
               rows: [
                 ["Mèche longue au-delà du niveau", "Le prix dépasse mais la bougie clôture de l'autre côté", "Méfiance, possible faux breakout"],
-                ["Volume faible à la cassure", "La cassure n'est pas soutenue par un volume fort", "Signe de faiblesse, probabilité de faux break élevée"],
+                ["Volume faible au breakout", "Le breakout n'est pas soutenu par un volume fort", "Signe de faiblesse, probabilité de faux break élevée"],
                 ["Retour rapide et violent", "Le prix revient en force dans les 1 à 3 bougies suivantes", "Confirmation du faux breakout"],
-                ["Niveau 'trop évident'", "Tout le monde voit la résistance, c'est une cible de liquidité", "Prudence à la cassure de ce type de niveau"],
+                ["Niveau 'trop évident'", "Tout le monde voit la résistance, c'est une cible de liquidité", "Prudence au breakout de ce type de niveau"],
               ],
             },
           },
@@ -1546,7 +1546,7 @@ export const LESSONS: LevelData[] = [
           "Faux breakout = le prix dépasse un niveau puis revient, les stops sont chassés",
           "Les niveaux 'trop évidents' (Equal Highs/Lows) sont les cibles favorites des faux breakouts",
           "Signal : mèche longue + clôture de l'autre côté du niveau + retour violent",
-          "Attends toujours la clôture de bougie avant de réagir à une cassure",
+          "Attends toujours la clôture de bougie avant de réagir à un breakout",
           "Un faux breakout confirmé est un setup d'entrée puissant avec SL serré",
         ],
         exercise: {
@@ -1561,7 +1561,7 @@ export const LESSONS: LevelData[] = [
         quiz: {
           question: "Le prix monte brièvement au-dessus d'une résistance majeure, puis clôture immédiatement en dessous avec une mèche haute longue. Que fais-tu ?",
           answers: [
-            "Tu achètes en cassure, le prix a bien dépassé la résistance",
+            "Tu achètes en breakout, le prix a bien dépassé la résistance",
             "Tu ignores, ce mouvement est trop ambigu",
             "Tu surveilles un signal de retournement baissier, c'est probablement un faux breakout",
             "Tu places un ordre achat au-dessus du pic pour suivre le momentum",
@@ -1570,10 +1570,10 @@ export const LESSONS: LevelData[] = [
           explanation:
             "Un spike au-dessus d'une résistance avec clôture en dessous est la signature classique d'un faux breakout. Les stops des shorts ont été déclenchés, les institutions ont vendu dans ce spike. Le retournement baissier qui suit est alimenté par ces ventes institutionnelles. C'est là qu'on cherche un signal de vente.",
           answerExplanations: [
-            "Faux. La clôture sous la résistance invalide la cassure. Ce n'est pas un vrai breakout, c'est exactement un faux breakout. Acheter ici, c'est se positionner du mauvais côté du mouvement institutionnel.",
-            "Faux. Cette configuration n'est pas du tout ambiguë, c'est la signature précise d'un faux breakout. Mèche longue + clôture de l'autre côté = signal d'alerte clair pour un trader structuré.",
-            "Correct. Spike sur résistance + clôture en dessous = faux breakout sur la résistance. Les institutions ont vendu dans ce pic. La probabilité de continuation baissière est élevée, cherche un avalement ou pin bar baissier pour entrer.",
-            "Faux. Placer un achat au-dessus du spike, c'est espérer que la cassure soit réelle, mais tous les signaux indiquent le contraire. Tu t'apprêterais à entrer dans la direction du piège, pas dans la direction institutionnelle.",
+            "Faux. La clôture sous la résistance invalide le breakout. Ce n'est pas un vrai breakout, c'est exactement un faux breakout. Acheter ici, c'est se positionner du mauvais côté du mouvement institutionnel.",
+            "Faux. Ce setup n'est pas du tout ambigu, c'est la signature précise d'un faux breakout. Mèche longue + clôture de l'autre côté = signal d'alerte clair pour un trader structuré.",
+            "Correct. Spike sur résistance + clôture en dessous = faux breakout sur la résistance. Les institutions ont vendu dans ce pic. La probabilité de continuation baissière est élevée, cherche un engulfing ou pin bar baissier pour entrer.",
+            "Faux. Placer un achat au-dessus du spike, c'est espérer que le breakout soit réel, mais tous les signaux indiquent le contraire. Tu t'apprêterais à entrer dans la direction du piège, pas dans la direction institutionnelle.",
           ],
         },
       },
@@ -1604,7 +1604,7 @@ export const LESSONS: LevelData[] = [
               "Étape 1. Daily : quelle est la tendance principale ? Quels sont les grands niveaux ?",
               "Étape 2. H4 : la tendance Daily se confirme-t-elle ? Suis-je sur un support ou une résistance ?",
               "Étape 3. H1 : y a-t-il une structure claire dans le sens de l'UT supérieure ? Où est le prochain niveau clé ?",
-              "Étape 4. M15 : quel est le signal d'entrée précis ? Pin bar, avalement, BOS micro-structure ?",
+              "Étape 4. M15 : quel est le signal d'entrée précis ? Pin bar, engulfing, BOS micro-structure ?",
             ],
           },
           {
@@ -1644,7 +1644,7 @@ export const LESSONS: LevelData[] = [
             "Ouvre EUR/USD sur TradingView. Commence par le Daily : quelle est la tendance ? Note le biais (haussier/baissier/neutre).",
             "Descends en H4 : le biais Daily se confirme-t-il ? Identifies-tu un pullback, un support ou une résistance ?",
             "Descends en H1 : y a-t-il une structure dans le sens du Daily ? Où est le prochain niveau H1 clé ?",
-            "Descends en M15 : y a-t-il un signal de bougie (pin bar, avalement) aligné avec le biais du Daily ? Note ton setup complet.",
+            "Descends en M15 : y a-t-il un signal de bougie (pin bar, engulfing) aligné avec le biais du Daily ? Note ton setup complet.",
           ],
         },
         quiz: {
@@ -1657,7 +1657,7 @@ export const LESSONS: LevelData[] = [
           ],
           correct: 1,
           explanation:
-            "Une pin bar haussière sur support H1, dans un contexte Daily baissier, est un signal contre la tendance principale. Même si la configuration de l'UT inférieure est belle, l'UT supérieure commande. La probabilité de succès est significativement réduite. La bonne décision : ignorer ce setup et attendre un signal dans le sens du Daily.",
+            "Une pin bar haussière sur support H1, dans un contexte Daily baissier, est un signal contre la tendance principale. Même si le setup de l'UT inférieure est beau, l'UT supérieure commande. La probabilité de succès est significativement réduite. La bonne décision : ignorer ce setup et attendre un signal dans le sens du Daily.",
           answerExplanations: [
             "Faux. Entrer Long contre une tendance Daily baissière, même sur un signal de l'UT inférieure propre, c'est nager à contre-courant. Statistiquement, ces trades ont une probabilité de succès bien inférieure à 50%.",
             "Correct. Quand l'UT supérieure et l'UT inférieure sont en conflit, l'UT supérieure gagne. Le Daily baissier invalide les signaux Long sur H1. Attendre un signal Short aligné avec le contexte Daily est la bonne approche.",
@@ -1692,7 +1692,7 @@ export const LESSONS: LevelData[] = [
             body: "L'entrée est le moment où tout se joue. Entrer trop tôt = SL large et R/R mauvais. Entrer trop tard = R/R trop petit. L'entrée optimale se fait sur confirmation, pas sur anticipation.",
             items: [
               "Ne jamais entrer 'parce que ça semble monter', attendre un signal de bougie de confirmation",
-              "Entrée précise : clôture d'une bougie de signal (pin bar, avalement) sur un niveau clé",
+              "Entrée précise : clôture d'une bougie de signal (pin bar, engulfing) sur un niveau clé",
               "Limite order vs Market order : un ordre limit te donne un meilleur prix mais peut ne jamais être déclenché",
               "Si le prix a déjà parcouru 70% du mouvement attendu : le setup est raté. Ne pas chasser.",
             ],
@@ -1701,7 +1701,7 @@ export const LESSONS: LevelData[] = [
             heading: "Stop Loss et Take Profit : la règle du R:R",
             body: "Le ratio risque/rendement (R:R) est le fondement de toute stratégie rentable. Il détermine combien tu peux perdre de trades et rester profitable sur le long terme.",
             table: {
-              headers: ["Ratio R:R", "Win Rate minimum pour être rentable", "Exemple concret"],
+              headers: ["Ratio R:R", "Winrate minimum pour être rentable", "Exemple concret"],
               rows: [
                 ["1:1", "51% (très difficile à tenir)", "Risque 500 €, gagne 500 €"],
                 ["1:2", "34% (réaliste)", "Risque 500 €, gagne 1 000 €"],
@@ -1723,7 +1723,7 @@ export const LESSONS: LevelData[] = [
         ],
         keyPoints: [
           "Un plan de trade = biais + entrée + SL + TP + R:R décidés AVANT d'ouvrir la position",
-          "R:R minimum 1:2, avec 34% de win rate tu es déjà profitable à long terme",
+          "R:R minimum 1:2, avec 34% de winrate tu es déjà profitable à long terme",
           "N'entre jamais sans un niveau logique de SL, sinon c'est du jeu, pas du trading",
           "Si la thèse change avant l'entrée, annule le trade. Pas de FOMO.",
           "Après chaque trade, note le résultat : c'est le seul outil de progression réelle",
@@ -1749,8 +1749,8 @@ export const LESSONS: LevelData[] = [
           explanation:
             "SL = 30 points, TP = 45 points. R:R = TP/SL = 45/30 = 1,5:1. Tu vises 1,5 fois ce que tu risques. C'est supérieur à 1:1 mais inférieur au minimum recommandé de 1:2. Avec ce ratio, tu as besoin de gagner plus de 40% de tes trades pour être rentable, ce qui est difficile à tenir sur la durée. Un TP à 60 points donnerait un R:R de 1:2, nettement plus sain.",
           answerExplanations: [
-            "Faux sur l'évaluation. R:R de 1,5:1 (ou 1:1,5) est bien supérieur à 1:1, mais inférieur au minimum de 1:2. C'est passable mais pas optimal, il faut 40%+ de win rate pour être rentable avec ce ratio.",
-            "Correct. 45/30 = 1:1,5. Ce ratio est insuffisant pour une stratégie saine sur le long terme. Il nécessite un win rate de 40% minimum. Mieux vaut chercher un TP plus loin (60+ points) pour atteindre un ratio 1:2.",
+            "Faux sur l'évaluation. R:R de 1,5:1 (ou 1:1,5) est bien supérieur à 1:1, mais inférieur au minimum de 1:2. C'est passable mais pas optimal, il faut 40%+ de winrate pour être rentable avec ce ratio.",
+            "Correct. 45/30 = 1:1,5. Ce ratio est insuffisant pour une stratégie saine sur le long terme. Il nécessite un winrate de 40% minimum. Mieux vaut chercher un TP plus loin (60+ points) pour atteindre un ratio 1:2.",
             "Faux. R:R de 2:1 voudrait dire que tu risques 2 fois plus que tu ne gagnes, ce serait catastrophique. Le bon ratio est l'inverse : tu vises 2 fois ce que tu risques (1:2), pas le contraire.",
             "Faux. Le R:R est un ratio, il se calcule uniquement avec la distance du SL et du TP, pas avec le capital. Capital × risque% = montant en euros risqué. Mais le ratio R:R = TP en points ÷ SL en points.",
           ],
@@ -1779,7 +1779,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Comment tracer correctement un retracement",
-            body: "L'erreur la plus commune : mal tracer le Fibonacci, ce qui donne des niveaux décalés. Il faut toujours tracer du point bas au point haut d'un mouvement impulsif (ou l'inverse pour une tendance baissière).",
+            body: "L'erreur la plus commune : mal tracer le Fibonacci, ce qui donne des niveaux décalés. Il faut toujours tracer du swing low au swing high d'un mouvement impulsif (ou l'inverse pour une tendance baissière).",
             items: [
               "Tendance haussière : trace du dernier Low significatif vers le dernier High significatif",
               "Tendance baissière : trace du dernier High significatif vers le dernier Low significatif",
@@ -1806,7 +1806,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Exemple : EUR/USD monte de 1,0700 à 1,0950 (HH). Le 61.8% se situe à 1,0795.",
               "Si 1,0795 correspond aussi à un support H4 → confluence forte",
-              "Attends le prix à 1,0795 : signal de bougie (pin bar, avalement) → entrée Long",
+              "Attends le prix à 1,0795 : signal de bougie (pin bar, engulfing) → entrée Long",
               "SL sous le 78.6% ou sous le Low du mouvement (selon la structure). TP au dernier High ou au niveau suivant.",
             ],
           },
@@ -1837,11 +1837,11 @@ export const LESSONS: LevelData[] = [
           ],
           correct: 2,
           explanation:
-            "Le niveau 61.8% de Fibonacci qui coïncide avec un support H4 est une confluence puissante, mais elle ne justifie pas une entrée immédiate au toucher. Il faut attendre un signal de confirmation (pin bar, avalement haussier) pour valider que le prix réagit vraiment à ce niveau. Le toucher sans confirmation peut être un transit vers des niveaux plus bas.",
+            "Le niveau 61.8% de Fibonacci qui coïncide avec un support H4 est une confluence puissante, mais elle ne justifie pas une entrée immédiate au toucher. Il faut attendre un signal de confirmation (pin bar, engulfing haussier) pour valider que le prix réagit vraiment à ce niveau. Le toucher sans confirmation peut être un transit vers des niveaux plus bas.",
           answerExplanations: [
             "Faux. Entrer au toucher d'un niveau Fibonacci sans confirmation de bougie, c'est anticiper sans preuve. Le prix peut transiter par 28 820 € vers 27 500 € (78.6%) sans réagir. Attends toujours le signal.",
             "Faux. Fibonacci seul n'est pas fiable, c'est vrai. Mais ici, il y a une CONFLUENCE : 61.8% + support H4. Cette confluence est précisément ce qui rend le setup valide. L'erreur serait de ne pas avoir de confirmation de bougie.",
-            "Correct. Confluence 61.8% + support H4 = zone d'intérêt forte. Mais tu attends le signal de bougie (pin bar ou avalement haussier) pour confirmer que le prix réagit à ce niveau. C'est l'entrée optimale : niveau fort + confirmation = setup complet.",
+            "Correct. Confluence 61.8% + support H4 = zone d'intérêt forte. Mais tu attends le signal de bougie (pin bar ou engulfing haussier) pour confirmer que le prix réagit à ce niveau. C'est l'entrée optimale : niveau fort + confirmation = setup complet.",
             "Faux. Un retracement de 61.8% en tendance haussière est un pullback profond mais normal. La tendance n'est pas terminée tant que le dernier Low significatif n'est pas cassé. 61.8% = zone d'achat potentielle, pas signal de vente.",
           ],
         },

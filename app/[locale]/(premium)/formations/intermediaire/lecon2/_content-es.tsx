@@ -196,7 +196,7 @@ export default function ContentEs() {
           "Falso. 1.0800 era un soporte, pero se rompió. Una vez roto, un soporte ya no cumple su rol de comprador, se invierte en resistencia. Comprar acá es ignorar la polaridad.",
           "Correcto. La polaridad es uno de los comportamientos más fiables del mercado. 1.0800 roto → se vuelve resistencia. El pullback en ese nivel es una oportunidad de venta con un SL lógico encima.",
           "Falso. Los niveles muy conocidos suelen funcionar mejor, no peor, es ahí donde se concentran las órdenes. La popularidad de un nivel no es razón para ignorarlo.",
-          "Falso. Esperar que el precio vuelva arriba para confirmar es perder la entrada. La señal de venta es el retorno a 1.0800 con un rechazo, no la ruptura al alza.",
+          "Falso. Esperar que el precio vuelva arriba para confirmar es perder la entrada. La señal de venta es el retorno a 1.0800 con un rechazo, no el breakout al alza.",
         ]}
       />
 

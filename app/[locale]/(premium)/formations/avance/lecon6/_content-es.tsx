@@ -50,7 +50,7 @@ export default function ContentEs() {
             },
             {
               label: "Cierre del otro lado del nivel",
-              detail: "La vela perfora el nivel pero cierra del lado opuesto. Eso confirma que la penetración fue temporal (stop hunt), no una verdadera ruptura.",
+              detail: "La vela perfora el nivel pero cierra del lado opuesto. Eso confirma que la penetración fue temporal (stop hunt), no un verdadero breakout.",
             },
             {
               label: "Retroceso brutal y rápido",
@@ -163,10 +163,10 @@ export default function ContentEs() {
         correctIndex={2}
         explanation="Un spike por encima de los Equal Highs con cierre por debajo es la firma de un stop hunt sobre la liquidez buy-side (BSL). Las instituciones acaban de tomar la liquidez de los stops de los shorts. El retroceso bajista que sigue está alimentado por las ventas institucionales, es una zona donde buscar una confirmación de venta, no una señal en sí misma."
         answerExplanations={[
-          "Falso. El cierre debajo de la resistencia invalida la ruptura. No es un breakout, es precisamente un false breakout (stop hunt). Comprar aquí es posicionarte del lado equivocado del movimiento institucional.",
+          "Falso. El cierre debajo de la resistencia invalida el breakout. No es un breakout, es precisamente un fakeout (stop hunt). Comprar aquí es posicionarte del lado equivocado del movimiento institucional.",
           "Falso. No es ambiguo para alguien que conoce los stop hunts. La firma es clara: spike + mecha larga + cierre del lado opuesto. Es una señal de alerta, no una situación neutra.",
           "Correcto. Un spike en los EQH con regreso debajo de la resistencia = stop hunt sobre la BSL. Las instituciones vendieron en ese spike. La probabilidad de una continuación bajista es alta, vigila una envolvente o pin bar bajista para entrar.",
-          "Falso. Colocar una orden por encima del spike es esperar que la ruptura sea real. Pero la señal es exactamente la opuesta: el precio rechazó ese nivel con fuerza. Te dispondrías a entrar en la dirección del stop hunt, no en la dirección institucional.",
+          "Falso. Colocar una orden por encima del spike es esperar que el breakout sea real. Pero la señal es exactamente la opuesta: el precio rechazó ese nivel con fuerza. Te dispondrías a entrar en la dirección del stop hunt, no en la dirección institucional.",
         ]}
       />
 

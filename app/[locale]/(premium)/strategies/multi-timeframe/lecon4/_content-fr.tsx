@@ -192,7 +192,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Toutes les zones ne réagissent pas. Une zone forte sur le papier peut être traversée sans aucun signal, le marché ne s&apos;y arrête pas, n&apos;y produit aucune mèche de rejet, aucune cassure locale en faveur du scénario. L&apos;UT inférieure protège alors le capital : pas de réaction = pas d&apos;entrée. La patience permet d&apos;attendre la zone suivante plutôt que de forcer un trade.
+              Toutes les zones ne réagissent pas. Une zone forte sur le papier peut être traversée sans aucun signal, le marché ne s&apos;y arrête pas, n&apos;y produit aucune mèche de rejet, aucun breakout local en faveur du scénario. L&apos;UT inférieure protège alors le capital : pas de réaction = pas d&apos;entrée. La patience permet d&apos;attendre la zone suivante plutôt que de forcer un trade.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">

@@ -365,7 +365,7 @@ export default function ContentEs() {
               "Entras: el setup está técnicamente validado, no importa la hora",
               "Entras con un SL ampliado para absorber la baja liquidez de Asia",
               "No entras: sin Killzone, el setup ICT tiene una probabilidad de continuación muy baja",
-              "Esperas a que el precio salga del FVG y tomas la ruptura",
+              "Esperas a que el precio salga del FVG y tomas el breakout",
             ]}
             correctIndex={2}
             explanation="El timing es un componente estructural del modelo ICT, no un detalle secundario. Una secuencia ICT técnicamente perfecta fuera de Killzone carece de volumen institucional para sostener la continuación, el precio en el FVG puede quedarse lateral varias horas sin disparar nada. La disciplina ICT consiste en filtrar por timing ANTES de ejecutar, no en ejecutar todo setup técnicamente válido. Se espera la próxima Killzone."
@@ -373,7 +373,7 @@ export default function ContentEs() {
               "Falso. « No importa la hora » contradice el modelo ICT, que integra el timing como una condición estructural. Un setup técnicamente perfecto sin timing favorable es estadísticamente no rentable.",
               "Falso. Ampliar el SL no corrige el problema de fondo: al mercado le falta volumen para ejecutar el escenario. Solo se asume más riesgo en un setup que probablemente no se disparará.",
               "Correcto. La secuencia ICT exige timing Y setup. Fuera de Killzone, la probabilidad de que el FVG sea respetado y de que la continuación se produzca cae drásticamente. La disciplina es esperar London o NY para ejecutar.",
-              "Falso. « Salir del FVG » y « tomar la ruptura » es una lectura mecánica sin lógica estructural. El FVG no es un rango que se tradea en breakout, es una zona de entrada por rechazo, no por salida.",
+              "Falso. « Salir del FVG » y « tomar el breakout » es una lectura mecánica sin lógica estructural. El FVG no es un rango que se tradea en breakout, es una zona de entrada por rechazo, no por salida.",
             ]}
           />
 

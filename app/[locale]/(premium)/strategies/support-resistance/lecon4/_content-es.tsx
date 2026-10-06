@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon1", title: "Soporte y resistencia: las zonas donde el mercado reacciona", disabled: false },
   { id: "lecon2", title: "Identificar un nivel real (vs una línea trazada al azar)", disabled: false },
   { id: "lecon3", title: "Flip support↔resistance y tradear un rebote", disabled: false },
-  { id: "lecon4", title: "Ruptura real vs fake breakout", disabled: false },
+  { id: "lecon4", title: "Breakout real vs fakeout", disabled: false },
 ];
 
 export default function ContentEs() {
@@ -56,12 +56,12 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Ruptura real vs fake breakout
+            Breakout real vs fakeout
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Esta lección enseña a reconocer un fake breakout y tradear el retorno: distinción real/falso, mecánica del stop hunt institucional, plan de ejecución numérico.
+              Esta lección enseña a reconocer un fakeout y tradear el retorno: distinción real/falso, mecánica del stop hunt institucional, plan de ejecución numérico.
             </p>
           </div>
 
@@ -113,7 +113,7 @@ export default function ContentEs() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                «La falsa ruptura atrapa a los retails que entran demasiado rápido. La misma ruptura, tomada a contracorriente, se vuelve un setup limpio.»
+                «El fakeout atrapa a los retails que entran demasiado rápido. El mismo breakout, tomado a contracorriente, se vuelve un setup limpio.»
               </p>
             </div>
           </section>
@@ -137,12 +137,12 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La distinción entre breakout real y fake breakout se basa en el comportamiento de la vela de ruptura y de las siguientes. El criterio esencial: cierre neto o mecha y luego retorno.
+              La distinción entre breakout real y fakeout se basa en el comportamiento de la vela de breakout y de las siguientes. El criterio esencial: cierre neto o mecha y luego retorno.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Breakout real: cierre neto más allá del nivel + follow-through en 3-5 velas</li>
-              <li>- Falso breakout: la mecha supera el nivel, pero el cierre vuelve a la zona</li>
+              <li>- Fakeout: la mecha supera el nivel, pero el cierre vuelve a la zona</li>
               <li>- Reintegración en 1-3 velas tras la mecha = fake confirmado</li>
               <li>- Zona fuerte (3+ toques, nivel psicológico) = terreno favorable a los fakes</li>
             </ul>
@@ -150,18 +150,18 @@ export default function ContentEs() {
 
           {/* Bloc 4 — RECONNAÎTRE UN FAKE BREAKOUT */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Reconocer un fake breakout</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Reconocer un fakeout</h2>
 
             <div className="my-8">
               <GraphFakeBreakout />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              4 criterios califican un fake breakout operativamente aprovechable.
+              4 criterios califican un fakeout operativamente aprovechable.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Mecha de al menos 50% del cuerpo de la vela, sobresaliendo del lado de la ruptura</li>
+              <li>- Mecha de al menos 50% del cuerpo de la vela, sobresaliendo del lado del breakout</li>
               <li>- Reintegración clara en la zona en 1-3 velas siguientes</li>
               <li>- Volumen relativo elevado en la mecha, luego desplome post-rechazo</li>
               <li>- Contexto de zona fuerte (3+ toques, nivel psicológico, OB visible)</li>
@@ -177,27 +177,27 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El fake breakout es a menudo un stop hunt institucional: las órdenes stop son objetivo y se disparan, luego el precio vuelve a su dirección de origen.
+              El fakeout es a menudo un stop hunt institucional: las órdenes stop son objetivo y se disparan, luego el precio vuelve a su dirección de origen.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Zona de cluster de stops situada justo más allá del nivel estructural (4 720$ → 4 745$)</li>
               <li>- La mecha pincha en la zona, dispara los stops, luego cierra bajo el nivel</li>
               <li>- Continuación bajista rápida tras la absorción de la liquidez</li>
-              <li>- El trade se toma en el sentido opuesto a la ruptura rechazada</li>
+              <li>- El trade se toma en el sentido opuesto al breakout rechazado</li>
             </ul>
           </section>
 
           {/* Bloc 6 — PLAN DE TRADE CHIFFRÉ */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade: fake breakout XAU/USD H1</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade: fakeout XAU/USD H1</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Resistencia 4 650$ tocada 3 veces en 2 meses (nivel psicológico fuerte). 4ª aproximación provoca una ruptura sospechosa. Vela 1: mecha hasta 4 680$ + cierre en 4 655$. Vela 2: cierre en 4 640$.
+              Resistencia 4 650$ tocada 3 veces en 2 meses (nivel psicológico fuerte). 4ª aproximación provoca un breakout sospechoso. Vela 1: mecha hasta 4 680$ + cierre en 4 655$. Vela 2: cierre en 4 640$.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Setup (trade short sobre fake breakout)</p>
+              <p className="text-white font-semibold text-sm mb-2">Setup (trade short sobre fakeout)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Vela 1: mecha 25$ por encima, cuerpo 5$, cierre en el límite</li>
                 <li>- Vela 2: cierre claro en 4 640$ (reintegración confirmada)</li>
@@ -228,15 +228,15 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "Un fake breakout combina 4 criterios: mecha larga sin cierre claro, reintegración rápida, volumen desproporcionado, zona fuerte.",
-              "El trade se toma en el sentido opuesto a la ruptura rechazada, tras doble confirmación (cierre + 2ª vela).",
+              "Un fakeout combina 4 criterios: mecha larga sin cierre claro, reintegración rápida, volumen desproporcionado, zona fuerte.",
+              "El trade se toma en el sentido opuesto al breakout rechazado, tras doble confirmación (cierre + 2ª vela).",
               "El stop loss se coloca más allá de la mecha inicial con margen 3-5 pips.",
-              "Los fake breakouts se observan preferentemente en zonas fuertes (3+ toques, niveles psicológicos).",
+              "Los fakeouts se observan preferentemente en zonas fuertes (3+ toques, niveles psicológicos).",
             ]}
           />
 
           <LessonExercice
-            description="En XAU/USD H1, la resistencia 4 650$ ha sido tocada 3 veces en 2 meses. Una vela imprime una mecha hasta 4 680$ y luego cierra en 4 655$. La vela siguiente cierra en 4 640$. ¿Cómo se construye el plan de trade fake breakout?"
+            description="En XAU/USD H1, la resistencia 4 650$ ha sido tocada 3 veces en 2 meses. Una vela imprime una mecha hasta 4 680$ y luego cierra en 4 655$. La vela siguiente cierra en 4 640$. ¿Cómo se construye el plan de trade fakeout?"
             steps={[
               "Validar los 4 criterios de detección: mecha de 25$ por encima de la zona sin cierre claro, reintegración en 1 vela, zona fuerte (3 toques + nivel psicológico 4 650$)",
               "Validar la doble confirmación: vela 1 cierra en 4 655$ (en el límite), vela 2 cierra en 4 640$ (reintegración clara)",
@@ -263,7 +263,7 @@ export default function ContentEs() {
             options={[
               "El simple retorno del precio a la zona basta",
               "Una señal de rechazo (pin bar, envolvente, reacción neta) al contacto con la zona",
-              "Una ruptura de la siguiente zona",
+              "Un breakout de la siguiente zona",
               "Ninguna señal requerida, la entrada es mecánica",
             ]}
             correctIndex={1}
@@ -271,15 +271,15 @@ export default function ContentEs() {
           />
 
           <LessonQuiz
-            question="Una vela imprime una mecha más allá de una resistencia fuerte, luego cierra bajo el límite. ¿Qué confirmación adicional se requiere antes de considerar un trade short fake breakout?"
+            question="Una vela imprime una mecha más allá de una resistencia fuerte, luego cierra bajo el límite. ¿Qué confirmación adicional se requiere antes de considerar un trade short fakeout?"
             options={[
               "Una segunda vela que mantiene o refuerza la reintegración en la zona",
               "Ninguna confirmación, la entrada se hace en la mecha rechazada",
-              "Una ruptura de la siguiente zona",
+              "Un breakout de la siguiente zona",
               "Un retroceso completo hacia la zona opuesta",
             ]}
             correctIndex={0}
-            explanation="La doble confirmación (cierre de la vela de rechazo en la zona + segunda vela que mantiene la reintegración) filtra los rechazos puntuales que finalmente se transforman en ruptura válida. Entrar en la mecha inicial expone a un riesgo elevado."
+            explanation="La doble confirmación (cierre de la vela de rechazo en la zona + segunda vela que mantiene la reintegración) filtra los rechazos puntuales que finalmente se transforman en breakout válido. Entrar en la mecha inicial expone a un riesgo elevado."
           />
 
         </div>

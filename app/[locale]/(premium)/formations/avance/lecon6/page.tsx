@@ -52,7 +52,7 @@ function ContentFr() {
             },
             {
               label: "Clôture de l'autre côté du niveau",
-              detail: "La bougie pierce le niveau mais clôture de l'autre côté. Cela confirme que la pénétration était temporaire (chasse aux stops), pas une vraie cassure.",
+              detail: "La bougie pierce le niveau mais clôture de l'autre côté. Cela confirme que la pénétration était temporaire (chasse aux stops), pas un vrai breakout.",
             },
             {
               label: "Retournement brutal et rapide",
@@ -86,7 +86,7 @@ function ContentFr() {
           {[
             { step: "1", text: "Identifie un niveau avec accumulation de stops : EQH, EQL, résistance ou support évident." },
             { step: "2", text: "Attends que le prix spike au-delà du niveau mais ne clôture pas de l'autre côté." },
-            { step: "3", text: "Confirme le retournement : bougie de rejet (pin bar, avalement) qui revient dans la zone." },
+            { step: "3", text: "Confirme le retournement : bougie de rejet (pin bar, engulfing) qui revient dans la zone." },
             { step: "4", text: "Entre dans le sens du retournement. SL au-delà du pic du spike. TP vers le niveau de liquidité opposé." },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -157,7 +157,7 @@ function ContentFr() {
       <LessonQuiz
         question="Le prix monte brièvement au-dessus d'une résistance majeure (Equal Highs) puis clôture immédiatement en dessous avec une mèche haute longue. Que fais-tu ?"
         options={[
-          "Tu achètes en cassure, le prix a bien dépassé la résistance",
+          "Tu achètes en breakout, le prix a bien dépassé la résistance",
           "Tu ignores, ce mouvement est trop ambigu pour en tirer une conclusion",
           "Tu surveilles un signal de retournement baissier, c'est probablement une chasse aux stops sur la BSL",
           "Tu places un ordre d'achat au-dessus du pic du spike pour suivre le momentum",
@@ -165,10 +165,10 @@ function ContentFr() {
         correctIndex={2}
         explanation="Un spike au-dessus des Equal Highs avec clôture en dessous est la signature d'une chasse aux stops sur la liquidité buy-side (BSL). Les institutions viennent de prendre la liquidité des stops des shorts. Le retournement baissier qui suit est alimenté par les ventes institutionnelles, c'est une zone où chercher une confirmation de vente, pas un signal en soi."
         answerExplanations={[
-          "Faux. La clôture sous la résistance invalide la cassure. Ce n'est pas un breakout, c'est précisément un faux breakout (chasse aux stops). Acheter ici, c'est se positionner du mauvais côté du mouvement institutionnel.",
+          "Faux. La clôture sous la résistance invalide le breakout. Ce n'est pas un breakout, c'est précisément un faux breakout (chasse aux stops). Acheter ici, c'est se positionner du mauvais côté du mouvement institutionnel.",
           "Faux. Ce n'est pas ambigu pour quelqu'un qui connaît les chasses aux stops. La signature est claire : spike + mèche longue + clôture de l'autre côté. C'est un signal d'alerte, pas une situation neutre.",
-          "Correct. Un spike sur les EQH avec retour sous la résistance = chasse aux stops sur la BSL. Les institutions ont vendu dans ce spike. La probabilité d'une continuation baissière est élevée, surveille un avalement ou pin bar baissier pour entrer.",
-          "Faux. Placer un ordre au-dessus du spike, c'est espérer que la cassure soit réelle. Mais le signal est exactement inverse : le prix a rejeté ce niveau avec force. Tu t'apprêterais à entrer dans la direction de la chasse aux stops, pas dans la direction institutionnelle.",
+          "Correct. Un spike sur les EQH avec retour sous la résistance = chasse aux stops sur la BSL. Les institutions ont vendu dans ce spike. La probabilité d'une continuation baissière est élevée, surveille un engulfing ou pin bar baissier pour entrer.",
+          "Faux. Placer un ordre au-dessus du spike, c'est espérer que le breakout soit réel. Mais le signal est exactement inverse : le prix a rejeté ce niveau avec force. Tu t'apprêterais à entrer dans la direction de la chasse aux stops, pas dans la direction institutionnelle.",
         ]}
       />
 

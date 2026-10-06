@@ -12,7 +12,7 @@ import { ScenarioZoneDiagram } from "@/app/components/charts/ScenarioZoneDiagram
 
 const LESSONS = [
   { id: "lecon1", title: "Por qué hacer un análisis multitemporal", disabled: false },
-  { id: "lecon2", title: "La temporalidad superior: el sesgo", disabled: false },
+  { id: "lecon2", title: "El HTF: el sesgo", disabled: false },
   { id: "lecon3", title: "La temporalidad intermedia: la zona", disabled: false },
   { id: "lecon4", title: "La temporalidad de ejecución: la entrada", disabled: false },
   { id: "lecon5", title: "El proceso completo", disabled: false },

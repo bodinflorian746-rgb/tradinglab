@@ -36,7 +36,7 @@ function ContentFr() {
           </p>
         </div>
         <p className="text-zinc-300 text-sm leading-relaxed">
-          En pratique, les FVG apparaissent après des annonces économiques importantes,
+          En pratique, les FVG apparaissent après des news économiques importantes,
           des ouvertures de session avec gap, ou des mouvements impulsifs
           institutionnels. Ils représentent des zones de déséquilibre que le marché
           cherche naturellement à réintégrer.
@@ -55,7 +55,7 @@ function ContentFr() {
             <div className="space-y-2">
               {[
                 { label: "Bougie 1", desc: "La bougie qui précède le mouvement. Retiens sa mèche haute (pour un FVG bullish) ou basse (pour un bearish)." },
-                { label: "Bougie 2", desc: "La bougie impulsive : grande, directionnelle, souvent sans mèche. Elle crée le déséquilibre." },
+                { label: "Bougie 2", desc: "La bougie de displacement : grande, directionnelle, souvent sans mèche. Elle crée le déséquilibre." },
                 { label: "Bougie 3", desc: "La bougie qui suit. Retiens sa mèche basse (bullish) ou haute (bearish). Si elle ne chevauche pas la mèche de la bougie 1, le FVG existe." },
               ].map((b) => (
                 <div key={b.label} className="flex items-start gap-3">

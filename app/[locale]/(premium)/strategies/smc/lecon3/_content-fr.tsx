@@ -164,7 +164,7 @@ export default function ContentFr() {
           {/* Bloc 5 — CRITÈRES DE QUALIFICATION D'UN OB TRADABLE */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Critères de qualification d&apos;un OB tradable</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">4 critères qualifient un OB comme tradable opérationnellement. Un OB qui ne valide pas ces critères reste structurellement présent mais expose à un taux de réussite réduit.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">4 critères qualifient un OB comme tradable opérationnellement. Un OB qui ne valide pas ces critères reste structurellement présent mais expose à un winrate réduit.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Fraîcheur de l&apos;OB.</span> <span className="text-zinc-300">Moins de 20 bougies H4 depuis formation. Au-delà, l&apos;institutionnel a pu accumuler ailleurs.</span></div>
@@ -286,7 +286,7 @@ export default function ContentFr() {
             description="Sur XAU/USD H4, tendance haussière confirmée (prix au-dessus de la MM200 Daily à 4 320$). Une impulsion haussière de 5 bougies a porté le prix de 4 540$ à 4 660$, validée par un BOS au-dessus du HH précédent à 4 650$. La dernière bougie baissière avant l’impulsion présente un corps entre 4 562$ (open) et 4 555$ (close), avec mèche basse à 4 547$. Aucune mitigation depuis la formation (8 bougies H4 écoulées). Le prix retrace actuellement vers la zone. Construis le plan complet et calcule deux variantes de R/R : variante naïve (TP éloigné) et variante réaliste (TP partiel intermédiaire)."
             steps={[
               "Délimiter l’Order Block bullish : corps de la bougie opposée entre 4 555$ et 4 562$, mèche basse à 4 547$. OB frais (8 bougies écoulées), aligné Daily haussier, non mitigé.",
-              "Placer l’entrée à 4 562$ (limite haute du corps de l’OB) avec attente du signal de rejet M15 (pin bar, avalement haussier).",
+              "Placer l’entrée à 4 562$ (limite haute du corps de l’OB) avec attente du signal de rejet M15 (pin bar, engulfing haussier).",
               "Placer le stop loss à 4 549$ (13$ sous l’entrée, au-delà de la mèche basse 4 547$ avec marge 2$). Risque = 13$ par unité.",
               "Variante naïve. TP éloigné à 4 720$ (projection extension complète de l’impulsion initiale) : Gain = 4 720 - 4 562 = 158$. R/R = 158 / 13 = 12,3. Ratio attractif sur le papier mais trop optimiste : la probabilité d’atteindre une cible à 12:1 sans pullback intermédiaire reste faible.",
               "Variante réaliste. TP partiel à 4 632$ (premier HH intermédiaire identifié, prise de profit partielle) : Gain = 4 632 - 4 562 = 70$. R/R = 70 / 13 = 5,4. Cible structurelle réaliste, atteignable sans détour. Le R/R 5,4 reste excellent pour un setup OB et permet de sécuriser la position avant le HH précédent à 4 650$, où le marché risque de produire une réaction technique avant le TP final.",

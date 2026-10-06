@@ -206,7 +206,7 @@ export default function ContentEs() {
                 <li>- 1ª vela bearish: Open 4 615$, Close 4 600$ (cuerpo 15$)</li>
                 <li>- 2ª vela bullish: Open 4 595$, Close 4 625$ (cuerpo 30$, 2x la 1ª)</li>
                 <li>- El cuerpo de la 2ª envuelve por completo al de la 1ª</li>
-                <li>- Entrada long: 4 630$ (ruptura del high de la vela envolvente)</li>
+                <li>- Entrada long: 4 630$ (breakout del high de la vela envolvente)</li>
                 <li>- Stop loss: 4 590$ (5$ debajo del low de la vela envolvente)</li>
                 <li>- Take profit: 4 720$ (high reciente anterior)</li>
               </ul>
@@ -246,7 +246,7 @@ export default function ContentEs() {
               "Abrir un gráfico XAU/USD o EUR/USD en temporalidad H4",
               "Identificar 2 envolventes válidas en el histórico de los últimos 30 días y anotar el contexto: support, resistance o Fibo",
               "Para cada envolvente, verificar que el cuerpo de la 2ª vela envuelve por completo el cuerpo de la 1ª",
-              "Calcular el R/R potencial para 1 envolvente válida: entrada en la ruptura, SL debajo del low de la vela envolvente, TP en el próximo nivel",
+              "Calcular el R/R potencial para 1 envolvente válida: entrada en el breakout, SL debajo del low de la vela envolvente, TP en el próximo nivel",
               "Detectar 1 caso donde una pin bar y una envolvente aparecen en el mismo nivel, y observar lo que pasó después",
             ]}
           />

@@ -165,7 +165,7 @@ export default function ContentFr() {
               <li>- Pin bar au support fort = tradable (rebond institutionnel attendu)</li>
               <li>- Pin bar à la résistance forte = tradable (rejet institutionnel attendu)</li>
               <li>- Pin bar en milieu de range = hors niveau, signal disqualifié</li>
-              <li>- Conditions externes : alignement sur l&apos;UT supérieure, absence d&apos;annonce majeure dans les 60 min</li>
+              <li>- Conditions externes : alignement sur l&apos;UT supérieure, absence de news majeure dans les 60 min</li>
             </ul>
           </section>
 
@@ -233,7 +233,7 @@ export default function ContentFr() {
               "Une pin bar tradable valide 4 critères : ratio mèche/corps ≥ 2:1, direction cohérente, clôture dans le tiers opposé, contact avec un niveau structurel.",
               "Le contact avec un niveau structurel est le critère le plus discriminant. Pin bar isolée hors contexte = pas de setup.",
               "Stop loss au-delà de la mèche avec marge 5-10 pips/$. Jamais à la clôture ou dans le corps.",
-              "Pas de trade dans les 60 minutes autour d’une annonce majeure (NFP, FOMC, CPI).",
+              "Pas de trade dans les 60 minutes autour d’une news majeure (NFP, FOMC, CPI).",
             ]}
           />
 
@@ -305,7 +305,7 @@ export default function ContentFr() {
                 Leçon 1. Lire une bougie : corps, mèche, signal
               </Link>
               <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 3, avalement, le retournement de force
+                Leçon 3, engulfing, le retournement de force
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
                   Bientôt
                 </span>

@@ -160,7 +160,7 @@ export const WeeklyBiasCalendarDiagram = () => {
       <text x="260" y="378" fill="#d4d4d8" fontSize="10">Exécution</text>
 
       <rect x="400" y="368" width="12" height="12" rx="2" fill="#fbbf24" />
-      <text x="420" y="378" fill="#d4d4d8" fontSize="10">Jour à risque (annonce)</text>
+      <text x="420" y="378" fill="#d4d4d8" fontSize="10">Jour à risque (news)</text>
 
       <rect x="600" y="368" width="12" height="12" rx="2" fill="#60a5fa" />
       <text x="620" y="378" fill="#d4d4d8" fontSize="10">Recalibrage</text>

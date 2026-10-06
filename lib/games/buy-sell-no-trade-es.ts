@@ -122,13 +122,13 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     metric: "lecture",
     context: "El precio consolida sobre un soporte mayor y acaba de romperlo con una vela impulsiva.",
     rationales: {
-      BUY: "✗ Comprar una ruptura de soporte con HTF bajista supone aquí ir contra el mercado. No aparece ninguna señal de reversión, solo una aceleración bajista.",
-      SELL: "✓ Ruptura limpia en el sentido del HTF bajista, con momentum del lado vendedor. Aquí, un SELL es la lectura más coherente.",
-      NO_TRADE: "✗ HTF alineado, ruptura limpia, sin noticia: aquí, la configuración parece completa. Pasar de turno en este caso es menos prudencia que duda.",
+      BUY: "✗ Comprar un breakout de soporte con HTF bajista supone aquí ir contra el mercado. No aparece ninguna señal de reversión, solo una aceleración bajista.",
+      SELL: "✓ Breakout limpio en el sentido del HTF bajista, con momentum del lado vendedor. Aquí, un SELL es la lectura más coherente.",
+      NO_TRADE: "✗ HTF alineado, breakout limpio, sin noticia: aquí, la configuración parece completa. Pasar de turno en este caso es menos prudencia que duda.",
     },
     lessons: {
       beginner:     "El espejo del breakout alcista: con HTF bajista y un soporte roto, un SELL sigue siendo coherente con el escenario, si encaja con tu plan.",
-      intermediate: "Tras una ruptura limpia alineada con el HTF, la continuación suele ser el escenario más probable. Buen razonamiento: este setup cumple los criterios. En condiciones reales, la decisión final depende de tu plan.",
+      intermediate: "Tras un breakout limpio alineado con el HTF, la continuación suele ser el escenario más probable. Buen razonamiento: este setup cumple los criterios. En condiciones reales, la decisión final depende de tu plan.",
       advanced:     "Si el breakout parece demasiado obvio, ojo con el retest. Con HTF alineado y estructura clara, el tamaño sigue tu plan de gestión de riesgos, y un stop sobre el soporte roto es una opción lógica.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -141,15 +141,15 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "piege",
-    context: "El precio acaba de romper sobre una resistencia, pero el HTF sigue bajista. La ruptura parece sospechosa.",
+    context: "El precio acaba de romper sobre una resistencia, pero el HTF sigue bajista. El breakout parece sospechoso.",
     rationales: {
-      BUY: "✗ Aquí, sigues el breakout sin mirar el HTF. Una ruptura alcista con HTF bajista puede ser a menudo una trampa de liquidez: un escenario donde muchos traders quedan atrapados.",
+      BUY: "✗ Aquí, sigues el breakout sin mirar el HTF. Un breakout alcista con HTF bajista puede ser a menudo una trampa de liquidez: un escenario donde muchos traders quedan atrapados.",
       SELL: "✓ Aquí, HTF bajista y breakout contra la tendencia pueden señalar un fakeout. La liquidez sobre la resistencia suele alimentar a los vendedores. Un SELL después de la trampa tiene sentido.",
       NO_TRADE: "≈ No es una catástrofe (evitas la trampa), pero aquí el HTF bajista y la señal contra la tendencia dan una ventaja bastante clara del lado SELL. Un trader con experiencia podría tomarlo.",
     },
     lessons: {
       beginner:     "Referencia útil: un breakout EN CONTRA del HTF suele ser una trampa. En este caso (HTF bajista, breakout alcista), quedarse fuera o buscar el SELL son dos opciones lógicas.",
-      intermediate: "Una trampa clásica: la ruptura puede servir para absorber la liquidez de los stops situados sobre la resistencia, antes de un regreso en el sentido del HTF.",
+      intermediate: "Una trampa clásica: el breakout puede servir para absorber la liquidez de los stops situados sobre la resistencia, antes de un regreso en el sentido del HTF.",
       advanced:     "Aquí, aún no tienes la confirmación de la mecha de rechazo: decides ANTES. Si el HTF y la macro lo permiten, anticipar el fakeout puede ser una ventaja real. Si no, NO TRADE tiene sentido.",
     },
     difficulties: ["intermediate", "advanced"],
@@ -162,14 +162,14 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "piege",
-    context: "El precio acaba de romper bajo un soporte, pero el HTF sigue alcista. La ruptura parece una trampa.",
+    context: "El precio acaba de romper bajo un soporte, pero el HTF sigue alcista. El breakout parece una trampa.",
     rationales: {
       BUY: "✓ Aquí, HTF alcista y breakout bajista contra la tendencia pueden señalar una trampa. La liquidez bajo el soporte suele recogerse antes del movimiento alcista. Un BUY en el regreso tiene sentido.",
-      SELL: "✗ Vender una ruptura contra el HTF supone aquí unirse a los vendedores atrapados. Estos fakeouts suelen volver en el sentido del HTF.",
+      SELL: "✗ Vender un breakout contra el HTF supone aquí unirse a los vendedores atrapados. Estos fakeouts suelen volver en el sentido del HTF.",
       NO_TRADE: "≈ Evitas la pérdida, pero dejas pasar la oportunidad. Aquí, jugar a la contra del fakeout era una opción lógica.",
     },
     lessons: {
-      beginner:     "Una ruptura EN CONTRA del HTF puede ser una trampa. Vender una ruptura bajista en un mercado alcista sigue siendo, en la mayoría de los casos, una apuesta arriesgada.",
+      beginner:     "Un breakout EN CONTRA del HTF puede ser una trampa. Vender un breakout bajista en un mercado alcista sigue siendo, en la mayoría de los casos, una apuesta arriesgada.",
       intermediate: "Aquí, el stop hunt bajo el soporte puede señalar una reversión alcista si el HTF está alineado, a confirmar antes de actuar. Puede que el mercado acabe de recargar combustible para subir.",
       advanced:     "Aquí, decides ANTES de que el precio vuelva sobre el soporte. Si HTF y estructura están alineados, un BUY tiene sentido. Si dudas, NO TRADE sigue siendo una opción lógica.",
     },
@@ -234,7 +234,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     lessons: {
       beginner:     "Resistencia mayor y HTF bajista: un SELL sigue siendo coherente con el escenario, si encaja con tu plan. Aquí el mercado te da dos razones para ir en el mismo sentido.",
       intermediate: "Las zonas HTF suelen aguantar mejor que las zonas LTF. En el primer test de una resistencia mayor HTF, el rechazo es frecuente, aunque no sistemático.",
-      advanced:     "Si la zona ya se ha testeado 3 veces o más, ojo con la ruptura (cada test puede debilitar el nivel). Con 1 o 2 tests en el sentido del HTF, el tamaño depende de tu plan de gestión de riesgos.",
+      advanced:     "Si la zona ya se ha testeado 3 veces o más, ojo con el breakout (cada test puede debilitar el nivel). Con 1 o 2 tests en el sentido del HTF, el tamaño depende de tu plan de gestión de riesgos.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["lectura", "rechazo", "resistencia"],
@@ -255,7 +255,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     lessons: {
       beginner:     "Soporte mayor y HTF alcista: un BUY sigue siendo coherente con el escenario, si encaja con tu plan. Es el simétrico del rechazo de resistencia.",
       intermediate: "En el primer test, las zonas HTF suelen aguantar más de lo que se rompen. Esa asimetría es la que puede crear una ventaja.",
-      advanced:     "Los soportes HTF testeados 1 o 2 veces suelen ser los más fiables. Más allá, el nivel puede debilitarse y el escenario ruptura y retest se vuelve más probable.",
+      advanced:     "Los soportes HTF testeados 1 o 2 veces suelen ser los más fiables. Más allá, el nivel puede debilitarse y el escenario breakout y retest se vuelve más probable.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["lectura", "soporte", "rebote"],
@@ -334,7 +334,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     rationales: {
       BUY: "✗ Comprar en medio de un rango no ofrece aquí ninguna ventaja clara: sin soporte testeado, sin señal, sin catalizador. Asumes el riesgo sin una razón real.",
       SELL: "✗ Lo mismo del lado vendedor: sin resistencia testeada, sin señal. En este caso, el trade se parece sobre todo a una apuesta.",
-      NO_TRADE: "✓ Aquí, el mercado no ofrece nada legible. Los buenos trades llegarán más bien en los bordes del rango o en la ruptura. Paciencia.",
+      NO_TRADE: "✓ Aquí, el mercado no ofrece nada legible. Los buenos trades llegarán más bien en los bordes del rango o en el breakout. Paciencia.",
     },
     lessons: {
       beginner:     "Si no puedes explicar en una frase por qué existe el trade, suele ser mejor no tomarlo. Aquí, NO TRADE.",
@@ -347,22 +347,22 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
   // ─── V3 — setups realistas trampa mental ─────────────────────────────────────
   {
     id: "weak_breakout",
-    title: "Ruptura sin convicción",
+    title: "Breakout sin convicción",
     correctAnswer: "NO_TRADE",
     htfBias: "range",
     macroContext: "normal",
     metric: "discipline",
     context: "El precio acaba de romper sobre la resistencia, pero a la vela impulsiva le falta body cruelmente.",
-    shortContext: "Ruptura alcista, body muy débil.",
+    shortContext: "Breakout alcista, body muy débil.",
     rationales: {
-      BUY: "✗ Aquí, persigues una ruptura débil. Sin una vela de momentum nítida, la continuación se vuelve mucho menos probable y el R/R esperado se degrada.",
-      SELL: "✗ Vender una ruptura alcista sin señal de reversión parece aquí prematuro: no hay ni vela de reversión ni estructura bajista.",
-      NO_TRADE: "✓ Una ruptura es más operable cuando se impone. Sin vela impulsiva, una opción lógica es esperar un retest limpio o una continuación clara. Paciencia.",
+      BUY: "✗ Aquí, persigues un breakout débil. Sin una vela de momentum nítida, la continuación se vuelve mucho menos probable y el R/R esperado se degrada.",
+      SELL: "✗ Vender un breakout alcista sin señal de reversión parece aquí prematuro: no hay ni vela de reversión ni estructura bajista.",
+      NO_TRADE: "✓ Un breakout es más operable cuando se impone. Sin vela impulsiva, una opción lógica es esperar un retest limpio o una continuación clara. Paciencia.",
     },
     lessons: {
       beginner:     "Una vela grande que rompe una zona aporta una confirmación fuerte. Una vela pequeña que apenas rompe sigue siendo una confirmación débil, a menudo insuficiente para actuar.",
-      intermediate: "El mercado no da una señal limpia en cada ruptura. Si falta convicción, nada te obliga a entrar.",
-      advanced:     "Una ruptura sin cuerpo suele servir de cebo de liquidez: estos breakouts débiles atrapan a menudo a los traders impacientes. Aquí, NO TRADE y observar es una opción lógica.",
+      intermediate: "El mercado no da una señal limpia en cada breakout. Si falta convicción, nada te obliga a entrar.",
+      advanced:     "Un breakout sin cuerpo suele servir de cebo de liquidez: estos breakouts débiles atrapan a menudo a los traders impacientes. Aquí, NO TRADE y observar es una opción lógica.",
     },
     difficulties: ["intermediate", "advanced"],
     tags: ["disciplina", "breakout", "momentum"],
@@ -384,7 +384,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     lessons: {
       beginner:     "Si una zona tarda en reaccionar, suele perder valor. En este caso, mejor esperar la siguiente.",
       intermediate: "Una zona profundamente mitigada suele perder su ventaja. Si la reacción no llega en 2-3 velas, la zona puede considerarse agotada.",
-      advanced:     "Un FVG mitigado más del 80 % sin reacción puede orientar a buscar una ruptura bajista para un SELL. Sin esa ruptura, NO TRADE sigue siendo la opción lógica.",
+      advanced:     "Un FVG mitigado más del 80 % sin reacción puede orientar a buscar un breakout bajista para un SELL. Sin ese breakout, NO TRADE sigue siendo la opción lógica.",
     },
     difficulties: ["advanced"],
     tags: ["lectura", "FVG", "mitigation"],
@@ -423,7 +423,7 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     rationales: {
       BUY: "✗ Aquí no hay señal de compra. El barrido reciente del techo hace que la zona baja sea menos fiable como soporte. Falta la ventaja.",
       SELL: "✗ Simétrico: el barrido reciente del suelo hace que la zona alta sea menos fiable. Aquí, el mercado ha limpiado la liquidez de los dos lados.",
-      NO_TRADE: "✓ Aquí no se aprecia ningún sesgo direccional, así que no hay estructura aprovechable. Una opción lógica: esperar una ruptura confirmada o una acumulación reconocible.",
+      NO_TRADE: "✓ Aquí no se aprecia ningún sesgo direccional, así que no hay estructura aprovechable. Una opción lógica: esperar un breakout confirmado o una acumulación reconocible.",
     },
     lessons: {
       intermediate: "Cuando un rango ha barrido los dos lados sin dirección, esperar la salida suele ser la decisión más sensata.",

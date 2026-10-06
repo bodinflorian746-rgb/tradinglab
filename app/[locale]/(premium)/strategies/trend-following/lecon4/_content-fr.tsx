@@ -138,12 +138,12 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Même structure de départ, sens de cassure opposé. La nature du niveau cassé dicte la nature du signal.
+              Même structure de départ, sens de breakout opposé. La nature du niveau cassé dicte la nature du signal.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="font-semibold text-zinc-100">BOS</span> : cassure dans le sens de la tendance (HH en haussier, LL en baissier) = continuation</li>
-              <li>- <span className="font-semibold text-zinc-100">CHoCH</span> : cassure contre le sens (HL en haussier, LH en baissier) = retournement</li>
+              <li>- <span className="font-semibold text-zinc-100">BOS</span> : breakout dans le sens de la tendance (HH en haussier, LL en baissier) = continuation</li>
+              <li>- <span className="font-semibold text-zinc-100">CHoCH</span> : breakout contre le sens (HL en haussier, LH en baissier) = retournement</li>
               <li>- La sortie sur BOS protège les gains. L&apos;inversion exige le CHoCH confirmé</li>
             </ul>
           </section>
@@ -257,7 +257,7 @@ export default function ContentFr() {
             steps={[
               "Qualifier le BOS baissier : clôture franche à 4 555$ (25$ sous le HL 4 580$), corps significatif, pas de réintégration sur 4 bougies. BOS validé",
               "Déclencher la sortie de toute position long existante dès la clôture à 4 555$",
-              "Observer la structure post-cassure : sommet à 4 600$ (premier LH potentiel) puis creux à 4 530$ (premier LL)",
+              "Observer la structure post-breakout : sommet à 4 600$ (premier LH potentiel) puis creux à 4 530$ (premier LL)",
               "Confirmer le CHoCH baissier : la séquence LH (4 600$) + LL (4 530$) inverse officiellement la tendance",
               "Construire le plan d’inversion : entrée short au retracement vers 4 580$ (ex-HL devenu résistance) avec signal de rejet, stop loss à 4 615$ (au-delà du LH 4 600$ + marge 15$), take profit à 4 450$ (ratio R/R 1:3,7), taille de position selon le risque par trade",
             ]}
@@ -266,7 +266,7 @@ export default function ContentFr() {
           <LessonQuiz
             question="Quelle est la condition minimum pour qualifier une tendance haussière comme exploitable sur un chart H4 ?"
             options={[
-              "1 sommet plus haut suffit",
+              "1 higher high suffit",
               "2 creux ascendants (HL) et 2 sommets ascendants (HH) successifs",
               "Une moyenne mobile orientée à la hausse",
               "Un volume élevé sur 5 bougies",

@@ -139,7 +139,7 @@ export default function ContentFr() {
               Tu repères un setup parfait sur EUR/USD à 14h25. Toutes les bougies sont alignées, ton plan de trade est béton, tu entres long. À 14h30, EUR/USD chute de 80 pips en 2 minutes. Ton stop saute. Tu ne comprends pas.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-2">
-              Et ce n&apos;est pas que sur l&apos;EUR/USD. Sur la même annonce macro, tu aurais probablement vu :
+              Et ce n&apos;est pas que sur l&apos;EUR/USD. Sur la même news macro, tu aurais probablement vu :
             </p>
             <ul className="space-y-1.5 mb-3">
               {[
@@ -237,7 +237,7 @@ export default function ContentFr() {
               <div className="space-y-1.5">
                 {[
                   "L'inflation US monte à 4% (au lieu des 3% attendus).",
-                  "→ La Fed annonce qu'elle va monter ses taux plus vite.",
+                  "→ La Fed indique qu'elle va monter ses taux plus vite.",
                   "→ Le dollar grimpe contre toutes les devises.",
                   "→ EUR/USD perd 150 pips en une journée.",
                 ].map((item, i) => (
@@ -450,13 +450,13 @@ export default function ContentFr() {
               "J'entre quand même, mon analyse technique est solide",
               "J'attends 30 minutes après la publication pour voir comment le marché réagit, puis je réévalue mon setup",
               "Je shorte EUR/USD car le CPI fait toujours baisser l'euro",
-              "Je passe en H4 pour ignorer le bruit de l'annonce",
+              "Je passe en H4 pour ignorer le bruit de la news",
             ]}
             correctIndex={1}
-            explanation="Une publication à 3 étoiles peut faire bouger EUR/USD de 80-150 pips en quelques minutes, dans une direction imprévisible. Entrer juste avant (option A) revient à parier à pile ou face. L'option C est fausse : le CPI peut faire monter ou baisser l'euro selon que les chiffres surprennent à la hausse ou à la baisse. L'option D est une fuite, changer d'unité de temps ne te protège pas du mouvement violent. La bonne pratique : attends que l'annonce passe, observe la réaction du marché, et trade ensuite avec la nouvelle information. Ce principe s'applique à tous les actifs : forex, or, indices, crypto."
+            explanation="Une publication à 3 étoiles peut faire bouger EUR/USD de 80-150 pips en quelques minutes, dans une direction imprévisible. Entrer juste avant (option A) revient à parier à pile ou face. L'option C est fausse : le CPI peut faire monter ou baisser l'euro selon que les chiffres surprennent à la hausse ou à la baisse. L'option D est une fuite, changer d'unité de temps ne te protège pas du mouvement violent. La bonne pratique : attends que la news passe, observe la réaction du marché, et trade ensuite avec la nouvelle information. Ce principe s'applique à tous les actifs : forex, or, indices, crypto."
             answerExplanations={[
               "Faux. Entrer juste avant une publication à 3 étoiles revient à parier à pile ou face. EUR/USD peut bouger de 80-150 pips en quelques minutes dans une direction imprévisible. Ton analyse technique ne compte plus, la macro écrase tout.",
-              "Correct. La bonne pratique : attends que l'annonce passe, observe la réaction du marché, et trade ensuite avec la nouvelle information. Tu gardes ton setup ET tu sais dans quelle direction le marché a décidé d'aller.",
+              "Correct. La bonne pratique : attends que la news passe, observe la réaction du marché, et trade ensuite avec la nouvelle information. Tu gardes ton setup ET tu sais dans quelle direction le marché a décidé d'aller.",
               "Faux. Le CPI peut faire monter ou baisser l'euro selon que les chiffres surprennent à la hausse ou à la baisse. Il n'y a pas de direction systématique, c'est l'écart par rapport aux attentes qui compte.",
               "Faux. Changer d'unité de temps ne te protège pas du mouvement violent. Un mouvement de 80-150 pips sur M5 est un mouvement de 80-150 pips sur H4 aussi. L'unité de temps ne change pas l'amplitude réelle.",
             ]}

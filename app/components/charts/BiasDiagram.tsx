@@ -168,7 +168,7 @@ export function BiasDiagram() {
           <p className="text-[13px] sm:text-[10px] font-bold text-red-400 uppercase tracking-wide mb-2">FOMO — Tu achètes au sommet</p>
           <FomoChart />
           <MobileBullets items={[
-            { color: "text-red-400", text: "Tu entres en panique au point haut (marqué !)" },
+            { color: "text-red-400", text: "Tu entres en panique au plus haut (marqué !)" },
             { color: "text-red-400", text: "Le prix retourne immédiatement → −5%" },
           ]} />
           <p className="hidden sm:block text-[9px] text-zinc-500 mt-1.5 leading-snug">Le marché monte fort, tu rentres en panique au sommet, le prix retourne immédiatement</p>

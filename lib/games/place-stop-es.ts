@@ -301,7 +301,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     context: "Identificas 2 swing lows recientes separados de unos pips. El segundo es más bajo. ¿Cuál respetar para el SL?",
     shortContext: "2 swing lows cercanos",
     lessons: {
-      beginner:     "Cuando 2 swing lows están cerca, un SL que respete el MÁS BAJO es una opción lógica: el 1º suele ser barrido antes de la ruptura real.",
+      beginner:     "Cuando 2 swing lows están cerca, un SL que respete el MÁS BAJO es una opción lógica: el 1º suele ser barrido antes del breakout real.",
       intermediate: "Cuando 2 swing lows están cerca, la estructura solo queda realmente invalidada si se rompe el MÁS BAJO. Un SL bajo el primero puede ser tocado en una fluctuación normal.",
       advanced:     "En una secuencia de lows, mientras el más bajo aguante, la estructura alcista sigue intacta. Un SL bajo el 1er swing ignora aquí esta mecánica.",
     },
@@ -333,7 +333,7 @@ export const PLACE_STOP_TEMPLATES_ES: PlaceStopTemplate[] = [
     context: "Rango estrecho: amplitud baja, precio atrapado entre soporte y resistencia cercanos. Quieres entrar BUY en el soporte. El R/R será malo con un SL estándar.",
     shortContext: "Rango estrecho",
     lessons: {
-      beginner:     "En un rango estrecho, esperar una ruptura o reducir tu tamaño de posición son dos opciones lógicas. Con un SL estándar, el R/R se vuelve débil.",
+      beginner:     "En un rango estrecho, esperar un breakout o reducir tu tamaño de posición son dos opciones lógicas. Con un SL estándar, el R/R se vuelve débil.",
       intermediate: "En un rango estrecho, un SL estándar degrada el R/R, y un SL demasiado corto puede ser tocado. Una opción lógica: esperar una expansión, o reducir el tamaño del lote.",
       advanced:     "En un rango estrecho, el equilibrio entre SL y R/R exige un compromiso sobre el tamaño. Esperar una expansión, o aceptar un R/R por debajo de 1:2 compensado por la tasa de acierto: te toca decidir.",
     },
@@ -647,9 +647,9 @@ const TIGHTCONS_WIDE_FR_NEW     = "≈ SL très large, mais ici le haut du range
 const EXTREME_VOL_TIGHT_FR_NEW   = "✗ Ici, le stop est dans le bruit immédiat. La 1re bougie de retest, ample à cause de la volatilité extrême, risque de le balayer très vite.";
 const EXTREME_VOL_LTT_FR_NEW     = "✗ Stop « standard » calibré pour une volatilité normale. Avec une volatilité du jour triplée (ATR, l'amplitude moyenne d'une journée), ce niveau se trouve ici dans le bruit, et risque d'être balayé avant que le setup ait le temps de jouer.";
 const EXTREME_VOL_WIDE_FR_NEW    = "✓ Marge calibrée sur la volatilité RÉELLE du jour (3 fois la normale). Ici, c'est le seul stop qui absorbe l'expansion sans casser le setup.";
-const NEWS_IMM_TIGHT_FR_NEW      = "✗ Ici, le stop est dans le bruit immédiat. La bougie d'impact de l'annonce risque de le balayer en quelques secondes.";
-const NEWS_IMM_LTT_FR_NEW        = "✗ Stop « normal », peu adapté à l'amplitude d'une annonce. Une bougie d'impact (2 à 3 fois plus ample) risque ici de te sortir avant le vrai mouvement directionnel.";
-const NEWS_IMM_WIDE_FR_NEW       = "✓ Marge assez large pour absorber l'amplitude de l'annonce. Ici, c'est ce SL, ou pas de trade pendant la fenêtre d'annonces.";
+const NEWS_IMM_TIGHT_FR_NEW      = "✗ Ici, le stop est dans le bruit immédiat. La bougie d'impact de la news risque de le balayer en quelques secondes.";
+const NEWS_IMM_LTT_FR_NEW        = "✗ Stop « normal », peu adapté à l'amplitude d'une news. Une bougie d'impact (2 à 3 fois plus ample) risque ici de te sortir avant le vrai mouvement directionnel.";
+const NEWS_IMM_WIDE_FR_NEW       = "✓ Marge assez large pour absorber l'amplitude de la news. Ici, c'est ce SL, ou pas de trade pendant la fenêtre de news.";
 const LIQ_HUNT_TIGHT_FR_NEW      = "✗ Ici, le stop est dans le bruit immédiat. Le 1er retest risque de le balayer avant même la chasse principale.";
 const LIQ_HUNT_LTT_FR_NEW        = "✗ Ici, le stop est sous un swing low évident, une zone de chasse aux stops fréquente. Le sweep prend très souvent ce niveau avant le vrai retournement.";
 const LIQ_HUNT_WIDE_FR_NEW       = "✓ Sous la zone de chasse aux stops, avec une marge ample. Le sweep peut avoir lieu : ici, ton SL reste hors d'atteinte.";

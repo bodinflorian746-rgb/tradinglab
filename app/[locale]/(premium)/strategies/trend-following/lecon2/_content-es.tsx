@@ -183,7 +183,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- 2 puntos aislados que ignoran otros pivots = trendline arbitraria</li>
               <li>- Pendiente irreal (&gt; 60°) = impulso no sostenible, retorno rápido esperado</li>
-              <li>- Ruptura ignorada = trendline prolongada cuando ya perdió su validez</li>
+              <li>- Breakout ignorado = trendline prolongada cuando ya perdió su validez</li>
             </ul>
           </section>
 

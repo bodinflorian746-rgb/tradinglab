@@ -164,7 +164,7 @@ export default function ContentFr() {
               <li>- Golden cross : MM20 &gt; MM50 &gt; MM200, ascendantes → biais long, setups long uniquement</li>
               <li>- Death cross : MM20 &lt; MM50 &lt; MM200, descendantes → biais short, setups short uniquement</li>
               <li>- Range : 3 MM enchevêtrées, pente nulle → pas de biais, attendre clarification</li>
-              <li>- Setup contraire au biais MM200 = taux de réussite réduit, à éviter sans confluence exceptionnelle</li>
+              <li>- Setup contraire au biais MM200 = winrate réduit, à éviter sans confluence exceptionnelle</li>
             </ul>
           </section>
 
@@ -183,7 +183,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- 2 points isolés ignorent les autres pivots = trendline arbitraire</li>
               <li>- Pente irréaliste (&gt; 60°) = impulsion non durable, retournement rapide attendu</li>
-              <li>- Cassure ignorée = trendline prolongée alors qu&apos;elle a perdu sa validité</li>
+              <li>- Breakout ignoré = trendline prolongée alors qu&apos;elle a perdu sa validité</li>
             </ul>
           </section>
 
@@ -239,13 +239,13 @@ export default function ContentFr() {
               "Valider la trendline baissière : 3 LH confirmés à 4 680$, 4 650$, 4 620$, trendline tradable",
               "Identifier la confluence : MM50 H4 à 4 605$ + trendline qui passe à 4 600$ = zone de confluence 4 600$-4 605$",
               "Vérifier le biais MM200 H4 : prix sous 4 720$ = biais short aligné, setup conforme",
-              "Attendre le signal de rejet baissier (pin bar haute, avalement baissier) au contact de la zone 4 600$-4 605$ pour valider l’entrée",
+              "Attendre le signal de rejet baissier (pin bar haute, engulfing baissier) au contact de la zone 4 600$-4 605$ pour valider l’entrée",
               "Construire le plan : entrée short à la clôture du signal, stop loss à 4 615$ (10$ au-dessus de la MM50), take profit à 4 555$ (LL précédent, niveau 1) ou 4 510$ (extension baissière, niveau 2). Taille de position selon le risque par trade adapté au capital",
             ]}
           />
 
           <LessonQuiz
-            question="Le prix touche la MM50 H4 sur EUR/USD sans signal de rejet explicite (pas de pin bar, pas d’avalement), dans une tendance haussière confirmée. Quel est le verdict opérationnel ?"
+            question="Le prix touche la MM50 H4 sur EUR/USD sans signal de rejet explicite (pas de pin bar, pas d’engulfing), dans une tendance haussière confirmée. Quel est le verdict opérationnel ?"
             options={[
               "Setup exploitable, le simple contact avec la MM50 suffit",
               "Setup invalide, l’absence de signal de rejet disqualifie l’entrée",
@@ -253,7 +253,7 @@ export default function ContentFr() {
               "Indéterminé sans confirmation Fibonacci",
             ]}
             correctIndex={1}
-            explanation="Le contact avec une MM ne déclenche pas automatiquement une entrée. Un signal de price action explicite (pin bar de rejet, avalement dans le sens de la tendance, ou réaction immédiate sans pénétration significative) doit confirmer le rebond. Sans signal, la MM peut être traversée sans rebond significatif, surtout en tendance modérée. Le trade pris sur simple contact se retrouve fréquemment en perte."
+            explanation="Le contact avec une MM ne déclenche pas automatiquement une entrée. Un signal de price action explicite (pin bar de rejet, engulfing dans le sens de la tendance, ou réaction immédiate sans pénétration significative) doit confirmer le rebond. Sans signal, la MM peut être traversée sans rebond significatif, surtout en tendance modérée. Le trade pris sur simple contact se retrouve fréquemment en perte."
           />
 
         </div>

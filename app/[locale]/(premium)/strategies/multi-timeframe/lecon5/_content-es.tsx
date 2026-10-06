@@ -13,7 +13,7 @@ import { M15ValidationDiagram } from "@/app/components/charts/M15ValidationDiagr
 
 const LESSONS = [
   { id: "lecon1", title: "Por qué hacer un análisis multitemporal", disabled: false },
-  { id: "lecon2", title: "La temporalidad superior: el sesgo", disabled: false },
+  { id: "lecon2", title: "El HTF: el sesgo", disabled: false },
   { id: "lecon3", title: "La temporalidad intermedia: la zona", disabled: false },
   { id: "lecon4", title: "La temporalidad de ejecución: la entrada", disabled: false },
   { id: "lecon5", title: "El proceso completo", disabled: false },
@@ -286,7 +286,7 @@ export default function ContentEs() {
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">1. Empezar directamente por M15</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Localizar un setup en M15 y luego buscar justificarlo en las temporalidades superiores es invertir el proceso. Se acaba validando mentalmente un trade que ya se decidió tomar. El HTF debe siempre venir primero.
+                  Localizar un setup en M15 y luego buscar justificarlo en los HTF es invertir el proceso. Se acaba validando mentalmente un trade que ya se decidió tomar. El HTF debe siempre venir primero.
                 </p>
               </div>
 

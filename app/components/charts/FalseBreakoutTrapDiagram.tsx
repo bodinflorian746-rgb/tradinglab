@@ -43,13 +43,13 @@ export function FalseBreakoutTrapDiagram({ className = "", locale = "fr" }: Fals
   const L = {
     resistance: isEs ? "Resistencia 4 680 $" : isEn ? "Resistance $4,680" : "Résistance 4 680 $",
     entries:    isEs ? "Entradas breakout" : isEn ? "Breakout entries" : "Entrées breakout",
-    annot:      isEs ? "Ruptura visible ≠ continuación real" : isEn ? "Visible break ≠ real continuation" : "Cassure visible ≠ continuation réelle",
-    mobTitle:   isEs ? "False breakout — trampa XAU/USD M15" : isEn ? "Fake breakout — trap XAU/USD M15" : "Faux breakout — piège XAU/USD M15",
-    visualT:    isEs ? "Ruptura visual de la resistencia" : isEn ? "Visual break of resistance" : "Cassure visuelle de la résistance",
+    annot:      isEs ? "Breakout visible ≠ continuación real" : isEn ? "Visible break ≠ real continuation" : "Breakout visible ≠ continuation réelle",
+    mobTitle:   isEs ? "Fakeout — trampa XAU/USD M15" : isEn ? "Fake breakout — trap XAU/USD M15" : "Faux breakout — piège XAU/USD M15",
+    visualT:    isEs ? "Breakout visual de la resistencia" : isEn ? "Visual break of resistance" : "Breakout visuel de la résistance",
     visualD:    isEs ? "El precio sube por encima → tentación de comprar en breakout." : isEn ? "Price pushes above → temptation to buy the breakout." : "Le prix monte au-dessus → tentation d'acheter sur breakout.",
     reintT:     isEs ? "Reintegración bajo el nivel = trampa" : isEn ? "Reclaim below the level = trap" : "Réintégration sous le niveau = piège",
-    reintD:     isEs ? "Ruptura no mantenida, el precio cae en cierre debajo de la resistencia → setup inválido." : isEn ? "Break not held, price closes back below resistance → invalid setup." : "Cassure non tenue, prix replonge en clôture sous la résistance → setup invalide.",
-    legendNotHeld: isEs ? "Ruptura no mantenida por encima de la resistencia" : isEn ? "Break not held above resistance" : "Cassure non tenue au-dessus de la résistance",
+    reintD:     isEs ? "Breakout no mantenido, el precio cae en cierre debajo de la resistencia → setup inválido." : isEn ? "Break not held, price closes back below resistance → invalid setup." : "Breakout non tenu, prix replonge en clôture sous la résistance → setup invalide.",
+    legendNotHeld: isEs ? "Breakout no mantenido por encima de la resistencia" : isEn ? "Break not held above resistance" : "Breakout non tenu au-dessus de la résistance",
     legendTrap:    isEs ? "Reintegración bajo el nivel = trampa" : isEn ? "Reclaim below the level = trap" : "Réintégration sous le niveau = piège",
   };
   return (

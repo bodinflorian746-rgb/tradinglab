@@ -8,9 +8,9 @@ export default function TrendlineWrongDrawingDiagram({ className = "", locale = 
         hl3Ignored: "3 HL ignorados bajo el path",
         slope: "✗ Pendiente irreal",
         angleNote: "Ángulo ~70° vs path a ~30°",
-        breakIgnored: "✗ Ruptura ignorada",
-        breakLabel: "Ruptura ignorada",
-        prolonged: "Trendline prolongada a pesar de la ruptura",
+        breakIgnored: "✗ Breakout ignorado",
+        breakLabel: "Breakout ignorado",
+        prolonged: "Trendline prolongada a pesar del breakout",
         mobTitle: "Trazar una trendline — buena vs errores",
         mobGood: "✓ Bien trazada — 3 HL alineados",
         mobGoodDesc: "Mínimo 3 pivotes HL (o LH) conectados sobre la misma recta.",
@@ -18,7 +18,7 @@ export default function TrendlineWrongDrawingDiagram({ className = "", locale = 
         mob2ptsDesc: "2 pivotes no bastan — cualquier recta pasa por 2 puntos. Hacen falta al menos 3.",
         mobWicks: "✗ Trendline forzada sobre mechas",
         mobWicksDesc: "Unir mechas aisladas = trazo sesgado. Usa los cuerpos de las velas.",
-        mobBreak: "✗ Ruptura ignorada",
+        mobBreak: "✗ Breakout ignorado",
         mobBreakDesc: "Una vez rota, abandona la trendline. No la prolongues.",
       }
     : locale === "en"
@@ -51,9 +51,9 @@ export default function TrendlineWrongDrawingDiagram({ className = "", locale = 
         hl3Ignored: "3 HL ignorés sous le path",
         slope: "✗ Pente irréaliste",
         angleNote: "Angle ~70° vs path à ~30°",
-        breakIgnored: "✗ Cassure ignorée",
-        breakLabel: "Cassure ignorée",
-        prolonged: "Trendline prolongée malgré la cassure",
+        breakIgnored: "✗ Breakout ignoré",
+        breakLabel: "Breakout ignoré",
+        prolonged: "Trendline prolongée malgré le breakout",
         mobTitle: "Tracer une trendline — bon vs erreurs",
         mobGood: "✓ Bon tracé — 3 HL alignés",
         mobGoodDesc: "Au minimum 3 pivots HL (ou LH) connectés sur la même droite.",
@@ -61,7 +61,7 @@ export default function TrendlineWrongDrawingDiagram({ className = "", locale = 
         mob2ptsDesc: "2 pivots ne suffisent pas — toute droite passe par 2 points. Il faut au moins 3.",
         mobWicks: "✗ Trendline forcée sur des mèches",
         mobWicksDesc: "Relier des mèches isolées = tracé biaisé. Utiliser les corps de bougies.",
-        mobBreak: "✗ Cassure ignorée",
+        mobBreak: "✗ Breakout ignoré",
         mobBreakDesc: "Une fois cassée, abandonner la trendline. Ne pas la prolonger.",
       };
   return (

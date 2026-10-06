@@ -42,7 +42,7 @@ function ContentFr() {
             { step: "2", text: "Utilise TradingView en mode Replay (flèche 'play' en haut) ou Forex Tester. Remonte 6 à 12 mois en arrière et avance bougie par bougie." },
             { step: "3", text: "Applique ta stratégie exactement comme tu le ferais en live : identifie les setups, marque l'entrée, le SL et le TP avant que la bougie suivante se forme." },
             { step: "4", text: "Enregistre chaque trade dans ton journal : confluences présentes, résultat en R, screenshot." },
-            { step: "5", text: "Après 50 à 100 trades, analyse les statistiques : win rate, R moyen, drawdown max, mois profitables vs déficitaires." },
+            { step: "5", text: "Après 50 à 100 trades, analyse les statistiques : winrate, R moyen, drawdown max, mois profitables vs déficitaires." },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.step}</span>
@@ -69,8 +69,8 @@ function ContentFr() {
         </p>
         <div className="space-y-2.5">
           {[
-            { metric: "Win Rate", good: "> 40%", desc: "Pourcentage de trades gagnants. Avec un bon R/R, même 40% de win rate peut être profitable." },
-            { metric: "R moyen", good: "> +0.5R", desc: "Gain moyen par trade en R. Un win rate de 50% avec R moyen de +1R = très rentable." },
+            { metric: "Win Rate", good: "> 40%", desc: "Pourcentage de trades gagnants. Avec un bon R/R, même 40% de winrate peut être profitable." },
+            { metric: "R moyen", good: "> +0.5R", desc: "Gain moyen par trade en R. Un winrate de 50% avec R moyen de +1R = très rentable." },
             { metric: "Profit Factor", good: "> 1.5", desc: "Total des gains ÷ total des pertes. Doit être supérieur à 1.0 pour être rentable." },
             { metric: "Drawdown max", good: "< 15%", desc: "Perte maximale depuis un pic. Un drawdown élevé teste ta psychologie en live, connais-le à l'avance." },
             { metric: "Nombre de trades", good: "> 50", desc: "En dessous de 50 trades, les résultats ne sont pas statistiquement fiables. Vise 100 minimum." },
@@ -123,7 +123,7 @@ function ContentFr() {
           "Le backtesting valide ta stratégie sur des données passées avant de risquer de l'argent réel.",
           "Utilise le mode Replay de TradingView pour simuler le temps réel, jamais le graphique statique.",
           "50 trades minimum pour la validation, 100 pour une confiance statistique solide.",
-          "Les métriques clés : win rate (>40%), R moyen (>+0.5R), profit factor (>1.5), drawdown (<15%).",
+          "Les métriques clés : winrate (>40%), R moyen (>+0.5R), profit factor (>1.5), drawdown (<15%).",
           "Intègre les frais (spread, commission) dans chaque trade, ils comptent sur la durée.",
         ]}
       />
@@ -134,14 +134,14 @@ function ContentFr() {
           "Sur TradingView, ouvre EUR/USD en H1. Remonte 3 mois en arrière en mode Replay (bouton flèche en haut de l'interface).",
           "Avance bougie par bougie. Applique ta stratégie (BOS → retracement OTE → OB → signal bougie). Note chaque trade potentiel.",
           "Pour les 10 premiers trades identifiés, enregistre : confluences présentes, entrée, SL, TP, résultat en R.",
-          "Calcule ton win rate et ton R moyen sur ces 10 trades. C'est le début de ton edge personnel.",
+          "Calcule ton winrate et ton R moyen sur ces 10 trades. C'est le début de ton edge personnel.",
         ]}
       />
 
       <LessonQuiz
-        question="Après 20 trades en backtest, tu obtiens un win rate de 70% et un profit factor de 1.8. Tu décides de passer en live immédiatement. Quelle est l'erreur ?"
+        question="Après 20 trades en backtest, tu obtiens un winrate de 70% et un profit factor de 1.8. Tu décides de passer en live immédiatement. Quelle est l'erreur ?"
         options={[
-          "Le win rate de 70% est trop élevé, ce n'est pas réaliste",
+          "Le winrate de 70% est trop élevé, ce n'est pas réaliste",
           "20 trades est un échantillon trop petit pour valider une stratégie de façon statistiquement fiable",
           "Le profit factor de 1.8 est insuffisant, il faut au moins 3.0 pour trader en live",
           "Il faut d'abord backtester sur 5 instruments différents avant de trader EUR/USD",
@@ -149,8 +149,8 @@ function ContentFr() {
         correctIndex={1}
         explanation="20 trades représente un échantillon trop petit pour tirer des conclusions statistiques fiables. Une série de 20 trades peut être positive par chance pure, même avec une stratégie sans edge. Il faut au minimum 50 trades, idéalement 100, pour que les résultats reflètent réellement la performance de la stratégie plutôt que la variance aléatoire."
         answerExplanations={[
-          "Faux. Un win rate de 70% n'est pas irréaliste si le R/R est favorable (>1:1). Certaines stratégies scalping ou à hautes confluences peuvent atteindre ces chiffres. Ce n'est pas le problème ici.",
-          "Correct. 20 trades = variance aléatoire trop élevée. Le même backtest avec 20 autres trades pourrait donner 30% de win rate et un profit factor de 0.8. Il faut 50 à 100 trades pour que les statistiques soient significatives.",
+          "Faux. Un winrate de 70% n'est pas irréaliste si le R/R est favorable (>1:1). Certaines stratégies scalping ou à hautes confluences peuvent atteindre ces chiffres. Ce n'est pas le problème ici.",
+          "Correct. 20 trades = variance aléatoire trop élevée. Le même backtest avec 20 autres trades pourrait donner 30% de winrate et un profit factor de 0.8. Il faut 50 à 100 trades pour que les statistiques soient significatives.",
           "Faux. Un profit factor de 1.8 est déjà solide, au-dessus de 1.5 est généralement un objectif valide. 3.0 est exceptionnel et n'est pas requis pour trader en live avec un edge réel.",
           "Faux. Backtester sur plusieurs instruments peut être utile mais n'est pas une condition préalable obligatoire. La priorité est d'avoir un échantillon suffisamment large sur un seul instrument avant de généraliser.",
         ]}

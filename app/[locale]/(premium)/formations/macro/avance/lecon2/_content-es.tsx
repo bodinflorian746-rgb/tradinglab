@@ -464,7 +464,7 @@ export default function ContentEs() {
                 Viernes 14h25. Capital 1 500€. El NFP sale en 5 minutos. Trabajas desde casa, tu mañana terminó. Cierras tus posiciones frágiles en EUR/USD y XAU/USD. Ningún interés en quedar expuesto durante el shock. Abres tus cuatro charts: EUR/USD, XAU/USD, Nasdaq y BTC/USD. Esperas la reacción del mercado, no el dato solo.
               </p>
               <p>
-                14h30: el NFP sale en 220k contra 180k esperado. Desempleo estable. Salarios a +0,3%. Primera lectura: dólar fuerte. Pero las revisiones del mes anterior caen a -50k. La lectura se vuelve más matizada. DXY sube de todos modos, EUR/USD baja y XAU/USD se hunde. No tradeas la primera vela. A las 14h45, el mercado empieza a desacelerarse. Luego a las 15h00, XAU/USD rompe el soporte de los 4 580$ antes de retestearlo desde abajo. Reacción hawkish confirmada + ruptura técnica validada. El setup está limpio.
+                14h30: el NFP sale en 220k contra 180k esperado. Desempleo estable. Salarios a +0,3%. Primera lectura: dólar fuerte. Pero las revisiones del mes anterior caen a -50k. La lectura se vuelve más matizada. DXY sube de todos modos, EUR/USD baja y XAU/USD se hunde. No tradeas la primera vela. A las 14h45, el mercado empieza a desacelerarse. Luego a las 15h00, XAU/USD rompe el soporte de los 4 580$ antes de retestearlo desde abajo. Reacción hawkish confirmada + breakout técnico validado. El setup está limpio.
               </p>
               <p>
                 Concretamente: entrada short XAU/USD a 4 575$, SL a 4 600$, TP a 4 525$. Arriesgas 30€ (2% de 1 500€), puedes ganar unos 60€. Cierras tu chart, te tomas tu viernes por la noche. Lo verificarás mañana por la mañana.

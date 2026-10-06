@@ -54,7 +54,7 @@ function ContentFr() {
               name: "New York Killzone",
               hours: "13h00 – 16h00",
               color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400",
-              detail: "Ouverture de New York, la plus volatile. Recoupement avec Londres pendant 1h à 2h : liquidité maximale. Les annonces économiques majeures tombent à 13h30 ou 15h00. Les mouvements ici sont rapides et puissants.",
+              detail: "Ouverture de New York, la plus volatile. Recoupement avec Londres pendant 1h à 2h : liquidité maximale. Les news économiques majeures tombent à 13h30 ou 15h00. Les mouvements ici sont rapides et puissants.",
             },
             {
               name: "London Close",
@@ -147,7 +147,7 @@ function ContentFr() {
           "Tu trades normalement, le marché est toujours ouvert et actif",
           "Tu attends la NY Killzone (13h00), la liquidité actuelle est trop faible pour des setups fiables",
           "Tu passes en M5 pour capter les micro-mouvements de cette heure creuse",
-          "Tu shortcut en cassure de range, les heures creuses sont idéales pour les breakouts",
+          "Tu shortcut en breakout de range, les heures creuses sont idéales pour les breakouts",
         ]}
         correctIndex={1}
         explanation="11h30 est en pleine heure creuse, après la fermeture de la London Killzone et avant l'ouverture de New York. La liquidité institutionnelle est minimale, les mouvements sont aléatoires et les faux signaux nombreux. La décision disciplinée est d'attendre la NY Killzone à 13h00."
@@ -155,7 +155,7 @@ function ContentFr() {
           "Faux. Le marché est ouvert, mais ce n'est pas suffisant pour trader. Les heures creuses (10h–13h) ont une liquidité institutionnelle très faible, les mouvements manquent de direction et les faux signaux pullulent.",
           "Correct. En attendant la NY Killzone, tu t'assures d'opérer dans une fenêtre où l'activité institutionnelle est forte, les mouvements directionnels et les setups plus fiables.",
           "Faux. Descendre en M5 pendant les heures creuses amplifie le problème, le bruit est encore plus fort sur les petites unités de temps quand la liquidité est faible.",
-          "Faux. Les heures creuses ne sont pas idéales pour les breakouts, elles sont connues pour les faux breakouts précisément parce que le volume institutionnel manque pour confirmer les cassures.",
+          "Faux. Les heures creuses ne sont pas idéales pour les breakouts, elles sont connues pour les faux breakouts précisément parce que le volume institutionnel manque pour confirmer les breakouts.",
         ]}
       />
 

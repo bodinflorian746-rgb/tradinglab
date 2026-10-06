@@ -11,7 +11,7 @@ export const InflationIndicatorsChainDiagram = ({ locale = "fr" }: InflationIndi
     ppiTitle:     isEs ? "Precios productores" : isEn ? "Producer prices" : "Prix producteurs",
     ppiTime:      isEs ? "D-12 días" : isEn ? "D-12 days" : "J-12 jours",
     ppiNote:      isEs ? "Señal temprana" : isEn ? "Early signal" : "Signal précoce",
-    announces:    isEs ? "anuncia a menudo" : isEn ? "often signals" : "annonce souvent",
+    announces:    isEs ? "anuncia a menudo" : isEn ? "often signals" : "signale souvent",
     cpiPrices:    isEs ? "Precios consumidores" : isEn ? "Consumer prices" : "Prix consommateurs",
     cpiTime:      isEs ? "Día D — 14h30" : isEn ? "Day D — 2:30pm" : "Jour J — 14h30",
     cpiNote:      isEs ? "Choque mediatizado" : isEn ? "Headline shock" : "Choc médiatisé",

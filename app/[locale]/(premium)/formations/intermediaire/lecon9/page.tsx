@@ -212,15 +212,15 @@ function ContentFr() {
         question="Tu traces Fibonacci sur un mouvement haussier EUR/USD (1.0800 → 1.0980). Le prix retrace jusqu'au 61.8% à 1.0869. Ce niveau coïncide avec un support historique respecté 2×. Que fais-tu ?"
         options={[
           "Tu entres immédiatement en achat, le golden ratio + support, c'est assez",
-          "Tu attends un signal de bougie (pin bar ou avalement haussier) sur la zone avant d'entrer",
+          "Tu attends un signal de bougie (pin bar ou engulfing haussier) sur la zone avant d'entrer",
           "Tu passes un ordre de vente, le retracement va probablement continuer jusqu'au 78.6%",
           "Tu ignores le 61.8%, le support a déjà été touché 2×, il est affaibli",
         ]}
         correctIndex={1}
-        explanation="Tu as 2 confluences solides : 61.8% Fib + support historique. C'est une zone d'or à surveiller. Mais le signal de bougie manque encore. Attends qu'une pin bar ou un avalement haussier confirme que le prix réagit à la zone, puis tu entres avec SL sous 1.0848 et TP vers 1.0980."
+        explanation="Tu as 2 confluences solides : 61.8% Fib + support historique. C'est une zone d'or à surveiller. Mais le signal de bougie manque encore. Attends qu'une pin bar ou un engulfing haussier confirme que le prix réagit à la zone, puis tu entres avec SL sous 1.0848 et TP vers 1.0980."
         answerExplanations={[
           "Trop hâtif. Tu as 2 confluences solides, mais sans signal de bougie, tu entres sur un prix qui peut continuer à baisser vers 1.0840 ou moins. La confluence te dit 'regarde ici', pas 'entre maintenant'.",
-          "Correct. Le 61.8% + support est une zone d'or. Mais la confirmation reste nécessaire. Une pin bar haussière ou un avalement sur cette zone te dit que les acheteurs réagissent. Tu entres alors avec SL sous la zone (1.0848) et TP vers le swing high (1.0980).",
+          "Correct. Le 61.8% + support est une zone d'or. Mais la confirmation reste nécessaire. Une pin bar haussière ou un engulfing sur cette zone te dit que les acheteurs réagissent. Tu entres alors avec SL sous la zone (1.0848) et TP vers le swing high (1.0980).",
           "Faux. En tendance haussière Daily, le retracement vers le 61.8% est une opportunité d'achat, pas de vente. Shorter ici, c'est trader contre la tendance de fond et contre 2 confluences haussières.",
           "Partiellement. Un support touché 2× est moins fort qu'un support vierge, mais il reste valide, surtout combiné au 61.8% Fib. La coïncidence des deux niveaux renforce la zone, elle ne l'annule pas.",
         ]}

@@ -44,9 +44,9 @@ export function TrendDiagram({ className = "", locale = "fr" }: TrendDiagramProp
         mobHaussier: "HAUSSIER ↗",
         mobRange: "RANGE ↔",
         mobBaissier: "BAISSIER ↘",
-        sommetsCreuxPlusHauts: "Sommets et creux plus hauts",
+        sommetsCreuxPlusHauts: "Higher highs et higher lows",
         oscillation: "Oscillation entre 2 niveaux",
-        sommetsCreuxPlusBas: "Sommets et creux plus bas",
+        sommetsCreuxPlusBas: "Lower highs et lower lows",
       };
   const p = (pts: number[][]) =>
     pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x},${y}`).join(" ");

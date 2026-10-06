@@ -214,13 +214,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le M15 est l&apos;étage du timing. Quand le prix entre dans la zone H1, on descend sur l&apos;UT inférieure pour observer la réaction : mèches de rejet successives, formation d&apos;un sommet local, puis cassure structurelle d&apos;un creux récent en faveur du biais. Ce sont ces signaux concrets qui valident l&apos;entrée, pas la simple présence du prix dans la zone. L&apos;exécution se fait à la cassure, le SL est calé serré juste au-dessus du dernier sommet de rejet.
+              Le M15 est l&apos;étage du timing. Quand le prix entre dans la zone H1, on descend sur l&apos;UT inférieure pour observer la réaction : mèches de rejet successives, formation d&apos;un sommet local, puis cassure structurelle d&apos;un creux récent en faveur du biais. Ce sont ces signaux concrets qui valident l&apos;entrée, pas la simple présence du prix dans la zone. L&apos;exécution se fait au breakout, le SL est calé serré juste au-dessus du dernier sommet de rejet.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : le prix arrive dans la zone 1.1750-1.1760 et imprime trois mèches hautes consécutives entre 1.1758 et 1.1762, sans clôturer au-dessus. Le dernier creux local entre les bougies de rejet est à 1.1750. Trois bougies M15 baissières enchaînent et cassent ce creux franchement vers 1.1745. La réaction est nette, la cassure confirme, entrée short à 1.1758 sur la cassure, SL à 1.1772 (juste au-dessus du dernier sommet de rejet).
+                EUR/USD : le prix arrive dans la zone 1.1750-1.1760 et imprime trois mèches hautes consécutives entre 1.1758 et 1.1762, sans clôturer au-dessus. Le dernier creux local entre les bougies de rejet est à 1.1750. Trois bougies M15 baissières enchaînent et cassent ce creux franchement vers 1.1745. La réaction est nette, le breakout confirme, entrée short à 1.1758 sur le breakout, SL à 1.1772 (juste au-dessus du dernier sommet de rejet).
               </p>
             </div>
 
@@ -332,11 +332,11 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Tu repères un signal M15 net (rejet + cassure) sur EUR/USD, mais sans avoir tracé de zone H1 au préalable et sans avoir vérifié le biais Daily. Que fais-tu ?"
+            question="Tu repères un signal M15 net (rejet + breakout) sur EUR/USD, mais sans avoir tracé de zone H1 au préalable et sans avoir vérifié le biais Daily. Que fais-tu ?"
             options={[
               "Tu descends sur M5 pour confirmer plus finement avant d'entrer",
               "Tu entres avec une taille réduite pour limiter le risque",
-              "Tu prends l'autre sens, en supposant que le signal annonce un faux mouvement",
+              "Tu prends l'autre sens, en supposant que le signal indique un faux mouvement",
               "Tu n'entres pas : un signal M15 hors process n'est pas un setup valide",
             ]}
             correctIndex={3}
@@ -358,7 +358,7 @@ export default function ContentFr() {
               "Tu places un ordre limite au-dessus de la zone et tu laisses faire",
             ]}
             correctIndex={2}
-            explanation="Sans confirmation M15, le process n'est pas complet, peu importe la qualité du Daily et de la zone H1. La consolidation latérale dans la zone n'est ni un rejet ni une cassure ; elle ne valide rien. Le rôle du M15 est précisément de filtrer ce genre de zone qui « aurait pu » fonctionner mais qui ne montre aucun signal concret. Patience."
+            explanation="Sans confirmation M15, le process n'est pas complet, peu importe la qualité du Daily et de la zone H1. La consolidation latérale dans la zone n'est ni un rejet ni un breakout ; elle ne valide rien. Le rôle du M15 est précisément de filtrer ce genre de zone qui « aurait pu » fonctionner mais qui ne montre aucun signal concret. Patience."
             answerExplanations={[
               "Faux. « Finira par casser » est une prédiction, pas une observation. Le process se construit sur des signaux concrets, pas sur des projections.",
               "Faux. Entrer au milieu de la zone sans signal de l'UT inférieure est un pari sur la moyenne, exactement le contraire d'un setup confirmé. C'est ce qu'on évite.",

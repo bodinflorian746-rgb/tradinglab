@@ -223,7 +223,7 @@ export default function PlaceStopPage() {
         loading:         "Chargement…",
         htf:             "UT supérieure",
         volatility:      "Volatilité",
-        newsImminent:    "Annonce imminente",
+        newsImminent:    "News imminente",
         question:        "Quel stop choisis-tu ?",
         revelation:      "Révélation",
         revealTextPre:   "On regarde quels stops survivent aux",

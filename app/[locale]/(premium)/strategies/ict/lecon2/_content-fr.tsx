@@ -337,7 +337,7 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Exécution potentielle (M15)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : sur M15, mèches hautes de rejet à 1.1768, puis bougie baissière impulsive qui casse le creux local à 1.1748</li>
-                <li>- Conclusion : entrée short à 1.1758 sur la cassure, SL à 1.1772 (au-dessus du sommet de rejet), TP vers la prochaine zone de liquidité basse à 1.1695. Si aucune bougie impulsive n'apparaît, la zone échoue, pas d'entrée</li>
+                <li>- Conclusion : entrée short à 1.1758 sur le breakout, SL à 1.1772 (au-dessus du sommet de rejet), TP vers la prochaine zone de liquidité basse à 1.1695. Si aucune bougie de displacement n'apparaît, la zone échoue, pas d'entrée</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">
@@ -362,7 +362,7 @@ export default function ContentFr() {
             steps={[
               "UT supérieure (Daily/H4) : conclus un biais directionnel clair. Sans biais, ne descends pas plus bas, un PD Array hors biais est très peu fiable.",
               "H1 : recherche un FVG dans le sens du biais, créé par une impulsion juste après un sweep ou un BOS. Vérifie qu'il coïncide avec un ancien support/résistance cassé. Si oui, tu as une confluence.",
-              "Attends le retour du prix dans le PD Array. Sur M15, observe la réaction : mèches de rejet + bougie impulsive = entrée validée. Si la zone est traversée sans réaction, le setup est invalidé, passe à la prochaine.",
+              "Attends le retour du prix dans le PD Array. Sur M15, observe la réaction : mèches de rejet + bougie de displacement = entrée validée. Si la zone est traversée sans réaction, le setup est invalidé, passe à la prochaine.",
             ]}
           />
 

@@ -13,7 +13,7 @@ import { LTFExecutionDiagram } from "@/app/components/charts/LTFExecutionDiagram
 
 const LESSONS = [
   { id: "lecon1", title: "Por qué hacer un análisis multitemporal", disabled: false },
-  { id: "lecon2", title: "La temporalidad superior: el sesgo", disabled: false },
+  { id: "lecon2", title: "El HTF: el sesgo", disabled: false },
   { id: "lecon3", title: "La temporalidad intermedia: la zona", disabled: false },
   { id: "lecon4", title: "La temporalidad de ejecución: la entrada", disabled: false },
   { id: "lecon5", title: "El proceso completo", disabled: false },
@@ -63,7 +63,7 @@ export default function ContentEs() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Esta lección establece la lógica del análisis multitemporal: por qué operar un solo gráfico te deja ciego, y el rol concreto de cada nivel, la temporalidad superior da el sesgo, la temporalidad intermedia localiza la zona, la temporalidad de ejecución dispara la entrada.
+              Esta lección establece la lógica del análisis multitemporal: por qué operar un solo gráfico te deja ciego, y el rol concreto de cada nivel, el HTF da el sesgo, la temporalidad intermedia localiza la zona, la temporalidad de ejecución dispara la entrada.
             </p>
           </div>
 
@@ -162,7 +162,7 @@ export default function ContentEs() {
 
           {/* Bloc 4 — HTF : TROUVER LE BIAIS */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">La temporalidad superior: encontrar el sesgo</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">El HTF: encontrar el sesgo</h2>
 
             <div className="my-8">
               <HTFBiasDiagram locale="es" />
@@ -257,7 +257,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              El LTF sirve únicamente para ejecutar. Es la temporalidad del timing, no la del sesgo. Su rol es mostrar que el mercado reacciona realmente en la zona preparada en las temporalidades superiores.
+              El LTF sirve únicamente para ejecutar. Es la temporalidad del timing, no la del sesgo. Su rol es mostrar que el mercado reacciona realmente en la zona preparada en los HTF.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -357,7 +357,7 @@ export default function ContentEs() {
               "Reemplazar completamente el análisis HTF",
             ]}
             correctIndex={2}
-            explanation="El LTF sirve para confirmar la ejecución en una zona ya preparada por las temporalidades superiores. El sesgo viene del HTF, la zona viene de la temporalidad intermedia; el LTF interviene solo para afinar el timing y reducir el risk. Complementa el análisis HTF, nunca lo reemplaza."
+            explanation="El LTF sirve para confirmar la ejecución en una zona ya preparada por los HTF. El sesgo viene del HTF, la zona viene de la temporalidad intermedia; el LTF interviene solo para afinar el timing y reducir el risk. Complementa el análisis HTF, nunca lo reemplaza."
           />
 
         </div>

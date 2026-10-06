@@ -272,7 +272,7 @@ export default function ContentFr() {
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-white font-semibold leading-relaxed">
-                Tu ne trades pas l&apos;annonce. Tu trades la réaction.
+                Tu ne trades pas la news. Tu trades la réaction.
               </p>
             </div>
           </section>
@@ -311,7 +311,7 @@ export default function ContentFr() {
               </p>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              Sans confluence technique, tu trades juste l&apos;annonce. Avec, tu trades l&apos;annonce + la structure.
+              Sans confluence technique, tu trades juste la news. Avec, tu trades la news + la structure.
             </p>
           </section>
 

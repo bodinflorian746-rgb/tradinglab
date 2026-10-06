@@ -124,7 +124,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Identification S/R → cf. Stratégie SR L1</li>
               <li>- Qualification d&apos;un niveau → cf. Stratégie SR L2</li>
-              <li>- Concept de cassure (clôture franche) → cf. Formation Trading L3</li>
+              <li>- Concept de breakout (clôture franche) → cf. Formation Trading L3</li>
             </ul>
           </div>
 
@@ -137,14 +137,14 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une zone cassée n&apos;est pas une zone morte. Elle inverse son rôle. La séquence cassure + retest + rebond constitue le setup flip.
+              Une zone cassée n&apos;est pas une zone morte. Elle inverse son rôle. La séquence breakout + retest + rebond constitue le setup flip.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Cassure franche : clôture nette + distance ≥ 15-20 pips/$ au-delà du niveau</li>
+              <li>- Breakout franc : clôture nette + distance ≥ 15-20 pips/$ au-delà du niveau</li>
               <li>- Pas de réintégration dans les 3-5 bougies suivantes (sinon flip invalidé)</li>
               <li>- Retest : retour du prix vers le niveau cassé par le côté opposé</li>
-              <li>- Rebond confirmé par un signal de rejet (pin bar, avalement, réaction nette)</li>
+              <li>- Rebond confirmé par un signal de rejet (pin bar, engulfing, réaction nette)</li>
             </ul>
           </section>
 
@@ -162,7 +162,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Pin bar de rejet (mèche longue côté zone, corps réduit côté opposé)</li>
-              <li>- Avalement dans le sens du flip (englobe la bougie précédente)</li>
+              <li>- Engulfing dans le sens du flip (englobe la bougie précédente)</li>
               <li>- Réaction immédiate (rebond net en 1-2 bougies sans pénétration profonde)</li>
               <li>- Signal absent = zone non confirmée, attendre une autre opportunité</li>
             </ul>
@@ -173,13 +173,13 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : flip EUR/USD H4</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              EUR/USD en tendance haussière depuis 2 semaines. Résistance majeure 1.1850 touchée 3 fois en 3 semaines avant d&apos;être cassée. 4 bougies confirment la cassure sans réintégration. Pin bar de rejet au retest.
+              EUR/USD en tendance haussière depuis 2 semaines. Résistance majeure 1.1850 touchée 3 fois en 3 semaines avant d&apos;être cassée. 4 bougies confirment le breakout sans réintégration. Pin bar de rejet au retest.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade long sur flip confirmé)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Cassure : clôture à 1.1878 (28 pips au-dessus de la zone)</li>
+                <li>- Breakout : clôture à 1.1878 (28 pips au-dessus de la zone)</li>
                 <li>- Validation : 4 bougies sans réintégration sous 1.1850</li>
                 <li>- Retest : pin bar avec mèche basse à 1.1842 et clôture à 1.1858</li>
                 <li>- Entrée long : 1.1858 (clôture de la pin bar)</li>
@@ -216,7 +216,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un flip peut échouer après une cassure apparemment franche. Le retour rapide du prix sous le niveau invalide le flip.
+              Un flip peut échouer après un breakout apparemment franc. Le retour rapide du prix sous le niveau invalide le flip.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -228,9 +228,9 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Un flip exige une cassure qualifiée : clôture franche, distance suffisante, pas de retour immédiat.",
+              "Un flip exige un breakout qualifié : clôture franche, distance suffisante, pas de retour immédiat.",
               "La zone cassée inverse son rôle au retest : support cassé → résistance, résistance cassée → support.",
-              "Le retest se valide uniquement par un signal de rejet au contact (pin bar, avalement, réaction nette).",
+              "Le retest se valide uniquement par un signal de rejet au contact (pin bar, engulfing, réaction nette).",
               "Le stop loss se place de l’autre côté de la zone avec marge 5-10 pips. Sans signal de rejet, pas d’entrée.",
             ]}
           />
@@ -238,7 +238,7 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur EUR/USD H4, une résistance à 1.1850 est cassée par une bougie qui clôture à 1.1875 avec un corps significatif. 4 bougies plus tard, le prix retrace vers 1.1850 et imprime une pin bar avec mèche longue qui rejette. Comment se construit le plan de trade flip ?"
             steps={[
-              "Qualifier la cassure : clôture à 1.1875, distance 25 pips au-dessus de la zone, corps significatif, pas de retour immédiat sur 4 bougies, cassure validée",
+              "Qualifier le breakout : clôture à 1.1875, distance 25 pips au-dessus de la zone, corps significatif, pas de retour immédiat sur 4 bougies, breakout validé",
               "Constater l’inversion du rôle : la résistance 1.1850 devient un support",
               "Identifier le signal de rejet : la pin bar au contact de la zone valide le flip",
               "Placer l’entrée long à la clôture de la pin bar, stop loss à 1.1830 (20 pips sous la zone pour absorber les mèches)",
@@ -250,12 +250,12 @@ export default function ContentFr() {
             question="Une résistance vient d’être cassée à la hausse avec une clôture franche. Le prix retrace ensuite vers la zone. Quel signal valide le flip et autorise une entrée long ?"
             options={[
               "Le simple retour du prix à la zone suffit",
-              "Un signal de rejet (pin bar, avalement, réaction nette) au contact de la zone",
-              "Une cassure de la zone suivante",
+              "Un signal de rejet (pin bar, engulfing, réaction nette) au contact de la zone",
+              "Un breakout de la zone suivante",
               "Aucun signal nécessaire, l’entrée est mécanique",
             ]}
             correctIndex={1}
-            explanation="Sans signal de rejet, le flip n’est pas validé. Une pin bar, un avalement ou une réaction nette au contact de la zone confirment que la zone inversée joue son nouveau rôle. Sans ce signal, le prix peut traverser la zone et invalider le flip."
+            explanation="Sans signal de rejet, le flip n’est pas validé. Une pin bar, un engulfing ou une réaction nette au contact de la zone confirment que la zone inversée joue son nouveau rôle. Sans ce signal, le prix peut traverser la zone et invalider le flip."
           />
 
         </div>

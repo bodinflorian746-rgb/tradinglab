@@ -137,7 +137,7 @@ export default function ContentFr() {
               <div>
                 <p className="text-sm font-semibold text-zinc-200 mb-1">Session New York, 14h à 22h Paris</p>
                 <p className="text-sm text-zinc-300 mb-0.5">
-                  Wall Street, indices US, annonces américaines. Elle représente environ{" "}
+                  Wall Street, indices US, news américaines. Elle représente environ{" "}
                   <span className="font-semibold text-zinc-200">20-25% du volume forex mondial</span>.
                 </p>
                 <p className="text-sm text-zinc-400">Paires actives : EUR/USD, GBP/USD, USD/JPY, USD/CAD, XAU/USD, indices US.</p>
@@ -172,7 +172,7 @@ export default function ContentFr() {
               {[
                 "les institutions européennes sont actives",
                 "les institutions américaines arrivent",
-                "les annonces US sortent souvent à 14h30",
+                "les news US sortent souvent à 14h30",
                 "les volumes explosent",
                 "les vrais mouvements se forment",
               ].map((item, i) => (
@@ -244,7 +244,7 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu vois une cassure. Tu entres. Le prix revient dans le range.
+              Tu vois un breakout. Tu entres. Le prix revient dans le range.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
               Ce n&apos;était pas un vrai breakout.{" "}
@@ -327,8 +327,8 @@ export default function ContentFr() {
               {[
                 { bold: "Scalping", rest: " : besoin de liquidité. Londres et overlap uniquement." },
                 { bold: "Day trading", rest: " : overlap Londres-New York idéal. C'est là que les mouvements sont les plus propres." },
-                { bold: "Swing trading", rest: " : tu peux utiliser Londres pour repérer les cassures importantes." },
-                { bold: "Trading des annonces", rest: " : souvent autour de 14h30 ou 20h00. Mais seulement avec préparation." },
+                { bold: "Swing trading", rest: " : tu peux utiliser Londres pour repérer les breakouts importants." },
+                { bold: "News trading", rest: " : souvent autour de 14h30 ou 20h00. Mais seulement avec préparation." },
               ].map((item, i) => (
                 <p key={i} className="text-zinc-300 leading-relaxed text-sm">
                   <span className="font-semibold text-zinc-200">{item.bold}</span>{item.rest}
@@ -431,10 +431,10 @@ export default function ContentFr() {
               "Le marché forex est fermé à 23h",
             ]}
             correctIndex={1}
-            explanation="À 23h Paris, Londres et New York sont fermés. Sur EUR/USD, la liquidité est souvent plus faible, les spreads peuvent s'élargir et les cassures sont moins fiables. C'est exactement le piège de la session Asie sur les paires européennes/US. L'option A est trop radicale (ta stratégie peut très bien marcher en overlap Londres-NY). L'option C est fausse (EUR/USD respecte parfaitement les résistances quand la liquidité est là). L'option D est incorrecte : le forex est ouvert, mais pas toujours bien tradable. Ce même principe s'applique à XAU/USD, aux indices US et au BTC/USD, le timing est universel, pas seulement forex."
+            explanation="À 23h Paris, Londres et New York sont fermés. Sur EUR/USD, la liquidité est souvent plus faible, les spreads peuvent s'élargir et les breakouts sont moins fiables. C'est exactement le piège de la session Asie sur les paires européennes/US. L'option A est trop radicale (ta stratégie peut très bien marcher en overlap Londres-NY). L'option C est fausse (EUR/USD respecte parfaitement les résistances quand la liquidité est là). L'option D est incorrecte : le forex est ouvert, mais pas toujours bien tradable. Ce même principe s'applique à XAU/USD, aux indices US et au BTC/USD, le timing est universel, pas seulement forex."
             answerExplanations={[
               "Faux. Ta stratégie n'est pas en cause ici. Le problème vient du contexte horaire, pas de l'analyse technique. Une stratégie peut fonctionner parfaitement en overlap et échouer la nuit.",
-              "Correct. À 23h Paris, Londres et New York sont fermés. La liquidité sur EUR/USD est faible, les spreads s'élargissent et les cassures sont moins fiables. C'est le piège classique de la session Asie sur les paires européennes.",
+              "Correct. À 23h Paris, Londres et New York sont fermés. La liquidité sur EUR/USD est faible, les spreads s'élargissent et les breakouts sont moins fiables. C'est le piège classique de la session Asie sur les paires européennes.",
               "Faux. EUR/USD respecte très bien les niveaux techniques, mais uniquement quand il y a de la liquidité, c'est-à-dire principalement durant les sessions Londres et New York.",
               "Faux. Le forex est techniquement ouvert 24h/24. Mais 'ouvert' ne veut pas dire 'tradable dans de bonnes conditions'.",
             ]}

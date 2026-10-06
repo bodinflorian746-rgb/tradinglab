@@ -50,7 +50,7 @@ export function MacroFilterFlowchartDiagram({ className = "", locale = "fr" }: M
         legendRed: "A single red filter = no trade",
       }
     : {
-        q1: "Annonce majeure imminente ?",
+        q1: "News majeure imminente ?",
         oui: "Oui",
         non: "Non",
         pasDeTrade: "Pas de trade",
@@ -60,7 +60,7 @@ export function MacroFilterFlowchartDiagram({ className = "", locale = "fr" }: M
         execution: "Exécution possible",
         annotation: "Le setup doit passer tous les filtres",
         mobileTitle: "Flowchart filtre macro pré-trade",
-        q1Mobile: "Q1 — Annonce majeure imminente ?",
+        q1Mobile: "Q1 — News majeure imminente ?",
         q1MobileDesc1: "Si OUI → ",
         q2Mobile: "Q2 — Régime macro aligné ?",
         q2MobileDesc1: "Si NON → ",

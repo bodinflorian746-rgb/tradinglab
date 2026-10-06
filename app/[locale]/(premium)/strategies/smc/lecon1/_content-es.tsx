@@ -202,12 +202,12 @@ export default function ContentEs() {
                 <p className="text-emerald-400 font-semibold text-sm mb-2">Acumulación</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Rango lateral tras tendencia bajista</li>
-                  <li>- Amplitud reducida, false breakouts frecuentes</li>
+                  <li>- Amplitud reducida, fakeouts frecuentes</li>
                   <li>- Setups rango + breakout alcista post-confirmación</li>
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
-                <p className="text-amber-400 font-semibold text-sm mb-2">Manipulación (falso breakout)</p>
+                <p className="text-amber-400 font-semibold text-sm mb-2">Manipulación (fakeout)</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Barrido de liquidez por encima o debajo del rango</li>
                   <li>- Mecha rompe, retorno brutal al interior del rango</li>
@@ -297,7 +297,7 @@ export default function ContentEs() {
           <LessonKeyPoints
             points={[
               "La lectura SMC distingue estructura interna (M15/H1) y externa (H4/Daily). La alineación da el sesgo.",
-              "El mercado alterna 3 fases: acumulación, manipulación (falso breakout), expansión (markup/markdown).",
+              "El mercado alterna 3 fases: acumulación, manipulación (fakeout), expansión (markup/markdown).",
               "Procedimiento top-down obligatorio: Daily → H4 → H1 → M15. Sin análisis direccional en M15 aislado.",
               "Ningún setup contra la estructura externa Daily sin BOS contratendencia + CHoCH confirmado.",
             ]}

@@ -55,10 +55,10 @@ export function NFPReversalDiagram({ className = "", locale = "fr" }: NFPReversa
         mobileTitle: "NFP reversal completo · XAU/USD M15",
         step1: "Caída inicial violenta en el headline.",
         step2: "Base de estabilización = digestión de los sub-datos.",
-        step3a: "Ruptura + reversión",
+        step3a: "Breakout + reversión",
         step3b: " sobre el nivel pre-NFP.",
         legend1: "Caída inicial luego base de estabilización",
-        legend2: "Ruptura y reversión completa sobre el pre-NFP",
+        legend2: "Breakout y reversión completa sobre el pre-NFP",
       }
     : locale === "en"
     ? {
@@ -82,10 +82,10 @@ export function NFPReversalDiagram({ className = "", locale = "fr" }: NFPReversa
         mobileTitle: "NFP reversal complet · XAU/USD M15",
         step1: "Chute initiale violente sur le headline.",
         step2: "Base de stabilisation = digestion des sous-données.",
-        step3a: "Cassure + retournement",
+        step3a: "Breakout + retournement",
         step3b: " au-dessus du niveau pré-NFP.",
         legend1: "Chute initiale puis base de stabilisation",
-        legend2: "Cassure et retournement complet au-dessus du pré-NFP",
+        legend2: "Breakout et retournement complet au-dessus du pré-NFP",
       };
   return (
     <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>

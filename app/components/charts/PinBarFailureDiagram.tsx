@@ -16,7 +16,7 @@ export default function PinBarFailureDiagram({ className = "", locale = "fr" }: 
         step2Tag: "Paso 2",
         step2: "Mini-rebote de 2-3 velas → luego fallo",
         step3Tag: "Paso 3",
-        step3: "Ruptura bajista del soporte → SL alcanzado a 4 470 $",
+        step3: "Breakout bajista del soporte → SL alcanzado a 4 470 $",
         mobileFooter1: "Incluso una pin bar válida puede fallar. ",
         mobileFooter2: "El SL está ahí para eso.",
       }
@@ -57,7 +57,7 @@ export default function PinBarFailureDiagram({ className = "", locale = "fr" }: 
         step2Tag: "Étape 2",
         step2: "Mini-rebond de 2-3 bougies → puis échec",
         step3Tag: "Étape 3",
-        step3: "Cassure baissière du support → SL touché à 4 470 $",
+        step3: "Breakout baissier du support → SL touché à 4 470 $",
         mobileFooter1: "Même un pin bar valide peut échouer. ",
         mobileFooter2: "Le SL est là pour ça.",
       };

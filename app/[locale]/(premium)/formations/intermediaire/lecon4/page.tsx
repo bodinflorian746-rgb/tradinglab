@@ -69,7 +69,7 @@ function ContentFr() {
           {[
             { label: "Daily ou H4 : le biais principal", detail: "C'est la tendance que tu dois respecter. Si Daily est haussier, tu cherches uniquement des achats." },
             { label: "H1 : les zones d'entrée", detail: "En tendance haussière Daily, le H1 montre les retracements (corrections). Ce sont tes fenêtres d'entrée." },
-            { label: "M15 : le timing précis", detail: "Sur M15, tu cherches le signal final (rejet, pin bar, avalement). C'est le déclencheur de l'entrée." },
+            { label: "M15 : le timing précis", detail: "Sur M15, tu cherches le signal final (rejet, pin bar, engulfing). C'est le déclencheur de l'entrée." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">

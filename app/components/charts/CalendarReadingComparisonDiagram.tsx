@@ -42,7 +42,7 @@ export const CalendarReadingComparisonDiagram = ({ locale = "fr" }: { locale?: "
         subtitle: "Le même événement, lu de 2 façons radicalement différentes",
         lectureDebutant: "LECTURE DÉBUTANT",
         lecturePro: "LECTURE PRO",
-        jeVoisNews: "Je vois une annonce importante.",
+        jeVoisNews: "Je vois une news importante.",
         jeSaisRisque: "→ Je sais juste qu'il y a un risque.",
         consensus: "Consensus :",
         precedent: "Précédent :",

@@ -61,7 +61,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              L&apos;épaule-tête-épaule est le pattern de retournement le plus réputé du trading technique. Plus complexe qu&apos;un double top, il devient plus fiable quand il se forme proprement. Cette leçon présente comment le repérer, le valider, et le trader avec un R/R modeste mais un taux de réussite élevé.
+              L&apos;épaule-tête-épaule est le pattern de retournement le plus réputé du trading technique. Plus complexe qu&apos;un double top, il devient plus fiable quand il se forme proprement. Cette leçon présente comment le repérer, le valider, et le trader avec un R/R modeste mais un winrate élevé.
             </p>
           </div>
 
@@ -133,7 +133,7 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Pourquoi l&apos;épaule-tête-épaule fonctionne</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Un ETE se forme à la fin d&apos;une tendance haussière. Le prix crée trois sommets : un premier sommet appelé épaule gauche, un sommet plus haut appelé tête, puis un troisième sommet plus bas que la tête appelé épaule droite. Les deux creux entre les sommets forment la ligne de cou. Quand cette ligne de cou casse, le retournement est confirmé.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Chaque sommet successif montre une perte de force des acheteurs. La tête représente le dernier vrai mouvement haussier. Quand l&apos;épaule droite échoue à revenir au niveau de la tête, le marché montre que les acheteurs arrivent au bout du mouvement. La cassure de la ligne de cou déclenche ensuite les stops des acheteurs et accélère la baisse.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Chaque sommet successif montre une perte de force des acheteurs. La tête représente le dernier vrai mouvement haussier. Quand l&apos;épaule droite échoue à revenir au niveau de la tête, le marché montre que les acheteurs arrivent au bout du mouvement. Le breakout de la ligne de cou déclenche ensuite les stops des acheteurs et accélère la baisse.</p>
             <p className="text-zinc-300 leading-relaxed text-sm">L&apos;ETE reste un pattern très accessible pour un retail. Aucun indicateur compliqué ni calcul avancé n&apos;est nécessaire. Il se voit directement sur le chart, peu importe l&apos;actif ou l&apos;unité de temps. C&apos;est le pattern de retournement le plus enseigné depuis plus de 100 ans, et il fonctionne toujours.</p>
           </section>
 
@@ -143,13 +143,13 @@ export default function ContentFr() {
             <div className="my-8">
               <HeadShouldersDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">L&apos;ETE classique apparaît à la fin d&apos;une tendance haussière. Il forme trois sommets : une épaule gauche avec un sommet modéré, une tête avec un sommet plus haut, puis une épaule droite avec un sommet proche de l&apos;épaule gauche. Les deux creux entre ces sommets définissent la ligne de cou.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">L&apos;ETE classique apparaît à la fin d&apos;une tendance haussière. Il forme trois sommets : une épaule gauche avec un sommet modéré, une tête avec un sommet au-dessus des deux épaules, puis une épaule droite avec un sommet proche de l&apos;épaule gauche. Les deux creux entre ces sommets définissent la ligne de cou.</p>
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Les 3 conditions pour qu&apos;un ETE soit valide :</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Une tendance haussière préalable claire</li>
               <li>- La tête doit être strictement plus haute que les 2 épaules</li>
-              <li>- Une cassure confirmée de la ligne de cou (clôture, pas mèche)</li>
+              <li>- Un breakout confirmé de la ligne de cou (clôture, pas mèche)</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur XAU/USD. Le marché est haussier depuis plusieurs séances. Il monte vers 4 620$ pour former l&apos;épaule gauche, redescend à 4 580$, repart vers 4 660$ pour former la tête, puis redescend à 4 575$. Ensuite, il remonte vers 4 625$ pour former l&apos;épaule droite, au même niveau que l&apos;épaule gauche. La ligne de cou relie les deux creux autour de 4 578$. Quand le prix clôture sous 4 575$, l&apos;ETE est confirmé.</p>
@@ -172,13 +172,13 @@ export default function ContentFr() {
           {/* Bloc 6 — H&S INVERSÉ */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Épaule-tête-épaule inversé : fin de tendance baissière</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">L&apos;ETE inversé est le miroir de l&apos;ETE classique. Il apparaît à la fin d&apos;une tendance baissière. Le prix forme trois creux : une épaule gauche avec un creux modéré, une tête avec un creux plus bas, puis une épaule droite avec un creux proche de l&apos;épaule gauche. La ligne de cou relie les deux sommets entre les creux.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">L&apos;ETE inversé est le miroir de l&apos;ETE classique. Il apparaît à la fin d&apos;une tendance baissière. Le prix forme trois creux : une épaule gauche avec un creux modéré, une tête avec un creux sous les deux épaules, puis une épaule droite avec un creux proche de l&apos;épaule gauche. La ligne de cou relie les deux sommets entre les creux.</p>
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Les 3 conditions restent les mêmes, en miroir :</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Une tendance baissière préalable claire</li>
               <li>- La tête doit être strictement plus basse que les 2 épaules</li>
-              <li>- Une cassure confirmée de la ligne de cou vers le haut (clôture)</li>
+              <li>- Un breakout confirmé de la ligne de cou vers le haut (clôture)</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur XAU/USD. Le marché est baissier depuis plusieurs séances. Il descend vers 4 470$ pour former l&apos;épaule gauche, remonte à 4 510$, repart vers 4 430$ pour former la tête, puis remonte à 4 515$. Ensuite, il redescend vers 4 475$ pour former l&apos;épaule droite. La ligne de cou relie les deux sommets autour de 4 512$. Quand le prix clôture au-dessus de 4 515$, l&apos;ETE inversé est confirmé.</p>
@@ -229,7 +229,7 @@ export default function ContentFr() {
               <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel environ 30€</li>
               <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel environ 75€</li>
             </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1,5:1 reste modeste comparé à un Pin bar ou un pullback de tendance, mais l&apos;ETE a un taux de réussite plus élevé quand le pattern est propre. Sur 100 trades, la rentabilité est atteinte même avec un R/R modeste si le win rate dépasse 50%.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1,5:1 reste modeste comparé à un Pin bar ou un pullback de tendance, mais l&apos;ETE a un winrate plus élevé quand le pattern est propre. Sur 100 trades, la rentabilité est atteinte même avec un R/R modeste si le winrate dépasse 50%.</p>
           </section>
 
           {/* Bloc 10 — FILTRES : QUAND NE PAS PRENDRE LE SETUP */}
@@ -238,8 +238,8 @@ export default function ContentFr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Tête pas assez marquée.</span> <span className="text-zinc-300">Si la tête dépasse à peine les épaules, moins de 0,3% au-dessus, le pattern devient faible. Le marché hésite sans cassure structurelle franche. Setup à ignorer.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Épaules trop asymétriques.</span> <span className="text-zinc-300">Si l&apos;épaule droite est beaucoup plus haute ou plus basse que la gauche, avec plus de 0,5% d&apos;écart, le pattern perd sa logique classique. La structure devient moins fiable.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Cassure sur mèche, sans clôture.</span> <span className="text-zinc-300">Une mèche qui casse brièvement la ligne de cou puis remonte ne valide rien. Une vraie clôture franche est attendue. Sur ETE, la patience reste critique.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. Annonce majeure dans la fenêtre.</span> <span className="text-zinc-300">Si FOMC, NFP ou CPI arrive dans les 30 minutes, le setup n&apos;est pas pris. Une annonce peut invalider le pattern immédiatement.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Breakout sur mèche, sans clôture.</span> <span className="text-zinc-300">Une mèche qui casse brièvement la ligne de cou puis remonte ne valide rien. Une vraie clôture franche est attendue. Sur ETE, la patience reste critique.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. News majeure dans la fenêtre.</span> <span className="text-zinc-300">Si FOMC, NFP ou CPI arrive dans les 30 minutes, le setup n&apos;est pas pris. Une news peut invalider le pattern immédiatement.</span></div>
             </div>
           </section>
 
@@ -248,7 +248,7 @@ export default function ContentFr() {
               "Épaule-tête-épaule = 3 sommets après une tendance haussière. La tête est plus haute que les 2 épaules. ETE inversé = miroir sur tendance baissière.",
               "Confirmation = clôture franche sous ou au-dessus de la ligne de cou. Pas de mèche.",
               "SL classique au-dessus de la tête, SL tactique au-dessus de l’épaule droite pour un R/R plus exploitable. TP = measured move (hauteur tête → ligne de cou projetée).",
-              "Le R/R de l'ETE est modeste, souvent autour de 1,5:1, mais le taux de réussite reste élevé quand le pattern est propre.",
+              "Le R/R de l'ETE est modeste, souvent autour de 1,5:1, mais le winrate reste élevé quand le pattern est propre.",
             ]}
           />
 
@@ -257,8 +257,8 @@ export default function ContentFr() {
             steps={[
               "Vérifier que la tête (4 680$) est strictement plus haute que les 2 épaules : 30 pips au-dessus, soit 0,65%, supérieur au seuil de 0,3%, OK",
               "Confirmer que les épaules sont symétriques : 4 650$ vs 4 658$, écart de 8 pips (0,17%), sous le seuil de 0,5%, OK",
-              "Confirmer la cassure : clôture à 4 615$ sous la ligne de cou à 4 620$, pas une simple mèche",
-              "Vérifier qu’aucune annonce majeure n’est prévue dans les 30 prochaines minutes",
+              "Confirmer le breakout : clôture à 4 615$ sous la ligne de cou à 4 620$, pas une simple mèche",
+              "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
               "Prendre l’entrée short à 4 615$, SL au-dessus de l’épaule droite à 4 668$, TP measured move étendu à 4 540$ pour un R/R rond de 1,5:1",
             ]}
           />

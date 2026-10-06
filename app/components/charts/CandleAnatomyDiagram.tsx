@@ -45,10 +45,10 @@ export function CandleAnatomyDiagram({ className = '', locale = "fr" }: CandleAn
     : {
         header: "Bougie verte (haussière) · Bougie rouge (baissière)",
         ariaLabel: "Anatomie d'une bougie japonaise",
-        highPoint: "High — point haut",
+        highPoint: "High — swing high",
         closeLabel: "Close — clôture",
         openLabel: "Open — ouverture",
-        lowPoint: "Low — point bas",
+        lowPoint: "Low — swing low",
         buyers: "Acheteurs ↑",
         sellers: "Vendeurs ↓",
         mobileGreenTitle: "Bougie verte — Acheteurs ↑",

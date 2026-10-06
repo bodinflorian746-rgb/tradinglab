@@ -270,7 +270,7 @@ export default function ContentEs() {
           />
 
           <LessonQuiz
-            question="Tu setup es limpio y el precio reacciona en una buena zona, pero tu sesgo en temporalidad superior (HTF) apunta en sentido contrario. ¿Qué haces?"
+            question="Tu setup es limpio y el precio reacciona en una buena zona, pero tu sesgo en HTF apunta en sentido contrario. ¿Qué haces?"
             options={[
               "Tomo la operación: setup y zona válidos son suficientes.",
               "Me abstengo: sin el sesgo HTF a mi favor, la probabilidad cae demasiado.",

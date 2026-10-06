@@ -60,7 +60,7 @@ export function DisplacementVsVolatilityDiagram({ className = "", locale = "fr" 
     mobTitle:    isEs ? "Displacement vs volatilidad · EUR/USD M15" : isEn ? "Displacement vs volatility · EUR/USD M15" : "Displacement vs volatilité · EUR/USD M15",
     leftCardT:   isEs ? "Volatilidad aislada — no es displacement" : isEn ? "Isolated volatility — not displacement" : "Volatilité isolée — pas displacement",
     leftCardD:   isEs ? "Gran vela aislada + rechazo inmediato = sin continuidad." : isEn ? "Large isolated candle + immediate rejection = no continuation." : "Grande bougie isolée + rejet immédiat = pas de continuité.",
-    rightCardT:  isEs ? "Displacement = verdadera ruptura" : isEn ? "Displacement = real breakout" : "Displacement = vraie cassure",
+    rightCardT:  isEs ? "Displacement = verdadero breakout" : isEn ? "Displacement = real breakout" : "Displacement = vrai breakout",
     rightCardD:  isEs ? "Ruptura de estructura + continuación = verdadero cambio de control institucional." : isEn ? "Structure break + continuation = real shift in institutional control." : "Cassure de structure + continuation = vrai changement de contrôle institutionnel.",
     legend1:     isEs ? "Gran vela aislada + rechazo = sin continuidad" : isEn ? "Large isolated candle + rejection = no continuation" : "Grande bougie isolée + rejet = pas de continuité",
     legend2:     isEs ? "Displacement = ruptura de estructura + continuación" : isEn ? "Displacement = structure break + continuation" : "Displacement = cassure de structure + continuation",

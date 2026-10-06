@@ -32,19 +32,19 @@ export default function EngulfingContextDiagram({ className = "", locale = "fr" 
         mobileFooter: "An engulfing with no structural context stays hypothetical.",
       }
     : {
-        title: "Avalement — la confluence change tout",
-        validPanel: "✓ Setup VALIDE — Confluence Fibo + avalement",
+        title: "Engulfing — la confluence change tout",
+        validPanel: "✓ Setup VALIDE — Confluence Fibo + engulfing",
         invalidPanel: "✗ Setup INVALIDE — Hors niveau structurel",
-        engulfFibo: "Avalement AU Fibo 0.618",
-        engulfImpulse: "Avalement isolé en impulsion",
+        engulfFibo: "Engulfing AU Fibo 0.618",
+        engulfImpulse: "Engulfing isolé en impulsion",
         fibo: "Fibo 0.618",
-        footer: "Un avalement isolé hors contexte structurel reste un signal hypothétique",
+        footer: "Un engulfing isolé hors contexte structurel reste un signal hypothétique",
         mobileTitle: "L'importance du contexte",
-        mobileValidTitle: "✓ Avalement sur Fibo 0.618",
+        mobileValidTitle: "✓ Engulfing sur Fibo 0.618",
         mobileValidDesc: "La bougie englobante apparaît exactement sur un niveau Fibonacci → setup fort, confluence visible.",
-        mobileInvalidTitle: "✗ Avalement isolé en pleine impulsion",
+        mobileInvalidTitle: "✗ Engulfing isolé en pleine impulsion",
         mobileInvalidDesc: "Englobante au milieu d'une chute, sans niveau structurel → signal hypothétique, à ignorer.",
-        mobileFooter: "Un avalement hors contexte structurel reste hypothétique.",
+        mobileFooter: "Un engulfing hors contexte structurel reste hypothétique.",
       };
 
   return (

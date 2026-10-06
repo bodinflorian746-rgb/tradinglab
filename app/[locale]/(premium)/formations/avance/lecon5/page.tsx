@@ -72,7 +72,7 @@ function ContentFr() {
               <li className="text-xs text-zinc-400 leading-relaxed">2. BOS haussier sur l'unité de temps de travail (H1/H4)</li>
               <li className="text-xs text-zinc-400 leading-relaxed">3. Retracement dans la zone OTE (61.8%–78.6%)</li>
               <li className="text-xs text-zinc-400 leading-relaxed">4. Confluence dans l'OTE : Bullish OB ou Bullish FVG</li>
-              <li className="text-xs text-zinc-400 leading-relaxed">5. Signal de bougie sur M15 (pin bar, avalement haussier) → entrée</li>
+              <li className="text-xs text-zinc-400 leading-relaxed">5. Signal de bougie sur M15 (pin bar, engulfing haussier) → entrée</li>
             </ul>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">

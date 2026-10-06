@@ -48,7 +48,7 @@ export function BacktestMetricsDiagram({ className = "" }: BacktestMetricsDiagra
         <line x1={594} y1={18} x2={594} y2={122} stroke="#27272a" strokeWidth="1" />
 
         {/* Card 1 — Win Rate */}
-        <text x={153} y={38}  fontSize="9"  fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">WIN RATE</text>
+        <text x={153} y={38}  fontSize="9"  fill="#52525b" textAnchor="middle" fontWeight="700" letterSpacing="1">WINRATE</text>
         <text x={153} y={90}  fontSize="36" fill="#34d399" textAnchor="middle" fontWeight="700">55%</text>
         <text x={153} y={110} fontSize="9"  fill="#52525b" textAnchor="middle">55 / 100 trades gagnants</text>
 

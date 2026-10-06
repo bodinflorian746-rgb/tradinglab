@@ -144,7 +144,7 @@ export default function FindTheMistakePage() {
         score:           "Score",
         ofStreak:        "de série",
         loading:         "Chargement…",
-        newsWarning:     "Annonce macro majeure dans < 30 min.",
+        newsWarning:     "News macro majeure dans < 30 min.",
         htf:             "UT supérieure",
         macro:           "Macro",
         volatility:      "Volatilité",

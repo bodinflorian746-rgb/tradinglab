@@ -56,7 +56,7 @@
         "lecon1": { "title": "Soporte y resistencia: las zonas donde reacciona el mercado",    "description": "Entiende qué es un soporte y una resistencia, las zonas donde el precio rebota o rechaza regularmente." },
         "lecon2": { "title": "Identificar un nivel real (vs una línea trazada al azar)",        "description": "Los criterios para distinguir un nivel real de una línea al azar, toques múltiples, rechazos visibles, nivel reciente." },
         "lecon3": { "title": "Flip soporte↔resistencia y tradear un rebote",                    "description": "Los niveles no desaparecen cuando se rompen, a menudo cambian de rol. Tradea los retests después del flip para setups clásicos." },
-        "lecon4": { "title": "Ruptura real vs fake breakout",                                   "description": "Distinguir las rupturas reales de las trampas. Los fakes son violentos y rechazan rápido, un setup en sí mismo." }
+        "lecon4": { "title": "Breakout real vs fakeout",                                   "description": "Distinguir los breakouts reales de las trampas. Los fakes son violentos y rechazan rápido, un setup en sí mismo." }
       }
     },
     "trend-following": {
@@ -74,7 +74,7 @@
       "subtitle": "Entiende cómo estructuran sus posiciones las instituciones y alíneate. Soportes y resistencias, BOS, CHoCH, confluencias.",
       "lessons": {
         "lecon1": { "title": "Market Structure SMC: leer la estructura del mercado como una institución",   "description": "Identificar los swings significativos, distinguir estructura interna y externa, leer las fases de acumulación, expansión y distribución." },
-        "lecon2": { "title": "BOS y CHoCH: leer las señales estructurales institucionales",                 "description": "Distinguir BOS y CHoCH, calificar operativamente la ruptura, entender la secuencia de reversal institucional en 3 etapas." },
+        "lecon2": { "title": "BOS y CHoCH: leer las señales estructurales institucionales",                 "description": "Distinguir BOS y CHoCH, calificar operativamente el breakout, entender la secuencia de reversal institucional en 3 etapas." },
         "lecon3": { "title": "Order Blocks: identificar las zonas institucionales",                          "description": "Procedimiento de identificación en 4 etapas, criterios de calificación, plan de ejecución concreto y trampas a evitar en los Order Blocks." },
         "lecon4": { "title": "FVG y liquidez: tradear el desequilibrio institucional",                      "description": "Liquidez, barrido y Fair Value Gap: la mecánica institucional completa." },
         "lecon5": { "title": "El trade SMC completo: del análisis HTF a la ejecución",                       "description": "La síntesis del módulo: ensamblar estructura, liquidez, barrido, CHoCH y mitigation en un trade completo." }
@@ -95,7 +95,7 @@
       "subtitle": "Método top-down disciplinado para transformar una lectura macro en una ejecución precisa. Daily → H4 → H1 → entrada.",
       "lessons": {
         "lecon1": { "title": "Por qué hacer un análisis multitemporal",                          "description": "Por qué tradear un solo gráfico te deja ciego, y el rol de cada nivel: sesgo, zona, gatillo." },
-        "lecon2": { "title": "La temporalidad superior: definir el contexto y el sesgo",        "description": "Leer la temporalidad superior (H4/Daily): estructura, zonas, y sacar de ahí un sesgo direccional claro." },
+        "lecon2": { "title": "El HTF: definir el contexto y el sesgo",        "description": "Leer el HTF (H4/Daily): estructura, zonas, y sacar de ahí un sesgo direccional claro." },
         "lecon3": { "title": "La temporalidad intermedia: detectar la zona que cuenta",          "description": "Bajar un nivel: ubicar la zona precisa donde el escenario del HTF puede activarse." },
         "lecon4": { "title": "La temporalidad de ejecución: la entrada precisa",                 "description": "La temporalidad de ejecución (M5/M15): esperar el gatillo dentro de la zona y entrar con precisión." },
         "lecon5": { "title": "El proceso completo: del Daily al M5 en un trade",              "description": "Desarrollar la secuencia completa, del Daily al M5, en un trade real de A a Z." }

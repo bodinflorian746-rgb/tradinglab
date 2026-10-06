@@ -283,7 +283,7 @@ export default function ContentFr() {
                   <li>- CHoCH ou BOS local</li>
                   <li>- Rejet violent</li>
                   <li>- Sweep de liquidité</li>
-                  <li>- Bougie impulsive de sortie de zone</li>
+                  <li>- Bougie de displacement de sortie de zone</li>
                 </ul>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
@@ -333,8 +333,8 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 3. UT inférieure (M5 / M15)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : sweep haussier jusqu&apos;à 1.1778, CHoCH baissier sur M5, bougie impulsive de rejet</li>
-                <li>- Conclusion : confirmation vendeuse valide, entrée short possible après la cassure locale</li>
+                <li>- Observation : sweep haussier jusqu&apos;à 1.1778, CHoCH baissier sur M5, bougie de displacement de rejet</li>
+                <li>- Conclusion : confirmation vendeuse valide, entrée short possible après le breakout local</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

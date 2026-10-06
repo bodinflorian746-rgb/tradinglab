@@ -130,7 +130,7 @@ export default function ContentFr() {
               </p>
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              <span className="font-semibold text-zinc-200">Analogie simple</span> : la météo annonce soleil. Il pleut. Ce n&apos;est pas la pluie qui te surprend. C&apos;est l&apos;écart avec ce que tu attendais.
+              <span className="font-semibold text-zinc-200">Analogie simple</span> : la météo prévoit du soleil. Il pleut. Ce n&apos;est pas la pluie qui te surprend. C&apos;est l&apos;écart avec ce que tu attendais.
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
@@ -368,12 +368,12 @@ export default function ContentFr() {
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-5">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">Méthode du trader expérimenté</span> : tu ne traderas <span className="font-semibold text-zinc-300">jamais</span> l&apos;annonce en direct. Tu attends 15-30 minutes après, le marché se calme, la nouvelle direction se dessine, et tu entres avec confluence technique.
+                <span className="text-white font-medium">Méthode du trader expérimenté</span> : tu ne traderas <span className="font-semibold text-zinc-300">jamais</span> la news en direct. Tu attends 15-30 minutes après, le marché se calme, la nouvelle direction se dessine, et tu entres avec confluence technique.
               </p>
             </div>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                Tu ne trades pas l&apos;annonce. Tu trades la réaction.
+                Tu ne trades pas la news. Tu trades la réaction.
               </p>
             </div>
           </section>

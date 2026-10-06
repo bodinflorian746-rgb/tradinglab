@@ -44,7 +44,7 @@ function ContentFr() {
               title: "1. Entrée sur rejet de bougie (M5/M15)",
               color: "bg-blue-500/5 border-blue-500/15",
               accentColor: "text-blue-400",
-              detail: "Quand le prix arrive dans la zone (OB, FVG, OTE), descends en M5 ou M15. Attends une bougie de rejet : pin bar avec longue mèche dans la zone, ou avalement dans le sens opposé. Entre sur la clôture de cette bougie. SL sous le bas de la mèche.",
+              detail: "Quand le prix arrive dans la zone (OB, FVG, OTE), descends en M5 ou M15. Attends une bougie de rejet : pin bar avec longue mèche dans la zone, ou engulfing dans le sens opposé. Entre sur la clôture de cette bougie. SL sous le bas de la mèche.",
             },
             {
               title: "2. Entrée sur retest d'un niveau cassé",
@@ -79,7 +79,7 @@ function ContentFr() {
         <div className="space-y-2.5">
           {[
             { rule: "Sous le bas de la zone (OB ou FVG)", detail: "Si le prix traverse entièrement l'OB ou le FVG, le niveau institutionnel est consommé, l'idée de trade est invalidée." },
-            { rule: "Sous le swing low de l'entrée", detail: "Si tu entres sur un rejet en M15, le SL va sous le plus bas de la pin bar ou de l'avalement." },
+            { rule: "Sous le swing low de l'entrée", detail: "Si tu entres sur un rejet en M15, le SL va sous le plus bas de la pin bar ou de l'engulfing." },
             { rule: "Quelques pips de marge", detail: "Laisse 2 à 5 pips (selon l'instrument) sous le niveau exact pour éviter d'être stoppé par le spread ou le bruit naturel du marché." },
             { rule: "Jamais un montant fixe", detail: "Un SL de 20 pips 'parce que c'est ton habitude' n'a aucun sens structurel. Le SL doit refléter la géographie du graphique." },
           ].map((r, i) => (
@@ -114,8 +114,8 @@ function ContentFr() {
         description="Sur un setup que tu as identifié, entraîne-toi à affiner l'entrée sur une petite unité de temps."
         steps={[
           "Identifie un Bullish Order Block actif sur H1. Marque la zone (open → close de la bougie OB).",
-          "Descends en M5. Si le prix est dans la zone, observe : y a-t-il un rejet (pin bar, avalement haussier) ?",
-          "Si le signal est là : note le prix d'entrée (clôture de la pin bar/avalement), le SL (sous la mèche basse), et le TP (prochain niveau de résistance ou liquidité).",
+          "Descends en M5. Si le prix est dans la zone, observe : y a-t-il un rejet (pin bar, engulfing haussier) ?",
+          "Si le signal est là : note le prix d'entrée (clôture de la pin bar/engulfing), le SL (sous la mèche basse), et le TP (prochain niveau de résistance ou liquidité).",
           "Calcule ton R/R. Est-il supérieur à 1:3 ? Si non, le setup est-il vraiment valide ?",
         ]}
       />
@@ -125,7 +125,7 @@ function ContentFr() {
         options={[
           "Entrer immédiatement au prix du marché dès que le prix touche le bas de l'OB",
           "Placer un ordre limit au milieu de l'OB pour ne pas rater le mouvement",
-          "Descendre en M5/M15 et attendre un signal de rejet (pin bar ou avalement haussier) avant d'entrer",
+          "Descendre en M5/M15 et attendre un signal de rejet (pin bar ou engulfing haussier) avant d'entrer",
           "Entrer en achat sur la prochaine bougie M15 qui clôture haussière dans l'OB",
         ]}
         correctIndex={2}
@@ -134,7 +134,7 @@ function ContentFr() {
           "Trop hâtif. Le prix peut traverser le bas de l'OB puis revenir, ou le traverser complètement. Entrer au toucher sans confirmation expose à un SL large ou à un stop prématuré.",
           "Mieux que le toucher, mais encore imprécis. Le milieu de l'OB n'a pas de logique structurelle particulière. Un ordre limit ici peut aussi être déclenché sans que le prix réagisse.",
           "Correct. C'est l'entrée de précision : descendre en M5/M15, attendre un rejet dans la zone OB, entrer sur la clôture du signal avec un SL sous le bas de la mèche. C'est l'équilibre optimal entre confirmation et timing.",
-          "Pas assez précis. 'La prochaine bougie haussière' dans l'OB peut être n'importe quelle petite bougie verte, ce n'est pas nécessairement un signal de rejet fort. Une pin bar ou un avalement est requis pour une confirmation institutionnelle.",
+          "Pas assez précis. 'La prochaine bougie haussière' dans l'OB peut être n'importe quelle petite bougie verte, ce n'est pas nécessairement un signal de rejet fort. Une pin bar ou un engulfing est requis pour une confirmation institutionnelle.",
         ]}
       />
 

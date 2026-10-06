@@ -105,7 +105,7 @@ function ContentFr() {
             },
             {
               label: "Confirme le rejet avant d'entrer",
-              detail: "Une bougie de rejet (pin bar, avalement) après la chasse aux stops est ton signal d'entrée.",
+              detail: "Une bougie de rejet (pin bar, engulfing) après la chasse aux stops est ton signal d'entrée.",
             },
             {
               label: "Cible la liquidité opposée comme objectif",

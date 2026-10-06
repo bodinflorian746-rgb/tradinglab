@@ -13,7 +13,7 @@ const lessons = [
   {
     id: "lecon2",
     number: 2,
-    title: "NFP : l'annonce mensuelle qui fait trembler tous les actifs",
+    title: "NFP : la news mensuelle qui fait trembler tous les actifs",
     duration: "16 min",
     description: "Lire le rapport complet (headline, chômage, salaires, révisions) et trader la réaction confirmée.",
     href: "/formations/macro/avance/lecon2",
@@ -60,7 +60,7 @@ export default function MacroAvancePage() {
             </span>
           </div>
           <p className="text-zinc-400 text-lg max-w-2xl leading-relaxed">
-            Trader les annonces, lire les banques centrales, construire un biais macro structuré.
+            Trader les news, lire les banques centrales, construire un biais macro structuré.
           </p>
         </div>
 

@@ -61,7 +61,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              Cette leçon enseigne à lire rapidement le rapport de force d&apos;une bougie et à reconnaître les 4 patterns clés (Marubozu, pin bar, doji, avalement) qui structurent toute la price action.
+              Cette leçon enseigne à lire rapidement le rapport de force d&apos;une bougie et à reconnaître les 4 patterns clés (Marubozu, pin bar, doji, engulfing) qui structurent toute la price action.
             </p>
           </div>
 
@@ -164,7 +164,7 @@ export default function ContentFr() {
               <li>- <span className="font-semibold text-zinc-100">Marubozu</span> : grand corps, pas de mèche = conviction maximale, signal de continuation</li>
               <li>- <span className="font-semibold text-zinc-100">Pin bar</span> : corps réduit + mèche longue d&apos;un côté = rejet de niveau, signal de retournement local</li>
               <li>- <span className="font-semibold text-zinc-100">Doji</span> : corps quasi inexistant = indécision, signal d&apos;attente ou retournement potentiel en zone extrême</li>
-              <li>- <span className="font-semibold text-zinc-100">Avalement</span> : corps qui englobe la bougie précédente dans le sens opposé = bascule de pouvoir nette</li>
+              <li>- <span className="font-semibold text-zinc-100">Engulfing</span> : corps qui englobe la bougie précédente dans le sens opposé = bascule de pouvoir nette</li>
             </ul>
           </section>
 
@@ -191,7 +191,7 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "Une bougie se lit par 4 éléments : taille du corps, mèches, position de la clôture, contexte adjacent.",
-              "4 patterns clés : Marubozu (conviction), pin bar (rejet), doji (indécision), avalement (bascule).",
+              "4 patterns clés : Marubozu (conviction), pin bar (rejet), doji (indécision), engulfing (bascule).",
               "Lecture uniquement sur bougies entièrement clôturées. La bougie en cours reste provisoire.",
               "Le contexte structurel détermine la valeur d’un signal : même pattern, valeur différente selon sa position.",
             ]}
@@ -214,7 +214,7 @@ export default function ContentFr() {
               "Doji d’indécision, équilibre entre les camps",
               "Pin bar haussière, rejet à la baisse confirmé",
               "Marubozu baissier, domination totale des vendeurs",
-              "Avalement baissier, bascule de pouvoir vers les vendeurs",
+              "Engulfing baissier, bascule de pouvoir vers les vendeurs",
             ]}
             correctIndex={1}
             explanation="Corps réduit + mèche basse 3 fois plus longue que le corps + clôture dans le tiers supérieur = signature exacte d’une pin bar haussière. Le message du marché : tentative d’extension baissière rapidement rejetée par les acheteurs, qui reprennent le contrôle avant la clôture. Signal de rejet à la baisse particulièrement opérationnel s’il apparaît au contact d’un niveau structurel."

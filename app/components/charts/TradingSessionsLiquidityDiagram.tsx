@@ -13,7 +13,7 @@ export const TradingSessionsLiquidityDiagram = ({ locale = "fr" }: TradingSessio
     ny:            "NEW YORK",
     killzone:      "KILLZONE",
     liquidity:     isEs ? "LIQUIDEZ" : isEn ? "LIQUIDITY" : "LIQUIDITÉ",
-    newsUS:        isEs ? "Noticia US 14h30" : isEn ? "US News 14h30" : "Annonce US 14h30",
+    newsUS:        isEs ? "Noticia US 14h30" : isEn ? "US News 14h30" : "News US 14h30",
     largeSpreads:  isEs ? "Spreads anchos" : isEn ? "Wide spreads" : "Spreads larges",
     largeFakeouts: isEs ? "Spreads anchos + fakeouts" : isEn ? "Wide spreads + fakeouts" : "Spreads larges + faux breakouts",
     realMoves:     isEs ? "Movimientos reales" : isEn ? "Real moves" : "Vrais mouvements",
@@ -43,7 +43,7 @@ export const TradingSessionsLiquidityDiagram = ({ locale = "fr" }: TradingSessio
         { name: "ASIE", range: "00h – 09h", color: "#60a5fa", desc: "Liquidité faible · spreads larges + faux breakouts", pairs: "USD/JPY, AUD/JPY, NZD/JPY", killzone: false as boolean },
         { name: "LONDRES", range: "08h – 17h", color: "#34d399", desc: "Vrai départ de la journée — bonne liquidité", pairs: "EUR/USD, GBP/USD, XAU/USD", killzone: false as boolean },
         { name: "OVERLAP LONDRES + NY", range: "14h – 17h", color: "#ef4444", desc: "🔴 KILLZONE — vraie liquidité institutionnelle", pairs: null as string | null, killzone: true as boolean },
-        { name: "NEW YORK", range: "14h – 22h", color: "#fbbf24", desc: "Pic d'activité — annonce US à 14h30", pairs: "Nasdaq, S&P500, BTC/USD, USD/CAD", killzone: false as boolean },
+        { name: "NEW YORK", range: "14h – 22h", color: "#fbbf24", desc: "Pic d'activité — news US à 14h30", pairs: "Nasdaq, S&P500, BTC/USD, USD/CAD", killzone: false as boolean },
       ];
   return (
     <div>

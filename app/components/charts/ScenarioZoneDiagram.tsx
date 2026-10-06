@@ -95,7 +95,7 @@ export function ScenarioZoneDiagram({ className = "", locale = "fr" }: ScenarioZ
           {/* Scénario 2 — cassure red */}
           <path d="M115,68 L140,82 L165,95 L195,108 L225,115" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
           <circle cx="225" cy="115" r="3" fill="#ef4444" />
-          <text x="225" y="105" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Cassure ↓</text>
+          <text x="225" y="105" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">Breakout ↓</text>
         </svg>
 
         <ul className="space-y-2 text-[13px]">

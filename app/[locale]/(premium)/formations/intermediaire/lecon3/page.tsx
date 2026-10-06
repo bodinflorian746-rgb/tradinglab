@@ -127,14 +127,14 @@ function ContentFr() {
             <span className="text-lg">↑</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">Le prix revient sur un support</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu attends un signal de rejet dans la zone (pin bar, avalement haussier). Si la tendance Daily est haussière → achat. SL sous la zone entière.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu attends un signal de rejet dans la zone (pin bar, engulfing haussier). Si la tendance Daily est haussière → achat. SL sous la zone entière.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <span className="text-lg">↓</span>
             <div>
               <p className="text-sm font-semibold text-red-400">Le prix remonte sur une résistance</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu attends un rejet dans la zone (mèche haute, avalement baissier). Si la tendance Daily est baissière → vente. SL au-dessus de la zone.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu attends un rejet dans la zone (mèche haute, engulfing baissier). Si la tendance Daily est baissière → vente. SL au-dessus de la zone.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3">
@@ -196,15 +196,15 @@ function ContentFr() {
         question="Tu traces un support sur EUR/USD H4. Le prix y descend. Que fais-tu ?"
         options={[
           "Tu achètes immédiatement dès que le prix entre dans la zone",
-          "Tu attends un signal de rejet dans la zone (pin bar ou avalement haussier), puis tu entres",
+          "Tu attends un signal de rejet dans la zone (pin bar ou engulfing haussier), puis tu entres",
           "Tu ignores la zone, le prix descend, c'est un signe de faiblesse",
           "Tu places un ordre limite au bas de la zone sans attendre de signal",
         ]}
         correctIndex={1}
-        explanation="La zone te dit où regarder, le signal de bougie te dit quand entrer. Attendre un rejet (pin bar, avalement haussier) sur le support confirme que les acheteurs institutionnels sont actifs. Sans signal, tu anticipes sans preuve."
+        explanation="La zone te dit où regarder, le signal de bougie te dit quand entrer. Attendre un rejet (pin bar, engulfing haussier) sur le support confirme que les acheteurs institutionnels sont actifs. Sans signal, tu anticipes sans preuve."
         answerExplanations={[
           "Trop hâtif. Le prix peut traverser la zone et continuer à baisser. Entrer sans signal de confirmation, c'est prendre le risque d'entrer sur une zone qui ne tient pas. La zone est une zone d'attention, pas un déclencheur d'achat automatique.",
-          "Correct. C'est la méthode en deux temps : la zone définit le niveau d'intérêt, le signal de bougie confirme que les acheteurs réagissent. Pin bar = rejet des prix bas. Avalement haussier = les acheteurs prennent le contrôle. Tu entres avec SL sous la zone.",
+          "Correct. C'est la méthode en deux temps : la zone définit le niveau d'intérêt, le signal de bougie confirme que les acheteurs réagissent. Pin bar = rejet des prix bas. Engulfing haussier = les acheteurs prennent le contrôle. Tu entres avec SL sous la zone.",
           "Faux. Le prix qui descend vers un support, c'est exactement le scénario attendu. C'est le retracement qui crée l'opportunité d'achat. Le prix doit descendre dans la zone pour que le setup soit valide.",
           "Risqué. Un ordre limite au bas de la zone peut fonctionner, mais tu entres sans confirmation. Le prix peut traverser le bas de la zone et continuer. Attendre le signal de bougie te donne un avantage supplémentaire.",
         ]}

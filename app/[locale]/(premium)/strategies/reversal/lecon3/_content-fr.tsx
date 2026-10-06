@@ -187,7 +187,7 @@ export default function ContentFr() {
 
           {/* Bloc 7 — LE PIÈGE : DIVERGENCE SANS CASSURE */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Le piège : divergence sans cassure</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Le piège : divergence sans breakout</h2>
             <div className="my-8">
               <DivergenceWithoutBreakoutDiagram />
             </div>
@@ -195,7 +195,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- La divergence signale un essoufflement du momentum, pas un retournement effectif.</li>
               <li>- La cassure du dernier creux ou sommet structurel reste obligatoire pour confirmer le retournement.</li>
-              <li>- Sans cassure, le prix peut continuer dans le sens de la tendance malgré la divergence visible.</li>
+              <li>- Sans breakout, le prix peut continuer dans le sens de la tendance malgré la divergence visible.</li>
             </ul>
           </section>
 
@@ -234,7 +234,7 @@ export default function ContentFr() {
               <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 40€</li>
               <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 100€</li>
             </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 2:1 reste solide. La divergence RSI a un win rate moyen quand le pattern est propre et confirmé par la cassure de structure. Sans confirmation, le piège reste élevé.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 2:1 reste solide. La divergence RSI a un winrate moyen quand le pattern est propre et confirmé par la cassure de structure. Sans confirmation, le piège reste élevé.</p>
           </section>
 
           {/* Bloc 10 — FILTRES : QUAND NE PAS PRENDRE LE SETUP */}
@@ -244,7 +244,7 @@ export default function ContentFr() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Divergence sans cassure de structure.</span> <span className="text-zinc-300">Une divergence seule ne suffit jamais. Tant que le prix continue à faire des HH/HL ou des LH/LL, la tendance reste valide. La cassure du dernier creux ou sommet structurel est attendue.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Divergence sur petite unité de temps (M5 ou M15).</span> <span className="text-zinc-300">Les divergences sur très petites unités de temps produisent énormément de bruit. Unité de temps minimum : H1. H4 reste le plus propre.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Divergence cachée confondue avec classique.</span> <span className="text-zinc-300">Les divergences cachées servent à détecter une continuation, pas un retournement. Les classiques sont à privilégier en priorité pour leur lisibilité supérieure.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. Annonce majeure dans la fenêtre.</span> <span className="text-zinc-300">Si FOMC, NFP ou CPI arrive dans les 30 minutes, le setup n&apos;est pas pris. Une annonce peut casser complètement la divergence.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. News majeure dans la fenêtre.</span> <span className="text-zinc-300">Si FOMC, NFP ou CPI arrive dans les 30 minutes, le setup n&apos;est pas pris. Une news peut casser complètement la divergence.</span></div>
             </div>
           </section>
 
@@ -263,7 +263,7 @@ export default function ContentFr() {
               "Vérifier que le prix forme un HH : 4 740$ > 4 720$, OK",
               "Vérifier que le RSI forme un LH : 72 < 78, OK, divergence baissière confirmée",
               "Confirmer la cassure structurelle : clôture à 4 685$ sous le creux 4 690$, OK",
-              "Vérifier qu’aucune annonce majeure n’est prévue dans les 30 prochaines minutes",
+              "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
               "Prendre l’entrée short à 4 685$, SL au-dessus de la mèche du sommet 2 (par exemple 4 750$), TP measured move étendu vers 4 585$ pour viser un R/R 1,5 à 2:1",
             ]}
           />

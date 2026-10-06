@@ -13,7 +13,7 @@ function ContentFr() {
       formationId="intermediaire"
       lessonId="lecon6"
       title="Fake Breakout, ne pas se faire piéger"
-      subtitle="Le prix casse un niveau, tu entres dans le sens de la cassure, et le prix revient immédiatement dans l'autre sens. Ce piège arrive plusieurs fois par semaine. Voici comment le reconnaître et même le trader."
+      subtitle="Le prix casse un niveau, tu entres dans le sens du breakout, et le prix revient immédiatement dans l'autre sens. Ce piège arrive plusieurs fois par semaine. Voici comment le reconnaître et même le trader."
       duration="18 min"
       lessonNumber={6}
       prev={{ href: "/formations/intermediaire/lecon5", label: "Leçon 5 : Confluences" }}
@@ -56,18 +56,18 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Pourquoi les fake breakouts arrivent</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Les niveaux évidents concentrent naturellement des ordres. Au-dessus d'une résistance → des stops d'acheteurs short + des ordres d'entrée d'acheteurs qui jouent la cassure. Le marché va chercher cette liquidité, déclenche tous ces ordres, puis repart dans l'autre sens.
+          Les niveaux évidents concentrent naturellement des ordres. Au-dessus d'une résistance → des stops d'acheteurs short + des ordres d'entrée d'acheteurs qui jouent le breakout. Le marché va chercher cette liquidité, déclenche tous ces ordres, puis repart dans l'autre sens.
         </p>
         <div className="space-y-2.5">
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
             <p className="text-sm font-medium text-white mb-1">Ce qui se passe</p>
             <p className="text-xs text-zinc-500 leading-relaxed">
-              Le prix monte, déclenche les ordres d'achat au-dessus de la résistance. Ces achats font monter légèrement. Mais il n'y a pas assez de momentum pour continuer. Le prix revient en dessous, et les acheteurs qui ont suivi la cassure sont maintenant en perte.
+              Le prix monte, déclenche les ordres d'achat au-dessus de la résistance. Ces achats font monter légèrement. Mais il n'y a pas assez de momentum pour continuer. Le prix revient en dessous, et les acheteurs qui ont suivi le breakout sont maintenant en perte.
             </p>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
             <p className="text-sm text-zinc-400">
-              <span className="text-white font-medium">Règle clé :</span> plus un niveau est évident et connu de tous, plus le risque de fake breakout est élevé. Méfie-toi des cassures "trop belles".
+              <span className="text-white font-medium">Règle clé :</span> plus un niveau est évident et connu de tous, plus le risque de fake breakout est élevé. Méfie-toi des breakouts "trop belles".
             </p>
           </div>
         </div>
@@ -79,9 +79,9 @@ function ContentFr() {
         <div className="space-y-2.5">
           {[
             { label: "La bougie clôture de l'autre côté du niveau", detail: "Signal principal. Le prix perce le niveau mais la clôture reste de l'autre côté → fake breakout. Attends toujours la clôture : jamais l'intrabar." },
-            { label: "Longue mèche dans la direction de la cassure", detail: "Une mèche haute au-dessus d'une résistance avec clôture dessous = rejet fort. C'est le signe visuel numéro 1 du fake breakout." },
+            { label: "Longue mèche dans la direction du breakout", detail: "Une mèche haute au-dessus d'une résistance avec clôture dessous = rejet fort. C'est le signe visuel numéro 1 du fake breakout." },
             { label: "Le retour est rapide et agressif", detail: "Après un fake, le retournement est violent. Le prix ne tergiverse pas : il revient avec momentum. C'est lui-même un signal." },
-            { label: "La tendance de fond contredit la cassure", detail: "Cassure haussière dans une forte tendance baissière = suspect. Le marché cherche des stops, pas une vraie direction." },
+            { label: "La tendance de fond contredit le breakout", detail: "Breakout haussier dans une forte tendance baissière = suspect. Le marché cherche des stops, pas une vraie direction." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-blue-400 shrink-0 mt-0.5">
@@ -121,7 +121,7 @@ function ContentFr() {
       {/* ── 5 secondes ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-3">Comment analyser en 5 secondes</p>
-        <h2 className="text-lg font-semibold text-white mb-4">Vérifier si une cassure est vraie ou fausse</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">Vérifier si un breakout est vrai ou faux</h2>
         <div className="space-y-2">
           {[
             { n: "1", t: "Attends la clôture de la bougie", d: "Règle absolue. Ne jamais juger une cassure sur un prix intrabar. La clôture est le seul juge." },
@@ -142,20 +142,20 @@ function ContentFr() {
       {/* ── Ce que tu dois faire ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <p className="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-3">Ce que tu dois faire</p>
-        <h2 className="text-lg font-semibold text-white mb-4">Face à une cassure de niveau</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">Face à un breakout de niveau</h2>
         <div className="space-y-2.5">
           <div className="flex items-start gap-3 bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <span className="text-lg">✓</span>
             <div>
-              <p className="text-sm font-semibold text-emerald-400">Vraie cassure (clôture franche au-delà)</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu peux suivre la cassure avec un SL de l'autre côté du niveau. Mais attends idéalement un pullback sur le niveau cassé avant d'entrer.</p>
+              <p className="text-sm font-semibold text-emerald-400">Vrai breakout (clôture franche au-delà)</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu peux suivre le breakout avec un SL de l'autre côté du niveau. Mais attends idéalement un pullback sur le niveau cassé avant d'entrer.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-amber-400/5 border border-amber-400/15 rounded-xl px-4 py-3">
             <span className="text-lg">!</span>
             <div>
               <p className="text-sm font-semibold text-amber-400">Fake breakout (mèche + clôture de l'autre côté)</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Ne suis pas la cassure. Tu peux entrer en sens inverse avec SL au-delà du pic, TP vers le prochain niveau, si ton plan de trading le prévoit.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Ne suis pas le breakout. Tu peux entrer en sens inverse avec SL au-delà du pic, TP vers le prochain niveau, si ton plan de trading le prévoit.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3">
@@ -171,7 +171,7 @@ function ContentFr() {
       {/* ── Erreur classique ── */}
       <section className="border border-red-500/20 bg-red-500/5 rounded-2xl p-6">
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Erreur classique</p>
-        <p className="text-sm font-semibold text-white mb-2">Entrer sur la cassure avant la clôture de bougie</p>
+        <p className="text-sm font-semibold text-white mb-2">Entrer sur le breakout avant la clôture de bougie</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
           Le prix perce la résistance à 1.0950 → grimpe à 1.0962 en intrabar. Tu achètes immédiatement "pour ne pas rater le mouvement". La bougie clôture à 1.0945, en dessous de la résistance. Tu es en short involontairement. La règle est simple : clôture de bougie d'abord, décision ensuite.
         </p>
@@ -181,7 +181,7 @@ function ContentFr() {
       <div className="border border-zinc-700/40 rounded-2xl p-5 bg-zinc-900/30">
         <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-3">Résumé en 3 secondes</p>
         <div className="space-y-2 text-sm">
-          <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>Clôture franche AU-DESSUS du niveau → vraie cassure → tu peux suivre</p>
+          <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>Clôture franche AU-DESSUS du niveau → vrai breakout → tu peux suivre</p>
           <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>Mèche + clôture EN-DESSOUS → fake breakout → tu vends en sens inverse</p>
           <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Bougie encore ouverte → tu attends toujours la clôture</p>
         </div>
@@ -197,7 +197,7 @@ function ContentFr() {
         points={[
           "Fake breakout = le prix perce un niveau mais la bougie clôture de l'autre côté.",
           "Signal visuel : mèche longue au-delà du niveau + clôture qui reste de l'autre côté.",
-          "Règle absolue : attendre la clôture de bougie avant de juger une cassure.",
+          "Règle absolue : attendre la clôture de bougie avant de juger un breakout.",
           "Le fake breakout se trade dans le sens inverse : entrée au retournement, SL au-delà du pic.",
           "Plus un niveau est évident, plus le risque de fake breakout est élevé.",
         ]}
@@ -216,7 +216,7 @@ function ContentFr() {
       <LessonQuiz
         question="Sur EUR/USD H1, le prix monte et perce la résistance à 1.0950 pendant la bougie en cours. La bougie n'est pas encore clôturée et affiche +18 pips au-dessus du niveau. Que fais-tu ?"
         options={[
-          "Tu achètes immédiatement, la cassure est en cours et tu veux être dans le mouvement",
+          "Tu achètes immédiatement, le breakout est en cours et tu veux être dans le mouvement",
           "Tu attends la clôture de cette bougie H1 avant de prendre une décision",
           "Tu vends, le prix a monté trop vite, c'est forcément un fake",
           "Tu places un ordre d'achat juste au-dessus de 1.0950 pour la prochaine bougie",
@@ -224,9 +224,9 @@ function ContentFr() {
         correctIndex={1}
         explanation="La règle est absolue : attends la clôture de la bougie. Le prix peut être à +18 pips au-dessus en intrabar et clôturer sous la résistance, c'est exactement la définition d'un fake breakout. Décider avant la clôture, c'est trader sur un prix provisoire."
         answerExplanations={[
-          "Faux. La cassure n'est pas encore confirmée. Le prix peut revenir sous 1.0950 avant la clôture. Entrer maintenant, c'est réagir à un prix temporaire. Si la bougie clôture sous 1.0950, tu es dans le mauvais sens.",
-          "Correct. La clôture de bougie est le seul moment où tu peux juger une cassure. Si elle clôture au-dessus de 1.0950 → potentiellement vraie cassure. Si elle clôture en dessous → fake breakout. Tu attends.",
-          "Faux. +18 pips sur une résistance peut être le début d'une vraie cassure, pas nécessairement un fake. Tu ne peux pas conclure 'faux breakout' sans la clôture de la bougie.",
+          "Faux. Le breakout n'est pas encore confirmé. Le prix peut revenir sous 1.0950 avant la clôture. Entrer maintenant, c'est réagir à un prix temporaire. Si la bougie clôture sous 1.0950, tu es dans le mauvais sens.",
+          "Correct. La clôture de bougie est le seul moment où tu peux juger un breakout. Si elle clôture au-dessus de 1.0950 → potentiellement vrai breakout. Si elle clôture en dessous → fake breakout. Tu attends.",
+          "Faux. +18 pips sur une résistance peut être le début d'un vrai breakout, pas nécessairement un fake. Tu ne peux pas conclure 'faux breakout' sans la clôture de la bougie.",
           "Risqué. Placer un ordre limite juste au-dessus de 1.0950 pour la prochaine bougie, c'est anticiper une continuation sans confirmation. Attends la clôture d'abord.",
         ]}
       />

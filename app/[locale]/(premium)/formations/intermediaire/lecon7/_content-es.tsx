@@ -13,7 +13,7 @@ export default function ContentEs() {
       subtitle="El mercado cuenta la misma historia a distintas escalas. Aprender a leer estos niveles en el orden correcto es una de las habilidades más potentes del trader."
       duration="22 min"
       lessonNumber={7}
-      prev={{ href: "/formations/intermediaire/lecon6", label: "Lección 6: Fake Breakout" }}
+      prev={{ href: "/formations/intermediaire/lecon6", label: "Lección 6: Fakeout" }}
       next={{ href: "/formations/intermediaire/lecon8", label: "Lección 8: Plan de trade" }}
     >
 

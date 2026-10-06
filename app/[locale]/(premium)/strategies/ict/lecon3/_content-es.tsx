@@ -165,7 +165,7 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD M15: durante la sesión asiática, el precio oscila en un rango estrecho entre 1.1710 y 1.1725. En la apertura de Londres, una vela rompe debajo de 1.1710, baja hasta 1.1702, los stops debajo del rango Asia se disparan. De inmediato, el precio sale disparado hacia 1.1750 en una secuencia alcista impulsiva. El objetivo no era la ruptura bajista, era la liquidez.
+                EUR/USD M15: durante la sesión asiática, el precio oscila en un rango estrecho entre 1.1710 y 1.1725. En la apertura de Londres, una vela rompe debajo de 1.1710, baja hasta 1.1702, los stops debajo del rango Asia se disparan. De inmediato, el precio sale disparado hacia 1.1750 en una secuencia alcista impulsiva. El objetivo no era el breakout bajista, era la liquidez.
               </p>
             </div>
 

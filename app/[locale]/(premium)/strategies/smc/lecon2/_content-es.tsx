@@ -129,7 +129,7 @@ export default function ContentEs() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prerrequisitos</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Market Structure SMC, HH/HL/LL/LH → ver Estrategia SMC L1</li>
-              <li>- Vela de ruptura, displacement → ver Formación Trading L2</li>
+              <li>- Vela de breakout, displacement → ver Formación Trading L2</li>
               <li>- Tendencia direccional multitemporal → ver Formación Trading L3</li>
             </ul>
           </div>
@@ -150,7 +150,7 @@ export default function ContentEs() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-emerald-400 font-semibold text-sm mb-2">BOS. Break of Structure</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- Ruptura en el sentido de la tendencia (HH en alcista, LL en bajista)</li>
+                  <li>- Breakout en el sentido de la tendencia (HH en alcista, LL en bajista)</li>
                   <li>- Valida la continuación, estructura HH/HL o LH/LL intacta</li>
                   <li>- Autoriza nuevas posiciones en el sentido de la tendencia</li>
                 </ul>
@@ -158,7 +158,7 @@ export default function ContentEs() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-amber-400 font-semibold text-sm mb-2">CHoCH. Change of Character</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- Ruptura en el sentido opuesto a la tendencia (HL en alcista, LH en bajista)</li>
+                  <li>- Breakout en el sentido opuesto a la tendencia (HL en alcista, LH en bajista)</li>
                   <li>- Señala un retroceso potencial, ruptura de la estructura</li>
                   <li>- Dispara la salida de posiciones, prepara la inversión tras confirmación</li>
                 </ul>
@@ -172,7 +172,7 @@ export default function ContentEs() {
           {/* Bloque 4 — CRITERIOS DE CALIFICACIÓN DE UN BOS VÁLIDO */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Criterios de calificación de un BOS válido</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">4 criterios califican un BOS como explotable institucionalmente. Una ruptura que no valide los 4 criterios queda hipotética y expone al fake breakout.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">4 criterios califican un BOS como explotable institucionalmente. Un breakout que no valide los 4 criterios queda hipotética y expone al fakeout.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
@@ -296,7 +296,7 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "BOS confirma la tendencia por la ruptura de un extremo estructural (HH o LL). CHoCH la pone en duda por la ruptura de un mínimo o máximo inverso (HL o LH). El nivel roto dicta la señal.",
+              "BOS confirma la tendencia por el breakout de un extremo estructural (HH o LL). CHoCH la pone en duda por el breakout de un mínimo o máximo inverso (HL o LH). El nivel roto dicta la señal.",
               "4 criterios califican un BOS válido: cierre nítido, displacement marcado, ausencia de reintegración, alineación multitemporal.",
               "La secuencia de retroceso sigue 3 etapas: BOS contratendencia, formación de la nueva estructura, CHoCH confirmado.",
               "La entrada de inversión solo se toma tras CHoCH confirmado, en la zona de mitigation con señal de rechazo.",
@@ -307,7 +307,7 @@ export default function ContentEs() {
             description="En XAU/USD H4, la tendencia bajista en curso muestra 3 LH sucesivos en 4 720$, 4 660$ y 4 620$, y 3 LL sucesivos en 4 660$, 4 600$ y 4 540$. Una vela H4 acaba de cerrar en 4 670$, es decir 50$ por encima del último LH en 4 620$. 4 velas siguientes mantienen su cierre por encima de 4 620$. Sin noticia macro en la ventana. ¿Cómo se construye la lectura BOS/CHoCH?"
             steps={[
               "Identificar la naturaleza del nivel roto: 4 620$ es el último LH (máximo de estructura bajista inversa), se trata de una señal de retroceso potencial, no de continuación.",
-              "Calificar la ruptura: cierre franco en 4 670$ (50$ por encima del LH), displacement superior al promedio reciente, sin reintegración en 4 velas, ruptura validada estructuralmente.",
+              "Calificar el breakout: cierre franco en 4 670$ (50$ por encima del LH), displacement superior al promedio reciente, sin reintegración en 4 velas, breakout validado estructuralmente.",
               "Clasificar la señal: la ruptura del último LH constituye un BOS contratendencia, primera señal de retroceso potencial de la tendencia bajista.",
               "Esperar la formación de la nueva estructura: observar la formación de un primer HL (mínimo más alto que el anterior) tras el BOS contratendencia.",
               "Validar el CHoCH antes de la inversión: confirmar el CHoCH por la secuencia completa HL más HH en la nueva estructura alcista antes de cualquier toma de posición long. La salida de las posiciones short existentes puede dispararse desde el BOS contratendencia, la inversión exige el CHoCH.",

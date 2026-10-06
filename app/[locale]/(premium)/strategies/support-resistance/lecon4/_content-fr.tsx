@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon1", title: "Support et résistance : les zones où le marché réagit", disabled: false },
   { id: "lecon2", title: "Identifier un vrai niveau (vs une ligne tracée au hasard)", disabled: false },
   { id: "lecon3", title: "Flip support↔résistance et trader un rebond", disabled: false },
-  { id: "lecon4", title: "Cassure vraie vs fake breakout", disabled: false },
+  { id: "lecon4", title: "Breakout vrai vs fake breakout", disabled: false },
 ];
 
 export default function ContentFr() {
@@ -56,7 +56,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Cassure vraie vs fake breakout
+            Breakout vrai vs fake breakout
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -113,7 +113,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « La fausse cassure piège les retails qui entrent trop vite. La même cassure, prise à contre-courant, devient un setup propre. »
+                « Le faux breakout piège les retails qui entrent trop vite. Le même breakout, pris à contre-courant, devient un setup propre. »
               </p>
             </div>
           </section>
@@ -137,7 +137,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La distinction entre vrai breakout et fake breakout repose sur le comportement de la bougie de cassure et des suivantes. Le critère essentiel : clôture nette ou mèche puis retour.
+              La distinction entre vrai breakout et fake breakout repose sur le comportement de la bougie de breakout et des suivantes. Le critère essentiel : clôture nette ou mèche puis retour.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -161,7 +161,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Mèche d&apos;au moins 50% du corps de la bougie, ressortant côté cassure</li>
+              <li>- Mèche d&apos;au moins 50% du corps de la bougie, ressortant côté breakout</li>
               <li>- Réintégration franche dans la zone en 1-3 bougies suivantes</li>
               <li>- Volume relatif élevé sur la mèche, puis effondrement post-rejet</li>
               <li>- Contexte de zone forte (3+ touches, chiffre rond, OB visible)</li>
@@ -184,7 +184,7 @@ export default function ContentFr() {
               <li>- Zone de stops cluster située juste au-delà du niveau structurel (4 720$ → 4 745$)</li>
               <li>- Mèche pique dans la zone, déclenche les stops, puis clôture sous le niveau</li>
               <li>- Continuation baissière rapide après absorption de la liquidité</li>
-              <li>- Le trade se prend dans le sens opposé à la cassure rejetée</li>
+              <li>- Le trade se prend dans le sens opposé au breakout rejeté</li>
             </ul>
           </section>
 
@@ -193,7 +193,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : fake breakout XAU/USD H1</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Résistance 4 650$ touchée 3 fois en 2 mois (chiffre rond fort). 4e approche provoque une cassure suspecte. Bougie 1 : mèche jusqu&apos;à 4 680$ + clôture à 4 655$. Bougie 2 : clôture à 4 640$.
+              Résistance 4 650$ touchée 3 fois en 2 mois (chiffre rond fort). 4e approche provoque un breakout suspect. Bougie 1 : mèche jusqu&apos;à 4 680$ + clôture à 4 655$. Bougie 2 : clôture à 4 640$.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -229,7 +229,7 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "Un fake breakout combine 4 critères : mèche longue sans clôture franche, réintégration rapide, volume disproportionné, zone forte.",
-              "Le trade se prend dans le sens opposé à la cassure rejetée, après double confirmation (clôture + 2ème bougie).",
+              "Le trade se prend dans le sens opposé au breakout rejeté, après double confirmation (clôture + 2ème bougie).",
               "Le stop loss se place au-delà de la mèche initiale avec marge 3-5 pips.",
               "Les fake breakouts s’observent préférentiellement sur des zones fortes (3+ touches, chiffres ronds).",
             ]}
@@ -262,12 +262,12 @@ export default function ContentFr() {
             question="Une résistance vient d’être cassée à la hausse avec une clôture franche. Le prix retrace ensuite vers la zone. Quel signal valide le flip et autorise une entrée long sur la zone devenue support ?"
             options={[
               "Le simple retour du prix à la zone suffit",
-              "Un signal de rejet (pin bar, avalement, réaction nette) au contact de la zone",
-              "Une cassure de la zone suivante",
+              "Un signal de rejet (pin bar, engulfing, réaction nette) au contact de la zone",
+              "Un breakout de la zone suivante",
               "Aucun signal requis, l’entrée est mécanique",
             ]}
             correctIndex={1}
-            explanation="Sans signal de rejet au contact de la zone inversée, le flip n’est pas validé. Une pin bar, un avalement ou une réaction nette confirment que la zone joue son nouveau rôle de support."
+            explanation="Sans signal de rejet au contact de la zone inversée, le flip n’est pas validé. Une pin bar, un engulfing ou une réaction nette confirment que la zone joue son nouveau rôle de support."
           />
 
           <LessonQuiz
@@ -275,11 +275,11 @@ export default function ContentFr() {
             options={[
               "Une seconde bougie qui maintient ou renforce la réintégration dans la zone",
               "Aucune confirmation, l’entrée se fait sur la mèche rejetée",
-              "Une cassure de la zone suivante",
+              "Un breakout de la zone suivante",
               "Un retracement complet vers la zone opposée",
             ]}
             correctIndex={0}
-            explanation="La double confirmation (clôture de la bougie de rejet dans la zone + seconde bougie qui maintient la réintégration) filtre les rejets ponctuels qui se transforment finalement en cassure valide. Entrer dès la mèche initiale expose à un risque élevé."
+            explanation="La double confirmation (clôture de la bougie de rejet dans la zone + seconde bougie qui maintient la réintégration) filtre les rejets ponctuels qui se transforment finalement en breakout valide. Entrer dès la mèche initiale expose à un risque élevé."
           />
 
         </div>

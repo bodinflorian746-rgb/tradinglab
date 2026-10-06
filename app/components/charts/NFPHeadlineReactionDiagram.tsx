@@ -53,10 +53,10 @@ export function NFPHeadlineReactionDiagram({ className = "", locale = "fr" }: NF
         reevaluation: "Reevaluación del mercado",
         mobileTitle: "NFP reacción headline · XAU/USD M15",
         mobileExcess: "Reacción excesiva en el headline",
-        mobileExcessDesc: "Movimiento violento inmediato → ruptura del soporte en pocos minutos.",
+        mobileExcessDesc: "Movimiento violento inmediato → breakout del soporte en pocos minutos.",
         mobileReeval: "Reevaluación tras estabilización",
         mobileReevalDesc: "El mercado digiere los sub-datos y revisa el movimiento inicial.",
-        legendHeadline: "Reacción headline excesiva, ruptura del soporte",
+        legendHeadline: "Reacción headline excesiva, breakout del soporte",
         legendReeval: "Reevaluación del mercado tras estabilización",
       }
     : locale === "en"

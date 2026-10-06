@@ -153,7 +153,7 @@ export default function ContentEs() {
           "Falso. El mercado está abierto, pero no es suficiente para tradear. Las horas muertas (10h–13h) tienen una liquidez institucional muy baja, los movimientos carecen de dirección y abundan las señales falsas.",
           "Correcto. Esperando la NY Killzone te aseguras de operar en una ventana donde la actividad institucional es fuerte, los movimientos son direccionales y los setups más confiables.",
           "Falso. Bajar a M5 durante las horas muertas amplifica el problema, el ruido es aún más fuerte en temporalidades pequeñas cuando la liquidez es baja.",
-          "Falso. Las horas muertas no son ideales para los breakouts, son conocidas por los false breakouts, precisamente porque falta volumen institucional para confirmar las rupturas.",
+          "Falso. Las horas muertas no son ideales para los breakouts, son conocidas por los fakeouts, precisamente porque falta volumen institucional para confirmar los breakouts.",
         ]}
       />
 

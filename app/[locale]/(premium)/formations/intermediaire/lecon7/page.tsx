@@ -110,7 +110,7 @@ function ContentFr() {
             { tf: "Daily", action: "Identifie la tendance : haussière, baissière ou range ? Définis ton biais pour la semaine." },
             { tf: "H4", action: "Localise les zones clés : supports et résistances. Où le prix a-t-il historiquement réagi ?" },
             { tf: "H1", action: "Attends que le prix arrive sur une zone H4. Y a-t-il un setup dans le sens de la tendance Daily ?" },
-            { tf: "M15", action: "Cherche le signal de déclenchement : rejet, avalement, pin bar dans la zone H4." },
+            { tf: "M15", action: "Cherche le signal de déclenchement : rejet, engulfing, pin bar dans la zone H4." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-6">{item.tf}</span>
@@ -180,7 +180,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Erreur classique</p>
         <p className="text-sm font-semibold text-white mb-2">Entrer sur un signal M15 sans vérifier le Daily</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Tu regardes EUR/USD en M15. Tu vois un beau avalement baissier. Tu vends. Sauf que le Daily est haussier et le prix est sur un support H4. Tu viens d'entrer exactement à contre-courant. Le prix repart à la hausse et tu perds. La règle : avant tout signal, toujours regarder le Daily d'abord. Toujours.
+          Tu regardes EUR/USD en M15. Tu vois un bel engulfing baissier. Tu vends. Sauf que le Daily est haussier et le prix est sur un support H4. Tu viens d'entrer exactement à contre-courant. Le prix repart à la hausse et tu perds. La règle : avant tout signal, toujours regarder le Daily d'abord. Toujours.
         </p>
       </section>
 
@@ -221,7 +221,7 @@ function ContentFr() {
       />
 
       <LessonQuiz
-        question="EUR/USD est clairement haussier en Daily. Tu passes en H1 et tu vois un avalement baissier net sur une résistance H1. Que fais-tu ?"
+        question="EUR/USD est clairement haussier en Daily. Tu passes en H1 et tu vois un engulfing baissier net sur une résistance H1. Que fais-tu ?"
         options={[
           "Tu prends le Short en H1, le signal est propre et récent",
           "Tu ignores le signal H1, il va contre la tendance Daily, tu attends un signal d'achat aligné",

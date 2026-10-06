@@ -20,7 +20,7 @@
   "available": {
     "buy-sell-no-trade": {
       "title": "BUY / SELL / NO TRADE",
-      "description": "10 scénarios à analyser. Mini graphique, contexte, annonces. Tu prends ta décision et le système évalue ta lecture, ta discipline et ta détection des pièges.",
+      "description": "10 scénarios à analyser. Mini graphique, contexte, news. Tu prends ta décision et le système évalue ta lecture, ta discipline et ta détection des pièges.",
       "duration": "~6 min"
     },
     "place-stop": {
@@ -47,7 +47,7 @@
     },
     "zone": {
       "title": "Touche ou Casse ?",
-      "description": "Le prix arrive sur une zone clé. Tu parles : rebond ou cassure ? Données historiques réelles, 10 rounds.",
+      "description": "Le prix arrive sur une zone clé. Tu parles : rebond ou breakout ? Données historiques réelles, 10 rounds.",
       "duration": "~3 min"
     },
     "rr": {

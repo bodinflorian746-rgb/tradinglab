@@ -111,7 +111,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Ce que tu rates en lecture débutant</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Lire un calendrier économique, ce n&apos;est pas juste repérer les annonces 3 étoiles. <span className="font-semibold text-zinc-200">Ça, c&apos;est le niveau minimum.</span>
+              Lire un calendrier économique, ce n&apos;est pas juste repérer les news 3 étoiles. <span className="font-semibold text-zinc-200">Ça, c&apos;est le niveau minimum.</span>
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               Un trader intermédiaire regarde le contexte :
@@ -142,7 +142,7 @@ export default function ContentFr() {
 
           {/* Bloc 2 — Les 4 colonnes à lire à chaque news */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Les 4 colonnes à lire à chaque annonce</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Les 4 colonnes à lire à chaque news</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               Chaque publication importante doit être lue avec <span className="font-semibold text-zinc-200">4 données</span>.
             </p>
@@ -155,7 +155,7 @@ export default function ContentFr() {
                 <span className="font-semibold text-zinc-200">Précédent</span> → le chiffre publié le mois dernier.
               </p>
               <p className="text-zinc-300 leading-relaxed text-sm">
-                <span className="font-semibold text-zinc-200">Réel</span> → le chiffre qui sort au moment de l&apos;annonce.
+                <span className="font-semibold text-zinc-200">Réel</span> → le chiffre qui sort au moment de la news.
               </p>
               <p className="text-zinc-300 leading-relaxed text-sm">
                 <span className="font-semibold text-zinc-200">Révisions</span> → <span className="font-semibold text-zinc-200">le piège oublié.</span> Le chiffre du mois précédent peut être corrigé à la hausse ou à la baisse.
@@ -255,16 +255,16 @@ export default function ContentFr() {
                 <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
               </div>
               <p className="text-base text-zinc-300 leading-relaxed">
-                Le trader amateur découvre l&apos;annonce à 14h30. Le trader préparé la voit venir <span className="font-semibold text-zinc-200">depuis dimanche soir</span>. La différence ? 5 minutes de prep par semaine.
+                Le trader amateur découvre la news à 14h30. Le trader préparé la voit venir <span className="font-semibold text-zinc-200">depuis dimanche soir</span>. La différence ? 5 minutes de prep par semaine.
               </p>
             </div>
           </section>
 
           {/* Bloc 4 — Les clusters de news */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Les clusters d&apos;annonces</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Les clusters de news</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Certaines semaines sont dangereuses parce que <span className="font-semibold text-zinc-200">plusieurs grosses annonces tombent presque ensemble</span>.
+              Certaines semaines sont dangereuses parce que <span className="font-semibold text-zinc-200">plusieurs grosses news tombent presque ensemble</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               <span className="font-semibold text-zinc-200">Exemple type de cluster</span> :
@@ -282,10 +282,10 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Dans ce genre de semaine, le marché peut devenir <span className="font-semibold text-zinc-200">nerveux avant même les annonces</span>.
+              Dans ce genre de semaine, le marché peut devenir <span className="font-semibold text-zinc-200">nerveux avant même les news</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Pourquoi ?</span> Parce que les institutions réduisent leur exposition, ajustent leurs positions, et attendent les chiffres. Tu vois souvent des <span className="font-semibold text-zinc-200">mouvements pré-annonce</span> dès le mardi matin sur ces semaines.
+              <span className="font-semibold text-zinc-200">Pourquoi ?</span> Parce que les institutions réduisent leur exposition, ajustent leurs positions, et attendent les chiffres. Tu vois souvent des <span className="font-semibold text-zinc-200">mouvements pré-news</span> dès le mardi matin sur ces semaines.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
               À l&apos;inverse, une semaine <span className="font-semibold text-zinc-200">calme macro</span> laisse plus de place à l&apos;analyse technique pure, c&apos;est le bon moment pour appliquer tes setups habituels sans surprise externe.
@@ -309,7 +309,7 @@ export default function ContentFr() {
             </div>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                Une seule annonce bouge le marché. Un cluster change toute la semaine.
+                Une seule news bouge le marché. Un cluster change toute la semaine.
               </p>
             </div>
           </section>
@@ -361,7 +361,7 @@ export default function ContentFr() {
               Le niveau d&apos;impact dépend du <span className="font-semibold text-zinc-200">contexte global</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Un chiffre moyen dans une semaine calme peut faire peu de bruit. Le <span className="font-semibold text-zinc-200">même chiffre dans une semaine tendue</span> (cluster d&apos;annonces, contexte macro fragile) peut déclencher un vrai mouvement.
+              Un chiffre moyen dans une semaine calme peut faire peu de bruit. Le <span className="font-semibold text-zinc-200">même chiffre dans une semaine tendue</span> (cluster de news, contexte macro fragile) peut déclencher un vrai mouvement.
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
@@ -381,7 +381,7 @@ export default function ContentFr() {
             </p>
             <div className="space-y-2 mb-5">
               {[
-                { n: "1", text: "Liste les 3 à 5 grosses annonces de la semaine" },
+                { n: "1", text: "Liste les 3 à 5 grosses news de la semaine" },
                 { n: "2", text: "Note les jours et heures exactes" },
                 { n: "3", text: "Identifie les devises concernées" },
                 { n: "4", bold: "Classe les jours :", rest: " agressif, neutre, défensif" },
@@ -407,7 +407,7 @@ export default function ContentFr() {
               {[
                 { bold: "Lundi/mardi", rest: " : trading plus normal (semaine commence calme)" },
                 { bold: "Mercredi", rest: " : prudence avant chiffres (anticipation du marché)" },
-                { bold: "Jeudi/vendredi", rest: " : taille réduite ou attente post-annonce" },
+                { bold: "Jeudi/vendredi", rest: " : taille réduite ou attente post-news" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
@@ -432,8 +432,8 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "Un calendrier se lit avec 4 paramètres : consensus, précédent, réel et révisions",
-              "Les révisions peuvent changer complètement l'interprétation d'une annonce",
-              "Les clusters d'annonces rendent toute la semaine plus volatile (pas juste le jour J)",
+              "Les révisions peuvent changer complètement l'interprétation d'une news",
+              "Les clusters de news rendent toute la semaine plus volatile (pas juste le jour J)",
               "Ta feuille de route macro doit être préparée avant de trader, pas pendant",
             ]}
           />
@@ -449,7 +449,7 @@ export default function ContentFr() {
             ]}
           />
           <p className="text-sm text-zinc-500 leading-relaxed px-1">
-            L&apos;objectif : <span className="font-semibold text-zinc-400">ne plus subir les annonces. Les voir venir</span>.
+            L&apos;objectif : <span className="font-semibold text-zinc-400">ne plus subir les news. Les voir venir</span>.
           </p>
 
           <LessonQuiz
@@ -458,7 +458,7 @@ export default function ContentFr() {
               "Le marché est aléatoire, ces mouvements ne sont pas explicables",
               "Le chiffre réel est très supérieur au consensus",
               "Le chiffre précédent a peut-être été révisé fortement à la baisse",
-              "Les annonces macro ne servent à rien sur le forex",
+              "Les news macro ne servent à rien sur le forex",
             ]}
             correctIndex={2}
             explanation="Un chiffre réel proche du consensus ne suffit pas toujours à expliquer un gros mouvement. Les révisions peuvent modifier toute la lecture de la tendance de l'emploi (par exemple, un chiffre précédent révisé de 250k à 170k change la perception du marché du travail US). L'option A ignore la logique macro, les mouvements ont presque toujours une cause identifiable. L'option B est fausse ici : 205k contre 200k n'est pas un gros écart. L'option D contredit tout le module Macro. C'est exactement le scénario du hero de cette leçon. Cette logique des révisions s'applique sur tous les actifs liés au dollar : EUR/USD, XAU/USD, Nasdaq et BTC/USD réagissent tous à la même réévaluation."
@@ -466,7 +466,7 @@ export default function ContentFr() {
               "Faux. Le marché suit une logique précise basée sur les anticipations et les révisions. La réaction n'est pas aléatoire, elle a presque toujours une cause identifiable.",
               "Faux. 205k contre 200k est un écart minimal, insuffisant pour provoquer un gros mouvement. Ce n'est pas le chiffre du jour qui explique la réaction.",
               "Correct. Les révisions peuvent modifier toute la lecture macro. Un chiffre précédent révisé de 250k à 170k change la perception du marché du travail US, et le marché réagit à cette nouvelle réalité.",
-              "Faux. Les annonces macro sont l'une des principales causes des gros mouvements sur le forex. Ce module entier en est la démonstration.",
+              "Faux. Les news macro sont l'une des principales causes des gros mouvements sur le forex. Ce module entier en est la démonstration.",
             ]}
           />
 

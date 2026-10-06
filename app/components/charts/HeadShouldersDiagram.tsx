@@ -49,15 +49,15 @@ export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" 
         head: "Cabeza",
         shoulderR: "Hombro D",
         neckline: "Línea clavicular",
-        breakout: "Ruptura",
+        breakout: "Breakout",
         mobileTitle: "Hombro-cabeza-hombro — 2 variantes",
         classicTitle: "HCH clásico — Reversión BAJISTA",
-        classicDesc1: "3 cimas: Hombro I → Cabeza (más alta) → Hombro D. Ruptura bajo la ",
+        classicDesc1: "3 cimas: Hombro I → Cabeza (más alta) → Hombro D. Breakout bajo la ",
         classicDesc2: " = señal short.",
         invTitle: "HCH invertido — Reversión ALCISTA",
-        invDesc1: "3 mínimos: Hombro I → Cabeza (más bajo) → Hombro D. Ruptura sobre la ",
+        invDesc1: "3 mínimos: Hombro I → Cabeza (más bajo) → Hombro D. Breakout sobre la ",
         invDesc2: " = señal long.",
-        footer: "Patrón de reversión mayor, válido tras ruptura de la línea clavicular.",
+        footer: "Patrón de reversión mayor, válido tras breakout de la línea clavicular.",
       }
     : locale === "en"
     ? {
@@ -86,15 +86,15 @@ export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" 
         head: "Tête",
         shoulderR: "Épaule D",
         neckline: "Ligne de cou",
-        breakout: "Cassure",
+        breakout: "Breakout",
         mobileTitle: "Épaule-tête-épaule — 2 variantes",
         classicTitle: "ETE classique — Retournement BAISSIER",
-        classicDesc1: "3 sommets : Épaule G → Tête (plus haut) → Épaule D. Cassure sous la ",
+        classicDesc1: "3 sommets : Épaule G → Tête (plus haut) → Épaule D. Breakout sous la ",
         classicDesc2: " = signal short.",
         invTitle: "ETE inversé — Retournement HAUSSIER",
-        invDesc1: "3 creux : Épaule G → Tête (plus bas) → Épaule D. Cassure au-dessus de la ",
+        invDesc1: "3 creux : Épaule G → Tête (plus bas) → Épaule D. Breakout au-dessus de la ",
         invDesc2: " = signal long.",
-        footer: "Pattern de retournement majeur, valide après cassure de la ligne de cou.",
+        footer: "Pattern de retournement majeur, valide après breakout de la ligne de cou.",
       };
   // ─── Head & Shoulders classique (bearish reversal) ─── x = 30 → 380
   const hsPts: [number, number][] = [

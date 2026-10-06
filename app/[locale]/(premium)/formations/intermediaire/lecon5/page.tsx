@@ -49,7 +49,7 @@ function ContentFr() {
             { label: "Support ou résistance", detail: "Un niveau où le prix a déjà réagi : un ancien support, une résistance, ou la zone de départ d'un mouvement impulsif.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
             { label: "Niveau Fibonacci", detail: "38.2%, 50% ou 61.8% du dernier mouvement impulsif. Souvent coïncide avec un S/R : c'est la puissance.", color: "bg-blue-500/5 border-blue-500/15 text-blue-400" },
             { label: "Chiffre rond", detail: "1.1000, 45 000$, 2 000$... Les traders placent naturellement stops et ordres sur les niveaux ronds.", color: "bg-amber-400/5 border-amber-400/15 text-amber-400" },
-            { label: "Signal de bougie (déclencheur)", detail: "Pin bar, avalement, rejet. C'est la gâchette : pas la raison d'entrer. La raison, c'est les confluences au-dessus.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
+            { label: "Signal de bougie (déclencheur)", detail: "Pin bar, engulfing, rejet. C'est la gâchette : pas la raison d'entrer. La raison, c'est les confluences au-dessus.", color: "bg-zinc-800/50 border-zinc-700/50 text-zinc-300" },
           ].map((item, i) => (
             <div key={i} className={`rounded-xl px-4 py-3 border ${item.color}`}>
               <p className="text-sm font-semibold mb-1">{item.label}</p>

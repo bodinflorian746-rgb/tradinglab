@@ -38,10 +38,10 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: { fr: "FVG", es: "FVG" },
     match: { fr: /\bFVG\b/, es: /\bFVG\b/ },
     def: {
-      fr: "Fair Value Gap, un déséquilibre laissé par une bougie impulsive : un écart de prix que le marché revient souvent combler.",
+      fr: "Fair Value Gap, un déséquilibre laissé par une bougie de displacement : un écart de prix que le marché revient souvent combler.",
       es: "Fair Value Gap, un desequilibrio dejado por una vela impulsiva: un hueco de precio que el mercado suele volver a llenar.",
     },
-    short: { fr: "déséquilibre laissé par une bougie impulsive.", es: "desequilibrio dejado por una vela impulsiva." },
+    short: { fr: "déséquilibre laissé par une bougie de displacement.", es: "desequilibrio dejado por una vela impulsiva." },
   },
   {
     id: "liquidity", source: "Avancé · leçon 1 (Liquidité)",
@@ -89,9 +89,9 @@ export const GLOSSARY: GlossaryEntry[] = [
     match: { fr: /UT supérieure/, es: /\bHTF\b/ },
     def: {
       fr: "l'unité de temps supérieure (H4, Daily), celle qui donne le biais directionnel.",
-      es: "la temporalidad superior (H4, Daily), la que da el sesgo direccional.",
+      es: "la temporalidad más alta (H4, Daily), la que da el sesgo direccional.",
     },
-    short: { fr: "unité de temps supérieure.", es: "temporalidad superior." },
+    short: { fr: "unité de temps supérieure.", es: "temporalidad más alta." },
   },
   {
     id: "sl", source: "Débutant · leçon 5 (Le Stop Loss)",
@@ -169,10 +169,10 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: { fr: "Faux breakout", es: "Fakeout" },
     match: { fr: /faux breakouts?/i, es: /fakeout/i },
     def: {
-      fr: "cassure qui ne tient pas : le prix revient de l'autre côté du niveau.",
-      es: "ruptura que no se sostiene: el precio vuelve al otro lado del nivel.",
+      fr: "breakout qui ne tient pas : le prix revient de l'autre côté du niveau.",
+      es: "breakout que no se sostiene: el precio vuelve al otro lado del nivel.",
     },
-    short: { fr: "cassure qui ne tient pas.", es: "ruptura que no se sostiene." },
+    short: { fr: "breakout qui ne tient pas.", es: "breakout que no se sostiene." },
   },
   {
     id: "pullback", source: "Intermédiaire · leçon 2 (Support & Résistance)",
@@ -246,8 +246,8 @@ export const GLOSSARY: GlossaryEntry[] = [
   },
   {
     id: "impulse-candle", source: "Avancé · leçon 2 (Fair Value Gap)",
-    term: { fr: "Bougie impulsive", es: "Vela impulsiva" },
-    match: { fr: /bougies? impulsives?/i, es: /velas? impulsivas?/i },
+    term: { fr: "Bougie de displacement", es: "Vela impulsiva" },
+    match: { fr: /bougies? de displacement|\bdisplacement\b/i, es: /velas? impulsivas?/i },
     def: {
       fr: "grande bougie directionnelle, souvent sans mèche.",
       es: "vela grande y direccional, a menudo sin mecha.",
@@ -300,49 +300,49 @@ export const GLOSSARY: GlossaryEntry[] = [
     match: { fr: /\bbiais\b/i, es: /\bsesgo\b/i },
     def: {
       fr: "la direction privilégiée, donnée par l'unité de temps supérieure.",
-      es: "la dirección favorecida, dada por la temporalidad superior.",
+      es: "la dirección favorecida, dada por el HTF.",
     },
-    short: { fr: "direction privilégiée par l'unité de temps supérieure.", es: "dirección favorecida por la temporalidad superior." },
+    short: { fr: "direction privilégiée par l'unité de temps supérieure.", es: "dirección favorecida por el HTF." },
   },
   {
     id: "macro-news", source: "Macro · Débutant",
     term: { fr: "FOMC, NFP, CPI", es: "FOMC, NFP, CPI" },
     match: { fr: /\b(?:FOMC|NFP|CPI)\b/, es: /\b(?:FOMC|NFP|CPI)\b/ },
     def: {
-      fr: "grandes annonces macro (taux de la Fed, emploi américain, inflation) qui font souvent bondir la volatilité.",
+      fr: "grandes news macro (taux de la Fed, emploi américain, inflation) qui font souvent bondir la volatilité.",
       es: "grandes noticias macro (tipos de la Fed, empleo estadounidense, inflación) que suelen disparar la volatilidad.",
     },
-    short: { fr: "grandes annonces macro (taux, emploi, inflation).", es: "grandes noticias macro (tipos, empleo, inflación)." },
+    short: { fr: "grandes news macro (taux, emploi, inflation).", es: "grandes noticias macro (tipos, empleo, inflación)." },
   },
   {
     id: "setup", source: "Avancé · leçon 1 (Liquidité)",
     term: { fr: "Setup", es: "Setup" },
     match: { fr: /\bsetups?\b/i, es: /\bsetups?\b/i },
     def: {
-      fr: "configuration de marché qui réunit les conditions d'une entrée.",
+      fr: "ensemble de conditions de marché qui réunit les critères d'une entrée.",
       es: "configuración de mercado que reúne las condiciones de una entrada.",
     },
-    short: { fr: "configuration d'entrée.", es: "configuración de entrada." },
+    short: { fr: "conditions d'entrée réunies.", es: "configuración de entrada." },
   },
   {
     id: "breakout", source: "Intermédiaire · leçon 1 (Structure de marché)",
     term: { fr: "Breakout", es: "Breakout" },
     match: { fr: /\bbreakouts?\b/i, es: /\bbreakouts?\b/i },
     def: {
-      fr: "cassure franche d'un niveau, avec une clôture au-delà.",
-      es: "ruptura clara de un nivel, con un cierre más allá.",
+      fr: "franchissement net d'un niveau, avec une clôture au-delà.",
+      es: "superación clara de un nivel, con un cierre más allá.",
     },
-    short: { fr: "cassure d'un niveau.", es: "ruptura de un nivel." },
+    short: { fr: "franchissement d'un niveau.", es: "superación de un nivel." },
   },
   {
     id: "news", source: "Macro · Débutant",
-    term: { fr: "Annonce", es: "Noticia" },
-    match: { fr: /\bannonces?\b/i, es: /\bnoticias?\b/i },
+    term: { fr: "News", es: "Noticia" },
+    match: { fr: /\bnews\b/i, es: /\bnoticias?\b/i },
     def: {
-      fr: "annonce économique (emploi, inflation, taux) qui peut faire bouger fortement le prix.",
+      fr: "publication économique (emploi, inflation, taux) qui peut faire bouger fortement le prix.",
       es: "noticia económica (empleo, inflación, tipos) que puede mover mucho el precio.",
     },
-    short: { fr: "annonce économique.", es: "noticia económica." },
+    short: { fr: "publication économique.", es: "noticia económica." },
   },
   {
     id: "gap", source: "Avancé · leçon 2 (Fair Value Gap)",
@@ -430,9 +430,9 @@ export const GLOSSARY: GlossaryEntry[] = [
     match: { fr: /UT inférieure/, es: /\bLTF\b/ },
     def: {
       fr: "unité de temps inférieure (M15, M5), utilisée pour affiner l'entrée.",
-      es: "temporalidad inferior (M15, M5), usada para afinar la entrada.",
+      es: "la temporalidad más baja (M15, M5), usada para afinar la entrada.",
     },
-    short: { fr: "unité de temps inférieure.", es: "temporalidad inferior." },
+    short: { fr: "unité de temps inférieure.", es: "temporalidad más baja." },
   },
   {
     id: "ict", source: "Stratégies · ICT, leçon 1",
@@ -549,7 +549,7 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
     { from: /niveaux? psychologiques?/i, to: "chiffre rond", source: "Intermédiaire · leçon 5" },
     { from: /niveau magnétique/i, to: "niveau clé", source: "Intermédiaire · leçons 2 et 5" },
     { from: /asia high/i, to: "haut de la session asiatique", source: "hors leçons (sessions : Avancé · leçon 4)" },
-    { from: /bougies? de force/i, to: "bougie impulsive", source: "Avancé · leçon 2" },
+    { from: /bougies? de force/i, to: "bougie de displacement", source: "Avancé · leçon 2" },
     { from: /zone douteuse/i, to: "niveau secondaire", source: "Intermédiaire · leçon 2" },
     { from: /position sizing/i, to: "taille de position", source: "Débutant · leçon 8" },
     { from: /wick fakeout/i, to: "mèche du faux breakout", source: "Intermédiaire · leçon 6" },

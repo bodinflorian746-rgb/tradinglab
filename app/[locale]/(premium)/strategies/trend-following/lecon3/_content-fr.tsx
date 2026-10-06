@@ -165,7 +165,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Impulsion claire : displacement directionnel marqué (corps significatifs)</li>
               <li>- Retracement 30-60% (idéalement 0.5 à 0.618) : profondeur tradable</li>
-              <li>- Signal de rejet au contact (pin bar, avalement, réaction immédiate)</li>
+              <li>- Signal de rejet au contact (pin bar, engulfing, réaction immédiate)</li>
               <li>- Biais de l&apos;UT supérieure (H4 ou Daily) aligné avec le sens de l&apos;impulsion</li>
             </ul>
           </section>
@@ -254,7 +254,7 @@ export default function ContentFr() {
               "Mesurer l’impulsion : 1.1820 - 1.1720 = 100 pips",
               "Calculer la position du retracement : 1.1820 - 1.1760 = 60 pips sous le HH, soit 60% de l’impulsion",
               "Identifier le niveau Fibonacci : 60% correspond à un niveau entre 0.5 (1.1770) et 0.618 (1.1758). Le prix actuel à 1.1760 se situe pratiquement au niveau 0.618, zone d’entrée optimale",
-              "Attendre le signal de rejet (pin bar, avalement) au contact de 1.1758-1.1760 pour valider le setup",
+              "Attendre le signal de rejet (pin bar, engulfing) au contact de 1.1758-1.1760 pour valider le setup",
               "Construire le plan : entrée long à la clôture du signal, stop loss sous 1.1741 (niveau 0.786 + marge 10 pips), take profit à 1.1820 (HH précédent) ou 1.1858 (extension 138%). Taille de position selon le risque par trade adapté au capital",
             ]}
           />

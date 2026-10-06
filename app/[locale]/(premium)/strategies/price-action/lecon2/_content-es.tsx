@@ -165,7 +165,7 @@ export default function ContentEs() {
               <li>- Pin bar en support fuerte = tradable (rebote institucional esperado)</li>
               <li>- Pin bar en resistance fuerte = tradable (rechazo institucional esperado)</li>
               <li>- Pin bar en medio de rango = fuera de nivel, señal descalificada</li>
-              <li>- Condiciones externas: alineación con la temporalidad superior, ausencia de noticia mayor en los 60 min</li>
+              <li>- Condiciones externas: alineación con el HTF, ausencia de noticia mayor en los 60 min</li>
             </ul>
           </section>
 

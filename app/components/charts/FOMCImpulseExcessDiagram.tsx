@@ -52,10 +52,10 @@ export function FOMCImpulseExcessDiagram({ className = "", locale = "fr" }: FOMC
         retourBalancier: "Retorno de péndulo",
         mobileTitle: "FOMC impulso excesivo · XAU/USD M15",
         impulsionTitle: "Impulso FOMC excesivo",
-        impulsionDesc: "Ruptura del soporte de forma violenta en el anuncio → movimiento demasiado lejos demasiado rápido.",
+        impulsionDesc: "Breakout del soporte de forma violenta en el anuncio → movimiento demasiado lejos demasiado rápido.",
         retourTitle: "Retorno de péndulo",
         retourDesc: "El mercado corrige el exceso → posible oportunidad de fade.",
-        legendImpulsion: "Impulso FOMC excesivo, ruptura del soporte",
+        legendImpulsion: "Impulso FOMC excesivo, breakout del soporte",
         legendRetour: "Retorno de péndulo tras el exceso",
       }
     : locale === "en"
@@ -79,7 +79,7 @@ export function FOMCImpulseExcessDiagram({ className = "", locale = "fr" }: FOMC
         retourBalancier: "Retour de balancier",
         mobileTitle: "FOMC impulsion excessive · XAU/USD M15",
         impulsionTitle: "Impulsion FOMC excessive",
-        impulsionDesc: "Casse du support de manière violente sur l'annonce → mouvement trop loin trop vite.",
+        impulsionDesc: "Casse du support de manière violente sur la news → mouvement trop loin trop vite.",
         retourTitle: "Retour de balancier",
         retourDesc: "Marché corrige l'excès → potentielle opportunité de fade.",
         legendImpulsion: "Impulsion FOMC excessive, casse du support",

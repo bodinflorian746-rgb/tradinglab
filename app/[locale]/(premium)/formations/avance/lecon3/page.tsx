@@ -94,7 +94,7 @@ function ContentFr() {
             { label: "OB + FVG dans la même zone", detail: "Si un Fair Value Gap se trouve dans la zone de l'Order Block, la confluence est extrêmement puissante." },
             { label: "OB + niveau de liquidité", detail: "Un OB situé juste en dessous d'un pool de liquidité BSL ou SSL augmente drastiquement la probabilité d'une réaction." },
             { label: "OB + biais de structure", detail: "En tendance haussière, ne trader que les Bullish OB. L'OB doit être dans le sens du marché dominant." },
-            { label: "Confirmation bougie", detail: "Attends un rejet dans l'OB (pin bar, avalement) avant d'entrer. Ne pas entrer aveuglément dans la zone." },
+            { label: "Confirmation bougie", detail: "Attends un rejet dans l'OB (pin bar, engulfing) avant d'entrer. Ne pas entrer aveuglément dans la zone." },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <div className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5" />

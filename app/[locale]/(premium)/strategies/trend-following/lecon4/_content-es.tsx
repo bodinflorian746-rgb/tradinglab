@@ -138,12 +138,12 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Misma estructura de partida, sentido de ruptura opuesto. La naturaleza del nivel roto dicta la naturaleza de la señal.
+              Misma estructura de partida, sentido de breakout opuesto. La naturaleza del nivel roto dicta la naturaleza de la señal.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="font-semibold text-zinc-100">BOS</span>: ruptura en el sentido de la tendencia (HH en alcista, LL en bajista) = continuación</li>
-              <li>- <span className="font-semibold text-zinc-100">CHoCH</span>: ruptura contra el sentido (HL en alcista, LH en bajista) = reversión</li>
+              <li>- <span className="font-semibold text-zinc-100">BOS</span>: breakout en el sentido de la tendencia (HH en alcista, LL en bajista) = continuación</li>
+              <li>- <span className="font-semibold text-zinc-100">CHoCH</span>: breakout contra el sentido (HL en alcista, LH en bajista) = reversión</li>
               <li>- La salida en BOS protege las ganancias. La inversión exige el CHoCH confirmado</li>
             </ul>
           </section>
@@ -257,7 +257,7 @@ export default function ContentEs() {
             steps={[
               "Calificar el BOS bajista: cierre claro en 4 555$ (25$ bajo el HL 4 580$), cuerpo significativo, sin reintegración en 4 velas. BOS validado",
               "Disparar la salida de toda posición long existente apenas el cierre en 4 555$",
-              "Observar la estructura post-ruptura: máximo en 4 600$ (primer LH potencial) luego mínimo en 4 530$ (primer LL)",
+              "Observar la estructura post-breakout: máximo en 4 600$ (primer LH potencial) luego mínimo en 4 530$ (primer LL)",
               "Confirmar el CHoCH bajista: la secuencia LH (4 600$) + LL (4 530$) invierte oficialmente la tendencia",
               "Armar el plan de inversión: entrada short en el retroceso hacia 4 580$ (ex-HL convertido en resistance) con señal de rechazo, stop loss en 4 615$ (más allá del LH 4 600$ + margen 15$), take profit en 4 450$ (ratio R/R 1:3,7), tamaño de posición según el riesgo por trade",
             ]}

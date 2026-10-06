@@ -166,7 +166,7 @@ export default function ContentEs() {
               <li>- Impulso claro: displacement direccional marcado (cuerpos significativos)</li>
               <li>- Retracement 30-60% (idealmente 0.5 a 0.618): profundidad tradeable</li>
               <li>- Señal de rechazo al contacto (pin bar, envolvente, reacción inmediata)</li>
-              <li>- Sesgo de la temporalidad superior (H4 o Daily) alineado con el sentido del impulso</li>
+              <li>- Sesgo del HTF (H4 o Daily) alineado con el sentido del impulso</li>
             </ul>
           </section>
 

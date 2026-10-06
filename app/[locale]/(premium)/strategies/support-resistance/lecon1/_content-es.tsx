@@ -181,7 +181,7 @@ export default function ContentEs() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Trazado en línea fina = mechas repetidas hacen creer en una ruptura inexistente</li>
+              <li>- Trazado en línea fina = mechas repetidas hacen creer en un breakout inexistente</li>
               <li>- Trazado en zona (rectángulo 10-20 pips) = mechas naturales absorbidas, lectura confiable</li>
               <li>- El trazado engloba cuerpos + mechas, nunca limitado solo a los cuerpos</li>
               <li>- Herramienta rectángulo de la plataforma, coloración translúcida (40% de opacidad)</li>

@@ -238,7 +238,7 @@ export default function ContentFr() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Sweep sans FVG clair</span> <span className="text-zinc-300">= manque de déséquilibre exploitable.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">FVG déjà totalement mitigé</span> <span className="text-zinc-300">= inefficience déjà comblée.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Contexte sans biais directionnel</span> <span className="text-zinc-300">= absence de direction de l&apos;UT supérieure.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Annonce macro majeure imminente</span> <span className="text-zinc-300">= volatilité imprévisible.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">News macro majeure imminente</span> <span className="text-zinc-300">= volatilité imprévisible.</span></div>
             </div>
           </section>
 
@@ -255,7 +255,7 @@ export default function ContentFr() {
             description="Sur XAU/USD H4, le marché affiche 2 equal highs à 4 680$ et un creux récent à 4 600$. Une bougie H4 perce 4 680$, imprime une mèche à 4 690$, puis clôture à 4 660$. Les bougies suivantes créent un FVG bearish entre 4 645$ et 4 658$. Le prix revient ensuite dans le FVG. Comment se construit le plan de trade sur ce setup ?"
             steps={[
               "Identifier la liquidité : les 2 equal highs à 4 680$ constituent une BSL. La mèche à 4 690$ confirme le sweep au-dessus du niveau.",
-              "Confirmer le rejet : la clôture à 4 660$, sous les equal highs, valide la réintégration, le breakout était un sweep, pas une cassure.",
+              "Confirmer le rejet : la clôture à 4 660$, sous les equal highs, valide la réintégration, le breakout était un sweep, pas un breakout.",
               "Localiser le FVG : le déséquilibre bearish se situe entre 4 645$ et 4 658$. Le retour du prix dans cette zone fournit le point d’entrée short.",
               "Poser le plan : entrée short 4 655$ (dans le FVG), stop loss 4 695$ (au-dessus de la mèche du sweep), take profit 4 605$ (cible la SSL sous le creux 4 600$).",
               "Calculer le R/R : risque 40$, gain potentiel 50$, R/R 1,25. Le setup reste acceptable mais présente un rendement moins favorable que le cas EUR/USD H4.",
@@ -268,7 +268,7 @@ export default function ContentFr() {
               "Le marché clôture au-dessus du niveau cassé avec continuation forte",
               "Le sweep laisse rarement une mèche visible",
               "Le prix réintègre rapidement le niveau sweepé après avoir pris la liquidité",
-              "Un sweep apparaît uniquement pendant les annonces macro",
+              "Un sweep apparaît uniquement pendant les news macro",
             ]}
             correctIndex={2}
             explanation="Le sweep se reconnaît à la réintégration rapide du niveau sweepé après que la liquidité a été prise. La mèche perce, les stops sont déclenchés, puis le prix revient sous (ou au-dessus) du niveau et rejette le mouvement. Un vrai breakout institutionnel se traduirait au contraire par une clôture franche au-delà du niveau avec continuation directionnelle."

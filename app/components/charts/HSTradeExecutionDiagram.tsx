@@ -3,13 +3,13 @@ export default function HSTradeExecutionDiagram({ className = "", locale = "fr" 
   const isEn = locale === "en";
   const L = {
     title:        isEs ? "2 estrategias de entrada en hombro-cabeza-hombro" : isEn ? "2 entry strategies on Head & Shoulders" : "2 stratégies d'entrée sur épaule-tête-épaule",
-    breakoutBadge: isEs ? "Entrada en ruptura — R/R 2,5" : isEn ? "Breakout entry — R/R 2.5" : "Entrée à la cassure — R/R 2,5",
+    breakoutBadge: isEs ? "Entrada en breakout — R/R 2,5" : isEn ? "Breakout entry — R/R 2.5" : "Entrée au breakout — R/R 2,5",
     retestBadge:   isEs ? "Entrada en retest — R/R 4,4" : isEn ? "Retest entry — R/R 4.4" : "Entrée au retest — R/R 4,4",
     shoulders:    isEs ? "Hombros" : isEn ? "Shoulders" : "Épaules",
     entryShort:   isEs ? "Entrada short" : isEn ? "Short entry" : "Entrée short",
-    footer:       isEs ? "Ruptura = ejecución rápida. Retest = entrada tardía con mejor R/R." : isEn ? "Breakout = fast execution. Retest = late entry with better R/R." : "Cassure = exécution rapide. Retest = entrée tardive avec meilleur R/R.",
+    footer:       isEs ? "Breakout = ejecución rápida. Retest = entrada tardía con mejor R/R." : isEn ? "Breakout = fast execution. Retest = late entry with better R/R." : "Breakout = exécution rapide. Retest = entrée tardive avec meilleur R/R.",
     mobileTitle:  isEs ? "2 estrategias de entrada HCH" : isEn ? "2 entry strategies on H&S" : "2 stratégies d'entrée ETE",
-    mobBreakoutT: isEs ? "Entrada en ruptura" : isEn ? "Breakout entry" : "Entrée sur cassure",
+    mobBreakoutT: isEs ? "Entrada en breakout" : isEn ? "Breakout entry" : "Entrée sur breakout",
     mobBreakoutD: isEs ? "Ejecución rápida cuando el precio rompe la línea clavicular. R/R medio, pero entrada inmediata." : isEn ? "Fast execution as soon as price breaks the neckline. Average R/R, but immediate entry." : "Exécution rapide dès que le prix casse la ligne de cou. R/R moyen, mais entrée immédiate.",
     mobRetestT:   isEs ? "Entrada en retest" : isEn ? "Retest entry" : "Entrée sur retest",
     mobRetestD:   isEs ? "Esperar a que el precio vuelva a testear la línea clavicular rota. Tardía pero" : isEn ? "Wait for price to come back and test the broken neckline. Late but" : "Attendre que le prix revienne tester la ligne de cou cassée. Tardive mais",

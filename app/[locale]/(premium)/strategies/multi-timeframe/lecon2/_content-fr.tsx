@@ -278,7 +278,7 @@ export default function ContentFr() {
               "Le nombre total de bougies vertes",
               "Les impulsions les plus fortes et les rejets dominants",
               "L'unité de temps M1 uniquement",
-              "Une seule bougie impulsive isolée",
+              "Une seule bougie de displacement isolée",
             ]}
             correctIndex={1}
             explanation="La direction dominante se lit dans la qualité des impulsions et des réactions, pas dans le nombre de bougies. Un marché baissier produit en général des chutes rapides, des corrections faibles et des rejets vendeurs agressifs. Le M1 ne montre que du bruit, et une bougie isolée ne suffit jamais à définir une tendance durable : c'est la force comparée des mouvements qui révèle quelle direction contrôle réellement le marché."

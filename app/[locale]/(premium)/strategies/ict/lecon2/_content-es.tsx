@@ -337,7 +337,7 @@ export default function ContentEs() {
               <p className="text-white font-semibold text-sm mb-2">Etapa 4. Ejecución potencial (M15)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observación: en M15, mechas superiores de rechazo en 1.1768, luego vela bajista impulsiva que rompe el mínimo local en 1.1748</li>
-                <li>- Conclusión: entrada short en 1.1758 en la ruptura, SL en 1.1772 (arriba del máximo de rechazo), TP hacia la próxima zona de liquidez baja en 1.1695. Si ninguna vela impulsiva aparece, la zona falla, sin entrada</li>
+                <li>- Conclusión: entrada short en 1.1758 en el breakout, SL en 1.1772 (arriba del máximo de rechazo), TP hacia la próxima zona de liquidez baja en 1.1695. Si ninguna vela impulsiva aparece, la zona falla, sin entrada</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

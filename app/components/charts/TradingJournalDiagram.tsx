@@ -43,7 +43,7 @@ export function TradingJournalDiagram({ className = "", locale = "fr" }: Trading
   const isEs = locale === "es";
   const isEn = locale === "en";
   const L = {
-    winRate:      isEs ? "Win Rate 60%" : isEn ? "Win Rate 60%" : "Win Rate 60%",
+    winRate:      isEs ? "Win Rate 60%" : isEn ? "Win Rate 60%" : "Winrate 60%",
     netR:         isEs ? "+5.5R neto" : isEn ? "+5.5R net" : "+5.5R net",
     hdrDate:      isEs ? "FECHA" : isEn ? "DATE" : "DATE",
     hdrSetup:     "SETUP",
@@ -63,7 +63,7 @@ export function TradingJournalDiagram({ className = "", locale = "fr" }: Trading
     recVal:       isEs ? "SL muy ajustado en 3 trades" : isEn ? "SL too tight on 3 trades" : "SL trop serré sur 3 trades",
     recSub:       isEs ? "Revisar sizing y colocación del SL" : isEn ? "Review sizing and SL placement" : "Revoir sizing et placement du SL",
     mobEqCap:     isEs ? "Equity acumulada (en R)" : isEn ? "Cumulative equity (in R)" : "Equity cumulée (en R)",
-    mobWinRate:   isEs ? "Win rate" : isEn ? "Win rate" : "Win rate",
+    mobWinRate:   isEs ? "Win rate" : isEn ? "Win rate" : "Winrate",
     mobWinRateD:  isEs ? "6 / 10 trades" : isEn ? "6 / 10 trades" : "6 / 10 trades",
     mobNet:       isEs ? "Net" : isEn ? "Net" : "Net",
     mobNetD:      isEs ? "capital acumulado" : isEn ? "cumulative capital" : "capital cumulé",

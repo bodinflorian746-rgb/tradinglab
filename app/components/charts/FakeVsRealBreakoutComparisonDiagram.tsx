@@ -2,16 +2,16 @@ export default function FakeVsRealBreakoutComparisonDiagram({ className = "", lo
   const isEs = locale === "es";
   const isEn = locale === "en";
   const L = {
-    title:       isEs ? "Verdadero breakout vs Falso breakout" : isEn ? "Real breakout vs Fake breakout" : "Vrai breakout vs Faux breakout",
+    title:       isEs ? "Verdadero breakout vs fakeout" : isEn ? "Real breakout vs Fake breakout" : "Vrai breakout vs Faux breakout",
     real:        isEs ? "✓ Verdadero breakout" : isEn ? "✓ Real breakout" : "✓ Vrai breakout",
-    fake:        isEs ? "✗ Falso breakout" : isEn ? "✗ Fake breakout" : "✗ Faux breakout",
+    fake:        isEs ? "✗ Fakeout" : isEn ? "✗ Fake breakout" : "✗ Faux breakout",
     resistance:  isEs ? "Resistencia 4 650$" : isEn ? "Resistance $4,650" : "{L.resistance}",
     realClose:   isEs ? "Cierre 4 680$ + follow-through" : isEn ? "Close $4,680 + follow-through" : "Clôture 4 680$ + follow-through",
     wickLabel:   isEs ? "mecha 4 685$" : isEn ? "wick $4,685" : "mèche 4 685$",
     closeLabel:  isEs ? "cierre 4 620$" : isEn ? "close $4,620" : "clôture 4 620$",
     fakeBottom:  isEs ? "Mecha + cierre debajo + reversal" : isEn ? "Wick + close below + reversal" : "Mèche + clôture sous + reversal",
     footer:      isEs ? "Criterio de distinción: cierre por encima del nivel + follow-through en 3-5 velas" : isEn ? "Distinction criterion: close above the level + follow-through over 3-5 candles" : "Critère de distinction : clôture au-dessus du niveau + follow-through sur 3-5 bougies",
-    realDesc:    isEs ? "Ruptura franca + cierre POR ENCIMA del nivel + 3-5 velas de continuación (follow-through)." : isEn ? "Clean break + close ABOVE the level + 3-5 continuation candles (follow-through)." : "Cassure franche + clôture AU-DESSUS du niveau + 3-5 bougies de continuation (follow-through).",
+    realDesc:    isEs ? "Breakout franco + cierre POR ENCIMA del nivel + 3-5 velas de continuación (follow-through)." : isEn ? "Clean break + close ABOVE the level + 3-5 continuation candles (follow-through)." : "Breakout franc + clôture AU-DESSUS du niveau + 3-5 bougies de continuation (follow-through).",
     fakeDescA:   isEs ? "La mecha rebasa pero" : isEn ? "Wick overshoots but" : "Mèche dépasse mais",
     fakeDescBold:isEs ? "cierre debajo" : isEn ? "close below" : "clôture sous",
     fakeDescB:   isEs ? "del nivel + reversal inmediato = trampa." : isEn ? "the level + immediate reversal = trap." : "le niveau + reversal immédiat = piège.",

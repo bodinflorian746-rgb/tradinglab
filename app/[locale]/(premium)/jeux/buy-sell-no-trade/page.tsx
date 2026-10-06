@@ -182,7 +182,7 @@ export default function BuySellNoTradePage() {
         ofStreak:        "de série",
         skills:          "Compétences",
         loading:         "Chargement…",
-        newsWarning:     "Annonce macro majeure dans < 30 min, volatilité et spread imprévisibles.",
+        newsWarning:     "News macro majeure dans < 30 min, volatilité et spread imprévisibles.",
         htf:             "UT supérieure",
         macro:           "Macro",
         volatility:      "Volatilité",

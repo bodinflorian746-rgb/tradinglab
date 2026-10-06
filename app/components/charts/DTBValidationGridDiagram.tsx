@@ -2,7 +2,7 @@ export default function DTBValidationGridDiagram({ className = "", locale = "fr"
   const labels = locale === "es"
     ? {
         title: "Reconocer un Double Top válido vs una trampa",
-        valid: "✓ Válido — diferencia 0,2%, ruptura clara",
+        valid: "✓ Válido — diferencia 0,2%, breakout claro",
         invalidGap: "✗ Diferencia demasiado grande — 0,5%",
         invalidNoTrend: "✗ Sin tendencia previa",
         invalidWick: "✗ Mecha, no cierre",
@@ -35,7 +35,7 @@ export default function DTBValidationGridDiagram({ className = "", locale = "fr"
       }
     : {
         title: "Reconnaître un Double Top valide vs un piège",
-        valid: "✓ Valide — écart 0,2%, cassure nette",
+        valid: "✓ Valide — écart 0,2%, breakout net",
         invalidGap: "✗ Écart trop grand — 0,5%",
         invalidNoTrend: "✗ Pas de tendance préalable",
         invalidWick: "✗ Mèche, pas clôture",

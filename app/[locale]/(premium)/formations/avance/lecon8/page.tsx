@@ -51,7 +51,7 @@ function ContentFr() {
             },
             {
               phase: "Révision hebdomadaire",
-              items: ["Taux de réussite (win rate)", "R moyen (gain moyen par trade)", "Drawdown maximum de la semaine", "Pattern d'erreur récurrent", "Condition de marché où ta stratégie performe ou sous-performe"],
+              items: ["Winrate", "R moyen (gain moyen par trade)", "Drawdown maximum de la semaine", "Pattern d'erreur récurrent", "Condition de marché où ta stratégie performe ou sous-performe"],
             },
           ].map((section, i) => (
             <div key={i} className="bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -128,7 +128,7 @@ function ContentFr() {
           "Crée un document (Notion, Google Sheets, carnet) avec les colonnes : Date, Instrument, Confluences, Entrée, SL, TP, R/R, Résultat (R), Plan respecté ? (oui/non), Notes.",
           "Retrouve 3 trades passés (sur papier ou en demo) et remplis leur entrée dans le journal.",
           "Pour chaque trade : indique si tu as respecté le plan. Si non, note l'erreur exacte.",
-          "Calcule ton win rate et ton R moyen sur ces 3 trades. Que constates-tu ?",
+          "Calcule ton winrate et ton R moyen sur ces 3 trades. Que constates-tu ?",
         ]}
       />
 
@@ -137,7 +137,7 @@ function ContentFr() {
         options={[
           "Ta semaine est négative (-0.5R), tu dois changer de stratégie immédiatement",
           "Le résultat hebdomadaire n'est pas suffisant pour tirer des conclusions, analyse les 5 trades individuellement",
-          "Ton win rate de 60% est excellent, continue exactement comme tu fais",
+          "Ton winrate de 60% est excellent, continue exactement comme tu fais",
           "Les trades perdus sont plus importants que les gagnants, focus sur les erreurs",
         ]}
         correctIndex={1}
@@ -145,7 +145,7 @@ function ContentFr() {
         answerExplanations={[
           "Trop hâtif. -0.5R sur 5 trades ne justifie aucun changement de stratégie. Un échantillon si court peut représenter une variance normale. Changer de stratégie sur 5 trades, c'est du micro-management contre-productif.",
           "Correct. 5 trades = pas de signal statistique fiable. L'analyse individuelle de chaque trade (plan respecté ? confluences valides ? erreur d'exécution ?) est bien plus instructive que le résultat brut.",
-          "Faux. 60% de win rate sur 5 trades ne dit rien de significatif. Et un win rate élevé peut masquer un mauvais R/R. Si les 3 wins font +0.5R chacun et les 2 pertes -1R chacune, le compte est perdant à long terme.",
+          "Faux. 60% de winrate sur 5 trades ne dit rien de significatif. Et un winrate élevé peut masquer un mauvais R/R. Si les 3 wins font +0.5R chacun et les 2 pertes -1R chacune, le compte est perdant à long terme.",
           "Partiellement vrai. Analyser les erreurs est important, mais ignorer les trades gagnants est une erreur. Comprendre pourquoi un trade a gagné est aussi crucial que comprendre pourquoi un autre a perdu.",
         ]}
       />

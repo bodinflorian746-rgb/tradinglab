@@ -35,7 +35,7 @@ function ContentFr() {
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-red-400 mb-1">Tendance baissière</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix descend → fait un creux → remonte un peu → repart plus bas → fait un sommet plus bas. C'est <strong className="text-white">LH (Lower High) + LL (Lower Low)</strong>.
+              Le prix descend → fait un creux → remonte un peu → repart plus bas → fait un lower high. C'est <strong className="text-white">LH (Lower High) + LL (Lower Low)</strong>.
             </p>
           </div>
           <div className="bg-zinc-800/50 border border-zinc-700/50 rounded-xl px-4 py-3">

@@ -115,7 +115,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     decoyMistakes: ["bad_rr", "no_confirmation", "fomo_after_pump"],
     explanation: "Aquí, la resistencia HTF testeada varias veces aguantó en cada test. Un BUY justo debajo sitúa la entrada en el peor sitio: el TP queda limitado por la resistencia inmediata y el R/R se vuelve muy desfavorable.",
     lessons: {
-      beginner:     "Comprar bajo una resistencia que rechaza en cada test rara vez es buena idea. Esperar una ruptura o una reversión suele ser más lógico.",
+      beginner:     "Comprar bajo una resistencia que rechaza en cada test rara vez es buena idea. Esperar un breakout o una reversión suele ser más lógico.",
       intermediate: "La ubicación suele contar más que el pattern. Incluso un setup técnicamente bueno puede volverse malo si la entrada está en una zona hostil.",
       advanced:     "Una resistencia HTF tocada 3 veces o más suele ser una resistencia sólida. Aquí, la ventaja está más bien en un SELL en el retest que en un BUY en el pullback.",
     },
@@ -135,7 +135,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     decoyMistakes: ["bad_rr", "no_confirmation", "fomo_after_pump"],
     explanation: "Aquí, el soporte HTF aguantó en cada test. Un SELL justo encima sitúa la entrada en el peor sitio: el TP queda limitado por el soporte inmediato y el R/R se vuelve muy desfavorable.",
     lessons: {
-      beginner:     "Vender sobre un soporte que rebota rara vez es buena idea. Esperar la ruptura del soporte, o un rebote en resistencia, suele ser más lógico.",
+      beginner:     "Vender sobre un soporte que rebota rara vez es buena idea. Esperar el breakout del soporte, o un rebote en resistencia, suele ser más lógico.",
       intermediate: "La ubicación suele contar más que el pattern. Vender sobre un soporte HTF supone aquí ponerse contra la ventaja.",
       advanced:     "Un soporte HTF con 3 rebotes o más suele ser un soporte sólido. Aquí, la ventaja está más bien en un BUY en el rebote que en un SELL.",
     },
@@ -213,7 +213,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     context: "El precio oscila en un rango. Tomas este BUY en el medio.",
     correctMistake: "range_middle",
     decoyMistakes: ["bad_rr", "no_confirmation", "fomo_after_pump"],
-    explanation: "Aquí, en medio del rango: sin zona testeada, sin señal, sin catalizador. El R/R es malo (TP menor que el riesgo). Un rango se opera más bien en sus bordes o en la ruptura.",
+    explanation: "Aquí, en medio del rango: sin zona testeada, sin señal, sin catalizador. El R/R es malo (TP menor que el riesgo). Un rango se opera más bien en sus bordes o en el breakout.",
     lessons: {
       beginner:     "Sin señal, al trade le falta una razón de ser. Si no puedes explicarlo en una frase, NO TRADE suele ser la opción lógica.",
       intermediate: "El medio de un rango suele suponer arriesgar 1 para ganar unos 0,3 (un R/R de aprox. 1:0,3). A la larga, esa cuenta juega en tu contra.",
@@ -264,18 +264,18 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
   },
   {
     id: "weak_breakout",
-    title: "BUY en ruptura débil",
+    title: "BUY en breakout débil",
     category: "technique",
     chartShape: "weak_breakout",
     direction: "BUY",
     htfBias: "range",
     macroContext: "normal",
-    context: "Tomas este BUY en la ruptura de resistencia. La vela impulsiva es minúscula.",
+    context: "Tomas este BUY en el breakout de resistencia. La vela impulsiva es minúscula.",
     correctMistake: "no_confirmation",
     decoyMistakes: ["buy_in_resistance", "bad_rr", "fomo_after_pump"],
-    explanation: "Una ruptura sin vela de momentum (cuerpo pequeño, justo sobre la resistencia) continúa bastante menos a menudo. Suele servir de cebo de liquidez.",
+    explanation: "Un breakout sin vela de momentum (cuerpo pequeño, justo sobre la resistencia) continúa bastante menos a menudo. Suele servir de cebo de liquidez.",
     lessons: {
-      intermediate: "Una ruptura débil puede ser una trampa. Una opción lógica: esperar una continuación clara o un retest que aguante.",
+      intermediate: "Un breakout débil puede ser una trampa. Una opción lógica: esperar una continuación clara o un retest que aguante.",
       advanced:     "Los breakouts débiles suelen servir para absorber los stops situados sobre la resistencia, antes de un regreso en el sentido del HTF.",
       beginner:     "Un breakout real suele venir con una vela impulsiva visible. Si no, esperar tiene sentido.",
     },
@@ -420,7 +420,7 @@ export const MISTAKE_TEMPLATES_ES: MistakeTemplate[] = [
     decoyMistakes: ["bad_rr", "stop_too_tight", "trade_against_htf"],
     explanation: "Aquí, una mitigación profunda sin reacción puede señalar un FVG agotado: los compradores ya no parecen defender la zona. Un BUY supondría esperar más que seguir una señal.",
     lessons: {
-      advanced:     "Un FVG mitigado más del 75 % sin reacción visible suele perder su ventaja. Dos opciones lógicas: esperar una ruptura para un SELL, o NO TRADE.",
+      advanced:     "Un FVG mitigado más del 75 % sin reacción visible suele perder su ventaja. Dos opciones lógicas: esperar un breakout para un SELL, o NO TRADE.",
       intermediate: "Una zona testeada en profundidad suele perder fuerza. El 1er y 2º test ofrecen en general más ventaja que un test profundo.",
       beginner:     "Si una zona tarda en reaccionar, suele perder fuerza. En este caso, mejor esperar la siguiente.",
     },

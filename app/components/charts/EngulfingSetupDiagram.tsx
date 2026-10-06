@@ -36,15 +36,15 @@ export default function EngulfingSetupDiagram({ locale = "fr" }: { locale?: "fr"
         mobileFooter: "Green candle fully engulfing the prior red one on Fibo 0.618 = strong entry signal.",
       }
     : {
-        title: "Avalement haussier sur Fibo 0.618 — XAU/USD H4",
+        title: "Engulfing haussier sur Fibo 0.618 — XAU/USD H4",
         tpResistance: "TP — Résistance 4 720$",
         fiboLabel: "Fibo 0.618 — 4 600$",
         slLabel: "SL 4 590$",
-        engulfBull: "Avalement haussier",
+        engulfBull: "Engulfing haussier",
         bodyEngulf: "Le corps engloutit la 1ère",
         entry: "Entrée 4 630$",
         legend: "Risque 40$ · Gain potentiel 90$ · R/R 2,25",
-        mobileTitle: "Avalement haussier sur Fibo 0.618 — XAU/USD H4",
+        mobileTitle: "Engulfing haussier sur Fibo 0.618 — XAU/USD H4",
         mobileTP: "Take Profit",
         mobileEntry: "Entrée",
         mobileSL: "Stop Loss",
@@ -174,7 +174,7 @@ export default function EngulfingSetupDiagram({ locale = "fr" }: { locale?: "fr"
       </p>
 
       {/* Mini-SVG : 2 bougies — petite bearish puis grande bullish englobante (engulfing) */}
-      <svg viewBox="0 0 200 140" className="w-full h-auto max-h-[180px]" aria-label={locale === "es" ? "Envolvente setup" : locale === "en" ? "Engulfing setup" : "Avalement setup"} fill="none">
+      <svg viewBox="0 0 200 140" className="w-full h-auto max-h-[180px]" aria-label={locale === "es" ? "Envolvente setup" : locale === "en" ? "Engulfing setup" : "Engulfing setup"} fill="none">
         {/* Niveau de référence */}
         <line x1="20" y1="100" x2="180" y2="100" stroke="#71717a" strokeWidth="0.7" strokeDasharray="3 3" />
         {/* Bougie 1 — petite bearish */}
@@ -187,7 +187,7 @@ export default function EngulfingSetupDiagram({ locale = "fr" }: { locale?: "fr"
         <text x="125" y="125" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">2 ↑</text>
         {/* Label engulfing */}
         <rect x="55" y="6" width="86" height="13" rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.6" />
-        <text x="98" y="15" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">{locale === "es" ? "Envolvente ↑" : locale === "en" ? "Engulfing ↑" : "Avalement ↑"}</text>
+        <text x="98" y="15" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">{locale === "es" ? "Envolvente ↑" : locale === "en" ? "Engulfing ↑" : "Engulfing ↑"}</text>
       </svg>
 
       <div className="space-y-2">

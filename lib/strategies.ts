@@ -14,7 +14,7 @@ export const STRATEGY_MODULES: StrategyModule[] = [
   {
     id:          "price-action",
     title:       "Price Action",
-    subtitle:    "Lis le marché brut sans indicateurs : bougies, pin bars, avalement et setup multi-unités de temps.",
+    subtitle:    "Lis le marché brut sans indicateurs : bougies, pin bars, engulfing et setup multi-unités de temps.",
     level:       "debutant",
     order:       1,
     lessonCount: 4,
@@ -77,7 +77,7 @@ export const STRATEGY_MODULES: StrategyModule[] = [
   {
     id:          "macro-trading",
     title:       "Macro Trading",
-    subtitle:    "Trade les annonces majeures et les régimes de marché : FOMC Fade, NFP Overreaction, Régime Risk-off, filtre macro pré-trade.",
+    subtitle:    "Trade les news majeures et les régimes de marché : FOMC Fade, NFP Overreaction, Régime Risk-off, filtre macro pré-trade.",
     level:       "avance",
     order:       8,
     lessonCount: 4,

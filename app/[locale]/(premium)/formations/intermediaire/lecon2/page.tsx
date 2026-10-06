@@ -127,14 +127,14 @@ function ContentFr() {
             <span className="text-lg">↑</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">Le prix arrive sur un support</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu attends un signal de rejet (pin bar, avalement haussier). Si le signal est là + la tendance est haussière → achat avec SL sous la zone.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu attends un signal de rejet (pin bar, engulfing haussier). Si le signal est là + la tendance est haussière → achat avec SL sous la zone.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <span className="text-lg">↓</span>
             <div>
               <p className="text-sm font-semibold text-red-400">Le prix arrive sur une résistance</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu attends un rejet (mèche haute, avalement baissier). Si le signal est là + la tendance est baissière → vente avec SL au-dessus de la zone.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu attends un rejet (mèche haute, engulfing baissier). Si le signal est là + la tendance est baissière → vente avec SL au-dessus de la zone.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3">
@@ -206,7 +206,7 @@ function ContentFr() {
           "Faux. 1.0800 était un support, mais il a été cassé. Une fois cassé, un support ne joue plus son rôle d'acheteur, il se retourne en résistance. Acheter ici, c'est ignorer la polarité.",
           "Correct. La polarité est l'un des comportements les plus fiables du marché. 1.0800 cassé → devient résistance. Le pullback sur ce niveau est une opportunité de vente avec un SL logique au-dessus.",
           "Faux. Les niveaux très connus fonctionnent souvent mieux, pas moins bien, c'est là que se concentrent les ordres. La popularité d'un niveau n'est pas une raison de l'ignorer.",
-          "Faux. Attendre que le prix repasse au-dessus pour confirmer, c'est rater l'entrée. Le signal de vente, c'est le retour sur 1.0800 avec un rejet, pas la cassure à la hausse.",
+          "Faux. Attendre que le prix repasse au-dessus pour confirmer, c'est rater l'entrée. Le signal de vente, c'est le retour sur 1.0800 avec un rejet, pas le breakout à la hausse.",
         ]}
       />
 

@@ -45,7 +45,7 @@ const S = {
     lessonsSection: {
       eyebrow: "Étape 1 · Les leçons",
       title: "Les bases d'abord, puis les notions avancées",
-      sub: "Trois parcours : Trading (lecture du graphique, gestion du risque), Macro (annonces, banques centrales, corrélations) et Stratégies. Tu avances niveau par niveau.",
+      sub: "Trois parcours : Trading (lecture du graphique, gestion du risque), Macro (news, banques centrales, corrélations) et Stratégies. Tu avances niveau par niveau.",
     },
     gamesEyebrow: "Étape 2 · Les jeux",
     strategiesSection: {
@@ -92,7 +92,7 @@ const S = {
     games: {
       sub: "4 jeux sur de vrais graphiques : décider, placer ton stop, repérer l'erreur, construire un trade complet.",
       lines: {
-        "buy-sell-no-trade": "Mini graphique, contexte, annonces : tu prends ta décision.",
+        "buy-sell-no-trade": "Mini graphique, contexte, news : tu prends ta décision.",
         "place-stop": "Quel stop va survivre ? Stop 1, 2 ou 3.",
         "find-the-mistake": "10 setups, une erreur cachée à repérer parmi 4 choix.",
         "build-the-trade": "Entrée, stop, take profit : tu construis le trade complet.",

@@ -165,7 +165,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD M15 : pendant la session asiatique, le prix oscille dans un range étroit entre 1.1710 et 1.1725. À l'ouverture de Londres, une bougie casse sous 1.1710, descend jusqu'à 1.1702, les stops sous le range Asia sont déclenchés. Immédiatement après, le prix repart en flèche vers 1.1750 dans une séquence haussière impulsive. La cible n'était pas la cassure baissière, c'était la liquidité.
+                EUR/USD M15 : pendant la session asiatique, le prix oscille dans un range étroit entre 1.1710 et 1.1725. À l'ouverture de Londres, une bougie casse sous 1.1710, descend jusqu'à 1.1702, les stops sous le range Asia sont déclenchés. Immédiatement après, le prix repart en flèche vers 1.1750 dans une séquence haussière impulsive. La cible n'était pas le breakout baissier, c'était la liquidité.
               </p>
             </div>
 

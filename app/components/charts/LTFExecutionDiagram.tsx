@@ -16,7 +16,7 @@ export function LTFExecutionDiagram({ className = "", locale = "fr" }: LTFExecut
     entryShort:  isEs ? "Entrada SHORT" : isEn ? "SHORT entry" : "Entrée SHORT",
     caption:     isEs ? "Barrido + CHoCH en la zona HTF = disparador de ejecución" : isEn ? "Sweep + CHoCH in the HTF zone = execution trigger" : "Sweep + CHoCH dans la zone de l'UT supérieure = déclencheur d'exécution",
     mobTitle:    isEs ? "Ejecución M5 — barrido + CHoCH" : isEn ? "M5 execution — sweep + CHoCH" : "Exécution M5 — sweep + CHoCH",
-    mob1:        isEs ? "mecha por encima de ~1.1775 (caza de stops)." : isEn ? "wick above ~1.1775 (stop hunt)." : "mèche au-dessus de ~1.1775 (chasse de stops).",
+    mob1:        isEs ? "mecha por encima de ~1.1775 (stop hunt)." : isEn ? "wick above ~1.1775 (stop hunt)." : "mèche au-dessus de ~1.1775 (chasse de stops).",
     mob2:        isEs ? "ruptura del mínimo local M5 = señal de entrada short." : isEn ? "break of M5 local low = short entry signal." : "cassure du creux local M5 = signal d'entrée short.",
     mob3pre:     isEs ? "SL más allá del barrido" : isEn ? "SL beyond the sweep" : "SL au-delà du sweep",
     mob3post:    isEs ? "entrada tras CHoCH." : isEn ? "entry after CHoCH." : "entrée après CHoCH.",

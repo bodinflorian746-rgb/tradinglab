@@ -198,13 +198,13 @@ export default function ContentEs() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Ejemplo concreto</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD: impulso inicial NFP de 4 640 $ hacia 4 575 $. Base alrededor de 4 580-4 585 $. Luego ruptura bullish por encima de 4 620 $, aceleración hasta 4 665 $, más allá del nivel pre-NFP. El reporte completo (salarios sólidos, revisiones positivas) anulaba la interpretación hawkish del headline. El mercado revirtió completamente su sesgo.
+                XAU/USD: impulso inicial NFP de 4 640 $ hacia 4 575 $. Base alrededor de 4 580-4 585 $. Luego breakout bullish por encima de 4 620 $, aceleración hasta 4 665 $, más allá del nivel pre-NFP. El reporte completo (salarios sólidos, revisiones positivas) anulaba la interpretación hawkish del headline. El mercado revirtió completamente su sesgo.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Puntos accionables: la superación del nivel pre-NFP señala un verdadero cambio, no un simple fade</li>
-              <li>- Una ruptura franca por encima (o debajo) del nivel pre-NFP cambia la naturaleza del setup</li>
+              <li>- Un breakout franco por encima (o debajo) del nivel pre-NFP cambia la naturaleza del setup</li>
               <li>- El cambio completo justifica un target más ambicioso que el fade táctico clásico</li>
               <li>- La distinción fade / cambio se confirma en los 30-60 minutos después de la estabilización</li>
             </ul>
@@ -277,7 +277,7 @@ export default function ContentEs() {
             description="En TradingView, identifica un NFP reciente en EUR/USD o XAU/USD y reconstruye a posteriori el setup NFP Overreaction."
             steps={[
               "Identifica el momento exacto de la publicación NFP: anota el precio justo antes, la amplitud del primer impulso y el nivel extremo alcanzado en los 5-10 minutos.",
-              "Observa lo que ocurre en los 15-60 minutos siguientes: estabilización visible? mechas repetidas? ruptura del nivel pre-NFP en el sentido contrario? Anota el punto preciso donde la dinámica se invierte.",
+              "Observa lo que ocurre en los 15-60 minutos siguientes: estabilización visible? mechas repetidas? breakout del nivel pre-NFP en el sentido contrario? Anota el punto preciso donde la dinámica se invierte.",
               "Si hubo estabilización: reconstruye el setup fade (entrada, SL ajustado, target hacia el nivel pre-NFP). Si el retorno supera francamente el pre-NFP: anota el cambio completo. Si nada claro ocurre: anota por qué el setup no debería haberse tomado.",
             ]}
           />

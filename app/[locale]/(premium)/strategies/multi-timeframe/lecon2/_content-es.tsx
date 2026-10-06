@@ -12,7 +12,7 @@ import { HTFFilterDiagram } from "@/app/components/charts/HTFFilterDiagram";
 
 const LESSONS = [
   { id: "lecon1", title: "Por qué hacer un análisis multitemporal", disabled: false },
-  { id: "lecon2", title: "La temporalidad superior: el sesgo", disabled: false },
+  { id: "lecon2", title: "El HTF: el sesgo", disabled: false },
   { id: "lecon3", title: "La temporalidad intermedia: la zona", disabled: false },
   { id: "lecon4", title: "La temporalidad de ejecución: la entrada", disabled: false },
   { id: "lecon5", title: "El proceso completo", disabled: false },
@@ -57,12 +57,12 @@ export default function ContentEs() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            La temporalidad superior: definir la dirección dominante
+            El HTF: definir la dirección dominante
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              La temporalidad superior construye el contexto antes de toda ejecución: identifica la dirección dominante, localiza las zonas importantes y muestra hacia dónde empuja realmente el mercado. No sirve para entrar en posición, sirve para evitar los trades tomados contra la tendencia de fondo.
+              El HTF construye el contexto antes de toda ejecución: identifica la dirección dominante, localiza las zonas importantes y muestra hacia dónde empuja realmente el mercado. No sirve para entrar en posición, sirve para evitar los trades tomados contra la tendencia de fondo.
             </p>
           </div>
 
@@ -138,7 +138,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un setup limpio en M15 puede fracasar por una sola razón: va contra la dirección dominante del HTF. La temporalidad pequeña muestra a menudo un simple retroceso local. La temporalidad superior, en cambio, muestra si el mercado empuja realmente hacia arriba... o hacia abajo.
+              Un setup limpio en M15 puede fracasar por una sola razón: va contra la dirección dominante del HTF. La temporalidad pequeña muestra a menudo un simple retroceso local. El HTF, en cambio, muestra si el mercado empuja realmente hacia arriba... o hacia abajo.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">

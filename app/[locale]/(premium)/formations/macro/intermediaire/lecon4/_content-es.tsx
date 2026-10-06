@@ -244,7 +244,7 @@ export default function ContentEs() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Ves una ruptura. Entras. El precio vuelve al rango.
+              Ves un breakout. Entras. El precio vuelve al rango.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
               No era un breakout real.{" "}
@@ -327,7 +327,7 @@ export default function ContentEs() {
               {[
                 { bold: "Scalping", rest: ": necesita liquidez. Solo Londres y overlap." },
                 { bold: "Day trading", rest: ": overlap Londres-New York ideal. Es donde los movimientos son más limpios." },
-                { bold: "Swing trading", rest: ": puedes usar Londres para identificar las rupturas importantes." },
+                { bold: "Swing trading", rest: ": puedes usar Londres para identificar los breakouts importantes." },
                 { bold: "Trading de noticias", rest: ": a menudo alrededor de las 14:30 o 20:00. Pero solo con preparación." },
               ].map((item, i) => (
                 <p key={i} className="text-zinc-300 leading-relaxed text-sm">
@@ -431,10 +431,10 @@ export default function ContentEs() {
               "El mercado forex está cerrado a las 23:00",
             ]}
             correctIndex={1}
-            explanation="A las 23:00 hora de París, Londres y New York están cerrados. En EUR/USD, la liquidez suele ser más baja, los spreads pueden ampliarse y las rupturas son menos confiables. Es exactamente la trampa de la sesión Asia en los pares europeos/US. La opción A es demasiado radical (tu estrategia puede funcionar muy bien en el overlap Londres-NY). La opción C es falsa (EUR/USD respeta perfectamente las resistencias cuando hay liquidez). La opción D es incorrecta: el forex está abierto, pero no siempre es bien operable. Este mismo principio aplica a XAU/USD, los índices US y BTC/USD, el timing es universal, no solo forex."
+            explanation="A las 23:00 hora de París, Londres y New York están cerrados. En EUR/USD, la liquidez suele ser más baja, los spreads pueden ampliarse y los breakouts son menos confiables. Es exactamente la trampa de la sesión Asia en los pares europeos/US. La opción A es demasiado radical (tu estrategia puede funcionar muy bien en el overlap Londres-NY). La opción C es falsa (EUR/USD respeta perfectamente las resistencias cuando hay liquidez). La opción D es incorrecta: el forex está abierto, pero no siempre es bien operable. Este mismo principio aplica a XAU/USD, los índices US y BTC/USD, el timing es universal, no solo forex."
             answerExplanations={[
               "Falso. Tu estrategia no es el problema aquí. El problema viene del contexto horario, no del análisis técnico. Una estrategia puede funcionar perfectamente en el overlap y fallar de noche.",
-              "Correcto. A las 23:00 hora de París, Londres y New York están cerrados. La liquidez en EUR/USD es baja, los spreads se amplían y las rupturas son menos confiables. Es la trampa clásica de la sesión Asia en los pares europeos.",
+              "Correcto. A las 23:00 hora de París, Londres y New York están cerrados. La liquidez en EUR/USD es baja, los spreads se amplían y los breakouts son menos confiables. Es la trampa clásica de la sesión Asia en los pares europeos.",
               "Falso. EUR/USD respeta muy bien los niveles técnicos, pero solo cuando hay liquidez, es decir principalmente durante las sesiones Londres y New York.",
               "Falso. El forex está técnicamente abierto 24/7. Pero 'abierto' no significa 'operable en buenas condiciones'.",
             ]}

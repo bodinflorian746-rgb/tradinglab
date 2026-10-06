@@ -124,7 +124,7 @@ export default function ContentEs() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Identificación S/R → ver Estrategia SR L1</li>
               <li>- Calificación de un nivel → ver Estrategia SR L2</li>
-              <li>- Concepto de ruptura (cierre claro) → ver Formación Trading L3</li>
+              <li>- Concepto de breakout (cierre claro) → ver Formación Trading L3</li>
             </ul>
           </div>
 
@@ -137,11 +137,11 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Una zona rota no es una zona muerta. Invierte su rol. La secuencia ruptura + retest + rebote constituye el setup flip.
+              Una zona rota no es una zona muerta. Invierte su rol. La secuencia breakout + retest + rebote constituye el setup flip.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Ruptura clara: cierre neto + distancia ≥ 15-20 pips/$ más allá del nivel</li>
+              <li>- Breakout claro: cierre neto + distancia ≥ 15-20 pips/$ más allá del nivel</li>
               <li>- Sin reintegración en las 3-5 velas siguientes (si no, flip invalidado)</li>
               <li>- Retest: vuelta del precio hacia el nivel roto por el lado opuesto</li>
               <li>- Rebote confirmado por una señal de rechazo (pin bar, envolvente, reacción neta)</li>
@@ -173,13 +173,13 @@ export default function ContentEs() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade: flip EUR/USD H4</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              EUR/USD en tendencia alcista desde hace 2 semanas. Resistencia mayor 1.1850 tocada 3 veces en 3 semanas antes de ser rota. 4 velas confirman la ruptura sin reintegración. Pin bar de rechazo en el retest.
+              EUR/USD en tendencia alcista desde hace 2 semanas. Resistencia mayor 1.1850 tocada 3 veces en 3 semanas antes de ser rota. 4 velas confirman el breakout sin reintegración. Pin bar de rechazo en el retest.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade long sobre flip confirmado)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Ruptura: cierre en 1.1878 (28 pips por encima de la zona)</li>
+                <li>- Breakout: cierre en 1.1878 (28 pips por encima de la zona)</li>
                 <li>- Validación: 4 velas sin reintegración bajo 1.1850</li>
                 <li>- Retest: pin bar con mecha baja en 1.1842 y cierre en 1.1858</li>
                 <li>- Entrada long: 1.1858 (cierre de la pin bar)</li>
@@ -216,7 +216,7 @@ export default function ContentEs() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Un flip puede fallar tras una ruptura aparentemente clara. El retorno rápido del precio bajo el nivel invalida el flip.
+              Un flip puede fallar tras un breakout aparentemente claro. El retorno rápido del precio bajo el nivel invalida el flip.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -228,7 +228,7 @@ export default function ContentEs() {
 
           <LessonKeyPoints
             points={[
-              "Un flip exige una ruptura calificada: cierre claro, distancia suficiente, sin retorno inmediato.",
+              "Un flip exige un breakout calificado: cierre claro, distancia suficiente, sin retorno inmediato.",
               "La zona rota invierte su rol en el retest: soporte roto → resistencia, resistencia rota → soporte.",
               "El retest se valida únicamente por una señal de rechazo al contacto (pin bar, envolvente, reacción neta).",
               "El stop loss se coloca al otro lado de la zona con margen 5-10 pips. Sin señal de rechazo, no hay entrada.",
@@ -238,7 +238,7 @@ export default function ContentEs() {
           <LessonExercice
             description="En EUR/USD H4, una resistencia en 1.1850 es rota por una vela que cierra en 1.1875 con un cuerpo significativo. 4 velas después, el precio retrocede hacia 1.1850 e imprime una pin bar con mecha larga que rechaza. ¿Cómo se construye el plan de trade flip?"
             steps={[
-              "Calificar la ruptura: cierre en 1.1875, distancia 25 pips por encima de la zona, cuerpo significativo, sin retorno inmediato en 4 velas, ruptura validada",
+              "Calificar el breakout: cierre en 1.1875, distancia 25 pips por encima de la zona, cuerpo significativo, sin retorno inmediato en 4 velas, breakout validado",
               "Constatar la inversión del rol: la resistencia 1.1850 se convierte en soporte",
               "Identificar la señal de rechazo: la pin bar al contacto con la zona valida el flip",
               "Colocar la entrada long en el cierre de la pin bar, stop loss en 1.1830 (20 pips bajo la zona para absorber las mechas)",
@@ -251,7 +251,7 @@ export default function ContentEs() {
             options={[
               "El simple retorno del precio a la zona basta",
               "Una señal de rechazo (pin bar, envolvente, reacción neta) al contacto con la zona",
-              "Una ruptura de la siguiente zona",
+              "Un breakout de la siguiente zona",
               "Ninguna señal necesaria, la entrada es mecánica",
             ]}
             correctIndex={1}

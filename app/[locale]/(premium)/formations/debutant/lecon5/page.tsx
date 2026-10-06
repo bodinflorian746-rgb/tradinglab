@@ -169,9 +169,9 @@ function ContentFr() {
           content: "Un bon SL ne se place pas au hasard. Il se place à un endroit logique sur le graphique, là où ton analyse serait clairement fausse si le prix l'atteignait.",
           visual: <StopLossChartDiagram />,
           items: [
-            "Long : SL juste en dessous du dernier point bas significatif (le support)",
-            "Short : SL juste au-dessus du dernier point haut significatif (la résistance)",
-            "Exemple : tu achètes au rebond d'un support à 78 000 $. Le dernier point bas est à 77 200 $. Ton SL va à 77 000 $.",
+            "Long : SL juste en dessous du dernier swing low significatif (le support)",
+            "Short : SL juste au-dessus du dernier swing high significatif (la résistance)",
+            "Exemple : tu achètes au rebond d'un support à 78 000 $. Le dernier swing low est à 77 200 $. Ton SL va à 77 000 $.",
             "Règle : si le prix atteint mon SL, mon analyse était fausse. La perte est normale.",
           ],
         },
@@ -193,12 +193,12 @@ function ContentFr() {
       exerciseTitle="Identifier des placements de Stop Loss logiques"
       exercise={[
         "Sur TradingView, ouvre Bitcoin (BTC/USD) en H1",
-        "Repère le dernier mouvement haussier. Identifie le dernier point bas avant cette hausse.",
-        "Si tu achetais au prix actuel, ton SL irait juste en dessous de ce point bas. Note le prix exact.",
+        "Repère le dernier mouvement haussier. Identifie le dernier swing low avant cette hausse.",
+        "Si tu achetais au prix actuel, ton SL irait juste en dessous de ce swing low. Note le prix exact.",
         "Calcule la différence en euros entre ce SL et le prix actuel. C'est le risque maximum de ce trade.",
       ]}
       quiz={{
-        question: "Une position acheteuse sur BTC/USD est ouverte à 78 000 $. Le dernier point bas significatif se situe à 77 000 $. Quel placement de Stop Loss respecte le mieux la logique technique ?",
+        question: "Une position acheteuse sur BTC/USD est ouverte à 78 000 $. Le dernier swing low significatif se situe à 77 000 $. Quel placement de Stop Loss respecte le mieux la logique technique ?",
         answers: [
           "77 900 $",
           "77 500 $",
@@ -206,11 +206,11 @@ function ContentFr() {
           "78 200 $",
         ],
         correctIndex: 2,
-        explanation: "Le Stop Loss doit être placé au-delà du niveau technique qui invalide le scénario. Le dernier point bas important se situe à 77 000 $. Un Stop Loss à 76 900 $ laisse une petite marge sous ce niveau tout en gardant un risque cohérent. La variation entre l'entrée (78 000 $) et le SL (76 900 $) représente une variation de prix de 1 100 $. La perte réellement subie en argent dépend ensuite de la taille de la position utilisée.",
+        explanation: "Le Stop Loss doit être placé au-delà du niveau technique qui invalide le scénario. Le dernier swing low important se situe à 77 000 $. Un Stop Loss à 76 900 $ laisse une petite marge sous ce niveau tout en gardant un risque cohérent. La variation entre l'entrée (78 000 $) et le SL (76 900 $) représente une variation de prix de 1 100 $. La perte réellement subie en argent dépend ensuite de la taille de la position utilisée.",
         answerExplanations: [
           "Incorrect. Le Stop Loss est placé trop proche de l'entrée. Une fluctuation normale de Bitcoin peut facilement toucher ce niveau sans invalider le scénario.",
-          "Incorrect. Le Stop Loss reste au-dessus du dernier point bas significatif. Le marché pourrait balayer ce niveau avant de repartir.",
-          "Correct. Le Stop Loss se situe juste sous le dernier point bas important à 77 000 $. Le niveau invalide réellement le scénario si le prix est cassé.",
+          "Incorrect. Le Stop Loss reste au-dessus du dernier swing low significatif. Le marché pourrait balayer ce niveau avant de repartir.",
+          "Correct. Le Stop Loss se situe juste sous le dernier swing low important à 77 000 $. Le niveau invalide réellement le scénario si le prix est cassé.",
           "Incorrect. Le Stop Loss est placé au-dessus du prix d'entrée. Le trade serait clôturé immédiatement ou presque.",
         ],
       }}

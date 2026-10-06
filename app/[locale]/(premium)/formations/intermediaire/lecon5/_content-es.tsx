@@ -14,7 +14,7 @@ export default function ContentEs() {
       duration="20 min"
       lessonNumber={5}
       prev={{ href: "/formations/intermediaire/lecon4", label: "Lección 4: Tendencias" }}
-      next={{ href: "/formations/intermediaire/lecon6", label: "Lección 6: Fake Breakout" }}
+      next={{ href: "/formations/intermediaire/lecon6", label: "Lección 6: Fakeout" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

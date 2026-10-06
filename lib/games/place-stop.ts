@@ -370,7 +370,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     context: "Tu identifies 2 swing lows récents séparés de quelques pips. Le second est plus bas. Lequel respecter pour le SL ?",
     shortContext: "2 swing lows proches",
     lessons: {
-      beginner:     "Quand 2 swing lows sont proches, un SL qui respecte le PLUS BAS est une option logique : le 1er est souvent balayé avant la vraie cassure.",
+      beginner:     "Quand 2 swing lows sont proches, un SL qui respecte le PLUS BAS est une option logique : le 1er est souvent balayé avant le vrai breakout.",
       intermediate: "Quand 2 swing lows sont proches, la structure n'est vraiment invalidée que si le PLUS BAS casse. Un SL sous le premier risque d'être touché sur une fluctuation normale.",
       advanced:     "Dans une séquence de lows, tant que le plus bas tient, la structure haussière reste intacte. Un SL sous le 1er swing ignore ici cette mécanique.",
     },
@@ -402,9 +402,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     context: "Range serré : amplitude faible, prix coincé entre support et résistance proches. Tu veux entrer BUY au support. Le R/R sera mauvais avec un SL standard.",
     shortContext: "Range serré",
     lessons: {
-      beginner:     "Dans un range serré, attendre une cassure ou réduire ta taille de position sont deux options logiques. Avec un SL standard, le R/R devient faible.",
+      beginner:     "Dans un range serré, attendre un breakout ou réduire ta taille de position sont deux options logiques. Avec un SL standard, le R/R devient faible.",
       intermediate: "Dans un range serré, un SL standard dégrade le R/R, et un SL trop court risque d'être touché. Une option logique : attendre une expansion, ou réduire la taille de lot.",
-      advanced:     "Dans un range étroit, l'arbitrage entre SL et R/R demande un compromis sur la taille. Attendre une expansion, ou accepter un R/R sous 1:2 compensé par le taux de réussite : à toi de trancher.",
+      advanced:     "Dans un range étroit, l'arbitrage entre SL et R/R demande un compromis sur la taille. Attendre une expansion, ou accepter un R/R sous 1:2 compensé par le winrate : à toi de trancher.",
     },
     difficulties: ["intermediate", "advanced"],
     tag: "structure",
@@ -444,16 +444,16 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
   },
   {
     id: "news_imminent_wide",
-    title: "Annonce dans 5 min — SL standard cramé",
+    title: "News dans 5 min — SL standard cramé",
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "dangereux",
     context: "NFP dans 5 minutes. Tu tiens absolument à entrer maintenant sur ce setup BUY. Le marché peut bouger 2 à 3 fois plus que d'habitude. Un SL standard a de fortes chances d'être touché.",
     shortContext: "NFP imminente",
     lessons: {
-      beginner:     "Avant une annonce majeure, l'amplitude des bougies peut doubler ou tripler. Adapter ton SL, ou ne pas prendre le trade, sont deux options logiques.",
-      intermediate: "Une bougie d'annonce trois fois plus ample risque de balayer ton SL « standard » avant que tu aies le temps de réagir. Ici, une marge large est fortement recommandée.",
-      advanced:     "Avant une annonce majeure, l'amplitude des bougies peut doubler ou tripler. Ne pas trader, ou adapter ton SL en conséquence, sont deux options logiques ; un SL standard risque d'être emporté par le mouvement.",
+      beginner:     "Avant une news majeure, l'amplitude des bougies peut doubler ou tripler. Adapter ton SL, ou ne pas prendre le trade, sont deux options logiques.",
+      intermediate: "Une bougie de news trois fois plus ample risque de balayer ton SL « standard » avant que tu aies le temps de réagir. Ici, une marge large est fortement recommandée.",
+      advanced:     "Avant une news majeure, l'amplitude des bougies peut doubler ou tripler. Ne pas trader, ou adapter ton SL en conséquence, sont deux options logiques ; un SL standard risque d'être emporté par le mouvement.",
     },
     difficulties: ["advanced"],
     tag: "macro",
@@ -541,7 +541,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
   // ─── V2.3 : 5 miroirs SELL pour rééquilibrer la distribution spatiale ────────
   {
     id: "news_imminent_wide_sell",
-    title: "Annonce dans 5 min — SELL et SL standard cramé",
+    title: "News dans 5 min — SELL et SL standard cramé",
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "dangereux",
@@ -846,9 +846,9 @@ const EXTREME_VOL_TIGHT_FR   = "✗ Ici, le stop est dans le bruit immédiat. La
 const EXTREME_VOL_LTT_FR     = "✗ Stop « standard » calibré pour une volatilité normale. Avec une volatilité du jour triplée (ATR, l'amplitude moyenne d'une journée), ce niveau se trouve ici dans le bruit, et risque d'être balayé avant que le setup ait le temps de jouer.";
 const EXTREME_VOL_WIDE_FR    = "✓ Marge calibrée sur la volatilité RÉELLE du jour (3 fois la normale). Ici, c'est le seul stop qui absorbe l'expansion sans casser le setup.";
 
-const NEWS_IMM_TIGHT_FR      = "✗ Ici, le stop est dans le bruit immédiat. La bougie d'impact de l'annonce risque de le balayer en quelques secondes.";
-const NEWS_IMM_LTT_FR        = "✗ Stop « normal », peu adapté à l'amplitude d'une annonce. Une bougie d'impact (2 à 3 fois plus ample) risque ici de te sortir avant le vrai mouvement directionnel.";
-const NEWS_IMM_WIDE_FR       = "✓ Marge assez large pour absorber l'amplitude de l'annonce. Ici, c'est ce SL, ou pas de trade pendant la fenêtre d'annonces.";
+const NEWS_IMM_TIGHT_FR      = "✗ Ici, le stop est dans le bruit immédiat. La bougie d'impact de la news risque de le balayer en quelques secondes.";
+const NEWS_IMM_LTT_FR        = "✗ Stop « normal », peu adapté à l'amplitude d'une news. Une bougie d'impact (2 à 3 fois plus ample) risque ici de te sortir avant le vrai mouvement directionnel.";
+const NEWS_IMM_WIDE_FR       = "✓ Marge assez large pour absorber l'amplitude de la news. Ici, c'est ce SL, ou pas de trade pendant la fenêtre de news.";
 
 const LIQ_HUNT_TIGHT_FR      = "✗ Ici, le stop est dans le bruit immédiat. Le 1er retest risque de le balayer avant même la chasse principale.";
 const LIQ_HUNT_LTT_FR        = "✗ Ici, le stop est sous un swing low évident, une zone de chasse aux stops fréquente. Le sweep prend très souvent ce niveau avant le vrai retournement.";

@@ -134,7 +134,7 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-2">
-              Exemple concret : Nasdaq +140 points sur une annonce soft CPI en risk-on, suivi de +220 points en extension.
+              Exemple concret : Nasdaq +140 points sur une news soft CPI en risk-on, suivi de +220 points en extension.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               Même pattern en risk-off : +120 points spike puis -260 points en retour sous le niveau.

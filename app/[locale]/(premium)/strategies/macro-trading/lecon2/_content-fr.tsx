@@ -198,13 +198,13 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : impulsion initiale NFP de 4 640 $ vers 4 575 $. Base autour de 4 580-4 585 $. Puis cassure bullish au-dessus de 4 620 $, accélération jusqu'à 4 665 $, au-delà du niveau pré-NFP. Le rapport complet (salaires solides, révisions positives) annulait l'interprétation hawkish du headline. Le marché a complètement renversé son biais.
+                XAU/USD : impulsion initiale NFP de 4 640 $ vers 4 575 $. Base autour de 4 580-4 585 $. Puis breakout bullish au-dessus de 4 620 $, accélération jusqu'à 4 665 $, au-delà du niveau pré-NFP. Le rapport complet (salaires solides, révisions positives) annulait l'interprétation hawkish du headline. Le marché a complètement renversé son biais.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Points actionnables : le dépassement du niveau pré-NFP signale un vrai retournement, pas un simple fade</li>
-              <li>- Une cassure franche au-dessus (ou sous) du niveau pré-NFP change la nature du setup</li>
+              <li>- Un breakout franc au-dessus (ou sous) du niveau pré-NFP change la nature du setup</li>
               <li>- Le retournement complet justifie un target plus ambitieux que le fade tactique classique</li>
               <li>- La distinction fade / retournement se confirme dans les 30-60 minutes après stabilisation</li>
             </ul>
@@ -277,7 +277,7 @@ export default function ContentFr() {
             description="Sur TradingView, identifie un NFP récent sur EUR/USD ou XAU/USD et reconstruis a posteriori le setup NFP Overreaction."
             steps={[
               "Repère le moment exact de la publication NFP : note le prix juste avant, l'amplitude de la première impulsion, et le niveau extrême atteint dans les 5-10 minutes.",
-              "Observe ce qui se passe dans les 15-60 minutes suivantes : stabilisation visible ? mèches répétées ? cassure du niveau pré-NFP dans le sens contraire ? Note le point précis où la dynamique s'inverse.",
+              "Observe ce qui se passe dans les 15-60 minutes suivantes : stabilisation visible ? mèches répétées ? breakout du niveau pré-NFP dans le sens contraire ? Note le point précis où la dynamique s'inverse.",
               "Si la stabilisation s'est produite : reconstruis le setup fade (entrée, SL serré, target vers le niveau pré-NFP). Si le retour dépasse franchement le pré-NFP : note le retournement complet. Si rien de net ne se produit : note pourquoi le setup n'aurait pas dû être pris.",
             ]}
           />

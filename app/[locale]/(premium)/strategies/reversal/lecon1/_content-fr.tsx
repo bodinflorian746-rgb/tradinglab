@@ -125,7 +125,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Structure de marché HH/HL/LL/LH → cf. Formation Trading L3</li>
               <li>- Support / Résistance → cf. Stratégie SR L1</li>
-              <li>- Bougie de cassure, clôture vs mèche → cf. Formation Trading L2</li>
+              <li>- Bougie de breakout, clôture vs mèche → cf. Formation Trading L2</li>
             </ul>
           </div>
 
@@ -149,7 +149,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Une tendance haussière préalable claire (HH/HL)</li>
               <li>- Deux sommets quasi égaux (écart toléré : 0,2% maximum)</li>
-              <li>- Une cassure confirmée de la ligne de cou (clôture, pas une simple mèche)</li>
+              <li>- Un breakout confirmé de la ligne de cou (clôture, pas une simple mèche)</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur EUR/USD. Le marché est haussier depuis plusieurs jours. Il touche une résistance à 1.1880 et redescend vers 1.1800. Il remonte tester 1.1895, quasi égal au premier sommet, puis échoue. Il redescend et clôture une bougie sous 1.1800. Double top confirmé.</p>
@@ -166,8 +166,8 @@ export default function ContentFr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Tendance préalable claire.</span> <span className="text-zinc-300">Pas de range avant les sommets/creux. La structure HH/HL ou LH/LL doit être nette.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Écart ≤ 0,3%.</span> <span className="text-zinc-300">Sur EUR/USD : 30 pips maximum entre les 2 sommets/creux. Au-delà : pattern non valide.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Cassure par clôture.</span> <span className="text-zinc-300">Clôture franche de bougie sous (ou au-dessus) de la ligne de cou. Mèche seule = test, pas confirmation.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Absence d&apos;annonce majeure.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le pattern peut être cassé dans n&apos;importe quel sens.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Breakout par clôture.</span> <span className="text-zinc-300">Clôture franche de bougie sous (ou au-dessus) de la ligne de cou. Mèche seule = test, pas confirmation.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Absence de news majeure.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le pattern peut être cassé dans n&apos;importe quel sens.</span></div>
             </div>
           </section>
 
@@ -180,7 +180,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Une tendance baissière préalable claire (LH/LL)</li>
               <li>- Deux creux quasi égaux</li>
-              <li>- Une cassure confirmée de la ligne de cou (clôture au-dessus)</li>
+              <li>- Un breakout confirmé de la ligne de cou (clôture au-dessus)</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur XAU/USD. Le marché est baissier depuis 2 jours. Il touche un support à 4 480$ et remonte vers 4 520$. Il redescend tester 4 478$ et rejette. Il remonte et clôture une bougie au-dessus de 4 520$. Double bottom confirmé.</p>
@@ -192,10 +192,10 @@ export default function ContentFr() {
             <div className="my-8">
               <DTBMeasuredMoveProjectionDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le take profit d&apos;un double top/bottom suit le principe du measured move : la hauteur du pattern (du sommet à la ligne de cou) se projette depuis la ligne de cou dans le sens de la cassure.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le take profit d&apos;un double top/bottom suit le principe du measured move : la hauteur du pattern (du sommet à la ligne de cou) se projette depuis la ligne de cou dans le sens du breakout.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Hauteur pattern = distance sommet (ou creux) → ligne de cou.</li>
-              <li>- TP théorique = ligne de cou ± hauteur du pattern, selon le sens de la cassure.</li>
+              <li>- TP théorique = ligne de cou ± hauteur du pattern, selon le sens du breakout.</li>
               <li>- TP ajusté de quelques pips pour obtenir un R/R rond (2:1 ou 3:1).</li>
             </ul>
           </section>
@@ -244,8 +244,8 @@ export default function ContentFr() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Pas de tendance préalable claire.</span> <span className="text-zinc-300">Si le marché était en range avant les 2 sommets/creux, ce n&apos;est pas un retournement. Setup à ignorer.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Écart trop grand entre sommets/creux.</span> <span className="text-zinc-300">Au-delà de 0,3% (30 pips sur EUR/USD), la mécanique n&apos;est plus celle du double top. Pattern non valide.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Cassure sur mèche, sans clôture.</span> <span className="text-zinc-300">Une mèche qui pique sous la ligne de cou puis revient au-dessus ne confirme rien. Attendre la clôture franche.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. Annonce majeure dans la fenêtre.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le setup n&apos;est pas pris. L&apos;annonce peut casser le pattern dans n&apos;importe quel sens.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Breakout sur mèche, sans clôture.</span> <span className="text-zinc-300">Une mèche qui pique sous la ligne de cou puis revient au-dessus ne confirme rien. Attendre la clôture franche.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. News majeure dans la fenêtre.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le setup n&apos;est pas pris. La news peut casser le pattern dans n&apos;importe quel sens.</span></div>
             </div>
           </section>
 
@@ -253,8 +253,8 @@ export default function ContentFr() {
             points={[
               "Double top = 2 sommets quasi égaux sur une résistance après tendance haussière. Double bottom = miroir sur un support.",
               "Confirmation = clôture (pas mèche) de l’autre côté de la ligne de cou.",
-              "Entrée juste après la cassure. SL au-delà du dernier sommet/creux. TP = measured move (hauteur du pattern projetée).",
-              "Setup ignoré si la tendance préalable n’est pas claire, si l’écart dépasse 0,3%, ou si une annonce majeure arrive.",
+              "Entrée juste après le breakout. SL au-delà du dernier sommet/creux. TP = measured move (hauteur du pattern projetée).",
+              "Setup ignoré si la tendance préalable n’est pas claire, si l’écart dépasse 0,3%, ou si une news majeure arrive.",
             ]}
           />
 
@@ -262,9 +262,9 @@ export default function ContentFr() {
             description="Sur EUR/USD H1, tu vois un double top avec un premier sommet à 1.1850 et un deuxième à 1.1825. Écart : 25 pips, soit environ 0,23%. La ligne de cou est à 1.1750. Le prix clôture à 1.1745. Tu prends le setup ?"
             steps={[
               "Vérifier que l’écart entre les 2 sommets reste sous la limite : 0,23% < 0,3%. OK",
-              "Confirmer que la cassure est par clôture sous 1.1750, pas une simple mèche. OK",
+              "Confirmer que le breakout est par clôture sous 1.1750, pas une simple mèche. OK",
               "Vérifier que la tendance haussière préalable est claire (HH/HL)",
-              "Vérifier qu’aucune annonce majeure n’est prévue dans les 30 prochaines minutes",
+              "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
               "Prendre l’entrée short à 1.1745, SL au-dessus du 2ème sommet, TP measured move",
             ]}
           />

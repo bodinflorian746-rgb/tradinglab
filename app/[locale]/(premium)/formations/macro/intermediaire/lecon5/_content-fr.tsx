@@ -238,7 +238,7 @@ export default function ContentFr() {
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               Résultat :{" "}
-              <span className="font-semibold text-zinc-200">-6% du compte sur une seule annonce</span>. Tu as bien géré ton risque par trade. Mais tu n&apos;as pas vu que tes 3 trades étaient{" "}
+              <span className="font-semibold text-zinc-200">-6% du compte sur une seule news</span>. Tu as bien géré ton risque par trade. Mais tu n&apos;as pas vu que tes 3 trades étaient{" "}
               <span className="font-semibold text-zinc-200">le même trade</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
@@ -352,7 +352,7 @@ export default function ContentFr() {
               {[
                 { bold: "BTC/USD monte alors que le Nasdaq baisse", rest: " → possible achat spécifique sur crypto ou flux institutionnel" },
                 { bold: "XAU/USD monte alors que le DXY monte", rest: " → possible stress géopolitique ou recherche de refuge extrême" },
-                { bold: "EUR/USD baisse mais GBP/USD tient", rest: " → possible annonce spécifique à l'euro ou à la livre" },
+                { bold: "EUR/USD baisse mais GBP/USD tient", rest: " → possible news spécifique à l'euro ou à la livre" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
