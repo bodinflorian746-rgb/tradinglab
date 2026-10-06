@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { ACTIVE_LOCALES } from "../i18n/config";
 
 async function setupNoOverlay(page: Page) {
   await page.addInitScript(() => {
@@ -6,8 +7,9 @@ async function setupNoOverlay(page: Page) {
   });
 }
 
-test.describe("Homepage — polish visuel (FR + ES, desktop + mobile)", () => {
-  for (const url of ["/fr", "/es"]) {
+// Langues actives seulement (i18n/config.ts, ACTIVE_LOCALES)
+test.describe("Homepage — polish visuel (langues actives, desktop + mobile)", () => {
+  for (const url of ACTIVE_LOCALES.map((l) => `/${l}`)) {
     test(`Desktop ${url} — no overflow, no console errors, hero visible`, async ({ page }) => {
       const errors: string[] = [];
       page.on("pageerror", (e) => errors.push(String(e)));
@@ -53,8 +55,9 @@ test.describe("Homepage — polish visuel (FR + ES, desktop + mobile)", () => {
       );
       expect(overflow).toBeLessThanOrEqual(4);
 
-      // Navbar + sélecteur de langue (compact) toujours présent
-      await expect(page.getByTestId("nav-lang-trigger")).toBeVisible();
+      // Sélecteur de langue (compact) : présent seulement s'il y a plusieurs langues actives
+      if (ACTIVE_LOCALES.length > 1) await expect(page.getByTestId("nav-lang-trigger")).toBeVisible();
+      else await expect(page.getByTestId("nav-lang-trigger")).toHaveCount(0);
       // H1 du hero
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 

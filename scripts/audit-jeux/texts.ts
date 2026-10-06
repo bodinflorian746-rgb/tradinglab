@@ -16,6 +16,7 @@ import * as PSES from "../../lib/games/place-stop-es";
 import * as BT from "../../lib/games/build-the-trade";
 import * as BTEN from "../../lib/games/build-the-trade-en";
 import * as BTES from "../../lib/games/build-the-trade-es";
+import { auditee } from "./langues";
 
 type Lang = "fr" | "en" | "es";
 // Champs internes (identifiants, énumérations en français côté code) : non affichés tels quels
@@ -46,17 +47,17 @@ const MODULES = [
   ["Place ton Stop", { fr: PS, en: PSEN, es: PSES }, ["PLACE_STOP_TEMPLATES", "STOP_TYPE_META", "DIFFICULTY_META"]],
   ["Build the Trade", { fr: BT, en: BTEN, es: BTES }, ["BUILD_TRADE_TEMPLATES", "ENTRY_LABELS", "STOP_LABELS", "TP_LABELS", "DIFFICULTY_META"]],
 ] as const;
-for (const [game, mods, names] of MODULES) for (const lang of ["fr", "en", "es"] as const) {
+for (const [game, mods, names] of MODULES) for (const lang of (["fr", "en", "es"] as const).filter(auditee)) {
   const mod = mods[lang] as unknown as Record<string, unknown>;
   for (const n of names) collect(lang, `${game} ${n}`, mod[n]);
 }
 // Justifications des stops (portées par les graphiques) et verdicts de Build the Trade
-for (const [lang, G] of [["fr", PS], ["en", PSEN], ["es", PSES]] as const) {
+for (const [lang, G] of ([["fr", PS], ["en", PSEN], ["es", PSES]] as const).filter(([l]) => auditee(l))) {
   for (const d of ["beginner", "intermediate", "advanced"] as const) for (let s = 1; s <= 40; s++) for (const inst of G.generatePlaceStopScenarios(s * 7919, d)) {
     for (const st of G.buildPlaceStopChart(inst.id, inst.seed, inst.volatility, d).stops) texts.push({ lang, where: `Place ton Stop ${inst.id}`, key: "rationale", text: st.rationale });
   }
 }
-for (const [lang, G] of [["fr", BT], ["en", BTEN], ["es", BTES]] as const) {
+for (const [lang, G] of ([["fr", BT], ["en", BTEN], ["es", BTES]] as const).filter(([l]) => auditee(l))) {
   for (const outcome of ["tp_hit", "sl_hit", "open", "no_fill"] as const) for (const q of [0, 1, 2, 3]) {
     const v = G.setupVerdict({ outcome, qualityMatch: q } as Parameters<typeof G.setupVerdict>[0]);
     texts.push({ lang, where: "Build the Trade setupVerdict", key: "label", text: v.label });
@@ -71,7 +72,7 @@ for (const [game, mods, names] of MODULES) {
   const list = (lang: Lang) => ((mods[lang] as unknown as Record<string, unknown>)[names[0]] as Record<string, unknown>[]);
   const sig = (t: Record<string, unknown>) => JSON.stringify(PARITY_KEYS.map((k) => t[k] ?? null));
   const fr = new Map(list("fr").map((t) => [t.id as string, sig(t)]));
-  for (const lang of ["en", "es"] as const) {
+  for (const lang of (["en", "es"] as const).filter(auditee)) {
     const other = new Map(list(lang).map((t) => [t.id as string, sig(t)]));
     for (const id of new Set([...fr.keys(), ...other.keys()])) {
       if (fr.get(id) !== other.get(id)) { errors++; lines.push(`  ERREUR parité ${game} ${lang.toUpperCase()} « ${id} » : FR ${fr.get(id) ?? "absent"} / ${lang.toUpperCase()} ${other.get(id) ?? "absent"}`); }

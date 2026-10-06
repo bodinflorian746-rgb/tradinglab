@@ -30,6 +30,7 @@ import { LESSON_PREVIEW_CANDLES } from "../../app/[locale]/_home/lesson-preview-
 import { assetDecimals } from "../../lib/games/price-scale";
 import type { Asset, Candle, ChartZone } from "../../lib/games/shared";
 import { candleBody } from "../../app/components/games/candle-geometry";
+import { auditee } from "./langues";
 
 const ROUNDS = 500;
 const VOLS = ["faible", "normale", "élevée"] as const;
@@ -111,7 +112,7 @@ for (const [lang, B, F, P, T] of [["fr", BS, FTM, PS, BT], ["es", BSES, FTMES, P
 record("Aperçu de leçon|order-block|—|—", LESSON_PREVIEW_CANDLES, "EUR/USD", "schéma", [], [230, 330]);
 
 // Aperçus du hub et jeu du héros de la home (passé puis futur révélé)
-for (const lang of ["fr", "es"] as const) {
+for (const lang of (["fr", "es"] as const).filter(auditee)) {
   for (const [id, p] of Object.entries(buildGamePreviews(lang))) record(`Aperçus du hub|${id}|—|${lang}`, p.data.candles, "EUR/USD", "aperçu", p.data.zones, [164, 180]);
   for (const r of buildHeroRounds(lang)) record(`Héros de la home|${r.key}|—|${lang}`, [...r.past, ...r.future], "EUR/USD", "héros", r.zones, [164, 327, 440]);
 }

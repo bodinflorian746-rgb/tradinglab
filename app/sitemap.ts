@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { LOCALES, type Locale } from "@/i18n/config";
+import { ACTIVE_LOCALES, type Locale } from "@/i18n/config";
 import { SITE_URL } from "@/i18n/site";
 import { FORMATIONS } from "@/lib/formations";
 import { STRATEGY_MODULES } from "@/lib/strategies";
@@ -62,13 +62,14 @@ function localePaths(): string[] {
   return paths;
 }
 
-function altLanguages(path: string): Record<Locale, string> {
-  return LOCALES.reduce(
+// Langues actives seulement (les autres redirigent vers le FR, cf. proxy.ts)
+function altLanguages(path: string): Partial<Record<Locale, string>> {
+  return ACTIVE_LOCALES.reduce(
     (acc, l) => {
       acc[l] = `${SITE_URL}/${l}${path}`;
       return acc;
     },
-    {} as Record<Locale, string>,
+    {} as Partial<Record<Locale, string>>,
   );
 }
 
@@ -77,7 +78,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
 
   for (const path of paths) {
-    for (const locale of LOCALES) {
+    for (const locale of ACTIVE_LOCALES) {
       entries.push({
         url: `${SITE_URL}/${locale}${path}`,
         lastModified: new Date(),

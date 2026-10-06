@@ -24,6 +24,7 @@ import * as PS from "../../lib/games/place-stop";
 import * as PSES from "../../lib/games/place-stop-es";
 import * as BT from "../../lib/games/build-the-trade";
 import * as BTES from "../../lib/games/build-the-trade-es";
+import { auditee } from "./langues";
 
 type Lang = "fr" | "es";
 const VOLS = ["faible", "normale", "élevée"] as const;
@@ -48,7 +49,7 @@ for (const [lang, B, F, P, T] of [["fr", BS, FTM, PS, BT], ["es", BSES, FTMES, P
     for (const t of T.BUILD_TRADE_TEMPLATES) addZones(lang, `Build the Trade ${t.id}`, T.buildBuildTradeChart(t, seed, vol, auditCtx(seed)).zones);
   }
 }
-for (const lang of ["fr", "es"] as const) {
+for (const lang of (["fr", "es"] as const).filter(auditee)) {
   const allowed = new Set(ZONE_LABELS[lang]);
   for (const [label, where] of zoneLabels[lang]) if (!allowed.has(label)) fail(`zone hors glossaire ${lang.toUpperCase()} « ${label} » (${where})`);
 }
@@ -68,7 +69,7 @@ const MODULES = [
   ["Place ton Stop", { fr: PS, es: PSES }, ["PLACE_STOP_TEMPLATES", "STOP_TYPE_META", "DIFFICULTY_META"]],
   ["Build the Trade", { fr: BT, es: BTES }, ["BUILD_TRADE_TEMPLATES", "ENTRY_LABELS", "STOP_LABELS", "TP_LABELS", "DIFFICULTY_META"]],
 ] as const;
-for (const [game, mods, names] of MODULES) for (const lang of ["fr", "es"] as const) {
+for (const [game, mods, names] of MODULES) for (const lang of (["fr", "es"] as const).filter(auditee)) {
   const mod = mods[lang] as unknown as Record<string, unknown>;
   for (const n of names) collect(lang, `${game} ${n}`, mod[n]);
 }
@@ -98,7 +99,7 @@ const ROUND_TEXTS = [
   ["Trouve l'erreur", { fr: FTM.MISTAKE_TEMPLATES, es: FTMES.MISTAKE_TEMPLATES }, ["context", "explanation", "extraInfo"]],
   ["Build the Trade", { fr: BT.BUILD_TRADE_TEMPLATES, es: BTES.BUILD_TRADE_TEMPLATES }, ["context", "optimalExplain"]],
 ] as const;
-for (const [game, lists, keys] of ROUND_TEXTS) for (const lang of ["fr", "es"] as const) {
+for (const [game, lists, keys] of ROUND_TEXTS) for (const lang of (["fr", "es"] as const).filter(auditee)) {
   for (const t of lists[lang] as unknown as Record<string, unknown>[]) for (const d of DIFFS) {
     const shown = [...keys.flatMap((k) => strings(t[k])), ...strings((t.lessons as Record<string, unknown> | undefined)?.[d])].join("\n");
     for (const g of GLOSSARY) if (g.inlineDef) {
@@ -109,7 +110,7 @@ for (const [game, lists, keys] of ROUND_TEXTS) for (const lang of ["fr", "es"] a
 }
 
 // 4. Glossaire complet
-for (const g of GLOSSARY) for (const lang of ["fr", "es"] as const) {
+for (const g of GLOSSARY) for (const lang of (["fr", "es"] as const).filter(auditee)) {
   if (!g.term[lang] || !g.def[lang] || g.def[lang].length < 15) fail(`glossaire « ${g.id} » : explication ${lang.toUpperCase()} manquante`);
   if (!g.short?.[lang] || g.short[lang].length < 6) fail(`glossaire « ${g.id} » : explication courte ${lang.toUpperCase()} manquante`);
 }
@@ -145,7 +146,7 @@ const corpus: Record<Lang, string> = {
 const outside: string[] = [];
 for (const g of GLOSSARY) {
   if (g.outsideLessons) { outside.push(g.term.fr); continue; }
-  for (const lang of ["fr", "es"] as const) if (!g.match[lang].test(corpus[lang])) fail(`glossaire « ${g.id} » : terme absent des leçons ${lang.toUpperCase()} (marquer « hors leçons » ou remplacer)`);
+  for (const lang of (["fr", "es"] as const).filter(auditee)) if (!g.match[lang].test(corpus[lang])) fail(`glossaire « ${g.id} » : terme absent des leçons ${lang.toUpperCase()} (marquer « hors leçons » ou remplacer)`);
 }
 lines.push(`Hors leçons (signalés) : ${outside.join(", ")}`);
 lines.push(`Jargon détecté : FR ${jargonSeen.fr.size}, ES ${jargonSeen.es.size} termes distincts`);

@@ -18,12 +18,14 @@
 //  - lignes au verdict (entrée, TP, stops, erreur marquée) : chacune a un rendu
 //    non nul (le graphique change quand on la masque).
 import { chromium } from "playwright";
+import { languesAuditees } from "./langues-node.mjs";
 
 const arg = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) ?? `--${k}=${d}`).split("=")[1];
 const BASE = arg("base", "http://localhost:3000");
 const STORAGE_STATE = process.env.AUDIT_STORAGE_STATE || undefined;
 const GAMES = arg("jeux", "buy-sell-no-trade,find-the-mistake,place-stop,build-the-trade").split(",");
-const LANGS = arg("langues", "fr,en,es").split(",");
+// Par défaut : langues actives du site (i18n/config.ts, ACTIVE_LOCALES)
+const LANGS = arg("langues", languesAuditees().join(",")).split(",");
 const FORMATS = arg("formats", "390,1440").split(",");
 const VALIDATE = { fr: "Valider le trade", en: "Validate the trade", es: "Validar el trade" };
 const STATE_CLASS = { good: "emerald", partial: "amber", bad: "red" };

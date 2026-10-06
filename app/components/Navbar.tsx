@@ -22,7 +22,7 @@ import { useSession } from "@/app/components/SessionProvider";
 import { localizedHref } from "@/lib/i18n/href";
 import Logo from "@/app/components/Logo";
 import { signOut } from "@/app/[locale]/auth/actions";
-import { LangMenu } from "@/app/components/nav/LangMenu";
+import { LangMenu, HAS_LANG_CHOICE } from "@/app/components/nav/LangMenu";
 import { AccountMenu, AccountLinks } from "@/app/components/nav/AccountMenu";
 
 // Journal IA volontairement absent : retiré de production (hotfix), bloqué
@@ -189,9 +189,11 @@ export default function Navbar() {
               </>
             )}
 
-            <div className="pt-1 pb-3 flex justify-center">
-              <LangMenu onNavigate={() => setIsOpen(false)} />
-            </div>
+            {HAS_LANG_CHOICE && (
+              <div className="pt-1 pb-3 flex justify-center">
+                <LangMenu onNavigate={() => setIsOpen(false)} />
+              </div>
+            )}
           </div>
         </div>
       )}

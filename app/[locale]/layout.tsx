@@ -10,7 +10,7 @@ import { OnboardingOverlay } from "@/app/components/OnboardingOverlay";
 import { StickyLessonNav } from "@/app/components/StickyLessonNav";
 import { LocaleProvider } from "@/app/components/LocaleProvider";
 import { SessionProvider } from "@/app/components/SessionProvider";
-import { LOCALES, DEFAULT_LOCALE, hasLocale, type Locale } from "@/i18n/config";
+import { ACTIVE_LOCALES, DEFAULT_LOCALE, hasLocale, type Locale } from "@/i18n/config";
 import { getAllDictionaries } from "@/i18n/dictionaries";
 import { SITE_URL } from "@/i18n/site";
 import { createClient } from "@/lib/supabase/server";
@@ -23,9 +23,9 @@ const inter = Inter({ subsets: ["latin"], display: "swap" });
 const v2Display = Space_Grotesk({ subsets: ["latin"], variable: "--font-v2-display", display: "swap", preload: false });
 const v2Mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-v2-mono", display: "swap", preload: false });
 
-// Pré-rendu statique des 3 locales.
+// Pré-rendu statique des langues actives (les autres redirigent vers le FR, cf. proxy.ts).
 export function generateStaticParams() {
-  return LOCALES.map((locale) => ({ locale }));
+  return ACTIVE_LOCALES.map((locale) => ({ locale }));
 }
 
 // Hreflang + canonical + metadata + Open Graph par locale.
@@ -64,7 +64,8 @@ export async function generateMetadata({
   const { locale } = await params;
   const safeLocale: Locale = hasLocale(locale) ? locale : DEFAULT_LOCALE;
 
-  const languages = LOCALES.reduce(
+  // Hreflang : langues actives seulement
+  const languages = ACTIVE_LOCALES.reduce(
     (acc, l) => {
       acc[l] = `${SITE_URL}/${l}`;
       return acc;
@@ -92,7 +93,7 @@ export async function generateMetadata({
       description: copy.description,
       url: canonical,
       locale: OG_LOCALE_TAG[safeLocale],
-      alternateLocale: LOCALES.filter((l) => l !== safeLocale).map(
+      alternateLocale: ACTIVE_LOCALES.filter((l) => l !== safeLocale).map(
         (l) => OG_LOCALE_TAG[l],
       ),
       images: [

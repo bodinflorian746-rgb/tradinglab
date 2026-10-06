@@ -15,6 +15,7 @@ import path from "node:path";
 import { FORBIDDEN } from "../../lib/games/glossary";
 import { collectContentTexts } from "./content-texts";
 import { accepted, wordsOf } from "./orthographe-mots";
+import { auditee } from "./langues";
 
 const DIR = path.join(__dirname, "orthographe");
 const vocab = new Set(fs.readFileSync(path.join(DIR, "vocabulaire.txt"), "utf8").split(/\r?\n/).filter(Boolean));
@@ -24,14 +25,15 @@ let errors = 0;
 const lines: string[] = [];
 const fail = (m: string) => { errors++; if (errors <= 40) lines.push(`  ERREUR ${m}`); };
 
-const texts = collectContentTexts();
+// Langues actives seulement (texte de langue inconnue : contrôlé avec les langues actives)
+const texts = collectContentTexts().filter((t) => auditee(t.lang));
 const files = new Set<string>();
 let words = 0;
 const unknown = new Map<string, string>();
 for (const t of texts) {
   files.add(t.file);
   // 1. Termes interdits (langue détectée ; inconnue : les deux listes)
-  const rules = t.lang === "fr" ? FORBIDDEN.fr : t.lang === "es" ? FORBIDDEN.es : [...FORBIDDEN.fr, ...FORBIDDEN.es];
+  const rules = t.lang === "fr" ? FORBIDDEN.fr : t.lang === "es" ? FORBIDDEN.es : [...(auditee("fr") ? FORBIDDEN.fr : []), ...(auditee("es") ? FORBIDDEN.es : [])];
   for (const r of rules) {
     const m = t.text.match(r.from);
     if (m) fail(`terme interdit « ${m[0]} » → « ${r.to} » (${t.file}:${t.line}) : ${t.text.slice(0, 80)}`);

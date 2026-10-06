@@ -8,6 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { collectContentTexts } from "./content-texts";
+import { auditee } from "./langues";
 
 type Lang = "fr" | "es";
 interface Term { notion: string; retenu: string; interdit: string[]; casse?: boolean; decision?: string; sources: { url: string }[] }
@@ -20,20 +21,21 @@ const fail = (m: string) => { errors++; if (errors <= 40) lines.push(`  ERREUR $
 
 // Contrôle du fichier lui-même : au moins 3 sources par terme retenu, sauf décision du PO (champ « decision »)
 const rules: Record<Lang, { re: RegExp; t: Term }[]> = { fr: [], es: [] };
-for (const lang of ["fr", "es"] as Lang[]) for (const t of ref.termes[lang]) {
+for (const lang of (["fr", "es"] as Lang[]).filter(auditee)) for (const t of ref.termes[lang]) {
   if (t.sources.length < 3 && !t.decision) fail(`${lang} « ${t.retenu} » : ${t.sources.length} source(s), 3 au minimum`);
   for (const src of t.interdit) rules[lang].push({ re: new RegExp(`(?<![\\p{L}\\d])(?:${src})(?![\\p{L}\\d])`, t.casse ? "u" : "iu"), t });
 }
 
-const texts = collectContentTexts();
+// Langues actives seulement (texte de langue inconnue : contrôlé avec les langues actives)
+const texts = collectContentTexts().filter((t) => auditee(t.lang));
 const hit = (lang: Lang, text: string) => rules[lang].map((r) => ({ r, m: text.match(r.re) })).find((x) => x.m);
 for (const t of texts) {
   if (t.lang === "fr" || t.lang === "es") {
     const h = hit(t.lang, t.text);
     if (h) fail(`${t.lang} « ${h.m![0]} » → « ${h.r.t.retenu} » (${t.file}:${t.line}) : ${t.text.slice(0, 90)}`);
   } else {
-    const fr = hit("fr", t.text), es = hit("es", t.text);
-    if (fr && es) fail(`? « ${fr.m![0]} » → « ${fr.r.t.retenu} » / « ${es.r.t.retenu} » (${t.file}:${t.line}) : ${t.text.slice(0, 90)}`);
+    const fr = auditee("fr") ? hit("fr", t.text) : undefined, es = auditee("es") ? hit("es", t.text) : undefined;
+    if ((fr || !auditee("fr")) && (es || !auditee("es")) && (fr || es)) fail(`? « ${(fr ?? es)!.m![0]} » → ${[fr, es].filter((x) => x).map((x) => `« ${x!.r.t.retenu} »`).join(" / ")} (${t.file}:${t.line}) : ${t.text.slice(0, 90)}`);
   }
 }
 

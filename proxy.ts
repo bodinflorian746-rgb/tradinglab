@@ -3,13 +3,17 @@
 //
 // Comportement :
 //   1. Locale : si l'URL n'a pas de préfixe /fr|/en|/es → redirect avec préfixe
+//   1 bis. Langue désactivée (absente de ACTIVE_LOCALES, ex. /en/..., /es/...)
+//      → redirection permanente vers la même page en DEFAULT_LOCALE (/fr/...)
 //   2. Si locale OK → refresh de la session Supabase via cookies
-//   - locale = cookie tradinglab_locale > Accept-Language > DEFAULT_LOCALE
+//   - locale = cookie tradinglab_locale > Accept-Language > DEFAULT_LOCALE,
+//     parmi les langues actives seulement (une préférence EN / ES enregistrée
+//     est ignorée tant que la langue est désactivée)
 //   - Le cookie tradinglab_locale est posé à chaque redirect (1 an)
 
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-import { LOCALES, DEFAULT_LOCALE, LOCALE_COOKIE, type Locale } from "@/i18n/config";
+import { LOCALES, ACTIVE_LOCALES, DEFAULT_LOCALE, LOCALE_COOKIE, type Locale } from "@/i18n/config";
 
 function parseAcceptLanguage(header: string | null): string[] {
   if (!header) return [];
@@ -27,7 +31,7 @@ function parseAcceptLanguage(header: string | null): string[] {
 function matchPreferredLocale(langs: string[]): Locale {
   for (const lang of langs) {
     const primary = lang.split("-")[0];
-    if ((LOCALES as readonly string[]).includes(primary)) {
+    if ((ACTIVE_LOCALES as readonly string[]).includes(primary)) {
       return primary as Locale;
     }
   }
@@ -36,7 +40,7 @@ function matchPreferredLocale(langs: string[]): Locale {
 
 function resolveLocale(request: NextRequest): Locale {
   const cookieValue = request.cookies.get(LOCALE_COOKIE)?.value;
-  if (cookieValue && (LOCALES as readonly string[]).includes(cookieValue)) {
+  if (cookieValue && (ACTIVE_LOCALES as readonly string[]).includes(cookieValue)) {
     return cookieValue as Locale;
   }
   return matchPreferredLocale(parseAcceptLanguage(request.headers.get("accept-language")));
@@ -55,6 +59,21 @@ export async function proxy(request: NextRequest) {
     url.pathname = `/${locale}${pathname}`;
     const response = NextResponse.redirect(url);
     response.cookies.set(LOCALE_COOKIE, locale, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+    });
+    return response;
+  }
+
+  // 1 bis. Langue désactivée → même page en langue par défaut, redirection
+  // permanente ; le cookie de préférence est ramené à la langue par défaut.
+  const prefix = pathname.split("/")[1];
+  if (!(ACTIVE_LOCALES as readonly string[]).includes(prefix)) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${DEFAULT_LOCALE}${pathname.slice(prefix.length + 1)}`;
+    const response = NextResponse.redirect(url, 308);
+    response.cookies.set(LOCALE_COOKIE, DEFAULT_LOCALE, {
       path: "/",
       maxAge: 60 * 60 * 24 * 365,
       sameSite: "lax",

@@ -1,9 +1,10 @@
 // Audit permanent des 4 mini-jeux (hors application : jamais importé par le site).
 // Usage : npm run audit:jeux              → toutes les règles (serveur de dev requis pour le DOM)
 //         npm run audit:jeux -- --sans-dom → règles sur les données seulement
-//         npm run audit:jeux -- --dom-args="--jeux=place-stop --langues=es"
+//         npm run audit:jeux -- --dom-args="--jeux=place-stop --langues=fr"
 //
-// Règles « données » (vite-node, 3 langues) :
+// Langues contrôlées : les langues actives du site (i18n/config.ts, ACTIVE_LOCALES).
+// Règles « données » (vite-node) :
 //   cohérence texte ↔ graphique (4 jeux), contexte de marché et prix (K1),
 //   distribution du bon stop ≤ 50 %, R/R des bonnes réponses, réalisme des
 //   bougies, énumération des verdicts, textes (français en EN/ES, ton),
@@ -11,18 +12,19 @@
 //   bougies (ouverture = clôture précédente, en données et au rendu ; jeux,
 //   aperçus du hub, héros de la home), textes affichés FR / ES des leçons, de la
 //   home, du hub et des jeux (termes interdits, orthographe, typographie ES).
-// Règles « DOM » (Playwright) : troncature 3 langues × 390/1440, sonde
+// Règles « DOM » (Playwright) : troncature langues actives × 390/1440, sonde
 //   lignes = étiquettes = boutons, cohérence du verdict affiché.
 // Code de sortie 1 dès qu'une règle compte une erreur.
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { languesAuditees } from "./langues-node.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..", "..");
 const SANS_DOM = process.argv.includes("--sans-dom");
 const DOM_ARGS = (process.argv.find((a) => a.startsWith("--dom-args=")) ?? "--dom-args=").slice("--dom-args=".length).split(" ").filter(Boolean);
-const LANGS = ["fr", "en", "es"];
+const LANGS = languesAuditees();
 
 function run(cmd, args, env = {}) {
   const r = spawnSync(cmd, args, { cwd: ROOT, env: { ...process.env, ...env }, encoding: "utf8", shell: process.platform === "win32", maxBuffer: 64 * 1024 * 1024 });
@@ -40,7 +42,7 @@ function record(rule, errors, detail = "", warnings = 0) {
   table.push([rule, `${errors} erreur(s)${warnings ? `, ${warnings} avertissement(s)` : ""}`, detail]);
 }
 
-// 1. Cohérence texte ↔ graphique, 4 jeux × 3 langues
+// 1. Cohérence texte ↔ graphique, 4 jeux × langues actives
 const COHERENCE = [
   ["Buy/Sell/No Trade", "coherence-bsnt.ts", {}],
   ["Trouve l'erreur", "coherence-ftm.ts", {}],
@@ -69,7 +71,7 @@ process.stdout.write("… contexte de marché et prix\n");
 }
 
 // 3. Réalisme, verdicts, textes, glossaire, bougies
-for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (français en EN/ES, ton)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"], ["Vocabulaire de référence (lib/vocabulary/trading-terms.json)", "vocabulaire.ts"]]) {
+for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (ton ; français en EN / ES si actives)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"], ["Vocabulaire de référence (lib/vocabulary/trading-terms.json)", "vocabulaire.ts"]]) {
   process.stdout.write(`… ${rule}\n`);
   const out = viteNode(file);
   const r = resultOf(out);
@@ -81,12 +83,12 @@ for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts 
 if (SANS_DOM) table.push(["DOM (troncature, sondes, verdict)", "non lancé (--sans-dom)", ""]);
 else {
   process.stdout.write("… DOM (troncature, sondes, verdict) : plusieurs minutes\n");
-  const out = run("node", [join("scripts", "audit-jeux", "dom.mjs"), ...DOM_ARGS]);
+  const out = run("node", [join("scripts", "audit-jeux", "dom.mjs"), `--langues=${LANGS.join(",")}`, ...DOM_ARGS]);
   const r = resultOf(out);
   record("DOM (troncature, sondes, verdict)", r ? r.e : null, out.split("\n").filter((l) => /erreur\(s\)|^\s{4}/.test(l) && !/: 0 erreur/.test(l)).slice(0, 10).join(" | ") || out.split("\n").slice(-3).join(" "));
 }
 
-console.log("\n=== Audit des jeux ===");
+console.log(`\n=== Audit des jeux (langues : ${LANGS.join(", ")}) ===`);
 for (const [rule, res, detail] of table) console.log(`${rule.padEnd(44)} ${res}${detail ? `\n    ${detail}` : ""}`);
 console.log(failed ? "\nÉCHEC : au moins une règle en erreur." : "\nOK : 0 erreur sur toutes les règles.");
 process.exit(failed ? 1 : 0);

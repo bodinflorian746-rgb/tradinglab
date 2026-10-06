@@ -4,19 +4,24 @@
 // en ligne. Un seul bouton affichant la locale courante, qui ouvre un petit
 // menu déroulant listant les 2 autres locales. Fermeture au clic extérieur,
 // à l'Échap, ou après sélection (navigation).
+// Ne propose que les langues actives (ACTIVE_LOCALES) ; rien n'est affiché
+// s'il n'en reste qu'une (décision PO du 2026-10-07 : français uniquement).
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useDict } from "@/app/components/LocaleProvider";
 import { localizedHref, stripLocalePrefix } from "@/lib/i18n/href";
-import type { Locale } from "@/i18n/config";
+import { ACTIVE_LOCALES, type Locale } from "@/i18n/config";
 
 const LOCALES: { code: Locale; label: string }[] = [
   { code: "fr", label: "FR" },
   { code: "en", label: "EN" },
   { code: "es", label: "ES" },
-];
+].filter((l) => (ACTIVE_LOCALES as readonly string[]).includes(l.code)) as { code: Locale; label: string }[];
+
+/** Vrai s'il y a plus d'une langue active (sinon pas de sélecteur). */
+export const HAS_LANG_CHOICE = LOCALES.length > 1;
 
 export function LangMenu({ onNavigate }: { onNavigate?: () => void }) {
   const t = useDict("nav");
@@ -43,6 +48,7 @@ export function LangMenu({ onNavigate }: { onNavigate?: () => void }) {
   }, [open]);
 
   const current = LOCALES.find((l) => l.code === currentLocale) ?? LOCALES[0];
+  if (!HAS_LANG_CHOICE) return null;
 
   return (
     <div ref={rootRef} className="relative">
