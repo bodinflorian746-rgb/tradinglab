@@ -35,6 +35,15 @@ const GAMES: { id: PreviewId; accent: string; level: "allLevels" | "intermediate
 
 // « Comment ça marche » : leçons (vert), jeux (violet, comme le hub), stratégies (ambre)
 const HOW_COLORS = ["#34d399", "#a78bfa", "#fbbf24"];
+// Picto de chaque étape (pas de numéro : chiffre non validé sur la home)
+const HOW_ICONS = [
+  // bougies
+  <svg key="l" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 3v14M10 5v10M15 2v12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /><rect x="3" y="6" width="4" height="6" rx="1" fill="currentColor" /><rect x="8" y="8" width="4" height="4" rx="1" fill="currentColor" opacity="0.55" /><rect x="13" y="4" width="4" height="7" rx="1" fill="currentColor" /></svg>,
+  // lecture
+  <svg key="g" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6.5 4.5v11l9-5.5-9-5.5z" fill="currentColor" /></svg>,
+  // cible
+  <svg key="s" width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.6" /><circle cx="10" cy="10" r="3.5" stroke="currentColor" strokeWidth="1.6" /><circle cx="10" cy="10" r="1" fill="currentColor" /></svg>,
+];
 // Niveau d'une stratégie : mêmes couleurs que le parcours débutant / intermédiaire / avancé
 const LEVEL_COLOR: Record<string, string> = { debutant: "#34d399", intermediaire: "#60a5fa", avance: "#fbbf24" };
 
@@ -48,13 +57,6 @@ const Lock = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
     <path d="M4 6V4.5a3 3 0 1 1 6 0V6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
     <rect x="2.5" y="6" width="9" height="6" rx="1" stroke="currentColor" strokeWidth="1.4" />
-  </svg>
-);
-
-const Clock = () => (
-  <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
-    <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.2" />
-    <path d="M5.5 3v2.5l1.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -77,10 +79,12 @@ function SectionHead({ eyebrow, title, sub, center }: { eyebrow?: string; title:
 }
 
 // ─── Nombre de leçons (vérifié contre les pages du dépôt) ───────────────────
-// Trading : FORMATIONS (débutant 10, intermédiaire 9, avancé 9 = 28).
+// Chiffres de la home : seuls ceux validés par le PO (79 leçons ; Trading 28,
+// Macro 16, « 8 stratégies, en 35 leçons » ; 4 jeux ; 48h ; note, avis et prix
+// tels qu'ils existent). Aucun autre chiffre, pas de répartition par niveau.
+// Trading : FORMATIONS (débutant + intermédiaire + avancé = 28).
 // Macro : 16 (6 + 6 + 4), non modélisé dans FORMATIONS : mêmes comptes que
-// app/sitemap.ts et StickyLessonNav. Stratégies : 35 pages de leçons ;
-// STRATEGY_MODULES en annonce 36 (ICT : lessonCount 6 pour 5 pages).
+// app/sitemap.ts et StickyLessonNav. Stratégies : 35 pages de leçons, 8 modules.
 const MACRO_LESSONS = 16;
 const STRATEGY_LESSONS = 35;
 
@@ -224,9 +228,9 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
   const sd = await getDictionary(locale, "strategies");
   const lessonHrefs = { trading: h("/formations"), macro: h("/formations/macro"), strategies: h("/strategies") };
   const levels = [
-    { ...s.progression.levels[0], n: count("debutant"), href: "/formations", color: "#34d399" },
-    { ...s.progression.levels[1], n: count("intermediaire"), href: "/formations/intermediaire", color: "#60a5fa" },
-    { ...s.progression.levels[2], n: count("avance"), href: "/formations/avance", color: "#fbbf24" },
+    { ...s.progression.levels[0], href: "/formations", color: "#34d399" },
+    { ...s.progression.levels[1], href: "/formations/intermediaire", color: "#60a5fa" },
+    { ...s.progression.levels[2], href: "/formations/avance", color: "#fbbf24" },
   ];
 
   return (
@@ -269,7 +273,7 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
 
         <HeroGame
           rounds={rounds}
-          s={{ ...s.game, duration: g.available["buy-sell-no-trade"].duration }}
+          s={s.game}
           gameHref={h("/jeux/buy-sell-no-trade")}
           trialHref={trialHref}
         />
@@ -298,11 +302,11 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
           <SectionHead eyebrow={s.how.eyebrow} title={s.how.title} sub={s.how.sub} />
           <ol className="hv2-how">
             {s.how.steps.map((st, i) => {
-              const meta = i === 0 ? s.how.lessonsMeta(tradingLessons + MACRO_LESSONS) : i === 1 ? s.how.gamesMeta : s.how.strategiesMeta(STRATEGY_MODULES.length, STRATEGY_LESSONS);
+              const meta = i === 0 ? s.how.lessonsMeta : i === 1 ? s.how.gamesMeta : s.how.strategiesMeta(STRATEGY_MODULES.length, STRATEGY_LESSONS);
               const href = i === 0 ? "#hv2-lecons" : i === 1 ? "#hv2-jeux" : "#hv2-strategies";
               return (
                 <li key={st.name} data-reveal className="hv2-how-step" style={css({ "--d": `${i * 90}ms`, "--c": HOW_COLORS[i] })}>
-                  <span className="hv2-how-n" aria-hidden="true">{i + 1}</span>
+                  <span className="hv2-how-n" aria-hidden="true">{HOW_ICONS[i]}</span>
                   <p className="hv2-how-verb">{st.verb}</p>
                   <h3 className="v2-display text-[22px] font-bold leading-tight">{st.name}</h3>
                   <p className="hv2-how-text">{st.text}</p>
@@ -328,14 +332,14 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
             <div data-reveal className="hv2-levels" style={css({ "--d": "90ms" })}>
               <p className="text-[15px] font-semibold text-[color:var(--v2-text-2)]">{s.progression.title}</p>
               <div className="hv2-steps">
-                {levels.map((lv, k) => (
+                {levels.map((lv) => (
                   <Link key={lv.href} href={h(lv.href)} className="hv2-step" style={css({ "--step": lv.color })}>
-                    <span className="hv2-step-n">{k + 1}</span>
+                    {/* Pastille de couleur, sans numéro (chiffre non validé sur la home) */}
+                    <span className="hv2-step-n" aria-hidden="true"><span className="block h-2.5 w-2.5 rounded-full" style={{ background: lv.color }} /></span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-[15px] font-semibold" style={{ color: lv.color }}>{lv.label}</span>
                       <span className="block text-[14px] text-[color:var(--v2-text-2)]">{lv.desc}</span>
                     </span>
-                    <span className="v2-mono shrink-0 text-[12px] text-[color:var(--v2-text-3)]">{lv.n} {s.progression.lessons}</span>
                   </Link>
                 ))}
               </div>
@@ -368,10 +372,6 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
                   <div className="flex flex-col gap-2">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="v2-chip">{g.index.levels[gm.level]}</span>
-                      <span className="v2-mono flex items-center gap-1.5 text-[12px] text-[color:var(--v2-text-3)]">
-                        <Clock />
-                        {game.duration}
-                      </span>
                     </div>
                     <h3 className="v2-display text-[20px] font-bold leading-tight">{game.title}</h3>
                     <p className="text-[14px] leading-snug text-[color:var(--v2-text-2)]">{s.games.lines[gm.id]}</p>
@@ -387,21 +387,17 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         </div>
       </section>
 
-      {/* ═══ 5. ÉTAPE 3, LES STRATÉGIES : les 8 modules réels ═══ */}
+      {/* ═══ 5. ÉTAPE 3, LES STRATÉGIES : les 8 modules réels (titre et niveau) ═══ */}
       <section id="hv2-strategies" className="hv2-section hv2-anchor">
         <div className="hv2-wrap flex flex-col hv2-stack">
           <SectionHead eyebrow={s.strategiesSection.eyebrow} title={s.strategiesSection.title} sub={s.strategiesSection.sub} />
           <div className="hv2-strats">
             {STRATEGY_MODULES.map((m, i) => {
-              const d = sd.modules[m.id as keyof typeof sd.modules] as { title: string; subtitle: string } | undefined;
+              const d = sd.modules[m.id as keyof typeof sd.modules] as { title: string } | undefined;
               return (
                 <Link key={m.id} href={h(`/strategies/${m.id}`)} data-reveal className="hv2-strat" style={css({ "--d": `${(i % 4) * 70}ms`, "--c": LEVEL_COLOR[m.level] })}>
-                  <span className="flex items-center justify-between gap-2">
-                    <span className="hv2-strat-level">{s.strategiesSection.levels[m.level]}</span>
-                    <span className="v2-mono text-[12px] text-[color:var(--v2-text-3)]">{m.lessonCount} {s.strategiesSection.lessons}</span>
-                  </span>
+                  <span className="hv2-strat-level">{s.strategiesSection.levels[m.level]}</span>
                   <span className="v2-display text-[18px] font-bold leading-snug">{d?.title ?? m.title}</span>
-                  <span className="text-[14px] leading-relaxed text-[color:var(--v2-text-2)]">{d?.subtitle ?? m.subtitle}</span>
                 </Link>
               );
             })}

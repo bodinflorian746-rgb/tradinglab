@@ -100,12 +100,12 @@
       {
         "icon": "⚡",
         "title": "\"No tengo tiempo\"",
-        "description": "Sesiones de 15 a 30 minutos al día. Avanzas de verdad, incluso trabajando a tiempo completo."
+        "description": "Sesiones cortas, cada día. Avanzas de verdad, incluso trabajando a tiempo completo."
       },
       {
         "icon": "💰",
         "title": "\"No tengo capital\"",
-        "description": "Estrategias y gestión de riesgos calibradas para cuentas pequeñas, de 300€ a 2 500€."
+        "description": "Estrategias y gestión de riesgos calibradas para cuentas pequeñas."
       },
       {
         "icon": "📺",
@@ -115,7 +115,7 @@
       {
         "icon": "🎯",
         "title": "\"Soy principiante total\"",
-        "description": "Recorrido progresivo estructurado. Empiezas en el nivel 1, avanzas paso a paso, a tu ritmo."
+        "description": "Recorrido progresivo estructurado. Empiezas por las bases, avanzas paso a paso, a tu ritmo."
       },
       {
         "icon": "🔬",
@@ -137,7 +137,7 @@
   },
   "leaveReview": {
     "title": "¿Usas TradeScaleX?",
-    "subtitle": "Tu opinión nos ayuda a mejorar la plataforma. Toma 2 minutos.",
+    "subtitle": "Tu opinión nos ayuda a mejorar la plataforma.",
     "ctaLabel": "Dejar una opinión"
   },
   "buildSpotlight": {
@@ -151,7 +151,7 @@
     "titleAccent": "mañana?",
     "choiceA": {
       "label": "OPCIÓN A",
-      "body": "¿De verdad quieres cerrar esta pestaña y seguir haciendo exactamente lo mismo que haces hoy? Ver un video más en YouTube. Seguir a un gurú de Telegram que te promete 5K€/mes. Mañana será igual que hoy."
+      "body": "¿De verdad quieres cerrar esta pestaña y seguir haciendo exactamente lo mismo que haces hoy? Ver un video más en YouTube. Seguir a un gurú de Telegram que te promete ganancias fáciles. Mañana será igual que hoy."
     },
     "choiceB": {
       "label": "OPCIÓN B",

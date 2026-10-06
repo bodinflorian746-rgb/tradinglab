@@ -100,12 +100,12 @@
       {
         "icon": "⚡",
         "title": "\"J'ai pas le temps\"",
-        "description": "Sessions de 15 à 30 minutes par jour. Tu avances vraiment, même en bossant en CDI."
+        "description": "Des sessions courtes, chaque jour. Tu avances vraiment, même en bossant en CDI."
       },
       {
         "icon": "💰",
         "title": "\"J'ai pas le capital\"",
-        "description": "Stratégies et gestion du risque calibrées pour les petits comptes, de 300€ à 2 500€."
+        "description": "Stratégies et gestion du risque calibrées pour les petits comptes."
       },
       {
         "icon": "📺",
@@ -115,7 +115,7 @@
       {
         "icon": "🎯",
         "title": "\"Je suis débutant total\"",
-        "description": "Parcours progressif structuré. Tu démarres au niveau 1, tu avances étape par étape, à ton rythme."
+        "description": "Parcours progressif structuré. Tu démarres par les bases, tu avances étape par étape, à ton rythme."
       },
       {
         "icon": "🔬",
@@ -137,7 +137,7 @@
   },
   "leaveReview": {
     "title": "Tu utilises TradeScaleX ?",
-    "subtitle": "Ton retour nous aide à améliorer la plateforme. Ça prend 2 minutes.",
+    "subtitle": "Ton retour nous aide à améliorer la plateforme.",
     "ctaLabel": "Laisser un avis"
   },
   "buildSpotlight": {
@@ -151,7 +151,7 @@
     "titleAccent": "demain ?",
     "choiceA": {
       "label": "OPTION A",
-      "body": "Es-tu sûr de vouloir fermer cet onglet et continuer exactement ce que tu fais aujourd'hui ? Regarder une vidéo YouTube de plus. Suivre un gourou Telegram qui te promet 5K€/mois. Demain sera comme aujourd'hui."
+      "body": "Es-tu sûr de vouloir fermer cet onglet et continuer exactement ce que tu fais aujourd'hui ? Regarder une vidéo YouTube de plus. Suivre un gourou Telegram qui te promet des gains faciles. Demain sera comme aujourd'hui."
     },
     "choiceB": {
       "label": "OPTION B",
