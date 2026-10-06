@@ -29,6 +29,7 @@ export interface HeroGameStrings {
   question: string;
   stepChoice: string;
   stepVerdict: string;
+  duration: string;
   htf: string;
   macro: string;
   bias: Record<"bullish" | "bearish" | "range", string>;
@@ -87,12 +88,13 @@ export function HeroGame({ rounds, s, gameHref, trialHref }: { rounds: HeroRound
 
   return (
     <div className="hv2-game v2-card v2-card--accent v2-accent--emerald flex flex-col gap-3 p-4 sm:p-5">
-      {/* En-tête : étape, comme dans le jeu (pas de durée : chiffre non validé sur la home) */}
+      {/* En-tête : étape et durée, comme dans le jeu */}
       <div className="flex items-center justify-between gap-3">
         <span className="flex items-center gap-2 text-[14px] font-semibold">
           <span className="v2-step">{phase === "question" ? 1 : phase === "reveal" ? 2 : 3}</span>
           {phase === "question" ? s.question : phase === "reveal" ? s.stepChoice : s.stepVerdict}
         </span>
+        <span className="v2-mono shrink-0 text-[12px] text-[color:var(--v2-text-3)]">{s.duration}</span>
       </div>
 
       <div aria-hidden="true">

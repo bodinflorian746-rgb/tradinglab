@@ -4285,8 +4285,6 @@ face
 fácil
 facile
 facilement
-faciles
-fáciles
 facilidad
 fácilmente
 façon
@@ -7009,7 +7007,6 @@ ofrece
 ofrecen
 ofrecer
 ofrecido
-oímos
 ojo
 ok
 ola
@@ -8207,7 +8204,6 @@ publica
 publicación
 publicaciones
 publicada
-publicadas
 publicado
 publican
 publicaron
@@ -10160,7 +10156,6 @@ taille
 tailles
 take
 takeprofit
-tal
 tamaño
 tamaños
 también
@@ -10195,7 +10190,6 @@ telegram
 téléphone
 telle
 tellement
-tels
 tema
 temblar
 tempête

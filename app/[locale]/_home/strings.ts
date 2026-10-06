@@ -32,7 +32,6 @@ const S = {
     how: {
       eyebrow: "Comment ça marche",
       title: "Comprendre, s'entraîner, appliquer",
-      sub: "Dans cet ordre, chaque étape s'appuie sur la précédente.",
       steps: [
         { verb: "Comprendre", name: "Les leçons", text: "Tu apprends à lire un graphique, à gérer ton risque et à suivre la macro, avec des schémas, des exemples et des quiz." },
         { verb: "S'entraîner", name: "Les jeux", text: "Sur de vrais graphiques, tu décides : acheter, vendre ou attendre, où placer ton stop, où est l'erreur. Chaque réponse est expliquée." },
@@ -45,7 +44,7 @@ const S = {
     lessonsSection: {
       eyebrow: "Comprendre · Les leçons",
       title: "Les bases d'abord, puis les notions avancées",
-      sub: "Les parcours : Trading (lecture du graphique, gestion du risque), Macro (news, banques centrales, corrélations) et Stratégies. Tu avances niveau par niveau.",
+      sub: "Les parcours : Trading (lecture du graphique, gestion du risque), Macro (news, banques centrales, corrélations) et Stratégies.",
     },
     gamesEyebrow: "S'entraîner · Les jeux",
     strategiesSection: {
@@ -55,8 +54,7 @@ const S = {
       levels: { debutant: "Débutant", intermediaire: "Intermédiaire", avance: "Avancé" } as Record<string, string>,
       all: "Voir les 8 stratégies",
     },
-    approcheSub: "Les doutes qu'on entend souvent avant de commencer, et ce que la plateforme y répond.",
-    reviewsSub: "Avis de membres et de premiers utilisateurs, publiés tels quels.",
+    reviewsSub: "Avis de membres et de premiers utilisateurs.",
     accessSub: {
       open: "Tu peux tester 48h gratuitement. Ensuite, l'accès complet passe par un dépôt chez un broker partenaire ou par un abonnement mensuel.",
       closed: "Tu peux tester 48h gratuitement. Ensuite, l'accès complet passe par un dépôt chez un broker partenaire ; l'abonnement direct n'est pas encore ouvert.",
@@ -92,8 +90,8 @@ const S = {
       sub: "4 jeux sur de vrais graphiques : décider, placer ton stop, repérer l'erreur, construire un trade complet.",
       lines: {
         "buy-sell-no-trade": "Mini graphique, contexte, news : tu prends ta décision.",
-        "place-stop": "Quel stop va survivre ? À toi de choisir.",
-        "find-the-mistake": "Une erreur cachée dans chaque setup : à toi de la repérer.",
+        "place-stop": "Quel stop va survivre ? Stop 1, 2 ou 3.",
+        "find-the-mistake": "10 setups, une erreur cachée à repérer parmi 4 choix.",
         "build-the-trade": "Entrée, stop, take profit : tu construis le trade complet.",
       } as Record<string, string>,
     },
@@ -122,7 +120,7 @@ const S = {
         price: "Accès via un dépôt chez un broker partenaire",
         desc: "Tu ouvres un compte broker via notre lien d'affiliation. Tu reçois ensuite ton code d'accès par email.",
         bullets: ["Ouverture compte broker partenaire", "Code envoyé après vérification", "Accès complet à la plateforme"],
-        depositNote: "Un dépôt sur ton compte broker · ton argent, retirable à tout moment",
+        depositNote: "Dépôt 200 € sur ton compte broker · ton argent, retirable à tout moment",
       },
       direct: {
         title: "Accès direct",
@@ -169,7 +167,6 @@ const S = {
     how: {
       eyebrow: "Cómo funciona",
       title: "Entender, entrenar, aplicar",
-      sub: "En este orden, cada etapa se apoya en la anterior.",
       steps: [
         { verb: "Entender", name: "Las lecciones", text: "Aprendes a leer un gráfico, a gestionar tu riesgo y a seguir la macro, con esquemas, ejemplos y cuestionarios." },
         { verb: "Entrenar", name: "Los juegos", text: "Sobre gráficos reales, decides: comprar, vender o esperar, dónde colocar tu stop, dónde está el error. Cada respuesta se explica." },
@@ -182,7 +179,7 @@ const S = {
     lessonsSection: {
       eyebrow: "Entender · Las lecciones",
       title: "Primero las bases, luego las nociones avanzadas",
-      sub: "Los recorridos: Trading (lectura del gráfico, gestión de riesgos), Macro (noticias, bancos centrales, correlaciones) y Estrategias. Avanzas nivel por nivel.",
+      sub: "Los recorridos: Trading (lectura del gráfico, gestión de riesgos), Macro (noticias, bancos centrales, correlaciones) y Estrategias.",
     },
     gamesEyebrow: "Entrenar · Los juegos",
     strategiesSection: {
@@ -192,8 +189,7 @@ const S = {
       levels: { debutant: "Principiante", intermediaire: "Intermedio", avance: "Avanzado" } as Record<string, string>,
       all: "Ver las 8 estrategias",
     },
-    approcheSub: "Las dudas que oímos a menudo antes de empezar, y lo que la plataforma responde.",
-    reviewsSub: "Opiniones de miembros y de los primeros usuarios, publicadas tal cual.",
+    reviewsSub: "Opiniones de miembros y de los primeros usuarios.",
     accessSub: {
       open: "Puedes probar 48h gratis. Después, el acceso completo pasa por un depósito en un broker partner o por una suscripción mensual.",
       closed: "Puedes probar 48h gratis. Después, el acceso completo pasa por un depósito en un broker partner; la suscripción directa aún no está abierta.",
@@ -227,8 +223,8 @@ const S = {
       sub: "4 juegos sobre gráficos reales: decidir, colocar tu stop, detectar el error, construir un trade completo.",
       lines: {
         "buy-sell-no-trade": "Mini-gráfico, contexto, noticias: tomas tu decisión.",
-        "place-stop": "¿Qué stop va a sobrevivir? Tú eliges.",
-        "find-the-mistake": "Un error oculto en cada setup: te toca detectarlo.",
+        "place-stop": "¿Qué stop va a sobrevivir? Stop 1, 2 o 3.",
+        "find-the-mistake": "10 setups, un error oculto que detectar entre 4 opciones.",
         "build-the-trade": "Entrada, stop, take profit: construyes el trade completo.",
       } as Record<string, string>,
     },
@@ -256,7 +252,7 @@ const S = {
         price: "Acceso mediante un depósito en un broker partner",
         desc: "Abre una cuenta broker vía nuestro enlace de afiliación. Recibes después tu código de acceso por email.",
         bullets: ["Apertura de cuenta broker partner", "Código enviado tras verificación", "Acceso completo a la plataforma"],
-        depositNote: "Un depósito en tu cuenta broker · tu dinero, retirable cuando quieras",
+        depositNote: "Depósito 200 € en tu cuenta broker · tu dinero, retirable cuando quieras",
       },
       direct: {
         title: "Acceso directo",

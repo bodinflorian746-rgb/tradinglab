@@ -47,6 +47,13 @@ const HOW_ICONS = [
 // Niveau d'une stratégie : mêmes couleurs que le parcours débutant / intermédiaire / avancé
 const LEVEL_COLOR: Record<string, string> = { debutant: "#34d399", intermediaire: "#60a5fa", avance: "#fbbf24" };
 
+const Clock = () => (
+  <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+    <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.2" />
+    <path d="M5.5 3v2.5l1.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 const Arrow = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 14 14" fill="none" aria-hidden="true">
     <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
@@ -273,7 +280,7 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
 
         <HeroGame
           rounds={rounds}
-          s={s.game}
+          s={{ ...s.game, duration: g.available["buy-sell-no-trade"].duration }}
           gameHref={h("/jeux/buy-sell-no-trade")}
           trialHref={trialHref}
         />
@@ -299,7 +306,7 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
       {/* ═══ 2. COMMENT ÇA MARCHE : leçons, puis jeux, puis stratégies ═══ */}
       <section className="hv2-section">
         <div className="hv2-wrap flex flex-col hv2-stack">
-          <SectionHead eyebrow={s.how.eyebrow} title={s.how.title} sub={s.how.sub} />
+          <SectionHead eyebrow={s.how.eyebrow} title={s.how.title} />
           <ol className="hv2-how">
             {s.how.steps.map((st, i) => {
               const meta = i === 0 ? s.how.lessonsMeta : i === 1 ? s.how.gamesMeta : s.how.strategiesMeta(STRATEGY_MODULES.length, STRATEGY_LESSONS);
@@ -332,10 +339,9 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
             <div data-reveal className="hv2-levels" style={css({ "--d": "90ms" })}>
               <p className="text-[15px] font-semibold text-[color:var(--v2-text-2)]">{s.progression.title}</p>
               <div className="hv2-steps">
-                {levels.map((lv) => (
+                {levels.map((lv, k) => (
                   <Link key={lv.href} href={h(lv.href)} className="hv2-step" style={css({ "--step": lv.color })}>
-                    {/* Pastille de couleur, sans numéro (chiffre non validé sur la home) */}
-                    <span className="hv2-step-n" aria-hidden="true"><span className="block h-2.5 w-2.5 rounded-full" style={{ background: lv.color }} /></span>
+                    <span className="hv2-step-n">{k + 1}</span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-[15px] font-semibold" style={{ color: lv.color }}>{lv.label}</span>
                       <span className="block text-[14px] text-[color:var(--v2-text-2)]">{lv.desc}</span>
@@ -372,6 +378,10 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
                   <div className="flex flex-col gap-2">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="v2-chip">{g.index.levels[gm.level]}</span>
+                      <span className="v2-mono flex items-center gap-1.5 text-[12px] text-[color:var(--v2-text-3)]">
+                        <Clock />
+                        {game.duration}
+                      </span>
                     </div>
                     <h3 className="v2-display text-[20px] font-bold leading-tight">{game.title}</h3>
                     <p className="text-[14px] leading-snug text-[color:var(--v2-text-2)]">{s.games.lines[gm.id]}</p>
@@ -412,7 +422,7 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
       {/* ═══ 6. L'APPROCHE : les objections, sans promesse ═══ */}
       <section className="hv2-section hv2-glow" style={css({ "--hv2-glow": "radial-gradient(55% 45% at 50% 40%, rgba(16,185,129,0.09), transparent 70%)" })}>
         <div className="hv2-wrap flex flex-col hv2-stack">
-          <SectionHead eyebrow={t.approche.eyebrow} title={<>{t.approche.titleLine1} <span className="hv2-accent">{t.approche.titleLine2}</span></>} sub={s.approcheSub} />
+          <SectionHead eyebrow={t.approche.eyebrow} title={<>{t.approche.titleLine1} <span className="hv2-accent">{t.approche.titleLine2}</span></>} />
           {(() => {
             const feats = t.approche.features;
             const hero = feats[feats.length - 1];
