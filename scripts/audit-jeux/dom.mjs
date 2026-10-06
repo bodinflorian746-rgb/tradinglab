@@ -1,6 +1,9 @@
 // Audit DOM des 4 jeux (navigateur) : joue une session complète par jeu × langue × format.
 // Usage : node scripts/audit-jeux/dom.mjs [--base=http://localhost:3000] [--jeux=place-stop,...] [--langues=fr,es] [--formats=390,1440]
 // Nécessite le serveur de dev déjà lancé (le script ne le démarre jamais).
+// Jeux réservés aux membres : AUDIT_STORAGE_STATE=<fichier> réutilise une session
+// premium enregistrée par Playwright (storage state, hors dépôt). Les jeux
+// n'écrivent qu'en localStorage : aucune écriture en base.
 //
 // Règles :
 //  - troncature : aucun texte coupé (ellipsis / overflow caché) ni hors écran, sur
@@ -18,6 +21,7 @@ import { chromium } from "playwright";
 
 const arg = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) ?? `--${k}=${d}`).split("=")[1];
 const BASE = arg("base", "http://localhost:3000");
+const STORAGE_STATE = process.env.AUDIT_STORAGE_STATE || undefined;
 const GAMES = arg("jeux", "buy-sell-no-trade,find-the-mistake,place-stop,build-the-trade").split(",");
 const LANGS = arg("langues", "fr,en,es").split(",");
 const FORMATS = arg("formats", "390,1440").split(",");
@@ -188,7 +192,7 @@ const probeVerdict = (page) => page.evaluate(({ STATE_CLASS }) => {
 
 async function session(browser, slug, loc, w) {
   const mobile = +w < 800;
-  const ctx = await browser.newContext({ viewport: { width: +w, height: mobile ? 844 : 900 }, deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile, locale: loc });
+  const ctx = await browser.newContext({ viewport: { width: +w, height: mobile ? 844 : 900 }, deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile, locale: loc, storageState: STORAGE_STATE });
   await ctx.addInitScript(() => { try { localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch { /* stockage indisponible */ } });
   const page = await ctx.newPage();
   const errs = [];
