@@ -50,12 +50,14 @@ test.describe("Langues désactivées", () => {
     test.skip(ACTIVE_LOCALES.length > 1, "plusieurs langues actives");
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(String(e)));
+    // Fenêtre d’accueil (première visite) déjà vue : elle masquerait le menu
+    await page.addInitScript(() => { try { window.localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch {} });
     await page.goto(`/${DEFAULT_LOCALE}/jeux`);
     await expect(page.getByTestId("nav-lang-trigger")).toHaveCount(0);
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`/${DEFAULT_LOCALE}`);
-    const burger = page.locator("nav button[aria-expanded]").last();
-    if (await burger.isVisible()) await burger.click();
+    await page.getByTestId("nav-burger").click();
+    await expect(page.getByTestId("nav-burger")).toHaveAttribute("aria-expanded", "true");
     await expect(page.getByTestId("nav-lang-trigger")).toHaveCount(0);
     expect(errors).toEqual([]);
   });
