@@ -455,7 +455,8 @@ export default function BuildTheTradePage() {
       price:    levels[s][v],
       color:    STEP_COLOR[s],
       dashed:   false,
-      label:    !isBuild || s === "entry" ? stepNames[s] : undefined,
+      // L'entrée porte aussi son prix ; Stop et TP, leur nom seul
+      label:    s === "entry" ? `${stepNames.entry} ${fmt(levels.entry[v])}` : !isBuild ? stepNames[s] : undefined,
       hit:      s === "stop" && !isBuild && slLive,
       selected: s === "tp" && !isBuild && tpLive,
     }];

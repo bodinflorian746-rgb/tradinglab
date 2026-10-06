@@ -509,7 +509,8 @@ export default function PlaceStopPage() {
               data={{ candles: [...chart.past, ...chart.future], zones: [], domain: chart.domain }}
               inlineLabels
               overlay={{
-                entry: { price: chart.entry, direction: chart.direction, label: ENTRY_LABEL[locale ?? "fr"] ?? ENTRY_LABEL.fr },
+                // Étiquette d'entrée avec son prix (le seul endroit où il apparaît)
+                entry: { price: chart.entry, direction: chart.direction, label: `${ENTRY_LABEL[locale ?? "fr"] ?? ENTRY_LABEL.fr} ${fmt(chart.entry, current.asset)}` },
                 stops: chart.stops.map((s) => ({
                   price:    s.price,
                   color:    STOP_COLORS[s.id].hex,
