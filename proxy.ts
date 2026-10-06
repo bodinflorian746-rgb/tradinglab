@@ -114,8 +114,9 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Skip Next internals, API routes, fichiers statiques courants
+  // Skip Next internals, API routes, fichiers statiques courants, et
+  // sitemap.xml / robots.txt (métadonnées à la racine, sans préfixe de langue)
   matcher: [
-    "/((?!_next/|api/|favicon\\.ico|.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|css|js|woff|woff2|ttf|otf|map)$).*)",
+    "/((?!_next/|api/|favicon\\.ico|sitemap\\.xml$|robots\\.txt$|.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|css|js|woff|woff2|ttf|otf|map)$).*)",
   ],
 };
