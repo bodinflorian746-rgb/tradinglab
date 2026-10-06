@@ -467,11 +467,15 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
       // gauche. Sans place à gauche (étiquette longue), décale d'un cran vers le
       // haut ou le bas, jamais hors du graphique.
       const minX = 2;
+      // Tolérance des comparaisons : une pastille posée exactement à gauche d'une autre
+      // (x = t.x - gap - w) ne doit pas compter comme un chevauchement à cause d'un
+      // arrondi (540.64 + 129.2 + 4 = 673.8400000000001 > 673.84), sinon elle quittait sa ligne.
+      const EPS = 0.01;
       const slotX = (y: number, w: number) => {
         let x = lineX1 - w;
         for (let guard = 0; guard < 8; guard++) {
-          const block = inlineTags.find((t) => Math.abs(t.y - y) < INLINE_TAG_H + INLINE_TAG_GAP
-            && x < t.x + t.w + INLINE_TAG_GAP && x + w + INLINE_TAG_GAP > t.x);
+          const block = inlineTags.find((t) => Math.abs(t.y - y) < INLINE_TAG_H + INLINE_TAG_GAP - EPS
+            && x < t.x + t.w + INLINE_TAG_GAP - EPS && x + w + INLINE_TAG_GAP > t.x + EPS);
           if (!block) return x >= minX ? x : null;
           x = block.x - INLINE_TAG_GAP - w;
         }
