@@ -10,5 +10,10 @@
   {"url":"/fr/formations/debutant/lecon3","charts":["CandleAnatomyDiagram","CandleExampleDiagram"]},
   {"url":"/fr/strategies/price-action/lecon1","charts":["CandleAnatomyDiagram"]},
   {"url":"/fr/strategies/price-action/lecon2","charts":["PinBarSetupDiagram"]},
-  {"url":"/fr/strategies/price-action/lecon3","charts":["BullishVsBearishEngulfingDiagram","EngulfingSetupDiagram"]}
+  {"url":"/fr/strategies/price-action/lecon3","charts":["BullishVsBearishEngulfingDiagram","EngulfingSetupDiagram"]},
+  {"url":"/fr/strategies/reversal/lecon3","charts":["DivergenceWithoutBreakoutDiagram"]},
+  {"url":"/fr/strategies/support-resistance/lecon3","charts":["FlipRetestValidationDiagram"]},
+  {"url":"/fr/strategies/support-resistance/lecon4","charts":["FakeVsRealBreakoutComparisonDiagram"]},
+  {"url":"/fr/strategies/trend-following/lecon3","charts":["FibPullbackChecklistDiagram"]},
+  {"url":"/fr/strategies/multi-timeframe/lecon4","charts":["RiskAffineDiagram"]}
 ]

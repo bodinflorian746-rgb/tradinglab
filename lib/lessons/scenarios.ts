@@ -113,3 +113,75 @@ Object.assign(SCENARIOS, {
   "engulfing-bear": engulfBear,
   "hs-execution": hsExecution,
 });
+
+// ─── Lot 3 ───────────────────────────────────────────────────────────────────
+
+/** Suite d'un scénario : bougies écrites qui ouvrent à la dernière clôture du préfixe. */
+const extend = (prefix: Candle[], steps: Step[], seed: number, decimals: number, pins: number[] = [], levels: number[] = []) =>
+  [...prefix, ...buildCandles(prefix[prefix.length - 1].c, steps, { seed, decimals, pins, levels })];
+
+// Reversal 3 — divergence sans breakout (XAU/USD H1) : sommet 1 4 600 sur une montée
+// franche, creux 4 570, sommet 2 4 640 (HH) sur une montée hachée (RSI plus bas),
+// repli qui tient au-dessus de 4 570, nouveau HH 4 665.
+const divergenceNoBreak = () => buildCandles(4500, [
+  ...c(4506, 4503, 4511, 4508, 4515, 4512, 4519, 4515, 4522, 4518, 4525, 4521, 4528, 4524, 4531, 4528, 4535, 4532, 4540),
+  ...c(4552, 4565, 4577, 4588), { c: 4597, h: 4600 },
+  ...c(4589, 4581), { c: 4574, l: 4570 },
+  ...c(4582, 4578, 4590, 4586, 4598, 4594, 4606, 4602, 4614, 4610, 4622, 4618), { c: 4633, h: 4640 },
+  ...c(4626, 4614, 4603), { c: 4594, l: 4588 },
+  ...c(4606, 4619, 4632, 4645), { c: 4658, h: 4665 },
+], { seed: 3101, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4570], pins: [4600, 4570, 4640, 4588, 4665] });
+
+// Support-résistance 3 — flip EUR/USD H4 : résistance 1.1850 touchée 3 fois, breakout
+// clôturé à 1.1878, 4 bougies au-dessus, retour vers la zone ; puis 3 signaux de retest.
+const flipPrefix = () => buildCandles(1.1790, [
+  ...c(1.1801, 1.1814, 1.1826, 1.1838), { c: 1.1843, h: 1.1849 }, ...c(1.1830, 1.1818, 1.1812, 1.1824, 1.1836), { c: 1.1842, h: 1.1850 },
+  ...c(1.1829, 1.1821, 1.1833), { c: 1.1844, h: 1.1849 }, { c: 1.1878 },
+  ...c(1.1872, 1.1884, 1.1879, 1.1888), ...c(1.1877, 1.1868, 1.1860, 1.1856),
+], { seed: 3201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1850, 1.1840], pins: [1.1849, 1.1850, 1.1878] });
+const flipWith = (kind: "pin" | "engulfing" | "reaction") => {
+  const p = flipPrefix();
+  if (kind === "pin") return extend(p, [{ c: 1.1858, h: 1.1861, l: 1.1842 }], 3202, 5);
+  if (kind === "engulfing") return extend(p, [{ c: 1.1849, h: 1.1857, l: 1.1846 }, { c: 1.1863, h: 1.1865, l: 1.1845 }], 3203, 5);
+  return extend(p, [{ c: 1.1868, h: 1.1870, l: 1.1851 }, { c: 1.1881, h: 1.1884, l: 1.1866 }], 3204, 5);
+};
+
+// Support-résistance 4 — vrai vs faux breakout de la résistance 4 650$ (XAU/USD H1)
+const breakoutPrefix = () => buildCandles(4590, [
+  ...c(4602, 4615, 4628, 4639), { c: 4644, h: 4649 }, ...c(4633, 4621, 4615, 4627, 4638), { c: 4645, h: 4650 },
+  ...c(4634, 4626, 4637), { c: 4643 },
+], { seed: 3301, decimals: 1, asset: "XAU/USD", session: "New York", volatility: "normale", levels: [4650], pins: [4649, 4650] });
+const breakoutWith = (real: boolean) => {
+  const p = breakoutPrefix();
+  return real
+    ? extend(p, [{ c: 4680, h: 4684, l: 4641 }, { c: 4692 }, { c: 4688 }, { c: 4703 }, { c: 4711 }], 3302, 1, [4680], [4650])
+    : extend(p, [{ c: 4620, h: 4685, l: 4617 }, { c: 4606 }, { c: 4598 }, { c: 4590 }], 3303, 1, [4685, 4620], [4650]);
+};
+
+// Trend-following 3 — pullback Fibonacci (XAU/USD H4) : HL 4 480, impulsion jusqu'au HH
+// 4 660 (180$), repli jusqu'à 4 550 (≈ 0.618), pin bar haussière clôturée à 4 565.
+const tf3Pullback = () => buildCandles(4510, [
+  ...c(4523, 4515, 4507, 4498, 4490), { c: 4486, l: 4480 },
+  ...c(4505, 4531, 4558, 4586, 4612, 4637), { c: 4652, h: 4660 },
+  ...c(4644, 4630, 4618, 4603, 4590, 4577, 4566, 4561), { c: 4565, h: 4569, l: 4550 },
+], { seed: 3401, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", pins: [4480, 4660, 4550] });
+
+// Multi-timeframe 4 — affiner le risque en M5 (EUR/USD) : montée dans la zone
+// 1.1750-1.1760, trois mèches hautes (1.1764 / 1.1768 / 1.1770), creux local 1.1748
+// cassé, retour à 1.1758 (entrée short).
+const riskAffineM5 = () => buildCandles(1.1724, [
+  ...c(1.1729, 1.1735, 1.1742, 1.1749),
+  { c: 1.1753, h: 1.1764 }, { c: 1.1750, h: 1.1768, l: 1.1748 }, { c: 1.1754, h: 1.1770 },
+  ...c(1.1741, 1.1734, 1.1729, 1.1738, 1.1747), { c: 1.1755, h: 1.1758 },
+], { seed: 3501, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1750, 1.1760], pins: [1.1764, 1.1768, 1.1770, 1.1748, 1.1758] });
+
+Object.assign(SCENARIOS, {
+  "divergence-no-break": divergenceNoBreak,
+  "flip-pin": () => flipWith("pin"),
+  "flip-engulfing": () => flipWith("engulfing"),
+  "flip-reaction": () => flipWith("reaction"),
+  "breakout-real": () => breakoutWith(true),
+  "breakout-fake": () => breakoutWith(false),
+  "tf3-pullback": tf3Pullback,
+  "risk-affine-m5": riskAffineM5,
+});

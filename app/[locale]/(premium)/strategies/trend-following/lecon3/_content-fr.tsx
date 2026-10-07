@@ -164,7 +164,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Impulsion claire : displacement directionnel marqué (corps significatifs)</li>
-              <li>- Retracement 30-60% (idéalement 0.5 à 0.618) : profondeur tradable</li>
+              <li>- Retracement de 50 à 78,6% (idéalement l&apos;OTE 0.618 à 0.786) : profondeur tradable</li>
               <li>- Signal de rejet au contact (pin bar, engulfing, réaction immédiate)</li>
               <li>- Biais de l&apos;UT supérieure (H4 ou Daily) aligné avec le sens de l&apos;impulsion</li>
             </ul>
@@ -199,7 +199,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD en tendance haussière confirmée. Dernier HL à 4 480$, dernier HH à 4 660$ (impulsion 180$). Fibonacci : 0.618 = 4 548$, 0.786 = 4 519$. Le prix descend toucher 4 550$ (pratiquement 0.618). Pin bar haussière au contact.
+              XAU/USD en tendance haussière confirmée. Dernier HL à 4 480$, dernier HH à 4 660$ (impulsion 180$). Fibonacci : 0.618 = 4 549$, 0.786 = 4 519$. Le prix descend toucher 4 550$ (pratiquement 0.618). Pin bar haussière au contact.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">

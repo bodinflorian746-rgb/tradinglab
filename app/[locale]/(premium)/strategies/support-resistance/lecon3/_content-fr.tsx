@@ -183,7 +183,7 @@ export default function ContentFr() {
                 <li>- Validation : 4 bougies sans réintégration sous 1.1850</li>
                 <li>- Retest : pin bar avec mèche basse à 1.1842 et clôture à 1.1858</li>
                 <li>- Entrée long : 1.1858 (clôture de la pin bar)</li>
-                <li>- Stop loss : 1.1830 (28 pips sous la mèche, marge 12 pips)</li>
+                <li>- Stop loss : 1.1830 (12 pips sous la mèche à 1.1842)</li>
                 <li>- Take profit : 1.1950 (prochaine résistance H4)</li>
               </ul>
 
@@ -191,7 +191,7 @@ export default function ContentFr() {
               <ul className="space-y-1 text-sm text-zinc-300">
                 <li>- Risque : 1.1858 - 1.1830 = 28 pips</li>
                 <li>- Gain potentiel : 1.1950 - 1.1858 = 92 pips</li>
-                <li>- R/R : 92 / 28 = 3,28</li>
+                <li>- R/R : 92 / 28 = 3,29</li>
               </ul>
             </div>
 
@@ -203,7 +203,7 @@ export default function ContentFr() {
               <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 164€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
-              Le R/R reste 3,28:1 peu importe la taille du compte.
+              Le R/R reste 3,29:1 peu importe la taille du compte.
             </p>
           </section>
 

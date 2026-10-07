@@ -171,7 +171,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : entrée short à 1.1758 sous la zone. Sans confirmation de l&apos;UT inférieure, le SL doit couvrir l&apos;intégralité de la zone H4, placé à 1.1790, soit 35 pts de risque. Avec confirmation M5, le SL passe juste au-dessus du dernier sommet local de rejet, placé à 1.1772, soit 14 pts. Même idée de trade, même cible, mais la distance entrée-SL est divisée par 2,5.
+                EUR/USD : entrée short à 1.1758, dans la zone H1, au retour du prix après la cassure du creux local. Sans confirmation de l&apos;UT inférieure, le SL doit couvrir l&apos;intégralité de la zone H4 (jusqu&apos;à la résistance Daily 1.1780), placé à 1.1790, soit 32 pts de risque. Avec confirmation M5, le SL passe juste au-dessus du dernier sommet local de rejet, placé à 1.1772, soit 14 pts. Même idée de trade, même cible, mais la distance entrée-SL est divisée par plus de 2.
               </p>
             </div>
 

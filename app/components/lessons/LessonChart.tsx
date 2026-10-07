@@ -124,7 +124,8 @@ export interface LCPanel {
   markers?: LCMarker[];
   segments?: LCSegment[];
   series?: LCSeries[];
-  rsi?: { values: (number | null)[]; label: string };
+  /** Sous-panneau RSI ; marks : repères sur la courbe (reliés deux à deux par un trait, ex. divergence) */
+  rsi?: { values: (number | null)[]; label: string; marks?: { i: number; label: string; tone?: LCTone }[] };
   /** Prix hors cadre (objectif lointain) : étiquette « … ↑ » au bord */
   offscale?: { key: string; price: number; label: string; short?: string; tone: LCTone }[];
   chips?: LCChip[];
@@ -392,6 +393,25 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
                 <line key={v} data-level={`rsi${v}`} data-price={v} x1={plotL} x2={plotR} y1={ry(v)} y2={ry(v)} stroke="#9ca0ab" strokeOpacity={0.6} strokeWidth={1.5} strokeDasharray="4 5" />
               ))}
               <polyline points={pts} fill="none" stroke={TONE.fib} strokeWidth={2} strokeLinejoin="round" />
+              {(p.rsi.marks ?? []).length > 1 && (
+                <polyline points={(p.rsi.marks ?? []).map((m) => `${xOf(m.i)},${ry(p.rsi!.values[m.i] ?? 50)}`).join(" ")}
+                  fill="none" stroke={TONE[(p.rsi.marks ?? [])[1].tone ?? "bear"]} strokeWidth={2} strokeDasharray="5 4" />
+              )}
+              {(p.rsi.marks ?? []).map((m) => {
+                const v = p.rsi!.values[m.i] ?? 50;
+                const w = tagW(m.label);
+                const x = clamp(xOf(m.i) - w / 2, plotL, plotR - w);
+                const y = Math.max(r0 + MARK_H / 2, ry(v) - 4 - MARK_H / 2);
+                return (
+                  <g key={`rm${m.i}`} data-marker={`rsi${m.i}`} data-rsi-mark={m.i}>
+                    <circle cx={xOf(m.i)} cy={ry(v)} r={4} fill={TONE[m.tone ?? "fib"]} stroke="#06090d" strokeWidth={1.5} />
+                    <g data-label-for={`rsi${m.i}`}>
+                      <rect x={x} y={y - MARK_H / 2} width={w} height={MARK_H} rx={MARK_H / 2} fill="#06090d" stroke={TONE[m.tone ?? "fib"]} strokeWidth={1.5} />
+                      <text x={x + w / 2} y={y + FS * 0.36} textAnchor="middle" fontSize={FS} fontWeight={700} fill={TONE[m.tone ?? "fib"]}>{m.label}</text>
+                    </g>
+                  </g>
+                );
+              })}
               <text x={plotL + 4} y={r0 + FS} fontSize={FS} fontWeight={600} fill="#c7c9d1">{p.rsi.label}</text>
             </g>
           );
