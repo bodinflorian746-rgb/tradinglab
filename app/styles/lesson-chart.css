@@ -186,8 +186,10 @@
 /* Tableau */
 .tsx-v2 .ls-matrix-wrap { overflow-x: auto; }
 .tsx-v2 .ls-matrix { width: 100%; border-collapse: separate; border-spacing: 4px; font-size: 13px; }
-.tsx-v2 .ls-matrix th { font-size: 12px; font-weight: 600; color: var(--v2-text-3); text-align: left; padding: 4px 6px; white-space: nowrap; }
+.tsx-v2 .ls-matrix th { font-size: 12px; font-weight: 600; color: var(--v2-text-3); text-align: left; padding: 4px 4px; white-space: nowrap; }
+.tsx-v2 .ls-matrix thead th { text-align: center; }
 .tsx-v2 .ls-matrix td {
+  min-width: 34px;
   text-align: center; padding: 8px 6px; border-radius: 8px; color: var(--v2-text); font-variant-numeric: tabular-nums;
   background: color-mix(in srgb, var(--ls-c, #9ca0ab) 22%, #06090d);
 }

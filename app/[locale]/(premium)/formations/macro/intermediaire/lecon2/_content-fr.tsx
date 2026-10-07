@@ -180,7 +180,7 @@ export default function ContentFr() {
               </li>
               <li className="flex items-start gap-2.5 text-sm text-zinc-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
-                <span><span className="font-semibold text-zinc-200">Mais le mois précédent est révisé de 250k à 170k</span></span>
+                <span><span className="font-semibold text-zinc-200">Mais le mois précédent est révisé de 170k à 250k</span></span>
               </li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
@@ -188,7 +188,7 @@ export default function ContentFr() {
             </p>
 
             <div className="bg-zinc-900/60 rounded-xl px-4 py-3 mb-5">
-              <p className="text-xs font-semibold text-zinc-400 mb-2">Sur cette révision NFP (250k → 170k), tous ces actifs ont bougé simultanément :</p>
+              <p className="text-xs font-semibold text-zinc-400 mb-2">Sur cette révision NFP (170k → 250k), tous ces actifs ont bougé simultanément :</p>
               <div className="space-y-1.5">
                 {[
                   { asset: "EUR/USD", detail: "-60 pips", note: "dollar réévalué à la hausse" },
@@ -457,15 +457,15 @@ export default function ContentFr() {
             options={[
               "Le marché est aléatoire, ces mouvements ne sont pas explicables",
               "Le chiffre réel est très supérieur au consensus",
-              "Le chiffre précédent a peut-être été révisé fortement à la baisse",
+              "Le chiffre précédent a peut-être été révisé fortement à la hausse",
               "Les news macro ne servent à rien sur le forex",
             ]}
             correctIndex={2}
-            explanation="Un chiffre réel proche du consensus ne suffit pas toujours à expliquer un gros mouvement. Les révisions peuvent modifier toute la lecture de la tendance de l'emploi (par exemple, un chiffre précédent révisé de 250k à 170k change la perception du marché du travail US). L'option A ignore la logique macro, les mouvements ont presque toujours une cause identifiable. L'option B est fausse ici : 205k contre 200k n'est pas un gros écart. L'option D contredit tout le module Macro. C'est exactement le scénario du hero de cette leçon. Cette logique des révisions s'applique sur tous les actifs liés au dollar : EUR/USD, XAU/USD, Nasdaq et BTC/USD réagissent tous à la même réévaluation."
+            explanation="Un chiffre réel proche du consensus ne suffit pas toujours à expliquer un gros mouvement. Les révisions peuvent modifier toute la lecture de la tendance de l'emploi (par exemple, un chiffre précédent révisé de 170k à 250k change la perception du marché du travail US). L'option A ignore la logique macro, les mouvements ont presque toujours une cause identifiable. L'option B est fausse ici : 205k contre 200k n'est pas un gros écart. L'option D contredit tout le module Macro. C'est exactement le scénario du hero de cette leçon. Cette logique des révisions s'applique sur tous les actifs liés au dollar : EUR/USD, XAU/USD, Nasdaq et BTC/USD réagissent tous à la même réévaluation."
             answerExplanations={[
               "Faux. Le marché suit une logique précise basée sur les anticipations et les révisions. La réaction n'est pas aléatoire, elle a presque toujours une cause identifiable.",
               "Faux. 205k contre 200k est un écart minimal, insuffisant pour provoquer un gros mouvement. Ce n'est pas le chiffre du jour qui explique la réaction.",
-              "Correct. Les révisions peuvent modifier toute la lecture macro. Un chiffre précédent révisé de 250k à 170k change la perception du marché du travail US, et le marché réagit à cette nouvelle réalité.",
+              "Correct. Les révisions peuvent modifier toute la lecture macro. Un chiffre précédent révisé de 170k à 250k change la perception du marché du travail US, et le marché réagit à cette nouvelle réalité.",
               "Faux. Les news macro sont l'une des principales causes des gros mouvements sur le forex. Ce module entier en est la démonstration.",
             ]}
           />

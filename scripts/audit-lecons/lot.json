@@ -52,5 +52,10 @@
   {"url":"/fr/formations/avance/lecon8","charts":["TradingJournalDiagram"]},
   {"url":"/fr/formations/macro/debutant/lecon1","charts":["MacroCalendarDiagram"]},
   {"url":"/fr/formations/macro/debutant/lecon2","charts":["CentralBanksHierarchy"]},
-  {"url":"/fr/formations/macro/debutant/lecon5","charts":["DollarHubDiagram"]}
+  {"url":"/fr/formations/macro/debutant/lecon5","charts":["DollarHubDiagram"]},
+  {"url":"/fr/formations/macro/debutant/lecon6","charts":["MacroDangerWindowsDiagram"]},
+  {"url":"/fr/formations/macro/intermediaire/lecon2","charts":["CalendarReadingComparisonDiagram"]},
+  {"url":"/fr/formations/macro/intermediaire/lecon4","charts":["TradingSessionsLiquidityDiagram"]},
+  {"url":"/fr/formations/macro/intermediaire/lecon5","charts":["CorrelationMatrixDiagram"]},
+  {"url":"/fr/formations/macro/intermediaire/lecon6","charts":["WeeklyBiasCalendarDiagram"]}
 ]
