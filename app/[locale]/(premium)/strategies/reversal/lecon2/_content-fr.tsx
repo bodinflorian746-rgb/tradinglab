@@ -161,11 +161,11 @@ export default function ContentFr() {
             <div className="my-8">
               <HSNecklineSlopeDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">La ligne de cou d&apos;un ETE n&apos;est pas toujours strictement horizontale. Sa pente conditionne le measured move et donc la cible TP.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">La ligne de cou d&apos;un ETE n&apos;est pas toujours strictement horizontale. Le calcul du measured move ne change pas : la hauteur se mesure de la tête jusqu&apos;à la ligne de cou, à la verticale de la tête, puis se reporte sous le point de breakout de la ligne de cou.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- <span className="text-white font-semibold">Ligne de cou horizontale</span>, measured move standard, TP plein conservé.</li>
-              <li>- <span className="text-white font-semibold">Ligne de cou ascendante</span>, measured move étendu, le TP gagne quelques pips supplémentaires.</li>
-              <li>- <span className="text-white font-semibold">Ligne de cou descendante</span>, measured move réduit, TP plus serré, R/R souvent moins favorable.</li>
+              <li>- <span className="text-white font-semibold">Ligne de cou horizontale</span>, le breakout se fait au niveau des deux creux : hauteur reportée sous la ligne de cou.</li>
+              <li>- <span className="text-white font-semibold">Ligne de cou ascendante</span>, le point de breakout est plus haut sur la ligne : la hauteur se reporte depuis ce point, pas depuis le creux le plus bas.</li>
+              <li>- <span className="text-white font-semibold">Ligne de cou descendante</span>, le point de breakout est plus bas sur la ligne : la hauteur se reporte depuis ce point, le TP descend d&apos;autant.</li>
             </ul>
           </section>
 

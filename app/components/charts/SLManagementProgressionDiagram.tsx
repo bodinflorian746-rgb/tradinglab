@@ -1,124 +1,67 @@
-export default function SLManagementProgressionDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
-  const isEs = locale === "es";
-  const isEn = locale === "en";
-  const L = {
-    title:        isEs ? "Gestión dinámica del SL en 4 etapas" : isEn ? "Dynamic SL management in 4 stages" : "Gestion dynamique du SL en 4 étapes",
-    s1:           isEs ? "Etapa 1 — SL inicial" : isEn ? "Stage 1 — Initial SL" : "Étape 1 — SL initial",
-    s2:           isEs ? "Etapa 2 — Ajuste" : isEn ? "Stage 2 — Tighten" : "Étape 2 — Resserrement",
-    s3:           isEs ? "Etapa 3 — Break-even" : isEn ? "Stage 3 — Break-even" : "Étape 3 — Break-even",
-    s4:           isEs ? "Etapa 4 — Trailing" : isEn ? "Stage 4 — Trailing" : "Étape 4 — Trailing",
-    entryLabel:   isEs ? "Entrada 1.1795" : isEn ? "Entry 1.1795" : "Entrée 1.1795",
-    sl1Label:     isEs ? "SL 1.1835 (+40)" : isEn ? "SL 1.1835 (+40)" : "SL 1.1835 (+40)",
-    sl1Bot:       isEs ? "SL inicial 1.1835" : isEn ? "Initial SL 1.1835" : "SL initial 1.1835",
-    sl2Label:     isEs ? "SL 1.1815 (+20)" : isEn ? "SL 1.1815 (+20)" : "SL 1.1815 (+20)",
-    sl2Bot:       isEs ? "SL ajustado 1.1815" : isEn ? "SL tightened 1.1815" : "SL resserré 1.1815",
-    sl3Label:     isEs ? "SL = Entrada 1.1795" : isEn ? "SL = Entry 1.1795" : "SL = Entrée 1.1795",
-    sl3Bot:       isEs ? "SL break-even" : isEn ? "SL break-even" : "SL break-even",
-    sl4Trail:     isEs ? "SL trailing" : isEn ? "SL trailing" : "SL trailing",
-    sl4Bot:       isEs ? "Sigue el precio" : isEn ? "Follows price" : "Suit le prix",
-    sl4Entry:     isEs ? "Entrada 1.1795" : isEn ? "Entry 1.1795" : "Entrée 1.1795",
-    mobTitle:     isEs ? "Gestión dinámica del SL en 4 etapas" : isEn ? "Dynamic SL management in 4 stages" : "Gestion dynamique du SL en 4 étapes",
-    mob1T:        isEs ? "1 · SL inicial — fijo" : isEn ? "1 · Initial SL — fixed" : "1 · SL initial — fixe",
-    mob1D:        isEs ? "Coloca el SL en el punto estructural en la entrada. Permanece fijo mientras el precio no haya avanzado." : isEn ? "Place the SL at the structural point on entry. Stays fixed until price has advanced." : "Place le SL au point structurel à l'entrée. Reste fixe tant que le prix n'a pas avancé.",
-    mob2T:        isEs ? "2 · Break-even (+1R)" : isEn ? "2 · Break-even (+1R)" : "2 · Break-even (+1R)",
-    mob2D:        isEs ? "Apenas el precio avanza 1R, mueve el SL al precio de entrada. Trade sin riesgo." : isEn ? "As soon as price advances 1R, move the SL to entry. Risk-free trade." : "Dès que le prix avance d'1R, déplace le SL au prix d'entrée. Trade sans risque.",
-    mob3T:        isEs ? "3 · SL en estructura intermedia" : isEn ? "3 · SL on intermediate structure" : "3 · SL sur structure intermédiaire",
-    mob3D:        isEs ? "En cada nuevo HH/HL formado, sube el SL justo debajo del último HL." : isEn ? "On each new HH/HL formed, raise the SL just below the last HL." : "À chaque nouveau HH/HL formé, remonte le SL juste sous le dernier HL.",
-    mob4T:        isEs ? "4 · Trailing dinámico" : isEn ? "4 · Dynamic trailing" : "4 · Trailing dynamique",
-    mob4D:        isEs ? "El SL sigue el precio — deja correr las ganancias. Salida automática si hay reversión." : isEn ? "The SL follows price — let profits run. Auto exit on reversal." : "SL suit le prix — laisse courir les gains. Sortie auto si retournement.",
-  };
+// Stratégie Reversal 4 — « Couper rapidement ». Cas 1 de la leçon : short
+// EUR/USD à 1.1795 après le breakout de la ligne de cou (1.1800), SL 1.1835.
+// Le prix descend à 1.1780 puis une bougie H1 clôture à 1.1810, au-dessus de la
+// ligne de cou : invalidation. Trois issues, pertes calculées sur les niveaux :
+// couper à la clôture, attendre une bougie de plus (SL touché), SL resserré
+// sur la ligne de cou dès l'entrée.
+
+import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
+import { crossing, fmtNum, fmtPrice, pips } from "@/lib/lessons/chart-analysis";
+import { SL_CASE } from "@/lib/lessons/line-data";
+import { PIP } from "@/lib/lessons/models";
+
+// Clôtures H1 : breakout (entrée), creux 1.1780, clôture d'invalidation 1.1810, puis montée jusqu'au SL
+const { neck: NECK, entry: ENTRY, sl: SL, closes: CLOSES, entryIndex: ENTRY_I, cutIndex: CUT_I } = SL_CASE;
+const SLOTS = CLOSES.length;
+
+const p = (x: number) => fmtPrice(x, 4);
+const loss = (exit: number) => {
+  const pp = pips(exit, ENTRY, PIP);
+  return `Perte ${pp} pips · −${fmtNum(pp / pips(SL, ENTRY, PIP))}R`;
+};
+
+export default function SLManagementProgressionDiagram({ className = "" }: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cut = CLOSES.slice(0, CUT_I + 1);
+  const hitSL = crossing(CLOSES, () => SL, ENTRY_I, "up")!;
+  const hitNeck = crossing(cut, () => NECK, ENTRY_I, "up")!;
+  const neck = { key: "neck", price: NECK, label: `Ligne de cou ${p(NECK)}`, short: "Ligne de cou", tone: "neutral" as const, dashed: true, faint: true };
+  const entry = { key: "entry", price: ENTRY, from: ENTRY_I, label: `Entrée ${p(ENTRY)}`, short: "Entrée", tone: "entry" as const };
+  const panels: LCPanel[] = [
+    {
+      key: "cut", title: "Couper à la clôture", subtitle: "La bougie H1 clôture à 1.1810, au-dessus de la ligne de cou : sortie à cette clôture",
+      decimals: 4, height: 210, line: cut, slots: SLOTS,
+      levels: [neck, entry, { key: "sl", price: SL, from: ENTRY_I, label: `SL ${p(SL)}`, tone: "bear", dashed: true }],
+      markers: [{ key: "cut", i: CUT_I, price: CLOSES[CUT_I], label: `Coupe ${p(CLOSES[CUT_I])}`, tone: "zone", side: "above", dot: true }],
+      chips: [{ label: loss(CLOSES[CUT_I]), tone: "zone", data: { entry: ENTRY, exit: CLOSES[CUT_I], sl: SL } }],
+    },
+    {
+      key: "wait", title: "Attendre une bougie de plus", subtitle: "Le prix continue de monter jusqu'au SL",
+      decimals: 4, height: 210, line: CLOSES, slots: SLOTS,
+      levels: [neck, entry, { key: "sl", price: SL, from: ENTRY_I, label: `SL ${p(SL)}`, tone: "bear", dashed: true }],
+      markers: [{ key: "hit", i: hitSL.i, price: SL, label: "SL touché", tone: "bear", side: "above", dot: true }],
+      chips: [{ label: loss(SL), tone: "bear", data: { entry: ENTRY, exit: SL, sl: SL } }],
+    },
+    {
+      key: "tight", title: "SL resserré sur la ligne de cou", subtitle: "Le SL passe de 1.1835 à la ligne de cou après l'entrée",
+      decimals: 4, height: 210, line: cut, slots: SLOTS,
+      levels: [
+        entry,
+        { key: "sl0", price: SL, from: ENTRY_I, to: ENTRY_I + 1, label: `SL initial ${p(SL)}`, short: "SL initial", tone: "bear", dashed: true, faint: true },
+        { key: "sl", price: NECK, from: ENTRY_I + 1, label: `SL ${p(NECK)} (ligne de cou)`, short: `SL ${p(NECK)}`, tone: "bear", dashed: true },
+      ],
+      markers: [{ key: "hit", i: hitNeck.i, price: NECK, label: "SL touché", tone: "bear", side: "above", dot: true }],
+      chips: [{ label: loss(NECK), tone: "bull", data: { entry: ENTRY, exit: NECK, sl: SL } }],
+    },
+  ];
   return (
     <div className={className}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 800 300"
-      className="hidden sm:block w-full h-auto"
-    >
-      <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        {L.title}
-      </text>
-
-      <line x1="200" y1="40" x2="200" y2="270" stroke="#3f3f46" strokeWidth="1" />
-      <line x1="400" y1="40" x2="400" y2="270" stroke="#3f3f46" strokeWidth="1" />
-      <line x1="600" y1="40" x2="600" y2="270" stroke="#3f3f46" strokeWidth="1" />
-
-      {/* ═══ PANEL 1 — SL initial ═══ */}
-      <rect x="20" y="50" width="170" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="105" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">{L.s1}</text>
-      {/* Entrée */}
-      <line x1="20" y1="150" x2="190" y2="150" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 2" />
-      {/* SL */}
-      <line x1="20" y1="210" x2="190" y2="210" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="5 3" />
-      <path d="M30,180 L65,165 L100,170 L135,155 L170,145" stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
-      {/* Halos + labels déplacés après path pour rester au-dessus */}
-      <rect x="21" y="134" width="99" height="14" fill="#09090b" rx="3" />
-      <text x="25" y="145" fill="#10b981" fontSize="8" fontWeight="600">{L.entryLabel}</text>
-      <rect x="21" y="194" width="113" height="14" fill="#09090b" rx="3" />
-      <text x="25" y="205" fill="#ef4444" fontSize="8" fontWeight="600">{L.sl1Label}</text>
-      <rect x="55" y="230" width="100" height="18" rx="4" fill="#ef444420" stroke="#ef4444" strokeWidth="0.8" />
-      <text x="105" y="243" fill="#ef4444" fontSize="8" fontWeight="600" textAnchor="middle">{L.sl1Bot}</text>
-
-      {/* ═══ PANEL 2 — Resserrement ═══ */}
-      <rect x="220" y="50" width="170" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="305" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">{L.s2}</text>
-      <line x1="220" y1="150" x2="390" y2="150" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 2" />
-      <line x1="220" y1="180" x2="390" y2="180" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="5 3" />
-      <path d="M230,200 L265,180 L300,170 L335,160 L370,155" stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
-      {/* Halos + labels déplacés après path */}
-      <rect x="221" y="134" width="99" height="14" fill="#09090b" rx="3" />
-      <text x="225" y="145" fill="#10b981" fontSize="8" fontWeight="600">{L.entryLabel}</text>
-      <rect x="221" y="184" width="113" height="14" fill="#09090b" rx="3" />
-      <text x="225" y="195" fill="#f59e0b" fontSize="8" fontWeight="600">{L.sl2Label}</text>
-      <rect x="255" y="230" width="100" height="18" rx="4" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="0.8" />
-      <text x="305" y="243" fill="#f59e0b" fontSize="8" fontWeight="600" textAnchor="middle">{L.sl2Bot}</text>
-
-      {/* ═══ PANEL 3 — Break-even ═══ */}
-      <rect x="420" y="50" width="170" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="505" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">{L.s3}</text>
-      <line x1="420" y1="150" x2="590" y2="150" stroke="#10b981" strokeWidth="1.5" strokeDasharray="3 2" />
-      <path d="M430,220 L465,195 L500,170 L535,155 L575,140" stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
-      {/* Halo + label déplacé après path */}
-      <rect x="421" y="134" width="134" height="14" fill="#09090b" rx="3" />
-      <text x="425" y="145" fill="#10b981" fontSize="8" fontWeight="600">{L.sl3Label}</text>
-      <rect x="455" y="230" width="100" height="18" rx="4" fill="#10b98120" stroke="#10b981" strokeWidth="0.8" />
-      <text x="505" y="243" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">{L.sl3Bot}</text>
-
-      {/* ═══ PANEL 4 — Trailing ═══ */}
-      <rect x="620" y="50" width="170" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="705" y="64" fill="#d4d4d8" fontSize="10" fontWeight="600" textAnchor="middle">{L.s4}</text>
-      <line x1="620" y1="150" x2="790" y2="150" stroke="#71717a" strokeWidth="1" strokeDasharray="2 2" opacity="0.5" />
-      {/* SL trailing qui suit le prix avec écart */}
-      <path d="M630,180 L665,160 L700,140 L735,120 L770,105" stroke="#10b981" strokeWidth="1.5" strokeDasharray="4 3" />
-      <path d="M630,220 L665,200 L700,180 L735,160 L770,140" stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
-      {/* Halos + labels déplacés après les 2 paths pour rester au-dessus */}
-      <rect x="621" y="134" width="99" height="14" fill="#09090b" rx="3" />
-      <text x="625" y="145" fill="#71717a" fontSize="8">{L.sl4Entry}</text>
-      <rect x="694" y="89" width="85" height="14" fill="#09090b" rx="3" />
-      <text x="775" y="100" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="end">{L.sl4Trail}</text>
-      <rect x="655" y="230" width="100" height="18" rx="4" fill="#10b98120" stroke="#10b981" strokeWidth="0.8" />
-      <text x="705" y="243" fill="#10b981" fontSize="8" fontWeight="600" textAnchor="middle">{L.sl4Bot}</text>
-    </svg>
-
-    {/* MOBILE : gestion SL en 4 étapes ───────────────────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
-      <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-        <p className="text-[13px] font-bold text-zinc-300">{L.mob1T}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mob1D}</p>
-      </div>
-      <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-        <p className="text-[13px] font-bold text-amber-400">{L.mob2T}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mob2D}</p>
-      </div>
-      <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
-        <p className="text-[13px] font-bold text-blue-400">{L.mob3T}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mob3D}</p>
-      </div>
-      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">{L.mob4T}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mob4D}</p>
-      </div>
-    </div>
+      <LessonChart
+        id="SLManagementProgressionDiagram"
+        title="Couper vite plutôt que subir le SL"
+        panels={panels}
+        sharedScale
+        caption="Cas 1 de la leçon : short EUR/USD à 1.1795, SL 1.1835 (40 pips = 1R). Clôtures H1."
+      />
     </div>
   );
 }

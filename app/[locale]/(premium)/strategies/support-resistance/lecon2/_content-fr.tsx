@@ -154,7 +154,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">La confluence renforce</h2>
 
             <div className="my-8">
-              <ConfluenceDiagram />
+              <ConfluenceDiagram variant="chiffre-rond" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
