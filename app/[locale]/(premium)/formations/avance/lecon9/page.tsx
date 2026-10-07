@@ -69,7 +69,7 @@ function ContentFr() {
         </p>
         <div className="space-y-2.5">
           {[
-            { metric: "Win Rate", good: "> 40%", desc: "Pourcentage de trades gagnants. Avec un bon R/R, même 40% de winrate peut être profitable." },
+            { metric: "Winrate", good: "> 40%", desc: "Pourcentage de trades gagnants. Avec un bon R/R, même 40% de winrate peut être profitable." },
             { metric: "R moyen", good: "> +0.5R", desc: "Gain moyen par trade en R. Un winrate de 50% avec R moyen de +1R = très rentable." },
             { metric: "Profit Factor", good: "> 1.5", desc: "Total des gains ÷ total des pertes. Doit être supérieur à 1.0 pour être rentable." },
             { metric: "Drawdown max", good: "< 15%", desc: "Perte maximale depuis un pic. Un drawdown élevé teste ta psychologie en live, connais-le à l'avance." },

@@ -355,7 +355,7 @@ function LongShortDiagram({ t }: { t: DiagLabels["longShort"] }) {
             <circle cx="200" cy="38" r="4" fill="#34d399" />
             <text x="110" y="30" fontSize="9" fill="#34d399" fontFamily="monospace">{t.exit}</text>
             <line x1="205" y1="38" x2="205" y2="140" stroke="#34d399" strokeWidth="1.5" strokeDasharray="3,3" />
-            <text x="208" y="94" fontSize="10" fill="#34d399" fontFamily="sans-serif" fontWeight="700">{t.longRise}</text>
+            <text x="199" y="115" textAnchor="end" fontSize="10" fill="#34d399" fontFamily="sans-serif" fontWeight="700">{t.longRise}</text>
             <path d="M105 80 L105 50 L100 56 M105 50 L110 56" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" fill="none" />
           </svg>
           <p className="text-[10px] text-emerald-400/70 text-center mt-1">{t.bullishCaption}</p>
@@ -375,7 +375,7 @@ function LongShortDiagram({ t }: { t: DiagLabels["longShort"] }) {
             <circle cx="200" cy="140" r="4" fill="#f87171" />
             <text x="100" y="155" fontSize="9" fill="#f87171" fontFamily="monospace">{t.exit.replace("81 000", "75 000")}</text>
             <line x1="205" y1="38" x2="205" y2="140" stroke="#f87171" strokeWidth="1.5" strokeDasharray="3,3" />
-            <text x="208" y="94" fontSize="10" fill="#f87171" fontFamily="sans-serif" fontWeight="700">{t.shortDrop}</text>
+            <text x="199" y="63" textAnchor="end" fontSize="10" fill="#f87171" fontFamily="sans-serif" fontWeight="700">{t.shortDrop}</text>
             <path d="M105 70 L105 100 L100 94 M105 100 L110 94" stroke="#f87171" strokeWidth="1.5" strokeLinecap="round" fill="none" />
           </svg>
           <p className="text-[10px] text-red-400/70 text-center mt-1">{t.bearishCaption}</p>

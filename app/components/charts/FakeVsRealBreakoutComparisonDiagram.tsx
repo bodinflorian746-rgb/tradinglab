@@ -5,7 +5,7 @@ export default function FakeVsRealBreakoutComparisonDiagram({ className = "", lo
     title:       isEs ? "Verdadero breakout vs fakeout" : isEn ? "Real breakout vs Fake breakout" : "Vrai breakout vs Faux breakout",
     real:        isEs ? "✓ Verdadero breakout" : isEn ? "✓ Real breakout" : "✓ Vrai breakout",
     fake:        isEs ? "✗ Fakeout" : isEn ? "✗ Fake breakout" : "✗ Faux breakout",
-    resistance:  isEs ? "Resistencia 4 650$" : isEn ? "Resistance $4,650" : "{L.resistance}",
+    resistance:  isEs ? "Resistencia 4 650$" : isEn ? "Resistance $4,650" : "Résistance 4 650$",
     realClose:   isEs ? "Cierre 4 680$ + follow-through" : isEn ? "Close $4,680 + follow-through" : "Clôture 4 680$ + follow-through",
     wickLabel:   isEs ? "mecha 4 685$" : isEn ? "wick $4,685" : "mèche 4 685$",
     closeLabel:  isEs ? "cierre 4 620$" : isEn ? "close $4,620" : "clôture 4 620$",
