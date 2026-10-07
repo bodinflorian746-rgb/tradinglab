@@ -1,6 +1,6 @@
 [
   {"url":"/fr/formations/intermediaire/lecon5","charts":["ConfluenceDiagram"]},
-  {"url":"/fr/strategies/support-resistance/lecon2","charts":["ConfluenceDiagram"]},
+  {"url":"/fr/strategies/support-resistance/lecon2","charts":["ConfluenceDiagram","SRHierarchyDiagram"]},
   {"url":"/fr/formations/avance/lecon7","charts":["PrecisionEntryDiagram"]},
   {"url":"/fr/formations/avance/lecon9","charts":["BacktestMetricsDiagram"]},
   {"url":"/fr/strategies/reversal/lecon4","charts":["SLManagementProgressionDiagram"]},
@@ -16,8 +16,8 @@
   {"url":"/fr/strategies/support-resistance/lecon4","charts":["FakeVsRealBreakoutComparisonDiagram"]},
   {"url":"/fr/strategies/trend-following/lecon3","charts":["FibPullbackChecklistDiagram"]},
   {"url":"/fr/strategies/multi-timeframe/lecon4","charts":["RiskAffineDiagram"]},
-  {"url":"/fr/strategies/smc/lecon2","charts":["BOSCHoCHSequenceDiagram"]},
-  {"url":"/fr/strategies/smc/lecon5","charts":["BOSCHoCHSequenceDiagram"]},
+  {"url":"/fr/strategies/smc/lecon2","charts":["BOSCHoCHSequenceDiagram","BOSvsCHoCHComparisonDiagram"]},
+  {"url":"/fr/strategies/smc/lecon5","charts":["BOSCHoCHSequenceDiagram","MitigationZoneEntryDiagram"]},
   {"url":"/fr/formations/debutant/lecon9","charts":["BiasDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon4","charts":["RetracementInteractive"]},
   {"url":"/fr/formations/avance/lecon4","charts":["KillzonesDiagram"]},
@@ -31,5 +31,8 @@
   {"url":"/fr/strategies/multi-timeframe/lecon5","charts":["ProcessFunnelDiagram"]},
   {"url":"/fr/strategies/price-action/lecon4","charts":["MultiTFEntryDiagram"]},
   {"url":"/fr/strategies/smc/lecon1","charts":["MarketStructureDiagram","InternalVsExternalStructureZoomDiagram","SMCPhasesDiagram"]},
-  {"url":"/fr/formations/intermediaire/lecon1","charts":["MarketStructureDiagram"]}
+  {"url":"/fr/formations/intermediaire/lecon1","charts":["MarketStructureDiagram"]},
+  {"url":"/fr/strategies/trend-following/lecon4","charts":["BOSvsCHoCHComparisonDiagram"]},
+  {"url":"/fr/strategies/smc/lecon3","charts":["OBExecutionPlanDiagram","MitigationZoneEntryDiagram"]},
+  {"url":"/fr/strategies/trend-following/lecon1","charts":["TrendIdentificationStepsDiagram"]}
 ]

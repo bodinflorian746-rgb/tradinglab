@@ -409,3 +409,50 @@ Object.assign(SCENARIOS, {
   "internal-h1": internalH1,
   "smc-phases": smcPhases,
 });
+
+// ─── Lot 8 ───────────────────────────────────────────────────────────────────
+
+// SMC 2 / TF 4 — même structure haussière (HL 1.1700, HH 1.1780, HL 1.1750, HH 1.1820),
+// puis breakout opposé : au-dessus du HH 1.1820 (BOS) ou sous le HL 1.1750 (CHoCH)
+const bosChochPrefix = () => buildCandles(1.1722, [
+  ...c(1.1712), { c: 1.1706, l: 1.1700 }, ...c(1.1721, 1.1742, 1.1761), { c: 1.1773, h: 1.1780 },
+  ...c(1.1768), { c: 1.1756, l: 1.1750 }, ...c(1.1771, 1.1792, 1.1808), { c: 1.1814, h: 1.1820 }, ...c(1.1806, 1.1793),
+], { seed: 8101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1746, 1.1824, 1.1696], pins: [1.1700, 1.1780, 1.1750, 1.1820] });
+const bosChochWith = (bos: boolean) => extend(bosChochPrefix(), bos
+  ? [{ c: 1.1809 }, { c: 1.1831, h: 1.1835 }, { c: 1.1845 }, { c: 1.1839 }]
+  : [{ c: 1.1772 }, { c: 1.1741, l: 1.1737 }, { c: 1.1733 }, { c: 1.1740 }], bos ? 8102 : 8103, 5, [], [1.1820, 1.1750]);
+
+// SMC 3 — Order Block haussier EUR/USD H1 : dernière bougie rouge avant l'impulsion
+// (corps 1.1752 → 1.1745, mèche 1.1738), BOS au-dessus de 1.1780, HH 1.1810, retour
+// dans l'OB (mèche 1.1748), rejet et reprise.
+const smcOB = () => buildCandles(1.1790, [
+  ...c(1.1784), { c: 1.1777, h: 1.1780 }, ...c(1.1772, 1.1764, 1.1757), { c: 1.1752 },
+  { c: 1.1745, h: 1.1754, l: 1.1738 },
+  ...c(1.1763, 1.1779), { c: 1.1791 }, ...c(1.1802), { c: 1.1806, h: 1.1810 },
+  ...c(1.1797, 1.1786, 1.1774, 1.1763), { c: 1.1757, l: 1.1748 }, ...c(1.1768, 1.1782),
+], { seed: 8201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1752, 1.1745, 1.1780], pins: [1.1752, 1.1745, 1.1738, 1.1810, 1.1748] });
+
+// SMC 3 / SMC 5 — mitigation après CHoCH baissier (EUR/USD H1) : HL 1.1720 / HH 1.1780,
+// breakout du HL (CHoCH), creux 1.1690, retour sur l'ex-HL 1.1720 devenu résistance,
+// rejet (entrée short 1.1718), baisse.
+const mitigation = () => buildCandles(1.1712, [
+  ...c(1.1703), { c: 1.1698, l: 1.1694 }, ...c(1.1724, 1.1738), { c: 1.1746, h: 1.1752 }, ...c(1.1737), { c: 1.1726, l: 1.1720 }, ...c(1.1741, 1.1758, 1.1771), { c: 1.1774, h: 1.1780 },
+  ...c(1.1762, 1.1745, 1.1729), { c: 1.1709 }, ...c(1.1698), { c: 1.1695, l: 1.1690 },
+  ...c(1.1702, 1.1711), { c: 1.1718, h: 1.1724 }, ...c(1.1704, 1.1688, 1.1673),
+], { seed: 8301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1720, 1.1726], pins: [1.1694, 1.1752, 1.1720, 1.1780, 1.1690, 1.1724, 1.1718] });
+
+// Trend-following 1 — identifier une tendance (EUR/USD H4) : HL 1.1680, HH 1.1760,
+// HL 1.1720, HH 1.1820 (amplitude 140 pips)
+const trendSteps = () => buildCandles(1.1662, [
+  ...c(1.1651), { c: 1.1646, l: 1.1640 }, ...c(1.1662, 1.1687, 1.1711), { c: 1.1724, h: 1.1730 }, ...c(1.1712, 1.1697), { c: 1.1686, l: 1.1680 },
+  ...c(1.1702, 1.1726, 1.1745), { c: 1.1754, h: 1.1760 }, ...c(1.1741), { c: 1.1727, l: 1.1720 },
+  ...c(1.1743, 1.1770, 1.1797), { c: 1.1813, h: 1.1820 }, ...c(1.1804, 1.1796),
+], { seed: 8401, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1676, 1.1716, 1.1824], pins: [1.1640, 1.1730, 1.1680, 1.1760, 1.1720, 1.1820] });
+
+Object.assign(SCENARIOS, {
+  "bos-case": () => bosChochWith(true),
+  "choch-case": () => bosChochWith(false),
+  "smc-ob": smcOB,
+  "mitigation": mitigation,
+  "trend-steps": trendSteps,
+});

@@ -199,6 +199,34 @@ export function checkLots(check: Check) {
     const after = pivots(cs).filter((q) => q.index > sw && q.name).map((q) => q.name);
     check(cs.slice(sw).some((k) => k.c > 1.1800) && after.includes("HH") && after.includes("HL") && cs[cs.length - 1].h > 1.1840, "Phases (SMC 1) : pas d'expansion haussière HH / HL");
   }
+  // ─── Lot 8 ─────────────────────────────────────────────────────────────────
+  {
+    // SMC 2 / TF 4 : même préfixe ; BOS = clôture au-dessus du HH 1.1820, CHoCH = clôture sous le HL 1.1750
+    const b = CS["bos-case"], ch = CS["choch-case"], n = Math.min(b.length, ch.length) - 4;
+    check(b.slice(0, n).every((k, i) => k.c === ch[i].c), "BOS / CHoCH (SMC 2) : préfixes différents");
+    const hh = b.findIndex((k) => k.h === 1.1820);
+    check(b.slice(hh + 1).some((k) => k.c > 1.1820) && !b.slice(hh + 1).some((k) => k.c < 1.1750), "BOS / CHoCH (SMC 2) : pas de BOS au-dessus de 1.1820");
+    check(ch.slice(hh + 1).some((k) => k.c < 1.1750) && !ch.slice(hh + 1).some((k) => k.c > 1.1820), "BOS / CHoCH (SMC 2) : pas de CHoCH sous 1.1750");
+  }
+  {
+    // SMC 3 : OB = dernière rouge avant l'impulsion (corps 1.1745-1.1752), BOS > 1.1780, retest de l'OB, R/R ≥ 2
+    const cs = CS["smc-ob"], obI = cs.findIndex((k) => k.o === 1.1752 && k.c === 1.1745);
+    check(obI > 0 && cs[obI + 1].c > cs[obI + 1].o && cs.slice(obI + 1).some((k) => k.c > 1.1780), "OB (SMC 3) : OB / impulsion / BOS");
+    const hhI = cs.reduce((b, k, i) => (i > obI && k.h > cs[b].h ? i : b), obI), re = cs.findIndex((k, i) => i > hhI && k.l <= 1.1752);
+    check(re > hhI && cs[re].l > cs[obI].l && rrOf(1.1752, cs[obI].l - 0.0007, cs[hhI].h) >= 2, "OB (SMC 3) : retest dans l'OB sans le casser, R/R ≥ 2");
+  }
+  {
+    // SMC 3 / 5 : HL 1.1720 / HH 1.1780, CHoCH sous 1.1720, creux 1.1690 (LL), retest de 1.1720 par en dessous, baisse
+    const cs = CS["mitigation"], piv = pivots(cs);
+    check(piv.some((q) => q.name === "HL" && q.price === 1.1720) && piv.some((q) => q.name === "HH" && q.price === 1.1780) && piv.some((q) => q.name === "LL" && q.price === 1.1690), "Mitigation (SMC 3) : HL / HH / LL ≠ texte");
+    const ll = piv.find((q) => q.name === "LL")!.index, re = cs.findIndex((k, i) => i > ll && k.h >= 1.1720 && k.c < 1.1720);
+    check(re > 0 && cs[re].c === 1.1718 && cs[cs.length - 1].c < 1.1690, "Mitigation (SMC 3) : retest à 1.1718 puis baisse");
+  }
+  {
+    // Trend-following 1 : HL 1.1680, HH 1.1760, HL 1.1720, HH 1.1820 ; amplitude 140 pips
+    const names = pivots(CS["trend-steps"]).filter((q) => q.name).map((q) => `${q.name}${q.price}`);
+    check(names.join(" ") === "HL1.168 HH1.176 HL1.172 HH1.182", `Tendance (TF 1) : pivots ${names.join(" ")}`);
+  }
 }
 
 export { CS, near, rrOf, isPin, engulfs };

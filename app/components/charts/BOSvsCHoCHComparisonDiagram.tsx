@@ -1,155 +1,43 @@
-export default function BOSvsCHoCHComparisonDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
-  const t = locale === "es"
-    ? {
-        title: "BOS vs CHoCH — misma estructura, sentido de breakout opuesto",
-        bosContinuation: "BOS — Continuación",
-        chochReversal: "CHoCH — Reversión",
-        bosBreakNote: "Breakout en el sentido de la tendencia",
-        chochBreakNote: "Breakout contra el sentido de la tendencia",
-        bottom: "Misma estructura de partida. Sentido del breakout = sentido de la señal.",
-        mobileTitle: "BOS vs CHoCH — misma estructura, sentidos opuestos",
-        bosMobileTitle: "BOS — Continuación",
-        bosMobileBodyPart1: "Breakout ",
-        bosMobileBodyBold: "EN EL SENTIDO",
-        bosMobileBodyPart2: " de la tendencia (HH2 roto al alza). Confirma la tendencia.",
-        chochMobileTitle: "CHoCH — Reversión",
-        chochMobileBodyPart1: "Breakout ",
-        chochMobileBodyBold: "CONTRA",
-        chochMobileBodyPart2: " el sentido de la tendencia (HL2 roto a la baja). 1ra señal de reversión.",
-        mobileFooter: "Misma estructura. Sentido del breakout = sentido de la señal.",
-      }
-    : locale === "en"
-    ? {
-        title: "BOS vs CHoCH — same structure, opposite break direction",
-        bosContinuation: "BOS — Continuation",
-        chochReversal: "CHoCH — Reversal",
-        bosBreakNote: "Break in the direction of the trend",
-        chochBreakNote: "Break against the direction of the trend",
-        bottom: "Same starting structure. Break direction = signal direction.",
-        mobileTitle: "BOS vs CHoCH — same structure, opposite directions",
-        bosMobileTitle: "BOS — Continuation",
-        bosMobileBodyPart1: "Break ",
-        bosMobileBodyBold: "WITH",
-        bosMobileBodyPart2: " the trend (HH2 broken upward). Confirms the trend.",
-        chochMobileTitle: "CHoCH — Reversal",
-        chochMobileBodyPart1: "Break ",
-        chochMobileBodyBold: "AGAINST",
-        chochMobileBodyPart2: " the trend (HL2 broken downward). 1st reversal signal.",
-        mobileFooter: "Same structure. Break direction = signal direction.",
-      }
-    : {
-        title: "BOS vs CHoCH — même structure, sens de breakout opposé",
-        bosContinuation: "BOS — Continuation",
-        chochReversal: "CHoCH — Retournement",
-        bosBreakNote: "Breakout dans le sens de la tendance",
-        chochBreakNote: "Breakout contre le sens de la tendance",
-        bottom: "Même structure de départ. Sens du breakout = sens du signal.",
-        mobileTitle: "BOS vs CHoCH — même structure, sens opposés",
-        bosMobileTitle: "BOS — Continuation",
-        bosMobileBodyPart1: "Breakout ",
-        bosMobileBodyBold: "DANS LE SENS",
-        bosMobileBodyPart2: " de la tendance (HH2 cassé à la hausse). Confirme la tendance.",
-        chochMobileTitle: "CHoCH — Retournement",
-        chochMobileBodyPart1: "Breakout ",
-        chochMobileBodyBold: "CONTRE",
-        chochMobileBodyPart2: " le sens de la tendance (HL2 cassé à la baisse). 1er signal de retournement.",
-        mobileFooter: "Même structure. Sens du breakout = sens du signal.",
-      };
+// SMC 2 / Trend-following 4 — même structure de départ (HL 1.1700, HH 1.1780, HL 1.1750,
+// HH 1.1820), breakout opposé : clôture au-dessus du dernier HH = BOS (continuation) ;
+// clôture sous le dernier HL = CHoCH (premier signal de retournement). Pivots calculés.
+// Bougies : scenarios.ts (« bos-case », « choch-case »).
+
+import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
+import { fmtPrice, pivots } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const p = (x: number) => fmtPrice(x, 4);
+
+function panel(key: "bos-case" | "choch-case"): LCPanel {
+  const cs = CANDLES[key];
+  const bos = key === "bos-case";
+  const piv = pivots(cs, 2);
+  const hh = piv.filter((q) => q.name === "HH")[0];
+  const hl = piv.filter((q) => q.name === "HL")[0];
+  const lvl = bos ? hh : hl;
+  const brk = cs.findIndex((k, i) => i > hh.index && (bos ? k.c > hh.price : k.c < hl.price));
+  return {
+    key, title: bos ? "BOS : breakout du dernier HH" : "CHoCH : breakout du dernier HL",
+    subtitle: bos ? "Continuation : la structure HH / HL reste intacte" : "Premier signal de retournement possible",
+    decimals: 5, height: 250, candles: cs,
+    levels: [{ key: "lvl", price: lvl.price, from: lvl.index, label: `${bos ? "HH" : "HL"} ${p(lvl.price)}`, tone: bos ? "bull" : "zone", dashed: true }],
+    markers: [
+      ...piv.filter((q) => q.name && q.index <= hh.index).map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name, tone: "neutral" as const, side: q.side === "h" ? "above" as const : "below" as const })),
+      { key: "brk", i: brk, price: bos ? cs[brk].h : cs[brk].l, label: bos ? "BOS" : "CHoCH", tone: bos ? "bull" : "zone", side: bos ? "above" : "below" },
+    ],
+  };
+}
+
+export default function BOSvsCHoCHComparisonDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   return (
-    <div className={className}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 800 400"
-      className="hidden sm:block w-full h-auto"
-    >
-      <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        {t.title}
-      </text>
-
-      <line x1="400" y1="40" x2="400" y2="370" stroke="#3f3f46" strokeWidth="1" />
-
-      {/* ═══ PANEL GAUCHE — BOS continuation ═══ */}
-      <rect x="60" y="50" width="280" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="200" y="65" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">{t.bosContinuation}</text>
-
-      <line x1="50" y1="150" x2="380" y2="150" stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
-      <rect x="52" y="134" width="78" height="12" rx="2" fill="#09090b" />
-      <text x="55" y="143" fill="#10b981" fontSize="9" fontWeight="600">HH2 1.1820</text>
-
-      <path d="M50,280 L100,230 L140,250 L180,200 L220,220 L260,150 L300,130 L340,90" stroke="#71717a" strokeWidth="2" fill="none" strokeLinejoin="round" />
-      <circle cx="100" cy="230" r="4" fill="#10b981" />
-      <rect x="103" y="240" width="60" height="11" rx="2" fill="#09090b" />
-      <text x="105" y="248" fill="#10b981" fontSize="8">HL 1.1720</text>
-      <circle cx="180" cy="200" r="4" fill="#10b981" />
-      <rect x="183" y="210" width="64" height="11" rx="2" fill="#09090b" />
-      <text x="185" y="218" fill="#10b981" fontSize="8">HL2 1.1750</text>
-      <circle cx="260" cy="150" r="5" fill="#10b981" />
-      <line x1="310" y1="80" x2="310" y2="160" stroke="#059669" strokeWidth="1.5" />
-      <rect x="304" y="80" width="12" height="60" fill="#10b981" stroke="#059669" strokeWidth="1" rx="1" />
-
-      <rect x="80" y="320" width="240" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="200" y="334" fill="#d4d4d8" fontSize="9" textAnchor="middle">{t.bosBreakNote}</text>
-
-      {/* ═══ PANEL DROIT — CHoCH retournement ═══ */}
-      <rect x="460" y="50" width="280" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="65" fill="#ef4444" fontSize="11" fontWeight="700" textAnchor="middle">{t.chochReversal}</text>
-
-      <line x1="450" y1="220" x2="780" y2="220" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
-      <rect x="452" y="204" width="78" height="12" rx="2" fill="#09090b" />
-      <text x="455" y="213" fill="#ef4444" fontSize="9" fontWeight="600">HL2 1.1750</text>
-
-      <path d="M450,280 L500,230 L540,250 L580,200 L620,220 L660,290 L700,310" stroke="#71717a" strokeWidth="2" fill="none" strokeLinejoin="round" />
-      <circle cx="500" cy="230" r="4" fill="#10b981" />
-      <rect x="503" y="240" width="60" height="11" rx="2" fill="#09090b" />
-      <text x="505" y="248" fill="#10b981" fontSize="8">HL 1.1720</text>
-      <circle cx="580" cy="200" r="4" fill="#10b981" />
-      <rect x="583" y="187" width="64" height="11" rx="2" fill="#09090b" />
-      <text x="585" y="195" fill="#10b981" fontSize="8">HH 1.1780</text>
-      <circle cx="620" cy="220" r="5" fill="#ef4444" />
-      <line x1="660" y1="240" x2="660" y2="310" stroke="#b91c1c" strokeWidth="1.5" />
-      <rect x="654" y="245" width="12" height="60" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
-
-      <rect x="480" y="320" width="240" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="600" y="334" fill="#d4d4d8" fontSize="9" textAnchor="middle">{t.chochBreakNote}</text>
-
-      <text x="400" y="385" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        {t.bottom}
-      </text>
-    </svg>
-
-    {/* MOBILE : BOS vs CHoCH ─────────────────────────────────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
-
-      {/* Mini-SVG : 2 panels comparant BOS (continuation tendance) vs CHoCH (retournement) */}
-      <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="BOS vs CHoCH" fill="none">
-        <line x1="138" y1="10" x2="138" y2="100" stroke="#3f3f46" strokeWidth="0.8" />
-        {/* Panel BOS — continuation haussière, dépasse HH précédent */}
-        <line x1="10" y1="50" x2="125" y2="50" stroke="#71717a" strokeWidth="0.7" strokeDasharray="3 3" />
-        <path d="M15,85 L35,70 L55,75 L80,55 L100,62 L120,32" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-        <circle cx="120" cy="32" r="3" fill="#10b981" />
-        <rect x="92" y="6" width="36" height="12" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.7" />
-        <text x="110" y="14" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">BOS ↑</text>
-        {/* Panel CHoCH — retournement, casse du HL précédent */}
-        <line x1="155" y1="60" x2="270" y2="60" stroke="#71717a" strokeWidth="0.7" strokeDasharray="3 3" />
-        <path d="M160,40 L180,30 L200,40 L220,55 L240,75 L262,92" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-        <circle cx="262" cy="92" r="3" fill="#ef4444" />
-        <rect x="220" y="6" width="48" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
-        <text x="244" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">CHoCH ↓</text>
-      </svg>
-
-      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">{t.bosMobileTitle}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.bosMobileBodyPart1}<span className="font-bold">{t.bosMobileBodyBold}</span>{t.bosMobileBodyPart2}</p>
-      </div>
-      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">{t.chochMobileTitle}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.chochMobileBodyPart1}<span className="font-bold">{t.chochMobileBodyBold}</span>{t.chochMobileBodyPart2}</p>
-      </div>
-      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-        {t.mobileFooter}
-      </p>
-    </div>
-    </div>
+    <LessonChart
+      id="BOSvsCHoCHComparisonDiagram"
+      title="Même structure, breakout opposé"
+      panels={[panel("bos-case"), panel("choch-case")]}
+      rows={[2]}
+      sharedScale
+      caption="La nature du niveau cassé dicte le signal : un HH cassé confirme la tendance, un HL cassé la remet en cause."
+    />
   );
 }
