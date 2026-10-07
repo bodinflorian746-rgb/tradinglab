@@ -165,6 +165,40 @@ export function checkLots(check: Check) {
     const lo = m.findIndex((k) => k.l === 4683), sig = m.findIndex((k, i) => i > lo && k.c < 4683);
     check(lo > 0 && sig > lo && m[m.length - 1].c > m[lo].l && m.length === 16 && m[0].o === h4[h4.length - 1].c, "Régime (MT 4) : signal M15 puis reprise, raccord H4");
   }
+  // ─── Lot 7 ─────────────────────────────────────────────────────────────────
+  {
+    // Price action 2 : après la pin bar (entrée 4 520), clôture sous 4 500 puis SL 4 470 touché
+    const cs = CS["pinbar-failure"], pin = cs.findIndex((k) => k.c === 4520 && k.l < 4500);
+    check(pin > 0 && cs.slice(pin + 1).some((k) => k.c < 4500) && cs.slice(pin + 1).some((k) => k.l <= 4470), "Échec pin bar (PA 2) : pas de breakout du support ni de SL touché");
+  }
+  {
+    // Price action 4 : Daily HH 1.1840 / HL 1.1720 ; H4 3 touches de 1.1750-1.1770 ; pin M15 1.1762 / 1.1778 ; R/R 1,88 / 3,70
+    const piv = pivots(CS["mtf-daily"]);
+    check(piv.some((q) => q.name === "HH" && q.price === 1.1840) && piv.some((q) => q.name === "HL" && q.price === 1.1720), "MTF (PA 4) : Daily HH 1.1840 / HL 1.1720");
+    const h4 = CS["mtf-h4"], t = pivots(h4).filter((q) => q.side === "l" && q.price <= 1.1770).length + (h4[h4.length - 1].l <= 1.1770 ? 1 : 0);
+    check(t === 3 && h4.every((k) => k.l >= 1.1750), `MTF (PA 4) : ${t} touches de la zone H4 (3 attendues) ou zone cassée`);
+    const pinK = CS["mtf-m15"][CS["mtf-m15"].length - 1];
+    check(pinK.l === 1.1762 && pinK.c === 1.1778 && isPin(pinK, true), "MTF (PA 4) : pin bar M15 ≠ texte");
+    check(near(rrOf(1.1778, 1.1745, 1.1840), 1.88, 0.005) && near(rrOf(1.1778, 1.1745, 1.1900), 3.70, 0.005), "MTF (PA 4) : R/R 1,88 / 3,70");
+  }
+  {
+    // SMC 1 / Int. 1 : HH / HL et LH / LL alternés, rien d'autre
+    const bull = pivots(CS["structure-bull"]).filter((q) => q.name).map((q) => q.name);
+    const bear = pivots(CS["structure-bear"]).filter((q) => q.name).map((q) => q.name);
+    check(bull.length >= 5 && bull.every((x) => x === "HH" || x === "HL"), `Structure (SMC 1) : haussière ≠ HH / HL (${bull.join(" ")})`);
+    check(bear.length >= 5 && bear.every((x) => x === "LH" || x === "LL"), `Structure (SMC 1) : baissière ≠ LH / LL (${bear.join(" ")})`);
+    const ext = pivots(CS["external-daily"]).filter((q) => q.name).map((q) => q.name), int = pivots(CS["internal-h1"]).filter((q) => q.name).map((q) => q.name);
+    check(ext.every((x) => x === "LH" || x === "LL") && int.every((x) => x === "HH" || x === "HL"), "Structure (SMC 1) : externe LH / LL, interne HH / HL");
+    const lastLH = pivots(CS["external-daily"]).filter((q) => q.name === "LH").at(-1)!;
+    check(Math.max(...CS["internal-h1"].map((k) => k.h)) < lastLH.price, "Structure (SMC 1) : le pullback interne dépasse le dernier LH externe");
+  }
+  {
+    // SMC 1 : range 1.1760-1.1800, sweep SOUS le range, retour dedans, expansion haussière au-dessus
+    const cs = CS["smc-phases"], sw = cs.reduce((b, k, i) => (k.l < cs[b].l ? i : b), 0);
+    check(cs[sw].l < 1.1760 && cs[sw].c > 1.1760 && cs.slice(0, sw).filter((k) => k.h >= 1.1799).length >= 2, "Phases (SMC 1) : sweep du bas du range");
+    const after = pivots(cs).filter((q) => q.index > sw && q.name).map((q) => q.name);
+    check(cs.slice(sw).some((k) => k.c > 1.1800) && after.includes("HH") && after.includes("HL") && cs[cs.length - 1].h > 1.1840, "Phases (SMC 1) : pas d'expansion haussière HH / HL");
+  }
 }
 
 export { CS, near, rrOf, isPin, engulfs };

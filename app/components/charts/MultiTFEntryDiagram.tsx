@@ -1,303 +1,53 @@
-export default function MultiTFEntryDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
-  const L = locale === "es"
-    ? {
-        title: "Proceso completo — Tendencia Daily → Nivel H4 → Entrada H1",
-        contexte: "El contexto",
-        leNiveau: "El nivel",
-        declencheur: "El disparador",
-        tendanceHaussiere: "Tendencia alcista ↑",
-        supportHigh: "Support 4 500$ → high 4 720$",
-        retracementFibo: "Retracement hacia Fibo",
-        fibo618: "Fibo 0.618 — 4 600$",
-        zoneSurveiller: "Zona a vigilar: 4 600$",
-        tp4720: "TP 4 720$",
-        sl4590: "SL 4 590$",
-        engulfingBullish: "Envolvente alcista",
-        fiboH1: "Fibo 4 600$",
-        setupLegend: "Setup envolvente — Entrada 4 630$ · SL 4 590$ · TP 4 720$ · R/R 2,25",
-        mobTitle: "Proceso completo Daily → H4 → H1 (XAU/USD)",
-        mobContexte: "El contexto",
-        mobLeNiveau: "El nivel",
-        mobDeclencheur: "El disparador",
-        mobDaily: "Tendencia alcista ↑ confirmada · Support 4 500 $ → high 4 720 $",
-        mobH4: "Retracement hacia Fibo 0.618 = 4 600 $ → zona a vigilar",
-        mobH1: "Envolvente alcista en el Fibo → entrada activada",
-        mobEntry: "Entrada",
-      }
-    : locale === "en"
-    ? {
-        title: "Full process — Daily trend → H4 level → H1 entry",
-        contexte: "The context",
-        leNiveau: "The level",
-        declencheur: "The trigger",
-        tendanceHaussiere: "Uptrend ↑",
-        supportHigh: "Support $4,500 → high $4,720",
-        retracementFibo: "Pullback to Fibo",
-        fibo618: "Fibo 0.618 — $4,600",
-        zoneSurveiller: "Zone to watch: $4,600",
-        tp4720: "TP $4,720",
-        sl4590: "SL $4,590",
-        engulfingBullish: "Bullish engulfing",
-        fiboH1: "Fibo $4,600",
-        setupLegend: "Engulfing setup — Entry $4,630 · SL $4,590 · TP $4,720 · R/R 2.25",
-        mobTitle: "Full process Daily → H4 → H1 (XAU/USD)",
-        mobContexte: "The context",
-        mobLeNiveau: "The level",
-        mobDeclencheur: "The trigger",
-        mobDaily: "Uptrend ↑ confirmed · Support $4,500 → high $4,720",
-        mobH4: "Pullback to Fibo 0.618 = $4,600 → zone to watch",
-        mobH1: "Bullish engulfing at the Fibo → entry triggered",
-        mobEntry: "Entry",
-      }
-    : {
-        title: "Process complet — Tendance Daily → Niveau H4 → Entrée H1",
-        contexte: "Le contexte",
-        leNiveau: "Le niveau",
-        declencheur: "Le déclencheur",
-        tendanceHaussiere: "Tendance haussière ↑",
-        supportHigh: "Support 4 500$ → high 4 720$",
-        retracementFibo: "Retracement vers Fibo",
-        fibo618: "Fibo 0.618 — 4 600$",
-        zoneSurveiller: "Zone à surveiller : 4 600$",
-        tp4720: "TP 4 720$",
-        sl4590: "SL 4 590$",
-        engulfingBullish: "Engulfing haussier",
-        fiboH1: "Fibo 4 600$",
-        setupLegend: "Setup engulfing — Entrée 4 630$ · SL 4 590$ · TP 4 720$ · R/R 2,25",
-        mobTitle: "Process complet Daily → H4 → H1 (XAU/USD)",
-        mobContexte: "Le contexte",
-        mobLeNiveau: "Le niveau",
-        mobDeclencheur: "Le déclencheur",
-        mobDaily: "Tendance haussière ↑ confirmée · Support 4 500 $ → high 4 720 $",
-        mobH4: "Retracement vers Fibo 0.618 = 4 600 $ → zone à surveiller",
-        mobH1: "Engulfing haussier sur le Fibo → entrée déclenchée",
-        mobEntry: "Entrée",
-      };
+// Price action 4 — plan de trade multi-unités de temps EUR/USD (texte de la leçon) :
+// Daily en HH / HL (HH 1.1840, HL 1.1720), zone support H4 1.1750-1.1770 (3 touches),
+// pin bar M15 au contact (bas 1.1762, clôture 1.1778). Entrée sur la pin bar M15,
+// SL 1.1745 (5 pips sous la zone), TP 1.1840 puis 1.1900. R/R calculés.
+// Bougies : scenarios.ts (« mtf-daily / -h4 / -m15 »).
+
+import { LessonChart, type LCMarker } from "@/app/components/lessons/LessonChart";
+import { fmtPrice, fmtRR, pips, pivots, tradeMath } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const ZONE = { y1: 1.1750, y2: 1.1770 };
+const SL = 1.1745, TP1 = 1.1840, TP2 = 1.1900;
+const p = (x: number) => fmtPrice(x, 4);
+
+export default function MultiTFEntryDiagram(_props: { locale?: "fr" | "es" | "en" } = {}) {
+  const d = CANDLES["mtf-daily"], h4 = CANDLES["mtf-h4"], m15 = CANDLES["mtf-m15"];
+  const named = (cs: typeof d): LCMarker[] => pivots(cs, 2).filter((q) => q.name).map((q) => ({
+    key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name, tone: "neutral", side: q.side === "h" ? "above" : "below",
+  }));
+  // Touches = creux (pivots) dans la zone, plus le contact actuel (dernière bougie)
+  const lows = pivots(h4, 2).filter((q) => q.side === "l" && q.price <= ZONE.y2).map((q) => q.index);
+  const touches = [...lows, ...(h4[h4.length - 1].l <= ZONE.y2 ? [h4.length - 1] : [])].map((i) => ({ k: h4[i], i }));
+  const pin = m15[m15.length - 1];
+  const entry = pin.c;
+  const rr = (tp: number) => tradeMath(entry, SL, tp).rr;
+  const rrChip = (n: string, tp: number) => ({ label: `${n} ${p(tp)} : +${pips(tp, entry, 0.0001)} pips, R/R ${fmtRR(rr(tp))}`, tone: "bull" as const, data: { rr: fmtRR(rr(tp)), entry, sl: SL, tp } });
   return (
-    <div>
-    <svg
-      viewBox="0 0 720 440"
-      width="100%"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="hidden sm:block"
-    >
-      {/* ── ZONE 1 — Titre général ── */}
-      <text x="360" y="22" textAnchor="middle" fontSize="14" fontWeight="600" fill="#10b981">
-        {L.title}
-      </text>
-      <text x="360" y="40" textAnchor="middle" fontSize="11" fontWeight="500" fill="#a1a1aa">
-        XAU/USD
-      </text>
-
-      {/* ══════════════════════════════════════════
-          PANEL 1 — DAILY (gauche)
-      ══════════════════════════════════════════ */}
-
-      {/* Encadrement */}
-      <rect x="20" y="70" width="220" height="280" fill="none" stroke="#27272a" strokeWidth="1" rx="6" />
-
-      {/* Header */}
-      <text x="130" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill="#10b981">DAILY</text>
-      <text x="130" y="104" textAnchor="middle" fontSize="10" fill="#a1a1aa">{L.contexte}</text>
-
-      {/* Bougie D1 — bullish */}
-      <line x1="58" y1="270" x2="58" y2="300" stroke="#059669" strokeWidth="1.2" strokeLinecap="round" />
-      <rect x="50" y="275" width="16" height="22" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.2" />
-
-      {/* Bougie D2 — bullish */}
-      <line x1="93" y1="240" x2="93" y2="275" stroke="#059669" strokeWidth="1.2" strokeLinecap="round" />
-      <rect x="85" y="245" width="16" height="25" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.2" />
-
-      {/* Bougie D3 — bullish */}
-      <line x1="128" y1="205" x2="128" y2="245" stroke="#059669" strokeWidth="1.2" strokeLinecap="round" />
-      <rect x="120" y="210" width="16" height="30" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.2" />
-
-      {/* Bougie D4 — bullish */}
-      <line x1="163" y1="170" x2="163" y2="210" stroke="#059669" strokeWidth="1.2" strokeLinecap="round" />
-      <rect x="155" y="180" width="16" height="25" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.2" />
-
-      {/* Bougie D5 — bearish correction */}
-      <line x1="198" y1="175" x2="198" y2="215" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round" />
-      <rect x="190" y="185" width="16" height="20" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.2" />
-
-      {/* Annotation tendance ↑ */}
-      <rect x="70" y="129" width="120" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="130" y="140" textAnchor="middle" fontSize="10" fontWeight="600" fill="#10b981">{L.tendanceHaussiere}</text>
-
-      {/* Légende prix bas panel 1 */}
-      <rect x="48" y="324" width="164" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="130" y="335" textAnchor="middle" fontSize="9" fontStyle="italic" fill="#71717a">{L.supportHigh}</text>
-
-      {/* ══════════════════════════════════════════
-          PANEL 2 — H4 (centre)
-      ══════════════════════════════════════════ */}
-
-      {/* Encadrement */}
-      <rect x="250" y="70" width="220" height="280" fill="none" stroke="#27272a" strokeWidth="1" rx="6" />
-
-      {/* Header */}
-      <text x="360" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill="#10b981">H4</text>
-      <text x="360" y="104" textAnchor="middle" fontSize="10" fill="#a1a1aa">{L.leNiveau}</text>
-
-      {/* Annotation "Retracement vers Fibo" */}
-      <rect x="297" y="119" width="126" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="360" y="130" textAnchor="middle" fontSize="10" fontWeight="500" fill="#a1a1aa">{L.retracementFibo}</text>
-
-      {/* Ligne Fibo 0.618 */}
-      <line x1="270" y1="235" x2="450" y2="235" stroke="#a1a1aa" strokeWidth="1.2" strokeDasharray="5 3" />
-
-      {/* H4-1 bearish */}
-      <line x1="292" y1="145" x2="292" y2="180" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round" />
-      <rect x="285" y="150" width="14" height="25" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.2" />
-
-      {/* H4-2 bearish */}
-      <line x1="322" y1="160" x2="322" y2="200" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round" />
-      <rect x="315" y="170" width="14" height="25" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.2" />
-
-      {/* H4-3 bearish */}
-      <line x1="352" y1="180" x2="352" y2="215" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round" />
-      <rect x="345" y="190" width="14" height="20" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.2" />
-
-      {/* H4-4 bearish */}
-      <line x1="382" y1="200" x2="382" y2="240" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round" />
-      <rect x="375" y="210" width="14" height="25" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.2" />
-
-      {/* H4-5 bearish petite (sans mèche) */}
-      <rect x="405" y="225" width="14" height="10" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.2" />
-
-      {/* H4-6 bullish engulfing miniature */}
-      <line x1="433" y1="205" x2="433" y2="240" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="425" y="210" width="16" height="25" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.5" />
-
-      {/* Label Fibo H4 — déplacé après les candles pour rester au-dessus */}
-      <rect x="268" y="217" width="114" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="270" y="228" textAnchor="start" fontSize="9" fontStyle="italic" fill="#a1a1aa">{L.fibo618}</text>
-
-      {/* Légende H4 */}
-      <rect x="288" y="323" width="144" height="16" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="360" y="335" textAnchor="middle" fontSize="9" fontStyle="italic" fill="#71717a">{L.zoneSurveiller}</text>
-
-      {/* ══════════════════════════════════════════
-          PANEL 3 — H1 (droite)
-      ══════════════════════════════════════════ */}
-
-      {/* Encadrement */}
-      <rect x="480" y="70" width="220" height="280" fill="none" stroke="#27272a" strokeWidth="1" rx="6" />
-
-      {/* Header */}
-      <text x="590" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill="#10b981">H1</text>
-      <text x="590" y="104" textAnchor="middle" fontSize="10" fill="#a1a1aa">{L.declencheur}</text>
-
-      {/* Ligne TP emerald */}
-      <line x1="500" y1="140" x2="680" y2="140" stroke="#10b981" strokeWidth="1.2" strokeDasharray="5 3" />
-
-      {/* Label TP */}
-      <rect x="498" y="122" width="58" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="500" y="133" textAnchor="start" fontSize="9" fontWeight="600" fill="#10b981">{L.tp4720}</text>
-
-      {/* Ligne Fibo zinc */}
-      <line x1="500" y1="235" x2="680" y2="235" stroke="#a1a1aa" strokeWidth="1.2" strokeDasharray="5 3" />
-
-      {/* Ligne SL red */}
-      <line x1="500" y1="290" x2="680" y2="290" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="5 3" />
-
-      {/* Label SL */}
-      <rect x="498" y="272" width="58" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="500" y="283" textAnchor="start" fontSize="9" fontWeight="600" fill="#ef4444">{L.sl4590}</text>
-
-      {/* H1-1 bearish */}
-      <line x1="516" y1="170" x2="516" y2="205" stroke="#b91c1c" strokeWidth="1" strokeLinecap="round" />
-      <rect x="510" y="175" width="12" height="25" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" />
-
-      {/* H1-2 bearish */}
-      <line x1="541" y1="190" x2="541" y2="220" stroke="#b91c1c" strokeWidth="1" strokeLinecap="round" />
-      <rect x="535" y="200" width="12" height="20" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" />
-
-      {/* H1-3 bearish */}
-      <line x1="566" y1="210" x2="566" y2="240" stroke="#b91c1c" strokeWidth="1" strokeLinecap="round" />
-      <rect x="560" y="215" width="12" height="20" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" />
-
-      {/* Engulfing A — bearish petite (1ère) */}
-      <line x1="592" y1="225" x2="592" y2="220" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round" />
-      <line x1="592" y1="235" x2="592" y2="242" stroke="#b91c1c" strokeWidth="1.2" strokeLinecap="round" />
-      <rect x="585" y="225" width="14" height="10" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.2" />
-
-      {/* Engulfing B — bullish qui englobe (corps dépasse A en haut ET en bas) */}
-      <line x1="623" y1="215" x2="623" y2="210" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" />
-      <line x1="623" y1="240" x2="623" y2="245" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="615" y="215" width="16" height="25" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.5" />
-
-      {/* Annotation Engulfing bullish */}
-      <rect x="573" y="194" width="94" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="620" y="205" textAnchor="middle" fontSize="9" fontWeight="600" fill="#10b981">{L.engulfingBullish}</text>
-
-      {/* Bougie de confirmation */}
-      <line x1="656" y1="180" x2="656" y2="215" stroke="#059669" strokeWidth="1" strokeLinecap="round" />
-      <rect x="650" y="185" width="12" height="30" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1" />
-
-      {/* Label Fibo H1 — déplacé après les candles pour rester au-dessus */}
-      <rect x="498" y="217" width="66" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="500" y="228" textAnchor="start" fontSize="9" fontStyle="italic" fill="#a1a1aa">{L.fiboH1}</text>
-
-      {/* ══════════════════════════════════════════
-          ZONE 3 — Flèches de liaison
-      ══════════════════════════════════════════ */}
-
-      {/* Flèche 1 : Daily → H4 */}
-      <line x1="200" y1="370" x2="264" y2="370" stroke="#3f3f46" strokeWidth="1.5" />
-      <polygon points="270,370 264,366 264,374" fill="#3f3f46" />
-
-      {/* Flèche 2 : H4 → H1 */}
-      <line x1="440" y1="370" x2="504" y2="370" stroke="#3f3f46" strokeWidth="1.5" />
-      <polygon points="510,370 504,366 504,374" fill="#3f3f46" />
-
-      {/* ══════════════════════════════════════════
-          ZONE 4 — Légende en bas
-      ══════════════════════════════════════════ */}
-      <rect x="145" y="404" width="430" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="360" y="415" textAnchor="middle" fontSize="11" fontWeight="500" fill="#d4d4d8">
-        {L.setupLegend}
-      </text>
-    </svg>
-
-    {/* MOBILE : process 3 timeframes empilé ──────────────────────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
-      <p className="text-[14px] font-bold text-emerald-400 text-center leading-snug">
-        {L.mobTitle}
-      </p>
-
-      <div className="space-y-2">
-        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/8 p-3">
-          <div className="flex items-baseline justify-between gap-2">
-            <span className="text-[14px] font-bold text-emerald-400">DAILY</span>
-            <span className="text-[11px] text-emerald-400/80 italic">{L.mobContexte}</span>
-          </div>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobDaily}</p>
-        </div>
-        <p className="text-center text-zinc-600 text-[14px]">↓</p>
-        <div className="rounded-lg border border-blue-400/30 bg-blue-500/8 p-3">
-          <div className="flex items-baseline justify-between gap-2">
-            <span className="text-[14px] font-bold text-blue-400">H4</span>
-            <span className="text-[11px] text-blue-400/80 italic">{L.mobLeNiveau}</span>
-          </div>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobH4}</p>
-        </div>
-        <p className="text-center text-zinc-600 text-[14px]">↓</p>
-        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/8 p-3">
-          <div className="flex items-baseline justify-between gap-2">
-            <span className="text-[14px] font-bold text-emerald-400">H1</span>
-            <span className="text-[11px] text-emerald-400/80 italic">{L.mobDeclencheur}</span>
-          </div>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobH1}</p>
-        </div>
-      </div>
-
-      <div className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-2.5 text-center space-y-0.5">
-        <p className="text-[13px] text-zinc-300">{L.mobEntry} <span className="font-mono font-bold text-white">4 630 $</span> · SL <span className="font-mono font-bold text-red-400">4 590 $</span> · TP <span className="font-mono font-bold text-emerald-400">4 720 $</span></p>
-        <p className="text-[14px] font-bold text-emerald-400">R/R = 2,25</p>
-      </div>
-    </div>
-    </div>
+    <LessonChart
+      id="MultiTFEntryDiagram"
+      title="Daily → H4 → M15 : un setup aligné"
+      panels={[
+        { key: "daily", title: "Daily · le biais", subtitle: "HH / HL : biais long", decimals: 5, height: 220, candles: d, markers: named(d) },
+        {
+          key: "h4", title: "H4 · la zone", subtitle: `Support ${p(ZONE.y1)}-${p(ZONE.y2)}, ${touches.length} touches`, decimals: 5, height: 220, candles: h4,
+          zones: [{ key: "zone", ...ZONE, label: "Zone H4", tone: "bull", kind: "zone" }],
+          markers: touches.map(({ k, i }, n) => ({ key: `t${i}`, i, price: k.l, label: String(n + 1), tone: "bull" as const, side: "below" as const })),
+        },
+        {
+          key: "m15", title: "M15 · le signal et l'entrée", subtitle: `Pin bar : bas ${p(pin.l)}, clôture ${p(pin.c)}`, decimals: 5, height: 260, candles: m15,
+          zones: [{ key: "zone", ...ZONE, tone: "bull", kind: "zone" }],
+          levels: [
+            { key: "entry", price: entry, from: m15.length - 1, label: `Entrée ${p(entry)}`, short: "Entrée", tone: "entry" },
+            { key: "sl", price: SL, label: `SL ${p(SL)}`, short: "SL", tone: "bear", dashed: true },
+          ],
+          offscale: [{ key: "tp", price: TP1, label: `TP ${p(TP1)} / ${p(TP2)} ↑`, short: "TP ↑", tone: "bull" }],
+          markers: [{ key: "pin", i: m15.length - 1, price: pin.h, label: "Pin bar", tone: "bull", side: "above" }],
+          chips: [{ label: `Risque ${pips(entry, SL, 0.0001)} pips`, tone: "bear" }, rrChip("TP 1", TP1), rrChip("TP 2", TP2)],
+        },
+      ]}
+      rows={[2, 1]}
+    />
   );
 }

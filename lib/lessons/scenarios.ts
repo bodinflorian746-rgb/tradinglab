@@ -339,3 +339,73 @@ Object.assign(SCENARIOS, {
   "regime-h4": regimeH4,
   "regime-m15": () => regimeM15(regimeH4().at(-1)!.c),
 });
+
+// ─── Lot 7 ───────────────────────────────────────────────────────────────────
+
+// Price action 2 — la pin bar échoue : rebond avorté, breakout du support 4 500, SL 4 470 touché
+const pinbarFailure = () => extend(pinbarSetup(), [
+  { c: 4527 }, { c: 4518 }, { c: 4507 }, { c: 4493, l: 4489 }, { c: 4476, l: 4466 }, { c: 4461 },
+], 7101, 1, [4466], [4500, 4470]);
+
+// Price action 4 — setup multi-UT EUR/USD : Daily HH 1.1840 / HL 1.1720, zone H4
+// 1.1750-1.1770 (3 touches), pin bar M15 (bas 1.1762, clôture 1.1778)
+const mtfDaily = () => buildCandles(1.1570, [
+  ...c(1.1584, 1.1602, 1.1621, 1.1643, 1.1662), { c: 1.1674, h: 1.1680 }, ...c(1.1661, 1.1648), { c: 1.1631, l: 1.1625 },
+  ...c(1.1650, 1.1676, 1.1701, 1.1727), { c: 1.1752, h: 1.1760 }, ...c(1.1741), { c: 1.1726, l: 1.1720 },
+  ...c(1.1748, 1.1773, 1.1799, 1.1821), { c: 1.1834, h: 1.1840 }, ...c(1.1818, 1.1797), { c: 1.1778, l: 1.1762 },
+], { seed: 7201, decimals: 5, asset: "EUR/USD", volatility: "normale", levels: [1.1619, 1.1714, 1.1846], pins: [1.1680, 1.1625, 1.1760, 1.1720, 1.1840, 1.1762] });
+const mtfH4 = () => buildCandles(1.1790, [
+  ...c(1.1778, 1.1766), { c: 1.1760, l: 1.1752 }, ...c(1.1774, 1.1790, 1.1805, 1.1797, 1.1782, 1.1771), { c: 1.1764, l: 1.1755 },
+  ...c(1.1776, 1.1795, 1.1813, 1.1828), { c: 1.1835, h: 1.1840 }, ...c(1.1820, 1.1804, 1.1789), { c: 1.1774 }, { c: 1.1778, l: 1.1762 },
+], { seed: 7202, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1750, 1.1770], pins: [1.1752, 1.1755, 1.1840, 1.1762] });
+const mtfM15 = () => buildCandles(1.1796, [
+  ...c(1.1791, 1.1788, 1.1784, 1.1786, 1.1781, 1.1777, 1.1779, 1.1775, 1.1772), { c: 1.1774 },
+  { c: 1.1778, h: 1.1780, l: 1.1762 },
+], { seed: 7203, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1770], pins: [1.1762, 1.1774] });
+
+// SMC 1 / Intermédiaire 1 — structure haussière (HH / HL) et baissière (LH / LL), EUR/USD H4, swings ≥ 50 pips
+const structureBull = () => buildCandles(1.1612, [
+  ...c(1.1606), { c: 1.1604, l: 1.1600 }, ...c(1.1622, 1.1645, 1.1666), { c: 1.1674, h: 1.1680 }, ...c(1.1660, 1.1643), { c: 1.1636, l: 1.1630 },
+  ...c(1.1655, 1.1683, 1.1705), { c: 1.1714, h: 1.1720 }, ...c(1.1697, 1.1678), { c: 1.1671, l: 1.1665 },
+  ...c(1.1694, 1.1725, 1.1752), { c: 1.1763, h: 1.1770 }, ...c(1.1745, 1.1726), { c: 1.1718, l: 1.1712 },
+  ...c(1.1742, 1.1771, 1.1796), { c: 1.1804, h: 1.1810 }, ...c(1.1792),
+], { seed: 7301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", pins: [1.1600, 1.1680, 1.1630, 1.1720, 1.1665, 1.1770, 1.1712, 1.1810] });
+const structureBear = () => buildCandles(1.1798, [
+  ...c(1.1804), { c: 1.1806, h: 1.1810 }, ...c(1.1788, 1.1765, 1.1744), { c: 1.1736, l: 1.1730 }, ...c(1.1750, 1.1767), { c: 1.1774, h: 1.1780 },
+  ...c(1.1755, 1.1727, 1.1705), { c: 1.1696, l: 1.1690 }, ...c(1.1713, 1.1732), { c: 1.1739, h: 1.1745 },
+  ...c(1.1716, 1.1685, 1.1658), { c: 1.1646, l: 1.1640 }, ...c(1.1664, 1.1685), { c: 1.1694, h: 1.1700 },
+  ...c(1.1672, 1.1641, 1.1616), { c: 1.1606, l: 1.1600 }, ...c(1.1618),
+], { seed: 7302, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1813, 1.1784, 1.1749, 1.1704], pins: [1.1810, 1.1730, 1.1780, 1.1690, 1.1745, 1.1640, 1.1700, 1.1600] });
+
+// SMC 1 — structure externe baissière (Daily XAU/USD : LH 4 740 / 4 700, LL 4 620 / 4 540)
+// et structure interne haussière du dernier pullback (H1 : 4 540 → 4 640, HL / HH)
+const externalDaily = () => buildCandles(4760, [
+  ...c(4771), { c: 4774, h: 4780 }, ...c(4752, 4723, 4697), { c: 4688, l: 4680 }, ...c(4703, 4722), { c: 4733, h: 4740 },
+  ...c(4708, 4675, 4644), { c: 4628, l: 4620 }, ...c(4646, 4671), { c: 4692, h: 4700 },
+  ...c(4661, 4622, 4584, 4556), { c: 4548, l: 4540 }, ...c(4569, 4596, 4618), { c: 4632, h: 4640 },
+], { seed: 7401, decimals: 1, asset: "XAU/USD", volatility: "normale", levels: [4744, 4704, 4676, 4616], pins: [4780, 4680, 4740, 4620, 4700, 4540, 4640] });
+const internalH1 = () => buildCandles(4552, [
+  ...c(4546), { c: 4544, l: 4540 }, ...c(4556, 4571, 4583), { c: 4586, h: 4590 }, ...c(4578), { c: 4569, l: 4565 },
+  ...c(4581, 4597, 4609), { c: 4611, h: 4615 }, ...c(4602), { c: 4594, l: 4590 }, ...c(4607, 4622, 4634), { c: 4636, h: 4640 },
+], { seed: 7402, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4562, 4587], pins: [4540, 4590, 4565, 4615, 4640] });
+
+// SMC 1 — accumulation (range 1.1760-1.1800 après une baisse), manipulation (sweep sous
+// le range à 1.1742, retour dedans), expansion haussière (HH / HL au-dessus du range)
+const smcPhases = () => buildCandles(1.1905, [
+  ...c(1.1889, 1.1868, 1.1846, 1.1822, 1.1797, 1.1774), { c: 1.1766, l: 1.1760 },
+  ...c(1.1781, 1.1794), { c: 1.1792, h: 1.1800 }, ...c(1.1779), { c: 1.1767, l: 1.1761 }, ...c(1.1778, 1.1790), { c: 1.1791, h: 1.1799 }, ...c(1.1776),
+  { c: 1.1768, l: 1.1742 },
+  ...c(1.1785, 1.1806, 1.1828), { c: 1.1840, h: 1.1846 }, ...c(1.1829), { c: 1.1821, l: 1.1815 }, ...c(1.1842, 1.1863), { c: 1.1874, h: 1.1880 },
+], { seed: 7501, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1760, 1.1800], pins: [1.1760, 1.1800, 1.1761, 1.1799, 1.1742, 1.1846, 1.1815, 1.1880] });
+
+Object.assign(SCENARIOS, {
+  "pinbar-failure": pinbarFailure,
+  "mtf-daily": mtfDaily,
+  "mtf-h4": mtfH4,
+  "mtf-m15": mtfM15,
+  "structure-bull": structureBull,
+  "structure-bear": structureBear,
+  "external-daily": externalDaily,
+  "internal-h1": internalH1,
+  "smc-phases": smcPhases,
+});
