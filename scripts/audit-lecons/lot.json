@@ -21,5 +21,9 @@
   {"url":"/fr/formations/debutant/lecon9","charts":["BiasDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon4","charts":["RetracementInteractive"]},
   {"url":"/fr/formations/avance/lecon4","charts":["KillzonesDiagram"]},
-  {"url":"/fr/formations/macro/debutant/lecon4","charts":["InflationChainDiagram"]}
+  {"url":"/fr/formations/macro/debutant/lecon4","charts":["InflationChainDiagram"]},
+  {"url":"/fr/formations/macro/intermediaire/lecon1","charts":["HawkishDovishScale"]},
+  {"url":"/fr/formations/macro/intermediaire/lecon3","charts":["InflationIndicatorsChainDiagram"]},
+  {"url":"/fr/strategies/ict/lecon2","charts":["PDArrayContextDiagram","PDArrayConfluenceDiagram"]},
+  {"url":"/fr/strategies/macro-trading/lecon1","charts":["FOMCExhaustionDiagram"]}
 ]

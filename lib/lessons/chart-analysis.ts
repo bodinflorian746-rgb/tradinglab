@@ -73,6 +73,16 @@ export function fvgAt(candles: Candle[], i: number, side: "bull" | "bear"): { y1
   return b.h < a.l ? { y1: b.h, y2: a.l } : null;
 }
 
+/** Le plus grand FVG d'une série (indice de la bougie centrale et bornes), ou null. */
+export function largestFvg(candles: Candle[], side: "bull" | "bear"): { i: number; y1: number; y2: number } | null {
+  let best: { i: number; y1: number; y2: number } | null = null;
+  for (let i = 1; i < candles.length - 1; i++) {
+    const g = fvgAt(candles, i, side);
+    if (g && (!best || g.y2 - g.y1 > best.y2 - best.y1)) best = { i, ...g };
+  }
+  return best;
+}
+
 /** Retracement de Fibonacci d'un mouvement from → to (61.8 % : ratio 0.618). */
 export function fibLevel(from: number, to: number, ratio: number): number {
   return to - (to - from) * ratio;

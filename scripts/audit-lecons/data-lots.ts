@@ -1,7 +1,7 @@
 // Chiffres du texte des leçons redonnés par les données des schémas (lots 2 et
 // suivants). Appelé par data.ts.
 import CANDLES from "@/lib/lessons/generated/candles.json";
-import { fibLevel, pivots, rsi, type Candle } from "@/lib/lessons/chart-analysis";
+import { fibLevel, fvgAt, largestFvg, pivots, rsi, type Candle } from "@/lib/lessons/chart-analysis";
 
 type Check = (ok: boolean, what: string) => void;
 const CS = CANDLES as Record<string, Candle[]>;
@@ -115,6 +115,25 @@ export function checkLots(check: Check) {
     check(cs.slice(0, d + 1).slice(-3).every((k) => k.l > 1.0862), "Repli (Int. 4) : le prix a déjà atteint le HL au point de décision");
     check(pinI > d && isPin(cs[pinI], true) && Math.max(...cs.slice(pinI).map((k) => k.h)) > Math.max(...cs.slice(0, d + 1).map((k) => k.h)), "Repli (Int. 4) : pas de pin bar sur le HL ni de nouveau HH");
     check(cs.slice(d + 1).some((k) => k.l <= now.l - 0.0002), "Repli (Int. 4) : le stop de l'entrée FOMO n'est pas touché");
+  }
+  // ─── Lot 5 ─────────────────────────────────────────────────────────────────
+  {
+    // ICT 2 : equal highs sous 1.1780, sweep 1.1792, FVG bearish 1.1758-1.1770 (1er FVG du graphique)
+    const cs = CS["pd-qualified"], lg = largestFvg(cs, "bear"), i = lg?.i ?? -1, g = lg;
+    check(!!g && g.y1 === 1.1758 && g.y2 === 1.1770, "PD array (ICT 2) : FVG ≠ 1.1758-1.1770");
+    check(cs.filter((k) => k.h >= 1.1779 && k.h <= 1.1780).length >= 2 && cs[i - 1].h === 1.1792, "PD array (ICT 2) : equal highs / sweep 1.1792 avant le FVG");
+    const rg = largestFvg(CS["pd-range"], "bear");
+    check(!!rg && CS["pd-range"].slice(rg.i + 2).some((k) => k.h >= rg.y2), "PD array (ICT 2) : le FVG hors contexte n'est pas retraversé");
+    const c2 = CS["pd-confluence"], g2 = largestFvg(c2, "bear"), bo = g2?.i ?? 0;
+    check(!!g2 && g2.y1 <= 1.1780 && g2.y2 >= 1.1780 && c2.slice(0, bo).filter((k) => k.l <= 1.1781 && k.l >= 1.1780).length >= 2, "Confluence (ICT 2) : support 1.1780 / FVG qui le contient");
+    check(Math.max(...c2.slice(bo + 2).map((k) => k.h)) > g2!.y2 && c2[c2.length - 1].c < 1.1780, "Confluence (ICT 2) : sweep au-dessus puis rejet");
+  }
+  {
+    // Macro-trading 1 : impulsion 4 640 → 4 705, 3 mèches de 6 à 8$ sans clôture au-dessus de 4 705, correction vers 4 670
+    const cs = CS["fomc-exhaustion"];
+    const w = cs.filter((k) => k.h > 4705 && k.h - Math.max(k.o, k.c) >= 6 && k.h - Math.max(k.o, k.c) <= 8);
+    check(w.length === 3 && cs.every((k) => k.c <= 4705) && Math.max(...cs.map((k) => k.h)) === 4710, "FOMC (MT 1) : 3 mèches de 6 à 8$ sans clôture au-dessus de 4 705");
+    check(cs[cs.length - 1].c === 4670 && cs.some((k) => k.o === 4640), "FOMC (MT 1) : 4 640 → 4 705 → 4 670");
   }
 }
 

@@ -227,3 +227,45 @@ Object.assign(SCENARIOS, {
   "bias-anchor": biasAnchor,
   "retracement": retracement,
 });
+
+// ─── Lot 5 ───────────────────────────────────────────────────────────────────
+
+// ICT 2 — FVG qualifié (EUR/USD H1) : résistance 1.1780, equal highs, sweep à 1.1792
+// (bas de la bougie 1.1770), bougie baissière d'impulsion, bougie suivante : haut
+// 1.1758 → FVG bearish 1.1758-1.1770 ; repli ensuite.
+const pdQualified = () => buildCandles(1.1742, [
+  ...c(1.1751, 1.1763, 1.1771), { c: 1.1775, h: 1.1780 }, ...c(1.1766, 1.1757, 1.1764, 1.1772), { c: 1.1774, h: 1.1779 },
+  ...c(1.1768, 1.1773), { c: 1.1774, h: 1.1792, l: 1.1770 },
+  { c: 1.1752, h: 1.1775, l: 1.1749 }, { c: 1.1747, h: 1.1758, l: 1.1744 },
+  ...c(1.1739, 1.1733, 1.1741, 1.1748),
+], { seed: 5101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1780], pins: [1.1780, 1.1779, 1.1792, 1.1770, 1.1758] });
+// ICT 2 — FVG hors contexte : petit gap laissé en milieu de range (1.1716-1.1722), traversé ensuite
+const pdRange = () => buildCandles(1.1722, [
+  ...c(1.1731, 1.1738, 1.1729, 1.1719, 1.1708, 1.1714, 1.1726, 1.1735), { c: 1.1727, l: 1.1722 },
+  { c: 1.1711, h: 1.1728, l: 1.1709 }, { c: 1.1708, h: 1.1716, l: 1.1703 },
+  ...c(1.1714, 1.1725, 1.1733, 1.1728, 1.1719, 1.1710, 1.1717),
+], { seed: 5102, decimals: 5, asset: "EUR/USD", session: "Asie", volatility: "faible", levels: [1.1740, 1.1700], pins: [1.1722, 1.1716] });
+
+// ICT 2 — confluence à 1.1780 : support H1 tenu puis cassé par une impulsion qui laisse
+// un FVG bearish 1.1772-1.1784 ; plus tard, retour sur la zone, sweep à 1.1795, rejet.
+const pdConfluence = () => buildCandles(1.1812, [
+  ...c(1.1800, 1.1788), { c: 1.1786, l: 1.1781 }, ...c(1.1796, 1.1806, 1.1797), { c: 1.1789, l: 1.1780 }, ...c(1.1798, 1.1803),
+  { c: 1.1791, l: 1.1784 }, { c: 1.1760, h: 1.1792, l: 1.1757 }, { c: 1.1754, h: 1.1772, l: 1.1750 },
+  ...c(1.1746, 1.1738, 1.1743, 1.1752, 1.1761, 1.1770), { c: 1.1776, h: 1.1795 }, ...c(1.1762, 1.1749),
+], { seed: 5201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1780], pins: [1.1781, 1.1780, 1.1784, 1.1772, 1.1795] });
+
+// Macro-trading 1 — essoufflement après FOMC (XAU/USD M15) : impulsion 4 640 → 4 705,
+// trois mèches hautes de 6-8$ sans clôture au-dessus de 4 705, correction vers 4 670.
+const fomcExhaustion = () => buildCandles(4636, [
+  ...c(4639, 4637, 4641, 4638), { c: 4640 },
+  ...c(4662, 4681, 4694), { c: 4703, h: 4705 },
+  { c: 4698, h: 4710 }, { c: 4702, h: 4709 }, { c: 4697, h: 4708 },
+  ...c(4689, 4681, 4674), { c: 4670 },
+], { seed: 5301, decimals: 1, asset: "XAU/USD", session: "New York", volatility: "élevée", levels: [4705], pins: [4705, 4710, 4709, 4708, 4640, 4670] });
+
+Object.assign(SCENARIOS, {
+  "pd-qualified": pdQualified,
+  "pd-range": pdRange,
+  "pd-confluence": pdConfluence,
+  "fomc-exhaustion": fomcExhaustion,
+});

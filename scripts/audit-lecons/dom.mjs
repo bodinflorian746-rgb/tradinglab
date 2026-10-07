@@ -120,8 +120,11 @@ function checkCharts({ ids, vocab }) {
           if (!near(+z.getAttribute("y"), toY(y2), 0.5)) E(id, `${P} zone ${z.dataset.zone} hors de son prix`);
           if (z.dataset.src) {
             const i = +z.dataset.src.split(":")[1];
-            const ok = allCandles.some((cs) => cs && cs[i] && near(Math.min(cs[i].o, cs[i].c), y1, 1e-9) && near(Math.max(cs[i].o, cs[i].c), y2, 1e-9));
-            if (!ok) E(id, `${P} zone ${z.dataset.zone} ≠ corps de la bougie ${i}`);
+            // FVG : du haut de la bougie i − 1 au bas de i + 1 (haussier) ou du haut de i + 1 au bas de i − 1 (baissier) ; sinon corps de la bougie i (Order Block)
+            const ok = z.dataset.kind === "fvg"
+              ? allCandles.some((cs) => cs && cs[i - 1] && cs[i + 1] && ((near(cs[i - 1].h, y1, 1e-9) && near(cs[i + 1].l, y2, 1e-9)) || (near(cs[i + 1].h, y1, 1e-9) && near(cs[i - 1].l, y2, 1e-9))))
+              : allCandles.some((cs) => cs && cs[i] && near(Math.min(cs[i].o, cs[i].c), y1, 1e-9) && near(Math.max(cs[i].o, cs[i].c), y2, 1e-9));
+            if (!ok) E(id, `${P} zone ${z.dataset.zone} ≠ ${z.dataset.kind === "fvg" ? "gap des bougies voisines de" : "corps de"} la bougie ${i}`);
           }
         }
         // Pivots nommés

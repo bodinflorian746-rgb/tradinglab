@@ -66,7 +66,7 @@ export default function ContentFr() {
               14h30. Le CPI sort, le marché explose. Mais les pros n&apos;ont pas attendu le choc.
             </p>
             <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
-              Le vrai signal était sorti 12 jours plus tôt, sur un chiffre que personne ne regarde : le PPI.
+              Le vrai signal était déjà visible dans les prix à la production, un chiffre que personne ne regarde : le PPI.
             </p>
           </div>
 
@@ -146,7 +146,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Le PPI : le signal précoce que le marché ignore</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le PPI sort environ <span className="font-semibold text-zinc-200">12 jours avant le CPI</span>. C&apos;est le prix que les producteurs reçoivent pour leurs biens, avant que l&apos;inflation ne remonte vers le consommateur.
+              Le PPI sort <span className="font-semibold text-zinc-200">la même semaine que le CPI</span>, souvent la veille ou le lendemain. Son avance n&apos;est pas dans l&apos;heure de publication : c&apos;est le prix que les producteurs reçoivent pour leurs biens, une hausse qui remonte vers le consommateur dans les mois suivants.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               <span className="font-semibold text-zinc-200">Pourquoi c&apos;est un signal précoce ?</span> Parce que les hausses de coût chez les producteurs finissent presque toujours par être répercutées en aval.
@@ -369,7 +369,7 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "La chaîne inflation suit un ordre : PPI → CPI Headline → Core CPI → Core PCE",
-              "Le PPI sort 12 jours avant le CPI, c'est le signal précoce que le marché sous-estime",
+              "Le PPI mesure les prix en amont, avant qu'ils n'atteignent le consommateur : c'est le signal précoce que le marché sous-estime",
               "Le Core CPI (hors énergie et alimentation) est ce que les pros regardent vraiment",
               "Le Core PCE est l'indicateur officiel de la Fed, avec une cible à 2% annuel",
               "Attendre 2-5 minutes après la publication pour éviter le faux breakout du premier tick",
