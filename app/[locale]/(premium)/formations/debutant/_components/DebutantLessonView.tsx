@@ -11,6 +11,8 @@ import { BiasDiagram } from "@/app/components/charts/BiasDiagram";
 import { LongShortDiagram } from "@/app/components/charts/LongShortDiagram";
 import { TakeProfitDiagram } from "@/app/components/charts/TakeProfitDiagram";
 import { BreakEvenDiagram } from "@/app/components/charts/BreakEvenDiagram";
+import { RiskGridDiagram } from "@/app/components/charts/RiskGridDiagram";
+import { PsychoTrapsDiagram } from "@/app/components/charts/PsychoTrapsDiagram";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -335,187 +337,6 @@ function getDiagLabels(locale: Locale): DiagLabels {
       : FR_DIAG_LABELS;
 }
 
-// ── Diagramme : Grille de risque retail ──────────────────────────────────────
-function RiskDiagram({ t }: { t: DiagLabels["risk"] }) {
-  const tiers = [
-    {
-      capital: "300 €",
-      idealPct: "3%",
-      maxPct: "5%",
-      idealBar: "22.5%",
-      maxBar: "37.5%",
-      euros: "9 € → 15 €",
-      colorSolid: "#fbbf24",
-      colorFade: "rgba(251,191,36,0.28)",
-      textOnBar: "#18181b",
-      labelColor: "#fbbf24",
-      full: false,
-    },
-    {
-      capital: "500 €",
-      idealPct: "2-3%",
-      maxPct: "5%",
-      idealBar: "31.25%",
-      maxBar: "62.5%",
-      euros: "12 € → 25 €",
-      colorSolid: "#fbbf24",
-      colorFade: "rgba(251,191,36,0.28)",
-      textOnBar: "#18181b",
-      labelColor: "#fbbf24",
-      full: false,
-    },
-    {
-      capital: "1 000 €",
-      idealPct: "2-3%",
-      maxPct: "3%",
-      idealBar: "62.5%",
-      maxBar: "75%",
-      euros: "25 € → 30 €",
-      colorSolid: "#60a5fa",
-      colorFade: "rgba(96,165,250,0.28)",
-      textOnBar: "#0f172a",
-      labelColor: "#60a5fa",
-      full: false,
-    },
-    {
-      capital: "2 000 €",
-      idealPct: "2%",
-      maxPct: null,
-      idealBar: "100%",
-      maxBar: "100%",
-      euros: "40 €",
-      colorSolid: "#10b981",
-      colorFade: null,
-      textOnBar: "#0f172a",
-      labelColor: "#10b981",
-      full: true,
-    },
-  ];
-
-  return (
-    <div className="mt-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
-      <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-1 text-center">
-        {t.headerTitle}
-      </p>
-      <p className="text-[10px] text-zinc-500 text-center mb-4">
-        {t.headerSubtitle}
-      </p>
-      {/* ── DESKTOP ───────────────────────────────────────── */}
-      <div className="hidden sm:block space-y-2.5">
-        {tiers.map((tier, i) => (
-          <div key={i} className="grid grid-cols-[64px_1fr_100px] items-center gap-2">
-            <div className="text-right">
-              <span className="text-sm font-medium text-zinc-300">{tier.capital}</span>
-            </div>
-            <div className="relative h-8 bg-zinc-900 rounded overflow-hidden border border-zinc-800">
-              {!tier.full && (
-                <div
-                  className="absolute inset-y-0 left-0 rounded"
-                  style={{ width: tier.maxBar, backgroundColor: tier.colorFade ?? undefined }}
-                />
-              )}
-              <div
-                className="absolute inset-y-0 left-0 rounded flex items-center overflow-hidden"
-                style={{ width: tier.idealBar, backgroundColor: tier.colorSolid }}
-              >
-                <span className="font-bold text-xs pl-2 whitespace-nowrap" style={{ color: tier.textOnBar }}>
-                  {tier.idealPct}
-                </span>
-              </div>
-              {!tier.full && (
-                <div
-                  className="absolute inset-y-0 flex items-center pl-2"
-                  style={{ left: tier.idealBar }}
-                >
-                  <span className="text-xs whitespace-nowrap font-medium" style={{ color: tier.labelColor }}>
-                    {t.maxPrefix} {tier.maxPct}
-                  </span>
-                </div>
-              )}
-            </div>
-            <div className="text-right leading-tight">
-              <span className="text-sm text-zinc-400 whitespace-nowrap">{tier.euros}</span>
-              <span className="text-[10px] text-zinc-600 block">{t.perTrade}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* ── MOBILE ──────────────────────────────────────── */}
-      <div className="sm:hidden space-y-3">
-        {tiers.map((tier, i) => (
-          <div key={i} className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3.5">
-            <div className="flex items-baseline justify-between mb-2.5">
-              <span className="text-[15px] font-bold text-white">{tier.capital}</span>
-              <span className="text-[13px] text-zinc-400 font-mono">{tier.euros}<span className="text-[11px] text-zinc-600"> {t.perTrade}</span></span>
-            </div>
-            <div className="relative h-7 bg-zinc-950 rounded-md overflow-hidden border border-zinc-800">
-              {!tier.full && (
-                <div
-                  className="absolute inset-y-0 left-0 rounded-md"
-                  style={{ width: tier.maxBar, backgroundColor: tier.colorFade ?? undefined }}
-                />
-              )}
-              <div
-                className="absolute inset-y-0 left-0 rounded-md flex items-center"
-                style={{ width: tier.idealBar, backgroundColor: tier.colorSolid }}
-              >
-                <span className="font-bold text-[12px] pl-2 whitespace-nowrap" style={{ color: tier.textOnBar }}>
-                  {tier.idealPct}
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 mt-2 text-[11px]">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: tier.colorSolid }} />
-                <span className="text-zinc-400">{t.legendIdeal} {tier.idealPct}</span>
-              </span>
-              {!tier.full && (
-                <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: tier.colorFade ?? undefined }} />
-                  <span className="text-zinc-400">{t.legendMax} {tier.maxPct}</span>
-                </span>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-      <p className="text-[10px] text-zinc-500 text-center mt-3 italic">
-        {t.footer}
-      </p>
-    </div>
-  );
-}
-
-// ── Diagramme : Biais psychologiques ─────────────────────────────────────────
-function ErrorsDiagram({ t }: { t: DiagLabels["errors"] }) {
-  return (
-    <div className="mt-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
-      <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-4 text-center">
-        {t.title}
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
-          <p className="text-xs font-bold text-red-400 mb-1">{t.fomo}</p>
-          <p className="text-[10px] text-zinc-400 leading-snug">{t.fomoBody}</p>
-        </div>
-        <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
-          <p className="text-xs font-bold text-red-400 mb-1">{t.vengeance}</p>
-          <p className="text-[10px] text-zinc-400 leading-snug">{t.vengeanceBody}</p>
-        </div>
-        <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-3">
-          <p className="text-xs font-bold text-blue-400 mb-1">{t.anchor}</p>
-          <p className="text-[10px] text-zinc-400 leading-snug">{t.anchorBody}</p>
-        </div>
-        <div className="rounded-xl border border-amber-400/20 bg-amber-400/5 p-3">
-          <p className="text-xs font-bold text-amber-400 mb-1">{t.overconfidence}</p>
-          <p className="text-[10px] text-zinc-400 leading-snug">{t.overconfBody}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ── Rendu conditionnel des diagrammes ────────────────────────────────────────
 function Diagram({ id, labels }: { id: string; labels: DiagLabels }) {
   switch (id) {
@@ -524,8 +345,8 @@ function Diagram({ id, labels }: { id: string; labels: DiagLabels }) {
     case "spread":      return <SpreadDiagram />;
     case "takeprofit":  return <TakeProfitDiagram />;
     case "breakeven":   return <BreakEvenDiagram />;
-    case "risk":        return <RiskDiagram t={labels.risk} />;
-    case "errors":      return <ErrorsDiagram t={labels.errors} />;
+    case "risk":        return <RiskGridDiagram />;
+    case "errors":      return <PsychoTrapsDiagram />;
     case "biaschart":   return <BiasDiagram />;
     default:            return null;
   }

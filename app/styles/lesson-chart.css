@@ -220,3 +220,5 @@
 .tsx-v2 .lc-choice:focus-visible { outline: 2px solid var(--v2-emerald); outline-offset: 2px; }
 .tsx-v2 .lc-result { display: grid; gap: 10px; margin-top: 14px; }
 .tsx-v2 .lc-result .lc-choice { justify-self: start; }
+.tsx-v2 .ls-bar--outer { position: relative; background: color-mix(in srgb, var(--ls-c, #9ca0ab) 35%, transparent); }
+.tsx-v2 .ls-bar-inner { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 7px; background: var(--ls-c, #9ca0ab); }

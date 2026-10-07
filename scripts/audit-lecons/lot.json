@@ -18,7 +18,7 @@
   {"url":"/fr/strategies/multi-timeframe/lecon4","charts":["RiskAffineDiagram"]},
   {"url":"/fr/strategies/smc/lecon2","charts":["BOSCHoCHSequenceDiagram","BOSvsCHoCHComparisonDiagram"]},
   {"url":"/fr/strategies/smc/lecon5","charts":["BOSCHoCHSequenceDiagram","MitigationZoneEntryDiagram"]},
-  {"url":"/fr/formations/debutant/lecon9","charts":["BiasDiagram"]},
+  {"url":"/fr/formations/debutant/lecon9","charts":["BiasDiagram","ErrorsDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon4","charts":["RetracementInteractive"]},
   {"url":"/fr/formations/avance/lecon4","charts":["KillzonesDiagram"]},
   {"url":"/fr/formations/macro/debutant/lecon4","charts":["InflationChainDiagram"]},
@@ -42,5 +42,10 @@
   {"url":"/fr/formations/debutant/lecon4","charts":["SpreadDiagram","SpreadImpactDiagram","SpreadVariationDiagram"]},
   {"url":"/fr/formations/debutant/lecon5","charts":["StopLossDiagram","WithWithoutSLDiagram","StopLossChartDiagram"]},
   {"url":"/fr/formations/debutant/lecon6","charts":["TakeProfitDiagram"]},
-  {"url":"/fr/formations/debutant/lecon7","charts":["BreakEvenDiagram"]}
+  {"url":"/fr/formations/debutant/lecon7","charts":["BreakEvenDiagram"]},
+  {"url":"/fr/formations/debutant/lecon8","charts":["RiskDiagram"]},
+  {"url":"/fr/formations/debutant/lecon10","charts":["RRComparisonDiagram"]},
+  {"url":"/fr/formations/intermediaire/lecon2","charts":["Candle"]},
+  {"url":"/fr/formations/intermediaire/lecon3","charts":["Candle","SupplyDemandDiagram"]},
+  {"url":"/fr/formations/intermediaire/lecon6","charts":["Candle"]}
 ]

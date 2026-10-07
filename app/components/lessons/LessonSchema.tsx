@@ -156,7 +156,7 @@ export function Timeline({ rows, start = 0, end = 24, ticks = [0, 6, 12, 18, 24]
   );
 }
 
-export interface BarItem { label: ReactNode; value: number; display: ReactNode; tone?: LCTone; note?: ReactNode }
+export interface BarItem { label: ReactNode; value: number; display: ReactNode; tone?: LCTone; note?: ReactNode; /** partie pleine (ex. l'idéal) dans la barre, même échelle */ inner?: number }
 
 /** Barres horizontales à l'échelle linéaire (0 → max). */
 export function Bars({ items, max }: { items: BarItem[]; max?: number }) {
@@ -167,7 +167,9 @@ export function Bars({ items, max }: { items: BarItem[]; max?: number }) {
         <div key={i} className="ls-bar-row" data-value={b.value}>
           <div className="ls-bar-label"><strong>{b.label}</strong>{b.note && <span className="ls-tl-note"> · {b.note}</span>}</div>
           <div className="ls-bar-track">
-            <span className={`ls-bar${tone(b.tone)}`} style={{ width: `${(b.value / m) * 100}%` }} />
+            <span className={`ls-bar${tone(b.tone)}${b.inner !== undefined ? " ls-bar--outer" : ""}`} style={{ width: `${(b.value / m) * 100}%` }}>
+              {b.inner !== undefined && <span className="ls-bar-inner" style={{ width: `${(b.inner / b.value) * 100}%` }} />}
+            </span>
             <span className="ls-bar-value">{b.display}</span>
           </div>
         </div>

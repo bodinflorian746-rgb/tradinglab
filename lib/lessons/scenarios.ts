@@ -539,3 +539,20 @@ const slChart = () => buildCandles(78900, [
   ...c(78550, 78300), { c: 78100, l: 78000 }, { c: 78450, l: 78020 },
 ], { seed: 10101, decimals: 0, asset: "BTC/USD", session: "New York", volatility: "normale", levels: [78000, 77200], pins: [77200, 78000, 79050] });
 Object.assign(SCENARIOS, { "sl-chart": slChart });
+
+// ─── Lot 11 ──────────────────────────────────────────────────────────────────
+// Intermédiaire 3 — support de type demande : descente lente, base (3 bougies),
+// départ impulsif haussier, retour sur la zone ; résistance de type offre : l'inverse.
+const sdSupport = () => buildCandles(1.0904, [
+  ...c(1.0897, 1.0891, 1.0884, 1.0878, 1.0871, 1.0863, 1.0855, 1.0846, 1.0838, 1.0830),
+  { c: 1.0824, l: 1.0816 }, { c: 1.0827, l: 1.0818 }, { c: 1.0822, l: 1.0815 },
+  { c: 1.0851, h: 1.0853, l: 1.0821 }, { c: 1.0879, h: 1.0882, l: 1.0850 },
+  ...c(1.0874, 1.0868, 1.0861, 1.0853, 1.0844, 1.0836), { c: 1.0838, l: 1.0829 },
+], { seed: 11101, decimals: 5, asset: "EUR/USD", volatility: "normale", levels: [1.0828, 1.0814], pins: [1.0816, 1.0818, 1.0815, 1.0829] });
+const sdResistance = () => buildCandles(1.0901, [
+  ...c(1.0907, 1.0913, 1.0920, 1.0926, 1.0933, 1.0941, 1.0949, 1.0958, 1.0966, 1.0974),
+  { c: 1.0980, h: 1.0988 }, { c: 1.0977, h: 1.0986 }, { c: 1.0982, h: 1.0989 },
+  { c: 1.0953, h: 1.0983, l: 1.0951 }, { c: 1.0925, h: 1.0954, l: 1.0922 },
+  ...c(1.0930, 1.0936, 1.0943, 1.0951, 1.0960, 1.0968), { c: 1.0966, h: 1.0975 },
+], { seed: 11102, decimals: 5, asset: "EUR/USD", volatility: "normale", levels: [1.0976, 1.0990], pins: [1.0988, 1.0986, 1.0989, 1.0975] });
+Object.assign(SCENARIOS, { "sd-support": sdSupport, "sd-resistance": sdResistance });
