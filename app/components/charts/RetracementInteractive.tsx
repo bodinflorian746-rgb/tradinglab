@@ -1,297 +1,76 @@
 "use client";
 
+// Trading Intermédiaire 4 — « Quand entres-tu ? ». EUR/USD H1 en tendance haussière,
+// le prix retrace vers le Higher Low (zone de l'ancien sommet 1.0860) sans l'avoir
+// atteint. Trois choix, un seul futur du marché : repli jusqu'à la zone, pin bar,
+// nouveau HH. Le choix ne change que l'entrée et le stop du joueur.
+// Bougies : scenarios.ts (« retracement », RETRACE_DECISION).
+
 import { useState } from "react";
+import { LessonChart, type LCLevel, type LCMarker } from "@/app/components/lessons/LessonChart";
+import { fmtPrice, fmtRR, tradeMath } from "@/lib/lessons/chart-analysis";
+import { RETRACE_DECISION } from "@/lib/lessons/scenarios-meta";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
 type Choice = null | "fomo" | "patience" | "reverse";
+const p = (x: number) => fmtPrice(x, 4);
+const ZONE = { y1: 1.0855, y2: 1.0862 };
 
-const PATHS = {
-  // Base: uptrend to HH, then retracement to decision point
-  trend:      "M10,128 L45,100 L75,76 L100,56 L118,44",
-  retracement:"M118,44 L138,60 L154,74 L166,84",
-
-  // Revealed continuations
-  patience_ext: "M166,84 L188,64 L216,44 L245,24 L258,18",
-  fomo_drop:    "M166,84 L178,94 L192,108 L204,118",
-  reverse_ext:  "M166,84 L188,64 L216,44 L245,24 L258,18",
-} as const;
-
-const CONFIGS_FR = {
-  fomo: {
-    heading: "FOMO — entrée trop tôt",
-    body: "Tu es entré pendant le retracement, pas au HL. Le prix a continué sa correction et touché ton Stop Loss. Les entrées en milieu de retracement manquent de précision — attends toujours la zone de structure.",
-    color: "border-red-500/20 bg-red-500/5 text-red-400",
-    badgeColor: "#ef4444",
-    badgeText: "SL touché ✗",
-    badgeCx: 204,
-    badgeCy: 118,
-  },
-  patience: {
-    heading: "Patience — entrée au HL",
-    body: "Tu as attendu que le prix revienne sur le Higher Low structurel. Le retracement s'est arrêté là. Pin bar haussière validée. Le prix a continué dans le sens de la tendance. Trade gagnant.",
-    color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
-    badgeColor: "#10b981",
-    badgeText: "Trade gagnant ✓",
-    badgeCx: 210,
-    badgeCy: 24,
-  },
-  reverse: {
-    heading: "Contre-tendance — vente dans une hausse",
-    body: "Tu as vendu dans une tendance haussière. Le retracement était une correction normale — pas un retournement. Le prix a repris sa montée et touché ton Stop Loss. Ne jamais shorter sans rupture de structure claire.",
-    color: "border-red-500/20 bg-red-500/5 text-red-400",
-    badgeColor: "#ef4444",
-    badgeText: "SL touché ✗",
-    badgeCx: 210,
-    badgeCy: 24,
-  },
-};
-
-const CONFIGS_EN = {
-  fomo: {
-    heading: "FOMO — entry too early",
-    body: "You entered during the retracement, not at the HL. Price kept correcting and hit your Stop Loss. Mid-retracement entries lack precision — always wait for the structure zone.",
-    color: "border-red-500/20 bg-red-500/5 text-red-400",
-    badgeColor: "#ef4444",
-    badgeText: "SL hit ✗",
-    badgeCx: 204,
-    badgeCy: 118,
-  },
-  patience: {
-    heading: "Patience — entry at the HL",
-    body: "You waited for price to return to the structural Higher Low. The retracement stopped there. Bullish pin bar validated. Price continued in the trend direction. Winning trade.",
-    color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
-    badgeColor: "#10b981",
-    badgeText: "Winning trade ✓",
-    badgeCx: 210,
-    badgeCy: 24,
-  },
-  reverse: {
-    heading: "Counter-trend — selling in an uptrend",
-    body: "You sold in a bullish trend. The retracement was a normal correction — not a reversal. Price resumed its rise and hit your Stop Loss. Never short without a clear break of structure.",
-    color: "border-red-500/20 bg-red-500/5 text-red-400",
-    badgeColor: "#ef4444",
-    badgeText: "SL hit ✗",
-    badgeCx: 210,
-    badgeCy: 24,
-  },
-};
-
-const CONFIGS_ES = {
-  fomo: {
-    heading: "FOMO — entrada demasiado pronto",
-    body: "Entraste durante el retracement, no en el HL. El precio continuó su corrección y tocó tu Stop Loss. Las entradas en medio del retracement carecen de precisión — espera siempre la zona de estructura.",
-    color: "border-red-500/20 bg-red-500/5 text-red-400",
-    badgeColor: "#ef4444",
-    badgeText: "SL tocado ✗",
-    badgeCx: 204,
-    badgeCy: 118,
-  },
-  patience: {
-    heading: "Paciencia — entrada en el HL",
-    body: "Esperaste a que el precio volviera al Higher Low estructural. El retracement se detuvo ahí. Pin bar alcista validada. El precio continuó en el sentido de la tendencia. Trade ganador.",
-    color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
-    badgeColor: "#10b981",
-    badgeText: "Trade ganador ✓",
-    badgeCx: 210,
-    badgeCy: 24,
-  },
-  reverse: {
-    heading: "Contra-tendencia — venta en una subida",
-    body: "Vendiste en una tendencia alcista. El retracement era una corrección normal — no un giro. El precio retomó su subida y tocó tu Stop Loss. Nunca vendas sin ruptura de estructura clara.",
-    color: "border-red-500/20 bg-red-500/5 text-red-400",
-    badgeColor: "#ef4444",
-    badgeText: "SL tocado ✗",
-    badgeCx: 210,
-    badgeCy: 24,
-  },
-};
-
-export function RetracementInteractive({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
+export function RetracementInteractive(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const [choice, setChoice] = useState<Choice>(null);
-
-  const CONFIGS = locale === "es" ? CONFIGS_ES : locale === "en" ? CONFIGS_EN : CONFIGS_FR;
-  const cfg = choice ? CONFIGS[choice] : null;
-
-  const labels = locale === "es"
-    ? {
-        question: "El precio retrocede al HL — ¿qué haces?",
-        btnFomo: "Entrar ahora",
-        btnPatience: "Esperar el HL",
-        btnReverse: "Vender aquí",
-        retry: "Volver a intentar",
-      }
-    : locale === "en"
-    ? {
-        question: "Price retraces to the HL — what do you do?",
-        btnFomo: "Enter now",
-        btnPatience: "Wait for the HL",
-        btnReverse: "Sell here",
-        retry: "Try again",
-      }
-    : {
-        question: "Le prix retrace sur le HL — que fais-tu ?",
-        btnFomo: "Entrer maintenant",
-        btnPatience: "Attendre le HL",
-        btnReverse: "Vendre ici",
-        retry: "Réessayer",
-      };
-
+  const all = CANDLES["retracement"];
+  const now = all[RETRACE_DECISION];
+  const pinI = all.findIndex((k, i) => i > RETRACE_DECISION && k.l <= ZONE.y2 && k.c > k.o);
+  const pin = all[pinI];
+  const lastHigh = Math.max(...all.slice(0, RETRACE_DECISION + 1).map((k) => k.h));
+  const trades = {
+    fomo: { entry: now.c, sl: now.l - 0.0002, side: "long" as const },
+    patience: { entry: pin.c, sl: pin.l - 0.0004, side: "long" as const },
+    reverse: { entry: now.c, sl: lastHigh + 0.0004, side: "short" as const },
+  };
+  const t = choice ? trades[choice] : null;
+  const shown = choice ? all : all.slice(0, RETRACE_DECISION + 1);
+  const hitI = t ? all.findIndex((k, i) => i > (choice === "patience" ? pinI : RETRACE_DECISION) && (t.side === "long" ? k.l <= t.sl : k.h >= t.sl)) : -1;
+  const tp = Math.max(...all.map((k) => k.h));
+  const levels: LCLevel[] = t ? [
+    { key: "entry", price: t.entry, from: choice === "patience" ? pinI : RETRACE_DECISION, label: `${t.side === "long" ? "Achat" : "Vente"} ${p(t.entry)}`, short: t.side === "long" ? "Achat" : "Vente", tone: "entry" },
+    { key: "sl", price: t.sl, from: choice === "patience" ? pinI : RETRACE_DECISION, label: `SL ${p(t.sl)}`, short: "SL", tone: "bear", dashed: true },
+  ] : [];
+  const markers: LCMarker[] = [];
+  if (t && hitI > 0) markers.push({ key: "hit", i: hitI, price: t.sl, label: "SL touché", tone: "bear", side: t.side === "long" ? "below" : "above", dot: true });
+  if (choice === "patience") markers.push({ key: "pin", i: pinI, price: pin.l, label: "Pin bar sur le HL", short: "Pin bar", tone: "bull", side: "below" });
+  if (!choice) markers.push({ key: "now", i: RETRACE_DECISION, price: now.l, label: "Maintenant", tone: "zone", side: "below" });
+  const result = !choice ? null : choice === "patience"
+    ? { tone: "bull", title: "Patience : entrée au HL", text: `Le repli s'arrête sur la zone du HL, pin bar haussière, entrée à ${p(pin.c)}. Le prix repart dans le sens de la tendance jusqu'à ${p(tp)} : trade gagnant (R/R ${fmtRR(tradeMath(pin.c, trades.patience.sl, tp).rr)} sur ce sommet).` }
+    : choice === "fomo"
+      ? { tone: "bear", title: "FOMO : entrée trop tôt", text: "Tu es entré pendant le repli, pas au HL. Le prix continue sa correction et touche ton stop avant de repartir sans toi. Attends la zone de structure." }
+      : { tone: "bear", title: "Contre-tendance : vente dans une hausse", text: "Le repli était une correction normale, pas un retournement. Le prix reprend sa montée et touche ton stop. Pas de vente sans cassure de structure." };
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <style>{`
-        @keyframes ri-pulse {
-          0%, 100% { opacity: 0.4; }
-          50%       { opacity: 1; }
-        }
-        @keyframes ri-shake {
-          0%, 100% { transform: translateX(0); }
-          20%       { transform: translateX(-4px); }
-          40%       { transform: translateX(4px); }
-          60%       { transform: translateX(-3px); }
-          80%       { transform: translateX(3px); }
-        }
-        .ri-pulse { animation: ri-pulse 1.5s ease-in-out infinite; }
-        .ri-shake { animation: ri-shake 0.45s ease; }
-        .ri-fade  { animation: ri-fade 0.4s ease; }
-        @keyframes ri-fade {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-      `}</style>
-
-      <svg
-        width="100%"
-        viewBox="0 0 268 152"
-        fill="none"
-        preserveAspectRatio="xMidYMid meet"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <style>{`
-          .ri-pulse { animation: ri-pulse 1.5s ease-in-out infinite; }
-          @media (max-width: 640px) { .chart-detail-labels { display: none; } }
-        `}</style>
-        <defs>
-          <marker id="ri-arr-em" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
-            <path d="M 0 0 L 6 2 L 0 4 Z" fill="#10b981" />
-          </marker>
-        </defs>
-
-        {/* Always-visible: base trend + retracement */}
-        <path d={PATHS.trend} stroke="#71717a" strokeWidth="1.8" strokeLinejoin="round" />
-        <path d={PATHS.retracement} stroke="#71717a" strokeWidth="1.6" strokeLinejoin="round" strokeDasharray="5 3" />
-
-        {/* HH dot — toujours visible */}
-        <circle cx="118" cy="44" r="3" fill="#71717a" opacity="0.7" />
-
-        {/* Labels HH/HL — masqués sur mobile */}
-        <g className="chart-detail-labels">
-          <rect x="146" y="79" width="26" height="14" rx="3" fill="#09090b" />
-          <text x="152" y="90" fontSize="7" fill="#71717a" fontWeight="600" opacity="0.7">HL</text>
-
-          <rect x="114" y="30" width="26" height="14" rx="3" fill="#09090b" />
-          <text x="120" y="41" fontSize="7" fill="#71717a" fontWeight="600" opacity="0.8">HH</text>
-        </g>
-
-        {/* Decision point "?" — pulsing when no choice made */}
-        {!choice && (
-          <g className="ri-pulse">
-            <circle cx="166" cy="84" r="10" fill="#60a5fa12" stroke="#60a5fa50" strokeWidth="1.2" />
-            <text x="166" y="88" fontSize="10" fill="#60a5fa" textAnchor="middle" fontWeight="700">?</text>
-          </g>
-        )}
-
-        {/* Entry dot on choice */}
-        {choice && (
-          <circle cx="166" cy="84" r="4"
-            fill={choice === "patience" ? "#10b981" : "#ef444488"}
-            opacity="0.9"
-            className="ri-fade"
-          />
-        )}
-
-        {/* Patience — continued rise */}
-        {choice === "patience" && (
-          <g className="ri-fade">
-            <path d={PATHS.patience_ext} stroke="#10b981" strokeWidth="2.2" strokeLinejoin="round" />
-            {/* Pin bar at HL */}
-            <line x1="166" y1="76" x2="166" y2="92" stroke="#10b981" strokeWidth="1.5" />
-            <rect x="163" y="80" width="6" height="6" rx="1" fill="#10b981" opacity="0.8" />
-          </g>
-        )}
-
-        {/* FOMO — continues down, SL hit */}
-        {choice === "fomo" && (
-          <g className="ri-fade">
-            <path d={PATHS.fomo_drop} stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" />
-          </g>
-        )}
-
-        {/* Reverse — price rises, SL hit */}
-        {choice === "reverse" && (
-          <g className="ri-fade">
-            <path d={PATHS.reverse_ext} stroke="#71717a" strokeWidth="1.8" strokeLinejoin="round" />
-          </g>
-        )}
-
-        {/* Result badge */}
-        {choice && cfg && (
-          <g className={choice !== "patience" ? "ri-shake ri-fade" : "ri-fade"}>
-            <rect
-              x={cfg.badgeCx - 38} y={cfg.badgeCy - 10}
-              width="76" height="14" rx="3"
-              fill={`${cfg.badgeColor}20`} stroke={`${cfg.badgeColor}50`} strokeWidth="0.8"
-            />
-            <text
-              x={cfg.badgeCx} y={cfg.badgeCy + 1}
-              fontSize="7.5" fill={cfg.badgeColor} textAnchor="middle" fontWeight="700"
-            >
-              {cfg.badgeText}
-            </text>
-          </g>
-        )}
-      </svg>
-
-      {/* Buttons */}
-      {!choice && (
-        <div className="px-4 pb-4 pt-2">
-          <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-2.5 text-center">
-            {labels.question}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-2">
-            <button
-              onClick={() => setChoice("fomo")}
-              className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 hover:bg-amber-400/20 transition-colors focus:outline-none focus:ring-1 focus:ring-amber-400"
-            >
-              {labels.btnFomo}
-            </button>
-            <button
-              onClick={() => setChoice("patience")}
-              className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-colors focus:outline-none focus:ring-1 focus:ring-emerald-500"
-            >
-              {labels.btnPatience}
-            </button>
-            <button
-              onClick={() => setChoice("reverse")}
-              className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-colors focus:outline-none focus:ring-1 focus:ring-red-500"
-            >
-              {labels.btnReverse}
-            </button>
+    <LessonChart
+      id="RetracementInteractive"
+      title={choice ? "Ce qui s'est passé" : "Le prix retrace vers le HL : que fais-tu ?"}
+      panels={[{
+        key: "h1", subtitle: "EUR/USD H1 — tendance haussière (HL puis HH)",
+        decimals: 5, height: 280, candles: shown, slots: all.length,
+        zones: [{ key: "hl", ...ZONE, label: "Zone du HL", tone: "sky", kind: "zone" }],
+        levels, markers,
+      }]}
+    >
+      {!choice ? (
+        <div className="lc-choices">
+          <button type="button" className="lc-choice" onClick={() => setChoice("fomo")}>Acheter maintenant</button>
+          <button type="button" className="lc-choice lc-choice--good" onClick={() => setChoice("patience")}>Attendre le HL</button>
+          <button type="button" className="lc-choice" onClick={() => setChoice("reverse")}>Vendre</button>
+        </div>
+      ) : (
+        <div className="lc-result">
+          <div className={`ls-card ls-tone--${result!.tone}`}>
+            <div className="ls-card-title">{result!.title}</div>
+            <div className="ls-card-text">{result!.text}</div>
           </div>
+          <button type="button" className="lc-choice" onClick={() => setChoice(null)}>Rejouer</button>
         </div>
       )}
-
-      {/* Explanation + retry */}
-      {choice && cfg && (
-        <div className={`mx-4 mb-4 mt-1 border rounded-xl px-4 py-3 ${cfg.color}`}>
-          <p className="text-xs font-semibold mb-1">{cfg.heading}</p>
-          <p className="text-xs text-zinc-400 leading-relaxed">{cfg.body}</p>
-          <button
-            onClick={() => setChoice(null)}
-            className="mt-2.5 text-[10px] font-semibold text-zinc-500 hover:text-zinc-300 transition-colors focus:outline-none underline underline-offset-2"
-          >
-            {labels.retry}
-          </button>
-        </div>
-      )}
-    </div>
+    </LessonChart>
   );
 }

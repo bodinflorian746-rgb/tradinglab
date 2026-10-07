@@ -1,165 +1,49 @@
-export default function BOSCHoCHSequenceDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
-  const t = locale === "es"
-    ? {
-        title: "Secuencia de reversión estructural en 3 etapas",
-        etape1: "Etapa 1",
-        etape2: "Etapa 2",
-        etape3: "Etapa 3",
-        bosCounterTrend: "BOS contra-tendencia",
-        firstSignal: "Primera señal de reversión",
-        newStructure: "Nueva estructura",
-        noCHoCH: "Aún no hay CHoCH",
-        chochConfirmed: "CHoCH confirmado",
-        reversalValidated: "Reversión validada",
-        bottomNote: "BOS contra-tendencia → Nueva estructura → CHoCH confirmado",
-        mobileTitle: "Secuencia reversión en 3 etapas",
-        m1Title: "Etapa 1 — BOS contra-tendencia",
-        m1Body: "Primer signo de agotamiento: ruptura de estructura contra la tendencia mayor.",
-        m2Title: "Etapa 2 — Nueva estructura",
-        m2Body: "El precio construye una nueva estructura (LH/LL en sentido opuesto).",
-        m3Title: "Etapa 3 — CHoCH confirmado",
-        m3Body: "El CHoCH en la nueva dirección confirma la reversión definitiva.",
-      }
-    : locale === "en"
-    ? {
-        title: "3-stage structural reversal sequence",
-        etape1: "Stage 1",
-        etape2: "Stage 2",
-        etape3: "Stage 3",
-        bosCounterTrend: "Counter-trend BOS",
-        firstSignal: "First reversal signal",
-        newStructure: "New structure",
-        noCHoCH: "No CHoCH yet",
-        chochConfirmed: "CHoCH confirmed",
-        reversalValidated: "Reversal validated",
-        bottomNote: "Counter-trend BOS → New structure → CHoCH confirmed",
-        mobileTitle: "3-stage reversal sequence",
-        m1Title: "Stage 1 — Counter-trend BOS",
-        m1Body: "First sign of exhaustion: break of structure against the major trend.",
-        m2Title: "Stage 2 — New structure",
-        m2Body: "Price builds a new structure (LH/LL in the opposite direction).",
-        m3Title: "Stage 3 — CHoCH confirmed",
-        m3Body: "The CHoCH in the new direction confirms the definitive reversal.",
-      }
-    : {
-        title: "Séquence de retournement structurel en 3 étapes",
-        etape1: "Étape 1",
-        etape2: "Étape 2",
-        etape3: "Étape 3",
-        bosCounterTrend: "CHoCH",
-        firstSignal: "Premier signal de retournement",
-        newStructure: "Nouvelle structure",
-        noCHoCH: "Pas encore de confirmation",
-        chochConfirmed: "BOS haussier",
-        reversalValidated: "Retournement confirmé",
-        bottomNote: "CHoCH → Nouvelle structure → BOS de confirmation",
-        mobileTitle: "Séquence retournement en 3 étapes",
-        m1Title: "Étape 1 — CHoCH",
-        m1Body: "Premier signal d'un retournement possible : cassure du dernier LH de la tendance baissière.",
-        m2Title: "Étape 2 — Nouvelle structure",
-        m2Body: "Le prix construit une nouvelle structure (HH puis HL, dans le sens opposé).",
-        m3Title: "Étape 3 — BOS haussier",
-        m3Body: "La cassure du HH dans le nouveau sens confirme le retournement.",
-      };
+// SMC 2 / SMC 5 — séquence de retournement haussier en 3 étapes (doctrine PO) :
+// 1. CHoCH : clôture au-dessus du dernier LH de la tendance baissière (1er signal) ;
+// 2. nouvelle structure : un HL se forme ;
+// 3. BOS : clôture au-dessus du sommet laissé par le CHoCH (confirmation).
+// EUR/USD H4, bougies : scenarios.ts (« choch-sequence ») ; pivots calculés.
+
+import { LessonChart, type LCMarker } from "@/app/components/lessons/LessonChart";
+import { fmtPrice, pivots } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const p = (x: number) => fmtPrice(x, 4);
+
+export default function BOSCHoCHSequenceDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const candles = CANDLES["choch-sequence"];
+  const piv = pivots(candles, 2);
+  const lastLH = piv.filter((q) => q.name === "LH").at(-1)!;
+  const chochI = candles.findIndex((k, i) => i > lastLH.index && k.c > lastLH.price);
+  const hh = piv.find((q) => q.side === "h" && q.index > chochI)!;
+  const hl = piv.find((q) => q.side === "l" && q.index > hh.index)!;
+  const bosI = candles.findIndex((k, i) => i > hl.index && k.c > hh.price);
+  const structure: LCMarker[] = piv.filter((q) => q.name && q.index < chochI).map((q) => ({
+    key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name, tone: "neutral", side: q.side === "h" ? "above" : "below",
+  }));
   return (
-    <div className={className}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 900 400"
-      className="hidden sm:block w-full h-auto"
-    >
-      <text x="450" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        {t.title}
-      </text>
-
-      <line x1="305" y1="40" x2="305" y2="370" stroke="#3f3f46" strokeWidth="1" />
-      <line x1="605" y1="40" x2="605" y2="370" stroke="#3f3f46" strokeWidth="1" />
-
-      {/* ═══ PANEL 1 — Étape 1 : BOS contre-tendance ═══ */}
-      <text x="150" y="55" fill="#ef4444" fontSize="11" fontWeight="700" textAnchor="middle">{t.etape1}</text>
-      <line x1="100" y1="90" x2="280" y2="90" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.5" />
-      <path d="M20,80 L60,140 L100,90 L140,200 L180,160 L220,250" stroke="#71717a" strokeWidth="2" fill="none" strokeLinejoin="round" />
-      <circle cx="100" cy="90" r="4" fill="#ef4444" />
-      <rect x="68" y="70" width="64" height="12" rx="2" fill="#09090b" />
-      <text x="100" y="80" fill="#ef4444" fontSize="9" textAnchor="middle">LH 1.1820</text>
-      <circle cx="180" cy="160" r="4" fill="#ef4444" />
-      <line x1="250" y1="60" x2="250" y2="180" stroke="#059669" strokeWidth="1.5" />
-      <rect x="244" y="60" width="12" height="100" fill="#10b981" stroke="#059669" strokeWidth="1" rx="1" />
-      <rect x="35" y="305" width="230" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="150" y="320" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{t.bosCounterTrend}</text>
-      <rect x="55" y="335" width="190" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="150" y="349" fill="#d4d4d8" fontSize="9" textAnchor="middle">{t.firstSignal}</text>
-
-      {/* ═══ PANEL 2 — Étape 2 : Nouvelle structure ═══ */}
-      <text x="455" y="55" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">{t.etape2}</text>
-      <path d="M325,260 L370,200 L410,150 L450,210 L490,130 L530,180 L570,140" stroke="#71717a" strokeWidth="2" fill="none" strokeLinejoin="round" />
-      <line x1="490" y1="130" x2="595" y2="130" stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.5" />
-      <circle cx="490" cy="130" r="5" fill="#10b981" />
-      <rect x="458" y="110" width="64" height="12" rx="2" fill="#09090b" />
-      <text x="490" y="120" fill="#10b981" fontSize="9" textAnchor="middle">HH 1.1840</text>
-      <circle cx="530" cy="180" r="5" fill="#10b981" />
-      <rect x="553" y="174" width="64" height="12" rx="2" fill="#09090b" />
-      <text x="555" y="184" fill="#10b981" fontSize="9">HL 1.1750</text>
-      <rect x="335" y="305" width="230" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="450" y="320" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{t.newStructure}</text>
-      <rect x="355" y="335" width="190" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="450" y="349" fill="#d4d4d8" fontSize="9" textAnchor="middle">{t.noCHoCH}</text>
-
-      {/* ═══ PANEL 3 — Étape 3 : CHoCH confirmé ═══ */}
-      <text x="755" y="55" fill="#10b981" fontSize="11" fontWeight="700" textAnchor="middle">{t.etape3}</text>
-      <path d="M625,260 L660,200 L690,150 L720,210 L755,130 L780,180 L810,90" stroke="#71717a" strokeWidth="2" fill="none" strokeLinejoin="round" />
-      <line x1="755" y1="130" x2="880" y2="130" stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.5" />
-      <circle cx="755" cy="130" r="4" fill="#10b981" />
-      <line x1="850" y1="60" x2="850" y2="170" stroke="#059669" strokeWidth="1.5" />
-      <rect x="844" y="60" width="12" height="80" fill="#10b981" stroke="#059669" strokeWidth="1" rx="1" />
-      <rect x="635" y="305" width="230" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="750" y="320" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{t.chochConfirmed}</text>
-      <rect x="655" y="335" width="190" height="20" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="750" y="349" fill="#d4d4d8" fontSize="9" textAnchor="middle">{t.reversalValidated}</text>
-
-      <text x="450" y="390" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        {t.bottomNote}
-      </text>
-    </svg>
-
-    {/* MOBILE : séquence retournement structurel ───────────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
-
-      {/* Mini-SVG : séquence BOS (continuation HH/HL) puis CHoCH (cassure du LL = retournement) */}
-      <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="Séquence BOS puis CHoCH" fill="none">
-        {/* Trend up : HH/HL */}
-        <path d="M10,90 L40,75 L55,82 L80,60 L95,68 L120,45 L140,55 L165,30" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-        {/* HH points */}
-        <circle cx="80" cy="60" r="3" fill="#10b981" />
-        <circle cx="120" cy="45" r="3" fill="#10b981" />
-        <circle cx="165" cy="30" r="3.5" fill="#10b981" />
-        {/* BOS label (au sommet) */}
-        <rect x="148" y="10" width="34" height="14" rx="3" fill="#10b98115" stroke="#10b98155" strokeWidth="0.8" />
-        <text x="165" y="20" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">BOS</text>
-        {/* Reversal : casse du HL → CHoCH */}
-        <path d="M165,30 L185,60 L200,55 L220,80 L240,95 L265,85" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-        {/* Niveau du dernier HL (cassé) */}
-        <line x1="80" y1="60" x2="240" y2="60" stroke="#71717a" strokeWidth="0.8" strokeDasharray="3 3" />
-        {/* CHoCH label */}
-        <rect x="210" y="98" width="50" height="14" rx="3" fill="#ef444415" stroke="#ef444455" strokeWidth="0.8" />
-        <text x="235" y="108" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">CHoCH</text>
-        <circle cx="220" cy="80" r="3" fill="#ef4444" />
-      </svg>
-
-      <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-        <p className="text-[13px] font-bold text-amber-400">{t.m1Title}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.m1Body}</p>
-      </div>
-      <div className="rounded-lg border border-blue-400/40 bg-blue-500/8 p-3">
-        <p className="text-[13px] font-bold text-blue-400">{t.m2Title}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.m2Body}</p>
-      </div>
-      <div className="rounded-lg border-2 border-red-500 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">{t.m3Title}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.m3Body}</p>
-      </div>
-    </div>
-    </div>
+    <LessonChart
+      id="BOSCHoCHSequenceDiagram"
+      title="Séquence de retournement en 3 étapes"
+      panels={[{
+        key: "h4", subtitle: "EUR/USD H4 — de la tendance baissière (LH / LL) au retournement confirmé",
+        decimals: 5, height: 340, candles,
+        levels: [
+          { key: "lh", price: lastLH.price, from: lastLH.index, to: chochI, label: `Dernier LH ${p(lastLH.price)}`, short: "Dernier LH", tone: "zone", dashed: true },
+          { key: "hh", price: hh.price, from: hh.index, to: bosI, label: `Sommet du CHoCH ${p(hh.price)}`, short: "Sommet CHoCH", tone: "bull", dashed: true },
+        ],
+        markers: [
+          ...structure,
+          { key: "choch", i: chochI, price: candles[chochI].l, label: "1 · CHoCH", tone: "zone", side: "below" },
+          { key: "hl", i: hl.index, price: hl.price, label: "2 · HL", pivot: "HL", tone: "sky", side: "below" },
+          { key: "bos", i: bosI, price: candles[bosI].h, label: "3 · BOS", tone: "bull", side: "above" },
+        ],
+        chips: [
+          { label: "1 · CHoCH : premier signal, sortie des ventes", tone: "zone" },
+          { label: "2 · Nouvelle structure : pas encore d'inversion" },
+          { label: "3 · BOS dans le nouveau sens : retournement confirmé", tone: "bull" },
+        ],
+      }]}
+    />
   );
 }

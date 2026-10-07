@@ -229,9 +229,9 @@ export default function ContentFr() {
             </div>
           </section>
 
-          {/* Bloc 4 — Exemple réel (2022-2023) */}
+          {/* Bloc 4 — Exemple réel (2021-2023) */}
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Exemple réel (2022-2023)</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Exemple réel (2021-2023)</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               C&apos;est exactement ce qui s&apos;est passé récemment.
             </p>
@@ -239,7 +239,7 @@ export default function ContentFr() {
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
                 <p className="text-sm font-semibold text-zinc-200 mb-1">Phase 1. L&apos;inflation explose</p>
                 <p className="text-sm text-zinc-300">
-                  l&apos;inflation US monte de 1.4% à <span className="font-semibold text-zinc-200">9.1%</span> (record sur 40 ans).
+                  l&apos;inflation US monte de 1.4% (janvier 2021) à <span className="font-semibold text-zinc-200">9.1%</span> (juin 2022, record sur 40 ans).
                 </p>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">

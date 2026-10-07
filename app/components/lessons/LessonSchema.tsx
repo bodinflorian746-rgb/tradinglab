@@ -121,12 +121,14 @@ export function Scale({ left, right, marks, gradient = "linear-gradient(90deg, #
   );
 }
 
-export interface TimelineRow { label: ReactNode; from: number; to: number; tone?: LCTone; note?: ReactNode }
+export interface TimelineMark { at: number; label: ReactNode; tone?: LCTone }
+export interface TimelineRow { label: ReactNode; from: number; to: number; tone?: LCTone; note?: ReactNode; /** repères dessinés sur cette ligne seulement */ marks?: TimelineMark[] }
 
 /** Frise horaire : une ligne par plage (heures de from à to, passage de minuit permis), graduations dessous. */
-export function Timeline({ rows, start = 0, end = 24, ticks = [0, 6, 12, 18, 24], unit = "h", marks = [] }: {
-  rows: TimelineRow[]; start?: number; end?: number; ticks?: number[]; unit?: string; marks?: { at: number; label: ReactNode; tone?: LCTone }[];
+export function Timeline({ rows, start = 0, end = 24, ticks = [0, 6, 12, 18, 24], unit = "h" }: {
+  rows: TimelineRow[]; start?: number; end?: number; ticks?: number[]; unit?: string;
 }) {
+  const marks = rows.flatMap((r) => r.marks ?? []);
   const pct = (h: number) => ((h - start) / (end - start)) * 100;
   const parts = (r: TimelineRow) => (r.to >= r.from ? [[r.from, r.to]] : [[r.from, end], [start, r.to]]);
   return (
@@ -138,7 +140,7 @@ export function Timeline({ rows, start = 0, end = 24, ticks = [0, 6, 12, 18, 24]
             {parts(r).map(([a, b], k) => (
               <span key={k} className={`ls-tl-seg${tone(r.tone)}`} style={{ left: `${pct(a)}%`, width: `${pct(b) - pct(a)}%` }} />
             ))}
-            {marks.map((m, k) => <span key={`m${k}`} className={`ls-tl-mark${tone(m.tone)}`} style={{ left: `${pct(m.at)}%` }} />)}
+            {(r.marks ?? []).map((m, k) => <span key={`m${k}`} className={`ls-tl-mark${tone(m.tone)}`} style={{ left: `${pct(m.at)}%` }} />)}
           </div>
         </div>
       ))}

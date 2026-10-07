@@ -5,6 +5,7 @@
 
 import { buildCandles, type Step } from "./chart-build";
 import type { Candle } from "./chart-analysis";
+import { RETRACE_DECISION } from "./scenarios-meta";
 
 const c = (...closes: number[]): Step[] => closes.map((x) => ({ c: x }));
 
@@ -184,4 +185,45 @@ Object.assign(SCENARIOS, {
   "breakout-fake": () => breakoutWith(false),
   "tf3-pullback": tf3Pullback,
   "risk-affine-m5": riskAffineM5,
+});
+
+// ─── Lot 4 ───────────────────────────────────────────────────────────────────
+
+// SMC 2 / SMC 5 — séquence de retournement haussier (EUR/USD H4) : tendance baissière
+// (LH 1.1850, 1.1820), CHoCH = clôture au-dessus du dernier LH 1.1820 (sommet 1.1840),
+// nouvelle structure : HL 1.1750, BOS = clôture au-dessus de 1.1840.
+const chochSequence = () => buildCandles(1.1860, [
+  ...c(1.1868), { c: 1.1874, h: 1.1880 }, ...c(1.1860, 1.1842, 1.1825, 1.1809), { c: 1.1797, l: 1.1790 },
+  ...c(1.1808, 1.1822, 1.1836), { c: 1.1842, h: 1.1850 }, ...c(1.1829, 1.1811, 1.1794, 1.1776, 1.1759), { c: 1.1751, l: 1.1745 },
+  ...c(1.1762, 1.1779, 1.1797), { c: 1.1811, h: 1.1820 }, ...c(1.1801, 1.1784, 1.1765, 1.1741), { c: 1.1727, l: 1.1720 },
+  ...c(1.1748, 1.1781), { c: 1.1828 }, { c: 1.1834, h: 1.1840 },
+  ...c(1.1818, 1.1797, 1.1772), { c: 1.1758, l: 1.1750 },
+  ...c(1.1779, 1.1806, 1.1831), { c: 1.1852 }, ...c(1.1866),
+], { seed: 4101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1820, 1.1840], pins: [1.1880, 1.1790, 1.1850, 1.1745, 1.1820, 1.1720, 1.1840, 1.1750] });
+
+// Débutant 9 — FOMO : hausse verticale, achat au sommet, retournement (prix sans unité)
+const biasFomo = () => buildCandles(100, [
+  ...c(100.4, 100.2, 100.7, 101.0, 101.8, 102.9, 104.3, 105.8), { c: 107.1, h: 107.6 },
+  ...c(105.9, 104.6, 103.8, 102.9),
+], { seed: 4201, decimals: 2, pins: [107.6] });
+// Débutant 9 — ancrage : achat 100, SL prévu 99 (1R), SL déplacé, sortie à 95 (−5R)
+const biasAnchor = () => buildCandles(99.6, [
+  { c: 100 }, ...c(100.3, 99.7, 99.2, 98.8, 98.3, 98.6, 97.9, 97.4, 96.8, 97.1, 96.3, 95.7), { c: 95.0 },
+], { seed: 4202, decimals: 2, levels: [99, 97.5], pins: [100, 95] });
+
+// Intermédiaire 4 — repli vers le HL en tendance haussière (EUR/USD H1). Point de
+// décision au milieu du repli (1.0876) ; suite unique : repli jusqu'à la zone du HL
+// (ancien sommet 1.0860), pin bar (bas 1.0852, clôture 1.0864), nouveau HH 1.0928.
+const retracement = () => buildCandles(1.0806, [
+  ...c(1.0812), { c: 1.0804, l: 1.0800 }, ...c(1.0817, 1.0833, 1.0848), { c: 1.0855, h: 1.0860 },
+  ...c(1.0846), { c: 1.0835, l: 1.0830 }, ...c(1.0849, 1.0866, 1.0884), { c: 1.0894, h: 1.0900 },
+  ...c(1.0888), { c: 1.0876 },
+  ...c(1.0862), { c: 1.0864, h: 1.0866, l: 1.0852 }, ...c(1.0880, 1.0897, 1.0912), { c: 1.0921, h: 1.0928 },
+], { seed: 4301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.0860, 1.0870], pins: [1.0800, 1.0860, 1.0830, 1.0900, 1.0876, 1.0862, 1.0852, 1.0864, 1.0928], split: RETRACE_DECISION + 1 });
+
+Object.assign(SCENARIOS, {
+  "choch-sequence": chochSequence,
+  "bias-fomo": biasFomo,
+  "bias-anchor": biasAnchor,
+  "retracement": retracement,
 });

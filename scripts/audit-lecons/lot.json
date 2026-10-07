@@ -15,5 +15,11 @@
   {"url":"/fr/strategies/support-resistance/lecon3","charts":["FlipRetestValidationDiagram"]},
   {"url":"/fr/strategies/support-resistance/lecon4","charts":["FakeVsRealBreakoutComparisonDiagram"]},
   {"url":"/fr/strategies/trend-following/lecon3","charts":["FibPullbackChecklistDiagram"]},
-  {"url":"/fr/strategies/multi-timeframe/lecon4","charts":["RiskAffineDiagram"]}
+  {"url":"/fr/strategies/multi-timeframe/lecon4","charts":["RiskAffineDiagram"]},
+  {"url":"/fr/strategies/smc/lecon2","charts":["BOSCHoCHSequenceDiagram"]},
+  {"url":"/fr/strategies/smc/lecon5","charts":["BOSCHoCHSequenceDiagram"]},
+  {"url":"/fr/formations/debutant/lecon9","charts":["BiasDiagram"]},
+  {"url":"/fr/formations/intermediaire/lecon4","charts":["RetracementInteractive"]},
+  {"url":"/fr/formations/avance/lecon4","charts":["KillzonesDiagram"]},
+  {"url":"/fr/formations/macro/debutant/lecon4","charts":["InflationChainDiagram"]}
 ]

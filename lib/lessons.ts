@@ -852,7 +852,7 @@ export const LESSONS: LevelData[] = [
                 ["FOMO", "Le marché monte fort, tu achètes en urgence", "Tu achètes au sommet, juste avant le retournement"],
                 ["Vengeance trading", "Tu perds un trade, tu ré-ouvres immédiatement", "Tu perds encore plus, avec moins de lucidité"],
                 ["Ancrage", "Tu refuses de fermer un trade perdant", "La perte double, tu fermes au pire moment"],
-                ["Overconfidence", "5 trades gagnants d'affilée, tu te sens invincible", "Tu doubles les lots, le prochain trade efface tout"],
+                ["Overconfidence", "5 trades gagnants d'affilée, tu te sens invincible", "Tu multiplies les lots par 5, le prochain trade perdant efface tout"],
               ],
             },
           },
