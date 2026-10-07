@@ -75,7 +75,7 @@ function checkCharts({ ids, vocab }) {
         if (cs.display === "none" || cs.visibility === "hidden") { E(id, `élément masqué <${el.tagName.toLowerCase()} class="${el.getAttribute("class") || ""}">`); break; }
       }
       const panels = [...fig.querySelectorAll("svg[data-panel]")];
-      if (!panels.length) E(id, "aucun panneau dessiné");
+      if (!panels.length && !fig.querySelector(".ls-body")) E(id, "aucun panneau dessiné");
       const allCandles = panels.map((sv) => (sv.dataset.candles ? JSON.parse(sv.dataset.candles) : null));
       for (const svg of panels) {
         const P = svg.dataset.panel;

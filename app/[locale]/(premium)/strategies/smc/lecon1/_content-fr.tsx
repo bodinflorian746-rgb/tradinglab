@@ -179,7 +179,7 @@ export default function ContentFr() {
                 <ul className="space-y-1 text-sm text-zinc-300">
                   <li>- Swings majeurs visibles sur unités de temps longues</li>
                   <li>- Donne le biais directionnel à plusieurs jours/semaines</li>
-                  <li>- Aucune position institutionnelle ne va contre sans BOS + CHoCH</li>
+                  <li>- Aucune position institutionnelle ne va contre sans CHoCH puis BOS de confirmation</li>
                 </ul>
               </div>
             </div>
@@ -299,7 +299,7 @@ export default function ContentFr() {
               "La lecture SMC distingue structure interne (M15/H1) et externe (H4/Daily). L’alignement donne le biais.",
               "Le marché alterne 3 phases : accumulation, manipulation (faux breakout), expansion (markup/markdown).",
               "Procédure top-down obligatoire : Daily → H4 → H1 → M15. Pas d’analyse directionnelle sur M15 isolé.",
-              "Aucun setup contre la structure externe Daily sans BOS contre-tendance + CHoCH confirmé.",
+              "Aucun setup contre la structure externe Daily sans CHoCH confirmé par un BOS dans le nouveau sens.",
             ]}
           />
 
@@ -309,8 +309,8 @@ export default function ContentFr() {
               "Identifier la structure externe Daily : structure baissière confirmée (LL/LH) sur les 6 dernières semaines, biais directionnel majeur baissier.",
               "Identifier la structure interne H4 : structure haussière de court terme (HH récent à 1.1780, HL à 1.1720), mouvement contre-tendance par rapport au Daily.",
               "Classifier la situation : structure interne H4 haussière INTERNE à une structure externe Daily baissière → pullback technique dans la tendance baissière majeure.",
-              "Vérifier l’absence de signal de retournement : aucun BOS contre-tendance Daily ni CHoCH confirmé. La structure externe Daily reste valide.",
-              "Biais opérationnel : SHORT, dans le sens de la structure externe Daily. Aucun setup long n’est exploitable tant que le Daily n’a pas produit BOS + CHoCH. La structure interne H4 sert uniquement à identifier la zone de rejet potentielle autour de 1.1780 (dernier HH H4 = résistance short potentielle au contact).",
+              "Vérifier l’absence de signal de retournement : aucun CHoCH Daily, ni BOS de confirmation dans le nouveau sens. La structure externe Daily reste valide.",
+              "Biais opérationnel : SHORT, dans le sens de la structure externe Daily. Aucun setup long n’est exploitable tant que le Daily n’a pas produit un CHoCH puis un BOS de confirmation. La structure interne H4 sert uniquement à identifier la zone de rejet potentielle autour de 1.1780 (dernier HH H4 = résistance short potentielle au contact).",
             ]}
           />
 

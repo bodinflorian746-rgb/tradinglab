@@ -143,8 +143,8 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- <span className="font-semibold text-zinc-100">BOS</span> : breakout dans le sens de la tendance (HH en haussier, LL en baissier) = continuation</li>
-              <li>- <span className="font-semibold text-zinc-100">CHoCH</span> : breakout contre le sens (HL en haussier, LH en baissier) = retournement</li>
-              <li>- La sortie sur BOS protège les gains. L&apos;inversion exige le CHoCH confirmé</li>
+              <li>- <span className="font-semibold text-zinc-100">CHoCH</span> : breakout contre le sens (HL en haussier, LH en baissier) = premier signal de retournement</li>
+              <li>- La sortie dès le CHoCH protège les gains. L&apos;inversion exige la confirmation par un BOS dans le nouveau sens</li>
             </ul>
           </section>
 
@@ -184,7 +184,7 @@ export default function ContentFr() {
               <li>- CHoCH baissier (depuis haussier) : cassure du dernier HL</li>
               <li>- CHoCH haussier (depuis baissier) : cassure du dernier LH</li>
               <li>- Premier signal de retournement structurel, déclenche la sortie des positions</li>
-              <li>- L&apos;inversion (entrée dans le nouveau sens) exige la confirmation par formation nouvelle structure + CHoCH complet</li>
+              <li>- L&apos;inversion (entrée dans le nouveau sens) exige la confirmation : nouvelle structure puis BOS dans le nouveau sens</li>
             </ul>
           </section>
 
@@ -209,10 +209,10 @@ export default function ContentFr() {
 
           {/* Bloc 7 — PLAN DE TRADE CHIFFRÉ */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : inversion sur CHoCH XAU/USD H4</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : inversion après CHoCH et BOS, XAU/USD H4</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD en tendance haussière H4 depuis 3 semaines (2 HL à 4 520$ et 4 580$, 2 HH à 4 620$ et 4 660$). BOS baissier : clôture à 4 555$ (25$ sous le HL 4 580$). Validation 4 bougies sans réintégration. Formation nouvelle structure : LH à 4 600$ puis LL à 4 530$ = CHoCH confirmé.
+              XAU/USD en tendance haussière H4 depuis 3 semaines (2 HL à 4 520$ et 4 580$, 2 HH à 4 620$ et 4 660$). CHoCH baissier : clôture à 4 555$ (25$ sous le HL 4 580$). Validation 4 bougies sans réintégration. Nouvelle structure : LH à 4 600$ puis LL à 4 530$, sous le creux du CHoCH = BOS baissier, retournement confirmé.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -246,8 +246,8 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "BOS = cassure du dernier extrême structurel dans le sens de la tendance (continuation).",
-              "CHoCH = cassure du dernier creux/sommet de structure inverse (retournement).",
-              "La sortie d’une position se déclenche dès le BOS validé. L’inversion exige le CHoCH confirmé.",
+              "CHoCH = cassure du dernier creux/sommet de structure inverse (premier signal de retournement).",
+              "La sortie d’une position se déclenche dès le CHoCH. L’inversion exige la confirmation par un BOS dans le nouveau sens.",
               "Sans clôture franche (mèche seulement), pas de BOS, c’est une prise de liquidité.",
             ]}
           />
@@ -255,10 +255,10 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur XAU/USD H4, la tendance haussière en cours a formé un dernier HL à 4 580$ et un dernier HH à 4 660$. Une bougie clôture à 4 555$ avec un corps significatif, soit 25$ sous le dernier HL. 4 bougies suivantes maintiennent leur clôture sous 4 580$. Le prix forme ensuite un sommet à 4 600$ puis redescend former un creux à 4 530$. Comment se construit le plan complet ?"
             steps={[
-              "Qualifier le BOS baissier : clôture franche à 4 555$ (25$ sous le HL 4 580$), corps significatif, pas de réintégration sur 4 bougies. BOS validé",
+              "Qualifier le CHoCH baissier : clôture franche à 4 555$ (25$ sous le HL 4 580$), corps significatif, pas de réintégration sur 4 bougies. CHoCH validé, sortie des positions longues",
               "Déclencher la sortie de toute position long existante dès la clôture à 4 555$",
               "Observer la structure post-breakout : sommet à 4 600$ (premier LH potentiel) puis creux à 4 530$ (premier LL)",
-              "Confirmer le CHoCH baissier : la séquence LH (4 600$) + LL (4 530$) inverse officiellement la tendance",
+              "Confirmer par le BOS baissier : la séquence LH (4 600$) + LL (4 530$) casse le creux laissé par le CHoCH et confirme le retournement",
               "Construire le plan d’inversion : entrée short au retracement vers 4 580$ (ex-HL devenu résistance) avec signal de rejet, stop loss à 4 615$ (au-delà du LH 4 600$ + marge 15$), take profit à 4 450$ (ratio R/R 1:3,7), taille de position selon le risque par trade",
             ]}
           />
@@ -290,13 +290,13 @@ export default function ContentFr() {
           <LessonQuiz
             question="Une cassure du dernier HL est confirmée sur tendance haussière. Une position d’inversion (entrée short) est envisagée. À quel moment exécuter cette inversion ?"
             options={[
-              "Dès la cassure du HL (BOS)",
-              "Après la confirmation CHoCH (premier LH + premier LL dans la nouvelle structure)",
+              "Dès la cassure du HL (CHoCH)",
+              "Après le BOS de confirmation (premier LH + premier LL dans la nouvelle structure)",
               "Au retour du prix sur le HL cassé sans autre confirmation",
               "Aucune attente, l’entrée est immédiate",
             ]}
             correctIndex={1}
-            explanation="L’inversion exige la confirmation CHoCH avant exécution. La sortie d’une position existante peut se déclencher dès le BOS, mais une position d’inversion ne se prend qu’après la formation du premier LH + premier LL dans la nouvelle structure baissière. Sans CHoCH, le BOS peut s’invalider."
+            explanation="L’inversion exige la confirmation par un BOS dans le nouveau sens avant exécution. La sortie d’une position existante peut se déclencher dès le CHoCH, mais une position d’inversion ne se prend qu’après la formation du premier LH + premier LL dans la nouvelle structure baissière. Sans cette confirmation, le CHoCH peut s’invalider."
           />
 
         </div>

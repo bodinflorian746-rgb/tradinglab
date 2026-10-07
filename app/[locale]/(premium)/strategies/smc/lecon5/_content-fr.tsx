@@ -143,7 +143,7 @@ export default function ContentFr() {
               <li>Analyse de l&apos;UT supérieure : déterminer le biais directionnel via la structure de marché</li>
               <li>Identifier la liquidité (BSL/SSL) qui sera la cible</li>
               <li>Attendre le sweep de la liquidité opposée</li>
-              <li>Confirmer le CHoCH sur l&apos;unité de temps d&apos;entrée</li>
+              <li>Repérer le CHoCH sur l&apos;unité de temps d&apos;entrée (premier signal ; entrée agressive, sans attendre le BOS de confirmation)</li>
               <li>Repérer l&apos;Order Block ou le FVG dans le displacement</li>
               <li>Entrer sur la mitigation de cette zone</li>
               <li>Gérer : SL au-delà de la zone, TP sur la liquidité ciblée</li>
@@ -171,10 +171,10 @@ export default function ContentFr() {
             <div className="my-8">
               <MitigationZoneEntryDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le CHoCH confirme que le contrôle du marché change de camp sur l&apos;unité de temps d&apos;entrée. Le displacement laisse ensuite un Order Block ou un FVG qui servira de zone de mitigation. L&apos;entrée intervient lorsque le prix revient dans cette zone avant reprise impulsive.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le CHoCH est le premier signal que le contrôle du marché change de camp sur l&apos;unité de temps d&apos;entrée. La confirmation viendrait d&apos;un BOS dans le nouveau sens : ce modèle ne l&apos;attend pas, c&apos;est une entrée agressive. Le displacement laisse ensuite un Order Block ou un FVG qui servira de zone de mitigation. L&apos;entrée intervient lorsque le prix revient dans cette zone avant reprise impulsive.</p>
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Logique d&apos;exécution</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- CHoCH = confirmation structurelle</li>
+              <li>- CHoCH = premier signal structurel (entrée agressive, sans BOS de confirmation)</li>
               <li>- FVG/OB = zone d&apos;entrée institutionnelle</li>
               <li>- Mitigation = optimisation du ratio risque/rendement</li>
             </ul>
@@ -183,7 +183,7 @@ export default function ContentFr() {
           {/* Bloc 6 — PLAN DE TRADE EUR/USD H4 */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade chiffré complet (EUR/USD H4)</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD H4. Biais baissier de l&apos;UT supérieure avec structure en LH/LL. Equal highs à 1.1780 = BSL identifiée. Cible finale : SSL sous le creux 1.1690. Une bougie H4 sweep la BSL en imprimant une mèche à 1.1792 puis clôture à 1.1772. Le prix casse ensuite le dernier creux mineur à 1.1755 : CHoCH bearish confirmé. Le displacement laisse un FVG bearish entre 1.1758 et 1.1770 avec un Order Block juste au-dessus.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD H4. Biais baissier de l&apos;UT supérieure avec structure en LH/LL. Equal highs à 1.1780 = BSL identifiée. Cible finale : SSL sous le creux 1.1690. Une bougie H4 sweep la BSL en imprimant une mèche à 1.1792 puis clôture à 1.1772. Le prix casse ensuite le dernier creux mineur à 1.1755 : CHoCH bearish, premier signal du retournement. Le displacement laisse un FVG bearish entre 1.1758 et 1.1770 avec un Order Block juste au-dessus.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Déroulé des 7 étapes</p>
@@ -191,7 +191,7 @@ export default function ContentFr() {
                 <li>Analyse de l&apos;UT supérieure: Structure H4 en LH/LL · Biais directionnel bearish</li>
                 <li>Identifier la liquidité : Equal highs à 1.1780 · BSL clairement visible</li>
                 <li>Sweep de liquidité : Mèche à 1.1792 · Réintégration immédiate sous la BSL</li>
-                <li>Confirmation CHoCH : Cassure du creux mineur à 1.1755 · Changement de caractère bearish confirmé</li>
+                <li>CHoCH : Cassure du creux mineur à 1.1755 · Premier signal bearish, entrée agressive</li>
                 <li>Identifier la zone d&apos;entrée : FVG bearish 1.1758 → 1.1770 · Order Block juste au-dessus</li>
                 <li>Entrée sur mitigation : Retour du prix dans le FVG · Entrée short sur mitigation</li>
                 <li>Gestion : SL au-dessus de la mèche du sweep · TP sur la SSL à 1.1690</li>
@@ -227,7 +227,7 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Les erreurs qui cassent le trade SMC</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Erreur 1 : Entrer avant le CHoCH</span> <span className="text-zinc-300">= absence de confirmation structurelle.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Erreur 1 : Entrer avant le CHoCH</span> <span className="text-zinc-300">= aucun signal structurel.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Erreur 2 : Confondre sweep et breakout</span> <span className="text-zinc-300">= achat/vente directement dans la prise de liquidité.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Erreur 3 : Ignorer le biais de l&apos;UT supérieure</span> <span className="text-zinc-300">= exécution contre la structure dominante.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">Erreur 4 : Viser une liquidité déjà prise</span> <span className="text-zinc-300">= absence de cible institutionnelle claire.</span></div>
@@ -238,7 +238,7 @@ export default function ContentFr() {
             points={[
               "La structure de l'UT supérieure définit le biais.",
               "Le sweep précède souvent le vrai mouvement.",
-              "Le CHoCH confirme le changement de contrôle.",
+              "Le CHoCH signale le changement de contrôle ; entrer sans attendre le BOS de confirmation est une entrée agressive.",
               "Le FVG/OB fournit la zone d’exécution.",
             ]}
           />
@@ -249,7 +249,7 @@ export default function ContentFr() {
               "Poser le biais de l'UT supérieure : la structure H4 est baissière (LH/LL). Le biais oriente vers des setups vendeurs en priorité.",
               "Identifier la liquidité : les equal highs à 4 720$ forment la BSL. La SSL du creux 4 600$ devient la cible finale du trade.",
               "Valider le sweep : la mèche à 4 735$ prend la liquidité au-dessus de 4 720$, et la clôture à 4 705$ confirme la réintégration sous la BSL.",
-              "Confirmer le CHoCH : la cassure du creux mineur à 4 680$ valide le changement de caractère baissier sur l’unité de temps d’entrée.",
+              "Repérer le CHoCH : la cassure du creux mineur à 4 680$ est le premier signal du changement de caractère baissier sur l’unité de temps d’entrée ; l’entrée qui suit est agressive, sans BOS de confirmation.",
               "Construire le plan : entrée short 4 692$ (mitigation du FVG 4 685$-4 700$), stop loss 4 740$ (au-dessus de la mèche du sweep), take profit 4 600$ (cible la SSL). Risque 48$, gain 92$, R/R ≈ 1,9.",
             ]}
           />

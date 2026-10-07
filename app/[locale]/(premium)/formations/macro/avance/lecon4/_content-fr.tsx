@@ -267,7 +267,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Les 4 régimes de marché</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Le marché peut se lire comme un quadrant. Axe horizontal : inflation faible à élevée. Axe vertical : croissance forte à faible. Chaque coin correspond à un régime distinct. Ce schéma te permet de positionner rapidement l&apos;environnement macro et d&apos;anticiper quels actifs doivent surperformer ou sous-performer.
+              Le marché peut se lire comme un quadrant. Axe horizontal : inflation faible à élevée. Axe vertical : croissance forte à faible. Chaque coin correspond à un régime distinct. Les deux régimes de peur, flight to quality et risk-off panique, se trouvent dans le coin croissance faible / inflation faible : les taux baissent, le capital fuit vers les obligations. Le coin croissance faible / inflation élevée est la stagflation : les taux restent hauts. Ce schéma te permet de positionner rapidement l&apos;environnement macro et d&apos;anticiper quels actifs doivent surperformer ou sous-performer.
             </p>
             <div className="border border-zinc-800 rounded-xl overflow-hidden">
               <RiskRegimesQuadrantDiagram />
