@@ -6,6 +6,7 @@
 import { buildCandles, type Step } from "./chart-build";
 import type { Candle } from "./chart-analysis";
 import { RETRACE_DECISION } from "./scenarios-meta";
+import { mulberry32 } from "@/lib/games/shared";
 
 const c = (...closes: number[]): Step[] => closes.map((x) => ({ c: x }));
 
@@ -455,4 +456,77 @@ Object.assign(SCENARIOS, {
   "smc-ob": smcOB,
   "mitigation": mitigation,
   "trend-steps": trendSteps,
+});
+
+// ─── Lot 9 ───────────────────────────────────────────────────────────────────
+
+/**
+ * Tendance oscillante écrite par formule : milieu qui monte de `slope` par bougie,
+ * oscillation de ±amp sur une période de `period` bougies (creux aux indices
+ * phase, phase + period…), petit bruit seedé. Les creux et sommets sont figés.
+ */
+const wave = (n: number, start: number, slope: number, amp: number, period: number, phase: number, seed: number, decimals: number) => {
+  const rng = mulberry32(seed);
+  const r = (x: number) => Number(x.toFixed(decimals));
+  const steps: Step[] = [];
+  const pins: number[] = [];
+  const guards: number[] = [];
+  for (let i = 0; i < n; i++) {
+    const mid = start + slope * i;
+    const t = (((i - phase) % period) + period) % period;
+    const v = mid - amp * Math.cos((2 * Math.PI * t) / period) + (t === 0 || t === period / 2 ? 0 : (rng() - 0.5) * amp * 0.15);
+    if (t === 0) { const l = r(v - amp * 0.15); steps.push({ c: r(v + amp * 0.06), l }); pins.push(l); guards.push(r(l + amp * 0.06)); }
+    else if (t === period / 2) { const h = r(v + amp * 0.15); steps.push({ c: r(v - amp * 0.06), h }); pins.push(h); guards.push(r(h - amp * 0.06)); }
+    else steps.push({ c: r(v) });
+  }
+  return { steps, pins, guards };
+};
+
+// Trend-following 2 — tendance haussière EUR/USD H4 : creux (HL) alignés tous les 12
+// bougies, MM50 proche de la trendline ; 3 HL visibles sur la fenêtre affichée.
+
+const tfTrend = () => { const w = wave(88, 1.1640, 0.00012, 0.0040, 12, 52, 9101, 5); return buildCandles(1.1600, w.steps, { seed: 9101, decimals: 5, asset: "EUR/USD", volatility: "normale", pins: w.pins, levels: w.guards }); };
+// … puis breakout sous la trendline, ignoré si on prolonge la ligne
+const tfTrendBreak = () => extend(tfTrend(), [{ c: 1.1760 }, { c: 1.1738 }, { c: 1.1715, l: 1.1709 }, { c: 1.1694 }, { c: 1.1680 }, { c: 1.1688 }], 9102, 5);
+// … pente irréaliste : impulsion verticale puis retour rapide
+const tfSteep = () => buildCandles(1.1700, [
+  ...c(1.1704, 1.1699, 1.1708, 1.1703), { c: 1.1711, l: 1.1698 }, ...c(1.1736, 1.1768), { c: 1.1781, l: 1.1752 }, ...c(1.1818, 1.1856, 1.1889),
+  ...c(1.1861, 1.1828, 1.1796, 1.1771),
+], { seed: 9103, decimals: 5, asset: "EUR/USD", volatility: "élevée", pins: [1.1698, 1.1752] });
+
+// Trend-following 2 — les 3 MM : alignement haussier, baissier, range (260 bougies pour la MM200)
+const maSeries = (seed: number, slope: number, amp: number) => {
+  const rng = mulberry32(seed);
+  const steps: Step[] = [];
+  for (let i = 0; i < 260; i++) {
+    // tendance + vagues régulières + petit bruit : l'ordre des MM suit la tendance
+    const x = 1.1700 + slope * i + amp * Math.sin(i / 5) + (rng() - 0.5) * amp * 0.4;
+    steps.push({ c: Number(x.toFixed(5)) });
+  }
+  return buildCandles(1.1700, steps, { seed, decimals: 5, asset: "EUR/USD", volatility: "normale" });
+};
+
+// Trend-following 3 / Avancé 5 — OTE (XAU/USD H1) : sommet 4 600, HL 4 480, impulsion qui
+// casse 4 600 (BOS) jusqu'à 4 660, repli dans l'OTE (bas 4 530), bougie de rejet (clôture 4 545)
+const ote = () => buildCandles(4560, [
+  ...c(4574, 4588), { c: 4593, h: 4600 }, ...c(4580, 4558, 4534, 4510, 4493), { c: 4487, l: 4480 },
+  ...c(4506, 4533, 4561, 4589), { c: 4614 }, ...c(4636), { c: 4652, h: 4660 },
+  ...c(4643, 4622, 4600, 4578, 4556, 4541), { c: 4545, h: 4549, l: 4530 },
+], { seed: 9201, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4518.5, 4548.8], pins: [4600, 4480, 4660, 4530, 4541] });
+
+// Trend-following 3 — projection des cibles : le pullback du plan (entrée 4 565) puis
+// la hausse jusqu'à l'extension 1.618 du repli (4 728)
+const fibTp = () => extend(tf3Pullback(), [
+  { c: 4579 }, { c: 4603 }, { c: 4628 }, { c: 4651 }, { c: 4668 }, { c: 4683 }, { c: 4694, h: 4698 }, { c: 4686 }, { c: 4705 }, { c: 4721, h: 4731 },
+], 9301, 1, [4731], [4660, 4690, 4728]);
+
+Object.assign(SCENARIOS, {
+  "tf-trend": tfTrend,
+  "tf-trend-break": tfTrendBreak,
+  "tf-steep": tfSteep,
+  "ma-bull": () => maSeries(9401, 0.00012, 0.0020),
+  "ma-bear": () => maSeries(9402, -0.00012, 0.0020),
+  "ma-range": () => maSeries(9403, 0, 0.0022),
+  "ote": ote,
+  "fib-tp": fibTp,
 });

@@ -207,14 +207,14 @@ export default function ContentFr() {
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 4 565$ (clôture de la pin bar)</li>
                 <li>- Stop loss : 4 510$ (10$ sous le niveau 0.786 à 4 519$)</li>
-                <li>- Take profit niveau 1 : 4 660$ (HH précédent), niveau 2 : 4 720$ (extension 138%)</li>
+                <li>- Take profit niveau 1 : 4 660$ (HH précédent), niveau 2 : 4 728$ (extension Fibonacci 1.618 du repli)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
                 <li>- Risque : 4 565$ - 4 510$ = 55$</li>
                 <li>- Gain niveau 1 : 95$ → R/R 1,73</li>
-                <li>- Gain niveau 2 : 155$ → R/R 155/55 = 2,82</li>
+                <li>- Gain niveau 2 : 163$ → R/R 163/55 = 2,96</li>
                 <li>- Le setup vise prioritairement le TP niveau 2</li>
               </ul>
             </div>
@@ -229,13 +229,13 @@ export default function ContentFr() {
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 42€</li>
-              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 42€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 56€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 141€</li>
+              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 44€</li>
+              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 44€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 59€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 148€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
-              Le R/R reste 2,82:1 peu importe la taille du compte.
+              Le R/R reste 2,96:1 peu importe la taille du compte.
             </p>
           </section>
 
@@ -255,7 +255,7 @@ export default function ContentFr() {
               "Calculer la position du retracement : 1.1820 - 1.1760 = 60 pips sous le HH, soit 60% de l’impulsion",
               "Identifier le niveau Fibonacci : 60% correspond à un niveau entre 0.5 (1.1770) et 0.618 (1.1758). Le prix actuel à 1.1760 se situe pratiquement au niveau 0.618, zone d’entrée optimale",
               "Attendre le signal de rejet (pin bar, engulfing) au contact de 1.1758-1.1760 pour valider le setup",
-              "Construire le plan : entrée long à la clôture du signal, stop loss sous 1.1741 (niveau 0.786 + marge 10 pips), take profit à 1.1820 (HH précédent) ou 1.1858 (extension 138%). Taille de position selon le risque par trade adapté au capital",
+              "Construire le plan : entrée long à la clôture du signal, stop loss sous 1.1741 (niveau 0.786 + marge 10 pips), take profit à 1.1820 (HH précédent) ou 1.1858 (extension 1.618 du repli). Taille de position selon le risque par trade adapté au capital",
             ]}
           />
 

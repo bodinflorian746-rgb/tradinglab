@@ -161,8 +161,8 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Golden cross : MM20 &gt; MM50 &gt; MM200, ascendantes → biais long, setups long uniquement</li>
-              <li>- Death cross : MM20 &lt; MM50 &lt; MM200, descendantes → biais short, setups short uniquement</li>
+              <li>- Alignement haussier (après un golden cross, MM50 qui passe au-dessus de la MM200) : MM20 &gt; MM50 &gt; MM200, ascendantes → biais long, setups long uniquement</li>
+              <li>- Alignement baissier (après un death cross, MM50 qui passe sous la MM200) : MM20 &lt; MM50 &lt; MM200, descendantes → biais short, setups short uniquement</li>
               <li>- Range : 3 MM enchevêtrées, pente nulle → pas de biais, attendre clarification</li>
               <li>- Setup contraire au biais MM200 = winrate réduit, à éviter sans confluence exceptionnelle</li>
             </ul>

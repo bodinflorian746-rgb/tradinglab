@@ -230,3 +230,36 @@ export function checkLots(check: Check) {
 }
 
 export { CS, near, rrOf, isPin, engulfs };
+
+// ─── Lot 9 ───────────────────────────────────────────────────────────────────
+export function checkLot9(check: Check) {
+  {
+    // Trend-following 2 : 3 HL alignés (± 1 pip) dans la fenêtre affichée ; la MM20 suit le prix (jamais au-dessus de tout le prix)
+    const all = CS["tf-trend"], cs = all.slice(36);
+    const hls = pivots(cs).filter((q) => q.name === "HL").slice(-3);
+    const [a, m, b] = hls;
+    const onLine = a && m && b && Math.abs(m.price - (a.price + ((b.price - a.price) * (m.index - a.index)) / (b.index - a.index))) <= 0.0001;
+    check(hls.length === 3 && !!onLine, "Trendline (TF 2) : les 3 HL ne sont pas alignés");
+    const closes = all.map((k) => k.c), m20 = closes.map((_, i) => (i < 19 ? null : closes.slice(i - 19, i + 1).reduce((x, y) => x + y, 0) / 20));
+    check(cs.some((k, i) => (m20[i + 36] ?? 0) < k.h && (m20[i + 36] ?? 0) > k.l), "Trendline (TF 2) : la MM20 ne traverse jamais le prix");
+  }
+  {
+    // Trend-following 2 : ordre des MM à la dernière bougie
+    const ord = (k: string) => { const c = CS[k].map((x) => x.c); const v = [20, 50, 200].map((n) => c.slice(-n).reduce((x, y) => x + y, 0) / n); return v; };
+    const b = ord("ma-bull"), r = ord("ma-bear");
+    check(b[0] > b[1] && b[1] > b[2] && r[0] < r[1] && r[1] < r[2], "MM (TF 2) : alignements haussier / baissier faux");
+  }
+  {
+    // Trend-following 3 / Avancé 5 : BOS > 4 600, A 4 480, B 4 660, rejet dans l'OTE 0.618-0.786
+    const cs = CS["ote"], k = cs[cs.length - 1];
+    const f618 = fibLevel(4480, 4660, 0.618), f786 = fibLevel(4480, 4660, 0.786);
+    check(Math.min(...cs.slice(8).map((x) => x.l)) === 4480 && Math.max(...cs.map((x) => x.h)) === 4660 && cs.some((x) => x.c > 4600), "OTE : A / B / BOS");
+    check(k.l >= f786 && k.l <= f618 && k.c > k.o && isPin(k, true), "OTE : la bougie de rejet n'est pas dans l'OTE");
+  }
+  {
+    // Trend-following 3 : extensions 1.272 / 1.618 du repli 4 660 → 4 550 = 4 690 / 4 728, atteintes ; R/R 1,73 / 2,96
+    const cs = CS["fib-tp"];
+    check(near(4550 + 1.618 * 110, 4728, 0.5) && near(4550 + 1.272 * 110, 4690, 0.5) && Math.max(...cs.map((x) => x.h)) >= 4728, "Projection (TF 3) : extension 1.618 non atteinte");
+    check(near(rrOf(4565, 4510, 4660), 1.73, 0.005) && near(rrOf(4565, 4510, 4728), 2.96, 0.005), "Projection (TF 3) : R/R 1,73 / 2,96");
+  }
+}

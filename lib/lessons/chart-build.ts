@@ -74,7 +74,9 @@ export function buildCandles(open: number, steps: Step[], opts: BuildOptions): C
   const out: Candle[] = [];
   for (const k of real) {
     const ko = out.length ? out[out.length - 1].c : r(k.o);
-    const kc = r(k.c);
+    let kc = r(k.c);
+    // l'arrondi ne doit pas créer de clôture égale à l'ouverture : un tick dans le sens de la bougie
+    if (kc === ko) kc = r(ko + (k.c >= k.o ? 1 : -1) * 10 ** -opts.decimals);
     out.push({ o: ko, c: kc, h: Math.max(r(k.h), ko, kc), l: Math.min(r(k.l), ko, kc) });
   }
   return out;
