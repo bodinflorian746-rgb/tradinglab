@@ -1,315 +1,68 @@
 "use client";
 
+// Trading Avancé 6 — « Le support vient d'être percé par une longue mèche : que fais-tu ? »
+// EUR/USD H1, support 1.0800 touché deux fois. Un seul futur pour les trois choix : la
+// bougie clôture au-dessus du support (chasse aux stops), puis le prix monte. Pendant la
+// question, la bougie est en cours (prix sous le support). Bougies : scenarios.ts (« stop-hunt »).
+
 import { useState } from "react";
+import { LessonChart, type LCLevel, type LCMarker } from "@/app/components/lessons/LessonChart";
+import { fmtPrice } from "@/lib/lessons/chart-analysis";
+import { STOPHUNT_WICK } from "@/lib/lessons/scenarios-meta";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
 type Choice = null | "sell" | "wait" | "buy";
+const SUPPORT = 1.0800;
+const p = (x: number) => fmtPrice(x, 4);
 
-type CD = {
-  cx: number;
-  wickTop: number;
-  bodyTop: number;
-  bodyBot: number;
-  wickBot: number;
-  bull: boolean;
-};
-
-function MiniCandle({ cx, wickTop, bodyTop, bodyBot, wickBot, bull }: CD) {
-  const hw = 9;
-  return (
-    <g>
-      <line x1={cx} y1={wickTop} x2={cx} y2={wickBot}
-        stroke={bull ? "#059669" : "#dc2626"} strokeWidth="1.5" strokeLinecap="round" />
-      <rect x={cx - hw} y={bodyTop} width={hw * 2}
-        height={Math.max(bodyBot - bodyTop, 3)}
-        fill={bull ? "#10b981" : "#ef4444"}
-        stroke={bull ? "#059669" : "#dc2626"}
-        strokeWidth="0.8" rx="1.5" />
-    </g>
-  );
-}
-
-const CONTEXT: CD[] = [
-  { cx: 32,  wickTop: 52, bodyTop: 60, bodyBot: 96,  wickBot: 106, bull: true  },
-  { cx: 60,  wickTop: 50, bodyTop: 58, bodyBot: 102, wickBot: 112, bull: false },
-  { cx: 88,  wickTop: 60, bodyTop: 68, bodyBot: 118, wickBot: 152, bull: true  },
-  { cx: 116, wickTop: 48, bodyTop: 56, bodyBot: 94,  wickBot: 104, bull: true  },
-  { cx: 144, wickTop: 56, bodyTop: 64, bodyBot: 112, wickBot: 122, bull: false },
-  { cx: 172, wickTop: 70, bodyTop: 78, bodyBot: 136, wickBot: 158, bull: true  },
-  { cx: 200, wickTop: 68, bodyTop: 76, bodyBot: 114, wickBot: 124, bull: false },
-];
-
-const CURRENT: CD = { cx: 228, wickTop: 76, bodyTop: 84, bodyBot: 152, wickBot: 196, bull: false };
-
-const REVEALED: Record<"sell" | "wait" | "buy", CD[]> = {
-  sell: [
-    { cx: 256, wickTop: 74, bodyTop: 82,  bodyBot: 144, wickBot: 158, bull: true  },
-    { cx: 284, wickTop: 52, bodyTop: 60,  bodyBot: 106, wickBot: 118, bull: true  },
-    { cx: 312, wickTop: 36, bodyTop: 44,  bodyBot: 88,  wickBot: 98,  bull: true  },
-  ],
-  wait: [
-    { cx: 256, wickTop: 78, bodyTop: 86,  bodyBot: 142, wickBot: 160, bull: true  },
-    { cx: 284, wickTop: 56, bodyTop: 64,  bodyBot: 108, wickBot: 120, bull: true  },
-    { cx: 312, wickTop: 38, bodyTop: 46,  bodyBot: 92,  wickBot: 102, bull: true  },
-  ],
-  buy: [
-    { cx: 256, wickTop: 150, bodyTop: 154, bodyBot: 182, wickBot: 196, bull: false },
-    { cx: 284, wickTop: 162, bodyTop: 170, bodyBot: 196, wickBot: 208, bull: false },
-    { cx: 312, wickTop: 168, bodyTop: 176, bodyBot: 200, wickBot: 212, bull: false },
-  ],
-};
-
-const CONFIGS_FR = {
-  sell: {
-    heading: "Chasse aux stops — tu t'es fait piéger",
-    body: "La mèche était une chasse de liquidité. Les institutions cherchaient les stops des acheteurs sous le support pour entrer long. Le prix est immédiatement remonté. Vendre sur la mèche, c'est exactement ce que les institutions veulent que tu fasses.",
-    color: "border-red-500/20 bg-red-500/5 text-red-400",
-    badgeColor: "#ef4444",
-    badgeText: "CHASSE AUX STOPS — piégé ✗",
-    badgeHw: 68,
-    badgeCx: 284,
-    badgeCy: 18,
-  },
-  wait: {
-    heading: "Patience — bonne décision",
-    body: "Tu as attendu la clôture de bougie. La bougie a clôturé au-dessus du support — la mèche était une chasse aux stops. En patientant, tu as évité le piège et tu peux maintenant chercher une entrée longue avec confirmation.",
-    color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
-    badgeColor: "#10b981",
-    badgeText: "Bonne décision ✓",
-    badgeHw: 56,
-    badgeCx: 284,
-    badgeCy: 18,
-  },
-  buy: {
-    heading: "Trop tôt — vrai breakout",
-    body: "Tu as acheté sans confirmation. Cette fois, le support a vraiment cédé — ton SL a été touché. Acheter sur une mèche sans signal de retournement est aussi risqué que vendre le breakout. Attends toujours la clôture et un signal.",
-    color: "border-amber-400/20 bg-amber-400/5 text-amber-400",
-    badgeColor: "#ef4444",
-    badgeText: "SL touché — vrai breakout ✗",
-    badgeHw: 78,
-    badgeCx: 284,
-    badgeCy: 18,
-  },
+const RESULTS = {
+  sell: { tone: "bear", title: "Chasse aux stops : tu t'es fait piéger", text: "La mèche était une chasse de liquidité : les institutions cherchaient les stops des acheteurs sous le support pour entrer à l'achat. La bougie clôture au-dessus du support et le prix remonte, ton SL est touché." },
+  wait: { tone: "bull", title: "Patience : bonne décision", text: "Tu as attendu la clôture : la bougie clôture au-dessus du support, la mèche était une chasse aux stops. Tu peux maintenant chercher une entrée à l'achat avec un signal de confirmation, SL sous la mèche." },
+  buy: { tone: "zone", title: "Gagné, mais par chance", text: "Le prix est remonté, mais au moment de ton achat, rien ne distinguait ce piège d'un vrai breakout : ni clôture, ni signal de retournement. Sans confirmation, la même décision perd dès que le support cède vraiment." },
 } as const;
 
-const CONFIGS_ES = {
-  sell: {
-    heading: "Stop hunt — caíste en la trampa",
-    body: "La mecha era una caza de liquidez. Las instituciones buscaban los stops de los compradores debajo del soporte para entrar long. El precio rebotó de inmediato. Vender en la mecha es exactamente lo que las instituciones quieren que hagas.",
-    color: "border-red-500/20 bg-red-500/5 text-red-400",
-    badgeColor: "#ef4444",
-    badgeText: "STOP HUNT — atrapado ✗",
-    badgeHw: 68,
-    badgeCx: 284,
-    badgeCy: 18,
-  },
-  wait: {
-    heading: "Paciencia — buena decisión",
-    body: "Esperaste el cierre de la vela. La vela cerró por encima del soporte — la mecha era un stop hunt. Al esperar, evitaste la trampa y ahora puedes buscar una entrada long con confirmación.",
-    color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
-    badgeColor: "#10b981",
-    badgeText: "Buena decisión ✓",
-    badgeHw: 56,
-    badgeCx: 284,
-    badgeCy: 18,
-  },
-  buy: {
-    heading: "Demasiado pronto — breakout real",
-    body: "Compraste sin confirmación. Esta vez el soporte sí cedió — tu SL fue tocado. Comprar en una mecha sin señal de reversión es tan arriesgado como vender en el breakout. Espera siempre el cierre y una señal.",
-    color: "border-amber-400/20 bg-amber-400/5 text-amber-400",
-    badgeColor: "#ef4444",
-    badgeText: "SL tocado — breakout real ✗",
-    badgeHw: 78,
-    badgeCx: 284,
-    badgeCy: 18,
-  },
-} as const;
-
-const CONFIGS_EN = {
-  sell: {
-    heading: "Stop hunt — you got trapped",
-    body: "The wick was a liquidity grab. Institutions were hunting buyers' stops below support to enter long. Price immediately bounced back up. Selling the wick is exactly what institutions want you to do.",
-    color: "border-red-500/20 bg-red-500/5 text-red-400",
-    badgeColor: "#ef4444",
-    badgeText: "STOP HUNT — trapped ✗",
-    badgeHw: 68,
-    badgeCx: 284,
-    badgeCy: 18,
-  },
-  wait: {
-    heading: "Patience — good call",
-    body: "You waited for the candle close. The candle closed above support — the wick was a stop hunt. By waiting, you avoided the trap and can now look for a long entry with confirmation.",
-    color: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400",
-    badgeColor: "#10b981",
-    badgeText: "Good call ✓",
-    badgeHw: 56,
-    badgeCx: 284,
-    badgeCy: 18,
-  },
-  buy: {
-    heading: "Too early — real break",
-    body: "You bought without confirmation. This time, support truly gave way — your SL got hit. Buying a wick without a reversal signal is as risky as selling the break. Always wait for the close and a signal.",
-    color: "border-amber-400/20 bg-amber-400/5 text-amber-400",
-    badgeColor: "#ef4444",
-    badgeText: "SL hit — real break ✗",
-    badgeHw: 78,
-    badgeCx: 284,
-    badgeCy: 18,
-  },
-} as const;
-
-interface StopHuntInteractiveProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
-
-export function StopHuntInteractive({ className = "", locale = "fr" }: StopHuntInteractiveProps) {
-  const isEs = locale === "es";
-  const isEn = locale === "en";
-  const CONFIGS = isEs ? CONFIGS_ES : isEn ? CONFIGS_EN : CONFIGS_FR;
-  const T = {
-    supportKey:    isEs ? "Soporte clave" : isEn ? "Key support" : "Support clé",
-    question:      isEs ? "El soporte acaba de ser perforado por una mecha larga — ¿qué haces?" : isEn ? "Support was just pierced by a long wick — what do you do?" : "Le support vient d'être percé par une longue mèche — que fais-tu ?",
-    btnSell:       isEs ? "Vender ahora (el soporte está roto)" : isEn ? "Sell now (support is broken)" : "Vendre maintenant (le support est cassé)",
-    btnWait:       isEs ? "Esperar el cierre de la vela" : isEn ? "Wait for the candle close" : "Attendre la clôture de bougie",
-    btnBuy:        isEs ? "Comprar (seguramente es un fakeout)" : isEn ? "Buy (it's probably a fakeout)" : "Acheter (c'est sûrement un faux breakout)",
-    retry:         isEs ? "Reintentar" : isEn ? "Retry" : "Réessayer",
-  };
+export function StopHuntInteractive(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const [choice, setChoice] = useState<Choice>(null);
-  const cfg = choice ? CONFIGS[choice] : null;
-
+  const all = CANDLES["stop-hunt"];
+  const wick = all[STOPHUNT_WICK];
+  // bougie en cours pendant la question : même ouverture, mêmes extrêmes jusqu'ici, prix actuel sous le support
+  const live = { o: wick.o, h: Math.max(wick.o, all[STOPHUNT_WICK - 1].c) + 0.0002, l: wick.l, c: wick.l + 0.0004 };
+  const shown = choice ? all : [...all.slice(0, STOPHUNT_WICK), live];
+  const levels: LCLevel[] = [{ key: "sup", price: SUPPORT, label: `Support ${p(SUPPORT)}`, short: "Support", tone: "bull", dashed: true }];
+  const markers: LCMarker[] = [];
+  if (!choice) markers.push({ key: "now", i: STOPHUNT_WICK, price: live.l, label: "Mèche en cours", short: "Mèche", tone: "zone", side: "below" });
+  else {
+    markers.push({ key: "close", i: STOPHUNT_WICK, price: wick.l, label: `Clôture ${p(wick.c)} au-dessus`, short: "Clôture au-dessus", tone: "bull", side: "below" });
+    if (choice === "sell") {
+      const entry = live.c, sl = SUPPORT + 0.0015;
+      const hit = all.findIndex((k, i) => i > STOPHUNT_WICK && k.h >= sl);
+      levels.push({ key: "sl", price: sl, from: STOPHUNT_WICK, label: `SL de la vente ${p(sl)}`, short: "SL", tone: "bear", dashed: true }, { key: "entry", price: entry, from: STOPHUNT_WICK, to: STOPHUNT_WICK, label: `Vente ${p(entry)}`, short: "Vente", tone: "entry" });
+      if (hit > 0) markers.push({ key: "hit", i: hit, price: sl, label: "SL touché", tone: "bear", side: "above", dot: true });
+    }
+    if (choice === "buy") levels.push({ key: "entry", price: live.c, from: STOPHUNT_WICK, label: `Achat ${p(live.c)}`, short: "Achat", tone: "entry" });
+  }
+  const r = choice ? RESULTS[choice] : null;
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <style>{`
-        @keyframes sh-pulse {
-          0%, 100% { opacity: 0.4; }
-          50%       { opacity: 1; }
-        }
-        @keyframes sh-fade {
-          from { opacity: 0; transform: translateY(4px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes sh-bad {
-          0%        { opacity: 0; transform: translateX(0) translateY(4px); }
-          15%       { opacity: 1; transform: translateX(-4px) translateY(0); }
-          30%       { opacity: 1; transform: translateX(4px); }
-          45%       { opacity: 1; transform: translateX(-3px); }
-          60%       { opacity: 1; transform: translateX(3px); }
-          75%, 100% { opacity: 1; transform: translateX(0); }
-        }
-        .sh-pulse { animation: sh-pulse 1.5s ease-in-out infinite; }
-        .sh-fade  { animation: sh-fade 0.4s ease both; }
-        .sh-bad   { animation: sh-bad 0.5s ease both; }
-        @media (max-width: 640px) { .chart-detail-labels { display: none; } }
-      `}</style>
-
-      <svg
-        width="100%"
-        viewBox="0 0 580 230"
-        fill="none"
-        preserveAspectRatio="xMidYMid meet"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Support zone */}
-        <rect x={10} y={148} width={475} height={14}
-          fill="#3f3f4630" stroke="#71717a40" strokeWidth="0.8"
-          strokeDasharray="4 3" rx="1" />
-
-        {/* Support label — masqué sur mobile (le contexte de la question explique deja) */}
-        <g className="chart-detail-labels">
-          <rect x={12} y={150} width={54} height={11} rx="2"
-            fill="#09090b" fillOpacity="0.85" />
-          <text x={39} y={158} fontSize="7.5" fill="#71717a"
-            textAnchor="middle" fontWeight="600">{T.supportKey}</text>
-        </g>
-
-        {/* Context candles */}
-        {CONTEXT.map((c, i) => <MiniCandle key={i} {...c} />)}
-
-        {/* Current ambiguous candle */}
-        <MiniCandle {...CURRENT} />
-
-        {/* Pulsing "?" when no choice */}
-        {!choice && (
-          <g className="sh-pulse">
-            <circle cx={256} cy={100} r={12}
-              fill="#60a5fa10" stroke="#60a5fa50" strokeWidth="1.2" />
-            <text x={256} y={105} fontSize="11" fill="#60a5fa"
-              textAnchor="middle" fontWeight="700">?</text>
-          </g>
-        )}
-
-        {/* Revealed candles */}
-        {choice && (
-          <g className="sh-fade">
-            {REVEALED[choice].map((c, i) => <MiniCandle key={i} {...c} />)}
-          </g>
-        )}
-
-        {/* Result badge — masqué sur mobile (la carte explication ci-dessous le reprend) */}
-        {choice && cfg && (
-          <g className={`chart-detail-labels ${choice !== "wait" ? "sh-bad" : "sh-fade"}`}>
-            <rect
-              x={cfg.badgeCx - cfg.badgeHw} y={cfg.badgeCy - 10}
-              width={cfg.badgeHw * 2} height={16} rx="3"
-              fill="#09090b" fillOpacity="0.85"
-            />
-            <rect
-              x={cfg.badgeCx - cfg.badgeHw} y={cfg.badgeCy - 10}
-              width={cfg.badgeHw * 2} height={16} rx="3"
-              fill={`${cfg.badgeColor}20`} stroke={`${cfg.badgeColor}50`} strokeWidth="0.8"
-            />
-            <text
-              x={cfg.badgeCx} y={cfg.badgeCy + 2}
-              fontSize="7.5" fill={cfg.badgeColor} textAnchor="middle" fontWeight="700"
-            >
-              {cfg.badgeText}
-            </text>
-          </g>
-        )}
-      </svg>
-
-      {/* Buttons */}
-      {!choice && (
-        <div className="px-4 pb-4 pt-2">
-          <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-2.5 text-center">
-            {T.question}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-2">
-            <button
-              onClick={() => setChoice("sell")}
-              className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 hover:bg-amber-400/20 transition-colors focus:outline-none focus:ring-1 focus:ring-amber-400"
-            >
-              {T.btnSell}
-            </button>
-            <button
-              onClick={() => setChoice("wait")}
-              className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-colors focus:outline-none focus:ring-1 focus:ring-emerald-500"
-            >
-              {T.btnWait}
-            </button>
-            <button
-              onClick={() => setChoice("buy")}
-              className="flex-1 px-3 py-2.5 text-xs font-semibold rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-colors focus:outline-none focus:ring-1 focus:ring-red-500"
-            >
-              {T.btnBuy}
-            </button>
+    <LessonChart
+      id="StopHuntInteractive"
+      title={choice ? "Ce qui s'est passé" : "Le support vient d'être percé par une longue mèche : que fais-tu ?"}
+      panels={[{ key: "h1", subtitle: "EUR/USD H1 — support 1.0800 touché deux fois", decimals: 5, height: 260, candles: shown, slots: all.length, levels, markers }]}
+    >
+      {!r ? (
+        <div className="lc-choices">
+          <button type="button" className="lc-choice" onClick={() => setChoice("sell")}>Vendre le breakout</button>
+          <button type="button" className="lc-choice" onClick={() => setChoice("wait")}>Attendre la clôture</button>
+          <button type="button" className="lc-choice" onClick={() => setChoice("buy")}>Acheter tout de suite</button>
+        </div>
+      ) : (
+        <div className="lc-result">
+          <div className={`ls-card ls-tone--${r.tone}`}>
+            <div className="ls-card-title">{r.title}</div>
+            <div className="ls-card-text">{r.text}</div>
           </div>
+          <button type="button" className="lc-choice" onClick={() => setChoice(null)}>Rejouer</button>
         </div>
       )}
-
-      {/* Explanation + retry */}
-      {choice && cfg && (
-        <div className={`mx-4 mb-4 mt-1 border rounded-xl px-4 py-3 sh-fade ${cfg.color}`}>
-          <p className="text-xs font-semibold mb-1">{cfg.heading}</p>
-          <p className="text-xs text-zinc-400 leading-relaxed">{cfg.body}</p>
-          <button
-            onClick={() => setChoice(null)}
-            className="mt-2.5 text-[10px] font-semibold text-zinc-500 hover:text-zinc-300 transition-colors focus:outline-none underline underline-offset-2"
-          >
-            {T.retry}
-          </button>
-        </div>
-      )}
-    </div>
+    </LessonChart>
   );
 }

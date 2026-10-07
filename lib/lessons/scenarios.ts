@@ -556,3 +556,17 @@ const sdResistance = () => buildCandles(1.0901, [
   ...c(1.0930, 1.0936, 1.0943, 1.0951, 1.0960, 1.0968), { c: 1.0966, h: 1.0975 },
 ], { seed: 11102, decimals: 5, asset: "EUR/USD", volatility: "normale", levels: [1.0976, 1.0990], pins: [1.0988, 1.0986, 1.0989, 1.0975] });
 Object.assign(SCENARIOS, { "sd-support": sdSupport, "sd-resistance": sdResistance });
+
+// ─── Lot 12 ──────────────────────────────────────────────────────────────────
+// Avancé 6 — chasse aux stops (EUR/USD H1) : support 1.0800 touché 2 fois (equal lows),
+// mèche à 1.0786 puis clôture à 1.0808 (au-dessus du support), hausse ensuite.
+const stopHunt = () => buildCandles(1.0838, [
+  ...c(1.0829, 1.0818, 1.0809), { c: 1.0806, l: 1.0801 }, ...c(1.0817, 1.0828, 1.0822, 1.0812), { c: 1.0805, l: 1.0800 }, ...c(1.0813, 1.0807),
+  { c: 1.0808, h: 1.0811, l: 1.0786 },
+  ...c(1.0821, 1.0834, 1.0829, 1.0843), { c: 1.0852 },
+], { seed: 12101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.0800], pins: [1.0801, 1.0800, 1.0786, 1.0808] });
+// Macro Débutant 1 — réaction d'EUR/USD au CPI de 14h30 (M1) : calme, puis −40 pips
+const cpiReaction = () => buildCandles(1.0850, [
+  ...c(1.0851, 1.0849, 1.0852, 1.0850, 1.0851, 1.0850), { c: 1.0810, h: 1.0853, l: 1.0804 }, ...c(1.0814, 1.0806, 1.0809),
+], { seed: 12201, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "élevée", preNews: true, pins: [1.0810], levels: [1.0820], split: 6 });
+Object.assign(SCENARIOS, { "stop-hunt": stopHunt, "cpi-reaction": cpiReaction });

@@ -47,5 +47,10 @@
   {"url":"/fr/formations/debutant/lecon10","charts":["RRComparisonDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon2","charts":["Candle"]},
   {"url":"/fr/formations/intermediaire/lecon3","charts":["Candle","SupplyDemandDiagram"]},
-  {"url":"/fr/formations/intermediaire/lecon6","charts":["Candle"]}
+  {"url":"/fr/formations/intermediaire/lecon6","charts":["Candle"]},
+  {"url":"/fr/formations/avance/lecon6","charts":["StopHuntInteractive"]},
+  {"url":"/fr/formations/avance/lecon8","charts":["TradingJournalDiagram"]},
+  {"url":"/fr/formations/macro/debutant/lecon1","charts":["MacroCalendarDiagram"]},
+  {"url":"/fr/formations/macro/debutant/lecon2","charts":["CentralBanksHierarchy"]},
+  {"url":"/fr/formations/macro/debutant/lecon5","charts":["DollarHubDiagram"]}
 ]

@@ -1,330 +1,50 @@
-interface TradingJournalDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+// Trading Avancé 8 — un journal en R et sa révision hebdomadaire : 8 trades, puis
+// winrate, R moyen, drawdown maximum et pattern d'erreur, tous calculés sur la liste.
 
-type Trade = {
-  date: string;
-  setup: string;
-  rr: string;
-  result: string;
-  win: boolean;
-};
+import { Cards, LessonSchema, Matrix, SchemaHeading } from "@/app/components/lessons/LessonSchema";
+import { fmtNum } from "@/lib/lessons/chart-analysis";
 
-const TRADES: Trade[] = [
-  { date: "12/04", setup: "OB Bullish",  rr: "1:2",   result: "+2R",   win: true  },
-  { date: "13/04", setup: "OTE Long",    rr: "1:1.5", result: "+1.5R", win: true  },
-  { date: "14/04", setup: "FVG Bullish", rr: "1:1.5", result: "+1.5R", win: true  },
-  { date: "15/04", setup: "Range Break", rr: "1:1",   result: "-1R",   win: false },
-  { date: "16/04", setup: "OTE Long",    rr: "1:2",   result: "-1R",   win: false },
-  { date: "17/04", setup: "OB Bullish",  rr: "1:2",   result: "+1R",   win: true  },
-  { date: "19/04", setup: "Range Break", rr: "1:2",   result: "-1R",   win: false },
-  { date: "20/04", setup: "FVG Bearish", rr: "1:2",   result: "-1R",   win: false },
-  { date: "21/04", setup: "OTE Long",    rr: "1:2",   result: "+1R",   win: true  },
-  { date: "22/04", setup: "OB Bullish",  rr: "1:2.5", result: "+2.5R", win: true  },
+const TRADES = [
+  { date: "14/04", setup: "Sweep + CHoCH", rr: "1:2", r: 2, plan: true },
+  { date: "14/04", setup: "Breakout de range", rr: "1:1,5", r: -1, plan: true },
+  { date: "15/04", setup: "OB haussier", rr: "1:2,5", r: 2.5, plan: true },
+  { date: "15/04", setup: "Breakout de range", rr: "1:1", r: -2, plan: false },
+  { date: "16/04", setup: "FVG", rr: "1:2", r: 2, plan: true },
+  { date: "16/04", setup: "Breakout de range", rr: "1:1,5", r: -1, plan: true },
+  { date: "17/04", setup: "OB haussier", rr: "1:2", r: -1, plan: true },
+  { date: "17/04", setup: "Sweep + CHoCH", rr: "1:3", r: 3, plan: true },
 ];
+const R = (x: number) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${fmtNum(Math.abs(x), 2)}R`;
 
-// Equity: zero at y=340, scale=40px per R
-// Cumulative R: 0 → 2 → 3.5 → 5 → 4 → 3 → 4 → 3 → 2 → 3 → 5.5
-const EQ_PTS: [number, number][] = [
-  [452, 340], [496, 260], [540, 200], [584, 140],
-  [628, 180], [672, 220], [716, 180], [760, 220],
-  [804, 260], [848, 220], [892, 120],
-];
-
-const eqPath = "M" + EQ_PTS.map(([x, y]) => `${x},${y}`).join(" L");
-
-const COL = { date: 15, setup: 80, rr: 218, result: 292 };
-const HDR_SEP = 66;
-const ROW_Y0 = 86;
-const ROW_DY = 28;
-
-export function TradingJournalDiagram({ className = "", locale = "fr" }: TradingJournalDiagramProps) {
-  const isEs = locale === "es";
-  const isEn = locale === "en";
-  const L = {
-    winRate:      isEs ? "Win Rate 60%" : isEn ? "Win Rate 60%" : "Winrate 60%",
-    netR:         isEs ? "+5.5R neto" : isEn ? "+5.5R net" : "+5.5R net",
-    hdrDate:      isEs ? "FECHA" : isEn ? "DATE" : "DATE",
-    hdrSetup:     "SETUP",
-    hdrRR:        "R/R",
-    hdrResult:    isEs ? "RESULTADO" : isEn ? "RESULT" : "RÉSULTAT",
-    equityCap:    isEs ? "Equity — capital acumulado (en R)" : isEn ? "Equity — cumulative capital (in R)" : "Equity — capital cumulé (en R)",
-    tradeNum:     isEs ? "Trade #" : isEn ? "Trade #" : "Trade #",
-    bestStreak:   isEs ? "Best streak +5R" : isEn ? "Best streak +5R" : "Best streak +5R",
-    worstDd:      isEs ? "Worst drawdown -2R" : isEn ? "Worst drawdown -2R" : "Worst drawdown -2R",
-    bestSetup:    isEs ? "✓  Setup más rentable" : isEn ? "✓  Most profitable setup" : "✓  Setup le plus rentable",
-    bestSetupVal: isEs ? "OB Bullish — 3 / 3 ganadores" : isEn ? "OB Bullish — 3 / 3 wins" : "OB Bullish — 3 / 3 gagnants",
-    bestSetupSub: isEs ? "Ratio promedio: +1.83R / trade" : isEn ? "Average ratio: +1.83R / trade" : "Ratio moyen : +1.83R / trade",
-    avoidSetup:   isEs ? "✗  Setup a evitar" : isEn ? "✗  Setup to avoid" : "✗  Setup à éviter",
-    avoidVal:     isEs ? "Rango Break — 0 / 2 ganadores" : isEn ? "Range Break — 0 / 2 wins" : "Range Break — 0 / 2 gagnants",
-    avoidSub:     isEs ? "Eliminar de tu plan de trading" : isEn ? "Remove from your trading plan" : "Supprimer de ton plan de trading",
-    recError:     isEs ? "⚠  Error recurrente" : isEn ? "⚠  Recurring mistake" : "⚠  Erreur récurrente",
-    recVal:       isEs ? "SL muy ajustado en 3 trades" : isEn ? "SL too tight on 3 trades" : "SL trop serré sur 3 trades",
-    recSub:       isEs ? "Revisar sizing y colocación del SL" : isEn ? "Review sizing and SL placement" : "Revoir sizing et placement du SL",
-    mobEqCap:     isEs ? "Equity acumulada (en R)" : isEn ? "Cumulative equity (in R)" : "Equity cumulée (en R)",
-    mobWinRate:   isEs ? "Win rate" : isEn ? "Win rate" : "Winrate",
-    mobWinRateD:  isEs ? "6 / 10 trades" : isEn ? "6 / 10 trades" : "6 / 10 trades",
-    mobNet:       isEs ? "Net" : isEn ? "Net" : "Net",
-    mobNetD:      isEs ? "capital acumulado" : isEn ? "cumulative capital" : "capital cumulé",
-    mobResult:    isEs ? "Result." : isEn ? "Result" : "Résult.",
-    mobBest:      isEs ? "Best +5R" : isEn ? "Best +5R" : "Best +5R",
-    mobDd:        isEs ? "Drawdown −2R" : isEn ? "Drawdown −2R" : "Drawdown −2R",
-    mobOBVal:     isEs ? "3/3 ganadores" : isEn ? "3/3 wins" : "3/3 gagnants",
-    mobRangeVal:  isEs ? "0/2 ganadores" : isEn ? "0/2 wins" : "0/2 gagnants",
-    mobSlTrades:  isEs ? "3 trades" : isEn ? "3 trades" : "3 trades",
-    mobSlVal:     isEs ? "SL muy ajustado —" : isEn ? "SL too tight —" : "SL trop serré —",
-    mobSlValEnd:  isEs ? "detenidos" : isEn ? "stopped out" : "stoppés",
-    mobObTitle:   isEs ? "OB Bullish —" : isEn ? "OB Bullish —" : "OB Bullish —",
-    mobRangeT:    isEs ? "Rango Break —" : isEn ? "Range Break —" : "Range Break —",
-    mobAvoidSub:  isEs ? "A eliminar del plan de trading" : isEn ? "Remove from the trading plan" : "À supprimer du plan de trading",
-    mobRecSub:    isEs ? "Revisar sizing y colocación del SL" : isEn ? "Review sizing and SL placement" : "Revoir sizing et placement du SL",
-    mobBestSub:   isEs ? "Ratio promedio: +1.83R / trade" : isEn ? "Average ratio: +1.83R / trade" : "Ratio moyen : +1.83R / trade",
-    mobBestTitle: isEs ? "✓ Setup más rentable" : isEn ? "✓ Most profitable setup" : "✓ Setup le plus rentable",
-    mobAvoidTitle:isEs ? "✗ Setup a evitar" : isEn ? "✗ Setup to avoid" : "✗ Setup à éviter",
-    mobRecTitle:  isEs ? "⚠ Error recurrente" : isEn ? "⚠ Recurring mistake" : "⚠ Erreur récurrente",
-  };
+export function TradingJournalDiagram(_props: { className?: string; locale?: string }) {
+  const wins = TRADES.filter((t) => t.r > 0).length;
+  const total = TRADES.reduce((a, t) => a + t.r, 0);
+  let eq = 0, peak = 0, dd = 0;
+  for (const t of TRADES) { eq += t.r; peak = Math.max(peak, eq); dd = Math.max(dd, peak - eq); }
+  const setups = [...new Set(TRADES.map((t) => t.setup))].map((s) => ({ s, ts: TRADES.filter((t) => t.setup === s) }));
+  const worst = setups.reduce((a, b) => (b.ts.reduce((x, t) => x + t.r, 0) < a.ts.reduce((x, t) => x + t.r, 0) ? b : a));
+  const offPlan = TRADES.filter((t) => !t.plan);
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      {/* ── DESKTOP (SVG 900×490, inchangé) ───────────────────────── */}
-      <svg
-        width="100%"
-        viewBox="0 0 900 490"
-        fill="none"
-        preserveAspectRatio="xMidYMid meet"
-        xmlns="http://www.w3.org/2000/svg"
-        className="hidden sm:block"
-      >
-        {/* ── LEFT PANEL — TABLE ── */}
-
-        <rect x={15} y={12} width={90} height={17} rx="3"
-          fill="#10b98114" stroke="#10b98130" strokeWidth="0.8" />
-        <text x={60} y={24} fontSize="9" fill="#10b981"
-          textAnchor="middle" fontWeight="700">{L.winRate}</text>
-
-        <rect x={115} y={12} width={72} height={17} rx="3"
-          fill="#10b98114" stroke="#10b98130" strokeWidth="0.8" />
-        <text x={151} y={24} fontSize="9" fill="#10b981"
-          textAnchor="middle" fontWeight="700">{L.netR}</text>
-
-        <rect x={10} y={38} width={425} height={28} fill="#18181b" />
-        <text x={COL.date}   y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">{L.hdrDate}</text>
-        <text x={COL.setup}  y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">{L.hdrSetup}</text>
-        <text x={COL.rr}     y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">{L.hdrRR}</text>
-        <text x={COL.result} y={57} fontSize="10" fill="#52525b" fontWeight="700" letterSpacing="0.5">{L.hdrResult}</text>
-        <line x1={10} y1={HDR_SEP} x2={435} y2={HDR_SEP} stroke="#3f3f46" strokeWidth="1.2" />
-
-        {TRADES.map((t, i) => {
-          const y = ROW_Y0 + i * ROW_DY;
-          const sepY = HDR_SEP + (i + 1) * ROW_DY;
-          return (
-            <g key={i}>
-              <rect x={10} y={y - 19} width={425} height={27}
-                fill={t.win ? "#10b9810a" : "#ef44440a"} />
-              <line x1={10} y1={sepY} x2={435} y2={sepY}
-                stroke="#1f1f23" strokeWidth="0.8" />
-              <text x={COL.date}   y={y} fontSize="11" fill="#71717a">{t.date}</text>
-              <text x={COL.setup}  y={y} fontSize="11" fill="#a1a1aa">{t.setup}</text>
-              <text x={COL.rr}     y={y} fontSize="10" fill="#52525b">{t.rr}</text>
-              <text x={COL.result} y={y} fontSize="11" fontWeight="600"
-                fill={t.win ? "#34d399" : "#f87171"}>{t.result}</text>
-            </g>
-          );
-        })}
-
-        {/* ── DIVIDER ── */}
-        <line x1={445} y1={8} x2={445} y2={382} stroke="#27272a" strokeWidth="1" />
-
-        {/* ── RIGHT PANEL — EQUITY CURVE ── */}
-
-        <rect x={588} y={12} width={190} height={16} rx="3"
-          fill="#09090b" fillOpacity="0.85" />
-        <text x={683} y={23} fontSize="8.5" fill="#52525b"
-          textAnchor="middle" fontWeight="600">{L.equityCap}</text>
-
-        {/* Zero baseline */}
-        <line x1={452} y1={340} x2={892} y2={340}
-          stroke="#3f3f46" strokeWidth="1" strokeDasharray="5 3" opacity="0.8" />
-        <text x={449} y={344} fontSize="8" fill="#52525b" textAnchor="end">0R</text>
-
-        {/* Grid lines */}
-        {[{ label: "+2R", y: 260 }, { label: "+4R", y: 180 }].map(({ label, y }) => (
-          <g key={label}>
-            <line x1={452} y1={y} x2={892} y2={y}
-              stroke="#27272a" strokeWidth="0.7" strokeDasharray="3 4" />
-            <text x={449} y={y + 4} fontSize="8" fill="#3f3f46" textAnchor="end">{label}</text>
-          </g>
-        ))}
-
-        {/* X-axis */}
-        {EQ_PTS.slice(1).map(([x], i) => (
-          <g key={i}>
-            <line x1={x} y1={340} x2={x} y2={348} stroke="#3f3f46" strokeWidth="0.8" />
-            <text x={x} y={360} fontSize="8" fill="#52525b" textAnchor="middle">{i + 1}</text>
-          </g>
-        ))}
-        <text x={672} y={374} fontSize="8" fill="#3f3f46" textAnchor="middle">{L.tradeNum}</text>
-
-        {/* Equity fill */}
-        <path d={`${eqPath} L892,340 L452,340 Z`} fill="#10b98108" />
-
-        {/* Equity curve */}
-        <path d={eqPath}
-          stroke="#10b981" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
-
-        {/* Dots */}
-        {EQ_PTS.slice(1).map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="3"
-            fill="#10b981" opacity={y <= 200 ? "0.9" : "0.4"} />
-        ))}
-
-        {/* Best streak — T3 peak (584, 140) */}
-        <circle cx={584} cy={140} r="5" fill="#10b981" opacity="0.9" />
-        <line x1={584} y1={135} x2={584} y2={127}
-          stroke="#10b981" strokeWidth="0.8" opacity="0.5" />
-        <rect x={524} y={109} width={120} height={16} rx="3"
-          fill="#09090b" fillOpacity="0.85" />
-        <rect x={524} y={109} width={120} height={16} rx="3"
-          fill="#10b98112" stroke="#10b98130" strokeWidth="0.7" />
-        <text x={584} y={121} fontSize="8.5" fill="#10b981"
-          textAnchor="middle" fontWeight="700">{L.bestStreak}</text>
-
-        {/* Worst drawdown — T5 trough (672, 220) */}
-        <circle cx={672} cy={220} r="5" fill="#ef4444" opacity="0.9" />
-        <line x1={672} y1={225} x2={672} y2={233}
-          stroke="#ef4444" strokeWidth="0.8" opacity="0.5" />
-        <rect x={606} y={233} width={132} height={16} rx="3"
-          fill="#09090b" fillOpacity="0.85" />
-        <rect x={606} y={233} width={132} height={16} rx="3"
-          fill="#ef444412" stroke="#ef444430" strokeWidth="0.7" />
-        <text x={672} y={245} fontSize="8.5" fill="#ef4444"
-          textAnchor="middle" fontWeight="700">{L.worstDd}</text>
-
-        {/* ── INSIGHTS BAND ── */}
-        <line x1={10} y1={386} x2={892} y2={386} stroke="#27272a" strokeWidth="1" />
-
-        <rect x={10}  y={394} width={280} height={80} rx="4"
-          fill="#10b9810a" stroke="#10b98120" strokeWidth="0.8" />
-        <text x={22} y={414} fontSize="8.5" fill="#34d399" fontWeight="700">{L.bestSetup}</text>
-        <text x={22} y={432} fontSize="10"  fill="#a1a1aa">{L.bestSetupVal}</text>
-        <text x={22} y={450} fontSize="8.5" fill="#52525b">{L.bestSetupSub}</text>
-
-        <rect x={306} y={394} width={280} height={80} rx="4"
-          fill="#ef44440a" stroke="#ef444420" strokeWidth="0.8" />
-        <text x={318} y={414} fontSize="8.5" fill="#f87171" fontWeight="700">{L.avoidSetup}</text>
-        <text x={318} y={432} fontSize="10"  fill="#a1a1aa">{L.avoidVal}</text>
-        <text x={318} y={450} fontSize="8.5" fill="#52525b">{L.avoidSub}</text>
-
-        <rect x={602} y={394} width={286} height={80} rx="4"
-          fill="#60a5fa0a" stroke="#60a5fa20" strokeWidth="0.8" />
-        <text x={614} y={414} fontSize="8.5" fill="#60a5fa" fontWeight="700">{L.recError}</text>
-        <text x={614} y={432} fontSize="10"  fill="#a1a1aa">{L.recVal}</text>
-        <text x={614} y={450} fontSize="8.5" fill="#52525b">{L.recSub}</text>
-      </svg>
-
-      {/* ── MOBILE (HTML reconstruit — tailles aggressives) ────────────────── */}
-      <div className="sm:hidden p-4 space-y-4">
-        {/* Hero metrics : 2 chiffres XXL */}
-        <div className="grid grid-cols-2 gap-2.5">
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-center">
-            <p className="text-[12px] text-emerald-400/80 uppercase tracking-wider font-bold">{L.mobWinRate}</p>
-            <p className="text-[32px] font-bold text-emerald-400 mt-1 leading-none">60%</p>
-            <p className="text-[12px] text-zinc-500 mt-1">{L.mobWinRateD}</p>
-          </div>
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-center">
-            <p className="text-[12px] text-emerald-400/80 uppercase tracking-wider font-bold">{L.mobNet}</p>
-            <p className="text-[32px] font-bold text-emerald-400 mt-1 leading-none">+5.5R</p>
-            <p className="text-[12px] text-zinc-500 mt-1">{L.mobNetD}</p>
-          </div>
-        </div>
-
-        {/* Equity curve simplifié — pleine largeur, plus haut, sans texte SVG */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3.5">
-          <p className="text-[13px] font-bold text-zinc-400 uppercase tracking-wider text-center mb-3">
-            {L.mobEqCap}
-          </p>
-          <svg viewBox="0 0 320 130" width="100%" fill="none" aria-label="Equity curve">
-            {/* Grille discrète */}
-            <line x1={0} y1={118} x2={320} y2={118} stroke="#3f3f46" strokeWidth="1" strokeDasharray="4 3" opacity="0.8" />
-            <line x1={0} y1={36}  x2={320} y2={36}  stroke="#27272a" strokeWidth="0.8" strokeDasharray="3 4" opacity="0.6" />
-            {/* Fill area */}
-            <path
-              d="M0,118 L32,90 L64,68 L96,46 L128,60 L160,74 L192,60 L224,74 L256,90 L288,74 L320,28 L320,118 Z"
-              fill="#10b98115"
-            />
-            {/* Curve épaisse */}
-            <path
-              d="M0,118 L32,90 L64,68 L96,46 L128,60 L160,74 L192,60 L224,74 L256,90 L288,74 L320,28"
-              stroke="#10b981" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round"
-            />
-            {/* Drawdown segment T3→T5 */}
-            <path d="M96,46 L128,60 L160,74"
-              stroke="#ef4444" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" opacity="0.85"
-            />
-            {/* Markers gros */}
-            <circle cx={96} cy={46} r="6" fill="#10b981" stroke="#09090b" strokeWidth="2" />
-            <circle cx={160} cy={74} r="6" fill="#ef4444" stroke="#09090b" strokeWidth="2" />
-            <circle cx={320} cy={28} r="6" fill="#10b981" stroke="#09090b" strokeWidth="2" />
-          </svg>
-          {/* Legend hors SVG, gros texte */}
-          <div className="grid grid-cols-2 gap-3 mt-3">
-            <div className="flex items-center gap-2">
-              <span className="shrink-0 w-3 h-3 rounded-full bg-emerald-400" />
-              <span className="text-[13px] text-emerald-400 font-bold">{L.mobBest}</span>
-            </div>
-            <div className="flex items-center gap-2 justify-end">
-              <span className="shrink-0 w-3 h-3 rounded-full bg-red-400" />
-              <span className="text-[13px] text-red-400 font-bold">{L.mobDd}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Table 10 trades — colonnes optimisées, noms complets */}
-        <div className="rounded-xl border border-zinc-800 overflow-hidden">
-          <div className="grid grid-cols-[48px_1fr_40px_56px] gap-1.5 px-2.5 py-2.5 bg-zinc-900 border-b border-zinc-800 text-[11px] font-bold text-zinc-500 uppercase tracking-wide">
-            <span>{isEs ? "Fecha" : isEn ? "Date" : "Date"}</span>
-            <span>Setup</span>
-            <span className="text-center">R/R</span>
-            <span className="text-right">{L.mobResult}</span>
-          </div>
-          <div className="divide-y divide-zinc-800/70">
-            {TRADES.map((t, i) => (
-              <div
-                key={i}
-                className={`grid grid-cols-[48px_1fr_40px_56px] gap-1.5 px-2.5 py-2.5 items-center text-[14px] ${
-                  t.win ? "bg-emerald-500/[0.05]" : "bg-red-500/[0.05]"
-                }`}
-              >
-                <span className="text-zinc-400 font-mono text-[12px]">{t.date}</span>
-                <span className="text-white font-medium text-[13px] leading-tight">{t.setup}</span>
-                <span className="text-center text-zinc-500 font-mono text-[12px]">{t.rr}</span>
-                <span className={`text-right font-bold font-mono ${t.win ? "text-emerald-400" : "text-red-400"}`}>
-                  {t.result}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Insights — 3 cartes, texte aggressif */}
-        <div className="space-y-2.5">
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/8 p-3">
-            <p className="text-[14px] font-bold text-emerald-400">{L.mobBestTitle}</p>
-            <p className="text-[14px] text-white leading-snug mt-1">{L.mobObTitle} <span className="font-bold text-emerald-400">{L.mobOBVal}</span></p>
-            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">{L.mobBestSub}</p>
-          </div>
-          <div className="rounded-xl border border-red-500/30 bg-red-500/8 p-3">
-            <p className="text-[14px] font-bold text-red-400">{L.mobAvoidTitle}</p>
-            <p className="text-[14px] text-white leading-snug mt-1">{L.mobRangeT} <span className="font-bold text-red-400">{L.mobRangeVal}</span></p>
-            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">{L.mobAvoidSub}</p>
-          </div>
-          <div className="rounded-xl border border-blue-400/30 bg-blue-500/8 p-3">
-            <p className="text-[14px] font-bold text-blue-400">{L.mobRecTitle}</p>
-            <p className="text-[14px] text-white leading-snug mt-1">{L.mobSlVal} <span className="font-bold text-blue-400">{L.mobSlTrades}</span> {L.mobSlValEnd}</p>
-            <p className="text-[13px] text-zinc-400 leading-snug mt-0.5">{L.mobRecSub}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <LessonSchema id="TradingJournalDiagram" title="Un journal en R et sa révision de la semaine" caption="Plan : ✓ respecté, ✗ non respecté (SL déplacé).">
+      <Matrix
+        head={["Setup", "R/R prévu", "Résultat", "Plan"]}
+        rows={TRADES.map((t) => ({
+          label: t.date,
+          cells: [
+            { text: t.setup },
+            { text: t.rr },
+            { text: R(t.r), tone: t.r > 0 ? "bull" : "bear" },
+            { text: t.plan ? "✓" : "✗", tone: t.plan ? undefined : "bear" },
+          ],
+        }))}
+      />
+      <SchemaHeading sub="Calculée sur les 8 trades">Révision hebdomadaire</SchemaHeading>
+      <Cards cols={4} mobileCols={2} items={[
+        { title: "Winrate", value: `${Math.round((wins / TRADES.length) * 100)} %`, text: `${wins} / ${TRADES.length} trades` },
+        { title: "R moyen", value: R(total / TRADES.length), text: `Total ${R(total)}`, tone: total > 0 ? "bull" : "bear" },
+        { title: "Drawdown max", value: R(-dd), text: "Du plus haut au plus bas", tone: "bear" },
+        { title: "Pattern d'erreur", value: worst.s, text: `${worst.ts.filter((t) => t.r > 0).length} gain sur ${worst.ts.length} trades ; ${offPlan.length} trade hors plan`, tone: "zone" },
+      ]} />
+    </LessonSchema>
   );
 }
