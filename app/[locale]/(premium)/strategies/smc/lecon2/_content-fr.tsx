@@ -206,9 +206,9 @@ export default function ContentFr() {
             </div>
           </section>
 
-          {/* Bloc 5 — SÉQUENCE BOS → CHoCH → MITIGATION */}
+          {/* Bloc 5 — SÉQUENCE CHoCH → BOS → MITIGATION */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Séquence opérationnelle BOS → CHoCH → mitigation</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Séquence opérationnelle CHoCH → BOS → mitigation</h2>
 
             <div className="my-8">
               <BOSCHoCHSequenceDiagram />
@@ -217,9 +217,9 @@ export default function ContentFr() {
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le retournement structurel institutionnel suit une séquence en 3 étapes. Cette séquence garantit que l&apos;inversion ne se prend qu&apos;après confirmation complète.</p>
 
             <ol className="space-y-2 text-sm text-zinc-300 list-decimal pl-5">
-              <li><span className="font-semibold text-white">BOS contre-tendance</span>, cassure du dernier HL (haussier) ou LH (baissier). Ouvre la possibilité du retournement sans le confirmer. Sortie progressive des positions, pas encore d&apos;inversion.</li>
-              <li><span className="font-semibold text-white">Formation de la nouvelle structure</span>, 5 à 15 bougies pour produire un premier LL/LH (retournement baissier) ou HH/HL (retournement haussier). Aucune entrée d&apos;inversion pendant cette phase d&apos;observation.</li>
-              <li><span className="font-semibold text-white">CHoCH confirmé + mitigation</span>, nouvelle structure inverse complète. Entrée sur le retracement vers le niveau structurel cassé (ex-HL devenu résistance, ou ex-LH devenu support) avec signal de rejet. Stop loss serré possible.</li>
+              <li><span className="font-semibold text-white">CHoCH</span>, cassure du dernier HL (haussier) ou LH (baissier). Premier signal d&apos;un retournement possible, sans le confirmer. Sortie progressive des positions, pas encore d&apos;inversion.</li>
+              <li><span className="font-semibold text-white">Formation de la nouvelle structure</span>, 5 à 15 bougies pour produire un premier LH (retournement baissier) ou HL (retournement haussier). Aucune entrée d&apos;inversion pendant cette phase d&apos;observation.</li>
+              <li><span className="font-semibold text-white">BOS dans le nouveau sens + mitigation</span>, cassure du creux (retournement baissier) ou du sommet (retournement haussier) laissé par le CHoCH : le retournement est confirmé. Entrée sur le retracement vers le niveau structurel cassé (ex-HL devenu résistance, ou ex-LH devenu support) avec signal de rejet. Stop loss serré possible.</li>
             </ol>
           </section>
 
@@ -245,8 +245,8 @@ export default function ContentFr() {
                 <p className="text-zinc-300 text-sm">HH/LL cassé = BOS (continuation). HL/LH cassé = CHoCH (retournement potentiel).</p>
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
-                <p className="text-red-400 font-semibold text-sm mb-1">3. Trader le 1er BOS contre-tendance sans CHoCH</p>
-                <p className="text-zinc-300 text-sm">Inversion prise avant confirmation = retour à la tendance d&apos;origine. Attendre la séquence complète LL+LH ou HH+HL.</p>
+                <p className="text-red-400 font-semibold text-sm mb-1">3. Inverser dès le CHoCH, sans confirmation</p>
+                <p className="text-zinc-300 text-sm">Inversion prise avant confirmation = retour fréquent à la tendance d&apos;origine. Attendre la nouvelle structure (LH en baissier, HL en haussier) puis le BOS dans le nouveau sens.</p>
               </div>
             </div>
           </section>
@@ -298,8 +298,8 @@ export default function ContentFr() {
             points={[
               "BOS confirme la tendance par le breakout d’un extrême structurel (HH ou LL). CHoCH la remet en cause par la cassure d’un creux ou sommet inverse (HL ou LH). Le niveau cassé dicte le signal.",
               "4 critères qualifient un BOS valide : clôture nette, displacement marqué, absence de réintégration, alignement multi-unités de temps.",
-              "La séquence de retournement suit 3 étapes : BOS contre-tendance, formation de la nouvelle structure, CHoCH confirmé.",
-              "L’entrée d’inversion se prend uniquement après CHoCH confirmé, sur la zone de mitigation avec signal de rejet.",
+              "La séquence de retournement suit 3 étapes : CHoCH (premier signal), formation de la nouvelle structure, BOS dans le nouveau sens (confirmation).",
+              "L’entrée d’inversion se prend uniquement après le BOS de confirmation dans le nouveau sens, sur la zone de mitigation avec signal de rejet.",
             ]}
           />
 
@@ -308,9 +308,9 @@ export default function ContentFr() {
             steps={[
               "Identifier la nature du niveau cassé : 4 620$ est le dernier LH (sommet de structure baissière inverse), il s’agit d’un signal de retournement potentiel, pas d’une continuation.",
               "Qualifier le breakout : clôture franche à 4 670$ (50$ au-dessus du LH), displacement supérieur à la moyenne récente, aucune réintégration sur 4 bougies, breakout validé structurellement.",
-              "Classifier le signal : la cassure du dernier LH constitue un BOS contre-tendance, premier signal de retournement potentiel de la tendance baissière.",
-              "Attendre la formation de la nouvelle structure : observer la formation d’un premier HL (creux plus haut que le précédent) après le BOS contre-tendance.",
-              "Valider le CHoCH avant inversion : confirmer le CHoCH par la séquence complète HL plus HH dans la nouvelle structure haussière avant toute prise de position long. La sortie des positions short existantes peut se déclencher dès le BOS contre-tendance, l’inversion exige le CHoCH.",
+              "Classifier le signal : la cassure du dernier LH constitue un CHoCH, premier signal d’un retournement possible de la tendance baissière.",
+              "Attendre la formation de la nouvelle structure : observer la formation d’un premier HL (creux plus haut que le précédent) après le CHoCH.",
+              "Attendre la confirmation avant inversion : un BOS haussier (cassure du sommet laissé par le CHoCH) valide la nouvelle structure HL plus HH avant toute prise de position long. La sortie des positions short existantes peut se déclencher dès le CHoCH, l’inversion exige le BOS de confirmation.",
             ]}
           />
 

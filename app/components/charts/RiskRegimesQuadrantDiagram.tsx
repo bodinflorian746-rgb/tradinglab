@@ -120,7 +120,7 @@ export default function RiskRegimesQuadrantDiagram({ locale = "fr" }: { locale?:
       {/* ── Quadrant BOTTOM-RIGHT — Risk-off panique (red-500) ── */}
       <rect x="370" y="285" width="265" height="160" rx="8" fill="transparent" stroke="#ef4444" strokeWidth="1.5" />
       <text x="382" y="311" fill="#ef4444" fontSize="14" fontWeight="600">{t.riskOffTitle}</text>
-      <text x="382" y="329" fill="#d4d4d8" fontSize="11">DXY ↑↑  •  Yields ↓  •  Or ↑</text>
+      <text x="382" y="329" fill="#d4d4d8" fontSize="11">DXY ↑↑  •  Yields ↑  •  Or ↑</text>
       <text x="382" y="344" fill="#d4d4d8" fontSize="11">Indices ↓↓  •  BTC ↓↓</text>
       <text x="382" y="418" fill="#71717a" fontSize="10" fontStyle="italic">{t.riskOffDesc1}</text>
       <text x="382" y="431" fill="#71717a" fontSize="10" fontStyle="italic">{t.riskOffDesc2}</text>
@@ -128,12 +128,12 @@ export default function RiskRegimesQuadrantDiagram({ locale = "fr" }: { locale?:
       {/* ── Labels d'axes avec pastilles opaques ── */}
 
       {/* Horizontal gauche — Inflation faible */}
-      <rect x="84" y="281" width="116" height="18" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="90" y="295" fill="#a1a1aa" fontSize="12" fontWeight="500">{t.infFaible}</text>
+      <rect x="84" y="261" width="116" height="18" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <text x="90" y="275" fill="#a1a1aa" fontSize="12" fontWeight="500">{t.infFaible}</text>
 
       {/* Horizontal droite — Inflation élevée */}
-      <rect x="520" y="281" width="116" height="18" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="630" y="295" fill="#a1a1aa" fontSize="12" fontWeight="500" textAnchor="end">{t.infElevee}</text>
+      <rect x="520" y="261" width="116" height="18" rx="3" fill="#09090b" fillOpacity="0.85" />
+      <text x="630" y="275" fill="#a1a1aa" fontSize="12" fontWeight="500" textAnchor="end">{t.infElevee}</text>
 
       {/* Vertical haut — Croissance forte */}
       <rect x="364" y="75" width="118" height="18" rx="3" fill="#09090b" fillOpacity="0.85" />
@@ -184,7 +184,7 @@ export default function RiskRegimesQuadrantDiagram({ locale = "fr" }: { locale?:
           name: t.riskOffTitle,
           color: "#ef4444",
           context: t.ctxRiskOff,
-          assets: "DXY ↑↑  ·  Yields ↓  ·  Or ↑  ·  Indices ↓↓  ·  BTC ↓↓",
+          assets: "DXY ↑↑  ·  Yields ↑  ·  Or ↑  ·  Indices ↓↓  ·  BTC ↓↓",
           desc: `${t.riskOffDesc1} ${t.riskOffDesc2}`,
         },
       ].map((r) => (
