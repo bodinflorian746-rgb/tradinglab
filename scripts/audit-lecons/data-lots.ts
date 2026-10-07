@@ -263,3 +263,16 @@ export function checkLot9(check: Check) {
     check(near(rrOf(4565, 4510, 4660), 1.73, 0.005) && near(rrOf(4565, 4510, 4728), 2.96, 0.005), "Projection (TF 3) : R/R 1,73 / 2,96");
   }
 }
+
+export function checkLot14(check: Check) {
+  {
+    // Macro Avancé 1 : impulsion de 20h00 dans « +100 à +150 pips », baisse 20h30 → 21h30 dans « 200 à 400 pips »,
+    // calme avant 20h00, le sommet de la décision n'est jamais dépassé après Powell
+    const cs = CS["fomc-timeline"];
+    const imp = (cs[3].h - cs[3].o) / 0.0001, drop = (cs[9].o - Math.min(...cs.slice(9, 22).map((k) => k.l))) / 0.0001;
+    check(imp >= 100 && imp <= 150, `FOMC (Macro Av. 1) : impulsion de 20h00 ${imp.toFixed(0)} pips hors 100-150`);
+    check(drop >= 200 && drop <= 400, `FOMC (Macro Av. 1) : baisse 20h30 → 21h30 ${drop.toFixed(0)} pips hors 200-400`);
+    check(cs.slice(0, 3).every((k) => (k.h - k.l) / 0.0001 <= 15), "FOMC (Macro Av. 1) : bougies d'avant 20h00 pas calmes");
+    check(Math.max(...cs.slice(9).map((k) => k.h)) < Math.max(...cs.slice(3, 9).map((k) => k.h)), "FOMC (Macro Av. 1) : le prix repasse au-dessus du sommet de la décision");
+  }
+}

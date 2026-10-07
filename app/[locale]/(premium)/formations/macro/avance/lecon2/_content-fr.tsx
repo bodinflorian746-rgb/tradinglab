@@ -160,11 +160,6 @@ export default function ContentFr() {
               </div>
             </div>
 
-            {/* Composant visuel */}
-            <div className="border border-zinc-800 rounded-xl overflow-hidden mb-5">
-              <NFPReportAnatomyDiagram />
-            </div>
-
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
                 Le NFP ne bouge pas un marché. Il secoue toute la chaîne du risque.
@@ -283,6 +278,9 @@ export default function ContentFr() {
               <p className="text-base text-white font-semibold italic leading-relaxed">
                 Un bon NFP peut devenir moyen si le passé est réécrit.
               </p>
+            </div>
+            <div className="mt-5">
+              <NFPReportAnatomyDiagram />
             </div>
           </section>
 

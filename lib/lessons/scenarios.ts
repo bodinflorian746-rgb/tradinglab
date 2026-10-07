@@ -570,3 +570,16 @@ const cpiReaction = () => buildCandles(1.0850, [
   ...c(1.0851, 1.0849, 1.0852, 1.0850, 1.0851, 1.0850), { c: 1.0810, h: 1.0853, l: 1.0804 }, ...c(1.0814, 1.0806, 1.0809),
 ], { seed: 12201, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "élevée", preNews: true, pins: [1.0810], levels: [1.0820], split: 6 });
 Object.assign(SCENARIOS, { "stop-hunt": stopHunt, "cpi-reaction": cpiReaction });
+
+// ─── Lot 14 ──────────────────────────────────────────────────────────────────
+// Macro Avancé 1 — un FOMC sur EUR/USD M5 (19h45 → 21h40, heure de Paris) : calme,
+// 20h00 décision = impulsion haussière violente, hésitation, 20h30 Powell = retournement
+// (plonge, remonte, replonge), après 21h00 la baisse s'installe.
+const fomcTimeline = () => buildCandles(1.1850, [
+  { c: 1.1852, h: 1.1855, l: 1.1847 }, { c: 1.1849, h: 1.1854, l: 1.1846 }, { c: 1.1851, h: 1.1853, l: 1.1845 },
+  { c: 1.1950, h: 1.1968, l: 1.1846 }, { c: 1.1962, h: 1.1985 },
+  ...c(1.1938, 1.1960, 1.1932, 1.1948),
+  { c: 1.1862, h: 1.1958 }, { c: 1.1908 }, ...c(1.1835, 1.1800, 1.1838, 1.1785),
+  ...c(1.1752, 1.1738, 1.1756, 1.1722, 1.1698, 1.1712), { c: 1.1668, l: 1.1660 }, ...c(1.1680, 1.1672),
+], { seed: 14101, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", preNews: true, split: 3, pins: [1.1855, 1.1854, 1.1853, 1.1847, 1.1846, 1.1845, 1.1968, 1.1985, 1.1660], levels: [1.1985, 1.1660] });
+Object.assign(SCENARIOS, { "fomc-timeline": fomcTimeline });

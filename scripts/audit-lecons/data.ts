@@ -6,7 +6,7 @@ import { isContinuous, pips, type Candle } from "@/lib/lessons/chart-analysis";
 import { HS_CASES, SL_CASE } from "@/lib/lessons/line-data";
 import { confluenceModel, headShouldersModel, PIP, precisionModel } from "@/lib/lessons/models";
 import { BACKTEST_COUNTS, backtestStats, backtestTrades } from "@/lib/lessons/backtest";
-import { checkLot9, checkLots } from "./data-lots";
+import { checkLot14, checkLot9, checkLots } from "./data-lots";
 
 let errors = 0;
 const lines: string[] = [];
@@ -95,6 +95,7 @@ for (const c of HS_CASES) {
 
 checkLots(check);
 checkLot9(check);
+checkLot14(check);
 
 lines.push(`Scénarios contrôlés : ${Object.keys(CANDLES).length} séries de bougies, ${HS_CASES.length + 6} schémas`);
 console.log(lines.join("\n"));

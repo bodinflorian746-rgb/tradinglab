@@ -372,7 +372,7 @@ export default function ContentFr() {
             <div className="space-y-2 mb-5">
               {[
                 { step: "1.", bold: "Regarde US10Y", suf: " : est-il en hausse ou en baisse ?" },
-                { step: "2.", bold: "Note le niveau clé", suf: " : 4%, 4.5% et 5% sont des seuils psychologiques." },
+                { step: "2.", bold: "Note le niveau clé", suf: " : 4%, 4.5% et 5% sont des chiffres ronds que tout le marché surveille." },
                 { step: "3.", bold: "Compare avec ton actif", suf: " : si tu veux long XAU/USD mais US10Y monte fort, il y a conflit." },
                 { step: "4.", bold: "Regarde DXY", suf: " : US10Y en hausse + DXY en hausse = pression forte sur l'or et les actifs risqués." },
                 { step: "5.", bold: "Vérifie Nasdaq et BTC/USD", suf: " : si les deux faiblissent pendant que US10Y monte, le marché réduit le risque." },
@@ -391,7 +391,7 @@ export default function ContentFr() {
               {[
                 "confondre prix obligataire et rendement",
                 "croire que la corrélation est automatique",
-                "ignorer les seuils psychologiques",
+                "ignorer les chiffres ronds (4%, 4.5%, 5%)",
                 "oublier les taux réels",
                 "regarder US10Y sans regarder US2Y",
               ].map((item, i) => (

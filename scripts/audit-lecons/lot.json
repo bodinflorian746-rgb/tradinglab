@@ -57,5 +57,8 @@
   {"url":"/fr/formations/macro/intermediaire/lecon2","charts":["CalendarReadingComparisonDiagram"]},
   {"url":"/fr/formations/macro/intermediaire/lecon4","charts":["TradingSessionsLiquidityDiagram"]},
   {"url":"/fr/formations/macro/intermediaire/lecon5","charts":["CorrelationMatrixDiagram"]},
-  {"url":"/fr/formations/macro/intermediaire/lecon6","charts":["WeeklyBiasCalendarDiagram"]}
+  {"url":"/fr/formations/macro/intermediaire/lecon6","charts":["WeeklyBiasCalendarDiagram"]},
+  {"url":"/fr/formations/macro/avance/lecon1","charts":["FOMCTimelineDiagram"]},
+  {"url":"/fr/formations/macro/avance/lecon2","charts":["NFPReportAnatomyDiagram"]},
+  {"url":"/fr/formations/macro/avance/lecon3","charts":["US10YHubDiagram"]}
 ]

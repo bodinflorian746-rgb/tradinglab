@@ -260,7 +260,7 @@ export default function ContentFr() {
             </div>
             <div className="space-y-2 mb-5">
               {[
-                "Tu n'entres jamais entre 20h00 et 20h30",
+                "Tu n'entres jamais entre 20h00 et 21h00",
                 "Tu ne trades pas la première bougie de breakout",
                 "Tu ne trades pas en aveugle si tu n'as pas écouté Powell",
               ].map((item) => (
