@@ -24,7 +24,7 @@
   {"url":"/fr/formations/macro/debutant/lecon4","charts":["InflationChainDiagram"]},
   {"url":"/fr/formations/macro/intermediaire/lecon1","charts":["HawkishDovishScale"]},
   {"url":"/fr/formations/macro/intermediaire/lecon3","charts":["InflationIndicatorsChainDiagram"]},
-  {"url":"/fr/strategies/ict/lecon2","charts":["PDArrayContextDiagram","PDArrayConfluenceDiagram"]},
+  {"url":"/fr/strategies/ict/lecon2","charts":["PDArrayContextDiagram","PDArrayConfluenceDiagram","FVGMitigationDiagram","FVGMitigationScenariosDiagram"]},
   {"url":"/fr/strategies/macro-trading/lecon1","charts":["FOMCExhaustionDiagram"]},
   {"url":"/fr/strategies/macro-trading/lecon4","charts":["MacroFilterRegimeDiagram"]},
   {"url":"/fr/strategies/multi-timeframe/lecon3","charts":["ZoneHistoireDiagram"]},
@@ -60,5 +60,7 @@
   {"url":"/fr/formations/macro/intermediaire/lecon6","charts":["WeeklyBiasCalendarDiagram"]},
   {"url":"/fr/formations/macro/avance/lecon1","charts":["FOMCTimelineDiagram"]},
   {"url":"/fr/formations/macro/avance/lecon2","charts":["NFPReportAnatomyDiagram"]},
-  {"url":"/fr/formations/macro/avance/lecon3","charts":["US10YHubDiagram"]}
+  {"url":"/fr/formations/macro/avance/lecon3","charts":["US10YHubDiagram"]},
+  {"url":"/fr/strategies/ict/lecon1","charts":["IctLiquidityGrabDiagram","FalseBreakoutTrapDiagram","PostSweepReactionDiagram"]},
+  {"url":"/fr/strategies/ict/lecon5","charts":["IctLiquidityGrabDiagram"]}
 ]

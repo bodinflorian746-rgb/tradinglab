@@ -276,3 +276,44 @@ export function checkLot14(check: Check) {
     check(Math.max(...cs.slice(9).map((k) => k.h)) < Math.max(...cs.slice(3, 9).map((k) => k.h)), "FOMC (Macro Av. 1) : le prix repasse au-dessus du sommet de la décision");
   }
 }
+
+export function checkLot15(check: Check) {
+  {
+    // ICT 1 (ict-eqh) : 2 sommets à 1.1780 (equal highs), sweep à 1.1792, chute à 1.1720
+    const cs = CS["ict-eqh"];
+    const tops = pivots(cs, 2).filter((q) => q.side === "h" && Math.abs(q.price - 1.178) < 0.0001);
+    check(tops.length >= 2, "ICT EQH : moins de 2 sommets à 1.1780");
+    check(cs.some((k) => k.h > 1.1790 && k.h <= 1.1795), "ICT EQH : le sweep ne dépasse pas 1.1790-1.1795");
+    check(Math.min(...cs.map((k) => k.l)) <= 1.1722, "ICT EQH : la chute n'atteint pas 1.1720");
+  }
+  {
+    // ICT 1 (false-breakout-xau) : résistance 4680, breakout à 4695, réintégration, chute à 4650
+    const cs = CS["false-breakout-xau"];
+    check(cs.some((k) => k.h === 4680), "FalseBreakout : pas de test à 4680");
+    check(cs.some((k) => k.h >= 4693 && k.h <= 4697), "FalseBreakout : breakout hors 4693-4697");
+    check(Math.min(...cs.map((k) => k.l)) <= 4652, "FalseBreakout : pas de chute vers 4650");
+  }
+  {
+    // ICT 1 (ict-sweep-m15) : equal highs 1.1780, sweep > 1.1790, bougie impulsive ~35 pts
+    const cs = CS["ict-sweep-m15"];
+    const sweep = cs.findIndex((k) => k.h > 1.178);
+    check(sweep >= 0, "ICT sweep M15 : pas de sweep");
+    check(sweep + 1 < cs.length && Math.abs(cs[sweep + 1].o - cs[sweep + 1].c) / 0.0001 >= 25, "ICT sweep M15 : bougie impulsive trop petite");
+  }
+  {
+    // ICT 2 (fvg-mitigation-xau) : FVG baissier ~4652-4665, creux 4620, retour dans la zone
+    const cs = CS["fvg-mitigation-xau"];
+    const fvg = largestFvg(cs, "bear");
+    check(!!fvg && fvg.y1 >= 4648 && fvg.y2 <= 4668, `FVG mitigation XAU : FVG hors 4648-4668 (${fvg ? `${fvg.y1}-${fvg.y2}` : "null"})`);
+    check(!!fvg && Math.min(...cs.slice(fvg.i + 1).map((k) => k.l)) <= 4622, "FVG mitigation XAU : creux ne descend pas à 4620");
+    check(!!fvg && cs.some((k, i) => i > fvg.i + 2 && k.h >= fvg.y1), "FVG mitigation XAU : le retour ne rentre pas dans le FVG");
+  }
+  {
+    // ICT 2 (fvg-case-a) : FVG bull 1.0840-1.0860, rebond ≥ 1.0918 ; (b) mèche ≤ 1.0843 ; (c) clôture ≤ 1.0826
+    const a = CS["fvg-case-a"], b = CS["fvg-case-b"], c = CS["fvg-case-c"];
+    check(largestFvg(a, "bull") !== null, "FVG case A : pas de FVG bull");
+    check(Math.max(...a.map((k) => k.h)) >= 1.0918, "FVG case A : rebond < 1.0918");
+    check(Math.min(...b.slice(13).map((k) => k.l)) <= 1.0843, "FVG case B : mèche > 1.0843");
+    check(c.some((k, i) => i > 12 && k.c <= 1.0826), "FVG case C : pas de clôture sous 1.0826");
+  }
+}

@@ -1,168 +1,41 @@
-// Diagramme : mitigation d'un FVG avant continuation (Leçon 2 ICT)
-// XAU/USD H1 — séquence en 3 phases : impulsion bearish à grands corps (gauche),
-// retour haussier dans le FVG (centre), rejet bearish et continuation (droite).
+// ICT 2 — mitigation d'un FVG baissier (XAU/USD H1) : depuis 4 690 $, impulsion qui
+// laisse un FVG ~4 652-4 665 $. Le prix descend jusqu'à 4 620 $, remonte progressivement
+// vers 4 663 $ (rentre dans le FVG), bougie baissière de rejet, puis 4 610 $.
+// FVG et pivots calculés. Bougies : scenarios.ts (« fvg-mitigation-xau »).
 
-interface FVGMitigationDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { usd } from "@/app/components/lessons/trade";
+import { largestFvg } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
-type CandleSpec = {
-  cx: number;
-  wickTop: number;
-  bodyY: number;
-  bodyH: number;
-  wickBottom: number;
-  type: "bull" | "bear";
-};
-
-const CANDLES: CandleSpec[] = [
-  // 15 bougies, espacement régulier ~39 px de x=70 à x=620.
-  // Continuité prix : l'ouverture de chaque bougie = la clôture de la précédente.
-  // Bear : open = bodyY (haut), close = bodyY+bodyH (bas). Bull : open = bodyY+bodyH (bas), close = bodyY (haut).
-
-  // PHASE 1 — impulsion bearish (5 rouges). Clôtures successives : 100 → 148 → 195 → 235 → 260.
-  { cx:  70, wickTop:  45, bodyY:  50, bodyH: 50, wickBottom: 105, type: "bear" }, // open 50, close 100, sommet y=45
-  { cx: 109, wickTop:  96, bodyY: 100, bodyH: 48, wickBottom: 152, type: "bear" }, // open 100, close 148
-  { cx: 149, wickTop: 145, bodyY: 148, bodyH: 47, wickBottom: 200, type: "bear" }, // open 148, close 195
-  { cx: 188, wickTop: 192, bodyY: 195, bodyH: 40, wickBottom: 240, type: "bear" }, // open 195, close 235 (sous la bande)
-  { cx: 227, wickTop: 232, bodyY: 235, bodyH: 25, wickBottom: 265, type: "bear" }, // open 235, close 260 (bas du mouvement)
-
-  // PHASE 2 — retour dans le FVG (5 vertes). Clôtures successives : 200 → 148 → 138 → 128 → 122.
-  { cx: 266, wickTop: 195, bodyY: 200, bodyH: 60, wickBottom: 265, type: "bull" }, // open 260, close 200
-  { cx: 306, wickTop: 143, bodyY: 148, bodyH: 52, wickBottom: 205, type: "bull" }, // open 200, close 148 (touche bord bas de la bande)
-  { cx: 345, wickTop: 134, bodyY: 138, bodyH: 10, wickBottom: 152, type: "bull" }, // corps DANS la bande (138-148)
-  { cx: 384, wickTop: 124, bodyY: 128, bodyH: 10, wickBottom: 142, type: "bull" }, // corps DANS la bande (128-138)
-  { cx: 424, wickTop: 118, bodyY: 122, bodyH:  6, wickBottom: 132, type: "bull" }, // corps DANS la bande (122-128), atteint bord haut
-
-  // PHASE 3 — rejet et continuation bearish (5 rouges). Clôtures successives : 180 → 220 → 240 → 253 → 263.
-  { cx: 463, wickTop: 118, bodyY: 122, bodyH: 58, wickBottom: 185, type: "bear" }, // open 122 (bord haut bande), close 180 — gros rejet
-  { cx: 502, wickTop: 178, bodyY: 180, bodyH: 40, wickBottom: 225, type: "bear" }, // open 180, close 220
-  { cx: 541, wickTop: 218, bodyY: 220, bodyH: 20, wickBottom: 245, type: "bear" }, // open 220, close 240
-  { cx: 581, wickTop: 238, bodyY: 240, bodyH: 13, wickBottom: 258, type: "bear" }, // open 240, close 253
-  { cx: 620, wickTop: 250, bodyY: 253, bodyH: 10, wickBottom: 268, type: "bear" }, // open 253, close 263, sommet y=250 label "4 610 $"
-];
-
-const BODY_W = 14;
-
-export function FVGMitigationDiagram({ className = "", locale = "fr" }: FVGMitigationDiagramProps) {
-  const t = locale === "es"
-    ? {
-        annotation: "Mitigation antes de la continuación",
-        mobileTitle: "FVG mitigation · XAU/USD H1",
-        m1Part1: "Impulso bajista fuerte deja un ",
-        m1Bold: "FVG",
-        m1Part2: " (zona no rellenada).",
-        m2Part1: "El precio regresa al FVG (",
-        m2Bold: "mitigation",
-        m2Part2: ") y luego rechazo.",
-        m3Bold: "Continuación bajista",
-        m3Part2: " = mitigation exitosa.",
-        leg1: "Impulso bajista que deja un FVG",
-        leg2: "Retorno al FVG y luego continuación = mitigation",
-      }
-    : locale === "en"
-    ? {
-        annotation: "Mitigation before continuation",
-        mobileTitle: "FVG mitigation · XAU/USD H1",
-        m1Part1: "Strong bearish impulse leaves a ",
-        m1Bold: "FVG",
-        m1Part2: " (unfilled zone).",
-        m2Part1: "Price returns into the FVG (",
-        m2Bold: "mitigation",
-        m2Part2: ") then rejects.",
-        m3Bold: "Bearish continuation",
-        m3Part2: " = successful mitigation.",
-        leg1: "Bearish impulse leaving a FVG",
-        leg2: "Return into the FVG then continuation = mitigation",
-      }
-    : {
-        annotation: "Mitigation avant continuation",
-        mobileTitle: "FVG mitigation · XAU/USD H1",
-        m1Part1: "Impulsion bearish forte laisse un ",
-        m1Bold: "FVG",
-        m1Part2: " (zone non remplie).",
-        m2Part1: "Le prix revient dans le FVG (",
-        m2Bold: "mitigation",
-        m2Part2: ") puis rejet.",
-        m3Bold: "Continuation bearish",
-        m3Part2: " = mitigation réussie.",
-        leg1: "Impulsion bearish qui laisse un FVG",
-        leg2: "Retour dans le FVG puis continuation = mitigation",
-      };
+export function FVGMitigationDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["fvg-mitigation-xau"];
+  const fvg = largestFvg(cs, "bear")!;
+  // Creux du repli initial (5 premières bougies après l'impulsion du FVG)
+  const repli = cs.slice(fvg.i + 1, fvg.i + 6);
+  const low1 = Math.min(...repli.map((k) => k.l));
+  const low1At = fvg.i + 1 + repli.findIndex((k) => k.l === low1);
+  // Pic dans la zone FVG : bougie avec le plus haut sommet après le creux
+  const back = cs.reduce((best, k, i) =>
+    i > low1At && k.h >= fvg.y1 && (best < 0 || cs[best].h < k.h) ? i : best, -1);
+  const rej = back + 1;
+  const end = Math.min(...cs.slice(rej + 1).map((k) => k.l));
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
-
-        <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
-        <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · H1</text>
-
-        {/* Bande FVG — y=120 à y=150, mi-hauteur du graphe */}
-        <rect x="70" y="120" width="550" height="30" fill="#ef444418" stroke="#ef4444" strokeWidth="1" strokeDasharray="4 3" strokeOpacity="0.75" />
-
-        {/* Bougies */}
-        {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
-          const bodyFill = type === "bull" ? "#10b981" : "#ef4444";
-          const wickStroke = type === "bull" ? "#059669" : "#b91c1c";
-          return (
-            <g key={i}>
-              <line x1={cx} y1={wickTop} x2={cx} y2={wickBottom} stroke={wickStroke} strokeWidth="1.4" strokeLinecap="round" />
-              <rect x={cx - BODY_W / 2} y={bodyY} width={BODY_W} height={bodyH} fill={bodyFill} stroke={wickStroke} strokeWidth="1" rx="1" />
-            </g>
-          );
-        })}
-
-        {/* Label "4 690 $" — décalé à droite du badge titre, dans un espace libre au-dessus des bougies */}
-        <rect x="146" y="30" width="58" height="14" rx="3" fill="#09090b" />
-        <text x="175" y="40" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">4 690 $</text>
-
-        {/* Labels FVG (bord haut et bord bas, à droite) */}
-        <rect x="625" y="113" width="58" height="14" rx="3" fill="#09090b" />
-        <text x="654" y="123" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">4 665 $</text>
-        <rect x="625" y="143" width="58" height="14" rx="3" fill="#09090b" />
-        <text x="654" y="153" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">4 655 $</text>
-
-        {/* Label "4 610 $" en bas (dernière bougie) */}
-        <rect x="625" y="263" width="58" height="14" rx="3" fill="#09090b" />
-        <text x="654" y="273" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">4 610 $</text>
-
-        {/* Annotation */}
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-        <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          {t.annotation}
-        </text>
-      </svg>
-
-      {/* MOBILE : FVG mitigation ──────────────────────────── */}
-      <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
-        <ul className="space-y-2 text-[13px]">
-          <li className="flex items-start gap-2.5">
-            <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>
-            <span className="text-zinc-300">{t.m1Part1}<span className="font-bold text-blue-400">{t.m1Bold}</span>{t.m1Part2}</span>
-          </li>
-          <li className="flex items-start gap-2.5">
-            <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-[11px] font-bold text-blue-400 mt-0.5">2</span>
-            <span className="text-zinc-300">{t.m2Part1}<span className="font-bold">{t.m2Bold}</span>{t.m2Part2}</span>
-          </li>
-          <li className="flex items-start gap-2.5">
-            <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">3</span>
-            <span className="text-zinc-300"><span className="font-bold text-red-400">{t.m3Bold}</span>{t.m3Part2}</span>
-          </li>
-        </ul>
-      </div>
-
-      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id="FVGMitigationDiagram"
+      title="Le retour dans le FVG est l'entrée"
+      caption="La mitigation a été le signal d'entrée, pas l'impulsion initiale, déjà passée."
+      panels={[{
+        key: "h1", title: "XAU/USD H1", decimals: 0, height: 290, candles: cs,
+        zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `fvg-mitigation-xau:${fvg.i}` }],
+        markers: [
+          { key: "imp", i: fvg.i, price: cs[fvg.i].l, label: "Impulsion", tone: "bear", side: "below" },
+          { key: "low", i: low1At, price: low1, label: usd(low1), tone: "neutral", side: "below" },
+          { key: "back", i: back, price: cs[back].h, label: `Retour à ${usd(cs[back].h)}`, short: "Retour", tone: "zone", side: "above" },
+          { key: "rej", i: rej, price: cs[rej].l, label: "Rejet", tone: "bear", side: "below" },
+        ],
+        chips: [{ label: `Puis ${usd(end)}`, tone: "bear" }],
+      }]}
+    />
   );
 }

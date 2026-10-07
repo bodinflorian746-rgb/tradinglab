@@ -1,126 +1,41 @@
-// Diagramme : piège de fausse cassure (Leçon 1 ICT)
-// XAU/USD M15 — cassure visible au-dessus d'une résistance, marqueur d'entrées breakout, puis
-// réintégration sous la ligne et continuation baissière franche.
+// ICT 1 — un breakout non tenu (XAU/USD M15) : résistance 4 680 $ testée plusieurs fois,
+// bougie de breakout jusqu'à 4 695 $ (les acheteurs entrent, SL sous 4 680), réintégration
+// sous 4 680 quelques bougies plus tard, chute vers 4 650 $. Tests, breakout et
+// réintégration lus sur les bougies. Bougies : scenarios.ts (« false-breakout-xau »).
 
-interface FalseBreakoutTrapDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { usd } from "@/app/components/lessons/trade";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
-type CandleSpec = {
-  cx: number;
-  wickTop: number;
-  bodyY: number;
-  bodyH: number;
-  wickBottom: number;
-  type: "bull" | "bear";
-};
+const RES = 4680;
 
-const CANDLES: CandleSpec[] = [
-  // Approche haussière
-  { cx:  80, wickTop: 195, bodyY: 200, bodyH: 30, wickBottom: 235, type: "bull" },
-  { cx: 130, wickTop: 155, bodyY: 160, bodyH: 40, wickBottom: 205, type: "bull" },
-  { cx: 180, wickTop: 115, bodyY: 120, bodyH: 40, wickBottom: 165, type: "bull" },
-  // Cassure 1 — le corps traverse au-dessus de y=80
-  { cx: 230, wickTop:  60, bodyY:  65, bodyH: 35, wickBottom: 110, type: "bull" },
-  // Cassure 2 — sommet à y≈45 (label "4 695 $")
-  { cx: 280, wickTop:  45, bodyY:  55, bodyH: 22, wickBottom:  82, type: "bull" },
-  // Réintégration — bougie baissière qui repasse sous la ligne
-  { cx: 330, wickTop:  58, bodyY:  62, bodyH: 42, wickBottom: 110, type: "bear" },
-  // Continuation baissière
-  { cx: 380, wickTop: 102, bodyY: 105, bodyH: 42, wickBottom: 152, type: "bear" },
-  { cx: 430, wickTop: 144, bodyY: 148, bodyH: 38, wickBottom: 192, type: "bear" },
-  { cx: 480, wickTop: 182, bodyY: 186, bodyH: 32, wickBottom: 222, type: "bear" },
-  { cx: 530, wickTop: 214, bodyY: 218, bodyH: 22, wickBottom: 245, type: "bear" },
-  { cx: 580, wickTop: 235, bodyY: 240, bodyH: 8,  wickBottom: 252, type: "bear" },
-];
-
-const BODY_W = 12;
-
-export function FalseBreakoutTrapDiagram({ className = "", locale = "fr" }: FalseBreakoutTrapDiagramProps) {
-  const isEs = locale === "es";
-  const isEn = locale === "en";
-  const L = {
-    resistance: isEs ? "Resistencia 4 680 $" : isEn ? "Resistance $4,680" : "Résistance 4 680 $",
-    entries:    isEs ? "Entradas breakout" : isEn ? "Breakout entries" : "Entrées breakout",
-    annot:      isEs ? "Breakout visible ≠ continuación real" : isEn ? "Visible break ≠ real continuation" : "Breakout visible ≠ continuation réelle",
-    mobTitle:   isEs ? "Fakeout — trampa XAU/USD M15" : isEn ? "Fake breakout — trap XAU/USD M15" : "Faux breakout — piège XAU/USD M15",
-    visualT:    isEs ? "Breakout visual de la resistencia" : isEn ? "Visual break of resistance" : "Breakout visuel de la résistance",
-    visualD:    isEs ? "El precio sube por encima → tentación de comprar en breakout." : isEn ? "Price pushes above → temptation to buy the breakout." : "Le prix monte au-dessus → tentation d'acheter sur breakout.",
-    reintT:     isEs ? "Reintegración bajo el nivel = trampa" : isEn ? "Reclaim below the level = trap" : "Réintégration sous le niveau = piège",
-    reintD:     isEs ? "Breakout no mantenido, el precio cae en cierre debajo de la resistencia → setup inválido." : isEn ? "Break not held, price closes back below resistance → invalid setup." : "Breakout non tenu, prix replonge en clôture sous la résistance → setup invalide.",
-    legendNotHeld: isEs ? "Breakout no mantenido por encima de la resistencia" : isEn ? "Break not held above resistance" : "Breakout non tenu au-dessus de la résistance",
-    legendTrap:    isEs ? "Reintegración bajo el nivel = trampa" : isEn ? "Reclaim below the level = trap" : "Réintégration sous le niveau = piège",
-  };
+export function FalseBreakoutTrapDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["false-breakout-xau"];
+  const brk = cs.findIndex((k) => k.c > RES);
+  const tests = cs.map((k, i) => (i < brk && k.h === RES ? i : -1)).filter((i) => i >= 0);
+  const mid = tests[Math.floor(tests.length / 2)];
+  const back = cs.findIndex((k, i) => i > brk && k.c < RES);
+  const low = Math.min(...cs.slice(back).map((k) => k.l));
+  const lowAt = cs.findIndex((k, i) => i >= back && k.l === low);
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
-
-        <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
-        <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · M15</text>
-
-        {/* Ligne résistance */}
-        <line x1="60" y1="80" x2="620" y2="80" stroke="#ef4444" strokeWidth="1.3" strokeDasharray="5 3" strokeOpacity="0.85" />
-        <rect x="486" y="68" width="124" height="13" rx="3" fill="#09090b" />
-        <text x="548" y="78" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">{L.resistance}</text>
-
-        {/* Bougies */}
-        {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
-          const bodyFill = type === "bull" ? "#10b981" : "#ef4444";
-          const wickStroke = type === "bull" ? "#059669" : "#b91c1c";
-          return (
-            <g key={i}>
-              <line x1={cx} y1={wickTop} x2={cx} y2={wickBottom} stroke={wickStroke} strokeWidth="1.4" strokeLinecap="round" />
-              <rect x={cx - BODY_W / 2} y={bodyY} width={BODY_W} height={bodyH} fill={bodyFill} stroke={wickStroke} strokeWidth="1" rx="1" />
-            </g>
-          );
-        })}
-
-        {/* Label "4 695 $" au sommet de la cassure */}
-        <rect x="208" y="30" width="64" height="13" rx="3" fill="#09090b" />
-        <text x="240" y="40" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">4 695 $</text>
-        <line x1="272" y1="42" x2="280" y2="45" stroke="#71717a" strokeWidth="0.9" strokeOpacity="0.7" />
-
-        {/* Marqueur "entrées breakout" — petit cercle zinc-500 + label */}
-        <circle cx="280" cy="78" r="4" fill="#71717a" stroke="#09090b" strokeWidth="1.2" />
-        <rect x="296" y="71" width="96" height="13" rx="3" fill="#09090b" />
-        <text x="344" y="81" fill="#a1a1aa" fontSize="9" fontWeight="600" textAnchor="middle">{L.entries}</text>
-
-        {/* Label "4 650 $" en bas */}
-        <rect x="540" y="258" width="64" height="13" rx="3" fill="#09090b" />
-        <text x="572" y="268" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">4 650 $</text>
-
-        {/* Annotation */}
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#09090b" />
-        <rect x="170" y="284" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-        <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          {L.annot}
-        </text>
-      </svg>
-
-      {/* MOBILE : faux breakout — piège ─────────────────────── */}
-      <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-red-400 text-center">{L.mobTitle}</p>
-        <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-          <p className="text-[13px] font-bold text-amber-400">{L.visualT}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.visualD}</p>
-        </div>
-        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">{L.reintT}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.reintD}</p>
-        </div>
-      </div>
-
-      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">{L.legendNotHeld}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">{L.legendTrap}</span>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id="FalseBreakoutTrapDiagram"
+      title="Un breakout non tenu est un piège"
+      caption="Réintégration sous le niveau cassé = piège : on inverse le scénario. L'ICT trade ce qui se passe après."
+      panels={[{
+        key: "m15", title: "XAU/USD M15", decimals: 0, height: 280, candles: cs,
+        levels: [{ key: "res", price: RES, label: `Résistance ${usd(RES)}`, short: "Résistance", tone: "zone" }],
+        markers: [
+          { key: "tests", i: mid, price: RES, label: `${tests.length} tests`, tone: "zone", side: "above", dot: true },
+          { key: "brk", i: brk, price: cs[brk].h, label: `Breakout ${usd(cs[brk].h)}`, short: `Breakout`, tone: "entry", side: "above" },
+          { key: "back", i: back, price: cs[back].l, label: `Réintégration sous ${usd(RES)}`, short: "Réintégration", tone: "bear", side: "below" },
+          { key: "low", i: lowAt, price: low, label: usd(low), tone: "bear", side: "below" },
+        ],
+        chips: [
+          { label: `SL des acheteurs sous ${usd(RES)} : déclenchés`, tone: "bear" },
+          { label: `Chute jusqu'à ${usd(low)}`, tone: "bear" },
+        ],
+      }]}
+    />
   );
 }

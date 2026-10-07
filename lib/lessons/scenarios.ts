@@ -583,3 +583,69 @@ const fomcTimeline = () => buildCandles(1.1850, [
   ...c(1.1752, 1.1738, 1.1756, 1.1722, 1.1698, 1.1712), { c: 1.1668, l: 1.1660 }, ...c(1.1680, 1.1672),
 ], { seed: 14101, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", preNews: true, split: 3, pins: [1.1855, 1.1854, 1.1853, 1.1847, 1.1846, 1.1845, 1.1968, 1.1985, 1.1660], levels: [1.1985, 1.1660] });
 Object.assign(SCENARIOS, { "fomc-timeline": fomcTimeline });
+
+// ─── Lot 15 ──────────────────────────────────────────────────────────────────
+// ICT 1 et ICT 5 — EUR/USD H1 : baisse, deux equal highs à 1.1780, repli à 1.1745
+// (« prix actuel » d'ICT 5, ICT_PREP_CUT), puis 3e poussée : mèche à 1.1792 (stops pris)
+// et chute violente vers 1.1720.
+const ictEqh = () => buildCandles(1.1815, [
+  ...c(1.1806, 1.1794, 1.1781, 1.1769, 1.1757), { c: 1.1746, l: 1.1742 },
+  ...c(1.1753, 1.1764, 1.1772), { c: 1.1777, h: 1.1780 },
+  ...c(1.1769, 1.1760), { c: 1.1753, l: 1.1750 }, ...c(1.1758, 1.1767, 1.1773), { c: 1.1776, h: 1.1780 },
+  ...c(1.1768, 1.1757), { c: 1.1745, l: 1.1741 },
+  ...c(1.1756, 1.1766, 1.1773), { c: 1.1774, h: 1.1792 },
+  { c: 1.1748, h: 1.1776 }, ...c(1.1739, 1.1731), { c: 1.1724, l: 1.1720 }, ...c(1.1727),
+], { seed: 15101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1780, 1.1792, 1.1720], pins: [1.1742, 1.1780, 1.1750, 1.1741, 1.1792, 1.1720] });
+// ICT 1 — faux breakout XAU/USD M15 : résistance 4 680 testée 3 fois, bougie de breakout
+// jusqu'à 4 695, réintégration sous 4 680 quelques bougies plus tard, chute vers 4 650.
+const falseBreakoutXau = () => buildCandles(4652, [
+  ...c(4660, 4668), { c: 4676, h: 4680 }, ...c(4669, 4662, 4671), { c: 4677, h: 4680 }, ...c(4668, 4664, 4672), { c: 4678, h: 4680 },
+  { c: 4689, h: 4695, l: 4676 }, { c: 4686, h: 4691 }, { c: 4684, l: 4681 },
+  { c: 4673, h: 4685 }, ...c(4663, 4656), { c: 4653, l: 4650 },
+], { seed: 15201, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4680, 4695, 4650], pins: [4680, 4695, 4681, 4650] });
+// ICT 1 — réaction après sweep (EUR/USD M15) : equal highs 1.1780, dernier creux local
+// 1.1762, sweep à 1.1792 refermé sous 1.1780, puis bougie impulsive de 35 pts qui casse
+// 1.1762 (entrée 1.1758, SL 1.1795, TP 1.1695).
+const ictSweepM15 = () => buildCandles(1.1755, [
+  ...c(1.1761, 1.1768, 1.1774), { c: 1.1777, h: 1.1780 }, ...c(1.1772, 1.1767), { c: 1.1769, l: 1.1765 },
+  ...c(1.1773), { c: 1.1776, h: 1.1780 }, ...c(1.1771, 1.1766), { c: 1.1764, l: 1.1762 }, ...c(1.1767, 1.1771),
+  { c: 1.1776, h: 1.1792, l: 1.1769 }, { c: 1.1741, h: 1.1777 },
+  ...c(1.1735, 1.1738, 1.1727, 1.1722),
+], { seed: 15301, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", levels: [1.1780, 1.1762, 1.1792], pins: [1.1780, 1.1765, 1.1762, 1.1792, 1.1769, 1.1777] });
+// ICT 2 — mitigation d'un FVG baissier (XAU/USD H1) : impulsion depuis 4 690, FVG 4 655-4 665,
+// prix jusqu'à 4 620, remontée progressive jusqu'à 4 660 (dans le FVG), bougie baissière
+// impulsive de rejet, puis 4 610.
+// Structure du FVG : largestFvg à i=3 (grande bougie baissière) : cs[2].l=4665 (borne
+// haute), cs[4].h=4652 (borne basse) → y1=4652, y2=4665 (taille 13). cs[3].h=4673 >
+// cs[1].l=4668 → pas de FVG à i=2. Creux 4620 (cs[5]). Retour dans la zone à cs[10]-cs[11].
+// Post-rejet graduel : aucun gap voisin ne dépasse 13.
+const fvgMitigationXau = () => buildCandles(4690, [
+  { c: 4681, h: 4690, l: 4675 },                // [0]
+  { c: 4674, h: 4682, l: 4668 },                // [1]
+  { c: 4672, h: 4675, l: 4665 },                // [2] l=4665 (borne haute du FVG)
+  { c: 4628, h: 4673, l: 4624 },                // [3] grande bougie impulsive
+  { c: 4624, h: 4652, l: 4620 },                // [4] h=4652 (borne basse du FVG), l=4620 (creux)
+  ...c(4631, 4637, 4644, 4650), { c: 4655 }, { c: 4660, h: 4663 },
+  { c: 4652, h: 4660 }, { c: 4644 }, { c: 4638 }, ...c(4633, 4627), { c: 4617, l: 4610 },
+], { seed: 15401, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4665, 4652, 4660, 4620, 4610], pins: [4690, 4668, 4665, 4673, 4624, 4652, 4620, 4663, 4660, 4610] });
+// ICT 2 — FVG haussier 1.0840-1.0860 (EUR/USD) : creux 1.0828, impulsion, sommet 1.0896,
+// retour vers la zone ; puis 3 cas : A rebond à 1.0860 → 1.0920 ; B mèche à 1.0842,
+// clôture 1.0855, reprise ; C traversée sans réaction, clôture 1.0825 sous le creux 1.0828.
+const FVG_PREFIX: Step[] = [
+  ...c(1.0846, 1.0840, 1.0834), { c: 1.0831, l: 1.0828 }, { c: 1.0836, h: 1.0840 }, { c: 1.0868 }, { c: 1.0874, l: 1.0860 },
+  ...c(1.0881, 1.0889), { c: 1.0893, h: 1.0896 }, ...c(1.0885, 1.0876, 1.0868),
+];
+const FVG_OPTS = { decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale" } as const;
+const fvgPrefix = () => buildCandles(1.0850, FVG_PREFIX, { ...FVG_OPTS, seed: 15501, levels: [1.0840, 1.0860], pins: [1.0828, 1.0840, 1.0860, 1.0896] });
+// chaque cas = le même début + sa suite (clôtures clés figées)
+const fvgCase = (steps: Step[], pins: number[], seed: number) => () => {
+  const p = fvgPrefix();
+  return [...p, ...buildCandles(p[p.length - 1].c, steps, { ...FVG_OPTS, seed, pins })];
+};
+const fvgCaseA = fvgCase([{ c: 1.0866, l: 1.0860 }, { c: 1.0885 }, ...c(1.0896, 1.0908), { c: 1.0918, h: 1.0920 }], [1.0860, 1.0866, 1.0885, 1.0920], 15502);
+const fvgCaseB = fvgCase([{ c: 1.0861 }, { c: 1.0855, l: 1.0842 }, { c: 1.0866, l: 1.0852 }, ...c(1.0878, 1.0887)], [1.0861, 1.0842, 1.0852, 1.0855], 15503);
+const fvgCaseC = fvgCase([...c(1.0857, 1.0846, 1.0834), { c: 1.0825 }, ...c(1.0819)], [1.0857, 1.0846, 1.0834, 1.0825], 15504);
+Object.assign(SCENARIOS, {
+  "ict-eqh": ictEqh, "false-breakout-xau": falseBreakoutXau, "ict-sweep-m15": ictSweepM15,
+  "fvg-mitigation-xau": fvgMitigationXau, "fvg-case-a": fvgCaseA, "fvg-case-b": fvgCaseB, "fvg-case-c": fvgCaseC,
+});
