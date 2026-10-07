@@ -8,8 +8,8 @@
   {"url":"/fr/strategies/reversal/lecon2","charts":["HSNecklineSlopeDiagram","HSTradeExecutionDiagram"]},
   {"url":"/fr/formations/macro/avance/lecon4","charts":["RiskRegimesQuadrantDiagram"]},
   {"url":"/fr/formations/debutant/lecon3","charts":["CandleAnatomyDiagram","CandleExampleDiagram"]},
-  {"url":"/fr/strategies/price-action/lecon1","charts":["CandleAnatomyDiagram"]},
-  {"url":"/fr/strategies/price-action/lecon2","charts":["PinBarSetupDiagram"]},
+  {"url":"/fr/strategies/price-action/lecon1","charts":["CandleAnatomyDiagram","CandleContextReadingDiagram"]},
+  {"url":"/fr/strategies/price-action/lecon2","charts":["PinBarSetupDiagram","PinBarLocationDiagram"]},
   {"url":"/fr/strategies/price-action/lecon3","charts":["BullishVsBearishEngulfingDiagram","EngulfingSetupDiagram"]},
   {"url":"/fr/strategies/reversal/lecon3","charts":["DivergenceWithoutBreakoutDiagram"]},
   {"url":"/fr/strategies/support-resistance/lecon3","charts":["FlipRetestValidationDiagram"]},
@@ -25,5 +25,8 @@
   {"url":"/fr/formations/macro/intermediaire/lecon1","charts":["HawkishDovishScale"]},
   {"url":"/fr/formations/macro/intermediaire/lecon3","charts":["InflationIndicatorsChainDiagram"]},
   {"url":"/fr/strategies/ict/lecon2","charts":["PDArrayContextDiagram","PDArrayConfluenceDiagram"]},
-  {"url":"/fr/strategies/macro-trading/lecon1","charts":["FOMCExhaustionDiagram"]}
+  {"url":"/fr/strategies/macro-trading/lecon1","charts":["FOMCExhaustionDiagram"]},
+  {"url":"/fr/strategies/macro-trading/lecon4","charts":["MacroFilterRegimeDiagram"]},
+  {"url":"/fr/strategies/multi-timeframe/lecon3","charts":["ZoneHistoireDiagram"]},
+  {"url":"/fr/strategies/multi-timeframe/lecon5","charts":["ProcessFunnelDiagram"]}
 ]

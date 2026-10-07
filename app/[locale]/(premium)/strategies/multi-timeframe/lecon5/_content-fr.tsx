@@ -140,7 +140,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le process multi-unités de temps fonctionne comme un entonnoir : chaque étage filtre le suivant et réduit les possibilités. Daily / H4 → donner la direction ; H1 → identifier la zone d&apos;intérêt ; M15 / M30 → attendre la réaction et confirmer. Le trade n&apos;arrive qu&apos;au bout, c&apos;est l&apos;aboutissement d&apos;une chaîne logique, pas un signal isolé qu&apos;on attrape au vol.
+              Le process multi-unités de temps fonctionne comme un entonnoir : chaque étage filtre le suivant et réduit les possibilités. Daily / H4 → donner la direction ; H1 → identifier la zone d&apos;intérêt ; M15 / M5 → attendre la réaction et confirmer. Le trade n&apos;arrive qu&apos;au bout, c&apos;est l&apos;aboutissement d&apos;une chaîne logique, pas un signal isolé qu&apos;on attrape au vol.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">

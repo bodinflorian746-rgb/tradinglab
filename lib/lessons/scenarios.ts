@@ -269,3 +269,73 @@ Object.assign(SCENARIOS, {
   "pd-confluence": pdConfluence,
   "fomc-exhaustion": fomcExhaustion,
 });
+
+// ─── Lot 6 ───────────────────────────────────────────────────────────────────
+
+/** Impose la bougie i (corps et mèches relatifs à son ouverture), en gardant la continuité avec la suivante. */
+const setCandle = (cs: Candle[], i: number, body: number, wu: number, wd: number, decimals: number): Candle[] => {
+  const r = (x: number) => Number(x.toFixed(decimals));
+  const out = cs.map((k) => ({ ...k }));
+  const k = out[i];
+  k.c = r(k.o + body);
+  k.h = r(Math.max(k.o, k.c) + wu);
+  k.l = r(Math.min(k.o, k.c) - wd);
+  const nx = out[i + 1];
+  if (nx) { nx.o = k.c; nx.h = Math.max(nx.h, nx.o, nx.c); nx.l = Math.min(nx.l, nx.o, nx.c); }
+  return out;
+};
+/** La « même bougie » de Price action 1 : petit corps vert, mèche haute */
+export const SAME_CANDLE = { body: 0.4, wu: 0.6, wd: 0.15 };
+const sameIn = (cs: Candle[], i: number) => setCandle(cs, i, SAME_CANDLE.body, SAME_CANDLE.wu, SAME_CANDLE.wd, 2);
+
+const ctxTop = () => sameIn(buildCandles(100, [
+  ...c(100.3, 100.1, 100.6, 100.4, 101.4, 102.5, 103.6, 104.6, 105.7), { c: 106.1 },
+], { seed: 6101, decimals: 2 }), 9);
+const ctxDrop = () => sameIn(buildCandles(107.2, [
+  ...c(107.5, 107.1, 106.2, 105.3, 104.4), { c: 104.8 }, ...c(103.7, 102.9, 101.9, 101.2),
+], { seed: 6102, decimals: 2 }), 5);
+const ctxRange = () => sameIn(buildCandles(103.8, [
+  ...c(104.4, 104.9, 104.2, 103.6, 103.2, 103.9), { c: 104.3 }, ...c(103.7, 104.5, 104.0),
+], { seed: 6103, decimals: 2, levels: [103.0, 105.2] }), 6);
+
+// Price action 2 — la pin bar a besoin d'un niveau (XAU/USD H4, range 4 500-4 650) :
+// pin bar baissière au plus haut (4 650), pin bar au milieu (ignorée, le prix
+// continue), pin bar haussière au plus bas (4 500).
+const pinLocation = () => buildCandles(4560, [
+  ...c(4572, 4589, 4604, 4618, 4637), { c: 4632, h: 4650, l: 4629 },
+  ...c(4620, 4607, 4594, 4583), { c: 4578, h: 4580, l: 4562 },
+  ...c(4566, 4551, 4537, 4524, 4512), { c: 4515, h: 4517, l: 4500 },
+  ...c(4528, 4541, 4553),
+], { seed: 6201, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4500, 4650], pins: [4650, 4629, 4637, 4500, 4517, 4562, 4580, 4632, 4515, 4578] });
+
+// Stratégie MTF 3 — zone qui raconte une histoire (EUR/USD H1) : support 1.1760 tenu,
+// puis cassé par une impulsion qui laisse un FVG bearish 1.1750-1.1760 ; remontée
+// actuelle vers la zone.
+const zoneHistoire = () => buildCandles(1.1792, [
+  ...c(1.1781, 1.1770), { c: 1.1766, l: 1.1761 }, ...c(1.1775, 1.1786, 1.1779), { c: 1.1768, l: 1.1760 },
+  { c: 1.1742, h: 1.1769, l: 1.1738 }, { c: 1.1737, h: 1.1750, l: 1.1731 },
+  ...c(1.1726, 1.1718, 1.1722, 1.1731, 1.1739), { c: 1.1745 },
+], { seed: 6301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1760, 1.1750], pins: [1.1761, 1.1760, 1.1750] });
+
+// Macro-trading 4 — signal bearish M15 contre le régime (XAU/USD) : H4 en HH / HL vers
+// 4 740 ; la dernière bougie H4 = 16 bougies M15 (rejet à 4 701, breakout du creux
+// mineur 4 683, plus bas 4 664, reprise) ; puis la hausse continue.
+const regimeM15 = (open: number) => buildCandles(open, [
+  ...c(4689, 4694), { c: 4695, h: 4701 }, ...c(4690), { c: 4687, l: 4683 }, ...c(4690), { c: 4679 },
+  ...c(4673), { c: 4668, l: 4664 }, ...c(4674, 4681, 4687, 4692, 4696, 4699), { c: 4703 },
+], { seed: 6401, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4683], pins: [4701, 4683, 4664] });
+const regimeH4 = () => buildCandles(4540, [
+  ...c(4552), { c: 4566, h: 4572 }, ...c(4561), { c: 4556, l: 4552 },
+  ...c(4568, 4579, 4592, 4606, 4622), { c: 4634, h: 4640 }, ...c(4627, 4615), { c: 4606, l: 4600 },
+  ...c(4618, 4633, 4648, 4663, 4677), { c: 4684, h: 4706 },
+], { seed: 6402, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", pins: [4572, 4552, 4640, 4600, 4706] });
+
+Object.assign(SCENARIOS, {
+  "ctx-top": ctxTop,
+  "ctx-drop": ctxDrop,
+  "ctx-range": ctxRange,
+  "pin-location": pinLocation,
+  "zone-histoire": zoneHistoire,
+  "regime-h4": regimeH4,
+  "regime-m15": () => regimeM15(regimeH4().at(-1)!.c),
+});

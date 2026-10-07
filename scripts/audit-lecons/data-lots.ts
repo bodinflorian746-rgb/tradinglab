@@ -135,6 +135,36 @@ export function checkLots(check: Check) {
     check(w.length === 3 && cs.every((k) => k.c <= 4705) && Math.max(...cs.map((k) => k.h)) === 4710, "FOMC (MT 1) : 3 mèches de 6 à 8$ sans clôture au-dessus de 4 705");
     check(cs[cs.length - 1].c === 4670 && cs.some((k) => k.o === 4640), "FOMC (MT 1) : 4 640 → 4 705 → 4 670");
   }
+  // ─── Lot 6 ─────────────────────────────────────────────────────────────────
+  {
+    // Price action 1 : la même bougie (corps, mèches) dans les 3 contextes
+    const shape = (k: Candle) => [k.c - k.o, k.h - Math.max(k.o, k.c), Math.min(k.o, k.c) - k.l].map((x) => x.toFixed(2)).join("/");
+    const s = [CS["ctx-top"][9], CS["ctx-drop"][5], CS["ctx-range"][6]].map(shape);
+    check(s[0] === s[1] && s[1] === s[2] && CS["ctx-top"][9].c > CS["ctx-top"][9].o, "Contexte (PA 1) : la « même bougie » diffère d'un panneau à l'autre");
+    const top = CS["ctx-top"];
+    check(top.slice(4, 9).every((k) => k.c > k.o), "Contexte (PA 1) : pas d'impulsion (5 vertes) avant la bougie du sommet");
+  }
+  {
+    // Price action 2 : range 4 500-4 650 jamais dépassé ; pin baissière au plus haut, haussière au plus bas, pin au milieu suivie d'une baisse
+    const cs = CS["pin-location"];
+    check(Math.max(...cs.map((k) => k.h)) === 4650 && Math.min(...cs.map((k) => k.l)) === 4500, "Pin bar (PA 2) : le prix sort du range");
+    const t = cs.find((k) => k.h === 4650)!, b = cs.find((k) => k.l === 4500)!, mi = cs.findIndex((k) => k.l === 4562);
+    check(isPin(t, false) && isPin(b, true) && isPin(cs[mi], true) && cs[mi + 3].c < cs[mi].l, "Pin bar (PA 2) : pin bars ≠ texte (haut, milieu ignoré, bas)");
+  }
+  {
+    // MTF 3 : ancien support 1.1760 cassé, FVG bearish 1.1750-1.1760, remontée vers la zone sans l'atteindre
+    const cs = CS["zone-histoire"], g = largestFvg(cs, "bear");
+    check(!!g && g.y1 === 1.1750 && g.y2 === 1.1760 && cs.slice(0, g.i).filter((k) => k.l <= 1.1761).length >= 2, "Zone (MTF 3) : support 1.1760 / FVG 1.1750-1.1760");
+    check(cs[cs.length - 1].h < 1.1750 && cs[cs.length - 1].c > cs[cs.length - 4].c, "Zone (MTF 3) : la remontée n'approche pas la zone");
+  }
+  {
+    // Macro-trading 4 : H4 en HH / HL ; M15 : breakout du creux 4 683 (signal bearish) puis reprise ; bougie H4 = agrégat des 16 M15
+    const h4 = CS["regime-h4"], m = CS["regime-m15"];
+    const names = pivots([...h4, { o: m[0].o, c: m[m.length - 1].c, h: Math.max(...m.map((k) => k.h)), l: Math.min(...m.map((k) => k.l)) }]).map((q) => q.name).filter(Boolean);
+    check(names.includes("HH") && names.includes("HL") && !names.includes("LL"), "Régime (MT 4) : H4 pas en HH / HL");
+    const lo = m.findIndex((k) => k.l === 4683), sig = m.findIndex((k, i) => i > lo && k.c < 4683);
+    check(lo > 0 && sig > lo && m[m.length - 1].c > m[lo].l && m.length === 16 && m[0].o === h4[h4.length - 1].c, "Régime (MT 4) : signal M15 puis reprise, raccord H4");
+  }
 }
 
 export { CS, near, rrOf, isPin, engulfs };
