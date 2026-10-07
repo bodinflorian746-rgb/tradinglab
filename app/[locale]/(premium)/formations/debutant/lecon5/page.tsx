@@ -1,126 +1,9 @@
 import { LessonTemplate } from "@/app/components/LessonTemplate";
 import { StopLossChartDiagram } from "@/app/components/charts/StopLossChartDiagram";
+import { StopLossBasicsDiagram } from "@/app/components/charts/StopLossBasicsDiagram";
+import { WithWithoutSLDiagram } from "@/app/components/charts/WithWithoutSLDiagram";
 import ContentEs from "./_content-es";
 import ContentEn from "./_content-en";
-
-// ── Schéma : Trade avec SL et TP ─────────────────────────────────────────────
-function StopLossDiagram() {
-  return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4">
-      <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-4 text-center">
-        Bitcoin, trade Long avec Stop Loss et Take Profit
-      </p>
-      <div className="max-w-xs mx-auto space-y-0">
-        {/* Zone TP */}
-        <div className="rounded-t-xl bg-emerald-500/10 border border-emerald-500/25 px-4 py-3.5 flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wide mb-0.5">Take Profit</p>
-            <p className="text-lg font-mono font-bold text-emerald-400">81 000 $</p>
-          </div>
-          <div className="text-right">
-            <p className="text-[10px] text-zinc-500 mb-0.5">Si le prix monte jusqu'ici</p>
-            <p className="text-sm font-bold text-emerald-400">Variation +3 000 $</p>
-          </div>
-        </div>
-
-        {/* Flèches */}
-        <div className="flex items-center justify-center bg-zinc-900 border-x border-zinc-700 h-8 gap-8">
-          <div className="flex items-center gap-1 text-[9px] text-emerald-400">
-            <svg width="10" height="14" viewBox="0 0 10 14" fill="none">
-              <path d="M5 13V2M2 5L5 2l3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <span>Objectif</span>
-          </div>
-          <div className="flex items-center gap-1 text-[9px] text-red-400">
-            <svg width="10" height="14" viewBox="0 0 10 14" fill="none">
-              <path d="M5 1v11M2 9l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <span>Protection</span>
-          </div>
-        </div>
-
-        {/* Entrée */}
-        <div className="bg-zinc-800 border-x border-zinc-700 px-4 py-3.5 flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold text-white uppercase tracking-wide mb-0.5">Entrée</p>
-            <p className="text-lg font-mono font-bold text-white">78 000 $</p>
-          </div>
-          <div className="text-right">
-            <p className="text-[10px] text-zinc-500 mb-0.5">Prix d'achat</p>
-            <span className="text-xs font-mono text-zinc-400">R/R 1:2</span>
-          </div>
-        </div>
-
-        {/* Zone SL */}
-        <div className="rounded-b-xl bg-red-500/10 border border-red-500/25 px-4 py-3.5 flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold text-red-400 uppercase tracking-wide mb-0.5">Stop Loss</p>
-            <p className="text-lg font-mono font-bold text-red-400">76 500 $</p>
-          </div>
-          <div className="text-right">
-            <p className="text-[10px] text-zinc-500 mb-0.5">Si le prix descend ici</p>
-            <p className="text-sm font-bold text-red-400">Variation −1 500 $</p>
-          </div>
-        </div>
-
-        {/* Résumé */}
-        <div className="mt-3 rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2 text-center">
-          <p className="text-[10px] text-zinc-400">
-            Variation risquée <strong className="text-red-400">1 500 $</strong> · visée <strong className="text-emerald-400">3 000 $</strong>
-            <span className="text-zinc-600 mx-1.5">·</span>
-            Ratio <strong className="text-white">1:2</strong>
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Schéma : avec SL vs sans SL ──────────────────────────────────────────────
-function WithWithoutSLDiagram() {
-  return (
-    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
-        <p className="text-[10px] font-bold text-emerald-400 mb-2 uppercase tracking-wide">Avec Stop Loss ✓</p>
-        <div className="space-y-1 text-xs">
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Achat</span>
-            <span className="text-white font-mono">78 000 $</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-zinc-500">SL déclenché à</span>
-            <span className="text-white font-mono">76 500 $</span>
-          </div>
-          <div className="h-px bg-zinc-700 my-1" />
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Variation</span>
-            <span className="text-red-400 font-bold">−1 500 $</span>
-          </div>
-          <p className="text-[9px] text-emerald-400/80 mt-1">Risque limité et défini à l'avance</p>
-        </div>
-      </div>
-      <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
-        <p className="text-[10px] font-bold text-red-400 mb-2 uppercase tracking-wide">Sans Stop Loss ✗</p>
-        <div className="space-y-1 text-xs">
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Achat</span>
-            <span className="text-white font-mono">78 000 $</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Chute nocturne à</span>
-            <span className="text-white font-mono">70 000 $</span>
-          </div>
-          <div className="h-px bg-zinc-700 my-1" />
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Variation</span>
-            <span className="text-red-400 font-bold">−8 000 $</span>
-          </div>
-          <p className="text-[9px] text-red-400/80 mt-1">Risque non plafonné</p>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function ContentFr() {
   return (
@@ -137,7 +20,7 @@ function ContentFr() {
         {
           title: "Qu'est-ce qu'un Stop Loss ?",
           content: "Un Stop Loss (SL), c'est un ordre automatique qui ferme ton trade si le prix va trop loin dans la mauvaise direction. Tu le définis avant d'entrer dans le trade. Quand le prix l'atteint, ta position se ferme seule, que tu sois devant l'écran ou non.",
-          visual: <StopLossDiagram />,
+          visual: <StopLossBasicsDiagram />,
           items: [
             "Trade Long (achat) : ton SL se place EN DESSOUS de ton prix d'entrée",
             "Trade Short (vente) : ton SL se place AU DESSUS de ton prix d'entrée",

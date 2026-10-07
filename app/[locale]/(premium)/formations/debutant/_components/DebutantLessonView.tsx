@@ -9,6 +9,8 @@ import { SpreadDiagram } from "@/app/components/charts/SpreadDiagram";
 import { CandleAnatomyDiagram } from "@/app/components/charts/CandleAnatomyDiagram";
 import { BiasDiagram } from "@/app/components/charts/BiasDiagram";
 import { LongShortDiagram } from "@/app/components/charts/LongShortDiagram";
+import { TakeProfitDiagram } from "@/app/components/charts/TakeProfitDiagram";
+import { BreakEvenDiagram } from "@/app/components/charts/BreakEvenDiagram";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -333,151 +335,6 @@ function getDiagLabels(locale: Locale): DiagLabels {
       : FR_DIAG_LABELS;
 }
 
-// ── Diagramme : Long vs Short ─────────────────────────────────────────────────
-function TakeProfitDiagram({ t }: { t: DiagLabels["takeProfit"] }) {
-  return (
-    <div className="mt-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
-      <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-4 text-center">
-        {t.headerCaption}
-      </p>
-
-      {/* ── DESKTOP ───────────────────────────────────────── */}
-      <div className="hidden sm:grid grid-cols-2 gap-3">
-        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
-          <p className="text-[10px] font-bold text-emerald-400 text-center mb-2">{t.withTP}</p>
-          <svg viewBox="0 0 130 145" className="w-full" fill="none">
-            <line x1="8" y1="35" x2="122" y2="35" stroke="#10b981" strokeWidth="1.5" strokeDasharray="4 2" opacity="0.8" />
-            <text x="8" y="28" fontSize="8" fill="#10b981">{t.tpLabel}</text>
-            <line x1="8" y1="108" x2="122" y2="108" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" />
-            <text x="8" y="119" fontSize="8" fill="#a1a1aa">{t.entryLabel}</text>
-            <polyline points="12,108 40,88 70,65 95,44 112,35" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" />
-            <circle cx="12" cy="108" r="3.5" fill="#10b981" />
-            <circle cx="112" cy="35" r="4" fill="#10b981" />
-            <text x="65" y="143" fontSize="10" fill="#10b981" textAnchor="middle" fontWeight="700">{t.profitCheck}</text>
-          </svg>
-        </div>
-        <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
-          <p className="text-[10px] font-bold text-red-400 text-center mb-2">{t.withoutTP}</p>
-          <svg viewBox="0 0 130 145" className="w-full" fill="none">
-            <line x1="8" y1="35" x2="122" y2="35" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" opacity="0.5" />
-            <text x="8" y="28" fontSize="8" fill="#52525b">{t.ignored84k}</text>
-            <line x1="8" y1="108" x2="122" y2="108" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" />
-            <text x="8" y="119" fontSize="8" fill="#a1a1aa">{t.entryLabel}</text>
-            <polyline points="12,108 35,82 62,40 90,78 112,125" stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" />
-            <circle cx="12" cy="108" r="3.5" fill="#ef4444" />
-            <circle cx="62" cy="40" r="3" fill="#f87171" opacity="0.85" />
-            <text x="64" y="36" fontSize="7" fill="#f87171">{t.plus6k}</text>
-            <circle cx="112" cy="125" r="4" fill="#ef4444" />
-            <text x="65" y="143" fontSize="10" fill="#ef4444" textAnchor="middle" fontWeight="700">{t.failureMark}</text>
-          </svg>
-        </div>
-      </div>
-
-      {/* ── MOBILE ───────────────────────────────────────── */}
-      <div className="sm:hidden space-y-3">
-        {/* AVEC TP */}
-        <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-4">
-          <p className="text-[13px] font-bold text-emerald-400 mb-3">{t.withTP} ✔</p>
-          <svg viewBox="0 0 200 80" className="w-full mb-3" fill="none" aria-label="Prix atteint TP">
-            <line x1="0" y1="8" x2="200" y2="8" stroke="#10b981" strokeWidth="1.5" strokeDasharray="5 3" opacity="0.6" />
-            <line x1="0" y1="70" x2="200" y2="70" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" opacity="0.6" />
-            <polyline points="10,70 50,52 100,32 150,18 190,8" stroke="#10b981" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
-            <circle cx="10" cy="70" r="5" fill="#10b981" />
-            <circle cx="190" cy="8" r="6" fill="#10b981" />
-          </svg>
-          <div className="space-y-1.5 mb-2">
-            <div className="flex justify-between items-center text-[13px]">
-              <span className="text-zinc-400">{t.entry}</span>
-              <span className="font-mono font-bold text-white">78 000 $</span>
-            </div>
-            <div className="flex justify-between items-center text-[13px]">
-              <span className="text-emerald-400">{t.tpReached}</span>
-              <span className="font-mono font-bold text-emerald-400">84 000 $</span>
-            </div>
-          </div>
-          <p className="text-center text-[14px] font-bold text-emerald-400 pt-2 border-t border-emerald-500/20">{t.secured}</p>
-        </div>
-
-        {/* SANS TP */}
-        <div className="rounded-xl border border-red-500/25 bg-red-500/5 p-4">
-          <p className="text-[13px] font-bold text-red-400 mb-3">{t.withoutTP} ✖</p>
-          <svg viewBox="0 0 200 80" className="w-full mb-3" fill="none" aria-label="Prix monte puis chute">
-            <line x1="0" y1="8" x2="200" y2="8" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" opacity="0.5" />
-            <line x1="0" y1="40" x2="200" y2="40" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" opacity="0.4" />
-            <polyline points="10,40 50,22 90,8 140,40 190,72" stroke="#ef4444" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
-            <circle cx="10" cy="40" r="5" fill="#ef4444" />
-            <circle cx="90" cy="8" r="4" fill="#fbbf24" opacity="0.85" />
-            <circle cx="190" cy="72" r="6" fill="#ef4444" />
-          </svg>
-          <div className="space-y-1.5 mb-2">
-            <div className="flex justify-between items-center text-[13px]">
-              <span className="text-zinc-400">{t.entry}</span>
-              <span className="font-mono font-bold text-white">78 000 $</span>
-            </div>
-            <div className="flex justify-between items-center text-[13px]">
-              <span className="text-amber-400">{t.ignoredAt}</span>
-              <span className="font-mono font-bold text-amber-400">84 000 $</span>
-            </div>
-            <div className="flex justify-between items-center text-[13px]">
-              <span className="text-red-400">{t.worstExit}</span>
-              <span className="font-mono font-bold text-red-400">75 000 $</span>
-            </div>
-          </div>
-          <p className="text-center text-[14px] font-bold text-red-400 pt-2 border-t border-red-500/20">{t.erased}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Diagramme : Break Even ────────────────────────────────────────────────────
-function BreakEvenDiagram({ t }: { t: DiagLabels["breakEven"] }) {
-  return (
-    <div className="mt-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
-      <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-4 text-center">
-        {t.headerCaption}
-      </p>
-      <div className="space-y-2">
-        <div className="flex items-center gap-3 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3">
-          <span className="text-xs font-bold text-zinc-500 w-4 shrink-0">1</span>
-          <div className="flex-1">
-            <p className="text-xs font-semibold text-white">{t.step1Title}</p>
-            <p className="text-[10px] text-zinc-500 mt-0.5">{t.step1Hint}</p>
-          </div>
-          <div className="bg-red-500/10 border border-red-500/20 rounded-lg px-2 py-1 text-center shrink-0">
-            <p className="text-[9px] text-red-400 font-mono">{t.step1Tag}</p>
-            <p className="text-[8px] text-red-500/60">si stoppé</p>
-          </div>
-        </div>
-        <p className="text-center text-[10px] text-zinc-600">{t.arrow1}</p>
-        <div className="flex items-center gap-3 bg-amber-400/5 border border-amber-400/20 rounded-xl px-4 py-3">
-          <span className="text-xs font-bold text-amber-400 w-4 shrink-0">2</span>
-          <div className="flex-1">
-            <p className="text-xs font-semibold text-white">{t.step2Title}</p>
-            <p className="text-[10px] text-zinc-500 mt-0.5">{t.step2Hint}</p>
-          </div>
-          <div className="bg-amber-400/10 border border-amber-400/20 rounded-lg px-2 py-1 text-center shrink-0">
-            <p className="text-[9px] text-amber-400 font-bold">{t.step2Tag}</p>
-          </div>
-        </div>
-        <p className="text-center text-[10px] text-zinc-600">{t.arrow2}</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl px-3 py-2.5 text-center">
-            <p className="text-[10px] font-bold text-emerald-400">{t.continueTitle}</p>
-            <p className="text-[9px] text-zinc-400 mt-1">{t.continueHint}</p>
-            <p className="text-xs font-bold text-emerald-400 mt-1">{t.continueGain}</p>
-          </div>
-          <div className="bg-zinc-800/60 border border-zinc-700 rounded-xl px-3 py-2.5 text-center">
-            <p className="text-[10px] font-bold text-zinc-300">{t.fallbackTitle}</p>
-            <p className="text-[9px] text-zinc-400 mt-1">{t.fallbackHint}</p>
-            <p className="text-xs font-bold text-zinc-400 mt-1">{t.fallbackGain}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ── Diagramme : Grille de risque retail ──────────────────────────────────────
 function RiskDiagram({ t }: { t: DiagLabels["risk"] }) {
   const tiers = [
@@ -665,8 +522,8 @@ function Diagram({ id, labels }: { id: string; labels: DiagLabels }) {
     case "candle":      return <CandleAnatomyDiagram />;
     case "long-short":  return <LongShortDiagram />;
     case "spread":      return <SpreadDiagram />;
-    case "takeprofit":  return <TakeProfitDiagram t={labels.takeProfit} />;
-    case "breakeven":   return <BreakEvenDiagram t={labels.breakEven} />;
+    case "takeprofit":  return <TakeProfitDiagram />;
+    case "breakeven":   return <BreakEvenDiagram />;
     case "risk":        return <RiskDiagram t={labels.risk} />;
     case "errors":      return <ErrorsDiagram t={labels.errors} />;
     case "biaschart":   return <BiasDiagram />;

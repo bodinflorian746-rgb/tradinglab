@@ -50,3 +50,6 @@ export function tradeSetup(s: TradeSpec): { levels: LCLevel[]; chips: LCChip[]; 
   ];
   return { levels, chips, offscale, rr: m.rr };
 }
+
+/** Prix en dollars au format des leçons débutant : « 78 000 $ » (espace avant $). */
+export const usdSp = (x: number) => `${fmtPrice(Math.round(x), 0, "$").replace("$", "")} $`;

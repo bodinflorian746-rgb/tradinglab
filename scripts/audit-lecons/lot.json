@@ -39,5 +39,8 @@
   {"url":"/fr/formations/avance/lecon5","charts":["OTEDiagram"]},
   {"url":"/fr/formations/debutant/lecon1","charts":["TradeDiagram"]},
   {"url":"/fr/formations/debutant/lecon2","charts":["LongShortDiagram"]},
-  {"url":"/fr/formations/debutant/lecon4","charts":["SpreadDiagram","SpreadImpactDiagram","SpreadVariationDiagram"]}
+  {"url":"/fr/formations/debutant/lecon4","charts":["SpreadDiagram","SpreadImpactDiagram","SpreadVariationDiagram"]},
+  {"url":"/fr/formations/debutant/lecon5","charts":["StopLossDiagram","WithWithoutSLDiagram","StopLossChartDiagram"]},
+  {"url":"/fr/formations/debutant/lecon6","charts":["TakeProfitDiagram"]},
+  {"url":"/fr/formations/debutant/lecon7","charts":["BreakEvenDiagram"]}
 ]

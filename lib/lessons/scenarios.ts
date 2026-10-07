@@ -530,3 +530,12 @@ Object.assign(SCENARIOS, {
   "ote": ote,
   "fib-tp": fibTp,
 });
+
+// ─── Lot 10b ─────────────────────────────────────────────────────────────────
+// Débutant 5 — où placer son SL (Bitcoin H1) : creux 77 200, rebond, retour sur le
+// support 78 000, rebond = achat ; SL 77 000 sous le dernier swing low.
+const slChart = () => buildCandles(78900, [
+  ...c(78700, 78450, 78200, 77800), { c: 77450, l: 77200 }, ...c(77750, 78150, 78600, 78900), { c: 78750, h: 79050 },
+  ...c(78550, 78300), { c: 78100, l: 78000 }, { c: 78450, l: 78020 },
+], { seed: 10101, decimals: 0, asset: "BTC/USD", session: "New York", volatility: "normale", levels: [78000, 77200], pins: [77200, 78000, 79050] });
+Object.assign(SCENARIOS, { "sl-chart": slChart });
