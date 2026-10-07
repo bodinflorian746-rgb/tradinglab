@@ -145,7 +145,7 @@ export function KillzonesTimelineDiagram({ className = "", locale = "fr" }: Kill
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
 
         {/* Mini-SVG : timeline 24h compressée avec 3 killzones colorées (Asia, London, NY) */}
-        <svg viewBox="0 0 300 60" className="w-full h-auto" aria-label="Timeline 24h killzones" fill="none">
+        <svg viewBox="0 -4 300 64" className="w-full h-auto" aria-label="Timeline 24h killzones" fill="none">
           {/* Axe + ticks horaires */}
           <line x1="10" y1="40" x2="290" y2="40" stroke="#52525b" strokeWidth="1" />
           {[0, 6, 12, 18, 24].map((h) => (

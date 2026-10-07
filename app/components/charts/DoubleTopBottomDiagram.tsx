@@ -143,8 +143,8 @@ export default function DoubleTopBottomDiagram({ locale = "fr" }: { locale?: "fr
         </text>
 
         {/* Résistance (les 2 sommets touchent ce niveau) */}
-        <line x1="60" y1="90" x2="385" y2="90" stroke="#71717a" strokeWidth="1" strokeDasharray="4 4" />
-        <text x="55" y="93" fontSize="11" fill="#a1a1aa" textAnchor="end">{t.resistance}</text>
+        <line x1="72" y1="90" x2="385" y2="90" stroke="#71717a" strokeWidth="1" strokeDasharray="4 4" />
+        <text x="68" y="93" fontSize="11" fill="#a1a1aa" textAnchor="end">{t.resistance}</text>
 
         {/* Neckline (creux intermédiaire prolongé) */}
         <line x1="130" y1="185" x2="385" y2="185" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="6 3" />

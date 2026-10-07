@@ -116,7 +116,7 @@ export default function TrendlineMADiagram({ className = "", locale = "fr" }: { 
     <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
       <p className="text-[14px] font-bold text-emerald-400 text-center">{labels.mobTitle}</p>
       {/* Mini-SVG : prix HH/HL + trendline emerald + MM20 bleue + MM50 grise (confluence) */}
-      <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Trendline + MM" fill="none">
+      <svg viewBox="0 -4 280 114" className="w-full h-auto" aria-label="Trendline + MM" fill="none">
         {/* MM50 — grise, lissée, lag marqué */}
         <path d="M15,95 L60,85 L110,75 L160,60 L210,45 L262,35"
           stroke="#a1a1aa" strokeWidth="1.2" fill="none" strokeLinejoin="round" />

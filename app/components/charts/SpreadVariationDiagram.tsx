@@ -143,7 +143,7 @@ export function SpreadVariationDiagram({ className = '' }: SpreadVariationDiagra
 
       {/* ── MOBILE (variante simplifiée — courbe + 2 dots, pas de texte SVG) ── */}
       <div className="sm:hidden p-4 space-y-3">
-        <svg viewBox="0 0 320 90" width="100%" fill="none" aria-label="Spread EUR/USD sur 24h">
+        <svg viewBox="0 0 320 98" width="100%" fill="none" aria-label="Spread EUR/USD sur 24h">
           {/* Zone heures de pointe (centre) */}
           <rect x={120} y={4} width={120} height={80} fill="#10b98115" stroke="#10b98130" strokeWidth="1" strokeDasharray="3 3" rx="3" />
           {/* Courbe simplifiée */}

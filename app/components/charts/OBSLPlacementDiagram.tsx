@@ -234,8 +234,8 @@ export default function OBSLPlacementDiagram({ className = "", locale = "fr" }: 
         <rect x="120" y="109" width="40" height="12" rx="2" fill="#ef444418" stroke="#ef4444" strokeWidth="0.7" />
         <text x="140" y="118" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">SL</text>
         {/* Annotation buffer */}
-        <text x="36" y="100" fontSize="8" fill="#f87171" textAnchor="end">low + buffer</text>
-        <line x1="40" y1="98" x2="55" y2="92" stroke="#f87171" strokeWidth="0.8" />
+        <text x="4" y="101" fontSize="8" fill="#f87171">low + buffer</text>
+        <line x1="54" y1="98" x2="57" y2="92" stroke="#f87171" strokeWidth="0.8" />
       </svg>
 
       <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">

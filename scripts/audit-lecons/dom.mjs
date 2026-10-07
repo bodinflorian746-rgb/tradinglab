@@ -187,6 +187,10 @@ function scanLesson() {
     const cs = getComputedStyle(el);
     if (cs.visibility === "hidden" || +cs.opacity === 0) continue;
     if (/\{[A-Za-z_.]+\}|\$\{|\bundefined\b|\bNaN\b|\[object/.test(own)) out.push(`variable non remplacée « ${own.slice(0, 50)} »`);
+    // Tableau à défilement horizontal voulu (overflow-x: auto) : texte accessible, pas coupé
+    let sc = el.parentElement;
+    while (sc && !/(auto|scroll)/.test(getComputedStyle(sc).overflowX)) sc = sc.parentElement;
+    if (sc) continue;
     const svg = el.closest("svg");
     if (svg) {
       const s = svg.getBoundingClientRect();

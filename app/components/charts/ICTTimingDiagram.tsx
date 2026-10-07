@@ -148,7 +148,7 @@ export function ICTTimingDiagram({ className = "", locale = "fr" }: ICTTimingDia
         <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
 
         {/* Mini-SVG : timeline 24h avec 3 fenêtres ICT (London Open, NY AM, Power Hour) */}
-        <svg viewBox="0 0 300 60" className="w-full h-auto" aria-label="ICT timing windows" fill="none">
+        <svg viewBox="0 -4 300 64" className="w-full h-auto" aria-label="ICT timing windows" fill="none">
           <line x1="10" y1="40" x2="290" y2="40" stroke="#52525b" strokeWidth="1" />
           {[0, 6, 12, 18, 24].map((h) => (
             <g key={h}>
