@@ -8,6 +8,7 @@ import { LessonQuiz } from "@/app/components/LessonQuiz";
 import { SpreadDiagram } from "@/app/components/charts/SpreadDiagram";
 import { CandleAnatomyDiagram } from "@/app/components/charts/CandleAnatomyDiagram";
 import { BiasDiagram } from "@/app/components/charts/BiasDiagram";
+import { LongShortDiagram } from "@/app/components/charts/LongShortDiagram";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -333,104 +334,6 @@ function getDiagLabels(locale: Locale): DiagLabels {
 }
 
 // ── Diagramme : Long vs Short ─────────────────────────────────────────────────
-function LongShortDiagram({ t }: { t: DiagLabels["longShort"] }) {
-  const longPoints = "20,140 50,120 80,105 110,88 140,70 170,55 200,38";
-  const shortPoints = "20,38 50,55 80,70 110,88 140,105 170,120 200,140";
-
-  return (
-    <>
-      {/* ── DESKTOP (inchangé) ───────────────────────────────────────── */}
-      <div className="hidden sm:grid mt-5 grid-cols-2 gap-3">
-        {/* Long */}
-        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
-          <p className="text-xs font-bold text-emerald-400 mb-3 text-center">{t.longTitle}</p>
-          <svg viewBox="0 0 220 160" className="w-full" aria-label="Trade Long">
-            <line x1="15" y1="150" x2="210" y2="150" stroke="#3f3f46" strokeWidth="1" />
-            <line x1="15" y1="10" x2="15" y2="150" stroke="#3f3f46" strokeWidth="1" />
-            <polyline points={longPoints} fill="none" stroke="#059669" strokeWidth="2" strokeLinejoin="round" />
-            <polygon points={`20,70 ${longPoints.split(" ").slice(4).join(" ")} 200,70`} fill="#059669" fillOpacity="0.08" />
-            <circle cx="20" cy="140" r="4" fill="#34d399" />
-            <line x1="20" y1="140" x2="200" y2="140" stroke="#34d399" strokeWidth="1" strokeDasharray="4,3" />
-            <text x="24" y="138" fontSize="9" fill="#34d399" fontFamily="monospace">{t.entry}</text>
-            <circle cx="200" cy="38" r="4" fill="#34d399" />
-            <text x="110" y="30" fontSize="9" fill="#34d399" fontFamily="monospace">{t.exit}</text>
-            <line x1="205" y1="38" x2="205" y2="140" stroke="#34d399" strokeWidth="1.5" strokeDasharray="3,3" />
-            <text x="199" y="115" textAnchor="end" fontSize="10" fill="#34d399" fontFamily="sans-serif" fontWeight="700">{t.longRise}</text>
-            <path d="M105 80 L105 50 L100 56 M105 50 L110 56" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-          </svg>
-          <p className="text-[10px] text-emerald-400/70 text-center mt-1">{t.bullishCaption}</p>
-        </div>
-
-        {/* Short */}
-        <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
-          <p className="text-xs font-bold text-red-400 mb-3 text-center">{t.shortTitle}</p>
-          <svg viewBox="0 0 220 160" className="w-full" aria-label="Trade Short">
-            <line x1="15" y1="150" x2="210" y2="150" stroke="#3f3f46" strokeWidth="1" />
-            <line x1="15" y1="10" x2="15" y2="150" stroke="#3f3f46" strokeWidth="1" />
-            <polyline points={shortPoints} fill="none" stroke="#dc2626" strokeWidth="2" strokeLinejoin="round" />
-            <polygon points={`20,88 ${shortPoints.split(" ").slice(3).join(" ")} 200,88`} fill="#dc2626" fillOpacity="0.08" />
-            <circle cx="20" cy="38" r="4" fill="#f87171" />
-            <line x1="20" y1="38" x2="200" y2="38" stroke="#f87171" strokeWidth="1" strokeDasharray="4,3" />
-            <text x="24" y="34" fontSize="9" fill="#f87171" fontFamily="monospace">{t.entry}</text>
-            <circle cx="200" cy="140" r="4" fill="#f87171" />
-            <text x="100" y="155" fontSize="9" fill="#f87171" fontFamily="monospace">{t.exit.replace("81 000", "75 000")}</text>
-            <line x1="205" y1="38" x2="205" y2="140" stroke="#f87171" strokeWidth="1.5" strokeDasharray="3,3" />
-            <text x="199" y="63" textAnchor="end" fontSize="10" fill="#f87171" fontFamily="sans-serif" fontWeight="700">{t.shortDrop}</text>
-            <path d="M105 70 L105 100 L100 94 M105 100 L110 94" stroke="#f87171" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-          </svg>
-          <p className="text-[10px] text-red-400/70 text-center mt-1">{t.bearishCaption}</p>
-        </div>
-      </div>
-
-      {/* ── MOBILE ──────────────────────────────────────────────────── */}
-      <div className="sm:hidden mt-5 space-y-3">
-        {/* LONG */}
-        <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-4">
-          <p className="text-[13px] font-bold text-emerald-400 mb-3">{t.longBuyMobile}</p>
-          <svg viewBox="0 0 200 80" className="w-full mb-3" fill="none" aria-label="Prix monte">
-            <polyline points="10,70 40,58 80,46 120,34 160,22 190,10" stroke="#10b981" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
-            <circle cx="10" cy="70" r="5" fill="#10b981" />
-            <circle cx="190" cy="10" r="5.5" fill="#10b981" />
-          </svg>
-          <div className="grid grid-cols-2 gap-2 mb-2">
-            <div className="rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2">
-              <p className="text-[10px] text-zinc-500 uppercase tracking-wide">{t.entry.split(":")[0]}</p>
-              <p className="text-[15px] font-bold text-white font-mono">78 000 $</p>
-            </div>
-            <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-3 py-2">
-              <p className="text-[10px] text-emerald-400 uppercase tracking-wide">{t.exit.split(":")[0]}</p>
-              <p className="text-[15px] font-bold text-emerald-400 font-mono">81 000 $</p>
-            </div>
-          </div>
-          <p className="text-center text-[14px] font-bold text-emerald-400">{t.long3kRise}</p>
-        </div>
-
-        {/* SHORT */}
-        <div className="rounded-xl border border-red-500/25 bg-red-500/5 p-4">
-          <p className="text-[13px] font-bold text-red-400 mb-3">{t.shortSellMobile}</p>
-          <svg viewBox="0 0 200 80" className="w-full mb-3" fill="none" aria-label="Prix baisse">
-            <polyline points="10,10 40,22 80,34 120,46 160,58 190,70" stroke="#ef4444" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
-            <circle cx="10" cy="10" r="5" fill="#ef4444" />
-            <circle cx="190" cy="70" r="5.5" fill="#ef4444" />
-          </svg>
-          <div className="grid grid-cols-2 gap-2 mb-2">
-            <div className="rounded-lg bg-zinc-900 border border-zinc-800 px-3 py-2">
-              <p className="text-[10px] text-zinc-500 uppercase tracking-wide">{t.entry.split(":")[0]}</p>
-              <p className="text-[15px] font-bold text-white font-mono">78 000 $</p>
-            </div>
-            <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-3 py-2">
-              <p className="text-[10px] text-red-400 uppercase tracking-wide">{t.exit.split(":")[0]}</p>
-              <p className="text-[15px] font-bold text-red-400 font-mono">75 000 $</p>
-            </div>
-          </div>
-          <p className="text-center text-[14px] font-bold text-red-400">{t.short3kDrop}</p>
-        </div>
-      </div>
-    </>
-  );
-}
-
-// ── Diagramme : Take Profit ───────────────────────────────────────────────────
 function TakeProfitDiagram({ t }: { t: DiagLabels["takeProfit"] }) {
   return (
     <div className="mt-5 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
@@ -760,7 +663,7 @@ function ErrorsDiagram({ t }: { t: DiagLabels["errors"] }) {
 function Diagram({ id, labels }: { id: string; labels: DiagLabels }) {
   switch (id) {
     case "candle":      return <CandleAnatomyDiagram />;
-    case "long-short":  return <LongShortDiagram t={labels.longShort} />;
+    case "long-short":  return <LongShortDiagram />;
     case "spread":      return <SpreadDiagram />;
     case "takeprofit":  return <TakeProfitDiagram t={labels.takeProfit} />;
     case "breakeven":   return <BreakEvenDiagram t={labels.breakEven} />;

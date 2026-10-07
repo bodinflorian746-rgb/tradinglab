@@ -1,52 +1,20 @@
-interface SpreadDiagramProps {
-  className?: string;
-}
+// Trading Débutant 4 — Bid et Ask : deux prix en permanence (exemple du texte :
+// EUR/USD Bid 1,0800, Ask 1,0805 → spread de 5 points, calculé).
 
-export function SpreadDiagram({ className = '' }: SpreadDiagramProps) {
+import { Cards, LessonSchema } from "@/app/components/lessons/LessonSchema";
+
+const BID = 1.08, ASK = 1.0805;
+const fr = (x: number) => x.toFixed(4).replace(".", ",");
+
+export function SpreadDiagram(_props: { className?: string }) {
+  const spread = Math.round((ASK - BID) / 0.0001);
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl p-5 space-y-4 ${className}`}>
-      <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest text-center">
-        EUR / USD — les deux prix affichés en permanence
-      </p>
-
-      {/* 3 cartes BID / SPREAD / ASK — empilées sur mobile pour lisibilité */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <div className="bg-blue-500/10 border border-blue-500/40 rounded-xl p-3 text-center flex sm:flex-col items-center justify-between sm:justify-center gap-3 sm:gap-0">
-          <p className="text-[12px] sm:text-[11px] font-bold text-blue-400 uppercase tracking-wider">BID</p>
-          <p className="text-xl sm:text-2xl font-mono font-bold text-white sm:mt-1">1,0800</p>
-          <span className="text-[11px] font-semibold text-blue-400 sm:hidden">↑ Tu vends ici</span>
-        </div>
-        <div className="bg-blue-500/10 border border-blue-500/40 rounded-xl p-3 text-center flex sm:flex-col items-center justify-between sm:justify-center gap-3 sm:gap-0">
-          <p className="text-[12px] sm:text-[11px] font-bold text-blue-400 uppercase tracking-wider">SPREAD</p>
-          <p className="text-xl sm:text-2xl font-mono font-bold text-white sm:mt-1">5 pts</p>
-          <span className="text-[11px] text-zinc-400 sm:hidden">Ask − Bid</span>
-        </div>
-        <div className="bg-emerald-500/10 border border-emerald-500/40 rounded-xl p-3 text-center flex sm:flex-col items-center justify-between sm:justify-center gap-3 sm:gap-0">
-          <p className="text-[12px] sm:text-[11px] font-bold text-emerald-400 uppercase tracking-wider">ASK</p>
-          <p className="text-xl sm:text-2xl font-mono font-bold text-white sm:mt-1">1,0805</p>
-          <span className="text-[11px] font-semibold text-emerald-400 sm:hidden">↓ Tu achètes ici</span>
-        </div>
-      </div>
-
-      {/* Flèches indicatives — desktop seulement (sur mobile l'info est intégrée dans chaque carte) */}
-      <div className="hidden sm:grid grid-cols-3 gap-2 text-center">
-        <div className="flex flex-col items-center gap-0.5">
-          <span className="text-[10px] font-semibold text-blue-400">↑ Tu vends ici</span>
-          <span className="text-[9px] text-zinc-600">Short (Sell)</span>
-        </div>
-        <div />
-        <div className="flex flex-col items-center gap-0.5">
-          <span className="text-[10px] font-semibold text-emerald-400">↓ Tu achètes ici</span>
-          <span className="text-[9px] text-zinc-600">Long (Buy)</span>
-        </div>
-      </div>
-
-      {/* Note explicative */}
-      <div className="bg-zinc-900/50 border border-zinc-700 rounded-xl px-4 py-3 text-center">
-        <p className="text-sm text-zinc-300">
-          Spread de <span className="font-bold text-blue-400">5 points</span> = coût payé immédiatement à l&apos;ouverture de chaque trade
-        </p>
-      </div>
-    </div>
+    <LessonSchema id="SpreadDiagram" title="Bid, Ask et spread" caption="L'Ask est toujours plus élevé que le Bid : tu achètes plus cher que tu ne pourrais revendre au même instant.">
+      <Cards cols={3} items={[
+        { tag: "BID", title: "Prix de vente", value: fr(BID), text: "Le moins élevé des deux.", tone: "bear" },
+        { tag: "SPREAD", title: "Ask − Bid", value: `${spread} points`, text: "Le coût payé à l'ouverture de chaque trade.", tone: "zone" },
+        { tag: "ASK", title: "Prix d'achat", value: fr(ASK), text: "Le plus élevé des deux.", tone: "bull" },
+      ]} />
+    </LessonSchema>
   );
 }

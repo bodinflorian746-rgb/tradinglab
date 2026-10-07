@@ -173,9 +173,7 @@
 .tsx-v2 .ls-tl-mark { position: absolute; top: -3px; width: 3px; height: 18px; margin-left: -1.5px; border-radius: 2px; background: var(--ls-c, #f5f5f7); }
 .tsx-v2 .ls-tl-mark--static { position: static; display: inline-block; margin: 0 8px 0 0; vertical-align: middle; height: 14px; }
 .tsx-v2 .ls-tl-ticks { position: relative; height: 18px; font-size: 12px; color: var(--v2-text-3); font-variant-numeric: tabular-nums; }
-.tsx-v2 .ls-tl-ticks span { position: absolute; transform: translateX(-50%); }
-.tsx-v2 .ls-tl-ticks span:first-child { transform: none; }
-.tsx-v2 .ls-tl-ticks span:last-child { transform: translateX(-100%); }
+.tsx-v2 .ls-tl-ticks span { position: absolute; }
 .tsx-v2 .ls-tl-marks { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; color: var(--v2-text-2); }
 
 /* Barres */

@@ -1,54 +1,11 @@
 import { LessonTemplate } from "@/app/components/LessonTemplate";
 import { SpreadDiagram } from "@/app/components/charts/SpreadDiagram";
 import { SpreadVariationDiagram } from "@/app/components/charts/SpreadVariationDiagram";
+import { SpreadImpactDiagram } from "@/app/components/charts/SpreadImpactDiagram";
 import ContentEs from "./_content-es";
 import ContentEn from "./_content-en";
 
 // ── Schéma : gain et perte avec le spread ────────────────────────────────────
-function SpreadImpactDiagram() {
-  return (
-    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
-        <p className="text-[10px] font-bold text-emerald-400 mb-2 uppercase tracking-wide">Mouvement suffisant ✓</p>
-        <div className="space-y-1 font-mono text-xs">
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Achat (Ask)</span>
-            <span className="text-white">1,0805</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Vente (Bid)</span>
-            <span className="text-white">1,0870</span>
-          </div>
-          <div className="h-px bg-zinc-700 my-1" />
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Gain net</span>
-            <span className="text-emerald-400 font-bold">+65 pts ✓</span>
-          </div>
-        </div>
-      </div>
-      <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3">
-        <p className="text-[10px] font-bold text-red-400 mb-2 uppercase tracking-wide">Mouvement trop faible ✗</p>
-        <div className="space-y-1 font-mono text-xs">
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Achat (Ask)</span>
-            <span className="text-white">1,0805</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Vente (Bid)</span>
-            <span className="text-white">1,0806</span>
-          </div>
-          <div className="h-px bg-zinc-700 my-1" />
-          <div className="flex justify-between">
-            <span className="text-zinc-500">Résultat</span>
-            <span className="text-red-400 font-bold">−4 pts ✗</span>
-          </div>
-        </div>
-        <p className="text-[9px] text-zinc-600 mt-1.5">Le spread efface le gain</p>
-      </div>
-    </div>
-  );
-}
-
 function ContentFr() {
   return (
     <LessonTemplate

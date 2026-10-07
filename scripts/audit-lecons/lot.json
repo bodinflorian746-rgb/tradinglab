@@ -36,5 +36,8 @@
   {"url":"/fr/strategies/smc/lecon3","charts":["OBExecutionPlanDiagram","MitigationZoneEntryDiagram"]},
   {"url":"/fr/strategies/trend-following/lecon1","charts":["TrendIdentificationStepsDiagram"]},
   {"url":"/fr/strategies/trend-following/lecon2","charts":["TrendlineMADiagram","MMHierarchyStackDiagram","TrendlineWrongDrawingDiagram"]},
-  {"url":"/fr/formations/avance/lecon5","charts":["OTEDiagram"]}
+  {"url":"/fr/formations/avance/lecon5","charts":["OTEDiagram"]},
+  {"url":"/fr/formations/debutant/lecon1","charts":["TradeDiagram"]},
+  {"url":"/fr/formations/debutant/lecon2","charts":["LongShortDiagram"]},
+  {"url":"/fr/formations/debutant/lecon4","charts":["SpreadDiagram","SpreadImpactDiagram","SpreadVariationDiagram"]}
 ]

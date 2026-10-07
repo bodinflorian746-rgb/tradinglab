@@ -145,7 +145,7 @@ export function Timeline({ rows, start = 0, end = 24, ticks = [0, 6, 12, 18, 24]
         </div>
       ))}
       <div className="ls-tl-ticks">
-        {ticks.map((t) => <span key={t} style={{ left: `${pct(t)}%` }}>{t}{unit}</span>)}
+        {ticks.map((t) => <span key={t} style={{ left: `${pct(t)}%`, transform: t <= start ? "none" : t >= end ? "translateX(-100%)" : "translateX(-50%)" }}>{t}{unit}</span>)}
       </div>
       {marks.length > 0 && (
         <ul className="ls-tl-marks">
