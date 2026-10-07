@@ -46,6 +46,17 @@ test.describe("Langues désactivées", () => {
     for (const lang of INACTIVE) expect(html).not.toMatch(new RegExp(`hrefLang="${lang}"`, "i"));
   });
 
+  test("robots.txt : pages privées interdites avec le préfixe de langue", async ({ request }) => {
+    const r = await request.get("/robots.txt", { maxRedirects: 0 });
+    expect(r.status()).toBe(200);
+    const txt = await r.text();
+    for (const l of ACTIVE_LOCALES) for (const p of ["/admin", "/compte", "/dashboard", "/auth/callback", "/auth/confirm"]) {
+      expect(txt).toContain(`Disallow: /${l}${p}\n`);
+    }
+    expect(txt).not.toMatch(/Disallow: \/(admin|compte|dashboard|auth)\b/);
+    for (const lang of INACTIVE) expect(txt).not.toContain(`/${lang}/`);
+  });
+
   test("pas de sélecteur de langue (desktop et menu mobile)", async ({ page }) => {
     test.skip(ACTIVE_LOCALES.length > 1, "plusieurs langues actives");
     const errors: string[] = [];
