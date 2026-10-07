@@ -1,175 +1,44 @@
-interface CandleAnatomyDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
+// Anatomie d'une bougie (Trading Débutant 3, Price action 1). Les deux bougies de
+// l'exemple de Débutant 3 (Bitcoin) : verte O 78 000 · H 79 000 · L 77 500 ·
+// C 78 600 ; rouge O 78 600 · H 78 900 · L 77 000 · C 77 400.
+// - "anatomie" : nom des 4 valeurs (Open, High, Low, Close) ;
+// - "exemple" : les mêmes bougies avec leurs prix.
+
+import { LessonChart, type LCLevel, type LCPanel } from "@/app/components/lessons/LessonChart";
+import type { Candle } from "@/lib/lessons/chart-analysis";
+import { usd } from "@/app/components/lessons/trade";
+
+const GREEN: Candle = { o: 78000, h: 79000, l: 77500, c: 78600 };
+const RED: Candle = { o: 78600, h: 78900, l: 77000, c: 77400 };
+
+function panel(key: string, k: Candle, withPrices: boolean): LCPanel {
+  const up = k.c > k.o;
+  const name = (n: string, fr: string, v: number) => (withPrices ? `${n} ${usd(v)}` : `${n} — ${fr}`);
+  const levels: LCLevel[] = [
+    { key: "h", price: k.h, from: 0.5, to: 1, label: name("High", "plus haut", k.h), short: withPrices ? undefined : "High", tone: "neutral" },
+    { key: "o", price: k.o, from: 0.5, to: 1, label: name("Open", "ouverture", k.o), short: withPrices ? undefined : "Open", tone: "entry" },
+    { key: "c", price: k.c, from: 0.5, to: 1, label: name("Close", "clôture", k.c), short: withPrices ? undefined : "Close", tone: up ? "bull" : "bear" },
+    { key: "l", price: k.l, from: 0.5, to: 1, label: name("Low", "plus bas", k.l), short: withPrices ? undefined : "Low", tone: "neutral" },
+  ];
+  return {
+    key, title: up ? "Bougie verte (haussière)" : "Bougie rouge (baissière)",
+    decimals: 0, height: 260, candleWidth: 40,
+    candles: [k], slots: 2,
+    levels,
+    chips: [{ label: up ? "Close > Open : les acheteurs ont gagné" : "Close < Open : les vendeurs ont gagné", tone: up ? "bull" : "bear" }],
+  };
 }
 
-export function CandleAnatomyDiagram({ className = '', locale = "fr" }: CandleAnatomyDiagramProps) {
-  const t = locale === "es"
-    ? {
-        header: "Vela verde (alcista) · Vela roja (bajista)",
-        ariaLabel: "Anatomía de una vela japonesa",
-        highPoint: "High — punto alto",
-        closeLabel: "Close — cierre",
-        openLabel: "Open — apertura",
-        lowPoint: "Low — punto bajo",
-        buyers: "Compradores ↑",
-        sellers: "Vendedores ↓",
-        mobileGreenTitle: "Vela verde — Compradores ↑",
-        mobileRedTitle: "Vela roja — Vendedores ↓",
-        highest: "punto más alto alcanzado",
-        lowest: "punto más bajo alcanzado",
-        closeTop: "cierre en la parte alta del cuerpo",
-        openBottom: "apertura en la parte baja del cuerpo",
-        openTop: "apertura en la parte alta del cuerpo",
-        closeBottom: "cierre en la parte baja del cuerpo",
-      }
-    : locale === "en"
-    ? {
-        header: "Green candle (bullish) · Red candle (bearish)",
-        ariaLabel: "Anatomy of a Japanese candlestick",
-        highPoint: "High — high point",
-        closeLabel: "Close — close",
-        openLabel: "Open — open",
-        lowPoint: "Low — low point",
-        buyers: "Buyers ↑",
-        sellers: "Sellers ↓",
-        mobileGreenTitle: "Green candle — Buyers ↑",
-        mobileRedTitle: "Red candle — Sellers ↓",
-        highest: "highest point reached",
-        lowest: "lowest point reached",
-        closeTop: "close at the top of the body",
-        openBottom: "open at the bottom of the body",
-        openTop: "open at the top of the body",
-        closeBottom: "close at the bottom of the body",
-      }
-    : {
-        header: "Bougie verte (haussière) · Bougie rouge (baissière)",
-        ariaLabel: "Anatomie d'une bougie japonaise",
-        highPoint: "High — plus haut",
-        closeLabel: "Close — clôture",
-        openLabel: "Open — ouverture",
-        lowPoint: "Low — plus bas",
-        buyers: "Acheteurs ↑",
-        sellers: "Vendeurs ↓",
-        mobileGreenTitle: "Bougie verte — Acheteurs ↑",
-        mobileRedTitle: "Bougie rouge — Vendeurs ↓",
-        highest: "point le plus haut atteint",
-        lowest: "point le plus bas atteint",
-        closeTop: "clôture en haut du corps",
-        openBottom: "ouverture en bas du corps",
-        openTop: "ouverture en haut du corps",
-        closeBottom: "clôture en bas du corps",
-      };
-
-  // Green (bullish) candle — Close at top, Open at bottom
-  const gCx = 240;
-  const gWickTopY = 62;
-  const gBodyTopY = 100;  // Close
-  const gBodyBotY = 240;  // Open
-  const gWickBotY = 278;
-
-  // Red (bearish) candle — Open at top, Close at bottom
-  const rCx = 460;
-  const rWickTopY = 70;
-  const rBodyTopY = 108;  // Open
-  const rBodyBotY = 228;  // Close
-  const rWickBotY = 262;
-
+export function CandleAnatomyDiagram({ variant = "anatomie" }: { className?: string; locale?: "fr" | "es" | "en"; variant?: "anatomie" | "exemple" }) {
+  const prices = variant === "exemple";
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest text-center py-3 border-b border-zinc-800/60">
-        {t.header}
-      </p>
-      <svg
-        viewBox="0 0 700 360"
-        width="100%"
-        fill="none"
-        preserveAspectRatio="xMidYMid meet"
-        aria-label={t.ariaLabel}
-      >
-        <style>{`
-          @media (max-width: 640px) {
-            .chart-detail-labels { display: none; }
-          }
-        `}</style>
-
-        {/* Zone separator */}
-        <line x1="350" y1="20" x2="350" y2="346" stroke="#3f3f46" strokeWidth="1" />
-
-        {/* Bougies — toujours visibles */}
-        {/* ── GREEN CANDLE ─── */}
-        <line x1={gCx} y1={gWickTopY} x2={gCx} y2={gBodyTopY} stroke="#059669" strokeWidth="1.5" strokeLinecap="round" />
-        <rect x={gCx - 20} y={gBodyTopY} width="40" height={gBodyBotY - gBodyTopY} rx="3" fill="#10b981" />
-        <line x1={gCx} y1={gBodyBotY} x2={gCx} y2={gWickBotY} stroke="#059669" strokeWidth="1.5" strokeLinecap="round" />
-
-        {/* ── RED CANDLE ─── */}
-        <line x1={rCx} y1={rWickTopY} x2={rCx} y2={rBodyTopY} stroke="#b91c1c" strokeWidth="1.5" strokeLinecap="round" />
-        <rect x={rCx - 20} y={rBodyTopY} width="40" height={rBodyBotY - rBodyTopY} rx="3" fill="#ef4444" />
-        <line x1={rCx} y1={rBodyBotY} x2={rCx} y2={rWickBotY} stroke="#b91c1c" strokeWidth="1.5" strokeLinecap="round" />
-
-        {/* Labels détaillés — masqués sur mobile, repris en HTML dessous */}
-        <g className="chart-detail-labels">
-          {/* Green: High — centered above, connector down to wick tip */}
-          <line x1={gCx} y1={gWickTopY} x2={gCx} y2={47} stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
-          <text x={gCx} y="41" textAnchor="middle" fontSize="11" fill="#a1a1aa" fontFamily="monospace">{t.highPoint}</text>
-
-          {/* Green: Close — horizontal connector left from body top */}
-          <line x1={gCx - 22} y1={gBodyTopY} x2={130} y2={gBodyTopY} stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
-          <text x="126" y={gBodyTopY + 5} textAnchor="end" fontSize="11" fill="#34d399" fontFamily="monospace">{t.closeLabel}</text>
-
-          {/* Green: Open — horizontal connector left from body bottom */}
-          <line x1={gCx - 22} y1={gBodyBotY} x2={130} y2={gBodyBotY} stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
-          <text x="126" y={gBodyBotY + 5} textAnchor="end" fontSize="11" fill="#34d399" fontFamily="monospace">{t.openLabel}</text>
-
-          {/* Green: Low — centered below, connector up from wick tip */}
-          <line x1={gCx} y1={gWickBotY} x2={gCx} y2={298} stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
-          <text x={gCx} y="308" textAnchor="middle" fontSize="11" fill="#a1a1aa" fontFamily="monospace">{t.lowPoint}</text>
-
-          {/* Green: subtitle */}
-          <text x={gCx} y="338" textAnchor="middle" fontSize="12" fill="#34d399" fontFamily="sans-serif" fontWeight="700">{t.buyers}</text>
-
-          {/* Red: High — centered above, connector down to wick tip */}
-          <line x1={rCx} y1={rWickTopY} x2={rCx} y2={49} stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
-          <text x={rCx} y="43" textAnchor="middle" fontSize="11" fill="#a1a1aa" fontFamily="monospace">{t.highPoint}</text>
-
-          {/* Red: Open — horizontal connector right from body top */}
-          <line x1={rCx + 22} y1={rBodyTopY} x2={570} y2={rBodyTopY} stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
-          <text x="574" y={rBodyTopY + 5} textAnchor="start" fontSize="11" fill="#f87171" fontFamily="monospace">{t.openLabel}</text>
-
-          {/* Red: Close — horizontal connector right from body bottom */}
-          <line x1={rCx + 22} y1={rBodyBotY} x2={570} y2={rBodyBotY} stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
-          <text x="574" y={rBodyBotY + 5} textAnchor="start" fontSize="11" fill="#f87171" fontFamily="monospace">{t.closeLabel}</text>
-
-          {/* Red: Low — centered below, connector up from wick tip */}
-          <line x1={rCx} y1={rWickBotY} x2={rCx} y2={285} stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
-          <text x={rCx} y="295" textAnchor="middle" fontSize="11" fill="#a1a1aa" fontFamily="monospace">{t.lowPoint}</text>
-
-          {/* Red: subtitle */}
-          <text x={rCx} y="326" textAnchor="middle" fontSize="12" fill="#f87171" fontFamily="sans-serif" fontWeight="700">{t.sellers}</text>
-        </g>
-      </svg>
-
-      {/* Mobile : anatomie expliquée en HTML (remplace les labels SVG illisibles) */}
-      <div className="sm:hidden grid grid-cols-1 gap-3 px-4 py-3 border-t border-zinc-800/50">
-        <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/5 p-3 space-y-1.5">
-          <p className="text-[12px] font-bold text-emerald-400 uppercase tracking-wide">{t.mobileGreenTitle}</p>
-          <ul className="space-y-1 text-[13px] text-white">
-            <li><span className="text-zinc-300">High</span> — {t.highest}</li>
-            <li><span className="text-emerald-400 font-semibold">Close</span> — {t.closeTop}</li>
-            <li><span className="text-emerald-400 font-semibold">Open</span> — {t.openBottom}</li>
-            <li><span className="text-zinc-300">Low</span> — {t.lowest}</li>
-          </ul>
-        </div>
-        <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-3 space-y-1.5">
-          <p className="text-[12px] font-bold text-red-400 uppercase tracking-wide">{t.mobileRedTitle}</p>
-          <ul className="space-y-1 text-[13px] text-white">
-            <li><span className="text-zinc-300">High</span> — {t.highest}</li>
-            <li><span className="text-red-400 font-semibold">Open</span> — {t.openTop}</li>
-            <li><span className="text-red-400 font-semibold">Close</span> — {t.closeBottom}</li>
-            <li><span className="text-zinc-300">Low</span> — {t.lowest}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id={prices ? "CandleExampleDiagram" : "CandleAnatomyDiagram"}
+      title={prices ? "Exemple : Bitcoin, une bougie verte puis une bougie rouge" : "Anatomie d'une bougie : 4 valeurs"}
+      panels={[panel("verte", GREEN, prices), panel("rouge", RED, prices)]}
+      rows={[2]}
+      sharedScale
+      caption={prices ? undefined : "Corps : de l'ouverture à la clôture. Mèches : jusqu'au plus haut et au plus bas de la période."}
+    />
   );
 }

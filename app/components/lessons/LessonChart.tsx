@@ -130,6 +130,8 @@ export interface LCPanel {
   chips?: LCChip[];
   /** Hauteur max du cadre en px (desktop) */
   height?: number;
+  /** Largeur max d'un corps de bougie en px (défaut 22 ; schéma d'une seule bougie : plus large) */
+  candleWidth?: number;
   /** Décimales des prix (audit) */
   decimals: number;
 }
@@ -216,10 +218,11 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
 
     // Étiquettes de la colonne de droite
     const colItems = [
-      ...(p.levels ?? []).filter((l) => l.label).map((l) => ({ key: l.key, label: txt(l), color: TONE[l.tone], price: l.price })),
-      ...(p.zones ?? []).filter((z) => z.label).map((z) => ({ key: z.key, label: txt(z), color: TONE[z.tone], price: (z.y1 + z.y2) / 2 })),
-      ...(p.segments ?? []).filter((s) => s.label).map((s) => ({ key: s.key, label: txt(s), color: TONE[s.tone], price: s.p2 })),
-      ...(p.series ?? []).filter((s) => s.label).map((s) => ({ key: s.key, label: txt(s), color: TONE[s.tone], price: [...s.values].reverse().find((x) => x !== null) ?? 0 })),
+      // endI / half : fin réelle de la ligne (indice, + demi-pas pour niveaux et zones) ; le trait de liaison part de là
+      ...(p.levels ?? []).filter((l) => l.label).map((l) => ({ key: l.key, label: txt(l), color: TONE[l.tone], price: l.price, endI: l.to, half: true })),
+      ...(p.zones ?? []).filter((z) => z.label).map((z) => ({ key: z.key, label: txt(z), color: TONE[z.tone], price: (z.y1 + z.y2) / 2, endI: z.to, half: true })),
+      ...(p.segments ?? []).filter((s) => s.label).map((s) => ({ key: s.key, label: txt(s), color: TONE[s.tone], price: s.p2, endI: s.i2 as number | undefined, half: false })),
+      ...(p.series ?? []).filter((s) => s.label).map((s) => ({ key: s.key, label: txt(s), color: TONE[s.tone], price: [...s.values].reverse().find((x) => x !== null) ?? 0, endI: s.values.length - 1 as number | undefined, half: false })),
     ];
     const offTags = (p.offscale ?? []).map((o) => ({ key: o.key, label: txt(o), color: TONE[o.tone], price: o.price }));
     const colW = colItems.length + offTags.length ? Math.max(...[...colItems, ...offTags].map((t) => tagW(t.label))) + 12 : 0;
@@ -228,7 +231,7 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
     const plotR = W - padX - colW;
     const slot = (plotR - plotL) / Math.max(n, 1);
     const xOf = (i: number) => plotL + slot * (i + 0.5);
-    const bodyW = Math.min(clamp(slot * 0.6, 3, 22), slot * 0.78);
+    const bodyW = Math.min(clamp(slot * 0.6, 3, p.candleWidth ?? 22), slot * 0.78);
 
     // Échelle linéaire (commune aux panneaux si demandé)
     const [dMin, dMax] = domain ?? panelExtent(p);
@@ -243,9 +246,9 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
 
     // Colonne : tri par hauteur, écartement sans chevauchement, puis remontée si le bas déborde
     const tags: Tag[] = [
-      ...colItems.map((t) => ({ ...t, lineY: toY(t.price) })),
-      ...offTags.map((t) => ({ ...t, lineY: t.price > dMax ? top - MARK_H : bottom + MARK_H })),
-    ].map((t) => ({ key: t.key, label: t.label, color: t.color, lineY: t.lineY, y: t.lineY, w: tagW(t.label), lineEnd: plotR }));
+      ...colItems.map((t) => ({ ...t, lineY: toY(t.price), lineEnd: t.endI === undefined ? plotR : xOf(t.endI) + (t.half ? slot / 2 : 0) })),
+      ...offTags.map((t) => ({ ...t, lineY: t.price > dMax ? top - MARK_H : bottom + MARK_H, lineEnd: plotR })),
+    ].map((t) => ({ key: t.key, label: t.label, color: t.color, lineY: t.lineY, y: t.lineY, w: tagW(t.label), lineEnd: t.lineEnd }));
     tags.sort((a, b) => a.lineY - b.lineY);
     for (let i = 0; i < tags.length; i++) tags[i].y = Math.max(tags[i].y, TAG_H / 2 + 2, i ? tags[i - 1].y + TAG_H + TAG_GAP : -Infinity);
     for (let i = tags.length - 1; i >= 0; i--) tags[i].y = Math.min(tags[i].y, i === tags.length - 1 ? H - TAG_H / 2 - 2 : tags[i + 1].y - TAG_H - TAG_GAP);

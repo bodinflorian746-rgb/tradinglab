@@ -3,32 +3,6 @@ import { CandleAnatomyDiagram } from "@/app/components/charts/CandleAnatomyDiagr
 import ContentEs from "./_content-es";
 import ContentEn from "./_content-en";
 
-// ── Schéma : exemple bougie verte vs rouge ───────────────────────────────────
-function CandleExampleDiagram() {
-  return (
-    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3 text-center">
-        <p className="text-xs font-bold text-emerald-400 mb-2">Bougie verte</p>
-        <svg viewBox="0 0 60 100" className="w-10 mx-auto mb-2" aria-label="Bougie verte">
-          <line x1="30" y1="5"  x2="30" y2="18" stroke="#4b5563" strokeWidth="2" />
-          <rect x="18" y="18" width="24" height="52" rx="2" fill="#059669" fillOpacity="0.9" />
-          <line x1="30" y1="70" x2="30" y2="92" stroke="#4b5563" strokeWidth="2" />
-        </svg>
-        <p className="text-[10px] text-emerald-400/80 leading-snug">Close &gt; Open<br />Acheteurs ont gagné</p>
-      </div>
-      <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-3 text-center">
-        <p className="text-xs font-bold text-red-400 mb-2">Bougie rouge</p>
-        <svg viewBox="0 0 60 100" className="w-10 mx-auto mb-2" aria-label="Bougie rouge">
-          <line x1="30" y1="5"  x2="30" y2="18" stroke="#4b5563" strokeWidth="2" />
-          <rect x="18" y="18" width="24" height="52" rx="2" fill="#dc2626" fillOpacity="0.8" />
-          <line x1="30" y1="70" x2="30" y2="92" stroke="#4b5563" strokeWidth="2" />
-        </svg>
-        <p className="text-[10px] text-red-400/80 leading-snug">Open &gt; Close<br />Vendeurs ont gagné</p>
-      </div>
-    </div>
-  );
-}
-
 function ContentFr() {
   return (
     <LessonTemplate
@@ -55,7 +29,7 @@ function ContentFr() {
         {
           title: "Exemple concret : une bougie verte, une bougie rouge",
           content: "Bougie verte : Bitcoin ouvre à 78 000 $, monte à 79 000 $, descend à 77 500 $, clôture à 78 600 $. Le prix termine plus haut qu'à l'ouverture : Close (78 600) > Open (78 000). Les acheteurs gagnent donc la bataille. Bougie rouge : Bitcoin ouvre à 78 600 $, monte à 78 900 $, chute à 77 000 $, clôture à 77 400 $. Le prix termine plus bas qu'à l'ouverture : Close (77 400) < Open (78 600). Les vendeurs gagnent donc la bataille.",
-          visual: <CandleExampleDiagram />,
+          visual: <CandleAnatomyDiagram variant="exemple" />,
           items: [
             "Corps vert = close > open, les acheteurs ont dominé la période",
             "Corps rouge = close < open, les vendeurs ont dominé la période",

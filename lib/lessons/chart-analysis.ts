@@ -23,9 +23,9 @@ export function fmtNum(n: number, decimals = 1): string {
   return `${r < 0 ? "−" : ""}${Math.abs(r).toString().replace(".", ",")}`;
 }
 
-/** R/R noté comme dans les leçons : « 1:4,2 », « 1:6 ». */
+/** R/R noté comme dans les leçons : « 1:4,2 », « 1:2,25 », « 1:6 » (2 décimales au plus). */
 export function fmtRR(rr: number): string {
-  return `1:${fmtNum(rr, 1)}`;
+  return `1:${fmtNum(rr, 2)}`;
 }
 
 /** Écart en pips (arrondi au dixième). */

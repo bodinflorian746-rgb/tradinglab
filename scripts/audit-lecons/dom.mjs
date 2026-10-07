@@ -45,7 +45,7 @@ function checkCharts({ ids, vocab }) {
   const E = (id, m) => errs.push(`${id} : ${m}`);
   const near = (a, b, t) => Math.abs(a - b) <= t;
   const fmtNum = (n, d = 1) => { const r = Number(n.toFixed(d)); return `${r < 0 ? "−" : ""}${Math.abs(r).toString().replace(".", ",")}`; };
-  const fmtRR = (rr) => `1:${fmtNum(rr, 1)}`;
+  const fmtRR = (rr) => `1:${fmtNum(rr, 2)}`;
   const pivots = (s, win = 2) => {
     const hi = (i) => (typeof s[i] === "number" ? s[i] : s[i].h), lo = (i) => (typeof s[i] === "number" ? s[i] : s[i].l);
     const out = [];

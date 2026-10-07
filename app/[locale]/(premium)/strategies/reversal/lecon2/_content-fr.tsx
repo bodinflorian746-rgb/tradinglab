@@ -205,7 +205,7 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée short : 4 570$ (clôture sous ligne de cou)</li>
-                <li>- Stop loss : 4 630$ (60$ au-dessus de l&apos;épaule droite à 4 625$)</li>
+                <li>- Stop loss : 4 630$ (5$ au-dessus de l&apos;épaule droite à 4 625$, soit 60$ au-dessus de l&apos;entrée)</li>
                 <li>- Take profit : 4 480$ (90$, measured move étendu)</li>
               </ul>
 

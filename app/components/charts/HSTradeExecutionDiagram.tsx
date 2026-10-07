@@ -1,111 +1,57 @@
-export default function HSTradeExecutionDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
-  const isEs = locale === "es";
-  const isEn = locale === "en";
-  const L = {
-    title:        isEs ? "2 estrategias de entrada en hombro-cabeza-hombro" : isEn ? "2 entry strategies on Head & Shoulders" : "2 stratégies d'entrée sur épaule-tête-épaule",
-    breakoutBadge: isEs ? "Entrada en breakout — R/R 2,5" : isEn ? "Breakout entry — R/R 2.5" : "Entrée au breakout — R/R 2,5",
-    retestBadge:   isEs ? "Entrada en retest — R/R 4,4" : isEn ? "Retest entry — R/R 4.4" : "Entrée au retest — R/R 4,4",
-    shoulders:    isEs ? "Hombros" : isEn ? "Shoulders" : "Épaules",
-    entryShort:   isEs ? "Entrada short" : isEn ? "Short entry" : "Entrée short",
-    footer:       isEs ? "Breakout = ejecución rápida. Retest = entrada tardía con mejor R/R." : isEn ? "Breakout = fast execution. Retest = late entry with better R/R." : "Breakout = exécution rapide. Retest = entrée tardive avec meilleur R/R.",
-    mobileTitle:  isEs ? "2 estrategias de entrada HCH" : isEn ? "2 entry strategies on H&S" : "2 stratégies d'entrée ETE",
-    mobBreakoutT: isEs ? "Entrada en breakout" : isEn ? "Breakout entry" : "Entrée sur breakout",
-    mobBreakoutD: isEs ? "Ejecución rápida cuando el precio rompe la línea clavicular. R/R medio, pero entrada inmediata." : isEn ? "Fast execution as soon as price breaks the neckline. Average R/R, but immediate entry." : "Exécution rapide dès que le prix casse la ligne de cou. R/R moyen, mais entrée immédiate.",
-    mobRetestT:   isEs ? "Entrada en retest" : isEn ? "Retest entry" : "Entrée sur retest",
-    mobRetestD:   isEs ? "Esperar a que el precio vuelva a testear la línea clavicular rota. Tardía pero" : isEn ? "Wait for price to come back and test the broken neckline. Late but" : "Attendre que le prix revienne tester la ligne de cou cassée. Tardive mais",
-    mobRetestBold:isEs ? "mejor R/R" : isEn ? "better R/R" : "meilleur R/R",
-    mobRetestEnd: isEs ? "(entrada 4 580 $)" : isEn ? "(entry $4,580)" : "(entrée 4 580 $)",
-  };
+// Reversal 2 — plan d'exécution de l'ETE XAU/USD H1 (épaule gauche 4 620$, tête
+// 4 660$, épaule droite 4 625$, ligne de cou ≈ 4 578$). Entrée short à la clôture
+// sous la ligne de cou (4 570$) ; SL tactique au-dessus de l'épaule droite
+// (4 630$) ou SL classique au-dessus de la tête (4 670$) ; measured move 82$ →
+// 4 496$, TP étendu 4 480$. R/R calculés pour les deux SL.
+
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { usd } from "@/app/components/lessons/trade";
+import { fmtRR, lineAt, pivots, tradeMath } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const SL_TACTIQUE = 4630, SL_CLASSIQUE = 4670, TP = 4480;
+
+export default function HSTradeExecutionDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const candles = CANDLES["hs-execution"];
+  const n = candles.length;
+  const piv = pivots(candles, 2);
+  const head = piv.filter((q) => q.side === "h").reduce((a, b) => (b.price > a.price ? b : a));
+  const ls = piv.filter((q) => q.side === "h" && q.index < head.index).at(-1)!;
+  const rs = piv.filter((q) => q.side === "h" && q.index > head.index)[0];
+  const t1 = piv.filter((q) => q.side === "l" && q.index > ls.index && q.index < head.index).at(-1)!;
+  const t2 = piv.filter((q) => q.side === "l" && q.index > head.index && q.index < rs.index)[0];
+  const neck = Math.round((t1.price + t2.price) / 2);
+  const neckAt = (i: number) => lineAt(t1.index, t1.price, t2.index, t2.price, i);
+  const mm = neck - (head.price - neck);
+  const entry = candles[n - 1].c;
+  const rr = (sl: number) => tradeMath(entry, sl, TP).rr;
+  const chip = (name: string, sl: number, expect?: string) => ({
+    label: `${name} : risque ${usd(sl - entry)}, R/R ${fmtRR(rr(sl))}`, tone: rr(sl) >= 1.5 ? "bull" as const : "bear" as const,
+    data: { rr: fmtRR(rr(sl)), entry, sl, tp: TP, ...(expect ? { expect } : {}) },
+  });
   return (
-    <div className={className}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 800 400"
-      className="hidden sm:block w-full h-auto"
-    >
-      <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        {L.title}
-      </text>
-
-      <line x1="400" y1="40" x2="400" y2="370" stroke="#3f3f46" strokeWidth="1" />
-
-      {/* ═══ PANEL GAUCHE — Entrée à la cassure ═══ */}
-      <rect x="60" y="50" width="280" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="200" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{L.breakoutBadge}</text>
-
-      {/* H&S classique */}
-      <line x1="50" y1="140" x2="380" y2="140" stroke="#a1a1aa" strokeWidth="0.6" strokeDasharray="3 3" opacity="0.5" />
-      <rect x="315" y="127" width="38" height="11" rx="2" fill="#09090b" />
-      <text x="350" y="135" fill="#a1a1aa" fontSize="8" textAnchor="end">{L.shoulders}</text>
-      <line x1="50" y1="200" x2="380" y2="200" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="4 3" />
-      <rect x="52" y="205" width="98" height="12" rx="2" fill="#09090b" />
-      <text x="55" y="214" fill="#a1a1aa" fontSize="9" fontWeight="600">{locale === "es" ? "Línea clavicular 4 580$" : locale === "en" ? "Neckline 4 580$" : "Ligne de cou 4 580$"}</text>
-      <line x1="50" y1="140" x2="380" y2="140" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.4" />
-
-      <path d="M60,280 L100,200 L130,140 L170,200 L210,90 L260,200 L300,140 L340,250 L375,290" stroke="#71717a" strokeWidth="1.8" fill="none" strokeLinejoin="round" />
-      <circle cx="130" cy="140" r="3" fill="#ef4444" />
-      <circle cx="210" cy="90" r="4" fill="#ef4444" />
-      <circle cx="300" cy="140" r="3" fill="#ef4444" />
-
-      {/* Niveau SL/TP */}
-      <line x1="50" y1="140" x2="380" y2="140" stroke="#ef4444" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.6" />
-      <rect x="335" y="127" width="48" height="11" rx="2" fill="#09090b" />
-      <text x="380" y="135" fill="#ef4444" fontSize="8" textAnchor="end">SL 4 620$</text>
-      <line x1="50" y1="320" x2="380" y2="320" stroke="#10b981" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.6" />
-      <rect x="335" y="327" width="48" height="11" rx="2" fill="#09090b" />
-      <text x="380" y="335" fill="#10b981" fontSize="8" textAnchor="end">TP 4 470$</text>
-
-      {/* Cercle entrée à la cassure */}
-      <circle cx="340" cy="205" r="6" fill="#ef4444" />
-      <rect x="240" y="225" width="120" height="18" rx="4" fill="#ef444420" stroke="#ef4444" strokeWidth="0.8" />
-      <text x="300" y="237" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">{L.entryShort} 4 575$</text>
-
-      {/* ═══ PANEL DROIT — Entrée au retest ═══ */}
-      <rect x="460" y="50" width="280" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="600" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{L.retestBadge}</text>
-
-      <line x1="450" y1="140" x2="780" y2="140" stroke="#a1a1aa" strokeWidth="0.6" strokeDasharray="3 3" opacity="0.5" />
-      <rect x="715" y="127" width="38" height="11" rx="2" fill="#09090b" />
-      <text x="750" y="135" fill="#a1a1aa" fontSize="8" textAnchor="end">{L.shoulders}</text>
-      <line x1="450" y1="200" x2="780" y2="200" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="4 3" />
-      <rect x="452" y="205" width="98" height="12" rx="2" fill="#09090b" />
-      <text x="455" y="214" fill="#a1a1aa" fontSize="9" fontWeight="600">{locale === "es" ? "Línea clavicular 4 580$" : locale === "en" ? "Neckline 4 580$" : "Ligne de cou 4 580$"}</text>
-
-      {/* H&S + retest */}
-      <path d="M460,280 L500,200 L530,140 L570,200 L610,90 L660,200 L700,140 L730,230 L745,250 L765,210 L778,200" stroke="#71717a" strokeWidth="1.8" fill="none" strokeLinejoin="round" />
-      <circle cx="530" cy="140" r="3" fill="#ef4444" />
-      <circle cx="610" cy="90" r="4" fill="#ef4444" />
-      <circle cx="700" cy="140" r="3" fill="#ef4444" />
-
-      <line x1="450" y1="140" x2="780" y2="140" stroke="#ef4444" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.6" />
-      <rect x="735" y="127" width="48" height="11" rx="2" fill="#09090b" />
-      <text x="780" y="135" fill="#ef4444" fontSize="8" textAnchor="end">SL 4 620$</text>
-      <line x1="450" y1="320" x2="780" y2="320" stroke="#10b981" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.6" />
-      <rect x="735" y="327" width="48" height="11" rx="2" fill="#09090b" />
-      <text x="780" y="335" fill="#10b981" fontSize="8" textAnchor="end">TP 4 470$</text>
-
-      {/* Cercle entrée au retest (sur la neckline) */}
-      <circle cx="775" cy="200" r="6" fill="#10b981" />
-      <rect x="650" y="225" width="125" height="18" rx="4" fill="#10b98120" stroke="#10b981" strokeWidth="0.8" />
-      <text x="712" y="237" fill="#10b981" fontSize="9" fontWeight="600" textAnchor="middle">{L.entryShort} 4 580$</text>
-
-      <text x="400" y="385" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        {L.footer}
-      </text>
-    </svg>
-
-    {/* MOBILE : 2 stratégies entrée H&S ───────────────────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">{L.mobileTitle}</p>
-      <div className="rounded-lg border border-amber-400/40 bg-amber-400/8 p-3">
-        <p className="text-[13px] font-bold text-amber-400">{L.mobBreakoutT}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobBreakoutD}</p>
-      </div>
-      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">{L.mobRetestT}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobRetestD} <span className="font-bold">{L.mobRetestBold}</span> {L.mobRetestEnd}.</p>
-      </div>
-    </div>
-    </div>
+    <LessonChart
+      id="HSTradeExecutionDiagram"
+      title="Exécuter un ETE : entrée, deux SL possibles, measured move"
+      panels={[{
+        key: "h1", subtitle: "XAU/USD H1 — clôture sous la ligne de cou, entrée short",
+        decimals: 1, height: 340, candles,
+        segments: [{ key: "neck", i1: t1.index, p1: neckAt(t1.index), i2: n - 1, p2: neckAt(n - 1), tone: "neutral", dashed: true, label: `Ligne de cou ≈ ${usd(neck)}`, short: "Ligne de cou" }],
+        levels: [
+          { key: "sl-c", price: SL_CLASSIQUE, from: head.index, label: `SL classique ${usd(SL_CLASSIQUE)}`, short: "SL classique", tone: "bear", dashed: true, faint: true },
+          { key: "sl-t", price: SL_TACTIQUE, from: rs.index, label: `SL tactique ${usd(SL_TACTIQUE)}`, short: "SL tactique", tone: "bear", dashed: true },
+          { key: "entry", price: entry, from: n - 1, label: `Entrée ${usd(entry)}`, short: "Entrée", tone: "entry" },
+          { key: "mm", price: mm, from: n - 1, label: `Measured move ${usd(mm)}`, short: "Measured move", tone: "zone", dashed: true, faint: true },
+          { key: "tp", price: TP, from: n - 1, label: `TP ${usd(TP)}`, short: "TP", tone: "bull", dashed: true },
+        ],
+        markers: [
+          { key: "ls", i: ls.index, price: ls.price, label: "Épaule G.", tone: "neutral", side: "above" },
+          { key: "head", i: head.index, price: head.price, label: "Tête", tone: "neutral", side: "above" },
+          { key: "rs", i: rs.index, price: rs.price, label: "Épaule D.", tone: "neutral", side: "above" },
+        ],
+        chips: [chip("SL tactique", SL_TACTIQUE), chip("SL classique", SL_CLASSIQUE, "<1")],
+      }]}
+      caption={`Hauteur tête → ligne de cou : ${usd(head.price - neck)}, reportée sous la ligne de cou (${usd(mm)}) ; TP étendu à ${usd(TP)}.`}
+    />
   );
 }

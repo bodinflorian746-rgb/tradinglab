@@ -6,6 +6,7 @@ import { isContinuous, pips, type Candle } from "@/lib/lessons/chart-analysis";
 import { HS_CASES, SL_CASE } from "@/lib/lessons/line-data";
 import { confluenceModel, headShouldersModel, PIP, precisionModel } from "@/lib/lessons/models";
 import { BACKTEST_COUNTS, backtestStats, backtestTrades } from "@/lib/lessons/backtest";
+import { checkLots } from "./data-lots";
 
 let errors = 0;
 const lines: string[] = [];
@@ -91,6 +92,8 @@ for (const c of HS_CASES) {
   // avant la publication : marché calme (aucune bougie de plus de 5 pips)
   for (const k of ["nfp-egal", "nfp-positif", "nfp-negatif"]) check((CANDLES as Record<string, Candle[]>)[k].slice(0, 6).every((x) => x.h - x.l <= 5 * PIP), `${k} : avant la publication, bougie de plus de 5 pips`);
 }
+
+checkLots(check);
 
 lines.push(`Scénarios contrôlés : ${Object.keys(CANDLES).length} séries de bougies, ${HS_CASES.length + 6} schémas`);
 console.log(lines.join("\n"));

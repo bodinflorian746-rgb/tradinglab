@@ -1,229 +1,29 @@
-export default function PinBarSetupDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
-  const t = locale === "es"
-    ? {
-        title: "Pin bar bullish en el soporte — XAU/USD H4",
-        tpResistance: "TP — Resistencia 4 650$",
-        supportLabel: "Soporte 4 500$",
-        slLabel: "SL 4 470$",
-        pinBar: "Pin bar",
-        entry: "Entrada 4 520$",
-        wickLong: "Mecha larga = rechazo vendedores",
-        legend: "Riesgo 50$ · Ganancia potencial 130$ · R/R 2,6",
-        mobileTitle: "Pin bar bullish en el soporte — XAU/USD H4",
-        mobileTP: "Take Profit",
-        mobileEntry: "Entrada",
-        mobileSupport: "Soporte",
-        mobileSL: "Stop Loss",
-        mobileRisk: "Riesgo 50 $",
-        mobileGain: "Ganancia 130 $",
-        mobileFooter: "Mecha larga debajo del soporte = rechazo vendedores → entrada en regreso por encima del soporte.",
-      }
-    : locale === "en"
-    ? {
-        title: "Bullish pin bar at support — XAU/USD H4",
-        tpResistance: "TP — Resistance $4,650",
-        supportLabel: "Support $4,500",
-        slLabel: "SL $4,470",
-        pinBar: "Pin bar",
-        entry: "Entry $4,520",
-        wickLong: "Long wick = sellers rejected",
-        legend: "Risk $50 · Potential gain $130 · R/R 2.6",
-        mobileTitle: "Bullish pin bar at support — XAU/USD H4",
-        mobileTP: "Take Profit",
-        mobileEntry: "Entry",
-        mobileSupport: "Support",
-        mobileSL: "Stop Loss",
-        mobileRisk: "Risk $50",
-        mobileGain: "Gain $130",
-        mobileFooter: "Long wick below support = sellers rejected → entry on return above support.",
-      }
-    : {
-        title: "Pin bar bullish au support — XAU/USD H4",
-        tpResistance: "TP — Résistance 4 650$",
-        supportLabel: "Support 4 500$",
-        slLabel: "SL 4 470$",
-        pinBar: "Pin bar",
-        entry: "Entrée 4 520$",
-        wickLong: "Mèche longue = rejet vendeurs",
-        legend: "Risque 50$ · Gain potentiel 130$ · R/R 2,6",
-        mobileTitle: "Pin bar bullish au support — XAU/USD H4",
-        mobileTP: "Take Profit",
-        mobileEntry: "Entrée",
-        mobileSupport: "Support",
-        mobileSL: "Stop Loss",
-        mobileRisk: "Risque 50 $",
-        mobileGain: "Gain 130 $",
-        mobileFooter: "Mèche longue sous le support = rejet vendeurs → entrée sur retour au-dessus du support.",
-      };
+// Price action 2 — plan de trade : pin bar haussière sur le support 4 500$,
+// XAU/USD H4 en tendance haussière. Entrée 4 520$ (clôture de la pin bar), SL
+// 4 470$ (sous la mèche, marge incluse), TP 4 650$ (résistance H4 suivante).
+// Bougies : lib/lessons/scenarios.ts (« pinbar-setup ») ; R/R calculé.
 
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { tradeSetup } from "@/app/components/lessons/trade";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+
+export default function PinBarSetupDiagram(_props: { locale?: "fr" | "es" | "en" } = {}) {
+  const candles = CANDLES["pinbar-setup"];
+  const pin = candles.length - 1;
+  const k = candles[pin];
+  const t = tradeSetup({ entry: k.c, sl: 4470, tp: 4650, unit: "$", names: { tp: "TP résistance" }, from: pin - 1 });
   return (
-    <div>
-    <svg
-      viewBox="0 0 720 440"
-      width="100%"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="hidden sm:block"
-    >
-      {/* ── 1. Titre ── */}
-      <text x="360" y="28" textAnchor="middle" fontSize="16" fontWeight="600" fill="#10b981">
-        {t.title}
-      </text>
-
-      {/* ── 2. Axe vertical gauche ── */}
-      <line x1="80" y1="65" x2="80" y2="375" stroke="#27272a" strokeWidth="1" />
-
-      {/* Labels prix axe gauche — pastilles + texte */}
-
-      {/* 4 650$ — niveau TP */}
-      <rect x="22" y="69" width="56" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="72" y="80" textAnchor="end" fontSize="11" fill="#a1a1aa">4 650$</text>
-
-      {/* 4 520$ — niveau entrée */}
-      <rect x="22" y="169" width="56" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="72" y="180" textAnchor="end" fontSize="11" fill="#a1a1aa">4 520$</text>
-
-      {/* 4 500$ — niveau support */}
-      <rect x="22" y="199" width="56" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="72" y="210" textAnchor="end" fontSize="11" fill="#a1a1aa">4 500$</text>
-
-      {/* 4 470$ — niveau SL */}
-      <rect x="22" y="309" width="56" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="72" y="320" textAnchor="end" fontSize="11" fill="#a1a1aa">4 470$</text>
-
-      {/* ── 4. Ligne TP (emerald-500) ── */}
-      <line x1="120" y1="80" x2="680" y2="80" stroke="#10b981" strokeWidth="1.5" strokeDasharray="6 4" />
-      <rect x="562" y="72" width="154" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="715" y="83" textAnchor="end" fontSize="11" fill="#10b981">{t.tpResistance}</text>
-
-      {/* ── 3. Ligne Support (zinc-400) ── */}
-      <line x1="120" y1="210" x2="680" y2="210" stroke="#a1a1aa" strokeWidth="1.5" strokeDasharray="6 4" />
-      <rect x="613" y="202" width="104" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="715" y="213" textAnchor="end" fontSize="11" fill="#a1a1aa">{t.supportLabel}</text>
-
-      {/* ── 5. Ligne SL (red-500) ── */}
-      <line x1="120" y1="320" x2="680" y2="320" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="6 4" />
-      <rect x="649" y="312" width="68" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="715" y="323" textAnchor="end" fontSize="11" fill="#ef4444">{t.slLabel}</text>
-
-      {/* ── 6. Bougies bearish de contexte — approche du support ── */}
-
-      {/* Bearish 1 */}
-      <line x1="169" y1="130" x2="169" y2="200" stroke="#b91c1c" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="160" y="145" width="18" height="45" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.5" />
-
-      {/* Bearish 2 */}
-      <line x1="214" y1="160" x2="214" y2="215" stroke="#b91c1c" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="205" y="170" width="18" height="40" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.5" />
-
-      {/* Bearish 3 */}
-      <line x1="259" y1="180" x2="259" y2="220" stroke="#b91c1c" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="250" y="190" width="18" height="25" rx="2" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.5" />
-
-      {/* ── 7. Pin bar bullish (élément central) ── */}
-
-      {/* Mèche basse longue — perce sous le support */}
-      <line x1="331" y1="290" x2="331" y2="180" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
-      {/* Mèche haute courte */}
-      <line x1="331" y1="180" x2="331" y2="170" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
-      {/* Corps petit bullish */}
-      <rect x="320" y="170" width="22" height="15" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.5" />
-      {/* Annotation "Pin bar" */}
-      <rect x="299" y="149" width="64" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="331" y="160" textAnchor="middle" fontSize="11" fontWeight="600" fill="#10b981">{t.pinBar}</text>
-
-      {/* ── 8. Bougie de confirmation bullish ── */}
-      <line x1="389" y1="140" x2="389" y2="180" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="380" y="140" width="18" height="40" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.5" />
-
-      {/* ── 9. Bougie target bullish — vers le TP ── */}
-      <line x1="434" y1="100" x2="434" y2="145" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="425" y="100" width="18" height="45" rx="2" fill="#10b981" stroke="#059669" strokeWidth="1.5" />
-
-      {/* ── 10. Annotation Entrée ── */}
-      {/* Flèche pointant vers la gauche (vers la pin bar) */}
-      <line x1="456" y1="185" x2="406" y2="185" stroke="#10b981" strokeWidth="1.5" />
-      <path
-        d="M412 181 L406 185 L412 189"
-        stroke="#10b981"
-        strokeWidth="1.5"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* Pastille + texte */}
-      <rect x="458" y="179" width="97" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="462" y="190" textAnchor="start" fontSize="11" fontWeight="600" fill="#10b981">{t.entry}</text>
-
-      {/* ── 11. Annotation mèche longue ── */}
-      <rect x="224" y="299" width="214" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="331" y="310" textAnchor="middle" fontSize="10" fontStyle="italic" fill="#71717a">
-        {t.wickLong}
-      </text>
-
-      {/* ── 12. Légende bas ── */}
-      <rect x="204" y="399" width="312" height="14" rx="3" fill="#09090b" fillOpacity="0.85" />
-      <text x="360" y="410" textAnchor="middle" fontSize="12" fontWeight="500" fill="#d4d4d8">
-        {t.legend}
-      </text>
-    </svg>
-
-    {/* MOBILE : setup Pin bar bullish au support — XAU/USD H4 ────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
-      <p className="text-[14px] font-bold text-emerald-400 text-center leading-snug">
-        {t.mobileTitle}
-      </p>
-
-      {/* Mini-SVG : bougie Pin Bar bullish — longue mèche du bas, petit corps en haut */}
-      <svg viewBox="0 0 200 160" className="w-full h-auto max-h-[180px]" aria-label="Pin Bar setup" fill="none">
-        {/* Niveau supportive */}
-        <line x1="20" y1="130" x2="180" y2="130" stroke="#10b98155" strokeWidth="1" strokeDasharray="3 3" />
-        <rect x="22" y="118" width="56" height="11" rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.6" />
-        <text x="50" y="126" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Support</text>
-        {/* Pin Bar — mèche longue qui descend sous le support puis revient */}
-        <line x1="100" y1="30" x2="100" y2="140" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
-        {/* Corps petit en haut */}
-        <rect x="92" y="30" width="16" height="22" fill="#10b981" stroke="#059669" strokeWidth="1.4" rx="1.5" />
-        {/* Annotations */}
-        <rect x="118" y="25" width="62" height="13" rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.6" />
-        <text x="149" y="34" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">Corps</text>
-        <rect x="118" y="95" width="62" height="13" rx="2" fill="#f59e0b18" stroke="#f59e0b55" strokeWidth="0.6" />
-        <text x="149" y="104" fontSize="9" fill="#f59e0b" textAnchor="middle" fontWeight="700">Mèche</text>
-        {/* Flèche : rejet */}
-        <path d="M100,148 L60,148 M60,148 L65,143 M60,148 L65,153" stroke="#10b981" strokeWidth="1.4" fill="none" strokeLinecap="round" />
-        <text x="38" y="152" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">rejet ↑</text>
-      </svg>
-
-      <div className="space-y-2">
-        <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/30 p-2.5 flex justify-between items-center">
-          <span className="text-[12px] text-emerald-400/80 uppercase font-bold tracking-wider">{t.mobileTP}</span>
-          <span className="text-[15px] font-mono font-bold text-emerald-400">4 650 $</span>
-        </div>
-        <div className="rounded-lg bg-zinc-800 border border-zinc-700 p-2.5 flex justify-between items-center">
-          <span className="text-[12px] text-zinc-300 uppercase font-bold tracking-wider">{t.mobileEntry}</span>
-          <span className="text-[15px] font-mono font-bold text-white">4 520 $</span>
-        </div>
-        <div className="rounded-lg bg-zinc-800/60 border border-zinc-700 p-2.5 flex justify-between items-center">
-          <span className="text-[12px] text-zinc-400 uppercase font-bold tracking-wider">{t.mobileSupport}</span>
-          <span className="text-[14px] font-mono font-semibold text-zinc-300">4 500 $</span>
-        </div>
-        <div className="rounded-lg bg-red-500/10 border border-red-500/30 p-2.5 flex justify-between items-center">
-          <span className="text-[12px] text-red-400/80 uppercase font-bold tracking-wider">{t.mobileSL}</span>
-          <span className="text-[15px] font-mono font-bold text-red-400">4 470 $</span>
-        </div>
-      </div>
-
-      <div className="rounded-lg border border-zinc-700 bg-zinc-800/30 p-2.5 text-center space-y-1">
-        <p className="text-[13px] text-zinc-300">
-          <span className="text-red-400 font-bold">{t.mobileRisk}</span> · <span className="text-emerald-400 font-bold">{t.mobileGain}</span>
-        </p>
-        <p className="text-[15px] font-bold text-emerald-400">R/R = 2,6</p>
-      </div>
-
-      <p className="text-[12px] text-zinc-400 italic text-center leading-snug pt-2 border-t border-zinc-800">
-        {t.mobileFooter}
-      </p>
-    </div>
-    </div>
+    <LessonChart
+      id="PinBarSetupDiagram"
+      title="Pin bar haussière sur le support 4 500$"
+      panels={[{
+        key: "h4", subtitle: "XAU/USD H4 — tendance haussière, support touché 3 fois en 6 semaines",
+        decimals: 1, height: 320, candles,
+        levels: [{ key: "support", price: 4500, label: "Support 4 500$", short: "Support", tone: "bull", dashed: true, faint: true }, ...t.levels],
+        markers: [{ key: "pin", i: pin, price: k.l, label: "Pin bar", tone: "bull", side: "below" }],
+        chips: t.chips,
+      }]}
+      caption="Entrée à la clôture de la pin bar, SL sous sa mèche basse avec une marge."
+    />
   );
 }

@@ -5,6 +5,10 @@
   {"url":"/fr/formations/avance/lecon9","charts":["BacktestMetricsDiagram"]},
   {"url":"/fr/strategies/reversal/lecon4","charts":["SLManagementProgressionDiagram"]},
   {"url":"/fr/formations/macro/debutant/lecon3","charts":["ConsensusVsRealDiagram"]},
-  {"url":"/fr/strategies/reversal/lecon2","charts":["HSNecklineSlopeDiagram"]},
-  {"url":"/fr/formations/macro/avance/lecon4","charts":["RiskRegimesQuadrantDiagram"]}
+  {"url":"/fr/strategies/reversal/lecon2","charts":["HSNecklineSlopeDiagram","HSTradeExecutionDiagram"]},
+  {"url":"/fr/formations/macro/avance/lecon4","charts":["RiskRegimesQuadrantDiagram"]},
+  {"url":"/fr/formations/debutant/lecon3","charts":["CandleAnatomyDiagram","CandleExampleDiagram"]},
+  {"url":"/fr/strategies/price-action/lecon1","charts":["CandleAnatomyDiagram"]},
+  {"url":"/fr/strategies/price-action/lecon2","charts":["PinBarSetupDiagram"]},
+  {"url":"/fr/strategies/price-action/lecon3","charts":["BullishVsBearishEngulfingDiagram","EngulfingSetupDiagram"]}
 ]
