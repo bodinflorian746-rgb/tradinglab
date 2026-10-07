@@ -1,0 +1,9 @@
+[
+  { "url": "/fr/formations/intermediaire/lecon5", "charts": ["ConfluenceDiagram"] },
+  { "url": "/fr/strategies/support-resistance/lecon2", "charts": ["ConfluenceDiagram"] },
+  { "url": "/fr/formations/avance/lecon7", "charts": ["PrecisionEntryDiagram"] },
+  { "url": "/fr/formations/avance/lecon9", "charts": ["BacktestMetricsDiagram"] },
+  { "url": "/fr/strategies/reversal/lecon4", "charts": ["SLManagementProgressionDiagram"] },
+  { "url": "/fr/formations/macro/debutant/lecon3", "charts": ["ConsensusVsRealDiagram"] },
+  { "url": "/fr/strategies/reversal/lecon2", "charts": ["HSNecklineSlopeDiagram"] }
+]

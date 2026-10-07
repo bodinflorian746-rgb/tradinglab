@@ -70,7 +70,8 @@ const CODE_KEYS = new Set(["className", "class", "href", "src", "d", "fill", "st
   "variant", "size", "kind", "tone", "accent", "dir", "dotClass", "textClass", "valueClass", "colorClass", "slug", "path", "url", "mode",
   "direction", "htfBias", "macroContext", "chartShape", "category", "correctMistake", "decoyMistakes", "difficulties", "showLines", "metric",
   "correctAnswer", "optimal", "metaOverride", "level", "duration", "session", "asset", "volatility", "spread", "outcome", "result", "state",
-  "data-reveal", "data-pick", "data-choice", "data-line", "data-label-for", "aria-hidden", "transform", "transformOrigin", "fontSize", "opacity", "tags", "moduleId"]);
+  "data-reveal", "data-pick", "data-choice", "data-line", "data-label-for", "aria-hidden", "transform", "transformOrigin", "fontSize", "opacity", "tags", "moduleId",
+  "side", "expect"]);
 const looksLikeCode = (s: string) => {
   const t = s.trim();
   if (!/\p{L}{2}/u.test(t)) return true;
@@ -162,8 +163,29 @@ function extractTs(file: string): ContentText[] {
     if (ts.isPropertyAssignment(p) && p.initializer === node && /^["']?en["']?$/.test(p.name.getText(sf))) return true;
     return false;
   };
-  const skipKey = (node: ts.Node): boolean => {
+  // Valeur choisie par une condition (x ? "a" : "b", a ?? "b", `…${x ? "a" : "b"}`) : on remonte
+  // jusqu'à l'expression entière, dont le propriétaire (attribut, clé) décide
+  const climb = (node: ts.Node): ts.Node => {
+    let n = node;
+    for (;;) {
+      const q = n.parent;
+      if (!q) return n;
+      if ((ts.isConditionalExpression(q) && q.condition !== n) || ts.isParenthesizedExpression(q) || ts.isTemplateSpan(q)
+        || (ts.isTemplateExpression(q) && q !== node)
+        || (ts.isBinaryExpression(q) && /^(\|\||\?\?|&&)$/.test(q.operatorToken.getText(sf)))) n = q;
+      else return n;
+    }
+  };
+  // Objet de style en ligne (style={{ display: "flex" }}) : valeurs CSS
+  const inStyle = (o: ts.Node): boolean => {
+    const q = o.parent;
+    if (ts.isJsxExpression(q) && ts.isJsxAttribute(q.parent)) return q.parent.name.getText(sf) === "style";
+    return ts.isPropertyAssignment(q) && q.name.getText(sf) === "style";
+  };
+  const skipKey = (lit: ts.Node): boolean => {
+    const node = climb(lit);
     const p = node.parent;
+    if (ts.isPropertyAssignment(p) && p.initializer === node && ts.isObjectLiteralExpression(p.parent) && inStyle(p.parent)) return true;
     if (ts.isJsxAttribute(p) || (ts.isJsxExpression(p) && ts.isJsxAttribute(p.parent))) {
       const attr = ts.isJsxAttribute(p) ? p : (p.parent as ts.JsxAttribute);
       return CODE_KEYS.has(attr.name.getText(sf));

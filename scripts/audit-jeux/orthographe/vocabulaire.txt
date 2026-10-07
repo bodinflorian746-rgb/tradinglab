@@ -27,7 +27,6 @@ absolu
 absolue
 absolument
 absoluta
-absolute
 absoluto
 absorbe
 absorbé
@@ -344,7 +343,6 @@ ajustarse
 ajuste
 ajusté
 ajustée
-ajustement
 ajustent
 ajuster
 al
@@ -413,7 +411,6 @@ alíneate
 alineen
 alineó
 aliviado
-all
 allá
 allait
 allé
@@ -994,7 +991,6 @@ backtestes
 backtesting
 backtests
 bad
-badgepop
 baguette
 baisse
 baissé
@@ -1095,10 +1091,6 @@ berne
 besoin
 best
 béton
-bg-emerald
-bg-red
-bg-white
-bg-zinc
 biais
 biaise
 biaisé
@@ -1154,12 +1146,9 @@ bons
 bonus
 bord
 borde
-border
 border-amber
 border-blue
 border-emerald
-border-red
-border-zinc
 bordes
 bords
 borne
@@ -1171,7 +1160,6 @@ borrar
 borró
 boss
 bossant
-both
 botón
 bottom
 bouchons
@@ -1363,7 +1351,6 @@ cancelación
 cancelar
 cand
 candle
-candle--static
 canjea
 cansado
 cantidad
@@ -1675,6 +1662,7 @@ clôturé
 clôturée
 clôturées
 clôturer
+clôtures
 clôturés
 clous
 cluster
@@ -2101,7 +2089,6 @@ consecuencia
 consecuencias
 consécutifs
 consecutivas
-consécutive
 consécutives
 consecutivos
 conseil
@@ -2120,7 +2107,6 @@ conservar
 conservas
 conservateur
 conserve
-conservé
 conservée
 conserver
 considérablement
@@ -2566,8 +2552,6 @@ cumulée
 cumulent
 cumules
 curso
-cursor-default
-cursor-pointer
 cursos
 curva
 curvas
@@ -2621,6 +2605,7 @@ d'attention
 d'attirer
 d'au
 d'aujourd'hui
+d'autant
 d'autre
 d'autres
 d'avance
@@ -2894,7 +2879,6 @@ définir
 définis
 définissent
 définit
-définitif
 définition
 definitiva
 définitive
@@ -3478,9 +3462,7 @@ dynamiques
 e-mail
 earnings
 ease
-ease-in
 ease-in-out
-ease-out
 easing
 écart
 écartée
@@ -4180,7 +4162,6 @@ expansion
 expansión
 expansiones
 expansions
-expectancy
 expectante
 expectativa
 expectativas
@@ -4297,7 +4278,6 @@ factual
 factuel
 fade
 faded
-fadeexplain
 faible
 faiblement
 faibles
@@ -4406,6 +4386,7 @@ fijan
 fijar
 fijaste
 fijo
+fil
 filante
 filet
 filtra
@@ -4547,7 +4528,6 @@ forte
 fortement
 fortes
 forts
-forwards
 forzada
 forzadas
 forzado
@@ -4666,7 +4646,6 @@ futures
 futurs
 fvg
 gâchette
-gagn
 gagnant
 gagnante
 gagnants
@@ -4819,7 +4798,6 @@ gros
 grosor
 grosse
 grosses
-group-hover
 groupe
 groupes
 grupo
@@ -5207,8 +5185,7 @@ incertitude
 inchangés
 incierta
 incierto
-inclinación
-inclinaison
+inclinée
 incluant
 incluidas
 incluido
@@ -5351,7 +5328,6 @@ inoperante
 inopérante
 inscribe
 inscribirse
-inset
 insiste
 insistes
 instable
@@ -5807,7 +5783,6 @@ l'impulsion
 l'impulsivité
 l'inaction
 l'incertitude
-l'inclinaison
 l'indicateur
 l'indice
 l'inefficience
@@ -5824,7 +5799,6 @@ l'intention
 l'interface
 l'intérieur
 l'interprétation
-l'intersection
 l'intrabar
 l'invalidation
 l'inverse
@@ -6502,7 +6476,6 @@ minimizar
 mínimo
 mínimos
 minimum
-minmax
 minoristas
 minuit
 minúscula
@@ -6656,7 +6629,6 @@ móviles
 movimiento
 movimientos
 movió
-moy
 moyen
 moyenne
 moyenner
@@ -7080,7 +7052,6 @@ optimización
 optimizado
 optimizar
 óptimo
-óptimos
 option
 optionnel
 options
@@ -7429,7 +7400,6 @@ période
 périodes
 período
 períodos
-permanece
 permanence
 permanent
 permanente
@@ -7682,7 +7652,6 @@ positivement
 positives
 positivo
 possèdes
-possibilité
 possibilités
 possible
 possibles
@@ -8369,7 +8338,6 @@ ralentissent
 ralentit
 ralentiza
 rallies
-rallongé
 rallyes
 ramassage
 ramassé
@@ -8595,7 +8563,6 @@ recorrer
 recorrido
 recorridos
 recorrió
-recortado
 recorte
 recortes
 recoupement
@@ -8911,6 +8878,7 @@ répond
 réponse
 réponses
 reporte
+reportée
 repose
 reposé
 reposicionamiento
@@ -9210,9 +9178,7 @@ reward
 rezagado
 rgba
 rhume
-ri-fade
 ri-pulse
-ri-shake
 rien
 riesgo
 riesgos
@@ -9469,7 +9435,6 @@ sea
 sean
 séance
 séances
-sec
 secciones
 second
 secondaire
@@ -9497,7 +9462,6 @@ sécurise
 sécurisé
 sécuriser
 sécurité
-seg
 seguía
 seguían
 seguida
@@ -9618,8 +9582,6 @@ seule
 seulement
 seules
 seuls
-sh-bad
-sh-fade
 shadow
 shake
 shakeoptions
@@ -9687,7 +9649,6 @@ silencio
 silenciosa
 símbolo
 simetría
-simétrica
 simétricas
 simétrico
 simétricos
@@ -9706,7 +9667,6 @@ simulado
 simuladores
 simular
 simulateurs
-simulation
 simule
 simulé
 simulée
@@ -9891,7 +9851,6 @@ statistique
 statistiquement
 statistiques
 statut
-stepring
 stimuler
 stochastique
 stock
@@ -9919,7 +9878,6 @@ strictement
 strictes
 stricts
 stripe
-stroke-dashoffset
 structurant
 structure
 structuré
@@ -10291,7 +10249,6 @@ testés
 tests
 tête
 têtu
-text-white
 textbook
 than
 the
@@ -10505,11 +10462,8 @@ transiciones
 transit
 transiter
 transition
-transition-all
 transitions
 tránsito
-translate-x
-translatey
 translúcida
 translucide
 transmisión
@@ -10854,6 +10808,7 @@ vertebral
 vertébrale
 vertes
 vertical
+verticale
 verticales
 verts
 ves
@@ -10887,7 +10842,6 @@ viens
 vient
 vierge
 viernes
-view-box
 vigila
 vigilado
 vigílalos
@@ -11022,7 +10976,6 @@ wall
 week-end
 weekend
 weekly
-white
 wide
 win
 windows
@@ -11034,7 +10987,6 @@ wording
 workflow
 worst
 wrong
-xppop
 ya
 yen
 yeux

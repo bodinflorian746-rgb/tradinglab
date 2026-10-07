@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "audit:jeux": "node scripts/audit-jeux/run.mjs",
+    "audit:lecons": "node scripts/audit-lecons/run.mjs",
     "visual:check": "playwright test -c scripts/visual-check/visual.config.ts",
     "test": "vitest run"
   },
