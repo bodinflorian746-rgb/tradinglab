@@ -224,3 +224,10 @@
 .tsx-v2 .lc-result .lc-choice { justify-self: start; }
 .tsx-v2 .ls-bar--outer { position: relative; background: color-mix(in srgb, var(--ls-c, #9ca0ab) 35%, transparent); }
 .tsx-v2 .ls-bar-inner { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 7px; background: var(--ls-c, #9ca0ab); }
+/* Matrice sur mobile : toutes les colonnes tiennent sans défilement (390 px) */
+@media (max-width: 479px) {
+  .tsx-v2 .ls-matrix { border-spacing: 3px; }
+  .tsx-v2 .ls-matrix td { min-width: 0; padding: 7px 2px; }
+  .tsx-v2 .ls-matrix th { padding: 4px 2px; }
+}
+.tsx-v2 .ls-matrix abbr { text-decoration: none; }

@@ -10,10 +10,10 @@ export const DollarHubDiagram = (_props: { locale?: "fr" | "es" | "en" } = {}) =
       { tag: "DXY ↓", title: "Dollar faible", text: "Respiration pour les actifs cotés en dollar.", tone: "bull" },
     ]} />
     <Cards cols={4} mobileCols={2} items={[
-      { title: "Forex", value: "EUR/USD", text: "GBP/USD", tone: "entry" },
+      { title: "Forex", value: "EUR/USD", tone: "entry" },
       { title: "Or", value: "XAU/USD", tone: "zone" },
       { title: "Crypto", value: "BTC/USD", tone: "fib" },
-      { title: "Indices US", value: "Nasdaq", text: "S&P 500", tone: "sky" },
+      { title: "Indices US", value: "Nasdaq", tone: "sky" },
     ]} />
   </LessonSchema>
 );

@@ -16,6 +16,8 @@ export function FOMCTimelineDiagram(_props: { locale?: "fr" | "es" | "en" } = {}
   const cs = CANDLES["fomc-timeline"];
   const { decision, powell, real, end } = FOMC_AT;
   const top = Math.max(...cs.map((k) => k.h)), bottom = Math.min(...cs.map((k) => k.l));
+  // fenêtres horaires : une bande sous les bougies (règle de temps), pas une zone de prix
+  const band = { y1: bottom - (top - bottom) * 0.1, y2: bottom - (top - bottom) * 0.05 };
   const impulse = pips(cs[decision].h, cs[decision].o, PIP);
   const drop = pips(cs[powell].o, Math.min(...cs.slice(powell, end + 1).map((k) => k.l)), PIP);
   return (
@@ -26,13 +28,13 @@ export function FOMCTimelineDiagram(_props: { locale?: "fr" | "es" | "en" } = {}
       panels={[{
         key: "m5", title: "EUR/USD M5, de 19h45 à 21h40 (heure de Paris)", decimals: 5, height: 300, candles: cs,
         zones: [
-          { key: "chaos", y1: bottom, y2: top, from: decision, to: real - 1, tone: "bear", kind: "fenetre", label: "20h00-21h00 : zone instable", short: "Zone instable" },
-          { key: "reel", y1: bottom, y2: top, from: real, to: cs.length - 1, tone: "bull", kind: "fenetre", label: "21h00+ : direction réelle", short: "Direction réelle" },
+          { key: "chaos", ...band, from: decision, to: real - 1, tone: "bear", kind: "fenetre", label: "20h00-21h00 : zone instable", short: "Zone instable" },
+          { key: "reel", ...band, from: real, to: cs.length - 1, tone: "bull", kind: "fenetre", label: "21h00+ : direction réelle", short: "Direction réelle" },
         ],
         markers: [
           { key: "fed", i: decision, price: cs[decision].h, label: "20h00 Décision Fed", short: "20h00 Fed", tone: "entry", side: "above" },
           { key: "powell", i: powell, price: cs[powell].h, label: "20h30 Discours Powell", short: "20h30 Powell", tone: "zone", side: "above" },
-          { key: "real", i: real, price: cs[real].l, label: "21h00 clôture M5 confirmée", short: "21h00 clôture", tone: "bull", side: "below" },
+          { key: "real", i: real, price: cs[real].c, label: "21h00 : clôture M5 confirmée", short: "21h00 clôture", tone: "bull", side: "below", role: "close" },
         ],
         chips: [
           { label: `20h00 : +${impulse} pips, piège fréquent`, tone: "entry", data: { move: impulse } },
