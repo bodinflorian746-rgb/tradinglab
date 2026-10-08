@@ -2,8 +2,6 @@ a-t-elle
 a-t-il
 a-tu
 abajo
-abandona
-abandonner
 abierta
 abiertas
 abierto
@@ -15,6 +13,7 @@ aborda
 aboutir
 aboutisse
 aboutissement
+above
 abre
 abren
 abres
@@ -30,15 +29,12 @@ absoluta
 absoluto
 absorbe
 absorbé
-absorbée
 absorbées
 absorben
 absorbent
 absorber
 absorbés
-absorbida
 absorbidas
-absorbido
 absorbieron
 absorción
 absorption
@@ -85,6 +81,7 @@ accionable
 accionables
 accionarios
 acciones
+accommodante
 accompagnée
 accompagnent
 accomplis
@@ -236,7 +233,6 @@ affaibli
 affaiblie
 affaiblir
 affaiblissent
-affaiblit
 affecte
 affectées
 affichait
@@ -293,9 +289,7 @@ agressive
 agressivement
 agressives
 agressivité
-agri
 agrícola
-agrícolas
 agricole
 agriculture
 agrupamientos
@@ -414,6 +408,7 @@ aliviado
 allá
 allait
 allé
+allemand
 aller
 allí
 alliée
@@ -430,7 +425,6 @@ alternancia
 alternando
 alternant
 alterne
-altitude
 alto
 altos
 altura
@@ -439,7 +433,6 @@ amarillo
 amateur
 ámbar
 ambas
-amber
 ambicioso
 ambigu
 ambigua
@@ -450,7 +443,6 @@ ambitieux
 ambitious
 ambos
 améliore
-amélioré
 améliorer
 amené
 américain
@@ -464,7 +456,6 @@ amontonan
 amorce
 ample
 amplement
-amples
 amplia
 amplía
 ampliado
@@ -538,10 +529,7 @@ ancré
 ancrer
 anda
 anglais
-angle
-ángulo
 anim
-animation
 année
 années
 annoncé
@@ -555,7 +543,6 @@ annule
 annulée
 annuler
 año
-anormal
 anormalement
 anormalmente
 años
@@ -613,7 +600,6 @@ anula
 anulaba
 anulación
 anulan
-anular
 anuncia
 anuncian
 anunciar
@@ -677,10 +663,8 @@ apporter
 apprend
 apprendre
 apprends
-apprends-la
 apprends-les
 appris
-approchant
 approche
 approché
 approfondies
@@ -689,7 +673,6 @@ approprié
 approximation
 aprecia
 aprende
-apréndela
 apréndelos
 aprender
 aprendes
@@ -788,7 +771,6 @@ ascendantes
 ascendants
 ascendente
 ascendentes
-asegura
 asegurado
 aseguramiento
 asegurar
@@ -915,9 +897,9 @@ aurait-il
 ausencia
 ausente
 aussi
+aussitôt
 autant
 auteur
-auto
 automática
 automáticamente
 automáticas
@@ -982,7 +964,6 @@ ayer
 ayuda
 ayudar
 azar
-azul
 back
 backtest
 backtestear
@@ -1075,6 +1056,7 @@ bastar
 bat
 bataille
 batalla
+bear
 bearish
 beau
 beaucoup
@@ -1082,6 +1064,7 @@ beginner
 bel
 belle
 belles
+below
 benchmark
 bénéfice
 beneficiar
@@ -1089,11 +1072,9 @@ beneficio
 beneficios
 berne
 besoin
-best
 béton
 biais
 biaise
-biaisé
 biaisées
 biaschart
 bid
@@ -1111,11 +1092,9 @@ binario
 bitcoin
 blanco
 blancos
-blanda
 blandas
 blandos
 blé
-bleu
 bloc
 block
 blocks
@@ -1124,7 +1103,7 @@ bloomberg
 bloque
 bloquea
 bloquear
-blue
+bloquer
 blur
 body
 boe
@@ -1152,6 +1131,7 @@ border-emerald
 bordes
 bords
 borne
+bornée
 borner
 bornes
 borra
@@ -1226,13 +1206,12 @@ buena
 buenas
 bueno
 buenos
-buffer
 bug
 build
 builder
+bull
 bullish
 busca
-buscaban
 buscada
 buscado
 buscados
@@ -1251,7 +1230,6 @@ búsqueda
 but
 bute
 buy
-buy-sell-no-trade
 buy-side
 c'est
 c'est-à-dire
@@ -1281,7 +1259,6 @@ caer
 caes
 caída
 caídas
-caíste
 caja
 cala
 calado
@@ -1457,10 +1434,9 @@ cazar
 ce
 cebo
 ceci
-cédé
+cède
 ceder
 céder
-cedió
 cela
 celle
 celles
@@ -1521,13 +1497,11 @@ character
 charge
 chargement
 chart
-chart-detail-labels
 charts
 chases
 chasse
 chassé
 chassée
-chassent
 chassent-elles
 chasser
 chasses
@@ -1576,7 +1550,6 @@ choisis-tu
 choisit
 choix
 chômage
-choque
 chose
 choses
 christine
@@ -1587,7 +1560,6 @@ chuter
 chutes
 ci-dessous
 cible
-ciblé
 ciblée
 ciblent
 cibles
@@ -1609,7 +1581,6 @@ ciertos
 cifra
 cifras
 cima
-cimas
 cinco
 cinq
 circle
@@ -1671,7 +1642,6 @@ co
 coach
 cobertura
 cobra
-cobre
 coche
 cochées
 cocinar
@@ -1815,7 +1785,6 @@ comparé
 comparée
 comparer
 compares
-comparison
 comparten
 compensa
 compensado
@@ -1893,7 +1862,6 @@ comprar
 comprarlo
 compraron
 compras
-compraste
 compréhension
 comprend
 comprende
@@ -1903,7 +1871,6 @@ comprends
 comprensión
 compresión
 compresse
-compressé
 compression
 comprime
 compris
@@ -2067,7 +2034,6 @@ connaître
 connecté
 connecte-toi
 connecter
-connectés
 connexion
 connu
 connue
@@ -2100,14 +2066,12 @@ consensus
 conséquence
 conséquences
 conserva
-conservada
 conservado
 conservador
 conservar
 conservas
 conservateur
 conserve
-conservée
 conserver
 considérablement
 considerablemente
@@ -2196,6 +2160,7 @@ contenus
 contestación
 contestation
 contexte
+contextes
 contexto
 contextual
 contextuelle
@@ -2216,15 +2181,11 @@ continues
 continuidad
 continuité
 continuo
-continuó
 continúo
 contourne
 contra
-contra-contexto
-contra-régimen
 contra-tendencia
 contra-trade
-contra-trend
 contracción
 contracorriente
 contraction
@@ -2252,18 +2213,14 @@ contraste
 contratendencia
 contratiempo
 contre
-contre-contexte
 contre-courant
 contre-mouvement
 contre-pied
 contre-productif
-contre-régime
-contre-sens
 contre-temps
 contre-tendance
 contre-trade
 contre-trader
-contre-trend
 contredire
 contredisent
 contredit
@@ -2305,7 +2262,6 @@ copier
 corazón
 core
 corps
-corr
 corre
 corrección
 correcciones
@@ -2355,6 +2311,7 @@ corrigée
 corrigen
 corrigent
 corriger
+corrigés
 corta
 cortando
 cortar
@@ -2383,6 +2340,7 @@ cou
 couche
 coucher
 couleur
+couleurs
 coup
 coupant
 coupe
@@ -2422,7 +2380,6 @@ craque
 crash
 crea
 creación
-creaciones
 creada
 creado
 creados
@@ -2474,11 +2431,9 @@ croire
 crois
 croise
 croisé
-croisées
 croisement
 croisent
 croiser
-croisés
 croissance
 croit
 cross
@@ -2489,10 +2444,7 @@ cruellement
 cruelmente
 cruz
 cruza
-cruzadas
 cruzado
-cruzados
-cruzan
 cruzar
 cruzarlo
 crypto
@@ -2508,7 +2460,6 @@ cuales
 cuáles
 cualidad
 cualquier
-cualquiera
 cuando
 cuándo
 cuántas
@@ -2537,25 +2488,20 @@ cuestionado
 cuestionarios
 cuidado
 cuisiner
-cuivre
 culminación
 cultivando
 cultiver
-cumbre
-cumbres
 cumple
 cumplido
 cumplir
 cumule
 cumulé
-cumulée
 cumulent
 cumules
 curso
 cursos
 curva
 curvas
-curve
 cycle
 cycles
 d'abonnement
@@ -2575,7 +2521,6 @@ d'actifs
 d'actionnable
 d'activation
 d'activité
-d'admettre
 d'administration
 d'affilée
 d'affiliation
@@ -2587,7 +2532,6 @@ d'aller
 d'amplitude
 d'analyse
 d'analyser
-d'angleterre
 d'anticipations
 d'anticiper
 d'appât
@@ -2632,7 +2576,6 @@ d'envisager
 d'épaisseur
 d'épuisement
 d'equal
-d'équilibré
 d'erreur
 d'erreurs
 d'espace
@@ -2656,7 +2599,6 @@ d'exploiter
 d'exposition
 d'extension
 d'habitude
-d'histoire
 d'hiver
 d'identification
 d'identifier
@@ -2669,7 +2611,6 @@ d'impulser
 d'impulsion
 d'indécision
 d'inflation
-d'info
 d'information
 d'installation
 d'institutions
@@ -2677,7 +2618,6 @@ d'intelligence
 d'intérêt
 d'interpréter
 d'invalidation
-d'inverser
 d'inversion
 d'investissement
 d'ob
@@ -2754,7 +2694,6 @@ debilitan
 debilitándose
 debilitar
 debilitarse
-débilmente
 débit
 debitados
 débités
@@ -2961,7 +2900,6 @@ deprecia
 déprécie
 depuis
 dérapages
-derecha
 derecho
 derechos
 deriva
@@ -3012,7 +2950,6 @@ descalifica
 descalificada
 descansado
 descartada
-descartar
 descend
 descendante
 descendantes
@@ -3070,13 +3007,11 @@ desplazamiento
 desplazamientos
 desploman
 desplome
-despreciable
 desproporcionada
 desproporcionado
 después
 dessin
 dessine
-dessinée
 dessinent
 dessous
 dessus
@@ -3100,7 +3035,6 @@ détail
 détaille
 détaillé
 détaillée
-détaillées
 détaillés
 détails
 detallado
@@ -3125,7 +3059,6 @@ détection
 détends
 detenerse
 detenerte
-detenidos
 deteniéndose
 detente
 determina
@@ -3162,6 +3095,7 @@ devenu
 devenue
 devenus
 deviendrai
+deviendrait
 deviennent
 deviens
 devient
@@ -3181,7 +3115,6 @@ diaria
 diario
 días
 dibuja
-dibujada
 dibujan
 dibujar
 dibujo
@@ -3250,7 +3183,6 @@ directions
 directo
 director
 dirige
-dirigido
 dis
 disait
 disciplina
@@ -3276,7 +3208,6 @@ diseñada
 diseñado
 disent
 disminuye
-disp
 dispara
 disparado
 disparador
@@ -3285,7 +3216,6 @@ disparan
 disparándose
 disparar
 disparará
-dispararon
 dispararse
 disparo
 disparó
@@ -3293,7 +3223,6 @@ dispersion
 dispersión
 displacement
 displacements
-display
 dispondrías
 disponible
 disponibles
@@ -3313,6 +3242,7 @@ distinctes
 distinctif
 distinction
 distincts
+distinguait
 distingue
 distinguen
 distinguent
@@ -3462,11 +3392,9 @@ dynamiques
 e-mail
 earnings
 ease
-ease-in-out
 easing
 écart
 écartée
-écarter
 ecb
 échange
 échangé
@@ -3476,6 +3404,7 @@ ecb
 échappe
 échapper
 échec
+échecs
 échelle
 échelles
 échoue
@@ -3495,7 +3424,6 @@ económicos
 économisés
 economista
 économiste
-ecosistema
 écoulé
 écoulées
 écoute
@@ -3514,13 +3442,11 @@ efecto
 efface
 effacé
 effacer
-effaces
 effectif
 effectivement
 efficace
 efficaces
 efficacité
-effleure
 effondrement
 eficacia
 eficaz
@@ -3635,7 +3561,6 @@ empruntent
 emprunter
 empuja
 empujado
-empujan
 empujar
 empujaron
 en
@@ -3651,7 +3576,6 @@ encaisses
 encaja
 encarga
 encendida
-encendido
 encendidos
 enchaîne
 enchaînement
@@ -3689,14 +3613,13 @@ enfría
 engagé
 engagée
 engagement
-engañosa
 engañosos
 engloba
 englobando
 englobant
 englobante
 englobe
-engloutit
+englobé
 engulfing
 engulfings
 engulle
@@ -3806,7 +3729,6 @@ equilibrar
 équilibré
 équilibrés
 equilibrio
-equity
 equivaldría
 equivale
 équivalences
@@ -3824,8 +3746,6 @@ eran
 ère
 eres
 erosionarse
-errática
-erratique
 erreur
 erreurs
 erróneo
@@ -3855,7 +3775,6 @@ escuchaste
 ese
 esencial
 esenciales
-esmeralda
 eso
 esos
 espace
@@ -3865,7 +3784,6 @@ especial
 específica
 específicas
 específico
-espectro
 especulación
 especulativos
 espejo
@@ -3885,7 +3803,6 @@ esperanza
 esperar
 esperaron
 esperas
-esperaste
 espéré
 espérer
 espero
@@ -4075,14 +3992,11 @@ evoluciona
 évolue
 évolue-t-il
 ex
-ex-high
 ex-hl
 ex-lh
-ex-low
 ex-nivel
 ex-résistance
 ex-resistencia
-ex-support
 exact
 exacta
 exactamente
@@ -4110,7 +4024,6 @@ excès
 excesiva
 excesivo
 exceso
-excess
 excessif
 excessive
 exclues
@@ -4136,7 +4049,6 @@ exemple
 exemples
 exercice
 exercices
-exhaustion
 exige
 existait
 existante
@@ -4152,7 +4064,6 @@ existía
 existiera
 exit
 éxito
-exitosa
 exits
 exótico
 exóticos
@@ -4244,6 +4155,7 @@ extendidas
 extendido
 extension
 extensión
+extensions
 externa
 externas
 externe
@@ -4279,7 +4191,6 @@ factuel
 fade
 faded
 faible
-faiblement
 faibles
 faiblesse
 faiblesses
@@ -4378,6 +4289,7 @@ fibonacci
 fichier
 fidélité
 fidelización
+fige
 figer
 fija
 fijadas
@@ -4455,7 +4367,6 @@ flota
 flotte
 floue
 flow
-flowchart
 fluctúa
 fluctuación
 fluctuation
@@ -4793,7 +4704,6 @@ grille
 grillent
 grimpe
 grimpé
-gris
 gros
 grosor
 grosse
@@ -4853,7 +4763,6 @@ haces
 hacia
 haciendo
 haga
-hagas
 hago
 halcón
 han
@@ -4882,7 +4791,6 @@ hayas
 haz
 hazte
 he
-head
 headline
 headlines
 hebdo
@@ -4891,13 +4799,11 @@ hecha
 hecho
 hechos
 hemos
-héritée
 hero
 herramienta
 herramientas
 hésitant
 hésitante
-hésitation
 hésite
 hésiter
 heure
@@ -4945,8 +4851,6 @@ horizons
 horizontal
 horizontale
 horizontales
-horizontalidad
-horizontalité
 horizontaux
 horizontes
 horodatage
@@ -5149,7 +5053,6 @@ impulsada
 impulsado
 impulsan
 impulsar
-impulse
 impulser
 impulsif
 impulsifs
@@ -5175,7 +5078,7 @@ inadapté
 inaperçues
 inaplicable
 inapplicable
-inattendu
+inattendue
 inattendues
 incapacité
 incertain
@@ -5250,11 +5153,9 @@ industria
 industrial
 industrie
 industriel
-industrielle
 inefficience
 ineficiencia
 inerte
-inesperado
 inesperados
 inestabilidad
 inestable
@@ -5269,7 +5170,6 @@ inférieurs
 inferior
 inferiores
 infinidad
-infinite
 infinité
 inflación
 inflacionaria
@@ -5281,15 +5181,11 @@ inflationnistes
 inflexion
 inflexión
 influence
-influencé
 influencées
 influencent
-influencia
 influenciadas
-influenciado
 influye
 influyen
-info
 informa
 información
 informaciones
@@ -5300,7 +5196,6 @@ informative
 informe
 infrautilizado
 ingenuo
-inglaterra
 inglés
 ingresa
 ingresan
@@ -5312,7 +5207,6 @@ iniciar
 inicio
 initial
 initiale
-initialement
 initiaux
 injecter
 inmediata
@@ -5321,11 +5215,8 @@ inmediato
 inmediatos
 inminente
 inmoviliza
-innecesariamente
 innegociable
 inner
-inoperante
-inopérante
 inscribe
 inscribirse
 insiste
@@ -5334,11 +5225,9 @@ instable
 instagram
 instala
 instalación
-instalada
 instalado
 instalar
 installé
-installée
 installer
 instant
 instantané
@@ -5372,6 +5261,7 @@ insuffisante
 insuffisantes
 insuficiente
 insuficientes
+int
 intact
 intacta
 intacte
@@ -5457,8 +5347,6 @@ intuition
 intuitiva
 intuitive
 inundan
-inútil
-inutile
 inutilement
 invalida
 inválida
@@ -5533,8 +5421,8 @@ irréversible
 irse
 isolé
 isolée
-isolées
 isolés
+issues
 italic
 items
 iu
@@ -5548,6 +5436,8 @@ j'entre
 j'évite
 jamais
 jamás
+jambe
+janv
 janvier
 japon
 japón
@@ -5599,6 +5489,7 @@ jugement
 juger
 juicio
 juillet
+juin
 julio
 junto
 juntos
@@ -5626,7 +5517,6 @@ keeps
 killzone
 killzones
 kong
-l-shoulder
 l'a
 l'abonnement
 l'aboutissement
@@ -5648,7 +5538,6 @@ l'affichage
 l'agressivité
 l'ait
 l'ajout
-l'alerte
 l'alignement
 l'amplitude
 l'analyse
@@ -5678,6 +5567,7 @@ l'attachement
 l'atteignait
 l'atteigne
 l'atteint
+l'attend
 l'attente
 l'attention
 l'audace
@@ -5690,7 +5580,6 @@ l'aveugle
 l'écart
 l'échelle
 l'économie
-l'écosystème
 l'écran
 l'edge
 l'effet
@@ -5703,10 +5592,10 @@ l'emploi
 l'empreinte
 l'enchaînement
 l'endroit
+l'énergie
 l'engulfing
 l'enregistrement
 l'ensemble
-l'entonnoir
 l'entrée
 l'envers
 l'envie
@@ -5717,7 +5606,6 @@ l'épargne
 l'épaule
 l'épaule-tête-épaule
 l'épuisement
-l'eql
 l'équilibre
 l'erreur
 l'espérance
@@ -5743,7 +5631,6 @@ l'évolution
 l'ex-hl
 l'ex-niveau
 l'excès
-l'exécute
 l'exécuter
 l'exécution
 l'exercice
@@ -5777,7 +5664,6 @@ l'image
 l'imagines
 l'impact
 l'impatience
-l'importance
 l'improvisation
 l'impulsion
 l'impulsivité
@@ -5920,7 +5806,6 @@ lejos
 lendemain
 lent
 lenta
-lentamente
 lentas
 lente
 lentement
@@ -5930,7 +5815,6 @@ lentitud
 lento
 lentos
 lents
-leo
 lequel
 les
 lesquelles
@@ -6050,7 +5934,6 @@ llena
 llenada
 llenado
 llenar
-lleno
 lleva
 llevar
 llevas
@@ -6109,7 +5992,6 @@ low
 lower
 lows
 lu
-lucha
 luchar
 lucide
 lucidez
@@ -6124,7 +6006,6 @@ lui-même
 lundi
 lunes
 lus
-lutte
 lutter
 lynx
 m'abstiens
@@ -6183,7 +6064,6 @@ manera
 maneras
 mangé
 manger
-manière
 manipulación
 manipulaciones
 manipulan
@@ -6214,8 +6094,6 @@ mantuvo
 manual
 manuel
 manuelle
-manufacturero
-manufacturier
 manufacturing
 mapa
 marca
@@ -6225,7 +6103,6 @@ marcadas
 marcado
 márcalo
 márcalos
-marcan
 marcar
 marcaría
 marcas
@@ -6250,7 +6127,6 @@ marqué
 marque-le
 marque-les
 marquée
-marquent
 marquer
 marques
 mars
@@ -6297,16 +6173,12 @@ mauvaise
 mauvaises
 max
 máx
-max-width
 máxima
-maximal
 maximale
 maximise
-maximisé
 maximiser
 maximises
 maximiza
-maximizado
 maximizar
 maximizas
 máximo
@@ -6334,8 +6206,6 @@ medianoche
 mediante
 medias
 médiatisé
-mediatizada
-mediatizado
 medible
 medida
 medido
@@ -6354,10 +6224,10 @@ meilleures
 meilleurs
 mejor
 mejora
-mejorado
 mejoran
 mejorar
 mejores
+mélangé
 membre
 membres
 membresía
@@ -6411,7 +6281,6 @@ met
 meta
 metatrader
 météo
-meteorología
 méthode
 méthodes
 méthodique
@@ -6435,7 +6304,6 @@ micro-mouvements
 micro-structure
 micromanagement
 micromovimientos
-middle
 mide
 midnight
 miedo
@@ -6456,21 +6324,15 @@ mineur
 mineure
 mini
 mini-baissière
-mini-estructuras
 mini-gráfico
 mini-jeux
 mini-juegos
-mini-niveau
-mini-nivel
-mini-pico
 mini-pullback
-mini-rebond
-mini-rebote
-mini-sommet
-mini-structures
+mini-structure
 mínima
 minimal
 minimale
+minime
 minimiser
 minimizar
 mínimo
@@ -6529,11 +6391,9 @@ modera
 moderada
 moderadamente
 moderado
-moderados
 modéré
 modère
 modérée
-modérées
 modérément
 modeste
 modesto
@@ -6556,12 +6416,11 @@ módulos
 moindre
 moins
 mois
+mois-ci
 moitié
 molle
 molles
 moment
-momentáneamente
-momentanément
 momento
 momentos
 moments
@@ -6612,6 +6471,7 @@ motivo
 motores
 mots
 mots-signaux
+mou
 mourir
 mous
 mouvement
@@ -6668,12 +6528,14 @@ multiplie
 multipliée
 multiplient
 multiplier
+multiplies
 multitemporal
 mundial
 mundiales
 mundo
 muy
 n'a
+n'achète
 n'achètes
 n'administrez
 n'agisse
@@ -6687,6 +6549,7 @@ n'arrive
 n'arrivent
 n'arrivera
 n'as
+n'atteignent
 n'attend
 n'aura
 n'auraient
@@ -6746,7 +6609,6 @@ naturel
 naturelle
 naturellement
 naturelles
-naturels
 naviguer
 ne
 né
@@ -6765,13 +6627,13 @@ nécessite
 nécessité
 nécessitent
 négatif
+négatifs
 negativa
 negativas
 négative
 négativement
 négatives
 negativo
-négligeable
 negociables
 negociación
 négociation
@@ -6802,7 +6664,6 @@ ningún
 ninguna
 ninguno
 nítida
-nítidamente
 nítido
 nítidos
 niveau
@@ -6818,7 +6679,6 @@ noción
 nociones
 nocturna
 nocturnas
-nocturne
 nocturno
 noient
 nom
@@ -6840,7 +6700,6 @@ non-pris
 non-retestée
 non-revisité
 non-revisitée
-non-scaling-stroke
 none
 normal
 normale
@@ -6934,9 +6793,7 @@ observer
 observes
 observo
 obtener
-obtenido
 obtenir
-obtenu
 obtienen
 obtienes
 obtiennent
@@ -6983,7 +6840,6 @@ ojo
 ok
 ola
 olas
-old
 olvidada
 olvidar
 olvidaste
@@ -7217,6 +7073,7 @@ participan
 participantes
 participants
 participation
+participe
 participent
 particular
 particulares
@@ -7269,10 +7126,8 @@ passera
 passes
 passés
 passif
-path
 patience
 patient
-patientant
 patiente
 patienter
 patients
@@ -7312,8 +7167,6 @@ penalizan
 pendant
 pendants
 pendiente
-péndulo
-penetra
 penetración
 pénétration
 pensada
@@ -7331,7 +7184,6 @@ peores
 pequeña
 pequeñas
 pequeño
-pequeños
 perçage
 perce
 percé
@@ -7387,10 +7239,7 @@ perfectos
 perfil
 perfora
 perforación
-perforaciones
-perforado
 perforan
-perforation
 perforations
 performance
 performe
@@ -7403,7 +7252,6 @@ períodos
 permanence
 permanent
 permanente
-permanezca
 permet
 permettent
 permettre
@@ -7452,6 +7300,7 @@ peur
 peut
 peut-elle
 peut-être
+peut-il
 peuvent
 peux
 phase
@@ -7463,7 +7312,6 @@ physiquement
 pic
 picked
 pico
-picos
 pide
 piege
 piégé
@@ -7502,7 +7350,6 @@ pires
 piso
 pivot
 pivote
-pivotes
 pivots
 pixel
 plaçant
@@ -7656,12 +7503,10 @@ possibilités
 possible
 possibles
 post
-post-barrido
 post-breakout
 post-confirmación
 post-confirmation
 post-estabilización
-post-fomc
 post-liquidez
 post-liquidité
 post-news
@@ -7674,7 +7519,6 @@ post-rechazo
 post-rejet
 post-stabilisation
 post-stop-hunt
-post-sweep
 post-swing
 posteriores
 posteriori
@@ -7703,7 +7547,6 @@ poursuivre
 pourtant
 poussant
 pousse
-poussent
 pousser
 pouvait
 pouvez
@@ -7728,8 +7571,6 @@ pré-fomc
 pre-identificar
 pré-identifier
 pré-marché
-pre-market
-pré-market
 pre-mercado
 pré-news
 pre-nfp
@@ -7944,11 +7785,9 @@ privé
 priver
 privilegia
 privilegiada
-privilegiados
 privilegiar
 privilégiée
 privilégier
-privilégiés
 prix
 pro
 pro-endurecimiento
@@ -8063,7 +7902,6 @@ projection
 projections
 projet
 projetée
-projeter
 projette
 prolonga
 prolongación
@@ -8074,7 +7912,6 @@ prolonge
 prolongée
 prolongement
 prolonger
-prolongues
 promediar
 promedio
 promesa
@@ -8146,7 +7983,6 @@ proyección
 proyecciones
 proyecta
 proyectada
-proyectar
 proyecto
 prudence
 prudencia
@@ -8296,7 +8132,6 @@ quién
 quienes
 quieras
 quiere
-quieren
 quieres
 quirúrgica
 quítalo
@@ -8309,7 +8144,6 @@ quizás
 quoi
 quotidien
 quotidienne
-r-shoulder
 ra
 raccourci
 raccourcissent
@@ -8336,7 +8170,6 @@ ralentissant
 ralentissement
 ralentissent
 ralentit
-ralentiza
 rallies
 rallyes
 ramassage
@@ -8392,9 +8225,7 @@ rdquo
 re
 re-abres
 re-breakout
-re-casse
 re-cassé
-re-cierra
 re-cierre
 re-clôture
 re-entrada
@@ -8404,7 +8235,6 @@ re-entrée
 ré-entrer
 ré-entres
 ré-ouvres
-re-rompe
 re-teste
 re-testee
 re-tester
@@ -8420,7 +8250,6 @@ reacciones
 reaccionó
 reached
 réactif
-reaction
 réaction
 réactions
 reactive
@@ -8661,6 +8490,7 @@ referencia
 referencias
 referme
 refermé
+refermée
 reflation
 refleja
 reflejar
@@ -8709,16 +8539,13 @@ regresa
 regresado
 regresan
 regresar
-regresará
 regrese
 regreso
 regresó
 regroupements
-regular
 regularidad
 régularité
 regularmente
-régulière
 régulièrement
 rehusarse
 reiniciar
@@ -8735,7 +8562,6 @@ réintègre
 réintégrée
 réintégrer
 reintentar
-rejection
 rejet
 rejeté
 rejetée
@@ -8776,8 +8602,6 @@ relie
 reliée
 relier
 relire
-rellena
-rellenada
 remar
 remarque
 remarqué
@@ -8829,7 +8653,6 @@ rentable
 rentables
 rentre
 rentrer
-rentres
 renunciar
 renuncias
 renversé
@@ -8855,6 +8678,7 @@ repéré
 repère
 repérée
 repérer
+repérés
 repères
 répété
 répète
@@ -8938,6 +8762,7 @@ résiduels
 resistance
 résistance
 résistances
+résiste
 résisté
 resistencia
 resistencias
@@ -8975,7 +8800,6 @@ respirar
 respiration
 respire
 respirer
-respiro
 responde
 responsable
 respuesta
@@ -9009,8 +8833,6 @@ restrictif
 restrictiva
 restrictive
 restrictivo
-result
-résult
 resultado
 resultados
 resultan
@@ -9034,7 +8856,6 @@ retenue
 retest
 retesté
 retestea
-retesteada
 retesteado
 retestear
 retestearlo
@@ -9057,10 +8878,8 @@ retomar
 retomará
 retombe
 retomber
-retomó
 retoque
 retorno
-retornos
 retouche
 retour
 retournant
@@ -9069,7 +8888,6 @@ retourné
 retournement
 retournements
 retourner
-retours
 retrace
 retracé
 retracée
@@ -9078,7 +8896,6 @@ retracements
 retracent
 retravailler
 retraversé
-rétrécissent
 retroactivamente
 rétroactivement
 retrocede
@@ -9101,7 +8918,6 @@ reuniones
 réunions
 réunis
 réunit
-réussie
 réussir
 réussis
 réussissent
@@ -9133,6 +8949,7 @@ revenge
 revenir
 revente
 revenu
+revenue
 reversal
 reversales
 reversals
@@ -9154,7 +8971,6 @@ revisado
 revisar
 revisarás
 revisas
-révise
 révisé
 réviser
 revisión
@@ -9178,7 +8994,6 @@ reward
 rezagado
 rgba
 rhume
-ri-pulse
 rien
 riesgo
 riesgos
@@ -9210,9 +9025,7 @@ ro
 robinets
 rodean
 roja
-rojas
 rojo
-rojos
 rol
 rôle
 rôles
@@ -9225,7 +9038,6 @@ romperla
 romperlo
 romperse
 rompiendo
-rompiéndose
 rompiera
 rompió
 rompt
@@ -9243,14 +9055,11 @@ rotations
 roto
 rotos
 rouge
-rouges
 round
 rounds
 route
 routine
-rouvres
 royaume-uni
-roza
 rues
 ruido
 ruine
@@ -9278,6 +9087,7 @@ s'affiche
 s'affichent
 s'aggrave
 s'agit
+s'agite
 s'agiter
 s'ajoute
 s'ajoutent
@@ -9449,7 +9259,6 @@ sectoriales
 sectorielles
 secuela
 secuencia
-secuencial
 secuencialmente
 secuencias
 secundaria
@@ -9458,9 +9267,9 @@ secundario
 secundarios
 secured
 sécurisation
-sécurise
 sécurisé
 sécuriser
+sécurisés
 sécurité
 seguía
 seguían
@@ -9520,15 +9329,12 @@ sentiment
 sentimiento
 sentiste
 separa
-separadas
 separados
 sépare
 séparés
 sepas
-sequence
 séquence
 séquences
-séquentiel
 séquentielle
 séquentiellement
 ser
@@ -9566,7 +9372,6 @@ servirá
 ses
 sesga
 sesgadas
-sesgado
 sesgo
 sesgos
 sesión
@@ -9611,7 +9416,6 @@ signale
 signalent
 signaler
 signalerait
-signals
 signature
 signaux
 signe
@@ -9705,6 +9509,7 @@ situé
 située
 six
 sizing
+sky
 slippage
 sm
 smart
@@ -9719,7 +9524,6 @@ sobreajustada
 sobrecompra
 sobreestima
 sobreinterpretan
-sobrepasa
 sobreperforma
 sobreperformar
 sobrerreacción
@@ -9742,7 +9546,6 @@ sois
 soit
 sol
 sola
-solamente
 solapa
 solapamiento
 solapan
@@ -9824,7 +9627,6 @@ spécial
 spécifique
 spécifiques
 spectateur
-spectre
 spéculatifs
 spéculation
 spéculer
@@ -9841,6 +9643,7 @@ stabilité
 stable
 stables
 stade
+stagflation
 stagnant
 stagnation
 standard
@@ -9867,7 +9670,6 @@ stratégie
 strategies
 stratégies
 stratégique
-streak
 street
 strength
 stress
@@ -9918,13 +9720,11 @@ subit
 subperforma
 subperformar
 subtilité
-succèdent
 succès
 successif
 successifs
 succession
 successives
-sucedan
 sucede
 sucesión
 sucesivas
@@ -9935,7 +9735,6 @@ sucio
 suele
 suelen
 suelo
-suelos
 suerte
 suffire
 suffisamment
@@ -10111,17 +9910,14 @@ táctica
 táctico
 tactique
 taille
-tailles
 take
 takeprofit
 tamaño
-tamaños
 también
 tan
 tandis
 tant
 tanto
-tape
 taper
 tard
 tarda
@@ -10197,7 +9993,6 @@ tentation
 tentative
 tentatives
 tenu
-tenue
 teoría
 teórica
 teórico
@@ -10241,7 +10036,6 @@ testeada
 testeado
 testeados
 testear
-testearla
 testearlo
 testée
 tester
@@ -10277,10 +10071,10 @@ tiens
 tient
 tiers
 tight
-time
 timeline
 timer
 timing
+timings
 típica
 típicamente
 típicas
@@ -10304,7 +10098,6 @@ tocara
 tocará
 tocarla
 tocas
-tocó
 toda
 todas
 todavía
@@ -10434,6 +10227,7 @@ train
 traite
 traité
 traiter
+trajet
 tramo
 trampa
 trampas
@@ -10496,7 +10290,6 @@ trázalo
 trazan
 trazar
 trazas
-trazo
 trazó
 treasuries
 treinta
@@ -10527,7 +10320,6 @@ triplicarse
 trois
 troisième
 tromper
-trompeur
 trop
 trou
 trouve
@@ -10589,7 +10381,6 @@ unió
 unique
 uniquement
 uniques
-unir
 unirse
 unirte
 uniste
@@ -10645,7 +10436,6 @@ utilizada
 utilizado
 va
 vaciar
-vacilación
 vacío
 vaga
 vago
@@ -10686,10 +10476,7 @@ validez
 validité
 válido
 válidos
-valle
-valles
 valor
-valoraciones
 valores
 valorisation
 valorisations
@@ -10729,8 +10516,6 @@ vencimientos
 vend
 venda
 vendant
-vendas
-vende
 vendedor
 vendedora
 vendedores
@@ -10744,7 +10529,6 @@ vendeurs
 vendeuse
 vendido
 vendieron
-vendiste
 vendo
 vendrais
 vendrán
@@ -10810,9 +10594,7 @@ vertes
 vertical
 verticale
 verticales
-verts
 ves
-veulent
 veut
 veux
 vez
@@ -10833,6 +10615,7 @@ vidéo
 vider
 vie
 viejo
+viendrait
 viendront
 viene
 vienen
@@ -10904,7 +10687,6 @@ visual
 visuales
 visualmente
 visuel
-visuelle
 visuellement
 visuels
 vital
@@ -10922,6 +10704,7 @@ voilà
 voir
 voire
 vois
+voisines
 voit
 voix
 vol
@@ -10940,7 +10723,6 @@ volver
 volverán
 volverse
 volverte
-volviera
 volvió
 vont
 vos
@@ -10978,14 +10760,12 @@ weekend
 weekly
 wide
 win
-windows
 winrate
 wins
 wiped
 woods
 wording
 workflow
-worst
 wrong
 ya
 yen

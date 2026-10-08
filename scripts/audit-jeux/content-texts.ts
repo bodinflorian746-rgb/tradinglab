@@ -79,7 +79,9 @@ const looksLikeCode = (s: string) => {
   if (!/\s/.test(t) && /[-_:/.\[\]#()=@]/.test(t) && !/^[\p{Lu}]?[\p{Ll}'’-]+[.,!?…]?$/u.test(t)) return true;
   if (/^(?:[a-z0-9]+(?:[-:/.\[\]#%()!_][a-z0-9.%#()\[\]/]*)+\s+){2,}/i.test(t + " ") && /(?:^|\s)(?:flex|grid|text-|bg-|border|rounded|px-|py-|mt-|mb-|gap-|w-|h-|font-|items-|justify-|hidden|block|relative|absolute)/.test(t)) return true;
   if (/^(?:[a-z]+[A-Z]\w*|[A-Z_]{2,}[A-Z0-9_]*)$/.test(t)) return true;
-  if (/^(?:use |@\/|\.\.?\/|https?:|mailto:|rgba?\(|var\(--)/i.test(t)) return true;
+  if (/^(?:use |@\/|\.\.?\/|https?:|mailto:|rgba?\(|var\(--|(?:linear|radial)-gradient\()/i.test(t)) return true;
+  // Clés de données (scénarios de bougies) : « fvg-case-a », préfixe de gabarit « eng-case- »
+  if (/^[a-z0-9]+(?:-[a-z0-9]+){2,}$|^[a-z0-9]+(?:-[a-z0-9]+)*-$/.test(t)) return true;
   return false;
 };
 
