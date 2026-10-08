@@ -921,13 +921,17 @@ const RETOUR_DESEQ: Step[] = [
 ];
 // Multi-UT 3 bloc 3 et Multi-UT 5 bloc 3 (fusion ScenarioZone + H1ZonePreparation) — EUR/USD H1 :
 // support 1.1760, chute qui le casse et laisse un FVG 1.1750-1.1760, puis remontée progressive
-// avec des bougies haussières de plus en plus courtes jusqu'au bas de la zone.
+// avec des bougies haussières de plus en plus courtes et des corrections de plus en plus longues,
+// jusqu'au bas de la zone.
 const ZONE_PREP: Step[] = [
   { c: 1.1768, h: 1.1774, l: 1.1762 }, { c: 1.1765, h: 1.1770, l: 1.1761 }, { c: 1.1769, h: 1.1772, l: 1.1762 }, { c: 1.1763, h: 1.1770, l: 1.1760 },
   { c: 1.1738, h: 1.1763, l: 1.1735 }, { c: 1.1728, h: 1.1750, l: 1.1724 }, { c: 1.1720, h: 1.1730, l: 1.1716 },
-  { c: 1.1731, h: 1.1733, l: 1.1718 }, { c: 1.1726, h: 1.1732, l: 1.1723 }, { c: 1.1735, h: 1.1737, l: 1.1725 }, { c: 1.1731, h: 1.1736, l: 1.1728 },
-  { c: 1.1738, h: 1.1740, l: 1.1730 }, { c: 1.1735, h: 1.1739, l: 1.1733 }, { c: 1.1741, h: 1.1743, l: 1.1734 }, { c: 1.1744, h: 1.1746, l: 1.1740 },
-  { c: 1.1746, h: 1.1748, l: 1.1743 }, { c: 1.1748, h: 1.1751, l: 1.1745 },
+  // remontée : corps haussiers 11, 9, 7, 6, 5, 4 pips ; corrections de plus en plus longues : 3 pips (1 bougie),
+  // 5 pips (2 bougies), 6 pips (2 bougies)
+  { c: 1.1731, h: 1.1733, l: 1.1718 }, { c: 1.1728, h: 1.1732, l: 1.1726 },
+  { c: 1.1737, h: 1.1739, l: 1.1727 }, { c: 1.1735, h: 1.1738, l: 1.1733 }, { c: 1.1732, h: 1.1736, l: 1.1730 },
+  { c: 1.1739, h: 1.1741, l: 1.1731 }, { c: 1.1736, h: 1.1740, l: 1.1734 }, { c: 1.1733, h: 1.1737, l: 1.1731 },
+  { c: 1.1739, h: 1.1741, l: 1.1732 }, { c: 1.1744, h: 1.1746, l: 1.1738 }, { c: 1.1748, h: 1.1751, l: 1.1743 },
 ];
 // Multi-UT 4 bloc 1 et Multi-UT 5 bloc 4 (fusion ConfirmationM5 + M15Validation) — EUR/USD :
 // arrivée dans la zone 1.1750-1.1760, trois mèches hautes (1.1764, 1.1767, 1.1770) sans clôture

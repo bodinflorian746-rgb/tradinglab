@@ -14,11 +14,13 @@
 // - Attributs d'audit (scripts/audit-lecons) : data-lesson-chart, data-panel,
 //   data-scale, data-candles / data-series, data-candle, data-level, data-zone,
 //   data-marker, data-label-for, data-chip.
+// - Accessibilité : chaque panneau est une image (role="img", titre) décrite par un <desc>
+//   généré à partir de ses données (describePanel), relié par aria-describedby.
 
 import "@/app/styles/lesson-chart.css";
 import { useId, type CSSProperties, type ReactNode } from "react";
 import { V2Candle, clamp, textWidth, useBoxSize } from "@/app/components/games/v2/GameChartV2";
-import type { Candle, PivotName } from "@/lib/lessons/chart-analysis";
+import { fmtPrice, type Candle, type PivotName } from "@/lib/lessons/chart-analysis";
 
 export type LCTone = "bull" | "bear" | "entry" | "zone" | "fib" | "neutral" | "sky";
 
@@ -158,6 +160,32 @@ const MARK_H = 20;
 const RSI_H = 86;
 const NARROW = 480;
 const tagW = (s: string) => textWidth(s, FS) + 16;
+
+/** Description accessible d'un panneau (lecteurs d'écran) : nature du graphique, étendue des prix,
+ *  puis les mêmes informations que le dessin — niveaux, zones, repères, objectifs hors cadre,
+ *  moyennes, RSI et R/R — à partir des données du panneau. */
+export function describePanel(p: LCPanel): string {
+  const dec = p.decimals >= 5 ? 4 : p.decimals <= 1 ? 0 : p.decimals;
+  const f = (x: number) => (dec === 0 ? fmtPrice(x, 0, "$") : fmtPrice(x, dec));
+  const parts: string[] = [];
+  const pts = p.candles ? p.candles.flatMap((k) => [k.h, k.l]) : p.line ?? [];
+  if (pts.length) {
+    const range = `prix de ${f(Math.min(...pts))} à ${f(Math.max(...pts))}`;
+    parts.push(p.candles ? `Graphique en bougies, ${p.candles.length} bougies, ${range}.` : `Courbe de prix, ${range}.`);
+  }
+  const list = (name: string, items: (string | undefined)[]) => {
+    const v = items.filter((x): x is string => !!x);
+    if (v.length) parts.push(`${name} : ${v.join(" ; ")}.`);
+  };
+  list("Niveaux", (p.levels ?? []).map((l) => l.label));
+  list("Zones", (p.zones ?? []).map((z) => z.label));
+  list("Repères", (p.markers ?? []).map((m) => m.label));
+  list("Hors cadre", (p.offscale ?? []).map((o) => o.label));
+  list("Courbes", [...(p.series ?? []).map((s) => s.label), ...(p.segments ?? []).map((s) => s.label)]);
+  if (p.rsi) list(p.rsi.label, (p.rsi.marks ?? []).map((m) => m.label));
+  list("Ratio", (p.chips ?? []).map((c) => (c.data && "rr" in c.data ? `R/R ${c.data.rr}` : undefined)));
+  return parts.join(" ");
+}
 
 function panelExtent(p: LCPanel): [number, number] {
   const v: number[] = [];
@@ -301,12 +329,14 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
         viewBox={`0 0 ${W} ${H}`}
         role="img"
         aria-label={[p.title, p.subtitle].filter(Boolean).join(" — ") || chart}
+        aria-describedby={`${uid}-desc`}
         data-panel={p.key}
         data-scale={JSON.stringify(scale)}
         data-decimals={p.decimals}
         data-candles={p.candles ? JSON.stringify(p.candles) : undefined}
         data-series={p.line ? JSON.stringify(p.line) : undefined}
       >
+        <desc id={`${uid}-desc`}>{describePanel(p)}</desc>
         <defs>
           {(Object.keys(TONE) as LCTone[]).map((t) => (
             <marker key={t} id={`${uid}-arrow-${t}`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">

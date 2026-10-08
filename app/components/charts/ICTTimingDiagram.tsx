@@ -30,7 +30,7 @@ export function ICTTimingDiagram(_props: { className?: string; locale?: "fr" | "
         ],
         markers: [
           { key: "sweep", i: SWEEP, price: cs[SWEEP].h, label: `Sweep au-dessus de ${usd(hi)}`, short: "Sweep", tone: "zone", side: "above" },
-          { key: "end", i: last, price: cs[last].l, label: usd(cs[last].c), tone: "bear", side: "below" },
+          { key: "end", i: last, price: cs[last].c, label: usd(cs[last].c), tone: "bear", side: "below" },
         ],
         chips: [{ label: `Displacement baissier de ${usd(disp)}`, tone: "bear" }],
       }]}

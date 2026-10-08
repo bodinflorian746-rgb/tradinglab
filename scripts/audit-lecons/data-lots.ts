@@ -499,6 +499,10 @@ export function checkLot21(check: Check) {
     const low = z.reduce((b, k, i) => (k.l < z[b].l ? i : b), 0);
     const ups = z.map((k, i) => (i > low && k.c > k.o ? k.c - k.o : -1)).filter((b) => b >= 0);
     check(ups.every((b, i) => i === 0 || b <= ups[i - 1] + 1e-9) && z[z.length - 1].h < 1.176, "Zone (MUT 3/5) : corps décroissants, pas encore de réaction");
+    // corrections (suites de bougies baissières après le creux) : de plus en plus profondes, jamais plus courtes
+    const corr: { d: number; n: number }[] = [];
+    z.forEach((k, i) => { if (i <= low || k.c >= k.o) return; if (z[i - 1].c < z[i - 1].o && i - 1 > low) { corr[corr.length - 1].d += k.o - k.c; corr[corr.length - 1].n++; } else corr.push({ d: k.o - k.c, n: 1 }); });
+    check(corr.length >= 3 && corr.every((c, i) => i === 0 || (c.d > corr[i - 1].d + 1e-9 && c.n >= corr[i - 1].n)), "Zone (MUT 3) : les corrections ne s'allongent pas");
   }
   {
     // Multi-UT 4/5 : 3 mèches > 1.1760 (≤ 1.1770) sans clôture au-dessus, creux 1.1748 cassé, retour à 1.1758, SL 1.1772, TP 1.1695 (R/R 4,5)

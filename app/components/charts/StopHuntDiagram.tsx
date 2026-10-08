@@ -24,7 +24,7 @@ export default function StopHuntDiagram(_props: { className?: string; locale?: "
         levels: [{ key: "res", price: RES, to: k, label: `Résistance ${usd(RES)}`, short: "Résistance", tone: "zone" }],
         markers: [
           { key: "k", i: k, price: cs[k].h, label: `Mèche ${usd(cs[k].h)}, clôture ${usd(cs[k].c)}`, short: "Mèche", tone: "bear", side: "above" },
-          { key: "end", i: end, price: cs[end].l, label: usd(cs[end].c), tone: "bear", side: "below" },
+          { key: "end", i: end, price: cs[end].c, label: usd(cs[end].c), tone: "bear", side: "below" },
         ],
       }]}
     />

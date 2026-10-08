@@ -27,7 +27,7 @@ export function HTFFilterDiagram(_props: { className?: string; locale?: "fr" | "
         zones: [{ key: "zone", ...Z, label: `Zone ${p(Z.y1)}-${p(Z.y2)}`, short: "Zone H4", tone: "zone" }],
         markers: [
           ...rejects.map((i, n) => ({ key: `r${n}`, i, price: cs[i].h, label: "Rejet", tone: "bear" as const, side: "above" as const })),
-          { key: "now", i: last, price: cs[last].l, label: `Prix ${p(cs[last].c)}`, short: p(cs[last].c), tone: "entry", side: "below" },
+          { key: "now", i: last, price: cs[last].c, label: `Prix ${p(cs[last].c)}`, short: p(cs[last].c), tone: "entry", side: "below" },
         ],
       }]}
     >

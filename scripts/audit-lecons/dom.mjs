@@ -84,6 +84,15 @@ function checkCharts({ ids, vocab }) {
         const xOf = (i) => sc.x0 + sc.slot * (i + 0.5);
         const r0 = svg.getBoundingClientRect();
         if (r0.width === 0) { E(id, `${P} : panneau non dessiné`); continue; }
+        // Accessibilité : description (<desc> relié par aria-describedby) qui reprend chaque étiquette du dessin
+        const desc = svg.getAttribute("aria-describedby") && svg.ownerDocument.getElementById(svg.getAttribute("aria-describedby"));
+        const dtext = desc ? desc.textContent.trim() : "";
+        if (dtext.length < 20) E(id, `${P} : description accessible absente`);
+        else if (r0.width >= 480) for (const g of svg.querySelectorAll("g[data-label-for]")) {
+          // en grand format, les étiquettes affichées sont les libellés complets : chacune doit être décrite
+          const lab = g.textContent.trim();
+          if (lab && !dtext.includes(lab)) E(id, `${P} : « ${lab} » absent de la description accessible`);
+        }
         // Bougies
         if (svg.dataset.candles) {
           const cs = JSON.parse(svg.dataset.candles);
@@ -163,11 +172,13 @@ function checkCharts({ ids, vocab }) {
         let px = parseFloat(cs.fontSize);
         const svg = el.closest("svg");
         if (svg && svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width) px *= svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
-        if (px < 11.95) E(id, `texte ${px.toFixed(1)} px « ${own.slice(0, 30)} »`);
+        // texte non affiché (description accessible) : vocabulaire et variables seulement
+        const hidden = !!el.closest("desc, title");
+        if (!hidden && px < 11.95) E(id, `texte ${px.toFixed(1)} px « ${own.slice(0, 30)} »`);
         if (/[{}]|\$\{|undefined|NaN|\[object/.test(own)) E(id, `variable non remplacée « ${own.slice(0, 40)} »`);
         for (const v of vocab) { const m = own.match(new RegExp(`(?<![\\p{L}\\d])(?:${v.src})(?![\\p{L}\\d])`, v.flags)); if (m) E(id, `vocabulaire « ${m[0]} » → « ${v.retenu} »`); }
         if (!svg && (cs.overflow === "hidden" || cs.textOverflow === "ellipsis") && el.scrollWidth > el.clientWidth + 1) E(id, `texte tronqué « ${own.slice(0, 40)} »`);
-        if (svg) {
+        if (svg && !hidden) {
           const r = el.getBoundingClientRect(), s = svg.getBoundingClientRect();
           if (r.left < s.left - 1 || r.right > s.right + 1 || r.top < s.top - 1 || r.bottom > s.bottom + 1) E(id, `texte coupé par le cadre « ${own.slice(0, 40)} »`);
         }
@@ -228,6 +239,7 @@ const MUTATIONS = {
   "bougie discontinue": () => { const s = document.querySelector("svg[data-candles]"); const c = JSON.parse(s.dataset.candles); c[3].o += 0.001; c[3].h += 0.001; s.dataset.candles = JSON.stringify(c); },
   "R/R écrit à la main": () => { const c = document.querySelector("[data-rr]"); c.textContent = "R/R 1:9"; },
   "étiquettes superposées": () => { const [a, b] = document.querySelectorAll("g[data-label-for] rect"); b.setAttribute("x", a.getAttribute("x")); b.setAttribute("y", a.getAttribute("y")); },
+  "description accessible vide": () => { const s = document.querySelector("svg[aria-describedby]"); document.getElementById(s.getAttribute("aria-describedby")).textContent = ""; },
   "texte de 10 px": () => { document.querySelector("[data-lesson-chart] svg text").setAttribute("font-size", "10"); },
   "variable non remplacée": () => { document.querySelector("[data-lesson-chart] .lc-caption").textContent = "{L.resistance}"; },
   "pivot mal nommé": () => { const m = document.querySelector("[data-pivot='HL']"); m.dataset.pivot = "LL"; },

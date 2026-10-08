@@ -24,7 +24,7 @@ export function ZoneEchecDiagram(_props: { className?: string; locale?: "fr" | "
         zones: [{ key: "sup", ...Z, label: `Support H1 ${usd(4545)}`, short: "Support H1", tone: "zone" }],
         markers: [
           { key: "cross", i: inZone[1], price: cs[inZone[1]].l, label: "Aucune mèche basse", short: "Pas de rejet", tone: "bear", side: "below" },
-          { key: "end", i: last, price: cs[last].l, label: usd(cs[last].c), tone: "bear", side: "below" },
+          { key: "end", i: last, price: cs[last].c, label: usd(cs[last].c), tone: "bear", side: "below" },
         ],
         chips: [{ label: `Mèches basses dans la zone : ${usd(maxWick)} au plus`, tone: "bear" }],
       }]}
