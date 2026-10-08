@@ -1,170 +1,40 @@
-// Diagramme : retournement complet NFP (Leçon 2 Macro Trading)
-// XAU/USD M15 — chute NFP 4 640 → 4 575 $, base 4 580-4 585 $, cassure bullish > 4 620 $,
-// accélération vers 4 665 $ (au-dessus du niveau pré-NFP).
+// Macro-trading 2 bloc 3 — retournement complet NFP (XAU/USD M15) : chute 4 640→4 575 $,
+// base 4 580-4 585 $, breakout bullish au-dessus de 4 620 $, accélération vers 4 665 $
+// (au-delà du niveau pré-NFP). Bougies : scenarios.ts (« nfp-reversal »).
 
-interface NFPReversalDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { usd } from "@/app/components/lessons/trade";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
-type CandleSpec = {
-  cx: number;
-  wickTop: number;
-  bodyY: number;
-  bodyH: number;
-  wickBottom: number;
-  type: "bull" | "bear";
-};
+const NFP_I = 5, STAB_END = 8, BRK = 9;
+const PRE_NFP = 4640;
 
-// Continuité prix. 4 665 $ ≈ y=30, 4 640 $ (pré-NFP) ≈ y=80, 4 620 $ ≈ y=120,
-// 4 585 $ ≈ y=180, 4 575 $ ≈ y=200.
-const CANDLES: CandleSpec[] = [
-  // Pré-NFP autour de y=80
-  { cx:  50, wickTop:  74, bodyY:  78, bodyH: 12, wickBottom:  96, type: "bull" }, // close 78
-  { cx:  85, wickTop:  74, bodyY:  78, bodyH: 10, wickBottom:  92, type: "bear" }, // open 78 close 88
-
-  // Panique initiale — chute bearish vers y=200
-  { cx: 120, wickTop:  82, bodyY:  88, bodyH: 52, wickBottom: 148, type: "bear" }, // open 88 close 140
-  { cx: 155, wickTop: 136, bodyY: 140, bodyH: 40, wickBottom: 190, type: "bear" }, // open 140 close 180
-  { cx: 190, wickTop: 176, bodyY: 180, bodyH: 20, wickBottom: 210, type: "bear" }, // open 180 close 200 (low ~4 575)
-
-  // Base / réévaluation autour de y=180-200
-  { cx: 225, wickTop: 180, bodyY: 185, bodyH: 15, wickBottom: 212, type: "bull" }, // open 200 close 185
-  { cx: 260, wickTop: 180, bodyY: 185, bodyH: 10, wickBottom: 208, type: "bear" }, // open 185 close 195
-  { cx: 295, wickTop: 178, bodyY: 182, bodyH: 13, wickBottom: 208, type: "bull" }, // open 195 close 182
-
-  // Cassure bullish — accélération vers y=30 (4 665 $)
-  { cx: 330, wickTop: 140, bodyY: 145, bodyH: 37, wickBottom: 188, type: "bull" }, // open 182 close 145
-  { cx: 365, wickTop: 105, bodyY: 110, bodyH: 35, wickBottom: 148, type: "bull" }, // open 145 close 110 — casse 4 620
-  { cx: 400, wickTop:  65, bodyY:  70, bodyH: 40, wickBottom: 115, type: "bull" }, // open 110 close 70 — casse pré-NFP 4 640
-  { cx: 435, wickTop:  40, bodyY:  45, bodyH: 25, wickBottom:  75, type: "bull" }, // open 70 close 45
-  { cx: 470, wickTop:  28, bodyY:  32, bodyH: 13, wickBottom:  55, type: "bull" }, // open 45 close 32 — sommet ~4 665
-  { cx: 505, wickTop:  28, bodyY:  32, bodyH:  6, wickBottom:  48, type: "bear" }, // open 32 close 38 (petite pause)
-  { cx: 540, wickTop:  30, bodyY:  35, bodyH:  3, wickBottom:  50, type: "bull" }, // open 38 close 35
-];
-
-const BODY_W = 12;
-
-export function NFPReversalDiagram({ className = "", locale = "fr" }: NFPReversalDiagramProps) {
-  const t = locale === "es"
-    ? {
-        preNfp: "4 640 $ pre-NFP",
-        paniqueInit: "Pánico inicial",
-        reevaluation: "Reevaluación",
-        renversement: "Reversión",
-        mobileTitle: "NFP reversal completo · XAU/USD M15",
-        step1: "Caída inicial violenta en el headline.",
-        step2: "Base de estabilización = digestión de los sub-datos.",
-        step3a: "Breakout + reversión",
-        step3b: " sobre el nivel pre-NFP.",
-        legend1: "Caída inicial luego base de estabilización",
-        legend2: "Breakout y reversión completa sobre el pre-NFP",
-      }
-    : locale === "en"
-    ? {
-        preNfp: "$4,640 pre-NFP",
-        paniqueInit: "Initial panic",
-        reevaluation: "Reassessment",
-        renversement: "Reversal",
-        mobileTitle: "Full NFP reversal · XAU/USD M15",
-        step1: "Violent initial drop on the headline.",
-        step2: "Stabilization base = digesting the sub-prints.",
-        step3a: "Breakout + reversal",
-        step3b: " above the pre-NFP level.",
-        legend1: "Initial drop then stabilization base",
-        legend2: "Breakout and full reversal above the pre-NFP",
-      }
-    : {
-        preNfp: "4 640 $ pré-NFP",
-        paniqueInit: "Panique initiale",
-        reevaluation: "Réévaluation",
-        renversement: "Renversement",
-        mobileTitle: "NFP reversal complet · XAU/USD M15",
-        step1: "Chute initiale violente sur le headline.",
-        step2: "Base de stabilisation = digestion des sous-données.",
-        step3a: "Breakout + retournement",
-        step3b: " au-dessus du niveau pré-NFP.",
-        legend1: "Chute initiale puis base de stabilisation",
-        legend2: "Breakout et retournement complet au-dessus du pré-NFP",
-      };
+export function NFPReversalDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["nfp-reversal"];
+  const impulse = cs[NFP_I];
+  const brkCandle = cs[BRK];
+  const peak = Math.max(...cs.map((k) => k.h));
+  const peakAt = cs.findIndex((k) => k.h === peak);
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
-
-        <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
-        <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · M15</text>
-
-        {/* Ligne pré-NFP 4 640 $ — visuellement le repère que le retournement dépasse */}
-        <line x1="40" y1="80" x2="660" y2="80" stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.65" />
-        <rect x="6" y="62" width="92" height="13" rx="3" fill="#09090b" />
-        <text x="52" y="72" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.preNfp}</text>
-
-        {/* Base de stabilisation autour de y=180-200 */}
-        <rect x="208" y="180" width="100" height="35" fill="#27272a40" stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.85" />
-
-        {/* Bougies */}
-        {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
-          const bodyFill = type === "bull" ? "#10b981" : "#ef4444";
-          const wickStroke = type === "bull" ? "#059669" : "#b91c1c";
-          return (
-            <g key={i}>
-              <line x1={cx} y1={wickTop} x2={cx} y2={wickBottom} stroke={wickStroke} strokeWidth="1.4" strokeLinecap="round" />
-              <rect x={cx - BODY_W / 2} y={bodyY} width={BODY_W} height={bodyH} fill={bodyFill} stroke={wickStroke} strokeWidth="1" rx="1" />
-            </g>
-          );
-        })}
-
-        {/* Label "4 575 $" — creux */}
-        <rect x="158" y="218" width="58" height="13" rx="3" fill="#09090b" />
-        <text x="187" y="228" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">4 575 $</text>
-
-        {/* Label "4 665 $" — sommet du retournement */}
-        <rect x="442" y="14" width="58" height="13" rx="3" fill="#09090b" />
-        <text x="471" y="24" fill="#10b981" fontSize="9" fontWeight="700" textAnchor="middle">4 665 $</text>
-
-        {/* Annotation "Panique initiale" — sur la chute */}
-        <rect x="110" y="108" width="110" height="14" rx="3" fill="#09090b" />
-        <text x="165" y="118" fill="#71717a" fontSize="9" fontWeight="700" textAnchor="middle">{t.paniqueInit}</text>
-
-        {/* Annotation "Réévaluation" — au-dessus de la base */}
-        <rect x="220" y="158" width="80" height="14" rx="3" fill="#09090b" />
-        <text x="260" y="168" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.reevaluation}</text>
-
-        {/* Annotation "Renversement" — sur la phase haussière */}
-        <rect x="376" y="194" width="100" height="14" rx="3" fill="#09090b" />
-        <rect x="376" y="194" width="100" height="14" rx="3" fill="#f59e0b18" stroke="#f59e0b" strokeWidth="0.9" />
-        <text x="426" y="204" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.renversement}</text>
-      </svg>
-
-      {/* MOBILE : NFP reversal ──────────────────────── */}
-      <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
-        <ul className="space-y-2 text-[13px]">
-          <li className="flex items-start gap-2.5">
-            <span className="shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500 flex items-center justify-center text-[11px] font-bold text-red-400 mt-0.5">1</span>
-            <span className="text-zinc-300">{t.step1}</span>
-          </li>
-          <li className="flex items-start gap-2.5">
-            <span className="shrink-0 w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[11px] font-bold text-amber-400 mt-0.5">2</span>
-            <span className="text-zinc-300">{t.step2}</span>
-          </li>
-          <li className="flex items-start gap-2.5">
-            <span className="shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px] font-bold text-emerald-400 mt-0.5">3</span>
-            <span className="text-zinc-300"><span className="font-bold text-emerald-400">{t.step3a}</span>{t.step3b}</span>
-          </li>
-        </ul>
-      </div>
-
-      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">{t.legend1}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">{t.legend2}</span>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id="NFPReversalDiagram"
+      title="Retournement complet : le rapport renverse le headline"
+      caption="Quand le retour dépasse le niveau pré-NFP, la nature du setup change : ce n'est plus un fade, c'est un retournement de biais."
+      panels={[{
+        key: "m15", title: "XAU/USD M15", decimals: 0, height: 290, candles: cs,
+        levels: [
+          { key: "pre", price: PRE_NFP, label: `Niveau pré-NFP ${usd(PRE_NFP)}`, short: "Pré-NFP", tone: "neutral", dashed: true },
+        ],
+        markers: [
+          { key: "nfp", i: NFP_I, price: impulse.l, label: `Impulsion ${usd(impulse.l)}`, short: "NFP", tone: "bear", side: "below" },
+          { key: "brk", i: BRK, price: brkCandle.h, label: `Breakout ${usd(brkCandle.h)}`, short: "Breakout", tone: "bull", side: "above" },
+          { key: "peak", i: peakAt, price: peak, label: `${usd(peak)} > pré-NFP`, short: usd(peak), tone: "bull", side: "above" },
+        ],
+        chips: [
+          { label: `Breakout au-dessus de ${usd(PRE_NFP)} : retournement de biais`, tone: "bull" },
+          { label: `Accélération → ${usd(peak)}`, tone: "bull" },
+        ],
+      }]}
+    />
   );
 }

@@ -385,3 +385,22 @@ export function checkLot17(check: Check) {
     check(Math.min(...cs.map(k=>k.l))<=4610,"ICTTiming: drop > 4610");
   }
 }
+
+export function checkLot18(check: Check) {
+  {
+    // fomc-excess : calm 4660, impulse bearish ≥60$, recovery ≥4630
+    const cs=CS["fomc-excess"],calm=cs.slice(0,5),imp=cs[5];
+    check(Math.max(...calm.map(k=>k.h))-Math.min(...calm.map(k=>k.l))<=15,"FOMC excess: calme > 15$");
+    check(Math.max(...calm.map(k=>k.c))-imp.l>=60,`FOMC excess: impulsion < 60$ (${(Math.max(...calm.map(k=>k.c))-imp.l).toFixed(0)}$)`);
+    check(Math.max(...cs.slice(6).map(k=>k.h))>=4630,"FOMC excess: recovery < 4630");
+  }
+  {
+    // nfp scenarios : all have impulse ≥60$ from ~4640
+    for(const k of["nfp-headline","nfp-stab","nfp-reversal"]){
+      const cs=CS[k],imp=cs[5];
+      check(Math.max(...cs.slice(0,5).map(k=>k.c))-imp.l>=60,`NFP ${k}: impulsion < 60$`);
+    }
+    // nfp-reversal reaches beyond pre-NFP (>4640)
+    check(Math.max(...CS["nfp-reversal"].map(k=>k.h))>4640,"NFP reversal: peak < 4640 (pas de retournement complet)");
+  }
+}

@@ -751,3 +751,50 @@ Object.assign(SCENARIOS, {
   "disp-setup-h1": dispSetupH1, "vol-spike": volSpike, "disp-bear": dispBear,
   "ict-timing-bear": ictTimingBear,
 });
+
+// ─── Lot 18 ──────────────────────────────────────────────────────────────────
+// Macro-trading 1 — FOMCImpulseExcess & FOMCFadeSetup : XAU/USD M15, prix stable
+// à 4 660 $, impulsion FOMC bearish de 70 $ jusqu'à 4 590 $, stabilisation autour de
+// 4 595 $, retour progressif vers 4 638 $. Entrée fade 4 600, SL 4 578, TP 4 638.
+const fomcExcess = () => buildCandles(4658, [
+  { c: 4660, h: 4663, l: 4655 }, { c: 4658, h: 4661, l: 4656 }, { c: 4661, h: 4664, l: 4657 },
+  { c: 4659, h: 4662, l: 4656 }, { c: 4661, h: 4663, l: 4657 },
+  { c: 4590, h: 4662 },           // impulsion FOMC bearish 70$
+  { c: 4596, h: 4597, l: 4590 }, { c: 4593, h: 4598, l: 4590 }, { c: 4596, h: 4598, l: 4591 },
+  ...c(4601, 4608, 4616, 4625, 4632, 4638),
+], { seed: 18101, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
+  levels: [4660, 4638, 4590], pins: [4663, 4656, 4662, 4590, 4600, 4578, 4638] });
+// Macro-trading 2 — NFP (XAU/USD M15) : base et variantes.
+// nfp-base : 5 bougies calmes 4 640 $, impulsion NFP bearish à 4 575 $, stabilisation
+// 4 580-4 585 $ (mèches basses répétées), puis reprise progressive.
+const NFP_BASE = [
+  { c: 4640, h: 4644, l: 4636 }, { c: 4637, h: 4641, l: 4634 }, { c: 4640, h: 4644, l: 4636 },
+  { c: 4638, h: 4642, l: 4635 }, { c: 4640, h: 4643, l: 4636 },
+  { c: 4575, h: 4641 },           // impulsion NFP bearish 65$
+] as Step[];
+// NFPHeadlineReaction : impulsion + stabilisation + retour 4 625
+const nfpHeadline = () => buildCandles(4638, [
+  ...NFP_BASE,
+  { c: 4582, h: 4583, l: 4576 }, { c: 4581, h: 4585, l: 4576 }, { c: 4583, h: 4586, l: 4577 },
+  ...c(4590, 4600, 4610, 4618, 4625),
+], { seed: 18201, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
+  levels: [4640, 4600, 4575], pins: [4644, 4636, 4641, 4575, 4576, 4585, 4625] });
+// NFPStabilization : impulsion + 4 mèches basses épuisement + reprise à 4 630
+const nfpStab = () => buildCandles(4638, [
+  ...NFP_BASE,
+  { c: 4583, h: 4584, l: 4575 }, { c: 4581, h: 4585, l: 4575 },
+  { c: 4584, h: 4586, l: 4576 }, { c: 4583, h: 4586, l: 4576 },
+  ...c(4592, 4603, 4614, 4621, 4630),
+], { seed: 18202, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
+  levels: [4640, 4575, 4580, 4585], pins: [4644, 4636, 4641, 4575, 4576, 4585, 4586, 4630] });
+// NFPReversal : impulsion + base 4 580-4 585 + breakout bullish > 4 620 + accélération 4 665
+const nfpReversal = () => buildCandles(4638, [
+  ...NFP_BASE,
+  { c: 4582, h: 4583, l: 4576 }, { c: 4580, h: 4584, l: 4576 }, { c: 4583, h: 4587, l: 4577 },
+  { c: 4624, h: 4626 }, ...c(4633, 4641, 4650, 4660), { c: 4665, h: 4668 },
+], { seed: 18203, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
+  levels: [4640, 4575, 4620, 4665], pins: [4644, 4636, 4641, 4575, 4576, 4620, 4668] });
+Object.assign(SCENARIOS, {
+  "fomc-excess": fomcExcess, "nfp-headline": nfpHeadline,
+  "nfp-stab": nfpStab, "nfp-reversal": nfpReversal,
+});
