@@ -1,39 +1,37 @@
-// Macro-trading 2 bloc 3 — retournement complet NFP (XAU/USD M15) : chute 4 640→4 575 $,
-// base 4 580-4 585 $, breakout bullish au-dessus de 4 620 $, accélération vers 4 665 $
-// (au-delà du niveau pré-NFP). Bougies : scenarios.ts (« nfp-reversal »).
+// Macro-trading 2 bloc 3 — le NFP peut produire un vrai changement de direction (XAU/USD
+// M15), exemple du texte : impulsion 4 640 → 4 575 $, base 4 580-4 585 $, breakout au-dessus
+// de 4 620 $ puis accélération jusqu'à 4 665 $, au-delà du niveau pré-NFP.
+// Breakout calculé. Bougies : scenarios.ts (« nfp-reversal »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { usd } from "@/app/components/lessons/trade";
 import CANDLES from "@/lib/lessons/generated/candles.json";
+import { NFP } from "./NFPHeadlineReactionDiagram";
 
-const NFP_I = 5, STAB_END = 8, BRK = 9;
-const PRE_NFP = 4640;
+const BRK = 4620;
 
 export function NFPReversalDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["nfp-reversal"];
-  const impulse = cs[NFP_I];
-  const brkCandle = cs[BRK];
-  const peak = Math.max(...cs.map((k) => k.h));
-  const peakAt = cs.findIndex((k) => k.h === peak);
+  const pre = cs[NFP.impulse].o;
+  const brk = cs.findIndex((k, i) => i > NFP.stabEnd && k.c > BRK);
+  const end = cs.length - 1;
   return (
     <LessonChart
       id="NFPReversalDiagram"
-      title="Retournement complet : le rapport renverse le headline"
-      caption="Quand le retour dépasse le niveau pré-NFP, la nature du setup change : ce n'est plus un fade, c'est un retournement de biais."
+      title="Au-delà du niveau pré-NFP : le biais s'inverse"
+      caption="Le retour ne s'arrête pas au niveau pré-NFP, il le dépasse : ce n'est plus un fade, c'est un retournement."
       panels={[{
-        key: "m15", title: "XAU/USD M15", decimals: 0, height: 290, candles: cs,
+        key: "m15", title: "XAU/USD M15, après le NFP", decimals: 0, height: 280, candles: cs,
         levels: [
-          { key: "pre", price: PRE_NFP, label: `Niveau pré-NFP ${usd(PRE_NFP)}`, short: "Pré-NFP", tone: "neutral", dashed: true },
+          { key: "pre", price: pre, label: `Niveau pré-NFP ${usd(pre)}`, short: "Pré-NFP", tone: "neutral", dashed: true },
+          { key: "brk", price: BRK, from: NFP.stabEnd, label: `Breakout ${usd(BRK)}`, short: "Breakout", tone: "bull", dashed: true },
         ],
         markers: [
-          { key: "nfp", i: NFP_I, price: impulse.l, label: `Impulsion ${usd(impulse.l)}`, short: "NFP", tone: "bear", side: "below" },
-          { key: "brk", i: BRK, price: brkCandle.h, label: `Breakout ${usd(brkCandle.h)}`, short: "Breakout", tone: "bull", side: "above" },
-          { key: "peak", i: peakAt, price: peak, label: `${usd(peak)} > pré-NFP`, short: usd(peak), tone: "bull", side: "above" },
+          { key: "low", i: NFP.impulse, price: cs[NFP.impulse].l, label: usd(cs[NFP.impulse].l), tone: "bear", side: "below" },
+          { key: "brk", i: brk, price: cs[brk].l, label: "Breakout", tone: "bull", side: "below" },
+          { key: "end", i: end, price: cs[end].h, label: usd(cs[end].h), tone: "bull", side: "above" },
         ],
-        chips: [
-          { label: `Breakout au-dessus de ${usd(PRE_NFP)} : retournement de biais`, tone: "bull" },
-          { label: `Accélération → ${usd(peak)}`, tone: "bull" },
-        ],
+        chips: [{ label: `Accélération jusqu'à ${usd(cs[end].h)}, ${usd(cs[end].h - pre)} au-dessus du pré-NFP`, tone: "bull" }],
       }]}
     />
   );

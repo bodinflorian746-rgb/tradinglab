@@ -391,20 +391,26 @@ export function checkLot17(check: Check) {
 
 export function checkLot18(check: Check) {
   {
-    // fomc-excess : calm 4660, impulse bearish ≥60$, recovery ≥4630
-    const cs=CS["fomc-excess"],calm=cs.slice(0,5),imp=cs[5];
-    check(Math.max(...calm.map(k=>k.h))-Math.min(...calm.map(k=>k.l))<=15,"FOMC excess: calme > 15$");
-    check(Math.max(...calm.map(k=>k.c))-imp.l>=60,`FOMC excess: impulsion < 60$ (${(Math.max(...calm.map(k=>k.c))-imp.l).toFixed(0)}$)`);
-    check(Math.max(...cs.slice(6).map(k=>k.h))>=4630,"FOMC excess: recovery < 4630");
+    // Macro-trading 1 : 4 660 → 4 590 (70 $) en une bougie, stabilisation ~4 595, retour à 4 638 une heure (4 bougies) après ;
+    // fade : entrée 4 600 sur la reprise, SL 4 578 sous l'extrémité, objectif 4 638 (R/R 1,73)
+    const cs = CS["fomc-excess"], I = 5, k = cs[I];
+    check(k.o === 4660 && k.l === 4590 && Math.min(...cs.map((x) => x.l)) === 4590, "FOMC (MT 1) : impulsion 4 660 → 4 590");
+    check(Math.max(...cs.slice(I + 1).map((x) => x.h)) === 4638 && cs[I + 4].h === 4638, "FOMC (MT 1) : retour à 4 638 une heure après");
+    check(cs.slice(I + 1, I + 3).every((x) => Math.abs((x.o + x.c) / 2 - 4595) <= 3) && cs[I + 3].c > 4600 && cs[I + 3].l < 4600, "FOMC (MT 1) : stabilisation ~4 595 puis reprise à travers 4 600");
+    check(near(rrOf(4600, 4578, 4638), 1.73, 0.005), "FOMC (MT 1) : R/R");
   }
   {
-    // nfp scenarios : all have impulse ≥60$ from ~4640
-    for(const k of["nfp-headline","nfp-stab","nfp-reversal"]){
-      const cs=CS[k],imp=cs[5];
-      check(Math.max(...cs.slice(0,5).map(k=>k.c))-imp.l>=60,`NFP ${k}: impulsion < 60$`);
+    // Macro-trading 2 : 4 640 → 4 575 (casse 4 600), 4 bougies de stabilisation (mèches 6-8 $, clôtures 4 580-4 585),
+    // puis A 4 625 / B 4 630 en 4 bougies, C breakout > 4 620 et 4 665
+    for (const [key, top] of [["nfp-headline", 4625], ["nfp-stab", 4630], ["nfp-reversal", 4665]] as const) {
+      const cs = CS[key], I = 5;
+      check(cs[I].o === 4640 && cs[I].l === 4575 && Math.min(...cs.map((x) => x.l)) === 4575, `NFP (MT 2) ${key} : impulsion 4 640 → 4 575`);
+      const st = cs.slice(I + 1, I + 5);
+      check(st.every((x) => { const w = Math.min(x.o, x.c) - x.l; return w >= 6 && w <= 8 && x.c >= 4580 && x.c <= 4585; }), `NFP (MT 2) ${key} : stabilisation`);
+      check(Math.max(...cs.slice(I + 1).map((x) => x.h)) === top && cs[cs.length - 1].h === top, `NFP (MT 2) ${key} : sommet ${top}`);
     }
-    // nfp-reversal reaches beyond pre-NFP (>4640)
-    check(Math.max(...CS["nfp-reversal"].map(k=>k.h))>4640,"NFP reversal: peak < 4640 (pas de retournement complet)");
+    const r = CS["nfp-reversal"];
+    check(r.slice(10).some((x) => x.o < 4620 && x.c > 4620), "NFP (MT 2) : breakout de 4 620");
   }
 }
 

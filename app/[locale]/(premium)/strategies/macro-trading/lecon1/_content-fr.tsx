@@ -144,7 +144,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : prix avant FOMC 4 660 $ ; première impulsion bearish jusqu'à 4 590 $ ; mouvement initial de 70 $ en quelques minutes. Trente minutes plus tard : retour du prix vers 4 638 $, correction de la majorité de l'impulsion initiale.
+                XAU/USD : prix avant FOMC 4 660 $ ; première impulsion bearish jusqu'à 4 590 $ ; mouvement initial de 70 $ en quelques minutes. Une heure plus tard : retour du prix vers 4 638 $, correction de la majorité de l'impulsion initiale.
               </p>
             </div>
 

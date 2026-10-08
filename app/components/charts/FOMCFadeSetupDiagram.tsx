@@ -1,30 +1,30 @@
-// Macro-trading 1 bloc 3 — setup Fade FOMC (XAU/USD M15) : même impulsion 4 660→4 590 $
-// que FOMCImpulseExcess, mais avec les niveaux de trade du texte : entrée long 4 600 $,
-// SL 4 578 $, target 4 638 $ (retour partiel). Bougies : scenarios.ts (« fomc-excess »).
+// Macro-trading 1 bloc 3 — le FOMC Fade (XAU/USD M15), exemple et plan du texte : chute
+// 4 660 → 4 590 $, stabilisation M15 autour de 4 595 $, retour progressif vers 4 638 $ ;
+// long 4 600 $ après la stabilisation, SL 4 578 $ (au-delà de l'extrémité), objectif 4 638 $
+// (retour partiel vers le niveau pré-FOMC). R/R calculé. Bougies : scenarios.ts (« fomc-excess »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { tradeSetup, usd } from "@/app/components/lessons/trade";
 import CANDLES from "@/lib/lessons/generated/candles.json";
+import { FOMC_IMPULSE } from "./FOMCImpulseExcessDiagram";
 
-const FOMC_I = 5;
 const ENTRY = 4600, SL = 4578, TP = 4638;
 
 export function FOMCFadeSetupDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["fomc-excess"];
-  const entryAt = cs.findIndex((k, i) => i > FOMC_I + 2 && k.c >= ENTRY);
-  const t = tradeSetup({ entry: ENTRY, sl: SL, tp: TP, unit: "$", from: entryAt, names: { entry: "Entrée fade", tp: "Target pré-FOMC" } });
+  const entryAt = cs.findIndex((k, i) => i > FOMC_IMPULSE && k.c > ENTRY);
+  const stab = cs.slice(FOMC_IMPULSE + 1, entryAt);
+  const t = tradeSetup({ entry: ENTRY, sl: SL, tp: TP, unit: "$", from: entryAt, names: { entry: "Entrée long", tp: "Objectif" } });
   return (
     <LessonChart
       id="FOMCFadeSetupDiagram"
-      title="FOMC Fade : exécution après essoufflement"
-      caption="Entrée après stabilisation visible. SL serré au-delà de l'extrémité. Target = niveau pré-FOMC."
+      title="Le fade : un retour partiel, structuré"
+      caption="Entrée après stabilisation, SL juste au-delà de l'extrémité, objectif sur le niveau d'où l'impulsion est partie."
       panels={[{
-        key: "m15", title: "XAU/USD M15", decimals: 0, height: 290, candles: cs,
+        key: "m15", title: "XAU/USD M15, après le FOMC", decimals: 0, height: 290, candles: cs,
+        zones: [{ key: "stab", y1: Math.min(...stab.map((k) => k.l)), y2: Math.max(...stab.map((k) => k.h)), from: FOMC_IMPULSE + 1, to: entryAt - 1, label: `Stabilisation ~${usd(4595)}`, short: "Stabilisation", tone: "zone" }],
         levels: t.levels,
-        markers: [
-          { key: "fomc", i: FOMC_I, price: cs[FOMC_I].h, label: "FOMC : impulsion", short: "FOMC", tone: "bear", side: "above" },
-          { key: "stab", i: FOMC_I + 1, price: cs[FOMC_I].l, label: `Stabilisation ~${usd(cs[FOMC_I].l)}`, short: "Stab.", tone: "zone", side: "below" },
-        ],
+        markers: [{ key: "low", i: FOMC_IMPULSE, price: cs[FOMC_IMPULSE].l, label: `Extrémité ${usd(cs[FOMC_IMPULSE].l)}`, short: usd(cs[FOMC_IMPULSE].l), tone: "bear", side: "below" }],
         chips: t.chips,
       }]}
     />

@@ -756,50 +756,40 @@ Object.assign(SCENARIOS, {
 });
 
 // ─── Lot 18 ──────────────────────────────────────────────────────────────────
-// Macro-trading 1 — FOMCImpulseExcess & FOMCFadeSetup : XAU/USD M15, prix stable
-// à 4 660 $, impulsion FOMC bearish de 70 $ jusqu'à 4 590 $, stabilisation autour de
-// 4 595 $, retour progressif vers 4 638 $. Entrée fade 4 600, SL 4 578, TP 4 638.
-const fomcExcess = () => buildCandles(4658, [
-  { c: 4660, h: 4663, l: 4655 }, { c: 4658, h: 4661, l: 4656 }, { c: 4661, h: 4664, l: 4657 },
-  { c: 4659, h: 4662, l: 4656 }, { c: 4661, h: 4663, l: 4657 },
-  { c: 4590, h: 4662 },           // impulsion FOMC bearish 70$
-  { c: 4596, h: 4597, l: 4590 }, { c: 4593, h: 4598, l: 4590 }, { c: 4596, h: 4598, l: 4591 },
-  ...c(4601, 4608, 4616, 4625, 4632, 4638),
-], { seed: 18101, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
-  levels: [4660, 4638, 4590], pins: [4663, 4656, 4662, 4590, 4600, 4578, 4638] });
-// Macro-trading 2 — NFP (XAU/USD M15) : base et variantes.
-// nfp-base : 5 bougies calmes 4 640 $, impulsion NFP bearish à 4 575 $, stabilisation
-// 4 580-4 585 $ (mèches basses répétées), puis reprise progressive.
-const NFP_BASE = [
-  { c: 4640, h: 4644, l: 4636 }, { c: 4637, h: 4641, l: 4634 }, { c: 4640, h: 4644, l: 4636 },
-  { c: 4638, h: 4642, l: 4635 }, { c: 4640, h: 4643, l: 4636 },
-  { c: 4575, h: 4641 },           // impulsion NFP bearish 65$
-] as Step[];
-// NFPHeadlineReaction : impulsion + stabilisation + retour 4 625
-const nfpHeadline = () => buildCandles(4638, [
-  ...NFP_BASE,
-  { c: 4582, h: 4583, l: 4576 }, { c: 4581, h: 4585, l: 4576 }, { c: 4583, h: 4586, l: 4577 },
-  ...c(4590, 4600, 4610, 4618, 4625),
-], { seed: 18201, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
-  levels: [4640, 4600, 4575], pins: [4644, 4636, 4641, 4575, 4576, 4585, 4625] });
-// NFPStabilization : impulsion + 4 mèches basses épuisement + reprise à 4 630
-const nfpStab = () => buildCandles(4638, [
-  ...NFP_BASE,
-  { c: 4583, h: 4584, l: 4575 }, { c: 4581, h: 4585, l: 4575 },
-  { c: 4584, h: 4586, l: 4576 }, { c: 4583, h: 4586, l: 4576 },
-  ...c(4592, 4603, 4614, 4621, 4630),
-], { seed: 18202, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
-  levels: [4640, 4575, 4580, 4585], pins: [4644, 4636, 4641, 4575, 4576, 4585, 4586, 4630] });
-// NFPReversal : impulsion + base 4 580-4 585 + breakout bullish > 4 620 + accélération 4 665
-const nfpReversal = () => buildCandles(4638, [
-  ...NFP_BASE,
-  { c: 4582, h: 4583, l: 4576 }, { c: 4580, h: 4584, l: 4576 }, { c: 4583, h: 4587, l: 4577 },
-  { c: 4624, h: 4626 }, ...c(4633, 4641, 4650, 4660), { c: 4665, h: 4668 },
-], { seed: 18203, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
-  levels: [4640, 4575, 4620, 4665], pins: [4644, 4636, 4641, 4575, 4576, 4620, 4668] });
+// Macro-trading 1 — FOMC sur XAU/USD M15 : compression autour de 4 660 $ (sous la résistance
+// H4 4 680), première impulsion baissière 4 660 → 4 590 $ (70 $) en une bougie, stabilisation
+// autour de 4 595 $ (mèches basses), retour vers 4 638 $ une heure après le creux.
+// Le fade : entrée 4 600 $ (bougie de reprise), SL 4 578 $, objectif 4 638 $.
+const fomcExcess = () => buildCandles(4659, [
+  { c: 4662, h: 4667, l: 4656 }, { c: 4658, h: 4664, l: 4654 }, { c: 4661, h: 4666, l: 4655 }, { c: 4657, h: 4663, l: 4653 }, { c: 4660, h: 4665, l: 4655 },
+  { c: 4596, h: 4661, l: 4590 },
+  { c: 4594, h: 4599, l: 4591 }, { c: 4597, h: 4600, l: 4592 },
+  { c: 4618, h: 4620, l: 4596 }, { c: 4635, h: 4638, l: 4616 },
+], { seed: 18101, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5, preNews: true,
+  levels: [4590, 4638], pins: [4667, 4656, 4664, 4654, 4666, 4655, 4663, 4653, 4665, 4660, 4661, 4596, 4590, 4594, 4599, 4591, 4597, 4600, 4592, 4618, 4620, 4616, 4635, 4638] });
+// Macro-trading 2 — NFP sur XAU/USD M15 : compression 4 630-4 650 $ (prix 4 640), impulsion
+// headline jusqu'à 4 575 $ (65 $) qui casse le support 4 600, quatre bougies de stabilisation
+// (mèches basses de 6 à 8 $, clôtures entre 4 580 et 4 585), puis trois suites :
+// A remontée vers 4 625 $ dans l'heure, B reprise franche vers 4 630 $, C breakout au-dessus
+// de 4 620 $ et accélération jusqu'à 4 665 $ (au-delà du niveau pré-NFP).
+const NFP_PREFIX: Step[] = [
+  { c: 4642, h: 4648, l: 4636 }, { c: 4637, h: 4645, l: 4632 }, { c: 4644, h: 4650, l: 4635 }, { c: 4639, h: 4646, l: 4630 }, { c: 4640, h: 4645, l: 4634 },
+  { c: 4582, h: 4641, l: 4575 },
+  { c: 4584, h: 4587, l: 4576 }, { c: 4581, h: 4586, l: 4575 }, { c: 4585, h: 4587, l: 4575 }, { c: 4583, h: 4587, l: 4575 },
+];
+const NFP_PINS = [4648, 4636, 4645, 4632, 4650, 4635, 4646, 4630, 4634, 4640, 4641, 4582, 4575, 4584, 4587, 4576, 4581, 4586, 4585, 4583];
+const NFP_OPTS = { decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée" } as const;
+const nfpPrefix = () => buildCandles(4641, NFP_PREFIX, { ...NFP_OPTS, seed: 18201, split: 5, preNews: true, levels: [4575], pins: NFP_PINS });
+const nfpCase = (steps: Step[], pins: number[], seed: number) => () => {
+  const p = nfpPrefix();
+  return [...p, ...buildCandles(p[p.length - 1].c, steps, { ...NFP_OPTS, seed, levels: [4575], pins })];
+};
+const nfpHeadline = nfpCase([{ c: 4594, l: 4582 }, { c: 4603, l: 4591 }, { c: 4613, l: 4600 }, { c: 4622, h: 4625, l: 4610 }], [4582, 4594, 4591, 4603, 4600, 4613, 4610, 4622, 4625], 18202);
+const nfpStab = nfpCase([{ c: 4600, l: 4582 }, { c: 4611, l: 4597 }, { c: 4621, l: 4608 }, { c: 4628, h: 4630, l: 4618 }], [4582, 4600, 4597, 4611, 4608, 4621, 4618, 4628, 4630], 18203);
+const nfpReversal = nfpCase([{ c: 4597, l: 4582 }, { c: 4609, l: 4595 }, { c: 4628, h: 4630, l: 4606 }, { c: 4643, l: 4625 }, { c: 4655, l: 4640 }, { c: 4662, h: 4665, l: 4651 }],
+  [4582, 4597, 4595, 4609, 4606, 4628, 4630, 4643, 4625, 4655, 4640, 4662, 4665, 4651], 18204);
 Object.assign(SCENARIOS, {
-  "fomc-excess": fomcExcess, "nfp-headline": nfpHeadline,
-  "nfp-stab": nfpStab, "nfp-reversal": nfpReversal,
+  "fomc-excess": fomcExcess, "nfp-headline": nfpHeadline, "nfp-stab": nfpStab, "nfp-reversal": nfpReversal,
 });
 
 // ─── Lot 19 ──────────────────────────────────────────────────────────────────

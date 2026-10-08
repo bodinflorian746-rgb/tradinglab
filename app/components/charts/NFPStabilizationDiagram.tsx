@@ -1,38 +1,31 @@
-// Macro-trading 2 bloc 2 — stabilisation post-NFP (XAU/USD M15) : impulsion bearish
-// 4 640→4 575 $, puis 4 bougies avec mèches basses répétées (épuisement des vendeurs,
-// 4 580-4 585 $), reprise bullish vers 4 630 $. Bougies : scenarios.ts (« nfp-stab »).
+// Macro-trading 2 bloc 2 — le retournement apparaît après la stabilisation (XAU/USD M15),
+// exemple du texte : après la chute à 4 575 $, quatre bougies M15 impriment des mèches basses
+// de 6 à 8 $ sans clôturer sous 4 580 $, le prix se cale entre 4 580 et 4 585 $, puis
+// reprise franche vers 4 630 $ dans l'heure. Mèches calculées. Bougies : scenarios.ts (« nfp-stab »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { usd } from "@/app/components/lessons/trade";
 import CANDLES from "@/lib/lessons/generated/candles.json";
-
-const NFP_I = 5, STAB_END = 9;
+import { NFP } from "./NFPHeadlineReactionDiagram";
 
 export function NFPStabilizationDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["nfp-stab"];
-  const impulse = cs[NFP_I];
-  const stabLow = Math.min(...cs.slice(NFP_I + 1, STAB_END + 1).map((k) => k.l));
-  const stabHigh = Math.max(...cs.slice(NFP_I + 1, STAB_END + 1).map((k) => k.h));
-  const recovery = Math.max(...cs.slice(STAB_END).map((k) => k.h));
-  const recovAt = cs.findIndex((k, i) => i >= STAB_END && k.h === recovery);
+  const stab = cs.slice(NFP.impulse + 1, NFP.stabEnd + 1);
+  const wicks = stab.map((k) => Math.min(k.o, k.c) - k.l);
+  const end = cs.length - 1;
   return (
     <LessonChart
       id="NFPStabilizationDiagram"
-      title="Stabilisation : les mèches basses = épuisement des vendeurs"
-      caption="Série de mèches basses répétées + perte d'accélération = signal de fin d'impulsion. Pas de stabilisation = pas de setup."
+      title="Les mèches basses répétées : les vendeurs ont fini"
+      caption="Pas de stabilisation visible = pas de setup, quelle que soit l'amplitude initiale."
       panels={[{
-        key: "m15", title: "XAU/USD M15", decimals: 0, height: 280, candles: cs,
-        zones: [
-          { key: "stab", y1: stabLow, y2: stabHigh, from: NFP_I + 1, to: STAB_END, label: `Zone de stabilisation ${usd(stabLow)}-${usd(stabHigh)}`, short: "Stabilisation", tone: "zone" },
-        ],
+        key: "m15", title: "XAU/USD M15, après le NFP", decimals: 0, height: 280, candles: cs,
+        zones: [{ key: "base", y1: 4580, y2: 4585, from: NFP.impulse + 1, to: NFP.stabEnd, label: `Base ${usd(4580)}-${usd(4585)}`, short: "Base", tone: "zone" }],
         markers: [
-          { key: "nfp", i: NFP_I, price: impulse.l, label: `Impulsion ${usd(impulse.l)}`, short: "NFP", tone: "bear", side: "below" },
-          { key: "rec", i: recovAt, price: recovery, label: `Reprise ${usd(recovery)}`, short: "Reprise", tone: "bull", side: "above" },
+          { key: "stab", i: NFP.impulse + 2, price: Math.min(...stab.map((k) => k.l)), label: "4 mèches basses", tone: "zone", side: "below" },
+          { key: "end", i: end, price: cs[end].h, label: `Reprise : ${usd(cs[end].h)}`, short: usd(cs[end].h), tone: "bull", side: "above" },
         ],
-        chips: [
-          { label: `4 bougies avec mèches basses ~${usd(stabLow)}-${usd(stabHigh)}`, tone: "zone" },
-          { label: "Pression vendeuse épuisée", tone: "bull" },
-        ],
+        chips: [{ label: `Mèches basses de ${Math.min(...wicks)} à ${Math.max(...wicks)} $, aucune clôture sous ${usd(4580)}`, tone: "zone" }],
       }]}
     />
   );
