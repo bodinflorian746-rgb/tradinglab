@@ -616,18 +616,18 @@ const ictSweepM15 = () => buildCandles(1.1755, [
 // prix jusqu'à 4 620, remontée progressive jusqu'à 4 660 (dans le FVG), bougie baissière
 // impulsive de rejet, puis 4 610.
 // Structure du FVG : largestFvg à i=3 (grande bougie baissière) : cs[2].l=4665 (borne
-// haute), cs[4].h=4652 (borne basse) → y1=4652, y2=4665 (taille 13). cs[3].h=4673 >
+// haute), cs[4].h=4655 (borne basse) → y1=4655, y2=4665 (taille 10). cs[3].h=4673 >
 // cs[1].l=4668 → pas de FVG à i=2. Creux 4620 (cs[5]). Retour dans la zone à cs[10]-cs[11].
-// Post-rejet graduel : aucun gap voisin ne dépasse 13.
+// Post-rejet graduel : aucun gap voisin ne dépasse 10.
 const fvgMitigationXau = () => buildCandles(4690, [
   { c: 4681, h: 4690, l: 4675 },                // [0]
   { c: 4674, h: 4682, l: 4668 },                // [1]
   { c: 4672, h: 4675, l: 4665 },                // [2] l=4665 (borne haute du FVG)
   { c: 4628, h: 4673, l: 4624 },                // [3] grande bougie impulsive
-  { c: 4624, h: 4652, l: 4620 },                // [4] h=4652 (borne basse du FVG), l=4620 (creux)
-  ...c(4631, 4637, 4644, 4650), { c: 4655 }, { c: 4660, h: 4663 },
-  { c: 4652, h: 4660 }, { c: 4644 }, { c: 4638 }, ...c(4633, 4627), { c: 4617, l: 4610 },
-], { seed: 15401, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4665, 4652, 4660, 4620, 4610], pins: [4690, 4668, 4665, 4673, 4624, 4652, 4620, 4663, 4660, 4610] });
+  { c: 4624, h: 4655, l: 4620 },                // [4] h=4655 (borne basse du FVG), l=4620 (creux)
+  ...c(4631, 4637, 4644, 4650), { c: 4655 }, { c: 4657, h: 4660 },
+  { c: 4642, h: 4659 }, { c: 4638 }, { c: 4633 }, ...c(4629, 4624), { c: 4617, l: 4610 },
+], { seed: 15401, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4665, 4655, 4660, 4620, 4610], pins: [4690, 4668, 4665, 4673, 4624, 4655, 4620, 4657, 4660, 4659, 4642, 4610] });
 // ICT 2 — FVG haussier 1.0840-1.0860 (EUR/USD) : creux 1.0828, impulsion, sommet 1.0896,
 // retour vers la zone ; puis 3 cas : A rebond à 1.0860 → 1.0920 ; B mèche à 1.0842,
 // clôture 1.0855, reprise ; C traversée sans réaction, clôture 1.0825 sous le creux 1.0828.
@@ -673,82 +673,85 @@ const asiaRangeSweep = () => buildCandles(1.1718, [
   { c: 1.1736 }, { c: 1.1742 }, { c: 1.1747, h: 1.1750 },
 ], { seed: 16201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", split: 7,
   levels: [1.1725, 1.1710, 1.1702, 1.1750], pins: [1.1725, 1.1715, 1.1710, 1.1712, 1.1702, 1.1750] });
-// ICT 3 — NYOpenExpansion (XAU/USD M15) : consolidation ~4 640 (5 bougies calmes),
-// bougie explosive haussière à 4 668, mèche de sweep, cascade baissière à 4 610.
+// ICT 3 — NYOpenExpansion (XAU/USD M15) : consolidation ~4 640 (5 bougies calmes), à
+// l'ouverture NY bougie explosive haussière de 28 $ (4 640 → mèche de sweep à 4 668), puis
+// cascade rouge jusqu'à 4 610 : 58 $ d'amplitude dans la première heure (4 bougies).
 const nyExpansion = () => buildCandles(4638, [
   { c: 4640, h: 4643, l: 4636 }, { c: 4638, h: 4641, l: 4636 }, { c: 4641, h: 4644, l: 4637 },
-  { c: 4639, h: 4643, l: 4636 }, { c: 4641, h: 4644, l: 4637 },
-  { c: 4668, h: 4671, l: 4640 }, { c: 4658, h: 4669, l: 4654 },
-  { c: 4640, h: 4659 }, { c: 4630, h: 4641 }, { c: 4622 }, { c: 4615, l: 4610 },
+  { c: 4639, h: 4643, l: 4636 }, { c: 4640, h: 4644, l: 4637 },
+  { c: 4664, h: 4668, l: 4640 }, { c: 4642, h: 4666 }, { c: 4622, h: 4644 }, { c: 4614, h: 4625, l: 4610 },
+  { c: 4619, l: 4612 }, { c: 4616, h: 4622, l: 4613 },
 ], { seed: 16301, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
-  levels: [4640, 4668, 4610], pins: [4640, 4644, 4636, 4668, 4671, 4610] });
-// ICT 3 — TimingComparison panneaux Asia et London : même résistance 1.1780 testée deux fois.
-// Asia (01h-04h UTC) : rejet mou de 4 pips, puis latéralisation 2 h.
-// London Open (07h-10h UTC) : sweep à 1.1792, cascade de 35 pips.
-const timingAsia = () => buildCandles(1.1770, [
-  ...c(1.1774, 1.1778), { c: 1.1778, h: 1.1780 }, { c: 1.1776, h: 1.1780 },
-  ...c(1.1774, 1.1776, 1.1773, 1.1775, 1.1773, 1.1775, 1.1772, 1.1774),
+  levels: [4668, 4610], pins: [4640, 4644, 4636, 4664, 4668, 4666, 4642, 4644, 4622, 4625, 4614, 4610, 4612, 4613, 4619, 4616] });
+// ICT 3 — TimingComparison : même résistance H1 1.1780 testée deux fois (M15).
+// Asia (03h UTC) : bougie de rejet de 4 pips (mèche 1.1776 → 1.1780), puis 2 h de latéralisation.
+// London Open : sweep à 1.1792, puis cascade baissière de 35 pips en 4 bougies (1.1757).
+const timingAsia = () => buildCandles(1.1768, [
+  ...c(1.1772, 1.1776), { c: 1.1775, h: 1.1780, l: 1.1773 },
+  { c: 1.1773 }, { c: 1.1775 }, { c: 1.1772 }, { c: 1.1774 }, { c: 1.1772 }, { c: 1.1775 }, { c: 1.1773 }, { c: 1.1774 },
 ], { seed: 16401, decimals: 5, asset: "EUR/USD", session: "Asie", volatility: "faible",
-  levels: [1.1780], pins: [1.1780] });
-const timingLondon = () => buildCandles(1.1770, [
-  ...c(1.1774, 1.1778), { c: 1.1780, h: 1.1792 }, { c: 1.1762 }, { c: 1.1755 }, { c: 1.1750 }, ...c(1.1745, 1.1742),
+  levels: [1.1780, 1.1777], pins: [1.1776, 1.1780, 1.1775, 1.1773] });
+const timingLondon = () => buildCandles(1.1768, [
+  ...c(1.1772, 1.1776), { c: 1.1777, h: 1.1792, l: 1.1774 }, { c: 1.1768 }, { c: 1.1764 }, { c: 1.1760 }, { c: 1.1759, l: 1.1757 },
+  ...c(1.1762, 1.1760),
 ], { seed: 16402, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale",
-  levels: [1.1780, 1.1792, 1.1745], pins: [1.1780, 1.1792, 1.1745] });
-// ICT 4 — DisplacementImpulse (EUR/USD M15) : 2 bougies calmes, sweep à 1.1792 refermé
-// sous 1.1780, puis 4 bougies baissières (displacement) ; prix jusqu'à 1.1748, FVGs laissés.
-const dispImpulse = () => buildCandles(1.1776, [
-  { c: 1.1780, h: 1.1782, l: 1.1776 }, { c: 1.1778, h: 1.1780, l: 1.1775 },
-  { c: 1.1778, h: 1.1792, l: 1.1774 },  // sweep : mèche à 1.1792, corps reste sous 1.1780
-  { c: 1.1769 }, { c: 1.1760 }, { c: 1.1752 }, { c: 1.1748, l: 1.1745 },
-], { seed: 16501, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", split: 3,
-  levels: [1.1780, 1.1792, 1.1748], pins: [1.1782, 1.1780, 1.1775, 1.1792, 1.1774, 1.1745] });
+  levels: [1.1780, 1.1757], pins: [1.1777, 1.1792, 1.1774, 1.1768, 1.1764, 1.1760, 1.1759, 1.1757] });
+// ICT 4 et ICT 5 — un displacement EUR/USD M15 complet (une seule séquence pour les deux
+// leçons) : calme sous les equal highs 1.1780, sweep à 1.1792 refermé sous 1.1780, 4 bougies
+// baissières (corps 10, 8, 6, 6 pips) jusqu'à 1.1748 en une heure, deux FVG bearish
+// (1.1768-1.1777 et 1.1761-1.1767), remontée progressive dans le FVG haut, bougie de rejet
+// (mèche 1.1784), bougie baissière impulsive : short 1.1774 (cassure du bas du rejet).
+// DISP_END = dernière bougie du displacement (ICT 4 bloc 1 s'arrête juste après).
+const dispEur = () => buildCandles(1.1770, [
+  { c: 1.1774, h: 1.1776, l: 1.1769 }, { c: 1.1777, h: 1.1780, l: 1.1773 }, { c: 1.1773, h: 1.1778, l: 1.1771 },
+  { c: 1.1776, h: 1.1777, l: 1.1772 }, { c: 1.1779, h: 1.1780, l: 1.1775 },
+  { c: 1.1778, h: 1.1792, l: 1.1777 },
+  { c: 1.1768, h: 1.1778, l: 1.1767 }, { c: 1.1760, h: 1.1768, l: 1.1757 }, { c: 1.1754, h: 1.1761, l: 1.1753 }, { c: 1.1748, h: 1.1757, l: 1.1748 },
+  { c: 1.1752, h: 1.1753, l: 1.1749 }, { c: 1.1756, l: 1.1750 }, { c: 1.1753, l: 1.1751 }, { c: 1.1759 }, { c: 1.1757 }, { c: 1.1763 }, { c: 1.1767 },
+  { c: 1.1771 }, { c: 1.1777, h: 1.1777 },
+  { c: 1.1775, h: 1.1784, l: 1.1774 }, { c: 1.1758, h: 1.1775 }, { c: 1.1751 }, { c: 1.1744, l: 1.1742 },
+], { seed: 16501, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", split: 5,
+  levels: [1.1780, 1.1792, 1.1748, 1.1777], pins: [1.1776, 1.1769, 1.1780, 1.1773, 1.1778, 1.1771, 1.1777, 1.1772, 1.1775, 1.1792,
+    1.1768, 1.1767, 1.1760, 1.1757, 1.1754, 1.1761, 1.1753, 1.1748, 1.1749, 1.1784, 1.1774, 1.1742] });
+// ICT 4 bloc 2 — XAU/USD M15 : 3 h d'équilibre autour de 4 650 $ (12 bougies plates, sommet
+// 4 657), à 14h UTC une bougie sweep le sommet jusqu'à 4 668 $, puis 5 bougies baissières à
+// grands corps jusqu'à 4 608 $.
+const dispControlXau = () => buildCandles(4650, [
+  { c: 4652, h: 4655, l: 4648 }, { c: 4649, h: 4653, l: 4646 }, { c: 4651, h: 4654, l: 4647 }, { c: 4647, h: 4652, l: 4645 },
+  { c: 4650, h: 4653, l: 4646 }, { c: 4654, h: 4657, l: 4649 }, { c: 4649, h: 4655, l: 4647 }, { c: 4651, h: 4654, l: 4647 },
+  { c: 4648, h: 4652, l: 4644 }, { c: 4652, h: 4655, l: 4647 }, { c: 4650, h: 4654, l: 4647 }, { c: 4651, h: 4654, l: 4648 },
+  { c: 4652, h: 4668, l: 4649 },
+  { c: 4641, h: 4653 }, { c: 4632, h: 4642 }, { c: 4624, h: 4633 }, { c: 4615, h: 4625 }, { c: 4610, l: 4608 },
+], { seed: 17101, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "normale", split: 12, preNews: true,
+  levels: [4657, 4668, 4608], pins: [4655, 4648, 4653, 4646, 4654, 4647, 4652, 4645, 4657, 4649, 4644, 4668, 4641, 4632, 4624, 4615, 4610, 4608] });
+// ICT 4 bloc 4 — volatilité ≠ displacement (EUR/USD M15).
+// vol-spike : calme, bougie haussière isolée de 18 pips (news mineure), la suivante referme tout.
+const volSpike = () => buildCandles(1.0838, [
+  { c: 1.0840, h: 1.0842, l: 1.0836 }, { c: 1.0837, h: 1.0841, l: 1.0835 }, { c: 1.0840, h: 1.0842, l: 1.0836 },
+  { c: 1.0858, h: 1.0860, l: 1.0839 }, { c: 1.0839, h: 1.0859, l: 1.0837 },
+  { c: 1.0841, h: 1.0843, l: 1.0837 }, { c: 1.0838, h: 1.0842, l: 1.0836 }, { c: 1.0840, h: 1.0842, l: 1.0837 },
+], { seed: 17201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "faible",
+  pins: [1.0840, 1.0858, 1.0860, 1.0839, 1.0859, 1.0837, 1.0836, 1.0842] });
+// disp-seq : creux local 1.0844, puis 4 bougies baissières de 10-12 pips qui cassent ce creux et enchaînent.
+const dispSeq = () => buildCandles(1.0850, [
+  { c: 1.0853, h: 1.0855, l: 1.0849 }, { c: 1.0849, h: 1.0854, l: 1.0847 }, { c: 1.0852, h: 1.0854, l: 1.0848 },
+  { c: 1.0847, h: 1.0853, l: 1.0844 }, { c: 1.0850, h: 1.0852, l: 1.0846 }, { c: 1.0853, h: 1.0855, l: 1.0849 },
+  { c: 1.0842, h: 1.0854 }, { c: 1.0831, h: 1.0843 }, { c: 1.0820, h: 1.0832 }, { c: 1.0809, h: 1.0821, l: 1.0807 },
+], { seed: 17202, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", split: 6,
+  levels: [1.0844], pins: [1.0844, 1.0855, 1.0853, 1.0842, 1.0831, 1.0820, 1.0809, 1.0807] });
+// ICT 5 bloc 4 — XAU/USD M15 : range Asia 4 642-4 655, à l'ouverture de London mèche de sweep
+// au-dessus de 4 655 (4 659), puis displacement baissier de 38 $ (4 651 → 4 613) qui laisse un FVG.
+const ictTimingBear = () => buildCandles(4648, [
+  { c: 4652, h: 4655, l: 4646 }, { c: 4648, h: 4654, l: 4644 }, { c: 4651, h: 4653, l: 4645 },
+  { c: 4646, h: 4652, l: 4642 }, { c: 4650, h: 4655, l: 4645 }, { c: 4649, h: 4653, l: 4646 },
+  { c: 4651, h: 4659, l: 4648 },
+  { c: 4640, h: 4651 }, { c: 4629, h: 4640 }, { c: 4620, h: 4630, l: 4618 }, { c: 4613, l: 4611 },
+], { seed: 17301, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale", split: 6, preNews: true,
+  levels: [4655, 4642, 4659], pins: [4655, 4646, 4644, 4642, 4659, 4648, 4651, 4640, 4629, 4630, 4618, 4620, 4613, 4611] });
 Object.assign(SCENARIOS, {
   "killzones-kz": killzonesKz, "asia-range-sweep": asiaRangeSweep, "ny-expansion": nyExpansion,
-  "timing-asia": timingAsia, "timing-london": timingLondon, "disp-impulse": dispImpulse,
-});
-
-// ─── Lot 17 ──────────────────────────────────────────────────────────────────
-// ICT 4 bloc 3 & ICT 5 bloc 3 (fusionnés) — EUR/USD H1 : calm approach, equal highs 1.1780,
-// sweep à 1.1792. Le sweep ouvre le FVG : cs[calm last].l = 1.1780, cs[disp1].h = 1.1768
-// → FVG y1=1.1768, y2=1.1780. 3 bougies displacement jusqu'à 1.1748, puis récupération
-// jusqu'à 1.1772 (retour dans le FVG), rejet baissier.
-const dispSetupH1 = () => buildCandles(1.1762, [
-  ...c(1.1768, 1.1773, 1.1778), { c: 1.1782, h: 1.1784, l: 1.1780 },
-  { c: 1.1778, h: 1.1792, l: 1.1776 },  // sweep (centre du FVG)
-  { c: 1.1762, h: 1.1768 },              // disp1 : h = 1.1768 = borne basse du FVG
-  { c: 1.1754 }, { c: 1.1748, l: 1.1745 },
-  ...c(1.1752, 1.1759, 1.1766), { c: 1.1770, h: 1.1773 },
-  { c: 1.1758, h: 1.1772 },
-], { seed: 17101, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", split: 5,
-  levels: [1.178, 1.1792, 1.1768, 1.1748], pins: [1.1780, 1.1792, 1.1776, 1.1768, 1.1745, 1.1773] });
-// ICT 4 bloc 4 — volatilité ≠ displacement : deux courts scénarios EUR/USD.
-// vol-spike : 3 calmes + bougie haussière isolée 18 pips + retournement immédiat + reprise calme.
-const volSpike = () => buildCandles(1.0838, [
-  ...c(1.0840, 1.0836, 1.0839),
-  { c: 1.0857, h: 1.0860 },              // grande bougie haussière isolée
-  { c: 1.0837, h: 1.0858 },              // retournement immédiat
-  ...c(1.0840, 1.0836, 1.0839),
-], { seed: 17201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "faible",
-  levels: [1.0835], pins: [1.0860, 1.0858] });
-// disp-bear : 3 calmes + sweep (h=1.0860, c=1.0840) + 4 bougies displacement baissier.
-const dispBear = () => buildCandles(1.0838, [
-  ...c(1.0840, 1.0836, 1.0839),
-  { c: 1.0840, h: 1.0860, l: 1.0836 },  // sweep
-  { c: 1.0826 }, { c: 1.0815 }, { c: 1.0804 }, { c: 1.0796, l: 1.0793 },
-], { seed: 17202, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", split: 4,
-  levels: [1.084, 1.086], pins: [1.086, 1.0836, 1.0793] });
-// ICT 5 bloc 4 — timing : XAU/USD, Asia range étroit 4642-4655 (6 bougies calmes), puis London
-// sweep AU-DESSUS du range (stops au-dessus pris, mèche à 4668), displacement baissier avec
-// FVG laissé dans la chute.
-const ictTimingBear = () => buildCandles(4648, [
-  { c: 4652, h: 4655, l: 4642 }, { c: 4648, h: 4654, l: 4644 }, { c: 4651, h: 4655, l: 4644 },
-  { c: 4648, h: 4654, l: 4642 }, { c: 4650, h: 4655, l: 4643 }, { c: 4651, h: 4655, l: 4644 },
-  { c: 4649, h: 4668, l: 4645 },         // sweep au-dessus du range
-  { c: 4638 }, { c: 4626 }, { c: 4615 }, { c: 4608, l: 4605 },
-], { seed: 17301, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale", split: 6,
-  levels: [4655, 4642, 4668, 4608], pins: [4655, 4644, 4642, 4668, 4645, 4605] });
-Object.assign(SCENARIOS, {
-  "disp-setup-h1": dispSetupH1, "vol-spike": volSpike, "disp-bear": dispBear,
+  "timing-asia": timingAsia, "timing-london": timingLondon,
+  "disp-eur": dispEur, "disp-control-xau": dispControlXau, "vol-spike": volSpike, "disp-seq": dispSeq,
   "ict-timing-bear": ictTimingBear,
 });
 
@@ -808,14 +811,15 @@ const riskoffDaily = () => buildCandles(4575, [
   { c: 4700, h: 4705 },
 ], { seed: 19101, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale",
   levels: [4585, 4640, 4668, 4660, 4705], pins: [4645, 4668, 4705] });
-// Macro-trading 3 — RiskoffTrend (XAU/USD H4) : impulsion 4 610→4 690, pullback 4 655,
-// entrée long 4 660, SL 4 640, TP 4 730.
+// Macro-trading 3 — RiskoffTrend (XAU/USD H4) : impulsion 4 610 → 4 690 avec un palier à
+// 4 655 (sommet), pullback contrôlé jusqu'à 4 655 (ancien sommet devenu support, HL),
+// stabilisation, bougie de reprise (entrée 4 660), impulsion jusqu'à 4 730.
 const riskoffTrend = () => buildCandles(4600, [
-  ...c(4610, 4620, 4635, 4650, 4668), { c: 4690, h: 4692 },
-  ...c(4678, 4665), { c: 4658, l: 4655 }, ...c(4664, 4672),
-  { c: 4683 }, { c: 4700 }, { c: 4715 }, { c: 4730, h: 4733 },
+  ...c(4605), { c: 4612, l: 4608 }, { c: 4624, l: 4610 }, { c: 4637, l: 4621 }, { c: 4648, l: 4634 }, { c: 4652, h: 4655 }, ...c(4647), { c: 4645, l: 4642 },
+  { c: 4657, l: 4644 }, ...c(4669, 4680), { c: 4685, h: 4690 }, { c: 4679, h: 4687 }, ...c(4667), { c: 4657, l: 4655 }, { c: 4660, h: 4662, l: 4656 },
+  ...c(4675, 4690, 4704, 4718), { c: 4728, h: 4730 },
 ], { seed: 19201, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "normale",
-  levels: [4655, 4690, 4660, 4640, 4730], pins: [4692, 4655, 4730, 4733] });
+  levels: [4655, 4690, 4730], pins: [4608, 4610, 4621, 4624, 4634, 4637, 4648, 4655, 4642, 4644, 4657, 4669, 4680, 4685, 4690, 4679, 4687, 4667, 4656, 4660, 4662, 4730] });
 // Macro-trading 3 — RiskoffExhaustion (XAU/USD H4) : forte tendance depuis 4 590 $ puis
 // trois sommets faiblissants (4 735, 4 720, 4 705 $), corrections croissantes (25, 40, 65 $).
 const riskoffExhaust = () => buildCandles(4580, [
@@ -892,4 +896,44 @@ const ctM15 = () => buildCandles(1.1715, [
 Object.assign(SCENARIOS, {
   "htf-bear-h4": htfBearH4, "trap-m15": trapM15, "inter-zone-h1": interZoneH1,
   "ltf-exec-m5": ltfExecM5, "ct-daily": ctDaily, "ct-m15": ctM15,
+});
+
+// ─── Lot 21 ──────────────────────────────────────────────────────────────────
+// Multi-UT 2 — DirectionDominante (XAU/USD H4) : impulsions baissières fortes (grands
+// corps, 30-40 $) vs corrections haussières faibles (petits corps, 10-15 $). La direction
+// dominante baissière est lisible à l'œil.
+const dirDomXau = () => buildCandles(4705, [
+  { c: 4672 }, ...c(4678, 4682), { c: 4660, h: 4682 }, { c: 4628 }, { c: 4635, h: 4640 },
+  { c: 4622 }, { c: 4614 }, { c: 4622, h: 4628 }, { c: 4611 }, { c: 4620, h: 4625 },
+  { c: 4608 }, { c: 4600 }, { c: 4608, h: 4614 }, { c: 4595 }, { c: 4603, h: 4607 },
+  { c: 4590 },
+], { seed: 21101, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale",
+  levels: [4680, 4628, 4614, 4590], pins: [4682, 4628, 4625, 4614, 4607] });
+// Multi-UT 3 — RetourDesequilibre (XAU/USD H1) : impulsion bearish depuis 4 680 $ avec FVG
+// entre 4 648-4 660 $, prix tombe à 4 620 $, remontée vers le FVG, rejet.
+const retourDeseqXau = () => buildCandles(4678, [
+  { c: 4665, h: 4680 }, { c: 4648, h: 4666 }, { c: 4628 }, { c: 4620, l: 4618 },
+  ...c(4625, 4631, 4638, 4644, 4651), { c: 4655, h: 4658 }, { c: 4638, h: 4656 }, ...c(4629, 4622),
+], { seed: 21201, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale", split: 4,
+  levels: [4660, 4648, 4618], pins: [4680, 4666, 4648, 4618, 4658, 4656] });
+// Multi-UT 3 & 5 (fusionné ScenarioZone + H1ZonePreparation) — EUR/USD H1 :
+// biais baissier. Zone de résistance 1.1750-1.1760 (FVG bearish). Bougies haussières qui
+// montent vers la zone avec amplitude décroissante, ralentissement visible à l'approche.
+const h1ZonePrep = () => buildCandles(1.1712, [
+  { c: 1.1718, h: 1.172 }, { c: 1.1726 }, { c: 1.1732, h: 1.1734 }, { c: 1.1737 },
+  { c: 1.1741, h: 1.1743 }, { c: 1.1744 }, { c: 1.1746, h: 1.1748 }, { c: 1.1747, h: 1.1749 },
+], { seed: 21301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "faible",
+  levels: [1.175, 1.176], pins: [1.172, 1.1734, 1.1748, 1.1749] });
+// Multi-UT 4 & 5 (fusionné ConfirmationM5 + M15Validation) — EUR/USD LTF : approche de la
+// zone 1.1750-1.1760, 3 bougies à mèches hautes répétées (rejet), puis cassure du creux
+// local (CHoCH / confirmation d'exécution baissière).
+const ltfConfEur = () => buildCandles(1.1740, [
+  { c: 1.1745 }, { c: 1.1749 }, { c: 1.1751 },
+  { c: 1.1749, h: 1.1754, l: 1.1747 }, { c: 1.1748, h: 1.1755, l: 1.1745 }, { c: 1.1747, h: 1.1753, l: 1.1744 },
+  { c: 1.1741 }, { c: 1.1736 }, { c: 1.1730, l: 1.1728 },
+], { seed: 21401, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", split: 6,
+  levels: [1.175, 1.176, 1.1740], pins: [1.1754, 1.1755, 1.1753, 1.1744, 1.1745, 1.1728] });
+Object.assign(SCENARIOS, {
+  "dir-dom-xau": dirDomXau, "retour-deseq-xau": retourDeseqXau,
+  "h1-zone-prep": h1ZonePrep, "ltf-conf-eur": ltfConfEur,
 });

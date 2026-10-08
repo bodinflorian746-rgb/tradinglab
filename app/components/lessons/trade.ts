@@ -32,7 +32,7 @@ export function distText(a: number, b: number, s: Pick<TradeSpec, "unit">) {
   return s.unit === "$" ? usd(Math.abs(a - b)) : `${pips(a, b, 0.0001)} pips`;
 }
 
-export function tradeSetup(s: TradeSpec): { levels: LCLevel[]; chips: LCChip[]; offscale: { key: string; price: number; label: string; tone: "bull" }[]; rr: number } {
+export function tradeSetup(s: TradeSpec): { levels: LCLevel[]; chips: LCChip[]; offscale: { key: string; price: number; label: string; short: string; tone: "bull" }[]; rr: number } {
   const m = tradeMath(s.entry, s.sl, s.tp);
   const n = { entry: "Entrée", sl: "SL", tp: "TP", ...s.names };
   const p = (x: number) => priceText(x, s);
@@ -40,8 +40,8 @@ export function tradeSetup(s: TradeSpec): { levels: LCLevel[]; chips: LCChip[]; 
     { key: "entry", price: s.entry, from: s.from, label: `${n.entry} ${p(s.entry)}`, short: n.entry, tone: "entry" },
     { key: "sl", price: s.sl, from: s.from, label: `${n.sl} ${p(s.sl)}`, short: n.sl, tone: "bear", dashed: true },
   ];
-  const offscale: { key: string; price: number; label: string; tone: "bull" }[] = [];
-  if (s.tpOffscale) offscale.push({ key: "tp", price: s.tp, label: `${n.tp} ${p(s.tp)} ${s.tp > s.entry ? "↑" : "↓"}`, tone: "bull" });
+  const offscale: { key: string; price: number; label: string; short: string; tone: "bull" }[] = [];
+  if (s.tpOffscale) offscale.push({ key: "tp", price: s.tp, label: `${n.tp} ${p(s.tp)} ${s.tp > s.entry ? "↑" : "↓"}`, short: `TP ${s.tp > s.entry ? "↑" : "↓"}`, tone: "bull" });
   else levels.push({ key: "tp", price: s.tp, from: s.from, label: `${n.tp} ${p(s.tp)}`, short: n.tp, tone: "bull", dashed: true });
   const chips: LCChip[] = [
     { label: `Risque ${distText(s.entry, s.sl, s)}`, tone: "bear" },

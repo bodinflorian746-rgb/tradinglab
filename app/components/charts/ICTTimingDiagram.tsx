@@ -1,42 +1,38 @@
-// ICT 5 bloc 4 — timing : XAU/USD M15, range Asia 4 642-4 655 (6 bougies calmes), London
-// Open sweep au-dessus du range (stops pris à 4 668 $), displacement bearish jusqu'à
-// 4 608 $ avec FVG. Même schéma que KillzonesTimeline mais sens baissier.
-// Bougies : scenarios.ts (« ict-timing-bear »).
+// ICT 5 bloc 4 — le timing reste essentiel (XAU/USD M15), exemple du texte : range Asia
+// 4 642-4 655 $, à l'ouverture de London mèche de sweep au-dessus de 4 655 $, puis
+// displacement baissier de 38 $ qui laisse un FVG. Setup complet ET en Killzone.
+// Range, sweep, displacement et FVG calculés. Bougies : scenarios.ts (« ict-timing-bear »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { usd } from "@/app/components/lessons/trade";
 import { largestFvg } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
-const ASIA_END = 5, SWEEP_I = 6;
+const SWEEP = 6; // 6 bougies de range Asia, puis l'ouverture de London
 
 export function ICTTimingDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["ict-timing-bear"];
-  const fvg = largestFvg(cs, "bear");
-  const low = Math.min(...cs.map((k) => k.l));
-  const lowAt = cs.findIndex((k) => k.l === low);
+  const asia = cs.slice(0, SWEEP);
+  const lo = Math.min(...asia.map((k) => k.l)), hi = Math.max(...asia.map((k) => k.h));
+  const fvg = largestFvg(cs, "bear")!;
+  const last = cs.length - 1;
+  const disp = Math.round(cs[SWEEP].c - cs[last].c);
   return (
     <LessonChart
       id="ICTTimingDiagram"
-      title="Setup ICT + Killzone : XAU/USD en London Open"
-      caption="Setup ICT + timing Killzone = setup premium. Hors Killzone : probabilité de continuation très faible."
+      title="Setup ICT en Killzone = setup premium"
+      caption="La même séquence à 03h UTC aurait probablement échoué : le volume manquait pour soutenir le displacement."
       panels={[{
-        key: "m15", title: "XAU/USD M15", decimals: 0, height: 280, candles: cs,
+        key: "m15", title: "XAU/USD M15, ouverture de London", decimals: 0, height: 280, candles: cs,
         zones: [
-          { key: "asia", y1: 4642, y2: 4655, from: 0, to: ASIA_END, label: "Range Asia 4642-4655", short: "Range Asia", tone: "sky" },
-          ...(fvg ? [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear" as const, kind: "fvg", src: `ict-timing-bear:${fvg.i}` }] : []),
-        ],
-        levels: [
-          { key: "asiaH", price: 4655, to: SWEEP_I, label: `Stops au-dessus ${usd(4655)}`, short: "Stops", tone: "zone", dashed: true },
+          { key: "asia", y1: lo, y2: hi, from: 0, to: SWEEP - 1, label: `Range Asia ${usd(lo)}-${usd(hi)}`, short: "Range Asia", tone: "sky" },
+          { key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `ict-timing-bear:${fvg.i}` },
         ],
         markers: [
-          { key: "sweep", i: SWEEP_I, price: cs[SWEEP_I].h, label: `London Open : sweep ${usd(cs[SWEEP_I].h)}`, short: "Sweep", tone: "zone", side: "above" },
-          { key: "low", i: lowAt, price: low, label: usd(low), tone: "bear", side: "below" },
+          { key: "sweep", i: SWEEP, price: cs[SWEEP].h, label: `Sweep au-dessus de ${usd(hi)}`, short: "Sweep", tone: "zone", side: "above" },
+          { key: "end", i: last, price: cs[last].l, label: usd(cs[last].c), tone: "bear", side: "below" },
         ],
-        chips: [
-          { label: `Sweep → ${usd(cs[SWEEP_I].h)} : stops au-dessus du range Asia pris`, tone: "zone" },
-          { label: `Displacement → ${usd(low)}`, tone: "bear" },
-        ],
+        chips: [{ label: `Displacement baissier de ${usd(disp)}`, tone: "bear" }],
       }]}
     />
   );

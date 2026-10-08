@@ -8,7 +8,7 @@ import { LessonExercice } from "@/app/components/LessonExercice";
 import { LessonQuiz } from "@/app/components/LessonQuiz";
 import { ICTSequenceTimelineDiagram } from "@/app/components/charts/ICTSequenceTimelineDiagram";
 import { IctLiquidityGrabDiagram } from "@/app/components/charts/IctLiquidityGrabDiagram";
-import { ICTDisplacementSetupDiagram } from "@/app/components/charts/ICTDisplacementSetupDiagram";
+import { DisplacementSetupDiagram } from "@/app/components/charts/DisplacementSetupDiagram";
 import { ICTTimingDiagram } from "@/app/components/charts/ICTTimingDiagram";
 
 const LESSONS = [
@@ -183,7 +183,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Le displacement crée le setup</h2>
 
             <div className="my-8">
-              <ICTDisplacementSetupDiagram />
+              <DisplacementSetupDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
@@ -193,7 +193,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : après le sweep à 1.1792, 4 bougies baissières consécutives à grands corps ramènent le prix à 1.1748. Un FVG est laissé entre 1.1768 et 1.1780. Le displacement valide l'intention vendeuse. Le prix remonte ensuite progressivement vers le FVG : entrée short au retour dans la bande, SL au-dessus de 1.1780 (extrémité du displacement), TP vers la prochaine liquidité basse.
+                EUR/USD : après le sweep à 1.1792, 4 bougies baissières consécutives à grands corps ramènent le prix à 1.1748. Un FVG est laissé entre 1.1768 et 1.1777. Le displacement valide l'intention vendeuse. Le prix remonte ensuite progressivement vers le FVG : entrée short au retour dans la bande, SL au-dessus du sommet du sweep (1.1792), TP vers la prochaine liquidité basse.
               </p>
             </div>
 
@@ -260,20 +260,20 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Displacement bearish</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : 4 bougies M15 baissières consécutives à grands corps, chute jusqu'à 1.1748. FVG visible entre 1.1768 et 1.1780</li>
+                <li>- Observation : 4 bougies M15 baissières consécutives à grands corps, chute jusqu'à 1.1748. FVG visible entre 1.1768 et 1.1777</li>
                 <li>- Conclusion : displacement validé, le FVG est la zone d'exécution</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 5. Retour dans le FVG</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : sur les heures suivantes, le prix remonte progressivement et rentre dans la bande 1.1768-1.1780</li>
+                <li>- Observation : sur les heures suivantes, le prix remonte progressivement et rentre dans la bande 1.1768-1.1777</li>
                 <li>- Conclusion : zone d'exécution active, on guette la confirmation de rejet</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 6. Exécution</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : une bougie M15 de rejet apparaît dans le FVG, suivie d'une bougie baissière impulsive</li>
-                <li>- Conclusion : entrée short à 1.1774, SL à 1.1798 (au-dessus de l'extrémité du displacement), TP vers 1.1695. R/R ≈ 1 : 3,3, séquence ICT complète et alignée</li>
+                <li>- Conclusion : entrée short à 1.1774, SL à 1.1798 (au-dessus du sommet du sweep à 1.1792), TP vers 1.1695. R/R ≈ 1 : 3,3, séquence ICT complète et alignée</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

@@ -31,7 +31,7 @@ export function NYOpenExpansionDiagram(_props: { className?: string; locale?: "f
           { key: "peak", i: peakAt, price: peak, label: `${usd(peak)} mèche sweep`, short: "Sweep", tone: "zone", side: "above" },
           { key: "low", i: lowAt, price: low, label: usd(low), tone: "bear", side: "below" },
         ],
-        chips: [{ label: `Amplitude totale ${usd(amplitude)}`, tone: "zone" }],
+        chips: [{ label: `Bougie explosive : +${usd(cs[EXP].h - cs[EXP].o)}`, tone: "bull" }, { label: `${usd(amplitude)} d'amplitude dans la 1re heure`, tone: "zone" }],
       }]}
     />
   );

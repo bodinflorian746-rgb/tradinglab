@@ -18,7 +18,7 @@ export function PostSweepReactionDiagram(_props: { className?: string; locale?: 
   const local = pivots(cs, 2).filter((q) => q.side === "l" && q.index < sweep).at(-1)!;
   const imp = sweep + 1;
   const body = Math.round((cs[imp].o - cs[imp].c) / 0.0001);
-  const t = tradeSetup({ entry: 1.1758, sl: 1.1795, tp: 1.1695, from: imp, tpOffscale: true, names: { tp: "TP liquidité basse" } });
+  const t = tradeSetup({ entry: 1.1758, sl: 1.1795, tp: 1.1695, from: imp, names: { tp: "TP liquidité basse" } });
   return (
     <LessonChart
       id="PostSweepReactionDiagram"

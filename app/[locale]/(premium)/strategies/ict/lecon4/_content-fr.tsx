@@ -146,7 +146,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Graphique M15 EUR/USD : depuis 1.1780, le prix imprime une mèche de sweep à 1.1792 puis enchaîne 4 bougies baissières consécutives, chacune avec un corps de 12-15 pips, sans aucune mèche haute notable. Le prix chute jusqu'à 1.1748 en moins d'une heure, laissant deux FVG bearish visibles dans la chute. C'est un displacement caractéristique, pas une volatilité passagère, mais une séquence orientée.
+                Graphique M15 EUR/USD : depuis 1.1780, le prix imprime une mèche de sweep à 1.1792 puis enchaîne 4 bougies baissières consécutives, aux corps de 6 à 10 pips, bien plus grands que ceux des bougies précédentes, sans aucune mèche haute notable. Le prix chute jusqu'à 1.1748 en moins d'une heure, laissant deux FVG bearish visibles dans la chute. C'est un displacement caractéristique, pas une volatilité passagère, mais une séquence orientée.
               </p>
             </div>
 
@@ -200,7 +200,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1 : le sweep à 1.1792 et le displacement bearish jusqu'à 1.1748 laissent un FVG visible entre 1.1768 et 1.1780. Sur les heures suivantes, le prix remonte progressivement, rentre dans la bande FVG, puis une bougie baissière franche relance la baisse. Entrée short au retour dans le FVG, SL juste au-dessus de 1.1780, TP vers la prochaine zone de liquidité basse, le displacement initial a créé à lui seul l'entrée et le SL.
+                EUR/USD M15 : le sweep à 1.1792 et le displacement bearish jusqu'à 1.1748 laissent un FVG visible entre 1.1768 et 1.1777. Sur les heures suivantes, le prix remonte progressivement, rentre dans la bande FVG, puis une bougie baissière franche relance la baisse. Entrée short au retour dans le FVG, SL au-dessus du sommet du sweep (1.1792), TP vers la prochaine zone de liquidité basse, le displacement initial a créé à lui seul l'entrée et le SL.
               </p>
             </div>
 
@@ -267,14 +267,14 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Displacement bearish</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : 4 bougies baissières consécutives à grands corps, sans mèches hautes, le prix chute à 1.1748. FVG visible entre 1.1768 et 1.1780</li>
+                <li>- Observation : 4 bougies baissières consécutives à grands corps, sans mèches hautes, le prix chute à 1.1748. FVG visible entre 1.1768 et 1.1777</li>
                 <li>- Conclusion : displacement validé. L'entrée n'est pas dans le displacement (déjà passé), elle est dans le FVG qu'il a créé</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 5. Retour dans le FVG : exécution</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : le prix remonte progressivement vers 1.1768-1.1780, rentre dans la bande FVG, puis bougie baissière de rejet</li>
-                <li>- Conclusion : entrée short au retour dans le FVG, SL juste au-dessus de 1.1780 (extrémité du displacement), TP vers 1.1695. R/R ≈ 1 : 2, setup haute probabilité car aligné sur l'UT supérieure + liquidité + sweep + displacement + FVG</li>
+                <li>- Observation : le prix remonte progressivement vers 1.1768-1.1777, rentre dans la bande FVG, puis bougie baissière de rejet</li>
+                <li>- Conclusion : entrée short à 1.1774 au retour dans le FVG, SL à 1.1798 (au-dessus du sommet du sweep, extrémité du mouvement), TP vers 1.1695. R/R ≈ 1 : 3,3, setup haute probabilité car aligné sur l'UT supérieure + liquidité + sweep + displacement + FVG</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

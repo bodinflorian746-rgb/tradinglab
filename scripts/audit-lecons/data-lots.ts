@@ -301,12 +301,14 @@ export function checkLot15(check: Check) {
     check(sweep + 1 < cs.length && Math.abs(cs[sweep + 1].o - cs[sweep + 1].c) / 0.0001 >= 25, "ICT sweep M15 : bougie impulsive trop petite");
   }
   {
-    // ICT 2 (fvg-mitigation-xau) : FVG baissier ~4652-4665, creux 4620, retour dans la zone
+    // ICT 2 (fvg-mitigation-xau) : depuis 4 690, FVG 4 655-4 665, creux 4 620, retour à 4 660 (dans le FVG), rejet baissier, 4 610
     const cs = CS["fvg-mitigation-xau"];
     const fvg = largestFvg(cs, "bear");
-    check(!!fvg && fvg.y1 >= 4648 && fvg.y2 <= 4668, `FVG mitigation XAU : FVG hors 4648-4668 (${fvg ? `${fvg.y1}-${fvg.y2}` : "null"})`);
-    check(!!fvg && Math.min(...cs.slice(fvg.i + 1).map((k) => k.l)) <= 4622, "FVG mitigation XAU : creux ne descend pas à 4620");
-    check(!!fvg && cs.some((k, i) => i > fvg.i + 2 && k.h >= fvg.y1), "FVG mitigation XAU : le retour ne rentre pas dans le FVG");
+    check(!!fvg && fvg.y1 === 4655 && fvg.y2 === 4665 && cs[0].o === 4690, `FVG mitigation XAU : FVG ≠ 4 655-4 665 (${fvg ? `${fvg.y1}-${fvg.y2}` : "null"})`);
+    const low = !!fvg && Math.min(...cs.slice(fvg.i + 1, fvg.i + 4).map((k) => k.l));
+    const back = !!fvg ? cs.findIndex((k, i) => i > fvg.i + 2 && k.h === 4660) : -1;
+    check(low === 4620 && back > 0 && Math.max(...cs.slice(fvg ? fvg.i + 2 : 0).map((k) => k.h)) === 4660, "FVG mitigation XAU : creux 4 620 / retour à 4 660");
+    check(back > 0 && cs[back + 1].c < cs[back + 1].o && cs[back + 1].o - cs[back + 1].c >= 15 && Math.min(...cs.slice(back).map((k) => k.l)) === 4610, "FVG mitigation XAU : rejet impulsif puis 4 610");
   }
   {
     // ICT 2 (fvg-case-a) : FVG bull 1.0840-1.0860, rebond ≥ 1.0918 ; (b) mèche ≤ 1.0843 ; (c) clôture ≤ 1.0826
@@ -335,54 +337,55 @@ export function checkLot16(check: Check) {
     check(Math.max(...cs.slice(9).map(k => k.h)) >= 1.1748, "AsiaRangeSweep : expansion < 1.1748");
   }
   {
-    // ny-expansion : consolidation calme, peak ≥ 4665, drop ≤ 4615
-    const cs = CS["ny-expansion"];
-    check(Math.max(...cs.map(k => k.h)) >= 4665, "NY expansion : peak < 4665");
-    check(Math.min(...cs.map(k => k.l)) <= 4615, "NY expansion : creux > 4615");
-    const calmRange = Math.max(...cs.slice(0, 5).map(k => k.h)) - Math.min(...cs.slice(0, 5).map(k => k.l));
-    check(calmRange <= 15, `NY expansion : calme trop large (${calmRange}$)`);
+    // ICT 3 — NY Open (XAU/USD) : bougie explosive de 28 $ jusqu'à 4 668, 4 610 en 4 bougies, 58 $ d'amplitude
+    const cs = CS["ny-expansion"], e = cs[5];
+    check(e.h - e.o === 28 && e.h === 4668 && Math.max(...cs.map((k) => k.h)) === 4668, "NY Open (ICT 3) : bougie explosive ≠ +28 $ jusqu'à 4 668");
+    check(Math.min(...cs.slice(5, 9).map((k) => k.l)) === 4610 && Math.min(...cs.map((k) => k.l)) === 4610, "NY Open (ICT 3) : 4 610 non atteint dans la 1re heure");
+    const calm = Math.max(...cs.slice(0, 5).map((k) => k.h)) - Math.min(...cs.slice(0, 5).map((k) => k.l));
+    check(calm <= 10, `NY Open (ICT 3) : consolidation trop large (${calm} $)`);
   }
   {
-    // timing comparison : Asia ne casse pas 1.1783, London casse > 1.1790
+    // ICT 3 — même résistance 1.1780 : Asia = mèche de rejet de 4 pips sans cassure ; London = sweep 1.1792, 35 pips en 4 bougies
     const a = CS["timing-asia"], l = CS["timing-london"];
-    check(!a.some(k => k.h > 1.1785), "Timing Asia : résistance cassée en Asia");
-    check(l.some(k => k.h >= 1.179), "Timing London : sweep < 1.1790");
-  }
-  {
-    // disp-impulse : sweep à 1.1792, baisse jusqu'à 1.1748, au moins 4 bear closes
-    const cs = CS["disp-impulse"];
-    check(cs.some(k => k.h >= 1.1791), "DisplacementImpulse : sweep < 1.1791");
-    check(Math.min(...cs.map(k => k.l)) <= 1.1748, "DisplacementImpulse : creux > 1.1748");
-    const bears = cs.filter(k => k.c < k.o).length;
-    check(bears >= 4, `DisplacementImpulse : ${bears} bougies bear < 4`);
+    const t = a.findIndex((k) => k.h === 1.178);
+    check(t >= 0 && near(a[t].h - Math.max(a[t].o, a[t].c), 0.0004, 1e-9) && a.every((k) => k.h <= 1.178), "Timing (ICT 3) : rejet Asia ≠ mèche de 4 pips");
+    const s = l.findIndex((k) => k.h === 1.1792);
+    check(s >= 0 && l[s].c < 1.178 && near(1.1792 - Math.min(...l.slice(s + 1, s + 5).map((k) => k.l)), 0.0035, 1e-9), "Timing (ICT 3) : cascade London ≠ 35 pips en 4 bougies");
   }
 }
 
 export function checkLot17(check: Check) {
   {
-    // disp-setup-h1 : FVG bearish entre ~1.1764-1.178, retour dedans (back > low)
-    const cs = CS["disp-setup-h1"];
-    let fvg: {i:number;y1:number;y2:number}|null=null;
-    for(let i=1;i<cs.length-1;i++){const a=cs[i-1],b=cs[i+1];if(b.h<a.l&&(!fvg||a.l-b.h>fvg.y2-fvg.y1))fvg={i,y1:b.h,y2:a.l};}
-    check(!!fvg && fvg.y2 >= 1.177 && fvg.y2 <= 1.179, `DispSetup : FVG upper hors 1.177-1.179 (${fvg?.y2?.toFixed(5)})`);
-    check(!!fvg && fvg.y1 >= 1.175 && fvg.y1 <= 1.178, `DispSetup : FVG lower hors 1.175-1.178 (${fvg?.y1?.toFixed(5)})`);
-    const low = Math.min(...cs.map(k=>k.l)), lowAt = cs.findIndex(k=>k.l===low);
-    check(low <= 1.1748, `DispSetup : creux > 1.1748 (${low.toFixed(5)})`);
-    check(!!fvg && cs.some((k,i)=>i>lowAt&&k.h>=fvg!.y1), "DispSetup : pas de retour dans le FVG");
+    // ICT 4 / ICT 5 — sweep 1.1792 refermé sous 1.1780, 4 bougies baissières jusqu'à 1.1748, FVG 1.1768-1.1777,
+    // retour dans le FVG, entrée 1.1774 sous le bas du rejet, SL 1.1798, TP 1.1695 (R/R 3,29)
+    const cs = CS["disp-eur"], S = 5;
+    check(cs[S].h === 1.1792 && cs[S].c < 1.178 && Math.max(...cs.map((k) => k.h)) === 1.1792, "Displacement (ICT 4) : sweep");
+    check(cs.slice(S + 1, S + 5).every((k) => k.c < k.o && k.h - k.o <= 0.00031) && cs[S + 4].l === 1.1748 && Math.min(...cs.slice(0, S + 5).map((k) => k.l)) === 1.1748, "Displacement (ICT 4) : 4 bougies baissières jusqu'à 1.1748");
+    const g = fvgAt(cs, S + 1, "bear"), g2 = fvgAt(cs, S + 2, "bear");
+    check(!!g && near(g.y1, 1.1768, 1e-9) && near(g.y2, 1.1777, 1e-9) && !!g2, "Displacement (ICT 4) : FVG 1.1768-1.1777 et second FVG");
+    const back = cs.findIndex((k, i) => i > S + 4 && k.c >= 1.1768);
+    check(back > 0 && cs.slice(back, back + 5).some((k, i, a) => i > 0 && k.l <= 1.1774 && a[i - 1].l >= 1.1774), "Displacement (ICT 4) : pas d'entrée 1.1774 après le rejet");
+    check(near(rrOf(1.1774, 1.1798, 1.1695), 3.29, 0.005), "Displacement (ICT 5) : R/R 3,3");
   }
   {
-    // vol-spike : une grande bougie bull isolée (6+ pips de corps) + retournement immédiat
-    const cs=CS["vol-spike"],peak=cs.reduce((b,k,i)=>k.h>cs[b].h?i:b,0);
-    check(Math.abs(cs[peak].c-cs[peak].o)/0.0001>=5,"VolSpike: corps de la bougie < 5 pips");
-    check(peak<cs.length-1&&cs[peak+1].c<cs[peak].c,"VolSpike: pas de retournement immédiat");
+    // ICT 4 bloc 2 — équilibre 3 h autour de 4 650, sweep 4 668, 5 bougies baissières jusqu'à 4 608
+    const cs = CS["disp-control-xau"], calm = cs.slice(0, 12);
+    check(Math.max(...calm.map((k) => k.h)) - Math.min(...calm.map((k) => k.l)) <= 15 && cs[12].h === 4668, "Displacement (ICT 4 bloc 2) : équilibre / sweep");
+    check(cs.slice(13).length === 5 && cs.slice(13).every((k) => k.c < k.o) && Math.min(...cs.map((k) => k.l)) === 4608, "Displacement (ICT 4 bloc 2) : 5 bougies jusqu'à 4 608");
   }
   {
-    // ict-timing-bear : Asia range ≤15$ puis sweep ≥4665, puis drop ≤4610
-    const cs=CS["ict-timing-bear"];
-    const aRange=Math.max(...cs.slice(0,6).map(k=>k.h))-Math.min(...cs.slice(0,6).map(k=>k.l));
-    check(aRange<=15,`ICTTiming: Asia range ${aRange}$ > 15$`);
-    check(cs[6].h>=4665,"ICTTiming: sweep < 4665");
-    check(Math.min(...cs.map(k=>k.l))<=4610,"ICTTiming: drop > 4610");
+    // ICT 4 bloc 4 — bougie isolée de +18 pips refermée par la suivante ; 4 bougies de 10-12 pips qui cassent le creux local
+    const v = CS["vol-spike"], i = v.reduce((b, k, j) => (k.c - k.o > v[b].c - v[b].o ? j : b), 0);
+    check(near(v[i].c - v[i].o, 0.0018, 1e-9) && v[i + 1].c <= v[i].o, "Volatilité (ICT 4) : +18 pips refermés");
+    const d = CS["disp-seq"], low = Math.min(...d.slice(0, 6).map((k) => k.l));
+    const bodies = d.slice(6).map((k) => (k.o - k.c) / 0.0001);
+    check(bodies.length === 4 && bodies.every((b) => b >= 9.95 && b <= 12.05) && d[6].c < low, "Displacement (ICT 4) : 4 bougies de 10-12 pips qui cassent le creux");
+  }
+  {
+    // ICT 5 bloc 4 — range Asia 4 642-4 655, sweep au-dessus de 4 655, displacement de 38 $, FVG
+    const cs = CS["ict-timing-bear"], asia = cs.slice(0, 6);
+    check(Math.min(...asia.map((k) => k.l)) === 4642 && Math.max(...asia.map((k) => k.h)) === 4655 && cs[6].h > 4655 && cs[6].c < 4655, "Timing (ICT 5) : range Asia / sweep");
+    check(cs[6].c - cs[cs.length - 1].c === 38 && !!largestFvg(cs, "bear"), "Timing (ICT 5) : displacement de 38 $ avec FVG");
   }
 }
 

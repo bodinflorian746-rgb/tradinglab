@@ -1,4 +1,4 @@
-// ICT 5 bloc 3 — fusionné avec DisplacementSetupDiagram ; même composant, même id.
+// ICT 5 bloc 3 — fusionné avec DisplacementSetupDiagram (la page FR l'importe directement).
 // Ce fichier reste pour les pages EN/ES qui l'importent encore.
 
 import { DisplacementSetupDiagram } from "./DisplacementSetupDiagram";
