@@ -1,192 +1,43 @@
-// Diagramme : timing + setup (Leçon 5 ICT)
-// XAU/USD — timeline 2 segments Asia / London Open, range Asia (4 642-4 655),
-// sweep au-dessus du range puis displacement bearish avec FVG dans la chute.
+// ICT 5 bloc 4 — timing : XAU/USD M15, range Asia 4 642-4 655 (6 bougies calmes), London
+// Open sweep au-dessus du range (stops pris à 4 668 $), displacement bearish jusqu'à
+// 4 608 $ avec FVG. Même schéma que KillzonesTimeline mais sens baissier.
+// Bougies : scenarios.ts (« ict-timing-bear »).
 
-interface ICTTimingDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { usd } from "@/app/components/lessons/trade";
+import { largestFvg } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
-type CandleSpec = {
-  cx: number;
-  wickTop: number;
-  bodyY: number;
-  bodyH: number;
-  wickBottom: number;
-  type: "bull" | "bear";
-};
+const ASIA_END = 5, SWEEP_I = 6;
 
-// Continuité : open = close de la précédente.
-// Range Asia y=120-150. Bande FVG y=170-200.
-const CANDLES: CandleSpec[] = [
-  // Range Asia — bougies serrées entre y=120 et y=150 (continuité dans la zone)
-  { cx:  70, wickTop: 122, bodyY: 125, bodyH: 18, wickBottom: 152, type: "bull" }, // open 143 close 125
-  { cx: 100, wickTop: 122, bodyY: 125, bodyH: 18, wickBottom: 152, type: "bear" }, // open 125 close 143
-  { cx: 130, wickTop: 130, bodyY: 134, bodyH: 12, wickBottom: 152, type: "bull" }, // open 146 close 134
-  { cx: 160, wickTop: 132, bodyY: 134, bodyH: 14, wickBottom: 152, type: "bear" }, // open 134 close 148
-  { cx: 190, wickTop: 124, bodyY: 128, bodyH: 20, wickBottom: 152, type: "bull" }, // open 148 close 128
-  { cx: 220, wickTop: 126, bodyY: 128, bodyH: 18, wickBottom: 152, type: "bear" }, // open 128 close 146
-  { cx: 250, wickTop: 130, bodyY: 134, bodyH: 12, wickBottom: 150, type: "bull" }, // open 146 close 134
-
-  // SWEEP — bougie qui dépasse au-dessus du range (mèche à y=98), corps referme sous le sommet du range
-  { cx: 290, wickTop:  98, bodyY: 132, bodyH: 16, wickBottom: 152, type: "bear" }, // open 134 close 148
-
-  // DISPLACEMENT bearish — grandes bougies rouges sous le range
-  { cx: 325, wickTop: 146, bodyY: 148, bodyH: 50, wickBottom: 205, type: "bear" }, // open 148 close 198
-  { cx: 360, wickTop: 196, bodyY: 198, bodyH: 42, wickBottom: 245, type: "bear" }, // open 198 close 240
-  { cx: 395, wickTop: 238, bodyY: 240, bodyH: 28, wickBottom: 270, type: "bear" }, // open 240 close 268
-  { cx: 430, wickTop: 266, bodyY: 268, bodyH: 12, wickBottom: 282, type: "bear" }, // open 268 close 280
-  { cx: 465, wickTop: 278, bodyY: 280, bodyH:  8, wickBottom: 290, type: "bear" }, // open 280 close 288
-];
-
-const BODY_W = 12;
-
-export function ICTTimingDiagram({ className = "", locale = "fr" }: ICTTimingDiagramProps) {
-  const t = locale === "es"
-    ? {
-        rangeAsia: "Rango Asia",
-        londonOpen: "London Open",
-        sweep: "Barrido",
-        annotation: "El timing activa el movimiento",
-        mobileTitle: "ICT timing · XAU/USD M15",
-        block1Title: "Rango Asia — liquidez visible",
-        block1Body: "Stops acumulados a los 2 lados del rango nocturno.",
-        block2Title: "Barrido + displacement en London Open",
-        block2Body: "London toma la liquidez de Asia y luego envía un displacement franco = setup ICT clásico.",
-        leg1: "Rango Asia = bolsa de liquidez visible",
-        leg2: "Barrido y displacement en London Open",
-      }
-    : locale === "en"
-    ? {
-        rangeAsia: "Asia Range",
-        londonOpen: "London Open",
-        sweep: "Sweep",
-        annotation: "Timing triggers the move",
-        mobileTitle: "ICT timing · XAU/USD M15",
-        block1Title: "Asia Range — visible liquidity",
-        block1Body: "Stops stacked on both sides of the overnight range.",
-        block2Title: "Sweep + displacement at London Open",
-        block2Body: "London takes Asia's liquidity then fires a clean displacement = classic ICT setup.",
-        leg1: "Asia Range = visible liquidity pool",
-        leg2: "Sweep and displacement at London Open",
-      }
-    : {
-        rangeAsia: "Range Asia",
-        londonOpen: "London Open",
-        sweep: "Sweep",
-        annotation: "Le timing active le mouvement",
-        mobileTitle: "ICT timing · XAU/USD M15",
-        block1Title: "Range Asia — liquidité visible",
-        block1Body: "Stops accumulés des 2 côtés du range nocturne.",
-        block2Title: "Sweep + displacement en London Open",
-        block2Body: "London prend la liquidité d'Asia puis envoie un displacement franc = setup ICT classique.",
-        leg1: "Range Asia = poche de liquidité visible",
-        leg2: "Sweep et displacement en London Open",
-      };
+export function ICTTimingDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["ict-timing-bear"];
+  const fvg = largestFvg(cs, "bear");
+  const low = Math.min(...cs.map((k) => k.l));
+  const lowAt = cs.findIndex((k) => k.l === low);
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
-
-        <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
-        <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · M15</text>
-
-        {/* Timeline horizontale en haut */}
-        {/* Segment Asia — fin, calme */}
-        <line x1="70" y1="60" x2="265" y2="60" stroke="#52525b" strokeWidth="2" strokeLinecap="round" />
-        <rect x="125" y="44" width="84" height="14" rx="3" fill="#09090b" />
-        <text x="167" y="54" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">{t.rangeAsia}</text>
-
-        {/* Segment London — épais, accent */}
-        <line x1="285" y1="60" x2="490" y2="60" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
-        <rect x="332" y="44" width="110" height="14" rx="3" fill="#09090b" />
-        <text x="387" y="54" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.londonOpen}</text>
-
-        {/* Séparateur vertical */}
-        <line x1="275" y1="68" x2="275" y2="290" stroke="#27272a" strokeWidth="1" strokeDasharray="2 4" />
-
-        {/* Rectangle Range Asia — y=120 à y=150 */}
-        <rect x="55" y="120" width="220" height="30" fill="#27272a40" stroke="#71717a" strokeWidth="1.2" strokeDasharray="5 3" strokeOpacity="0.9" />
-
-        {/* Labels du range — à GAUCHE pour ne pas chevaucher */}
-        <rect x="6" y="113" width="50" height="13" rx="3" fill="#09090b" />
-        <text x="31" y="123" fill="#a1a1aa" fontSize="9" fontWeight="600" textAnchor="middle">4 655 $</text>
-        <rect x="6" y="144" width="50" height="13" rx="3" fill="#09090b" />
-        <text x="31" y="154" fill="#a1a1aa" fontSize="9" fontWeight="600" textAnchor="middle">4 642 $</text>
-
-        {/* Bande FVG dans la chute — y=170 à y=200 */}
-        <rect x="310" y="170" width="345" height="30" fill="#ef444418" stroke="#ef4444" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.6" />
-        <rect x="610" y="178" width="42" height="13" rx="3" fill="#09090b" />
-        <text x="631" y="188" fill="#ef4444" fontSize="9" fontWeight="700" textAnchor="middle">FVG</text>
-
-        {/* Bougies */}
-        {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
-          const bodyFill = type === "bull" ? "#10b981" : "#ef4444";
-          const wickStroke = type === "bull" ? "#059669" : "#b91c1c";
-          return (
-            <g key={i}>
-              <line x1={cx} y1={wickTop} x2={cx} y2={wickBottom} stroke={wickStroke} strokeWidth="1.4" strokeLinecap="round" />
-              <rect x={cx - BODY_W / 2} y={bodyY} width={BODY_W} height={bodyH} fill={bodyFill} stroke={wickStroke} strokeWidth="1" rx="1" />
-            </g>
-          );
-        })}
-
-        {/* Label Sweep au-dessus de la mèche */}
-        <line x1="292" y1="96" x2="320" y2="84" stroke="#f59e0b" strokeWidth="0.9" strokeOpacity="0.7" />
-        <rect x="320" y="74" width="56" height="14" rx="3" fill="#09090b" />
-        <text x="348" y="84" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.sweep}</text>
-
-        {/* Annotation */}
-        <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
-        <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-        <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          {t.annotation}
-        </text>
-      </svg>
-
-      {/* MOBILE : ICT timing ──────────────────────────── */}
-      <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
-
-        {/* Mini-SVG : timeline 24h avec 3 fenêtres ICT (London Open, NY AM, Power Hour) */}
-        <svg viewBox="0 -4 300 64" className="w-full h-auto" aria-label="ICT timing windows" fill="none">
-          <line x1="10" y1="40" x2="290" y2="40" stroke="#52525b" strokeWidth="1" />
-          {[0, 6, 12, 18, 24].map((h) => (
-            <g key={h}>
-              <line x1={10 + (h * 280) / 24} y1="40" x2={10 + (h * 280) / 24} y2="44" stroke="#52525b" strokeWidth="0.8" />
-              <text x={10 + (h * 280) / 24} y="54" fontSize="9" fill="#71717a" textAnchor="middle">{h}h</text>
-            </g>
-          ))}
-          {/* London Open 7h-9h (emerald) */}
-          <rect x={10 + (7 * 280) / 24} y="14" width={(2 * 280) / 24} height="26" fill="#10b98130" stroke="#10b98180" strokeWidth="1" />
-          <text x={10 + (8 * 280) / 24} y="10" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">LON</text>
-          {/* NY AM 13h-15h (emerald — clé) */}
-          <rect x={10 + (13 * 280) / 24} y="8" width={(2 * 280) / 24} height="32" fill="#10b98140" stroke="#10b981" strokeWidth="1.2" />
-          <text x={10 + (14 * 280) / 24} y="6" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">NY ★</text>
-          {/* Power Hour 14h-15h (badge dans NY) */}
-          {/* Asia (zone moins active, juste pour contexte) */}
-          <rect x={10 + (0 * 280) / 24} y="26" width={(6 * 280) / 24} height="14" fill="#71717a15" stroke="#71717a55" strokeWidth="0.7" />
-        </svg>
-
-        <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-          <p className="text-[13px] font-bold text-zinc-300">{t.block1Title}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.block1Body}</p>
-        </div>
-        <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">{t.block2Title}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.block2Body}</p>
-        </div>
-      </div>
-
-      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id="ICTTimingDiagram"
+      title="Setup ICT + Killzone : XAU/USD en London Open"
+      caption="Setup ICT + timing Killzone = setup premium. Hors Killzone : probabilité de continuation très faible."
+      panels={[{
+        key: "m15", title: "XAU/USD M15", decimals: 0, height: 280, candles: cs,
+        zones: [
+          { key: "asia", y1: 4642, y2: 4655, from: 0, to: ASIA_END, label: "Range Asia 4642-4655", short: "Range Asia", tone: "sky" },
+          ...(fvg ? [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear" as const, kind: "fvg", src: `ict-timing-bear:${fvg.i}` }] : []),
+        ],
+        levels: [
+          { key: "asiaH", price: 4655, to: SWEEP_I, label: `Stops au-dessus ${usd(4655)}`, short: "Stops", tone: "zone", dashed: true },
+        ],
+        markers: [
+          { key: "sweep", i: SWEEP_I, price: cs[SWEEP_I].h, label: `London Open : sweep ${usd(cs[SWEEP_I].h)}`, short: "Sweep", tone: "zone", side: "above" },
+          { key: "low", i: lowAt, price: low, label: usd(low), tone: "bear", side: "below" },
+        ],
+        chips: [
+          { label: `Sweep → ${usd(cs[SWEEP_I].h)} : stops au-dessus du range Asia pris`, tone: "zone" },
+          { label: `Displacement → ${usd(low)}`, tone: "bear" },
+        ],
+      }]}
+    />
   );
 }

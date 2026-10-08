@@ -357,3 +357,31 @@ export function checkLot16(check: Check) {
     check(bears >= 4, `DisplacementImpulse : ${bears} bougies bear < 4`);
   }
 }
+
+export function checkLot17(check: Check) {
+  {
+    // disp-setup-h1 : FVG bearish entre ~1.1764-1.178, retour dedans (back > low)
+    const cs = CS["disp-setup-h1"];
+    let fvg: {i:number;y1:number;y2:number}|null=null;
+    for(let i=1;i<cs.length-1;i++){const a=cs[i-1],b=cs[i+1];if(b.h<a.l&&(!fvg||a.l-b.h>fvg.y2-fvg.y1))fvg={i,y1:b.h,y2:a.l};}
+    check(!!fvg && fvg.y2 >= 1.177 && fvg.y2 <= 1.179, `DispSetup : FVG upper hors 1.177-1.179 (${fvg?.y2?.toFixed(5)})`);
+    check(!!fvg && fvg.y1 >= 1.175 && fvg.y1 <= 1.178, `DispSetup : FVG lower hors 1.175-1.178 (${fvg?.y1?.toFixed(5)})`);
+    const low = Math.min(...cs.map(k=>k.l)), lowAt = cs.findIndex(k=>k.l===low);
+    check(low <= 1.1748, `DispSetup : creux > 1.1748 (${low.toFixed(5)})`);
+    check(!!fvg && cs.some((k,i)=>i>lowAt&&k.h>=fvg!.y1), "DispSetup : pas de retour dans le FVG");
+  }
+  {
+    // vol-spike : une grande bougie bull isolée (6+ pips de corps) + retournement immédiat
+    const cs=CS["vol-spike"],peak=cs.reduce((b,k,i)=>k.h>cs[b].h?i:b,0);
+    check(Math.abs(cs[peak].c-cs[peak].o)/0.0001>=5,"VolSpike: corps de la bougie < 5 pips");
+    check(peak<cs.length-1&&cs[peak+1].c<cs[peak].c,"VolSpike: pas de retournement immédiat");
+  }
+  {
+    // ict-timing-bear : Asia range ≤15$ puis sweep ≥4665, puis drop ≤4610
+    const cs=CS["ict-timing-bear"];
+    const aRange=Math.max(...cs.slice(0,6).map(k=>k.h))-Math.min(...cs.slice(0,6).map(k=>k.l));
+    check(aRange<=15,`ICTTiming: Asia range ${aRange}$ > 15$`);
+    check(cs[6].h>=4665,"ICTTiming: sweep < 4665");
+    check(Math.min(...cs.map(k=>k.l))<=4610,"ICTTiming: drop > 4610");
+  }
+}

@@ -706,3 +706,48 @@ Object.assign(SCENARIOS, {
   "killzones-kz": killzonesKz, "asia-range-sweep": asiaRangeSweep, "ny-expansion": nyExpansion,
   "timing-asia": timingAsia, "timing-london": timingLondon, "disp-impulse": dispImpulse,
 });
+
+// ─── Lot 17 ──────────────────────────────────────────────────────────────────
+// ICT 4 bloc 3 & ICT 5 bloc 3 (fusionnés) — EUR/USD H1 : calm approach, equal highs 1.1780,
+// sweep à 1.1792. Le sweep ouvre le FVG : cs[calm last].l = 1.1780, cs[disp1].h = 1.1768
+// → FVG y1=1.1768, y2=1.1780. 3 bougies displacement jusqu'à 1.1748, puis récupération
+// jusqu'à 1.1772 (retour dans le FVG), rejet baissier.
+const dispSetupH1 = () => buildCandles(1.1762, [
+  ...c(1.1768, 1.1773, 1.1778), { c: 1.1782, h: 1.1784, l: 1.1780 },
+  { c: 1.1778, h: 1.1792, l: 1.1776 },  // sweep (centre du FVG)
+  { c: 1.1762, h: 1.1768 },              // disp1 : h = 1.1768 = borne basse du FVG
+  { c: 1.1754 }, { c: 1.1748, l: 1.1745 },
+  ...c(1.1752, 1.1759, 1.1766), { c: 1.1770, h: 1.1773 },
+  { c: 1.1758, h: 1.1772 },
+], { seed: 17101, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", split: 5,
+  levels: [1.178, 1.1792, 1.1768, 1.1748], pins: [1.1780, 1.1792, 1.1776, 1.1768, 1.1745, 1.1773] });
+// ICT 4 bloc 4 — volatilité ≠ displacement : deux courts scénarios EUR/USD.
+// vol-spike : 3 calmes + bougie haussière isolée 18 pips + retournement immédiat + reprise calme.
+const volSpike = () => buildCandles(1.0838, [
+  ...c(1.0840, 1.0836, 1.0839),
+  { c: 1.0857, h: 1.0860 },              // grande bougie haussière isolée
+  { c: 1.0837, h: 1.0858 },              // retournement immédiat
+  ...c(1.0840, 1.0836, 1.0839),
+], { seed: 17201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "faible",
+  levels: [1.0835], pins: [1.0860, 1.0858] });
+// disp-bear : 3 calmes + sweep (h=1.0860, c=1.0840) + 4 bougies displacement baissier.
+const dispBear = () => buildCandles(1.0838, [
+  ...c(1.0840, 1.0836, 1.0839),
+  { c: 1.0840, h: 1.0860, l: 1.0836 },  // sweep
+  { c: 1.0826 }, { c: 1.0815 }, { c: 1.0804 }, { c: 1.0796, l: 1.0793 },
+], { seed: 17202, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", split: 4,
+  levels: [1.084, 1.086], pins: [1.086, 1.0836, 1.0793] });
+// ICT 5 bloc 4 — timing : XAU/USD, Asia range étroit 4642-4655 (6 bougies calmes), puis London
+// sweep AU-DESSUS du range (stops au-dessus pris, mèche à 4668), displacement baissier avec
+// FVG laissé dans la chute.
+const ictTimingBear = () => buildCandles(4648, [
+  { c: 4652, h: 4655, l: 4642 }, { c: 4648, h: 4654, l: 4644 }, { c: 4651, h: 4655, l: 4644 },
+  { c: 4648, h: 4654, l: 4642 }, { c: 4650, h: 4655, l: 4643 }, { c: 4651, h: 4655, l: 4644 },
+  { c: 4649, h: 4668, l: 4645 },         // sweep au-dessus du range
+  { c: 4638 }, { c: 4626 }, { c: 4615 }, { c: 4608, l: 4605 },
+], { seed: 17301, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale", split: 6,
+  levels: [4655, 4642, 4668, 4608], pins: [4655, 4644, 4642, 4668, 4645, 4605] });
+Object.assign(SCENARIOS, {
+  "disp-setup-h1": dispSetupH1, "vol-spike": volSpike, "disp-bear": dispBear,
+  "ict-timing-bear": ictTimingBear,
+});

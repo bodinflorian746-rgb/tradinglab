@@ -62,7 +62,7 @@
   {"url":"/fr/formations/macro/avance/lecon2","charts":["NFPReportAnatomyDiagram"]},
   {"url":"/fr/formations/macro/avance/lecon3","charts":["US10YHubDiagram"]},
   {"url":"/fr/strategies/ict/lecon1","charts":["IctLiquidityGrabDiagram","FalseBreakoutTrapDiagram","PostSweepReactionDiagram"]},
-  {"url":"/fr/strategies/ict/lecon5","charts":["IctLiquidityGrabDiagram"]},
+  {"url":"/fr/strategies/ict/lecon5","charts":["IctLiquidityGrabDiagram","ICTSequenceTimelineDiagram","DisplacementSetupDiagram","ICTTimingDiagram"]},
   {"url":"/fr/strategies/ict/lecon3","charts":["KillzonesTimelineDiagram","AsiaRangeSweepDiagram","NYOpenExpansionDiagram","TimingComparisonDiagram"]},
-  {"url":"/fr/strategies/ict/lecon4","charts":["DisplacementImpulseDiagram"]}
+  {"url":"/fr/strategies/ict/lecon4","charts":["DisplacementImpulseDiagram","DisplacementControlDiagram","DisplacementSetupDiagram","DisplacementVsVolatilityDiagram"]}
 ]
