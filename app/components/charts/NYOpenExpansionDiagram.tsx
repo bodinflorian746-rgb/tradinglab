@@ -1,166 +1,38 @@
-// Diagramme : expansion à l'ouverture NY (Leçon 3 ICT)
-// XAU/USD M15 — pré-market lent autour de 4 640 $, puis impulsion explosive haussière à
-// l'ouverture NY (sommet 4 668 $ avec mèche de sweep), puis rejet violent vers 4 610 $.
+// ICT 3 — NY Open : consolidation ~4 640 $ (5 bougies calmes), bougie explosive haussière
+// à 4 668 $ (mèche de sweep), puis cascade baissière jusqu'à 4 610 $.
+// Bougies : scenarios.ts (« ny-expansion »).
 
-interface NYOpenExpansionDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { usd } from "@/app/components/lessons/trade";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
-type CandleSpec = {
-  cx: number;
-  wickTop: number;
-  bodyY: number;
-  bodyH: number;
-  wickBottom: number;
-  type: "bull" | "bear";
-};
-
-const CANDLES: CandleSpec[] = [
-  // PHASE 1 — pré-market lent, autour de y=160 (4 640 $)
-  { cx:  70, wickTop: 156, bodyY: 160, bodyH:  8, wickBottom: 172, type: "bull" },
-  { cx: 100, wickTop: 162, bodyY: 168, bodyH:  6, wickBottom: 178, type: "bear" },
-  { cx: 130, wickTop: 158, bodyY: 162, bodyH:  8, wickBottom: 174, type: "bull" },
-  { cx: 160, wickTop: 160, bodyY: 162, bodyH:  6, wickBottom: 172, type: "bear" },
-  { cx: 190, wickTop: 158, bodyY: 162, bodyH:  6, wickBottom: 172, type: "bull" },
-  { cx: 220, wickTop: 160, bodyY: 164, bodyH:  8, wickBottom: 178, type: "bear" },
-  { cx: 250, wickTop: 158, bodyY: 162, bodyH:  6, wickBottom: 170, type: "bull" },
-
-  // PHASE 2 — bougie explosive haussière + sweep
-  { cx: 295, wickTop:  78, bodyY:  85, bodyH: 75, wickBottom: 165, type: "bull" }, // grosse impulsion verte (open 160, close 85)
-  { cx: 335, wickTop:  50, bodyY:  62, bodyH: 22, wickBottom:  92, type: "bull" }, // mèche de sweep à y=50, sommet final 4 668 $
-
-  // PHASE 3 — rejet violent bearish vers 4 610 $
-  { cx: 380, wickTop:  60, bodyY:  62, bodyH: 70, wickBottom: 138, type: "bear" }, // gros rejet rouge
-  { cx: 420, wickTop: 130, bodyY: 132, bodyH: 50, wickBottom: 188, type: "bear" },
-  { cx: 460, wickTop: 180, bodyY: 182, bodyH: 40, wickBottom: 228, type: "bear" },
-  { cx: 500, wickTop: 220, bodyY: 222, bodyH: 28, wickBottom: 255, type: "bear" },
-  { cx: 540, wickTop: 248, bodyY: 250, bodyH: 14, wickBottom: 268, type: "bear" },
-  { cx: 580, wickTop: 262, bodyY: 264, bodyH:  8, wickBottom: 274, type: "bear" },
-];
-
-const BODY_W = 14;
-
-export function NYOpenExpansionDiagram({ className = "", locale = "fr" }: NYOpenExpansionDiagramProps) {
-  const t = locale === "es"
-    ? {
-        nyOpen: "NY Open",
-        annotation: "El volumen transforma el mercado",
-        mobileTitle: "NY Open expansion · XAU/USD M15",
-        b1Title: "Pre-market — velas planas",
-        b1Body: "Volumen bajo, rango estrecho.",
-        b2Title: "NY Open — impulso explosivo",
-        b2Body: "El volumen explota a las 14h30 o 15h30 (París) → barrido + rechazo visible inmediato.",
-        leg1: "Pre-market = velas planas, volumen bajo",
-        leg2: "NY Open = impulso explosivo y luego barrido y rechazo",
-      }
-    : locale === "en"
-    ? {
-        nyOpen: "NY Open",
-        annotation: "Volume transforms the market",
-        mobileTitle: "NY Open expansion · XAU/USD M15",
-        b1Title: "Pre-market — flat candles",
-        b1Body: "Low volume, tight range.",
-        b2Title: "NY Open — explosive impulse",
-        b2Body: "Volume explodes at 9:30 AM ET → sweep + rejection immediately visible.",
-        leg1: "Pre-market = flat candles, low volume",
-        leg2: "NY Open = explosive impulse then sweep and rejection",
-      }
-    : {
-        nyOpen: "NY Open",
-        annotation: "Le volume transforme le marché",
-        mobileTitle: "NY Open expansion · XAU/USD M15",
-        b1Title: "Pré-market — bougies plates",
-        b1Body: "Volume faible, range étroit.",
-        b2Title: "NY Open — impulsion explosive",
-        b2Body: "Volume explose à 14h30 ou 15h30 (Paris) → sweep + rejet visible immédiat.",
-        leg1: "Pré-market = bougies plates, faible volume",
-        leg2: "NY Open = impulsion explosive puis sweep et rejet",
-      };
+export function NYOpenExpansionDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["ny-expansion"];
+  const CALM_END = 4, EXP = 5;
+  const calLow = Math.min(...cs.slice(0, CALM_END + 1).map((k) => k.l));
+  const calHigh = Math.max(...cs.slice(0, CALM_END + 1).map((k) => k.h));
+  const peak = Math.max(...cs.map((k) => k.h));
+  const peakAt = cs.findIndex((k) => k.h === peak);
+  const low = Math.min(...cs.map((k) => k.l));
+  const lowAt = cs.findIndex((k) => k.l === low);
+  const amplitude = Math.round(peak - low);
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
-
-        <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
-        <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">XAU/USD · M15</text>
-
-        {/* Repère vertical "NY Open" entre phase 1 et phase 2 */}
-        <line x1="272" y1="50" x2="272" y2="278" stroke="#f59e0b" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.5" />
-        <rect x="232" y="50" width="78" height="14" rx="3" fill="#09090b" />
-        <text x="271" y="60" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">{t.nyOpen}</text>
-
-        {/* Bougies */}
-        {CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
-          const bodyFill = type === "bull" ? "#10b981" : "#ef4444";
-          const wickStroke = type === "bull" ? "#059669" : "#b91c1c";
-          return (
-            <g key={i}>
-              <line x1={cx} y1={wickTop} x2={cx} y2={wickBottom} stroke={wickStroke} strokeWidth="1.4" strokeLinecap="round" />
-              <rect x={cx - BODY_W / 2} y={bodyY} width={BODY_W} height={bodyH} fill={bodyFill} stroke={wickStroke} strokeWidth="1" rx="1" />
-            </g>
-          );
-        })}
-
-        {/* Label "4 640 $" sur la zone pré-market */}
-        <rect x="158" y="138" width="62" height="13" rx="3" fill="#09090b" />
-        <text x="189" y="148" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">4 640 $</text>
-
-        {/* Label "4 668 $" au sommet du sweep */}
-        <line x1="338" y1="48" x2="365" y2="40" stroke="#f59e0b" strokeWidth="0.9" strokeOpacity="0.7" />
-        <rect x="365" y="30" width="62" height="14" rx="3" fill="#09090b" />
-        <text x="396" y="40" fill="#f59e0b" fontSize="9" fontWeight="700" textAnchor="middle">4 668 $</text>
-
-        {/* Label "4 610 $" en bas du rejet */}
-        <rect x="600" y="268" width="62" height="13" rx="3" fill="#09090b" />
-        <text x="631" y="278" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle">4 610 $</text>
-
-        {/* Annotation */}
-        <rect x="170" y="290" width="360" height="22" rx="11" fill="#09090b" />
-        <rect x="170" y="290" width="360" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-        <text x="350" y="304" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          {t.annotation}
-        </text>
-      </svg>
-
-      {/* MOBILE : NY Open expansion ──────────────────────── */}
-      <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
-
-        {/* Mini-SVG : pré-NY plat puis expansion violente à NY Open */}
-        <svg viewBox="0 0 280 100" className="w-full h-auto" aria-label="NY Open expansion" fill="none">
-          {/* Niveau de référence */}
-          <line x1="10" y1="60" x2="270" y2="60" stroke="#52525b" strokeWidth="0.8" strokeDasharray="3 3" />
-          {/* Pré-NY : range plat (oscillation faible amplitude) */}
-          <path d="M15,60 L30,58 L45,62 L60,57 L75,63 L90,58 L105,62 L120,58" stroke="#71717a" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
-          {/* Ligne verticale NY Open */}
-          <line x1="130" y1="10" x2="130" y2="90" stroke="#10b981" strokeWidth="1" strokeDasharray="2 2" opacity="0.6" />
-          <rect x="100" y="2" width="60" height="12" rx="2" fill="#10b98115" stroke="#10b98155" strokeWidth="0.7" />
-          <text x="130" y="11" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">NY Open</text>
-          {/* Expansion violente (impulsion ascendante post-NY) */}
-          <path d="M130,58 L145,40 L160,48 L180,28 L200,32 L222,18 L250,22 L270,8" stroke="#10b981" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
-          <circle cx="270" cy="8" r="3.5" fill="#10b981" />
-        </svg>
-
-        <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-          <p className="text-[13px] font-bold text-zinc-300">{t.b1Title}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b1Body}</p>
-        </div>
-        <div className="rounded-lg border-2 border-emerald-500 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">{t.b2Title}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.b2Body}</p>
-        </div>
-      </div>
-
-      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id="NYOpenExpansionDiagram"
+      title="L'ouverture New York : expansion en quelques bougies"
+      caption="NY Open = superposition London + flux US. Amplitude souvent supérieure à la veille entière."
+      panels={[{
+        key: "m15", title: "XAU/USD M15", decimals: 0, height: 280, candles: cs,
+        zones: [
+          { key: "cons", y1: calLow, y2: calHigh, from: 0, to: CALM_END, label: "Consolidation calme", short: "Calme", tone: "neutral" },
+        ],
+        markers: [
+          { key: "exp", i: EXP, price: cs[EXP].l, label: "NY Open : bougie explosive", short: "NY Open", tone: "bull", side: "below" },
+          { key: "peak", i: peakAt, price: peak, label: `${usd(peak)} mèche sweep`, short: "Sweep", tone: "zone", side: "above" },
+          { key: "low", i: lowAt, price: low, label: usd(low), tone: "bear", side: "below" },
+        ],
+        chips: [{ label: `Amplitude totale ${usd(amplitude)}`, tone: "zone" }],
+      }]}
+    />
   );
 }

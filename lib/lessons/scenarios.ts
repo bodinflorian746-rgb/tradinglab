@@ -649,3 +649,60 @@ Object.assign(SCENARIOS, {
   "ict-eqh": ictEqh, "false-breakout-xau": falseBreakoutXau, "ict-sweep-m15": ictSweepM15,
   "fvg-mitigation-xau": fvgMitigationXau, "fvg-case-a": fvgCaseA, "fvg-case-b": fvgCaseB, "fvg-case-c": fvgCaseC,
 });
+
+// ─── Lot 16 ──────────────────────────────────────────────────────────────────
+// ICT 3 — KillzonesTimeline (EUR/USD M15 compact) : 7 bougies calmes Asia (range
+// 1.1710-1.1725) → 7 bougies London (sweep 1.1702, impulsion haussière à 1.1750)
+// → 5 bougies NY (continuation + expansion). Séparations à 7 et 14.
+const killzonesKz = () => buildCandles(1.1718, [
+  { c: 1.1720, h: 1.1724, l: 1.1715 }, { c: 1.1716, h: 1.1721, l: 1.1713 },
+  { c: 1.1720, h: 1.1723, l: 1.1714 }, { c: 1.1718, h: 1.1722, l: 1.1712 },
+  { c: 1.1722, h: 1.1725, l: 1.1716 }, { c: 1.1719, h: 1.1724, l: 1.1714 }, { c: 1.1720, h: 1.1724, l: 1.1715 },
+  { c: 1.1702, h: 1.1716, l: 1.1700 },
+  { c: 1.1724, h: 1.1726, l: 1.1703 }, { c: 1.1738 }, { c: 1.1745 }, { c: 1.1748, h: 1.1750 }, ...c(1.1742, 1.1746),
+  { c: 1.1758 }, { c: 1.1766 }, { c: 1.1770, h: 1.1774 }, ...c(1.1765, 1.1768),
+], { seed: 16101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", split: 7, preNews: true,
+  levels: [1.1725, 1.1710, 1.1702, 1.1750, 1.1774], pins: [1.1725, 1.1710, 1.1712, 1.1700, 1.1702, 1.1750, 1.1774] });
+// ICT 3 — AsiaRangeSweep (EUR/USD M15) : range Asia 1.1710-1.1725 (7 bougies calmes),
+// bougie de sweep sous 1.1710 jusqu'à 1.1702, réintégration, impulsion haussière à 1.1750.
+const asiaRangeSweep = () => buildCandles(1.1718, [
+  { c: 1.1720, h: 1.1724, l: 1.1715 }, { c: 1.1716, h: 1.1721, l: 1.1712 },
+  { c: 1.1720, h: 1.1723, l: 1.1714 }, { c: 1.1718, h: 1.1722, l: 1.1712 },
+  { c: 1.1722, h: 1.1725, l: 1.1716 }, { c: 1.1719, h: 1.1724, l: 1.1714 }, { c: 1.1720, h: 1.1724, l: 1.1715 },
+  { c: 1.1706, h: 1.1716, l: 1.1702 }, { c: 1.1718, h: 1.1720, l: 1.1703 },
+  { c: 1.1736 }, { c: 1.1742 }, { c: 1.1747, h: 1.1750 },
+], { seed: 16201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", split: 7,
+  levels: [1.1725, 1.1710, 1.1702, 1.1750], pins: [1.1725, 1.1715, 1.1710, 1.1712, 1.1702, 1.1750] });
+// ICT 3 — NYOpenExpansion (XAU/USD M15) : consolidation ~4 640 (5 bougies calmes),
+// bougie explosive haussière à 4 668, mèche de sweep, cascade baissière à 4 610.
+const nyExpansion = () => buildCandles(4638, [
+  { c: 4640, h: 4643, l: 4636 }, { c: 4638, h: 4641, l: 4636 }, { c: 4641, h: 4644, l: 4637 },
+  { c: 4639, h: 4643, l: 4636 }, { c: 4641, h: 4644, l: 4637 },
+  { c: 4668, h: 4671, l: 4640 }, { c: 4658, h: 4669, l: 4654 },
+  { c: 4640, h: 4659 }, { c: 4630, h: 4641 }, { c: 4622 }, { c: 4615, l: 4610 },
+], { seed: 16301, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
+  levels: [4640, 4668, 4610], pins: [4640, 4644, 4636, 4668, 4671, 4610] });
+// ICT 3 — TimingComparison panneaux Asia et London : même résistance 1.1780 testée deux fois.
+// Asia (01h-04h UTC) : rejet mou de 4 pips, puis latéralisation 2 h.
+// London Open (07h-10h UTC) : sweep à 1.1792, cascade de 35 pips.
+const timingAsia = () => buildCandles(1.1770, [
+  ...c(1.1774, 1.1778), { c: 1.1778, h: 1.1780 }, { c: 1.1776, h: 1.1780 },
+  ...c(1.1774, 1.1776, 1.1773, 1.1775, 1.1773, 1.1775, 1.1772, 1.1774),
+], { seed: 16401, decimals: 5, asset: "EUR/USD", session: "Asie", volatility: "faible",
+  levels: [1.1780], pins: [1.1780] });
+const timingLondon = () => buildCandles(1.1770, [
+  ...c(1.1774, 1.1778), { c: 1.1780, h: 1.1792 }, { c: 1.1762 }, { c: 1.1755 }, { c: 1.1750 }, ...c(1.1745, 1.1742),
+], { seed: 16402, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale",
+  levels: [1.1780, 1.1792, 1.1745], pins: [1.1780, 1.1792, 1.1745] });
+// ICT 4 — DisplacementImpulse (EUR/USD M15) : 2 bougies calmes, sweep à 1.1792 refermé
+// sous 1.1780, puis 4 bougies baissières (displacement) ; prix jusqu'à 1.1748, FVGs laissés.
+const dispImpulse = () => buildCandles(1.1776, [
+  { c: 1.1780, h: 1.1782, l: 1.1776 }, { c: 1.1778, h: 1.1780, l: 1.1775 },
+  { c: 1.1778, h: 1.1792, l: 1.1774 },  // sweep : mèche à 1.1792, corps reste sous 1.1780
+  { c: 1.1769 }, { c: 1.1760 }, { c: 1.1752 }, { c: 1.1748, l: 1.1745 },
+], { seed: 16501, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", split: 3,
+  levels: [1.1780, 1.1792, 1.1748], pins: [1.1782, 1.1780, 1.1775, 1.1792, 1.1774, 1.1745] });
+Object.assign(SCENARIOS, {
+  "killzones-kz": killzonesKz, "asia-range-sweep": asiaRangeSweep, "ny-expansion": nyExpansion,
+  "timing-asia": timingAsia, "timing-london": timingLondon, "disp-impulse": dispImpulse,
+});

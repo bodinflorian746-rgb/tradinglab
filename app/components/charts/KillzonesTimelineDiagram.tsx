@@ -1,195 +1,43 @@
-// Diagramme : timeline horizontale des Killzones (Leçon 3 ICT)
-// Timeline découpée en 3 segments (Asia / London / NY) au-dessus d'un mini-tracé de prix
-// qui montre range calme sous Asia, sweep + impulsion sous London, seconde accélération sous NY.
+// ICT 3 — les 3 sessions ICT sur un seul graphique EUR/USD M15 : Asia range étroit (7 bougies),
+// London Open sweep + expansion haussière, NY continuation.
+// Bougies : scenarios.ts (« killzones-kz »).
 
-interface KillzonesTimelineDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { fmtPrice } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
-const BODY_W = 8;
+const p = (x: number) => fmtPrice(x, 4);
+const ASIA_END = 6, LONDON_START = 7, NY_START = 14;
+const ASIA_HIGH = 1.1725, ASIA_LOW = 1.171;
 
-type MiniCandle = {
-  cx: number;
-  wickTop: number;
-  bodyY: number;
-  bodyH: number;
-  wickBottom: number;
-  type: "bull" | "bear";
-};
-
-// Mini-tracé de prix aligné sous la timeline. Bougies serrées dans Asia, expansion sous London,
-// nouvelle expansion sous NY.
-const MINI_CANDLES: MiniCandle[] = [
-  // Phase Asia (x=70 à x=240) — range étroit autour de y=200
-  { cx:  80, wickTop: 192, bodyY: 196, bodyH: 10, wickBottom: 212, type: "bull" },
-  { cx: 105, wickTop: 196, bodyY: 200, bodyH:  8, wickBottom: 215, type: "bear" },
-  { cx: 130, wickTop: 192, bodyY: 198, bodyH: 10, wickBottom: 214, type: "bull" },
-  { cx: 155, wickTop: 195, bodyY: 200, bodyH:  8, wickBottom: 213, type: "bear" },
-  { cx: 180, wickTop: 194, bodyY: 198, bodyH:  9, wickBottom: 212, type: "bull" },
-  { cx: 205, wickTop: 196, bodyY: 200, bodyH:  7, wickBottom: 213, type: "bear" },
-  { cx: 230, wickTop: 194, bodyY: 198, bodyH: 10, wickBottom: 215, type: "bull" },
-
-  // Phase London (x=260 à x=440) — sweep sous le range puis impulsion haussière
-  { cx: 260, wickTop: 215, bodyY: 220, bodyH: 10, wickBottom: 245, type: "bear" }, // sweep sous le range
-  { cx: 290, wickTop: 218, bodyY: 195, bodyH: 30, wickBottom: 230, type: "bull" }, // grosse impulsion
-  { cx: 320, wickTop: 170, bodyY: 175, bodyH: 25, wickBottom: 205, type: "bull" },
-  { cx: 350, wickTop: 148, bodyY: 152, bodyH: 25, wickBottom: 180, type: "bull" },
-  { cx: 380, wickTop: 130, bodyY: 134, bodyH: 20, wickBottom: 158, type: "bull" },
-  { cx: 410, wickTop: 128, bodyY: 132, bodyH: 12, wickBottom: 150, type: "bear" }, // pause
-  { cx: 440, wickTop: 130, bodyY: 134, bodyH: 14, wickBottom: 152, type: "bull" },
-
-  // Phase NY (x=470 à x=620) — seconde accélération
-  { cx: 470, wickTop: 110, bodyY: 114, bodyH: 24, wickBottom: 140, type: "bull" },
-  { cx: 500, wickTop:  88, bodyY:  92, bodyH: 26, wickBottom: 122, type: "bull" },
-  { cx: 530, wickTop:  70, bodyY:  72, bodyH: 22, wickBottom:  98, type: "bull" },
-  { cx: 560, wickTop:  60, bodyY:  64, bodyH: 14, wickBottom:  82, type: "bull" },
-  { cx: 590, wickTop:  56, bodyY:  60, bodyH: 12, wickBottom:  78, type: "bull" },
-  { cx: 615, wickTop:  52, bodyY:  56, bodyH: 10, wickBottom:  72, type: "bull" },
-];
-
-export function KillzonesTimelineDiagram({ className = "", locale = "fr" }: KillzonesTimelineDiagramProps) {
-  const t = locale === "es"
-    ? {
-        asia: "Asia Session",
-        london: "London Open",
-        newYork: "New York Open",
-        annotation: "La volatilidad se concentra en ciertas ventanas horarias",
-        mobileTitle: "Killzones — timeline 24h",
-        asiaTitle: "Asia (00h–07h)",
-        asiaBody: "Baja volatilidad, rango estrecho. Acumulación.",
-        londonTitle: "London (08h–10h)",
-        londonBody: "Expansión + impulsos francos. Killzone mayor.",
-        nyTitle: "New York (14h30 o 15h30 París)",
-        nyBody: "2da ventana — pico de actividad institucional US.",
-        leg1: "Asia Session = baja volatilidad, rango estrecho",
-        leg2: "London & New York = expansión, impulsos francos",
-      }
-    : locale === "en"
-    ? {
-        asia: "Asia Session",
-        london: "London Open",
-        newYork: "New York Open",
-        annotation: "Volatility clusters in specific time windows",
-        mobileTitle: "Killzones — 24h timeline",
-        asiaTitle: "Asia (00h–07h)",
-        asiaBody: "Low volatility, tight range. Accumulation.",
-        londonTitle: "London (08h–10h)",
-        londonBody: "Expansion + clean impulses. Major killzone.",
-        nyTitle: "New York (2:30pm or 3:30pm Paris)",
-        nyBody: "2nd window — peak US institutional activity.",
-        leg1: "Asia Session = low volatility, tight range",
-        leg2: "London & New York = expansion, clean impulses",
-      }
-    : {
-        asia: "Asia Session",
-        london: "London Open",
-        newYork: "New York Open",
-        annotation: "La volatilité se concentre dans certaines fenêtres horaires",
-        mobileTitle: "Killzones — timeline 24h",
-        asiaTitle: "Asia (00h–07h)",
-        asiaBody: "Faible volatilité, range étroit. Accumulation.",
-        londonTitle: "London (08h–10h)",
-        londonBody: "Expansion + impulsions franches. Killzone majeure.",
-        nyTitle: "New York (14h30 ou 15h30 Paris)",
-        nyBody: "2e fenêtre — pic d'activité institutionnelle US.",
-        leg1: "Asia Session = faible volatilité, range étroit",
-        leg2: "London & New York = expansion, impulsions franches",
-      };
+export function KillzonesTimelineDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["killzones-kz"];
+  const sweep = cs[LONDON_START].l;
+  const peak = Math.max(...cs.slice(LONDON_START).map((k) => k.h));
+  const peakAt = cs.findIndex((k, i) => i >= LONDON_START && k.h === peak);
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
-
-        {/* Timeline horizontale en haut */}
-        {/* Asia — segment fin, calme */}
-        <line x1="70" y1="42" x2="240" y2="42" stroke="#52525b" strokeWidth="2" strokeLinecap="round" />
-        <rect x="98" y="20" width="114" height="14" rx="3" fill="#09090b" />
-        <text x="155" y="30" fill="#a1a1aa" fontSize="10" fontWeight="700" textAnchor="middle">{t.asia}</text>
-
-        {/* London — segment épais, accent */}
-        <line x1="260" y1="42" x2="440" y2="42" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
-        <rect x="288" y="20" width="124" height="14" rx="3" fill="#09090b" />
-        <text x="350" y="30" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">{t.london}</text>
-
-        {/* NY — segment épais, accent */}
-        <line x1="460" y1="42" x2="620" y2="42" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
-        <rect x="486" y="20" width="124" height="14" rx="3" fill="#09090b" />
-        <text x="548" y="30" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">{t.newYork}</text>
-
-        {/* Séparateurs verticaux entre les phases */}
-        <line x1="245" y1="50" x2="245" y2="270" stroke="#27272a" strokeWidth="1" strokeDasharray="2 3" />
-        <line x1="455" y1="50" x2="455" y2="270" stroke="#27272a" strokeWidth="1" strokeDasharray="2 3" />
-
-        {/* Mini-tracé de prix */}
-        {MINI_CANDLES.map(({ cx, wickTop, bodyY, bodyH, wickBottom, type }, i) => {
-          const bodyFill = type === "bull" ? "#10b981" : "#ef4444";
-          const wickStroke = type === "bull" ? "#059669" : "#b91c1c";
-          return (
-            <g key={i}>
-              <line x1={cx} y1={wickTop} x2={cx} y2={wickBottom} stroke={wickStroke} strokeWidth="1.2" strokeLinecap="round" />
-              <rect x={cx - BODY_W / 2} y={bodyY} width={BODY_W} height={bodyH} fill={bodyFill} stroke={wickStroke} strokeWidth="0.8" rx="1" />
-            </g>
-          );
-        })}
-
-        {/* Annotation */}
-        <rect x="160" y="284" width="380" height="22" rx="11" fill="#09090b" />
-        <rect x="160" y="284" width="380" height="22" rx="11" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-        <text x="350" y="298" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          {t.annotation}
-        </text>
-      </svg>
-
-      {/* MOBILE : killzones timeline ──────────────────────── */}
-      <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
-
-        {/* Mini-SVG : timeline 24h compressée avec 3 killzones colorées (Asia, London, NY) */}
-        <svg viewBox="0 -4 300 64" className="w-full h-auto" aria-label="Timeline 24h killzones" fill="none">
-          {/* Axe + ticks horaires */}
-          <line x1="10" y1="40" x2="290" y2="40" stroke="#52525b" strokeWidth="1" />
-          {[0, 6, 12, 18, 24].map((h) => (
-            <g key={h}>
-              <line x1={10 + (h * 280) / 24} y1="40" x2={10 + (h * 280) / 24} y2="44" stroke="#52525b" strokeWidth="0.8" />
-              <text x={10 + (h * 280) / 24} y="54" fontSize="9" fill="#71717a" textAnchor="middle">{h}h</text>
-            </g>
-          ))}
-          {/* Asia 00-07 (zinc) */}
-          <rect x={10 + (0 * 280) / 24} y="20" width={(7 * 280) / 24} height="20" fill="#71717a25" stroke="#71717a55" strokeWidth="0.7" />
-          {/* London 07-10 (emerald) */}
-          <rect x={10 + (7 * 280) / 24} y="14" width={(3 * 280) / 24} height="26" fill="#10b98125" stroke="#10b98155" strokeWidth="0.9" />
-          <text x={10 + (8.5 * 280) / 24} y="10" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">LON</text>
-          {/* NY AM 12-15 (emerald) */}
-          <rect x={10 + (12 * 280) / 24} y="10" width={(3 * 280) / 24} height="30" fill="#10b98130" stroke="#10b981" strokeWidth="1" />
-          <text x={10 + (13.5 * 280) / 24} y="6" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">NY</text>
-          {/* NY PM 18-20 (blue) */}
-          <rect x={10 + (18 * 280) / 24} y="22" width={(2 * 280) / 24} height="18" fill="#60a5fa25" stroke="#60a5fa55" strokeWidth="0.7" />
-        </svg>
-
-        <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-          <p className="text-[13px] font-bold text-zinc-300">{t.asiaTitle}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.asiaBody}</p>
-        </div>
-        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">{t.londonTitle}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.londonBody}</p>
-        </div>
-        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">{t.nyTitle}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.nyBody}</p>
-        </div>
-      </div>
-
-      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-zinc-600" />
-          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-amber-500" />
-          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id="KillzonesTimelineDiagram"
+      title="Asia → London → New York"
+      caption="80 % des mouvements significatifs se produisent dans 20 % des heures."
+      panels={[{
+        key: "m15", title: "EUR/USD M15", decimals: 5, height: 280, candles: cs,
+        zones: [
+          { key: "asia", y1: ASIA_LOW, y2: ASIA_HIGH, from: 0, to: ASIA_END, label: "Range Asia", short: "Asia", tone: "sky" },
+        ],
+        levels: [
+          { key: "asialow", price: ASIA_LOW, to: LONDON_START, label: `Bas Asia ${p(ASIA_LOW)}`, short: "Bas Asia", tone: "zone", dashed: true },
+        ],
+        markers: [
+          { key: "london", i: LONDON_START, price: sweep, label: "London Open : sweep", short: "London", tone: "bull", side: "below" },
+          { key: "ny", i: NY_START, price: cs[NY_START].l, label: "NY Open", short: "NY", tone: "entry", side: "below" },
+          { key: "peak", i: peakAt, price: peak, label: p(peak), tone: "bull", side: "above" },
+        ],
+        chips: [
+          { label: `Asia : range ${Math.round((ASIA_HIGH - ASIA_LOW) / 0.0001)} pips`, tone: "sky" },
+          { label: "London : sweep + expansion haussière", tone: "bull" },
+        ],
+      }]}
+    />
   );
 }

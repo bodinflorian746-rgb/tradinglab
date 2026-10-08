@@ -317,3 +317,43 @@ export function checkLot15(check: Check) {
     check(c.some((k, i) => i > 12 && k.c <= 1.0826), "FVG case C : pas de clôture sous 1.0826");
   }
 }
+
+export function checkLot16(check: Check) {
+  {
+    // killzones-kz : Asia range tight (7 first candles), sweep below 1.1710, expansion
+    const cs = CS["killzones-kz"];
+    const asia = cs.slice(0, 7);
+    const range = Math.max(...asia.map(k => k.h)) - Math.min(...asia.map(k => k.l));
+    check(range / 0.0001 <= 20, `KZ timeline : Asia range ${(range / 0.0001).toFixed(0)} pips > 20`);
+    check(Math.min(...cs.map(k => k.l)) <= 1.1702, "KZ timeline : sweep ne descend pas sous 1.1710");
+    check(Math.max(...cs.map(k => k.h)) >= 1.1745, "KZ timeline : expansion < 1.1745");
+  }
+  {
+    // asia-range-sweep : range 1.1710-1.1725, sweep 1.1702, expansion 1.1750
+    const cs = CS["asia-range-sweep"];
+    check(Math.min(...cs.slice(7, 9).map(k => k.l)) <= 1.1703, "AsiaRangeSweep : sweep > 1.1703");
+    check(Math.max(...cs.slice(9).map(k => k.h)) >= 1.1748, "AsiaRangeSweep : expansion < 1.1748");
+  }
+  {
+    // ny-expansion : consolidation calme, peak ≥ 4665, drop ≤ 4615
+    const cs = CS["ny-expansion"];
+    check(Math.max(...cs.map(k => k.h)) >= 4665, "NY expansion : peak < 4665");
+    check(Math.min(...cs.map(k => k.l)) <= 4615, "NY expansion : creux > 4615");
+    const calmRange = Math.max(...cs.slice(0, 5).map(k => k.h)) - Math.min(...cs.slice(0, 5).map(k => k.l));
+    check(calmRange <= 15, `NY expansion : calme trop large (${calmRange}$)`);
+  }
+  {
+    // timing comparison : Asia ne casse pas 1.1783, London casse > 1.1790
+    const a = CS["timing-asia"], l = CS["timing-london"];
+    check(!a.some(k => k.h > 1.1785), "Timing Asia : résistance cassée en Asia");
+    check(l.some(k => k.h >= 1.179), "Timing London : sweep < 1.1790");
+  }
+  {
+    // disp-impulse : sweep à 1.1792, baisse jusqu'à 1.1748, au moins 4 bear closes
+    const cs = CS["disp-impulse"];
+    check(cs.some(k => k.h >= 1.1791), "DisplacementImpulse : sweep < 1.1791");
+    check(Math.min(...cs.map(k => k.l)) <= 1.1748, "DisplacementImpulse : creux > 1.1748");
+    const bears = cs.filter(k => k.c < k.o).length;
+    check(bears >= 4, `DisplacementImpulse : ${bears} bougies bear < 4`);
+  }
+}
