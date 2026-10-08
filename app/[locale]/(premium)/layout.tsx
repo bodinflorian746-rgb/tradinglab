@@ -14,6 +14,8 @@
 // impact sur les URLs.
 
 import type { ReactNode } from "react";
+// Coque des leçons (règles scopées sous .lesson-v2, posé par chaque leçon)
+import "@/app/styles/lesson-shell.css";
 
 export default function PremiumLayout({ children }: { children: ReactNode }) {
   return <div className="app-bg">{children}</div>;

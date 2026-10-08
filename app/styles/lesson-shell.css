@@ -1,0 +1,133 @@
+/* Coque des leçons — charte v2, cohérente avec l'aperçu de leçon de la home.
+   La racine des leçons porte « tsx-v2 tsx-v2--soft lesson-v2 » : fond doux
+   (halos, sans quadrillage), couleurs et polices v2. Les leçons sont écrites
+   avec des utilitaires Tailwind (zinc) ; ces règles les ramènent, sous
+   .lesson-v2 seulement, aux cartes, textes et filets de la charte v2.
+   Les schémas (.lc) gardent leurs propres styles : ils sont exclus partout.
+   Lisibilité : texte courant 15 px sur mobile, 16 px à partir de 1280 px ;
+   aucun texte sous 12 px ; gouttière de 16 px sur mobile. */
+
+/* ─── Colonne de lecture ──────────────────────────────────────────────── */
+.lesson-v2 .max-w-3xl:not(.lc *) {
+  max-width: 46rem;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 32px;
+  padding-bottom: 56px;
+}
+@media (min-width: 640px) {
+  .lesson-v2 .max-w-3xl:not(.lc *) { padding-left: 24px; padding-right: 24px; padding-top: 48px; }
+}
+@media (min-width: 1280px) {
+  .lesson-v2 .max-w-3xl:not(.lc *) { max-width: 52rem; }
+}
+@media (min-width: 1680px) {
+  .lesson-v2 .max-w-3xl:not(.lc *) { max-width: 56rem; }
+}
+
+/* ─── Textes ──────────────────────────────────────────────────────────── */
+.lesson-v2 :is(p, li, ul, ol, span, div, label).text-sm:not(.lc *) { font-size: 15px; line-height: 1.65; }
+.lesson-v2 :is(p, li, ul, ol, span, div, label).text-base:not(.lc *) { font-size: 16px; line-height: 1.6; }
+.lesson-v2 .text-\[15px\]:not(.lc *) { font-size: 16px; line-height: 1.65; }
+.lesson-v2 :is(.text-\[10px\], .text-\[11px\]):not(.lc *) { font-size: 12px; }
+@media (min-width: 1280px) {
+  .lesson-v2 :is(p, li, ul, ol, span, div, label).text-sm:not(.lc *) { font-size: 16px; }
+  .lesson-v2 :is(p, li, ul, ol, span, div, label).text-base:not(.lc *) { font-size: 17px; }
+  .lesson-v2 .text-\[15px\]:not(.lc *) { font-size: 17px; }
+}
+/* Boutons et étiquettes : taille d'interface, pas de texte courant */
+.lesson-v2 :is(button, a).text-sm:not(.lc *) { font-size: 15px; }
+
+.lesson-v2 h1:not(.lc *) {
+  font-family: var(--v2-font-display);
+  letter-spacing: -0.02em;
+  font-size: 30px;
+  line-height: 1.15;
+}
+@media (min-width: 1280px) { .lesson-v2 h1:not(.lc *) { font-size: 38px; } }
+.lesson-v2 :is(h2, h3):not(.lc *) { font-family: var(--v2-font-display); letter-spacing: -0.015em; }
+.lesson-v2 h2.text-lg:not(.lc *) { font-size: 20px; line-height: 1.3; }
+@media (min-width: 1280px) { .lesson-v2 h2.text-lg:not(.lc *) { font-size: 22px; } }
+
+.lesson-v2 :is(.text-zinc-100, .text-zinc-200):not(.lc *) { color: var(--v2-text); }
+.lesson-v2 :is(.text-zinc-300, .text-zinc-400):not(.lc *) { color: var(--v2-text-2); }
+.lesson-v2 :is(.text-zinc-500, .text-zinc-600):not(.lc *) { color: var(--v2-text-3); }
+.lesson-v2 :is(.text-zinc-700, .text-zinc-800):not(.lc *) { color: rgba(255, 255, 255, 0.28); }
+
+/* Libellés en capitales (« Exemple concret », « À retenir »…) : sur-titre v2 */
+.lesson-v2 .uppercase.tracking-widest:not(.lc *) {
+  font-family: var(--v2-font-mono);
+  letter-spacing: 0.1em;
+}
+
+/* ─── Cartes ──────────────────────────────────────────────────────────── */
+/* Sections de leçon : cartes v2 en couches (comme l'aperçu de la home) */
+.lesson-v2 .bg-zinc-900\/50.rounded-2xl:not(.lc *) {
+  border-color: transparent;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.01) 40%),
+    var(--v2-surface);
+  box-shadow:
+    inset 0 0 0 1px var(--v2-edge),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 60px -34px rgba(16, 185, 129, 0.22),
+    0 12px 32px -16px rgba(0, 0, 0, 0.9);
+}
+@media (max-width: 639px) {
+  .lesson-v2 .rounded-2xl.p-6:not(.lc *) { padding: 18px; border-radius: 20px; }
+}
+/* Encadrés intérieurs (exemples, rappels) : puits v2 */
+.lesson-v2 :is(.bg-zinc-950\/60, .bg-zinc-900\/60, .bg-zinc-900\/40):not(.lc *) {
+  background: radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.03), transparent 60%), #070a0f;
+  border-color: var(--v2-edge-strong);
+}
+.lesson-v2 :is(.bg-zinc-800\/30, .bg-zinc-800\/40, .bg-zinc-800\/50, .bg-zinc-800\/60):not(.lc *) {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: var(--v2-edge);
+}
+.lesson-v2 .bg-zinc-900:not(.lc *) { background-color: var(--v2-surface-2); }
+.lesson-v2 :is(.border-zinc-800, .border-zinc-700, .border-zinc-700\/50, .border-zinc-700\/40, .border-zinc-700\/80, .border-zinc-800\/70, .border-zinc-800\/80):not(.lc *) {
+  border-color: var(--v2-edge-strong);
+}
+.lesson-v2 .border-zinc-800\/60:not(.lc *) { border-color: var(--v2-edge); }
+
+/* Bouton principal (« Marquer la leçon comme terminée ») : bouton v2 */
+.lesson-v2 button.bg-emerald-500:not(.lc *) {
+  font-family: var(--v2-font-display);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #16c08a, #0a8f64);
+  color: #ecfdf5;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 12px 30px -12px rgba(16, 185, 129, 0.6);
+}
+.lesson-v2 button.bg-emerald-500:hover:not(.lc *) { filter: brightness(1.06); }
+
+/* ─── Navigation entre les leçons ─────────────────────────────────────── */
+/* Pastilles des leçons du module : une seule ligne défilante sur mobile
+   (au lieu de 5 à 9 lignes avant le contenu), retour à la ligne au-delà. */
+@media (max-width: 639px) {
+  .lesson-v2 header > .mt-6.flex.flex-wrap:not(.lc *) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding: 0 16px 4px;
+    scrollbar-width: none;
+  }
+  .lesson-v2 header > .mt-6.flex.flex-wrap:not(.lc *)::-webkit-scrollbar { display: none; }
+  .lesson-v2 header > .mt-6.flex.flex-wrap > *:not(.lc *) { flex: 0 0 auto; }
+}
+.lesson-v2 header > .mt-6.flex.flex-wrap :is(a, div) > span.rounded-lg:not(.lc *) {
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+/* Anciens cadres autour des schémas (bordure + coins) : le schéma a déjà sa
+   carte ; le cadre est neutralisé pour éviter le double cadre. */
+.lesson-v2 :is(div, section):has(> .lc):not(.lc *):not(.rounded-2xl) {
+  border: 0;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  overflow: visible;
+}

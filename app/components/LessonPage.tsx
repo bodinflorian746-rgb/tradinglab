@@ -88,7 +88,7 @@ export function LessonPage({
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
+    <main className="tsx-v2 tsx-v2--soft lesson-v2 min-h-screen">
 
       {/* Célébration unifiée : confettis + XP toast lors d'une 1re complétion */}
       <LessonCelebration triggerKey={celebKey} />

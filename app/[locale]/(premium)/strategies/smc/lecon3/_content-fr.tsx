@@ -28,7 +28,7 @@ export default function ContentFr() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
+    <main className="tsx-v2 tsx-v2--soft lesson-v2 min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-14">
 
         {/* ── Breadcrumb ── */}

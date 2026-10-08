@@ -1020,7 +1020,7 @@ export default function ContentFr() {
   const sc = lesson.sections.length;
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white">
+    <div className="tsx-v2 tsx-v2--soft lesson-v2 min-h-screen">
       <style>{KEYFRAMES}</style>
 
       {showConfetti && <Confetti />}
