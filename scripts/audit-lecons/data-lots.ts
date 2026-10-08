@@ -445,3 +445,34 @@ export function checkLot19(check: Check) {
   }
 }
 
+
+export function checkLot20(check: Check) {
+  const lhll = (k: string) => pivots(CS[k], 2).filter((q) => q.name).every((q) => q.name === "LH" || q.name === "LL");
+  {
+    // Multi-UT 1 : Daily LH/LL sous 1.1820 ; M15 breakout de 1.1760 (deux touches), sommet 1.1775, rechute à 1.1700
+    const d = CS["stf-daily"], m = CS["stf-m15"], b = m.findIndex((k) => k.c > 1.176);
+    check(lhll("stf-daily") && pivots(d, 2).filter((q) => q.name === "LH").at(-1)?.price === 1.182, "Piège (MUT 1) : Daily LH/LL, résistance 1.1820");
+    check(m.slice(0, b).filter((k) => k.h === 1.176).length === 2 && m.slice(0, b).every((k) => k.h <= 1.176), "Piège (MUT 1) : niveau 1.1760 touché deux fois");
+    check(Math.max(...m.map((k) => k.h)) === 1.1775 && Math.min(...m.slice(b).map((k) => k.l)) === 1.17, "Piège (MUT 1) : 1.1775 puis 1.1700");
+  }
+  {
+    // Multi-UT 1 : H4 LH/LL, dernier LH sur 1.1780, prix 1.1725 ; H1 zone 1.1765-1.1780 (ancien support, rejet, retour)
+    const h4 = CS["htf-bear-h4"], h1 = CS["inter-zone-h1"];
+    check(lhll("htf-bear-h4") && pivots(h4, 2).filter((q) => q.name === "LH").at(-1)?.price === 1.178 && h4[h4.length - 1].c === 1.1725, "Biais (MUT 1) : H4 LH/LL, 1.1780, 1.1725");
+    const brk = h1.findIndex((k) => k.c < 1.1765);
+    check(brk > 0 && h1.slice(0, brk).every((k) => k.l >= 1.1765) && h1.some((k, i) => i > brk && k.h >= 1.1765 && k.h <= 1.178 && k.c < k.o), "Zone (MUT 1) : support 1.1765-1.1780 cassé puis rejet");
+    check(h1[h1.length - 1].h >= 1.1765 && h1[h1.length - 1].h <= 1.178, "Zone (MUT 1) : retour dans la zone");
+  }
+  {
+    // Multi-UT 1 : M5 sweep 1.1778 dans la zone, puis clôture sous le dernier creux (CHoCH)
+    const m = CS["ltf-exec-m5"], s = m.reduce((b, k, i) => (k.h > m[b].h ? i : b), 0);
+    const low = Math.min(...m.slice(s - 3, s).map((k) => k.l));
+    check(m[s].h === 1.1778 && m.some((k, i) => i > s && k.c < low && k.o - k.c >= 0.0008), "Exécution (MUT 1) : sweep 1.1778 puis CHoCH par displacement");
+  }
+  {
+    // Multi-UT 2 : Daily LH/LL, dernier LH 1.1760, prix 1.1715 ; M15 breakout de 1.1740, sommet 1.1752, rejet 1.1685
+    const d = CS["ct-daily"], m = CS["ct-m15"], b = m.findIndex((k) => k.c > 1.174);
+    check(lhll("ct-daily") && pivots(d, 2).filter((q) => q.name === "LH").at(-1)?.price === 1.176 && d[d.length - 1].c === 1.1715, "Contre-tendance (MUT 2) : Daily 1.1760 / 1.1715");
+    check(m.slice(0, b).every((k) => k.h <= 1.174) && Math.max(...m.map((k) => k.h)) === 1.1752 && Math.min(...m.slice(b).map((k) => k.l)) === 1.1685, "Contre-tendance (MUT 2) : 1.1740 → 1.1752 → 1.1685");
+  }
+}

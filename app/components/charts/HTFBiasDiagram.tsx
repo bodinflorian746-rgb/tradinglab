@@ -1,6 +1,6 @@
-// Multi-UT 1 bloc 2 — biais HTF : EUR/USD H4 en structure LH/LL baissière, résistance
-// 1.1780 rejetée deux fois. L'H4 dit « ventes prioritaires, pas d'achats ».
-// Bougies : scenarios.ts (« htf-bear-h4 »).
+// Multi-UT 1 bloc 3 — l'UT supérieure donne le biais (process, étape 1) : EUR/USD H4 en
+// LH/LL, résistance importante à 1.1780 (ancien support cassé, dernier LH), prix actuel
+// 1.1725 : priorité aux ventes. Pivots calculés. Bougies : scenarios.ts (« htf-bear-h4 »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { fmtPrice, pivots } from "@/lib/lessons/chart-analysis";
@@ -11,25 +11,21 @@ const RES = 1.178;
 
 export function HTFBiasDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["htf-bear-h4"];
-  const piv = pivots(cs, 2);
-  const lhs = piv.filter((q) => q.name === "LH");
-  const lls = piv.filter((q) => q.name === "LL");
+  const named = pivots(cs, 2).filter((q) => q.name === "LH" || q.name === "LL");
+  const last = cs.length - 1;
   return (
     <LessonChart
       id="HTFBiasDiagram"
-      title="L'H4 donne le biais : LH/LL baissier"
-      caption="L'UT supérieure filtre les trades avant même de chercher un setup. LH/LL → ventes prioritaires."
+      title="Le biais se lit sur l'UT supérieure"
+      caption="Structure LH/LL : biais baissier, priorité aux ventes, aucun achat agressif."
       panels={[{
         key: "h4", title: "EUR/USD H4", decimals: 5, height: 280, candles: cs,
-        levels: [{ key: "res", price: RES, label: `Résistance ${p(RES)}`, short: "Résistance", tone: "zone", dashed: true }],
+        levels: [{ key: "res", price: RES, label: `Résistance ${p(RES)}`, short: "Résistance", tone: "zone" }],
         markers: [
-          ...lhs.slice(0, 2).map((q, i) => ({ key: `lh${i}`, i: q.index, price: q.price, label: "LH", pivot: "LH" as const, tone: "bear" as const, side: "above" as const })),
-          ...lls.slice(0, 2).map((q, i) => ({ key: `ll${i}`, i: q.index, price: q.price, label: "LL", pivot: "LL" as const, tone: "bear" as const, side: "below" as const })),
+          ...named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name!, tone: "bear" as const, side: q.side === "h" ? "above" as const : "below" as const })),
+          { key: "now", i: last, price: cs[last].c, label: `Prix actuel ${p(cs[last].c)}`, short: p(cs[last].c), tone: "entry", side: "below" },
         ],
-        chips: [
-          { label: "Structure LH / LL : biais baissier confirmé", tone: "bear" },
-          { label: "Ventes prioritaires, achats contre le biais", tone: "neutral" },
-        ],
+        chips: [{ label: "Biais baissier : priorité aux ventes", tone: "bear" }],
       }]}
     />
   );

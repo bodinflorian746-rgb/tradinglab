@@ -840,54 +840,53 @@ Object.assign(SCENARIOS, {
 });
 
 // ─── Lot 20 ──────────────────────────────────────────────────────────────────
-// Multi-UT 1 (leçon 1) — H4 baissier EUR/USD, résistance 1.1780 : structure LH/LL,
-// rejets répétés sous 1.1780. Utilisé pour HTFBias (H4) et panel 1 de SingleTimeframeTrap.
-const htfBearH4 = () => buildCandles(1.1740, [
-  { c: 1.1750, h: 1.1757 }, ...c(1.1743, 1.1737, 1.1730, 1.1722),
-  { c: 1.1744 }, { c: 1.1760, h: 1.1773 }, { c: 1.1751, h: 1.1773, l: 1.1742 },
-  ...c(1.1738, 1.1727, 1.1719, 1.1712), { c: 1.1704, l: 1.1700 },
-  { c: 1.1717 }, { c: 1.1731 }, { c: 1.1745, h: 1.1750 },
-  { c: 1.1738, h: 1.1750, l: 1.1730 }, ...c(1.1726, 1.1718, 1.1710), { c: 1.1704, l: 1.1700 },
-], { seed: 20101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale",
-  levels: [1.178, 1.17], pins: [1.178, 1.1773, 1.17] });
-// Multi-UT 1 — M15 EUR/USD, breakout haussier local à 1.1775 (dans la résistance H4) puis
-// retour à 1.1700 : le signal M15 était valide mais contre l'UT supérieure.
-const trapM15 = () => buildCandles(1.1720, [
-  ...c(1.1729, 1.1738, 1.1745), { c: 1.1756 }, { c: 1.1763 }, { c: 1.1775, h: 1.1778 },
-  { c: 1.1764, h: 1.1776 }, { c: 1.1751 }, { c: 1.1740 }, { c: 1.1728 },
-  { c: 1.1716 }, { c: 1.1703 }, { c: 1.1700, l: 1.1698 },
-], { seed: 20102, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale",
-  levels: [1.1778, 1.17], pins: [1.1778, 1.1776, 1.1698] });
-// Multi-UT 1 — H1 EUR/USD, résistance zone 1.1765-1.1780 : price returns after impulsion.
-const interZoneH1 = () => buildCandles(1.1720, [
-  ...c(1.1728, 1.1736, 1.1745, 1.1754, 1.1762), { c: 1.1768, h: 1.1772 },
-  { c: 1.1775, h: 1.1779, l: 1.1770 }, ...c(1.1771, 1.1768),
-], { seed: 20201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale",
-  levels: [1.1765, 1.178], pins: [1.1765, 1.1772, 1.178, 1.1779] });
-// Multi-UT 1 — M5 EUR/USD, sweep à 1.1778 dans la zone H1 1.1765-1.1780, puis CHoCH
-// baissier (clôture sous 1.1765), entrée short.
-const ltfExecM5 = () => buildCandles(1.1762, [
-  ...c(1.1765, 1.1769, 1.1773, 1.1776), { c: 1.1774, h: 1.1778, l: 1.1771 },
-  { c: 1.1765, h: 1.1775 }, { c: 1.1762 }, { c: 1.1757, l: 1.1755 },
-], { seed: 20301, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale",
-  levels: [1.1765, 1.1778], pins: [1.1765, 1.1778, 1.1755] });
-// Multi-UT 2 — Daily EUR/USD baissier, résistance 1.1760 : piège contre-tendance.
-const ctDaily = () => buildCandles(1.1720, [
-  { c: 1.1730, h: 1.1736 }, ...c(1.1724, 1.1717, 1.1710), { c: 1.1703, l: 1.1700 },
-  ...c(1.1710, 1.1720, 1.1728, 1.1736), { c: 1.1742, h: 1.1749 },
-  { c: 1.1736, h: 1.1749, l: 1.1728 }, ...c(1.1720, 1.1710, 1.1700, 1.1692), { c: 1.1685, l: 1.1682 },
-], { seed: 20401, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale",
-  levels: [1.176, 1.1682], pins: [1.176, 1.1749, 1.1682] });
-// Multi-UT 2 — M15 EUR/USD : breakout haussier local à 1.1752 (sous la résistance Daily
-// 1.1760), puis rejet violent vers 1.1685.
-const ctM15 = () => buildCandles(1.1715, [
-  ...c(1.1724, 1.1731, 1.1738, 1.1743), { c: 1.1752, h: 1.1754 },
-  { c: 1.1746, h: 1.1754 }, { c: 1.1733 }, { c: 1.1718 }, { c: 1.1703 },
-  { c: 1.1690 }, { c: 1.1685, l: 1.1682 },
-], { seed: 20402, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale",
-  levels: [1.1754, 1.1682], pins: [1.1754, 1.1682] });
+const EU = { decimals: 5, asset: "EUR/USD", volatility: "normale" } as const;
+// Multi-UT 1 bloc 2 — le piège du graphique unique : Daily EUR/USD en LH/LL, résistance 1.1820
+// (dernier LH) ; M15 : niveau local 1.1760 touché deux fois, breakout, sommet 1.1775, rechute à 1.1700.
+const stfDaily = () => buildCandles(1.1925, [
+  { c: 1.1918, l: 1.1912 }, ...c(1.1932, 1.1946), { c: 1.1955, h: 1.1962 }, ...c(1.1940, 1.1918, 1.1896, 1.1872), { c: 1.1850, l: 1.1842 },
+  ...c(1.1862, 1.1878, 1.1893), { c: 1.1900, h: 1.1905 }, ...c(1.1885, 1.1862, 1.1838, 1.1810, 1.1786), { c: 1.1768, l: 1.1760 },
+  ...c(1.1779, 1.1795, 1.1810), { c: 1.1812, h: 1.1820 }, ...c(1.1798, 1.1776), { c: 1.1752 },
+], { ...EU, seed: 20101, session: "Londres", levels: [1.1820], pins: [1.1912, 1.1962, 1.1842, 1.1905, 1.1760, 1.1820, 1.1752] });
+const stfM15 = () => buildCandles(1.1738, [
+  ...c(1.1745, 1.1752), { c: 1.1757, h: 1.1760 }, { c: 1.1750, h: 1.1758 }, ...c(1.1746), { c: 1.1755, h: 1.1757 }, { c: 1.1758, h: 1.1760 },
+  { c: 1.1767, h: 1.1769 }, { c: 1.1771, h: 1.1775 }, { c: 1.1764, h: 1.1772 }, ...c(1.1752, 1.1740, 1.1728, 1.1716), { c: 1.1705, l: 1.1700 },
+], { ...EU, seed: 20102, session: "Londres", levels: [1.1760, 1.1775, 1.1700], pins: [1.1757, 1.1760, 1.1758, 1.1755, 1.1767, 1.1769, 1.1771, 1.1775, 1.1772, 1.1700] });
+// Multi-UT 1 bloc 3 (process, étape 1) — H4 EUR/USD en LH/LL : ancien support 1.1778 cassé,
+// LH 1.1820, LL 1.1740, LH sur la résistance 1.1780, prix actuel 1.1725.
+const htfBearH4 = () => buildCandles(1.1830, [
+  ...c(1.1838), { c: 1.1845, h: 1.1850 }, ...c(1.1832, 1.1815, 1.1798), { c: 1.1785, l: 1.1778 }, ...c(1.1795, 1.1808), { c: 1.1815, h: 1.1820 },
+  ...c(1.1800, 1.1782, 1.1764), { c: 1.1748, l: 1.1740 }, ...c(1.1756, 1.1768), { c: 1.1774, h: 1.1780 }, ...c(1.1762, 1.1744), { c: 1.1725 },
+], { ...EU, seed: 20201, session: "Londres", levels: [1.1780], pins: [1.1850, 1.1778, 1.1820, 1.1740, 1.1774, 1.1780, 1.1725] });
+// Multi-UT 1 bloc 4 (process, étape 2) — H1 : zone 1.1765-1.1780 = ancien support (deux appuis),
+// support cassé, premier rejet au retest, baisse vers 1.1725, puis retour du prix dans la zone.
+const interZoneH1 = () => buildCandles(1.1800, [
+  ...c(1.1792), { c: 1.1784, l: 1.1770 }, ...c(1.1790, 1.1796, 1.1786), { c: 1.1778, l: 1.1768 }, ...c(1.1785, 1.1774),
+  { c: 1.1752, h: 1.1776 }, ...c(1.1748, 1.1760), { c: 1.1772, h: 1.1777 }, { c: 1.1755, h: 1.1778 }, ...c(1.1742, 1.1733), { c: 1.1728, l: 1.1725 },
+  ...c(1.1738, 1.1750, 1.1761), { c: 1.1768, h: 1.1770 },
+], { ...EU, seed: 20301, session: "Londres", levels: [1.1765, 1.1780], pins: [1.1770, 1.1768, 1.1752, 1.1776, 1.1772, 1.1777, 1.1755, 1.1778, 1.1725, 1.1768, 1.1770] });
+// Multi-UT 1 bloc 5 (process, étape 3) — M5 dans la zone H1 : petite structure haussière (HL),
+// sommet local 1.1774, sweep jusqu'à 1.1778, puis bougie de displacement qui casse le dernier HL
+// (CHoCH baissier) : entrée short après le breakout local.
+const LTF_M5: Step[] = [
+  { c: 1.1762, h: 1.1763, l: 1.1757 }, { c: 1.1766, h: 1.1767, l: 1.1761 }, { c: 1.1770, h: 1.1772, l: 1.1765 }, { c: 1.1766, h: 1.1771, l: 1.1764 },
+  { c: 1.1770, h: 1.1771, l: 1.1765 }, { c: 1.1773, h: 1.1774, l: 1.1769 }, { c: 1.1768, h: 1.1773, l: 1.1765 }, { c: 1.1772, h: 1.1773, l: 1.1767 },
+  { c: 1.1771, h: 1.1778, l: 1.1769 }, { c: 1.1768, h: 1.1772, l: 1.1766 }, { c: 1.1757, h: 1.1769, l: 1.1756 }, { c: 1.1753, h: 1.1758, l: 1.1751 },
+  { c: 1.1749, h: 1.1754, l: 1.1747 },
+];
+const ltfExecM5 = () => buildCandles(1.1758, LTF_M5, { ...EU, seed: 20401, session: "New York", levels: [1.1765, 1.1778], pins: pinAll(LTF_M5) });
+// Multi-UT 2 bloc 1 — contre la tendance : Daily en LH/LL, résistance Daily/H4 1.1760 (dernier LH),
+// prix 1.1715 ; M15 : niveau local 1.1740, breakout, sommet 1.1752, rejet jusqu'à 1.1685.
+const ctDaily = () => buildCandles(1.1850, [
+  ...c(1.1858), { c: 1.1866, h: 1.1870 }, ...c(1.1850, 1.1828, 1.1806), { c: 1.1787, l: 1.1780 }, ...c(1.1797, 1.1812), { c: 1.1825, h: 1.1830 },
+  ...c(1.1808, 1.1784, 1.1760, 1.1734), { c: 1.1710, l: 1.1700 }, ...c(1.1722, 1.1738), { c: 1.1752, h: 1.1760 }, ...c(1.1735), { c: 1.1715 },
+], { ...EU, seed: 20501, session: "Londres", levels: [1.1760], pins: [1.1870, 1.1780, 1.1830, 1.1700, 1.1752, 1.1760, 1.1715] });
+const ctM15 = () => buildCandles(1.1712, [
+  ...c(1.1720, 1.1728), { c: 1.1736, h: 1.1740 }, ...c(1.1730, 1.1725), { c: 1.1734 }, { c: 1.1737, h: 1.1740 },
+  { c: 1.1746, h: 1.1748 }, { c: 1.1749, h: 1.1752 }, { c: 1.1741, h: 1.1750 }, ...c(1.1728, 1.1715, 1.1703, 1.1694), { c: 1.1689, l: 1.1685 },
+], { ...EU, seed: 20502, session: "Londres", levels: [1.1740, 1.1752, 1.1685], pins: [1.1736, 1.1740, 1.1737, 1.1746, 1.1748, 1.1749, 1.1752, 1.1750, 1.1685] });
 Object.assign(SCENARIOS, {
-  "htf-bear-h4": htfBearH4, "trap-m15": trapM15, "inter-zone-h1": interZoneH1,
+  "stf-daily": stfDaily, "stf-m15": stfM15, "htf-bear-h4": htfBearH4, "inter-zone-h1": interZoneH1,
   "ltf-exec-m5": ltfExecM5, "ct-daily": ctDaily, "ct-m15": ctM15,
 });
 

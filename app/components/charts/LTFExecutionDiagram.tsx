@@ -1,34 +1,39 @@
-// Multi-UT 1 bloc 4 — exécution LTF (M5) dans la zone H1 1.1765-1.1780 : sweep haussier
-// à 1.1778, réintégration, CHoCH baissier (clôture sous 1.1765), entrée short.
+// Multi-UT 1 bloc 5 — l'UT inférieure déclenche le trade (process, étape 3) : dans la zone
+// H1 1.1765-1.1780, sweep haussier jusqu'à 1.1778, puis bougie de displacement qui casse le
+// dernier creux (CHoCH baissier) : entrée short après le breakout local, SL derrière la
+// structure. Le texte ne chiffre ni l'entrée ni l'objectif : le schéma n'en invente pas.
 // Bougies : scenarios.ts (« ltf-exec-m5 »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
-import { tradeSetup } from "@/app/components/lessons/trade";
 import { fmtPrice } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
 const p = (x: number) => fmtPrice(x, 4);
-const SWEEP_I = 4;
+const Z = { y1: 1.1765, y2: 1.178 };
 
 export function LTFExecutionDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["ltf-exec-m5"];
-  const choch = cs.findIndex((k, i) => i > SWEEP_I && k.c < 1.1765);
-  const t = tradeSetup({ entry: cs[choch].c, sl: cs[SWEEP_I].h + 0.0005, tp: 1.1700, tpOffscale: true, names: { entry: "CHoCH → entrée short" } });
+  const sweep = cs.reduce((b, k, i) => (k.h > cs[b].h ? i : b), 0);
+  // dernier creux avant le sweep, cassé par la bougie de displacement
+  const lastLow = Math.min(...cs.slice(sweep - 3, sweep).map((k) => k.l));
+  const lowAt = cs.findIndex((k, i) => i >= sweep - 3 && k.l === lastLow);
+  const choch = cs.findIndex((k, i) => i > sweep && k.c < lastLow);
   return (
     <LessonChart
       id="LTFExecutionDiagram"
-      title="M5 : sweep → CHoCH → entrée short"
-      caption="Le LTF donne le timing précis. L'entrée n'arrive qu'après le déclencheur dans la zone préparée."
+      title="Le timing : sweep, CHoCH, entrée"
+      caption="L'UT inférieure donne le timing, jamais le contexte : on exécute dans le sens préparé au-dessus."
       panels={[{
-        key: "m5", title: "EUR/USD M5 — dans la zone H1 1.1765-1.1780", decimals: 5, height: 280, candles: cs,
-        zones: [{ key: "zone", y1: 1.1765, y2: 1.178, label: "Zone H1", short: "Zone H1", tone: "zone" }],
-        levels: t.levels,
-        offscale: t.offscale,
-        markers: [
-          { key: "sweep", i: SWEEP_I, price: cs[SWEEP_I].h, label: `Sweep ${p(cs[SWEEP_I].h)}`, short: "Sweep", tone: "zone", side: "above" },
-          { key: "choch", i: choch, price: cs[choch].l, label: `CHoCH ${p(cs[choch].c)}`, short: "CHoCH", tone: "bear", side: "below" },
+        key: "m5", title: "EUR/USD M5, dans la zone H1", decimals: 5, height: 280, candles: cs,
+        zones: [{ key: "zone", ...Z, label: `Zone H1 ${p(Z.y1)}-${p(Z.y2)}`, short: "Zone H1", tone: "zone" }],
+        levels: [
+          { key: "low", price: lastLow, from: lowAt, to: choch, label: `Dernier creux ${p(lastLow)}`, short: "Dernier creux", tone: "neutral", dashed: true },
+          { key: "sl", price: cs[sweep].h + 0.0003, from: choch, label: "SL derrière le sweep", short: "SL", tone: "bear", dashed: true },
         ],
-        chips: t.chips,
+        markers: [
+          { key: "sweep", i: sweep, price: cs[sweep].h, label: `Sweep ${p(cs[sweep].h)}`, short: "Sweep", tone: "zone", side: "above" },
+          { key: "choch", i: choch, price: cs[choch].l, label: "CHoCH : entrée short", short: "CHoCH", tone: "bear", side: "below" },
+        ],
       }]}
     />
   );
