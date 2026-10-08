@@ -705,3 +705,33 @@ export function checkLot28(check: Check) {
     check(h[k].h > 4720 && h[k].h <= 4745 && h[k].c < 4720 && h[h.length - 1].c < h[k].c - 40, "Chasse aux stops (S/R 4) : mèche dans le cluster, rejet");
   }
 }
+
+export function checkLot29(check: Check) {
+  {
+    // Intermédiaire 4 / TF 1 : haussière HL 1.1700 et 1.1730, HH 1.1780 et 1.1810 ; baissière LH / LL ; range 1.1700-1.1780
+    const up = pivots(CS["trend-up"], 2).filter((q) => q.name);
+    check(up.filter((q) => q.name === "HL").map((q) => q.price).join() === "1.17,1.173" && up.filter((q) => q.name === "HH").map((q) => q.price).join() === "1.178,1.181" && up.every((q) => q.name === "HH" || q.name === "HL"), "Tendance (TF 1) : HL 1.1700 / 1.1730, HH 1.1780 / 1.1810");
+    const dn = pivots(CS["trend-down"], 2).filter((q) => q.name);
+    check(dn.length >= 4 && dn.every((q) => q.name === "LH" || q.name === "LL"), "Tendance (TF 1) : baissière LH / LL");
+    check(CS["trend-range"].every((k) => k.h <= 1.178 && k.l >= 1.17), "Tendance (TF 1) : range 1.1700-1.1780");
+    // Force : swings HL → HH d'environ 50, 100, 200 pips
+    const swing = (k: string) => { const p = pivots(CS[k], 2), hl = p.find((q) => q.name === "HL")!, hh = p.find((q) => q.name === "HH" && q.index > hl.index)!; return (hh.price - hl.price) / 0.0001; };
+    check(Math.abs(swing("str-weak") - 50) <= 10 && Math.abs(swing("str-mid") - 100) <= 15 && Math.abs(swing("str-strong") - 200) <= 25, "Force (TF 1) : swings 50 / 100 / 200 pips");
+  }
+  {
+    // Intermédiaire 9 : swing 1.0800 → 1.0980, niveaux 1.0937 / 1.0911 / 1.0890 / 1.0869, arrêt sur 1.0870
+    const cs = CS["fib-int9"], lo = Math.min(...cs.map((k) => k.l)), hi = Math.max(...cs.map((k) => k.h));
+    check(lo === 1.08 && hi === 1.098, "Fibonacci (Int. 9) : swing 1.0800 → 1.0980");
+    check([[0.236, 1.0937], [0.382, 1.0911], [0.5, 1.089], [0.618, 1.0869]].every(([r, v]) => near(fibLevel(lo, hi, r), v, 0.00006)), "Fibonacci (Int. 9) : niveaux du texte");
+    const hiAt = cs.findIndex((k) => k.h === hi);
+    check(Math.min(...cs.slice(hiAt).map((k) => k.l)) === 1.087, "Fibonacci (Int. 9) : arrêt sur 1.0870");
+    // TF 3 plan : 0.618 = 4 549, 0.786 = 4 519, pin bar sur 4 550, R/R 1,73 / 2,96
+    check(near(fibLevel(4480, 4660, 0.618), 4549, 0.5) && near(fibLevel(4480, 4660, 0.786), 4519, 0.5) && near(rrOf(4565, 4510, 4660), 1.73, 0.005), "Fibonacci (TF 3) : plan");
+    // TF 3 confluence : OB dans l'OTE, FVG baissier au-dessus, rejet dans l'OTE, support 4 470-4 485 au départ
+    const b = CS["pb-conf"], ote = [fibLevel(4480, 4660, 0.786), fibLevel(4480, 4660, 0.618)];
+    const obK = b.find((k, i) => i > 1 && i < 10 && k.c < k.o)!, g = largestFvg(b, "bear");
+    check(Math.min(obK.o, obK.c) >= ote[0] && Math.max(obK.o, obK.c) <= ote[1] && !!g && g.y1 > ote[1], "Confluence (TF 3) : OB dans l'OTE, FVG au-dessus");
+    const tail = b.slice(-4), rl = Math.min(...tail.map((k) => k.l));
+    check(rl >= ote[0] && rl <= ote[1] && Math.min(...b.map((k) => k.l)) === 4480, "Confluence (TF 3) : rejet dans l'OTE, départ sur le support");
+  }
+}

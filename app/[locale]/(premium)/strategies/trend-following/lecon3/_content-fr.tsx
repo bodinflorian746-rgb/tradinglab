@@ -195,7 +195,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : pullback Fibo XAU/USD H4</h2>
 
             <div className="my-8">
-              <FibonacciDiagram />
+              <FibonacciDiagram variant="tf3" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">

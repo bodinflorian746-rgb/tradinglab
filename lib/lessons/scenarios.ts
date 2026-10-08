@@ -1217,3 +1217,53 @@ Object.assign(SCENARIOS, {
   "fake-sr4": authored(4598, FAKE_SR4, 28203, 0, "XAU/USD", [4650]),
   "hunt-sr4": authored(4668, HUNT_SR4, 28301, 0, "XAU/USD", [4720]),
 });
+
+// ─── Lot 29 ──────────────────────────────────────────────────────────────────
+// Intermédiaire 4 / Trend-following 1 — les 3 états (EUR/USD H4) : haussière (creux 1.1665, HL 1.1700
+// et 1.1730, HH 1.1780 et 1.1810, comme le plan de TF 1), baissière (miroir), range 1.1700-1.1780.
+const TREND_UP = bars(1.1690, [
+  1.1676, { c: 1.1670, l: 1.1665 }, { c: 1.1690, l: 1.1668 }, 1.1712, 1.1734, { c: 1.1745, h: 1.1750 }, { c: 1.1728, h: 1.1747 }, 1.1712, { c: 1.1706, l: 1.1700 },
+  { c: 1.1722, l: 1.1703 }, 1.1746, 1.1765, { c: 1.1775, h: 1.1780 }, { c: 1.1760, h: 1.1777 }, 1.1744, { c: 1.1736, l: 1.1730 }, { c: 1.1752, l: 1.1733 }, 1.1776, 1.1796, { c: 1.1806, h: 1.1810 }, { c: 1.1797, h: 1.1807 },
+], 0.0003, 5);
+const TREND_DOWN = bars(1.1800, [
+  1.1814, { c: 1.1820, h: 1.1825 }, { c: 1.1800, h: 1.1822 }, 1.1778, 1.1756, { c: 1.1745, l: 1.1740 }, { c: 1.1762, l: 1.1743 }, 1.1778, { c: 1.1784, h: 1.1790 },
+  { c: 1.1768, h: 1.1787 }, 1.1744, 1.1725, { c: 1.1715, l: 1.1710 }, { c: 1.1730, l: 1.1713 }, 1.1746, { c: 1.1754, h: 1.1760 }, { c: 1.1738, h: 1.1757 }, 1.1714, 1.1694, { c: 1.1684, l: 1.1680 }, { c: 1.1693, l: 1.1683 },
+], 0.0003, 5);
+const TREND_RANGE = bars(1.1740, [
+  1.1752, 1.1766, { c: 1.1774, h: 1.1780 }, 1.1760, 1.1742, 1.1724, { c: 1.1706, l: 1.1700 }, 1.1720, 1.1738, 1.1756, { c: 1.1772, h: 1.1779 }, 1.1758, 1.1740, 1.1718, { c: 1.1707, l: 1.1701 }, 1.1724, 1.1744, 1.1762,
+], 0.0003, 5);
+// Trend-following 1 bloc 3 — force de tendance : swings d'environ 50, 100 et 200 pips (EUR/USD H4).
+const strength = (amp: number) => {
+  const st: (number | Step)[] = []; let x = 1.1700;
+  for (let k = 0; k < 4; k++) {
+    const up = amp / 10000, dn = up * 0.45;
+    st.push(Number((x + up * 0.35).toFixed(5)), Number((x + up * 0.7).toFixed(5)), { c: Number((x + up).toFixed(5)), h: Number((x + up + 0.0002).toFixed(5)) });
+    st.push(Number((x + up - dn * 0.5).toFixed(5)), { c: Number((x + up - dn).toFixed(5)), l: Number((x + up - dn - 0.0002).toFixed(5)) });
+    x = x + up - dn;
+  }
+  return bars(1.1700, st, 0.0003, 5);
+};
+const STR_WEAK = strength(50), STR_MID = strength(100), STR_STRONG = strength(200);
+// Intermédiaire 9 — Fibonacci sur EUR/USD : impulsion 1.0800 → 1.0980 (pause vers 1.0870 pendant la
+// montée = support historique), retracement jusqu'à 1.0870 (61,8 % = 1.0869).
+const FIB_INT9 = bars(1.0815, [
+  { c: 1.0806, l: 1.0800 }, { c: 1.0826, l: 1.0803 }, 1.0848, 1.0864, { c: 1.0872, h: 1.0876 }, 1.0864, { c: 1.0868, l: 1.0860 }, 1.0886, 1.0908, 1.0931, 1.0955, { c: 1.0972, h: 1.0980 },
+  { c: 1.0962, h: 1.0977 }, 1.0946, 1.0928, 1.0910, 1.0894, 1.0881, { c: 1.0874, l: 1.0870 }, { c: 1.0877, l: 1.0871 },
+], 0.0003, 5);
+// Trend-following 3 bloc 3 — confluence (XAU/USD H4) : support de l'UT supérieure 4 470-4 485,
+// impulsion 4 480 → 4 660 avec une bougie baissière (OB 4 532-4 541) au milieu de l'OTE, chute qui
+// laisse un FVG baissier au-dessus, retour dans l'OTE sur l'OB, rejet ; cible : le FVG.
+const PB_CONF = bars(4500, [
+  4492, { c: 4486, l: 4480 }, { c: 4504, l: 4483 }, 4522, { c: 4541, h: 4544 }, { c: 4532, h: 4543, l: 4529 }, { c: 4562, l: 4531 }, 4588, 4612, 4636, { c: 4652, h: 4660 },
+  { c: 4646, h: 4657 }, { c: 4634, h: 4648, l: 4630 }, { c: 4598, h: 4634, l: 4596 }, { c: 4588, h: 4612, l: 4584 }, 4576, 4560, { c: 4546, l: 4538 }, { c: 4552, h: 4555, l: 4536 }, 4570,
+], 3, 0);
+Object.assign(SCENARIOS, {
+  "trend-up": authored(1.1690, TREND_UP, 29101, 5, "EUR/USD"),
+  "trend-down": authored(1.1800, TREND_DOWN, 29102, 5, "EUR/USD"),
+  "trend-range": authored(1.1740, TREND_RANGE, 29103, 5, "EUR/USD", [1.1700, 1.1780]),
+  "str-weak": authored(1.1700, STR_WEAK, 29201, 5, "EUR/USD"),
+  "str-mid": authored(1.1700, STR_MID, 29202, 5, "EUR/USD"),
+  "str-strong": authored(1.1700, STR_STRONG, 29203, 5, "EUR/USD"),
+  "fib-int9": authored(1.0815, FIB_INT9, 29301, 5, "EUR/USD"),
+  "pb-conf": authored(4500, PB_CONF, 29401, 0, "XAU/USD"),
+});
