@@ -46,13 +46,11 @@ function ContentFr() {
       {/* ── Schéma visuel ── */}
       <div className="border border-zinc-800 rounded-2xl p-5 space-y-4">
         <SupportResistance supportPrice="1.0800" resistancePrice="1.0950" />
-        <div className="flex justify-around items-start pt-1 border-t border-zinc-800/50">
+        <div className="grid gap-4 sm:grid-cols-2 pt-1 border-t border-zinc-800/50">
           <Candle type="pin-bull" label="Rejet support" caption="Pin bar haussière" />
-          <div className="flex flex-col items-center justify-center gap-1 mt-8">
-            <p className="text-[10px] text-zinc-600 font-mono text-center leading-relaxed">Signal<br/>→ entrée<br/>+ SL sous zone</p>
-          </div>
           <Candle type="pin-bear" label="Rejet résistance" caption="Pin bar baissière" />
         </div>
+        <p className="text-xs text-zinc-500 text-center">Signal → entrée + SL de l&apos;autre côté de la zone</p>
       </div>
 
       {/* ── Support & Résistance ── */}
