@@ -44,8 +44,8 @@ export function tradeSetup(s: TradeSpec): { levels: LCLevel[]; chips: LCChip[]; 
   if (s.tpOffscale) offscale.push({ key: "tp", price: s.tp, label: `${n.tp} ${p(s.tp)} ${s.tp > s.entry ? "↑" : "↓"}`, short: `TP ${s.tp > s.entry ? "↑" : "↓"}`, tone: "bull" });
   else levels.push({ key: "tp", price: s.tp, from: s.from, label: `${n.tp} ${p(s.tp)}`, short: n.tp, tone: "bull", dashed: true });
   const chips: LCChip[] = [
-    { label: `Risque ${distText(s.entry, s.sl, s)}`, tone: "bear" },
-    { label: `Gain visé ${distText(s.tp, s.entry, s)}`, tone: "bull" },
+    { label: `Risque ${distText(s.entry, s.sl, s)}`, tone: "bear", data: { calc: "risque" } },
+    { label: `Gain visé ${distText(s.tp, s.entry, s)}`, tone: "bull", data: { calc: "gain" } },
     { label: `R/R ${fmtRR(m.rr)}`, tone: "entry", data: { rr: fmtRR(m.rr), entry: s.entry, sl: s.sl, tp: s.tp, ...(s.expect ? { expect: s.expect } : {}) } },
   ];
   return { levels, chips, offscale, rr: m.rr };

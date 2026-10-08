@@ -28,16 +28,16 @@ export function ContreTendanceTrapDiagram(_props: { className?: string; locale?:
           levels: [{ key: "res", price: RES, label: `Résistance Daily/H4 ${p(RES)}`, short: "Résistance", tone: "zone" }],
           markers: [
             ...named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name!, tone: "bear" as const, side: q.side === "h" ? "above" as const : "below" as const })),
-            { key: "now", i: last, price: d[last].h, label: `Prix ${p(d[last].c)}`, short: p(d[last].c), tone: "entry", side: "above" },
+            { key: "now", i: last, price: d[last].c, label: `Prix actuel ${p(d[last].c)}`, short: "Prix actuel", tone: "entry", side: "above", role: "close" },
           ],
         },
         {
           key: "m15", title: "EUR/USD M15", decimals: 5, height: 220, candles: m,
-          levels: [{ key: "lvl", price: 1.174, to: brk, label: `Niveau local ${p(1.174)}`, short: p(1.174), tone: "neutral", dashed: true }],
+          levels: [{ key: "lvl", price: 1.174, to: brk, label: `Niveau local ${p(1.174)}`, short: "Niveau local", tone: "neutral", dashed: true }],
           markers: [
-            { key: "brk", i: brk, price: m[brk].l, label: "Breakout haussier", short: "Breakout", tone: "bull", side: "below" },
-            { key: "top", i: topAt, price: top, label: p(top), tone: "bull", side: "above" },
-            { key: "low", i: m.length - 1, price: low, label: `Rejet vers ${p(low)}`, short: p(low), tone: "bear", side: "below" },
+            { key: "brk", i: brk, price: m[brk].c, label: "Breakout haussier : clôture au-dessus", short: "Breakout", tone: "bull", side: "below", role: "close" },
+            { key: "top", i: topAt, price: top, label: `Sommet ${p(top)}`, short: "Sommet", tone: "bull", side: "above", role: "high" },
+            { key: "low", i: m.length - 1, price: low, label: `Rejet vers ${p(low)}`, short: "Rejet", tone: "bear", side: "below" },
           ],
           chips: [{ label: "Une impulsion locale n'est pas un retournement global", tone: "bear" }],
         },

@@ -24,8 +24,8 @@ export function IntermediateZoneDiagram(_props: { className?: string; locale?: "
         key: "h1", title: "EUR/USD H1", decimals: 5, height: 280, candles: cs,
         zones: [{ key: "zone", ...Z, label: `Zone ${p(Z.y1)}-${p(Z.y2)}`, short: "Zone H1", tone: "zone" }],
         markers: [
-          { key: "brk", i: brk, price: cs[brk].l, label: "Support cassé", tone: "bear", side: "below" },
-          { key: "rej", i: rej, price: cs[rej].h, label: "Rejet", tone: "bear", side: "above" },
+          { key: "brk", i: brk, price: cs[brk].c, label: "Clôture sous la zone : support cassé", short: "Support cassé", tone: "bear", side: "below", role: "close" },
+          { key: "rej", i: rej, price: cs[rej].h, label: "Rejet", tone: "bear", side: "above", role: "rejet", ref: "zone", dir: "bear" },
           { key: "back", i: last, price: cs[last].h, label: "Retour dans la zone", short: "Retour", tone: "entry", side: "above" },
         ],
         chips: [{ label: "Ancien support devenu résistance", tone: "zone" }],

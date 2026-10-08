@@ -89,14 +89,21 @@ const engulfingSetup = () => buildCandles(4530, [
 ], { seed: 2301, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", pins: [4500, 4720, 4615] });
 
 // Engulfings de principe (sans prix affichés) : haussier sur support, baissier sur résistance
-const engulfBull = () => buildCandles(101.2, [
-  ...c(100.6, 100.9, 99.8, 99.1, 98.2, 98.6, 97.5, 96.8, 96.1), { c: 95.6 },
+// Le niveau a déjà été touché une fois avant le pattern (support / résistance = au moins 2 touches).
+const ENGULF_BULL: Step[] = [
+  { c: 98.6, h: 99.2, l: 98.4 }, { c: 98.0, h: 98.7, l: 97.8 }, { c: 97.3, h: 98.1, l: 97.1 }, { c: 96.5, h: 97.4, l: 96.3 },
+  { c: 95.6, h: 96.6, l: 95.4 }, { c: 94.8, h: 95.7, l: 94.6 }, { c: 95.5, h: 95.7, l: 94.7 }, { c: 96.3, h: 96.5, l: 95.3 },
+  { c: 96.7, h: 97.0, l: 96.1 }, { c: 96.2, h: 96.8, l: 96.0 }, { c: 95.6, h: 96.3, l: 95.4 },
   { c: 94.9, h: 95.8, l: 94.5 }, { c: 96.3, h: 96.5, l: 94.7 },
-], { seed: 2311, decimals: 2, asset: "XAU/USD", levels: [94.5], pins: [94.5] });
-const engulfBear = () => buildCandles(98.8, [
-  ...c(99.4, 99.1, 100.2, 100.9, 101.8, 101.4, 102.5, 103.2, 103.9), { c: 104.4 },
+];
+const ENGULF_BEAR: Step[] = [
+  { c: 101.4, h: 101.6, l: 100.8 }, { c: 102.0, h: 102.2, l: 101.3 }, { c: 102.7, h: 102.9, l: 101.9 }, { c: 103.5, h: 103.7, l: 102.6 },
+  { c: 104.4, h: 104.6, l: 103.4 }, { c: 105.2, h: 105.4, l: 104.3 }, { c: 104.5, h: 105.3, l: 104.3 }, { c: 103.7, h: 104.7, l: 103.5 },
+  { c: 103.3, h: 103.9, l: 103.0 }, { c: 103.8, h: 104.0, l: 103.2 }, { c: 104.4, h: 104.6, l: 103.7 },
   { c: 105.1, h: 105.5, l: 104.2 }, { c: 103.7, h: 105.3, l: 103.5 },
-], { seed: 2312, decimals: 2, asset: "XAU/USD", levels: [105.5], pins: [105.5] });
+];
+const engulfBull = () => buildCandles(99.0, ENGULF_BULL, { seed: 2311, decimals: 2, asset: "XAU/USD", levels: [94.5], pins: pinAll(ENGULF_BULL) });
+const engulfBear = () => buildCandles(101.0, ENGULF_BEAR, { seed: 2312, decimals: 2, asset: "XAU/USD", levels: [105.5], pins: pinAll(ENGULF_BEAR) });
 
 // ─── Reversal 2 — ETE XAU/USD H1 (épaule gauche 4 620, tête 4 660, épaule ─────
 // droite 4 625, creux 4 580 / 4 575, clôture de breakout 4 570)
@@ -312,13 +319,20 @@ const ctxRange = () => sameIn(buildCandles(103.8, [
 
 // Price action 2 — la pin bar a besoin d'un niveau (XAU/USD H4, range 4 500-4 650) :
 // pin bar baissière au plus haut (4 650), pin bar au milieu (ignorée, le prix
-// continue), pin bar haussière au plus bas (4 500).
-const pinLocation = () => buildCandles(4560, [
-  ...c(4572, 4589, 4604, 4618, 4637), { c: 4632, h: 4650, l: 4629 },
-  ...c(4620, 4607, 4594, 4583), { c: 4578, h: 4580, l: 4562 },
-  ...c(4566, 4551, 4537, 4524, 4512), { c: 4515, h: 4517, l: 4500 },
-  ...c(4528, 4541, 4553),
-], { seed: 6201, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4500, 4650], pins: [4650, 4629, 4637, 4500, 4517, 4562, 4580, 4632, 4515, 4578] });
+// continue), pin bar haussière au plus bas (4 500). Bougies écrites : les deux bornes du range sont
+// touchées avant les pin bars (4 503 et 4 506 en bas, 4 647 en haut).
+const PIN_LOCATION: Step[] = [
+  { c: 4512, h: 4523, l: 4503 }, { c: 4530, h: 4533, l: 4508 }, { c: 4556, h: 4559, l: 4527 }, { c: 4584, h: 4587, l: 4553 },
+  { c: 4611, h: 4615, l: 4580 }, { c: 4638, h: 4647, l: 4607 },
+  { c: 4620, h: 4641, l: 4616 }, { c: 4596, h: 4623, l: 4592 }, { c: 4572, h: 4599, l: 4568 }, { c: 4548, h: 4575, l: 4544 },
+  { c: 4528, h: 4551, l: 4524 }, { c: 4515, h: 4531, l: 4506 },
+  { c: 4540, h: 4543, l: 4512 }, { c: 4566, h: 4569, l: 4537 }, { c: 4592, h: 4595, l: 4563 }, { c: 4618, h: 4621, l: 4589 },
+  { c: 4614, h: 4650, l: 4612 },
+  { c: 4598, h: 4616, l: 4594 }, { c: 4580, h: 4601, l: 4576 }, { c: 4582, h: 4584, l: 4562 },
+  { c: 4560, h: 4585, l: 4556 }, { c: 4538, h: 4563, l: 4534 }, { c: 4518, h: 4541, l: 4514 },
+  { c: 4520, h: 4522, l: 4500 }, { c: 4545, h: 4548, l: 4517 },
+];
+const pinLocation = () => buildCandles(4520, PIN_LOCATION, { seed: 6201, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4500, 4650], pins: pinAll(PIN_LOCATION) });
 
 // Stratégie MTF 3 — zone qui raconte une histoire (EUR/USD H1) : support 1.1760 tenu,
 // puis cassé par une impulsion qui laisse un FVG bearish 1.1750-1.1760 ; remontée
@@ -919,10 +933,11 @@ const interZoneH1 = () => buildCandles(1.1800, [
 // sommet local 1.1774, sweep jusqu'à 1.1778, puis bougie de displacement qui casse le dernier HL
 // (CHoCH baissier) : entrée short après le breakout local.
 const LTF_M5: Step[] = [
-  { c: 1.1762, h: 1.1763, l: 1.1757 }, { c: 1.1766, h: 1.1767, l: 1.1761 }, { c: 1.1770, h: 1.1772, l: 1.1765 }, { c: 1.1766, h: 1.1771, l: 1.1764 },
-  { c: 1.1770, h: 1.1771, l: 1.1765 }, { c: 1.1773, h: 1.1774, l: 1.1769 }, { c: 1.1768, h: 1.1773, l: 1.1765 }, { c: 1.1772, h: 1.1773, l: 1.1767 },
-  { c: 1.1771, h: 1.1778, l: 1.1769 }, { c: 1.1768, h: 1.1772, l: 1.1766 }, { c: 1.1757, h: 1.1769, l: 1.1756 }, { c: 1.1753, h: 1.1758, l: 1.1751 },
-  { c: 1.1749, h: 1.1754, l: 1.1747 },
+  // HL 1.1753 puis HL 1.1764 (vrais creux), sommet local 1.1774, sweep 1.1778, clôture sous 1.1764 = CHoCH
+  { c: 1.1762, h: 1.1763, l: 1.1756 }, { c: 1.1759, h: 1.1764, l: 1.1757 }, { c: 1.1757, h: 1.1760, l: 1.1753 }, { c: 1.1764, h: 1.1765, l: 1.1756 },
+  { c: 1.1770, h: 1.1772, l: 1.1763 }, { c: 1.1773, h: 1.1774, l: 1.1768 }, { c: 1.1769, h: 1.1773, l: 1.1767 }, { c: 1.1766, h: 1.1770, l: 1.1764 },
+  { c: 1.1771, h: 1.1772, l: 1.1766 }, { c: 1.1772, h: 1.1778, l: 1.1770 }, { c: 1.1768, h: 1.1773, l: 1.1766 }, { c: 1.1755, h: 1.1768, l: 1.1754 },
+  { c: 1.1751, h: 1.1756, l: 1.1749 }, { c: 1.1747, h: 1.1752, l: 1.1745 },
 ];
 const ltfExecM5 = () => buildCandles(1.1758, LTF_M5, { ...EU, seed: 20401, session: "New York", levels: [1.1765, 1.1778], pins: pinAll(LTF_M5) });
 // Multi-UT 2 bloc 1 — contre la tendance : Daily en LH/LL, résistance Daily/H4 1.1760 (dernier LH),
@@ -974,7 +989,7 @@ const RETOUR_DESEQ: Step[] = [
 // avec des bougies haussières de plus en plus courtes et des corrections de plus en plus longues,
 // jusqu'au bas de la zone.
 const ZONE_PREP: Step[] = [
-  { c: 1.1768, h: 1.1774, l: 1.1762 }, { c: 1.1765, h: 1.1770, l: 1.1761 }, { c: 1.1769, h: 1.1772, l: 1.1762 }, { c: 1.1763, h: 1.1770, l: 1.1760 },
+  { c: 1.1768, h: 1.1774, l: 1.1762 }, { c: 1.1767, h: 1.1770, l: 1.1761 }, { c: 1.1772, h: 1.1775, l: 1.1766 }, { c: 1.1763, h: 1.1773, l: 1.1760 },
   { c: 1.1738, h: 1.1763, l: 1.1735 }, { c: 1.1728, h: 1.1750, l: 1.1724 }, { c: 1.1720, h: 1.1730, l: 1.1716 },
   // remontée : corps haussiers 11, 9, 7, 6, 5, 4 pips ; corrections de plus en plus longues : 3 pips (1 bougie),
   // 5 pips (2 bougies), 6 pips (2 bougies)
@@ -988,7 +1003,7 @@ const ZONE_PREP: Step[] = [
 // au-dessus de la zone, creux local 1.1748 entre les rejets, trois bougies baissières qui le cassent
 // vers 1.1745, retour du prix à 1.1758 (entrée short), SL 1.1772, TP 1.1695.
 const LTF_CONFIRM: Step[] = [
-  { c: 1.1742, h: 1.1744, l: 1.1737 }, { c: 1.1747, h: 1.1749, l: 1.1740 }, { c: 1.1752, h: 1.1754, l: 1.1745 },
+  { c: 1.1742, h: 1.1744, l: 1.1737 }, { c: 1.1749, h: 1.1750, l: 1.1740 }, { c: 1.1752, h: 1.1754, l: 1.1749 },
   { c: 1.1755, h: 1.1764, l: 1.1750 }, { c: 1.1752, h: 1.1767, l: 1.1748 }, { c: 1.1754, h: 1.1770, l: 1.1750 },
   { c: 1.1751, h: 1.1756, l: 1.1749 }, { c: 1.1747, h: 1.1752, l: 1.1746 }, { c: 1.1745, h: 1.1748, l: 1.1743 },
   { c: 1.1752, h: 1.1753, l: 1.1744 }, { c: 1.1757, h: 1.1759, l: 1.1751 },
@@ -1227,7 +1242,7 @@ const SR_STRONG = bars(4560, [
   4544, 4528, 4514, { c: 4506, l: 4500 }, 4520, 4536, { c: 4545, h: 4548 }, 4530, 4515, { c: 4507, l: 4501 }, 4523, 4540, { c: 4546, h: 4549 },
   4532, 4516, { c: 4508, l: 4500 }, 4524, { c: 4541, h: 4544 }, 4527, { c: 4513, l: 4511 }, { c: 4506, l: 4501 }, 4521, 4538,
 ], 3, 0);
-const SR_WEAK = bars(4560, [4548, 4535, 4522, { c: 4512, l: 4511 }, { c: 4506, h: 4512, l: 4502 }, { c: 4511, l: 4505 }, { c: 4512, h: 4513, l: 4511 }, { c: 4505, h: 4512, l: 4503 }, { c: 4510, h: 4511, l: 4504 }, { c: 4507, h: 4512, l: 4505 }, 4496, 4486], 3, 0);
+const SR_WEAK = bars(4560, [4548, 4535, 4522, { c: 4512, l: 4511 }, { c: 4506, h: 4512, l: 4502 }, { c: 4518, h: 4519, l: 4505 }, { c: 4519, h: 4520, l: 4518 }, { c: 4505, h: 4520, l: 4503 }, { c: 4510, h: 4511, l: 4504 }, { c: 4507, h: 4512, l: 4505 }, 4496, 4486], 3, 0);
 // Support / résistance 1 — zone ou ligne : trois creux 1.1685 / 1.1688 / 1.1690 avec mèches ;
 // tracés une fois en ligne fine (1.1690), une fois en zone 1.1680-1.1695 (EUR/USD H4).
 const ZONE_LINE = bars(1.1735, [

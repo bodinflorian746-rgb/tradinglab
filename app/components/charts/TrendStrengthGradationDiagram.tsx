@@ -21,7 +21,7 @@ export default function TrendStrengthGradationDiagram(_props: { className?: stri
     <LessonChart
       id="TrendStrengthGradationDiagram"
       title="Faible, modérée, forte"
-      caption="L'amplitude des swings et la pente conditionnent le R/R structurel. Pullback exploitable : 30 à 60 % de l'impulsion."
+      caption="L'amplitude des swings et la pente conditionnent le R/R structurel. Pullback exploitable : 50 à 78,6 % de l'impulsion."
       panels={[
         panel("str-weak", "Tendance faible", "peu exploitable"),
         panel("str-mid", "Tendance modérée", "exploitable avec discipline"),

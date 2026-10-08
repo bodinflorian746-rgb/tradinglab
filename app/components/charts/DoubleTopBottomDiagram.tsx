@@ -6,11 +6,11 @@
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { usd } from "@/app/components/lessons/trade";
-import { fmtPrice, pivots, type Candle } from "@/lib/lessons/chart-analysis";
+import { fmtPrice, pips, pivots, type Candle } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
 const p = (x: number) => fmtPrice(x, 4);
-const pct = (a: number, b: number) => `${((Math.abs(a - b) / Math.min(a, b)) * 100).toLocaleString("fr-FR", { maximumFractionDigits: 2 })} %`;
+// écart entre les deux sommets / creux : en pips (EUR/USD) ou en dollars (XAU/USD), seuil du texte : 30 pips
 
 /** Les deux extrêmes du pattern et la ligne de cou (pivot opposé entre les deux) */
 export function dtbShape(cs: Candle[], side: "h" | "l") {
@@ -34,21 +34,21 @@ export default function DoubleTopBottomDiagram(_props: { className?: string; loc
           key: "top", title: "Double top · EUR/USD H1", decimals: 5, height: 230, candles: top,
           levels: [{ key: "neck", price: t.neck.price, from: t.a.index, label: `Ligne de cou ${p(t.neck.price)}`, short: "Ligne de cou", tone: "zone" }],
           markers: [
-            { key: "a", i: t.a.index, price: t.a.price, label: p(t.a.price), tone: "bear", side: "above" },
-            { key: "b", i: t.b.index, price: t.b.price, label: p(t.b.price), tone: "bear", side: "above" },
-            { key: "brk", i: t.brk, price: top[t.brk].l, label: "Clôture sous la ligne de cou", short: "Clôture", tone: "bear", side: "below" },
+            { key: "a", i: t.a.index, price: t.a.price, label: `Sommet 1 ${p(t.a.price)}`, short: "Sommet 1", tone: "bear", side: "above", role: "swing-high" },
+            { key: "b", i: t.b.index, price: t.b.price, label: `Sommet 2 ${p(t.b.price)}`, short: "Sommet 2", tone: "bear", side: "above", role: "swing-high" },
+            { key: "brk", i: t.brk, price: top[t.brk].c, label: "Clôture sous la ligne de cou", short: "Clôture", tone: "bear", side: "below", role: "close" },
           ],
-          chips: [{ label: `Écart entre les sommets : ${pct(t.a.price, t.b.price)}`, tone: "neutral" }],
+          chips: [{ label: `Écart entre les sommets : ${pips(t.a.price, t.b.price, 0.0001)} pips (30 au plus)`, tone: "neutral" }],
         },
         {
           key: "bottom", title: "Double bottom · XAU/USD H1", decimals: 0, height: 230, candles: bot,
           levels: [{ key: "neck", price: b.neck.price, from: b.a.index, label: `Ligne de cou ${usd(b.neck.price)}`, short: "Ligne de cou", tone: "zone" }],
           markers: [
-            { key: "a", i: b.a.index, price: b.a.price, label: usd(b.a.price), tone: "bull", side: "below" },
-            { key: "b", i: b.b.index, price: b.b.price, label: usd(b.b.price), tone: "bull", side: "below" },
-            { key: "brk", i: b.brk, price: bot[b.brk].h, label: "Clôture au-dessus", short: "Clôture", tone: "bull", side: "above" },
+            { key: "a", i: b.a.index, price: b.a.price, label: `Creux 1 ${usd(b.a.price)}`, short: "Creux 1", tone: "bull", side: "below", role: "swing-low" },
+            { key: "b", i: b.b.index, price: b.b.price, label: `Creux 2 ${usd(b.b.price)}`, short: "Creux 2", tone: "bull", side: "below", role: "swing-low" },
+            { key: "brk", i: b.brk, price: bot[b.brk].c, label: "Clôture au-dessus de la ligne de cou", short: "Clôture", tone: "bull", side: "above", role: "close" },
           ],
-          chips: [{ label: `Écart entre les creux : ${pct(b.a.price, b.b.price)}`, tone: "neutral" }],
+          chips: [{ label: `Écart entre les creux : ${usd(Math.abs(b.a.price - b.b.price))}`, tone: "neutral" }],
         },
       ]}
       rows={[2]}

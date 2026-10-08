@@ -28,10 +28,10 @@ export default function PullbackContinuationDiagram(_props: { className?: string
         zones: [
           { key: "htf", y1: 4470, y2: 4485, label: "Support UT supérieure", short: "Support", tone: "bull" },
           { key: "ote", ...ote, from: hiAt, label: `OTE ${usd(ote.y1)}-${usd(ote.y2)}`, short: "OTE", tone: "fib" },
-          { key: "ob", ...ob, from: obI, label: `OB ${usd(ob.y1)}-${usd(ob.y2)}`, short: "OB", tone: "zone", kind: "ob", src: `pb-conf:${obI}` },
-          { key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG cible ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG cible", tone: "bear", kind: "fvg", src: `pb-conf:${fvg.i}` },
+          { key: "ob", ...ob, from: obI, label: `OB ${usd(ob.y1)}-${usd(ob.y2)}`, short: "OB", tone: "zone", kind: "ob", src: `pb-conf:${obI}`, role: "ob", dir: "bull" },
+          { key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG cible ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG cible", tone: "bear", kind: "fvg", src: `pb-conf:${fvg.i}`, role: "fvg" },
         ],
-        markers: [{ key: "rej", i: rej, price: cs[rej].l, label: "Rejet sur l'OB", short: "Rejet", tone: "bull", side: "below" }],
+        markers: [{ key: "rej", i: rej, price: cs[rej].l, label: "Rejet sur l'OB", short: "Rejet", tone: "bull", side: "below", role: "rejet", ref: "ob", dir: "bull" }],
       }]}
     />
   );

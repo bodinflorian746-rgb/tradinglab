@@ -24,11 +24,11 @@ export default function EngulfingContextDiagram(_props: { className?: string; lo
         {
           key: "fibo", title: "✓ Sur la zone Fibonacci : tradable", decimals: 1, height: 220, candles: a,
           zones: [{ key: "fib", y1: f618, y2: f50, from: hiAt, label: `Fibo 0.5 / 0.618 (${usd(f50)}-${usd(f618)})`, short: "Fibo 0.5-0.618", tone: "fib" }],
-          markers: [{ key: "eng", i: a.length - 1, price: a[a.length - 1].l, label: "Engulfing", tone: "bull", side: "below" }],
+          markers: [{ key: "eng", i: a.length - 1, price: a[a.length - 1].l, label: "Engulfing", tone: "bull", side: "below", role: "engulfing" }],
         },
         {
           key: "isole", title: "✗ En pleine impulsion : bruit", decimals: 0, height: 220, candles: b,
-          markers: [{ key: "eng", i: eng, price: b[eng].l, label: "Engulfing isolé", short: "Isolé", tone: "neutral", side: "below" }],
+          markers: [{ key: "eng", i: eng, price: b[eng].l, label: "Engulfing isolé", short: "Isolé", tone: "neutral", side: "below", role: "engulfing" }],
         },
       ]}
       rows={[2]}

@@ -28,13 +28,13 @@ export default function FibTPProjectionDiagram(_props: { className?: string; loc
         key: "h4", subtitle: `XAU/USD H4 — extensions de la jambe ${usd(hh.price)} → ${usd(cs[c].l)}`,
         decimals: 1, height: 320, candles: cs,
         levels: [
-          { key: "e1618", price: e1618, from: entryI, label: `TP 2 · 1.618 = ${usd(e1618)}`, short: "TP 2 · 1.618", tone: "bull", dashed: true },
-          { key: "e1272", price: e1272, from: entryI, label: `1.272 = ${usd(e1272)}`, short: "1.272", tone: "fib", dashed: true, faint: true },
+          { key: "e1618", price: e1618, from: entryI, label: `TP 2 · 1.618 = ${usd(e1618)}`, short: "TP 2 · 1.618", tone: "bull", dashed: true, role: "fib", ref: `${hh.index}:${c}:1.618` },
+          { key: "e1272", price: e1272, from: entryI, label: `Extension 1.272 = ${usd(e1272)}`, short: "Ext. 1.272", tone: "fib", dashed: true, faint: true, role: "fib", ref: `${hh.index}:${c}:1.272` },
           { key: "tp1", price: hh.price, from: hh.index, label: `TP 1 · HH ${usd(hh.price)}`, short: "TP 1 · HH", tone: "bull", dashed: true },
           { key: "entry", price: ENTRY, from: entryI, label: `Entrée ${usd(ENTRY)}`, short: "Entrée", tone: "entry" },
           { key: "sl", price: SL, from: entryI, label: `SL ${usd(SL)}`, short: "SL", tone: "bear", dashed: true },
         ],
-        markers: [{ key: "pin", i: entryI, price: cs[entryI].l, label: "Pin bar", tone: "bull", side: "below" }],
+        markers: [{ key: "pin", i: entryI, price: cs[entryI].l, label: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" }],
         chips: [chip("TP 1", hh.price), chip("TP 2", Math.round(e1618))],
       }]}
       caption="Extension = creux du repli + ratio × (HH − creux du repli)."

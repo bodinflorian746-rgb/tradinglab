@@ -35,7 +35,7 @@ export default function EngulfingValidationGridDiagram(_props: { className?: str
     return {
       key, title, decimals: 0, height: 180, candles: cs,
       subtitle: `${r.covers ? "Englobe" : "N'englobe pas"} · ${fr(r.contrast)} × · amplitude ${Math.round(r.range)} $ (moyenne ${fr(r.avg)} $)`,
-      markers: [{ key: "pair", i, price: cs[i].h, label: r.ok ? "Tradable" : "Pas de setup", tone: r.ok ? "bull" as const : "bear" as const, side: "above" as const }],
+      markers: [{ key: "pair", i, price: cs[i].h, label: r.ok ? "Tradable" : "Pas de setup", tone: r.ok ? "bull" as const : "bear" as const, side: "above" as const, ...(r.ok ? { role: "engulfing" as const } : {}) }],
     };
   });
   return (

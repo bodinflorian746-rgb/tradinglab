@@ -24,7 +24,7 @@ export function RiskAffineDiagram(_props: { className?: string; locale?: "fr" | 
       { key: "sl", price: sl, from: h4 ? undefined : top, label: `SL ${p(sl)}`, tone: "bear", dashed: true },
       { key: "entry", price: ENTRY, from: last - 1, label: `Entrée ${p(ENTRY)}`, short: "Entrée", tone: "entry" },
     ],
-    markers: h4 ? [] : [{ key: "rej", i: top, price: candles[top].h, label: "Dernier sommet de rejet", short: "Rejet", tone: "bear", side: "above" }],
+    markers: h4 ? [] : [{ key: "rej", i: top, price: candles[top].h, label: "Dernier sommet de rejet", short: "Rejet", tone: "bear", side: "above", role: "high" }],
     chips: [{ label: `Risque ${pips(sl, ENTRY, 0.0001)} pips`, tone: h4 ? "bear" : "bull", data: { entry: ENTRY, sl } }],
   });
   return (

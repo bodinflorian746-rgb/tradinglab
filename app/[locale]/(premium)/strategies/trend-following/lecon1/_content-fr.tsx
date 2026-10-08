@@ -183,7 +183,7 @@ export default function ContentFr() {
               <li>- Tendance faible (pente &lt; 20°, amplitude ~50 pips) : peu exploitable</li>
               <li>- Tendance modérée (pente ~35°, amplitude ~100 pips) : exploitable avec discipline</li>
               <li>- Tendance forte (pente &gt; 55°, amplitude ~200 pips) : setup à privilégier</li>
-              <li>- Pullback exploitable : entre 30% et 60% de l&apos;impulsion précédente</li>
+              <li>- Pullback exploitable : entre 50% et 78,6% de l&apos;impulsion précédente (idéalement l&apos;OTE 0.618-0.786, leçon 3)</li>
             </ul>
           </section>
 
@@ -228,7 +228,7 @@ export default function ContentFr() {
             points={[
               "Une tendance exploitable exige 2 HL + 2 HH (haussière) ou 2 LH + 2 LL (baissière) minimum sur H4.",
               "L’alignement Daily + H4 dans le même sens maximise la fiabilité du setup.",
-              "Le pullback exploitable se situe entre 30% et 60% de l’impulsion précédente.",
+              "Le pullback exploitable se situe entre 50% et 78,6% de l’impulsion précédente.",
               "Stop loss au-delà du dernier creux/sommet structurel avec marge 5-10 pips. L’entrée exige un signal de rejet.",
             ]}
           />

@@ -19,17 +19,13 @@ export default function PinBarLocationDiagram(_props: { className?: string; loca
         key: "h4", subtitle: "XAU/USD H4 — range entre 4 500$ et 4 650$",
         decimals: 1, height: 300, candles: cs,
         levels: [
-          { key: "res", price: 4650, label: "Résistance 4 650$", short: "Résistance", tone: "bear", dashed: true },
-          { key: "sup", price: 4500, label: "Support 4 500$", short: "Support", tone: "bull", dashed: true },
+          { key: "res", price: 4650, label: "Résistance 4 650$", short: "Résistance", tone: "bear", dashed: true, role: "range-high" },
+          { key: "sup", price: 4500, label: "Support 4 500$", short: "Support", tone: "bull", dashed: true, role: "range-low" },
         ],
         markers: [
-          { key: "top", i: top, price: cs[top].h, label: "Tradable", tone: "bear", side: "above" },
-          { key: "mid", i: mid, price: cs[mid].l, label: "Milieu de range : ignorer", short: "Ignorer", tone: "neutral", side: "below" },
-          { key: "bottom", i: bottom, price: cs[bottom].l, label: "Tradable", tone: "bull", side: "below" },
-        ],
-        chips: [
-          { label: "Pin bar baissière au plus haut du range", tone: "bear" },
-          { label: "Pin bar haussière au plus bas du range", tone: "bull" },
+          { key: "top", i: top, price: cs[top].h, label: "Pin bar baissière : tradable", short: "Tradable", tone: "bear", side: "above", role: "pinbar", dir: "bear" },
+          { key: "mid", i: mid, price: cs[mid].l, label: "Milieu de range : ignorer", short: "Ignorer", tone: "neutral", side: "below", role: "pinbar", dir: "bull" },
+          { key: "bottom", i: bottom, price: cs[bottom].l, label: "Pin bar haussière : tradable", short: "Tradable", tone: "bull", side: "below", role: "pinbar", dir: "bull" },
         ],
       }]}
       caption="Pin bar = signal de confirmation à un niveau. Sans niveau, c'est du bruit."

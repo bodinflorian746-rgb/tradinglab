@@ -30,13 +30,13 @@ export function ConfirmationM5Diagram({ tf = "M5" }: { tf?: "M5" | "M15"; classN
         key: "ltf", title: `EUR/USD ${tf}, dans la zone H1`, decimals: 5, height: 290, candles: cs,
         zones: [{ key: "zone", ...Z, label: `Zone H1 ${p(Z.y1)}-${p(Z.y2)}`, short: "Zone H1", tone: "zone" }],
         levels: [
-          { key: "low", price: LOCAL_LOW, from: lowAt, to: brk, label: `Creux local ${p(LOCAL_LOW)}`, short: "Creux local", tone: "neutral", dashed: true },
+          { key: "low", price: LOCAL_LOW, from: lowAt, to: brk, label: `Creux local ${p(LOCAL_LOW)}`, short: "Creux local", tone: "neutral", dashed: true, role: "bos", ref: lowAt, dir: "bear" },
           ...t.levels,
         ],
         offscale: t.offscale,
         markers: [
           { key: "wicks", i: wicks[1], price: cs[wicks[2]].h, label: `${wicks.length} mèches de rejet`, short: `${wicks.length} rejets`, tone: "bear", side: "above" },
-          { key: "brk", i: brk, price: cs[brk].l, label: "Breakout du creux", short: "Breakout", tone: "bear", side: "below" },
+          { key: "brk", i: brk, price: cs[brk].c, label: "Clôture sous le creux", short: "Breakout", tone: "bear", side: "below", role: "close" },
         ],
         chips: t.chips,
       }]}

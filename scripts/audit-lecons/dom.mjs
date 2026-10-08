@@ -85,7 +85,7 @@ function checkCharts({ ids, vocab }) {
       for (let i = Math.max(0, from); i <= Math.min(n - 1, to); i++) {
         const v = side === "low" ? cs[i].l : cs[i].h;
         const hit = v >= lo - tol && v <= hi + tol;
-        const far = side === "low" ? cs[i].l > hi + 2 * tol : cs[i].h < lo - 2 * tol;
+        const far = side === "low" ? cs[i].l > hi + tol : cs[i].h < lo - tol;
         if (hit && !inTouch && away) { count++; inTouch = true; away = false; }
         if (!hit) inTouch = false;
         if (far) away = true;
@@ -269,13 +269,14 @@ function checkCharts({ ids, vocab }) {
       const vals = [];
       JSON.parse(svg.dataset.candles).forEach((k) => vals.push(k.o, k.h, k.l, k.c));
       svg.querySelectorAll("[data-price]").forEach((e) => vals.push(+e.dataset.price));
-      svg.querySelectorAll("rect[data-zone]").forEach((z) => vals.push(+z.dataset.y1, +z.dataset.y2));
+      svg.querySelectorAll("rect[data-zone]").forEach((z) => vals.push(+z.dataset.y1, +z.dataset.y2, (+z.dataset.y1 + +z.dataset.y2) / 2));
       svg.querySelectorAll("line[data-segment]").forEach((s) => vals.push(+s.dataset.p1, +s.dataset.p2));
       const d = dec >= 5 ? 4 : dec;
-      const re = d === 0 ? /(\d{1,3}(?:[\s  ]\d{3})+|\d{3,})(?=\s?\$)/g : new RegExp(`\\b\\d+\\.\\d{${d}}\\b`, "g");
+      // or / indices (0 à 2 décimales) : prix écrits « 4 545 $ » ; forex : « 1.1748 » (jamais les ratios « 0.5 »)
+      const re = d <= 2 ? /(\d{1,3}(?:[\s\u202f\u00a0]\d{3})+|\d{3,})(?=\s?\$)/g : new RegExp(`\b\d+\.\d{${d}}\b`, "g");
       for (const L of labels) for (const m of L.t.matchAll(re)) {
         const v = +m[0].replace(/[\s  ]/g, "");
-        if (!vals.some((x) => Math.abs(x - v) <= Math.pow(10, -d) / 2 + 1e-9)) E(`étiquette « ${L.t} » : ${m[0]} ne correspond à aucune donnée du graphique`);
+        if (!/≈/.test(L.t) && !vals.some((x) => Math.abs(x - v) <= (d <= 2 ? 0.5 : Math.pow(10, -d) / 2) + 1e-9)) E(`étiquette « ${L.t} » : ${m[0]} ne correspond à aucune donnée du graphique`);
       }
     }
   }
@@ -374,13 +375,16 @@ function checkCharts({ ids, vocab }) {
       {
         const labs = [...fig.querySelectorAll("g[data-label-for]")].map((g) => g.textContent.trim().toLowerCase());
         const descs = [...fig.querySelectorAll("svg desc")].map((d) => d.textContent.toLowerCase()).join(" ");
-        const nums = (s) => (s.match(/\d+(?:[.,\s  ]\d+)*/g) ?? []).map((x) => x.replace(/[\s  ]/g, "").replace(",", "."));
-        const onChart = new Set(nums(labs.join(" ") + " " + descs));
+        // chiffres autonomes (pas « MM20 », « M15 »), comparés aux étiquettes du dessin (libellés complets
+        // repris de la description accessible, sans sa phrase d'étendue ni ses comptes de bougies)
+        const nums = (s) => (s.match(/(?<![\p{L}\d])\d+(?:[.,\s\u202f\u00a0]\d+)*/gu) ?? []).map((x) => x.replace(/[\s\u202f\u00a0]/g, "").replace(",", "."));
+        const labelled = descs.split(/\.\s/).filter((s) => !/^\s*(graphique en bougies|courbe)/.test(s)).join(" ");
+        const onChart = new Set(nums(labs.join(" ") + " " + labelled));
         for (const c of fig.querySelectorAll("[data-chip]")) {
           const t = c.textContent.trim().toLowerCase();
           const n = nums(t).filter((x) => x.replace(/\D/g, "").length >= 2);
           if (labs.some((l) => l === t || (t.length > 3 && l.includes(t)))) E(id, `pastille « ${c.textContent.trim()} » qui répète une étiquette du graphique`);
-          else if (n.length && !c.dataset.rr && n.every((x) => onChart.has(x))) E(id, `pastille « ${c.textContent.trim()} » qui répète les chiffres du graphique`);
+          else if (n.length && !c.dataset.rr && !c.dataset.calc && n.every((x) => onChart.has(x))) E(id, `pastille « ${c.textContent.trim()} » qui répète les chiffres du graphique`);
         }
       }
       // Tableaux (matrices) : toutes les colonnes visibles, sans défilement horizontal

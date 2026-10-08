@@ -23,12 +23,11 @@ export default function RSIDivergenceDiagram(_props: { className?: string; local
         key: "h1", title: "XAU/USD H1", decimals: 0, height: 300, candles: cs,
         segments: [{ key: "div", i1: t1.index, p1: t1.price, i2: t2.index, p2: t2.price, tone: "bear", dashed: true }],
         markers: [
-          { key: "t1", i: t1.index, price: t1.price, label: usd(t1.price), tone: "neutral", side: "above" },
-          { key: "low", i: low.index, price: low.price, label: usd(low.price), tone: "neutral", side: "below" },
+          { key: "t1", i: t1.index, price: t1.price, label: `Sommet ${usd(t1.price)}`, short: "Sommet", tone: "neutral", side: "above", role: "swing-high" },
+          { key: "low", i: low.index, price: low.price, label: `Creux ${usd(low.price)}`, short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
           { key: "t2", i: t2.index, price: t2.price, label: `HH ${usd(t2.price)}`, pivot: "HH", tone: "bull", side: "above" },
         ],
-        rsi: { values: r, label: "RSI 14", marks: [{ i: t1.index, label: String(v1), tone: "fib" }, { i: t2.index, label: `${v2} (LH)`, tone: "bear" }] },
-        chips: [{ label: `Prix : ${usd(t1.price)} → ${usd(t2.price)} · RSI : ${v1} → ${v2}`, tone: "bear", data: { rsi1: r[t1.index]!.toFixed(1), rsi2: r[t2.index]!.toFixed(1) } }],
+        rsi: { values: r, label: "RSI 14", marks: [{ i: t1.index, label: `RSI ${v1}`, tone: "fib" }, { i: t2.index, label: `RSI ${v2} (LH)`, tone: "bear" }] },
       }]}
     />
   );

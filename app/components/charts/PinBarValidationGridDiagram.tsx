@@ -35,7 +35,7 @@ export default function PinBarValidationGridDiagram(_props: { className?: string
       key, title, decimals: 0, height: 180, candles: cs,
       subtitle: `Ratio ${fr(r.ratio)}:1 · clôture ${r.top ? "tiers haut" : "hors tiers haut"} · ${r.touch ? "niveau touché" : "milieu de range"}`,
       levels: level ? [{ key: "sup", price: level, label: `Support ${usd(level)}`, short: "Support", tone: "zone" as const }] : [],
-      markers: [{ key: "pin", i, price: cs[i].l, label: r.ok ? "Tradable" : "Pas de setup", tone: r.ok ? "bull" as const : "bear" as const, side: "below" as const }],
+      markers: [{ key: "pin", i, price: cs[i].l, label: r.ok ? "Tradable" : "Pas de setup", tone: r.ok ? "bull" as const : "bear" as const, side: "below" as const, ...(r.ok ? { role: "pinbar" as const, dir: "bull" as const } : {}) }],
     };
   });
   return (

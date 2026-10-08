@@ -148,7 +148,7 @@ export default function ContentFr() {
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Les 3 conditions pour qu&apos;un double top soit valide :</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Une tendance haussière préalable claire (HH/HL)</li>
-              <li>- Deux sommets quasi égaux (écart toléré : 0,3% maximum)</li>
+              <li>- Deux sommets quasi égaux (écart toléré : 30 pips maximum)</li>
               <li>- Un breakout confirmé de la ligne de cou (clôture, pas une simple mèche)</li>
             </ul>
 
@@ -165,9 +165,9 @@ export default function ContentFr() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">1. Tendance préalable claire.</span> <span className="text-zinc-300">Pas de range avant les sommets/creux. La structure HH/HL ou LH/LL doit être nette.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Écart ≤ 0,3%.</span> <span className="text-zinc-300">Sur EUR/USD : 30 pips maximum entre les 2 sommets/creux. Au-delà : pattern non valide.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">2. Écart ≤ 30 pips.</span> <span className="text-zinc-300">30 pips maximum entre les 2 sommets/creux. Au-delà : pattern non valide.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">3. Breakout par clôture.</span> <span className="text-zinc-300">Clôture franche de bougie sous (ou au-dessus) de la ligne de cou. Mèche seule = test, pas confirmation.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Absence de news majeure.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le pattern peut être cassé dans n&apos;importe quel sens.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-white font-semibold">4. Absence de news majeure.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le pattern peut être cassé dans n&apos;importe quel sens. Ce critère se vérifie dans le calendrier économique, pas sur le graphique.</span></div>
             </div>
           </section>
 
@@ -192,11 +192,11 @@ export default function ContentFr() {
             <div className="my-8">
               <DTBMeasuredMoveProjectionDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le take profit d&apos;un double top/bottom suit le principe du measured move : la hauteur du pattern (du sommet à la ligne de cou) se projette depuis la ligne de cou dans le sens du breakout.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le take profit d&apos;un double top/bottom suit le principe du measured move : la hauteur du pattern (du sommet le plus haut, ou du creux le plus bas, à la ligne de cou) se projette depuis la ligne de cou dans le sens du breakout.</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Hauteur pattern = distance sommet (ou creux) → ligne de cou.</li>
+              <li>- Hauteur pattern = distance du sommet le plus haut (ou du creux le plus bas) → ligne de cou.</li>
               <li>- TP théorique = ligne de cou ± hauteur du pattern, selon le sens du breakout.</li>
-              <li>- TP ajusté de quelques pips pour obtenir un R/R rond (2:1 ou 3:1).</li>
+              <li>- TP prudent : placé un peu avant la projection théorique, pour qu&apos;il soit atteint avant la réaction autour de ce niveau.</li>
             </ul>
           </section>
 
@@ -204,15 +204,15 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : Double Top EUR/USD H1</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte du double top EUR/USD du Bloc 3 est repris. Tendance haussière préalable, deux sommets à 1.1880 et 1.1895, ligne de cou à 1.1800. Le prix vient de clôturer une bougie H1 à 1.1795, sous la ligne de cou. Pattern confirmé.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée se fait short juste sous la ligne de cou pour saisir le breakdown. Un prix qui plonge déjà ne se chasse pas. Une confirmation propre avec une clôture sous la ligne de cou est requise. Le SL classique irait au-dessus du deuxième sommet, mais le R/R deviendrait trop faible : le SL tactique se place juste au-dessus du dernier rebond sous la ligne des sommets. Le TP suit la measured move : la hauteur du pattern, du sommet à la ligne de cou, se projette depuis la ligne de cou vers le bas.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Hauteur du pattern : 1.1880 - 1.1800 = 80 pips. Projection théorique sous la ligne de cou : 1.1720. Le TP est pris 5 pips plus bas à 1.1715 pour obtenir un R/R rond de 2:1 (40 pips de risque, 80 pips de gain).</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée se fait short juste sous la ligne de cou pour saisir le breakdown. Un prix qui plonge déjà ne se chasse pas. Une confirmation propre avec une clôture sous la ligne de cou est requise. Le SL classique irait au-dessus du deuxième sommet, mais le R/R deviendrait trop faible : le SL tactique se place juste au-dessus du dernier rebond sous la ligne des sommets. Le TP suit la measured move : la hauteur du pattern, du sommet le plus haut à la ligne de cou, se projette depuis la ligne de cou vers le bas.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Hauteur du pattern, depuis le sommet le plus haut : 1.1895 - 1.1800 = 95 pips. Projection théorique sous la ligne de cou : 1.1705. Le TP est placé un peu avant, à 1.1715 : un objectif prudent avant la projection théorique, pour un R/R de 2:1 (40 pips de risque, 80 pips de gain).</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée short : 1.1795 (clôture sous ligne de cou)</li>
                 <li>- Stop loss : 1.1835 (au-dessus du dernier rebond à 1.1832, soit 40 pips au-dessus de l&apos;entrée)</li>
-                <li>- Take profit : 1.1715 (80 pips, measured move ajusté)</li>
+                <li>- Take profit : 1.1715 (80 pips, objectif prudent avant la projection théorique à 1.1705)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
@@ -243,7 +243,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Filtres : quand ne pas prendre le setup</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Pas de tendance préalable claire.</span> <span className="text-zinc-300">Si le marché était en range avant les 2 sommets/creux, ce n&apos;est pas un retournement. Setup à ignorer.</span></div>
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Écart trop grand entre sommets/creux.</span> <span className="text-zinc-300">Au-delà de 0,3% (30 pips sur EUR/USD), la mécanique n&apos;est plus celle du double top. Pattern non valide.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Écart trop grand entre sommets/creux.</span> <span className="text-zinc-300">Au-delà de 30 pips, la mécanique n&apos;est plus celle du double top. Pattern non valide.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Breakout sur mèche, sans clôture.</span> <span className="text-zinc-300">Une mèche qui pique sous la ligne de cou puis revient au-dessus ne confirme rien. Attendre la clôture franche.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. News majeure dans la fenêtre.</span> <span className="text-zinc-300">FOMC, NFP, CPI dans les 30 minutes : le setup n&apos;est pas pris. La news peut casser le pattern dans n&apos;importe quel sens.</span></div>
             </div>
@@ -253,19 +253,19 @@ export default function ContentFr() {
             points={[
               "Double top = 2 sommets quasi égaux sur une résistance après tendance haussière. Double bottom = miroir sur un support.",
               "Confirmation = clôture (pas mèche) de l’autre côté de la ligne de cou.",
-              "Entrée juste après le breakout. SL classique au-delà du dernier sommet/creux, SL tactique au-dessus du dernier rebond. TP = measured move (hauteur du pattern projetée).",
-              "Setup ignoré si la tendance préalable n’est pas claire, si l’écart dépasse 0,3%, ou si une news majeure arrive.",
+              "Entrée juste après le breakout. SL classique au-delà du dernier sommet/creux, SL tactique au-dessus du dernier rebond. TP = measured move (hauteur projetée depuis le sommet le plus haut), objectif prudent un peu avant.",
+              "Setup ignoré si la tendance préalable n’est pas claire, si l’écart dépasse 30 pips, ou si une news majeure arrive.",
             ]}
           />
 
           <LessonExercice
-            description="Sur EUR/USD H1, tu vois un double top avec un premier sommet à 1.1850 et un deuxième à 1.1825. Écart : 25 pips, soit environ 0,23%. La ligne de cou est à 1.1750. Le prix clôture à 1.1745. Tu prends le setup ?"
+            description="Sur EUR/USD H1, tu vois un double top avec un premier sommet à 1.1850 et un deuxième à 1.1825. Écart : 25 pips. La ligne de cou est à 1.1750. Le prix clôture à 1.1745. Tu prends le setup ?"
             steps={[
-              "Vérifier que l’écart entre les 2 sommets reste sous la limite : 0,23% < 0,3%. OK",
+              "Vérifier que l’écart entre les 2 sommets reste sous la limite : 25 pips < 30 pips. OK",
               "Confirmer que le breakout est par clôture sous 1.1750, pas une simple mèche. OK",
               "Vérifier que la tendance haussière préalable est claire (HH/HL)",
               "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
-              "Prendre l’entrée short à 1.1745, SL au-dessus du 2ème sommet, TP measured move",
+              "Prendre l’entrée short à 1.1745, SL au-dessus du 2ème sommet, TP measured move : hauteur depuis le sommet le plus haut (1.1850 - 1.1750 = 100 pips), projection théorique à 1.1650",
             ]}
           />
 

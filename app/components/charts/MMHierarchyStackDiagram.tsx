@@ -26,9 +26,9 @@ export default function MMHierarchyStackDiagram(_props: { className?: string }) 
     return {
       key: c.key, title: c.title, decimals: 5, height: 230, candles: all.slice(from),
       series: [
-        { key: "mm200", values: m200, tone: "fib", label: "MM200", short: "200" },
-        { key: "mm50", values: m50, tone: "zone", label: "MM50", short: "50" },
-        { key: "mm20", values: m20, tone: "sky", label: "MM20", short: "20" },
+        { key: "mm200", values: m200, tone: "fib", label: "MM200" },
+        { key: "mm50", values: m50, tone: "zone", label: "MM50" },
+        { key: "mm20", values: m20, tone: "sky", label: "MM20" },
       ],
       chips: [{ label: order, tone: c.key === "ma-bull" ? "bull" : c.key === "ma-bear" ? "bear" : undefined, data: { order } }, { label: c.read }],
 

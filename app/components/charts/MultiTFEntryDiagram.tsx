@@ -32,8 +32,8 @@ export default function MultiTFEntryDiagram(_props: { locale?: "fr" | "es" | "en
         { key: "daily", title: "Daily · le biais", subtitle: "HH / HL : biais long", decimals: 5, height: 220, candles: d, markers: named(d) },
         {
           key: "h4", title: "H4 · la zone", subtitle: `Support ${p(ZONE.y1)}-${p(ZONE.y2)}, ${touches.length} touches`, decimals: 5, height: 220, candles: h4,
-          zones: [{ key: "zone", ...ZONE, label: "Zone H4", tone: "bull", kind: "zone" }],
-          markers: touches.map(({ k, i }, n) => ({ key: `t${i}`, i, price: k.l, label: String(n + 1), tone: "bull" as const, side: "below" as const })),
+          zones: [{ key: "zone", ...ZONE, label: "Zone H4", tone: "bull", kind: "zone", role: "support" }],
+          markers: touches.map(({ k, i }, n) => ({ key: `t${i}`, i, price: k.l, label: `Touche ${n + 1}`, short: `T${n + 1}`, tone: "bull" as const, side: "below" as const })),
         },
         {
           key: "m15", title: "M15 · le signal et l'entrée", subtitle: `Pin bar : bas ${p(pin.l)}, clôture ${p(pin.c)}`, decimals: 5, height: 260, candles: m15,
@@ -42,8 +42,11 @@ export default function MultiTFEntryDiagram(_props: { locale?: "fr" | "es" | "en
             { key: "entry", price: entry, from: m15.length - 1, label: `Entrée ${p(entry)}`, short: "Entrée", tone: "entry" },
             { key: "sl", price: SL, label: `SL ${p(SL)}`, short: "SL", tone: "bear", dashed: true },
           ],
-          offscale: [{ key: "tp", price: TP1, label: `TP ${p(TP1)} / ${p(TP2)} ↑`, short: "TP ↑", tone: "bull" }],
-          markers: [{ key: "pin", i: m15.length - 1, price: pin.h, label: "Pin bar", tone: "bull", side: "above" }],
+          offscale: [
+            { key: "tp1", price: TP1, label: `TP 1 ${p(TP1)} ↑`, short: "TP 1 ↑", tone: "bull" },
+            { key: "tp2", price: TP2, label: `TP 2 ${p(TP2)} ↑`, short: "TP 2 ↑", tone: "bull" },
+          ],
+          markers: [{ key: "pin", i: m15.length - 1, price: pin.h, label: "Pin bar", tone: "bull", side: "above", role: "pinbar", dir: "bull" }],
           chips: [{ label: `Risque ${pips(entry, SL, 0.0001)} pips`, tone: "bear" }, rrChip("TP 1", TP1), rrChip("TP 2", TP2)],
         },
       ]}

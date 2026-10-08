@@ -30,10 +30,10 @@ export function ScenarioZoneDiagram(_props: { className?: string; locale?: "fr" 
       caption="Le ralentissement à l'approche est un signe d'intérêt, pas un signal d'entrée : on attend l'UT inférieure."
       panels={[{
         key: "h1", title: "EUR/USD H1, biais baissier", decimals: 5, height: 280, candles: cs,
-        levels: [{ key: "sup", price: fvg.y2, to: fvg.i, label: `Ancien support ${p(fvg.y2)}`, short: "Ancien support", tone: "neutral", dashed: true }],
-        zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `Zone ${p(fvg.y1)}-${p(fvg.y2)} (FVG)`, short: "Zone + FVG", tone: "zone", kind: "fvg", src: `zone-prep-h1:${fvg.i}` }],
+        levels: [{ key: "sup", price: fvg.y2, to: fvg.i, label: `Ancien support ${p(fvg.y2)}`, short: "Ancien support", tone: "neutral", dashed: true, role: "support" }],
+        zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `Zone ${p(fvg.y1)}-${p(fvg.y2)} (FVG)`, short: "Zone + FVG", tone: "zone", kind: "fvg", src: `zone-prep-h1:${fvg.i}`, role: "fvg" }],
         markers: [
-          { key: "brk", i: fvg.i, price: cs[fvg.i].l, label: "Support cassé", tone: "bear", side: "below" },
+          { key: "brk", i: fvg.i, price: cs[fvg.i].c, label: "Clôture sous le support", short: "Support cassé", tone: "bear", side: "below", role: "close" },
           { key: "slow", i: cs.length - 1, price: cs[cs.length - 1].l, label: "Bougies de plus en plus courtes", short: "Ralentissement", tone: "zone", side: "below" },
         ],
         chips: [

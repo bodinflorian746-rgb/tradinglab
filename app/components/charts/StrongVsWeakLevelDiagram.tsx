@@ -17,8 +17,8 @@ function panel(key: "sr-strong" | "sr-weak", title: string): LCPanel {
   return {
     key, title, decimals: 0, height: 220, candles: cs,
     subtitle: `${touches.length} touches · rebonds de ${usd(Math.min(...rebounds))} à ${usd(Math.max(...rebounds))}`,
-    zones: [{ key: "sup", ...Z, label: `Support ${usd(4500)}`, short: "Support", tone: "zone" }],
-    markers: touches.map((i, n) => ({ key: `t${n}`, i, price: cs[i].l, label: `${n + 1}`, tone: "neutral" as const, side: "below" as const })),
+    zones: [{ key: "sup", ...Z, label: `Support ${usd(4500)}`, short: "Support", tone: "zone", role: "support" }],
+    markers: touches.map((i, n) => ({ key: `t${n}`, i, price: cs[i].l, label: `Touche ${n + 1}`, short: `T${n + 1}`, tone: "neutral" as const, side: "below" as const })),
   };
 }
 

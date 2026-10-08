@@ -28,7 +28,7 @@ export default function EngulfingSetupDiagram(_props: { locale?: "fr" | "es" | "
         decimals: 1, height: 320, candles,
         zones: [{ key: "fib", y1: f618, y2: f50, from: highI, label: "Fibonacci 0.5-0.618", short: "Fibo 0.5-0.618", tone: "fib", kind: "fib" }],
         levels: t.levels,
-        markers: [{ key: "eng", i: n - 1, price: k2.l, label: "Engulfing", tone: "bull", side: "below" }],
+        markers: [{ key: "eng", i: n - 1, price: k2.l, label: "Engulfing", tone: "bull", side: "below", role: "engulfing" }],
         chips: [{ label: `Corps : ${usd(body(k1))} puis ${usd(body(k2))}` }, ...t.chips],
       }]}
       caption="La 2e bougie ouvre à la clôture de la 1re et clôture au-dessus de son ouverture : son corps englobe entièrement le corps rouge."

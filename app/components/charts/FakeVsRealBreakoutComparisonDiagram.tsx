@@ -19,7 +19,9 @@ function panel(key: "breakout-real" | "breakout-fake"): LCPanel {
     subtitle: real ? `Clôture ${usd(k.c)} au-dessus du niveau, puis follow-through` : `Mèche ${usd(k.h)}, clôture ${usd(k.c)} sous le niveau, retournement`,
     decimals: 1, height: 260, candles: cs,
     levels: [{ key: "res", price: LEVEL, label: `Résistance ${usd(LEVEL)}`, short: "Résistance", tone: "bear", dashed: true }],
-    markers: [{ key: "b", i: b, price: real ? k.l : k.h, label: real ? "Clôture au-dessus" : "Mèche seule", tone: real ? "bull" : "bear", side: real ? "below" : "above" }],
+    markers: [real
+      ? { key: "b", i: b, price: k.c, label: "Clôture au-dessus", tone: "bull", side: "below", role: "close" }
+      : { key: "b", i: b, price: k.h, label: "Mèche seule", tone: "bear", side: "above", role: "sweep", ref: LEVEL, dir: "bear" }],
   };
 }
 

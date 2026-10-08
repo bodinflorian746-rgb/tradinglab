@@ -29,11 +29,11 @@ export function SingleTimeframeTrapDiagram(_props: { className?: string; locale?
         },
         {
           key: "m15", title: "EUR/USD M15 : le breakout local", decimals: 5, height: 220, candles: m,
-          levels: [{ key: "lvl", price: 1.176, to: brk, label: `Niveau local ${p(1.176)}`, short: p(1.176), tone: "neutral", dashed: true }],
+          levels: [{ key: "lvl", price: 1.176, to: brk, label: `Niveau local ${p(1.176)}`, short: "Niveau local", tone: "neutral", dashed: true }],
           markers: [
-            { key: "brk", i: brk, price: m[brk].l, label: "Breakout haussier", short: "Breakout", tone: "bull", side: "below" },
-            { key: "top", i: topAt, price: top, label: p(top), tone: "bull", side: "above" },
-            { key: "low", i: m.length - 1, price: low, label: p(low), tone: "bear", side: "below" },
+            { key: "brk", i: brk, price: m[brk].c, label: "Breakout haussier : clôture au-dessus", short: "Breakout", tone: "bull", side: "below", role: "close" },
+            { key: "top", i: topAt, price: top, label: `Sommet ${p(top)}`, short: "Sommet", tone: "bull", side: "above", role: "high" },
+            { key: "low", i: m.length - 1, price: low, label: `Rechute vers ${p(low)}`, short: "Rechute", tone: "bear", side: "below" },
           ],
           chips: [{ label: "« Achat évident » sur M15 = simple retracement sur Daily", tone: "bear" }],
         },

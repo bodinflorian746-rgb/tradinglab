@@ -23,12 +23,12 @@ export default function PinBarFailureDiagram(_props: { className?: string; local
         levels: [
           { key: "support", price: 4500, to: bo, label: "Support 4 500$", short: "Support", tone: "bull", dashed: true, faint: true },
           { key: "entry", price: ENTRY, from: pin, label: `Entrée ${usd(ENTRY)}`, short: "Entrée", tone: "entry" },
-          { key: "sl", price: SL, from: pin, label: `SL ${usd(SL)}`, short: "SL", tone: "bear", dashed: true },
+          { key: "sl", price: SL, from: pin, to: hit, label: `SL ${usd(SL)} : touché`, short: "SL touché", tone: "bear", dashed: true },
         ],
         markers: [
-          { key: "pin", i: pin, price: cs[pin].h, label: "Pin bar", tone: "bull", side: "above" },
-          { key: "bo", i: bo, price: cs[bo].h, label: "Support cassé", tone: "bear", side: "above" },
-          { key: "hit", i: hit, price: SL, label: "SL touché", tone: "bear", side: "below", dot: true },
+          { key: "pin", i: pin, price: cs[pin].h, label: "Pin bar", tone: "bull", side: "above", role: "pinbar", dir: "bull" },
+          { key: "bo", i: bo, price: cs[bo].c, label: "Clôture sous le support", short: "Support cassé", tone: "bear", side: "above", role: "close" },
+
         ],
         chips: [{ label: `Perte : ${usd(ENTRY - SL)} = −1R, comme prévu`, tone: "bear" }],
       }]}

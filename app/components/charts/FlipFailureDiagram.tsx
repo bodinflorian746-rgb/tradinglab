@@ -29,8 +29,8 @@ export default function FlipFailureDiagram(_props: { className?: string; locale?
           { key: "sl", price: SL, from: entryAt, label: `SL ${p(SL)}`, short: "SL", tone: "bear", dashed: true },
         ],
         markers: [
-          { key: "brk", i: brk, price: cs[brk].h, label: "Breakout", tone: "bull", side: "above" },
-          { key: "back", i: back, price: cs[back].h, label: `Retour sous ${p(LEVEL)} en ${back - brk} bougies`, short: "Retour", tone: "bear", side: "above" },
+          { key: "brk", i: brk, price: cs[brk].c, label: `Breakout : clôture ${p(cs[brk].c)}`, short: "Breakout", tone: "bull", side: "above", role: "close" },
+          { key: "back", i: back, price: cs[back].c, label: `Clôture sous ${p(LEVEL)} en ${back - brk} bougies`, short: "Retour", tone: "bear", side: "above", role: "close" },
           { key: "stop", i: stop, price: cs[stop].l, label: "SL touché", tone: "bear", side: "below" },
         ],
         chips: [{ label: `Perte bornée : ${pips(ENTRY, SL, 0.0001)} pips`, tone: "bear" }],

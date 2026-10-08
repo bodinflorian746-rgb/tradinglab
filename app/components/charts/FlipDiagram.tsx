@@ -23,11 +23,11 @@ export default function FlipDiagram(_props: { className?: string; locale?: "fr" 
       caption="Breakout franc, pas de réintégration, retest avec signal de rejet : la zone a inversé son rôle."
       panels={[{
         key: "h4", title: "EUR/USD H4", decimals: 5, height: 290, candles: cs,
-        levels: [{ key: "lvl", price: LEVEL, label: `Résistance → support ${p(LEVEL)}`, short: "Zone 1.1850", tone: "zone" }, ...t.levels],
+        levels: [{ key: "lvl", price: LEVEL, label: `Résistance → support ${p(LEVEL)}`, short: "Niveau inversé", tone: "zone" }, ...t.levels],
         offscale: t.offscale,
         markers: [
-          { key: "brk", i: brk, price: cs[brk].h, label: `Breakout ${p(cs[brk].c)} (+${pips(cs[brk].c, LEVEL, 0.0001)} pips)`, short: "Breakout", tone: "bull", side: "above" },
-          { key: "pin", i: pin, price: cs[pin].l, label: `Retest : pin bar ${p(cs[pin].l)}`, short: "Pin bar", tone: "bull", side: "below" },
+          { key: "brk", i: brk, price: cs[brk].c, label: `Breakout : clôture ${p(cs[brk].c)} (+${pips(cs[brk].c, LEVEL, 0.0001)} pips)`, short: "Breakout", tone: "bull", side: "above", role: "close" },
+          { key: "pin", i: pin, price: cs[pin].l, label: `Retest : pin bar ${p(cs[pin].l)}`, short: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" },
         ],
         chips: t.chips,
       }]}

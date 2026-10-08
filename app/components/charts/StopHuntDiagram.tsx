@@ -21,10 +21,10 @@ export default function StopHuntDiagram(_props: { className?: string; locale?: "
       panels={[{
         key: "h1", title: "XAU/USD H1", decimals: 0, height: 280, candles: cs,
         zones: [{ key: "stops", y1: RES, y2: 4745, from: k - 4, label: `Stops ${usd(RES)} → ${usd(4745)}`, short: "Stops", tone: "bear" }],
-        levels: [{ key: "res", price: RES, to: k, label: `Résistance ${usd(RES)}`, short: "Résistance", tone: "zone" }],
+        levels: [{ key: "res", price: RES, to: k, label: `Résistance ${usd(RES)}`, short: "Résistance", tone: "zone", role: "resistance" }],
         markers: [
-          { key: "k", i: k, price: cs[k].h, label: `Mèche ${usd(cs[k].h)}, clôture ${usd(cs[k].c)}`, short: "Mèche", tone: "bear", side: "above" },
-          { key: "end", i: end, price: cs[end].c, label: usd(cs[end].c), tone: "bear", side: "below" },
+          { key: "k", i: k, price: cs[k].h, label: `Mèche ${usd(cs[k].h)}, clôture ${usd(cs[k].c)}`, short: "Mèche", tone: "bear", side: "above", role: "sweep", ref: RES, dir: "bear" },
+          { key: "end", i: end, price: cs[end].c, label: `Continuation → ${usd(cs[end].c)}`, short: "Continuation", tone: "bear", side: "below", role: "close" },
         ],
       }]}
     />

@@ -42,7 +42,7 @@ export default function TrendlineWrongDrawingDiagram(_props: { className?: strin
         { key: "t", i1: a.index, p1: a.price, i2: breakI, p2: lineB(breakI), tone: "bull" },
         { key: "t2", i1: breakI, p1: lineB(breakI), i2: lastB, p2: lineB(lastB), tone: "bear", dashed: true },
       ],
-      markers: [{ key: "brk", i: breakI, price: brk[breakI].l, label: "Breakout", tone: "bear", side: "below" }],
+      markers: [{ key: "brk", i: breakI, price: brk[breakI].c, label: "Clôture sous la trendline", short: "Breakout", tone: "bear", side: "below", role: "close" }],
     },
   ];
   return <LessonChart id="TrendlineWrongDrawingDiagram" title="Erreurs de tracé fréquentes" panels={panels} rows={[2, 2]} />;

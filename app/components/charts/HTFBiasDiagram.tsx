@@ -23,7 +23,7 @@ export function HTFBiasDiagram(_props: { className?: string; locale?: "fr" | "es
         levels: [{ key: "res", price: RES, label: `Résistance ${p(RES)}`, short: "Résistance", tone: "zone" }],
         markers: [
           ...named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name!, tone: "bear" as const, side: q.side === "h" ? "above" as const : "below" as const })),
-          { key: "now", i: last, price: cs[last].c, label: `Prix actuel ${p(cs[last].c)}`, short: p(cs[last].c), tone: "entry", side: "below" },
+          { key: "now", i: last, price: cs[last].c, label: `Prix actuel ${p(cs[last].c)}`, short: "Prix actuel", tone: "entry", side: "below", role: "close" },
         ],
         chips: [{ label: "Biais baissier : priorité aux ventes", tone: "bear" }],
       }]}

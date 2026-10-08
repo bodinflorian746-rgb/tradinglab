@@ -29,8 +29,8 @@ export default function InvalidationDiagram(_props: { className?: string; locale
           { key: "sl", price: SL, from: entryAt, label: `SL ${p(SL)}`, short: "SL", tone: "bear", dashed: true },
         ],
         markers: [
-          { key: "low", i: last - 1, price: low, label: p(low), tone: "neutral", side: "below" },
-          { key: "cut", i: last, price: cs[last].h, label: `Re-clôture ${p(cut)} : coupe`, short: "Coupe", tone: "bear", side: "above" },
+          { key: "low", i: cs.findIndex((k, i) => i >= entryAt && k.l === low), price: low, label: `Plus bas ${p(low)}`, short: "Plus bas", tone: "neutral", side: "below", role: "low" },
+          { key: "cut", i: last, price: cut, label: `Re-clôture ${p(cut)} : coupe`, short: "Coupe", tone: "bear", side: "above", role: "close" },
         ],
         chips: [
           { label: "Critères 1 et 2 allumés", tone: "bear" },

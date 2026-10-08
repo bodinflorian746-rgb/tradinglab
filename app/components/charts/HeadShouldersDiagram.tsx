@@ -20,10 +20,10 @@ function hs(cs: Candle[], side: "h" | "l", key: string, title: string, decimals:
     key, title, decimals, height: 230, candles: cs,
     levels: [{ key: "neck", price: Math.round(neck), from: necks[0].index, label: `Ligne de cou ≈ ${usd(neck)}`, short: "Ligne de cou", tone: "zone" }],
     markers: [
-      { key: "ls", i: ls.index, price: ls.price, label: `Épaule ${usd(ls.price)}`, short: "Épaule", tone, side: at },
-      { key: "head", i: head.index, price: head.price, label: `Tête ${usd(head.price)}`, short: "Tête", tone, side: at },
-      { key: "rs", i: rs.index, price: rs.price, label: `Épaule ${usd(rs.price)}`, short: "Épaule", tone, side: at },
-      { key: "brk", i: last, price: side === "h" ? cs[last].l : cs[last].h, label: `Clôture ${usd(cs[last].c)}`, short: "Clôture", tone, side: side === "h" ? "below" : "above" },
+      { key: "ls", i: ls.index, price: ls.price, label: `Épaule ${usd(ls.price)}`, short: "Épaule", tone, side: at, role: side === "h" ? "swing-high" as const : "swing-low" as const },
+      { key: "head", i: head.index, price: head.price, label: `Tête ${usd(head.price)}`, short: "Tête", tone, side: at, role: side === "h" ? "swing-high" as const : "swing-low" as const },
+      { key: "rs", i: rs.index, price: rs.price, label: `Épaule ${usd(rs.price)}`, short: "Épaule", tone, side: at, role: side === "h" ? "swing-high" as const : "swing-low" as const },
+      { key: "brk", i: last, price: cs[last].c, label: `Clôture ${usd(cs[last].c)}`, short: "Clôture", tone, side: side === "h" ? "below" : "above", role: "close" },
     ],
   };
 }

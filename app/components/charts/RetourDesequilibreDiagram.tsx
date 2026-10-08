@@ -19,10 +19,10 @@ export function RetourDesequilibreDiagram(_props: { className?: string; locale?:
       caption="Le retour dans le déséquilibre a précédé la continuation baissière : c'est une mitigation."
       panels={[{
         key: "h1", title: "XAU/USD H1", decimals: 0, height: 280, candles: cs,
-        zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `retour-deseq-xau:${fvg.i}` }],
+        zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `retour-deseq-xau:${fvg.i}`, role: "fvg" }],
         markers: [
-          { key: "start", i: fvg.i - 1, price: cs[fvg.i - 1].h, label: `Impulsion depuis ${usd(cs[fvg.i - 1].h)}`, short: usd(cs[fvg.i - 1].h), tone: "bear", side: "above" },
-          { key: "touch", i: touch, price: cs[touch].h, label: "Mèche dans le FVG, rejet", short: "Rejet", tone: "bear", side: "above" },
+          { key: "start", i: fvg.i - 1, price: cs[fvg.i - 1].h, label: `Impulsion depuis ${usd(cs[fvg.i - 1].h)}`, short: "Départ", tone: "bear", side: "above", role: "high" },
+          { key: "touch", i: touch, price: cs[touch].h, label: "Mèche dans le FVG, rejet", short: "Rejet", tone: "bear", side: "above", role: "rejet", ref: "fvg", dir: "bear" },
         ],
       }]}
     />

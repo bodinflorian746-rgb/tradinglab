@@ -19,8 +19,8 @@ export default function PinBarSetupDiagram(_props: { locale?: "fr" | "es" | "en"
       panels={[{
         key: "h4", subtitle: "XAU/USD H4 — tendance haussière, support touché 3 fois en 6 semaines",
         decimals: 1, height: 320, candles,
-        levels: [{ key: "support", price: 4500, label: "Support 4 500$", short: "Support", tone: "bull", dashed: true, faint: true }, ...t.levels],
-        markers: [{ key: "pin", i: pin, price: k.l, label: "Pin bar", tone: "bull", side: "below" }],
+        levels: [{ key: "support", price: 4500, label: "Support 4 500$", short: "Support", tone: "bull", dashed: true, faint: true, role: "support" }, ...t.levels],
+        markers: [{ key: "pin", i: pin, price: k.l, label: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" }],
         chips: t.chips,
       }]}
       caption="Entrée à la clôture de la pin bar, SL sous sa mèche basse avec une marge."
