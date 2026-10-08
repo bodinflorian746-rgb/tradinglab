@@ -165,18 +165,18 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le réflexe naturel d&apos;un trader débutant face à un breakout de résistance, c&apos;est d&apos;acheter le breakout. Le réflexe ICT, c&apos;est de se demander si ce breakout est tenu ou s&apos;il est une simple manipulation. Un breakout qui ne se confirme pas, c&apos;est-à-dire qui n&apos;est pas suivie d&apos;une continuation franche dans la nouvelle direction, est presque toujours un piège. Le prix revient sous la résistance, et tous ceux qui ont acheté le breakout se retrouvent en perte instantanément.
+              Le réflexe naturel d&apos;un trader débutant face à un breakout de résistance, c&apos;est d&apos;acheter le breakout. Le réflexe ICT, c&apos;est de se demander si ce breakout est tenu ou s&apos;il est une simple manipulation. Un breakout qui ne se confirme pas, c&apos;est-à-dire qui n&apos;est pas suivi d&apos;une continuation franche dans la nouvelle direction, est presque toujours un piège. Le prix revient sous la résistance, et tous ceux qui ont acheté le breakout se retrouvent en perte instantanément.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD M15 : la résistance est à 4 680 $, testée plusieurs fois. Une bougie casse au-dessus, atteint 4 695 $, les traders breakout entrent en achat avec leur SL sous 4 680. Quelques bougies plus tard, le prix réintègre sous 4 680, descend rapidement vers 4 650. Le breakout n&apos;était pas tenue, elle servait juste à déclencher les ordres breakout pour alimenter la descente.
+                XAU/USD M15 : la résistance est à 4 680 $, testée plusieurs fois. Une bougie casse au-dessus, atteint 4 695 $, les traders breakout entrent en achat avec leur SL sous 4 680. Quelques bougies plus tard, le prix réintègre sous 4 680, descend rapidement vers 4 650. Le breakout n&apos;était pas tenu, il servait juste à déclencher les ordres breakout pour alimenter la descente.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Un breakout n&apos;a de valeur que s&apos;il est tenu et suivie d&apos;une continuation</li>
+              <li>- Un breakout n&apos;a de valeur que s&apos;il est tenu et suivi d&apos;une continuation</li>
               <li>- Réintégration immédiate sous le niveau cassé = piège, on inverse mentalement le scénario</li>
               <li>- Le breakout naïf est l&apos;un des setups les plus coûteux pour les traders retail</li>
               <li>- L&apos;ICT ne trade pas le breakout, il trade ce qui se passe APRÈS</li>
@@ -198,7 +198,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Graphique M15 EUR/USD : le prix vient d&apos;imprimer une mèche au-dessus de 1.1780 (sweep). Sur la bougie suivante, il referme sous 1.1780 (réintégration). Sur la bougie d&apos;après, gros corps baissier de 35 pts (impulsion). C&apos;est cette séquence qui autorise un short, entrée sur la cassure du dernier creux local, SL juste au-dessus du sommet du sweep, TP vers la prochaine zone de liquidité en aval.
+                Graphique M15 EUR/USD : le prix vient d&apos;imprimer une mèche au-dessus de 1.1780 (sweep) et la bougie referme sous 1.1780 (réintégration). Sur la bougie suivante, gros corps baissier de 35 pts (impulsion). C&apos;est cette séquence qui autorise un short, entrée sur la cassure du dernier creux local, SL juste au-dessus du sommet du sweep, TP vers la prochaine zone de liquidité en aval.
               </p>
             </div>
 

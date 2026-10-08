@@ -7,7 +7,7 @@ import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
 import { LessonQuiz } from "@/app/components/LessonQuiz";
 import { ICTSequenceTimelineDiagram } from "@/app/components/charts/ICTSequenceTimelineDiagram";
-import { ICTLiquidityPrepDiagram } from "@/app/components/charts/ICTLiquidityPrepDiagram";
+import { IctLiquidityGrabDiagram } from "@/app/components/charts/IctLiquidityGrabDiagram";
 import { ICTDisplacementSetupDiagram } from "@/app/components/charts/ICTDisplacementSetupDiagram";
 import { ICTTimingDiagram } from "@/app/components/charts/ICTTimingDiagram";
 
@@ -156,7 +156,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">La liquidité prépare le mouvement</h2>
 
             <div className="my-8">
-              <ICTLiquidityPrepDiagram />
+              <IctLiquidityGrabDiagram variant="attente" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
