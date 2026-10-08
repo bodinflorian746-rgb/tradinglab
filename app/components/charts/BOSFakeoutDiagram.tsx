@@ -18,7 +18,9 @@ function panel(key: "bos-fake" | "bos-eur", title: string, fake: boolean): LCPan
     key, title, decimals: 5, height: 220, candles: cs,
     subtitle: fake ? `Mèche à ${p(cs[k].h)}, clôture ${p(cs[k].c)}` : `Clôture ${p(cs[k].c)}, pas de réintégration`,
     levels: [{ key: "hh", price: HH, from: hh.index, label: `HH ${p(HH)}`, short: "HH", tone: "zone", dashed: true }],
-    markers: [{ key: "k", i: k, price: cs[k].h, label: fake ? "Faux BOS" : "BOS", tone: fake ? "bear" : "bull", side: "above" }],
+    markers: [fake
+      ? { key: "k", i: k, price: cs[k].h, label: "Faux BOS : mèche seule", short: "Faux BOS", tone: "bear", side: "above", role: "sweep", ref: HH, dir: "bear" }
+      : { key: "k", i: k, price: cs[k].c, label: "BOS : clôture au-dessus", short: "BOS", tone: "bull", side: "above", role: "bos", ref: hh.index, dir: "bull" }],
   };
 }
 

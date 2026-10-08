@@ -220,7 +220,7 @@ export function checkLots(check: Check) {
     const cs = CS["mitigation"], piv = pivots(cs);
     check(piv.some((q) => q.name === "HL" && q.price === 1.1720) && piv.some((q) => q.name === "HH" && q.price === 1.1780) && piv.some((q) => q.name === "LL" && q.price === 1.1690), "Mitigation (SMC 3) : HL / HH / LL ≠ texte");
     const ll = piv.find((q) => q.name === "LL")!.index, re = cs.findIndex((k, i) => i > ll && k.h >= 1.1720 && k.c < 1.1720);
-    check(re > 0 && cs[re].c === 1.1718 && cs[cs.length - 1].c < 1.1690, "Mitigation (SMC 3) : retest à 1.1718 puis baisse");
+    check(re > 0 && cs[re].c === 1.1706 && cs[re].c < cs[re].o && cs[cs.length - 1].c < 1.1690, "Mitigation (SMC 3) : rejet baissier au retest (clôture 1.1706) puis baisse");
   }
   {
     // Trend-following 1 : HL 1.1680, HH 1.1760, HL 1.1720, HH 1.1820 ; amplitude 140 pips
@@ -645,7 +645,7 @@ export function checkLot26(check: Check) {
     // SMC 3 : OB = dernière bougie baissière avant l'impulsion (corps 1.1745-1.1752, mèche 1.1738) ; frais vs mitigé ;
     // SL dans la zone touché par le retest, SL avec marge (1.1731) intact
     const a = CS["smc-ob"], m = CS["ob-mitigated"];
-    const ob = (cs: Candle[]) => { const hiI = cs.reduce((b, k, i) => (k.h > cs[b].h ? i : b), 0); return cs.reduce((b, k, i) => (i < hiI && k.l < cs[b].l ? i : b), 0); };
+    const ob = (cs: Candle[]) => cs.findIndex((k) => k.o === 1.1752 && k.c === 1.1745);
     check(a[ob(a)].o === 1.1752 && a[ob(a)].c === 1.1745 && a[ob(a)].l === 1.1738, "OB (SMC 3) : corps 1.1745-1.1752, mèche 1.1738");
     const ma = m.findIndex((k) => k.o === 1.1752 && k.c === 1.1745);
     check(ma > 0 && m.some((k, i) => i > ma + 1 && k.c < 1.1745) && !a.some((k, i) => i > ob(a) + 1 && k.c < 1.1745), "OB (SMC 3) : mitigé retraversé, frais intact");

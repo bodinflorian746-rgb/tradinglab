@@ -26,7 +26,7 @@ export function CHoCHDiagram(_props: { trend?: "bullish" | "bearish"; className?
         levels: [{ key: "hl", price: hl.price, from: hl.index, label: `Dernier HL ${p(hl.price)}`, short: "Dernier HL", tone: "zone", dashed: true }],
         markers: [
           ...named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name!, tone: "bull" as const, side: q.side === "h" ? "above" as const : "below" as const })),
-          { key: "choch", i: choch, price: cs[choch].l, label: "CHoCH : clôture sous le HL", short: "CHoCH", tone: "bear", side: "below" },
+          { key: "choch", i: choch, price: cs[choch].c, label: "CHoCH : clôture sous le HL", short: "CHoCH", tone: "bear", side: "below", role: "choch", ref: hl.index, dir: "bear" },
         ],
       }]}
     />

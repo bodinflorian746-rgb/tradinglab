@@ -16,10 +16,10 @@ function panel(key: "fvg-bull" | "fvg-bear", side: "bull" | "bear", title: strin
   const back = cs.findIndex((k, i) => i > g.i + 2 && (up ? k.l <= g.y2 : k.h >= g.y1));
   return {
     key, title, decimals: 5, height: 220, candles: cs,
-    zones: [{ key: "fvg", y1: g.y1, y2: g.y2, from: g.i - 1, label: `FVG ${p(g.y1)}-${p(g.y2)}`, short: "FVG", tone: up ? "bull" : "bear", kind: "fvg", src: `${key}:${g.i}` }],
+    zones: [{ key: "fvg", y1: g.y1, y2: g.y2, from: g.i - 1, label: `FVG ${p(g.y1)}-${p(g.y2)}`, short: "FVG", tone: up ? "bull" : "bear", kind: "fvg", src: `${key}:${g.i}`, role: "fvg" }],
     markers: [
       { key: "b1", i: g.i - 1, price: up ? cs[g.i - 1].l : cs[g.i - 1].h, label: "B1", tone: "neutral", side: up ? "below" : "above" },
-      { key: "b2", i: g.i, price: up ? cs[g.i].h : cs[g.i].l, label: "B2", tone: up ? "bull" : "bear", side: up ? "above" : "below" },
+      { key: "b2", i: g.i, price: up ? cs[g.i].h : cs[g.i].l, label: "B2 : impulsion", short: "B2", tone: up ? "bull" : "bear", side: up ? "above" : "below", role: "impulse", span: [g.i, g.i] },
       { key: "b3", i: g.i + 1, price: up ? cs[g.i + 1].h : cs[g.i + 1].l, label: "B3", tone: "neutral", side: up ? "above" : "below" },
       { key: "back", i: back, price: up ? cs[back].l : cs[back].h, label: "Retour dans le gap", short: "Retour", tone: "zone", side: up ? "below" : "above" },
     ],

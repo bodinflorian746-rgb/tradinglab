@@ -1,7 +1,7 @@
 // SMC 4 bloc 2 et SMC 5 bloc 2 — le sweep (EUR/USD H4, plan de SMC 4) : accumulation entre
 // 1.1700 et 1.1750, equal highs 1.1760 (liquidité buy-side) ; une bougie perce 1.1760 (mèche
-// 1.1765) et clôture à 1.1745 : réintégration, puis displacement baissier. Sommets, mèche et
-// clôture lus sur les bougies. Bougies : scenarios.ts (« smc4-sweep », jusqu'au displacement).
+// 1.1765) et clôture à 1.1745 : réintégration, puis impulsion baissière. Sommets, mèche et
+// clôture lus sur les bougies. Bougies : scenarios.ts (« smc4-sweep », jusqu'à l'impulsion opposée).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { fmtPrice } from "@/lib/lessons/chart-analysis";
@@ -26,8 +26,8 @@ export function LiquidityGrabDiagram(_props: { className?: string; locale?: "fr"
         levels: [{ key: "eqh", price: EQH, from: tops[0], label: `Equal highs ${p(EQH)} (BSL)`, short: "BSL", tone: "zone", dashed: true }],
         markers: [
           ...tops.map((i, n) => ({ key: `t${n}`, i, price: EQH, label: "EQH", tone: "zone" as const, side: "above" as const })),
-          { key: "sweep", i: sweep, price: all[sweep].h, label: `Sweep ${p(all[sweep].h)}, clôture ${p(all[sweep].c)}`, short: "Sweep", tone: "bear", side: "above" },
-          { key: "disp", i: sweep + 1, price: all[sweep + 1].l, label: "Displacement", tone: "bear", side: "below" },
+          { key: "sweep", i: sweep, price: all[sweep].h, label: `Sweep ${p(all[sweep].h)}`, short: "Sweep", tone: "bear", side: "above", role: "sweep", ref: EQH, dir: "bear" },
+          { key: "imp", i: sweep + 1, price: all[sweep + 1].l, label: "Impulsion opposée", short: "Impulsion", tone: "bear", side: "below", role: "impulse", span: [sweep + 1, sweep + 1] },
         ],
       }]}
     />

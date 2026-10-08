@@ -240,7 +240,7 @@ export default function ContentFr() {
           {/* Bloc 10 — PLAN DE TRADE EUR/USD H4 */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : OB bullish EUR/USD H4</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD en tendance haussière H4 confirmée. Prix au-dessus MM200 Daily (1.1500) et MM50 Daily (1.1700). Impulsion haussière de 4 bougies depuis 1.1740 jusqu&apos;à 1.1830, validée par un BOS au-dessus du HH précédent à 1.1820. Bougie opposée précédant l&apos;impulsion : corps 1.1780 (open) / 1.1752 (close), mèche basse 1.1745. Zone OB : 1.1752-1.1780, OB frais (5 bougies depuis formation), aligné Daily, non mitigé.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD en tendance haussière H4 confirmée. Prix au-dessus MM200 Daily (1.1500) et MM50 Daily (1.1700). Impulsion haussière de 4 bougies depuis 1.1745 (mèche basse de l&apos;OB) jusqu&apos;à 1.1835, validée par un BOS au-dessus du HH précédent à 1.1820. Bougie opposée précédant l&apos;impulsion : corps 1.1780 (open) / 1.1752 (close), mèche basse 1.1745. Zone OB : 1.1752-1.1780, OB frais (5 bougies depuis formation), aligné Daily, non mitigé.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>

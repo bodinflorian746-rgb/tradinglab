@@ -47,7 +47,7 @@
 .tsx-v2 .lc-frame {
   position: relative;
   width: 100%;
-  height: clamp(200px, 64vw, var(--lc-h, 280px));
+  height: clamp(220px, 78vw, var(--lc-h, 280px));
   border-radius: 14px;
   overflow: hidden;
   background: radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.035), transparent 60%), #06090d;

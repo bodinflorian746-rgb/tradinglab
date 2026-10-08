@@ -48,12 +48,7 @@ function ContentFr() {
       </section>
 
       {/* ── Schéma visuel ── */}
-      <div className="border border-zinc-800 rounded-2xl p-5 space-y-3">
-        <div className="grid grid-cols-2 gap-3">
-          <MarketStructureDiagram trend="bullish" />
-          <MarketStructureDiagram trend="bearish" />
-        </div>
-      </div>
+      <MarketStructureDiagram />
 
       {/* ── BOS ── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

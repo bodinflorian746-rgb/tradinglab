@@ -24,6 +24,38 @@ import { fmtPrice, type Candle, type PivotName } from "@/lib/lessons/chart-analy
 
 export type LCTone = "bull" | "bear" | "entry" | "zone" | "fib" | "neutral" | "sky";
 
+/** Notion dessinée, vérifiée sur les données par l'audit (scripts/audit-lecons, règles par notion) :
+ *  - repères : close (sur la clôture), high / low (extrême de la bougie), swing-high / swing-low (vrai pivot,
+ *    jamais au bord), bos / choch (ref = indice du swing cassé), sweep (ref = niveau balayé), rejet (ref = clé
+ *    de la zone), engulfing, pinbar, impulse / displacement (span = [première, dernière bougie]) ;
+ *  - zones : ob, fvg (src), support / resistance / range (au moins deux touches), confluence (ref = clés des
+ *    niveaux réunis, séparées par des virgules) ;
+ *  - niveaux : bos / choch (ref = indice du swing cassé, to = bougie qui le casse en clôture), support /
+ *    resistance / range-high / range-low (au moins deux touches), fib (ref = « i1:i2:ratio »,
+ *    swing de i1 à i2) ;
+ *  - segments : dt-height / db-height (ref = « i1,i2 » des deux sommets / creux ; de l'extrême à la ligne de cou). */
+export type LCRole =
+  | "close" | "high" | "low" | "swing-high" | "swing-low" | "bos" | "choch" | "sweep" | "rejet"
+  | "engulfing" | "pinbar" | "impulse" | "displacement" | "ob" | "fvg" | "support" | "resistance"
+  | "range" | "range-high" | "range-low" | "confluence" | "fib" | "dt-height" | "db-height";
+
+/** Attributs d'audit d'une notion */
+export interface LCSemantic {
+  role?: LCRole;
+  /** Référence de la règle (indice du swing, niveau balayé, clé de zone, « i1:i2:ratio »…) */
+  ref?: string | number;
+  /** Première et dernière bougie de la notion (impulsion, displacement) */
+  span?: [number, number];
+  /** Sens de la notion */
+  dir?: "bull" | "bear";
+}
+const sem = (o: LCSemantic) => ({
+  "data-role": o.role,
+  "data-ref": o.ref === undefined ? undefined : String(o.ref),
+  "data-span": o.span ? o.span.join(",") : undefined,
+  "data-dir": o.dir,
+});
+
 const TONE: Record<LCTone, string> = {
   bull: "#10b981",
   bear: "#ef4444",
@@ -35,7 +67,7 @@ const TONE: Record<LCTone, string> = {
 };
 
 /** Niveau horizontal (entrée, stop, objectif, support…). */
-export interface LCLevel {
+export interface LCLevel extends LCSemantic {
   key: string;
   price: number;
   /** Étiquette dans la colonne de droite ; sans étiquette : trait discret */
@@ -51,7 +83,7 @@ export interface LCLevel {
 }
 
 /** Zone de prix (Order Block, FVG, zone de confluence…). */
-export interface LCZone {
+export interface LCZone extends LCSemantic {
   key: string;
   y1: number;
   y2: number;
@@ -67,7 +99,7 @@ export interface LCZone {
 }
 
 /** Repère accroché à un point (pivot, signal, publication…). */
-export interface LCMarker {
+export interface LCMarker extends LCSemantic {
   key: string;
   /** Indice (fractionnaire possible sur une ligne) */
   i: number;
@@ -82,7 +114,7 @@ export interface LCMarker {
 }
 
 /** Segment libre (ligne de cou, mesure, flèche). */
-export interface LCSegment {
+export interface LCSegment extends LCSemantic {
   key: string;
   i1: number;
   p1: number;
@@ -284,42 +316,69 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
     const tagX = W - padX - (colW - 12);
     const boxes: Box[] = tags.map((t) => ({ x: tagX, y: t.y - TAG_H / 2, w: colW - 12, h: TAG_H }));
 
-    // Obstacles des repères : bougies (mèches comprises) et ligne de prix (points tous les 3 px)
+    const levelX1 = (l: { from?: number }) => (l.from !== undefined ? xOf(l.from) - slot / 2 : plotL);
+    const levelX2 = (l: { to?: number }) => (l.to !== undefined ? xOf(l.to) + slot / 2 : plotR);
+
+    // Obstacles des repères : tout ce qui est dessiné — bougies (mèches comprises), ligne de prix,
+    // zones, niveaux, segments, moyennes et traits de liaison de la colonne (points tous les 3 px)
     const drawn: Box[] = [];
-    p.candles?.forEach((c, i) => drawn.push({ x: xOf(i) - bodyW / 2 - 2, y: toY(c.h) - 2, w: bodyW + 4, h: toY(c.l) - toY(c.h) + 4 }));
-    p.line?.forEach((v, i) => {
-      if (!i) return;
-      const x0 = xOf(i - 1), y0 = toY(p.line![i - 1]), x1 = xOf(i), y1 = toY(v);
+    const trace = (x0: number, y0: number, x1: number, y1: number) => {
       const steps = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 3));
       for (let s = 0; s <= steps; s++) drawn.push({ x: x0 + ((x1 - x0) * s) / steps - 2, y: y0 + ((y1 - y0) * s) / steps - 2, w: 4, h: 4 });
+    };
+    p.candles?.forEach((c, i) => drawn.push({ x: xOf(i) - bodyW / 2 - 2, y: toY(c.h) - 2, w: bodyW + 4, h: toY(c.l) - toY(c.h) + 4 }));
+    p.line?.forEach((v, i) => { if (i) trace(xOf(i - 1), toY(p.line![i - 1]), xOf(i), toY(v)); });
+    (p.zones ?? []).forEach((z) => {
+      const y = toY(Math.max(z.y1, z.y2));
+      drawn.push({ x: levelX1(z) - 1, y: y - 1, w: levelX2(z) - levelX1(z) + 2, h: Math.max(toY(Math.min(z.y1, z.y2)) - y, 3) + 2 });
     });
+    (p.levels ?? []).forEach((l) => drawn.push({ x: levelX1(l), y: toY(l.price) - 2, w: levelX2(l) - levelX1(l), h: 4 }));
+    (p.segments ?? []).forEach((s) => trace(xOf(s.i1), toY(s.p1), xOf(s.i2), toY(s.p2)));
+    (p.series ?? []).forEach((s) => s.values.forEach((v, i) => {
+      const prev = s.values[i - 1];
+      if (i && v !== null && prev !== null && prev !== undefined) trace(xOf(i - 1), toY(prev), xOf(i), toY(v));
+    }));
+    tags.forEach((t) => { if (Math.abs(t.y - t.lineY) > 0.5) trace(t.lineEnd, t.lineY, tagX, t.y); });
 
-    // Repères : au-dessus / en dessous du point, décalés tant qu'ils recouvrent
-    // une étiquette, une bougie ou la ligne de prix (relié au point par un trait)
+    // Repères : au-dessus / en dessous du point, décalés (verticalement, puis un peu sur le côté)
+    // tant que l'étiquette recouvre quoi que ce soit, ou que son trait de liaison traverse une
+    // autre étiquette ; à défaut, de l'autre côté du point.
+    const yMin = MARK_H / 2 + 1, yMax = plotH - MARK_H / 2 - 1;
     const marks = (p.markers ?? []).map((m) => {
       const label = txt(m);
       const w = tagW(label);
       const py = toY(m.price);
-      const x = clamp(xOf(m.i) - w / 2, 2, plotR - w);
-      const dir = m.side === "above" ? -1 : 1;
-      const yMin = MARK_H / 2 + 1, yMax = plotH - MARK_H / 2 - 1;
-      const free = (yy: number) => {
-        const b = { x, y: yy - MARK_H / 2, w, h: MARK_H };
-        return !boxes.some((o) => overlaps(o, b)) && !drawn.some((o) => overlaps(o, b));
+      const cx = xOf(m.i);
+      const leaderOf = (yy: number): Box | null => {
+        if (Math.abs(yy - py) <= MARK_H / 2 + 10) return null;
+        const a = py + (yy < py ? -6 : 6), b = yy + (yy < py ? MARK_H / 2 : -MARK_H / 2);
+        return { x: cx - 1, y: Math.min(a, b), w: 2, h: Math.abs(b - a) };
       };
-      const y0 = py + dir * (8 + MARK_H / 2);
-      let y = clamp(y0, yMin, yMax);
-      for (let k = 0; k <= 24; k++) {
-        const yy = y0 + dir * k * 6;
-        if (yy < yMin || yy > yMax) break;
-        if (free(yy)) { y = yy; break; }
+      const fits = (x: number, yy: number) => {
+        const b = { x, y: yy - MARK_H / 2, w, h: MARK_H };
+        if (boxes.some((o) => overlaps(o, b)) || drawn.some((o) => overlaps(o, b))) return false;
+        const ld = leaderOf(yy);
+        return !ld || !boxes.some((o) => overlaps(o, ld));
+      };
+      let at: { x: number; y: number } | null = null;
+      for (const dir of m.side === "above" ? [-1, 1] : [1, -1]) {
+        const y0 = py + dir * (8 + MARK_H / 2);
+        for (let k = 0; k <= 40 && !at; k++) {
+          const yy = y0 + dir * k * 6;
+          if (yy < yMin || yy > yMax) break;
+          for (const dx of [0, -0.35, 0.35]) {
+            const x = clamp(cx - w / 2 + dx * w, 2, plotR - w);
+            if (fits(x, yy)) { at = { x, y: yy }; break; }
+          }
+        }
+        if (at) break;
       }
+      const { x, y } = at ?? { x: clamp(cx - w / 2, 2, plotR - w), y: clamp(py + (m.side === "above" ? -1 : 1) * (8 + MARK_H / 2), yMin, yMax) };
       boxes.push({ x, y: y - MARK_H / 2, w, h: MARK_H });
+      const ld = leaderOf(y);
+      if (ld) drawn.push(ld);
       return { ...m, label, w, x, y, py };
     });
-
-    const levelX1 = (l: { from?: number }) => (l.from !== undefined ? xOf(l.from) - slot / 2 : plotL);
-    const levelX2 = (l: { to?: number }) => (l.to !== undefined ? xOf(l.to) + slot / 2 : plotR);
     const scale = { min, max, top, bottom, x0: plotL, slot, n };
 
     svg = (
@@ -351,7 +410,7 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
           const h = Math.max(toY(Math.min(z.y1, z.y2)) - y, 3);
           const x = levelX1(z);
           return (
-            <rect key={z.key} data-zone={z.key} data-y1={Math.min(z.y1, z.y2)} data-y2={Math.max(z.y1, z.y2)} data-kind={z.kind} data-src={z.src}
+            <rect key={z.key} data-zone={z.key} data-y1={Math.min(z.y1, z.y2)} data-y2={Math.max(z.y1, z.y2)} data-kind={z.kind} data-src={z.src} data-from={z.from} data-to={z.to} {...sem(z)}
               x={x} y={y} width={levelX2(z) - x} height={h} rx={4}
               fill={TONE[z.tone]} fillOpacity={0.16} stroke={TONE[z.tone]} strokeOpacity={0.75} strokeWidth={1.5} strokeDasharray="5 4" />
           );
@@ -359,7 +418,7 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
 
         {/* Niveaux */}
         {(p.levels ?? []).map((l) => (
-          <line key={l.key} data-level={l.key} data-price={l.price}
+          <line key={l.key} data-level={l.key} data-price={l.price} data-from={l.from} data-to={l.to} {...sem(l)}
             x1={levelX1(l)} x2={levelX2(l)} y1={toY(l.price)} y2={toY(l.price)}
             stroke={TONE[l.tone]} strokeWidth={l.faint ? 1.5 : 2} strokeOpacity={l.faint ? 0.5 : 1}
             strokeDasharray={l.dashed ? "6 5" : undefined} strokeLinecap="round" />
@@ -392,17 +451,17 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
 
         {/* Segments (ligne de cou, mesures) */}
         {(p.segments ?? []).map((s) => (
-          <line key={s.key} data-segment={s.key} x1={xOf(s.i1)} y1={toY(s.p1)} x2={xOf(s.i2)} y2={toY(s.p2)}
+          <line key={s.key} data-segment={s.key} data-p1={s.p1} data-p2={s.p2} {...sem(s)} x1={xOf(s.i1)} y1={toY(s.p1)} x2={xOf(s.i2)} y2={toY(s.p2)}
             stroke={TONE[s.tone]} strokeWidth={2} strokeDasharray={s.dashed ? "6 5" : undefined} strokeLinecap="round"
             markerEnd={s.arrow ? `url(#${uid}-arrow-${s.tone})` : undefined} />
         ))}
 
         {/* Repères */}
         {marks.map((m) => (
-          <g key={m.key} data-marker={m.key} data-i={m.i} data-price={m.price} data-pivot={m.pivot}>
+          <g key={m.key} data-marker={m.key} data-i={m.i} data-price={m.price} data-pivot={m.pivot} {...sem(m)}>
             {m.dot && <circle cx={xOf(m.i)} cy={m.py} r={4.5} fill={TONE[m.tone]} stroke="#06090d" strokeWidth={1.5} />}
             {Math.abs(m.y - m.py) > MARK_H / 2 + 10 && (
-              <line x1={xOf(m.i)} x2={xOf(m.i)} y1={m.py + (m.y < m.py ? -6 : 6)} y2={m.y + (m.y < m.py ? MARK_H / 2 : -MARK_H / 2)} stroke={TONE[m.tone]} strokeWidth={1.5} strokeOpacity={0.8} />
+              <line data-leader={m.key} x1={xOf(m.i)} x2={xOf(m.i)} y1={m.py + (m.y < m.py ? -6 : 6)} y2={m.y + (m.y < m.py ? MARK_H / 2 : -MARK_H / 2)} stroke={TONE[m.tone]} strokeWidth={1.5} strokeOpacity={0.8} />
             )}
             <g data-label-for={m.key}>
               <rect x={m.x} y={m.y - MARK_H / 2} width={m.w} height={MARK_H} rx={MARK_H / 2} fill="#06090d" stroke={TONE[m.tone]} strokeWidth={1.5} />
@@ -451,7 +510,7 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
         {tags.map((t) => (
           <g key={t.key} data-label-for={t.key}>
             {Math.abs(t.y - t.lineY) > 0.5 && (
-              <line x1={t.lineEnd} y1={t.lineY} x2={tagX} y2={t.y} stroke={t.color} strokeWidth={1.5} strokeOpacity={0.9} />
+              <line data-leader={t.key} x1={t.lineEnd} y1={t.lineY} x2={tagX} y2={t.y} stroke={t.color} strokeWidth={1.5} strokeOpacity={0.9} />
             )}
             <rect x={tagX} y={t.y - TAG_H / 2} width={colW - 12} height={TAG_H} rx={TAG_H / 2} fill={t.color} />
             <text x={tagX + (colW - 12) / 2} y={t.y + FS * 0.36} textAnchor="middle" fontSize={FS} fontWeight={700} fill="#04060a">{t.label}</text>

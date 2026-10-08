@@ -192,17 +192,25 @@ Object.assign(SCENARIOS, {
 
 // ─── Lot 4 ───────────────────────────────────────────────────────────────────
 
-// SMC 2 / SMC 5 — séquence de retournement haussier (EUR/USD H4) : tendance baissière
-// (LH 1.1850, 1.1820), CHoCH = clôture au-dessus du dernier LH 1.1820 (sommet 1.1840),
-// nouvelle structure : HL 1.1750, BOS = clôture au-dessus de 1.1840.
-const chochSequence = () => buildCandles(1.1860, [
-  ...c(1.1868), { c: 1.1874, h: 1.1880 }, ...c(1.1860, 1.1842, 1.1825, 1.1809), { c: 1.1797, l: 1.1790 },
-  ...c(1.1808, 1.1822, 1.1836), { c: 1.1842, h: 1.1850 }, ...c(1.1829, 1.1811, 1.1794, 1.1776, 1.1759), { c: 1.1751, l: 1.1745 },
-  ...c(1.1762, 1.1779, 1.1797), { c: 1.1811, h: 1.1820 }, ...c(1.1801, 1.1784, 1.1765, 1.1741), { c: 1.1727, l: 1.1720 },
-  ...c(1.1748, 1.1781), { c: 1.1828 }, { c: 1.1834, h: 1.1840 },
-  ...c(1.1818, 1.1797, 1.1772), { c: 1.1758, l: 1.1750 },
-  ...c(1.1779, 1.1806, 1.1831), { c: 1.1852 }, ...c(1.1866),
-], { seed: 4101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1820, 1.1840], pins: [1.1880, 1.1790, 1.1850, 1.1745, 1.1820, 1.1720, 1.1840, 1.1750] });
+// SMC 2 / SMC 5 — séquence de retournement haussier (EUR/USD H4), bougies entièrement écrites :
+// tendance baissière (sommet 1.1880, LH 1.1850, LL 1.1745, LH 1.1820, LL 1.1720), CHoCH = clôture
+// au-dessus du dernier LH 1.1820 (sommet 1.1840), nouvelle structure : HL 1.1750 cinq bougies après
+// le CHoCH, BOS = clôture au-dessus de 1.1840, puis mitigation : retour sur l'ex-LH 1.1820 devenu
+// support, bougie de rejet haussière (mèche 1.1822).
+const CHOCH_SEQ: Step[] = [
+  { c: 1.1861, h: 1.1864, l: 1.1849 }, { c: 1.1872, h: 1.1875, l: 1.1858 }, { c: 1.1876, h: 1.1880, l: 1.1869 },
+  { c: 1.1851, h: 1.1878, l: 1.1848 }, { c: 1.1826, h: 1.1853, l: 1.1822 }, { c: 1.1797, h: 1.1828, l: 1.1790 },
+  { c: 1.1812, h: 1.1816, l: 1.1794 }, { c: 1.1828, h: 1.1832, l: 1.1808 }, { c: 1.1843, h: 1.1850, l: 1.1825 },
+  { c: 1.1820, h: 1.1846, l: 1.1816 }, { c: 1.1793, h: 1.1823, l: 1.1789 }, { c: 1.1766, h: 1.1796, l: 1.1762 }, { c: 1.1751, h: 1.1769, l: 1.1745 },
+  { c: 1.1771, h: 1.1774, l: 1.1748 }, { c: 1.1792, h: 1.1796, l: 1.1768 }, { c: 1.1811, h: 1.1820, l: 1.1789 },
+  { c: 1.1788, h: 1.1815, l: 1.1784 }, { c: 1.1762, h: 1.1791, l: 1.1758 }, { c: 1.1727, h: 1.1765, l: 1.1720 },
+  { c: 1.1752, h: 1.1756, l: 1.1723 }, { c: 1.1784, h: 1.1788, l: 1.1749 }, { c: 1.1829, h: 1.1833, l: 1.1781 },
+  { c: 1.1834, h: 1.1840, l: 1.1824 }, { c: 1.1822, h: 1.1838, l: 1.1818 }, { c: 1.1803, h: 1.1825, l: 1.1799 }, { c: 1.1781, h: 1.1806, l: 1.1777 }, { c: 1.1758, h: 1.1784, l: 1.1750 },
+  { c: 1.1784, h: 1.1788, l: 1.1754 }, { c: 1.1812, h: 1.1816, l: 1.1780 }, { c: 1.1852, h: 1.1856, l: 1.1808 },
+  { c: 1.1866, h: 1.1870, l: 1.1848 }, { c: 1.1850, h: 1.1868, l: 1.1846 }, { c: 1.1834, h: 1.1853, l: 1.1830 }, { c: 1.1843, h: 1.1846, l: 1.1822 },
+  { c: 1.1862, h: 1.1866, l: 1.1840 },
+];
+const chochSequence = () => buildCandles(1.1852, CHOCH_SEQ, { seed: 4101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1820, 1.1840], pins: pinAll(CHOCH_SEQ) });
 
 // Débutant 9 — FOMO : hausse verticale, achat au sommet, retournement (prix sans unité)
 const biasFomo = () => buildCandles(100, [
@@ -417,32 +425,62 @@ Object.assign(SCENARIOS, {
 
 // SMC 2 / TF 4 — même structure haussière (HL 1.1700, HH 1.1780, HL 1.1750, HH 1.1820),
 // puis breakout opposé : au-dessus du HH 1.1820 (BOS) ou sous le HL 1.1750 (CHoCH)
-const bosChochPrefix = () => buildCandles(1.1722, [
+const bosChochPrefix = () => buildCandles(1.1718, [
+  { c: 1.1722, h: 1.1726, l: 1.1714 },
   ...c(1.1712), { c: 1.1706, l: 1.1700 }, ...c(1.1721, 1.1742, 1.1761), { c: 1.1773, h: 1.1780 },
   ...c(1.1768), { c: 1.1756, l: 1.1750 }, ...c(1.1771, 1.1792, 1.1808), { c: 1.1814, h: 1.1820 }, ...c(1.1806, 1.1793),
-], { seed: 8101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1746, 1.1824, 1.1696], pins: [1.1700, 1.1780, 1.1750, 1.1820] });
+], { seed: 8101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1746, 1.1824, 1.1696], pins: [1.1722, 1.1726, 1.1714, 1.1700, 1.1780, 1.1750, 1.1820] });
 const bosChochWith = (bos: boolean) => extend(bosChochPrefix(), bos
   ? [{ c: 1.1809 }, { c: 1.1831, h: 1.1835 }, { c: 1.1845 }, { c: 1.1839 }]
   : [{ c: 1.1772 }, { c: 1.1741, l: 1.1737 }, { c: 1.1733 }, { c: 1.1740 }], bos ? 8102 : 8103, 5, [], [1.1820, 1.1750]);
 
-// SMC 3 — Order Block haussier EUR/USD H1 : dernière bougie rouge avant l'impulsion
-// (corps 1.1752 → 1.1745, mèche 1.1738), BOS au-dessus de 1.1780, HH 1.1810, retour
-// dans l'OB (mèche 1.1748), rejet et reprise.
-const smcOB = () => buildCandles(1.1790, [
-  ...c(1.1784), { c: 1.1777, h: 1.1780 }, ...c(1.1772, 1.1764, 1.1757), { c: 1.1752 },
-  { c: 1.1745, h: 1.1754, l: 1.1738 },
-  ...c(1.1763, 1.1779), { c: 1.1791 }, ...c(1.1802), { c: 1.1806, h: 1.1810 },
-  ...c(1.1797, 1.1786, 1.1774, 1.1763), { c: 1.1757, l: 1.1748 }, ...c(1.1768, 1.1782),
-], { seed: 8201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1752, 1.1745, 1.1780], pins: [1.1752, 1.1745, 1.1738, 1.1810, 1.1748] });
+// SMC 3 / Avancé 3 — Order Block haussier EUR/USD H4, bougies entièrement écrites : hausse jusqu'au
+// sommet 1.1780 (vrai swing, bougies plus basses de chaque côté), repli de 5 bougies jusqu'à la
+// dernière bougie rouge (corps 1.1752 → 1.1745, mèche 1.1738), impulsion de 3 bougies à grands
+// corps (22, 24 et 16 pips, plus de 2 fois la moyenne des 10 précédentes, mèches courtes) qui
+// clôture au-dessus de 1.1780 (BOS) et marque le HH 1.1810.
+const SMC_OB_PRE: Step[] = [
+  { c: 1.1731, h: 1.1734, l: 1.1719 }, { c: 1.1740, h: 1.1744, l: 1.1728 }, { c: 1.1752, h: 1.1756, l: 1.1737 },
+  { c: 1.1764, h: 1.1769, l: 1.1749 }, { c: 1.1773, h: 1.1780, l: 1.1760 },
+  { c: 1.1768, h: 1.1776, l: 1.1763 }, { c: 1.1761, h: 1.1771, l: 1.1757 }, { c: 1.1764, h: 1.1767, l: 1.1755 },
+  { c: 1.1757, h: 1.1766, l: 1.1753 }, { c: 1.1752, h: 1.1760, l: 1.1748 },
+  { c: 1.1745, h: 1.1755, l: 1.1738 },
+  { c: 1.1767, h: 1.1770, l: 1.1743 }, { c: 1.1791, h: 1.1794, l: 1.1765 }, { c: 1.1807, h: 1.1810, l: 1.1789 },
+];
+// OB frais : retour dans le corps (mèche 1.1748), bougie de rejet haussière, reprise.
+const SMC_OB: Step[] = [
+  ...SMC_OB_PRE,
+  { c: 1.1801, h: 1.1809, l: 1.1797 }, { c: 1.1790, h: 1.1803, l: 1.1786 }, { c: 1.1779, h: 1.1792, l: 1.1775 },
+  { c: 1.1768, h: 1.1781, l: 1.1764 }, { c: 1.1758, h: 1.1771, l: 1.1755 },
+  { c: 1.1766, h: 1.1769, l: 1.1748 }, { c: 1.1779, h: 1.1782, l: 1.1763 }, { c: 1.1792, h: 1.1795, l: 1.1776 },
+];
+const smcOB = () => buildCandles(1.1722, SMC_OB, { seed: 8201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1752, 1.1745, 1.1780], pins: pinAll(SMC_OB) });
 
 // SMC 3 / SMC 5 — mitigation après CHoCH baissier (EUR/USD H1) : HL 1.1720 / HH 1.1780,
 // breakout du HL (CHoCH), creux 1.1690, retour sur l'ex-HL 1.1720 devenu résistance,
-// rejet (entrée short 1.1718), baisse.
-const mitigation = () => buildCandles(1.1712, [
+// bougie de rejet baissière (mèche 1.1724, clôture 1.1706 = entrée short), baisse.
+const mitigation = () => buildCandles(1.1708, [
+  { c: 1.1712, h: 1.1716, l: 1.1705 },
   ...c(1.1703), { c: 1.1698, l: 1.1694 }, ...c(1.1724, 1.1738), { c: 1.1746, h: 1.1752 }, ...c(1.1737), { c: 1.1726, l: 1.1720 }, ...c(1.1741, 1.1758, 1.1771), { c: 1.1774, h: 1.1780 },
   ...c(1.1762, 1.1745, 1.1729), { c: 1.1709 }, ...c(1.1698), { c: 1.1695, l: 1.1690 },
-  ...c(1.1702, 1.1711), { c: 1.1718, h: 1.1724 }, ...c(1.1704, 1.1688, 1.1673),
-], { seed: 8301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1720, 1.1726], pins: [1.1694, 1.1752, 1.1720, 1.1780, 1.1690, 1.1724, 1.1718] });
+  ...c(1.1702, 1.1711), { c: 1.1706, h: 1.1724, l: 1.1704 }, ...c(1.1691, 1.1676, 1.1662),
+], { seed: 8301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1720, 1.1726], pins: [1.1712, 1.1716, 1.1705, 1.1694, 1.1752, 1.1720, 1.1780, 1.1690, 1.1724, 1.1706, 1.1704] });
+
+// SMC 5 bloc 5 — confirmer et exécuter (EUR/USD H4, plan chiffré du bloc 6) : remontée jusqu'aux
+// equal highs 1.1780 (BSL) après un HL 1.1713, creux mineur 1.1755 (HL), sweep (mèche 1.1792, clôture 1.1772), displacement
+// baissier de 3 bougies (corps 14, 22, 22 pips, sans mèche) qui clôture sous 1.1755 (CHoCH) et laisse
+// le FVG 1.1758-1.1770 ; retour dans le FVG (entrée limite 1.1765), rejet, baisse jusqu'à la SSL 1.1690.
+const SMC5_EXEC: Step[] = [
+  { c: 1.1719, h: 1.1722, l: 1.1709 }, { c: 1.1727, h: 1.1730, l: 1.1716 }, { c: 1.1722, h: 1.1729, l: 1.1719 }, { c: 1.1717, h: 1.1724, l: 1.1713 },
+  { c: 1.1728, h: 1.1731, l: 1.1715 }, { c: 1.1740, h: 1.1743, l: 1.1726 }, { c: 1.1752, h: 1.1755, l: 1.1738 }, { c: 1.1762, h: 1.1765, l: 1.1749 }, { c: 1.1774, h: 1.1780, l: 1.1759 },
+  { c: 1.1767, h: 1.1776, l: 1.1763 }, { c: 1.1760, h: 1.1769, l: 1.1757 }, { c: 1.1758, h: 1.1763, l: 1.1755 },
+  { c: 1.1766, h: 1.1769, l: 1.1757 }, { c: 1.1774, h: 1.1780, l: 1.1763 },
+  { c: 1.1772, h: 1.1792, l: 1.1770 },
+  { c: 1.1758, h: 1.1773, l: 1.1757 }, { c: 1.1736, h: 1.1758, l: 1.1734 }, { c: 1.1714, h: 1.1737, l: 1.1712 },
+  { c: 1.1708, h: 1.1716, l: 1.1703 }, { c: 1.1712, h: 1.1715, l: 1.1704 }, { c: 1.1726, h: 1.1729, l: 1.1710 }, { c: 1.1741, h: 1.1744, l: 1.1724 },
+  { c: 1.1752, h: 1.1755, l: 1.1739 }, { c: 1.1749, h: 1.1767, l: 1.1748 },
+  { c: 1.1731, h: 1.1752, l: 1.1729 }, { c: 1.1716, h: 1.1733, l: 1.1713 }, { c: 1.1703, h: 1.1719, l: 1.1699 }, { c: 1.1694, h: 1.1706, l: 1.1688 },
+];
 
 // Trend-following 1 — identifier une tendance (EUR/USD H4) : HL 1.1680, HH 1.1760,
 // HL 1.1720, HH 1.1820 (amplitude 140 pips)
@@ -457,6 +495,7 @@ Object.assign(SCENARIOS, {
   "choch-case": () => bosChochWith(false),
   "smc-ob": smcOB,
   "mitigation": mitigation,
+  "smc5-exec": () => buildCandles(1.1712, SMC5_EXEC, { seed: 8302, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1780, 1.1755], pins: pinAll(SMC5_EXEC) }),
   "trend-steps": trendSteps,
 });
 
@@ -1123,7 +1162,7 @@ const STRUCT_EUR: (number | Step)[] = [
   1.0812, 1.0826, { c: 1.0838, h: 1.0845 }, 1.0832, { c: 1.0824, l: 1.0820 }, { c: 1.0838, l: 1.0823 }, 1.0858, 1.0884, { c: 1.0902, h: 1.0910, l: 1.0882 },
   { c: 1.0898, h: 1.0907 }, { c: 1.0886, l: 1.0880 }, { c: 1.0898, l: 1.0883 }, 1.0916, 1.0934, { c: 1.0944, h: 1.0950 },
 ];
-const BOS_EUR = bars(1.0800, [...STRUCT_EUR, { c: 1.0938, h: 1.0947 }, 1.0922, { c: 1.0910, l: 1.0905 }, { c: 1.0924, l: 1.0908 }, 1.0940, { c: 1.0967, l: 1.0938 }, 1.0975, 1.0984], 0.0004, 5);
+const BOS_EUR = bars(1.0800, [...STRUCT_EUR, { c: 1.0938, h: 1.0947 }, 1.0922, { c: 1.0910, l: 1.0905 }, { c: 1.0924, l: 1.0908 }, 1.0940, { c: 1.0967, l: 1.0938 }, 1.0975, 1.0984, 1.0977, 1.0991], 0.0004, 5);
 const CHOCH_EUR = bars(1.0800, [...STRUCT_EUR, { c: 1.0936, h: 1.0947 }, 1.0918, 1.0900, { c: 1.0872, h: 1.0902 }, 1.0864, { c: 1.0874, l: 1.0861 }], 0.0004, 5);
 Object.assign(SCENARIOS, {
   "inv-eur": authored(1.1730, INV_EUR, 25101, 5, "EUR/USD", [1.1800]),
@@ -1136,12 +1175,14 @@ Object.assign(SCENARIOS, {
 // 1.0950 mais la bougie clôture en dessous, puis le prix réintègre et baisse (prise de liquidité).
 const BOS_FAKE = bars(1.0800, [...STRUCT_EUR, { c: 1.0938, h: 1.0947 }, 1.0926, { c: 1.0918, l: 1.0912 }, { c: 1.0930, l: 1.0915 }, 1.0944,
   { c: 1.0946, h: 1.0962, l: 1.0940 }, { c: 1.0928, h: 1.0948 }, 1.0915, 1.0904], 0.0004, 5);
-// SMC 3 — OB mitigé : même OB haussier (corps 1.1745-1.1752, mèche 1.1738), impulsion et BOS
-// au-dessus de 1.1780, puis le prix retraverse tout le corps (clôture 1.1736) : ordres consommés.
-const OB_MITIGATED = bars(1.1790, [
-  1.1784, { c: 1.1777, h: 1.1780 }, 1.1772, 1.1764, 1.1757, 1.1752, { c: 1.1745, h: 1.1754, l: 1.1738 },
-  1.1763, 1.1779, 1.1791, 1.1802, { c: 1.1806, h: 1.1810 }, 1.1795, 1.1780, 1.1764, 1.1750, { c: 1.1736, l: 1.1732 }, 1.1748, 1.1742,
-], 0.0003, 5);
+// SMC 3 — OB mitigé : même OB haussier (mêmes bougies jusqu'au HH 1.1810), puis le prix retraverse
+// tout le corps (clôture 1.1736 sous 1.1745) : ordres consommés.
+const OB_MITIGATED: Step[] = [
+  ...SMC_OB_PRE,
+  { c: 1.1801, h: 1.1809, l: 1.1797 }, { c: 1.1788, h: 1.1803, l: 1.1785 }, { c: 1.1774, h: 1.1791, l: 1.1771 },
+  { c: 1.1760, h: 1.1777, l: 1.1757 }, { c: 1.1749, h: 1.1763, l: 1.1746 }, { c: 1.1736, h: 1.1752, l: 1.1732 },
+  { c: 1.1742, h: 1.1746, l: 1.1731 }, { c: 1.1737, h: 1.1745, l: 1.1733 },
+];
 // SMC 4 / Avancé 1 — pools de liquidité (EUR/USD H1) : range avec equal highs 1.0900 et equal
 // lows 1.0840 ; stops des vendeurs au-dessus (BSL), des acheteurs en dessous (SSL).
 const LIQ_POOLS = bars(1.0862, [
@@ -1150,18 +1191,19 @@ const LIQ_POOLS = bars(1.0862, [
 ], 0.0003, 5);
 Object.assign(SCENARIOS, {
   "bos-fake": authored(1.0800, BOS_FAKE, 26101, 5, "EUR/USD", [1.0950]),
-  "ob-mitigated": authored(1.1790, OB_MITIGATED, 26201, 5, "EUR/USD", [1.1745]),
+  "ob-mitigated": authored(1.1722, OB_MITIGATED, 26201, 5, "EUR/USD", [1.1745]),
   "liq-pools": authored(1.0862, LIQ_POOLS, 26301, 5, "EUR/USD", [1.0900, 1.0840]),
 });
 
 // ─── Lot 27 ──────────────────────────────────────────────────────────────────
 // SMC 4 / SMC 5 — EUR/USD H4 : accumulation 1.1700-1.1750, equal highs 1.1760, bougie qui perce
-// 1.1760 (mèche 1.1765) et clôture à 1.1745 sans mèche basse, displacement baissier, FVG
+// 1.1760 (mèche 1.1765) et clôture à 1.1745 sans mèche basse, impulsion baissière (corps 27 pips,
+// plus de 2 fois la moyenne des 10 précédentes), FVG
 // 1.1735-1.1745, retour dans le FVG (entrée 1.1745), puis la SSL sous 1.1700.
 const SMC4_SWEEP = bars(1.1705, [
   1.1712, 1.1728, 1.1742, { c: 1.1748, h: 1.1760 }, 1.1734, 1.1718, { c: 1.1708, l: 1.1702 }, 1.1722, 1.1737, { c: 1.1746, h: 1.1760 },
   1.1733, 1.1724, 1.1738, 1.1749,
-  { c: 1.1745, h: 1.1765, l: 1.1745 }, { c: 1.1722, h: 1.1745, l: 1.1720 }, { c: 1.1712, h: 1.1735, l: 1.1708 },
+  { c: 1.1745, h: 1.1765, l: 1.1745 }, { c: 1.1718, h: 1.1745, l: 1.1716 }, { c: 1.1712, h: 1.1735, l: 1.1708 },
   1.1718, 1.1728, { c: 1.1736, h: 1.1745 }, 1.1720, 1.1708, { c: 1.1702, l: 1.1698 },
 ], 0.0004, 5);
 // Avancé 2 / SMC 4 — FVG haussier et baissier génériques : B1, B2 (impulsion), B3, gap entre la

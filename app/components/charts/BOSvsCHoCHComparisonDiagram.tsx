@@ -24,7 +24,7 @@ function panel(key: "bos-case" | "choch-case"): LCPanel {
     levels: [{ key: "lvl", price: lvl.price, from: lvl.index, label: `${bos ? "HH" : "HL"} ${p(lvl.price)}`, tone: bos ? "bull" : "zone", dashed: true }],
     markers: [
       ...piv.filter((q) => q.name && q.index <= hh.index).map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name, tone: "neutral" as const, side: q.side === "h" ? "above" as const : "below" as const })),
-      { key: "brk", i: brk, price: bos ? cs[brk].h : cs[brk].l, label: bos ? "BOS" : "CHoCH", tone: bos ? "bull" : "zone", side: bos ? "above" : "below" },
+      { key: "brk", i: brk, price: cs[brk].c, label: bos ? "BOS : clôture au-dessus" : "CHoCH : clôture en dessous", short: bos ? "BOS" : "CHoCH", tone: bos ? "bull" : "zone", side: bos ? "above" : "below", role: bos ? "bos" : "choch", ref: lvl.index, dir: bos ? "bull" : "bear" },
     ],
   };
 }

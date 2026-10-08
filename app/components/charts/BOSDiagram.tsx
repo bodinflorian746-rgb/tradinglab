@@ -26,7 +26,7 @@ export function BOSDiagram(_props: { trend?: "bullish" | "bearish"; className?: 
         levels: [{ key: "hh", price: hh.price, from: hh.index, label: `Dernier HH ${p(hh.price)}`, short: "Dernier HH", tone: "zone", dashed: true }],
         markers: [
           ...named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name!, tone: "bull" as const, side: q.side === "h" ? "above" as const : "below" as const })),
-          { key: "bos", i: bos, price: cs[bos].h, label: `BOS : clôture ${dist} pips au-dessus`, short: "BOS", tone: "bull", side: "above" },
+          { key: "bos", i: bos, price: cs[bos].c, label: `BOS : clôture ${dist} pips au-dessus`, short: "BOS", tone: "bull", side: "above", role: "bos", ref: hh.index, dir: "bull" },
         ],
       }]}
     />

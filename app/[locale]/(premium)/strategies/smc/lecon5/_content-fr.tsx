@@ -169,7 +169,7 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Confirmer et exécuter</h2>
             <div className="my-8">
-              <MitigationZoneEntryDiagram />
+              <MitigationZoneEntryDiagram variant="fvg" />
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le CHoCH est le premier signal que le contrôle du marché change de camp sur l&apos;unité de temps d&apos;entrée. La confirmation viendrait d&apos;un BOS dans le nouveau sens : ce modèle ne l&apos;attend pas, c&apos;est une entrée agressive. Le displacement laisse ensuite un Order Block ou un FVG qui servira de zone de mitigation. L&apos;entrée intervient lorsque le prix revient dans cette zone avant reprise impulsive.</p>
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Logique d&apos;exécution</p>

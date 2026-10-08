@@ -1,4 +1,4 @@
-// SMC 3 bloc 2 — OB frais vs OB mitigé (EUR/USD H1), même Order Block (corps 1.1745-1.1752) :
+// SMC 3 bloc 2 — OB frais vs OB mitigé (EUR/USD H4), même Order Block (corps 1.1745-1.1752) :
 // à gauche, le premier retour n'a jamais retraversé le corps (moins de 20 bougies) : réaction
 // attendue ; à droite, le prix a retraversé tout le corps : ordres exécutés, OB consommé.
 // Retraversée et âge calculés. Bougies : scenarios.ts (« smc-ob », « ob-mitigated »).
@@ -18,10 +18,10 @@ function panel(key: "smc-ob" | "ob-mitigated", title: string): LCPanel {
   return {
     key, title, decimals: 5, height: 230, candles: cs,
     subtitle: through > 0 ? `Corps retraversé ${through - obI} bougies après sa formation` : `Retour ${touch - obI} bougies après, corps jamais retraversé`,
-    zones: [{ key: "ob", ...ob, from: obI, label: `OB ${p(ob.y1)}-${p(ob.y2)}`, short: "OB", tone: through > 0 ? "neutral" : "zone", kind: "ob", src: `${key}:${obI}` }],
+    zones: [{ key: "ob", ...ob, from: obI, label: `OB ${p(ob.y1)}-${p(ob.y2)}`, short: "OB", tone: through > 0 ? "neutral" : "zone", kind: "ob", src: `${key}:${obI}`, role: "ob", dir: "bull" }],
     markers: [through > 0
-      ? { key: "m", i: through, price: cs[through].l, label: "Clôture sous l'OB : consommé", short: "Consommé", tone: "bear", side: "below" }
-      : { key: "m", i: touch, price: cs[touch].l, label: "Premier retour : réaction", short: "Réaction", tone: "bull", side: "below" }],
+      ? { key: "m", i: through, price: cs[through].c, label: "Clôture sous l'OB : consommé", short: "Consommé", tone: "bear", side: "below", role: "close" }
+      : { key: "m", i: touch, price: cs[touch].l, label: "Premier retour : rejet", short: "Rejet", tone: "bull", side: "below", role: "rejet", ref: "ob", dir: "bull" }],
   };
 }
 

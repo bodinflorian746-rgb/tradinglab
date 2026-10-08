@@ -124,7 +124,8 @@
 
 /* Anciens cadres autour des schémas (bordure + coins) : le schéma a déjà sa
    carte ; le cadre est neutralisé pour éviter le double cadre. */
-.lesson-v2 :is(div, section):has(> .lc):not(.lc *):not(.rounded-2xl) {
+.lesson-v2 :is(div, section):has(> .lc):not(.lc *):not(.rounded-2xl),
+.lesson-v2 :is(div, section):has(> .lc):not(:has(> :not(.lc))):not(.lc *) {
   border: 0;
   background: none;
   box-shadow: none;
