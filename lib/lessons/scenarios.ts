@@ -1015,3 +1015,26 @@ Object.assign(SCENARIOS, paTypes, pinCases, engCases, {
   "zone-fail-xau": authored(4583, ZONE_FAIL, 22401, 0, "XAU/USD", [4540, 4550]),
   "daily-ctx": authored(1.1878, DAILY_CTX, 22501, 5, "EUR/USD", [1.1860, 1.1695]),
 });
+
+// ─── Lot 23 ──────────────────────────────────────────────────────────────────
+// Intermédiaire 7 — la même paire, trois unités de temps (EUR/USD) : Daily en escalier depuis
+// 3 semaines (HH / HL, dernier HL 1.0850, HH 1.0960) ; H4 : recul jusqu'à 1.0850 (dernier HL) ;
+// M15 : pin bar haussière au contact de la zone.
+const L7_DAILY = bars(1.0700, [
+  1.0718, 1.0742, 1.0768, { c: 1.0792, h: 1.0800 }, 1.0778, { c: 1.0766, l: 1.0760 }, { c: 1.0790, l: 1.0764 }, 1.0822, 1.0856, { c: 1.0892, h: 1.0900, l: 1.0853 },
+  1.0878, { c: 1.0858, l: 1.0850 }, { c: 1.0884, l: 1.0855 }, 1.0918, { c: 1.0952, h: 1.0960 }, 1.0932, 1.0906,
+], 0.0006, 5);
+const L7_H4 = bars(1.0958, [
+  { c: 1.0950, h: 1.0960 }, 1.0938, 1.0930, 1.0941, 1.0924, 1.0910, 1.0918, 1.0901, 1.0889, 1.0894, 1.0878, 1.0866, 1.0872, 1.0859, { c: 1.0857, l: 1.0850 },
+], 0.0005, 5);
+const L7_M15 = bars(1.0872, [
+  1.0869, 1.0865, 1.0867, 1.0862, 1.0859, 1.0861, 1.0856, { c: 1.0857, l: 1.0852 }, { c: 1.0861, h: 1.0862, l: 1.0848 }, 1.0866, 1.0871,
+], 0.0002, 5);
+// Price action 3 bloc 3 — engulfing isolé en pleine impulsion (XAU/USD H4) : aucun niveau, simple bruit.
+const ENG_ISOLATED = bars(4560, [4568, 4579, 4591, 4602, { c: 4598, h: 4606 }, { c: 4612, l: 4596 }, 4624, 4636, 4647, 4659], 3, 0);
+Object.assign(SCENARIOS, {
+  "l7-daily": authored(1.0700, L7_DAILY, 23101, 5, "EUR/USD", [1.0850]),
+  "l7-h4": authored(1.0958, L7_H4, 23102, 5, "EUR/USD", [1.0850]),
+  "l7-m15": authored(1.0872, L7_M15, 23103, 5, "EUR/USD", [1.0850]),
+  "eng-isolated": authored(4560, ENG_ISOLATED, 23201, 0, "XAU/USD"),
+});

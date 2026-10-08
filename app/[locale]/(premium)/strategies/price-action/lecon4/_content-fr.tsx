@@ -135,7 +135,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Lecture top-down Daily → H4 → M15</h2>
 
             <div className="my-8">
-              <MultiTimeframeDiagram />
+              <MultiTimeframeDiagram variant="roles" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
@@ -222,7 +222,7 @@ export default function ContentFr() {
             </div>
 
             <div className="my-8">
-              <TradePlanDiagram />
+              <TradePlanDiagram variant="pa4" />
             </div>
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>

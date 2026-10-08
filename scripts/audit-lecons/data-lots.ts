@@ -549,3 +549,25 @@ export function checkLot22(check: Check) {
     check(p.filter((q) => q.name === "LH").map((q) => q.price).join() === "1.186,1.183,1.178" && p.filter((q) => q.name === "LL").at(-1)?.price === 1.1695, "Daily (MUT 5) : trois LH, dernier LL 1.1695");
   }
 }
+
+export function checkLot23(check: Check) {
+  {
+    // Intermédiaire 7 : Daily HH / HL (dernier HL 1.0850), H4 qui recule jusqu'à 1.0850, pin bar M15 sur la zone
+    const d = pivots(CS["l7-daily"], 2).filter((q) => q.name);
+    check(d.every((q) => q.name === "HH" || q.name === "HL") && d.filter((q) => q.name === "HL").at(-1)?.price === 1.085, "Top-down (Int. 7) : Daily HH / HL, dernier HL 1.0850");
+    const h4 = CS["l7-h4"], m = CS["l7-m15"];
+    check(Math.min(...h4.map((k) => k.l)) === 1.085 && h4[h4.length - 1].l === 1.085, "Top-down (Int. 7) : H4 jusqu'à 1.0850");
+    const pin = m.reduce((b, k, i) => (k.l < m[b].l ? i : b), 0), k = m[pin];
+    check(k.l <= 1.085 && k.c > k.o && (Math.min(k.o, k.c) - k.l) >= 2 * (k.c - k.o) && (k.c - k.l) / (k.h - k.l) >= 2 / 3, "Top-down (Int. 7) : pin bar M15 sur 1.0850");
+  }
+  {
+    // Price action 4 : R/R 1,88 et 3,70 ; Intermédiaire 8 : zone 1.0850, SL 1.0835, TP 1.0950
+    check(near(rrOf(1.1778, 1.1745, 1.184), 1.88, 0.005) && near(rrOf(1.1778, 1.1745, 1.19), 3.7, 0.005), "Plan (PA 4) : R/R 1,88 / 3,70");
+    check(near(rrOf(1.085, 1.0835, 1.095), 6.67, 0.005), "Plan (Int. 8) : R/R depuis la zone");
+    // Price action 3 : engulfing du plan dans la zone Fibonacci 0.5 / 0.618 du swing 4 500 → 4 720
+    const a = CS["engulfing-setup"], k2 = a[a.length - 1];
+    check(k2.l <= fibLevel(4500, 4720, 0.5) && k2.l >= fibLevel(4500, 4720, 0.618) - 15, "Contexte (PA 3) : engulfing dans la zone Fibonacci");
+    const b = CS["eng-isolated"];
+    check(b.some((x, i) => i > 0 && engulfs(b[i - 1], x, true)), "Contexte (PA 3) : engulfing isolé en impulsion");
+  }
+}
