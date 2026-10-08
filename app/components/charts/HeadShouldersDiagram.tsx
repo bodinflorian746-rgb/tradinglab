@@ -1,254 +1,44 @@
-interface PastilleProps {
-  x: number;
-  y: number;
-  label: string;
-  color: string;
-  textColor?: string;
-  arrow?: "up" | "down";
+// Reversal 2 blocs 2 et 4 — épaule-tête-épaule et ETE inversé (XAU/USD H1), exemples du texte :
+// épaule gauche 4 620, tête 4 660, épaule droite 4 625, ligne de cou ≈ 4 578, clôture sous la
+// ligne de cou ; inversé : 4 470 / 4 430 / 4 475, ligne de cou ≈ 4 512, clôture au-dessus de
+// 4 515. Sommets, creux et ligne de cou lus sur les bougies.
+// Bougies : scenarios.ts (« hs-execution », « ihs-xau »).
+
+import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
+import { usd } from "@/app/components/lessons/trade";
+import { pivots, type Candle } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+
+function hs(cs: Candle[], side: "h" | "l", key: string, title: string, decimals: number): LCPanel {
+  const piv = pivots(cs, 2);
+  const [ls, head, rs] = piv.filter((q) => q.side === side).slice(-3);
+  const necks = piv.filter((q) => q.side !== side && q.index > ls.index && q.index < rs.index);
+  const neck = necks.reduce((s, q) => s + q.price, 0) / necks.length;
+  const last = cs.length - 1;
+  const tone = side === "h" ? "bear" as const : "bull" as const, at = side === "h" ? "above" as const : "below" as const;
+  return {
+    key, title, decimals, height: 230, candles: cs,
+    levels: [{ key: "neck", price: Math.round(neck), from: necks[0].index, label: `Ligne de cou ≈ ${usd(neck)}`, short: "Ligne de cou", tone: "zone" }],
+    markers: [
+      { key: "ls", i: ls.index, price: ls.price, label: `Épaule ${usd(ls.price)}`, short: "Épaule", tone, side: at },
+      { key: "head", i: head.index, price: head.price, label: `Tête ${usd(head.price)}`, short: "Tête", tone, side: at },
+      { key: "rs", i: rs.index, price: rs.price, label: `Épaule ${usd(rs.price)}`, short: "Épaule", tone, side: at },
+      { key: "brk", i: last, price: side === "h" ? cs[last].l : cs[last].h, label: `Clôture ${usd(cs[last].c)}`, short: "Clôture", tone, side: side === "h" ? "below" : "above" },
+    ],
+  };
 }
 
-// Petite étiquette type "pill" centrée sur (x, y) — pattern visuel EdgeTrade.
-function Pastille({ x, y, label, color, textColor, arrow }: PastilleProps) {
-  const text = arrow === "up" ? `${label} ↑` : arrow === "down" ? `${label} ↓` : label;
-  const width = text.length * 6.2 + 12;
-  const height = 18;
+export default function HeadShouldersDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   return (
-    <g>
-      <rect
-        x={x - width / 2}
-        y={y - height / 2}
-        width={width}
-        height={height}
-        rx="3"
-        fill="#09090b"
-        fillOpacity="0.85"
-        stroke={color}
-        strokeWidth="1"
-      />
-      <text
-        x={x}
-        y={y + 4}
-        fontSize="11"
-        fontWeight="500"
-        fill={textColor ?? color}
-        textAnchor="middle"
-      >
-        {text}
-      </text>
-    </g>
-  );
-}
-
-export default function HeadShouldersDiagram({ locale = "fr" }: { locale?: "fr" | "es" | "en" } = {}) {
-  const L = locale === "es"
-    ? {
-        hsTitle: "Hombro-cabeza-hombro — fin de tendencia alcista",
-        ihsTitle: "HCH Invertido — fin de tendencia bajista",
-        shoulders: "Hombros",
-        shoulderL: "Hombro I",
-        head: "Cabeza",
-        shoulderR: "Hombro D",
-        neckline: "Línea clavicular",
-        breakout: "Breakout",
-        mobileTitle: "Hombro-cabeza-hombro — 2 variantes",
-        classicTitle: "HCH clásico — Reversión BAJISTA",
-        classicDesc1: "3 cimas: Hombro I → Cabeza (más alta) → Hombro D. Breakout bajo la ",
-        classicDesc2: " = señal short.",
-        invTitle: "HCH invertido — Reversión ALCISTA",
-        invDesc1: "3 mínimos: Hombro I → Cabeza (más bajo) → Hombro D. Breakout sobre la ",
-        invDesc2: " = señal long.",
-        footer: "Patrón de reversión mayor, válido tras breakout de la línea clavicular.",
-      }
-    : locale === "en"
-    ? {
-        hsTitle: "Head & Shoulders — end of uptrend",
-        ihsTitle: "Inverse H&S — end of downtrend",
-        shoulders: "Shoulders",
-        shoulderL: "L shoulder",
-        head: "Head",
-        shoulderR: "R shoulder",
-        neckline: "Neckline",
-        breakout: "Breakout",
-        mobileTitle: "Head & Shoulders — 2 variants",
-        classicTitle: "Classic H&S — BEARISH reversal",
-        classicDesc1: "3 peaks: L shoulder → Head (higher) → R shoulder. Break below the ",
-        classicDesc2: " = short signal.",
-        invTitle: "Inverse H&S — BULLISH reversal",
-        invDesc1: "3 lows: L shoulder → Head (lower) → R shoulder. Break above the ",
-        invDesc2: " = long signal.",
-        footer: "Major reversal pattern, valid after neckline break.",
-      }
-    : {
-        hsTitle: "Épaule-tête-épaule — fin de tendance haussière",
-        ihsTitle: "ETE inversé — fin de tendance baissière",
-        shoulders: "Épaules",
-        shoulderL: "Épaule G",
-        head: "Tête",
-        shoulderR: "Épaule D",
-        neckline: "Ligne de cou",
-        breakout: "Breakout",
-        mobileTitle: "Épaule-tête-épaule — 2 variantes",
-        classicTitle: "ETE classique — Retournement BAISSIER",
-        classicDesc1: "3 sommets : Épaule G → Tête (plus haut) → Épaule D. Breakout sous la ",
-        classicDesc2: " = signal short.",
-        invTitle: "ETE inversé — Retournement HAUSSIER",
-        invDesc1: "3 creux : Épaule G → Tête (plus bas) → Épaule D. Breakout au-dessus de la ",
-        invDesc2: " = signal long.",
-        footer: "Pattern de retournement majeur, valide après breakout de la ligne de cou.",
-      };
-  // ─── Head & Shoulders classique (bearish reversal) ─── x = 30 → 380
-  const hsPts: [number, number][] = [
-    [30, 295],   // début pré-tendance haussière
-    [55, 235],   // ascension intermédiaire
-    [80, 130],   // Épaule G
-    [120, 185],  // creux 1 (neckline)
-    [175, 75],   // Tête (plus haut)
-    [235, 185],  // creux 2 (neckline)
-    [290, 130],  // Épaule D
-    [340, 245],  // cassure sous la neckline
-    [380, 310],  // continuation baissière
-  ];
-
-  // ─── Head & Shoulders inversé (bullish reversal) ─── x = 435 → 780
-  const ihsPts: [number, number][] = [
-    [435, 110],  // début pré-tendance baissière
-    [460, 170],  // descente intermédiaire
-    [485, 275],  // Épaule G (inversée)
-    [525, 220],  // sommet 1 (neckline)
-    [580, 325],  // Tête (plus bas)
-    [640, 220],  // sommet 2 (neckline)
-    [695, 275],  // Épaule D (inversée)
-    [745, 160],  // cassure au-dessus de la neckline
-    [785, 95],   // continuation haussière
-  ];
-
-  const buildPath = (pts: [number, number][]) =>
-    pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x},${y}`).join(" ");
-
-  // H&S : bullish (formation) jusqu'à l'Épaule D, puis bearish (cassure + continuation)
-  const hsBullPath = buildPath(hsPts.slice(0, 7));
-  const hsBearPath = buildPath(hsPts.slice(6));
-
-  // H&S Inversé : bearish (formation) jusqu'à l'Épaule D, puis bullish (cassure + continuation)
-  const ihsBearPath = buildPath(ihsPts.slice(0, 7));
-  const ihsBullPath = buildPath(ihsPts.slice(6));
-
-  return (
-    <div>
-      <svg
-        width="100%"
-        viewBox="0 0 800 400"
-        fill="none"
-        preserveAspectRatio="xMidYMid meet"
-        xmlns="http://www.w3.org/2000/svg"
-        className="hidden sm:block"
-      >
-        {/* ════════ HEAD & SHOULDERS (gauche) ════════ */}
-
-        <text x="195" y="28" fontSize="13" fontWeight="600" fill="#d4d4d8" textAnchor="middle">
-          {L.hsTitle}
-        </text>
-
-        {/* Ligne guide des 2 épaules (résistance des shoulders) */}
-        <line x1="60" y1="130" x2="310" y2="130" stroke="#71717a" strokeWidth="1" strokeDasharray="4 4" />
-        <text x="55" y="133" fontSize="11" fill="#a1a1aa" textAnchor="end">{L.shoulders}</text>
-
-        {/* Neckline reliant les 2 creux */}
-        <line x1="90" y1="185" x2="385" y2="185" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="6 3" />
-
-        {/* Chemin haussier — formation jusqu'à l'Épaule D */}
-        <path d={hsBullPath} stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-
-        {/* Chemin baissier — cassure sous la neckline + continuation */}
-        <path d={hsBearPath} stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-
-        {/* Points clés : 3 sommets + creux 2 + cassure */}
-        <circle cx={hsPts[2][0]} cy={hsPts[2][1]} r="3.5" fill="#ef4444" />
-        <circle cx={hsPts[4][0]} cy={hsPts[4][1]} r="3.5" fill="#ef4444" />
-        <circle cx={hsPts[6][0]} cy={hsPts[6][1]} r="3.5" fill="#ef4444" />
-        <circle cx={hsPts[5][0]} cy={hsPts[5][1]} r="3" fill="#a1a1aa" />
-        <circle cx={hsPts[7][0]} cy={hsPts[7][1]} r="3.5" fill="#ef4444" />
-
-        {/* Pastilles */}
-        <Pastille x={80} y={110} label={L.shoulderL} color="#ef4444" />
-        <Pastille x={175} y={55} label={L.head} color="#ef4444" />
-        <Pastille x={290} y={110} label={L.shoulderR} color="#ef4444" />
-        <Pastille x={235} y={208} label={L.neckline} color="#3f3f46" textColor="#a1a1aa" />
-        <Pastille x={340} y={270} label={L.breakout} color="#ef4444" arrow="down" />
-
-        {/* ════════ Séparateur vertical ════════ */}
-        <line x1="405" y1="25" x2="405" y2="380" stroke="#27272a" strokeWidth="1" strokeDasharray="2 4" />
-
-        {/* ════════ HEAD & SHOULDERS INVERSÉ (droite) ════════ */}
-
-        <text x="600" y="28" fontSize="13" fontWeight="600" fill="#d4d4d8" textAnchor="middle">
-          {L.ihsTitle}
-        </text>
-
-        {/* Ligne guide des 2 épaules (support des shoulders inversées) */}
-        <line x1="465" y1="275" x2="715" y2="275" stroke="#71717a" strokeWidth="1" strokeDasharray="4 4" />
-        <text x="460" y="278" fontSize="11" fill="#a1a1aa" textAnchor="end">{L.shoulders}</text>
-
-        {/* Neckline reliant les 2 sommets */}
-        <line x1="495" y1="220" x2="785" y2="220" stroke="#a1a1aa" strokeWidth="1" strokeDasharray="6 3" />
-
-        {/* Chemin baissier — formation jusqu'à l'Épaule D */}
-        <path d={ihsBearPath} stroke="#ef4444" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-
-        {/* Chemin haussier — cassure au-dessus de la neckline + continuation */}
-        <path d={ihsBullPath} stroke="#10b981" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-
-        {/* Points clés : 3 creux + sommet 2 + cassure */}
-        <circle cx={ihsPts[2][0]} cy={ihsPts[2][1]} r="3.5" fill="#10b981" />
-        <circle cx={ihsPts[4][0]} cy={ihsPts[4][1]} r="3.5" fill="#10b981" />
-        <circle cx={ihsPts[6][0]} cy={ihsPts[6][1]} r="3.5" fill="#10b981" />
-        <circle cx={ihsPts[5][0]} cy={ihsPts[5][1]} r="3" fill="#a1a1aa" />
-        <circle cx={ihsPts[7][0]} cy={ihsPts[7][1]} r="3.5" fill="#10b981" />
-
-        {/* Pastilles */}
-        <Pastille x={485} y={295} label={L.shoulderL} color="#10b981" />
-        <Pastille x={580} y={345} label={L.head} color="#10b981" />
-        <Pastille x={695} y={295} label={L.shoulderR} color="#10b981" />
-        <Pastille x={640} y={197} label={L.neckline} color="#3f3f46" textColor="#a1a1aa" />
-        <Pastille x={745} y={135} label={L.breakout} color="#10b981" arrow="up" />
-      </svg>
-
-      {/* MOBILE : 2 patterns H&S empilés ───────────────────────── */}
-      <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">{L.mobileTitle}</p>
-
-        {/* Mini-SVG : Head & Shoulders — épaule gauche, tête, épaule droite + neckline */}
-        <svg viewBox="0 0 280 130" className="w-full h-auto" aria-label="Head and Shoulders" fill="none">
-          {/* Neckline */}
-          <line x1="15" y1="85" x2="265" y2="85" stroke="#71717a" strokeWidth="1" strokeDasharray="3 3" />
-          <rect x="100" y="92" width="80" height="13" rx="2" fill="#71717a18" stroke="#52525b" strokeWidth="0.6" />
-          <text x="140" y="101" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">{locale === "es" ? "Línea clavicular" : locale === "en" ? "Neckline" : "Ligne de cou"}</text>
-          {/* Pattern H&S — left shoulder, head, right shoulder */}
-          <path d="M15,100 L55,55 L85,85 L140,20 L195,85 L225,55 L265,100" stroke="#ef4444" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
-          <circle cx="55" cy="55" r="3" fill="#ef4444" opacity="0.7" />
-          <circle cx="140" cy="20" r="4" fill="#ef4444" />
-          <circle cx="225" cy="55" r="3" fill="#ef4444" opacity="0.7" />
-          {/* Labels */}
-          <text x="55" y="48" fontSize="9" fill="#a1a1aa" textAnchor="middle">L-shoulder</text>
-          <text x="140" y="13" fontSize="10" fill="#ef4444" textAnchor="middle" fontWeight="700">Head</text>
-          <text x="225" y="48" fontSize="9" fill="#a1a1aa" textAnchor="middle">R-shoulder</text>
-          {/* Cassure neckline → target bearish */}
-          <path d="M265,100 L275,120" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="2 2" />
-          <text x="270" y="125" fontSize="8" fill="#ef4444" textAnchor="end" fontWeight="700">target ↓</text>
-        </svg>
-
-        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">{L.classicTitle}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.classicDesc1}<span className="font-bold">{locale === "es" ? "línea clavicular" : locale === "en" ? "neckline" : "ligne de cou"}</span>{L.classicDesc2}</p>
-        </div>
-        <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-          <p className="text-[13px] font-bold text-emerald-400">{L.invTitle}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.invDesc1}<span className="font-bold">{locale === "es" ? "línea clavicular" : locale === "en" ? "neckline" : "ligne de cou"}</span>{L.invDesc2}</p>
-        </div>
-        <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-          {L.footer}
-        </p>
-      </div>
-    </div>
+    <LessonChart
+      id="HeadShouldersDiagram"
+      title="Trois sommets, la tête au-dessus"
+      caption="La tête doit être strictement plus haute (ou plus basse) que les deux épaules ; la clôture de l'autre côté de la ligne de cou confirme."
+      panels={[
+        hs(CANDLES["hs-execution"] as Candle[], "h", "ete", "ETE · fin de tendance haussière", 1),
+        hs(CANDLES["ihs-xau"] as Candle[], "l", "inv", "ETE inversé · fin de tendance baissière", 0),
+      ]}
+      rows={[2]}
+    />
   );
 }

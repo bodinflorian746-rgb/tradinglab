@@ -5,13 +5,13 @@
   {"url":"/fr/formations/avance/lecon9","charts":["BacktestMetricsDiagram"]},
   {"url":"/fr/strategies/reversal/lecon4","charts":["SLManagementProgressionDiagram"]},
   {"url":"/fr/formations/macro/debutant/lecon3","charts":["ConsensusVsRealDiagram"]},
-  {"url":"/fr/strategies/reversal/lecon2","charts":["HSNecklineSlopeDiagram","HSTradeExecutionDiagram"]},
+  {"url":"/fr/strategies/reversal/lecon2","charts":["HSNecklineSlopeDiagram","HSTradeExecutionDiagram","HeadShouldersDiagram"]},
   {"url":"/fr/formations/macro/avance/lecon4","charts":["RiskRegimesQuadrantDiagram"]},
   {"url":"/fr/formations/debutant/lecon3","charts":["CandleAnatomyDiagram","CandleExampleDiagram"]},
   {"url":"/fr/strategies/price-action/lecon1","charts":["CandleAnatomyDiagram","CandleContextReadingDiagram","CandleStrengthComparisonDiagram"]},
   {"url":"/fr/strategies/price-action/lecon2","charts":["PinBarSetupDiagram","PinBarLocationDiagram","PinBarFailureDiagram","PinBarValidationGridDiagram"]},
   {"url":"/fr/strategies/price-action/lecon3","charts":["BullishVsBearishEngulfingDiagram","EngulfingSetupDiagram","EngulfingValidationGridDiagram","EngulfingContextDiagram"]},
-  {"url":"/fr/strategies/reversal/lecon3","charts":["DivergenceWithoutBreakoutDiagram"]},
+  {"url":"/fr/strategies/reversal/lecon3","charts":["DivergenceWithoutBreakoutDiagram","RSIDivergenceDiagram"]},
   {"url":"/fr/strategies/support-resistance/lecon3","charts":["FlipRetestValidationDiagram"]},
   {"url":"/fr/strategies/support-resistance/lecon4","charts":["FakeVsRealBreakoutComparisonDiagram"]},
   {"url":"/fr/strategies/trend-following/lecon3","charts":["FibPullbackChecklistDiagram","OTEDiagram","FibTPProjectionDiagram"]},
@@ -70,5 +70,6 @@
   {"url":"/fr/strategies/multi-timeframe/lecon1","charts":["SingleTimeframeTrapDiagram","HTFBiasDiagram","IntermediateZoneDiagram","LTFExecutionDiagram"]},
   {"url":"/fr/strategies/multi-timeframe/lecon2","charts":["ContreTendanceTrapDiagram","DirectionDominanteDiagram","HTFFilterDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon7","charts":["MultiTimeframeDiagram"]},
-  {"url":"/fr/formations/intermediaire/lecon8","charts":["TradePlanDiagram"]}
+  {"url":"/fr/formations/intermediaire/lecon8","charts":["TradePlanDiagram"]},
+  {"url":"/fr/strategies/reversal/lecon1","charts":["DoubleTopBottomDiagram","DTBValidationGridDiagram","DTBMeasuredMoveProjectionDiagram"]}
 ]

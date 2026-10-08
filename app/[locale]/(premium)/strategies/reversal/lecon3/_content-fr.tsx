@@ -204,13 +204,13 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : Divergence baissière XAU/USD H1</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte de la divergence baissière du Bloc 4 est repris. La tendance reste haussière, le prix imprime un HH à 4 640$ et le RSI forme un LH à 68. La divergence est confirmée. Mais une divergence seule ne suffit jamais pour entrer short. Une confirmation supplémentaire est attendue.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">La confirmation classique est la cassure du dernier creux ascendant. Le creux entre les deux sommets se situe à 4 570$. Si le prix clôture une bougie sous 4 570$, la divergence est confirmée par la structure du marché. Ce signal déclenche l&apos;entrée short.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée short se fait juste sous le creux cassé, à 4 565$. Le SL classique se placerait au-dessus du deuxième sommet à 4 650$, mais cela donne un R/R trop faible. Le SL tactique plus serré se place au-dessus de la mèche du deuxième sommet à 4 605$, soit 40$ de risque. Le TP suit la measured move : hauteur entre le deuxième sommet à 4 640$ et le creux à 4 570$, soit 70$, étendue légèrement à 80$ sous le creux cassé pour obtenir un R/R rond de 2:1.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée short se fait juste sous le creux cassé, à 4 565$. Le SL classique se placerait au-dessus du deuxième sommet à 4 650$, mais cela donne un R/R trop faible. Le SL tactique plus serré se place au-dessus du dernier sommet local formé pendant la baisse, à 4 605$, soit 40$ de risque. Le TP suit la measured move : hauteur entre le deuxième sommet à 4 640$ et le creux à 4 570$, soit 70$, étendue légèrement à 80$ sous l&apos;entrée pour obtenir un R/R rond de 2:1.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée short : 4 565$ (sous le creux cassé)</li>
-                <li>- Stop loss : 4 605$ (40$ au-dessus de la mèche du 2ème sommet)</li>
+                <li>- Stop loss : 4 605$ (au-dessus du dernier sommet local, soit 40$ au-dessus de l&apos;entrée)</li>
                 <li>- Take profit : 4 485$ (80$, measured move étendu)</li>
               </ul>
 

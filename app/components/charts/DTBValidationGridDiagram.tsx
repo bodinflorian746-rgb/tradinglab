@@ -1,128 +1,44 @@
-export default function DTBValidationGridDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
-  const labels = locale === "es"
-    ? {
-        title: "Reconocer un Double Top válido vs una trampa",
-        valid: "✓ Válido — diferencia 0,2%, breakout claro",
-        invalidGap: "✗ Diferencia demasiado grande — 0,5%",
-        invalidNoTrend: "✗ Sin tendencia previa",
-        invalidWick: "✗ Mecha, no cierre",
-        rangeNote: "Rango lateral — no es un retroceso",
-        wickOnly: "solo mecha",
-        mobileTitle: "Double Top válido vs trampa",
-        items: [
-          { v: true, t: "Cimas casi iguales", d: "Tolerancia < 0.5%, simetría clara" },
-          { v: false, t: "2ª cima demasiado baja", d: "Falta de simetría — patrón débil" },
-          { v: false, t: "2ª cima demasiado alta", d: "No es un double top, es una ruptura de rango" },
-          { v: false, t: "Mecha, no cierre", d: "La ruptura de la neckline debe ser en cierre, no una simple mecha" },
-        ],
-      }
-    : locale === "en"
-    ? {
-        title: "Tell a valid Double Top from a trap",
-        valid: "✓ Valid — 0.2% gap, clean break",
-        invalidGap: "✗ Gap too wide — 0.5%",
-        invalidNoTrend: "✗ No prior trend",
-        invalidWick: "✗ Wick, not close",
-        rangeNote: "Sideways range — not a reversal",
-        wickOnly: "wick only",
-        mobileTitle: "Valid Double Top vs trap",
-        items: [
-          { v: true, t: "Near-equal tops", d: "Tolerance < 0.5%, clear symmetry" },
-          { v: false, t: "2nd top too low", d: "Lack of symmetry — weak pattern" },
-          { v: false, t: "2nd top too high", d: "Not a double top, it's a range breakout" },
-          { v: false, t: "Wick, not close", d: "The neckline break must be on close, not just a wick" },
-        ],
-      }
-    : {
-        title: "Reconnaître un Double Top valide vs un piège",
-        valid: "✓ Valide — écart 0,2%, breakout net",
-        invalidGap: "✗ Écart trop grand — 0,5%",
-        invalidNoTrend: "✗ Pas de tendance préalable",
-        invalidWick: "✗ Mèche, pas clôture",
-        rangeNote: "Range latéral — pas un retournement",
-        wickOnly: "mèche seulement",
-        mobileTitle: "Double Top valide vs piège",
-        items: [
-          { v: true, t: "Sommets quasi égaux", d: "Tolérance < 0.5%, symétrie nette" },
-          { v: false, t: "2e sommet trop bas", d: "Manque de symétrie — pattern faible" },
-          { v: false, t: "2e sommet trop haut", d: "Pas un double top, c'est une cassure de range" },
-          { v: false, t: "Mèche, pas clôture", d: "La cassure de neckline doit être en clôture, pas une simple mèche" },
-        ],
-      };
+// Reversal 1 bloc 3 — valider un double top avec les critères du texte : tendance préalable
+// claire, écart ≤ 0,3 % entre les sommets, breakout par clôture (pas une mèche), pas de news
+// majeure dans les 30 minutes. Quatre cas sur EUR/USD H1 : le premier passe tout, chacun des
+// autres rate un critère visible sur le graphique. Écart et clôture calculés.
+// Bougies : scenarios.ts (« dt-eur », « dt-range », « dt-gap », « dt-wick »).
+
+import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
+import { fmtPrice, pivots, type Candle } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const p = (x: number) => fmtPrice(x, 4);
+const NECK = 1.18;
+
+const CASES = [
+  { key: "dt-eur", title: "✓ Double top valide" },
+  { key: "dt-range", title: "✗ Pas de tendance préalable" },
+  { key: "dt-gap", title: "✗ Écart supérieur à 0,3 %" },
+  { key: "dt-wick", title: "✗ Mèche seule sous la ligne de cou" },
+] as const;
+
+export default function DTBValidationGridDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const panels: LCPanel[] = CASES.map(({ key, title }) => {
+    const cs = CANDLES[key] as Candle[];
+    const tops = pivots(cs, 2).filter((q) => q.side === "h").slice(-2);
+    const gap = (Math.abs(tops[1].price - tops[0].price) / tops[0].price) * 100;
+    const last = cs[cs.length - 1];
+    const closed = last.c < NECK;
+    return {
+      key, title, decimals: 5, height: 180, candles: cs,
+      subtitle: `Écart ${gap.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} % · ${closed ? "clôture sous la ligne de cou" : "mèche, clôture au-dessus"}`,
+      levels: [{ key: "neck", price: NECK, from: tops[0].index, label: `Ligne de cou ${p(NECK)}`, short: "Ligne de cou", tone: "zone" as const }],
+      markers: tops.map((t, n) => ({ key: `t${n}`, i: t.index, price: t.price, label: p(t.price), tone: "bear" as const, side: "above" as const })),
+    };
+  });
   return (
-    <div className={className}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 800 500"
-      className="hidden sm:block w-full h-auto"
-    >
-      <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        {labels.title}
-      </text>
-
-      <line x1="400" y1="40" x2="400" y2="480" stroke="#3f3f46" strokeWidth="1" />
-      <line x1="20" y1="260" x2="780" y2="260" stroke="#3f3f46" strokeWidth="1" />
-
-      {/* ═══ Cellule 1 — VALIDE (haut gauche) ═══ */}
-      <line x1="40" y1="100" x2="360" y2="100" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="40" y1="170" x2="360" y2="170" stroke="#a1a1aa" strokeWidth="0.8" strokeDasharray="4 3" />
-      <path d="M50,230 L100,170 L150,100 L200,170 L250,100 L300,170 L350,230" stroke="#71717a" strokeWidth="2" fill="none" strokeLinejoin="round" />
-      <circle cx="150" cy="100" r="4" fill="#ef4444" />
-      <circle cx="250" cy="100" r="4" fill="#ef4444" />
-      <line x1="320" y1="170" x2="320" y2="220" stroke="#b91c1c" strokeWidth="1.5" />
-      <rect x="314" y="190" width="12" height="30" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
-      <rect x="80" y="50" width="240" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="200" y="65" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{labels.valid}</text>
-
-      {/* ═══ Cellule 2 — INVALIDE écart (haut droite) ═══ */}
-      <line x1="440" y1="100" x2="760" y2="100" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="440" y1="170" x2="760" y2="170" stroke="#a1a1aa" strokeWidth="0.8" strokeDasharray="4 3" />
-      <path d="M450,230 L500,170 L550,100 L600,170 L650,135 L700,170 L750,230" stroke="#71717a" strokeWidth="2" fill="none" strokeLinejoin="round" />
-      <circle cx="550" cy="100" r="4" fill="#ef4444" />
-      <circle cx="650" cy="135" r="4" fill="#ef4444" />
-      <line x1="555" y1="100" x2="645" y2="135" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" />
-      <rect x="480" y="50" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="65" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{labels.invalidGap}</text>
-
-      {/* ═══ Cellule 3 — INVALIDE pas de tendance (bas gauche) ═══ */}
-      <line x1="40" y1="320" x2="360" y2="320" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="40" y1="390" x2="360" y2="390" stroke="#a1a1aa" strokeWidth="0.8" strokeDasharray="4 3" />
-      {/* Range latéral sans tendance préalable */}
-      <path d="M50,360 L80,390 L110,330 L140,390 L170,320 L220,390 L270,320 L320,390 L350,360" stroke="#71717a" strokeWidth="2" fill="none" strokeLinejoin="round" />
-      <circle cx="170" cy="320" r="4" fill="#ef4444" />
-      <circle cx="270" cy="320" r="4" fill="#ef4444" />
-      <rect x="80" y="280" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="200" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{labels.invalidNoTrend}</text>
-      <text x="200" y="460" fill="#71717a" fontSize="8" textAnchor="middle">{labels.rangeNote}</text>
-
-      {/* ═══ Cellule 4 — INVALIDE mèche au lieu de clôture (bas droite) ═══ */}
-      <line x1="440" y1="320" x2="760" y2="320" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
-      <line x1="440" y1="390" x2="760" y2="390" stroke="#a1a1aa" strokeWidth="0.8" strokeDasharray="4 3" />
-      <path d="M450,450 L500,390 L550,320 L600,390 L650,320 L700,395" stroke="#71717a" strokeWidth="2" fill="none" strokeLinejoin="round" />
-      <circle cx="550" cy="320" r="4" fill="#ef4444" />
-      <circle cx="650" cy="320" r="4" fill="#ef4444" />
-      {/* Bougie avec mèche qui dépasse mais corps reste au-dessus de la neckline */}
-      <line x1="720" y1="380" x2="720" y2="420" stroke="#b91c1c" strokeWidth="1.5" />
-      <rect x="714" y="380" width="12" height="10" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
-      <line x1="730" y1="410" x2="755" y2="415" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" />
-      <rect x="685" y="410" width="82" height="11" rx="2" fill="#09090b" />
-      <text x="765" y="418" fill="#ef4444" fontSize="8" textAnchor="end">{labels.wickOnly}</text>
-      <rect x="480" y="280" width="240" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="295" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{labels.invalidWick}</text>
-    </svg>
-
-    {/* MOBILE : Double Top valide vs piège ─────────────────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">{labels.mobileTitle}</p>
-      {labels.items.map((c, i) => (
-        <div key={i} className={`rounded-lg border p-2.5 ${c.v ? "border-emerald-500/40 bg-emerald-500/8" : "border-red-500/40 bg-red-500/8"}`}>
-          <p className={`text-[13px] font-bold ${c.v ? "text-emerald-400" : "text-red-400"}`}>
-            {c.v ? "✓" : "✗"} {c.t}
-          </p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{c.d}</p>
-        </div>
-      ))}
-    </div>
-    </div>
+    <LessonChart
+      id="DTBValidationGridDiagram"
+      title="Les critères d'un double top valide"
+      caption="Tendance préalable, écart ≤ 0,3 % (30 pips sur EUR/USD), clôture sous la ligne de cou, et pas de news majeure dans les 30 minutes."
+      panels={panels}
+      rows={[2, 2]}
+    />
   );
 }

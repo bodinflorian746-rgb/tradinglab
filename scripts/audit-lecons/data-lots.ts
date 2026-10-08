@@ -571,3 +571,42 @@ export function checkLot23(check: Check) {
     check(b.some((x, i) => i > 0 && engulfs(b[i - 1], x, true)), "Contexte (PA 3) : engulfing isolé en impulsion");
   }
 }
+
+export function checkLot24(check: Check) {
+  const shape = (cs: Candle[], side: "h" | "l") => {
+    const piv = pivots(cs, 2), ext = piv.filter((q) => q.side === side).slice(-2);
+    const neck = piv.find((q) => q.side !== side && q.index > ext[0].index && q.index < ext[1].index);
+    return { ext, neck };
+  };
+  {
+    // Reversal 1 : sommets 1.1880 / 1.1895, ligne de cou 1.1800, clôture 1.1795 ; creux 4 480 / 4 478, ligne de cou 4 520
+    const t = shape(CS["dt-eur"], "h"), cs = CS["dt-eur"];
+    check(t.ext.map((q) => q.price).join() === "1.188,1.1895" && t.neck?.price === 1.18 && cs[cs.length - 1].c === 1.1795, "Double top (Rev. 1) : 1.1880 / 1.1895 / 1.1800 / 1.1795");
+    const b = shape(CS["db-xau"], "l"), db = CS["db-xau"];
+    check(b.ext.map((q) => q.price).join() === "4480,4478" && b.neck?.price === 4520 && db[db.length - 1].c > 4520, "Double bottom (Rev. 1) : 4 480 / 4 478 / 4 520");
+    // grille : valide ; range préalable (pas de HH / HL avant le 1er sommet) ; écart > 0,3 % ; mèche sous la ligne de cou sans clôture
+    const gap = (k: string) => { const e = shape(CS[k], "h").ext; return Math.abs(e[1].price - e[0].price) / e[0].price; };
+    check(gap("dt-eur") <= 0.003 && gap("dt-range") <= 0.003 && gap("dt-gap") > 0.003 && gap("dt-wick") <= 0.003, "Grille (Rev. 1) : écarts");
+    const w = CS["dt-wick"], lw = w[w.length - 1];
+    check(lw.l < 1.18 && lw.c > 1.18 && CS["dt-gap"][CS["dt-gap"].length - 1].c < 1.18, "Grille (Rev. 1) : mèche seule / clôture");
+    // tendance préalable : progression nette avant le 1er sommet (le range reste dans 40 pips)
+    const run = (k: string) => { const c = CS[k], i = shape(c, "h").ext[0].index; return c[i - 1].c - c[0].o; };
+    check(run("dt-eur") > 0.01 && Math.abs(run("dt-range")) < 0.004, "Grille (Rev. 1) : tendance préalable");
+    // plan : hauteur 80 pips, projection 1.1720, TP 1.1715, SL 1.1835 au-dessus du dernier rebond 1.1832, R/R 2
+    check(near(1.18 - (1.188 - 1.18), 1.172, 1e-9) && near(rrOf(1.1795, 1.1835, 1.1715), 2, 0.005) && cs.some((k) => k.h === 1.1832), "Measured move (Rev. 1) : 80 pips, R/R 2, rebond 1.1832");
+  }
+  {
+    // Reversal 2 : ETE 4 620 / 4 660 / 4 625, creux 4 580 / 4 575 ; inversé 4 470 / 4 430 / 4 475, sommets 4 510 / 4 515
+    const h = pivots(CS["hs-execution"], 2), i = pivots(CS["ihs-xau"], 2);
+    check(h.filter((q) => q.side === "h").slice(-3).map((q) => q.price).join() === "4620,4660,4625", "ETE (Rev. 2) : épaules et tête");
+    check(i.filter((q) => q.side === "l").slice(-3).map((q) => q.price).join() === "4470,4430,4475" && i.filter((q) => q.side === "h").map((q) => q.price).join() === "4510,4515", "ETE inversé (Rev. 2)");
+    check(CS["ihs-xau"][CS["ihs-xau"].length - 1].c > 4515, "ETE inversé (Rev. 2) : clôture au-dessus de 4 515");
+  }
+  {
+    // Reversal 3 : sommets 4 600 (RSI 75) puis 4 640 (RSI 68), creux 4 570
+    const cs = CS["rsi-div"], r = rsi(cs.map((k) => k.c), 14), p = pivots(cs, 2);
+    const [t1, t2] = p.filter((q) => q.side === "h").slice(-2);
+    check(t1.price === 4600 && t2.price === 4640 && p.some((q) => q.side === "l" && q.price === 4570), "Divergence (Rev. 3) : 4 600 / 4 570 / 4 640");
+    check(Math.round(r[t1.index]!) === 75 && Math.round(r[t2.index]!) === 68, `Divergence (Rev. 3) : RSI ${r[t1.index]?.toFixed(1)} / ${r[t2.index]?.toFixed(1)} ≠ 75 / 68`);
+  }
+}

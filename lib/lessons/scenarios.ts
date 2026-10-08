@@ -1038,3 +1038,72 @@ Object.assign(SCENARIOS, {
   "l7-m15": authored(1.0872, L7_M15, 23103, 5, "EUR/USD", [1.0850]),
   "eng-isolated": authored(4560, ENG_ISOLATED, 23201, 0, "XAU/USD"),
 });
+
+// ─── Lot 24 ──────────────────────────────────────────────────────────────────
+// Reversal 1 — double top EUR/USD H1 (exemple et plan du texte) : tendance haussière HH / HL,
+// sommet 1.1880, ligne de cou 1.1800, 2e sommet 1.1895, clôture sous la ligne de cou à 1.1795.
+const DT_EUR = bars(1.1730, [
+  1.1746, { c: 1.1740, l: 1.1735 }, 1.1758, 1.1775, { c: 1.1768, l: 1.1762 }, 1.1790, 1.1812, 1.1836, 1.1858, { c: 1.1872, h: 1.1880 },
+  1.1858, 1.1836, 1.1816, { c: 1.1806, l: 1.1800 }, 1.1824, 1.1848, 1.1870, { c: 1.1886, h: 1.1895 }, 1.1866, 1.1846, { c: 1.1826, l: 1.1822 }, { c: 1.1830, h: 1.1832 }, 1.1812, { c: 1.1795, h: 1.1814 },
+], 0.0004, 5);
+// Les autres cas de la grille de validation : même fin de pattern, un seul critère manquant.
+const DT_RANGE = bars(1.1840, [
+  1.1822, 1.1840, { c: 1.1852, h: 1.1856 }, 1.1836, { c: 1.1818, l: 1.1812 }, 1.1834, { c: 1.1848, h: 1.1851 }, 1.1832, { c: 1.1818, l: 1.1814 }, 1.1838, 1.1858, { c: 1.1872, h: 1.1880 },
+  1.1858, 1.1836, 1.1816, { c: 1.1806, l: 1.1800 }, 1.1824, 1.1848, 1.1870, { c: 1.1886, h: 1.1895 }, 1.1868, 1.1842, 1.1820, 1.1808, { c: 1.1795, h: 1.1812 },
+], 0.0004, 5);
+const DT_GAP = bars(1.1730, [
+  1.1746, { c: 1.1740, l: 1.1735 }, 1.1758, 1.1775, { c: 1.1768, l: 1.1762 }, 1.1790, 1.1812, 1.1836, 1.1858, { c: 1.1872, h: 1.1880 },
+  1.1858, 1.1836, 1.1816, { c: 1.1806, l: 1.1800 }, 1.1830, 1.1860, 1.1890, { c: 1.1912, h: 1.1925 }, 1.1890, 1.1858, 1.1828, 1.1810, { c: 1.1795, h: 1.1814 },
+], 0.0004, 5);
+const DT_WICK = bars(1.1730, [
+  1.1746, { c: 1.1740, l: 1.1735 }, 1.1758, 1.1775, { c: 1.1768, l: 1.1762 }, 1.1790, 1.1812, 1.1836, 1.1858, { c: 1.1872, h: 1.1880 },
+  1.1858, 1.1836, 1.1816, { c: 1.1806, l: 1.1800 }, 1.1824, 1.1848, 1.1870, { c: 1.1886, h: 1.1895 }, 1.1868, 1.1842, 1.1820, 1.1808, { c: 1.1806, h: 1.1812, l: 1.1788 },
+], 0.0004, 5);
+// Reversal 1 — double bottom XAU/USD H1 : baisse depuis 2 jours, support 4 480, ligne de cou 4 520,
+// 2e creux 4 478 rejeté, clôture au-dessus de 4 520.
+const DB_XAU = bars(4572, [
+  4562, 4550, { c: 4555, h: 4560 }, 4540, 4524, 4507, 4494, { c: 4486, l: 4480 }, 4498, 4510, { c: 4516, h: 4520 },
+  4506, 4494, { c: 4486, l: 4478 }, 4498, 4510, { c: 4527, l: 4508 },
+], 3, 0);
+// Reversal 2 — ETE inversé XAU/USD H1 : épaule gauche 4 470, sommet 4 510, tête 4 430, sommet 4 515,
+// épaule droite 4 475, clôture au-dessus de 4 515.
+const IHS_XAU = bars(4530, [
+  4520, 4506, 4492, { c: 4476, l: 4470 }, 4488, { c: 4504, h: 4510 }, 4486, 4466, 4448, { c: 4438, l: 4430 }, 4456, 4478, 4498, { c: 4510, h: 4515 },
+  4500, 4488, { c: 4480, l: 4475 }, 4492, 4505, { c: 4522, l: 4503 },
+], 3, 0);
+// Reversal 3 — divergence baissière XAU/USD H1 (exemple du texte) : sommet 4 600 (RSI 75), creux
+// 4 570, nouveau sommet 4 640 (HH, RSI 68). Montées en marches (+15 / −5 puis +12 / −5) réglées
+// pour que le RSI 14 calculé sur les clôtures vaille 75 puis 68.
+const rsiDivCloses = () => {
+  const cl: number[] = []; let x = 4450;
+  for (;;) { const up = x + 15; if (up >= 4600) { cl.push(4600); break; } cl.push(up); x = up - 5; cl.push(x); }
+  cl.push(4590, 4578, 4570); x = 4570;
+  for (;;) { const up = x + 12; if (up >= 4640) { cl.push(4640); break; } cl.push(up); x = up - 5; cl.push(x); }
+  cl.push(4632, 4626);
+  return cl;
+};
+// Sommets : clôture 2 $ sous l'extrême (mèche jusqu'à 4 600 / 4 640), creux : clôture 4 572, mèche
+// 4 570 ; les bougies voisines restent strictement sous les sommets et au-dessus du creux.
+const RSI_DIV = (() => {
+  const cl0 = rsiDivCloses();
+  const t1 = cl0.indexOf(4600), t2 = cl0.indexOf(4640), b = cl0.indexOf(4570, t1);
+  const cl = cl0.map((v, i) => (i === t1 || i === t2 ? v - 2 : i === b ? 4572 : v));
+  const st = bars(4450, cl.map((v, i): number | Step => (i === t1 ? { c: v, h: 4600 } : i === t2 ? { c: v, h: 4640 } : i === b ? { c: v, l: 4570 } : v)), 3, 0);
+  let o = 4450;
+  return st.map((k, i) => {
+    const out = { ...k }, top = Math.max(o, k.c), bot = Math.min(o, k.c);
+    for (const [t, hi] of [[t1, 4600], [t2, 4640]]) if (i !== t && Math.abs(i - t) <= 3) out.h = Math.max(top, Math.min(out.h!, hi - 1));
+    if (i !== b && Math.abs(i - b) <= 3) out.l = Math.min(bot, Math.max(out.l!, 4571));
+    o = k.c;
+    return out;
+  });
+})();
+Object.assign(SCENARIOS, {
+  "dt-eur": authored(1.1730, DT_EUR, 24101, 5, "EUR/USD", [1.1800]),
+  "dt-range": authored(1.1840, DT_RANGE, 24102, 5, "EUR/USD", [1.1800]),
+  "dt-gap": authored(1.1730, DT_GAP, 24103, 5, "EUR/USD", [1.1800]),
+  "dt-wick": authored(1.1730, DT_WICK, 24104, 5, "EUR/USD", [1.1800]),
+  "db-xau": authored(4572, DB_XAU, 24105, 0, "XAU/USD", [4520]),
+  "ihs-xau": authored(4530, IHS_XAU, 24201, 0, "XAU/USD"),
+  "rsi-div": authored(4450, RSI_DIV, 24301, 0, "XAU/USD"),
+});

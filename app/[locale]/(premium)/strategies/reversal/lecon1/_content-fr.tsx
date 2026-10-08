@@ -148,7 +148,7 @@ export default function ContentFr() {
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Les 3 conditions pour qu&apos;un double top soit valide :</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Une tendance haussière préalable claire (HH/HL)</li>
-              <li>- Deux sommets quasi égaux (écart toléré : 0,2% maximum)</li>
+              <li>- Deux sommets quasi égaux (écart toléré : 0,3% maximum)</li>
               <li>- Un breakout confirmé de la ligne de cou (clôture, pas une simple mèche)</li>
             </ul>
 
@@ -204,14 +204,14 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : Double Top EUR/USD H1</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte du double top EUR/USD du Bloc 3 est repris. Tendance haussière préalable, deux sommets à 1.1880 et 1.1895, ligne de cou à 1.1800. Le prix vient de clôturer une bougie H1 à 1.1795, sous la ligne de cou. Pattern confirmé.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée se fait short juste sous la ligne de cou pour saisir le breakdown. Un prix qui plonge déjà ne se chasse pas. Une confirmation propre avec une clôture sous la ligne de cou est requise. Le SL va au-dessus du dernier sommet pour invalider proprement le pattern. Le TP suit la measured move : la hauteur du pattern, du sommet à la ligne de cou, se projette depuis la ligne de cou vers le bas.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée se fait short juste sous la ligne de cou pour saisir le breakdown. Un prix qui plonge déjà ne se chasse pas. Une confirmation propre avec une clôture sous la ligne de cou est requise. Le SL classique irait au-dessus du deuxième sommet, mais le R/R deviendrait trop faible : le SL tactique se place juste au-dessus du dernier rebond sous la ligne des sommets. Le TP suit la measured move : la hauteur du pattern, du sommet à la ligne de cou, se projette depuis la ligne de cou vers le bas.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">Hauteur du pattern : 1.1880 - 1.1800 = 80 pips. Projection théorique sous la ligne de cou : 1.1720. Le TP est pris 5 pips plus bas à 1.1715 pour obtenir un R/R rond de 2:1 (40 pips de risque, 80 pips de gain).</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée short : 1.1795 (clôture sous ligne de cou)</li>
-                <li>- Stop loss : 1.1835 (40 pips au-dessus de la mèche du 2ème sommet)</li>
+                <li>- Stop loss : 1.1835 (au-dessus du dernier rebond à 1.1832, soit 40 pips au-dessus de l&apos;entrée)</li>
                 <li>- Take profit : 1.1715 (80 pips, measured move ajusté)</li>
               </ul>
 
@@ -253,7 +253,7 @@ export default function ContentFr() {
             points={[
               "Double top = 2 sommets quasi égaux sur une résistance après tendance haussière. Double bottom = miroir sur un support.",
               "Confirmation = clôture (pas mèche) de l’autre côté de la ligne de cou.",
-              "Entrée juste après le breakout. SL au-delà du dernier sommet/creux. TP = measured move (hauteur du pattern projetée).",
+              "Entrée juste après le breakout. SL classique au-delà du dernier sommet/creux, SL tactique au-dessus du dernier rebond. TP = measured move (hauteur du pattern projetée).",
               "Setup ignoré si la tendance préalable n’est pas claire, si l’écart dépasse 0,3%, ou si une news majeure arrive.",
             ]}
           />
