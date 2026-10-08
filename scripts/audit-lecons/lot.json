@@ -26,7 +26,7 @@
   {"url":"/fr/formations/macro/intermediaire/lecon3","charts":["InflationIndicatorsChainDiagram"]},
   {"url":"/fr/strategies/ict/lecon2","charts":["PDArrayContextDiagram","PDArrayConfluenceDiagram","FVGMitigationDiagram","FVGMitigationScenariosDiagram"]},
   {"url":"/fr/strategies/macro-trading/lecon1","charts":["FOMCExhaustionDiagram","FOMCImpulseExcessDiagram","FOMCFadeSetupDiagram"]},
-  {"url":"/fr/strategies/macro-trading/lecon4","charts":["MacroFilterRegimeDiagram"]},
+  {"url":"/fr/strategies/macro-trading/lecon4","charts":["MacroFilterRegimeDiagram","MacroFilterCalendarDiagram","MacroFilterFlowchartDiagram"]},
   {"url":"/fr/strategies/multi-timeframe/lecon3","charts":["ZoneHistoireDiagram"]},
   {"url":"/fr/strategies/multi-timeframe/lecon5","charts":["ProcessFunnelDiagram"]},
   {"url":"/fr/strategies/price-action/lecon4","charts":["MultiTFEntryDiagram"]},
@@ -65,5 +65,6 @@
   {"url":"/fr/strategies/ict/lecon5","charts":["IctLiquidityGrabDiagram","ICTSequenceTimelineDiagram","DisplacementSetupDiagram","ICTTimingDiagram"]},
   {"url":"/fr/strategies/ict/lecon3","charts":["KillzonesTimelineDiagram","AsiaRangeSweepDiagram","NYOpenExpansionDiagram","TimingComparisonDiagram"]},
   {"url":"/fr/strategies/ict/lecon4","charts":["DisplacementImpulseDiagram","DisplacementControlDiagram","DisplacementSetupDiagram","DisplacementVsVolatilityDiagram"]},
-  {"url":"/fr/strategies/macro-trading/lecon2","charts":["NFPHeadlineReactionDiagram","NFPStabilizationDiagram","NFPReversalDiagram"]}
+  {"url":"/fr/strategies/macro-trading/lecon2","charts":["NFPHeadlineReactionDiagram","NFPStabilizationDiagram","NFPReversalDiagram"]},
+  {"url":"/fr/strategies/macro-trading/lecon3","charts":["RiskoffSignalsDiagram","RiskoffTrendDiagram","RiskoffExhaustionDiagram"]}
 ]

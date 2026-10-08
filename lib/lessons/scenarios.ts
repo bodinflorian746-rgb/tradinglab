@@ -798,3 +798,46 @@ Object.assign(SCENARIOS, {
   "fomc-excess": fomcExcess, "nfp-headline": nfpHeadline,
   "nfp-stab": nfpStab, "nfp-reversal": nfpReversal,
 });
+
+// ─── Lot 19 ──────────────────────────────────────────────────────────────────
+// Macro-trading 3 — RiskoffSignals (XAU/USD Daily) : structure HH/HL haussière depuis
+// 4 585 $ jusqu'à 4 705 $ sur fond de régime risk-off concordant (S&P 500 ↓, VIX ↑, DXY ↑).
+const riskoffDaily = () => buildCandles(4575, [
+  ...c(4590, 4585, 4610, 4605, 4600), { c: 4640, h: 4645 }, ...c(4630, 4618, 4622, 4625, 4620),
+  { c: 4660, h: 4668 }, ...c(4650, 4642, 4648, 4652),
+  { c: 4700, h: 4705 },
+], { seed: 19101, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale",
+  levels: [4585, 4640, 4668, 4660, 4705], pins: [4645, 4668, 4705] });
+// Macro-trading 3 — RiskoffTrend (XAU/USD H4) : impulsion 4 610→4 690, pullback 4 655,
+// entrée long 4 660, SL 4 640, TP 4 730.
+const riskoffTrend = () => buildCandles(4600, [
+  ...c(4610, 4620, 4635, 4650, 4668), { c: 4690, h: 4692 },
+  ...c(4678, 4665), { c: 4658, l: 4655 }, ...c(4664, 4672),
+  { c: 4683 }, { c: 4700 }, { c: 4715 }, { c: 4730, h: 4733 },
+], { seed: 19201, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "normale",
+  levels: [4655, 4690, 4660, 4640, 4730], pins: [4692, 4655, 4730, 4733] });
+// Macro-trading 3 — RiskoffExhaustion (XAU/USD H4) : forte tendance depuis 4 590 $ puis
+// trois sommets faiblissants (4 735, 4 720, 4 705 $), corrections croissantes (25, 40, 65 $).
+const riskoffExhaust = () => buildCandles(4580, [
+  ...c(4600, 4625, 4650, 4675, 4705), { c: 4735, h: 4738 },   // fort
+  { c: 4718, l: 4710 }, ...c(4712),                             // correction 25$
+  { c: 4726 }, { c: 4720, h: 4722 },                           // 2e sommet (LH)
+  { c: 4700, l: 4680 }, ...c(4685, 4692),                      // correction 40$
+  { c: 4705, h: 4706 },                                         // 3e sommet (LH)
+  { c: 4692, l: 4668 },                                         // début correction 65$
+], { seed: 19301, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "normale",
+  levels: [4590, 4735, 4720, 4705], pins: [4738, 4710, 4722, 4680, 4706, 4668] });
+// Macro-trading 4 — MacroFilterCalendar (XAU/USD M15) : calme 4 640 $, CPI à 13h30 UTC
+// (setup short techniquement solide mais filtre rouge calendrier) : publication → volatilité
+// extrême jusqu'à 4 705 $ puis chute à 4 610 $.
+const macroFilterNews = () => buildCandles(4635, [
+  ...c(4638, 4640, 4637, 4641),
+  { c: 4705, h: 4710 },    // publication CPI : impulsion haussière explosive
+  { c: 4660, h: 4706 },    // rejet violent
+  { c: 4635 }, { c: 4618 }, { c: 4612, l: 4610 },
+], { seed: 19401, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 4, preNews: true,
+  levels: [4640, 4705, 4640, 4610], pins: [4641, 4710, 4706, 4610] });
+Object.assign(SCENARIOS, {
+  "riskoff-daily": riskoffDaily, "riskoff-trend-h4": riskoffTrend,
+  "riskoff-exhaust-h4": riskoffExhaust, "macro-filter-news": macroFilterNews,
+});

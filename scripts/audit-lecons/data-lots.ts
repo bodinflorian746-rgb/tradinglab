@@ -404,3 +404,34 @@ export function checkLot18(check: Check) {
     check(Math.max(...CS["nfp-reversal"].map(k=>k.h))>4640,"NFP reversal: peak < 4640 (pas de retournement complet)");
   }
 }
+
+export function checkLot19(check: Check) {
+  {
+    // riskoff-daily : structure HH/HL jusqu'à ≥4700
+    const cs=CS["riskoff-daily"];
+    check(Math.max(...cs.map(k=>k.h))>=4700,"RiskoffDaily: peak < 4700");
+    check(cs[cs.length-1].c > cs[0].c + 50, "RiskoffDaily: pas de hausse suffisante");
+  }
+  {
+    // riskoff-trend-h4 : HH→pullback→HL→TP ≥ 4730
+    const cs=CS["riskoff-trend-h4"];
+    check(Math.max(...cs.map(k=>k.h))>=4730,"RiskoffTrend: TP < 4730");
+    check(Math.min(...cs.map(k=>k.l))<=4658,"RiskoffTrend: pullback trop haut");
+    check(cs[cs.length-1].c>=4728,"RiskoffTrend: TP final < 4728");
+  }
+  {
+    // riskoff-exhaust-h4 : pic principal puis dernier sommet < pic
+    const cs=CS["riskoff-exhaust-h4"];
+    const peak=Math.max(...cs.map(k=>k.h));
+    const peakAt=cs.findIndex(k=>k.h===peak);
+    const lastHigh=Math.max(...cs.slice(peakAt+1).map(k=>k.h));
+    check(lastHigh<peak,"RiskoffExhaust: sommets non faiblissants (lastHigh ≥ HH)");
+  }
+  {
+    // macro-filter-news : calm (≤15$) then news spike ≥60$
+    const cs=CS["macro-filter-news"];
+    const calmRange=Math.max(...cs.slice(0,4).map(k=>k.h))-Math.min(...cs.slice(0,4).map(k=>k.l));
+    check(calmRange<=15,`MacroFilterNews: calme > 15$ (${calmRange}$)`);
+    check(Math.max(...cs.map(k=>k.h))-Math.min(...cs.map(k=>k.l))>=60,"MacroFilterNews: amplitude < 60$");
+  }
+}
