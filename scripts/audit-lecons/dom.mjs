@@ -507,8 +507,8 @@ const MUTATIONS = {
   "niveau hors de son prix": () => { const l = document.querySelector("line[data-level]:not([data-offscale])"); l.setAttribute("y1", +l.getAttribute("y1") + 3); },
   "étiquette sur une bougie": () => { const g = document.querySelector("[data-candle='3']"); const b = g.querySelector("rect"); const r = document.querySelector("[data-marker] g[data-label-for] rect"); r.setAttribute("x", b.getAttribute("x")); r.setAttribute("y", b.getAttribute("y")); },
   "étiquette = un prix seul": () => { document.querySelector("[data-marker] g[data-label-for] text").textContent = "1.1748"; },
-  "repère « clôture » sur la mèche": () => { const m = document.querySelector("svg[data-candles] [data-marker]"); const s = m.closest("svg"); const k = JSON.parse(s.dataset.candles)[+m.dataset.i]; m.dataset.role = "close"; m.dataset.price = String(k.h === k.c ? k.l : k.h); },
-  "BOS sur une bougie au bord": () => { const m = document.querySelector("svg[data-candles] [data-marker]"); m.dataset.role = "bos"; m.dataset.ref = "0"; },
+  "repère « clôture » sur la mèche": () => { const m = [...document.querySelectorAll("svg[data-candles] [data-marker]")].find((x) => Number.isInteger(+x.dataset.i)); const s = m.closest("svg"); const k = JSON.parse(s.dataset.candles)[+m.dataset.i]; m.dataset.role = "close"; m.dataset.price = String(k.h === k.c ? k.l : k.h); },
+  "BOS sur une bougie au bord": () => { const m = [...document.querySelectorAll("svg[data-candles] [data-marker]")].find((x) => Number.isInteger(+x.dataset.i)); m.dataset.role = "bos"; m.dataset.ref = "0"; },
   "double cadre": () => { const f = document.querySelector("[data-lesson-chart]"); const w = document.createElement("div"); w.style.border = "1px solid #444"; w.style.padding = "16px"; f.parentElement.insertBefore(w, f); w.appendChild(f); },
   "doublon graphique / légende": () => { const chip = document.querySelector("[data-chip]"); const t = chip.closest("[data-lesson-chart]").querySelector("g[data-label-for] text"); chip.textContent = t.textContent; },
 };
