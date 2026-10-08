@@ -476,3 +476,36 @@ export function checkLot20(check: Check) {
     check(m.slice(0, b).every((k) => k.h <= 1.174) && Math.max(...m.map((k) => k.h)) === 1.1752 && Math.min(...m.slice(b).map((k) => k.l)) === 1.1685, "Contre-tendance (MUT 2) : 1.1740 → 1.1752 → 1.1685");
   }
 }
+
+export function checkLot21(check: Check) {
+  {
+    // Multi-UT 2 : chutes de 35-40 $ en 2 bougies, corrections en 4 bougies, tout sous 4 680
+    const cs = CS["dir-dom-xau"];
+    const drops = [[0, 2], [6, 8], [12, 14]].map(([a, b]) => cs[a].c - cs[b].c);
+    check(drops.every((d) => d >= 35 && d <= 40) && cs.every((k) => k.h < 4680), `Direction dominante (MUT 2) : chutes ${drops.join(", ")} $`);
+    // H4 : zone 1.1750-1.1760 rejetée au moins deux fois, rien au-dessus de 1.1760 après le passage dessous, prix 1.1715
+    const h = CS["htf-filter-h4"], f = h.findIndex((k) => k.c < 1.175);
+    check(h.slice(f + 1).every((k) => k.h <= 1.176) && h.filter((k, i) => i > f && k.h >= 1.175 && k.c < k.o).length >= 2 && h[h.length - 1].c === 1.1715, "Filtre (MUT 2) : rejets sous 1.1760, prix 1.1715");
+  }
+  {
+    // Multi-UT 3 : depuis 4 680, FVG 4 648-4 660, mèche partiellement dans le FVG puis rejet
+    const cs = CS["retour-deseq-xau"], g = largestFvg(cs, "bear");
+    check(!!g && g.y1 === 4648 && g.y2 === 4660 && Math.max(...cs.map((k) => k.h)) === 4680, "Retour (MUT 3) : FVG 4 648-4 660 depuis 4 680");
+    const t = cs.findIndex((k, i) => !!g && i > g.i + 2 && k.h >= 4648);
+    check(t > 0 && cs[t + 1].h > 4648 && cs[t + 1].h < 4660 && cs[t + 1].o - cs[t + 1].c >= 12, "Retour (MUT 3) : mèche partielle puis rejet fort");
+    // H1 : support 1.1760 cassé, FVG 1.1750-1.1760, remontée aux corps haussiers décroissants
+    const z = CS["zone-prep-h1"], zg = largestFvg(z, "bear");
+    check(!!zg && near(zg.y1, 1.175, 1e-9) && near(zg.y2, 1.176, 1e-9) && z.slice(0, zg.i).every((k) => k.l >= 1.176), "Zone (MUT 3/5) : support 1.1760 et FVG 1.1750-1.1760");
+    const low = z.reduce((b, k, i) => (k.l < z[b].l ? i : b), 0);
+    const ups = z.map((k, i) => (i > low && k.c > k.o ? k.c - k.o : -1)).filter((b) => b >= 0);
+    check(ups.every((b, i) => i === 0 || b <= ups[i - 1] + 1e-9) && z[z.length - 1].h < 1.176, "Zone (MUT 3/5) : corps décroissants, pas encore de réaction");
+  }
+  {
+    // Multi-UT 4/5 : 3 mèches > 1.1760 (≤ 1.1770) sans clôture au-dessus, creux 1.1748 cassé, retour à 1.1758, SL 1.1772, TP 1.1695 (R/R 4,5)
+    const cs = CS["ltf-confirm"], w = cs.filter((k) => k.h > 1.176);
+    check(w.length === 3 && w.every((k) => k.c <= 1.176 && k.h <= 1.177) && Math.max(...w.map((k) => k.h)) === 1.177, "Confirmation (MUT 4/5) : 3 mèches de rejet");
+    const lowAt = cs.findIndex((k) => k.l === 1.1748), b = cs.findIndex((k, i) => i > lowAt && k.c < 1.1748);
+    check(lowAt > 0 && b > 0 && cs.slice(b - 2, b + 2).filter((k) => k.c < k.o).length >= 3 && cs.some((k, i) => i > b && k.h >= 1.1758 && k.h < 1.1772), "Confirmation (MUT 4/5) : breakout de 1.1748 puis retour à 1.1758");
+    check(near(rrOf(1.1758, 1.1772, 1.1695), 4.5, 0.005), "Confirmation (MUT 5) : R/R 4,5");
+  }
+}

@@ -891,41 +891,59 @@ Object.assign(SCENARIOS, {
 });
 
 // ─── Lot 21 ──────────────────────────────────────────────────────────────────
-// Multi-UT 2 — DirectionDominante (XAU/USD H4) : impulsions baissières fortes (grands
-// corps, 30-40 $) vs corrections haussières faibles (petits corps, 10-15 $). La direction
-// dominante baissière est lisible à l'œil.
-const dirDomXau = () => buildCandles(4705, [
-  { c: 4672 }, ...c(4678, 4682), { c: 4660, h: 4682 }, { c: 4628 }, { c: 4635, h: 4640 },
-  { c: 4622 }, { c: 4614 }, { c: 4622, h: 4628 }, { c: 4611 }, { c: 4620, h: 4625 },
-  { c: 4608 }, { c: 4600 }, { c: 4608, h: 4614 }, { c: 4595 }, { c: 4603, h: 4607 },
-  { c: 4590 },
-], { seed: 21101, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale",
-  levels: [4680, 4628, 4614, 4590], pins: [4682, 4628, 4625, 4614, 4607] });
-// Multi-UT 3 — RetourDesequilibre (XAU/USD H1) : impulsion bearish depuis 4 680 $ avec FVG
-// entre 4 648-4 660 $, prix tombe à 4 620 $, remontée vers le FVG, rejet.
-const retourDeseqXau = () => buildCandles(4678, [
-  { c: 4665, h: 4680 }, { c: 4648, h: 4666 }, { c: 4628 }, { c: 4620, l: 4618 },
-  ...c(4625, 4631, 4638, 4644, 4651), { c: 4655, h: 4658 }, { c: 4638, h: 4656 }, ...c(4629, 4622),
-], { seed: 21201, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale", split: 4,
-  levels: [4660, 4648, 4618], pins: [4680, 4666, 4648, 4618, 4658, 4656] });
-// Multi-UT 3 & 5 (fusionné ScenarioZone + H1ZonePreparation) — EUR/USD H1 :
-// biais baissier. Zone de résistance 1.1750-1.1760 (FVG bearish). Bougies haussières qui
-// montent vers la zone avec amplitude décroissante, ralentissement visible à l'approche.
-const h1ZonePrep = () => buildCandles(1.1712, [
-  { c: 1.1718, h: 1.172 }, { c: 1.1726 }, { c: 1.1732, h: 1.1734 }, { c: 1.1737 },
-  { c: 1.1741, h: 1.1743 }, { c: 1.1744 }, { c: 1.1746, h: 1.1748 }, { c: 1.1747, h: 1.1749 },
-], { seed: 21301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "faible",
-  levels: [1.175, 1.176], pins: [1.172, 1.1734, 1.1748, 1.1749] });
-// Multi-UT 4 & 5 (fusionné ConfirmationM5 + M15Validation) — EUR/USD LTF : approche de la
-// zone 1.1750-1.1760, 3 bougies à mèches hautes répétées (rejet), puis cassure du creux
-// local (CHoCH / confirmation d'exécution baissière).
-const ltfConfEur = () => buildCandles(1.1740, [
-  { c: 1.1745 }, { c: 1.1749 }, { c: 1.1751 },
-  { c: 1.1749, h: 1.1754, l: 1.1747 }, { c: 1.1748, h: 1.1755, l: 1.1745 }, { c: 1.1747, h: 1.1753, l: 1.1744 },
-  { c: 1.1741 }, { c: 1.1736 }, { c: 1.1730, l: 1.1728 },
-], { seed: 21401, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", split: 6,
-  levels: [1.175, 1.176, 1.1740], pins: [1.1754, 1.1755, 1.1753, 1.1744, 1.1745, 1.1728] });
+// Bougies entièrement écrites (o = clôture précédente), structures exactes.
+const authored = (open: number, st: Step[], seed: number, decimals: number, asset: "EUR/USD" | "XAU/USD", levels: number[] = []) =>
+  () => buildCandles(open, st, { seed, decimals, asset, session: "Londres", volatility: "normale", levels, pins: pinAll(st) });
+// Multi-UT 2 bloc 2 — XAU/USD H4 : chutes agressives de 35 à 40 $, corrections lentes,
+// rejets systématiques sous 4 680 $.
+const DIR_DOM: Step[] = [
+  { c: 4676, h: 4679, l: 4669 }, { c: 4656, h: 4677, l: 4653 }, { c: 4638, h: 4657, l: 4635 },
+  { c: 4643, h: 4645, l: 4636 }, { c: 4647, h: 4649, l: 4642 }, { c: 4652, h: 4654, l: 4646 }, { c: 4656, h: 4666, l: 4650 },
+  { c: 4637, h: 4657, l: 4634 }, { c: 4619, h: 4639, l: 4616 },
+  { c: 4623, h: 4625, l: 4617 }, { c: 4627, h: 4629, l: 4621 }, { c: 4632, h: 4634, l: 4626 }, { c: 4635, h: 4645, l: 4630 },
+  { c: 4616, h: 4636, l: 4613 }, { c: 4600, h: 4618, l: 4597 }, { c: 4604, h: 4606, l: 4598 },
+];
+// Multi-UT 2 bloc 3 et plan — EUR/USD H4 : zone de résistance 1.1750-1.1760 (résistance
+// Daily/H4 1.1760), rejets répétés sous la résistance, prix actuel 1.1715.
+const HTF_FILTER: Step[] = [
+  { c: 1.1792, h: 1.1804, l: 1.1788 }, { c: 1.1778, h: 1.1795, l: 1.1775 }, { c: 1.1762, h: 1.1780, l: 1.1758 }, { c: 1.1744, h: 1.1764, l: 1.1740 },
+  { c: 1.1752, h: 1.1755, l: 1.1742 }, { c: 1.1749, h: 1.1759, l: 1.1745 }, { c: 1.1753, h: 1.1755, l: 1.1747 }, { c: 1.1746, h: 1.1760, l: 1.1743 },
+  { c: 1.1736, h: 1.1748, l: 1.1733 }, { c: 1.1728, h: 1.1738, l: 1.1724 }, { c: 1.1741, h: 1.1743, l: 1.1726 }, { c: 1.1738, h: 1.1758, l: 1.1736 },
+  { c: 1.1731, h: 1.1746, l: 1.1728 }, { c: 1.1722, h: 1.1733, l: 1.1719 }, { c: 1.1715, h: 1.1725, l: 1.1712 },
+];
+// Multi-UT 3 bloc 2 — XAU/USD H1 : impulsion baissière brutale depuis 4 680 $, FVG 4 648-4 660 $,
+// remontée progressive, mèche qui traverse partiellement le FVG, rejet fort vers le bas.
+const RETOUR_DESEQ: Step[] = [
+  { c: 4679, h: 4680, l: 4673 }, { c: 4664, h: 4680, l: 4660 }, { c: 4632, h: 4664, l: 4628 }, { c: 4622, h: 4648, l: 4618 },
+  { c: 4626, h: 4629, l: 4619 }, { c: 4630, h: 4633, l: 4624 }, { c: 4634, h: 4637, l: 4628 }, { c: 4639, h: 4642, l: 4632 },
+  { c: 4643, h: 4646, l: 4637 }, { c: 4647, h: 4647, l: 4641 }, { c: 4651, h: 4655, l: 4645 },
+  { c: 4636, h: 4657, l: 4634 }, { c: 4625, h: 4637, l: 4622 }, { c: 4616, h: 4627, l: 4613 },
+];
+// Multi-UT 3 bloc 3 et Multi-UT 5 bloc 3 (fusion ScenarioZone + H1ZonePreparation) — EUR/USD H1 :
+// support 1.1760, chute qui le casse et laisse un FVG 1.1750-1.1760, puis remontée progressive
+// avec des bougies haussières de plus en plus courtes jusqu'au bas de la zone.
+const ZONE_PREP: Step[] = [
+  { c: 1.1768, h: 1.1774, l: 1.1762 }, { c: 1.1765, h: 1.1770, l: 1.1761 }, { c: 1.1769, h: 1.1772, l: 1.1762 }, { c: 1.1763, h: 1.1770, l: 1.1760 },
+  { c: 1.1738, h: 1.1763, l: 1.1735 }, { c: 1.1728, h: 1.1750, l: 1.1724 }, { c: 1.1720, h: 1.1730, l: 1.1716 },
+  { c: 1.1731, h: 1.1733, l: 1.1718 }, { c: 1.1726, h: 1.1732, l: 1.1723 }, { c: 1.1735, h: 1.1737, l: 1.1725 }, { c: 1.1731, h: 1.1736, l: 1.1728 },
+  { c: 1.1738, h: 1.1740, l: 1.1730 }, { c: 1.1735, h: 1.1739, l: 1.1733 }, { c: 1.1741, h: 1.1743, l: 1.1734 }, { c: 1.1744, h: 1.1746, l: 1.1740 },
+  { c: 1.1746, h: 1.1748, l: 1.1743 }, { c: 1.1748, h: 1.1751, l: 1.1745 },
+];
+// Multi-UT 4 bloc 1 et Multi-UT 5 bloc 4 (fusion ConfirmationM5 + M15Validation) — EUR/USD :
+// arrivée dans la zone 1.1750-1.1760, trois mèches hautes (1.1764, 1.1767, 1.1770) sans clôture
+// au-dessus de la zone, creux local 1.1748 entre les rejets, trois bougies baissières qui le cassent
+// vers 1.1745, retour du prix à 1.1758 (entrée short), SL 1.1772, TP 1.1695.
+const LTF_CONFIRM: Step[] = [
+  { c: 1.1742, h: 1.1744, l: 1.1737 }, { c: 1.1747, h: 1.1749, l: 1.1740 }, { c: 1.1752, h: 1.1754, l: 1.1745 },
+  { c: 1.1755, h: 1.1764, l: 1.1750 }, { c: 1.1752, h: 1.1767, l: 1.1748 }, { c: 1.1754, h: 1.1770, l: 1.1750 },
+  { c: 1.1751, h: 1.1756, l: 1.1749 }, { c: 1.1747, h: 1.1752, l: 1.1746 }, { c: 1.1745, h: 1.1748, l: 1.1743 },
+  { c: 1.1752, h: 1.1753, l: 1.1744 }, { c: 1.1757, h: 1.1759, l: 1.1751 },
+  { c: 1.1746, h: 1.1758, l: 1.1744 }, { c: 1.1737, h: 1.1747, l: 1.1735 }, { c: 1.1729, h: 1.1738, l: 1.1726 },
+];
 Object.assign(SCENARIOS, {
-  "dir-dom-xau": dirDomXau, "retour-deseq-xau": retourDeseqXau,
-  "h1-zone-prep": h1ZonePrep, "ltf-conf-eur": ltfConfEur,
+  "dir-dom-xau": authored(4672, DIR_DOM, 21101, 0, "XAU/USD", [4680]),
+  "htf-filter-h4": authored(1.1800, HTF_FILTER, 21201, 5, "EUR/USD", [1.1760]),
+  "retour-deseq-xau": authored(4676, RETOUR_DESEQ, 21301, 0, "XAU/USD", [4648, 4660]),
+  "zone-prep-h1": authored(1.1772, ZONE_PREP, 21401, 5, "EUR/USD", [1.1750, 1.1760]),
+  "ltf-confirm": authored(1.1738, LTF_CONFIRM, 21501, 5, "EUR/USD", [1.1748, 1.1760, 1.1772]),
 });

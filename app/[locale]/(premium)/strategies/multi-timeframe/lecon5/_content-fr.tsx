@@ -8,8 +8,8 @@ import { LessonExercice } from "@/app/components/LessonExercice";
 import { LessonQuiz } from "@/app/components/LessonQuiz";
 import { ProcessFunnelDiagram } from "@/app/components/charts/ProcessFunnelDiagram";
 import { DailyContextDiagram } from "@/app/components/charts/DailyContextDiagram";
-import { H1ZonePreparationDiagram } from "@/app/components/charts/H1ZonePreparationDiagram";
-import { M15ValidationDiagram } from "@/app/components/charts/M15ValidationDiagram";
+import { ScenarioZoneDiagram } from "@/app/components/charts/ScenarioZoneDiagram";
+import { ConfirmationM5Diagram } from "@/app/components/charts/ConfirmationM5Diagram";
 
 const LESSONS = [
   { id: "lecon1", title: "Pourquoi faire une analyse multi-unités de temps", disabled: false },
@@ -183,7 +183,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Le H1 prépare la zone</h2>
 
             <div className="my-8">
-              <H1ZonePreparationDiagram />
+              <ScenarioZoneDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
@@ -210,17 +210,17 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Le M15 valide l&apos;exécution</h2>
 
             <div className="my-8">
-              <M15ValidationDiagram />
+              <ConfirmationM5Diagram tf="M15" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le M15 est l&apos;étage du timing. Quand le prix entre dans la zone H1, on descend sur l&apos;UT inférieure pour observer la réaction : mèches de rejet successives, formation d&apos;un sommet local, puis cassure structurelle d&apos;un creux récent en faveur du biais. Ce sont ces signaux concrets qui valident l&apos;entrée, pas la simple présence du prix dans la zone. L&apos;exécution se fait au breakout, le SL est calé serré juste au-dessus du dernier sommet de rejet.
+              Le M15 est l&apos;étage du timing. Quand le prix entre dans la zone H1, on descend sur l&apos;UT inférieure pour observer la réaction : mèches de rejet successives, formation d&apos;un sommet local, puis cassure structurelle d&apos;un creux récent en faveur du biais. Ce sont ces signaux concrets qui valident l&apos;entrée, pas la simple présence du prix dans la zone. L&apos;exécution se fait au retour du prix après le breakout, le SL est calé serré juste au-dessus du dernier sommet de rejet.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : le prix arrive dans la zone 1.1750-1.1760 et imprime trois mèches hautes consécutives entre 1.1758 et 1.1762, sans clôturer au-dessus. Le dernier creux local entre les bougies de rejet est à 1.1750. Trois bougies M15 baissières enchaînent et cassent ce creux franchement vers 1.1745. La réaction est nette, le breakout confirme, entrée short à 1.1758 sur le breakout, SL à 1.1772 (juste au-dessus du dernier sommet de rejet).
+                EUR/USD : le prix arrive dans la zone 1.1750-1.1760 et imprime trois mèches hautes consécutives entre 1.1764 et 1.1770, sans clôturer au-dessus de la zone. Le dernier creux local entre les bougies de rejet est à 1.1748. Trois bougies M15 baissières enchaînent et cassent ce creux franchement vers 1.1745. La réaction est nette, le breakout confirme, entrée short à 1.1758 au retour du prix après le breakout, SL à 1.1772 (juste au-dessus du dernier sommet de rejet).
               </p>
             </div>
 

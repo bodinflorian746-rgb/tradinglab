@@ -15,7 +15,7 @@
   {"url":"/fr/strategies/support-resistance/lecon3","charts":["FlipRetestValidationDiagram"]},
   {"url":"/fr/strategies/support-resistance/lecon4","charts":["FakeVsRealBreakoutComparisonDiagram"]},
   {"url":"/fr/strategies/trend-following/lecon3","charts":["FibPullbackChecklistDiagram","OTEDiagram","FibTPProjectionDiagram"]},
-  {"url":"/fr/strategies/multi-timeframe/lecon4","charts":["RiskAffineDiagram"]},
+  {"url":"/fr/strategies/multi-timeframe/lecon4","charts":["RiskAffineDiagram","ConfirmationM5Diagram"]},
   {"url":"/fr/strategies/smc/lecon2","charts":["BOSCHoCHSequenceDiagram","BOSvsCHoCHComparisonDiagram"]},
   {"url":"/fr/strategies/smc/lecon5","charts":["BOSCHoCHSequenceDiagram","MitigationZoneEntryDiagram"]},
   {"url":"/fr/formations/debutant/lecon9","charts":["BiasDiagram","ErrorsDiagram"]},
@@ -27,8 +27,8 @@
   {"url":"/fr/strategies/ict/lecon2","charts":["PDArrayContextDiagram","PDArrayConfluenceDiagram","FVGMitigationDiagram","FVGMitigationScenariosDiagram"]},
   {"url":"/fr/strategies/macro-trading/lecon1","charts":["FOMCExhaustionDiagram","FOMCImpulseExcessDiagram","FOMCFadeSetupDiagram"]},
   {"url":"/fr/strategies/macro-trading/lecon4","charts":["MacroFilterRegimeDiagram","MacroFilterCalendarDiagram","MacroFilterFlowchartDiagram"]},
-  {"url":"/fr/strategies/multi-timeframe/lecon3","charts":["ZoneHistoireDiagram"]},
-  {"url":"/fr/strategies/multi-timeframe/lecon5","charts":["ProcessFunnelDiagram"]},
+  {"url":"/fr/strategies/multi-timeframe/lecon3","charts":["ZoneHistoireDiagram","RetourDesequilibreDiagram","ScenarioZoneDiagram"]},
+  {"url":"/fr/strategies/multi-timeframe/lecon5","charts":["ProcessFunnelDiagram","ScenarioZoneDiagram","ConfirmationM5Diagram"]},
   {"url":"/fr/strategies/price-action/lecon4","charts":["MultiTFEntryDiagram"]},
   {"url":"/fr/strategies/smc/lecon1","charts":["MarketStructureDiagram","InternalVsExternalStructureZoomDiagram","SMCPhasesDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon1","charts":["MarketStructureDiagram"]},
@@ -68,5 +68,5 @@
   {"url":"/fr/strategies/macro-trading/lecon2","charts":["NFPHeadlineReactionDiagram","NFPStabilizationDiagram","NFPReversalDiagram"]},
   {"url":"/fr/strategies/macro-trading/lecon3","charts":["RiskoffSignalsDiagram","RiskoffTrendDiagram","RiskoffExhaustionDiagram"]},
   {"url":"/fr/strategies/multi-timeframe/lecon1","charts":["SingleTimeframeTrapDiagram","HTFBiasDiagram","IntermediateZoneDiagram","LTFExecutionDiagram"]},
-  {"url":"/fr/strategies/multi-timeframe/lecon2","charts":["ContreTendanceTrapDiagram"]}
+  {"url":"/fr/strategies/multi-timeframe/lecon2","charts":["ContreTendanceTrapDiagram","DirectionDominanteDiagram","HTFFilterDiagram"]}
 ]
