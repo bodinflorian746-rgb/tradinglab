@@ -509,3 +509,43 @@ export function checkLot21(check: Check) {
     check(near(rrOf(1.1758, 1.1772, 1.1695), 4.5, 0.005), "Confirmation (MUT 5) : R/R 4,5");
   }
 }
+
+export function checkLot22(check: Check) {
+  {
+    // Price action 1 : marubozu sans mèche, pin bar mèche ≥ 2 × corps, doji corps < 10 % de la bougie, engulfing
+    const m = CS["pa-type-marubozu"][4], p = CS["pa-type-pinbar"][3], d = CS["pa-type-doji"][3];
+    const e = CS["pa-type-engulfing"], ea = e[3], eb = e[4];
+    check(m.h === Math.max(m.o, m.c) && m.l === Math.min(m.o, m.c) && m.c > m.o, "Types (PA 1) : marubozu");
+    check((Math.min(p.o, p.c) - p.l) >= 2 * Math.abs(p.c - p.o) && (p.c - p.l) / (p.h - p.l) >= 2 / 3, "Types (PA 1) : pin bar");
+    check(Math.abs(d.c - d.o) / (d.h - d.l) < 0.1, "Types (PA 1) : doji");
+    check(engulfs(ea, eb, true), "Types (PA 1) : engulfing");
+  }
+  {
+    // Price action 2 : une seule candidate remplit les 4 critères, chacune des autres en rate exactement un
+    const crit = (k: Candle, level?: number) => {
+      const body = Math.abs(k.c - k.o) || 1;
+      return [(Math.min(k.o, k.c) - k.l) / body >= 2, (k.c - k.l) / (k.h - k.l) >= 2 / 3, level !== undefined && k.l <= level && Math.min(k.o, k.c) >= level];
+    };
+    const res = (["valide", "ratio", "cloture", "niveau"] as const).map((key) => { const cs = CS[`pin-case-${key}`]; return crit(cs[cs.length - 1], key === "niveau" ? undefined : 4500); });
+    check(res[0].every(Boolean) && res.slice(1).every((r, i) => r.filter((x) => !x).length === 1 && !r[i]), "Pin bar (PA 2) : grille des critères");
+  }
+  {
+    // Price action 3 : englobe / contraste ≥ 1,5 / amplitude > moyenne des 20 précédentes ; chaque cas invalide rate un critère
+    const crit = (cs: Candle[]) => {
+      const a = cs[cs.length - 2], b = cs[cs.length - 1], prev = cs.slice(-22, -2);
+      const avg = prev.reduce((s, k) => s + (k.h - k.l), 0) / prev.length;
+      return [Math.min(b.o, b.c) <= Math.min(a.o, a.c) && Math.max(b.o, b.c) >= Math.max(a.o, a.c), Math.abs(b.c - b.o) / Math.abs(a.c - a.o) >= 1.5, b.h - b.l > avg, a.c < a.o && b.c > b.o];
+    };
+    const res = (["valide", "partiel", "contraste", "amplitude"] as const).map((key) => crit(CS[`eng-case-${key}`]));
+    check(res[0].every(Boolean) && res.slice(1).every((r, i) => !r[i] && r[3]), "Engulfing (PA 3) : grille des critères");
+    check(CS["eng-case-valide"].length === 22, "Engulfing (PA 3) : 20 bougies de contexte");
+  }
+  {
+    // Multi-UT 4 : support 4 545 (4 540-4 550) traversé sans mèche basse, continuation sous la zone
+    const cs = CS["zone-fail-xau"], z = cs.filter((k) => k.l <= 4550 && k.h >= 4540);
+    check(z.length >= 2 && z.every((k) => Math.min(k.o, k.c) - k.l <= 1 && k.c < k.o) && cs[cs.length - 1].c < 4520, "Zone (MUT 4) : traversée sans réaction");
+    // Multi-UT 5 : LH 1.1860 / 1.1830 / 1.1780, dernier LL 1.1695
+    const p = pivots(CS["daily-ctx"], 2);
+    check(p.filter((q) => q.name === "LH").map((q) => q.price).join() === "1.186,1.183,1.178" && p.filter((q) => q.name === "LL").at(-1)?.price === 1.1695, "Daily (MUT 5) : trois LH, dernier LL 1.1695");
+  }
+}

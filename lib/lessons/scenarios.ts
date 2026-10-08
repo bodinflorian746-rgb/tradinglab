@@ -947,3 +947,71 @@ Object.assign(SCENARIOS, {
   "zone-prep-h1": authored(1.1772, ZONE_PREP, 21401, 5, "EUR/USD", [1.1750, 1.1760]),
   "ltf-confirm": authored(1.1738, LTF_CONFIRM, 21501, 5, "EUR/USD", [1.1748, 1.1760, 1.1772]),
 });
+
+// ─── Lot 22 ──────────────────────────────────────────────────────────────────
+// Price action 1 bloc 2 — les 4 types de bougies, chacun dans un court contexte (XAU/USD H1) :
+// marubozu dans une impulsion, pin bar sur un creux, doji au sommet, engulfing haussier.
+const PA_TYPES: Record<string, Step[]> = {
+  marubozu: [{ c: 4604, h: 4607, l: 4598 }, { c: 4601, h: 4606, l: 4597 }, { c: 4605, h: 4608, l: 4599 }, { c: 4603, h: 4607, l: 4600 }, { c: 4628, h: 4628, l: 4603 }, { c: 4632, h: 4635, l: 4626 }],
+  pinbar: [{ c: 4596, h: 4602, l: 4593 }, { c: 4590, h: 4598, l: 4587 }, { c: 4584, h: 4592, l: 4581 }, { c: 4588, h: 4589, l: 4566 }, { c: 4595, h: 4597, l: 4586 }, { c: 4600, h: 4603, l: 4593 }],
+  doji: [{ c: 4606, h: 4608, l: 4598 }, { c: 4614, h: 4616, l: 4605 }, { c: 4622, h: 4624, l: 4612 }, { c: 4623, h: 4632, l: 4614 }, { c: 4616, h: 4625, l: 4613 }, { c: 4610, h: 4618, l: 4607 }],
+  engulfing: [{ c: 4596, h: 4602, l: 4593 }, { c: 4590, h: 4598, l: 4587 }, { c: 4585, h: 4592, l: 4582 }, { c: 4580, h: 4587, l: 4577 }, { c: 4597, h: 4599, l: 4578 }, { c: 4602, h: 4605, l: 4595 }],
+};
+const paTypes = Object.fromEntries(Object.entries(PA_TYPES).map(([k, st], n) => [`pa-type-${k}`, authored(k === "pinbar" || k === "engulfing" ? 4600 : 4600, st, 22100 + n, 0, "XAU/USD")]));
+// Price action 2 bloc 1 — valider une pin bar : même descente vers le support 4 500 $ (XAU/USD H4),
+// puis 4 bougies candidates, chacune ne ratant qu'un critère du texte (la 1re les remplit tous) ;
+// la 4e est une pin bar parfaite en milieu de range, loin de tout niveau.
+const PIN_CTX: Step[] = [{ c: 4552, h: 4560, l: 4548 }, { c: 4541, h: 4554, l: 4537 }, { c: 4533, h: 4544, l: 4529 }, { c: 4524, h: 4535, l: 4520 }, { c: 4516, h: 4527, l: 4512 }];
+const PIN_RANGE: Step[] = [{ c: 4592, h: 4598, l: 4584 }, { c: 4583, h: 4594, l: 4580 }, { c: 4590, h: 4596, l: 4581 }, { c: 4584, h: 4593, l: 4580 }, { c: 4586, h: 4592, l: 4579 }];
+const PIN_CASES: Record<string, [Step[], number, Step]> = {
+  valide: [PIN_CTX, 4560, { c: 4522, h: 4524, l: 4496 }],
+  ratio: [PIN_CTX, 4560, { c: 4528, h: 4530, l: 4500 }],
+  cloture: [PIN_CTX, 4560, { c: 4512, h: 4536, l: 4494 }],
+  niveau: [PIN_RANGE, 4588, { c: 4592, h: 4594, l: 4566 }],
+};
+const pinCases = Object.fromEntries(Object.entries(PIN_CASES).map(([k, [ctx, open, last]], n) => [`pin-case-${k}`, authored(open, [...ctx, last], 22200 + n, 0, "XAU/USD")]));
+// Price action 3 bloc 2 — valider un engulfing : mêmes 20 bougies de contexte vers le support,
+// puis une paire rouge + verte ; seule la 1re respecte les 4 critères du texte.
+const ENG_CTX: Step[] = [
+  { c: 4596, h: 4602, l: 4592 }, { c: 4599, h: 4603, l: 4593 }, { c: 4593, h: 4601, l: 4590 }, { c: 4590, h: 4596, l: 4586 }, { c: 4594, h: 4597, l: 4588 },
+  { c: 4588, h: 4596, l: 4585 }, { c: 4584, h: 4590, l: 4580 }, { c: 4587, h: 4590, l: 4581 }, { c: 4581, h: 4589, l: 4578 }, { c: 4577, h: 4583, l: 4573 },
+  { c: 4580, h: 4583, l: 4574 }, { c: 4574, h: 4582, l: 4571 }, { c: 4570, h: 4576, l: 4566 }, { c: 4573, h: 4576, l: 4567 }, { c: 4567, h: 4575, l: 4564 },
+  { c: 4563, h: 4569, l: 4559 }, { c: 4566, h: 4569, l: 4560 }, { c: 4560, h: 4568, l: 4557 }, { c: 4556, h: 4562, l: 4552 }, { c: 4554, h: 4558, l: 4550 },
+];
+const ENG_CASES: Record<string, Step[]> = {
+  valide: [{ c: 4546, h: 4555, l: 4542 }, { c: 4562, h: 4564, l: 4540 }],
+  partiel: [{ c: 4542, h: 4555, l: 4538 }, { c: 4549, h: 4551, l: 4537 }],
+  contraste: [{ c: 4534, h: 4556, l: 4531 }, { c: 4555, h: 4557, l: 4532 }],
+  amplitude: [{ c: 4552, h: 4555, l: 4551 }, { c: 4556, h: 4557, l: 4551 }],
+};
+const engCases = Object.fromEntries(Object.entries(ENG_CASES).map(([k, pair], n) => [`eng-case-${k}`, authored(4600, [...ENG_CTX, ...pair], 22300 + n, 0, "XAU/USD")]));
+// Multi-UT 4 bloc 3 — une zone peut échouer (XAU/USD M5) : support H1 attendu à 4 545 $ (bande
+// 4 540-4 550), le prix arrive et traverse la bande sans mèche basse de rejet, continuation nette.
+const ZONE_FAIL: Step[] = [
+  { c: 4578, h: 4582, l: 4575 }, { c: 4572, h: 4579, l: 4570 }, { c: 4566, h: 4573, l: 4565 }, { c: 4560, h: 4567, l: 4559 }, { c: 4554, h: 4561, l: 4553 },
+  { c: 4547, h: 4555, l: 4546 }, { c: 4539, h: 4548, l: 4538 }, { c: 4531, h: 4540, l: 4530 }, { c: 4524, h: 4532, l: 4523 }, { c: 4517, h: 4525, l: 4516 }, { c: 4512, h: 4518, l: 4510 },
+];
+// Multi-UT 5 bloc 2 — le Daily donne la direction (EUR/USD) : sommet 1.1905, puis trois LH
+// consécutifs 1.1860 (résistance), 1.1830 et 1.1780, impulsions baissières franches entre chaque
+// correction, LL 1.1760 puis 1.1695 (dernier LL, objectif du plan), prix ~1.1745.
+// Bougies complètes à partir des clôtures : mèches courtes régulières (w), extrêmes imposés gardés.
+const bars = (open: number, st: (number | Step)[], w: number, decimals: number): Step[] => {
+  let o = open;
+  const r = (x: number) => Number(x.toFixed(decimals));
+  return st.map((x) => {
+    const k = typeof x === "number" ? { c: x } : x;
+    const top = Math.max(o, k.c), bot = Math.min(o, k.c);
+    const out = { c: k.c, h: k.h ?? r(top + w), l: k.l ?? r(bot - w) };
+    o = k.c;
+    return out;
+  });
+};
+const DAILY_CTX = bars(1.1878, [
+  1.1888, { c: 1.1898, h: 1.1905 }, 1.1880, 1.1852, 1.1826, { c: 1.1806, l: 1.1800 }, 1.1822, 1.1840, { c: 1.1854, h: 1.1860 },
+  1.1832, 1.1804, 1.1778, { c: 1.1766, l: 1.1760 }, 1.1782, 1.1806, { c: 1.1822, h: 1.1830 },
+  1.1796, 1.1762, 1.1728, { c: 1.1704, l: 1.1695 }, 1.1722, 1.1748, 1.1768, { c: 1.1774, h: 1.1780 }, 1.1758, 1.1745,
+], 0.0005, 5);
+Object.assign(SCENARIOS, paTypes, pinCases, engCases, {
+  "zone-fail-xau": authored(4583, ZONE_FAIL, 22401, 0, "XAU/USD", [4540, 4550]),
+  "daily-ctx": authored(1.1878, DAILY_CTX, 22501, 5, "EUR/USD", [1.1860, 1.1695]),
+});

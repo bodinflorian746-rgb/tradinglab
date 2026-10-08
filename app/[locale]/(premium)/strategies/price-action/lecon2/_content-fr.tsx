@@ -178,7 +178,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD descend vers le support psychologique 4 500$ (déjà touché 3 fois en 6 semaines). Tendance H4 haussière. Pin bar bullish au contact du support.
+              XAU/USD descend vers le support 4 500$ (chiffre rond) (déjà touché 3 fois en 6 semaines). Tendance H4 haussière. Pin bar bullish au contact du support.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">

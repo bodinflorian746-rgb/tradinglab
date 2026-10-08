@@ -1,118 +1,31 @@
-// Diagramme : le Daily donne la direction (Leçon 5 multi-timeframe)
-// EUR/USD Daily — structure baissière en LH/LL : impulsions baissières fortes vs corrections faibles.
+// Multi-UT 5 bloc 2 — le Daily donne la direction (EUR/USD), exemple et plan du texte : trois
+// LH consécutifs (1.1860, 1.1830, 1.1780) sous la résistance 1.1860, impulsions baissières
+// franches entre chaque correction, dernier LL 1.1695 (objectif du plan). Pivots calculés.
+// Bougies : scenarios.ts (« daily-ctx »).
 
-interface DailyContextDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { fmtPrice, pivots } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
-export function DailyContextDiagram({ className = "", locale = "fr" }: DailyContextDiagramProps) {
-  const L = locale === "es"
-    ? {
-        annotation: "El Daily define el contexto general",
-        mobTitle: "Contexto Daily — dirección vendedora",
-        mobImpulsions: "Impulsos bajistas fuertes",
-        mobImpulsionsDesc: "Movimientos direccionales rápidos hacia abajo.",
-        mobCorrections: "Correcciones alcistas débiles",
-        mobCorrectionsDesc: "Retracements lentos → dirección vendedora confirmada.",
-        legendImpulsions: "Impulsos bajistas fuertes",
-        legendCorrections: "Correcciones alcistas débiles = dirección vendedora",
-      }
-    : locale === "en"
-    ? {
-        annotation: "The Daily defines the overall context",
-        mobTitle: "Daily context — bearish direction",
-        mobImpulsions: "Strong bearish impulses",
-        mobImpulsionsDesc: "Fast directional moves to the downside.",
-        mobCorrections: "Weak bullish corrections",
-        mobCorrectionsDesc: "Slow pullbacks → bearish direction confirmed.",
-        legendImpulsions: "Strong bearish impulses",
-        legendCorrections: "Weak bullish corrections = bearish direction",
-      }
-    : {
-        annotation: "Le Daily définit le contexte général",
-        mobTitle: "Contexte Daily — direction vendeuse",
-        mobImpulsions: "Impulsions baissières fortes",
-        mobImpulsionsDesc: "Mouvements directionnels rapides vers le bas.",
-        mobCorrections: "Corrections haussières faibles",
-        mobCorrectionsDesc: "Retracements lents → direction vendeuse confirmée.",
-        legendImpulsions: "Impulsions baissières fortes",
-        legendCorrections: "Corrections haussières faibles = direction vendeuse",
-      };
+const p = (x: number) => fmtPrice(x, 4);
+
+export function DailyContextDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["daily-ctx"];
+  const named = pivots(cs, 2).filter((q) => q.name === "LH" || q.name === "LL");
+  const lastLL = named.filter((q) => q.name === "LL").at(-1)!;
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg width="100%" viewBox="0 0 700 320" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" className="hidden sm:block">
-
-        <rect x="20" y="18" width="118" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
-        <text x="79" y="33" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">EUR/USD · Daily</text>
-
-        {/* Résistance 1.1760 */}
-        <line x1="40" y1="55" x2="660" y2="55" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" />
-        <rect x="40" y="42" width="56" height="12" rx="3" fill="#09090b" />
-        <text x="68" y="51" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">1.1760</text>
-
-        {/* Tracé en zigzag — corrections haussières fines (zinc) / impulsions baissières épaisses (red) */}
-        {/* Le tracé démarre directement à LH1, au contact de la résistance */}
-        {/* Impulsion 1 — chute raide vers LL1 */}
-        <line x1="110" y1="55" x2="170" y2="165" stroke="#ef4444" strokeWidth="3" />
-        {/* Correction vers LH2 */}
-        <line x1="170" y1="165" x2="290" y2="85" stroke="#71717a" strokeWidth="1.5" />
-        {/* Impulsion 2 — chute raide vers LL2 */}
-        <line x1="290" y1="85" x2="350" y2="220" stroke="#ef4444" strokeWidth="3" />
-        {/* Correction vers LH3 */}
-        <line x1="350" y1="220" x2="470" y2="125" stroke="#71717a" strokeWidth="1.5" />
-        {/* Impulsion 3 — chute raide vers LL3 */}
-        <line x1="470" y1="125" x2="530" y2="275" stroke="#ef4444" strokeWidth="3" />
-        {/* Extension bearish */}
-        <line x1="530" y1="275" x2="640" y2="295" stroke="#ef4444" strokeWidth="3" />
-
-        {/* Markers LH décroissants */}
-        <circle cx="110" cy="55" r="4" fill="#ef4444" />
-        <rect x="96" y="32" width="28" height="13" rx="3" fill="#09090b" />
-        <text x="110" y="42" fill="#ef4444" fontSize="8" fontWeight="700" textAnchor="middle">LH1</text>
-
-        <circle cx="290" cy="85" r="4" fill="#ef4444" />
-        <rect x="276" y="62" width="28" height="13" rx="3" fill="#09090b" />
-        <text x="290" y="72" fill="#ef4444" fontSize="8" fontWeight="700" textAnchor="middle">LH2</text>
-
-        <circle cx="470" cy="125" r="4" fill="#ef4444" />
-        <rect x="456" y="102" width="28" height="13" rx="3" fill="#09090b" />
-        <text x="470" y="112" fill="#ef4444" fontSize="8" fontWeight="700" textAnchor="middle">LH3</text>
-
-        {/* Flèche bearish */}
-        <text x="630" y="290" fill="#ef4444" fontSize="20" opacity="0.5" textAnchor="middle">↘</text>
-
-        {/* Annotation */}
-        <rect x="190" y="296" width="320" height="20" rx="10" fill="#09090b" />
-        <rect x="190" y="296" width="320" height="20" rx="10" fill="#f59e0b20" stroke="#f59e0b" strokeWidth="1" />
-        <text x="350" y="309" fill="#f59e0b" fontSize="10" fontWeight="700" textAnchor="middle">
-          {L.annotation}
-        </text>
-      </svg>
-
-      {/* MOBILE : contexte Daily ──────────────────────────── */}
-      <div className="sm:hidden p-4 space-y-2.5">
-        <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
-        <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-          <p className="text-[13px] font-bold text-red-400">{L.mobImpulsions}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobImpulsionsDesc}</p>
-        </div>
-        <div className="rounded-lg border border-zinc-600 bg-zinc-800/40 p-3">
-          <p className="text-[13px] font-bold text-zinc-300">{L.mobCorrections}</p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobCorrectionsDesc}</p>
-        </div>
-      </div>
-
-      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">{L.legendImpulsions}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">{L.legendCorrections}</span>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id="DailyContextDiagram"
+      title="Trois LH sous la résistance : biais vendeur"
+      caption="Tant que la structure Daily n'est pas cassée, le biais reste le même : uniquement des ventes."
+      panels={[{
+        key: "d1", title: "EUR/USD Daily", decimals: 5, height: 280, candles: cs,
+        levels: [
+          { key: "res", price: 1.186, label: `Résistance ${p(1.186)}`, short: "Résistance", tone: "zone" },
+          { key: "ll", price: lastLL.price, from: lastLL.index, label: `Dernier LL ${p(lastLL.price)}`, short: "Dernier LL", tone: "neutral", dashed: true },
+        ],
+        markers: named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name === "LH" ? `LH ${p(q.price)}` : "LL", short: q.name!, pivot: q.name!, tone: "bear" as const, side: q.side === "h" ? "above" as const : "below" as const })),
+      }]}
+    />
   );
 }

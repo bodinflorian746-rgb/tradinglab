@@ -1,163 +1,50 @@
-export default function PinBarValidationGridDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
-  const t = locale === "es"
-    ? {
-        title: "Reconocer una pin bar válida en 5 segundos",
-        cell1: "✓ Válida — Pin bar de rechazo claro",
-        wickLabel: "Mecha:",
-        bodyLabel: "Cuerpo:",
-        ratioLabel: "Ratio:",
-        cell2: "✗ Mecha = Cuerpo",
-        cell3: "✗ Cuerpo aplasta la mecha",
-        cell4: "✗ Mecha despreciable",
-        footer: "Ratio mecha / cuerpo ≥ 2:1 = pin bar válida",
-        mobileTitle: "Reconocer una pin bar válida",
-        mobileCases: [
-          { v: true, label: "Rechazo claro", wick: 140, body: 30, ratio: "4,7:1" },
-          { v: false, label: "Mecha = Cuerpo", wick: 60, body: 60, ratio: "1:1" },
-          { v: false, label: "Cuerpo aplasta la mecha", wick: 30, body: 120, ratio: "1:4" },
-          { v: false, label: "Mecha despreciable", wick: 10, body: 60, ratio: "0,2:1" },
-        ],
-        mobileMecheLabel: "Mecha",
-        mobileCorpsLabel: "Cuerpo",
-        mobileRatioLabel: "Ratio",
-        mobileFooter: "Ratio mecha / cuerpo ≥ 2:1 = pin bar válida",
-      }
-    : locale === "en"
-    ? {
-        title: "Spot a valid pin bar in 5 seconds",
-        cell1: "✓ Valid — Clean rejection pin bar",
-        wickLabel: "Wick:",
-        bodyLabel: "Body:",
-        ratioLabel: "Ratio:",
-        cell2: "✗ Wick = Body",
-        cell3: "✗ Body crushes the wick",
-        cell4: "✗ Negligible wick",
-        footer: "Wick / body ratio ≥ 2:1 = valid pin bar",
-        mobileTitle: "Spot a valid pin bar",
-        mobileCases: [
-          { v: true, label: "Clean rejection", wick: 140, body: 30, ratio: "4.7:1" },
-          { v: false, label: "Wick = Body", wick: 60, body: 60, ratio: "1:1" },
-          { v: false, label: "Body crushes the wick", wick: 30, body: 120, ratio: "1:4" },
-          { v: false, label: "Negligible wick", wick: 10, body: 60, ratio: "0.2:1" },
-        ],
-        mobileMecheLabel: "Wick",
-        mobileCorpsLabel: "Body",
-        mobileRatioLabel: "Ratio",
-        mobileFooter: "Wick / body ratio ≥ 2:1 = valid pin bar",
-      }
-    : {
-        title: "Reconnaître une pin bar valide en 5 secondes",
-        cell1: "✓ Valide — Pin bar de rejet net",
-        wickLabel: "Mèche :",
-        bodyLabel: "Corps :",
-        ratioLabel: "Ratio:",
-        cell2: "✗ Mèche = Corps",
-        cell3: "✗ Corps écrase la mèche",
-        cell4: "✗ Mèche négligeable",
-        footer: "Ratio mèche / corps ≥ 2:1 = pin bar valide",
-        mobileTitle: "Reconnaître une pin bar valide",
-        mobileCases: [
-          { v: true, label: "Rejet net", wick: 140, body: 30, ratio: "4,7:1" },
-          { v: false, label: "Mèche = Corps", wick: 60, body: 60, ratio: "1:1" },
-          { v: false, label: "Corps écrase la mèche", wick: 30, body: 120, ratio: "1:4" },
-          { v: false, label: "Mèche négligeable", wick: 10, body: 60, ratio: "0,2:1" },
-        ],
-        mobileMecheLabel: "Mèche",
-        mobileCorpsLabel: "Corps",
-        mobileRatioLabel: "Ratio",
-        mobileFooter: "Ratio mèche / corps ≥ 2:1 = pin bar valide",
-      };
+// Price action 2 bloc 1 — valider une pin bar (XAU/USD H4) avec les critères chiffrés du texte :
+// ratio mèche / corps ≥ 2:1 (idéalement 3:1), mèche longue en bas pour une pin bar haussière,
+// clôture dans le tiers haut, contact avec un niveau. Quatre candidates : la 1re remplit tout,
+// chacune des autres rate un critère. Ratio, tiers de clôture et contact calculés.
+// Bougies : scenarios.ts (« pin-case-… »).
 
+import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
+import { usd } from "@/app/components/lessons/trade";
+import type { Candle } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const SUPPORT = 4500;
+const fr = (x: number) => x.toLocaleString("fr-FR", { maximumFractionDigits: 1 });
+
+export function pinCheck(k: Candle, level?: number) {
+  const body = Math.abs(k.c - k.o) || 1;
+  const ratio = (Math.min(k.o, k.c) - k.l) / body;
+  const closePos = (k.c - k.l) / (k.h - k.l);
+  const touch = level !== undefined && k.l <= level && Math.min(k.o, k.c) >= level;
+  return { ratio, top: closePos >= 2 / 3, touch, ok: ratio >= 2 && closePos >= 2 / 3 && touch };
+}
+
+const CASES = [
+  { key: "valide", title: "✓ Pin bar valide", level: SUPPORT },
+  { key: "ratio", title: "✗ Mèche trop courte", level: SUPPORT },
+  { key: "cloture", title: "✗ Clôture au milieu", level: SUPPORT },
+  { key: "niveau", title: "✗ Aucun niveau", level: undefined },
+] as const;
+
+export default function PinBarValidationGridDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const panels: LCPanel[] = CASES.map(({ key, title, level }) => {
+    const cs = CANDLES[`pin-case-${key}` as "pin-case-valide"] as Candle[];
+    const i = cs.length - 1, r = pinCheck(cs[i], level);
+    return {
+      key, title, decimals: 0, height: 180, candles: cs,
+      subtitle: `Ratio ${fr(r.ratio)}:1 · clôture ${r.top ? "tiers haut" : "hors tiers haut"} · ${r.touch ? "niveau touché" : "milieu de range"}`,
+      levels: level ? [{ key: "sup", price: level, label: `Support ${usd(level)}`, short: "Support", tone: "zone" as const }] : [],
+      markers: [{ key: "pin", i, price: cs[i].l, label: r.ok ? "Tradable" : "Pas de setup", tone: r.ok ? "bull" as const : "bear" as const, side: "below" as const }],
+    };
+  });
   return (
-    <div className={className}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 800 500"
-      className="hidden sm:block w-full h-auto"
-    >
-      <text x="400" y="30" fill="#d4d4d8" fontSize="14" fontWeight="600" textAnchor="middle">
-        {t.title}
-      </text>
-
-      {/* Séparateurs grille */}
-      <line x1="410" y1="70" x2="410" y2="460" stroke="#3f3f46" strokeWidth="1" />
-      <line x1="30" y1="290" x2="770" y2="290" stroke="#3f3f46" strokeWidth="1" />
-
-      {/* ═══════ CELLULE 1 — VALIDE (haut gauche) ═══════ */}
-      <rect x="60" y="70" width="300" height="22" rx="11" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="210" y="85" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">
-        {t.cell1}
-      </text>
-
-      {/* Pin bar : mèche basse longue 140px + petit corps 30px */}
-      <line x1="210" y1="110" x2="210" y2="280" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
-      <rect x="195" y="110" width="30" height="30" fill="#10b981" stroke="#059669" strokeWidth="1.5" rx="2" />
-
-      <text x="290" y="200" fill="#d4d4d8" fontSize="9">{t.wickLabel} 140 px</text>
-      <text x="290" y="220" fill="#d4d4d8" fontSize="9">{t.bodyLabel} 30 px</text>
-      <text x="290" y="240" fill="#10b981" fontSize="10" fontWeight="600">{t.ratioLabel} 4,7:1</text>
-
-      {/* ═══════ CELLULE 2 — Mèche = Corps (haut droite) ═══════ */}
-      <rect x="450" y="70" width="300" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="85" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">
-        {t.cell2}
-      </text>
-
-      <line x1="600" y1="160" x2="600" y2="280" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
-      <rect x="585" y="160" width="30" height="60" fill="#10b981" stroke="#059669" strokeWidth="1.5" rx="2" />
-
-      <text x="680" y="200" fill="#d4d4d8" fontSize="9">{t.wickLabel} 60 px</text>
-      <text x="680" y="220" fill="#d4d4d8" fontSize="9">{t.bodyLabel} 60 px</text>
-      <text x="680" y="240" fill="#ef4444" fontSize="10" fontWeight="600">{t.ratioLabel} 1:1</text>
-
-      {/* ═══════ CELLULE 3 — Corps écrase la mèche (bas gauche) ═══════ */}
-      <rect x="60" y="310" width="300" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="210" y="325" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">
-        {t.cell3}
-      </text>
-
-      <line x1="210" y1="320" x2="210" y2="470" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
-      <rect x="195" y="320" width="30" height="120" fill="#10b981" stroke="#059669" strokeWidth="1.5" rx="2" />
-
-      <text x="290" y="400" fill="#d4d4d8" fontSize="9">{t.wickLabel} 30 px</text>
-      <text x="290" y="420" fill="#d4d4d8" fontSize="9">{t.bodyLabel} 120 px</text>
-      <text x="290" y="440" fill="#ef4444" fontSize="10" fontWeight="600">{t.ratioLabel} 1:4</text>
-
-      {/* ═══════ CELLULE 4 — Mèche négligeable (bas droite) ═══════ */}
-      <rect x="450" y="310" width="300" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="600" y="325" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">
-        {t.cell4}
-      </text>
-
-      <line x1="600" y1="400" x2="600" y2="470" stroke="#059669" strokeWidth="2" strokeLinecap="round" />
-      <rect x="585" y="400" width="30" height="60" fill="#10b981" stroke="#059669" strokeWidth="1.5" rx="2" />
-
-      <text x="680" y="400" fill="#d4d4d8" fontSize="9">{t.wickLabel} 10 px</text>
-      <text x="680" y="420" fill="#d4d4d8" fontSize="9">{t.bodyLabel} 60 px</text>
-      <text x="680" y="440" fill="#ef4444" fontSize="10" fontWeight="600">{t.ratioLabel} 0,2:1</text>
-
-      <text x="400" y="490" fill="#a1a1aa" fontSize="10" textAnchor="middle">
-        {t.footer}
-      </text>
-    </svg>
-
-    {/* MOBILE : 4 cas validés/invalidés ─────────────────────────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
-      {t.mobileCases.map((c, i) => (
-        <div key={i} className={`rounded-lg border p-2.5 ${c.v ? "border-emerald-500/40 bg-emerald-500/8" : "border-red-500/40 bg-red-500/8"}`}>
-          <p className={`text-[13px] font-bold ${c.v ? "text-emerald-400" : "text-red-400"}`}>
-            {c.v ? "✓" : "✗"} {c.label}
-          </p>
-          <p className="text-[12px] text-zinc-300 leading-snug mt-1">
-            {t.mobileMecheLabel} {c.wick}px · {t.mobileCorpsLabel} {c.body}px · <span className="font-bold font-mono">{t.mobileRatioLabel} {c.ratio}</span>
-          </p>
-        </div>
-      ))}
-      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800">
-        {t.mobileFooter}
-      </p>
-    </div>
-    </div>
+    <LessonChart
+      id="PinBarValidationGridDiagram"
+      title="Une pin bar tradable remplit les 4 critères"
+      caption="Ratio mèche / corps ≥ 2:1, mèche du bon côté, clôture dans le tiers opposé, contact avec un niveau."
+      panels={panels}
+      rows={[2, 2]}
+    />
   );
 }
