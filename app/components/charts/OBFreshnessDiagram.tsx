@@ -1,250 +1,39 @@
-export default function OBFreshnessDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
-  const t = locale === "es"
-    ? {
-        title: "OB fresh vs OB mitigado",
-        leftTitle: "✓ OB fresh — nunca retesteado",
-        leftSubtitle: "Desequilibrio alcista confirmado",
-        rightTitle: "✗ OB mitigado — ya atravesado de nuevo",
-        rightSubtitle: "Desequilibrio alcista comprometido",
-        obCree: "OB creado",
-        retest: "Retest",
-        leftBottomTitle: "3 velas desde la formación",
-        leftBottomSub: "Sin retorno del precio a la zona",
-        rightBottomTitle: "Retest + rechazo = OB consumido",
-        rightBottomSub: "Órdenes institucionales ya ejecutadas",
-        infoCaption: "Un OB mitigado está consumido: sus órdenes institucionales ya se dispararon",
-        leftZoneLabel: "Zona OB nunca retesteada",
-        rightZoneLabel: "Zona OB ya atravesada",
-        mobileTitle: "OB fresh vs OB mitigado",
-        leftMobileTitle: "✓ OB fresh — nunca retesteado",
-        leftMobileBody: "Desequilibrio alcista confirmado · zona OB aún intacta → entrada de alta probabilidad.",
-        rightMobileTitle: "✗ OB mitigado — ya atravesado de nuevo",
-        rightMobileBody: "Zona OB ya atravesada por el precio → desequilibrio comprometido, señal débil.",
-        mobileFooterPart1: "Un OB solo se opera en su ",
-        mobileFooterBold: "primer retest",
-        mobileFooterPart2: ".",
-      }
-    : locale === "en"
-    ? {
-        title: "Fresh OB vs mitigated OB",
-        leftTitle: "✓ Fresh OB — never retested",
-        leftSubtitle: "Bullish imbalance confirmed",
-        rightTitle: "✗ Mitigated OB — already retraced",
-        rightSubtitle: "Bullish imbalance compromised",
-        obCree: "OB created",
-        retest: "Retest",
-        leftBottomTitle: "3 candles since formation",
-        leftBottomSub: "No price return into the zone",
-        rightBottomTitle: "Retest + rejection = OB consumed",
-        rightBottomSub: "Institutional orders already filled",
-        infoCaption: "A mitigated OB is consumed: its institutional orders have already been triggered",
-        leftZoneLabel: "OB zone never retested",
-        rightZoneLabel: "OB zone already crossed",
-        mobileTitle: "Fresh OB vs mitigated OB",
-        leftMobileTitle: "✓ Fresh OB — never retested",
-        leftMobileBody: "Bullish imbalance confirmed · OB zone still intact → high-probability entry.",
-        rightMobileTitle: "✗ Mitigated OB — already retraced",
-        rightMobileBody: "OB zone already crossed by price → imbalance compromised, weak signal.",
-        mobileFooterPart1: "An OB is only traded on its ",
-        mobileFooterBold: "first retest",
-        mobileFooterPart2: ".",
-      }
-    : {
-        title: "OB frais vs OB mitigé",
-        leftTitle: "✓ OB frais — jamais retesté",
-        leftSubtitle: "Déséquilibre haussier confirmé",
-        rightTitle: "✗ OB mitigé — déjà retraversé",
-        rightSubtitle: "Déséquilibre haussier compromis",
-        obCree: "OB créé",
-        retest: "Retest",
-        leftBottomTitle: "3 bougies depuis formation",
-        leftBottomSub: "Aucun retour du prix dans la zone",
-        rightBottomTitle: "Retest + rejet = OB consommé",
-        rightBottomSub: "Ordres institutionnels déjà exécutés",
-        infoCaption: "Un OB mitigé est consommé : ses ordres institutionnels ont déjà été déclenchés",
-        leftZoneLabel: "Zone d'OB jamais retestée",
-        rightZoneLabel: "Zone d'OB déjà traversée",
-        mobileTitle: "OB frais vs OB mitigé",
-        leftMobileTitle: "✓ OB frais — jamais retesté",
-        leftMobileBody: "Déséquilibre haussier confirmé · zone d'OB encore intacte → entrée à haute probabilité.",
-        rightMobileTitle: "✗ OB mitigé — déjà retraversé",
-        rightMobileBody: "Zone d'OB déjà traversée par le prix → déséquilibre compromis, signal faible.",
-        mobileFooterPart1: "Un OB ne se trade que sur son ",
-        mobileFooterBold: "premier retest",
-        mobileFooterPart2: ".",
-      };
+// SMC 3 bloc 2 — OB frais vs OB mitigé (EUR/USD H1), même Order Block (corps 1.1745-1.1752) :
+// à gauche, le premier retour n'a jamais retraversé le corps (moins de 20 bougies) : réaction
+// attendue ; à droite, le prix a retraversé tout le corps : ordres exécutés, OB consommé.
+// Retraversée et âge calculés. Bougies : scenarios.ts (« smc-ob », « ob-mitigated »).
+
+import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
+import { fmtPrice, type Candle } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+import { obLayout } from "./OrderBlockDiagram";
+
+const p = (x: number) => fmtPrice(x, 4);
+
+function panel(key: "smc-ob" | "ob-mitigated", title: string): LCPanel {
+  const cs = CANDLES[key] as Candle[];
+  const { obI, ob } = obLayout(cs);
+  const through = cs.findIndex((k, i) => i > obI + 1 && k.c < ob.y1);
+  const touch = cs.findIndex((k, i) => i > obI + 2 && k.l <= ob.y2);
+  return {
+    key, title, decimals: 5, height: 230, candles: cs,
+    subtitle: through > 0 ? `Corps retraversé ${through - obI} bougies après sa formation` : `Retour ${touch - obI} bougies après, corps jamais retraversé`,
+    zones: [{ key: "ob", ...ob, from: obI, label: `OB ${p(ob.y1)}-${p(ob.y2)}`, short: "OB", tone: through > 0 ? "neutral" : "zone", kind: "ob", src: `${key}:${obI}` }],
+    markers: [through > 0
+      ? { key: "m", i: through, price: cs[through].l, label: "Clôture sous l'OB : consommé", short: "Consommé", tone: "bear", side: "below" }
+      : { key: "m", i: touch, price: cs[touch].l, label: "Premier retour : réaction", short: "Réaction", tone: "bull", side: "below" }],
+  };
+}
+
+export default function OBFreshnessDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   return (
-    <div className={className}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1100 500"
-      className="hidden sm:block w-full h-auto"
-    >
-      {/* ═══ DEFS — marker flèche rouge pointillée ═══ */}
-      <defs>
-        <marker id="arrowRed" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-          <path d="M0,0 L6,3 L0,6 Z" fill="#ef4444" />
-        </marker>
-      </defs>
-
-      {/* ═══ Titre haut ═══ */}
-      <text x="550" y="30" fill="#ffffff" fontSize="18" fontWeight="700" textAnchor="middle">
-        {t.title}
-      </text>
-
-      {/* ═══ Cartes (bordures gauche et droite) ═══ */}
-      <rect x="20" y="60" width="500" height="400" rx="12" stroke="#10b981" strokeWidth="1.5" fill="none" />
-      <rect x="580" y="60" width="500" height="400" rx="12" stroke="#ef4444" strokeWidth="1.5" fill="none" />
-
-      {/* ═══ Cercle VS central ═══ */}
-      <circle cx="550" cy="260" r="22" fill="#27272a" stroke="#3f3f46" strokeWidth="1" />
-      <text x="550" y="265" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">VS</text>
-
-      {/* ═══ Titres et sous-titres des cartes ═══ */}
-      <text x="270" y="95" fill="#10b981" fontSize="16" fontWeight="700" textAnchor="middle">{t.leftTitle}</text>
-      <text x="270" y="115" fill="#10b981" fontSize="13" fontWeight="500" textAnchor="middle">{t.leftSubtitle}</text>
-
-      <text x="830" y="95" fill="#ef4444" fontSize="16" fontWeight="700" textAnchor="middle">{t.rightTitle}</text>
-      <text x="830" y="115" fill="#ef4444" fontSize="13" fontWeight="500" textAnchor="middle">{t.rightSubtitle}</text>
-
-      {/* ═══ PANNEAU GAUCHE ═══ */}
-
-      {/* Rectangle OB gauche — encadre bougie 2 (x=140) avec marge */}
-      <rect x="125" y="215" width="30" height="85" stroke="#10b981" fill="rgba(16,185,129,0.06)" strokeDasharray="4 3" strokeWidth="1.5" rx="2" />
-
-      {/* Zone d'OB étendue — 2 lignes pointillées horizontales vers la droite */}
-      <line x1="155" y1="235" x2="420" y2="235" stroke="#10b981" strokeDasharray="4 3" strokeWidth="1" strokeOpacity="0.5" />
-      <line x1="155" y1="285" x2="420" y2="285" stroke="#10b981" strokeDasharray="4 3" strokeWidth="1" strokeOpacity="0.5" />
-
-      {/* 5 bougies — escalier ascendant */}
-      {/* B1 bullish x=80 */}
-      <line x1="80" y1="255" x2="80" y2="320" stroke="#059669" strokeWidth="1.5" />
-      <rect x="69" y="270" width="22" height="40" fill="#10b981" stroke="#059669" strokeWidth="1" rx="2" />
-
-      {/* B2 bearish OB x=140 */}
-      <line x1="140" y1="220" x2="140" y2="295" stroke="#b91c1c" strokeWidth="1.5" />
-      <rect x="129" y="235" width="22" height="50" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="2" />
-
-      {/* B3 bullish FORTE impulsion x=200 */}
-      <line x1="200" y1="170" x2="200" y2="300" stroke="#059669" strokeWidth="1.5" />
-      <rect x="189" y="180" width="22" height="110" fill="#10b981" stroke="#059669" strokeWidth="1" rx="2" />
-
-      {/* B4 bullish moyenne x=260 */}
-      <line x1="260" y1="185" x2="260" y2="250" stroke="#059669" strokeWidth="1.5" />
-      <rect x="249" y="200" width="22" height="40" fill="#10b981" stroke="#059669" strokeWidth="1" rx="2" />
-
-      {/* B5 bullish moyenne-grande x=320 */}
-      <line x1="320" y1="150" x2="320" y2="230" stroke="#059669" strokeWidth="1.5" />
-      <rect x="309" y="160" width="22" height="60" fill="#10b981" stroke="#059669" strokeWidth="1" rx="2" />
-
-      {/* ═══ PANNEAU DROIT ═══ */}
-
-      {/* Rectangle OB droit — encadre bougie 2 droite (x=700) */}
-      <rect x="685" y="215" width="30" height="85" stroke="#ef4444" fill="rgba(239,68,68,0.06)" strokeDasharray="4 3" strokeWidth="1.5" rx="2" />
-
-      {/* Zone d'OB étendue droite — rect teinté horizontal */}
-      <rect x="715" y="235" width="265" height="50" fill="rgba(239,68,68,0.10)" stroke="#ef4444" strokeDasharray="4 3" strokeWidth="1" strokeOpacity="0.6" />
-
-      {/* 6 bougies — impulsion puis retour qui traverse l'OB */}
-      {/* B1 bullish x=640 */}
-      <line x1="640" y1="255" x2="640" y2="320" stroke="#059669" strokeWidth="1.5" />
-      <rect x="629" y="270" width="22" height="40" fill="#10b981" stroke="#059669" strokeWidth="1" rx="2" />
-
-      {/* B2 bearish OB x=700 */}
-      <line x1="700" y1="220" x2="700" y2="295" stroke="#b91c1c" strokeWidth="1.5" />
-      <rect x="689" y="235" width="22" height="50" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="2" />
-
-      {/* B3 bullish FORTE impulsion x=760 */}
-      <line x1="760" y1="170" x2="760" y2="300" stroke="#059669" strokeWidth="1.5" />
-      <rect x="749" y="180" width="22" height="110" fill="#10b981" stroke="#059669" strokeWidth="1" rx="2" />
-
-      {/* B4 bullish continuation x=820 */}
-      <line x1="820" y1="185" x2="820" y2="250" stroke="#059669" strokeWidth="1.5" />
-      <rect x="809" y="200" width="22" height="40" fill="#10b981" stroke="#059669" strokeWidth="1" rx="2" />
-
-      {/* B5 BEARISH RETEST x=880 — MÈCHE BASSE LONGUE descend dans la zone d'OB (y=235-285) */}
-      <line x1="880" y1="170" x2="880" y2="270" stroke="#b91c1c" strokeWidth="1.5" />
-      <rect x="869" y="180" width="22" height="50" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="2" />
-
-      {/* B6 bullish FORTE rebond x=940 */}
-      <line x1="940" y1="150" x2="940" y2="270" stroke="#059669" strokeWidth="1.5" />
-      <rect x="929" y="160" width="22" height="100" fill="#10b981" stroke="#059669" strokeWidth="1" rx="2" />
-
-      {/* Flèche pointillée retest depuis l'extrémité de la mèche B5 vers la zone d'OB */}
-      <line x1="880" y1="265" x2="880" y2="290" stroke="#ef4444" strokeDasharray="3 2" strokeWidth="1.5" markerEnd="url(#arrowRed)" />
-
-      {/* ═══ Pastilles "OB créé" sous bougie 2 dans les 2 panneaux ═══ */}
-      <rect x="115" y="310" width="50" height="18" rx="9" fill="#10b98120" stroke="#10b981" strokeWidth="1" />
-      <text x="140" y="323" fill="#10b981" fontSize="10" fontWeight="600" textAnchor="middle">{t.obCree}</text>
-
-      <rect x="675" y="310" width="50" height="18" rx="9" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="700" y="323" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{t.obCree}</text>
-
-      {/* Pastille "Retest" sous la flèche */}
-      <rect x="855" y="310" width="50" height="18" rx="9" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="880" y="323" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{t.retest}</text>
-
-      {/* ═══ Pastilles bottom (wrappers + titres + captions) ═══ */}
-      {/* Pastille bottom gauche */}
-      <rect x="50" y="380" width="440" height="60" rx="12" fill="#10b98110" stroke="#10b98140" strokeWidth="1" />
-      <text x="270" y="405" fill="#10b981" fontSize="14" fontWeight="600" textAnchor="middle">{t.leftBottomTitle}</text>
-      <text x="270" y="425" fill="#10b981" fontSize="12" textAnchor="middle">{t.leftBottomSub}</text>
-
-      {/* Pastille bottom droite */}
-      <rect x="610" y="380" width="440" height="60" rx="12" fill="#ef444410" stroke="#ef444440" strokeWidth="1" />
-      <text x="830" y="405" fill="#ef4444" fontSize="14" fontWeight="600" textAnchor="middle">{t.rightBottomTitle}</text>
-      <text x="830" y="425" fill="#ef4444" fontSize="12" textAnchor="middle">{t.rightBottomSub}</text>
-
-      {/* ═══ Caption central bas — pastille bleue avec icône info ═══ */}
-      <rect x="300" y="475" width="500" height="22" rx="11" fill="rgba(96,165,250,0.10)" stroke="#60a5fa" strokeWidth="1" strokeOpacity="0.5" />
-      <circle cx="320" cy="486" r="7" stroke="#60a5fa" strokeWidth="1.2" fill="none" />
-      <text x="320" y="490" fill="#60a5fa" fontSize="9" fontWeight="700" textAnchor="middle">i</text>
-      <text x="560" y="490" fill="#60a5fa" fontSize="11" textAnchor="middle">
-        {t.infoCaption}
-      </text>
-
-      {/* ═══ EN FIN — Halos opaques + labels "Zone d'OB ..." (à droite des zones, alignés end pour rester dans la carte) ═══ */}
-      <rect x="305" y="249" width="80" height="14" fill="#09090b" rx="3" />
-      <text x="380" y="260" fill="#10b981" fontSize="10" textAnchor="end">{t.leftZoneLabel}</text>
-
-      <rect x="955" y="249" width="90" height="14" fill="#09090b" rx="3" />
-      <text x="1040" y="260" fill="#ef4444" fontSize="10" textAnchor="end">{t.rightZoneLabel}</text>
-    </svg>
-
-    {/* MOBILE : OB frais vs mitigé ──────────────────────────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">{t.mobileTitle}</p>
-
-      {/* Mini-SVG : 2 panels — OB fresh (jamais touché, emerald) vs OB old (déjà mitigé, zinc) */}
-      <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label="OB Fresh vs Old" fill="none">
-        <line x1="138" y1="10" x2="138" y2="110" stroke="#3f3f46" strokeWidth="0.8" />
-        {/* Panel Fresh — zone non touchée */}
-        <rect x="20" y="50" width="100" height="18" fill="#10b98115" stroke="#10b98155" strokeWidth="1" strokeDasharray="3 2" />
-        <path d="M15,30 L40,40 L65,50 L90,40 L120,28" stroke="#10b981" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
-        <rect x="50" y="6" width="42" height="13" rx="2" fill="#10b98118" stroke="#10b98155" strokeWidth="0.8" />
-        <text x="71" y="15" fontSize="9" fill="#10b981" textAnchor="middle" fontWeight="700">FRESH ✓</text>
-        <text x="70" y="92" fontSize="9" fill="#10b981" textAnchor="middle">Jamais touché</text>
-        {/* Panel Old — zone déjà mitigée */}
-        <rect x="160" y="50" width="100" height="18" fill="#71717a15" stroke="#52525b" strokeWidth="1" strokeDasharray="3 2" />
-        {/* Path passe DANS la zone (= déjà mitigé) */}
-        <path d="M158,30 L180,50 L195,65 L210,58 L225,50 L240,68 L260,42" stroke="#71717a" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
-        <rect x="190" y="6" width="42" height="13" rx="2" fill="#71717a18" stroke="#52525b" strokeWidth="0.8" />
-        <text x="211" y="15" fontSize="9" fill="#a1a1aa" textAnchor="middle" fontWeight="700">OLD ✗</text>
-        <text x="210" y="92" fontSize="9" fill="#a1a1aa" textAnchor="middle">Déjà mitigé</text>
-      </svg>
-
-      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">{t.leftMobileTitle}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.leftMobileBody}</p>
-      </div>
-      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">{t.rightMobileTitle}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{t.rightMobileBody}</p>
-      </div>
-      <p className="text-[13px] text-emerald-400 font-bold text-center pt-2 border-t border-zinc-800 leading-snug">
-        {t.mobileFooterPart1}<span className="font-bold">{t.mobileFooterBold}</span>{t.mobileFooterPart2}
-      </p>
-    </div>
-    </div>
+    <LessonChart
+      id="OBFreshnessDiagram"
+      title="OB frais ou OB mitigé"
+      caption="Un OB frais (moins de 20 bougies H4, jamais retraversé) réagit mieux ; un OB mitigé n'est plus exploitable."
+      panels={[panel("smc-ob", "✓ OB frais"), panel("ob-mitigated", "✗ OB mitigé")]}
+      rows={[2]}
+      sharedScale
+    />
   );
 }

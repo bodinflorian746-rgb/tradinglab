@@ -630,3 +630,28 @@ export function checkLot25(check: Check) {
     check(hh2.price === 1.095 && hl.price === 1.088 && c.some((k, i) => i > hh2.index && k.c < 1.088), "CHoCH (Int. 1) : HH 1.0950, HL 1.0880 cassé");
   }
 }
+
+export function checkLot26(check: Check) {
+  {
+    // SMC 2 / TF 4 : faux BOS = mèche au-dessus de 1.0950, clôture en dessous, puis réintégration
+    const cs = CS["bos-fake"], k = cs.findIndex((x, i) => i > 14 && x.h > 1.095);
+    check(k > 0 && cs[k].c < 1.095 && cs.slice(k).every((x) => x.c < 1.095), "Faux BOS (SMC 2) : mèche sans clôture");
+  }
+  {
+    // SMC 3 : OB = dernière bougie baissière avant l'impulsion (corps 1.1745-1.1752, mèche 1.1738) ; frais vs mitigé ;
+    // SL dans la zone touché par le retest, SL avec marge (1.1731) intact
+    const a = CS["smc-ob"], m = CS["ob-mitigated"];
+    const ob = (cs: Candle[]) => { const hiI = cs.reduce((b, k, i) => (k.h > cs[b].h ? i : b), 0); return cs.reduce((b, k, i) => (i < hiI && k.l < cs[b].l ? i : b), 0); };
+    check(a[ob(a)].o === 1.1752 && a[ob(a)].c === 1.1745 && a[ob(a)].l === 1.1738, "OB (SMC 3) : corps 1.1745-1.1752, mèche 1.1738");
+    const ma = m.findIndex((k) => k.o === 1.1752 && k.c === 1.1745);
+    check(ma > 0 && m.some((k, i) => i > ma + 1 && k.c < 1.1745) && !a.some((k, i) => i > ob(a) + 1 && k.c < 1.1745), "OB (SMC 3) : mitigé retraversé, frais intact");
+    const r = a.findIndex((k, i) => i > ob(a) + 2 && k.l <= 1.1752);
+    check(r > 0 && a.slice(r).some((k) => k.l <= 1.17485) && a.slice(r).every((k) => k.l > 1.1731), "SL (SMC 3) : dans la zone touché, avec marge intact");
+    check(near(rrOf(1.178, 1.1738, 1.187), 2.14, 0.005), "Plan (SMC 3) : R/R 2,14");
+  }
+  {
+    // SMC 4 / Avancé 1 : deux sommets à 1.0900, deux creux à 1.0840
+    const cs = CS["liq-pools"];
+    check(cs.filter((k) => k.h === 1.09).length === 2 && cs.filter((k) => k.l === 1.084).length === 2 && cs.every((k) => k.h <= 1.09 && k.l >= 1.084), "Liquidité (SMC 4) : EQH 1.0900, EQL 1.0840");
+  }
+}

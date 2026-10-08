@@ -1,191 +1,35 @@
-interface LiquidityPoolsDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+// Avancé 1 et SMC 4 — pools de liquidité (EUR/USD H1) : un range avec deux sommets au même
+// niveau (equal highs 1.0900) et deux creux au même niveau (equal lows 1.0840). Les stops des
+// vendeurs dorment au-dessus (liquidité buy-side), ceux des acheteurs en dessous (sell-side).
+// Sommets et creux lus sur les bougies. Bougies : scenarios.ts (« liq-pools »).
 
-export function LiquidityPoolsDiagram({ className = "", locale = "fr" }: LiquidityPoolsDiagramProps) {
-  const t = locale === "es"
-    ? {
-        bslLabel: "Liquidez buy-side (BSL)",
-        sslLabel: "Liquidez sell-side (SSL)",
-        stopHunt: "stop hunt",
-        bslTaken: "BSL tomada ↑",
-        bslMobileDesc: " · stops de compra por encima de máximos iguales (EQH)",
-        sslMobileDesc: " · stops de venta bajo mínimos iguales (EQL)",
-        stopHuntMobileDesc: " · el precio baja a cazar los stops bajo el EQL antes de subir",
-        bslTakenMobileDesc: " · luego ruptura de máximos para tomar la liquidez opuesta",
-        leg1: "Liquidez buy-side — stops por encima de los EQH",
-        leg2: "Liquidez sell-side — stops bajo los EQL",
-        leg3: "Stop hunt = caza de liquidez",
-      }
-    : locale === "en"
-    ? {
-        bslLabel: "Buy-side liquidity (BSL)",
-        sslLabel: "Sell-side liquidity (SSL)",
-        stopHunt: "stop hunt",
-        bslTaken: "BSL taken ↑",
-        bslMobileDesc: " · buy stops above equal highs (EQH)",
-        sslMobileDesc: " · sell stops below equal lows (EQL)",
-        stopHuntMobileDesc: " · price dips to hunt stops below EQL before reversing up",
-        bslTakenMobileDesc: " · then breaks the highs to grab the opposite liquidity",
-        leg1: "Buy-side liquidity — stops above the EQH",
-        leg2: "Sell-side liquidity — stops below the EQL",
-        leg3: "Stop hunt = liquidity grab",
-      }
-    : {
-        bslLabel: "Liquidité buy-side (BSL)",
-        sslLabel: "Liquidité sell-side (SSL)",
-        stopHunt: "chasse aux stops",
-        bslTaken: "BSL pris ↑",
-        bslMobileDesc: " · stops d’achat au-dessus des sommets égaux (EQH)",
-        sslMobileDesc: " · stops de vente sous les creux égaux (EQL)",
-        stopHuntMobileDesc: " · le prix descend chasser les stops sous l’EQL avant de repartir",
-        bslTakenMobileDesc: " · puis cassure des sommets pour prendre la liquidité opposée",
-        leg1: "Liquidité buy-side — stops au-dessus des EQH",
-        leg2: "Liquidité sell-side — stops sous les EQL",
-        leg3: "Chasse aux stops = chasse de liquidité",
-      };
-  const BSL_Y = 24;   // buy-side liquidity line — red
-  const SSL_Y = 128;  // sell-side liquidity line — emerald
-  const EQH_Y = 34;   // equal highs level
-  const EQL_Y = 118;  // equal lows level
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { fmtPrice } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
-  // Price path: two equal highs, two equal lows, stop hunt below SSL, then rally breaking BSL
-  const pricePath =
-    "M10,78 L34,34 L58,80 L82,35 L106,80 L128,118 L148,76 L164,118 L172,138 L192,104 L214,68 L236,34 L254,18 L262,24";
+const p = (x: number) => fmtPrice(x, 4);
 
+export function LiquidityPoolsDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["liq-pools"];
+  const hi = Math.max(...cs.map((k) => k.h)), lo = Math.min(...cs.map((k) => k.l));
+  const tops = cs.map((k, i) => (k.h === hi ? i : -1)).filter((i) => i >= 0);
+  const bots = cs.map((k, i) => (k.l === lo ? i : -1)).filter((i) => i >= 0);
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg
-        width="100%"
-        viewBox="0 0 268 152"
-        fill="none"
-        preserveAspectRatio="xMidYMid meet"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
-
-        {/* SSL zone tint */}
-        <rect x="0" y={SSL_Y - 2} width="268" height="6" fill="#10b98108" />
-        {/* BSL zone tint */}
-        <rect x="0" y={BSL_Y - 2} width="268" height="6" fill="#ef444408" />
-
-        {/* SSL line */}
-        <line x1="10" y1={SSL_Y} x2="258" y2={SSL_Y}
-          stroke="#10b981" strokeWidth="1.3" strokeDasharray="5 3" opacity="0.7" />
-
-        {/* BSL line */}
-        <line x1="10" y1={BSL_Y} x2="258" y2={BSL_Y}
-          stroke="#ef4444" strokeWidth="1.3" strokeDasharray="5 3" opacity="0.7" />
-
-        {/* Price path */}
-        <path d={pricePath} stroke="#71717a" strokeWidth="1.8" strokeLinejoin="round" />
-
-        {/* Equal Highs dots (red) */}
-        <circle cx="34" cy={EQH_Y} r="3" fill="#ef4444" opacity="0.85" />
-        <circle cx="82" cy="35" r="3" fill="#ef4444" opacity="0.85" />
-        {/* Horizontal alignment markers between EQH */}
-        <line x1="34" y1={EQH_Y} x2="82" y2={EQH_Y}
-          stroke="#ef4444" strokeWidth="0.6" strokeDasharray="2 3" opacity="0.3" />
-
-        {/* Equal Lows dots (emerald) */}
-        <circle cx="128" cy={EQL_Y} r="3" fill="#10b981" opacity="0.85" />
-        <circle cx="164" cy={EQL_Y} r="3" fill="#10b981" opacity="0.85" />
-        {/* Horizontal alignment markers between EQL */}
-        <line x1="128" y1={EQL_Y} x2="164" y2={EQL_Y}
-          stroke="#10b981" strokeWidth="0.6" strokeDasharray="2 3" opacity="0.3" />
-
-        {/* Stop hunt spike circle */}
-        <circle cx="172" cy="138" r="3.5" fill="#ef4444" opacity="0.9" />
-
-        {/* BSL break circle */}
-        <circle cx="254" cy="18" r="3.5" fill="#ef4444" opacity="0.9" />
-
-        {/* Badges textuels — masqués sur mobile */}
-        <g className="chart-detail-labels">
-          <rect x="6" y="7" width="112" height="13" rx="3"
-            fill="#ef444414" stroke="#ef444438" strokeWidth="0.8" />
-          <text x="62" y="17" fontSize="7.5" fill="#ef4444" textAnchor="middle" fontWeight="700">
-            {t.bslLabel}
-          </text>
-
-          <rect x="6" y="131" width="114" height="13" rx="3"
-            fill="#10b98114" stroke="#10b98138" strokeWidth="0.8" />
-          <text x="63" y="141" fontSize="7.5" fill="#10b981" textAnchor="middle" fontWeight="700">
-            {t.sslLabel}
-          </text>
-
-          <rect x="44" y="22" width="28" height="10" rx="2"
-            fill="#09090b" fillOpacity="0.85" />
-          <text x="58" y="30" fontSize="7" fill="#ef4444" textAnchor="middle" fontWeight="600">EQH</text>
-
-          <rect x="126" y="107" width="28" height="10" rx="2"
-            fill="#09090b" fillOpacity="0.85" />
-          <text x="140" y="115" fontSize="7" fill="#10b981" textAnchor="middle" fontWeight="600">EQL</text>
-
-          <rect x="178" y="133" width="48" height="11" rx="2"
-            fill="#09090b" fillOpacity="0.9" />
-          <text x="202" y="141" fontSize="6.5" fill="#71717a" textAnchor="middle" opacity="0.9">
-            {t.stopHunt}
-          </text>
-
-          <rect x="188" y="7" width="68" height="13" rx="3"
-            fill="#ef444418" stroke="#ef444438" strokeWidth="0.8" />
-          <text x="222" y="17" fontSize="7.5" fill="#ef4444" textAnchor="middle" fontWeight="700">
-            {t.bslTaken}
-          </text>
-        </g>
-      </svg>
-
-      {/* Mobile : key card */}
-      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
-        <ul className="space-y-1.5 text-[13px] leading-snug">
-          <li className="flex items-start gap-2">
-            <span className="shrink-0 w-3 h-1 rounded-sm bg-red-400 mt-2" />
-            <span className="text-white">
-              <span className="font-bold text-red-400">{locale === "es" ? "BSL (Liquidez buy-side)" : locale === "en" ? "BSL (Buy-Side Liquidity)" : "BSL (Liquidité buy-side)"}</span>
-              <span className="text-zinc-300">{t.bslMobileDesc}</span>
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="shrink-0 w-3 h-1 rounded-sm bg-emerald-400 mt-2" />
-            <span className="text-white">
-              <span className="font-bold text-emerald-400">{locale === "es" ? "SSL (Liquidez sell-side)" : locale === "en" ? "SSL (Sell-Side Liquidity)" : "SSL (Liquidité sell-side)"}</span>
-              <span className="text-zinc-300">{t.sslMobileDesc}</span>
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
-            <span className="text-white">
-              <span className="font-bold text-red-400">{locale === "es" ? "Stop hunt" : locale === "en" ? "Stop hunt" : "Chasse aux stops"}</span>
-              <span className="text-zinc-300">{t.stopHuntMobileDesc}</span>
-            </span>
-          </li>
-          <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
-            <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
-            <span className="text-white">
-              <span className="font-bold text-red-400">{t.bslTaken}</span>
-              <span className="text-zinc-300">{t.bslTakenMobileDesc}</span>
-            </span>
-          </li>
-        </ul>
-      </div>
-
-      {/* Desktop legend (inchangée) */}
-      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-red-500" />
-          <span className="text-[10px] text-zinc-500">{t.leg1}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-zinc-500">{t.leg2}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-zinc-500" />
-          <span className="text-[10px] text-zinc-500">{t.leg3}</span>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id="LiquidityPoolsDiagram"
+      title="Où dorment les stops"
+      caption="Les institutions visent ces zones : le prix va souvent chercher les stops avant le mouvement suivant."
+      panels={[{
+        key: "h1", title: "EUR/USD H1", decimals: 5, height: 280, candles: cs,
+        zones: [
+          { key: "bsl", y1: hi, y2: hi + 0.001, label: "Liquidité buy-side (stops des vendeurs)", short: "BSL", tone: "bull" },
+          { key: "ssl", y1: lo - 0.001, y2: lo, label: "Liquidité sell-side (stops des acheteurs)", short: "SSL", tone: "bear" },
+        ],
+        markers: [
+          ...tops.map((i, n) => ({ key: `t${n}`, i, price: hi, label: n ? `EQH ${p(hi)}` : "EQH", short: "EQH", tone: "zone" as const, side: "above" as const })),
+          ...bots.map((i, n) => ({ key: `b${n}`, i, price: lo, label: n ? `EQL ${p(lo)}` : "EQL", short: "EQL", tone: "zone" as const, side: "below" as const })),
+        ],
+      }]}
+    />
   );
 }

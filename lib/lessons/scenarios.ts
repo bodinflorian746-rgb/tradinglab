@@ -1126,3 +1126,26 @@ Object.assign(SCENARIOS, {
   "bos-eur": authored(1.0800, BOS_EUR, 25201, 5, "EUR/USD", [1.0950]),
   "choch-eur": authored(1.0800, CHOCH_EUR, 25202, 5, "EUR/USD", [1.0880]),
 });
+
+// ─── Lot 26 ──────────────────────────────────────────────────────────────────
+// SMC 2 / Trend-following 4 — faux BOS : même structure EUR/USD H4 (HH 1.0950), la mèche perce
+// 1.0950 mais la bougie clôture en dessous, puis le prix réintègre et baisse (prise de liquidité).
+const BOS_FAKE = bars(1.0800, [...STRUCT_EUR, { c: 1.0938, h: 1.0947 }, 1.0926, { c: 1.0918, l: 1.0912 }, { c: 1.0930, l: 1.0915 }, 1.0944,
+  { c: 1.0946, h: 1.0962, l: 1.0940 }, { c: 1.0928, h: 1.0948 }, 1.0915, 1.0904], 0.0004, 5);
+// SMC 3 — OB mitigé : même OB haussier (corps 1.1745-1.1752, mèche 1.1738), impulsion et BOS
+// au-dessus de 1.1780, puis le prix retraverse tout le corps (clôture 1.1736) : ordres consommés.
+const OB_MITIGATED = bars(1.1790, [
+  1.1784, { c: 1.1777, h: 1.1780 }, 1.1772, 1.1764, 1.1757, 1.1752, { c: 1.1745, h: 1.1754, l: 1.1738 },
+  1.1763, 1.1779, 1.1791, 1.1802, { c: 1.1806, h: 1.1810 }, 1.1795, 1.1780, 1.1764, 1.1750, { c: 1.1736, l: 1.1732 }, 1.1748, 1.1742,
+], 0.0003, 5);
+// SMC 4 / Avancé 1 — pools de liquidité (EUR/USD H1) : range avec equal highs 1.0900 et equal
+// lows 1.0840 ; stops des vendeurs au-dessus (BSL), des acheteurs en dessous (SSL).
+const LIQ_POOLS = bars(1.0862, [
+  1.0874, 1.0888, { c: 1.0896, h: 1.0900 }, 1.0884, 1.0868, 1.0852, { c: 1.0846, l: 1.0840 }, 1.0858, 1.0874, 1.0887, { c: 1.0894, h: 1.0900 },
+  1.0882, 1.0866, 1.0853, { c: 1.0845, l: 1.0840 }, 1.0856, 1.0866,
+], 0.0003, 5);
+Object.assign(SCENARIOS, {
+  "bos-fake": authored(1.0800, BOS_FAKE, 26101, 5, "EUR/USD", [1.0950]),
+  "ob-mitigated": authored(1.1790, OB_MITIGATED, 26201, 5, "EUR/USD", [1.1745]),
+  "liq-pools": authored(1.0862, LIQ_POOLS, 26301, 5, "EUR/USD", [1.0900, 1.0840]),
+});

@@ -16,7 +16,7 @@
   {"url":"/fr/strategies/support-resistance/lecon4","charts":["FakeVsRealBreakoutComparisonDiagram"]},
   {"url":"/fr/strategies/trend-following/lecon3","charts":["FibPullbackChecklistDiagram","OTEDiagram","FibTPProjectionDiagram"]},
   {"url":"/fr/strategies/multi-timeframe/lecon4","charts":["RiskAffineDiagram","ConfirmationM5Diagram","ZoneEchecDiagram"]},
-  {"url":"/fr/strategies/smc/lecon2","charts":["BOSCHoCHSequenceDiagram","BOSvsCHoCHComparisonDiagram","BOSDiagram","CHoCHDiagram"]},
+  {"url":"/fr/strategies/smc/lecon2","charts":["BOSCHoCHSequenceDiagram","BOSvsCHoCHComparisonDiagram","BOSDiagram","CHoCHDiagram","BOSFakeoutDiagram"]},
   {"url":"/fr/strategies/smc/lecon5","charts":["BOSCHoCHSequenceDiagram","MitigationZoneEntryDiagram"]},
   {"url":"/fr/formations/debutant/lecon9","charts":["BiasDiagram","ErrorsDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon4","charts":["RetracementInteractive"]},
@@ -32,8 +32,8 @@
   {"url":"/fr/strategies/price-action/lecon4","charts":["MultiTFEntryDiagram","MultiTimeframeDiagram","MultiTFAlignmentCheckDiagram","MultiTFConflictDiagram","TradePlanDiagram"]},
   {"url":"/fr/strategies/smc/lecon1","charts":["MarketStructureDiagram","InternalVsExternalStructureZoomDiagram","SMCPhasesDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon1","charts":["MarketStructureDiagram","BOSDiagram","CHoCHDiagram"]},
-  {"url":"/fr/strategies/trend-following/lecon4","charts":["BOSvsCHoCHComparisonDiagram","BOSDiagram","CHoCHDiagram"]},
-  {"url":"/fr/strategies/smc/lecon3","charts":["OBExecutionPlanDiagram","MitigationZoneEntryDiagram"]},
+  {"url":"/fr/strategies/trend-following/lecon4","charts":["BOSvsCHoCHComparisonDiagram","BOSDiagram","CHoCHDiagram","BOSFakeoutDiagram"]},
+  {"url":"/fr/strategies/smc/lecon3","charts":["OBExecutionPlanDiagram","MitigationZoneEntryDiagram","OrderBlockDiagram","OBFreshnessDiagram","OBSLPlacementDiagram"]},
   {"url":"/fr/strategies/trend-following/lecon1","charts":["TrendIdentificationStepsDiagram"]},
   {"url":"/fr/strategies/trend-following/lecon2","charts":["TrendlineMADiagram","MMHierarchyStackDiagram","TrendlineWrongDrawingDiagram"]},
   {"url":"/fr/formations/avance/lecon5","charts":["OTEDiagram"]},
@@ -71,5 +71,8 @@
   {"url":"/fr/strategies/multi-timeframe/lecon2","charts":["ContreTendanceTrapDiagram","DirectionDominanteDiagram","HTFFilterDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon7","charts":["MultiTimeframeDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon8","charts":["TradePlanDiagram"]},
-  {"url":"/fr/strategies/reversal/lecon1","charts":["DoubleTopBottomDiagram","DTBValidationGridDiagram","DTBMeasuredMoveProjectionDiagram"]}
+  {"url":"/fr/strategies/reversal/lecon1","charts":["DoubleTopBottomDiagram","DTBValidationGridDiagram","DTBMeasuredMoveProjectionDiagram"]},
+  {"url":"/fr/formations/avance/lecon3","charts":["OrderBlockDiagram"]},
+  {"url":"/fr/formations/avance/lecon1","charts":["LiquidityPoolsDiagram"]},
+  {"url":"/fr/strategies/smc/lecon4","charts":["LiquidityPoolsDiagram"]}
 ]
