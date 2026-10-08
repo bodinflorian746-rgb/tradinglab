@@ -32,8 +32,8 @@ export function TimingComparisonDiagram(_props: { className?: string; locale?: "
           key: "london", title: "London Open : sweep + cascade", decimals: 5, height: 240, candles: l,
           levels: [{ key: "res", price: RES, label: `Résistance ${p(RES)}`, short: "Résistance", tone: "zone" }],
           markers: [
-            { key: "sweep", i: lSweep, price: l[lSweep].h, label: `Sweep ${p(l[lSweep].h)}`, short: "Sweep", tone: "bear", side: "above" },
-            { key: "low", i: lLowAt, price: lLow, label: p(lLow), tone: "bear", side: "below" },
+            { key: "sweep", i: lSweep, price: l[lSweep].h, label: `Sweep ${p(l[lSweep].h)}`, short: "Sweep", tone: "bear", side: "above", role: "sweep", ref: RES, dir: "bear" },
+            { key: "low", i: lLowAt, price: lLow, label: `Plus bas ${p(lLow)}`, short: "Plus bas", tone: "bear", side: "below", role: "low" },
           ],
           chips: [{ label: `Cascade de ${Math.round((l[lSweep].h - lLow) / 0.0001)} pips en 4 bougies`, tone: "bear" }],
         },

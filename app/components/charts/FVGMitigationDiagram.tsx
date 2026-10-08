@@ -20,6 +20,7 @@ export function FVGMitigationDiagram(_props: { className?: string; locale?: "fr"
     i > low1At && k.h >= fvg.y1 && (best < 0 || cs[best].h < k.h) ? i : best, -1);
   const rej = back + 1;
   const end = Math.min(...cs.slice(rej + 1).map((k) => k.l));
+  const endAt = cs.findIndex((k, i) => i > rej && k.l === end);
   return (
     <LessonChart
       id="FVGMitigationDiagram"
@@ -27,14 +28,14 @@ export function FVGMitigationDiagram(_props: { className?: string; locale?: "fr"
       caption="La mitigation a été le signal d'entrée, pas l'impulsion initiale, déjà passée."
       panels={[{
         key: "h1", title: "XAU/USD H1", decimals: 0, height: 290, candles: cs,
-        zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `fvg-mitigation-xau:${fvg.i}` }],
+        zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `fvg-mitigation-xau:${fvg.i}`, role: "fvg" }],
         markers: [
-          { key: "imp", i: fvg.i, price: cs[fvg.i].l, label: "Impulsion", tone: "bear", side: "below" },
-          { key: "low", i: low1At, price: low1, label: usd(low1), tone: "neutral", side: "below" },
-          { key: "back", i: back, price: cs[back].h, label: `Retour à ${usd(cs[back].h)}`, short: "Retour", tone: "zone", side: "above" },
-          { key: "rej", i: rej, price: cs[rej].l, label: "Rejet", tone: "bear", side: "below" },
+          { key: "imp", i: fvg.i, price: cs[fvg.i].l, label: "Impulsion", tone: "bear", side: "below", role: "impulse", span: [fvg.i, fvg.i] },
+          { key: "low", i: low1At, price: low1, label: `Plus bas ${usd(low1)}`, short: "Plus bas", tone: "neutral", side: "below", role: "low" },
+          { key: "back", i: back, price: cs[back].h, label: `Retour à ${usd(cs[back].h)}`, short: "Retour", tone: "zone", side: "above", role: "high" },
+          { key: "rej", i: rej, price: cs[rej].h, label: "Rejet", tone: "bear", side: "above", role: "rejet", ref: "fvg", dir: "bear" },
+          { key: "end", i: endAt, price: end, label: `Repart vers ${usd(end)}`, short: "Reprise", tone: "bear", side: "below", role: "low" },
         ],
-        chips: [{ label: `Puis ${usd(end)}`, tone: "bear" }],
       }]}
     />
   );

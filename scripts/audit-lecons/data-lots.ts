@@ -356,14 +356,15 @@ export function checkLot16(check: Check) {
 
 export function checkLot17(check: Check) {
   {
-    // ICT 4 / ICT 5 — sweep 1.1792 refermé sous 1.1780, 4 bougies baissières jusqu'à 1.1748, FVG 1.1768-1.1777,
+    // ICT 4 / ICT 5 — sweep 1.1792 refermé sous 1.1780, 3 bougies baissières (corps qui ne rétrécissent pas) jusqu'à 1.1748, FVG 1.1768-1.1777,
     // retour dans le FVG, entrée 1.1774 sous le bas du rejet, SL 1.1798, TP 1.1695 (R/R 3,29)
     const cs = CS["disp-eur"], S = 5;
     check(cs[S].h === 1.1792 && cs[S].c < 1.178 && Math.max(...cs.map((k) => k.h)) === 1.1792, "Displacement (ICT 4) : sweep");
-    check(cs.slice(S + 1, S + 5).every((k) => k.c < k.o && k.h - k.o <= 0.00031) && cs[S + 4].l === 1.1748 && Math.min(...cs.slice(0, S + 5).map((k) => k.l)) === 1.1748, "Displacement (ICT 4) : 4 bougies baissières jusqu'à 1.1748");
+    const seq = cs.slice(S + 1, S + 4);
+    check(seq.every((k, i) => k.c < k.o && k.h === k.o && (!i || k.o - k.c >= seq[i - 1].o - seq[i - 1].c - 1e-9)) && cs[S + 3].l === 1.1748 && Math.min(...cs.slice(0, S + 5).map((k) => k.l)) === 1.1748, "Displacement (ICT 4) : 3 bougies baissières sans mèche haute, corps qui ne rétrécissent pas, jusqu'à 1.1748");
     const g = fvgAt(cs, S + 1, "bear"), g2 = fvgAt(cs, S + 2, "bear");
     check(!!g && near(g.y1, 1.1768, 1e-9) && near(g.y2, 1.1777, 1e-9) && !!g2, "Displacement (ICT 4) : FVG 1.1768-1.1777 et second FVG");
-    const back = cs.findIndex((k, i) => i > S + 4 && k.c >= 1.1768);
+    const back = cs.findIndex((k, i) => i > S + 3 && k.c >= 1.1768);
     check(back > 0 && cs.slice(back, back + 5).some((k, i, a) => i > 0 && k.l <= 1.1774 && a[i - 1].l >= 1.1774), "Displacement (ICT 4) : pas d'entrée 1.1774 après le rejet");
     check(near(rrOf(1.1774, 1.1798, 1.1695), 3.29, 0.005), "Displacement (ICT 5) : R/R 3,3");
   }

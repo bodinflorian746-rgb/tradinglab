@@ -26,13 +26,12 @@ export function ICTTimingDiagram(_props: { className?: string; locale?: "fr" | "
         key: "m15", title: "XAU/USD M15, ouverture de London", decimals: 0, height: 280, candles: cs,
         zones: [
           { key: "asia", y1: lo, y2: hi, from: 0, to: SWEEP - 1, label: `Range Asia ${usd(lo)}-${usd(hi)}`, short: "Range Asia", tone: "sky" },
-          { key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `ict-timing-bear:${fvg.i}` },
+          { key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `ict-timing-bear:${fvg.i}`, role: "fvg" },
         ],
         markers: [
-          { key: "sweep", i: SWEEP, price: cs[SWEEP].h, label: `Sweep au-dessus de ${usd(hi)}`, short: "Sweep", tone: "zone", side: "above" },
-          { key: "end", i: last, price: cs[last].c, label: usd(cs[last].c), tone: "bear", side: "below" },
+          { key: "sweep", i: SWEEP, price: cs[SWEEP].h, label: `Sweep au-dessus de ${usd(hi)}`, short: "Sweep", tone: "zone", side: "above", role: "sweep", ref: hi, dir: "bear" },
+          { key: "disp", i: last, price: cs[last].l, label: `Displacement baissier de ${usd(disp)}`, short: `Displacement −${usd(disp)}`, tone: "bear", side: "below", role: "displacement", span: [SWEEP + 1, last] },
         ],
-        chips: [{ label: `Displacement baissier de ${usd(disp)}`, tone: "bear" }],
       }]}
     />
   );

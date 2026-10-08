@@ -30,13 +30,10 @@ export function AsiaRangeSweepDiagram(_props: { className?: string; locale?: "fr
           { key: "asialow", price: 1.171, to: SWEEP, label: `Stops sous ${p(1.171)}`, short: "Stops", tone: "zone", dashed: true },
         ],
         markers: [
-          { key: "asiaH", i: asiaHighAt, price: asiaHigh, label: p(asiaHigh), tone: "sky", side: "above" },
-          { key: "sweep", i: SWEEP, price: sweepLow, label: `Sweep ${p(sweepLow)}`, short: "Sweep", tone: "bear", side: "below" },
-          { key: "peak", i: peakAt, price: peak, label: p(peak), tone: "bull", side: "above" },
-        ],
-        chips: [
-          { label: `Sweep → ${p(sweepLow)} : stops déclenchés`, tone: "bear" },
-          { label: `Puis expansion → ${p(peak)}`, tone: "bull" },
+          { key: "asiaH", i: asiaHighAt, price: asiaHigh, label: `Haut Asia ${p(asiaHigh)}`, short: "Haut Asia", tone: "sky", side: "above", role: "high" },
+          { key: "sweep", i: SWEEP, price: sweepLow, label: `Sweep ${p(sweepLow)} : stops déclenchés`, short: "Sweep", tone: "bear", side: "below", role: "sweep", ref: 1.171, dir: "bull" },
+          { key: "imp", i: REIN + 1, price: cs[REIN + 1].l, label: "Impulsion haussière", short: "Impulsion", tone: "bull", side: "below", role: "impulse", span: [REIN, REIN + 2] },
+          { key: "peak", i: peakAt, price: peak, label: `Expansion → ${p(peak)}`, short: "Expansion", tone: "bull", side: "above", role: "high" },
         ],
       }]}
     />

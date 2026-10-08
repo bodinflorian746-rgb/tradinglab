@@ -29,13 +29,12 @@ export function KillzonesTimelineDiagram(_props: { className?: string; locale?: 
           { key: "asialow", price: ASIA_LOW, to: LONDON_START, label: `Bas Asia ${p(ASIA_LOW)}`, short: "Bas Asia", tone: "zone", dashed: true },
         ],
         markers: [
-          { key: "london", i: LONDON_START, price: sweep, label: "London Open : sweep", short: "London", tone: "bull", side: "below" },
+          { key: "london", i: LONDON_START, price: sweep, label: "London Open : sweep du bas Asia", short: "London : sweep", tone: "bull", side: "below", role: "sweep", ref: ASIA_LOW, dir: "bull" },
           { key: "ny", i: NY_START, price: cs[NY_START].l, label: "NY Open", short: "NY", tone: "entry", side: "below" },
-          { key: "peak", i: peakAt, price: peak, label: p(peak), tone: "bull", side: "above" },
+          { key: "peak", i: peakAt, price: peak, label: `Expansion → ${p(peak)}`, short: "Expansion", tone: "bull", side: "above", role: "high" },
         ],
         chips: [
           { label: `Asia : range ${Math.round((ASIA_HIGH - ASIA_LOW) / 0.0001)} pips`, tone: "sky" },
-          { label: "London : sweep + expansion haussière", tone: "bull" },
         ],
       }]}
     />

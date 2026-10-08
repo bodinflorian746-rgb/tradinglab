@@ -54,10 +54,9 @@ export function IctLiquidityGrabDiagram({ variant = "prise" }: { variant?: "pris
         key: "h1", title: "EUR/USD H1", decimals: 5, height: 280, candles: cs, ...common,
         markers: [
           ...markers,
-          { key: "sweep", i: sweep, price: all[sweep].h, label: `Sweep ${p(all[sweep].h)} : stops déclenchés`, short: `Sweep ${p(all[sweep].h)}`, tone: "bear", side: "above" },
-          { key: "low", i: lowAt, price: low, label: `Chute vers ${p(low)}`, short: p(low), tone: "bear", side: "below" },
+          { key: "sweep", i: sweep, price: all[sweep].h, label: `Sweep ${p(all[sweep].h)} : stops déclenchés`, short: `Sweep ${p(all[sweep].h)}`, tone: "bear", side: "above", role: "sweep", ref: EQH, dir: "bear" },
+          { key: "low", i: lowAt, price: low, label: `Chute de ${Math.round((all[sweep].h - low) / 0.0001)} pips → ${p(low)}`, short: "Chute", tone: "bear", side: "below", role: "low" },
         ],
-        chips: [{ label: `Chute de ${Math.round((all[sweep].h - low) / 0.0001)} pips après le sweep`, tone: "bear" }],
       }]}
     />
   );

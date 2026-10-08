@@ -146,7 +146,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Graphique M15 EUR/USD : depuis 1.1780, le prix imprime une mèche de sweep à 1.1792 puis enchaîne 4 bougies baissières consécutives, aux corps de 6 à 10 pips, bien plus grands que ceux des bougies précédentes, sans aucune mèche haute notable. Le prix chute jusqu'à 1.1748 en moins d'une heure, laissant deux FVG bearish visibles dans la chute. C'est un displacement caractéristique, pas une volatilité passagère, mais une séquence orientée.
+                Graphique M15 EUR/USD : depuis 1.1780, le prix imprime une mèche de sweep à 1.1792 puis enchaîne 3 bougies baissières consécutives, aux corps de 9 à 10 pips qui ne rétrécissent pas, bien plus grands que ceux des bougies précédentes, sans aucune mèche haute notable. Le prix chute jusqu'à 1.1748 en moins d'une heure, laissant deux FVG bearish visibles dans la chute. C'est un displacement caractéristique, pas une volatilité passagère, mais une séquence orientée.
               </p>
             </div>
 
@@ -267,7 +267,7 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Displacement bearish</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : 4 bougies baissières consécutives à grands corps, sans mèches hautes, le prix chute à 1.1748. FVG visible entre 1.1768 et 1.1777</li>
+                <li>- Observation : 3 bougies baissières consécutives à grands corps, sans mèches hautes, le prix chute à 1.1748. FVG visible entre 1.1768 et 1.1777</li>
                 <li>- Conclusion : displacement validé. L'entrée n'est pas dans le displacement (déjà passé), elle est dans le FVG qu'il a créé</li>
               </ul>
 

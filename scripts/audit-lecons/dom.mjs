@@ -152,7 +152,8 @@ function checkCharts({ ids, vocab }) {
           seq.forEach((q, t) => {
             if (body(q) < 1.5 * mb) E(`${name} : corps de la bougie ${a + t} = ${(body(q) / mb).toFixed(1)} × la moyenne des précédentes (au moins 1,5)`);
             if (t && body(q) < 0.9 * body(seq[t - 1])) E(`${name} : le corps rétrécit (bougie ${a + t})`);
-            if (Math.max(upW(q), loW(q)) > 0.15 * body(q)) E(`${name} : mèche visible sur la bougie ${a + t}`);
+            // mèche contraire : au-dessus du corps pour une séquence baissière, en dessous pour une haussière
+            if ((b ? loW(q) : upW(q)) > 0.15 * body(q)) E(`${name} : mèche contraire visible sur la bougie ${a + t}`);
           });
         }
       }

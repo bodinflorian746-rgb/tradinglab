@@ -28,8 +28,8 @@ export function NYOpenExpansionDiagram(_props: { className?: string; locale?: "f
         ],
         markers: [
           { key: "exp", i: EXP, price: cs[EXP].l, label: "NY Open : bougie explosive", short: "NY Open", tone: "bull", side: "below" },
-          { key: "peak", i: peakAt, price: peak, label: `${usd(peak)} mèche sweep`, short: "Sweep", tone: "zone", side: "above" },
-          { key: "low", i: lowAt, price: low, label: usd(low), tone: "bear", side: "below" },
+          { key: "peak", i: peakAt, price: peak, label: `Mèche de sweep ${usd(peak)}`, short: "Sweep", tone: "zone", side: "above", role: "high" },
+          { key: "low", i: lowAt, price: low, label: `Cascade → ${usd(low)}`, short: "Cascade", tone: "bear", side: "below", role: "low" },
         ],
         chips: [{ label: `Bougie explosive : +${usd(cs[EXP].h - cs[EXP].o)}`, tone: "bull" }, { label: `${usd(amplitude)} d'amplitude dans la 1re heure`, tone: "zone" }],
       }]}

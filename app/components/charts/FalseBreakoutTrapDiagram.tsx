@@ -21,19 +21,15 @@ export function FalseBreakoutTrapDiagram(_props: { className?: string; locale?: 
     <LessonChart
       id="FalseBreakoutTrapDiagram"
       title="Un breakout non tenu est un piège"
-      caption="Réintégration sous le niveau cassé = piège : on inverse le scénario. L'ICT trade ce qui se passe après."
+      caption={`Les SL des acheteurs du breakout, sous ${usd(RES)}, sont déclenchés : réintégration sous le niveau cassé = piège. L'ICT trade ce qui se passe après.`}
       panels={[{
         key: "m15", title: "XAU/USD M15", decimals: 0, height: 280, candles: cs,
-        levels: [{ key: "res", price: RES, label: `Résistance ${usd(RES)}`, short: "Résistance", tone: "zone" }],
+        levels: [{ key: "res", price: RES, label: `Résistance ${usd(RES)}`, short: "Résistance", tone: "zone", role: "resistance" }],
         markers: [
           { key: "tests", i: mid, price: RES, label: `${tests.length} tests`, tone: "zone", side: "above", dot: true },
-          { key: "brk", i: brk, price: cs[brk].h, label: `Breakout ${usd(cs[brk].h)}`, short: `Breakout`, tone: "entry", side: "above" },
-          { key: "back", i: back, price: cs[back].l, label: `Réintégration sous ${usd(RES)}`, short: "Réintégration", tone: "bear", side: "below" },
-          { key: "low", i: lowAt, price: low, label: usd(low), tone: "bear", side: "below" },
-        ],
-        chips: [
-          { label: `SL des acheteurs sous ${usd(RES)} : déclenchés`, tone: "bear" },
-          { label: `Chute jusqu'à ${usd(low)}`, tone: "bear" },
+          { key: "brk", i: brk, price: cs[brk].h, label: `Breakout ${usd(cs[brk].h)}`, short: `Breakout`, tone: "entry", side: "above", role: "high" },
+          { key: "back", i: back, price: cs[back].c, label: `Clôture sous ${usd(RES)} : réintégration`, short: "Réintégration", tone: "bear", side: "below", role: "close" },
+          { key: "low", i: lowAt, price: low, label: `Chute jusqu'à ${usd(low)}`, short: "Chute", tone: "bear", side: "below", role: "low" },
         ],
       }]}
     />

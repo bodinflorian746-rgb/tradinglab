@@ -1,5 +1,5 @@
 // ICT 4 bloc 3 et ICT 5 bloc 3 (fusionné avec ICTDisplacementSetupDiagram) — le displacement
-// crée le setup (EUR/USD M15, plan des leçons) : sweep à 1.1792, displacement jusqu'à 1.1748,
+// crée le setup (EUR/USD M15, plan des leçons) : sweep à 1.1792, displacement de 3 bougies jusqu'à 1.1748,
 // FVG 1.1768-1.1777 ; le prix remonte progressivement dans le FVG, bougie de rejet, puis
 // bougie baissière impulsive : short 1.1774, SL 1.1798 (au-dessus du sommet du sweep),
 // TP 1.1695 (liquidité basse). FVG et R/R calculés. Bougies : scenarios.ts (« disp-eur »).
@@ -28,13 +28,13 @@ export function DisplacementSetupDiagram(_props: { className?: string; locale?: 
       caption="L'entrée se prend au retour dans le FVG, jamais pendant le displacement."
       panels={[{
         key: "m15", title: "EUR/USD M15", decimals: 5, height: 300, candles: cs,
-        zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: DISP.first - 1, label: `FVG ${p(fvg.y1)}-${p(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `disp-eur:${DISP.first}` }],
+        zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: DISP.first - 1, label: `FVG ${p(fvg.y1)}-${p(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `disp-eur:${DISP.first}`, role: "fvg" }],
         levels: t.levels,
         offscale: t.offscale,
         markers: [
-          { key: "sweep", i: DISP.sweep, price: cs[DISP.sweep].h, label: `Sweep ${p(cs[DISP.sweep].h)}`, short: "Sweep", tone: "zone", side: "above" },
-          { key: "disp", i: DISP.last, price: cs[DISP.last].l, label: `Displacement → ${p(cs[DISP.last].l)}`, short: "Displacement", tone: "bear", side: "below" },
-          { key: "rej", i: rej, price: cs[rej].h, label: "Rejet dans le FVG", short: "Rejet", tone: "bear", side: "above" },
+          { key: "sweep", i: DISP.sweep, price: cs[DISP.sweep].h, label: `Sweep ${p(cs[DISP.sweep].h)}`, short: "Sweep", tone: "zone", side: "above", role: "sweep", ref: 1.178, dir: "bear" },
+          { key: "disp", i: DISP.last, price: cs[DISP.last].l, label: `Displacement → plus bas ${p(cs[DISP.last].l)}`, short: "Displacement", tone: "bear", side: "below", role: "displacement", span: [DISP.first, DISP.last] },
+          { key: "rej", i: rej, price: cs[rej].h, label: "Rejet dans le FVG", short: "Rejet", tone: "bear", side: "above", role: "rejet", ref: "fvg", dir: "bear" },
         ],
         chips: t.chips,
       }]}

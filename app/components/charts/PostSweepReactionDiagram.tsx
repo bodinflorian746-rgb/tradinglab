@@ -28,13 +28,13 @@ export function PostSweepReactionDiagram(_props: { className?: string; locale?: 
         key: "m15", title: "EUR/USD M15", decimals: 5, height: 300, candles: cs,
         levels: [
           { key: "eqh", price: EQH, to: sweep, label: `Equal highs ${p(EQH)}`, short: "Equal highs", tone: "zone" },
-          { key: "local", price: local.price, from: local.index, to: imp, label: `Creux local ${p(local.price)}`, short: "Creux local", tone: "neutral", dashed: true },
+          { key: "local", price: local.price, from: local.index, to: imp, label: `Creux local ${p(local.price)} cassé`, short: "Creux local", tone: "neutral", dashed: true, role: "bos", ref: local.index, dir: "bear" },
           ...t.levels,
         ],
         offscale: t.offscale,
         markers: [
-          { key: "sweep", i: sweep, price: cs[sweep].h, label: `Sweep ${p(cs[sweep].h)}, clôture sous ${p(EQH)}`, short: "Sweep", tone: "bear", side: "above" },
-          { key: "imp", i: imp, price: cs[imp].l, label: `Impulsion ${body} pts`, short: `${body} pts`, tone: "bear", side: "below" },
+          { key: "sweep", i: sweep, price: cs[sweep].h, label: `Sweep ${p(cs[sweep].h)}, clôture sous ${p(EQH)}`, short: "Sweep", tone: "bear", side: "above", role: "sweep", ref: EQH, dir: "bear" },
+          { key: "imp", i: imp, price: cs[imp].l, label: `Impulsion ${body} pts`, short: "Impulsion", tone: "bear", side: "below", role: "impulse", span: [imp, imp] },
         ],
         chips: t.chips,
       }]}

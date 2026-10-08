@@ -20,7 +20,7 @@ export function FVGMitigationScenariosDiagram(_props: { className?: string; loca
   const start = sets[0].length - 5; // 1re bougie propre à chaque cas
   const base = (key: string, cs: Candle[]) => ({
     key, decimals: 5, candles: cs, height: 260,
-    zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${p(fvg.y1)}-${p(fvg.y2)}`, short: "FVG", tone: "bull" as const, kind: "fvg", src: `${KEYS[0]}:${fvg.i}` }],
+    zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${p(fvg.y1)}-${p(fvg.y2)}`, short: "FVG", tone: "bull" as const, kind: "fvg", src: `${KEYS[0]}:${fvg.i}`, role: "fvg" as const }],
   });
   const [a, b, c] = sets;
   const aTouch = start, bWick = start + 1, cBreak = c.findIndex((k, i) => i >= start && k.c < swing);
@@ -28,19 +28,19 @@ export function FVGMitigationScenariosDiagram(_props: { className?: string; loca
     {
       ...base("a", a), title: "A. Rebond immédiat", subtitle: "FVG fresh, setup A+",
       markers: [
-        { key: "touch", i: aTouch, price: a[aTouch].l, label: `Mèche ${p(a[aTouch].l)}`, short: p(a[aTouch].l), tone: "bull", side: "below" },
-        { key: "top", i: a.length - 1, price: a[a.length - 1].h, label: p(a[a.length - 1].h), tone: "bull", side: "above" },
+        { key: "touch", i: aTouch, price: a[aTouch].l, label: `Mèche ${p(a[aTouch].l)}`, short: "Mèche", tone: "bull", side: "below", role: "low" },
+        { key: "top", i: a.length - 1, price: a[a.length - 1].h, label: `Repart vers ${p(a[a.length - 1].h)}`, short: "Reprise", tone: "bull", side: "above", role: "high" },
       ],
     },
     {
       ...base("b", b), title: "B. Mitigation profonde", subtitle: "Rejet net, setup actif",
       levels: [{ key: "stop", price: 1.0838, from: bWick, label: `Stop ${p(1.0838)}`, short: "Stop", tone: "bear", dashed: true }],
-      markers: [{ key: "wick", i: bWick, price: b[bWick].l, label: `Mèche ${p(b[bWick].l)}, clôture ${p(b[bWick].c)}`, short: `Mèche ${p(b[bWick].l)}`, tone: "bull", side: "below" }],
+      markers: [{ key: "wick", i: bWick, price: b[bWick].l, label: `Mèche ${p(b[bWick].l)}, clôture ${p(b[bWick].c)}`, short: `Mèche ${p(b[bWick].l)}`, tone: "bull", side: "below", role: "pinbar", dir: "bull" }],
     },
     {
       ...base("c", c), title: "C. Invalidation", subtitle: "Pas de trade",
-      levels: [{ key: "swing", price: swing, from: swingAt, label: `Swing low ${p(swing)}`, short: "Swing low", tone: "neutral", dashed: true }],
-      markers: [{ key: "close", i: cBreak, price: c[cBreak].l, label: `Clôture ${p(c[cBreak].c)}`, short: p(c[cBreak].c), tone: "bear", side: "below" }],
+      levels: [{ key: "swing", price: swing, from: swingAt, to: cBreak, label: `Swing low ${p(swing)}`, short: "Swing low", tone: "neutral", dashed: true, role: "bos", ref: swingAt, dir: "bear" }],
+      markers: [{ key: "close", i: cBreak, price: c[cBreak].c, label: `Clôture ${p(c[cBreak].c)}`, short: "Clôture", tone: "bear", side: "below", role: "close" }],
     },
   ];
   return (

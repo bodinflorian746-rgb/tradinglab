@@ -26,7 +26,7 @@ export function DisplacementVsVolatilityDiagram(_props: { className?: string; lo
         {
           key: "vol", title: "Volatilité : bougie isolée, refermée", decimals: 5, height: 220, candles: vol,
           markers: [
-            { key: "spike", i: spike, price: vol[spike].h, label: `+${spikePips} pips (news mineure)`, short: `+${spikePips} pips`, tone: "bull", side: "above" },
+            { key: "spike", i: spike, price: vol[spike].h, label: `Bougie isolée +${spikePips} pips (news mineure)`, short: `Bougie +${spikePips} pips`, tone: "bull", side: "above" },
             { key: "back", i: spike + 1, price: vol[spike + 1].l, label: "Tout est refermé", short: "Refermé", tone: "bear", side: "below" },
           ],
           chips: [{ label: "Pas de breakout, pas de suite", tone: "neutral" }],
@@ -34,8 +34,10 @@ export function DisplacementVsVolatilityDiagram(_props: { className?: string; lo
         {
           key: "disp", title: "Displacement : séquence qui casse le creux", decimals: 5, height: 220, candles: seq,
           levels: [{ key: "low", price: local.price, from: local.index, label: `Creux local ${p(local.price)}`, short: "Creux local", tone: "neutral", dashed: true }],
-          markers: [{ key: "brk", i: first, price: seq[first].l, label: "Cassure du creux local", short: "Cassure du creux", tone: "bear", side: "below" }],
-          chips: [{ label: `4 bougies baissières : corps de ${bodies.join(", ")} pips`, tone: "bear" }],
+          markers: [
+            { key: "brk", i: first, price: seq[first].c, label: "Clôture sous le creux local", short: "Cassure du creux", tone: "bear", side: "above", role: "bos", ref: local.index, dir: "bear" },
+            { key: "disp", i: seq.length - 1, price: seq[seq.length - 1].l, label: `${bodies.length} bougies de ${Math.min(...bodies)} à ${Math.max(...bodies)} pips`, short: `${bodies.length} bougies`, tone: "bear", side: "below", role: "displacement", span: [first, seq.length - 1] },
+          ],
         },
       ]}
       rows={[1, 1]}

@@ -193,7 +193,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : après le sweep à 1.1792, 4 bougies baissières consécutives à grands corps ramènent le prix à 1.1748. Un FVG est laissé entre 1.1768 et 1.1777. Le displacement valide l'intention vendeuse. Le prix remonte ensuite progressivement vers le FVG : entrée short au retour dans la bande, SL au-dessus du sommet du sweep (1.1792), TP vers la prochaine liquidité basse.
+                EUR/USD : après le sweep à 1.1792, 3 bougies baissières consécutives à grands corps ramènent le prix à 1.1748. Un FVG est laissé entre 1.1768 et 1.1777. Le displacement valide l'intention vendeuse. Le prix remonte ensuite progressivement vers le FVG : entrée short au retour dans la bande, SL au-dessus du sommet du sweep (1.1792), TP vers la prochaine liquidité basse.
               </p>
             </div>
 
@@ -260,7 +260,7 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Displacement bearish</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : 4 bougies M15 baissières consécutives à grands corps, chute jusqu'à 1.1748. FVG visible entre 1.1768 et 1.1777</li>
+                <li>- Observation : 3 bougies M15 baissières consécutives à grands corps, chute jusqu'à 1.1748. FVG visible entre 1.1768 et 1.1777</li>
                 <li>- Conclusion : displacement validé, le FVG est la zone d'exécution</li>
               </ul>
 
