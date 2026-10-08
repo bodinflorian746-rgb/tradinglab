@@ -841,3 +841,55 @@ Object.assign(SCENARIOS, {
   "riskoff-daily": riskoffDaily, "riskoff-trend-h4": riskoffTrend,
   "riskoff-exhaust-h4": riskoffExhaust, "macro-filter-news": macroFilterNews,
 });
+
+// ─── Lot 20 ──────────────────────────────────────────────────────────────────
+// Multi-UT 1 (leçon 1) — H4 baissier EUR/USD, résistance 1.1780 : structure LH/LL,
+// rejets répétés sous 1.1780. Utilisé pour HTFBias (H4) et panel 1 de SingleTimeframeTrap.
+const htfBearH4 = () => buildCandles(1.1740, [
+  { c: 1.1750, h: 1.1757 }, ...c(1.1743, 1.1737, 1.1730, 1.1722),
+  { c: 1.1744 }, { c: 1.1760, h: 1.1773 }, { c: 1.1751, h: 1.1773, l: 1.1742 },
+  ...c(1.1738, 1.1727, 1.1719, 1.1712), { c: 1.1704, l: 1.1700 },
+  { c: 1.1717 }, { c: 1.1731 }, { c: 1.1745, h: 1.1750 },
+  { c: 1.1738, h: 1.1750, l: 1.1730 }, ...c(1.1726, 1.1718, 1.1710), { c: 1.1704, l: 1.1700 },
+], { seed: 20101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale",
+  levels: [1.178, 1.17], pins: [1.178, 1.1773, 1.17] });
+// Multi-UT 1 — M15 EUR/USD, breakout haussier local à 1.1775 (dans la résistance H4) puis
+// retour à 1.1700 : le signal M15 était valide mais contre l'UT supérieure.
+const trapM15 = () => buildCandles(1.1720, [
+  ...c(1.1729, 1.1738, 1.1745), { c: 1.1756 }, { c: 1.1763 }, { c: 1.1775, h: 1.1778 },
+  { c: 1.1764, h: 1.1776 }, { c: 1.1751 }, { c: 1.1740 }, { c: 1.1728 },
+  { c: 1.1716 }, { c: 1.1703 }, { c: 1.1700, l: 1.1698 },
+], { seed: 20102, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale",
+  levels: [1.1778, 1.17], pins: [1.1778, 1.1776, 1.1698] });
+// Multi-UT 1 — H1 EUR/USD, résistance zone 1.1765-1.1780 : price returns after impulsion.
+const interZoneH1 = () => buildCandles(1.1720, [
+  ...c(1.1728, 1.1736, 1.1745, 1.1754, 1.1762), { c: 1.1768, h: 1.1772 },
+  { c: 1.1775, h: 1.1779, l: 1.1770 }, ...c(1.1771, 1.1768),
+], { seed: 20201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale",
+  levels: [1.1765, 1.178], pins: [1.1765, 1.1772, 1.178, 1.1779] });
+// Multi-UT 1 — M5 EUR/USD, sweep à 1.1778 dans la zone H1 1.1765-1.1780, puis CHoCH
+// baissier (clôture sous 1.1765), entrée short.
+const ltfExecM5 = () => buildCandles(1.1762, [
+  ...c(1.1765, 1.1769, 1.1773, 1.1776), { c: 1.1774, h: 1.1778, l: 1.1771 },
+  { c: 1.1765, h: 1.1775 }, { c: 1.1762 }, { c: 1.1757, l: 1.1755 },
+], { seed: 20301, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale",
+  levels: [1.1765, 1.1778], pins: [1.1765, 1.1778, 1.1755] });
+// Multi-UT 2 — Daily EUR/USD baissier, résistance 1.1760 : piège contre-tendance.
+const ctDaily = () => buildCandles(1.1720, [
+  { c: 1.1730, h: 1.1736 }, ...c(1.1724, 1.1717, 1.1710), { c: 1.1703, l: 1.1700 },
+  ...c(1.1710, 1.1720, 1.1728, 1.1736), { c: 1.1742, h: 1.1749 },
+  { c: 1.1736, h: 1.1749, l: 1.1728 }, ...c(1.1720, 1.1710, 1.1700, 1.1692), { c: 1.1685, l: 1.1682 },
+], { seed: 20401, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale",
+  levels: [1.176, 1.1682], pins: [1.176, 1.1749, 1.1682] });
+// Multi-UT 2 — M15 EUR/USD : breakout haussier local à 1.1752 (sous la résistance Daily
+// 1.1760), puis rejet violent vers 1.1685.
+const ctM15 = () => buildCandles(1.1715, [
+  ...c(1.1724, 1.1731, 1.1738, 1.1743), { c: 1.1752, h: 1.1754 },
+  { c: 1.1746, h: 1.1754 }, { c: 1.1733 }, { c: 1.1718 }, { c: 1.1703 },
+  { c: 1.1690 }, { c: 1.1685, l: 1.1682 },
+], { seed: 20402, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale",
+  levels: [1.1754, 1.1682], pins: [1.1754, 1.1682] });
+Object.assign(SCENARIOS, {
+  "htf-bear-h4": htfBearH4, "trap-m15": trapM15, "inter-zone-h1": interZoneH1,
+  "ltf-exec-m5": ltfExecM5, "ct-daily": ctDaily, "ct-m15": ctM15,
+});

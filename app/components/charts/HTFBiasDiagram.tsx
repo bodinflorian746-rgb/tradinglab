@@ -1,220 +1,36 @@
-// Diagramme : biais directionnel HTF
-// Le HTF (H4) donne le verdict directionnel — ventes prioritaires.
+// Multi-UT 1 bloc 2 — biais HTF : EUR/USD H4 en structure LH/LL baissière, résistance
+// 1.1780 rejetée deux fois. L'H4 dit « ventes prioritaires, pas d'achats ».
+// Bougies : scenarios.ts (« htf-bear-h4 »).
 
-interface HTFBiasDiagramProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { fmtPrice, pivots } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
-export function HTFBiasDiagram({ className = "", locale = "fr" }: HTFBiasDiagramProps) {
-  const L = locale === "es"
-    ? {
-        rLabel: "1.1780 — R",
-        prixLabel: "Precio 1.1725",
-        verdict: "VEREDICTO HTF",
-        bias: "Sesgo",
-        baissier: "BAJISTA",
-        ventes: "Ventas prioritarias",
-        achats: "Compras = contra",
-        contexte: "contexto",
-        analyseLtf1: "Todo análisis LTF",
-        analyseLtf2: "parte de este veredicto",
-        caption: "Estructura HTF en LH/LL → solo ventas",
-        mobTitle: "Sesgo direccional HTF (H4)",
-        mobVerdict: "Veredicto HTF",
-        mobBaissier: "BAJISTA",
-        mobVentes: "Ventas prioritarias",
-        mobVentesDesc: " · estructura H4 en LH/LL",
-        mobAchats: "Compras = contra-contexto",
-        mobAchatsDesc: " a evitar",
-        mobFooter: "Todo análisis LTF parte de este veredicto.",
-        legendStruct: "Estructura H4 LH/LL = sesgo bajista",
-        legendPrice: "Precio actual bajo la resistencia HTF",
-      }
-    : locale === "en"
-    ? {
-        rLabel: "1.1780 — R",
-        prixLabel: "Price 1.1725",
-        verdict: "HTF VERDICT",
-        bias: "Bias",
-        baissier: "BEARISH",
-        ventes: "Sells prioritized",
-        achats: "Buys = against",
-        contexte: "context",
-        analyseLtf1: "All LTF analysis",
-        analyseLtf2: "starts from this verdict",
-        caption: "HTF structure in LH/LL → sells only",
-        mobTitle: "HTF directional bias (H4)",
-        mobVerdict: "HTF verdict",
-        mobBaissier: "BEARISH",
-        mobVentes: "Sells prioritized",
-        mobVentesDesc: " · H4 structure in LH/LL",
-        mobAchats: "Buys = counter-context",
-        mobAchatsDesc: " to avoid",
-        mobFooter: "All LTF analysis starts from this verdict.",
-        legendStruct: "H4 LH/LL structure = bearish bias",
-        legendPrice: "Current price below HTF resistance",
-      }
-    : {
-        rLabel: "1.1780 — R",
-        prixLabel: "Prix 1.1725",
-        verdict: "VERDICT UT SUPÉRIEURE",
-        bias: "Biais",
-        baissier: "BAISSIER",
-        ventes: "Ventes prioritaires",
-        achats: "Achats = contre",
-        contexte: "contexte",
-        analyseLtf1: "Toute analyse de l'UT inférieure",
-        analyseLtf2: "part de ce verdict",
-        caption: "Structure de l'UT supérieure en LH/LL → ventes seulement",
-        mobTitle: "Biais directionnel de l'UT supérieure (H4)",
-        mobVerdict: "Verdict de l'UT supérieure",
-        mobBaissier: "BAISSIER",
-        mobVentes: "Ventes prioritaires",
-        mobVentesDesc: " · structure H4 en LH/LL",
-        mobAchats: "Achats = contre-contexte",
-        mobAchatsDesc: " à éviter",
-        mobFooter: "Toute analyse de l'UT inférieure part de ce verdict.",
-        legendStruct: "Structure H4 LH/LL = biais baissier",
-        legendPrice: "Prix actuel sous la résistance de l'UT supérieure",
-      };
+const p = (x: number) => fmtPrice(x, 4);
+const RES = 1.178;
+
+export function HTFBiasDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["htf-bear-h4"];
+  const piv = pivots(cs, 2);
+  const lhs = piv.filter((q) => q.name === "LH");
+  const lls = piv.filter((q) => q.name === "LL");
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg
-        width="100%"
-        viewBox="0 0 700 320"
-        fill="none"
-        preserveAspectRatio="xMidYMid meet"
-        xmlns="http://www.w3.org/2000/svg"
-        className="hidden sm:block"
-      >
-        {/* Badge timeframe */}
-        <rect x="20" y="20" width="80" height="22" rx="4" fill="#27272a" stroke="#3f3f46" />
-        <text x="60" y="35" fill="#a1a1aa" fontSize="11" fontWeight="700" textAnchor="middle">H4</text>
-
-        {/* Zone graphique principale (gauche) */}
-        {/* Résistance 1.1780 */}
-        <line x1="40" y1="80" x2="450" y2="80" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" />
-        <rect x="40" y="66" width="80" height="13" rx="3" fill="#09090b" />
-        <text x="80" y="76" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">{L.rLabel}</text>
-
-        {/* Path baissier LH/LL */}
-        <path
-          d="M40,100 L90,82 L140,150 L195,115 L250,200 L300,165 L355,235 L410,210 L445,225"
-          stroke="#ef4444" strokeWidth="2" fill="none" strokeLinejoin="round" strokeLinecap="round"
-        />
-
-        {/* Markers LH/LL */}
-        <circle cx="90" cy="82" r="4" fill="#ef4444" />
-        <rect x="76" y="44" width="28" height="13" rx="3" fill="#09090b" />
-        <text x="90" y="54" fill="#ef4444" fontSize="8" fontWeight="700" textAnchor="middle">LH1</text>
-
-        <circle cx="195" cy="115" r="4" fill="#ef4444" />
-        <rect x="181" y="95" width="28" height="13" rx="3" fill="#09090b" />
-        <text x="195" y="105" fill="#ef4444" fontSize="8" fontWeight="700" textAnchor="middle">LH2</text>
-
-        <circle cx="300" cy="165" r="4" fill="#ef4444" />
-        <rect x="286" y="145" width="28" height="13" rx="3" fill="#09090b" />
-        <text x="300" y="155" fill="#ef4444" fontSize="8" fontWeight="700" textAnchor="middle">LH3</text>
-
-        <circle cx="140" cy="150" r="4" fill="#ef4444" />
-        <rect x="126" y="157" width="28" height="13" rx="3" fill="#09090b" />
-        <text x="140" y="167" fill="#ef4444" fontSize="8" fontWeight="700" textAnchor="middle">LL1</text>
-
-        <circle cx="250" cy="200" r="4" fill="#ef4444" />
-        <rect x="236" y="207" width="28" height="13" rx="3" fill="#09090b" />
-        <text x="250" y="217" fill="#ef4444" fontSize="8" fontWeight="700" textAnchor="middle">LL2</text>
-
-        <circle cx="355" cy="235" r="4" fill="#ef4444" />
-        <rect x="341" y="242" width="28" height="13" rx="3" fill="#09090b" />
-        <text x="355" y="252" fill="#ef4444" fontSize="8" fontWeight="700" textAnchor="middle">LL3</text>
-
-        {/* Prix actuel 1.1725 — label placé À GAUCHE du marker pour éviter la verdict box */}
-        <line x1="40" y1="225" x2="450" y2="225" stroke="#60a5fa" strokeWidth="1.2" strokeDasharray="2 2" strokeOpacity="0.7" />
-        <circle cx="445" cy="225" r="5" fill="#60a5fa" />
-        <rect x="355" y="222" width="78" height="13" rx="3" fill="#09090b" />
-        <text x="394" y="232" fill="#60a5fa" fontSize="9" fontWeight="600" textAnchor="middle">{L.prixLabel}</text>
-
-        {/* Flèche directionnelle */}
-        <text x="425" y="275" fill="#ef4444" fontSize="22" opacity="0.4" textAnchor="middle">↘</text>
-
-        {/* ═══ Encart verdict (droite) ═══ */}
-        <rect x="490" y="50" width="190" height="200" rx="10" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
-
-        {/* Titre verdict */}
-        <text x="585" y="76" fill="#a1a1aa" fontSize="9" fontWeight="700" textAnchor="middle" letterSpacing="2">
-          {L.verdict}
-        </text>
-        <line x1="510" y1="86" x2="660" y2="86" stroke="#3f3f46" strokeWidth="1" />
-
-        {/* Item 1 — Biais */}
-        <rect x="510" y="100" width="150" height="34" rx="6" fill="#ef444415" stroke="#ef4444" strokeWidth="1" />
-        <text x="585" y="116" fill="#a1a1aa" fontSize="8" textAnchor="middle">{L.bias}</text>
-        <text x="585" y="129" fill="#ef4444" fontSize="13" fontWeight="700" textAnchor="middle">{L.baissier}</text>
-
-        {/* Item 2 — Priorité */}
-        <text x="520" y="158" fill="#10b981" fontSize="11" fontWeight="700">✓</text>
-        <text x="535" y="158" fill="#a1a1aa" fontSize="10" fontWeight="600">{L.ventes}</text>
-
-        {/* Item 3 — Contre-contexte */}
-        <text x="520" y="183" fill="#ef4444" fontSize="11" fontWeight="700">✗</text>
-        <text x="535" y="183" fill="#a1a1aa" fontSize="10" fontWeight="600">{L.achats}</text>
-        <text x="535" y="197" fill="#71717a" fontSize="9">{L.contexte}</text>
-
-        {/* Note bas */}
-        <text x="585" y="232" fill="#71717a" fontSize="9" textAnchor="middle">{L.analyseLtf1}</text>
-        <text x="585" y="244" fill="#71717a" fontSize="9" textAnchor="middle">{L.analyseLtf2}</text>
-
-        {/* Caption */}
-        <text x="350" y="305" fill="#a1a1aa" fontSize="10" textAnchor="middle">
-          {L.caption}
-        </text>
-      </svg>
-
-      {/* MOBILE : biais HTF H4 ─────────────────────────────── */}
-      <div className="sm:hidden p-4 space-y-3">
-        <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
-
-        {/* Mini-SVG : 2 panels — HTF bias bearish dicte la direction, LTF aligné dans le sens */}
-        <svg viewBox="0 0 280 120" className="w-full h-auto" aria-label={locale === "es" ? "Sesgo HTF" : locale === "en" ? "HTF bias" : "Biais de l'UT supérieure"} fill="none">
-          <line x1="138" y1="10" x2="138" y2="110" stroke="#3f3f46" strokeWidth="0.8" />
-          {/* Panel HTF — tendance baissière nette */}
-          <path d="M15,28 L40,45 L60,38 L85,65 L100,58 L120,90" stroke="#ef4444" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
-          <circle cx="120" cy="90" r="3" fill="#ef4444" />
-          <rect x="35" y="6" width="70" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
-          <text x="70" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">{locale === "es" ? "HTF ↘ BEARISH" : locale === "en" ? "HTF ↘ BEARISH" : "UT supérieure ↘ BEARISH"}</text>
-          {/* Panel LTF — micro pullback puis continuation dans le sens HTF baissier */}
-          <path d="M155,30 L170,40 L185,28 L200,48 L215,38 L230,60 L245,55 L262,82" stroke="#ef4444" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
-          <circle cx="262" cy="82" r="3" fill="#ef4444" />
-          <rect x="178" y="6" width="60" height="12" rx="2" fill="#ef444415" stroke="#ef444455" strokeWidth="0.7" />
-          <text x="208" y="14" fontSize="9" fill="#ef4444" textAnchor="middle" fontWeight="700">{locale === "es" ? "LTF ↘" : locale === "en" ? "LTF ↘" : "UT inférieure ↘"}</text>
-          <text x="208" y="105" fontSize="8" fill="#a1a1aa" textAnchor="middle" fontStyle="italic">{locale === "es" ? "alineado HTF" : locale === "en" ? "aligné HTF" : "aligné sur l'UT supérieure"}</text>
-        </svg>
-
-        <div className="rounded-xl border-2 border-red-500 bg-red-500/8 p-4 text-center">
-          <p className="text-[12px] text-zinc-400 uppercase tracking-wider">{L.mobVerdict}</p>
-          <p className="text-[22px] font-bold text-red-400 mt-1.5 leading-none">{L.mobBaissier}</p>
-        </div>
-        <ul className="space-y-2 text-[13px]">
-          <li className="flex items-start gap-2.5"><span className="text-emerald-400 font-bold shrink-0">✓</span><span className="text-zinc-300"><span className="font-bold">{L.mobVentes}</span>{L.mobVentesDesc}</span></li>
-          <li className="flex items-start gap-2.5"><span className="text-red-400 font-bold shrink-0">✗</span><span className="text-zinc-300"><span className="font-bold">{L.mobAchats}</span>{L.mobAchatsDesc}</span></li>
-        </ul>
-        <p className="text-[12px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
-          {L.mobFooter}
-        </p>
-      </div>
-
-      {/* Légende */}
-      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-red-500" />
-          <span className="text-[10px] text-zinc-500">{L.legendStruct}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-blue-400" />
-          <span className="text-[10px] text-zinc-500">{L.legendPrice}</span>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id="HTFBiasDiagram"
+      title="L'H4 donne le biais : LH/LL baissier"
+      caption="L'UT supérieure filtre les trades avant même de chercher un setup. LH/LL → ventes prioritaires."
+      panels={[{
+        key: "h4", title: "EUR/USD H4", decimals: 5, height: 280, candles: cs,
+        levels: [{ key: "res", price: RES, label: `Résistance ${p(RES)}`, short: "Résistance", tone: "zone", dashed: true }],
+        markers: [
+          ...lhs.slice(0, 2).map((q, i) => ({ key: `lh${i}`, i: q.index, price: q.price, label: "LH", pivot: "LH" as const, tone: "bear" as const, side: "above" as const })),
+          ...lls.slice(0, 2).map((q, i) => ({ key: `ll${i}`, i: q.index, price: q.price, label: "LL", pivot: "LL" as const, tone: "bear" as const, side: "below" as const })),
+        ],
+        chips: [
+          { label: "Structure LH / LL : biais baissier confirmé", tone: "bear" },
+          { label: "Ventes prioritaires, achats contre le biais", tone: "neutral" },
+        ],
+      }]}
+    />
   );
 }
