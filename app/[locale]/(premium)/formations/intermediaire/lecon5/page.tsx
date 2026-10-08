@@ -94,7 +94,7 @@ function ContentFr() {
           {[
             { n: "1", t: "Quelle est la tendance ?", d: "Daily haussier → achats. Baissier → ventes. Pas de tendance → pas de trade." },
             { n: "2", t: "Y a-t-il un niveau de structure sur ma zone ?", d: "Support, résistance, Higher Low ? Si oui, première confluence validée." },
-            { n: "3", t: "Y a-t-il une deuxième confluence indépendante ?", d: "Fibonacci ? Niveau psychologique ? Si oui, le trade est qualifié. Si non, on attend." },
+            { n: "3", t: "Y a-t-il une deuxième confluence indépendante ?", d: "Fibonacci ? Chiffre rond ? Si oui, le trade est qualifié. Si non, on attend." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.n}</span>

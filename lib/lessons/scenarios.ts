@@ -1149,3 +1149,39 @@ Object.assign(SCENARIOS, {
   "ob-mitigated": authored(1.1790, OB_MITIGATED, 26201, 5, "EUR/USD", [1.1745]),
   "liq-pools": authored(1.0862, LIQ_POOLS, 26301, 5, "EUR/USD", [1.0900, 1.0840]),
 });
+
+// ─── Lot 27 ──────────────────────────────────────────────────────────────────
+// SMC 4 / SMC 5 — EUR/USD H4 : accumulation 1.1700-1.1750, equal highs 1.1760, bougie qui perce
+// 1.1760 (mèche 1.1765) et clôture à 1.1745 sans mèche basse, displacement baissier, FVG
+// 1.1735-1.1745, retour dans le FVG (entrée 1.1745), puis la SSL sous 1.1700.
+const SMC4_SWEEP = bars(1.1705, [
+  1.1712, 1.1728, 1.1742, { c: 1.1748, h: 1.1760 }, 1.1734, 1.1718, { c: 1.1708, l: 1.1702 }, 1.1722, 1.1737, { c: 1.1746, h: 1.1760 },
+  1.1733, 1.1724, 1.1738, 1.1749,
+  { c: 1.1745, h: 1.1765, l: 1.1745 }, { c: 1.1722, h: 1.1745, l: 1.1720 }, { c: 1.1712, h: 1.1735, l: 1.1708 },
+  1.1718, 1.1728, { c: 1.1736, h: 1.1745 }, 1.1720, 1.1708, { c: 1.1702, l: 1.1698 },
+], 0.0004, 5);
+// Avancé 2 / SMC 4 — FVG haussier et baissier génériques : B1, B2 (impulsion), B3, gap entre la
+// mèche de B1 et celle de B3, retour du prix dans la zone puis reprise.
+const FVG_BULL = bars(1.0800, [1.0794, 1.0801, { c: 1.0812, h: 1.0816 }, { c: 1.0846, l: 1.0810, h: 1.0848 }, { c: 1.0852, l: 1.0828 }, 1.0856, 1.0846, 1.0836, { c: 1.0830, l: 1.0824 }, 1.0842, 1.0858], 0.0003, 5);
+const FVG_BEAR = bars(1.0860, [1.0866, 1.0859, { c: 1.0848, l: 1.0844 }, { c: 1.0814, h: 1.0850, l: 1.0812 }, { c: 1.0808, h: 1.0832 }, 1.0804, 1.0814, 1.0824, { c: 1.0830, h: 1.0836 }, 1.0818, 1.0802], 0.0003, 5);
+// Support / résistance 1 — niveau fort (4 touches franches, rebonds de 35-45 $) vs niveau faible
+// (2 touches molles, rebonds de 8-10 $), support 4 500 $ (XAU/USD H4).
+const SR_STRONG = bars(4560, [
+  4544, 4528, 4514, { c: 4506, l: 4500 }, 4520, 4536, { c: 4545, h: 4548 }, 4530, 4515, { c: 4507, l: 4501 }, 4523, 4540, { c: 4546, h: 4549 },
+  4532, 4516, { c: 4508, l: 4500 }, 4524, { c: 4541, h: 4544 }, 4527, { c: 4513, l: 4511 }, { c: 4506, l: 4501 }, 4521, 4538,
+], 3, 0);
+const SR_WEAK = bars(4560, [4548, 4535, 4522, { c: 4512, l: 4511 }, { c: 4506, h: 4512, l: 4502 }, { c: 4511, l: 4505 }, { c: 4512, h: 4513, l: 4511 }, { c: 4505, h: 4512, l: 4503 }, { c: 4510, h: 4511, l: 4504 }, { c: 4507, h: 4512, l: 4505 }, 4496, 4486], 3, 0);
+// Support / résistance 1 — zone ou ligne : trois creux 1.1685 / 1.1688 / 1.1690 avec mèches ;
+// tracés une fois en ligne fine (1.1690), une fois en zone 1.1680-1.1695 (EUR/USD H4).
+const ZONE_LINE = bars(1.1735, [
+  1.1722, 1.1708, 1.1696, { c: 1.1694, l: 1.1685 }, 1.1706, 1.1718, { c: 1.1724, h: 1.1728 }, 1.1712, 1.1700, { c: 1.1697, l: 1.1688 },
+  1.1709, 1.1721, { c: 1.1727, h: 1.1730 }, 1.1714, 1.1701, { c: 1.1698, l: 1.1690 }, 1.1711, 1.1724,
+], 0.0003, 5);
+Object.assign(SCENARIOS, {
+  "smc4-sweep": authored(1.1705, SMC4_SWEEP, 27101, 5, "EUR/USD", [1.1760]),
+  "fvg-bull": authored(1.0800, FVG_BULL, 27201, 5, "EUR/USD"),
+  "fvg-bear": authored(1.0860, FVG_BEAR, 27202, 5, "EUR/USD"),
+  "sr-strong": authored(4560, SR_STRONG, 27301, 0, "XAU/USD", [4500]),
+  "sr-weak": authored(4560, SR_WEAK, 27302, 0, "XAU/USD", [4500]),
+  "zone-line": authored(1.1735, ZONE_LINE, 27401, 5, "EUR/USD"),
+});

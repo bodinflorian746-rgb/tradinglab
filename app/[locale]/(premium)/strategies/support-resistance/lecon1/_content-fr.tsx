@@ -164,7 +164,7 @@ export default function ContentFr() {
               <li>- 4 touches franches avec rebonds nets = niveau fort, prioritaire dans la sélection des setups</li>
               <li>- 2 touches molles sans amplitude post-rebond = niveau faible, à exclure</li>
               <li>- Fraîcheur : zone touchée dans les 30 derniers jours conserve son poids structurel</li>
-              <li>- Zones psychologiques (1.1800, 4 500$, 100 000$) renforcent la force du niveau</li>
+              <li>- Les chiffres ronds (1.1800, 4 500$, 100 000$) renforcent la force du niveau</li>
             </ul>
           </section>
 
@@ -211,7 +211,7 @@ export default function ContentFr() {
           <LessonQuiz
             question="Combien de touches minimum sont nécessaires pour valider une zone de support ?"
             options={[
-              "1 touche suffit si le niveau est psychologique",
+              "1 touche suffit si le niveau est un chiffre rond",
               "2 touches minimum, 3 idéalement",
               "5 touches obligatoires",
               "Aucun seuil défini, jugement à l’œil",

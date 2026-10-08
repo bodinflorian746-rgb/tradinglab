@@ -655,3 +655,29 @@ export function checkLot26(check: Check) {
     check(cs.filter((k) => k.h === 1.09).length === 2 && cs.filter((k) => k.l === 1.084).length === 2 && cs.every((k) => k.h <= 1.09 && k.l >= 1.084), "Liquidité (SMC 4) : EQH 1.0900, EQL 1.0840");
   }
 }
+
+export function checkLot27(check: Check) {
+  {
+    // SMC 4 : 2 sommets à 1.1760, bougie de sweep (mèche 1.1765, clôture 1.1745), FVG 1.1735-1.1745, retour à 1.1745, 1.1700 atteint
+    const cs = CS["smc4-sweep"], s = cs.findIndex((k) => k.h > 1.176);
+    check(cs.slice(0, s).filter((k) => k.h === 1.176).length === 2 && cs[s].h === 1.1765 && cs[s].c === 1.1745, "Sweep (SMC 4) : EQH 1.1760, mèche 1.1765, clôture 1.1745");
+    const g = largestFvg(cs, "bear");
+    check(!!g && g.i === s + 1 && near(g.y1, 1.1735, 1e-9) && near(g.y2, 1.1745, 1e-9), "Sweep (SMC 4) : FVG 1.1735-1.1745");
+    check(cs.some((k, i) => i > s + 2 && k.h === 1.1745) && Math.min(...cs.map((k) => k.l)) <= 1.17 && near(rrOf(1.1745, 1.1768, 1.17), 1.96, 0.005), "Sweep (SMC 4) : retour, SSL, R/R 1,96");
+  }
+  {
+    // Avancé 2 : FVG haussier = haut de B1 → bas de B3 ; baissier = bas de B1 → haut de B3 ; retour dans le gap
+    const u = CS["fvg-bull"], d = CS["fvg-bear"], gu = largestFvg(u, "bull"), gd = largestFvg(d, "bear");
+    check(!!gu && gu.y1 === u[gu.i - 1].h && gu.y2 === u[gu.i + 1].l && u.some((k, i) => i > gu.i + 2 && k.l <= gu.y2), "FVG (Av. 2) : haussier");
+    check(!!gd && gd.y2 === d[gd.i - 1].l && gd.y1 === d[gd.i + 1].h && d.some((k, i) => i > gd.i + 2 && k.h >= gd.y1), "FVG (Av. 2) : baissier");
+  }
+  {
+    // S/R 1 : fort = 4 touches avec rebonds ≥ 35 $ ; faible = 2 touches, rebonds ≤ 12 $ ; trois creux 1.1685 / 1.1688 / 1.1690 dans la zone 1.1680-1.1695
+    const t = (k: string) => { const cs = CS[k]; return cs.map((x, i) => (x.l <= 4510 && x.c >= 4495 && (i === 0 || cs[i - 1].l > 4510) ? i : -1)).filter((i) => i >= 0); };
+    const reb = (k: string) => { const cs = CS[k], ts = t(k); return ts.map((i, n) => Math.max(...cs.slice(i, ts[n + 1] ?? cs.length).map((x) => x.h)) - cs[i].l); };
+    check(t("sr-strong").length === 4 && reb("sr-strong").every((r) => r >= 35), "Niveau fort (S/R 1) : 4 touches franches");
+    check(t("sr-weak").length === 2 && reb("sr-weak").every((r) => r <= 12), "Niveau faible (S/R 1) : 2 touches molles");
+    const z = CS["zone-line"], lows = pivots(z, 2).filter((q) => q.side === "l").map((q) => q.price);
+    check(lows.join() === "1.1685,1.1688,1.169" && z.every((k) => k.l >= 1.168), "Zone (S/R 1) : creux 1.1685 / 1.1688 / 1.1690");
+  }
+}

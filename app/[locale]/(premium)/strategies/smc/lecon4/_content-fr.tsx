@@ -193,7 +193,7 @@ export default function ContentFr() {
           {/* Bloc 7 — PLAN DE TRADE EUR/USD H4 */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade chiffré (EUR/USD H4)</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD H4. Accumulation entre 1.1700 et 1.1750. Equal highs à 1.1760 = BSL identifiée. Une bougie H4 perce 1.1760 puis clôture à 1.1745. Le rejet crée un FVG bearish entre 1.1735 et 1.1748. Le setup consiste à attendre le retour du prix dans le FVG afin de chercher une entrée short vers la SSL située sous 1.1700.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">EUR/USD H4. Accumulation entre 1.1700 et 1.1750. Equal highs à 1.1760 = BSL identifiée. Une bougie H4 perce 1.1760 puis clôture à 1.1745. Le rejet crée un FVG bearish entre 1.1735 et 1.1745. Le setup consiste à attendre le retour du prix dans le FVG afin de chercher une entrée short vers la SSL située sous 1.1700.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>

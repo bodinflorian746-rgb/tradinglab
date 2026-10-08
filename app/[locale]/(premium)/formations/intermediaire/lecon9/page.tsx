@@ -120,7 +120,7 @@ function ContentFr() {
         <div className="space-y-2">
           {[
             { n: "1", t: "Y a-t-il un mouvement impulsif clair récent ?", d: "Si oui, trace Fibonacci dessus (swing low → swing high en haussier). Sinon → pas de Fibonacci utilisable." },
-            { n: "2", t: "Y a-t-il une confluence sur le 61.8% ou le 50% ?", d: "Support ou résistance historique, niveau psychologique au même niveau ? Si oui → zone d'or à surveiller." },
+            { n: "2", t: "Y a-t-il une confluence sur le 61.8% ou le 50% ?", d: "Support ou résistance historique, chiffre rond au même niveau ? Si oui → zone d'or à surveiller." },
             { n: "3", t: "Attends le signal de bougie dans la zone", d: "Pin bar ou engulfing dans le sens de la tendance Daily sur la zone Fib = entrée. Sans signal = rien à faire." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">

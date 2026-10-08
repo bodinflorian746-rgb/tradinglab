@@ -17,7 +17,7 @@
   {"url":"/fr/strategies/trend-following/lecon3","charts":["FibPullbackChecklistDiagram","OTEDiagram","FibTPProjectionDiagram"]},
   {"url":"/fr/strategies/multi-timeframe/lecon4","charts":["RiskAffineDiagram","ConfirmationM5Diagram","ZoneEchecDiagram"]},
   {"url":"/fr/strategies/smc/lecon2","charts":["BOSCHoCHSequenceDiagram","BOSvsCHoCHComparisonDiagram","BOSDiagram","CHoCHDiagram","BOSFakeoutDiagram"]},
-  {"url":"/fr/strategies/smc/lecon5","charts":["BOSCHoCHSequenceDiagram","MitigationZoneEntryDiagram"]},
+  {"url":"/fr/strategies/smc/lecon5","charts":["BOSCHoCHSequenceDiagram","MitigationZoneEntryDiagram","LiquidityGrabDiagram"]},
   {"url":"/fr/formations/debutant/lecon9","charts":["BiasDiagram","ErrorsDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon4","charts":["RetracementInteractive"]},
   {"url":"/fr/formations/avance/lecon4","charts":["KillzonesDiagram"]},
@@ -45,7 +45,7 @@
   {"url":"/fr/formations/debutant/lecon7","charts":["BreakEvenDiagram"]},
   {"url":"/fr/formations/debutant/lecon8","charts":["RiskDiagram"]},
   {"url":"/fr/formations/debutant/lecon10","charts":["RRComparisonDiagram"]},
-  {"url":"/fr/formations/intermediaire/lecon2","charts":["Candle"]},
+  {"url":"/fr/formations/intermediaire/lecon2","charts":["Candle","SupportResistance"]},
   {"url":"/fr/formations/intermediaire/lecon3","charts":["Candle","SupplyDemandDiagram"]},
   {"url":"/fr/formations/intermediaire/lecon6","charts":["Candle"]},
   {"url":"/fr/formations/avance/lecon6","charts":["StopHuntInteractive"]},
@@ -74,5 +74,7 @@
   {"url":"/fr/strategies/reversal/lecon1","charts":["DoubleTopBottomDiagram","DTBValidationGridDiagram","DTBMeasuredMoveProjectionDiagram"]},
   {"url":"/fr/formations/avance/lecon3","charts":["OrderBlockDiagram"]},
   {"url":"/fr/formations/avance/lecon1","charts":["LiquidityPoolsDiagram"]},
-  {"url":"/fr/strategies/smc/lecon4","charts":["LiquidityPoolsDiagram"]}
+  {"url":"/fr/strategies/smc/lecon4","charts":["LiquidityPoolsDiagram","LiquidityGrabDiagram","FVGDiagram"]},
+  {"url":"/fr/formations/avance/lecon2","charts":["FVGDiagram"]},
+  {"url":"/fr/strategies/support-resistance/lecon1","charts":["SupportResistance","StrongVsWeakLevelDiagram","ZoneVsLineDiagram"]}
 ]

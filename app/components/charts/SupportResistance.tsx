@@ -1,141 +1,39 @@
-interface SupportResistanceProps {
-  supportPrice?: string;
-  resistancePrice?: string;
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+// Intermédiaire 2 et Support / résistance 1 — zones de support et de résistance (format ligne
+// validé par le PO) : le prix rebondit plusieurs fois sur le même plancher et est repoussé
+// plusieurs fois du même plafond ; les niveaux sont tracés en zones (rectangles), pas en lignes.
+// Les prix des niveaux viennent de la leçon (props) ; touches marquées sur la série.
 
-export function SupportResistance({
-  supportPrice = '1.0800',
-  resistancePrice = '1.0950',
-  className = '',
-  locale = 'fr',
-}: SupportResistanceProps) {
-  const T = locale === 'es'
-    ? {
-        resistance: "Resistencia",
-        support: "Support",
-        rDesc: " · zona donde el precio es rechazado hacia abajo ",
-        sDesc: " · zona donde el precio rebota hacia arriba ",
-        arrow: "Los puntos rojos/verdes marcan cada rebote del precio en estos niveles",
-      }
-    : locale === 'en'
-    ? {
-        resistance: "Resistance",
-        support: "Support",
-        rDesc: " · zone where price is pushed back down ",
-        sDesc: " · zone where price bounces back up ",
-        arrow: "Red/green dots mark each price bounce on these levels",
-      }
-    : {
-        resistance: "Résistance",
-        support: "Support",
-        rDesc: " · zone où le prix est repoussé vers le bas ",
-        sDesc: " · zone où le prix rebondit vers le haut ",
-        arrow: "Les points rouges/verts marquent chaque rebond du prix sur ces niveaux",
-      };
-  const rY = 32;
-  const sY = 114;
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { fmtPrice } from "@/lib/lessons/chart-analysis";
 
-  // Price path bouncing between S/R
-  const pts: [number, number][] = [
-    [0, 73],
-    [32, sY], [62, sY],
-    [92, rY], [122, rY],
-    [152, sY], [182, sY],
-    [212, rY], [242, rY],
-    [272, 76],
-  ];
-  const path = pts.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x},${y}`).join(' ');
-  const touchPts = pts.slice(1, -1);
+const parse = (s: string) => Number(s.replace(/[\s$ ]/g, "").replace(",", "."));
 
+export function SupportResistance({ supportPrice = "1.0800", resistancePrice = "1.0950" }: { supportPrice?: string; resistancePrice?: string; className?: string; locale?: "fr" | "es" | "en" }) {
+  const S = parse(supportPrice), R = parse(resistancePrice);
+  const fx = S < 100, decimals = fx ? 5 : 0;
+  const f = (x: number) => (fx ? fmtPrice(x, 4) : `${fmtPrice(Math.round(x), 0)} $`);
+  const h = R - S, w = h * 0.06;
+  // série : départ au milieu, 3 touches de la résistance et 3 du support
+  const shape = [0.45, 0.75, 1, 0.62, 0.3, 0, 0.35, 0.7, 1, 0.66, 0.28, 0, 0.4, 0.78, 1, 0.6, 0.25, 0, 0.42];
+  const line = shape.map((t) => Number((S + t * h).toFixed(decimals)));
+  const tops = shape.map((t, i) => (t === 1 ? i : -1)).filter((i) => i >= 0);
+  const lows = shape.map((t, i) => (t === 0 ? i : -1)).filter((i) => i >= 0);
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg
-        width="100%"
-        viewBox="0 0 290 148"
-        fill="none"
-        preserveAspectRatio="xMidYMid meet"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
-
-        {/* Subtle zone tints */}
-        <rect x="0" y="0" width="290" height={rY + 6} fill="#ef444408" />
-        <rect x="0" y={sY - 6} width="290" height={148 - sY + 6} fill="#10b98108" />
-
-        {/* Resistance line */}
-        <line
-          x1="0" y1={rY} x2="290" y2={rY}
-          stroke="#f87171" strokeWidth="1.5" strokeDasharray="4 4" strokeOpacity="0.7"
-        />
-
-        {/* Support line */}
-        <line
-          x1="0" y1={sY} x2="290" y2={sY}
-          stroke="#34d399" strokeWidth="1.5" strokeDasharray="4 4" strokeOpacity="0.7"
-        />
-
-        {/* Price path */}
-        <path d={path} stroke="#71717a" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
-
-        {/* Touch dots — toujours visibles */}
-        {touchPts.map(([x, y], i) => (
-          <circle
-            key={i} cx={x} cy={y} r="3.5"
-            fill={y === sY ? '#10b981' : '#ef4444'} opacity="0.9"
-          />
-        ))}
-
-        {/* Labels & prix — masqués sur mobile */}
-        <g className="chart-detail-labels">
-          {resistancePrice && (
-            <text x="225" y={rY - 9} fontSize="9" fill="#ef4444" opacity="0.5">
-              {resistancePrice}
-            </text>
-          )}
-
-          {supportPrice && (
-            <text x="233" y={sY + 18} fontSize="9" fill="#10b981" opacity="0.5">
-              {supportPrice}
-            </text>
-          )}
-
-          <rect x="2" y={rY - 20} width="92" height="14" rx="3" fill="#09090b" />
-          <text x="8" y={rY - 9} fontSize="10" fill="#ef4444" fontWeight="600" opacity="0.9">
-            {T.resistance}
-          </text>
-
-          <rect x="2" y={sY + 7} width="68" height="14" rx="3" fill="#09090b" />
-          <text x="8" y={sY + 18} fontSize="10" fill="#10b981" fontWeight="600" opacity="0.9">
-            {T.support}
-          </text>
-        </g>
-      </svg>
-
-      {/* Mobile : key card avec définitions */}
-      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
-        <ul className="space-y-1.5 text-[13px] leading-snug">
-          <li className="flex items-start gap-2">
-            <span className="shrink-0 w-3 h-1 rounded-sm bg-red-400 mt-2" />
-            <span className="text-white">
-              <span className="font-bold text-red-400">{T.resistance}</span>
-              <span className="text-zinc-300">{T.rDesc}{resistancePrice && <span className="font-mono text-zinc-400">({resistancePrice})</span>}</span>
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="shrink-0 w-3 h-1 rounded-sm bg-emerald-400 mt-2" />
-            <span className="text-white">
-              <span className="font-bold text-emerald-400">{T.support}</span>
-              <span className="text-zinc-300">{T.sDesc}{supportPrice && <span className="font-mono text-zinc-400">({supportPrice})</span>}</span>
-            </span>
-          </li>
-          <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
-            <span className="shrink-0 text-zinc-300 font-bold">→</span>
-            <span className="text-zinc-300">{T.arrow}</span>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <LessonChart
+      id="SupportResistance"
+      title="Plancher et plafond répétés"
+      caption="Ce sont des zones, pas des lignes : le prix ne respecte jamais un niveau à la bougie près."
+      panels={[{
+        key: "sr", decimals, height: 240, line,
+        zones: [
+          { key: "res", y1: R - w, y2: R + w, label: `Résistance ${f(R)}`, short: "Résistance", tone: "bear" },
+          { key: "sup", y1: S - w, y2: S + w, label: `Support ${f(S)}`, short: "Support", tone: "bull" },
+        ],
+        markers: [
+          ...tops.map((i, n) => ({ key: `r${n}`, i, price: line[i], label: n ? "Rejet" : "Rejet vers le bas", short: "Rejet", tone: "bear" as const, side: "above" as const, dot: true })),
+          ...lows.map((i, n) => ({ key: `s${n}`, i, price: line[i], label: n ? "Rebond" : "Rebond vers le haut", short: "Rebond", tone: "bull" as const, side: "below" as const, dot: true })),
+        ],
+      }]}
+    />
   );
 }
