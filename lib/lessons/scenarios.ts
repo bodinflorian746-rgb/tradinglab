@@ -1107,3 +1107,22 @@ Object.assign(SCENARIOS, {
   "ihs-xau": authored(4530, IHS_XAU, 24201, 0, "XAU/USD"),
   "rsi-div": authored(4450, RSI_DIV, 24301, 0, "XAU/USD"),
 });
+
+// ─── Lot 25 ──────────────────────────────────────────────────────────────────
+// Reversal 4 cas 1 — le double top EUR/USD H1 (short 1.1795) s'invalide : baisse à 1.1780 en deux
+// bougies, puis bougie haussière large qui les englobe et re-clôture à 1.1810, au-dessus de la ligne de cou.
+const INV_EUR = [...DT_EUR, { c: 1.1788, h: 1.1796, l: 1.1784 }, { c: 1.1782, h: 1.1790, l: 1.1780 }, { c: 1.1810, h: 1.1812, l: 1.1781 }];
+// Intermédiaire 1 / SMC 2 / Trend-following 4 — structure haussière EUR/USD H4 : HL 1.0880, HH 1.0950 ;
+// BOS : repli (HL 1.0905) puis clôture au-dessus de 1.0950 (+17 pips) sans réintégration ;
+// CHoCH : depuis 1.0950, chute qui clôture sous le dernier HL 1.0880.
+const STRUCT_EUR: (number | Step)[] = [
+  1.0812, 1.0826, { c: 1.0838, h: 1.0845 }, 1.0832, { c: 1.0824, l: 1.0820 }, { c: 1.0838, l: 1.0823 }, 1.0858, 1.0884, { c: 1.0902, h: 1.0910, l: 1.0882 },
+  { c: 1.0898, h: 1.0907 }, { c: 1.0886, l: 1.0880 }, { c: 1.0898, l: 1.0883 }, 1.0916, 1.0934, { c: 1.0944, h: 1.0950 },
+];
+const BOS_EUR = bars(1.0800, [...STRUCT_EUR, { c: 1.0938, h: 1.0947 }, 1.0922, { c: 1.0910, l: 1.0905 }, { c: 1.0924, l: 1.0908 }, 1.0940, { c: 1.0967, l: 1.0938 }, 1.0975, 1.0984], 0.0004, 5);
+const CHOCH_EUR = bars(1.0800, [...STRUCT_EUR, { c: 1.0936, h: 1.0947 }, 1.0918, 1.0900, { c: 1.0872, h: 1.0902 }, 1.0864, { c: 1.0874, l: 1.0861 }], 0.0004, 5);
+Object.assign(SCENARIOS, {
+  "inv-eur": authored(1.1730, INV_EUR, 25101, 5, "EUR/USD", [1.1800]),
+  "bos-eur": authored(1.0800, BOS_EUR, 25201, 5, "EUR/USD", [1.0950]),
+  "choch-eur": authored(1.0800, CHOCH_EUR, 25202, 5, "EUR/USD", [1.0880]),
+});

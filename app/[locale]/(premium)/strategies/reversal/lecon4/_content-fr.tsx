@@ -235,8 +235,8 @@ export default function ContentFr() {
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Sur 10 trades qui foirent : économie totale</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Compte 300€ → ~70€ économisés au lieu de 150€ perdus</li>
-              <li>- Compte 500€ → ~70€ économisés</li>
+              <li>- Compte 300€ → ~80€ économisés (environ 70€ perdus au lieu de 150€)</li>
+              <li>- Compte 500€ → ~80€ économisés</li>
               <li>- Compte 1 000€ → ~100€ économisés</li>
               <li>- Compte 2 500€ → ~250€ économisés</li>
             </ul>

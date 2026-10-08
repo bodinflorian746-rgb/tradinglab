@@ -610,3 +610,23 @@ export function checkLot24(check: Check) {
     check(Math.round(r[t1.index]!) === 75 && Math.round(r[t2.index]!) === 68, `Divergence (Rev. 3) : RSI ${r[t1.index]?.toFixed(1)} / ${r[t2.index]?.toFixed(1)} ≠ 75 / 68`);
   }
 }
+
+export function checkLot25(check: Check) {
+  {
+    // Reversal 4 cas 1 : short 1.1795, baisse à 1.1780 en 2 bougies, bougie qui les englobe et re-clôture à 1.1810
+    const cs = CS["inv-eur"], n = cs.length, k = cs[n - 1], a = cs[n - 3], b = cs[n - 2];
+    check(cs[n - 4].c === 1.1795 && Math.min(a.l, b.l) === 1.178 && a.c < a.o && b.c < b.o, "Invalidation (Rev. 4) : 1.1795 puis 1.1780");
+    check(k.c === 1.181 && k.o <= Math.min(a.c, b.c) && k.c >= Math.max(a.o, b.o), "Invalidation (Rev. 4) : bougie englobante, re-clôture 1.1810");
+  }
+  {
+    // Intermédiaire 1 : BOS = clôture au-dessus du dernier HH 1.0950 (≥ 15 pips), sans réintégration ;
+    // CHoCH = clôture sous le dernier HL 1.0880 après le HH 1.0950
+    const b = CS["bos-eur"], pb = pivots(b, 2);
+    const hh = pb.filter((q) => q.name === "HH").at(-1)!;
+    const bos = b.findIndex((k, i) => i > hh.index && k.c > hh.price);
+    check(hh.price === 1.095 && bos > 0 && b[bos].c - 1.095 >= 0.0015 && b.slice(bos + 1).every((k) => k.c > 1.095), "BOS (Int. 1) : 1.0950 cassé par clôture, sans réintégration");
+    const c = CS["choch-eur"], pc = pivots(c, 2);
+    const hh2 = pc.filter((q) => q.name === "HH").at(-1)!, hl = pc.filter((q) => q.name === "HL" && q.index < hh2.index).at(-1)!;
+    check(hh2.price === 1.095 && hl.price === 1.088 && c.some((k, i) => i > hh2.index && k.c < 1.088), "CHoCH (Int. 1) : HH 1.0950, HL 1.0880 cassé");
+  }
+}
