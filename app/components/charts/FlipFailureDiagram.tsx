@@ -1,140 +1,40 @@
-export default function FlipFailureDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
-  const L = locale === "es"
-    ? {
-        title: "Flip que falla — el nivel no aguanta",
-        invalid: "✗ Flip invalidado",
-        miniSommet: "Mini-pico 1.1880",
-        cassure: "Breakout 1.1875",
-        returnLabel: "Retorno bajo nivel",
-        resistance: "Resistencia 1.1850",
-        footer: "El retorno rápido bajo el nivel invalida el flip — salida inmediata",
-        mobTitle: "Flip que falla — el nivel no aguanta",
-        mobStep1: "Paso 1 — Breakout de resistencia 1.1850",
-        mobStep1Desc: "El precio rompe la resistencia → esperas el retest para entrar long.",
-        mobStep2: "Paso 2 — Retorno franco bajo el nivel",
-        mobStep2Desc: "En lugar de rebotar, el precio cae bajo 1.1850 en cierre.",
-        mobStep3: "Paso 3 — Salida inmediata",
-        mobStep3Desc: "Flip inválido. Corta la posición sin esperar a que el SL sea tocado.",
-      }
-    : locale === "en"
-    ? {
-        title: "Failed flip — the level doesn't hold",
-        invalid: "✗ Flip invalidated",
-        miniSommet: "Mini-top 1.1880",
-        cassure: "Breakout 1.1875",
-        returnLabel: "Back below level",
-        resistance: "Resistance 1.1850",
-        footer: "A fast move back below the level invalidates the flip — exit now",
-        mobTitle: "Failed flip — level doesn't hold",
-        mobStep1: "Step 1 — Breakout of resistance 1.1850",
-        mobStep1Desc: "Price breaks the resistance → you wait for the retest to go long.",
-        mobStep2: "Step 2 — Clean move back below the level",
-        mobStep2Desc: "Instead of bouncing, price closes back below 1.1850.",
-        mobStep3: "Step 3 — Exit now",
-        mobStep3Desc: "Flip invalid. Cut the position without waiting for the SL to be hit.",
-      }
-    : {
-        title: "Flip qui échoue — le niveau ne tient pas",
-        invalid: "✗ Flip invalidé",
-        miniSommet: "Mini-sommet 1.1880",
-        cassure: "Breakout 1.1875",
-        returnLabel: "Retour sous niveau",
-        resistance: "Résistance 1.1850",
-        footer: "Le retour rapide sous le niveau invalide le flip — sortie immédiate",
-        mobTitle: "Flip qui échoue — niveau ne tient pas",
-        mobStep1: "Étape 1 — Breakout de résistance 1.1850",
-        mobStep1Desc: "Le prix casse la résistance → tu attends le retest pour entrer long.",
-        mobStep2: "Étape 2 — Retour franc sous le niveau",
-        mobStep2Desc: "Au lieu de rebondir, le prix replonge sous 1.1850 en clôture.",
-        mobStep3: "Étape 3 — Sortie immédiate",
-        mobStep3Desc: "Flip invalide. Couper la position sans attendre que le SL soit touché.",
-      };
+// Support / résistance 3 bloc 4 — quand le flip échoue (EUR/USD H4) : breakout de 1.1850
+// clôturé à 1.1872, retest acheté à 1.1858, puis retour sous 1.1850 en moins de 3 bougies : flip
+// invalidé ; le SL 1.1830, placé de l'autre côté de la zone, borne la perte. Calculs sur les
+// bougies. Bougies : scenarios.ts (« flip-fail »).
+
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { fmtPrice, pips } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const p = (x: number) => fmtPrice(x, 4);
+const LEVEL = 1.185, ENTRY = 1.1858, SL = 1.183;
+
+export default function FlipFailureDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["flip-fail"];
+  const brk = cs.findIndex((k) => k.c > LEVEL + 0.0015);
+  const entryAt = cs.findIndex((k, i) => i > brk && k.c === ENTRY);
+  const back = cs.findIndex((k, i) => i > entryAt && k.c < LEVEL);
+  const stop = cs.findIndex((k, i) => i > entryAt && k.l <= SL);
   return (
-    <div className={className}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 800 400"
-      className="hidden sm:block w-full h-auto"
-    >
-      <text x="400" y="22" fill="#d4d4d8" fontSize="13" fontWeight="600" textAnchor="middle">
-        {L.title}
-      </text>
-
-      <rect x="560" y="40" width="220" height="22" rx="11" fill="#ef444420" stroke="#ef4444" strokeWidth="1" />
-      <text x="670" y="55" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="middle">{L.invalid}</text>
-
-      {/* Niveau résistance — trait continu d'un bout à l'autre */}
-      <line x1="20" y1="200" x2="780" y2="200" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" />
-
-      {/* Path prix CONTINU : 2 rebonds dessous → cassure → mini-sommet → retour rapide → continuation baissière */}
-      <path
-        d="M30,300 L70,250 L100,210 L130,260 L170,215 L210,265 L250,220 L290,205 L310,170 L330,160 L350,140 L380,155 L420,200 L460,240 L500,280 L550,320 L620,350 L680,370"
-        stroke="#71717a"
-        strokeWidth="2"
-        fill="none"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-
-      {/* Bougie verte de cassure à x=310 */}
-      <line x1="310" y1="155" x2="310" y2="220" stroke="#059669" strokeWidth="2" />
-      <rect x="302" y="160" width="16" height="55" fill="#10b981" stroke="#059669" strokeWidth="1.5" rx="1.5" />
-
-      {/* Bougie rouge qui recasse le niveau à x=430 */}
-      <line x1="430" y1="200" x2="430" y2="255" stroke="#b91c1c" strokeWidth="2" />
-      <rect x="422" y="210" width="16" height="40" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.5" rx="1.5" />
-
-      {/* Mini-sommet annotation — déplacé y=128 → y=110 (séparation verticale 18px de "Cassure 1.1875") */}
-      <rect x="283" y="99" width="134" height="14" fill="#09090b" rx="3" />
-      <text x="350" y="110" fill="#71717a" fontSize="8" textAnchor="middle">{L.miniSommet}</text>
-      <line x1="350" y1="114" x2="350" y2="138" stroke="#71717a" strokeWidth="0.8" strokeDasharray="2 2" />
-
-      {/* Annotation cassure — pastille remplacée par halo uniforme #09090b */}
-      <rect x="242" y="116" width="106" height="14" fill="#09090b" rx="3" />
-      <text x="295" y="127" fill="#d4d4d8" fontSize="9" textAnchor="middle">{L.cassure}</text>
-      <line x1="295" y1="133" x2="310" y2="158" stroke="#3f3f46" strokeWidth="0.8" strokeDasharray="2 2" />
-
-      {/* Annotation retour rapide — halo opaque inséré sous la pastille translucide */}
-      <rect x="448" y="266" width="134" height="14" fill="#09090b" rx="3" />
-      <rect x="450" y="265" width="130" height="18" rx="4" fill="#ef444420" stroke="#ef4444" strokeWidth="0.8" />
-      <text x="515" y="277" fill="#ef4444" fontSize="9" fontWeight="600" textAnchor="middle">{L.returnLabel}</text>
-      <line x1="450" y1="270" x2="432" y2="225" stroke="#ef4444" strokeWidth="0.8" strokeDasharray="2 2" />
-
-      {/* Continuation baissière — 3 bougies rouges */}
-      <line x1="540" y1="305" x2="540" y2="345" stroke="#b91c1c" strokeWidth="1.5" />
-      <rect x="533" y="312" width="14" height="30" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
-
-      <line x1="610" y1="335" x2="610" y2="370" stroke="#b91c1c" strokeWidth="1.5" />
-      <rect x="603" y="342" width="14" height="28" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
-
-      <line x1="670" y1="355" x2="670" y2="385" stroke="#b91c1c" strokeWidth="1.5" />
-      <rect x="663" y="360" width="14" height="25" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
-
-      {/* Halo + label "Résistance 1.1850" déplacé tout à la fin pour rester au-dessus du path et des bougies */}
-      <rect x="21" y="183" width="127" height="14" fill="#09090b" rx="3" />
-      <text x="25" y="194" fill="#ef4444" fontSize="9" fontWeight="600">{L.resistance}</text>
-
-      <text x="400" y="395" fill="#a1a1aa" fontSize="9" textAnchor="middle">
-        {L.footer}
-      </text>
-    </svg>
-
-    {/* MOBILE : échec de flip ─────────────────────────────────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
-      <p className="text-[14px] font-bold text-red-400 text-center">{L.mobTitle}</p>
-      <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-2.5">
-        <p className="text-[12px] font-bold text-emerald-400">{L.mobStep1}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">{L.mobStep1Desc}</p>
-      </div>
-      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-2.5">
-        <p className="text-[12px] font-bold text-red-400">{L.mobStep2}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">{L.mobStep2Desc}</p>
-      </div>
-      <div className="rounded-lg border-2 border-red-500/60 bg-red-500/10 p-2.5">
-        <p className="text-[12px] font-bold text-red-400">{L.mobStep3}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-0.5">{L.mobStep3Desc}</p>
-      </div>
-    </div>
-    </div>
+    <LessonChart
+      id="FlipFailureDiagram"
+      title="Retour sous le niveau : le flip est invalidé"
+      caption="Retour rapide sous le niveau cassé dans les 3 à 5 bougies = flip invalidé. On ne déplace jamais le SL contre soi."
+      panels={[{
+        key: "h4", title: "EUR/USD H4", decimals: 5, height: 280, candles: cs,
+        levels: [
+          { key: "lvl", price: LEVEL, label: `Niveau cassé ${p(LEVEL)}`, short: "Niveau", tone: "zone" },
+          { key: "entry", price: ENTRY, from: entryAt, label: `Entrée long ${p(ENTRY)}`, short: "Entrée", tone: "entry" },
+          { key: "sl", price: SL, from: entryAt, label: `SL ${p(SL)}`, short: "SL", tone: "bear", dashed: true },
+        ],
+        markers: [
+          { key: "brk", i: brk, price: cs[brk].h, label: "Breakout", tone: "bull", side: "above" },
+          { key: "back", i: back, price: cs[back].h, label: `Retour sous ${p(LEVEL)} en ${back - brk} bougies`, short: "Retour", tone: "bear", side: "above" },
+          { key: "stop", i: stop, price: cs[stop].l, label: "SL touché", tone: "bear", side: "below" },
+        ],
+        chips: [{ label: `Perte bornée : ${pips(ENTRY, SL, 0.0001)} pips`, tone: "bear" }],
+      }]}
+    />
   );
 }

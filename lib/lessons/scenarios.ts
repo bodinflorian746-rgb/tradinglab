@@ -1185,3 +1185,35 @@ Object.assign(SCENARIOS, {
   "sr-weak": authored(4560, SR_WEAK, 27302, 0, "XAU/USD", [4500]),
   "zone-line": authored(1.1735, ZONE_LINE, 27401, 5, "EUR/USD"),
 });
+
+// ─── Lot 28 ──────────────────────────────────────────────────────────────────
+// Support / résistance 3 — flip raté (EUR/USD H4) : résistance 1.1850 touchée 3 fois, breakout
+// clôturé à 1.1872, retest acheté à 1.1858, puis retour sous 1.1850 en 3 bougies : flip invalidé,
+// le SL 1.1830 (de l'autre côté de la zone) borne la perte.
+const FLIP_FAIL = bars(1.1790, [
+  1.1806, 1.1822, 1.1838, { c: 1.1846, h: 1.1850 }, 1.1832, 1.1818, 1.1830, 1.1841, { c: 1.1845, h: 1.1850 }, 1.1834, 1.1826, 1.1838, { c: 1.1846, h: 1.1850 },
+  1.1856, { c: 1.1872, l: 1.1852 }, 1.1866, { c: 1.1858, h: 1.1867, l: 1.1852 }, 1.1849, { c: 1.1838, h: 1.1852 }, { c: 1.1826, l: 1.1822 },
+], 0.0003, 5);
+// Intermédiaire 6 — fake breakouts EUR/USD H1 : résistance 1.0950, mèche jusqu'à 1.0965 et clôture
+// sous 1.0950 (acheteurs piégés) ; support 1.0850, mèche jusqu'à 1.0840 et clôture au-dessus (vendeurs piégés).
+const FAKE_UP = bars(1.0905, [1.0916, 1.0928, { c: 1.0943, h: 1.0948 }, 1.0934, 1.0926, 1.0938, { c: 1.0946, h: 1.0949 }, { c: 1.0944, h: 1.0965, l: 1.0940 }, 1.0928, 1.0914, 1.0902], 0.0003, 5);
+const FAKE_DOWN = bars(1.0895, [1.0884, 1.0872, { c: 1.0857, l: 1.0852 }, 1.0866, 1.0874, 1.0862, { c: 1.0854, l: 1.0851 }, { c: 1.0856, h: 1.0860, l: 1.0840 }, 1.0872, 1.0886, 1.0898], 0.0003, 5);
+// Support / résistance 4 (plan) — XAU/USD H1 : résistance 4 650 touchée 3 fois, bougie 1 mèche 4 680
+// et clôture 4 655 (corps 5 $), bougie 2 clôture 4 640 : short 4 640, SL 4 685, TP 4 540.
+const FAKE_SR4 = bars(4598, [
+  4610, 4624, 4638, { c: 4645, h: 4650 }, 4632, 4620, 4614, 4626, 4639, { c: 4646, h: 4650 }, 4634, 4625, 4636, { c: 4644, h: 4650 },
+  { c: 4650, h: 4652, l: 4641 }, { c: 4655, h: 4680, l: 4648 }, { c: 4640, h: 4657, l: 4637 }, 4626, 4612, 4598,
+], 3, 0);
+// Support / résistance 4 bloc 3 — chasse aux stops (XAU/USD H1) : résistance 4 720, cluster de stops
+// 4 720-4 745, mèche jusqu'à 4 740 qui déclenche les stops, clôture sous 4 720, continuation baissière.
+const HUNT_SR4 = bars(4668, [
+  4680, 4694, 4708, { c: 4715, h: 4720 }, 4702, 4690, 4699, 4710, { c: 4716, h: 4720 }, 4703, 4696, 4706, 4714,
+  { c: 4712, h: 4740, l: 4708 }, { c: 4694, h: 4713 }, 4680, 4668, 4659,
+], 3, 0);
+Object.assign(SCENARIOS, {
+  "flip-fail": authored(1.1790, FLIP_FAIL, 28101, 5, "EUR/USD", [1.1850]),
+  "fake-up-eur": authored(1.0905, FAKE_UP, 28201, 5, "EUR/USD", [1.0950]),
+  "fake-down-eur": authored(1.0895, FAKE_DOWN, 28202, 5, "EUR/USD", [1.0850]),
+  "fake-sr4": authored(4598, FAKE_SR4, 28203, 0, "XAU/USD", [4650]),
+  "hunt-sr4": authored(4668, HUNT_SR4, 28301, 0, "XAU/USD", [4720]),
+});

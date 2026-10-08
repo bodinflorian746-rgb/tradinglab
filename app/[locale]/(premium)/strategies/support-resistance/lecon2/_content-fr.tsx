@@ -143,7 +143,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Touches multiples : ≥ 2 touches confirmées, idéalement 3 pour confiance élevée</li>
-              <li>- Réactions claires : rebond ≥ 1% sur EUR/USD ou 25-50$ sur XAU/USD à chaque touche</li>
+              <li>- Réactions claires : rebond de 30 pips ou plus sur EUR/USD ou 25-50$ sur XAU/USD à chaque touche</li>
               <li>- Fraîcheur : zone touchée dans les 30 derniers jours = mémoire collective forte</li>
               <li>- Confluence avec niveau rond, Fibonacci, MM ou Order Block = priorité</li>
             </ul>
@@ -164,7 +164,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Confluence Fibonacci 0.5 / 0.618 / 0.786 = zone respectée par les institutionnels</li>
               <li>- Confluence MM50 ou MM200 (Daily ou H4) = niveau dynamique défendu</li>
-              <li>- Confluence niveau rond psychologique (1.1800, 4 500$) = mémoire émotionnelle</li>
+              <li>- Confluence chiffre rond (1.1800, 4 500$) = mémoire émotionnelle</li>
               <li>- 3 confluences ou plus = vrai niveau majeur, sélection prioritaire</li>
             </ul>
           </section>

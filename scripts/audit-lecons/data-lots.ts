@@ -681,3 +681,27 @@ export function checkLot27(check: Check) {
     check(lows.join() === "1.1685,1.1688,1.169" && z.every((k) => k.l >= 1.168), "Zone (S/R 1) : creux 1.1685 / 1.1688 / 1.1690");
   }
 }
+
+export function checkLot28(check: Check) {
+  {
+    // S/R 3 : flip raté — 3 touches de 1.1850, breakout clôturé à 1.1872, entrée 1.1858, retour sous 1.1850 en ≤ 3 bougies, SL 1.1830 touché
+    const cs = CS["flip-fail"], brk = cs.findIndex((k) => k.c > 1.1865);
+    check(cs.slice(0, brk).filter((k) => k.h === 1.185).length === 3 && cs[brk].c === 1.1872, "Flip raté (S/R 3) : 3 touches, breakout 1.1872");
+    const e = cs.findIndex((k, i) => i > brk && k.c === 1.1858), back = cs.findIndex((k, i) => i > e && k.c < 1.185);
+    check(e > 0 && back - brk <= 4 && cs.slice(e + 1).some((k) => k.l <= 1.183), "Flip raté (S/R 3) : retour sous 1.1850 puis SL 1.1830");
+    check(near(rrOf(1.1858, 1.183, 1.195), 3.29, 0.005), "Flip (S/R 3) : R/R 3,29");
+  }
+  {
+    // Intermédiaire 6 : mèche 1.0965 au-dessus de 1.0950 et clôture dessous ; mèche 1.0840 sous 1.0850 et clôture au-dessus
+    const u = CS["fake-up-eur"], d = CS["fake-down-eur"], ku = u.findIndex((k) => k.h > 1.095), kd = d.findIndex((k) => k.l < 1.085);
+    check(u[ku].h === 1.0965 && u[ku].c < 1.095 && u.slice(ku).every((k) => k.c < 1.095), "Fake haussier (Int. 6) : 1.0965 puis clôture sous 1.0950");
+    check(d[kd].l === 1.084 && d[kd].c > 1.085 && d.slice(kd).every((k) => k.c > 1.085), "Fake baissier (Int. 6) : 1.0840 puis clôture au-dessus de 1.0850");
+    // S/R 4 : 3 touches de 4 650, bougie 1 mèche 4 680 / corps 5 / clôture 4 655, bougie 2 clôture 4 640, R/R 2,22
+    const s = CS["fake-sr4"], b1 = s.findIndex((k) => k.h > 4652);
+    check(s.slice(0, b1).filter((k) => k.h === 4650).length === 3 && s[b1].h === 4680 && s[b1].c === 4655 && s[b1].c - s[b1].o === 5 && s[b1 + 1].c === 4640, "Fake breakout (S/R 4) : plan");
+    check(near(rrOf(4640, 4685, 4540), 2.22, 0.005), "Fake breakout (S/R 4) : R/R 2,22");
+    // S/R 4 bloc 3 : mèche dans le cluster 4 720-4 745, clôture sous 4 720, continuation baissière
+    const h = CS["hunt-sr4"], k = h.findIndex((x) => x.h > 4720);
+    check(h[k].h > 4720 && h[k].h <= 4745 && h[k].c < 4720 && h[h.length - 1].c < h[k].c - 40, "Chasse aux stops (S/R 4) : mèche dans le cluster, rejet");
+  }
+}

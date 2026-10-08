@@ -153,7 +153,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Reconnaître un fake breakout</h2>
 
             <div className="my-8">
-              <GraphFakeBreakout />
+              <GraphFakeBreakout variant="sr4" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">

@@ -1,196 +1,36 @@
-export default function FlipDiagram({ className = "", locale = "fr" }: { className?: string; locale?: "fr" | "es" | "en" }) {
-  const L = locale === "es"
-    ? {
-        header: "Flip de polaridad — el mercado tiene memoria de los precios",
-        resistance: "Resistencia",
-        support: "Support",
-        cassure: "Breakout",
-        retest: "Retest",
-        title1: "Resistencia rota → Support",
-        title2: "Support roto → Resistencia",
-        mobTitle: "Flip de polaridad — la memoria de los precios",
-        mobResToSup: "Resistencia rota → Support",
-        mobResToSupDesc: "El precio rompe una resistencia y luego vuelve a testearla por abajo → se convierte en support.",
-        mobSupToRes: "Support roto → Resistencia",
-        mobSupToResDesc: "El precio rompe un support y luego sube a testearlo por arriba → se convierte en resistencia.",
-        mobFooter: "Un nivel roto invierte su polaridad — siempre.",
-      }
-    : locale === "en"
-    ? {
-        header: "Polarity flip — the market has price memory",
-        resistance: "Resistance",
-        support: "Support",
-        cassure: "Breakout",
-        retest: "Retest",
-        title1: "Resistance broken → Support",
-        title2: "Support broken → Resistance",
-        mobTitle: "Polarity flip — price memory",
-        mobResToSup: "Resistance broken → Support",
-        mobResToSupDesc: "Price breaks a resistance then comes back to test it from below → it becomes support.",
-        mobSupToRes: "Support broken → Resistance",
-        mobSupToResDesc: "Price breaks a support then rallies back to test it from above → it becomes resistance.",
-        mobFooter: "A broken level flips its polarity — always.",
-      }
-    : {
-        header: "Flip de polarité — le marché a la mémoire des prix",
-        resistance: "Résistance",
-        support: "Support",
-        cassure: "Breakout",
-        retest: "Retest",
-        title1: "Résistance cassée → Support",
-        title2: "Support cassé → Résistance",
-        mobTitle: "Flip de polarité — la mémoire des prix",
-        mobResToSup: "Résistance cassée → Support",
-        mobResToSupDesc: "Le prix casse une résistance puis revient la tester par le bas → elle devient support.",
-        mobSupToRes: "Support cassé → Résistance",
-        mobSupToResDesc: "Le prix casse un support puis remonte le tester par le haut → il devient résistance.",
-        mobFooter: "Un niveau cassé inverse sa polarité — toujours.",
-      };
+// Support / résistance 3 blocs 1 et 3 — le flip de polarité, plan de la leçon (EUR/USD H4) :
+// résistance 1.1850 touchée 3 fois, breakout clôturé à 1.1878 (28 pips au-dessus), 4 bougies sans
+// réintégration, retest et pin bar (mèche 1.1842, clôture 1.1858) ; long 1.1858, SL 1.1830,
+// TP 1.1950. Breakout, distance et R/R calculés. Bougies : scenarios.ts (« flip-pin »).
+
+import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { tradeSetup } from "@/app/components/lessons/trade";
+import { fmtPrice, pips } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const p = (x: number) => fmtPrice(x, 4);
+const LEVEL = 1.185;
+
+export default function FlipDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
+  const cs = CANDLES["flip-pin"];
+  const brk = cs.findIndex((k) => k.c > LEVEL + 0.0015);
+  const pin = cs.length - 1;
+  const t = tradeSetup({ entry: cs[pin].c, sl: 1.183, tp: 1.195, from: pin, tpOffscale: true, expect: ">3.2", names: { entry: "Entrée long", tp: "TP résistance H4" } });
   return (
-    <div className={className}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 600 300"
-      className="hidden sm:block w-full h-auto"
-    >
-      {/* Header */}
-      <text x="300" y="20" fill="#a1a1aa" fontSize="10" textAnchor="middle">
-        {L.header}
-      </text>
-
-      {/* Séparateur vertical */}
-      <line x1="300" y1="35" x2="300" y2="270" stroke="#3f3f46" strokeWidth="1" />
-
-      {/* ════════════ PANNEAU GAUCHE — Bullish flip (Résistance → Support) ════════════ */}
-
-      {/* Ligne pivot — moitié red (résistance) puis moitié emerald (support) */}
-      <line x1="10" y1="150" x2="145" y2="150" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="4 3" />
-      <line x1="145" y1="150" x2="280" y2="150" stroke="#10b981" strokeWidth="1.5" strokeDasharray="4 3" />
-
-      {/* Path du prix */}
-      <path
-        d="M15,210 L40,150 L60,200 L90,150 L110,205 L130,150 L145,110 L160,95 L185,145 L210,110 L240,85 L275,60"
-        stroke="#71717a"
-        strokeWidth="2"
-        fill="none"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-
-      {/* Bougie de cassure — corps vert entre y=140 et y=110 */}
-      <rect x="139" y="110" width="12" height="30" fill="#10b981" stroke="#059669" strokeWidth="1" rx="1" />
-
-      {/* Touches résistance */}
-      <circle cx="40" cy="150" r="4" fill="#ef4444" />
-      <circle cx="90" cy="150" r="4" fill="#ef4444" />
-
-      {/* Retest support */}
-      <circle cx="185" cy="145" r="5" fill="#10b981" />
-
-      {/* Labels avec halos opaques */}
-      <rect x="16" y="129" width="78" height="14" fill="#09090b" rx="3" />
-      <text x="20" y="140" fill="#ef4444" fontSize="10" fontWeight="600">{L.resistance}</text>
-      <rect x="236" y="154" width="57" height="14" fill="#09090b" rx="3" />
-      <text x="240" y="165" fill="#10b981" fontSize="10" fontWeight="600">{L.support}</text>
-
-      {/* Pastille Cassure */}
-      <rect x="105" y="88" width="50" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="130" y="98" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.cassure}</text>
-
-      {/* Pastille Retest avec petite flèche */}
-      <rect x="178" y="128" width="44" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="200" y="138" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.retest}</text>
-      <line x1="192" y1="142" x2="188" y2="145" stroke="#10b981" strokeWidth="0.8" />
-
-      {/* Titre panneau bas */}
-      <text x="145" y="285" fill="#d4d4d8" fontSize="11" fontWeight="600" textAnchor="middle">
-        {L.title1}
-      </text>
-
-      {/* ════════════ PANNEAU DROIT — Bearish flip (Support → Résistance) ════════════ */}
-
-      {/* Ligne pivot — moitié emerald (support) puis moitié red (résistance) */}
-      <line x1="320" y1="150" x2="455" y2="150" stroke="#10b981" strokeWidth="1.5" strokeDasharray="4 3" />
-      <line x1="455" y1="150" x2="590" y2="150" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="4 3" />
-
-      {/* Path du prix */}
-      <path
-        d="M325,90 L350,150 L370,100 L400,150 L420,95 L440,150 L455,190 L470,205 L495,155 L520,190 L550,215 L585,240"
-        stroke="#71717a"
-        strokeWidth="2"
-        fill="none"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-
-      {/* Bougie de cassure — corps rouge entre y=160 et y=190 */}
-      <rect x="449" y="160" width="12" height="30" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" rx="1" />
-
-      {/* Touches support */}
-      <circle cx="350" cy="150" r="4" fill="#10b981" />
-      <circle cx="400" cy="150" r="4" fill="#10b981" />
-
-      {/* Retest résistance */}
-      <circle cx="495" cy="155" r="5" fill="#ef4444" />
-
-      {/* Labels avec halos opaques */}
-      <rect x="326" y="154" width="57" height="14" fill="#09090b" rx="3" />
-      <text x="330" y="165" fill="#10b981" fontSize="10" fontWeight="600">{L.support}</text>
-      <rect x="511" y="129" width="78" height="14" fill="#09090b" rx="3" />
-      <text x="585" y="140" fill="#ef4444" fontSize="10" fontWeight="600" textAnchor="end">{L.resistance}</text>
-
-      {/* Pastille Cassure */}
-      <rect x="415" y="203" width="50" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="440" y="213" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.cassure}</text>
-
-      {/* Pastille Retest avec petite flèche */}
-      <rect x="488" y="163" width="44" height="14" rx="4" fill="#27272a" stroke="#3f3f46" strokeWidth="0.8" />
-      <text x="510" y="173" fill="#d4d4d8" fontSize="8" textAnchor="middle">{L.retest}</text>
-      <line x1="500" y1="163" x2="497" y2="159" stroke="#ef4444" strokeWidth="0.8" />
-
-      {/* Titre panneau bas */}
-      <text x="455" y="285" fill="#d4d4d8" fontSize="11" fontWeight="600" textAnchor="middle">
-        {L.title2}
-      </text>
-    </svg>
-
-    {/* MOBILE : flip de polarité ──────────────────────────────── */}
-    <div className="sm:hidden bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2.5">
-      <p className="text-[14px] font-bold text-white text-center">{L.mobTitle}</p>
-      {/* Mini-SVG : niveau pivote — résistance (rouge) → cassure → retest par-dessus → support (emerald) */}
-      <svg viewBox="0 0 280 110" className="w-full h-auto" aria-label="Flip de polarité" fill="none">
-        {/* Ligne S/R : moitié rouge (résistance) → moitié emerald (support) */}
-        <line x1="15" y1="55" x2="140" y2="55" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 2" />
-        <line x1="140" y1="55" x2="265" y2="55" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 2" />
-        {/* Labels */}
-        <text x="20" y="50" fontSize="8" fill="#ef4444" fontWeight="700">Résistance</text>
-        <text x="262" y="68" fontSize="8" fill="#10b981" fontWeight="700" textAnchor="end">Support</text>
-        {/* Path prix : 2 touches résistance → cassure → retest par le bas → rebond */}
-        <path d="M15,95 L35,55 L55,80 L75,55 L100,75 L130,55 L145,30 L170,45 L190,55 L215,40 L240,25 L262,10"
-          stroke="#71717a" strokeWidth="1.6" fill="none" strokeLinejoin="round" strokeLinecap="round" />
-        {/* Touches résistance (avant cassure) */}
-        <circle cx="35" cy="55" r="2.5" fill="#ef4444" />
-        <circle cx="75" cy="55" r="2.5" fill="#ef4444" />
-        {/* Retest par le bas (devient support) */}
-        <circle cx="190" cy="55" r="3.5" fill="#10b981" />
-        {/* Bougie de cassure */}
-        <rect x="135" y="35" width="8" height="20" fill="#10b981" stroke="#059669" strokeWidth="0.6" rx="1" />
-        {/* Label "Flip" */}
-        <rect x="160" y="65" width="40" height="12" rx="2" fill="#10b98118" stroke="#10b981" strokeWidth="0.6" />
-        <text x="180" y="73" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="700">Retest</text>
-      </svg>
-      <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/8 p-3">
-        <p className="text-[13px] font-bold text-emerald-400">{L.mobResToSup}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobResToSupDesc}</p>
-      </div>
-      <div className="rounded-lg border border-red-500/40 bg-red-500/8 p-3">
-        <p className="text-[13px] font-bold text-red-400">{L.mobSupToRes}</p>
-        <p className="text-[12px] text-zinc-300 leading-snug mt-1">{L.mobSupToResDesc}</p>
-      </div>
-      <p className="text-[13px] text-zinc-400 italic text-center pt-2 border-t border-zinc-800 leading-snug">
-        {L.mobFooter}
-      </p>
-    </div>
-    </div>
+    <LessonChart
+      id="FlipDiagram"
+      title="Résistance cassée, support au retest"
+      caption="Breakout franc, pas de réintégration, retest avec signal de rejet : la zone a inversé son rôle."
+      panels={[{
+        key: "h4", title: "EUR/USD H4", decimals: 5, height: 290, candles: cs,
+        levels: [{ key: "lvl", price: LEVEL, label: `Résistance → support ${p(LEVEL)}`, short: "Zone 1.1850", tone: "zone" }, ...t.levels],
+        offscale: t.offscale,
+        markers: [
+          { key: "brk", i: brk, price: cs[brk].h, label: `Breakout ${p(cs[brk].c)} (+${pips(cs[brk].c, LEVEL, 0.0001)} pips)`, short: "Breakout", tone: "bull", side: "above" },
+          { key: "pin", i: pin, price: cs[pin].l, label: `Retest : pin bar ${p(cs[pin].l)}`, short: "Pin bar", tone: "bull", side: "below" },
+        ],
+        chips: t.chips,
+      }]}
+    />
   );
 }

@@ -1,145 +1,59 @@
-interface MiniCandleProps {
-  cx: number;
-  bodyTop: number;
-  bodyBot: number;
-  wickTop: number;
-  wickBot: number;
-  bullish: boolean;
-}
+// Deux usages :
+// - Intermédiaire 6 (par défaut) — les deux pièges du texte (EUR/USD H1) : mèche jusqu'à 1.0965
+//   au-dessus de la résistance 1.0950 et clôture dessous (acheteurs piégés) ; mèche jusqu'à 1.0840
+//   sous le support 1.0850 et clôture au-dessus (vendeurs piégés).
+// - Support / résistance 4 (variant « sr4 ») — le plan XAU/USD H1 : résistance 4 650 touchée 3 fois,
+//   bougie 1 mèche 4 680 / clôture 4 655, bougie 2 clôture 4 640 ; short 4 640, SL 4 685, TP 4 540.
+// Mèches, clôtures et R/R calculés. Bougies : scenarios.ts (« fake-up-eur », « fake-down-eur », « fake-sr4 »).
 
-function MiniCandle({ cx, bodyTop, bodyBot, wickTop, wickBot, bullish }: MiniCandleProps) {
-  return (
-    <g>
-      <line
-        x1={cx} y1={wickTop} x2={cx} y2={wickBot}
-        stroke="#3f3f46" strokeWidth="1.5" strokeLinecap="round"
-      />
-      <rect
-        x={cx - 6} y={bodyTop} width="12"
-        height={Math.max(bodyBot - bodyTop, 3)}
-        fill={bullish ? '#10b981' : '#ef4444'}
-        stroke={bullish ? '#059669' : '#dc2626'}
-        strokeWidth="0.8" rx="1.5"
-      />
-    </g>
-  );
-}
+import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
+import { tradeSetup, usd } from "@/app/components/lessons/trade";
+import { fmtPrice, type Candle } from "@/lib/lessons/chart-analysis";
+import CANDLES from "@/lib/lessons/generated/candles.json";
 
-interface GraphFakeBreakoutProps {
-  className?: string;
-  locale?: "fr" | "es" | "en";
-}
+const p = (x: number) => fmtPrice(x, 4);
 
-export function GraphFakeBreakout({ className = '', locale = "fr" }: GraphFakeBreakoutProps) {
-  const rY = 62;
-  const isEs = locale === "es";
-  const isEn = locale === "en";
-  const L = {
-    wick:           isEs ? "mecha ↑" : isEn ? "wick ↑" : "mèche ↑",
-    close:          isEs ? "cierre ↓" : isEn ? "close ↓" : "clôture ↓",
-    resistance:     isEs ? "Resistencia" : isEn ? "Resistance" : "Résistance",
-    mobTitle:       isEs ? "Fakeout — trampa clásica ✗" : isEn ? "Fake Breakout — classic trap ✗" : "Fake Breakout — piège classique ✗",
-    resistanceLine: isEs ? "línea alta, rechazada varias veces" : isEn ? "upper line, rejected several times" : "ligne haute, repoussée plusieurs fois",
-    wickAbove:      isEs ? "rebasa la resistencia — parece validar el breakout" : isEn ? "breaks above resistance — looks like a valid breakout" : "dépasse la résistance — semble valider le breakout",
-    closeBelow:     isEs ? "debajo de la resistencia — la trampa se cierra" : isEn ? "below resistance — the trap closes" : "sous la résistance — le piège se referme",
-    waitClose:      isEs ? "Siempre espera un cierre para validar un breakout" : isEn ? "Always wait for a close to validate a breakout" : "Toujours attendre une clôture pour valider un breakout",
-    legendWick:     isEs ? "Mecha por encima de la resistencia" : isEn ? "Wick above resistance" : "Mèche au-dessus de la résistance",
-    legendTrap:     isEs ? "Cierre debajo de la resistencia = trampa" : isEn ? "Close below resistance = trap" : "Clôture sous la résistance = piège",
+function trap(key: "fake-up-eur" | "fake-down-eur", level: number, up: boolean, title: string): LCPanel {
+  const cs = CANDLES[key] as Candle[];
+  const k = cs.findIndex((x) => (up ? x.h > level : x.l < level));
+  return {
+    key, title, decimals: 5, height: 220, candles: cs,
+    subtitle: up ? `Mèche ${p(cs[k].h)}, clôture ${p(cs[k].c)}` : `Mèche ${p(cs[k].l)}, clôture ${p(cs[k].c)}`,
+    levels: [{ key: "lvl", price: level, label: `${up ? "Résistance" : "Support"} ${p(level)}`, short: up ? "Résistance" : "Support", tone: "zone" }],
+    markers: [{ key: "k", i: k, price: up ? cs[k].h : cs[k].l, label: up ? "Acheteurs piégés" : "Vendeurs piégés", short: "Piège", tone: up ? "bear" : "bull", side: up ? "above" : "below" }],
   };
+}
 
+export function GraphFakeBreakout({ variant = "int6" }: { variant?: "int6" | "sr4"; className?: string; locale?: "fr" | "es" | "en" }) {
+  if (variant === "sr4") {
+    const cs = CANDLES["fake-sr4"];
+    const b1 = cs.reduce((b, k, i) => (k.h > cs[b].h ? i : b), 0), b2 = b1 + 1;
+    const t = tradeSetup({ entry: cs[b2].c, sl: 4685, tp: 4540, unit: "$", from: b2, tpOffscale: true, expect: ">2.2", names: { entry: "Entrée short" } });
+    return (
+      <LessonChart
+        id="GraphFakeBreakout"
+        title="Fake breakout : double confirmation, puis short"
+        caption="Bougie 1 : mèche au-dessus, clôture à la limite. Bougie 2 : réintégration franche. Le trade se prend dans le sens opposé."
+        panels={[{
+          key: "h1", title: "XAU/USD H1, résistance 4 650 $", decimals: 0, height: 280, candles: cs,
+          levels: [{ key: "lvl", price: 4650, label: `Résistance ${usd(4650)} (3 touches)`, short: "Résistance", tone: "zone" }, ...t.levels],
+          offscale: t.offscale,
+          markers: [
+            { key: "b1", i: b1, price: cs[b1].h, label: `Bougie 1 : mèche ${usd(cs[b1].h)}`, short: "Bougie 1", tone: "bear", side: "above" },
+            { key: "b2", i: b2, price: cs[b2].l, label: `Bougie 2 : clôture ${usd(cs[b2].c)}`, short: "Bougie 2", tone: "bear", side: "below" },
+          ],
+          chips: t.chips,
+        }]}
+      />
+    );
+  }
   return (
-    <div className={`bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden ${className}`}>
-      <svg
-        width="100%"
-        viewBox="0 0 270 158"
-        fill="none"
-        preserveAspectRatio="xMidYMid meet"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <style>{`@media (max-width: 640px) { .chart-detail-labels { display: none; } }`}</style>
-
-        {/* Resistance zone: subtle fill above */}
-        <rect x="0" y="0" width="270" height={rY + 2} fill="#ef444408" />
-
-        {/* Fake wick zone highlight — the "fake" part above resistance */}
-        <rect x="104" y="26" width="12" height={rY - 26} fill="#b91c1c22" rx="2" />
-
-        {/* Resistance line */}
-        <line
-          x1="0" y1={rY} x2="270" y2={rY}
-          stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" opacity="0.8"
-        />
-
-        {/* Candle 1 — bullish approach */}
-        <MiniCandle cx={28} bodyTop={90} bodyBot={110} wickTop={83} wickBot={118} bullish />
-        {/* Candle 2 — bullish approach, closer to resistance */}
-        <MiniCandle cx={66} bodyTop={72} bodyBot={93} wickTop={65} wickBot={100} bullish />
-        {/* Candle 3 — FAKE BREAKOUT: wick above resistance, bearish body below */}
-        <MiniCandle cx={110} bodyTop={68} bodyBot={90} wickTop={26} wickBot={97} bullish={false} />
-        {/* Candle 4 — bearish reversal */}
-        <MiniCandle cx={150} bodyTop={90} bodyBot={120} wickTop={84} wickBot={126} bullish={false} />
-        {/* Candle 5 — bearish drop */}
-        <MiniCandle cx={190} bodyTop={118} bodyBot={142} wickTop={113} wickBot={148} bullish={false} />
-
-        {/* Dot marking the wick peak (fake) */}
-        <circle cx="110" cy="26" r="3" fill="#b91c1c" opacity="0.95" />
-
-        {/* Dot marking the close (below resistance) — toujours visible */}
-        <circle cx="116" cy="68" r="2.5" fill="#ef4444" opacity="0.9" />
-
-        {/* Annotations textuelles — masquées sur mobile */}
-        <g className="chart-detail-labels">
-          <line x1="113" y1="24" x2="138" y2="14" stroke="#f87171" strokeWidth="1" opacity="0.5" strokeDasharray="2 2" />
-          <text x="141" y="18" fontSize="9" fill="#f87171" opacity="0.9">{L.wick}</text>
-
-          <line x1="118" y1="68" x2="138" y2="80" stroke="#ef4444" strokeWidth="1" opacity="0.45" strokeDasharray="2 2" />
-          <text x="141" y="84" fontSize="9" fill="#ef4444" opacity="0.8">{L.close}</text>
-
-          <rect x="182" y={rY - 19} width="87" height="14" rx="3" fill="#09090b" />
-          <text x="188" y={rY - 8} fontSize="9" fill="#ef4444" opacity="0.75">{L.resistance}</text>
-        </g>
-      </svg>
-
-      {/* Mobile : key card avec scénario du fake breakout */}
-      <div className="sm:hidden px-4 py-3 border-t border-zinc-800/60 space-y-2">
-        <p className="text-[13px] font-bold text-red-400">{L.mobTitle}</p>
-        <ul className="space-y-1.5 text-[13px] leading-snug">
-          <li className="flex items-start gap-2">
-            <span className="shrink-0 w-3 h-1 rounded-sm bg-red-400 mt-2" />
-            <span className="text-zinc-300">
-              <span className="font-bold text-red-400">{L.resistance}</span> {L.resistanceLine}
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
-            <span className="text-zinc-300">
-              <span className="font-bold text-red-400">{L.wick}</span> {L.wickAbove}
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-red-500 mt-1" />
-            <span className="text-zinc-300">
-              <span className="font-bold text-red-400">{L.close}</span> {L.closeBelow}
-            </span>
-          </li>
-          <li className="flex items-start gap-2 pt-1 border-t border-zinc-800/50">
-            <span className="shrink-0 text-zinc-300 font-bold">→</span>
-            <span className="text-zinc-300">{L.waitClose}</span>
-          </li>
-        </ul>
-      </div>
-
-      {/* Desktop legend (inchangée) */}
-      <div className="hidden sm:flex flex-wrap gap-4 px-4 py-2.5 border-t border-zinc-800/50">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-400 opacity-90" />
-          <span className="text-[10px] text-zinc-500">{L.legendWick}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-          <span className="text-[10px] text-zinc-500">{L.legendTrap}</span>
-        </div>
-      </div>
-    </div>
+    <LessonChart
+      id="GraphFakeBreakout"
+      title="À quoi ressemble un fake breakout"
+      caption="Longue mèche au-delà du niveau, clôture de l'autre côté : ceux qui ont suivi le breakout sont piégés."
+      panels={[trap("fake-up-eur", 1.095, true, "Fake breakout haussier"), trap("fake-down-eur", 1.085, false, "Fake breakout baissier")]}
+      rows={[2]}
+    />
   );
 }

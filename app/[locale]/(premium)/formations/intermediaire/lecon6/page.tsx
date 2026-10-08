@@ -56,7 +56,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Pourquoi les fake breakouts arrivent</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Les niveaux évidents concentrent naturellement des ordres. Au-dessus d'une résistance → des stops d'acheteurs short + des ordres d'entrée d'acheteurs qui jouent le breakout. Le marché va chercher cette liquidité, déclenche tous ces ordres, puis repart dans l'autre sens.
+          Les niveaux évidents concentrent naturellement des ordres. Au-dessus d'une résistance → des stops de vendeurs (positions short) + des ordres d'entrée d'acheteurs qui jouent le breakout. Le marché va chercher cette liquidité, déclenche tous ces ordres, puis repart dans l'autre sens.
         </p>
         <div className="space-y-2.5">
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
