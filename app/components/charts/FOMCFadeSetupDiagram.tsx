@@ -14,6 +14,7 @@ export function FOMCFadeSetupDiagram(_props: { className?: string; locale?: "fr"
   const cs = CANDLES["fomc-excess"];
   const entryAt = cs.findIndex((k, i) => i > FOMC_IMPULSE && k.c > ENTRY);
   const stab = cs.slice(FOMC_IMPULSE + 1, entryAt);
+  const stabZone = { y1: Math.min(...stab.map((k) => k.l)), y2: Math.max(...stab.map((k) => k.h)) };
   const t = tradeSetup({ entry: ENTRY, sl: SL, tp: TP, unit: "$", from: entryAt, names: { entry: "Entrée long", tp: "Objectif" } });
   return (
     <LessonChart
@@ -22,9 +23,9 @@ export function FOMCFadeSetupDiagram(_props: { className?: string; locale?: "fr"
       caption="Entrée après stabilisation, SL juste au-delà de l'extrémité, objectif sur le niveau d'où l'impulsion est partie."
       panels={[{
         key: "m15", title: "XAU/USD M15, après le FOMC", decimals: 0, height: 290, candles: cs,
-        zones: [{ key: "stab", y1: Math.min(...stab.map((k) => k.l)), y2: Math.max(...stab.map((k) => k.h)), from: FOMC_IMPULSE + 1, to: entryAt - 1, label: `Stabilisation ~${usd(4595)}`, short: "Stabilisation", tone: "zone" }],
+        zones: [{ key: "stab", ...stabZone, from: FOMC_IMPULSE + 1, to: entryAt - 1, label: `Stabilisation ${usd(stabZone.y1)}-${usd(stabZone.y2)}`, short: "Stabilisation", tone: "zone" }],
         levels: t.levels,
-        markers: [{ key: "low", i: FOMC_IMPULSE, price: cs[FOMC_IMPULSE].l, label: `Extrémité ${usd(cs[FOMC_IMPULSE].l)}`, short: usd(cs[FOMC_IMPULSE].l), tone: "bear", side: "below" }],
+        markers: [{ key: "low", i: FOMC_IMPULSE, price: cs[FOMC_IMPULSE].l, label: `Extrémité ${usd(cs[FOMC_IMPULSE].l)}`, short: "Extrémité", tone: "bear", side: "below", role: "low" }],
         chips: t.chips,
       }]}
     />

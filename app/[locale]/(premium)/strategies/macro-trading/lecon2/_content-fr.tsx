@@ -244,9 +244,10 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 5. Exécution du Fade</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée long : 4 612 $</li>
+                <li>- Entrée long : 4 600 $ (clôture de la première bougie de reprise franche)</li>
                 <li>- Stop loss : 4 568 $ (au-delà de l'extrémité de l'impulsion)</li>
                 <li>- Target : 4 655 $ (proche du niveau pré-NFP)</li>
+                <li>- R/R : (4 655 - 4 600) / (4 600 - 4 568) = 55 / 32 ≈ 1,7</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 6. Gestion du risque</p>

@@ -21,11 +21,11 @@ export function FOMCExhaustionDiagram(_props: { className?: string; locale?: "fr
       panels={[{
         key: "m15", subtitle: `XAU/USD M15 — impulsion ${usd(cs[fomc].o)} → ${usd(TOP)}`,
         decimals: 1, height: 300, candles: cs,
-        levels: [{ key: "top", price: TOP, from: fomc, label: `Aucune clôture au-dessus de ${usd(TOP)}`, short: usd(TOP), tone: "zone", dashed: true }],
+        levels: [{ key: "top", price: TOP, from: fomc, label: `Aucune clôture au-dessus de ${usd(TOP)}`, short: "Plafond", tone: "zone", dashed: true }],
         markers: [
           { key: "fomc", i: fomc, price: cs[fomc].l, label: "FOMC", tone: "entry", side: "below" },
           { key: "wicks", i: wicks[1]?.i ?? wicks[0].i, price: Math.max(...wicks.map((x) => cs[x.i].h)), label: `${wicks.length} mèches de rejet`, short: "Rejet", tone: "bear", side: "above" },
-          { key: "fade", i: last, price: cs[last].l, label: `Correction vers ${usd(cs[last].c)}`, short: usd(cs[last].c), tone: "bull", side: "below" },
+          { key: "fade", i: last, price: cs[last].l, label: `Correction vers ${usd(cs[last].c)}`, short: "Correction", tone: "bull", side: "below" },
         ],
         chips: [{ label: `Mèches hautes : ${wicks.map((x) => usd(x.w)).join(", ")}`, tone: "bear" }],
       }]}

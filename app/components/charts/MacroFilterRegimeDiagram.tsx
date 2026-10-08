@@ -30,14 +30,15 @@ export function MacroFilterRegimeDiagram(_props: { className?: string; locale?: 
             ...piv.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name, tone: "neutral" as const, side: q.side === "h" ? "above" as const : "below" as const })),
             { key: "zoom", i: h4All.length - 1, price: h4All[h4All.length - 1].l, label: "Détail M15", tone: "zone", side: "below" },
           ],
+          offscale: [{ key: "obj", price: 4740, label: `Structure vers ${usd(4740)} ↑`, short: "Cible ↑", tone: "bull" }],
         },
         {
           key: "m15", title: "M15 · le mini-pullback", subtitle: "Rejet sur résistance locale, breakout du dernier creux mineur",
           decimals: 1, height: 260, candles: m15,
           levels: [{ key: "creux", price: m15[minorLow].l, from: minorLow, to: sig, label: `Creux mineur ${usd(m15[minorLow].l)}`, short: "Creux mineur", tone: "neutral", dashed: true }],
           markers: [
-            { key: "res", i: res, price: m15[res].h, label: "Rejet", tone: "neutral", side: "above" },
-            { key: "sig", i: sig, price: m15[sig].l, label: "Signal bearish", tone: "bear", side: "below" },
+            { key: "res", i: res, price: m15[res].h, label: "Rejet sur résistance locale", short: "Rejet", tone: "neutral", side: "above" },
+            { key: "sig", i: sig, price: m15[sig].c, label: "Signal bearish : clôture sous le creux", short: "Signal bearish", tone: "bear", side: "below", role: "close" },
           ],
           chips: [{ label: "Contre le régime : pas de trade", tone: "bear" }, { label: "La hausse reprend", tone: "bull" }],
         },

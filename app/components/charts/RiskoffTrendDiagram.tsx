@@ -1,6 +1,6 @@
 // Macro-trading 3 bloc 2 — trader dans le sens du régime (XAU/USD H4), exemple et plan du
 // texte : impulsion 4 610 → 4 690 $ (HH) avec un palier à 4 655 $, pullback contrôlé
-// jusqu'à 4 655 $ (ancien sommet devenu support, HL), stabilisation, bougie de reprise :
+// jusqu'à 4 655 $ (ancien sommet devenu support, HL), stabilisation, 1re bougie de reprise franche :
 // long 4 660 $, SL 4 640 $ (sous le pullback), TP 4 730 $ (continuation). Pivots et R/R
 // calculés. Bougies : scenarios.ts (« riskoff-trend-h4 »).
 
@@ -17,7 +17,8 @@ export function RiskoffTrendDiagram(_props: { className?: string; locale?: "fr" 
   const hh = piv.find((q) => q.name === "HH")!;
   const old = piv.filter((q) => q.side === "h" && q.index < hh.index).at(-1)!;
   const hl = piv.find((q) => q.name === "HL" && q.index > hh.index)!;
-  const entryAt = cs.findIndex((k, i) => i > hl.index && k.c === ENTRY);
+  // entrée : la 1re bougie de reprise franche (ouverture 4 660 $, corps de plus de 8 $) après le HL
+  const entryAt = cs.findIndex((k, i) => i > hl.index && k.o === ENTRY && k.c - k.o > 8);
   const t = tradeSetup({ entry: ENTRY, sl: SL, tp: TP, unit: "$", from: entryAt, names: { entry: "Entrée long", tp: "TP continuation" } });
   return (
     <LessonChart

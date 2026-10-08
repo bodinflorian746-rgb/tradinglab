@@ -329,12 +329,12 @@ const zoneHistoire = () => buildCandles(1.1792, [
 ], { seed: 6301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1760, 1.1750], pins: [1.1761, 1.1760, 1.1750] });
 
 // Macro-trading 4 — signal bearish M15 contre le régime (XAU/USD) : H4 en HH / HL vers
-// 4 740 ; la dernière bougie H4 = 16 bougies M15 (rejet à 4 701, breakout du creux
+// 4 740 ; la dernière bougie H4 = 16 bougies M15 (bougie de rejet baissière à 4 701, breakout du creux
 // mineur 4 683, plus bas 4 664, reprise) ; puis la hausse continue.
 const regimeM15 = (open: number) => buildCandles(open, [
-  ...c(4689, 4694), { c: 4695, h: 4701 }, ...c(4690), { c: 4687, l: 4683 }, ...c(4690), { c: 4679 },
+  ...c(4689, 4694), { c: 4691, h: 4701 }, ...c(4690), { c: 4687, l: 4683 }, ...c(4690), { c: 4679 },
   ...c(4673), { c: 4668, l: 4664 }, ...c(4674, 4681, 4687, 4692, 4696, 4699), { c: 4703 },
-], { seed: 6401, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4683], pins: [4701, 4683, 4664] });
+], { seed: 6401, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4683], pins: [4694, 4691, 4701, 4683, 4664] });
 const regimeH4 = () => buildCandles(4540, [
   ...c(4552), { c: 4566, h: 4572 }, ...c(4561), { c: 4556, l: 4552 },
   ...c(4568, 4579, 4592, 4606, 4622), { c: 4634, h: 4640 }, ...c(4627, 4615), { c: 4606, l: 4600 },
@@ -808,10 +808,10 @@ Object.assign(SCENARIOS, {
 const fomcExcess = () => buildCandles(4659, [
   { c: 4662, h: 4667, l: 4656 }, { c: 4658, h: 4664, l: 4654 }, { c: 4661, h: 4666, l: 4655 }, { c: 4657, h: 4663, l: 4653 }, { c: 4660, h: 4665, l: 4655 },
   { c: 4596, h: 4661, l: 4590 },
-  { c: 4594, h: 4599, l: 4591 }, { c: 4597, h: 4600, l: 4592 },
+  { c: 4597, h: 4599, l: 4591 }, { c: 4596, h: 4600, l: 4591 },
   { c: 4618, h: 4620, l: 4596 }, { c: 4635, h: 4638, l: 4616 },
 ], { seed: 18101, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5, preNews: true,
-  levels: [4590, 4638], pins: [4667, 4656, 4664, 4654, 4666, 4655, 4663, 4653, 4665, 4660, 4661, 4596, 4590, 4594, 4599, 4591, 4597, 4600, 4592, 4618, 4620, 4616, 4635, 4638] });
+  levels: [4590, 4638], pins: [4667, 4656, 4664, 4654, 4666, 4655, 4663, 4653, 4665, 4660, 4661, 4596, 4590, 4597, 4599, 4591, 4600, 4618, 4620, 4616, 4635, 4638] });
 // Macro-trading 2 — NFP sur XAU/USD M15 : compression 4 630-4 650 $ (prix 4 640), impulsion
 // headline jusqu'à 4 575 $ (65 $) qui casse le support 4 600, quatre bougies de stabilisation
 // (mèches basses de 6 à 8 $, clôtures entre 4 580 et 4 585), puis trois suites :

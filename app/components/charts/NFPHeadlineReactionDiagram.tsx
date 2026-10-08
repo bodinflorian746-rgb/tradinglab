@@ -18,20 +18,16 @@ export function NFPHeadlineReactionDiagram(_props: { className?: string; locale?
     <LessonChart
       id="NFPHeadlineReactionDiagram"
       title="Le headline d'abord, le rapport complet ensuite"
-      caption="Le marché réagit au headline en quelques minutes, puis digère salaires et révisions."
+      caption={`Impulsion headline de −${usd(pre - low)} en quelques minutes ; le marché digère ensuite salaires et révisions.`}
       panels={[{
         key: "m15", title: "XAU/USD M15, publication NFP", decimals: 0, height: 280, candles: cs,
         levels: [
           { key: "pre", price: pre, label: `Avant NFP ${usd(pre)}`, short: "Avant NFP", tone: "neutral", dashed: true },
-          { key: "sup", price: 4600, to: NFP.impulse, label: `Support ${usd(4600)}`, short: "Support", tone: "zone" },
+          { key: "sup", price: 4600, to: NFP.impulse, label: `Support ${usd(4600)} cassé`, short: "Support", tone: "zone" },
         ],
         markers: [
-          { key: "nfp", i: NFP.impulse, price: low, label: `Headline : ${usd(low)}`, short: usd(low), tone: "bear", side: "below" },
-          { key: "end", i: end, price: cs[end].h, label: `1 h plus tard : ${usd(cs[end].h)}`, short: usd(cs[end].h), tone: "bull", side: "above" },
-        ],
-        chips: [
-          { label: `Impulsion headline : −${usd(pre - low)}`, tone: "bear" },
-          { label: `Réévaluation : ${usd(cs[end].h)}`, tone: "bull" },
+          { key: "nfp", i: NFP.impulse, price: low, label: `Headline : ${usd(low)}`, short: "Headline", tone: "bear", side: "below", role: "low" },
+          { key: "end", i: end, price: cs[end].h, label: `1 h plus tard : ${usd(cs[end].h)}`, short: "1 h plus tard", tone: "bull", side: "above", role: "high" },
         ],
       }]}
     />

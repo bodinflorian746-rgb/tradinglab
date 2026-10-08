@@ -24,8 +24,8 @@ export function FOMCImpulseExcessDiagram(_props: { className?: string; locale?: 
         key: "m15", title: "XAU/USD M15", decimals: 0, height: 280, candles: cs,
         levels: [{ key: "pre", price: pre, label: `Avant FOMC ${usd(pre)}`, short: "Avant FOMC", tone: "neutral", dashed: true }],
         markers: [
-          { key: "fomc", i: FOMC_IMPULSE, price: low, label: `FOMC : ${usd(low)}`, short: usd(low), tone: "bear", side: "below" },
-          { key: "back", i: topAt, price: top, label: `1 h plus tard : ${usd(top)}`, short: usd(top), tone: "bull", side: "above" },
+          { key: "fomc", i: FOMC_IMPULSE, price: low, label: `FOMC : ${usd(low)}`, short: "FOMC", tone: "bear", side: "below", role: "low" },
+          { key: "back", i: topAt, price: top, label: `1 h plus tard : ${usd(top)}`, short: "1 h plus tard", tone: "bull", side: "above", role: "high" },
         ],
         chips: [
           { label: `Impulsion de ${usd(pre - low)} en une bougie`, tone: "bear" },

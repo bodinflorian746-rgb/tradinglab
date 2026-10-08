@@ -27,11 +27,11 @@ export function NFPReversalDiagram(_props: { className?: string; locale?: "fr" |
           { key: "brk", price: BRK, from: NFP.stabEnd, label: `Breakout ${usd(BRK)}`, short: "Breakout", tone: "bull", dashed: true },
         ],
         markers: [
-          { key: "low", i: NFP.impulse, price: cs[NFP.impulse].l, label: usd(cs[NFP.impulse].l), tone: "bear", side: "below" },
-          { key: "brk", i: brk, price: cs[brk].l, label: "Breakout", tone: "bull", side: "below" },
-          { key: "end", i: end, price: cs[end].h, label: usd(cs[end].h), tone: "bull", side: "above" },
+          { key: "low", i: NFP.impulse, price: cs[NFP.impulse].l, label: `Headline : ${usd(cs[NFP.impulse].l)}`, short: "Headline", tone: "bear", side: "below", role: "low" },
+          { key: "brk", i: brk, price: cs[brk].c, label: `Clôture au-dessus de ${usd(BRK)}`, short: "Breakout", tone: "bull", side: "below", role: "close" },
+          { key: "end", i: end, price: cs[end].h, label: `Accélération → ${usd(cs[end].h)}`, short: "Accélération", tone: "bull", side: "above", role: "high" },
         ],
-        chips: [{ label: `Accélération jusqu'à ${usd(cs[end].h)}, ${usd(cs[end].h - pre)} au-dessus du pré-NFP`, tone: "bull" }],
+        chips: [{ label: `${usd(cs[end].h - pre)} au-dessus du niveau pré-NFP`, tone: "bull" }],
       }]}
     />
   );

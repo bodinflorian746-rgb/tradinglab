@@ -27,12 +27,8 @@ export function RiskoffExhaustionDiagram(_props: { className?: string; locale?: 
       panels={[{
         key: "h4", title: "XAU/USD H4", decimals: 0, height: 290, candles: cs,
         markers: [
-          ...tops.map((t, n) => ({ key: `t${n}`, i: t.index, price: t.price, label: `${t.name} ${usd(t.price)}`, short: usd(t.price), pivot: t.name!, tone: n ? "bear" as const : "bull" as const, side: "above" as const })),
-          ...lows.map((l, n) => ({ key: `l${n}`, i: l.i, price: l.price, label: `−${usd(l.depth)}`, tone: "bear" as const, side: "below" as const })),
-        ],
-        chips: [
-          { label: `Sommets : ${tops.map((t) => usd(t.price)).join(" → ")}`, tone: "zone" },
-          { label: `Corrections : ${lows.map((l) => usd(l.depth)).join(", ")}`, tone: "bear" },
+          ...tops.map((t, n) => ({ key: `t${n}`, i: t.index, price: t.price, label: `${t.name} ${usd(t.price)}`, short: t.name!, pivot: t.name!, tone: n ? "bear" as const : "bull" as const, side: "above" as const })),
+          ...lows.map((l, n) => ({ key: `l${n}`, i: l.i, price: l.price, label: `Repli −${usd(l.depth)}`, tone: "bear" as const, side: "below" as const, role: "low" as const })),
         ],
       }]}
     />

@@ -21,11 +21,10 @@ export function RiskoffSignalsDiagram(_props: { className?: string; locale?: "fr
       panels={[{
         key: "h4", title: "XAU/USD H4, une semaine de tensions", decimals: 0, height: 240, candles: cs,
         markers: [
-          { key: "start", i: 0, price: start, label: usd(start), tone: "neutral", side: "below" },
+          { key: "start", i: 0, price: start, label: `Départ ${usd(start)}`, short: "Départ", tone: "neutral", side: "below", role: "low" },
           ...named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name!, tone: "bull" as const, side: q.side === "h" ? "above" as const : "below" as const })),
-          { key: "end", i: cs.length - 1, price: end, label: usd(end), tone: "bull", side: "above" },
+          { key: "end", i: cs.length - 1, price: end, label: `Fin de semaine ${usd(end)}`, short: "Fin", tone: "bull", side: "above", role: "high" },
         ],
-        chips: [{ label: `Or : ${usd(start)} → ${usd(end)}, structure HH / HL`, tone: "bull" }],
       }]}
     >
       <div style={{ marginTop: 16 }}>

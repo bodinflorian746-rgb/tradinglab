@@ -333,6 +333,7 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
       drawn.push({ x: levelX1(z) - 1, y: y - 1, w: levelX2(z) - levelX1(z) + 2, h: Math.max(toY(Math.min(z.y1, z.y2)) - y, 3) + 2 });
     });
     (p.levels ?? []).forEach((l) => drawn.push({ x: levelX1(l), y: toY(l.price) - 2, w: levelX2(l) - levelX1(l), h: 4 }));
+    offTags.forEach((o) => drawn.push({ x: plotL, y: (o.price > dMax ? top - MARK_H : bottom + MARK_H) - 2, w: plotR - plotL, h: 4 }));
     (p.segments ?? []).forEach((s) => trace(xOf(s.i1), toY(s.p1), xOf(s.i2), toY(s.p2)));
     (p.series ?? []).forEach((s) => s.values.forEach((v, i) => {
       const prev = s.values[i - 1];

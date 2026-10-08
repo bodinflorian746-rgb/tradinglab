@@ -23,9 +23,10 @@ export function NFPStabilizationDiagram(_props: { className?: string; locale?: "
         zones: [{ key: "base", y1: 4580, y2: 4585, from: NFP.impulse + 1, to: NFP.stabEnd, label: `Base ${usd(4580)}-${usd(4585)}`, short: "Base", tone: "zone" }],
         markers: [
           { key: "stab", i: NFP.impulse + 2, price: Math.min(...stab.map((k) => k.l)), label: "4 mèches basses", tone: "zone", side: "below" },
-          { key: "end", i: end, price: cs[end].h, label: `Reprise : ${usd(cs[end].h)}`, short: usd(cs[end].h), tone: "bull", side: "above" },
+          { key: "go", i: NFP.stabEnd + 1, price: cs[NFP.stabEnd + 1].c, label: `1re reprise franche : clôture ${usd(cs[NFP.stabEnd + 1].c)}`, short: "Reprise franche", tone: "entry", side: "above", role: "close" },
+          { key: "end", i: end, price: cs[end].h, label: `Reprise : ${usd(cs[end].h)}`, short: "Reprise", tone: "bull", side: "above", role: "high" },
         ],
-        chips: [{ label: `Mèches basses de ${Math.min(...wicks)} à ${Math.max(...wicks)} $, aucune clôture sous ${usd(4580)}`, tone: "zone" }],
+        chips: [{ label: `Mèches basses de ${Math.min(...wicks)} à ${Math.max(...wicks)} $`, tone: "zone" }],
       }]}
     />
   );
