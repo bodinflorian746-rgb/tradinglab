@@ -34,11 +34,12 @@ export function BacktestMetricsDiagram({ className = "" }: BacktestMetricsDiagra
     subtitle: `En % du capital de départ, risque de ${BACKTEST_RISK_PCT} % par trade`,
     decimals: 1, height: 240,
     line: s.equity,
-    levels: [{ key: "start", price: 100, label: "Départ", tone: "neutral", dashed: true, faint: true }],
+    measure: { name: "Capital", unit: "% du capital de départ (100 = départ)" },
+    levels: [{ key: "start", price: 100, label: "Départ 100 %", short: "Départ", tone: "neutral", dashed: true, faint: true }],
     segments: [{ key: "dd", i1: s.ddPeak, p1: s.equity[s.ddPeak], i2: s.ddTrough, p2: s.equity[s.ddTrough], tone: "bear", arrow: true }],
     markers: [
       { key: "dd", i: s.ddTrough, price: s.equity[s.ddTrough], label: `Drawdown max −${fmtNum(s.maxDD, 1)} %`, short: `DD −${fmtNum(s.maxDD, 1)} %`, tone: "bear", side: "below", dot: true },
-      { key: "final", i: s.n, price: s.equity[s.n], label: `${signed(final, 0)} %`, tone: "bull", side: "above", dot: true },
+      { key: "final", i: s.n, price: s.equity[s.n], label: `Capital final ${signed(final, 0)} %`, short: `Final ${signed(final, 0)} %`, tone: "bull", side: "above", dot: true },
     ],
   };
 

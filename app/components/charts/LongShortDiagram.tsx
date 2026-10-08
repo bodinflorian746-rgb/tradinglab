@@ -18,7 +18,7 @@ export function LongShortDiagram() {
     return {
       key: c.key, title: c.title, decimals: 0, height: 220, line: c.line,
       levels: [{ key: "entry", price: c.entry, label: `${c.name} ${usdSp(c.entry)}`, short: c.name, tone: "entry", dashed: true }],
-      markers: [{ key: "exit", i: c.line.length - 1, price: exit, label: usdSp(exit), tone: "bull", side: c.key === "long" ? "above" : "below", dot: true }],
+      markers: [{ key: "exit", i: c.line.length - 1, price: exit, label: `Sortie ${usdSp(exit)}`, short: "Sortie", tone: "bull", side: c.key === "long" ? "above" : "below", dot: true }],
       chips: [{ label: `${gain > 0 ? "+" : "−"}${usdSp(Math.abs(gain))} en ta faveur`, tone: "bull", data: { gain } }],
     };
   });

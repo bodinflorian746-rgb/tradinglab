@@ -86,7 +86,7 @@ function ContentFr() {
         </div>
       </section>
 
-      <div className="border border-zinc-800 rounded-2xl p-5 space-y-4">
+      <div className="space-y-4">
         <BacktestMetricsDiagram />
       </div>
 

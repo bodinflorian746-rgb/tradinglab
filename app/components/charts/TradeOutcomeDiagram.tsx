@@ -20,7 +20,7 @@ export function TradeOutcomeDiagram() {
     return {
       key: c.key, title: c.title, decimals: 0, height: 220, line: c.line,
       levels: [{ key: "achat", price: BUY, label: `Achat ${usdSp(BUY)}`, short: "Achat", tone: "entry", dashed: true }],
-      markers: [{ key: "sortie", i: c.line.length - 1, price: exit, label: `Revente ${usdSp(exit)}`, short: usdSp(exit), tone: c.tone, side: diff > 0 ? "above" : "below", dot: true }],
+      markers: [{ key: "sortie", i: c.line.length - 1, price: exit, label: `Revente ${usdSp(exit)}`, short: "Revente", tone: c.tone, side: diff > 0 ? "above" : "below", dot: true }],
       chips: [{ label: `${diff > 0 ? "+" : "−"}${usdSp(Math.abs(diff))} ${diff > 0 ? "de hausse" : "de baisse"}`, tone: c.tone, data: { diff } }],
     };
   });

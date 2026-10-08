@@ -21,11 +21,11 @@ export function StopLossChartDiagram(_props: { className?: string }) {
         key: "btc", subtitle: "Bitcoin H1 — achat au rebond du support 78 000 $",
         decimals: 0, height: 280, candles: cs,
         levels: [
-          { key: "support", price: SUPPORT, label: `Achat ${usdSp(SUPPORT)} (support)`, short: "Achat", tone: "entry", dashed: true },
+          { key: "support", price: SUPPORT, label: `Achat ${usdSp(SUPPORT)} (support)`, short: "Achat", tone: "entry", dashed: true, role: "support" },
           { key: "sl", price: SL, label: `SL ${usdSp(SL)}`, short: "SL", tone: "bear", dashed: true },
         ],
         markers: [
-          { key: "swing", i: swing.index, price: swing.price, label: `Swing low ${usdSp(swing.price)}`, short: "Swing low", tone: "neutral", side: "below" },
+          { key: "swing", i: swing.index, price: swing.price, label: `Swing low ${usdSp(swing.price)}`, short: "Swing low", tone: "neutral", side: "below", role: "swing-low" },
           { key: "rebond", i: last, price: cs[last].h, label: "Rebond", tone: "bull", side: "above" },
         ],
       }]}

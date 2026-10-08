@@ -33,7 +33,7 @@ export function ConfluenceDiagram({ className = "", variant = "structure" }: { c
     subtitle: `EUR/USD H4 — Fibonacci tracé de ${fmtPrice(m.A.price, 4)} à ${fmtPrice(m.B.price, 4)}`,
     decimals: 4, height: 300,
     line: m.line,
-    zones: [{ key: "confluence", ...m.zone, from: m.L2.index, label: "Zone de confluence", short: "Confluence", tone: "bull", kind: "confluence" }],
+    zones: [{ key: "confluence", ...m.zone, from: m.L2.index, label: "Zone de confluence", short: "Confluence", tone: "bull", kind: "confluence", role: "confluence", ref: variant === "structure" ? "support,hl,fib" : "support,round,fib" }],
     levels,
     segments: [{ key: "fib-trace", i1: m.A.index, p1: m.A.price, i2: m.B.index, p2: m.B.price, tone: "fib", dashed: true }],
     markers,

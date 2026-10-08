@@ -1,5 +1,5 @@
 // Trading Avancé 4 — les 4 Killzones de la leçon, en heure de Paris (CET/CEST),
-// avec les heures creuses (10h-13h) et les publications majeures (13h30, 15h00).
+// avec les heures creuses (10h-13h) et les publications majeures US (14h30, 16h00 heure de Paris).
 
 import { LessonSchema, Timeline } from "@/app/components/lessons/LessonSchema";
 
@@ -15,8 +15,8 @@ export function KillzonesDiagram(_props: { className?: string; locale?: "fr" | "
           {
             label: "New York Killzone", note: "13h00 – 16h00", from: 13, to: 16, tone: "bull",
             marks: [
-              { at: 13.5, label: "13h30 : news US majeures (ex. NFP, CPI)", tone: "zone" },
-              { at: 15, label: "15h00 : autres publications US", tone: "zone" },
+              { at: 14.5, label: "14h30 : news US majeures (ex. NFP, CPI)", tone: "zone" },
+              { at: 16, label: "16h00 : autres publications US", tone: "zone" },
             ],
           },
           { label: "London Close", note: "16h00 – 17h00", from: 16, to: 17, tone: "entry" },

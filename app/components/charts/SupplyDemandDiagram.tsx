@@ -24,8 +24,8 @@ function panel(key: "sd-support" | "sd-resistance"): LCPanel {
     decimals: 5, height: 250, candles: cs,
     zones: [{ key: "zone", ...zone, from: imp - 3, label: sup ? "Support" : "Résistance", tone: sup ? "bull" : "bear", kind: "zone" }],
     markers: [
-      { key: "imp", i: imp, price: sup ? cs[imp].h : cs[imp].l, label: "Départ impulsif", short: "Départ", tone: sup ? "bull" : "bear", side: sup ? "above" : "below" },
-      { key: "retour", i: last, price: sup ? cs[last].l : cs[last].h, label: "Retour", tone: "entry", side: sup ? "below" : "above" },
+      { key: "imp", i: imp, price: sup ? cs[imp].h : cs[imp].l, label: "Départ impulsif (2 bougies)", short: "Départ", tone: sup ? "bull" : "bear", side: sup ? "above" : "below", role: "impulse", span: [imp, imp + 1] },
+      { key: "retour", i: last, price: sup ? cs[last].l : cs[last].h, label: "Retour dans la zone", short: "Retour", tone: "entry", side: sup ? "below" : "above", role: sup ? "low" : "high" },
     ],
   };
 }

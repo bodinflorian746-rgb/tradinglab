@@ -20,7 +20,7 @@ function trap(key: "fake-up-eur" | "fake-down-eur", level: number, up: boolean, 
     key, title, decimals: 5, height: 220, candles: cs,
     subtitle: up ? `Mèche ${p(cs[k].h)}, clôture ${p(cs[k].c)}` : `Mèche ${p(cs[k].l)}, clôture ${p(cs[k].c)}`,
     levels: [{ key: "lvl", price: level, label: `${up ? "Résistance" : "Support"} ${p(level)}`, short: up ? "Résistance" : "Support", tone: "zone" }],
-    markers: [{ key: "k", i: k, price: up ? cs[k].h : cs[k].l, label: up ? "Acheteurs piégés" : "Vendeurs piégés", short: "Piège", tone: up ? "bear" : "bull", side: up ? "above" : "below" }],
+    markers: [{ key: "k", i: k, price: up ? cs[k].h : cs[k].l, label: up ? "Acheteurs piégés" : "Vendeurs piégés", short: "Piège", tone: up ? "bear" : "bull", side: up ? "above" : "below", role: "sweep", ref: level, dir: up ? "bear" : "bull" }],
   };
 }
 
@@ -39,8 +39,8 @@ export function GraphFakeBreakout({ variant = "int6" }: { variant?: "int6" | "sr
           levels: [{ key: "lvl", price: 4650, label: `Résistance ${usd(4650)} (3 touches)`, short: "Résistance", tone: "zone" }, ...t.levels],
           offscale: t.offscale,
           markers: [
-            { key: "b1", i: b1, price: cs[b1].h, label: `Bougie 1 : mèche ${usd(cs[b1].h)}`, short: "Bougie 1", tone: "bear", side: "above" },
-            { key: "b2", i: b2, price: cs[b2].l, label: `Bougie 2 : clôture ${usd(cs[b2].c)}`, short: "Bougie 2", tone: "bear", side: "below" },
+            { key: "b1", i: b1, price: cs[b1].h, label: `Bougie 1 : mèche ${usd(cs[b1].h)}`, short: "Bougie 1", tone: "bear", side: "above", role: "high" },
+            { key: "b2", i: b2, price: cs[b2].c, label: `Bougie 2 : clôture ${usd(cs[b2].c)}`, short: "Bougie 2", tone: "bear", side: "below", role: "close" },
           ],
           chips: t.chips,
         }]}

@@ -18,7 +18,8 @@ export function PrecisionEntryDiagram({ className = "" }: { className?: string; 
     return {
       key, title, subtitle, decimals: 5, height: 300,
       candles: m.M15,
-      zones: [{ ...obZone, label: "Order Block H1", short: "OB H1" }],
+      // zone tracée sur H1 (pas une bougie de ce panneau M15)
+      zones: [{ key: "ob", y1: m.ob.y1, y2: m.ob.y2, tone: "zone", label: "Order Block H1", short: "OB H1" }],
       levels: [
         { key: "entry", price: t.entry, label: `Entrée ${p(t.entry)}`, tone: "entry" },
         { key: "sl", price: t.sl, label: `SL ${p(t.sl)}`, tone: "bear", dashed: true },
@@ -40,9 +41,9 @@ export function PrecisionEntryDiagram({ className = "" }: { className?: string; 
       subtitle: "EUR/USD — dernière bougie rouge avant l'impulsion, puis BOS",
       decimals: 5, height: 280,
       candles: m.h1All,
-      zones: [{ ...obZone, from: m.obI, label: "Order Block", short: "OB" }],
+      zones: [{ ...obZone, from: m.obI, label: "Order Block", short: "OB", role: "ob", dir: "bull" }],
       levels: [
-        { key: "bos", price: m.prior.price, from: m.prior.index, to: m.bosI, label: `BOS ${p(m.prior.price)}`, short: "BOS", tone: "neutral", dashed: true },
+        { key: "bos", price: m.prior.price, from: m.prior.index, to: m.bosI, label: `BOS ${p(m.prior.price)}`, short: "BOS", tone: "neutral", dashed: true, role: "bos", ref: m.prior.index, dir: "bull" },
         { key: "top", price: m.top.price, from: m.top.index, label: `Sommet ${p(m.top.price)}`, short: "Sommet", tone: "bull", dashed: true },
       ],
       markers: [{ key: "m15", i: m.H1.length + 0.5, price: Math.min(...m.M15.map((k) => k.l)), label: "Détail M15", tone: "neutral", side: "below" }],
@@ -50,7 +51,7 @@ export function PrecisionEntryDiagram({ className = "" }: { className?: string; 
     tradePanel("loose", "M15 · Entrée imprécise", "Entrée dès le toucher de la zone, SL sous toute la zone", m.loose, "<2",
       { key: "touch", i: m.touchI, price: m.M15[m.touchI].h, label: "Toucher", tone: "entry", side: "above" }),
     tradePanel("sharp", "M15 · Entrée de précision", "Entrée à la clôture de la pin bar, SL sous sa mèche", m.sharp, ">3",
-      { key: "pin", i: m.pinI, price: m.pin.h, label: "Pin bar", tone: "bull", side: "above" }),
+      { key: "pin", i: m.pinI, price: m.pin.h, label: "Pin bar", tone: "bull", side: "above", role: "pinbar", dir: "bull" }),
   ];
   return (
     <div className={className}>

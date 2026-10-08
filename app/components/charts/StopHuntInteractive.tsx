@@ -28,11 +28,11 @@ export function StopHuntInteractive(_props: { className?: string; locale?: "fr" 
   // bougie en cours pendant la question : même ouverture, mêmes extrêmes jusqu'ici, prix actuel sous le support
   const live = { o: wick.o, h: Math.max(wick.o, all[STOPHUNT_WICK - 1].c) + 0.0002, l: wick.l, c: wick.l + 0.0004 };
   const shown = choice ? all : [...all.slice(0, STOPHUNT_WICK), live];
-  const levels: LCLevel[] = [{ key: "sup", price: SUPPORT, label: `Support ${p(SUPPORT)}`, short: "Support", tone: "bull", dashed: true }];
+  const levels: LCLevel[] = [{ key: "sup", price: SUPPORT, label: `Support ${p(SUPPORT)}`, short: "Support", tone: "bull", dashed: true, role: "support", to: STOPHUNT_WICK - 1 }];
   const markers: LCMarker[] = [];
   if (!choice) markers.push({ key: "now", i: STOPHUNT_WICK, price: live.l, label: "Mèche en cours", short: "Mèche", tone: "zone", side: "below" });
   else {
-    markers.push({ key: "close", i: STOPHUNT_WICK, price: wick.l, label: `Clôture ${p(wick.c)} au-dessus`, short: "Clôture au-dessus", tone: "bull", side: "below" });
+    markers.push({ key: "close", i: STOPHUNT_WICK, price: wick.c, label: `Clôture ${p(wick.c)} au-dessus`, short: "Clôture au-dessus", tone: "bull", side: "below", role: "close" });
     if (choice === "sell") {
       const entry = live.c, sl = SUPPORT + 0.0015;
       const hit = all.findIndex((k, i) => i > STOPHUNT_WICK && k.h >= sl);

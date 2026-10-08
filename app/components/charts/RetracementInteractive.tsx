@@ -38,7 +38,7 @@ export function RetracementInteractive(_props: { className?: string; locale?: "f
   ] : [];
   const markers: LCMarker[] = [];
   if (t && hitI > 0) markers.push({ key: "hit", i: hitI, price: t.sl, label: "SL touché", tone: "bear", side: t.side === "long" ? "below" : "above", dot: true });
-  if (choice === "patience") markers.push({ key: "pin", i: pinI, price: pin.l, label: "Pin bar sur le HL", short: "Pin bar", tone: "bull", side: "below" });
+  if (choice === "patience") markers.push({ key: "pin", i: pinI, price: pin.l, label: "Pin bar sur le HL", short: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" });
   if (!choice) markers.push({ key: "now", i: RETRACE_DECISION, price: now.l, label: "Maintenant", tone: "zone", side: "below" });
   const result = !choice ? null : choice === "patience"
     ? { tone: "bull", title: "Patience : entrée au HL", text: `Le repli s'arrête sur la zone du HL, pin bar haussière, entrée à ${p(pin.c)}. Le prix repart dans le sens de la tendance jusqu'à ${p(tp)} : trade gagnant (R/R ${fmtRR(tradeMath(pin.c, trades.patience.sl, tp).rr)} sur ce sommet).` }

@@ -25,14 +25,19 @@ export function OTEDiagram(_props: { className?: string; locale?: "fr" | "es" | 
       panels={[{
         key: "h1", subtitle: `XAU/USD H1 — Fibonacci de A (${usd(A.price)}) à B (${usd(B.price)})`,
         decimals: 1, height: 320, candles: cs,
-        zones: [{ key: "ote", y1: f786, y2: f618, from: B.index, label: `OTE ${usd(f786)}-${usd(f618)}`, short: "OTE", tone: "fib", kind: "fib" }],
-        levels: [{ key: "h0", price: h0.price, from: h0.index, to: bos, label: `Sommet cassé ${usd(h0.price)}`, short: "Sommet cassé", tone: "neutral", dashed: true, faint: true }, ...t.levels],
+        zones: [{ key: "ote", y1: f786, y2: f618, from: B.index, label: `OTE ${usd(f786)}-${usd(f618)}`, short: "OTE", tone: "fib", kind: "fib", role: "confluence", ref: "f618,f786" }],
+        levels: [
+          { key: "h0", price: h0.price, from: h0.index, to: bos, label: `Sommet cassé ${usd(h0.price)}`, short: "Sommet cassé", tone: "neutral", dashed: true, faint: true, role: "bos", ref: h0.index, dir: "bull" },
+          { key: "f618", price: f618, from: B.index, tone: "fib", faint: true, role: "fib", ref: `${A.index}:${B.index}:0.618` },
+          { key: "f786", price: f786, from: B.index, tone: "fib", faint: true, role: "fib", ref: `${A.index}:${B.index}:0.786` },
+          ...t.levels,
+        ],
         segments: [{ key: "fib", i1: A.index, p1: A.price, i2: B.index, p2: B.price, tone: "fib", dashed: true }],
         markers: [
-          { key: "a", i: A.index, price: A.price, label: "A", tone: "fib", side: "below" },
-          { key: "b", i: B.index, price: B.price, label: "B", tone: "fib", side: "above" },
-          { key: "bos", i: bos, price: cs[bos].h, label: "BOS", tone: "bull", side: "above" },
-          { key: "rej", i: last, price: cs[last].l, label: "Rejet dans l'OTE", short: "Rejet", tone: "bull", side: "below" },
+          { key: "a", i: A.index, price: A.price, label: "A : swing low", short: "A", tone: "fib", side: "below", role: "swing-low" },
+          { key: "b", i: B.index, price: B.price, label: "B : swing high", short: "B", tone: "fib", side: "above", role: "swing-high" },
+          { key: "bos", i: bos, price: cs[bos].c, label: "BOS : clôture au-dessus", short: "BOS", tone: "bull", side: "above" },
+          { key: "rej", i: last, price: cs[last].l, label: "Rejet dans l'OTE", short: "Rejet", tone: "bull", side: "below", role: "rejet", ref: "ote", dir: "bull" },
         ],
         chips: t.chips,
       }]}

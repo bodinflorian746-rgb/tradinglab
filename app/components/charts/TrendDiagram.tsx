@@ -32,8 +32,8 @@ export function TrendDiagram(_props: { className?: string; locale?: "fr" | "es" 
         {
           key: "range", title: "Range", subtitle: "Ni acheteurs ni vendeurs ne gagnent", decimals: 5, height: 200, candles: r,
           levels: [
-            { key: "top", price: 1.178, label: `Haut ${p(1.178)}`, short: "Haut", tone: "zone", dashed: true },
-            { key: "bot", price: 1.17, label: `Bas ${p(1.17)}`, short: "Bas", tone: "zone", dashed: true },
+            { key: "top", price: 1.178, label: `Haut du range ${p(1.178)}`, short: "Haut", tone: "zone", dashed: true, role: "range-high" },
+            { key: "bot", price: 1.17, label: `Bas du range ${p(1.17)}`, short: "Bas", tone: "zone", dashed: true, role: "range-low" },
           ],
         },
       ]}

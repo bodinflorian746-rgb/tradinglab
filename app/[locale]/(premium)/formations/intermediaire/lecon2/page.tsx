@@ -44,7 +44,7 @@ function ContentFr() {
       </section>
 
       {/* ── Schéma visuel ── */}
-      <div className="border border-zinc-800 rounded-2xl p-5 space-y-4">
+      <div className="space-y-4">
         <SupportResistance supportPrice="1.0800" resistancePrice="1.0950" />
         <div className="grid gap-4 sm:grid-cols-2 pt-1 border-t border-zinc-800/50">
           <Candle type="pin-bull" label="Rejet support" caption="Pin bar haussière" />

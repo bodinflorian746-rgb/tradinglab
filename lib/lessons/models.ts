@@ -40,9 +40,9 @@ export function precisionModel() {
   const impulse = H1.findIndex((k, i) => i >= lowI && k.c > k.o);
   const obI = lastOpposite(H1, impulse, "bull");
   const ob = orderBlock(H1, obI);
-  const prior = pivotAt(H1, 1, "h");                     // sommet cassé par le BOS
+  const prior = pivotAt(H1, 2, "h");                     // sommet cassé par le BOS
   const bosI = H1.findIndex((k, i) => i > obI && k.c > prior.price);
-  const top = pivotAt(h1All, 14, "h");                   // objectif : sommet de l'impulsion
+  const top = pivotAt(h1All, 15, "h");                   // objectif : sommet de l'impulsion
   // Entrée imprécise : 1re bougie M15 qui touche le haut de la zone ; SL sous toute la zone
   const touchI = M15.findIndex((k) => k.l <= ob.y2);
   const loose = { entry: ob.y2, sl: ob.y1 - PRECISION_MARGIN, tp: top.price };

@@ -361,6 +361,13 @@ function checkCharts({ ids, vocab }) {
           else if (pv.name !== m.dataset.pivot) E(id, `${P} « ${m.dataset.pivot} » à l'indice ${m.dataset.i} : c'est un ${pv.name ?? "pivot sans précédent"}`);
         }
         if (svg.dataset.candles) checkNotions(svg, JSON.parse(svg.dataset.candles), (m) => E(id, `${P} ${m}`));
+        // Schéma en ligne : seules les confluences se vérifient (niveaux réunis dans la zone)
+        else for (const z of svg.querySelectorAll("rect[data-role='confluence']")) {
+          for (const key of (z.dataset.ref || "").split(",").filter(Boolean)) {
+            const l = svg.querySelector(`line[data-level="${key}"]`);
+            if (!l || !(+l.dataset.price >= +z.dataset.y1 - 1e-9 && +l.dataset.price <= +z.dataset.y2 + 1e-9)) E(id, `${P} zone ${z.dataset.zone} (confluence) : le niveau ${key} n'est pas dans la zone`);
+          }
+        }
         checkLegibility(svg, r0.width, (m) => E(id, `${P} ${m}`));
       }
       // Pastilles et légende qui répètent le graphique (mêmes chiffres, même texte)
@@ -376,6 +383,8 @@ function checkCharts({ ids, vocab }) {
           else if (n.length && !c.dataset.rr && n.every((x) => onChart.has(x))) E(id, `pastille « ${c.textContent.trim()} » qui répète les chiffres du graphique`);
         }
       }
+      // Tableaux (matrices) : toutes les colonnes visibles, sans défilement horizontal
+      for (const w of fig.querySelectorAll(".ls-matrix-wrap")) if (w.scrollWidth > w.clientWidth + 1) E(id, `tableau coupé : ${w.scrollWidth - w.clientWidth} px masqués à droite`);
       // Double cadre : une ancienne carte (bordure, fond, ombre) qui n'enveloppe que le schéma
       for (let el = fig.parentElement; el && el !== document.body && el.tagName !== "MAIN"; el = el.parentElement) {
         const cs = getComputedStyle(el);
@@ -553,6 +562,8 @@ for (const w of FORMATS) {
       for (const f of found) console.log(`    AVERTISSEMENT ${w} ${url} : ${f}`);
     }
   }
+  // session rafraîchie par le serveur (jetons renouvelés) : réenregistrée pour les passages suivants
+  if (STORAGE_STATE) await ctx.storageState({ path: STORAGE_STATE }).catch(() => {});
   await ctx.close();
 }
 await browser.close();

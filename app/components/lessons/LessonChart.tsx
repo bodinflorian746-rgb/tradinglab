@@ -20,7 +20,7 @@
 import "@/app/styles/lesson-chart.css";
 import { useId, type CSSProperties, type ReactNode } from "react";
 import { V2Candle, clamp, textWidth, useBoxSize } from "@/app/components/games/v2/GameChartV2";
-import { fmtPrice, type Candle, type PivotName } from "@/lib/lessons/chart-analysis";
+import { fmtNum, fmtPrice, type Candle, type PivotName } from "@/lib/lessons/chart-analysis";
 
 export type LCTone = "bull" | "bear" | "entry" | "zone" | "fib" | "neutral" | "sky";
 
@@ -169,6 +169,9 @@ export interface LCPanel {
   candleWidth?: number;
   /** Décimales des prix (audit) */
   decimals: number;
+  /** Série qui n'est pas un prix (courbe de capital, résultats cumulés) : nom et unité pour la
+   *  description accessible, ex. { name: "Capital", unit: "% du capital de départ" } */
+  measure?: { name: string; unit: string };
 }
 
 export interface LessonChartProps {
@@ -201,7 +204,10 @@ export function describePanel(p: LCPanel): string {
   const f = (x: number) => (dec === 0 ? fmtPrice(x, 0, "$") : fmtPrice(x, dec));
   const parts: string[] = [];
   const pts = p.candles ? p.candles.flatMap((k) => [k.h, k.l]) : p.line ?? [];
-  if (pts.length) {
+  if (pts.length && p.measure) {
+    const g = (x: number) => fmtNum(x, dec);
+    parts.push(`Courbe : ${p.measure.name}, en ${p.measure.unit}, de ${g(Math.min(...pts))} à ${g(Math.max(...pts))}.`);
+  } else if (pts.length) {
     const range = `prix de ${f(Math.min(...pts))} à ${f(Math.max(...pts))}`;
     parts.push(p.candles ? `Graphique en bougies, ${p.candles.length} bougies, ${range}.` : `Courbe de prix, ${range}.`);
   }

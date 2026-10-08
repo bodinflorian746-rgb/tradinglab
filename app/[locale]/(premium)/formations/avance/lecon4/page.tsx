@@ -54,7 +54,7 @@ function ContentFr() {
               name: "New York Killzone",
               hours: "13h00 – 16h00",
               color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400",
-              detail: "Ouverture de New York, la plus volatile. Recoupement avec Londres pendant 1h à 2h : liquidité maximale. Les news économiques majeures tombent à 13h30 ou 15h00. Les mouvements ici sont rapides et puissants.",
+              detail: "Ouverture de New York, la plus volatile. Recoupement avec Londres pendant 1h à 2h : liquidité maximale. Les news économiques majeures tombent à 14h30 ou 16h00 (8h30 et 10h00 à New York). Les mouvements ici sont rapides et puissants.",
             },
             {
               name: "London Close",
@@ -74,7 +74,7 @@ function ContentFr() {
         </div>
       </section>
 
-      <div className="border border-zinc-800 rounded-2xl p-5 space-y-4">
+      <div className="space-y-4">
         <KillzonesDiagram />
       </div>
 

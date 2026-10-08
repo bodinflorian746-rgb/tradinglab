@@ -43,12 +43,12 @@ function ContentFr() {
         </div>
       </section>
 
-      <div className="border border-zinc-800 rounded-2xl p-5 space-y-4">
+      <div className="space-y-4">
         <SupplyDemandDiagram />
       </div>
 
       {/* ── Schéma visuel ── */}
-      <div className="border border-zinc-800 rounded-2xl p-5">
+      <div className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2 pt-4 mt-2 border-t border-zinc-800/50">
           <Candle type="bullish" label="Signal sur support" caption="Rejet haussier dans la zone" />
           <Candle type="bearish" label="Signal sur résistance" caption="Rejet baissier dans la zone" />

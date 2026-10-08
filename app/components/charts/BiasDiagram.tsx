@@ -27,11 +27,11 @@ export function BiasDiagram() {
     },
     {
       key: "vengeance", title: "Vengeance trading", subtitle: "Tu perds un trade, tu ré-ouvres immédiatement, plus gros",
-      decimals: 0, height: 200, line: revenge,
+      decimals: 0, height: 200, line: revenge, measure: { name: "Résultat cumulé", unit: "R (multiples du risque)" },
       levels: [{ key: "zero", price: 0, label: "0R", tone: "neutral", dashed: true, faint: true }],
       markers: [
         { key: "t1", i: 1, price: revenge[1], label: "Trade 1 : −1R", tone: "bear", side: "above", dot: true },
-        { key: "t2", i: 2, price: revenge[2], label: "Trade 2, lots ×3 : −3R", short: "Lots ×3 : −3R", tone: "bear", side: "above", dot: true },
+        { key: "t2", i: 2, price: revenge[2], label: "Trade 2, lots ×3 : −3R", short: "Lots ×3 : −3R", tone: "bear", side: "below", dot: true },
       ],
       chips: [{ label: `Total ${R(revenge[2])} en 2 trades`, tone: "bear" }],
     },
@@ -43,15 +43,14 @@ export function BiasDiagram() {
         { key: "sl", price: entry - risk, label: "SL prévu (−1R)", short: "SL prévu", tone: "bear", dashed: true },
         { key: "exit", price: exit, from: anchor.length - 1, label: `Sortie ${R((exit - entry) / risk)}`, tone: "bear" },
       ],
-      chips: [{ label: `${R((exit - entry) / risk)} au lieu du −1R prévu`, tone: "bear" }],
     },
     {
       key: "confiance", title: "Excès de confiance", subtitle: "5 trades gagnants d'affilée, tu te sens invincible",
-      decimals: 0, height: 200, line: confidence,
+      decimals: 0, height: 200, line: confidence, measure: { name: "Résultat cumulé", unit: "R (multiples du risque)" },
       levels: [{ key: "zero", price: 0, label: "0R", tone: "neutral", dashed: true, faint: true }],
       markers: [
         { key: "peak", i: 5, price: confidence[5], label: "5 gains : +5R", tone: "bull", side: "above", dot: true },
-        { key: "loss", i: 6, price: confidence[6], label: "Lots ×5 : −5R", tone: "bear", side: "above", dot: true },
+        { key: "loss", i: 6, price: confidence[6], label: "Lots ×5 : −5R", tone: "bear", side: "below", dot: true },
       ],
       chips: [{ label: "Un seul trade efface tout", tone: "bear" }],
     },

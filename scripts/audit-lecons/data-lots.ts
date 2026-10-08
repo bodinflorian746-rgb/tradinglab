@@ -589,16 +589,19 @@ export function checkLot24(check: Check) {
     check(t.ext.map((q) => q.price).join() === "1.188,1.1895" && t.neck?.price === 1.18 && cs[cs.length - 1].c === 1.1795, "Double top (Rev. 1) : 1.1880 / 1.1895 / 1.1800 / 1.1795");
     const b = shape(CS["db-xau"], "l"), db = CS["db-xau"];
     check(b.ext.map((q) => q.price).join() === "4480,4478" && b.neck?.price === 4520 && db[db.length - 1].c > 4520, "Double bottom (Rev. 1) : 4 480 / 4 478 / 4 520");
-    // grille : valide ; range préalable (pas de HH / HL avant le 1er sommet) ; écart > 0,3 % ; mèche sous la ligne de cou sans clôture
-    const gap = (k: string) => { const e = shape(CS[k], "h").ext; return Math.abs(e[1].price - e[0].price) / e[0].price; };
-    check(gap("dt-eur") <= 0.003 && gap("dt-range") <= 0.003 && gap("dt-gap") > 0.003 && gap("dt-wick") <= 0.003, "Grille (Rev. 1) : écarts");
+    // grille : valide ; range préalable (pas de HH / HL avant le 1er sommet) ; écart > 30 pips (seuil fixe, décision PO) ;
+    // mèche sous la ligne de cou sans clôture
+    const gap = (k: string) => { const e = shape(CS[k], "h").ext; return Math.round(Math.abs(e[1].price - e[0].price) / 0.0001); };
+    check(gap("dt-eur") <= 30 && gap("dt-range") <= 30 && gap("dt-gap") > 30 && gap("dt-wick") <= 30, "Grille (Rev. 1) : écarts (30 pips)");
     const w = CS["dt-wick"], lw = w[w.length - 1];
     check(lw.l < 1.18 && lw.c > 1.18 && CS["dt-gap"][CS["dt-gap"].length - 1].c < 1.18, "Grille (Rev. 1) : mèche seule / clôture");
     // tendance préalable : progression nette avant le 1er sommet (le range reste dans 40 pips)
     const run = (k: string) => { const c = CS[k], i = shape(c, "h").ext[0].index; return c[i - 1].c - c[0].o; };
     check(run("dt-eur") > 0.01 && Math.abs(run("dt-range")) < 0.004, "Grille (Rev. 1) : tendance préalable");
-    // plan : hauteur 80 pips, projection 1.1720, TP 1.1715, SL 1.1835 au-dessus du dernier rebond 1.1832, R/R 2
-    check(near(1.18 - (1.188 - 1.18), 1.172, 1e-9) && near(rrOf(1.1795, 1.1835, 1.1715), 2, 0.005) && cs.some((k) => k.h === 1.1832), "Measured move (Rev. 1) : 80 pips, R/R 2, rebond 1.1832");
+    // plan (décision PO) : hauteur depuis le sommet le plus haut 1.1895 = 95 pips, projection 1.1705, TP prudent 1.1715 avant
+    // la projection, SL 1.1835 au-dessus du dernier rebond 1.1832, R/R 2
+    const top = Math.max(...t.ext.map((q) => q.price));
+    check(top === 1.1895 && near(1.18 - (top - 1.18), 1.1705, 1e-9) && 1.1715 > 1.1705 && near(rrOf(1.1795, 1.1835, 1.1715), 2, 0.005) && cs.some((k) => k.h === 1.1832), "Measured move (Rev. 1) : 95 pips depuis 1.1895, projection 1.1705, TP 1.1715, R/R 2, rebond 1.1832");
   }
   {
     // Reversal 2 : ETE 4 620 / 4 660 / 4 625, creux 4 580 / 4 575 ; inversé 4 470 / 4 430 / 4 475, sommets 4 510 / 4 515
@@ -734,7 +737,8 @@ export function checkLot29(check: Check) {
     check(near(fibLevel(4480, 4660, 0.618), 4549, 0.5) && near(fibLevel(4480, 4660, 0.786), 4519, 0.5) && near(rrOf(4565, 4510, 4660), 1.73, 0.005), "Fibonacci (TF 3) : plan");
     // TF 3 confluence : OB dans l'OTE, FVG baissier au-dessus, rejet dans l'OTE, support 4 470-4 485 au départ
     const b = CS["pb-conf"], ote = [fibLevel(4480, 4660, 0.786), fibLevel(4480, 4660, 0.618)];
-    const obK = b.find((k, i) => i > 1 && i < 10 && k.c < k.o)!, g = largestFvg(b, "bear");
+    const loI = b.findIndex((k) => k.l === 4480), hiI = b.findIndex((k) => k.h === 4660);
+    const obK = b.find((k, i) => i > loI && i < hiI && k.c < k.o)!, g = largestFvg(b, "bear");
     check(Math.min(obK.o, obK.c) >= ote[0] && Math.max(obK.o, obK.c) <= ote[1] && !!g && g.y1 > ote[1], "Confluence (TF 3) : OB dans l'OTE, FVG au-dessus");
     const tail = b.slice(-4), rl = Math.min(...tail.map((k) => k.l));
     check(rl >= ote[0] && rl <= ote[1] && Math.min(...b.map((k) => k.l)) === 4480, "Confluence (TF 3) : rejet dans l'OTE, départ sur le support");

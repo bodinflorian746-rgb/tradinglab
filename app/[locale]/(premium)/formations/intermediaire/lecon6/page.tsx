@@ -41,7 +41,7 @@ function ContentFr() {
       </section>
 
       {/* ── Schéma visuel ── */}
-      <div className="border border-zinc-800 rounded-2xl p-5 space-y-4">
+      <div className="space-y-4">
         <GraphFakeBreakout />
         <div className="flex justify-center pt-1 border-t border-zinc-800/50">
           <Candle

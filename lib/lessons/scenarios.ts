@@ -21,7 +21,8 @@ export const PE_SWING_HIGH = 1.0889;
 export const PE_TOP = 1.0904;
 
 function precisionH1(): Candle[] {
-  return buildCandles(1.0868, [
+  return buildCandles(1.0861, [
+    { c: 1.0868, h: 1.0871, l: 1.0858 },
     ...c(1.0876),
     { c: 1.0884, h: PE_SWING_HIGH },
     ...c(1.0877, 1.0868, 1.0871, 1.0859, 1.0850, 1.0843, 1.0832),
@@ -31,7 +32,7 @@ function precisionH1(): Candle[] {
     ...c(1.0887, 1.0871, 1.0856, 1.0841),           // retour vers l'OB
   ], {
     seed: 7101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale",
-    pins: [1.0832, 1.0795, PE_SWING_HIGH, PE_TOP],
+    pins: [1.0868, 1.0871, 1.0858, 1.0832, 1.0795, PE_SWING_HIGH, PE_TOP],
   });
 }
 
@@ -548,12 +549,18 @@ const maSeries = (seed: number, slope: number, amp: number) => {
 };
 
 // Trend-following 3 / Avancé 5 — OTE (XAU/USD H1) : sommet 4 600, HL 4 480, impulsion qui
-// casse 4 600 (BOS) jusqu'à 4 660, repli dans l'OTE (bas 4 530), bougie de rejet (clôture 4 545)
-const ote = () => buildCandles(4560, [
-  ...c(4574, 4588), { c: 4593, h: 4600 }, ...c(4580, 4558, 4534, 4510, 4493), { c: 4487, l: 4480 },
-  ...c(4506, 4533, 4561, 4589), { c: 4614 }, ...c(4636), { c: 4652, h: 4660 },
-  ...c(4643, 4622, 4600, 4578, 4556, 4541), { c: 4545, h: 4549, l: 4530 },
-], { seed: 9201, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4518.5, 4548.8], pins: [4600, 4480, 4660, 4530, 4541] });
+// casse 4 600 (BOS) jusqu'à 4 660, repli régulier dans l'OTE (bas 4 530), bougie de rejet (clôture
+// 4 545). Bougies entièrement écrites : aucun rebond parasite dans le repli.
+const OTE: Step[] = [
+  { c: 4574, h: 4578, l: 4557 }, { c: 4588, h: 4591, l: 4572 }, { c: 4593, h: 4600, l: 4585 },
+  { c: 4580, h: 4596, l: 4577 }, { c: 4558, h: 4583, l: 4555 }, { c: 4534, h: 4561, l: 4531 }, { c: 4510, h: 4537, l: 4507 },
+  { c: 4493, h: 4513, l: 4489 }, { c: 4487, h: 4497, l: 4480 },
+  { c: 4506, h: 4509, l: 4484 }, { c: 4533, h: 4536, l: 4503 }, { c: 4561, h: 4564, l: 4530 }, { c: 4589, h: 4592, l: 4558 },
+  { c: 4598, h: 4603, l: 4586 }, { c: 4614, h: 4617, l: 4595 }, { c: 4636, h: 4640, l: 4611 }, { c: 4652, h: 4660, l: 4633 },
+  { c: 4643, h: 4655, l: 4639 }, { c: 4622, h: 4646, l: 4618 }, { c: 4600, h: 4625, l: 4596 }, { c: 4578, h: 4603, l: 4574 },
+  { c: 4556, h: 4581, l: 4552 }, { c: 4541, h: 4559, l: 4537 }, { c: 4545, h: 4549, l: 4530 },
+];
+const ote = () => buildCandles(4560, OTE, { seed: 9201, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4518.5, 4548.8], pins: pinAll(OTE) });
 
 // Trend-following 3 — projection des cibles : le pullback du plan (entrée 4 565) puis
 // la hausse jusqu'à l'extension 1.618 du repli (4 728)
@@ -1302,8 +1309,11 @@ const FIB_INT9 = bars(1.0815, [
 ], 0.0003, 5);
 // Trend-following 3 bloc 3 — confluence (XAU/USD H4) : support de l'UT supérieure 4 470-4 485,
 // impulsion 4 480 → 4 660 avec une bougie baissière (OB 4 532-4 541) au milieu de l'OTE, chute qui
-// laisse un FVG baissier au-dessus, retour dans l'OTE sur l'OB, rejet ; cible : le FVG.
-const PB_CONF = bars(4500, [
+// laisse un FVG baissier au-dessus, retour dans l'OTE sur l'OB, rejet ; cible : le FVG. Avant le creux,
+// un vrai sommet 4 558 : l'impulsion qui suit l'OB le casse en clôture (l'OB précède un breakout de structure).
+const PB_CONF = bars(4530, [
+  { c: 4538, h: 4541, l: 4527 }, { c: 4548, h: 4551, l: 4536 }, { c: 4553, h: 4558, l: 4545 },
+  { c: 4532, h: 4555, l: 4529 }, { c: 4515, h: 4534, l: 4512 }, { c: 4500, h: 4517, l: 4497 },
   4492, { c: 4486, l: 4480 }, { c: 4504, l: 4483 }, 4522, { c: 4541, h: 4544 }, { c: 4532, h: 4543, l: 4529 }, { c: 4562, l: 4531 }, 4588, 4612, 4636, { c: 4652, h: 4660 },
   { c: 4646, h: 4657 }, { c: 4634, h: 4648, l: 4630 }, { c: 4598, h: 4634, l: 4596 }, { c: 4588, h: 4612, l: 4584 }, 4576, 4560, { c: 4546, l: 4538 }, { c: 4552, h: 4555, l: 4536 }, 4570,
 ], 3, 0);
@@ -1315,5 +1325,5 @@ Object.assign(SCENARIOS, {
   "str-mid": authored(1.1700, STR_MID, 29202, 5, "EUR/USD"),
   "str-strong": authored(1.1700, STR_STRONG, 29203, 5, "EUR/USD"),
   "fib-int9": authored(1.0815, FIB_INT9, 29301, 5, "EUR/USD"),
-  "pb-conf": authored(4500, PB_CONF, 29401, 0, "XAU/USD"),
+  "pb-conf": authored(4530, PB_CONF, 29401, 0, "XAU/USD"),
 });

@@ -24,8 +24,6 @@ export function StopLossBasicsDiagram() {
         ],
         markers: [{ key: "now", i: 3, price: ENTRY, label: "Achat", tone: "entry", side: "above", dot: true }],
         chips: [
-          { label: `Risque ${usdSp(ENTRY - SL)}`, tone: "bear" },
-          { label: `Objectif ${usdSp(TP - ENTRY)}`, tone: "bull" },
           { label: `R/R ${fmtRR(rr)}`, tone: "entry", data: { rr: fmtRR(rr), entry: ENTRY, sl: SL, tp: TP } },
         ],
       }]}

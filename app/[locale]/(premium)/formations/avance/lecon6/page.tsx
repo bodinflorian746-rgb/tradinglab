@@ -108,7 +108,7 @@ function ContentFr() {
         <div className="flex-1 h-px bg-zinc-800" />
       </div>
 
-      <div className="border border-zinc-800 rounded-2xl p-5 space-y-4">
+      <div className="space-y-4">
         <StopHuntInteractive />
       </div>
 

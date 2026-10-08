@@ -41,12 +41,12 @@ export function MultiTimeframeDiagram({ variant = "l7" }: { variant?: "l7" | "ro
         },
         {
           key: "h4", title: `H4 : recul vers le dernier HL ${p(ZONE)}`, decimals: 5, height: 200, candles: h4,
-          levels: [{ key: "zone", price: ZONE, label: `Zone ${p(ZONE)}`, short: "Zone", tone: "zone" }],
+          levels: [{ key: "zone", price: ZONE, label: `Dernier HL ${p(ZONE)}`, short: "Dernier HL", tone: "zone" }],
         },
         {
           key: "m15", title: "M15 : pin bar sur la zone", decimals: 5, height: 200, candles: m,
-          levels: [{ key: "zone", price: ZONE, label: `Zone ${p(ZONE)}`, short: "Zone", tone: "zone" }],
-          markers: [{ key: "pin", i: pin, price: m[pin].l, label: "Pin bar : achat", short: "Pin bar", tone: "bull", side: "below" }],
+          levels: [{ key: "zone", price: ZONE, label: `Dernier HL ${p(ZONE)}`, short: "Dernier HL", tone: "zone" }],
+          markers: [{ key: "pin", i: pin, price: m[pin].l, label: "Pin bar : achat", short: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" }],
         },
       ]}
       rows={[1, 1, 1]}

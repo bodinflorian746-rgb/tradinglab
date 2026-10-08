@@ -19,7 +19,7 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
   if (variant === "tf3") {
     const cs = CANDLES["tf3-pullback"];
     const lo = Math.min(...cs.map((k) => k.l)), hi = Math.max(...cs.map((k) => k.h));
-    const hiAt = cs.findIndex((k) => k.h === hi), pin = cs.length - 1;
+    const hiAt = cs.findIndex((k) => k.h === hi), loAt = cs.findIndex((k) => k.l === lo), pin = cs.length - 1;
     const f618 = fibLevel(lo, hi, 0.618), f786 = fibLevel(lo, hi, 0.786);
     const t = tradeSetup({ entry: 4565, sl: 4510, tp: 4728, unit: "$", from: pin, tpOffscale: true, names: { entry: "Entrée long", tp: "TP 2 (1.618)" } });
     return (
@@ -30,13 +30,13 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
         panels={[{
           key: "h4", title: "XAU/USD H4", decimals: 1, height: 300, candles: cs,
           levels: [
-            { key: "f618", price: f618, from: hiAt, label: `0.618 = ${usd(f618)}`, short: "0.618", tone: "fib", dashed: true },
-            { key: "f786", price: f786, from: hiAt, label: `0.786 = ${usd(f786)}`, short: "0.786", tone: "fib", dashed: true },
+            { key: "f618", price: f618, from: hiAt, label: `Fibo 0.618 = ${usd(f618)}`, short: "Fibo 0.618", tone: "fib", dashed: true, role: "fib", ref: `${loAt}:${hiAt}:0.618` },
+            { key: "f786", price: f786, from: hiAt, label: `Fibo 0.786 = ${usd(f786)}`, short: "Fibo 0.786", tone: "fib", dashed: true, role: "fib", ref: `${loAt}:${hiAt}:0.786` },
             { key: "tp1", price: hi, from: pin, label: `TP 1 HH ${usd(hi)}`, short: "TP 1", tone: "bull", dashed: true },
             ...t.levels,
           ],
           offscale: t.offscale,
-          markers: [{ key: "pin", i: pin, price: cs[pin].l, label: `Pin bar sur ${usd(cs[pin].l)}`, short: "Pin bar", tone: "bull", side: "below" }],
+          markers: [{ key: "pin", i: pin, price: cs[pin].l, label: `Pin bar sur ${usd(cs[pin].l)}`, short: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" }],
           chips: [...t.chips, { label: `R/R TP 1 : ${fmtRR(tradeMath(4565, 4510, hi).rr)}`, tone: "entry" }],
         }]}
       />
@@ -46,6 +46,9 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
   const lo = Math.min(...cs.map((k) => k.l)), hi = Math.max(...cs.map((k) => k.h));
   const hiAt = cs.findIndex((k) => k.h === hi);
   const stop = cs.reduce((b, k, i) => (i > hiAt && k.l < cs[b].l ? i : b), hiAt + 1);
+  const loAt = cs.findIndex((k) => k.l === lo);
+  // support historique : la pause du rallye (bougies 4 à 6), ancienne résistance devenue support
+  const SUPPORT = { y1: Math.min(...cs.slice(4, 7).map((k) => k.l)), y2: Math.max(...cs.slice(4, 7).map((k) => k.h)) };
   return (
     <LessonChart
       id="FibonacciDiagram"
@@ -53,7 +56,8 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
       caption="Fibonacci identifie la zone d'attention, pas l'entrée automatique : on attend un signal de bougie."
       panels={[{
         key: "h1", title: `EUR/USD, swing ${p(lo)} → ${p(hi)}`, decimals: 5, height: 300, candles: cs,
-        levels: RATIOS.map((r) => ({ key: `f${r}`, price: Number(fibLevel(lo, hi, r).toFixed(5)), from: hiAt, label: `${pct(r)} = ${p(fibLevel(lo, hi, r))}`, short: pct(r), tone: r === 0.618 ? "fib" as const : "neutral" as const, dashed: r !== 0.618 })),
+        zones: [{ key: "sup", ...SUPPORT, from: 4, label: `Support historique ${p(SUPPORT.y1)}-${p(SUPPORT.y2)}`, short: "Support", tone: "bull", role: "support" }],
+        levels: RATIOS.map((r) => ({ key: `f${r}`, price: Number(fibLevel(lo, hi, r).toFixed(5)), from: hiAt, label: `Fibo ${pct(r)} = ${p(fibLevel(lo, hi, r))}`, short: `Fibo ${pct(r)}`, tone: r === 0.618 ? "fib" as const : "neutral" as const, dashed: r !== 0.618, role: "fib" as const, ref: `${loAt}:${hiAt}:${r}` })),
         markers: [{ key: "stop", i: stop, price: cs[stop].l, label: `Arrêt sur ${p(cs[stop].l)} : 61,8 % + support`, short: "61,8 % + support", tone: "fib", side: "below" }],
       }]}
     />

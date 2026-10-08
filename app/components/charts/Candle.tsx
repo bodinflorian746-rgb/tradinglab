@@ -26,7 +26,7 @@ export function Candle({ type = "bullish", label, caption }: { type?: CandleType
       panels={[{
         key: type, decimals: 2, height: 200, candleWidth: 30, candles: s.cs, slots: 4,
         levels: [{ key: "lvl", price: s.level, label: s.side === "support" ? "Support" : "Résistance", tone: s.side === "support" ? "bull" : "bear", dashed: true }],
-        markers: [{ key: "sig", i: 2, price: s.side === "support" ? sig.h : sig.l, label: "Signal", tone: "entry", side: s.side === "support" ? "above" : "below" }],
+        markers: [{ key: "sig", i: 2, price: s.side === "support" ? sig.h : sig.l, label: "Signal", tone: "entry", side: s.side === "support" ? "above" : "below", ...(type.startsWith("pin") ? { role: "pinbar" as const, dir: s.side === "support" ? "bull" as const : "bear" as const } : {}) }],
       }]}
       caption={caption}
     />

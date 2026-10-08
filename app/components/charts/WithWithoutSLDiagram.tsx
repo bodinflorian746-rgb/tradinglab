@@ -25,7 +25,7 @@ export function WithWithoutSLDiagram() {
     {
       key: "sans", title: "Sans Stop Loss ✗", decimals: 0, height: 220, line: PATH,
       levels: [{ key: "entry", price: ENTRY, label: `Achat ${usdSp(ENTRY)}`, short: "Achat", tone: "entry", dashed: true }],
-      markers: [{ key: "low", i: PATH.length - 1, price: PATH[PATH.length - 1], label: `Chute à ${usdSp(PATH[PATH.length - 1])}`, short: usdSp(PATH[PATH.length - 1]), tone: "bear", side: "above", dot: true }],
+      markers: [{ key: "low", i: PATH.length - 1, price: PATH[PATH.length - 1], label: `Chute à ${usdSp(PATH[PATH.length - 1])}`, short: "Chute", tone: "bear", side: "above", dot: true }],
       chips: [{ label: `Variation −${usdSp(ENTRY - PATH[PATH.length - 1])} : risque non plafonné`, tone: "bear" }],
     },
   ];
