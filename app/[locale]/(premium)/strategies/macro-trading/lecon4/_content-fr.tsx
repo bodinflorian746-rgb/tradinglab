@@ -178,7 +178,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Points actionnables : vérifier le régime macro et la structure de l&apos;UT supérieure avant chaque trade</li>
-              <li>- Setup contre-tendance = filtre amber ou rouge, sauf preuve structurelle de retournement</li>
+              <li>- Setup contre-tendance = filtre orange ou rouge, sauf preuve structurelle de retournement</li>
               <li>- Le régime dominant prime sur le signal local, toujours</li>
               <li>- Un signal techniquement valide mais hors régime = setup à passer son tour</li>
             </ul>

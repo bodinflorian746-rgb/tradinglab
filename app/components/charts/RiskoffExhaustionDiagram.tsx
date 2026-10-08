@@ -1,6 +1,7 @@
-// Macro-trading 3 bloc 3 — essoufflement du régime risk-off (XAU/USD H4) : tendance
-// haussière forte depuis 4 590 $, puis 3 sommets faiblissants (HH→LH→LH) et corrections
-// de plus en plus profondes. Bougies : scenarios.ts (« riskoff-exhaust-h4 »).
+// Macro-trading 3 bloc 3 — le risk-off s'essouffle progressivement (XAU/USD H4), exemple du
+// texte : après une forte tendance depuis 4 590 $, trois sommets qui faiblissent (4 735,
+// 4 720, 4 705 $) et des corrections de 25, 40 puis 65 $. Sommets et corrections calculés
+// sur les pivots. Bougies : scenarios.ts (« riskoff-exhaust-h4 »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { usd } from "@/app/components/lessons/trade";
@@ -10,26 +11,28 @@ import CANDLES from "@/lib/lessons/generated/candles.json";
 export function RiskoffExhaustionDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["riskoff-exhaust-h4"];
   const piv = pivots(cs, 2);
-  const highs = piv.filter((q) => q.side === "h");
-  const lows = piv.filter((q) => q.side === "l");
-  const hh = highs[0];
-  const lh1 = highs.find((q) => q.name === "LH");
-  const lh2 = highs.filter((q) => q.name === "LH").at(-1);
+  const first = piv.findIndex((q) => q.name === "HH");
+  const tops = piv.slice(first).filter((q) => q.side === "h");
+  // creux de chaque correction : le plus bas entre un sommet et le suivant (ou la fin)
+  const lows = tops.map((t, n) => {
+    const to = n + 1 < tops.length ? tops[n + 1].index : cs.length;
+    const seg = cs.slice(t.index, to), l = Math.min(...seg.map((k) => k.l));
+    return { i: t.index + seg.findIndex((k) => k.l === l), price: l, depth: t.price - l };
+  });
   return (
     <LessonChart
       id="RiskoffExhaustionDiagram"
-      title="L'essoufflement se lit progressivement"
-      caption="Sommets plus faibles + corrections plus profondes + VIX qui redescend = signal d'essoufflement. On réduit AVANT la cassure structurelle."
+      title="Sommets plus faibles, corrections plus profondes"
+      caption="Le régime perd en force : on resserre les SL, on réduit la taille, avant la cassure structurelle."
       panels={[{
-        key: "h4", title: "XAU/USD H4 — régime risk-off qui s'essouffle", decimals: 0, height: 280, candles: cs,
+        key: "h4", title: "XAU/USD H4", decimals: 0, height: 290, candles: cs,
         markers: [
-          ...(hh ? [{ key: "hh", i: hh.index, price: hh.price, label: `HH ${usd(hh.price)}`, pivot: "HH" as const, tone: "bull" as const, side: "above" as const }] : []),
-          ...(lh1 && lh1 !== lh2 ? [{ key: "lh1", i: lh1.index, price: lh1.price, label: `LH ${usd(lh1.price)}`, pivot: "LH" as const, tone: "zone" as const, side: "above" as const }] : []),
-          ...(lh2 ? [{ key: "lh2", i: lh2.index, price: lh2.price, label: `LH ${usd(lh2.price)}`, pivot: "LH" as const, tone: "bear" as const, side: "above" as const }] : []),
+          ...tops.map((t, n) => ({ key: `t${n}`, i: t.index, price: t.price, label: `${t.name} ${usd(t.price)}`, short: usd(t.price), pivot: t.name!, tone: n ? "bear" as const : "bull" as const, side: "above" as const })),
+          ...lows.map((l, n) => ({ key: `l${n}`, i: l.i, price: l.price, label: `−${usd(l.depth)}`, tone: "bear" as const, side: "below" as const })),
         ],
         chips: [
-          { label: "Sommets : HH → LH → LH (faiblissants)", tone: "zone" },
-          { label: "Corrections croissantes : signal d'alerte", tone: "bear" },
+          { label: `Sommets : ${tops.map((t) => usd(t.price)).join(" → ")}`, tone: "zone" },
+          { label: `Corrections : ${lows.map((l) => usd(l.depth)).join(", ")}`, tone: "bear" },
         ],
       }]}
     />

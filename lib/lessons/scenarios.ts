@@ -119,6 +119,8 @@ Object.assign(SCENARIOS, {
 // ─── Lot 3 ───────────────────────────────────────────────────────────────────
 
 /** Suite d'un scénario : bougies écrites qui ouvrent à la dernière clôture du préfixe. */
+/** Tous les prix écrits d'une série (bougies entièrement imposées) */
+const pinAll = (st: Step[]) => st.flatMap((x) => [x.c, x.h, x.l].filter((v): v is number => v !== undefined));
 const extend = (prefix: Candle[], steps: Step[], seed: number, decimals: number, pins: number[] = [], levels: number[] = []) =>
   [...prefix, ...buildCandles(prefix[prefix.length - 1].c, steps, { seed, decimals, pins, levels })];
 
@@ -793,14 +795,14 @@ Object.assign(SCENARIOS, {
 });
 
 // ─── Lot 19 ──────────────────────────────────────────────────────────────────
-// Macro-trading 3 — RiskoffSignals (XAU/USD Daily) : structure HH/HL haussière depuis
-// 4 585 $ jusqu'à 4 705 $ sur fond de régime risk-off concordant (S&P 500 ↓, VIX ↑, DXY ↑).
-const riskoffDaily = () => buildCandles(4575, [
-  ...c(4590, 4585, 4610, 4605, 4600), { c: 4640, h: 4645 }, ...c(4630, 4618, 4622, 4625, 4620),
-  { c: 4660, h: 4668 }, ...c(4650, 4642, 4648, 4652),
-  { c: 4700, h: 4705 },
+// Macro-trading 3 — RiskoffSignals (XAU/USD H4, une semaine) : de 4 585 $ à 4 705 $ en
+// structure haussière, trois jambes : sommets 4 628 / 4 662 / 4 705, HL 4 608 et 4 640.
+const riskoffDaily = () => buildCandles(4590, [
+  { c: 4588, l: 4585 }, ...c(4596, 4604, 4613, 4621), { c: 4626, h: 4628 }, { c: 4619, h: 4624 }, ...c(4612), { c: 4611, l: 4608 },
+  ...c(4620, 4631, 4642, 4653), { c: 4659, h: 4662 }, ...c(4652, 4645), { c: 4643, l: 4640 },
+  ...c(4652, 4664, 4677, 4690), { c: 4702, h: 4705 },
 ], { seed: 19101, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale",
-  levels: [4585, 4640, 4668, 4660, 4705], pins: [4645, 4668, 4705] });
+  levels: [4585, 4705], pins: [4588, 4585, 4626, 4628, 4619, 4624, 4612, 4611, 4608, 4659, 4662, 4645, 4643, 4640, 4702, 4705] });
 // Macro-trading 3 — RiskoffTrend (XAU/USD H4) : impulsion 4 610 → 4 690 avec un palier à
 // 4 655 (sommet), pullback contrôlé jusqu'à 4 655 (ancien sommet devenu support, HL),
 // stabilisation, bougie de reprise (entrée 4 660), impulsion jusqu'à 4 730.
@@ -810,27 +812,28 @@ const riskoffTrend = () => buildCandles(4600, [
   ...c(4675, 4690, 4704, 4718), { c: 4728, h: 4730 },
 ], { seed: 19201, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "normale",
   levels: [4655, 4690, 4730], pins: [4608, 4610, 4621, 4624, 4634, 4637, 4648, 4655, 4642, 4644, 4657, 4669, 4680, 4685, 4690, 4679, 4687, 4667, 4656, 4660, 4662, 4730] });
-// Macro-trading 3 — RiskoffExhaustion (XAU/USD H4) : forte tendance depuis 4 590 $ puis
-// trois sommets faiblissants (4 735, 4 720, 4 705 $), corrections croissantes (25, 40, 65 $).
-const riskoffExhaust = () => buildCandles(4580, [
-  ...c(4600, 4625, 4650, 4675, 4705), { c: 4735, h: 4738 },   // fort
-  { c: 4718, l: 4710 }, ...c(4712),                             // correction 25$
-  { c: 4726 }, { c: 4720, h: 4722 },                           // 2e sommet (LH)
-  { c: 4700, l: 4680 }, ...c(4685, 4692),                      // correction 40$
-  { c: 4705, h: 4706 },                                         // 3e sommet (LH)
-  { c: 4692, l: 4668 },                                         // début correction 65$
-], { seed: 19301, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "normale",
-  levels: [4590, 4735, 4720, 4705], pins: [4738, 4710, 4722, 4680, 4706, 4668] });
-// Macro-trading 4 — MacroFilterCalendar (XAU/USD M15) : calme 4 640 $, CPI à 13h30 UTC
-// (setup short techniquement solide mais filtre rouge calendrier) : publication → volatilité
-// extrême jusqu'à 4 705 $ puis chute à 4 610 $.
-const macroFilterNews = () => buildCandles(4635, [
-  ...c(4638, 4640, 4637, 4641),
-  { c: 4705, h: 4710 },    // publication CPI : impulsion haussière explosive
-  { c: 4660, h: 4706 },    // rejet violent
-  { c: 4635 }, { c: 4618 }, { c: 4612, l: 4610 },
-], { seed: 19401, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 4, preNews: true,
-  levels: [4640, 4705, 4640, 4610], pins: [4641, 4710, 4706, 4610] });
+// Macro-trading 3 — RiskoffExhaustion (XAU/USD H4) : forte tendance depuis 4 590 $, puis trois
+// sommets qui faiblissent (4 735, 4 720, 4 705 $) et des corrections de plus en plus profondes
+// (25, 40, 65 $ : creux 4 710, 4 680, 4 640). Chaque bougie est écrite (o = clôture précédente).
+const EXHAUST: Step[] = [
+  { c: 4605, h: 4607, l: 4588 }, { c: 4622, h: 4624, l: 4603 }, { c: 4640, h: 4642, l: 4620 }, { c: 4650, h: 4653, l: 4638 },
+  { c: 4638, h: 4651, l: 4635 }, { c: 4645, h: 4647, l: 4636 }, { c: 4662, h: 4664, l: 4643 }, { c: 4685, h: 4687, l: 4660 },
+  { c: 4712, h: 4714, l: 4683 }, { c: 4732, h: 4735, l: 4711 },
+  { c: 4718, h: 4733, l: 4716 }, { c: 4713, h: 4719, l: 4710 }, { c: 4716, h: 4718, l: 4711 }, { c: 4719, h: 4720, l: 4714 },
+  { c: 4705, h: 4719, l: 4703 }, { c: 4692, h: 4707, l: 4690 }, { c: 4684, h: 4694, l: 4680 }, { c: 4694, h: 4696, l: 4682 }, { c: 4703, h: 4705, l: 4692 },
+  { c: 4688, h: 4704, l: 4686 }, { c: 4668, h: 4690, l: 4666 }, { c: 4652, h: 4670, l: 4650 }, { c: 4645, h: 4655, l: 4640 },
+];
+const riskoffExhaust = () => buildCandles(4590, EXHAUST, { seed: 19301, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "normale",
+  levels: [4735, 4710, 4720, 4680, 4705, 4640], pins: pinAll(EXHAUST) });
+// Macro-trading 4 — MacroFilterCalendar (XAU/USD M5, 12h55 → 13h55 UTC) : prix sous la
+// résistance 4 665, structure baissière, setup short à 13h25 ; CPI à 13h30 : bougie jusqu'à
+// 4 710 $ (au-dessus du SL d'un short), puis chute jusqu'à 4 610 $ : 100 $ d'amplitude.
+const macroFilterNews = () => buildCandles(4655, [
+  { c: 4658, h: 4661, l: 4653 }, { c: 4662, h: 4665, l: 4656 }, { c: 4657, h: 4663, l: 4655 }, { c: 4654, h: 4659, l: 4651 },
+  { c: 4656, h: 4660, l: 4652 }, { c: 4653, h: 4658, l: 4650 }, { c: 4652, h: 4656, l: 4649 },
+  { c: 4688, h: 4710, l: 4648 }, { c: 4662, h: 4692 }, { c: 4640, h: 4664 }, { c: 4622, h: 4643 }, { c: 4613, h: 4626, l: 4610 },
+], { seed: 19401, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 7, preNews: true,
+  levels: [4665, 4710, 4610], pins: [4661, 4653, 4665, 4656, 4663, 4655, 4659, 4651, 4660, 4652, 4658, 4650, 4649, 4688, 4710, 4648, 4662, 4692, 4640, 4664, 4622, 4643, 4613, 4626, 4610] });
 Object.assign(SCENARIOS, {
   "riskoff-daily": riskoffDaily, "riskoff-trend-h4": riskoffTrend,
   "riskoff-exhaust-h4": riskoffExhaust, "macro-filter-news": macroFilterNews,

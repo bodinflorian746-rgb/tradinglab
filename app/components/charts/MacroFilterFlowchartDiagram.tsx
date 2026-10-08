@@ -13,7 +13,7 @@ export function MacroFilterFlowchartDiagram(_props: { className?: string; locale
       ]} />
       <Checklist items={[
         { ok: true, title: "3 filtres VERTS → exécution possible", text: "Calendrier libre · Régime aligné · Setup avec confluence → trade exécuté." },
-        { ok: false, title: "1 filtre ROUGE → pas de trade", text: "On ne négocie pas. Pas de réduction de taille. Pas d'ordre limite. On passe son tour." },
+        { ok: false, title: "1 filtre ROUGE → pas de trade", text: "Aucune négociation : on passe son tour." },
       ]} />
     </LessonSchema>
   );

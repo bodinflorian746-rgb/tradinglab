@@ -1,6 +1,6 @@
-// Macro-trading 3 bloc 1 — signaux concordants risk-off : XAU/USD Daily en structure
-// HH/HL haussière (4 585→4 705 $) accompagnée des 4 signaux concordants du texte
-// (indices ↓, VIX ↑, DXY ↑, or ↑). Bougies : scenarios.ts (« riskoff-daily »).
+// Macro-trading 3 bloc 1 — le risk-off se confirme par des signaux concordants, exemple du
+// texte sur une semaine : S&P 500 −3 %, VIX de 14 à 22, DXY +1,5 %, et XAU/USD de 4 585 $ à
+// 4 705 $ en structure haussière (H4). Pivots calculés. Bougies : scenarios.ts (« riskoff-daily »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { Cards } from "@/app/components/lessons/LessonSchema";
@@ -10,31 +10,30 @@ import CANDLES from "@/lib/lessons/generated/candles.json";
 
 export function RiskoffSignalsDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["riskoff-daily"];
-  const piv = pivots(cs, 3);
-  const peak = Math.max(...cs.map((k) => k.h));
-  const peakAt = cs.findIndex((k) => k.h === peak);
-  const hls = piv.filter((q) => q.name === "HL");
-  const hh2At = piv.filter((q) => q.name === "HH").at(-1)?.index ?? peakAt;
+  const piv = pivots(cs, 2);
+  const start = cs[0].l, end = Math.max(...cs.map((k) => k.h));
+  const named = piv.filter((q) => q.name === "HH" || q.name === "HL");
   return (
     <LessonChart
       id="RiskoffSignalsDiagram"
-      title="Régime risk-off : 4 signaux concordants"
-      caption="La concordance de 3-4 signaux macro confirme le régime. Un seul marché ne suffit pas."
+      title="Quatre marchés racontent la même histoire"
+      caption="Sans concordance, on ne parle pas encore de régime, juste d'un mouvement."
       panels={[{
-        key: "daily", title: "XAU/USD Daily — structure HH/HL en régime risk-off", decimals: 0, height: 240, candles: cs,
+        key: "h4", title: "XAU/USD H4, une semaine de tensions", decimals: 0, height: 240, candles: cs,
         markers: [
-          { key: "peak", i: peakAt, price: peak, label: usd(peak), tone: "bull", side: "above" },
-          ...(hls.slice(0, 2).map((hl, j) => ({ key: `hl${j}`, i: hl.index, price: hl.price, label: hl.name!, pivot: hl.name! as "HL", tone: "neutral" as const, side: "below" as const }))),
+          { key: "start", i: 0, price: start, label: usd(start), tone: "neutral", side: "below" },
+          ...named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name!, tone: "bull" as const, side: q.side === "h" ? "above" as const : "below" as const })),
+          { key: "end", i: cs.length - 1, price: end, label: usd(end), tone: "bull", side: "above" },
         ],
-        chips: [{ label: "Structure HH / HL intacte = régime intact", tone: "bull" }],
+        chips: [{ label: `Or : ${usd(start)} → ${usd(end)}, structure HH / HL`, tone: "bull" }],
       }]}
     >
       <div style={{ marginTop: 16 }}>
         <Cards cols={4} mobileCols={2} items={[
-          { tag: "INDICES US", title: "Indices baissiers", text: "S&P 500 −3 %, pression vendeuse sur les actifs risqués.", tone: "bear" },
-          { tag: "VIX", title: "Volatilité en hausse", text: "VIX passe de 14 à 22 : la peur monte.", tone: "zone" },
-          { tag: "DXY", title: "Dollar fort", text: "DXY +1,5 % : les flux fuient vers le dollar.", tone: "sky" },
-          { tag: "XAU/USD", title: "Or haussier", text: "Flux refuge, structure HH/HL établie.", tone: "bull" },
+          { tag: "S&P 500 ↓", title: "Indices baissiers", text: "−3 % sur la semaine.", tone: "bear" },
+          { tag: "VIX ↑", title: "Volatilité en hausse", text: "De 14 à 22.", tone: "zone" },
+          { tag: "DXY ↑", title: "Dollar fort", text: "+1,5 % face aux devises plus risquées.", tone: "sky" },
+          { tag: "XAU/USD ↑", title: "L'or attire les flux", text: "Actif directionnel à privilégier, à l'achat.", tone: "bull" },
         ]} />
       </div>
     </LessonChart>

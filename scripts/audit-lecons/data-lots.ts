@@ -416,31 +416,32 @@ export function checkLot18(check: Check) {
 
 export function checkLot19(check: Check) {
   {
-    // riskoff-daily : structure HH/HL jusqu'à ≥4700
-    const cs=CS["riskoff-daily"];
-    check(Math.max(...cs.map(k=>k.h))>=4700,"RiskoffDaily: peak < 4700");
-    check(cs[cs.length-1].c > cs[0].c + 50, "RiskoffDaily: pas de hausse suffisante");
+    // Macro-trading 3 bloc 1 : XAU/USD de 4 585 à 4 705 en structure HH / HL
+    const cs = CS["riskoff-daily"], p = pivots(cs, 2);
+    check(Math.min(...cs.map((k) => k.l)) === 4585 && cs[0].l === 4585 && Math.max(...cs.map((k) => k.h)) === 4705 && cs[cs.length - 1].h === 4705, "Risk-off (MT 3) : 4 585 → 4 705");
+    check(p.filter((q) => q.name).every((q) => q.name === "HH" || q.name === "HL") && p.some((q) => q.name === "HL"), "Risk-off (MT 3) : structure HH / HL");
   }
   {
-    // riskoff-trend-h4 : HH→pullback→HL→TP ≥ 4730
-    const cs=CS["riskoff-trend-h4"];
-    check(Math.max(...cs.map(k=>k.h))>=4730,"RiskoffTrend: TP < 4730");
-    check(Math.min(...cs.map(k=>k.l))<=4658,"RiskoffTrend: pullback trop haut");
-    check(cs[cs.length-1].c>=4728,"RiskoffTrend: TP final < 4728");
+    // Macro-trading 3 bloc 2 : 4 610 → 4 690 (HH), pullback 4 655 sur l'ancien sommet 4 655 (HL), long 4 660 / SL 4 640 / TP 4 730
+    const cs = CS["riskoff-trend-h4"], p = pivots(cs, 2);
+    const hh = p.find((q) => q.name === "HH"), hl = p.find((q) => q.name === "HL" && hh && q.index > hh.index);
+    check(hh?.price === 4690 && hl?.price === 4655 && p.some((q) => q.side === "h" && q.price === 4655), "Risk-off (MT 3) : HH 4 690, HL 4 655 = ancien sommet");
+    check(!!hl && cs.some((k, i) => i > hl.index && k.c === 4660) && Math.max(...cs.map((k) => k.h)) === 4730 && near(rrOf(4660, 4640, 4730), 3.5, 0.005), "Risk-off (MT 3) : entrée 4 660, TP 4 730");
   }
   {
-    // riskoff-exhaust-h4 : pic principal puis dernier sommet < pic
-    const cs=CS["riskoff-exhaust-h4"];
-    const peak=Math.max(...cs.map(k=>k.h));
-    const peakAt=cs.findIndex(k=>k.h===peak);
-    const lastHigh=Math.max(...cs.slice(peakAt+1).map(k=>k.h));
-    check(lastHigh<peak,"RiskoffExhaust: sommets non faiblissants (lastHigh ≥ HH)");
+    // Macro-trading 3 bloc 3 : sommets 4 735 / 4 720 / 4 705, corrections 25 / 40 / 65
+    const cs = CS["riskoff-exhaust-h4"], p = pivots(cs, 2);
+    const tops = p.slice(p.findIndex((q) => q.name === "HH")).filter((q) => q.side === "h");
+    check(tops.map((t) => t.price).join() === "4735,4720,4705", "Essoufflement (MT 3) : sommets 4 735 / 4 720 / 4 705");
+    const depth = tops.map((t, n) => t.price - Math.min(...cs.slice(t.index, n + 1 < tops.length ? tops[n + 1].index : cs.length).map((k) => k.l)));
+    check(depth.join() === "25,40,65", `Essoufflement (MT 3) : corrections ${depth.join(", ")} ≠ 25, 40, 65`);
   }
   {
-    // macro-filter-news : calm (≤15$) then news spike ≥60$
-    const cs=CS["macro-filter-news"];
-    const calmRange=Math.max(...cs.slice(0,4).map(k=>k.h))-Math.min(...cs.slice(0,4).map(k=>k.l));
-    check(calmRange<=15,`MacroFilterNews: calme > 15$ (${calmRange}$)`);
-    check(Math.max(...cs.map(k=>k.h))-Math.min(...cs.map(k=>k.l))>=60,"MacroFilterNews: amplitude < 60$");
+    // Macro-trading 4 bloc 1 : sous la résistance 4 665 jusqu'à 13h25, bougie CPI au-dessus du SL 4 672, 50-100 $ d'amplitude
+    const cs = CS["macro-filter-news"];
+    check(cs.slice(0, 7).every((k) => k.h <= 4665) && cs[7].h > 4672, "Calendrier (MT 4) : résistance / SL emporté par le CPI");
+    const amp = cs[7].h - Math.min(...cs.slice(7).map((k) => k.l));
+    check(amp >= 50 && amp <= 100, `Calendrier (MT 4) : amplitude ${amp} $ hors 50-100`);
   }
 }
+
