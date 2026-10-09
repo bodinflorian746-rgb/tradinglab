@@ -1,7 +1,8 @@
 // Deux usages :
 // - Intermédiaire 9 (par défaut) — Fibonacci en action sur EUR/USD : swing 1.0800 → 1.0980,
 //   niveaux 23,6 % = 1.0937, 38,2 % = 1.0911, 50 % = 1.0890, 61,8 % = 1.0869 et 78,6 %, retracement
-//   arrêté sur 1.0870 (61,8 % + support historique) : on attend un signal de bougie.
+//   arrêté sur 1.0870 (61,8 % + support historique 1.0868-1.0876, rejeté deux fois pendant la
+//   montée puis cassé) : on attend un signal de bougie.
 // - Trend-following 3 (variant « tf3 ») — le plan : HL 4 480, HH 4 660, 0.618 = 4 549, 0.786 = 4 519,
 //   pin bar sur 4 550 ; long 4 565, SL 4 510, TP 4 660 puis 4 728 (R/R 1,73 et 2,96).
 // Niveaux et R/R calculés. Bougies : scenarios.ts (« fib-int9 », « tf3-pullback »).
@@ -47,8 +48,9 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
   const hiAt = cs.findIndex((k) => k.h === hi);
   const stop = cs.reduce((b, k, i) => (i > hiAt && k.l < cs[b].l ? i : b), hiAt + 1);
   const loAt = cs.findIndex((k) => k.l === lo);
-  // support historique : la pause du rallye (bougies 4 à 6), ancienne résistance devenue support
-  const SUPPORT = { y1: Math.min(...cs.slice(4, 7).map((k) => k.l)), y2: Math.max(...cs.slice(4, 7).map((k) => k.h)) };
+  // support historique : ancienne résistance rejetée deux fois pendant la montée (mèches à 1.0875 et
+  // 1.0876), cassée, puis retestée par le retracement
+  const SUPPORT = { y1: 1.0868, y2: 1.0876 };
   return (
     <LessonChart
       id="FibonacciDiagram"
@@ -56,7 +58,7 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
       caption="Fibonacci identifie la zone d'attention, pas l'entrée automatique : on attend un signal de bougie."
       panels={[{
         key: "h1", title: `EUR/USD, swing ${p(lo)} → ${p(hi)}`, decimals: 5, height: 300, candles: cs,
-        zones: [{ key: "sup", ...SUPPORT, from: 4, label: `Support historique ${p(SUPPORT.y1)}-${p(SUPPORT.y2)}`, short: "Support", tone: "bull", role: "support" }],
+        zones: [{ key: "sup", ...SUPPORT, from: 3, label: `Support historique ${p(SUPPORT.y1)}-${p(SUPPORT.y2)}`, short: "Support", tone: "bull", role: "support" }],
         levels: RATIOS.map((r) => ({ key: `f${r}`, price: Number(fibLevel(lo, hi, r).toFixed(5)), from: hiAt, label: `Fibo ${pct(r)} = ${p(fibLevel(lo, hi, r))}`, short: `Fibo ${pct(r)}`, tone: r === 0.618 ? "fib" as const : "neutral" as const, dashed: r !== 0.618, role: "fib" as const, ref: `${loAt}:${hiAt}:${r}` })),
         markers: [{ key: "stop", i: stop, price: cs[stop].l, label: `Arrêt sur ${p(cs[stop].l)} : 61,8 % + support`, short: "61,8 % + support", tone: "fib", side: "below" }],
       }]}

@@ -26,7 +26,7 @@ export function StopLossChartDiagram(_props: { className?: string }) {
         ],
         markers: [
           { key: "swing", i: swing.index, price: swing.price, label: `Swing low ${usdSp(swing.price)}`, short: "Swing low", tone: "neutral", side: "below", role: "swing-low" },
-          { key: "rebond", i: last, price: cs[last].h, label: "Rebond", tone: "bull", side: "above" },
+          { key: "rebond", i: last - 1, price: cs[last - 1].h, label: "Rebond", tone: "bull", side: "above" },
         ],
       }]}
       caption="Si le prix atteint le SL, l'analyse était fausse : la perte est normale."

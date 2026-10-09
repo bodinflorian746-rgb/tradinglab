@@ -28,13 +28,13 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-emerald-400 mb-2">Support (achat)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix descend lentement → entre dans une zone → BOOM, une ou deux grosses bougies haussières explosent vers le haut. <strong className="text-white">Cette zone devient un support.</strong> Les institutions ont acheté massivement là. Quand le prix y revient, leurs ordres restants se déclenchent.
+              Le prix descend lentement → entre dans une zone → BOOM, une ou deux grosses bougies haussières explosent vers le haut. Les institutions ont acheté massivement là : la zone est un support possible. <strong className="text-white">Le retest le confirme :</strong> quand le prix y revient et réagit (rejet, rebond), leurs ordres restants se sont déclenchés.
             </p>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-red-400 mb-2">Résistance (vente)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix monte lentement → entre dans une zone → BOOM, grosse bougie baissière explose vers le bas. <strong className="text-white">Cette zone devient une résistance.</strong> Les institutions ont vendu massivement là. Au retour du prix, leurs ordres résiduels s'exécutent.
+              Le prix monte lentement → entre dans une zone → BOOM, grosse bougie baissière explose vers le bas. Les institutions ont vendu massivement là : la zone est une résistance possible. <strong className="text-white">Le retest la confirme :</strong> quand le prix y revient et réagit (rejet, repli), leurs ordres résiduels se sont exécutés.
             </p>
           </div>
         </div>
@@ -59,14 +59,14 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Comment tracer ce support ou cette résistance</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Ce support (ou cette résistance) se trace sur les bougies de consolidation juste avant le départ impulsif, pas sur le départ lui-même. La zone = l'endroit où les ordres ont été passés. Le départ = la preuve qu'ils ont été exécutés.
+          Ce support (ou cette résistance) se trace sur les bougies de consolidation juste avant le départ impulsif, pas sur le départ lui-même. La zone = l'endroit où les ordres ont été passés. Le départ = la preuve qu'ils ont été exécutés. Le retest = la preuve que la zone tient.
         </p>
         <div className="space-y-2">
           {[
             { n: "1", t: "Identifie le départ impulsif", d: "Une ou plusieurs grosses bougies dans la même direction, peu de mèches. C'est le signal qu'une institution a agi." },
             { n: "2", t: "Remonte juste avant ce départ", d: "Tu trouves souvent 1 à 3 bougies de consolidation (petites bougies). C'est là que la zone commence." },
             { n: "3", t: "Trace ton rectangle sur cette consolidation", d: "Du bas au haut de la dernière bougie avant le départ. C'est ton support (ou ta résistance)." },
-            { n: "4", t: "Vérifie que la zone est encore fraîche", d: "Si le prix est déjà retourné dans la zone plusieurs fois, elle est moins puissante. Une zone non-retestée = zone forte." },
+            { n: "4", t: "Attends le retest qui la confirme", d: "Tant que le prix n'est pas revenu dans la zone, ce n'est qu'un support (ou une résistance) possible. Le premier retest avec réaction le confirme. Ensuite, chaque nouveau retour l'use : touchée 3 fois ou plus, la zone s'affaiblit." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-emerald-400 shrink-0 mt-0.5 w-4">{item.n}</span>
@@ -92,7 +92,7 @@ function ContentFr() {
           </div>
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
             <p className="text-sm font-medium text-white mb-1">Par l'origine du mouvement</p>
-            <p className="text-xs text-zinc-500 leading-relaxed">Basé sur l'origine du mouvement. Une seule réaction impulsive suffit. Plus la zone est fraîche (non-retestée), plus elle est puissante.</p>
+            <p className="text-xs text-zinc-500 leading-relaxed">Basé sur l'origine du mouvement. Le départ impulsif désigne la zone, le retest la confirme : le prix y revient et réagit. Les premiers retests sont les plus fiables.</p>
           </div>
         </div>
       </section>
@@ -105,7 +105,7 @@ function ContentFr() {
           {[
             { n: "1", t: "Cherche les gros mouvements impulsifs sur le graphique", d: "Les grandes bougies sans hésitation. Ce sont les traces laissées par les institutions." },
             { n: "2", t: "Remonte juste avant chaque départ", d: "Quelques petites bougies de consolidation : c'est ton support ou ta résistance. Trace le rectangle." },
-            { n: "3", t: "Le prix est-il déjà revenu dans cette zone ?", d: "Si non → zone fraîche, forte. Si oui plusieurs fois → zone affaiblie, moins fiable." },
+            { n: "3", t: "Le prix est-il revenu dans cette zone, et a-t-il réagi ?", d: "Pas encore → zone à confirmer, attends le retest. Un retest avec réaction → zone confirmée. Trois retours ou plus → zone affaiblie, moins fiable." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.n}</span>
@@ -174,9 +174,9 @@ function ContentFr() {
 
       <LessonKeyPoints
         points={[
-          "Support : le prix quitte une zone avec un départ haussier impulsif → les institutions ont acheté.",
-          "Résistance : le prix quitte une zone avec un départ baissier impulsif → les institutions ont vendu.",
-          "Zone fraîche (non-retestée) = zone forte. Zone testée 3× = zone affaiblie.",
+          "Support : le prix quitte une zone avec un départ haussier impulsif → les institutions ont acheté. Le retest (le prix revient et réagit) confirme le support.",
+          "Résistance : le prix quitte une zone avec un départ baissier impulsif → les institutions ont vendu. Le retest confirme la résistance.",
+          "Sans retest, la zone reste à confirmer. Premier retest avec réaction = zone confirmée. Zone testée 3× ou plus = zone affaiblie.",
           "On trace la zone sur la consolidation avant le départ, pas sur le départ lui-même.",
           "Le support ou la résistance indique où regarder, le signal de bougie indique quand entrer.",
         ]}
@@ -185,15 +185,15 @@ function ContentFr() {
       <LessonExercice
         description="Sur TradingView, ouvre EUR/USD en H4 et identifie des supports et résistances nés d'un départ impulsif."
         steps={[
-          "Repère le dernier grand mouvement haussier (plusieurs bougies vertes consécutives). Remonte juste avant : c'est là que se trouve ton support. Trace un rectangle.",
-          "Fais de même pour le dernier grand mouvement baissier. Trace ta résistance.",
-          "Vérifie si le prix est revenu tester l'une de ces zones depuis. Comment a-t-il réagi ?",
+          "Repère le dernier grand mouvement haussier (plusieurs bougies vertes consécutives). Remonte juste avant : c'est là que se trouve ton support possible. Trace un rectangle.",
+          "Fais de même pour le dernier grand mouvement baissier. Trace ta résistance possible.",
+          "Vérifie si le prix est revenu tester ces zones depuis. S'il y est revenu et a réagi, la zone est confirmée ; sinon, ce n'est encore qu'une zone à surveiller.",
           "Cherche un de ces niveaux qui coïncide avec un support ou une résistance historique, c'est une confluence forte. Note le prix exact.",
         ]}
       />
 
       <LessonQuiz
-        question="Tu traces un support sur EUR/USD H4. Le prix y descend. Que fais-tu ?"
+        question="Sur EUR/USD H4, tu as tracé un support confirmé par un premier retest. Le prix y redescend. Que fais-tu ?"
         options={[
           "Tu achètes immédiatement dès que le prix entre dans la zone",
           "Tu attends un signal de rejet dans la zone (pin bar ou engulfing haussier), puis tu entres",

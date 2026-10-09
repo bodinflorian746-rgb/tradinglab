@@ -2,6 +2,7 @@
 // suivants). Appelé par data.ts.
 import CANDLES from "@/lib/lessons/generated/candles.json";
 import { fibLevel, fvgAt, largestFvg, pivots, rsi, type Candle } from "@/lib/lessons/chart-analysis";
+import { srTouches } from "./sr-proof.mjs";
 
 type Check = (ok: boolean, what: string) => void;
 const CS = CANDLES as Record<string, Candle[]>;
@@ -152,10 +153,12 @@ export function checkLots(check: Check) {
     check(isPin(t, false) && isPin(b, true) && isPin(cs[mi], true) && cs[mi + 3].c < cs[mi].l, "Pin bar (PA 2) : pin bars ≠ texte (haut, milieu ignoré, bas)");
   }
   {
-    // MTF 3 : ancien support 1.1760 cassé, FVG bearish 1.1750-1.1760, remontée vers la zone sans l'atteindre
+    // MTF 3 : ancien support 1.1760 touché deux fois puis cassé, FVG bearish 1.1750-1.1760, remontée
+    // qui revient au contact du FVG sans le mitiger
     const cs = CS["zone-histoire"], g = largestFvg(cs, "bear");
     check(!!g && g.y1 === 1.1750 && g.y2 === 1.1760 && cs.slice(0, g.i).filter((k) => k.l <= 1.1761).length >= 2, "Zone (MTF 3) : support 1.1760 / FVG 1.1750-1.1760");
-    check(cs[cs.length - 1].h < 1.1750 && cs[cs.length - 1].c > cs[cs.length - 4].c, "Zone (MTF 3) : la remontée n'approche pas la zone");
+    check(cs[cs.length - 1].h === 1.1750 && cs[cs.length - 1].c > cs[cs.length - 4].c, "Zone (MTF 3) : la remontée ne revient pas au contact du FVG");
+    check(srTouches(cs.slice(0, g ? g.i : 0), 1.176, 1.176).touches >= 2, "Zone (MTF 3) : support 1.1760 touché deux fois avant la cassure");
   }
   {
     // Macro-trading 4 : H4 en HH / HL ; M15 : breakout du creux 4 683 (signal bearish) puis reprise ; bougie H4 = agrégat des 16 M15
@@ -404,14 +407,15 @@ export function checkLot18(check: Check) {
     // Macro-trading 2 : 4 640 → 4 575 (casse 4 600), 4 bougies de stabilisation (mèches 6-8 $, clôtures 4 580-4 585),
     // puis A 4 625 / B 4 630 en 4 bougies, C breakout > 4 620 et 4 665
     for (const [key, top] of [["nfp-headline", 4625], ["nfp-stab", 4630], ["nfp-reversal", 4665]] as const) {
-      const cs = CS[key], I = 5;
+      const cs = CS[key], I = 14;
       check(cs[I].o === 4640 && cs[I].l === 4575 && Math.min(...cs.map((x) => x.l)) === 4575, `NFP (MT 2) ${key} : impulsion 4 640 → 4 575`);
+      check(srTouches(cs.slice(0, I), 4600, 4600).touches >= 2, `NFP (MT 2) ${key} : support 4 600 touché deux fois avant la publication`);
       const st = cs.slice(I + 1, I + 5);
       check(st.every((x) => { const w = Math.min(x.o, x.c) - x.l; return w >= 6 && w <= 8 && x.c >= 4580 && x.c <= 4585; }), `NFP (MT 2) ${key} : stabilisation`);
       check(Math.max(...cs.slice(I + 1).map((x) => x.h)) === top && cs[cs.length - 1].h === top, `NFP (MT 2) ${key} : sommet ${top}`);
     }
     const r = CS["nfp-reversal"];
-    check(r.slice(10).some((x) => x.o < 4620 && x.c > 4620), "NFP (MT 2) : breakout de 4 620");
+    check(r.slice(19).some((x) => x.o < 4620 && x.c > 4620), "NFP (MT 2) : breakout de 4 620");
   }
 }
 
@@ -546,8 +550,12 @@ export function checkLot22(check: Check) {
     check(CS["eng-case-valide"].length === 22, "Engulfing (PA 3) : 20 bougies de contexte");
   }
   {
-    // Multi-UT 4 : support 4 545 (4 540-4 550) traversé sans mèche basse, continuation sous la zone
-    const cs = CS["zone-fail-xau"], z = cs.filter((k) => k.l <= 4550 && k.h >= 4540);
+    // Multi-UT 4 : support 4 545 (4 540-4 550) prouvé par deux rebonds, puis traversé sans mèche
+    // basse (depuis le dernier sommet), continuation sous la zone
+    const cs = CS["zone-fail-xau"], top = cs.reduce((b, k, i) => (k.l > 4570 ? i : b), 0);
+    const z = cs.slice(top + 1).filter((k) => k.l <= 4550 && k.h >= 4540);
+    const st = srTouches(cs.slice(0, top + 1), 4540, 4550);
+    check(st.touches >= 2, "Zone (MUT 4) : support prouvé (2 rebonds) avant la traversée");
     check(z.length >= 2 && z.every((k) => Math.min(k.o, k.c) - k.l <= 1 && k.c < k.o) && cs[cs.length - 1].c < 4520, "Zone (MUT 4) : traversée sans réaction");
     // Multi-UT 5 : LH 1.1860 / 1.1830 / 1.1780, dernier LL 1.1695
     const p = pivots(CS["daily-ctx"], 2);
@@ -733,6 +741,8 @@ export function checkLot29(check: Check) {
     check([[0.236, 1.0937], [0.382, 1.0911], [0.5, 1.089], [0.618, 1.0869]].every(([r, v]) => near(fibLevel(lo, hi, r), v, 0.00006)), "Fibonacci (Int. 9) : niveaux du texte");
     const hiAt = cs.findIndex((k) => k.h === hi);
     check(Math.min(...cs.slice(hiAt).map((k) => k.l)) === 1.087, "Fibonacci (Int. 9) : arrêt sur 1.0870");
+    const st = srTouches(cs, 1.0868, 1.0876);
+    check(st.touches >= 2 && st.breaks >= 1, "Fibonacci (Int. 9) : support historique 1.0868-1.0876 rejeté deux fois puis cassé");
     // TF 3 plan : 0.618 = 4 549, 0.786 = 4 519, pin bar sur 4 550, R/R 1,73 / 2,96
     check(near(fibLevel(4480, 4660, 0.618), 4549, 0.5) && near(fibLevel(4480, 4660, 0.786), 4519, 0.5) && near(rrOf(4565, 4510, 4660), 1.73, 0.005), "Fibonacci (TF 3) : plan");
     // TF 3 confluence : OB dans l'OTE, FVG baissier au-dessus, rejet dans l'OTE, support 4 470-4 485 au départ

@@ -72,12 +72,14 @@ export const SCENARIOS: Record<string, () => Candle[]> = {
 // ─── Price action 2 — pin bar haussière sur support, XAU/USD H4 ─────────────
 // Tendance haussière (creux 4 445 → 4 482 → 4 486, sommets 4 560 → 4 650) ;
 // support 4 500 (mèches jusqu'à 4 482 / 4 486, clôtures au-dessus) ; pin bar :
-// ouverture 4 512, plus bas 4 486, clôture 4 520 ; résistance 4 650 (TP).
+// ouverture 4 512, plus bas 4 486, clôture 4 520 ; résistance 4 650 (TP), rejetée deux fois
+// (mèches à 4 650 et 4 648) avant le repli.
 const pinbarSetup = () => buildCandles(4470, [
   ...c(4458), { c: 4452, l: 4445 }, ...c(4466, 4487, 4509, 4530), { c: 4553, h: 4560 },
   ...c(4541, 4527, 4514), { c: 4505, l: 4482 }, ...c(4521, 4540, 4562, 4583, 4604, 4626), { c: 4641, h: 4650 },
-  ...c(4630, 4617, 4601, 4588, 4572, 4557, 4541, 4528, 4512), { c: 4520, h: 4524, l: 4486 },
-], { seed: 2201, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4500], pins: [4445, 4482, 4486, 4560, 4650] });
+  { c: 4628, h: 4643, l: 4624 }, { c: 4644, h: 4648, l: 4626 }, { c: 4619, h: 4647, l: 4616 },
+  ...c(4601, 4588, 4572, 4557, 4541, 4528, 4512), { c: 4520, h: 4524, l: 4486 },
+], { seed: 2201, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4500, 4650], pins: [4445, 4482, 4486, 4560, 4650, 4643, 4624, 4648, 4626, 4647, 4616] });
 
 // ─── Price action 3 — engulfing haussier sur la zone Fibonacci, XAU/USD H4 ──
 // Rebond 4 500 → 4 720, correction dans la zone 0.5 / 0.618 (4 610 / 4 584) ;
@@ -89,21 +91,24 @@ const engulfingSetup = () => buildCandles(4530, [
 ], { seed: 2301, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", pins: [4500, 4720, 4615] });
 
 // Engulfings de principe (sans prix affichés) : haussier sur support, baissier sur résistance
-// Le niveau a déjà été touché une fois avant le pattern (support / résistance = au moins 2 touches).
+// Le niveau est prouvé avant le pattern : deux touches suivies d'un rebond net (règle PO : un support
+// ou une résistance = au moins 2 touches visibles) ; le pattern se forme au 3e contact.
 const ENGULF_BULL: Step[] = [
+  { c: 95.6, h: 96.7, l: 95.4 }, { c: 94.9, h: 95.8, l: 94.55 }, { c: 95.8, h: 96.0, l: 94.8 }, { c: 96.9, h: 97.1, l: 95.7 }, { c: 98.0, h: 98.2, l: 96.8 }, { c: 99.0, h: 99.2, l: 97.9 },
   { c: 98.6, h: 99.2, l: 98.4 }, { c: 98.0, h: 98.7, l: 97.8 }, { c: 97.3, h: 98.1, l: 97.1 }, { c: 96.5, h: 97.4, l: 96.3 },
   { c: 95.6, h: 96.6, l: 95.4 }, { c: 94.8, h: 95.7, l: 94.6 }, { c: 95.5, h: 95.7, l: 94.7 }, { c: 96.3, h: 96.5, l: 95.3 },
   { c: 96.7, h: 97.0, l: 96.1 }, { c: 96.2, h: 96.8, l: 96.0 }, { c: 95.6, h: 96.3, l: 95.4 },
   { c: 94.9, h: 95.8, l: 94.5 }, { c: 96.3, h: 96.5, l: 94.7 },
 ];
 const ENGULF_BEAR: Step[] = [
+  { c: 104.4, h: 104.6, l: 103.3 }, { c: 105.1, h: 105.45, l: 104.2 }, { c: 104.2, h: 105.2, l: 104.0 }, { c: 103.1, h: 104.3, l: 102.9 }, { c: 102.0, h: 103.2, l: 101.8 }, { c: 101.0, h: 102.1, l: 100.8 },
   { c: 101.4, h: 101.6, l: 100.8 }, { c: 102.0, h: 102.2, l: 101.3 }, { c: 102.7, h: 102.9, l: 101.9 }, { c: 103.5, h: 103.7, l: 102.6 },
   { c: 104.4, h: 104.6, l: 103.4 }, { c: 105.2, h: 105.4, l: 104.3 }, { c: 104.5, h: 105.3, l: 104.3 }, { c: 103.7, h: 104.7, l: 103.5 },
   { c: 103.3, h: 103.9, l: 103.0 }, { c: 103.8, h: 104.0, l: 103.2 }, { c: 104.4, h: 104.6, l: 103.7 },
   { c: 105.1, h: 105.5, l: 104.2 }, { c: 103.7, h: 105.3, l: 103.5 },
 ];
-const engulfBull = () => buildCandles(99.0, ENGULF_BULL, { seed: 2311, decimals: 2, asset: "XAU/USD", levels: [94.5], pins: pinAll(ENGULF_BULL) });
-const engulfBear = () => buildCandles(101.0, ENGULF_BEAR, { seed: 2312, decimals: 2, asset: "XAU/USD", levels: [105.5], pins: pinAll(ENGULF_BEAR) });
+const engulfBull = () => buildCandles(96.5, ENGULF_BULL, { seed: 2311, decimals: 2, asset: "XAU/USD", levels: [94.5], pins: pinAll(ENGULF_BULL) });
+const engulfBear = () => buildCandles(103.5, ENGULF_BEAR, { seed: 2312, decimals: 2, asset: "XAU/USD", levels: [105.5], pins: pinAll(ENGULF_BEAR) });
 
 // ─── Reversal 2 — ETE XAU/USD H1 (épaule gauche 4 620, tête 4 660, épaule ─────
 // droite 4 625, creux 4 580 / 4 575, clôture de breakout 4 570)
@@ -148,9 +153,9 @@ const divergenceNoBreak = () => buildCandles(4500, [
 // clôturé à 1.1878, 4 bougies au-dessus, retour vers la zone ; puis 3 signaux de retest.
 const flipPrefix = () => buildCandles(1.1790, [
   ...c(1.1801, 1.1814, 1.1826, 1.1838), { c: 1.1843, h: 1.1849 }, ...c(1.1830, 1.1818, 1.1812, 1.1824, 1.1836), { c: 1.1842, h: 1.1850 },
-  ...c(1.1829, 1.1821, 1.1833), { c: 1.1844, h: 1.1849 }, { c: 1.1878 },
+  { c: 1.1826, h: 1.1843 }, { c: 1.1815, h: 1.1828 }, { c: 1.1828, h: 1.1831 }, { c: 1.1844, h: 1.1849 }, { c: 1.1878 },
   ...c(1.1872, 1.1884, 1.1879, 1.1888), ...c(1.1877, 1.1868, 1.1860, 1.1856),
-], { seed: 3201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1850, 1.1840], pins: [1.1849, 1.1850, 1.1878] });
+], { seed: 3201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1850, 1.1840], pins: [1.1849, 1.1850, 1.1878, 1.1843, 1.1828, 1.1831] });
 const flipWith = (kind: "pin" | "engulfing" | "reaction") => {
   const p = flipPrefix();
   if (kind === "pin") return extend(p, [{ c: 1.1858, h: 1.1861, l: 1.1842 }], 3202, 5);
@@ -334,14 +339,17 @@ const PIN_LOCATION: Step[] = [
 ];
 const pinLocation = () => buildCandles(4520, PIN_LOCATION, { seed: 6201, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4500, 4650], pins: pinAll(PIN_LOCATION) });
 
-// Stratégie MTF 3 — zone qui raconte une histoire (EUR/USD H1) : support 1.1760 tenu,
-// puis cassé par une impulsion qui laisse un FVG bearish 1.1750-1.1760 ; remontée
-// actuelle vers la zone.
-const zoneHistoire = () => buildCandles(1.1792, [
-  ...c(1.1781, 1.1770), { c: 1.1766, l: 1.1761 }, ...c(1.1775, 1.1786, 1.1779), { c: 1.1768, l: 1.1760 },
-  { c: 1.1742, h: 1.1769, l: 1.1738 }, { c: 1.1737, h: 1.1750, l: 1.1731 },
-  ...c(1.1726, 1.1718, 1.1722, 1.1731, 1.1739), { c: 1.1745 },
-], { seed: 6301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1760, 1.1750], pins: [1.1761, 1.1760, 1.1750] });
+// Stratégie MTF 3 — zone qui raconte une histoire (EUR/USD H1) : support 1.1760 touché deux fois
+// (mèches à 1.1761 et 1.1760, rebonds jusqu'à 1.1789 et 1.1781), puis cassé par une impulsion qui
+// laisse un FVG bearish 1.1750-1.1760 ; la remontée actuelle revient au contact du FVG (1.1750,
+// sans le mitiger), sous l'ancien support devenu résistance.
+const ZONE_HISTOIRE: Step[] = [
+  ...c(1.1781, 1.1772), { c: 1.1768, h: 1.1774, l: 1.1761 }, { c: 1.1776, h: 1.1778, l: 1.1766 }, { c: 1.1785, h: 1.1787, l: 1.1775 }, { c: 1.1789, h: 1.1792, l: 1.1783 },
+  { c: 1.1781, h: 1.1790, l: 1.1779 }, { c: 1.1771, h: 1.1782, l: 1.1769 }, { c: 1.1766, h: 1.1772, l: 1.1760 }, { c: 1.1774, h: 1.1776, l: 1.1764 }, { c: 1.1781, h: 1.1783, l: 1.1772 },
+  { c: 1.1764, h: 1.1782, l: 1.1760 }, { c: 1.1738, h: 1.1765, l: 1.1734 }, { c: 1.1733, h: 1.1750, l: 1.1727 },
+  ...c(1.1724, 1.1717, 1.1722, 1.1731, 1.1740), { c: 1.1746, h: 1.1750, l: 1.1738 },
+];
+const zoneHistoire = () => buildCandles(1.1792, ZONE_HISTOIRE, { seed: 6301, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.1760, 1.1750], pins: pinAll(ZONE_HISTOIRE) });
 
 // Macro-trading 4 — signal bearish M15 contre le régime (XAU/USD) : H4 en HH / HL vers
 // 4 740 ; la dernière bougie H4 = 16 bougies M15 (bougie de rejet baissière à 4 701, breakout du creux
@@ -595,38 +603,44 @@ Object.assign(SCENARIOS, {
 
 // ─── Lot 10b ─────────────────────────────────────────────────────────────────
 // Débutant 5 — où placer son SL (Bitcoin H1) : creux 77 200, rebond, retour sur le
-// support 78 000, rebond = achat ; SL 77 000 sous le dernier swing low.
+// support 78 000 (repassé au-dessus, puis retesté), rebond = achat, confirmé par la bougie suivante
+// qui s'écarte nettement du niveau ; SL 77 000 sous le dernier swing low.
 const slChart = () => buildCandles(78900, [
   ...c(78700, 78450, 78200, 77800), { c: 77450, l: 77200 }, ...c(77750, 78150, 78600, 78900), { c: 78750, h: 79050 },
-  ...c(78550, 78300), { c: 78100, l: 78000 }, { c: 78450, l: 78020 },
-], { seed: 10101, decimals: 0, asset: "BTC/USD", session: "New York", volatility: "normale", levels: [78000, 77200], pins: [77200, 78000, 79050] });
+  ...c(78550, 78300), { c: 78100, l: 78000 }, { c: 78450, l: 78020 }, { c: 78820, h: 78880, l: 78430 },
+], { seed: 10101, decimals: 0, asset: "BTC/USD", session: "New York", volatility: "normale", levels: [78000, 77200], pins: [77200, 78000, 79050, 78020, 78880, 78430] });
 Object.assign(SCENARIOS, { "sl-chart": slChart });
 
 // ─── Lot 11 ──────────────────────────────────────────────────────────────────
-// Intermédiaire 3 — support de type demande : descente lente, base (3 bougies),
-// départ impulsif haussier, retour sur la zone ; résistance de type offre : l'inverse.
+// Intermédiaire 3 — support de type demande : descente lente, base (3 bougies), départ impulsif
+// haussier, puis RETEST : le prix revient dans la zone (mèche à 1.0826), rejette et repart (deux
+// bougies haussières jusqu'à 1.0871) — c'est le retest qui confirme le support. Résistance de type
+// offre : l'inverse (retest à 1.0978, rejet, repli jusqu'à 1.0933).
 const sdSupport = () => buildCandles(1.0904, [
   ...c(1.0897, 1.0891, 1.0884, 1.0878, 1.0871, 1.0863, 1.0855, 1.0846, 1.0838, 1.0830),
   { c: 1.0824, l: 1.0816 }, { c: 1.0827, l: 1.0818 }, { c: 1.0822, l: 1.0815 },
   { c: 1.0851, h: 1.0853, l: 1.0821 }, { c: 1.0879, h: 1.0882, l: 1.0850 },
-  ...c(1.0874, 1.0868, 1.0861, 1.0853, 1.0844, 1.0836), { c: 1.0838, l: 1.0829 },
-], { seed: 11101, decimals: 5, asset: "EUR/USD", volatility: "normale", levels: [1.0828, 1.0814], pins: [1.0816, 1.0818, 1.0815, 1.0829] });
+  ...c(1.0874, 1.0868, 1.0861, 1.0853, 1.0844, 1.0836), { c: 1.0841, h: 1.0843, l: 1.0826 },
+  { c: 1.0856, h: 1.0858, l: 1.0839 }, { c: 1.0871, h: 1.0874, l: 1.0853 },
+], { seed: 11101, decimals: 5, asset: "EUR/USD", volatility: "normale", levels: [1.0830, 1.0814, 1.0838], pins: [1.0816, 1.0818, 1.0815, 1.0826, 1.0843, 1.0839, 1.0858, 1.0853, 1.0874] });
 const sdResistance = () => buildCandles(1.0901, [
   ...c(1.0907, 1.0913, 1.0920, 1.0926, 1.0933, 1.0941, 1.0949, 1.0958, 1.0966, 1.0974),
   { c: 1.0980, h: 1.0988 }, { c: 1.0977, h: 1.0986 }, { c: 1.0982, h: 1.0989 },
   { c: 1.0953, h: 1.0983, l: 1.0951 }, { c: 1.0925, h: 1.0954, l: 1.0922 },
-  ...c(1.0930, 1.0936, 1.0943, 1.0951, 1.0960, 1.0968), { c: 1.0966, h: 1.0975 },
-], { seed: 11102, decimals: 5, asset: "EUR/USD", volatility: "normale", levels: [1.0976, 1.0990], pins: [1.0988, 1.0986, 1.0989, 1.0975] });
+  ...c(1.0930, 1.0936, 1.0943, 1.0951, 1.0960, 1.0968), { c: 1.0963, h: 1.0978, l: 1.0961 },
+  { c: 1.0948, h: 1.0966, l: 1.0946 }, { c: 1.0933, h: 1.0951, l: 1.0930 },
+], { seed: 11102, decimals: 5, asset: "EUR/USD", volatility: "normale", levels: [1.0974, 1.0990, 1.0968], pins: [1.0988, 1.0986, 1.0989, 1.0978, 1.0961, 1.0966, 1.0946, 1.0951, 1.0930] });
 Object.assign(SCENARIOS, { "sd-support": sdSupport, "sd-resistance": sdResistance });
 
 // ─── Lot 12 ──────────────────────────────────────────────────────────────────
 // Avancé 6 — chasse aux stops (EUR/USD H1) : support 1.0800 touché 2 fois (equal lows),
 // mèche à 1.0786 puis clôture à 1.0808 (au-dessus du support), hausse ensuite.
 const stopHunt = () => buildCandles(1.0838, [
-  ...c(1.0829, 1.0818, 1.0809), { c: 1.0806, l: 1.0801 }, ...c(1.0817, 1.0828, 1.0822, 1.0812), { c: 1.0805, l: 1.0800 }, ...c(1.0813, 1.0807),
+  ...c(1.0829, 1.0818, 1.0809), { c: 1.0806, l: 1.0801 }, ...c(1.0817, 1.0828, 1.0822, 1.0812), { c: 1.0805, l: 1.0800 },
+  { c: 1.0814, h: 1.0816, l: 1.0803 }, { c: 1.0810, h: 1.0815, l: 1.0808 },
   { c: 1.0808, h: 1.0811, l: 1.0786 },
   ...c(1.0821, 1.0834, 1.0829, 1.0843), { c: 1.0852 },
-], { seed: 12101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.0800], pins: [1.0801, 1.0800, 1.0786, 1.0808] });
+], { seed: 12101, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.0800], pins: [1.0801, 1.0800, 1.0786, 1.0808, 1.0816, 1.0803, 1.0815] });
 // Macro Débutant 1 — réaction d'EUR/USD au CPI de 14h30 (M1) : calme, puis −40 pips
 const cpiReaction = () => buildCandles(1.0850, [
   ...c(1.0851, 1.0849, 1.0852, 1.0850, 1.0851, 1.0850), { c: 1.0810, h: 1.0853, l: 1.0804 }, ...c(1.0814, 1.0806, 1.0809),
@@ -747,19 +761,22 @@ const nyExpansion = () => buildCandles(4638, [
   { c: 4619, l: 4612 }, { c: 4616, h: 4622, l: 4613 },
 ], { seed: 16301, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 5,
   levels: [4668, 4610], pins: [4640, 4644, 4636, 4664, 4668, 4666, 4642, 4644, 4622, 4625, 4614, 4610, 4612, 4613, 4619, 4616] });
-// ICT 3 — TimingComparison : même résistance H1 1.1780 testée deux fois (M15).
+// ICT 3 — TimingComparison : même résistance H1 1.1780 testée deux fois (M15). Dans les deux
+// panneaux, un test antérieur (mèche à 1.1779, repli à 1.1761) prouve la résistance.
 // Asia (03h UTC) : bougie de rejet de 4 pips (mèche 1.1776 → 1.1780), puis 2 h de latéralisation.
 // London Open : sweep à 1.1792, puis cascade baissière de 35 pips en 4 bougies (1.1757).
-const timingAsia = () => buildCandles(1.1768, [
+const timingAsia = () => buildCandles(1.1764, [
+  { c: 1.1770, h: 1.1771, l: 1.1763 }, { c: 1.1776, h: 1.1777, l: 1.1769 }, { c: 1.1774, h: 1.1779, l: 1.1772 }, { c: 1.1768, h: 1.1775, l: 1.1766 }, { c: 1.1763, h: 1.1769, l: 1.1761 }, { c: 1.1768, h: 1.1769, l: 1.1762 },
   ...c(1.1772, 1.1776), { c: 1.1775, h: 1.1780, l: 1.1773 },
   { c: 1.1773 }, { c: 1.1775 }, { c: 1.1772 }, { c: 1.1774 }, { c: 1.1772 }, { c: 1.1775 }, { c: 1.1773 }, { c: 1.1774 },
 ], { seed: 16401, decimals: 5, asset: "EUR/USD", session: "Asie", volatility: "faible",
-  levels: [1.1780, 1.1777], pins: [1.1776, 1.1780, 1.1775, 1.1773] });
-const timingLondon = () => buildCandles(1.1768, [
+  levels: [1.1780, 1.1777], pins: [1.1776, 1.1780, 1.1775, 1.1773, 1.1779, 1.1761] });
+const timingLondon = () => buildCandles(1.1764, [
+  { c: 1.1770, h: 1.1771, l: 1.1763 }, { c: 1.1776, h: 1.1777, l: 1.1769 }, { c: 1.1774, h: 1.1779, l: 1.1772 }, { c: 1.1768, h: 1.1775, l: 1.1766 }, { c: 1.1763, h: 1.1769, l: 1.1761 }, { c: 1.1768, h: 1.1769, l: 1.1762 },
   ...c(1.1772, 1.1776), { c: 1.1777, h: 1.1792, l: 1.1774 }, { c: 1.1768 }, { c: 1.1764 }, { c: 1.1760 }, { c: 1.1759, l: 1.1757 },
   ...c(1.1762, 1.1760),
 ], { seed: 16402, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale",
-  levels: [1.1780, 1.1757], pins: [1.1777, 1.1792, 1.1774, 1.1768, 1.1764, 1.1760, 1.1759, 1.1757] });
+  levels: [1.1780, 1.1757], pins: [1.1779, 1.1761, 1.1777, 1.1792, 1.1774, 1.1768, 1.1764, 1.1760, 1.1759, 1.1757] });
 // ICT 4 et ICT 5 — un displacement EUR/USD M15 complet (une seule séquence pour les deux leçons),
 // bougies entièrement écrites : calme sous les equal highs 1.1780 (corps de 3 à 4 pips), sweep à
 // 1.1792 refermé à 1.1777, puis 3 bougies baissières sans mèche haute aux corps de 9, 10 et 10 pips
@@ -838,14 +855,18 @@ const fomcExcess = () => buildCandles(4659, [
 // (mèches basses de 6 à 8 $, clôtures entre 4 580 et 4 585), puis trois suites :
 // A remontée vers 4 625 $ dans l'heure, B reprise franche vers 4 630 $, C breakout au-dessus
 // de 4 620 $ et accélération jusqu'à 4 665 $ (au-delà du niveau pré-NFP).
+// Avant : le support 4 600 est prouvé (touches à 4 601 et 4 602, chacune suivie d'un rebond net),
+// puis le prix monte à 4 640 avant la publication.
 const NFP_PREFIX: Step[] = [
+  { c: 4610, h: 4620, l: 4607 }, { c: 4604, h: 4612, l: 4601 }, { c: 4615, h: 4617, l: 4602 }, { c: 4626, h: 4628, l: 4613 }, { c: 4618, h: 4629, l: 4615 },
+  { c: 4608, h: 4620, l: 4602 }, { c: 4622, h: 4624, l: 4606 }, { c: 4634, h: 4636, l: 4620 }, { c: 4641, h: 4643, l: 4632 },
   { c: 4642, h: 4648, l: 4636 }, { c: 4637, h: 4645, l: 4632 }, { c: 4644, h: 4650, l: 4635 }, { c: 4639, h: 4646, l: 4630 }, { c: 4640, h: 4645, l: 4634 },
   { c: 4582, h: 4641, l: 4575 },
   { c: 4584, h: 4587, l: 4576 }, { c: 4581, h: 4586, l: 4575 }, { c: 4585, h: 4587, l: 4575 }, { c: 4583, h: 4587, l: 4575 },
 ];
-const NFP_PINS = [4648, 4636, 4645, 4632, 4650, 4635, 4646, 4630, 4634, 4640, 4641, 4582, 4575, 4584, 4587, 4576, 4581, 4586, 4585, 4583];
+const NFP_PINS = [4610, 4620, 4607, 4604, 4612, 4601, 4615, 4617, 4602, 4626, 4628, 4613, 4618, 4629, 4615, 4608, 4620, 4622, 4624, 4606, 4634, 4636, 4632, 4643, 4648, 4636, 4645, 4632, 4650, 4635, 4646, 4630, 4634, 4640, 4641, 4582, 4575, 4584, 4587, 4576, 4581, 4586, 4585, 4583];
 const NFP_OPTS = { decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée" } as const;
-const nfpPrefix = () => buildCandles(4641, NFP_PREFIX, { ...NFP_OPTS, seed: 18201, split: 5, preNews: true, levels: [4575], pins: NFP_PINS });
+const nfpPrefix = () => buildCandles(4618, NFP_PREFIX, { ...NFP_OPTS, seed: 18201, split: 14, preNews: true, levels: [4575], pins: NFP_PINS });
 const nfpCase = (steps: Step[], pins: number[], seed: number) => () => {
   const p = nfpPrefix();
   return [...p, ...buildCandles(p[p.length - 1].c, steps, { ...NFP_OPTS, seed, levels: [4575], pins })];
@@ -890,14 +911,14 @@ const EXHAUST: Step[] = [
 const riskoffExhaust = () => buildCandles(4590, EXHAUST, { seed: 19301, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "normale",
   levels: [4735, 4710, 4720, 4680, 4705, 4640], pins: pinAll(EXHAUST) });
 // Macro-trading 4 — MacroFilterCalendar (XAU/USD M5, 12h55 → 13h55 UTC) : prix sous la
-// résistance 4 665, structure baissière, setup short à 13h25 ; CPI à 13h30 : bougie jusqu'à
+// résistance 4 665, rejetée deux fois (mèches à 4 665 et 4 664), structure baissière, setup short à 13h25 ; CPI à 13h30 : bougie jusqu'à
 // 4 710 $ (au-dessus du SL d'un short), puis chute jusqu'à 4 610 $ : 100 $ d'amplitude.
 const macroFilterNews = () => buildCandles(4655, [
   { c: 4658, h: 4661, l: 4653 }, { c: 4662, h: 4665, l: 4656 }, { c: 4657, h: 4663, l: 4655 }, { c: 4654, h: 4659, l: 4651 },
-  { c: 4656, h: 4660, l: 4652 }, { c: 4653, h: 4658, l: 4650 }, { c: 4652, h: 4656, l: 4649 },
+  { c: 4656, h: 4664, l: 4652 }, { c: 4653, h: 4658, l: 4650 }, { c: 4652, h: 4656, l: 4649 },
   { c: 4688, h: 4710, l: 4648 }, { c: 4662, h: 4692 }, { c: 4640, h: 4664 }, { c: 4622, h: 4643 }, { c: 4613, h: 4626, l: 4610 },
 ], { seed: 19401, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "élevée", split: 7, preNews: true,
-  levels: [4665, 4710, 4610], pins: [4661, 4653, 4665, 4656, 4663, 4655, 4659, 4651, 4660, 4652, 4658, 4650, 4649, 4688, 4710, 4648, 4662, 4692, 4640, 4664, 4622, 4643, 4613, 4626, 4610] });
+  levels: [4665, 4710, 4610], pins: [4661, 4653, 4665, 4656, 4663, 4655, 4659, 4651, 4664, 4652, 4658, 4650, 4649, 4688, 4710, 4648, 4662, 4692, 4640, 4664, 4622, 4643, 4613, 4626, 4610] });
 Object.assign(SCENARIOS, {
   "riskoff-daily": riskoffDaily, "riskoff-trend-h4": riskoffTrend,
   "riskoff-exhaust-h4": riskoffExhaust, "macro-filter-news": macroFilterNews,
@@ -987,8 +1008,11 @@ const RETOUR_DESEQ: Step[] = [
 // Multi-UT 3 bloc 3 et Multi-UT 5 bloc 3 (fusion ScenarioZone + H1ZonePreparation) — EUR/USD H1 :
 // support 1.1760, chute qui le casse et laisse un FVG 1.1750-1.1760, puis remontée progressive
 // avec des bougies haussières de plus en plus courtes et des corrections de plus en plus longues,
-// jusqu'au bas de la zone.
+// jusqu'au bas de la zone. Le support est prouvé avant la cassure : touches à 1.1761 et 1.1761
+// (bougie 7), chacune suivie d'un rebond net.
 const ZONE_PREP: Step[] = [
+  { c: 1.1770, h: 1.1778, l: 1.1768 }, { c: 1.1765, h: 1.1771, l: 1.1761 }, { c: 1.1774, h: 1.1776, l: 1.1764 }, { c: 1.1783, h: 1.1785, l: 1.1773 },
+  { c: 1.1779, h: 1.1786, l: 1.1777 }, { c: 1.1772, h: 1.1780, l: 1.1770 },
   { c: 1.1768, h: 1.1774, l: 1.1762 }, { c: 1.1767, h: 1.1770, l: 1.1761 }, { c: 1.1772, h: 1.1775, l: 1.1766 }, { c: 1.1763, h: 1.1773, l: 1.1760 },
   { c: 1.1738, h: 1.1763, l: 1.1735 }, { c: 1.1728, h: 1.1750, l: 1.1724 }, { c: 1.1720, h: 1.1730, l: 1.1716 },
   // remontée : corps haussiers 11, 9, 7, 6, 5, 4 pips ; corrections de plus en plus longues : 3 pips (1 bougie),
@@ -1013,7 +1037,7 @@ Object.assign(SCENARIOS, {
   "dir-dom-xau": authored(4672, DIR_DOM, 21101, 0, "XAU/USD", [4680]),
   "htf-filter-h4": authored(1.1800, HTF_FILTER, 21201, 5, "EUR/USD", [1.1760]),
   "retour-deseq-xau": authored(4676, RETOUR_DESEQ, 21301, 0, "XAU/USD", [4648, 4660]),
-  "zone-prep-h1": authored(1.1772, ZONE_PREP, 21401, 5, "EUR/USD", [1.1750, 1.1760]),
+  "zone-prep-h1": authored(1.1776, ZONE_PREP, 21401, 5, "EUR/USD", [1.1750, 1.1760]),
   "ltf-confirm": authored(1.1738, LTF_CONFIRM, 21501, 5, "EUR/USD", [1.1748, 1.1760, 1.1772]),
 });
 
@@ -1030,12 +1054,21 @@ const paTypes = Object.fromEntries(Object.entries(PA_TYPES).map(([k, st], n) => 
 // Price action 2 bloc 1 — valider une pin bar : même descente vers le support 4 500 $ (XAU/USD H4),
 // puis 4 bougies candidates, chacune ne ratant qu'un critère du texte (la 1re les remplit tous) ;
 // la 4e est une pin bar parfaite en milieu de range, loin de tout niveau.
-const PIN_CTX: Step[] = [{ c: 4552, h: 4560, l: 4548 }, { c: 4541, h: 4554, l: 4537 }, { c: 4533, h: 4544, l: 4529 }, { c: 4524, h: 4535, l: 4520 }, { c: 4516, h: 4527, l: 4512 }];
-const PIN_RANGE: Step[] = [{ c: 4592, h: 4598, l: 4584 }, { c: 4583, h: 4594, l: 4580 }, { c: 4590, h: 4596, l: 4581 }, { c: 4584, h: 4593, l: 4580 }, { c: 4586, h: 4592, l: 4579 }];
+// Contexte des trois premières : le support 4 500 est prouvé (touches à 4 501 et 4 499, chacune
+// suivie d'un rebond net), puis le prix y redescend.
+const PIN_CTX: Step[] = [
+  { c: 4516, h: 4532, l: 4512 }, { c: 4506, h: 4518, l: 4501 }, { c: 4518, h: 4520, l: 4503 }, { c: 4532, h: 4535, l: 4517 }, { c: 4541, h: 4544, l: 4528 },
+  { c: 4528, h: 4543, l: 4525 }, { c: 4514, h: 4530, l: 4511 }, { c: 4504, h: 4516, l: 4499 }, { c: 4517, h: 4519, l: 4502 }, { c: 4530, h: 4533, l: 4515 },
+  { c: 4538, h: 4541, l: 4527 }, { c: 4531, h: 4540, l: 4528 }, { c: 4523, h: 4533, l: 4520 }, { c: 4516, h: 4526, l: 4512 },
+];
+const PIN_RANGE: Step[] = [
+  { c: 4591, h: 4597, l: 4583 }, { c: 4585, h: 4593, l: 4582 }, { c: 4589, h: 4595, l: 4583 }, { c: 4582, h: 4592, l: 4579 }, { c: 4588, h: 4594, l: 4580 },
+  { c: 4593, h: 4598, l: 4586 }, { c: 4587, h: 4595, l: 4584 }, { c: 4583, h: 4590, l: 4580 }, { c: 4588, h: 4592, l: 4579 },
+  { c: 4592, h: 4598, l: 4584 }, { c: 4583, h: 4594, l: 4580 }, { c: 4590, h: 4596, l: 4581 }, { c: 4584, h: 4593, l: 4580 }, { c: 4586, h: 4592, l: 4579 }];
 const PIN_CASES: Record<string, [Step[], number, Step]> = {
-  valide: [PIN_CTX, 4560, { c: 4522, h: 4524, l: 4496 }],
-  ratio: [PIN_CTX, 4560, { c: 4528, h: 4530, l: 4500 }],
-  cloture: [PIN_CTX, 4560, { c: 4512, h: 4536, l: 4494 }],
+  valide: [PIN_CTX, 4530, { c: 4522, h: 4524, l: 4496 }],
+  ratio: [PIN_CTX, 4530, { c: 4528, h: 4530, l: 4500 }],
+  cloture: [PIN_CTX, 4530, { c: 4512, h: 4536, l: 4494 }],
   niveau: [PIN_RANGE, 4588, { c: 4592, h: 4594, l: 4566 }],
 };
 const pinCases = Object.fromEntries(Object.entries(PIN_CASES).map(([k, [ctx, open, last]], n) => [`pin-case-${k}`, authored(open, [...ctx, last], 22200 + n, 0, "XAU/USD")]));
@@ -1054,9 +1087,13 @@ const ENG_CASES: Record<string, Step[]> = {
   amplitude: [{ c: 4552, h: 4555, l: 4551 }, { c: 4556, h: 4557, l: 4551 }],
 };
 const engCases = Object.fromEntries(Object.entries(ENG_CASES).map(([k, pair], n) => [`eng-case-${k}`, authored(4600, [...ENG_CTX, ...pair], 22300 + n, 0, "XAU/USD")]));
-// Multi-UT 4 bloc 3 — une zone peut échouer (XAU/USD M5) : support H1 attendu à 4 545 $ (bande
-// 4 540-4 550), le prix arrive et traverse la bande sans mèche basse de rejet, continuation nette.
+// Multi-UT 4 bloc 3 — une zone peut échouer (XAU/USD M5) : support H1 à 4 545 $ (bande 4 540-4 550),
+// prouvé par deux rebonds (mèches à 4 542 et 4 541, remontées jusqu'à 4 575 et 4 583) ; au 3e passage,
+// le prix traverse la bande sans mèche basse de rejet, continuation nette.
 const ZONE_FAIL: Step[] = [
+  { c: 4561, h: 4572, l: 4559 }, { c: 4552, h: 4563, l: 4549 }, { c: 4556, h: 4558, l: 4542 }, { c: 4566, h: 4568, l: 4553 }, { c: 4575, h: 4577, l: 4564 },
+  { c: 4569, h: 4578, l: 4567 }, { c: 4560, h: 4571, l: 4558 }, { c: 4553, h: 4562, l: 4551 }, { c: 4559, h: 4561, l: 4541 }, { c: 4568, h: 4570, l: 4557 },
+  { c: 4577, h: 4579, l: 4566 }, { c: 4583, h: 4586, l: 4575 },
   { c: 4578, h: 4582, l: 4575 }, { c: 4572, h: 4579, l: 4570 }, { c: 4566, h: 4573, l: 4565 }, { c: 4560, h: 4567, l: 4559 }, { c: 4554, h: 4561, l: 4553 },
   { c: 4547, h: 4555, l: 4546 }, { c: 4539, h: 4548, l: 4538 }, { c: 4531, h: 4540, l: 4530 }, { c: 4524, h: 4532, l: 4523 }, { c: 4517, h: 4525, l: 4516 }, { c: 4512, h: 4518, l: 4510 },
 ];
@@ -1081,7 +1118,7 @@ const DAILY_CTX = bars(1.1878, [
   1.1796, 1.1762, 1.1728, { c: 1.1704, l: 1.1695 }, 1.1722, 1.1748, 1.1768, { c: 1.1774, h: 1.1780 }, 1.1758, 1.1745,
 ], 0.0005, 5);
 Object.assign(SCENARIOS, paTypes, pinCases, engCases, {
-  "zone-fail-xau": authored(4583, ZONE_FAIL, 22401, 0, "XAU/USD", [4540, 4550]),
+  "zone-fail-xau": authored(4570, ZONE_FAIL, 22401, 0, "XAU/USD", [4540, 4550]),
   "daily-ctx": authored(1.1878, DAILY_CTX, 22501, 5, "EUR/USD", [1.1860, 1.1695]),
 });
 
@@ -1242,7 +1279,7 @@ const SR_STRONG = bars(4560, [
   4544, 4528, 4514, { c: 4506, l: 4500 }, 4520, 4536, { c: 4545, h: 4548 }, 4530, 4515, { c: 4507, l: 4501 }, 4523, 4540, { c: 4546, h: 4549 },
   4532, 4516, { c: 4508, l: 4500 }, 4524, { c: 4541, h: 4544 }, 4527, { c: 4513, l: 4511 }, { c: 4506, l: 4501 }, 4521, 4538,
 ], 3, 0);
-const SR_WEAK = bars(4560, [4548, 4535, 4522, { c: 4512, l: 4511 }, { c: 4506, h: 4512, l: 4502 }, { c: 4518, h: 4519, l: 4505 }, { c: 4519, h: 4520, l: 4518 }, { c: 4505, h: 4520, l: 4503 }, { c: 4510, h: 4511, l: 4504 }, { c: 4507, h: 4512, l: 4505 }, 4496, 4486], 3, 0);
+const SR_WEAK = bars(4560, [4548, 4535, 4522, { c: 4512, l: 4511 }, { c: 4506, h: 4512, l: 4502 }, { c: 4518, h: 4519, l: 4505 }, { c: 4519, h: 4520, l: 4518 }, { c: 4505, h: 4520, l: 4503 }, { c: 4514, h: 4515, l: 4504 }, { c: 4518, h: 4521, l: 4515 }, 4493, 4484], 3, 0);
 // Support / résistance 1 — zone ou ligne : trois creux 1.1685 / 1.1688 / 1.1690 avec mèches ;
 // tracés une fois en ligne fine (1.1690), une fois en zone 1.1680-1.1695 (EUR/USD H4).
 const ZONE_LINE = bars(1.1735, [
@@ -1316,17 +1353,23 @@ const strength = (amp: number) => {
   return bars(1.1700, st, 0.0003, 5);
 };
 const STR_WEAK = strength(50), STR_MID = strength(100), STR_STRONG = strength(200);
-// Intermédiaire 9 — Fibonacci sur EUR/USD : impulsion 1.0800 → 1.0980 (pause vers 1.0870 pendant la
-// montée = support historique), retracement jusqu'à 1.0870 (61,8 % = 1.0869).
+// Intermédiaire 9 — Fibonacci sur EUR/USD : impulsion 1.0800 → 1.0980. Pendant la montée, la zone
+// 1.0868-1.0876 rejette deux fois (mèches à 1.0875 et 1.0876, replis à 1.0834 puis 1.0844 : creux
+// montants), cède en clôture, puis le retracement revient la tester par le haut jusqu'à 1.0870
+// (61,8 % = 1.0869) : ancienne résistance devenue support historique, respectée deux fois.
 const FIB_INT9 = bars(1.0815, [
-  { c: 1.0806, l: 1.0800 }, { c: 1.0826, l: 1.0803 }, 1.0848, 1.0864, { c: 1.0872, h: 1.0876 }, 1.0864, { c: 1.0868, l: 1.0860 }, 1.0886, 1.0908, 1.0931, 1.0955, { c: 1.0972, h: 1.0980 },
+  { c: 1.0806, l: 1.0800 }, { c: 1.0826, l: 1.0803 }, 1.0846, { c: 1.0862, h: 1.0866 }, { c: 1.0858, h: 1.0875 }, 1.0846, { c: 1.0838, l: 1.0834 },
+  1.0852, { c: 1.0864, h: 1.0867 }, { c: 1.0859, h: 1.0876 }, { c: 1.0848, l: 1.0844 }, 1.0862,
+  1.0884, 1.0906, 1.0930, 1.0954, { c: 1.0972, h: 1.0980 },
   { c: 1.0962, h: 1.0977 }, 1.0946, 1.0928, 1.0910, 1.0894, 1.0881, { c: 1.0874, l: 1.0870 }, { c: 1.0877, l: 1.0871 },
 ], 0.0003, 5);
 // Trend-following 3 bloc 3 — confluence (XAU/USD H4) : support de l'UT supérieure 4 470-4 485,
 // impulsion 4 480 → 4 660 avec une bougie baissière (OB 4 532-4 541) au milieu de l'OTE, chute qui
 // laisse un FVG baissier au-dessus, retour dans l'OTE sur l'OB, rejet ; cible : le FVG. Avant le creux,
 // un vrai sommet 4 558 : l'impulsion qui suit l'OB le casse en clôture (l'OB précède un breakout de structure).
+// Le support de l'UT supérieure est prouvé : un 1er test (4 481) suivi d'un rebond net, avant le creux 4 480.
 const PB_CONF = bars(4530, [
+  { c: 4512, h: 4532, l: 4508 }, { c: 4496, h: 4514, l: 4493 }, { c: 4487, h: 4498, l: 4481 }, { c: 4498, h: 4500, l: 4484 }, { c: 4512, h: 4514, l: 4496 }, { c: 4523, h: 4526, l: 4509 }, { c: 4530, h: 4533, l: 4520 },
   { c: 4538, h: 4541, l: 4527 }, { c: 4548, h: 4551, l: 4536 }, { c: 4553, h: 4558, l: 4545 },
   { c: 4532, h: 4555, l: 4529 }, { c: 4515, h: 4534, l: 4512 }, { c: 4500, h: 4517, l: 4497 },
   4492, { c: 4486, l: 4480 }, { c: 4504, l: 4483 }, 4522, { c: 4541, h: 4544 }, { c: 4532, h: 4543, l: 4529 }, { c: 4562, l: 4531 }, 4588, 4612, 4636, { c: 4652, h: 4660 },

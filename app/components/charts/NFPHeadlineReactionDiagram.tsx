@@ -1,14 +1,15 @@
 // Macro-trading 2 bloc 1 — le headline provoque une sur-réaction (XAU/USD M15), exemple du
-// texte : 4 640 $ avant le NFP, impulsion baissière jusqu'à 4 575 $ qui casse le support
-// 4 600 $, stabilisation autour de 4 580-4 585 $, puis remontée vers 4 625 $ dans l'heure
+// texte : support 4 600 $ touché deux fois avant (rebonds nets), 4 640 $ avant le NFP, impulsion
+// baissière jusqu'à 4 575 $ qui casse le support 4 600 $, stabilisation autour de 4 580-4 585 $, puis remontée vers 4 625 $ dans l'heure
 // suivante. Mouvements calculés. Bougies : scenarios.ts (« nfp-headline »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { usd } from "@/app/components/lessons/trade";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
-/** Bougies des scénarios NFP : 5 avant la publication, l'impulsion, 4 de stabilisation */
-export const NFP = { impulse: 5, stabEnd: 9 };
+/** Bougies des scénarios NFP : 14 avant la publication (dont le support 4 600 touché deux fois),
+ *  l'impulsion, 4 de stabilisation */
+export const NFP = { impulse: 14, stabEnd: 18 };
 
 export function NFPHeadlineReactionDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["nfp-headline"];

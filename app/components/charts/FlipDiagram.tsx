@@ -15,7 +15,7 @@ export default function FlipDiagram(_props: { className?: string; locale?: "fr" 
   const cs = CANDLES["flip-pin"];
   const brk = cs.findIndex((k) => k.c > LEVEL + 0.0015);
   const pin = cs.length - 1;
-  const t = tradeSetup({ entry: cs[pin].c, sl: 1.183, tp: 1.195, from: pin, tpOffscale: true, expect: ">3.2", names: { entry: "Entrée long", tp: "TP résistance H4" } });
+  const t = tradeSetup({ entry: cs[pin].c, sl: 1.183, tp: 1.195, from: pin, tpOffscale: true, expect: ">3.2", names: { entry: "Entrée long", tp: "TP" } });
   return (
     <LessonChart
       id="FlipDiagram"
