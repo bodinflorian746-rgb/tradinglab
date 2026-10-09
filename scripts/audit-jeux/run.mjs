@@ -11,7 +11,9 @@
 //   glossaire (libellés de zones et termes = vocabulaire des leçons),
 //   bougies (ouverture = clôture précédente, en données et au rendu ; jeux,
 //   aperçus du hub, héros de la home), textes affichés FR / ES des leçons, de la
-//   home, du hub et des jeux (termes interdits, orthographe, typographie ES).
+//   home, du hub et des jeux (termes interdits, orthographe, typographie ES),
+//   supports et résistances prouvés (2 touches, ou cassure puis retest avec réaction,
+//   visibles avant la réponse ; même règle que les leçons : audit-lecons/sr-proof.mjs).
 // Règles « DOM » (Playwright) : troncature langues actives × 390/1440, sonde
 //   lignes = étiquettes = boutons, cohérence du verdict affiché.
 // Code de sortie 1 dès qu'une règle compte une erreur.
@@ -71,7 +73,7 @@ process.stdout.write("… contexte de marché et prix\n");
 }
 
 // 3. Réalisme, verdicts, textes, glossaire, bougies
-for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (ton ; français en EN / ES si actives)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"], ["Vocabulaire de référence (lib/vocabulary/trading-terms.json)", "vocabulaire.ts"]]) {
+for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (ton ; français en EN / ES si actives)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Supports / résistances prouvés (500 rounds)", "sr.ts"], ["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"], ["Vocabulaire de référence (lib/vocabulary/trading-terms.json)", "vocabulaire.ts"]]) {
   process.stdout.write(`… ${rule}\n`);
   const out = viteNode(file);
   const r = resultOf(out);

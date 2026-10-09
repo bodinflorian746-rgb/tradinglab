@@ -20,6 +20,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+import { srTouches, srProofError } from "./sr-proof.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, "..", "..");
@@ -38,9 +39,12 @@ const pages = PAGES.length ? PAGES.map((url) => ({ url, charts: LOT.find((l) => 
 
 const terms = JSON.parse(fs.readFileSync(path.join(ROOT, "lib", "vocabulary", "trading-terms.json"), "utf8"));
 const VOCAB = terms.termes.fr.flatMap((t) => t.interdit.map((src) => ({ src, flags: t.casse ? "u" : "iu", retenu: t.retenu })));
+const SR_SRC = `${srTouches.toString()}\n${srProofError.toString()}`;
 
 // ─── Contrôles exécutés dans la page ─────────────────────────────────────────
-function checkCharts({ ids, vocab }) {
+function checkCharts({ ids, vocab, sr }) {
+  // Preuve des supports / résistances (sr-proof.mjs, passé en texte au navigateur)
+  const [, srProofError] = new Function(`${sr}; return [srTouches, srProofError];`)();
   const errs = [];
   const E = (id, m) => errs.push(`${id} : ${m}`);
   const near = (a, b, t) => Math.abs(a - b) <= t;
@@ -77,6 +81,9 @@ function checkCharts({ ids, vocab }) {
     const meanBody = (a) => { const prev = cs.slice(Math.max(0, a - 10), a); return prev.length >= 3 ? prev.reduce((s, k) => s + body(k), 0) / prev.length : null; };
     const zoneOf = (key) => svg.querySelector(`rect[data-zone="${key}"]`);
     const fmt = (x) => x.toFixed(dec >= 5 ? 5 : dec);
+    // Étiquette d'une zone / d'un niveau ; support ou résistance par le rôle ou par l'étiquette
+    const labelOf = (key) => svg.querySelector(`g[data-label-for="${CSS.escape(key)}"]`)?.textContent.trim() ?? "";
+    const isSR = (el, key) => /^(support|resistance)$/.test(el.dataset.role || "") || /\b(support|r[ée]sistance)/i.test(labelOf(key));
     // Touches d'un niveau : groupes de bougies qui l'atteignent, séparés par un éloignement
     const touches = (side, lo, hi, from = 0, to = n - 1) => {
       const med = [...cs].map((k) => k.h - k.l).sort((a, b) => a - b)[Math.floor(n / 2)];
@@ -181,10 +188,11 @@ function checkCharts({ ids, vocab }) {
           else if (cs.slice(i + 1, j + 1).some((q) => up(q) !== b)) E(`${name} : la bougie ${i} n'est pas la dernière bougie opposée avant l'impulsion`);
         }
       }
-      if (/^(support|resistance)$/.test(z.dataset.role || "")) {
-        const from = z.dataset.from ? +z.dataset.from : 0;
-        const t = touches(z.dataset.role === "support" ? "low" : "high", y1, y2, from, z.dataset.to ? +z.dataset.to : n - 1);
-        if (t < 2) E(`${name} : ${t} touche visible (au moins 2)`);
+      // Support / résistance (rôle ou étiquette) : 2 touches, ou cassure puis retest avec réaction,
+      // comptées sur tout le panneau visible (une touche avant le début du tracé reste visible)
+      if (isSR(z, z.dataset.zone)) {
+        const err = srProofError(cs, y1, y2, 0, z.dataset.to ? +z.dataset.to : n - 1);
+        if (err) E(`${name}, « ${labelOf(z.dataset.zone)} » : ${err}`);
       }
       if (z.dataset.role === "range") {
         const tl = touches("low", y1, y1), th = touches("high", y2, y2);
@@ -198,10 +206,18 @@ function checkCharts({ ids, vocab }) {
         }
       }
     }
+    for (const l of svg.querySelectorAll("line[data-level]")) {
+      if (!isSR(l, l.dataset.level)) continue;
+      const name = `niveau ${l.dataset.level}, « ${labelOf(l.dataset.level)} »`;
+      if (l.hasAttribute("data-offscale")) { E(`${name} : hors du cadre, aucune touche visible`); continue; }
+      const v = +l.dataset.price;
+      const err = srProofError(cs, v, v, 0, l.dataset.to ? +l.dataset.to : n - 1);
+      if (err) E(`${name} : ${err}`);
+    }
     for (const l of svg.querySelectorAll("line[data-level][data-role]")) {
       const role = l.dataset.role, v = +l.dataset.price, name = `niveau ${l.dataset.level} (${role})`;
-      if (/^(support|resistance|range-high|range-low)$/.test(role)) {
-        const t = touches(/support|low/.test(role) ? "low" : "high", v, v, l.dataset.from ? +l.dataset.from : 0, l.dataset.to ? +l.dataset.to : n - 1);
+      if (/^(range-high|range-low)$/.test(role)) {
+        const t = touches(/low/.test(role) ? "low" : "high", v, v, l.dataset.from ? +l.dataset.from : 0, l.dataset.to ? +l.dataset.to : n - 1);
         if (t < 2) E(`${name} : ${t} touche visible (au moins 2)`);
       }
       if (role === "fib") {
@@ -363,10 +379,27 @@ function checkCharts({ ids, vocab }) {
         }
         if (svg.dataset.candles) checkNotions(svg, JSON.parse(svg.dataset.candles), (m) => E(id, `${P} ${m}`));
         // Schéma en ligne : seules les confluences se vérifient (niveaux réunis dans la zone)
-        else for (const z of svg.querySelectorAll("rect[data-role='confluence']")) {
-          for (const key of (z.dataset.ref || "").split(",").filter(Boolean)) {
-            const l = svg.querySelector(`line[data-level="${key}"]`);
-            if (!l || !(+l.dataset.price >= +z.dataset.y1 - 1e-9 && +l.dataset.price <= +z.dataset.y2 + 1e-9)) E(id, `${P} zone ${z.dataset.zone} (confluence) : le niveau ${key} n'est pas dans la zone`);
+        else {
+          for (const z of svg.querySelectorAll("rect[data-role='confluence']")) {
+            for (const key of (z.dataset.ref || "").split(",").filter(Boolean)) {
+              const l = svg.querySelector(`line[data-level="${key}"]`);
+              if (!l || !(+l.dataset.price >= +z.dataset.y1 - 1e-9 && +l.dataset.price <= +z.dataset.y2 + 1e-9)) E(id, `${P} zone ${z.dataset.zone} (confluence) : le niveau ${key} n'est pas dans la zone`);
+            }
+          }
+          // Support / résistance sur une courbe : mêmes touches, la courbe tenant lieu de bougies
+          if (series) {
+            const pts = series.map((v) => ({ o: v, h: v, l: v, c: v }));
+            const lab = (k) => svg.querySelector(`g[data-label-for="${CSS.escape(k)}"]`)?.textContent.trim() ?? "";
+            const sr = (el, k) => /^(support|resistance)$/.test(el.dataset.role || "") || /\b(support|r[ée]sistance)/i.test(lab(k));
+            const at = (el) => [0, el.dataset.to ? +el.dataset.to : pts.length - 1];
+            for (const z of svg.querySelectorAll("rect[data-zone]")) if (sr(z, z.dataset.zone)) {
+              const err = srProofError(pts, +z.dataset.y1, +z.dataset.y2, ...at(z));
+              if (err) E(id, `${P} zone ${z.dataset.zone}, « ${lab(z.dataset.zone)} » : ${err}`);
+            }
+            for (const l of svg.querySelectorAll("line[data-level]")) if (sr(l, l.dataset.level)) {
+              const err = l.hasAttribute("data-offscale") ? "hors du cadre, aucune touche visible" : srProofError(pts, +l.dataset.price, +l.dataset.price, ...at(l));
+              if (err) E(id, `${P} niveau ${l.dataset.level}, « ${lab(l.dataset.level)} » : ${err}`);
+            }
           }
         }
         checkLegibility(svg, r0.width, (m) => E(id, `${P} ${m}`));
@@ -495,6 +528,12 @@ function lessonUrls() {
 const MUTATIONS = {
   "corps de bougie déplacé": () => { const r = document.querySelector("[data-candle='3'] rect"); r.setAttribute("y", +r.getAttribute("y") + 4); },
   "bougie discontinue": () => { const s = document.querySelector("svg[data-candles]"); const c = JSON.parse(s.dataset.candles); c[3].o += 0.001; c[3].h += 0.001; s.dataset.candles = JSON.stringify(c); },
+  "support jamais touché": () => {
+    const svg = document.querySelector("svg[data-candles]");
+    const keys = [...svg.querySelectorAll("line[data-level]:not([data-offscale])")].map((l) => l.dataset.level);
+    const g = keys.map((k) => svg.querySelector(`g[data-label-for="${CSS.escape(k)}"]`)).find((x) => x && /entrée|sl|stop|tp|objectif/i.test(x.textContent));
+    g.querySelector("text").textContent = "Support";
+  },
   "R/R écrit à la main": () => { const c = document.querySelector("[data-rr]"); c.textContent = "R/R 1:9"; },
   "étiquettes superposées": () => { const [a, b] = document.querySelectorAll("g[data-label-for] rect"); b.setAttribute("x", a.getAttribute("x")); b.setAttribute("y", a.getAttribute("y")); },
   "description accessible vide": () => { const s = document.querySelector("svg[aria-describedby]"); document.getElementById(s.getAttribute("aria-describedby")).textContent = ""; },
@@ -528,10 +567,10 @@ if (AUTOTEST) {
       await page.goto(`${BASE}${p.url}`, { waitUntil: "load", timeout: 120000 });
       await page.waitForSelector("[data-lesson-chart] svg[data-panel]", { timeout: 120000 }).catch(() => {});
       await page.waitForTimeout(400);
-      const before = new Set(await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB }));
+      const before = new Set(await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB, sr: SR_SRC }));
       const applied = await page.evaluate(`(() => { try { (${fn.toString()})(); return true; } catch { return false; } })()`);
       if (!applied) continue;
-      errs = (await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB })).filter((e) => !before.has(e));
+      errs = (await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB, sr: SR_SRC })).filter((e) => !before.has(e));
       break;
     }
     const ok = !!errs && errs.length > 0;
@@ -551,7 +590,7 @@ for (const w of FORMATS) {
     await page.goto(`${BASE}${p.url}`, { waitUntil: "load", timeout: 120000 });
     await page.waitForSelector("[data-lesson-chart] svg[data-panel]", { timeout: 60000 }).catch(() => {});
     await page.waitForTimeout(500);
-    const errs = await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB });
+    const errs = await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB, sr: SR_SRC });
     errors += errs.length;
     console.log(`${String(w).padEnd(5)} ${p.url.padEnd(42)} ${errs.length} erreur(s)`);
     for (const e of errs.slice(0, 25)) console.log(`    ERREUR ${e}`);
