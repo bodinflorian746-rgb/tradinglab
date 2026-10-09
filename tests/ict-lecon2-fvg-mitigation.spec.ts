@@ -32,12 +32,12 @@ test("ICT lecon2 — nouvelle section FVG : rebond / mitigation profonde / inval
 
   // Section présente
   await expect(page.getByText(/Rebond, mitigation profonde ou invalidation/i)).toBeVisible();
-  await expect(page.getByText(/FVG haussier — 3 retours possibles/i)).toBeVisible();
+  await expect(page.getByText(/Un FVG haussier, trois issues/i).first()).toBeVisible();
 
-  // Les 3 mini-scenarios sont visibles (labels A / B / C avec titres)
-  await expect(page.getByText("Rebond immédiat").first()).toBeVisible();
-  await expect(page.getByText("Mitigation profonde + réaction").first()).toBeVisible();
-  await expect(page.getByText("Invalidation réelle").first()).toBeVisible();
+  // Les 3 panneaux du graphique sont visibles (titres A / B / C)
+  await expect(page.getByText("A. Rebond immédiat").first()).toBeVisible();
+  await expect(page.getByText("B. Mitigation profonde").first()).toBeVisible();
+  await expect(page.getByText("C. Invalidation").first()).toBeVisible();
 
   // Les 4 catégories text-only sont présentes
   await expect(page.getByText("1. Rebond immédiat")).toBeVisible();
@@ -46,7 +46,7 @@ test("ICT lecon2 — nouvelle section FVG : rebond / mitigation profonde / inval
   await expect(page.getByText("4. Invalidation réelle")).toBeVisible();
 
   // Règle à retenir
-  await expect(page.getByText(/FVG rempli SANS réaction \+ structure cassée/i)).toBeVisible();
+  await expect(page.getByText("FVG rempli SANS réaction + structure cassée = invalidation probable.", { exact: true })).toBeVisible();
 
   // Exemple concret EUR/USD
   await expect(page.getByText(/FVG haussier entre 1\.0840 et 1\.0860/i)).toBeVisible();
