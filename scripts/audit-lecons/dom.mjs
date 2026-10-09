@@ -529,10 +529,18 @@ const MUTATIONS = {
   "corps de bougie déplacé": () => { const r = document.querySelector("[data-candle='3'] rect"); r.setAttribute("y", +r.getAttribute("y") + 4); },
   "bougie discontinue": () => { const s = document.querySelector("svg[data-candles]"); const c = JSON.parse(s.dataset.candles); c[3].o += 0.001; c[3].h += 0.001; s.dataset.candles = JSON.stringify(c); },
   "support jamais touché": () => {
-    const svg = document.querySelector("svg[data-candles]");
-    const keys = [...svg.querySelectorAll("line[data-level]:not([data-offscale])")].map((l) => l.dataset.level);
-    const g = keys.map((k) => svg.querySelector(`g[data-label-for="${CSS.escape(k)}"]`)).find((x) => x && /entrée|sl|stop|tp|objectif/i.test(x.textContent));
-    g.querySelector("text").textContent = "Support";
+    // le niveau étiqueté le plus éloigné de toutes les bougies, renommé « Support »
+    let best = null;
+    for (const svg of document.querySelectorAll("svg[data-candles]")) {
+      const cs = JSON.parse(svg.dataset.candles);
+      for (const l of svg.querySelectorAll("line[data-level]:not([data-offscale])")) {
+        const g = svg.querySelector(`g[data-label-for="${CSS.escape(l.dataset.level)}"]`);
+        if (!g) continue;
+        const v = +l.dataset.price, d = Math.min(...cs.flatMap((k) => [Math.abs(k.h - v), Math.abs(k.l - v)]));
+        if (!best || d > best.d) best = { d, g };
+      }
+    }
+    best.g.querySelector("text").textContent = "Support";
   },
   "R/R écrit à la main": () => { const c = document.querySelector("[data-rr]"); c.textContent = "R/R 1:9"; },
   "étiquettes superposées": () => { const [a, b] = document.querySelectorAll("g[data-label-for] rect"); b.setAttribute("x", a.getAttribute("x")); b.setAttribute("y", a.getAttribute("y")); },
