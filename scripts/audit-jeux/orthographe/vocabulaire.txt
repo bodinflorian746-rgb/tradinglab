@@ -1673,6 +1673,7 @@ colectiva
 colère
 colle
 collé
+collecte
 collecter
 collective
 coller
@@ -4149,6 +4150,7 @@ expresión
 expresó
 exprimé
 expuesto
+ext
 extenderse
 extendida
 extendidas
@@ -8328,6 +8330,7 @@ rechazos
 recherche
 recherché
 rechercher
+rechute
 recibe
 reciben
 recibes
@@ -8896,6 +8899,7 @@ retracements
 retracent
 retravailler
 retraversé
+rétrécissent
 retroactivamente
 rétroactivement
 retrocede

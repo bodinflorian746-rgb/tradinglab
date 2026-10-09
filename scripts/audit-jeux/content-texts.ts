@@ -71,7 +71,7 @@ const CODE_KEYS = new Set(["className", "class", "href", "src", "d", "fill", "st
   "direction", "htfBias", "macroContext", "chartShape", "category", "correctMistake", "decoyMistakes", "difficulties", "showLines", "metric",
   "correctAnswer", "optimal", "metaOverride", "level", "duration", "session", "asset", "volatility", "spread", "outcome", "result", "state",
   "data-reveal", "data-pick", "data-choice", "data-line", "data-label-for", "aria-hidden", "transform", "transformOrigin", "fontSize", "opacity", "tags", "moduleId",
-  "side", "expect"]);
+  "side", "expect", "ref"]);
 const looksLikeCode = (s: string) => {
   const t = s.trim();
   if (!/\p{L}{2}/u.test(t)) return true;
@@ -172,7 +172,7 @@ function extractTs(file: string): ContentText[] {
     for (;;) {
       const q = n.parent;
       if (!q) return n;
-      if ((ts.isConditionalExpression(q) && q.condition !== n) || ts.isParenthesizedExpression(q) || ts.isTemplateSpan(q)
+      if ((ts.isConditionalExpression(q) && q.condition !== n) || ts.isParenthesizedExpression(q) || ts.isTemplateSpan(q) || ts.isAsExpression(q)
         || (ts.isTemplateExpression(q) && q !== node)
         || (ts.isBinaryExpression(q) && /^(\|\||\?\?|&&)$/.test(q.operatorToken.getText(sf)))) n = q;
       else return n;
