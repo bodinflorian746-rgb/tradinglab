@@ -27,7 +27,7 @@ function ContentFr() {
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-red-400 mb-2">Sans plan, ce qui se passe réellement</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              EUR/USD monte rapidement. Tu vois +30 pips en 10 minutes. Tu entres par FOMO à 1.0980. Le prix recule à 1.0960. Tu gardes "parce qu'il va remonter". Il descend à 1.0940. Tu paniques et tu coupes. Le prix repart à 1.1020 sans toi. Tu as perdu 40 pips et le trade que tu attendais.
+              EUR/USD monte rapidement. Tu vois +30 pips en 10 minutes. Tu entres par FOMO à 1.0980. Le prix recule à 1.0960. Tu gardes "parce qu'il va remonter". Il descend à 1.0940. Tu paniques et tu coupes. Le prix repart à 1.1020 sans toi. Tu as perdu 40 pips et le trade que tu attendais.
             </p>
           </div>
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
@@ -160,7 +160,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Erreur classique</p>
         <p className="text-sm font-semibold text-white mb-2">Déplacer le SL "pour lui donner une chance"</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Tu es en short sur EUR/USD. SL à 1.0965. Le prix monte à 1.0960 — 5 pips de ton SL. Tu te dis "si je le mets à 1.0980, il a plus de place". Tu déplaces. Le prix continue à 1.0975. Tu déplaces encore à 1.0995. Tu passes d'une perte de 15 pips à une perte de 35 pips. Le SL initial existait pour une raison : la structure. Ne le touche plus une fois le trade ouvert.
+          Tu es en short sur EUR/USD. SL à 1.0965. Le prix monte à 1.0960 — 5 pips de ton SL. Tu te dis "si je le mets à 1.0980, il a plus de place". Tu déplaces. Le prix continue à 1.0975. Tu déplaces encore à 1.0995. Tu passes d'une perte de 15 pips à une perte de 35 pips. Le SL initial existait pour une raison : la structure. Ne le touche plus une fois le trade ouvert.
         </p>
       </section>
 
@@ -201,7 +201,7 @@ function ContentFr() {
       />
 
       <LessonQuiz
-        question="Tu es en achat sur EUR/USD. SL à 1.0835. Le trade va contre toi, le prix descend à 1.0845, à 10 pips de ton SL. Tu penses 'il va remonter'. Que fais-tu ?"
+        question="Tu es en achat sur EUR/USD. SL à 1.0835. Le trade va contre toi, le prix descend à 1.0845, à 10 pips de ton SL. Tu penses 'il va remonter'. Que fais-tu ?"
         options={[
           "Tu déplaces le SL à 1.0820 pour lui donner plus d'espace",
           "Tu fermes le trade immédiatement, le marché va contre ton plan",

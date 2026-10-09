@@ -150,7 +150,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Erreur classique</p>
         <p className="text-sm font-semibold text-white mb-2">Tracer une ligne au lieu d'une zone</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Tu traces une ligne exacte à 1.0800 et tu places ton SL à 1.0798. Le prix descend à 1.0796, déclenche ton SL, puis repart à la hausse. Le problème : le prix n'est jamais exact. Il faut tracer une zone de 10-20 pips d'épaisseur et mettre le SL sous la zone entière, pas sous la ligne.
+          Tu traces une ligne exacte à 1.0800 et tu places ton SL à 1.0798. Le prix descend à 1.0796, déclenche ton SL, puis repart à la hausse. Le problème : le prix n'est jamais exact. Il faut tracer une zone de 10-20 pips d'épaisseur et mettre le SL sous la zone entière, pas sous la ligne.
         </p>
       </section>
 
@@ -183,7 +183,7 @@ function ContentFr() {
       <LessonExercice
         description="Sur TradingView, ouvre EUR/USD en H4 et trace tes zones."
         steps={[
-          "Identifie 2 zones de support : trace des rectangles horizontaux sur les creux alignés. Donne-leur de l'épaisseur (10-20 pips minimum).",
+          "Identifie 2 zones de support : trace des rectangles horizontaux sur les creux alignés. Donne-leur de l'épaisseur (10-20 pips minimum).",
           "Identifie 2 zones de résistance : fais de même sur les sommets alignés.",
           "Vérifie la polarité : y a-t-il un niveau qui a changé de rôle récemment ? Support devenu résistance ?",
           "Identifie un Order Block récent : la dernière bougie de direction opposée avant le dernier grand mouvement. Note le niveau exact.",

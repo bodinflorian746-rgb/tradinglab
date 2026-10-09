@@ -229,16 +229,16 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Compte 300€ → risque prévu 15€, perte réelle ~7€ (au lieu de 15€)</li>
               <li>- Compte 500€ → risque prévu 15€, perte réelle ~7€</li>
-              <li>- Compte 1 000€ → risque prévu 20€, perte réelle ~10€</li>
-              <li>- Compte 2 500€ → risque prévu 50€, perte réelle ~25€</li>
+              <li>- Compte 1 000€ → risque prévu 20€, perte réelle ~10€</li>
+              <li>- Compte 2 500€ → risque prévu 50€, perte réelle ~25€</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Sur 10 trades qui foirent : économie totale</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → ~80€ économisés (environ 70€ perdus au lieu de 150€)</li>
               <li>- Compte 500€ → ~80€ économisés</li>
-              <li>- Compte 1 000€ → ~100€ économisés</li>
-              <li>- Compte 2 500€ → ~250€ économisés</li>
+              <li>- Compte 1 000€ → ~100€ économisés</li>
+              <li>- Compte 2 500€ → ~250€ économisés</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm">En coupant à l&apos;invalidation, les pertes sont réduites de 50% sur les trades qui foirent. Sur 100 trades dont 40-50 perdants, ça fait la différence entre un compte qui survit et un compte qui fond.</p>
@@ -254,13 +254,13 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Tu es entré short XAU/USD à 4 720$ sur un double top. SL à 4 760$, TP à 4 640$. Position ouverte depuis 1 heure. Le prix descend à 4 705$, puis remonte fortement. Bougie H1 qui clôture à 4 745$ avec un volume 2x supérieur à la moyenne. Que fais-tu ?"
+            description="Tu es entré short XAU/USD à 4 720$ sur un double top. SL à 4 760$, TP à 4 640$. Position ouverte depuis 1 heure. Le prix descend à 4 705$, puis remonte fortement. Bougie H1 qui clôture à 4 745$ avec un volume 2x supérieur à la moyenne. Que fais-tu ?"
             steps={[
-              "Vérifier le critère 1, breakout rejeté : le prix a re-cassé la ligne de cou à 4 720$ vers le haut, OUI",
-              "Vérifier le critère 2, bougie de rejet violente : large bougie verte qui clôture à 4 745$, OUI",
+              "Vérifier le critère 1, breakout rejeté : le prix a re-cassé la ligne de cou à 4 720$ vers le haut, OUI",
+              "Vérifier le critère 2, bougie de rejet violente : large bougie verte qui clôture à 4 745$, OUI",
               "Vérifier le critère 3, volume incohérent : volume 2x supérieur pendant la remontée, OUI",
               "3 critères sur 5 allumés : aucun débat, tu coupes immédiatement à la clôture",
-              "Couper à 4 745$ : perte de 25$ par unité au lieu des 40$ prévus si tu attendais le SL à 4 760$, tu sauves plus d’un tiers de ton risque",
+              "Couper à 4 745$ : perte de 25$ par unité au lieu des 40$ prévus si tu attendais le SL à 4 760$, tu sauves plus d’un tiers de ton risque",
             ]}
           />
 

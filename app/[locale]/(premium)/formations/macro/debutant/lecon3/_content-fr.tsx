@@ -63,7 +63,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              14h30. Une bougie M5 fait 80 pips d&apos;un coup. Tu cherches le pattern.
+              14h30. Une bougie M5 fait 80 pips d&apos;un coup. Tu cherches le pattern.
             </p>
             <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
               Il n&apos;y en a pas. C&apos;est un chiffre que tu as ignoré qui vient de passer.
@@ -251,7 +251,7 @@ export default function ContentFr() {
               {[
                 "Effacer un setup parfait en 30 secondes",
                 "Inverser la tendance de la journée",
-                "Créer des mouvements violents : 100 à 300 pips forex, 30 à 60$ sur l'or, 1 à 2% sur les indices",
+                "Créer des mouvements violents : 100 à 300 pips forex, 30 à 60$ sur l'or, 1 à 2% sur les indices",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0" />
@@ -282,7 +282,7 @@ export default function ContentFr() {
                 Énorme surprise positive sur l&apos;économie US → le dollar monte fort → EUR/USD chute.
               </p>
               <p className="text-sm font-semibold text-zinc-200">
-                Mouvement typique : -50 à -100 pips en 30 secondes.
+                Mouvement typique : -50 à -100 pips en 30 secondes.
               </p>
               <div className="mt-3 bg-zinc-900/60 rounded-lg px-3 py-2.5">
                 <p className="text-xs font-semibold text-zinc-400 mb-2">Le même NFP touche aussi :</p>
@@ -314,7 +314,7 @@ export default function ContentFr() {
                 Économie US plus faible que prévu → le dollar chute → EUR/USD monte.
               </p>
               <p className="text-sm font-semibold text-zinc-200">
-                Mouvement typique : +50 à +100 pips en 30 secondes.
+                Mouvement typique : +50 à +100 pips en 30 secondes.
               </p>
               <div className="mt-3 bg-zinc-900/60 rounded-lg px-3 py-2.5">
                 <p className="text-xs font-semibold text-zinc-400 mb-2">Le même NFP touche aussi :</p>

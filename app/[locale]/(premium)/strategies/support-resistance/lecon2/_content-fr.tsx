@@ -143,7 +143,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Touches multiples : ≥ 2 touches confirmées, idéalement 3 pour confiance élevée</li>
-              <li>- Réactions claires : rebond de 30 pips ou plus sur EUR/USD ou 25-50$ sur XAU/USD à chaque touche</li>
+              <li>- Réactions claires : rebond de 30 pips ou plus sur EUR/USD ou 25-50$ sur XAU/USD à chaque touche</li>
               <li>- Fraîcheur : zone touchée dans les 30 derniers jours = mémoire collective forte</li>
               <li>- Confluence avec niveau rond, Fibonacci, MM ou Order Block = priorité</li>
             </ul>
@@ -164,7 +164,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Confluence Fibonacci 0.5 / 0.618 / 0.786 = zone respectée par les institutionnels</li>
               <li>- Confluence MM50 ou MM200 (Daily ou H4) = niveau dynamique défendu</li>
-              <li>- Confluence chiffre rond (1.1800, 4 500$) = mémoire émotionnelle</li>
+              <li>- Confluence chiffre rond (1.1800, 4 500$) = mémoire émotionnelle</li>
               <li>- 3 confluences ou plus = vrai niveau majeur, sélection prioritaire</li>
             </ul>
           </section>
@@ -199,10 +199,10 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Une zone de résistance EUR/USD entre 1.1880 et 1.1900 a été touchée 2 fois dans les 8 dernières semaines, la dernière fois il y a 12 jours, avec rejets nets (mèches de 30 à 40 pips). Le chiffre rond 1.1900 est au sommet de la zone. La MM50 H4 passe actuellement à 1.1885. Quel est le verdict de qualification ?"
+            description="Une zone de résistance EUR/USD entre 1.1880 et 1.1900 a été touchée 2 fois dans les 8 dernières semaines, la dernière fois il y a 12 jours, avec rejets nets (mèches de 30 à 40 pips). Le chiffre rond 1.1900 est au sommet de la zone. La MM50 H4 passe actuellement à 1.1885. Quel est le verdict de qualification ?"
             steps={[
               "Critère 1. Touches : 2 touches confirmées dans les 8 dernières semaines = minimum requis validé",
-              "Critère 2. Réactions : rejets nets avec mèches de 30 à 40 pips = réactions claires proportionnées",
+              "Critère 2. Réactions : rejets nets avec mèches de 30 à 40 pips = réactions claires proportionnées",
               "Critère 3. Fraîcheur : dernière touche il y a 12 jours, donc dans les 30 derniers jours = critère validé (sans touche de moins de 30 jours, ce critère ne serait pas validé)",
               "Critère 4. Confluences : chiffre rond 1.1900 au sommet de la zone (confluence 1) + MM50 H4 à 1.1885 dans la zone (confluence 2) = 2 confluences identifiées",
               "Verdict : zone tradable confirmée. 3 critères validés franchement + 2 confluences. Note opérationnelle élevée. La zone entre dans la sélection prioritaire pour un setup short sur retracement avec signal de rejet confirmé",

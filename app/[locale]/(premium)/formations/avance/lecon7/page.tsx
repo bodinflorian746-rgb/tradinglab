@@ -80,8 +80,8 @@ function ContentFr() {
           {[
             { rule: "Sous le bas de la zone (OB ou FVG)", detail: "Si le prix traverse entièrement l'OB ou le FVG, le niveau institutionnel est consommé, l'idée de trade est invalidée." },
             { rule: "Sous le plus bas du signal d'entrée", detail: "Si tu entres sur un rejet en M15, le SL va sous le plus bas de la pin bar ou de l'engulfing." },
-            { rule: "Quelques pips de marge", detail: "Laisse 2 à 5 pips (selon l'instrument) sous le niveau exact pour éviter d'être stoppé par le spread ou le bruit naturel du marché." },
-            { rule: "Jamais un montant fixe", detail: "Un SL de 20 pips 'parce que c'est ton habitude' n'a aucun sens structurel. Le SL doit refléter la géographie du graphique." },
+            { rule: "Quelques pips de marge", detail: "Laisse 2 à 5 pips (selon l'instrument) sous le niveau exact pour éviter d'être stoppé par le spread ou le bruit naturel du marché." },
+            { rule: "Jamais un montant fixe", detail: "Un SL de 20 pips 'parce que c'est ton habitude' n'a aucun sens structurel. Le SL doit refléter la géographie du graphique." },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 mt-1.5" />

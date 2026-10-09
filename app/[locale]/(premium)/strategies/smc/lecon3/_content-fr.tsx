@@ -246,14 +246,14 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée : 1.1780 (limite haute du corps de l&apos;OB, ordre limite ou attente du signal M15)</li>
-                <li>- Stop loss : 1.1738 (au-delà de la mèche basse 1.1745 avec marge de 7 pips, soit 42 pips sous l&apos;entrée)</li>
-                <li>- Take profit : 1.1870 (90 pips au-dessus, projection de l&apos;impulsion initiale de 90 pips)</li>
+                <li>- Stop loss : 1.1738 (au-delà de la mèche basse 1.1745 avec marge de 7 pips, soit 42 pips sous l&apos;entrée)</li>
+                <li>- Take profit : 1.1870 (90 pips au-dessus, projection de l&apos;impulsion initiale de 90 pips)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 1.1780 - 1.1738 = 42 pips</li>
-                <li>- Gain potentiel : 1.1870 - 1.1780 = 90 pips</li>
+                <li>- Risque : 1.1780 - 1.1738 = 42 pips</li>
+                <li>- Gain potentiel : 1.1870 - 1.1780 = 90 pips</li>
                 <li>- R/R : 90 / 42 = 2,14</li>
                 <li>- Setup exploitable.</li>
               </ul>
@@ -267,8 +267,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 32€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 32€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 43€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 107€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 43€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 107€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">Le R/R reste 2,14:1 peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.</p>
           </section>
@@ -283,13 +283,13 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD H4, tendance haussière confirmée (prix au-dessus de la MM200 Daily à 4 320$). Une impulsion haussière de 5 bougies a porté le prix de 4 540$ à 4 660$, validée par un BOS au-dessus du HH précédent à 4 650$. La dernière bougie baissière avant l’impulsion présente un corps entre 4 562$ (open) et 4 555$ (close), avec mèche basse à 4 547$. Aucune mitigation depuis la formation (8 bougies H4 écoulées). Le prix retrace actuellement vers la zone. Construis le plan complet et calcule deux variantes de R/R : variante naïve (TP éloigné) et variante réaliste (TP partiel intermédiaire)."
+            description="Sur XAU/USD H4, tendance haussière confirmée (prix au-dessus de la MM200 Daily à 4 320$). Une impulsion haussière de 5 bougies a porté le prix de 4 540$ à 4 660$, validée par un BOS au-dessus du HH précédent à 4 650$. La dernière bougie baissière avant l’impulsion présente un corps entre 4 562$ (open) et 4 555$ (close), avec mèche basse à 4 547$. Aucune mitigation depuis la formation (8 bougies H4 écoulées). Le prix retrace actuellement vers la zone. Construis le plan complet et calcule deux variantes de R/R : variante naïve (TP éloigné) et variante réaliste (TP partiel intermédiaire)."
             steps={[
-              "Délimiter l’Order Block bullish : corps de la bougie opposée entre 4 555$ et 4 562$, mèche basse à 4 547$. OB frais (8 bougies écoulées), aligné Daily haussier, non mitigé.",
-              "Placer l’entrée à 4 562$ (limite haute du corps de l’OB) avec attente du signal de rejet M15 (pin bar, engulfing haussier).",
-              "Placer le stop loss à 4 545$ (au-delà de la mèche basse 4 547$ avec marge 2$, soit 17$ sous l’entrée). Risque = 17$ par unité.",
-              "Variante naïve. TP éloigné à 4 720$ (projection extension complète de l’impulsion initiale) : Gain = 4 720 - 4 562 = 158$. R/R = 158 / 17 = 9,3. Ratio attractif sur le papier mais trop optimiste : la probabilité d’atteindre une cible à 9:1 sans pullback intermédiaire reste faible.",
-              "Variante réaliste. TP partiel à 4 632$ (premier HH intermédiaire identifié, prise de profit partielle) : Gain = 4 632 - 4 562 = 70$. R/R = 70 / 17 = 4,1. Cible structurelle réaliste, atteignable sans détour. Le R/R 4,1 reste excellent pour un setup OB et permet de sécuriser la position avant le HH précédent à 4 650$, où le marché risque de produire une réaction technique avant le TP final.",
+              "Délimiter l’Order Block bullish : corps de la bougie opposée entre 4 555$ et 4 562$, mèche basse à 4 547$. OB frais (8 bougies écoulées), aligné Daily haussier, non mitigé.",
+              "Placer l’entrée à 4 562$ (limite haute du corps de l’OB) avec attente du signal de rejet M15 (pin bar, engulfing haussier).",
+              "Placer le stop loss à 4 545$ (au-delà de la mèche basse 4 547$ avec marge 2$, soit 17$ sous l’entrée). Risque = 17$ par unité.",
+              "Variante naïve. TP éloigné à 4 720$ (projection extension complète de l’impulsion initiale) : Gain = 4 720 - 4 562 = 158$. R/R = 158 / 17 = 9,3. Ratio attractif sur le papier mais trop optimiste : la probabilité d’atteindre une cible à 9:1 sans pullback intermédiaire reste faible.",
+              "Variante réaliste. TP partiel à 4 632$ (premier HH intermédiaire identifié, prise de profit partielle) : Gain = 4 632 - 4 562 = 70$. R/R = 70 / 17 = 4,1. Cible structurelle réaliste, atteignable sans détour. Le R/R 4,1 reste excellent pour un setup OB et permet de sécuriser la position avant le HH précédent à 4 650$, où le marché risque de produire une réaction technique avant le TP final.",
             ]}
           />
 

@@ -209,15 +209,15 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée short : 4 565$ (sous le creux cassé)</li>
-                <li>- Stop loss : 4 605$ (au-dessus du dernier sommet local, soit 40$ au-dessus de l&apos;entrée)</li>
-                <li>- Take profit : 4 485$ (80$, measured move étendu)</li>
+                <li>- Entrée short : 4 565$ (sous le creux cassé)</li>
+                <li>- Stop loss : 4 605$ (au-dessus du dernier sommet local, soit 40$ au-dessus de l&apos;entrée)</li>
+                <li>- Take profit : 4 485$ (80$, measured move étendu)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 605 - 4 565 = 40$</li>
-                <li>- Gain potentiel : 4 565 - 4 485 = 80$</li>
+                <li>- Risque : 4 605 - 4 565 = 40$</li>
+                <li>- Gain potentiel : 4 565 - 4 485 = 80$</li>
                 <li>- R/R : 80 / 40 = 2:1</li>
                 <li>- Setup exploitable.</li>
               </ul>
@@ -231,8 +231,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 30€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 30€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 40€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 100€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 40€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 100€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 2:1 reste solide. La divergence RSI a un winrate moyen quand le pattern est propre et confirmé par la cassure de structure. Sans confirmation, le piège reste élevé.</p>
           </section>
@@ -258,13 +258,13 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD H1 : le prix fait un sommet 1 à 4 720$, redescend à 4 690$, puis fait un sommet 2 à 4 740$. Le RSI affichait 78 au sommet 1 et 72 au sommet 2. Le prix vient de clôturer à 4 685$. Tu prends le setup short ?"
+            description="Sur XAU/USD H1 : le prix fait un sommet 1 à 4 720$, redescend à 4 690$, puis fait un sommet 2 à 4 740$. Le RSI affichait 78 au sommet 1 et 72 au sommet 2. Le prix vient de clôturer à 4 685$. Tu prends le setup short ?"
             steps={[
-              "Vérifier que le prix forme un HH : 4 740$ > 4 720$, OK",
+              "Vérifier que le prix forme un HH : 4 740$ > 4 720$, OK",
               "Vérifier que le RSI forme un LH : 72 < 78, OK, divergence baissière confirmée",
-              "Confirmer la cassure structurelle : clôture à 4 685$ sous le creux 4 690$, OK",
+              "Confirmer la cassure structurelle : clôture à 4 685$ sous le creux 4 690$, OK",
               "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
-              "Prendre l’entrée short à 4 685$, SL au-dessus de la mèche du sommet 2 (par exemple 4 750$), TP measured move étendu vers 4 585$ pour viser un R/R 1,5 à 2:1",
+              "Prendre l’entrée short à 4 685$, SL au-dessus de la mèche du sommet 2 (par exemple 4 750$), TP measured move étendu vers 4 585$ pour viser un R/R 1,5 à 2:1",
             ]}
           />
 

@@ -178,7 +178,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD H1 : depuis 4 690 $, une forte impulsion baissière laisse un FVG entre 4 655 et 4 665 $. Le prix continue jusqu'à 4 620, puis remonte progressivement vers 4 660, il rentre dans le FVG. Là, une bougie baissière impulsive marque le rejet ; le prix repart vers 4 610 dans la séance suivante. La mitigation a été le signal d'entrée, pas l'impulsion initiale, déjà passée.
+                XAU/USD H1 : depuis 4 690 $, une forte impulsion baissière laisse un FVG entre 4 655 et 4 665 $. Le prix continue jusqu'à 4 620, puis remonte progressivement vers 4 660, il rentre dans le FVG. Là, une bougie baissière impulsive marque le rejet ; le prix repart vers 4 610 dans la séance suivante. La mitigation a été le signal d'entrée, pas l'impulsion initiale, déjà passée.
               </p>
             </div>
 

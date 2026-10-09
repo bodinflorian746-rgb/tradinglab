@@ -181,7 +181,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Zone de stops cluster située juste au-delà du niveau structurel (4 720$ → 4 745$)</li>
+              <li>- Zone de stops cluster située juste au-delà du niveau structurel (4 720$ → 4 745$)</li>
               <li>- Mèche pique dans la zone, déclenche les stops, puis clôture sous le niveau</li>
               <li>- Continuation baissière rapide après absorption de la liquidité</li>
               <li>- Le trade se prend dans le sens opposé au breakout rejeté</li>
@@ -193,23 +193,23 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : fake breakout XAU/USD H1</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Résistance 4 650$ touchée 3 fois en 2 mois (chiffre rond fort). 4e approche provoque un breakout suspect. Bougie 1 : mèche jusqu&apos;à 4 680$ + clôture à 4 655$. Bougie 2 : clôture à 4 640$.
+              Résistance 4 650$ touchée 3 fois en 2 mois (chiffre rond fort). 4e approche provoque un breakout suspect. Bougie 1 : mèche jusqu&apos;à 4 680$ + clôture à 4 655$. Bougie 2 : clôture à 4 640$.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade short sur fake breakout)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Bougie 1 : mèche 25$ au-dessus, corps 5$, clôture à la limite</li>
-                <li>- Bougie 2 : clôture franche à 4 640$ (réintégration confirmée)</li>
-                <li>- Entrée short : 4 640$ (clôture de la bougie de confirmation)</li>
-                <li>- Stop loss : 4 685$ (5$ au-dessus de la mèche à 4 680$)</li>
-                <li>- Take profit : 4 540$ (zone support identifiée plus bas)</li>
+                <li>- Bougie 2 : clôture franche à 4 640$ (réintégration confirmée)</li>
+                <li>- Entrée short : 4 640$ (clôture de la bougie de confirmation)</li>
+                <li>- Stop loss : 4 685$ (5$ au-dessus de la mèche à 4 680$)</li>
+                <li>- Take profit : 4 540$ (zone support identifiée plus bas)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 685$ - 4 640$ = 45$</li>
-                <li>- Gain potentiel : 4 640$ - 4 540$ = 100$</li>
+                <li>- Risque : 4 685$ - 4 640$ = 45$</li>
+                <li>- Gain potentiel : 4 640$ - 4 540$ = 100$</li>
                 <li>- R/R : 100 / 45 = 2,22</li>
               </ul>
             </div>
@@ -218,8 +218,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 33€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 33€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 44€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 111€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 44€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 111€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 2,22:1 peu importe la taille du compte.
@@ -230,19 +230,19 @@ export default function ContentFr() {
             points={[
               "Un fake breakout combine 4 critères : mèche longue sans clôture franche, réintégration rapide, volume disproportionné, zone forte.",
               "Le trade se prend dans le sens opposé au breakout rejeté, après double confirmation (clôture + 2ème bougie).",
-              "Le stop loss se place au-delà de la mèche initiale avec marge 3-5 pips.",
+              "Le stop loss se place au-delà de la mèche initiale avec marge 3-5 pips.",
               "Les fake breakouts s’observent préférentiellement sur des zones fortes (3+ touches, chiffres ronds).",
             ]}
           />
 
           <LessonExercice
-            description="Sur XAU/USD H1, la résistance 4 650$ a été touchée 3 fois en 2 mois. Une bougie imprime une mèche jusqu’à 4 680$ puis clôture à 4 655$. La bougie suivante clôture à 4 640$. Comment se construit le plan de trade fake breakout ?"
+            description="Sur XAU/USD H1, la résistance 4 650$ a été touchée 3 fois en 2 mois. Une bougie imprime une mèche jusqu’à 4 680$ puis clôture à 4 655$. La bougie suivante clôture à 4 640$. Comment se construit le plan de trade fake breakout ?"
             steps={[
-              "Valider les 4 critères de détection : mèche de 25$ au-dessus de la zone sans clôture franche, réintégration en 1 bougie, zone forte (3 touches + chiffre rond 4 650$)",
-              "Valider la double confirmation : bougie 1 clôture à 4 655$ (à la limite), bougie 2 clôture à 4 640$ (réintégration franche)",
-              "Placer l’entrée short à 4 640$ (clôture de la bougie de confirmation)",
-              "Placer le stop loss à 4 685$ (5$ au-dessus de la mèche initiale à 4 680$)",
-              "Placer le take profit à 4 560$ (zone support identifiée plus bas, ratio R/R 1:1,8), taille de position selon le risque par trade adapté au capital",
+              "Valider les 4 critères de détection : mèche de 25$ au-dessus de la zone sans clôture franche, réintégration en 1 bougie, zone forte (3 touches + chiffre rond 4 650$)",
+              "Valider la double confirmation : bougie 1 clôture à 4 655$ (à la limite), bougie 2 clôture à 4 640$ (réintégration franche)",
+              "Placer l’entrée short à 4 640$ (clôture de la bougie de confirmation)",
+              "Placer le stop loss à 4 685$ (5$ au-dessus de la mèche initiale à 4 680$)",
+              "Placer le take profit à 4 560$ (zone support identifiée plus bas, ratio R/R 1:1,8), taille de position selon le risque par trade adapté au capital",
             ]}
           />
 

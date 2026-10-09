@@ -160,7 +160,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Erreur classique</p>
         <p className="text-sm font-semibold text-white mb-2">Entrer en vente dans une tendance haussière "parce que le prix est monté trop haut"</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          EUR/USD est en tendance haussière depuis 2 semaines. Le prix monte encore. Tu te dis "il ne peut pas continuer, je vends". Tu entres en short. Le prix monte encore 200 pips. La tendance haussière peut durer des semaines. Ne jamais trader "contre" parce que tu penses que "c'est trop haut" ou "trop bas". Le marché a toujours raison.
+          EUR/USD est en tendance haussière depuis 2 semaines. Le prix monte encore. Tu te dis "il ne peut pas continuer, je vends". Tu entres en short. Le prix monte encore 200 pips. La tendance haussière peut durer des semaines. Ne jamais trader "contre" parce que tu penses que "c'est trop haut" ou "trop bas". Le marché a toujours raison.
         </p>
       </section>
 

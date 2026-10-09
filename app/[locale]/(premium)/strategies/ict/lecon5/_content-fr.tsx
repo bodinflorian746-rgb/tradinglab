@@ -220,7 +220,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : range Asia entre 4 642 et 4 655 $. À l'ouverture de London, mèche de sweep au-dessus de 4 655 $, puis displacement bearish de 38 $ qui crée un FVG dans la chute. Setup complet ET en Killzone = setup premium. La même séquence à 03h UTC aurait probablement échoué, le marché manquait de volume pour soutenir le displacement.
+                XAU/USD : range Asia entre 4 642 et 4 655 $. À l'ouverture de London, mèche de sweep au-dessus de 4 655 $, puis displacement bearish de 38 $ qui crée un FVG dans la chute. Setup complet ET en Killzone = setup premium. La même séquence à 03h UTC aurait probablement échoué, le marché manquait de volume pour soutenir le displacement.
               </p>
             </div>
 

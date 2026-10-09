@@ -144,7 +144,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : prix avant NFP 4 640 $. Le chiffre tombe au-dessus du consensus, headline interprété hawkish. Première impulsion bearish jusqu'à 4 575 $ en 5 minutes, cassant un support à 4 600 $. Puis le marché digère le détail du rapport (salaires plus mous, révisions baissières), le prix se stabilise autour de 4 580-4 585 $, puis remonte progressivement vers 4 625 $ dans l'heure suivante.
+                XAU/USD : prix avant NFP 4 640 $. Le chiffre tombe au-dessus du consensus, headline interprété hawkish. Première impulsion bearish jusqu'à 4 575 $ en 5 minutes, cassant un support à 4 600 $. Puis le marché digère le détail du rapport (salaires plus mous, révisions baissières), le prix se stabilise autour de 4 580-4 585 $, puis remonte progressivement vers 4 625 $ dans l'heure suivante.
               </p>
             </div>
 
@@ -171,7 +171,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : après la chute initiale NFP à 4 575 $, quatre bougies M15 consécutives impriment des mèches basses de 6-8 $ chacune, sans clôturer en dessous. Le prix se cale entre 4 580-4 585 $. Une fois cette base reconnue, le marché entame une reprise franche vers 4 630 $ dans l'heure suivante.
+                XAU/USD : après la chute initiale NFP à 4 575 $, quatre bougies M15 consécutives impriment des mèches basses de 6-8 $ chacune, sans clôturer en dessous. Le prix se cale entre 4 580-4 585 $. Une fois cette base reconnue, le marché entame une reprise franche vers 4 630 $ dans l'heure suivante.
               </p>
             </div>
 
@@ -198,7 +198,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : impulsion initiale NFP de 4 640 $ vers 4 575 $. Base autour de 4 580-4 585 $. Puis breakout bullish au-dessus de 4 620 $, accélération jusqu'à 4 665 $, au-delà du niveau pré-NFP. Le rapport complet (salaires solides, révisions positives) annulait l'interprétation hawkish du headline. Le marché a complètement renversé son biais.
+                XAU/USD : impulsion initiale NFP de 4 640 $ vers 4 575 $. Base autour de 4 580-4 585 $. Puis breakout bullish au-dessus de 4 620 $, accélération jusqu'à 4 665 $, au-delà du niveau pré-NFP. Le rapport complet (salaires solides, révisions positives) annulait l'interprétation hawkish du headline. Le marché a complètement renversé son biais.
               </p>
             </div>
 
@@ -220,19 +220,19 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Étape 1. Contexte H4 pré-NFP</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : XAU/USD compresse entre 4 630 $ et 4 650 $ dans les heures précédant le NFP, volatilité réduite</li>
+                <li>- Observation : XAU/USD compresse entre 4 630 $ et 4 650 $ dans les heures précédant le NFP, volatilité réduite</li>
                 <li>- Conclusion : forte probabilité d'expansion sur la publication, on prépare le scénario de fade</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 2. Publication NFP</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : chiffre headline au-dessus du consensus, première impulsion bearish 4 640 → 4 575 $ en quelques minutes</li>
+                <li>- Observation : chiffre headline au-dessus du consensus, première impulsion bearish 4 640 → 4 575 $ en quelques minutes</li>
                 <li>- Conclusion : réaction headline excessive, on attend la stabilisation, pas d'entrée immédiate</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 3. Stabilisation M15</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : le prix cesse de faire de nouveaux plus bas, quatre bougies M15 avec mèches basses répétées, prix calé autour de 4 580-4 585 $</li>
+                <li>- Observation : le prix cesse de faire de nouveaux plus bas, quatre bougies M15 avec mèches basses répétées, prix calé autour de 4 580-4 585 $</li>
                 <li>- Conclusion : absorption acheteuse visible, la condition du setup est validée</li>
               </ul>
 
@@ -244,10 +244,10 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 5. Exécution du Fade</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée long : 4 600 $ (clôture de la première bougie de reprise franche)</li>
-                <li>- Stop loss : 4 568 $ (au-delà de l'extrémité de l'impulsion)</li>
-                <li>- Target : 4 655 $ (proche du niveau pré-NFP)</li>
-                <li>- R/R : (4 655 - 4 600) / (4 600 - 4 568) = 55 / 32 ≈ 1,7</li>
+                <li>- Entrée long : 4 600 $ (clôture de la première bougie de reprise franche)</li>
+                <li>- Stop loss : 4 568 $ (au-delà de l'extrémité de l'impulsion)</li>
+                <li>- Target : 4 655 $ (proche du niveau pré-NFP)</li>
+                <li>- R/R : (4 655 - 4 600) / (4 600 - 4 568) = 55 / 32 ≈ 1,7</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 6. Gestion du risque</p>
@@ -284,11 +284,11 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Le NFP vient de tomber sur XAU/USD : impulsion bearish violente vers 4 575 $, prix calé autour de 4 580-4 585 $ depuis 20 minutes avec des mèches basses répétées. Que fais-tu ?"
+            question="Le NFP vient de tomber sur XAU/USD : impulsion bearish violente vers 4 575 $, prix calé autour de 4 580-4 585 $ depuis 20 minutes avec des mèches basses répétées. Que fais-tu ?"
             options={[
               "Tu shortes en supposant que la chute va continuer",
               "Tu attends une première bougie de reprise franche puis tu prends le fade long",
-              "Tu places un ordre limite à 4 575 $ pour acheter la mèche basse exacte",
+              "Tu places un ordre limite à 4 575 $ pour acheter la mèche basse exacte",
               "Tu ignores le setup : la volatilité post-NFP est trop dangereuse à trader",
             ]}
             correctIndex={1}

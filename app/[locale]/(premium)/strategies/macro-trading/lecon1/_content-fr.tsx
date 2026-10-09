@@ -144,7 +144,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : prix avant FOMC 4 660 $ ; première impulsion bearish jusqu'à 4 590 $ ; mouvement initial de 70 $ en quelques minutes. Une heure plus tard : retour du prix vers 4 638 $, correction de la majorité de l'impulsion initiale.
+                XAU/USD : prix avant FOMC 4 660 $ ; première impulsion bearish jusqu'à 4 590 $ ; mouvement initial de 70 $ en quelques minutes. Une heure plus tard : retour du prix vers 4 638 $, correction de la majorité de l'impulsion initiale.
               </p>
             </div>
 
@@ -171,7 +171,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : impulsion bullish 4 640 $ → 4 705 $ après FOMC. Au sommet, trois bougies M15 consécutives impriment des mèches hautes de 6-8 $ sans clôturer au-dessus de 4 705. L'accélération est cassée, le marché ne fait plus de nouveaux plus hauts. Quelques bougies plus tard, le prix corrige vers 4 670 $, le fade fonctionne.
+                XAU/USD : impulsion bullish 4 640 $ → 4 705 $ après FOMC. Au sommet, trois bougies M15 consécutives impriment des mèches hautes de 6-8 $ sans clôturer au-dessus de 4 705. L'accélération est cassée, le marché ne fait plus de nouveaux plus hauts. Quelques bougies plus tard, le prix corrige vers 4 670 $, le fade fonctionne.
               </p>
             </div>
 
@@ -198,12 +198,12 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : chute FOMC 4 660 $ → 4 590 $ ; stabilisation M15 autour de 4 595 $ ; retour progressif vers 4 638 $. Setup fade : entrée long 4 600 $, stop loss 4 578 $, target 4 638 $. Le setup vise un retour partiel du mouvement, pas un retournement Daily complet.
+                XAU/USD : chute FOMC 4 660 $ → 4 590 $ ; stabilisation M15 autour de 4 595 $ ; retour progressif vers 4 638 $. Setup fade : entrée long 4 600 $, stop loss 4 578 $, target 4 638 $. Le setup vise un retour partiel du mouvement, pas un retournement Daily complet.
               </p>
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Points actionnables : le fade vise un retour partiel, typiquement 50-80 % de l'impulsion</li>
+              <li>- Points actionnables : le fade vise un retour partiel, typiquement 50-80 % de l'impulsion</li>
               <li>- Entrée après stabilisation visible, jamais en cours d'impulsion</li>
               <li>- SL serré au-delà de l'extrémité, structure d'invalidation claire</li>
               <li>- Target sur le niveau structurel précédent l'impulsion (ancien support / résistance)</li>
@@ -220,27 +220,27 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Étape 1. Contexte H4</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : XAU sous résistance H4 à 4 680 $, marché attentiste avant FOMC, compression de volatilité</li>
+                <li>- Observation : XAU sous résistance H4 à 4 680 $, marché attentiste avant FOMC, compression de volatilité</li>
                 <li>- Conclusion : forte probabilité d'expansion sur la décision, on prépare le scénario de fade</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 2. Réaction FOMC</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : première impulsion bearish 4 660 $ → 4 590 $, mouvement de 70 $ en quelques minutes, volatilité agressive</li>
+                <li>- Observation : première impulsion bearish 4 660 $ → 4 590 $, mouvement de 70 $ en quelques minutes, volatilité agressive</li>
                 <li>- Conclusion : réaction potentiellement excessive, on attend l'essoufflement, pas l'entrée immédiate</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 3. Essoufflement</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : le marché cesse de créer de nouveaux plus bas, longues mèches basses M15, stabilisation autour de 4 595 $</li>
+                <li>- Observation : le marché cesse de créer de nouveaux plus bas, longues mèches basses M15, stabilisation autour de 4 595 $</li>
                 <li>- Conclusion : pression vendeuse en ralentissement, la condition du fade est validée</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Exécution du Fade</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée long : 4 600 $</li>
-                <li>- Stop loss : 4 578 $ (au-delà de l'extrémité de l'impulsion)</li>
-                <li>- Target : 4 638 $ (retour partiel vers le niveau pré-FOMC)</li>
+                <li>- Entrée long : 4 600 $</li>
+                <li>- Stop loss : 4 578 $ (au-delà de l'extrémité de l'impulsion)</li>
+                <li>- Target : 4 638 $ (retour partiel vers le niveau pré-FOMC)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 5. Gestion du risque</p>
@@ -277,7 +277,7 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Tu es en position devant le FOMC sur XAU/USD. La décision tombe et provoque une impulsion bearish violente de 70 $ en quelques minutes. Que fais-tu ?"
+            question="Tu es en position devant le FOMC sur XAU/USD. La décision tombe et provoque une impulsion bearish violente de 70 $ en quelques minutes. Que fais-tu ?"
             options={[
               "Tu shortes dans l'impulsion pour profiter du mouvement en cours",
               "Tu n'entres pas tout de suite : tu attends l'essoufflement de l'impulsion avant tout trade",

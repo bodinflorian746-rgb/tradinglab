@@ -136,7 +136,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Pourquoi un trader doit s&apos;y intéresser</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Imagine ce scénario.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Tu repères un setup parfait sur EUR/USD à 14h25. Toutes les bougies sont alignées, ton plan de trade est béton, tu entres long. À 14h30, EUR/USD chute de 80 pips en 2 minutes. Ton stop saute. Tu ne comprends pas.
+              Tu repères un setup parfait sur EUR/USD à 14h25. Toutes les bougies sont alignées, ton plan de trade est béton, tu entres long. À 14h30, EUR/USD chute de 80 pips en 2 minutes. Ton stop saute. Tu ne comprends pas.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-2">
               Et ce n&apos;est pas que sur l&apos;EUR/USD. Sur la même news macro, tu aurais probablement vu :
@@ -218,7 +218,7 @@ export default function ContentFr() {
               </p>
               <ul className="space-y-1.5">
                 {[
-                  { asset: "EUR/USD", move: "de 100 à 200 pips" },
+                  { asset: "EUR/USD", move: "de 100 à 200 pips" },
                   { asset: "XAU/USD", move: "de 30 à 60$" },
                   { asset: "Nasdaq", move: "de 1 à 2%" },
                   { asset: "BTC/USD", move: "de 500 à 1500$" },
@@ -239,7 +239,7 @@ export default function ContentFr() {
                   "L'inflation US monte à 4% (au lieu des 3% attendus).",
                   "→ La Fed indique qu'elle va monter ses taux plus vite.",
                   "→ Le dollar grimpe contre toutes les devises.",
-                  "→ EUR/USD perd 150 pips en une journée.",
+                  "→ EUR/USD perd 150 pips en une journée.",
                 ].map((item, i) => (
                   <p key={i} className={`text-sm leading-relaxed ${item.startsWith("→") ? "text-emerald-400 font-medium" : "text-zinc-300"}`}>
                     {item}
@@ -453,12 +453,12 @@ export default function ContentFr() {
               "Je passe en H4 pour ignorer le bruit de la news",
             ]}
             correctIndex={1}
-            explanation="Une publication à 3 étoiles peut faire bouger EUR/USD de 80-150 pips en quelques minutes, dans une direction imprévisible. Entrer juste avant (option A) revient à parier à pile ou face. L'option C est fausse : le CPI peut faire monter ou baisser l'euro selon que les chiffres surprennent à la hausse ou à la baisse. L'option D est une fuite, changer d'unité de temps ne te protège pas du mouvement violent. La bonne pratique : attends que la news passe, observe la réaction du marché, et trade ensuite avec la nouvelle information. Ce principe s'applique à tous les actifs : forex, or, indices, crypto."
+            explanation="Une publication à 3 étoiles peut faire bouger EUR/USD de 80-150 pips en quelques minutes, dans une direction imprévisible. Entrer juste avant (option A) revient à parier à pile ou face. L'option C est fausse : le CPI peut faire monter ou baisser l'euro selon que les chiffres surprennent à la hausse ou à la baisse. L'option D est une fuite, changer d'unité de temps ne te protège pas du mouvement violent. La bonne pratique : attends que la news passe, observe la réaction du marché, et trade ensuite avec la nouvelle information. Ce principe s'applique à tous les actifs : forex, or, indices, crypto."
             answerExplanations={[
-              "Faux. Entrer juste avant une publication à 3 étoiles revient à parier à pile ou face. EUR/USD peut bouger de 80-150 pips en quelques minutes dans une direction imprévisible. Ton analyse technique ne compte plus, la macro écrase tout.",
+              "Faux. Entrer juste avant une publication à 3 étoiles revient à parier à pile ou face. EUR/USD peut bouger de 80-150 pips en quelques minutes dans une direction imprévisible. Ton analyse technique ne compte plus, la macro écrase tout.",
               "Correct. La bonne pratique : attends que la news passe, observe la réaction du marché, et trade ensuite avec la nouvelle information. Tu gardes ton setup ET tu sais dans quelle direction le marché a décidé d'aller.",
               "Faux. Le CPI peut faire monter ou baisser l'euro selon que les chiffres surprennent à la hausse ou à la baisse. Il n'y a pas de direction systématique, c'est l'écart par rapport aux attentes qui compte.",
-              "Faux. Changer d'unité de temps ne te protège pas du mouvement violent. Un mouvement de 80-150 pips sur M5 est un mouvement de 80-150 pips sur H4 aussi. L'unité de temps ne change pas l'amplitude réelle.",
+              "Faux. Changer d'unité de temps ne te protège pas du mouvement violent. Un mouvement de 80-150 pips sur M5 est un mouvement de 80-150 pips sur H4 aussi. L'unité de temps ne change pas l'amplitude réelle.",
             ]}
           />
 

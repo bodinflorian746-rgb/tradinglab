@@ -115,7 +115,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <div className="bg-zinc-900 border-l-4 border-amber-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
-                « Le marché passe 80 % de sa journée à attendre. Tout ce qui compte se joue dans les 20 % restants. »
+                « Le marché passe 80 % de sa journée à attendre. Tout ce qui compte se joue dans les 20 % restants. »
               </p>
             </div>
           </section>
@@ -143,7 +143,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- 80 % des mouvements significatifs se produisent dans 20 % des heures</li>
+              <li>- 80 % des mouvements significatifs se produisent dans 20 % des heures</li>
               <li>- Hors Killzone : range étroit, bougies plates, sweeps lents</li>
               <li>- En Killzone: expansion, impulsions franches, vrais déplacements</li>
               <li>- Trader sans regarder l'heure, c'est trader en aveugle</li>
@@ -192,7 +192,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Graphique M15 XAU/USD : juste avant l'ouverture de New York, le prix consolide autour de 4 640 $ dans des bougies plates de faible amplitude. À l'ouverture, après 14h30 ou 15h30 heure de Paris selon la saison, une bougie explosive haussière de 28 $ projette le prix à 4 668 $, où une mèche de sweep marque le sommet. Dans les minutes qui suivent, une cascade rouge ramène le prix à 4 610 $, une amplitude de 58 $ totale dans la première heure de NY, soit plus que la veille entière.
+                Graphique M15 XAU/USD : juste avant l'ouverture de New York, le prix consolide autour de 4 640 $ dans des bougies plates de faible amplitude. À l'ouverture, après 14h30 ou 15h30 heure de Paris selon la saison, une bougie explosive haussière de 28 $ projette le prix à 4 668 $, où une mèche de sweep marque le sommet. Dans les minutes qui suivent, une cascade rouge ramène le prix à 4 610 $, une amplitude de 58 $ totale dans la première heure de NY, soit plus que la veille entière.
               </p>
             </div>
 
@@ -213,13 +213,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le même setup technique, une résistance H1 testée, produira des réactions radicalement différentes selon le moment où le test arrive. En pleine Asia Session, la résistance peut être touchée et n'engendrer qu'une latéralisation molle ; en London Open, le même niveau peut produire un sweep franc suivi d'une impulsion baissière de 30 pips. La Killzone n'est pas un déclencheur en soi, c'est un FILTRE de timing : on attend que le contexte horaire soit propice avant de prendre un setup, même bien préparé techniquement.
+              Le même setup technique, une résistance H1 testée, produira des réactions radicalement différentes selon le moment où le test arrive. En pleine Asia Session, la résistance peut être touchée et n'engendrer qu'une latéralisation molle ; en London Open, le même niveau peut produire un sweep franc suivi d'une impulsion baissière de 30 pips. La Killzone n'est pas un déclencheur en soi, c'est un FILTRE de timing : on attend que le contexte horaire soit propice avant de prendre un setup, même bien préparé techniquement.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : la résistance H1 à 1.1780 est testée deux fois sur la même journée. Premier test à 03h UTC en plein Asia : le prix touche, produit une bougie de rejet de 4 pips, puis se cale en latéralisation pendant 2h sans déplacement. Second test à l'ouverture de London : le prix touche, sweep à 1.1792, puis cascade baissière de 35 pips en 4 bougies. Même setup, deux résultats, la différence est uniquement le timing.
+                EUR/USD : la résistance H1 à 1.1780 est testée deux fois sur la même journée. Premier test à 03h UTC en plein Asia : le prix touche, produit une bougie de rejet de 4 pips, puis se cale en latéralisation pendant 2h sans déplacement. Second test à l'ouverture de London : le prix touche, sweep à 1.1792, puis cascade baissière de 35 pips en 4 bougies. Même setup, deux résultats, la différence est uniquement le timing.
               </p>
             </div>
 
@@ -227,7 +227,7 @@ export default function ContentFr() {
               <li>- Un setup ICT n'est valable que si le timing l'est aussi</li>
               <li>- Hors Killzone : réaction molle, latéralisation, faux signaux</li>
               <li>- En Killzone: sweep franc, impulsion, déplacement réel</li>
-              <li>- Le filtre horaire élimine 80 % des « setups corrects » non rentables</li>
+              <li>- Le filtre horaire élimine 80 % des « setups corrects » non rentables</li>
             </ul>
           </section>
 

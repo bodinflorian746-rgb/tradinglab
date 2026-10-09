@@ -66,7 +66,7 @@ export default function ContentFr() {
               Vendredi 14h30. NFP sort à 205k vs 200k attendus. Mouvement nul.
             </p>
             <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
-              Trois minutes plus tard, EUR/USD perd 60 pips. Tu n&apos;as pas vu venir. Le marché, lui, a vu la révision.
+              Trois minutes plus tard, EUR/USD perd 60 pips. Tu n&apos;as pas vu venir. Le marché, lui, a vu la révision.
             </p>
           </div>
 
@@ -191,7 +191,7 @@ export default function ContentFr() {
               <p className="text-xs font-semibold text-zinc-400 mb-2">Sur cette révision NFP (170k → 250k), tous ces actifs ont bougé simultanément :</p>
               <div className="space-y-1.5">
                 {[
-                  { asset: "EUR/USD", detail: "-60 pips", note: "dollar réévalué à la hausse" },
+                  { asset: "EUR/USD", detail: "-60 pips", note: "dollar réévalué à la hausse" },
                   { asset: "XAU/USD", detail: "-20 à -25$", note: "or pénalisé par le dollar fort" },
                   { asset: "Nasdaq", detail: "-0.8 à -1%", note: "marché du travail solide = taux élevés maintenus" },
                   { asset: "BTC/USD", detail: "-300 à -500$", note: "risk-off sur actifs spéculatifs" },

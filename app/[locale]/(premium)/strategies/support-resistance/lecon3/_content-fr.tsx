@@ -141,7 +141,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Breakout franc : clôture nette + distance ≥ 15-20 pips/$ au-delà du niveau</li>
+              <li>- Breakout franc : clôture nette + distance ≥ 15-20 pips/$ au-delà du niveau</li>
               <li>- Pas de réintégration dans les 3-5 bougies suivantes (sinon flip invalidé)</li>
               <li>- Retest : retour du prix vers le niveau cassé par le côté opposé</li>
               <li>- Rebond confirmé par un signal de rejet (pin bar, engulfing, réaction nette)</li>
@@ -179,18 +179,18 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade long sur flip confirmé)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Breakout : clôture à 1.1878 (28 pips au-dessus de la zone)</li>
+                <li>- Breakout : clôture à 1.1878 (28 pips au-dessus de la zone)</li>
                 <li>- Validation : 4 bougies sans réintégration sous 1.1850</li>
                 <li>- Retest : pin bar avec mèche basse à 1.1842 et clôture à 1.1858</li>
                 <li>- Entrée long : 1.1858 (clôture de la pin bar)</li>
-                <li>- Stop loss : 1.1830 (12 pips sous la mèche à 1.1842)</li>
+                <li>- Stop loss : 1.1830 (12 pips sous la mèche à 1.1842)</li>
                 <li>- Take profit : 1.1950 (prochaine résistance H4)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 1.1858 - 1.1830 = 28 pips</li>
-                <li>- Gain potentiel : 1.1950 - 1.1858 = 92 pips</li>
+                <li>- Risque : 1.1858 - 1.1830 = 28 pips</li>
+                <li>- Gain potentiel : 1.1950 - 1.1858 = 92 pips</li>
                 <li>- R/R : 92 / 28 = 3,29</li>
               </ul>
             </div>
@@ -199,8 +199,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 49€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 49€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 66€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 164€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 66€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 164€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 3,29:1 peu importe la taille du compte.
@@ -221,7 +221,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Retour rapide sous le niveau cassé dans les 3-5 bougies = flip invalidé</li>
-              <li>- Le SL placé de l&apos;autre côté de la zone (avec marge 5-10 pips) borne la perte</li>
+              <li>- Le SL placé de l&apos;autre côté de la zone (avec marge 5-10 pips) borne la perte</li>
               <li>- Aucun déplacement du SL contre soi en cours de trade</li>
             </ul>
           </section>
@@ -231,17 +231,17 @@ export default function ContentFr() {
               "Un flip exige un breakout qualifié : clôture franche, distance suffisante, pas de retour immédiat.",
               "La zone cassée inverse son rôle au retest : support cassé → résistance, résistance cassée → support.",
               "Le retest se valide uniquement par un signal de rejet au contact (pin bar, engulfing, réaction nette).",
-              "Le stop loss se place de l’autre côté de la zone avec marge 5-10 pips. Sans signal de rejet, pas d’entrée.",
+              "Le stop loss se place de l’autre côté de la zone avec marge 5-10 pips. Sans signal de rejet, pas d’entrée.",
             ]}
           />
 
           <LessonExercice
             description="Sur EUR/USD H4, une résistance à 1.1850 est cassée par une bougie qui clôture à 1.1875 avec un corps significatif. 4 bougies plus tard, le prix retrace vers 1.1850 et imprime une pin bar avec mèche longue qui rejette. Comment se construit le plan de trade flip ?"
             steps={[
-              "Qualifier le breakout : clôture à 1.1875, distance 25 pips au-dessus de la zone, corps significatif, pas de retour immédiat sur 4 bougies, breakout validé",
+              "Qualifier le breakout : clôture à 1.1875, distance 25 pips au-dessus de la zone, corps significatif, pas de retour immédiat sur 4 bougies, breakout validé",
               "Constater l’inversion du rôle : la résistance 1.1850 devient un support",
               "Identifier le signal de rejet : la pin bar au contact de la zone valide le flip",
-              "Placer l’entrée long à la clôture de la pin bar, stop loss à 1.1830 (20 pips sous la zone pour absorber les mèches)",
+              "Placer l’entrée long à la clôture de la pin bar, stop loss à 1.1830 (20 pips sous la zone pour absorber les mèches)",
               "Définir le take profit à la prochaine résistance majeure identifiée sur le chart H4 (ratio minimum 1:2), taille de position selon le risque par trade adapté au capital",
             ]}
           />

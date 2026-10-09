@@ -260,7 +260,7 @@ export default function ContentFr() {
                   intro: "Les valeurs tech sont",
                   boldMid: "très sensibles aux taux",
                   body: "Pourquoi ? Parce que leurs valorisations dépendent fortement des profits futurs. Quand les taux montent, ces profits futurs valent moins aujourd'hui.",
-                  items: ["US10Y +50 points de base", "Nasdaq peut corriger de 2% à 3%"],
+                  items: ["US10Y +50 points de base", "Nasdaq peut corriger de 2% à 3%"],
                 },
                 {
                   bold: "US10Y vs BTC/USD",

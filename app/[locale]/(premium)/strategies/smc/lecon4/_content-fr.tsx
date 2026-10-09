@@ -214,8 +214,8 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-                <li>- Risque : 1.1768 - 1.1745 = 23 pips</li>
-                <li>- Gain : 1.1745 - 1.1700 = 45 pips</li>
+                <li>- Risque : 1.1768 - 1.1745 = 23 pips</li>
+                <li>- Gain : 1.1745 - 1.1700 = 45 pips</li>
                 <li>- R/R : 45 / 23 = 1,96</li>
               </ul>
               <p className="text-zinc-300 leading-relaxed text-sm">Le setup présente un rendement presque deux fois supérieur au risque engagé.</p>
@@ -225,8 +225,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 29€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 29€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 39€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 98€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 39€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 98€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">Le R/R reste 1,96:1 peu importe la taille du compte.</p>
           </section>
@@ -252,12 +252,12 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD H4, le marché affiche 2 equal highs à 4 680$ et un creux récent à 4 600$. Une bougie H4 perce 4 680$, imprime une mèche à 4 690$, puis clôture à 4 660$. Les bougies suivantes créent un FVG bearish entre 4 645$ et 4 658$. Le prix revient ensuite dans le FVG. Comment se construit le plan de trade sur ce setup ?"
+            description="Sur XAU/USD H4, le marché affiche 2 equal highs à 4 680$ et un creux récent à 4 600$. Une bougie H4 perce 4 680$, imprime une mèche à 4 690$, puis clôture à 4 660$. Les bougies suivantes créent un FVG bearish entre 4 645$ et 4 658$. Le prix revient ensuite dans le FVG. Comment se construit le plan de trade sur ce setup ?"
             steps={[
-              "Identifier la liquidité : les 2 equal highs à 4 680$ constituent une BSL. La mèche à 4 690$ confirme le sweep au-dessus du niveau.",
-              "Confirmer le rejet : la clôture à 4 660$, sous les equal highs, valide la réintégration, le breakout était un sweep, pas un breakout.",
-              "Localiser le FVG : le déséquilibre bearish se situe entre 4 645$ et 4 658$. Le retour du prix dans cette zone fournit le point d’entrée short.",
-              "Poser le plan : entrée short 4 655$ (dans le FVG), stop loss 4 695$ (au-dessus de la mèche du sweep), take profit 4 605$ (cible la SSL sous le creux 4 600$).",
+              "Identifier la liquidité : les 2 equal highs à 4 680$ constituent une BSL. La mèche à 4 690$ confirme le sweep au-dessus du niveau.",
+              "Confirmer le rejet : la clôture à 4 660$, sous les equal highs, valide la réintégration, le breakout était un sweep, pas un breakout.",
+              "Localiser le FVG : le déséquilibre bearish se situe entre 4 645$ et 4 658$. Le retour du prix dans cette zone fournit le point d’entrée short.",
+              "Poser le plan : entrée short 4 655$ (dans le FVG), stop loss 4 695$ (au-dessus de la mèche du sweep), take profit 4 605$ (cible la SSL sous le creux 4 600$).",
               "Calculer le R/R : risque 40$, gain potentiel 50$, R/R 1,25. Le setup reste acceptable mais présente un rendement moins favorable que le cas EUR/USD H4.",
             ]}
           />

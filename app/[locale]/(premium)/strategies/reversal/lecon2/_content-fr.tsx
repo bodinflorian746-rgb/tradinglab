@@ -204,15 +204,15 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée short : 4 570$ (clôture sous ligne de cou)</li>
-                <li>- Stop loss : 4 630$ (5$ au-dessus de l&apos;épaule droite à 4 625$, soit 60$ au-dessus de l&apos;entrée)</li>
-                <li>- Take profit : 4 480$ (90$, measured move étendu)</li>
+                <li>- Entrée short : 4 570$ (clôture sous ligne de cou)</li>
+                <li>- Stop loss : 4 630$ (5$ au-dessus de l&apos;épaule droite à 4 625$, soit 60$ au-dessus de l&apos;entrée)</li>
+                <li>- Take profit : 4 480$ (90$, measured move étendu)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 630 - 4 570 = 60$</li>
-                <li>- Gain potentiel : 4 570 - 4 480 = 90$</li>
+                <li>- Risque : 4 630 - 4 570 = 60$</li>
+                <li>- Gain potentiel : 4 570 - 4 480 = 90$</li>
                 <li>- R/R : 90 / 60 = 1,5:1</li>
                 <li>- Setup exploitable au seuil minimum.</li>
               </ul>
@@ -226,8 +226,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel environ 22€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel environ 22€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel environ 30€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel environ 75€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel environ 30€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel environ 75€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1,5:1 reste modeste comparé à un Pin bar ou un pullback de tendance, mais l&apos;ETE a un winrate plus élevé quand le pattern est propre. Sur 100 trades, la rentabilité est atteinte même avec un R/R modeste si le winrate dépasse 50%.</p>
           </section>
@@ -253,13 +253,13 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD H1, tu vois un ETE avec épaule gauche à 4 650$, tête à 4 680$, épaule droite à 4 658$. Ligne de cou à 4 620$. La tête est 30 pips au-dessus des épaules (0,65%). Le prix vient de clôturer à 4 615$. Tu prends le setup ?"
+            description="Sur XAU/USD H1, tu vois un ETE avec épaule gauche à 4 650$, tête à 4 680$, épaule droite à 4 658$. Ligne de cou à 4 620$. La tête est 30 pips au-dessus des épaules (0,65%). Le prix vient de clôturer à 4 615$. Tu prends le setup ?"
             steps={[
-              "Vérifier que la tête (4 680$) est strictement plus haute que les 2 épaules : 30 pips au-dessus, soit 0,65%, supérieur au seuil de 0,3%, OK",
-              "Confirmer que les épaules sont symétriques : 4 650$ vs 4 658$, écart de 8 pips (0,17%), sous le seuil de 0,5%, OK",
-              "Confirmer le breakout : clôture à 4 615$ sous la ligne de cou à 4 620$, pas une simple mèche",
+              "Vérifier que la tête (4 680$) est strictement plus haute que les 2 épaules : 30 pips au-dessus, soit 0,65%, supérieur au seuil de 0,3%, OK",
+              "Confirmer que les épaules sont symétriques : 4 650$ vs 4 658$, écart de 8 pips (0,17%), sous le seuil de 0,5%, OK",
+              "Confirmer le breakout : clôture à 4 615$ sous la ligne de cou à 4 620$, pas une simple mèche",
               "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
-              "Prendre l’entrée short à 4 615$, SL au-dessus de l’épaule droite à 4 668$, TP measured move étendu à 4 540$ pour un R/R rond de 1,5:1",
+              "Prendre l’entrée short à 4 615$, SL au-dessus de l’épaule droite à 4 668$, TP measured move étendu à 4 540$ pour un R/R rond de 1,5:1",
             ]}
           />
 

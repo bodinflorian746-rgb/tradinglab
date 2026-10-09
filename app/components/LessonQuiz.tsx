@@ -51,7 +51,7 @@ function OptionBadge({
   return (
     <span
       className={`shrink-0 w-[22px] h-[22px] mt-0.5 rounded-full border flex items-center justify-center transition-all duration-300 ${styles[state]}`}
-      style={{ fontSize: 10, fontWeight: 700 }}
+      style={{ fontSize: 12, fontWeight: 700 }}
     >
       {state === "correct" ? <CheckIcon /> : state === "wrong" ? <CrossIcon /> : letter}
     </span>

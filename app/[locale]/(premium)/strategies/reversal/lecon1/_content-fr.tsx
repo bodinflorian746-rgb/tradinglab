@@ -148,7 +148,7 @@ export default function ContentFr() {
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Les 3 conditions pour qu&apos;un double top soit valide :</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
               <li>- Une tendance haussière préalable claire (HH/HL)</li>
-              <li>- Deux sommets quasi égaux (écart toléré : 30 pips maximum)</li>
+              <li>- Deux sommets quasi égaux (écart toléré : 30 pips maximum)</li>
               <li>- Un breakout confirmé de la ligne de cou (clôture, pas une simple mèche)</li>
             </ul>
 
@@ -211,14 +211,14 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée short : 1.1795 (clôture sous ligne de cou)</li>
-                <li>- Stop loss : 1.1835 (au-dessus du dernier rebond à 1.1832, soit 40 pips au-dessus de l&apos;entrée)</li>
-                <li>- Take profit : 1.1715 (80 pips, objectif prudent avant la projection théorique à 1.1705)</li>
+                <li>- Stop loss : 1.1835 (au-dessus du dernier rebond à 1.1832, soit 40 pips au-dessus de l&apos;entrée)</li>
+                <li>- Take profit : 1.1715 (80 pips, objectif prudent avant la projection théorique à 1.1705)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 1.1835 - 1.1795 = 40 pips</li>
-                <li>- Gain potentiel : 1.1795 - 1.1715 = 80 pips</li>
+                <li>- Risque : 1.1835 - 1.1795 = 40 pips</li>
+                <li>- Gain potentiel : 1.1795 - 1.1715 = 80 pips</li>
                 <li>- R/R : 80 / 40 = 2:1</li>
                 <li>- Setup exploitable.</li>
               </ul>
@@ -232,8 +232,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 30€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 30€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 40€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 100€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 40€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 100€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 2:1 reste constant peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.</p>
           </section>
@@ -254,18 +254,18 @@ export default function ContentFr() {
               "Double top = 2 sommets quasi égaux sur une résistance après tendance haussière. Double bottom = miroir sur un support.",
               "Confirmation = clôture (pas mèche) de l’autre côté de la ligne de cou.",
               "Entrée juste après le breakout. SL classique au-delà du dernier sommet/creux, SL tactique au-dessus du dernier rebond. TP = measured move (hauteur projetée depuis le sommet le plus haut), objectif prudent un peu avant.",
-              "Setup ignoré si la tendance préalable n’est pas claire, si l’écart dépasse 30 pips, ou si une news majeure arrive.",
+              "Setup ignoré si la tendance préalable n’est pas claire, si l’écart dépasse 30 pips, ou si une news majeure arrive.",
             ]}
           />
 
           <LessonExercice
-            description="Sur EUR/USD H1, tu vois un double top avec un premier sommet à 1.1850 et un deuxième à 1.1825. Écart : 25 pips. La ligne de cou est à 1.1750. Le prix clôture à 1.1745. Tu prends le setup ?"
+            description="Sur EUR/USD H1, tu vois un double top avec un premier sommet à 1.1850 et un deuxième à 1.1825. Écart : 25 pips. La ligne de cou est à 1.1750. Le prix clôture à 1.1745. Tu prends le setup ?"
             steps={[
-              "Vérifier que l’écart entre les 2 sommets reste sous la limite : 25 pips < 30 pips. OK",
+              "Vérifier que l’écart entre les 2 sommets reste sous la limite : 25 pips < 30 pips. OK",
               "Confirmer que le breakout est par clôture sous 1.1750, pas une simple mèche. OK",
               "Vérifier que la tendance haussière préalable est claire (HH/HL)",
               "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
-              "Prendre l’entrée short à 1.1745, SL au-dessus du 2ème sommet, TP measured move : hauteur depuis le sommet le plus haut (1.1850 - 1.1750 = 100 pips), projection théorique à 1.1650",
+              "Prendre l’entrée short à 1.1745, SL au-dessus du 2ème sommet, TP measured move : hauteur depuis le sommet le plus haut (1.1850 - 1.1750 = 100 pips), projection théorique à 1.1650",
             ]}
           />
 

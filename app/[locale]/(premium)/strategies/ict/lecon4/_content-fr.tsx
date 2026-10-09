@@ -146,7 +146,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Graphique M15 EUR/USD : depuis 1.1780, le prix imprime une mèche de sweep à 1.1792 puis enchaîne 3 bougies baissières consécutives, aux corps de 9 à 10 pips qui ne rétrécissent pas, bien plus grands que ceux des bougies précédentes, sans aucune mèche haute notable. Le prix chute jusqu'à 1.1748 en moins d'une heure, laissant deux FVG bearish visibles dans la chute. C'est un displacement caractéristique, pas une volatilité passagère, mais une séquence orientée.
+                Graphique M15 EUR/USD : depuis 1.1780, le prix imprime une mèche de sweep à 1.1792 puis enchaîne 3 bougies baissières consécutives, aux corps de 9 à 10 pips qui ne rétrécissent pas, bien plus grands que ceux des bougies précédentes, sans aucune mèche haute notable. Le prix chute jusqu'à 1.1748 en moins d'une heure, laissant deux FVG bearish visibles dans la chute. C'est un displacement caractéristique, pas une volatilité passagère, mais une séquence orientée.
               </p>
             </div>
 
@@ -173,7 +173,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD M15 : le prix consolide autour de 4 650 $ pendant 3 heures, bougies plates, marché équilibré. À 14h UTC, une bougie sweep un sommet à 4 668 $, suivie immédiatement par 5 bougies baissières à grands corps qui ramènent le prix à 4 608 $. L'équilibre est rompu : ce sont les vendeurs qui prennent le contrôle. Le biais des heures suivantes est défini, on ne cherche plus de longs jusqu'à preuve du contraire.
+                XAU/USD M15 : le prix consolide autour de 4 650 $ pendant 3 heures, bougies plates, marché équilibré. À 14h UTC, une bougie sweep un sommet à 4 668 $, suivie immédiatement par 5 bougies baissières à grands corps qui ramènent le prix à 4 608 $. L'équilibre est rompu : ce sont les vendeurs qui prennent le contrôle. Le biais des heures suivantes est défini, on ne cherche plus de longs jusqu'à preuve du contraire.
             </p>
             </div>
 
@@ -221,13 +221,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le piège classique est de confondre toute grande bougie avec un displacement. Une bougie isolée, même très grande, qui n'est ni précédée d'une structure exploitée ni suivie d'une continuité, est simplement de la volatilité, un événement ponctuel sans suite. Le vrai displacement se distingue par deux éléments : il casse une structure locale (BOS dans le sens du mouvement) et il est suivi d'une continuation, pas d'un rejet immédiat. Sans ces deux conditions, c'est juste une mèche que le marché va effacer dans les minutes qui suivent. La taille de 18 pips n'est jamais en soi un critère, c'est le breakout et la continuité qui le sont.
+              Le piège classique est de confondre toute grande bougie avec un displacement. Une bougie isolée, même très grande, qui n'est ni précédée d'une structure exploitée ni suivie d'une continuité, est simplement de la volatilité, un événement ponctuel sans suite. Le vrai displacement se distingue par deux éléments : il casse une structure locale (BOS dans le sens du mouvement) et il est suivi d'une continuation, pas d'un rejet immédiat. Sans ces deux conditions, c'est juste une mèche que le marché va effacer dans les minutes qui suivent. La taille de 18 pips n'est jamais en soi un critère, c'est le breakout et la continuité qui le sont.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Sur EUR/USD, une bougie M15 imprime brutalement 18 pips à la hausse suite à une news mineure, puis la bougie suivante referme entièrement le mouvement, pas de cassure structurelle, pas de continuation. C'est de la volatilité, pas un displacement. À l'inverse, une séquence de 4 bougies baissières de 10-12 pips chacune qui casse un creux local et enchaîne dans la même direction est un displacement, même si aucune bougie ne dépasse 12 pips.
+                Sur EUR/USD, une bougie M15 imprime brutalement 18 pips à la hausse suite à une news mineure, puis la bougie suivante referme entièrement le mouvement, pas de cassure structurelle, pas de continuation. C'est de la volatilité, pas un displacement. À l'inverse, une séquence de 4 bougies baissières de 10-12 pips chacune qui casse un creux local et enchaîne dans la même direction est un displacement, même si aucune bougie ne dépasse 12 pips.
               </p>
             </div>
 
@@ -304,9 +304,9 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Sur EUR/USD, une bougie M15 imprime brutalement 18 pips à la hausse, puis la bougie suivante referme entièrement le mouvement. Aucune cassure structurelle n'est visible. Comment qualifies-tu ce mouvement ?"
+            question="Sur EUR/USD, une bougie M15 imprime brutalement 18 pips à la hausse, puis la bougie suivante referme entièrement le mouvement. Aucune cassure structurelle n'est visible. Comment qualifies-tu ce mouvement ?"
             options={[
-              "C'est un displacement haussier, 18 pips en une bougie est un signal fort",
+              "C'est un displacement haussier, 18 pips en une bougie est un signal fort",
               "C'est de la volatilité sans suite, pas un displacement, pas de breakout ni de continuation",
               "C'est un sweep, donc le scénario inverse est validé pour entrer short immédiatement",
               "C'est un signal indéterminé, il faut attendre 1h pour décider",
@@ -314,7 +314,7 @@ export default function ContentFr() {
             correctIndex={1}
             explanation="Un displacement n'est jamais défini par la taille d'une seule bougie. Les deux critères structurels sont : une cassure de structure locale (BOS) ET une continuation dans la direction. Ici, la bougie suivante referme intégralement le mouvement et il n'y a pas de breakout, c'est exactement la définition de la volatilité sans suite, pas un displacement. Trader cette bougie comme un signal d'achat reviendrait à acheter le sommet du faux mouvement."
             answerExplanations={[
-              "Faux. La taille d'une bougie n'a aucune valeur sans cassure de structure et continuation. 18 pips isolés et immédiatement rejetés = volatilité ponctuelle, exactement le piège que le concept de displacement vise à éviter.",
+              "Faux. La taille d'une bougie n'a aucune valeur sans cassure de structure et continuation. 18 pips isolés et immédiatement rejetés = volatilité ponctuelle, exactement le piège que le concept de displacement vise à éviter.",
               "Correct. Sans cassure structurelle ni continuation, c'est une bougie isolée, donc de la volatilité, pas un displacement. La règle de l'ICT est claire : un displacement n'est validé que par une séquence orientée qui casse une structure et continue.",
               "Faux. Un sweep n'est qu'une condition préalable, jamais un signal d'entrée seul. Entrer short immédiatement sur la base d'une bougie haussière isolée n'a aucune logique structurelle, il faut attendre la confirmation (réintégration + bougie de displacement opposée).",
               "Faux. Attendre 1h arbitrairement ne change pas la lecture. Le mouvement est déjà qualifié de volatilité par les critères structurels (pas de breakout, rejet immédiat). Pas besoin de timer, il faut juste lire correctement ce qu'on voit.",

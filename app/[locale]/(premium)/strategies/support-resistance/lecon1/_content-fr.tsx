@@ -133,7 +133,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Identifier par les touches multiples</h2>
 
             <div className="my-8">
-              <SupportResistance supportPrice="4 500$" resistancePrice="4 650$" />
+              <SupportResistance supportPrice="4 500$" resistancePrice="4 650$" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
@@ -143,7 +143,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Minimum 2 touches pour qualifier une zone, 3 touches pour une confiance élevée</li>
               <li>- Unité de temps d&apos;identification principal : H4 (historique 100-150 bougies)</li>
-              <li>- Sur EUR/USD : épaisseur 10-20 pips. Sur XAU/USD : épaisseur 10-20$</li>
+              <li>- Sur EUR/USD : épaisseur 10-20 pips. Sur XAU/USD : épaisseur 10-20$</li>
               <li>- Pas de trade sur 1ère touche : la touche initiale valide l&apos;existence du niveau, pas encore une entrée</li>
             </ul>
           </section>
@@ -164,7 +164,7 @@ export default function ContentFr() {
               <li>- 4 touches franches avec rebonds nets = niveau fort, prioritaire dans la sélection des setups</li>
               <li>- 2 touches molles sans amplitude post-rebond = niveau faible, à exclure</li>
               <li>- Fraîcheur : zone touchée dans les 30 derniers jours conserve son poids structurel</li>
-              <li>- Les chiffres ronds (1.1800, 4 500$, 100 000$) renforcent la force du niveau</li>
+              <li>- Les chiffres ronds (1.1800, 4 500$, 100 000$) renforcent la force du niveau</li>
             </ul>
           </section>
 
@@ -182,7 +182,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Tracé en ligne fine = mèches répétées font croire à un breakout inexistant</li>
-              <li>- Tracé en zone (rectangle 10-20 pips) = mèches naturelles absorbés, lecture fiable</li>
+              <li>- Tracé en zone (rectangle 10-20 pips) = mèches naturelles absorbés, lecture fiable</li>
               <li>- Le tracé englobe corps + mèches, jamais limité aux corps seuls</li>
               <li>- Outil rectangle de la plateforme, coloration translucide (40% opacité)</li>
             </ul>
@@ -191,7 +191,7 @@ export default function ContentFr() {
           <LessonKeyPoints
             points={[
               "Une zone valide comporte minimum 2 touches confirmées, idéalement 3 (mémoire collective).",
-              "L’épaisseur d’une zone : 10-20 pips sur EUR/USD, 10-20$ sur XAU/USD.",
+              "L’épaisseur d’une zone : 10-20 pips sur EUR/USD, 10-20$ sur XAU/USD.",
               "Le tracé en zone (pas en ligne) absorbe les mèches naturelles et évite les faux signaux.",
               "Une zone fraîche (touchée dans les 30 derniers jours) prime sur une zone ancienne.",
             ]}
@@ -200,10 +200,10 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur EUR/USD H4, 3 creux sont identifiés à 1.1685, 1.1690 et 1.1688. Le prix actuel se situe à 1.1750. Comment se trace la zone de support ?"
             steps={[
-              "Démarrer le tracé avec l’outil Rectangle, du plus bas des 3 creux (1.1685) au plus haut (1.1690), zone initiale de 5 pips, trop fine",
-              "Élargir la zone : limite basse à 1.1680, limite haute à 1.1695, zone finale de 15 pips, conforme à la règle 10-20 pips",
+              "Démarrer le tracé avec l’outil Rectangle, du plus bas des 3 creux (1.1685) au plus haut (1.1690), zone initiale de 5 pips, trop fine",
+              "Élargir la zone : limite basse à 1.1680, limite haute à 1.1695, zone finale de 15 pips, conforme à la règle 10-20 pips",
               "Colorer le rectangle en vert transparent (40% d’opacité)",
-              "Vérifier les 4 critères : 3 touches confirmées (OK), épaisseur 15 pips (OK), distance 60 pips du prix actuel (OK), fraîcheur à confirmer selon historique",
+              "Vérifier les 4 critères : 3 touches confirmées (OK), épaisseur 15 pips (OK), distance 60 pips du prix actuel (OK), fraîcheur à confirmer selon historique",
               "Conclure : la zone valide les 4 critères et devient tradable",
             ]}
           />

@@ -144,7 +144,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Sur une semaine de tensions géopolitiques, le S&amp;P 500 baisse de 3 %, le VIX passe de 14 à 22, le DXY monte de 1,5 %, et XAU/USD passe progressivement de 4 585 $ à 4 705 $ en structure haussière. Les quatre marchés convergent, le régime risk-off est installé, l'or est l'actif directionnel à privilégier dans le sens long tant que la concordance tient.
+                Sur une semaine de tensions géopolitiques, le S&amp;P 500 baisse de 3 %, le VIX passe de 14 à 22, le DXY monte de 1,5 %, et XAU/USD passe progressivement de 4 585 $ à 4 705 $ en structure haussière. Les quatre marchés convergent, le régime risk-off est installé, l'or est l'actif directionnel à privilégier dans le sens long tant que la concordance tient.
               </p>
             </div>
 
@@ -171,7 +171,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD H4 en régime risk-off établi : impulsion haussière de 4 610 $ à 4 690 $, puis pullback contrôlé vers 4 655 $ sur un ancien support. Stabilisation, puis nouvelle impulsion bullish jusqu'à 4 730 $. Entrée long au retest de 4 655 $ avec SL sous le pullback, target sur la zone de continuation 4 730 $. La structure HH/HL respecte le régime.
+                XAU/USD H4 en régime risk-off établi : impulsion haussière de 4 610 $ à 4 690 $, puis pullback contrôlé vers 4 655 $ sur un ancien support. Stabilisation, puis nouvelle impulsion bullish jusqu'à 4 730 $. Entrée long au retest de 4 655 $ avec SL sous le pullback, target sur la zone de continuation 4 730 $. La structure HH/HL respecte le régime.
               </p>
             </div>
 
@@ -198,7 +198,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD H4 : après une forte tendance haussière depuis 4 590 $, trois sommets successifs faiblissent, 4 735 $, puis 4 720 $, puis 4 705 $. Les corrections passent de 25 $ à 40 $ puis 65 $ d'amplitude. Les impulsions haussières deviennent plus courtes. Le régime n'est pas encore cassé, mais il perd en force, on resserre les SL, on réduit la taille de position, on prépare la transition.
+                XAU/USD H4 : après une forte tendance haussière depuis 4 590 $, trois sommets successifs faiblissent, 4 735 $, puis 4 720 $, puis 4 705 $. Les corrections passent de 25 $ à 40 $ puis 65 $ d'amplitude. Les impulsions haussières deviennent plus courtes. Le régime n'est pas encore cassé, mais il perd en force, on resserre les SL, on réduit la taille de position, on prépare la transition.
               </p>
             </div>
 
@@ -226,21 +226,21 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 2. Contexte technique H4</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : XAU/USD en structure HH/HL claire depuis le début du régime, prix actuel 4 690 $</li>
+                <li>- Observation : XAU/USD en structure HH/HL claire depuis le début du régime, prix actuel 4 690 $</li>
                 <li>- Conclusion : structure intacte, on cherche le prochain pullback pour entrer long</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 3. Attente du pullback</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : correction H4 vers 4 655 $ (ancien sommet devenu support), stabilisation visible avec mèches basses sur M15</li>
+                <li>- Observation : correction H4 vers 4 655 $ (ancien sommet devenu support), stabilisation visible avec mèches basses sur M15</li>
                 <li>- Conclusion : zone d'entrée préparée, on attend la première bougie de reprise franche</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Exécution</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée long : 4 660 $</li>
-                <li>- Stop loss : 4 640 $ (sous le pullback)</li>
-                <li>- Target : 4 730 $ (zone de continuation)</li>
+                <li>- Entrée long : 4 660 $</li>
+                <li>- Stop loss : 4 640 $ (sous le pullback)</li>
+                <li>- Target : 4 730 $ (zone de continuation)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 5. Suivi du régime</p>
@@ -277,7 +277,7 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Tu observes un régime risk-off bien installé sur XAU/USD avec structure HH/HL claire en H4. Le prix entame un pullback de 30 $ vers un ancien sommet devenu support. Que fais-tu ?"
+            question="Tu observes un régime risk-off bien installé sur XAU/USD avec structure HH/HL claire en H4. Le prix entame un pullback de 30 $ vers un ancien sommet devenu support. Que fais-tu ?"
             options={[
               "Tu shortes le pullback pour profiter de la correction",
               "Tu attends la stabilisation sur le support puis tu entres long pour profiter de la continuation",
@@ -289,7 +289,7 @@ export default function ContentFr() {
             answerExplanations={[
               "Faux. Shorter dans un régime risk-off établi, c'est trader contre le contexte macro qui soutient l'or. Le pullback est une correction technique, pas un retournement, la statistique favorise la continuation.",
               "Correct. La discipline du régime est claire : on entre dans son sens sur les pullbacks. Le support technique offre une entrée serrée, la concordance macro soutient le trade, la structure HH/HL valide la continuation probable.",
-              "Faux. Fermer une position long sur un pullback de 30 $, sans signe d'essoufflement (sommets faiblissants, corrections plus profondes, VIX qui redescend), c'est sortir prématurément. Les pullbacks font partie d'une tendance saine.",
+              "Faux. Fermer une position long sur un pullback de 30 $, sans signe d'essoufflement (sommets faiblissants, corrections plus profondes, VIX qui redescend), c'est sortir prématurément. Les pullbacks font partie d'une tendance saine.",
               "Faux. Attendre la cassure du sommet précédent pour entrer, c'est entrer beaucoup trop tard, au-dessus du dernier high, sans support technique pour caler le SL. Les meilleures entrées en régime sont sur pullback, pas sur breakout.",
             ]}
           />

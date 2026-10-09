@@ -146,7 +146,7 @@ export default function ContentFr() {
 
             <h3 className="text-sm font-semibold text-zinc-200 mb-2">Critères d&apos;un swing significatif</h3>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Amplitude minimale : 50-80 pips EUR/USD H4, 50-100$ XAU/USD H4</li>
+              <li>- Amplitude minimale : 50-80 pips EUR/USD H4, 50-100$ XAU/USD H4</li>
               <li>- Bougie de pivot claire avec mèche significative de rejet</li>
               <li>- Réaction post-swing: retracement ≥ 20% en direction opposée</li>
               <li>- Visibilité multi-unités de temps : visible Daily et H4</li>
@@ -249,19 +249,19 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Swings Daily majeurs</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Swing low : 4 380$ (-5 sem.)</li>
-                <li>- Swing high : 4 520$ (-4 sem.)</li>
-                <li>- HL : 4 460$ (-3 sem.)</li>
-                <li>- HH : 4 720$ (-1 sem.)</li>
+                <li>- Swing low : 4 380$ (-5 sem.)</li>
+                <li>- Swing high : 4 520$ (-4 sem.)</li>
+                <li>- HL : 4 460$ (-3 sem.)</li>
+                <li>- HH : 4 720$ (-1 sem.)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Verdict</p>
               <ul className="space-y-1 text-sm text-zinc-300">
                 <li>- Phase : expansion haussière (markup) confirmée</li>
                 <li>- Biais : long</li>
-                <li>- Zone de pullback active : 4 580$-4 600$ (dernier HL H4)</li>
-                <li>- Zone secondaire : 4 540$-4 560$ (61.8% Fibo)</li>
-                <li>- Setup à surveiller : signal de rejet M15 au contact 4 580$-4 600$ pour long dans le sens du markup Daily</li>
+                <li>- Zone de pullback active : 4 580$-4 600$ (dernier HL H4)</li>
+                <li>- Zone secondaire : 4 540$-4 560$ (61.8% Fibo)</li>
+                <li>- Setup à surveiller : signal de rejet M15 au contact 4 580$-4 600$ pour long dans le sens du markup Daily</li>
               </ul>
             </div>
           </section>
@@ -287,7 +287,7 @@ export default function ContentFr() {
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-red-400 font-semibold text-sm mb-2">3. Swing significatif sur amplitude insuffisante</p>
                 <ul className="space-y-1 text-sm text-zinc-300">
-                  <li>- Un swing de 20 pips EUR/USD H4 n&apos;est PAS une référence structurelle</li>
+                  <li>- Un swing de 20 pips EUR/USD H4 n&apos;est PAS une référence structurelle</li>
                   <li>- Appliquer strictement les seuils du Bloc 3</li>
                 </ul>
               </div>

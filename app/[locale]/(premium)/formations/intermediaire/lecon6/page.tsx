@@ -214,7 +214,7 @@ function ContentFr() {
       />
 
       <LessonQuiz
-        question="Sur EUR/USD H1, le prix monte et perce la résistance à 1.0950 pendant la bougie en cours. La bougie n'est pas encore clôturée et affiche +18 pips au-dessus du niveau. Que fais-tu ?"
+        question="Sur EUR/USD H1, le prix monte et perce la résistance à 1.0950 pendant la bougie en cours. La bougie n'est pas encore clôturée et affiche +18 pips au-dessus du niveau. Que fais-tu ?"
         options={[
           "Tu achètes immédiatement, le breakout est en cours et tu veux être dans le mouvement",
           "Tu attends la clôture de cette bougie H1 avant de prendre une décision",
@@ -222,11 +222,11 @@ function ContentFr() {
           "Tu places un ordre d'achat juste au-dessus de 1.0950 pour la prochaine bougie",
         ]}
         correctIndex={1}
-        explanation="La règle est absolue : attends la clôture de la bougie. Le prix peut être à +18 pips au-dessus en intrabar et clôturer sous la résistance, c'est exactement la définition d'un fake breakout. Décider avant la clôture, c'est trader sur un prix provisoire."
+        explanation="La règle est absolue : attends la clôture de la bougie. Le prix peut être à +18 pips au-dessus en intrabar et clôturer sous la résistance, c'est exactement la définition d'un fake breakout. Décider avant la clôture, c'est trader sur un prix provisoire."
         answerExplanations={[
           "Faux. Le breakout n'est pas encore confirmé. Le prix peut revenir sous 1.0950 avant la clôture. Entrer maintenant, c'est réagir à un prix temporaire. Si la bougie clôture sous 1.0950, tu es dans le mauvais sens.",
           "Correct. La clôture de bougie est le seul moment où tu peux juger un breakout. Si elle clôture au-dessus de 1.0950 → potentiellement vrai breakout. Si elle clôture en dessous → fake breakout. Tu attends.",
-          "Faux. +18 pips sur une résistance peut être le début d'un vrai breakout, pas nécessairement un fake. Tu ne peux pas conclure 'faux breakout' sans la clôture de la bougie.",
+          "Faux. +18 pips sur une résistance peut être le début d'un vrai breakout, pas nécessairement un fake. Tu ne peux pas conclure 'faux breakout' sans la clôture de la bougie.",
           "Risqué. Placer un ordre limite juste au-dessus de 1.0950 pour la prochaine bougie, c'est anticiper une continuation sans confirmation. Attends la clôture d'abord.",
         ]}
       />

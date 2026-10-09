@@ -284,7 +284,7 @@ export default function ContentFr() {
                 </div>
                 <div className="divide-y divide-zinc-800/60">
                   {[
-                    { asset: "EUR/USD", reaction: "-100 à -150 pips" },
+                    { asset: "EUR/USD", reaction: "-100 à -150 pips" },
                     { asset: "XAU/USD", reaction: "-30 à -50$" },
                     { asset: "Nasdaq", reaction: "-1.5 à -2%" },
                     { asset: "BTC/USD", reaction: "-800 à -1500$" },

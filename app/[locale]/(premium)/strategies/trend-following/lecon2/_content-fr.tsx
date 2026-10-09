@@ -141,8 +141,8 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Trendline haussière : reliée aux HL successifs (3 points minimum)</li>
-              <li>- Trendline baissière : reliée aux LH successifs (3 points minimum)</li>
+              <li>- Trendline haussière : reliée aux HL successifs (3 points minimum)</li>
+              <li>- Trendline baissière : reliée aux LH successifs (3 points minimum)</li>
               <li>- Pente exploitable : entre 20° et 60° (sous 20° = faible, au-delà 60° = irréaliste)</li>
               <li>- MM20 = dynamique courte, MM50 = référence intermédiaire, MM200 = biais long terme</li>
             </ul>
@@ -181,7 +181,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- 2 points isolés ignorent les autres pivots = trendline arbitraire</li>
+              <li>- 2 points isolés ignorent les autres pivots = trendline arbitraire</li>
               <li>- Pente irréaliste (&gt; 60°) = impulsion non durable, retournement rapide attendu</li>
               <li>- Breakout ignoré = trendline prolongée alors qu&apos;elle a perdu sa validité</li>
             </ul>
@@ -199,15 +199,15 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Setup (trade long sur rebond confluence)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 1.1778 (clôture de la pin bar)</li>
-                <li>- Stop loss : 1.1750 (10 pips sous la mèche basse à 1.1762)</li>
+                <li>- Stop loss : 1.1750 (10 pips sous la mèche basse à 1.1762)</li>
                 <li>- Take profit niveau 1 : 1.1820 (HH précédent), niveau 2 : 1.1860 (extension)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 1.1778 - 1.1750 = 28 pips</li>
-                <li>- Gain niveau 1 : 42 pips → R/R 1,50</li>
-                <li>- Gain niveau 2 : 82 pips → R/R 82/28 = 2,93</li>
+                <li>- Risque : 1.1778 - 1.1750 = 28 pips</li>
+                <li>- Gain niveau 1 : 42 pips → R/R 1,50</li>
+                <li>- Gain niveau 2 : 82 pips → R/R 82/28 = 2,93</li>
                 <li>- Le setup vise prioritairement le TP niveau 2</li>
               </ul>
             </div>
@@ -216,8 +216,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 44€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 44€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 59€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 147€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 59€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 147€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1:2,93 peu importe la taille du compte.
@@ -226,7 +226,7 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Une trendline tradable s’appuie sur 2 points minimum (3 idéalement), avec une pente entre 20° et 60°.",
+              "Une trendline tradable s’appuie sur 2 points minimum (3 idéalement), avec une pente entre 20° et 60°.",
               "MM20 = dynamique courte. MM50 = référence intermédiaire. MM200 = biais structurel long terme.",
               "La confluence trendline + MM50 crée une zone défendue par 2 références dynamiques distinctes.",
               "Respecter le biais MM200 : trade long au-dessus, trade short en dessous. Aucune entrée sans signal de rejet.",
@@ -234,13 +234,13 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD H4 en tendance baissière confirmée, le prix évolue sous la MM200 H4 à 4 720$. Une trendline baissière a été tracée sur 3 LH successifs à 4 680$, 4 650$ et 4 620$. La MM50 H4 est actuellement à 4 605$. Le prix remonte vers 4 600$. Quel est le statut du setup et quel plan théorique ?"
+            description="Sur XAU/USD H4 en tendance baissière confirmée, le prix évolue sous la MM200 H4 à 4 720$. Une trendline baissière a été tracée sur 3 LH successifs à 4 680$, 4 650$ et 4 620$. La MM50 H4 est actuellement à 4 605$. Le prix remonte vers 4 600$. Quel est le statut du setup et quel plan théorique ?"
             steps={[
-              "Valider la trendline baissière : 3 LH confirmés à 4 680$, 4 650$, 4 620$, trendline tradable",
-              "Identifier la confluence : MM50 H4 à 4 605$ + trendline qui passe à 4 600$ = zone de confluence 4 600$-4 605$",
-              "Vérifier le biais MM200 H4 : prix sous 4 720$ = biais short aligné, setup conforme",
-              "Attendre le signal de rejet baissier (pin bar haute, engulfing baissier) au contact de la zone 4 600$-4 605$ pour valider l’entrée",
-              "Construire le plan : entrée short à la clôture du signal, stop loss à 4 615$ (10$ au-dessus de la MM50), take profit à 4 555$ (LL précédent, niveau 1) ou 4 510$ (extension baissière, niveau 2). Taille de position selon le risque par trade adapté au capital",
+              "Valider la trendline baissière : 3 LH confirmés à 4 680$, 4 650$, 4 620$, trendline tradable",
+              "Identifier la confluence : MM50 H4 à 4 605$ + trendline qui passe à 4 600$ = zone de confluence 4 600$-4 605$",
+              "Vérifier le biais MM200 H4 : prix sous 4 720$ = biais short aligné, setup conforme",
+              "Attendre le signal de rejet baissier (pin bar haute, engulfing baissier) au contact de la zone 4 600$-4 605$ pour valider l’entrée",
+              "Construire le plan : entrée short à la clôture du signal, stop loss à 4 615$ (10$ au-dessus de la MM50), take profit à 4 555$ (LL précédent, niveau 1) ou 4 510$ (extension baissière, niveau 2). Taille de position selon le risque par trade adapté au capital",
             ]}
           />
 

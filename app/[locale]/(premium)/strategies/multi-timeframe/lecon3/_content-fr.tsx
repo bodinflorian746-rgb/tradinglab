@@ -171,7 +171,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD H1 : impulsion bearish brutale depuis 4 680 $. Le mouvement laisse un FVG bearish entre 4 648 $ et 4 660 $. Plusieurs heures plus tard, le prix remonte progressivement dans cette bande. Au contact, la mèche traverse partiellement le FVG, puis le rejet s&apos;enclenche avec force vers le bas. Le retour dans le déséquilibre a précédé la continuation baissière.
+                XAU/USD H1 : impulsion bearish brutale depuis 4 680 $. Le mouvement laisse un FVG bearish entre 4 648 $ et 4 660 $. Plusieurs heures plus tard, le prix remonte progressivement dans cette bande. Au contact, la mèche traverse partiellement le FVG, puis le rejet s&apos;enclenche avec force vers le bas. Le retour dans le déséquilibre a précédé la continuation baissière.
               </p>
             </div>
 

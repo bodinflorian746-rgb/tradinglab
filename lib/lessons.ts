@@ -63,7 +63,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Exemple concret : gain et perte",
-            body: "Cas 1, le prix monte en ta faveur : Tu achètes Bitcoin à 78 000 $. Quelques heures plus tard, Bitcoin monte à 81 000 $. Le prix a donc progressé de 3 000 $ en faveur de ta position. Tu gardes ton plan, tu laisses le trade respirer, puis tu prends tes profits. Cas 2, le prix descend contre toi : Tu achètes Bitcoin à 78 000 $. Quelques heures plus tard, Bitcoin chute à 76 500 $. Le prix a donc baissé de 1 500 $ contre ta position. Sous le coup de la peur, tu fermes la position en panique et encaisses la perte. Le trading consiste à essayer d'anticiper ces mouvements de prix. Le montant réellement gagné ou perdu en argent dépend ensuite de la taille de ta position. Le calcul précis de cette taille sera détaillé dans la Leçon 8. La différence entre les deux cas ? Pas l'analyse, le comportement face à la perte.",
+            body: "Cas 1, le prix monte en ta faveur : Tu achètes Bitcoin à 78 000 $. Quelques heures plus tard, Bitcoin monte à 81 000 $. Le prix a donc progressé de 3 000 $ en faveur de ta position. Tu gardes ton plan, tu laisses le trade respirer, puis tu prends tes profits. Cas 2, le prix descend contre toi : Tu achètes Bitcoin à 78 000 $. Quelques heures plus tard, Bitcoin chute à 76 500 $. Le prix a donc baissé de 1 500 $ contre ta position. Sous le coup de la peur, tu fermes la position en panique et encaisses la perte. Le trading consiste à essayer d'anticiper ces mouvements de prix. Le montant réellement gagné ou perdu en argent dépend ensuite de la taille de ta position. Le calcul précis de cette taille sera détaillé dans la Leçon 8. La différence entre les deux cas ? Pas l'analyse, le comportement face à la perte.",
             diagram: "trade",
             items: [
               "Un trade qui gagne ≠ un bon trade (tu aurais pu juste avoir de la chance)",
@@ -110,19 +110,19 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "Tu achètes Bitcoin à 78 000 $ puis tu le revends à 81 000 $. Quelle affirmation est correcte ?",
+          question: "Tu achètes Bitcoin à 78 000 $ puis tu le revends à 81 000 $. Quelle affirmation est correcte ?",
           answers: [
-            "Le mouvement de prix est de +3 000 $",
-            "Tu gagnes automatiquement 3 000 $",
+            "Le mouvement de prix est de +3 000 $",
+            "Tu gagnes automatiquement 3 000 $",
             "Tu doubles forcément ton capital",
             "Le résultat dépend uniquement du prix de vente final",
           ],
           correct: 0,
           explanation:
-            "Le trading repose sur les variations de prix entre l'entrée et la sortie. Dans cet exemple, Bitcoin passe de 78 000 $ à 81 000 $, soit un mouvement de +3 000 $. En revanche, le montant réellement gagné en argent dépend de la taille de ta position. Deux traders peuvent prendre exactement le même mouvement tout en gagnant des montants très différents.",
+            "Le trading repose sur les variations de prix entre l'entrée et la sortie. Dans cet exemple, Bitcoin passe de 78 000 $ à 81 000 $, soit un mouvement de +3 000 $. En revanche, le montant réellement gagné en argent dépend de la taille de ta position. Deux traders peuvent prendre exactement le même mouvement tout en gagnant des montants très différents.",
           answerExplanations: [
-            "Correct. Le prix est passé de 78 000 $ à 81 000 $, soit une variation positive de 3 000 $.",
-            "Incorrect. 3 000 $ correspond au mouvement du prix, pas automatiquement au gain réel en argent. Le résultat final dépend aussi de la taille de ta position.",
+            "Correct. Le prix est passé de 78 000 $ à 81 000 $, soit une variation positive de 3 000 $.",
+            "Incorrect. 3 000 $ correspond au mouvement du prix, pas automatiquement au gain réel en argent. Le résultat final dépend aussi de la taille de ta position.",
             "Incorrect. Le mouvement du prix ne permet pas de connaître l'évolution exacte du capital sans connaître la taille de la position.",
             "Incorrect. Le prix de vente seul ne suffit pas. Le résultat dépend de la différence entre entrée et sortie, ainsi que de la taille de ta position.",
           ],
@@ -142,9 +142,9 @@ export const LESSONS: LevelData[] = [
             heading: "Long = tu paries à la hausse",
             body: "Aller Long (ou Buy), c'est acheter un actif en espérant que son prix va monter. Tu achètes maintenant et tu revends plus tard à un prix plus élevé. C'est la direction la plus intuitive, comme acheter des chaussures pour les revendre plus cher.",
             items: [
-              "L'or est à 4 600 $. Tu penses qu'il va monter. Tu achètes (Long).",
-              "L'or monte à 4 720 $. Le prix a grimpé de 120 $ : le mouvement va dans ton sens.",
-              "L'or descend à 4 510 $. Le prix a reculé de 90 $ : le mouvement joue contre toi.",
+              "L'or est à 4 600 $. Tu penses qu'il va monter. Tu achètes (Long).",
+              "L'or monte à 4 720 $. Le prix a grimpé de 120 $ : le mouvement va dans ton sens.",
+              "L'or descend à 4 510 $. Le prix a reculé de 90 $ : le mouvement joue contre toi.",
               "Long = tu veux que le prix monte APRÈS que tu aies acheté",
             ],
           },
@@ -152,9 +152,9 @@ export const LESSONS: LevelData[] = [
             heading: "Short = tu paries à la baisse",
             body: "Aller Short (ou Sell), c'est vendre un actif que tu ne possèdes pas physiquement, en espérant le racheter moins cher ensuite. En pratique, ton broker gère la technique, tu cliques simplement 'Sell'. Si le prix baisse, tu gagnes.",
             items: [
-              "L'or est à 4 700 $. Tu penses qu'il va baisser. Tu vends (Short).",
-              "L'or descend à 4 580 $. Le prix a reculé de 120 $ : pour un Short, une baisse va dans ton sens.",
-              "L'or monte à 4 790 $. Le prix a grimpé de 90 $ : pour un Short, une hausse joue contre toi.",
+              "L'or est à 4 700 $. Tu penses qu'il va baisser. Tu vends (Short).",
+              "L'or descend à 4 580 $. Le prix a reculé de 120 $ : pour un Short, une baisse va dans ton sens.",
+              "L'or monte à 4 790 $. Le prix a grimpé de 90 $ : pour un Short, une hausse joue contre toi.",
               "Short = tu veux que le prix BAISSE après que tu aies vendu",
             ],
           },
@@ -204,7 +204,7 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "Le Bitcoin est à 78 000 $. Tu penses qu'il va baisser à 75 000 $. Quel ordre ouvres-tu ?",
+          question: "Le Bitcoin est à 78 000 $. Tu penses qu'il va baisser à 75 000 $. Quel ordre ouvres-tu ?",
           answers: [
             "Un Long (Buy), pour profiter de la baisse anticipée",
             "Un Short (Sell), pour profiter de la baisse anticipée",
@@ -213,10 +213,10 @@ export const LESSONS: LevelData[] = [
           ],
           correct: 1,
           explanation:
-            "Pour profiter d'une baisse anticipée, tu ouvres un Short (Sell). Tu vends à 78 000 $ et tu rachètes à 75 000 $. Le prix a baissé de 3 000 $, et ce mouvement joue en ta faveur. Le montant réellement gagné en argent dépend ensuite de la taille de ta position, c'est le sujet de la Leçon 8.",
+            "Pour profiter d'une baisse anticipée, tu ouvres un Short (Sell). Tu vends à 78 000 $ et tu rachètes à 75 000 $. Le prix a baissé de 3 000 $, et ce mouvement joue en ta faveur. Le montant réellement gagné en argent dépend ensuite de la taille de ta position, c'est le sujet de la Leçon 8.",
           answerExplanations: [
-            "Faux. Un Long (Buy) = parier sur une HAUSSE. Si tu penses que le Bitcoin va baisser et tu ouvres un Long, tu perdras quand le prix descend à 75 000 $, exactement l'inverse de ce que tu voulais.",
-            "Correct. Un Short (Sell) = parier sur une BAISSE. Tu vends à 78 000 $, le prix descend à 75 000 $, tu rachètes : il a baissé de 3 000 $. C'est ce mouvement que le Short cherche à capter, le gain réel en argent dépend de la taille de ta position (Leçon 8).",
+            "Faux. Un Long (Buy) = parier sur une HAUSSE. Si tu penses que le Bitcoin va baisser et tu ouvres un Long, tu perdras quand le prix descend à 75 000 $, exactement l'inverse de ce que tu voulais.",
+            "Correct. Un Short (Sell) = parier sur une BAISSE. Tu vends à 78 000 $, le prix descend à 75 000 $, tu rachètes : il a baissé de 3 000 $. C'est ce mouvement que le Short cherche à capter, le gain réel en argent dépend de la taille de ta position (Leçon 8).",
             "Faux. Le Short existe précisément pour profiter des baisses. En trading, on peut gagner dans les deux sens. Se limiter aux hausses, c'est se priver de la moitié des opportunités du marché.",
             "Faux. Ouvrir un Long et un Short simultanément sur le même actif s'annule parfaitement, les gains de l'un compensent les pertes de l'autre. Tu ne gagnes rien, mais tu paies les frais deux fois.",
           ],
@@ -245,7 +245,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Exemple concret : lire une bougie pas à pas",
-            body: "Cas 1, bougie verte (acheteurs gagnants) : Bitcoin ouvre à 20 000 €. Il monte jusqu'à 20 800 €. Il redescend légèrement à 19 700 €. Il clôture à 20 400 €. Résultat : corps vert de 20 000 à 20 400 (close > open). Mèche haute de 20 400 à 20 800 (les vendeurs ont repoussé les acheteurs depuis les sommets). Mèche basse de 20 000 à 19 700 (les acheteurs ont défendu les prix bas).\n\nCas 2, bougie rouge (vendeurs gagnants) : Bitcoin ouvre à 20 400 €. Monte à 20 600 €. Chute à 19 500 €. Clôture à 19 800 €. Résultat : corps rouge de 20 400 à 19 800 (close < open). Les vendeurs ont dominé la période.",
+            body: "Cas 1, bougie verte (acheteurs gagnants) : Bitcoin ouvre à 20 000 €. Il monte jusqu'à 20 800 €. Il redescend légèrement à 19 700 €. Il clôture à 20 400 €. Résultat : corps vert de 20 000 à 20 400 (close > open). Mèche haute de 20 400 à 20 800 (les vendeurs ont repoussé les acheteurs depuis les sommets). Mèche basse de 20 000 à 19 700 (les acheteurs ont défendu les prix bas).\n\nCas 2, bougie rouge (vendeurs gagnants) : Bitcoin ouvre à 20 400 €. Monte à 20 600 €. Chute à 19 500 €. Clôture à 19 800 €. Résultat : corps rouge de 20 400 à 19 800 (close < open). Les vendeurs ont dominé la période.",
             items: [
               "Corps vert = acheteurs ont gagné (close > open)",
               "Corps rouge = vendeurs ont gagné (close < open)",
@@ -340,11 +340,11 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Exemple concret : gain et perte avec le spread",
-            body: "Cas 1, tu gagnes malgré le spread : Tu achètes EUR/USD à l'Ask (1,0804). Le prix monte à 1,0870. Tu vends au Bid (1,0866). Tu gagnes 1,0866 - 1,0804 = 62 euros pour 1 euro par point. Le spread a réduit ton gain de 4 euros, mais tu restes largement positif.\n\nCas 2, le spread devient problématique : Tu achètes à 1,0804. Le prix ne monte que de 2 points à 1,0806. Tu vends au Bid : 1,0802. Tu perds 2 euros malgré un mouvement dans ton sens. Le spread de 4 points a effacé ton gain et t'a mis en perte.",
+            body: "Cas 1, tu gagnes malgré le spread : Tu achètes EUR/USD à l'Ask (1,0804). Le prix monte à 1,0870. Tu vends au Bid (1,0866). Tu gagnes 1,0866 - 1,0804 = 62 euros pour 1 euro par point. Le spread a réduit ton gain de 4 euros, mais tu restes largement positif.\n\nCas 2, le spread devient problématique : Tu achètes à 1,0804. Le prix ne monte que de 2 points à 1,0806. Tu vends au Bid : 1,0802. Tu perds 2 euros malgré un mouvement dans ton sens. Le spread de 4 points a effacé ton gain et t'a mis en perte.",
             items: [
               "Le spread est payé à l'ENTRÉE, pas à la sortie",
               "Tu commences chaque trade dans le rouge du montant du spread",
-              "Pour EUR/USD avec un spread de 4 points : ton trade doit gagner plus de 4 points pour être rentable",
+              "Pour EUR/USD avec un spread de 4 points : ton trade doit gagner plus de 4 points pour être rentable",
               "Sur de petits objectifs, le spread représente une part significative du gain visé",
             ],
           },
@@ -354,10 +354,10 @@ export const LESSONS: LevelData[] = [
             table: {
               headers: ["Situation", "Spread typique", "Impact"],
               rows: [
-                ["EUR/USD aux heures de pointe (9h–17h)", "1–2 points", "Faible coût d'entrée"],
-                ["EUR/USD la nuit (22h–6h)", "4–8 points", "Coût plus élevé"],
+                ["EUR/USD aux heures de pointe (9h–17h)", "1–2 points", "Faible coût d'entrée"],
+                ["EUR/USD la nuit (22h–6h)", "4–8 points", "Coût plus élevé"],
                 ["Cryptos le week-end", "Très variable", "Peut être très coûteux"],
-                ["Paires exotiques (USD/TRY…)", "20–100 points", "Dangereux pour les petits objectifs"],
+                ["Paires exotiques (USD/TRY…)", "20–100 points", "Dangereux pour les petits objectifs"],
               ],
             },
           },
@@ -373,7 +373,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "L'erreur fatale",
-            body: "Trader un actif à fort spread avec un objectif de gain inférieur au spread. Si ton spread est de 20 points et que tu vises un gain de 15 points, tu es en perte avant même que le marché bouge. Calcule toujours le spread avant de choisir ton objectif.",
+            body: "Trader un actif à fort spread avec un objectif de gain inférieur au spread. Si ton spread est de 20 points et que tu vises un gain de 15 points, tu es en perte avant même que le marché bouge. Calcule toujours le spread avant de choisir ton objectif.",
           },
         ],
         keyPoints: [
@@ -396,17 +396,17 @@ export const LESSONS: LevelData[] = [
           question: "EUR/USD : Bid = 1,0800, Ask = 1,0805. Tu ouvres un achat (Long). À quel prix s'exécute ton trade, et de combien es-tu dans le rouge au départ ?",
           answers: [
             "À 1,0800, tu commences à l'équilibre, spread nul",
-            "À 1,0802, tu es 2 points dans le rouge",
-            "À 1,0805, tu es 5 points dans le rouge immédiatement",
+            "À 1,0802, tu es 2 points dans le rouge",
+            "À 1,0805, tu es 5 points dans le rouge immédiatement",
             "Le prix dépend de la taille de ta position",
           ],
           correct: 2,
           explanation:
-            "Un achat s'exécute toujours à l'Ask = 1,0805. Le spread = Ask - Bid = 1,0805 - 1,0800 = 5 points. Si tu fermes immédiatement, tu vends au Bid = 1,0800. Tu perds 5 points : c'est le coût d'entrée du trade.",
+            "Un achat s'exécute toujours à l'Ask = 1,0805. Le spread = Ask - Bid = 1,0805 - 1,0800 = 5 points. Si tu fermes immédiatement, tu vends au Bid = 1,0800. Tu perds 5 points : c'est le coût d'entrée du trade.",
           answerExplanations: [
-            "Faux. Le Bid (1,0800) est le prix auquel tu VENDS, pas celui auquel tu achètes. À l'achat, ton ordre s'exécute à l'Ask (1,0805). Tu démarres donc avec 5 points de déficit, pas à l'équilibre.",
-            "Faux. Il n'existe pas de 'prix moyen' entre Bid et Ask pour un ordre au marché. Le marché est binaire : tu achètes à l'Ask ou tu vends au Bid. Ici, l'achat s'exécute à l'Ask = 1,0805, et le spread est de 5 points.",
-            "Correct. Un Long s'exécute à l'Ask = 1,0805. Spread = 1,0805 - 1,0800 = 5 points. Si tu fermes immédiatement, tu vends au Bid = 1,0800. Perte = 5 points. C'est le coût d'entrée que tu paies sur chaque trade.",
+            "Faux. Le Bid (1,0800) est le prix auquel tu VENDS, pas celui auquel tu achètes. À l'achat, ton ordre s'exécute à l'Ask (1,0805). Tu démarres donc avec 5 points de déficit, pas à l'équilibre.",
+            "Faux. Il n'existe pas de 'prix moyen' entre Bid et Ask pour un ordre au marché. Le marché est binaire : tu achètes à l'Ask ou tu vends au Bid. Ici, l'achat s'exécute à l'Ask = 1,0805, et le spread est de 5 points.",
+            "Correct. Un Long s'exécute à l'Ask = 1,0805. Spread = 1,0805 - 1,0800 = 5 points. Si tu fermes immédiatement, tu vends au Bid = 1,0800. Perte = 5 points. C'est le coût d'entrée que tu paies sur chaque trade.",
             "Faux. Le prix d'exécution est toujours l'Ask pour un achat, quelle que soit la taille de la position. La taille de position affecte le montant en euros gagné ou perdu par point, pas le prix auquel l'ordre s'exécute.",
           ],
         },
@@ -433,7 +433,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Exemple concret : avec et sans Stop Loss",
-            body: "Cas 1, avec Stop Loss : Tu achètes Bitcoin à 30 000 €. Tu places un SL à 28 500 €. Le marché chute à 28 500 €. Ton SL se déclenche. Tu perds 1 500 € par Bitcoin. Il te reste 98,5% de ton capital. Tu continues à trader.\n\nCas 2, sans Stop Loss : Tu achètes Bitcoin à 30 000 €. Pas de SL. Le soir, une mauvaise nouvelle fait chuter le Bitcoin à 22 000 €. Tu te réveilles avec une perte de 8 000 € par Bitcoin, 27% de ton capital parti en une nuit. Sans que tu aies pu réagir.",
+            body: "Cas 1, avec Stop Loss : Tu achètes Bitcoin à 30 000 €. Tu places un SL à 28 500 €. Le marché chute à 28 500 €. Ton SL se déclenche. Tu perds 1 500 € par Bitcoin. Il te reste 98,5% de ton capital. Tu continues à trader.\n\nCas 2, sans Stop Loss : Tu achètes Bitcoin à 30 000 €. Pas de SL. Le soir, une mauvaise nouvelle fait chuter le Bitcoin à 22 000 €. Tu te réveilles avec une perte de 8 000 € par Bitcoin, 27% de ton capital parti en une nuit. Sans que tu aies pu réagir.",
             diagram: "stoploss",
             items: [
               "Avec SL : la perte est limitée et connue à l'avance",
@@ -447,7 +447,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Long : SL juste en dessous du dernier swing low significatif (le support)",
               "Short : SL juste au-dessus du dernier swing high significatif (la résistance)",
-              "Exemple : tu achètes au rebond d'un support à 30 000 €. Le dernier swing low est à 29 200 €. Ton SL va à 29 100 €.",
+              "Exemple : tu achètes au rebond d'un support à 30 000 €. Le dernier swing low est à 29 200 €. Ton SL va à 29 100 €.",
               "Règle : si le prix atteint mon SL, mon analyse était fausse. La perte est normale.",
             ],
           },
@@ -463,7 +463,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "L'erreur fatale",
-            body: "Déplacer le Stop Loss dans le mauvais sens pour éviter d'être stoppé. Ton trade perd, tu es à -500 €. Tu éloignes le SL pour 'lui laisser une chance'. Le trade continue à perdre. Tu éloignes encore. Au final, tu perds 5 ou 10 fois plus que ce que tu avais prévu. Cette erreur, commise sous l'émotion, est responsable de la destruction de milliers de comptes de traders débutants.",
+            body: "Déplacer le Stop Loss dans le mauvais sens pour éviter d'être stoppé. Ton trade perd, tu es à -500 €. Tu éloignes le SL pour 'lui laisser une chance'. Le trade continue à perdre. Tu éloignes encore. Au final, tu perds 5 ou 10 fois plus que ce que tu avais prévu. Cette erreur, commise sous l'émotion, est responsable de la destruction de milliers de comptes de traders débutants.",
           },
         ],
         keyPoints: [
@@ -483,20 +483,20 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "Tu achètes Bitcoin à 30 000 €. Le dernier swing low sur le graphique est à 29 000 €. Où places-tu ton Stop Loss ?",
+          question: "Tu achètes Bitcoin à 30 000 €. Le dernier swing low sur le graphique est à 29 000 €. Où places-tu ton Stop Loss ?",
           answers: [
-            "À 31 000 €, au-dessus de l'entrée pour ne pas perdre d'argent",
-            "À 29 950 €, juste 50 € sous l'entrée, pour minimiser la perte",
-            "À 28 900 €, juste sous le swing low logique, là où ton analyse serait fausse",
+            "À 31 000 €, au-dessus de l'entrée pour ne pas perdre d'argent",
+            "À 29 950 €, juste 50 € sous l'entrée, pour minimiser la perte",
+            "À 28 900 €, juste sous le swing low logique, là où ton analyse serait fausse",
             "Pas de Stop Loss, le Bitcoin finit toujours par remonter",
           ],
           correct: 2,
           explanation:
-            "Le SL d'un Long va en dessous de l'entrée, à un niveau logique. Le dernier swing low à 29 000 € est le niveau qui invalide ton scénario haussier. En plaçant le SL à 28 900 € (juste en dessous), si le prix y arrive, ton analyse était fausse. La perte = 1 100 € par Bitcoin, connue et acceptée à l'avance.",
+            "Le SL d'un Long va en dessous de l'entrée, à un niveau logique. Le dernier swing low à 29 000 € est le niveau qui invalide ton scénario haussier. En plaçant le SL à 28 900 € (juste en dessous), si le prix y arrive, ton analyse était fausse. La perte = 1 100 € par Bitcoin, connue et acceptée à l'avance.",
           answerExplanations: [
             "Faux. Un SL au-dessus de l'entrée sur un Long ferme la position quand le prix monte, quand tu gagnes. C'est complètement inversé. Le SL d'un Long va toujours EN DESSOUS de l'entrée pour te protéger d'une baisse.",
-            "Faux. 50 € de SL sur Bitcoin, c'est beaucoup trop serré. Bitcoin fluctue normalement de plusieurs centaines d'euros par heure. Tu seras sorti automatiquement par le simple bruit du marché, avant même que le trade puisse se développer.",
-            "Correct. Le SL logique se place juste sous le niveau qui invalide ton analyse. Le swing low à 29 000 € est ce niveau. À 28 900 €, si le prix y arrive, la structure haussière est brisée, tu avais tort. La perte est de 1 100 € : définie et acceptée dès le départ.",
+            "Faux. 50 € de SL sur Bitcoin, c'est beaucoup trop serré. Bitcoin fluctue normalement de plusieurs centaines d'euros par heure. Tu seras sorti automatiquement par le simple bruit du marché, avant même que le trade puisse se développer.",
+            "Correct. Le SL logique se place juste sous le niveau qui invalide ton analyse. Le swing low à 29 000 € est ce niveau. À 28 900 €, si le prix y arrive, la structure haussière est brisée, tu avais tort. La perte est de 1 100 € : définie et acceptée dès le départ.",
             "Faux. 'Le Bitcoin finit toujours par remonter' est vrai sur 10 ans, mais sur une position ouverte sans SL, une chute de 30% peut arriver en quelques jours. Sans SL, 30% de perte sur une position = potentiellement tout le capital engagé. Un SL n'empêche pas le rebond, il limite la perte si le rebond tarde trop.",
           ],
         },
@@ -518,17 +518,17 @@ export const LESSONS: LevelData[] = [
             items: [
               "Long : ton TP est placé AU-DESSUS de ton prix d'entrée",
               "Short : ton TP est placé EN-DESSOUS de ton prix d'entrée",
-              "Exemple : tu achètes Bitcoin à 78 000 $. Tu places un TP à 84 000 $.",
-              "Quand le Bitcoin touche 84 000 $, le trade se ferme tout seul à ton objectif, le prix aura parcouru 6 000 $ en ta faveur",
+              "Exemple : tu achètes Bitcoin à 78 000 $. Tu places un TP à 84 000 $.",
+              "Quand le Bitcoin touche 84 000 $, le trade se ferme tout seul à ton objectif, le prix aura parcouru 6 000 $ en ta faveur",
             ],
           },
           {
             heading: "Exemple concret : avec et sans Take Profit",
-            body: "Cas 1, avec Take Profit : Tu achètes Bitcoin à 78 000 $. Tu places un TP à 84 000 $. Le prix monte jusqu'à 84 000 $. Le trade se ferme automatiquement à ton objectif : le prix a parcouru 6 000 $ en ta faveur. Même si le prix redescend ensuite à 73 000 $, ta sortie est déjà actée, le mouvement est sécurisé.\n\nCas 2, sans Take Profit : Tu achètes Bitcoin à 78 000 $. Le prix monte à 84 000 $. Tu regardes et tu gardes 'parce que ça monte encore'. Le prix redescend à 75 000 $. Tu paniques et tu fermes. À cet instant, le prix est repassé 3 000 $ SOUS ton entrée, alors qu'il avait été 6 000 $ AU-DESSUS.",
+            body: "Cas 1, avec Take Profit : Tu achètes Bitcoin à 78 000 $. Tu places un TP à 84 000 $. Le prix monte jusqu'à 84 000 $. Le trade se ferme automatiquement à ton objectif : le prix a parcouru 6 000 $ en ta faveur. Même si le prix redescend ensuite à 73 000 $, ta sortie est déjà actée, le mouvement est sécurisé.\n\nCas 2, sans Take Profit : Tu achètes Bitcoin à 78 000 $. Le prix monte à 84 000 $. Tu regardes et tu gardes 'parce que ça monte encore'. Le prix redescend à 75 000 $. Tu paniques et tu fermes. À cet instant, le prix est repassé 3 000 $ SOUS ton entrée, alors qu'il avait été 6 000 $ AU-DESSUS.",
             items: [
               "Avec TP : ta sortie se déclenche automatiquement à l'objectif, sans émotion",
               "Sans TP : l'émotion décide quand sortir, presque toujours au mauvais moment",
-              "Sans TP, un prix qui était 6 000 $ au-dessus de ton entrée peut repasser en dessous",
+              "Sans TP, un prix qui était 6 000 $ au-dessus de ton entrée peut repasser en dessous",
             ],
           },
           {
@@ -537,9 +537,9 @@ export const LESSONS: LevelData[] = [
             table: {
               headers: ["Ratio R/R", "Exemple concret", "Ce que ça permet"],
               rows: [
-                ["1:1", "Stop à 3 000 $, objectif à 3 000 $", "Il faut gagner 1 trade sur 2 pour être rentable"],
-                ["1:2", "Stop à 3 000 $, objectif à 6 000 $", "Tu peux perdre 2 trades sur 3 et rester positif"],
-                ["1:3", "Stop à 3 000 $, objectif à 9 000 $", "Tu peux perdre 3 trades sur 4 et rester positif"],
+                ["1:1", "Stop à 3 000 $, objectif à 3 000 $", "Il faut gagner 1 trade sur 2 pour être rentable"],
+                ["1:2", "Stop à 3 000 $, objectif à 6 000 $", "Tu peux perdre 2 trades sur 3 et rester positif"],
+                ["1:3", "Stop à 3 000 $, objectif à 9 000 $", "Tu peux perdre 3 trades sur 4 et rester positif"],
               ],
             },
           },
@@ -547,7 +547,7 @@ export const LESSONS: LevelData[] = [
             heading: "Erreurs fréquentes des débutants",
             body: "Ces erreurs sur le Take Profit transforment des trades gagnants en trades nuls ou perdants.",
             items: [
-              "Fermer le trade trop tôt par peur : le prix n'a parcouru que 1 500 $ en ta faveur, tu fermes. Ensuite il en parcourt 4 500 $.",
+              "Fermer le trade trop tôt par peur : le prix n'a parcouru que 1 500 $ en ta faveur, tu fermes. Ensuite il en parcourt 4 500 $.",
               "TP trop ambitieux : viser un R/R de 1:10 sur chaque trade, le TP n'est presque jamais atteint.",
               "Ne pas avoir de TP du tout : 'je verrai quand sortir.' Résultat : une position gagnante qui devient perdante.",
               "Déplacer le TP en cours de route : le prix approche du TP, tu le déplaces plus loin 'parce que ça monte bien'. L'émotion reprend le contrôle.",
@@ -555,7 +555,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "L'erreur fatale",
-            body: "Ne pas avoir de Take Profit et laisser une position gagnante ouverte indéfiniment. Le marché ne monte jamais en ligne droite. Sans TP, tu regardes le prix s'éroder depuis son plus haut : il était 6 000 $ au-dessus de ton entrée, puis 4 500 $, puis 2 500 $, puis 800 $. Tu attends le rebond. Le rebond ne vient pas. Le prix repasse 3 000 $ sous ton entrée. Un trade qui était excellent devient perdant, uniquement parce qu'il n'y avait pas d'ordre pour figer la sortie au bon niveau.",
+            body: "Ne pas avoir de Take Profit et laisser une position gagnante ouverte indéfiniment. Le marché ne monte jamais en ligne droite. Sans TP, tu regardes le prix s'éroder depuis son plus haut : il était 6 000 $ au-dessus de ton entrée, puis 4 500 $, puis 2 500 $, puis 800 $. Tu attends le rebond. Le rebond ne vient pas. Le prix repasse 3 000 $ sous ton entrée. Un trade qui était excellent devient perdant, uniquement parce qu'il n'y avait pas d'ordre pour figer la sortie au bon niveau.",
           },
         ],
         keyPoints: [
@@ -570,25 +570,25 @@ export const LESSONS: LevelData[] = [
           steps: [
             "Sur TradingView, ouvre Bitcoin (BTC/USD) en H1. Note le prix actuel.",
             "Identifie la prochaine résistance au-dessus du prix actuel, note ce niveau.",
-            "Imagine une entrée Long au prix actuel avec un SL placé 3 000 $ en dessous. Pour un R/R de 1:2, ton TP doit être 6 000 $ au-dessus (2 fois la distance du stop).",
+            "Imagine une entrée Long au prix actuel avec un SL placé 3 000 $ en dessous. Pour un R/R de 1:2, ton TP doit être 6 000 $ au-dessus (2 fois la distance du stop).",
             "La prochaine résistance identifiée est-elle au-delà de ce TP ? Si oui, le setup a un bon potentiel.",
           ],
         },
         quiz: {
-          question: "Tu achètes Bitcoin à 78 000 $. Ton Stop Loss est à 75 000 $, soit 3 000 $ sous ton entrée. Pour un ratio R/R de 1:2, où places-tu ton Take Profit ?",
+          question: "Tu achètes Bitcoin à 78 000 $. Ton Stop Loss est à 75 000 $, soit 3 000 $ sous ton entrée. Pour un ratio R/R de 1:2, où places-tu ton Take Profit ?",
           answers: [
-            "À 79 500 $, l'objectif est à 1 500 $, le stop à 3 000 $",
-            "À 81 000 $, objectif et stop à la même distance (ratio 1:1)",
-            "À 84 000 $, l'objectif est à 6 000 $, soit 2 fois la distance du stop",
+            "À 79 500 $, l'objectif est à 1 500 $, le stop à 3 000 $",
+            "À 81 000 $, objectif et stop à la même distance (ratio 1:1)",
+            "À 84 000 $, l'objectif est à 6 000 $, soit 2 fois la distance du stop",
             "Le plus haut possible pour maximiser le gain",
           ],
           correct: 2,
           explanation:
-            "Ratio 1:2 = ton objectif est 2 fois plus loin que ton stop. Le Stop Loss est à 3 000 $ sous l'entrée ; le Take Profit doit donc être à 6 000 $ au-dessus : 78 000 + 6 000 = 84 000 $. Le gain ou la perte en argent dépend ensuite de la taille de ta position (voir Leçon 8), mais le ratio, lui, reste 1:2 quelle que soit cette taille. Avec ce ratio, tu peux perdre 2 trades sur 3 et rester profitable sur le long terme.",
+            "Ratio 1:2 = ton objectif est 2 fois plus loin que ton stop. Le Stop Loss est à 3 000 $ sous l'entrée ; le Take Profit doit donc être à 6 000 $ au-dessus : 78 000 + 6 000 = 84 000 $. Le gain ou la perte en argent dépend ensuite de la taille de ta position (voir Leçon 8), mais le ratio, lui, reste 1:2 quelle que soit cette taille. Avec ce ratio, tu peux perdre 2 trades sur 3 et rester profitable sur le long terme.",
           answerExplanations: [
-            "Faux. Un objectif à 1 500 $ pour un stop à 3 000 $, c'est un ratio 1:0,5 : ton objectif est 2 fois plus proche que ton stop. Même avec 70 % de trades gagnants, une stratégie avec ce ratio est perdante sur le long terme.",
+            "Faux. Un objectif à 1 500 $ pour un stop à 3 000 $, c'est un ratio 1:0,5 : ton objectif est 2 fois plus proche que ton stop. Même avec 70 % de trades gagnants, une stratégie avec ce ratio est perdante sur le long terme.",
             "Faux. Objectif et stop à la même distance = ratio 1:1. Ce n'est pas suffisant : il faudrait gagner plus d'un trade sur deux pour être rentable, difficile à tenir durablement.",
-            "Correct. Un objectif à 6 000 $ pour un stop à 3 000 $ = ratio 1:2. C'est le minimum recommandé pour une stratégie saine : avec ce ratio, 34 % de trades gagnants suffisent pour être en profit global.",
+            "Correct. Un objectif à 6 000 $ pour un stop à 3 000 $ = ratio 1:2. C'est le minimum recommandé pour une stratégie saine : avec ce ratio, 34 % de trades gagnants suffisent pour être en profit global.",
             "Faux. Viser 'le plus haut possible' sans niveau défini, c'est trader sans plan. Un TP trop éloigné n'est presque jamais atteint, tu regardes le prix monter, toucher ta zone, puis redescendre sans que ta sortie ait été déclenchée.",
           ],
         },
@@ -608,18 +608,18 @@ export const LESSONS: LevelData[] = [
             body: "Le Break Even (BE), c'est déplacer ton Stop Loss à ton prix d'entrée exact. Si le prix revient en arrière, tu sors à zéro, ni gain, ni perte. Si le prix continue dans ton sens, tu restes en course. Ton trade ne peut plus se solder par une perte.",
             diagram: "breakeven",
             items: [
-              "Tu achètes Bitcoin à 78 000 $ avec un SL initial à 75 000 $",
-              "Le Bitcoin monte à 81 000 $, le prix a parcouru 3 000 $ en ta faveur, soit la distance exacte de ton risque (1R)",
-              "Tu déplaces ton SL de 75 000 $ à 78 000 $ (ton prix d'entrée), c'est le Break Even",
-              "Maintenant : si le Bitcoin redescend à 78 000 $, tu sors à zéro. S'il continue de monter, tu restes en course.",
+              "Tu achètes Bitcoin à 78 000 $ avec un SL initial à 75 000 $",
+              "Le Bitcoin monte à 81 000 $, le prix a parcouru 3 000 $ en ta faveur, soit la distance exacte de ton risque (1R)",
+              "Tu déplaces ton SL de 75 000 $ à 78 000 $ (ton prix d'entrée), c'est le Break Even",
+              "Maintenant : si le Bitcoin redescend à 78 000 $, tu sors à zéro. S'il continue de monter, tu restes en course.",
             ],
           },
           {
             heading: "Exemple concret : avec et sans Break Even",
-            body: "Cas 1, avec Break Even : Tu achètes Bitcoin à 78 000 $, SL à 75 000 $. Le prix monte à 81 000 $, il a parcouru 3 000 $ en ta faveur, soit 1R. Tu actives le BE (SL → 78 000 $). Le marché fait une correction et redescend à 78 000 $. Sortie automatique : tu sors exactement à ton prix d'entrée, ni gain ni perte. Et si le prix avait continué jusqu'à 84 000 $, tu serais resté en course pour un mouvement de 6 000 $ en ta faveur.\n\nCas 2, sans Break Even : Même trade. Le Bitcoin monte à 81 000 $. Tu ne touches rien. Le marché redescend brutalement à 73 500 $. Ton SL d'origine à 75 000 $ se déclenche, le prix finit 3 000 $ SOUS ton entrée, alors qu'il avait été 3 000 $ AU-DESSUS.",
+            body: "Cas 1, avec Break Even : Tu achètes Bitcoin à 78 000 $, SL à 75 000 $. Le prix monte à 81 000 $, il a parcouru 3 000 $ en ta faveur, soit 1R. Tu actives le BE (SL → 78 000 $). Le marché fait une correction et redescend à 78 000 $. Sortie automatique : tu sors exactement à ton prix d'entrée, ni gain ni perte. Et si le prix avait continué jusqu'à 84 000 $, tu serais resté en course pour un mouvement de 6 000 $ en ta faveur.\n\nCas 2, sans Break Even : Même trade. Le Bitcoin monte à 81 000 $. Tu ne touches rien. Le marché redescend brutalement à 73 500 $. Ton SL d'origine à 75 000 $ se déclenche, le prix finit 3 000 $ SOUS ton entrée, alors qu'il avait été 3 000 $ AU-DESSUS.",
             items: [
               "Avec BE : le trade ne peut plus se solder par une perte une fois activé",
-              "Sans BE : un prix qui était 3 000 $ au-dessus de ton entrée peut repasser 3 000 $ en dessous",
+              "Sans BE : un prix qui était 3 000 $ au-dessus de ton entrée peut repasser 3 000 $ en dessous",
               "Le BE te libère du stress, tu peux attendre ton TP sereinement",
             ],
           },
@@ -629,8 +629,8 @@ export const LESSONS: LevelData[] = [
             table: {
               headers: ["Distance entrée → SL", "Activer le BE quand…", "Pourquoi"],
               rows: [
-                ["2 000 $", "le prix a parcouru 2 000 $ en ta faveur", "1R atteint, la protection devient logique"],
-                ["3 000 $", "le prix a parcouru 3 000 $ en ta faveur", "Avant ça, une fluctuation normale te sortirait"],
+                ["2 000 $", "le prix a parcouru 2 000 $ en ta faveur", "1R atteint, la protection devient logique"],
+                ["3 000 $", "le prix a parcouru 3 000 $ en ta faveur", "Avant ça, une fluctuation normale te sortirait"],
                 ["Peu importe", "le prix n'a pas encore parcouru 1R → attends", "Trop tôt : le marché fluctue, tu sortirais inutilement"],
               ],
             },
@@ -639,7 +639,7 @@ export const LESSONS: LevelData[] = [
             heading: "Erreurs fréquentes des débutants",
             body: "Ces erreurs sur le Break Even font rater des trades gagnants ou créent une fausse impression de sécurité.",
             items: [
-              "Activer le BE trop tôt : le prix n'a parcouru que 200 $ en ta faveur alors que ton risque est de 3 000 $, la moindre fluctuation te sort à zéro",
+              "Activer le BE trop tôt : le prix n'a parcouru que 200 $ en ta faveur alors que ton risque est de 3 000 $, la moindre fluctuation te sort à zéro",
               "Ne jamais activer le BE : tu subis des retournements complets sur des trades qui étaient largement gagnants",
               "Confondre BE et prise de profit partielle : le BE = sécuriser le risque (zéro perte), pas encaisser un gain",
               "Croire que le BE garantit un profit : non, le BE garantit zéro perte. Le profit dépend toujours du TP.",
@@ -647,7 +647,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "L'erreur fatale",
-            body: "Activer le Break Even trop tôt sous le stress. Le prix n'a parcouru que 800 $ en ta faveur, alors que ton risque (distance entrée → SL) est de 3 000 $. Tu paniques à l'idée de tout reperdre. Tu déplaces ton SL à ton prix d'entrée. Le marché fluctue normalement, repasse brièvement sous ton entrée, déclenche ton BE, tu sors à zéro. Ensuite, le prix monte de 6 000 $. Tu regardes le trade faire exactement ce que tu avais prévu, sans toi. L'impatience t'a sorti d'un trade gagnant.",
+            body: "Activer le Break Even trop tôt sous le stress. Le prix n'a parcouru que 800 $ en ta faveur, alors que ton risque (distance entrée → SL) est de 3 000 $. Tu paniques à l'idée de tout reperdre. Tu déplaces ton SL à ton prix d'entrée. Le marché fluctue normalement, repasse brièvement sous ton entrée, déclenche ton BE, tu sors à zéro. Ensuite, le prix monte de 6 000 $. Tu regardes le trade faire exactement ce que tu avais prévu, sans toi. L'impatience t'a sorti d'un trade gagnant.",
           },
         ],
         keyPoints: [
@@ -667,21 +667,21 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "Tu achètes Bitcoin à 78 000 $ avec un SL à 75 000 $. Le prix monte à 81 000 $. Que fais-tu ?",
+          question: "Tu achètes Bitcoin à 78 000 $ avec un SL à 75 000 $. Le prix monte à 81 000 $. Que fais-tu ?",
           answers: [
-            "Tu actives le Break Even : tu déplaces ton SL de 75 000 $ à 78 000 $",
-            "Tu gardes le SL à 75 000 $, il ne faut jamais déplacer un SL",
-            "Tu fermes le trade à 81 000 $ tout de suite, pour ne plus rien risquer",
-            "Tu déplaces le SL à 78 900 $ pour verrouiller une partie du mouvement",
+            "Tu actives le Break Even : tu déplaces ton SL de 75 000 $ à 78 000 $",
+            "Tu gardes le SL à 75 000 $, il ne faut jamais déplacer un SL",
+            "Tu fermes le trade à 81 000 $ tout de suite, pour ne plus rien risquer",
+            "Tu déplaces le SL à 78 900 $ pour verrouiller une partie du mouvement",
           ],
           correct: 0,
           explanation:
-            "À 81 000 $, le prix a parcouru 3 000 $ en ta faveur, exactement la distance entre ton entrée et ton SL, soit 1R. C'est le bon moment pour activer le BE : tu déplaces le SL de 75 000 $ à 78 000 $. À partir de là, le trade ne peut plus se solder par une perte, et si le prix continue vers ton TP, tu restes en course. Le montant en argent, lui, dépend de la taille de ta position (voir Leçon 8).",
+            "À 81 000 $, le prix a parcouru 3 000 $ en ta faveur, exactement la distance entre ton entrée et ton SL, soit 1R. C'est le bon moment pour activer le BE : tu déplaces le SL de 75 000 $ à 78 000 $. À partir de là, le trade ne peut plus se solder par une perte, et si le prix continue vers ton TP, tu restes en course. Le montant en argent, lui, dépend de la taille de ta position (voir Leçon 8).",
           answerExplanations: [
-            "Correct. Le prix a parcouru 3 000 $ en ta faveur = exactement 1R (la distance entrée → SL). Tu déplaces le SL de 75 000 $ à 78 000 $. Le trade ne peut plus se solder par une perte : si le prix revient à 78 000 $, sortie à zéro ; s'il continue de monter, tu restes en course.",
+            "Correct. Le prix a parcouru 3 000 $ en ta faveur = exactement 1R (la distance entrée → SL). Tu déplaces le SL de 75 000 $ à 78 000 $. Le trade ne peut plus se solder par une perte : si le prix revient à 78 000 $, sortie à zéro ; s'il continue de monter, tu restes en course.",
             "Faux. Il est parfaitement valide, et même recommandé, de déplacer le SL dans le sens favorable. La règle est de ne jamais déplacer le SL dans le sens de la PERTE. Ici, tu le déplaces vers ton prix d'entrée pour te protéger.",
-            "Faux. Fermer à 81 000 $ verrouille le mouvement déjà acquis, mais tu renonces à un éventuel prolongement vers 84 000 $ ou plus. Activer le BE te permet de rester dans le trade sans plus aucun risque de perte, c'est souvent le meilleur choix.",
-            "Faux. Déplacer le SL à 78 900 $ (900 $ au-dessus de l'entrée) est une technique appelée 'trailing stop partiel'. C'est différent du Break Even standard, qui place le SL exactement au prix d'entrée. Le risque ici : se faire sortir sur une simple fluctuation normale de 900 $.",
+            "Faux. Fermer à 81 000 $ verrouille le mouvement déjà acquis, mais tu renonces à un éventuel prolongement vers 84 000 $ ou plus. Activer le BE te permet de rester dans le trade sans plus aucun risque de perte, c'est souvent le meilleur choix.",
+            "Faux. Déplacer le SL à 78 900 $ (900 $ au-dessus de l'entrée) est une technique appelée 'trailing stop partiel'. C'est différent du Break Even standard, qui place le SL exactement au prix d'entrée. Le risque ici : se faire sortir sur une simple fluctuation normale de 900 $.",
           ],
         },
       },
@@ -693,14 +693,14 @@ export const LESSONS: LevelData[] = [
         title: "Gestion du risque : le money management",
         duration: "12 min",
         introduction:
-          "Un seul trade peut ruiner des semaines entières de travail. Pas parce que l'analyse était mauvaise, parce que le risque était trop élevé. Mais le risque adapté à quel capital ? La plupart des guides parlent de '1% par trade' pour des comptes de 5 000 €+. Si tu démarres avec 300 ou 700 €, tu as besoin d'une grille différente.",
+          "Un seul trade peut ruiner des semaines entières de travail. Pas parce que l'analyse était mauvaise, parce que le risque était trop élevé. Mais le risque adapté à quel capital ? La plupart des guides parlent de '1% par trade' pour des comptes de 5 000 €+. Si tu démarres avec 300 ou 700 €, tu as besoin d'une grille différente.",
         sections: [
           {
             heading: "Ce que personne ne te dit sur le '1%'",
-            body: "Le money management, c'est ce qui sépare les traders qui survivent de ceux qui grillent leur compte en 2 mois. La règle d'or : ne JAMAIS risquer plus que ce que ton capital permet. La règle théorique '1% par trade' est faite pour les comptes de 5 000 €+. En dessous, 1% = 2 à 10 € de risque, un montant souvent inférieur au risque minimum que génèrent les lots disponibles sur les paires majeures.",
+            body: "Le money management, c'est ce qui sépare les traders qui survivent de ceux qui grillent leur compte en 2 mois. La règle d'or : ne JAMAIS risquer plus que ce que ton capital permet. La règle théorique '1% par trade' est faite pour les comptes de 5 000 €+. En dessous, 1% = 2 à 10 € de risque, un montant souvent inférieur au risque minimum que génèrent les lots disponibles sur les paires majeures.",
             items: [
-              "Les lots minimum sur Forex génèrent souvent 10 à 20 € de risque même avec un Stop Loss serré",
-              "Capital de 300 € → 1% = 3 € de risque max. Inapplicable avec les lots standard.",
+              "Les lots minimum sur Forex génèrent souvent 10 à 20 € de risque même avec un Stop Loss serré",
+              "Capital de 300 € → 1% = 3 € de risque max. Inapplicable avec les lots standard.",
               "La solution : adapter ton % de risque à ta tranche de capital, pas appliquer une règle générique",
               "Le risque = montant que tu perds si ton Stop Loss se déclenche",
             ],
@@ -711,22 +711,22 @@ export const LESSONS: LevelData[] = [
             table: {
               headers: ["Capital de départ", "Risque par trade", "Exemple concret"],
               rows: [
-                ["200 – 500 €", "5 %", "10 – 25 € max par trade"],
-                ["500 – 1 000 €", "3 %", "15 – 30 € max par trade"],
-                ["1 000 – 5 000 €", "2 %", "20 – 100 € max par trade"],
-                ["5 000 € et +", "0,5 – 2 %", "25 – 100 €+ par trade"],
+                ["200 – 500 €", "5 %", "10 – 25 € max par trade"],
+                ["500 – 1 000 €", "3 %", "15 – 30 € max par trade"],
+                ["1 000 – 5 000 €", "2 %", "20 – 100 € max par trade"],
+                ["5 000 € et +", "0,5 – 2 %", "25 – 100 €+ par trade"],
               ],
             },
-            note: "La règle 1% que tu liras partout est techniquement correcte pour les comptes 5 000 €+. Sur un petit compte (200–1 000 €), 1% = 2 à 10 € de risque, souvent inapplicable en pratique car le lot minimum génère déjà plus. Adapter ton % n'est pas tricher : c'est s'aligner sur la réalité des lots disponibles.",
+            note: "La règle 1% que tu liras partout est techniquement correcte pour les comptes 5 000 €+. Sur un petit compte (200–1 000 €), 1% = 2 à 10 € de risque, souvent inapplicable en pratique car le lot minimum génère déjà plus. Adapter ton % n'est pas tricher : c'est s'aligner sur la réalité des lots disponibles.",
           },
           {
             heading: "Les chiffres en pratique",
             body: "Voici comment calculer ton risque max avec la grille :",
             items: [
-              "Capital 300 €, idéal 3% (9 €), max 5% (15 €) par trade",
-              "Capital 500 €, idéal 2-3% (12-15 €), max 5% (25 €) par trade",
-              "Capital 1 000 €, idéal 2-3% (20-30 €), max 3% (30 €) par trade",
-              "Capital 2 000 €, 2% (40 €) par trade (idéal = max)",
+              "Capital 300 €, idéal 3% (9 €), max 5% (15 €) par trade",
+              "Capital 500 €, idéal 2-3% (12-15 €), max 5% (25 €) par trade",
+              "Capital 1 000 €, idéal 2-3% (20-30 €), max 3% (30 €) par trade",
+              "Capital 2 000 €, 2% (40 €) par trade (idéal = max)",
             ],
             diagram: "risk",
           },
@@ -736,11 +736,11 @@ export const LESSONS: LevelData[] = [
             table: {
               headers: ["Risque par trade", "Capital restant après 10 pertes consécutives"],
               rows: [
-                ["1%", "90,4 %, tu continues à trader calmement"],
-                ["2%", "81,7 %, encore gérable"],
-                ["5%", "59,9 %, moral en berne, erreurs qui s'accumulent"],
-                ["10%", "34,9 %, très difficile de se relever"],
-                ["20%", "10,7 %, compte quasi détruit"],
+                ["1%", "90,4 %, tu continues à trader calmement"],
+                ["2%", "81,7 %, encore gérable"],
+                ["5%", "59,9 %, moral en berne, erreurs qui s'accumulent"],
+                ["10%", "34,9 %, très difficile de se relever"],
+                ["20%", "10,7 %, compte quasi détruit"],
               ],
             },
           },
@@ -770,11 +770,11 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "L'erreur fatale",
-            body: "Doubler sa mise après une série de pertes pour 'se refaire' plus vite. Exemple : compte de 1 000 €, risque à 3%. Tu perds 3 trades → -30 € × 3 = -90 €. Il te reste 910 €. Tu te dis : 'Je risque 10% sur le prochain pour récupérer d'un coup.' Tu perds ce trade aussi. -91 € de plus. Total : -181 € en 4 trades au lieu de -90 € en suivant la grille. Multiplier le risque après des pertes, c'est le chemin le plus rapide vers le compte à zéro.",
+            body: "Doubler sa mise après une série de pertes pour 'se refaire' plus vite. Exemple : compte de 1 000 €, risque à 3%. Tu perds 3 trades → -30 € × 3 = -90 €. Il te reste 910 €. Tu te dis : 'Je risque 10% sur le prochain pour récupérer d'un coup.' Tu perds ce trade aussi. -91 € de plus. Total : -181 € en 4 trades au lieu de -90 € en suivant la grille. Multiplier le risque après des pertes, c'est le chemin le plus rapide vers le compte à zéro.",
           },
         ],
         keyPoints: [
-          "Adapte ton % de risque à ton capital : 200-500 € → 5%, 500-1000 € → 3%, 1000-5000 € → 2%",
+          "Adapte ton % de risque à ton capital : 200-500 € → 5%, 500-1000 € → 3%, 1000-5000 € → 2%",
           "Calcule ton risque en euros AVANT d'entrer : Capital × % adapté = montant maximum à perdre",
           "Avec 3% de risque, 10 pertes consécutives = 74% du capital intact. Tu peux rebondir.",
           "Ratio R/R recommandé : 1:2 minimum, viser 2 fois ce qu'on risque",
@@ -783,27 +783,27 @@ export const LESSONS: LevelData[] = [
         exercise: {
           title: "Calculer ton risque adapté à ton capital",
           steps: [
-            "Note ton capital. Identifie ta tranche dans la grille : 200-500 € → 5%, 500-1000 € → 3%, 1000-5000 € → 2%.",
-            "Calcule ton risque maximum par trade. Exemple : 700 € × 3% = 21 € maximum par trade.",
+            "Note ton capital. Identifie ta tranche dans la grille : 200-500 € → 5%, 500-1000 € → 3%, 1000-5000 € → 2%.",
+            "Calcule ton risque maximum par trade. Exemple : 700 € × 3% = 21 € maximum par trade.",
             "Sur TradingView (EUR/USD, H1), identifie un setup Long. Où mettras-tu ton Stop Loss ? Estime la perte en euros si le SL se déclenche avec 0,1 lot.",
             "Compare ce montant à ton risque adapté. Si tu dépasses ton max, réduis la taille de position jusqu'à respecter le montant calculé.",
           ],
         },
         quiz: {
-          question: "Tu as un capital de 700 €. Quelle est la bonne application de la grille de risque ?",
+          question: "Tu as un capital de 700 €. Quelle est la bonne application de la grille de risque ?",
           answers: [
-            "1% de 700 € = 7 €, la règle universelle s'applique toujours",
-            "3% de 700 € = 21 €, adapté à la tranche 500-1 000 €",
-            "5% de 700 € = 35 €, pour maximiser les gains sur petit capital",
-            "10% de 700 € = 70 €, acceptable si le setup est 'sûr'",
+            "1% de 700 € = 7 €, la règle universelle s'applique toujours",
+            "3% de 700 € = 21 €, adapté à la tranche 500-1 000 €",
+            "5% de 700 € = 35 €, pour maximiser les gains sur petit capital",
+            "10% de 700 € = 70 €, acceptable si le setup est 'sûr'",
           ],
           correct: 1,
           explanation:
-            "700 € se situe dans la tranche 500-1 000 € → 3% de risque par trade = 21 € maximum. La règle 1% est conçue pour les comptes 5 000 €+, avec 700 €, 1% = 7 €, souvent inférieur au risque généré par le lot minimum disponible sur les paires majeures.",
+            "700 € se situe dans la tranche 500-1 000 € → 3% de risque par trade = 21 € maximum. La règle 1% est conçue pour les comptes 5 000 €+, avec 700 €, 1% = 7 €, souvent inférieur au risque généré par le lot minimum disponible sur les paires majeures.",
           answerExplanations: [
-            "Faux. La règle 1% s'applique aux comptes de 5 000 €+. Sur 700 €, 1% = 7 €, souvent inapplicable car les lots minimum génèrent 10-20 € de risque sur les paires majeures.",
-            "Correct. 700 € est dans la tranche 500-1 000 €, donc 3% de risque par trade = 21 €. C'est le % adapté qui te permet d'exécuter correctement tes ordres tout en protégeant ton capital.",
-            "Faux. 5% est adapté à la tranche 200-500 €. Avec 700 €, tu es dans la tranche supérieure (3%). Utiliser 5% sur 700 € reviendrait à sur-risquer.",
+            "Faux. La règle 1% s'applique aux comptes de 5 000 €+. Sur 700 €, 1% = 7 €, souvent inapplicable car les lots minimum génèrent 10-20 € de risque sur les paires majeures.",
+            "Correct. 700 € est dans la tranche 500-1 000 €, donc 3% de risque par trade = 21 €. C'est le % adapté qui te permet d'exécuter correctement tes ordres tout en protégeant ton capital.",
+            "Faux. 5% est adapté à la tranche 200-500 €. Avec 700 €, tu es dans la tranche supérieure (3%). Utiliser 5% sur 700 € reviendrait à sur-risquer.",
             "Faux. 10% par trade = compte détruit en quelques séries de pertes normales. Il n'existe pas de trade certain.",
           ],
         },
@@ -917,11 +917,11 @@ export const LESSONS: LevelData[] = [
             table: {
               headers: ["", "Scénario A. Risque 3%", "Scénario B. Risque 10%"],
               rows: [
-                ["Compte", "500 €", "500 €"],
-                ["Risque par trade", "15 € (3%)", "50 € (10%)"],
-                ["5 pertes consécutives", "−75 €", "−250 €"],
-                ["Compte restant", "425 €", "250 €"],
-                ["Verdict", "Le trader est encore vivant, il peut continuer à trader normalement.", "Le compte est détruit psychologiquement, il faut désormais +100% pour revenir à 500 €."],
+                ["Compte", "500 €", "500 €"],
+                ["Risque par trade", "15 € (3%)", "50 € (10%)"],
+                ["5 pertes consécutives", "−75 €", "−250 €"],
+                ["Compte restant", "425 €", "250 €"],
+                ["Verdict", "Le trader est encore vivant, il peut continuer à trader normalement.", "Le compte est détruit psychologiquement, il faut désormais +100% pour revenir à 500 €."],
               ],
             },
           },
@@ -966,9 +966,9 @@ export const LESSONS: LevelData[] = [
               rows: [
                 ["Capital départ", "500€", "500€"],
                 ["Risque par trade", "15€ (3%)", "15€ (3%)"],
-                ["Entrée XAU/USD", "4 320", "4 320"],
-                ["SL", "4 300 (20 pts)", "4 300 (20 pts)"],
-                ["TP", "4 340 (20 pts, RR 1:1)", "4 380 (60 pts, RR 1:3)"],
+                ["Entrée XAU/USD", "4 320", "4 320"],
+                ["SL", "4 300 (20 pts)", "4 300 (20 pts)"],
+                ["TP", "4 340 (20 pts, RR 1:1)", "4 380 (60 pts, RR 1:3)"],
                 ["Winrate sur 10 trades", "60%", "40%"],
                 ["Trades gagnés", "6 × +15€ = +90€", "4 × +45€ = +180€"],
                 ["Trades perdus", "4 × -15€ = -60€", "6 × -15€ = -90€"],
@@ -1069,7 +1069,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "BOS haussier : le prix casse au-dessus du dernier HH → la tendance haussière se confirme",
               "BOS baissier : le prix casse en dessous du dernier LL → la tendance baissière se confirme",
-              "Exemple : BTC est en tendance haussière. Il casse le dernier sommet à 35 000 € → BOS haussier confirmé",
+              "Exemple : BTC est en tendance haussière. Il casse le dernier sommet à 35 000 € → BOS haussier confirmé",
               "Le BOS dit 'la tendance continue', pas 'entre maintenant'",
             ],
           },
@@ -1148,7 +1148,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Un support est VALIDÉ quand le prix l'a touché ET rebondi au moins une fois",
               "Plus le prix rebondit sur une zone, plus elle est significative, et plus elle risque de céder quand elle est finalement cassée",
-              "Exemple : BTC a rebondi à 25 000 € trois fois sur 6 mois → support majeur à ce niveau",
+              "Exemple : BTC a rebondi à 25 000 € trois fois sur 6 mois → support majeur à ce niveau",
               "Sur le graphique : cherche les zones de creux alignés, pas juste un seul swing low",
             ],
           },
@@ -1159,14 +1159,14 @@ export const LESSONS: LevelData[] = [
               "Résistance validée = le prix y a été rejeté au moins une fois dans le passé",
               "Principe de polarité : une résistance cassée devient support, un support cassé devient résistance",
               "Exemple : EUR/USD bute sur 1,1000 pendant 3 semaines. Quand il casse, ce niveau devient son nouveau support",
-              "Les résistances psychologiques (nombres ronds : 1,1000, 30 000 €, 50 000 €) sont souvent les plus fortes",
+              "Les résistances psychologiques (nombres ronds : 1,1000, 30 000 €, 50 000 €) sont souvent les plus fortes",
             ],
           },
           {
             heading: "Zones vs lignes : tracer correctement",
             body: "L'erreur classique est de tracer des lignes horizontales précises. Le marché est imprécis, les zones sont plus efficaces que les lignes. Une zone capture l'incertitude naturelle autour d'un niveau clé.",
             items: [
-              "Trace une zone de 10 à 30 points autour du niveau clé, pas une ligne au pip près",
+              "Trace une zone de 10 à 30 points autour du niveau clé, pas une ligne au pip près",
               "Utilise le corps des bougies (Open/Close) pour définir la zone, les mèches peuvent dépasser",
               "Sur TradingView : utilise l'outil Rectangle pour tracer des zones, pas la ligne horizontale simple",
               "Un niveau clé n'a pas besoin d'être parfaitement précis, c'est une zone d'intérêt, pas un niveau exact",
@@ -1247,7 +1247,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Origine : le prix était à ce niveau, a explosé à la hausse rapidement (peu de bougies, corps larges)",
               "La zone est la base du mouvement, les corps des dernières bougies baissières avant l'impulsion",
-              "Exemple : BTC à 28 000 €, explose à 35 000 € en 3 bougies journalières → support à 27 500 – 28 500 €",
+              "Exemple : BTC à 28 000 €, explose à 35 000 € en 3 bougies journalières → support à 27 500 – 28 500 €",
               "Validité : plus le mouvement de départ est fort, plus la zone est institutionnelle",
             ],
           },
@@ -1269,7 +1269,7 @@ export const LESSONS: LevelData[] = [
               rows: [
                 ["Origine du mouvement", "Mouvement lent, progressif", "Mouvement rapide, impulsif (1–3 bougies)"],
                 ["Nombre de touches", "Déjà visité plusieurs fois", "Encore vierge (jamais revisitée)"],
-                ["Taille de la zone", "Très large (> 100 points)", "Compacte (30–60 points)"],
+                ["Taille de la zone", "Très large (> 100 points)", "Compacte (30–60 points)"],
                 ["Contexte", "Contre la tendance de l'UT supérieure", "Dans le sens de la tendance de l'UT supérieure"],
               ],
             },
@@ -1358,7 +1358,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Pullback haussier : le prix monte, recule temporairement sur un support, puis reprend",
               "Pullback baissier : le prix descend, remonte temporairement sur une résistance, puis reprend",
-              "Exemple : BTC en tendance haussière. Il monte de 30 000 → 35 000 €, puis recule à 32 000 € (pullback sur support). Entrée Long à 32 000 €.",
+              "Exemple : BTC en tendance haussière. Il monte de 30 000 → 35 000 €, puis recule à 32 000 € (pullback sur support). Entrée Long à 32 000 €.",
               "Le pullback idéal recule de 38% à 62% du mouvement précédent (niveaux Fibonacci, voir leçon 9)",
             ],
           },
@@ -1703,16 +1703,16 @@ export const LESSONS: LevelData[] = [
             table: {
               headers: ["Ratio R:R", "Winrate minimum pour être rentable", "Exemple concret"],
               rows: [
-                ["1:1", "51% (très difficile à tenir)", "Risque 500 €, gagne 500 €"],
-                ["1:2", "34% (réaliste)", "Risque 500 €, gagne 1 000 €"],
-                ["1:3", "26% (confortable)", "Risque 500 €, gagne 1 500 €"],
-                ["1:4", "21% (excellent)", "Risque 500 €, gagne 2 000 €"],
+                ["1:1", "51% (très difficile à tenir)", "Risque 500 €, gagne 500 €"],
+                ["1:2", "34% (réaliste)", "Risque 500 €, gagne 1 000 €"],
+                ["1:3", "26% (confortable)", "Risque 500 €, gagne 1 500 €"],
+                ["1:4", "21% (excellent)", "Risque 500 €, gagne 2 000 €"],
               ],
             },
           },
           {
             heading: "Exemple de plan de trade complet",
-            body: "Instrument : EUR/USD. Biais : Haussier (H4 en tendance haussière, pullback sur support). Entrée : pin bar haussière sur support H1 à 1,0825. Stop Loss : 1,0800 (sous le support, -25 points). Take Profit : 1,0900 (prochaine résistance, +75 points). R:R = 1:3. Taille de position : 2% du capital = risque de 40 € → taille adaptée.",
+            body: "Instrument : EUR/USD. Biais : Haussier (H4 en tendance haussière, pullback sur support). Entrée : pin bar haussière sur support H1 à 1,0825. Stop Loss : 1,0800 (sous le support, -25 points). Take Profit : 1,0900 (prochaine résistance, +75 points). R:R = 1:3. Taille de position : 2% du capital = risque de 40 € → taille adaptée.",
             items: [
               "Le plan est écrit AVANT l'entrée, pas modifié en cours de route",
               "Le SL ne bouge jamais dans le sens de la perte, uniquement vers le Break Even si le trade avance",
@@ -1738,7 +1738,7 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "Tu as un setup avec SL à 30 points et TP à 45 points. Ton capital est de 2 000 €, risque de 2%. Quel est ton ratio R:R et est-il acceptable ?",
+          question: "Tu as un setup avec SL à 30 points et TP à 45 points. Ton capital est de 2 000 €, risque de 2%. Quel est ton ratio R:R et est-il acceptable ?",
           answers: [
             "R:R de 1,5:1, acceptable, tu vises plus que tu ne risques",
             "R:R de 1:1,5, insuffisant, il faut au minimum 1:2 pour un setup valide",
@@ -1747,7 +1747,7 @@ export const LESSONS: LevelData[] = [
           ],
           correct: 1,
           explanation:
-            "SL = 30 points, TP = 45 points. R:R = TP/SL = 45/30 = 1,5:1. Tu vises 1,5 fois ce que tu risques. C'est supérieur à 1:1 mais inférieur au minimum recommandé de 1:2. Avec ce ratio, tu as besoin de gagner plus de 40% de tes trades pour être rentable, ce qui est difficile à tenir sur la durée. Un TP à 60 points donnerait un R:R de 1:2, nettement plus sain.",
+            "SL = 30 points, TP = 45 points. R:R = TP/SL = 45/30 = 1,5:1. Tu vises 1,5 fois ce que tu risques. C'est supérieur à 1:1 mais inférieur au minimum recommandé de 1:2. Avec ce ratio, tu as besoin de gagner plus de 40% de tes trades pour être rentable, ce qui est difficile à tenir sur la durée. Un TP à 60 points donnerait un R:R de 1:2, nettement plus sain.",
           answerExplanations: [
             "Faux sur l'évaluation. R:R de 1,5:1 (ou 1:1,5) est bien supérieur à 1:1, mais inférieur au minimum de 1:2. C'est passable mais pas optimal, il faut 40%+ de winrate pour être rentable avec ce ratio.",
             "Correct. 45/30 = 1:1,5. Ce ratio est insuffisant pour une stratégie saine sur le long terme. Il nécessite un winrate de 40% minimum. Mieux vaut chercher un TP plus loin (60+ points) pour atteindre un ratio 1:2.",
@@ -1828,18 +1828,18 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "BTC monte de 25 000 € à 35 000 €. Il pullback. Le niveau 61.8% de Fibonacci coïncide avec un support H4 à 28 820 €. Que fais-tu ?",
+          question: "BTC monte de 25 000 € à 35 000 €. Il pullback. Le niveau 61.8% de Fibonacci coïncide avec un support H4 à 28 820 €. Que fais-tu ?",
           answers: [
-            "Tu entres Long immédiatement à 28 820 € dès que le prix touche ce niveau",
+            "Tu entres Long immédiatement à 28 820 € dès que le prix touche ce niveau",
             "Tu ignores. Fibonacci n'est pas fiable seul",
-            "Tu attends un signal de bougie de confirmation à 28 820 € avant d'entrer Long",
+            "Tu attends un signal de bougie de confirmation à 28 820 € avant d'entrer Long",
             "Tu entres Short, un pullback de 61.8% signifie que la tendance est terminée",
           ],
           correct: 2,
           explanation:
             "Le niveau 61.8% de Fibonacci qui coïncide avec un support H4 est une confluence puissante, mais elle ne justifie pas une entrée immédiate au toucher. Il faut attendre un signal de confirmation (pin bar, engulfing haussier) pour valider que le prix réagit vraiment à ce niveau. Le toucher sans confirmation peut être un transit vers des niveaux plus bas.",
           answerExplanations: [
-            "Faux. Entrer au toucher d'un niveau Fibonacci sans confirmation de bougie, c'est anticiper sans preuve. Le prix peut transiter par 28 820 € vers 27 500 € (78.6%) sans réagir. Attends toujours le signal.",
+            "Faux. Entrer au toucher d'un niveau Fibonacci sans confirmation de bougie, c'est anticiper sans preuve. Le prix peut transiter par 28 820 € vers 27 500 € (78.6%) sans réagir. Attends toujours le signal.",
             "Faux. Fibonacci seul n'est pas fiable, c'est vrai. Mais ici, il y a une CONFLUENCE : 61.8% + support H4. Cette confluence est précisément ce qui rend le setup valide. L'erreur serait de ne pas avoir de confirmation de bougie.",
             "Correct. Confluence 61.8% + support H4 = zone d'intérêt forte. Mais tu attends le signal de bougie (pin bar ou engulfing haussier) pour confirmer que le prix réagit à ce niveau. C'est l'entrée optimale : niveau fort + confirmation = setup complet.",
             "Faux. Un retracement de 61.8% en tendance haussière est un pullback profond mais normal. La tendance n'est pas terminée tant que le dernier Low significatif n'est pas cassé. 61.8% = zone d'achat potentielle, pas signal de vente.",

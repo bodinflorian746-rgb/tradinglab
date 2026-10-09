@@ -134,10 +134,10 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-2">
-              Exemple concret : Nasdaq +140 points sur une news soft CPI en risk-on, suivi de +220 points en extension.
+              Exemple concret : Nasdaq +140 points sur une news soft CPI en risk-on, suivi de +220 points en extension.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Même pattern en risk-off : +120 points spike puis -260 points en retour sous le niveau.
+              Même pattern en risk-off : +120 points spike puis -260 points en retour sous le niveau.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               Le marché ne te paie pas pour voir un signal. Il te paie pour comprendre le contexte dans lequel ce signal apparaît.
@@ -284,19 +284,19 @@ export default function ContentFr() {
               {[
                 {
                   signal: "L'or monte alors que les yields montent",
-                  body: "Normalement inverse. Si XAU/USD +40 points et US10Y +20 points simultanément, le marché price une inflation persistante.",
+                  body: "Normalement inverse. Si XAU/USD +40 points et US10Y +20 points simultanément, le marché price une inflation persistante.",
                 },
                 {
                   signal: "Les yields chutent malgré un discours Fed hawkish",
-                  body: "Le marché ne croit pas la Fed. Exemple : US10Y -25 points post FOMC alors que le ton reste restrictif → pricing récession.",
+                  body: "Le marché ne croit pas la Fed. Exemple : US10Y -25 points post FOMC alors que le ton reste restrictif → pricing récession.",
                 },
                 {
                   signal: "Le DXY monte avec des yields qui montent",
-                  body: "Double pression : attractivité taux + demande de sécurité. Exemple : DXY +70 points avec US10Y +15 points = tension latente.",
+                  body: "Double pression : attractivité taux + demande de sécurité. Exemple : DXY +70 points avec US10Y +15 points = tension latente.",
                 },
                 {
                   signal: "Nasdaq diverge du Russell 2000",
-                  body: "Si Nasdaq +120 points pendant que Russell -80 points = marché qui price une baisse de yields anticipée (favorable à la tech longue duration), pas une vraie reprise économique. Inverse (Russell +80 / Nasdaq -120) = reflation, croissance domestique réelle favorisée.",
+                  body: "Si Nasdaq +120 points pendant que Russell -80 points = marché qui price une baisse de yields anticipée (favorable à la tech longue duration), pas une vraie reprise économique. Inverse (Russell +80 / Nasdaq -120) = reflation, croissance domestique réelle favorisée.",
                 },
               ].map((item, i) => (
                 <div key={i} className="bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -319,19 +319,19 @@ export default function ContentFr() {
                   term: "Flight to quality",
                   def: "Déplacement du capital vers des actifs sûrs.",
                   util: "Identifier les phases défensives sans panique.",
-                  cas: "Or +50 points, US10Y -15 points, indices -100 points.",
+                  cas: "Or +50 points, US10Y -15 points, indices -100 points.",
                 },
                 {
                   term: "Reflation trade",
                   def: "Positionnement sur le retour de croissance et inflation.",
                   util: "Comprendre les rotations sectorielles.",
-                  cas: "US10Y +25 points, banques montent, tech sous-performe.",
+                  cas: "US10Y +25 points, banques montent, tech sous-performe.",
                 },
                 {
                   term: "Carry trade",
                   def: "Emprunter dans une devise à faible taux pour investir dans une devise à taux élevé.",
                   util: "Capter le rendement différentiel.",
-                  cas: "Positions short JPY massives accumulées pendant des mois, puis débouclage violent en août 2024 avec USD/JPY -2000 pips en quelques séances (du 31 juillet au 5 août).",
+                  cas: "Positions short JPY massives accumulées pendant des mois, puis débouclage violent en août 2024 avec USD/JPY -2000 pips en quelques séances (du 31 juillet au 5 août).",
                 },
                 {
                   term: "Safe haven flow",
@@ -363,9 +363,9 @@ export default function ContentFr() {
               {[
                 { bold: "DXY + US10Y", body: "= baromètre principal. Si les deux montent, tension. Si DXY baisse et yields stables, risk-on." },
                 { bold: "XAU/USD", body: "= arbitre. Il distingue une peur contrôlée d'une panique. Or qui monte sans crash actions = flight to quality." },
-                { bold: "Nasdaq", body: "= sensible aux yields. +25 points sur US10Y peut suffire à provoquer -150 points sur l'indice." },
+                { bold: "Nasdaq", body: "= sensible aux yields. +25 points sur US10Y peut suffire à provoquer -150 points sur l'indice." },
                 { bold: "Russell 2000", body: "= proxy de la croissance US domestique. Surperforme en reflation, sous-performe en stress et en flight to quality." },
-                { bold: "BTC/USD", body: "= version amplifiée du Nasdaq. Si Nasdaq +120 points, BTC peut faire +1500. Idéal pour lire le sentiment brut." },
+                { bold: "BTC/USD", body: "= version amplifiée du Nasdaq. Si Nasdaq +120 points, BTC peut faire +1500. Idéal pour lire le sentiment brut." },
               ].map((item) => (
                 <div key={item.bold} className="bg-zinc-800/30 rounded-xl px-4 py-3">
                   <p className="text-sm text-zinc-300">

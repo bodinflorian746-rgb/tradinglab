@@ -111,7 +111,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Pourquoi la macro change ton risque</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              En temps normal, ton stop loss technique a du sens. Si ton analyse prévoit un SL à 30 pips, le marché peut respecter cette zone.
+              En temps normal, ton stop loss technique a du sens. Si ton analyse prévoit un SL à 30 pips, le marché peut respecter cette zone.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               Mais pendant une news majeure :
@@ -278,7 +278,7 @@ export default function ContentFr() {
                     "14h30 : NFP prévu",
                     "14h00 : tu fermes ou réduis tes positions",
                     "14h30 : le chiffre sort",
-                    "EUR/USD fait 80 pips de mouvement",
+                    "EUR/USD fait 80 pips de mouvement",
                     "15h30 : le marché se calme",
                     "tu identifies un retracement propre",
                     "tu entres avec une taille divisée par 2",
@@ -297,7 +297,7 @@ export default function ContentFr() {
               <div className="bg-zinc-800/30 rounded-xl px-4 py-4">
                 <p className="text-sm font-semibold text-zinc-200 mb-3">Cas de mauvaise gestion :</p>
                 <p className="text-sm text-zinc-300 leading-relaxed mb-2">
-                  Tu entres long EUR/USD à 14h00 sans regarder le calendrier. À 14h30, NFP sort très positif. EUR/USD chute de 80 pips en 30 secondes. Ton SL de 30 pips saute.
+                  Tu entres long EUR/USD à 14h00 sans regarder le calendrier. À 14h30, NFP sort très positif. EUR/USD chute de 80 pips en 30 secondes. Ton SL de 30 pips saute.
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   <span className="font-semibold text-zinc-200">Techniquement, ton analyse pouvait être correcte.</span> Mais ton timing était mauvais. Et le marché ne pardonne pas le mauvais timing en macro.
@@ -324,7 +324,7 @@ export default function ContentFr() {
             <ul className="space-y-1.5 mb-4">
               <li className="flex items-start gap-2.5 text-sm text-zinc-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
-                <span>EUR/USD chute de 80 pips</span>
+                <span>EUR/USD chute de 80 pips</span>
               </li>
               <li className="flex items-start gap-2.5 text-sm text-zinc-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
@@ -342,7 +342,7 @@ export default function ContentFr() {
               <p className="text-xs font-semibold text-zinc-400 mb-2">Et ce n&apos;est pas qu&apos;un risque sur EUR/USD. Avec un compte de 500€ et une position dimensionnée selon les règles de gestion du risque (2% par trade), une mauvaise news macro peut effacer le même pourcentage du compte sur tous les actifs :</p>
               <div className="space-y-1.5">
                 {[
-                  { asset: "EUR/USD", detail: "-80 pips → -80€", pct: "16% du compte" },
+                  { asset: "EUR/USD", detail: "-80 pips → -80€", pct: "16% du compte" },
                   { asset: "XAU/USD", detail: "-30$ → -90€", pct: "18% du compte" },
                   { asset: "Nasdaq", detail: "-1.5% → -75€", pct: "15% du compte" },
                   { asset: "BTC/USD", detail: "-800$ → -120€", pct: "24% du compte" },
@@ -468,9 +468,9 @@ export default function ContentFr() {
               "Tu retires ton stop loss pour éviter d'être sorti par la volatilité",
             ]}
             correctIndex={2}
-            explanation="Un NFP peut créer un mouvement violent et imprévisible (200-500 pips de mouvement total possible). Même si ton setup est techniquement propre, le risque réel est trop élevé juste avant la publication. L'option A ignore complètement le contexte macro et te fait subir la volatilité. L'option B est encore pire, tu augmentes ton risque dans la fenêtre la plus dangereuse. L'option D est catastrophique : retirer ton SL transforme une perte limitée en perte potentiellement énorme. La seule réponse pro : attendre, observer, réévaluer. Ce principe vaut sur tous les actifs sensibles à la macro : EUR/USD, XAU/USD, Nasdaq, BTC/USD."
+            explanation="Un NFP peut créer un mouvement violent et imprévisible (200-500 pips de mouvement total possible). Même si ton setup est techniquement propre, le risque réel est trop élevé juste avant la publication. L'option A ignore complètement le contexte macro et te fait subir la volatilité. L'option B est encore pire, tu augmentes ton risque dans la fenêtre la plus dangereuse. L'option D est catastrophique : retirer ton SL transforme une perte limitée en perte potentiellement énorme. La seule réponse pro : attendre, observer, réévaluer. Ce principe vaut sur tous les actifs sensibles à la macro : EUR/USD, XAU/USD, Nasdaq, BTC/USD."
             answerExplanations={[
-              "Faux. Ignorer une news 3 étoiles à 20 minutes, c'est subir la volatilité. Un NFP peut créer un mouvement de 200-500 pips, ton setup technique ne tient pas face à cette réalité.",
+              "Faux. Ignorer une news 3 étoiles à 20 minutes, c'est subir la volatilité. Un NFP peut créer un mouvement de 200-500 pips, ton setup technique ne tient pas face à cette réalité.",
               "Faux. Augmenter la taille dans la fenêtre de danger maximale est une erreur grave. Tu maximises ton risque au pire moment possible.",
               "Correct. Un NFP peut créer un mouvement violent et imprévisible. Attendre, observer la réaction, puis réévaluer le setup est la seule approche professionnelle.",
               "Faux. Retirer ton SL est catastrophique : cela transforme une perte limitée en perte potentiellement énorme si le marché part dans le mauvais sens.",

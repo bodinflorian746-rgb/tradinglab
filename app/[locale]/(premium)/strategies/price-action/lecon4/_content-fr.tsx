@@ -164,7 +164,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Tendance Daily clairement orientée (HH/HL ou LH/LL sur 30-50 dernières bougies)</li>
-              <li>- Zone H4 identifiée et tradable à proximité du prix (distance ≤ 100 pips/$ du prix actuel)</li>
+              <li>- Zone H4 identifiée et tradable à proximité du prix (distance ≤ 100 pips/$ du prix actuel)</li>
               <li>- Structure H1 alignée avec la tendance Daily (pas de correction temporaire en cours)</li>
               <li>- Signal M15 explicite au contact de la zone H4 (pin bar, engulfing, réaction immédiate)</li>
             </ul>
@@ -208,15 +208,15 @@ export default function ContentFr() {
                 <li>- H4: zone support 1.1750-1.1770, 3 touches en 5 semaines</li>
                 <li>- M15 : pin bar haussière, mèche basse 1.1762, clôture 1.1778</li>
                 <li>- Entrée long : 1.1778 (clôture de la pin bar M15)</li>
-                <li>- Stop loss : 1.1745 (5 pips sous la zone H4)</li>
+                <li>- Stop loss : 1.1745 (5 pips sous la zone H4)</li>
                 <li>- Take profit niveau 1 : 1.1840 (HH Daily), niveau 2 : 1.1900 (extension)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 1.1778 - 1.1745 = 33 pips</li>
-                <li>- Gain niveau 1 : 1.1840 - 1.1778 = 62 pips → R/R 1,88</li>
-                <li>- Gain niveau 2 : 1.1900 - 1.1778 = 122 pips → R/R 3,70</li>
+                <li>- Risque : 1.1778 - 1.1745 = 33 pips</li>
+                <li>- Gain niveau 1 : 1.1840 - 1.1778 = 62 pips → R/R 1,88</li>
+                <li>- Gain niveau 2 : 1.1900 - 1.1778 = 122 pips → R/R 3,70</li>
                 <li>- Le setup vise prioritairement le TP niveau 2 pour un R/R optimal</li>
               </ul>
             </div>
@@ -229,8 +229,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 56€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 56€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 74€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 185€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 74€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 185€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 3,70:1 peu importe la taille du compte.
@@ -242,17 +242,17 @@ export default function ContentFr() {
               "Procédure top-down obligatoire : Daily → H4 → H1 → M15. Pas d’analyse directionnelle sur M15 isolé.",
               "Daily = biais. H4 = zones. H1 = alignement structurel. M15 = timing d’entrée.",
               "Les 4 critères d’alignement doivent tous être validés. Un seul manquant invalide le setup.",
-              "Stop loss au-delà de la zone H4 avec marge 5-10 pips. Take profit vers la prochaine zone H4 dans le sens du trade.",
+              "Stop loss au-delà de la zone H4 avec marge 5-10 pips. Take profit vers la prochaine zone H4 dans le sens du trade.",
             ]}
           />
 
           <LessonExercice
-            description="Sur XAU/USD, le Daily est en tendance haussière avec dernier HH à 4 680$ et dernier HL à 4 520$. Une zone de support H4 est identifiée entre 4 560$ et 4 580$ (3 touches en 5 semaines). Le prix actuel est à 4 595$. La structure H1 est alignée haussière. Le prix descend toucher 4 575$ puis imprime un engulfing haussier M15 avec clôture à 4 595$. Comment se construit le plan de trade ?"
+            description="Sur XAU/USD, le Daily est en tendance haussière avec dernier HH à 4 680$ et dernier HL à 4 520$. Une zone de support H4 est identifiée entre 4 560$ et 4 580$ (3 touches en 5 semaines). Le prix actuel est à 4 595$. La structure H1 est alignée haussière. Le prix descend toucher 4 575$ puis imprime un engulfing haussier M15 avec clôture à 4 595$. Comment se construit le plan de trade ?"
             steps={[
-              "Valider les 4 critères d’alignement : tendance Daily haussière confirmée, zone H4 4 560$-4 580$ tradable (3 touches, fraîche), structure H1 alignée haussière, signal M15 engulfing haussier au contact de la zone H4",
-              "Placer l’entrée long à 4 595$ (clôture de l’engulfing M15)",
-              "Placer le stop loss à 4 555$ (5$ sous le bas de la zone H4 à 4 560$)",
-              "Placer le take profit niveau 1 à 4 680$ (HH Daily précédent) ou niveau 2 à 4 750$ (projection extension Daily)",
+              "Valider les 4 critères d’alignement : tendance Daily haussière confirmée, zone H4 4 560$-4 580$ tradable (3 touches, fraîche), structure H1 alignée haussière, signal M15 engulfing haussier au contact de la zone H4",
+              "Placer l’entrée long à 4 595$ (clôture de l’engulfing M15)",
+              "Placer le stop loss à 4 555$ (5$ sous le bas de la zone H4 à 4 560$)",
+              "Placer le take profit niveau 1 à 4 680$ (HH Daily précédent) ou niveau 2 à 4 750$ (projection extension Daily)",
               "Calculer les R/R : Risque 40$, gain niveau 1 = 85$ → R/R 2,12 ; gain niveau 2 = 155$ → R/R 3,88. Taille de position selon le risque par trade adapté au capital",
             ]}
           />

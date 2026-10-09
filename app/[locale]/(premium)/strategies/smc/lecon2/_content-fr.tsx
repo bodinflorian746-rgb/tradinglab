@@ -256,21 +256,21 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : BOS haussier EUR/USD H4</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              EUR/USD en tendance haussière H4 depuis 4 semaines. Structure : 3 HL à 1.1620, 1.1680, 1.1720, et 3 HH à 1.1700, 1.1760, 1.1820. MM200 Daily à 1.1500, prix au-dessus. Bougie H4 vient de clôturer à 1.1858, soit 38 pips au-dessus du HH 1.1820, displacement marqué. 5 bougies maintiennent leur clôture au-dessus de 1.1820 sans réintégration. Aucune news macro dans la fenêtre. Le dernier HL 1.1720 n&apos;a pas été cassé : aucun CHoCH, BOS haussier validé.
+              EUR/USD en tendance haussière H4 depuis 4 semaines. Structure : 3 HL à 1.1620, 1.1680, 1.1720, et 3 HH à 1.1700, 1.1760, 1.1820. MM200 Daily à 1.1500, prix au-dessus. Bougie H4 vient de clôturer à 1.1858, soit 38 pips au-dessus du HH 1.1820, displacement marqué. 5 bougies maintiennent leur clôture au-dessus de 1.1820 sans réintégration. Aucune news macro dans la fenêtre. Le dernier HL 1.1720 n&apos;a pas été cassé : aucun CHoCH, BOS haussier validé.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée : 1.1822 (retest du niveau ex-résistance devenu support, signal de rejet M15)</li>
-                <li>- Stop loss : 1.1710 (sous le dernier HL 1.1720 avec marge de 10 pips)</li>
+                <li>- Stop loss : 1.1710 (sous le dernier HL 1.1720 avec marge de 10 pips)</li>
                 <li>- Take profit : 1.1990 (projection structurelle, prochaine extension de l&apos;impulsion)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 1.1822 - 1.1710 = 112 pips</li>
-                <li>- Gain potentiel : 1.1990 - 1.1822 = 168 pips</li>
+                <li>- Risque : 1.1822 - 1.1710 = 112 pips</li>
+                <li>- Gain potentiel : 1.1990 - 1.1822 = 168 pips</li>
                 <li>- R/R : 168 / 112 = 1,5</li>
                 <li>- Setup exploitable au seuil minimum institutionnel.</li>
               </ul>
@@ -286,8 +286,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 22,50€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 22,50€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 30€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 75€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 30€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 75€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1,5:1 peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.
@@ -304,10 +304,10 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD H4, la tendance baissière en cours affiche 3 LH successifs à 4 720$, 4 660$ et 4 620$, et 3 LL successifs à 4 660$, 4 600$ et 4 540$. Une bougie H4 vient de clôturer à 4 670$, soit 50$ au-dessus du dernier LH à 4 620$. 4 bougies suivantes maintiennent leur clôture au-dessus de 4 620$. Aucune news macro dans la fenêtre. Comment se construit la lecture BOS/CHoCH ?"
+            description="Sur XAU/USD H4, la tendance baissière en cours affiche 3 LH successifs à 4 720$, 4 660$ et 4 620$, et 3 LL successifs à 4 660$, 4 600$ et 4 540$. Une bougie H4 vient de clôturer à 4 670$, soit 50$ au-dessus du dernier LH à 4 620$. 4 bougies suivantes maintiennent leur clôture au-dessus de 4 620$. Aucune news macro dans la fenêtre. Comment se construit la lecture BOS/CHoCH ?"
             steps={[
-              "Identifier la nature du niveau cassé : 4 620$ est le dernier LH (sommet de structure baissière inverse), il s’agit d’un signal de retournement potentiel, pas d’une continuation.",
-              "Qualifier le breakout : clôture franche à 4 670$ (50$ au-dessus du LH), displacement supérieur à la moyenne récente, aucune réintégration sur 4 bougies, breakout validé structurellement.",
+              "Identifier la nature du niveau cassé : 4 620$ est le dernier LH (sommet de structure baissière inverse), il s’agit d’un signal de retournement potentiel, pas d’une continuation.",
+              "Qualifier le breakout : clôture franche à 4 670$ (50$ au-dessus du LH), displacement supérieur à la moyenne récente, aucune réintégration sur 4 bougies, breakout validé structurellement.",
               "Classifier le signal : la cassure du dernier LH constitue un CHoCH, premier signal d’un retournement possible de la tendance baissière.",
               "Attendre la formation de la nouvelle structure : observer la formation d’un premier HL (creux plus haut que le précédent) après le CHoCH.",
               "Attendre la confirmation avant inversion : un BOS haussier (cassure du sommet laissé par le CHoCH) valide la nouvelle structure HL plus HH avant toute prise de position long. La sortie des positions short existantes peut se déclencher dès le CHoCH, l’inversion exige le BOS de confirmation.",

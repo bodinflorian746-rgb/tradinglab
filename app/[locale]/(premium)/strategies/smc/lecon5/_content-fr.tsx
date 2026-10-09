@@ -206,8 +206,8 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-                <li>- Risque : 1.1798 - 1.1765 = 33 pips</li>
-                <li>- Gain : 1.1765 - 1.1690 = 75 pips</li>
+                <li>- Risque : 1.1798 - 1.1765 = 33 pips</li>
+                <li>- Gain : 1.1765 - 1.1690 = 75 pips</li>
                 <li>- R/R : 75 / 33 = 2,27</li>
               </ul>
               <p className="text-zinc-300 leading-relaxed text-sm">Le rendement potentiel représente plus du double du risque engagé.</p>
@@ -217,8 +217,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 34€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 34€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 45€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 113€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 45€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 113€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">Le R/R reste 2,27:1 peu importe la taille du compte.</p>
           </section>
@@ -244,13 +244,13 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD H4, le marché évolue dans un biais baissier. Les equal highs à 4 720$ représentent une BSL visible, et la cible de liquidité principale se situe sur la SSL du creux 4 600$. Une bougie H4 sweep la BSL avec une mèche à 4 735$ puis clôture à 4 705$. Le marché casse ensuite le creux mineur à 4 680$ et crée un FVG bearish entre 4 685$ et 4 700$. Le prix revient ensuite dans la zone. Comment se reconstruit le trade SMC complet sur ce setup ?"
+            description="Sur XAU/USD H4, le marché évolue dans un biais baissier. Les equal highs à 4 720$ représentent une BSL visible, et la cible de liquidité principale se situe sur la SSL du creux 4 600$. Une bougie H4 sweep la BSL avec une mèche à 4 735$ puis clôture à 4 705$. Le marché casse ensuite le creux mineur à 4 680$ et crée un FVG bearish entre 4 685$ et 4 700$. Le prix revient ensuite dans la zone. Comment se reconstruit le trade SMC complet sur ce setup ?"
             steps={[
               "Poser le biais de l'UT supérieure : la structure H4 est baissière (LH/LL). Le biais oriente vers des setups vendeurs en priorité.",
-              "Identifier la liquidité : les equal highs à 4 720$ forment la BSL. La SSL du creux 4 600$ devient la cible finale du trade.",
-              "Valider le sweep : la mèche à 4 735$ prend la liquidité au-dessus de 4 720$, et la clôture à 4 705$ confirme la réintégration sous la BSL.",
-              "Repérer le CHoCH : la cassure du creux mineur à 4 680$ est le premier signal du changement de caractère baissier sur l’unité de temps d’entrée ; l’entrée qui suit est agressive, sans BOS de confirmation.",
-              "Construire le plan : entrée short 4 692$ (mitigation du FVG 4 685$-4 700$), stop loss 4 740$ (au-dessus de la mèche du sweep), take profit 4 600$ (cible la SSL). Risque 48$, gain 92$, R/R ≈ 1,9.",
+              "Identifier la liquidité : les equal highs à 4 720$ forment la BSL. La SSL du creux 4 600$ devient la cible finale du trade.",
+              "Valider le sweep : la mèche à 4 735$ prend la liquidité au-dessus de 4 720$, et la clôture à 4 705$ confirme la réintégration sous la BSL.",
+              "Repérer le CHoCH : la cassure du creux mineur à 4 680$ est le premier signal du changement de caractère baissier sur l’unité de temps d’entrée ; l’entrée qui suit est agressive, sans BOS de confirmation.",
+              "Construire le plan : entrée short 4 692$ (mitigation du FVG 4 685$-4 700$), stop loss 4 740$ (au-dessus de la mèche du sweep), take profit 4 600$ (cible la SSL). Risque 48$, gain 92$, R/R ≈ 1,9.",
             ]}
           />
 

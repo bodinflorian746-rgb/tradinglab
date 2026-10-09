@@ -52,7 +52,13 @@
 .lesson-v2 :is(.text-zinc-100, .text-zinc-200):not(.lc *) { color: var(--v2-text); }
 .lesson-v2 :is(.text-zinc-300, .text-zinc-400):not(.lc *) { color: var(--v2-text-2); }
 .lesson-v2 :is(.text-zinc-500, .text-zinc-600):not(.lc *) { color: var(--v2-text-3); }
-.lesson-v2 :is(.text-zinc-700, .text-zinc-800):not(.lc *) { color: rgba(255, 255, 255, 0.28); }
+/* Textes secondaires les plus discrets (séparateurs, « Révision », états désactivés) : contraste ≥ 3,
+   lisibles sans concurrencer le texte courant */
+.lesson-v2 :is(.text-zinc-700, .text-zinc-800):not(.lc *) { color: rgba(255, 255, 255, 0.5); }
+
+/* Puce d'une liste en flex centrée : sur un élément de plusieurs lignes, la puce suit la 1re ligne */
+.lesson-v2 li.flex.items-center:has(> .rounded-full:first-child):not(.lc *) { align-items: flex-start; }
+.lesson-v2 li.flex.items-center > .rounded-full:first-child:not(.lc *) { margin-top: 0.62em; }
 
 /* Libellés en capitales (« Exemple concret », « À retenir »…) : sur-titre v2 */
 .lesson-v2 .uppercase.tracking-widest:not(.lc *) {
@@ -131,4 +137,15 @@
   box-shadow: none;
   padding: 0;
   overflow: visible;
+}
+
+/* Tableaux des leçons sur mobile : tiennent dans la colonne de lecture (en-têtes sans grand
+   espacement de lettres, cellules resserrées, mots longs coupés proprement) ; au-delà, le
+   tableau défile dans son cadre sans élargir la page. */
+@media (max-width: 639px) {
+  .lesson-v2 table:not(.lc *) { width: 100%; }
+  .lesson-v2 table:not(.lc *) th { letter-spacing: 0.03em; hyphens: auto; }
+  .lesson-v2 table:not(.lc *) :is(th, td) { padding-right: 10px; overflow-wrap: break-word; hyphens: auto; }
+  .lesson-v2 table:not(.lc *) td { font-size: 14px; }
+  .lesson-v2 table:not(.lc *) :is(th, td):last-child { padding-right: 0; }
 }

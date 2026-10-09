@@ -212,7 +212,7 @@ export default function ContentFr() {
               </div>
               <div className="divide-y divide-zinc-800/60">
                 {[
-                  { asset: "EUR/USD", reaction: "Baisse, 100 à 300 pips sur la séance" },
+                  { asset: "EUR/USD", reaction: "Baisse, 100 à 300 pips sur la séance" },
                   { asset: "DXY", reaction: "Monte (mesure la force du dollar)" },
                   { asset: "XAU/USD", reaction: "Baisse (taux réels hauts pénalisent l'or)" },
                   { asset: "Nasdaq", reaction: "Baisse (taux hauts pénalisent la tech)" },

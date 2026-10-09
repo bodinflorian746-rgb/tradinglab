@@ -197,24 +197,24 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD rebondit depuis 4 500$ vers 4 720$, puis corrige dans la zone Fibonacci 0.5 / 0.618 (4 610$ à 4 584$). Engulfing haussier au contact du Fibo dans une tendance H4 haussière.
+              XAU/USD rebondit depuis 4 500$ vers 4 720$, puis corrige dans la zone Fibonacci 0.5 / 0.618 (4 610$ à 4 584$). Engulfing haussier au contact du Fibo dans une tendance H4 haussière.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- 1ère bougie bearish : Open 4 615$, Close 4 600$ (corps 15$)</li>
-                <li>- 2ème bougie bullish : Open 4 600$ (clôture de la 1ère), Close 4 628$ (corps 28$, près de 2x la 1ère), plus haut 4 630$, plus bas 4 595$</li>
+                <li>- 1ère bougie bearish : Open 4 615$, Close 4 600$ (corps 15$)</li>
+                <li>- 2ème bougie bullish : Open 4 600$ (clôture de la 1ère), Close 4 628$ (corps 28$, près de 2x la 1ère), plus haut 4 630$, plus bas 4 595$</li>
                 <li>- Corps de la 2ème englobe entièrement celui de la 1ère</li>
-                <li>- Entrée long : 4 630$ (breakout du high de la bougie englobante)</li>
-                <li>- Stop loss : 4 590$ (5$ sous le low de la bougie englobante)</li>
-                <li>- Take profit : 4 720$ (ancien high récent)</li>
+                <li>- Entrée long : 4 630$ (breakout du high de la bougie englobante)</li>
+                <li>- Stop loss : 4 590$ (5$ sous le low de la bougie englobante)</li>
+                <li>- Take profit : 4 720$ (ancien high récent)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 630$ - 4 590$ = 40$</li>
-                <li>- Gain potentiel : 4 720$ - 4 630$ = 90$</li>
+                <li>- Risque : 4 630$ - 4 590$ = 40$</li>
+                <li>- Gain potentiel : 4 720$ - 4 630$ = 90$</li>
                 <li>- R/R : 90 / 40 = 2,25</li>
               </ul>
             </div>
@@ -223,8 +223,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 34€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 34€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 45€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 113€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 45€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 113€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 2,25:1 peu importe la taille du compte.

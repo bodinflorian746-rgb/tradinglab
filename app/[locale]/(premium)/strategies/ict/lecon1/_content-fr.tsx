@@ -171,7 +171,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD M15 : la résistance est à 4 680 $, testée plusieurs fois. Une bougie casse au-dessus, atteint 4 695 $, les traders breakout entrent en achat avec leur SL sous 4 680. Quelques bougies plus tard, le prix réintègre sous 4 680, descend rapidement vers 4 650. Le breakout n&apos;était pas tenu, il servait juste à déclencher les ordres breakout pour alimenter la descente.
+                XAU/USD M15 : la résistance est à 4 680 $, testée plusieurs fois. Une bougie casse au-dessus, atteint 4 695 $, les traders breakout entrent en achat avec leur SL sous 4 680. Quelques bougies plus tard, le prix réintègre sous 4 680, descend rapidement vers 4 650. Le breakout n&apos;était pas tenu, il servait juste à déclencher les ordres breakout pour alimenter la descente.
               </p>
             </div>
 
@@ -198,7 +198,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Graphique M15 EUR/USD : le prix vient d&apos;imprimer une mèche au-dessus de 1.1780 (sweep) et la bougie referme sous 1.1780 (réintégration). Sur la bougie suivante, gros corps baissier de 35 pts (impulsion). C&apos;est cette séquence qui autorise un short, entrée sur la cassure du dernier creux local, SL juste au-dessus du sommet du sweep, TP vers la prochaine zone de liquidité en aval.
+                Graphique M15 EUR/USD : le prix vient d&apos;imprimer une mèche au-dessus de 1.1780 (sweep) et la bougie referme sous 1.1780 (réintégration). Sur la bougie suivante, gros corps baissier de 35 pts (impulsion). C&apos;est cette séquence qui autorise un short, entrée sur la cassure du dernier creux local, SL juste au-dessus du sommet du sweep, TP vers la prochaine zone de liquidité en aval.
               </p>
             </div>
 
@@ -238,8 +238,8 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Réaction (M15) : exécuter</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : la bougie suivante est un gros corps baissier impulsif (35 pts), cassure du dernier creux local à 1.1762</li>
-                <li>- Conclusion : entrée short à 1.1758 sur le breakout, SL à 1.1795 (3 pts au-dessus du sommet du sweep), TP vers la prochaine zone de liquidité basse à 1.1695. R/R ≈ 1 : 1,7, setup haut probabilité aligné Daily + sweep + réaction</li>
+                <li>- Observation : la bougie suivante est un gros corps baissier impulsif (35 pts), cassure du dernier creux local à 1.1762</li>
+                <li>- Conclusion : entrée short à 1.1758 sur le breakout, SL à 1.1795 (3 pts au-dessus du sommet du sweep), TP vers la prochaine zone de liquidité basse à 1.1695. R/R ≈ 1 : 1,7, setup haut probabilité aligné Daily + sweep + réaction</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

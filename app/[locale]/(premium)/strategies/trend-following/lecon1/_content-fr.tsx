@@ -163,7 +163,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Étape 1 : repérer les pivots (creux et sommets) sur les 30-50 dernières bougies</li>
               <li>- Étape 2 : confirmer la succession (2 HL + 2 HH minimum, ou 2 LH + 2 LL minimum)</li>
-              <li>- Étape 3 : valider l&apos;amplitude (≥ 30-50 pips sur EUR/USD H4, 50-100$ sur XAU/USD H4)</li>
+              <li>- Étape 3 : valider l&apos;amplitude (≥ 30-50 pips sur EUR/USD H4, 50-100$ sur XAU/USD H4)</li>
             </ul>
           </section>
 
@@ -180,9 +180,9 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Tendance faible (pente &lt; 20°, amplitude ~50 pips) : peu exploitable</li>
-              <li>- Tendance modérée (pente ~35°, amplitude ~100 pips) : exploitable avec discipline</li>
-              <li>- Tendance forte (pente &gt; 55°, amplitude ~200 pips) : setup à privilégier</li>
+              <li>- Tendance faible (pente &lt; 20°, amplitude ~50 pips) : peu exploitable</li>
+              <li>- Tendance modérée (pente ~35°, amplitude ~100 pips) : exploitable avec discipline</li>
+              <li>- Tendance forte (pente &gt; 55°, amplitude ~200 pips) : setup à privilégier</li>
               <li>- Pullback exploitable : entre 50% et 78,6% de l&apos;impulsion précédente (idéalement l&apos;OTE 0.618-0.786, leçon 3)</li>
             </ul>
           </section>
@@ -192,22 +192,22 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : pullback EUR/USD H4</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              EUR/USD en tendance haussière confirmée (2 HL à 1.1700 et 1.1730, 2 HH à 1.1780 et 1.1810). Le prix retrace vers 1.1760 (62% de l&apos;impulsion 80 pips) et imprime une pin bar haussière.
+              EUR/USD en tendance haussière confirmée (2 HL à 1.1700 et 1.1730, 2 HH à 1.1780 et 1.1810). Le prix retrace vers 1.1760 (62% de l&apos;impulsion 80 pips) et imprime une pin bar haussière.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade long sur pullback)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 1.1765 (clôture de la pin bar)</li>
-                <li>- Stop loss : 1.1720 (10 pips sous le dernier HL à 1.1730)</li>
-                <li>- Take profit niveau 1 : 1.1810 (HH précédent), niveau 2 : 1.1890 (projection 80 pips)</li>
+                <li>- Stop loss : 1.1720 (10 pips sous le dernier HL à 1.1730)</li>
+                <li>- Take profit niveau 1 : 1.1810 (HH précédent), niveau 2 : 1.1890 (projection 80 pips)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 1.1765 - 1.1720 = 45 pips</li>
-                <li>- Gain niveau 1 : 45 pips → R/R 1:1 (sortie partielle possible)</li>
-                <li>- Gain niveau 2 : 125 pips → R/R 125/45 = 2,78</li>
+                <li>- Risque : 1.1765 - 1.1720 = 45 pips</li>
+                <li>- Gain niveau 1 : 45 pips → R/R 1:1 (sortie partielle possible)</li>
+                <li>- Gain niveau 2 : 125 pips → R/R 125/45 = 2,78</li>
                 <li>- Le setup vise prioritairement le TP niveau 2</li>
               </ul>
             </div>
@@ -216,8 +216,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 42€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 42€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 56€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 139€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 56€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 139€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 2,78:1 peu importe la taille du compte.
@@ -229,7 +229,7 @@ export default function ContentFr() {
               "Une tendance exploitable exige 2 HL + 2 HH (haussière) ou 2 LH + 2 LL (baissière) minimum sur H4.",
               "L’alignement Daily + H4 dans le même sens maximise la fiabilité du setup.",
               "Le pullback exploitable se situe entre 50% et 78,6% de l’impulsion précédente.",
-              "Stop loss au-delà du dernier creux/sommet structurel avec marge 5-10 pips. L’entrée exige un signal de rejet.",
+              "Stop loss au-delà du dernier creux/sommet structurel avec marge 5-10 pips. L’entrée exige un signal de rejet.",
             ]}
           />
 
@@ -237,10 +237,10 @@ export default function ContentFr() {
             description="Sur EUR/USD H4, le prix a formé 2 creux successifs à 1.1700 et 1.1730, puis 2 sommets successifs à 1.1780 et 1.1810. Le prix retrace ensuite vers 1.1760 et imprime une pin bar de rejet. Comment se construit le plan de trade pullback ?"
             steps={[
               "Confirmer la tendance haussière : 2 HL à 1.1700 et 1.1730 + 2 HH à 1.1780 et 1.1810",
-              "Mesurer l’impulsion : dernier HL (1.1730) à dernier HH (1.1810) = 80 pips",
+              "Mesurer l’impulsion : dernier HL (1.1730) à dernier HH (1.1810) = 80 pips",
               "Calculer le retracement : retour à 1.1760 = 62% de l’impulsion (50/80), à la limite haute du retracement exploitable",
               "Valider le signal : la pin bar au contact du niveau confirme le rejet",
-              "Placer le plan : entrée long à la clôture (1.1762), stop loss à 1.1720 (10 pips sous le dernier HL), take profit à 1.1810 (HH précédent) ou 1.1890 (projection sur 80 pips, ratio 1:3)",
+              "Placer le plan : entrée long à la clôture (1.1762), stop loss à 1.1720 (10 pips sous le dernier HL), take profit à 1.1810 (HH précédent) ou 1.1890 (projection sur 80 pips, ratio 1:3)",
             ]}
           />
 
@@ -248,12 +248,12 @@ export default function ContentFr() {
             question="Sur un chart H4 en tendance haussière confirmée, le prix retrace de 45% de l’impulsion précédente et imprime un signal de rejet au contact du dernier creux structurel (HL). Quel est le placement correct du stop loss ?"
             options={[
               "À mi-chemin entre le niveau d’entrée et le dernier HL",
-              "Au-delà du dernier HL avec une marge de 5-10 pips",
+              "Au-delà du dernier HL avec une marge de 5-10 pips",
               "Au dernier HH",
               "Aucun stop loss, gestion manuelle",
             ]}
             correctIndex={1}
-            explanation="Le stop loss se place au-delà du dernier creux structurel (HL en tendance haussière) avec une marge de 5-10 pips pour absorber les mèches. Cette position invalide structurellement la tendance : si le prix casse le dernier HL, la structure HL/HH est rompue. Un stop placé à mi-chemin est déclenché par le pullback normal."
+            explanation="Le stop loss se place au-delà du dernier creux structurel (HL en tendance haussière) avec une marge de 5-10 pips pour absorber les mèches. Cette position invalide structurellement la tendance : si le prix casse le dernier HL, la structure HL/HH est rompue. Un stop placé à mi-chemin est déclenché par le pullback normal."
           />
 
         </div>

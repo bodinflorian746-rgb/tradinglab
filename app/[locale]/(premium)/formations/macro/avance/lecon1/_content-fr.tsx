@@ -166,12 +166,12 @@ export default function ContentFr() {
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-4 mb-3">
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-400 leading-relaxed mb-4">
-                À 20h00, EUR/USD peut faire +100 à +150 pips en 3 minutes, parfois plus. Tu vois le breakout, tu entres. À 20h30, Powell parle. Le marché inverse. Entre 20h30 et 21h30, EUR/USD peut perdre 200 à 400 pips.
+                À 20h00, EUR/USD peut faire +100 à +150 pips en 3 minutes, parfois plus. Tu vois le breakout, tu entres. À 20h30, Powell parle. Le marché inverse. Entre 20h30 et 21h30, EUR/USD peut perdre 200 à 400 pips.
               </p>
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Matrice hawkish surprise, en 3 minutes</p>
               <div className="grid grid-cols-2 gap-2 mb-3">
                 {[
-                  { asset: "EUR/USD", move: "-100 à -150 pips", note: "dollar plus fort" },
+                  { asset: "EUR/USD", move: "-100 à -150 pips", note: "dollar plus fort" },
                   { asset: "XAU/USD", move: "-30 à -60$", note: "or pénalisé par les taux" },
                   { asset: "Nasdaq", move: "-1.5 à -2.5%", note: "tech sous pression" },
                   { asset: "BTC/USD", move: "-800 à -2000$", note: "risk-off massif" },
@@ -191,7 +191,7 @@ export default function ContentFr() {
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">FOMC vraiment surprise, amplitudes extrêmes</p>
               <div className="grid grid-cols-2 gap-2 mb-2">
                 {[
-                  { asset: "EUR/USD", move: "200 à 400 pips" },
+                  { asset: "EUR/USD", move: "200 à 400 pips" },
                   { asset: "XAU/USD", move: "80 à 150$" },
                   { asset: "Nasdaq", move: "3 à 5%" },
                   { asset: "BTC/USD", move: "3000 à 6000$" },
@@ -320,13 +320,13 @@ export default function ContentFr() {
             <p className="text-emerald-400 uppercase tracking-widest text-xs font-bold mb-4">ET TOI, RETAIL ?</p>
             <div className="text-zinc-300 leading-relaxed space-y-3">
               <p>
-                Mercredi soir 19h45. Capital 1 000€. Le FOMC tombe dans 15 minutes. Tu n&apos;as aucune position ouverte sur EUR/USD ni sur les indices US. Tout est plat. Hier, tu avais déjà identifié un Order Block H1 vers 1.1820 sur EUR/USD. C&apos;est ton niveau clé. Entre 20h00 et 20h30, tu sais que le marché peut partir dans les deux sens sans logique propre.
+                Mercredi soir 19h45. Capital 1 000€. Le FOMC tombe dans 15 minutes. Tu n&apos;as aucune position ouverte sur EUR/USD ni sur les indices US. Tout est plat. Hier, tu avais déjà identifié un Order Block H1 vers 1.1820 sur EUR/USD. C&apos;est ton niveau clé. Entre 20h00 et 20h30, tu sais que le marché peut partir dans les deux sens sans logique propre.
               </p>
               <p>
                 20h00 : la Fed laisse les taux inchangés. Première impulsion violente. 20h30 : Powell devient hawkish et insiste sur une inflation encore trop élevée. EUR/USD plonge, remonte brutalement, puis replonge encore. Le chaos classique du FOMC. Tu ne touches toujours à rien. À 21h05, une bougie M15 clôture sous ton Order Block 1.1820. Le dollar confirme sa force. La confluence macro + technique est là.
               </p>
               <p>
-                Concrètement : entrée short à 1.1820, SL à 1.1850, TP à 1.1760. Tu risques 20€ (2% de 1 000€), tu peux gagner environ 40€. Tu coupes ton chart, tu vas dormir. Tu vérifieras au réveil, les mouvements post-21h00 du FOMC continuent souvent pendant toute la session asiatique.
+                Concrètement : entrée short à 1.1820, SL à 1.1850, TP à 1.1760. Tu risques 20€ (2% de 1 000€), tu peux gagner environ 40€. Tu coupes ton chart, tu vas dormir. Tu vérifieras au réveil, les mouvements post-21h00 du FOMC continuent souvent pendant toute la session asiatique.
               </p>
             </div>
           </div>

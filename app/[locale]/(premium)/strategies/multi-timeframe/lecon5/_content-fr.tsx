@@ -261,8 +261,8 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Exécution</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée short : 1.1758</li>
-                <li>- Stop loss : 1.1772 (juste au-dessus du dernier sommet de rejet), soit 14 pts de risque</li>
-                <li>- Take profit : 1.1695 (au niveau du dernier LL Daily), soit 63 pts de gain potentiel</li>
+                <li>- Stop loss : 1.1772 (juste au-dessus du dernier sommet de rejet), soit 14 pts de risque</li>
+                <li>- Take profit : 1.1695 (au niveau du dernier LL Daily), soit 63 pts de gain potentiel</li>
                 <li>- R/R ≈ 1 : 4,5, setup haute probabilité car aligné Daily + H1 + M15</li>
               </ul>
 

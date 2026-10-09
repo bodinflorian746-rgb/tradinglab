@@ -178,21 +178,21 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD descend vers le support 4 500$ (chiffre rond) (déjà touché 3 fois en 6 semaines). Tendance H4 haussière. Pin bar bullish au contact du support.
+              XAU/USD descend vers le support 4 500$ (chiffre rond) (déjà touché 3 fois en 6 semaines). Tendance H4 haussière. Pin bar bullish au contact du support.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée long : 4 520$ (clôture de la pin bar)</li>
-                <li>- Stop loss : 4 470$ (sous la mèche basse, marge incluse)</li>
-                <li>- Take profit : 4 650$ (résistance H4 suivante)</li>
+                <li>- Entrée long : 4 520$ (clôture de la pin bar)</li>
+                <li>- Stop loss : 4 470$ (sous la mèche basse, marge incluse)</li>
+                <li>- Take profit : 4 650$ (résistance H4 suivante)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 520$ - 4 470$ = 50$</li>
-                <li>- Gain potentiel : 4 650$ - 4 520$ = 130$</li>
+                <li>- Risque : 4 520$ - 4 470$ = 50$</li>
+                <li>- Gain potentiel : 4 650$ - 4 520$ = 130$</li>
                 <li>- R/R : 130 / 50 = 2,6</li>
               </ul>
             </div>
@@ -201,8 +201,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 39€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 39€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 52€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 130€</li>
+              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 52€</li>
+              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 130€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 2,6:1 peu importe la taille du compte.
@@ -223,7 +223,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Le marché peut casser le niveau structurel = invalidation du rejet</li>
-              <li>- Le SL doit être placé au-delà de la mèche directionnelle, avec marge 5-10 pips / 5-10$</li>
+              <li>- Le SL doit être placé au-delà de la mèche directionnelle, avec marge 5-10 pips / 5-10$</li>
               <li>- Aucun déplacement du SL contre soi en cours de trade</li>
             </ul>
           </section>
@@ -232,7 +232,7 @@ export default function ContentFr() {
             points={[
               "Une pin bar tradable valide 4 critères : ratio mèche/corps ≥ 2:1, direction cohérente, clôture dans le tiers opposé, contact avec un niveau structurel.",
               "Le contact avec un niveau structurel est le critère le plus discriminant. Pin bar isolée hors contexte = pas de setup.",
-              "Stop loss au-delà de la mèche avec marge 5-10 pips/$. Jamais à la clôture ou dans le corps.",
+              "Stop loss au-delà de la mèche avec marge 5-10 pips/$. Jamais à la clôture ou dans le corps.",
               "Pas de trade dans les 60 minutes autour d’une news majeure (NFP, FOMC, CPI).",
             ]}
           />
@@ -240,11 +240,11 @@ export default function ContentFr() {
           <LessonExercice
             description="Sur EUR/USD H1, le prix s’approche d’une résistance qualifiée à 1.1820 (3 touches dans les 5 dernières semaines, MM50 H4 à 1.1815 = confluence). Une bougie H1 imprime une mèche haute jusqu’à 1.1835 puis clôture à 1.1803. Ouverture à 1.1815. Quelle qualification pour ce signal et quel plan de trade ?"
             steps={[
-              "Mesurer la pin bar : mèche haute 32 pips (de 1.1803 à 1.1835), corps 12 pips (de 1.1815 à 1.1803). Ratio mèche/corps = 32/12 = 2,67:1, critère 1 validé",
+              "Mesurer la pin bar : mèche haute 32 pips (de 1.1803 à 1.1835), corps 12 pips (de 1.1815 à 1.1803). Ratio mèche/corps = 32/12 = 2,67:1, critère 1 validé",
               "Vérifier la direction et le contact : mèche longue en haut, pin bar baissière au contact de la résistance 1.1820, critères 2 et 4 validés",
               "Position de la clôture : 1.1803 dans la fourchette 1.1803-1.1835, au plus bas absolu, clôture dans le tiers inférieur, critère 3 validé",
               "Confluence : MM50 H4 à 1.1815 dans la zone = renforcement du signal",
-              "Plan : entrée short à 1.1803 (clôture pin bar), stop loss à 1.1843 (8 pips au-dessus de la mèche à 1.1835), take profit à 1.1720 (support H4 suivant). Risque 40 pips, gain 83 pips, R/R 2,07. Taille de position selon le risque par trade adapté au capital",
+              "Plan : entrée short à 1.1803 (clôture pin bar), stop loss à 1.1843 (8 pips au-dessus de la mèche à 1.1835), take profit à 1.1720 (support H4 suivant). Risque 40 pips, gain 83 pips, R/R 2,07. Taille de position selon le risque par trade adapté au capital",
             ]}
           />
 

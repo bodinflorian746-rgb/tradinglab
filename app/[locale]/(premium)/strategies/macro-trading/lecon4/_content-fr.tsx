@@ -139,13 +139,13 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Avant tout setup, la première question à se poser est simple : y a-t-il une publication économique majeure dans la fenêtre qui vient ? FOMC, NFP, CPI, données d&apos;emploi, conférence Powell, ces événements provoquent des volatilités extrêmes et imprévisibles qui désorganisent complètement les structures techniques. Un setup techniquement parfait à 10h UTC peut être réduit à néant par une bougie de 70 $ à 13h30 UTC sur la publication NFP. Le calendrier économique est donc le filtre le plus simple et le plus efficace : si une news majeure est dans la fenêtre du trade, on ne prend pas le trade, peu importe la qualité technique du setup.
+              Avant tout setup, la première question à se poser est simple : y a-t-il une publication économique majeure dans la fenêtre qui vient ? FOMC, NFP, CPI, données d&apos;emploi, conférence Powell, ces événements provoquent des volatilités extrêmes et imprévisibles qui désorganisent complètement les structures techniques. Un setup techniquement parfait à 10h UTC peut être réduit à néant par une bougie de 70 $ à 13h30 UTC sur la publication NFP. Le calendrier économique est donc le filtre le plus simple et le plus efficace : si une news majeure est dans la fenêtre du trade, on ne prend pas le trade, peu importe la qualité technique du setup.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD 13h25 UTC : setup short H4 parfait, prix sous résistance, structure baissière nette. Mais le calendrier indique la publication du CPI américain à 13h30 UTC. La probabilité d'une volatilité de 50-100 $ dans les minutes qui suivent est très élevée, le SL serait emporté avant que le scénario ait la moindre chance de s'exprimer. Filtre rouge : pas de trade. On attend que la publication soit digérée (typiquement 30-60 minutes) avant de réévaluer.
+                XAU/USD 13h25 UTC : setup short H4 parfait, prix sous résistance, structure baissière nette. Mais le calendrier indique la publication du CPI américain à 13h30 UTC. La probabilité d'une volatilité de 50-100 $ dans les minutes qui suivent est très élevée, le SL serait emporté avant que le scénario ait la moindre chance de s'exprimer. Filtre rouge : pas de trade. On attend que la publication soit digérée (typiquement 30-60 minutes) avant de réévaluer.
               </p>
             </div>
 
@@ -172,7 +172,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD H4 en régime risk-off établi, structure HH/HL claire qui pointe vers 4 740 $. Un signal bearish M15 apparaît au cours d'un mini-pullback : rejet sur résistance locale, début de cassure du dernier creux. Techniquement, c'est un short valide. Macro-contextuellement, c'est un trade à contre-courant du régime dominant. Filtre rouge : on ne prend pas. Le marché continue effectivement de monter et casse les sommets précédents dans les heures qui suivent.
+                XAU/USD H4 en régime risk-off établi, structure HH/HL claire qui pointe vers 4 740 $. Un signal bearish M15 apparaît au cours d'un mini-pullback : rejet sur résistance locale, début de cassure du dernier creux. Techniquement, c'est un short valide. Macro-contextuellement, c'est un trade à contre-courant du régime dominant. Filtre rouge : on ne prend pas. Le marché continue effectivement de monter et casse les sommets précédents dans les heures qui suivent.
               </p>
             </div>
 
