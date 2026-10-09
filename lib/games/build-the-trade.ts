@@ -1148,7 +1148,7 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   const ch = buildBuildTradeChartRaw(template, seed, vol);
   // (passé : zones ; futur : aussi entrées, stops et TP, qui décident de l'issue)
   // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
-  const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol])];
+  const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol], ch.past)];
   const plan = [...Object.values(ch.entries), ...Object.values(ch.stops), ...Object.values(ch.tps)];
   return realizeChart(ch, { past: zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol });
 }

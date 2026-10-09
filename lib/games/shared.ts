@@ -104,16 +104,27 @@ export function levelTouches(
     p = c;
   };
   const small = () => (0.08 + rng() * 0.08) * m;
+  // mèche opposée au niveau : libre (proportions réelles), sans effet sur les touches
+  const far = () => (0.15 + rng() * 0.3) * m;
   for (let t = 0; t < n; t++) {
     // Approche, mèches courtes qui restent hors de la bande
     const a0 = (0.3 + rng() * 0.2) * m;
-    while (dist(p) > a0 + 0.9 * m) push(at(dist(p) - (0.45 + rng() * 0.3) * m), small(), small());
-    push(at(a0), Math.min(small(), 0.5 * a0), small());
+    while (dist(p) > a0 + 0.9 * m) {
+      push(at(dist(p) - (0.45 + rng() * 0.3) * m), small(), far());
+      // petit repli intercalé (une fois sur deux) : une approche n'est pas d'un seul bloc
+      if (dist(p) > a0 + 0.9 * m && rng() < 0.5) push(at(dist(p) + (0.05 + rng() * 0.1) * m), small(), far());
+    }
+    push(at(a0 + (0.08 + rng() * 0.08) * m), Math.min(small(), 0.4 * a0), far());
+    // Hésitation à l'approche : petit corps, mèches des deux côtés (hors de la bande)
+    push(at(a0), Math.min((0.1 + rng() * 0.1) * m, 0.5 * a0), (0.15 + rng() * 0.2) * m);
     // Contact : mèche dans la bande, clôture qui s'en écarte
     const tip = edge + dir * (0.25 + rng() * 0.5) * (hi - lo);
-    push(at(a0 + (0.25 + rng() * 0.25) * m), dir * (tip - p), small());
-    // Réaction : deux bougies qui s'éloignent nettement
-    for (let r = 0; r < 2; r++) push(at(dist(p) + (0.6 + rng() * 0.4) * m), small(), small());
+    push(at(a0 + (0.25 + rng() * 0.25) * m), dir * (tip - p), far());
+    // Réaction : deux bougies qui s'éloignent nettement, séparées par un petit repli (couleur
+    // opposée, comme sur un vrai graphique : la jambe n'est pas d'un seul bloc)
+    push(at(dist(p) + (0.6 + rng() * 0.4) * m), small(), far());
+    push(at(dist(p) - (0.06 + rng() * 0.1) * m), small(), far());
+    push(at(dist(p) + (0.7 + rng() * 0.4) * m), small(), far());
   }
   return { candles: out, p };
 }
@@ -121,12 +132,25 @@ export function levelTouches(
 /**
  * Garde-fous de la passe de réalisme autour des supports et résistances : une bougie
  * éloignée du niveau dans le scénario le reste (sa mèche ne vient pas le frôler), pour
- * que les touches et les réactions qui le prouvent restent lisibles.
+ * que les touches et les réactions qui le prouvent restent lisibles. Un garde-fou n'est
+ * posé que du côté d'où le niveau est touché dans le scénario (le prix en vient, le
+ * contacte et y repart) : la passe garde ailleurs ses mèches réelles.
  */
-export function srGuards(zones: ChartZone[], m: number): number[] {
+export function srGuards(zones: ChartZone[], m: number, past: Candle[]): number[] {
+  const g = 0.8 * m;
   return zones
     .filter((z) => z.kind === "support" || z.kind === "resistance")
-    .flatMap((z) => [Math.min(z.y1, z.y2) - 0.8 * m, Math.max(z.y1, z.y2) + 0.8 * m]);
+    .flatMap((z) => {
+      const lo = Math.min(z.y1, z.y2), hi = Math.max(z.y1, z.y2);
+      const sides = new Set<"above" | "below">();
+      let last: "above" | "below" | null = null, contact = false;
+      for (const k of past) {
+        const side = k.l > hi + g ? "above" : k.h < lo - g ? "below" : null;
+        if (side) { if (contact && last === side) sides.add(side); contact = false; last = side; }
+        else if (last && k.l <= hi + 0.3 * m && k.h >= lo - 0.3 * m) contact = true;
+      }
+      return [...(sides.has("below") ? [lo - g] : []), ...(sides.has("above") ? [hi + g] : [])];
+    });
 }
 
 export function chartDomain(

@@ -681,10 +681,10 @@ function shApproachResistance(rng: () => number, m: number): { chart: ScenarioCh
     past.push(k);
     p = c;
   }
-  // 2 dernières candles : prix re-approche R
+  // 2 dernières candles : prix re-approche R (l'entrée finit « pile sous » la résistance)
   for (let i = 0; i < 2; i++) {
     const o = p;
-    const c = clamp(o + (0.2 + rng() * 0.3) * m, R - 1.2, R - 0.3);
+    const c = i === 1 ? clamp(o + (0.2 + rng() * 0.3) * m, R - 0.45, R - 0.25) : clamp(o + (0.2 + rng() * 0.3) * m, R - 1.2, R - 0.5);
     past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.13 + rng() * 0.13) * m));
     p = c;
   }
@@ -710,9 +710,10 @@ function shApproachSupport(rng: () => number, m: number): { chart: ScenarioChart
     past.push(k);
     p = c;
   }
+  // 2 dernières : l'entrée finit « pile au-dessus » du support
   for (let i = 0; i < 2; i++) {
     const o = p;
-    const c = clamp(o - (0.2 + rng() * 0.3) * m, S + 0.3, S + 1.2);
+    const c = i === 1 ? clamp(o - (0.2 + rng() * 0.3) * m, S + 0.25, S + 0.45) : clamp(o - (0.2 + rng() * 0.3) * m, S + 0.5, S + 1.2);
     past.push(candle(o, c, (0.13 + rng() * 0.13) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
@@ -942,7 +943,7 @@ export function withAssetPrices(chart: ScenarioChart, inst: { id: string; asset:
 export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): ScenarioChart {
   const ch = buildScenarioChartRaw(template, seed, vol);
   // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
-  const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol])];
+  const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol], ch.past)];
   const lines = [ch.entry, ch.stop, ch.tp].filter((p): p is number => p !== undefined);
   const calm = template.chartShape === "calm_before_news";
   return realizeChart(ch, { past: zones, future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm });

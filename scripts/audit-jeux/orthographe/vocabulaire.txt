@@ -2991,6 +2991,7 @@ desequilibrios
 desequilibró
 desfavorable
 designan
+désigne
 désignent
 desinterés
 désintérêt
@@ -6699,7 +6700,6 @@ non-mitigation
 non-négociable
 non-négociables
 non-pris
-non-retestée
 non-revisité
 non-revisitée
 none

@@ -2746,7 +2746,7 @@ export function buildPlaceStopChart(
   // Passe de réalisme des bougies (niveaux clés : zones, entrée, TP, les 3 stops)
   // (passé : zones ; futur : aussi entrée, TP et stops, qui décident de l'issue)
   // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
-  const zones = [...withTarget.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(withTarget.zones, VOL_MULT[volatility])];
+  const zones = [...withTarget.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(withTarget.zones, VOL_MULT[volatility], withTarget.past)];
   const outcome = [...(withTarget.tp !== null ? [withTarget.tp] : []), ...withTarget.stops.map((st) => st.price)];
   return keepPricesPositive(realizeChart(withTarget, { past: zones, future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility }));
 }

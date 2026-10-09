@@ -1332,7 +1332,7 @@ export function buildChart(
 ): BuySellChart {
   const ch = buildChartRaw(setup, seed, volatility, difficulty);
   const calm = setup === "trade_before_news";
-  return realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility])], seed, { ...ctx, volatility, calmPast: calm, preNews: calm });
+  return realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm });
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */
