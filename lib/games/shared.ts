@@ -82,6 +82,53 @@ export function candle(o: number, c: number, wU: number, wD: number): Candle {
   return { o, c, h: Math.max(o, c) + wU, l: Math.min(o, c) - wD };
 }
 
+/**
+ * Preuve d'un support ou d'une résistance (règle PO : un niveau n'existe que si le
+ * graphique le montre). `n` touches de la bande [lo, hi] : depuis le côté `from`
+ * (« below » : sous une résistance ; « above » : au-dessus d'un support), le prix vient
+ * au contact (mèche dans la bande, clôture qui s'en écarte : bougie de rejet), puis
+ * repart nettement du même côté. Le prix de départ p doit être éloigné du niveau
+ * (au moins 1,5 m) ; le prix renvoyé l'est aussi.
+ */
+export function levelTouches(
+  rng: () => number, p: number, lo: number, hi: number, from: "below" | "above", m: number, n = 2,
+): { candles: Candle[]; p: number } {
+  const dir = from === "below" ? 1 : -1;             // sens vers le niveau
+  const edge = from === "below" ? lo : hi;           // bord de la bande côté prix
+  const dist = (x: number) => dir * (edge - x);      // distance au bord (> 0 : du bon côté)
+  const at = (d: number) => edge - dir * d;          // prix à la distance d du bord
+  const out: Candle[] = [];
+  // wNear : mèche côté niveau ; wFar : mèche opposée
+  const push = (c: number, wNear: number, wFar: number) => {
+    out.push(dir > 0 ? candle(p, c, wNear, wFar) : candle(p, c, wFar, wNear));
+    p = c;
+  };
+  const small = () => (0.08 + rng() * 0.08) * m;
+  for (let t = 0; t < n; t++) {
+    // Approche, mèches courtes qui restent hors de la bande
+    const a0 = (0.3 + rng() * 0.2) * m;
+    while (dist(p) > a0 + 0.9 * m) push(at(dist(p) - (0.45 + rng() * 0.3) * m), small(), small());
+    push(at(a0), Math.min(small(), 0.5 * a0), small());
+    // Contact : mèche dans la bande, clôture qui s'en écarte
+    const tip = edge + dir * (0.25 + rng() * 0.5) * (hi - lo);
+    push(at(a0 + (0.25 + rng() * 0.25) * m), dir * (tip - p), small());
+    // Réaction : deux bougies qui s'éloignent nettement
+    for (let r = 0; r < 2; r++) push(at(dist(p) + (0.6 + rng() * 0.4) * m), small(), small());
+  }
+  return { candles: out, p };
+}
+
+/**
+ * Garde-fous de la passe de réalisme autour des supports et résistances : une bougie
+ * éloignée du niveau dans le scénario le reste (sa mèche ne vient pas le frôler), pour
+ * que les touches et les réactions qui le prouvent restent lisibles.
+ */
+export function srGuards(zones: ChartZone[], m: number): number[] {
+  return zones
+    .filter((z) => z.kind === "support" || z.kind === "resistance")
+    .flatMap((z) => [Math.min(z.y1, z.y2) - 0.8 * m, Math.max(z.y1, z.y2) + 0.8 * m]);
+}
+
 export function chartDomain(
   candles: Candle[],
   zones:   ChartZone[],

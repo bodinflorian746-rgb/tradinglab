@@ -17,7 +17,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle,
+  VOL_MULT, mulberry32, clamp, candle, levelTouches, srGuards,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -1029,13 +1029,10 @@ function scnBounceSupport(rng: () => number, m: number, d: Difficulty, mode: Pla
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const S = 1;
-  let p = 5 + rng() * 0.4;
-  for (let i = 0; i < 6; i++) {
-    const o = p;
-    const c = clamp(o - (0.5 + rng() * 0.5) * m, S + 0.4, 6);
-    past.push(candle(o, c, (0.15 + rng() * 0.18) * m, (0.18 + rng() * 0.25) * m));
-    p = c;
-  }
+  // Le support est prouvé : deux rebonds nets avant le rebond actuel
+  const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.1, S + 0.1, "above", m);
+  past.push(...h.candles);
+  let p = h.p;
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
@@ -1064,13 +1061,10 @@ function scnRejectionResistance(rng: () => number, m: number, d: Difficulty, mod
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const R = 10;
-  let p = 5 - rng() * 0.4;
-  for (let i = 0; i < 6; i++) {
-    const o = p;
-    const c = clamp(o + (0.5 + rng() * 0.5) * m, 4, R - 0.4);
-    past.push(candle(o, c, (0.18 + rng() * 0.25) * m, (0.15 + rng() * 0.18) * m));
-    p = c;
-  }
+  // La résistance est prouvée : deux rejets nets avant le rejet actuel
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
@@ -1106,11 +1100,15 @@ function scnFakeoutAboveResistance(rng: () => number, m: number, d: Difficulty, 
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const R = 10;
-  let p = 6 + rng() * 0.3;
-  for (let i = 0; i < 5; i++) {
+  // La résistance est prouvée : deux rejets avant le faux breakout
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
+  // Remontée vers la résistance
+  while (p < R - 1.2 * m) {
     const o = p;
-    const c = clamp(o + (0.3 + rng() * 0.4) * m, 5, R - 0.5);
-    past.push(candle(o, c, (0.18 + rng() * 0.2) * m, (0.15 + rng() * 0.18) * m));
+    const c = Math.min(o + (0.4 + rng() * 0.3) * m, R - 0.6 * m);
+    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.12 + rng() * 0.12) * m));
     p = c;
   }
   // Fakeout (la zone du piège = wick au-dessus de R)
@@ -2270,11 +2268,14 @@ function scnFakeoutZoneWide(rng: () => number, m: number, d: Difficulty, mode: P
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const R = 10;
-  let p = R - 2 - rng() * 0.3;
+  // La résistance est prouvée : deux rejets nets avant les faux breakouts
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.05 * m, R + 0.05 * m, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
   // Approche vers R
-  for (let i = 0; i < 3; i++) {
+  while (p < R - 1.0 * m) {
     const o = p;
-    const c = clamp(o + (0.3 + rng() * 0.3) * m, R - 2, R - 0.4);
+    const c = Math.min(o + (0.3 + rng() * 0.3) * m, R - 0.5 * m);
     past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.13 + rng() * 0.12) * m));
     p = c;
   }
@@ -2744,7 +2745,8 @@ export function buildPlaceStopChart(
   const withTarget = setup === "tight_consolidation" ? chart : ensureCorrectStopRR(chart);
   // Passe de réalisme des bougies (niveaux clés : zones, entrée, TP, les 3 stops)
   // (passé : zones ; futur : aussi entrée, TP et stops, qui décident de l'issue)
-  const zones = withTarget.zones.flatMap((z) => [z.y1, z.y2]);
+  // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
+  const zones = [...withTarget.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(withTarget.zones, VOL_MULT[volatility])];
   const outcome = [...(withTarget.tp !== null ? [withTarget.tp] : []), ...withTarget.stops.map((st) => st.price)];
   return keepPricesPositive(realizeChart(withTarget, { past: zones, future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility }));
 }

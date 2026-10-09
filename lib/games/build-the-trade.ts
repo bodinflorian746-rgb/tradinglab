@@ -10,7 +10,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle,
+  VOL_MULT, mulberry32, clamp, candle, levelTouches, srGuards,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -562,14 +562,10 @@ function shapeDowntrendPullback(rng: () => number, m: number): ShapeOutput {
 function shapeBreakoutUp(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
   const R = 10;
-  let p = 5 + rng() * 0.4;
-  // approach
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = clamp(o + (0.4 + rng() * 0.4) * m, 4, R - 1);
-    past.push(candle(o, c, (0.18 + rng() * 0.18) * m, (0.15 + rng() * 0.15) * m));
-    p = c;
-  }
+  // La résistance est prouvée : deux rejets avant la consolidation
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
   // consol
   for (let i = 0; i < 4; i++) {
     const o = p;
@@ -604,13 +600,10 @@ function shapeBreakoutUp(rng: () => number, m: number): ShapeOutput {
 function shapeBreakoutDown(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
   const S = 1;
-  let p = 6 - rng() * 0.4;
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = clamp(o - (0.4 + rng() * 0.4) * m, S + 1, 7);
-    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.18 + rng() * 0.18) * m));
-    p = c;
-  }
+  // Le support est prouvé : deux rebonds avant la consolidation
+  const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.1, S + 0.1, "above", m);
+  past.push(...h.candles);
+  let p = h.p;
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 0.8 * m, S + 0.3, S + 1.3);
@@ -641,13 +634,14 @@ function shapeBreakoutDown(rng: () => number, m: number): ShapeOutput {
 function shapeBounceSupport(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
   const S = 1;
-  let p = 5 + rng() * 0.4;
-  for (let i = 0; i < 6; i++) {
+  // Le support est prouvé : deux rebonds nets, puis le prix y redescend
+  const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.1, S + 0.1, "above", m);
+  past.push(...h.candles);
+  let p = h.p;
+  while (p > S + 1.4 * m) {
     const o = p;
-    const c = clamp(o - (0.5 + rng() * 0.5) * m, S + 0.4, 6);
-    const k = candle(o, c, (0.15 + rng() * 0.18) * m, (0.18 + rng() * 0.25) * m);
-    k.l = Math.max(k.l, S - 0.05); // le support tient
-    past.push(k);
+    const c = Math.max(o - (0.5 + rng() * 0.4) * m, S + 0.9 * m);
+    past.push(candle(o, c, (0.12 + rng() * 0.12) * m, (0.15 + rng() * 0.15) * m));
     p = c;
   }
   // 3 bougies testant support avec mèches (sans le percer), les 2 dernières le
@@ -686,13 +680,14 @@ function shapeBounceSupport(rng: () => number, m: number): ShapeOutput {
 function shapeRejectionResistance(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
   const R = 10;
-  let p = 5 - rng() * 0.4;
-  for (let i = 0; i < 6; i++) {
+  // La résistance est prouvée : deux rejets nets, puis le prix y remonte
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
+  while (p < R - 1.4 * m) {
     const o = p;
-    const c = clamp(o + (0.5 + rng() * 0.5) * m, 4, R - 0.4);
-    const k = candle(o, c, (0.18 + rng() * 0.25) * m, (0.15 + rng() * 0.18) * m);
-    k.h = Math.min(k.h, R + 0.05); // la résistance tient
-    past.push(k);
+    const c = Math.min(o + (0.5 + rng() * 0.4) * m, R - 0.9 * m);
+    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.12 + rng() * 0.12) * m));
     p = c;
   }
   // 3 bougies testant la résistance (sans la percer), les 2 dernières la
@@ -801,11 +796,14 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
 function shapeFakeoutAbove(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
   const R = 10;
-  let p = 6 + rng() * 0.3;
-  for (let i = 0; i < 5; i++) {
+  // La résistance est prouvée : deux rejets avant le faux breakout
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
+  while (p < R - 1.2 * m) {
     const o = p;
-    const c = clamp(o + (0.3 + rng() * 0.4) * m, 5, R - 0.5);
-    past.push(candle(o, c, (0.18 + rng() * 0.2) * m, (0.15 + rng() * 0.18) * m));
+    const c = Math.min(o + (0.4 + rng() * 0.3) * m, R - 0.6 * m);
+    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.12 + rng() * 0.12) * m));
     p = c;
   }
   // Fakeout candle
@@ -1031,13 +1029,10 @@ function shapeHighVolPullback(rng: () => number, m: number): ShapeOutput {
 function shapeWeakBreakout(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
   const R = 10;
-  let p = 6 + rng() * 0.3;
-  for (let i = 0; i < 5; i++) {
-    const o = p;
-    const c = clamp(o + (0.3 + rng() * 0.4) * m, 5, R - 0.5);
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
-    p = c;
-  }
+  // La résistance est prouvée : deux rejets avant la consolidation
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
   for (let i = 0; i < 4; i++) {
     const o = p;
     const d = rng() - 0.5;
@@ -1152,7 +1147,8 @@ export function withAssetPrices(chart: BuildTradeChart, inst: { asset: Asset; se
 export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): BuildTradeChart {
   const ch = buildBuildTradeChartRaw(template, seed, vol);
   // (passé : zones ; futur : aussi entrées, stops et TP, qui décident de l'issue)
-  const zones = ch.zones.flatMap((z) => [z.y1, z.y2]);
+  // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
+  const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol])];
   const plan = [...Object.values(ch.entries), ...Object.values(ch.stops), ...Object.values(ch.tps)];
   return realizeChart(ch, { past: zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol });
 }

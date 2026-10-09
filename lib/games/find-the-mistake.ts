@@ -8,7 +8,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle,
+  VOL_MULT, mulberry32, clamp, candle, levelTouches, srGuards,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -668,14 +668,10 @@ function shDowntrendPullback(rng: () => number, m: number): { chart: ScenarioCha
 function shApproachResistance(rng: () => number, m: number): { chart: ScenarioChart; R: number; entry: number } {
   const past: Candle[] = [];
   const R = 10;
-  let p = 5 + rng() * 0.4;
-  // 4 candles up
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = clamp(o + (0.5 + rng() * 0.4) * m, 4, R - 1);
-    past.push(candle(o, c, (0.18 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m));
-    p = c;
-  }
+  // La résistance est prouvée : deux rejets nets avant les tests récents
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
   // 4 candles testant R avec wicks (rejets passés)
   for (let i = 0; i < 4; i++) {
     const o = p;
@@ -702,13 +698,10 @@ function shApproachResistance(rng: () => number, m: number): { chart: ScenarioCh
 function shApproachSupport(rng: () => number, m: number): { chart: ScenarioChart; S: number; entry: number } {
   const past: Candle[] = [];
   const S = 1;
-  let p = 6 - rng() * 0.4;
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = clamp(o - (0.5 + rng() * 0.4) * m, S + 1, 7);
-    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.18 + rng() * 0.2) * m));
-    p = c;
-  }
+  // Le support est prouvé : deux rebonds nets avant les tests récents
+  const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.1, S + 0.1, "above", m);
+  past.push(...h.candles);
+  let p = h.p;
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 0.5 * m, S + 0.4, S + 1.2);
@@ -782,13 +775,10 @@ function shFastRally(rng: () => number, m: number): { chart: ScenarioChart; entr
 function shWeakBreakout(rng: () => number, m: number): { chart: ScenarioChart; R: number; entry: number } {
   const past: Candle[] = [];
   const R = 10;
-  let p = 6 + rng() * 0.3;
-  for (let i = 0; i < 5; i++) {
-    const o = p;
-    const c = clamp(o + (0.3 + rng() * 0.4) * m, 5, R - 0.5);
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
-    p = c;
-  }
+  // La résistance est prouvée : deux rejets avant la consolidation
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
   for (let i = 0; i < 4; i++) {
     const o = p;
     // La dernière bougie de consolidation clôt juste sous la résistance : la
@@ -951,7 +941,8 @@ export function withAssetPrices(chart: ScenarioChart, inst: { id: string; asset:
 /** Graphique du scénario, avec la passe de réalisme des bougies (niveaux clés : zones, entrée, stop, TP). */
 export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): ScenarioChart {
   const ch = buildScenarioChartRaw(template, seed, vol);
-  const zones = ch.zones.flatMap((z) => [z.y1, z.y2]);
+  // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
+  const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol])];
   const lines = [ch.entry, ch.stop, ch.tp].filter((p): p is number => p !== undefined);
   const calm = template.chartShape === "calm_before_news";
   return realizeChart(ch, { past: zones, future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm });

@@ -62,6 +62,31 @@ function bullFvg(ch: BuySellChart): { i: number; gapLo: number; gapHi: number } 
   return null;
 }
 
+// Tendance établie, lue sur la structure : un plus haut récent (plus bas en baisse) au-delà
+// des sommets précédents (HH), une jambe de tendance depuis le dernier creux faite surtout de
+// bougies dans le sens, puis un pullback qui reste au-dessus de ce creux (HL). L'historique
+// qui prouve le support (touches d'une ancienne résistance) précède la jambe.
+function trendEstablished(ch: BuySellChart, up: boolean): { err: string | null; pk: number } {
+  const ps = ch.past;
+  const ext = (k: Candle) => (up ? k.h : -k.l);   // extrême dans le sens de la tendance
+  const opp = (k: Candle) => (up ? k.l : -k.h);   // extrême contraire
+  let pk = 0;
+  ps.forEach((k, i) => { if (ext(k) > ext(ps[pk])) pk = i; });
+  if (pk < 4 || pk >= ps.length - 1) return { err: "pas de plus haut récent suivi d'un pullback", pk };
+  // Jambe : bougies dans le sens qui mènent au plus haut (une bougie contraire tolérée)
+  const withT = (k: Candle) => (up ? k.c > k.o : k.c < k.o);
+  let e = pk;
+  while (e > 0 && !withT(ps[e])) e--;
+  let b = e, counter = 0;
+  while (b > 0) { if (!withT(ps[b - 1])) { if (counter) break; counter++; } b--; }
+  while (b < e && !withT(ps[b])) b++;
+  if (e - b + 1 < 4) return { err: "jambe de tendance peu nette", pk };
+  const swing = Math.min(opp(ps[b]), b > 0 ? opp(ps[b - 1]) : Infinity);
+  if (!(ext(ps[pk]) > Math.max(...ps.slice(0, b).map(ext)))) return { err: "pas de nouveau plus haut (HH)", pk };
+  if (!(Math.min(...ps.slice(pk + 1).map(opp)) > swing)) return { err: "le pullback casse le dernier creux (pas de HL)", pk };
+  return { err: null, pk };
+}
+
 const CHECKS: Record<string, Record<string, Check>> = {
   breakout_bullish_clean: { "cassure nette (sous la résistance puis bougie impulsive au-dessus)": (ch) => cleanBreak(ch, "resistance"), direction },
   breakout_bearish_clean: { "cassure nette (au-dessus du support puis bougie impulsive en dessous)": (ch) => cleanBreak(ch, "support"), direction },
@@ -74,13 +99,13 @@ const CHECKS: Record<string, Record<string, Check>> = {
     direction,
   },
   pullback_bullish_trend: {
-    "tendance haussière établie": (ch) => { const t = ch.past.slice(0, 8); return last(t).c > t[0].o && t.filter((k) => k.c > k.o).length >= 6 ? null : "pas de tendance haussière nette"; },
-    "corrige jusqu'au support": (ch) => { const z = zoneOf(ch, "support"); return ch.past.slice(8).some((k) => k.l <= hi(z)) ? null : "la correction n'atteint pas la zone de demande"; },
+    "tendance haussière établie": (ch) => trendEstablished(ch, true).err,
+    "corrige jusqu'au support": (ch) => { const z = zoneOf(ch, "support"); return ch.past.slice(trendEstablished(ch, true).pk + 1).some((k) => k.l <= hi(z)) ? null : "la correction n'atteint pas la zone de demande"; },
     direction,
   },
   pullback_bearish_trend: {
-    "tendance baissière établie": (ch) => { const t = ch.past.slice(0, 8); return last(t).c < t[0].o && t.filter((k) => k.c < k.o).length >= 6 ? null : "pas de tendance baissière nette"; },
-    "rebondit jusqu'à la zone d'offre": (ch) => { const z = zoneOf(ch, "resistance"); return ch.past.slice(8).some((k) => k.h >= lo(z)) ? null : "le rebond n'atteint pas la zone d'offre"; },
+    "tendance baissière établie": (ch) => trendEstablished(ch, false).err,
+    "rebondit jusqu'à la zone d'offre": (ch) => { const z = zoneOf(ch, "resistance"); return ch.past.slice(trendEstablished(ch, false).pk + 1).some((k) => k.h >= lo(z)) ? null : "le rebond n'atteint pas la zone d'offre"; },
     direction,
   },
   rejection_resistance: {
@@ -166,8 +191,8 @@ const CHECKS: Record<string, Record<string, Check>> = {
   },
   setup_toxic_execution: {
     "setup technique valide (pullback haussier jusqu'au support)": (ch) => {
-      const t = ch.past.slice(0, 8); const z = zoneOf(ch, "support");
-      return last(t).c > t[0].o && ch.past.slice(8).some((k) => k.l <= hi(z)) ? null : "pullback haussier non valide";
+      const t = trendEstablished(ch, true); const z = zoneOf(ch, "support");
+      return !t.err && ch.past.slice(t.pk + 1).some((k) => k.l <= hi(z)) ? null : `pullback haussier non valide${t.err ? ` (${t.err})` : ""}`;
     },
   },
 };

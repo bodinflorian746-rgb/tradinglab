@@ -15,7 +15,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone, type ChartData, type ZoneKind,
-  VOL_MULT, mulberry32, clamp, candle, chartDomain,
+  VOL_MULT, mulberry32, clamp, candle, chartDomain, levelTouches, srGuards,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -561,13 +561,10 @@ function genBreakoutBull(rng: () => number, m: number, d: Difficulty): BuySellCh
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const R = 10;
-  let p = 3 + rng() * 0.5;
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = clamp(o + (0.5 + rng() * 0.8) * m, 2, R - 1);
-    past.push(candle(o, c, (0.2 + rng() * 0.3) * m, (0.2 + rng() * 0.3) * m));
-    p = c;
-  }
+  // La résistance est prouvée : deux rejets avant la cassure
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.15, R + 0.15, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 1.2 * m, R - 1.6, R - 0.3);
@@ -603,13 +600,10 @@ function genBreakoutBear(rng: () => number, m: number, d: Difficulty): BuySellCh
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const S = 0;
-  let p = 7 - rng() * 0.5;
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = clamp(o - (0.5 + rng() * 0.8) * m, S + 1, 8);
-    past.push(candle(o, c, (0.2 + rng() * 0.3) * m, (0.2 + rng() * 0.3) * m));
-    p = c;
-  }
+  // Le support est prouvé : deux rebonds avant la cassure
+  const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.15, S + 0.15, "above", m);
+  past.push(...h.candles);
+  let p = h.p;
   for (let i = 0; i < 4; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 1.2 * m, S + 0.3, S + 1.6);
@@ -647,13 +641,10 @@ function genFalseBreakoutBull(rng: () => number, m: number, d: Difficulty): BuyS
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const R = 10;
-  let p = 5 + rng() * 0.5;
-  for (let i = 0; i < 5; i++) {
-    const o = p;
-    const c = clamp(o + (0.4 + rng() * 0.55) * m, 3.5, R - 0.5);
-    past.push(candle(o, c, (0.22 + rng() * 0.22) * m, (0.22 + rng() * 0.22) * m));
-    p = c;
-  }
+  // La résistance est prouvée : deux rejets avant la fausse cassure
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.15, R + 0.15, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 1.0 * m, R - 1.4, R - 0.3);
@@ -694,13 +685,10 @@ function genFalseBreakoutBear(rng: () => number, m: number, d: Difficulty): BuyS
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const S = 0;
-  let p = 5 - rng() * 0.5;
-  for (let i = 0; i < 5; i++) {
-    const o = p;
-    const c = clamp(o - (0.4 + rng() * 0.55) * m, S + 0.5, 6);
-    past.push(candle(o, c, (0.22 + rng() * 0.22) * m, (0.22 + rng() * 0.22) * m));
-    p = c;
-  }
+  // Le support est prouvé : deux rebonds avant la fausse cassure
+  const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.15, S + 0.15, "above", m);
+  past.push(...h.candles);
+  let p = h.p;
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 1.0 * m, S + 0.3, S + 1.4);
@@ -734,27 +722,46 @@ function genFalseBreakoutBear(rng: () => number, m: number, d: Difficulty): BuyS
   });
 }
 
-function genPullbackBull(rng: () => number, m: number, d: Difficulty): BuySellChart {
+// Pullback en tendance sur un niveau prouvé (règle PO) : une ancienne résistance (ou un
+// ancien support en tendance baissière) rejette deux fois, cède, la tendance repart, puis
+// le pullback revient la tester par l'autre côté : c'est le support (la résistance)
+// affiché. La dernière bougie du pullback entre dans la bande et clôture juste au-delà.
+function trendRetest(rng: () => number, m: number, up: boolean, depth: number): { past: Candle[]; p: number; peak: number; lo: number; hi: number } {
+  const s = up ? 1 : -1;
   const past: Candle[] = [];
-  const fut: Candle[] = [];
-  let p = 1 + rng() * 0.5;
-  // Trend up
-  for (let i = 0; i < 8; i++) {
-    const o = p;
-    const c = o + (0.5 + rng() * 0.55) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.25) * m, (0.15 + rng() * 0.18) * m));
+  const push = (c: number, wWith: number, wAgainst: number) => {
+    past.push(up ? candle(p, c, wWith, wAgainst) : candle(p, c, wAgainst, wWith));
     p = c;
-  }
+  };
+  let p = up ? 1 + rng() * 0.5 : 9 - rng() * 0.5;
+  for (let i = 0; i < 2; i++) push(p + s * (0.5 + rng() * 0.55) * m, (0.2 + rng() * 0.25) * m, (0.15 + rng() * 0.18) * m);
+  // Ancien niveau, rejeté deux fois
+  const lvl = p + s * (2.0 + rng() * 0.4) * m;
+  const lo = up ? lvl - 0.3 * m : lvl - 0.2 * m, hi = up ? lvl + 0.2 * m : lvl + 0.3 * m;
+  const h = levelTouches(rng, p, lo, hi, up ? "below" : "above", m);
+  past.push(...h.candles); p = h.p;
+  // Cassure, puis tendance jusqu'au plus haut (plus bas)
+  const top = (up ? hi : lo) + s * (2.6 + rng() * 0.6) * m;
+  while (s * (top - p) > 0) push(p + s * (0.55 + rng() * 0.5) * m, (0.2 + rng() * 0.25) * m, (0.15 + rng() * 0.18) * m);
   const peak = p;
-  // Pullback (4 candles rouges, plus profond en advanced)
-  const depth = d === "advanced" ? 5 : 4;
+  // Pullback : `depth` bougies, la dernière entre dans la bande et clôture juste au-delà
+  const target = up ? hi + (0.05 + rng() * 0.1) * m : lo - (0.05 + rng() * 0.1) * m;
+  const tip = up ? hi - (0.2 + rng() * 0.4) * (hi - lo) : lo + (0.2 + rng() * 0.4) * (hi - lo);
   for (let i = 0; i < depth; i++) {
-    const o = p;
-    const c = o - (0.2 + rng() * 0.45) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.25) * m));
-    p = c;
+    const last = i === depth - 1;
+    const c = last ? target : p - s * (Math.abs(p - target) / (depth - i)) * (0.8 + rng() * 0.3);
+    push(c, (0.15 + rng() * 0.15) * m, last ? Math.abs(c - tip) : (0.12 + rng() * 0.12) * m);
   }
-  const pullbackLow = p;
+  return { past, p, peak, lo, hi };
+}
+
+function genPullbackBull(rng: () => number, m: number, d: Difficulty): BuySellChart {
+  const fut: Candle[] = [];
+  // Pullback (4 bougies rouges, 5 en avancé) sur l'ancienne résistance devenue support
+  const depth = d === "advanced" ? 5 : 4;
+  const t = trendRetest(rng, m, true, depth);
+  const past = t.past, peak = t.peak;
+  let p = t.p;
   // Beginner : ajouter 1 small green confirmation au past
   if (d === "beginner") {
     const o = p; const c = o + (0.3 + rng() * 0.3) * m;
@@ -768,36 +775,22 @@ function genPullbackBull(rng: () => number, m: number, d: Difficulty): BuySellCh
     fut.push(candle(o, c, (0.2 + rng() * 0.25) * m, (0.15 + rng() * 0.15) * m));
     p = c;
   }
-  const demandLow = pullbackLow - 0.4 * m;
-  const demandHigh = pullbackLow + 0.2 * m;
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "support",        y1: demandLow,         y2: demandHigh,         label: "Support" },
+      { kind: "support",        y1: t.lo,              y2: t.hi,               label: "Support" },
       { kind: "liquidity_high", y1: peak - 0.15,       y2: peak + 0.15,        label: "Plus haut précédent"   },
     ],
   });
 }
 
 function genPullbackBear(rng: () => number, m: number, d: Difficulty): BuySellChart {
-  const past: Candle[] = [];
   const fut: Candle[] = [];
-  let p = 9 - rng() * 0.5;
-  for (let i = 0; i < 8; i++) {
-    const o = p;
-    const c = o - (0.5 + rng() * 0.55) * m;
-    past.push(candle(o, c, (0.15 + rng() * 0.18) * m, (0.2 + rng() * 0.25) * m));
-    p = c;
-  }
-  const bottom = p;
+  // Rebond (4 bougies vertes, 5 en avancé) sur l'ancien support devenu résistance
   const depth = d === "advanced" ? 5 : 4;
-  for (let i = 0; i < depth; i++) {
-    const o = p;
-    const c = o + (0.2 + rng() * 0.45) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.25) * m, (0.2 + rng() * 0.2) * m));
-    p = c;
-  }
-  const pullbackHigh = p;
+  const t = trendRetest(rng, m, false, depth);
+  const past = t.past, bottom = t.peak;
+  let p = t.p;
   if (d === "beginner") {
     const o = p; const c = o - (0.3 + rng() * 0.3) * m;
     past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
@@ -809,12 +802,10 @@ function genPullbackBear(rng: () => number, m: number, d: Difficulty): BuySellCh
     fut.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.25) * m));
     p = c;
   }
-  const offerLow = pullbackHigh - 0.2 * m;
-  const offerHigh = pullbackHigh + 0.4 * m;
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "resistance",    y1: offerLow,          y2: offerHigh,         label: "Résistance" },
+      { kind: "resistance",    y1: t.lo,              y2: t.hi,              label: "Résistance" },
       { kind: "liquidity_low", y1: bottom - 0.15,     y2: bottom + 0.15,     label: "Plus bas précédent" },
     ],
   });
@@ -824,12 +815,14 @@ function genRejectionResistance(rng: () => number, m: number, d: Difficulty): Bu
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const R = 10;
-  let p = 4 + rng() * 0.5;
-  // Rally vers la résistance
-  for (let i = 0; i < 6; i++) {
+  // La résistance a déjà rejeté deux fois (preuve), puis le prix y remonte
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.2, R + 0.2, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
+  while (p < R - 1.4 * m) {
     const o = p;
-    const c = clamp(o + (0.5 + rng() * 0.6) * m, 3, R - 0.3);
-    past.push(candle(o, c, (0.2 + rng() * 0.25) * m, (0.15 + rng() * 0.18) * m));
+    const c = Math.min(o + (0.5 + rng() * 0.4) * m, R - 0.9 * m);
+    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.12 + rng() * 0.12) * m));
     p = c;
   }
   // Test résistance : wicks (intensité selon difficulté)
@@ -861,11 +854,14 @@ function genBounceSupport(rng: () => number, m: number, d: Difficulty): BuySellC
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const S = 0;
-  let p = 6 - rng() * 0.5;
-  for (let i = 0; i < 6; i++) {
+  // Le support a déjà tenu deux fois (preuve), puis le prix y redescend
+  const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.2, S + 0.2, "above", m);
+  past.push(...h.candles);
+  let p = h.p;
+  while (p > S + 1.4 * m) {
     const o = p;
-    const c = clamp(o - (0.5 + rng() * 0.6) * m, S + 0.3, 7);
-    past.push(candle(o, c, (0.15 + rng() * 0.18) * m, (0.2 + rng() * 0.25) * m));
+    const c = Math.max(o - (0.5 + rng() * 0.4) * m, S + 0.9 * m);
+    past.push(candle(o, c, (0.12 + rng() * 0.12) * m, (0.15 + rng() * 0.15) * m));
     p = c;
   }
   const tests = d === "beginner" ? 4 : d === "intermediate" ? 3 : 2;
@@ -1083,13 +1079,10 @@ function genWeakBreakout(rng: () => number, m: number, d: Difficulty): BuySellCh
   const past: Candle[] = [];
   const fut: Candle[] = [];
   const R = 10;
-  let p = 5.5 + rng() * 0.4;
-  for (let i = 0; i < 5; i++) {
-    const o = p;
-    const c = clamp(o + (0.3 + rng() * 0.45) * m, 4, R - 0.5);
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
-    p = c;
-  }
+  // La résistance est prouvée : deux rejets avant la consolidation
+  const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.15, R + 0.15, "below", m);
+  past.push(...h.candles);
+  let p = h.p;
   // Consolidation serrée
   for (let i = 0; i < 4; i++) {
     const o = p;
@@ -1295,22 +1288,11 @@ function genToxicExecution(rng: () => number, m: number, d: Difficulty): BuySell
   // technique fonctionne). Le piège est dans le contexte d'exécution
   // (spread élevé + session morte) qui rend le R/R réel < 1 même si le
   // setup marche.
-  const past: Candle[] = [];
   const fut: Candle[] = [];
-  let p = 1 + rng() * 0.3;
-  for (let i = 0; i < 8; i++) {
-    const o = p;
-    const c = o + (0.3 + rng() * 0.35) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.18) * m, (0.12 + rng() * 0.14) * m));
-    p = c;
-  }
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = o - (0.2 + rng() * 0.32) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
-    p = c;
-  }
-  const pullbackLow = p;
+  // Pullback sur l'ancienne résistance devenue support (niveau prouvé)
+  const t = trendRetest(rng, m, true, 4);
+  const past = t.past;
+  let p = t.p;
   for (let i = 0; i < 5; i++) {
     const o = p;
     const c = o + (0.3 + rng() * 0.42) * m;
@@ -1321,7 +1303,7 @@ function genToxicExecution(rng: () => number, m: number, d: Difficulty): BuySell
   return finalize({
     past, future: fut,
     zones: [
-      { kind: "support", y1: pullbackLow - 0.35 * m, y2: pullbackLow + 0.2 * m, label: "Support" },
+      { kind: "support", y1: t.lo, y2: t.hi, label: "Support" },
     ],
   });
 }
@@ -1350,7 +1332,7 @@ export function buildChart(
 ): BuySellChart {
   const ch = buildChartRaw(setup, seed, volatility, difficulty);
   const calm = setup === "trade_before_news";
-  return realizeChart(ch, ch.zones.flatMap((z) => [z.y1, z.y2]), seed, { ...ctx, volatility, calmPast: calm, preNews: calm });
+  return realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility])], seed, { ...ctx, volatility, calmPast: calm, preNews: calm });
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */
