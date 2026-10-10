@@ -4,8 +4,12 @@ import { useState, useEffect, useRef, useMemo, Fragment } from "react";
 import { TradeOutcomeDiagram } from "@/app/components/charts/TradeOutcomeDiagram";
 import Link from "next/link";
 import { LESSONS } from "@/lib/lessons";
+import { FORMATIONS } from "@/lib/formations";
 import type { LessonContent } from "@/lib/lessons";
 import { getStoredProgress, markLessonComplete, isLessonComplete } from "@/lib/progress";
+
+// Nombre de leçons du niveau Débutant (catalogue des formations), jamais écrit en dur
+const DEBUTANT_TOTAL = FORMATIONS.find((f) => f.id === "debutant")?.lessons.length ?? 0;
 
 type Section = LessonContent["sections"][number];
 
@@ -212,7 +216,7 @@ function Sidebar({ phases, activeSection, onNavigate, duration }: SidebarProps) 
               <rect x="1.5" y="1.5" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
               <path d="M3.5 5.5h4M3.5 7.5h2" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
             </svg>
-            Leçon 1 sur 9
+            Leçon 1 sur {DEBUTANT_TOTAL}
           </div>
           <div className="flex items-center gap-2 text-[11px] text-zinc-600">
             <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
@@ -1132,7 +1136,7 @@ export default function ContentFr() {
 
             {/* Footer nav */}
             <div className="mt-10 pt-6 border-t border-zinc-800/60 flex items-center justify-between">
-              <span className="text-xs text-zinc-700">Leçon 1 sur 9</span>
+              <span className="text-xs text-zinc-700">Leçon 1 sur {DEBUTANT_TOTAL}</span>
               <Link
                 href="/formations/debutant/lecon2"
                 className="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-white transition-colors group"
