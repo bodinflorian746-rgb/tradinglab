@@ -335,16 +335,35 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
 
   const fsPill = desktop ? DESKTOP_PILL_PX : clamp(W * 0.036, 13, 17);
   const pillH = fsPill + 12;
-  const bottomPad = hero && !columnMode && !inline ? pillH + 16 : 14; // la pastille héros vit sous la zone
+  const pillW0 = (label: string) => textWidth(label, fsPill) + fsPill * 1.3;
+  const bottomPad0 = hero && !columnMode && !inline ? pillH + 16 : 14; // la pastille héros vit sous la zone
   // Réserve juste ce qu'il faut pour que la pastille « ton choix » ne
   // recouvre aucune bougie de son coin.
   const topPadBase = !pin || H <= 0 ? 14 : scaled.reduce((acc, k, i) => {
     if (xOf(i) - bodyW / 2 > PIN_BOX.right) return acc;
     const f = (max - k.h) / range;
-    return f < 1 ? Math.max(acc, (PIN_BOX.bottom - f * (H - bottomPad)) / (1 - f)) : acc;
+    return f < 1 ? Math.max(acc, (PIN_BOX.bottom - f * (H - bottomPad0)) / (1 - f)) : acc;
   }, 14);
+  // Aperçus (hors étiquettes en ligne) : la pastille de la zone héros et celle du marquage vont
+  // sous leur élément, à droite. Si elle y couvrirait des bougies et que l'élément touche le
+  // haut du cadre, une marge haute lui est réservée pour qu'elle passe au-dessus.
+  const MARK_FS = 13, MARK_PH = 26;
+  const roomTop = (el: number[] | null, pw: number, ph: number, gap: number) => {
+    if (!el || W <= 0 || H <= 0) return 0;
+    const y0 = (p: number) => topPadBase + ((max - p) / range) * (H - topPadBase - bottomPad0);
+    const x1 = W - padX - pw, py = y0(Math.min(...el)) + gap;
+    const below = py + ph <= H - 4 && !visible.some((k, i) => xOf(i) + bodyW / 2 + 2 > x1 && y0(k.h) - 2 < py + ph && y0(k.l) + 2 > py);
+    return !below && y0(Math.max(...el)) - gap - ph < 4 ? ph + gap + 8 : 0;
+  };
+  const heroRoom = hero && !columnMode && !inline ? roomTop([hero.y1, hero.y2], pillW0(hero.label), pillH, 6) : 0;
+  // Pastille héros passée au-dessus : la marge basse qui lui était réservée est rendue au graphique
+  const bottomPad = heroRoom > 0 ? 14 : bottomPad0;
+  const pillRoom = columnMode || inline ? 0 : Math.max(
+    heroRoom,
+    preview && mark && mark.kind !== "point" ? roomTop(mark.kind === "line" ? [mark.price] : zones[mark.index] ? [zones[mark.index].y1, zones[mark.index].y2] : null, textWidth(mark.label, MARK_FS) + 20, MARK_PH, 8) : 0,
+  );
   // Verdict en bandeau (élément marqué) : sa hauteur est réservée en haut
-  const topPad = mark && mode === "verdict" ? Math.max(topPadBase, 76) : topPadBase;
+  const topPad = mark && mode === "verdict" ? Math.max(topPadBase, 76) : Math.max(topPadBase, pillRoom);
 
   // ─── Glissement au clic (FLIP) ───
   // Le tracé est rendu directement dans son nouveau cadrage ; avant l'affichage,
@@ -398,7 +417,15 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
     };
 
     const heroBox = hero ? zoneRect(hero) : null;
-    const pillW = hero ? textWidth(hero.label, fsPill) + fsPill * 1.3 : 0;
+    const pillW = hero ? pillW0(hero.label) : 0;
+    // Sous la zone héros, sinon au-dessus : du côté où la pastille ne couvre aucune bougie
+    const heroPillY = (() => {
+      if (!heroBox) return 0;
+      const x1 = lineX1 - pillW;
+      const onCandle = (y: number) => visible.some((k, i) => xOf(i) + bodyW / 2 + 2 > x1 && toY(k.h) - 2 < y + pillH && toY(k.l) + 2 > y);
+      const sides = [heroBox.y + heroBox.h + 6, heroBox.y - 6 - pillH].filter((y) => y >= 2 && y + pillH <= H - 2);
+      return sides.find((y) => !onCandle(y)) ?? heroBox.y + heroBox.h + 6;
+    })();
     // Pastille héros : à droite, sauf si des étiquettes de lignes occupent cette colonne
 
     // Lignes de trade (entrée / TP / stop / stops / candidats), style v2
@@ -713,9 +740,9 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
         {/* Marquage de verdict : l'élément fautif en rouge, avec son libellé */}
         {mark && showMark && (() => {
           const RED = "#f87171";
-          const fs = 13;
+          const fs = MARK_FS;
           const pw = textWidth(mark.label, fs) + 20;
-          const ph = 26;
+          const ph = MARK_PH;
           let body: ReactNode = null;
           let top = 0;      // bord haut de l'élément marqué
           let bottom = 0;   // bord bas de l'élément marqué
@@ -741,7 +768,12 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
             );
           }
           if (mark.kind === "point") pillY = top + 22 + ph <= H - 4 ? top + 22 : top - 22 - ph;
-          else pillY = bottom + 8 + ph <= H - 4 ? bottom + 8 : top - 8 - ph; // sous l'élément, sinon au-dessus
+          else {
+            // Sous l'élément, sinon au-dessus ; et du côté où elle ne couvre aucune bougie
+            const onCandle = (y: number) => visible.some((k, i) => xOf(i) + bodyW / 2 + 2 > pillX && xOf(i) - bodyW / 2 - 2 < pillX + pw && toY(k.h) - 2 < y + ph && toY(k.l) + 2 > y);
+            const sides = [bottom + 8, top - 8 - ph].filter((y) => y >= 2 && y + ph <= H - 4);
+            pillY = sides.find((y) => !onCandle(y)) ?? sides[0] ?? top - 8 - ph;
+          }
           return (
             <g className={markClass}>
               {body}
@@ -766,8 +798,8 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
 
         {hero && heroBox && !columnMode && !inline && (
           <g className="v2-hero-label">
-            <rect x={lineX1 - pillW} y={heroBox.y + heroBox.h + 6} width={pillW} height={pillH} rx={pillH / 2} fill={HERO_GRADIENT[hero.kind]} />
-            <text x={lineX1 - pillW / 2} y={heroBox.y + heroBox.h + 6 + pillH / 2 + fsPill * 0.35} textAnchor="middle"
+            <rect x={lineX1 - pillW} y={heroPillY} width={pillW} height={pillH} rx={pillH / 2} fill={HERO_GRADIENT[hero.kind]} />
+            <text x={lineX1 - pillW / 2} y={heroPillY + pillH / 2 + fsPill * 0.35} textAnchor="middle"
               fontSize={fsPill} fontWeight={700} fill="#1c1206" className="v2-display">
               {hero.label}
             </text>
