@@ -194,7 +194,15 @@ const TAG_GAP = 4;
 const MARK_H = 20;
 const RSI_H = 86;
 const NARROW = 480;
-const tagW = (s: string) => textWidth(s, FS) + 16;
+/** Largeur d'un libellé en gras (Space Grotesk 12 px), par caractère : une estimation uniforme
+ *  (0,6 em) sous-estimait les chiffres et les capitales (« 1er HL » débordait de sa pastille). */
+const charEm = (c: string) => (/[il|.,:;'!·]/.test(c) ? 0.32 : c === " " ? 0.3 : /[mwMW@%]/.test(c) ? 0.9 : /[A-Z0-9$€→↑↓≈−+×]/.test(c) ? 0.68 : 0.58);
+const labelW = (s: string) => [...s].reduce((a, c) => a + charEm(c), 0) * FS;
+const tagW = (s: string) => Math.max(textWidth(s, FS), labelW(s)) + 18;
+/** Écart minimal entre un repère et ce qui est dessiné (pas d'étiquette collée à un tracé) */
+const GAP = 3;
+/** Pas minimal d'une bougie sur mobile : en dessous, les premières bougies non citées sont retirées */
+const MIN_SLOT = 5;
 
 /** Description accessible d'un panneau (lecteurs d'écran) : nature du graphique, étendue des prix,
  *  puis les mêmes informations que le dessin — niveaux, zones, repères, objectifs hors cadre,
@@ -265,19 +273,62 @@ export function LessonChart({ id, title, caption, panels, rows, sharedScale, chi
   );
 }
 
+/**
+ * Mobile : si les bougies seraient plus serrées que MIN_SLOT px, les premières bougies qu'aucun
+ * élément ne cite sont retirées (contexte lointain), en gardant au moins 8 bougies avant le
+ * premier élément cité (pivots et structure restent lisibles) ; tous les indices sont décalés.
+ * Rien ne change sur grand écran, ni pour un panneau à positions fixes (slots).
+ */
+function cropPanel(p: LCPanel, W: number): LCPanel {
+  const n = p.candles?.length ?? p.line?.length ?? 0;
+  if (!n || p.slots || W >= NARROW) return p;
+  const plotW = W * 0.96 - 110;                       // colonne d'étiquettes mobile estimée
+  const fit = Math.floor(plotW / MIN_SLOT);
+  if (n <= fit) return p;
+  const refs = [
+    ...(p.markers ?? []).map((m) => m.i), ...(p.levels ?? []).map((l) => l.from), ...(p.zones ?? []).map((z) => z.from),
+    ...(p.segments ?? []).flatMap((s) => [s.i1, s.i2]), ...(p.rsi?.marks ?? []).map((m) => m.i),
+  ].filter((v): v is number => typeof v === "number");
+  let first = refs.length ? Math.min(...refs) : n;
+  // un pivot nommé (HH, HL…) se lit par rapport au pivot précédent du même côté : celui-ci reste visible
+  const cs = p.candles;
+  for (const m of p.markers ?? []) {
+    if (!m.pivot || !cs) continue;
+    const hi = m.pivot.endsWith("H");
+    const isPiv = (i: number) => i >= 2 && i <= cs.length - 3 && [i - 2, i - 1, i + 1, i + 2].every((j) => (hi ? cs[j].h < cs[i].h : cs[j].l > cs[i].l));
+    let j = m.i - 1;
+    while (j >= 0 && !isPiv(j)) j--;
+    if (j >= 0) first = Math.min(first, j);
+  }
+  const s = Math.max(0, Math.min(n - fit, first - 8));
+  if (s <= 0) return p;
+  const sh = (i: number | undefined) => (i === undefined ? undefined : Math.max(0, i - s));
+  return {
+    ...p,
+    candles: p.candles?.slice(s), line: p.line?.slice(s),
+    markers: p.markers?.map((m) => ({ ...m, i: m.i - s })),
+    levels: p.levels?.map((l) => ({ ...l, from: sh(l.from), to: l.to === undefined ? undefined : l.to - s })),
+    zones: p.zones?.map((z) => ({ ...z, from: sh(z.from), to: z.to === undefined ? undefined : z.to - s })),
+    segments: p.segments?.map((g) => ({ ...g, i1: g.i1 - s, i2: g.i2 - s })),
+    series: p.series?.map((r) => ({ ...r, values: r.values.slice(s) })),
+    rsi: p.rsi ? { ...p.rsi, values: p.rsi.values.slice(s), marks: p.rsi.marks?.map((m) => ({ ...m, i: m.i - s })) } : undefined,
+  };
+}
+
 type Tag = { key: string; label: string; color: string; lineY: number; y: number; w: number; lineEnd: number };
 type Box = { x: number; y: number; w: number; h: number };
+type Mark = LCMarker & { label: string; w: number; x: number; y: number; py: number };
 const overlaps = (a: Box, b: Box) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 
 function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain?: [number, number] }) {
   const { ref, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const uid = useId().replace(/:/g, "");
-  const p = panel;
   const narrow = W > 0 && W < NARROW;
   const txt = (o: { label?: string; short?: string }) => (narrow && o.short ? o.short : o.label ?? "");
 
   let svg: ReactNode = null;
   if (W > 0 && H > 0) {
+    const p = cropPanel(panel, W);
     const nPts = p.candles?.length ?? p.line?.length ?? 0;
     const n = p.slots ?? nPts;
     const rsiH = p.rsi ? RSI_H : 0;
@@ -320,19 +371,21 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
     for (let i = 0; i < tags.length; i++) tags[i].y = Math.max(tags[i].y, TAG_H / 2 + 2, i ? tags[i - 1].y + TAG_H + TAG_GAP : -Infinity);
     for (let i = tags.length - 1; i >= 0; i--) tags[i].y = Math.min(tags[i].y, i === tags.length - 1 ? H - TAG_H / 2 - 2 : tags[i + 1].y - TAG_H - TAG_GAP);
     const tagX = W - padX - (colW - 12);
-    const boxes: Box[] = tags.map((t) => ({ x: tagX, y: t.y - TAG_H / 2, w: colW - 12, h: TAG_H }));
+    const boxes0: Box[] = tags.map((t) => ({ x: tagX, y: t.y - TAG_H / 2, w: colW - 12, h: TAG_H }));
 
     const levelX1 = (l: { from?: number }) => (l.from !== undefined ? xOf(l.from) - slot / 2 : plotL);
     const levelX2 = (l: { to?: number }) => (l.to !== undefined ? xOf(l.to) + slot / 2 : plotR);
 
     // Obstacles des repères : tout ce qui est dessiné — bougies (mèches comprises), ligne de prix,
     // zones, niveaux, segments, moyennes et traits de liaison de la colonne (points tous les 3 px)
-    const drawn: Box[] = [];
+    const drawn0: Box[] = [];
+    const drawn = drawn0;
     const trace = (x0: number, y0: number, x1: number, y1: number) => {
       const steps = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 3));
       for (let s = 0; s <= steps; s++) drawn.push({ x: x0 + ((x1 - x0) * s) / steps - 2, y: y0 + ((y1 - y0) * s) / steps - 2, w: 4, h: 4 });
     };
-    p.candles?.forEach((c, i) => drawn.push({ x: xOf(i) - bodyW / 2 - 2, y: toY(c.h) - 2, w: bodyW + 4, h: toY(c.l) - toY(c.h) + 4 }));
+    const candleBox: Box[] = [];
+    p.candles?.forEach((c, i) => { const b = { x: xOf(i) - bodyW / 2 - 2, y: toY(c.h) - 2, w: bodyW + 4, h: toY(c.l) - toY(c.h) + 4 }; candleBox[i] = b; drawn.push(b); });
     p.line?.forEach((v, i) => { if (i) trace(xOf(i - 1), toY(p.line![i - 1]), xOf(i), toY(v)); });
     (p.zones ?? []).forEach((z) => {
       const y = toY(Math.max(z.y1, z.y2));
@@ -345,13 +398,22 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
       const prev = s.values[i - 1];
       if (i && v !== null && prev !== null && prev !== undefined) trace(xOf(i - 1), toY(prev), xOf(i), toY(v));
     }));
-    tags.forEach((t) => { if (Math.abs(t.y - t.lineY) > 0.5) trace(t.lineEnd, t.lineY, tagX, t.y); });
+    const linked = (t: Tag) => Math.abs(t.y - t.lineY) > 0.5 || tagX - t.lineEnd > 6;
+    tags.forEach((t) => { if (linked(t)) trace(t.lineEnd, t.lineY, tagX, t.y); });
 
     // Repères : au-dessus / en dessous du point, décalés (verticalement, puis un peu sur le côté)
     // tant que l'étiquette recouvre quoi que ce soit, ou que son trait de liaison traverse une
     // autre étiquette ; à défaut, de l'autre côté du point.
     const yMin = MARK_H / 2 + 1, yMax = plotH - MARK_H / 2 - 1;
-    const marks = (p.markers ?? []).map((m) => {
+    // Placement dans l'ordre des repères ; si l'un d'eux n'a pas de place nette (son trait traverserait
+    // une étiquette déjà posée, ou l'étiquette recouvrirait un tracé), on essaie les autres ordres
+    // (tous jusqu'à 4 repères, l'ordre inverse au-delà) et on garde le moins coûteux.
+    const placeAll = (order: number[]) => {
+    const boxes = [...boxes0], drawn = [...drawn0];
+    let total = 0;
+    const out: Mark[] = [];
+    for (const idx of order) {
+      const m = (p.markers ?? [])[idx];
       const label = txt(m);
       const w = tagW(label);
       const py = toY(m.price);
@@ -361,31 +423,65 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
         const a = py + (yy < py ? -6 : 6), b = yy + (yy < py ? MARK_H / 2 : -MARK_H / 2);
         return { x: cx - 1, y: Math.min(a, b), w: 2, h: Math.abs(b - a) };
       };
-      const fits = (x: number, yy: number) => {
-        const b = { x, y: yy - MARK_H / 2, w, h: MARK_H };
-        if (boxes.some((o) => overlaps(o, b)) || drawn.some((o) => overlaps(o, b))) return false;
+      // Coût d'une position : jamais sur une autre étiquette ni sur le trait d'un autre repère ;
+      // en dernier recours, mieux vaut frôler une ligne qu'une bougie, et un trait qui passe
+      // derrière une bougie qu'une étiquette posée dessus.
+      const leaders = drawn.filter((o) => o.w === 2);
+      const cost = (x: number, yy: number, strict: boolean) => {
+        const b = { x: x - GAP, y: yy - MARK_H / 2 - GAP, w: w + 2 * GAP, h: MARK_H + 2 * GAP };
+        const core = { x, y: yy - MARK_H / 2, w, h: MARK_H };
+        let c = 0;
+        for (const o of boxes) if (overlaps(o, b)) c += 5000;
+        for (const o of leaders) if (overlaps(o, b)) c += 5000;
+        for (const o of candleBox) if (o && overlaps(o, b)) c += strict ? 5000 : 300;
+        for (const o of drawn) if (overlaps(o, b) && !candleBox.includes(o)) c += strict ? 5000 : 20;
         const ld = leaderOf(yy);
-        return !ld || !boxes.some((o) => overlaps(o, ld));
+        if (ld) {
+          if (boxes.some((o) => overlaps(o, ld))) c += 5000;
+          if (candleBox.some((o, j) => o && j !== m.i && overlaps(o, ld))) c += strict ? 5000 : 40;
+        }
+        return c;
       };
       let at: { x: number; y: number } | null = null;
-      for (const dir of m.side === "above" ? [-1, 1] : [1, -1]) {
-        const y0 = py + dir * (8 + MARK_H / 2);
-        for (let k = 0; k <= 40 && !at; k++) {
-          const yy = y0 + dir * k * 6;
-          if (yy < yMin || yy > yMax) break;
-          for (const dx of [0, -0.35, 0.35]) {
-            const x = clamp(cx - w / 2 + dx * w, 2, plotR - w);
-            if (fits(x, yy)) { at = { x, y: yy }; break; }
+      let best: { x: number; y: number; c: number } | null = null;
+      const DX = [0, -0.35, 0.35, -0.7, 0.7, -1.05, 1.05];
+      for (const strict of [true, false]) {
+        for (const dir of m.side === "above" ? [-1, 1] : [1, -1]) {
+          const y0 = py + dir * (8 + MARK_H / 2);
+          for (let k = 0; k <= 40 && !at; k++) {
+            const yy = y0 + dir * k * 6;
+            if (yy < yMin || yy > yMax) break;
+            for (const dx of DX) {
+              const x = clamp(cx - w / 2 + dx * w, 2, plotR - w);
+              const c = cost(x, yy, strict);
+              if (c === 0) { at = { x, y: yy }; break; }
+              if (!strict && (!best || c + k < best.c)) best = { x, y: yy, c: c + k };
+            }
           }
+          if (at) break;
         }
         if (at) break;
       }
-      const { x, y } = at ?? { x: clamp(cx - w / 2, 2, plotR - w), y: clamp(py + (m.side === "above" ? -1 : 1) * (8 + MARK_H / 2), yMin, yMax) };
+      const { x, y } = at ?? best ?? { x: clamp(cx - w / 2, 2, plotR - w), y: clamp(py + (m.side === "above" ? -1 : 1) * (8 + MARK_H / 2), yMin, yMax) };
+      total += at ? 0 : best?.c ?? 1e6;
       boxes.push({ x, y: y - MARK_H / 2, w, h: MARK_H });
       const ld = leaderOf(y);
       if (ld) drawn.push(ld);
-      return { ...m, label, w, x, y, py };
-    });
+      out[idx] = { ...m, label, w, x, y, py };
+    }
+    return { out, total };
+    };
+    const ids = (p.markers ?? []).map((_, i) => i);
+    let placed = placeAll(ids);
+    if (placed.total > 0) {
+      const perms = (a: number[]): number[][] => (a.length <= 1 ? [a] : a.flatMap((v, i) => perms([...a.slice(0, i), ...a.slice(i + 1)]).map((r) => [v, ...r])));
+      for (const order of ids.length <= 4 ? perms(ids).slice(1) : [[...ids].reverse()]) {
+        const alt = placeAll(order);
+        if (alt.total < placed.total) placed = alt;
+        if (!placed.total) break;
+      }
+    }
+    const marks = placed.out;
     const scale = { min, max, top, bottom, x0: plotL, slot, n };
 
     svg = (
@@ -479,6 +575,7 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
 
         {/* RSI */}
         {p.rsi && (() => {
+          const rsiPlaced: { x: number; y: number; w: number }[] = [];
           const r0 = plotH + 10, r1 = H - 8;
           const ry = (v: number) => r0 + ((100 - v) / 100) * (r1 - r0);
           const pts = p.rsi.values.map((v, i) => (v === null ? null : `${xOf(i)},${ry(v)}`)).filter(Boolean).join(" ");
@@ -493,11 +590,20 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
                 <polyline points={(p.rsi.marks ?? []).map((m) => `${xOf(m.i)},${ry(p.rsi!.values[m.i] ?? 50)}`).join(" ")}
                   fill="none" stroke={TONE[(p.rsi.marks ?? [])[1].tone ?? "bear"]} strokeWidth={2} strokeDasharray="5 4" />
               )}
-              {(p.rsi.marks ?? []).map((m) => {
+              {(p.rsi.marks ?? []).map((m, mi) => {
                 const v = p.rsi!.values[m.i] ?? 50;
                 const w = tagW(m.label);
-                const x = clamp(xOf(m.i) - w / 2, plotL, plotR - w);
-                const y = Math.max(r0 + MARK_H / 2, ry(v) - 4 - MARK_H / 2);
+                const above = ry(v) - 7 - MARK_H / 2, below = ry(v) + 7 + MARK_H / 2;
+                let y = above >= r0 + MARK_H / 2 ? above : below <= r1 - MARK_H / 2 ? below : clamp(above, r0 + MARK_H / 2, r1 - MARK_H / 2);
+                let x = clamp(xOf(m.i) - w / 2, plotL, plotR - w);
+                // repère précédent trop proche : de l'autre côté du point, sinon décalé à sa droite
+                const prev = rsiPlaced[mi - 1];
+                if (prev && Math.abs(prev.y - y) < MARK_H + 2 && x < prev.x + prev.w + 4) {
+                  const other = y === above ? below : above;
+                  if (other >= r0 + MARK_H / 2 && other <= r1 - MARK_H / 2) y = other;
+                  else x = clamp(prev.x + prev.w + 4, plotL, plotR - w);
+                }
+                rsiPlaced[mi] = { x, y, w };
                 return (
                   <g key={`rm${m.i}`} data-marker={`rsi${m.i}`} data-rsi-mark={m.i}>
                     <circle cx={xOf(m.i)} cy={ry(v)} r={4} fill={TONE[m.tone ?? "fib"]} stroke="#06090d" strokeWidth={1.5} />
@@ -516,8 +622,10 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
         {/* Colonne des étiquettes (au-dessus de tout) */}
         {tags.map((t) => (
           <g key={t.key} data-label-for={t.key}>
-            {Math.abs(t.y - t.lineY) > 0.5 && (
-              <line data-leader={t.key} x1={t.lineEnd} y1={t.lineY} x2={tagX} y2={t.y} stroke={t.color} strokeWidth={1.5} strokeOpacity={0.9} />
+            {linked(t) && (
+              // objet arrêté avant la colonne : lien en pointillé fin, distinct d'un niveau
+              <line data-leader={t.key} x1={t.lineEnd} y1={t.lineY} x2={tagX} y2={t.y} stroke={t.color} strokeWidth={1.5}
+                strokeOpacity={tagX - t.lineEnd > 18 ? 0.6 : 0.9} strokeDasharray={tagX - t.lineEnd > 18 ? "2 3" : undefined} />
             )}
             <rect x={tagX} y={t.y - TAG_H / 2} width={colW - 12} height={TAG_H} rx={TAG_H / 2} fill={t.color} />
             <text x={tagX + (colW - 12) / 2} y={t.y + FS * 0.36} textAnchor="middle" fontSize={FS} fontWeight={700} fill="#04060a">{t.label}</text>
@@ -528,17 +636,17 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
   }
 
   return (
-    <div className="lc-panel" data-panel-box={p.key}>
-      {(p.title || p.subtitle) && (
+    <div className="lc-panel" data-panel-box={panel.key}>
+      {(panel.title || panel.subtitle) && (
         <div className="lc-panel-head">
-          {p.title && <div className="lc-panel-title">{p.title}</div>}
-          {p.subtitle && <div className="lc-panel-sub">{p.subtitle}</div>}
+          {panel.title && <div className="lc-panel-title">{panel.title}</div>}
+          {panel.subtitle && <div className="lc-panel-sub">{panel.subtitle}</div>}
         </div>
       )}
-      <div ref={ref} className="lc-frame" style={{ "--lc-h": `${p.height ?? 280}px` } as CSSProperties}>{svg}</div>
-      {p.chips && p.chips.length > 0 && (
+      <div ref={ref} className="lc-frame" data-dense={(panel.markers?.length ?? 0) + (panel.zones ?? []).filter((z) => z.label).length + (panel.rsi?.marks?.length ?? 0) >= 5 ? "" : undefined} style={{ "--lc-h": `${panel.height ?? 280}px`, ...(panel.rsi ? { "--lc-extra": `${RSI_H}px` } : {}) } as CSSProperties}>{svg}</div>
+      {panel.chips && panel.chips.length > 0 && (
         <ul className="lc-chips">
-          {p.chips.map((c, i) => (
+          {panel.chips.map((c, i) => (
             <li key={i} data-chip="" className={`lc-chip${c.tone ? ` lc-chip--${c.tone}` : ""}`}
               {...Object.fromEntries(Object.entries(c.data ?? {}).map(([k2, v]) => [`data-${k2}`, String(v)]))}>
               {c.label}

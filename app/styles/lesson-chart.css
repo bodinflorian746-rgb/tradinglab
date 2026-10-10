@@ -47,13 +47,17 @@
 .tsx-v2 .lc-frame {
   position: relative;
   width: 100%;
-  height: clamp(220px, 78vw, var(--lc-h, 280px));
+  height: calc(clamp(220px, 78vw, var(--lc-h, 280px)) + var(--lc-extra, 0px));
   border-radius: 14px;
   overflow: hidden;
   background: radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.035), transparent 60%), #06090d;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 .tsx-v2 .lc-frame svg { position: absolute; inset: 0; display: block; }
+/* Panneau chargé (5 repères ou plus) sur mobile : plus haut, pour que chaque étiquette ait sa place */
+@media (max-width: 479px) {
+  .tsx-v2 .lc-frame[data-dense] { height: calc(clamp(220px, 78vw, var(--lc-h, 280px)) + var(--lc-extra, 0px) + 72px); }
+}
 .tsx-v2 .lc-frame text { font-family: var(--v2-font-display); }
 
 .tsx-v2 .lc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }

@@ -34,7 +34,7 @@ export function ScenarioZoneDiagram(_props: { className?: string; locale?: "fr" 
         zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `Zone ${p(fvg.y1)}-${p(fvg.y2)} (FVG)`, short: "Zone + FVG", tone: "zone", kind: "fvg", src: `zone-prep-h1:${fvg.i}`, role: "fvg" }],
         markers: [
           { key: "brk", i: fvg.i, price: cs[fvg.i].c, label: "Clôture sous le support", short: "Support cassé", tone: "bear", side: "below", role: "close" },
-          { key: "slow", i: cs.length - 1, price: cs[cs.length - 1].l, label: "Bougies de plus en plus courtes", short: "Ralentissement", tone: "zone", side: "below" },
+          { key: "slow", i: cs.length - 1, price: cs[cs.length - 1].l, label: "Bougies de plus en plus courtes", short: "Ralentissement", tone: "zone", side: "above" },
         ],
         chips: [
           { label: `Impulsions : ${ups.join(", ")} pips`, tone: "zone" },
