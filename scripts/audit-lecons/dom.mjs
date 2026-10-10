@@ -29,6 +29,9 @@ const BASE = arg("base", "http://localhost:3000");
 const FORMATS = arg("formats", "390,1440").split(",").map(Number);
 const PAGES = arg("pages", "").split(",").filter(Boolean).map((u) => (u.startsWith("/") ? u : `/${u}`));
 const AUTOTEST = process.argv.includes("--autotest");
+// Largeurs contrôlées en plus, dans le même chargement que 1440 (défauts qui n'apparaissent qu'à
+// certaines largeurs : chevauchements en tablette, bougies serrées en petit mobile…)
+const EXTRA = arg("largeurs-sup", "360,430,768,1024,1280,1536").split(",").filter(Boolean).map(Number);
 const TOUTES = process.argv.includes("--toutes");
 const STORAGE_STATE = process.env.AUDIT_STORAGE_STATE || undefined;
 
@@ -42,7 +45,7 @@ const VOCAB = terms.termes.fr.flatMap((t) => t.interdit.map((src) => ({ src, fla
 const SR_SRC = `${srTouches.toString()}\n${srProofError.toString()}`;
 
 // ─── Contrôles exécutés dans la page ─────────────────────────────────────────
-function checkCharts({ ids, vocab, sr }) {
+function checkCharts({ ids, vocab, sr, chrome = true }) {
   // Preuve des supports / résistances (sr-proof.mjs, passé en texte au navigateur)
   const [, srProofError] = new Function(`${sr}; return [srTouches, srProofError];`)();
   const errs = [];
@@ -295,6 +298,67 @@ function checkCharts({ ids, vocab, sr }) {
         if (!/≈/.test(L.t) && !vals.some((x) => Math.abs(x - v) <= (d <= 2 ? 0.5 : Math.pow(10, -d) / 2) + 1e-9)) E(`étiquette « ${L.t} » : ${m[0]} ne correspond à aucune donnée du graphique`);
       }
     }
+    // ─── Règles de l'audit visuel (étiquettes collées, liens, traits, pastilles, bougies serrées) ───
+    const sc = svg.dataset.scale ? JSON.parse(svg.dataset.scale) : null;
+    const k = svg.getBoundingClientRect().width / (svg.viewBox?.baseVal?.width || svg.getBoundingClientRect().width || 1);
+    // Repère collé à un tracé : marge d'au moins 1,5 px entre la pastille et une bougie, une zone ou une ligne
+    const grow = (r, d) => ({ x: r.x - d, y: r.y - d, w: r.w + 2 * d, h: r.h + 2 * d });
+    for (const g of svg.querySelectorAll("[data-marker] > g[data-label-for]")) {
+      const rc = g.querySelector("rect"), t = g.textContent.trim();
+      const R = grow({ x: num(rc, "x"), y: num(rc, "y"), w: num(rc, "width"), h: num(rc, "height") }, 1.5);
+      const own = g.parentElement.dataset.i;
+      const near = candles.find((c) => c.i !== own && inter(R, c.r)) ?? zones.find((z) => inter(R, z.r)) ?? lines.find((l) => l.own !== g.dataset.labelFor && segHits(...l.s, R));
+      if (near && !labels.some((L) => L.key === g.dataset.labelFor && (candles.some((c) => inter(L.r, c.r)) || zones.some((z) => inter(L.r, z.r)))))
+        E(`repère « ${t} » collé à ${near.i !== undefined ? "la bougie " + near.i : near.k ? (near.s ? near.k : "la zone " + near.k) : "un tracé"}`);
+    }
+    // Étiquette de la colonne sans lien : l'objet s'arrête avant la colonne et aucun trait ne les relie
+    for (const g of svg.querySelectorAll(":scope > g[data-label-for]")) {
+      const key = g.dataset.labelFor, rc = g.querySelector("rect");
+      const obj = svg.querySelector(`line[data-level="${CSS.escape(key)}"], rect[data-zone="${CSS.escape(key)}"], line[data-segment="${CSS.escape(key)}"]`);
+      if (!obj || obj.hasAttribute("data-offscale")) continue;
+      const end = obj.tagName === "rect" ? num(obj, "x") + num(obj, "width") : Math.max(num(obj, "x1"), num(obj, "x2"));
+      if (num(rc, "x") - end > 8 && !svg.querySelector(`line[data-leader="${CSS.escape(key)}"]`)) E(`étiquette « ${g.textContent.trim()} » sans lien avec son objet (arrêté ${Math.round(num(rc, "x") - end)} px avant)`);
+    }
+    // Trait de liaison d'un repère qui traverse une autre bougie
+    for (const ld of svg.querySelectorAll("[data-marker] > line[data-leader]")) {
+      const own = ld.parentElement.dataset.i;
+      const c = candles.find((q) => q.i !== own && segHits(num(ld, "x1"), num(ld, "y1"), num(ld, "x2"), num(ld, "y2"), q.r));
+      if (c) E(`trait du repère « ${ld.parentElement.querySelector("g[data-label-for]")?.textContent.trim()} » qui traverse la bougie ${c.i}`);
+    }
+    // Texte qui déborde de sa pastille
+    for (const g of svg.querySelectorAll("g[data-label-for]")) {
+      const rc = g.querySelector("rect"), tx = g.querySelector("text");
+      if (rc && tx && tx.getBBox().width > num(rc, "width") - 4) E(`texte « ${tx.textContent.trim()} » plus large que sa pastille`);
+    }
+    // Bougies trop serrées pour être lues
+    if (sc && svg.dataset.candles && sc.slot * k < 3.25) E(`bougies trop serrées : ${(sc.slot * k).toFixed(1)} px par bougie`);
+  }
+
+  // Page (hors schémas) : aucun texte sous 12 px, aucun texte d'un contraste inférieur à 3 sur son fond
+  if (chrome) {
+    const rgb = (s) => { const m = s && s.match(/rgba?\(([^)]+)\)/); if (!m) return null; const p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; };
+    const lum = (c) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b); };
+    const main = document.querySelector("main") || document.body;
+    const seen = new Set();
+    for (const el of main.querySelectorAll("*")) {
+      if (el.closest("[data-lesson-chart], svg, nav, footer, [aria-hidden='true']")) continue;
+      const own = [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join("").trim();
+      if (!own || !/[\p{L}\d]/u.test(own)) continue;
+      const cs = getComputedStyle(el);
+      if (cs.visibility === "hidden" || el.getBoundingClientRect().width === 0) continue;
+      const fs = parseFloat(cs.fontSize);
+      if (fs < 11.95 && !seen.has("f" + own)) { seen.add("f" + own); E("page", `texte de ${fs.toFixed(1)} px « ${own.slice(0, 40)} »`); }
+      const fg = rgb(cs.color);
+      let bg = null, op = 1;
+      for (let e = el; e; e = e.parentElement) { const c = getComputedStyle(e); op *= +c.opacity; const b = rgb(c.backgroundColor); if (!bg && b && b.a > 0.5) bg = b; }
+      bg = bg ?? { r: 4, g: 6, b: 10 };
+      // élément pas encore révélé (apparition au défilement, opacité nulle) : rien à juger
+      if (fg && op >= 0.3) {
+        const a = fg.a * op, mix = { r: fg.r * a + bg.r * (1 - a), g: fg.g * a + bg.g * (1 - a), b: fg.b * a + bg.b * (1 - a) };
+        const L1 = lum(mix), L2 = lum(bg), ratio = (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
+        if (ratio < 3 && !seen.has("c" + own)) { seen.add("c" + own); E("page", `texte peu contrasté (${ratio.toFixed(2)}) « ${own.slice(0, 40)} »`); }
+      }
+    }
   }
 
   for (const id of ids) {
@@ -524,6 +588,12 @@ function lessonUrls() {
   return out.sort();
 }
 
+// Message attendu pour les défauts dont une règle dédiée doit répondre (pas une règle voisine)
+const EXPECT = {
+  "repère collé à une bougie": /repère « .* » collé à/, "étiquette de colonne sans lien": /sans lien avec son objet/,
+  "trait de repère à travers une bougie": /qui traverse la bougie/, "texte plus large que sa pastille": /plus large que sa pastille/,
+  "bougies trop serrées": /bougies trop serrées/, "texte de page sous 12 px": /page : texte de 10/, "texte de page peu contrasté": /page : texte peu contrasté/,
+};
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
   "corps de bougie déplacé": () => { const r = document.querySelector("[data-candle='3'] rect"); r.setAttribute("y", +r.getAttribute("y") + 4); },
@@ -542,6 +612,31 @@ const MUTATIONS = {
     }
     best.g.querySelector("text").textContent = "Support";
   },
+  "repère collé à une bougie": () => {
+    // pastille posée juste au-dessus d'une autre bougie (0,5 px), sans la recouvrir
+    const g = document.querySelector("svg[data-candles] [data-marker] > g[data-label-for]"); const m = g.parentElement; const svg = m.closest("svg");
+    const all = [...svg.querySelectorAll("[data-candle]")]; const c = all[Math.floor(all.length / 2)]; const r = g.querySelector("rect"); const w = +r.getAttribute("width");
+    const x = +c.querySelector("line").getAttribute("x1") - w / 2;
+    // au-dessus de la plus haute mèche sous la pastille, à 0,5 px
+    const top = Math.min(...all.filter((q) => { const b = q.querySelector("rect"); return +b.getAttribute("x") < x + w && +b.getAttribute("x") + +b.getAttribute("width") > x; }).map((q) => { const l = q.querySelector("line"); return Math.min(+l.getAttribute("y1"), +l.getAttribute("y2")); }));
+    r.setAttribute("x", x); r.setAttribute("y", top - +r.getAttribute("height") - 0.5);
+  },
+  "étiquette de colonne sans lien": () => {
+    const svg = [...document.querySelectorAll("svg[data-panel]")].find((s) => [...s.querySelectorAll(":scope > g[data-label-for]")].some((g) => s.querySelector(`line[data-level="${CSS.escape(g.dataset.labelFor)}"]:not([data-offscale])`)));
+    const g = [...svg.querySelectorAll(":scope > g[data-label-for]")].find((q) => svg.querySelector(`line[data-level="${CSS.escape(q.dataset.labelFor)}"]:not([data-offscale])`));
+    const l = svg.querySelector(`line[data-level="${CSS.escape(g.dataset.labelFor)}"]`);
+    l.setAttribute("x2", Math.max(+l.getAttribute("x1") + 10, +l.getAttribute("x2") - 80)); g.querySelector("line[data-leader]")?.remove();
+  },
+  "trait de repère à travers une bougie": () => {
+    const m = [...document.querySelectorAll("svg[data-candles] [data-marker]")].find((x) => Number.isInteger(+x.dataset.i)); const svg = m.closest("svg");
+    const c = [...svg.querySelectorAll("[data-candle]")].find((q) => q.dataset.candle !== m.dataset.i); const b = c.querySelector("rect");
+    const ld = document.createElementNS("http://www.w3.org/2000/svg", "line"); const x = +b.getAttribute("x") + +b.getAttribute("width") / 2;
+    ld.setAttribute("data-leader", m.dataset.marker); ld.setAttribute("x1", x); ld.setAttribute("x2", x); ld.setAttribute("y1", +b.getAttribute("y") - 10); ld.setAttribute("y2", +b.getAttribute("y") + +b.getAttribute("height") + 10); m.prepend(ld);
+  },
+  "texte plus large que sa pastille": () => { document.querySelector("g[data-label-for] text").textContent = "Libellé beaucoup trop long pour sa pastille"; },
+  "bougies trop serrées": () => { const s = document.querySelector("svg[data-candles]"); const sc = JSON.parse(s.dataset.scale); sc.slot = 2; s.dataset.scale = JSON.stringify(sc); },
+  "texte de page sous 12 px": () => { const p = [...document.querySelectorAll("main p")].find((x) => !x.closest("[data-lesson-chart]") && x.textContent.trim().length > 20); p.style.fontSize = "10px"; },
+  "texte de page peu contrasté": () => { const p = [...document.querySelectorAll("main p")].find((x) => !x.closest("[data-lesson-chart]") && x.textContent.trim().length > 20); p.style.color = "rgba(255,255,255,0.18)"; },
   "R/R écrit à la main": () => { const c = document.querySelector("[data-rr]"); c.textContent = "R/R 1:9"; },
   "étiquettes superposées": () => { const [a, b] = document.querySelectorAll("g[data-label-for] rect"); b.setAttribute("x", a.getAttribute("x")); b.setAttribute("y", a.getAttribute("y")); },
   "description accessible vide": () => { const s = document.querySelector("svg[aria-describedby]"); document.getElementById(s.getAttribute("aria-describedby")).textContent = ""; },
@@ -569,7 +664,7 @@ if (AUTOTEST) {
   // Chaque défaut est injecté dans la 1re page où il s'applique (R/R et OB : Avancé 7 ; pivots : Intermédiaire 5)
   const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon7|intermediaire\/lecon5/.test(p.url));
   let missed = 0;
-  for (const [name, fn] of Object.entries(MUTATIONS)) {
+  for (const [name, fn] of Object.entries(MUTATIONS).filter(([n]) => !process.env.MUT_ONLY || new RegExp(process.env.MUT_ONLY).test(n))) {
     let errs = null;
     for (const p of candidates) {
       await page.goto(`${BASE}${p.url}`, { waitUntil: "load", timeout: 120000 });
@@ -581,9 +676,10 @@ if (AUTOTEST) {
       errs = (await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB, sr: SR_SRC })).filter((e) => !before.has(e));
       break;
     }
-    const ok = !!errs && errs.length > 0;
+    const want = EXPECT[name];
+    const ok = !!errs && errs.length > 0 && (!want || errs.some((e) => want.test(e)));
     console.log(`${ok ? "détecté    " : "NON DÉTECTÉ"} ${name}${errs === null ? " (défaut non injectable)" : ok ? ` (${errs[0].slice(0, 90)})` : ""}`);
-    if (!ok) missed++;
+    if (!ok) { missed++; for (const e of (errs ?? []).slice(0, 4)) console.log(`      (nouvelle erreur : ${e.slice(0, 120)})`); }
   }
   await browser.close();
   console.log(`RESULTAT erreurs=${missed} avertissements=0`);
@@ -597,8 +693,26 @@ for (const w of FORMATS) {
   for (const p of pages) {
     await page.goto(`${BASE}${p.url}`, { waitUntil: "load", timeout: 120000 });
     await page.waitForSelector("[data-lesson-chart] svg[data-panel]", { timeout: 60000 }).catch(() => {});
-    await page.waitForTimeout(500);
+    // défilement complet : les blocs qui apparaissent au défilement sont révélés avant les contrôles
+    await page.evaluate(async () => { for (let y = 0; y < document.documentElement.scrollHeight; y += 600) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } scrollTo(0, 0); });
+    await page.waitForTimeout(900);
+    // Leçon verrouillée (session premium expirée) : arrêt immédiat, sinon chaque page attendrait en vain
+    if (await page.evaluate(() => !document.querySelector("[data-lesson-chart]") && /LEÇON PREMIUM|Connecte-toi/i.test(document.body.innerText))) {
+      console.log(`ARRÊT : ${p.url} verrouillée, session premium absente ou expirée (AUDIT_STORAGE_STATE)`);
+      console.log(`RESULTAT erreurs=${errors + 1} avertissements=${warnings}`);
+      await browser.close();
+      process.exit(2);
+    }
     const errs = await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB, sr: SR_SRC });
+    if (w === 1440) {
+      const base = new Set(errs);
+      for (const xw of EXTRA) {
+        await page.setViewportSize({ width: xw, height: xw < 800 ? 844 : 900 });
+        await page.waitForTimeout(600);
+        for (const e of await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB, sr: SR_SRC })) if (!base.has(e)) { base.add(e); errs.push(`[${xw} px] ${e}`); }
+      }
+      await page.setViewportSize({ width: 1440, height: 900 });
+    }
     errors += errs.length;
     console.log(`${String(w).padEnd(5)} ${p.url.padEnd(42)} ${errs.length} erreur(s)`);
     for (const e of errs.slice(0, 25)) console.log(`    ERREUR ${e}`);
