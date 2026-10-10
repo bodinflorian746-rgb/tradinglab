@@ -61,16 +61,17 @@ const ZONE = { top: CANDLES[OB].h, bottom: CANDLES[OB].l };
 const W = 420;
 const H = 230;
 const PAD_X = 12;
-const PAD_TOP = 34;    // place de l'étiquette RÉACTION
-const PAD_BOTTOM = 40; // place des étiquettes OB et MITIGATION
+const PAD_TOP = 42;    // place de l'étiquette RÉACTION
+const PAD_BOTTOM = 48; // place des étiquettes OB et MITIGATION
 const SLOT = (W - 2 * PAD_X) / CANDLES.length;
 const BODY_W = SLOT * 0.52;
 const MIN = Math.min(...CANDLES.map((k) => k.l));
 const MAX = Math.max(...CANDLES.map((k) => k.h));
 const toY = (p: number) => PAD_TOP + ((MAX - p) / (MAX - MIN)) * (H - PAD_TOP - PAD_BOTTOM);
 const xOf = (i: number) => PAD_X + SLOT * (i + 0.5);
-const FS = 14;
-const PILL_H = 24;
+// le schéma se réduit avec la carte (≈ 0,65 de sa taille en 360 px) : 19 unités ≥ 12 px à l'écran
+const FS = 19;
+const PILL_H = 30;
 const pillW = (s: string) => s.length * FS * 0.62 + 20;
 
 const css = (v: Record<string, string | number>) => v as CSSProperties;
