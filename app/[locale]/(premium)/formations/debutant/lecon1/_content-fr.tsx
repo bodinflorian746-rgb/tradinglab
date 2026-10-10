@@ -777,7 +777,7 @@ function QuizCard({ quiz, onComplete }: {
             <div className="w-7 h-7 rounded-lg bg-zinc-800 border border-zinc-700/80 flex items-center justify-center shrink-0">
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none" className="text-zinc-400">
                 <path d="M6.5 2.5c-1.6 0-2.8 1-2.8 2.3 0 .6.3 1.1.7 1.5L5 7.5h3l.6-1.2c.4-.4.7-.9.7-1.5C9.3 3.5 8.1 2.5 6.5 2.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-                <path d="M5 7.5v.5a1.5 1.5 0 003 0v-.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+                <path d="M5 7.5v.5a1.5 1.5 0 003 0v-.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
               </svg>
             </div>
             <span className="text-sm font-semibold text-white">Quiz de validation</span>

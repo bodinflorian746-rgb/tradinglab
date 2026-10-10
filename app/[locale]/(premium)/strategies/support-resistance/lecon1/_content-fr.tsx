@@ -133,7 +133,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Identifier par les touches multiples</h2>
 
             <div className="my-8">
-              <SupportResistance supportPrice="4 500$" resistancePrice="4 650$" />
+              <SupportResistance supportPrice="4 500$" resistancePrice="4 650$" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
