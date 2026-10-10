@@ -317,7 +317,13 @@ function cropPanel(p: LCPanel, W: number): LCPanel {
 
 type Tag = { key: string; label: string; color: string; lineY: number; y: number; w: number; lineEnd: number };
 type Box = { x: number; y: number; w: number; h: number };
-type Mark = LCMarker & { label: string; w: number; x: number; y: number; py: number };
+type Seg = { x1: number; y1: number; x2: number; y2: number };
+type Mark = LCMarker & { label: string; w: number; x: number; y: number; py: number; lead: Seg | null };
+/** Petites boîtes le long d'un segment (tous les 3 px), pour les tests de recouvrement */
+const segBoxes = (s: Seg): Box[] => {
+  const n = Math.max(1, Math.ceil(Math.hypot(s.x2 - s.x1, s.y2 - s.y1) / 3));
+  return Array.from({ length: n + 1 }, (_, q) => ({ x: s.x1 + ((s.x2 - s.x1) * q) / n - 1, y: s.y1 + ((s.y2 - s.y1) * q) / n - 1, w: 2, h: 2 }));
+};
 const overlaps = (a: Box, b: Box) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 
 function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain?: [number, number] }) {
@@ -408,8 +414,11 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
     // Placement dans l'ordre des repères ; si l'un d'eux n'a pas de place nette (son trait traverserait
     // une étiquette déjà posée, ou l'étiquette recouvrirait un tracé), on essaie les autres ordres
     // (tous jusqu'à 4 repères, l'ordre inverse au-delà) et on garde le moins coûteux.
+    // Les repères peuvent déborder à droite des bougies, jusque dans la colonne là où elle est
+    // vide (les étiquettes de la colonne sont des obstacles ; repère cerclé, étiquette pleine)
+    const xRight = W - padX;
     const placeAll = (order: number[]) => {
-    const boxes = [...boxes0], drawn = [...drawn0];
+    const boxes = [...boxes0], drawn = [...drawn0], leads: Box[] = [];
     let total = 0;
     const out: Mark[] = [];
     for (const idx of order) {
@@ -418,56 +427,72 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
       const w = tagW(label);
       const py = toY(m.price);
       const cx = xOf(m.i);
-      const leaderOf = (yy: number): Box | null => {
-        if (Math.abs(yy - py) <= MARK_H / 2 + 10) return null;
-        const a = py + (yy < py ? -6 : 6), b = yy + (yy < py ? MARK_H / 2 : -MARK_H / 2);
-        return { x: cx - 1, y: Math.min(a, b), w: 2, h: Math.abs(b - a) };
+      // Trait de liaison : du point au bord le plus proche de l'étiquette (vertical quand
+      // l'étiquette passe au-dessus du point, en biais quand elle est décalée sur le côté)
+      const leaderOf = (x: number, yy: number): Seg | null => {
+        const over = cx >= x + 2 && cx <= x + w - 2;
+        if (Math.abs(yy - py) <= MARK_H / 2 + 10) {
+          if (over) return null;
+          const ex = cx < x ? x : x + w;
+          return Math.abs(ex - cx) <= 6 ? null : { x1: cx + Math.sign(ex - cx) * 4, y1: py, x2: ex, y2: yy };
+        }
+        const s = yy < py ? -1 : 1;
+        return { x1: cx, y1: py + s * 6, x2: clamp(cx, x + 8, x + w - 8), y2: yy - s * (MARK_H / 2) };
       };
       // Coût d'une position : jamais sur une autre étiquette ni sur le trait d'un autre repère ;
       // en dernier recours, mieux vaut frôler une ligne qu'une bougie, et un trait qui passe
       // derrière une bougie qu'une étiquette posée dessus.
-      const leaders = drawn.filter((o) => o.w === 2);
       const cost = (x: number, yy: number, strict: boolean) => {
         const b = { x: x - GAP, y: yy - MARK_H / 2 - GAP, w: w + 2 * GAP, h: MARK_H + 2 * GAP };
         const core = { x, y: yy - MARK_H / 2, w, h: MARK_H };
         let c = 0;
         for (const o of boxes) if (overlaps(o, b)) c += 5000;
-        for (const o of leaders) if (overlaps(o, b)) c += 5000;
+        for (const o of leads) if (overlaps(o, b)) c += 5000;
         for (const o of candleBox) if (o && overlaps(o, b)) c += strict ? 5000 : 300;
         for (const o of drawn) if (overlaps(o, b) && !candleBox.includes(o)) c += strict ? 5000 : 20;
-        const ld = leaderOf(yy);
+        const ld = leaderOf(x, yy);
         if (ld) {
-          if (boxes.some((o) => overlaps(o, ld))) c += 5000;
-          if (candleBox.some((o, j) => o && j !== m.i && overlaps(o, ld))) c += strict ? 5000 : 40;
+          const sb = segBoxes(ld);
+          // à 2 px au moins des autres étiquettes (pas de trait qui frôle une étiquette)
+          if (boxes.some((o) => sb.some((q) => overlaps({ x: o.x - 2, y: o.y - 2, w: o.w + 4, h: o.h + 4 }, q)))) c += 5000;
+          if (candleBox.some((o, j) => o && j !== m.i && sb.some((q) => overlaps(o, q)))) c += strict ? 5000 : 40;
         }
         return c;
       };
+      // Positions candidates : au-dessus, en dessous et à côté du point, décalées sur le côté ;
+      // essayées de la plus proche du point à la plus lointaine (le côté demandé d'abord à
+      // distance égale). Une étiquette loin de son point, même reliée, se lit mal.
+      const DX = [0, -0.35, 0.35, -0.7, 0.7, -1.05, 1.05];
+      const cands: { x: number; y: number; d: number }[] = [];
+      for (let off = 0; off <= 240; off += 6) for (const sgn of [-1, 1]) {
+        if (off === 0 && sgn > 0) continue;
+        const yy = py + sgn * off;
+        if (yy < yMin || yy > yMax) continue;
+        const xs = [...DX.map((dx) => cx - w / 2 + dx * w), cx + bodyW / 2 + 6, cx - bodyW / 2 - 6 - w];
+        for (const x0 of xs) {
+          const x = clamp(x0, 2, xRight - w);
+          const ddx = Math.max(x - cx, 0, cx - (x + w)), ddy = Math.max(yy - MARK_H / 2 - py, 0, py - (yy + MARK_H / 2));
+          const wrong = off > 0 && (m.side === "above" ? sgn > 0 : sgn < 0);
+          cands.push({ x, y: yy, d: Math.hypot(ddx, ddy) + (wrong ? 14 : 0) });
+        }
+      }
+      cands.sort((a, b) => a.d - b.d);
       let at: { x: number; y: number } | null = null;
       let best: { x: number; y: number; c: number } | null = null;
-      const DX = [0, -0.35, 0.35, -0.7, 0.7, -1.05, 1.05];
       for (const strict of [true, false]) {
-        for (const dir of m.side === "above" ? [-1, 1] : [1, -1]) {
-          const y0 = py + dir * (8 + MARK_H / 2);
-          for (let k = 0; k <= 40 && !at; k++) {
-            const yy = y0 + dir * k * 6;
-            if (yy < yMin || yy > yMax) break;
-            for (const dx of DX) {
-              const x = clamp(cx - w / 2 + dx * w, 2, plotR - w);
-              const c = cost(x, yy, strict);
-              if (c === 0) { at = { x, y: yy }; break; }
-              if (!strict && (!best || c + k < best.c)) best = { x, y: yy, c: c + k };
-            }
-          }
-          if (at) break;
+        for (const q of cands) {
+          const c = cost(q.x, q.y, strict);
+          if (c === 0) { at = { x: q.x, y: q.y }; break; }
+          if (!strict && (!best || c + q.d / 6 < best.c)) best = { x: q.x, y: q.y, c: c + q.d / 6 };
         }
         if (at) break;
       }
-      const { x, y } = at ?? best ?? { x: clamp(cx - w / 2, 2, plotR - w), y: clamp(py + (m.side === "above" ? -1 : 1) * (8 + MARK_H / 2), yMin, yMax) };
+      const { x, y } = at ?? best ?? { x: clamp(cx - w / 2, 2, xRight - w), y: clamp(py + (m.side === "above" ? -1 : 1) * (8 + MARK_H / 2), yMin, yMax) };
       total += at ? 0 : best?.c ?? 1e6;
       boxes.push({ x, y: y - MARK_H / 2, w, h: MARK_H });
-      const ld = leaderOf(y);
-      if (ld) drawn.push(ld);
-      out[idx] = { ...m, label, w, x, y, py };
+      const lead = leaderOf(x, y);
+      if (lead) { const sb = segBoxes(lead); leads.push(...sb); drawn.push(...sb); }
+      out[idx] = { ...m, label, w, x, y, py, lead };
     }
     return { out, total };
     };
@@ -563,8 +588,8 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
         {marks.map((m) => (
           <g key={m.key} data-marker={m.key} data-i={m.i} data-price={m.price} data-pivot={m.pivot} {...sem(m)}>
             {m.dot && <circle cx={xOf(m.i)} cy={m.py} r={4.5} fill={TONE[m.tone]} stroke="#06090d" strokeWidth={1.5} />}
-            {Math.abs(m.y - m.py) > MARK_H / 2 + 10 && (
-              <line data-leader={m.key} x1={xOf(m.i)} x2={xOf(m.i)} y1={m.py + (m.y < m.py ? -6 : 6)} y2={m.y + (m.y < m.py ? MARK_H / 2 : -MARK_H / 2)} stroke={TONE[m.tone]} strokeWidth={1.5} strokeOpacity={0.8} />
+            {m.lead && (
+              <line data-leader={m.key} x1={m.lead.x1} x2={m.lead.x2} y1={m.lead.y1} y2={m.lead.y2} stroke={TONE[m.tone]} strokeWidth={1.5} strokeOpacity={0.8} />
             )}
             <g data-label-for={m.key}>
               <rect x={m.x} y={m.y - MARK_H / 2} width={m.w} height={MARK_H} rx={MARK_H / 2} fill="#06090d" stroke={TONE[m.tone]} strokeWidth={1.5} />
