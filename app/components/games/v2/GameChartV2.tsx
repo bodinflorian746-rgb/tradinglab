@@ -522,7 +522,9 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
       };
       // Étiquettes de lignes d'abord (elles restent sur leur ligne), puis zones
       const onLine = (k: string) => !k.startsWith("zone") && (k !== "markTag" || mark?.kind === "line");
-      const placeOrder = [...specs].sort((a, b) => Number(onLine(b.key)) - Number(onLine(a.key)) || toY(a.price) - toY(b.price));
+      // Lignes d'abord, et la plus longue étiquette d'abord : les courtes (TP, Entrée) trouvent
+      // leur place dans les trous, la longue (libellé de l'erreur) garde le bord libre
+      const placeOrder = [...specs].sort((a, b) => Number(onLine(b.key)) - Number(onLine(a.key)) || inlineTagW(b.label) - inlineTagW(a.label) || toY(a.price) - toY(b.price));
       // Lignes rapprochées (moins d'une hauteur de pastille) : leurs pastilles sont empilées
       // au bord droit, centrées sur le groupe, chacune décalée d'au plus 8 px pour rester
       // traversée par sa ligne ; sinon elles glissaient à gauche, sur les bougies.
