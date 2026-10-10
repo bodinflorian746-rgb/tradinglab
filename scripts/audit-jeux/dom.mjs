@@ -282,15 +282,22 @@ async function autotest(browser) {
   let missed = 0;
   try {
     for (const [name, [expect, inject]] of Object.entries(MUTATIONS)) {
-      await page.goto(`${BASE}/fr/jeux/buy-sell-no-trade`, { waitUntil: "networkidle", timeout: 180000 });
-      await page.getByRole("button", { name: /Interm/ }).first().click();
-      await page.getByRole("button", { name: "NO TRADE" }).first().waitFor({ timeout: 30000 });
-      await page.waitForTimeout(4500);
-      const before = await probeLabels(page, { mobile: true, buttons: null });
-      await page.evaluate(inject);
-      const after = await measureLabels(page, { mobile: true, buttons: null });
-      const hit = after.filter((e) => !before.includes(e) && expect.test(e));
-      console.log(`${hit.length ? "détecté" : "MANQUÉ "}  ${name}${hit.length ? ` (${hit[0]})` : ` : ${after.filter((e) => !before.includes(e)).join(" | ") || "aucune erreur"}`}`);
+      // Round tiré au hasard : jusqu'à 3 essais si l'injection ne trouve pas sa cible
+      let hit = [], after = [], before = [], err = "";
+      for (let attempt = 0; attempt < 3 && !hit.length; attempt++) {
+        try {
+          await page.goto(`${BASE}/fr/jeux/buy-sell-no-trade`, { waitUntil: "networkidle", timeout: 180000 });
+          await page.getByRole("button", { name: /Interm/ }).first().click();
+          await page.getByRole("button", { name: "NO TRADE" }).first().waitFor({ timeout: 30000 });
+          await page.waitForTimeout(4500);
+          before = await probeLabels(page, { mobile: true, buttons: null });
+          await page.evaluate(inject);
+          after = await measureLabels(page, { mobile: true, buttons: null });
+          hit = after.filter((e) => !before.includes(e) && expect.test(e));
+          err = "";
+        } catch (e) { err = e.message.split("\n")[0].slice(0, 100); }
+      }
+      console.log(`${hit.length ? "détecté" : "MANQUÉ "}  ${name}${hit.length ? ` (${hit[0]})` : ` : ${err || after.filter((e) => !before.includes(e)).join(" | ") || "aucune erreur"}`}`);
       if (!hit.length) missed++;
     }
   } finally { await ctx.close(); }
