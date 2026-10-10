@@ -261,7 +261,7 @@ export function LessonChart({ id, title, caption, panels, rows, sharedScale, chi
             k += n;
             return (
               <div key={r} className={`lc-row lc-row--${n}`}>
-                {slice.map((p) => <Panel key={p.key} chart={id} panel={p} domain={domain} />)}
+                {slice.map((p) => <Panel key={p.key} chart={id} panel={p} domain={domain} single={panels.length === 1} />)}
               </div>
             );
           })}
@@ -278,13 +278,22 @@ export function LessonChart({ id, title, caption, panels, rows, sharedScale, chi
  * élément ne cite sont retirées (contexte lointain), en gardant au moins 8 bougies avant le
  * premier élément cité (pivots et structure restent lisibles) ; tous les indices sont décalés.
  * Rien ne change sur grand écran, ni pour un panneau à positions fixes (slots).
+ *
+ * Jamais de rognage pour un schéma à plusieurs panneaux (comparaison : les panneaux doivent
+ * commencer à la même bougie) ni pour une courbe qui n'est pas un prix (courbe de capital : elle
+ * part de son point de départ). Un rognage ne change jamais ce que montre le schéma : il s'arrête
+ * avant la première touche de chaque support / résistance et avant le premier croisement des
+ * moyennes. Rend le nombre de bougies retirées, ou la raison pour laquelle le panneau n'est pas
+ * rogné alors qu'il serait serré (signalée par l'audit).
  */
-function cropPanel(p: LCPanel, W: number): LCPanel {
+export function cropStart(p: LCPanel, W: number, single: boolean): { s: number; noCrop?: string } {
   const n = p.candles?.length ?? p.line?.length ?? 0;
-  if (!n || p.slots || W >= NARROW) return p;
+  if (!n || p.slots || W >= NARROW) return { s: 0 };
   const plotW = W * 0.96 - 110;                       // colonne d'étiquettes mobile estimée
   const fit = Math.floor(plotW / MIN_SLOT);
-  if (n <= fit) return p;
+  if (n <= fit) return { s: 0 };
+  if (!single) return { s: 0, noCrop: "schéma de comparaison (plusieurs panneaux)" };
+  if (p.measure) return { s: 0, noCrop: `courbe « ${p.measure.name} » (part de son point de départ)` };
   const refs = [
     ...(p.markers ?? []).map((m) => m.i), ...(p.levels ?? []).map((l) => l.from), ...(p.zones ?? []).map((z) => z.from),
     ...(p.segments ?? []).flatMap((s) => [s.i1, s.i2]), ...(p.rsi?.marks ?? []).map((m) => m.i),
@@ -300,7 +309,32 @@ function cropPanel(p: LCPanel, W: number): LCPanel {
     while (j >= 0 && !isPiv(j)) j--;
     if (j >= 0) first = Math.min(first, j);
   }
-  const s = Math.max(0, Math.min(n - fit, first - 8));
+  // Supports / résistances : toutes leurs touches restent visibles (la bougie d'arrivée comprise)
+  const ks = cs ?? (p.line ?? []).map((v) => ({ o: v, h: v, l: v, c: v }));
+  const med = (a: number[]) => [...a].sort((x, y) => x - y)[Math.floor(a.length / 2)] || 0;
+  const tol = 0.25 * (med(ks.map((k) => k.h - k.l)) || med(ks.slice(1).map((k, i) => Math.abs(k.c - ks[i].c))));
+  const isSR = (o: { role?: string; label?: string }) => /^(support|resistance)$/.test(o.role ?? "") || /\b(support|r[ée]sistance)/i.test(o.label ?? "");
+  const bands = [
+    ...(p.levels ?? []).filter(isSR).map((l) => [l.price, l.price] as const),
+    ...(p.zones ?? []).filter(isSR).map((z) => [Math.min(z.y1, z.y2), Math.max(z.y1, z.y2)] as const),
+  ];
+  for (const [lo, hi] of bands) {
+    const i = ks.findIndex((k) => k.l <= hi + tol && k.h >= lo - tol);
+    if (i >= 0) first = Math.min(first, i - 1 + 8);  // 1 bougie d'arrivée avant le premier contact
+  }
+  // Moyennes : tous leurs croisements restent visibles
+  const ser = p.series ?? [];
+  for (let a = 0; a < ser.length; a++) for (let b = a + 1; b < ser.length; b++) {
+    const A = ser[a].values, B = ser[b].values;
+    for (let i = 1; i < n; i++) {
+      const v = [A[i], B[i], A[i - 1], B[i - 1]];
+      if (v.every((x) => x !== null && x !== undefined) && Math.sign(A[i]! - B[i]!) !== Math.sign(A[i - 1]! - B[i - 1]!)) { first = Math.min(first, i - 1 + 8); break; }
+    }
+  }
+  return { s: Math.max(0, Math.min(n - fit, first - 8)) };
+}
+
+function cropPanel(p: LCPanel, s: number): LCPanel {
   if (s <= 0) return p;
   const sh = (i: number | undefined) => (i === undefined ? undefined : Math.max(0, i - s));
   return {
@@ -326,7 +360,7 @@ const segBoxes = (s: Seg): Box[] => {
 };
 const overlaps = (a: Box, b: Box) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 
-function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain?: [number, number] }) {
+function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel; domain?: [number, number]; single: boolean }) {
   const { ref, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const uid = useId().replace(/:/g, "");
   const narrow = W > 0 && W < NARROW;
@@ -334,7 +368,8 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
 
   let svg: ReactNode = null;
   if (W > 0 && H > 0) {
-    const p = cropPanel(panel, W);
+    const crop = cropStart(panel, W, single);
+    const p = cropPanel(panel, crop.s);
     const nPts = p.candles?.length ?? p.line?.length ?? 0;
     const n = p.slots ?? nPts;
     const rsiH = p.rsi ? RSI_H : 0;
@@ -520,6 +555,8 @@ function Panel({ chart, panel, domain }: { chart: string; panel: LCPanel; domain
         data-panel={p.key}
         data-scale={JSON.stringify(scale)}
         data-decimals={p.decimals}
+        data-crop={crop.s || undefined}
+        data-nocrop={crop.noCrop}
         data-candles={p.candles ? JSON.stringify(p.candles) : undefined}
         data-series={p.line ? JSON.stringify(p.line) : undefined}
       >
