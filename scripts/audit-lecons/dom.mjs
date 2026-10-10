@@ -325,6 +325,14 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       const c = candles.find((q) => q.i !== own && segHits(num(ld, "x1"), num(ld, "y1"), num(ld, "x2"), num(ld, "y2"), q.r));
       if (c) E(`trait du repère « ${ld.parentElement.querySelector("g[data-label-for]")?.textContent.trim()} » qui traverse la bougie ${c.i}`);
     }
+    // Repère détaché : l'étiquette n'est ni au-dessus de son point ni reliée à lui par un trait
+    if (sc) for (const m of svg.querySelectorAll("[data-marker]")) {
+      const rc = m.querySelector(":scope > g[data-label-for] rect");
+      if (!rc || m.querySelector(":scope > line[data-leader]")) continue;
+      const px = sc.x0 + sc.slot * (+m.dataset.i + 0.5), x = num(rc, "x"), w = num(rc, "width");
+      const gap = px < x ? x - px : px - (x + w);
+      if (gap > 8) E(`repère « ${m.textContent.trim()} » détaché de son point (${Math.round(gap)} px, sans trait)`);
+    }
     // Texte qui déborde de sa pastille
     for (const g of svg.querySelectorAll("g[data-label-for]")) {
       const rc = g.querySelector("rect"), tx = g.querySelector("text");
@@ -592,7 +600,7 @@ function lessonUrls() {
 const EXPECT = {
   "repère collé à une bougie": /repère « .* » collé à/, "étiquette de colonne sans lien": /sans lien avec son objet/,
   "trait de repère à travers une bougie": /qui traverse la bougie/, "texte plus large que sa pastille": /plus large que sa pastille/,
-  "bougies trop serrées": /bougies trop serrées/, "texte de page sous 12 px": /page : texte de 10/, "texte de page peu contrasté": /page : texte peu contrasté/,
+  "bougies trop serrées": /bougies trop serrées/, "repère détaché de son point": /détaché de son point/, "texte de page sous 12 px": /page : texte de 10/, "texte de page peu contrasté": /page : texte peu contrasté/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
@@ -634,6 +642,13 @@ const MUTATIONS = {
     ld.setAttribute("data-leader", m.dataset.marker); ld.setAttribute("x1", x); ld.setAttribute("x2", x); ld.setAttribute("y1", +b.getAttribute("y") - 10); ld.setAttribute("y2", +b.getAttribute("y") + +b.getAttribute("height") + 10); m.prepend(ld);
   },
   "texte plus large que sa pastille": () => { document.querySelector("g[data-label-for] text").textContent = "Libellé beaucoup trop long pour sa pastille"; },
+  "repère détaché de son point": () => {
+    // étiquette décalée de 60 px sur le côté, trait retiré
+    const m = document.querySelector("svg[data-candles] [data-marker]"); m.querySelector(":scope > line[data-leader]")?.remove();
+    const g = m.querySelector(":scope > g[data-label-for]"), r = g.querySelector("rect"), sc = JSON.parse(m.closest("svg").dataset.scale);
+    const px = sc.x0 + sc.slot * (+m.dataset.i + 0.5), dx = px - +r.getAttribute("x") + 60;
+    g.setAttribute("transform", `translate(${dx} 0)`); r.setAttribute("x", +r.getAttribute("x") + dx); g.removeAttribute("transform");
+  },
   "bougies trop serrées": () => { const s = document.querySelector("svg[data-candles]"); const sc = JSON.parse(s.dataset.scale); sc.slot = 2; s.dataset.scale = JSON.stringify(sc); },
   "texte de page sous 12 px": () => { const p = [...document.querySelectorAll("main p")].find((x) => !x.closest("[data-lesson-chart]") && x.textContent.trim().length > 20); p.style.fontSize = "10px"; },
   "texte de page peu contrasté": () => { const p = [...document.querySelectorAll("main p")].find((x) => !x.closest("[data-lesson-chart]") && x.textContent.trim().length > 20); p.style.color = "rgba(255,255,255,0.18)"; },
