@@ -15,7 +15,8 @@
 //   supports et résistances prouvés (2 touches, ou cassure puis retest avec réaction,
 //   visibles avant la réponse ; même règle que les leçons : audit-lecons/sr-proof.mjs).
 // Règles « DOM » (Playwright) : troncature langues actives × 390/1440, sonde
-//   lignes = étiquettes = boutons, cohérence du verdict affiché.
+//   lignes = étiquettes = boutons, aucune étiquette sur une bougie, cohérence du verdict
+//   affiché ; autotest (défauts injectés dans les étiquettes, chacun doit être détecté).
 // Code de sortie 1 dès qu'une règle compte une erreur.
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
@@ -88,6 +89,11 @@ else {
   const out = run("node", [join("scripts", "audit-jeux", "dom.mjs"), `--langues=${LANGS.join(",")}`, ...DOM_ARGS]);
   const r = resultOf(out);
   record("DOM (troncature, sondes, verdict)", r ? r.e : null, out.split("\n").filter((l) => /erreur\(s\)|^\s{4}/.test(l) && !/: 0 erreur/.test(l)).slice(0, 10).join(" | ") || out.split("\n").slice(-3).join(" "));
+  // Autotest : défauts injectés dans les étiquettes du graphique, chacun doit être détecté
+  process.stdout.write("… autotest de l'audit DOM (défauts injectés)\n");
+  const auto = run("node", [join("scripts", "audit-jeux", "dom.mjs"), "--autotest"]);
+  const ra = resultOf(auto);
+  record("Autotest de l'audit DOM (défauts injectés)", ra ? ra.e : null, auto.split("\n").filter((l) => /^MANQUÉ/.test(l)).join(" | ") || (ra ? "" : auto.split("\n").slice(-3).join(" ")));
 }
 
 console.log(`\n=== Audit des jeux (langues : ${LANGS.join(", ")}) ===`);

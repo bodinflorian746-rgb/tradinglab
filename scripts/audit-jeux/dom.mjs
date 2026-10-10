@@ -1,5 +1,6 @@
 // Audit DOM des 4 jeux (navigateur) : joue une session complète par jeu × langue × format.
 // Usage : node scripts/audit-jeux/dom.mjs [--base=http://localhost:3000] [--jeux=place-stop,...] [--langues=fr,es] [--formats=390,1440]
+//         node scripts/audit-jeux/dom.mjs --autotest   → défauts injectés dans les étiquettes, chacun doit être détecté
 // Nécessite le serveur de dev déjà lancé (le script ne le démarre jamais).
 // Jeux réservés aux membres : AUDIT_STORAGE_STATE=<fichier> réutilise une session
 // premium enregistrée par Playwright (storage state, hors dépôt). Les jeux
@@ -11,7 +12,8 @@
 //  - sonde Place ton Stop : ordre vertical des lignes = ordre des étiquettes
 //    « Stop 1/2/3 » = ordre des boutons (couleurs et numéros) ;
 //  - étiquettes du graphique (question, chaque étape de Build the Trade, verdict) :
-//    toute ligne étiquetée à sa hauteur, aucun chevauchement, au plus 4 en 390,
+//    toute ligne étiquetée à sa hauteur, aucun chevauchement, aucune posée sur une
+//    bougie (corps ou mèche), aucune hors du graphique, au plus 4 en 390,
 //    mêmes noms que les boutons, aucun doublon avec une légende ;
 //  - verdict : état (bon / partiel / faux), couleurs du titre et des points
 //    cohérentes, maximum affiché ; barème simple : bon > 0, faux = 0 (sans signe) ;
@@ -92,6 +94,11 @@ const measureLabels = (page, { mobile, buttons }) => page.evaluate(({ mobile, bu
     const t = g.querySelector("text");
     return { key: g.getAttribute("data-label-for"), txt: t.textContent.trim(), r, fs: t.getBoundingClientRect().height };
   });
+  // Bougies affichées (corps et mèche) : une étiquette posée dessus cache le prix
+  const candles = [...svg.querySelectorAll(".v2-candle")].filter(visible).map((g, i) => {
+    const rs = [...g.querySelectorAll("line, rect")].map((e) => e.getBoundingClientRect());
+    return { i, l: Math.min(...rs.map((r) => r.left)), r: Math.max(...rs.map((r) => r.right)), t: Math.min(...rs.map((r) => r.top)), b: Math.max(...rs.map((r) => r.bottom)) };
+  });
   const lines = [...svg.querySelectorAll("line[data-line]:not([data-discreet])")].filter(visible)
     .map((l) => ({ key: l.getAttribute("data-line"), y: l.getBoundingClientRect().top + l.getBoundingClientRect().height / 2 }));
   const errs = [];
@@ -100,6 +107,8 @@ const measureLabels = (page, { mobile, buttons }) => page.evaluate(({ mobile, bu
     if (!t.txt) errs.push(`étiquette « ${t.key} » vide`);
     if (t.fs < 10) errs.push(`étiquette « ${t.txt} » illisible (${t.fs.toFixed(1)} px)`);
     if (t.r.left < sr.left - 1 || t.r.right > sr.right + 1 || t.r.top < sr.top - 1 || t.r.bottom > sr.bottom + 1) errs.push(`étiquette « ${t.txt} » hors du graphique`);
+    const c = candles.find((k) => k.l < t.r.right - 0.5 && t.r.left < k.r - 0.5 && k.t < t.r.bottom - 0.5 && t.r.top < k.b - 0.5);
+    if (c) errs.push(`étiquette « ${t.txt} » sur une bougie`);
   }
   for (let i = 0; i < labels.length; i++) for (let j = i + 1; j < labels.length; j++) {
     const a = labels[i].r, b = labels[j].r;
@@ -251,10 +260,53 @@ async function session(browser, slug, loc, w) {
   } finally { await ctx.close(); }
 }
 
+// --autotest : défauts injectés dans les étiquettes du graphique (1re question de Buy / Sell /
+// No Trade en 390) ; chacun doit produire l'erreur attendue, sinon la règle ne protège rien.
+const MUTATIONS = {
+  "étiquette posée sur une bougie": [/sur une bougie/, () => {
+    const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
+    const g = svg.querySelector("[data-label-for]"), r = g.querySelector("rect");
+    const c = [...svg.querySelectorAll(".v2-candle")].filter((k) => getComputedStyle(k).opacity !== "0").at(-3).querySelector("rect");
+    const dx = +c.getAttribute("x") - +r.getAttribute("x"), dy = +c.getAttribute("y") - +r.getAttribute("y");
+    g.setAttribute("transform", `translate(${dx} ${dy})`);
+  }],
+  "étiquette coupée par le cadre": [/hors du graphique/, () => {
+    const g = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg [data-label-for]"), r = g.querySelector("rect");
+    g.setAttribute("transform", `translate(0 ${-(+r.getAttribute("y")) - 8})`);
+  }],
+};
+async function autotest(browser) {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
+  await ctx.addInitScript(() => { try { localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch { /* stockage indisponible */ } });
+  const page = await ctx.newPage();
+  let missed = 0;
+  try {
+    for (const [name, [expect, inject]] of Object.entries(MUTATIONS)) {
+      await page.goto(`${BASE}/fr/jeux/buy-sell-no-trade`, { waitUntil: "networkidle", timeout: 180000 });
+      await page.getByRole("button", { name: /Interm/ }).first().click();
+      await page.getByRole("button", { name: "NO TRADE" }).first().waitFor({ timeout: 30000 });
+      await page.waitForTimeout(4500);
+      const before = await probeLabels(page, { mobile: true, buttons: null });
+      await page.evaluate(inject);
+      const after = await measureLabels(page, { mobile: true, buttons: null });
+      const hit = after.filter((e) => !before.includes(e) && expect.test(e));
+      console.log(`${hit.length ? "détecté" : "MANQUÉ "}  ${name}${hit.length ? ` (${hit[0]})` : ` : ${after.filter((e) => !before.includes(e)).join(" | ") || "aucune erreur"}`}`);
+      if (!hit.length) missed++;
+    }
+  } finally { await ctx.close(); }
+  return missed;
+}
+
 (async () => {
   try { const r = await fetch(`${BASE}/fr/jeux`); if (!r.ok) throw new Error(`HTTP ${r.status}`); }
   catch (e) { console.log(`Serveur injoignable (${BASE}) : ${e.message}. Lance le serveur de dev puis relance l'audit.`); console.log("RESULTAT erreurs=1 avertissements=0"); process.exit(1); }
   const browser = await chromium.launch();
+  if (process.argv.includes("--autotest")) {
+    const missed = await autotest(browser);
+    await browser.close();
+    console.log(`RESULTAT erreurs=${missed} avertissements=0`);
+    process.exit(missed ? 1 : 0);
+  }
   const jobs = GAMES.flatMap((g) => LANGS.flatMap((l) => FORMATS.map((f) => [g, l, f])));
   let errors = 0; const lines = [];
   const worker = async () => {
