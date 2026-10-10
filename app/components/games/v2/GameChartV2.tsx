@@ -481,14 +481,80 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
         }
         return null;
       };
+      // Pastilles empilées (lignes rapprochées) : 1 px entre elles, leur contour sombre les sépare
+      const PACK_GAP = 1;
+      // Bougies affichées (corps et mèche, marge de 3 px) : une pastille posée dessus cache le prix
+      const candleBoxes = visible.map((k, i) => ({ x1: xOf(i) - bodyW / 2 - 3, x2: xOf(i) + bodyW / 2 + 3, y1: toY(k.h) - 3, y2: toY(k.l) + 3 }));
+      const free = (x: number, y: number, w: number) =>
+        !inlineTags.some((t) => Math.abs(t.y - y) < INLINE_TAG_H + PACK_GAP - EPS && x < t.x + t.w + INLINE_TAG_GAP - EPS && x + w + INLINE_TAG_GAP > t.x + EPS)
+        && !candleBoxes.some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1);
+      // Première place libre en partant du bord droit, le long de la hauteur y (ni pastille ni bougie)
+      const clearX = (y: number, w: number) => {
+        for (let x = lineX1 - w; x >= minX; x -= 2) if (free(x, y, w)) return x;
+        return null;
+      };
       // Étiquettes de lignes d'abord (elles restent sur leur ligne), puis zones
       const onLine = (k: string) => !k.startsWith("zone") && (k !== "markTag" || mark?.kind === "line");
       const placeOrder = [...specs].sort((a, b) => Number(onLine(b.key)) - Number(onLine(a.key)) || toY(a.price) - toY(b.price));
+      // Lignes rapprochées (moins d'une hauteur de pastille) : leurs pastilles sont empilées
+      // au bord droit, centrées sur le groupe, chacune décalée d'au plus 8 px pour rester
+      // traversée par sa ligne ; sinon elles glissaient à gauche, sur les bougies.
+      const STEP = INLINE_TAG_H + PACK_GAP, MAX_SHIFT = INLINE_TAG_H / 2 - 2;
+      const packed = new Map<string, number>();
+      const ls = placeOrder.filter((s) => onLine(s.key)).map((s) => ({ k: s.key, l: toY(s.price) })).sort((a, b) => a.l - b.l);
+      // Groupes : on fusionne deux groupes voisins tant que leurs piles se recouvrent ; chaque
+      // pile est recentrée (écart maximal minimal entre une pastille et sa ligne). Une fusion
+      // qui éloignerait une pastille de sa ligne est refusée : ces pastilles se rangent alors
+      // côte à côte, à la première place libre le long de leur ligne.
+      type Pile = { m: { k: string; l: number }[]; top: number };
+      const recenter = (g: Pile) => {
+        const dev = g.m.map((x, q) => q * STEP - x.l);
+        g.top = -(Math.max(...dev) + Math.min(...dev)) / 2;
+      };
+      const valid = (g: Pile) => g.m.every((x, q) => Math.abs(g.top + q * STEP - x.l) <= MAX_SHIFT);
+      let piles: Pile[] = ls.map((x) => ({ m: [x], top: x.l }));
+      // Les lignes les plus proches d'abord : ce sont elles qui ne peuvent pas se partager la place
+      for (let merged = true; merged;) {
+        merged = false;
+        let pick: { q: number; g: Pile; d: number } | null = null;
+        for (let q = 0; q + 1 < piles.length; q++) {
+          const a = piles[q], b = piles[q + 1];
+          if (a.top + (a.m.length - 1) * STEP + STEP <= b.top + EPS) continue;
+          const g: Pile = { m: [...a.m, ...b.m], top: 0 };
+          recenter(g);
+          const d = b.m[0].l - a.m[a.m.length - 1].l;
+          if (valid(g) && (!pick || d < pick.d)) pick = { q, g, d };
+        }
+        if (pick) {
+          piles = [...piles.slice(0, pick.q), pick.g, ...piles.slice(pick.q + 2)];
+          merged = true;
+        }
+      }
+      for (const g of piles) {
+        if (g.m.length < 2 || !valid(g)) continue;
+        g.m.forEach((x, q) => packed.set(x.k, clamp(g.top + q * STEP, INLINE_TAG_H / 2 + 1, H - INLINE_TAG_H / 2 - 1)));
+      }
       for (const s of placeOrder) {
         const w = inlineTagW(s.label);
-        const y0 = clamp(toY(s.price), INLINE_TAG_H / 2 + 1, H - INLINE_TAG_H / 2 - 1);
+        const y0 = clamp(packed.get(s.key) ?? toY(s.price), INLINE_TAG_H / 2 + 1, H - INLINE_TAG_H / 2 - 1);
         let y = y0;
-        let x = slotX(y0, w);
+        // Sur sa ligne, à la première place sans bougie ni pastille ; une zone peut aussi
+        // monter ou descendre d'un cran pour trouver cette place
+        let x = clearX(y0, w);
+        // Ligne : petit décalage vertical (la ligne traverse toujours la pastille)
+        if (x === null && onLine(s.key)) for (const d of [2, -2, 4, -4, 6, -6, 8, -8]) {
+          const yy = toY(s.price) + d;
+          if (Math.abs(d) > MAX_SHIFT || yy < INLINE_TAG_H / 2 + 1 || yy > H - INLINE_TAG_H / 2 - 1) continue;
+          const xx = clearX(yy, w);
+          if (xx !== null) { x = xx; y = yy; break; }
+        }
+        if (x === null && !onLine(s.key)) for (let k = 1; x === null && k <= 6; k++) for (const dir of [1, -1]) {
+          const yy = y0 + dir * k * (INLINE_TAG_H + INLINE_TAG_GAP) / 2;
+          if (yy < INLINE_TAG_H / 2 + 1 || yy > H - INLINE_TAG_H / 2 - 1) continue;
+          const xx = clearX(yy, w);
+          if (xx !== null) { x = xx; y = yy; break; }
+        }
+        if (x === null) x = slotX(y0, w);
         for (let k = 1; x === null && k <= 6; k++) for (const dir of [1, -1]) {
           const yy = y0 + dir * k * (INLINE_TAG_H + INLINE_TAG_GAP);
           if (yy < INLINE_TAG_H / 2 + 1 || yy > H - INLINE_TAG_H / 2 - 1) continue;
