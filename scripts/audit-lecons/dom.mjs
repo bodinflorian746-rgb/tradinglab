@@ -339,7 +339,8 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       if (rc && tx && tx.getBBox().width > num(rc, "width") - 4) E(`texte « ${tx.textContent.trim()} » plus large que sa pastille`);
     }
     // Bougies trop serrées pour être lues
-    if (sc && svg.dataset.candles && sc.slot * k < 3.25) E(`bougies trop serrées : ${(sc.slot * k).toFixed(1)} px par bougie`);
+    // (schéma volontairement non rogné : comparaison, courbe de capital → signalé en avertissement, à valider)
+    if (sc && svg.dataset.candles && sc.slot * k < 3.25) E(`${svg.dataset.nocrop ? `AVERTISSEMENT non rogné (${svg.dataset.nocrop}) : ` : ""}bougies trop serrées : ${(sc.slot * k).toFixed(1)} px par bougie`);
   }
 
   // Page (hors schémas) : aucun texte sous 12 px, aucun texte d'un contraste inférieur à 3 sur son fond
@@ -382,6 +383,8 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       }
       const panels = [...fig.querySelectorAll("svg[data-panel]")];
       if (!panels.length && !fig.querySelector(".ls-body")) E(id, "aucun panneau dessiné");
+      // Rognage mobile : jamais sur un schéma de comparaison (les panneaux commencent à la même bougie)
+      if (panels.length > 1 && panels.some((sv) => +(sv.dataset.crop || 0) > 0)) E(id, `schéma de comparaison rogné en mobile (${panels.map((sv) => sv.dataset.crop || 0).join(" / ")} bougies retirées)`);
       const allCandles = panels.map((sv) => (sv.dataset.candles ? JSON.parse(sv.dataset.candles) : null));
       for (const svg of panels) {
         const P = svg.dataset.panel;
@@ -600,7 +603,7 @@ function lessonUrls() {
 const EXPECT = {
   "repère collé à une bougie": /repère « .* » collé à/, "étiquette de colonne sans lien": /sans lien avec son objet/,
   "trait de repère à travers une bougie": /qui traverse la bougie/, "texte plus large que sa pastille": /plus large que sa pastille/,
-  "bougies trop serrées": /bougies trop serrées/, "repère détaché de son point": /détaché de son point/, "texte de page sous 12 px": /page : texte de 10/, "texte de page peu contrasté": /page : texte peu contrasté/,
+  "bougies trop serrées": /bougies trop serrées/, "schéma de comparaison rogné": /schéma de comparaison rogné/, "repère détaché de son point": /détaché de son point/, "texte de page sous 12 px": /page : texte de 10/, "texte de page peu contrasté": /page : texte peu contrasté/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
@@ -642,6 +645,11 @@ const MUTATIONS = {
     ld.setAttribute("data-leader", m.dataset.marker); ld.setAttribute("x1", x); ld.setAttribute("x2", x); ld.setAttribute("y1", +b.getAttribute("y") - 10); ld.setAttribute("y2", +b.getAttribute("y") + +b.getAttribute("height") + 10); m.prepend(ld);
   },
   "texte plus large que sa pastille": () => { document.querySelector("g[data-label-for] text").textContent = "Libellé beaucoup trop long pour sa pastille"; },
+  "schéma de comparaison rogné": () => {
+    // un panneau d'un schéma à plusieurs panneaux marqué rogné
+    const f = [...document.querySelectorAll("[data-lesson-chart]")].find((x) => x.querySelectorAll("svg[data-panel]").length > 1);
+    f.querySelectorAll("svg[data-panel]")[1].dataset.crop = "5";
+  },
   "repère détaché de son point": () => {
     // étiquette décalée de 60 px sur le côté, trait retiré
     const m = document.querySelector("svg[data-candles] [data-marker]"); m.querySelector(":scope > line[data-leader]")?.remove();
@@ -676,8 +684,9 @@ if (AUTOTEST) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, storageState: STORAGE_STATE, locale: "fr-FR" });
   await ctx.addInitScript(() => { try { window.localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch {} });
   const page = await ctx.newPage();
-  // Chaque défaut est injecté dans la 1re page où il s'applique (R/R et OB : Avancé 7 ; pivots : Intermédiaire 5)
-  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon7|intermediaire\/lecon5/.test(p.url));
+  // Chaque défaut est injecté dans la 1re page où il s'applique (R/R et OB : Avancé 7 ; pivots : Intermédiaire 5 ;
+  // schéma à plusieurs panneaux : Trend Following 2)
+  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon7|intermediaire\/lecon5|trend-following\/lecon2/.test(p.url));
   let missed = 0;
   for (const [name, fn] of Object.entries(MUTATIONS).filter(([n]) => !process.env.MUT_ONLY || new RegExp(process.env.MUT_ONLY).test(n))) {
     let errs = null;
@@ -728,9 +737,14 @@ for (const w of FORMATS) {
       }
       await page.setViewportSize({ width: 1440, height: 900 });
     }
-    errors += errs.length;
-    console.log(`${String(w).padEnd(5)} ${p.url.padEnd(42)} ${errs.length} erreur(s)`);
-    for (const e of errs.slice(0, 25)) console.log(`    ERREUR ${e}`);
+    // Avertissements (schéma volontairement non rogné et serré : à valider) comptés à part
+    const warns = errs.filter((e) => e.includes("AVERTISSEMENT"));
+    const hard = errs.filter((e) => !e.includes("AVERTISSEMENT"));
+    errors += hard.length;
+    warnings += warns.length;
+    console.log(`${String(w).padEnd(5)} ${p.url.padEnd(42)} ${hard.length} erreur(s)${warns.length ? `, ${warns.length} avertissement(s)` : ""}`);
+    for (const e of hard.slice(0, 25)) console.log(`    ERREUR ${e}`);
+    for (const e of warns.slice(0, 10)) console.log(`    AVERTISSEMENT ${e.replace("AVERTISSEMENT ", "")}`);
   }
   if (TOUTES) {
     for (const url of lessonUrls()) {

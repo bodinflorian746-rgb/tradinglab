@@ -26,7 +26,7 @@ function record(rule, out) {
   const r = resultOf(out);
   if (!r) { failed = true; table.push([rule, "ÉCHEC D'EXÉCUTION", out.split("\n").slice(-5).join(" ")]); return; }
   if (r.e > 0) failed = true;
-  const detail = out.split("\n").filter((l) => /ERREUR/.test(l)).slice(0, 12).join("\n    ");
+  const detail = out.split("\n").filter((l) => /ERREUR|AVERTISSEMENT/.test(l)).slice(0, 12).join("\n    ");
   table.push([rule, `${r.e} erreur(s)${r.w ? `, ${r.w} avertissement(s)` : ""}`, detail]);
 }
 
@@ -34,6 +34,15 @@ process.stdout.write("… données des schémas (candles.json à jour)\n");
 record("Données générées à jour (scenarios.ts → candles.json)", viteNode("gen-charts.ts", ["--check"]));
 process.stdout.write("… données des schémas (continuité, niveaux, R/R)\n");
 record("Données : continuité, pivots, zones, R/R", viteNode("data.ts"));
+
+process.stdout.write("… rognage mobile des schémas (360 et 390)\n");
+record("Rognage mobile : rien de ce que montre le schéma n'est retiré", viteNode("crop.tsx"));
+{
+  const ac = viteNode("crop.tsx", ["--autotest"]);
+  const r = resultOf(ac);
+  if (!r || r.e) failed = true;
+  table.push(["Autotest du rognage (défauts injectés)", r ? (r.e ? `${r.e} défaut(s) non détecté(s)` : "tous détectés") : "ÉCHEC D'EXÉCUTION", ac.split("\n").filter((l) => /^MANQUÉ/.test(l)).join("\n    ")]);
+}
 
 if (SANS_DOM) table.push(["DOM (rendu des schémas)", "non lancé (--sans-dom)", ""]);
 else {
