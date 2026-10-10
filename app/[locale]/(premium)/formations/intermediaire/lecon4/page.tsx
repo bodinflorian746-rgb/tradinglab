@@ -72,8 +72,8 @@ function ContentFr() {
             { label: "M15 : le timing précis", detail: "Sur M15, tu cherches le signal final (rejet, pin bar, engulfing). C'est le déclencheur de l'entrée." },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
-              <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
-                <span style={{ fontSize: 9, fontWeight: 700, color: "#10b981" }}>{i + 1}</span>
+              <div className="w-6 h-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#10b981" }}>{i + 1}</span>
               </div>
               <div>
                 <p className="text-sm font-medium text-white">{item.label}</p>

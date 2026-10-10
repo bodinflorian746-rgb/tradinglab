@@ -163,7 +163,7 @@ function Sidebar({ phases, activeSection, onNavigate, duration }: SidebarProps) 
                   >
                     {/* Icon */}
                     <div
-                      className={`shrink-0 w-[18px] h-[18px] rounded-full flex items-center justify-center border transition-all duration-300 ${
+                      className={`shrink-0 w-[22px] h-[22px] rounded-full flex items-center justify-center border transition-all duration-300 ${
                         done
                           ? "bg-emerald-500 border-emerald-500"
                           : current
@@ -176,7 +176,7 @@ function Sidebar({ phases, activeSection, onNavigate, duration }: SidebarProps) 
                           <path d="M1.5 4l2 2 3-3" stroke="#09090b" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       ) : (
-                        <span style={{ fontSize: 7, fontWeight: 700, color: current ? "#10b981" : "#52525b" }}>
+                        <span style={{ fontSize: 12, fontWeight: 700, color: current ? "#10b981" : "#9ca0ab" }}>
                           {i + 1}
                         </span>
                       )}
@@ -314,7 +314,7 @@ function ProgressBar({ phases }: { phases: boolean[] }) {
                   />
                   <span
                     className="text-[10px] font-medium hidden sm:block transition-colors duration-300"
-                    style={{ color: done ? "#34d399" : current ? "#e4e4e7" : "#52525b" }}
+                    style={{ color: done ? "#34d399" : current ? "#e4e4e7" : "#9ca0ab" }}
                   >
                     {label}
                   </span>
@@ -681,7 +681,7 @@ function QuizOptionBadge({ letter, state }: { letter: string; state: QuizOptionS
   return (
     <span
       className={`shrink-0 w-[22px] h-[22px] mt-0.5 rounded-full border flex items-center justify-center transition-all duration-300 ${cls[state]}`}
-      style={{ fontSize: 10, fontWeight: 700 }}
+      style={{ fontSize: 12, fontWeight: 700 }}
     >
       {state === "correct" ? (
         <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
