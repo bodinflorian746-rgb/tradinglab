@@ -47,7 +47,7 @@ const ROUTES = [
   { path: "/fr/formations/avance/lecon7", type: "serveur", source: "app/[locale]/(premium)/formations/avance/lecon7/page.tsx", marker: "Les 3 méthodes : rejet de bougie, retest du niveau cassé, sweep +" },
   { path: "/fr/formations/avance/lecon8", type: "serveur", source: "app/[locale]/(premium)/formations/avance/lecon8/page.tsx", marker: "Biais de marché (haussier / baissier / neutre)" },
   { path: "/fr/formations/avance/lecon9", type: "serveur", source: "app/[locale]/(premium)/formations/avance/lecon9/page.tsx", marker: "Enregistre chaque trade dans ton journal : confluences présentes" },
-  { path: "/fr/formations/debutant/lecon1", type: "client", source: "app/[locale]/(premium)/formations/debutant/lecon1/_content-fr.tsx + lib/lessons.ts", marker: "Si les acheteurs sont plus nombreux et plus agressifs → le prix monte" },
+  { path: "/fr/formations/debutant/lecon1", type: "client", source: "lib/lessons.ts (lecon1) via app/[locale]/(premium)/formations/debutant/lecon1/_content-fr.tsx", marker: "Si les acheteurs sont plus nombreux et plus agressifs → le prix monte" },
   { path: "/fr/formations/debutant/lecon2", type: "serveur", source: "lib/lessons.ts (lecon2) via DebutantLessonView", marker: "Long = tu veux que le prix monte APRÈS que tu aies acheté" },
   { path: "/fr/formations/debutant/lecon3", type: "serveur", source: "app/[locale]/(premium)/formations/debutant/lecon3/page.tsx", marker: "Open (O), le prix au moment où la période commence" },
   { path: "/fr/formations/debutant/lecon4", type: "serveur", source: "app/[locale]/(premium)/formations/debutant/lecon4/page.tsx", marker: "BID = prix de vente (toujours le moins élevé des deux)" },
@@ -61,10 +61,10 @@ const ROUTES = [
   { path: "/fr/formations/intermediaire/lecon2", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon2/page.tsx", marker: "Cherche les creux alignés sur le graphique" },
   { path: "/fr/formations/intermediaire/lecon3", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon3/page.tsx", marker: "Trace ton rectangle sur cette consolidation" },
   { path: "/fr/formations/intermediaire/lecon4", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon4/page.tsx", marker: "EUR/USD Daily haussier. Le prix vient de faire un nouveau HH à" },
-  { path: "/fr/formations/intermediaire/lecon5", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon5/page.tsx", marker: "Un niveau où le prix a déjà réagi. Un ancien support, une résistance" },
+  { path: "/fr/formations/intermediaire/lecon5", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon5/page.tsx", marker: "Un niveau où le prix a déjà réagi : un ancien support, une résistance, ou la zone de départ" },
   { path: "/fr/formations/intermediaire/lecon6", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon6/page.tsx", marker: "Mèche haute + clôture sous la résistance" },
   { path: "/fr/formations/intermediaire/lecon7", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon7/page.tsx", marker: "Entrée sur signal de bougie, timing final" },
-  { path: "/fr/formations/intermediaire/lecon8", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon8/page.tsx", marker: "Les zones de support/résistance, SD zones et structures importantes" },
+  { path: "/fr/formations/intermediaire/lecon8", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon8/page.tsx", marker: "Il descend à 1.0940. Tu paniques et tu coupes. Le prix repart à 1.1020 sans toi." },
   { path: "/fr/formations/intermediaire/lecon9", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon9/page.tsx", marker: "Retracement superficiel, tendance très forte, peu de correction. Rare" },
   { path: "/fr/formations/macro/avance/lecon1", type: "client", source: "app/[locale]/(premium)/formations/macro/avance/lecon1/_content-fr.tsx", marker: "Tu observes DXY + EUR/USD entre 19h45 et 21h00" },
   { path: "/fr/formations/macro/avance/lecon2", type: "client", source: "app/[locale]/(premium)/formations/macro/avance/lecon2/_content-fr.tsx", marker: "Le taux de chômage. Parfois plus important que le headline si le" },
@@ -84,8 +84,8 @@ const ROUTES = [
   { path: "/fr/formations/macro/intermediaire/lecon6", type: "client", source: "app/[locale]/(premium)/formations/macro/intermediaire/lecon6/_content-fr.tsx", marker: "Y a-t-il un CPI, un NFP, un FOMC ou un cluster" },
   { path: "/fr/jeux/build-the-trade", type: "jeu", source: "lib/games/build-the-trade.ts", marker: "Tendance haussière nette. Le prix vient de finir un pullback" },
   { path: "/fr/jeux/buy-sell-no-trade", type: "jeu", source: "lib/games/buy-sell-no-trade.ts", marker: "Le prix consolide sous une résistance majeure puis vient de la casser" },
-  { path: "/fr/jeux/find-the-mistake", type: "jeu", source: "lib/games/find-the-mistake.ts", marker: "Tu prends ce BUY pile sous une résistance HTF testée plusieurs fois" },
-  { path: "/fr/jeux/place-stop", type: "jeu", source: "lib/games/place-stop.ts", marker: "Tendance haussière, le prix corrige sur la zone de demand. Tu es" },
+  { path: "/fr/jeux/find-the-mistake", type: "jeu", source: "lib/games/find-the-mistake.ts", marker: "UT supérieure clairement baissière. Tu prends ce BUY sur un rebond local." },
+  { path: "/fr/jeux/place-stop", type: "jeu", source: "lib/games/place-stop.ts", marker: "Tendance haussière, le prix corrige sur le support. Tu es entré au rebond." },
   { path: "/fr/strategies/ict/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/ict/lecon1/_content-fr.tsx", marker: "Le marché va chercher les zones de liquidité évidentes, equal" },
   { path: "/fr/strategies/ict/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/ict/lecon2/_content-fr.tsx", marker: "Un FVG ou un OB seul ne vaut rien sans contexte structurel, sweep" },
   { path: "/fr/strategies/ict/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/ict/lecon3/_content-fr.tsx", marker: "Le marché ne produit ses vrais mouvements que dans certaines fenêtres" },
@@ -95,17 +95,17 @@ const ROUTES = [
   { path: "/fr/strategies/macro-trading/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/macro-trading/lecon2/_content-fr.tsx", marker: "La première impulsion NFP est portée par le chiffre headline, pas par" },
   { path: "/fr/strategies/macro-trading/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/macro-trading/lecon3/_content-fr.tsx", marker: "Un régime risk-off se confirme par CONCORDANCE de plusieurs signaux" },
   { path: "/fr/strategies/macro-trading/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/macro-trading/lecon4/_content-fr.tsx", marker: "Le filtre macro est une logique NÉGATIVE : chercher des raisons de" },
-  { path: "/fr/strategies/multi-timeframe/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/multi-timeframe/lecon1/_content-fr.tsx", marker: "Un seul timeframe donne une vision incomplète du marché" },
-  { path: "/fr/strategies/multi-timeframe/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/multi-timeframe/lecon2/_content-fr.tsx", marker: "Le HTF définit la direction dominante du marché" },
+  { path: "/fr/strategies/multi-timeframe/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/multi-timeframe/lecon1/_content-fr.tsx", marker: "Un setup parfait sur M15 peut devenir un piège complet si le Daily raconte" },
+  { path: "/fr/strategies/multi-timeframe/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/multi-timeframe/lecon2/_content-fr.tsx", marker: "construit le contexte avant toute exécution : il identifie la direction dominante, repère les zones importantes" },
   { path: "/fr/strategies/multi-timeframe/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/multi-timeframe/lecon3/_content-fr.tsx", marker: "Une zone forte cumule plusieurs raisons de réaction, la confluence" },
-  { path: "/fr/strategies/multi-timeframe/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/multi-timeframe/lecon4/_content-fr.tsx", marker: "Le LTF ne sert pas à analyser, il sert à confirmer que la zone réagit" },
-  { path: "/fr/strategies/multi-timeframe/lecon5", type: "client", source: "app/[locale]/(premium)/strategies/multi-timeframe/lecon5/_content-fr.tsx", marker: "Le process descend toujours du HTF vers le LTF, jamais l’inverse" },
+  { path: "/fr/strategies/multi-timeframe/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/multi-timeframe/lecon4/_content-fr.tsx", marker: "ne sert pas à analyser, il sert à confirmer que la zone réagit" },
+  { path: "/fr/strategies/multi-timeframe/lecon5", type: "client", source: "app/[locale]/(premium)/strategies/multi-timeframe/lecon5/_content-fr.tsx", marker: "descend toujours de l’UT supérieure vers l’UT inférieure, jamais l’inverse" },
   { path: "/fr/strategies/price-action/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/price-action/lecon1/_content-fr.tsx", marker: "Une bougie se lit par 4 éléments : taille du corps, mèches, position" },
   { path: "/fr/strategies/price-action/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/price-action/lecon2/_content-fr.tsx", marker: "Le contact avec un niveau structurel est le critère le plus" },
   { path: "/fr/strategies/price-action/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/price-action/lecon3/_content-fr.tsx", marker: "Engulfing = 2 bougies de sens opposé, la 2ème englobe ENTIÈREMENT le" },
   { path: "/fr/strategies/price-action/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/price-action/lecon4/_content-fr.tsx", marker: "Daily = biais. H4 = zones. H1 = alignement structurel. M15 = timing" },
   { path: "/fr/strategies/reversal/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/reversal/lecon1/_content-fr.tsx", marker: "Double top = 2 sommets quasi égaux sur une résistance après tendance" },
-  { path: "/fr/strategies/reversal/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/reversal/lecon2/_content-fr.tsx", marker: "Confirmation = clôture franche sous ou au-dessus de la neckline. Pas" },
+  { path: "/fr/strategies/reversal/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/reversal/lecon2/_content-fr.tsx", marker: "Confirmation = clôture franche sous ou au-dessus de la ligne de cou. Pas de mèche." },
   { path: "/fr/strategies/reversal/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/reversal/lecon3/_content-fr.tsx", marker: "Une divergence seule ne suffit JAMAIS. La cassure du dernier" },
   { path: "/fr/strategies/reversal/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/reversal/lecon4/_content-fr.tsx", marker: "Trader un reversal : checklist d’invalidation" },
   { path: "/fr/strategies/smc/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/smc/lecon1/_content-fr.tsx", marker: "La lecture SMC distingue structure interne (M15/H1) et externe" },
@@ -116,7 +116,7 @@ const ROUTES = [
   { path: "/fr/strategies/support-resistance/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/support-resistance/lecon1/_content-fr.tsx", marker: "Une zone valide comporte minimum 2 touches confirmées, idéalement 3" },
   { path: "/fr/strategies/support-resistance/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/support-resistance/lecon2/_content-fr.tsx", marker: "Les confluences (niveau rond, Fibonacci, MM, Order Block) multiplient" },
   { path: "/fr/strategies/support-resistance/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/support-resistance/lecon3/_content-fr.tsx", marker: "Un flip exige un breakout qualifié : clôture franche, distance" },
-  { path: "/fr/strategies/support-resistance/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/support-resistance/lecon4/_content-fr.tsx", marker: "Un fake breakout combine 4 critères : wick long sans clôture franche" },
+  { path: "/fr/strategies/support-resistance/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/support-resistance/lecon4/_content-fr.tsx", marker: "Un fake breakout combine 4 critères : mèche longue sans clôture franche, réintégration rapide" },
   { path: "/fr/strategies/trend-following/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/trend-following/lecon1/_content-fr.tsx", marker: "Une tendance exploitable exige 2 HL + 2 HH (haussière) ou 2 LH + 2 LL" },
   { path: "/fr/strategies/trend-following/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/trend-following/lecon2/_content-fr.tsx", marker: "Une trendline tradable s’appuie sur 2 points minimum (3 idéalement)" },
   { path: "/fr/strategies/trend-following/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/trend-following/lecon3/_content-fr.tsx", marker: "Pullback Fibonacci 0.618/0.786 : entrée optimale" },
@@ -149,8 +149,20 @@ function variants(marker) {
     });
   return [...new Set([marker, esc(false), esc(true)])];
 }
+// Espaces : le texte des leçons emploie des espaces insécables (U+00A0) et fines insécables (U+202F)
+// entre un nombre et son unité ou ses milliers ; la page peut les servir telles quelles, échappées
+// (\u00a0) ou en entités HTML. Marqueur et page sont comparés après réduction de toute espace à
+// une espace ordinaire : le type d'espace ne compte pas.
+const SPACES = /\u00a0|\u202f|\\u00a0|\\u202f|&nbsp;|&#160;|&#xa0;|&#8239;|&#x202f;/gi;
+const normCache = new Map();
+function norm(text) {
+  let n = normCache.get(text);
+  if (n === undefined) { n = text.replace(SPACES, " "); if (normCache.size > 200) normCache.clear(); normCache.set(text, n); }
+  return n;
+}
 function contains(haystack, marker) {
-  return variants(marker).some((v) => haystack.includes(v));
+  const h = norm(haystack);
+  return variants(norm(marker)).some((v) => h.includes(v));
 }
 
 // ─── HTTP (GET anonymes uniquement) ─────────────────────────────────────────
