@@ -26,7 +26,9 @@ function record(rule, out) {
   const r = resultOf(out);
   if (!r) { failed = true; table.push([rule, "ÉCHEC D'EXÉCUTION", out.split("\n").slice(-5).join(" ")]); return; }
   if (r.e > 0) failed = true;
-  const detail = out.split("\n").filter((l) => /ERREUR|AVERTISSEMENT/.test(l)).slice(0, 12).join("\n    ");
+  // Erreurs d'abord : les avertissements ne doivent jamais masquer une erreur dans le résumé
+  const lines = out.split("\n");
+  const detail = [...lines.filter((l) => /ERREUR/.test(l)), ...lines.filter((l) => /AVERTISSEMENT/.test(l) && !/ERREUR/.test(l))].slice(0, 14).join("\n    ");
   table.push([rule, `${r.e} erreur(s)${r.w ? `, ${r.w} avertissement(s)` : ""}`, detail]);
 }
 
