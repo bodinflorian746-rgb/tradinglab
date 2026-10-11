@@ -368,6 +368,41 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
         if (ratio < 3 && !seen.has("c" + own)) { seen.add("c" + own); E("page", `texte peu contrasté (${ratio.toFixed(2)}) « ${own.slice(0, 40)} »`); }
       }
     }
+    // Tableaux : jamais un mot de moins de 12 lettres, un sigle ou « R/R » coupé en fin de ligne
+    // (seuls les mots très longs peuvent l'être, à la syllabe) ; chaque tableau défile dans son
+    // propre cadre ; la page ne défile jamais horizontalement. Un retour à la ligne sur un tiret
+    // déjà présent dans le mot (« ré-ouvres ») n'est pas une coupure.
+    for (const t of main.querySelectorAll("table")) {
+      if (t.closest("[data-lesson-chart], [aria-hidden='true']")) continue;
+      let framed = false;
+      for (let e = t.parentElement; e && e !== main.parentElement; e = e.parentElement) { const ox = getComputedStyle(e).overflowX; if (ox === "auto" || ox === "scroll") { framed = true; break; } }
+      if (!framed) E("page", `tableau sans cadre de défilement (« ${t.textContent.trim().slice(0, 30)} »)`);
+      for (const cell of t.querySelectorAll("th, td")) {
+        const walker = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT);
+        for (let n = walker.nextNode(); n; n = walker.nextNode()) for (const m of n.textContent.matchAll(/[\p{L}\p{N}'’/&.]+/gu)) {
+          const r = document.createRange();
+          r.setStart(n, m.index); r.setEnd(n, m.index + m[0].length);
+          if (new Set([...r.getClientRects()].filter((x) => x.width > 0).map((x) => Math.round(x.top))).size < 2) continue;
+          const letters = (m[0].match(/\p{L}/gu) || []).length;
+          const sigle = m[0].includes("/") || /^[\p{Lu}\d&.]{2,}$/u.test(m[0]);
+          if ((letters < 12 || sigle) && !seen.has("w" + m[0])) { seen.add("w" + m[0]); E("page", `mot coupé dans un tableau « ${m[0]} »`); }
+        }
+      }
+    }
+    // La racine du site coupe tout débordement horizontal (overflow-x: clip) : un contenu trop large
+    // ne fait pas défiler la page, il disparaît. Tout texte qui dépasse le bord droit de l'écran hors
+    // d'un cadre de défilement (tableau) est donc coupé.
+    if (document.documentElement.scrollWidth > innerWidth + 1) E("page", `la page défile horizontalement (${document.documentElement.scrollWidth - innerWidth} px de trop)`);
+    for (const el of main.querySelectorAll("*")) {
+      if (el.closest("[data-lesson-chart], svg, nav, footer, [aria-hidden='true']")) continue;
+      const own = [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join("").trim();
+      if (!own) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.right <= innerWidth + 1) continue;
+      let framed = false;
+      for (let e = el.parentElement; e && e !== main.parentElement; e = e.parentElement) { const ox = getComputedStyle(e).overflowX; if (ox === "auto" || ox === "scroll") { framed = true; break; } }
+      if (!framed && !seen.has("x" + own)) { seen.add("x" + own); E("page", `texte qui dépasse l'écran à droite (${Math.round(r.right - innerWidth)} px coupés) « ${own.slice(0, 40)} »`); }
+    }
   }
 
   for (const id of ids) {
@@ -604,6 +639,7 @@ const EXPECT = {
   "repère collé à une bougie": /repère « .* » collé à/, "étiquette de colonne sans lien": /sans lien avec son objet/,
   "trait de repère à travers une bougie": /qui traverse la bougie/, "texte plus large que sa pastille": /plus large que sa pastille/,
   "bougies trop serrées": /bougies trop serrées/, "schéma de comparaison rogné": /schéma de comparaison rogné/, "repère détaché de son point": /détaché de son point/, "texte de page sous 12 px": /page : texte de 10/, "texte de page peu contrasté": /page : texte peu contrasté/,
+  "mot coupé dans un tableau": /mot coupé dans un tableau/, "texte qui dépasse l'écran": /dépasse l'écran|la page défile horizontalement/, "tableau sans cadre de défilement": /tableau sans cadre de défilement/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
@@ -660,6 +696,23 @@ const MUTATIONS = {
   "bougies trop serrées": () => { const s = document.querySelector("svg[data-candles]"); const sc = JSON.parse(s.dataset.scale); sc.slot = 2; s.dataset.scale = JSON.stringify(sc); },
   "texte de page sous 12 px": () => { const p = [...document.querySelectorAll("main p")].find((x) => !x.closest("[data-lesson-chart]") && x.textContent.trim().length > 20); p.style.fontSize = "10px"; },
   "texte de page peu contrasté": () => { const p = [...document.querySelectorAll("main p")].find((x) => !x.closest("[data-lesson-chart]") && x.textContent.trim().length > 20); p.style.color = "rgba(255,255,255,0.18)"; },
+  "mot coupé dans un tableau": () => {
+    // cellule rétrécie et coupure à n'importe quelle lettre : un mot court passe sur deux lignes
+    const root = document.querySelector("main") || document.body;
+    const c = [...root.querySelectorAll("table td")].find((x) => !x.closest("[data-lesson-chart]") && /\p{L}{5,}/u.test(x.textContent) && x.getBoundingClientRect().width > 0);
+    c.innerHTML = '<span style="display:inline-block;width:2ch;word-break:break-all">Secondes</span>';
+  },
+  "texte qui dépasse l'écran": () => {
+    // paragraphe élargi hors de tout cadre de défilement : coupé par la racine du site
+    const root = document.querySelector("main") || document.body;
+    const p = [...root.querySelectorAll("p")].find((x) => !x.closest("[data-lesson-chart], table, nav, footer") && x.textContent.trim().length > 20);
+    p.style.width = "4000px"; p.style.maxWidth = "none";
+  },
+  "tableau sans cadre de défilement": () => {
+    const root = document.querySelector("main") || document.body;
+    const t = [...root.querySelectorAll("table")].find((x) => !x.closest("[data-lesson-chart]"));
+    for (let e = t.parentElement; e; e = e.parentElement) { const ox = getComputedStyle(e).overflowX; if (ox === "auto" || ox === "scroll") { e.style.overflowX = "visible"; break; } }
+  },
   "R/R écrit à la main": () => { const c = document.querySelector("[data-rr]"); c.textContent = "R/R 1:9"; },
   "étiquettes superposées": () => { const [a, b] = document.querySelectorAll("g[data-label-for] rect"); b.setAttribute("x", a.getAttribute("x")); b.setAttribute("y", a.getAttribute("y")); },
   "description accessible vide": () => { const s = document.querySelector("svg[aria-describedby]"); document.getElementById(s.getAttribute("aria-describedby")).textContent = ""; },
@@ -685,8 +738,8 @@ if (AUTOTEST) {
   await ctx.addInitScript(() => { try { window.localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch {} });
   const page = await ctx.newPage();
   // Chaque défaut est injecté dans la 1re page où il s'applique (R/R et OB : Avancé 7 ; pivots : Intermédiaire 5 ;
-  // schéma à plusieurs panneaux : Trend Following 2)
-  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon7|intermediaire\/lecon5|trend-following\/lecon2/.test(p.url));
+  // schéma à plusieurs panneaux : Trend Following 2 ; tableau : Débutant 1)
+  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon7|intermediaire\/lecon5|trend-following\/lecon2|debutant\/lecon1$/.test(p.url));
   let missed = 0;
   for (const [name, fn] of Object.entries(MUTATIONS).filter(([n]) => !process.env.MUT_ONLY || new RegExp(process.env.MUT_ONLY).test(n))) {
     let errs = null;
