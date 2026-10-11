@@ -117,9 +117,11 @@ type V2CandleProps = Candle & {
   still?: boolean;
   /** Clôture précédente : couleur d'une bougie sans corps (jamais de bougie neutre) */
   prevClose?: number;
+  /** Jeux : mèche au plus un tiers du corps (1 à 3 px) ; sinon 3 px (rendu des leçons inchangé) */
+  thinWick?: boolean;
 };
 
-export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still = false, prevClose }: V2CandleProps) {
+export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still = false, prevClose, thinWick = false }: V2CandleProps) {
   // Toujours verte ou rouge : sans corps, la couleur suit la clôture précédente
   const up = c > o || (c === o && (prevClose === undefined || c >= prevClose));
   const body = up ? "var(--v2-bull)" : "var(--v2-bear)";
@@ -131,8 +133,8 @@ export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still
   return (
     <g className={dimClass}>
       <g className={still ? "v2-candle v2-candle--static" : "v2-candle"} style={cssVars({ "--i": index })}>
-        {/* Mèche toujours nettement plus fine que le corps : au plus un tiers de sa largeur (1 à 3 px) */}
-        <line x1={x} x2={x} y1={toY(h)} y2={toY(l)} stroke={wick} strokeWidth={Math.max(1, Math.min(3, width / 3))} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        {/* Jeux : mèche toujours nettement plus fine que le corps, au plus un tiers de sa largeur (1 à 3 px) */}
+        <line x1={x} x2={x} y1={toY(h)} y2={toY(l)} stroke={wick} strokeWidth={thinWick ? Math.max(1, Math.min(3, width / 3)) : 3} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
         <rect x={x - width / 2} y={bodyBox.y} width={width} height={bodyBox.h} rx={Math.min(3, bodyBox.h / 2)} fill={body} />
       </g>
     </g>
@@ -728,12 +730,12 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
           const isFuture = sep !== undefined && i >= sep;
           // Avant la réponse, les bougies restent nettes, aux couleurs de la charte (plus d'estompage
           // quand la zone s'allume : la zone est derrière elles et se voit à travers)
-          if (question) return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={i} dim="full" />;
+          if (question) return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={i} dim="full" />;
           if (mode === "reveal" && isFuture) {
             // Montée par la page toutes les 420ms : apparaît à son arrivée
-            return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="full" />;
+            return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={0} dim="full" />;
           }
-          return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="now" still />;
+          return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={0} dim="now" still />;
         })}
 
         {/* Impact : le stop touché est marqué à la bougie qui l'atteint */}

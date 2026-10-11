@@ -88,7 +88,11 @@ function swings(cs: Candle[], side: "h" | "l"): number[] {
  * asset / session / volatility : classe des séquences réelles ; preNews : séquences
  * de l'heure qui précède une news majeure.
  */
-export type RealismOptions = { calmPast?: boolean; asset?: Asset; session?: Session; volatility?: Volatility; preNews?: boolean };
+export type RealismOptions = {
+  calmPast?: boolean; asset?: Asset; session?: Session; volatility?: Volatility; preNews?: boolean;
+  /** Pas de série de corps minuscules sous des mèches immenses (jeux : activé par realizeChart ; leçons : inchangé) */
+  noWickRuns?: boolean;
+};
 
 /** Contexte de marché d'un round : choisit la classe des séquences réelles. */
 export type MarketCtx = { asset?: Asset; session?: Session };
@@ -363,7 +367,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
         if (!force && side === "l" && Math.abs(k.c - k.o) < 0.15 * (k.h - v) && k[side] - v > Math.abs(k.c - k.o)) return false;
         k[side] = v; return true;
       };
-      if (raise(false) || lower(false) || raise(true) || lower(true)) return true;
+      if (opts.noWickRuns ? raise(false) || lower(false) || raise(true) || lower(true) : raise(true) || lower(true)) return true;
     }
     for (const r of [i - 1, i]) all[r][side] = side === "h" ? Math.max(orig[r].h, all[r].o, all[r].c) : Math.min(orig[r].l, all[r].o, all[r].c);
     return true;
@@ -391,7 +395,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
   //    dont le corps fait moins de 20 % de l'amplitude et dont l'amplitude dépasse 1,2 × la
   //    médiane voit ses mèches raccourcies (dans leurs bornes) jusqu'à l'amplitude médiane ;
   //    retour en arrière si l'ordre des extrêmes avec une voisine change.
-  {
+  if (opts.noWickRuns) {
     const medR = median(all.map((k) => k.h - k.l));
     const longWick = (k: Candle) => k.h - k.l >= 1.2 * medR && Math.abs(k.c - k.o) < 0.2 * (k.h - k.l);
     const sameOrder = (i: number) => [i - 1, i + 1].every((j) => j < 0 || j >= n || (["h", "l"] as const).every((sd) => Math.sign(orig[i][sd] - orig[j][sd]) === 0 || Math.sign(all[i][sd] - all[j][sd]) === Math.sign(orig[i][sd] - orig[j][sd])));
@@ -428,7 +432,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
 
 /** Applique la passe de réalisme à un graphique (passé + futur) et élargit son domaine. */
 export function realizeChart<T extends { past: Candle[]; future: Candle[]; domain: { min: number; max: number } }>(chart: T, levels: RealismLevels, seed: number, opts: RealismOptions = {}): T {
-  const { past, future } = realizeCandles(chart.past, chart.future, levels, seed, opts);
+  const { past, future } = realizeCandles(chart.past, chart.future, levels, seed, { noWickRuns: true, ...opts });
   const vals = [...past, ...future].flatMap((k) => [k.h, k.l]);
   return {
     ...chart,
