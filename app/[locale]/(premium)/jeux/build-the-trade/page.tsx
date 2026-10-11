@@ -19,7 +19,7 @@ import {
   type TpType,
 } from "@/lib/games/build-the-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, rrText, type VerdictState } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, useChartInView, rrText, type VerdictState } from "@/app/components/games/v2/ui";
 
 // Couleur du verdict de setup → état du verdict superposé (icône, titre et points)
 const VERDICT_STATE: Record<"emerald" | "amber" | "red", VerdictState> = { emerald: "good", amber: "partial", red: "bad" };
@@ -249,6 +249,8 @@ export default function BuildTheTradePage() {
   const [phase, setPhase] = useState<"build" | "reveal" | "feedback">("build");
   const [revealed, setRevealed] = useState(0);
   const [result, setResult] = useState<BuildTradeResult | null>(null);
+  // Graphique entier à l'écran (téléphone) : à chaque manche, puis dès le choix fait
+  useChartInView(seed === null ? null : `${seed}:${idx}`, phase === "build" ? null : `${seed}:${idx}`);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);

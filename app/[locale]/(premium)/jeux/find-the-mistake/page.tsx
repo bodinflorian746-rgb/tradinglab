@@ -16,7 +16,7 @@ import {
   type ScenarioChart,
 } from "@/lib/games/find-the-mistake";
 import { GameChartV2, type GameChartMark } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, useChartInView } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { sessionLabel } from "@/lib/games/shared";
 
@@ -187,6 +187,8 @@ export default function FindTheMistakePage() {
   const jargon = useJargon(locale, seed);
   const [chosen, setChosen] = useState<MistakeId | null>(null);
   const [result, setResult] = useState<MistakeScoreResult | null>(null);
+  // Graphique entier à l'écran (téléphone) : à chaque manche, puis dès le choix fait
+  useChartInView(seed === null ? null : `${seed}:${idx}`, result === null ? null : `${seed}:${idx}`);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);

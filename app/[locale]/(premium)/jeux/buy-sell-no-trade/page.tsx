@@ -16,7 +16,7 @@ import {
   type ScenarioInstance,
 } from "@/lib/games/buy-sell-no-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { ChoiceRow, StepBadge, VerdictOverlay, type ChoiceOption, GeneralCasesNote, JargonHints, useJargon } from "@/app/components/games/v2/ui";
+import { ChoiceRow, StepBadge, VerdictOverlay, type ChoiceOption, GeneralCasesNote, JargonHints, useJargon, useChartInView } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { sessionLabel } from "@/lib/games/shared";
 
@@ -238,6 +238,8 @@ export default function BuySellNoTradePage() {
   });
   const [chosen, setChosen] = useState<GameChoice | null>(null);
   const [phase, setPhase] = useState<"placing" | "revealing" | "feedback">("placing");
+  // Graphique entier à l'écran (téléphone) : à chaque manche, puis dès le choix fait
+  useChartInView(seed === null ? null : `${seed}:${idx}`, phase === "placing" ? null : `${seed}:${idx}`);
   const [revealed, setRevealed] = useState(0);
   const [lastPoints, setLastPoints] = useState(0);
   const [showSummary, setShowSummary] = useState(false);

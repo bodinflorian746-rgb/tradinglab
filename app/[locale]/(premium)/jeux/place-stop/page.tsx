@@ -20,7 +20,7 @@ import {
   type TradeDirection,
 } from "@/lib/games/place-stop";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, rrText, type VerdictState } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, useChartInView, rrText, type VerdictState } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { formatPrice } from "@/lib/games/price-scale";
 import { firstDefinitionOnly } from "@/lib/games/glossary";
@@ -266,6 +266,8 @@ export default function PlaceStopPage() {
   const [phase, setPhase] = useState<"placing" | "revealing" | "feedback">("placing");
   const [revealed, setRevealed] = useState(0);
   const [result, setResult] = useState<ScoreResult | null>(null);
+  // Graphique entier à l'écran (téléphone) : à chaque manche, puis dès le choix fait
+  useChartInView(seed === null ? null : `${seed}:${idx}`, phase === "placing" ? null : `${seed}:${idx}`);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
