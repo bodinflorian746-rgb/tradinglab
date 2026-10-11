@@ -10,7 +10,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, levelTouches, srGuards,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, srGuards,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -883,29 +883,31 @@ function shapeSweepLowReversal(rng: () => number, m: number): ShapeOutput {
 // 10. FVG continuation (BUY)
 function shapeFvgContinuation(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
-  let p = 2 + rng() * 0.3;
+  let p = 3.5 + rng() * 0.3;
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = o + (rng() - 0.4) * 0.4 * m;
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
-  const baseHigh = Math.max(...past.slice(-3).map((k) => k.h));
-  past.push(candle(p, p + (2.0 + rng() * 0.3) * m, (0.3 + rng() * 0.2) * m, 0.12));
-  p = past[past.length - 1].c;
+  // Impulsion en 3 bougies : le FVG reste un petit vide proportionné aux bougies voisines
+  const imp = bullImpulse3(rng, m, p, past);
+  p = imp.p;
+  const fvgLow = imp.fvgLow;
+  const fvgHigh = imp.fvgHigh;
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = o + (0.25 + rng() * 0.25) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
+    const k = candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m);
+    k.l = Math.max(k.l, fvgHigh + 0.04 * m);  // la continuation ne rentre pas dans le FVG
+    past.push(k);
     p = c;
   }
-  const fvgLow = baseHigh;
-  const fvgHigh = past[past.length - 2].l;
-  // Pullback dans le FVG
+  // Pullback dans le FVG : la 3e bougie clôture au milieu du FVG (retour garanti)
   const target = (fvgLow + fvgHigh) / 2;
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = Math.max(target, o - (0.3 + rng() * 0.3) * m);
+    const c = i === 2 ? target : Math.max(target, o - (0.3 + rng() * 0.3) * m);
     past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.18 + rng() * 0.18) * m));
     p = c;
   }

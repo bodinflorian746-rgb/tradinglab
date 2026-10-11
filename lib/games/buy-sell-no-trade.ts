@@ -15,7 +15,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone, type ChartData, type ZoneKind,
-  VOL_MULT, mulberry32, clamp, candle, chartDomain, levelTouches, srGuards,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, srGuards,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -953,22 +953,21 @@ function genFvgReaction(rng: () => number, m: number, d: Difficulty): BuySellCha
     past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
-  const gO = p;
-  const gC = p + (2.0 + rng() * 0.4) * m;
-  past.push(candle(gO, gC, (0.3 + rng() * 0.2) * m, 0.12));
-  p = gC;
-  // 2 candles d'impulsion au-dessus du FVG
+  // Impulsion en 3 bougies : FVG réel entre la mèche haute de la 1re et la mèche basse de la
+  // 3e, un petit vide proportionné aux bougies voisines (plus une bougie géante)
+  const imp = bullImpulse3(rng, m, p, past);
+  p = imp.p;
+  const fvgLow = imp.fvgLow;
+  const fvgHigh = imp.fvgHigh;
+  // 2 candles de continuation au-dessus du FVG : le prix ne le touche pas avant le pullback final
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = o + (0.3 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m));
+    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m);
+    k.l = Math.max(k.l, fvgHigh + 0.05 * m);
+    past.push(k);
     p = c;
   }
-  // FVG réel : entre le haut de la bougie 1 (avant l'impulsion) et le bas de la
-  // bougie 3 (juste après). Le prix ne le touche pas avant le pullback final.
-  const fvgLow = past[2].h;
-  const fvgHigh = past[4].l;
-  past[5].l = Math.max(past[5].l, fvgHigh + 0.05);
   // Pullback dans le FVG — profondeur variable par difficulté ; seule la
   // dernière bougie du pullback vient tester la zone (1er retest), sans la casser.
   const pullbackTarget = d === "beginner"
@@ -1131,23 +1130,20 @@ function genFvgOvermitigated(rng: () => number, m: number, d: Difficulty): BuySe
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
-  // Bas du FVG = high de la dernière base candle
-  const baseHigh = Math.max(...past.slice(-3).map((k) => k.h));
-  // Impulse (crée la FVG)
-  const iO = p;
-  const iC = p + (2.0 + rng() * 0.3) * m;
-  past.push(candle(iO, iC, (0.3 + rng() * 0.2) * m, 0.12));
-  p = iC;
-  // 2 candles au-dessus
+  // Impulsion en 3 bougies (crée le FVG) : un petit vide proportionné aux bougies voisines
+  const imp = bullImpulse3(rng, m, p, past);
+  p = imp.p;
+  const fvgLow  = imp.fvgLow;
+  const fvgHigh = imp.fvgHigh;
+  // 2 candles au-dessus, sans rentrer dans le FVG
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = o + (0.25 + rng() * 0.25) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
+    const k = candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m);
+    k.l = Math.max(k.l, fvgHigh + 0.04 * m);
+    past.push(k);
     p = c;
   }
-  // Haut du FVG = low de la candle juste après l'impulse
-  const fvgLow  = baseHigh;
-  const fvgHigh = past[past.length - 2].l;  // bottom of c3 (1st candle after impulse)
   // Pullback profond — close target ~10% au-dessus du bas (mitigation 85%+)
   const target = fvgLow + (fvgHigh - fvgLow) * 0.1;
   for (let i = 0; i < 5; i++) {
@@ -1159,7 +1155,7 @@ function genFvgOvermitigated(rng: () => number, m: number, d: Difficulty): BuySe
   // 2 candles indécises au fond du FVG (pas de réaction = piège mental).
   // On contraint le close à rester dans le bas du FVG (max = target + 5% du
   // FVG) pour que le past ne révèle pas un faux rebond.
-  const indecMax = fvgLow + (fvgHigh - fvgLow) * 0.15;
+  const indecMax = fvgLow + (fvgHigh - fvgLow) * 0.1;  // FVG proportionné : marge resserrée au fond
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.6) * 0.18 * m, target - 0.05, indecMax);

@@ -83,6 +83,20 @@ export function candle(o: number, c: number, wU: number, wD: number): Candle {
 }
 
 /**
+ * Impulsion haussière en 3 bougies franches (corps pleins, mèches courtes) qui laisse un FVG
+ * proportionné aux bougies voisines : le vide entre la mèche haute de la 1re et la mèche basse
+ * de la 3e (≈ un demi-pas m), et non toute la hauteur d'une bougie géante. Ajoute les 3 bougies
+ * à `past` ; rend les bornes du FVG et la dernière clôture.
+ */
+export function bullImpulse3(rng: () => number, m: number, p: number, past: Candle[]): { fvgLow: number; fvgHigh: number; p: number } {
+  const a = candle(p, p + (0.5 + rng() * 0.2) * m, 0.06 * m, (0.1 + rng() * 0.08) * m);
+  const b = candle(a.c, a.c + (0.6 + rng() * 0.15) * m, 0.05 * m, 0.05 * m);
+  const c = candle(b.c, b.c + (0.45 + rng() * 0.2) * m, (0.1 + rng() * 0.08) * m, 0.06 * m);
+  past.push(a, b, c);
+  return { fvgLow: a.h, fvgHigh: c.l, p: c.c };
+}
+
+/**
  * Preuve d'un support ou d'une résistance (règle PO : un niveau n'existe que si le
  * graphique le montre). `n` touches de la bande [lo, hi] : depuis le côté `from`
  * (« below » : sous une résistance ; « above » : au-dessus d'un support), le prix vient
