@@ -672,12 +672,21 @@ function shApproachResistance(rng: () => number, m: number): { chart: ScenarioCh
   const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
   past.push(...h.candles);
   let p = h.p;
-  // 4 candles testant R avec wicks (rejets passés)
+  // 4 tests de R (rejets passés), séparés par une bougie ordinaire : pas de série de mèches géantes
   for (let i = 0; i < 4; i++) {
+    if (i > 0) {
+      const o = p;
+      const c = clamp(o + (rng() - 0.5) * 0.4 * m, R - 1.3, R - 0.6);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.h = Math.min(k.h, R - 0.5);
+      past.push(k);
+      p = c;
+    }
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.5 * m, R - 1.2, R - 0.4);
-    const k = candle(o, c, (0.6 + rng() * 0.3) * m, (0.2 + rng() * 0.2) * m);
-    k.h = Math.max(k.h, R - 0.05); // « testée plusieurs fois » : la mèche entre dans la zone
+    let c = clamp(o + (rng() - 0.5) * 0.5 * m, R - 1.2, R - 0.4);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o > R - 0.8 ? -0.3 : 0.3) * m;
+    const k = candle(o, c, 0, (0.1 + rng() * 0.1) * m);
+    k.h = R - 0.05 + rng() * 0.12; // « testée plusieurs fois » : la mèche entre dans la zone, sans la traverser
     past.push(k);
     p = c;
   }
@@ -702,11 +711,21 @@ function shApproachSupport(rng: () => number, m: number): { chart: ScenarioChart
   const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.1, S + 0.1, "above", m);
   past.push(...h.candles);
   let p = h.p;
+  // 4 tests de S (rebonds passés), séparés par une bougie ordinaire : pas de série de mèches géantes
   for (let i = 0; i < 4; i++) {
+    if (i > 0) {
+      const o = p;
+      const c = clamp(o + (rng() - 0.5) * 0.4 * m, S + 0.6, S + 1.3);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.l = Math.max(k.l, S + 0.5);
+      past.push(k);
+      p = c;
+    }
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.5 * m, S + 0.4, S + 1.2);
-    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.6 + rng() * 0.3) * m);
-    k.l = Math.min(k.l, S + 0.05); // « testé plusieurs fois » : la mèche entre dans la zone
+    let c = clamp(o + (rng() - 0.5) * 0.5 * m, S + 0.4, S + 1.2);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o < S + 0.8 ? 0.3 : -0.3) * m;
+    const k = candle(o, c, (0.1 + rng() * 0.1) * m, 0);
+    k.l = S + 0.05 - rng() * 0.12; // « testé plusieurs fois » : la mèche entre dans la zone, sans la traverser
     past.push(k);
     p = c;
   }

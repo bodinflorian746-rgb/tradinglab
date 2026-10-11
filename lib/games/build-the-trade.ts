@@ -649,6 +649,8 @@ function shapeBounceSupport(rng: () => number, m: number): ShapeOutput {
   for (let i = 0; i < 3; i++) {
     const o = p;
     let c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
+    // corps réel sur le test du milieu : pas de série de corps minuscules sous des mèches géantes
+    if (i === 1 && Math.abs(c - o) < 0.3 * m) c = o + (o < S + 0.85 ? 0.3 : -0.3) * m;
     const wU = (0.2 + rng() * 0.2) * m;
     let l = Math.max(Math.min(o, c) - (0.7 + rng() * 0.3) * m, S - 0.05);
     if (i >= 1) l = Math.min(l, S + 0.05); // support « testé 2-3 fois »
@@ -695,6 +697,8 @@ function shapeRejectionResistance(rng: () => number, m: number): ShapeOutput {
   for (let i = 0; i < 3; i++) {
     const o = p;
     let c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
+    // corps réel sur le test du milieu : pas de série de corps minuscules sous des mèches géantes
+    if (i === 1 && Math.abs(c - o) < 0.3 * m) c = o + (o > R - 0.85 ? -0.3 : 0.3) * m;
     let h = Math.min(Math.max(o, c) + (0.7 + rng() * 0.3) * m, R + 0.05);
     const wD = (0.2 + rng() * 0.2) * m;
     if (i >= 1) h = Math.max(h, R - 0.05); // résistance testée plusieurs fois

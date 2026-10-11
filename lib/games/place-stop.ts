@@ -1033,11 +1033,21 @@ function scnBounceSupport(rng: () => number, m: number, d: Difficulty, mode: Pla
   const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.1, S + 0.1, "above", m);
   past.push(...h.candles);
   let p = h.p;
+  // Test, bougie ordinaire, test : pas de série de mèches géantes ; chaque test a un corps réel
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
-    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.7 + rng() * 0.3) * m);
-    k.l = Math.min(k.l, S + 0.05); // « vient de rebondir sur le support » : la mèche entre dans la zone
+    if (i === 1) {
+      const c = clamp(o + (rng() - 0.45) * 0.4 * m, S + 0.6, S + 1.3);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.l = Math.max(k.l, S + 0.5);
+      past.push(k);
+      p = c;
+      continue;
+    }
+    let c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o < S + 0.85 ? 0.3 : -0.3) * m;
+    const k = candle(o, c, (0.1 + rng() * 0.1) * m, 0);
+    k.l = S + 0.05 - rng() * 0.12; // « vient de rebondir sur le support » : la mèche entre dans la zone
     past.push(k);
     p = c;
   }
@@ -1065,11 +1075,21 @@ function scnRejectionResistance(rng: () => number, m: number, d: Difficulty, mod
   const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
   past.push(...h.candles);
   let p = h.p;
+  // Test, bougie ordinaire, test : pas de série de mèches géantes ; chaque test a un corps réel
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
-    const k = candle(o, c, (0.7 + rng() * 0.3) * m, (0.2 + rng() * 0.2) * m);
-    k.h = Math.max(k.h, R - 0.05); // « vient de rejeter la résistance avec mèches » : la mèche entre dans la zone
+    if (i === 1) {
+      const c = clamp(o + (rng() - 0.55) * 0.4 * m, R - 1.3, R - 0.6);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.h = Math.min(k.h, R - 0.5);
+      past.push(k);
+      p = c;
+      continue;
+    }
+    let c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o > R - 0.85 ? -0.3 : 0.3) * m;
+    const k = candle(o, c, 0, (0.1 + rng() * 0.1) * m);
+    k.h = R - 0.05 + rng() * 0.12; // « vient de rejeter la résistance avec mèches » : la mèche entre dans la zone
     past.push(k);
     p = c;
   }

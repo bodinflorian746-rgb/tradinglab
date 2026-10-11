@@ -827,13 +827,23 @@ function genRejectionResistance(rng: () => number, m: number, d: Difficulty): Bu
   }
   // Test résistance : wicks (intensité selon difficulté)
   const tests = d === "beginner" ? 4 : d === "intermediate" ? 3 : 2;
-  const wickK = wickAmp(d);
   for (let i = 0; i < tests; i++) {
+    // Entre deux tests, une bougie ordinaire sous la zone : pas de série de mèches géantes
+    if (i > 0) {
+      const o = p;
+      const c = clamp(o + (rng() - 0.55) * 0.4 * m, R - 1.4, R - 0.6);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.h = Math.min(k.h, R - 0.5);
+      past.push(k);
+      p = c;
+    }
+    // Test : corps réel (au moins 0,3 pas) et mèche de rejet qui entre dans la zone, sans la traverser
     const o = p;
-    const c = clamp(o + (rng() - 0.6) * 0.7 * m, R - 1.3, R - 0.4);
-    const k = candle(o, c, (1.0 + rng() * 0.4) * m * wickK, (0.2 + rng() * 0.2) * m);
+    let c = clamp(o + (rng() - 0.6) * 0.7 * m, R - 1.3, R - 0.4);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o > R - 0.85 ? -0.3 : 0.3) * m;
+    const k = candle(o, c, 0, (0.08 + rng() * 0.1) * m);
     // « La zone a déjà rejeté plusieurs fois » : la mèche entre toujours dans la zone
-    k.h = Math.max(k.h, R - 0.15);
+    k.h = R - 0.1 + rng() * 0.2;
     past.push(k);
     p = c;
   }
@@ -865,13 +875,23 @@ function genBounceSupport(rng: () => number, m: number, d: Difficulty): BuySellC
     p = c;
   }
   const tests = d === "beginner" ? 4 : d === "intermediate" ? 3 : 2;
-  const wickK = wickAmp(d);
   for (let i = 0; i < tests; i++) {
+    // Entre deux tests, une bougie ordinaire au-dessus de la zone : pas de série de mèches géantes
+    if (i > 0) {
+      const o = p;
+      const c = clamp(o + (rng() - 0.45) * 0.4 * m, S + 0.6, S + 1.4);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.l = Math.max(k.l, S + 0.5);
+      past.push(k);
+      p = c;
+    }
+    // Test : corps réel (au moins 0,3 pas) et mèche de rejet qui entre dans la zone, sans la traverser
     const o = p;
-    const c = clamp(o + (rng() - 0.4) * 0.7 * m, S + 0.4, S + 1.3);
-    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (1.0 + rng() * 0.4) * m * wickK);
+    let c = clamp(o + (rng() - 0.4) * 0.7 * m, S + 0.4, S + 1.3);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o < S + 0.85 ? 0.3 : -0.3) * m;
+    const k = candle(o, c, (0.08 + rng() * 0.1) * m, 0);
     // « La zone a déjà tenu plusieurs fois » : la mèche entre toujours dans la zone
-    k.l = Math.min(k.l, S + 0.15);
+    k.l = S - 0.1 + rng() * 0.2;
     past.push(k);
     p = c;
   }
