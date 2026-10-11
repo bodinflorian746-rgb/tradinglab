@@ -230,7 +230,7 @@ function chartIntoView(newRound: boolean) {
   if (inView && !(newRound && y > roundTop + 1)) return;
   const top = c.bottom + y - roundTop <= window.innerHeight ? roundTop : Math.max(0, c.top + y - nav - 8);
   const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  window.scrollTo({ top, behavior: smooth ? "smooth" : "auto" });
+  window.scrollTo({ top, behavior: smooth ? "smooth" : "instant" });
 }
 
 /**
