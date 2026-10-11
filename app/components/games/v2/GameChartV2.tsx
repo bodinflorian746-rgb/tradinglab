@@ -256,6 +256,8 @@ const inlineTagW = (label: string) => textWidth(label, INLINE_TAG_FS) + 14;
 const NARROW_CHART_W = 480;
 /** Écart maximal (px) entre une étiquette de ligne empilée et sa ligne : la ligne la traverse toujours */
 const PACK_SHIFT = INLINE_TAG_H / 2 - 2;
+/** Écart vertical (px) entre deux étiquettes empilées : leur contour sombre les sépare */
+const PACK_GAP = 1;
 /** Étiquette de l'erreur marquée (point, zone) : demi-pas verticaux explorés pour lui trouver une place */
 const MARK_TAG_STEPS = 40;
 
@@ -359,25 +361,52 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
     ...zoneLabelIdx.filter((i) => !(mark && showMark && mark.kind === "zone" && mark.index === i)).map((i) => ({ label: zones[i].label, price: (zones[i].y1 + zones[i].y2) / 2, line: false, isMark: false })),
     ...(mark && showMark && markPrice !== undefined ? [{ label: mark.label, price: markPrice, line: mark.kind === "line", isMark: true }] : []),
   ];
-  // Étiquettes flottantes sans place libre (ni bougie ni étiquette de ligne) dans un cadrage donné
-  const misfits = (colW: number, bandTop: number, bandBottom: number) => {
-    if (!floating.length || W <= 0 || H <= 0) return [];
+  // Étiquettes de lignes (TP, entrée, stops, candidats) : prix de leur ligne
+  const linePills: [string, number][] = !inline ? [] : [
+    ...(tpTagLabel && tpShown !== undefined ? [[tpTagLabel, tpShown] as [string, number]] : []),
+    ...(overlay?.entry?.label ? [[overlay.entry.label, overlay.entry.price] as [string, number]] : []),
+    ...(overlay?.stops ?? []).flatMap((st) => (st.label ? [[st.label, st.price] as [string, number]] : [])),
+    ...(overlay?.candidateLines ?? []).map((c) => [c.label, c.price] as [string, number]),
+  ];
+  // Cadrage approché pour une marge d'étiquettes et des bandes données (sans la pastille « ton
+  // choix ») : échelle des prix et obstacles (bougies, pastille, bandeau). Marge de 3 px autour
+  // des bougies, comme au placement réel : une marge plus prudente déplaçait une étiquette et
+  // libérait à tort la place d'une autre.
+  const frame = (colW: number, bandTop: number, bandBottom: number) => {
     const sl = (W - 2 * padX - colW) / nSlots, bw = Math.min(clamp(sl * 0.6, 8, 30), sl * 0.78);
-    // cadrage approché (sans la pastille « ton choix ») ; marge de 3 px autour des bougies, comme au
-    // placement réel : une marge plus prudente déplaçait une étiquette et libérait à tort la place
-    // d'une autre
     const tp = (bannerBottom ? bannerBottom + 12 : 14) + bandTop, bp = 14 + bandBottom;
     const ty = (p: number) => tp + ((max - p) / range) * (H - tp - bp);
     const boxes = visible.map((k, i) => ({ x1: padX + sl * (i + 0.5) - bw / 2 - 3, x2: padX + sl * (i + 0.5) + bw / 2 + 3, y1: ty(k.h) - 3, y2: ty(k.l) + 3 }));
+    boxes.push(...uiBoxes);
+    return { ty, boxes };
+  };
+  // Étiquettes de lignes sans place (ni bougie ni autre étiquette) à la hauteur de leur ligne :
+  // posées comme au placement réel, la plus longue d'abord, au bord droit puis vers la gauche,
+  // à au plus PACK_SHIFT px de leur ligne. Lignes très proches (stops et entrée à quelques
+  // pixels) : leurs étiquettes, côte à côte, glissaient sur les bougies faute de marge.
+  const lineMisfits = (colW: number, bandTop: number, bandBottom: number) => {
+    if (!linePills.length || W <= 0 || H <= 0) return [];
+    const { ty, boxes } = frame(colW, bandTop, bandBottom);
+    const shifts = [0, 2, -2, 4, -4, 6, -6, 8, -8].filter((d) => Math.abs(d) <= PACK_SHIFT);
+    return [...linePills].sort((a, b) => inlineTagW(b[0]) - inlineTagW(a[0])).filter(([label, price]) => {
+      const w = inlineTagW(label);
+      for (const d of shifts) {
+        const y = ty(price) + d;
+        if (y < INLINE_TAG_H / 2 + 1 || y > H - INLINE_TAG_H / 2 - 1) continue;
+        for (let x = W - padX - w; x >= 2; x -= 2) if (!boxes.some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1)) {
+          boxes.push({ x1: x - INLINE_TAG_GAP, x2: x + w + INLINE_TAG_GAP, y1: y - INLINE_TAG_H / 2 - PACK_GAP, y2: y + INLINE_TAG_H / 2 + PACK_GAP });
+          return false;
+        }
+      }
+      return true;
+    });
+  };
+  // Étiquettes flottantes sans place libre (ni bougie ni étiquette de ligne) dans un cadrage donné
+  const misfits = (colW: number, bandTop: number, bandBottom: number) => {
+    if (!floating.length || W <= 0 || H <= 0) return [];
+    const { ty, boxes } = frame(colW, bandTop, bandBottom);
     // les étiquettes de lignes, posées d'abord au bord droit sur leur ligne, sont aussi des obstacles ;
     // empilées si leurs lignes sont proches, elles s'en écartent d'au plus PACK_SHIFT px
-    const linePills: [string, number][] = [
-      ...(tpTagLabel && tpShown !== undefined ? [[tpTagLabel, tpShown] as [string, number]] : []),
-      ...(overlay?.entry?.label ? [[overlay.entry.label, overlay.entry.price] as [string, number]] : []),
-      ...(overlay?.stops ?? []).flatMap((st) => (st.label ? [[st.label, st.price] as [string, number]] : [])),
-      ...(overlay?.candidateLines ?? []).map((c) => [c.label, c.price] as [string, number]),
-    ];
-    boxes.push(...uiBoxes);
     for (const [l, p] of linePills) boxes.push({ x1: W - padX - inlineTagW(l) - INLINE_TAG_GAP, x2: W, y1: ty(p) - INLINE_TAG_H / 2 - 2 - PACK_SHIFT, y2: ty(p) + INLINE_TAG_H / 2 + 2 + PACK_SHIFT });
     // Posées une à une dans l'ordre du placement réel (celle de l'erreur sur sa ligne d'abord, puis
     // la plus longue) : chacune devient un obstacle pour les suivantes
@@ -406,15 +435,25 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
     top: m.some((x) => bandSide(x) === "top") ? LABEL_BAND : 0,
     bottom: m.some((x) => bandSide(x) === "bottom") ? LABEL_BAND : 0,
   });
+  // Marge élargie, d'une étiquette à la fois, tant qu'une étiquette de ligne n'a pas de place
+  const widened = (l: { col: number; top: number; bottom: number }) => {
+    let col = l.col;
+    for (let k = 0; k < linePills.length; k++) {
+      const m = lineMisfits(col, l.top, l.bottom);
+      if (!m.length || col + 10 > W / 2) break;
+      col += Math.max(...m.map(([label]) => inlineTagW(label))) + INLINE_TAG_GAP;
+    }
+    return { ...l, col };
+  };
   const labelLayout = (() => {
     if (!inline) return { col: 0, top: 0, bottom: 0 };
     if (W > 0 && W < NARROW_CHART_W && lineColW < fullColW) {
       const m = misfits(lineColW, 0, 0);
-      if (!m.length) return { col: lineColW, top: 0, bottom: 0 };
+      if (!m.length) return widened({ col: lineColW, top: 0, bottom: 0 });
       const b = bandsFor(m);
-      if ((b.top || b.bottom) && !misfits(lineColW, b.top, b.bottom).length) return { col: lineColW, ...b };
+      if ((b.top || b.bottom) && !misfits(lineColW, b.top, b.bottom).length) return widened({ col: lineColW, ...b });
     }
-    return { col: fullColW, ...bandsFor(misfits(fullColW, 0, 0)) };
+    return widened({ col: fullColW, ...bandsFor(misfits(fullColW, 0, 0)) });
   })();
   const tagColW = inline
     ? labelLayout.col
@@ -599,8 +638,6 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
         }
         return null;
       };
-      // Pastilles empilées (lignes rapprochées) : 1 px entre elles, leur contour sombre les sépare
-      const PACK_GAP = 1;
       // Bougies affichées (corps et mèche, marge de 3 px) : une pastille posée dessus cache le prix ;
       // pastille « ton choix » et bandeau du verdict : elle y serait cachée
       const candleBoxes = visible.map((k, i) => ({ x1: xOf(i) - bodyW / 2 - 3, x2: xOf(i) + bodyW / 2 + 3, y1: toY(k.h) - 3, y2: toY(k.l) + 3 }));
