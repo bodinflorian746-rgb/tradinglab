@@ -32,8 +32,8 @@ export function FOMCTimelineDiagram(_props: { locale?: "fr" | "es" | "en" } = {}
           { key: "reel", ...band, from: real, to: cs.length - 1, tone: "bull", kind: "fenetre", label: "21h00+ : direction réelle", short: "Direction réelle" },
         ],
         markers: [
-          { key: "fed", i: decision, price: cs[decision].h, label: "20h00 Décision Fed", short: "20h00 Fed", tone: "entry", side: "above" },
-          { key: "powell", i: powell, price: cs[powell].h, label: "20h30 Discours Powell", short: "20h30 Powell", tone: "zone", side: "above" },
+          { key: "fed", i: decision, price: cs[decision].h, label: "20h00 Décision Fed", short: "Fed", tone: "entry", side: "above" },
+          { key: "powell", i: powell, price: cs[powell].h, label: "20h30 Discours Powell", short: "Powell", tone: "zone", side: "above" },
           { key: "real", i: real, price: cs[real].c, label: "21h00 : clôture M5 confirmée", short: "21h00 clôture", tone: "bull", side: "below", role: "close" },
         ],
         chips: [
