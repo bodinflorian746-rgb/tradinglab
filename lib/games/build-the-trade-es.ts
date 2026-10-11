@@ -28,7 +28,7 @@ import {
   evaluateTrade,
 } from "./build-the-trade";
 import type { MarketCtx } from "./candle-realism";
-export { withAssetPrices } from "./build-the-trade";
+export { withAssetPrices, planRR } from "./build-the-trade";
 
 // ─── Reexports tipos / utilidades ────────────────────────────────────────────
 

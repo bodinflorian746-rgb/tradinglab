@@ -54,6 +54,15 @@ export function assetDecimals(asset: Asset | undefined): number {
   return asset ? ASSET_SCALE[asset].decimals : 2;
 }
 
+/**
+ * Plus petit écart de prix significatif : un demi-pas de cotation de l'actif (EUR/USD 0,000005,
+ * BTC/USD 0,5) ; sans actif (échelle abstraite des générateurs, ≈ 1 unité par bougie) : 0,001.
+ * Un seuil absolu unique vidait le R/R d'EUR/USD (risque de 0,00015 < 0,001).
+ */
+export function priceEpsilon(asset: Asset | undefined): number {
+  return asset ? 0.5 * Math.pow(10, -ASSET_SCALE[asset].decimals) : 0.001;
+}
+
 /** Prix formaté selon l'actif (EUR/USD 1.16432, XAU/USD 4384.15, BTC/USD 97432, NASDAQ 27234.5). */
 export function formatPrice(asset: Asset | undefined, p: number): string {
   return p.toFixed(assetDecimals(asset));

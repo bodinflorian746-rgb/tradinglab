@@ -14,7 +14,7 @@ import {
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
-import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
+import { assetPriceMap, mapCandle, mapDomain, mapZone, priceEpsilon } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext, Candle, ChartZone };
 
@@ -103,6 +103,8 @@ export interface BuildTradeChart {
   tps:     Record<TpType,    number>;
   // Prix actuel = dernier close du past (pour l'entry market)
   currentPrice: number;
+  /** Actif des prix (posé par withAssetPrices) ; absent en échelle abstraite */
+  asset?: Asset;
 }
 
 export const ROUNDS_PER_SESSION = 8;
@@ -1143,7 +1145,18 @@ export function withAssetPrices(chart: BuildTradeChart, inst: { asset: Asset; se
     stops:   map(chart.stops),
     tps:     map(chart.tps),
     currentPrice: f(chart.currentPrice),
+    asset:   inst.asset,
   };
+}
+
+/**
+ * R/R d'un plan (reward / risk), affiché à la construction et au verdict ; 0 si le risque est
+ * plus petit qu'un demi-pas de cotation de l'actif (seuil relatif à son échelle de prix).
+ * Affichage seulement : le barème ne dépend que des 3 décisions.
+ */
+export function planRR(chart: BuildTradeChart, picks: ChoiceSet): number {
+  const e = chart.entries[picks.entry], risk = Math.abs(e - chart.stops[picks.stop]);
+  return risk > priceEpsilon(chart.asset) ? Math.abs(chart.tps[picks.tp] - e) / risk : 0;
 }
 
 /** Graphique du scénario, avec la passe de réalisme des bougies (niveaux clés : zones, entrées, stops, TP). */
@@ -1401,7 +1414,7 @@ export function evaluateTrade(
     if (tpIdx !== null && (slIdx === null || tpIdx < slIdx)) {
       tpHit = true;
       outcome = "tp_hit";
-      rr = Math.abs(tp - entry) / Math.max(0.001, Math.abs(entry - stop));
+      rr = planRR(chart, picks);
       drawdown = maxDrawdownAfterEntry(entry, direction, future, entryIdx!, tpIdx);
     } else if (slIdx !== null) {
       slHit = true;

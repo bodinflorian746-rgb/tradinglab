@@ -8,6 +8,7 @@ import * as EsGame from "@/lib/games/build-the-trade-es";
 import * as EnGame from "@/lib/games/build-the-trade-en";
 import {
   evaluateTrade,
+  planRR,
   MAX_TRADE_POINTS,
   ROUNDS_PER_SESSION,
   type BuildTradeChart,
@@ -755,7 +756,8 @@ function RrPreview({ T, chart, entry, stop, tp, asset }: { T: { [k: string]: str
   const t = chart.tps[tp];
   const risk = Math.abs(e - s);
   const reward = Math.abs(t - e);
-  const rr = risk > 0.001 ? reward / risk : 0;
+  // Seuil relatif à l'échelle de prix de l'actif (planRR)
+  const rr = planRR(chart, { entry, stop, tp });
   const rrColor = rr >= 2 ? "text-emerald-400" : rr >= 1 ? "text-amber-300" : "text-red-400";
   return (
     <div className="grid grid-cols-3 gap-2 sm:gap-3">
