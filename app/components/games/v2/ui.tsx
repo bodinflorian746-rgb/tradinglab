@@ -228,7 +228,13 @@ function chartIntoView(newRound: boolean) {
   const roundTop = Math.max(0, section.getBoundingClientRect().top + y - nav - 8);
   const inView = c.top >= nav - 1 && c.bottom <= window.innerHeight + 1;
   if (inView && !(newRound && y > roundTop + 1)) return;
-  const top = c.bottom + y - roundTop <= window.innerHeight ? roundTop : Math.max(0, c.top + y - nav - 8);
+  // Manche trop haute pour l'écran : à la question, défilement juste suffisant pour le bas du
+  // graphique (l'énoncé, au-dessus, reste lisible) ; après le choix, graphique sous le bandeau
+  // (l'explication suit dessous)
+  const chartTop = Math.max(0, c.top + y - nav - 8);
+  const top = c.bottom + y - roundTop <= window.innerHeight ? roundTop
+    : newRound ? Math.min(chartTop, Math.max(roundTop, c.bottom + y - window.innerHeight + 8))
+    : chartTop;
   const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   window.scrollTo({ top, behavior: smooth ? "smooth" : "instant" });
 }
