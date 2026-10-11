@@ -15,7 +15,8 @@
 //   supports et résistances prouvés (2 touches, ou cassure puis retest avec réaction,
 //   visibles avant la réponse ; même règle que les leçons : audit-lecons/sr-proof.mjs),
 //   zones (FVG ≤ 25 % de la hauteur du graphique, autres zones ≤ 40 %, libellés du
-//   vocabulaire validé ; autotest).
+//   vocabulaire validé ; autotest), R/R affiché de Build the Trade identique sur les
+//   4 actifs (plan et réalisé ; autotest).
 // Règles « DOM » (Playwright) : troncature langues actives × 390/1440, sonde
 //   lignes = étiquettes = boutons, aucune étiquette sur une bougie, zones derrière les
 //   bougies, corps ≥ 3 × la mèche, graphique entier dans l'écran du téléphone, cohérence
@@ -77,18 +78,19 @@ process.stdout.write("… contexte de marché et prix\n");
 }
 
 // 3. Réalisme, verdicts, textes, glossaire, bougies
-for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (ton ; français en EN / ES si actives)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Supports / résistances prouvés (500 rounds)", "sr.ts"], ["Zones : taille (FVG ≤ 25 %, autres ≤ 40 %), libellés validés", "zones.ts"], ["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"], ["Vocabulaire de référence (lib/vocabulary/trading-terms.json)", "vocabulaire.ts"]]) {
+for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (ton ; français en EN / ES si actives)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Supports / résistances prouvés (500 rounds)", "sr.ts"], ["Zones : taille (FVG ≤ 25 %, autres ≤ 40 %), libellés validés", "zones.ts"], ["R/R affiché de Build the Trade (4 actifs)", "rr-btt.ts"],["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"], ["Vocabulaire de référence (lib/vocabulary/trading-terms.json)", "vocabulaire.ts"]]) {
   process.stdout.write(`… ${rule}\n`);
   const out = viteNode(file);
   const r = resultOf(out);
   const detail = out.split("\n").filter((l) => /ERREUR|hors seuil :/.test(l)).slice(0, 6).join(" | ");
   record(rule, r ? r.e : null, r ? detail : out.split("\n").slice(-5).join(" "), r ? r.w : 0);
 }
-// Autotest des règles de zones (défauts injectés : FVG trop grand, zone trop grande, libellé inventé)
-{
-  const out = viteNode("zones.ts", ["--autotest"]);
+// Autotests des règles de zones (FVG trop grand, zone trop grande, libellé inventé) et du R/R
+// affiché (ancien seuil de risque absolu)
+for (const [rule, file] of [["Autotest des zones (défauts injectés)", "zones.ts"], ["Autotest du R/R affiché (défaut injecté)", "rr-btt.ts"]]) {
+  const out = viteNode(file, ["--autotest"]);
   const r = resultOf(out);
-  record("Autotest des zones (défauts injectés)", r ? r.e : null, out.split("\n").filter((l) => /^MANQUÉ/.test(l)).join(" | "));
+  record(rule, r ? r.e : null, out.split("\n").filter((l) => /^MANQUÉ/.test(l)).join(" | "));
 }
 
 // 4. DOM (navigateur) : troncature, sondes, verdict affiché
