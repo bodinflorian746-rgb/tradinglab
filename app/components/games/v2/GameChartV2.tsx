@@ -220,8 +220,9 @@ const GLIDE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)"; // ease-out
 const QUESTION_SPARE_SLOTS = 3;
 /** Emprise de la pastille « ton choix » (HTML, coin haut gauche) en px */
 const PIN_BOX = { right: 224, bottom: 54 };
-/** Bas du bandeau du verdict (élément marqué, VerdictOverlay compact, en haut du cadre) en px */
-const BANNER_BOTTOM = 64;
+/** Bas du bandeau du verdict (élément marqué, VerdictOverlay compact, en haut du cadre) en px :
+ *  12 + 8 + 32 + 8 en mobile ; padding de 16 px sur ordinateur (tsx-v2.css, ≥ 1024 px) */
+const BANNER_BOTTOM = { mobile: 64, desktop: 82 };
 
 const ZONE_COLOR: Record<ZoneKind, { stroke: string; fill: string; dashed: boolean }> = {
   support:        { stroke: "var(--v2-bull)", fill: "rgba(16,185,129,0.18)", dashed: true },
@@ -343,12 +344,14 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
   const fullColW = tagLabels.length ? Math.max(...tagLabels.map(inlineTagW)) + 10 : 0;
   const lineColW = lineLabels.length ? Math.max(...lineLabels.map(inlineTagW)) + 10 : 0;
   const LABEL_BAND = INLINE_TAG_H + 8;
+  // Verdict en bandeau (élément marqué) : hauteur réservée en haut, 12 px sous le bandeau
+  const bannerBottom = mark && mode === "verdict" ? (desktop ? BANNER_BOTTOM.desktop : BANNER_BOTTOM.mobile) : 0;
   // Pastille « ton choix » (coin haut gauche, à sa largeur) et bandeau du verdict (élément
   // marqué) : aucune étiquette dessous, elle y serait cachée
   const pinRight = pin ? Math.min(PIN_BOX.right, 12 + 24 + 8 + 6 + textWidth(pin.sub ? `${pin.label} ${pin.sub}` : pin.label, 15)) : 0;
   const uiBoxes = [
     ...(pin ? [{ x1: 0, x2: pinRight, y1: 0, y2: PIN_BOX.bottom }] : []),
-    ...(mark && mode === "verdict" ? [{ x1: 0, x2: W, y1: 0, y2: BANNER_BOTTOM }] : []),
+    ...(mark && mode === "verdict" ? [{ x1: 0, x2: W, y1: 0, y2: bannerBottom }] : []),
   ];
   const floating = !inline ? [] : [
     ...zoneLabelIdx.filter((i) => !(mark && showMark && mark.kind === "zone" && mark.index === i)).map((i) => ({ label: zones[i].label, price: (zones[i].y1 + zones[i].y2) / 2, line: false, isMark: false })),
@@ -359,7 +362,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
     if (!floating.length || W <= 0 || H <= 0) return [];
     const sl = (W - 2 * padX - colW) / nSlots, bw = Math.min(clamp(sl * 0.6, 8, 30), sl * 0.78);
     // cadrage approché (sans la pastille « ton choix ») : marge de 6 px autour des bougies
-    const tp = (mark && mode === "verdict" ? 76 : 14) + bandTop, bp = 14 + bandBottom;
+    const tp = (bannerBottom ? bannerBottom + 12 : 14) + bandTop, bp = 14 + bandBottom;
     const ty = (p: number) => tp + ((max - p) / range) * (H - tp - bp);
     const boxes = visible.map((k, i) => ({ x1: padX + sl * (i + 0.5) - bw / 2 - 6, x2: padX + sl * (i + 0.5) + bw / 2 + 6, y1: ty(k.h) - 6, y2: ty(k.l) + 6 }));
     // les étiquettes de lignes, posées d'abord au bord droit sur leur ligne, sont aussi des obstacles
@@ -439,7 +442,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
     preview && mark && mark.kind !== "point" ? roomTop(mark.kind === "line" ? [mark.price] : zones[mark.index] ? [zones[mark.index].y1, zones[mark.index].y2] : null, textWidth(mark.label, MARK_FS) + 20, MARK_PH, 8) : 0,
   );
   // Verdict en bandeau (élément marqué) : sa hauteur est réservée en haut
-  const topPad = (mark && mode === "verdict" ? Math.max(topPadBase, 76) : Math.max(topPadBase, pillRoom)) + labelLayout.top;
+  const topPad = (bannerBottom ? Math.max(topPadBase, bannerBottom + 12) : Math.max(topPadBase, pillRoom)) + labelLayout.top;
 
   // ─── Glissement au clic (FLIP) ───
   // Le tracé est rendu directement dans son nouveau cadrage ; avant l'affichage,
