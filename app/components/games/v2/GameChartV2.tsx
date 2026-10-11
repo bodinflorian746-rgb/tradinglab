@@ -254,6 +254,8 @@ const INLINE_TAG_GAP = 4;
 const inlineTagW = (label: string) => textWidth(label, INLINE_TAG_FS) + 14;
 /** Largeur de graphique (px) en dessous de laquelle la marge d'étiquettes ne sert qu'aux lignes */
 const NARROW_CHART_W = 480;
+/** Écart maximal (px) entre une étiquette de ligne empilée et sa ligne : la ligne la traverse toujours */
+const PACK_SHIFT = INLINE_TAG_H / 2 - 2;
 /** Étiquette de l'erreur marquée (point, zone) : demi-pas verticaux explorés pour lui trouver une place */
 const MARK_TAG_STEPS = 40;
 
@@ -361,11 +363,14 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
   const misfits = (colW: number, bandTop: number, bandBottom: number) => {
     if (!floating.length || W <= 0 || H <= 0) return [];
     const sl = (W - 2 * padX - colW) / nSlots, bw = Math.min(clamp(sl * 0.6, 8, 30), sl * 0.78);
-    // cadrage approché (sans la pastille « ton choix ») : marge de 6 px autour des bougies
+    // cadrage approché (sans la pastille « ton choix ») ; marge de 3 px autour des bougies, comme au
+    // placement réel : une marge plus prudente déplaçait une étiquette et libérait à tort la place
+    // d'une autre
     const tp = (bannerBottom ? bannerBottom + 12 : 14) + bandTop, bp = 14 + bandBottom;
     const ty = (p: number) => tp + ((max - p) / range) * (H - tp - bp);
-    const boxes = visible.map((k, i) => ({ x1: padX + sl * (i + 0.5) - bw / 2 - 6, x2: padX + sl * (i + 0.5) + bw / 2 + 6, y1: ty(k.h) - 6, y2: ty(k.l) + 6 }));
-    // les étiquettes de lignes, posées d'abord au bord droit sur leur ligne, sont aussi des obstacles
+    const boxes = visible.map((k, i) => ({ x1: padX + sl * (i + 0.5) - bw / 2 - 3, x2: padX + sl * (i + 0.5) + bw / 2 + 3, y1: ty(k.h) - 3, y2: ty(k.l) + 3 }));
+    // les étiquettes de lignes, posées d'abord au bord droit sur leur ligne, sont aussi des obstacles ;
+    // empilées si leurs lignes sont proches, elles s'en écartent d'au plus PACK_SHIFT px
     const linePills: [string, number][] = [
       ...(tpTagLabel && tpShown !== undefined ? [[tpTagLabel, tpShown] as [string, number]] : []),
       ...(overlay?.entry?.label ? [[overlay.entry.label, overlay.entry.price] as [string, number]] : []),
@@ -373,16 +378,23 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
       ...(overlay?.candidateLines ?? []).map((c) => [c.label, c.price] as [string, number]),
     ];
     boxes.push(...uiBoxes);
-    for (const [l, p] of linePills) boxes.push({ x1: W - padX - inlineTagW(l) - INLINE_TAG_GAP, x2: W, y1: ty(p) - INLINE_TAG_H / 2 - 2, y2: ty(p) + INLINE_TAG_H / 2 + 2 });
-    return floating.filter(({ label, price, line, isMark }) => {
+    for (const [l, p] of linePills) boxes.push({ x1: W - padX - inlineTagW(l) - INLINE_TAG_GAP, x2: W, y1: ty(p) - INLINE_TAG_H / 2 - 2 - PACK_SHIFT, y2: ty(p) + INLINE_TAG_H / 2 + 2 + PACK_SHIFT });
+    // Posées une à une dans l'ordre du placement réel (celle de l'erreur sur sa ligne d'abord, puis
+    // la plus longue) : chacune devient un obstacle pour les suivantes
+    return [...floating].sort((a, b) => Number(b.line) - Number(a.line) || inlineTagW(b.label) - inlineTagW(a.label)).filter(({ label, price, line, isMark }) => {
       const w = inlineTagW(label);
       const shifts = line ? [0, 2, -2, 4, -4, 6, -6, 8, -8] : [0, ...Array.from({ length: isMark ? MARK_TAG_STEPS : 6 }, (_, k) => k + 1).flatMap((k) => [k, -k].map((d) => d * (INLINE_TAG_H + INLINE_TAG_GAP) / 2))];
-      return !shifts.some((d) => {
+      for (const d of shifts) {
         const y = ty(price) + d;
-        if (y < INLINE_TAG_H / 2 + 1 || y > H - INLINE_TAG_H / 2 - 1) return false;
-        for (let x = W - padX - w; x >= 2; x -= 2) if (!boxes.some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1)) return true;
-        return false;
-      });
+        if (y < INLINE_TAG_H / 2 + 1 || y > H - INLINE_TAG_H / 2 - 1) continue;
+        for (let x = W - padX - w; x >= 2; x -= 2) if (!boxes.some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1)) {
+          // étiquette de ligne : toute la plage où l'empilement peut la poser, autour de sa ligne
+          const yc = line ? ty(price) : y, pad = line ? PACK_SHIFT : 0;
+          boxes.push({ x1: x - INLINE_TAG_GAP, x2: x + w + INLINE_TAG_GAP, y1: yc - INLINE_TAG_H / 2 - 1 - pad, y2: yc + INLINE_TAG_H / 2 + 1 + pad });
+          return false;
+        }
+      }
+      return true;
     });
   };
   // Bandes demandées par les étiquettes sans place : zone au bord du cadre, ou erreur marquée sur
@@ -608,7 +620,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
       // Lignes rapprochées (moins d'une hauteur de pastille) : leurs pastilles sont empilées
       // au bord droit, centrées sur le groupe, chacune décalée d'au plus 8 px pour rester
       // traversée par sa ligne ; sinon elles glissaient à gauche, sur les bougies.
-      const STEP = INLINE_TAG_H + PACK_GAP, MAX_SHIFT = INLINE_TAG_H / 2 - 2;
+      const STEP = INLINE_TAG_H + PACK_GAP, MAX_SHIFT = PACK_SHIFT;
       const packed = new Map<string, number>();
       const ls = placeOrder.filter((s) => onLine(s.key)).map((s) => ({ k: s.key, l: toY(s.price) })).sort((a, b) => a.l - b.l);
       // Groupes : on fusionne deux groupes voisins tant que leurs piles se recouvrent ; chaque
