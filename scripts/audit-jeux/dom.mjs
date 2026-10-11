@@ -15,6 +15,9 @@
 //    toute ligne étiquetée à sa hauteur, aucun chevauchement, aucune posée sur une
 //    bougie (corps ou mèche), aucune hors du graphique, au plus 4 en 390,
 //    mêmes noms que les boutons, aucun doublon avec une légende ;
+//  - graphique (question et verdict) : zones derrière les bougies, corps au moins 3 fois plus
+//    large que la mèche, graphique entier dans l'écran en 390 × 844 sans défiler (sous le
+//    bandeau du site, au-dessus de la barre du navigateur) ;
 //  - verdict : état (bon / partiel / faux), couleurs du titre et des points
 //    cohérentes, maximum affiché ; barème simple : bon > 0, faux = 0 (sans signe) ;
 //  - lignes au verdict (entrée, TP, stops, erreur marquée) : chacune a un rendu
@@ -29,6 +32,8 @@ const GAMES = arg("jeux", "buy-sell-no-trade,find-the-mistake,place-stop,build-t
 // Par défaut : langues actives du site (i18n/config.ts, ACTIVE_LOCALES)
 const LANGS = arg("langues", languesAuditees().join(",")).split(",");
 const FORMATS = arg("formats", "390,1440").split(",");
+// Téléphone 390 × 844 : barre d'état et barres de Safari déduites, ~750 px visibles (innerHeight)
+const MOBILE_H = 750;
 const VALIDATE = { fr: "Valider le trade", en: "Validate the trade", es: "Validar el trade" };
 const STATE_CLASS = { good: "emerald", partial: "amber", bad: "red" };
 
@@ -124,6 +129,34 @@ const measureLabels = (page, { mobile, buttons }) => page.evaluate(({ mobile, bu
   for (const t of labels) if (legend.includes(t.txt)) errs.push(`« ${t.txt} » à la fois sur le graphique et en légende`);
   return errs;
 }, { mobile, buttons });
+// Graphique (question et verdict) : chaque zone est dessinée derrière les bougies ; chaque corps
+// est au moins 3 fois plus large que sa mèche ; en mobile (390), le graphique tient en entier dans
+// l'écran tel que le joueur le voit, sans défiler : sous le bandeau du site, au-dessus de la barre
+// du navigateur.
+const measureChart = (page, { mobile }) => page.evaluate(({ mobile }) => {
+  const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
+  if (!svg) return ["graphique absent"];
+  const errs = [];
+  const candles = [...svg.querySelectorAll(".v2-candle")];
+  if (candles.length) for (const z of svg.querySelectorAll("[data-zone], [data-mark-zone]")) {
+    if (candles[0].compareDocumentPosition(z) & Node.DOCUMENT_POSITION_FOLLOWING) { errs.push("zone dessinée par-dessus les bougies (elle les masque)"); break; }
+  }
+  for (const g of candles) {
+    const l = g.querySelector("line"), r = g.querySelector("rect");
+    if (!l || !r || g.getBoundingClientRect().width === 0) continue;
+    const wick = parseFloat(l.getAttribute("stroke-width")), body = parseFloat(r.getAttribute("width"));
+    if (body < 3 * wick - 1e-6) { errs.push(`corps trop étroit : ${body.toFixed(1)} px pour une mèche de ${wick.toFixed(1)} px (au moins 3 fois)`); break; }
+  }
+  if (mobile) {
+    // Zone visible : sous le bandeau collant du site, au-dessus de la barre du navigateur
+    // (fenêtre de MOBILE_H px : 844 moins les barres de Safari)
+    const r = svg.getBoundingClientRect();
+    const top = document.querySelector("nav.sticky")?.getBoundingClientRect().bottom ?? 0, bottom = innerHeight;
+    if (r.top < top - 1 || r.bottom > bottom + 1) errs.push(`graphique hors de l'écran : de ${Math.round(r.top)} à ${Math.round(r.bottom)} px pour une zone visible de ${Math.round(top)} à ${bottom} px`);
+  }
+  return errs;
+}, { mobile });
+
 const STOP_BUTTONS = { selector: ".tsx-v2 button.v2-stop-choice", keys: "^stop\\d" };
 const stepButtons = (step) => ({ selector: `.tsx-v2 [data-pick^="${step}:"]`, keys: "^cand\\d" });
 
@@ -203,7 +236,7 @@ const probeVerdict = (page) => page.evaluate(({ STATE_CLASS }) => {
 
 async function session(browser, slug, loc, w) {
   const mobile = +w < 800;
-  const ctx = await browser.newContext({ viewport: { width: +w, height: mobile ? 844 : 900 }, deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile, locale: loc, storageState: STORAGE_STATE });
+  const ctx = await browser.newContext({ viewport: { width: +w, height: mobile ? MOBILE_H : 900 }, deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile, locale: loc, storageState: STORAGE_STATE });
   await ctx.addInitScript(() => { try { localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch { /* stockage indisponible */ } });
   const page = await ctx.newPage();
   const errs = [];
@@ -227,6 +260,7 @@ async function session(browser, slug, loc, w) {
       if (round === 0) add("question", await scan(page));
       if (slug === "place-stop") add(`round ${round + 1}`, await probeStops(page));
       if (slug !== "build-the-trade") add(`round ${round + 1} étiquettes`, await probeLabels(page, { mobile, buttons: slug === "place-stop" ? STOP_BUTTONS : null }));
+      add(`round ${round + 1} graphique`, await measureChart(page, { mobile }));
       if (slug === "build-the-trade") {
         // Étiquettes à chaque étape (le choix reste affiché 600 ms, puis le cadrage glisse)
         for (const step of ["entry", "stop", "tp"]) {
@@ -243,6 +277,7 @@ async function session(browser, slug, loc, w) {
       await page.waitForTimeout(1500);
       add(`verdict ${round + 1}`, await probeVerdict(page));
       add(`verdict ${round + 1} étiquettes`, await probeLabels(page, { mobile, buttons: null }));
+      add(`verdict ${round + 1} graphique`, await measureChart(page, { mobile }));
       const pl = await probeLines(page);
       add(`verdict ${round + 1} lignes`, pl.errs);
       lineCount += pl.n; markCount += pl.marks;
@@ -261,7 +296,7 @@ async function session(browser, slug, loc, w) {
   } finally { await ctx.close(); }
 }
 
-// --autotest : défauts injectés dans les étiquettes du graphique (1re question de Buy / Sell /
+// --autotest : défauts injectés dans les étiquettes et le graphique (1re question de Buy / Sell /
 // No Trade en 390) ; chacun doit produire l'erreur attendue, sinon la règle ne protège rien.
 const MUTATIONS = {
   "étiquette posée sur une bougie": [/sur une bougie/, () => {
@@ -275,9 +310,21 @@ const MUTATIONS = {
     const g = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg [data-label-for]"), r = g.querySelector("rect");
     g.setAttribute("transform", `translate(0 ${-(+r.getAttribute("y")) - 8})`);
   }],
+  "zone par-dessus les bougies": [/zone dessinée par-dessus les bougies/, () => {
+    const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
+    const z = svg.querySelector("[data-zone]");
+    z.parentElement.appendChild(z);
+  }],
+  "corps trop étroit": [/corps trop étroit/, () => {
+    const g = [...document.querySelectorAll(".tsx-v2 .v2-chart svg.v2-svg .v2-candle")].at(-1);
+    g.querySelector("line").setAttribute("stroke-width", g.querySelector("rect").getAttribute("width"));
+  }],
+  "graphique hors de l'écran": [/graphique hors de l'écran/, () => {
+    document.querySelector(".tsx-v2 .v2-chart").style.marginTop = "900px";
+  }],
 };
 async function autotest(browser) {
-  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
+  const ctx = await browser.newContext({ viewport: { width: 390, height: MOBILE_H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
   await ctx.addInitScript(() => { try { localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch { /* stockage indisponible */ } });
   const page = await ctx.newPage();
   let missed = 0;
@@ -291,9 +338,9 @@ async function autotest(browser) {
           await page.getByRole("button", { name: /Interm/ }).first().click();
           await page.getByRole("button", { name: "NO TRADE" }).first().waitFor({ timeout: 30000 });
           await page.waitForTimeout(4500);
-          before = await probeLabels(page, { mobile: true, buttons: null });
+          before = [...await probeLabels(page, { mobile: true, buttons: null }), ...await measureChart(page, { mobile: true })];
           await page.evaluate(inject);
-          after = await measureLabels(page, { mobile: true, buttons: null });
+          after = [...await measureLabels(page, { mobile: true, buttons: null }), ...await measureChart(page, { mobile: true })];
           hit = after.filter((e) => !before.includes(e) && expect.test(e));
           err = "";
         } catch (e) { err = e.message.split("\n")[0].slice(0, 100); }
