@@ -1189,14 +1189,11 @@ function genCounterTrendBounce(rng: () => number, m: number, d: Difficulty): Buy
     past.push(candle(o, c, (0.12 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
-  const minorLevel = p;
-  // 2 candles de rebond faible
-  for (let i = 0; i < 2; i++) {
-    const o = p;
-    const c = o + (0.2 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.15 + rng() * 0.15) * m));
-    p = c;
-  }
+  // Support prouvé : touché deux fois par-dessus ; la 2e réaction est le rebond local
+  const minorLevel = p - (2.4 + rng() * 0.5) * m;
+  const touches = levelTouches(rng, p, minorLevel - 0.1, minorLevel + 0.1, "above", m, 2);
+  past.push(...touches.candles);
+  p = touches.p;
   // 2 candles indécises
   for (let i = 0; i < 2; i++) {
     const o = p;
@@ -1214,7 +1211,7 @@ function genCounterTrendBounce(rng: () => number, m: number, d: Difficulty): Buy
   void d;
   return finalize({
     past, future: fut,
-    zones: [{ kind: "support", y1: minorLevel - 0.1, y2: minorLevel + 0.1, label: "Niveau secondaire" }],
+    zones: [{ kind: "support", y1: minorLevel - 0.1, y2: minorLevel + 0.1, label: "Support" }],
   });
 }
 

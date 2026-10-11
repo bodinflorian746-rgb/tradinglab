@@ -2385,15 +2385,32 @@ function scnKeyLevelMagnet(rng: () => number, m: number, d: Difficulty, mode: Pl
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 5 + rng() * 0.3;
-  // Construire un niveau clé visible à p - 0.7m approximativement
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 4; i++) {
     const o = p;
     const c = o + (rng() - 0.4) * 0.4 * m;
     past.push(candle(o, c, (0.15 + rng() * 0.12) * m, (0.15 + rng() * 0.12) * m));
     p = c;
   }
+  // Support prouvé : touché deux fois par-dessus, puis retour à l'entrée, 0,7 m au-dessus
+  const magnetLevel = p - (2.4 + rng() * 0.5) * m;
+  const touches = levelTouches(rng, p, magnetLevel - 0.04 * m, magnetLevel + 0.04 * m, "above", m, 2);
+  past.push(...touches.candles);
+  p = touches.p;
+  const entryTarget = magnetLevel + 0.7 * m;
+  while (p - entryTarget > 0.45 * m) {
+    const c = Math.max(entryTarget + 0.1 * m, p - (0.25 + rng() * 0.2) * m);
+    const k = candle(p, c, (0.1 + rng() * 0.1) * m, (0.08 + rng() * 0.08) * m);
+    k.l = Math.max(k.l, magnetLevel + 0.35 * m);
+    past.push(k);
+    p = c;
+  }
+  {
+    const k = candle(p, entryTarget, (0.1 + rng() * 0.08) * m, (0.08 + rng() * 0.06) * m);
+    k.l = Math.max(k.l, magnetLevel + 0.35 * m);
+    past.push(k);
+    p = entryTarget;
+  }
   const entry = p;
-  const magnetLevel = entry - 0.7 * m;
   const tightPrice  = entry - 0.4 * m;
   const lttPrice    = magnetLevel - 0.2 * m;  // juste sous le magnet, dans la zone de test
   const widePrice   = magnetLevel - 1.0 * m;  // BONNE RÉPONSE, sous l'amplitude du test
@@ -2410,7 +2427,7 @@ function scnKeyLevelMagnet(rng: () => number, m: number, d: Difficulty, mode: Pl
   }
   return finalizeStops({
     past, fut,
-    zones: [{ kind: "support", y1: magnetLevel - 0.04 * m, y2: magnetLevel + 0.04 * m, label: "Niveau clé" }],
+    zones: [{ kind: "support", y1: magnetLevel - 0.04 * m, y2: magnetLevel + 0.04 * m, label: "Support" }],
     entry,
     tp: entry + 4.0 * m,
     direction: "BUY",
@@ -2677,14 +2694,32 @@ function scnKeyLevelMagnetSell(rng: () => number, m: number, d: Difficulty, mode
   const fut: Candle[] = [];
   let p = 10 - rng() * 0.3;
   // Structure neutre avec léger downtrend
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 4; i++) {
     const o = p;
     const c = o + (rng() - 0.6) * 0.4 * m;
     past.push(candle(o, c, (0.15 + rng() * 0.12) * m, (0.15 + rng() * 0.12) * m));
     p = c;
   }
+  // Résistance prouvée : touchée deux fois par-dessous, puis retour à l'entrée, 0,7 m en dessous
+  const magnetLevel = p + (2.4 + rng() * 0.5) * m;
+  const touches = levelTouches(rng, p, magnetLevel - 0.04 * m, magnetLevel + 0.04 * m, "below", m, 2);
+  past.push(...touches.candles);
+  p = touches.p;
+  const entryTarget = magnetLevel - 0.7 * m;
+  while (entryTarget - p > 0.45 * m) {
+    const c = Math.min(entryTarget - 0.1 * m, p + (0.25 + rng() * 0.2) * m);
+    const k = candle(p, c, (0.08 + rng() * 0.08) * m, (0.1 + rng() * 0.1) * m);
+    k.h = Math.min(k.h, magnetLevel - 0.35 * m);
+    past.push(k);
+    p = c;
+  }
+  {
+    const k = candle(p, entryTarget, (0.08 + rng() * 0.06) * m, (0.1 + rng() * 0.08) * m);
+    k.h = Math.min(k.h, magnetLevel - 0.35 * m);
+    past.push(k);
+    p = entryTarget;
+  }
   const entry = p;
-  const magnetLevel = entry + 0.7 * m;
   const tightPrice  = entry + 0.4 * m;
   const lttPrice    = magnetLevel + 0.2 * m;  // juste au-dessus du magnet, zone de test
   const widePrice   = magnetLevel + 1.0 * m;  // BONNE RÉPONSE
@@ -2701,7 +2736,7 @@ function scnKeyLevelMagnetSell(rng: () => number, m: number, d: Difficulty, mode
   }
   return finalizeStops({
     past, fut,
-    zones: [{ kind: "resistance", y1: magnetLevel - 0.04 * m, y2: magnetLevel + 0.04 * m, label: "Niveau clé" }],
+    zones: [{ kind: "resistance", y1: magnetLevel - 0.04 * m, y2: magnetLevel + 0.04 * m, label: "Résistance" }],
     entry,
     tp: entry - 4.0 * m,
     direction: "SELL",

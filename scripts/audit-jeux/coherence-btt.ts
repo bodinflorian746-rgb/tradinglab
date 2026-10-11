@@ -168,7 +168,8 @@ const SPECIFIC: Record<string, Check> = {
   },
   // « Plus de 60% de l'impulsion précédente est retracée. »
   deep_pullback_risky: (ch) => {
-    const imp = ch.past.slice(0, 8);
+    // L'impulsion : les 8 bougies avant le pullback (6 dernières) ; le support est prouvé avant elle
+    const imp = ch.past.slice(-14, -6);
     const start = imp[0].o, peak = last(imp).c;
     const ret = (peak - last(ch.past).c) / (peak - start);
     if (!(ret > 0.6)) return "retracement ≤ 60 % de l'impulsion";
@@ -186,9 +187,14 @@ const SPECIFIC: Record<string, Check> = {
   },
   // « Un setup BUY apparaît localement » + « Le TP rapide capture l'edge avant le reversal »
   counter_trend_local: (ch, t) => {
-    const d = ch.past.slice(0, 8), b = ch.past.slice(8);
+    const d = ch.past.slice(0, 8);
     if (d.filter(red).length < 7) return "pas de HTF baissier visible";
-    if (!b.every(green)) return "pas de rebond local";
+    // Rebond local : après le dernier contact avec le support (prouvé par deux touches), le prix
+    // repart nettement vers le haut (plus de bougies vertes que rouges, clôture au-dessus du contact)
+    const s = zone(ch, "support");
+    const lastTouch = s ? ch.past.reduce((j, k, idx) => (k.l <= hi(s) + E ? idx : j), -1) : -1;
+    const b = ch.past.slice(lastTouch + 1);
+    if (lastTouch < 8 || b.length < 2 || b.filter(green).length <= b.length / 2 || !(last(b).c > ch.past[lastTouch].c)) return "pas de rebond local";
     const i = ch.future.findIndex((k) => k.h >= ch.tps.fast);
     const top = ch.future.reduce((b, k, j) => (k.h > ch.future[b].h ? j : b), 0);
     if (i < 0 || i > top) return "TP rapide jamais atteint avant le reversal";

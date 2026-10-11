@@ -935,38 +935,38 @@ function shapeFvgContinuation(rng: () => number, m: number): ShapeOutput {
 // 11. Deep pullback risky (BUY context but pullback too deep)
 function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
-  let p = 1 + rng() * 0.3;
-  for (let i = 0; i < 8; i++) {
+  // Support prouvé par polarité : ancien haut de range touché deux fois par-dessous, cassé par
+  // l'impulsion, puis retesté par le pullback profond (plus de 60 % de l'impulsion retracés)
+  const level = 7 + rng() * 0.3;  // assez haut pour que tout le graphique reste au-dessus de 0
+  let p = level - (2.4 + rng() * 0.5) * m;
+  const touches = levelTouches(rng, p, level - 0.04, level + 0.04, "below", m, 2);
+  past.push(...touches.candles);
+  p = touches.p;
+  const base = p;
+  // Impulsion : 8 bougies haussières, calée pour que le niveau soit à 70-82 % de retracement
+  const target = 0.7 + rng() * 0.12;
+  const peak = base + (level - base) / (1 - target);
+  const w = Array.from({ length: 8 }, () => 0.5 + rng() * 0.5);
+  const sw = w.reduce((a, b) => a + b, 0);
+  for (const wi of w) {
     const o = p;
-    const c = o + (0.5 + rng() * 0.5) * m;
+    const c = o + ((peak - base) * wi) / sw;
     past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.13 + rng() * 0.15) * m));
     p = c;
   }
-  const peak = p;
-  // Pullback profond — 6 bougies rouges, retracement ~65%
+  // Pullback profond — 6 bougies rouges jusqu'au niveau ; seule la dernière vient au contact
+  const lastClose = level + (0.25 + rng() * 0.15) * m;  // au-dessus du support (entrée « pullback profond » distincte)
+  const wd = Array.from({ length: 6 }, () => 0.4 + rng() * 0.45);
+  const sd = wd.reduce((a, b) => a + b, 0);
   for (let i = 0; i < 6; i++) {
     const o = p;
-    const c = o - (0.4 + rng() * 0.45) * m;
-    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.25) * m));
+    const c = i === 5 ? lastClose : o - ((peak - lastClose) * wd[i]) / sd;
+    const k = candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.25) * m);
+    k.l = i === 5 ? level : Math.max(k.l, level + 0.04 + 0.15 * m);
+    past.push(k);
     p = c;
   }
-  // « Plus de 60% de l'impulsion retracée » sans la retracer entièrement :
-  // on met à l'échelle les corps du pullback (mèches conservées).
-  const impulse = peak - past[0].o;
-  const ratio = (peak - p) / impulse;
-  const target = ratio < 0.62 ? 0.62 + 0.1 * (ratio / 0.62) : ratio > 0.88 ? 0.88 : ratio;
-  if (target !== ratio) {
-    const f = target / ratio;
-    let q = peak;
-    for (const k of past.slice(8)) {
-      const wU = k.h - Math.max(k.o, k.c), wD = Math.min(k.o, k.c) - k.l;
-      const c = q - (k.o - k.c) * f;
-      k.o = q; k.c = c; k.h = q + wU; k.l = c - wD;
-      q = c;
-    }
-    p = q;
-  }
-  const swingLow = Math.min(...past.slice(-7).map((k) => k.l));
+  const swingLow = level;
   const topHigh = Math.max(...past.map((k) => k.h));
   const entryRef = p;
   const fut: Candle[] = [];
@@ -982,7 +982,7 @@ function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "support",        y1: swingLow - 0.04,    y2: swingLow + 0.04,    label: "Niveau secondaire" },
+    { kind: "support",        y1: swingLow - 0.04,    y2: swingLow + 0.04,    label: "Support" },
     { kind: "liquidity_high", y1: topHigh - 0.05,      y2: topHigh + 0.05,     label: "Plus haut précédent" },
   ], ref: { swingLow, swingHigh: peak, entryRef } };
 }
@@ -1077,14 +1077,11 @@ function shapeCounterTrendLocal(rng: () => number, m: number): ShapeOutput {
     past.push(candle(o, c, (0.12 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
-  const minorLevel = p;
-  // 4 candles rebond local
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = o + (0.25 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.15 + rng() * 0.15) * m));
-    p = c;
-  }
+  // Support prouvé : touché deux fois par-dessus ; la 2e réaction est le rebond local
+  const minorLevel = p - (2.4 + rng() * 0.5) * m;
+  const touches = levelTouches(rng, p, minorLevel - 0.08, minorLevel + 0.08, "above", m, 2);
+  past.push(...touches.candles);
+  p = touches.p;
   const entryRef = p;
   // Structure de confirmation : les 2 dernières bougies du rebond local. Le
   // stop logique se place dessous (swingLow - marge, cf. formule des stops).
@@ -1121,7 +1118,7 @@ function shapeCounterTrendLocal(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "support", y1: minorLevel - 0.08, y2: minorLevel + 0.08, label: "Niveau secondaire" },
+    { kind: "support", y1: minorLevel - 0.08, y2: minorLevel + 0.08, label: "Support" },
   ], ref: { swingLow: structLow, swingHigh: entryRef + 1.5 * m, entryRef, reversal: top.h } };
 }
 
