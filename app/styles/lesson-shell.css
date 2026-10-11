@@ -140,12 +140,17 @@
 }
 
 /* Tableaux des leçons sur mobile : tiennent dans la colonne de lecture (en-têtes sans grand
-   espacement de lettres, cellules resserrées, mots longs coupés proprement) ; au-delà, le
-   tableau défile dans son cadre sans élargir la page. */
+   espacement de lettres, cellules resserrées). Un mot n'est jamais coupé, sauf un mot très long
+   (12 lettres ou plus), à la syllabe, là où le navigateur sait respecter cette longueur minimale
+   (hyphenate-limit-chars) ; les mots courts, sigles et « R/R » restent entiers. Si le tableau ne
+   tient pas, il défile dans son propre cadre (overflow-x-auto des leçons), jamais la page. */
 @media (max-width: 639px) {
   .lesson-v2 table:not(.lc *) { width: 100%; }
-  .lesson-v2 table:not(.lc *) th { letter-spacing: 0.03em; hyphens: auto; }
-  .lesson-v2 table:not(.lc *) :is(th, td) { padding-right: 10px; overflow-wrap: break-word; hyphens: auto; }
+  .lesson-v2 table:not(.lc *) th { letter-spacing: 0.03em; }
+  .lesson-v2 table:not(.lc *) :is(th, td) { padding-right: 10px; overflow-wrap: normal; word-break: normal; hyphens: manual; }
+  @supports (hyphenate-limit-chars: 12 6 5) {
+    .lesson-v2 table:not(.lc *) :is(th, td) { hyphens: auto; hyphenate-limit-chars: 12 6 5; }
+  }
   .lesson-v2 table:not(.lc *) td { font-size: 14px; }
   .lesson-v2 table:not(.lc *) :is(th, td):last-child { padding-right: 0; }
 }
