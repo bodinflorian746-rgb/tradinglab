@@ -126,7 +126,7 @@ export function VerdictOverlay({
   const maxLabel = max !== undefined ? <span className="v2-verdict-max"> / {max}</span> : null;
   if (compact) {
     return (
-      <div className="pointer-events-none absolute inset-x-0 top-3 z-[5] flex justify-center px-3" style={cssVars({ "--spot": "250ms" })}>
+      <div data-verdict-banner className="pointer-events-none absolute inset-x-0 top-3 z-[5] flex justify-center px-3" style={cssVars({ "--spot": "250ms" })}>
         <div
           className="v2-verdict flex items-center gap-3 rounded-full py-2 pl-2.5 pr-4"
           data-verdict={st}

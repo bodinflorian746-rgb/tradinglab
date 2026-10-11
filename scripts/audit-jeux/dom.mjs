@@ -78,7 +78,8 @@ const probeStops = (page) => page.evaluate(() => {
 
 // Étiquettes du graphique (mode inlineLabels) :
 //  - toute ligne affichée (hors traits discrets) a une étiquette lisible posée à sa hauteur ;
-//  - aucune étiquette n'en chevauche une autre, aucune ne sort du graphique ;
+//  - aucune étiquette n'en chevauche une autre, aucune ne sort du graphique, aucune n'est
+//    cachée sous la pastille « ton choix » ou sous le bandeau du verdict ;
 //  - au plus 4 étiquettes visibles en même temps en 390 × 844 ;
 //  - les étiquettes portent les noms des boutons (Place ton Stop : Stop 1/2/3 ;
 //    Build the Trade : noms de l'étape active) ;
@@ -106,6 +107,9 @@ const measureLabels = (page, { mobile, buttons }) => page.evaluate(({ mobile, bu
   });
   const lines = [...svg.querySelectorAll("line[data-line]:not([data-discreet])")].filter(visible)
     .map((l) => ({ key: l.getAttribute("data-line"), y: l.getBoundingClientRect().top + l.getBoundingClientRect().height / 2 }));
+  // Pastille « ton choix » et bandeau du verdict (élément marqué) : posés par-dessus le graphique
+  const covers = [[".v2-pin-tag", "la pastille « ton choix »"], ["[data-verdict-banner] .v2-verdict", "le bandeau du verdict"]]
+    .flatMap(([sel, name]) => [...chart.querySelectorAll(sel)].map((e) => ({ name, r: e.getBoundingClientRect() })).filter((c) => c.r.width > 0));
   const errs = [];
   for (const l of lines) if (!labels.some((t) => l.y >= t.r.top - 1 && l.y <= t.r.bottom + 1)) errs.push(`ligne « ${l.key} » sans étiquette à sa hauteur`);
   for (const t of labels) {
@@ -114,6 +118,8 @@ const measureLabels = (page, { mobile, buttons }) => page.evaluate(({ mobile, bu
     if (t.r.left < sr.left - 1 || t.r.right > sr.right + 1 || t.r.top < sr.top - 1 || t.r.bottom > sr.bottom + 1) errs.push(`étiquette « ${t.txt} » hors du graphique`);
     const c = candles.find((k) => k.l < t.r.right - 0.5 && t.r.left < k.r - 0.5 && k.t < t.r.bottom - 0.5 && t.r.top < k.b - 0.5);
     if (c) errs.push(`étiquette « ${t.txt} » sur une bougie`);
+    const u = covers.find((k) => k.r.left < t.r.right - 0.5 && t.r.left < k.r.right - 0.5 && k.r.top < t.r.bottom - 0.5 && t.r.top < k.r.bottom - 0.5);
+    if (u) errs.push(`étiquette « ${t.txt} » cachée sous ${u.name}`);
   }
   for (let i = 0; i < labels.length; i++) for (let j = i + 1; j < labels.length; j++) {
     const a = labels[i].r, b = labels[j].r;
@@ -309,6 +315,14 @@ const MUTATIONS = {
   "étiquette coupée par le cadre": [/hors du graphique/, () => {
     const g = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg [data-label-for]"), r = g.querySelector("rect");
     g.setAttribute("transform", `translate(0 ${-(+r.getAttribute("y")) - 8})`);
+  }],
+  "étiquette sous la pastille « ton choix »": [/cachée sous la pastille/, () => {
+    const chart = document.querySelector(".tsx-v2 .v2-chart");
+    const r = chart.querySelector("svg.v2-svg [data-label-for] rect").getBoundingClientRect(), c = chart.getBoundingClientRect();
+    const p = document.createElement("span");
+    p.className = "v2-pin-tag";
+    Object.assign(p.style, { position: "absolute", display: "block", left: `${r.left - c.left}px`, top: `${r.top - c.top}px`, width: "60px", height: "20px" });
+    chart.appendChild(p);
   }],
   "zone par-dessus les bougies": [/zone dessinée par-dessus les bougies/, () => {
     const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");

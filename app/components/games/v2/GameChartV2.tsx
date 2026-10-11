@@ -220,6 +220,8 @@ const GLIDE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)"; // ease-out
 const QUESTION_SPARE_SLOTS = 3;
 /** Emprise de la pastille « ton choix » (HTML, coin haut gauche) en px */
 const PIN_BOX = { right: 224, bottom: 54 };
+/** Bas du bandeau du verdict (élément marqué, VerdictOverlay compact, en haut du cadre) en px */
+const BANNER_BOTTOM = 64;
 
 const ZONE_COLOR: Record<ZoneKind, { stroke: string; fill: string; dashed: boolean }> = {
   support:        { stroke: "var(--v2-bull)", fill: "rgba(16,185,129,0.18)", dashed: true },
@@ -341,6 +343,13 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
   const fullColW = tagLabels.length ? Math.max(...tagLabels.map(inlineTagW)) + 10 : 0;
   const lineColW = lineLabels.length ? Math.max(...lineLabels.map(inlineTagW)) + 10 : 0;
   const LABEL_BAND = INLINE_TAG_H + 8;
+  // Pastille « ton choix » (coin haut gauche, à sa largeur) et bandeau du verdict (élément
+  // marqué) : aucune étiquette dessous, elle y serait cachée
+  const pinRight = pin ? Math.min(PIN_BOX.right, 12 + 24 + 8 + 6 + textWidth(pin.sub ? `${pin.label} ${pin.sub}` : pin.label, 15)) : 0;
+  const uiBoxes = [
+    ...(pin ? [{ x1: 0, x2: pinRight, y1: 0, y2: PIN_BOX.bottom }] : []),
+    ...(mark && mode === "verdict" ? [{ x1: 0, x2: W, y1: 0, y2: BANNER_BOTTOM }] : []),
+  ];
   const floating = !inline ? [] : [
     ...zoneLabelIdx.filter((i) => !(mark && showMark && mark.kind === "zone" && mark.index === i)).map((i) => ({ label: zones[i].label, price: (zones[i].y1 + zones[i].y2) / 2, line: false, isMark: false })),
     ...(mark && showMark && markPrice !== undefined ? [{ label: mark.label, price: markPrice, line: mark.kind === "line", isMark: true }] : []),
@@ -360,6 +369,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
       ...(overlay?.stops ?? []).flatMap((st) => (st.label ? [[st.label, st.price] as [string, number]] : [])),
       ...(overlay?.candidateLines ?? []).map((c) => [c.label, c.price] as [string, number]),
     ];
+    boxes.push(...uiBoxes);
     for (const [l, p] of linePills) boxes.push({ x1: W - padX - inlineTagW(l) - INLINE_TAG_GAP, x2: W, y1: ty(p) - INLINE_TAG_H / 2 - 2, y2: ty(p) + INLINE_TAG_H / 2 + 2 });
     return floating.filter(({ label, price, line, isMark }) => {
       const w = inlineTagW(label);
@@ -576,11 +586,12 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
       };
       // Pastilles empilées (lignes rapprochées) : 1 px entre elles, leur contour sombre les sépare
       const PACK_GAP = 1;
-      // Bougies affichées (corps et mèche, marge de 3 px) : une pastille posée dessus cache le prix
+      // Bougies affichées (corps et mèche, marge de 3 px) : une pastille posée dessus cache le prix ;
+      // pastille « ton choix » et bandeau du verdict : elle y serait cachée
       const candleBoxes = visible.map((k, i) => ({ x1: xOf(i) - bodyW / 2 - 3, x2: xOf(i) + bodyW / 2 + 3, y1: toY(k.h) - 3, y2: toY(k.l) + 3 }));
       const free = (x: number, y: number, w: number) =>
         !inlineTags.some((t) => Math.abs(t.y - y) < INLINE_TAG_H + PACK_GAP - EPS && x < t.x + t.w + INLINE_TAG_GAP - EPS && x + w + INLINE_TAG_GAP > t.x + EPS)
-        && !candleBoxes.some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1);
+        && ![...candleBoxes, ...uiBoxes].some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1);
       // Première place libre en partant du bord droit, le long de la hauteur y (ni pastille ni bougie)
       const clearX = (y: number, w: number) => {
         for (let x = lineX1 - w; x >= minX; x -= 2) if (free(x, y, w)) return x;
