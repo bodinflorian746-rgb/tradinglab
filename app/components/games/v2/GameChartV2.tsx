@@ -131,7 +131,8 @@ export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still
   return (
     <g className={dimClass}>
       <g className={still ? "v2-candle v2-candle--static" : "v2-candle"} style={cssVars({ "--i": index })}>
-        <line x1={x} x2={x} y1={toY(h)} y2={toY(l)} stroke={wick} strokeWidth={3} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        {/* Mèche toujours nettement plus fine que le corps : au plus un tiers de sa largeur (1 à 3 px) */}
+        <line x1={x} x2={x} y1={toY(h)} y2={toY(l)} stroke={wick} strokeWidth={Math.max(1, Math.min(3, width / 3))} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
         <rect x={x - width / 2} y={bodyBox.y} width={width} height={bodyBox.h} rx={Math.min(3, bodyBox.h / 2)} fill={body} />
       </g>
     </g>
@@ -158,8 +159,8 @@ export interface GameChartV2Props {
   /** Choix du joueur, épinglé en haut à gauche (reveal / verdict). */
   pin?: { label: string; sub?: string; color: string };
   /**
-   * Garde les bougies à pleine opacité en état question (pas d'estompage au
-   * « spot »). Utile quand le joueur doit lire les bougies elles-mêmes.
+   * Sans effet : les bougies ne sont plus jamais estompées avant la réponse (gardé pour
+   * les appels existants).
    */
   keepCandlesBright?: boolean;
   /** Élément marqué en rouge au verdict (ex. l'erreur de « Trouve l'erreur »). */
@@ -247,7 +248,7 @@ const INLINE_TAG_FS = 12;
 const INLINE_TAG_GAP = 4;
 const inlineTagW = (label: string) => textWidth(label, INLINE_TAG_FS) + 14;
 
-export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBright, mark, reserve, tpOffscale, preview, inlineLabels, labeledZones, emphasis, glideScale, children }: GameChartV2Props) {
+export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve, tpOffscale, preview, inlineLabels, labeledZones, emphasis, glideScale, children }: GameChartV2Props) {
   const inline = !!inlineLabels;
   const { ref: sizeRef, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const { ref: playRef, playing } = usePlayOnView<HTMLDivElement>(0.4);
@@ -691,6 +692,16 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
           );
         })}
 
+        {/* Zone marquée au verdict (erreur) : derrière les bougies, transparente */}
+        {mark && showMark && mark.kind === "zone" && zones[mark.index] && (() => {
+          const r = zoneRect(zones[mark.index]);
+          return (
+            <g className={markClass} data-mark-zone="">
+              <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={6} fill="rgba(239,68,68,0.16)" stroke="#f87171" strokeWidth={3} vectorEffect="non-scaling-stroke" />
+            </g>
+          );
+        })()}
+
         {/* Séparation passé / futur */}
         {!question && splitX !== null && (
           <line x1={splitX} x2={splitX} y1={pin && splitX < PIN_BOX.right ? PIN_BOX.bottom : topPad - 6} y2={H - bottomPad + 4}
@@ -715,7 +726,9 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
         {/* Bougies */}
         {visible.map((k, i) => {
           const isFuture = sep !== undefined && i >= sep;
-          if (question) return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={i} dim={keepCandlesBright ? "full" : "anim"} />;
+          // Avant la réponse, les bougies restent nettes, aux couleurs de la charte (plus d'estompage
+          // quand la zone s'allume : la zone est derrière elles et se voit à travers)
+          if (question) return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={i} dim="full" />;
           if (mode === "reveal" && isFuture) {
             // Montée par la page toutes les 420ms : apparaît à son arrivée
             return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="full" />;
@@ -754,9 +767,9 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
             top = bottom = toY(mark.price);
             body = <line x1={padX} x2={lineX1} y1={top} y2={top} stroke={RED} strokeWidth={3.5} filter="url(#v2-line-glow)" strokeLinecap="round" />;
           } else if (mark.kind === "zone" && zones[mark.index]) {
+            // Zone marquée : dessinée derrière les bougies (calque des zones) ; ici, seulement sa pastille
             const r = zoneRect(zones[mark.index]);
             top = r.y; bottom = r.y + r.h;
-            body = <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={6} fill="rgba(239,68,68,0.22)" stroke={RED} strokeWidth={3} filter="url(#v2-hero-glow)" />;
           } else if (mark.kind === "point") {
             const cx = xOf(visible.length - 1);
             top = bottom = toY(mark.price);
