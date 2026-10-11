@@ -208,7 +208,8 @@ async function session(browser, slug, loc, w) {
   const page = await ctx.newPage();
   const errs = [];
   const add = (where, list) => list.forEach((e) => errs.push(`${where} : ${e}`));
-  page.on("pageerror", (e) => errs.push(`erreur JS : ${e.message.slice(0, 80)}`));
+  // Message complet et début de la pile : sans eux, une erreur ponctuelle ne se diagnostique pas
+  page.on("pageerror", (e) => errs.push(`erreur JS : ${e.message.slice(0, 200)}${e.stack ? ` [pile : ${e.stack.split("\n").slice(1, 4).map((l) => l.trim()).join(" ← ").slice(0, 300)}]` : ""}`));
   try {
     await page.goto(`${BASE}/${loc}/jeux/${slug}`, { waitUntil: "networkidle", timeout: 180000 });
     await page.evaluate(() => document.fonts.ready);
