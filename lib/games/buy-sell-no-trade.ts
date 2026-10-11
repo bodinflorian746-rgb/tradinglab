@@ -1324,6 +1324,32 @@ function genToxicExecution(rng: () => number, m: number, d: Difficulty): BuySell
 // ─── Build chart depuis un setup ──────────────────────────────────────────────
 
 /** Graphique converti à l'échelle de prix de l'actif (au dernier moment, pour l'affichage). */
+/**
+ * Niveau avancé : les zones perdent leurs qualificatifs (« UT supérieure », « majeure »,
+ * « haussier ») pour que le joueur lise le marché plutôt que les noms. Un support reste
+ * « Support » et une résistance « Résistance » : on ne les renomme jamais.
+ */
+export function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, locale: string | undefined): BuySellChart["zones"] {
+  if (d !== "advanced") return zones;
+  return zones.map((z) => {
+    const generic = locale === "es"
+      ? (z.kind === "support"        ? "Soporte"
+       : z.kind === "resistance"     ? "Resistencia"
+       : z.kind === "fvg"            ? "Desequilibrio"
+       :                                "Liquidez")
+      : locale === "en"
+      ? (z.kind === "support"        ? "Support"
+       : z.kind === "resistance"     ? "Resistance"
+       : z.kind === "fvg"            ? "Imbalance"
+       :                                "Liquidity")
+      : (z.kind === "support"        ? "Support"
+       : z.kind === "resistance"     ? "Résistance"
+       : z.kind === "fvg"            ? "Déséquilibre"
+       :                                "Liquidité");
+    return { ...z, label: generic };
+  });
+}
+
 export function withAssetPrices(chart: BuySellChart, inst: { asset: Asset; seed: number }): BuySellChart {
   const f = assetPriceMap(inst.asset, inst.seed, chart.past[chart.past.length - 1].c);
   return {

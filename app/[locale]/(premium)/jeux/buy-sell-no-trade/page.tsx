@@ -14,6 +14,7 @@ import {
   type GameChoice,
   type Metric,
   type ScenarioInstance,
+  maskZonesForDifficulty,
 } from "@/lib/games/buy-sell-no-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
 import { ChoiceRow, StepBadge, VerdictOverlay, type ChoiceOption, GeneralCasesNote, JargonHints, useJargon, useChartInView } from "@/app/components/games/v2/ui";
@@ -830,30 +831,6 @@ function biasClass(bias: "bullish" | "bearish" | "range"): string {
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
-// V3 : en niveau avancé, les labels de zones perdent leurs noms spécifiques
-// (Support HTF, Résistance majeure, FVG haussier) au profit de labels
-// génériques. Le joueur doit lire le marché plutôt que de suivre les noms.
-function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, locale: string | undefined): BuySellChart["zones"] {
-  if (d !== "advanced") return zones;
-  return zones.map((z) => {
-    const generic = locale === "es"
-      ? (z.kind === "support"        ? "Nivel bajo"
-       : z.kind === "resistance"     ? "Nivel alto"
-       : z.kind === "fvg"            ? "Desequilibrio"
-       :                                "Liquidez")
-      : locale === "en"
-      ? (z.kind === "support"        ? "Low level"
-       : z.kind === "resistance"     ? "High level"
-       : z.kind === "fvg"            ? "Imbalance"
-       :                                "Liquidity")
-      : (z.kind === "support"        ? "Niveau bas"
-       : z.kind === "resistance"     ? "Niveau haut"
-       : z.kind === "fvg"            ? "Déséquilibre"
-       :                                "Liquidité");
-    return { ...z, label: generic };
-  });
 }
 
 function translateVolatility(v: "faible" | "normale" | "élevée", locale: string | undefined): string {
