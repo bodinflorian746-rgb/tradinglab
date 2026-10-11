@@ -249,6 +249,10 @@ const INLINE_TAG_H = 20;
 const INLINE_TAG_FS = 12;
 const INLINE_TAG_GAP = 4;
 const inlineTagW = (label: string) => textWidth(label, INLINE_TAG_FS) + 14;
+/** Largeur de graphique (px) en dessous de laquelle la marge d'étiquettes ne sert qu'aux lignes */
+const NARROW_CHART_W = 480;
+/** Étiquette de l'erreur marquée (point, zone) : demi-pas verticaux explorés pour lui trouver une place */
+const MARK_TAG_STEPS = 40;
 
 export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve, tpOffscale, preview, inlineLabels, labeledZones, emphasis, glideScale, children }: GameChartV2Props) {
   const inline = !!inlineLabels;
@@ -314,15 +318,6 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
       ...(columnMode && mark && showMark && markPrice !== undefined ? [mark.label] : []),
     ];
   const colLabels = reserve?.labels ? [...tagLabels, ...reserve.labels] : tagLabels;
-  // En ligne : une marge à droite de la largeur de la plus grande petite étiquette
-  const tagColW = inline
-    ? (tagLabels.length ? Math.max(...tagLabels.map(inlineTagW)) + 10 : 0)
-    : colLabels.length ? Math.max(...colLabels.map((l) => textWidth(l, 12) + 16)) + 18 : 0;
-  const slot = W > 0 ? (W - 2 * padX - tagColW) / nSlots : 0;
-  const xOf = (i: number) => padX + slot * (i + 0.5);
-  // Plafond relatif au pas : les bougies ne se touchent jamais, même nombreuses
-  const bodyW = Math.min(clamp(slot * 0.6, 8, 30), slot * 0.78);
-
   // Échelle des prix calée sur les données, les zones et les lignes
   const prices = scaled.flatMap((k) => [k.h, k.l])
     .concat(zones.flatMap((z) => [z.y1, z.y2]))
@@ -335,6 +330,74 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
   const min = prices.length ? Math.min(...prices) : 0;
   const max = prices.length ? Math.max(...prices) : 1;
   const range = max - min || 1;
+
+  // En ligne : une marge à droite de la largeur de la plus grande petite étiquette. Graphique
+  // étroit (téléphone) : la marge n'est réservée qu'aux étiquettes de lignes (courtes, elles
+  // restent au bord sur leur ligne) si celles des zones et de l'erreur trouvent chacune, dans ce
+  // cadrage, une place sans bougie près de leur niveau ; sinon la marge prenait jusqu'à la
+  // moitié de la largeur et les bougies devenaient des traits (corps de 2 à 4 px).
+  // Étiquette de zone sans place libre près d'une zone qui touche le haut (ou le bas) du cadre :
+  // une bande lui est réservée au-dessus (ou au-dessous) des bougies.
+  const fullColW = tagLabels.length ? Math.max(...tagLabels.map(inlineTagW)) + 10 : 0;
+  const lineColW = lineLabels.length ? Math.max(...lineLabels.map(inlineTagW)) + 10 : 0;
+  const LABEL_BAND = INLINE_TAG_H + 8;
+  const floating = !inline ? [] : [
+    ...zoneLabelIdx.filter((i) => !(mark && showMark && mark.kind === "zone" && mark.index === i)).map((i) => ({ label: zones[i].label, price: (zones[i].y1 + zones[i].y2) / 2, line: false, isMark: false })),
+    ...(mark && showMark && markPrice !== undefined ? [{ label: mark.label, price: markPrice, line: mark.kind === "line", isMark: true }] : []),
+  ];
+  // Étiquettes flottantes sans place libre (ni bougie ni étiquette de ligne) dans un cadrage donné
+  const misfits = (colW: number, bandTop: number, bandBottom: number) => {
+    if (!floating.length || W <= 0 || H <= 0) return [];
+    const sl = (W - 2 * padX - colW) / nSlots, bw = Math.min(clamp(sl * 0.6, 8, 30), sl * 0.78);
+    // cadrage approché (sans la pastille « ton choix ») : marge de 6 px autour des bougies
+    const tp = (mark && mode === "verdict" ? 76 : 14) + bandTop, bp = 14 + bandBottom;
+    const ty = (p: number) => tp + ((max - p) / range) * (H - tp - bp);
+    const boxes = visible.map((k, i) => ({ x1: padX + sl * (i + 0.5) - bw / 2 - 6, x2: padX + sl * (i + 0.5) + bw / 2 + 6, y1: ty(k.h) - 6, y2: ty(k.l) + 6 }));
+    // les étiquettes de lignes, posées d'abord au bord droit sur leur ligne, sont aussi des obstacles
+    const linePills: [string, number][] = [
+      ...(tpTagLabel && tpShown !== undefined ? [[tpTagLabel, tpShown] as [string, number]] : []),
+      ...(overlay?.entry?.label ? [[overlay.entry.label, overlay.entry.price] as [string, number]] : []),
+      ...(overlay?.stops ?? []).flatMap((st) => (st.label ? [[st.label, st.price] as [string, number]] : [])),
+      ...(overlay?.candidateLines ?? []).map((c) => [c.label, c.price] as [string, number]),
+    ];
+    for (const [l, p] of linePills) boxes.push({ x1: W - padX - inlineTagW(l) - INLINE_TAG_GAP, x2: W, y1: ty(p) - INLINE_TAG_H / 2 - 2, y2: ty(p) + INLINE_TAG_H / 2 + 2 });
+    return floating.filter(({ label, price, line, isMark }) => {
+      const w = inlineTagW(label);
+      const shifts = line ? [0, 2, -2, 4, -4, 6, -6, 8, -8] : [0, ...Array.from({ length: isMark ? MARK_TAG_STEPS : 6 }, (_, k) => k + 1).flatMap((k) => [k, -k].map((d) => d * (INLINE_TAG_H + INLINE_TAG_GAP) / 2))];
+      return !shifts.some((d) => {
+        const y = ty(price) + d;
+        if (y < INLINE_TAG_H / 2 + 1 || y > H - INLINE_TAG_H / 2 - 1) return false;
+        for (let x = W - padX - w; x >= 2; x -= 2) if (!boxes.some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1)) return true;
+        return false;
+      });
+    });
+  };
+  // Bandes demandées par les étiquettes sans place : zone au bord du cadre, ou erreur marquée sur
+  // un point ou une zone (côté le plus proche ; elle peut s'éloigner de sa marque, de même couleur)
+  const bandSide = (x: { price: number; line: boolean; isMark: boolean }) => x.line ? null
+    : x.isMark ? (x.price >= (min + max) / 2 ? "top" : "bottom")
+    : x.price >= max - 0.2 * range ? "top" : x.price <= min + 0.2 * range ? "bottom" : null;
+  const bandsFor = (m: { price: number; line: boolean; isMark: boolean }[]) => ({
+    top: m.some((x) => bandSide(x) === "top") ? LABEL_BAND : 0,
+    bottom: m.some((x) => bandSide(x) === "bottom") ? LABEL_BAND : 0,
+  });
+  const labelLayout = (() => {
+    if (!inline) return { col: 0, top: 0, bottom: 0 };
+    if (W > 0 && W < NARROW_CHART_W && lineColW < fullColW) {
+      const m = misfits(lineColW, 0, 0);
+      if (!m.length) return { col: lineColW, top: 0, bottom: 0 };
+      const b = bandsFor(m);
+      if ((b.top || b.bottom) && !misfits(lineColW, b.top, b.bottom).length) return { col: lineColW, ...b };
+    }
+    return { col: fullColW, ...bandsFor(misfits(fullColW, 0, 0)) };
+  })();
+  const tagColW = inline
+    ? labelLayout.col
+    : colLabels.length ? Math.max(...colLabels.map((l) => textWidth(l, 12) + 16)) + 18 : 0;
+  const slot = W > 0 ? (W - 2 * padX - tagColW) / nSlots : 0;
+  const xOf = (i: number) => padX + slot * (i + 0.5);
+  // Plafond relatif au pas : les bougies ne se touchent jamais, même nombreuses
+  const bodyW = Math.min(clamp(slot * 0.6, 8, 30), slot * 0.78);
 
   const fsPill = desktop ? DESKTOP_PILL_PX : clamp(W * 0.036, 13, 17);
   const pillH = fsPill + 12;
@@ -360,13 +423,13 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
   };
   const heroRoom = hero && !columnMode && !inline ? roomTop([hero.y1, hero.y2], pillW0(hero.label), pillH, 6) : 0;
   // Pastille héros passée au-dessus : la marge basse qui lui était réservée est rendue au graphique
-  const bottomPad = heroRoom > 0 ? 14 : bottomPad0;
+  const bottomPad = (heroRoom > 0 ? 14 : bottomPad0) + labelLayout.bottom;
   const pillRoom = columnMode || inline ? 0 : Math.max(
     heroRoom,
     preview && mark && mark.kind !== "point" ? roomTop(mark.kind === "line" ? [mark.price] : zones[mark.index] ? [zones[mark.index].y1, zones[mark.index].y2] : null, textWidth(mark.label, MARK_FS) + 20, MARK_PH, 8) : 0,
   );
   // Verdict en bandeau (élément marqué) : sa hauteur est réservée en haut
-  const topPad = mark && mode === "verdict" ? Math.max(topPadBase, 76) : Math.max(topPadBase, pillRoom);
+  const topPad = (mark && mode === "verdict" ? Math.max(topPadBase, 76) : Math.max(topPadBase, pillRoom)) + labelLayout.top;
 
   // ─── Glissement au clic (FLIP) ───
   // Le tracé est rendu directement dans son nouveau cadrage ; avant l'affichage,
@@ -580,7 +643,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
           const xx = clearX(yy, w);
           if (xx !== null) { x = xx; y = yy; break; }
         }
-        if (x === null && !onLine(s.key)) for (let k = 1; x === null && k <= 6; k++) for (const dir of [1, -1]) {
+        if (x === null && !onLine(s.key)) for (let k = 1; x === null && k <= (s.key === "markTag" ? MARK_TAG_STEPS : 6); k++) for (const dir of [1, -1]) {
           const yy = y0 + dir * k * (INLINE_TAG_H + INLINE_TAG_GAP) / 2;
           if (yy < INLINE_TAG_H / 2 + 1 || yy > H - INLINE_TAG_H / 2 - 1) continue;
           const xx = clearX(yy, w);
