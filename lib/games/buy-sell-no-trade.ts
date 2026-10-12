@@ -201,7 +201,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Tendance haussière établie, le prix corrige vers un support visible.",
+    context: "Tendance haussière établie, le prix corrige vers une ancienne résistance, cassée, qui sert maintenant de support.",
     rationales: {
       BUY: "✓ Ici, le pullback dans la tendance offre une opportunité d'achat à meilleur prix. Tu rejoins la tendance au lieu de la poursuivre, avec souvent un meilleur R/R.",
       SELL: "✗ Vendre dans une tendance haussière revient souvent à ramer contre le courant. Ici, le pullback ressemble plus à une opportunité d'achat qu'à un signal de vente.",
@@ -209,7 +209,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     },
     lessons: {
       beginner:     "Dans une tendance haussière, les replis sont souvent les meilleurs moments pour acheter, plutôt que l'inverse. C'est l'un des trades les plus courants chez les traders de tendance.",
-      intermediate: "Un pullback dans le sens de l'UT supérieure, sur un support visible, compte souvent parmi les setups les plus solides.",
+      intermediate: "Un pullback dans le sens de l'UT supérieure, sur une ancienne résistance devenue support, compte souvent parmi les setups les plus solides.",
       advanced:     "Un pullback profond n'invalide pas forcément le scénario. Tant que l'UT supérieure tient et que la structure n'est pas cassée, le pullback peut rester une opportunité.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -222,16 +222,16 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Tendance baissière établie, le prix rebondit vers une résistance.",
+    context: "Tendance baissière établie, le prix rebondit vers un ancien support, cassé, qui sert maintenant de résistance.",
     rationales: {
       BUY: "✗ Acheter le rebond dans une tendance baissière revient ici à chercher le plus bas. Ce type de trade est souvent perdant.",
-      SELL: "✓ Ici, le rebond ramène le prix sur une résistance visible. Vendre dans le sens baissière de l'UT supérieure, à un meilleur prix, est une option logique.",
+      SELL: "✓ Ici, le rebond ramène le prix sur cet ancien support devenu résistance. Vendre dans le sens baissière de l'UT supérieure, à un meilleur prix, est une option logique.",
       NO_TRADE: "≈ Pas faux, mais ici l'UT supérieure et la zone sont alignés. La discipline consiste à filtrer les trades, pas à tous les éviter.",
     },
     lessons: {
       beginner:     "En tendance baissière, on cherche plutôt les rebonds pour vendre. Acheter en espérant une remontée va souvent contre le marché.",
       intermediate: "Ici, un pullback sur une résistance dans une tendance baissière peut constituer un setup à bonne probabilité, à considérer selon ton plan de trading.",
-      advanced:     "Si la résistance est retestée proprement et que l'UT supérieure reste intacte, le SELL se défend. Si la structure casse pendant le pullback, NO TRADE devient l'option logique.",
+      advanced:     "Si l'ancien support est retesté proprement par en dessous et que l'UT supérieure reste intacte, le SELL se défend. Si la structure casse pendant le pullback, NO TRADE devient l'option logique.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["lecture", "pullback", "trend"],
