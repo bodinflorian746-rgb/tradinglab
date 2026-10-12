@@ -387,7 +387,14 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
   // libérait à tort la place d'une autre.
   const frame = (colW: number, bandTop: number, bandBottom: number) => {
     const sl = (W - 2 * padX - colW) / nSlots, bw = Math.min(clamp(sl * 0.6, 8, 30), sl * 0.78);
-    const tp = (bannerBottom ? bannerBottom + 12 : 14) + bandTop, bp = 14 + bandBottom;
+    // Marge haute de la pastille « ton choix » (même calcul que topPadBase, dans ce cadrage) : sans
+    // elle, les niveaux simulés étaient décalés et une place libre trouvée ici n'existait pas au rendu
+    const pinTop = !pin || H <= 0 ? 14 : scaled.reduce((acc, k, i) => {
+      if (padX + sl * (i + 0.5) - bw / 2 > PIN_BOX.right) return acc;
+      const f = (max - k.h) / range;
+      return f < 1 ? Math.max(acc, (PIN_BOX.bottom - f * (H - 14)) / (1 - f)) : acc;
+    }, 14);
+    const tp = (bannerBottom ? Math.max(pinTop, bannerBottom + 12) : pinTop) + bandTop, bp = 14 + bandBottom;
     const ty = (p: number) => tp + ((max - p) / range) * (H - tp - bp);
     const boxes = visible.map((k, i) => ({ x1: padX + sl * (i + 0.5) - bw / 2 - 3, x2: padX + sl * (i + 0.5) + bw / 2 + 3, y1: ty(k.h) - 3 - ext(i).up, y2: ty(k.l) + 3 + ext(i).down }));
     boxes.push(...uiBoxes);
