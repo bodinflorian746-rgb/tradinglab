@@ -414,10 +414,10 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "discipline",
-    context: "UT supérieure baissière nette. Le prix rebondit localement sur un niveau secondaire, mais la tendance reste contre toi.",
+    context: "UT supérieure baissière nette. Le prix rebondit localement sur un support, mais la tendance reste contre toi.",
     shortContext: "Rebond local dans une tendance baissière de l'UT supérieure.",
     rationales: {
-      BUY: "✗ Trader contre la tendance de l'UT supérieure en misant sur un niveau secondaire revient ici à jouer une probabilité faible. Les statistiques jouent souvent contre toi avant même le clic.",
+      BUY: "✗ Trader contre la tendance de l'UT supérieure en misant sur ce support local revient ici à jouer une probabilité faible. Les statistiques jouent souvent contre toi avant même le clic.",
       SELL: "✗ Pas le bon moment : ici, le rebond local ne montre pas encore de signe d'épuisement. En vendant maintenant, 2-3 bougies vertes peuvent te sortir avant la reprise.",
       NO_TRADE: "✓ Le setup local tient, MAIS il va contre l'UT supérieure : ici, l'avantage manque. Une option logique consiste à attendre l'épuisement du rebond et une zone claire de l'UT supérieure pour vendre.",
     },
@@ -1198,7 +1198,7 @@ function genFvgOvermitigated(rng: () => number, m: number, d: Difficulty): BuySe
 
 function genCounterTrendBounce(rng: () => number, m: number, d: Difficulty): BuySellChart {
   // HTF baissier clairement visible (downtrend en début de past). Rebond local
-  // faible sur un niveau secondaire. Future : continuation baissière.
+  // faible sur un support local. Future : continuation baissière.
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 8.5 + rng() * 0.3;

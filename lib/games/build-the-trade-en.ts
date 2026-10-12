@@ -70,7 +70,6 @@ const ZONE_LABEL_EN: Record<string, string> = {
   "Plus haut précédent":     "Previous high",
   "Liquidité balayée":  "Liquidity swept",
   "FVG haussier":       "Bullish FVG",
-  "Niveau secondaire":  "Secondary level",
 };
 
 function translateZones(zones: ChartZone[]): ChartZone[] {
@@ -317,7 +316,7 @@ export const BUILD_TRADE_TEMPLATES_EN: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "The pullback has become very deep. More than 60% of the prior impulse is retraced.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
-    optimalExplain: "Here, the deep pullback can announce a structural break. Confirmation preserves the edge: an aggressive entry would mean chasing price, and a deep pullback entry would mean betting on a doubtful zone.",
+    optimalExplain: "Here, the deep pullback can announce a structural break. Confirmation preserves the edge: an aggressive entry would mean chasing price, and a deep pullback entry would mean betting on another touch of the support.",
     lessons: {
       advanced:     "A pullback of more than 60% of the impulse can signal a tired pattern. Here, a confirmation and a moderate TP are a logical option.",
       intermediate: "The deeper the pullback, the more confirmation matters. Here, an aggressive entry would be very risky.",

@@ -70,7 +70,6 @@ const ZONE_LABEL_EN: Record<string, string> = {
   "Bas du range":       "Range floor",
   "Sweep haut":           "Sweep high",
   "Sweep bas":            "Sweep low",
-  "Niveau secondaire":    "Secondary level",
 };
 
 function translateZones(zones: ChartZone[]): ChartZone[] {
@@ -396,10 +395,10 @@ export const SCENARIO_TEMPLATES_EN: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "discipline",
-    context: "Clear bearish HTF. Price bounces locally on a secondary level, but the trend stays against you.",
+    context: "Clear bearish HTF. Price bounces locally on a support, but the trend stays against you.",
     shortContext: "Local bounce in an HTF downtrend.",
     rationales: {
-      BUY: "✗ Trading against the HTF trend by betting on a secondary level here means playing a low probability. The statistics often work against you before you even click.",
+      BUY: "✗ Trading against the HTF trend by betting on this local support here means playing a low probability. The statistics often work against you before you even click.",
       SELL: "✗ Not the right moment: here, the local bounce shows no sign of exhaustion yet. Selling now, 2-3 green candles can stop you out before the resumption.",
       NO_TRADE: "✓ The local setup holds, BUT it goes against the HTF: here, the edge is missing. A logical option is to wait for the bounce to exhaust and a clear HTF zone to sell.",
     },

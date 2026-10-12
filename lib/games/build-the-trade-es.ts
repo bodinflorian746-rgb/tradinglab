@@ -70,7 +70,6 @@ const ZONE_LABEL_ES: Record<string, string> = {
   "Plus haut précédent":     "Máximo anterior",
   "Liquidité balayée":  "Liquidez barrida",
   "FVG haussier":       "FVG alcista",
-  "Niveau secondaire":  "Nivel secundario",
 };
 
 function translateZones(zones: ChartZone[]): ChartZone[] {
@@ -317,7 +316,7 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "El pullback se volvió muy profundo. El precio ya retrocedió más del 60 % del impulso previo.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
-    optimalExplain: "Aquí, el pullback profundo puede anunciar una ruptura de estructura. La confirmación preserva la ventaja: una entrada agresiva supondría perseguir el precio, y un pullback profundo apostar por un nivel secundario.",
+    optimalExplain: "Aquí, el pullback profundo puede anunciar una ruptura de estructura. La confirmación preserva la ventaja: una entrada agresiva supondría perseguir el precio, y un pullback profundo apostar por un nuevo toque del soporte.",
     lessons: {
       advanced:     "Un pullback de más del 60 % del impulso puede señalar un pattern agotado. Aquí, una confirmación y un TP moderado son una opción lógica.",
       intermediate: "Cuanto más profundo es el pullback, más cuenta la confirmación. Aquí, una entrada agresiva sería muy arriesgada.",

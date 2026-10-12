@@ -332,7 +332,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Le pullback est devenu très profond. Plus de 60 % de l'impulsion précédente est retracée.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
-    optimalExplain: "Ici, le pullback profond peut annoncer une cassure de structure. La confirmation préserve l'avantage : une entrée agressive reviendrait à courir après le prix, et un pullback profond à parier sur un niveau secondaire.",
+    optimalExplain: "Ici, le pullback profond peut annoncer une cassure de structure. La confirmation préserve l'avantage : une entrée agressive reviendrait à courir après le prix, et un pullback profond à parier sur une nouvelle touche du support.",
     lessons: {
       advanced:     "Un pullback de plus de 60 % de l'impulsion peut signaler un pattern fatigué. Ici, une confirmation et un TP modéré sont une option logique.",
       intermediate: "Plus le pullback est profond, plus la confirmation compte. Ici, une entrée agressive serait très risquée.",
