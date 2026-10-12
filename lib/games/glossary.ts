@@ -590,6 +590,8 @@ export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
     "Faux breakouts précédents", "Zone de chasse aux stops", "Equal lows", "Haut de la session asiatique",
     "Chiffre rond", "HL H4", "PDL", "Swing high 1", "Swing high 2", "Swing high 3", "Swing low 1",
     "Swing low 2", "Swing low 3", "Swing high évident", "Swing low évident", "Swing low H1",
+    // changement de rôle (lib/games/shared.ts, ROLE_CHANGE_LABELS) : libellé et libellé court
+    "Ancienne résistance → support", "Ancien support → résistance", "Résistance → support", "Support → résistance",
     // niveau avancé : libellés génériques
     "Déséquilibre", "Liquidité",
   ],
@@ -601,6 +603,7 @@ export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
     "Fakeouts anteriores", "Zona de stop hunt", "Equal lows", "Máximo de la sesión asiática",
     "Nivel psicológico", "HL H4", "PDL", "Swing high 1", "Swing high 2", "Swing high 3", "Swing low 1",
     "Swing low 2", "Swing low 3", "Swing high evidente", "Swing low evidente", "Swing low H1",
+    "Antigua resistencia → soporte", "Antiguo soporte → resistencia", "Resistencia → soporte", "Soporte → resistencia",
     "Desequilibrio", "Liquidez",
   ],
 };

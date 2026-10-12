@@ -17,7 +17,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, srGuards,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, srGuards, withRoleChanges,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -2805,7 +2805,7 @@ export function buildPlaceStopChart(
   // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
   const zones = [...withTarget.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(withTarget.zones, VOL_MULT[volatility], withTarget.past)];
   const outcome = [...(withTarget.tp !== null ? [withTarget.tp] : []), ...withTarget.stops.map((st) => st.price)];
-  return keepPricesPositive(realizeChart(withTarget, { past: zones, future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility }));
+  return withRoleChanges(keepPricesPositive(realizeChart(withTarget, { past: zones, future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility })));
 }
 
 // Le bon stop ne doit jamais avoir un R/R faible : l'objectif (TP) est au moins

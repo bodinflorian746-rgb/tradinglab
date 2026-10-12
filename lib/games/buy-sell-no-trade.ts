@@ -15,7 +15,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone, type ChartData, type ZoneKind,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, srGuards,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, srGuards, withRoleChanges,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -1332,6 +1332,8 @@ function genToxicExecution(rng: () => number, m: number, d: Difficulty): BuySell
 export function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, locale: string | undefined): BuySellChart["zones"] {
   if (d !== "advanced") return zones;
   return zones.map((z) => {
+    // Changement de rôle : il fait partie de la preuve du niveau, il reste dit en avancé aussi
+    if (z.flip) return z;
     const generic = locale === "es"
       ? (z.kind === "support"        ? "Soporte"
        : z.kind === "resistance"     ? "Resistencia"
@@ -1371,7 +1373,7 @@ export function buildChart(
 ): BuySellChart {
   const ch = buildChartRaw(setup, seed, volatility, difficulty);
   const calm = setup === "trade_before_news";
-  return realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm });
+  return withRoleChanges(realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm }));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

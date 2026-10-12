@@ -49,6 +49,11 @@ export { ROUNDS_PER_SESSION, scoreMistakeChoice };
 // ─── Translation table for zone labels (FR key → EN) ─────────────────────────
 
 const ZONE_LABEL_EN: Record<string, string> = {
+  // Changement de rôle (lib/games/shared.ts, ROLE_CHANGE_LABELS) : libellé et libellé court
+  "Ancienne résistance → support": "Former resistance → support",
+  "Résistance → support": "Resistance → support",
+  "Ancien support → résistance": "Former support → resistance",
+  "Support → résistance": "Support → resistance",
   "Swing low":          "Swing low",
   "Swing high":         "Swing high",
   "Résistance UT supérieure":     "HTF resistance",
@@ -63,7 +68,7 @@ const ZONE_LABEL_EN: Record<string, string> = {
 };
 
 function translateZones(zones: ChartZone[]): ChartZone[] {
-  return zones.map((z) => ({ ...z, label: ZONE_LABEL_EN[z.label] ?? z.label }));
+  return zones.map((z) => ({ ...z, label: ZONE_LABEL_EN[z.label] ?? z.label, ...(z.short ? { short: ZONE_LABEL_EN[z.short] ?? z.short } : {}) }));
 }
 
 // Wrapper around buildScenarioChart that translates the zone labels.

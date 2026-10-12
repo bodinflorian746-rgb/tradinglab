@@ -30,6 +30,88 @@ export interface ChartZone {
   y1:    number;
   y2:    number;
   label: string;
+  /** Libellé court (graphique étroit, téléphone), même idée que le libellé */
+  short?: string;
+  /** Changement de rôle prouvé (ancienne résistance → support, ou l'inverse) : touches et cassure */
+  flip?: RoleChange;
+}
+
+/** Changement de rôle d'un niveau : touches (indices des bougies) du côté de l'ancien rôle, puis cassure. */
+export interface RoleChange {
+  /** Rôle d'avant la cassure */
+  was: "support" | "resistance";
+  touches: number[];
+  /** Bougie de la cassure (première clôture de l'autre côté) */
+  breakAt: number;
+}
+
+/**
+ * Support touché seulement par en dessous (ancienne résistance cassée vers le haut) ou résistance
+ * touchée seulement par au-dessus (ancien support cassé vers le bas) : le niveau tient son rôle d'un
+ * changement de rôle. Touches et cassures : même définition que la preuve des supports / résistances
+ * (scripts/audit-lecons/sr-proof.mjs) — le prix arrive d'un côté, vient au contact, repart du même
+ * côté ; s'il ressort de l'autre côté, c'est une cassure.
+ */
+export function roleChange(cs: Candle[], z: Pick<ChartZone, "kind" | "y1" | "y2" | "label">): RoleChange | null {
+  // Seulement un niveau NOMMÉ support / résistance (les zones nommées autrement — swing low, HL H4,
+  // plus bas précédent — ne prétendent pas à ce rôle)
+  const sup = /^(support|soporte)/i.test(z.label);
+  const res = /^(r[ée]sistance|resistencia)/i.test(z.label);
+  if (!sup && !res) return null;
+  const lo = Math.min(z.y1, z.y2), hi = Math.max(z.y1, z.y2);
+  const ranges = cs.map((k) => k.h - k.l).sort((a, b) => a - b);
+  const tol = 0.25 * (ranges[Math.floor(ranges.length / 2)] || 0);
+  let last: "above" | "below" | null = null, group: number[] = [];
+  const touches = { above: [] as number[], below: [] as number[] };
+  let breakAt = -1, brokeTo: "above" | "below" | null = null;
+  cs.forEach((k, i) => {
+    const above = k.l > hi + tol, below = k.h < lo - tol;
+    if (above || below) {
+      const side = above ? "above" : "below";
+      if (group.length && last === side) {
+        // bougie du contact la plus proche du niveau
+        touches[side].push(group.reduce((a, j) => (side === "below" ? (cs[j].h > cs[a].h ? j : a) : (cs[j].l < cs[a].l ? j : a))));
+      } else if (last && last !== side && breakAt < 0) {
+        const cand = [...group, i];
+        breakAt = cand.find((j) => (side === "above" ? cs[j].c > hi : cs[j].c < lo)) ?? i;
+        brokeTo = side;
+      }
+      group = []; last = side;
+    } else if (last) group.push(i);
+  });
+  // Mèches très longues (tolérance large) : le prix peut clôturer de l'autre côté sans jamais en
+  // sortir franchement. Une clôture au-delà de la zone après la dernière touche est la cassure.
+  if (brokeTo === null) {
+    const side = touches.below.length && !touches.above.length ? "below" : touches.above.length && !touches.below.length ? "above" : null;
+    if (side) {
+      const after = Math.max(...touches[side]);
+      const j = cs.findIndex((k, i) => i > after && (side === "below" ? k.c > hi : k.c < lo));
+      if (j >= 0) { breakAt = j; brokeTo = side === "below" ? "above" : "below"; }
+    }
+  }
+  if (sup && touches.below.length > 0 && touches.above.length === 0 && brokeTo === "above") return { was: "resistance", touches: touches.below, breakAt };
+  if (res && touches.above.length > 0 && touches.below.length === 0 && brokeTo === "below") return { was: "support", touches: touches.above, breakAt };
+  return null;
+}
+
+/** Libellés du changement de rôle (FR ; les modules EN / ES les traduisent) */
+export const ROLE_CHANGE_LABELS = {
+  support: { label: "Ancienne résistance → support", short: "Résistance → support" },
+  resistance: { label: "Ancien support → résistance", short: "Support → résistance" },
+} as const;
+
+/** Zones du passé : un support / une résistance prouvé par changement de rôle le dit (libellé) et
+ *  porte ses touches et sa cassure (repères discrets sur le graphique). */
+export function withRoleChanges<T extends { past: Candle[]; zones: ChartZone[] }>(ch: T): T {
+  return {
+    ...ch,
+    zones: ch.zones.map((z) => {
+      const f = roleChange(ch.past, z);
+      if (!f) return z;
+      const L = ROLE_CHANGE_LABELS[f.was === "resistance" ? "support" : "resistance"];
+      return { ...z, label: L.label, short: L.short, flip: f };
+    }),
+  };
 }
 
 export interface ChartData {

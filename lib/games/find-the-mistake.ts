@@ -8,7 +8,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, srGuards,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, srGuards, withRoleChanges,
 } from "./shared";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -967,7 +967,7 @@ export function buildScenarioChart(template: MistakeTemplate, seed: number, vol:
   const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol], ch.past)];
   const lines = [ch.entry, ch.stop, ch.tp].filter((p): p is number => p !== undefined);
   const calm = template.chartShape === "calm_before_news";
-  return realizeChart(ch, { past: zones, future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm });
+  return withRoleChanges(realizeChart(ch, { past: zones, future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm }));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

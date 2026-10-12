@@ -252,6 +252,8 @@ const INLINE_TAG_H = 20;
 const INLINE_TAG_FS = 12;
 const INLINE_TAG_GAP = 4;
 const inlineTagW = (label: string) => textWidth(label, INLINE_TAG_FS) + 14;
+/** Repères du changement de rôle : rayon d'un anneau de touche, écart à la pointe de la mèche (px) */
+const FLIP_R = 3, FLIP_GAP = 4;
 /** Largeur de graphique (px) en dessous de laquelle la marge d'étiquettes ne sert qu'aux lignes */
 const NARROW_CHART_W = 480;
 /** Écart maximal (px) entre une étiquette de ligne empilée et sa ligne : la ligne la traverse toujours */
@@ -274,7 +276,18 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
   const question = mode === "question";
   const visibleCount = sep === undefined ? all.length : question ? sep : Math.min(all.length, sep + revealed);
   const visible = all.slice(0, visibleCount);
-  const zones = data.zones;
+  // Graphique étroit (téléphone) : libellé court d'une zone quand il existe (même idée, ex.
+  // « Résistance → support » pour « Ancienne résistance → support »)
+  const zones = W > 0 && W < NARROW_CHART_W ? data.zones.map((z) => (z.short ? { ...z, label: z.short } : z)) : data.zones;
+  // Place occupée par les repères du changement de rôle au-dessus / au-dessous d'une bougie (px) :
+  // les étiquettes ne les recouvrent pas
+  const flipExt = new Map<number, { up: number; down: number }>();
+  for (const z of zones) if (z.flip) {
+    const up = z.flip.was === "resistance";
+    for (const i of z.flip.touches) flipExt.set(i, up ? { up: FLIP_GAP + 2 * FLIP_R + 1, down: 0 } : { up: 0, down: FLIP_GAP + 2 * FLIP_R + 1 });
+    if (z.flip.breakAt >= 0) flipExt.set(z.flip.breakAt, up ? { up: FLIP_GAP + 8, down: 0 } : { up: 0, down: FLIP_GAP + 8 });
+  }
+  const ext = (i: number) => flipExt.get(i) ?? { up: 0, down: 0 };
   const hero = question ? zones[0] : undefined;
   const stepMs = preview ? PREVIEW_STEP_MS : STEP_MS;
   const spotMs = question ? visibleCount * stepMs + 250 : 0;
@@ -376,7 +389,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
     const sl = (W - 2 * padX - colW) / nSlots, bw = Math.min(clamp(sl * 0.6, 8, 30), sl * 0.78);
     const tp = (bannerBottom ? bannerBottom + 12 : 14) + bandTop, bp = 14 + bandBottom;
     const ty = (p: number) => tp + ((max - p) / range) * (H - tp - bp);
-    const boxes = visible.map((k, i) => ({ x1: padX + sl * (i + 0.5) - bw / 2 - 3, x2: padX + sl * (i + 0.5) + bw / 2 + 3, y1: ty(k.h) - 3, y2: ty(k.l) + 3 }));
+    const boxes = visible.map((k, i) => ({ x1: padX + sl * (i + 0.5) - bw / 2 - 3, x2: padX + sl * (i + 0.5) + bw / 2 + 3, y1: ty(k.h) - 3 - ext(i).up, y2: ty(k.l) + 3 + ext(i).down }));
     boxes.push(...uiBoxes);
     return { ty, boxes };
   };
@@ -640,7 +653,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
       };
       // Bougies affichées (corps et mèche, marge de 3 px) : une pastille posée dessus cache le prix ;
       // pastille « ton choix » et bandeau du verdict : elle y serait cachée
-      const candleBoxes = visible.map((k, i) => ({ x1: xOf(i) - bodyW / 2 - 3, x2: xOf(i) + bodyW / 2 + 3, y1: toY(k.h) - 3, y2: toY(k.l) + 3 }));
+      const candleBoxes = visible.map((k, i) => ({ x1: xOf(i) - bodyW / 2 - 3, x2: xOf(i) + bodyW / 2 + 3, y1: toY(k.h) - 3 - ext(i).up, y2: toY(k.l) + 3 + ext(i).down }));
       const free = (x: number, y: number, w: number) =>
         !inlineTags.some((t) => Math.abs(t.y - y) < INLINE_TAG_H + PACK_GAP - EPS && x < t.x + t.w + INLINE_TAG_GAP - EPS && x + w + INLINE_TAG_GAP > t.x + EPS)
         && ![...candleBoxes, ...uiBoxes].some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1);
@@ -862,6 +875,29 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
             return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={0} dim="full" />;
           }
           return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={0} dim="now" still />;
+        })}
+
+        {/* Changement de rôle : touches du côté de l'ancien rôle (anneaux à la pointe de la mèche) et
+            cassure (triangle dans le sens de la cassure), discrets, à l'écart des bougies */}
+        {zones.map((z, zi) => {
+          if (!z.flip) return null;
+          const f = z.flip, up = f.was === "resistance";
+          const oldColor = up ? "var(--v2-bear)" : "var(--v2-bull)", newColor = up ? "var(--v2-bull)" : "var(--v2-bear)";
+          const past = sep ?? visible.length;
+          return (
+            <g key={`flip${zi}`} data-flip={zi} className={question ? undefined : "v2-dim--now"}>
+              {f.touches.filter((i) => i < Math.min(past, visible.length)).map((i) => {
+                const k = visible[i];
+                const y = up ? toY(k.h) - FLIP_GAP - FLIP_R : toY(k.l) + FLIP_GAP + FLIP_R;
+                return <circle key={i} data-flip-touch={i} cx={xOf(i)} cy={y} r={FLIP_R} fill="none" stroke={oldColor} strokeWidth={1.6} vectorEffect="non-scaling-stroke" />;
+              })}
+              {f.breakAt >= 0 && f.breakAt < Math.min(past, visible.length) && (() => {
+                const k = visible[f.breakAt], x = xOf(f.breakAt);
+                const tip = up ? toY(k.h) - FLIP_GAP - 7 : toY(k.l) + FLIP_GAP + 7, d = up ? 5 : -5;
+                return <path data-flip-break={f.breakAt} d={`M${x} ${tip}L${x - 4} ${tip + d}L${x + 4} ${tip + d}Z`} fill={newColor} />;
+              })()}
+            </g>
+          );
         })}
 
         {/* Impact : le stop touché est marqué à la bougie qui l'atteint */}
