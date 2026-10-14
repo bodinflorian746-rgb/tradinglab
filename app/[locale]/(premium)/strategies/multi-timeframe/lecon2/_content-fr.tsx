@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon1", title: "Pourquoi faire une analyse multi-unités de temps", disabled: false },
   { id: "lecon2", title: "L'unité de temps supérieure : le biais", disabled: false },
   { id: "lecon3", title: "L'unité de temps intermédiaire : la zone", disabled: false },
-  { id: "lecon4", title: "L'unité de temps d'exécution : l'entrée", disabled: false },
+  { id: "lecon4", title: "L’unité de temps d’exécution : l’entrée", disabled: false },
   { id: "lecon5", title: "Le process complet", disabled: false },
 ];
 

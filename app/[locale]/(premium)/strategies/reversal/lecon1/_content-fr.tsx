@@ -12,9 +12,9 @@ import DTBMeasuredMoveProjectionDiagram from "@/app/components/charts/DTBMeasure
 
 const LESSONS = [
   { id: "lecon1", slug: "lecon1", title: "Double top / Double bottom : la signature du retournement", duration: "16 min", disabled: false },
-  { id: "lecon2", slug: "lecon2", title: "Leçon 2", duration: "", disabled: true },
-  { id: "lecon3", slug: "lecon3", title: "Leçon 3", duration: "", disabled: true },
-  { id: "lecon4", slug: "lecon4", title: "Leçon 4", duration: "", disabled: true },
+  { id: "lecon2", slug: "lecon2", title: "Épaule-tête-épaule : le retournement majeur", duration: "18 min", disabled: false },
+  { id: "lecon3", slug: "lecon3", title: "Divergence RSI : quand le momentum trahit la tendance", duration: "17 min", disabled: false },
+  { id: "lecon4", slug: "lecon4", title: "Trader un reversal : checklist d’invalidation", duration: "18 min", disabled: false },
 ];
 
 export default function ContentFr() {

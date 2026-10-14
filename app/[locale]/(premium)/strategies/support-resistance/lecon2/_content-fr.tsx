@@ -14,8 +14,8 @@ import { LessonQuiz } from "@/app/components/LessonQuiz";
 const LESSONS = [
   { id: "lecon1", title: "Support et résistance : les zones où le marché réagit", disabled: false },
   { id: "lecon2", title: "Identifier un vrai niveau (vs une ligne tracée au hasard)", disabled: false },
-  { id: "lecon3", title: "Leçon 3",          disabled: true },
-  { id: "lecon4", title: "Leçon 4",          disabled: true },
+  { id: "lecon3", title: "Flip support↔résistance et trader un rebond", disabled: false },
+  { id: "lecon4", title: "Breakout vrai vs faux breakout", disabled: false },
 ];
 
 export default function ContentFr() {

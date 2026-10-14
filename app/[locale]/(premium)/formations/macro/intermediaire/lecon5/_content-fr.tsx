@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon3", title: "CPI, PPI et inflation",                   href: "/formations/macro/intermediaire/lecon3", disabled: false },
   { id: "lecon4", title: "Sessions de trading et liquidité",        href: "/formations/macro/intermediaire/lecon4", disabled: false },
   { id: "lecon5", title: "Les corrélations",                        href: "/formations/macro/intermediaire/lecon5", disabled: false },
-  { id: "lecon6", title: "Construire son biais hebdomadaire",       href: null,                                     disabled: true  },
+  { id: "lecon6", title: "Construire son biais hebdomadaire",       href: "/formations/macro/intermediaire/lecon6", disabled: false },
 ];
 
 export default function ContentFr() {
@@ -495,7 +495,7 @@ export default function ContentFr() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">La prochaine leçon (Construire son biais hebdomadaire) sera bientôt disponible.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Passe à la leçon suivante : Construire son biais hebdomadaire.</p>
                 </div>
               </div>
             )}

@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon1", title: "Support et résistance : les zones où le marché réagit", disabled: false },
   { id: "lecon2", title: "Identifier un vrai niveau (vs une ligne tracée au hasard)", disabled: false },
   { id: "lecon3", title: "Flip support↔résistance et trader un rebond", disabled: false },
-  { id: "lecon4", title: "Leçon 4",          disabled: true },
+  { id: "lecon4", title: "Breakout vrai vs faux breakout", disabled: false },
 ];
 
 export default function ContentFr() {
@@ -184,14 +184,14 @@ export default function ContentFr() {
                 <li>- Retest : pin bar avec mèche basse à 1.1842 et clôture à 1.1858</li>
                 <li>- Entrée long : 1.1858 (clôture de la pin bar)</li>
                 <li>- Stop loss : 1.1830 (12 pips sous la mèche à 1.1842)</li>
-                <li>- Take profit : 1.1950 (prochaine résistance H4)</li>
+                <li>- Take profit : 1.1950, objectif fixé pour un R/R supérieur à 1:3 (au-dessus du graphique)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
                 <li>- Risque : 1.1858 - 1.1830 = 28 pips</li>
                 <li>- Gain potentiel : 1.1950 - 1.1858 = 92 pips</li>
-                <li>- R/R : 92 / 28 = 3,29</li>
+                <li>- R/R : 92 / 28 = 3,29, soit 1:3,29</li>
               </ul>
             </div>
 

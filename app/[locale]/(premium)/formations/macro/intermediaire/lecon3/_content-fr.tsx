@@ -12,9 +12,9 @@ const LESSONS = [
   { id: "lecon1", title: "Hawkish vs Dovish",                      href: "/formations/macro/intermediaire/lecon1", disabled: false },
   { id: "lecon2", title: "Comprendre le calendrier économique",     href: "/formations/macro/intermediaire/lecon2", disabled: false },
   { id: "lecon3", title: "CPI, PPI et inflation",                   href: "/formations/macro/intermediaire/lecon3", disabled: false },
-  { id: "lecon4", title: "Le carry trade",                          href: null,                                     disabled: true  },
-  { id: "lecon5", title: "Les corrélations macro",                  href: null,                                     disabled: true  },
-  { id: "lecon6", title: "Construire son biais hebdomadaire",       href: null,                                     disabled: true  },
+  { id: "lecon4", title: "Le carry trade",                          href: "/formations/macro/intermediaire/lecon4", disabled: false },
+  { id: "lecon5", title: "Les corrélations macro",                  href: "/formations/macro/intermediaire/lecon5", disabled: false },
+  { id: "lecon6", title: "Construire son biais hebdomadaire",       href: "/formations/macro/intermediaire/lecon6", disabled: false },
 ];
 
 export default function ContentFr() {
@@ -433,7 +433,7 @@ export default function ContentFr() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">La prochaine leçon (Le carry trade) sera bientôt disponible.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Passe à la leçon suivante : Le carry trade.</p>
                 </div>
               </div>
             )}

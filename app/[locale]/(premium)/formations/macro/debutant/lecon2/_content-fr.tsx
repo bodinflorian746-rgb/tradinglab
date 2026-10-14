@@ -11,10 +11,10 @@ import { LessonQuiz } from "@/app/components/LessonQuiz";
 const LESSONS = [
   { id: "lecon1", title: "C'est quoi la macro",              href: "/formations/macro/debutant/lecon1", disabled: false },
   { id: "lecon2", title: "Les 4 grandes banques centrales",  href: "/formations/macro/debutant/lecon2", disabled: false },
-  { id: "lecon3", title: "Les chiffres macro à surveiller",  href: null,                                disabled: true  },
-  { id: "lecon4", title: "Comprendre l'inflation",           href: null,                                disabled: true  },
-  { id: "lecon5", title: "Le rôle du dollar dans le monde",  href: null,                                disabled: true  },
-  { id: "lecon6", title: "Macro et gestion du risque",         href: null,                                disabled: true  },
+  { id: "lecon3", title: "Les chiffres macro à surveiller",  href: "/formations/macro/debutant/lecon3", disabled: false },
+  { id: "lecon4", title: "Comprendre l'inflation",           href: "/formations/macro/debutant/lecon4", disabled: false },
+  { id: "lecon5", title: "Le rôle du dollar dans le monde",  href: "/formations/macro/debutant/lecon5", disabled: false },
+  { id: "lecon6", title: "Macro et gestion du risque",         href: "/formations/macro/debutant/lecon6", disabled: false },
 ];
 
 export default function ContentFr() {
@@ -394,7 +394,7 @@ export default function ContentFr() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">La prochaine leçon (Les chiffres macro à surveiller) sera bientôt disponible.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Passe à la leçon suivante : Les chiffres macro à surveiller.</p>
                 </div>
               </div>
             )}

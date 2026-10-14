@@ -403,7 +403,7 @@ export default function ContentFr() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">La prochaine leçon (NFP) sera bientôt disponible.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Passe à la leçon suivante : NFP.</p>
                 </div>
               </div>
             )}

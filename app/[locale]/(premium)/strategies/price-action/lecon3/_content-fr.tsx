@@ -15,7 +15,7 @@ const LESSONS = [
   { id: "lecon1", title: "Lire une bougie", disabled: false },
   { id: "lecon2", title: "Pin bar",          disabled: false },
   { id: "lecon3", title: "Engulfing",        disabled: false },
-  { id: "lecon4", title: "Leçon 4",          disabled: true },
+  { id: "lecon4", title: "Setup multi-unités de temps",        disabled: false },
 ];
 
 export default function ContentFr() {

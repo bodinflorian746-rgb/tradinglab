@@ -11,11 +11,11 @@ import { LiquidityGrabDiagram } from "@/app/components/charts/LiquidityGrabDiagr
 import { FVGDiagram } from "@/app/components/charts/FVGDiagram";
 
 const LESSONS = [
-  { id: "lecon1", title: "Leçon 1", disabled: false },
-  { id: "lecon2", title: "Leçon 2", disabled: false },
-  { id: "lecon3", title: "Leçon 3", disabled: false },
-  { id: "lecon4", title: "FVG et liquidité : trader le déséquilibre institutionnel", disabled: false },
-  { id: "lecon5", title: "Leçon 5", disabled: true },
+  { id: "lecon1", title: "Market Structure SMC", disabled: false },
+  { id: "lecon2", title: "BOS et CHoCH", disabled: false },
+  { id: "lecon3", title: "Order Blocks", disabled: false },
+  { id: "lecon4", title: "FVG et liquidité", disabled: false },
+  { id: "lecon5", title: "Le trade SMC complet", disabled: false },
 ];
 
 export default function ContentFr() {

@@ -13,8 +13,8 @@ import { LessonQuiz } from "@/app/components/LessonQuiz";
 const LESSONS = [
   { id: "lecon1", title: "Reconnaître une tendance (HH/HL vs LH/LL)", disabled: false },
   { id: "lecon2", title: "Trendline et moyennes mobiles : tracer la tendance", disabled: false },
-  { id: "lecon3", title: "Leçon 3",          disabled: true },
-  { id: "lecon4", title: "Leçon 4",          disabled: true },
+  { id: "lecon3", title: "Trader avec la tendance : pullback et entrée", disabled: false },
+  { id: "lecon4", title: "Quand sortir : retournement de tendance", disabled: false },
 ];
 
 export default function ContentFr() {

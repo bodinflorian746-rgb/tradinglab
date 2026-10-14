@@ -10,11 +10,11 @@ import { LessonQuiz } from "@/app/components/LessonQuiz";
 
 const LESSONS = [
   { id: "lecon1", title: "C'est quoi la macro",              href: "/formations/macro/debutant/lecon1", disabled: false },
-  { id: "lecon2", title: "Les 4 grandes banques centrales",  href: null,                                disabled: true  },
-  { id: "lecon3", title: "Les chiffres macro à surveiller",  href: null,                                disabled: true  },
-  { id: "lecon4", title: "Comprendre l'inflation",           href: null,                                disabled: true  },
-  { id: "lecon5", title: "Le rôle du dollar dans le monde",  href: null,                                disabled: true  },
-  { id: "lecon6", title: "Macro et gestion du risque",         href: null,                                disabled: true  },
+  { id: "lecon2", title: "Les 4 grandes banques centrales",  href: "/formations/macro/debutant/lecon2", disabled: false },
+  { id: "lecon3", title: "Les chiffres macro à surveiller",  href: "/formations/macro/debutant/lecon3", disabled: false },
+  { id: "lecon4", title: "Comprendre l'inflation",           href: "/formations/macro/debutant/lecon4", disabled: false },
+  { id: "lecon5", title: "Le rôle du dollar dans le monde",  href: "/formations/macro/debutant/lecon5", disabled: false },
+  { id: "lecon6", title: "Macro et gestion du risque",         href: "/formations/macro/debutant/lecon6", disabled: false },
 ];
 
 export default function ContentFr() {
@@ -178,7 +178,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Les 4 forces macro qui bougent les marchés</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Tu n&apos;as pas besoin de devenir économiste. Mais 4 forces font bouger 90% des marchés.
+              Tu n&apos;as pas besoin de devenir économiste. Mais 4 forces expliquent l&apos;essentiel des grands mouvements.
             </p>
             <div className="space-y-3 mb-6">
               {[
@@ -195,7 +195,7 @@ export default function ContentFr() {
                 {
                   n: "3",
                   label: "Emploi",
-                  text: "un chiffre comme le NFP (publié chaque 1er vendredi du mois) peut faire bouger violemment tous les actifs en même temps.",
+                  text: "un chiffre comme le NFP (publié en général le 1er vendredi du mois) peut faire bouger violemment tous les actifs en même temps.",
                 },
                 {
                   n: "4",
@@ -236,7 +236,7 @@ export default function ContentFr() {
             <div className="bg-zinc-800/50 border border-zinc-700/40 rounded-xl px-4 py-4 mb-3">
               <div className="space-y-1.5">
                 {[
-                  "L'inflation US monte à 4% (au lieu des 3% attendus).",
+                  "L'inflation US sort à 3,4 % (au lieu des 3,1 % attendus).",
                   "→ La Fed indique qu'elle va monter ses taux plus vite.",
                   "→ Le dollar grimpe contre toutes les devises.",
                   "→ EUR/USD perd 150 pips en une journée.",
@@ -403,7 +403,7 @@ export default function ContentFr() {
 
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> <span className="font-semibold text-zinc-300">C&apos;est tout.</span> Avec ces 2 habitudes, tu es déjà au-dessus de 80% des traders particuliers qui tradent dans le brouillard.
+                <span className="text-white font-medium">À retenir :</span> <span className="font-semibold text-zinc-300">C&apos;est tout.</span> Avec ces 2 habitudes, tu es déjà au-dessus de la plupart des traders particuliers qui tradent dans le brouillard.
               </p>
             </div>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
@@ -487,7 +487,7 @@ export default function ContentFr() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">La prochaine leçon (Les 4 grandes banques centrales) sera bientôt disponible.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Passe à la leçon suivante : Les 4 grandes banques centrales.</p>
                 </div>
               </div>
             )}
