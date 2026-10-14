@@ -315,7 +315,8 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
   const bMin = Math.min(...baseVals), bMax = Math.max(...baseVals), bSpan = bMax - bMin || 1;
   const tpArrow = !tpOffscale || tpRaw === undefined ? null : tpRaw > bMax + 0.35 * bSpan ? "up" : tpRaw < bMin - 0.35 * bSpan ? "down" : null;
   const tpShown = tpArrow === "up" ? bMax + 0.12 * bSpan : tpArrow === "down" ? bMin - 0.12 * bSpan : tpRaw;
-  const tpTagLabel = tpArrow === "up" ? "TP ↑" : tpArrow === "down" ? "TP ↓" : null;
+  // (dans l'échelle, l'objectif garde son étiquette « TP » : une ligne n'est jamais muette)
+  const tpTagLabel = tpArrow === "up" ? "TP ↑" : tpArrow === "down" ? "TP ↓" : tpOffscale && tpRaw !== undefined ? "TP" : null;
   // Zones nommées sur le graphique (étiquettes en ligne)
   const zoneLabelIdx = inline ? (labeledZones ?? zones.map((_, i) => i)).filter((i) => zones[i]) : [];
   const lineLabels = [
