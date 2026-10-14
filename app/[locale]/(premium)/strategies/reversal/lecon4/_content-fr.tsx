@@ -131,8 +131,8 @@ export default function ContentFr() {
 
           {/* Bloc 3 — POURQUOI 70% ÉCHOUENT */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Pourquoi 70% des reversals échouent pour les retails</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Les patterns de retournement comme le Double top, l&apos;ETE ou la divergence RSI ont un winrate réel autour de 55-65% quand ils sont propres. Pour la majorité des retails, ce taux tombe à 30-40%. Pas parce que les patterns sont mauvais. Parce que les retails ne savent pas reconnaître quand le pattern a foiré.</p>
+            <h2 className="text-lg font-semibold text-white mb-3">Pourquoi tant de reversals échouent chez les retails</h2>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Les patterns de retournement comme le Double top, l&apos;ETE ou la divergence RSI peuvent avoir un winrate correct quand ils sont propres. Chez beaucoup de retails, ce taux s&apos;effondre. Pas parce que les patterns sont mauvais. Parce que les retails ne savent pas reconnaître quand le pattern a foiré.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Lors d&apos;une entrée sur un double top où le prix remonte au-dessus de la ligne de cou, le cerveau humain présente deux réactions possibles. Soit la sortie est immédiate et la petite perte est encaissée. Soit le retail se dit : &apos;ça va revenir, j&apos;ai vu le pattern&apos;. Le retail moyen choisit la deuxième option. Sur 10 trades comme ça, il en sauve peut-être 2 et il rend 8 avec des pertes 3 à 5 fois plus grosses que prévu.</p>
             <p className="text-zinc-300 leading-relaxed text-sm">Un trader pro a une checklist d&apos;invalidation. Pas une intuition. Pas un feeling. Une liste mécanique de critères qui déclenchent la coupe dès qu&apos;ils s&apos;allument. Pas de débat. Pas de &apos;j&apos;attends une bougie de plus&apos;. La sortie est immédiate, la perte est actée, le trade suivant est étudié. Cette leçon présente cette checklist.</p>
           </section>
@@ -289,7 +289,7 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Pourquoi 70% des reversals échouent pour les retails ?"
+            question="Pourquoi tant de reversals échouent chez les retails ?"
             options={[
               "Parce que les patterns ne fonctionnent pas",
               "Parce que les retails ne savent pas reconnaître une invalidation et gardent leurs positions perdantes",
@@ -297,7 +297,7 @@ export default function ContentFr() {
               "Parce que les retails utilisent le levier maximum proposé par leur broker",
             ]}
             correctIndex={1}
-            explanation="Les patterns ont un winrate réel autour de 55-65% quand ils sont propres. Pour la majorité des retails, ce taux tombe à 30-40% parce qu’ils ne savent pas reconnaître quand le pattern a foiré et gardent leurs positions en espérant un retour."
+            explanation="Les patterns peuvent avoir un winrate correct quand ils sont propres. Chez beaucoup de retails, ce taux s'effondre parce qu’ils ne savent pas reconnaître quand le pattern a foiré et gardent leurs positions en espérant un retour."
           />
 
         </div>

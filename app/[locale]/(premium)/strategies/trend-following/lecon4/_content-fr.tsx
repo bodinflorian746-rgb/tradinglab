@@ -123,8 +123,8 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Structure HH/HL/LL/LH → cf. Formation Trading L3</li>
-              <li>- Cassure structurelle → cf. Formation Trading L3</li>
+              <li>- Structure HH/HL/LL/LH → cf. Formation Intermédiaire, leçon 1</li>
+              <li>- Cassure structurelle → cf. Formation Intermédiaire, leçon 1</li>
               <li>- Approche SMC complète → cf. Stratégies SMC L1 et L2</li>
             </ul>
           </div>
@@ -220,7 +220,7 @@ export default function ContentFr() {
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée short : 4 580$ (retracement vers ex-HL devenu résistance, signal de rejet attendu)</li>
                 <li>- Stop loss : 4 615$ (au-delà du LH à 4 600$, marge 15$)</li>
-                <li>- Take profit : 4 450$ (zone support identifiée plus bas)</li>
+                <li>- Take profit : 4 450$, objectif fixé pour un R/R supérieur à 1:3 ; le premier HL de la tendance, à 4 520$, peut freiner la baisse : une sortie partielle juste au-dessus est raisonnable</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
@@ -233,10 +233,9 @@ export default function ContentFr() {
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 55€</li>
-              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 55€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 74€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 185€</li>
+              <li>- Au lot minimum (0,01 lot), ce stop de 35$ représente déjà environ 30€ de risque (1$ ≈ 0,85€)</li>
+              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,01 lot, risque environ 30€, gain potentiel environ 111€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1:3,71 peu importe la taille du compte.

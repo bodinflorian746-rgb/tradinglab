@@ -143,7 +143,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- 80 % des mouvements significatifs se produisent dans 20 % des heures</li>
+              <li>- L&apos;essentiel des mouvements significatifs se concentre sur quelques heures de la journée</li>
               <li>- Hors Killzone : range étroit, bougies plates, sweeps lents</li>
               <li>- En Killzone: expansion, impulsions franches, vrais déplacements</li>
               <li>- Trader sans regarder l'heure, c'est trader en aveugle</li>
@@ -227,7 +227,7 @@ export default function ContentFr() {
               <li>- Un setup ICT n'est valable que si le timing l'est aussi</li>
               <li>- Hors Killzone : réaction molle, latéralisation, faux signaux</li>
               <li>- En Killzone: sweep franc, impulsion, déplacement réel</li>
-              <li>- Le filtre horaire élimine 80 % des « setups corrects » non rentables</li>
+              <li>- Le filtre horaire élimine une bonne partie des « setups corrects » qui ne rapportent rien</li>
             </ul>
           </section>
 

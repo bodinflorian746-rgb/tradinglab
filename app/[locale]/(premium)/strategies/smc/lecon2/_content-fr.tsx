@@ -129,8 +129,8 @@ export default function ContentFr() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Market Structure SMC, HH/HL/LL/LH → cf. Stratégie SMC L1</li>
-              <li>- Bougie de breakout, displacement → cf. Formation Trading L2</li>
-              <li>- Tendance directionnelle multi-unités de temps → cf. Formation Trading L3</li>
+              <li>- Bougie de breakout, displacement → cf. Formation Avancé, leçon 2</li>
+              <li>- Tendance directionnelle multi-unités de temps → cf. Formation Intermédiaire, leçon 7</li>
             </ul>
           </div>
 
@@ -246,7 +246,7 @@ export default function ContentFr() {
               </div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">
                 <p className="text-red-400 font-semibold text-sm mb-1">3. Inverser dès le CHoCH, sans confirmation</p>
-                <p className="text-zinc-300 text-sm">Inversion prise avant confirmation = retour fréquent à la tendance d&apos;origine. Attendre la nouvelle structure (LH en baissier, HL en haussier) puis le BOS dans le nouveau sens.</p>
+                <p className="text-zinc-300 text-sm">Inversion prise avant confirmation = retour fréquent à la tendance d&apos;origine. Attendre la nouvelle structure (LH en baissier, HL en haussier) puis le BOS dans le nouveau sens. Seule exception : l&apos;entrée agressive de la leçon 5, après un sweep de liquidité et avec un stop serré, qui accepte ce risque en connaissance de cause.</p>
               </div>
             </div>
           </section>
@@ -368,12 +368,12 @@ export default function ContentFr() {
                 </svg>
                 Leçon 1
               </Link>
-              <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 3. À venir
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
-                  Bientôt
-                </span>
-              </span>
+              <Link href="/strategies/smc/lecon3" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+                Leçon 3. Order Blocks
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

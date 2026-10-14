@@ -122,9 +122,9 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Notions de OHLC (open/high/low/close) → cf. Formation Trading L1</li>
-              <li>- Bougies japonaises → cf. Formation Trading L1</li>
-              <li>- Concept de swing high/low → cf. Formation Trading L2</li>
+              <li>- Notions de OHLC (open/high/low/close) → cf. Formation Débutant, leçon 3</li>
+              <li>- Bougies japonaises → cf. Formation Débutant, leçon 3</li>
+              <li>- Concept de swing high/low → cf. Formation Débutant, leçon 5</li>
             </ul>
           </div>
 
@@ -256,12 +256,12 @@ export default function ContentFr() {
 
             <div className="mt-5 flex items-center justify-between">
               <span />
-              <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 2, Pin bar, le rejet de niveau
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
-                  Bientôt
-                </span>
-              </span>
+              <Link href="/strategies/price-action/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+                Leçon 2. Pin bar
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

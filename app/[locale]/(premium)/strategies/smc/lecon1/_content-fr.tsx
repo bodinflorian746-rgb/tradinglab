@@ -126,9 +126,9 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- HH/HL/LL/LH et tendance directionnelle → cf. Formation Trading L3</li>
-              <li>- Swing high / swing low → cf. Formation Trading L2</li>
-              <li>- Phases accumulation/distribution → cf. Formation Macro L4</li>
+              <li>- HH/HL/LL/LH et tendance directionnelle → cf. Formation Intermédiaire, leçon 1</li>
+              <li>- Swing high / swing low → cf. Formation Débutant, leçon 5</li>
+              <li>- Phases accumulation/distribution → présentées dans cette leçon</li>
             </ul>
           </div>
 
@@ -233,7 +233,7 @@ export default function ContentFr() {
             </p>
             <ol className="space-y-2 text-sm text-zinc-300 list-decimal pl-5">
               <li><span className="font-semibold text-white">Daily ou Weekly</span>, identifier les 3-5 derniers swings majeurs (structure externe)</li>
-              <li><span className="font-semibold text-white">Classifier la phase</span>, accumulation, expansion, ou distribution</li>
+              <li><span className="font-semibold text-white">Classifier la phase</span>, accumulation, manipulation ou expansion (en haut de tendance, la distribution est le miroir de l'accumulation)</li>
               <li><span className="font-semibold text-white">H4</span>, vérifier l&apos;alignement de la structure interne avec la structure externe</li>
               <li><span className="font-semibold text-white">H1 ou M15</span>, pré-identifier zones d&apos;intérêt (HL, liquidité, OB potentiels)</li>
             </ol>

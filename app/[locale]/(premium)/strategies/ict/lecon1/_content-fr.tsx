@@ -198,7 +198,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Graphique M15 EUR/USD : le prix vient d&apos;imprimer une mèche au-dessus de 1.1780 (sweep) et la bougie referme sous 1.1780 (réintégration). Sur la bougie suivante, gros corps baissier de 35 pts (impulsion). C&apos;est cette séquence qui autorise un short, entrée sur la cassure du dernier creux local, SL juste au-dessus du sommet du sweep, TP vers la prochaine zone de liquidité en aval.
+                Graphique M15 EUR/USD : le prix vient d&apos;imprimer une mèche au-dessus de 1.1780 (sweep) et la bougie referme sous 1.1780 (réintégration). Sur la bougie suivante, gros corps baissier de 35 pips (impulsion). C&apos;est cette séquence qui autorise un short, entrée sur la cassure du dernier creux local, SL juste au-dessus du sommet du sweep, TP vers la prochaine zone de liquidité en aval.
               </p>
             </div>
 
@@ -238,8 +238,8 @@ export default function ContentFr() {
 
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Réaction (M15) : exécuter</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Observation : la bougie suivante est un gros corps baissier impulsif (35 pts), cassure du dernier creux local à 1.1762</li>
-                <li>- Conclusion : entrée short à 1.1758 sur le breakout, SL à 1.1795 (3 pts au-dessus du sommet du sweep), TP vers la prochaine zone de liquidité basse à 1.1695. R/R ≈ 1:1,7, sous le repère de 1:2 : acceptable parce que le setup est aligné Daily + sweep + réaction, ce qui augmente ses chances (seuil de rentabilité à 1:1,7 : 37 % de trades gagnants, avant frais)</li>
+                <li>- Observation : la bougie suivante est un gros corps baissier impulsif (35 pips), cassure du dernier creux local à 1.1762</li>
+                <li>- Conclusion : entrée short à 1.1758 sur le breakout, SL à 1.1795 (3 pips au-dessus du sommet du sweep), TP vers la prochaine zone de liquidité basse à 1.1695. R/R ≈ 1:1,7, sous le repère de 1:2 : acceptable parce que le setup est aligné Daily + sweep + réaction, ce qui augmente ses chances (seuil de rentabilité à 1:1,7 : 37 % de trades gagnants, avant frais)</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

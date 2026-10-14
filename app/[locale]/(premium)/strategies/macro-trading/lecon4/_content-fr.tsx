@@ -166,7 +166,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le second filtre est le régime macro. Si le contexte général (risk-on, risk-off, biais Daily des actifs refuges, structure de l&apos;UT supérieure) pointe dans une direction, prendre un trade contre cette direction n&apos;est pas seulement risqué, c&apos;est statistiquement perdant. Un signal bearish M15 isolé sur l&apos;or pendant un régime risk-off bullish établi a une probabilité de continuation très faible. La structure de l&apos;UT supérieure absorbe en général ces signaux contraires en quelques bougies, le SL est touché, et le trade échoue. Trader dans le sens du régime, jamais contre.
+              Le second filtre est le régime macro. Si le contexte général (risk-on, risk-off, biais Daily des actifs refuges, structure de l&apos;UT supérieure) pointe dans une direction, prendre un trade contre cette direction n&apos;est pas seulement risqué, c&apos;est le plus souvent perdant. Un signal bearish M15 isolé sur l&apos;or pendant un régime risk-off bullish établi a une probabilité de continuation très faible. La structure de l&apos;UT supérieure absorbe en général ces signaux contraires en quelques bougies, le SL est touché, et le trade échoue. Trader dans le sens du régime, jamais contre.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">

@@ -246,8 +246,8 @@ export default function ContentFr() {
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 4 600 $ (clôture de la première bougie de reprise franche)</li>
                 <li>- Stop loss : 4 568 $ (au-delà de l'extrémité de l'impulsion)</li>
-                <li>- Target : 4 655 $ (proche du niveau pré-NFP)</li>
-                <li>- R/R : (4 655 - 4 600) / (4 600 - 4 568) = 55 / 32 ≈ 1,7</li>
+                <li>- Target : 4 655 $, un peu au-delà du niveau pré-NFP (4 640 $) : si le prix cale sous 4 640 $, une sortie partielle y est raisonnable</li>
+                <li>- R/R : (4 655 - 4 600) / (4 600 - 4 568) = 55 / 32 ≈ 1:1,7, sous le repère de 1:2 : à réserver aux stabilisations très nettes (seuil de rentabilité : 37 % de trades gagnants, avant frais)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 6. Gestion du risque</p>

@@ -148,7 +148,7 @@ export default function ContentFr() {
               <div className="divide-y divide-zinc-800/60">
                 {[
                   { asset: "EUR/USD", move: "20 à 80 pips" },
-                  { asset: "XAU/USD", move: "10 à 30$" },
+                  { asset: "XAU/USD", move: "20 à 60$" },
                   { asset: "Nasdaq",  move: "30 à 200 points" },
                   { asset: "BTC/USD", move: "300 à 1 500$" },
                 ].map((row) => (

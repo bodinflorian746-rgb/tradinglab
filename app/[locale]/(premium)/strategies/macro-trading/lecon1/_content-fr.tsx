@@ -192,7 +192,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le FOMC Fade ne consiste pas à anticiper un retournement complet de tendance, c'est un trade de retour PARTIEL, calibré sur la zone où la majorité de l'impulsion excessive a été corrigée. La structure doit rester claire : entrée après stabilisation du prix au point d'essoufflement, stop loss serré juste au-delà de l'extrémité de l'impulsion, target sur le niveau structurel d'où l'impulsion est partie. Sans ces trois éléments alignés, le setup n'est pas valide.
+              Le FOMC Fade ne consiste pas à anticiper un retournement complet de tendance, c'est un trade de retour PARTIEL, calibré sur la zone où la majorité de l'impulsion excessive a été corrigée. La structure doit rester claire : entrée après stabilisation du prix au point d'essoufflement, stop loss serré juste au-delà de l'extrémité de l'impulsion, target dans la zone de retour partiel, sous le niveau d'où l'impulsion est partie. Sans ces trois éléments alignés, le setup n'est pas valide.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
@@ -206,7 +206,7 @@ export default function ContentFr() {
               <li>- Points actionnables : le fade vise un retour partiel, typiquement 50-80 % de l'impulsion</li>
               <li>- Entrée après stabilisation visible, jamais en cours d'impulsion</li>
               <li>- SL serré au-delà de l'extrémité, structure d'invalidation claire</li>
-              <li>- Target sur le niveau structurel précédent l'impulsion (ancien support / résistance)</li>
+              <li>- Target dans la zone de retour partiel, sous le niveau d'où l'impulsion est partie</li>
             </ul>
           </section>
 
@@ -241,6 +241,7 @@ export default function ContentFr() {
                 <li>- Entrée long : 4 600 $</li>
                 <li>- Stop loss : 4 578 $ (au-delà de l'extrémité de l'impulsion)</li>
                 <li>- Target : 4 638 $ (retour partiel vers le niveau pré-FOMC)</li>
+                <li>- R/R : (4 638 - 4 600) / (4 600 - 4 578) = 38 / 22 ≈ 1:1,7, sous le repère de 1:2 : à réserver aux essoufflements très nets (seuil de rentabilité à 1:1,7 : 37 % de trades gagnants, avant frais)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 5. Gestion du risque</p>

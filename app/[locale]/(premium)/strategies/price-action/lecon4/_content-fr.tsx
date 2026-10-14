@@ -126,7 +126,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Lecture de bougie → cf. Stratégie PA L1</li>
               <li>- Pin bar et engulfing → cf. Stratégie PA L2 et L3</li>
-              <li>- Concept d&apos;unités de temps → cf. Formation Trading L1</li>
+              <li>- Concept d&apos;unités de temps → cf. Formation Intermédiaire, leçon 7</li>
             </ul>
           </div>
 

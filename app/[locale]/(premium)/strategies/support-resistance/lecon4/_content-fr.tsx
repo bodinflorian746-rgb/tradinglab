@@ -123,8 +123,8 @@ export default function ContentFr() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Identification S/R → cf. Stratégie SR L1</li>
-              <li>- Concept de clôture vs mèche → cf. Formation Trading L2</li>
-              <li>- Notion de chasse aux stops / liquidité → cf. Formation Trading L4</li>
+              <li>- Concept de clôture vs mèche → cf. Formation Intermédiaire, leçon 6</li>
+              <li>- Notion de chasse aux stops / liquidité → cf. Formation Avancé, leçons 1 et 6</li>
             </ul>
           </div>
 
@@ -143,8 +143,8 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Vrai breakout : clôture nette au-delà du niveau + follow-through sur 3-5 bougies</li>
               <li>- Faux breakout : mèche dépasse le niveau, mais clôture revient dans la zone</li>
-              <li>- Réintégration en 1-3 bougies après la mèche = fake confirmé</li>
-              <li>- Zone forte (3+ touches, chiffre rond) = terrain favorable aux fakes</li>
+              <li>- Réintégration en 1-3 bougies après la mèche = faux breakout confirmé</li>
+              <li>- Zone forte (3+ touches, chiffre rond) = terrain favorable aux faux breakouts</li>
             </ul>
           </section>
 
@@ -203,7 +203,7 @@ export default function ContentFr() {
                 <li>- Bougie 2 : clôture franche à 4 640$ (réintégration confirmée)</li>
                 <li>- Entrée short : 4 640$ (clôture de la bougie de confirmation)</li>
                 <li>- Stop loss : 4 685$ (5$ au-dessus de la mèche à 4 680$)</li>
-                <li>- Take profit : 4 540$ (zone support identifiée plus bas)</li>
+                <li>- Take profit : 4 540$, objectif fixé pour un R/R supérieur à 1:2 (sous le graphique)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
@@ -216,10 +216,9 @@ export default function ContentFr() {
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 33€</li>
-              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 33€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 44€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 111€</li>
+              <li>- Au lot minimum (0,01 lot), ce stop de 45$ représente déjà environ 38€ de risque (1$ ≈ 0,85€)</li>
+              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,01 lot, risque environ 38€, gain potentiel environ 86€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1:2,22 peu importe la taille du compte.
@@ -242,7 +241,7 @@ export default function ContentFr() {
               "Valider la double confirmation : bougie 1 clôture à 4 655$ (à la limite), bougie 2 clôture à 4 640$ (réintégration franche)",
               "Placer l’entrée short à 4 640$ (clôture de la bougie de confirmation)",
               "Placer le stop loss à 4 685$ (5$ au-dessus de la mèche initiale à 4 680$)",
-              "Placer le take profit à 4 560$ (zone support identifiée plus bas, ratio R/R 1:1,8), taille de position selon le risque par trade adapté au capital",
+              "Placer le take profit à 4 540$ (R/R 100 / 45 ≈ 1:2,22), taille de position selon le risque par trade adapté au capital, en vérifiant qu'elle reste possible au lot minimum",
             ]}
           />
 

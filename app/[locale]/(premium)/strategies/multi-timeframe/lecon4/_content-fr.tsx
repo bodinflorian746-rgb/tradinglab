@@ -171,7 +171,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD : entrée short à 1.1758, dans la zone H1, au retour du prix après la cassure du creux local. Sans confirmation de l&apos;UT inférieure, le SL doit couvrir l&apos;intégralité de la zone H4 (jusqu&apos;à la résistance Daily 1.1780), placé à 1.1790, soit 32 pts de risque. Avec confirmation M5, le SL passe juste au-dessus du dernier sommet local de rejet, placé à 1.1772, soit 14 pts. Même idée de trade, même cible, mais la distance entrée-SL est divisée par plus de 2.
+                EUR/USD : entrée short à 1.1758, dans la zone H1, au retour du prix après la cassure du creux local. Sans confirmation de l&apos;UT inférieure, le SL doit couvrir l&apos;intégralité de la zone H4 (jusqu&apos;à la résistance Daily 1.1780), placé à 1.1790, soit 32 pips de risque. Avec confirmation M5, le SL passe juste au-dessus du dernier sommet local de rejet, placé à 1.1772, soit 14 pips. Même idée de trade, même cible, mais la distance entrée-SL est divisée par plus de 2.
               </p>
             </div>
 
@@ -233,7 +233,7 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Étape 3. UT inférieure (M5)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : prix dans la zone, trois mèches hautes de rejet consécutives, cassure du creux local à 1.1748</li>
-                <li>- Conclusion : confirmation valide, entrée short à 1.1758, SL serré juste au-dessus du dernier sommet de rejet (1.1772, 14 pts)</li>
+                <li>- Conclusion : confirmation valide, entrée short à 1.1758, SL serré juste au-dessus du dernier sommet de rejet (1.1772, 14 pips)</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

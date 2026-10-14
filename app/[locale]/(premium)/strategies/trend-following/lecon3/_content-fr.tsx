@@ -125,7 +125,7 @@ export default function ContentFr() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Pullback en tendance → cf. Stratégie Trend Following L1</li>
-              <li>- Fibonacci retracement → cf. Formation Trading L4</li>
+              <li>- Fibonacci retracement → cf. Formation Intermédiaire, leçon 9</li>
               <li>- Order Block / FVG → cf. Stratégie SMC L3 (mention rapide)</li>
             </ul>
           </div>
@@ -229,10 +229,9 @@ export default function ContentFr() {
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 44€</li>
-              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 44€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 59€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 148€</li>
+              <li>- Au lot minimum (0,01 lot), ce stop de 55$ représente déjà environ 47€ de risque (1$ ≈ 0,85€)</li>
+              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,01 lot, risque environ 47€, gain potentiel environ 139€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1:2,96 peu importe la taille du compte.
@@ -312,12 +311,12 @@ export default function ContentFr() {
                 </svg>
                 Leçon 2
               </Link>
-              <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 4. À venir
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
-                  Bientôt
-                </span>
-              </span>
+              <Link href="/strategies/trend-following/lecon4" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+                Leçon 4. Quand sortir : retournement de tendance
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

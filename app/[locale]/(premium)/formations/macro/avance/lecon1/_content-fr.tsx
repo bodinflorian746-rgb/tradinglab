@@ -172,7 +172,7 @@ export default function ContentFr() {
               <div className="grid grid-cols-2 gap-2 mb-3">
                 {[
                   { asset: "EUR/USD", move: "-50 à -80 pips", note: "dollar plus fort" },
-                  { asset: "XAU/USD", move: "-15 à -35$", note: "or pénalisé par les taux" },
+                  { asset: "XAU/USD", move: "-30 à -60$", note: "or pénalisé par les taux" },
                   { asset: "Nasdaq", move: "-0,5 à -1,5%", note: "tech sous pression" },
                   { asset: "BTC/USD", move: "-500 à -1500$", note: "risk-off massif" },
                 ].map((item) => (
@@ -184,7 +184,7 @@ export default function ContentFr() {
                 ))}
               </div>
               <p className="text-[10px] text-zinc-500 italic">
-                Sur un FOMC dovish surprise, c&apos;est l&apos;inverse : EUR/USD +50/+80, XAU/USD +15/+35$, Nasdaq +0,5/+1,5%, BTC/USD +500/+1500$.
+                Sur un FOMC dovish surprise, c&apos;est l&apos;inverse : EUR/USD +50/+80, XAU/USD +30/+60$, Nasdaq +0,5/+1,5%, BTC/USD +500/+1500$.
               </p>
             </div>
             <div className="bg-zinc-800/30 rounded-xl px-4 py-3 mb-3">
@@ -192,7 +192,7 @@ export default function ContentFr() {
               <div className="grid grid-cols-2 gap-2 mb-2">
                 {[
                   { asset: "EUR/USD", move: "100 à 200 pips" },
-                  { asset: "XAU/USD", move: "40 à 80$" },
+                  { asset: "XAU/USD", move: "80 à 150$" },
                   { asset: "Nasdaq", move: "2 à 4%" },
                   { asset: "BTC/USD", move: "2000 à 5000$" },
                 ].map((item) => (

@@ -124,7 +124,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Identification S/R → cf. Stratégie SR L1</li>
               <li>- Qualification d&apos;un niveau → cf. Stratégie SR L2</li>
-              <li>- Concept de breakout (clôture franche) → cf. Formation Trading L3</li>
+              <li>- Concept de breakout (clôture franche) → cf. Formation Intermédiaire, leçon 6</li>
             </ul>
           </div>
 
@@ -299,12 +299,12 @@ export default function ContentFr() {
                 </svg>
                 Leçon 2
               </Link>
-              <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 4. À venir
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
-                  Bientôt
-                </span>
-              </span>
+              <Link href="/strategies/support-resistance/lecon4" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+                Leçon 4. Breakout vrai vs faux breakout
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

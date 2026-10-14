@@ -123,7 +123,7 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Structure de marché, sommets et creux → cf. Formation Trading L3</li>
+              <li>- Structure de marché, sommets et creux → cf. Formation Intermédiaire, leçon 1</li>
               <li>- Support / Résistance → cf. Stratégie SR L1</li>
               <li>- Double Top / Double Bottom → cf. Stratégie Reversal L1</li>
             </ul>
@@ -199,7 +199,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : ETE XAU/USD H1</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte de l&apos;ETE classique du Bloc 4 est repris. La tendance haussière était déjà en place. L&apos;épaule gauche se forme à 4 620$, la tête à 4 660$, l&apos;épaule droite à 4 625$, avec une ligne de cou autour de 4 578$. Le prix vient de clôturer une bougie H1 à 4 570$, sous la ligne de cou. Le pattern est confirmé.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le SL tactique est placé juste au-dessus de l&apos;épaule droite à 4 630$. Le SL classique au-dessus de la tête à 4 670$ donnerait un R/R trop faible : l&apos;option tactique reste retenue pour ce setup.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le TP suit la measured move : hauteur du pattern entre la tête à 4 660$ et la ligne de cou à 4 578$, soit 82$. Cette hauteur est projetée sous la ligne de cou vers 4 496$. La cible est étendue légèrement à 4 480$ pour obtenir un R/R rond de 1:1,5.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le TP suit la measured move : hauteur du pattern entre la tête à 4 660$ et la ligne de cou à 4 578$, soit 82$. Cette hauteur est projetée sous la ligne de cou vers 4 496$. La cible est placée à 4 480$, un peu au-delà de la projection (4 496$), pour obtenir un R/R de 1:1,5 : c'est moins prudent que le TP placé avant la projection au double top (leçon 1), à réserver aux ETE très propres.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
@@ -224,10 +224,9 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Calcul retail</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le risque par trade s&apos;adapte au capital. Sur ce setup R/R 1:1,5, voici la répartition selon la taille du compte.</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Compte 300€ → 5% = risque 15€, gain potentiel environ 22€</li>
-              <li>- Compte 500€ → 3% = risque 15€, gain potentiel environ 22€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel environ 30€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel environ 75€</li>
+              <li>- Au lot minimum (0,01 lot), ce stop de 60$ représente déjà environ 51€ de risque (1$ ≈ 0,85€)</li>
+              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max), 2 500€ (50€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
+              <li>- Compte 5 000€ → 2% = 100€ maximum : 0,01 lot, risque environ 51€, gain potentiel environ 77€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1:1,5 reste modeste comparé à un Pin bar ou un pullback de tendance, mais l&apos;ETE a un winrate plus élevé quand le pattern est propre. À 1:1,5, la rentabilité est atteinte dès que le winrate dépasse 40 % (avant frais) : avec un ETE propre, cette marge est réaliste.</p>
           </section>
@@ -316,12 +315,12 @@ export default function ContentFr() {
                 </svg>
                 Leçon 1
               </Link>
-              <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 3. À venir
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
-                  Bientôt
-                </span>
-              </span>
+              <Link href="/strategies/reversal/lecon3" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+                Leçon 3. Divergence RSI : quand le momentum trahit la tendance
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

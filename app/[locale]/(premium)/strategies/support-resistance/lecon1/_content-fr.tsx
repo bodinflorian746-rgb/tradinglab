@@ -122,9 +122,9 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Notion de support et résistance → cf. Formation Trading L3</li>
+              <li>- Notion de support et résistance → cf. Formation Intermédiaire, leçon 2</li>
               <li>- Lecture des bougies → cf. Stratégie PA L1</li>
-              <li>- Concept de swing high/low → cf. Formation Trading L2</li>
+              <li>- Concept de swing high/low → cf. Formation Débutant, leçon 5</li>
             </ul>
           </div>
 
@@ -161,7 +161,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- 4 touches franches avec rebonds nets = niveau fort, prioritaire dans la sélection des setups</li>
+              <li>- 4 touches franches avec rebonds nets = niveau fort, prioritaire dans la sélection des setups ; mais chaque nouvelle touche consomme une partie des ordres qui le défendent : après 3 à 4 retours rapprochés, le risque de cassure augmente (cf. Formation Intermédiaire, leçon 3)</li>
               <li>- 2 touches molles sans amplitude post-rebond = niveau faible, à exclure</li>
               <li>- Fraîcheur : zone touchée dans les 30 derniers jours conserve son poids structurel</li>
               <li>- Les chiffres ronds (1.1800, 4 500$, 100 000$) renforcent la force du niveau</li>
@@ -182,7 +182,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Tracé en ligne fine = mèches répétées font croire à un breakout inexistant</li>
-              <li>- Tracé en zone (rectangle 10-20 pips) = mèches naturelles absorbés, lecture fiable</li>
+              <li>- Tracé en zone (rectangle 10-20 pips) = mèches naturelles absorbées, lecture fiable</li>
               <li>- Le tracé englobe corps + mèches, jamais limité aux corps seuls</li>
               <li>- Outil rectangle de la plateforme, coloration translucide (40% opacité)</li>
             </ul>
@@ -256,12 +256,12 @@ export default function ContentFr() {
 
             <div className="mt-5 flex items-center justify-between">
               <span />
-              <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 2. À venir
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
-                  Bientôt
-                </span>
-              </span>
+              <Link href="/strategies/support-resistance/lecon2" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+                Leçon 2. Identifier un vrai niveau (vs une ligne tracée au hasard)
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

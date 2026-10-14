@@ -123,8 +123,8 @@ export default function ContentFr() {
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Reconnaître une tendance → cf. Stratégie Trend Following L1</li>
-              <li>- Notion de trendline → cf. Formation Trading L3</li>
-              <li>- MM20 / MM50 / MM200 → cf. Formation Trading L4</li>
+              <li>- Notion de trendline → présentée dans cette leçon</li>
+              <li>- MM20 / MM50 / MM200 → présentées dans cette leçon</li>
             </ul>
           </div>
 
@@ -199,7 +199,7 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Setup (trade long sur rebond confluence)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Entrée long : 1.1778 (clôture de la pin bar)</li>
-                <li>- Stop loss : 1.1750 (10 pips sous la mèche basse à 1.1762)</li>
+                <li>- Stop loss : 1.1750 (12 pips sous la mèche basse à 1.1762)</li>
                 <li>- Take profit niveau 1 : 1.1820 (HH précédent), niveau 2 : 1.1860 (extension)</li>
               </ul>
 
@@ -297,12 +297,12 @@ export default function ContentFr() {
                 </svg>
                 Leçon 1
               </Link>
-              <span className="inline-flex items-center gap-2 text-sm text-zinc-700 cursor-not-allowed">
-                Leçon 3. À venir
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-600 border border-zinc-700">
-                  Bientôt
-                </span>
-              </span>
+              <Link href="/strategies/trend-following/lecon3" className="inline-flex items-center gap-2 py-3 -my-1 text-sm text-zinc-400 hover:text-zinc-300 transition-colors">
+                Leçon 3. Trader avec la tendance : pullback et entrée
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M6 4l4 3-4 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
 
           </div>

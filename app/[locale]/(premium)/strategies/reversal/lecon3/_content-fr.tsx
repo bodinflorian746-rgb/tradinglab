@@ -123,8 +123,8 @@ export default function ContentFr() {
           <div className="border border-zinc-800 rounded-xl p-4">
             <p className="text-zinc-400 text-xs uppercase tracking-wide font-semibold mb-2">Prérequis</p>
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Structure de marché HH/HL/LL/LH → cf. Formation Trading L3</li>
-              <li>- Indicateur RSI, oscillateur de momentum → cf. Formation Trading L4</li>
+              <li>- Structure de marché HH/HL/LL/LH → cf. Formation Intermédiaire, leçon 1</li>
+              <li>- Indicateur RSI, oscillateur de momentum → présenté dans cette leçon</li>
               <li>- Double Top / Épaule-tête-épaule → cf. Stratégie Reversal L1 ou L2</li>
             </ul>
           </div>
@@ -204,7 +204,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : Divergence baissière XAU/USD H1</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte de la divergence baissière du Bloc 4 est repris. La tendance reste haussière, le prix imprime un HH à 4 640$ et le RSI forme un LH à 68. La divergence est confirmée. Mais une divergence seule ne suffit jamais pour entrer short. Une confirmation supplémentaire est attendue.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">La confirmation classique est la cassure du dernier creux ascendant. Le creux entre les deux sommets se situe à 4 570$. Si le prix clôture une bougie sous 4 570$, la divergence est confirmée par la structure du marché. Ce signal déclenche l&apos;entrée short.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée short se fait juste sous le creux cassé, à 4 565$. Le SL classique se placerait au-dessus du deuxième sommet à 4 650$, mais cela donne un R/R trop faible. Le SL tactique plus serré se place au-dessus du dernier sommet local formé pendant la baisse, à 4 605$, soit 40$ de risque. Le TP suit la measured move : hauteur entre le deuxième sommet à 4 640$ et le creux à 4 570$, soit 70$, étendue légèrement à 80$ sous l&apos;entrée pour obtenir un R/R rond de 1:2.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée short se fait juste sous le creux cassé, à 4 565$. Le SL classique se placerait au-dessus du deuxième sommet à 4 650$, mais cela donne un R/R trop faible. Le SL tactique plus serré se place au-dessus du dernier sommet local formé pendant la baisse, à 4 605$, soit 40$ de risque. Le TP suit la measured move : hauteur entre le deuxième sommet à 4 640$ et le creux à 4 570$, soit 70$, projetée sous le creux (4 500$) ; la cible est placée un peu au-delà, à 80$ sous l&apos;entrée, pour obtenir un R/R de 1:2 : moins prudent que le TP placé avant la projection au double top (leçon 1).</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
@@ -229,10 +229,9 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Calcul retail</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le risque par trade s&apos;adapte au capital. Sur ce setup R/R 1:2, voici la répartition selon la taille du compte.</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 30€</li>
-              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 30€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 40€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 100€</li>
+              <li>- Au lot minimum (0,01 lot), ce stop de 40$ représente déjà environ 34€ de risque (1$ ≈ 0,85€)</li>
+              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,01 lot, risque environ 34€, gain potentiel environ 68€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1:2 reste solide. La divergence RSI a un winrate moyen quand le pattern est propre et confirmé par la cassure de structure. Sans confirmation, le piège reste élevé.</p>
           </section>
