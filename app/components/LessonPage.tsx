@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { useState, useEffect, createContext, useContext } from "react";
-import { FORMATIONS } from "@/lib/formations";
+import { FORMATIONS, PUBLISHED_FORMATIONS } from "@/lib/formations";
 import {
   getStoredProgress,
   markLessonComplete,
   isLessonComplete,
   getGlobalStats,
-  TOTAL_FREE_LESSONS,
   LESSON_XP,
   type ProgressData,
 } from "@/lib/progress";
@@ -71,7 +70,7 @@ export function LessonPage({
   const lessons = formation?.lessons ?? [];
   const lessonIds = lessons.map((l) => l.id);
   const done = mounted && isLessonComplete(progress, formationId, lessonId);
-  const globalStats = mounted ? getGlobalStats(progress, FORMATIONS) : null;
+  const globalStats = mounted ? getGlobalStats(progress, PUBLISHED_FORMATIONS) : null;
   const fEntry = fdict[formationId];
   const localizedFormationTitle = fEntry?.title ?? formation?.title ?? formationId;
   const localizedFormationBadge = fEntry?.badge ?? formation?.badge ?? formation?.title;
@@ -203,7 +202,7 @@ export function LessonPage({
                 <span className="ml-auto text-xs text-zinc-600">
                   {t.globalCount
                     .replace("{done}", String(globalStats.completedLessons))
-                    .replace("{total}", String(TOTAL_FREE_LESSONS))}
+                    .replace("{total}", String(globalStats.totalFreeLessons))}
                 </span>
               )}
             </div>

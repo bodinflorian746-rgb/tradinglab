@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { FORMATIONS } from "@/lib/formations";
+import { PUBLISHED_FORMATIONS } from "@/lib/formations";
 import {
   getStoredProgress,
   isLessonComplete,
@@ -149,7 +149,7 @@ const LEVEL_THEMES: Record<string, LevelTheme> = {
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
 
 function getActiveLessonKey(progress: ProgressData): string | null {
-  for (const f of FORMATIONS) {
+  for (const f of PUBLISHED_FORMATIONS) {
     const ids = f.lessons.map((l) => l.id);
     for (let i = 0; i < f.lessons.length; i++) {
       if (
@@ -190,7 +190,7 @@ export default function FormationsPage() {
   }, []);
 
   const global = mounted
-    ? getGlobalStats(progress, FORMATIONS)
+    ? getGlobalStats(progress, PUBLISHED_FORMATIONS)
     : { completedLessons: 0, totalFreeLessons: 0, pct: 0 };
 
   const activeLessonKey = mounted ? getActiveLessonKey(progress) : null;
@@ -246,7 +246,7 @@ export default function FormationsPage() {
 
         {/* ── CARDS GRID ── */}
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {FORMATIONS.filter((formation) => formation.id !== "mt5").map((formation) => {
+          {PUBLISHED_FORMATIONS.map((formation) => {
             const theme = LEVEL_THEMES[formation.id] ?? LEVEL_THEMES.debutant;
             const lessonIds = formation.lessons.map((l) => l.id);
             const stats = mounted

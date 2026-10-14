@@ -96,3 +96,7 @@ export const FORMATIONS: Formation[] = [
     ],
   },
 ];
+
+// Formations ouvertes (les pistes « disabled » n'ont pas encore de pages) :
+// c'est sur elles que se comptent les leçons du parcours Trading.
+export const PUBLISHED_FORMATIONS = FORMATIONS.filter((f) => !f.disabled);
