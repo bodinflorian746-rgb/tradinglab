@@ -20,7 +20,7 @@ export function TimingComparisonDiagram(_props: { className?: string; locale?: "
     <LessonChart
       id="TimingComparisonDiagram"
       title="Même setup, deux timings"
-      caption="Le filtre horaire élimine 80 % des setups corrects non rentables."
+      caption="Même niveau, même setup : en Asie le rejet manque de volume, à l'ouverture de Londres il déclenche la cascade. Le filtre horaire écarte les setups pris au mauvais moment."
       panels={[
         {
           key: "asia", title: "Asia Session 03h UTC : rejet mou", decimals: 5, height: 240, candles: a,

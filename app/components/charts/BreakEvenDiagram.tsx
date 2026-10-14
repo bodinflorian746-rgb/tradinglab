@@ -25,9 +25,9 @@ export function BreakEvenDiagram() {
       ],
       markers: [
         { key: "1r", i: oneR, price: PATH[oneR], label: "+1R", tone: "bull", side: "above", dot: true },
-        { key: "exit", i: hit.i, price: stop, label: be ? "Sortie à 0" : "SL touché", tone: be ? "zone" : "bear", side: "below", dot: true },
+        { key: "exit", i: hit.i, price: stop, label: be ? "Sortie à l'entrée" : "SL touché", tone: be ? "zone" : "bear", side: "below", dot: true },
       ],
-      chips: [{ label: be ? "Ni gain ni perte" : `−${usdSp(ENTRY - SL0)} alors qu'il était à +${usdSp(ENTRY - SL0)}`, tone: be ? "zone" : "bear" }],
+      chips: [{ label: be ? "0 au lieu de −1R, hors frais" : `−${usdSp(ENTRY - SL0)} alors qu'il était à +${usdSp(ENTRY - SL0)}`, tone: be ? "zone" : "bear" }],
     };
   };
   return <LessonChart id="BreakEvenDiagram" title="Bitcoin : le même trajet, avec et sans Break Even" panels={[panel(true), panel(false)]} rows={[2]} sharedScale />;

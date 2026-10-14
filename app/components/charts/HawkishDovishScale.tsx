@@ -17,7 +17,7 @@ export function HawkishDovishScale(_props: { className?: string; locale?: "fr" |
         right="Très hawkish"
         gradient="linear-gradient(90deg, #38bdf8, #9ca0ab, #f59e0b)"
         marks={[
-          { pos: 8, label: "BoJ", sub: "taux négatifs, politique très accommodante", tone: "sky" },
+          { pos: 8, label: "BoJ", sub: "taux négatifs en 2022 (abandonnés en mars 2024)", tone: "sky" },
           { pos: 62, label: "BCE", sub: "hausse des taux plus tardive", tone: "neutral" },
           { pos: 90, label: "Fed", sub: "hausse rapide des taux contre l'inflation", tone: "zone" },
         ]}

@@ -17,7 +17,7 @@ export const DISP = { sweep: 9, first: 10, last: 12 };
 export function DisplacementImpulseDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["disp-eur"].slice(0, DISP.last + 2);
   const seq = cs.slice(DISP.first, DISP.last + 1);
-  const bodies = seq.map((k) => pips(k.o, k.c, 0.0001));
+  const bodies = seq.map((k) => Math.round(pips(k.o, k.c, 0.0001)));
   const low = Math.min(...seq.map((k) => k.l));
   const fvgs = [DISP.first, DISP.first + 1].map((i) => ({ i, ...fvgAt(cs, i, "bear")! }));
   return (

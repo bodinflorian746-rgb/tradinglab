@@ -259,7 +259,7 @@ export default function ContentFr() {
                 <ul className="space-y-1">
                   <li className="text-sm text-zinc-300">Nasdaq : <span className="font-semibold text-zinc-200">-33%</span> sur 2022</li>
                   <li className="text-sm text-zinc-300">Bitcoin : <span className="font-semibold text-zinc-200">-65%</span> sur l&apos;année</li>
-                  <li className="text-sm text-zinc-300">Or : volatil, jusqu&apos;à <span className="font-semibold text-zinc-200">-21%</span> entre son sommet de mars et son creux de novembre</li>
+                  <li className="text-sm text-zinc-300">Or : volatil, jusqu&apos;à <span className="font-semibold text-zinc-200">-21%</span> entre son sommet de mars et son creux de fin septembre</li>
                   <li className="text-sm text-zinc-300">Obligations : pire année depuis 100 ans</li>
                 </ul>
               </div>

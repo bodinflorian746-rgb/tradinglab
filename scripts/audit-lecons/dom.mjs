@@ -697,7 +697,8 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
         if (/[{}]|\$\{|undefined|NaN|\[object/.test(own)) E(id, `variable non remplacée « ${own.slice(0, 40)} »`);
         // valeur calculée en décimale française : « 58,5 pips », « 0,5R » (les prix gardent le point : « 1.1748 » ;
         // les niveaux de Fibonacci « 61.8% » attendent la décision PO sur la notation)
-        { const m = own.match(/(?<![\d.,])\d+\.\d+\s?(?:pips?\b|R\b)/); if (!hidden && m) E(id, `décimale avec un point « ${m[0]} » : virgule en français`); }
+        // (liste « 9.1, 10 et 10 pips » comprise : 1 ou 2 décimales dans un texte en pips ou en R)
+        { const m = /pips?\b|\dR\b/.test(own) && own.match(/(?<![\d.,])\d{1,3}\.\d{1,2}(?![\d])(?:\s?(?:pips?\b|R\b))?/); if (!hidden && m) E(id, `décimale avec un point « ${m[0]} » : virgule en français`); }
         for (const v of vocab) { const m = own.match(new RegExp(`(?<![\\p{L}\\d])(?:${v.src})(?![\\p{L}\\d])`, v.flags)); if (m) E(id, `vocabulaire « ${m[0]} » → « ${v.retenu} »`); }
         if (!svg && (cs.overflow === "hidden" || cs.textOverflow === "ellipsis") && el.scrollWidth > el.clientWidth + 1) E(id, `texte tronqué « ${own.slice(0, 40)} »`);
         if (svg && !hidden) {
@@ -767,7 +768,7 @@ const EXPECT = {
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
-  "décimale avec un point": () => { const c = document.querySelector("[data-chip]:not([data-rr])") || document.querySelector("[data-chip]"); c.textContent = "+58.5 pips"; },
+  "décimale avec un point": () => { const c = document.querySelector("[data-chip]:not([data-rr])") || document.querySelector("[data-chip]"); c.textContent = "Corps de 9.1, 10 et 10 pips"; },
   "corps de bougie déplacé": () => { const r = document.querySelector("[data-candle='3'] rect"); r.setAttribute("y", +r.getAttribute("y") + 4); },
   "bougie discontinue": () => { const s = document.querySelector("svg[data-candles]"); const c = JSON.parse(s.dataset.candles); c[3].o += 0.001; c[3].h += 0.001; s.dataset.candles = JSON.stringify(c); },
   "support jamais touché": () => {

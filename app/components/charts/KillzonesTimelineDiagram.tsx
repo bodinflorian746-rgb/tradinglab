@@ -19,7 +19,7 @@ export function KillzonesTimelineDiagram(_props: { className?: string; locale?: 
     <LessonChart
       id="KillzonesTimelineDiagram"
       title="Asia → London → New York"
-      caption="80 % des mouvements significatifs se produisent dans 20 % des heures."
+      caption="Le range d'Asie est étroit ; les mouvements significatifs arrivent le plus souvent à l'ouverture de Londres puis de New York."
       panels={[{
         key: "m15", title: "EUR/USD M15", decimals: 5, height: 280, candles: cs,
         zones: [

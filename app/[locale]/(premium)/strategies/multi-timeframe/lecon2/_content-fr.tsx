@@ -181,7 +181,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : les corrections haussières en M15 sont lentes, mais les chutes en H4 sont agressives, de l&apos;ordre de 35 à 40 $, avec des rejets systématiques sous 4 680 $. Le marché reste baissier malgré plusieurs rebonds locaux.
+                XAU/USD : les corrections haussières en M15 sont lentes, mais les chutes en H4 sont agressives, de l&apos;ordre de 35 à 40 $, et des rebonds qui s&apos;arrêtent de plus en plus bas (4 666 $, puis 4 645 $). Le marché reste baissier malgré plusieurs rebonds locaux.
               </p>
             </div>
 
