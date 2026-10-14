@@ -1,5 +1,5 @@
 // Multi-UT 3 bloc 2 — le marché revient dans les zones fortes (XAU/USD H1), exemple du texte :
-// impulsion baissière brutale depuis 4 680 $, FVG 4 648-4 660 $, remontée progressive, mèche
+// impulsion baissière brutale depuis 4 680 $, FVG 4 648-4 660 $, remontée progressive, mèche
 // qui traverse partiellement le FVG, puis rejet fort vers le bas. FVG calculé.
 // Bougies : scenarios.ts (« retour-deseq-xau »).
 

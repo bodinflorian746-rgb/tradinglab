@@ -1,5 +1,5 @@
-// Trading Débutant 1 — les deux cas du texte : achat de Bitcoin à 78 000 $, puis
-// cas 1 : hausse à 81 000 $ (+3 000 $) ; cas 2 : baisse à 76 500 $ (−1 500 $).
+// Trading Débutant 1 — les deux cas du texte : achat de Bitcoin à 78 000 $, puis
+// cas 1 : hausse à 81 000 $ (+3 000 $) ; cas 2 : baisse à 76 500 $ (−1 500 $).
 // Schéma en ligne (notion de variation de prix), même échelle pour les deux cas ;
 // écarts calculés.
 

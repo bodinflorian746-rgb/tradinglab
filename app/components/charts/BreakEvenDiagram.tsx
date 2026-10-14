@@ -1,7 +1,7 @@
 // Trading Débutant 7 — avec et sans Break Even (texte de la leçon) : achat Bitcoin à
-// 78 000 $, SL initial 75 000 $ (1R = 3 000 $). Le prix monte à 81 000 $ (+1R) puis
-// redescend brutalement à 73 500 $. Avec BE (SL déplacé à 78 000 $) : sortie à 0.
-// Sans BE : SL 75 000 $ touché, −3 000 $. Même chemin, sorties calculées. Schéma en ligne.
+// 78 000 $, SL initial 75 000 $ (1R = 3 000 $). Le prix monte à 81 000 $ (+1R) puis
+// redescend brutalement à 73 500 $. Avec BE (SL déplacé à 78 000 $) : sortie à 0.
+// Sans BE : SL 75 000 $ touché, −3 000 $. Même chemin, sorties calculées. Schéma en ligne.
 
 import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
 import { usdSp } from "@/app/components/lessons/trade";

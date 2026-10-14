@@ -1,6 +1,6 @@
 // Macro-trading 1 bloc 1 — la première impulsion FOMC est souvent excessive (XAU/USD M15),
-// exemple du texte : 4 660 $ avant FOMC, impulsion baissière jusqu'à 4 590 $ (70 $) en
-// quelques minutes, puis retour vers 4 638 $ une heure plus tard (la majorité de
+// exemple du texte : 4 660 $ avant FOMC, impulsion baissière jusqu'à 4 590 $ (70 $) en
+// quelques minutes, puis retour vers 4 638 $ une heure plus tard (la majorité de
 // l'impulsion corrigée). Mouvements calculés. Bougies : scenarios.ts (« fomc-excess »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";

@@ -198,7 +198,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                XAU/USD : impulsion initiale NFP de 4 640 $ vers 4 575 $. Base autour de 4 580-4 585 $. Puis breakout bullish au-dessus de 4 620 $, accélération jusqu'à 4 665 $, au-delà du niveau pré-NFP. Le rapport complet (salaires solides, révisions positives) annulait l'interprétation hawkish du headline. Le marché a complètement renversé son biais.
+                XAU/USD : impulsion initiale NFP de 4 640 $ vers 4 575 $. Base autour de 4 580-4 585 $. Puis clôture au-dessus du niveau pré-NFP (4 640 $) et accélération jusqu'à 4 665 $. Le rapport complet (salaires solides, révisions positives) annulait l'interprétation hawkish du headline. Le marché a complètement renversé son biais.
               </p>
             </div>
 

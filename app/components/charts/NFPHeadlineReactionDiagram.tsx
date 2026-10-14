@@ -1,6 +1,6 @@
 // Macro-trading 2 bloc 1 — le headline provoque une sur-réaction (XAU/USD M15), exemple du
-// texte : support 4 600 $ touché deux fois avant (rebonds nets), 4 640 $ avant le NFP, impulsion
-// baissière jusqu'à 4 575 $ qui casse le support 4 600 $, stabilisation autour de 4 580-4 585 $, puis remontée vers 4 625 $ dans l'heure
+// texte : support 4 600 $ touché deux fois avant (rebonds nets), 4 640 $ avant le NFP, impulsion
+// baissière jusqu'à 4 575 $ qui casse le support 4 600 $, stabilisation autour de 4 580-4 585 $, puis remontée vers 4 625 $ dans l'heure
 // suivante. Mouvements calculés. Bougies : scenarios.ts (« nfp-headline »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";

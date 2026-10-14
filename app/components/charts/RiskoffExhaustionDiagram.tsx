@@ -1,6 +1,6 @@
 // Macro-trading 3 bloc 3 — le risk-off s'essouffle progressivement (XAU/USD H4), exemple du
-// texte : après une forte tendance depuis 4 590 $, trois sommets qui faiblissent (4 735,
-// 4 720, 4 705 $) et des corrections de 25, 40 puis 65 $. Sommets et corrections calculés
+// texte : après une forte tendance depuis 4 590 $, trois sommets qui faiblissent (4 735,
+// 4 720, 4 705 $) et des corrections de 25, 40 puis 65 $. Sommets et corrections calculés
 // sur les pivots. Bougies : scenarios.ts (« riskoff-exhaust-h4 »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";

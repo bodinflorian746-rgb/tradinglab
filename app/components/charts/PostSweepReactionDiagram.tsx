@@ -1,6 +1,6 @@
 // ICT 1 — le signal = la réaction après le sweep (EUR/USD M15, plan de la leçon) : equal
 // highs 1.1780, dernier creux local 1.1762, sweep à 1.1792 refermé sous 1.1780
-// (réintégration), bougie impulsive baissière de 35 pts qui casse 1.1762 → short 1.1758,
+// (réintégration), bougie impulsive baissière de 35 pips qui casse 1.1762 → short 1.1758,
 // SL 1.1795 (au-dessus du sweep), TP 1.1695 (liquidité basse). Corps, pivots et R/R
 // calculés. Bougies : scenarios.ts (« ict-sweep-m15 »).
 
@@ -34,7 +34,7 @@ export function PostSweepReactionDiagram(_props: { className?: string; locale?: 
         offscale: t.offscale,
         markers: [
           { key: "sweep", i: sweep, price: cs[sweep].h, label: `Sweep ${p(cs[sweep].h)}, clôture sous ${p(EQH)}`, short: "Sweep", tone: "bear", side: "above", role: "sweep", ref: EQH, dir: "bear" },
-          { key: "imp", i: imp, price: cs[imp].l, label: `Impulsion ${body} pts`, short: "Impulsion", tone: "bear", side: "below", role: "impulse", span: [imp, imp] },
+          { key: "imp", i: imp, price: cs[imp].l, label: `Impulsion ${body} pips`, short: "Impulsion", tone: "bear", side: "below", role: "impulse", span: [imp, imp] },
         ],
         chips: t.chips,
       }]}

@@ -1,5 +1,5 @@
-// ICT 3 — NY Open : consolidation ~4 640 $ (5 bougies calmes), bougie explosive haussière
-// à 4 668 $ (mèche de sweep), puis cascade baissière jusqu'à 4 610 $.
+// ICT 3 — NY Open : consolidation ~4 640 $ (5 bougies calmes), bougie explosive haussière
+// à 4 668 $ (mèche de sweep), puis cascade baissière jusqu'à 4 610 $.
 // Bougies : scenarios.ts (« ny-expansion »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";

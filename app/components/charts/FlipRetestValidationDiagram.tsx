@@ -16,7 +16,7 @@ export default function FlipRetestValidationDiagram(_props: { className?: string
   const pin = CANDLES["flip-pin"];
   const breakoutI = pin.findIndex((k) => k.c === 1.1878);
   const ctx: LCPanel = {
-    key: "contexte", title: "Le flip", subtitle: "EUR/USD H4 — résistance 1.1850 touchée 3 fois, breakout à 1.1878, retour sur la zone",
+    key: "contexte", title: "Le flip", subtitle: "EUR/USD H4 — résistance 1.1850 touchée 3 fois, breakout à 1.1878, retour vers la zone",
     decimals: 5, height: 260, candles: pin.slice(0, -1),
     zones: [zone(true)],
     markers: [{ key: "bo", i: breakoutI, price: pin[breakoutI].c, label: `Breakout : clôture ${fmtPrice(pin[breakoutI].c, 4)}`, short: "Breakout", tone: "bull", side: "above", role: "close" }],

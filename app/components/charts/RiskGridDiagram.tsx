@@ -1,5 +1,5 @@
 // Trading Débutant 8 — grille de risque : montant risqué par trade selon le capital
-// (grille de la leçon : 200-499 € → 5 %, 500-999 € → 3 %, 1 000-4 999 € → 2 %, un exemple par tranche). Barres à l'échelle des euros : partie pleine = idéal, barre
+// (grille de la leçon : 200-499 € → 5 %, 500-999 € → 3 %, 1 000-4 999 € → 2 %, un exemple par tranche). Barres à l'échelle des euros : partie pleine = idéal, barre
 // entière = maximum. Les montants sont calculés à partir des pourcentages.
 
 import { Bars, LessonSchema } from "@/app/components/lessons/LessonSchema";

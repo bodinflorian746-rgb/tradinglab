@@ -1,5 +1,5 @@
 // Trading Débutant 5 — où placer son Stop Loss (exemple du texte) : achat Bitcoin au
-// rebond du support 78 000 $, dernier swing low 77 200 $, SL à 77 000 $ juste en
+// rebond du support 78 000 $, dernier swing low 77 200 $, SL à 77 000 $ juste en
 // dessous. Bougies : scenarios.ts (« sl-chart ») ; swing low calculé.
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
@@ -18,7 +18,7 @@ export function StopLossChartDiagram(_props: { className?: string }) {
       id="StopLossChartDiagram"
       title="Le SL se place sous le dernier swing low"
       panels={[{
-        key: "btc", subtitle: "Bitcoin H1 — achat au rebond du support 78 000 $",
+        key: "btc", subtitle: "Bitcoin H1 — achat au rebond du support 78 000 $",
         decimals: 0, height: 280, candles: cs,
         levels: [
           { key: "support", price: SUPPORT, label: `Achat ${usdSp(SUPPORT)} (support)`, short: "Achat", tone: "entry", dashed: true, role: "support" },

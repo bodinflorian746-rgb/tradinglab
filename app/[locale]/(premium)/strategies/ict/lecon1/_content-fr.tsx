@@ -144,7 +144,7 @@ export default function ContentFr() {
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                EUR/USD H1 : deux sommets quasiment identiques se forment à 1.1780 sur quelques heures. Tous les traders en short voient cette résistance et placent leur SL juste au-dessus, vers 1.1790-1.1795. Le marché monte une troisième fois, traverse 1.1780, atteint 1.1792, tous les stops sont déclenchés, puis chute violemment vers 1.1720. La liquidité a été prise, le mouvement réel commence après.
+                EUR/USD H1 : deux sommets quasiment identiques se forment à 1.1780 sur quelques heures. Tous les traders en short voient cette résistance et placent leur SL juste au-dessus, vers 1.1785-1.1790. Le marché monte une troisième fois, traverse 1.1780, atteint 1.1792, tous les stops sont déclenchés, puis chute violemment vers 1.1720. La liquidité a été prise, le mouvement réel commence après.
               </p>
             </div>
 
@@ -227,7 +227,7 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Étape 2. Liquidité (H1) : repérer la cible</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : deux sommets quasi identiques formés à 1.1780 dans la dernière séance</li>
-                <li>- Conclusion : equal highs à 1.1780 = liquidité visible. Les stops short dorment au-dessus, vers 1.1790-1.1795</li>
+                <li>- Conclusion : equal highs à 1.1780 = liquidité visible. Les stops short dorment au-dessus, vers 1.1785-1.1790</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Étape 3. Sweep (M15) : attendre la prise</p>

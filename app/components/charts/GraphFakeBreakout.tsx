@@ -35,7 +35,7 @@ export function GraphFakeBreakout({ variant = "int6" }: { variant?: "int6" | "sr
         title="Faux breakout : double confirmation, puis short"
         caption="Bougie 1 : mèche au-dessus, clôture à la limite. Bougie 2 : réintégration franche. Le trade se prend dans le sens opposé."
         panels={[{
-          key: "h1", title: "XAU/USD H1, résistance 4 650 $", decimals: 0, height: 280, candles: cs,
+          key: "h1", title: "XAU/USD H1, résistance 4 650 $", decimals: 0, height: 280, candles: cs,
           levels: [{ key: "lvl", price: 4650, label: `Résistance ${usd(4650)} (3 touches)`, short: "Résistance", tone: "zone" }, ...t.levels],
           offscale: t.offscale,
           markers: [

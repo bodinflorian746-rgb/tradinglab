@@ -1,5 +1,5 @@
 // Reversal 3 bloc 2 — divergence baissière (XAU/USD H1), exemple du texte : premier sommet
-// 4 600 $ (RSI 75), creux 4 570 $, nouveau sommet 4 640 $ (HH) alors que le RSI ne monte qu'à 68
+// 4 600 $ (RSI 75), creux 4 570 $, nouveau sommet 4 640 $ (HH) alors que le RSI ne monte qu'à 68
 // (LH). RSI 14 calculé sur les clôtures. Bougies : scenarios.ts (« rsi-div »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";

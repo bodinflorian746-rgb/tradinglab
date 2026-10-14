@@ -18,8 +18,8 @@ export function FOMCTimelineDiagram(_props: { locale?: "fr" | "es" | "en" } = {}
   const top = Math.max(...cs.map((k) => k.h)), bottom = Math.min(...cs.map((k) => k.l));
   // fenêtres horaires : une bande sous les bougies (règle de temps), pas une zone de prix
   const band = { y1: bottom - (top - bottom) * 0.1, y2: bottom - (top - bottom) * 0.05 };
-  const impulse = pips(cs[decision].h, cs[decision].o, PIP);
-  const drop = pips(cs[powell].o, Math.min(...cs.slice(powell, end + 1).map((k) => k.l)), PIP);
+  const impulse = Math.round(pips(cs[decision].h, cs[decision].o, PIP));
+  const drop = Math.round(pips(cs[powell].o, Math.min(...cs.slice(powell, end + 1).map((k) => k.l)), PIP));
   return (
     <LessonChart
       id="FOMCTimelineDiagram"

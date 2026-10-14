@@ -1,5 +1,5 @@
 // Macro Débutant 4 — la chaîne inflation → taux → dollar → marchés, et l'exemple
-// réel de la leçon (2021-2023 : l'inflation US à 1,4 % date de janvier 2021).
+// réel de la leçon (2021-2023 : l'inflation US à 1,4 % date de janvier 2021).
 
 import { Cards, Flow, LessonSchema, SchemaHeading } from "@/app/components/lessons/LessonSchema";
 
@@ -13,10 +13,10 @@ export const InflationChainDiagram = (_props: { locale?: "fr" | "es" | "en" } = 
     ]} />
     <SchemaHeading sub="Exemple réel, 2021-2023">La chaîne en action</SchemaHeading>
     <Cards cols={4} mobileCols={2} items={[
-      { title: "Inflation US", value: "1,4 % → 9,1 %", text: "Janv. 2021 → juin 2022", tone: "bear" },
-      { title: "Taux de la Fed", value: "0,25 % → 5,5 %", text: "En moins de 18 mois", tone: "zone" },
-      { title: "Dollar (DXY)", value: "+20 %", text: "En 2022 ; EUR/USD de 1.20 à 0.95", tone: "entry" },
-      { title: "Marchés 2022", value: "Nasdaq −33 %", text: "Bitcoin −65 %, or jusqu'à −15 %", tone: "fib" },
+      { title: "Inflation US", value: "1,4 % → 9,1 %", text: "Janv. 2021 → juin 2022", tone: "bear" },
+      { title: "Taux de la Fed", value: "0,25 % → 5,5 %", text: "En moins de 18 mois", tone: "zone" },
+      { title: "Dollar (DXY)", value: "+20 %", text: "Début → sept. 2022 ; EUR/USD de 1.23 (2021) à 0.95", tone: "entry" },
+      { title: "Marchés 2022", value: "Nasdaq −33 %", text: "Bitcoin −65 %, or jusqu'à −21 %", tone: "fib" },
     ]} />
   </LessonSchema>
 );

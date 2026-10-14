@@ -1,7 +1,7 @@
 // Macro-trading 4 bloc 1 — le calendrier est le premier filtre (XAU/USD M5), exemple du
 // texte : à 13h25 UTC, setup short parfait sous la résistance, mais le CPI tombe à 13h30.
 // La bougie du CPI emporte le stop d'un short (au-dessus de la résistance) avant que le
-// scénario baissier ne s'exprime : 100 $ d'amplitude. Filtre rouge : pas de trade.
+// scénario baissier ne s'exprime : 100 $ d'amplitude. Filtre rouge : pas de trade.
 // Mouvements calculés. Bougies : scenarios.ts (« macro-filter-news »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
@@ -36,7 +36,7 @@ export function MacroFilterCalendarDiagram(_props: { className?: string; locale?
       <div style={{ marginTop: 16 }}>
         <Checklist items={[
           { ok: true, title: "Setup technique", text: "Prix sous résistance, structure baissière nette." },
-          { ok: false, title: "Calendrier", text: "CPI américain à 13h30 UTC : volatilité de 50 à 100 $ probable. Filtre rouge, pas de trade." },
+          { ok: false, title: "Calendrier", text: "CPI américain à 13h30 UTC : volatilité de 50 à 100 $ probable. Filtre rouge, pas de trade." },
         ]} />
       </div>
     </LessonChart>

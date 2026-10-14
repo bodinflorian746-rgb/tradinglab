@@ -1,6 +1,6 @@
-// ICT 2 — mitigation d'un FVG baissier (XAU/USD H1) : depuis 4 690 $, impulsion qui
-// laisse un FVG ~4 652-4 665 $. Le prix descend jusqu'à 4 620 $, remonte progressivement
-// vers 4 663 $ (rentre dans le FVG), bougie baissière de rejet, puis 4 610 $.
+// ICT 2 — mitigation d'un FVG baissier (XAU/USD H1) : depuis 4 690 $, impulsion qui
+// laisse un FVG ~4 652-4 665 $. Le prix descend jusqu'à 4 620 $, remonte progressivement
+// vers 4 663 $ (rentre dans le FVG), bougie baissière de rejet, puis 4 610 $.
 // FVG et pivots calculés. Bougies : scenarios.ts (« fvg-mitigation-xau »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";

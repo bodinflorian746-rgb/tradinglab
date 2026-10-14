@@ -1,6 +1,6 @@
-// Trading Débutant 2 — Long vs Short avec les exemples du texte (or) : Long à 4 600 $,
-// le prix monte à 4 720 $ (+120 $ en ta faveur) ; Short à 4 700 $, le prix descend à
-// 4 580 $ (+120 $ en ta faveur). Schéma en ligne (sens du gain), écarts calculés.
+// Trading Débutant 2 — Long vs Short avec les exemples du texte (or) : Long à 4 600 $,
+// le prix monte à 4 720 $ (+120 $ en ta faveur) ; Short à 4 700 $, le prix descend à
+// 4 580 $ (+120 $ en ta faveur). Schéma en ligne (sens du gain), écarts calculés.
 
 import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
 import { fmtPrice } from "@/lib/lessons/chart-analysis";

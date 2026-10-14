@@ -1,5 +1,5 @@
 // Multi-UT 2 bloc 2 — lire la direction dominante (XAU/USD H4), exemple du texte : chutes
-// agressives de 35 à 40 $, corrections haussières lentes, rejets systématiques sous 4 680 $.
+// agressives de 35 à 40 $, corrections haussières lentes, rejets systématiques sous 4 680 $.
 // Amplitudes calculées sur les bougies. Bougies : scenarios.ts (« dir-dom-xau »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";

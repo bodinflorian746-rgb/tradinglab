@@ -1,6 +1,6 @@
 // Macro-trading 3 bloc 1 — le risk-off se confirme par des signaux concordants, exemple du
-// texte sur une semaine : S&P 500 −3 %, VIX de 14 à 22, DXY +1,5 %, et XAU/USD de 4 585 $ à
-// 4 705 $ en structure haussière (H4). Pivots calculés. Bougies : scenarios.ts (« riskoff-daily »).
+// texte sur une semaine : S&P 500 −3 %, VIX de 14 à 22, DXY +1,5 %, et XAU/USD de 4 585 $ à
+// 4 705 $ en structure haussière (H4). Pivots calculés. Bougies : scenarios.ts (« riskoff-daily »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { Cards } from "@/app/components/lessons/LessonSchema";
@@ -29,9 +29,9 @@ export function RiskoffSignalsDiagram(_props: { className?: string; locale?: "fr
     >
       <div style={{ marginTop: 16 }}>
         <Cards cols={4} mobileCols={2} items={[
-          { tag: "S&P 500 ↓", title: "Indices baissiers", text: "−3 % sur la semaine.", tone: "bear" },
+          { tag: "S&P 500 ↓", title: "Indices baissiers", text: "−3 % sur la semaine.", tone: "bear" },
           { tag: "VIX ↑", title: "Volatilité en hausse", text: "De 14 à 22.", tone: "zone" },
-          { tag: "DXY ↑", title: "Dollar fort", text: "+1,5 % face aux devises plus risquées.", tone: "sky" },
+          { tag: "DXY ↑", title: "Dollar fort", text: "+1,5 % face aux devises plus risquées.", tone: "sky" },
           { tag: "XAU/USD ↑", title: "L'or attire les flux", text: "Actif directionnel à privilégier, à l'achat.", tone: "bull" },
         ]} />
       </div>

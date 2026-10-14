@@ -1,5 +1,5 @@
 // Multi-UT 4 bloc 3 — une zone peut échouer (XAU/USD M5), exemple du texte : support H1 à
-// 4 545 $, prouvé par deux rebonds ; au passage suivant, le prix traverse la bande sans aucune
+// 4 545 $, prouvé par deux rebonds ; au passage suivant, le prix traverse la bande sans aucune
 // mèche basse de rejet, dans une séquence baissière franche, et continue nettement sous la zone.
 // Pas de signal = pas d'entrée.
 // Mèches calculées. Bougies : scenarios.ts (« zone-fail-xau »).

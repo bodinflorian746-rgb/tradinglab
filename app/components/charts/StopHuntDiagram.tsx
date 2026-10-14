@@ -1,5 +1,5 @@
 // Support / résistance 4 bloc 3 — la chasse aux stops institutionnelle (XAU/USD H1), exemple du
-// texte : cluster de stops juste au-delà de la résistance (4 720 → 4 730 $, bande fine que la mèche dépasse), la mèche pique dans la
+// texte : cluster de stops juste au-delà de la résistance (4 720 → 4 730 $, bande fine que la mèche dépasse), la mèche pique dans la
 // zone, déclenche les stops, la bougie clôture sous le niveau, puis continuation baissière rapide.
 // Mèche et clôture lues sur les bougies. Bougies : scenarios.ts (« hunt-sr4 »).
 

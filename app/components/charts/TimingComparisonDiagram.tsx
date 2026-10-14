@@ -20,7 +20,7 @@ export function TimingComparisonDiagram(_props: { className?: string; locale?: "
     <LessonChart
       id="TimingComparisonDiagram"
       title="Même setup, deux timings"
-      caption="Le filtre horaire élimine 80 % des setups corrects non rentables."
+      caption="Le filtre horaire élimine 80 % des setups corrects non rentables."
       panels={[
         {
           key: "asia", title: "Asia Session 03h UTC : rejet mou", decimals: 5, height: 240, candles: a,

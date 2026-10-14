@@ -695,6 +695,9 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
         const hidden = !!el.closest("desc, title");
         if (!hidden && px < 11.95) E(id, `texte ${px.toFixed(1)} px « ${own.slice(0, 30)} »`);
         if (/[{}]|\$\{|undefined|NaN|\[object/.test(own)) E(id, `variable non remplacée « ${own.slice(0, 40)} »`);
+        // valeur calculée en décimale française : « 58,5 pips », « 0,5R » (les prix gardent le point : « 1.1748 » ;
+        // les niveaux de Fibonacci « 61.8% » attendent la décision PO sur la notation)
+        { const m = own.match(/(?<![\d.,])\d+\.\d+\s?(?:pips?\b|R\b)/); if (!hidden && m) E(id, `décimale avec un point « ${m[0]} » : virgule en français`); }
         for (const v of vocab) { const m = own.match(new RegExp(`(?<![\\p{L}\\d])(?:${v.src})(?![\\p{L}\\d])`, v.flags)); if (m) E(id, `vocabulaire « ${m[0]} » → « ${v.retenu} »`); }
         if (!svg && (cs.overflow === "hidden" || cs.textOverflow === "ellipsis") && el.scrollWidth > el.clientWidth + 1) E(id, `texte tronqué « ${own.slice(0, 40)} »`);
         if (svg && !hidden) {
@@ -760,10 +763,11 @@ const EXPECT = {
   "mot coupé dans un tableau": /mot coupé dans un tableau/, "texte qui dépasse l'écran": /dépasse l'écran|la page défile horizontalement/, "tableau sans cadre de défilement": /tableau sans cadre de défilement/,
   "FVG décalé": /écart mèche à mèche|≠ gap des bougies/, "liquidité épaisse": /bande de liquidité de/, "sommet hors d'une mèche": /pas sur la pointe de mèche d'un vrai/,
   "OB qui déborde de sa bougie": /ne couvre exactement aucune bougie/, "support trop épais": /MR \(au plus 1,5\)/, "résistance appelée support": /touché seulement par-dessous|changement de rôle n'est pas annoncé/,
-  "swing nommé sur la dernière bougie": /au bord du graphique, swing pas encore confirmé/, "étiquette vague": /nom vague/, "zone sans étiquette": /sans étiquette/, "SL du côté du TP": /du même côté de l'entrée/, "mèche aussi épaisse que le corps": /mèches presque aussi épaisses/,
+  "swing nommé sur la dernière bougie": /au bord du graphique, swing pas encore confirmé/, "étiquette vague": /nom vague/, "zone sans étiquette": /sans étiquette/, "SL du côté du TP": /du même côté de l'entrée/, "mèche aussi épaisse que le corps": /mèches presque aussi épaisses/, "décimale avec un point": /décimale avec un point/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
+  "décimale avec un point": () => { const c = document.querySelector("[data-chip]:not([data-rr])") || document.querySelector("[data-chip]"); c.textContent = "+58.5 pips"; },
   "corps de bougie déplacé": () => { const r = document.querySelector("[data-candle='3'] rect"); r.setAttribute("y", +r.getAttribute("y") + 4); },
   "bougie discontinue": () => { const s = document.querySelector("svg[data-candles]"); const c = JSON.parse(s.dataset.candles); c[3].o += 0.001; c[3].h += 0.001; s.dataset.candles = JSON.stringify(c); },
   "support jamais touché": () => {

@@ -1,6 +1,6 @@
 // Trading Débutant 6 — avec et sans Take Profit (texte de la leçon) : achat Bitcoin à
-// 78 000 $, le prix monte à 84 000 $ puis redescend à 75 000 $. Avec TP à 84 000 $ :
-// sortie à l'objectif, +6 000 $. Sans TP : sortie en panique à 75 000 $, −3 000 $.
+// 78 000 $, le prix monte à 84 000 $ puis redescend à 75 000 $. Avec TP à 84 000 $ :
+// sortie à l'objectif, +6 000 $. Sans TP : sortie en panique à 75 000 $, −3 000 $.
 // Même chemin de prix, variations calculées. Schéma en ligne.
 
 import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";

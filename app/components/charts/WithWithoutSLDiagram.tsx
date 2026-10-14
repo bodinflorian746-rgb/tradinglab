@@ -1,6 +1,6 @@
 // Trading Débutant 5 — avec et sans Stop Loss (texte de la leçon) : même achat Bitcoin à
-// 78 000 $, chute nocturne. Avec SL 76 500 $ : −1 500 $. Sans SL : le marché s'effondre
-// jusqu'à 70 000 $, −8 000 $. Même échelle, variations calculées. Schéma en ligne.
+// 78 000 $, chute nocturne. Avec SL 76 500 $ : −1 500 $. Sans SL : le marché s'effondre
+// jusqu'à 70 000 $, −8 000 $. Même échelle, variations calculées. Schéma en ligne.
 
 import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
 import { usdSp } from "@/app/components/lessons/trade";

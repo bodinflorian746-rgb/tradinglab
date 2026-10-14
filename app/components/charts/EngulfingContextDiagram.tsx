@@ -1,6 +1,6 @@
 // Price action 3 bloc 3 — la confluence change tout (XAU/USD H4) : à gauche, l'engulfing
-// haussier du plan de la leçon, au contact de la zone Fibonacci 0.5 / 0.618 (4 610 $ à 4 584 $)
-// du swing 4 500 → 4 720 $ : setup tradable ; à droite, un engulfing isolé en pleine impulsion,
+// haussier du plan de la leçon, au contact de la zone Fibonacci 0.5 / 0.618 (4 610 $ à 4 584 $)
+// du swing 4 500 → 4 720 $ : setup tradable ; à droite, un engulfing isolé en pleine impulsion,
 // sans niveau : simple bruit. Fibonacci calculé. Bougies : scenarios.ts (« engulfing-setup »,
 // « eng-isolated »).
 

@@ -1,7 +1,7 @@
 // ICT 4 bloc 2 — le displacement montre qui prend le contrôle (XAU/USD M15), exemple du
-// texte : 3 heures d'équilibre autour de 4 650 $ (bougies plates), à 14h UTC une bougie
-// sweep le sommet jusqu'à 4 668 $, puis 5 bougies baissières à grands corps ramènent le prix
-// à 4 608 $ (corps de 8 à 10 $ qui ne rétrécissent pas, sans mèche haute). Range, sweep et
+// texte : 3 heures d'équilibre autour de 4 650 $ (bougies plates), à 14h UTC une bougie
+// sweep le sommet jusqu'à 4 668 $, puis 5 bougies baissières à grands corps ramènent le prix
+// à 4 608 $ (corps de 8 à 10 $ qui ne rétrécissent pas, sans mèche haute). Range, sweep et
 // displacement vérifiés par l'audit (rôles).
 // Bougies : scenarios.ts (« disp-control-xau »).
 

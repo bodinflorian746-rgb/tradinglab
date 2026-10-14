@@ -1,4 +1,4 @@
-// Support / résistance 1 bloc 2 — niveau fort vs niveau faible (XAU/USD H4, support 4 500 $) :
+// Support / résistance 1 bloc 2 — niveau fort vs niveau faible (XAU/USD H4, support 4 500 $) :
 // 4 touches franches avec rebonds nets (niveau fort, prioritaire) contre 2 touches molles sans
 // amplitude après le rebond (niveau faible, à exclure). Touches et rebonds calculés.
 // Bougies : scenarios.ts (« sr-strong », « sr-weak »).
@@ -16,7 +16,7 @@ function panel(key: "sr-strong" | "sr-weak", title: string): LCPanel {
   const rebounds = touches.map((t, n) => Math.max(...cs.slice(t, touches[n + 1] ?? cs.length).map((k) => k.h)) - cs[t].l);
   return {
     key, title, decimals: 0, height: 220, candles: cs,
-    subtitle: `${touches.length} touches · rebonds de ${usd(Math.min(...rebounds))} à ${usd(Math.max(...rebounds))}`,
+    subtitle: `${touches.length} touches · ${Math.min(...rebounds) === Math.max(...rebounds) ? `rebonds de ${usd(rebounds[0])}` : `rebonds de ${usd(Math.min(...rebounds))} à ${usd(Math.max(...rebounds))}`}`,
     zones: [{ key: "sup", ...Z, label: `Support ${usd(4500)}`, short: "Support", tone: "zone", role: "support" }],
     markers: touches.map((i, n) => ({ key: `t${n}`, i, price: cs[i].l, label: `Touche ${n + 1}`, short: `T${n + 1}`, tone: "neutral" as const, side: "below" as const })),
   };

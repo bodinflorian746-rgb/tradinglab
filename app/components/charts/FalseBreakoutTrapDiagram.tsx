@@ -1,6 +1,6 @@
-// ICT 1 — un breakout non tenu (XAU/USD M15) : résistance 4 680 $ testée plusieurs fois,
-// bougie de breakout jusqu'à 4 695 $ (les acheteurs entrent, SL sous 4 680), réintégration
-// sous 4 680 quelques bougies plus tard, chute vers 4 650 $. Tests, breakout et
+// ICT 1 — un breakout non tenu (XAU/USD M15) : résistance 4 680 $ testée plusieurs fois,
+// bougie de breakout jusqu'à 4 695 $ (les acheteurs entrent, SL sous 4 680), réintégration
+// sous 4 680 quelques bougies plus tard, chute vers 4 650 $. Tests, breakout et
 // réintégration lus sur les bougies. Bougies : scenarios.ts (« false-breakout-xau »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";

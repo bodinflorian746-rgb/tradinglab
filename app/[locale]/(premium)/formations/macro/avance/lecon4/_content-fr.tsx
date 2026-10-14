@@ -179,16 +179,16 @@ export default function ContentFr() {
               <div className="bg-zinc-800/30 rounded-xl px-4 py-4">
                 <h3 className="text-sm font-semibold text-zinc-200 mb-3">Risk-off panique</h3>
                 <p className="text-sm text-zinc-300 mb-1">
-                  <span className="font-semibold text-zinc-400">Signature :</span>{" "}DXY +80 à +150 points, US10Y -20 à -40 points (fuite vers Treasuries), or +40 à +90 points, indices -300 à -800 points, BTC/USD -2000 à -6000.
+                  <span className="font-semibold text-zinc-400">Signature :</span>{" "}DXY +80 à +150 points, US10Y -20 à -40 points (fuite vers Treasuries), or d&apos;abord vendu avec le reste (ventes forcées pour couvrir les appels de marge) puis repris, indices -300 à -800 points, BTC/USD -2000 à -6000.
                 </p>
                 <p className="text-sm text-zinc-300 mb-1">
                   <span className="font-semibold text-zinc-400">Lecture :</span>{" "}liquidation globale, recherche de cash et de sécurité.
                 </p>
                 <p className="text-sm text-zinc-300 mb-1">
-                  <span className="font-semibold text-zinc-400">Trade typique :</span>{" "}long USD, long CHF/JPY, long or, short indices ou flat.
+                  <span className="font-semibold text-zinc-400">Trade typique :</span>{" "}long USD, long CHF/JPY, short indices ou flat. L&apos;or seulement une fois les ventes forcées terminées.
                 </p>
                 <p className="text-sm text-zinc-300">
-                  <span className="font-semibold text-zinc-400">Cas concret :</span>{" "}16 mars 2020. Nasdaq -900 points en séance, DXY +140 points, US10Y -35 points.
+                  <span className="font-semibold text-zinc-400">Cas concret :</span>{" "}mars 2020. Le 16 mars, le Nasdaq perd 970 points (−12 %) et l&apos;or passe sous 1 500 $ (−2 %). Du 9 au 20 mars, le DXY monte d&apos;environ 95 à 103 pendant que l&apos;or perd 12 % : tout est vendu pour obtenir des dollars.
                 </p>
               </div>
 
@@ -362,7 +362,7 @@ export default function ContentFr() {
             <div className="space-y-3">
               {[
                 { bold: "DXY + US10Y", body: "= baromètre principal. Si les deux montent, tension. Si DXY baisse et yields stables, risk-on." },
-                { bold: "XAU/USD", body: "= arbitre. Il distingue une peur contrôlée d'une panique. Or qui monte sans crash actions = flight to quality." },
+                { bold: "XAU/USD", body: "= arbitre. Il distingue une peur contrôlée d'une panique. Or qui monte sans crash actions = flight to quality. Or vendu avec les actions = liquidation (risk-off panique)." },
                 { bold: "Nasdaq", body: "= sensible aux yields. +25 points sur US10Y peut suffire à provoquer -150 points sur l'indice." },
                 { bold: "Russell 2000", body: "= proxy de la croissance US domestique. Surperforme en reflation, sous-performe en stress et en flight to quality." },
                 { bold: "BTC/USD", body: "= version amplifiée du Nasdaq. Si Nasdaq +120 points, BTC peut faire +1500. Idéal pour lire le sentiment brut." },

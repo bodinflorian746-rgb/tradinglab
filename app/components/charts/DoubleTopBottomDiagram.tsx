@@ -1,6 +1,6 @@
 // Reversal 1 blocs 2 et 4 — double top et double bottom, exemples du texte :
 // EUR/USD H1 : tendance haussière, sommets 1.1880 et 1.1895, ligne de cou 1.1800, clôture
-// sous 1.1800 ; XAU/USD H1 : tendance baissière, creux 4 480 et 4 478 $, ligne de cou 4 520 $,
+// sous 1.1800 ; XAU/USD H1 : tendance baissière, creux 4 480 et 4 478 $, ligne de cou 4 520 $,
 // clôture au-dessus. Sommets, creux, écart et breakout lus sur les bougies.
 // Bougies : scenarios.ts (« dt-eur », « db-xau »).
 

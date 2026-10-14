@@ -1,6 +1,6 @@
 // Trading Avancé 9 — métriques d'un backtest de 100 trades. Chaque chiffre est
 // calculé sur la liste des trades (lib/lessons/backtest.ts) : winrate, R moyen,
-// profit factor, drawdown max (risque fixe de 1 % du capital par trade),
+// profit factor, drawdown max (risque fixe de 1 % du capital par trade),
 // nombre de trades, courbe du capital, répartition des résultats. Seuils : ceux
 // du tableau de la leçon.
 
@@ -19,10 +19,10 @@ export function BacktestMetricsDiagram({ className = "" }: BacktestMetricsDiagra
   const s = backtestStats(trades);
   const final = s.equity[s.equity.length - 1] - 100;
   const metrics = [
-    { key: "winrate", label: "Winrate", value: `${fmtNum(s.winrate, 0)} %`, rule: "> 40 %", ok: s.winrate > 40 },
+    { key: "winrate", label: "Winrate", value: `${fmtNum(s.winrate, 0)} %`, rule: "> 40 %", ok: s.winrate > 40 },
     { key: "avgR", label: "R moyen", value: `${signed(s.avgR, 2)}R`, rule: "> +0,5R", ok: s.avgR > 0.5 },
     { key: "pf", label: "Profit factor", value: s.profitFactor.toFixed(1).replace(".", ","), rule: "> 1,5", ok: s.profitFactor > 1.5 },
-    { key: "dd", label: "Drawdown max", value: `${fmtNum(s.maxDD, 1)} %`, rule: "< 15 %", ok: s.maxDD < 15 },
+    { key: "dd", label: "Drawdown max", value: `${fmtNum(s.maxDD, 1)} %`, rule: "< 15 %", ok: s.maxDD < 15 },
     { key: "n", label: "Trades", value: String(s.n), rule: "> 50", ok: s.n > 50 },
   ];
   const buckets = [...new Set(trades)].sort((a, b) => a - b).map((r) => ({ r, n: trades.filter((x) => x === r).length }));
@@ -35,7 +35,7 @@ export function BacktestMetricsDiagram({ className = "" }: BacktestMetricsDiagra
     decimals: 1, height: 240,
     line: s.equity,
     measure: { name: "Capital", unit: "% du capital de départ (100 = départ)" },
-    levels: [{ key: "start", price: 100, label: "Départ 100 %", short: "Départ", tone: "neutral", dashed: true, faint: true }],
+    levels: [{ key: "start", price: 100, label: "Départ 100 %", short: "Départ", tone: "neutral", dashed: true, faint: true }],
     segments: [{ key: "dd", i1: s.ddPeak, p1: s.equity[s.ddPeak], i2: s.ddTrough, p2: s.equity[s.ddTrough], tone: "bear", arrow: true }],
     markers: [
       { key: "dd", i: s.ddTrough, price: s.equity[s.ddTrough], label: `Drawdown max −${fmtNum(s.maxDD, 1)} %`, short: `DD −${fmtNum(s.maxDD, 1)} %`, tone: "bear", side: "below", dot: true },

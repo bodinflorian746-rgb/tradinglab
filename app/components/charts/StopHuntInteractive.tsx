@@ -1,6 +1,6 @@
 "use client";
 
-// Trading Avancé 6 — « Le support vient d'être percé par une longue mèche : que fais-tu ? »
+// Trading Avancé 6 — « Le prix vient de passer sous le support : que fais-tu ? » (la bougie est en cours : mèche ou cassure, seule la clôture le dira)
 // EUR/USD H1, support 1.0800 touché deux fois. Un seul futur pour les trois choix : la
 // bougie clôture au-dessus du support (chasse aux stops), puis le prix monte. Pendant la
 // question, la bougie est en cours (prix sous le support). Bougies : scenarios.ts (« stop-hunt »).
@@ -30,7 +30,7 @@ export function StopHuntInteractive(_props: { className?: string; locale?: "fr" 
   const shown = choice ? all : [...all.slice(0, STOPHUNT_WICK), live];
   const levels: LCLevel[] = [{ key: "sup", price: SUPPORT, label: `Support ${p(SUPPORT)}`, short: "Support", tone: "bull", dashed: true, role: "support", to: STOPHUNT_WICK - 1 }];
   const markers: LCMarker[] = [];
-  if (!choice) markers.push({ key: "now", i: STOPHUNT_WICK, price: live.l, label: "Mèche en cours", short: "Mèche", tone: "zone", side: "below" });
+  if (!choice) markers.push({ key: "now", i: STOPHUNT_WICK, price: live.l, label: "Bougie en cours, sous le support", short: "En cours", tone: "zone", side: "below" });
   else {
     markers.push({ key: "close", i: STOPHUNT_WICK, price: wick.c, label: `Clôture ${p(wick.c)} au-dessus`, short: "Clôture au-dessus", tone: "bull", side: "below", role: "close" });
     if (choice === "sell") {
@@ -45,7 +45,7 @@ export function StopHuntInteractive(_props: { className?: string; locale?: "fr" 
   return (
     <LessonChart
       id="StopHuntInteractive"
-      title={choice ? "Ce qui s'est passé" : "Le support vient d'être percé par une longue mèche : que fais-tu ?"}
+      title={choice ? "Ce qui s'est passé" : "Le prix vient de passer sous le support : que fais-tu ?"}
       panels={[{ key: "h1", subtitle: "EUR/USD H1 — support 1.0800 touché deux fois", decimals: 5, height: 260, candles: shown, slots: all.length, levels, markers }]}
     >
       {!r ? (

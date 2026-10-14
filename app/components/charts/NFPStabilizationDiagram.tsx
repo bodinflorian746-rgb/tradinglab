@@ -1,7 +1,7 @@
 // Macro-trading 2 bloc 2 — le retournement apparaît après la stabilisation (XAU/USD M15),
-// exemple du texte : après la chute à 4 575 $, quatre bougies M15 impriment des mèches basses
-// de 6 à 8 $ sans clôturer sous 4 580 $, le prix se cale entre 4 580 et 4 585 $, puis
-// reprise franche vers 4 630 $ dans l'heure. Mèches calculées. Bougies : scenarios.ts (« nfp-stab »).
+// exemple du texte : après la chute à 4 575 $, quatre bougies M15 impriment des mèches basses
+// de 6 à 8 $ sans clôturer sous 4 580 $, le prix se cale entre 4 580 et 4 585 $, puis
+// reprise franche vers 4 630 $ dans l'heure. Mèches calculées. Bougies : scenarios.ts (« nfp-stab »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { usd } from "@/app/components/lessons/trade";

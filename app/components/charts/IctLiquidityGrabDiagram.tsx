@@ -1,7 +1,7 @@
 // ICT 1 et ICT 5 — liquidité au-dessus d'equal highs (EUR/USD H1), un seul schéma pour les
 // deux leçons (fusion d'IctLiquidityGrab et d'ICTLiquidityPrep) :
 // - « prise » (ICT 1, bloc 1) : deux sommets à 1.1780, stops des vendeurs vers
-//   1.1790-1.1795, 3e poussée jusqu'à 1.1792 (stops déclenchés), chute vers 1.1720 ;
+//   1.1785-1.1790, 3e poussée jusqu'à 1.1792 (tous les stops déclenchés), chute vers 1.1720 ;
 // - « attente » (ICT 5, bloc 2) : prix actuel 1.1745 sous les equal highs (résistance
 //   Daily 1.1780) ; pas de sweep, pas de séquence, on patiente.
 // Sommets et creux lus sur les bougies. Bougies : scenarios.ts (« ict-eqh »).
@@ -12,7 +12,7 @@ import CANDLES from "@/lib/lessons/generated/candles.json";
 
 const p = (x: number) => fmtPrice(x, 4);
 const EQH = 1.178;
-const STOPS = { y1: 1.179, y2: 1.1795 };
+const STOPS = { y1: 1.1785, y2: 1.179 };
 
 export function IctLiquidityGrabDiagram({ variant = "prise" }: { variant?: "prise" | "attente"; locale?: "fr" | "es" | "en" }) {
   const all = CANDLES["ict-eqh"];

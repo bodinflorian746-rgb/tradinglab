@@ -9,8 +9,8 @@ export const TradingSessionsLiquidityDiagram = (_props: { locale?: "fr" | "es" |
       ticks={[0, 8, 14, 17, 22]}
       rows={[
         { label: "Asie", note: "USD/JPY, AUD/JPY, AUD/USD · liquidité faible", from: 0, to: 9, tone: "entry" },
-        { label: "Londres", note: "EUR/USD, GBP/USD, XAU/USD · 35-40 % du volume", from: 8, to: 17, tone: "bull" },
-        { label: "New York", note: "EUR/USD, USD/JPY, XAU/USD, indices US · 20-25 %", from: 14, to: 22, tone: "zone" },
+        { label: "Londres", note: "EUR/USD, GBP/USD, XAU/USD · 35-40 % du volume", from: 8, to: 17, tone: "bull" },
+        { label: "New York", note: "EUR/USD, USD/JPY, XAU/USD, indices US · 20-25 %", from: 14, to: 22, tone: "zone" },
         { label: "Overlap Londres-New York", note: "14h-17h · liquidité maximale", from: 14, to: 17, tone: "bear" },
       ]}
     />

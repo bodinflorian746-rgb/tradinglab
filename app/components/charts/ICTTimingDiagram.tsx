@@ -1,6 +1,6 @@
 // ICT 5 bloc 4 — le timing reste essentiel (XAU/USD M15), exemple du texte : range Asia
-// 4 642-4 655 $, à l'ouverture de London mèche de sweep au-dessus de 4 655 $, puis
-// displacement baissier de 38 $ qui laisse un FVG. Setup complet ET en Killzone.
+// 4 642-4 655 $, à l'ouverture de London mèche de sweep au-dessus de 4 655 $, puis
+// displacement baissier de 38 $ qui laisse un FVG. Setup complet ET en Killzone.
 // Range, sweep, displacement et FVG calculés. Bougies : scenarios.ts (« ict-timing-bear »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";

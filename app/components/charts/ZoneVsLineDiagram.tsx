@@ -17,7 +17,7 @@ export default function ZoneVsLineDiagram(_props: { className?: string; locale?:
     <LessonChart
       id="ZoneVsLineDiagram"
       title="Ligne fine ou zone ?"
-      caption="Le tracé englobe corps et mèches : 10 à 20 pips sur EUR/USD, 10 à 20 $ sur XAU/USD."
+      caption="Le tracé englobe corps et mèches : 10 à 20 pips sur EUR/USD, 10 à 20 $ sur XAU/USD."
       panels={[
         {
           key: "line", title: "✗ Ligne fine", decimals: 5, height: 220, candles: cs,

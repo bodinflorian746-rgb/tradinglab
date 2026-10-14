@@ -1,6 +1,6 @@
 // Macro-trading 1 bloc 3 — le FOMC Fade (XAU/USD M15), exemple et plan du texte : chute
-// 4 660 → 4 590 $, stabilisation M15 autour de 4 595 $, retour progressif vers 4 638 $ ;
-// long 4 600 $ après la stabilisation, SL 4 578 $ (au-delà de l'extrémité), objectif 4 638 $
+// 4 660 → 4 590 $, stabilisation M15 autour de 4 595 $, retour progressif vers 4 638 $ ;
+// long 4 600 $ après la stabilisation, SL 4 578 $ (au-delà de l'extrémité), objectif 4 638 $
 // (retour partiel vers le niveau pré-FOMC). R/R calculé. Bougies : scenarios.ts (« fomc-excess »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
@@ -20,7 +20,7 @@ export function FOMCFadeSetupDiagram(_props: { className?: string; locale?: "fr"
     <LessonChart
       id="FOMCFadeSetupDiagram"
       title="Le fade : un retour partiel, structuré"
-      caption="Entrée après stabilisation, SL juste au-delà de l'extrémité, objectif sur le niveau d'où l'impulsion est partie."
+      caption="Entrée après stabilisation, SL juste au-delà de l'extrémité, objectif : un retour partiel vers le niveau d'avant la news (4 638 $, sous les 4 660 $ de départ)."
       panels={[{
         key: "m15", title: "XAU/USD M15, après le FOMC", decimals: 0, height: 290, candles: cs,
         zones: [{ key: "stab", ...stabZone, from: FOMC_IMPULSE + 1, to: entryAt - 1, label: `Stabilisation ${usd(stabZone.y1)}-${usd(stabZone.y2)}`, short: "Stabilisation", tone: "zone" }],
