@@ -653,13 +653,17 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
       // (x = t.x - gap - w) ne doit pas compter comme un chevauchement à cause d'un
       // arrondi (540.64 + 129.2 + 4 = 673.8400000000001 > 673.84), sinon elle quittait sa ligne.
       const EPS = 0.01;
+      // (glisse aussi à gauche des bougies : une pastille posée sur une bougie cache le prix)
       const slotX = (y: number, w: number) => {
         let x = lineX1 - w;
-        for (let guard = 0; guard < 8; guard++) {
+        for (let guard = 0; guard < 40; guard++) {
+          if (x < minX) return null;
           const block = inlineTags.find((t) => Math.abs(t.y - y) < INLINE_TAG_H + INLINE_TAG_GAP - EPS
             && x < t.x + t.w + INLINE_TAG_GAP - EPS && x + w + INLINE_TAG_GAP > t.x + EPS);
-          if (!block) return x >= minX ? x : null;
-          x = block.x - INLINE_TAG_GAP - w;
+          if (block) { x = block.x - INLINE_TAG_GAP - w; continue; }
+          const box = [...candleBoxes, ...uiBoxes].find((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1);
+          if (box) { x = box.x1 - w - 1; continue; }
+          return x;
         }
         return null;
       };
