@@ -15,7 +15,7 @@ export default function FlipDiagram(_props: { className?: string; locale?: "fr" 
   const cs = CANDLES["flip-pin"];
   const brk = cs.findIndex((k) => k.c > LEVEL + 0.0015);
   const pin = cs.length - 1;
-  const t = tradeSetup({ entry: cs[pin].c, sl: 1.183, tp: 1.195, from: pin, tpOffscale: true, expect: ">3.2", names: { entry: "Entrée long", tp: "TP" } });
+  const t = tradeSetup({ entry: cs[pin].c, sl: 1.183, tp: 1.195, from: pin, tpOffscale: true, expect: ">3.2", names: { entry: "Entrée long", tp: "TP (R/R)" } });
   return (
     <LessonChart
       id="FlipDiagram"
@@ -23,7 +23,7 @@ export default function FlipDiagram(_props: { className?: string; locale?: "fr" 
       caption="Breakout franc, pas de réintégration, retest avec signal de rejet : la zone a inversé son rôle."
       panels={[{
         key: "h4", title: "EUR/USD H4", decimals: 5, height: 290, candles: cs,
-        levels: [{ key: "lvl", price: LEVEL, label: `Résistance → support ${p(LEVEL)}`, short: "Niveau inversé", tone: "zone" }, ...t.levels],
+        levels: [{ key: "lvl", price: LEVEL, label: `Résistance → support ${p(LEVEL)}`, short: "Rés. → support", tone: "zone" }, ...t.levels],
         offscale: t.offscale,
         markers: [
           { key: "brk", i: brk, price: cs[brk].c, label: `Breakout : clôture ${p(cs[brk].c)} (+${pips(cs[brk].c, LEVEL, 0.0001)} pips)`, short: "Breakout", tone: "bull", side: "above", role: "close" },

@@ -24,7 +24,7 @@ export default function FlipFailureDiagram(_props: { className?: string; locale?
       panels={[{
         key: "h4", title: "EUR/USD H4", decimals: 5, height: 280, candles: cs,
         levels: [
-          { key: "lvl", price: LEVEL, label: `Niveau cassé ${p(LEVEL)}`, short: "Niveau", tone: "zone" },
+          { key: "lvl", price: LEVEL, label: `Résistance cassée ${p(LEVEL)}`, short: "Résistance", tone: "zone" },
           { key: "entry", price: ENTRY, from: entryAt, label: `Entrée long ${p(ENTRY)}`, short: "Entrée", tone: "entry" },
           { key: "sl", price: SL, from: entryAt, label: `SL ${p(SL)}`, short: "SL", tone: "bear", dashed: true },
         ],

@@ -29,7 +29,7 @@ export function SingleTimeframeTrapDiagram(_props: { className?: string; locale?
         },
         {
           key: "m15", title: "EUR/USD M15 : le breakout local", decimals: 5, height: 220, candles: m,
-          levels: [{ key: "lvl", price: 1.176, to: brk, label: `Niveau local ${p(1.176)}`, short: "Niveau local", tone: "neutral", dashed: true }],
+          levels: [{ key: "lvl", price: 1.176, to: brk, label: `Résistance locale ${p(1.176)}`, short: "Résistance M15", tone: "neutral", dashed: true }],
           markers: [
             { key: "brk", i: brk, price: m[brk].c, label: "Breakout haussier : clôture au-dessus", short: "Breakout", tone: "bull", side: "below", role: "close" },
             { key: "top", i: topAt, price: top, label: `Sommet ${p(top)}`, short: "Sommet", tone: "bull", side: "above", role: "high" },
