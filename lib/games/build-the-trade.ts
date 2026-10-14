@@ -726,10 +726,11 @@ function shapeRejectionResistance(rng: () => number, m: number): ShapeOutput {
   ], ref: { swingLow: entryRef - 4 * m, swingHigh: R, entryRef } };
 }
 
-// Mèches contenues dans les zones du range (bornes ± 0,1)
+// Mèches contenues dans le range : au plus jusqu'au bord intérieur de ses zones (le range se lit à
+// ses touches ; une mèche au-delà sortait du range tracé)
 function inRange(k: Candle, S: number, R: number): Candle {
-  k.h = Math.min(k.h, R + 0.1);
-  k.l = Math.max(k.l, S - 0.1);
+  k.h = Math.min(k.h, R - 0.16);
+  k.l = Math.max(k.l, S + 0.16);
   return k;
 }
 
@@ -740,13 +741,27 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
   const R = 6;
   const mid = (S + R) / 2;
   let p = mid + (rng() - 0.5);
-  // 12 candles d'oscillation
+  // 12 bougies d'oscillation : le prix va d'une borne à l'autre (cible alternée toutes les 3
+  // bougies, bruit du marché conservé) au lieu de revenir sans cesse au milieu ; le range se lit à ses
+  // bornes testées. Avant : bornes jamais testées et oscillation resserrée loin d'elles par la passe
+  // de réalisme (un « range » sans range, puis une chute).
+  const firstUp = direction === "SELL";
   for (let i = 0; i < 12; i++) {
     const o = p;
-    const drift = (mid - o) * 0.25 + (rng() - 0.5) * 1.2 * m;
-    const c = clamp(o + drift, S + 0.4, R - 0.4);
+    const up = (Math.floor(i / 3) % 2 === 0) === firstUp;
+    const target = up ? R - 0.25 : S + 0.25;
+    const drift = (target - o) * 0.3 + (rng() - 0.5) * 1.2 * m;
+    const c = clamp(o + drift, S + 0.3, R - 0.3);
     past.push(inRange(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m), S, R));
     p = c;
+  }
+  // Chaque borne touchée deux fois : dans chaque moitié de l'oscillation, la bougie la plus proche
+  // de la borne y pousse sa mèche (juste dans la zone) ; le futur reste sous ce niveau
+  for (const [a0, a1] of [[0, 6], [6, 12]]) {
+    const seg = past.slice(a0, a1);
+    const top = seg.reduce((x, k) => (k.h > x.h ? k : x)), bot = seg.reduce((x, k) => (k.l < x.l ? k : x));
+    top.h = R - 0.12;
+    bot.l = S + 0.12;
   }
   // 2 candles approchant la borne ciblée : la dernière clôture dans le tiers
   // de range côté borne (« le prix arrive au haut du range / bas du range »)
@@ -771,7 +786,7 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
   // Future : oscillation jusqu'à l'autre borne
   if (direction === "SELL") {
     // 1 bump test résistance puis drop vers support
-    fut.push({ o: p, c: R - 0.5 * m, h: R - 0.05 * m, l: Math.min(p, R - 0.5 * m) - 0.1 * m });
+    fut.push({ o: p, c: R - 0.5 * m, h: R - 0.15, l: Math.min(p, R - 0.5 * m) - 0.1 * m });
     p = R - 0.5 * m;
     fut.push(inRange(candle(p, p - 0.5 * m, 0.1, (0.2 + rng() * 0.15) * m), S, R));
     p -= 0.5 * m;
@@ -782,7 +797,7 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
       p = c;
     }
   } else {
-    fut.push({ o: p, c: S + 0.5 * m, h: Math.max(p, S + 0.5 * m) + 0.1 * m, l: S + 0.05 * m });
+    fut.push({ o: p, c: S + 0.5 * m, h: Math.max(p, S + 0.5 * m) + 0.1 * m, l: S + 0.15 });
     p = S + 0.5 * m;
     fut.push(inRange(candle(p, p + 0.5 * m, (0.2 + rng() * 0.15) * m, 0.1), S, R));
     p += 0.5 * m;

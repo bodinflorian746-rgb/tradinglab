@@ -15,7 +15,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone, type ChartData, type ZoneKind,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, srGuards, withRoleChanges,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
@@ -1063,18 +1063,18 @@ function genRangeNoOpp(rng: () => number, m: number, d: Difficulty): BuySellChar
   const R = 6;
   const mid = (S + R) / 2;
   let p = mid + (rng() - 0.5);
-  // 14 candles dans le range
-  for (let i = 0; i < 14; i++) {
+  // 12 bougies : le range se lit à ses bornes, touchées deux fois chacune (rangeLegs) ; puis 4 bougies
+  // qui ramènent le prix au milieu, loin des bornes (« sans test de zone » en cours)
+  const legs = rangeLegs(rng, p, S, R, 4, 3, m, rng() < 0.5);
+  past.push(...legs.candles);
+  p = legs.p;
+  for (let i = 0; i < 4; i++) {
     const o = p;
-    const pull = (mid - o) * 0.25;
-    const drift = pull + (rng() - 0.5) * 1.5 * m;
-    // « Au milieu d'un range » : la dernière bougie finit dans le tiers central
-    let c = i === 13 ? mid + (drift - pull) * 0.25 : o + drift;
-    c = clamp(c, S + 0.4, R - 0.4);
-    const k = candle(o, c, (0.25 + rng() * 0.28) * m, (0.25 + rng() * 0.28) * m);
-    // « Sans test de zone » : les mèches restent à l'intérieur du range
-    k.h = Math.min(k.h, R - 0.2);
-    k.l = Math.max(k.l, S + 0.2);
+    // « Au milieu d'un range » : la dernière bougie finit dans le tiers central (la 1re, qui part
+    // de la borne, peut encore la frôler : les 3 dernières en restent loin)
+    const c = i === 3 ? mid + (rng() - 0.5) * 0.4 : clamp(mid + (o - mid) * 0.2 + (rng() - 0.5) * 0.3, S + 1.4, R - 1.4);
+    const k = candle(o, c, (0.2 + rng() * 0.25) * m, (0.2 + rng() * 0.25) * m);
+    k.h = Math.min(k.h, R - 1); k.l = Math.max(k.l, S + 1);
     past.push(k);
     p = c;
   }
@@ -1249,25 +1249,32 @@ function genDirtyRangeSweep(rng: () => number, m: number, d: Difficulty): BuySel
   const R = 6;
   const mid = (S + R) / 2;
   let p = mid;
-  // 4 oscillations
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const drift = (rng() - 0.5) * 1.4 * m + (mid - o) * 0.2;
-    const c = clamp(o + drift, S + 0.5, R - 0.5);
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
-    p = c;
-  }
+  // Le range se lit à ses bornes : une jambe monte toucher le haut (pointe de mèche sur le bord de la
+  // zone, gardée par la passe de réalisme) avant le sweep du haut, une autre descend toucher le bas
+  // avant le sweep du bas. Avant : retour au milieu, les bornes jamais testées et les bougies de sweep
+  // énormes à côté d'un range resserré.
+  const leg = (n: number, up: boolean) => {
+    const target = up ? R - 0.3 : S + 0.3;
+    for (let i = 0; i < n; i++) {
+      const o = p;
+      const c = clamp(i === n - 1 ? target + (rng() - 0.5) * 0.1 : o + (target - o) * (0.25 + rng() * 0.45), S + 0.25, R - 0.25);
+      const k = candle(o, c, (0.2 + rng() * 0.25) * m, (0.2 + rng() * 0.25) * m);
+      k.h = Math.min(k.h, R - 0.16); k.l = Math.max(k.l, S + 0.16);
+      if (i === n - 1) { if (up) k.h = R - 0.1; else k.l = S + 0.1; }
+      past.push(k);
+      p = c;
+    }
+  };
+  // 6 oscillations : haut touché, bas touché, haut touché (2 touches du haut avant son sweep)
+  leg(2, true);
+  leg(2, false);
+  leg(2, true);
   // Sweep du haut (mèche dépasse R, close inside)
   const swHc = R - 0.7 - rng() * 0.3;
   const swH = { o: p, c: swHc, h: R + 1.0 * m + rng() * 0.3, l: Math.min(p, swHc) - 0.15 };
   past.push(swH); p = swH.c;
-  // 3 oscillations
-  for (let i = 0; i < 3; i++) {
-    const o = p;
-    const c = clamp(o + (rng() - 0.55) * 1.2 * m, S + 0.5, R - 0.5);
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
-    p = c;
-  }
+  // 3 oscillations : le prix redescend toucher le bas du range
+  leg(3, false);
   // Sweep du bas (mèche descend sous S, close inside)
   const swLc = S + 0.7 + rng() * 0.3;
   const swL = { o: p, c: swLc, h: Math.max(p, swLc) + 0.15, l: S - 1.0 * m - rng() * 0.3 };

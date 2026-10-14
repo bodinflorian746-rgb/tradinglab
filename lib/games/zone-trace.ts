@@ -17,7 +17,7 @@
 import type { Candle, ChartZone } from "./shared";
 
 /** Épaisseurs (× MR) : niveau d'un extrême, liquidité, support / résistance maximal */
-export const TRACE = { PIVOT_W: 0.02, LIQ_W: 0.8, LIQ_GAP: 0.05, SR_W: 1.2, SR_MIN: 0.3, SNAP: 2.0, EQ_LIQ: 0.2 };
+export const TRACE = { PIVOT_W: 0.02, LIQ_W: 0.8, LIQ_GAP: 0.05, SR_W: 1.2, SR_MIN: 0.3, SR_PAD: 0.05, SNAP: 2.0, EQ_LIQ: 0.2, RANGE_SPIKE: 0.8 };
 
 const median = (a: number[]) => { const s = [...a].sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
 export const medianRange = (cs: Candle[]) => median(cs.map((k) => k.h - k.l)) || 1e-9;
@@ -51,6 +51,28 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
   if (swept) {
     const low = isLowLiq(swept);
     sweepIdx = past.reduce((a, k, i) => (low ? (k.l < past[a].l ? i : a) : (k.h > past[a].h ? i : a)), 0);
+  }
+  // 0. Bornes de range : sur les extrêmes visibles du range (ses deux plus hauts / plus bas), la
+  //    mèche isolée d'un sweep exclue (plus de RANGE_SPIKE × MR au-delà de l'extrême suivant). Un
+  //    range se lit à ses bornes testées ; posées au prix voulu par le générateur, elles flottaient
+  //    loin des bougies quand le prix n'allait pas jusque-là.
+  for (const z of out) {
+    if (!/^(haut|bas) du range/i.test(z.label)) continue;
+    const top = /^haut/i.test(z.label);
+    const ks = [...past].sort((x, y) => (top ? y.h - x.h : x.l - y.l)), ext = (k: Candle) => (top ? k.h : k.l);
+    // (une mèche de sweep : très au-delà de l'extrême suivant, et la bougie referme à l'intérieur)
+    // un sweep tracé de ce côté (« Sweep haut / bas ») : sa mèche n'est pas une borne, même courte
+    const swept = out.some((x) => (top ? /^sweep haut/i : /^sweep bas/i).test(x.label));
+    const spike = (swept ? 0.1 : TRACE.RANGE_SPIKE) * MR;
+    while (ks.length > 2 && Math.abs(ext(ks[0]) - ext(ks[1])) > spike && (top ? ks[0].c <= ext(ks[1]) : ks[0].c >= ext(ks[1]))) { ks.shift(); if (swept) break; }
+    const e = ks.map(ext);
+    if (e.length < 2) continue;
+    let a = Math.min(e[0], e[1]) - TRACE.SR_PAD * MR, b = Math.max(e[0], e[1]) + TRACE.SR_PAD * MR;
+    if (b - a < TRACE.SR_MIN * MR) { const c = (a + b) / 2; a = c - (TRACE.SR_MIN * MR) / 2; b = c + (TRACE.SR_MIN * MR) / 2; }
+    // aucune clôture du range au-delà de sa borne (hors bougies déclencheuses : cassure, sweep)
+    const closes = past.slice(0, -2).map((k) => k.c);
+    if (closes.length) { if (top) b = Math.max(b, Math.max(...closes)); else a = Math.min(a, Math.min(...closes)); }
+    z.y1 = a; z.y2 = b;
   }
   // 1. Extrêmes nommés (plus bas / haut précédent, swings…), chacun sur un extrême distinct
   const used = new Set<number>();
@@ -153,8 +175,33 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
   }
   // 5. Support / résistance, bornes du range : bande resserrée sur les touches
   for (const z of out) {
-    if (!SR_LABEL.test(z.label)) continue;
+    if (!SR_LABEL.test(z.label) || /^(haut|bas) du range/i.test(z.label)) continue;
     const lo = Math.min(z.y1, z.y2), hi = Math.max(z.y1, z.y2);
+    // bande aussi épaisse que l'écart des touches : pointes des mèches qui viennent toucher la zone
+    // depuis un côté (corps au-dessus pour un support touché par le haut, au-dessous sinon) ; resserrée
+    // sur elles sans jamais sortir de la bande d'origine (les preuves tiennent), jusqu'à stabilité
+    // (une bande resserrée fait apparaître les touches des bougies dont le corps y était)
+    {
+      const tol = 0.25 * MR;
+      let cl = lo, ch = hi, done = false;
+      for (let it = 0; it < 4; it++) {
+        const tips: number[] = [];
+        for (const k of past) {
+          const top = Math.max(k.o, k.c), bot = Math.min(k.o, k.c);
+          if (bot >= ch && k.l <= ch + tol && k.l >= cl - tol) tips.push(k.l);
+          else if (top <= cl && k.h >= cl - tol && k.h <= ch + tol) tips.push(k.h);
+        }
+        if (tips.length < 2) break;
+        // bornes d'un range (pas de preuve S/R) : la bande va sur ses touches, même un peu hors de la
+        // bande d'origine ; support / résistance : jamais hors d'elle
+        const free = /^(haut|bas) du range/i.test(z.label), L = free ? -Infinity : lo, Hh = free ? Infinity : hi;
+        let a = Math.max(L, Math.min(...tips) - TRACE.SR_PAD * MR), b = Math.min(Hh, Math.max(...tips) + TRACE.SR_PAD * MR);
+        if (b - a < TRACE.SR_MIN * MR) { const c = (a + b) / 2, w = free ? TRACE.SR_MIN * MR : Math.min(TRACE.SR_MIN * MR, hi - lo); a = Math.max(L, Math.min(c - w / 2, Hh - w)); b = a + w; }
+        if (Math.abs(a - cl) < 1e-9 * MR && Math.abs(b - ch) < 1e-9 * MR) break;
+        cl = a; ch = b; done = true;
+      }
+      if (done && (ch - cl < hi - lo || /^(haut|bas) du range/i.test(z.label))) { z.y1 = cl; z.y2 = ch; continue; }
+    }
     if (hi - lo <= TRACE.SR_W * MR) continue;
     const tol = 0.25 * MR;
     const ext: number[] = [];

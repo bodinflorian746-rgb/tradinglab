@@ -205,6 +205,31 @@ export function markPrevLow(past: Candle[], L: number, m: number): void {
   past[t].l = Math.min(past[t].l, L + 0.02);
 }
 
+/**
+ * Oscillation d'un range qui se lit à ses bornes : jambes de `perLeg` bougies d'une borne à l'autre
+ * (S + inset … R − inset) ; la dernière bougie de chaque jambe touche la borne, pointe de mèche
+ * posée juste dans la zone (au-delà de S + edge, R − edge : la passe de réalisme garde la touche sans
+ * figer la mèche). Les autres mèches restent sous ces bords. Renvoie les bougies et la dernière clôture.
+ */
+export function rangeLegs(rng: () => number, p: number, S: number, R: number, legs: number, perLeg: number, m: number, firstUp: boolean, inset = 0.3, edge = 0.15): { candles: Candle[]; p: number } {
+  const candles: Candle[] = [];
+  for (let leg = 0; leg < legs; leg++) {
+    const up = (leg % 2 === 0) === firstUp;
+    const target = up ? R - inset : S + inset;
+    for (let i = 0; i < perLeg; i++) {
+      const o = p;
+      const last = i === perLeg - 1;
+      const c = clamp(last ? target + (rng() - 0.5) * 0.1 : o + (target - o) * (0.25 + rng() * 0.45), S + inset - 0.05, R - inset + 0.05);
+      const k = candle(o, c, (0.2 + rng() * 0.25) * m, (0.2 + rng() * 0.25) * m);
+      k.h = Math.min(k.h, R - edge - 0.01); k.l = Math.max(k.l, S + edge + 0.01);
+      if (last) { if (up) k.h = R - edge + 0.05; else k.l = S + edge - 0.05; }
+      candles.push(k);
+      p = c;
+    }
+  }
+  return { candles, p };
+}
+
 export function levelTouches(
   rng: () => number, p: number, lo: number, hi: number, from: "below" | "above", m: number, n = 2,
 ): { candles: Candle[]; p: number } {

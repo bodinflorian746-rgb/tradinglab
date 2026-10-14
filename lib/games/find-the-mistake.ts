@@ -8,7 +8,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
@@ -750,16 +750,17 @@ function shRangeOscillation(rng: () => number, m: number): { chart: ScenarioChar
   const R = 6;
   const mid = (S + R) / 2;
   let p = mid + (rng() - 0.5);
-  for (let i = 0; i < 14; i++) {
+  // Le prix « oscille dans un range » : bornes touchées deux fois chacune (rangeLegs), puis retour
+  // au milieu, où le BUY est pris
+  const legs = rangeLegs(rng, p, S, R, 4, 3, m, rng() < 0.5);
+  past.push(...legs.candles);
+  p = legs.p;
+  for (let i = 0; i < 2; i++) {
     const o = p;
-    const drift = (mid - o) * 0.25 + (rng() - 0.5) * 1.4 * m;
     // « Tu prends ce BUY au milieu » : la dernière bougie finit dans le tiers central
-    let c = i === 13 ? mid + (drift - (mid - o) * 0.25) * 0.25 : o + drift;
-    c = clamp(c, S + 0.4, R - 0.4);
-    const k = candle(o, c, (0.2 + rng() * 0.22) * m, (0.2 + rng() * 0.22) * m);
-    // Le prix « oscille dans un range » : les mèches restent dans ses bornes
-    k.h = Math.min(k.h, R + 0.1);
-    k.l = Math.max(k.l, S - 0.1);
+    const c = i === 1 ? mid + (rng() - 0.5) * 0.4 : clamp((o + mid) / 2 + (rng() - 0.5) * 0.3, S + 0.8, R - 0.8);
+    const k = candle(o, c, (0.2 + rng() * 0.25) * m, (0.2 + rng() * 0.25) * m);
+    k.h = Math.min(k.h, R - 0.6); k.l = Math.max(k.l, S + 0.6);
     past.push(k);
     p = c;
   }
