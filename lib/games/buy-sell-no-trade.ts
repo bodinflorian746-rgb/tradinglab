@@ -15,8 +15,9 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone, type ChartData, type ZoneKind,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, srGuards, withRoleChanges,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, srGuards, withRoleChanges,
 } from "./shared";
+import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
@@ -926,12 +927,16 @@ function genLiquiditySweep(rng: () => number, m: number, d: Difficulty): BuySell
   }
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.8 * m, L + 0.5, L + 1.6);
+    // les clôtures restent nettement au-dessus du plus bas précédent (le prix en est reparti)
+    const c = clamp(o + (rng() - 0.5) * 0.8 * m, L + Math.max(0.5, 0.8 * m), L + 1.7 * Math.max(1, m));
     const k = candle(o, c, (0.25 + rng() * 0.22) * m, (0.25 + rng() * 0.22) * m);
     k.l = Math.max(k.l, L - 0.12); // le plus bas précédent n'est pas balayé avant le sweep
     past.push(k);
     p = c;
   }
+  // Le « plus bas précédent » : le creux de la consolidation touche le niveau L (sinon le plus bas
+  // visible d'avant le sweep pouvait être au-dessus de la clôture du sweep)
+  markPrevLow(past, L, m);
   // Trigger : sweep candle (longue mèche basse) — module par difficulté
   const sO = p;
   const wickDown = (1.1 + rng() * 0.5) * m * wickAmp(d);
@@ -1334,6 +1339,12 @@ export function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficul
   return zones.map((z) => {
     // Changement de rôle : il fait partie de la preuve du niveau, il reste dit en avancé aussi
     if (z.flip) return z;
+    // Seuls les supports / résistances et les FVG / liquidités deviennent génériques : un plus bas
+    // précédent, un swing, un range gardent leur nom (« Support » sur un creux jamais touché
+    // présentait un niveau non prouvé)
+    const sr = /^(support|soporte|r[ée]sistance|resistencia|resistance)/i.test(z.label);
+    const liq = /^(liquidit|liquidez|sweep|barrido)/i.test(z.label);
+    if (!sr && !liq && z.kind !== "fvg") return z;
     const generic = locale === "es"
       ? (z.kind === "support"        ? "Soporte"
        : z.kind === "resistance"     ? "Resistencia"
@@ -1373,7 +1384,7 @@ export function buildChart(
 ): BuySellChart {
   const ch = buildChartRaw(setup, seed, volatility, difficulty);
   const calm = setup === "trade_before_news";
-  return withRoleChanges(realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm }));
+  return withRoleChanges(withTracedZones(realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm })));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

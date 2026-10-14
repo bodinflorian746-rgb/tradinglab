@@ -10,8 +10,9 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, srGuards, withRoleChanges,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
 } from "./shared";
+import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone, priceEpsilon } from "./price-scale";
@@ -856,14 +857,13 @@ function shapeSweepLowReversal(rng: () => number, m: number): ShapeOutput {
   }
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.5 * m, L + 0.5, L + 1.5);
+    // les clôtures restent nettement au-dessus du plus bas précédent (le prix en est reparti)
+    const c = clamp(o + (rng() - 0.5) * 0.5 * m, L + Math.max(0.5, 0.8 * m), L + 1.6 * Math.max(1, m));
     past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
     p = c;
   }
   // Le « plus bas précédent » : le creux de la consolidation touche le niveau L
-  const consol = past.slice(-3);
-  const prevLow = consol.reduce((a, k) => (k.l < a.l ? k : a));
-  prevLow.l = Math.min(prevLow.l, L + 0.02);
+  markPrevLow(past, L, m);
   // Sweep candle
   const sweepLow = L - 1.2 * m - rng() * 0.3;
   past.push({ o: p, c: L + 0.4 + rng() * 0.2, h: p + 0.15, l: sweepLow });
@@ -1166,7 +1166,7 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
   const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol], ch.past)];
   const plan = [...Object.values(ch.entries), ...Object.values(ch.stops), ...Object.values(ch.tps)];
-  return withRoleChanges(realizeChart(ch, { past: zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol }));
+  return withRoleChanges(withTracedZones(realizeChart(ch, { past: zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol })));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

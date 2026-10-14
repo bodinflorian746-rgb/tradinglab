@@ -34,6 +34,9 @@ export interface ChartZone {
   short?: string;
   /** Changement de rôle prouvé (ancienne résistance → support, ou l'inverse) : touches et cassure */
   flip?: RoleChange;
+  /** Extrême nommé (swing, HL…) : indice de la bougie du passé qui clôture au swing ; le tracé se
+   *  pose sur la pointe de sa mèche ou de celle de la suivante */
+  at?: number;
 }
 
 /** Changement de rôle d'un niveau : touches (indices des bougies) du côté de l'ancien rôle, puis cassure. */
@@ -186,6 +189,22 @@ export function bullImpulse3(rng: () => number, m: number, p: number, past: Cand
  * repart nettement du même côté. Le prix de départ p doit être éloigné du niveau
  * (au moins 1,5 m) ; le prix renvoyé l'est aussi.
  */
+/**
+ * « Plus bas précédent » d'un sweep haussier, posé sur le niveau L : le creux de la 1re bougie
+ * de la consolidation (les 3 dernières du passé), dont le prix repart nettement avant que la
+ * mèche du sweep vienne le balayer. Jamais la bougie juste avant la mèche, et aucune bougie
+ * d'avant ne descend plus bas.
+ */
+export function markPrevLow(past: Candle[], L: number, m: number): void {
+  const n = past.length, t = n - 3;
+  past.forEach((k, i) => {
+    if (i === t) return;
+    const lift = i > t ? L + 0.45 * m : L + 0.08;
+    k.l = Math.max(k.l, Math.min(lift, Math.min(k.o, k.c)));
+  });
+  past[t].l = Math.min(past[t].l, L + 0.02);
+}
+
 export function levelTouches(
   rng: () => number, p: number, lo: number, hi: number, from: "below" | "above", m: number, n = 2,
 ): { candles: Candle[]; p: number } {

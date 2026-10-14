@@ -8,8 +8,9 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, srGuards, withRoleChanges,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
 } from "./shared";
+import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { anchorPrice, assetPriceMap, linearPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
@@ -849,10 +850,14 @@ function shSweepLowDone(rng: () => number, m: number): { chart: ScenarioChart; e
   }
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.5 * m, L + 0.5, L + 1.5);
+    // les clôtures restent nettement au-dessus du plus bas précédent (le prix en est reparti)
+    const c = clamp(o + (rng() - 0.5) * 0.5 * m, L + Math.max(0.5, 0.8 * m), L + 1.6 * Math.max(1, m));
     past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
     p = c;
   }
+  // Le « plus bas précédent » : le creux de la consolidation touche le niveau L (sinon le plus bas
+  // visible d'avant le sweep pouvait être au-dessus de la clôture du sweep)
+  markPrevLow(past, L, m);
   // Sweep candle : longue mèche basse, close au-dessus
   const sweepLow = L - 1.3 * m - rng() * 0.3;
   past.push({ o: p, c: L + 0.4 + rng() * 0.3, h: p + 0.2, l: sweepLow });
@@ -967,7 +972,9 @@ export function buildScenarioChart(template: MistakeTemplate, seed: number, vol:
   const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol], ch.past)];
   const lines = [ch.entry, ch.stop, ch.tp].filter((p): p is number => p !== undefined);
   const calm = template.chartShape === "calm_before_news";
-  return withRoleChanges(realizeChart(ch, { past: zones, future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm }));
+  // le stop aussi sur le passé : un stop « pile au-dessus du swing low » le reste (seulement lui :
+  // l'entrée et le TP en plus raidissaient les corps, réalisme EUR/USD au bord du seuil)
+  return withRoleChanges(withTracedZones(realizeChart(ch, { past: [...zones, ...(ch.stop !== undefined ? [ch.stop] : [])], future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm })));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */
