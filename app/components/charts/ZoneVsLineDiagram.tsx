@@ -28,7 +28,7 @@ export default function ZoneVsLineDiagram(_props: { className?: string; locale?:
         {
           key: "zone", title: "✓ Zone de 15 pips", decimals: 5, height: 220, candles: cs,
           subtitle: "Mèches naturelles absorbées",
-          zones: [{ key: "z", ...Z, label: `Zone ${p(Z.y1)}-${p(Z.y2)}`, short: "Zone", tone: "bull", role: "support" }],
+          zones: [{ key: "z", ...Z, label: `Support (zone) ${p(Z.y1)}-${p(Z.y2)}`, short: "Support", tone: "bull", role: "support" }],
         },
       ]}
       rows={[2]}

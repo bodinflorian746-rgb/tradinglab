@@ -12,7 +12,7 @@ const p = (x: number) => fmtPrice(x, 4);
 const EQH = 1.178;
 
 /** Bougies de « disp-eur » : sweep, puis les 3 bougies du displacement */
-export const DISP = { sweep: 5, first: 6, last: 8 };
+export const DISP = { sweep: 9, first: 10, last: 12 };
 
 export function DisplacementImpulseDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["disp-eur"].slice(0, DISP.last + 2);

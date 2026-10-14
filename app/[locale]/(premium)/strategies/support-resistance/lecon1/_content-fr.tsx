@@ -161,7 +161,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- 4 touches franches avec rebonds nets = niveau fort, prioritaire dans la sélection des setups ; mais chaque nouvelle touche consomme une partie des ordres qui le défendent : après 3 à 4 retours rapprochés, le risque de cassure augmente (cf. Formation Intermédiaire, leçon 3)</li>
+              <li>- 4 touches franches avec rebonds nets = niveau fort, prioritaire dans la sélection des setups ; mais chaque nouvelle touche consomme une partie des ordres qui le défendent : après 3 à 4 retours rapprochés, le risque de breakout augmente (cf. Formation Intermédiaire, leçon 3)</li>
               <li>- 2 touches molles sans amplitude post-rebond = niveau faible, à exclure</li>
               <li>- Fraîcheur : zone touchée dans les 30 derniers jours conserve son poids structurel</li>
               <li>- Les chiffres ronds (1.1800, 4 500$, 100 000$) renforcent la force du niveau</li>

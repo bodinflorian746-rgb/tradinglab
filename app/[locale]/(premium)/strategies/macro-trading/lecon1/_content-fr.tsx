@@ -278,7 +278,7 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Tu es en position devant le FOMC sur XAU/USD. La décision tombe et provoque une impulsion bearish violente de 70 $ en quelques minutes. Que fais-tu ?"
+            question="Tu suis le FOMC sur XAU/USD, sans position ouverte. La décision tombe et provoque une impulsion bearish violente de 70 $ en quelques minutes. Que fais-tu ?"
             options={[
               "Tu shortes dans l'impulsion pour profiter du mouvement en cours",
               "Tu n'entres pas tout de suite : tu attends l'essoufflement de l'impulsion avant tout trade",

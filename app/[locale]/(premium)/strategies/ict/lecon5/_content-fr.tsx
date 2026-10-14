@@ -317,7 +317,7 @@ export default function ContentFr() {
               <div className="border border-zinc-800 rounded-xl p-4 bg-zinc-950/60">
                 <p className="text-white font-semibold text-sm mb-1.5">4. Entrer pendant le displacement</p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Voir le displacement en cours et chercher à monter en marche, c'est rater l'entrée propre et prendre un SL beaucoup trop large. L'entrée ICT se prend de préférence au RETOUR dans le FVG, pas dans la séquence d'impulsion elle-même. L'entrée sur cassure de la leçon 1 reste possible, mais avec un SL plus large et un R/R moindre (1:1,7 contre 1:3,3). La patience entre displacement et retour est ce qui rend le R/R favorable.
+                  Voir le displacement en cours et chercher à monter en marche, c'est rater l'entrée propre et prendre un SL beaucoup trop large. L'entrée ICT se prend de préférence au RETOUR dans le FVG, pas dans la séquence d'impulsion elle-même. L'entrée sur breakout de la leçon 1 reste possible, mais avec un SL plus large et un R/R moindre (1:1,7 contre 1:3,3). La patience entre displacement et retour est ce qui rend le R/R favorable.
                 </p>
               </div>
             </div>

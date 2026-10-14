@@ -3,7 +3,8 @@
 // trois mèches hautes (jusqu'à 1.1770) sans clôture au-dessus de la zone, creux local 1.1748
 // cassé par trois bougies baissières vers 1.1745, retour du prix : short 1.1758, SL 1.1772
 // (au-dessus du dernier sommet de rejet), TP 1.1695 (dernier LL Daily). R/R calculé.
-// Bougies : scenarios.ts (« ltf-confirm »).
+// Au-dessus, le panneau H1 montre d'où vient la zone : ancien support touché deux fois, puis cassé.
+// Bougies : scenarios.ts (« zone-prep-h1 », « ltf-confirm »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
 import { tradeSetup } from "@/app/components/lessons/trade";
@@ -15,6 +16,7 @@ const Z = { y1: 1.175, y2: 1.176 };
 const LOCAL_LOW = 1.1748, ENTRY = 1.1758;
 
 export function ConfirmationM5Diagram({ tf = "M5" }: { tf?: "M5" | "M15"; className?: string; locale?: "fr" | "es" | "en" }) {
+  const h1 = CANDLES["zone-prep-h1"];
   const cs = CANDLES["ltf-confirm"];
   const wicks = cs.map((k, i) => (k.h > Z.y2 && k.c <= Z.y2 ? i : -1)).filter((i) => i >= 0);
   const lowAt = cs.findIndex((k) => k.l === LOCAL_LOW);
@@ -27,8 +29,11 @@ export function ConfirmationM5Diagram({ tf = "M5" }: { tf?: "M5" | "M15"; classN
       title="Réaction dans la zone, breakout, entrée"
       caption="Aucune réaction = aucune entrée. L'UT inférieure ne prédit pas, elle confirme."
       panels={[{
+        key: "h1", title: "EUR/USD H1 : d'où vient la zone", decimals: 5, height: 200, candles: h1,
+        zones: [{ key: "zh1", ...Z, label: `Résistance H1 (ancien support) ${p(Z.y1)}-${p(Z.y2)}`, short: "Ex-support", tone: "zone" }],
+      }, {
         key: "ltf", title: `EUR/USD ${tf}, dans la zone H1`, decimals: 5, height: 290, candles: cs,
-        zones: [{ key: "zone", ...Z, label: `Zone H1 ${p(Z.y1)}-${p(Z.y2)}`, short: "Zone H1", tone: "zone" }],
+        zones: [{ key: "zone", ...Z, label: `Résistance H1 ${p(Z.y1)}-${p(Z.y2)}`, short: "Résistance H1", tone: "zone" }],
         levels: [
           { key: "low", price: LOCAL_LOW, from: lowAt, to: brk, label: `Creux local ${p(LOCAL_LOW)}`, short: "Creux local", tone: "neutral", dashed: true, role: "bos", ref: lowAt, dir: "bear" },
           ...t.levels,
@@ -40,6 +45,7 @@ export function ConfirmationM5Diagram({ tf = "M5" }: { tf?: "M5" | "M15"; classN
         ],
         chips: t.chips,
       }]}
+      rows={[1, 1]}
     />
   );
 }

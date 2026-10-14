@@ -14,7 +14,8 @@ export function MacroFilterRegimeDiagram(_props: { className?: string; locale?: 
   const h4 = CANDLES["regime-h4"];
   const m15 = CANDLES["regime-m15"];
   const h4All = [...h4, ...aggregate(m15, 16)];
-  const piv = pivots(h4All, 2).filter((q) => q.name);
+  // swings nommés seulement s'ils sont confirmés (deux bougies de chaque côté)
+  const piv = pivots(h4All, 2).filter((q) => q.name && q.index <= h4All.length - 3);
   const minorLow = m15.findIndex((k, i) => i > 2 && k.l === 4683);
   const sig = m15.findIndex((k, i) => i > minorLow && k.c < m15[minorLow].l);
   const res = m15.reduce((b, k, i) => (i < sig && k.h > m15[b].h ? i : b), 0);

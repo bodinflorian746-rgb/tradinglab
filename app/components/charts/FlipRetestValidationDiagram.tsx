@@ -9,7 +9,8 @@ import { fmtPrice } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
 const ZONE = { y1: 1.1840, y2: 1.1850 };
-const zone = (named: boolean) => ({ key: "zone", ...ZONE, ...(named ? { label: "Ancienne résistance 1.1840-1.1850", short: "Zone" } : {}), tone: "zone" as const, kind: "flip" });
+// chaque panneau nomme la zone (règle : toute zone a son étiquette) ; en petit format, le nom court
+const zone = (_named: boolean) => ({ key: "zone", ...ZONE, label: "Ancienne résistance 1.1840-1.1850", short: "Ex-résistance", tone: "zone" as const, kind: "flip" });
 
 export default function FlipRetestValidationDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const pin = CANDLES["flip-pin"];

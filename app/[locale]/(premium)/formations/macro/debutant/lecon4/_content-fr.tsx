@@ -376,7 +376,7 @@ export default function ContentFr() {
           </p>
 
           <LessonQuiz
-            question="L'inflation US sort à 5% (au lieu de 3% attendus). Sans même connaître la suite, quelle est la réaction la plus probable du dollar dans les heures qui suivent ?"
+            question="L'inflation US sort à 3,5 % (au lieu de 3,1 % attendus). Sans même connaître la suite, quelle est la réaction la plus probable du dollar dans les heures qui suivent ?"
             options={[
               "Le dollar baisse, l'inflation est mauvaise pour la devise",
               "Le dollar monte, le marché anticipe que la Fed va monter ses taux pour combattre l'inflation",

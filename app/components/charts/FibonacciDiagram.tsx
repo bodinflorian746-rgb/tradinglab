@@ -58,7 +58,7 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
       caption="Fibonacci identifie la zone d'attention, pas l'entrée automatique : on attend un signal de bougie."
       panels={[{
         key: "h1", title: `EUR/USD, swing ${p(lo)} → ${p(hi)}`, decimals: 5, height: 300, candles: cs,
-        zones: [{ key: "sup", ...SUPPORT, from: 3, label: `Support historique ${p(SUPPORT.y1)}-${p(SUPPORT.y2)}`, short: "Support", tone: "bull", role: "support" }],
+        zones: [{ key: "sup", ...SUPPORT, from: 3, label: `Ancienne résistance → support ${p(SUPPORT.y1)}-${p(SUPPORT.y2)}`, short: "Ex-résistance", tone: "bull", role: "support" }],
         levels: RATIOS.map((r) => ({ key: `f${r}`, price: Number(fibLevel(lo, hi, r).toFixed(5)), from: hiAt, label: `Fibo ${pct(r)} = ${p(fibLevel(lo, hi, r))}`, short: `Fibo ${pct(r)}`, tone: r === 0.618 ? "fib" as const : "neutral" as const, dashed: r !== 0.618, role: "fib" as const, ref: `${loAt}:${hiAt}:${r}` })),
         markers: [{ key: "stop", i: stop, price: cs[stop].l, label: `Arrêt sur ${p(cs[stop].l)} : 61,8 % + support`, short: "61,8 % + support", tone: "fib", side: "below" }],
       }]}

@@ -9,7 +9,7 @@ import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart"
 import { fmtNum, fmtPrice, pips } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
-const ENTRY = 1.1758, SL_H4 = 1.1790, SL_M5 = 1.1772, H4_TOP = 1.1780;
+const ENTRY = 1.1758, SL_H4 = 1.1790, SL_M5 = 1.1772;
 const p = (x: number) => fmtPrice(x, 4);
 
 export function RiskAffineDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
@@ -18,9 +18,8 @@ export function RiskAffineDiagram(_props: { className?: string; locale?: "fr" | 
   const top = candles.reduce((b, k, i) => (k.h > candles[b].h ? i : b), 0);
   const panel = (key: string, title: string, sub: string, sl: number, h4: boolean): LCPanel => ({
     key, title, subtitle: sub, decimals: 5, height: 280, candles,
-    zones: [{ key: "zone", y1: 1.1750, y2: 1.1760, label: "Zone H1", tone: "zone", kind: "zone" }],
+    zones: [{ key: "zone", y1: 1.1750, y2: 1.1760, label: "Résistance H1 1.1750-1.1760", short: "Résistance H1", tone: "zone", kind: "zone" }],
     levels: [
-      ...(h4 ? [{ key: "h4", price: H4_TOP, label: `Haut zone H4 ${p(H4_TOP)}`, short: "Zone H4", tone: "neutral" as const, dashed: true, faint: true }] : []),
       { key: "sl", price: sl, from: h4 ? undefined : top, label: `SL ${p(sl)}`, tone: "bear", dashed: true },
       { key: "entry", price: ENTRY, from: last - 1, label: `Entrée ${p(ENTRY)}`, short: "Entrée", tone: "entry" },
     ],

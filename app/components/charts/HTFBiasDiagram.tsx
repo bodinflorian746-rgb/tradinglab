@@ -20,7 +20,7 @@ export function HTFBiasDiagram(_props: { className?: string; locale?: "fr" | "es
       caption="Structure LH/LL : biais baissier, priorité aux ventes, aucun achat agressif."
       panels={[{
         key: "h4", title: "EUR/USD H4", decimals: 5, height: 280, candles: cs,
-        levels: [{ key: "res", price: RES, label: `Résistance ${p(RES)}`, short: "Résistance", tone: "zone" }],
+        levels: [{ key: "res", price: RES, label: `Résistance (ancien support) ${p(RES)}`, short: "Ex-support", tone: "zone" }],
         markers: [
           ...named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name!, tone: "bear" as const, side: q.side === "h" ? "above" as const : "below" as const })),
           { key: "now", i: last, price: cs[last].c, label: `Prix actuel ${p(cs[last].c)}`, short: "Prix actuel", tone: "entry", side: "below", role: "close" },

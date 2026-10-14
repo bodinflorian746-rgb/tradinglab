@@ -33,7 +33,7 @@ function ContentFr() {
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-blue-400 mb-2">Le retracement (zone d'entrée)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix recule depuis 1.0980. Il descend, descend... et s'arrête sur 1.0870. C'est le 61.8% de Fibonacci. Tu regardes, il y a aussi un support historique à ce niveau. <strong className="text-white">Confluence.</strong> Tu attends un signal de bougie avant d'entrer en achat.
+              Le prix recule depuis 1.0980. Il descend, descend... et s'arrête sur 1.0870. C'est le 61.8% de Fibonacci. Tu regardes, il y a aussi une ancienne résistance à ce niveau, rejetée deux fois puis cassée : elle sert maintenant de support. <strong className="text-white">Confluence.</strong> Tu attends un signal de bougie avant d'entrer en achat.
             </p>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
@@ -102,7 +102,7 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-medium text-emerald-400 mb-1">Setup idéal, 3 confluences + signal</p>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              EUR/USD Daily haussier → 61.8% Fib à 1.0869 → support historique à 1.0870, touché 2 fois. Trois confluences indépendantes : tendance, Fibonacci, support. Le prix arrive. Pin bar haussière. Tu entres en achat. SL sous la zone (1.0848), TP vers 1.0980.
+              EUR/USD Daily haussier → 61.8% Fib à 1.0869 → ancienne résistance à 1.0870 (deux rejets), cassée puis devenue support. Trois confluences indépendantes : tendance, Fibonacci, support. Le prix arrive. Pin bar haussière. Tu entres en achat. SL sous la zone (1.0848), TP vers 1.0980.
             </p>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">

@@ -1,6 +1,6 @@
 "use client";
 
-// Graphique des leçons — même rendu que les jeux (GameChartV2) : bougies V2Candle,
+// Graphique des leçons — même rendu que les jeux (GameChartV2) : bougies LessonCandle (V2Candle, mèche proportionnée),
 // géométrie en pixels réels (ResizeObserver), charte v2, sans quadrillage.
 // - Données : bougies construites à partir de prix (lib/lessons/chart-build.ts)
 //   ou série de prix en ligne (schémas) ; zones, niveaux, pivots, R/R calculés
@@ -19,8 +19,24 @@
 
 import "@/app/styles/lesson-chart.css";
 import { useId, type CSSProperties, type ReactNode } from "react";
-import { V2Candle, clamp, textWidth, useBoxSize } from "@/app/components/games/v2/GameChartV2";
+import { clamp, cssVars, textWidth, useBoxSize } from "@/app/components/games/v2/GameChartV2";
+import { candleBody } from "@/app/components/games/candle-geometry";
 import { fmtNum, fmtPrice, type Candle, type PivotName } from "@/lib/lessons/chart-analysis";
+
+// Bougie des leçons : rendu des jeux (couleurs, corps exact, jamais neutre), mais mèche proportionnée
+// au corps. Le trait fixe de 3 px des jeux paraît aussi épais qu'un corps étroit sur téléphone : ici la
+// mèche fait au plus la moitié du corps (entre 0,6 et 3 px).
+function LessonCandle({ o, h, l, c, x, width, toY, index, prevClose }: Candle & { x: number; width: number; toY: (v: number) => number; index: number; prevClose?: number }) {
+  const up = c > o || (c === o && (prevClose === undefined || c >= prevClose));
+  const box = candleBody(o, c, toY);
+  const wickW = clamp(width / 2, 0.6, 3);
+  return (
+    <g className="v2-candle v2-candle--static" style={cssVars({ "--i": index })}>
+      <line x1={x} x2={x} y1={toY(h)} y2={toY(l)} stroke={up ? "var(--v2-bull-wick)" : "var(--v2-bear-wick)"} strokeWidth={wickW} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <rect x={x - width / 2} y={box.y} width={width} height={box.h} rx={Math.min(3, box.h / 2)} fill={up ? "var(--v2-bull)" : "var(--v2-bear)"} />
+    </g>
+  );
+}
 
 export type LCTone = "bull" | "bear" | "entry" | "zone" | "fib" | "neutral" | "sky";
 
@@ -610,7 +626,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
         {/* Bougies */}
         {p.candles?.map((c, i) => (
           <g key={i} data-candle={i}>
-            <V2Candle {...c} prevClose={p.candles![i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={i} dim="full" still />
+            <LessonCandle {...c} prevClose={p.candles![i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={i} />
           </g>
         ))}
 
