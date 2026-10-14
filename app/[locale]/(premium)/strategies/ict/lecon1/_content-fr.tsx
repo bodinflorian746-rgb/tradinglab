@@ -239,7 +239,7 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Réaction (M15) : exécuter</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : la bougie suivante est un gros corps baissier impulsif (35 pts), cassure du dernier creux local à 1.1762</li>
-                <li>- Conclusion : entrée short à 1.1758 sur le breakout, SL à 1.1795 (3 pts au-dessus du sommet du sweep), TP vers la prochaine zone de liquidité basse à 1.1695. R/R ≈ 1 : 1,7, setup haut probabilité aligné Daily + sweep + réaction</li>
+                <li>- Conclusion : entrée short à 1.1758 sur le breakout, SL à 1.1795 (3 pts au-dessus du sommet du sweep), TP vers la prochaine zone de liquidité basse à 1.1695. R/R ≈ 1:1,7, sous le repère de 1:2 : acceptable parce que le setup est aligné Daily + sweep + réaction, ce qui augmente ses chances (seuil de rentabilité à 1:1,7 : 37 % de trades gagnants, avant frais)</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

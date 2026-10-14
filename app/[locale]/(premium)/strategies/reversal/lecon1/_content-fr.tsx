@@ -205,7 +205,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : Double Top EUR/USD H1</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte du double top EUR/USD du Bloc 3 est repris. Tendance haussière préalable, deux sommets à 1.1880 et 1.1895, ligne de cou à 1.1800. Le prix vient de clôturer une bougie H1 à 1.1795, sous la ligne de cou. Pattern confirmé.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée se fait short juste sous la ligne de cou pour saisir le breakdown. Un prix qui plonge déjà ne se chasse pas. Une confirmation propre avec une clôture sous la ligne de cou est requise. Le SL classique irait au-dessus du deuxième sommet, mais le R/R deviendrait trop faible : le SL tactique se place juste au-dessus du dernier rebond sous la ligne des sommets. Le TP suit la measured move : la hauteur du pattern, du sommet le plus haut à la ligne de cou, se projette depuis la ligne de cou vers le bas.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Hauteur du pattern, depuis le sommet le plus haut : 1.1895 - 1.1800 = 95 pips. Projection théorique sous la ligne de cou : 1.1705. Le TP est placé un peu avant, à 1.1715 : un objectif prudent avant la projection théorique, pour un R/R de 2:1 (40 pips de risque, 80 pips de gain).</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Hauteur du pattern, depuis le sommet le plus haut : 1.1895 - 1.1800 = 95 pips. Projection théorique sous la ligne de cou : 1.1705. Le TP est placé un peu avant, à 1.1715 : un objectif prudent avant la projection théorique, pour un R/R de 1:2 (40 pips de risque, 80 pips de gain).</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
@@ -219,7 +219,7 @@ export default function ContentFr() {
               <ul className="space-y-1 text-sm text-zinc-300">
                 <li>- Risque : 1.1835 - 1.1795 = 40 pips</li>
                 <li>- Gain potentiel : 1.1795 - 1.1715 = 80 pips</li>
-                <li>- R/R : 80 / 40 = 2:1</li>
+                <li>- R/R : 80 / 40 = 2, soit 1:2</li>
                 <li>- Setup exploitable.</li>
               </ul>
             </div>
@@ -228,14 +228,14 @@ export default function ContentFr() {
           {/* Bloc 8 — CALCUL RETAIL */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Calcul retail</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le risque par trade s&apos;adapte au capital. Sur ce setup R/R 2:1, voici la répartition selon la taille du compte.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le risque par trade s&apos;adapte au capital. Sur ce setup R/R 1:2, voici la répartition selon la taille du compte.</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel 30€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel 30€</li>
               <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 40€</li>
               <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 100€</li>
             </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 2:1 reste constant peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1:2 reste constant peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.</p>
           </section>
 
           {/* Bloc 9 — FILTRES : QUAND NE PAS PRENDRE LE SETUP */}

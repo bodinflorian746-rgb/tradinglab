@@ -227,7 +227,7 @@ export default function ContentFr() {
               <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 113€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
-              Le R/R reste 2,25:1 peu importe la taille du compte.
+              Le R/R reste 1:2,25 peu importe la taille du compte.
             </p>
           </section>
 

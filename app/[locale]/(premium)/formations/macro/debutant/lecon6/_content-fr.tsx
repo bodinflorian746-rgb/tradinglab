@@ -185,7 +185,7 @@ export default function ContentFr() {
                   </li>
                   <li className="flex items-start gap-2.5 text-sm text-zinc-300">
                     <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
-                    <span>soit tu <span className="font-semibold text-zinc-200">attends 1 à 2 heures</span> que ça se calme</span>
+                    <span>soit tu <span className="font-semibold text-zinc-200">attends 30 minutes à 1 heure</span> que ça se calme</span>
                   </li>
                 </ul>
               </div>

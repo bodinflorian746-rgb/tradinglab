@@ -272,7 +272,7 @@ export default function ContentFr() {
                 <li>- Risque : 1.1822 - 1.1710 = 112 pips</li>
                 <li>- Gain potentiel : 1.1990 - 1.1822 = 168 pips</li>
                 <li>- R/R : 168 / 112 = 1,5</li>
-                <li>- Setup exploitable au seuil minimum institutionnel.</li>
+                <li>- Sous le repère de 1:2 vu en Débutant : setup exploitable seulement si le winrate dépasse nettement 40 % (seuil de rentabilité à 1:1,5, avant frais).</li>
               </ul>
             </div>
           </section>
@@ -290,7 +290,7 @@ export default function ContentFr() {
               <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 75€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
-              Le R/R reste 1,5:1 peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.
+              Le R/R reste 1:1,5 peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.
             </p>
           </section>
 

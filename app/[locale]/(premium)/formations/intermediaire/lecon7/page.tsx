@@ -131,7 +131,7 @@ function ContentFr() {
         <h2 className="text-lg font-semibold text-white mb-4">Vérifier l'alignement des unités de temps</h2>
         <div className="space-y-2">
           {[
-            { n: "1", t: "Daily, quelle est la tendance ?", d: "Haussier = cherche des achats. Baissier = cherche des ventes. Range = pas de trade directionnel." },
+            { n: "1", t: "Daily, quelle est la tendance ?", d: "Haussier = cherche des achats. Baissier = cherche des ventes. Range = pas de trade de tendance." },
             { n: "2", t: "H4, le prix est-il sur une zone clé ?", d: "Support en tendance haussière = potentiel achat. Résistance en tendance baissière = potentiel vente. Sinon → attends." },
             { n: "3", t: "M15, y a-t-il un signal ?", d: "Pin bar, engulfing dans le sens du Daily sur la zone H4 = entrée. Si le signal va contre le Daily → ignore." },
           ].map((item) => (

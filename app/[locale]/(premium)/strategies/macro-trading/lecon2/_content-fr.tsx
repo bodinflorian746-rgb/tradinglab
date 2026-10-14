@@ -138,7 +138,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le NFP est publié chaque premier vendredi du mois et déclenche presque toujours une impulsion violente sur le dollar et les actifs qui lui sont sensibles. XAU/USD, EUR/USD, indices US. Mais cette première réaction se construit sur le chiffre headline (le nombre d'emplois créés) en une fraction de seconde, alors que le rapport complet contient d'autres données, salaires, taux de chômage, taux de participation, révisions des mois précédents. Le marché réagit d'abord au headline, puis intègre brutalement le reste du rapport quelques minutes plus tard. Cette double phase est la signature même du setup NFP Overreaction.
+              Le NFP est publié en général le premier vendredi du mois et déclenche presque toujours une impulsion violente sur le dollar et les actifs qui lui sont sensibles. XAU/USD, EUR/USD, indices US. Mais cette première réaction se construit sur le chiffre headline (le nombre d'emplois créés) en une fraction de seconde, alors que le rapport complet contient d'autres données, salaires, taux de chômage, taux de participation, révisions des mois précédents. Le marché réagit d'abord au headline, puis intègre brutalement le reste du rapport quelques minutes plus tard. Cette double phase est la signature même du setup NFP Overreaction.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">

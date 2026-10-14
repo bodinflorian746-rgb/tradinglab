@@ -270,7 +270,7 @@ export default function ContentFr() {
               <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 43€</li>
               <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 107€</li>
             </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R reste 2,14:1 peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R reste 1:2,14 peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.</p>
           </section>
 
           <LessonKeyPoints
@@ -288,7 +288,7 @@ export default function ContentFr() {
               "Délimiter l’Order Block bullish : corps de la bougie opposée entre 4 555$ et 4 562$, mèche basse à 4 547$. OB frais (8 bougies écoulées), aligné Daily haussier, non mitigé.",
               "Placer l’entrée à 4 562$ (limite haute du corps de l’OB) avec attente du signal de rejet M15 (pin bar, engulfing haussier).",
               "Placer le stop loss à 4 545$ (au-delà de la mèche basse 4 547$ avec marge 2$, soit 17$ sous l’entrée). Risque = 17$ par unité.",
-              "Variante naïve. TP éloigné à 4 720$ (projection extension complète de l’impulsion initiale) : Gain = 4 720 - 4 562 = 158$. R/R = 158 / 17 = 9,3. Ratio attractif sur le papier mais trop optimiste : la probabilité d’atteindre une cible à 9:1 sans pullback intermédiaire reste faible.",
+              "Variante naïve. TP éloigné à 4 720$ (projection extension complète de l’impulsion initiale) : Gain = 4 720 - 4 562 = 158$. R/R = 158 / 17 = 9,3. Ratio attractif sur le papier mais trop optimiste : la probabilité d’atteindre une cible à 1:9 sans pullback intermédiaire reste faible.",
               "Variante réaliste. TP partiel à 4 632$ (premier HH intermédiaire identifié, prise de profit partielle) : Gain = 4 632 - 4 562 = 70$. R/R = 70 / 17 = 4,1. Cible structurelle réaliste, atteignable sans détour. Le R/R 4,1 reste excellent pour un setup OB et permet de sécuriser la position avant le HH précédent à 4 650$, où le marché risque de produire une réaction technique avant le TP final.",
             ]}
           />

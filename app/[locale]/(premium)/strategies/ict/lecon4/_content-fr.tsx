@@ -274,7 +274,7 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Étape 5. Retour dans le FVG : exécution</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : le prix remonte progressivement vers 1.1768-1.1777, rentre dans la bande FVG, puis bougie baissière de rejet</li>
-                <li>- Conclusion : entrée short à 1.1774 au retour dans le FVG, SL à 1.1798 (au-dessus du sommet du sweep, extrémité du mouvement), TP vers 1.1695. R/R ≈ 1 : 3,3, setup haute probabilité car aligné sur l'UT supérieure + liquidité + sweep + displacement + FVG</li>
+                <li>- Conclusion : entrée short à 1.1774 au retour dans le FVG, SL à 1.1798 (au-dessus du sommet du sweep, extrémité du mouvement), TP vers 1.1695. R/R ≈ 1:3,3, setup haute probabilité car aligné sur l'UT supérieure + liquidité + sweep + displacement + FVG</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

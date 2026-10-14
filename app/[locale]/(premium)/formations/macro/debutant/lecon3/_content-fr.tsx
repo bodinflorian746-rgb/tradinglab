@@ -368,7 +368,7 @@ export default function ContentFr() {
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-5">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">Méthode du trader expérimenté</span> : tu ne traderas <span className="font-semibold text-zinc-300">jamais</span> la news en direct. Tu attends 15-30 minutes après, le marché se calme, la nouvelle direction se dessine, et tu entres avec confluence technique.
+                <span className="text-white font-medium">Méthode du trader expérimenté</span> : tu ne traderas <span className="font-semibold text-zinc-300">jamais</span> la news en direct. Tu attends au moins 30 minutes après (jusqu&apos;à 1 heure sur les news les plus violentes), le marché se calme, la nouvelle direction se dessine, et tu entres avec confluence technique.
               </p>
             </div>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
@@ -409,7 +409,7 @@ export default function ContentFr() {
           </p>
 
           <LessonQuiz
-            question="Un chiffre CPI est attendu à 3.0%. Il sort à 3.8%. Que se passe-t-il le plus souvent ?"
+            question="Un chiffre CPI est attendu à 3,0 %. Il sort à 3,4 %. Que se passe-t-il le plus souvent ?"
             options={[
               "Rien, c'est déjà prévu",
               "Le marché monte toujours",
@@ -417,12 +417,12 @@ export default function ContentFr() {
               "Le marché baisse toujours",
             ]}
             correctIndex={2}
-            explanation="Le marché ne réagit pas au chiffre seul, mais à l'écart avec les attentes. Ici, l'inflation sort à 3.8% au lieu de 3.0% attendus → grosse surprise inflationniste → mouvement violent quasi garanti. Les options A, B et D sont fausses : le sens dépend toujours du contexte (la direction du mouvement, elle, dépend si une inflation plus haute est perçue comme positive ou négative selon la situation économique du moment). Ce principe s'applique à tous les actifs : forex, or, indices, crypto."
+            explanation="Le marché ne réagit pas au chiffre seul, mais à l'écart avec les attentes. Ici, l'inflation sort à 3,4 % au lieu de 3,0 % attendus → grosse surprise inflationniste (un écart de 0,4 point est rare) → mouvement violent très probable. Les options A, B et D sont fausses : le sens dépend du contexte (la direction du mouvement, elle, dépend si une inflation plus haute est perçue comme positive ou négative selon la situation économique du moment). Ce principe s'applique à tous les actifs : forex, or, indices, crypto."
             answerExplanations={[
-              "Faux. Ce n'est pas parce qu'un chiffre est attendu qu'il n'aura pas d'impact. 3.8% vs 3.0% attendus représente un écart important, le marché réagit toujours à une telle surprise.",
-              "Faux. La direction du mouvement dépend du contexte économique. Une inflation plus haute peut être perçue positivement ou négativement selon la situation. Ce qui est certain : il y aura un mouvement fort.",
-              "Correct. 3.8% vs 3.0% attendus = +0.8% d'écart sur l'inflation, c'est une grosse surprise. Le marché va réagir fortement. La direction exacte dépend du contexte, mais le mouvement violent est quasi garanti.",
-              "Faux. La direction dépend du contexte économique, pas d'une règle fixe. Ce qui est certain, c'est qu'il y aura un mouvement fort, pas nécessairement à la baisse.",
+              "Faux. Ce n'est pas parce qu'un chiffre est attendu qu'il n'aura pas d'impact. 3,4 % contre 3,0 % attendus représente un écart important, le marché réagit presque toujours à une telle surprise.",
+              "Faux. La direction du mouvement dépend du contexte économique. Une inflation plus haute peut être perçue positivement ou négativement selon la situation. Ce qui est très probable : un mouvement fort.",
+              "Correct. 3,4 % contre 3,0 % attendus = 0,4 point d'écart sur l'inflation, c'est une grosse surprise. Le marché va très probablement réagir fortement. La direction exacte dépend du contexte.",
+              "Faux. La direction dépend du contexte économique, pas d'une règle fixe. Ce qui est très probable, c'est un mouvement fort, pas nécessairement à la baisse.",
             ]}
           />
 

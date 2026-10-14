@@ -260,7 +260,7 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Étape 4. Exécution (M15 pendant NY Open)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : à l'ouverture NY (14h30 ou 15h30 heure de Paris selon la saison), le prix monte tester 1.1780, sweep à 1.1792, réintégration sous 1.1780, bougie baissière impulsive M15 qui casse le creux local à 1.1762</li>
-                <li>- Conclusion : entrée short à 1.1758 (timing Killzone + setup ICT aligné), SL à 1.1795 (au-dessus du sweep), TP vers 1.1695. R/R ≈ 1 : 1,7, setup haute probabilité car aligné Daily + range Asia + NY Open</li>
+                <li>- Conclusion : entrée short à 1.1758 (timing Killzone + setup ICT aligné), SL à 1.1795 (au-dessus du sweep), TP vers 1.1695. R/R ≈ 1:1,7, sous le repère de 1:2 : acceptable parce que le setup est aligné Daily + range Asia + NY Open, ce qui augmente ses chances (seuil de rentabilité : 37 % de trades gagnants, avant frais)</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

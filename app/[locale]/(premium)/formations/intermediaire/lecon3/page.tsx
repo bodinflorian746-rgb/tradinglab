@@ -39,7 +39,7 @@ function ContentFr() {
           </div>
         </div>
         <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-3 py-2">
-          <p className="text-xs text-zinc-400"><span className="text-white font-medium">Signe clé :</span> le départ de la zone est toujours IMPULSIF, fort, rapide, peu de mèches. Si le départ est lent, ce n'est pas un support (ou une résistance) de ce type.</p>
+          <p className="text-xs text-zinc-400"><span className="text-white font-medium">Signe clé :</span> le départ de la zone est le plus souvent IMPULSIF, fort, rapide, peu de mèches. Si le départ est lent, ce n'est pas un support (ou une résistance) de ce type.</p>
         </div>
       </section>
 

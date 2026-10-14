@@ -273,7 +273,7 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-2">Étape 6. Exécution</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Observation : une bougie M15 de rejet apparaît dans le FVG, suivie d'une bougie baissière impulsive</li>
-                <li>- Conclusion : entrée short à 1.1774, SL à 1.1798 (au-dessus du sommet du sweep à 1.1792), TP vers 1.1695. R/R ≈ 1 : 3,3, séquence ICT complète et alignée</li>
+                <li>- Conclusion : entrée short à 1.1774, SL à 1.1798 (au-dessus du sommet du sweep à 1.1792), TP vers 1.1695. R/R ≈ 1:3,3, séquence ICT complète et alignée</li>
               </ul>
 
               <div className="border-t border-zinc-800/60 pt-3 mt-3">

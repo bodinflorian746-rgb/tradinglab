@@ -134,7 +134,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Pourquoi l&apos;épaule-tête-épaule fonctionne</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Un ETE se forme à la fin d&apos;une tendance haussière. Le prix crée trois sommets : un premier sommet appelé épaule gauche, un sommet plus haut appelé tête, puis un troisième sommet plus bas que la tête appelé épaule droite. Les deux creux entre les sommets forment la ligne de cou. Quand cette ligne de cou casse, le retournement est confirmé.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Chaque sommet successif montre une perte de force des acheteurs. La tête représente le dernier vrai mouvement haussier. Quand l&apos;épaule droite échoue à revenir au niveau de la tête, le marché montre que les acheteurs arrivent au bout du mouvement. Le breakout de la ligne de cou déclenche ensuite les stops des acheteurs et accélère la baisse.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm">L&apos;ETE reste un pattern très accessible pour un retail. Aucun indicateur compliqué ni calcul avancé n&apos;est nécessaire. Il se voit directement sur le chart, peu importe l&apos;actif ou l&apos;unité de temps. C&apos;est le pattern de retournement le plus enseigné depuis plus de 100 ans, et il fonctionne toujours.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">L&apos;ETE reste un pattern très accessible pour un retail. Aucun indicateur compliqué ni calcul avancé n&apos;est nécessaire. Il se voit directement sur le chart, peu importe l&apos;actif ou l&apos;unité de temps. C&apos;est le pattern de retournement le plus enseigné depuis plus de 100 ans, et il reste utilisé aujourd&apos;hui.</p>
           </section>
 
           {/* Bloc 4 — H&S CLASSIQUE */}
@@ -199,7 +199,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : ETE XAU/USD H1</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte de l&apos;ETE classique du Bloc 4 est repris. La tendance haussière était déjà en place. L&apos;épaule gauche se forme à 4 620$, la tête à 4 660$, l&apos;épaule droite à 4 625$, avec une ligne de cou autour de 4 578$. Le prix vient de clôturer une bougie H1 à 4 570$, sous la ligne de cou. Le pattern est confirmé.</p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le SL tactique est placé juste au-dessus de l&apos;épaule droite à 4 630$. Le SL classique au-dessus de la tête à 4 670$ donnerait un R/R trop faible : l&apos;option tactique reste retenue pour ce setup.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le TP suit la measured move : hauteur du pattern entre la tête à 4 660$ et la ligne de cou à 4 578$, soit 82$. Cette hauteur est projetée sous la ligne de cou vers 4 496$. La cible est étendue légèrement à 4 480$ pour obtenir un R/R rond de 1,5:1.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le TP suit la measured move : hauteur du pattern entre la tête à 4 660$ et la ligne de cou à 4 578$, soit 82$. Cette hauteur est projetée sous la ligne de cou vers 4 496$. La cible est étendue légèrement à 4 480$ pour obtenir un R/R rond de 1:1,5.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
@@ -213,8 +213,8 @@ export default function ContentFr() {
               <ul className="space-y-1 text-sm text-zinc-300">
                 <li>- Risque : 4 630 - 4 570 = 60$</li>
                 <li>- Gain potentiel : 4 570 - 4 480 = 90$</li>
-                <li>- R/R : 90 / 60 = 1,5:1</li>
-                <li>- Setup exploitable au seuil minimum.</li>
+                <li>- R/R : 90 / 60 = 1,5, soit 1:1,5</li>
+                <li>- Sous le repère de 1:2 vu en Débutant : setup exploitable seulement si le winrate dépasse nettement 40 % (seuil de rentabilité à 1:1,5, avant frais).</li>
               </ul>
             </div>
           </section>
@@ -222,14 +222,14 @@ export default function ContentFr() {
           {/* Bloc 9 — CALCUL RETAIL */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Calcul retail</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le risque par trade s&apos;adapte au capital. Sur ce setup R/R 1,5:1, voici la répartition selon la taille du compte.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le risque par trade s&apos;adapte au capital. Sur ce setup R/R 1:1,5, voici la répartition selon la taille du compte.</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
               <li>- Compte 300€ → 5% = risque 15€, gain potentiel environ 22€</li>
               <li>- Compte 500€ → 3% = risque 15€, gain potentiel environ 22€</li>
               <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel environ 30€</li>
               <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel environ 75€</li>
             </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1,5:1 reste modeste comparé à un Pin bar ou un pullback de tendance, mais l&apos;ETE a un winrate plus élevé quand le pattern est propre. Sur 100 trades, la rentabilité est atteinte même avec un R/R modeste si le winrate dépasse 50%.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1:1,5 reste modeste comparé à un Pin bar ou un pullback de tendance, mais l&apos;ETE a un winrate plus élevé quand le pattern est propre. À 1:1,5, la rentabilité est atteinte dès que le winrate dépasse 40 % (avant frais) : avec un ETE propre, cette marge est réaliste.</p>
           </section>
 
           {/* Bloc 10 — FILTRES : QUAND NE PAS PRENDRE LE SETUP */}
@@ -248,7 +248,7 @@ export default function ContentFr() {
               "Épaule-tête-épaule = 3 sommets après une tendance haussière. La tête est plus haute que les 2 épaules. ETE inversé = miroir sur tendance baissière.",
               "Confirmation = clôture franche sous ou au-dessus de la ligne de cou. Pas de mèche.",
               "SL classique au-dessus de la tête, SL tactique au-dessus de l’épaule droite pour un R/R plus exploitable. TP = measured move (hauteur tête → ligne de cou projetée).",
-              "Le R/R de l'ETE est modeste, souvent autour de 1,5:1, mais le winrate reste élevé quand le pattern est propre.",
+              "Le R/R de l'ETE est modeste, souvent autour de 1:1,5, mais le winrate reste élevé quand le pattern est propre.",
             ]}
           />
 
@@ -259,7 +259,7 @@ export default function ContentFr() {
               "Confirmer que les épaules sont symétriques : 4 650$ vs 4 658$, écart de 8 pips (0,17%), sous le seuil de 0,5%, OK",
               "Confirmer le breakout : clôture à 4 615$ sous la ligne de cou à 4 620$, pas une simple mèche",
               "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
-              "Prendre l’entrée short à 4 615$, SL au-dessus de l’épaule droite à 4 668$, TP measured move étendu à 4 540$ pour un R/R rond de 1,5:1",
+              "Prendre l’entrée short à 4 615$, SL au-dessus de l’épaule droite à 4 668$, TP measured move étendu à 4 540$ pour un R/R rond de 1:1,5",
             ]}
           />
 

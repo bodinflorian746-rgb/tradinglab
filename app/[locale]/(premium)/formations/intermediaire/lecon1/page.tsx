@@ -103,7 +103,7 @@ function ContentFr() {
           {[
             { n: "1", t: "Zoom arrière sur le Daily ou H4", d: "Ne commence jamais par le M15, tu perdrais le contexte global." },
             { n: "2", t: "Trace les 3 derniers sommets et creux significatifs", d: "Ignore les petites fluctuations, seuls les swings importants comptent." },
-            { n: "3", t: "La direction des sommets/creux = ta tendance", d: "Sommets et creux qui montent → haussier. Qui descendent → baissier. Stagnants → range, pas de trade." },
+            { n: "3", t: "La direction des sommets/creux = ta tendance", d: "Sommets et creux qui montent → haussier. Qui descendent → baissier. Stagnants → range : pas de trade de tendance, tu attends une structure claire (le trading des bornes du range est vu dans la stratégie Support / Résistance)." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
               <span className="text-xs font-bold text-blue-400 shrink-0 mt-0.5 w-4">{item.n}</span>
@@ -160,7 +160,7 @@ function ContentFr() {
         <div className="space-y-2 text-sm">
           <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>HH + HL → tendance haussière → tu achètes sur les HL</p>
           <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>LH + LL → tendance baissière → tu vends sur les LH</p>
-          <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Pas de structure claire → range → tu ne fais rien</p>
+          <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Pas de structure claire → range → pas de trade de tendance</p>
         </div>
       </div>
 
@@ -176,7 +176,7 @@ function ContentFr() {
           "BOS = le prix casse un sommet/creux précédent → la tendance continue.",
           "CHoCH = premier signal de retournement → alerte, pas encore un trade.",
           "CHoCH + BOS opposé = retournement confirmé.",
-          "En range, tu ne trades pas, tu attends une structure claire.",
+          "En range, tu ne trades pas la tendance : tu attends une structure claire.",
         ]}
       />
 

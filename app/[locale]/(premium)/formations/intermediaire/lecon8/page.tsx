@@ -63,7 +63,7 @@ function ContentFr() {
             { q: "Quel est mon biais ?", r: "Haussier, baissier ou neutre (pas de trade). Basé sur l'analyse Daily." },
             { q: "Quels sont mes niveaux clés ?", r: "Les supports, résistances et structures importantes pour la session." },
             { q: "À quelle condition j'entre ?", r: "Le déclencheur précis : 'Si le prix revient sur 1.0850 et forme un rejet, j'achète'." },
-            { q: "Où est mon Stop Loss ?", r: "Niveau défini à l'avance, logique sur le graphique, non modifiable une fois le trade ouvert." },
+            { q: "Où est mon Stop Loss ?", r: "Niveau défini à l'avance, logique sur le graphique. Une fois le trade ouvert, il ne s'éloigne jamais ; il peut seulement se rapprocher dans ton sens (break-even, leçon 7 Débutant)." },
             { q: "Où est mon Take Profit ?", r: "Objectif basé sur la structure du marché. R/R d'au moins 1:2." },
             { q: "Quelle est ma règle de stop de journée ?", r: "Si je perds X% aujourd'hui, je m'arrête. Protège contre le vengeance trading." },
           ].map((item, i) => (

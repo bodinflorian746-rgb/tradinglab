@@ -256,7 +256,7 @@ export default function ContentFr() {
 
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Logique à retenir : un dollar fort vient toujours d&apos;une Fed plus hawkish que les autres banques centrales. Un dollar faible, l&apos;inverse. La force d&apos;une devise, c&apos;est toujours <span className="font-semibold text-zinc-300">relatif</span> au ton de SA banque centrale comparé aux autres.
+                <span className="text-white font-medium">À retenir :</span> Logique à retenir : un dollar fort vient le plus souvent d&apos;une Fed plus hawkish que les autres banques centrales (la recherche de sécurité en période de stress le renforce aussi). Un dollar faible, l&apos;inverse. La force d&apos;une devise, c&apos;est toujours <span className="font-semibold text-zinc-300">relatif</span> au ton de SA banque centrale comparé aux autres.
               </p>
             </div>
           </section>

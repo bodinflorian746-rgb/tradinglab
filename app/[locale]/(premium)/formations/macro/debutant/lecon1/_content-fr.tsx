@@ -313,7 +313,7 @@ export default function ContentFr() {
               {[
                 { label: "Impact faible", desc: "(1 étoile / vert) : peu de mouvement attendu", color: "bg-emerald-400/60" },
                 { label: "Impact moyen", desc: "(2 étoiles / jaune ou orange) : mouvement modéré possible", color: "bg-amber-400/60" },
-                { label: "Impact fort", desc: "(3 étoiles / rouge) : mouvement violent quasi garanti", color: "bg-red-500/60" },
+                { label: "Impact fort", desc: "(3 étoiles / rouge) : mouvement violent fréquent", color: "bg-red-500/60" },
               ].map((item) => (
                 <li key={item.label} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className={`w-1.5 h-1.5 rounded-full ${item.color} shrink-0 mt-1.5`} />

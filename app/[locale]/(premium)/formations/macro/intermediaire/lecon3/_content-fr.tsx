@@ -303,7 +303,7 @@ export default function ContentFr() {
               <span className="font-semibold text-zinc-200">Mais attention au premier mouvement</span>. Souvent appelé le &apos;faux breakout&apos; : le marché spike dans un sens, puis inverse quelques minutes après quand les algos et les traders institutionnels absorbent l&apos;ensemble du rapport.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Règle pratique</span> : attendre <span className="font-semibold text-zinc-200">2 à 5 minutes</span> après la publication pour voir la direction réelle se confirmer. Le premier tick n&apos;est souvent pas le vrai mouvement.
+              <span className="font-semibold text-zinc-200">Règle pratique</span> : attendre <span className="font-semibold text-zinc-200">2 à 5 minutes</span> après la publication avant de juger la direction réelle : le premier tick n&apos;est souvent pas le vrai mouvement. Pour entrer en position, le repère du parcours reste d&apos;attendre au moins 30 minutes, que le spread et la volatilité se calment.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
               La combinaison PPI + CPI + Core PCE dans la même direction est le signal le plus fort. Quand les 3 convergent, la Fed n&apos;a plus d&apos;excuse pour ne pas agir.
@@ -316,7 +316,7 @@ export default function ContentFr() {
                 <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
               </div>
               <p className="text-base text-zinc-300 leading-relaxed">
-                Le retail entre au premier mouvement et se fait sortir au renversement. Le pro attend la confirmation et entre sur le vrai momentum. La différence entre les deux ? <span className="font-semibold text-zinc-200">2 à 5 minutes de patience</span>.
+                Le retail entre au premier mouvement et se fait sortir au renversement. Le pro attend que la direction se confirme avant de la juger, puis que le marché se calme avant d&apos;entrer. La différence entre les deux ? <span className="font-semibold text-zinc-200">De la patience</span>, quelques minutes pour lire, 30 minutes pour entrer.
               </p>
             </div>
           </section>

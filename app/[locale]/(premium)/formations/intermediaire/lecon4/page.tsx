@@ -112,7 +112,7 @@ function ContentFr() {
         <div className="space-y-2">
           {[
             { n: "1", t: "Ouvre le Daily", d: "Regarde la direction générale : les sommets et creux montent-ils ou descendent-ils ?" },
-            { n: "2", t: "Note ton biais : achats ou ventes", d: "Haussier = achats seulement. Baissier = ventes seulement. Range = pas de trade." },
+            { n: "2", t: "Note ton biais : achats ou ventes", d: "Haussier = achats seulement. Baissier = ventes seulement. Range = pas de trade de tendance." },
             { n: "3", t: "Descends en H4, où est le dernier HL ou LH ?", d: "C'est là que tu vas surveiller pour entrer. Le retracement doit arriver sur cette zone." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -170,7 +170,7 @@ function ContentFr() {
         <div className="space-y-2 text-sm">
           <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>Daily haussier → tu achètes uniquement sur les retracements (HL)</p>
           <p className="text-zinc-200"><span className="text-emerald-400 font-bold mr-2">✔</span>Daily baissier → tu vends uniquement sur les rebonds (LH)</p>
-          <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Range / direction incertaine → aucun trade directionnel</p>
+          <p className="text-zinc-500"><span className="text-red-400 font-bold mr-2">✖</span>Range / direction incertaine → pas de trade de tendance</p>
         </div>
       </div>
 

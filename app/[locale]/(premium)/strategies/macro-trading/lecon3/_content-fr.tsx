@@ -176,7 +176,7 @@ export default function ContentFr() {
             </div>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Points actionnables : longs prioritaires sur l'or en régime risk-off, jamais l'inverse</li>
+              <li>- Points actionnables : longs prioritaires sur l'or en régime risk-off, rarement l'inverse (une liquidation générale peut aussi faire baisser l'or)</li>
               <li>- Les pullbacks sont des entrées, pas des retournements à anticiper</li>
               <li>- Structure HH/HL intacte = régime intact = continuation probable</li>
               <li>- Contre-trader un régime établi = aller contre la statistique</li>
