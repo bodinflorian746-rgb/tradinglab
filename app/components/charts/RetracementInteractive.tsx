@@ -41,18 +41,18 @@ export function RetracementInteractive(_props: { className?: string; locale?: "f
   if (choice === "patience") markers.push({ key: "pin", i: pinI, price: pin.l, label: "Pin bar sur le HL", short: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" });
   if (!choice) markers.push({ key: "now", i: RETRACE_DECISION, price: now.l, label: "Maintenant", tone: "zone", side: "below" });
   const result = !choice ? null : choice === "patience"
-    ? { tone: "bull", title: "Patience : entrée au HL", text: `Le repli s'arrête sur la zone du HL, pin bar haussière, entrée à ${p(pin.c)}. Le prix repart dans le sens de la tendance jusqu'à ${p(tp)} : trade gagnant (R/R ${fmtRR(tradeMath(pin.c, trades.patience.sl, tp).rr)} sur ce sommet).` }
+    ? { tone: "bull", title: "Patience : entrée au HL", text: `Le repli s'arrête sur l'ancien sommet, qui devient le HL : pin bar haussière, entrée à ${p(pin.c)}. Le prix repart dans le sens de la tendance jusqu'à ${p(tp)} : trade gagnant (R/R ${fmtRR(tradeMath(pin.c, trades.patience.sl, tp).rr)} sur ce sommet).` }
     : choice === "fomo"
       ? { tone: "bear", title: "FOMO : entrée trop tôt", text: "Tu es entré pendant le repli, pas au HL. Le prix continue sa correction et touche ton stop avant de repartir sans toi. Attends la zone de structure." }
       : { tone: "bear", title: "Contre-tendance : vente dans une hausse", text: "Le repli était une correction normale, pas un retournement. Le prix reprend sa montée et touche ton stop. Pas de vente sans cassure de structure." };
   return (
     <LessonChart
       id="RetracementInteractive"
-      title={choice ? "Ce qui s'est passé" : "Le prix retrace vers le HL : que fais-tu ?"}
+      title={choice ? "Ce qui s'est passé" : "Le prix retrace vers l'ancien sommet : que fais-tu ?"}
       panels={[{
         key: "h1", subtitle: "EUR/USD H1 — tendance haussière (HL puis HH)",
         decimals: 5, height: 280, candles: shown, slots: all.length,
-        zones: [{ key: "hl", ...ZONE, label: "Zone du HL", tone: "sky", kind: "zone" }],
+        zones: [{ key: "hl", ...ZONE, label: `Ancien sommet ${p(ZONE.y1)}-${p(ZONE.y2)} : HL attendu`, short: "Ancien sommet", tone: "sky", kind: "zone" }],
         levels, markers,
       }]}
     >

@@ -25,7 +25,7 @@ export function TrendDiagram(_props: { className?: string; locale?: "fr" | "es" 
     <LessonChart
       id="TrendDiagram"
       title="Les 3 états du marché"
-      caption="Haussier : achats sur les corrections. Baissier : ventes sur les rebonds. Range : pas de trade directionnel."
+      caption="Haussier : achats sur les corrections. Baissier : ventes sur les rebonds. Range : pas de trade de tendance."
       panels={[
         trend("trend-up", "Tendance haussière", "HH / HL : achats sur pullback"),
         trend("trend-down", "Tendance baissière", "LH / LL : ventes sur pullback"),

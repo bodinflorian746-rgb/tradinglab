@@ -275,7 +275,7 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
         if (h > 2.5 * MR) E(`${name} : FVG de ${ratio(h)} MR, démesuré (au plus 2,5)`);
       }
       // Liquidité : bande fine juste au-delà d'un vrai sommet ou creux, jamais au-delà de la mèche qui la balaie
-      if (role === "liquidity" || /liquidit/i.test(lab)) {
+      if (role === "liquidity" || /liquidit|\bstops\b/i.test(lab)) {
         if (h > MR + tolMR) E(`${name} : bande de liquidité de ${ratio(h)} MR (au plus 1)`);
         const base = [...Array(n).keys()].some((i) => (pivH(i) && Math.abs(y1 - cs[i].h) <= 0.35 * MR) || (pivL(i) && Math.abs(y2 - cs[i].l) <= 0.35 * MR));
         if (!base) E(`${name} : ne borde aucun vrai sommet ni creux (bord à plus de 0,35 MR)`);

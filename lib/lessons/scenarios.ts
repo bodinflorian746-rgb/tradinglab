@@ -1318,7 +1318,7 @@ const FAKE_SR4 = bars(4598, [
   { c: 4650, h: 4652, l: 4641 }, { c: 4655, h: 4680, l: 4648 }, { c: 4640, h: 4657, l: 4637 }, 4626, 4612, 4598,
 ], 3, 0);
 // Support / résistance 4 bloc 3 — chasse aux stops (XAU/USD H1) : résistance 4 720, cluster de stops
-// 4 720-4 745, mèche jusqu'à 4 740 qui déclenche les stops, clôture sous 4 720, continuation baissière.
+// 4 720-4 730, mèche jusqu'à 4 740 qui déclenche les stops, clôture sous 4 720, continuation baissière.
 const HUNT_SR4 = bars(4668, [
   4680, 4694, 4708, { c: 4715, h: 4720 }, 4702, 4690, 4699, 4710, { c: 4716, h: 4720 }, 4703, 4696, 4706, 4714,
   { c: 4712, h: 4740, l: 4708 }, { c: 4694, h: 4713 }, 4680, 4668, 4659,

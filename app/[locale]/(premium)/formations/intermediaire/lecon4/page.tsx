@@ -54,7 +54,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-3">Teste ton instinct</p>
         <h2 className="text-lg font-semibold text-white mb-4">Quand entres-tu ?</h2>
         <p className="text-zinc-300 text-sm leading-relaxed mb-4">
-          Le prix est en tendance haussière. Il retrace vers le Higher Low. À ce stade précis, que fais-tu ?
+          Le prix est en tendance haussière. Il retrace vers l'ancien sommet, là où le prochain Higher Low est attendu. À ce stade précis, que fais-tu ?
         </p>
         <RetracementInteractive />
       </section>

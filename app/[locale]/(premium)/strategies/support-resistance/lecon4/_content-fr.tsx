@@ -181,7 +181,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Zone de stops cluster située juste au-delà du niveau structurel (4 720$ → 4 745$)</li>
+              <li>- Zone de stops cluster située juste au-delà du niveau structurel (4 720$ → 4 730$), que la mèche traverse jusqu'à 4 740$</li>
               <li>- Mèche pique dans la zone, déclenche les stops, puis clôture sous le niveau</li>
               <li>- Continuation baissière rapide après absorption de la liquidité</li>
               <li>- Le trade se prend dans le sens opposé au breakout rejeté</li>

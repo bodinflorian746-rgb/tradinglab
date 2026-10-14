@@ -1,5 +1,5 @@
 // Support / résistance 4 bloc 3 — la chasse aux stops institutionnelle (XAU/USD H1), exemple du
-// texte : cluster de stops juste au-delà de la résistance (4 720 → 4 745 $), la mèche pique dans la
+// texte : cluster de stops juste au-delà de la résistance (4 720 → 4 730 $, bande fine que la mèche dépasse), la mèche pique dans la
 // zone, déclenche les stops, la bougie clôture sous le niveau, puis continuation baissière rapide.
 // Mèche et clôture lues sur les bougies. Bougies : scenarios.ts (« hunt-sr4 »).
 
@@ -20,7 +20,7 @@ export default function StopHuntDiagram(_props: { className?: string; locale?: "
       caption="Le trade se prend dans le sens opposé au breakout rejeté."
       panels={[{
         key: "h1", title: "XAU/USD H1", decimals: 0, height: 280, candles: cs,
-        zones: [{ key: "stops", y1: RES, y2: 4745, from: k - 4, label: `Stops ${usd(RES)} → ${usd(4745)}`, short: "Stops", tone: "bear" }],
+        zones: [{ key: "stops", y1: RES, y2: 4730, from: k - 4, label: `Stops ${usd(RES)} → ${usd(4730)}`, short: "Stops", tone: "bear" }],
         levels: [{ key: "res", price: RES, to: k, label: `Résistance ${usd(RES)}`, short: "Résistance", tone: "zone", role: "resistance" }],
         markers: [
           { key: "k", i: k, price: cs[k].h, label: `Mèche ${usd(cs[k].h)}, clôture ${usd(cs[k].c)}`, short: "Mèche", tone: "bear", side: "above", role: "sweep", ref: RES, dir: "bear" },

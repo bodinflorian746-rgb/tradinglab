@@ -28,10 +28,12 @@ export function ConfirmationM5Diagram({ tf = "M5" }: { tf?: "M5" | "M15"; classN
       id="ConfirmationM5Diagram"
       title="Réaction dans la zone, breakout, entrée"
       caption="Aucune réaction = aucune entrée. L'UT inférieure ne prédit pas, elle confirme."
-      panels={[{
-        key: "h1", title: "EUR/USD H1 : d'où vient la zone", decimals: 5, height: 200, candles: h1,
-        zones: [{ key: "zh1", ...Z, label: `Résistance H1 (ancien support) ${p(Z.y1)}-${p(Z.y2)}`, short: "Ex-support", tone: "zone" }],
-      }, {
+      panels={[
+        // Multi-UT 4 (M5) : le panneau H1 montre d'où vient la zone ; Multi-UT 5 (M15) l'a déjà montrée juste avant
+        ...(tf === "M5" ? [{
+          key: "h1", title: "EUR/USD H1 : d'où vient la zone", decimals: 5, height: 200, candles: h1,
+          zones: [{ key: "zh1", ...Z, label: `Résistance H1 (ancien support) ${p(Z.y1)}-${p(Z.y2)}`, short: "Ex-support", tone: "zone" as const }],
+        }] : []), {
         key: "ltf", title: `EUR/USD ${tf}, dans la zone H1`, decimals: 5, height: 290, candles: cs,
         zones: [{ key: "zone", ...Z, label: `Résistance H1 ${p(Z.y1)}-${p(Z.y2)}`, short: "Résistance H1", tone: "zone" }],
         levels: [
@@ -45,7 +47,7 @@ export function ConfirmationM5Diagram({ tf = "M5" }: { tf?: "M5" | "M15"; classN
         ],
         chips: t.chips,
       }]}
-      rows={[1, 1]}
+      rows={tf === "M5" ? [1, 1] : [1]}
     />
   );
 }

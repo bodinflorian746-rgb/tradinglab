@@ -31,7 +31,7 @@ export function RiskAffineDiagram(_props: { className?: string; locale?: "fr" | 
       id="RiskAffineDiagram"
       title="Même entrée, deux SL"
       panels={[
-        panel("h4", "Sans confirmation", "SL au-dessus de toute la zone H4", SL_H4, true),
+        panel("h4", "Sans confirmation", "SL au-dessus de la résistance Daily (1.1780)", SL_H4, true),
         panel("m5", "Avec confirmation M5", "SL au-dessus du dernier sommet de rejet", SL_M5, false),
       ]}
       rows={[2]}
