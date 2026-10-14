@@ -143,7 +143,7 @@ function ContentFr() {
         answerExplanations={[
           "Faux. La zone OTE s'étend de 61.8% à 78.6%. Le 65% est pleinement dans cette zone. Attendre exactement 61.8% est une erreur de précision qui fait manquer des entrées valides.",
           "Correct. Tous les éléments du setup OTE complet sont réunis : BOS haussier → retracement dans l'OTE → Bullish OB comme confluence → pin bar comme signal. C'est un setup institutionnel à haute probabilité.",
-          "Faux. 78.6% est la limite haute de la zone OTE, si une confluence et un signal apparaissent à 65%, il n'y a aucune raison d'attendre plus loin. Attendre 78.6% sans raison, c'est potentiellement rater l'entrée optimale.",
+          "Faux. 78.6% est la limite la plus profonde de la zone OTE, si une confluence et un signal apparaissent à 65%, il n'y a aucune raison d'attendre plus loin. Attendre 78.6% sans raison, c'est potentiellement rater l'entrée optimale.",
           "Faux. En tendance haussière avec BOS confirmé, un retracement de 65% est attendu et normal. Ce n'est pas une faiblesse, c'est précisément la zone de recharge institutionnelle avant la reprise haussière.",
         ]}
       />

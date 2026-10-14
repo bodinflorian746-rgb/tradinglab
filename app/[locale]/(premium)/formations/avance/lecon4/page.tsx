@@ -46,19 +46,19 @@ function ContentFr() {
             },
             {
               name: "London Killzone",
-              hours: "07h00 – 10h00",
+              hours: "08h00 – 11h00",
               color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400",
-              detail: "Ouverture de Londres, l'une des fenêtres les plus puissantes. Les institutions européennes entrent sur le marché. On voit souvent un sweep de liquidité suivi d'un mouvement directionnel fort. C'est ici que se forment les highs ou lows de la journée.",
+              detail: "Ouverture de Londres, l'une des fenêtres les plus puissantes. Les institutions européennes entrent sur le marché. On voit souvent un sweep de liquidité suivi d'un mouvement directionnel fort. C'est souvent ici que se forme le plus haut ou le plus bas de la journée.",
             },
             {
               name: "New York Killzone",
               hours: "13h00 – 16h00",
               color: "bg-emerald-500/5 border-emerald-500/15 text-emerald-400",
-              detail: "Ouverture de New York, la plus volatile. Recoupement avec Londres pendant 1h à 2h : liquidité maximale. Les news économiques majeures tombent à 14h30 ou 16h00 (8h30 et 10h00 à New York). Les mouvements ici sont rapides et puissants.",
+              detail: "Ouverture de New York, la plus volatile. Chevauchement avec la fin de la session de Londres : liquidité maximale. Les news économiques majeures tombent à 14h30 ou 16h00 (8h30 et 10h00 à New York). Les mouvements ici sont rapides et puissants.",
             },
             {
               name: "London Close",
-              hours: "16h00 – 17h00",
+              hours: "16h00 – 18h00",
               color: "bg-blue-500/5 border-blue-500/15 text-blue-400",
               detail: "Fermeture de Londres. Les institutions européennes liquident ou ajustent leurs positions. On voit souvent un retournement ou un mouvement de retracement. Utile pour les exits et les prises de profit partielles.",
             },
@@ -99,7 +99,7 @@ function ContentFr() {
             },
             {
               label: "Évite les heures creuses",
-              detail: "Entre 10h et 13h (après Londres et avant NY), la liquidité chute. Les faux signaux sont beaucoup plus fréquents.",
+              detail: "Entre 11h et 13h (après la Killzone de Londres et avant NY), la liquidité chute. Les faux signaux sont beaucoup plus fréquents.",
             },
           ].map((r, i) => (
             <div key={i} className="flex items-start gap-3 bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -147,12 +147,12 @@ function ContentFr() {
           "Tu trades normalement, le marché est toujours ouvert et actif",
           "Tu attends la NY Killzone (13h00), la liquidité actuelle est trop faible pour des setups fiables",
           "Tu passes en M5 pour capter les micro-mouvements de cette heure creuse",
-          "Tu shortcut en breakout de range, les heures creuses sont idéales pour les breakouts",
+          "Tu joues le breakout du range, les heures creuses sont idéales pour les breakouts",
         ]}
         correctIndex={1}
-        explanation="11h30 est en pleine heure creuse, après la fermeture de la London Killzone et avant l'ouverture de New York. La liquidité institutionnelle est minimale, les mouvements sont aléatoires et les faux signaux nombreux. La décision disciplinée est d'attendre la NY Killzone à 13h00."
+        explanation="11h30 est en pleine heure creuse, après la fermeture de la London Killzone et avant l'ouverture de New York. La liquidité institutionnelle baisse nettement, les mouvements sont moins directionnels et les faux signaux plus nombreux. La décision disciplinée est d'attendre la NY Killzone à 13h00."
         answerExplanations={[
-          "Faux. Le marché est ouvert, mais ce n'est pas suffisant pour trader. Les heures creuses (10h–13h) ont une liquidité institutionnelle très faible, les mouvements manquent de direction et les faux signaux pullulent.",
+          "Faux. Le marché est ouvert, mais ce n'est pas suffisant pour trader. Les heures creuses (11h–13h) ont une liquidité institutionnelle plus faible, les mouvements manquent de direction et les faux signaux pullulent.",
           "Correct. En attendant la NY Killzone, tu t'assures d'opérer dans une fenêtre où l'activité institutionnelle est forte, les mouvements directionnels et les setups plus fiables.",
           "Faux. Descendre en M5 pendant les heures creuses amplifie le problème, le bruit est encore plus fort sur les petites unités de temps quand la liquidité est faible.",
           "Faux. Les heures creuses ne sont pas idéales pour les breakouts, elles sont connues pour les faux breakouts précisément parce que le volume institutionnel manque pour confirmer les breakouts.",

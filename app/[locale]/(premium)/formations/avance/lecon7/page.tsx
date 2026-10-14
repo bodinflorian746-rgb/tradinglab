@@ -123,7 +123,7 @@ function ContentFr() {
       <LessonQuiz
         question="Le prix arrive dans un Bullish Order Block sur H1. Quelle est la meilleure entrée ?"
         options={[
-          "Entrer immédiatement au prix du marché dès que le prix touche le bas de l'OB",
+          "Entrer immédiatement au prix du marché dès que le prix touche le haut de l'OB",
           "Placer un ordre limit au milieu de l'OB pour ne pas rater le mouvement",
           "Descendre en M5/M15 et attendre un signal de rejet (pin bar ou engulfing haussier) avant d'entrer",
           "Entrer en achat sur la prochaine bougie M15 qui clôture haussière dans l'OB",

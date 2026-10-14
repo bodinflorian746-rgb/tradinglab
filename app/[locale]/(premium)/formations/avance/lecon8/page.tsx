@@ -47,7 +47,7 @@ function ContentFr() {
             },
             {
               phase: "Après le trade",
-              items: ["Résultat (gain/perte en R, pas en euros)", "Le prix s'est-il comporté comme prévu ?", "A-tu respecté le plan ?", "Erreurs commises (entrée trop tôt, SL déplacé, TP réduit...)", "Screenshot du résultat avec annotations"],
+              items: ["Résultat (gain/perte en R, pas en euros)", "Le prix s'est-il comporté comme prévu ?", "As-tu respecté le plan ?", "Erreurs commises (entrée trop tôt, SL déplacé, TP réduit...)", "Screenshot du résultat avec annotations"],
             },
             {
               phase: "Révision hebdomadaire",
@@ -76,7 +76,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Analyser en R, pas en euros</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Le R (risque/rendement) est l&apos;unité standard pour mesurer la performance de trading. Analyser en euros biaise l&apos;analyse, un trade gagné de 50€ peut être un mauvais trade si le R/R était 1:0.5. Un trade perdu de 20€ peut être un bon trade si le plan était respecté.
+          Le R (ton risque initial : 1R = la perte prévue si le SL est touché, ici 50€) est l&apos;unité standard pour mesurer la performance de trading. Analyser en euros biaise l&apos;analyse, un trade gagné de 50€ peut être un mauvais trade si le R/R était 1:0.5. Un trade perdu de 20€ peut être un bon trade si le plan était respecté.
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -92,7 +92,7 @@ function ContentFr() {
                 ["Trade 1", "+85€", "+1.7R", "Bon trade"],
                 ["Trade 2", "+10€", "+0.2R", "Mauvais trade"],
                 ["Trade 3", "-50€", "-1R", "Bon trade (plan respecté)"],
-                ["Trade 4", "-50€", "-3R", "Mauvais trade (SL déplacé)"],
+                ["Trade 4", "-150€", "-3R", "Mauvais trade (SL déplacé)"],
               ].map((row, i) => (
                 <tr key={i} className="border-t border-zinc-800/70">
                   <td className="py-2.5 pr-4 text-zinc-400 text-xs">{row[0]}</td>
@@ -133,7 +133,7 @@ function ContentFr() {
       />
 
       <LessonQuiz
-        question="Tu as gagné 3 trades cette semaine pour +1.5R total, et perdu 2 trades pour -2R. Que fait un bon journal te dire ?"
+        question="Tu as gagné 3 trades cette semaine pour +1.5R total, et perdu 2 trades pour -2R. Que te dit un bon journal ?"
         options={[
           "Ta semaine est négative (-0.5R), tu dois changer de stratégie immédiatement",
           "Le résultat hebdomadaire n'est pas suffisant pour tirer des conclusions, analyse les 5 trades individuellement",

@@ -465,7 +465,7 @@ export default function ContentFr() {
                 14h30 : le NFP sort à 220k contre 180k attendu. Chômage stable. Salaires à +0,3%. Première lecture : dollar fort. Mais les révisions du mois précédent tombent à -50k. La lecture devient plus nuancée. DXY monte quand même, EUR/USD baisse et XAU/USD plonge. Tu ne trades pas la première bougie. À 14h45, le marché commence à ralentir. Puis à 15h00, XAU/USD casse le support des 4 580$ avant de le re-tester depuis dessous. Réaction hawkish confirmée + breakout technique validé. Le setup est propre.
               </p>
               <p>
-                Concrètement : entrée short XAU/USD à 4 575$, SL à 4 600$, TP à 4 525$. Tu risques 30€ (2% de 1 500€), tu peux gagner environ 60€. Tu coupes ton chart, tu prends ton vendredi soir. Tu vérifieras demain matin.
+                Concrètement : entrée short XAU/USD à 4 575$, SL à 4 600$, TP à 4 525$. Au lot minimum (0,01 lot), ce stop de 25$ représente environ 21€, sous ton maximum de 30€ (2% de 1 500€) ; tu peux gagner environ 43€. Tu coupes ton chart. Tu vérifieras avant la clôture du vendredi soir : si le trade est encore ouvert, tu le fermes plutôt que de le garder pendant le week-end.
               </p>
             </div>
           </div>

@@ -58,7 +58,7 @@ function ContentFr() {
           <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
         </div>
         <p className="text-base text-zinc-300 leading-relaxed">
-          Si tu backtestes avec un capital de 200 à 1 000 €, utilise les vrais % de ta grille de risque (cf. Débutant leçon 8), pas la règle théorique du 1%. Backtester avec 1% sur un compte de 300 € revient à risquer 3 € par trade, inapplicable avec les lots disponibles. Un backtest calibré sur ton capital réel te donnera des résultats exploitables en live, pas des chiffres déconnectés de ta réalité.
+          Si tu backtestes avec un capital de 200 à 1 000 €, utilise les vrais % de ta grille de risque (cf. Débutant leçon 8), pas la règle théorique du 1%. Backtester avec 1% sur un compte de 300 € revient à risquer 3 € par trade : avec le lot minimum, cela laisse trop peu de place à un Stop Loss logique dès que l'actif bouge beaucoup (or, indices). Un backtest calibré sur ton capital réel te donnera des résultats exploitables en live, pas des chiffres déconnectés de ta réalité.
         </p>
       </div>
 
@@ -149,7 +149,7 @@ function ContentFr() {
         correctIndex={1}
         explanation="20 trades représente un échantillon trop petit pour tirer des conclusions statistiques fiables. Une série de 20 trades peut être positive par chance pure, même avec une stratégie sans edge. Il faut au minimum 50 trades, idéalement 100, pour que les résultats reflètent réellement la performance de la stratégie plutôt que la variance aléatoire."
         answerExplanations={[
-          "Faux. Un winrate de 70% n'est pas irréaliste si le R/R est favorable (>1:1). Certaines stratégies scalping ou à hautes confluences peuvent atteindre ces chiffres. Ce n'est pas le problème ici.",
+          "Faux. Un winrate de 70% n'est pas irréaliste, surtout avec un R/R modeste (inférieur à 1:1, fréquent en scalping). Ce n'est pas le problème ici.",
           "Correct. 20 trades = variance aléatoire trop élevée. Le même backtest avec 20 autres trades pourrait donner 30% de winrate et un profit factor de 0.8. Il faut 50 à 100 trades pour que les statistiques soient significatives.",
           "Faux. Un profit factor de 1.8 est déjà solide, au-dessus de 1.5 est généralement un objectif valide. 3.0 est exceptionnel et n'est pas requis pour trader en live avec un edge réel.",
           "Faux. Backtester sur plusieurs instruments peut être utile mais n'est pas une condition préalable obligatoire. La priorité est d'avoir un échantillon suffisamment large sur un seul instrument avant de généraliser.",

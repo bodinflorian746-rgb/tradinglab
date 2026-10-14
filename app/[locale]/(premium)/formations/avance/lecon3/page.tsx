@@ -91,8 +91,8 @@ function ContentFr() {
         </p>
         <div className="space-y-2.5">
           {[
-            { label: "OB + FVG dans la même zone", detail: "Si un Fair Value Gap se trouve dans la zone de l'Order Block, la confluence est extrêmement puissante." },
-            { label: "OB + niveau de liquidité", detail: "Un OB situé juste en dessous d'un pool de liquidité BSL ou SSL augmente drastiquement la probabilité d'une réaction." },
+            { label: "OB + FVG dans la même zone", detail: "Si un Fair Value Gap se trouve dans la zone de l'Order Block, la confluence renforce nettement la zone." },
+            { label: "OB + niveau de liquidité", detail: "Un OB formé juste après une prise de liquidité (sweep d'un creux ou d'un sommet évident) augmente la probabilité d'une réaction." },
             { label: "OB + biais de structure", detail: "En tendance haussière, ne trader que les Bullish OB. L'OB doit être dans le sens du marché dominant." },
             { label: "Confirmation bougie", detail: "Attends un rejet dans l'OB (pin bar, engulfing) avant d'entrer. Ne pas entrer aveuglément dans la zone." },
           ].map((r, i) => (
@@ -134,19 +134,19 @@ function ContentFr() {
       />
 
       <LessonQuiz
-        question="Tu identifies un mouvement haussier impulsif sur le graphique. La bougie juste avant ce mouvement est une bougie baissière. Que représente-t-elle ?"
+        question="Tu identifies un mouvement haussier impulsif qui casse le dernier sommet (BOS). La bougie juste avant ce mouvement est une bougie baissière. Que représente-t-elle ?"
         options={[
           "Un signal de vente, la bougie baissière signifie que le marché va baisser",
           "Un Bullish Order Block, c'est la zone où les institutions ont placé leurs ordres d'achat",
-          "Un Fair Value Gap, il n'y a pas eu d'échanges à ce niveau",
+          "Un Fair Value Gap, le prix a traversé ce niveau d'un trait",
           "Un niveau de support/résistance classique sans signification institutionnelle",
         ]}
         correctIndex={1}
-        explanation="La dernière bougie baissière avant un mouvement haussier impulsif est un Bullish Order Block. Paradoxalement, c'est une bougie baissière qui marque une zone d'achat institutionnel, les institutions ont absorbé la pression vendeuse dans cette bougie avant de lancer leur mouvement haussier."
+        explanation="La dernière bougie baissière avant un mouvement haussier impulsif qui casse la structure est un Bullish Order Block. Paradoxalement, c'est une bougie baissière qui marque une zone d'achat institutionnel, les institutions ont absorbé la pression vendeuse dans cette bougie avant de lancer leur mouvement haussier."
         answerExplanations={[
           "Faux. La direction de la bougie en elle-même n'est pas le signal, c'est son contexte. Une bougie baissière précédant un mouvement haussier impulsif est un Bullish OB, pas un signal de vente.",
-          "Correct. C'est précisément la définition d'un Bullish Order Block. La dernière bougie de direction opposée avant un mouvement impulsif marque la zone où les institutions ont exécuté leurs ordres.",
-          "Faux. Un FVG se définit sur 3 bougies et concerne une zone de prix non échangée. L'Order Block est la bougie elle-même (son corps), pas un espace entre bougies.",
+          "Correct. C'est précisément la définition d'un Bullish Order Block. La dernière bougie de direction opposée avant un mouvement impulsif qui casse la structure marque la zone où les institutions ont exécuté leurs ordres.",
+          "Faux. Un FVG se définit sur 3 bougies et concerne la zone de prix que la bougie 2 a traversée d'un trait. L'Order Block est la bougie elle-même (son corps), pas un espace entre bougies.",
           "Faux. Ce n'est pas un simple S/R, c'est une zone institutionnelle avec des ordres en attente. La différence est fondamentale : les OB ont une logique de déclenchement que les S/R classiques n'ont pas.",
         ]}
       />

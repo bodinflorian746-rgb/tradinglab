@@ -117,13 +117,13 @@ function ContentFr() {
         <p className="text-emerald-400 uppercase tracking-widest text-xs font-bold mb-4">ET TOI, RETAIL ?</p>
         <div className="text-zinc-300 leading-relaxed space-y-3">
           <p>
-            Mardi soir 20h. Capital 700€. Tu as 30 minutes avant de dîner. Tu ouvres ton chart XAU/USD H1. Tu vois une résistance qui a déjà été testée 3 fois ces dernières semaines à 4 650$. Une zone trop évidente. Exactement le type de niveau où les institutions savent qu&apos;il y a de la liquidité au-dessus des highs.
+            Mardi 15h30, en pleine Killzone de New York. Capital 1 500€. Tu as 30 minutes avant un rendez-vous. Tu ouvres ton chart XAU/USD H1. Tu vois une résistance qui a déjà été testée 3 fois ces dernières semaines à 4 650$. Une zone trop évidente. Exactement le type de niveau où les institutions savent qu&apos;il y a de la liquidité au-dessus des highs.
           </p>
           <p>
             Une bougie H1 spike jusqu&apos;à 4 670$, avec une longue mèche au-dessus de la résistance, puis clôture sous les 4 650$. La bougie suivante est bearish et confirme le rejet. Le BSL vient d&apos;être pris. Les stops des vendeurs ont sauté, la liquidité a été récupérée, et le marché refuse de tenir au-dessus de la zone. Le piège est terminé.
           </p>
           <p>
-            Concrètement : entrée short à 4 645$, SL à 4 680$ au-dessus du spike, TP à 4 580$ vers la prochaine liquidité basse. Tu risques 21€ (3% de 700€, adapté à ton capital), tu peux gagner environ 39€. Tu coupes ton chart, tu vas dîner. Tu vérifieras avant de te coucher.
+            Concrètement : entrée short à 4 645$, SL à 4 672$ juste au-dessus du spike (4 670$), TP à 4 580$ vers la prochaine liquidité basse. Au lot minimum (0,01 lot), ce stop de 27$ représente environ 23€, sous ton maximum de 30€ (2% de 1 500€) ; tu peux gagner environ 55€, R/R ≈ 1:2,4. Tu coupes ton chart, tu pars à ton rendez-vous. Tu vérifieras ce soir.
           </p>
         </div>
       </div>

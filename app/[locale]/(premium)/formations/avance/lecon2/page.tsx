@@ -24,14 +24,14 @@ function ContentFr() {
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
           Un Fair Value Gap (FVG) est un déséquilibre de prix créé lorsqu'un mouvement
           est tellement rapide que les bougies adjacentes ne se chevauchent pas.
-          Il reste une zone de prix où les échanges n'ont pas eu lieu, le marché
+          Il reste une zone de prix traversée d'un seul trait, presque sans échanges dans l'autre sens, le marché
           tend à y revenir pour "combler" ce déséquilibre.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Principe :</span> un FVG se
             forme sur 3 bougies consécutives. La zone entre la mèche haute de la
-            bougie 1 et la mèche basse de la bougie 3 n'a pas été échangée, c'est
+            bougie 1 et la mèche basse de la bougie 3 n'a été traversée que par la bougie 2, c'est
             le gap.
           </p>
         </div>
@@ -195,7 +195,7 @@ function ContentFr() {
           "Le prix clôture au-dessus du plus haut de la bougie précédente",
         ]}
         correctIndex={1}
-        explanation="Un Bullish FVG existe quand la mèche haute de la bougie 1 est inférieure à la mèche basse de la bougie 3, il y a un espace entre ces deux mèches qui n'a jamais été échangé. C'est ce déséquilibre que le marché cherche à combler en y revenant, créant une opportunité d'entrée à l'achat dans un contexte haussier."
+        explanation="Un Bullish FVG existe quand la mèche haute de la bougie 1 est inférieure à la mèche basse de la bougie 3, il y a un espace entre ces deux mèches que seule la bougie 2 a traversé, d'un trait. C'est ce déséquilibre que le marché cherche à combler en y revenant, créant une opportunité d'entrée à l'achat dans un contexte haussier."
       />
 
     </LessonPage>
