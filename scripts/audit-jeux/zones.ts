@@ -1,9 +1,6 @@
-// Zones des jeux (règles PO) : une zone n'occupe jamais l'essentiel du graphique et ne porte qu'un
-// libellé validé.
-//  - zone trop grande : un FVG reste un petit vide entre deux mèches, au plus un quart de la
-//    hauteur du graphique ; toute autre zone au plus 40 % (question : bougies passées ; verdict :
-//    passé et futur). Hauteur du graphique = étendue des bougies et des zones, comme l'échelle
-//    du graphique des jeux.
+// Zones des jeux (règle PO) : une zone ne porte qu'un libellé validé. Leur taille et leur place
+// se jugent par rapport aux bougies (scripts/audit-jeux/trace.ts), plus par rapport à la hauteur
+// du graphique.
 //  - libellé hors vocabulaire : seuls les libellés de lib/games/glossary.ts (ZONE_LABELS) ; aucun
 //    libellé qui désigne un niveau sans le nommer (« Niveau secondaire », « Niveau clé »…).
 // Usage : npx vite-node scripts/audit-jeux/zones.ts [--autotest] (lancé par run.mjs)
@@ -19,20 +16,11 @@ import type { Candle, ChartZone } from "../../lib/games/shared";
 
 const ROUNDS = 200;
 const VOLS = ["faible", "normale", "élevée"] as const;
-const MAX = { fvg: 0.25, other: 0.4 };
 const ALLOWED = new Set(ZONE_LABELS.fr);
 
-/** Erreurs d'un graphique (ou null) : zone trop grande, libellé hors vocabulaire. */
-export function zoneErrors(past: Candle[], future: Candle[], zones: ChartZone[]): string | null {
+/** Erreur d'un graphique (ou null) : libellé hors vocabulaire. */
+export function zoneErrors(_past: Candle[], _future: Candle[], zones: ChartZone[]): string | null {
   for (const z of zones) if (z.label && !ALLOWED.has(z.label)) return `libellé de zone hors vocabulaire validé « ${z.label} »`;
-  for (const [state, cs] of [["à la question", past], ["au verdict", [...past, ...future]]] as const) {
-    const ps = cs.flatMap((k) => [k.h, k.l]).concat(zones.flatMap((z) => [z.y1, z.y2]));
-    const range = Math.max(...ps) - Math.min(...ps) || 1;
-    for (const z of zones) {
-      const f = Math.abs(z.y2 - z.y1) / range, max = z.kind === "fvg" ? MAX.fvg : MAX.other;
-      if (f > max + 1e-9) return `zone trop grande ${state} : « ${z.label ?? z.kind} » occupe ${(f * 100).toFixed(0)} % de la hauteur (max ${max * 100} %)`;
-    }
-  }
   return null;
 }
 
@@ -66,15 +54,8 @@ const lines: string[] = [];
 if (process.argv.includes("--autotest")) {
   // Défauts injectés sur de vrais graphiques : chacun doit être détecté
   const all = [...charts()].map(([, c]) => c);
-  const fvg = all.find((c) => c.zones.some((z) => z.kind === "fvg"))!;
   const any = all.find((c) => c.zones.some((z) => z.kind !== "fvg" && z.label))!;
-  const grow = (c: Chart, kind: (z: ChartZone) => boolean, f: number): Chart => {
-    const ps = c.past.flatMap((k) => [k.h, k.l]); const range = Math.max(...ps) - Math.min(...ps);
-    return { ...c, zones: c.zones.map((z) => (kind(z) ? { ...z, y2: Math.min(z.y1, z.y2) + f * range } : z)) };
-  };
   const cases: [string, RegExp, Chart][] = [
-    ["FVG trop grand (30 %)", /zone trop grande/, grow(fvg, (z) => z.kind === "fvg", 0.3)],
-    ["zone trop grande (55 %)", /zone trop grande/, grow(any, (z) => z.kind !== "fvg", 0.55)],
     ["libellé « Niveau secondaire »", /hors vocabulaire/, { ...any, zones: any.zones.map((z, i) => (i === 0 ? { ...z, label: "Niveau secondaire" } : z)) }],
   ];
   for (const [name, expect, c] of cases) {
