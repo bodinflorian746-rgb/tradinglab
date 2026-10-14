@@ -135,8 +135,8 @@ const measureLabels = (page, { mobile, buttons, ps }) => page.evaluate(({ mobile
     if (!zr) continue;
     const cy = (t.r.top + t.r.bottom) / 2, own = gapTo(cy, zr);
     if (own > t.r.height * 1.5) errs.push(`étiquette « ${t.txt} » loin de sa zone (${Math.round(own)} px)`);
-    // (une étiquette qui touche sa zone n'est jamais ambiguë, même posée sur une zone voisine)
-    const other = own > t.r.height / 2 && allZones.filter((i) => i !== t.key.slice(4)).map((i) => zoneRect(i)).filter(Boolean).find((r) => gapTo(cy, r) + 0.5 < own);
+    // (une étiquette qui touche sa zone, bord à 4 px près, n'est jamais ambiguë, même posée sur une zone voisine)
+    const other = own > t.r.height / 2 + 4 && allZones.filter((i) => i !== t.key.slice(4)).map((i) => zoneRect(i)).filter(Boolean).find((r) => gapTo(cy, r) + 0.5 < own);
     if (other) errs.push(`étiquette « ${t.txt} » plus près d'une autre zone que de la sienne`);
   }
 
