@@ -504,11 +504,11 @@ export default function PlaceStopPage() {
               </div>
             )}
 
-            {/* Graphique : bougies, entrée et 3 stops, chacun étiqueté sur sa ligne
-                (4 étiquettes au plus) ; le TP n'est pas tracé : le R/R de chaque
+            {/* Graphique : bougies, niveaux cités par l'énoncé et les justifications (nommés), entrée et
+                3 stops, chacun étiqueté sur sa ligne ; le TP n'est pas tracé : le R/R de chaque
                 stop est dans son bouton. Puis impact du stop touché. */}
             <GameChartV2
-              data={{ candles: [...chart.past, ...chart.future], zones: [], domain: chart.domain }}
+              data={{ candles: [...chart.past, ...chart.future], zones: chart.zones, domain: chart.domain }}
               inlineLabels
               overlay={{
                 // Étiquette d'entrée avec son prix (le seul endroit où il apparaît)
