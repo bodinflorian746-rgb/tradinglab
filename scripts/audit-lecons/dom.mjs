@@ -83,6 +83,10 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
     const pivL = (i) => i >= 2 && i <= n - 3 && [i - 2, i - 1, i + 1, i + 2].every((j) => cs[j].l > cs[i].l);
     const meanBody = (a) => { const prev = cs.slice(Math.max(0, a - 10), a); return prev.length >= 3 ? prev.reduce((s, k) => s + body(k), 0) / prev.length : null; };
     const zoneOf = (key) => svg.querySelector(`rect[data-zone="${key}"]`);
+    // Preuve d'un support / d'une résistance : sur ce panneau, ou sur un autre panneau de la leçon qui le montre
+    // (zone H1 tracée sur l'exécution M5, contexte d'un schéma à plusieurs panneaux) ; même bande de prix
+    const others = [...svg.ownerDocument.querySelectorAll("svg[data-candles]")].filter((s2) => s2 !== svg).map((s2) => JSON.parse(s2.dataset.candles));
+    const proof = (lo, hi, to) => { const err = srProofError(cs, lo, hi, 0, to); return err && others.some((q) => !srProofError(q, lo, hi, 0, q.length - 1)) ? null : err; };
     const fmt = (x) => x.toFixed(dec >= 5 ? 5 : dec);
     // Étiquette d'une zone / d'un niveau ; support ou résistance par le rôle ou par l'étiquette
     const labelOf = (key) => svg.querySelector(`g[data-label-for="${CSS.escape(key)}"]`)?.textContent.trim() ?? "";
@@ -194,7 +198,7 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       // Support / résistance (rôle ou étiquette) : 2 touches, ou cassure puis retest avec réaction,
       // comptées sur tout le panneau visible (une touche avant le début du tracé reste visible)
       if (isSR(z, z.dataset.zone)) {
-        const err = srProofError(cs, y1, y2, 0, z.dataset.to ? +z.dataset.to : n - 1);
+        const err = proof(y1, y2, z.dataset.to ? +z.dataset.to : n - 1);
         if (err) E(`${name}, « ${labelOf(z.dataset.zone)} » : ${err}`);
       }
       if (z.dataset.role === "range") {
@@ -214,7 +218,7 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       const name = `niveau ${l.dataset.level}, « ${labelOf(l.dataset.level)} »`;
       if (l.hasAttribute("data-offscale")) { E(`${name} : hors du cadre, aucune touche visible`); continue; }
       const v = +l.dataset.price;
-      const err = srProofError(cs, v, v, 0, l.dataset.to ? +l.dataset.to : n - 1);
+      const err = proof(v, v, l.dataset.to ? +l.dataset.to : n - 1);
       if (err) E(`${name} : ${err}`);
     }
     for (const l of svg.querySelectorAll("line[data-level][data-role]")) {
@@ -238,6 +242,101 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       const top = s.dataset.role === "dt-height";
       const ext = top ? Math.max(cs[i1].h, cs[i2].h) : Math.min(cs[i1].l, cs[i2].l);
       if (!eq(+s.dataset.p1, ext) && !eq(+s.dataset.p2, ext)) E(`hauteur ${s.dataset.segment} : ne part pas de l'extrême du pattern (${fmt(ext)})`);
+    }
+
+    // ─── Tracé mesuré en MR : amplitude médiane (haut − bas) des bougies affichées, comme les jeux ───
+    const MR = [...cs].map((k) => k.h - k.l).sort((a, b) => a - b)[Math.floor(n / 2)];
+    const MB = [...cs].map(body).sort((a, b) => a - b)[Math.floor(n / 2)];
+    const tolMR = 0.02 * MR;
+    const nearMR = (a, b, f = 0.02) => Math.abs(a - b) <= f * MR;
+    const ratio = (x) => (x / MR).toFixed(2).replace(".", ",");
+    // panneaux en bougies du même schéma (une zone peut venir d'une autre unité de temps)
+    const figPanels = [...(svg.closest("[data-lesson-chart]") || svg.parentElement).querySelectorAll("svg[data-candles]")].map((s) => JSON.parse(s.dataset.candles));
+    for (const z of svg.querySelectorAll("rect[data-zone]")) {
+      const y1 = +z.dataset.y1, y2 = +z.dataset.y2, h = y2 - y1, lab = labelOf(z.dataset.zone), role = z.dataset.role || z.dataset.kind || "";
+      const name = `zone ${z.dataset.zone}${lab ? ` « ${lab} »` : ""}`;
+      // FVG : exactement l'écart entre la mèche de la bougie 1 et celle de la bougie 3, dans une vraie impulsion, proportionné
+      if ((role === "fvg" || /\bFVG\b/.test(lab)) && !z.dataset.src) {
+        let hit = null;
+        for (const q of figPanels) {
+          for (let i = 1; i < q.length - 1 && !hit; i++) {
+            const a = q[i - 1], c = q[i + 1];
+            if (Math.abs(a.h - y1) <= tolMR && Math.abs(c.l - y2) <= tolMR && c.l > a.h) hit = { q, i, bull: true };
+            else if (Math.abs(c.h - y1) <= tolMR && Math.abs(a.l - y2) <= tolMR && a.l > c.h) hit = { q, i, bull: false };
+          }
+          if (hit) break;
+        }
+        if (!hit) E(`${name} : n'est l'écart mèche à mèche d'aucun triplet de bougies (FVG = de la mèche de la bougie 1 à celle de la bougie 3)`);
+        else if (hit.q === cs) {
+          const k = cs[hit.i];
+          if (up(k) !== hit.bull || body(k) < 1.5 * MB) E(`${name} : bougie centrale ${hit.i} sans impulsion (corps ${(body(k) / MB).toFixed(1).replace(".", ",")} × le corps médian, au moins 1,5, dans le sens du gap)`);
+        }
+        if (h < 0.15 * MR) E(`${name} : FVG de ${ratio(h)} MR, trop fin pour être lu (au moins 0,15)`);
+        if (h > 2.5 * MR) E(`${name} : FVG de ${ratio(h)} MR, démesuré (au plus 2,5)`);
+      }
+      // Liquidité : bande fine juste au-delà d'un vrai sommet ou creux, jamais au-delà de la mèche qui la balaie
+      if (role === "liquidity" || /liquidit/i.test(lab)) {
+        if (h > MR + tolMR) E(`${name} : bande de liquidité de ${ratio(h)} MR (au plus 1)`);
+        const base = [...Array(n).keys()].some((i) => (pivH(i) && Math.abs(y1 - cs[i].h) <= 0.35 * MR) || (pivL(i) && Math.abs(y2 - cs[i].l) <= 0.35 * MR));
+        if (!base) E(`${name} : ne borde aucun vrai sommet ni creux (bord à plus de 0,35 MR)`);
+        for (const m of svg.querySelectorAll("[data-marker][data-role='sweep']")) {
+          const k = cs[+m.dataset.i], lvl = +m.dataset.ref;
+          if (!k) continue;
+          if (k.h > lvl && y1 >= lvl - 0.5 * MR && y2 > k.h + tolMR) E(`${name} : monte à ${fmt(y2)}, au-delà de la mèche du sweep (${fmt(k.h)})`);
+          if (k.l < lvl && y2 <= lvl + 0.5 * MR && y1 < k.l - tolMR) E(`${name} : descend à ${fmt(y1)}, au-delà de la mèche du sweep (${fmt(k.l)})`);
+        }
+      }
+      // Order Block reconnu à son étiquette : couvre exactement une bougie opposée à l'impulsion qui suit, sans déborder
+      if ((role === "ob" || /\b(OB|order block)\b/i.test(lab)) && !z.dataset.src && !/mitig|breaker|frais|consomm/i.test(lab)) {
+        const f = 0.05;
+        // la bougie peut se trouver dans un autre panneau du schéma (OB H1 reporté sur le M15)
+        const coverIn = (q) => q.map((k, i) => ({ k, i, q })).filter(({ k }) => [[Math.min(k.o, k.c), Math.max(k.o, k.c)], [k.l, k.h], [k.l, Math.max(k.o, k.c)], [Math.min(k.o, k.c), k.h]].some(([a, b]) => nearMR(a, y1, f) && nearMR(b, y2, f)));
+        const cover = [cs, ...figPanels.filter((q) => JSON.stringify(q) !== JSON.stringify(cs))].flatMap(coverIn);
+        if (!cover.length) E(`${name} : ne couvre exactement aucune bougie (corps, ou corps et mèche)`);
+        else if (!cover.some(({ k, i, q }) => { const nx = q.slice(i + 1, i + 4); const last = nx[nx.length - 1]; return !!last && ((!up(k) && last.c > k.h) || (up(k) && last.c < k.l)); })) E(`${name} : la bougie couverte (${cover.map((c) => c.i).join(", ")}) n'est pas suivie d'une impulsion de sens contraire qui la dépasse`);
+      }
+      // Support / résistance : bande aussi fine que l'écart des touches (au plus 1,5 MR)
+      // mesurée sur le panneau qui prouve la zone : une zone H4 reportée sur le M15 se juge à l'échelle H4
+      if (isSR(z, z.dataset.zone) && h > 1.5 * MR + tolMR) {
+        const mr = (q) => q.map((k) => k.h - k.l).sort((x, y) => x - y)[Math.floor(q.length / 2)];
+        const home = srProofError(cs, y1, y2, 0, n - 1) ? others.find((q) => !srProofError(q, y1, y2, 0, q.length - 1)) : null;
+        if (!home || h > 1.5 * mr(home) * 1.02) E(`${name} : bande de ${ratio(h)} MR (au plus 1,5)`);
+      }
+    }
+    // Changement de rôle : un support touché seulement par-dessous est une résistance (et inversement) ;
+    // touché des deux côtés, l'étiquette annonce le changement de rôle
+    const sides = (lo, hi, to) => {
+      const t = 0.25 * MR; let last = null, contact = false; const r = { above: 0, below: 0 };
+      for (let i = 0; i <= Math.min(n - 1, to); i++) {
+        const k = cs[i], above = k.l > hi + t, below = k.h < lo - t;
+        if (above || below) { const s = above ? "above" : "below"; if (contact && last === s) r[s]++; contact = false; last = s; }
+        else if (last) contact = true;
+      }
+      return r;
+    };
+    const flip = /(ancien|ex-|devenu|deviens|→|invers|cass|flip|retest|polarit)/i;
+    for (const el of [...svg.querySelectorAll("rect[data-zone]"), ...svg.querySelectorAll("line[data-level]:not([data-offscale])")]) {
+      const key = el.dataset.zone || el.dataset.level, lab = labelOf(key);
+      if (!/\b(support|r[ée]sistance)/i.test(lab) || flip.test(lab)) continue;
+      const lo = el.dataset.zone ? +el.dataset.y1 : +el.dataset.price, hi = el.dataset.zone ? +el.dataset.y2 : +el.dataset.price;
+      const s = sides(lo, hi, el.dataset.to ? +el.dataset.to : n - 1);
+      const sup = /\bsupport/i.test(lab) && !/r[ée]sistance/i.test(lab), res = /r[ée]sistance/i.test(lab) && !/\bsupport/i.test(lab);
+      if (s.above && s.below) E(`« ${lab} » : touché par-dessus (${s.above}) et par-dessous (${s.below}), le changement de rôle n'est pas annoncé`);
+      else if (sup && s.below && !s.above) E(`« ${lab} » : touché seulement par-dessous, c'est une résistance`);
+      else if (res && s.above && !s.below) E(`« ${lab} » : touché seulement par-dessus, c'est un support`);
+    }
+    // Sommets, creux et « plus haut / bas précédent » nommés : sur la pointe de mèche d'un vrai swing
+    const PIVOT = /(plus (haut|bas) (pr[ée]c[ée]dent|ant[ée]rieur)|swing (high|low)|\b(HH|HL|LH|LL|EQH|EQL)\b|\bsommet\b|\bcreux\b|equal (high|low)s?)/i;
+    const NOT_PIVOT = /(ligne de cou|cible|objectif|\bTP\b|\bSL\b|stop|entr[ée]e|fibo|\d+[,.]\d+ ?%|moyenne|MM\d)/i;
+    const highish = (t) => /(haut|high|\bHH\b|\bLH\b|sommet|EQH)/i.test(t) && !/(\bbas\b|low|\bHL\b|\bLL\b|creux|EQL)/i.test(t);
+    for (const l of svg.querySelectorAll("line[data-level]:not([data-offscale])")) {
+      const lab = labelOf(l.dataset.level), v = +l.dataset.price;
+      if (l.dataset.role && !/^(level|neutral)$/.test(l.dataset.role)) continue;
+      if (!PIVOT.test(lab) || NOT_PIVOT.test(lab)) continue;
+      const hi = highish(lab);
+      // le swing peut venir d'un autre panneau du schéma (structure externe reportée sur l'interne)
+      const swingIn = (q) => q.some((k, i) => i >= 2 && i <= q.length - 3 && [i - 2, i - 1, i + 1, i + 2].every((j) => (hi ? q[j].h < k.h : q[j].l > k.l)) && nearMR(hi ? k.h : k.l, v));
+      if (!figPanels.some(swingIn)) E(`niveau ${l.dataset.level} « ${lab} » à ${fmt(v)} : pas sur la pointe de mèche d'un vrai ${hi ? "sommet" : "creux"} (bougies moins extrêmes des deux côtés, jamais au bord)`);
     }
   }
 
@@ -275,6 +374,13 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
     for (const pl of svg.querySelectorAll("polyline[data-ma], polyline[data-price-line]")) {
       const pts = pl.getAttribute("points").trim().split(/\s+/).map((p) => p.split(",").map(Number));
       for (let q = 1; q < pts.length; q++) lines.push({ k: pl.dataset.ma || "ligne de prix", s: [...pts[q - 1], ...pts[q]] });
+    }
+    // Chaque zone a son étiquette ; aucune étiquette de contournement (un niveau se nomme : support, résistance, sommet…)
+    for (const z of svg.querySelectorAll("rect[data-zone]")) if (!svg.querySelector(`g[data-label-for="${CSS.escape(z.dataset.zone)}"]`)) E(`zone ${z.dataset.zone} sans étiquette`);
+    const BYPASS = /^(niveau|niveau local|niveau cass[ée]|niveau invers[ée]|niveau faible|plafond|plancher|zone|zone [hmd]\d*|zone daily)$/i;
+    for (const L of labels) {
+      const words = L.t.replace(/[\d.,\s  $€%:·+\-−–()/↑↓]+/g, " ").trim();
+      if (BYPASS.test(words)) E(`étiquette « ${L.t} » : nom vague, le niveau doit être nommé (support, résistance, sommet, creux…)`);
     }
     for (const L of labels) {
       for (const c of candles) if (inter(L.r, c.r)) { E(`étiquette « ${L.t} » sur la bougie ${c.i}`); break; }
@@ -454,6 +560,15 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
             const up = k.c > k.o || (k.c === k.o && i > 0 && k.c >= cs[i - 1].c);
             if (up !== bull(body)) E(id, `${P} bougie ${i} : couleur contraire au mouvement`);
           });
+          // Mèches nettement plus fines que les corps, mesurées à l'écran (le trait de mèche ne suit pas le zoom)
+          const g0 = svg.querySelector("[data-candle]");
+          if (g0) {
+            const wl = g0.querySelector("line");
+            const k = svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width ? svg.getBoundingClientRect().width / svg.viewBox.baseVal.width : 1;
+            const sw = parseFloat(wl.getAttribute("stroke-width") || getComputedStyle(wl).strokeWidth) * (wl.getAttribute("vector-effect") === "non-scaling-stroke" ? 1 : k);
+            const bw = +g0.querySelector("rect").getAttribute("width") * k;
+            if (bw < 2 * sw) E(id, `${P} : mèches presque aussi épaisses que les corps (corps ${bw.toFixed(1)} px, mèche ${sw.toFixed(1)} px à l'écran, au moins 2 fois)`);
+          }
         }
         // Ligne de prix
         if (svg.dataset.series) {
@@ -484,6 +599,8 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
         for (const m of svg.querySelectorAll("[data-pivot]")) {
           if (!m.dataset.pivot) continue;
           const pv = pivots(series).find((q) => q.index === +m.dataset.i && Math.abs(q.price - +m.dataset.price) < 1e-9);
+          // un swing nommé a au moins deux bougies de chaque côté : jamais sur la dernière (ou l'avant-dernière) bougie
+          if (+m.dataset.i < 2 || +m.dataset.i > series.length - 3) E(id, `${P} « ${m.dataset.pivot} » à l'indice ${m.dataset.i} : au bord du graphique, swing pas encore confirmé (2 bougies de chaque côté)`);
           if (!pv) E(id, `${P} « ${m.dataset.pivot} » à l'indice ${m.dataset.i} : pas un pivot`);
           else if (pv.name !== m.dataset.pivot) E(id, `${P} « ${m.dataset.pivot} » à l'indice ${m.dataset.i} : c'est un ${pv.name ?? "pivot sans précédent"}`);
         }
@@ -549,6 +666,7 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       for (const c of fig.querySelectorAll("[data-rr]")) {
         const e = +c.dataset.entry, s = +c.dataset.sl, t = +c.dataset.tp;
         const rr = Math.abs(t - e) / Math.abs(e - s);
+        if (!((s < e && t > e) || (s > e && t < e))) E(id, `SL ${s} et TP ${t} du même côté de l'entrée ${e}`);
         if (fmtRR(rr) !== c.dataset.rr || !c.textContent.includes(fmtRR(rr))) E(id, `R/R affiché ${c.textContent.trim()} ≠ calculé ${fmtRR(rr)}`);
         const x = c.dataset.expect;
         if (x && !(x[0] === "<" ? rr < +x.slice(1) : rr > +x.slice(1))) E(id, `R/R ${fmtRR(rr)} contraire au texte (${x})`);
@@ -640,6 +758,9 @@ const EXPECT = {
   "trait de repère à travers une bougie": /qui traverse la bougie/, "texte plus large que sa pastille": /plus large que sa pastille/,
   "bougies trop serrées": /bougies trop serrées/, "schéma de comparaison rogné": /schéma de comparaison rogné/, "repère détaché de son point": /détaché de son point/, "texte de page sous 12 px": /page : texte de 10/, "texte de page peu contrasté": /page : texte peu contrasté/,
   "mot coupé dans un tableau": /mot coupé dans un tableau/, "texte qui dépasse l'écran": /dépasse l'écran|la page défile horizontalement/, "tableau sans cadre de défilement": /tableau sans cadre de défilement/,
+  "FVG décalé": /écart mèche à mèche|≠ gap des bougies/, "liquidité épaisse": /bande de liquidité de/, "sommet hors d'une mèche": /pas sur la pointe de mèche d'un vrai/,
+  "OB qui déborde de sa bougie": /ne couvre exactement aucune bougie/, "support trop épais": /MR \(au plus 1,5\)/, "résistance appelée support": /touché seulement par-dessous|changement de rôle n'est pas annoncé/,
+  "swing nommé sur la dernière bougie": /au bord du graphique, swing pas encore confirmé/, "étiquette vague": /nom vague/, "zone sans étiquette": /sans étiquette/, "SL du côté du TP": /du même côté de l'entrée/, "mèche aussi épaisse que le corps": /mèches presque aussi épaisses/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
@@ -719,6 +840,7 @@ const MUTATIONS = {
   "texte de 10 px": () => { document.querySelector("[data-lesson-chart] svg text").setAttribute("font-size", "10"); },
   "variable non remplacée": () => { document.querySelector("[data-lesson-chart] .lc-caption").textContent = "{L.resistance}"; },
   "pivot mal nommé": () => { const m = document.querySelector("[data-pivot='HL']"); m.dataset.pivot = "LL"; },
+  "swing nommé sur la dernière bougie": () => { const m = document.querySelector("svg[data-candles] [data-pivot]"); const n = JSON.parse(m.closest("svg").dataset.candles).length; m.dataset.i = String(n - 1); },
   "élément masqué": () => { document.querySelector("[data-chip]").style.display = "none"; },
   "vocabulaire interdit": () => { document.querySelector("[data-lesson-chart] .lc-caption").textContent = "Attention au stop hunt"; },
   "zone ≠ corps de l'OB": () => { const z = document.querySelector("rect[data-src]"); z.dataset.y2 = String(+z.dataset.y2 + 0.0005); },
@@ -729,6 +851,35 @@ const MUTATIONS = {
   "BOS sur une bougie au bord": () => { const m = [...document.querySelectorAll("svg[data-candles] [data-marker]")].find((x) => Number.isInteger(+x.dataset.i)); m.dataset.role = "bos"; m.dataset.ref = "0"; },
   "double cadre": () => { const f = document.querySelector("[data-lesson-chart]"); const w = document.createElement("div"); w.style.border = "1px solid #444"; w.style.padding = "16px"; f.parentElement.insertBefore(w, f); w.appendChild(f); },
   "doublon graphique / légende": () => { const chip = document.querySelector("[data-chip]"); const t = chip.closest("[data-lesson-chart]").querySelector("g[data-label-for] text"); chip.textContent = t.textContent; },
+  // Règles de tracé mesurées en MR (amplitude médiane des bougies du panneau)
+  "FVG décalé": () => { const z = [...document.querySelectorAll("svg[data-candles] rect[data-zone]")].find((q) => q.dataset.kind === "fvg" || q.dataset.role === "fvg" || /\bFVG\b/.test(q.closest("svg").querySelector(`g[data-label-for="${CSS.escape(q.dataset.zone)}"]`)?.textContent ?? "")); z.removeAttribute("data-src"); z.dataset.y2 = String(+z.dataset.y2 + (+z.dataset.y2 - +z.dataset.y1)); },
+  "liquidité épaisse": () => {
+    const z = [...document.querySelectorAll("svg[data-candles] rect[data-zone]")].find((q) => q.dataset.role === "liquidity" || /liquidit/i.test(q.closest("svg").querySelector(`g[data-label-for="${CSS.escape(q.dataset.zone)}"]`)?.textContent ?? ""));
+    const cs = JSON.parse(z.closest("svg").dataset.candles); const mr = cs.map((k) => k.h - k.l).sort((a, b) => a - b)[Math.floor(cs.length / 2)];
+    z.dataset.y2 = String(+z.dataset.y1 + 2 * mr);
+  },
+  "sommet hors d'une mèche": () => {
+    const l = [...document.querySelectorAll("svg[data-candles] line[data-level]:not([data-offscale])")].find((q) => !q.dataset.role && /(plus haut pr[ée]c[ée]dent|\bsommet\b|swing high|\bHH\b|\bLH\b)/i.test(q.closest("svg").querySelector(`g[data-label-for="${CSS.escape(q.dataset.level)}"]`)?.textContent ?? ""));
+    const cs = JSON.parse(l.closest("svg").dataset.candles); const k = cs[Math.floor(cs.length / 2)]; l.dataset.price = String((k.o + k.c) / 2);
+  },
+  "OB qui déborde de sa bougie": () => {
+    const z = [...document.querySelectorAll("svg[data-candles] rect[data-zone]")].find((q) => q.dataset.role === "ob" || q.dataset.kind === "ob" || /\bOB\b/.test(q.closest("svg").querySelector(`g[data-label-for="${CSS.escape(q.dataset.zone)}"]`)?.textContent ?? ""));
+    const cs = JSON.parse(z.closest("svg").dataset.candles); const mr = cs.map((k) => k.h - k.l).sort((a, b) => a - b)[Math.floor(cs.length / 2)];
+    z.removeAttribute("data-src"); z.dataset.y2 = String(+z.dataset.y2 + mr);
+  },
+  "support trop épais": () => {
+    const z = [...document.querySelectorAll("svg[data-candles] rect[data-zone]")].find((q) => /support|r[ée]sistance/i.test(q.closest("svg").querySelector(`g[data-label-for="${CSS.escape(q.dataset.zone)}"]`)?.textContent ?? ""));
+    const cs = JSON.parse(z.closest("svg").dataset.candles); const mr = cs.map((k) => k.h - k.l).sort((a, b) => a - b)[Math.floor(cs.length / 2)];
+    z.dataset.y1 = String(+z.dataset.y2 - 3 * mr);
+  },
+  "résistance appelée support": () => {
+    const g = [...document.querySelectorAll("svg[data-candles] g[data-label-for]")].find((q) => /^r[ée]sistance\b/i.test(q.textContent.trim()) && !/(ancien|→|cass|devenu|invers)/i.test(q.textContent));
+    g.querySelector("text").textContent = "Support";
+  },
+  "étiquette vague": () => { const g = document.querySelector("svg[data-candles] line[data-level] ~ g[data-label-for], svg[data-candles] g[data-label-for]"); g.querySelector("text").textContent = "Niveau"; },
+  "zone sans étiquette": () => { const z = document.querySelector("rect[data-zone]"); z.closest("svg").querySelector(`g[data-label-for="${CSS.escape(z.dataset.zone)}"]`).remove(); },
+  "SL du côté du TP": () => { const c = document.querySelector("[data-rr]"); c.dataset.sl = String(2 * +c.dataset.entry - +c.dataset.sl); },
+  "mèche aussi épaisse que le corps": () => { const g = document.querySelector("[data-candle]"); const l = g.querySelector("line"); l.removeAttribute("vector-effect"); l.setAttribute("stroke-width", g.querySelector("rect").getAttribute("width")); },
 };
 
 const browser = await chromium.launch();
@@ -738,14 +889,16 @@ if (AUTOTEST) {
   await ctx.addInitScript(() => { try { window.localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch {} });
   const page = await ctx.newPage();
   // Chaque défaut est injecté dans la 1re page où il s'applique (R/R et OB : Avancé 7 ; pivots : Intermédiaire 5 ;
-  // schéma à plusieurs panneaux : Trend Following 2 ; tableau : Débutant 1)
-  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon7|intermediaire\/lecon5|trend-following\/lecon2|debutant\/lecon1$/.test(p.url));
+  // schéma à plusieurs panneaux : Trend Following 2 ; tableau : Débutant 1 ; liquidité, FVG, OB, support :
+  // Avancé 1, 2, 3, Support / Résistance 1)
+  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon[1237]$|intermediaire\/lecon5|trend-following\/lecon2|support-resistance\/lecon[14]|debutant\/lecon1$/.test(p.url));
   let missed = 0;
   for (const [name, fn] of Object.entries(MUTATIONS).filter(([n]) => !process.env.MUT_ONLY || new RegExp(process.env.MUT_ONLY).test(n))) {
     let errs = null;
     for (const p of candidates) {
       await page.goto(`${BASE}${p.url}`, { waitUntil: "load", timeout: 120000 });
-      await page.waitForSelector("[data-lesson-chart] svg[data-panel]", { timeout: 120000 }).catch(() => {});
+      // chaque schéma dessiné : panneaux en bougies ou schéma statique (.ls-body)
+      await page.waitForFunction(() => { const f = [...document.querySelectorAll("[data-lesson-chart]")]; return f.every((x) => x.querySelector("svg[data-panel], .ls-body")); }, null, { timeout: 120000 }).catch(() => {});
       await page.waitForTimeout(400);
       const before = new Set(await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB, sr: SR_SRC }));
       const applied = await page.evaluate(`(() => { try { (${fn.toString()})(); return true; } catch { return false; } })()`);
@@ -769,7 +922,8 @@ for (const w of FORMATS) {
   const page = await ctx.newPage();
   for (const p of pages) {
     await page.goto(`${BASE}${p.url}`, { waitUntil: "load", timeout: 120000 });
-    await page.waitForSelector("[data-lesson-chart] svg[data-panel]", { timeout: 60000 }).catch(() => {});
+    // chaque schéma dessiné : panneaux en bougies ou schéma statique (.ls-body) ; une page sans schéma n'attend pas
+    await page.waitForFunction(() => { const f = [...document.querySelectorAll("[data-lesson-chart]")]; return f.every((x) => x.querySelector("svg[data-panel], .ls-body")); }, null, { timeout: 60000 }).catch(() => {});
     // défilement complet : les blocs qui apparaissent au défilement sont révélés avant les contrôles
     await page.evaluate(async () => { for (let y = 0; y < document.documentElement.scrollHeight; y += 600) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } scrollTo(0, 0); });
     await page.waitForTimeout(900);
