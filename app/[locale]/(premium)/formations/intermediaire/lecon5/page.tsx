@@ -16,7 +16,7 @@ function ContentFr() {
       duration="20 min"
       lessonNumber={5}
       prev={{ href: "/formations/intermediaire/lecon4", label: "Leçon 4 : Tendances" }}
-      next={{ href: "/formations/intermediaire/lecon6", label: "Leçon 6 : Fake Breakout" }}
+      next={{ href: "/formations/intermediaire/lecon6", label: "Leçon 6 : Faux breakout" }}
     >
 
       {/* ── Ce que tu dois VOIR ── */}
@@ -92,7 +92,7 @@ function ContentFr() {
         <h2 className="text-lg font-semibold text-white mb-4">Compter ses confluences avant d'entrer</h2>
         <div className="space-y-2">
           {[
-            { n: "1", t: "Quelle est la tendance ?", d: "Daily haussier → achats. Baissier → ventes. Pas de tendance → pas de trade." },
+            { n: "1", t: "Quelle est la tendance ?", d: "Daily haussier → achats. Baissier → ventes. Pas de tendance → pas de trade de tendance." },
             { n: "2", t: "Y a-t-il un niveau de structure sur ma zone ?", d: "Support, résistance, Higher Low ? Si oui, première confluence validée." },
             { n: "3", t: "Y a-t-il une deuxième confluence indépendante ?", d: "Fibonacci ? Chiffre rond ? Si oui, le trade est qualifié. Si non, on attend." },
           ].map((item) => (
@@ -182,7 +182,7 @@ function ContentFr() {
       />
 
       <LessonQuiz
-        question="Tu vois EUR/USD Daily haussier. Le prix retrace sur 1.0850. C'est aussi un support historique respecté 2×. Pas d'autre confluence. Que fais-tu ?"
+        question="Tu vois EUR/USD Daily haussier. Le prix retrace sur 1.0850. C'est aussi un support historique respecté 2×. Tu n'as pas encore vérifié les autres confluences. Que fais-tu ?"
         options={[
           "Tu achètes immédiatement, 2 confluences (tendance + support) suffisent amplement",
           "Tu attends un signal de bougie de rejet sur 1.0850 avant d'entrer",
@@ -190,7 +190,7 @@ function ContentFr() {
           "Tu n'entres pas, 2 confluences, c'est trop peu pour un trade",
         ]}
         correctIndex={2}
-        explanation="2 confluences sont un début, mais pas encore suffisant pour entrer avec confiance. Tu cherches une 3ème confluence (Fibonacci 61.8% ? Chiffre rond 1.0850 ?) puis tu attends un signal de bougie sur la zone. C'est le processus complet."
+        explanation="2 confluences sont un début, mais pas encore suffisant pour entrer avec confiance. Tu cherches une 3ème confluence (Fibonacci 61.8% ? Chiffre rond proche ?) puis tu attends un signal de bougie sur la zone. C'est le processus complet."
         answerExplanations={[
           "Trop hâtif. 2 confluences sans signal de confirmation, c'est entrer trop tôt. Le prix peut continuer à baisser dans la zone. Attends au minimum un signal de bougie sur le niveau.",
           "Mieux, mais incomplet. Attendre le signal est une bonne pratique, mais chercher une 3ème confluence avant renforce encore le trade. La combinaison des deux est la méthode optimale.",

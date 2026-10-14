@@ -172,7 +172,7 @@ export default function ContentFr() {
           {/* Bloc 4 — CRITÈRES DE QUALIFICATION D'UN BOS VALIDE */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Critères de qualification d&apos;un BOS valide</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">4 critères qualifient un BOS comme exploitable institutionnellement. Un breakout qui ne valide pas les 4 critères reste hypothétique et expose au fake breakout.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">4 critères qualifient un BOS comme exploitable institutionnellement. Un breakout qui ne valide pas les 4 critères reste hypothétique et expose au faux breakout.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4">

@@ -56,7 +56,7 @@
         "lecon1": { "title": "Support et résistance : les zones où le marché réagit",         "description": "Comprends ce qu'est un support et une résistance, les zones où le prix rebondit ou rejette régulièrement.",                  "duration": "15 min" },
         "lecon2": { "title": "Identifier un vrai niveau (vs une ligne tracée au hasard)",     "description": "Les critères pour distinguer un vrai niveau d'une ligne au hasard, touches multiples, rejets visibles, niveau récent.",        "duration": "15 min" },
         "lecon3": { "title": "Flip support↔résistance et trader un rebond",                    "description": "Les niveaux ne disparaissent pas quand ils cassent, ils changent souvent de rôle. Trade les retests après flip pour des setups classiques.", "duration": "18 min" },
-        "lecon4": { "title": "Breakout vrai vs fake breakout",                                 "description": "Distinguer les vrais breakouts des pièges. Les fakes sont violentes et rejettent vite, un setup à part entière.",         "duration": "17 min" }
+        "lecon4": { "title": "Breakout vrai vs faux breakout",                                 "description": "Distinguer les vrais breakouts des pièges. Les faux breakouts sont violents et rejettent vite, un setup à part entière.",         "duration": "17 min" }
       }
     },
     "trend-following": {

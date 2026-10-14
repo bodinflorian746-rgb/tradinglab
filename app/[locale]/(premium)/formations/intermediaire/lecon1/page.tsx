@@ -29,13 +29,13 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-emerald-400 mb-1">Tendance haussière</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix monte → fait un sommet → recule un peu → repart plus haut que le sommet précédent → fait un creux plus haut que le creux précédent. C'est <strong className="text-white">HH (Higher High) + HL (Higher Low)</strong>.
+              Le prix monte → fait un sommet → recule un peu sans repasser sous le creux précédent (un creux plus haut que le précédent) → repart plus haut que le sommet précédent. C'est <strong className="text-white">HH (Higher High) + HL (Higher Low)</strong>.
             </p>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-red-400 mb-1">Tendance baissière</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix descend → fait un creux → remonte un peu → repart plus bas → fait un lower high. C'est <strong className="text-white">LH (Lower High) + LL (Lower Low)</strong>.
+              Le prix descend → fait un creux → remonte un peu sans dépasser le sommet précédent (un lower high) → repart plus bas que le creux précédent. C'est <strong className="text-white">LH (Lower High) + LL (Lower Low)</strong>.
             </p>
           </div>
           <div className="bg-zinc-800/50 border border-zinc-700/50 rounded-xl px-4 py-3">
@@ -125,21 +125,21 @@ function ContentFr() {
             <span className="text-lg">↑</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">Tendance haussière</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu cherches uniquement des achats. Tu attends un retracement sur le dernier Higher Low pour entrer.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu cherches uniquement des achats. Tu attends le pullback qui forme le prochain Higher Low pour entrer.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <span className="text-lg">↓</span>
             <div>
               <p className="text-sm font-semibold text-red-400">Tendance baissière</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu cherches uniquement des ventes. Tu attends un rebond sur le dernier Lower High pour entrer.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu cherches uniquement des ventes. Tu attends le rebond qui forme le prochain Lower High pour entrer.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-zinc-800/40 border border-zinc-700/40 rounded-xl px-4 py-3">
             <span className="text-lg">—</span>
             <div>
               <p className="text-sm font-semibold text-zinc-300">Range / Pas de structure claire</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu ne fais rien. Pas de trade sans tendance définie. Attends que la structure se clarifie.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Pas de trade de tendance. Attends que la structure se clarifie (le trading des bornes d'un range est vu dans la stratégie Support / Résistance).</p>
             </div>
           </div>
         </div>
@@ -150,7 +150,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Erreur classique</p>
         <p className="text-sm font-semibold text-white mb-2">Entrer sur le BOS au lieu d'attendre le retour sur structure</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Tu vois le prix casser un nouveau High → tu achètes immédiatement. Mais c'est souvent le moment où le marché retrace. Le bon timing, c'est d'attendre que le prix revienne sur le dernier HL, pas d'acheter le breakout. Entrer sur le BOS = payer cher avec un mauvais ratio R/R.
+          Tu vois le prix casser un nouveau High → tu achètes immédiatement. Mais c'est souvent le moment où le marché retrace. Le bon timing, c'est d'attendre le pullback qui forme le prochain HL, pas d'acheter la bougie de breakout. Entrer sur le BOS = payer cher avec un mauvais ratio R/R.
         </p>
       </section>
 

@@ -28,13 +28,13 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-emerald-400 mb-2">Support (achat)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix descend lentement → entre dans une zone → BOOM, une ou deux grosses bougies haussières explosent vers le haut. Les institutions ont acheté massivement là : la zone est un support possible. <strong className="text-white">Le retest le confirme :</strong> quand le prix y revient et réagit (rejet, rebond), leurs ordres restants se sont déclenchés.
+              Le prix descend lentement → entre dans une zone → BOOM, une ou deux grosses bougies haussières explosent vers le haut. Les institutions ont acheté massivement là : la zone devient un support, encore à confirmer. <strong className="text-white">Le retest le confirme :</strong> quand le prix y revient et réagit (rejet, rebond), leurs ordres restants se sont déclenchés.
             </p>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-red-400 mb-2">Résistance (vente)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix monte lentement → entre dans une zone → BOOM, grosse bougie baissière explose vers le bas. Les institutions ont vendu massivement là : la zone est une résistance possible. <strong className="text-white">Le retest la confirme :</strong> quand le prix y revient et réagit (rejet, repli), leurs ordres résiduels se sont exécutés.
+              Le prix monte lentement → entre dans une zone → BOOM, grosse bougie baissière explose vers le bas. Les institutions ont vendu massivement là : la zone devient une résistance, encore à confirmer. <strong className="text-white">Le retest la confirme :</strong> quand le prix y revient et réagit (rejet, repli), leurs ordres résiduels se sont exécutés.
             </p>
           </div>
         </div>
@@ -141,7 +141,7 @@ function ContentFr() {
             <span className="text-lg">—</span>
             <div>
               <p className="text-sm font-semibold text-zinc-300">Zone déjà testée plusieurs fois</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu ignores ou tu réduis ta confiance. Une zone touchée 3+ fois perd sa puissance, les ordres institutionnels sont épuisés.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu ignores ou tu réduis ta confiance. Une zone touchée 3 fois ou plus s'affaiblit souvent : les ordres qui la défendaient ont en grande partie été exécutés.</p>
             </div>
           </div>
         </div>
@@ -185,7 +185,7 @@ function ContentFr() {
       <LessonExercice
         description="Sur TradingView, ouvre EUR/USD en H4 et identifie des supports et résistances nés d'un départ impulsif."
         steps={[
-          "Repère le dernier grand mouvement haussier (plusieurs bougies vertes consécutives). Remonte juste avant : c'est là que se trouve ton support possible. Trace un rectangle.",
+          "Repère le dernier grand mouvement haussier (plusieurs bougies vertes consécutives). Remonte juste avant : c'est là que se trouve ton futur support, à confirmer par un retest. Trace un rectangle.",
           "Fais de même pour le dernier grand mouvement baissier. Trace ta résistance possible.",
           "Vérifie si le prix est revenu tester ces zones depuis. S'il y est revenu et a réagi, la zone est confirmée ; sinon, ce n'est encore qu'une zone à surveiller.",
           "Cherche un de ces niveaux qui coïncide avec un support ou une résistance historique, c'est une confluence forte. Note le prix exact.",

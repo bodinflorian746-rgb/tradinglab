@@ -15,7 +15,7 @@ function ContentFr() {
       subtitle="Le marché raconte la même histoire à différentes échelles. Apprendre à lire ces niveaux dans le bon ordre est l'une des compétences les plus puissantes du trader."
       duration="22 min"
       lessonNumber={7}
-      prev={{ href: "/formations/intermediaire/lecon6", label: "Leçon 6 : Fake Breakout" }}
+      prev={{ href: "/formations/intermediaire/lecon6", label: "Leçon 6 : Faux breakout" }}
       next={{ href: "/formations/intermediaire/lecon8", label: "Leçon 8 : Plan de trade" }}
     >
 
@@ -169,7 +169,7 @@ function ContentFr() {
             <span className="text-lg">✗</span>
             <div>
               <p className="text-sm font-semibold text-red-400">Signal M15 contre le Daily</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu ignores. La petite unité de temps qui va contre le grand est un retracement, pas un retournement. Ne jamais trader contre le biais Daily.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu ignores. Un signal de la petite unité de temps contre la grande est le plus souvent un retracement, pas un retournement. Ne jamais trader contre le biais Daily.</p>
             </div>
           </div>
         </div>
@@ -233,7 +233,7 @@ function ContentFr() {
         answerExplanations={[
           "Faux. Trader un signal H1 contre une tendance Daily forte est statistiquement défavorable. Tu vas à contre-courant de la direction dominante, même si le signal technique semble propre.",
           "Correct. La règle top-down est claire : le Daily définit le biais. Si Daily = haussier, tu ne cherches que des achats. Le signal H1 baissier signifie que le prix est en retracement. C'est justement là où tu cherches un achat, pas une vente.",
-          "Partiellement valide mais trop conservateur. Attendre que le Daily retourne est une approche très lente. En pratique, un signal H1 baissier dans une tendance Daily haussière est un retracement temporaire, pas un signal de retournement.",
+          "Partiellement valide mais trop conservateur. Attendre que le Daily retourne est une approche très lente. En pratique, un signal H1 baissier dans une tendance Daily haussière est le plus souvent un retracement temporaire, pas un signal de retournement.",
           "Faux. Réduire la taille ne change pas le problème fondamental : tu trades contre la tendance dominante. La taille de position gère le risque, elle ne compense pas une mauvaise direction.",
         ]}
       />

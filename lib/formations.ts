@@ -50,7 +50,7 @@ export const FORMATIONS: Formation[] = [
       { id: "lecon3", title: "Support et résistance : l'origine du mouvement", duration: "20 min", href: "/formations/intermediaire/lecon3" },
       { id: "lecon4", title: "Tendances : trader dans le sens du marché", duration: "18 min", href: "/formations/intermediaire/lecon4" },
       { id: "lecon5", title: "Confluences et probabilité",             duration: "20 min", href: "/formations/intermediaire/lecon5" },
-      { id: "lecon6", title: "Fake Breakout : ne pas se faire piéger", duration: "18 min", href: "/formations/intermediaire/lecon6" },
+      { id: "lecon6", title: "Faux breakout : ne pas se faire piéger", duration: "18 min", href: "/formations/intermediaire/lecon6" },
       { id: "lecon7", title: "Analyse multi-unités de temps",                duration: "22 min", href: "/formations/intermediaire/lecon7" },
       { id: "lecon8", title: "Plan de trade",                          duration: "20 min", href: "/formations/intermediaire/lecon8" },
       { id: "lecon9", title: "Fibonacci : retracements et confluences", duration: "20 min", href: "/formations/intermediaire/lecon9" },

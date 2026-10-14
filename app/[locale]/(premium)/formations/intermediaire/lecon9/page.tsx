@@ -27,7 +27,7 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-emerald-400 mb-2">Le mouvement impulsif (point de départ)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              EUR/USD monte de 1.0800 (swing low) à 1.0980 (swing high) en tendance haussière. Tu traces Fibonacci de 1.0800 à 1.0980. Les niveaux apparaissent sur le graphique : 23.6% = 1.0937, 38.2% = 1.0911, 50% = 1.0890, <strong className="text-white">61.8% = 1.0869.</strong>
+              EUR/USD monte de 1.0800 (swing low) à 1.0980 (swing high) en tendance haussière. Tu traces Fibonacci de 1.0800 à 1.0980. Les niveaux apparaissent sur le graphique : 23.6% = 1.0938, 38.2% = 1.0911, 50% = 1.0890, <strong className="text-white">61.8% = 1.0869.</strong>
             </p>
           </div>
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
@@ -54,7 +54,7 @@ function ContentFr() {
         <div className="space-y-2.5">
           {[
             { level: "23.6%", desc: "Retracement superficiel, tendance très forte, peu de correction. Rare.", color: "text-zinc-400" },
-            { level: "38.2%", desc: "Retracement modéré, courant en tendance solide. Bon ratio risque/récompense.", color: "text-blue-400" },
+            { level: "38.2%", desc: "Retracement modéré, courant en tendance solide. Bon ratio risque/rendement.", color: "text-blue-400" },
             { level: "50%", desc: "Chiffre rond fort, pas un Fibonacci pur, mais très respecté par les traders.", color: "text-blue-400" },
             { level: "61.8%", desc: "Le 'golden ratio', zone de retracement la plus utilisée et la plus puissante. À surveiller en priorité.", color: "text-emerald-400" },
             { level: "78.6%", desc: "Retracement profond, utile pour les entrées agressives près du swing low. Risqué sans confluence.", color: "text-red-400" },
@@ -102,7 +102,7 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-medium text-emerald-400 mb-1">Setup idéal, 3 confluences + signal</p>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              EUR/USD Daily haussier → 61.8% Fib à 1.0869 → ancien support historique à 1.0870 → support H4 non retesté au même niveau. Le prix arrive. Pin bar haussière. Tu entres en achat. SL sous la zone (1.0848), TP vers 1.0980.
+              EUR/USD Daily haussier → 61.8% Fib à 1.0869 → support historique à 1.0870, touché 2 fois. Trois confluences indépendantes : tendance, Fibonacci, support. Le prix arrive. Pin bar haussière. Tu entres en achat. SL sous la zone (1.0848), TP vers 1.0980.
             </p>
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
@@ -222,7 +222,7 @@ function ContentFr() {
           "Trop hâtif. Tu as 2 confluences solides, mais sans signal de bougie, tu entres sur un prix qui peut continuer à baisser vers 1.0840 ou moins. La confluence te dit 'regarde ici', pas 'entre maintenant'.",
           "Correct. Le 61.8% + support est une zone d'or. Mais la confirmation reste nécessaire. Une pin bar haussière ou un engulfing sur cette zone te dit que les acheteurs réagissent. Tu entres alors avec SL sous la zone (1.0848) et TP vers le swing high (1.0980).",
           "Faux. En tendance haussière Daily, le retracement vers le 61.8% est une opportunité d'achat, pas de vente. Shorter ici, c'est trader contre la tendance de fond et contre 2 confluences haussières.",
-          "Partiellement. Un support touché 2× est moins fort qu'un support vierge, mais il reste valide, surtout combiné au 61.8% Fib. La coïncidence des deux niveaux renforce la zone, elle ne l'annule pas.",
+          "Faux. Deux touches, c'est justement ce qui fait un support (leçon 2) ; c'est à partir de 3 touches ou plus qu'une zone s'use souvent (leçon 3). Combiné au 61.8% Fib, ce support renforce la zone.",
         ]}
       />
 

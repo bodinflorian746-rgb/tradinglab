@@ -32,7 +32,7 @@ export function GraphFakeBreakout({ variant = "int6" }: { variant?: "int6" | "sr
     return (
       <LessonChart
         id="GraphFakeBreakout"
-        title="Fake breakout : double confirmation, puis short"
+        title="Faux breakout : double confirmation, puis short"
         caption="Bougie 1 : mèche au-dessus, clôture à la limite. Bougie 2 : réintégration franche. Le trade se prend dans le sens opposé."
         panels={[{
           key: "h1", title: "XAU/USD H1, résistance 4 650 $", decimals: 0, height: 280, candles: cs,
@@ -50,9 +50,9 @@ export function GraphFakeBreakout({ variant = "int6" }: { variant?: "int6" | "sr
   return (
     <LessonChart
       id="GraphFakeBreakout"
-      title="À quoi ressemble un fake breakout"
+      title="À quoi ressemble un faux breakout"
       caption="Longue mèche au-delà du niveau, clôture de l'autre côté : ceux qui ont suivi le breakout sont piégés."
-      panels={[trap("fake-up-eur", 1.095, true, "Fake breakout haussier"), trap("fake-down-eur", 1.085, false, "Fake breakout baissier")]}
+      panels={[trap("fake-up-eur", 1.095, true, "Faux breakout haussier"), trap("fake-down-eur", 1.085, false, "Faux breakout baissier")]}
       rows={[2]}
     />
   );

@@ -14,7 +14,7 @@ const LESSONS = [
   { id: "lecon1", title: "Support et résistance : les zones où le marché réagit", disabled: false },
   { id: "lecon2", title: "Identifier un vrai niveau (vs une ligne tracée au hasard)", disabled: false },
   { id: "lecon3", title: "Flip support↔résistance et trader un rebond", disabled: false },
-  { id: "lecon4", title: "Breakout vrai vs fake breakout", disabled: false },
+  { id: "lecon4", title: "Breakout vrai vs faux breakout", disabled: false },
 ];
 
 export default function ContentFr() {
@@ -56,7 +56,7 @@ export default function ContentFr() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight mb-4">
-            Breakout vrai vs fake breakout
+            Breakout vrai vs faux breakout
           </h1>
 
           <div className="border-l-2 border-zinc-700 pl-4">
@@ -137,7 +137,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La distinction entre vrai breakout et fake breakout repose sur le comportement de la bougie de breakout et des suivantes. Le critère essentiel : clôture nette ou mèche puis retour.
+              La distinction entre vrai breakout et faux breakout repose sur le comportement de la bougie de breakout et des suivantes. Le critère essentiel : clôture nette ou mèche puis retour.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -150,14 +150,14 @@ export default function ContentFr() {
 
           {/* Bloc 4 — RECONNAÎTRE UN FAKE BREAKOUT */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Reconnaître un fake breakout</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Reconnaître un faux breakout</h2>
 
             <div className="my-8">
               <GraphFakeBreakout variant="sr4" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              4 critères qualifient un fake breakout opérationnellement exploitable.
+              4 critères qualifient un faux breakout opérationnellement exploitable.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -177,7 +177,7 @@ export default function ContentFr() {
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le fake breakout est souvent une chasse aux stops institutionnelle : les ordres stops sont ciblés et déclenchés, puis le prix revient à sa direction d&apos;origine.
+              Le faux breakout est souvent une chasse aux stops institutionnelle : les ordres stops sont ciblés et déclenchés, puis le prix revient à sa direction d&apos;origine.
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
@@ -190,14 +190,14 @@ export default function ContentFr() {
 
           {/* Bloc 6 — PLAN DE TRADE CHIFFRÉ */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : fake breakout XAU/USD H1</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : faux breakout XAU/USD H1</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               Résistance 4 650$ touchée 3 fois en 2 mois (chiffre rond fort). 4e approche provoque un breakout suspect. Bougie 1 : mèche jusqu&apos;à 4 680$ + clôture à 4 655$. Bougie 2 : clôture à 4 640$.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
-              <p className="text-white font-semibold text-sm mb-2">Setup (trade short sur fake breakout)</p>
+              <p className="text-white font-semibold text-sm mb-2">Setup (trade short sur faux breakout)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
                 <li>- Bougie 1 : mèche 25$ au-dessus, corps 5$, clôture à la limite</li>
                 <li>- Bougie 2 : clôture franche à 4 640$ (réintégration confirmée)</li>
@@ -228,15 +228,15 @@ export default function ContentFr() {
 
           <LessonKeyPoints
             points={[
-              "Un fake breakout combine 4 critères : mèche longue sans clôture franche, réintégration rapide, volume disproportionné, zone forte.",
+              "Un faux breakout combine 4 critères : mèche longue sans clôture franche, réintégration rapide, volume disproportionné, zone forte.",
               "Le trade se prend dans le sens opposé au breakout rejeté, après double confirmation (clôture + 2ème bougie).",
               "Le stop loss se place au-delà de la mèche initiale avec marge 3-5 pips.",
-              "Les fake breakouts s’observent préférentiellement sur des zones fortes (3+ touches, chiffres ronds).",
+              "Les faux breakouts s’observent préférentiellement sur des zones fortes (3+ touches, chiffres ronds).",
             ]}
           />
 
           <LessonExercice
-            description="Sur XAU/USD H1, la résistance 4 650$ a été touchée 3 fois en 2 mois. Une bougie imprime une mèche jusqu’à 4 680$ puis clôture à 4 655$. La bougie suivante clôture à 4 640$. Comment se construit le plan de trade fake breakout ?"
+            description="Sur XAU/USD H1, la résistance 4 650$ a été touchée 3 fois en 2 mois. Une bougie imprime une mèche jusqu’à 4 680$ puis clôture à 4 655$. La bougie suivante clôture à 4 640$. Comment se construit le plan de trade faux breakout ?"
             steps={[
               "Valider les 4 critères de détection : mèche de 25$ au-dessus de la zone sans clôture franche, réintégration en 1 bougie, zone forte (3 touches + chiffre rond 4 650$)",
               "Valider la double confirmation : bougie 1 clôture à 4 655$ (à la limite), bougie 2 clôture à 4 640$ (réintégration franche)",
@@ -271,7 +271,7 @@ export default function ContentFr() {
           />
 
           <LessonQuiz
-            question="Une bougie imprime une mèche au-delà d’une résistance forte, puis clôture sous la limite. Quelle confirmation supplémentaire est requise avant d’envisager un trade short fake breakout ?"
+            question="Une bougie imprime une mèche au-delà d’une résistance forte, puis clôture sous la limite. Quelle confirmation supplémentaire est requise avant d’envisager un trade short faux breakout ?"
             options={[
               "Une seconde bougie qui maintient ou renforce la réintégration dans la zone",
               "Aucune confirmation, l’entrée se fait sur la mèche rejetée",

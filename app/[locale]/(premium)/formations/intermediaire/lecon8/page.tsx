@@ -31,7 +31,7 @@ function ContentFr() {
             </p>
           </div>
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
-            <p className="text-sm font-semibold text-emerald-400 mb-2">Avec plan, le même jour</p>
+            <p className="text-sm font-semibold text-emerald-400 mb-2">Avec plan</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
               Tu avais identifié 1.0850 comme zone d'achat le matin. Tu regardes le prix monter sans toi, sans stress. Il retrace à 1.0853. Pin bar sur ta zone. Tu entres exactement comme prévu. SL à 1.0835, TP à 1.0950. Tu n'improvises rien. <strong className="text-white">Tu exécutes.</strong>
             </p>
@@ -160,7 +160,7 @@ function ContentFr() {
         <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Erreur classique</p>
         <p className="text-sm font-semibold text-white mb-2">Déplacer le SL "pour lui donner une chance"</p>
         <p className="text-sm text-zinc-300 leading-relaxed">
-          Tu es en short sur EUR/USD. SL à 1.0965. Le prix monte à 1.0960 — 5 pips de ton SL. Tu te dis "si je le mets à 1.0980, il a plus de place". Tu déplaces. Le prix continue à 1.0975. Tu déplaces encore à 1.0995. Tu passes d'une perte de 15 pips à une perte de 35 pips. Le SL initial existait pour une raison : la structure. Ne le touche plus une fois le trade ouvert.
+          Tu es en short sur EUR/USD à 1.0950. SL à 1.0965. Le prix monte à 1.0960 — 5 pips de ton SL. Tu te dis "si je le mets à 1.0980, il a plus de place". Tu déplaces. Le prix continue à 1.0975. Tu déplaces encore à 1.0995. Si ce dernier stop est touché, tu passes d'une perte prévue de 15 pips à une perte de 45 pips, trois fois plus. Le SL initial existait pour une raison : la structure. Ne l'éloigne jamais une fois le trade ouvert.
         </p>
       </section>
 

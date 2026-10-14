@@ -57,7 +57,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Polarité : quand le rôle s'inverse</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Quand un support est cassé avec conviction, il devient une résistance. Quand une résistance est cassée, elle devient un support. C'est l'une des dynamiques les plus fiables du marché.
+          Quand un support est cassé avec conviction, il devient souvent une résistance. Quand une résistance est cassée, elle devient souvent un support. C'est une dynamique fréquente et très suivie.
         </p>
         <div className="space-y-2.5">
           <div className="bg-zinc-800/50 rounded-xl px-4 py-3">
@@ -77,7 +77,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Order Blocks : où les institutions ont agi</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Un Order Block (OB) est la dernière bougie de direction opposée avant un mouvement impulsif. C'est là qu'une institution a passé un gros ordre. Le prix y revient souvent pour compléter l'exécution.
+          Un Order Block (OB) est la dernière bougie de direction opposée avant un mouvement impulsif qui casse la structure. Selon cette lecture, de gros ordres y ont été passés, et le prix y revient souvent avant de repartir.
         </p>
         <div className="space-y-2.5 mb-3">
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
@@ -194,15 +194,15 @@ function ContentFr() {
         question="EUR/USD rebondissait sur 1.0800 depuis 3 semaines. Le prix vient de casser 1.0800 à la baisse avec une grosse bougie baissière. Maintenant il remonte vers 1.0800. Que fais-tu ?"
         options={[
           "Tu achètes, 1.0800 est un support historique fort",
-          "Tu vends sur 1.0800, l'ancien support devient une résistance par polarité",
+          "Tu cherches à vendre sur 1.0800 après un signal de rejet : l'ancien support devient une résistance par polarité",
           "Tu ne fais rien, le niveau est trop connu, il ne fonctionnera pas",
           "Tu attends que le prix repasse au-dessus de 1.0800 pour confirmer",
         ]}
         correctIndex={1}
-        explanation="C'est la polarité en action. 1.0800 était un support. Il a été cassé avec conviction. Maintenant que le prix revient tester ce niveau, il se comporte comme une résistance. Tu vends sur le pullback avec SL au-dessus de 1.0800."
+        explanation="C'est la polarité en action. 1.0800 était un support. Il a été cassé avec conviction. Maintenant que le prix revient tester ce niveau, il devrait se comporter comme une résistance. Tu vends sur le pullback, après un signal de rejet, avec SL au-dessus de 1.0800."
         answerExplanations={[
           "Faux. 1.0800 était un support, mais il a été cassé. Une fois cassé, un support ne joue plus son rôle d'acheteur, il se retourne en résistance. Acheter ici, c'est ignorer la polarité.",
-          "Correct. La polarité est l'un des comportements les plus fiables du marché. 1.0800 cassé → devient résistance. Le pullback sur ce niveau est une opportunité de vente avec un SL logique au-dessus.",
+          "Correct. La polarité est un comportement fréquent du marché. 1.0800 cassé → devient résistance. Le pullback sur ce niveau, confirmé par un rejet, est une opportunité de vente avec un SL logique au-dessus.",
           "Faux. Les niveaux très connus fonctionnent souvent mieux, pas moins bien, c'est là que se concentrent les ordres. La popularité d'un niveau n'est pas une raison de l'ignorer.",
           "Faux. Attendre que le prix repasse au-dessus pour confirmer, c'est rater l'entrée. Le signal de vente, c'est le retour sur 1.0800 avec un rejet, pas le breakout à la hausse.",
         ]}

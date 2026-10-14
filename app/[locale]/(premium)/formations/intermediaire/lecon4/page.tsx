@@ -40,7 +40,7 @@ function ContentFr() {
           <div className="bg-zinc-800/50 border border-zinc-700/50 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-zinc-300 mb-2">Range</p>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              Le prix va et vient entre deux niveaux horizontaux. Ni les acheteurs ni les vendeurs ne gagnent clairement. Pas de trade directionnel, attendre.
+              Le prix va et vient entre deux niveaux horizontaux. Ni les acheteurs ni les vendeurs ne gagnent clairement. Pas de trade de tendance, attendre.
             </p>
           </div>
         </div>
@@ -135,7 +135,7 @@ function ContentFr() {
             <span className="text-lg">↑</span>
             <div>
               <p className="text-sm font-semibold text-emerald-400">Tendance haussière</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Tu n'achètes que sur les retracements (corrections). Jamais sur les impulsions. Tu attends que le prix revienne sur un HL avant d'entrer.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Tu n'achètes que sur les retracements (corrections). Jamais sur les impulsions. Tu attends que le prix revienne vers le dernier HL (s'il tient, il forme le HL suivant) avant d'entrer.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
@@ -149,7 +149,7 @@ function ContentFr() {
             <span className="text-lg">—</span>
             <div>
               <p className="text-sm font-semibold text-zinc-300">Range</p>
-              <p className="text-xs text-zinc-400 mt-0.5">Pas de trade directionnel. Si tu veux trader le range, tu achètes le bas et vends le haut, mais c'est avancé. Pour l'instant, évite.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Pas de trade de tendance. Si tu veux trader le range, tu achètes le bas et vends le haut, mais c'est avancé. Pour l'instant, évite.</p>
             </div>
           </div>
         </div>
@@ -204,15 +204,15 @@ function ContentFr() {
         question="EUR/USD est clairement haussier en Daily (HH/HL). Le prix vient de faire un nouveau sommet à 1.0950 et recule maintenant. Il descend vers 1.0860 (dernier Higher Low). Tu vois une pin bar haussière sur ce niveau en H1. Que fais-tu ?"
         options={[
           "Tu attends encore, peut-être que le retracement va continuer jusqu'à 1.0800",
-          "Tu achètes sur la pin bar, SL sous 1.0850, TP vers 1.0990",
+          "Tu achètes à la clôture de la pin bar (1.0870), SL 1.0840 sous le HL, TP 1.0950 au dernier HH",
           "Tu vends, le prix descend, c'est un signal de faiblesse",
           "Tu ne fais rien, le marché est trop incertain en ce moment",
         ]}
         correctIndex={1}
-        explanation="Tous les éléments sont alignés : tendance haussière Daily, retracement sur le dernier HL, signal de confirmation (pin bar). C'est le setup en tendance par excellence. Tu entres en achat avec SL sous le HL et TP vers le dépassement du dernier HH."
+        explanation="Tous les éléments sont alignés : tendance haussière Daily, retracement sur le dernier HL, signal de confirmation (pin bar). C'est le setup en tendance par excellence. Tu entres en achat avec SL sous le HL et TP au dernier HH."
         answerExplanations={[
           "Trop prudent. Tu as 3 éléments alignés : tendance, niveau de structure, signal. C'est exactement le setup que tu attendais. Attendre davantage sans raison, c'est laisser passer une opportunité valide.",
-          "Correct. Tendance haussière + retracement sur HL + signal pin bar = setup à haute probabilité. SL à 1.0810 (sous le HL à 1.0860), TP vers le prochain HH (1.0960). R/R d'environ 1:2.",
+          "Correct. Tendance haussière + retracement sur HL + signal pin bar = setup à haute probabilité. SL à 1.0840 (sous le HL à 1.0860 et sous la mèche de la pin bar), TP au dernier HH (1.0950) : 30 pips de risque pour 80 pips de gain, R/R d'environ 1:2,7.",
           "Faux. Le prix qui descend vers un HL en tendance haussière, c'est un retracement normal, une correction. Ce n'est pas de la faiblesse. C'est l'opportunité d'achat que tu attendais.",
           "Faux. L'incertitude ne justifie pas l'inaction quand le setup est clairement défini. Tendance + structure + signal = trade valide. L'incertitude est toujours présente, la gestion du risque (SL + taille) s'en charge.",
         ]}
