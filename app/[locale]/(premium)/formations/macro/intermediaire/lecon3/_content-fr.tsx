@@ -12,8 +12,8 @@ const LESSONS = [
   { id: "lecon1", title: "Hawkish vs Dovish",                      href: "/formations/macro/intermediaire/lecon1", disabled: false },
   { id: "lecon2", title: "Comprendre le calendrier économique",     href: "/formations/macro/intermediaire/lecon2", disabled: false },
   { id: "lecon3", title: "CPI, PPI et inflation",                   href: "/formations/macro/intermediaire/lecon3", disabled: false },
-  { id: "lecon4", title: "Le carry trade",                          href: "/formations/macro/intermediaire/lecon4", disabled: false },
-  { id: "lecon5", title: "Les corrélations macro",                  href: "/formations/macro/intermediaire/lecon5", disabled: false },
+  { id: "lecon4", title: "Sessions de trading et liquidité",                          href: "/formations/macro/intermediaire/lecon4", disabled: false },
+  { id: "lecon5", title: "Les corrélations",                  href: "/formations/macro/intermediaire/lecon5", disabled: false },
   { id: "lecon6", title: "Construire son biais hebdomadaire",       href: "/formations/macro/intermediaire/lecon6", disabled: false },
 ];
 
@@ -211,7 +211,7 @@ export default function ContentFr() {
             </p>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
               <p className="text-sm text-zinc-300">CPI Headline : <span className="font-semibold text-zinc-200">+2,1%</span> (conforme aux attentes)</p>
-              <p className="text-sm text-zinc-300 mt-1">Core CPI : <span className="font-semibold text-zinc-200">+3,6%</span> (supérieur aux attentes de 3,2%)</p>
+              <p className="text-sm text-zinc-300 mt-1">Core CPI : <span className="font-semibold text-zinc-200">+3,4%</span> (supérieur aux attentes de 3,2%)</p>
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               La réaction du marché ? <span className="font-semibold text-zinc-200">Hausse du dollar, baisse de l&apos;or, repli des indices</span>. Et pourtant le Headline était dans les clous.
@@ -276,7 +276,7 @@ export default function ContentFr() {
             </div>
 
             <div className="bg-zinc-900/60 rounded-xl px-4 py-3 mb-5">
-              <p className="text-xs font-semibold text-zinc-400 mb-2">Concrètement, sur un Core CPI qui surprend fortement à la hausse (ex : 3.5% vs 3.2% attendus), 30 premières minutes :</p>
+              <p className="text-xs font-semibold text-zinc-400 mb-2">Concrètement, sur un Core CPI qui surprend fortement à la hausse (ex : 3,4% contre 3,2% attendus), 30 premières minutes :</p>
               <div className="overflow-hidden rounded-xl border border-zinc-800">
                 <div className="grid grid-cols-2 border-b border-zinc-800">
                   <div className="px-4 py-2 bg-zinc-800/50 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Actif</div>
@@ -347,7 +347,7 @@ export default function ContentFr() {
               ))}
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Si le scénario se confirme après 2-5 minutes : tu entres avec ta taille habituelle.
+              Si le scénario se confirme et que le marché s'est calmé (au moins 30 minutes) : tu entres, avec une taille réduite (règle de la leçon Débutant Macro 6).
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
               Si la réaction est floue ou contradictoire : <span className="font-semibold text-zinc-200">tu ne trades pas</span>. Ce n&apos;est pas une occasion ratée, c&apos;est du capital préservé.
@@ -433,7 +433,7 @@ export default function ContentFr() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-emerald-400">Leçon terminée</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Passe à la leçon suivante : Le carry trade.</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Passe à la leçon suivante : Sessions de trading et liquidité.</p>
                 </div>
               </div>
             )}

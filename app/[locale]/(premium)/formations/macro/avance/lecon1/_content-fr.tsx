@@ -166,15 +166,15 @@ export default function ContentFr() {
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-4 mb-3">
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Exemple concret</p>
               <p className="text-sm text-zinc-400 leading-relaxed mb-4">
-                À 20h00, EUR/USD peut faire +100 à +150 pips en 3 minutes, parfois plus. Tu vois le breakout, tu entres. À 20h30, Powell parle. Le marché inverse. Entre 20h30 et 21h30, EUR/USD peut perdre 200 à 400 pips.
+                À 20h00, EUR/USD peut faire +50 à +80 pips en quelques minutes, parfois plus. Tu vois le breakout, tu entres. À 20h30, Powell parle. Le marché inverse. Entre 20h30 et 21h30, EUR/USD peut perdre 100 à 150 pips.
               </p>
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Matrice hawkish surprise, en 3 minutes</p>
               <div className="grid grid-cols-2 gap-2 mb-3">
                 {[
-                  { asset: "EUR/USD", move: "-100 à -150 pips", note: "dollar plus fort" },
-                  { asset: "XAU/USD", move: "-30 à -60$", note: "or pénalisé par les taux" },
-                  { asset: "Nasdaq", move: "-1.5 à -2.5%", note: "tech sous pression" },
-                  { asset: "BTC/USD", move: "-800 à -2000$", note: "risk-off massif" },
+                  { asset: "EUR/USD", move: "-50 à -80 pips", note: "dollar plus fort" },
+                  { asset: "XAU/USD", move: "-15 à -35$", note: "or pénalisé par les taux" },
+                  { asset: "Nasdaq", move: "-0,5 à -1,5%", note: "tech sous pression" },
+                  { asset: "BTC/USD", move: "-500 à -1500$", note: "risk-off massif" },
                 ].map((item) => (
                   <div key={item.asset} className="bg-zinc-900/60 rounded-lg px-3 py-2">
                     <p className="text-xs font-bold text-zinc-300">{item.asset}</p>
@@ -184,17 +184,17 @@ export default function ContentFr() {
                 ))}
               </div>
               <p className="text-[10px] text-zinc-500 italic">
-                Sur un FOMC dovish surprise, c&apos;est l&apos;inverse : EUR/USD +100/+150, XAU/USD +30/+60$, Nasdaq +2/+3%, BTC/USD +1000/+3000$.
+                Sur un FOMC dovish surprise, c&apos;est l&apos;inverse : EUR/USD +50/+80, XAU/USD +15/+35$, Nasdaq +0,5/+1,5%, BTC/USD +500/+1500$.
               </p>
             </div>
             <div className="bg-zinc-800/30 rounded-xl px-4 py-3 mb-3">
               <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">FOMC vraiment surprise, amplitudes extrêmes</p>
               <div className="grid grid-cols-2 gap-2 mb-2">
                 {[
-                  { asset: "EUR/USD", move: "200 à 400 pips" },
-                  { asset: "XAU/USD", move: "80 à 150$" },
-                  { asset: "Nasdaq", move: "3 à 5%" },
-                  { asset: "BTC/USD", move: "3000 à 6000$" },
+                  { asset: "EUR/USD", move: "100 à 200 pips" },
+                  { asset: "XAU/USD", move: "40 à 80$" },
+                  { asset: "Nasdaq", move: "2 à 4%" },
+                  { asset: "BTC/USD", move: "2000 à 5000$" },
                 ].map((item) => (
                   <div key={item.asset} className="flex items-center justify-between bg-zinc-900/40 rounded-lg px-3 py-1.5">
                     <span className="text-xs font-semibold text-zinc-300">{item.asset}</span>
@@ -303,7 +303,7 @@ export default function ContentFr() {
               </div>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed mb-3">
-              Avec un FOMC qui produit 300+ pips de mouvement directionnel, un setup confirmé peut viser un R/R 1:5, voire 1:10.
+              Avec un FOMC qui produit 100 pips ou plus de mouvement directionnel, un setup confirmé peut viser un R/R de 1:3 ou plus.
             </p>
             <div className="bg-zinc-800/30 rounded-xl px-4 py-3 mb-3">
               <p className="text-sm text-zinc-400 leading-relaxed">

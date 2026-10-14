@@ -12,8 +12,8 @@ const LESSONS = [
   { id: "lecon1", title: "Hawkish vs Dovish",                      href: "/formations/macro/intermediaire/lecon1", disabled: false },
   { id: "lecon2", title: "Comprendre le calendrier économique",     href: "/formations/macro/intermediaire/lecon2", disabled: false },
   { id: "lecon3", title: "CPI, PPI et inflation",                   href: "/formations/macro/intermediaire/lecon3", disabled: false },
-  { id: "lecon4", title: "Le carry trade",                          href: "/formations/macro/intermediaire/lecon4", disabled: false },
-  { id: "lecon5", title: "Les corrélations macro",                  href: "/formations/macro/intermediaire/lecon5", disabled: false },
+  { id: "lecon4", title: "Sessions de trading et liquidité",                          href: "/formations/macro/intermediaire/lecon4", disabled: false },
+  { id: "lecon5", title: "Les corrélations",                  href: "/formations/macro/intermediaire/lecon5", disabled: false },
   { id: "lecon6", title: "Construire son biais hebdomadaire",       href: "/formations/macro/intermediaire/lecon6", disabled: false },
 ];
 
@@ -212,7 +212,7 @@ export default function ContentFr() {
               </div>
               <div className="divide-y divide-zinc-800/60">
                 {[
-                  { asset: "EUR/USD", reaction: "Baisse, 100 à 300 pips sur la séance" },
+                  { asset: "EUR/USD", reaction: "Baisse, souvent 50 à 150 pips sur la séance" },
                   { asset: "DXY", reaction: "Monte (mesure la force du dollar)" },
                   { asset: "XAU/USD", reaction: "Baisse (taux réels hauts pénalisent l'or)" },
                   { asset: "Nasdaq", reaction: "Baisse (taux hauts pénalisent la tech)" },
@@ -256,7 +256,7 @@ export default function ContentFr() {
 
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Logique à retenir : un dollar fort vient le plus souvent d&apos;une Fed plus hawkish que les autres banques centrales (la recherche de sécurité en période de stress le renforce aussi). Un dollar faible, l&apos;inverse. La force d&apos;une devise, c&apos;est toujours <span className="font-semibold text-zinc-300">relatif</span> au ton de SA banque centrale comparé aux autres.
+                <span className="text-white font-medium">À retenir :</span> Logique à retenir : un dollar fort vient le plus souvent d&apos;une Fed plus hawkish que les autres banques centrales (la recherche de sécurité en période de stress le renforce aussi). Un dollar faible, l&apos;inverse. La force d&apos;une devise est avant tout <span className="font-semibold text-zinc-300">relative</span> au ton de SA banque centrale comparé aux autres.
               </p>
             </div>
           </section>
@@ -276,7 +276,7 @@ export default function ContentFr() {
               Et là, l&apos;EUR/USD <span className="font-semibold text-zinc-200">monte</span> au lieu de baisser. Tu te fais sortir.
             </p>
             <p className="text-sm text-zinc-300 leading-relaxed mb-4">
-              Pourquoi ? Parce que le marché avait anticipé une hausse de <span className="font-semibold text-zinc-200">50bps</span>. Donc 25bps, c&apos;est <span className="font-semibold text-zinc-200">moins hawkish que prévu</span>. Et &quot;moins hawkish que prévu&quot; = <span className="font-semibold text-zinc-200">dovish surprise</span> pour le marché. Le dollar baisse parce que les attentes étaient trop optimistes.
+              Pourquoi ? Parce que le marché avait anticipé une hausse de <span className="font-semibold text-zinc-200">50bps</span>. Donc 25bps, c&apos;est <span className="font-semibold text-zinc-200">moins hawkish que prévu</span>. Et &quot;moins hawkish que prévu&quot; = <span className="font-semibold text-zinc-200">dovish surprise</span> pour le marché. Le dollar baisse parce que les attentes étaient plus hawkish que la décision.
             </p>
             <div className="bg-zinc-900/40 border border-red-500/15 rounded-xl px-4 py-3 mb-4">
               <p className="text-sm text-zinc-400 italic leading-relaxed">

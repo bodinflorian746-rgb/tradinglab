@@ -63,7 +63,7 @@ export default function ContentFr() {
 
           <div className="border-l-2 border-zinc-700 pl-4">
             <p className="text-[15px] text-zinc-400 leading-relaxed">
-              2022. La baguette passe de 1€ à 1,30€. Et au même moment, la Fed monte ses taux 20 fois en 18 mois.
+              2022. Ton panier de courses prend plus de 10 % en un an. Et au même moment, la Fed monte ses taux 11 fois en 17 mois.
             </p>
             <p className="text-[15px] text-zinc-400 leading-relaxed mt-2">
               Ce n&apos;est pas un hasard.
@@ -124,8 +124,8 @@ export default function ContentFr() {
             <div className="bg-zinc-800/30 rounded-xl px-4 py-3 mb-4">
               <p className="text-sm font-semibold text-zinc-200 mb-2">Exemple réel :</p>
               <ul className="space-y-1">
-                <li className="text-sm text-zinc-300">une baguette à 1€</li>
-                <li className="text-sm text-zinc-300">deux ans plus tard → 1,30€</li>
+                <li className="text-sm text-zinc-300">un panier de courses à 100€</li>
+                <li className="text-sm text-zinc-300">deux ans plus tard → 115€</li>
               </ul>
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
@@ -251,7 +251,7 @@ export default function ContentFr() {
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
                 <p className="text-sm font-semibold text-zinc-200 mb-1">Phase 3. Le dollar explose</p>
                 <p className="text-sm text-zinc-300">
-                  le DXY (indice dollar) gagne <span className="font-semibold text-zinc-200">+20%</span> en 2022. EUR/USD passe de 1.20 à 0.95.
+                  le DXY (indice dollar) gagne <span className="font-semibold text-zinc-200">près de 20%</span> entre début 2022 et son sommet de septembre 2022. EUR/USD passe d&apos;environ 1.23 (mi-2021) à 0.95 (septembre 2022).
                 </p>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
@@ -259,7 +259,7 @@ export default function ContentFr() {
                 <ul className="space-y-1">
                   <li className="text-sm text-zinc-300">Nasdaq : <span className="font-semibold text-zinc-200">-33%</span> sur 2022</li>
                   <li className="text-sm text-zinc-300">Bitcoin : <span className="font-semibold text-zinc-200">-65%</span> sur l&apos;année</li>
-                  <li className="text-sm text-zinc-300">Or : volatil avec des creux à <span className="font-semibold text-zinc-200">-15%</span></li>
+                  <li className="text-sm text-zinc-300">Or : volatil, jusqu&apos;à <span className="font-semibold text-zinc-200">-21%</span> entre son sommet de mars et son creux de novembre</li>
                   <li className="text-sm text-zinc-300">Obligations : pire année depuis 100 ans</li>
                 </ul>
               </div>

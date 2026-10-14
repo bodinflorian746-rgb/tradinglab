@@ -129,7 +129,7 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Depuis Bretton Woods (1944), le monde financier s&apos;est construit autour du dollar. Cette position centrale ne s&apos;est jamais remise en question.
+              Depuis Bretton Woods (1944), le monde financier s&apos;est construit autour du dollar. Malgré la fin de la convertibilité en or (1971), cette position centrale n&apos;a jamais été détrônée.
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
@@ -218,14 +218,14 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Exemple récent : 2022</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le meilleur exemple récent : <span className="font-semibold text-zinc-200">2022</span>. Le dollar (DXY) a gagné <span className="font-semibold text-zinc-200">+20%</span> sur l&apos;année.
+              Le meilleur exemple récent : <span className="font-semibold text-zinc-200">2022</span>. Le dollar (DXY) a gagné <span className="font-semibold text-zinc-200">près de 20%</span> entre janvier et son sommet de septembre.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               Conséquences en cascade:
             </p>
             <ul className="space-y-1.5 mb-4">
               {[
-                { bold: "EUR/USD", rest: " : -21% (passe de 1.20 à 0.95)" },
+                { bold: "EUR/USD", rest: " : environ -22% (passe d'environ 1.23 mi-2021 à 0.95 en septembre 2022)" },
                 { bold: "Or", rest: " : sous pression toute l'année" },
                 { bold: "Crypto", rest: " : -65%" },
                 { bold: "Indices US", rest: " : Nasdaq -33%" },

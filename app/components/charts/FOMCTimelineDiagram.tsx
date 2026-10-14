@@ -1,5 +1,5 @@
 // Macro Avancé 1 — le timing d'un FOMC sur EUR/USD M5 (heure de Paris), comme dans le
-// texte : 20h00 décision Fed (impulsion de +100 à +150 pips, souvent un piège), 20h30
+// texte : 20h00 décision Fed (impulsion de +50 à +80 pips, souvent un piège), 20h30
 // discours de Powell (retournement, le prix plonge, remonte, replonge), 21h00+ la
 // direction réelle. Pas d'entrée entre 20h00 et 21h00. Mouvements calculés sur les bougies.
 // Bougies : scenarios.ts (« fomc-timeline »).

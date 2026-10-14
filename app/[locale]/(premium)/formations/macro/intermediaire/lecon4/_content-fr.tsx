@@ -191,7 +191,7 @@ export default function ContentFr() {
               <p className="text-xs font-semibold text-zinc-400 mb-2">C&apos;est pareil pour les autres actifs majeurs :</p>
               <ul className="space-y-1.5">
                 {[
-                  { bold: "XAU/USD (or)", rest: " : 50-60% de la volatilité quotidienne se concentre sur l'overlap" },
+                  { bold: "XAU/USD (or)", rest: " : une grande partie de la volatilité quotidienne se concentre sur l'overlap" },
                   { bold: "Nasdaq, S&P500", rest: " : ouverture US à 15h30 = pic d'activité institutionnelle" },
                   { bold: "BTC/USD", rest: " : volatilité institutionnelle maximale entre 14h et 17h" },
                 ].map((item) => (

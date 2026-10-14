@@ -192,7 +192,7 @@ export default function ContentFr() {
                 <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
               </div>
               <p className="text-base text-zinc-300 leading-relaxed">
-                Tu n&apos;as pas besoin de suivre tout le calendrier. Maîtrise ces 5 chiffres et tu comprends déjà <span className="font-semibold text-zinc-200">80% des mouvements brutaux</span> du marché. Le reste, c&apos;est du bruit.
+                Tu n&apos;as pas besoin de suivre tout le calendrier. Maîtrise ces 5 chiffres et tu comprends déjà <span className="font-semibold text-zinc-200">l&apos;essentiel des mouvements brutaux</span> du marché. Le reste, c&apos;est du bruit.
               </p>
             </div>
           </section>
@@ -251,7 +251,7 @@ export default function ContentFr() {
               {[
                 "Effacer un setup parfait en 30 secondes",
                 "Inverser la tendance de la journée",
-                "Créer des mouvements violents : 100 à 300 pips forex, 30 à 60$ sur l'or, 1 à 2% sur les indices",
+                "Créer des mouvements violents : 50 à 150 pips sur le forex, 30 à 60$ sur l'or, 1 à 2% sur les indices",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0" />
@@ -282,13 +282,13 @@ export default function ContentFr() {
                 Énorme surprise positive sur l&apos;économie US → le dollar monte fort → EUR/USD chute.
               </p>
               <p className="text-sm font-semibold text-zinc-200">
-                Mouvement typique : -50 à -100 pips en 30 secondes.
+                Mouvement typique : -50 à -100 pips dans la première minute.
               </p>
               <div className="mt-3 bg-zinc-900/60 rounded-lg px-3 py-2.5">
                 <p className="text-xs font-semibold text-zinc-400 mb-2">Le même NFP touche aussi :</p>
                 <ul className="space-y-1">
                   {[
-                    { asset: "XAU/USD", move: "-25 à -40$ en 30 secondes" },
+                    { asset: "XAU/USD", move: "-25 à -40$ dans la première minute" },
                     { asset: "Nasdaq", move: "-1 à -1.5% sur les premières minutes" },
                     { asset: "BTC/USD", move: "-300 à -800$ selon la volatilité" },
                   ].map((item) => (
@@ -302,7 +302,7 @@ export default function ContentFr() {
               </div>
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Sur 0.10 lot d&apos;EUR/USD, ça fait <span className="font-semibold text-zinc-200">50 à 100$ de variation en 30 secondes</span>. Si tu étais long avec un SL de 30 pips, <span className="font-semibold text-zinc-200">tu te fais sortir AVANT même de comprendre ce qui s&apos;est passé.</span>
+              Sur 0.10 lot d&apos;EUR/USD, ça fait <span className="font-semibold text-zinc-200">50 à 100$ de variation en une minute</span>. Si tu étais long avec un SL de 30 pips, <span className="font-semibold text-zinc-200">tu te fais sortir AVANT même de comprendre ce qui s&apos;est passé.</span>
             </p>
             <div className="bg-zinc-800/30 rounded-xl px-4 py-4 mb-5">
               <p className="text-sm font-semibold text-zinc-200 mb-2">Cas surprise négative :</p>
@@ -314,13 +314,13 @@ export default function ContentFr() {
                 Économie US plus faible que prévu → le dollar chute → EUR/USD monte.
               </p>
               <p className="text-sm font-semibold text-zinc-200">
-                Mouvement typique : +50 à +100 pips en 30 secondes.
+                Mouvement typique : +50 à +100 pips dans la première minute.
               </p>
               <div className="mt-3 bg-zinc-900/60 rounded-lg px-3 py-2.5">
                 <p className="text-xs font-semibold text-zinc-400 mb-2">Le même NFP touche aussi :</p>
                 <ul className="space-y-1">
                   {[
-                    { asset: "XAU/USD", move: "+25 à +40$ en 30 secondes" },
+                    { asset: "XAU/USD", move: "+25 à +40$ dans la première minute" },
                     { asset: "Nasdaq", move: "+1 à +1.5% sur les premières minutes" },
                     { asset: "BTC/USD", move: "+300 à +800$ selon la volatilité" },
                   ].map((item) => (

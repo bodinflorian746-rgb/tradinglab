@@ -165,7 +165,7 @@ export default function ContentFr() {
                 { bold: "EUR/USD vs USD/CHF", rest: " : corrélation négative très forte, souvent autour de ", val: "-0.95" },
                 { bold: "XAU/USD vs DXY", rest: " : corrélation négative forte, souvent autour de ", val: "-0.80" },
                 { bold: "Nasdaq vs DXY", rest: " : corrélation négative modérée, souvent autour de ", val: "-0.60" },
-                { bold: "BTC/USD vs Nasdaq", rest: " : corrélation positive forte depuis 2022, souvent autour de ", val: "+0.75" },
+                { bold: "BTC/USD vs Nasdaq", rest: " : corrélation positive variable, forte en 2022, souvent autour de ", val: "+0.5" },
                 { bold: "WTI vs USD/CAD", rest: " : corrélation négative forte, souvent autour de ", val: "-0.75" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">

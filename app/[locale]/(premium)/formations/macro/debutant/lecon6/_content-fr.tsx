@@ -297,7 +297,7 @@ export default function ContentFr() {
               <div className="bg-zinc-800/30 rounded-xl px-4 py-4">
                 <p className="text-sm font-semibold text-zinc-200 mb-3">Cas de mauvaise gestion :</p>
                 <p className="text-sm text-zinc-300 leading-relaxed mb-2">
-                  Tu entres long EUR/USD à 14h00 sans regarder le calendrier. À 14h30, NFP sort très positif. EUR/USD chute de 80 pips en 30 secondes. Ton SL de 30 pips saute.
+                  Tu entres long EUR/USD à 14h00 sans regarder le calendrier. À 14h30, NFP sort très positif. EUR/USD chute de 80 pips en une minute. Ton SL de 30 pips saute, avec du glissement.
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   <span className="font-semibold text-zinc-200">Techniquement, ton analyse pouvait être correcte.</span> Mais ton timing était mauvais. Et le marché ne pardonne pas le mauvais timing en macro.
@@ -319,7 +319,7 @@ export default function ContentFr() {
               Avec un compte de 500€, un mauvais trade macro peut faire <span className="font-semibold text-zinc-200">très mal</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Calcul concret :
+              Calcul concret, si tu étais entré sans stop loss :
             </p>
             <ul className="space-y-1.5 mb-4">
               <li className="flex items-start gap-2.5 text-sm text-zinc-300">
@@ -336,10 +336,10 @@ export default function ContentFr() {
               </li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              <span className="font-semibold text-zinc-200">80€ sur 500€ = 16% du compte en 30 secondes.</span>
+              <span className="font-semibold text-zinc-200">80€ sur 500€ = 16% du compte en une minute. Avec ton SL de 30 pips, la perte serait d'environ 30€, un peu plus si l'ordre glisse.</span>
             </p>
             <div className="bg-zinc-900/60 rounded-xl px-4 py-3 mb-5">
-              <p className="text-xs font-semibold text-zinc-400 mb-2">Et ce n&apos;est pas qu&apos;un risque sur EUR/USD. Avec un compte de 500€ et une position dimensionnée selon les règles de gestion du risque (2% par trade), une mauvaise news macro peut effacer le même pourcentage du compte sur tous les actifs :</p>
+              <p className="text-xs font-semibold text-zinc-400 mb-2">Et ce n&apos;est pas qu&apos;un risque sur EUR/USD. Avec un compte de 500€, une position de taille comparable, sans stop loss, subit le même ordre de perte sur tous les actifs :</p>
               <div className="space-y-1.5">
                 {[
                   { asset: "EUR/USD", detail: "-80 pips → -80€", pct: "16% du compte" },
@@ -354,7 +354,7 @@ export default function ContentFr() {
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-zinc-500 mt-2 italic">Note : ces équivalences sont calculées à taille de risque similaire (pas à même nombre de lots). Le but est de montrer que peu importe l&apos;actif tradé, une mauvaise gestion du risque sur news macro peut effacer 15-25% du compte en quelques minutes.</p>
+              <p className="text-xs text-zinc-500 mt-2 italic">Note : ces équivalences supposent une position de taille comparable, sans stop loss. Le but est de montrer que, quel que soit l&apos;actif, une position trop grosse et sans stop sur news macro peut effacer 15-25% du compte en quelques minutes. Avec un stop et un risque de 2%, la perte reste proche de 10€, un peu plus si l&apos;ordre glisse.</p>
             </div>
 
             {/* Encadré 💰 Réalité du retail */}
@@ -379,7 +379,7 @@ export default function ContentFr() {
               {[
                 { bold: "petit compte (300€)", rest: " → 3% idéal, max 5%" },
                 { bold: "compte moyen (500-1000€)", rest: " → 2-3% idéal" },
-                { bold: "compte plus solide (2000€+)", rest: " → 2% strict" },
+                { bold: "compte plus solide (1 000€ et plus)", rest: " → 2% strict" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
@@ -468,9 +468,9 @@ export default function ContentFr() {
               "Tu retires ton stop loss pour éviter d'être sorti par la volatilité",
             ]}
             correctIndex={2}
-            explanation="Un NFP peut créer un mouvement violent et imprévisible (200-500 pips de mouvement total possible). Même si ton setup est techniquement propre, le risque réel est trop élevé juste avant la publication. L'option A ignore complètement le contexte macro et te fait subir la volatilité. L'option B est encore pire, tu augmentes ton risque dans la fenêtre la plus dangereuse. L'option D est catastrophique : retirer ton SL transforme une perte limitée en perte potentiellement énorme. La seule réponse pro : attendre, observer, réévaluer. Ce principe vaut sur tous les actifs sensibles à la macro : EUR/USD, XAU/USD, Nasdaq, BTC/USD."
+            explanation="Un NFP peut créer un mouvement violent et imprévisible (souvent 50 à 150 pips sur EUR/USD en quelques minutes, parfois davantage). Même si ton setup est techniquement propre, le risque réel est trop élevé juste avant la publication. L'option A ignore complètement le contexte macro et te fait subir la volatilité. L'option B est encore pire, tu augmentes ton risque dans la fenêtre la plus dangereuse. L'option D est catastrophique : retirer ton SL transforme une perte limitée en perte potentiellement énorme. La seule réponse pro : attendre, observer, réévaluer. Ce principe vaut sur tous les actifs sensibles à la macro : EUR/USD, XAU/USD, Nasdaq, BTC/USD."
             answerExplanations={[
-              "Faux. Ignorer une news 3 étoiles à 20 minutes, c'est subir la volatilité. Un NFP peut créer un mouvement de 200-500 pips, ton setup technique ne tient pas face à cette réalité.",
+              "Faux. Ignorer une news 3 étoiles à 20 minutes, c'est subir la volatilité. Un NFP peut créer un mouvement de 50 à 150 pips en quelques minutes, ton setup technique ne tient pas face à cette réalité.",
               "Faux. Augmenter la taille dans la fenêtre de danger maximale est une erreur grave. Tu maximises ton risque au pire moment possible.",
               "Correct. Un NFP peut créer un mouvement violent et imprévisible. Attendre, observer la réaction, puis réévaluer le setup est la seule approche professionnelle.",
               "Faux. Retirer ton SL est catastrophique : cela transforme une perte limitée en perte potentiellement énorme si le marché part dans le mauvais sens.",

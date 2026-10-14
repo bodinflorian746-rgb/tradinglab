@@ -375,7 +375,7 @@ export default function ContentFr() {
                 {
                   bold: "Piège 4",
                   desc: " : oublier les corrélations.",
-                  consequence: "Long XAU/USD + long BTC/USD + long Nasdaq peut devenir un seul gros pari risk-on.",
+                  consequence: "Long XAU/USD + long EUR/USD + long GBP/USD peut devenir un seul gros pari contre le dollar.",
                   ref: "(cf leçon 5)",
                 },
                 {

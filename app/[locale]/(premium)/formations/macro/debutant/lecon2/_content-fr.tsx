@@ -166,7 +166,7 @@ export default function ContentFr() {
                   Quand une banque centrale <span className="font-semibold">monte</span> ses taux → l&apos;argent devient plus cher → les marchés ralentissent.
                 </p>
                 <p className="text-sm leading-relaxed text-emerald-400 font-medium">
-                  Quand elle <span className="font-semibold">baisse</span> ses taux → l&apos;argent circule plus → les marchés montent.
+                  Quand elle <span className="font-semibold">baisse</span> ses taux → l&apos;argent circule plus → les marchés ont tendance à monter.
                 </p>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function ContentFr() {
                 { bold: "Le dollar US est la devise de réserve mondiale", rest: "" },
                 { bold: "Le commerce international se fait en USD", rest: "" },
                 { bold: "Les matières premières", rest: " (or, pétrole, blé) sont cotées en USD" },
-                { bold: "Plus de 60% des réserves mondiales", rest: " des banques centrales sont en USD" },
+                { bold: "Près de 60% des réserves mondiales", rest: " des banques centrales sont en USD" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/60 shrink-0 mt-1.5" />
@@ -252,7 +252,7 @@ export default function ContentFr() {
                 <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
               </div>
               <p className="text-base text-zinc-300 leading-relaxed">
-                Tu trades sûrement EUR/USD, GBP/USD ou XAU/USD ? Ces 3 paires sont <span className="font-semibold text-zinc-200">toutes contre le dollar</span>. Donc en pratique, <span className="font-semibold text-zinc-200">tu trades la Fed à 80% du temps</span>, même si tu crois trader &apos;juste l&apos;euro&apos; ou &apos;juste l&apos;or&apos;. Comprendre la Fed = comprendre 80% de tes trades.
+                Tu trades sûrement EUR/USD, GBP/USD ou XAU/USD ? Ces 3 paires sont <span className="font-semibold text-zinc-200">toutes contre le dollar</span>. Donc en pratique, <span className="font-semibold text-zinc-200">tu trades en grande partie la Fed</span>, même si tu crois trader &apos;juste l&apos;euro&apos; ou &apos;juste l&apos;or&apos;. Comprendre la Fed = comprendre une grande partie de tes trades.
               </p>
             </div>
 
@@ -290,7 +290,7 @@ export default function ContentFr() {
             </p>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Sur EUR/USD, une décision FOMC peut générer <span className="font-semibold text-zinc-300">200 à 500 pips de mouvement total</span> en quelques heures (cf leçon Macro Avancé sur le FOMC pour les détails).
+                <span className="text-white font-medium">À retenir :</span> Sur EUR/USD, une décision FOMC peut générer <span className="font-semibold text-zinc-300">souvent 50 à 150 pips de mouvement total, parfois davantage,</span> en quelques heures (cf leçon Macro Avancé sur le FOMC pour les détails).
               </p>
             </div>
           </section>

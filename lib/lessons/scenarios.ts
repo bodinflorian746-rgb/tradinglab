@@ -652,12 +652,12 @@ Object.assign(SCENARIOS, { "stop-hunt": stopHunt, "cpi-reaction": cpiReaction })
 // 20h00 décision = impulsion haussière violente, hésitation, 20h30 Powell = retournement
 // (plonge, remonte, replonge), après 21h00 la baisse s'installe.
 const fomcTimeline = () => buildCandles(1.1850, [
-  { c: 1.1852, h: 1.1855, l: 1.1847 }, { c: 1.1849, h: 1.1854, l: 1.1846 }, { c: 1.1851, h: 1.1853, l: 1.1845 },
-  { c: 1.1950, h: 1.1968, l: 1.1846 }, { c: 1.1962, h: 1.1985 },
-  ...c(1.1938, 1.1960, 1.1932, 1.1948),
-  { c: 1.1862, h: 1.1958 }, { c: 1.1908 }, ...c(1.1835, 1.1800, 1.1838, 1.1785),
-  ...c(1.1752, 1.1738, 1.1756, 1.1722, 1.1698, 1.1712), { c: 1.1668, l: 1.1660 }, ...c(1.1680, 1.1672),
-], { seed: 14101, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", preNews: true, split: 3, pins: [1.1855, 1.1854, 1.1853, 1.1847, 1.1846, 1.1845, 1.1968, 1.1985, 1.1660], levels: [1.1985, 1.1660] });
+  { c: 1.1851, h: 1.18525, l: 1.18485 }, { c: 1.18495, h: 1.1852, l: 1.1848 }, { c: 1.18505, h: 1.18515, l: 1.18475 },
+  { c: 1.1900, h: 1.1909, l: 1.1848 }, { c: 1.1906, h: 1.19175 },
+  ...c(1.1894, 1.1905, 1.1891, 1.1899),
+  { c: 1.1856, h: 1.1904 }, { c: 1.1879 }, ...c(1.18425, 1.1825, 1.1844, 1.18175),
+  ...c(1.1801, 1.1794, 1.1803, 1.1786, 1.1774, 1.1781), { c: 1.1759, l: 1.1755 }, ...c(1.1765, 1.1761),
+], { seed: 14101, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "normale", preNews: true, split: 3, pins: [1.18525, 1.1852, 1.18515, 1.18485, 1.1848, 1.18475, 1.1909, 1.19175, 1.1755], levels: [1.19175, 1.1755] });
 Object.assign(SCENARIOS, { "fomc-timeline": fomcTimeline });
 
 // ─── Lot 15 ──────────────────────────────────────────────────────────────────
@@ -927,16 +927,17 @@ Object.assign(SCENARIOS, {
 // ─── Lot 20 ──────────────────────────────────────────────────────────────────
 const EU = { decimals: 5, asset: "EUR/USD", volatility: "normale" } as const;
 // Multi-UT 1 bloc 2 — le piège du graphique unique : Daily EUR/USD en LH/LL, résistance 1.1820
-// (dernier LH) ; M15 : niveau local 1.1760 touché deux fois, breakout, sommet 1.1775, rechute à 1.1700.
+// (dernier LH) ; M15 : résistance locale 1.1760 touchée deux fois (repli entre les deux), breakout,
+// sommet 1.1775, rechute à 1.1700.
 const stfDaily = () => buildCandles(1.1925, [
   { c: 1.1918, l: 1.1912 }, ...c(1.1932, 1.1946), { c: 1.1955, h: 1.1962 }, ...c(1.1940, 1.1918, 1.1896, 1.1872), { c: 1.1850, l: 1.1842 },
   ...c(1.1862, 1.1878, 1.1893), { c: 1.1900, h: 1.1905 }, ...c(1.1885, 1.1862, 1.1838, 1.1810, 1.1786), { c: 1.1768, l: 1.1760 },
   ...c(1.1779, 1.1795, 1.1810), { c: 1.1812, h: 1.1820 }, ...c(1.1798, 1.1776), { c: 1.1752 },
 ], { ...EU, seed: 20101, session: "Londres", levels: [1.1820], pins: [1.1912, 1.1962, 1.1842, 1.1905, 1.1760, 1.1820, 1.1752] });
 const stfM15 = () => buildCandles(1.1738, [
-  ...c(1.1745, 1.1752), { c: 1.1757, h: 1.1760 }, { c: 1.1750, h: 1.1758 }, ...c(1.1746), { c: 1.1755, h: 1.1757 }, { c: 1.1758, h: 1.1760 },
+  ...c(1.1745, 1.1752), { c: 1.1757, h: 1.1760 }, { c: 1.1750, h: 1.1758 }, ...c(1.1746), { c: 1.1755, h: 1.1757 }, { c: 1.1751, h: 1.1760 }, { c: 1.1747, h: 1.1752 }, { c: 1.1755, h: 1.1757 },
   { c: 1.1767, h: 1.1769 }, { c: 1.1771, h: 1.1775 }, { c: 1.1764, h: 1.1772 }, ...c(1.1752, 1.1740, 1.1728, 1.1716), { c: 1.1705, l: 1.1700 },
-], { ...EU, seed: 20102, session: "Londres", levels: [1.1760, 1.1775, 1.1700], pins: [1.1757, 1.1760, 1.1758, 1.1755, 1.1767, 1.1769, 1.1771, 1.1775, 1.1772, 1.1700] });
+], { ...EU, seed: 20102, session: "Londres", levels: [1.1760, 1.1775, 1.1700], pins: [1.1757, 1.1760, 1.1758, 1.1755, 1.1751, 1.1747, 1.1752, 1.1767, 1.1769, 1.1771, 1.1775, 1.1772, 1.1700] });
 // Multi-UT 1 bloc 3 (process, étape 1) — H4 EUR/USD en LH/LL : ancien support 1.1778 cassé,
 // LH 1.1820, LL 1.1740, LH sur la résistance 1.1780, prix actuel 1.1725.
 const htfBearH4 = () => buildCandles(1.1830, [
@@ -962,15 +963,16 @@ const LTF_M5: Step[] = [
 ];
 const ltfExecM5 = () => buildCandles(1.1758, LTF_M5, { ...EU, seed: 20401, session: "New York", levels: [1.1765, 1.1778], pins: pinAll(LTF_M5) });
 // Multi-UT 2 bloc 1 — contre la tendance : Daily en LH/LL, résistance Daily/H4 1.1760 (dernier LH),
-// prix 1.1715 ; M15 : niveau local 1.1740, breakout, sommet 1.1752, rejet jusqu'à 1.1685.
+// prix 1.1715 ; M15 : résistance locale 1.1740 touchée deux fois (repli entre les deux), breakout,
+// sommet 1.1752, rejet jusqu'à 1.1685.
 const ctDaily = () => buildCandles(1.1850, [
   ...c(1.1858), { c: 1.1866, h: 1.1870 }, ...c(1.1850, 1.1828, 1.1806), { c: 1.1787, l: 1.1780 }, ...c(1.1797, 1.1812), { c: 1.1825, h: 1.1830 },
   ...c(1.1808, 1.1784, 1.1760, 1.1734), { c: 1.1710, l: 1.1700 }, ...c(1.1722, 1.1738), { c: 1.1752, h: 1.1760 }, ...c(1.1735), { c: 1.1715 },
 ], { ...EU, seed: 20501, session: "Londres", levels: [1.1760], pins: [1.1870, 1.1780, 1.1830, 1.1700, 1.1752, 1.1760, 1.1715] });
 const ctM15 = () => buildCandles(1.1712, [
-  ...c(1.1720, 1.1728), { c: 1.1736, h: 1.1740 }, ...c(1.1730, 1.1725), { c: 1.1734 }, { c: 1.1737, h: 1.1740 },
+  ...c(1.1720, 1.1728), { c: 1.1736, h: 1.1740 }, ...c(1.1730, 1.1725), { c: 1.1734 }, { c: 1.1732, h: 1.1740 }, { c: 1.1728, h: 1.1733 }, { c: 1.1735, h: 1.1737 },
   { c: 1.1746, h: 1.1748 }, { c: 1.1749, h: 1.1752 }, { c: 1.1741, h: 1.1750 }, ...c(1.1728, 1.1715, 1.1703, 1.1694), { c: 1.1689, l: 1.1685 },
-], { ...EU, seed: 20502, session: "Londres", levels: [1.1740, 1.1752, 1.1685], pins: [1.1736, 1.1740, 1.1737, 1.1746, 1.1748, 1.1749, 1.1752, 1.1750, 1.1685] });
+], { ...EU, seed: 20502, session: "Londres", levels: [1.1740, 1.1752, 1.1685], pins: [1.1736, 1.1740, 1.1732, 1.1728, 1.1733, 1.1735, 1.1737, 1.1746, 1.1748, 1.1749, 1.1752, 1.1750, 1.1685] });
 Object.assign(SCENARIOS, {
   "stf-daily": stfDaily, "stf-m15": stfM15, "htf-bear-h4": htfBearH4, "inter-zone-h1": interZoneH1,
   "ltf-exec-m5": ltfExecM5, "ct-daily": ctDaily, "ct-m15": ctM15,
