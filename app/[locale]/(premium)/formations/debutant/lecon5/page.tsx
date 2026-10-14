@@ -43,7 +43,7 @@ function ContentFr() {
           visual: <WithWithoutSLDiagram />,
           items: [
             "Avec SL : la perte est limitée et connue à l'avance dès l'entrée",
-            "Sans SL : la perte peut être illimitée, le marché n'attend pas que tu sois prêt",
+            "Sans SL : la perte n'a plus de plafond, elle peut emporter tout ton compte, le marché n'attend pas que tu sois prêt",
             "Les traders sans SL pensent 'le prix va revenir', parfois oui, parfois non. Le 'non' détruit le compte.",
           ],
         },
@@ -62,14 +62,14 @@ function ContentFr() {
       errors={[
         "Ne pas mettre de SL 'pour laisser une chance au trade', c'est la cause n°1 de comptes détruits chez les débutants",
         "SL trop serré : 100 $ de SL sur Bitcoin qui fluctue normalement de plus de 1 000 $ par heure, tu seras sorti sans raison",
-        "SL placé au hasard ('1 500 $ parce que ça me semble bien'), le SL doit correspondre à un niveau logique sur le graphique",
+        "SL placé au hasard ('1 000 $ parce que ça me semble bien'), le SL doit correspondre à un niveau logique sur le graphique",
         "Oublier de placer le SL au moment d'entrer en pensant 'je le mets juste après', et ne jamais le mettre",
       ]}
       fatalError="Déplacer le Stop Loss dans le mauvais sens pour éviter d'être stoppé. Ton trade perd, tu es à −500 $. Tu éloignes le SL pour 'lui laisser une chance'. Le trade continue à perdre. Tu éloignes encore. Au final, tu perds 5 ou 10 fois plus que prévu. Cette erreur, commise sous l'émotion, est responsable de la destruction de milliers de comptes de traders débutants."
       keyPoints={[
         "Stop Loss = ordre automatique qui limite ta perte à un montant défini à l'avance",
         "Long : SL en dessous de l'entrée. Short : SL au-dessus de l'entrée.",
-        "Sans SL, ta perte est potentiellement illimitée, c'est un risque inacceptable",
+        "Sans SL, ta perte n'a plus de plafond et peut emporter tout ton compte, c'est un risque inacceptable",
         "Place le SL à un endroit logique sur le graphique, pas au hasard",
         "Ne déplace JAMAIS le SL dans le sens de la perte, c'est l'erreur fatale",
       ]}

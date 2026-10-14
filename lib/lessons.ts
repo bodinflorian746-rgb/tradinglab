@@ -78,8 +78,8 @@ export const LESSONS: LevelData[] = [
               headers: ["", "Trading", "Investissement", "Casino"],
               rows: [
                 ["Durée", "Minutes à semaines", "Mois à années", "Secondes"],
-                ["Décision", "Analyse technique", "Analyse fondamentale", "Hasard pur"],
-                ["Résultat", "Reproductible", "Reproductible", "Non reproductible"],
+                ["Décision", "Surtout analyse technique", "Surtout analyse fondamentale", "Hasard pur"],
+                ["Méthode", "Reproductible", "Reproductible", "Aucune"],
                 ["Contrôle", "Élevé (SL, TP)", "Moyen", "Aucun"],
               ],
             },
@@ -89,7 +89,7 @@ export const LESSONS: LevelData[] = [
             body: "Ces erreurs sont universelles. Presque tous les nouveaux traders en commettent au moins une dans les premières semaines.",
             items: [
               "Confondre trading et investissement, un trader qui 'garde sa position parce qu'il croit au projet' n'est plus un trader, c'est un investisseur",
-              "Croire qu'il faut avoir raison souvent pour être rentable, faux : un bon ratio risque/rendement suffit",
+              "Croire qu'il faut avoir raison souvent pour être rentable, faux : avec un bon ratio risque/rendement (R/R, leçon 6), on peut être rentable en se trompant souvent",
               "Suivre des conseils de trading sans comprendre pourquoi, tu ne peux pas apprendre à cuisiner en regardant quelqu'un d'autre manger",
             ],
           },
@@ -179,7 +179,7 @@ export const LESSONS: LevelData[] = [
               "Croire qu'on ne peut gagner que quand ça monte, le Short existe précisément pour profiter des baisses",
               "Confondre 'Sell pour fermer un Long' et 'ouvrir un Short', dans MT5, les deux s'appellent Sell mais ce n'est pas pareil",
               "Shorter sans Stop Loss, une erreur encore plus grave qu'un Long sans SL (expliqué ci-dessous)",
-              "Chercher le Short sur tout 'parce que ça baisse toujours', les marchés montent sur le long terme, le Long est statistiquement favorisé",
+              "Chercher le Short sur tout 'parce que ça baisse toujours', les indices actions montent sur le long terme, le Long y a historiquement été favorisé",
             ],
           },
           {
@@ -533,13 +533,13 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Le ratio risque/rendement (R/R)",
-            body: "Le R/R compare deux distances : celle qui sépare ton entrée de ton Stop Loss (le risque), et celle qui sépare ton entrée de ton Take Profit (l'objectif). C'est un rapport, il ne dépend pas de la taille de ta position. C'est la métrique la plus importante en gestion du risque : elle détermine si ta stratégie est rentable sur le long terme, indépendamment de ton winrate.",
+            body: "Le R/R compare deux distances : celle qui sépare ton entrée de ton Stop Loss (le risque), et celle qui sépare ton entrée de ton Take Profit (l'objectif). C'est un rapport, il ne dépend pas de la taille de ta position. C'est l'une des métriques les plus importantes en gestion du risque : avec ton winrate (la part de trades gagnants), elle détermine si ta stratégie est rentable sur le long terme.",
             table: {
               headers: ["Ratio R/R", "Exemple concret", "Ce que ça permet"],
               rows: [
-                ["1:1", "Stop à 3 000 $, objectif à 3 000 $", "Il faut gagner 1 trade sur 2 pour être rentable"],
-                ["1:2", "Stop à 3 000 $, objectif à 6 000 $", "Tu peux perdre 2 trades sur 3 et rester positif"],
-                ["1:3", "Stop à 3 000 $, objectif à 9 000 $", "Tu peux perdre 3 trades sur 4 et rester positif"],
+                ["1:1", "Stop à 3 000 $, objectif à 3 000 $", "Il faut gagner plus d'1 trade sur 2 pour être rentable (avant frais)"],
+                ["1:2", "Stop à 3 000 $, objectif à 6 000 $", "Gagner plus d'1 trade sur 3 suffit pour être rentable (avant frais)"],
+                ["1:3", "Stop à 3 000 $, objectif à 9 000 $", "Gagner plus d'1 trade sur 4 suffit pour être rentable (avant frais)"],
               ],
             },
           },
@@ -584,11 +584,11 @@ export const LESSONS: LevelData[] = [
           ],
           correct: 2,
           explanation:
-            "Ratio 1:2 = ton objectif est 2 fois plus loin que ton stop. Le Stop Loss est à 3 000 $ sous l'entrée ; le Take Profit doit donc être à 6 000 $ au-dessus : 78 000 + 6 000 = 84 000 $. Le gain ou la perte en argent dépend ensuite de la taille de ta position (voir Leçon 8), mais le ratio, lui, reste 1:2 quelle que soit cette taille. Avec ce ratio, tu peux perdre 2 trades sur 3 et rester profitable sur le long terme.",
+            "Ratio 1:2 = ton objectif est 2 fois plus loin que ton stop. Le Stop Loss est à 3 000 $ sous l'entrée ; le Take Profit doit donc être à 6 000 $ au-dessus : 78 000 + 6 000 = 84 000 $. Le gain ou la perte en argent dépend ensuite de la taille de ta position (voir Leçon 8), mais le ratio, lui, reste 1:2 quelle que soit cette taille. Avec ce ratio, gagner un peu plus d'1 trade sur 3 suffit, avant frais, pour être rentable sur le long terme.",
           answerExplanations: [
-            "Faux. Un objectif à 1 500 $ pour un stop à 3 000 $, c'est un ratio 1:0,5 : ton objectif est 2 fois plus proche que ton stop. Même avec 70 % de trades gagnants, une stratégie avec ce ratio est perdante sur le long terme.",
+            "Faux. Un objectif à 1 500 $ pour un stop à 3 000 $, c'est un ratio 1:0,5 : ton objectif est 2 fois plus proche que ton stop. Avec ce ratio, il faut gagner plus de 2 trades sur 3 (66,7 %) juste pour ne pas perdre d'argent, avant frais : la moindre baisse de winrate rend la stratégie perdante.",
             "Faux. Objectif et stop à la même distance = ratio 1:1. Ce n'est pas suffisant : il faudrait gagner plus d'un trade sur deux pour être rentable, difficile à tenir durablement.",
-            "Correct. Un objectif à 6 000 $ pour un stop à 3 000 $ = ratio 1:2. C'est le minimum recommandé pour une stratégie saine : avec ce ratio, 34 % de trades gagnants suffisent pour être en profit global.",
+            "Correct. Un objectif à 6 000 $ pour un stop à 3 000 $ = ratio 1:2. C'est le minimum souvent recommandé pour une stratégie saine : avec ce ratio, un peu plus d'1 trade gagnant sur 3 (plus de 33,3 %) suffit, avant frais, pour être en profit global.",
             "Faux. Viser 'le plus haut possible' sans niveau défini, c'est trader sans plan. Un TP trop éloigné n'est presque jamais atteint, tu regardes le prix monter, toucher ta zone, puis redescendre sans que ta sortie ait été déclenchée.",
           ],
         },
@@ -605,7 +605,7 @@ export const LESSONS: LevelData[] = [
         sections: [
           {
             heading: "Le principe, en une phrase",
-            body: "Le Break Even (BE), c'est déplacer ton Stop Loss à ton prix d'entrée exact. Si le prix revient en arrière, tu sors à zéro, ni gain, ni perte. Si le prix continue dans ton sens, tu restes en course. Ton trade ne peut plus se solder par une perte.",
+            body: "Le Break Even (BE), c'est déplacer ton Stop Loss à ton prix d'entrée exact. Si le prix revient en arrière, tu sors à ton prix d'entrée : ni gain ni perte sur le mouvement, seuls les frais (spread, commission) ou un glissement peuvent laisser une petite perte. Si le prix continue dans ton sens, tu restes en course. Ton risque de départ est neutralisé.",
             diagram: "breakeven",
             items: [
               "Tu achètes Bitcoin à 78 000 $ avec un SL initial à 75 000 $",
@@ -616,16 +616,16 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Exemple concret : avec et sans Break Even",
-            body: "Cas 1, avec Break Even : Tu achètes Bitcoin à 78 000 $, SL à 75 000 $. Le prix monte à 81 000 $, il a parcouru 3 000 $ en ta faveur, soit 1R. Tu actives le BE (SL → 78 000 $). Le marché fait une correction et redescend à 78 000 $. Sortie automatique : tu sors exactement à ton prix d'entrée, ni gain ni perte. Et si le prix avait continué jusqu'à 84 000 $, tu serais resté en course pour un mouvement de 6 000 $ en ta faveur.\n\nCas 2, sans Break Even : Même trade. Le Bitcoin monte à 81 000 $. Tu ne touches rien. Le marché redescend brutalement à 73 500 $. Ton SL d'origine à 75 000 $ se déclenche, le prix finit 3 000 $ SOUS ton entrée, alors qu'il avait été 3 000 $ AU-DESSUS.",
+            body: "Cas 1, avec Break Even : Tu achètes Bitcoin à 78 000 $, SL à 75 000 $. Le prix monte à 81 000 $, il a parcouru 3 000 $ en ta faveur, soit 1R. Tu actives le BE (SL → 78 000 $). Le marché fait une correction et redescend à 78 000 $. Sortie automatique à ton prix d'entrée : ni gain ni perte sur le mouvement, hors frais. Et si le prix avait continué jusqu'à 84 000 $, tu serais resté en course pour un mouvement de 6 000 $ en ta faveur.\n\nCas 2, sans Break Even : Même trade. Le Bitcoin monte à 81 000 $. Tu ne touches rien. Le marché redescend brutalement à 73 500 $. Ton SL d'origine à 75 000 $ se déclenche : tu sors 3 000 $ SOUS ton entrée, alors que le prix avait été 3 000 $ AU-DESSUS.",
             items: [
-              "Avec BE : le trade ne peut plus se solder par une perte une fois activé",
+              "Avec BE : une fois activé, ton risque de départ est neutralisé (au pire, une petite perte due aux frais ou à un glissement)",
               "Sans BE : un prix qui était 3 000 $ au-dessus de ton entrée peut repasser 3 000 $ en dessous",
               "Le BE te libère du stress, tu peux attendre ton TP sereinement",
             ],
           },
           {
             heading: "Quand activer le Break Even ?",
-            body: "Le timing est crucial. Trop tôt, le marché te sort sur une simple fluctuation normale. Au bon moment, le BE te protège vraiment. La règle : attends que le prix ait parcouru au moins 1R en ta faveur, c'est-à-dire la distance qui sépare ton entrée de ton Stop Loss.\n\nLaisse une petite marge avant de passer au break-even : si tu colles ton stop pile à ton prix d'entrée, les frais et le spread peuvent te sortir en légère perte. On se met au break-even quand on estime que le prix peut se retourner et invalider notre théorie à notre point d'entrée.",
+            body: "Le timing est crucial. Trop tôt, le marché te sort sur une simple fluctuation normale. Au bon moment, le BE te protège vraiment. Un repère courant : attendre que le prix ait parcouru au moins 1R en ta faveur, c'est-à-dire la distance qui sépare ton entrée de ton Stop Loss.\n\nPense aux frais : si ton stop est pile à ton prix d'entrée, le spread et les frais peuvent te sortir en légère perte. Certains traders placent donc leur stop quelques points au-delà de l'entrée, dans le sens du trade, pour les couvrir. On passe au break-even quand on estime que le prix peut se retourner et invalider notre théorie à notre point d'entrée.",
             table: {
               headers: ["Distance entrée → SL", "Activer le BE quand…", "Pourquoi"],
               rows: [
@@ -641,8 +641,8 @@ export const LESSONS: LevelData[] = [
             items: [
               "Activer le BE trop tôt : le prix n'a parcouru que 200 $ en ta faveur alors que ton risque est de 3 000 $, la moindre fluctuation te sort à zéro",
               "Ne jamais activer le BE : tu subis des retournements complets sur des trades qui étaient largement gagnants",
-              "Confondre BE et prise de profit partielle : le BE = sécuriser le risque (zéro perte), pas encaisser un gain",
-              "Croire que le BE garantit un profit : non, le BE garantit zéro perte. Le profit dépend toujours du TP.",
+              "Confondre BE et prise de profit partielle : le BE neutralise le risque de départ, il n'encaisse aucun gain",
+              "Croire que le BE garantit un profit : non, au mieux il ramène la perte possible à presque zéro (frais, glissement). Le profit dépend toujours du TP.",
             ],
           },
           {
@@ -651,10 +651,10 @@ export const LESSONS: LevelData[] = [
           },
         ],
         keyPoints: [
-          "Break Even = déplacer le Stop Loss au prix d'entrée → plus aucun risque de perte",
+          "Break Even = déplacer le Stop Loss au prix d'entrée → le risque de départ est neutralisé, hors frais et glissement",
           "Activer le BE quand le prix a parcouru au moins 1R en ta faveur, 1R = la distance entre ton entrée et ton Stop Loss",
           "Trop tôt = le marché te sort sur une simple fluctuation normale",
-          "Un trade en BE peut sortir à zéro ou continuer à gagner, jamais perdre",
+          "Un trade en BE sort à peu près à zéro ou continue à gagner ; seuls les frais ou un glissement peuvent laisser une petite perte",
           "Le BE ne remplace pas un bon TP, c'est une protection supplémentaire",
         ],
         exercise: {
@@ -676,12 +676,12 @@ export const LESSONS: LevelData[] = [
           ],
           correct: 0,
           explanation:
-            "À 81 000 $, le prix a parcouru 3 000 $ en ta faveur, exactement la distance entre ton entrée et ton SL, soit 1R. C'est le bon moment pour activer le BE : tu déplaces le SL de 75 000 $ à 78 000 $. À partir de là, le trade ne peut plus se solder par une perte, et si le prix continue vers ton TP, tu restes en course. Le montant en argent, lui, dépend de la taille de ta position (voir Leçon 8).",
+            "À 81 000 $, le prix a parcouru 3 000 $ en ta faveur, exactement la distance entre ton entrée et ton SL, soit 1R. C'est le bon moment pour activer le BE : tu déplaces le SL de 75 000 $ à 78 000 $. À partir de là, ton risque de départ est neutralisé (hors frais et glissement), et si le prix continue vers ton TP, tu restes en course. Le montant en argent, lui, dépend de la taille de ta position (voir Leçon 8).",
           answerExplanations: [
-            "Correct. Le prix a parcouru 3 000 $ en ta faveur = exactement 1R (la distance entrée → SL). Tu déplaces le SL de 75 000 $ à 78 000 $. Le trade ne peut plus se solder par une perte : si le prix revient à 78 000 $, sortie à zéro ; s'il continue de monter, tu restes en course.",
+            "Correct. Le prix a parcouru 3 000 $ en ta faveur = exactement 1R (la distance entrée → SL). Tu déplaces le SL de 75 000 $ à 78 000 $. Ton risque de départ est neutralisé : si le prix revient à 78 000 $, sortie à ton prix d'entrée (hors frais) ; s'il continue de monter, tu restes en course.",
             "Faux. Il est parfaitement valide, et même recommandé, de déplacer le SL dans le sens favorable. La règle est de ne jamais déplacer le SL dans le sens de la PERTE. Ici, tu le déplaces vers ton prix d'entrée pour te protéger.",
-            "Faux. Fermer à 81 000 $ verrouille le mouvement déjà acquis, mais tu renonces à un éventuel prolongement vers 84 000 $ ou plus. Activer le BE te permet de rester dans le trade sans plus aucun risque de perte, c'est souvent le meilleur choix.",
-            "Faux. Déplacer le SL à 78 900 $ (900 $ au-dessus de l'entrée) est une technique appelée 'trailing stop partiel'. C'est différent du Break Even standard, qui place le SL exactement au prix d'entrée. Le risque ici : se faire sortir sur une simple fluctuation normale de 900 $.",
+            "Faux. Fermer à 81 000 $ verrouille le mouvement déjà acquis, mais tu renonces à un éventuel prolongement vers 84 000 $ ou plus. Activer le BE te permet de rester dans le trade avec un risque ramené à presque zéro, c'est souvent le meilleur choix.",
+            "Faux. Déplacer le SL à 78 900 $ (900 $ au-dessus de l'entrée), c'est placer un stop en profit : une autre technique que le Break Even, qui place le SL au prix d'entrée. Le risque ici : se faire sortir sur une simple fluctuation normale de 900 $.",
           ],
         },
       },
@@ -697,10 +697,10 @@ export const LESSONS: LevelData[] = [
         sections: [
           {
             heading: "Ce que personne ne te dit sur le '1%'",
-            body: "Le money management, c'est ce qui sépare les traders qui survivent de ceux qui grillent leur compte en 2 mois. La règle d'or : ne JAMAIS risquer plus que ce que ton capital permet. La règle théorique '1% par trade' est faite pour les comptes de 5 000 €+. En dessous, 1% = 2 à 10 € de risque, un montant souvent inférieur au risque minimum que génèrent les lots disponibles sur les paires majeures.",
+            body: "Le money management, c'est ce qui sépare les traders qui survivent de ceux qui grillent leur compte en 2 mois. La règle d'or : ne JAMAIS risquer plus que ce que ton capital permet. La règle théorique '1% par trade' est faite pour les comptes de 5 000 €+. Sur un compte de 200 à 1 000 €, 1% = 2 à 10 € de risque : même avec le lot minimum, cela impose des Stop Loss très serrés, souvent trop serrés pour l'or, les indices ou la crypto.",
             items: [
-              "Les lots minimum sur Forex génèrent souvent 10 à 20 € de risque même avec un Stop Loss serré",
-              "Capital de 300 € → 1% = 3 € de risque max. Inapplicable avec les lots standard.",
+              "Le lot minimum (0,01 lot chez la plupart des courtiers) vaut environ 0,10 € par point sur EUR/USD : avec 3 € de risque, ton Stop Loss ne peut pas dépasser 30 points",
+              "Capital de 300 € → 1% = 3 € de risque max. Faisable sur EUR/USD avec un stop serré, très difficile sur l'or ou les indices.",
               "La solution : adapter ton % de risque à ta tranche de capital, pas appliquer une règle générique",
               "Le risque = montant que tu perds si ton Stop Loss se déclenche",
             ],
@@ -709,26 +709,37 @@ export const LESSONS: LevelData[] = [
             heading: "La grille adaptée au retail",
             body: "Voici la grille de référence : adapte ton risque par trade à ton capital réel. Le % baisse à mesure que le capital monte, parce que tu as plus à protéger.",
             table: {
-              headers: ["Capital de départ", "Risque par trade", "Exemple concret"],
+              headers: ["Capital de départ", "Risque maximum par trade", "Exemple concret"],
               rows: [
-                ["200 – 500 €", "5 %", "10 – 25 € max par trade"],
-                ["500 – 1 000 €", "3 %", "15 – 30 € max par trade"],
-                ["1 000 – 5 000 €", "2 %", "20 – 100 € max par trade"],
+                ["200 – 499 €", "5 %", "10 – 25 € max par trade"],
+                ["500 – 999 €", "3 %", "15 – 30 € max par trade"],
+                ["1 000 – 4 999 €", "2 %", "20 – 100 € max par trade"],
                 ["5 000 € et +", "0,5 – 2 %", "25 – 100 €+ par trade"],
               ],
             },
-            note: "La règle 1% que tu liras partout est techniquement correcte pour les comptes 5 000 €+. Sur un petit compte (200–1 000 €), 1% = 2 à 10 € de risque, souvent inapplicable en pratique car le lot minimum génère déjà plus. Adapter ton % n'est pas tricher : c'est s'aligner sur la réalité des lots disponibles.",
+            note: "La règle 1% que tu liras partout est techniquement correcte pour les comptes 5 000 €+. Sur un petit compte (200 à 1 000 €), 1% = 2 à 10 € de risque : avec le lot minimum, cela laisse si peu de place au Stop Loss qu'il devient souvent illogique. Adapter ton % n'est pas tricher : c'est s'aligner sur la réalité des lots disponibles, en acceptant un risque plus élevé.",
           },
           {
             heading: "Les chiffres en pratique",
-            body: "Voici comment calculer ton risque max avec la grille :",
+            body: "Voici comment calculer ton risque max avec la grille (le diagramme montre aussi le niveau idéal, plus prudent) :",
             items: [
-              "Capital 300 €, idéal 3% (9 €), max 5% (15 €) par trade",
-              "Capital 500 €, idéal 2-3% (12-15 €), max 5% (25 €) par trade",
-              "Capital 1 000 €, idéal 2-3% (20-30 €), max 3% (30 €) par trade",
-              "Capital 2 000 €, 2% (40 €) par trade (idéal = max)",
+              "Capital 300 € (tranche 200-499 €) : max 5% (15 €) par trade, idéalement 3% (9 €)",
+              "Capital 700 € (tranche 500-999 €) : max 3% (21 €) par trade, idéalement 2-3% (14-21 €)",
+              "Capital 2 000 € (tranche 1 000-4 999 €) : 2% (40 €) par trade (idéal = max)",
             ],
             diagram: "risk",
+          },
+          {
+            heading: "Calculer ta taille de position",
+            body: "Le montant en euros ne suffit pas : il faut le traduire en taille de position (en lots), à partir de la distance de ton Stop Loss. La formule : taille = risque en euros ÷ (distance du Stop Loss en points × valeur d'un point pour 1 lot). Sur EUR/USD, un point (on dit aussi un pip) vaut 0,0001 : avec 0,1 lot, chaque point vaut environ 1 € (la valeur exacte varie avec le taux de change).",
+            items: [
+              "Capital 700 € → tranche 500-999 € → 3% = 21 € de risque maximum",
+              "Ton Stop Loss est à 30 points de ton entrée",
+              "Avec 0,1 lot (environ 1 € par point), 30 points = 30 € de perte : tu dépasses tes 21 €",
+              "Taille adaptée : 21 € ÷ 30 points = 0,70 € par point, soit environ 0,07 lot",
+              "Stop Loss à 60 points : 21 € ÷ 60 = 0,35 € par point, soit 0,035 lot, arrondi vers le bas à 0,03 lot. La taille baisse, le risque en euros reste sous ton maximum.",
+            ],
+            note: "Ta plateforme ou un calculateur de taille de position fait ce calcul pour toi. L'important : le faire AVANT d'entrer, à partir du Stop Loss logique, jamais l'inverse.",
           },
           {
             heading: "Pourquoi le sur-risque détruit les comptes",
@@ -770,11 +781,12 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "L'erreur fatale",
-            body: "Doubler sa mise après une série de pertes pour 'se refaire' plus vite. Exemple : compte de 1 000 €, risque à 3%. Tu perds 3 trades → -30 € × 3 = -90 €. Il te reste 910 €. Tu te dis : 'Je risque 10% sur le prochain pour récupérer d'un coup.' Tu perds ce trade aussi. -91 € de plus. Total : -181 € en 4 trades au lieu de -90 € en suivant la grille. Multiplier le risque après des pertes, c'est le chemin le plus rapide vers le compte à zéro.",
+            body: "Doubler sa mise après une série de pertes pour 'se refaire' plus vite. Exemple : compte de 1 000 €, risque à 3%. Tu perds 3 trades → -30 € × 3 = -90 €. Il te reste 910 €. Tu te dis : 'Je risque 10% sur le prochain pour récupérer d'un coup.' Tu perds ce trade aussi. -91 € de plus. Total : -181 € en 4 trades, au lieu d'environ -117 € en suivant la grille (3% de 910 € = 27 € sur le 4e trade). Multiplier le risque après des pertes, c'est le chemin le plus rapide vers le compte à zéro.",
           },
         ],
         keyPoints: [
-          "Adapte ton % de risque à ton capital : 200-500 € → 5%, 500-1000 € → 3%, 1000-5000 € → 2%",
+          "Adapte ton % de risque à ton capital : jusqu'à 5% de 200 à 499 €, 3% de 500 à 999 €, 2% de 1 000 à 4 999 €",
+          "Taille de position = risque en euros ÷ (distance du Stop Loss en points × valeur d'un point pour 1 lot)",
           "Calcule ton risque en euros AVANT d'entrer : Capital × % adapté = montant maximum à perdre",
           "Avec 3% de risque, 10 pertes consécutives = 74% du capital intact. Tu peux rebondir.",
           "Ratio R/R recommandé : 1:2 minimum, viser 2 fois ce qu'on risque",
@@ -783,27 +795,27 @@ export const LESSONS: LevelData[] = [
         exercise: {
           title: "Calculer ton risque adapté à ton capital",
           steps: [
-            "Note ton capital. Identifie ta tranche dans la grille : 200-500 € → 5%, 500-1000 € → 3%, 1000-5000 € → 2%.",
+            "Note ton capital. Identifie ta tranche dans la grille : 200-499 € → 5%, 500-999 € → 3%, 1 000-4 999 € → 2%.",
             "Calcule ton risque maximum par trade. Exemple : 700 € × 3% = 21 € maximum par trade.",
             "Sur TradingView (EUR/USD, H1), identifie un setup Long. Où mettras-tu ton Stop Loss ? Estime la perte en euros si le SL se déclenche avec 0,1 lot.",
-            "Compare ce montant à ton risque adapté. Si tu dépasses ton max, réduis la taille de position jusqu'à respecter le montant calculé.",
+            "Compare ce montant à ton risque adapté. Si tu dépasses ton max, calcule la taille adaptée avec la formule de la leçon (risque ÷ (points × valeur d'un point)).",
           ],
         },
         quiz: {
           question: "Tu as un capital de 700 €. Quelle est la bonne application de la grille de risque ?",
           answers: [
             "1% de 700 € = 7 €, la règle universelle s'applique toujours",
-            "3% de 700 € = 21 €, adapté à la tranche 500-1 000 €",
+            "3% de 700 € = 21 €, adapté à la tranche 500-999 €",
             "5% de 700 € = 35 €, pour maximiser les gains sur petit capital",
             "10% de 700 € = 70 €, acceptable si le setup est 'sûr'",
           ],
           correct: 1,
           explanation:
-            "700 € se situe dans la tranche 500-1 000 € → 3% de risque par trade = 21 € maximum. La règle 1% est conçue pour les comptes 5 000 €+, avec 700 €, 1% = 7 €, souvent inférieur au risque généré par le lot minimum disponible sur les paires majeures.",
+            "700 € se situe dans la tranche 500-999 € → 3% de risque par trade = 21 € maximum. La règle 1% est conçue pour les comptes 5 000 €+, avec 700 €, 1% = 7 €, souvent trop peu pour placer un Stop Loss logique avec le lot minimum dès que l'actif bouge beaucoup.",
           answerExplanations: [
-            "Faux. La règle 1% s'applique aux comptes de 5 000 €+. Sur 700 €, 1% = 7 €, souvent inapplicable car les lots minimum génèrent 10-20 € de risque sur les paires majeures.",
-            "Correct. 700 € est dans la tranche 500-1 000 €, donc 3% de risque par trade = 21 €. C'est le % adapté qui te permet d'exécuter correctement tes ordres tout en protégeant ton capital.",
-            "Faux. 5% est adapté à la tranche 200-500 €. Avec 700 €, tu es dans la tranche supérieure (3%). Utiliser 5% sur 700 € reviendrait à sur-risquer.",
+            "Faux. La règle 1% s'applique aux comptes de 5 000 €+. Sur 700 €, 1% = 7 €, souvent trop peu pour placer un Stop Loss logique avec le lot minimum (sur EUR/USD, 0,01 lot et 7 € de risque = 70 points de stop au maximum ; sur l'or, beaucoup moins).",
+            "Correct. 700 € est dans la tranche 500-999 €, donc 3% de risque par trade = 21 €. C'est le % adapté qui te permet d'exécuter correctement tes ordres tout en protégeant ton capital.",
+            "Faux. 5% est le maximum de la tranche 200-499 €. Avec 700 €, tu es dans la tranche supérieure (3%). Utiliser 5% sur 700 € reviendrait à sur-risquer.",
             "Faux. 10% par trade = compte détruit en quelques séries de pertes normales. Il n'existe pas de trade certain.",
           ],
         },
@@ -852,7 +864,7 @@ export const LESSONS: LevelData[] = [
                 ["FOMO", "Le marché monte fort, tu achètes en urgence", "Tu achètes au sommet, juste avant le retournement"],
                 ["Vengeance trading", "Tu perds un trade, tu ré-ouvres immédiatement", "Tu perds encore plus, avec moins de lucidité"],
                 ["Ancrage", "Tu refuses de fermer un trade perdant", "La perte double, tu fermes au pire moment"],
-                ["Overconfidence", "5 trades gagnants d'affilée, tu te sens invincible", "Tu multiplies les lots par 5, le prochain trade perdant efface tout"],
+                ["Overconfidence", "5 trades gagnants d'affilée, tu te sens invincible", "Tu multiplies les lots par 5, un seul trade perdant peut tout effacer"],
               ],
             },
           },

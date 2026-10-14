@@ -137,12 +137,12 @@ export default async function Page({
           <RRComparisonDiagram />
         </div>
         <p className="text-[13px] text-zinc-400 italic leading-relaxed mt-3 text-center">
-          À risque égal (20€ dans les deux cas), le bon RR te fait gagner 4x plus. Et sur 10 trades avec un winrate moyen de 50%, l&apos;un te ruine, l&apos;autre te rend rentable.
+          À risque égal (20€ dans les deux cas), le bon RR te fait gagner 4x plus. Et sur 10 trades avec un winrate de 50%, la situation 1 te fait perdre 50&nbsp;€, la situation 2 te fait gagner 100&nbsp;€.
         </p>
 
         <h3 className="text-base font-semibold text-white mt-6 mb-3">Ce que ça veut vraiment dire</h3>
         <p className="text-zinc-300 leading-relaxed text-sm">
-          Tu n&apos;as PAS besoin d&apos;avoir raison souvent pour gagner en bourse. Tu as besoin que tes trades gagnants rapportent beaucoup plus que ce que tes trades perdants te coûtent.
+          Tu n&apos;as PAS besoin d&apos;avoir raison souvent pour être rentable. Tu as besoin que tes trades gagnants rapportent beaucoup plus que ce que tes trades perdants te coûtent.
         </p>
 
         <div className="overflow-x-auto mt-4">
@@ -153,7 +153,7 @@ export default async function Page({
                 <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Winrate</th>
                 <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">RR</th>
                 <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Risque/trade</th>
-                <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Sur 10 trades</th>
+                <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Sur 10 trades, en moyenne</th>
               </tr>
             </thead>
             <tbody>
@@ -289,7 +289,7 @@ export default async function Page({
 
         <div className="space-y-2.5 mt-4">
           {[
-            "Risque par trade : 3% à 5% du capital (selon ta grille de capital détaillée en leçon 8 : 5% si tu démarres à 200-500€, 3% si tu es à 500-1000€, 2% au-delà)",
+            "Risque par trade : 2% à 5% du capital au maximum, selon ta grille de la leçon 8 (5% de 200 à 499 €, 3% de 500 à 999 €, 2% de 1 000 à 4 999 €)",
             "Maximum 2-3 trades par jour",
             "Stop journalier : 10% à 15% du capital max par jour",
             "RR minimum acceptable : 1:2",

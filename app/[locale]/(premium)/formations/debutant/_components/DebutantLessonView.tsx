@@ -150,7 +150,7 @@ const FR_DIAG_LABELS: DiagLabels = {
     continueGain:  "+6 000 $",
     fallbackTitle: "Prix redescend ↓",
     fallbackHint:  "BE déclenché à 78 000 $",
-    fallbackGain:  "0 $, sortie à l'entrée",
+    fallbackGain:  "0 $ hors frais, sortie à l'entrée",
   },
   risk: {
     headerTitle:    "Grille de risque : idéal et plafond par capital",
@@ -170,7 +170,7 @@ const FR_DIAG_LABELS: DiagLabels = {
     anchor:         "Ancrage",
     anchorBody:     "Tu refuses de fermer le trade perdant, la perte s'aggrave",
     overconfidence: "Overconfidence",
-    overconfBody:   "5 gains d'affilée → tu doubles la mise → le prochain efface tout",
+    overconfBody:   "5 gains d'affilée → tu multiplies la mise par 5 → une seule perte peut tout effacer",
   },
   retailReality: "Réalité du retail",
   reviewLabel:   "Révision",
