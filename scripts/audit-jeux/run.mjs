@@ -81,7 +81,7 @@ process.stdout.write("… contexte de marché et prix\n");
 }
 
 // 3. Réalisme, verdicts, textes, glossaire, bougies
-for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (ton ; français en EN / ES si actives)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Supports / résistances prouvés (500 rounds)", "sr.ts"], ["Zones : libellés validés", "zones.ts"], ["Tracé calé sur les bougies (liquidité, extrêmes, FVG, OB, S/R, taille × bougie médiane)", "trace.ts"], ["Stops de Place ton Stop là où leur justification le dit", "stops.ts"], ["R/R affiché de Build the Trade (4 actifs)", "rr-btt.ts"], ["Termes de niveau refusés (Niveau secondaire / bas / haut, niveau faible)", "termes-niveaux.ts"], ["Changement de rôle lisible (ancienne résistance → support…)", "roles.ts"],["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"], ["Vocabulaire de référence (lib/vocabulary/trading-terms.json)", "vocabulaire.ts"]]) {
+for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (ton ; français en EN / ES si actives)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Supports / résistances prouvés (500 rounds)", "sr.ts"], ["Zones : libellés validés", "zones.ts"], ["Tracé calé sur les bougies (liquidité, extrêmes, FVG, OB, S/R, taille × bougie médiane)", "trace.ts"], ["Stops de Place ton Stop là où leur justification le dit", "stops.ts"], ["Bornes de range testées, jamais franchies avant la cassure", "range.ts"], ["R/R affiché de Build the Trade (4 actifs)", "rr-btt.ts"], ["Termes de niveau refusés (Niveau secondaire / bas / haut, niveau faible)", "termes-niveaux.ts"], ["Changement de rôle lisible (ancienne résistance → support…)", "roles.ts"],["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"], ["Vocabulaire de référence (lib/vocabulary/trading-terms.json)", "vocabulaire.ts"]]) {
   process.stdout.write(`… ${rule}\n`);
   const out = viteNode(file);
   const r = resultOf(out);
@@ -89,8 +89,8 @@ for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts 
   record(rule, r ? r.e : null, r ? detail : out.split("\n").slice(-5).join(" "), r ? r.w : 0);
 }
 // Autotests des règles de zones (libellé inventé), du tracé (liquidité trop loin, extrême hors
-// d'un creux, FVG décalé…), des stops et du R/R affiché (ancien seuil de risque absolu)
-for (const [rule, file] of [["Autotest des zones (défauts injectés)", "zones.ts"], ["Autotest du tracé (défauts injectés)", "trace.ts"], ["Autotest des stops (défauts injectés)", "stops.ts"], ["Autotest du R/R affiché (défaut injecté)", "rr-btt.ts"], ["Autotest des termes de niveau (défauts injectés)", "termes-niveaux.ts"], ["Autotest du changement de rôle (défauts injectés)", "roles.ts"]]) {
+// d'un creux, FVG décalé…), des stops, des bornes de range et du R/R affiché (ancien seuil de risque absolu)
+for (const [rule, file] of [["Autotest des zones (défauts injectés)", "zones.ts"], ["Autotest du tracé (défauts injectés)", "trace.ts"], ["Autotest des stops (défauts injectés)", "stops.ts"], ["Autotest des bornes de range (défauts injectés)", "range.ts"], ["Autotest du R/R affiché (défaut injecté)", "rr-btt.ts"], ["Autotest des termes de niveau (défauts injectés)", "termes-niveaux.ts"], ["Autotest du changement de rôle (défauts injectés)", "roles.ts"]]) {
   const out = viteNode(file, ["--autotest"]);
   const r = resultOf(out);
   record(rule, r ? r.e : null, out.split("\n").filter((l) => /^MANQUÉ/.test(l)).join(" | "));

@@ -146,9 +146,11 @@ const CHECKS: Record<string, Record<string, Check>> = {
   },
   trade_before_news: {},
   range_no_opp: {
-    "oscille dans le range sans tester ses bornes": (ch) => {
+    // « au milieu d'un range, sans test de zone » : le range se lit à ses bornes (touchées plus tôt) ;
+    // les 3 dernières bougies, au milieu, n'en testent aucune
+    "oscille au milieu du range, sans test de zone en cours": (ch) => {
       const r = zoneOf(ch, "resistance"); const s = zoneOf(ch, "support");
-      return ch.past.every((k) => k.h < lo(r) && k.l > hi(s)) ? null : "une mèche teste une borne du range";
+      return ch.past.slice(-3).every((k) => k.h < lo(r) && k.l > hi(s)) ? null : "une des 3 dernières bougies teste une borne du range";
     },
     "dernière bougie au milieu du range": (ch) => {
       const r = zoneOf(ch, "resistance"); const s = zoneOf(ch, "support"); const mid = (lo(r) + hi(s)) / 2; const third = (lo(r) - hi(s)) / 3;

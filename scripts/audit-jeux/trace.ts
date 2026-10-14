@@ -10,7 +10,9 @@
 //  - FVG : exactement l'écart entre la mèche de la bougie 1 et celle de la bougie 3 (± FVG_TOL ×
 //    MR), au plus FVG_MAX × MR ;
 //  - Order Block : la bougie opposée avant l'impulsion, pas plus (bords à ± OB_TOL × MR) ;
-//  - support / résistance, haut / bas du range : bande fine (≤ SR_MAX × MR).
+//  - support / résistance, haut / bas du range : bande fine (≤ SR_MAX × MR), aussi épaisse que
+//    l'écart de ses touches (au plus SR_BEYOND × MR au-delà des pointes de mèche qui la touchent ;
+//    support / résistance seulement : les bornes de range sont jugées par range.ts).
 // Usage : npx vite-node scripts/audit-jeux/trace.ts [--autotest] [--detail] (lancé par run.mjs)
 import { auditCtx } from "./market-ctx";
 import * as BS from "../../lib/games/buy-sell-no-trade";
@@ -21,7 +23,7 @@ import { buildGamePreviews } from "../../lib/games/previews";
 import { buildHeroRounds } from "../../app/[locale]/_home/hero-rounds";
 import type { Candle, ChartZone } from "../../lib/games/shared";
 
-export const LIQ_MAX = 1.0, PIVOT_MAX = 1.0, SR_MAX = 1.5, FVG_MAX = 2.5, FVG_TOL = 0.2, OB_TOL = 0.25, PIVOT_TOL = 0.35, BOUNCE = 0.4;
+export const LIQ_MAX = 1.0, PIVOT_MAX = 1.0, SR_MAX = 1.5, FVG_MAX = 2.5, FVG_TOL = 0.2, OB_TOL = 0.25, PIVOT_TOL = 0.35, BOUNCE = 0.4, SR_BEYOND = 0.3;
 const ROUNDS = +(process.argv.find((a) => a.startsWith("--rounds="))?.split("=")[1] ?? 200);
 const VOLS = ["faible", "normale", "élevée"] as const;
 const DETAIL = process.argv.includes("--detail");
@@ -118,6 +120,19 @@ export function zoneTraceError(past: Candle[], z: ChartZone, zones: ChartZone[] 
     return ok ? null : `« ${z.label} » posé sur aucun ${high ? "sommet" : "creux"} visible`;
   }
   if (SR.test(z.label) && h > SR_MAX * MR) return `« ${z.label} » épais de ${r(h)} × la bougie médiane (max ${SR_MAX})`;
+  if (SR.test(z.label) && !/^(haut|bas) du range/i.test(z.label)) {
+    // aussi épais que l'écart des touches : pas plus de SR_BEYOND × MR au-delà des pointes de mèche qui la touchent
+    const tol = 0.25 * MR, tips: number[] = [];
+    for (const k of past) {
+      const top = Math.max(k.o, k.c), bot = Math.min(k.o, k.c);
+      if (bot >= hi && k.l <= hi + tol && k.l >= lo - tol) tips.push(k.l);
+      else if (top <= lo && k.h >= lo - tol && k.h <= hi + tol) tips.push(k.h);
+    }
+    if (tips.length >= 2) {
+      const over = Math.max(Math.min(...tips) - lo, hi - Math.max(...tips));
+      if (over > SR_BEYOND * MR) return `« ${z.label} » plus épais que l'écart de ses touches (${r(over)} × la bougie médiane au-delà, max ${SR_BEYOND})`;
+    }
+  }
   return null;
 }
 
@@ -162,6 +177,7 @@ if (!process.env.TRACE_NO_MAIN) {
       ["liquidité épaisse", /épaisse/, () => { const f = find(/^Liquidité (au-dessus|en-dessous)/); return f && [f.c.past, { ...f.z, y2: Math.max(f.z.y1, f.z.y2) + 2 * MRof(f.c) }]; }],
       ["plus bas précédent hors d'un creux", /aucun creux/, () => { const f = find(/^Plus bas précédent/); return f && [f.c.past, { ...f.z, y1: f.z.y1 + 6 * MRof(f.c), y2: f.z.y2 + 6 * MRof(f.c) }]; }],
       ["FVG décalé de l'écart", /aucune impulsion/, () => { const f = find(/^FVG/); return f && [f.c.past, { ...f.z, y1: f.z.y1 + 0.8 * MRof(f.c), y2: f.z.y2 + 0.8 * MRof(f.c) }]; }],
+      ["support plus épais que ses touches", /écart de ses touches/, () => { const f = find(/^Support$/); return f && [f.c.past, { ...f.z, y1: Math.min(f.z.y1, f.z.y2) - 0.9 * MRof(f.c) }]; }],
       ["support épais", /épais/, () => { const f = find(/^Support$/); return f && [f.c.past, { ...f.z, y2: Math.max(f.z.y1, f.z.y2) + 3 * MRof(f.c) }]; }],
       ["plus bas précédent sur la bougie juste avant le sweep", /sans rebond/, () => {
         const c = all.find((x) => x.zones.some((z) => /^Plus bas précédent/.test(z.label)) && x.zones.some((z) => /^Liquidité balayée/.test(z.label)));
