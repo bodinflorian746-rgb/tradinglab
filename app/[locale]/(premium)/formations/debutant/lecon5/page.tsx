@@ -34,7 +34,7 @@ function ContentFr() {
           items: [
             "La variation de prix jusqu'au SL est identique pour tous les traders sur le trade",
             "Le gain ou la perte en argent dépend de la taille de ta position, ton lot",
-            "Même trade, même SL, même TP : avec des lots différents, les montants gagnés ou perdus sont totalement différents",
+            "Même trade, même SL, même Take Profit (TP, l'objectif, leçon 6) : avec des lots différents, les montants gagnés ou perdus sont totalement différents",
           ],
         },
         {
@@ -49,7 +49,7 @@ function ContentFr() {
         },
         {
           title: "Où placer son Stop Loss ?",
-          content: "Un bon SL ne se place pas au hasard. Il se place à un endroit logique sur le graphique, là où ton analyse serait clairement fausse si le prix l'atteignait.",
+          content: "Un bon SL ne se place pas au hasard. Il se place à un endroit logique sur le graphique, là où ton analyse serait clairement fausse si le prix l'atteignait. Un swing low est un creux marqué : une bougie dont le plus bas est plus bas que celui des bougies voisines, de chaque côté. Un swing high est l'inverse, un sommet marqué.",
           visual: <StopLossChartDiagram />,
           items: [
             "Long : SL juste en dessous du dernier swing low significatif (le support)",
@@ -75,7 +75,7 @@ function ContentFr() {
       ]}
       exerciseTitle="Identifier des placements de Stop Loss logiques"
       exercise={[
-        "Sur TradingView, ouvre Bitcoin (BTC/USD) en H1",
+        "Sur TradingView, ouvre Bitcoin (BTC/USD) en H1 (une bougie par heure)",
         "Repère le dernier mouvement haussier. Identifie le dernier swing low avant cette hausse.",
         "Si tu achetais au prix actuel, ton SL irait juste en dessous de ce swing low. Note le prix exact.",
         "Calcule la différence en euros entre ce SL et le prix actuel. C'est le risque maximum de ce trade.",

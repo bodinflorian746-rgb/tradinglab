@@ -39,7 +39,7 @@ function ContentFr() {
         },
         {
           title: "Patterns de bougies à connaître",
-          content: "Ces setups reviennent souvent. Ils donnent des informations, mais leur valeur dépend entièrement de l'endroit où ils apparaissent sur le graphique.",
+          content: "Ces setups (des situations de marché qui reviennent et qu'on apprend à reconnaître) reviennent souvent. Ils donnent des informations, mais leur valeur dépend entièrement de l'endroit où ils apparaissent sur le graphique.",
           items: [
             "Marteau : petit corps en haut, longue mèche basse → les vendeurs ont essayé de faire baisser, les acheteurs ont résisté fort",
             "Étoile filante : petit corps en bas, longue mèche haute → les acheteurs ont essayé de faire monter, les vendeurs ont rejeté",

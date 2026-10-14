@@ -69,7 +69,7 @@ export const FORMATIONS: Formation[] = [
       { id: "lecon3", title: "Order Blocks",                           duration: "24 min", href: "/formations/avance/lecon3" },
       { id: "lecon4", title: "Killzones : les sessions qui comptent",  duration: "20 min", href: "/formations/avance/lecon4" },
       { id: "lecon5", title: "OTE : Optimal Trade Entry",              duration: "22 min", href: "/formations/avance/lecon5" },
-      { id: "lecon6", title: "Chasses aux stops : la chasse aux stops",       duration: "22 min", href: "/formations/avance/lecon6" },
+      { id: "lecon6", title: "La chasse aux stops",       duration: "22 min", href: "/formations/avance/lecon6" },
       { id: "lecon7", title: "Entrées de précision",                   duration: "25 min", href: "/formations/avance/lecon7" },
       { id: "lecon8", title: "Journaling : analyser pour progresser",  duration: "18 min", href: "/formations/avance/lecon8" },
       { id: "lecon9", title: "Backtesting : valider sa stratégie",     duration: "22 min", href: "/formations/avance/lecon9" },

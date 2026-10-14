@@ -706,7 +706,7 @@ export const LESSONS: LevelData[] = [
             ],
           },
           {
-            heading: "La grille adaptée au retail",
+            heading: "La grille adaptée aux particuliers (le « retail »)",
             body: "Voici la grille de référence : adapte ton risque par trade à ton capital réel. Le % baisse à mesure que le capital monte, parce que tu as plus à protéger.",
             table: {
               headers: ["Capital de départ", "Risque maximum par trade", "Exemple concret"],
@@ -757,7 +757,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "L'effet du drawdown : pourquoi protéger son capital",
-            body: "Plus la perte est lourde, plus la remontée est disproportionnée. D'où la priorité : préserver le capital plutôt que chercher à se refaire.",
+            body: "Le drawdown, c'est la baisse de ton capital depuis son plus haut. Plus la perte est lourde, plus la remontée est disproportionnée. D'où la priorité : préserver le capital plutôt que chercher à se refaire.",
             table: {
               headers: ["Perte subie", "Gain nécessaire pour revenir à l'équilibre"],
               rows: [

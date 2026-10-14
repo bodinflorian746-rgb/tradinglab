@@ -11,7 +11,7 @@ function ContentFr() {
     <LessonPage
       formationId="avance"
       lessonId="lecon6"
-      title="Chasses aux stops, la chasse aux stops"
+      title="La chasse aux stops"
       subtitle="Les chasses aux stops ne sont pas de la manipulation illégale, ils sont une mécanique structurelle du marché. Apprendre à les lire te transforme de victime en observateur averti."
       duration="22 min"
       lessonNumber={6}
@@ -42,7 +42,7 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Reconnaître une chasse aux stops en temps réel</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Plusieurs signaux permettent d&apos;identifier une chasse aux stops avant ou pendant qu&apos;il se produit.
+          Plusieurs signaux permettent d&apos;identifier une chasse aux stops avant ou pendant qu&apos;elle se produit.
         </p>
         <div className="space-y-2.5">
           {[
@@ -52,7 +52,7 @@ function ContentFr() {
             },
             {
               label: "Clôture de l'autre côté du niveau",
-              detail: "La bougie pierce le niveau mais clôture de l'autre côté. Cela confirme que la pénétration était temporaire (chasse aux stops), pas un vrai breakout.",
+              detail: "La bougie perce le niveau mais clôture de l'autre côté. Cela confirme que la pénétration était temporaire (chasse aux stops), pas un vrai breakout.",
             },
             {
               label: "Retournement brutal et rapide",

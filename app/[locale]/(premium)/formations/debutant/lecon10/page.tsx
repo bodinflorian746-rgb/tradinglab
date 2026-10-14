@@ -17,7 +17,7 @@ export default async function Page({
       formationId="debutant"
       lessonId="lecon10"
       title="Gestion du risque : pourquoi 90% des traders perdent"
-      subtitle="Le problème du retail n&apos;est généralement pas l&apos;entrée. Il vient de ce qui se passe AUTOUR du trade : risque trop élevé, mauvais RR, levier excessif, revenge trading. Deux traders avec le même setup : l&apos;un finit rentable, l&apos;autre détruit son compte. La différence ne vient pas de la stratégie. Elle vient de la gestion du risque."
+      subtitle="Le problème du retail n&apos;est généralement pas l&apos;entrée. Il vient de ce qui se passe AUTOUR du trade : risque trop élevé, mauvais R/R, levier excessif (une position trop grosse pour le capital), revenge trading. Deux traders avec le même setup : l&apos;un finit rentable, l&apos;autre détruit son compte. La différence ne vient pas de la stratégie. Elle vient de la gestion du risque."
       duration="13 min"
       lessonNumber={10}
       prev={{ href: "/formations/debutant/lecon9", label: "Leçon 9" }}
@@ -109,7 +109,7 @@ export default async function Page({
 
       {/* ── Section 4 — Pourquoi le RR change tout ───────────────────────── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Pourquoi le RR change tout</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Pourquoi le R/R change tout</h2>
 
         <h3 className="text-base font-semibold text-white mb-3">Imagine deux situations</h3>
         <p className="text-zinc-300 leading-relaxed text-sm">
@@ -123,21 +123,21 @@ export default async function Page({
           Évidemment la situation 2. Tu gagnes 4 fois plus pour exactement le même risque. Et pourtant, 90% des retails passent leur temps à prendre des trades de type Situation 1 sans s&apos;en rendre compte. Soit parce qu&apos;ils placent leur Take Profit trop tôt «&nbsp;pour sécuriser&nbsp;», soit parce qu&apos;ils acceptent des trades médiocres où le potentiel de gain est minuscule par rapport au risque.
         </p>
 
-        <h3 className="text-base font-semibold text-white mt-6 mb-3">Le RR, c&apos;est quoi exactement ?</h3>
+        <h3 className="text-base font-semibold text-white mt-6 mb-3">Le R/R, c&apos;est quoi exactement ?</h3>
         <p className="text-zinc-300 leading-relaxed text-sm">
-          Le RR (ratio risque/rendement) est le rapport entre ce que tu RISQUES et ce que tu peux GAGNER sur un trade.
+          Le R/R (ratio risque/rendement) est le rapport entre ce que tu RISQUES et ce que tu peux GAGNER sur un trade.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mt-3">
-          Si tu risques 20€ et que tu vises 40€ → ton RR est de 1:2.<br />
-          Si tu risques 20€ et que tu vises 60€ → ton RR est de 1:3.<br />
-          Si tu risques 20€ et que tu vises 10€ → ton RR est de 1:0,5 (catastrophique).
+          Si tu risques 20€ et que tu vises 40€ → ton R/R est de 1:2.<br />
+          Si tu risques 20€ et que tu vises 60€ → ton R/R est de 1:3.<br />
+          Si tu risques 20€ et que tu vises 10€ → ton R/R est de 1:0,5 (catastrophique).
         </p>
 
         <div className="mt-5">
           <RRComparisonDiagram />
         </div>
         <p className="text-[13px] text-zinc-400 italic leading-relaxed mt-3 text-center">
-          À risque égal (20€ dans les deux cas), le bon RR te fait gagner 4x plus. Et sur 10 trades avec un winrate de 50%, la situation 1 te fait perdre 50&nbsp;€, la situation 2 te fait gagner 100&nbsp;€.
+          À risque égal (20€ dans les deux cas), le bon R/R te fait gagner 4x plus. Et sur 10 trades avec un winrate de 50%, la situation 1 te fait perdre 50&nbsp;€, la situation 2 te fait gagner 100&nbsp;€.
         </p>
 
         <h3 className="text-base font-semibold text-white mt-6 mb-3">Ce que ça veut vraiment dire</h3>
@@ -151,7 +151,7 @@ export default async function Page({
               <tr className="bg-zinc-800">
                 <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Trader</th>
                 <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Winrate</th>
-                <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">RR</th>
+                <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">R/R</th>
                 <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Risque/trade</th>
                 <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Sur 10 trades, en moyenne</th>
               </tr>
@@ -202,7 +202,7 @@ export default async function Page({
 
       {/* ── Section 6 — Exemple concret XAU/USD ──────────────────────────── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-3">Exemple concret XAU/USD : deux RR, deux résultats</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">Exemple concret XAU/USD : deux R/R, deux résultats</h2>
 
         <div className="bg-zinc-800/50 border-l-4 border-amber-400 px-5 py-4 rounded">
           <div className="flex items-center gap-2 mb-2">
@@ -210,19 +210,19 @@ export default async function Page({
             <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
           </div>
           <p className="text-base text-zinc-300 leading-relaxed">
-            Deux traders prennent XAU/USD au même moment, sur le même setup d&apos;entrée. Même capital de 500€, même risque de 15€ (3%). La seule différence : où ils placent leur Take Profit. Donc leur RR. Voilà l&apos;impact réel sur 10 trades.
+            Deux traders prennent XAU/USD au même moment, sur le même setup d&apos;entrée. Même capital de 500€, même risque de 15€ (3%). La seule différence : où ils placent leur Take Profit. Donc leur R/R. Voilà l&apos;impact réel sur 10 trades.
           </p>
         </div>
 
-        <h3 className="text-base font-semibold text-white mt-5 mb-3">Même setup, deux RR : résultat après 10 trades</h3>
+        <h3 className="text-base font-semibold text-white mt-5 mb-3">Même setup, deux R/R : résultat après 10 trades</h3>
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-zinc-800">
                 <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Critère</th>
-                <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Trader RR 1:1</th>
-                <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Trader RR 1:3</th>
+                <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Trader R/R 1:1</th>
+                <th className="text-left text-[11px] font-semibold text-zinc-400 uppercase tracking-wide py-2 px-3">Trader R/R 1:3</th>
               </tr>
             </thead>
             <tbody>
@@ -248,8 +248,8 @@ export default async function Page({
               </tr>
               <tr className="bg-zinc-900/40">
                 <td className="py-2.5 px-3 leading-snug text-white font-medium text-sm">TP</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">4&nbsp;340 (20 pts, RR 1:1)</td>
-                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">4&nbsp;380 (60 pts, RR 1:3)</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">4&nbsp;340 (20 pts, R/R 1:1)</td>
+                <td className="py-2.5 px-3 leading-snug text-zinc-400 text-sm">4&nbsp;380 (60 pts, R/R 1:3)</td>
               </tr>
               <tr>
                 <td className="py-2.5 px-3 leading-snug text-white font-medium text-sm">Winrate sur 10 trades</td>
@@ -276,7 +276,7 @@ export default async function Page({
         </div>
 
         <p className="text-zinc-300 leading-relaxed text-sm mt-5">
-          Le trader RR 1:1 gagne plus souvent (60% des trades). Mais il finit la série à +30€. Le trader RR 1:3 perd plus souvent (60% des trades), mais il finit à +90€. Soit 3x plus rentable, avec moins de trades gagnants. C&apos;est ça, la puissance du RR : tu peux te tromper plus de la moitié du temps et être quand même beaucoup plus rentable que celui qui a raison plus souvent.
+          Le trader R/R 1:1 gagne plus souvent (60% des trades). Mais il finit la série à +30€. Le trader R/R 1:3 perd plus souvent (60% des trades), mais il finit à +90€. Soit 3x plus rentable, avec moins de trades gagnants. C&apos;est ça, la puissance du R/R : tu peux te tromper plus de la moitié du temps et être quand même beaucoup plus rentable que celui qui a raison plus souvent.
         </p>
       </section>
 
@@ -292,7 +292,7 @@ export default async function Page({
             "Risque par trade : 2% à 5% du capital au maximum, selon ta grille de la leçon 8 (5% de 200 à 499 €, 3% de 500 à 999 €, 2% de 1 000 à 4 999 €)",
             "Maximum 2-3 trades par jour",
             "Stop journalier : 10% à 15% du capital max par jour",
-            "RR minimum acceptable : 1:2",
+            "R/R minimum acceptable : 1:2",
             "Arrêt immédiat après une perte qui te fait perdre ta lucidité émotionnelle",
             "Jamais de revenge trading",
             "Jamais déplacer un SL pour « espérer »",
@@ -361,10 +361,10 @@ export default async function Page({
 
       {/* ── Quiz de fin de leçon (3 questions) ───────────────────────────── */}
       <LessonQuiz
-        question="Tu risques 20€ pour gagner 60€ sur un trade. Quel est ton RR ?"
+        question="Tu risques 20€ pour gagner 60€ sur un trade. Quel est ton R/R ?"
         options={["1:0,3", "1:2", "1:3", "1:60"]}
         correctIndex={2}
-        explanation="RR = gain potentiel / risque. Ici 60€ / 20€ = 3. Donc le RR est de 1:3. Tu risques 1 pour gagner 3."
+        explanation="R/R = gain potentiel / risque. Ici 60€ / 20€ = 3. Donc le R/R est de 1:3. Tu risques 1 pour gagner 3."
       />
 
       <LessonQuiz
@@ -377,13 +377,13 @@ export default async function Page({
       <LessonQuiz
         question="Quel trader est le plus rentable sur 10 trades, avec un risque constant de 15€ par trade ?"
         options={[
-          "Trader A : 80% de winrate, RR 1:0,5",
-          "Trader B : 50% de winrate, RR 1:2",
-          "Trader C : 90% de winrate, RR 1:0,3",
+          "Trader A : 80% de winrate, R/R 1:0,5",
+          "Trader B : 50% de winrate, R/R 1:2",
+          "Trader C : 90% de winrate, R/R 1:0,3",
           "Tous identiques car la chance compense",
         ]}
         correctIndex={1}
-        explanation="Trader A : 8 × +7,50€ - 2 × 15€ = +30€. Trader B : 5 × +30€ - 5 × 15€ = +75€. Trader C : 9 × +4,50€ - 1 × 15€ = +25,50€. Le trader B est le plus rentable malgré son winrate plus faible, grâce à son RR. C&apos;est la puissance de l&apos;asymétrie."
+        explanation="Trader A : 8 × +7,50€ - 2 × 15€ = +30€. Trader B : 5 × +30€ - 5 × 15€ = +75€. Trader C : 9 × +4,50€ - 1 × 15€ = +25,50€. Le trader B est le plus rentable malgré son winrate plus faible, grâce à son R/R. C&apos;est la puissance de l&apos;asymétrie."
       />
     </LessonPage>
   );
