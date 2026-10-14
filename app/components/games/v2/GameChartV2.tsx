@@ -371,8 +371,8 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
     ...(mark && mode === "verdict" ? [{ x1: 0, x2: W, y1: 0, y2: bannerBottom }] : []),
   ];
   const floating = !inline ? [] : [
-    ...zoneLabelIdx.filter((i) => !(mark && showMark && mark.kind === "zone" && mark.index === i)).map((i) => ({ label: zones[i].label, price: (zones[i].y1 + zones[i].y2) / 2, line: false, isMark: false })),
-    ...(mark && showMark && markPrice !== undefined ? [{ label: mark.label, price: markPrice, line: mark.kind === "line", isMark: true }] : []),
+    ...zoneLabelIdx.filter((i) => !(mark && showMark && mark.kind === "zone" && mark.index === i)).map((i) => ({ label: zones[i].label, price: (zones[i].y1 + zones[i].y2) / 2, line: false, isMark: false, zone: [Math.min(zones[i].y1, zones[i].y2), Math.max(zones[i].y1, zones[i].y2)] as [number, number] })),
+    ...(mark && showMark && markPrice !== undefined ? [{ label: mark.label, price: markPrice, line: mark.kind === "line", isMark: true, zone: undefined }] : []),
   ];
   // Étiquettes de lignes (TP, entrée, stops, candidats) : prix de leur ligne
   const linePills: [string, number][] = !inline ? [] : [
@@ -430,9 +430,14 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
     for (const [l, p] of linePills) boxes.push({ x1: W - padX - inlineTagW(l) - INLINE_TAG_GAP, x2: W, y1: ty(p) - INLINE_TAG_H / 2 - 2 - PACK_SHIFT, y2: ty(p) + INLINE_TAG_H / 2 + 2 + PACK_SHIFT });
     // Posées une à une dans l'ordre du placement réel (celle de l'erreur sur sa ligne d'abord, puis
     // la plus longue) : chacune devient un obstacle pour les suivantes
-    return [...floating].sort((a, b) => Number(b.line) - Number(a.line) || inlineTagW(b.label) - inlineTagW(a.label)).filter(({ label, price, line, isMark }) => {
+    return [...floating].sort((a, b) => Number(b.line) - Number(a.line) || inlineTagW(b.label) - inlineTagW(a.label)).filter(({ label, price, line, isMark, zone }) => {
       const w = inlineTagW(label);
-      const shifts = line ? [0, 2, -2, 4, -4, 6, -6, 8, -8] : [0, ...Array.from({ length: isMark ? MARK_TAG_STEPS : 6 }, (_, k) => k + 1).flatMap((k) => [k, -k].map((d) => d * (INLINE_TAG_H + INLINE_TAG_GAP) / 2))];
+      // zone : d'abord les places qui touchent la zone (comme au placement réel)
+      const touch: number[] = [];
+      if (zone) { const reach = INLINE_TAG_H / 2 + 8, y0 = ty(price); for (let yy = ty(zone[1]) - reach; yy <= ty(zone[0]) + reach; yy += 2) touch.push(yy - y0); touch.sort((a, b) => Math.abs(a) - Math.abs(b)); }
+      // une étiquette de zone qui ne touche pas sa zone compte comme sans place : la marge
+      // s'élargit (ou une bande s'ouvre) pour qu'elle reste à côté de ce qu'elle nomme
+      const shifts = line ? [0, 2, -2, 4, -4, 6, -6, 8, -8] : zone ? [0, ...touch] : [0, ...Array.from({ length: isMark ? MARK_TAG_STEPS : 6 }, (_, k) => k + 1).flatMap((k) => [k, -k].map((d) => d * (INLINE_TAG_H + INLINE_TAG_GAP) / 2))];
       for (const d of shifts) {
         const y = ty(price) + d;
         if (y < INLINE_TAG_H / 2 + 1 || y > H - INLINE_TAG_H / 2 - 1) continue;
@@ -725,6 +730,24 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
           if (Math.abs(d) > MAX_SHIFT || yy < INLINE_TAG_H / 2 + 1 || yy > H - INLINE_TAG_H / 2 - 1) continue;
           const xx = clearX(yy, w);
           if (xx !== null) { x = xx; y = yy; break; }
+        }
+        // Zone : d'abord une place qui touche la zone (bord à au plus 8 px de
+        // ses bords), la plus proche de son milieu ; sinon l'étiquette s'éloignait au-delà d'un
+        // niveau voisin (« Liquidité balayée » au-dessus du « Plus bas précédent »)
+        if (x === null && s.key.startsWith("zone")) {
+          const z = zones[+s.key.slice(4)];
+          const reach = INLINE_TAG_H / 2 + 8, zt = toY(Math.max(z.y1, z.y2)) - reach, zb = toY(Math.min(z.y1, z.y2)) + reach;
+          // puis, faute de place contre la zone, la place libre la plus proche d'elle (jamais à l'autre
+          // bout du graphique, à côté d'un autre niveau : « Swing high 1 » près du Swing high 3)
+          const far = 6 * (INLINE_TAG_H + INLINE_TAG_GAP), gap = (yy: number) => (yy < zt ? zt - yy : yy > zb ? yy - zb : 0);
+          const cands: number[] = [];
+          for (let yy = zt - far; yy <= zb + far; yy += 2) cands.push(yy);
+          cands.sort((a, b) => gap(a) - gap(b) || Math.abs(a - y0) - Math.abs(b - y0));
+          for (const yy of cands) {
+            if (yy < INLINE_TAG_H / 2 + 1 || yy > H - INLINE_TAG_H / 2 - 1) continue;
+            const xx = clearX(yy, w);
+            if (xx !== null) { x = xx; y = yy; break; }
+          }
         }
         if (x === null && !onLine(s.key)) for (let k = 1; x === null && k <= (s.key === "markTag" ? MARK_TAG_STEPS : 6); k++) for (const dir of [1, -1]) {
           const yy = y0 + dir * k * (INLINE_TAG_H + INLINE_TAG_GAP) / 2;

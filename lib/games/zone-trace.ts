@@ -167,6 +167,11 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
     const w = Math.max(TRACE.SR_MIN * MR, Math.min(TRACE.SR_W * MR, ext.length ? Math.max(...ext) - Math.min(...ext) : TRACE.SR_W * MR));
     Object.assign(z, band(c, w));
   }
+  // Graphique étroit (téléphone) : « Liquidité » seul, la zone dit où elle dort ; le libellé long
+  // ne trouvait pas de place contre sa zone entre le niveau voisin et les stops
+  for (const z of out) if (/^Liquidité (balayée|au-dessus|en-dessous)$/.test(z.label) && !z.short) z.short = "Liquidité";
+  // (la pastille de session dit « Asie »)
+  for (const z of out) if (z.label === "Haut de la session asiatique" && !z.short) z.short = "Haut Asie";
   return out;
 }
 
