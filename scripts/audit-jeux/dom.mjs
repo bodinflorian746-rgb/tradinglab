@@ -89,7 +89,7 @@ const probeLabels = async (page, opts) => {
   await page.waitForFunction(() => [...document.querySelectorAll(".tsx-v2 .v2-chart .v2-labels")].every((g) => getComputedStyle(g).opacity === "1"), null, { timeout: 15000 }).catch(() => {});
   return measureLabels(page, opts);
 };
-const measureLabels = (page, { mobile, buttons }) => page.evaluate(({ mobile, buttons }) => {
+const measureLabels = (page, { mobile, buttons, ps }) => page.evaluate(({ mobile, buttons, ps }) => {
   const chart = document.querySelector(".tsx-v2 .v2-chart");
   const svg = chart?.querySelector("svg.v2-svg");
   if (!svg) return ["graphique absent"];
@@ -125,7 +125,26 @@ const measureLabels = (page, { mobile, buttons }) => page.evaluate(({ mobile, bu
     const a = labels[i].r, b = labels[j].r;
     if (a.left < b.right - 0.5 && b.left < a.right - 0.5 && a.top < b.bottom - 0.5 && b.top < a.bottom - 0.5) errs.push(`« ${labels[i].txt} » chevauche « ${labels[j].txt} »`);
   }
-  if (mobile && labels.length > 4) errs.push(`${labels.length} étiquettes visibles (max 4) : ${labels.map((t) => t.txt).join(", ")}`);
+  // Étiquette de zone à côté de sa zone, sans ambiguïté : son bord à au plus une hauteur d'étiquette
+  // de la zone, et, si elle ne la touche pas, aucune autre zone plus proche d'elle que la sienne
+  const zoneRect = (i) => { const z = svg.querySelector(`[data-zone="${i}"]`); return z && [...z.querySelectorAll("rect")].map((e) => e.getBoundingClientRect()).filter((r) => r.width > 0).sort((p, q) => q.width - p.width)[0]; };
+  const allZones = [...svg.querySelectorAll("[data-zone]")].map((z) => z.getAttribute("data-zone"));
+  const gapTo = (cy, r) => (cy < r.top ? r.top - cy : cy > r.bottom ? cy - r.bottom : 0);
+  for (const t of labels.filter((x) => /^zone\d+$/.test(x.key))) {
+    const zr = zoneRect(t.key.slice(4));
+    if (!zr) continue;
+    const cy = (t.r.top + t.r.bottom) / 2, own = gapTo(cy, zr);
+    if (own > t.r.height * 1.5) errs.push(`étiquette « ${t.txt} » loin de sa zone (${Math.round(own)} px)`);
+    // (une étiquette qui touche sa zone n'est jamais ambiguë, même posée sur une zone voisine)
+    const other = own > t.r.height / 2 && allZones.filter((i) => i !== t.key.slice(4)).map((i) => zoneRect(i)).filter(Boolean).find((r) => gapTo(cy, r) + 0.5 < own);
+    if (other) errs.push(`étiquette « ${t.txt} » plus près d'une autre zone que de la sienne`);
+  }
+
+  // Téléphone : au plus 4 étiquettes ; Place ton Stop (entrée + 3 stops, puis les niveaux cités par les
+  // justifications, demande du PO) : au plus 4 étiquettes de lignes et 3 de zones
+  const zoneLabels = labels.filter((x) => /^zone\d+$/.test(x.key)), lineLabels = labels.filter((x) => !/^zone\d+$/.test(x.key));
+  if (mobile && !ps && labels.length > 4) errs.push(`${labels.length} étiquettes visibles (max 4) : ${labels.map((t) => t.txt).join(", ")}`);
+  if (mobile && ps && (lineLabels.length > 4 || zoneLabels.length > 3)) errs.push(`${lineLabels.length} étiquettes de lignes (max 4) et ${zoneLabels.length} de zones (max 3) : ${labels.map((t) => t.txt).join(", ")}`);
   if (buttons) {
     const names = [...document.querySelectorAll(buttons.selector)].map((b) => (b.getAttribute("aria-label") ?? b.querySelector("span")?.textContent ?? "").trim());
     const onChart = labels.filter((t) => new RegExp(buttons.keys).test(t.key)).map((t) => t.txt);
@@ -134,7 +153,7 @@ const measureLabels = (page, { mobile, buttons }) => page.evaluate(({ mobile, bu
   const legend = [...document.querySelectorAll(".tsx-v2 [data-legend]")].map((e) => e.textContent.trim());
   for (const t of labels) if (legend.includes(t.txt)) errs.push(`« ${t.txt} » à la fois sur le graphique et en légende`);
   return errs;
-}, { mobile, buttons });
+}, { mobile, buttons, ps: !!ps });
 // Graphique (question et verdict) : chaque zone est dessinée derrière les bougies ; chaque corps
 // est au moins 3 fois plus large que sa mèche ; en mobile (390), le graphique tient en entier dans
 // l'écran tel que le joueur le voit, sans défiler : sous le bandeau du site, au-dessus de la barre
@@ -265,7 +284,7 @@ async function session(browser, slug, loc, w) {
       await page.waitForTimeout(round === 0 ? 4500 : 1500);
       if (round === 0) add("question", await scan(page));
       if (slug === "place-stop") add(`round ${round + 1}`, await probeStops(page));
-      if (slug !== "build-the-trade") add(`round ${round + 1} étiquettes`, await probeLabels(page, { mobile, buttons: slug === "place-stop" ? STOP_BUTTONS : null }));
+      if (slug !== "build-the-trade") add(`round ${round + 1} étiquettes`, await probeLabels(page, { mobile, buttons: slug === "place-stop" ? STOP_BUTTONS : null, ps: slug === "place-stop" }));
       add(`round ${round + 1} graphique`, await measureChart(page, { mobile }));
       if (slug === "build-the-trade") {
         // Étiquettes à chaque étape (le choix reste affiché 600 ms, puis le cadrage glisse)
@@ -282,7 +301,7 @@ async function session(browser, slug, loc, w) {
       await page.locator(".v2-verdict").first().waitFor({ timeout: 20000 });
       await page.waitForTimeout(1500);
       add(`verdict ${round + 1}`, await probeVerdict(page));
-      add(`verdict ${round + 1} étiquettes`, await probeLabels(page, { mobile, buttons: null }));
+      add(`verdict ${round + 1} étiquettes`, await probeLabels(page, { mobile, buttons: null, ps: slug === "place-stop" }));
       add(`verdict ${round + 1} graphique`, await measureChart(page, { mobile }));
       const pl = await probeLines(page);
       add(`verdict ${round + 1} lignes`, pl.errs);
@@ -311,6 +330,11 @@ const MUTATIONS = {
     const c = [...svg.querySelectorAll(".v2-candle")].filter((k) => getComputedStyle(k).opacity !== "0").at(-3).querySelector("rect");
     const dx = +c.getAttribute("x") - +r.getAttribute("x"), dy = +c.getAttribute("y") - +r.getAttribute("y");
     g.setAttribute("transform", `translate(${dx} ${dy})`);
+  }],
+  "étiquette de zone loin de sa zone": [/loin de sa zone/, () => {
+    const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
+    const g = svg.querySelector('[data-label-for^="zone"]'), r = g.querySelector("rect").getBoundingClientRect(), s = svg.getBoundingClientRect();
+    g.setAttribute("transform", `translate(0 ${r.top - s.top > s.height / 2 ? -110 : 110})`);
   }],
   "étiquette coupée par le cadre": [/hors du graphique/, () => {
     const g = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg [data-label-for]"), r = g.querySelector("rect");
