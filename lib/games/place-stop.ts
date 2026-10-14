@@ -2594,9 +2594,12 @@ function scnLiquidityHuntZoneSell(rng: () => number, m: number, d: Difficulty, m
   const bumpClose = swingHighTip - 0.3 * m;
   fut.push(explicitCandle(p, bumpClose, bumpHigh, p - 0.15 * m));
   p = bumpClose;
-  for (let i = 0; i < 5; i++) {
+  // 3 bougies de suite suffisent à montrer l'issue (le TP n'est pas tracé) : une chute plus longue
+  // tassait le graphique du verdict en haut, sous la pastille « ton choix », étiquettes mêlées
+  for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o - (0.45 + rng() * 0.45) * m;
+    // la dernière clôture finit nettement sous l'entrée (le trade part dans le sens annoncé)
+    const c = i === 2 ? Math.min(o - (0.3 + rng() * 0.25) * m, entry - (0.4 + rng() * 0.3) * m) : o - (0.3 + rng() * 0.25) * m;
     fut.push(candle(o, c, (0.13 + rng() * 0.1) * m, (0.2 + rng() * 0.15) * m));
     p = c;
   }
@@ -2693,9 +2696,11 @@ function scnMultiSwingHighDeep(rng: () => number, m: number, d: Difficulty, mode
   const bumpClose = swing2Tip - 0.3 * m;
   fut.push(explicitCandle(p, bumpClose, bumpHigh, p - 0.13 * m));
   p = bumpClose;
-  for (let i = 0; i < 5; i++) {
+  // 3 bougies de suite suffisent à montrer l'issue (voir la vente sur swing évident)
+  for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o - (0.45 + rng() * 0.4) * m;
+    // la dernière clôture finit nettement sous l'entrée (le trade part dans le sens annoncé)
+    const c = i === 2 ? Math.min(o - (0.3 + rng() * 0.25) * m, entry - (0.4 + rng() * 0.3) * m) : o - (0.3 + rng() * 0.25) * m;
     fut.push(candle(o, c, (0.13 + rng() * 0.1) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
