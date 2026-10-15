@@ -152,7 +152,7 @@ export default function ContentFr() {
               <li>- Le 2ème sommet du RSI doit être strictement plus bas que le 1er</li>
             </ul>
 
-            <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur XAU/USD. Le prix monte vers un premier sommet à 4 600$, puis redescend vers 4 570$. Ensuite, il repart vers un nouveau sommet à 4 640$, donc un HH. Mais sur le RSI H1, le premier sommet avait atteint 75 alors que le second ne monte qu&apos;à 68. Divergence baissière confirmée.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur EUR/USD. Le prix monte vers un premier sommet à 1.0900, puis redescend vers 1.0870. Ensuite, il repart vers un nouveau sommet à 1.0940, donc un HH. Mais sur le RSI H1, le premier sommet avait atteint 75 alors que le second ne monte qu&apos;à 68. Divergence baissière confirmée.</p>
           </section>
 
           {/* Bloc 5 — LES 4 TYPES DE DIVERGENCE */}
@@ -182,7 +182,7 @@ export default function ContentFr() {
               <li>- Le 2ème creux du RSI doit être strictement plus haut que le 1er</li>
             </ul>
 
-            <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur XAU/USD. Le prix descend vers un premier creux à 4 480$, puis remonte vers 4 510$. Ensuite, il repart vers un nouveau creux à 4 450$, donc un LL. Mais sur le RSI H1, le premier creux avait touché 28 alors que le second remonte à 35. Divergence haussière confirmée.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur EUR/USD. Le prix descend vers un premier creux à 1.0780, puis remonte vers 1.0810. Ensuite, il repart vers un nouveau creux à 1.0750, donc un LL. Mais sur le RSI H1, le premier creux avait touché 28 alors que le second remonte à 35. Divergence haussière confirmée.</p>
           </section>
 
           {/* Bloc 7 — LE PIÈGE : DIVERGENCE SANS CASSURE */}
@@ -199,27 +199,27 @@ export default function ContentFr() {
             </ul>
           </section>
 
-          {/* Bloc 8 — PLAN DE TRADE DIVERGENCE BAISSIÈRE XAU/USD H1 */}
+          {/* Bloc 8 — PLAN DE TRADE DIVERGENCE BAISSIÈRE EUR/USD H1 */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : Divergence baissière XAU/USD H1</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte de la divergence baissière du Bloc 4 est repris. La tendance reste haussière, le prix imprime un HH à 4 640$ et le RSI forme un LH à 68. La divergence est confirmée. Mais une divergence seule ne suffit jamais pour entrer short. Une confirmation supplémentaire est attendue.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">La confirmation classique est la cassure du dernier creux ascendant. Le creux entre les deux sommets se situe à 4 570$. Si le prix clôture une bougie sous 4 570$, la divergence est confirmée par la structure du marché. Ce signal déclenche l&apos;entrée short.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée short se fait juste sous le creux cassé, à 4 565$. Le SL classique se placerait au-dessus du deuxième sommet à 4 650$, mais cela donne un R/R trop faible. Le SL tactique plus serré se place au-dessus du dernier sommet local formé pendant la baisse, à 4 605$, soit 40$ de risque. Le TP suit la measured move : hauteur entre le deuxième sommet à 4 640$ et le creux à 4 570$, soit 70$, projetée sous le creux (4 500$) ; la cible est placée un peu au-delà, à 80$ sous l&apos;entrée, pour obtenir un R/R de 1:2 : moins prudent que le TP placé avant la projection au double top (leçon 1).</p>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : Divergence baissière EUR/USD H1</h2>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte de la divergence baissière du Bloc 4 est repris. La tendance reste haussière, le prix imprime un HH à 1.0940 et le RSI forme un LH à 68. La divergence est confirmée. Mais une divergence seule ne suffit jamais pour entrer short. Une confirmation supplémentaire est attendue.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">La confirmation classique est la cassure du dernier creux ascendant. Le creux entre les deux sommets se situe à 1.0870. Si le prix clôture une bougie sous 1.0870, la divergence est confirmée par la structure du marché. Le setup short est validé ; reste à trouver une entrée au R/R exploitable.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le TP suit la measured move : hauteur entre le deuxième sommet à 1.0940 et le creux à 1.0870, soit 70 pips, projetée sous le creux : 1.0800. La cible reste à la projection, sans l&apos;étendre. Prise juste sous le creux cassé, à 1.0865, avec un SL au-dessus du dernier sommet local formé pendant la baisse (1.0905), l&apos;entrée risquerait 40 pips pour 65 pips de gain : R/R 1:1,63, sous le repère de 1:2 (avec le SL au-dessus du HH à 1.0950, ce serait encore pire). Pas d&apos;entrée à ce moment-là. Si le prix remonte tester le creux cassé par en dessous et le rejette, par exemple mèche à 1.0884 et clôture à 1.0866, c&apos;est le signal d&apos;entrée : SL 6 pips au-dessus de la mèche.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée short : 4 565$ (sous le creux cassé)</li>
-                <li>- Stop loss : 4 605$ (au-dessus du dernier sommet local, soit 40$ au-dessus de l&apos;entrée)</li>
-                <li>- Take profit : 4 485$ (80$, measured move étendu)</li>
+                <li>- Entrée short : 1.0866 (clôture de la bougie de rejet du retest)</li>
+                <li>- Stop loss : 1.0890 (6 pips au-dessus de la mèche du retest à 1.0884)</li>
+                <li>- Take profit : 1.0800 (projection de la measured move)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 605 - 4 565 = 40$</li>
-                <li>- Gain potentiel : 4 565 - 4 485 = 80$</li>
-                <li>- R/R : 80 / 40 = 2, soit 1:2</li>
-                <li>- Setup exploitable.</li>
+                <li>- Risque : 1.0890 - 1.0866 = 24 pips</li>
+                <li>- Gain potentiel : 1.0866 - 1.0800 = 66 pips</li>
+                <li>- R/R : 66 / 24 = 2,75, soit 1:2,75</li>
+                <li>- Juste sous le creux cassé, le même TP donnait 65 / 40 = 1:1,63 : setup refusé. S&apos;il n&apos;y a pas de retest, le trade n&apos;est pas pris, c&apos;est un setup manqué, pas une perte.</li>
               </ul>
             </div>
           </section>
@@ -227,13 +227,15 @@ export default function ContentFr() {
           {/* Bloc 9 — CALCUL RETAIL */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Calcul retail</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le risque par trade s&apos;adapte au capital. Sur ce setup R/R 1:2, voici la répartition selon la taille du compte.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">La règle de risque (2% du capital au maximum) appliquée à l&apos;entrée au retest, au lot près.</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Au lot minimum (0,01 lot), ce stop de 40$ représente déjà environ 34€ de risque (1$ ≈ 0,85€)</li>
-              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
-              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,01 lot, risque environ 34€, gain potentiel environ 68€</li>
+              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,085€ : ce stop de 24 pips représente environ 2€ de risque</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,02 lot, risque environ 4€, gain potentiel environ 11€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,04 lot, risque environ 8€, gain potentiel environ 22€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,09 lot, risque environ 18€, gain potentiel environ 50€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,24 lot, risque environ 49€, gain potentiel environ 135€</li>
             </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1:2 reste solide. La divergence RSI a un winrate moyen quand le pattern est propre et confirmé par la cassure de structure. Sans confirmation, le piège reste élevé.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Pris au retest, le setup offre un R/R de 1:2,75 avec un stop court. Le prix ne revient pas toujours tester le creux cassé : c&apos;est le prix de ce R/R, quelques setups manqués plutôt que des trades au R/R trop faible. Sans cassure du dernier creux, pas de setup du tout.</p>
           </section>
 
           {/* Bloc 10 — FILTRES : QUAND NE PAS PRENDRE LE SETUP */}
@@ -257,13 +259,14 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD H1 : le prix fait un sommet 1 à 4 720$, redescend à 4 690$, puis fait un sommet 2 à 4 740$. Le RSI affichait 78 au sommet 1 et 72 au sommet 2. Le prix vient de clôturer à 4 685$. Tu prends le setup short ?"
+            description="Sur EUR/USD H1 : le prix fait un sommet 1 à 1.1020, redescend à 1.0990, puis fait un sommet 2 à 1.1040. Le RSI affichait 78 au sommet 1 et 72 au sommet 2. Le prix vient de clôturer à 1.0985. Tu prends le setup short ?"
             steps={[
-              "Vérifier que le prix forme un HH : 4 740$ > 4 720$, OK",
+              "Vérifier que le prix forme un HH : 1.1040 > 1.1020, OK",
               "Vérifier que le RSI forme un LH : 72 < 78, OK, divergence baissière confirmée",
-              "Confirmer la cassure structurelle : clôture à 4 685$ sous le creux 4 690$, OK",
+              "Confirmer la cassure structurelle : clôture à 1.0985 sous le creux 1.0990, OK",
               "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
-              "Prendre l’entrée short à 4 685$, SL au-dessus de la mèche du sommet 2 (par exemple 4 750$), TP measured move étendu vers 4 585$ pour viser un R/R de 1:1,5 à 1:2",
+              "Calculer la cible : hauteur sommet 2 → creux de 50 pips, projetée sous 1.0990, TP 1.0940. Juste sous le creux, avec un SL au-dessus de la mèche du sommet 2 (1.1050) : 65 pips de risque pour 45 pips de gain, R/R 1:0,69, pas d’entrée",
+              "Attendre le retest : si le prix remonte vers 1.0990 et le rejette (par exemple mèche à 1.0996, clôture à 1.0984), entrée short à 1.0984, SL 1.1002 au-dessus de la mèche, TP 1.0940 : 18 pips de risque pour 44 pips de gain, R/R 1:2,44",
             ]}
           />
 
@@ -276,7 +279,7 @@ export default function ContentFr() {
               "Non, il faut une moyenne mobile en plus",
             ]}
             correctIndex={1}
-            explanation="Une divergence seule ne suffit JAMAIS. Tant que le prix continue à respecter sa structure (HH/HL en hausse ou LH/LL en baisse), la tendance reste valide. C’est la cassure du dernier creux/sommet structurel qui confirme et déclenche l’entrée."
+            explanation="Une divergence seule ne suffit JAMAIS. Tant que le prix continue à respecter sa structure (HH/HL en hausse ou LH/LL en baisse), la tendance reste valide. C’est la cassure du dernier creux/sommet structurel qui confirme le retournement ; l’entrée se prend ensuite si le R/R le permet, souvent au retest."
           />
 
         </div>

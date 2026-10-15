@@ -1,12 +1,13 @@
-// Reversal 3 — le piège de la divergence sans breakout. XAU/USD H1 : le prix
+// Reversal 3 — le piège de la divergence sans breakout. EUR/USD H1 : le prix
 // fait un HH pendant que le RSI (14, calculé sur les clôtures) fait un sommet plus
-// bas ; le creux structurel 4 570$ n'est jamais cassé et la tendance haussière
+// bas ; le creux structurel 1.0870 n'est jamais cassé et la tendance haussière
 // continue (nouveau HH). Bougies : scenarios.ts (« divergence-no-break »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
-import { usd } from "@/app/components/lessons/trade";
-import { pivots, rsi } from "@/lib/lessons/chart-analysis";
+import { pivots, rsi, fmtPrice } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const px = (x: number) => fmtPrice(x, 4);
 
 export default function DivergenceWithoutBreakoutDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const candles = CANDLES["divergence-no-break"];
@@ -21,10 +22,10 @@ export default function DivergenceWithoutBreakoutDiagram(_props: { className?: s
       id="DivergenceWithoutBreakoutDiagram"
       title="Divergence sans breakout : la tendance continue"
       panels={[{
-        key: "h1", subtitle: "XAU/USD H1 — prix en HH, RSI en LH, creux structurel intact",
-        decimals: 1, height: 360, candles,
+        key: "h1", subtitle: "EUR/USD H1 — prix en HH, RSI en LH, creux structurel intact",
+        decimals: 5, height: 360, candles,
         segments: [{ key: "div", i1: t1.index, p1: t1.price, i2: t2.index, p2: t2.price, tone: "bear", dashed: true }],
-        levels: [{ key: "creux", price: trough.price, from: trough.index, label: `Creux ${usd(trough.price)} jamais cassé`, short: `Creux ${usd(trough.price)}`, tone: "bull", dashed: true }],
+        levels: [{ key: "creux", price: trough.price, from: trough.index, label: `Creux ${px(trough.price)} jamais cassé`, short: `Creux ${px(trough.price)}`, tone: "bull", dashed: true }],
         markers: [
           ...[t1, t2].map((q) => ({ key: `hh${q.index}`, i: q.index, price: q.price, label: "HH", pivot: "HH" as const, tone: "neutral" as const, side: "above" as const })),
           { key: "suite", i: last, price: candles[last].h, label: "Nouveau HH", tone: "bull", side: "above" },
