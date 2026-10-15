@@ -336,7 +336,7 @@ export default function ContentFr() {
               </li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              <span className="font-semibold text-zinc-200">80€ sur 500€ = 16% du compte en une minute. Avec ton SL de 30 pips, la perte serait d'environ 30€, un peu plus si l'ordre glisse.</span>
+              <span className="font-semibold text-zinc-200">80€ sur 500€ = 16% du compte en une minute. Avec un SL de 30 pips et la taille adaptée à 2% (0,03 lot), la perte aurait été d'environ 9€, un peu plus si l'ordre glisse.</span>
             </p>
             <div className="bg-zinc-900/60 rounded-xl px-4 py-3 mb-5">
               <p className="text-xs font-semibold text-zinc-400 mb-2">Et ce n&apos;est pas qu&apos;un risque sur EUR/USD. Avec un compte de 500€, une position de taille comparable, sans stop loss, subit le même ordre de perte sur tous les actifs :</p>
@@ -373,13 +373,13 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Comment adapter ta gestion du risque</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Tu as déjà appris à adapter ton risque à ton capital (cf leçon Trading &apos;Gestion du risque&apos;) :
+              Tu as déjà appris la règle de risque (cf leçon Trading &apos;Gestion du risque&apos;) : la même pour tous les comptes.
             </p>
             <ul className="space-y-1.5 mb-4">
               {[
-                { bold: "petit compte (300€)", rest: " → 3% idéal, max 5%" },
-                { bold: "compte moyen (500-1000€)", rest: " → 2-3% idéal" },
-                { bold: "compte plus solide (1 000€ et plus)", rest: " → 2% strict" },
+                { bold: "la règle", rest: " → 1 à 2% du capital par trade, quel que soit le capital" },
+                { bold: "compte de 300€", rest: " → 3 à 6 € par trade" },
+                { bold: "compte de 2 000€", rest: " → 20 à 40 € par trade" },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
@@ -402,7 +402,7 @@ export default function ContentFr() {
               </div>
               <div className="divide-y divide-zinc-800/60">
                 {[
-                  { ctx: "Macro calme", action: "Règles standard (% selon ton capital)" },
+                  { ctx: "Macro calme", action: "Règles standard (1 à 2% par trade)" },
                   { ctx: "News 3 étoiles dans <2h", action: "Fermer / réduire / attendre" },
                   { ctx: "Macro contre ton setup", action: "Diviser la taille par 2 ou passer" },
                   { ctx: "Macro confirme ton setup", action: "Setup standard avec confluence renforcée" },

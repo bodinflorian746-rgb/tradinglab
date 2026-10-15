@@ -58,7 +58,7 @@ function ContentFr() {
           <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
         </div>
         <p className="text-base text-zinc-300 leading-relaxed">
-          Si tu backtestes avec un capital de 200 à 1 000 €, utilise les vrais % de ta grille de risque (cf. Débutant leçon 8), pas la règle théorique du 1%. Backtester avec 1% sur un compte de 300 € revient à risquer 3 € par trade : avec le lot minimum, cela laisse trop peu de place à un Stop Loss logique dès que l'actif bouge beaucoup (or, indices). Un backtest calibré sur ton capital réel te donnera des résultats exploitables en live, pas des chiffres déconnectés de ta réalité.
+          Backteste avec le risque que tu prendras vraiment : 1 à 2% du capital par trade (Débutant leçon 8). Sur un compte de 300 €, cela fait 3 à 6 € par trade : avec le lot minimum, c'est faisable sur EUR/USD, beaucoup plus rarement sur l'or ou les indices, où les Stop Loss sont plus larges. Si ta stratégie demande des stops que ton capital ne permet pas, le backtest te le montre avant que tu risques ton argent. Un backtest calibré sur ton capital réel te donnera des résultats exploitables en live, pas des chiffres déconnectés de ta réalité.
         </p>
       </div>
 

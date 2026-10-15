@@ -16,7 +16,7 @@ export default async function Page({
     <LessonPage
       formationId="debutant"
       lessonId="lecon10"
-      title="Gestion du risque : pourquoi 90% des traders perdent"
+      title="Gestion du risque : pourquoi 70 à 89% des comptes CFD perdent"
       subtitle="Le problème du retail n&apos;est généralement pas l&apos;entrée. Il vient de ce qui se passe AUTOUR du trade : risque trop élevé, mauvais R/R, levier excessif (une position trop grosse pour le capital), revenge trading. Deux traders avec le même setup : l&apos;un finit rentable, l&apos;autre détruit son compte. La différence ne vient pas de la stratégie. Elle vient de la gestion du risque."
       duration="13 min"
       lessonNumber={10}
@@ -27,7 +27,7 @@ export default async function Page({
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Le plus grand mensonge du retail</h2>
         <p className="text-zinc-300 leading-relaxed text-sm">
-          Le retail pense souvent : «&nbsp;Si je trouve la bonne stratégie, je deviendrai rentable.&nbsp;» C&apos;est faux. Une bonne stratégie avec une mauvaise gestion du risque finit presque toujours par mourir. Aucune stratégie ne gagne 100% du temps. Même une excellente stratégie prend des pertes, subit des drawdowns, traverse des périodes compliquées, enchaîne parfois plusieurs stops d&apos;affilée.
+          Les avertissements que les courtiers doivent afficher le disent : 70 à 89% des comptes CFD des particuliers perdent de l&apos;argent. Le retail pense souvent : «&nbsp;Si je trouve la bonne stratégie, je deviendrai rentable.&nbsp;» C&apos;est faux. Une bonne stratégie avec une mauvaise gestion du risque finit presque toujours par mourir. Aucune stratégie ne gagne 100% du temps. Même une excellente stratégie prend des pertes, subit des drawdowns, traverse des périodes compliquées, enchaîne parfois plusieurs stops d&apos;affilée.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mt-3">
           Le problème du retail, c&apos;est qu&apos;il construit son trading comme si les pertes ne devaient jamais arriver. Donc dès qu&apos;elles arrivent, il augmente le risque, force des setups, déplace le stop, supprime le SL, veut récupérer immédiatement. Et c&apos;est là que le compte commence réellement à mourir.
@@ -120,7 +120,7 @@ export default async function Page({
           Laquelle est la plus intelligente ?
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mt-3">
-          Évidemment la situation 2. Tu gagnes 4 fois plus pour exactement le même risque. Et pourtant, 90% des retails passent leur temps à prendre des trades de type Situation 1 sans s&apos;en rendre compte. Soit parce qu&apos;ils placent leur Take Profit trop tôt «&nbsp;pour sécuriser&nbsp;», soit parce qu&apos;ils acceptent des trades médiocres où le potentiel de gain est minuscule par rapport au risque.
+          Évidemment la situation 2. Tu gagnes 4 fois plus pour exactement le même risque. Et pourtant, beaucoup de retails passent leur temps à prendre des trades de type Situation 1 sans s&apos;en rendre compte. Soit parce qu&apos;ils placent leur Take Profit trop tôt «&nbsp;pour sécuriser&nbsp;», soit parce qu&apos;ils acceptent des trades médiocres où le potentiel de gain est minuscule par rapport au risque.
         </p>
 
         <h3 className="text-base font-semibold text-white mt-6 mb-3">Le R/R, c&apos;est quoi exactement ?</h3>
@@ -289,9 +289,9 @@ export default async function Page({
 
         <div className="space-y-2.5 mt-4">
           {[
-            "Risque par trade : 2% à 5% du capital au maximum, selon ta grille de la leçon 8 (5% de 200 à 499 €, 3% de 500 à 999 €, 2% de 1 000 à 4 999 €)",
+            "Risque par trade : 1 à 2% du capital, quel que soit ton capital (leçon 8)",
             "Maximum 2-3 trades par jour",
-            "Stop journalier : 10% à 15% du capital max par jour",
+            "Stop journalier : 5% du capital maximum par jour, puis tu arrêtes jusqu'au lendemain",
             "R/R minimum acceptable : 1:2",
             "Arrêt immédiat après une perte qui te fait perdre ta lucidité émotionnelle",
             "Jamais de revenge trading",

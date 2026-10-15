@@ -13,7 +13,7 @@ function ContentFr() {
       formationId="intermediaire"
       lessonId="lecon4"
       title="Tendances, trader dans le sens du marché"
-      subtitle="90% des traders perdants tradent contre la tendance sans le savoir. Apprendre à lire la direction dominante, c'est mettre les probabilités de ton côté avant même d'ouvrir un trade."
+      subtitle="Beaucoup de traders perdants tradent contre la tendance sans le savoir. Apprendre à lire la direction dominante, c'est mettre les probabilités de ton côté avant même d'ouvrir un trade."
       duration="18 min"
       lessonNumber={4}
       prev={{ href: "/formations/intermediaire/lecon3", label: "Leçon 3 : Support et résistance : l'origine du mouvement" }}

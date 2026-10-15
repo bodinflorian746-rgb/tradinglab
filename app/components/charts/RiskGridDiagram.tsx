@@ -1,28 +1,24 @@
-// Trading Débutant 8 — grille de risque : montant risqué par trade selon le capital
-// (grille de la leçon : 200-499 € → 5 %, 500-999 € → 3 %, 1 000-4 999 € → 2 %, un exemple par tranche). Barres à l'échelle des euros : partie pleine = idéal, barre
-// entière = maximum. Les montants sont calculés à partir des pourcentages.
+// Trading Débutant 8 — risque par trade selon le capital : la même règle pour tous, 1 % (prudent) à 2 %
+// (maximum) du capital, quel que soit le capital (décision PO du 2026-10-15, comme le jeu « Trouve
+// l'erreur »). Barres à l'échelle des euros : partie pleine = 1 %, barre entière = 2 %. Les montants
+// sont calculés à partir des pourcentages.
 
 import { Bars, LessonSchema } from "@/app/components/lessons/LessonSchema";
 
-const ROWS = [
-  { capital: 300, ideal: [3], max: 5 },
-  { capital: 700, ideal: [2, 3], max: 3 },
-  { capital: 2000, ideal: [2], max: 2 },
-];
-const eur = (x: number) => `${Math.round(x).toLocaleString("fr-FR").replace(/ /g, " ")} €`;
-const pct = (a: number[]) => a.join("-") + " %";
+const CAPITALS = [300, 700, 2000];
+const PRUDENT = 1, MAX = 2;
+const eur = (x: number) => `${Math.round(x).toLocaleString("fr-FR").replace(/ /g, " ")} €`;
 
 export function RiskGridDiagram() {
   return (
-    <LessonSchema id="RiskDiagram" title="Risque par trade : idéal et maximum selon le capital" caption="Le pourcentage baisse quand le capital monte, le montant en euros augmente.">
-      <Bars items={ROWS.map((r) => {
-        const idealEur = (r.capital * Math.max(...r.ideal)) / 100, maxEur = (r.capital * r.max) / 100;
-        const idealTxt = r.ideal.length > 1 ? `${eur((r.capital * r.ideal[0]) / 100).replace(" €", "")}-${eur(idealEur)}` : eur(idealEur);
+    <LessonSchema id="RiskDiagram" title="Risque par trade : 1 à 2 % du capital" caption="Le pourcentage ne change pas avec le capital : c'est le montant en euros qui grandit avec lui.">
+      <Bars items={CAPITALS.map((capital) => {
+        const low = (capital * PRUDENT) / 100, high = (capital * MAX) / 100;
         return {
-          label: `Capital ${eur(r.capital)}`,
-          note: r.ideal.length === 1 && r.max === r.ideal[0] ? `${pct(r.ideal)} (idéal = max)` : `idéal ${pct(r.ideal)}, max ${r.max} %`,
-          value: maxEur, inner: idealEur, tone: "bull" as const,
-          display: r.ideal.length === 1 && idealEur === maxEur ? eur(maxEur) : `idéal ${idealTxt} · max ${eur(maxEur)}`,
+          label: `Capital ${eur(capital)}`,
+          note: `${PRUDENT} % prudent, ${MAX} % maximum`,
+          value: high, inner: low, tone: "bull" as const,
+          display: `${eur(low)} à ${eur(high)}`,
         };
       })} />
     </LessonSchema>
