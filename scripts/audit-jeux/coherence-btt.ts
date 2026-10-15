@@ -171,7 +171,9 @@ const SPECIFIC: Record<string, Check> = {
     // L'impulsion : les 8 bougies avant le pullback (6 dernières) ; le support est prouvé avant elle
     const imp = ch.past.slice(-14, -6);
     const start = imp[0].o, peak = last(imp).c;
-    const ret = (peak - last(ch.past).c) / (peak - start);
+    // mesuré au creux du pullback (le retest du support) : la dernière bougie est la réaction qui en
+    // repart (prix actuel = entrée agressive), elle ne réduit pas la profondeur du pullback
+    const ret = (peak - Math.min(...ch.past.slice(-6).map((k) => k.l))) / (peak - start);
     if (!(ret > 0.6)) return "retracement ≤ 60 % de l'impulsion";
     const h = zone(ch, "liquidity_high")!;
     if (!(maxH(ch.past) <= hi(h) + E && maxH(ch.past) >= lo(h) - E)) return "« Plus haut précédent » ne contient pas le sommet";

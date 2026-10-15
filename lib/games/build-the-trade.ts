@@ -964,9 +964,9 @@ function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
   past.push(...touches.candles);
   p = touches.p;
   const base = p;
-  // Impulsion : 8 bougies haussières, calée pour que le niveau soit à 65-72 % de retracement (pas
+  // Impulsion : 8 bougies haussières, calée pour que le niveau soit à 67-73 % de retracement (pas
   // plus : les 3 entrées candidates, à moins de 1 m l’une de l’autre, restent lisibles au téléphone)
-  const target = 0.65 + rng() * 0.07;
+  const target = 0.67 + rng() * 0.06;
   const peak = base + (level - base) / (1 - target);
   const w = Array.from({ length: 8 }, () => 0.5 + rng() * 0.5);
   const sw = w.reduce((a, b) => a + b, 0);
