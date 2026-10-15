@@ -267,6 +267,7 @@ export default async function StrategiesPage({
               </div>
             ))}
           </div>
+          {t.page.stats.freeAccess && <p className="mt-3 text-xs text-zinc-500">{t.page.stats.freeAccess}</p>}
         </div>
 
         {/* ── Progression path ── */}

@@ -241,6 +241,7 @@ export default function FormationsPage() {
                 style={{ width: `${global.pct}%` }}
               />
             </div>
+            {common.lessons.freeAccess && <p className="mt-2 text-xs text-zinc-500">{common.lessons.freeAccess}</p>}
           </div>
         </section>
 

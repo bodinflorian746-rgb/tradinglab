@@ -167,7 +167,8 @@
     "nextLessonLabel": "Leçon suivante",
     "formationCompleteLabel": "Formation complète",
     "viewAllFormations": "Voir toutes les formations",
-    "globalCount": "{done} / {total} leçons gratuites"
+    "globalCount": "{done} / {total} leçons gratuites",
+    "freeAccess": "Accès gratuit via un dépôt chez le broker partenaire."
   },
   "stickyNav": {
     "moduleMacro": "Module Macro",
