@@ -768,8 +768,14 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
           const others = zoneLabelIdx.filter((j) => j !== +s.key.slice(4)).map((j) => [toY(Math.max(zones[j].y1, zones[j].y2)), toY(Math.min(zones[j].y1, zones[j].y2))]);
           const own = [toY(Math.max(z.y1, z.y2)), toY(Math.min(z.y1, z.y2))];
           const dist = (yy: number, [t, b]: number[]) => (yy < t ? t - yy : yy > b ? yy - b : 0);
-          const amb = (yy: number) => Number(others.some((o) => dist(yy, o) < dist(yy, own)));
-          cands.sort((a, b) => amb(a) - amb(b) || gap(a) - gap(b) || Math.abs(a - y0) - Math.abs(b - y0));
+          const amb = (yy: number) => others.some((o) => dist(yy, o) < dist(yy, own));
+          // ordre : contre la zone (jamais ambigu, même posée sur une zone voisine) ; puis tout près
+          // (centre à au plus 1,5 hauteur d'étiquette de la zone, seuil « loin » de l'audit) sans
+          // ambiguïté, puis tout près même ambigu ; puis la plus proche (sinon « Résistance », collée à
+          // une liquidité, partait à 130 px)
+          const near = 1.5 * INLINE_TAG_H - (INLINE_TAG_H / 2 + ZONE_TOUCH);
+          const tier = (yy: number) => (gap(yy) === 0 ? 0 : gap(yy) <= near ? (amb(yy) ? 2 : 1) : 3);
+          cands.sort((a, b) => tier(a) - tier(b) || gap(a) - gap(b) || Math.abs(a - y0) - Math.abs(b - y0));
           const inFrame = (yy: number) => yy >= INLINE_TAG_H / 2 + 1 && yy <= H - INLINE_TAG_H / 2 - 1;
           // Contre la zone mais entre deux pastilles de lignes du bord droit (stops, entrée) trop
           // proches : elles s'écartent, chacune d'au plus MAX_SHIFT de sa ligne (toujours traversée
