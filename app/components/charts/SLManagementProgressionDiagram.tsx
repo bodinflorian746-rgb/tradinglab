@@ -1,9 +1,9 @@
 // Stratégie Reversal 4 — « Couper rapidement ». Cas 1 de la leçon : short
 // EUR/USD à 1.1795 après le breakout de la ligne de cou (1.1800), SL 1.1835.
 // Le prix descend à 1.1780 puis une bougie H1 clôture à 1.1810, au-dessus de la
-// ligne de cou : invalidation. Trois issues, pertes calculées sur les niveaux :
-// couper à la clôture, attendre une bougie de plus (SL touché), SL resserré
-// sur la ligne de cou dès l'entrée.
+// ligne de cou : invalidation. Deux issues, pertes calculées sur les niveaux :
+// couper à la clôture, attendre une bougie de plus (SL touché). Pas de SL resserré :
+// le prix n'a pas fait 1R en faveur du trade (décision PO 14).
 
 import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
 import { crossing, fmtNum, fmtPrice, pips } from "@/lib/lessons/chart-analysis";
@@ -23,7 +23,6 @@ const loss = (exit: number) => {
 export default function SLManagementProgressionDiagram({ className = "" }: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cut = CLOSES.slice(0, CUT_I + 1);
   const hitSL = crossing(CLOSES, () => SL, ENTRY_I, "up")!;
-  const hitNeck = crossing(cut, () => NECK, ENTRY_I, "up")!;
   const neck = { key: "neck", price: NECK, label: `Ligne de cou ${p(NECK)}`, short: "Ligne de cou", tone: "neutral" as const, dashed: true, faint: true };
   const entry = { key: "entry", price: ENTRY, from: ENTRY_I, label: `Entrée ${p(ENTRY)}`, short: "Entrée", tone: "entry" as const };
   const panels: LCPanel[] = [
@@ -41,18 +40,10 @@ export default function SLManagementProgressionDiagram({ className = "" }: { cla
       markers: [{ key: "hit", i: hitSL.i, price: SL, label: "SL touché", tone: "bear", side: "above", dot: true }],
       chips: [{ label: loss(SL), tone: "bear", data: { entry: ENTRY, exit: SL, sl: SL } }],
     },
-    {
-      key: "tight", title: "SL resserré sur la ligne de cou", subtitle: "Le SL passe de 1.1835 à la ligne de cou après l'entrée",
-      decimals: 4, height: 210, line: cut, slots: SLOTS,
-      levels: [
-        entry,
-        { key: "sl0", price: SL, from: ENTRY_I, to: ENTRY_I + 1, label: `SL initial ${p(SL)}`, short: "SL initial", tone: "bear", dashed: true, faint: true },
-        { key: "sl", price: NECK, from: ENTRY_I + 1, label: `SL ${p(NECK)} (ligne de cou)`, short: `SL ${p(NECK)}`, tone: "bear", dashed: true },
-      ],
-      markers: [{ key: "hit", i: hitNeck.i, price: NECK, label: "SL touché", tone: "bear", side: "above", dot: true }],
-      chips: [{ label: loss(NECK), tone: "bull", data: { entry: ENTRY, exit: NECK, sl: SL } }],
-    },
   ];
+  // Règle de la leçon (décision PO 14) : le SL ne se resserre qu'après un premier mouvement de 1R
+  const best = Math.min(...cut.slice(ENTRY_I));
+  const moved = pips(ENTRY, best, PIP), oneR = pips(SL, ENTRY, PIP);
   return (
     <div className={className}>
       <LessonChart
@@ -60,7 +51,7 @@ export default function SLManagementProgressionDiagram({ className = "" }: { cla
         title="Couper vite plutôt que subir le SL"
         panels={panels}
         sharedScale
-        caption="Cas 1 de la leçon : short EUR/USD à 1.1795, SL 1.1835 (40 pips = 1R). Clôtures H1."
+        caption={`Cas 1 de la leçon : short EUR/USD à ${p(ENTRY)}, SL ${p(SL)} (${oneR} pips = 1R). Le prix n'a fait que ${moved} pips en ta faveur (${fmtNum(moved / oneR)}R) : pas de SL resserré avant 1R, c'est la coupe à la clôture qui limite la perte. Clôtures H1.`}
       />
     </div>
   );
