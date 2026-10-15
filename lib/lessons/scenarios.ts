@@ -356,7 +356,7 @@ const zoneHistoire = () => buildCandles(1.1792, ZONE_HISTOIRE, { seed: 6301, dec
 // mineur 4 683, plus bas 4 664, reprise) ; puis la hausse continue.
 const regimeM15 = (open: number) => buildCandles(open, [
   ...c(4689, 4694), { c: 4691, h: 4701 }, ...c(4690), { c: 4687, l: 4683 }, { c: 4690, l: 4685 }, { c: 4693, l: 4688 }, { c: 4679 },
-  ...c(4673), { c: 4668, l: 4664 }, ...c(4674, 4681, 4687, 4692, 4696, 4699), { c: 4703 },
+  ...c(4673), { c: 4668, l: 4664 }, ...c(4674, 4681, 4687, 4692, 4699), { c: 4703 },
 ], { seed: 6401, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4683], pins: [4694, 4691, 4701, 4683, 4685, 4688, 4664] });
 const regimeH4 = () => buildCandles(4540, [
   ...c(4552), { c: 4566, h: 4572 }, ...c(4561), { c: 4556, l: 4552 },

@@ -299,7 +299,8 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       // mesurée sur le panneau qui prouve la zone : une zone H4 reportée sur le M15 se juge à l'échelle H4
       if (isSR(z, z.dataset.zone) && h > 1.5 * MR + tolMR) {
         const mr = (q) => q.map((k) => k.h - k.l).sort((x, y) => x - y)[Math.floor(q.length / 2)];
-        const home = srProofError(cs, y1, y2, 0, n - 1) ? others.find((q) => !srProofError(q, y1, y2, 0, q.length - 1)) : null;
+        // parmi les panneaux qui prouvent la zone (celui-ci compris), l'unité de temps la plus large
+        const home = [cs, ...others].filter((q) => !srProofError(q, y1, y2, 0, q.length - 1)).sort((a, b) => mr(b) - mr(a))[0] ?? null;
         if (!home || h > 1.5 * mr(home) * 1.02) E(`${name} : bande de ${ratio(h)} MR (au plus 1,5)`);
       }
     }

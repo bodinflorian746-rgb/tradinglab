@@ -269,12 +269,12 @@ export function checkLot9(check: Check) {
 
 export function checkLot14(check: Check) {
   {
-    // Macro Avancé 1 : impulsion de 20h00 dans « +100 à +150 pips », baisse 20h30 → 21h30 dans « 200 à 400 pips »,
+    // Macro Avancé 1 : impulsion de 20h00 dans « +50 à +80 pips », baisse 20h30 → 21h30 dans « 100 à 150 pips » (texte),
     // calme avant 20h00, le sommet de la décision n'est jamais dépassé après Powell
     const cs = CS["fomc-timeline"];
     const imp = (cs[3].h - cs[3].o) / 0.0001, drop = (cs[9].o - Math.min(...cs.slice(9, 22).map((k) => k.l))) / 0.0001;
-    check(imp >= 100 && imp <= 150, `FOMC (Macro Av. 1) : impulsion de 20h00 ${imp.toFixed(0)} pips hors 100-150`);
-    check(drop >= 200 && drop <= 400, `FOMC (Macro Av. 1) : baisse 20h30 → 21h30 ${drop.toFixed(0)} pips hors 200-400`);
+    check(imp >= 50 && imp <= 80, `FOMC (Macro Av. 1) : impulsion de 20h00 ${imp.toFixed(0)} pips hors 50-80`);
+    check(drop >= 100 && drop <= 150, `FOMC (Macro Av. 1) : baisse 20h30 → 21h30 ${drop.toFixed(0)} pips hors 100-150`);
     check(cs.slice(0, 3).every((k) => (k.h - k.l) / 0.0001 <= 15), "FOMC (Macro Av. 1) : bougies d'avant 20h00 pas calmes");
     check(Math.max(...cs.slice(9).map((k) => k.h)) < Math.max(...cs.slice(3, 9).map((k) => k.h)), "FOMC (Macro Av. 1) : le prix repasse au-dessus du sommet de la décision");
   }
@@ -361,7 +361,7 @@ export function checkLot17(check: Check) {
   {
     // ICT 4 / ICT 5 — sweep 1.1792 refermé sous 1.1780, 3 bougies baissières (corps qui ne rétrécissent pas) jusqu'à 1.1748, FVG 1.1768-1.1777,
     // retour dans le FVG, entrée 1.1774 sous le bas du rejet, SL 1.1798, TP 1.1695 (R/R 3,29)
-    const cs = CS["disp-eur"], S = 5;
+    const cs = CS["disp-eur"], S = 9; // préfixe aux deux vrais sommets 1.1780 (equal highs), sweep en 9
     check(cs[S].h === 1.1792 && cs[S].c < 1.178 && Math.max(...cs.map((k) => k.h)) === 1.1792, "Displacement (ICT 4) : sweep");
     const seq = cs.slice(S + 1, S + 4);
     check(seq.every((k, i) => k.c < k.o && k.h === k.o && (!i || k.o - k.c >= seq[i - 1].o - seq[i - 1].c - 1e-9)) && cs[S + 3].l === 1.1748 && Math.min(...cs.slice(0, S + 5).map((k) => k.l)) === 1.1748, "Displacement (ICT 4) : 3 bougies baissières sans mèche haute, corps qui ne rétrécissent pas, jusqu'à 1.1748");

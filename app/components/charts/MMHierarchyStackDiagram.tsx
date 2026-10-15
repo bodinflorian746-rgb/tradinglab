@@ -34,5 +34,5 @@ export default function MMHierarchyStackDiagram(_props: { className?: string }) 
 
     };
   });
-  return <LessonChart id="MMHierarchyStackDiagram" title="Lire les 3 MM ensemble" panels={panels} rows={[3]} caption="Un golden cross (MM50 qui passe au-dessus de la MM200) ouvre souvent l'alignement haussier ; un death cross, l'alignement baissier." />;
+  return <LessonChart id="MMHierarchyStackDiagram" title="Lire les 3 MM ensemble" panels={panels} rows={[1, 1, 1]} caption="Un golden cross (MM50 qui passe au-dessus de la MM200) ouvre souvent l'alignement haussier ; un death cross, l'alignement baissier." />;
 }
