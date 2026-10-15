@@ -81,7 +81,7 @@ const probeStops = (page) => page.evaluate(() => {
 // Étiquettes du graphique (mode inlineLabels) :
 //  - toute ligne affichée (hors traits discrets) a une étiquette lisible posée à sa hauteur ;
 //  - aucune étiquette n'en chevauche une autre, aucune ne sort du graphique, aucune n'est
-//    cachée sous la pastille « ton choix » ou sous le bandeau du verdict ;
+//    cachée sous la pastille « ton choix » ou sous le verdict (bandeau ou carte) ;
 //  - au plus 4 étiquettes visibles en même temps en 390 × 844 ;
 //  - les étiquettes portent les noms des boutons (Place ton Stop : Stop 1/2/3 ;
 //    Build the Trade : noms de l'étape active) ;
@@ -109,8 +109,8 @@ const measureLabels = (page, { mobile, buttons, ps }) => page.evaluate(({ mobile
   });
   const lines = [...svg.querySelectorAll("line[data-line]:not([data-discreet])")].filter(visible)
     .map((l) => ({ key: l.getAttribute("data-line"), y: l.getBoundingClientRect().top + l.getBoundingClientRect().height / 2 }));
-  // Pastille « ton choix » et bandeau du verdict (élément marqué) : posés par-dessus le graphique
-  const covers = [[".v2-pin-tag", "la pastille « ton choix »"], ["[data-verdict-banner] .v2-verdict", "le bandeau du verdict"]]
+  // Pastille « ton choix » et verdict (bandeau ou carte) : posés par-dessus le graphique
+  const covers = [[".v2-pin-tag", "la pastille « ton choix »"], [".v2-verdict", "le verdict"]]
     .flatMap(([sel, name]) => [...chart.querySelectorAll(sel)].map((e) => ({ name, r: e.getBoundingClientRect() })).filter((c) => c.r.width > 0));
   const errs = [];
   // l'étiquette d'une ligne (même clé) la traverse : posée ailleurs, une autre étiquette à cette hauteur
@@ -413,6 +413,14 @@ const MUTATIONS = {
     p.className = "v2-pin-tag";
     Object.assign(p.style, { position: "absolute", display: "block", left: `${r.left - c.left}px`, top: `${r.top - c.top}px`, width: "60px", height: "20px" });
     chart.appendChild(p);
+  }],
+  "étiquette sous le verdict": [/cachée sous le verdict/, () => {
+    const chart = document.querySelector(".tsx-v2 .v2-chart");
+    const r = chart.querySelector("svg.v2-svg [data-label-for] rect").getBoundingClientRect(), c = chart.getBoundingClientRect();
+    const v = document.createElement("div");
+    v.className = "v2-verdict";
+    Object.assign(v.style, { position: "absolute", display: "block", opacity: "1", transform: "none", left: `${r.left - c.left}px`, top: `${r.top - c.top}px`, width: "80px", height: "30px" });
+    chart.appendChild(v);
   }],
   "zone par-dessus les bougies": [/zone dessinée par-dessus les bougies/, () => {
     const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
