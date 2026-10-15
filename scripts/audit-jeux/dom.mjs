@@ -12,7 +12,7 @@
 //  - sonde Place ton Stop : ordre vertical des lignes = ordre des étiquettes
 //    « Stop 1/2/3 » = ordre des boutons (couleurs et numéros) ;
 //  - étiquettes du graphique (question, chaque étape de Build the Trade, verdict) :
-//    toute ligne étiquetée à sa hauteur, aucun chevauchement, aucune posée sur une
+//    toute ligne étiquetée à sa hauteur (par sa propre étiquette, qui la traverse), aucun chevauchement, aucune posée sur une
 //    bougie (corps ou mèche), aucune hors du graphique, au plus 4 en 390,
 //    mêmes noms que les boutons, aucun doublon avec une légende ;
 //  - graphique (question et verdict) : zones derrière les bougies, corps au moins 3 fois plus
@@ -29,6 +29,8 @@ const arg = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) ?? `--$
 const BASE = arg("base", "http://localhost:3000");
 const STORAGE_STATE = process.env.AUDIT_STORAGE_STATE || undefined;
 const GAMES = arg("jeux", "buy-sell-no-trade,find-the-mistake,place-stop,build-the-trade").split(",");
+//  - rounds difficiles à graine fixe (390, fr ; Place ton Stop et Build the Trade) : les mêmes
+//    règles d’étiquettes à la question, à chaque étape et au verdict, sur les cas déjà tombés en faute.
 // Par défaut : langues actives du site (i18n/config.ts, ACTIVE_LOCALES)
 const LANGS = arg("langues", languesAuditees().join(",")).split(",");
 const FORMATS = arg("formats", "390,1440").split(",");
@@ -111,7 +113,13 @@ const measureLabels = (page, { mobile, buttons, ps }) => page.evaluate(({ mobile
   const covers = [[".v2-pin-tag", "la pastille « ton choix »"], ["[data-verdict-banner] .v2-verdict", "le bandeau du verdict"]]
     .flatMap(([sel, name]) => [...chart.querySelectorAll(sel)].map((e) => ({ name, r: e.getBoundingClientRect() })).filter((c) => c.r.width > 0));
   const errs = [];
-  for (const l of lines) if (!labels.some((t) => l.y >= t.r.top - 1 && l.y <= t.r.bottom + 1)) errs.push(`ligne « ${l.key} » sans étiquette à sa hauteur`);
+  // l'étiquette d'une ligne (même clé) la traverse : posée ailleurs, une autre étiquette à cette hauteur
+  // la faisait passer pour étiquetée (« Agressive » à 28 px de sa ligne, sous « Pullback profond »)
+  for (const l of lines) {
+    const own = labels.find((t) => t.key === l.key);
+    if (own && !(l.y >= own.r.top - 1 && l.y <= own.r.bottom + 1)) errs.push(`étiquette « ${own.txt} » loin de sa ligne (${Math.round(Math.min(Math.abs(l.y - own.r.top), Math.abs(l.y - own.r.bottom)))} px)`);
+    else if (!own && !labels.some((t) => l.y >= t.r.top - 1 && l.y <= t.r.bottom + 1)) errs.push(`ligne « ${l.key} » sans étiquette à sa hauteur`);
+  }
   for (const t of labels) {
     if (!t.txt) errs.push(`étiquette « ${t.key} » vide`);
     if (t.fs < 10) errs.push(`étiquette « ${t.txt} » illisible (${t.fs.toFixed(1)} px)`);
@@ -321,6 +329,53 @@ async function session(browser, slug, loc, w) {
   } finally { await ctx.close(); }
 }
 
+// Rounds difficiles à graine fixe (390, fr) : les sessions tirent leurs rounds au hasard ; ces
+// graines rejouent à chaque audit les cas où les étiquettes se sont déjà mal placées (swings empilés,
+// verdict des ventes sur swing évident, 3 entrées à moins de 1 m dans Build the Trade). La 1re valeur
+// de Math.random de la page fixe la graine du 1er round (comme le rejeu ciblé du PO).
+const HARD = [
+  ["place-stop", "Débutant", 1098], ["place-stop", "Débutant", 1315], ["place-stop", "Intermédiaire", 1112],
+  ["place-stop", "Avancé", 1091], ["place-stop", "Avancé", 1112], ["place-stop", "Avancé", 1182],
+  ["place-stop", "Avancé", 2008], ["place-stop", "Avancé", 2029],
+  ["build-the-trade", "Avancé", 1084], ["build-the-trade", "Avancé", 1483], ["build-the-trade", "Avancé", 1833], ["build-the-trade", "Avancé", 1931],
+];
+async function hardRounds(browser) {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: MOBILE_H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
+  await ctx.addInitScript(() => { try { localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch { /* stockage indisponible */ } });
+  const page = await ctx.newPage();
+  const errs = [];
+  try {
+    for (const [slug, level, seed] of HARD) {
+      const add = (where, list) => list.forEach((e) => errs.push(`${slug} ${level} graine ${seed} ${where} : ${e}`));
+      try {
+        await page.goto(`${BASE}/fr/jeux/${slug}`, { waitUntil: "networkidle", timeout: 180000 });
+        await page.waitForTimeout(600);
+        await page.evaluate((v) => { let first = true, x = 0x2f6b9e1d; Math.random = () => { if (first) { first = false; return v; } x |= 0; x = (x + 0x6d2b79f5) | 0; let t = Math.imul(x ^ (x >>> 15), 1 | x); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }, (seed + 0.5) / 1e9);
+        await page.getByText(level, { exact: true }).first().click({ timeout: 60000 });
+        if (slug === "build-the-trade") {
+          await page.locator('[data-pick^="entry:"]').first().waitFor({ timeout: 60000 });
+          for (const step of ["entry", "stop", "tp"]) {
+            await page.waitForTimeout(step === "entry" ? 4500 : 1400);
+            add(`étape ${step}`, await probeLabels(page, { mobile: true, buttons: stepButtons(step) }));
+            await page.locator(`[data-pick^="${step}:"]`).first().click();
+          }
+          await page.waitForTimeout(400);
+          await page.getByRole("button", { name: VALIDATE.fr }).click();
+        } else {
+          await page.getByRole("button", { name: "Stop 1", exact: true }).waitFor({ timeout: 60000 });
+          await page.waitForTimeout(4500);
+          add("question", await probeLabels(page, { mobile: true, buttons: STOP_BUTTONS, ps: true }));
+          await page.getByRole("button", { name: "Stop 1", exact: true }).click();
+        }
+        await page.locator(".v2-verdict").first().waitFor({ timeout: 20000 });
+        await page.waitForTimeout(1500);
+        add("verdict", await probeLabels(page, { mobile: true, buttons: null, ps: slug === "place-stop" }));
+      } catch (e) { add("", [`round interrompu : ${e.message.split("\n")[0].slice(0, 100)}`]); }
+    }
+  } finally { await ctx.close(); }
+  return errs;
+}
+
 // --autotest : défauts injectés dans les étiquettes et le graphique (1re question de Buy / Sell /
 // No Trade en 390) ; chacun doit produire l'erreur attendue, sinon la règle ne protège rien.
 const MUTATIONS = {
@@ -335,6 +390,17 @@ const MUTATIONS = {
     const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
     const g = svg.querySelector('[data-label-for^="zone"]'), r = g.querySelector("rect").getBoundingClientRect(), s = svg.getBoundingClientRect();
     g.setAttribute("transform", `translate(0 ${r.top - s.top > s.height / 2 ? -110 : 110})`);
+  }],
+  "étiquette de ligne loin de sa ligne": [/loin de sa ligne/, () => {
+    // une ligne ajoutée 40 px sous une étiquette qui porte sa clé
+    const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
+    const g = svg.querySelector("[data-label-for]").cloneNode(true), r = g.querySelector("rect");
+    g.setAttribute("data-label-for", "cand9");
+    svg.appendChild(g);
+    const y = +r.getAttribute("y") + +r.getAttribute("height") / 2 + 40;
+    const l = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    for (const [k, v] of Object.entries({ "data-line": "cand9", x1: 10, x2: 200, y1: y, y2: y, stroke: "#fff", "stroke-width": 2 })) l.setAttribute(k, String(v));
+    svg.appendChild(l);
   }],
   "étiquette coupée par le cadre": [/hors du graphique/, () => {
     const g = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg [data-label-for]"), r = g.querySelector("rect");
@@ -412,6 +478,12 @@ async function autotest(browser) {
     }
   };
   await Promise.all([worker(), worker(), worker(), worker()]);
+  if (GAMES.some((g) => g === "place-stop" || g === "build-the-trade") && FORMATS.includes("390")) {
+    const h = await hardRounds(browser);
+    errors += h.length;
+    lines.push(`rounds difficiles (graines fixes, fr 390) : ${h.length} erreur(s), ${HARD.length} rounds`);
+    h.slice(0, 12).forEach((e) => lines.push(`    ${e}`));
+  }
   await browser.close();
   console.log(lines.sort().join("\n"));
   console.log(`RESULTAT erreurs=${errors} avertissements=0`);
