@@ -111,7 +111,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Pourquoi le NFP est si violent</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le <span className="font-semibold text-zinc-200">NFP</span> sort le <span className="font-semibold text-zinc-200">premier vendredi du mois (en général) à 14h30 heure de Paris</span>.
+              Le <span className="font-semibold text-zinc-200">NFP</span>{" "}sort le <span className="font-semibold text-zinc-200">premier vendredi du mois (en général) à 14h30 heure de Paris</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               Il mesure les créations d&apos;emplois aux États-Unis, hors secteur agricole.

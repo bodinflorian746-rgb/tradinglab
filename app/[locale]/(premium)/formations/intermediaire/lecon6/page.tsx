@@ -67,7 +67,7 @@ function ContentFr() {
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
             <p className="text-sm text-zinc-400">
-              <span className="text-white font-medium">Règle clé :</span> plus un niveau est évident et connu de tous, plus le risque de faux breakout est élevé. Méfie-toi des breakouts "trop beaux".
+              <span className="text-white font-medium">Règle clé :</span>{" "}plus un niveau est évident et connu de tous, plus le risque de faux breakout est élevé. Méfie-toi des breakouts "trop beaux".
             </p>
           </div>
         </div>

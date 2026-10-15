@@ -29,7 +29,7 @@ function ContentFr() {
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">Principe :</span> un FVG se
+            <span className="text-white font-medium">Principe :</span>{" "}un FVG se
             forme sur 3 bougies consécutives. La zone entre la mèche haute de la
             bougie 1 et la mèche basse de la bougie 3 n'a été traversée que par la bougie 2, c'est
             le gap.
@@ -67,7 +67,7 @@ function ContentFr() {
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
             <p className="text-sm text-zinc-400 leading-relaxed">
-              <span className="text-white font-medium">Test rapide :</span> un FVG
+              <span className="text-white font-medium">Test rapide :</span>{" "}un FVG
               existe si la mèche haute de la bougie 1 est inférieure à la mèche
               basse de la bougie 3 (bullish), ou si la mèche basse de la bougie 1
               est supérieure à la mèche haute de la bougie 3 (bearish).
@@ -156,7 +156,7 @@ function ContentFr() {
         </div>
         <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">Workflow complet :</span> structure
+            <span className="text-white font-medium">Workflow complet :</span>{" "}structure
             → liquidité → FVG + confluence → entrée sur rejet dans la zone. Ce
             sont ces 4 étapes combinées qui définissent un setup institutionnel complet.
           </p>

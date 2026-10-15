@@ -180,7 +180,7 @@ export default function ContentFr() {
               <p className="text-zinc-300 leading-relaxed text-sm mb-2">Entrée short EUR/USD prise à 1.1795 après breakout de la ligne de cou, scénario de la Leçon 4.1. SL à 1.1835, TP à 1.1715. Position ouverte depuis 30 minutes. Le prix descend d&apos;abord à 1.1780, puis remonte vivement. Bougie H1 qui clôture à 1.1810.</p>
               <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le prix a re-cassé la ligne de cou à 1.1800 vers le haut. Le double top est invalidé, critère 1. La bougie de remontée est large et englobe les 2 bougies baissières précédentes, critère 2. Pas de news imminente. 2 critères sur 5 sont allumés.</p>
               <p className="text-sm text-zinc-300 leading-relaxed border-l-2 border-emerald-500/50 pl-3 py-1">
-                <span className="font-semibold text-emerald-400">Action :</span> la position est coupée à 1.1810. Perte : 15 pips au lieu des 40 pips prévus en cas d&apos;attente du SL. 25 pips sauvés.
+                <span className="font-semibold text-emerald-400">Action :</span>{" "}la position est coupée à 1.1810. Perte : 15 pips au lieu des 40 pips prévus en cas d&apos;attente du SL. 25 pips sauvés.
               </p>
             </div>
 
@@ -192,7 +192,7 @@ export default function ContentFr() {
               <p className="text-zinc-300 leading-relaxed text-sm mb-2">Entrée short XAU/USD prise à 4 570$ après breakout ligne de cou d&apos;un ETE, scénario Leçon 4.2. SL à 4 630$, TP à 4 480$. Le prix descend bien à 4 540$ pendant 2 bougies, puis remonte fortement.</p>
               <p className="text-zinc-300 leading-relaxed text-sm mb-3">Bougie H1 qui clôture à 4 595$, au-dessus de la ligne de cou mais sous l&apos;épaule droite. Vérification : breakout rejeté, critère 1, volume cohérent sur la remontée, critère 3. Le pattern ETE est en train de se transformer en simple pause dans la tendance haussière. Pas d&apos;attente que le prix re-teste l&apos;épaule droite à 4 625$.</p>
               <p className="text-sm text-zinc-300 leading-relaxed border-l-2 border-emerald-500/50 pl-3 py-1">
-                <span className="font-semibold text-emerald-400">Action :</span> la position est coupée à 4 595$. Perte : 25$ par unité au lieu des 60$ prévus. Plus de la moitié du risque est sauvée.
+                <span className="font-semibold text-emerald-400">Action :</span>{" "}la position est coupée à 4 595$. Perte : 25$ par unité au lieu des 60$ prévus. Plus de la moitié du risque est sauvée.
               </p>
             </div>
 
@@ -204,7 +204,7 @@ export default function ContentFr() {
               <p className="text-zinc-300 leading-relaxed text-sm mb-2">Une divergence baissière propre est repérée sur XAU H1. Prix HH à 4 640$, RSI LH à 68. La tentation d&apos;entrer short directement reste forte. Mais la règle reste claire : &apos;une divergence seule ne suffit JAMAIS&apos;, Leçon 4.3.</p>
               <p className="text-zinc-300 leading-relaxed text-sm mb-3">La cassure du creux structurel à 4 570$ est attendue. Pendant 6 bougies H1, le prix oscille entre 4 580$ et 4 645$. Il ne casse JAMAIS le creux à 4 570$. Le critère 5, temps écoulé sans confirmation, s&apos;allume. L&apos;entrée n&apos;est pas prise, malgré la divergence visible.</p>
               <p className="text-sm text-zinc-300 leading-relaxed border-l-2 border-emerald-500/50 pl-3 py-1">
-                <span className="font-semibold text-emerald-400">Action :</span> aucune entrée. 100% du capital est préservé sur ce trade non-pris. La divergence RSI sans cassure de structure n&apos;est pas un setup tradable.
+                <span className="font-semibold text-emerald-400">Action :</span>{" "}aucune entrée. 100% du capital est préservé sur ce trade non-pris. La divergence RSI sans cassure de structure n&apos;est pas un setup tradable.
               </p>
             </div>
           </section>

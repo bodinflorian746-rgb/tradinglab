@@ -113,11 +113,11 @@ export default function ContentFr() {
             <ul className="space-y-2 mb-4 ml-1">
               <li className="flex items-start gap-2.5 text-sm text-zinc-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 mt-1.5" />
-                <span><span className="text-white font-semibold">Hawkish</span> (faucon) = ton DUR. La banque centrale veut <span className="font-semibold text-zinc-200">resserrer</span> la politique monétaire : monter les taux, retirer des liquidités, lutter contre l&apos;inflation.</span>
+                <span><span className="text-white font-semibold">Hawkish</span>{" "}(faucon) = ton DUR. La banque centrale veut <span className="font-semibold text-zinc-200">resserrer</span>{" "}la politique monétaire : monter les taux, retirer des liquidités, lutter contre l&apos;inflation.</span>
               </li>
               <li className="flex items-start gap-2.5 text-sm text-zinc-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5" />
-                <span><span className="text-white font-semibold">Dovish</span> (colombe) = ton SOUPLE. La banque centrale veut <span className="font-semibold text-zinc-200">stimuler</span> l&apos;économie : baisser les taux, injecter des liquidités, soutenir la croissance.</span>
+                <span><span className="text-white font-semibold">Dovish</span>{" "}(colombe) = ton SOUPLE. La banque centrale veut <span className="font-semibold text-zinc-200">stimuler</span>{" "}l&apos;économie : baisser les taux, injecter des liquidités, soutenir la croissance.</span>
               </li>
             </ul>
             <p className="text-sm text-zinc-400 leading-relaxed mb-4">
@@ -125,7 +125,7 @@ export default function ContentFr() {
             </p>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Ces termes décrivent l&apos;<span className="font-semibold text-zinc-200">orientation</span> du discours d&apos;un banquier central, pas une décision en elle-même. Powell peut tenir un discours hawkish sans monter les taux. Lagarde peut paraître dovish sans les baisser. C&apos;est le ton qui compte, pas l&apos;action immédiate.
+                <span className="text-white font-medium">À retenir :</span>{" "}Ces termes décrivent l&apos;<span className="font-semibold text-zinc-200">orientation</span>{" "}du discours d&apos;un banquier central, pas une décision en elle-même. Powell peut tenir un discours hawkish sans monter les taux. Lagarde peut paraître dovish sans les baisser. C&apos;est le ton qui compte, pas l&apos;action immédiate.
               </p>
             </div>
           </section>
@@ -141,11 +141,11 @@ export default function ContentFr() {
             </p>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Le ton précède l&apos;action. Apprendre à lire le ton = anticiper le mouvement avant que les chiffres ne tombent.
+                <span className="text-white font-medium">À retenir :</span>{" "}Le ton précède l&apos;action. Apprendre à lire le ton = anticiper le mouvement avant que les chiffres ne tombent.
               </p>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              C&apos;est exactement pour ça que les meilleurs traders macro lisent les <span className="font-semibold text-zinc-300">discours</span> et les <span className="font-semibold text-zinc-300">minutes</span> (procès-verbaux des réunions de banques centrales), pas seulement les chiffres.
+              C&apos;est exactement pour ça que les meilleurs traders macro lisent les <span className="font-semibold text-zinc-300">discours</span>{" "}et les <span className="font-semibold text-zinc-300">minutes</span>{" "}(procès-verbaux des réunions de banques centrales), pas seulement les chiffres.
             </p>
           </section>
 
@@ -153,7 +153,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Comment reconnaître un ton hawkish vs dovish</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Voici les <span className="font-semibold text-zinc-200">mots-signaux</span> que tu vas croiser dans les communiqués officiels (la plupart sont publiés en anglais, voici les traductions).
+              Voici les <span className="font-semibold text-zinc-200">mots-signaux</span>{" "}que tu vas croiser dans les communiqués officiels (la plupart sont publiés en anglais, voici les traductions).
             </p>
 
             <p className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">Vocabulaire HAWKISH (ton dur, pro-resserrement)</p>
@@ -256,7 +256,7 @@ export default function ContentFr() {
 
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Logique à retenir : un dollar fort vient le plus souvent d&apos;une Fed plus hawkish que les autres banques centrales (la recherche de sécurité en période de stress le renforce aussi). Un dollar faible, l&apos;inverse. La force d&apos;une devise est avant tout <span className="font-semibold text-zinc-300">relative</span> au ton de SA banque centrale comparé aux autres.
+                <span className="text-white font-medium">À retenir :</span>{" "}Logique à retenir : un dollar fort vient le plus souvent d&apos;une Fed plus hawkish que les autres banques centrales (la recherche de sécurité en période de stress le renforce aussi). Un dollar faible, l&apos;inverse. La force d&apos;une devise est avant tout <span className="font-semibold text-zinc-300">relative</span>{" "}au ton de SA banque centrale comparé aux autres.
               </p>
             </div>
           </section>
@@ -273,10 +273,10 @@ export default function ContentFr() {
               <span className="font-semibold text-zinc-200">Tu vois Powell monter les taux de 25bps et te dis</span> : &quot;C&apos;est hawkish, le dollar va monter, je shorte EUR/USD.&quot;
             </p>
             <p className="text-sm text-zinc-300 leading-relaxed mb-3">
-              Et là, l&apos;EUR/USD <span className="font-semibold text-zinc-200">monte</span> au lieu de baisser. Tu te fais sortir.
+              Et là, l&apos;EUR/USD <span className="font-semibold text-zinc-200">monte</span>{" "}au lieu de baisser. Tu te fais sortir.
             </p>
             <p className="text-sm text-zinc-300 leading-relaxed mb-4">
-              Pourquoi ? Parce que le marché avait anticipé une hausse de <span className="font-semibold text-zinc-200">50bps</span>. Donc 25bps, c&apos;est <span className="font-semibold text-zinc-200">moins hawkish que prévu</span>. Et &quot;moins hawkish que prévu&quot; = <span className="font-semibold text-zinc-200">dovish surprise</span> pour le marché. Le dollar baisse parce que les attentes étaient plus hawkish que la décision.
+              Pourquoi ? Parce que le marché avait anticipé une hausse de <span className="font-semibold text-zinc-200">50bps</span>. Donc 25bps, c&apos;est <span className="font-semibold text-zinc-200">moins hawkish que prévu</span>. Et &quot;moins hawkish que prévu&quot; = <span className="font-semibold text-zinc-200">dovish surprise</span>{" "}pour le marché. Le dollar baisse parce que les attentes étaient plus hawkish que la décision.
             </p>
             <div className="bg-zinc-900/40 border border-red-500/15 rounded-xl px-4 py-3 mb-4">
               <p className="text-sm text-zinc-400 italic leading-relaxed">
@@ -284,7 +284,7 @@ export default function ContentFr() {
               </p>
             </div>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              Avant chaque réunion FOMC, regarde ce qui est <span className="font-semibold text-zinc-300">pricé</span> par le marché (FedWatch Tool de la CME donne ces probabilités). Si la Fed sort EXACTEMENT ce qui était attendu, peu de mouvement. Si elle sort plus dur ou plus souple, mouvement violent dans la direction de la surprise.
+              Avant chaque réunion FOMC, regarde ce qui est <span className="font-semibold text-zinc-300">pricé</span>{" "}par le marché (FedWatch Tool de la CME donne ces probabilités). Si la Fed sort EXACTEMENT ce qui était attendu, peu de mouvement. Si elle sort plus dur ou plus souple, mouvement violent dans la direction de la surprise.
             </p>
           </section>
 
@@ -307,13 +307,13 @@ export default function ContentFr() {
                 {
                   n: "2",
                   text: (
-                    <><span className="font-semibold text-zinc-200">Compare au ton précédent</span> : la banque devient-elle plus hawkish ou plus dovish que la dernière fois ? C&apos;est l&apos;<span className="font-semibold text-zinc-200">inflexion</span> qui compte le plus, pas le ton absolu.</>
+                    <><span className="font-semibold text-zinc-200">Compare au ton précédent</span> : la banque devient-elle plus hawkish ou plus dovish que la dernière fois ? C&apos;est l&apos;<span className="font-semibold text-zinc-200">inflexion</span>{" "}qui compte le plus, pas le ton absolu.</>
                   ),
                 },
                 {
                   n: "3",
                   text: (
-                    <><span className="font-semibold text-zinc-200">Définis ton biais directionnel pour la semaine</span> sur la devise concernée. Exemple : &quot;BCE plus hawkish que prévu → biais long EUR pour les 5 jours qui viennent → je cherche des setups longs EUR/USD, EUR/GBP, EUR/JPY, et j&apos;évite les setups shorts EUR.&quot;</>
+                    <><span className="font-semibold text-zinc-200">Définis ton biais directionnel pour la semaine</span>{" "}sur la devise concernée. Exemple : &quot;BCE plus hawkish que prévu → biais long EUR pour les 5 jours qui viennent → je cherche des setups longs EUR/USD, EUR/GBP, EUR/JPY, et j&apos;évite les setups shorts EUR.&quot;</>
                   ),
                 },
               ].map((item) => (

@@ -28,18 +28,18 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-emerald-400 mb-2">Zone de support</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Tu vois le prix descendre, atteindre un niveau, rebondir vers le haut. Descendre encore, atteindre le même niveau, rebondir à nouveau. <strong className="text-white">Ce niveau répété = zone de support.</strong> Les acheteurs défendent ce plancher.
+              Tu vois le prix descendre, atteindre un niveau, rebondir vers le haut. Descendre encore, atteindre le même niveau, rebondir à nouveau. <strong className="text-white">Ce niveau répété = zone de support.</strong>{" "}Les acheteurs défendent ce plancher.
             </p>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-red-400 mb-2">Zone de résistance</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix monte, atteint un niveau, est repoussé vers le bas. Monte encore, atteint le même niveau, rejeté à nouveau. <strong className="text-white">Ce plafond répété = zone de résistance.</strong> Les vendeurs défendent ce sommet.
+              Le prix monte, atteint un niveau, est repoussé vers le bas. Monte encore, atteint le même niveau, rejeté à nouveau. <strong className="text-white">Ce plafond répété = zone de résistance.</strong>{" "}Les vendeurs défendent ce sommet.
             </p>
           </div>
         </div>
         <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-3 py-2">
-          <p className="text-xs text-zinc-400"><span className="text-white font-medium">Clé :</span> ce sont des <span className="text-white font-medium">zones</span> (rectangles), pas des lignes. Le prix ne respecte jamais un niveau à la bougie près.</p>
+          <p className="text-xs text-zinc-400"><span className="text-white font-medium">Clé :</span>{" "}ce sont des <span className="text-white font-medium">zones</span>{" "}(rectangles), pas des lignes. Le prix ne respecte jamais un niveau à la bougie près.</p>
         </div>
       </section>
 

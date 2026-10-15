@@ -136,8 +136,8 @@ export default function ContentFr() {
             </p>
             <ul className="space-y-1.5 mb-5">
               {[
-                { bold: "2%", rest: " → normal" },
-                { bold: "5%+", rest: " → problématique" },
+                { bold: "2 %", rest: " → normal" },
+                { bold: "5 %+", rest: " → problématique" },
               ].map((item) => (
                 <li key={item.bold} className="flex items-center gap-2.5 text-sm text-zinc-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0" />
@@ -167,7 +167,7 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Les banques centrales ont une mission : <span className="font-semibold text-zinc-200">maintenir l&apos;inflation autour de 2%</span>.
+              Les banques centrales ont une mission : <span className="font-semibold text-zinc-200">maintenir l&apos;inflation autour de 2 %</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Pourquoi ?</p>
             <ul className="space-y-1.5 mb-4">
@@ -239,27 +239,27 @@ export default function ContentFr() {
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
                 <p className="text-sm font-semibold text-zinc-200 mb-1">Phase 1. L&apos;inflation explose</p>
                 <p className="text-sm text-zinc-300">
-                  l&apos;inflation US monte de 1.4% (janvier 2021) à <span className="font-semibold text-zinc-200">9.1%</span> (juin 2022, record sur 40 ans).
+                  l&apos;inflation US monte de 1,4 % (janvier 2021) à <span className="font-semibold text-zinc-200">9,1 %</span>{" "}(juin 2022, record sur 40 ans).
                 </p>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
                 <p className="text-sm font-semibold text-zinc-200 mb-1">Phase 2. La Fed panique et agit</p>
                 <p className="text-sm text-zinc-300">
-                  elle monte ses taux de <span className="font-semibold text-zinc-200">0.25% à 5.5%</span> en moins de 18 mois, l&apos;un des cycles de hausse les plus violents de l&apos;histoire.
+                  elle monte ses taux de <span className="font-semibold text-zinc-200">0,25 % à 5,5 %</span>{" "}en moins de 18 mois, l&apos;un des cycles de hausse les plus violents de l&apos;histoire.
                 </p>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
                 <p className="text-sm font-semibold text-zinc-200 mb-1">Phase 3. Le dollar explose</p>
                 <p className="text-sm text-zinc-300">
-                  le DXY (indice dollar) gagne <span className="font-semibold text-zinc-200">près de 20%</span> entre début 2022 et son sommet de septembre 2022. EUR/USD passe d&apos;environ 1.23 (mi-2021) à 0.95 (septembre 2022).
+                  le DXY (indice dollar) gagne <span className="font-semibold text-zinc-200">près de 20 %</span>{" "}entre début 2022 et son sommet de septembre 2022. EUR/USD passe d&apos;environ 1.23 (mi-2021) à 0.95 (septembre 2022).
                 </p>
               </div>
               <div className="bg-zinc-800/30 rounded-xl px-4 py-3">
                 <p className="text-sm font-semibold text-zinc-200 mb-2">Phase 4. Tous les marchés se font massacrer</p>
                 <ul className="space-y-1">
-                  <li className="text-sm text-zinc-300">Nasdaq : <span className="font-semibold text-zinc-200">-33%</span> sur 2022</li>
-                  <li className="text-sm text-zinc-300">Bitcoin : <span className="font-semibold text-zinc-200">-65%</span> sur l&apos;année</li>
-                  <li className="text-sm text-zinc-300">Or : volatil, jusqu&apos;à <span className="font-semibold text-zinc-200">-21%</span> entre son sommet de mars et son creux de fin septembre</li>
+                  <li className="text-sm text-zinc-300">Nasdaq : <span className="font-semibold text-zinc-200">-33 %</span>{" "}sur 2022</li>
+                  <li className="text-sm text-zinc-300">Bitcoin : <span className="font-semibold text-zinc-200">-65 %</span>{" "}sur l&apos;année</li>
+                  <li className="text-sm text-zinc-300">Or : volatil, jusqu&apos;à <span className="font-semibold text-zinc-200">-21 %</span>{" "}entre son sommet de mars et son creux de fin septembre</li>
                   <li className="text-sm text-zinc-300">Obligations : pire année depuis 100 ans</li>
                 </ul>
               </div>
@@ -357,7 +357,7 @@ export default function ContentFr() {
               "L'inflation = hausse des prix + baisse du pouvoir d'achat",
               "Les banques centrales la contrôlent via les taux",
               "La chaîne centrale : Inflation → Taux → Devise → Marchés",
-              "Comprendre l'inflation = comprendre 80% de la macro",
+              "Comprendre l'inflation = comprendre 80 % de la macro",
             ]}
           />
 
@@ -365,14 +365,14 @@ export default function ContentFr() {
             description="Commence à intégrer l'inflation dans ton analyse."
             steps={[
               "Cherche le niveau actuel d'inflation US (approximation suffit, sur Investing.com).",
-              "Note s'il est élevé ou faible (au-dessus ou en dessous de 2-3%).",
+              "Note s'il est élevé ou faible (au-dessus ou en dessous de 2-3 %).",
               "Regarde la tendance sur les 6 derniers mois (en hausse ou en baisse).",
               "Observe le comportement du dollar (DXY ou EUR/USD) sur la même période.",
               "Pose-toi la question : est-ce cohérent avec la chaîne de causalité ?",
             ]}
           />
           <p className="text-sm text-zinc-500 leading-relaxed px-1">
-            L&apos;objectif : <span className="font-semibold text-zinc-400">créer le lien entre inflation et marché</span> dans ta tête.
+            L&apos;objectif : <span className="font-semibold text-zinc-400">créer le lien entre inflation et marché</span>{" "}dans ta tête.
           </p>
 
           <LessonQuiz
@@ -388,7 +388,7 @@ export default function ContentFr() {
             answerExplanations={[
               "Faux. L'inflation haute est perçue positivement pour la devise à court terme car elle signale que la banque centrale va monter ses taux, ce qui attire les capitaux. La confusion vient du long terme où une inflation non maîtrisée peut détruire la devise.",
               "Correct. Le marché anticipe la chaîne avant même que la Fed agisse : inflation surprise → hausse de taux probable → dollar attractif → dollar monte. C'est exactement ce qui s'est passé en 2022.",
-              "Faux. L'inflation est le driver macro principal de tous les marchés. Une surprise inflationniste à +2% déclenche des mouvements immédiats sur le forex, les obligations, les actions et les matières premières.",
+              "Faux. L'inflation est le driver macro principal de tous les marchés. Une surprise inflationniste à +2 % déclenche des mouvements immédiats sur le forex, les obligations, les actions et les matières premières.",
               "Faux. Le marché bouge sur les anticipations, pas sur les décisions officielles. Dès que le chiffre CPI sort, les traders réévaluent la probabilité de hausse de taux, et le dollar bouge immédiatement.",
             ]}
           />

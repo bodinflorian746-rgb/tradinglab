@@ -86,7 +86,7 @@ function ContentFr() {
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
             <p className="text-sm text-zinc-400">
-              <span className="text-white font-medium">CHoCH → BOS opposé = retournement confirmé.</span> Un CHoCH seul = simple alerte. Attends toujours la confirmation.
+              <span className="text-white font-medium">CHoCH → BOS opposé = retournement confirmé.</span>{" "}Un CHoCH seul = simple alerte. Attends toujours la confirmation.
             </p>
           </div>
         </div>

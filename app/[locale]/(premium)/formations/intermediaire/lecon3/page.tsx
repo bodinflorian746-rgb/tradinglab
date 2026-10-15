@@ -28,18 +28,18 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-emerald-400 mb-2">Support (achat)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix descend lentement → entre dans une zone → BOOM, une ou deux grosses bougies haussières explosent vers le haut. Les institutions ont acheté massivement là : la zone devient un support, encore à confirmer. <strong className="text-white">Le retest le confirme :</strong> quand le prix y revient et réagit (rejet, rebond), leurs ordres restants se sont déclenchés.
+              Le prix descend lentement → entre dans une zone → BOOM, une ou deux grosses bougies haussières explosent vers le haut. Les institutions ont acheté massivement là : la zone devient un support, encore à confirmer. <strong className="text-white">Le retest le confirme :</strong>{" "}quand le prix y revient et réagit (rejet, rebond), leurs ordres restants se sont déclenchés.
             </p>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-red-400 mb-2">Résistance (vente)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix monte lentement → entre dans une zone → BOOM, grosse bougie baissière explose vers le bas. Les institutions ont vendu massivement là : la zone devient une résistance, encore à confirmer. <strong className="text-white">Le retest la confirme :</strong> quand le prix y revient et réagit (rejet, repli), leurs ordres résiduels se sont exécutés.
+              Le prix monte lentement → entre dans une zone → BOOM, grosse bougie baissière explose vers le bas. Les institutions ont vendu massivement là : la zone devient une résistance, encore à confirmer. <strong className="text-white">Le retest la confirme :</strong>{" "}quand le prix y revient et réagit (rejet, repli), leurs ordres résiduels se sont exécutés.
             </p>
           </div>
         </div>
         <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-3 py-2">
-          <p className="text-xs text-zinc-400"><span className="text-white font-medium">Signe clé :</span> le départ de la zone est le plus souvent IMPULSIF, fort, rapide, peu de mèches. Si le départ est lent, ce n'est pas un support (ou une résistance) de ce type.</p>
+          <p className="text-xs text-zinc-400"><span className="text-white font-medium">Signe clé :</span>{" "}le départ de la zone est le plus souvent IMPULSIF, fort, rapide, peu de mèches. Si le départ est lent, ce n'est pas un support (ou une résistance) de ce type.</p>
         </div>
       </section>
 

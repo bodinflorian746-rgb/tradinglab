@@ -709,6 +709,14 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       }
     }
   }
+  // Texte de la leçon (hors schémas) : mots collés derrière un élément en ligne (« 5,5 %en moins »), l'espace
+  // « </span> mot » écrite en fin de ligne est perdue au rendu du JSX
+  for (const el of document.querySelectorAll("main span, main strong, main em, main b, main code, main a")) {
+    if (el.closest("svg, [data-lesson-chart], button, nav")) continue;
+    const n = el.nextSibling, t = el.textContent;
+    if (!n || n.nodeType !== 3 || !t.trim() || getComputedStyle(el).display !== "inline") continue;
+    if (/^[\p{L}\d(«]/u.test(n.textContent) && /[\p{L}\d%)»:.]$/u.test(t)) E("texte", `mots collés « ${t.slice(-20)}${n.textContent.slice(0, 15)} » : espace perdue après la balise`);
+  }
   return errs;
 }
 
@@ -765,10 +773,11 @@ const EXPECT = {
   "mot coupé dans un tableau": /mot coupé dans un tableau/, "texte qui dépasse l'écran": /dépasse l'écran|la page défile horizontalement/, "tableau sans cadre de défilement": /tableau sans cadre de défilement/,
   "FVG décalé": /écart mèche à mèche|≠ gap des bougies/, "liquidité épaisse": /bande de liquidité de/, "sommet hors d'une mèche": /pas sur la pointe de mèche d'un vrai/,
   "OB qui déborde de sa bougie": /ne couvre exactement aucune bougie/, "support trop épais": /MR \(au plus 1,5\)/, "résistance appelée support": /touché seulement par-dessous|changement de rôle n'est pas annoncé/,
-  "swing nommé sur la dernière bougie": /au bord du graphique, swing pas encore confirmé/, "étiquette vague": /nom vague/, "zone sans étiquette": /sans étiquette/, "SL du côté du TP": /du même côté de l'entrée/, "mèche aussi épaisse que le corps": /mèches presque aussi épaisses/, "décimale avec un point": /décimale avec un point/,
+  "swing nommé sur la dernière bougie": /au bord du graphique, swing pas encore confirmé/, "étiquette vague": /nom vague/, "zone sans étiquette": /sans étiquette/, "SL du côté du TP": /du même côté de l'entrée/, "mèche aussi épaisse que le corps": /mèches presque aussi épaisses/, "décimale avec un point": /décimale avec un point/, "mots collés": /mots collés/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
+  "mots collés": () => { const m = document.querySelector("main"); const s = document.createElement("strong"); s.textContent = "5,5 %"; m.append(s, document.createTextNode("en moins de 18 mois")); },
   "décimale avec un point": () => { const c = document.querySelector("[data-chip]:not([data-rr])") || document.querySelector("[data-chip]"); c.textContent = "Corps de 9.1, 10 et 10 pips"; },
   "corps de bougie déplacé": () => { const r = document.querySelector("[data-candle='3'] rect"); r.setAttribute("y", +r.getAttribute("y") + 4); },
   "bougie discontinue": () => { const s = document.querySelector("svg[data-candles]"); const c = JSON.parse(s.dataset.candles); c[3].o += 0.001; c[3].h += 0.001; s.dataset.candles = JSON.stringify(c); },
@@ -940,6 +949,12 @@ for (const w of FORMATS) {
       await browser.close();
       process.exit(2);
     }
+    // Page 404 (le titre de l'onglet ne change pas : on lit le titre affiché) : erreur, la page n'est pas contrôlée
+    if (await page.evaluate(() => /Page introuvable/.test(document.querySelector("h1")?.textContent ?? ""))) {
+      errors++;
+      console.log(`${String(w).padEnd(5)} ${p.url.padEnd(42)} 1 erreur(s)\n    ERREUR page introuvable (404) : schémas non contrôlés`);
+      continue;
+    }
     const errs = await page.evaluate(checkCharts, { ids: p.charts, vocab: VOCAB, sr: SR_SRC });
     if (w === 1440) {
       const base = new Set(errs);
@@ -963,7 +978,7 @@ for (const w of FORMATS) {
     for (const url of lessonUrls()) {
       await page.goto(`${BASE}${url}`, { waitUntil: "load", timeout: 120000 });
       await page.waitForTimeout(800);
-      if (/Page introuvable/.test(await page.title()) || page.url().includes("/login")) { console.log(`    ? ${url} : page non chargée`); warnings++; continue; }
+      if (/Page introuvable/.test(await page.title()) || await page.evaluate(() => /Page introuvable/.test(document.querySelector("h1")?.textContent ?? "")) || page.url().includes("/login")) { console.log(`    ? ${url} : page non chargée`); warnings++; continue; }
       const found = await page.evaluate(scanLesson);
       warnings += found.length;
       for (const f of found) console.log(`    AVERTISSEMENT ${w} ${url} : ${f}`);

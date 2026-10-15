@@ -158,7 +158,7 @@ export default function ContentFr() {
                 <span className="font-semibold text-zinc-200">Réel</span> → le chiffre qui sort au moment de la news.
               </p>
               <p className="text-zinc-300 leading-relaxed text-sm">
-                <span className="font-semibold text-zinc-200">Révisions</span> → <span className="font-semibold text-zinc-200">le piège oublié.</span> Le chiffre du mois précédent peut être corrigé à la hausse ou à la baisse.
+                <span className="font-semibold text-zinc-200">Révisions</span> → <span className="font-semibold text-zinc-200">le piège oublié.</span>{" "}Le chiffre du mois précédent peut être corrigé à la hausse ou à la baisse.
               </p>
             </div>
 
@@ -242,10 +242,10 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Pourquoi l&apos;USD reste toujours important ?</span> Parce que même si tu trades EUR/USD, XAU/USD, BTC/USD ou NASDAQ, le dollar influence tout (cf leçon Débutant Macro 5).
+              <span className="font-semibold text-zinc-200">Pourquoi l&apos;USD reste toujours important ?</span>{" "}Parce que même si tu trades EUR/USD, XAU/USD, BTC/USD ou NASDAQ, le dollar influence tout (cf leçon Débutant Macro 5).
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              La <span className="font-semibold text-zinc-200">vue semaine</span> est essentielle. Elle te permet de voir les zones de risque <span className="font-semibold text-zinc-200">avant qu&apos;elles arrivent</span>, pas pendant.
+              La <span className="font-semibold text-zinc-200">vue semaine</span>{" "}est essentielle. Elle te permet de voir les zones de risque <span className="font-semibold text-zinc-200">avant qu&apos;elles arrivent</span>, pas pendant.
             </p>
 
             {/* Encadré 💰 Réalité du retail */}
@@ -285,10 +285,10 @@ export default function ContentFr() {
               Dans ce genre de semaine, le marché peut devenir <span className="font-semibold text-zinc-200">nerveux avant même les news</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Pourquoi ?</span> Parce que les institutions réduisent leur exposition, ajustent leurs positions, et attendent les chiffres. Tu vois souvent des <span className="font-semibold text-zinc-200">mouvements pré-news</span> dès le mardi matin sur ces semaines.
+              <span className="font-semibold text-zinc-200">Pourquoi ?</span>{" "}Parce que les institutions réduisent leur exposition, ajustent leurs positions, et attendent les chiffres. Tu vois souvent des <span className="font-semibold text-zinc-200">mouvements pré-news</span>{" "}dès le mardi matin sur ces semaines.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              À l&apos;inverse, une semaine <span className="font-semibold text-zinc-200">calme macro</span> laisse plus de place à l&apos;analyse technique pure, c&apos;est le bon moment pour appliquer tes setups habituels sans surprise externe.
+              À l&apos;inverse, une semaine <span className="font-semibold text-zinc-200">calme macro</span>{" "}laisse plus de place à l&apos;analyse technique pure, c&apos;est le bon moment pour appliquer tes setups habituels sans surprise externe.
             </p>
             <div className="bg-zinc-800/30 rounded-xl px-4 py-3 mb-5">
               <p className="text-xs font-semibold text-zinc-400 mb-2">Sur une semaine FOMC + CPI + NFP, ces actifs sont tous impactés :</p>
@@ -361,7 +361,7 @@ export default function ContentFr() {
               Le niveau d&apos;impact dépend du <span className="font-semibold text-zinc-200">contexte global</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Un chiffre moyen dans une semaine calme peut faire peu de bruit. Le <span className="font-semibold text-zinc-200">même chiffre dans une semaine tendue</span> (cluster de news, contexte macro fragile) peut déclencher un vrai mouvement.
+              Un chiffre moyen dans une semaine calme peut faire peu de bruit. Le <span className="font-semibold text-zinc-200">même chiffre dans une semaine tendue</span>{" "}(cluster de news, contexte macro fragile) peut déclencher un vrai mouvement.
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
@@ -374,7 +374,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Construire ta feuille de route hebdomadaire</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Chaque <span className="font-semibold text-zinc-200">dimanche soir</span> ou <span className="font-semibold text-zinc-200">lundi matin</span>, tu prépares ta semaine macro.
+              Chaque <span className="font-semibold text-zinc-200">dimanche soir</span>{" "}ou <span className="font-semibold text-zinc-200">lundi matin</span>, tu prépares ta semaine macro.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               <span className="font-semibold text-zinc-200">Méthode simple</span> :

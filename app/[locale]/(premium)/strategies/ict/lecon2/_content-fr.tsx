@@ -195,7 +195,7 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Rebond, mitigation profonde ou invalidation : ne pas confondre</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Quand le prix revient dans un FVG, il y a un piège classique : croire qu'un FVG « rempli » est automatiquement mort. C'est faux. Un FVG peut être traversé profondément, presque entièrement, et continuer à réagir parfaitement au test suivant. Ce qui invalide réellement un FVG, ce n'est pas le remplissage, c'est la <span className="text-white font-semibold">cassure structurelle propre</span> au-delà de la zone, accompagnée d'une absence de réaction et d'un contexte de l'UT supérieure qui ne soutient plus le scénario.
+              Quand le prix revient dans un FVG, il y a un piège classique : croire qu'un FVG « rempli » est automatiquement mort. C'est faux. Un FVG peut être traversé profondément, presque entièrement, et continuer à réagir parfaitement au test suivant. Ce qui invalide réellement un FVG, ce n'est pas le remplissage, c'est la <span className="text-white font-semibold">cassure structurelle propre</span>{" "}au-delà de la zone, accompagnée d'une absence de réaction et d'un contexte de l'UT supérieure qui ne soutient plus le scénario.
             </p>
 
             <div className="my-6">
@@ -252,7 +252,7 @@ export default function ContentFr() {
             <div className="border border-amber-500/30 bg-amber-500/5 rounded-xl p-4 md:p-6 my-6">
               <p className="text-amber-400 font-semibold text-sm mb-2">Règle à retenir</p>
               <p className="text-sm text-zinc-200 leading-relaxed">
-                FVG rempli <span className="text-zinc-500">≠</span> setup mort.
+                FVG rempli <span className="text-zinc-500">≠</span>{" "}setup mort.
                 <br />
                 <span className="text-white font-semibold">FVG rempli SANS réaction + structure cassée = invalidation probable.</span>
               </p>
@@ -262,13 +262,13 @@ export default function ContentFr() {
               <p className="text-white font-semibold text-sm mb-3">Exemple concret. FVG haussier entre 1.0840 et 1.0860</p>
               <ul className="space-y-2 text-sm text-zinc-300">
                 <li>
-                  <span className="text-emerald-400 font-semibold">Cas A. Rebond immédiat :</span> le prix revient à 1.0860, marque une mèche, bougie verte de force, repart vers 1.0920. FVG fresh, setup A+, RR optimisé.
+                  <span className="text-emerald-400 font-semibold">Cas A. Rebond immédiat :</span>{" "}le prix revient à 1.0860, marque une mèche, bougie verte de force, repart vers 1.0920. FVG fresh, setup A+, RR optimisé.
                 </li>
                 <li>
-                  <span className="text-amber-400 font-semibold">Cas B. Mitigation profonde :</span> le prix descend à 1.0842 (presque tout le FVG), longue mèche d'achat, close à 1.0855 puis reprise. Le FVG est mitigé mais le rejet est net, le setup reste actif. Stop à 1.0838.
+                  <span className="text-amber-400 font-semibold">Cas B. Mitigation profonde :</span>{" "}le prix descend à 1.0842 (presque tout le FVG), longue mèche d'achat, close à 1.0855 puis reprise. Le FVG est mitigé mais le rejet est net, le setup reste actif. Stop à 1.0838.
                 </li>
                 <li>
-                  <span className="text-red-400 font-semibold">Cas C. Invalidation :</span> le prix traverse le FVG sans réaction, close à 1.0825, casse le dernier swing low. Pas de mèche d'achat, momentum continu baissier. Le FVG est mort, pas de trade, on attend une nouvelle structure.
+                  <span className="text-red-400 font-semibold">Cas C. Invalidation :</span>{" "}le prix traverse le FVG sans réaction, close à 1.0825, casse le dernier swing low. Pas de mèche d'achat, momentum continu baissier. Le FVG est mort, pas de trade, on attend une nouvelle structure.
                 </li>
               </ul>
             </div>

@@ -29,7 +29,7 @@ function ContentFr() {
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">Objectif :</span> obtenir un échantillon de 50 à 100 trades pour valider l'edge de ta stratégie avec des données statistiques fiables.
+            <span className="text-white font-medium">Objectif :</span>{" "}obtenir un échantillon de 50 à 100 trades pour valider l'edge de ta stratégie avec des données statistiques fiables.
           </p>
         </div>
       </section>

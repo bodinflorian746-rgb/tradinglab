@@ -28,7 +28,7 @@ function ContentFr() {
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400">
-            <span className="text-white font-medium">Règle fondamentale :</span> n'entre jamais sur une seule raison. Chaque confluence supplémentaire indépendante augmente la probabilité, et réduit le risque d'une entrée dans le mauvais sens.
+            <span className="text-white font-medium">Règle fondamentale :</span>{" "}n'entre jamais sur une seule raison. Chaque confluence supplémentaire indépendante augmente la probabilité, et réduit le risque d'une entrée dans le mauvais sens.
           </p>
         </div>
       </section>
@@ -81,7 +81,7 @@ function ContentFr() {
         </div>
         <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400">
-            <span className="text-white font-medium">Résultat :</span> 4 confluences indépendantes sur le même niveau. Entrée à 1.0851, SL à 1.0835, TP à 1.0950. R/R = 1:6.
+            <span className="text-white font-medium">Résultat :</span>{" "}4 confluences indépendantes sur le même niveau. Entrée à 1.0851, SL à 1.0835, TP à 1.0950. R/R = 1:6.
           </p>
         </div>
       </section>

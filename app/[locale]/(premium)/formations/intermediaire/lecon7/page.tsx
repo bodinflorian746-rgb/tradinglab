@@ -27,19 +27,19 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-emerald-400 mb-2">EUR/USD. Daily (biais)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Tu ouvres EUR/USD en Daily. Le graphique monte en escalier depuis 3 semaines. HH/HL clairs. <strong className="text-white">Biais haussier.</strong> Tu ne cherches que des achats pour la semaine.
+              Tu ouvres EUR/USD en Daily. Le graphique monte en escalier depuis 3 semaines. HH/HL clairs. <strong className="text-white">Biais haussier.</strong>{" "}Tu ne cherches que des achats pour la semaine.
             </p>
           </div>
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD. H4 (zone d'intérêt)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Tu passes en H4. Le prix recule vers 1.0850, le dernier Higher Low. C'est une zone de support. <strong className="text-white">Tu marques la zone</strong> comme zone d'entrée potentielle en achat.
+              Tu passes en H4. Le prix recule vers 1.0850, le dernier Higher Low. C'est une zone de support. <strong className="text-white">Tu marques la zone</strong>{" "}comme zone d'entrée potentielle en achat.
             </p>
           </div>
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-blue-400 mb-2">EUR/USD. M15 (déclencheur)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Tu passes en M15 quand le prix touche la zone. Une pin bar haussière se forme. <strong className="text-white">C'est le signal.</strong> Tu entres en achat dans le sens du Daily. Les 3 unités de temps racontent la même histoire.
+              Tu passes en M15 quand le prix touche la zone. Une pin bar haussière se forme. <strong className="text-white">C'est le signal.</strong>{" "}Tu entres en achat dans le sens du Daily. Les 3 unités de temps racontent la même histoire.
             </p>
           </div>
         </div>
@@ -120,7 +120,7 @@ function ContentFr() {
         </div>
         <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">Règle absolue :</span> si le Daily est haussier et que le H1 montre un signal de vente, tu n'entres pas en vente. Tu attends le prochain signal d'achat aligné.
+            <span className="text-white font-medium">Règle absolue :</span>{" "}si le Daily est haussier et que le H1 montre un signal de vente, tu n'entres pas en vente. Tu attends le prochain signal d'achat aligné.
           </p>
         </div>
       </section>

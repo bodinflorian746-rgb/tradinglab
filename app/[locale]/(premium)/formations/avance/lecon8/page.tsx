@@ -26,7 +26,7 @@ function ContentFr() {
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">Fait :</span> la majorité des traders professionnels tient un journal détaillé. Ce n'est pas une option, c'est un outil de performance au même titre qu'une stratégie.
+            <span className="text-white font-medium">Fait :</span>{" "}la majorité des traders professionnels tient un journal détaillé. Ce n'est pas une option, c'est un outil de performance au même titre qu'une stratégie.
           </p>
         </div>
         <p className="text-zinc-300 leading-relaxed text-sm mt-4">

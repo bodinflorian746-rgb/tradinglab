@@ -149,7 +149,7 @@ export default function ContentFr() {
               Le PPI sort <span className="font-semibold text-zinc-200">la même semaine que le CPI</span>, souvent la veille ou le lendemain. Son avance n&apos;est pas dans l&apos;heure de publication : c&apos;est le prix que les producteurs reçoivent pour leurs biens, une hausse qui remonte vers le consommateur dans les mois suivants.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Pourquoi c&apos;est un signal précoce ?</span> Parce que les hausses de coût chez les producteurs finissent presque toujours par être répercutées en aval.
+              <span className="font-semibold text-zinc-200">Pourquoi c&apos;est un signal précoce ?</span>{" "}Parce que les hausses de coût chez les producteurs finissent presque toujours par être répercutées en aval.
             </p>
             <ul className="space-y-2 mb-4">
               {[
@@ -163,7 +163,7 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Exemple concret</span> : si le PPI de janvier sort fortement au-dessus des attentes, les traders expérimentés commencent à repositionner leur exposition <span className="font-semibold text-zinc-200">avant même le CPI</span> de février.
+              <span className="font-semibold text-zinc-200">Exemple concret</span> : si le PPI de janvier sort fortement au-dessus des attentes, les traders expérimentés commencent à repositionner leur exposition <span className="font-semibold text-zinc-200">avant même le CPI</span>{" "}de février.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
               Le débutant réagit au CPI. Le trader intermédiaire <span className="font-semibold text-zinc-200">se prépare avec le PPI</span>.
@@ -210,8 +210,8 @@ export default function ContentFr() {
               <span className="font-semibold text-zinc-200">Exemple type</span> :
             </p>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
-              <p className="text-sm text-zinc-300">CPI Headline : <span className="font-semibold text-zinc-200">+2,1%</span> (conforme aux attentes)</p>
-              <p className="text-sm text-zinc-300 mt-1">Core CPI : <span className="font-semibold text-zinc-200">+3,4%</span> (supérieur aux attentes de 3,2%)</p>
+              <p className="text-sm text-zinc-300">CPI Headline : <span className="font-semibold text-zinc-200">+2,1%</span>{" "}(conforme aux attentes)</p>
+              <p className="text-sm text-zinc-300 mt-1">Core CPI : <span className="font-semibold text-zinc-200">+3,4%</span>{" "}(supérieur aux attentes de 3,2%)</p>
             </div>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               La réaction du marché ? <span className="font-semibold text-zinc-200">Hausse du dollar, baisse de l&apos;or, repli des indices</span>. Et pourtant le Headline était dans les clous.
@@ -303,7 +303,7 @@ export default function ContentFr() {
               <span className="font-semibold text-zinc-200">Mais attention au premier mouvement</span>. Souvent appelé le &apos;faux breakout&apos; : le marché spike dans un sens, puis inverse quelques minutes après quand les algos et les traders institutionnels absorbent l&apos;ensemble du rapport.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              <span className="font-semibold text-zinc-200">Règle pratique</span> : attendre <span className="font-semibold text-zinc-200">2 à 5 minutes</span> après la publication avant de juger la direction réelle : le premier tick n&apos;est souvent pas le vrai mouvement. Pour entrer en position, le repère du parcours reste d&apos;attendre au moins 30 minutes, que le spread et la volatilité se calment.
+              <span className="font-semibold text-zinc-200">Règle pratique</span> : attendre <span className="font-semibold text-zinc-200">2 à 5 minutes</span>{" "}après la publication avant de juger la direction réelle : le premier tick n&apos;est souvent pas le vrai mouvement. Pour entrer en position, le repère du parcours reste d&apos;attendre au moins 30 minutes, que le spread et la volatilité se calment.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
               La combinaison PPI + CPI + Core PCE dans la même direction est le signal le plus fort. Quand les 3 convergent, la Fed n&apos;a plus d&apos;excuse pour ne pas agir.

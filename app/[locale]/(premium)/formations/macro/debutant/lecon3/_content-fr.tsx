@@ -150,7 +150,7 @@ export default function ContentFr() {
                 <p className="text-sm font-semibold text-zinc-200 mb-1.5">NFP (Non-Farm Payrolls)</p>
                 <ul className="space-y-1">
                   <li className="text-sm text-zinc-300">Créations d&apos;emplois US</li>
-                  <li className="text-sm text-zinc-300">Publié le <span className="font-semibold text-zinc-200">1er vendredi du mois à 14h30</span> (heure de Paris)</li>
+                  <li className="text-sm text-zinc-300">Publié le <span className="font-semibold text-zinc-200">1er vendredi du mois à 14h30</span>{" "}(heure de Paris)</li>
                   <li className="text-sm text-zinc-300">Souvent ultra violent</li>
                 </ul>
               </div>
@@ -192,7 +192,7 @@ export default function ContentFr() {
                 <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
               </div>
               <p className="text-base text-zinc-300 leading-relaxed">
-                Tu n&apos;as pas besoin de suivre tout le calendrier. Maîtrise ces 5 chiffres et tu comprends déjà <span className="font-semibold text-zinc-200">l&apos;essentiel des mouvements brutaux</span> du marché. Le reste, c&apos;est du bruit.
+                Tu n&apos;as pas besoin de suivre tout le calendrier. Maîtrise ces 5 chiffres et tu comprends déjà <span className="font-semibold text-zinc-200">l&apos;essentiel des mouvements brutaux</span>{" "}du marché. Le reste, c&apos;est du bruit.
               </p>
             </div>
           </section>
@@ -218,7 +218,7 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Ils peuvent créer des mouvements, mais rarement aussi violents que les 5 majeurs. Apprends-les <span className="font-semibold text-zinc-200">après</span> avoir maîtrisé les 5 premiers.
+              Ils peuvent créer des mouvements, mais rarement aussi violents que les 5 majeurs. Apprends-les <span className="font-semibold text-zinc-200">après</span>{" "}avoir maîtrisé les 5 premiers.
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
@@ -368,7 +368,7 @@ export default function ContentFr() {
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-5">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">Méthode du trader expérimenté</span> : tu ne traderas <span className="font-semibold text-zinc-300">jamais</span> la news en direct. Tu attends au moins 30 minutes après (jusqu&apos;à 1 heure sur les news les plus violentes), le marché se calme, la nouvelle direction se dessine, et tu entres avec confluence technique.
+                <span className="text-white font-medium">Méthode du trader expérimenté</span> : tu ne traderas <span className="font-semibold text-zinc-300">jamais</span>{" "}la news en direct. Tu attends au moins 30 minutes après (jusqu&apos;à 1 heure sur les news les plus violentes), le marché se calme, la nouvelle direction se dessine, et tu entres avec confluence technique.
               </p>
             </div>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
@@ -405,7 +405,7 @@ export default function ContentFr() {
             ]}
           />
           <p className="text-sm text-zinc-500 leading-relaxed px-1">
-            L&apos;objectif : t&apos;habituer à <span className="font-semibold text-zinc-400">anticiper la volatilité</span> au lieu de la subir.
+            L&apos;objectif : t&apos;habituer à <span className="font-semibold text-zinc-400">anticiper la volatilité</span>{" "}au lieu de la subir.
           </p>
 
           <LessonQuiz

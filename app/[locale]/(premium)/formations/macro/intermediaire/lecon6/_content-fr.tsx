@@ -120,7 +120,7 @@ export default function ContentFr() {
               Tu vois une bougie baisser, tu veux vendre.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le problème : tu trades le <span className="font-semibold text-zinc-200">bruit du jour</span> au lieu du <span className="font-semibold text-zinc-200">contexte de la semaine</span>.
+              Le problème : tu trades le <span className="font-semibold text-zinc-200">bruit du jour</span>{" "}au lieu du <span className="font-semibold text-zinc-200">contexte de la semaine</span>.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               Un biais hebdomadaire te donne une <span className="font-semibold text-zinc-200">direction prioritaire</span> :

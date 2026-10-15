@@ -33,7 +33,7 @@ function ContentFr() {
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-blue-400 mb-2">Le retracement (zone d'entrée)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Le prix recule depuis 1.0980. Il descend, descend... et s'arrête sur 1.0870. C'est le 61.8% de Fibonacci. Tu regardes, il y a aussi une ancienne résistance à ce niveau, rejetée deux fois puis cassée : elle sert maintenant de support. <strong className="text-white">Confluence.</strong> Tu attends un signal de bougie avant d'entrer en achat.
+              Le prix recule depuis 1.0980. Il descend, descend... et s'arrête sur 1.0870. C'est le 61.8% de Fibonacci. Tu regardes, il y a aussi une ancienne résistance à ce niveau, rejetée deux fois puis cassée : elle sert maintenant de support. <strong className="text-white">Confluence.</strong>{" "}Tu attends un signal de bougie avant d'entrer en achat.
             </p>
           </div>
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3">
@@ -107,7 +107,7 @@ function ContentFr() {
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
             <p className="text-sm text-zinc-400 leading-relaxed">
-              <span className="text-white font-medium">Limite de Fibonacci :</span> les niveaux ne sont pas des aimants magiques. Le prix peut traverser le 61.8% et continuer jusqu'au 78.6%. Utilise Fibonacci pour identifier des zones d'attention, pas pour placer des ordres sans signal.
+              <span className="text-white font-medium">Limite de Fibonacci :</span>{" "}les niveaux ne sont pas des aimants magiques. Le prix peut traverser le 61.8% et continuer jusqu'au 78.6%. Utilise Fibonacci pour identifier des zones d'attention, pas pour placer des ordres sans signal.
             </p>
           </div>
         </div>

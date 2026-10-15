@@ -149,7 +149,7 @@ export default function ContentFr() {
               <div>
                 <p className="text-sm font-semibold text-zinc-200 mb-2">Règle 1. Pas de position ouverte sur news 3 étoiles</p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
-                  Si une news majeure arrive, tu vérifies tes positions. Tu fermes, tu réduis, ou tu assumes consciemment le risque. Mais tu ne <span className="font-semibold text-zinc-200">découvres jamais</span> la news après coup.
+                  Si une news majeure arrive, tu vérifies tes positions. Tu fermes, tu réduis, ou tu assumes consciemment le risque. Mais tu ne <span className="font-semibold text-zinc-200">découvres jamais</span>{" "}la news après coup.
                 </p>
               </div>
 
@@ -181,11 +181,11 @@ export default function ContentFr() {
                 <ul className="space-y-1.5">
                   <li className="flex items-start gap-2.5 text-sm text-zinc-300">
                     <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
-                    <span>soit tu <span className="font-semibold text-zinc-200">élargis ton SL intelligemment</span> (50 pips minimum au lieu de 20-30)</span>
+                    <span>soit tu <span className="font-semibold text-zinc-200">élargis ton SL intelligemment</span>{" "}(50 pips minimum au lieu de 20-30)</span>
                   </li>
                   <li className="flex items-start gap-2.5 text-sm text-zinc-300">
                     <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
-                    <span>soit tu <span className="font-semibold text-zinc-200">attends 30 minutes à 1 heure</span> que ça se calme</span>
+                    <span>soit tu <span className="font-semibold text-zinc-200">attends 30 minutes à 1 heure</span>{" "}que ça se calme</span>
                   </li>
                 </ul>
               </div>
@@ -226,7 +226,7 @@ export default function ContentFr() {
             <ul className="space-y-1.5 mb-4">
               <li className="flex items-start gap-2.5 text-sm text-zinc-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
-                <span><span className="font-semibold text-zinc-200">30 minutes avant</span> la publication</span>
+                <span><span className="font-semibold text-zinc-200">30 minutes avant</span>{" "}la publication</span>
               </li>
               <li className="flex items-start gap-2.5 text-sm text-zinc-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0 mt-1.5" />
@@ -300,7 +300,7 @@ export default function ContentFr() {
                   Tu entres long EUR/USD à 14h00 sans regarder le calendrier. À 14h30, NFP sort très positif. EUR/USD chute de 80 pips en une minute. Ton SL de 30 pips saute, avec du glissement.
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
-                  <span className="font-semibold text-zinc-200">Techniquement, ton analyse pouvait être correcte.</span> Mais ton timing était mauvais. Et le marché ne pardonne pas le mauvais timing en macro.
+                  <span className="font-semibold text-zinc-200">Techniquement, ton analyse pouvait être correcte.</span>{" "}Mais ton timing était mauvais. Et le marché ne pardonne pas le mauvais timing en macro.
                 </p>
               </div>
             </div>

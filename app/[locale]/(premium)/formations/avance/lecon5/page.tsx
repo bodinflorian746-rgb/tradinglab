@@ -25,11 +25,11 @@ function ContentFr() {
           L'OTE (Optimal Trade Entry) est une zone de retracement identifiée par les niveaux Fibonacci 61.8% et 78.6% d'un mouvement impulsif. Après un BOS (Break of Structure), le prix revient souvent dans cette zone, qui coïncide avec un Order Block ou un FVG, avant de repartir dans la direction institutionnelle.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          L'OTE n'est pas un signal d'entrée en lui-même. C'est une <span className="text-white font-medium">zone de timing</span> qui te dit où chercher ton entrée, pas directement pourquoi.
+          L'OTE n'est pas un signal d'entrée en lui-même. C'est une <span className="text-white font-medium">zone de timing</span>{" "}qui te dit où chercher ton entrée, pas directement pourquoi.
         </p>
         <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-blue-400 font-medium">Zone OTE :</span> retracement entre 61.8% et 78.6% d'un swing. C'est là que les institutions rachètent (en haussier) ou revendent (en baissier) à un prix avantageux.
+            <span className="text-blue-400 font-medium">Zone OTE :</span>{" "}retracement entre 61.8% et 78.6% d'un swing. C'est là que les institutions rachètent (en haussier) ou revendent (en baissier) à un prix avantageux.
           </p>
         </div>
       </section>
@@ -77,7 +77,7 @@ function ContentFr() {
           </div>
           <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
             <p className="text-sm text-zinc-400 leading-relaxed">
-              <span className="text-white font-medium">SL et TP :</span> le Stop Loss se place en dessous du swing low (point A) avec une petite marge. Le Take Profit vise le prochain pool de liquidité ou niveau de résistance au-dessus du BOS.
+              <span className="text-white font-medium">SL et TP :</span>{" "}le Stop Loss se place en dessous du swing low (point A) avec une petite marge. Le Take Profit vise le prochain pool de liquidité ou niveau de résistance au-dessus du BOS.
             </p>
           </div>
         </div>

@@ -129,7 +129,7 @@ export default function ContentFr() {
               <div>
                 <p className="text-sm font-semibold text-zinc-200 mb-1">Session Londres, 08h à 17h Paris</p>
                 <p className="text-sm text-zinc-300 mb-0.5">
-                  <span className="font-semibold text-zinc-200">LA session la plus importante.</span> Elle représente environ{" "}
+                  <span className="font-semibold text-zinc-200">LA session la plus importante.</span>{" "}Elle représente environ{" "}
                   <span className="font-semibold text-zinc-200">35-40% du volume forex mondial</span>.
                 </p>
                 <p className="text-sm text-zinc-400">Paires actives : EUR/USD, GBP/USD, EUR/GBP, GBP/JPY, XAU/USD.</p>
@@ -225,7 +225,7 @@ export default function ContentFr() {
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               Le même piège existe sur{" "}
-              <span className="font-semibold text-zinc-200">XAU/USD</span> et{" "}
+              <span className="font-semibold text-zinc-200">XAU/USD</span>{" "}et{" "}
               <span className="font-semibold text-zinc-200">les indices US</span> : entre 22h et 6h, ces actifs sont aussi en zone calme avec des spreads élargis. Seules les paires en JPY (USD/JPY, AUD/JPY) bougent vraiment pendant la session Asie.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">Entre 22h et 6h :</p>

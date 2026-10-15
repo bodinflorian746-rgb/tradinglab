@@ -25,7 +25,7 @@ function ContentFr() {
           Une chasse aux stops se produit quand le prix dépasse brièvement un niveau clé, support, résistance, Equal High ou Equal Low, uniquement pour déclencher les stops des traders positionnés à ce niveau. Une fois les stops exécutés, le prix repart immédiatement dans la direction opposée.
         </p>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          Ce n'est pas une conspiration. C'est une mécanique naturelle : les stops des retail traders constituent des <span className="text-white font-medium">pools de liquidité</span> que les institutions doivent consommer pour exécuter leurs propres ordres massifs.
+          Ce n'est pas une conspiration. C'est une mécanique naturelle : les stops des retail traders constituent des <span className="text-white font-medium">pools de liquidité</span>{" "}que les institutions doivent consommer pour exécuter leurs propres ordres massifs.
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-4">
@@ -97,7 +97,7 @@ function ContentFr() {
         </div>
         <div className="mt-3 bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">Avantage :</span> en entrant après la chasse aux stops, tu as un SL très serré (juste au-delà du spike) pour un TP potentiellement large (le marché vient de se positionner institutionnellement).
+            <span className="text-white font-medium">Avantage :</span>{" "}en entrant après la chasse aux stops, tu as un SL très serré (juste au-delà du spike) pour un TP potentiellement large (le marché vient de se positionner institutionnellement).
           </p>
         </div>
       </section>

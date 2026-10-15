@@ -111,7 +111,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">La macro, c&apos;est quoi exactement ?</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              La <span className="font-semibold text-zinc-200">macro</span> (raccourci pour macroéconomie), c&apos;est l&apos;étude des <span className="font-semibold text-zinc-200">grandes forces</span> qui font bouger l&apos;économie mondiale : taux d&apos;intérêt, inflation, emploi, croissance, décisions des banques centrales.
+              La <span className="font-semibold text-zinc-200">macro</span>{" "}(raccourci pour macroéconomie), c&apos;est l&apos;étude des <span className="font-semibold text-zinc-200">grandes forces</span>{" "}qui font bouger l&apos;économie mondiale : taux d&apos;intérêt, inflation, emploi, croissance, décisions des banques centrales.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               En trading, ces forces ont un impact direct sur <span className="font-semibold text-zinc-200">tous les marchés</span> : forex, indices, crypto, matières premières, obligations.
@@ -126,7 +126,7 @@ export default function ContentFr() {
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Tu peux ignorer la macro et trader uniquement la technique. Mais tu seras régulièrement balayé par des mouvements que tu ne comprends pas. Comprendre la macro, c&apos;est arrêter d&apos;être surpris.
+                <span className="text-white font-medium">À retenir :</span>{" "}Tu peux ignorer la macro et trader uniquement la technique. Mais tu seras régulièrement balayé par des mouvements que tu ne comprends pas. Comprendre la macro, c&apos;est arrêter d&apos;être surpris.
               </p>
             </div>
           </section>
@@ -160,7 +160,7 @@ export default function ContentFr() {
               <span className="font-semibold text-zinc-200">Ce qui s&apos;est passé</span> : à 14h30 (heure de Paris), les chiffres mensuels de l&apos;inflation US ont été publiés. Plus élevés que prévu. Le marché a anticipé que la Fed allait être plus dure. Le dollar a explosé à la hausse. Ton EUR/USD long, qui pariait sur un dollar faible, a été balayé.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              <span className="font-semibold text-zinc-200">La technique seule ne pouvait pas te prévenir.</span> Seule la macro (le calendrier économique + la compréhension des chiffres) pouvait te faire <span className="font-semibold text-zinc-200">éviter</span> ce trade.
+              <span className="font-semibold text-zinc-200">La technique seule ne pouvait pas te prévenir.</span>{" "}Seule la macro (le calendrier économique + la compréhension des chiffres) pouvait te faire <span className="font-semibold text-zinc-200">éviter</span>{" "}ce trade.
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded mb-4">
               <p className="text-base text-white font-semibold italic leading-relaxed">
@@ -169,7 +169,7 @@ export default function ContentFr() {
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> La macro ne remplace pas la technique. Elle la <span className="font-semibold text-zinc-300">complète</span>. Elle te dit quand ne PAS trader, et quand un mouvement est probablement amené à durer.
+                <span className="text-white font-medium">À retenir :</span>{" "}La macro ne remplace pas la technique. Elle la <span className="font-semibold text-zinc-300">complète</span>. Elle te dit quand ne PAS trader, et quand un mouvement est probablement amené à durer.
               </p>
             </div>
           </section>
@@ -252,7 +252,7 @@ export default function ContentFr() {
             </p>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Ces 4 forces sont liées. L&apos;inflation force les taux. Les taux bougent les devises. Les devises bougent les marchés. <span className="font-semibold text-zinc-300">Suivre la chaîne = anticiper le mouvement.</span>
+                <span className="text-white font-medium">À retenir :</span>{" "}Ces 4 forces sont liées. L&apos;inflation force les taux. Les taux bougent les devises. Les devises bougent les marchés. <span className="font-semibold text-zinc-300">Suivre la chaîne = anticiper le mouvement.</span>
               </p>
             </div>
           </section>
@@ -261,7 +261,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Qui décide quoi ?</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              <span className="font-semibold text-zinc-200">Les acteurs principaux</span> que tu vas croiser dans la macro :
+              <span className="font-semibold text-zinc-200">Les acteurs principaux</span>{" "}que tu vas croiser dans la macro :
             </p>
             <ul className="space-y-3 mb-5">
               {[
@@ -295,7 +295,7 @@ export default function ContentFr() {
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Le retail (les traders particuliers comme toi) représente une fraction minuscule du volume. <span className="font-semibold text-zinc-300">Le marché bouge sur les décisions des banques centrales et les flux des institutionnels.</span> Comprendre la macro = comprendre ce qu&apos;ils regardent.
+                <span className="text-white font-medium">À retenir :</span>{" "}Le retail (les traders particuliers comme toi) représente une fraction minuscule du volume. <span className="font-semibold text-zinc-300">Le marché bouge sur les décisions des banques centrales et les flux des institutionnels.</span>{" "}Comprendre la macro = comprendre ce qu&apos;ils regardent.
               </p>
             </div>
           </section>
@@ -304,10 +304,10 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Le calendrier économique : ton outil n°1</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le <span className="font-semibold text-zinc-200">calendrier économique</span> est un outil gratuit qui liste toutes les publications macro à venir, classées par importance.
+              Le <span className="font-semibold text-zinc-200">calendrier économique</span>{" "}est un outil gratuit qui liste toutes les publications macro à venir, classées par importance.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Sur les sites comme <span className="font-semibold text-zinc-200">Investing.com</span> ou <span className="font-semibold text-zinc-200">Forex Factory</span>, chaque événement est noté avec une icône d&apos;impact :
+              Sur les sites comme <span className="font-semibold text-zinc-200">Investing.com</span>{" "}ou <span className="font-semibold text-zinc-200">Forex Factory</span>, chaque événement est noté avec une icône d&apos;impact :
             </p>
             <ul className="space-y-2 mb-5">
               {[
@@ -349,7 +349,7 @@ export default function ContentFr() {
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Avant chaque journée de trading, regarde le calendrier économique. Les événements à 3 étoiles peuvent transformer un setup parfait en piège mortel. Mieux vaut <span className="font-semibold text-zinc-300">ne pas trader</span> dans les 30 minutes avant et après une publication majeure.
+                <span className="text-white font-medium">À retenir :</span>{" "}Avant chaque journée de trading, regarde le calendrier économique. Les événements à 3 étoiles peuvent transformer un setup parfait en piège mortel. Mieux vaut <span className="font-semibold text-zinc-300">ne pas trader</span>{" "}dans les 30 minutes avant et après une publication majeure.
               </p>
             </div>
           </section>
@@ -358,7 +358,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Comment commencer concrètement</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Tu n&apos;as pas besoin de tout savoir. Voici la <span className="font-semibold text-zinc-200">routine simple</span> d&apos;un trader qui intègre la macro à son workflow.
+              Tu n&apos;as pas besoin de tout savoir. Voici la <span className="font-semibold text-zinc-200">routine simple</span>{" "}d&apos;un trader qui intègre la macro à son workflow.
             </p>
 
             <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">Chaque matin (5 minutes)</p>
@@ -403,7 +403,7 @@ export default function ContentFr() {
 
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> <span className="font-semibold text-zinc-300">C&apos;est tout.</span> Avec ces 2 habitudes, tu es déjà au-dessus de la plupart des traders particuliers qui tradent dans le brouillard.
+                <span className="text-white font-medium">À retenir :</span> <span className="font-semibold text-zinc-300">C&apos;est tout.</span>{" "}Avec ces 2 habitudes, tu es déjà au-dessus de la plupart des traders particuliers qui tradent dans le brouillard.
               </p>
             </div>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
@@ -441,7 +441,7 @@ export default function ContentFr() {
             ]}
           />
           <p className="text-sm text-zinc-500 leading-relaxed px-1">
-            L&apos;objectif : t&apos;habituer à lier les <span className="font-semibold text-zinc-400">mouvements brutaux du marché</span> à leurs <span className="font-semibold text-zinc-400">causes macro</span>. Au bout de 2-3 semaines, tu commenceras à anticiper.
+            L&apos;objectif : t&apos;habituer à lier les <span className="font-semibold text-zinc-400">mouvements brutaux du marché</span>{" "}à leurs <span className="font-semibold text-zinc-400">causes macro</span>. Au bout de 2-3 semaines, tu commenceras à anticiper.
           </p>
 
           <LessonQuiz

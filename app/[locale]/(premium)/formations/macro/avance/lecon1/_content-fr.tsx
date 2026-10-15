@@ -110,7 +110,7 @@ export default function ContentFr() {
             </p>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Le FOMC détermine le coût de l&apos;argent, donc la direction des flux sur les marchés.
+                <span className="text-white font-medium">À retenir :</span>{" "}Le FOMC détermine le coût de l&apos;argent, donc la direction des flux sur les marchés.
               </p>
             </div>
           </section>

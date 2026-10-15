@@ -138,7 +138,7 @@ export default function ContentFr() {
               <span className="font-semibold text-zinc-200">Pourquoi ?</span>
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Parce que le 10 ans US sert de référence mondiale. C&apos;est le <span className="font-semibold text-zinc-200">&apos;taux sans risque&apos;</span> que les institutions utilisent pour comparer tous les autres actifs.
+              Parce que le 10 ans US sert de référence mondiale. C&apos;est le <span className="font-semibold text-zinc-200">&apos;taux sans risque&apos;</span>{" "}que les institutions utilisent pour comparer tous les autres actifs.
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
@@ -151,7 +151,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Prix et rendement : le piège de base</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une obligation fonctionne à <span className="font-semibold text-zinc-200">l&apos;inverse</span> de ce que beaucoup imaginent.
+              Une obligation fonctionne à <span className="font-semibold text-zinc-200">l&apos;inverse</span>{" "}de ce que beaucoup imaginent.
             </p>
             <div className="space-y-1.5 mb-4">
               {[
@@ -245,7 +245,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">US10Y vs XAU/USD, Nasdaq et BTC/USD</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              Le <span className="font-semibold text-zinc-200">US10Y</span> est l&apos;un des graphiques les plus importants pour trader plusieurs actifs.
+              Le <span className="font-semibold text-zinc-200">US10Y</span>{" "}est l&apos;un des graphiques les plus importants pour trader plusieurs actifs.
             </p>
             <div className="space-y-4 mb-5">
               {[
@@ -316,7 +316,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">La courbe des taux</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              La <span className="font-semibold text-zinc-200">courbe des taux</span> compare les rendements selon les maturités.
+              La <span className="font-semibold text-zinc-200">courbe des taux</span>{" "}compare les rendements selon les maturités.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
               La plus suivie : <span className="font-semibold text-zinc-200">US10Y - US2Y</span>.
@@ -402,7 +402,7 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le <span className="font-semibold text-zinc-200">taux réel</span> compte beaucoup pour l&apos;or :
+              Le <span className="font-semibold text-zinc-200">taux réel</span>{" "}compte beaucoup pour l&apos;or :
             </p>
             <div className="bg-zinc-800/30 rounded-xl px-4 py-3 mb-5">
               <p className="text-sm font-semibold text-zinc-200 text-center">

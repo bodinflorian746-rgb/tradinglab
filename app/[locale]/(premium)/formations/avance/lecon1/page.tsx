@@ -34,7 +34,7 @@ function ContentFr() {
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">À retenir :</span> le marché
+            <span className="text-white font-medium">À retenir :</span>{" "}le marché
             se déplace vers la liquidité, pas l'inverse. Avant tout grand mouvement,
             le prix va souvent chercher les stops pour alimenter le mouvement suivant.
           </p>
@@ -51,7 +51,7 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl p-4">
             <p className="font-semibold text-emerald-400 text-sm mb-2">Liquidité buy-side (BSL)</p>
             <p className="text-xs text-zinc-400 leading-relaxed mb-2">
-              Se trouve <span className="text-white">au-dessus</span> des résistances
+              Se trouve <span className="text-white">au-dessus</span>{" "}des résistances
               et des Equal Highs (EQH). Les traders short y ont placé leurs stops.
               Quand le prix y monte, il déclenche ces stops, des ordres d'achat
               qui alimentent une vente institutionnelle.
@@ -63,7 +63,7 @@ function ContentFr() {
           <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-4">
             <p className="font-semibold text-red-400 text-sm mb-2">Liquidité sell-side (SSL)</p>
             <p className="text-xs text-zinc-400 leading-relaxed mb-2">
-              Se trouve <span className="text-white">en dessous</span> des supports
+              Se trouve <span className="text-white">en dessous</span>{" "}des supports
               et des Equal Lows (EQL). Les traders long y ont placé leurs stops.
               Quand le prix y descend, il déclenche ces stops, des ordres de vente
               qui alimentent un achat institutionnel.

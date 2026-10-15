@@ -123,7 +123,7 @@ export default function ContentFr() {
                 <div key={item.label} className="flex items-start gap-3 bg-zinc-800/30 rounded-xl px-4 py-3">
                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/60 shrink-0 mt-1.5" />
                   <p className="text-sm text-zinc-300 leading-relaxed">
-                    <span className="font-semibold text-zinc-200">{item.label}</span> ({item.desc}) → contrôle le <span className="font-semibold text-zinc-200">{item.devise}</span>
+                    <span className="font-semibold text-zinc-200">{item.label}</span>{" "}({item.desc}) → contrôle le <span className="font-semibold text-zinc-200">{item.devise}</span>
                   </p>
                 </div>
               ))}
@@ -163,16 +163,16 @@ export default function ContentFr() {
             <div className="bg-zinc-800/50 border border-zinc-700/40 rounded-xl px-4 py-4 mb-4">
               <div className="space-y-1.5">
                 <p className="text-sm leading-relaxed text-emerald-400 font-medium">
-                  Quand une banque centrale <span className="font-semibold">monte</span> ses taux → l&apos;argent devient plus cher → les marchés ralentissent.
+                  Quand une banque centrale <span className="font-semibold">monte</span>{" "}ses taux → l&apos;argent devient plus cher → les marchés ralentissent.
                 </p>
                 <p className="text-sm leading-relaxed text-emerald-400 font-medium">
-                  Quand elle <span className="font-semibold">baisse</span> ses taux → l&apos;argent circule plus → les marchés ont tendance à monter.
+                  Quand elle <span className="font-semibold">baisse</span>{" "}ses taux → l&apos;argent circule plus → les marchés ont tendance à monter.
                 </p>
               </div>
             </div>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">Exemple concret :</span> Quand la Fed durcit son ton (juste un discours, pas même une décision), l&apos;EUR/USD peut perdre <span className="font-semibold text-zinc-300">100 à 300 pips en 24h</span>. Sur 0.10 lot, ça fait <span className="font-semibold text-zinc-300">100 à 300$ de mouvement</span> à digérer en quelques heures.
+                <span className="text-white font-medium">Exemple concret :</span>{" "}Quand la Fed durcit son ton (juste un discours, pas même une décision), l&apos;EUR/USD peut perdre <span className="font-semibold text-zinc-300">100 à 300 pips en 24h</span>. Sur 0.10 lot, ça fait <span className="font-semibold text-zinc-300">100 à 300$ de mouvement</span>{" "}à digérer en quelques heures.
               </p>
             </div>
           </section>
@@ -181,7 +181,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Ce qu&apos;elles font concrètement</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Une banque centrale ne trade pas elle-même. Elle <span className="font-semibold text-zinc-200">influence</span> le marché.
+              Une banque centrale ne trade pas elle-même. Elle <span className="font-semibold text-zinc-200">influence</span>{" "}le marché.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               Elle agit principalement sur 3 leviers :
@@ -286,11 +286,11 @@ export default function ContentFr() {
               Pourquoi c&apos;est important pour toi en tant que trader ?
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Parce que ces jours-là, le marché devient <span className="font-semibold text-zinc-200">beaucoup plus volatil</span>. Pas juste le jour J, mais aussi <span className="font-semibold text-zinc-200">les heures qui précèdent</span> (anticipation) et celles qui suivent (réaction).
+              Parce que ces jours-là, le marché devient <span className="font-semibold text-zinc-200">beaucoup plus volatil</span>. Pas juste le jour J, mais aussi <span className="font-semibold text-zinc-200">les heures qui précèdent</span>{" "}(anticipation) et celles qui suivent (réaction).
             </p>
             <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
               <p className="text-sm text-zinc-400 leading-relaxed">
-                <span className="text-white font-medium">À retenir :</span> Sur EUR/USD, une décision FOMC peut générer <span className="font-semibold text-zinc-300">souvent 50 à 150 pips de mouvement total, parfois davantage,</span> en quelques heures (cf leçon Macro Avancé sur le FOMC pour les détails).
+                <span className="text-white font-medium">À retenir :</span>{" "}Sur EUR/USD, une décision FOMC peut générer <span className="font-semibold text-zinc-300">souvent 50 à 150 pips de mouvement total, parfois davantage,</span>{" "}en quelques heures (cf leçon Macro Avancé sur le FOMC pour les détails).
               </p>
             </div>
           </section>
@@ -348,7 +348,7 @@ export default function ContentFr() {
             ]}
           />
           <p className="text-sm text-zinc-500 leading-relaxed px-1">
-            L&apos;objectif : t&apos;habituer à <span className="font-semibold text-zinc-400">lier les mouvements brutaux</span> à leurs <span className="font-semibold text-zinc-400">causes macro</span>.
+            L&apos;objectif : t&apos;habituer à <span className="font-semibold text-zinc-400">lier les mouvements brutaux</span>{" "}à leurs <span className="font-semibold text-zinc-400">causes macro</span>.
           </p>
 
           <LessonQuiz

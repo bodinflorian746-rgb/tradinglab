@@ -142,7 +142,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Le DXY : la météo du dollar</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le <span className="font-semibold text-zinc-200">DXY</span> (Dollar Index) mesure la force du dollar face à un panier de 6 devises majeures :
+              Le <span className="font-semibold text-zinc-200">DXY</span>{" "}(Dollar Index) mesure la force du dollar face à un panier de 6 devises majeures :
             </p>
             <ul className="space-y-1.5 mb-4">
               {[
@@ -205,7 +205,7 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              <span className="font-semibold text-zinc-200">Pourquoi ?</span> Parce qu&apos;un dollar fort rend les actifs libellés en USD plus chers pour le reste du monde. Et parce que les investisseurs préfèrent le dollar refuge quand l&apos;incertitude monte.
+              <span className="font-semibold text-zinc-200">Pourquoi ?</span>{" "}Parce qu&apos;un dollar fort rend les actifs libellés en USD plus chers pour le reste du monde. Et parce que les investisseurs préfèrent le dollar refuge quand l&apos;incertitude monte.
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
@@ -218,7 +218,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Exemple récent : 2022</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Le meilleur exemple récent : <span className="font-semibold text-zinc-200">2022</span>. Le dollar (DXY) a gagné <span className="font-semibold text-zinc-200">près de 20%</span> entre janvier et son sommet de septembre.
+              Le meilleur exemple récent : <span className="font-semibold text-zinc-200">2022</span>. Le dollar (DXY) a gagné <span className="font-semibold text-zinc-200">près de 20%</span>{" "}entre janvier et son sommet de septembre.
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               Conséquences en cascade:
@@ -250,7 +250,7 @@ export default function ContentFr() {
           <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-white mb-3">Le dollar et les pays fragiles</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Beaucoup de pays et d&apos;entreprises <span className="font-semibold text-zinc-200">empruntent en dollars</span> (et pas dans leur monnaie locale).
+              Beaucoup de pays et d&apos;entreprises <span className="font-semibold text-zinc-200">empruntent en dollars</span>{" "}(et pas dans leur monnaie locale).
             </p>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
               Quand le dollar monte :
@@ -268,7 +268,7 @@ export default function ContentFr() {
               ))}
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm mb-5">
-              C&apos;est pour ça que les périodes de dollar fort peuvent mettre sous pression des pays comme l&apos;<span className="font-semibold text-zinc-200">Argentine</span>, la <span className="font-semibold text-zinc-200">Turquie</span> ou le <span className="font-semibold text-zinc-200">Sri Lanka</span>. Crises monétaires, défauts de paiement, chute des devises locales.
+              C&apos;est pour ça que les périodes de dollar fort peuvent mettre sous pression des pays comme l&apos;<span className="font-semibold text-zinc-200">Argentine</span>, la <span className="font-semibold text-zinc-200">Turquie</span>{" "}ou le <span className="font-semibold text-zinc-200">Sri Lanka</span>. Crises monétaires, défauts de paiement, chute des devises locales.
             </p>
             <div className="bg-zinc-900 border-l-4 border-emerald-500 px-5 py-4 rounded">
               <p className="text-base text-white font-semibold italic leading-relaxed">
@@ -311,7 +311,7 @@ export default function ContentFr() {
                   Si tu veux acheter (long) sur EUR/USD, XAU/USD ou BTC/USD → vérifie que le DXY n&apos;est <span className="font-semibold text-zinc-200">PAS en train de monter fort</span>. Sinon ton setup va probablement échouer même si techniquement il est parfait.
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
-                  <span className="font-semibold text-zinc-200">L&apos;inverse est aussi vrai</span> : si tu veux vendre (short) ces mêmes actifs, un DXY haussier <span className="font-semibold text-zinc-200">renforce</span> ton setup.
+                  <span className="font-semibold text-zinc-200">L&apos;inverse est aussi vrai</span> : si tu veux vendre (short) ces mêmes actifs, un DXY haussier <span className="font-semibold text-zinc-200">renforce</span>{" "}ton setup.
                 </p>
               </div>
             </div>

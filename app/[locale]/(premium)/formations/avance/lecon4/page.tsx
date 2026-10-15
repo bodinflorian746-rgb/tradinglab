@@ -22,11 +22,11 @@ function ContentFr() {
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-3">Pourquoi le timing est critique</h2>
         <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-          La plupart des traders analysent <em>quoi</em> trader, mais ignorent <em>quand</em> trader. Or, les institutions opèrent selon des horaires précis liés aux ouvertures des grandes places financières. En dehors de ces fenêtres, le marché est dominé par les retail traders, les mouvements sont moins fiables, plus aléatoires.
+          La plupart des traders analysent <em>quoi</em>{" "}trader, mais ignorent <em>quand</em>{" "}trader. Or, les institutions opèrent selon des horaires précis liés aux ouvertures des grandes places financières. En dehors de ces fenêtres, le marché est dominé par les retail traders, les mouvements sont moins fiables, plus aléatoires.
         </p>
         <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
-            <span className="text-white font-medium">Killzone :</span> fenêtre horaire où l'activité institutionnelle est concentrée. Les prix bougent avec plus de force, les niveaux sont plus respectés, et les faux signaux sont moins fréquents.
+            <span className="text-white font-medium">Killzone :</span>{" "}fenêtre horaire où l'activité institutionnelle est concentrée. Les prix bougent avec plus de force, les niveaux sont plus respectés, et les faux signaux sont moins fréquents.
           </p>
         </div>
       </section>
