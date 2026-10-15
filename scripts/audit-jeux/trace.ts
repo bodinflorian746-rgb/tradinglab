@@ -4,7 +4,8 @@
 // du graphique. Bougies vues avant la réponse ; libellés tels qu'affichés.
 //  - liquidité (« Liquidité … », « Sweep bas / haut », « Zone de chasse aux stops ») : bande fine
 //    (≤ LIQ_MAX × MR) collée au niveau qu'elle prolonge ; balayée, elle ne s'étend jamais plus
-//    loin que la mèche qui la balaie ;
+//    loin que la mèche qui la balaie ; non balayée, au-delà du sommet / creux nommé qu’elle prolonge,
+//    jamais par-dessus ;
 //  - plus haut / plus bas précédent, swings, PDL, HL, equal lows / highs, haut de session :
 //    bande fine (≤ PIVOT_MAX × MR) posée sur un vrai sommet / creux visible (extrême local) ;
 //  - swing rattaché à sa bougie (« Swing high / low … », règle des leçons) : posé sur la pointe de
@@ -98,6 +99,14 @@ export function zoneTraceError(past: Candle[], z: ChartZone, zones: ChartZone[] 
         const below = z.kind === "liquidity_low" || /bas|en-dessous/i.test(z.label);
         const tip = below ? Math.min(...into.map((k) => k.l)) : Math.max(...into.map((k) => k.h));
         if (below ? lo < tip - 0.1 * MR : hi > tip + 0.1 * MR) return `liquidité balayée « ${z.label} » qui s'étend ${r(Math.abs((below ? lo : hi) - tip))} × la bougie médiane plus loin que la mèche du sweep`;
+      }
+    } else {
+      // au-delà du niveau qu'elle prolonge (sommet / creux nommé du même côté, à moins de 2 bougies
+      // médianes), jamais par-dessus : la zone de chasse d'une vente couvrait le swing high
+      const below = z.kind === "liquidity_low" || (z.kind !== "liquidity_high" && /bas|en-dessous|chasse/i.test(z.label));
+      for (const p of zones.filter((x) => x !== z && PIVOT.test(x.label) && /haut|high|highs/i.test(x.label) === !below)) {
+        const plo = Math.min(p.y1, p.y2), phi = Math.max(p.y1, p.y2);
+        if (below ? hi > plo + 0.02 * MR && hi - plo < 2 * MR : lo < phi - 0.02 * MR && phi - lo < 2 * MR) return `liquidité « ${z.label} » posée par-dessus « ${p.label} » (${r(below ? hi - plo : phi - lo)} × la bougie médiane), au lieu de le prolonger au-delà`;
       }
     }
     return null;
@@ -205,6 +214,16 @@ if (!process.env.TRACE_NO_MAIN) {
         const past = c.past.map((k, i) => (i === s - 1 ? { ...k, l: low } : k));
         const z = { ...c.zones.find((x) => /^Plus bas précédent/.test(x.label))!, y1: low - 0.01 * MR, y2: low + 0.01 * MR };
         return [past, z, c.zones.map((x) => (/^Plus bas précédent/.test(x.label) ? z : x))];
+      }],
+      ["zone de chasse posée par-dessus le swing qu'elle prolonge", /par-dessus/, () => {
+        for (const c of all) {
+          const s = c.zones.find((x) => x.label === "Swing high évident"), h = c.zones.find((x) => /^Zone de chasse/.test(x.label) && x.kind === "liquidity_high");
+          if (!s || !h || zoneTraceError(c.past, h, c.zones)) continue;
+          const MR = MRof(c), top = Math.max(s.y1, s.y2);
+          const moved = { ...h, y1: top - 0.15 * MR, y2: top + 0.6 * MR };
+          return [c.past, moved, c.zones.map((x) => (x === h ? moved : x))];
+        }
+        return null;
       }],
       ["swing posé sur la clôture de sa bougie, pas sur la pointe de la mèche", /pointe de la mèche de son/, () => {
         for (const c of all) for (const z of c.zones) {

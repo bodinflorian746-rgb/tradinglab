@@ -27,7 +27,9 @@ export const SWEPT_LABEL = /balay|^sweep|^mèche du faux breakout/i;
 export const PIVOT_LABEL = /^(plus (haut|bas) précédent|swing (high|low)|equal (lows|highs)|haut de la session|bas de la session)/i;
 export const SR_LABEL = /^(support|r[ée]sistance|haut du range|bas du range)/i;
 const isHigh = (label: string) => /haut|high|lh|highs/i.test(label);
-const isLowLiq = (z: ChartZone) => z.kind === "liquidity_low" || /bas|en-dessous|chasse/i.test(z.label);
+// le type de la zone d’abord : « Zone de chasse aux stops » est au-dessus du prix dans une vente
+// (liquidity_high) ; lue « en dessous » d’après son libellé, elle était tracée par-dessus le swing high
+const isLowLiq = (z: ChartZone) => z.kind === "liquidity_low" || (z.kind !== "liquidity_high" && /bas|en-dessous|chasse/i.test(z.label));
 
 /** Extrêmes locaux (fenêtre ±w) : indices */
 function localExtremes(cs: Candle[], side: "l" | "h", w = 2): number[] {
