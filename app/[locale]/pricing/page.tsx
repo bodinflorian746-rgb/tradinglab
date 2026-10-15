@@ -2,8 +2,6 @@ import Link from "next/link";
 import { hasLocale, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary } from "@/i18n/dictionaries";
-import { isStripeCheckoutEnabled } from "@/lib/stripe-checkout-flag";
-import CheckoutButton from "./CheckoutButton";
 import BrokerConfirmCTA from "./BrokerConfirmCTA";
 import { requestTrialCode } from "./actions";
 
@@ -49,8 +47,6 @@ export default async function PricingPage({
   const { trial_error } = await searchParams;
   const t = await getDictionary(locale, "pricing");
   const h = (p: string) => localizedHref(p, locale);
-  // Checkout Stripe désactivé côté serveur → offre payante masquée.
-  const checkoutEnabled = isStripeCheckoutEnabled();
   return (
     <main className="min-h-screen bg-zinc-950 text-white px-6 py-12 md:py-20">
       <div className="max-w-5xl mx-auto">
@@ -60,7 +56,7 @@ export default async function PricingPage({
             {t.title}
           </h1>
           <p className="text-zinc-400 text-lg max-w-xl mx-auto">
-            {checkoutEnabled ? t.subtitle : t.checkoutDisabled.subtitle}
+            {t.subtitle}
           </p>
         </div>
 
@@ -71,8 +67,8 @@ export default async function PricingPage({
           </div>
         )}
 
-        {/* Plans */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        {/* Accès : essai 48h, puis accès gratuit via un dépôt chez le broker partenaire */}
+        <div className="max-w-md mx-auto">
           {/* Via broker partenaire */}
           <div className="relative bg-zinc-900 border border-emerald-500/40 rounded-2xl p-8 flex flex-col">
             {/* Badge */}
@@ -141,57 +137,8 @@ export default async function PricingPage({
             </Link>
           </div>
 
-          {/* Accès direct */}
-          {checkoutEnabled ? (
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 flex flex-col">
-            <div className="mb-6">
-              <h2 className="text-lg font-semibold text-zinc-300 mb-1">
-                {t.direct.name}
-              </h2>
-              <div className="flex items-end gap-1 mb-3">
-                <span className="text-5xl font-bold">{t.direct.price}</span>
-                <span className="text-zinc-500 mb-2">{t.direct.period}</span>
-              </div>
-              <p className="text-sm text-zinc-500">
-                {t.direct.description}
-              </p>
-            </div>
-
-            <ul className="space-y-3 mb-8 flex-1">
-              {t.direct.features.map((f) => (
-                <li key={f} className="flex items-center gap-3 text-sm text-zinc-300">
-                  <CheckIcon />
-                  {f}
-                </li>
-              ))}
-            </ul>
-
-            <TrialBadgeForm locale={locale} label={t.direct.trialBadge} />
-            <CheckoutButton
-              locale={locale}
-              className="block w-full text-center border border-zinc-700 hover:border-zinc-500 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-60 text-sm"
-            >
-              {t.direct.cta}
-            </CheckoutButton>
-          </div>
-          ) : (
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 flex flex-col">
-            <h2 className="text-lg font-semibold text-zinc-300 mb-3">
-              {t.direct.name}
-            </h2>
-            <p className="text-sm text-zinc-500">
-              {t.checkoutDisabled.directMessage}
-            </p>
-          </div>
-          )}
         </div>
 
-        {/* Guarantee */}
-        {checkoutEnabled && (
-        <p className="text-center text-zinc-500 text-sm mt-10">
-          {t.guarantee}
-        </p>
-        )}
       </div>
     </main>
   );

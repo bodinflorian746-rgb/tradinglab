@@ -27,7 +27,7 @@ const T = {
     subjectOptions: [
       "Question générale",
       "Problème technique",
-      "Facturation / abonnement",
+      "Accès / code d'activation",
       "Partenariat",
       "Autre",
     ],

@@ -27,7 +27,6 @@ const CONTENT: Record<Locale, Content> = {
           {
             list: [
               "Compte : email, pseudo, mot de passe (hashé), langue préférée",
-              "Paiement : géré intégralement par Stripe — TradeScaleX n'a jamais accès à vos coordonnées bancaires",
               "Usage : progression dans les formations, préférences de compte",
               "Contact : nom, email, sujet et message envoyés via le formulaire de contact",
               "Technique : logs de connexion, adresse IP (à des fins de sécurité)",
@@ -41,8 +40,7 @@ const CONTENT: Record<Locale, Content> = {
           {
             list: [
               "Fournir l'accès au service et à votre progression personnelle",
-              "Gérer votre abonnement et facturation (via Stripe)",
-              "Vous envoyer les emails nécessaires au service (confirmation, réinitialisation de mot de passe, factures) via Resend",
+              "Vous envoyer les emails nécessaires au service (confirmation, réinitialisation de mot de passe, codes d'accès) via Resend",
               "Améliorer le produit",
             ],
           },
@@ -66,7 +64,6 @@ const CONTENT: Record<Locale, Content> = {
           {
             list: [
               "Supabase (hébergement base de données et authentification)",
-              "Stripe (paiement)",
               "Resend (envoi d'emails transactionnels)",
               "Vercel (hébergement du site)",
             ],

@@ -8,7 +8,6 @@ import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import { localizedHref } from "@/lib/i18n/href";
 import { getDictionary, type Dictionaries } from "@/i18n/dictionaries";
-import { isStripeCheckoutEnabled } from "@/lib/stripe-checkout-flag";
 import { FORMATIONS } from "@/lib/formations";
 import { STRATEGY_MODULES } from "@/lib/strategies";
 import { REVIEWS, type Review } from "@/lib/reviews";
@@ -215,7 +214,6 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
   const g: Dictionaries["games"] = await getDictionary(locale, "games");
   const s = homeStrings(locale);
   // Checkout Stripe désactivé côté serveur → pas de prix ni d'offre payante.
-  const checkoutEnabled = isStripeCheckoutEnabled();
   const previews = buildGamePreviews(locale);
   const rounds = buildHeroRounds(locale);
   // Aperçu BUY / SELL / NO TRADE de la rangée des jeux : un round lisible du
@@ -477,67 +475,6 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         </div>
       </section>
 
-      {/* ═══ 8. COMMENT ACCÉDER : essai 48h, broker partenaire, abonnement ═══ */}
-      <section className="hv2-section hv2-glow" style={css({ "--hv2-glow": "radial-gradient(60% 50% at 50% 55%, rgba(16,185,129,0.12), transparent 70%)" })}>
-        <div className="hv2-wrap flex flex-col hv2-stack">
-          <SectionHead title={s.access.title} sub={checkoutEnabled ? s.accessSub.open : s.accessSub.closed} center />
-
-          <div data-reveal className="v2-card v2-card--accent v2-accent--emerald mx-auto flex w-full max-w-4xl flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-            <div>
-              <p className="v2-display text-[22px] font-bold">{s.access.trial.title}</p>
-              <p className="text-[14.5px] text-[color:var(--v2-text-2)]">{s.access.trial.desc}</p>
-            </div>
-            <TrialCta locale={locale} trialHref={trialHref} className="hv2-btn-main w-full sm:w-auto" formClassName="w-full shrink-0 sm:w-auto">
-              {s.access.trial.cta}
-              <Arrow />
-            </TrialCta>
-          </div>
-
-          <div className="mx-auto grid w-full max-w-4xl gap-6 md:grid-cols-2" style={checkoutEnabled ? undefined : { alignItems: "start" }}>
-            {/* Via broker partenaire (recommandé) */}
-            <div data-reveal className="v2-card v2-card--accent v2-accent--emerald relative flex flex-col gap-5 p-6 sm:p-8">
-              <span className="v2-chip v2-chip--emerald absolute -top-3 left-6 bg-[color:var(--v2-surface)]">{s.access.broker.badge}</span>
-              <p className="v2-display text-[20px] font-bold">{s.access.broker.title}</p>
-              {/* Accès décrit en toutes lettres (comme sur /pricing), pas de prix chiffré */}
-              <p className="v2-display text-[22px] font-bold leading-snug text-[color:var(--v2-emerald)]">{s.access.broker.price}</p>
-              <p className="text-[14.5px] leading-relaxed text-[color:var(--v2-text-2)]">{s.access.broker.desc}</p>
-              <ul className="hv2-list" style={css({ "--accent": "#34d399" })}>
-                {s.access.broker.bullets.map((b) => <li key={b}>{b}</li>)}
-              </ul>
-              <p className="rounded-xl bg-[color:rgba(16,185,129,0.07)] px-3 py-2 text-[13px] leading-snug text-[color:var(--v2-text-2)] shadow-[inset_0_0_0_1px_rgba(16,185,129,0.25)]">
-                {s.access.broker.depositNote}
-              </p>
-              <Link href={h("/pricing")} className="v2-btn v2-btn--accent mt-auto w-full">
-                {s.access.cta}
-                <Arrow size={12} />
-              </Link>
-            </div>
-            {/* Accès direct */}
-            <div data-reveal className="v2-card flex flex-col gap-5 p-6 sm:p-8" style={css({ "--d": "90ms" })}>
-              <p className="v2-display text-[20px] font-bold">{s.access.direct.title}</p>
-              {checkoutEnabled ? (
-                <>
-                  <p className="flex items-baseline gap-1">
-                    <span className="v2-mono text-[44px] font-bold leading-none">{s.access.direct.price}</span>
-                    <span className="text-[14px] text-[color:var(--v2-text-3)]">{s.access.direct.period}</span>
-                  </p>
-                  <p className="text-[14.5px] leading-relaxed text-[color:var(--v2-text-2)]">{s.access.direct.desc}</p>
-                  <ul className="hv2-list" style={css({ "--accent": "#a1a1aa" })}>
-                    {s.access.direct.bullets.map((b) => <li key={b}>{b}</li>)}
-                  </ul>
-                </>
-              ) : (
-                <p className="text-[14.5px] leading-relaxed text-[color:var(--v2-text-2)]">{s.access.direct.unavailable}</p>
-              )}
-              <Link href={h("/pricing")} className="v2-btn mt-auto w-full">
-                {s.access.cta}
-                <Arrow size={12} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ═══ 9. LE MOMENT DE DÉCIDER ═══ */}
       <section className="hv2-section">
         <div className="hv2-wrap">
@@ -617,7 +554,6 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
               <Link href={h("/mentions-legales")} className="hover:text-white">{s.footer.legalNotice}</Link>
               <Link href={h("/cgu")} className="hover:text-white">{s.footer.terms}</Link>
-              <Link href={h("/cgv")} className="hover:text-white">{s.footer.cgv}</Link>
               <Link href={h("/confidentialite")} className="hover:text-white">{s.footer.privacy}</Link>
             </div>
           </div>

@@ -1,10 +1,10 @@
 {
   "title": "Choisis ton accès",
-  "subtitle": "Accès gratuit pour les traders affiliés à un broker partenaire, ou 19€/mois en accès direct.",
+  "subtitle": "48h d'essai gratuit, puis un accès gratuit via un dépôt chez le broker partenaire.",
   "broker": {
     "badge": "Recommandé",
     "name": "Via broker partenaire",
-    "price": "Accès via un dépôt chez un broker partenaire",
+    "price": "Accès via un dépôt chez le broker partenaire",
     "period": "",
     "description": "Tu ouvres un compte broker via notre lien d'affiliation (ou celui d'un partenaire de notre réseau). En contrepartie, tu accèdes gratuitement à toute la plateforme.",
     "features": [
@@ -12,7 +12,7 @@
       "Module Macro-économie (FOMC, NFP, indicateurs clés)",
       "Stratégies institutionnelles (SMC, ICT, Price Action)",
       "Jeux et simulateurs (Place ton Stop, Trouve l'erreur...)",
-      "Quiz et exercices sur graphiques réels",
+      "Quiz sur graphiques réels",
       "Contenu régulièrement mis à jour"
     ],
     "cta": "Accéder via le broker partenaire",
@@ -35,27 +35,6 @@
         "cancelLabel": "Annuler"
       }
     }
-  },
-  "direct": {
-    "name": "Accès direct",
-    "price": "19€",
-    "period": "/mois",
-    "description": "Pour ceux qui préfèrent un accès direct, sans affiliation broker. Mêmes contenus, sans engagement.",
-    "features": [
-      "Formations Trading complètes (Débutant → Avancé)",
-      "Module Macro-économie (FOMC, NFP, indicateurs clés)",
-      "Stratégies institutionnelles (SMC, ICT, Price Action)",
-      "Jeux et simulateurs (Place ton Stop, Trouve l'erreur...)",
-      "Quiz et exercices sur graphiques réels",
-      "Contenu régulièrement mis à jour"
-    ],
-    "cta": "Commencer l'accès direct",
-    "trialBadge": "48h d'essai gratuit"
-  },
-  "guarantee": "Aucun engagement · Paiement sécurisé · Annulation en 1 clic",
-  "checkoutDisabled": {
-    "subtitle": "Accès gratuit pour les traders affiliés à un broker partenaire.",
-    "directMessage": "L'accès direct par abonnement n'est pas disponible pour le moment."
   },
   "trialError": "Une erreur est survenue lors de l'envoi de ton code. Réessaie dans un instant."
 }

@@ -14,7 +14,7 @@ const CONTENT: Record<Locale, Content> = {
     title: "Conditions générales d'utilisation",
     description:
       "Conditions générales d'utilisation du site et de l'application TradeScaleX.",
-    updated: "Dernière mise à jour : 2 octobre 2026",
+    updated: "Dernière mise à jour : 15 octobre 2026",
     sections: [
       {
         heading: "Objet",
@@ -25,7 +25,7 @@ const CONTENT: Record<Locale, Content> = {
       {
         heading: "Accès au service",
         blocks: [
-          "L'accès à certains contenus nécessite la création d'un compte. Trois voies d'accès sont proposées : une période d'essai gratuite de 48h, l'ouverture d'un compte chez un broker partenaire via notre lien d'affiliation (accès gratuit à la plateforme : le code d'accès est envoyé par email après vérification, selon les conditions indiquées sur la page « Nos accès »), ou un abonnement mensuel payant (voir CGV).",
+          "L'accès à certains contenus nécessite la création d'un compte. Deux voies d'accès sont proposées : une période d'essai gratuite de 48h, puis un accès gratuit via un dépôt chez le broker partenaire, après ouverture d'un compte chez lui via notre lien d'affiliation (le code d'accès est envoyé par email après vérification, selon les conditions indiquées sur la page « Nos accès »). Aucun abonnement payant n'est proposé.",
         ],
       },
       {
@@ -73,7 +73,10 @@ const CONTENT: Record<Locale, Content> = {
       },
       {
         heading: "Droit applicable",
-        blocks: ["Les présentes CGU sont soumises au droit français."],
+        blocks: [
+          "Les présentes CGU sont soumises au droit français.",
+          "En cas de litige, l'utilisateur peut contacter contact@tradescalex.com. À défaut de résolution amiable, les tribunaux français compétents seront saisis, sauf disposition impérative contraire applicable au consommateur.",
+        ],
       },
     ],
   },

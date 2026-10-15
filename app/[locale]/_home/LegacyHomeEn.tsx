@@ -1343,7 +1343,6 @@ export async function LegacyHome({ locale }: { locale: Locale }) {
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
               <Link href={h("/mentions-legales")} className="hover:text-white transition-colors">{T.footer.legalNotice}</Link>
               <Link href={h("/cgu")} className="hover:text-white transition-colors">{T.footer.terms}</Link>
-              <Link href={h("/cgv")} className="hover:text-white transition-colors">{T.footer.cgv}</Link>
               <Link href={h("/confidentialite")} className="hover:text-white transition-colors">{T.footer.privacy}</Link>
             </div>
           </div>
