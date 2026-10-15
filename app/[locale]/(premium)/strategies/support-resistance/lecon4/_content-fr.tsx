@@ -181,7 +181,7 @@ export default function ContentFr() {
             </p>
 
             <ul className="space-y-1 text-sm text-zinc-300">
-              <li>- Zone de stops cluster située juste au-delà du niveau structurel (4 720$ → 4 730$), que la mèche traverse jusqu'à 4 740$</li>
+              <li>- Zone de stops cluster située juste au-delà du niveau structurel (1.1020 → 1.1030), que la mèche traverse jusqu'à 1.1040</li>
               <li>- Mèche pique dans la zone, déclenche les stops, puis clôture sous le niveau</li>
               <li>- Continuation baissière rapide après absorption de la liquidité</li>
               <li>- Le trade se prend dans le sens opposé au breakout rejeté</li>
@@ -190,35 +190,37 @@ export default function ContentFr() {
 
           {/* Bloc 6 — PLAN DE TRADE CHIFFRÉ */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : faux breakout XAU/USD H1</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : faux breakout EUR/USD H1</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              Résistance 4 650$ touchée 3 fois en 2 mois (chiffre rond fort). 4e approche provoque un breakout suspect. Bougie 1 : mèche jusqu&apos;à 4 680$ + clôture à 4 655$. Bougie 2 : clôture à 4 640$.
+              Résistance 1.0950 touchée 3 fois en 2 mois (chiffre rond fort). 4e approche provoque un breakout suspect. Bougie 1 : mèche jusqu&apos;à 1.0980 + clôture à 1.0955. Bougie 2 : clôture à 1.0940.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade short sur faux breakout)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Bougie 1 : mèche 25$ au-dessus, corps 5$, clôture à la limite</li>
-                <li>- Bougie 2 : clôture franche à 4 640$ (réintégration confirmée)</li>
-                <li>- Entrée short : 4 640$ (clôture de la bougie de confirmation)</li>
-                <li>- Stop loss : 4 685$ (5$ au-dessus de la mèche à 4 680$)</li>
-                <li>- Take profit : 4 540$, objectif fixé pour un R/R supérieur à 1:2 (sous le graphique)</li>
+                <li>- Bougie 1 : mèche 25 pips au-dessus, corps 5 pips, clôture à la limite</li>
+                <li>- Bougie 2 : clôture franche à 1.0940 (réintégration confirmée)</li>
+                <li>- Entrée short : 1.0940 (clôture de la bougie de confirmation)</li>
+                <li>- Stop loss : 1.0985 (5 pips au-dessus de la mèche à 1.0980)</li>
+                <li>- Take profit : 1.0840, objectif fixé pour un R/R supérieur à 1:2 (sous le graphique)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 685$ - 4 640$ = 45$</li>
-                <li>- Gain potentiel : 4 640$ - 4 540$ = 100$</li>
+                <li>- Risque : 1.0985 - 1.0940 = 45 pips</li>
+                <li>- Gain potentiel : 1.0940 - 1.0840 = 100 pips</li>
                 <li>- R/R : 100 / 45 = 2,22</li>
               </ul>
             </div>
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Au lot minimum (0,01 lot), ce stop de 45$ représente déjà environ 38€ de risque (1$ ≈ 0,85€)</li>
-              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
-              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,01 lot, risque environ 38€, gain potentiel environ 86€</li>
+              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,085€ : ce stop de 45 pips représente environ 4€ de risque</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,01 lot, risque environ 4€, gain potentiel environ 8€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,02 lot, risque environ 8€, gain potentiel environ 17€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,05 lot, risque environ 19€, gain potentiel environ 42€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,13 lot, risque environ 50€, gain potentiel environ 110€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1:2,22 peu importe la taille du compte.
@@ -235,13 +237,13 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD H1, la résistance 4 650$ a été touchée 3 fois en 2 mois. Une bougie imprime une mèche jusqu’à 4 680$ puis clôture à 4 655$. La bougie suivante clôture à 4 640$. Comment se construit le plan de trade faux breakout ?"
+            description="Sur EUR/USD H1, la résistance 1.0950 a été touchée 3 fois en 2 mois. Une bougie imprime une mèche jusqu’à 1.0980 puis clôture à 1.0955. La bougie suivante clôture à 1.0940. Comment se construit le plan de trade faux breakout ?"
             steps={[
-              "Valider les 4 critères de détection : mèche de 25$ au-dessus de la zone sans clôture franche, réintégration en 1 bougie, zone forte (3 touches + chiffre rond 4 650$)",
-              "Valider la double confirmation : bougie 1 clôture à 4 655$ (à la limite), bougie 2 clôture à 4 640$ (réintégration franche)",
-              "Placer l’entrée short à 4 640$ (clôture de la bougie de confirmation)",
-              "Placer le stop loss à 4 685$ (5$ au-dessus de la mèche initiale à 4 680$)",
-              "Placer le take profit à 4 540$ (R/R 100 / 45 ≈ 1:2,22), taille de position selon le risque par trade adapté au capital, en vérifiant qu'elle reste possible au lot minimum",
+              "Valider les 4 critères de détection : mèche de 25 pips au-dessus de la zone sans clôture franche, réintégration en 1 bougie, zone forte (3 touches + chiffre rond 1.0950)",
+              "Valider la double confirmation : bougie 1 clôture à 1.0955 (à la limite), bougie 2 clôture à 1.0940 (réintégration franche)",
+              "Placer l’entrée short à 1.0940 (clôture de la bougie de confirmation)",
+              "Placer le stop loss à 1.0985 (5 pips au-dessus de la mèche initiale à 1.0980)",
+              "Placer le take profit à 1.0840 (R/R 100 / 45 ≈ 1:2,22), taille de position selon le risque par trade adapté au capital, en vérifiant qu'elle reste possible au lot minimum",
             ]}
           />
 

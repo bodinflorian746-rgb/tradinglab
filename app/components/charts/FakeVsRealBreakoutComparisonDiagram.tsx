@@ -1,24 +1,27 @@
-// Support-résistance 4 — vrai vs faux breakout de la résistance 4 650$ (XAU/USD H1),
-// même approche du niveau : vrai = clôture 4 680$ au-dessus et follow-through ;
-// faux = mèche à 4 685$, clôture 4 620$ revenue sous le niveau, retournement.
+// Support-résistance 4 — vrai vs faux breakout de la résistance 1.0950 (EUR/USD H1),
+// même approche du niveau : vrai = clôture 1.0980 au-dessus et follow-through ;
+// faux = mèche à 1.0985, clôture 1.0920 revenue sous le niveau, retournement.
 // Bougies : scenarios.ts (« breakout-real / -fake »).
 
 import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
-import { usd } from "@/app/components/lessons/trade";
+import { fmtPrice } from "@/lib/lessons/chart-analysis";
+import { EUR_PIP, xauToEur } from "@/lib/lessons/eur-from-xau";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
-const LEVEL = 4650;
+const px = (x: number) => fmtPrice(x, 4);
+
+const LEVEL = xauToEur(4650);
 
 function panel(key: "breakout-real" | "breakout-fake"): LCPanel {
   const cs = CANDLES[key];
   const real = key === "breakout-real";
-  const b = cs.findIndex((k) => k.h > LEVEL + 10);
+  const b = cs.findIndex((k) => k.h > LEVEL + 10 * EUR_PIP);
   const k = cs[b];
   return {
     key, title: real ? "✓ Vrai breakout" : "✗ Faux breakout",
-    subtitle: real ? `Clôture ${usd(k.c)} au-dessus du niveau, puis follow-through` : `Mèche ${usd(k.h)}, clôture ${usd(k.c)} sous le niveau, retournement`,
-    decimals: 1, height: 260, candles: cs,
-    levels: [{ key: "res", price: LEVEL, label: `Résistance ${usd(LEVEL)}`, short: "Résistance", tone: "bear", dashed: true }],
+    subtitle: real ? `Clôture ${px(k.c)} au-dessus du niveau, puis follow-through` : `Mèche ${px(k.h)}, clôture ${px(k.c)} sous le niveau, retournement`,
+    decimals: 5, height: 260, candles: cs,
+    levels: [{ key: "res", price: LEVEL, label: `Résistance ${px(LEVEL)}`, short: "Résistance", tone: "bear", dashed: true }],
     markers: [real
       ? { key: "b", i: b, price: k.c, label: "Clôture au-dessus", tone: "bull", side: "below", role: "close" }
       : { key: "b", i: b, price: k.h, label: "Mèche seule", tone: "bear", side: "above", role: "sweep", ref: LEVEL, dir: "bear" }],
