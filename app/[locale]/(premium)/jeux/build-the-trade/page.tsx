@@ -543,6 +543,8 @@ export default function BuildTheTradePage() {
                 candidateLines,
               }}
               mode={isBuild ? "question" : isReveal ? "reveal" : "verdict"}
+              /* verdict en bandeau du bas : il ne cache plus l’entrée, le stop, le TP ni les zones */
+              verdictBanner="bottom"
               // Étiquettes posées sur leur ligne ; échelle calée sur les bougies et
               // les niveaux de l'étape en cours, avec un glissement d'une étape à l'autre
               inlineLabels
@@ -552,6 +554,8 @@ export default function BuildTheTradePage() {
             >
               {isFeedback && result && (
                 <VerdictOverlay
+                  compact
+                  bottom
                   state={VERDICT_STATE[G.setupVerdict(result).color]}
                   headline={G.setupVerdict(result).label}
                   points={result.points}

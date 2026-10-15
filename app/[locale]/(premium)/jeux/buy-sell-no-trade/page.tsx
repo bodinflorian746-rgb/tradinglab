@@ -478,9 +478,13 @@ export default function BuySellNoTradePage() {
               }}
               mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
               pin={chosen ? { label: CHOICE_LABEL[chosen], sub: T.yourChoice, color: CHOICE_TINT[chosen] } : undefined}
+              /* verdict en bandeau du bas : il ne cache plus les zones ni leurs étiquettes */
+              verdictBanner="bottom"
             >
               {isFeedback && chosen && (
                 <VerdictOverlay
+                  compact
+                  bottom
                   state={correct ? "good" : "bad"}
                   headline={headline}
                   points={lastPoints}
