@@ -190,40 +190,42 @@ export default function ContentFr() {
 
           {/* Bloc 6 — PLAN DE TRADE CHIFFRÉ */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : engulfing haussier XAU/USD H4</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : engulfing haussier EUR/USD H4</h2>
 
             <div className="my-8">
               <EngulfingSetupDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD rebondit depuis 4 500$ vers 4 720$, puis corrige dans la zone Fibonacci 0.5 / 0.618 (4 610$ à 4 584$). Engulfing haussier au contact du Fibo dans une tendance H4 haussière.
+              EUR/USD rebondit depuis 1.0800 vers 1.1020, puis corrige dans la zone Fibonacci 0.5 / 0.618 (1.0910 à 1.0884). Engulfing haussier au contact du Fibo dans une tendance H4 haussière.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- 1ère bougie bearish : Open 4 615$, Close 4 600$ (corps 15$)</li>
-                <li>- 2ème bougie bullish : Open 4 600$ (clôture de la 1ère), Close 4 628$ (corps 28$, près de 2x la 1ère), plus haut 4 630$, plus bas 4 595$</li>
+                <li>- 1ère bougie bearish : Open 1.0915, Close 1.0900 (corps 15 pips)</li>
+                <li>- 2ème bougie bullish : Open 1.0900 (clôture de la 1ère), Close 1.0928 (corps 28 pips, près de 2x la 1ère), plus haut 1.0930, plus bas 1.0895</li>
                 <li>- Corps de la 2ème englobe entièrement celui de la 1ère</li>
-                <li>- Entrée long : 4 630$ (breakout du high de la bougie englobante)</li>
-                <li>- Stop loss : 4 590$ (5$ sous le low de la bougie englobante)</li>
-                <li>- Take profit : 4 720$ (ancien high récent)</li>
+                <li>- Entrée long : 1.0930 (breakout du high de la bougie englobante)</li>
+                <li>- Stop loss : 1.0890 (5 pips sous le low de la bougie englobante)</li>
+                <li>- Take profit : 1.1020 (ancien high récent)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 630$ - 4 590$ = 40$</li>
-                <li>- Gain potentiel : 4 720$ - 4 630$ = 90$</li>
+                <li>- Risque : 1.0930 - 1.0890 = 40 pips</li>
+                <li>- Gain potentiel : 1.1020 - 1.0930 = 90 pips</li>
                 <li>- R/R : 90 / 40 = 2,25</li>
               </ul>
             </div>
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Au lot minimum (0,01 lot), ce stop de 40$ représente déjà environ 34€ de risque (1$ ≈ 0,85€)</li>
-              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
-              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,01 lot, risque environ 34€, gain potentiel environ 77€</li>
+              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,085€ : ce stop de 40 pips représente environ 3€ de risque</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,01 lot, risque environ 3€, gain potentiel environ 8€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,02 lot, risque environ 7€, gain potentiel environ 15€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,05 lot, risque environ 17€, gain potentiel environ 38€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,14 lot, risque environ 48€, gain potentiel environ 107€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1:2,25 peu importe la taille du compte.
@@ -242,7 +244,7 @@ export default function ContentFr() {
           <LessonExercice
             description="Mets en pratique la lecture des bougies sur un graphique réel."
             steps={[
-              "Ouvrir un graphique XAU/USD ou EUR/USD en unité de temps H4",
+              "Ouvrir un graphique EUR/USD (ou XAU/USD) en unité de temps H4",
               "Identifier 2 engulfings valides sur l'historique des 30 derniers jours et noter le contexte : support, résistance ou Fibo",
               "Pour chaque engulfing, vérifier que le corps de la 2ème bougie englobe entièrement le corps de la 1ère",
               "Calculer le R/R potentiel pour 1 engulfing valide : entrée au breakout, SL sous le low de la bougie engulfing, TP au prochain niveau",

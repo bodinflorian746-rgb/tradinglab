@@ -1,4 +1,4 @@
-// Price action 3 bloc 2 — valider un engulfing (XAU/USD H4) avec les 4 critères du texte : le
+// Price action 3 bloc 2 — valider un engulfing (EUR/USD H4, décision PO 9) avec les 4 critères du texte : le
 // corps de la 2e bougie englobe entièrement celui de la 1re, couleurs opposées, 2e bougie
 // clairement plus grande, amplitude supérieure à la moyenne des 20 bougies précédentes.
 // Mêmes 20 bougies de contexte, quatre paires : seule la 1re passe tout. Critères calculés.
@@ -6,6 +6,7 @@
 
 import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart";
 import type { Candle } from "@/lib/lessons/chart-analysis";
+import { EUR_PIP } from "@/lib/lessons/eur-from-xau";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
 const fr = (x: number) => x.toLocaleString("fr-FR", { maximumFractionDigits: 2 });
@@ -33,8 +34,8 @@ export default function EngulfingValidationGridDiagram(_props: { className?: str
     const cs = CANDLES[`eng-case-${key}` as "eng-case-valide"] as Candle[];
     const r = engulfCheck(cs), i = cs.length - 1;
     return {
-      key, title, decimals: 0, height: 180, candles: cs,
-      subtitle: `${r.covers ? "Englobe" : "N'englobe pas"} · ${fr(r.contrast)} × · amplitude ${Math.round(r.range)} $ (moyenne ${fr(r.avg)} $)`,
+      key, title, decimals: 5, height: 180, candles: cs,
+      subtitle: `${r.covers ? "Englobe" : "N'englobe pas"} · ${fr(r.contrast)} × · amplitude ${Math.round(r.range / EUR_PIP)} pips (moyenne ${fr(r.avg / EUR_PIP)} pips)`,
       markers: [{ key: "pair", i, price: cs[i].h, label: r.ok ? "Tradable" : "Pas de setup", tone: r.ok ? "bull" as const : "bear" as const, side: "above" as const, ...(r.ok ? { role: "engulfing" as const } : {}) }],
     };
   });
