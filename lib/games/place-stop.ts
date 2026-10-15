@@ -817,6 +817,9 @@ function highTip(past: Candle[], i: number): number { return Math.max(past[i].h,
 // Swings numérotés (1 < 2 < 3) : chacun clôture au-delà de la pointe de la mèche du précédent d'au
 // moins SWING_STEP (× m), pour que l'ordre se lise sans ambiguïté (étiquettes comprises).
 const SWING_STEP = 0.4;
+// Swings empilés : l'entrée s'écarte d'au moins ENTRY_CLEAR (× m) de la pointe du swing 1 (le stop
+// serré est juste derrière) ; plus près, entrée, stop 1 et swing 1 tenaient en une pastille
+const ENTRY_CLEAR = 0.9;
 
 // Distances des stops (× m) qui respectent le niveau tracé qu'ils protègent : le serré reste entre
 // l'entrée et le niveau (dans le bruit), le logique passe au-delà du niveau avec une marge, le
@@ -2287,10 +2290,12 @@ function scnMultiSwingDeep(rng: () => number, m: number, d: Difficulty, mode: Pl
   }
   const swing3 = swing3Target;
   const i_swing3 = past.length - 1;
-  // Rebond vers entry (au-dessus de swing1)
+  // Rebond vers entry (au-dessus de swing1, d'au moins ENTRY_CLEAR : entrée, stop 1 et swing 1 se
+  // lisent séparément, étiquettes comprises)
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o + (0.4 + rng() * 0.3) * m;
+    const rise = o + (0.4 + rng() * 0.3) * m;
+    const c = i === 2 ? Math.max(rise, lowTip(past, i_swing1) + ENTRY_CLEAR * m) : rise;
     past.push(candle(o, c, (0.15 + rng() * 0.12) * m, (0.13 + rng() * 0.1) * m));
     p = c;
   }
@@ -2687,10 +2692,12 @@ function scnMultiSwingHighDeep(rng: () => number, m: number, d: Difficulty, mode
   }
   const swing3 = swing3Target;
   const i_swing3 = past.length - 1;
-  // Repli vers entry (sous swing1)
+  // Repli vers entry (sous swing1, d'au moins ENTRY_CLEAR : entrée, stop 1 et swing 1 se lisent
+  // séparément, étiquettes comprises)
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o - (0.4 + rng() * 0.3) * m;
+    const drop = o - (0.4 + rng() * 0.3) * m;
+    const c = i === 2 ? Math.min(drop, highTip(past, i_swing1) - ENTRY_CLEAR * m) : drop;
     past.push(candle(o, c, (0.13 + rng() * 0.1) * m, (0.15 + rng() * 0.12) * m));
     p = c;
   }
