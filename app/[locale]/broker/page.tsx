@@ -60,11 +60,11 @@ const content: Record<
     faqs: [
       {
         q: "Est-ce que l'accès TradeScaleX est vraiment gratuit ?",
-        a: "Oui. Ton accès est offert après ouverture du compte et dépôt validé chez un broker partenaire.",
+        a: "Oui. Ton accès est offert après ouverture du compte et dépôt validé chez le broker partenaire.",
       },
       {
         q: "Mon dépôt est-il en sécurité ?",
-        a: "Ton dépôt reste sur ton compte broker personnel. TradeScaleX ne reçoit jamais tes fonds et n'a aucun accès à ton capital. Nous avons sélectionné nos brokers partenaires pour leur fiabilité opérationnelle et leurs conditions de trading.",
+        a: "Ton dépôt reste sur ton compte broker personnel. TradeScaleX ne reçoit jamais tes fonds et n'a aucun accès à ton capital. Nous avons sélectionné notre broker partenaire pour sa fiabilité opérationnelle et ses conditions de trading.",
       },
       {
         q: "Est-ce que je peux récupérer mon argent à tout moment ?",
