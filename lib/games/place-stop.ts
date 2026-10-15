@@ -1876,9 +1876,12 @@ function scnMultiSwingLow(rng: () => number, m: number, d: Difficulty, mode: Pla
   const dipClose = swing1Tip + 0.3 * m;
   fut.push(explicitCandle(p, dipClose, p + 0.13 * m, dipLow));
   p = dipClose;
-  for (let i = 0; i < 5; i++) {
+  // 3 bougies de suite suffisent à montrer l'issue (voir la vente sur 3 swing highs) : une hausse de
+  // 5 bougies tassait le passé du verdict en bas du cadre, étiquettes des swings mêlées à l'entrée
+  for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o + (0.4 + rng() * 0.5) * m;
+    // la dernière clôture finit nettement au-dessus de l'entrée (le trade part dans le sens annoncé)
+    const c = i === 2 ? Math.max(o + (0.3 + rng() * 0.25) * m, entry + (0.4 + rng() * 0.3) * m) : o + (0.3 + rng() * 0.25) * m;
     fut.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.12) * m));
     p = c;
   }
@@ -2305,9 +2308,12 @@ function scnMultiSwingDeep(rng: () => number, m: number, d: Difficulty, mode: Pl
   const dipClose = swing2Tip + 0.3 * m;
   fut.push(explicitCandle(p, dipClose, p + 0.13 * m, dipLow));
   p = dipClose;
-  for (let i = 0; i < 5; i++) {
+  // 3 bougies de suite suffisent à montrer l'issue (voir la vente sur 3 swing highs) : une hausse de
+  // 5 bougies tassait le passé du verdict en bas du cadre, étiquettes des swings mêlées à l'entrée
+  for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o + (0.45 + rng() * 0.4) * m;
+    // la dernière clôture finit nettement au-dessus de l'entrée (le trade part dans le sens annoncé)
+    const c = i === 2 ? Math.max(o + (0.3 + rng() * 0.25) * m, entry + (0.4 + rng() * 0.3) * m) : o + (0.3 + rng() * 0.25) * m;
     fut.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
     p = c;
   }
