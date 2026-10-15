@@ -62,6 +62,7 @@ accélère
 accélérer
 acceptable
 acceptables
+acceptant
 accepte
 acceptée
 acceptent
@@ -651,6 +652,7 @@ appelé
 appelée
 appelées
 appelle
+appels
 appétit
 application
 appliquant
@@ -755,6 +757,7 @@ arrivé
 arrivée
 arrivent
 arriver
+arrondi
 arruina
 arruinan
 arruinar
@@ -1060,6 +1063,7 @@ bear
 bearish
 beau
 beaucoup
+beaux
 beginner
 bel
 belle
@@ -1269,6 +1273,7 @@ calculado
 calculan
 calcular
 calcularse
+calculateur
 calculator
 calcule
 calculé
@@ -1307,7 +1312,9 @@ calificas
 calles
 calma
 calme
+calmé
 calmement
+calment
 calor
 cambia
 cambian
@@ -1530,6 +1537,7 @@ cherches-tu
 chère
 chers
 chevauche
+chevauchement
 chevauchent
 chez
 chica
@@ -1774,6 +1782,7 @@ como
 cómo
 compacte
 compara
+comparable
 comparación
 comparada
 comparado
@@ -1848,6 +1857,7 @@ comporté
 comportement
 comportementales
 comportements
+comporter
 comportó
 composante
 composer
@@ -2029,6 +2039,7 @@ confusions
 conjunto
 connais
 connais-le
+connaissance
 connaissances
 connaît
 connaître
@@ -2246,6 +2257,7 @@ convaincs
 convence
 convergen
 convergent
+convertibilité
 convertida
 convertido
 convertirse
@@ -2358,9 +2370,11 @@ courbe
 courir
 cours
 course
+courses
 court
 courte
 courtes
+courtiers
 courts
 coût
 coûte
@@ -2782,6 +2796,7 @@ défauts
 défavorable
 defecto
 défend
+défendaient
 défendent
 defender
 defendida
@@ -3078,6 +3093,7 @@ detienes
 détour
 détourne
 detrás
+détrônée
 détruire
 détruisent
 détruit
@@ -3113,6 +3129,7 @@ devuelve
 día
 diagnostic
 diagnóstico
+diagramme
 diaria
 diario
 días
@@ -3365,6 +3382,7 @@ dudar
 dudas
 dudosa
 dudoso
+due
 duermen
 duplica
 duplicada
@@ -3396,6 +3414,7 @@ earnings
 ease
 easing
 écart
+écarte
 écartée
 ecb
 échange
@@ -3819,6 +3838,7 @@ essentielle
 essentielles
 essentiels
 essoufflement
+essoufflements
 est
 est-ce
 est-elle
@@ -4111,6 +4131,7 @@ explicitement
 explique
 expliqué
 expliquée
+expliquent
 expliquer
 exploitable
 exploitables
@@ -4205,6 +4226,7 @@ fair
 faire
 fais
 fais-tu
+faisable
 faisaient
 fait
 faite
@@ -4434,6 +4456,7 @@ former
 formes
 formés
 formó
+formule
 fort
 fortalece
 fortaleza
@@ -4662,6 +4685,7 @@ girarse
 giro
 giros
 glisse
+glissement
 global
 globale
 globalement
@@ -4959,6 +4983,7 @@ illégale
 illimité
 illimitée
 illiquide
+illogique
 illustrent
 illustrer
 ils
@@ -6651,9 +6676,12 @@ netos
 nets
 nette
 nettement
+nettes
 nettoyé
 neutra
 neutral
+neutralise
+neutralisé
 neutraliser
 neutralizar
 neutre
@@ -7358,6 +7386,7 @@ plaçant
 place
 placé
 place-stop
+placée
 placement
 placements
 placent
@@ -7691,6 +7720,8 @@ presenta
 presente
 présente
 présenté
+présentée
+présentées
 présentent
 presentes
 présentes
@@ -8178,6 +8209,7 @@ ramassage
 ramassé
 ramassée
 ramassés
+ramené
 ramène
 ramènent
 ramer
@@ -8200,6 +8232,7 @@ rapportent
 rapporter
 rapproche
 rapprocher
+rapprochés
 rara
 raras
 rare
@@ -8634,6 +8667,7 @@ rende
 rendement
 rendements
 rendent
+rendez-vous
 rendimiento
 rendimientos
 rendir
@@ -8755,6 +8789,7 @@ reservados
 reservas
 réserve
 réservé
+réserver
 réserves
 réservés
 réservoir
@@ -8891,6 +8926,7 @@ retourné
 retournement
 retournements
 retourner
+retours
 retrace
 retracé
 retracée
@@ -9114,6 +9150,7 @@ s'approfondir
 s'appuie
 s'arrête
 s'arrête-t-il
+s'arrêtent
 s'arrêter
 s'effondre
 s'élargir
@@ -9149,6 +9186,7 @@ s'inverse
 s'inverser
 s'observent
 s'ouvre
+s'use
 s'utilise
 s'y
 sa
@@ -9337,6 +9375,8 @@ separados
 sépare
 séparés
 sepas
+sept
+septembre
 séquence
 séquences
 séquentielle
@@ -9640,6 +9680,7 @@ spreads
 squeeze
 sri
 stabilisation
+stabilisations
 stabilise
 stabilisent
 stabiliser
@@ -9817,6 +9858,7 @@ supports
 supposant
 suppose
 supposé
+supposent
 suppression
 supprime
 supprimée
@@ -10022,6 +10064,7 @@ terminaste
 termine
 terminé
 terminée
+terminées
 terminer
 terminó
 término
@@ -10228,6 +10271,7 @@ traiciona
 traicioneras
 trailing
 train
+trait
 traite
 traité
 traiter
@@ -10323,6 +10367,7 @@ triplicar
 triplicarse
 trois
 troisième
+trompant
 tromper
 trop
 trou
@@ -10568,6 +10613,7 @@ verdes
 verdict
 veré
 veredicto
+vérifiant
 verifica
 verificación
 verificado
