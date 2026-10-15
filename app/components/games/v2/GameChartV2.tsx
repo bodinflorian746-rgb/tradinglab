@@ -168,6 +168,12 @@ export interface GameChartV2Props {
   /** Élément marqué en rouge au verdict (ex. l'erreur de « Trouve l'erreur »). */
   mark?: GameChartMark;
   /**
+   * Verdict en bandeau en bas du cadre (VerdictOverlay compact, `bottom`), quand le haut est pris
+   * par la pastille « ton choix » (Place ton Stop) : sa hauteur est réservée en bas, aucune bougie,
+   * ligne ni étiquette dessous (l'entrée et les stops restent lisibles).
+   */
+  verdictBanner?: "bottom";
+  /**
    * Prix et libellés à venir, réservés d'avance dans l'échelle et la colonne
    * d'étiquettes : le cadrage ne bouge pas quand les lignes affichées changent
    * (ex. les étapes de « Build the Trade »).
@@ -223,6 +229,9 @@ const PIN_BOX = { right: 224, bottom: 54 };
 /** Bas du bandeau du verdict (élément marqué, VerdictOverlay compact, en haut du cadre) en px :
  *  12 + 8 + 32 + 8 en mobile ; padding de 16 px sur ordinateur (tsx-v2.css, ≥ 1024 px) */
 const BANNER_BOTTOM = { mobile: 64, desktop: 82 };
+/** Hauteur réservée en bas du cadre au verdict en bandeau du bas, en px : 12 + bandeau + 12 ; en
+ *  mobile, titre sur 2 lignes au plus (16 px) : 8 + 38 + 8 ; sur ordinateur, une ligne */
+const BANNER_BOTTOM_ROOM = { mobile: 78, desktop: 82 };
 
 const ZONE_COLOR: Record<ZoneKind, { stroke: string; fill: string; dashed: boolean }> = {
   support:        { stroke: "var(--v2-bull)", fill: "rgba(16,185,129,0.18)", dashed: true },
@@ -263,7 +272,7 @@ const PACK_GAP = 1;
 /** Étiquette de l'erreur marquée (point, zone) : demi-pas verticaux explorés pour lui trouver une place */
 const MARK_TAG_STEPS = 40;
 
-export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve, tpOffscale, preview, inlineLabels, labeledZones, emphasis, glideScale, children }: GameChartV2Props) {
+export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictBanner, reserve, tpOffscale, preview, inlineLabels, labeledZones, emphasis, glideScale, children }: GameChartV2Props) {
   const inline = !!inlineLabels;
   const { ref: sizeRef, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const { ref: playRef, playing } = usePlayOnView<HTMLDivElement>(0.4);
@@ -364,12 +373,15 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
   const LABEL_BAND = INLINE_TAG_H + 8;
   // Verdict en bandeau (élément marqué) : hauteur réservée en haut, 12 px sous le bandeau
   const bannerBottom = mark && mode === "verdict" ? (desktop ? BANNER_BOTTOM.desktop : BANNER_BOTTOM.mobile) : 0;
+  // Verdict en bandeau du bas : hauteur réservée en bas du cadre
+  const bannerRoom = verdictBanner === "bottom" && mode === "verdict" ? (desktop ? BANNER_BOTTOM_ROOM.desktop : BANNER_BOTTOM_ROOM.mobile) : 0;
   // Pastille « ton choix » (coin haut gauche, à sa largeur) et bandeau du verdict (élément
   // marqué) : aucune étiquette dessous, elle y serait cachée
   const pinRight = pin ? Math.min(PIN_BOX.right, 12 + 24 + 8 + 6 + textWidth(pin.sub ? `${pin.label} ${pin.sub}` : pin.label, 15)) : 0;
   const uiBoxes = [
     ...(pin ? [{ x1: 0, x2: pinRight, y1: 0, y2: PIN_BOX.bottom }] : []),
     ...(mark && mode === "verdict" ? [{ x1: 0, x2: W, y1: 0, y2: bannerBottom }] : []),
+    ...(bannerRoom ? [{ x1: 0, x2: W, y1: H - bannerRoom + 12, y2: H }] : []),
   ];
   const floating = !inline ? [] : [
     ...zoneLabelIdx.filter((i) => !(mark && showMark && mark.kind === "zone" && mark.index === i)).map((i) => ({ label: zones[i].label, price: (zones[i].y1 + zones[i].y2) / 2, line: false, isMark: false, zone: [Math.min(zones[i].y1, zones[i].y2), Math.max(zones[i].y1, zones[i].y2)] as [number, number] })),
@@ -395,7 +407,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
       const f = (max - k.h) / range;
       return f < 1 ? Math.max(acc, (PIN_BOX.bottom - f * (H - 14)) / (1 - f)) : acc;
     }, 14);
-    const tp = (bannerBottom ? Math.max(pinTop, bannerBottom + 12) : pinTop) + bandTop, bp = 14 + bandBottom;
+    const tp = (bannerBottom ? Math.max(pinTop, bannerBottom + 12) : pinTop) + bandTop, bp = Math.max(14, bannerRoom) + bandBottom;
     const ty = (p: number) => tp + ((max - p) / range) * (H - tp - bp);
     const boxes = visible.map((k, i) => ({ x1: padX + sl * (i + 0.5) - bw / 2 - 3, x2: padX + sl * (i + 0.5) + bw / 2 + 3, y1: ty(k.h) - 3 - ext(i).up, y2: ty(k.l) + 3 + ext(i).down }));
     boxes.push(...uiBoxes);
@@ -492,7 +504,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, reserve,
   const fsPill = desktop ? DESKTOP_PILL_PX : clamp(W * 0.036, 13, 17);
   const pillH = fsPill + 12;
   const pillW0 = (label: string) => textWidth(label, fsPill) + fsPill * 1.3;
-  const bottomPad0 = hero && !columnMode && !inline ? pillH + 16 : 14; // la pastille héros vit sous la zone
+  const bottomPad0 = hero && !columnMode && !inline ? pillH + 16 : Math.max(14, bannerRoom); // la pastille héros vit sous la zone ; le verdict en bandeau du bas aussi
   // Réserve juste ce qu'il faut pour que la pastille « ton choix » ne
   // recouvre aucune bougie de son coin.
   const topPadBase = !pin || H <= 0 ? 14 : scaled.reduce((acc, k, i) => {

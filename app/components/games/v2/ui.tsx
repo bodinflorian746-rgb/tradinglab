@@ -106,6 +106,7 @@ export function VerdictOverlay({
   max,
   bonus,
   compact = false,
+  bottom = false,
 }: {
   state?: VerdictState;
   /** Compatibilité : bon / faux quand `state` n'est pas fourni. */
@@ -120,13 +121,18 @@ export function VerdictOverlay({
    * élément marqué sur le graphique (ex. l'erreur de « Trouve l'erreur »).
    */
   compact?: boolean;
+  /**
+   * Bandeau compact en bas du graphique (GameChartV2 `verdictBanner="bottom"` lui réserve sa
+   * hauteur) : le haut reste à la pastille « ton choix ». Titre sur 2 lignes au plus en mobile.
+   */
+  bottom?: boolean;
 }) {
   const st: VerdictState = state ?? (correct ? "good" : "bad");
   const tone = VERDICT_TONE[st];
   const maxLabel = max !== undefined ? <span className="v2-verdict-max"> / {max}</span> : null;
   if (compact) {
     return (
-      <div data-verdict-banner className="pointer-events-none absolute inset-x-0 top-3 z-[5] flex justify-center px-3" style={cssVars({ "--spot": "250ms" })}>
+      <div data-verdict-banner className={`pointer-events-none absolute inset-x-0 ${bottom ? "bottom-3" : "top-3"} z-[5] flex justify-center px-3`} style={cssVars({ "--spot": "250ms" })}>
         <div
           className="v2-verdict flex items-center gap-3 rounded-full py-2 pl-2.5 pr-4"
           data-verdict={st}
@@ -135,7 +141,7 @@ export function VerdictOverlay({
           <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full" style={{ background: tone.soft, boxShadow: `inset 0 0 0 2px ${tone.ring}` }} aria-hidden="true">
             <VerdictIcon state={st} size={16} />
           </span>
-          <p className={`v2-display text-[18px] font-bold ${tone.title}`}>{headline}</p>
+          <p className={`v2-display ${bottom ? "min-w-0 text-[16px] leading-[1.18] lg:text-[18px]" : "text-[18px]"} font-bold ${tone.title}`}>{headline}</p>
           <div className="flex flex-col items-end gap-0.5">
             <p className={`v2-mono text-[24px] font-bold leading-none ${tone.points}`}>
               {fmtPoints(points)}{maxLabel}

@@ -526,9 +526,13 @@ export default function PlaceStopPage() {
               }}
               mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
               pin={chosenStop ? { label: `Stop ${spatialLabels[chosenStop.id]}`, sub: T.yourChoicePin, color: STOP_COLORS[chosenStop.id].hex } : undefined}
+              /* verdict en bandeau du bas : le haut est à la pastille, l'entrée et les stops restent visibles */
+              verdictBanner="bottom"
             >
               {isFeedback && result && (
                 <VerdictOverlay
+                  compact
+                  bottom
                   state={verdictState(result.type, hasLogicalInChart)}
                   headline={feedbackLabel(result.type, hasLogicalInChart, locale, displayedRR(chart.entry, chart.tp, chart.stops.find((s) => s.id === chosen)!.price))}
                   points={result.points}
