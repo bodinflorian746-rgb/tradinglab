@@ -1,5 +1,5 @@
 // Trend-following 2 — lire les 3 MM ensemble : MM20, MM50, MM200 calculées sur 260
-// bougies (fenêtre affichée : les 80 dernières). Alignement haussier (MM20 > MM50 >
+// bougies (fenêtre affichée : les 50 dernières). Alignement haussier (MM20 > MM50 >
 // MM200), alignement baissier, range (MM enchevêtrées). L'ordre affiché est lu sur
 // les valeurs de la dernière bougie. Bougies : scenarios.ts (« ma-bull / -bear / -range »).
 
@@ -7,7 +7,7 @@ import { LessonChart, type LCPanel } from "@/app/components/lessons/LessonChart"
 import { sma } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
-const SHOW = 80;
+const SHOW = 50; // décision PO 19 : 50 bougies visibles, MM calculées sur tout l'historique
 const CASES = [
   { key: "ma-bull", title: "Alignement haussier", read: "Biais long : setups long uniquement" },
   { key: "ma-bear", title: "Alignement baissier", read: "Biais short : setups short uniquement" },
