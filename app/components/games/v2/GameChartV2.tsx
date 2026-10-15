@@ -638,7 +638,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
     // la ligne mise en avant reste vive, les autres s'estompent.
     const family = (k: string) => k.replace(/\d+$/, "");
     const dimmed = (k: string) => !!emphasis && family(k) === family(emphasis) && k !== emphasis;
-    type InlineTag = { key: string; label: string; color: string; y: number; w: number; x: number; dim: boolean; hit: boolean };
+    type InlineTag = { key: string; label: string; color: string; y: number; w: number; x: number; dim: boolean; hit: boolean; lineY?: number };
     const inlineTags: InlineTag[] = [];
     if (inline) {
       // Au verdict, l'étiquette de l'erreur remplace celle de l'élément marqué
@@ -760,9 +760,43 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
           const far = 6 * (INLINE_TAG_H + INLINE_TAG_GAP), gap = (yy: number) => (yy < zt ? zt - yy : yy > zb ? yy - zb : 0);
           const cands: number[] = [];
           for (let yy = zt - far; yy <= zb + far; yy += 2) cands.push(yy);
-          cands.sort((a, b) => gap(a) - gap(b) || Math.abs(a - y0) - Math.abs(b - y0));
+          // jamais plus près d'une autre zone étiquetée que de la sienne : plus loin, mais sans
+          // ambiguïté (« Swing low 1 » posé au niveau du Swing low 2 inversait l'ordre lu)
+          const others = zoneLabelIdx.filter((j) => j !== +s.key.slice(4)).map((j) => [toY(Math.max(zones[j].y1, zones[j].y2)), toY(Math.min(zones[j].y1, zones[j].y2))]);
+          const own = [toY(Math.max(z.y1, z.y2)), toY(Math.min(z.y1, z.y2))];
+          const dist = (yy: number, [t, b]: number[]) => (yy < t ? t - yy : yy > b ? yy - b : 0);
+          const amb = (yy: number) => Number(others.some((o) => dist(yy, o) < dist(yy, own)));
+          cands.sort((a, b) => amb(a) - amb(b) || gap(a) - gap(b) || Math.abs(a - y0) - Math.abs(b - y0));
+          const inFrame = (yy: number) => yy >= INLINE_TAG_H / 2 + 1 && yy <= H - INLINE_TAG_H / 2 - 1;
+          // Contre la zone mais entre deux pastilles de lignes du bord droit (stops, entrée) trop
+          // proches : elles s'écartent, chacune d'au plus MAX_SHIFT de sa ligne (toujours traversée
+          // par elle), pour lui faire la place ; sinon « Swing high 1 » passait sous « Entrée »
+          const squeeze = (yy: number) => {
+            const xx = lineX1 - w;
+            const blocks = inlineTags.filter((t) => Math.abs(t.y - yy) < INLINE_TAG_H + PACK_GAP - EPS && xx < t.x + t.w + INLINE_TAG_GAP - EPS && xx + w + INLINE_TAG_GAP > t.x + EPS);
+            if (!blocks.length || blocks.some((t) => t.lineY === undefined)) return null;
+            const moved = blocks.map((t) => ({ t, y: t.y < yy ? yy - INLINE_TAG_H - PACK_GAP : yy + INLINE_TAG_H + PACK_GAP }));
+            const rest = inlineTags.filter((t) => !blocks.includes(t));
+            const clear = (bx: number, by: number, bw: number, others: { x: number; y: number; w: number }[]) => inFrame(by)
+              && !others.some((o) => Math.abs(o.y - by) < INLINE_TAG_H + PACK_GAP - EPS && bx < o.x + o.w + INLINE_TAG_GAP - EPS && bx + bw + INLINE_TAG_GAP > o.x + EPS)
+              && ![...candleBoxes, ...uiBoxes].some((c) => bx < c.x2 && bx + bw > c.x1 && by - INLINE_TAG_H / 2 < c.y2 && by + INLINE_TAG_H / 2 > c.y1);
+            if (!clear(xx, yy, w, rest)) return null;
+            for (const m of moved) {
+              if (Math.abs(m.y - m.t.lineY!) > MAX_SHIFT) return null;
+              const others = [...rest, { x: xx, y: yy, w }, ...moved.filter((o) => o !== m).map((o) => ({ x: o.t.x, y: o.y, w: o.t.w }))];
+              if (!clear(m.t.x, m.y, m.t.w, others)) return null;
+            }
+            for (const m of moved) m.t.y = m.y;
+            return xx;
+          };
+          let squeezed = false;
           for (const yy of cands) {
-            if (yy < INLINE_TAG_H / 2 + 1 || yy > H - INLINE_TAG_H / 2 - 1) continue;
+            if (!inFrame(yy)) continue;
+            if (!squeezed && gap(yy) > 0) {
+              squeezed = true;
+              for (const sy of cands) { if (gap(sy) > 0) break; if (!inFrame(sy)) continue; const sx = squeeze(sy); if (sx !== null) { x = sx; y = sy; break; } }
+              if (x !== null) break;
+            }
             const xx = clearX(yy, w);
             if (xx !== null) { x = xx; y = yy; break; }
           }
@@ -780,7 +814,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
           const xx = slotX(yy, w);
           if (xx !== null) { x = xx; y = yy; break; }
         }
-        inlineTags.push({ key: s.key, label: s.label, color: s.color, y, w, x: x ?? Math.max(minX, lineX1 - w), dim: dimmed(s.key), hit: !!s.hit });
+        inlineTags.push({ key: s.key, label: s.label, color: s.color, y, w, x: x ?? Math.max(minX, lineX1 - w), dim: dimmed(s.key), hit: !!s.hit, lineY: onLine(s.key) ? toY(s.price) : undefined });
       }
     }
     const inlineTag = (t: InlineTag) => (
