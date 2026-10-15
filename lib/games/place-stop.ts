@@ -814,6 +814,9 @@ function explicitCandle(o: number, c: number, h: number, l: number): Candle {
 // sous cette pointe.
 function lowTip(past: Candle[], i: number): number { return Math.min(past[i].l, past[i + 1]?.l ?? Infinity); }
 function highTip(past: Candle[], i: number): number { return Math.max(past[i].h, past[i + 1]?.h ?? -Infinity); }
+// Swings numérotés (1 < 2 < 3) : chacun clôture au-delà de la pointe de la mèche du précédent d'au
+// moins SWING_STEP (× m), pour que l'ordre se lise sans ambiguïté (étiquettes comprises).
+const SWING_STEP = 0.4;
 
 // Distances des stops (× m) qui respectent le niveau tracé qu'ils protègent : le serré reste entre
 // l'entrée et le niveau (dans le bruit), le logique passe au-delà du niveau avec une marge, le
@@ -1846,7 +1849,7 @@ function scnMultiSwingLow(rng: () => number, m: number, d: Difficulty, mode: Pla
     p = c;
   }
   // Drop plus profond vers swing low #2 (plus bas)
-  const swing2Target = swing1 - 0.4 * m;
+  const swing2Target = Math.min(swing1 - 0.4 * m, lowTip(past, i_swing1) - SWING_STEP * m);
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = i === 2 ? swing2Target : o - (0.25 + rng() * 0.25) * m;
@@ -2254,10 +2257,11 @@ function scnMultiSwingDeep(rng: () => number, m: number, d: Difficulty, mode: Pl
     past.push(candle(o, c, (0.15 + rng() * 0.12) * m, (0.12 + rng() * 0.1) * m));
     p = c;
   }
-  // Drop vers swing2 (plus bas que swing1)
+  // Drop vers swing2 (plus bas que swing1, au-delà de la pointe de sa mèche)
   for (let i = 0; i < 2; i++) {
     const o = p;
-    const c = o - (0.35 + rng() * 0.2) * m;
+    const drop = o - (0.35 + rng() * 0.2) * m;
+    const c = i === 1 ? Math.min(drop, lowTip(past, i_swing1) - SWING_STEP * m) : drop;
     past.push(candle(o, c, (0.13 + rng() * 0.1) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
@@ -2650,10 +2654,11 @@ function scnMultiSwingHighDeep(rng: () => number, m: number, d: Difficulty, mode
     past.push(candle(o, c, (0.12 + rng() * 0.1) * m, (0.15 + rng() * 0.12) * m));
     p = c;
   }
-  // Rebond vers swing2 (plus haut que swing1)
+  // Rebond vers swing2 (plus haut que swing1, au-delà de la pointe de sa mèche)
   for (let i = 0; i < 2; i++) {
     const o = p;
-    const c = o + (0.35 + rng() * 0.2) * m;
+    const rise = o + (0.35 + rng() * 0.2) * m;
+    const c = i === 1 ? Math.max(rise, highTip(past, i_swing1) + SWING_STEP * m) : rise;
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
     p = c;
   }
