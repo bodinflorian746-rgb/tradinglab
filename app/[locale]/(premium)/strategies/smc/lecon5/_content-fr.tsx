@@ -215,10 +215,10 @@ export default function ContentFr() {
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 34€</li>
-              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 34€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 45€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 113€</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,02 lot, risque environ 6€, gain potentiel environ 13€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,03 lot, risque environ 8€, gain potentiel environ 19€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,07 lot, risque environ 20€, gain potentiel environ 45€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,17 lot, risque environ 48€, gain potentiel environ 108€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">Le R/R reste 1:2,27 peu importe la taille du compte.</p>
           </section>

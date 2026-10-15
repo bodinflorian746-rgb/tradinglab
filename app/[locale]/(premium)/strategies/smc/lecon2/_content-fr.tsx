@@ -281,16 +281,16 @@ export default function ContentFr() {
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Calcul retail</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">
-              Le risque par trade selon le capital appliqué à ce setup.
+              La règle de risque (2% du capital au maximum) appliquée à ce setup, au lot près.
             </p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 22,50€</li>
-              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 22,50€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 30€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 75€</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,01 lot représente déjà environ 10€ de risque, setup pas faisable sur ce compte ; tu passes, ou tu attends un setup au stop plus court</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,01 lot, risque environ 10€, gain potentiel environ 14€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,02 lot, risque environ 19€, gain potentiel environ 29€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,05 lot, risque environ 48€, gain potentiel environ 71€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
-              Le R/R reste 1:1,5 peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.
+              Le R/R reste 1:1,5 peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot, calculée pour rester sous 2% du capital.
             </p>
           </section>
 

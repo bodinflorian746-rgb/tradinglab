@@ -228,14 +228,14 @@ export default function ContentFr() {
           {/* Bloc 8 — CALCUL RETAIL */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Calcul retail</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le risque par trade s&apos;adapte au capital. Sur ce setup R/R 1:2, voici la répartition selon la taille du compte.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le risque reste à 2% du capital au maximum, la taille de lot s&apos;adapte. Sur ce setup R/R 1:2, voici la répartition selon la taille du compte.</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Compte 300€ → 5% = risque 15€, gain potentiel 30€</li>
-              <li>- Compte 500€ → 3% = risque 15€, gain potentiel 30€</li>
-              <li>- Compte 1 000€ → 2% = risque 20€, gain potentiel 40€</li>
-              <li>- Compte 2 500€ → 2% = risque 50€, gain potentiel 100€</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,01 lot, risque environ 3€, gain potentiel environ 7€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,02 lot, risque environ 7€, gain potentiel environ 14€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,05 lot, risque environ 17€, gain potentiel environ 34€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,14 lot, risque environ 48€, gain potentiel environ 95€</li>
             </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1:2 reste constant peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot et le pourcentage de risque adapté au capital.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1:2 reste constant peu importe la taille du compte. Ce qui change, c&apos;est la taille de lot, calculée pour rester sous 2% du capital.</p>
           </section>
 
           {/* Bloc 9 — FILTRES : QUAND NE PAS PRENDRE LE SETUP */}

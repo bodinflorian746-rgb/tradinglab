@@ -227,10 +227,10 @@ export default function ContentFr() {
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Scénario : coupe à -50% du SL prévu (à l&apos;invalidation)</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-              <li>- Compte 300€ → risque prévu 15€, perte réelle ~7€ (au lieu de 15€)</li>
-              <li>- Compte 500€ → risque prévu 15€, perte réelle ~7€</li>
-              <li>- Compte 1 000€ → risque prévu 20€, perte réelle ~10€</li>
-              <li>- Compte 2 500€ → risque prévu 50€, perte réelle ~25€</li>
+              <li>- Compte 300€ → risque prévu 6€ (2%), perte réelle ~3€ (au lieu de 6€)</li>
+              <li>- Compte 500€ → risque prévu 10€ (2%), perte réelle ~5€ (au lieu de 10€)</li>
+              <li>- Compte 1 000€ → risque prévu 20€ (2%), perte réelle ~10€ (au lieu de 20€)</li>
+              <li>- Compte 2 500€ → risque prévu 50€ (2%), perte réelle ~25€ (au lieu de 50€)</li>
             </ul>
 
             <p className="text-zinc-300 leading-relaxed text-sm font-semibold text-zinc-200 mb-2">Sur 10 trades qui foirent : économie totale</p>
