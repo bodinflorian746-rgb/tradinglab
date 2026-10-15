@@ -163,7 +163,7 @@ export default function ContentFr() {
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- BOS haussier : cassure du dernier HH par clôture nette au-dessus</li>
               <li>- BOS baissier : cassure du dernier LL par clôture nette en-dessous</li>
-              <li>- Distance minimum : 15-20 pips EUR/USD H4 ou 15-20$ XAU/USD H4</li>
+              <li>- Distance minimum : 15-20 pips sur EUR/USD H4</li>
               <li>- Pas de réintégration dans les 3-5 bougies suivantes</li>
             </ul>
           </section>
@@ -209,33 +209,35 @@ export default function ContentFr() {
 
           {/* Bloc 7 — PLAN DE TRADE CHIFFRÉ */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : inversion après CHoCH et BOS, XAU/USD H4</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : inversion après CHoCH et BOS, EUR/USD H4</h2>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD en tendance haussière H4 depuis 3 semaines (2 HL à 4 520$ et 4 580$, 2 HH à 4 620$ et 4 660$). CHoCH baissier : clôture à 4 555$ (25$ sous le HL 4 580$). Validation 4 bougies sans réintégration. Nouvelle structure : LH à 4 600$ puis LL à 4 530$, sous le creux du CHoCH = BOS baissier, retournement confirmé.
+              EUR/USD en tendance haussière H4 depuis 3 semaines (2 HL à 1.0820 et 1.0880, 2 HH à 1.0920 et 1.0960). CHoCH baissier : clôture à 1.0855 (25 pips sous le HL 1.0880). Validation 4 bougies sans réintégration. Nouvelle structure : LH à 1.0900 puis LL à 1.0830, sous le creux du CHoCH = BOS baissier, retournement confirmé.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade short sur inversion confirmée)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée short : 4 580$ (retracement vers ex-HL devenu résistance, signal de rejet attendu)</li>
-                <li>- Stop loss : 4 615$ (au-delà du LH à 4 600$, marge 15$)</li>
-                <li>- Take profit : 4 450$, objectif fixé pour un R/R supérieur à 1:3 ; le premier HL de la tendance, à 4 520$, peut freiner la baisse : une sortie partielle juste au-dessus est raisonnable</li>
+                <li>- Entrée short : 1.0880 (retracement vers ex-HL devenu résistance, signal de rejet attendu)</li>
+                <li>- Stop loss : 1.0915 (au-delà du LH à 1.0900, marge 15 pips)</li>
+                <li>- Take profit : 1.0750, objectif fixé pour un R/R supérieur à 1:3 ; le premier HL de la tendance, à 1.0820, peut freiner la baisse : une sortie partielle juste au-dessus est raisonnable</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 615$ - 4 580$ = 35$</li>
-                <li>- Gain potentiel : 4 580$ - 4 450$ = 130$</li>
+                <li>- Risque : 1.0915 - 1.0880 = 35 pips</li>
+                <li>- Gain potentiel : 1.0880 - 1.0750 = 130 pips</li>
                 <li>- R/R : 130 / 35 = 3,71</li>
               </ul>
             </div>
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Au lot minimum (0,01 lot), ce stop de 35$ représente déjà environ 30€ de risque (1$ ≈ 0,85€)</li>
-              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
-              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,01 lot, risque environ 30€, gain potentiel environ 111€</li>
+              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,085€ : ce stop de 35 pips représente environ 3€ de risque</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,02 lot, risque environ 6€, gain potentiel environ 22€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,03 lot, risque environ 9€, gain potentiel environ 33€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,06 lot, risque environ 18€, gain potentiel environ 66€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,16 lot, risque environ 48€, gain potentiel environ 177€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1:3,71 peu importe la taille du compte.
@@ -252,13 +254,13 @@ export default function ContentFr() {
           />
 
           <LessonExercice
-            description="Sur XAU/USD H4, la tendance haussière en cours a formé un dernier HL à 4 580$ et un dernier HH à 4 660$. Une bougie clôture à 4 555$ avec un corps significatif, soit 25$ sous le dernier HL. 4 bougies suivantes maintiennent leur clôture sous 4 580$. Le prix forme ensuite un sommet à 4 600$ puis redescend former un creux à 4 530$. Comment se construit le plan complet ?"
+            description="Sur EUR/USD H4, la tendance haussière en cours a formé un dernier HL à 1.0880 et un dernier HH à 1.0960. Une bougie clôture à 1.0855 avec un corps significatif, soit 25 pips sous le dernier HL. 4 bougies suivantes maintiennent leur clôture sous 1.0880. Le prix forme ensuite un sommet à 1.0900 puis redescend former un creux à 1.0830. Comment se construit le plan complet ?"
             steps={[
-              "Qualifier le CHoCH baissier : clôture franche à 4 555$ (25$ sous le HL 4 580$), corps significatif, pas de réintégration sur 4 bougies. CHoCH validé, sortie des positions longues",
-              "Déclencher la sortie de toute position long existante dès la clôture à 4 555$",
-              "Observer la structure post-breakout : sommet à 4 600$ (premier LH potentiel) puis creux à 4 530$ (premier LL)",
-              "Confirmer par le BOS baissier : la séquence LH (4 600$) + LL (4 530$) casse le creux laissé par le CHoCH et confirme le retournement",
-              "Construire le plan d’inversion : entrée short au retracement vers 4 580$ (ex-HL devenu résistance) avec signal de rejet, stop loss à 4 615$ (au-delà du LH 4 600$ + marge 15$), take profit à 4 450$ (ratio R/R 1:3,7), taille de position selon le risque par trade",
+              "Qualifier le CHoCH baissier : clôture franche à 1.0855 (25 pips sous le HL 1.0880), corps significatif, pas de réintégration sur 4 bougies. CHoCH validé, sortie des positions longues",
+              "Déclencher la sortie de toute position long existante dès la clôture à 1.0855",
+              "Observer la structure post-breakout : sommet à 1.0900 (premier LH potentiel) puis creux à 1.0830 (premier LL)",
+              "Confirmer par le BOS baissier : la séquence LH (1.0900) + LL (1.0830) casse le creux laissé par le CHoCH et confirme le retournement",
+              "Construire le plan d’inversion : entrée short au retracement vers 1.0880 (ex-HL devenu résistance) avec signal de rejet, stop loss à 1.0915 (au-delà du LH 1.0900 + marge 15 pips), take profit à 1.0750 (ratio R/R 1:3,7), taille de position selon le risque par trade",
             ]}
           />
 
