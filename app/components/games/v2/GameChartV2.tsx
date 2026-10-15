@@ -229,9 +229,10 @@ const PIN_BOX = { right: 224, bottom: 54 };
 /** Bas du bandeau du verdict (élément marqué, VerdictOverlay compact, en haut du cadre) en px :
  *  12 + 8 + 32 + 8 en mobile ; padding de 16 px sur ordinateur (tsx-v2.css, ≥ 1024 px) */
 const BANNER_BOTTOM = { mobile: 64, desktop: 82 };
-/** Hauteur réservée en bas du cadre au verdict en bandeau du bas, en px : 12 + bandeau + 12 ; en
- *  mobile, titre sur 2 lignes au plus (16 px) : 8 + 38 + 8 ; sur ordinateur, une ligne */
-const BANNER_BOTTOM_ROOM = { mobile: 78, desktop: 82 };
+/** Hauteur réservée en bas du cadre au verdict en bandeau du bas, en px : 12 + bandeau + 14, la
+ *  demi-pastille d'une ligne posée au bas de l'échelle (stop) comprise ; bandeau en mobile : titre
+ *  sur 2 lignes au plus (16 px), 8 + 38 + 8 ; sur ordinateur : une ligne, 32 + 2 × 16,4 */
+const BANNER_BOTTOM_ROOM = { mobile: 80, desktop: 92 };
 
 const ZONE_COLOR: Record<ZoneKind, { stroke: string; fill: string; dashed: boolean }> = {
   support:        { stroke: "var(--v2-bull)", fill: "rgba(16,185,129,0.18)", dashed: true },
