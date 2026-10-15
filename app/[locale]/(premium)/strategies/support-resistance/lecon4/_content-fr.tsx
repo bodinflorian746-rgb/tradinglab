@@ -243,7 +243,7 @@ export default function ContentFr() {
               "Valider la double confirmation : bougie 1 clôture à 1.0955 (à la limite), bougie 2 clôture à 1.0940 (réintégration franche)",
               "Placer l’entrée short à 1.0940 (clôture de la bougie de confirmation)",
               "Placer le stop loss à 1.0985 (5 pips au-dessus de la mèche initiale à 1.0980)",
-              "Placer le take profit à 1.0840 (R/R 100 / 45 ≈ 1:2,22), taille de position selon le risque par trade adapté au capital, en vérifiant qu'elle reste possible au lot minimum",
+              "Placer le take profit à 1.0840 (R/R 100 / 45 ≈ 1:2,22), taille de position calculée pour risquer 2% du capital au maximum, en vérifiant qu'elle reste possible au lot minimum",
             ]}
           />
 

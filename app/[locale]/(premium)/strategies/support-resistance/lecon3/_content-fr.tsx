@@ -242,7 +242,7 @@ export default function ContentFr() {
               "Constater l’inversion du rôle : la résistance 1.1850 devient un support",
               "Identifier le signal de rejet : la pin bar au contact de la zone valide le flip",
               "Placer l’entrée long à la clôture de la pin bar, stop loss à 1.1830 (20 pips sous la zone pour absorber les mèches)",
-              "Définir le take profit à la prochaine résistance majeure identifiée sur le chart H4 (ratio minimum 1:2), taille de position selon le risque par trade adapté au capital",
+              "Définir le take profit à la prochaine résistance majeure identifiée sur le chart H4 (ratio minimum 1:2), taille de position calculée pour risquer 2% du capital au maximum",
             ]}
           />
 

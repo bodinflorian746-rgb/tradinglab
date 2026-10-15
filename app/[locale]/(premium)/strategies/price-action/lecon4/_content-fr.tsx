@@ -253,7 +253,7 @@ export default function ContentFr() {
               "Placer l’entrée long à 4 595$ (clôture de l’engulfing M15)",
               "Placer le stop loss à 4 555$ (5$ sous le bas de la zone H4 à 4 560$)",
               "Placer le take profit niveau 1 à 4 680$ (HH Daily précédent) ou niveau 2 à 4 750$ (projection extension Daily)",
-              "Calculer les R/R : Risque 40$, gain niveau 1 = 85$ → R/R 2,12 ; gain niveau 2 = 155$ → R/R 3,88. Taille de position selon le risque par trade adapté au capital",
+              "Calculer les R/R : Risque 40$, gain niveau 1 = 85$ → R/R 2,12 ; gain niveau 2 = 155$ → R/R 3,88. Taille de position calculée pour risquer 2% du capital au maximum",
             ]}
           />
 

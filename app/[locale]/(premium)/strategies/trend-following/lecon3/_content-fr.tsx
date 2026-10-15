@@ -256,7 +256,7 @@ export default function ContentFr() {
               "Calculer la position du retracement : 1.1820 - 1.1760 = 60 pips sous le HH, soit 60% de l’impulsion",
               "Identifier le niveau Fibonacci : 60% correspond à un niveau entre 0.5 (1.1770) et 0.618 (1.1758). Le prix actuel à 1.1760 se situe pratiquement au niveau 0.618, zone d’entrée optimale",
               "Attendre le signal de rejet (pin bar, engulfing) au contact de 1.1758-1.1760 pour valider le setup",
-              "Construire le plan : entrée long à la clôture du signal, stop loss sous 1.1741 (niveau 0.786 + marge 10 pips), take profit à 1.1820 (HH précédent) ou 1.1858 (extension 1.618 du repli). Taille de position selon le risque par trade adapté au capital",
+              "Construire le plan : entrée long à la clôture du signal, stop loss sous 1.1741 (niveau 0.786 + marge 10 pips), take profit à 1.1820 (HH précédent) ou 1.1858 (extension 1.618 du repli). Taille de position calculée pour risquer 2% du capital au maximum",
             ]}
           />
 

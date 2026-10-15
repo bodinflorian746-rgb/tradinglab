@@ -240,7 +240,7 @@ export default function ContentFr() {
               "Identifier la confluence : MM50 H4 à 4 605$ + trendline qui passe à 4 600$ = zone de confluence 4 600$-4 605$",
               "Vérifier le biais MM200 H4 : prix sous 4 720$ = biais short aligné, setup conforme",
               "Attendre le signal de rejet baissier (pin bar haute, engulfing baissier) au contact de la zone 4 600$-4 605$ pour valider l’entrée",
-              "Construire le plan : entrée short à la clôture du signal, stop loss à 4 615$ (10$ au-dessus de la MM50), take profit à 4 555$ (LL précédent, niveau 1) ou 4 510$ (extension baissière, niveau 2). Taille de position selon le risque par trade adapté au capital",
+              "Construire le plan : entrée short à la clôture du signal, stop loss à 4 615$ (10$ au-dessus de la MM50), take profit à 4 555$ (LL précédent, niveau 1) ou 4 510$ (extension baissière, niveau 2). Taille de position calculée pour risquer 2% du capital au maximum",
             ]}
           />
 

@@ -245,7 +245,7 @@ export default function ContentFr() {
               "Vérifier la direction et le contact : mèche longue en haut, pin bar baissière au contact de la résistance 1.1820, critères 2 et 4 validés",
               "Position de la clôture : 1.1803 dans la fourchette 1.1803-1.1835, au plus bas absolu, clôture dans le tiers inférieur, critère 3 validé",
               "Confluence : MM50 H4 à 1.1815 dans la zone = renforcement du signal",
-              "Plan : entrée short à 1.1803 (clôture pin bar), stop loss à 1.1843 (8 pips au-dessus de la mèche à 1.1835), take profit à 1.1720 (support H4 suivant). Risque 40 pips, gain 83 pips, R/R 2,07. Taille de position selon le risque par trade adapté au capital",
+              "Plan : entrée short à 1.1803 (clôture pin bar), stop loss à 1.1843 (8 pips au-dessus de la mèche à 1.1835), take profit à 1.1720 (support H4 suivant). Risque 40 pips, gain 83 pips, R/R 2,07. Taille de position calculée pour risquer 2% du capital au maximum",
             ]}
           />
 
