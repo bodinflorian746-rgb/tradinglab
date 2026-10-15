@@ -165,7 +165,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "creux / sommet marquant.", es: "mínimo / máximo marcado." },
   },
   {
-    id: "fakeout", source: "Intermédiaire · leçon 6 (Fake Breakout)",
+    id: "fakeout", source: "Intermédiaire · leçon 6 (Faux breakout)",
     term: { fr: "Faux breakout", es: "Fakeout" },
     match: { fr: /faux breakouts?/i, es: /fakeout/i },
     def: {
@@ -285,7 +285,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "marché sans tendance, entre un haut et un bas.", es: "mercado sin tendencia, entre un techo y un piso." },
   },
   {
-    id: "momentum", source: "Intermédiaire · leçon 6 (Fake Breakout)",
+    id: "momentum", source: "Intermédiaire · leçon 6 (Faux breakout)",
     term: { fr: "Momentum", es: "Momentum" },
     match: { fr: /momentum/i, es: /momentum/i },
     def: {
