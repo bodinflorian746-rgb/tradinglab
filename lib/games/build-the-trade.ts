@@ -964,8 +964,9 @@ function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
   past.push(...touches.candles);
   p = touches.p;
   const base = p;
-  // Impulsion : 8 bougies haussières, calée pour que le niveau soit à 70-82 % de retracement
-  const target = 0.7 + rng() * 0.12;
+  // Impulsion : 8 bougies haussières, calée pour que le niveau soit à 65-72 % de retracement (pas
+  // plus : les 3 entrées candidates, à moins de 1 m l’une de l’autre, restent lisibles au téléphone)
+  const target = 0.65 + rng() * 0.07;
   const peak = base + (level - base) / (1 - target);
   const w = Array.from({ length: 8 }, () => 0.5 + rng() * 0.5);
   const sw = w.reduce((a, b) => a + b, 0);
@@ -975,18 +976,25 @@ function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
     past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.13 + rng() * 0.15) * m));
     p = c;
   }
-  // Pullback profond — 6 bougies rouges jusqu'au niveau ; seule la dernière vient au contact
-  const lastClose = level + (0.25 + rng() * 0.15) * m;  // au-dessus du support (entrée « pullback profond » distincte)
-  const wd = Array.from({ length: 6 }, () => 0.4 + rng() * 0.45);
+  // Pullback profond — 5 bougies rouges jusqu'au niveau ; seule la dernière vient au contact
+  const retestClose = level + (0.25 + rng() * 0.15) * m;  // au-dessus du support (entrée « pullback profond » distincte)
+  const wd = Array.from({ length: 5 }, () => 0.4 + rng() * 0.45);
   const sd = wd.reduce((a, b) => a + b, 0);
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = i === 5 ? lastClose : o - ((peak - lastClose) * wd[i]) / sd;
+    const c = i === 4 ? retestClose : o - ((peak - retestClose) * wd[i]) / sd;
     const k = candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.25) * m);
-    k.l = i === 5 ? level : Math.max(k.l, level + 0.04 + 0.15 * m);
+    k.l = i === 4 ? level : Math.max(k.l, level + 0.04 + 0.15 * m);
     past.push(k);
     p = c;
   }
+  // Réaction au retest : une bougie verte qui repart du support (prix actuel = entrée « agressive »),
+  // assez haut pour que les 3 entrées candidates se lisent séparément au téléphone
+  const lastClose = level + (0.65 + rng() * 0.15) * m;
+  const react = candle(p, lastClose, (0.12 + rng() * 0.1) * m, (0.1 + rng() * 0.1) * m);
+  react.l = Math.max(react.l, level + 0.04 + 0.15 * m);
+  past.push(react);
+  p = lastClose;
   const swingLow = level;
   const topHigh = Math.max(...past.map((k) => k.h));
   const entryRef = p;
