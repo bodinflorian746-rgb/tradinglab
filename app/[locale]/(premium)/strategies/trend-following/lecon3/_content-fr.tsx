@@ -164,7 +164,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Impulsion claire : displacement directionnel marqué (corps significatifs)</li>
-              <li>- Retracement de 50 à 78,6% (idéalement l&apos;OTE 0.618 à 0.786) : profondeur tradable</li>
+              <li>- Retracement de 50 à 78.6% (idéalement l&apos;OTE 0.618 à 0.786) : profondeur tradable</li>
               <li>- Signal de rejet au contact (pin bar, engulfing, réaction immédiate)</li>
               <li>- Biais de l&apos;UT supérieure (H4 ou Daily) aligné avec le sens de l&apos;impulsion</li>
             </ul>
@@ -267,7 +267,7 @@ export default function ContentFr() {
               "Indéterminé, Fibonacci ne s’applique pas en tendance",
             ]}
             correctIndex={1}
-            explanation="Un retracement à 70% se situe entre 0.618 (61,8%) et 0.786 (78,6%), zone d’entrée valide mais profonde, exploitable uniquement avec un signal de rejet confirmé. La pin bar de rejet apporte cette confirmation. Le stop loss se place au-delà de 0.786 avec marge 5-10 pips. Au-delà de 0.786, la structure de la tendance serait remise en cause."
+            explanation="Un retracement à 70% se situe entre 0.618 (61.8%) et 0.786 (78.6%), zone d’entrée valide mais profonde, exploitable uniquement avec un signal de rejet confirmé. La pin bar de rejet apporte cette confirmation. Le stop loss se place au-delà de 0.786 avec marge 5-10 pips. Au-delà de 0.786, la structure de la tendance serait remise en cause."
           />
 
         </div>

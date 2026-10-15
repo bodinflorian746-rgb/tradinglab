@@ -334,13 +334,13 @@ export const LESSONS: LevelData[] = [
             items: [
               "BID = prix de vente (le moins élevé des deux)",
               "ASK = prix d'achat (le plus élevé des deux)",
-              "Exemple : EUR/USD affiche Bid = 1,0800 / Ask = 1,0804",
-              "Si tu achètes maintenant → tu paies 1,0804. Si tu vends maintenant → tu reçois 1,0800.",
+              "Exemple : EUR/USD affiche Bid = 1.0800 / Ask = 1.0804",
+              "Si tu achètes maintenant → tu paies 1.0804. Si tu vends maintenant → tu reçois 1.0800.",
             ],
           },
           {
             heading: "Exemple concret : gain et perte avec le spread",
-            body: "Cas 1, tu gagnes malgré le spread : Tu achètes EUR/USD à l'Ask (1,0804). Le prix monte à 1,0870. Tu vends au Bid (1,0866). Tu gagnes 1,0866 - 1,0804 = 62 euros pour 1 euro par point. Le spread a réduit ton gain de 4 euros, mais tu restes largement positif.\n\nCas 2, le spread devient problématique : Tu achètes à 1,0804. Le prix ne monte que de 2 points à 1,0806. Tu vends au Bid : 1,0802. Tu perds 2 euros malgré un mouvement dans ton sens. Le spread de 4 points a effacé ton gain et t'a mis en perte.",
+            body: "Cas 1, tu gagnes malgré le spread : Tu achètes EUR/USD à l'Ask (1.0804). Le prix monte à 1.0870. Tu vends au Bid (1.0866). Tu gagnes 1.0866 - 1.0804 = 62 euros pour 1 euro par point. Le spread a réduit ton gain de 4 euros, mais tu restes largement positif.\n\nCas 2, le spread devient problématique : Tu achètes à 1.0804. Le prix ne monte que de 2 points à 1.0806. Tu vends au Bid : 1.0802. Tu perds 2 euros malgré un mouvement dans ton sens. Le spread de 4 points a effacé ton gain et t'a mis en perte.",
             items: [
               "Le spread est payé à l'ENTRÉE, pas à la sortie",
               "Tu commences chaque trade dans le rouge du montant du spread",
@@ -393,20 +393,20 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "EUR/USD : Bid = 1,0800, Ask = 1,0805. Tu ouvres un achat (Long). À quel prix s'exécute ton trade, et de combien es-tu dans le rouge au départ ?",
+          question: "EUR/USD : Bid = 1.0800, Ask = 1.0805. Tu ouvres un achat (Long). À quel prix s'exécute ton trade, et de combien es-tu dans le rouge au départ ?",
           answers: [
-            "À 1,0800, tu commences à l'équilibre, spread nul",
-            "À 1,0802, tu es 2 points dans le rouge",
-            "À 1,0805, tu es 5 points dans le rouge immédiatement",
+            "À 1.0800, tu commences à l'équilibre, spread nul",
+            "À 1.0802, tu es 2 points dans le rouge",
+            "À 1.0805, tu es 5 points dans le rouge immédiatement",
             "Le prix dépend de la taille de ta position",
           ],
           correct: 2,
           explanation:
-            "Un achat s'exécute toujours à l'Ask = 1,0805. Le spread = Ask - Bid = 1,0805 - 1,0800 = 5 points. Si tu fermes immédiatement, tu vends au Bid = 1,0800. Tu perds 5 points : c'est le coût d'entrée du trade.",
+            "Un achat s'exécute toujours à l'Ask = 1.0805. Le spread = Ask - Bid = 1.0805 - 1.0800 = 5 points. Si tu fermes immédiatement, tu vends au Bid = 1.0800. Tu perds 5 points : c'est le coût d'entrée du trade.",
           answerExplanations: [
-            "Faux. Le Bid (1,0800) est le prix auquel tu VENDS, pas celui auquel tu achètes. À l'achat, ton ordre s'exécute à l'Ask (1,0805). Tu démarres donc avec 5 points de déficit, pas à l'équilibre.",
-            "Faux. Il n'existe pas de 'prix moyen' entre Bid et Ask pour un ordre au marché. Le marché est binaire : tu achètes à l'Ask ou tu vends au Bid. Ici, l'achat s'exécute à l'Ask = 1,0805, et le spread est de 5 points.",
-            "Correct. Un Long s'exécute à l'Ask = 1,0805. Spread = 1,0805 - 1,0800 = 5 points. Si tu fermes immédiatement, tu vends au Bid = 1,0800. Perte = 5 points. C'est le coût d'entrée que tu paies sur chaque trade.",
+            "Faux. Le Bid (1.0800) est le prix auquel tu VENDS, pas celui auquel tu achètes. À l'achat, ton ordre s'exécute à l'Ask (1.0805). Tu démarres donc avec 5 points de déficit, pas à l'équilibre.",
+            "Faux. Il n'existe pas de 'prix moyen' entre Bid et Ask pour un ordre au marché. Le marché est binaire : tu achètes à l'Ask ou tu vends au Bid. Ici, l'achat s'exécute à l'Ask = 1.0805, et le spread est de 5 points.",
+            "Correct. Un Long s'exécute à l'Ask = 1.0805. Spread = 1.0805 - 1.0800 = 5 points. Si tu fermes immédiatement, tu vends au Bid = 1.0800. Perte = 5 points. C'est le coût d'entrée que tu paies sur chaque trade.",
             "Faux. Le prix d'exécution est toujours l'Ask pour un achat, quelle que soit la taille de la position. La taille de position affecte le montant en euros gagné ou perdu par point, pas le prix auquel l'ordre s'exécute.",
           ],
         },
@@ -1071,7 +1071,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Higher High (HH) + Higher Low (HL) = tendance haussière, les acheteurs sont en contrôle",
               "Lower Low (LL) + Lower High (LH) = tendance baissière, les vendeurs dominent",
-              "Exemple : EUR/USD fait 1,0800 → 1,0750 → 1,0900 → 1,0820 → 1,1000 = séquence HH/HL haussière",
+              "Exemple : EUR/USD fait 1.0800 → 1.0750 → 1.0900 → 1.0820 → 1.1000 = séquence HH/HL haussière",
               "La structure ne change pas à chaque bougie, elle change seulement sur des swings significatifs",
             ],
           },
@@ -1091,7 +1091,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "CHoCH en tendance haussière : le prix casse sous le dernier HL → première alerte de retournement",
               "CHoCH en tendance baissière : le prix casse au-dessus du dernier LH → premier signal de reprise",
-              "EUR/USD en tendance haussière : le prix brise son dernier HL à 1,0820 → CHoCH, surveiller un renversement",
+              "EUR/USD en tendance haussière : le prix brise son dernier HL à 1.0820 → CHoCH, surveiller un renversement",
               "CHoCH ≠ retournement confirmé. C'est le début d'une phase de vigilance, pas un ordre de vente immédiat",
             ],
           },
@@ -1170,8 +1170,8 @@ export const LESSONS: LevelData[] = [
             items: [
               "Résistance validée = le prix y a été rejeté au moins une fois dans le passé",
               "Principe de polarité : une résistance cassée devient support, un support cassé devient résistance",
-              "Exemple : EUR/USD bute sur 1,1000 pendant 3 semaines. Quand il casse, ce niveau devient son nouveau support",
-              "Les résistances psychologiques (nombres ronds : 1,1000, 30 000 €, 50 000 €) sont souvent les plus fortes",
+              "Exemple : EUR/USD bute sur 1.1000 pendant 3 semaines. Quand il casse, ce niveau devient son nouveau support",
+              "Les résistances psychologiques (nombres ronds : 1.1000, 30 000 €, 50 000 €) sont souvent les plus fortes",
             ],
           },
           {
@@ -1215,7 +1215,7 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "EUR/USD a testé la résistance à 1,1000 à trois reprises sans la casser. Il casse finalement ce niveau avec une grande bougie haussière. Que devient ce niveau ?",
+          question: "EUR/USD a testé la résistance à 1.1000 à trois reprises sans la casser. Il casse finalement ce niveau avec une grande bougie haussière. Que devient ce niveau ?",
           answers: [
             "Il reste une résistance, le prix va rebondir dessus à la prochaine visite",
             "Il devient un support, le principe de polarité s'applique",
@@ -1269,7 +1269,7 @@ export const LESSONS: LevelData[] = [
             items: [
               "Origine : le prix était à ce niveau, a chuté rapidement (mouvement impulsif baissier)",
               "La zone est le plafond du mouvement, les corps des dernières bougies haussières avant l'impulsion baissière",
-              "Exemple : EUR/USD à 1,0950, chute à 1,0800 en 2 jours → résistance à 1,0920 – 1,0960",
+              "Exemple : EUR/USD à 1.0950, chute à 1.0800 en 2 jours → résistance à 1.0920 – 1.0960",
               "Une résistance non revisitée depuis longtemps reste valide jusqu'à ce que le prix y retourne",
             ],
           },
@@ -1304,19 +1304,19 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "EUR/USD se trouve à 1,0800. Il monte à 1,1050 en 4 bougies H4. Où se situe le support ?",
+          question: "EUR/USD se trouve à 1.0800. Il monte à 1.1050 en 4 bougies H4. Où se situe le support ?",
           answers: [
-            "À 1,1050, au sommet du mouvement haussier",
-            "À 1,0800, à l'origine du mouvement impulsif haussier",
-            "À mi-chemin, vers 1,0925",
+            "À 1.1050, au sommet du mouvement haussier",
+            "À 1.0800, à l'origine du mouvement impulsif haussier",
+            "À mi-chemin, vers 1.0925",
             "Il n'y a pas de support ici, le prix monte trop vite",
           ],
           correct: 1,
           explanation:
-            "Le support se situe à l'ORIGINE du mouvement impulsif, là où les institutions ont commencé à acheter. Ici, le mouvement part de 1,0800 → le support est autour de 1,0800 (les corps des bougies juste avant l'impulsion). C'est là que les ordres résiduels attendent le retour du prix.",
+            "Le support se situe à l'ORIGINE du mouvement impulsif, là où les institutions ont commencé à acheter. Ici, le mouvement part de 1.0800 → le support est autour de 1.0800 (les corps des bougies juste avant l'impulsion). C'est là que les ordres résiduels attendent le retour du prix.",
           answerExplanations: [
-            "Faux. 1,1050 est le sommet du mouvement, c'est la destination, pas l'origine. C'est plutôt une résistance potentielle, pas un support.",
-            "Correct. Le support se place à l'ORIGINE du mouvement haussier impulsif, ici autour de 1,0800. Quand le prix reviendra dans cette zone, les ordres institutionnels résiduels devraient acheter à nouveau.",
+            "Faux. 1.1050 est le sommet du mouvement, c'est la destination, pas l'origine. C'est plutôt une résistance potentielle, pas un support.",
+            "Correct. Le support se place à l'ORIGINE du mouvement haussier impulsif, ici autour de 1.0800. Quand le prix reviendra dans cette zone, les ordres institutionnels résiduels devraient acheter à nouveau.",
             "Faux. Le milieu du mouvement n'a pas de signification institutionnelle particulière. Le support ou la résistance se trouve à l'origine ou à la destination du mouvement, pas entre les deux.",
             "Faux. C'est exactement le contraire : un mouvement impulsif rapide (4 bougies H4) est le signe le plus fort d'une présence institutionnelle. Plus c'est rapide et fort, plus la zone d'origine est valide.",
           ],
@@ -1392,16 +1392,16 @@ export const LESSONS: LevelData[] = [
           ],
         },
         quiz: {
-          question: "EUR/USD est en tendance haussière (séquence HH/HL). Le prix recule de 1,0950 à 1,0870. Quelle est la stratégie optimale ?",
+          question: "EUR/USD est en tendance haussière (séquence HH/HL). Le prix recule de 1.0950 à 1.0870. Quelle est la stratégie optimale ?",
           answers: [
             "Entrer Short, le prix baisse, c'est une opportunité de vente",
             "Ignorer, les pullbacks sont des pièges, attendre un nouveau breakout par le haut",
-            "Chercher une entrée Long sur le pullback si 1,0870 est un support valide",
+            "Chercher une entrée Long sur le pullback si 1.0870 est un support valide",
             "Passer en mode neutre, la tendance haussière est annulée par ce recul",
           ],
           correct: 2,
           explanation:
-            "Un pullback en tendance haussière est une opportunité d'achat, pas un signal de vente. Le prix recule pour trouver un support, puis reprendre sa direction haussière. Si 1,0870 est un niveau validé, c'est l'entrée Long idéale, dans le sens de la tendance, au meilleur prix.",
+            "Un pullback en tendance haussière est une opportunité d'achat, pas un signal de vente. Le prix recule pour trouver un support, puis reprendre sa direction haussière. Si 1.0870 est un niveau validé, c'est l'entrée Long idéale, dans le sens de la tendance, au meilleur prix.",
           answerExplanations: [
             "Faux. Entrer Short dans une tendance haussière sur un simple pullback, c'est aller contre la force dominante. Les probabilités sont contre toi, et ton SL devrait être placé très loin pour éviter les faux signaux.",
             "Faux. Les pullbacks ne sont pas des pièges, ils sont les meilleures opportunités d'entrée en tendance. Attendre un breakout par le haut signifie entrer en retard, avec un R/R moins favorable.",
@@ -1442,14 +1442,14 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Exemple concret : empiler les confirmations",
-            body: "EUR/USD : tendance haussière en H4 (contexte). Le prix revient vers 1,0820 (support H4 et support H1). Une pin bar haussière se forme en M15. C'est 3 confluences alignées : tendance, niveau institutionnel, signal de rejet. Entrée Long à la clôture de la pin bar.",
+            body: "EUR/USD : tendance haussière en H4 (contexte). Le prix revient vers 1.0820 (support H4 et support H1). Une pin bar haussière se forme en M15. C'est 3 confluences alignées : tendance, niveau institutionnel, signal de rejet. Entrée Long à la clôture de la pin bar.",
             table: {
               headers: ["Confluence", "Présente ?", "Poids"],
               rows: [
                 ["Tendance haussière de l'UT supérieure (H4)", "✓ Oui", "Élevé, contexte global favorable"],
-                ["Support H1 à 1,0820", "✓ Oui", "Élevé, niveau institutionnel non-revisité"],
+                ["Support H1 à 1.0820", "✓ Oui", "Élevé, niveau institutionnel non-revisité"],
                 ["Signal de rejet (pin bar M15)", "✓ Oui", "Moyen, confirmation d'entrée"],
-                ["Fibonacci 61.8% à 1,0815", "✓ Oui", "Bonus, confluence supplémentaire"],
+                ["Fibonacci 61.8% à 1.0815", "✓ Oui", "Bonus, confluence supplémentaire"],
                 ["Session Killzone London", "✗ Non", "Absent, timing pas idéal"],
               ],
             },
@@ -1621,11 +1621,11 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Exemple concret : EUR/USD top-down",
-            body: "Daily : tendance haussière (HH/HL). Grand support à 1,0820. H4 : pullback vers 1,0820, support H4 actif. H1 : CHoCH haussier, la structure mini baissière du pullback est cassée. M15 : pin bar haussière au contact du support. Résultat : 4 unités de temps alignées → entrée Long à la clôture de la pin bar M15, SL sous le Low de la mèche.",
+            body: "Daily : tendance haussière (HH/HL). Grand support à 1.0820. H4 : pullback vers 1.0820, support H4 actif. H1 : CHoCH haussier, la structure mini baissière du pullback est cassée. M15 : pin bar haussière au contact du support. Résultat : 4 unités de temps alignées → entrée Long à la clôture de la pin bar M15, SL sous le Low de la mèche.",
             table: {
               headers: ["Unité de temps", "Biais", "Signal"],
               rows: [
-                ["Daily", "Haussier (HH/HL intact)", "Support majeur à 1,0820 non cassé"],
+                ["Daily", "Haussier (HH/HL intact)", "Support majeur à 1.0820 non cassé"],
                 ["H4", "Haussier (pullback en cours)", "Support H4 touché"],
                 ["H1", "Haussier (CHoCH vers la hausse)", "Structure mini-baissière cassée à la hausse"],
                 ["M15", "Signal d'entrée", "Pin bar haussière → ENTRÉE LONG"],
@@ -1724,7 +1724,7 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Exemple de plan de trade complet",
-            body: "Instrument : EUR/USD. Biais : Haussier (H4 en tendance haussière, pullback sur support). Entrée : pin bar haussière sur support H1 à 1,0825. Stop Loss : 1,0800 (sous le support, -25 points). Take Profit : 1,0900 (prochaine résistance, +75 points). R:R = 1:3. Taille de position : 2% du capital = risque de 40 € → taille adaptée.",
+            body: "Instrument : EUR/USD. Biais : Haussier (H4 en tendance haussière, pullback sur support). Entrée : pin bar haussière sur support H1 à 1.0825. Stop Loss : 1.0800 (sous le support, -25 points). Take Profit : 1.0900 (prochaine résistance, +75 points). R:R = 1:3. Taille de position : 2% du capital = risque de 40 € → taille adaptée.",
             items: [
               "Le plan est écrit AVANT l'entrée, pas modifié en cours de route",
               "Le SL ne bouge jamais dans le sens de la perte, uniquement vers le Break Even si le trade avance",
@@ -1816,9 +1816,9 @@ export const LESSONS: LevelData[] = [
             heading: "Confluence Fibonacci + structure : l'entrée de précision",
             body: "Fibonacci seul n'est pas suffisant. Sa puissance vient de la confluence avec d'autres éléments. Quand le 61.8% coïncide avec un support ou un BOS, c'est le setup optimal.",
             items: [
-              "Exemple : EUR/USD monte de 1,0700 à 1,0950 (HH). Le 61.8% se situe à 1,0795.",
-              "Si 1,0795 correspond aussi à un support H4 → confluence forte",
-              "Attends le prix à 1,0795 : signal de bougie (pin bar, engulfing) → entrée Long",
+              "Exemple : EUR/USD monte de 1.0700 à 1.0950 (HH). Le 61.8% se situe à 1.0795.",
+              "Si 1.0795 correspond aussi à un support H4 → confluence forte",
+              "Attends le prix à 1.0795 : signal de bougie (pin bar, engulfing) → entrée Long",
               "SL sous le 78.6% ou sous le Low du mouvement (selon la structure). TP au dernier High ou au niveau suivant.",
             ],
           },

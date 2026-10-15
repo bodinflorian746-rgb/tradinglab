@@ -278,12 +278,12 @@ export default function ContentFr() {
             question="Sur une tendance haussière confirmée, quelle profondeur de retracement définit un pullback exploitable ?"
             options={[
               "Inférieure à 10% de l’impulsion",
-              "Entre 50% et 78,6% de l’impulsion précédente",
+              "Entre 50% et 78.6% de l’impulsion précédente",
               "Supérieure à 80% de l’impulsion",
               "Pas de seuil défini",
             ]}
             correctIndex={1}
-            explanation="Le pullback exploitable se situe entre 50% et 78,6% de l’impulsion précédente, idéalement dans l’OTE 0.618-0.786 (leçon 3). Un retracement inférieur à 50% reste superficiel et n’offre pas de niveau d’entrée propre. Un retracement au-delà de 78,6% remet en cause la structure de la tendance."
+            explanation="Le pullback exploitable se situe entre 50% et 78.6% de l’impulsion précédente, idéalement dans l’OTE 0.618-0.786 (leçon 3). Un retracement inférieur à 50% reste superficiel et n’offre pas de niveau d’entrée propre. Un retracement au-delà de 78.6% remet en cause la structure de la tendance."
           />
 
           <LessonQuiz

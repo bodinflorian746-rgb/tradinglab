@@ -1360,7 +1360,7 @@ const STR_WEAK = strength(50), STR_MID = strength(100), STR_STRONG = strength(20
 // Intermédiaire 9 — Fibonacci sur EUR/USD : impulsion 1.0800 → 1.0980. Pendant la montée, la zone
 // 1.0868-1.0876 rejette deux fois (mèches à 1.0875 et 1.0876, replis à 1.0834 puis 1.0844 : creux
 // montants), cède en clôture, puis le retracement revient la tester par le haut jusqu'à 1.0870
-// (61,8 % = 1.0869) : ancienne résistance devenue support historique, respectée deux fois.
+// (61.8 % = 1.0869) : ancienne résistance devenue support historique, respectée deux fois.
 const FIB_INT9 = bars(1.0815, [
   { c: 1.0806, l: 1.0800 }, { c: 1.0826, l: 1.0803 }, 1.0846, { c: 1.0862, h: 1.0866 }, { c: 1.0858, h: 1.0875 }, 1.0846, { c: 1.0838, l: 1.0834 },
   1.0852, { c: 1.0864, h: 1.0867 }, { c: 1.0859, h: 1.0876 }, { c: 1.0848, l: 1.0844 }, 1.0862,

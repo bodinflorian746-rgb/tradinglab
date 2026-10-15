@@ -26,12 +26,12 @@ function ContentFr() {
             "BID = prix de vente (toujours le moins élevé des deux)",
             "ASK = prix d'achat (toujours le plus élevé des deux)",
             "SPREAD = Ask − Bid = le coût payé à chaque ouverture de trade",
-            "Exemple : EUR/USD Bid = 1,0800, Ask = 1,0805 → spread de 5 points",
+            "Exemple : EUR/USD Bid = 1.0800, Ask = 1.0805 → spread de 5 points",
           ],
         },
         {
           title: "Exemple concret : l'impact du spread sur tes trades",
-          content: "Tu achètes EUR/USD à l'Ask (1,0805). Pour être rentable, le prix Bid doit dépasser 1,0805, c'est-à-dire que le marché doit bouger d'au moins 5 points dans ta direction avant que tu commences à gagner.",
+          content: "Tu achètes EUR/USD à l'Ask (1.0805). Pour être rentable, le prix Bid doit dépasser 1.0805, c'est-à-dire que le marché doit bouger d'au moins 5 points dans ta direction avant que tu commences à gagner.",
           visual: <SpreadImpactDiagram />,
           items: [
             "Le spread est payé à l'ENTRÉE du trade, pas à la sortie",
@@ -74,19 +74,19 @@ function ContentFr() {
         "Ouvre une paire exotique comme USD/MXN et compare son spread à celui d'EUR/USD.",
       ]}
       quiz={{
-        question: "EUR/USD : Bid = 1,0800, Ask = 1,0805. Tu ouvres un achat (Long). À quel prix s'exécute ton trade, et de combien es-tu dans le rouge immédiatement ?",
+        question: "EUR/USD : Bid = 1.0800, Ask = 1.0805. Tu ouvres un achat (Long). À quel prix s'exécute ton trade, et de combien es-tu dans le rouge immédiatement ?",
         answers: [
-          "À 1,0800, tu commences à l'équilibre, spread nul",
-          "À 1,0802, tu es 2 points dans le rouge",
-          "À 1,0805, tu es 5 points dans le rouge immédiatement",
+          "À 1.0800, tu commences à l'équilibre, spread nul",
+          "À 1.0802, tu es 2 points dans le rouge",
+          "À 1.0805, tu es 5 points dans le rouge immédiatement",
           "Le prix d'exécution dépend de la taille de ta position",
         ],
         correctIndex: 2,
-        explanation: "Un achat s'exécute toujours à l'Ask = 1,0805. Le spread = Ask − Bid = 1,0805 − 1,0800 = 5 points. Si tu fermes immédiatement, tu vends au Bid = 1,0800 et perds 5 points. C'est le coût d'entrée payé sur chaque trade.",
+        explanation: "Un achat s'exécute toujours à l'Ask = 1.0805. Le spread = Ask − Bid = 1.0805 − 1.0800 = 5 points. Si tu fermes immédiatement, tu vends au Bid = 1.0800 et perds 5 points. C'est le coût d'entrée payé sur chaque trade.",
         answerExplanations: [
-          "Faux. Le Bid (1,0800) est le prix auquel tu VENDS, pas celui auquel tu achètes. À l'achat, l'ordre s'exécute à l'Ask (1,0805). Tu démarres avec 5 points de déficit, pas à l'équilibre.",
-          "Faux. Il n'existe pas de prix intermédiaire entre Bid et Ask pour un ordre au marché. Tu achètes à l'Ask (1,0805) ou tu vends au Bid (1,0800). Ici : 1,0805, soit 5 points dans le rouge.",
-          "Correct. L'achat s'exécute à l'Ask = 1,0805. Spread = 5 points. Fermeture immédiate au Bid = 1,0800 → perte de 5 points. Ce coût est payé à l'ouverture de chaque trade, sans exception.",
+          "Faux. Le Bid (1.0800) est le prix auquel tu VENDS, pas celui auquel tu achètes. À l'achat, l'ordre s'exécute à l'Ask (1.0805). Tu démarres avec 5 points de déficit, pas à l'équilibre.",
+          "Faux. Il n'existe pas de prix intermédiaire entre Bid et Ask pour un ordre au marché. Tu achètes à l'Ask (1.0805) ou tu vends au Bid (1.0800). Ici : 1.0805, soit 5 points dans le rouge.",
+          "Correct. L'achat s'exécute à l'Ask = 1.0805. Spread = 5 points. Fermeture immédiate au Bid = 1.0800 → perte de 5 points. Ce coût est payé à l'ouverture de chaque trade, sans exception.",
           "Faux. Le prix d'exécution est toujours l'Ask pour un achat, quelle que soit la taille de position. La taille affecte le montant en euros perdu par point, pas le niveau de prix d'exécution.",
         ],
       }}

@@ -1,5 +1,5 @@
-// Trading Débutant 4 — l'impact du spread : achat EUR/USD à l'Ask 1,0805 ; tant que
-// le Bid n'a pas dépassé 1,0805, la position est dans le rouge (5 points à rattraper).
+// Trading Débutant 4 — l'impact du spread : achat EUR/USD à l'Ask 1.0805 ; tant que
+// le Bid n'a pas dépassé 1.0805, la position est dans le rouge (5 points à rattraper).
 // Schéma en ligne (le Bid au fil du temps), équilibre calculé.
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
@@ -7,7 +7,7 @@ import { crossing } from "@/lib/lessons/chart-analysis";
 
 const ASK = 1.0805;
 const BID = [1.0800, 1.0801, 1.0799, 1.0802, 1.0801, 1.0803, 1.0804, 1.0803, 1.0806, 1.0808, 1.0807, 1.0810];
-const fr = (x: number) => x.toFixed(4).replace(".", ",");
+const fr = (x: number) => x.toFixed(4); // prix au point décimal, comme les plateformes (décision PO 18)
 
 export function SpreadImpactDiagram() {
   const even = crossing(BID, () => ASK, 0, "up")!;

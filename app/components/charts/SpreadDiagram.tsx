@@ -1,10 +1,10 @@
 // Trading Débutant 4 — Bid et Ask : deux prix en permanence (exemple du texte :
-// EUR/USD Bid 1,0800, Ask 1,0805 → spread de 5 points, calculé).
+// EUR/USD Bid 1.0800, Ask 1.0805 → spread de 5 points, calculé).
 
 import { Cards, LessonSchema } from "@/app/components/lessons/LessonSchema";
 
 const BID = 1.08, ASK = 1.0805;
-const fr = (x: number) => x.toFixed(4).replace(".", ",");
+const fr = (x: number) => x.toFixed(4); // prix au point décimal, comme les plateformes (décision PO 18)
 
 export function SpreadDiagram(_props: { className?: string }) {
   const spread = Math.round((ASK - BID) / 0.0001);
