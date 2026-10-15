@@ -535,20 +535,20 @@ export default function PlaceStopPage() {
               }}
               mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
               pin={chosenStop ? { label: `Stop ${spatialLabels[chosenStop.id]}`, sub: T.yourChoicePin, color: STOP_COLORS[chosenStop.id].hex } : undefined}
-              /* verdict en bandeau du bas : le haut est à la pastille, l'entrée et les stops restent visibles */
-              verdictBanner="bottom"
             >
-              {isFeedback && result && (
-                <VerdictOverlay
-                  compact
-                  bottom
-                  state={verdictState(result.type, hasLogicalInChart)}
-                  headline={feedbackLabel(result.type, hasLogicalInChart, locale, displayedRR(chart.entry, chart.tp, chart.stops.find((s) => s.id === chosen)!.price))}
-                  points={result.points}
-                  max={10}
-                />
-              )}
             </GameChartV2>
+
+            {/* Verdict en bandeau sous le graphique : il ne cache rien, le graphique garde sa hauteur */}
+            {isFeedback && result && (
+              <VerdictOverlay
+                compact
+                bottom
+                state={verdictState(result.type, hasLogicalInChart)}
+                headline={feedbackLabel(result.type, hasLogicalInChart, locale, displayedRR(chart.entry, chart.tp, chart.stops.find((s) => s.id === chosen)!.price))}
+                points={result.points}
+                max={10}
+              />
+            )}
 
             {/* Contexte (téléphone : en chips, au-dessus) */}
             <div className="grid grid-cols-2 gap-2 max-sm:hidden sm:gap-3">

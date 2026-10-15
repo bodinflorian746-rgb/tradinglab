@@ -478,20 +478,20 @@ export default function BuySellNoTradePage() {
               }}
               mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
               pin={chosen ? { label: CHOICE_LABEL[chosen], sub: T.yourChoice, color: CHOICE_TINT[chosen] } : undefined}
-              /* verdict en bandeau du bas : il ne cache plus les zones ni leurs étiquettes */
-              verdictBanner="bottom"
             >
-              {isFeedback && chosen && (
-                <VerdictOverlay
-                  compact
-                  bottom
-                  state={correct ? "good" : "bad"}
-                  headline={headline}
-                  points={lastPoints}
-                  max={10}
-                />
-              )}
             </GameChartV2>
+
+            {/* Verdict en bandeau sous le graphique : il ne cache rien, le graphique garde sa hauteur */}
+            {isFeedback && chosen && (
+              <VerdictOverlay
+                compact
+                bottom
+                state={correct ? "good" : "bad"}
+                headline={headline}
+                points={lastPoints}
+                max={10}
+              />
+            )}
 
             {/* Context infos — en avancé, on cache la volatilité pour forcer la
                 lecture du chart (mais on garde la news warning visible). */}

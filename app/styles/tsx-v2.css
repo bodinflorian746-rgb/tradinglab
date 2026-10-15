@@ -256,6 +256,8 @@
 
 /* Verdict : grand, centré, effet d'échelle */
 .tsx-v2 .v2-verdict { opacity: 0; transform: scale(0.6); }
+/* verdict en bandeau sous le graphique (hors du cadre animé) */
+.tsx-v2 .v2-verdict--below { animation: v2-verdict-in 900ms cubic-bezier(0.2, 1.35, 0.3, 1) both; }
 .tsx-v2 .is-playing .v2-verdict {
   animation: v2-verdict-in 900ms cubic-bezier(0.2, 1.35, 0.3, 1) both;
   animation-delay: var(--spot, 0ms);
@@ -505,6 +507,7 @@
   .tsx-v2 .is-playing .v2-hero-label,
   .tsx-v2 .is-playing .v2-late,
   .tsx-v2 .is-playing .v2-verdict,
+  .tsx-v2 .v2-verdict--below,
   .tsx-v2 .is-playing .v2-pin { animation: none; }
   .tsx-v2 .v2-hit,
   .tsx-v2 .v2-mark,

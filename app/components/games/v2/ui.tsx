@@ -122,8 +122,8 @@ export function VerdictOverlay({
    */
   compact?: boolean;
   /**
-   * Bandeau compact en bas du graphique (GameChartV2 `verdictBanner="bottom"` lui réserve sa
-   * hauteur) : le haut reste à la pastille « ton choix ». Titre sur 2 lignes au plus en mobile.
+   * Bandeau compact posé SOUS le graphique (rendu après GameChartV2) : il ne cache rien et le
+   * graphique garde toute sa hauteur au verdict. Titre sur 2 lignes au plus en mobile.
    */
   bottom?: boolean;
 }) {
@@ -132,9 +132,9 @@ export function VerdictOverlay({
   const maxLabel = max !== undefined ? <span className="v2-verdict-max"> / {max}</span> : null;
   if (compact) {
     return (
-      <div data-verdict-banner className={`pointer-events-none absolute inset-x-0 ${bottom ? "bottom-3" : "top-3"} z-[5] flex justify-center px-3`} style={cssVars({ "--spot": "250ms" })}>
+      <div data-verdict-banner className={bottom ? "flex justify-center" : "pointer-events-none absolute inset-x-0 top-3 z-[5] flex justify-center px-3"} style={cssVars({ "--spot": "250ms" })}>
         <div
-          className="v2-verdict flex items-center gap-3 rounded-full py-2 pl-2.5 pr-4"
+          className={`v2-verdict${bottom ? " v2-verdict--below" : ""} flex items-center gap-3 rounded-full py-2 pl-2.5 pr-4`}
           data-verdict={st}
           style={{ background: "rgba(4,6,10,0.92)", boxShadow: `inset 0 0 0 2px ${tone.ring}, 0 16px 40px -12px ${tone.glow}` }}
         >
