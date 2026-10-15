@@ -41,7 +41,8 @@
         "retenu": "faux breakout",
         "occurrences": 62,
         "interdit": [
-          "fakeouts?"
+          "fakeouts?",
+          "fake breakouts?"
         ],
         "sources": [
           {
@@ -69,7 +70,8 @@
             "url": "https://fr.tradingview.com/ideas/fakeout/",
             "forme": "fakeout"
           }
-        ]
+        ],
+        "decision": "PO (2026-10-15) : « fake breakout » aussi interdit"
       },
       {
         "notion": "stop hunt",

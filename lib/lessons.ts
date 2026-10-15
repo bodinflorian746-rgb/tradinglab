@@ -1505,14 +1505,14 @@ export const LESSONS: LevelData[] = [
       {
         id: "lecon-6",
         slug: "lecon6",
-        title: "Fake Breakout : ne pas se faire piéger",
+        title: "Faux breakout : ne pas se faire piéger",
         duration: "18 min",
         introduction:
           "Le marché semble casser un niveau important. Tu entres dans le sens du breakout. Et puis le prix revient en arrière et te stoppe. Ce n'est pas de la malchance, c'est un piège mécanique que tu peux apprendre à reconnaître, et même à exploiter.",
         sections: [
           {
-            heading: "La mécanique du Fake Breakout",
-            body: "Un Fake Breakout (faux breakout) se produit quand le prix passe brièvement au-delà d'un niveau clé, support, résistance, swing high, swing low, puis revient immédiatement de l'autre côté. L'objectif : déclencher les stops des traders positionnés à ce niveau et collecter leur liquidité.",
+            heading: "La mécanique du faux breakout",
+            body: "Un faux breakout se produit quand le prix passe brièvement au-delà d'un niveau clé, support, résistance, swing high, swing low, puis revient immédiatement de l'autre côté. L'objectif : déclencher les stops des traders positionnés à ce niveau et collecter leur liquidité.",
             items: [
               "Le prix dépasse un niveau évident (support ou résistance visible de tous)",
               "Les stops des traders sont déclenchés, les longs sous le support, les shorts au-dessus de la résistance",
