@@ -270,6 +270,9 @@ const NARROW_CHART_W = 480;
 const PACK_SHIFT = INLINE_TAG_H / 2 - 2;
 /** Écart vertical (px) entre deux étiquettes empilées : leur contour sombre les sépare */
 const PACK_GAP = 1;
+/** Une étiquette de zone « touche » sa zone quand son bord en est à au plus ZONE_TOUCH px (même seuil
+ *  que audit:jeux) : au-delà, elle peut se lire comme celle d’une zone voisine */
+const ZONE_TOUCH = 4;
 /** Étiquette de l'erreur marquée (point, zone) : demi-pas verticaux explorés pour lui trouver une place */
 const MARK_TAG_STEPS = 40;
 
@@ -448,7 +451,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
       const w = inlineTagW(label);
       // zone : d'abord les places qui touchent la zone (comme au placement réel)
       const touch: number[] = [];
-      if (zone) { const reach = INLINE_TAG_H / 2 + 8, y0 = ty(price); for (let yy = ty(zone[1]) - reach; yy <= ty(zone[0]) + reach; yy += 2) touch.push(yy - y0); touch.sort((a, b) => Math.abs(a) - Math.abs(b)); }
+      if (zone) { const reach = INLINE_TAG_H / 2 + ZONE_TOUCH, y0 = ty(price); for (let yy = ty(zone[1]) - reach; yy <= ty(zone[0]) + reach; yy += 2) touch.push(yy - y0); touch.sort((a, b) => Math.abs(a) - Math.abs(b)); }
       // une étiquette de zone qui ne touche pas sa zone compte comme sans place : la marge
       // s'élargit (ou une bande s'ouvre) pour qu'elle reste à côté de ce qu'elle nomme
       const shifts = line ? [0, 2, -2, 4, -4, 6, -6, 8, -8] : zone ? [0, ...touch] : [0, ...Array.from({ length: isMark ? MARK_TAG_STEPS : 6 }, (_, k) => k + 1).flatMap((k) => [k, -k].map((d) => d * (INLINE_TAG_H + INLINE_TAG_GAP) / 2))];
@@ -749,12 +752,12 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
           const xx = clearX(yy, w);
           if (xx !== null) { x = xx; y = yy; break; }
         }
-        // Zone : d'abord une place qui touche la zone (bord à au plus 8 px de
+        // Zone : d'abord une place qui touche la zone (bord à au plus ZONE_TOUCH px de
         // ses bords), la plus proche de son milieu ; sinon l'étiquette s'éloignait au-delà d'un
         // niveau voisin (« Liquidité balayée » au-dessus du « Plus bas précédent »)
         if (x === null && s.key.startsWith("zone")) {
           const z = zones[+s.key.slice(4)];
-          const reach = INLINE_TAG_H / 2 + 8, zt = toY(Math.max(z.y1, z.y2)) - reach, zb = toY(Math.min(z.y1, z.y2)) + reach;
+          const reach = INLINE_TAG_H / 2 + ZONE_TOUCH, zt = toY(Math.max(z.y1, z.y2)) - reach, zb = toY(Math.min(z.y1, z.y2)) + reach;
           // puis, faute de place contre la zone, la place libre la plus proche d'elle (jamais à l'autre
           // bout du graphique, à côté d'un autre niveau : « Swing high 1 » près du Swing high 3)
           const far = 6 * (INLINE_TAG_H + INLINE_TAG_GAP), gap = (yy: number) => (yy < zt ? zt - yy : yy > zb ? yy - zb : 0);
