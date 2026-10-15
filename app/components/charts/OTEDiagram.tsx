@@ -1,12 +1,15 @@
-// OTE (Trend-following 3, Trading Avancé 5) : BOS haussier (breakout du sommet 4 600$),
-// Fibonacci du swing low A (4 480$) au swing high B (4 660$), zone OTE 0.618-0.786
+// OTE (Trend-following 3, Trading Avancé 5) : BOS haussier (breakout du sommet 1.0900),
+// Fibonacci du swing low A (1.0780) au swing high B (1.0960), zone OTE 0.618-0.786
 // calculée, repli dans la zone et bougie de rejet = entrée ; SL au-delà du 0.786 avec
-// marge, objectif B. XAU/USD H1, bougies : scenarios.ts (« ote »).
+// marge, objectif B. EUR/USD H1, bougies : scenarios.ts (« ote »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
-import { tradeSetup, usd } from "@/app/components/lessons/trade";
-import { fibLevel, pivots } from "@/lib/lessons/chart-analysis";
+import { tradeSetup } from "@/app/components/lessons/trade";
+import { fibLevel, pivots, fmtPrice } from "@/lib/lessons/chart-analysis";
+import { eurToXau, xauToEur } from "@/lib/lessons/eur-from-xau";
 import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const px = (x: number) => fmtPrice(x, 4);
 
 export function OTEDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["ote"];
@@ -17,17 +20,17 @@ export function OTEDiagram(_props: { className?: string; locale?: "fr" | "es" | 
   const bos = cs.findIndex((k, i) => i > A.index && k.c > h0.price);
   const f618 = fibLevel(A.price, B.price, 0.618), f786 = fibLevel(A.price, B.price, 0.786);
   const last = cs.length - 1;
-  const t = tradeSetup({ entry: cs[last].c, sl: Math.floor(f786) - 8, tp: B.price, unit: "$", names: { tp: "Objectif B" }, from: last });
+  const t = tradeSetup({ entry: cs[last].c, sl: xauToEur(Math.floor(eurToXau(f786)) - 8), tp: B.price, names: { tp: "Objectif B" }, from: last });
   return (
     <LessonChart
       id="OTEDiagram"
       title="La zone OTE : entre 61.8% et 78.6% du swing"
       panels={[{
-        key: "h1", subtitle: `XAU/USD H1 — Fibonacci de A (${usd(A.price)}) à B (${usd(B.price)})`,
-        decimals: 1, height: 320, candles: cs,
-        zones: [{ key: "ote", y1: f786, y2: f618, from: B.index, label: `OTE ${usd(f786)}-${usd(f618)}`, short: "OTE", tone: "fib", kind: "fib", role: "confluence", ref: "f618,f786" }],
+        key: "h1", subtitle: `EUR/USD H1 — Fibonacci de A (${px(A.price)}) à B (${px(B.price)})`,
+        decimals: 5, height: 320, candles: cs,
+        zones: [{ key: "ote", y1: f786, y2: f618, from: B.index, label: `OTE ${px(f786)}-${px(f618)}`, short: "OTE", tone: "fib", kind: "fib", role: "confluence", ref: "f618,f786" }],
         levels: [
-          { key: "h0", price: h0.price, from: h0.index, to: bos, label: `Sommet cassé ${usd(h0.price)}`, short: "Sommet cassé", tone: "neutral", dashed: true, faint: true, role: "bos", ref: h0.index, dir: "bull" },
+          { key: "h0", price: h0.price, from: h0.index, to: bos, label: `Sommet cassé ${px(h0.price)}`, short: "Sommet cassé", tone: "neutral", dashed: true, faint: true, role: "bos", ref: h0.index, dir: "bull" },
           { key: "f618", price: f618, from: B.index, tone: "fib", faint: true, role: "fib", ref: `${A.index}:${B.index}:0.618` },
           { key: "f786", price: f786, from: B.index, tone: "fib", faint: true, role: "fib", ref: `${A.index}:${B.index}:0.786` },
           ...t.levels,

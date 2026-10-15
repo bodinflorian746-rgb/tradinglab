@@ -1,13 +1,15 @@
-// Trend-following 3 bloc 3 — la confluence multi-éléments (XAU/USD H4) : support de l'UT
-// supérieure en bas (4 470-4 485), impulsion 4 480 → 4 660, Order Block (dernière bougie
+// Trend-following 3 bloc 3 — la confluence multi-éléments (EUR/USD H4) : support de l'UT
+// supérieure en bas (1.0770-1.0785), impulsion 1.0780 → 1.0960, Order Block (dernière bougie
 // baissière de l'impulsion) dans l'OTE 0.618-0.786, chute qui laisse un FVG baissier au-dessus,
 // retour dans l'OTE sur l'OB et rejet ; cible : le FVG. OTE, OB et FVG calculés.
 // Bougies : scenarios.ts (« pb-conf »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
-import { usd } from "@/app/components/lessons/trade";
-import { fibLevel, largestFvg, orderBlock } from "@/lib/lessons/chart-analysis";
+import { fibLevel, largestFvg, orderBlock, fmtPrice } from "@/lib/lessons/chart-analysis";
+import { xauToEur } from "@/lib/lessons/eur-from-xau";
 import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const px = (x: number) => fmtPrice(x, 4);
 
 export default function PullbackContinuationDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
   const cs = CANDLES["pb-conf"];
@@ -24,12 +26,12 @@ export default function PullbackContinuationDiagram(_props: { className?: string
       title="Quatre éléments, une même zone"
       caption="Ancrage en bas, retracement dans l'OTE, trace institutionnelle à l'entrée, déséquilibre à combler en cible."
       panels={[{
-        key: "h4", title: "XAU/USD H4", decimals: 0, height: 300, candles: cs,
+        key: "h4", title: "EUR/USD H4", decimals: 5, height: 300, candles: cs,
         zones: [
-          { key: "htf", y1: 4470, y2: 4485, label: "Support UT supérieure", short: "Support", tone: "bull" },
-          { key: "ote", ...ote, from: hiAt, label: `OTE ${usd(ote.y1)}-${usd(ote.y2)}`, short: "OTE", tone: "fib" },
-          { key: "ob", ...ob, from: obI, label: `OB ${usd(ob.y1)}-${usd(ob.y2)}`, short: "OB", tone: "zone", kind: "ob", src: `pb-conf:${obI}`, role: "ob", dir: "bull" },
-          { key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG cible ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG cible", tone: "bear", kind: "fvg", src: `pb-conf:${fvg.i}`, role: "fvg" },
+          { key: "htf", y1: xauToEur(4470), y2: xauToEur(4485), label: "Support UT supérieure", short: "Support", tone: "bull" },
+          { key: "ote", ...ote, from: hiAt, label: `OTE ${px(ote.y1)}-${px(ote.y2)}`, short: "OTE", tone: "fib" },
+          { key: "ob", ...ob, from: obI, label: `OB ${px(ob.y1)}-${px(ob.y2)}`, short: "OB", tone: "zone", kind: "ob", src: `pb-conf:${obI}`, role: "ob", dir: "bull" },
+          { key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG cible ${px(fvg.y1)}-${px(fvg.y2)}`, short: "FVG cible", tone: "bear", kind: "fvg", src: `pb-conf:${fvg.i}`, role: "fvg" },
         ],
         markers: [{ key: "rej", i: rej, price: cs[rej].l, label: "Rejet sur l'OB", short: "Rejet", tone: "bull", side: "below", role: "rejet", ref: "ob", dir: "bull" }],
       }]}

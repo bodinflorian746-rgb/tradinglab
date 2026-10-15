@@ -192,29 +192,29 @@ export default function ContentFr() {
 
           {/* Bloc 6 — PLAN DE TRADE CHIFFRÉ */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : pullback Fibo XAU/USD H4</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : pullback Fibo EUR/USD H4</h2>
 
             <div className="my-8">
               <FibonacciDiagram variant="tf3" />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD en tendance haussière confirmée. Dernier HL à 4 480$, dernier HH à 4 660$ (impulsion 180$). Fibonacci : 0.618 = 4 549$, 0.786 = 4 519$. Le prix descend toucher 4 550$ (pratiquement 0.618). Pin bar haussière au contact.
+              EUR/USD en tendance haussière confirmée. Dernier HL à 1.0780, dernier HH à 1.0960 (impulsion 180 pips). Fibonacci : 0.618 = 1.0849, 0.786 = 1.0819. Le prix descend toucher 1.0850 (pratiquement 0.618). Pin bar haussière au contact.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup (trade long sur pullback 0.618)</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée long : 4 565$ (clôture de la pin bar)</li>
-                <li>- Stop loss : 4 510$ (10$ sous le niveau 0.786 à 4 519$)</li>
-                <li>- Take profit niveau 1 : 4 660$ (HH précédent), niveau 2 : 4 728$ (extension Fibonacci 1.618 du repli)</li>
+                <li>- Entrée long : 1.0865 (clôture de la pin bar)</li>
+                <li>- Stop loss : 1.0810 (10 pips sous le niveau 0.786 à 1.0819)</li>
+                <li>- Take profit niveau 1 : 1.0960 (HH précédent), niveau 2 : 1.1028 (extension Fibonacci 1.618 du repli)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 565$ - 4 510$ = 55$</li>
-                <li>- Gain niveau 1 : 95$ → R/R 1,73</li>
-                <li>- Gain niveau 2 : 163$ → R/R 163/55 = 2,96</li>
+                <li>- Risque : 1.0865 - 1.0810 = 55 pips</li>
+                <li>- Gain niveau 1 : 95 pips → R/R 1,73</li>
+                <li>- Gain niveau 2 : 163 pips → R/R 163/55 = 2,96</li>
                 <li>- Le setup vise prioritairement le TP niveau 2</li>
               </ul>
             </div>
@@ -229,9 +229,11 @@ export default function ContentFr() {
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Au lot minimum (0,01 lot), ce stop de 55$ représente déjà environ 47€ de risque (1$ ≈ 0,85€)</li>
-              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
-              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,01 lot, risque environ 47€, gain potentiel environ 139€</li>
+              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,085€ : ce stop de 55 pips représente environ 5€ de risque</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,01 lot, risque environ 5€, gain potentiel environ 14€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,02 lot, risque environ 9€, gain potentiel environ 28€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,04 lot, risque environ 19€, gain potentiel environ 55€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,1 lot, risque environ 47€, gain potentiel environ 138€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1:2,96 peu importe la taille du compte.

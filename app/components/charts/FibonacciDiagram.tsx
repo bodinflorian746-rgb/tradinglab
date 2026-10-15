@@ -3,14 +3,17 @@
 //   niveaux 23.6 % = 1.0937, 38.2 % = 1.0911, 50 % = 1.0890, 61.8 % = 1.0869 et 78.6 %, retracement
 //   arrêté sur 1.0870 (61.8 % + support historique 1.0868-1.0876, rejeté deux fois pendant la
 //   montée puis cassé) : on attend un signal de bougie.
-// - Trend-following 3 (variant « tf3 ») — le plan : HL 4 480, HH 4 660, 0.618 = 4 549, 0.786 = 4 519,
-//   pin bar sur 4 550 ; long 4 565, SL 4 510, TP 4 660 puis 4 728 (R/R 1,73 et 2,96).
+// - Trend-following 3 (variant « tf3 ») — le plan : HL 1.0780, HH 1.0960, 0.618 = 1.0849, 0.786 = 1.0819,
+//   pin bar sur 1.0850 ; long 1.0865, SL 1.0810, TP 1.0960 puis 1.1028 (R/R 1,73 et 2,96).
 // Niveaux et R/R calculés. Bougies : scenarios.ts (« fib-int9 », « tf3-pullback »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
-import { tradeSetup, usd } from "@/app/components/lessons/trade";
+import { tradeSetup } from "@/app/components/lessons/trade";
 import { fibLevel, fmtPrice, fmtRR, tradeMath } from "@/lib/lessons/chart-analysis";
+import { xauToEur } from "@/lib/lessons/eur-from-xau";
 import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const px = (x: number) => fmtPrice(x, 4);
 
 const p = (x: number) => fmtPrice(x, 4);
 const RATIOS = [0.236, 0.382, 0.5, 0.618, 0.786];
@@ -22,23 +25,23 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
     const lo = Math.min(...cs.map((k) => k.l)), hi = Math.max(...cs.map((k) => k.h));
     const hiAt = cs.findIndex((k) => k.h === hi), loAt = cs.findIndex((k) => k.l === lo), pin = cs.length - 1;
     const f618 = fibLevel(lo, hi, 0.618), f786 = fibLevel(lo, hi, 0.786);
-    const t = tradeSetup({ entry: 4565, sl: 4510, tp: 4728, unit: "$", from: pin, tpOffscale: true, names: { entry: "Entrée long", tp: "TP 2 (1.618)" } });
+    const t = tradeSetup({ entry: xauToEur(4565), sl: xauToEur(4510), tp: xauToEur(4728), from: pin, tpOffscale: true, names: { entry: "Entrée long", tp: "TP 2 (1.618)" } });
     return (
       <LessonChart
         id="FibonacciDiagram"
         title="Plan : pullback sur le 0.618"
         caption="SL sous le 0.786 avec marge ; TP 1 sur le HH précédent, TP 2 sur l'extension 1.618 du repli."
         panels={[{
-          key: "h4", title: "XAU/USD H4", decimals: 1, height: 300, candles: cs,
+          key: "h4", title: "EUR/USD H4", decimals: 5, height: 300, candles: cs,
           levels: [
-            { key: "f618", price: f618, from: hiAt, label: `Fibo 0.618 = ${usd(f618)}`, short: "Fibo 0.618", tone: "fib", dashed: true, role: "fib", ref: `${loAt}:${hiAt}:0.618` },
-            { key: "f786", price: f786, from: hiAt, label: `Fibo 0.786 = ${usd(f786)}`, short: "Fibo 0.786", tone: "fib", dashed: true, role: "fib", ref: `${loAt}:${hiAt}:0.786` },
-            { key: "tp1", price: hi, from: pin, label: `TP 1 HH ${usd(hi)}`, short: "TP 1", tone: "bull", dashed: true },
+            { key: "f618", price: f618, from: hiAt, label: `Fibo 0.618 = ${px(f618)}`, short: "Fibo 0.618", tone: "fib", dashed: true, role: "fib", ref: `${loAt}:${hiAt}:0.618` },
+            { key: "f786", price: f786, from: hiAt, label: `Fibo 0.786 = ${px(f786)}`, short: "Fibo 0.786", tone: "fib", dashed: true, role: "fib", ref: `${loAt}:${hiAt}:0.786` },
+            { key: "tp1", price: hi, from: pin, label: `TP 1 HH ${px(hi)}`, short: "TP 1", tone: "bull", dashed: true },
             ...t.levels,
           ],
           offscale: t.offscale,
-          markers: [{ key: "pin", i: pin, price: cs[pin].l, label: `Pin bar sur ${usd(cs[pin].l)}`, short: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" }],
-          chips: [...t.chips, { label: `R/R TP 1 : ${fmtRR(tradeMath(4565, 4510, hi).rr)}`, tone: "entry" }],
+          markers: [{ key: "pin", i: pin, price: cs[pin].l, label: `Pin bar sur ${px(cs[pin].l)}`, short: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" }],
+          chips: [...t.chips, { label: `R/R TP 1 : ${fmtRR(tradeMath(xauToEur(4565), xauToEur(4510), hi).rr)}`, tone: "entry" }],
         }]}
       />
     );
