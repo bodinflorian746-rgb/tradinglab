@@ -7,6 +7,10 @@
 //    loin que la mèche qui la balaie ;
 //  - plus haut / plus bas précédent, swings, PDL, HL, equal lows / highs, haut de session :
 //    bande fine (≤ PIVOT_MAX × MR) posée sur un vrai sommet / creux visible (extrême local) ;
+//  - swing rattaché à sa bougie (« Swing high / low … », règle des leçons) : posé sur la pointe de
+//    la mèche de son sommet / creux (extrême des bougies voisines, ± SWING_TIP × MR), jamais sur une
+//    clôture ; numérotés, chacun plus haut (swing high) ou plus bas (swing low) que le précédent
+//    d'au moins SWING_GAP × MR, pour que l'ordre 1 < 2 < 3 se lise sans ambiguïté ;
 //  - FVG : exactement l'écart entre la mèche de la bougie 1 et celle de la bougie 3 (± FVG_TOL ×
 //    MR), au plus FVG_MAX × MR ;
 //  - Order Block : la bougie opposée avant l'impulsion, pas plus (bords à ± OB_TOL × MR) ;
@@ -23,7 +27,7 @@ import { buildGamePreviews } from "../../lib/games/previews";
 import { buildHeroRounds } from "../../app/[locale]/_home/hero-rounds";
 import type { Candle, ChartZone } from "../../lib/games/shared";
 
-export const LIQ_MAX = 1.0, PIVOT_MAX = 1.0, SR_MAX = 1.5, FVG_MAX = 2.5, FVG_TOL = 0.2, OB_TOL = 0.25, PIVOT_TOL = 0.35, BOUNCE = 0.4, SR_BEYOND = 0.3;
+export const LIQ_MAX = 1.0, PIVOT_MAX = 1.0, SR_MAX = 1.5, FVG_MAX = 2.5, FVG_TOL = 0.2, OB_TOL = 0.25, PIVOT_TOL = 0.35, BOUNCE = 0.4, SR_BEYOND = 0.3, SWING_TIP = 0.1, SWING_GAP = 0.3;
 const ROUNDS = +(process.argv.find((a) => a.startsWith("--rounds="))?.split("=")[1] ?? 200);
 const VOLS = ["faible", "normale", "élevée"] as const;
 const DETAIL = process.argv.includes("--detail");
@@ -100,6 +104,20 @@ export function zoneTraceError(past: Candle[], z: ChartZone, zones: ChartZone[] 
   }
   if (PIVOT.test(z.label)) {
     if (h > PIVOT_MAX * MR) return `« ${z.label} » épais de ${r(h)} × la bougie médiane (max ${PIVOT_MAX})`;
+    const swing = z.label.match(/^swing (high|low)\b(?:.*?(\d)$)?/i);
+    if (swing && z.at !== undefined) {
+      const high = swing[1].toLowerCase() === "high", mid = (lo + hi) / 2;
+      // numérotés : chacun au-delà du précédent, d'assez loin pour que l'ordre se lise
+      const prev = swing[2] && zones.find((x) => x.label === z.label.replace(/\d$/, String(+swing[2] - 1)));
+      if (prev) {
+        const gap = high ? mid - (prev.y1 + prev.y2) / 2 : (prev.y1 + prev.y2) / 2 - mid;
+        if (gap < SWING_GAP * MR) return `« ${z.label} » ${gap <= 0 ? "pas plus" : "à peine plus"} ${high ? "haut" : "bas"} que « ${prev.label} » (${r(gap)} × la bougie médiane, min ${SWING_GAP}) : l'ordre ne se lit pas`;
+      }
+      // sur la pointe de la mèche : l'extrême des bougies voisines de sa bougie, pas une clôture
+      const win = past.slice(Math.max(0, z.at - 2), z.at + 3);
+      const tip = high ? Math.max(...win.map((k) => k.h)) : Math.min(...win.map((k) => k.l));
+      if (Math.abs(mid - tip) > SWING_TIP * MR) return `« ${z.label} » à ${r(Math.abs(mid - tip))} × la bougie médiane de la pointe de la mèche de son ${high ? "sommet" : "creux"} (max ${SWING_TIP})`;
+    }
     const { lows, highs } = pivots(past);
     const high = /haut|high|pdh|lh|highs/i.test(z.label);
     const ext = high ? highs : lows;
@@ -187,6 +205,26 @@ if (!process.env.TRACE_NO_MAIN) {
         const past = c.past.map((k, i) => (i === s - 1 ? { ...k, l: low } : k));
         const z = { ...c.zones.find((x) => /^Plus bas précédent/.test(x.label))!, y1: low - 0.01 * MR, y2: low + 0.01 * MR };
         return [past, z, c.zones.map((x) => (/^Plus bas précédent/.test(x.label) ? z : x))];
+      }],
+      ["swing posé sur la clôture de sa bougie, pas sur la pointe de la mèche", /pointe de la mèche de son/, () => {
+        for (const c of all) for (const z of c.zones) {
+          if (!/^Swing high 1$/.test(z.label) || z.at === undefined || zoneTraceError(c.past, z, c.zones)) continue;
+          const MR = MRof(c), close = c.past[z.at].c;
+          if (Math.max(z.y1, z.y2) - close < 0.3 * MR) continue;
+          const moved = { ...z, y1: close - 0.02 * MR, y2: close + 0.02 * MR };
+          return [c.past, moved, c.zones.map((x) => (x === z ? moved : x))];
+        }
+        return null;
+      }],
+      ["swings numérotés dont l'ordre ne se lit pas (2 au niveau du 1)", /l'ordre ne se lit pas/, () => {
+        for (const c of all) {
+          const z1 = c.zones.find((x) => x.label === "Swing high 1"), z2 = c.zones.find((x) => x.label === "Swing high 2");
+          if (!z1 || !z2 || zoneTraceError(c.past, z2, c.zones)) continue;
+          const MR = MRof(c), y = Math.max(z1.y1, z1.y2) + 0.1 * MR;
+          const moved = { ...z2, y1: y - 0.04 * MR, y2: y + 0.04 * MR };
+          return [c.past, moved, c.zones.map((x) => (x === z2 ? moved : x))];
+        }
+        return null;
       }],
       ["mèche du faux breakout arrêtée avant sa pointe", /s'arrête/, () => { const f = find(/^Mèche du faux breakout/); return f && [f.c.past, { ...f.z, y2: Math.max(f.z.y1, f.z.y2) - 0.5 * MRof(f.c) }]; }],
       ["Order Block plus grand que sa bougie", /couvre aucune bougie/, () => { const f = find(/^Order Block/); return f && [f.c.past, { ...f.z, y1: Math.min(f.z.y1, f.z.y2) - 2 * MRof(f.c) }]; }],
