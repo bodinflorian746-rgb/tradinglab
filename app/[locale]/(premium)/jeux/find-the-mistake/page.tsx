@@ -346,10 +346,11 @@ export default function FindTheMistakePage() {
         </div>
 
         {/* Scénario */}
-        <section className="v2-card v2-pad v2-gap flex flex-col" aria-labelledby="ftm-title">
+        {/* énoncé long : graphique un peu plus bas sur téléphone, pour tenir sur un écran */}
+        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${current.context.length > 150 ? " v2-onescreen--long" : ""}`} aria-labelledby="ftm-title">
           <h2 id="ftm-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">{T.title}</h2>
 
-          <div className="v2-gap-s mx-auto flex w-full max-w-3xl flex-col">
+          <div className="v2-gap-s v2-onescreen-body mx-auto flex w-full max-w-3xl flex-col">
             <StepBadge n={step} label={stepLabel} />
 
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">

@@ -60,7 +60,7 @@ export function ChoiceRow<V extends string>({
 
 export function StepBadge({ n, label }: { n: number; label: string }) {
   return (
-    <div className="flex items-center gap-2.5">
+    <div data-step-badge className="flex items-center gap-2.5">
       <span className="v2-step">{n}</span>
       <span className="v2-eyebrow">{label}</span>
     </div>
