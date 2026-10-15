@@ -1,25 +1,31 @@
-// Price action 2 — plan de trade : pin bar haussière sur le support 4 500$,
-// XAU/USD H4 en tendance haussière. Entrée 4 520$ (clôture de la pin bar), SL
-// 4 470$ (sous la mèche, marge incluse), TP 4 650$ (résistance H4 suivante).
+// Price action 2 — plan de trade : pin bar haussière sur le support 1.0800,
+// EUR/USD H4 en tendance haussière (décision PO 9 : exemple passé de l'or à EUR/USD, eur-from-xau.ts).
+// Entrée 1.0820 (clôture de la pin bar), SL 1.0770 (sous la mèche, marge incluse), TP 1.0950
+// (résistance H4 suivante).
 // Bougies : lib/lessons/scenarios.ts (« pinbar-setup ») ; R/R calculé.
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
+import { fmtPrice } from "@/lib/lessons/chart-analysis";
 import { tradeSetup } from "@/app/components/lessons/trade";
+import { xauToEur } from "@/lib/lessons/eur-from-xau";
 import CANDLES from "@/lib/lessons/generated/candles.json";
+
+const SUPPORT = xauToEur(4500);
+const p = (x: number) => fmtPrice(x, 4);
 
 export default function PinBarSetupDiagram(_props: { locale?: "fr" | "es" | "en" } = {}) {
   const candles = CANDLES["pinbar-setup"];
   const pin = candles.length - 1;
   const k = candles[pin];
-  const t = tradeSetup({ entry: k.c, sl: 4470, tp: 4650, unit: "$", names: { tp: "TP résistance" }, from: pin - 1 });
+  const t = tradeSetup({ entry: k.c, sl: xauToEur(4470), tp: xauToEur(4650), names: { tp: "TP résistance" }, from: pin - 1 });
   return (
     <LessonChart
       id="PinBarSetupDiagram"
-      title="Pin bar haussière sur le support 4 500$"
+      title={`Pin bar haussière sur le support ${p(SUPPORT)}`}
       panels={[{
-        key: "h4", subtitle: "XAU/USD H4 — tendance haussière, support touché 3 fois en 6 semaines",
-        decimals: 1, height: 320, candles,
-        levels: [{ key: "support", price: 4500, label: "Support 4 500$", short: "Support", tone: "bull", dashed: true, faint: true, role: "support" }, ...t.levels],
+        key: "h4", subtitle: "EUR/USD H4 — tendance haussière, support touché 3 fois en 6 semaines",
+        decimals: 5, height: 320, candles,
+        levels: [{ key: "support", price: SUPPORT, label: `Support ${p(SUPPORT)}`, short: "Support", tone: "bull", dashed: true, faint: true, role: "support" }, ...t.levels],
         markers: [{ key: "pin", i: pin, price: k.l, label: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" }],
         chips: t.chips,
       }]}

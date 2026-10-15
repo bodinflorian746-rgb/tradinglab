@@ -3,9 +3,11 @@
 import CANDLES from "@/lib/lessons/generated/candles.json";
 import { fibLevel, fvgAt, largestFvg, pivots, rsi, type Candle } from "@/lib/lessons/chart-analysis";
 import { srTouches } from "./sr-proof.mjs";
+import { EUR_FROM_XAU_KEYS, eurToXau } from "@/lib/lessons/eur-from-xau";
 
 type Check = (ok: boolean, what: string) => void;
-const CS = CANDLES as Record<string, Candle[]>;
+// Séries passées de XAU/USD à EUR/USD (décision PO 9) : relues en dollars, les contrôles gardent leurs chiffres d'origine
+const CS = Object.fromEntries(Object.entries(CANDLES as Record<string, Candle[]>).map(([key, cs]) => [key, EUR_FROM_XAU_KEYS.includes(key) ? cs.map((k) => ({ ...k, o: eurToXau(k.o), h: eurToXau(k.h), l: eurToXau(k.l), c: eurToXau(k.c) })) : cs]));
 const near = (a: number, b: number, tol: number) => Math.abs(a - b) <= tol;
 const rrOf = (e: number, sl: number, tp: number) => Math.abs(tp - e) / Math.abs(e - sl);
 const isPin = (k: Candle, bull: boolean) => (bull

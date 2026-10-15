@@ -171,37 +171,39 @@ export default function ContentFr() {
 
           {/* Bloc 5 — PLAN DE TRADE CHIFFRÉ */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : pin bar haussière XAU/USD H4</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : pin bar haussière EUR/USD H4</h2>
 
             <div className="my-8">
               <PinBarSetupDiagram />
             </div>
 
             <p className="text-zinc-300 leading-relaxed text-sm mb-4">
-              XAU/USD descend vers le support 4 500$ (chiffre rond) (déjà touché 3 fois en 6 semaines). Tendance H4 haussière. Pin bar bullish au contact du support.
+              EUR/USD descend vers le support 1.0800 (chiffre rond) (déjà touché 3 fois en 6 semaines). Tendance H4 haussière. Pin bar bullish au contact du support.
             </p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée long : 4 520$ (clôture de la pin bar)</li>
-                <li>- Stop loss : 4 470$ (sous la mèche basse, marge incluse)</li>
-                <li>- Take profit : 4 650$ (résistance H4 suivante)</li>
+                <li>- Entrée long : 1.0820 (clôture de la pin bar)</li>
+                <li>- Stop loss : 1.0770 (sous la mèche basse, marge incluse)</li>
+                <li>- Take profit : 1.0950 (résistance H4 suivante)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 520$ - 4 470$ = 50$</li>
-                <li>- Gain potentiel : 4 650$ - 4 520$ = 130$</li>
+                <li>- Risque : 1.0820 - 1.0770 = 50 pips</li>
+                <li>- Gain potentiel : 1.0950 - 1.0820 = 130 pips</li>
                 <li>- R/R : 130 / 50 = 2,6</li>
               </ul>
             </div>
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Au lot minimum (0,01 lot), ce stop de 50$ représente déjà environ 43€ de risque (1$ ≈ 0,85€)</li>
-              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
-              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,01 lot, risque environ 43€, gain potentiel environ 111€</li>
+              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,085€ : ce stop de 50 pips représente environ 4€ de risque</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,01 lot, risque environ 4€, gain potentiel environ 11€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,02 lot, risque environ 9€, gain potentiel environ 22€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,04 lot, risque environ 17€, gain potentiel environ 44€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,11 lot, risque environ 47€, gain potentiel environ 122€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1:2,6 peu importe la taille du compte.
@@ -222,7 +224,7 @@ export default function ContentFr() {
 
             <ul className="space-y-1 text-sm text-zinc-300">
               <li>- Le marché peut casser le niveau structurel = invalidation du rejet</li>
-              <li>- Le SL doit être placé au-delà de la mèche directionnelle, avec marge 5-10 pips / 5-10$</li>
+              <li>- Le SL doit être placé au-delà de la mèche directionnelle, avec une marge de 5 à 10 pips</li>
               <li>- Aucun déplacement du SL contre soi en cours de trade</li>
             </ul>
           </section>
@@ -231,7 +233,7 @@ export default function ContentFr() {
             points={[
               "Une pin bar tradable valide 4 critères : ratio mèche/corps ≥ 2:1, direction cohérente, clôture dans le tiers opposé, contact avec un niveau structurel.",
               "Le contact avec un niveau structurel est le critère le plus discriminant. Pin bar isolée hors contexte = pas de setup.",
-              "Stop loss au-delà de la mèche avec marge 5-10 pips/$. Jamais à la clôture ou dans le corps.",
+              "Stop loss au-delà de la mèche avec une marge de 5 à 10 pips. Jamais à la clôture ou dans le corps.",
               "Pas de trade dans les 60 minutes autour d’une news majeure (NFP, FOMC, CPI).",
             ]}
           />

@@ -5,6 +5,7 @@
 
 import { buildCandles, type Step } from "./chart-build";
 import type { Candle } from "./chart-analysis";
+import { EUR_FROM_XAU_KEYS, xauToEur } from "./eur-from-xau";
 import { RETRACE_DECISION } from "./scenarios-meta";
 import { mulberry32 } from "@/lib/games/shared";
 
@@ -1389,3 +1390,9 @@ Object.assign(SCENARIOS, {
   "fib-int9": authored(1.0815, FIB_INT9, 29301, 5, "EUR/USD"),
   "pb-conf": authored(4530, PB_CONF, 29401, 0, "XAU/USD"),
 });
+
+// Décision PO 9 : exemples de 7 stratégies passés de XAU/USD à EUR/USD (lib/lessons/eur-from-xau.ts).
+for (const key of EUR_FROM_XAU_KEYS) {
+  const build = SCENARIOS[key];
+  SCENARIOS[key] = () => build().map((k) => ({ ...k, o: xauToEur(k.o), h: xauToEur(k.h), l: xauToEur(k.l), c: xauToEur(k.c) }));
+}
