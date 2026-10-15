@@ -518,3 +518,24 @@
   .tsx-v2 .v2-btn { transition: none; }
   .tsx-v2 .v2-card--accent { transition: none; }
 }
+
+/* ─── Téléphone (< 640 px) : énoncé, graphique et boutons d'un jeu sur un seul écran (décision PO) ───
+   La carte du jeu (.v2-onescreen) passe en ligne qui se replie et son contenu (.v2-onescreen-body) en
+   display: contents : le titre et l'étape tiennent sur une ligne, sans dupliquer le DOM ; les
+   tuiles de contexte passent en chips (pages des jeux) ; boutons compacts. Ordinateur inchangé. */
+@media (max-width: 639px) {
+  .tsx-v2 .v2-onescreen { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px; padding-block: 12px; }
+  .tsx-v2 .v2-onescreen > .v2-onescreen-body { display: contents; }
+  .tsx-v2 .v2-onescreen > *, .tsx-v2 .v2-onescreen > .v2-onescreen-body > * { flex: 1 1 100%; min-width: 0; }
+  .tsx-v2 .v2-onescreen > .v2-h2 { flex: 1 1 auto; width: auto; margin: 0; font-size: 22px; line-height: 1.1; }
+  .tsx-v2 .v2-onescreen [data-step-badge] { flex: 0 0 auto; }
+  .tsx-v2 .v2-onescreen .v2-lead { font-size: 15px; line-height: 1.35; }
+  .tsx-v2 .v2-onescreen .v2-asset { font-size: 17px; }
+  .tsx-v2 .v2-onescreen .v2-choice { padding-block: 11px; }
+  .tsx-v2 .v2-onescreen .v2-mistake-choice { min-height: 46px; padding: 8px 12px; font-size: 14px; }
+  .tsx-v2 .v2-onescreen .v2-build-tab { padding: 6px 10px; }
+  .tsx-v2 .v2-onescreen .v2-build-choice { min-height: 56px; padding: 6px 10px; }
+  /* énoncé long (plus de 150 caractères) : graphique à 70 % de la largeur, énoncé en 14 px */
+  .tsx-v2 .v2-onescreen--long .v2-chart--question { height: clamp(240px, 70vw, 300px); }
+  .tsx-v2 .v2-onescreen--long .v2-lead { font-size: 14px; }
+}

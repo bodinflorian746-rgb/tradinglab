@@ -28,7 +28,7 @@ import {
   evaluateTrade,
 } from "./build-the-trade";
 import type { MarketCtx } from "./candle-realism";
-export { withAssetPrices } from "./build-the-trade";
+export { withAssetPrices, planRR } from "./build-the-trade";
 
 // ─── Reexports types / utils ─────────────────────────────────────────────────
 
@@ -55,6 +55,11 @@ export { ROUNDS_PER_SESSION, evaluateTrade };
 // ─── Translation table for zone labels (FR key → EN) ─────────────────────────
 
 const ZONE_LABEL_EN: Record<string, string> = {
+  // Changement de rôle (lib/games/shared.ts, ROLE_CHANGE_LABELS) : libellé et libellé court
+  "Ancienne résistance → support": "Former resistance → support",
+  "Résistance → support": "Resistance → support",
+  "Ancien support → résistance": "Former support → resistance",
+  "Support → résistance": "Support → resistance",
   "Swing low":          "Swing low",
   "Swing high":         "Swing high",
   "Résistance":         "Resistance",
@@ -70,11 +75,10 @@ const ZONE_LABEL_EN: Record<string, string> = {
   "Plus haut précédent":     "Previous high",
   "Liquidité balayée":  "Liquidity swept",
   "FVG haussier":       "Bullish FVG",
-  "Niveau secondaire":  "Secondary level",
 };
 
 function translateZones(zones: ChartZone[]): ChartZone[] {
-  return zones.map((z) => ({ ...z, label: ZONE_LABEL_EN[z.label] ?? z.label }));
+  return zones.map((z) => ({ ...z, label: ZONE_LABEL_EN[z.label] ?? z.label, ...(z.short ? { short: ZONE_LABEL_EN[z.short] ?? z.short } : {}) }));
 }
 
 // Wrapper around buildBuildTradeChart that translates the zone labels.
@@ -317,7 +321,7 @@ export const BUILD_TRADE_TEMPLATES_EN: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "The pullback has become very deep. More than 60% of the prior impulse is retraced.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
-    optimalExplain: "Here, the deep pullback can announce a structural break. Confirmation preserves the edge: an aggressive entry would mean chasing price, and a deep pullback entry would mean betting on a doubtful zone.",
+    optimalExplain: "Here, the deep pullback can announce a structural break. Confirmation preserves the edge: an aggressive entry would mean chasing price, and a deep pullback entry would mean betting on another touch of the support.",
     lessons: {
       advanced:     "A pullback of more than 60% of the impulse can signal a tired pattern. Here, a confirmation and a moderate TP are a logical option.",
       intermediate: "The deeper the pullback, the more confirmation matters. Here, an aggressive entry would be very risky.",

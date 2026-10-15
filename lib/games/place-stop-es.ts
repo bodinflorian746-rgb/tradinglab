@@ -558,6 +558,11 @@ export const PLACE_STOP_TEMPLATES = PLACE_STOP_TEMPLATES_ES;
 // ─── Tabla de traducción para etiquetas de zonas ─────────────────────────────
 
 const ZONE_LABEL_ES: Record<string, string> = {
+  // Changement de rôle (lib/games/shared.ts, ROLE_CHANGE_LABELS) : libellé et libellé court
+  "Ancienne résistance → support": "Antigua resistencia → soporte",
+  "Résistance → support": "Resistencia → soporte",
+  "Ancien support → résistance": "Antiguo soporte → resistencia",
+  "Support → résistance": "Soporte → resistencia",
   "Résistance":           "Resistencia",
   "Support":              "Soporte",
   "Résistance UT supérieure":       "Resistencia HTF",
@@ -595,7 +600,7 @@ const ZONE_LABEL_ES: Record<string, string> = {
 };
 
 function translateZones(zones: ChartZone[]): ChartZone[] {
-  return zones.map((z) => ({ ...z, label: ZONE_LABEL_ES[z.label] ?? z.label }));
+  return zones.map((z) => ({ ...z, label: ZONE_LABEL_ES[z.label] ?? z.label, ...(z.short ? { short: ZONE_LABEL_ES[z.short] ?? z.short } : {}) }));
 }
 
 // ─── Tabla de traducción de rationales ───────────────────────────────────────

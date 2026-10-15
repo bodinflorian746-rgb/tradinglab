@@ -20,7 +20,7 @@ import {
   type TradeDirection,
 } from "@/lib/games/place-stop";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, rrText, type VerdictState } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, useChartInView, rrText, type VerdictState } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { formatPrice } from "@/lib/games/price-scale";
 import { firstDefinitionOnly } from "@/lib/games/glossary";
@@ -266,6 +266,8 @@ export default function PlaceStopPage() {
   const [phase, setPhase] = useState<"placing" | "revealing" | "feedback">("placing");
   const [revealed, setRevealed] = useState(0);
   const [result, setResult] = useState<ScoreResult | null>(null);
+  // Graphique entier à l'écran (téléphone) : à chaque manche, puis dès le choix fait
+  useChartInView(seed === null ? null : `${seed}:${idx}`, phase === "placing" ? null : `${seed}:${idx}`);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
@@ -476,10 +478,11 @@ export default function PlaceStopPage() {
         </div>
 
         {/* Scénario */}
-        <section className="v2-card v2-pad v2-gap flex flex-col" aria-labelledby="ps-title">
+        {/* énoncé long : graphique un peu plus bas sur téléphone, pour tenir sur un écran */}
+        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${shownContext.length > 150 ? " v2-onescreen--long" : ""}`} aria-labelledby="ps-title">
           <h2 id="ps-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">{T.title}</h2>
 
-          <div className="v2-gap-s mx-auto flex w-full max-w-3xl flex-col">
+          <div className="v2-gap-s v2-onescreen-body mx-auto flex w-full max-w-3xl flex-col">
             <StepBadge n={step} label={stepLabel} />
 
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
@@ -489,6 +492,8 @@ export default function PlaceStopPage() {
               <span className={`v2-chip ${current.volatility === "élevée" ? "v2-chip--amber" : ""}`}>
                 {T.volatility} {translateVolatility(current.volatility, locale)}
               </span>
+              {/* téléphone : la tuile « UT supérieure » passe en chip */}
+              <span className="v2-chip sm:hidden">{locale === "fr" ? "UT sup." : T.htf}{"\u00a0"}: {BIAS_LABEL[current.htfBias].toLowerCase()}</span>
             </div>
 
             {/* News warning (présent dès la question : aucun saut au clic) */}
@@ -502,11 +507,17 @@ export default function PlaceStopPage() {
               </div>
             )}
 
-            {/* Graphique : bougies, entrée et 3 stops, chacun étiqueté sur sa ligne
-                (4 étiquettes au plus) ; le TP n'est pas tracé : le R/R de chaque
+            {/* Énoncé au-dessus du graphique : énoncé, graphique et stops sur un seul écran */}
+            <p className="v2-lead text-[color:var(--v2-text-2)]">
+              {shownContext}
+            </p>
+
+
+            {/* Graphique : bougies, niveaux cités par l'énoncé et les justifications (nommés), entrée et
+                3 stops, chacun étiqueté sur sa ligne ; le TP n'est pas tracé : le R/R de chaque
                 stop est dans son bouton. Puis impact du stop touché. */}
             <GameChartV2
-              data={{ candles: [...chart.past, ...chart.future], zones: [], domain: chart.domain }}
+              data={{ candles: [...chart.past, ...chart.future], zones: chart.zones, domain: chart.domain }}
               inlineLabels
               overlay={{
                 // Étiquette d'entrée avec son prix (le seul endroit où il apparaît)
@@ -524,9 +535,13 @@ export default function PlaceStopPage() {
               }}
               mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
               pin={chosenStop ? { label: `Stop ${spatialLabels[chosenStop.id]}`, sub: T.yourChoicePin, color: STOP_COLORS[chosenStop.id].hex } : undefined}
+              /* verdict en bandeau du bas : le haut est à la pastille, l'entrée et les stops restent visibles */
+              verdictBanner="bottom"
             >
               {isFeedback && result && (
                 <VerdictOverlay
+                  compact
+                  bottom
                   state={verdictState(result.type, hasLogicalInChart)}
                   headline={feedbackLabel(result.type, hasLogicalInChart, locale, displayedRR(chart.entry, chart.tp, chart.stops.find((s) => s.id === chosen)!.price))}
                   points={result.points}
@@ -535,15 +550,11 @@ export default function PlaceStopPage() {
               )}
             </GameChartV2>
 
-            {/* Contexte */}
-            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+            {/* Contexte (téléphone : en chips, au-dessus) */}
+            <div className="grid grid-cols-2 gap-2 max-sm:hidden sm:gap-3">
               <InfoTile label={T.htf} value={BIAS_LABEL[current.htfBias]} valueClass={biasClass(current.htfBias)} />
               <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} valueClass="" />
             </div>
-
-            <p className="v2-lead text-[color:var(--v2-text-2)]">
-              {shownContext}
-            </p>
 
             {/* Question + 3 stops : interactifs, puis figés (le choix reste visible) */}
             <p className="v2-eyebrow">{T.question}</p>
@@ -679,7 +690,7 @@ function StopChoices({
 }) {
   const ordered = [...stops].sort((a, b) => b.price - a.price);
   return (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3">
+    <div className="grid grid-cols-3 gap-2 sm:gap-3">
       {ordered.map((s) => {
         const dist = Math.abs(s.price - entry);
         const rr = tp !== null ? Math.abs((tp - entry) / (entry - s.price)) : null;
@@ -695,16 +706,16 @@ function StopChoices({
             aria-label={`Stop ${num}`}
             aria-pressed={picked === s.id}
             data-state={state}
-            className={`v2-stop-choice flex items-center gap-3 rounded-[16px] px-3.5 py-2.5 text-left ${onChoose ? "cursor-pointer" : "cursor-default"}`}
+            className={`v2-stop-choice flex flex-col items-center gap-1 rounded-[16px] px-1 py-2 text-center sm:flex-row sm:gap-3 sm:px-3.5 sm:py-2.5 sm:text-left ${onChoose ? "cursor-pointer" : "cursor-default"}`}
             style={{ boxShadow: `inset 0 0 0 2px ${color}`, background: `linear-gradient(180deg, ${color}22, ${color}0d)` }}
           >
-            <span className="v2-display grid h-9 w-9 shrink-0 place-items-center rounded-[10px] text-[16px] font-bold" style={{ background: color, color: "#04060a" }}>
+            <span className="v2-display grid h-7 w-7 shrink-0 place-items-center rounded-[8px] text-[14px] font-bold sm:h-9 sm:w-9 sm:rounded-[10px] sm:text-[16px]" style={{ background: color, color: "#04060a" }}>
               {num}
             </span>
-            <span className="flex min-w-0 flex-col">
-              <span className="v2-mono text-[16px] font-bold" style={{ color }}>{fmt(s.price, asset)}</span>
+            <span className="flex min-w-0 flex-col items-center sm:items-start">
+              <span className="v2-mono text-[15px] font-bold sm:text-[16px]" style={{ color }}>{fmt(s.price, asset)}</span>
               <span className="flex items-center gap-2 text-[12px]">
-                <span className="text-[color:var(--v2-text-3)]">{locale === "es" ? `a ${fmt(dist, asset)} de la entrada` : locale === "en" ? `${fmt(dist, asset)} from entry` : `à ${fmt(dist, asset)} de l'entrée`}</span>
+                <span className="hidden text-[color:var(--v2-text-3)] sm:inline">{locale === "es" ? `a ${fmt(dist, asset)} de la entrada` : locale === "en" ? `${fmt(dist, asset)} from entry` : `à ${fmt(dist, asset)} de l'entrée`}</span>
                 {rr !== null && rr > 0 && (
                   <span className={`v2-mono font-semibold ${rr >= 2 ? "text-emerald-300" : rr >= 1 ? "text-amber-300" : "text-red-300"}`}>
                     R/R {rrText(rr, locale)}

@@ -15,8 +15,9 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone, type ChartData, type ZoneKind,
-  VOL_MULT, mulberry32, clamp, candle, chartDomain, levelTouches, srGuards,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
 } from "./shared";
+import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
@@ -201,7 +202,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Tendance haussière établie, le prix corrige vers un support visible.",
+    context: "Tendance haussière établie, le prix corrige vers une ancienne résistance, cassée, qui sert maintenant de support.",
     rationales: {
       BUY: "✓ Ici, le pullback dans la tendance offre une opportunité d'achat à meilleur prix. Tu rejoins la tendance au lieu de la poursuivre, avec souvent un meilleur R/R.",
       SELL: "✗ Vendre dans une tendance haussière revient souvent à ramer contre le courant. Ici, le pullback ressemble plus à une opportunité d'achat qu'à un signal de vente.",
@@ -209,7 +210,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     },
     lessons: {
       beginner:     "Dans une tendance haussière, les replis sont souvent les meilleurs moments pour acheter, plutôt que l'inverse. C'est l'un des trades les plus courants chez les traders de tendance.",
-      intermediate: "Un pullback dans le sens de l'UT supérieure, sur un support visible, compte souvent parmi les setups les plus solides.",
+      intermediate: "Un pullback dans le sens de l'UT supérieure, sur une ancienne résistance devenue support, compte souvent parmi les setups les plus solides.",
       advanced:     "Un pullback profond n'invalide pas forcément le scénario. Tant que l'UT supérieure tient et que la structure n'est pas cassée, le pullback peut rester une opportunité.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -222,16 +223,16 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Tendance baissière établie, le prix rebondit vers une résistance.",
+    context: "Tendance baissière établie, le prix rebondit vers un ancien support, cassé, qui sert maintenant de résistance.",
     rationales: {
       BUY: "✗ Acheter le rebond dans une tendance baissière revient ici à chercher le plus bas. Ce type de trade est souvent perdant.",
-      SELL: "✓ Ici, le rebond ramène le prix sur une résistance visible. Vendre dans le sens baissière de l'UT supérieure, à un meilleur prix, est une option logique.",
+      SELL: "✓ Ici, le rebond ramène le prix sur cet ancien support devenu résistance. Vendre dans le sens baissière de l'UT supérieure, à un meilleur prix, est une option logique.",
       NO_TRADE: "≈ Pas faux, mais ici l'UT supérieure et la zone sont alignés. La discipline consiste à filtrer les trades, pas à tous les éviter.",
     },
     lessons: {
       beginner:     "En tendance baissière, on cherche plutôt les rebonds pour vendre. Acheter en espérant une remontée va souvent contre le marché.",
       intermediate: "Ici, un pullback sur une résistance dans une tendance baissière peut constituer un setup à bonne probabilité, à considérer selon ton plan de trading.",
-      advanced:     "Si la résistance est retestée proprement et que l'UT supérieure reste intacte, le SELL se défend. Si la structure casse pendant le pullback, NO TRADE devient l'option logique.",
+      advanced:     "Si l'ancien support est retesté proprement par en dessous et que l'UT supérieure reste intacte, le SELL se défend. Si la structure casse pendant le pullback, NO TRADE devient l'option logique.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["lecture", "pullback", "trend"],
@@ -414,10 +415,10 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "discipline",
-    context: "UT supérieure baissière nette. Le prix rebondit localement sur un niveau secondaire, mais la tendance reste contre toi.",
+    context: "UT supérieure baissière nette. Le prix rebondit localement sur un support, mais la tendance reste contre toi.",
     shortContext: "Rebond local dans une tendance baissière de l'UT supérieure.",
     rationales: {
-      BUY: "✗ Trader contre la tendance de l'UT supérieure en misant sur un niveau secondaire revient ici à jouer une probabilité faible. Les statistiques jouent souvent contre toi avant même le clic.",
+      BUY: "✗ Trader contre la tendance de l'UT supérieure en misant sur ce support local revient ici à jouer une probabilité faible. Les statistiques jouent souvent contre toi avant même le clic.",
       SELL: "✗ Pas le bon moment : ici, le rebond local ne montre pas encore de signe d'épuisement. En vendant maintenant, 2-3 bougies vertes peuvent te sortir avant la reprise.",
       NO_TRADE: "✓ Le setup local tient, MAIS il va contre l'UT supérieure : ici, l'avantage manque. Une option logique consiste à attendre l'épuisement du rebond et une zone claire de l'UT supérieure pour vendre.",
     },
@@ -827,13 +828,23 @@ function genRejectionResistance(rng: () => number, m: number, d: Difficulty): Bu
   }
   // Test résistance : wicks (intensité selon difficulté)
   const tests = d === "beginner" ? 4 : d === "intermediate" ? 3 : 2;
-  const wickK = wickAmp(d);
   for (let i = 0; i < tests; i++) {
+    // Entre deux tests, une bougie ordinaire sous la zone : pas de série de mèches géantes
+    if (i > 0) {
+      const o = p;
+      const c = clamp(o + (rng() - 0.55) * 0.4 * m, R - 1.4, R - 0.6);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.h = Math.min(k.h, R - 0.5);
+      past.push(k);
+      p = c;
+    }
+    // Test : corps réel (au moins 0,3 pas) et mèche de rejet qui entre dans la zone, sans la traverser
     const o = p;
-    const c = clamp(o + (rng() - 0.6) * 0.7 * m, R - 1.3, R - 0.4);
-    const k = candle(o, c, (1.0 + rng() * 0.4) * m * wickK, (0.2 + rng() * 0.2) * m);
+    let c = clamp(o + (rng() - 0.6) * 0.7 * m, R - 1.3, R - 0.4);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o > R - 0.85 ? -0.3 : 0.3) * m;
+    const k = candle(o, c, 0, (0.08 + rng() * 0.1) * m);
     // « La zone a déjà rejeté plusieurs fois » : la mèche entre toujours dans la zone
-    k.h = Math.max(k.h, R - 0.15);
+    k.h = R - 0.1 + rng() * 0.2;
     past.push(k);
     p = c;
   }
@@ -865,13 +876,23 @@ function genBounceSupport(rng: () => number, m: number, d: Difficulty): BuySellC
     p = c;
   }
   const tests = d === "beginner" ? 4 : d === "intermediate" ? 3 : 2;
-  const wickK = wickAmp(d);
   for (let i = 0; i < tests; i++) {
+    // Entre deux tests, une bougie ordinaire au-dessus de la zone : pas de série de mèches géantes
+    if (i > 0) {
+      const o = p;
+      const c = clamp(o + (rng() - 0.45) * 0.4 * m, S + 0.6, S + 1.4);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.l = Math.max(k.l, S + 0.5);
+      past.push(k);
+      p = c;
+    }
+    // Test : corps réel (au moins 0,3 pas) et mèche de rejet qui entre dans la zone, sans la traverser
     const o = p;
-    const c = clamp(o + (rng() - 0.4) * 0.7 * m, S + 0.4, S + 1.3);
-    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (1.0 + rng() * 0.4) * m * wickK);
+    let c = clamp(o + (rng() - 0.4) * 0.7 * m, S + 0.4, S + 1.3);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o < S + 0.85 ? 0.3 : -0.3) * m;
+    const k = candle(o, c, (0.08 + rng() * 0.1) * m, 0);
     // « La zone a déjà tenu plusieurs fois » : la mèche entre toujours dans la zone
-    k.l = Math.min(k.l, S + 0.15);
+    k.l = S - 0.1 + rng() * 0.2;
     past.push(k);
     p = c;
   }
@@ -906,12 +927,16 @@ function genLiquiditySweep(rng: () => number, m: number, d: Difficulty): BuySell
   }
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.8 * m, L + 0.5, L + 1.6);
+    // les clôtures restent nettement au-dessus du plus bas précédent (le prix en est reparti)
+    const c = clamp(o + (rng() - 0.5) * 0.8 * m, L + Math.max(0.5, 0.8 * m), L + 1.7 * Math.max(1, m));
     const k = candle(o, c, (0.25 + rng() * 0.22) * m, (0.25 + rng() * 0.22) * m);
     k.l = Math.max(k.l, L - 0.12); // le plus bas précédent n'est pas balayé avant le sweep
     past.push(k);
     p = c;
   }
+  // Le « plus bas précédent » : le creux de la consolidation touche le niveau L (sinon le plus bas
+  // visible d'avant le sweep pouvait être au-dessus de la clôture du sweep)
+  markPrevLow(past, L, m);
   // Trigger : sweep candle (longue mèche basse) — module par difficulté
   const sO = p;
   const wickDown = (1.1 + rng() * 0.5) * m * wickAmp(d);
@@ -953,22 +978,21 @@ function genFvgReaction(rng: () => number, m: number, d: Difficulty): BuySellCha
     past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
-  const gO = p;
-  const gC = p + (2.0 + rng() * 0.4) * m;
-  past.push(candle(gO, gC, (0.3 + rng() * 0.2) * m, 0.12));
-  p = gC;
-  // 2 candles d'impulsion au-dessus du FVG
+  // Impulsion en 3 bougies : FVG réel entre la mèche haute de la 1re et la mèche basse de la
+  // 3e, un petit vide proportionné aux bougies voisines (plus une bougie géante)
+  const imp = bullImpulse3(rng, m, p, past);
+  p = imp.p;
+  const fvgLow = imp.fvgLow;
+  const fvgHigh = imp.fvgHigh;
+  // 2 candles de continuation au-dessus du FVG : le prix ne le touche pas avant le pullback final
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = o + (0.3 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m));
+    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m);
+    k.l = Math.max(k.l, fvgHigh + 0.05 * m);
+    past.push(k);
     p = c;
   }
-  // FVG réel : entre le haut de la bougie 1 (avant l'impulsion) et le bas de la
-  // bougie 3 (juste après). Le prix ne le touche pas avant le pullback final.
-  const fvgLow = past[2].h;
-  const fvgHigh = past[4].l;
-  past[5].l = Math.max(past[5].l, fvgHigh + 0.05);
   // Pullback dans le FVG — profondeur variable par difficulté ; seule la
   // dernière bougie du pullback vient tester la zone (1er retest), sans la casser.
   const pullbackTarget = d === "beginner"
@@ -1039,18 +1063,18 @@ function genRangeNoOpp(rng: () => number, m: number, d: Difficulty): BuySellChar
   const R = 6;
   const mid = (S + R) / 2;
   let p = mid + (rng() - 0.5);
-  // 14 candles dans le range
-  for (let i = 0; i < 14; i++) {
+  // 12 bougies : le range se lit à ses bornes, touchées deux fois chacune (rangeLegs) ; puis 4 bougies
+  // qui ramènent le prix au milieu, loin des bornes (« sans test de zone » en cours)
+  const legs = rangeLegs(rng, p, S, R, 4, 3, m, rng() < 0.5);
+  past.push(...legs.candles);
+  p = legs.p;
+  for (let i = 0; i < 4; i++) {
     const o = p;
-    const pull = (mid - o) * 0.25;
-    const drift = pull + (rng() - 0.5) * 1.5 * m;
-    // « Au milieu d'un range » : la dernière bougie finit dans le tiers central
-    let c = i === 13 ? mid + (drift - pull) * 0.25 : o + drift;
-    c = clamp(c, S + 0.4, R - 0.4);
-    const k = candle(o, c, (0.25 + rng() * 0.28) * m, (0.25 + rng() * 0.28) * m);
-    // « Sans test de zone » : les mèches restent à l'intérieur du range
-    k.h = Math.min(k.h, R - 0.2);
-    k.l = Math.max(k.l, S + 0.2);
+    // « Au milieu d'un range » : la dernière bougie finit dans le tiers central (la 1re, qui part
+    // de la borne, peut encore la frôler : les 3 dernières en restent loin)
+    const c = i === 3 ? mid + (rng() - 0.5) * 0.4 : clamp(mid + (o - mid) * 0.2 + (rng() - 0.5) * 0.3, S + 1.4, R - 1.4);
+    const k = candle(o, c, (0.2 + rng() * 0.25) * m, (0.2 + rng() * 0.25) * m);
+    k.h = Math.min(k.h, R - 1); k.l = Math.max(k.l, S + 1);
     past.push(k);
     p = c;
   }
@@ -1131,23 +1155,20 @@ function genFvgOvermitigated(rng: () => number, m: number, d: Difficulty): BuySe
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
-  // Bas du FVG = high de la dernière base candle
-  const baseHigh = Math.max(...past.slice(-3).map((k) => k.h));
-  // Impulse (crée la FVG)
-  const iO = p;
-  const iC = p + (2.0 + rng() * 0.3) * m;
-  past.push(candle(iO, iC, (0.3 + rng() * 0.2) * m, 0.12));
-  p = iC;
-  // 2 candles au-dessus
+  // Impulsion en 3 bougies (crée le FVG) : un petit vide proportionné aux bougies voisines
+  const imp = bullImpulse3(rng, m, p, past);
+  p = imp.p;
+  const fvgLow  = imp.fvgLow;
+  const fvgHigh = imp.fvgHigh;
+  // 2 candles au-dessus, sans rentrer dans le FVG
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = o + (0.25 + rng() * 0.25) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
+    const k = candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m);
+    k.l = Math.max(k.l, fvgHigh + 0.04 * m);
+    past.push(k);
     p = c;
   }
-  // Haut du FVG = low de la candle juste après l'impulse
-  const fvgLow  = baseHigh;
-  const fvgHigh = past[past.length - 2].l;  // bottom of c3 (1st candle after impulse)
   // Pullback profond — close target ~10% au-dessus du bas (mitigation 85%+)
   const target = fvgLow + (fvgHigh - fvgLow) * 0.1;
   for (let i = 0; i < 5; i++) {
@@ -1159,7 +1180,7 @@ function genFvgOvermitigated(rng: () => number, m: number, d: Difficulty): BuySe
   // 2 candles indécises au fond du FVG (pas de réaction = piège mental).
   // On contraint le close à rester dans le bas du FVG (max = target + 5% du
   // FVG) pour que le past ne révèle pas un faux rebond.
-  const indecMax = fvgLow + (fvgHigh - fvgLow) * 0.15;
+  const indecMax = fvgLow + (fvgHigh - fvgLow) * 0.1;  // FVG proportionné : marge resserrée au fond
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.6) * 0.18 * m, target - 0.05, indecMax);
@@ -1182,7 +1203,7 @@ function genFvgOvermitigated(rng: () => number, m: number, d: Difficulty): BuySe
 
 function genCounterTrendBounce(rng: () => number, m: number, d: Difficulty): BuySellChart {
   // HTF baissier clairement visible (downtrend en début de past). Rebond local
-  // faible sur un niveau secondaire. Future : continuation baissière.
+  // faible sur un support local. Future : continuation baissière.
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 8.5 + rng() * 0.3;
@@ -1193,14 +1214,11 @@ function genCounterTrendBounce(rng: () => number, m: number, d: Difficulty): Buy
     past.push(candle(o, c, (0.12 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
-  const minorLevel = p;
-  // 2 candles de rebond faible
-  for (let i = 0; i < 2; i++) {
-    const o = p;
-    const c = o + (0.2 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.15 + rng() * 0.15) * m));
-    p = c;
-  }
+  // Support prouvé : touché deux fois par-dessus ; la 2e réaction est le rebond local
+  const minorLevel = p - (2.4 + rng() * 0.5) * m;
+  const touches = levelTouches(rng, p, minorLevel - 0.1, minorLevel + 0.1, "above", m, 2);
+  past.push(...touches.candles);
+  p = touches.p;
   // 2 candles indécises
   for (let i = 0; i < 2; i++) {
     const o = p;
@@ -1218,7 +1236,7 @@ function genCounterTrendBounce(rng: () => number, m: number, d: Difficulty): Buy
   void d;
   return finalize({
     past, future: fut,
-    zones: [{ kind: "support", y1: minorLevel - 0.1, y2: minorLevel + 0.1, label: "Niveau secondaire" }],
+    zones: [{ kind: "support", y1: minorLevel - 0.1, y2: minorLevel + 0.1, label: "Support" }],
   });
 }
 
@@ -1231,25 +1249,32 @@ function genDirtyRangeSweep(rng: () => number, m: number, d: Difficulty): BuySel
   const R = 6;
   const mid = (S + R) / 2;
   let p = mid;
-  // 4 oscillations
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const drift = (rng() - 0.5) * 1.4 * m + (mid - o) * 0.2;
-    const c = clamp(o + drift, S + 0.5, R - 0.5);
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
-    p = c;
-  }
+  // Le range se lit à ses bornes : une jambe monte toucher le haut (pointe de mèche sur le bord de la
+  // zone, gardée par la passe de réalisme) avant le sweep du haut, une autre descend toucher le bas
+  // avant le sweep du bas. Avant : retour au milieu, les bornes jamais testées et les bougies de sweep
+  // énormes à côté d'un range resserré.
+  const leg = (n: number, up: boolean) => {
+    const target = up ? R - 0.3 : S + 0.3;
+    for (let i = 0; i < n; i++) {
+      const o = p;
+      const c = clamp(i === n - 1 ? target + (rng() - 0.5) * 0.1 : o + (target - o) * (0.25 + rng() * 0.45), S + 0.25, R - 0.25);
+      const k = candle(o, c, (0.2 + rng() * 0.25) * m, (0.2 + rng() * 0.25) * m);
+      k.h = Math.min(k.h, R - 0.16); k.l = Math.max(k.l, S + 0.16);
+      if (i === n - 1) { if (up) k.h = R - 0.1; else k.l = S + 0.1; }
+      past.push(k);
+      p = c;
+    }
+  };
+  // 6 oscillations : haut touché, bas touché, haut touché (2 touches du haut avant son sweep)
+  leg(2, true);
+  leg(2, false);
+  leg(2, true);
   // Sweep du haut (mèche dépasse R, close inside)
   const swHc = R - 0.7 - rng() * 0.3;
   const swH = { o: p, c: swHc, h: R + 1.0 * m + rng() * 0.3, l: Math.min(p, swHc) - 0.15 };
   past.push(swH); p = swH.c;
-  // 3 oscillations
-  for (let i = 0; i < 3; i++) {
-    const o = p;
-    const c = clamp(o + (rng() - 0.55) * 1.2 * m, S + 0.5, R - 0.5);
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
-    p = c;
-  }
+  // 3 oscillations : le prix redescend toucher le bas du range
+  leg(3, false);
   // Sweep du bas (mèche descend sous S, close inside)
   const swLc = S + 0.7 + rng() * 0.3;
   const swL = { o: p, c: swLc, h: Math.max(p, swLc) + 0.15, l: S - 1.0 * m - rng() * 0.3 };
@@ -1311,6 +1336,40 @@ function genToxicExecution(rng: () => number, m: number, d: Difficulty): BuySell
 // ─── Build chart depuis un setup ──────────────────────────────────────────────
 
 /** Graphique converti à l'échelle de prix de l'actif (au dernier moment, pour l'affichage). */
+/**
+ * Niveau avancé : les zones perdent leurs qualificatifs (« UT supérieure », « majeure »,
+ * « haussier ») pour que le joueur lise le marché plutôt que les noms. Un support reste
+ * « Support » et une résistance « Résistance » : on ne les renomme jamais.
+ */
+export function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, locale: string | undefined): BuySellChart["zones"] {
+  if (d !== "advanced") return zones;
+  return zones.map((z) => {
+    // Changement de rôle : il fait partie de la preuve du niveau, il reste dit en avancé aussi
+    if (z.flip) return z;
+    // Seuls les supports / résistances et les FVG / liquidités deviennent génériques : un plus bas
+    // précédent, un swing, un range gardent leur nom (« Support » sur un creux jamais touché
+    // présentait un niveau non prouvé)
+    const sr = /^(support|soporte|r[ée]sistance|resistencia|resistance)/i.test(z.label);
+    const liq = /^(liquidit|liquidez|sweep|barrido)/i.test(z.label);
+    if (!sr && !liq && z.kind !== "fvg") return z;
+    const generic = locale === "es"
+      ? (z.kind === "support"        ? "Soporte"
+       : z.kind === "resistance"     ? "Resistencia"
+       : z.kind === "fvg"            ? "Desequilibrio"
+       :                                "Liquidez")
+      : locale === "en"
+      ? (z.kind === "support"        ? "Support"
+       : z.kind === "resistance"     ? "Resistance"
+       : z.kind === "fvg"            ? "Imbalance"
+       :                                "Liquidity")
+      : (z.kind === "support"        ? "Support"
+       : z.kind === "resistance"     ? "Résistance"
+       : z.kind === "fvg"            ? "Déséquilibre"
+       :                                "Liquidité");
+    return { ...z, label: generic };
+  });
+}
+
 export function withAssetPrices(chart: BuySellChart, inst: { asset: Asset; seed: number }): BuySellChart {
   const f = assetPriceMap(inst.asset, inst.seed, chart.past[chart.past.length - 1].c);
   return {
@@ -1332,7 +1391,7 @@ export function buildChart(
 ): BuySellChart {
   const ch = buildChartRaw(setup, seed, volatility, difficulty);
   const calm = setup === "trade_before_news";
-  return realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm });
+  return withRoleChanges(withTracedZones(realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm })));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

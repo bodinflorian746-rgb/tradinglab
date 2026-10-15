@@ -28,7 +28,7 @@ import {
   evaluateTrade,
 } from "./build-the-trade";
 import type { MarketCtx } from "./candle-realism";
-export { withAssetPrices } from "./build-the-trade";
+export { withAssetPrices, planRR } from "./build-the-trade";
 
 // ─── Reexports tipos / utilidades ────────────────────────────────────────────
 
@@ -55,6 +55,11 @@ export { ROUNDS_PER_SESSION, evaluateTrade };
 // ─── Tabla de traducción para etiquetas de zonas ─────────────────────────────
 
 const ZONE_LABEL_ES: Record<string, string> = {
+  // Changement de rôle (lib/games/shared.ts, ROLE_CHANGE_LABELS) : libellé et libellé court
+  "Ancienne résistance → support": "Antigua resistencia → soporte",
+  "Résistance → support": "Resistencia → soporte",
+  "Ancien support → résistance": "Antiguo soporte → resistencia",
+  "Support → résistance": "Soporte → resistencia",
   "Swing low":          "Swing low",
   "Swing high":         "Swing high",
   "Résistance":         "Resistencia",
@@ -70,11 +75,10 @@ const ZONE_LABEL_ES: Record<string, string> = {
   "Plus haut précédent":     "Máximo anterior",
   "Liquidité balayée":  "Liquidez barrida",
   "FVG haussier":       "FVG alcista",
-  "Niveau secondaire":  "Nivel secundario",
 };
 
 function translateZones(zones: ChartZone[]): ChartZone[] {
-  return zones.map((z) => ({ ...z, label: ZONE_LABEL_ES[z.label] ?? z.label }));
+  return zones.map((z) => ({ ...z, label: ZONE_LABEL_ES[z.label] ?? z.label, ...(z.short ? { short: ZONE_LABEL_ES[z.short] ?? z.short } : {}) }));
 }
 
 // Wrapper de buildBuildTradeChart que traduce las etiquetas de zonas.
@@ -317,7 +321,7 @@ export const BUILD_TRADE_TEMPLATES_ES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "El pullback se volvió muy profundo. El precio ya retrocedió más del 60 % del impulso previo.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
-    optimalExplain: "Aquí, el pullback profundo puede anunciar una ruptura de estructura. La confirmación preserva la ventaja: una entrada agresiva supondría perseguir el precio, y un pullback profundo apostar por un nivel secundario.",
+    optimalExplain: "Aquí, el pullback profundo puede anunciar una ruptura de estructura. La confirmación preserva la ventaja: una entrada agresiva supondría perseguir el precio, y un pullback profundo apostar por un nuevo toque del soporte.",
     lessons: {
       advanced:     "Un pullback de más del 60 % del impulso puede señalar un pattern agotado. Aquí, una confirmación y un TP moderado son una opción lógica.",
       intermediate: "Cuanto más profundo es el pullback, más cuenta la confirmación. Aquí, una entrada agresiva sería muy arriesgada.",

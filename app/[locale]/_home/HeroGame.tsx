@@ -105,6 +105,7 @@ export function HeroGame({ rounds, s, gameHref, trialHref }: { rounds: HeroRound
           mode={phase === "question" ? "question" : "reveal"}
           keepCandlesBright
           preview
+          inlineLabels
         />
       </div>
 

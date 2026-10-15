@@ -117,9 +117,11 @@ type V2CandleProps = Candle & {
   still?: boolean;
   /** Clôture précédente : couleur d'une bougie sans corps (jamais de bougie neutre) */
   prevClose?: number;
+  /** Jeux : mèche au plus un tiers du corps (1 à 3 px) ; sinon 3 px (rendu des leçons inchangé) */
+  thinWick?: boolean;
 };
 
-export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still = false, prevClose }: V2CandleProps) {
+export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still = false, prevClose, thinWick = false }: V2CandleProps) {
   // Toujours verte ou rouge : sans corps, la couleur suit la clôture précédente
   const up = c > o || (c === o && (prevClose === undefined || c >= prevClose));
   const body = up ? "var(--v2-bull)" : "var(--v2-bear)";
@@ -131,7 +133,8 @@ export function V2Candle({ o, h, l, c, x, width, toY, index, dim = "anim", still
   return (
     <g className={dimClass}>
       <g className={still ? "v2-candle v2-candle--static" : "v2-candle"} style={cssVars({ "--i": index })}>
-        <line x1={x} x2={x} y1={toY(h)} y2={toY(l)} stroke={wick} strokeWidth={3} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        {/* Jeux : mèche toujours nettement plus fine que le corps, au plus un tiers de sa largeur (1 à 3 px) */}
+        <line x1={x} x2={x} y1={toY(h)} y2={toY(l)} stroke={wick} strokeWidth={thinWick ? Math.max(1, Math.min(3, width / 3)) : 3} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
         <rect x={x - width / 2} y={bodyBox.y} width={width} height={bodyBox.h} rx={Math.min(3, bodyBox.h / 2)} fill={body} />
       </g>
     </g>
@@ -158,12 +161,18 @@ export interface GameChartV2Props {
   /** Choix du joueur, épinglé en haut à gauche (reveal / verdict). */
   pin?: { label: string; sub?: string; color: string };
   /**
-   * Garde les bougies à pleine opacité en état question (pas d'estompage au
-   * « spot »). Utile quand le joueur doit lire les bougies elles-mêmes.
+   * Sans effet : les bougies ne sont plus jamais estompées avant la réponse (gardé pour
+   * les appels existants).
    */
   keepCandlesBright?: boolean;
   /** Élément marqué en rouge au verdict (ex. l'erreur de « Trouve l'erreur »). */
   mark?: GameChartMark;
+  /**
+   * Verdict en bandeau en bas du cadre (VerdictOverlay compact, `bottom`), quand le haut est pris
+   * par la pastille « ton choix » (Place ton Stop) : sa hauteur est réservée en bas, aucune bougie,
+   * ligne ni étiquette dessous (l'entrée et les stops restent lisibles).
+   */
+  verdictBanner?: "bottom";
   /**
    * Prix et libellés à venir, réservés d'avance dans l'échelle et la colonne
    * d'étiquettes : le cadrage ne bouge pas quand les lignes affichées changent
@@ -217,6 +226,13 @@ const GLIDE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)"; // ease-out
 const QUESTION_SPARE_SLOTS = 3;
 /** Emprise de la pastille « ton choix » (HTML, coin haut gauche) en px */
 const PIN_BOX = { right: 224, bottom: 54 };
+/** Bas du bandeau du verdict (élément marqué, VerdictOverlay compact, en haut du cadre) en px :
+ *  12 + 8 + 32 + 8 en mobile ; padding de 16 px sur ordinateur (tsx-v2.css, ≥ 1024 px) */
+const BANNER_BOTTOM = { mobile: 64, desktop: 82 };
+/** Hauteur réservée en bas du cadre au verdict en bandeau du bas, en px : 12 + bandeau + 14, la
+ *  demi-pastille d'une ligne posée au bas de l'échelle (stop) comprise ; bandeau en mobile : titre
+ *  sur 2 lignes au plus (16 px), 8 + 38 + 8 ; sur ordinateur : une ligne, 32 + 2 × 16,4 */
+const BANNER_BOTTOM_ROOM = { mobile: 80, desktop: 92 };
 
 const ZONE_COLOR: Record<ZoneKind, { stroke: string; fill: string; dashed: boolean }> = {
   support:        { stroke: "var(--v2-bull)", fill: "rgba(16,185,129,0.18)", dashed: true },
@@ -246,8 +262,21 @@ const INLINE_TAG_H = 20;
 const INLINE_TAG_FS = 12;
 const INLINE_TAG_GAP = 4;
 const inlineTagW = (label: string) => textWidth(label, INLINE_TAG_FS) + 14;
+/** Repères du changement de rôle : rayon d'un anneau de touche, écart à la pointe de la mèche (px) */
+const FLIP_R = 3, FLIP_GAP = 4;
+/** Largeur de graphique (px) en dessous de laquelle la marge d'étiquettes ne sert qu'aux lignes */
+const NARROW_CHART_W = 480;
+/** Écart maximal (px) entre une étiquette de ligne empilée et sa ligne : la ligne la traverse toujours */
+const PACK_SHIFT = INLINE_TAG_H / 2 - 2;
+/** Écart vertical (px) entre deux étiquettes empilées : leur contour sombre les sépare */
+const PACK_GAP = 1;
+/** Une étiquette de zone « touche » sa zone quand son bord en est à au plus ZONE_TOUCH px (même seuil
+ *  que audit:jeux) : au-delà, elle peut se lire comme celle d’une zone voisine */
+const ZONE_TOUCH = 4;
+/** Étiquette de l'erreur marquée (point, zone) : demi-pas verticaux explorés pour lui trouver une place */
+const MARK_TAG_STEPS = 40;
 
-export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBright, mark, reserve, tpOffscale, preview, inlineLabels, labeledZones, emphasis, glideScale, children }: GameChartV2Props) {
+export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictBanner, reserve, tpOffscale, preview, inlineLabels, labeledZones, emphasis, glideScale, children }: GameChartV2Props) {
   const inline = !!inlineLabels;
   const { ref: sizeRef, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const { ref: playRef, playing } = usePlayOnView<HTMLDivElement>(0.4);
@@ -260,7 +289,18 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
   const question = mode === "question";
   const visibleCount = sep === undefined ? all.length : question ? sep : Math.min(all.length, sep + revealed);
   const visible = all.slice(0, visibleCount);
-  const zones = data.zones;
+  // Graphique étroit (téléphone) : libellé court d'une zone quand il existe (même idée, ex.
+  // « Résistance → support » pour « Ancienne résistance → support »)
+  const zones = W > 0 && W < NARROW_CHART_W ? data.zones.map((z) => (z.short ? { ...z, label: z.short } : z)) : data.zones;
+  // Place occupée par les repères du changement de rôle au-dessus / au-dessous d'une bougie (px) :
+  // les étiquettes ne les recouvrent pas
+  const flipExt = new Map<number, { up: number; down: number }>();
+  for (const z of zones) if (z.flip) {
+    const up = z.flip.was === "resistance";
+    for (const i of z.flip.touches) flipExt.set(i, up ? { up: FLIP_GAP + 2 * FLIP_R + 1, down: 0 } : { up: 0, down: FLIP_GAP + 2 * FLIP_R + 1 });
+    if (z.flip.breakAt >= 0) flipExt.set(z.flip.breakAt, up ? { up: FLIP_GAP + 8, down: 0 } : { up: 0, down: FLIP_GAP + 8 });
+  }
+  const ext = (i: number) => flipExt.get(i) ?? { up: 0, down: 0 };
   const hero = question ? zones[0] : undefined;
   const stepMs = preview ? PREVIEW_STEP_MS : STEP_MS;
   const spotMs = question ? visibleCount * stepMs + 250 : 0;
@@ -288,7 +328,8 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
   const bMin = Math.min(...baseVals), bMax = Math.max(...baseVals), bSpan = bMax - bMin || 1;
   const tpArrow = !tpOffscale || tpRaw === undefined ? null : tpRaw > bMax + 0.35 * bSpan ? "up" : tpRaw < bMin - 0.35 * bSpan ? "down" : null;
   const tpShown = tpArrow === "up" ? bMax + 0.12 * bSpan : tpArrow === "down" ? bMin - 0.12 * bSpan : tpRaw;
-  const tpTagLabel = tpArrow === "up" ? "TP ↑" : tpArrow === "down" ? "TP ↓" : null;
+  // (dans l'échelle, l'objectif garde son étiquette « TP » : une ligne n'est jamais muette)
+  const tpTagLabel = tpArrow === "up" ? "TP ↑" : tpArrow === "down" ? "TP ↓" : tpOffscale && tpRaw !== undefined ? "TP" : null;
   // Zones nommées sur le graphique (étiquettes en ligne)
   const zoneLabelIdx = inline ? (labeledZones ?? zones.map((_, i) => i)).filter((i) => zones[i]) : [];
   const lineLabels = [
@@ -311,15 +352,6 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
       ...(columnMode && mark && showMark && markPrice !== undefined ? [mark.label] : []),
     ];
   const colLabels = reserve?.labels ? [...tagLabels, ...reserve.labels] : tagLabels;
-  // En ligne : une marge à droite de la largeur de la plus grande petite étiquette
-  const tagColW = inline
-    ? (tagLabels.length ? Math.max(...tagLabels.map(inlineTagW)) + 10 : 0)
-    : colLabels.length ? Math.max(...colLabels.map((l) => textWidth(l, 12) + 16)) + 18 : 0;
-  const slot = W > 0 ? (W - 2 * padX - tagColW) / nSlots : 0;
-  const xOf = (i: number) => padX + slot * (i + 0.5);
-  // Plafond relatif au pas : les bougies ne se touchent jamais, même nombreuses
-  const bodyW = Math.min(clamp(slot * 0.6, 8, 30), slot * 0.78);
-
   // Échelle des prix calée sur les données, les zones et les lignes
   const prices = scaled.flatMap((k) => [k.h, k.l])
     .concat(zones.flatMap((z) => [z.y1, z.y2]))
@@ -333,10 +365,150 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
   const max = prices.length ? Math.max(...prices) : 1;
   const range = max - min || 1;
 
+  // En ligne : une marge à droite de la largeur de la plus grande petite étiquette. Graphique
+  // étroit (téléphone) : la marge n'est réservée qu'aux étiquettes de lignes (courtes, elles
+  // restent au bord sur leur ligne) si celles des zones et de l'erreur trouvent chacune, dans ce
+  // cadrage, une place sans bougie près de leur niveau ; sinon la marge prenait jusqu'à la
+  // moitié de la largeur et les bougies devenaient des traits (corps de 2 à 4 px).
+  // Étiquette de zone sans place libre près d'une zone qui touche le haut (ou le bas) du cadre :
+  // une bande lui est réservée au-dessus (ou au-dessous) des bougies.
+  const fullColW = tagLabels.length ? Math.max(...tagLabels.map(inlineTagW)) + 10 : 0;
+  const lineColW = lineLabels.length ? Math.max(...lineLabels.map(inlineTagW)) + 10 : 0;
+  const LABEL_BAND = INLINE_TAG_H + 8;
+  // Verdict en bandeau (élément marqué) : hauteur réservée en haut, 12 px sous le bandeau
+  const bannerBottom = mark && mode === "verdict" ? (desktop ? BANNER_BOTTOM.desktop : BANNER_BOTTOM.mobile) : 0;
+  // Verdict en bandeau du bas : hauteur réservée en bas du cadre
+  const bannerRoom = verdictBanner === "bottom" && mode === "verdict" ? (desktop ? BANNER_BOTTOM_ROOM.desktop : BANNER_BOTTOM_ROOM.mobile) : 0;
+  // Pastille « ton choix » (coin haut gauche, à sa largeur) et bandeau du verdict (élément
+  // marqué) : aucune étiquette dessous, elle y serait cachée
+  const pinRight = pin ? Math.min(PIN_BOX.right, 12 + 24 + 8 + 6 + textWidth(pin.sub ? `${pin.label} ${pin.sub}` : pin.label, 15)) : 0;
+  const uiBoxes = [
+    ...(pin ? [{ x1: 0, x2: pinRight, y1: 0, y2: PIN_BOX.bottom }] : []),
+    ...(mark && mode === "verdict" ? [{ x1: 0, x2: W, y1: 0, y2: bannerBottom }] : []),
+    ...(bannerRoom ? [{ x1: 0, x2: W, y1: H - bannerRoom + 12, y2: H }] : []),
+  ];
+  const floating = !inline ? [] : [
+    ...zoneLabelIdx.filter((i) => !(mark && showMark && mark.kind === "zone" && mark.index === i)).map((i) => ({ label: zones[i].label, price: (zones[i].y1 + zones[i].y2) / 2, line: false, isMark: false, zone: [Math.min(zones[i].y1, zones[i].y2), Math.max(zones[i].y1, zones[i].y2)] as [number, number] })),
+    ...(mark && showMark && markPrice !== undefined ? [{ label: mark.label, price: markPrice, line: mark.kind === "line", isMark: true, zone: undefined }] : []),
+  ];
+  // Étiquettes de lignes (TP, entrée, stops, candidats) : prix de leur ligne
+  const linePills: [string, number][] = !inline ? [] : [
+    ...(tpTagLabel && tpShown !== undefined ? [[tpTagLabel, tpShown] as [string, number]] : []),
+    ...(overlay?.entry?.label ? [[overlay.entry.label, overlay.entry.price] as [string, number]] : []),
+    ...(overlay?.stops ?? []).flatMap((st) => (st.label ? [[st.label, st.price] as [string, number]] : [])),
+    ...(overlay?.candidateLines ?? []).map((c) => [c.label, c.price] as [string, number]),
+  ];
+  // Cadrage approché pour une marge d'étiquettes et des bandes données (sans la pastille « ton
+  // choix ») : échelle des prix et obstacles (bougies, pastille, bandeau). Marge de 3 px autour
+  // des bougies, comme au placement réel : une marge plus prudente déplaçait une étiquette et
+  // libérait à tort la place d'une autre.
+  const frame = (colW: number, bandTop: number, bandBottom: number) => {
+    const sl = (W - 2 * padX - colW) / nSlots, bw = Math.min(clamp(sl * 0.6, 8, 30), sl * 0.78);
+    // Marge haute de la pastille « ton choix » (même calcul que topPadBase, dans ce cadrage) : sans
+    // elle, les niveaux simulés étaient décalés et une place libre trouvée ici n'existait pas au rendu
+    const pinTop = !pin || H <= 0 ? 14 : scaled.reduce((acc, k, i) => {
+      if (padX + sl * (i + 0.5) - bw / 2 > PIN_BOX.right) return acc;
+      const f = (max - k.h) / range;
+      return f < 1 ? Math.max(acc, (PIN_BOX.bottom - f * (H - 14)) / (1 - f)) : acc;
+    }, 14);
+    const tp = (bannerBottom ? Math.max(pinTop, bannerBottom + 12) : pinTop) + bandTop, bp = Math.max(14, bannerRoom) + bandBottom;
+    const ty = (p: number) => tp + ((max - p) / range) * (H - tp - bp);
+    const boxes = visible.map((k, i) => ({ x1: padX + sl * (i + 0.5) - bw / 2 - 3, x2: padX + sl * (i + 0.5) + bw / 2 + 3, y1: ty(k.h) - 3 - ext(i).up, y2: ty(k.l) + 3 + ext(i).down }));
+    boxes.push(...uiBoxes);
+    return { ty, boxes };
+  };
+  // Étiquettes de lignes sans place (ni bougie ni autre étiquette) à la hauteur de leur ligne :
+  // posées comme au placement réel, la plus longue d'abord, au bord droit puis vers la gauche,
+  // à au plus PACK_SHIFT px de leur ligne. Lignes très proches (stops et entrée à quelques
+  // pixels) : leurs étiquettes, côte à côte, glissaient sur les bougies faute de marge.
+  const lineMisfits = (colW: number, bandTop: number, bandBottom: number) => {
+    if (!linePills.length || W <= 0 || H <= 0) return [];
+    const { ty, boxes } = frame(colW, bandTop, bandBottom);
+    const shifts = [0, 2, -2, 4, -4, 6, -6, 8, -8].filter((d) => Math.abs(d) <= PACK_SHIFT);
+    return [...linePills].sort((a, b) => inlineTagW(b[0]) - inlineTagW(a[0])).filter(([label, price]) => {
+      const w = inlineTagW(label);
+      for (const d of shifts) {
+        const y = ty(price) + d;
+        if (y < INLINE_TAG_H / 2 + 1 || y > H - INLINE_TAG_H / 2 - 1) continue;
+        for (let x = W - padX - w; x >= 2; x -= 2) if (!boxes.some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1)) {
+          boxes.push({ x1: x - INLINE_TAG_GAP, x2: x + w + INLINE_TAG_GAP, y1: y - INLINE_TAG_H / 2 - PACK_GAP, y2: y + INLINE_TAG_H / 2 + PACK_GAP });
+          return false;
+        }
+      }
+      return true;
+    });
+  };
+  // Étiquettes flottantes sans place libre (ni bougie ni étiquette de ligne) dans un cadrage donné
+  const misfits = (colW: number, bandTop: number, bandBottom: number) => {
+    if (!floating.length || W <= 0 || H <= 0) return [];
+    const { ty, boxes } = frame(colW, bandTop, bandBottom);
+    // les étiquettes de lignes, posées d'abord au bord droit sur leur ligne, sont aussi des obstacles ;
+    // empilées si leurs lignes sont proches, elles s'en écartent d'au plus PACK_SHIFT px
+    for (const [l, p] of linePills) boxes.push({ x1: W - padX - inlineTagW(l) - INLINE_TAG_GAP, x2: W, y1: ty(p) - INLINE_TAG_H / 2 - 2 - PACK_SHIFT, y2: ty(p) + INLINE_TAG_H / 2 + 2 + PACK_SHIFT });
+    // Posées une à une dans l'ordre du placement réel (celle de l'erreur sur sa ligne d'abord, puis
+    // la plus longue) : chacune devient un obstacle pour les suivantes
+    return [...floating].sort((a, b) => Number(b.line) - Number(a.line) || inlineTagW(b.label) - inlineTagW(a.label)).filter(({ label, price, line, isMark, zone }) => {
+      const w = inlineTagW(label);
+      // zone : d'abord les places qui touchent la zone (comme au placement réel)
+      const touch: number[] = [];
+      if (zone) { const reach = INLINE_TAG_H / 2 + ZONE_TOUCH, y0 = ty(price); for (let yy = ty(zone[1]) - reach; yy <= ty(zone[0]) + reach; yy += 2) touch.push(yy - y0); touch.sort((a, b) => Math.abs(a) - Math.abs(b)); }
+      // une étiquette de zone qui ne touche pas sa zone compte comme sans place : la marge
+      // s'élargit (ou une bande s'ouvre) pour qu'elle reste à côté de ce qu'elle nomme
+      const shifts = line ? [0, 2, -2, 4, -4, 6, -6, 8, -8] : zone ? [0, ...touch] : [0, ...Array.from({ length: isMark ? MARK_TAG_STEPS : 6 }, (_, k) => k + 1).flatMap((k) => [k, -k].map((d) => d * (INLINE_TAG_H + INLINE_TAG_GAP) / 2))];
+      for (const d of shifts) {
+        const y = ty(price) + d;
+        if (y < INLINE_TAG_H / 2 + 1 || y > H - INLINE_TAG_H / 2 - 1) continue;
+        for (let x = W - padX - w; x >= 2; x -= 2) if (!boxes.some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1)) {
+          // étiquette de ligne : toute la plage où l'empilement peut la poser, autour de sa ligne
+          const yc = line ? ty(price) : y, pad = line ? PACK_SHIFT : 0;
+          boxes.push({ x1: x - INLINE_TAG_GAP, x2: x + w + INLINE_TAG_GAP, y1: yc - INLINE_TAG_H / 2 - 1 - pad, y2: yc + INLINE_TAG_H / 2 + 1 + pad });
+          return false;
+        }
+      }
+      return true;
+    });
+  };
+  // Bandes demandées par les étiquettes sans place : zone au bord du cadre, ou erreur marquée sur
+  // un point ou une zone (côté le plus proche ; elle peut s'éloigner de sa marque, de même couleur)
+  const bandSide = (x: { price: number; line: boolean; isMark: boolean }) => x.line ? null
+    : x.isMark ? (x.price >= (min + max) / 2 ? "top" : "bottom")
+    : x.price >= max - 0.2 * range ? "top" : x.price <= min + 0.2 * range ? "bottom" : null;
+  const bandsFor = (m: { price: number; line: boolean; isMark: boolean }[]) => ({
+    top: m.some((x) => bandSide(x) === "top") ? LABEL_BAND : 0,
+    bottom: m.some((x) => bandSide(x) === "bottom") ? LABEL_BAND : 0,
+  });
+  // Marge élargie, d'une étiquette à la fois, tant qu'une étiquette de ligne n'a pas de place
+  const widened = (l: { col: number; top: number; bottom: number }) => {
+    let col = l.col;
+    for (let k = 0; k < linePills.length; k++) {
+      const m = lineMisfits(col, l.top, l.bottom);
+      if (!m.length || col + 10 > W / 2) break;
+      col += Math.max(...m.map(([label]) => inlineTagW(label))) + INLINE_TAG_GAP;
+    }
+    return { ...l, col };
+  };
+  const labelLayout = (() => {
+    if (!inline) return { col: 0, top: 0, bottom: 0 };
+    if (W > 0 && W < NARROW_CHART_W && lineColW < fullColW) {
+      const m = misfits(lineColW, 0, 0);
+      if (!m.length) return widened({ col: lineColW, top: 0, bottom: 0 });
+      const b = bandsFor(m);
+      if ((b.top || b.bottom) && !misfits(lineColW, b.top, b.bottom).length) return widened({ col: lineColW, ...b });
+    }
+    return widened({ col: fullColW, ...bandsFor(misfits(fullColW, 0, 0)) });
+  })();
+  const tagColW = inline
+    ? labelLayout.col
+    : colLabels.length ? Math.max(...colLabels.map((l) => textWidth(l, 12) + 16)) + 18 : 0;
+  const slot = W > 0 ? (W - 2 * padX - tagColW) / nSlots : 0;
+  const xOf = (i: number) => padX + slot * (i + 0.5);
+  // Plafond relatif au pas : les bougies ne se touchent jamais, même nombreuses
+  const bodyW = Math.min(clamp(slot * 0.6, 8, 30), slot * 0.78);
+
   const fsPill = desktop ? DESKTOP_PILL_PX : clamp(W * 0.036, 13, 17);
   const pillH = fsPill + 12;
   const pillW0 = (label: string) => textWidth(label, fsPill) + fsPill * 1.3;
-  const bottomPad0 = hero && !columnMode && !inline ? pillH + 16 : 14; // la pastille héros vit sous la zone
+  const bottomPad0 = hero && !columnMode && !inline ? pillH + 16 : Math.max(14, bannerRoom); // la pastille héros vit sous la zone ; le verdict en bandeau du bas aussi
   // Réserve juste ce qu'il faut pour que la pastille « ton choix » ne
   // recouvre aucune bougie de son coin.
   const topPadBase = !pin || H <= 0 ? 14 : scaled.reduce((acc, k, i) => {
@@ -357,13 +529,13 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
   };
   const heroRoom = hero && !columnMode && !inline ? roomTop([hero.y1, hero.y2], pillW0(hero.label), pillH, 6) : 0;
   // Pastille héros passée au-dessus : la marge basse qui lui était réservée est rendue au graphique
-  const bottomPad = heroRoom > 0 ? 14 : bottomPad0;
+  const bottomPad = (heroRoom > 0 ? 14 : bottomPad0) + labelLayout.bottom;
   const pillRoom = columnMode || inline ? 0 : Math.max(
     heroRoom,
     preview && mark && mark.kind !== "point" ? roomTop(mark.kind === "line" ? [mark.price] : zones[mark.index] ? [zones[mark.index].y1, zones[mark.index].y2] : null, textWidth(mark.label, MARK_FS) + 20, MARK_PH, 8) : 0,
   );
   // Verdict en bandeau (élément marqué) : sa hauteur est réservée en haut
-  const topPad = mark && mode === "verdict" ? Math.max(topPadBase, 76) : Math.max(topPadBase, pillRoom);
+  const topPad = (bannerBottom ? Math.max(topPadBase, bannerBottom + 12) : Math.max(topPadBase, pillRoom)) + labelLayout.top;
 
   // ─── Glissement au clic (FLIP) ───
   // Le tracé est rendu directement dans son nouveau cadrage ; avant l'affichage,
@@ -469,7 +641,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
     // la ligne mise en avant reste vive, les autres s'estompent.
     const family = (k: string) => k.replace(/\d+$/, "");
     const dimmed = (k: string) => !!emphasis && family(k) === family(emphasis) && k !== emphasis;
-    type InlineTag = { key: string; label: string; color: string; y: number; w: number; x: number; dim: boolean; hit: boolean };
+    type InlineTag = { key: string; label: string; color: string; y: number; w: number; x: number; dim: boolean; hit: boolean; lineY?: number };
     const inlineTags: InlineTag[] = [];
     if (inline) {
       // Au verdict, l'étiquette de l'erreur remplace celle de l'élément marqué
@@ -498,23 +670,26 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
       // (x = t.x - gap - w) ne doit pas compter comme un chevauchement à cause d'un
       // arrondi (540.64 + 129.2 + 4 = 673.8400000000001 > 673.84), sinon elle quittait sa ligne.
       const EPS = 0.01;
+      // (glisse aussi à gauche des bougies : une pastille posée sur une bougie cache le prix)
       const slotX = (y: number, w: number) => {
         let x = lineX1 - w;
-        for (let guard = 0; guard < 8; guard++) {
+        for (let guard = 0; guard < 40; guard++) {
+          if (x < minX) return null;
           const block = inlineTags.find((t) => Math.abs(t.y - y) < INLINE_TAG_H + INLINE_TAG_GAP - EPS
             && x < t.x + t.w + INLINE_TAG_GAP - EPS && x + w + INLINE_TAG_GAP > t.x + EPS);
-          if (!block) return x >= minX ? x : null;
-          x = block.x - INLINE_TAG_GAP - w;
+          if (block) { x = block.x - INLINE_TAG_GAP - w; continue; }
+          const box = [...candleBoxes, ...uiBoxes].find((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1);
+          if (box) { x = box.x1 - w - 1; continue; }
+          return x;
         }
         return null;
       };
-      // Pastilles empilées (lignes rapprochées) : 1 px entre elles, leur contour sombre les sépare
-      const PACK_GAP = 1;
-      // Bougies affichées (corps et mèche, marge de 3 px) : une pastille posée dessus cache le prix
-      const candleBoxes = visible.map((k, i) => ({ x1: xOf(i) - bodyW / 2 - 3, x2: xOf(i) + bodyW / 2 + 3, y1: toY(k.h) - 3, y2: toY(k.l) + 3 }));
+      // Bougies affichées (corps et mèche, marge de 3 px) : une pastille posée dessus cache le prix ;
+      // pastille « ton choix » et bandeau du verdict : elle y serait cachée
+      const candleBoxes = visible.map((k, i) => ({ x1: xOf(i) - bodyW / 2 - 3, x2: xOf(i) + bodyW / 2 + 3, y1: toY(k.h) - 3 - ext(i).up, y2: toY(k.l) + 3 + ext(i).down }));
       const free = (x: number, y: number, w: number) =>
         !inlineTags.some((t) => Math.abs(t.y - y) < INLINE_TAG_H + PACK_GAP - EPS && x < t.x + t.w + INLINE_TAG_GAP - EPS && x + w + INLINE_TAG_GAP > t.x + EPS)
-        && !candleBoxes.some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1);
+        && ![...candleBoxes, ...uiBoxes].some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1);
       // Première place libre en partant du bord droit, le long de la hauteur y (ni pastille ni bougie)
       const clearX = (y: number, w: number) => {
         for (let x = lineX1 - w; x >= minX; x -= 2) if (free(x, y, w)) return x;
@@ -528,7 +703,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
       // Lignes rapprochées (moins d'une hauteur de pastille) : leurs pastilles sont empilées
       // au bord droit, centrées sur le groupe, chacune décalée d'au plus 8 px pour rester
       // traversée par sa ligne ; sinon elles glissaient à gauche, sur les bougies.
-      const STEP = INLINE_TAG_H + PACK_GAP, MAX_SHIFT = INLINE_TAG_H / 2 - 2;
+      const STEP = INLINE_TAG_H + PACK_GAP, MAX_SHIFT = PACK_SHIFT;
       const packed = new Map<string, number>();
       const ls = placeOrder.filter((s) => onLine(s.key)).map((s) => ({ k: s.key, l: toY(s.price) })).sort((a, b) => a.l - b.l);
       // Groupes : on fusionne deux groupes voisins tant que leurs piles se recouvrent ; chaque
@@ -577,7 +752,59 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
           const xx = clearX(yy, w);
           if (xx !== null) { x = xx; y = yy; break; }
         }
-        if (x === null && !onLine(s.key)) for (let k = 1; x === null && k <= 6; k++) for (const dir of [1, -1]) {
+        // Zone : d'abord une place qui touche la zone (bord à au plus ZONE_TOUCH px de
+        // ses bords), la plus proche de son milieu ; sinon l'étiquette s'éloignait au-delà d'un
+        // niveau voisin (« Liquidité balayée » au-dessus du « Plus bas précédent »)
+        if (x === null && s.key.startsWith("zone")) {
+          const z = zones[+s.key.slice(4)];
+          const reach = INLINE_TAG_H / 2 + ZONE_TOUCH, zt = toY(Math.max(z.y1, z.y2)) - reach, zb = toY(Math.min(z.y1, z.y2)) + reach;
+          // puis, faute de place contre la zone, la place libre la plus proche d'elle (jamais à l'autre
+          // bout du graphique, à côté d'un autre niveau : « Swing high 1 » près du Swing high 3)
+          const far = 6 * (INLINE_TAG_H + INLINE_TAG_GAP), gap = (yy: number) => (yy < zt ? zt - yy : yy > zb ? yy - zb : 0);
+          const cands: number[] = [];
+          for (let yy = zt - far; yy <= zb + far; yy += 2) cands.push(yy);
+          // jamais plus près d'une autre zone étiquetée que de la sienne : plus loin, mais sans
+          // ambiguïté (« Swing low 1 » posé au niveau du Swing low 2 inversait l'ordre lu)
+          const others = zoneLabelIdx.filter((j) => j !== +s.key.slice(4)).map((j) => [toY(Math.max(zones[j].y1, zones[j].y2)), toY(Math.min(zones[j].y1, zones[j].y2))]);
+          const own = [toY(Math.max(z.y1, z.y2)), toY(Math.min(z.y1, z.y2))];
+          const dist = (yy: number, [t, b]: number[]) => (yy < t ? t - yy : yy > b ? yy - b : 0);
+          const amb = (yy: number) => Number(others.some((o) => dist(yy, o) < dist(yy, own)));
+          cands.sort((a, b) => amb(a) - amb(b) || gap(a) - gap(b) || Math.abs(a - y0) - Math.abs(b - y0));
+          const inFrame = (yy: number) => yy >= INLINE_TAG_H / 2 + 1 && yy <= H - INLINE_TAG_H / 2 - 1;
+          // Contre la zone mais entre deux pastilles de lignes du bord droit (stops, entrée) trop
+          // proches : elles s'écartent, chacune d'au plus MAX_SHIFT de sa ligne (toujours traversée
+          // par elle), pour lui faire la place ; sinon « Swing high 1 » passait sous « Entrée »
+          const squeeze = (yy: number) => {
+            const xx = lineX1 - w;
+            const blocks = inlineTags.filter((t) => Math.abs(t.y - yy) < INLINE_TAG_H + PACK_GAP - EPS && xx < t.x + t.w + INLINE_TAG_GAP - EPS && xx + w + INLINE_TAG_GAP > t.x + EPS);
+            if (!blocks.length || blocks.some((t) => t.lineY === undefined)) return null;
+            const moved = blocks.map((t) => ({ t, y: t.y < yy ? yy - INLINE_TAG_H - PACK_GAP : yy + INLINE_TAG_H + PACK_GAP }));
+            const rest = inlineTags.filter((t) => !blocks.includes(t));
+            const clear = (bx: number, by: number, bw: number, others: { x: number; y: number; w: number }[]) => inFrame(by)
+              && !others.some((o) => Math.abs(o.y - by) < INLINE_TAG_H + PACK_GAP - EPS && bx < o.x + o.w + INLINE_TAG_GAP - EPS && bx + bw + INLINE_TAG_GAP > o.x + EPS)
+              && ![...candleBoxes, ...uiBoxes].some((c) => bx < c.x2 && bx + bw > c.x1 && by - INLINE_TAG_H / 2 < c.y2 && by + INLINE_TAG_H / 2 > c.y1);
+            if (!clear(xx, yy, w, rest)) return null;
+            for (const m of moved) {
+              if (Math.abs(m.y - m.t.lineY!) > MAX_SHIFT) return null;
+              const others = [...rest, { x: xx, y: yy, w }, ...moved.filter((o) => o !== m).map((o) => ({ x: o.t.x, y: o.y, w: o.t.w }))];
+              if (!clear(m.t.x, m.y, m.t.w, others)) return null;
+            }
+            for (const m of moved) m.t.y = m.y;
+            return xx;
+          };
+          let squeezed = false;
+          for (const yy of cands) {
+            if (!inFrame(yy)) continue;
+            if (!squeezed && gap(yy) > 0) {
+              squeezed = true;
+              for (const sy of cands) { if (gap(sy) > 0) break; if (!inFrame(sy)) continue; const sx = squeeze(sy); if (sx !== null) { x = sx; y = sy; break; } }
+              if (x !== null) break;
+            }
+            const xx = clearX(yy, w);
+            if (xx !== null) { x = xx; y = yy; break; }
+          }
+        }
+        if (x === null && !onLine(s.key)) for (let k = 1; x === null && k <= (s.key === "markTag" ? MARK_TAG_STEPS : 6); k++) for (const dir of [1, -1]) {
           const yy = y0 + dir * k * (INLINE_TAG_H + INLINE_TAG_GAP) / 2;
           if (yy < INLINE_TAG_H / 2 + 1 || yy > H - INLINE_TAG_H / 2 - 1) continue;
           const xx = clearX(yy, w);
@@ -590,7 +817,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
           const xx = slotX(yy, w);
           if (xx !== null) { x = xx; y = yy; break; }
         }
-        inlineTags.push({ key: s.key, label: s.label, color: s.color, y, w, x: x ?? Math.max(minX, lineX1 - w), dim: dimmed(s.key), hit: !!s.hit });
+        inlineTags.push({ key: s.key, label: s.label, color: s.color, y, w, x: x ?? Math.max(minX, lineX1 - w), dim: dimmed(s.key), hit: !!s.hit, lineY: onLine(s.key) ? toY(s.price) : undefined });
       }
     }
     const inlineTag = (t: InlineTag) => (
@@ -691,6 +918,16 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
           );
         })}
 
+        {/* Zone marquée au verdict (erreur) : derrière les bougies, transparente */}
+        {mark && showMark && mark.kind === "zone" && zones[mark.index] && (() => {
+          const r = zoneRect(zones[mark.index]);
+          return (
+            <g className={markClass} data-mark-zone="">
+              <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={6} fill="rgba(239,68,68,0.16)" stroke="#f87171" strokeWidth={3} vectorEffect="non-scaling-stroke" />
+            </g>
+          );
+        })()}
+
         {/* Séparation passé / futur */}
         {!question && splitX !== null && (
           <line x1={splitX} x2={splitX} y1={pin && splitX < PIN_BOX.right ? PIN_BOX.bottom : topPad - 6} y2={H - bottomPad + 4}
@@ -715,12 +952,37 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
         {/* Bougies */}
         {visible.map((k, i) => {
           const isFuture = sep !== undefined && i >= sep;
-          if (question) return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={i} dim={keepCandlesBright ? "full" : "anim"} />;
+          // Avant la réponse, les bougies restent nettes, aux couleurs de la charte (plus d'estompage
+          // quand la zone s'allume : la zone est derrière elles et se voit à travers)
+          if (question) return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={i} dim="full" />;
           if (mode === "reveal" && isFuture) {
             // Montée par la page toutes les 420ms : apparaît à son arrivée
-            return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="full" />;
+            return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={0} dim="full" />;
           }
-          return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={0} dim="now" still />;
+          return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={0} dim="now" still />;
+        })}
+
+        {/* Changement de rôle : touches du côté de l'ancien rôle (anneaux à la pointe de la mèche) et
+            cassure (triangle dans le sens de la cassure), discrets, à l'écart des bougies */}
+        {zones.map((z, zi) => {
+          if (!z.flip) return null;
+          const f = z.flip, up = f.was === "resistance";
+          const oldColor = up ? "var(--v2-bear)" : "var(--v2-bull)", newColor = up ? "var(--v2-bull)" : "var(--v2-bear)";
+          const past = sep ?? visible.length;
+          return (
+            <g key={`flip${zi}`} data-flip={zi} className={question ? undefined : "v2-dim--now"}>
+              {f.touches.filter((i) => i < Math.min(past, visible.length)).map((i) => {
+                const k = visible[i];
+                const y = up ? toY(k.h) - FLIP_GAP - FLIP_R : toY(k.l) + FLIP_GAP + FLIP_R;
+                return <circle key={i} data-flip-touch={i} cx={xOf(i)} cy={y} r={FLIP_R} fill="none" stroke={oldColor} strokeWidth={1.6} vectorEffect="non-scaling-stroke" />;
+              })}
+              {f.breakAt >= 0 && f.breakAt < Math.min(past, visible.length) && (() => {
+                const k = visible[f.breakAt], x = xOf(f.breakAt);
+                const tip = up ? toY(k.h) - FLIP_GAP - 7 : toY(k.l) + FLIP_GAP + 7, d = up ? 5 : -5;
+                return <path data-flip-break={f.breakAt} d={`M${x} ${tip}L${x - 4} ${tip + d}L${x + 4} ${tip + d}Z`} fill={newColor} />;
+              })()}
+            </g>
+          );
         })}
 
         {/* Impact : le stop touché est marqué à la bougie qui l'atteint */}
@@ -754,9 +1016,9 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, keepCandlesBri
             top = bottom = toY(mark.price);
             body = <line x1={padX} x2={lineX1} y1={top} y2={top} stroke={RED} strokeWidth={3.5} filter="url(#v2-line-glow)" strokeLinecap="round" />;
           } else if (mark.kind === "zone" && zones[mark.index]) {
+            // Zone marquée : dessinée derrière les bougies (calque des zones) ; ici, seulement sa pastille
             const r = zoneRect(zones[mark.index]);
             top = r.y; bottom = r.y + r.h;
-            body = <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={6} fill="rgba(239,68,68,0.22)" stroke={RED} strokeWidth={3} filter="url(#v2-hero-glow)" />;
           } else if (mark.kind === "point") {
             const cx = xOf(visible.length - 1);
             top = bottom = toY(mark.price);

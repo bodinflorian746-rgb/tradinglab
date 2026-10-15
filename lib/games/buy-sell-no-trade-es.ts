@@ -56,6 +56,11 @@ export { ROUNDS_PER_SESSION, scoreChoice, mulberry32 };
 // ─── Tabla de traducción para etiquetas de zonas ─────────────────────────────
 
 const ZONE_LABEL_ES: Record<string, string> = {
+  // Changement de rôle (lib/games/shared.ts, ROLE_CHANGE_LABELS) : libellé et libellé court
+  "Ancienne résistance → support": "Antigua resistencia → soporte",
+  "Résistance → support": "Resistencia → soporte",
+  "Ancien support → résistance": "Antiguo soporte → resistencia",
+  "Support → résistance": "Soporte → resistencia",
   "Résistance":           "Resistencia",
   "Support":              "Soporte",
   "Résistance UT supérieure":       "Resistencia HTF",
@@ -70,11 +75,10 @@ const ZONE_LABEL_ES: Record<string, string> = {
   "Bas du range":       "Piso del rango",
   "Sweep haut":           "Barrido arriba",
   "Sweep bas":            "Barrido abajo",
-  "Niveau secondaire":    "Nivel secundario",
 };
 
 function translateZones(zones: ChartZone[]): ChartZone[] {
-  return zones.map((z) => ({ ...z, label: ZONE_LABEL_ES[z.label] ?? z.label }));
+  return zones.map((z) => ({ ...z, label: ZONE_LABEL_ES[z.label] ?? z.label, ...(z.short ? { short: ZONE_LABEL_ES[z.short] ?? z.short } : {}) }));
 }
 
 // Wrapper de buildChart que traduce las etiquetas de zonas.
@@ -396,10 +400,10 @@ export const SCENARIO_TEMPLATES_ES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "discipline",
-    context: "HTF bajista nítido. El precio rebota localmente sobre un nivel secundario, pero la tendencia sigue en contra tuya.",
+    context: "HTF bajista nítido. El precio rebota localmente sobre un soporte, pero la tendencia sigue en contra tuya.",
     shortContext: "Rebote local en una tendencia bajista HTF.",
     rationales: {
-      BUY: "✗ Operar contra la tendencia HTF apostando por un nivel secundario supone aquí jugar una probabilidad baja. Las estadísticas suelen ir en tu contra antes incluso del click.",
+      BUY: "✗ Operar contra la tendencia HTF apostando por este soporte local supone aquí jugar una probabilidad baja. Las estadísticas suelen ir en tu contra antes incluso del click.",
       SELL: "✗ No es el momento: aquí, el rebote local aún no muestra signos de agotamiento. Si vendes ahora, 2-3 velas verdes pueden sacarte antes de la reanudación.",
       NO_TRADE: "✓ El setup local se sostiene, PERO va contra el HTF: aquí falta la ventaja. Una opción lógica es esperar el agotamiento del rebote y una zona HTF clara para vender.",
     },

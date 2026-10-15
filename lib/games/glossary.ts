@@ -165,7 +165,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "creux / sommet marquant.", es: "mínimo / máximo marcado." },
   },
   {
-    id: "fakeout", source: "Intermédiaire · leçon 6 (Fake Breakout)",
+    id: "fakeout", source: "Intermédiaire · leçon 6 (Faux breakout)",
     term: { fr: "Faux breakout", es: "Fakeout" },
     match: { fr: /faux breakouts?/i, es: /fakeout/i },
     def: {
@@ -285,7 +285,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "marché sans tendance, entre un haut et un bas.", es: "mercado sin tendencia, entre un techo y un piso." },
   },
   {
-    id: "momentum", source: "Intermédiaire · leçon 6 (Fake Breakout)",
+    id: "momentum", source: "Intermédiaire · leçon 6 (Faux breakout)",
     term: { fr: "Momentum", es: "Momentum" },
     match: { fr: /momentum/i, es: /momentum/i },
     def: {
@@ -550,7 +550,7 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
     { from: /niveau magnétique/i, to: "niveau clé", source: "Intermédiaire · leçons 2 et 5" },
     { from: /asia high/i, to: "haut de la session asiatique", source: "hors leçons (sessions : Avancé · leçon 4)" },
     { from: /bougies? de force/i, to: "bougie de displacement", source: "Avancé · leçon 2" },
-    { from: /zone douteuse/i, to: "niveau secondaire", source: "Intermédiaire · leçon 2" },
+    { from: /zone douteuse|niveau secondaire/i, to: "support / résistance, sinon plus haut / plus bas précédent", source: "Intermédiaire · leçon 2" },
     { from: /position sizing/i, to: "taille de position", source: "Débutant · leçon 8" },
     { from: /wick fakeout/i, to: "mèche du faux breakout", source: "Intermédiaire · leçon 6" },
     { from: /fakeouts?/i, to: "faux breakout", source: "Intermédiaire · leçon 6" },
@@ -567,7 +567,7 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
     { from: /nivel magnético/i, to: "nivel clave", source: "Intermedio · lecciones 2 y 5" },
     { from: /asia high/i, to: "máximo de la sesión asiática", source: "hors leçons (sesiones: Avanzado · lección 4)" },
     { from: /velas? de fuerza/i, to: "vela impulsiva", source: "Avanzado · lección 2" },
-    { from: /zona dudosa/i, to: "nivel secundario", source: "Intermedio · lección 2" },
+    { from: /zona dudosa|nivel secundario/i, to: "soporte / resistencia, si no máximo / mínimo anterior", source: "Intermedio · lección 2" },
     { from: /position sizing/i, to: "tamaño de posición", source: "Principiante · lección 8" },
     { from: /wick del fakeout/i, to: "mecha del fakeout", source: "Intermedio · lección 6" },
     { from: /falso breakout/i, to: "fakeout", source: "Intermedio · lección 6" },
@@ -578,27 +578,32 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
   ],
 };
 
-/** Libellés de zones autorisés sur les graphiques (FR / ES), tous couverts par les leçons sauf mention. */
+/** Libellés de zones autorisés sur les graphiques (FR / ES), tous couverts par les leçons sauf mention.
+ *  Aucun libellé qui désigne un niveau sans le nommer (« Niveau secondaire », « Niveau clé »…) :
+ *  un support ou une résistance s'appelle ainsi et se prouve sur le graphique (scripts/audit-jeux/sr.ts). */
 export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
   fr: [
     "FVG haussier", "Order Block", "Liquidité au-dessus", "Liquidité en-dessous", "Liquidité balayée",
     "Plus haut précédent", "Plus bas précédent", "Sweep haut", "Sweep bas", "Haut du range", "Bas du range",
     "Résistance", "Résistance UT supérieure", "Résistance cassée", "Support", "Support UT supérieure", "Support cassé",
-    "Niveau secondaire", "Mèche du faux breakout", "Swing high", "Swing low",
-    "Faux breakouts précédents", "Zone de chasse aux stops", "Equal lows", "Haut de la session asiatique", "Niveau clé",
+    "Mèche du faux breakout", "Swing high", "Swing low",
+    "Faux breakouts précédents", "Zone de chasse aux stops", "Equal lows", "Haut de la session asiatique",
     "Chiffre rond", "HL H4", "PDL", "Swing high 1", "Swing high 2", "Swing high 3", "Swing low 1",
     "Swing low 2", "Swing low 3", "Swing high évident", "Swing low évident", "Swing low H1",
+    // changement de rôle (lib/games/shared.ts, ROLE_CHANGE_LABELS) : libellé et libellé court
+    "Ancienne résistance → support", "Ancien support → résistance", "Résistance → support", "Support → résistance",
     // niveau avancé : libellés génériques
-    "Niveau bas", "Niveau haut", "Déséquilibre", "Liquidité",
+    "Déséquilibre", "Liquidité",
   ],
   es: [
     "FVG alcista", "Order Block", "Liquidez arriba", "Liquidez abajo", "Liquidez barrida",
     "Máximo anterior", "Mínimo anterior", "Barrido arriba", "Barrido abajo", "Techo del rango", "Piso del rango",
     "Resistencia", "Resistencia HTF", "Resistencia rota", "Soporte", "Soporte HTF", "Soporte roto",
-    "Nivel secundario", "Mecha del fakeout", "Swing high", "Swing low",
-    "Fakeouts anteriores", "Zona de stop hunt", "Equal lows", "Máximo de la sesión asiática", "Nivel clave",
+    "Mecha del fakeout", "Swing high", "Swing low",
+    "Fakeouts anteriores", "Zona de stop hunt", "Equal lows", "Máximo de la sesión asiática",
     "Nivel psicológico", "HL H4", "PDL", "Swing high 1", "Swing high 2", "Swing high 3", "Swing low 1",
     "Swing low 2", "Swing low 3", "Swing high evidente", "Swing low evidente", "Swing low H1",
-    "Nivel bajo", "Nivel alto", "Desequilibrio", "Liquidez",
+    "Antigua resistencia → soporte", "Antiguo soporte → resistencia", "Resistencia → soporte", "Soporte → resistencia",
+    "Desequilibrio", "Liquidez",
   ],
 };

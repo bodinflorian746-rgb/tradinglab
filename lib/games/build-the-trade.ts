@@ -10,11 +10,12 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, levelTouches, srGuards,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
 } from "./shared";
+import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
-import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
+import { assetPriceMap, mapCandle, mapDomain, mapZone, priceEpsilon } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext, Candle, ChartZone };
 
@@ -103,6 +104,8 @@ export interface BuildTradeChart {
   tps:     Record<TpType,    number>;
   // Prix actuel = dernier close du past (pour l'entry market)
   currentPrice: number;
+  /** Actif des prix (posé par withAssetPrices) ; absent en échelle abstraite */
+  asset?: Asset;
 }
 
 export const ROUNDS_PER_SESSION = 8;
@@ -330,7 +333,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Le pullback est devenu très profond. Plus de 60 % de l'impulsion précédente est retracée.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
-    optimalExplain: "Ici, le pullback profond peut annoncer une cassure de structure. La confirmation préserve l'avantage : une entrée agressive reviendrait à courir après le prix, et un pullback profond à parier sur un niveau secondaire.",
+    optimalExplain: "Ici, le pullback profond peut annoncer une cassure de structure. La confirmation préserve l'avantage : une entrée agressive reviendrait à courir après le prix, et un pullback profond à parier sur une nouvelle touche de l'ancienne résistance devenue support.",
     lessons: {
       advanced:     "Un pullback de plus de 60 % de l'impulsion peut signaler un pattern fatigué. Ici, une confirmation et un TP modéré sont une option logique.",
       intermediate: "Plus le pullback est profond, plus la confirmation compte. Ici, une entrée agressive serait très risquée.",
@@ -649,6 +652,8 @@ function shapeBounceSupport(rng: () => number, m: number): ShapeOutput {
   for (let i = 0; i < 3; i++) {
     const o = p;
     let c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
+    // corps réel sur le test du milieu : pas de série de corps minuscules sous des mèches géantes
+    if (i === 1 && Math.abs(c - o) < 0.3 * m) c = o + (o < S + 0.85 ? 0.3 : -0.3) * m;
     const wU = (0.2 + rng() * 0.2) * m;
     let l = Math.max(Math.min(o, c) - (0.7 + rng() * 0.3) * m, S - 0.05);
     if (i >= 1) l = Math.min(l, S + 0.05); // support « testé 2-3 fois »
@@ -695,6 +700,8 @@ function shapeRejectionResistance(rng: () => number, m: number): ShapeOutput {
   for (let i = 0; i < 3; i++) {
     const o = p;
     let c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
+    // corps réel sur le test du milieu : pas de série de corps minuscules sous des mèches géantes
+    if (i === 1 && Math.abs(c - o) < 0.3 * m) c = o + (o > R - 0.85 ? -0.3 : 0.3) * m;
     let h = Math.min(Math.max(o, c) + (0.7 + rng() * 0.3) * m, R + 0.05);
     const wD = (0.2 + rng() * 0.2) * m;
     if (i >= 1) h = Math.max(h, R - 0.05); // résistance testée plusieurs fois
@@ -719,10 +726,11 @@ function shapeRejectionResistance(rng: () => number, m: number): ShapeOutput {
   ], ref: { swingLow: entryRef - 4 * m, swingHigh: R, entryRef } };
 }
 
-// Mèches contenues dans les zones du range (bornes ± 0,1)
+// Mèches contenues dans le range : au plus jusqu'au bord intérieur de ses zones (le range se lit à
+// ses touches ; une mèche au-delà sortait du range tracé)
 function inRange(k: Candle, S: number, R: number): Candle {
-  k.h = Math.min(k.h, R + 0.1);
-  k.l = Math.max(k.l, S - 0.1);
+  k.h = Math.min(k.h, R - 0.16);
+  k.l = Math.max(k.l, S + 0.16);
   return k;
 }
 
@@ -733,13 +741,27 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
   const R = 6;
   const mid = (S + R) / 2;
   let p = mid + (rng() - 0.5);
-  // 12 candles d'oscillation
+  // 12 bougies d'oscillation : le prix va d'une borne à l'autre (cible alternée toutes les 3
+  // bougies, bruit du marché conservé) au lieu de revenir sans cesse au milieu ; le range se lit à ses
+  // bornes testées. Avant : bornes jamais testées et oscillation resserrée loin d'elles par la passe
+  // de réalisme (un « range » sans range, puis une chute).
+  const firstUp = direction === "SELL";
   for (let i = 0; i < 12; i++) {
     const o = p;
-    const drift = (mid - o) * 0.25 + (rng() - 0.5) * 1.2 * m;
-    const c = clamp(o + drift, S + 0.4, R - 0.4);
+    const up = (Math.floor(i / 3) % 2 === 0) === firstUp;
+    const target = up ? R - 0.25 : S + 0.25;
+    const drift = (target - o) * 0.3 + (rng() - 0.5) * 1.2 * m;
+    const c = clamp(o + drift, S + 0.3, R - 0.3);
     past.push(inRange(candle(o, c, (0.2 + rng() * 0.2) * m, (0.2 + rng() * 0.2) * m), S, R));
     p = c;
+  }
+  // Chaque borne touchée deux fois : dans chaque moitié de l'oscillation, la bougie la plus proche
+  // de la borne y pousse sa mèche (juste dans la zone) ; le futur reste sous ce niveau
+  for (const [a0, a1] of [[0, 6], [6, 12]]) {
+    const seg = past.slice(a0, a1);
+    const top = seg.reduce((x, k) => (k.h > x.h ? k : x)), bot = seg.reduce((x, k) => (k.l < x.l ? k : x));
+    top.h = R - 0.12;
+    bot.l = S + 0.12;
   }
   // 2 candles approchant la borne ciblée : la dernière clôture dans le tiers
   // de range côté borne (« le prix arrive au haut du range / bas du range »)
@@ -764,7 +786,7 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
   // Future : oscillation jusqu'à l'autre borne
   if (direction === "SELL") {
     // 1 bump test résistance puis drop vers support
-    fut.push({ o: p, c: R - 0.5 * m, h: R - 0.05 * m, l: Math.min(p, R - 0.5 * m) - 0.1 * m });
+    fut.push({ o: p, c: R - 0.5 * m, h: R - 0.15, l: Math.min(p, R - 0.5 * m) - 0.1 * m });
     p = R - 0.5 * m;
     fut.push(inRange(candle(p, p - 0.5 * m, 0.1, (0.2 + rng() * 0.15) * m), S, R));
     p -= 0.5 * m;
@@ -775,7 +797,7 @@ function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDir
       p = c;
     }
   } else {
-    fut.push({ o: p, c: S + 0.5 * m, h: Math.max(p, S + 0.5 * m) + 0.1 * m, l: S + 0.05 * m });
+    fut.push({ o: p, c: S + 0.5 * m, h: Math.max(p, S + 0.5 * m) + 0.1 * m, l: S + 0.15 });
     p = S + 0.5 * m;
     fut.push(inRange(candle(p, p + 0.5 * m, (0.2 + rng() * 0.15) * m, 0.1), S, R));
     p += 0.5 * m;
@@ -850,14 +872,13 @@ function shapeSweepLowReversal(rng: () => number, m: number): ShapeOutput {
   }
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.5 * m, L + 0.5, L + 1.5);
+    // les clôtures restent nettement au-dessus du plus bas précédent (le prix en est reparti)
+    const c = clamp(o + (rng() - 0.5) * 0.5 * m, L + Math.max(0.5, 0.8 * m), L + 1.6 * Math.max(1, m));
     past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
     p = c;
   }
   // Le « plus bas précédent » : le creux de la consolidation touche le niveau L
-  const consol = past.slice(-3);
-  const prevLow = consol.reduce((a, k) => (k.l < a.l ? k : a));
-  prevLow.l = Math.min(prevLow.l, L + 0.02);
+  markPrevLow(past, L, m);
   // Sweep candle
   const sweepLow = L - 1.2 * m - rng() * 0.3;
   past.push({ o: p, c: L + 0.4 + rng() * 0.2, h: p + 0.15, l: sweepLow });
@@ -883,29 +904,31 @@ function shapeSweepLowReversal(rng: () => number, m: number): ShapeOutput {
 // 10. FVG continuation (BUY)
 function shapeFvgContinuation(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
-  let p = 2 + rng() * 0.3;
+  let p = 3.5 + rng() * 0.3;
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = o + (rng() - 0.4) * 0.4 * m;
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
-  const baseHigh = Math.max(...past.slice(-3).map((k) => k.h));
-  past.push(candle(p, p + (2.0 + rng() * 0.3) * m, (0.3 + rng() * 0.2) * m, 0.12));
-  p = past[past.length - 1].c;
+  // Impulsion en 3 bougies : le FVG reste un petit vide proportionné aux bougies voisines
+  const imp = bullImpulse3(rng, m, p, past);
+  p = imp.p;
+  const fvgLow = imp.fvgLow;
+  const fvgHigh = imp.fvgHigh;
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = o + (0.25 + rng() * 0.25) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
+    const k = candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m);
+    k.l = Math.max(k.l, fvgHigh + 0.04 * m);  // la continuation ne rentre pas dans le FVG
+    past.push(k);
     p = c;
   }
-  const fvgLow = baseHigh;
-  const fvgHigh = past[past.length - 2].l;
-  // Pullback dans le FVG
+  // Pullback dans le FVG : la 3e bougie clôture au milieu du FVG (retour garanti)
   const target = (fvgLow + fvgHigh) / 2;
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = Math.max(target, o - (0.3 + rng() * 0.3) * m);
+    const c = i === 2 ? target : Math.max(target, o - (0.3 + rng() * 0.3) * m);
     past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.18 + rng() * 0.18) * m));
     p = c;
   }
@@ -933,38 +956,46 @@ function shapeFvgContinuation(rng: () => number, m: number): ShapeOutput {
 // 11. Deep pullback risky (BUY context but pullback too deep)
 function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
   const past: Candle[] = [];
-  let p = 1 + rng() * 0.3;
-  for (let i = 0; i < 8; i++) {
+  // Support prouvé par polarité : ancien haut de range touché deux fois par-dessous, cassé par
+  // l'impulsion, puis retesté par le pullback profond (plus de 60 % de l'impulsion retracés)
+  const level = 7 + rng() * 0.3;  // assez haut pour que tout le graphique reste au-dessus de 0
+  let p = level - (2.4 + rng() * 0.5) * m;
+  const touches = levelTouches(rng, p, level - 0.04, level + 0.04, "below", m, 2);
+  past.push(...touches.candles);
+  p = touches.p;
+  const base = p;
+  // Impulsion : 8 bougies haussières, calée pour que le niveau soit à 65-72 % de retracement (pas
+  // plus : les 3 entrées candidates, à moins de 1 m l’une de l’autre, restent lisibles au téléphone)
+  const target = 0.65 + rng() * 0.07;
+  const peak = base + (level - base) / (1 - target);
+  const w = Array.from({ length: 8 }, () => 0.5 + rng() * 0.5);
+  const sw = w.reduce((a, b) => a + b, 0);
+  for (const wi of w) {
     const o = p;
-    const c = o + (0.5 + rng() * 0.5) * m;
+    const c = o + ((peak - base) * wi) / sw;
     past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.13 + rng() * 0.15) * m));
     p = c;
   }
-  const peak = p;
-  // Pullback profond — 6 bougies rouges, retracement ~65%
-  for (let i = 0; i < 6; i++) {
+  // Pullback profond — 5 bougies rouges jusqu'au niveau ; seule la dernière vient au contact
+  const retestClose = level + (0.25 + rng() * 0.15) * m;  // au-dessus du support (entrée « pullback profond » distincte)
+  const wd = Array.from({ length: 5 }, () => 0.4 + rng() * 0.45);
+  const sd = wd.reduce((a, b) => a + b, 0);
+  for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o - (0.4 + rng() * 0.45) * m;
-    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.25) * m));
+    const c = i === 4 ? retestClose : o - ((peak - retestClose) * wd[i]) / sd;
+    const k = candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.25) * m);
+    k.l = i === 4 ? level : Math.max(k.l, level + 0.04 + 0.15 * m);
+    past.push(k);
     p = c;
   }
-  // « Plus de 60% de l'impulsion retracée » sans la retracer entièrement :
-  // on met à l'échelle les corps du pullback (mèches conservées).
-  const impulse = peak - past[0].o;
-  const ratio = (peak - p) / impulse;
-  const target = ratio < 0.62 ? 0.62 + 0.1 * (ratio / 0.62) : ratio > 0.88 ? 0.88 : ratio;
-  if (target !== ratio) {
-    const f = target / ratio;
-    let q = peak;
-    for (const k of past.slice(8)) {
-      const wU = k.h - Math.max(k.o, k.c), wD = Math.min(k.o, k.c) - k.l;
-      const c = q - (k.o - k.c) * f;
-      k.o = q; k.c = c; k.h = q + wU; k.l = c - wD;
-      q = c;
-    }
-    p = q;
-  }
-  const swingLow = Math.min(...past.slice(-7).map((k) => k.l));
+  // Réaction au retest : une bougie verte qui repart du support (prix actuel = entrée « agressive »),
+  // assez haut pour que les 3 entrées candidates se lisent séparément au téléphone
+  const lastClose = level + (0.65 + rng() * 0.15) * m;
+  const react = candle(p, lastClose, (0.12 + rng() * 0.1) * m, (0.1 + rng() * 0.1) * m);
+  react.l = Math.max(react.l, level + 0.04 + 0.15 * m);
+  past.push(react);
+  p = lastClose;
+  const swingLow = level;
   const topHigh = Math.max(...past.map((k) => k.h));
   const entryRef = p;
   const fut: Candle[] = [];
@@ -980,7 +1011,7 @@ function shapeDeepPullbackRisky(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "support",        y1: swingLow - 0.04,    y2: swingLow + 0.04,    label: "Niveau secondaire" },
+    { kind: "support",        y1: swingLow - 0.04,    y2: swingLow + 0.04,    label: "Support" },
     { kind: "liquidity_high", y1: topHigh - 0.05,      y2: topHigh + 0.05,     label: "Plus haut précédent" },
   ], ref: { swingLow, swingHigh: peak, entryRef } };
 }
@@ -1075,14 +1106,11 @@ function shapeCounterTrendLocal(rng: () => number, m: number): ShapeOutput {
     past.push(candle(o, c, (0.12 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
-  const minorLevel = p;
-  // 4 candles rebond local
-  for (let i = 0; i < 4; i++) {
-    const o = p;
-    const c = o + (0.25 + rng() * 0.3) * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.15 + rng() * 0.15) * m));
-    p = c;
-  }
+  // Support prouvé : touché deux fois par-dessus ; la 2e réaction est le rebond local
+  const minorLevel = p - (2.4 + rng() * 0.5) * m;
+  const touches = levelTouches(rng, p, minorLevel - 0.08, minorLevel + 0.08, "above", m, 2);
+  past.push(...touches.candles);
+  p = touches.p;
   const entryRef = p;
   // Structure de confirmation : les 2 dernières bougies du rebond local. Le
   // stop logique se place dessous (swingLow - marge, cf. formule des stops).
@@ -1119,7 +1147,7 @@ function shapeCounterTrendLocal(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "support", y1: minorLevel - 0.08, y2: minorLevel + 0.08, label: "Niveau secondaire" },
+    { kind: "support", y1: minorLevel - 0.08, y2: minorLevel + 0.08, label: "Support" },
   ], ref: { swingLow: structLow, swingHigh: entryRef + 1.5 * m, entryRef, reversal: top.h } };
 }
 
@@ -1140,7 +1168,18 @@ export function withAssetPrices(chart: BuildTradeChart, inst: { asset: Asset; se
     stops:   map(chart.stops),
     tps:     map(chart.tps),
     currentPrice: f(chart.currentPrice),
+    asset:   inst.asset,
   };
+}
+
+/**
+ * R/R d'un plan (reward / risk), affiché à la construction et au verdict ; 0 si le risque est
+ * plus petit qu'un demi-pas de cotation de l'actif (seuil relatif à son échelle de prix).
+ * Affichage seulement : le barème ne dépend que des 3 décisions.
+ */
+export function planRR(chart: BuildTradeChart, picks: ChoiceSet): number {
+  const e = chart.entries[picks.entry], risk = Math.abs(e - chart.stops[picks.stop]);
+  return risk > priceEpsilon(chart.asset) ? Math.abs(chart.tps[picks.tp] - e) / risk : 0;
 }
 
 /** Graphique du scénario, avec la passe de réalisme des bougies (niveaux clés : zones, entrées, stops, TP). */
@@ -1150,7 +1189,7 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
   const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol], ch.past)];
   const plan = [...Object.values(ch.entries), ...Object.values(ch.stops), ...Object.values(ch.tps)];
-  return realizeChart(ch, { past: zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol });
+  return withRoleChanges(withTracedZones(realizeChart(ch, { past: zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol })));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */
@@ -1398,7 +1437,7 @@ export function evaluateTrade(
     if (tpIdx !== null && (slIdx === null || tpIdx < slIdx)) {
       tpHit = true;
       outcome = "tp_hit";
-      rr = Math.abs(tp - entry) / Math.max(0.001, Math.abs(entry - stop));
+      rr = planRR(chart, picks);
       drawdown = maxDrawdownAfterEntry(entry, direction, future, entryIdx!, tpIdx);
     } else if (slIdx !== null) {
       slHit = true;

@@ -558,6 +558,11 @@ export const PLACE_STOP_TEMPLATES = PLACE_STOP_TEMPLATES_EN;
 // ─── Translation table for zone labels ───────────────────────────────────────
 
 const ZONE_LABEL_EN: Record<string, string> = {
+  // Changement de rôle (lib/games/shared.ts, ROLE_CHANGE_LABELS) : libellé et libellé court
+  "Ancienne résistance → support": "Former resistance → support",
+  "Résistance → support": "Resistance → support",
+  "Ancien support → résistance": "Former support → resistance",
+  "Support → résistance": "Support → resistance",
   "Résistance":           "Resistance",
   "Support":              "Support",
   "Résistance UT supérieure":       "HTF Resistance",
@@ -595,7 +600,7 @@ const ZONE_LABEL_EN: Record<string, string> = {
 };
 
 function translateZones(zones: ChartZone[]): ChartZone[] {
-  return zones.map((z) => ({ ...z, label: ZONE_LABEL_EN[z.label] ?? z.label }));
+  return zones.map((z) => ({ ...z, label: ZONE_LABEL_EN[z.label] ?? z.label, ...(z.short ? { short: ZONE_LABEL_EN[z.short] ?? z.short } : {}) }));
 }
 
 // ─── Rationale translation table ─────────────────────────────────────────────

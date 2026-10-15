@@ -13,10 +13,17 @@
 //   aperçus du hub, héros de la home), textes affichés FR / ES des leçons, de la
 //   home, du hub et des jeux (termes interdits, orthographe, typographie ES),
 //   supports et résistances prouvés (2 touches, ou cassure puis retest avec réaction,
-//   visibles avant la réponse ; même règle que les leçons : audit-lecons/sr-proof.mjs).
+//   visibles avant la réponse ; même règle que les leçons : audit-lecons/sr-proof.mjs),
+//   zones (FVG ≤ 25 % de la hauteur du graphique, autres zones ≤ 40 %, libellés du
+//   vocabulaire validé ; autotest), R/R affiché de Build the Trade identique sur les
+//   4 actifs (plan et réalisé ; autotest), termes de niveau refusés dans tout texte affiché
+//   (« Niveau secondaire », « Niveau bas », « Niveau haut », « niveau faible » ; autotest),
+//   changement de rôle lisible (support touché seulement par en dessous, résistance seulement
+//   par au-dessus : « Ancienne résistance → support »… ; autotest).
 // Règles « DOM » (Playwright) : troncature langues actives × 390/1440, sonde
-//   lignes = étiquettes = boutons, aucune étiquette sur une bougie, cohérence du verdict
-//   affiché ; autotest (défauts injectés dans les étiquettes, chacun doit être détecté).
+//   lignes = étiquettes = boutons, aucune étiquette sur une bougie, zones derrière les
+//   bougies, corps ≥ 3 × la mèche, graphique entier dans l'écran du téléphone, cohérence
+//   du verdict affiché ; autotest (défauts injectés, chacun doit être détecté).
 // Code de sortie 1 dès qu'une règle compte une erreur.
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
@@ -74,12 +81,19 @@ process.stdout.write("… contexte de marché et prix\n");
 }
 
 // 3. Réalisme, verdicts, textes, glossaire, bougies
-for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (ton ; français en EN / ES si actives)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Supports / résistances prouvés (500 rounds)", "sr.ts"], ["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"], ["Vocabulaire de référence (lib/vocabulary/trading-terms.json)", "vocabulaire.ts"]]) {
+for (const [rule, file] of [["Réalisme des bougies", "realism.ts"], ["Verdicts (toutes les issues)", "verdicts.ts"], ["Textes (ton ; français en EN / ES si actives)", "texts.ts"], ["Glossaire (vocabulaire des leçons)", "glossary.ts"], ["Bougies (continuité, rendu, 500 rounds)", "candles.ts"], ["Supports / résistances prouvés (500 rounds)", "sr.ts"], ["Zones : libellés validés", "zones.ts"], ["Tracé calé sur les bougies (liquidité au-delà de son niveau, extrêmes, swings sur la pointe de la mèche et dans l'ordre, FVG, OB, S/R, taille × bougie médiane)", "trace.ts"], ["Stops de Place ton Stop là où leur justification le dit", "stops.ts"], ["Bornes de range testées, jamais franchies avant la cassure", "range.ts"], ["R/R affiché de Build the Trade (4 actifs)", "rr-btt.ts"], ["Termes de niveau refusés (Niveau secondaire / bas / haut, niveau faible)", "termes-niveaux.ts"], ["Changement de rôle lisible (ancienne résistance → support…)", "roles.ts"],["Leçons, home, hub : termes interdits, orthographe", "orthographe.ts"], ["Vocabulaire de référence (lib/vocabulary/trading-terms.json)", "vocabulaire.ts"]]) {
   process.stdout.write(`… ${rule}\n`);
   const out = viteNode(file);
   const r = resultOf(out);
   const detail = out.split("\n").filter((l) => /ERREUR|hors seuil :/.test(l)).slice(0, 6).join(" | ");
   record(rule, r ? r.e : null, r ? detail : out.split("\n").slice(-5).join(" "), r ? r.w : 0);
+}
+// Autotests des règles de zones (libellé inventé), du tracé (liquidité trop loin, extrême hors
+// d'un creux, FVG décalé…), des stops, des bornes de range et du R/R affiché (ancien seuil de risque absolu)
+for (const [rule, file] of [["Autotest des zones (défauts injectés)", "zones.ts"], ["Autotest du tracé (défauts injectés)", "trace.ts"], ["Autotest des stops (défauts injectés)", "stops.ts"], ["Autotest des bornes de range (défauts injectés)", "range.ts"], ["Autotest du R/R affiché (défaut injecté)", "rr-btt.ts"], ["Autotest des termes de niveau (défauts injectés)", "termes-niveaux.ts"], ["Autotest du changement de rôle (défauts injectés)", "roles.ts"]]) {
+  const out = viteNode(file, ["--autotest"]);
+  const r = resultOf(out);
+  record(rule, r ? r.e : null, out.split("\n").filter((l) => /^MANQUÉ/.test(l)).join(" | "));
 }
 
 // 4. DOM (navigateur) : troncature, sondes, verdict affiché

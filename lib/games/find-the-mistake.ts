@@ -8,8 +8,9 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, levelTouches, srGuards,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
 } from "./shared";
+import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { anchorPrice, assetPriceMap, linearPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
@@ -672,12 +673,21 @@ function shApproachResistance(rng: () => number, m: number): { chart: ScenarioCh
   const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
   past.push(...h.candles);
   let p = h.p;
-  // 4 candles testant R avec wicks (rejets passés)
+  // 4 tests de R (rejets passés), séparés par une bougie ordinaire : pas de série de mèches géantes
   for (let i = 0; i < 4; i++) {
+    if (i > 0) {
+      const o = p;
+      const c = clamp(o + (rng() - 0.5) * 0.4 * m, R - 1.3, R - 0.6);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.h = Math.min(k.h, R - 0.5);
+      past.push(k);
+      p = c;
+    }
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.5 * m, R - 1.2, R - 0.4);
-    const k = candle(o, c, (0.6 + rng() * 0.3) * m, (0.2 + rng() * 0.2) * m);
-    k.h = Math.max(k.h, R - 0.05); // « testée plusieurs fois » : la mèche entre dans la zone
+    let c = clamp(o + (rng() - 0.5) * 0.5 * m, R - 1.2, R - 0.4);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o > R - 0.8 ? -0.3 : 0.3) * m;
+    const k = candle(o, c, 0, (0.1 + rng() * 0.1) * m);
+    k.h = R - 0.05 + rng() * 0.12; // « testée plusieurs fois » : la mèche entre dans la zone, sans la traverser
     past.push(k);
     p = c;
   }
@@ -702,11 +712,21 @@ function shApproachSupport(rng: () => number, m: number): { chart: ScenarioChart
   const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.1, S + 0.1, "above", m);
   past.push(...h.candles);
   let p = h.p;
+  // 4 tests de S (rebonds passés), séparés par une bougie ordinaire : pas de série de mèches géantes
   for (let i = 0; i < 4; i++) {
+    if (i > 0) {
+      const o = p;
+      const c = clamp(o + (rng() - 0.5) * 0.4 * m, S + 0.6, S + 1.3);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.l = Math.max(k.l, S + 0.5);
+      past.push(k);
+      p = c;
+    }
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.5 * m, S + 0.4, S + 1.2);
-    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.6 + rng() * 0.3) * m);
-    k.l = Math.min(k.l, S + 0.05); // « testé plusieurs fois » : la mèche entre dans la zone
+    let c = clamp(o + (rng() - 0.5) * 0.5 * m, S + 0.4, S + 1.2);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o < S + 0.8 ? 0.3 : -0.3) * m;
+    const k = candle(o, c, (0.1 + rng() * 0.1) * m, 0);
+    k.l = S + 0.05 - rng() * 0.12; // « testé plusieurs fois » : la mèche entre dans la zone, sans la traverser
     past.push(k);
     p = c;
   }
@@ -730,16 +750,17 @@ function shRangeOscillation(rng: () => number, m: number): { chart: ScenarioChar
   const R = 6;
   const mid = (S + R) / 2;
   let p = mid + (rng() - 0.5);
-  for (let i = 0; i < 14; i++) {
+  // Le prix « oscille dans un range » : bornes touchées deux fois chacune (rangeLegs), puis retour
+  // au milieu, où le BUY est pris
+  const legs = rangeLegs(rng, p, S, R, 4, 3, m, rng() < 0.5);
+  past.push(...legs.candles);
+  p = legs.p;
+  for (let i = 0; i < 2; i++) {
     const o = p;
-    const drift = (mid - o) * 0.25 + (rng() - 0.5) * 1.4 * m;
     // « Tu prends ce BUY au milieu » : la dernière bougie finit dans le tiers central
-    let c = i === 13 ? mid + (drift - (mid - o) * 0.25) * 0.25 : o + drift;
-    c = clamp(c, S + 0.4, R - 0.4);
-    const k = candle(o, c, (0.2 + rng() * 0.22) * m, (0.2 + rng() * 0.22) * m);
-    // Le prix « oscille dans un range » : les mèches restent dans ses bornes
-    k.h = Math.min(k.h, R + 0.1);
-    k.l = Math.max(k.l, S - 0.1);
+    const c = i === 1 ? mid + (rng() - 0.5) * 0.4 : clamp((o + mid) / 2 + (rng() - 0.5) * 0.3, S + 0.8, R - 0.8);
+    const k = candle(o, c, (0.2 + rng() * 0.25) * m, (0.2 + rng() * 0.25) * m);
+    k.h = Math.min(k.h, R - 0.6); k.l = Math.max(k.l, S + 0.6);
     past.push(k);
     p = c;
   }
@@ -830,10 +851,14 @@ function shSweepLowDone(rng: () => number, m: number): { chart: ScenarioChart; e
   }
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.5 * m, L + 0.5, L + 1.5);
+    // les clôtures restent nettement au-dessus du plus bas précédent (le prix en est reparti)
+    const c = clamp(o + (rng() - 0.5) * 0.5 * m, L + Math.max(0.5, 0.8 * m), L + 1.6 * Math.max(1, m));
     past.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.2 + rng() * 0.18) * m));
     p = c;
   }
+  // Le « plus bas précédent » : le creux de la consolidation touche le niveau L (sinon le plus bas
+  // visible d'avant le sweep pouvait être au-dessus de la clôture du sweep)
+  markPrevLow(past, L, m);
   // Sweep candle : longue mèche basse, close au-dessus
   const sweepLow = L - 1.3 * m - rng() * 0.3;
   past.push({ o: p, c: L + 0.4 + rng() * 0.3, h: p + 0.2, l: sweepLow });
@@ -858,17 +883,19 @@ function shFvgDeepPullback(rng: () => number, m: number): { chart: ScenarioChart
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
-  const baseHigh = Math.max(...past.slice(-3).map((k) => k.h));
-  past.push(candle(p, p + (2.0 + rng() * 0.3) * m, (0.3 + rng() * 0.2) * m, 0.12));
-  p = past[past.length - 1].c;
+  // Impulsion en 3 bougies : le FVG reste un petit vide proportionné aux bougies voisines
+  const imp = bullImpulse3(rng, m, p, past);
+  p = imp.p;
+  const fvgLow = imp.fvgLow;
+  const fvgHigh = imp.fvgHigh;
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = o + (0.25 + rng() * 0.25) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
+    const k = candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m);
+    k.l = Math.max(k.l, fvgHigh + 0.04 * m);  // la continuation ne rentre pas dans le FVG
+    past.push(k);
     p = c;
   }
-  const fvgLow = baseHigh;
-  const fvgHigh = past[past.length - 2].l;
   // Deep pullback (85%+ mitigation)
   const target = fvgLow + (fvgHigh - fvgLow) * 0.12;
   for (let i = 0; i < 5; i++) {
@@ -946,7 +973,9 @@ export function buildScenarioChart(template: MistakeTemplate, seed: number, vol:
   const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol], ch.past)];
   const lines = [ch.entry, ch.stop, ch.tp].filter((p): p is number => p !== undefined);
   const calm = template.chartShape === "calm_before_news";
-  return realizeChart(ch, { past: zones, future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm });
+  // le stop aussi sur le passé : un stop « pile au-dessus du swing low » le reste (seulement lui :
+  // l'entrée et le TP en plus raidissaient les corps, réalisme EUR/USD au bord du seuil)
+  return withRoleChanges(withTracedZones(realizeChart(ch, { past: [...zones, ...(ch.stop !== undefined ? [ch.stop] : [])], future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm })));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

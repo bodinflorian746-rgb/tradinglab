@@ -17,8 +17,9 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, levelTouches, srGuards,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
 } from "./shared";
+import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
@@ -808,6 +809,28 @@ function explicitCandle(o: number, c: number, h: number, l: number): Candle {
   return { o, c, h, l };
 }
 
+// Un swing se lit sur la pointe de la mèche, pas sur la clôture : creux (sommet) de la bougie i, qui
+// clôture au swing, et de la suivante, qui en repart. Les stops « sous le swing low » se posent
+// sous cette pointe.
+function lowTip(past: Candle[], i: number): number { return Math.min(past[i].l, past[i + 1]?.l ?? Infinity); }
+function highTip(past: Candle[], i: number): number { return Math.max(past[i].h, past[i + 1]?.h ?? -Infinity); }
+// Swings numérotés (1 < 2 < 3) : chacun clôture au-delà de la pointe de la mèche du précédent d'au
+// moins SWING_STEP (× m), pour que l'ordre se lise sans ambiguïté (étiquettes comprises).
+const SWING_STEP = 0.4;
+// Swings empilés : l'entrée s'écarte d'au moins ENTRY_CLEAR (× m) de la pointe du swing 1 (le stop
+// serré est juste derrière) ; plus près, entrée, stop 1 et swing 1 tenaient en une pastille
+const ENTRY_CLEAR = 0.9;
+
+// Distances des stops (× m) qui respectent le niveau tracé qu'ils protègent : le serré reste entre
+// l'entrée et le niveau (dans le bruit), le logique passe au-delà du niveau avec une marge, le
+// large reste au-delà du logique avec le même écart.
+const LOGICAL_LEVEL_MARGIN = 0.25;
+function levelSpread(sp: { tight: number; logical: number; wide: number }, entry: number, nearEdge: number, farEdge: number, m: number) {
+  const tight = Math.min(sp.tight, (0.6 * Math.abs(entry - nearEdge)) / m);
+  const logical = Math.max(sp.logical, Math.abs(entry - farEdge) / m + LOGICAL_LEVEL_MARGIN);
+  return { tight, logical, wide: Math.max(sp.wide, logical + (sp.wide - sp.logical)) };
+}
+
 // ─── Rationales communs ──────────────────────────────────────────────────────
 // Réutilisables — chaque scenario les personnalise légèrement.
 const TIGHT_RATIONALE = "✗ Trop serré : ici, le stop est placé dans le bruit normal du marché. La 1re mèche de retest risque de le balayer avant que le trade aboutisse. C'est une erreur fréquente.";
@@ -977,7 +1000,7 @@ function scnPullbackBull(rng: () => number, m: number, d: Difficulty, mode: Plac
   }
   const swingLow = Math.min(...past.slice(-5).map((k) => k.l));
   const entry = p;
-  const sp = getSpread(d, mode);
+  const sp = levelSpread(getSpread(d, mode), entry, swingLow + 0.04, swingLow - 0.04, m);
   buildBuyFuture(rng, m, entry, sp, fut);
   return finalize({
     past, fut,
@@ -1010,7 +1033,7 @@ function scnPullbackBear(rng: () => number, m: number, d: Difficulty, mode: Plac
   }
   const swingHigh = Math.max(...past.slice(-5).map((k) => k.h));
   const entry = p;
-  const sp = getSpread(d, mode);
+  const sp = levelSpread(getSpread(d, mode), entry, swingHigh - 0.04, swingHigh + 0.04, m);
   buildSellFuture(rng, m, entry, sp, fut);
   return finalize({
     past, fut,
@@ -1033,16 +1056,26 @@ function scnBounceSupport(rng: () => number, m: number, d: Difficulty, mode: Pla
   const h = levelTouches(rng, S + (2.4 + rng() * 0.5) * m, S - 0.1, S + 0.1, "above", m);
   past.push(...h.candles);
   let p = h.p;
+  // Test, bougie ordinaire, test : pas de série de mèches géantes ; chaque test a un corps réel
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
-    const k = candle(o, c, (0.2 + rng() * 0.2) * m, (0.7 + rng() * 0.3) * m);
-    k.l = Math.min(k.l, S + 0.05); // « vient de rebondir sur le support » : la mèche entre dans la zone
+    if (i === 1) {
+      const c = clamp(o + (rng() - 0.45) * 0.4 * m, S + 0.6, S + 1.3);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.l = Math.max(k.l, S + 0.5);
+      past.push(k);
+      p = c;
+      continue;
+    }
+    let c = clamp(o + (rng() - 0.3) * 0.6 * m, S + 0.4, S + 1.3);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o < S + 0.85 ? 0.3 : -0.3) * m;
+    const k = candle(o, c, (0.1 + rng() * 0.1) * m, 0);
+    k.l = S + 0.05 - rng() * 0.12; // « vient de rebondir sur le support » : la mèche entre dans la zone
     past.push(k);
     p = c;
   }
   const entry = p;
-  const sp = getSpread(d, mode);
+  const sp = levelSpread(getSpread(d, mode), entry, S + 0.1, S - 0.1, m);
   buildBuyFuture(rng, m, entry, sp, fut);
   return finalize({
     past, fut,
@@ -1065,16 +1098,26 @@ function scnRejectionResistance(rng: () => number, m: number, d: Difficulty, mod
   const h = levelTouches(rng, R - (2.4 + rng() * 0.5) * m, R - 0.1, R + 0.1, "below", m);
   past.push(...h.candles);
   let p = h.p;
+  // Test, bougie ordinaire, test : pas de série de mèches géantes ; chaque test a un corps réel
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
-    const k = candle(o, c, (0.7 + rng() * 0.3) * m, (0.2 + rng() * 0.2) * m);
-    k.h = Math.max(k.h, R - 0.05); // « vient de rejeter la résistance avec mèches » : la mèche entre dans la zone
+    if (i === 1) {
+      const c = clamp(o + (rng() - 0.55) * 0.4 * m, R - 1.3, R - 0.6);
+      const k = candle(o, c, (0.08 + rng() * 0.1) * m, (0.08 + rng() * 0.1) * m);
+      k.h = Math.min(k.h, R - 0.5);
+      past.push(k);
+      p = c;
+      continue;
+    }
+    let c = clamp(o + (rng() - 0.7) * 0.6 * m, R - 1.3, R - 0.4);
+    if (Math.abs(c - o) < 0.3 * m) c = o + (o > R - 0.85 ? -0.3 : 0.3) * m;
+    const k = candle(o, c, 0, (0.1 + rng() * 0.1) * m);
+    k.h = R - 0.05 + rng() * 0.12; // « vient de rejeter la résistance avec mèches » : la mèche entre dans la zone
     past.push(k);
     p = c;
   }
   const entry = p;
-  const sp = getSpread(d, mode);
+  const sp = levelSpread(getSpread(d, mode), entry, R - 0.1, R + 0.1, m);
   buildSellFuture(rng, m, entry, sp, fut);
   return finalize({
     past, fut,
@@ -1174,10 +1217,14 @@ function scnSweepLowReversal(rng: () => number, m: number, d: Difficulty, mode: 
   }
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = clamp(o + (rng() - 0.5) * 0.6 * m, L + 0.5, L + 1.5);
+    // les clôtures restent nettement au-dessus du plus bas précédent (le prix en est reparti)
+    const c = clamp(o + (rng() - 0.5) * 0.6 * m, L + Math.max(0.5, 0.8 * m), L + 1.6 * Math.max(1, m));
     past.push(candle(o, c, (0.22 + rng() * 0.2) * m, (0.22 + rng() * 0.2) * m));
     p = c;
   }
+  // Le « plus bas précédent » : le creux de la consolidation touche le niveau L (sinon le plus bas
+  // visible d'avant le sweep pouvait être au-dessus de la clôture du sweep)
+  markPrevLow(past, L, m);
   const sweepLow = L - 1.2 * m - rng() * 0.3;
   past.push({ o: p, c: L + 0.4 + rng() * 0.3, h: p + 0.2, l: sweepLow });
   p = past[past.length - 1].c;
@@ -1233,22 +1280,24 @@ function scnFvgContinuation(rng: () => number, m: number, d: Difficulty, mode: P
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
-  const baseHigh = Math.max(...past.slice(-3).map((k) => k.h));
-  past.push(candle(p, p + (2.0 + rng() * 0.3) * m, (0.3 + rng() * 0.2) * m, 0.12));
-  p = past[past.length - 1].c;
+  // Impulsion en 3 bougies : le FVG reste un petit vide proportionné aux bougies voisines
+  const imp = bullImpulse3(rng, m, p, past);
+  p = imp.p;
+  const fvgLow = imp.fvgLow;
+  const fvgHigh = imp.fvgHigh;
   for (let i = 0; i < 2; i++) {
     const o = p;
     const c = o + (0.25 + rng() * 0.25) * m;
-    past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
+    const k = candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m);
+    k.l = Math.max(k.l, fvgHigh + 0.04 * m);  // la continuation ne rentre pas dans le FVG
+    past.push(k);
     p = c;
   }
-  const fvgLow = baseHigh;
-  const fvgHigh = past[past.length - 2].l;
-  // Pullback dans le FVG (mitigation partielle)
+  // Pullback dans le FVG (mitigation partielle) : la 3e bougie clôture au milieu du FVG (retest garanti)
   const target = (fvgLow + fvgHigh) / 2;
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = Math.max(target, o - (0.3 + rng() * 0.3) * m);
+    const c = i === 2 ? target : Math.max(target, o - (0.3 + rng() * 0.3) * m);
     past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.18 + rng() * 0.18) * m));
     p = c;
   }
@@ -1387,7 +1436,8 @@ function scnEqualLowsTrap(rng: () => number, m: number, d: Difficulty, mode: Pla
   const entry = p;
   const equalLow = low1;
   const tightPrice   = equalLow - 0.1 * m;
-  const logicalPrice = equalLow - trapMarginFor(d, mode) * m - 0.3 * m;
+  // sous la liquidité des equal lows tracée et le sweep attendu, avec la marge
+  const logicalPrice = equalLow - trapMarginFor(d, mode) * m - 0.45 * m;
   const widePrice    = entry - 2.5 * m - widePushFor(mode) * m;
   // Future : sweep des equal lows (touche tight), puis rallye
   const dipLow = tightPrice - 0.15 * m;
@@ -1715,6 +1765,7 @@ function scnHtfInvalidation(rng: () => number, m: number, d: Difficulty, mode: P
     p = c;
   }
   const H4low = p;
+  const i_H4low = past.length - 1;
   // Reprise haussière
   for (let i = 0; i < 5; i++) {
     const o = p;
@@ -1730,6 +1781,7 @@ function scnHtfInvalidation(rng: () => number, m: number, d: Difficulty, mode: P
     p = c;
   }
   const H1low = p;
+  const i_H1low = past.length - 1;
   // Léger rebond vers entry
   for (let i = 0; i < 2; i++) {
     const o = p;
@@ -1738,12 +1790,14 @@ function scnHtfInvalidation(rng: () => number, m: number, d: Difficulty, mode: P
     p = c;
   }
   const entry = p;
-  const tightPrice   = H1low - 0.2 * m;
-  const logicalPrice = H4low - trapMarginFor(d, mode) * m - 0.4 * m;
-  const widePrice    = H4low - 2.0 * m - widePushFor(mode) * m;
-  // Future : sweep du swing low H1 (pas H4low), reverse haussier
+  // niveaux des swings sur la pointe des mèches (les stops se posent par rapport à elles)
+  const H4lowTip = lowTip(past, i_H4low), H1lowTip = lowTip(past, i_H1low);
+  const tightPrice   = H1lowTip - 0.2 * m;
+  const logicalPrice = H4lowTip - trapMarginFor(d, mode) * m - 0.4 * m;
+  const widePrice    = H4lowTip - 2.0 * m - widePushFor(mode) * m;
+  // Future : sweep du swing low H1 (pas H4lowTip), reverse haussier
   const dipLow = tightPrice - 0.2 * m;
-  const dipClose = H1low + 0.3 * m;
+  const dipClose = H1lowTip + 0.3 * m;
   fut.push(explicitCandle(p, dipClose, p + 0.15 * m, dipLow));
   p = dipClose;
   for (let i = 0; i < 5; i++) {
@@ -1755,8 +1809,8 @@ function scnHtfInvalidation(rng: () => number, m: number, d: Difficulty, mode: P
   return finalizeStops({
     past, fut,
     zones: [
-      { kind: "support", y1: H4low - 0.05 * m, y2: H4low + 0.05 * m, label: "HL H4" },
-      { kind: "support", y1: H1low - 0.05 * m, y2: H1low + 0.05 * m, label: "Swing low H1" },
+      { kind: "support", y1: H4lowTip - 0.05 * m, y2: H4lowTip + 0.05 * m, label: "HL H4", at: i_H4low },
+      { kind: "support", y1: H1lowTip - 0.05 * m, y2: H1lowTip + 0.05 * m, label: "Swing low H1", at: i_H1low },
     ],
     entry,
     tp: entry + Math.max(3.5 * m, Math.abs(entry - logicalPrice) * 2.2),
@@ -1789,6 +1843,7 @@ function scnMultiSwingLow(rng: () => number, m: number, d: Difficulty, mode: Pla
     p = c;
   }
   const swing1 = p;
+  const i_swing1 = past.length - 1;
   // Rebond léger
   for (let i = 0; i < 2; i++) {
     const o = p;
@@ -1797,7 +1852,7 @@ function scnMultiSwingLow(rng: () => number, m: number, d: Difficulty, mode: Pla
     p = c;
   }
   // Drop plus profond vers swing low #2 (plus bas)
-  const swing2Target = swing1 - 0.4 * m;
+  const swing2Target = Math.min(swing1 - 0.4 * m, lowTip(past, i_swing1) - SWING_STEP * m);
   for (let i = 0; i < 3; i++) {
     const o = p;
     const c = i === 2 ? swing2Target : o - (0.25 + rng() * 0.25) * m;
@@ -1805,6 +1860,7 @@ function scnMultiSwingLow(rng: () => number, m: number, d: Difficulty, mode: Pla
     p = c;
   }
   const swing2 = swing2Target;
+  const i_swing2 = past.length - 1;
   // Rebond vers entry (au-dessus des 2 swings)
   for (let i = 0; i < 3; i++) {
     const o = p;
@@ -1813,25 +1869,30 @@ function scnMultiSwingLow(rng: () => number, m: number, d: Difficulty, mode: Pla
     p = c;
   }
   const entry = p;
-  const tightPrice   = swing1 - 0.1 * m;
-  const logicalPrice = swing2 - trapMarginFor(d, mode) * m - 0.3 * m;
-  const widePrice    = swing2 - 2.0 * m - widePushFor(mode) * m;
-  // Future : sweep du swing1 (pas du swing2)
-  const dipLow = swing1 - 0.2 * m;  // sous swing1, au-dessus de swing2
-  const dipClose = swing1 + 0.3 * m;
+  // niveaux des swings sur la pointe des mèches (les stops se posent par rapport à elles)
+  const swing1Tip = lowTip(past, i_swing1), swing2Tip = lowTip(past, i_swing2);
+  const tightPrice   = swing1Tip - 0.1 * m;
+  const logicalPrice = swing2Tip - trapMarginFor(d, mode) * m - 0.3 * m;
+  const widePrice    = swing2Tip - 2.0 * m - widePushFor(mode) * m;
+  // Future : sweep du swing1Tip (pas du swing2Tip)
+  const dipLow = swing1Tip - 0.2 * m;  // sous swing1Tip, au-dessus de swing2Tip
+  const dipClose = swing1Tip + 0.3 * m;
   fut.push(explicitCandle(p, dipClose, p + 0.13 * m, dipLow));
   p = dipClose;
-  for (let i = 0; i < 5; i++) {
+  // 3 bougies de suite suffisent à montrer l'issue (voir la vente sur 3 swing highs) : une hausse de
+  // 5 bougies tassait le passé du verdict en bas du cadre, étiquettes des swings mêlées à l'entrée
+  for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o + (0.4 + rng() * 0.5) * m;
+    // la dernière clôture finit nettement au-dessus de l'entrée (le trade part dans le sens annoncé)
+    const c = i === 2 ? Math.max(o + (0.3 + rng() * 0.25) * m, entry + (0.4 + rng() * 0.3) * m) : o + (0.3 + rng() * 0.25) * m;
     fut.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.12) * m));
     p = c;
   }
   return finalizeStops({
     past, fut,
     zones: [
-      { kind: "support", y1: swing1 - 0.04 * m, y2: swing1 + 0.04 * m, label: "Swing low 1" },
-      { kind: "support", y1: swing2 - 0.04 * m, y2: swing2 + 0.04 * m, label: "Swing low 2" },
+      { kind: "support", y1: swing1Tip - 0.04 * m, y2: swing1Tip + 0.04 * m, label: "Swing low 1", at: i_swing1 },
+      { kind: "support", y1: swing2Tip - 0.04 * m, y2: swing2Tip + 0.04 * m, label: "Swing low 2", at: i_swing2 },
     ],
     entry,
     tp: entry + Math.max(3.5 * m, Math.abs(entry - logicalPrice) * 2.2),
@@ -1858,9 +1919,10 @@ function scnFakeoutThenRetest(rng: () => number, m: number, d: Difficulty, mode:
   }
   const swingHigh = p + 0.3 * m;
   const fakeoutWick = swingHigh + 0.5 * m;
-  // Bougie fakeout : pierce au-dessus du swingHigh, close en dessous
-  past.push({ o: p, c: swingHigh - 0.3 * m, h: fakeoutWick, l: p - 0.2 * m });
-  p = swingHigh - 0.3 * m;
+  // Bougie fakeout : pierce au-dessus du swingHigh, clôture en dessous de son ouverture (rejet
+  // baissier ; avant, clôture = ouverture : la passe de réalisme pouvait la rendre haussière)
+  past.push({ o: p, c: p - 0.2 * m, h: fakeoutWick, l: p - 0.3 * m });
+  p = p - 0.2 * m;
   // 2 bougies baissières de confirmation
   for (let i = 0; i < 2; i++) {
     const o = p;
@@ -1924,7 +1986,8 @@ function scnTightConsolidation(rng: () => number, m: number, d: Difficulty, mode
   }
   const entry = p;
   const tightPrice   = entry - 0.5 * m;
-  const logicalPrice = entry - 1.0 * m - trapMarginFor(d, mode) * m;
+  // « juste sous le bas du range, avec une marge » : au plus 0,75 m + la marge sous le bas du range
+  const logicalPrice = Math.max(entry - 1.0 * m, rangeLow - 0.75 * m) - trapMarginFor(d, mode) * m;
   const widePrice    = entry - 2.0 * m - widePushFor(mode) * m;
   // Future : sweep du SL tight, reverse haussier limité par le top du range
   const dipLow = tightPrice - 0.2 * m;
@@ -2125,6 +2188,7 @@ function scnLiquidityHuntZone(rng: () => number, m: number, d: Difficulty, mode:
     p = c;
   }
   const swingLow = p;
+  const i_swingLow = past.length - 1;
   // Rebond léger qui amène à entry, swingLow visible à entry - 0.9m environ
   for (let i = 0; i < 5; i++) {
     const o = p;
@@ -2133,13 +2197,16 @@ function scnLiquidityHuntZone(rng: () => number, m: number, d: Difficulty, mode:
     p = c;
   }
   const entry = p;
+  // niveaux des swings sur la pointe des mèches (les stops se posent par rapport à elles)
+  const swingLowTip = lowTip(past, i_swingLow);
   const tightPrice = entry - 0.5 * m;
-  const lttPrice   = swingLow - 0.3 * m;  // sous le swing low évident
-  const widePrice  = entry - 2.5 * m;
-  // Future : sweep profond du swing — dipLow calibré sur swingLow pour garantir
-  // qu'il dépasse lttPrice même quand entry-swingLow varie avec le RNG.
-  const dipLow = swingLow - 0.6 * m;
-  const dipClose = swingLow + 0.3 * m;
+  const lttPrice   = swingLowTip - 0.3 * m;  // sous le swing low évident
+  // sous la zone de chasse (jusqu'au sweep attendu, 0,6 m sous le swing) avec une marge ample
+  const widePrice  = Math.min(entry - 2.5 * m, swingLowTip - 1.6 * m);
+  // Future : sweep profond du swing — dipLow calibré sur swingLowTip pour garantir
+  // qu'il dépasse lttPrice même quand entry-swingLowTip varie avec le RNG.
+  const dipLow = swingLowTip - 0.6 * m;
+  const dipClose = swingLowTip + 0.3 * m;
   fut.push(explicitCandle(p, dipClose, p + 0.15 * m, dipLow));
   p = dipClose;
   for (let i = 0; i < 5; i++) {
@@ -2151,8 +2218,8 @@ function scnLiquidityHuntZone(rng: () => number, m: number, d: Difficulty, mode:
   return finalizeStops({
     past, fut,
     zones: [
-      { kind: "support",       y1: swingLow - 0.05 * m, y2: swingLow + 0.05 * m, label: "Swing low évident" },
-      { kind: "liquidity_low", y1: dipLow - 0.05 * m,   y2: swingLow - 0.1 * m,  label: "Zone de chasse aux stops" },
+      { kind: "support",       y1: swingLowTip - 0.05 * m, y2: swingLowTip + 0.05 * m, label: "Swing low évident", at: i_swingLow },
+      { kind: "liquidity_low", y1: dipLow - 0.05 * m,   y2: swingLowTip - 0.1 * m,  label: "Zone de chasse aux stops" },
     ],
     entry,
     tp: entry + 4.5 * m,
@@ -2188,6 +2255,7 @@ function scnMultiSwingDeep(rng: () => number, m: number, d: Difficulty, mode: Pl
     p = c;
   }
   const swing1 = p;
+  const i_swing1 = past.length - 1;
   // Petit rebond
   for (let i = 0; i < 2; i++) {
     const o = p;
@@ -2195,14 +2263,16 @@ function scnMultiSwingDeep(rng: () => number, m: number, d: Difficulty, mode: Pl
     past.push(candle(o, c, (0.15 + rng() * 0.12) * m, (0.12 + rng() * 0.1) * m));
     p = c;
   }
-  // Drop vers swing2 (plus bas que swing1)
+  // Drop vers swing2 (plus bas que swing1, au-delà de la pointe de sa mèche)
   for (let i = 0; i < 2; i++) {
     const o = p;
-    const c = o - (0.35 + rng() * 0.2) * m;
+    const drop = o - (0.35 + rng() * 0.2) * m;
+    const c = i === 1 ? Math.min(drop, lowTip(past, i_swing1) - SWING_STEP * m) : drop;
     past.push(candle(o, c, (0.13 + rng() * 0.1) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
   const swing2 = p;
+  const i_swing2 = past.length - 1;
   // Petit rebond
   for (let i = 0; i < 2; i++) {
     const o = p;
@@ -2219,37 +2289,45 @@ function scnMultiSwingDeep(rng: () => number, m: number, d: Difficulty, mode: Pl
     p = c;
   }
   const swing3 = swing3Target;
-  // Rebond vers entry (au-dessus de swing1)
+  const i_swing3 = past.length - 1;
+  // Rebond vers entry (au-dessus de swing1, d'au moins ENTRY_CLEAR : entrée, stop 1 et swing 1 se
+  // lisent séparément, étiquettes comprises)
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o + (0.4 + rng() * 0.3) * m;
+    const rise = o + (0.4 + rng() * 0.3) * m;
+    const c = i === 2 ? Math.max(rise, lowTip(past, i_swing1) + ENTRY_CLEAR * m) : rise;
     past.push(candle(o, c, (0.15 + rng() * 0.12) * m, (0.13 + rng() * 0.1) * m));
     p = c;
   }
   const entry = p;
+  // niveaux des swings sur la pointe des mèches (les stops se posent par rapport à elles)
+  const swing1Tip = lowTip(past, i_swing1), swing2Tip = lowTip(past, i_swing2), swing3Tip = lowTip(past, i_swing3);
   void peak;
-  // Stops : tight sous swing1, ltt sous swing2, wide sous swing3
-  const tightPrice = swing1 - 0.1 * m;
-  const lttPrice   = swing2 - 0.3 * m;
-  const widePrice  = swing3 - 0.3 * m;
-  // Future : sweep entre swing2 et swing3 — calibré pour dépasser lttPrice
-  // (swing2 - 0.3m) sans atteindre widePrice (swing3 - 0.3m = swing2 - 0.9m).
-  const dipLow = swing2 - 0.45 * m;
-  const dipClose = swing2 + 0.3 * m;
+  // Stops : tight sous swing1Tip, ltt sous swing2Tip, wide sous swing3Tip
+  const tightPrice = swing1Tip - 0.1 * m;
+  const lttPrice   = swing2Tip - 0.3 * m;
+  const widePrice  = swing3Tip - 0.3 * m;
+  // Future : sweep entre swing2Tip et swing3Tip — calibré pour dépasser lttPrice
+  // (swing2Tip - 0.3m) sans atteindre widePrice (swing3Tip - 0.3m = swing2Tip - 0.9m).
+  const dipLow = swing2Tip - 0.45 * m;
+  const dipClose = swing2Tip + 0.3 * m;
   fut.push(explicitCandle(p, dipClose, p + 0.13 * m, dipLow));
   p = dipClose;
-  for (let i = 0; i < 5; i++) {
+  // 3 bougies de suite suffisent à montrer l'issue (voir la vente sur 3 swing highs) : une hausse de
+  // 5 bougies tassait le passé du verdict en bas du cadre, étiquettes des swings mêlées à l'entrée
+  for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o + (0.45 + rng() * 0.4) * m;
+    // la dernière clôture finit nettement au-dessus de l'entrée (le trade part dans le sens annoncé)
+    const c = i === 2 ? Math.max(o + (0.3 + rng() * 0.25) * m, entry + (0.4 + rng() * 0.3) * m) : o + (0.3 + rng() * 0.25) * m;
     fut.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
     p = c;
   }
   return finalizeStops({
     past, fut,
     zones: [
-      { kind: "support", y1: swing1 - 0.04 * m, y2: swing1 + 0.04 * m, label: "Swing low 1" },
-      { kind: "support", y1: swing2 - 0.04 * m, y2: swing2 + 0.04 * m, label: "Swing low 2" },
-      { kind: "support", y1: swing3 - 0.04 * m, y2: swing3 + 0.04 * m, label: "Swing low 3" },
+      { kind: "support", y1: swing1Tip - 0.04 * m, y2: swing1Tip + 0.04 * m, label: "Swing low 1", at: i_swing1 },
+      { kind: "support", y1: swing2Tip - 0.04 * m, y2: swing2Tip + 0.04 * m, label: "Swing low 2", at: i_swing2 },
+      { kind: "support", y1: swing3Tip - 0.04 * m, y2: swing3Tip + 0.04 * m, label: "Swing low 3", at: i_swing3 },
     ],
     entry,
     tp: entry + 4.5 * m,
@@ -2305,10 +2383,11 @@ function scnFakeoutZoneWide(rng: () => number, m: number, d: Difficulty, mode: P
   }
   const entry = p;
   const tightPrice = R + 0.2 * m;
-  const lttPrice   = R + 0.6 * m;  // au-dessus des fakeouts précédents, sera balayé par le 3e
+  // au-dessus des mèches des 2 fakeouts précédents, sera balayé par le 3e
+  const lttPrice   = Math.max(R + 0.6 * m, Math.max(fake1High, fake2High) + 0.15 * m);
   const widePrice  = R + 2.5 * m;  // BONNE RÉPONSE
   // Future : 3e fakeout (amplitude supérieure aux précédents), puis drop
-  const bumpHigh = R + 0.9 * m;  // dépasse ltt (0.6m) mais pas wide (2.5m)
+  const bumpHigh = Math.max(R + 0.9 * m, lttPrice + 0.25 * m);  // dépasse ltt mais pas wide (2.5m)
   const bumpClose = R - 0.5 * m;
   fut.push(explicitCandle(p, bumpClose, bumpHigh, Math.min(p, bumpClose) - 0.15 * m));
   p = bumpClose;
@@ -2383,17 +2462,35 @@ function scnKeyLevelMagnet(rng: () => number, m: number, d: Difficulty, mode: Pl
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 5 + rng() * 0.3;
-  // Construire un niveau clé visible à p - 0.7m approximativement
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 4; i++) {
     const o = p;
     const c = o + (rng() - 0.4) * 0.4 * m;
     past.push(candle(o, c, (0.15 + rng() * 0.12) * m, (0.15 + rng() * 0.12) * m));
     p = c;
   }
+  // Support prouvé : touché deux fois par-dessus, puis retour à l'entrée, 0,7 m au-dessus
+  const magnetLevel = p - (2.4 + rng() * 0.5) * m;
+  const touches = levelTouches(rng, p, magnetLevel - 0.04 * m, magnetLevel + 0.04 * m, "above", m, 2);
+  past.push(...touches.candles);
+  p = touches.p;
+  const entryTarget = magnetLevel + 0.7 * m;
+  while (p - entryTarget > 0.45 * m) {
+    const c = Math.max(entryTarget + 0.1 * m, p - (0.25 + rng() * 0.2) * m);
+    const k = candle(p, c, (0.1 + rng() * 0.1) * m, (0.08 + rng() * 0.08) * m);
+    k.l = Math.max(k.l, magnetLevel + 0.35 * m);
+    past.push(k);
+    p = c;
+  }
+  {
+    const k = candle(p, entryTarget, (0.1 + rng() * 0.08) * m, (0.08 + rng() * 0.06) * m);
+    k.l = Math.max(k.l, magnetLevel + 0.35 * m);
+    past.push(k);
+    p = entryTarget;
+  }
   const entry = p;
-  const magnetLevel = entry - 0.7 * m;
-  const tightPrice  = entry - 0.4 * m;
-  const lttPrice    = magnetLevel - 0.2 * m;  // juste sous le magnet, dans la zone de test
+  const tightPrice  = entry - 0.25 * m;  // dans le bruit immédiat
+  // « juste au-dessus du niveau clé » (texte de la justification) : le test profond le prend
+  const lttPrice    = magnetLevel + 0.1 * m;
   const widePrice   = magnetLevel - 1.0 * m;  // BONNE RÉPONSE, sous l'amplitude du test
   // Future : test profond du magnet (mèche jusqu'à entry - 1.5m), puis rebond
   const dipLow = entry - 1.5 * m;
@@ -2408,7 +2505,7 @@ function scnKeyLevelMagnet(rng: () => number, m: number, d: Difficulty, mode: Pl
   }
   return finalizeStops({
     past, fut,
-    zones: [{ kind: "support", y1: magnetLevel - 0.04 * m, y2: magnetLevel + 0.04 * m, label: "Niveau clé" }],
+    zones: [{ kind: "support", y1: magnetLevel - 0.04 * m, y2: magnetLevel + 0.04 * m, label: "Support" }],
     entry,
     tp: entry + 4.0 * m,
     direction: "BUY",
@@ -2492,6 +2589,7 @@ function scnLiquidityHuntZoneSell(rng: () => number, m: number, d: Difficulty, m
     p = c;
   }
   const swingHigh = p;
+  const i_swingHigh = past.length - 1;
   // Repli léger qui amène à entry, swingHigh visible à entry + 0.9m environ
   for (let i = 0; i < 5; i++) {
     const o = p;
@@ -2500,25 +2598,31 @@ function scnLiquidityHuntZoneSell(rng: () => number, m: number, d: Difficulty, m
     p = c;
   }
   const entry = p;
+  // niveaux des swings sur la pointe des mèches (les stops se posent par rapport à elles)
+  const swingHighTip = highTip(past, i_swingHigh);
   const tightPrice = entry + 0.5 * m;
-  const lttPrice   = swingHigh + 0.3 * m;  // au-dessus du swing high évident
-  const widePrice  = entry + 2.5 * m;
-  // Future : sweep profond du swing — bumpHigh calibré sur swingHigh
-  const bumpHigh = swingHigh + 0.6 * m;
-  const bumpClose = swingHigh - 0.3 * m;
+  const lttPrice   = swingHighTip + 0.3 * m;  // au-dessus du swing high évident
+  // au-dessus de la zone de chasse (jusqu'au sweep attendu, 0,6 m au-dessus du swing) avec une marge ample
+  const widePrice  = Math.max(entry + 2.5 * m, swingHighTip + 1.6 * m);
+  // Future : sweep profond du swing — bumpHigh calibré sur swingHighTip
+  const bumpHigh = swingHighTip + 0.6 * m;
+  const bumpClose = swingHighTip - 0.3 * m;
   fut.push(explicitCandle(p, bumpClose, bumpHigh, p - 0.15 * m));
   p = bumpClose;
-  for (let i = 0; i < 5; i++) {
+  // 3 bougies de suite suffisent à montrer l'issue (le TP n'est pas tracé) : une chute plus longue
+  // tassait le graphique du verdict en haut, sous la pastille « ton choix », étiquettes mêlées
+  for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o - (0.45 + rng() * 0.45) * m;
+    // la dernière clôture finit nettement sous l'entrée (le trade part dans le sens annoncé)
+    const c = i === 2 ? Math.min(o - (0.3 + rng() * 0.25) * m, entry - (0.4 + rng() * 0.3) * m) : o - (0.3 + rng() * 0.25) * m;
     fut.push(candle(o, c, (0.13 + rng() * 0.1) * m, (0.2 + rng() * 0.15) * m));
     p = c;
   }
   return finalizeStops({
     past, fut,
     zones: [
-      { kind: "resistance",     y1: swingHigh - 0.05 * m, y2: swingHigh + 0.05 * m, label: "Swing high évident" },
-      { kind: "liquidity_high", y1: swingHigh + 0.1 * m,  y2: bumpHigh + 0.05 * m,  label: "Zone de chasse aux stops" },
+      { kind: "resistance",     y1: swingHighTip - 0.05 * m, y2: swingHighTip + 0.05 * m, label: "Swing high évident", at: i_swingHigh },
+      { kind: "liquidity_high", y1: swingHighTip + 0.1 * m,  y2: bumpHigh + 0.05 * m,  label: "Zone de chasse aux stops" },
     ],
     entry,
     tp: entry - 4.5 * m,
@@ -2553,6 +2657,7 @@ function scnMultiSwingHighDeep(rng: () => number, m: number, d: Difficulty, mode
     p = c;
   }
   const swing1 = p;
+  const i_swing1 = past.length - 1;
   // Petit repli
   for (let i = 0; i < 2; i++) {
     const o = p;
@@ -2560,14 +2665,16 @@ function scnMultiSwingHighDeep(rng: () => number, m: number, d: Difficulty, mode
     past.push(candle(o, c, (0.12 + rng() * 0.1) * m, (0.15 + rng() * 0.12) * m));
     p = c;
   }
-  // Rebond vers swing2 (plus haut que swing1)
+  // Rebond vers swing2 (plus haut que swing1, au-delà de la pointe de sa mèche)
   for (let i = 0; i < 2; i++) {
     const o = p;
-    const c = o + (0.35 + rng() * 0.2) * m;
+    const rise = o + (0.35 + rng() * 0.2) * m;
+    const c = i === 1 ? Math.max(rise, highTip(past, i_swing1) + SWING_STEP * m) : rise;
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.1) * m));
     p = c;
   }
   const swing2 = p;
+  const i_swing2 = past.length - 1;
   // Petit repli
   for (let i = 0; i < 2; i++) {
     const o = p;
@@ -2584,36 +2691,43 @@ function scnMultiSwingHighDeep(rng: () => number, m: number, d: Difficulty, mode
     p = c;
   }
   const swing3 = swing3Target;
-  // Repli vers entry (sous swing1)
+  const i_swing3 = past.length - 1;
+  // Repli vers entry (sous swing1, d'au moins ENTRY_CLEAR : entrée, stop 1 et swing 1 se lisent
+  // séparément, étiquettes comprises)
   for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o - (0.4 + rng() * 0.3) * m;
+    const drop = o - (0.4 + rng() * 0.3) * m;
+    const c = i === 2 ? Math.min(drop, highTip(past, i_swing1) - ENTRY_CLEAR * m) : drop;
     past.push(candle(o, c, (0.13 + rng() * 0.1) * m, (0.15 + rng() * 0.12) * m));
     p = c;
   }
   const entry = p;
+  // niveaux des swings sur la pointe des mèches (les stops se posent par rapport à elles)
+  const swing1Tip = highTip(past, i_swing1), swing2Tip = highTip(past, i_swing2), swing3Tip = highTip(past, i_swing3);
   void trough;
-  // Stops : tight au-dessus de swing1, ltt au-dessus de swing2, wide au-dessus de swing3
-  const tightPrice = swing1 + 0.1 * m;
-  const lttPrice   = swing2 + 0.3 * m;
-  const widePrice  = swing3 + 0.3 * m;
-  // Future : sweep entre swing2 et swing3 (touche tight + ltt, pas wide)
-  const bumpHigh = swing2 + 0.45 * m;
-  const bumpClose = swing2 - 0.3 * m;
+  // Stops : tight au-dessus de swing1Tip, ltt au-dessus de swing2Tip, wide au-dessus de swing3Tip
+  const tightPrice = swing1Tip + 0.1 * m;
+  const lttPrice   = swing2Tip + 0.3 * m;
+  const widePrice  = swing3Tip + 0.3 * m;
+  // Future : sweep entre swing2Tip et swing3Tip (touche tight + ltt, pas wide)
+  const bumpHigh = swing2Tip + 0.45 * m;
+  const bumpClose = swing2Tip - 0.3 * m;
   fut.push(explicitCandle(p, bumpClose, bumpHigh, p - 0.13 * m));
   p = bumpClose;
-  for (let i = 0; i < 5; i++) {
+  // 3 bougies de suite suffisent à montrer l'issue (voir la vente sur swing évident)
+  for (let i = 0; i < 3; i++) {
     const o = p;
-    const c = o - (0.45 + rng() * 0.4) * m;
+    // la dernière clôture finit nettement sous l'entrée (le trade part dans le sens annoncé)
+    const c = i === 2 ? Math.min(o - (0.3 + rng() * 0.25) * m, entry - (0.4 + rng() * 0.3) * m) : o - (0.3 + rng() * 0.25) * m;
     fut.push(candle(o, c, (0.13 + rng() * 0.1) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
   return finalizeStops({
     past, fut,
     zones: [
-      { kind: "resistance", y1: swing1 - 0.04 * m, y2: swing1 + 0.04 * m, label: "Swing high 1" },
-      { kind: "resistance", y1: swing2 - 0.04 * m, y2: swing2 + 0.04 * m, label: "Swing high 2" },
-      { kind: "resistance", y1: swing3 - 0.04 * m, y2: swing3 + 0.04 * m, label: "Swing high 3" },
+      { kind: "resistance", y1: swing1Tip - 0.04 * m, y2: swing1Tip + 0.04 * m, label: "Swing high 1", at: i_swing1 },
+      { kind: "resistance", y1: swing2Tip - 0.04 * m, y2: swing2Tip + 0.04 * m, label: "Swing high 2", at: i_swing2 },
+      { kind: "resistance", y1: swing3Tip - 0.04 * m, y2: swing3Tip + 0.04 * m, label: "Swing high 3", at: i_swing3 },
     ],
     entry,
     tp: entry - 4.5 * m,
@@ -2675,16 +2789,35 @@ function scnKeyLevelMagnetSell(rng: () => number, m: number, d: Difficulty, mode
   const fut: Candle[] = [];
   let p = 10 - rng() * 0.3;
   // Structure neutre avec léger downtrend
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 4; i++) {
     const o = p;
     const c = o + (rng() - 0.6) * 0.4 * m;
     past.push(candle(o, c, (0.15 + rng() * 0.12) * m, (0.15 + rng() * 0.12) * m));
     p = c;
   }
+  // Résistance prouvée : touchée deux fois par-dessous, puis retour à l'entrée, 0,7 m en dessous
+  const magnetLevel = p + (2.4 + rng() * 0.5) * m;
+  const touches = levelTouches(rng, p, magnetLevel - 0.04 * m, magnetLevel + 0.04 * m, "below", m, 2);
+  past.push(...touches.candles);
+  p = touches.p;
+  const entryTarget = magnetLevel - 0.7 * m;
+  while (entryTarget - p > 0.45 * m) {
+    const c = Math.min(entryTarget - 0.1 * m, p + (0.25 + rng() * 0.2) * m);
+    const k = candle(p, c, (0.08 + rng() * 0.08) * m, (0.1 + rng() * 0.1) * m);
+    k.h = Math.min(k.h, magnetLevel - 0.35 * m);
+    past.push(k);
+    p = c;
+  }
+  {
+    const k = candle(p, entryTarget, (0.08 + rng() * 0.06) * m, (0.1 + rng() * 0.08) * m);
+    k.h = Math.min(k.h, magnetLevel - 0.35 * m);
+    past.push(k);
+    p = entryTarget;
+  }
   const entry = p;
-  const magnetLevel = entry + 0.7 * m;
-  const tightPrice  = entry + 0.4 * m;
-  const lttPrice    = magnetLevel + 0.2 * m;  // juste au-dessus du magnet, zone de test
+  const tightPrice  = entry + 0.25 * m;  // dans le bruit immédiat
+  // « juste sous le niveau clé » (texte de la justification) : le test profond le prend
+  const lttPrice    = magnetLevel - 0.1 * m;
   const widePrice   = magnetLevel + 1.0 * m;  // BONNE RÉPONSE
   // Future : test profond du magnet (bumpHigh à entry + 1.5m), puis reverse
   const bumpHigh = entry + 1.5 * m;
@@ -2699,7 +2832,7 @@ function scnKeyLevelMagnetSell(rng: () => number, m: number, d: Difficulty, mode
   }
   return finalizeStops({
     past, fut,
-    zones: [{ kind: "resistance", y1: magnetLevel - 0.04 * m, y2: magnetLevel + 0.04 * m, label: "Niveau clé" }],
+    zones: [{ kind: "resistance", y1: magnetLevel - 0.04 * m, y2: magnetLevel + 0.04 * m, label: "Résistance" }],
     entry,
     tp: entry - 4.0 * m,
     direction: "SELL",
@@ -2747,8 +2880,10 @@ export function buildPlaceStopChart(
   // (passé : zones ; futur : aussi entrée, TP et stops, qui décident de l'issue)
   // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
   const zones = [...withTarget.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(withTarget.zones, VOL_MULT[volatility], withTarget.past)];
-  const outcome = [...(withTarget.tp !== null ? [withTarget.tp] : []), ...withTarget.stops.map((st) => st.price)];
-  return keepPricesPositive(realizeChart(withTarget, { past: zones, future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility }));
+  const stopPrices = withTarget.stops.map((st) => st.price);
+  const outcome = [...(withTarget.tp !== null ? [withTarget.tp] : []), ...stopPrices];
+  // passé : les stops aussi (un stop « sous le swing low » reste sous la mèche du swing)
+  return withRoleChanges(withTracedZones(keepPricesPositive(realizeChart(withTarget, { past: [...zones, ...stopPrices], future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility }))));
 }
 
 // Le bon stop ne doit jamais avoir un R/R faible : l'objectif (TP) est au moins

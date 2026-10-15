@@ -14,9 +14,10 @@ import {
   type GameChoice,
   type Metric,
   type ScenarioInstance,
+  maskZonesForDifficulty,
 } from "@/lib/games/buy-sell-no-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { ChoiceRow, StepBadge, VerdictOverlay, type ChoiceOption, GeneralCasesNote, JargonHints, useJargon } from "@/app/components/games/v2/ui";
+import { ChoiceRow, StepBadge, VerdictOverlay, type ChoiceOption, GeneralCasesNote, JargonHints, useJargon, useChartInView } from "@/app/components/games/v2/ui";
 import { logGameEvent, type SkillId } from "@/lib/trader-profile";
 import { sessionLabel } from "@/lib/games/shared";
 
@@ -238,6 +239,8 @@ export default function BuySellNoTradePage() {
   });
   const [chosen, setChosen] = useState<GameChoice | null>(null);
   const [phase, setPhase] = useState<"placing" | "revealing" | "feedback">("placing");
+  // Graphique entier à l'écran (téléphone) : à chaque manche, puis dès le choix fait
+  useChartInView(seed === null ? null : `${seed}:${idx}`, phase === "placing" ? null : `${seed}:${idx}`);
   const [revealed, setRevealed] = useState(0);
   const [lastPoints, setLastPoints] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
@@ -426,14 +429,15 @@ export default function BuySellNoTradePage() {
         </div>
 
         {/* Scénario */}
-        <section className="v2-card v2-pad v2-gap flex flex-col" aria-labelledby="bsnt-title">
+        {/* énoncé long : graphique un peu plus bas sur téléphone, pour tenir sur un écran */}
+        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${(difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context))).length > 150 ? " v2-onescreen--long" : ""}`} aria-labelledby="bsnt-title">
           <h2 id="bsnt-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">
             BUY <span className="text-[color:var(--v2-text-3)]">/</span>{" "}
             <span className="text-red-400">SELL</span> <span className="text-[color:var(--v2-text-3)]">/</span>{" "}
             <span className="whitespace-nowrap bg-[linear-gradient(90deg,#f4f4f5,#a1a1aa)] bg-clip-text text-transparent">NO TRADE</span>
           </h2>
 
-          <div className="v2-gap-s mx-auto flex w-full max-w-3xl flex-col">
+          <div className="v2-gap-s v2-onescreen-body mx-auto flex w-full max-w-3xl flex-col">
             <StepBadge n={step} label={stepLabel} />
 
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
@@ -441,6 +445,9 @@ export default function BuySellNoTradePage() {
               <span className="v2-chip">{sessionLabel(current.session, locale)}</span>
               <VolBadge volatility={current.volatility} T={T} />
               <SpreadBadge spread={current.spread} T={T} />
+              {/* téléphone : les tuiles de contexte passent en chips */}
+              <span className="v2-chip sm:hidden">{locale === "fr" ? "UT sup." : T.htf}{"\u00a0"}: {BIAS_LABEL[current.htfBias].toLowerCase()}</span>
+              <span className={`v2-chip sm:hidden ${current.macroContext === "dangereux" ? "v2-chip--red" : ""}`}>{T.macro}{"\u00a0"}: {MACRO_LABEL[current.macroContext].toLowerCase()}</span>
             </div>
 
             {/* News warning */}
@@ -454,6 +461,12 @@ export default function BuySellNoTradePage() {
               </div>
             )}
 
+            {/* Énoncé au-dessus du graphique (énoncé, graphique et choix sur un seul écran) — raccourci en intermédiaire/avancé pour réduire les
+                aides texte (le joueur doit lire le marché lui-même). */}
+            <p className="v2-lead text-[color:var(--v2-text-2)]">
+              {difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context))}
+            </p>
+
             {/* Graphique : passé, puis futur révélé bougie par bougie, puis verdict */}
             {/* Chaque zone est nommée sur le graphique (étiquette posée sur la zone) */}
             <GameChartV2
@@ -465,9 +478,13 @@ export default function BuySellNoTradePage() {
               }}
               mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
               pin={chosen ? { label: CHOICE_LABEL[chosen], sub: T.yourChoice, color: CHOICE_TINT[chosen] } : undefined}
+              /* verdict en bandeau du bas : il ne cache plus les zones ni leurs étiquettes */
+              verdictBanner="bottom"
             >
               {isFeedback && chosen && (
                 <VerdictOverlay
+                  compact
+                  bottom
                   state={correct ? "good" : "bad"}
                   headline={headline}
                   points={lastPoints}
@@ -478,19 +495,13 @@ export default function BuySellNoTradePage() {
 
             {/* Context infos — en avancé, on cache la volatilité pour forcer la
                 lecture du chart (mais on garde la news warning visible). */}
-            <div className={`grid gap-2 sm:gap-3 ${difficulty === "advanced" ? "grid-cols-2" : "grid-cols-3"}`}>
+            <div className={`grid gap-2 max-sm:hidden sm:gap-3 ${difficulty === "advanced" ? "grid-cols-2" : "grid-cols-3"}`}>
               <InfoTile label={T.htf}   value={BIAS_LABEL[current.htfBias]}       valueClass={biasClass(current.htfBias)} />
               <InfoTile label={T.macro} value={MACRO_LABEL[current.macroContext]} valueClass={current.macroContext === "dangereux" ? "text-red-300" : ""} />
               {difficulty !== "advanced" && (
                 <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} valueClass="" />
               )}
             </div>
-
-            {/* Context text — raccourci en intermédiaire/avancé pour réduire les
-                aides texte (le joueur doit lire le marché lui-même). */}
-            <p className="v2-lead text-[color:var(--v2-text-2)]">
-              {difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context))}
-            </p>
 
             {/* Décision : interactive, puis figée (le choix reste visible) */}
             {isPlacing
@@ -828,30 +839,6 @@ function biasClass(bias: "bullish" | "bearish" | "range"): string {
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
-// V3 : en niveau avancé, les labels de zones perdent leurs noms spécifiques
-// (Support HTF, Résistance majeure, FVG haussier) au profit de labels
-// génériques. Le joueur doit lire le marché plutôt que de suivre les noms.
-function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, locale: string | undefined): BuySellChart["zones"] {
-  if (d !== "advanced") return zones;
-  return zones.map((z) => {
-    const generic = locale === "es"
-      ? (z.kind === "support"        ? "Nivel bajo"
-       : z.kind === "resistance"     ? "Nivel alto"
-       : z.kind === "fvg"            ? "Desequilibrio"
-       :                                "Liquidez")
-      : locale === "en"
-      ? (z.kind === "support"        ? "Low level"
-       : z.kind === "resistance"     ? "High level"
-       : z.kind === "fvg"            ? "Imbalance"
-       :                                "Liquidity")
-      : (z.kind === "support"        ? "Niveau bas"
-       : z.kind === "resistance"     ? "Niveau haut"
-       : z.kind === "fvg"            ? "Déséquilibre"
-       :                                "Liquidité");
-    return { ...z, label: generic };
-  });
 }
 
 function translateVolatility(v: "faible" | "normale" | "élevée", locale: string | undefined): string {

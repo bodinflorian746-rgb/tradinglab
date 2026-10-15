@@ -8,6 +8,7 @@ import * as EsGame from "@/lib/games/build-the-trade-es";
 import * as EnGame from "@/lib/games/build-the-trade-en";
 import {
   evaluateTrade,
+  planRR,
   MAX_TRADE_POINTS,
   ROUNDS_PER_SESSION,
   type BuildTradeChart,
@@ -19,7 +20,7 @@ import {
   type TpType,
 } from "@/lib/games/build-the-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
-import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, rrText, type VerdictState } from "@/app/components/games/v2/ui";
+import { StepBadge, VerdictOverlay, GeneralCasesNote, JargonHints, useJargon, useChartInView, rrText, type VerdictState } from "@/app/components/games/v2/ui";
 
 // Couleur du verdict de setup → état du verdict superposé (icône, titre et points)
 const VERDICT_STATE: Record<"emerald" | "amber" | "red", VerdictState> = { emerald: "good", amber: "partial", red: "bad" };
@@ -249,6 +250,8 @@ export default function BuildTheTradePage() {
   const [phase, setPhase] = useState<"build" | "reveal" | "feedback">("build");
   const [revealed, setRevealed] = useState(0);
   const [result, setResult] = useState<BuildTradeResult | null>(null);
+  // Graphique entier à l'écran (téléphone) : à chaque manche, puis dès le choix fait
+  useChartInView(seed === null ? null : `${seed}:${idx}`, phase === "build" ? null : `${seed}:${idx}`);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
@@ -512,10 +515,11 @@ export default function BuildTheTradePage() {
         </div>
 
         {/* Scénario */}
-        <section className="v2-card v2-pad v2-gap flex flex-col" aria-labelledby="btt-title">
+        {/* énoncé long : graphique un peu plus bas sur téléphone, pour tenir sur un écran */}
+        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${current.context.length > 150 ? " v2-onescreen--long" : ""}`} aria-labelledby="btt-title">
           <h2 id="btt-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">{T.buildTitle}</h2>
 
-          <div className="v2-gap-s mx-auto flex w-full max-w-3xl flex-col">
+          <div className="v2-gap-s v2-onescreen-body mx-auto flex w-full max-w-3xl flex-col">
             <StepBadge n={step} label={stepLabel} />
 
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
@@ -539,6 +543,8 @@ export default function BuildTheTradePage() {
                 candidateLines,
               }}
               mode={isBuild ? "question" : isReveal ? "reveal" : "verdict"}
+              /* verdict en bandeau du bas : il ne cache plus l’entrée, le stop, le TP ni les zones */
+              verdictBanner="bottom"
               // Étiquettes posées sur leur ligne ; échelle calée sur les bougies et
               // les niveaux de l'étape en cours, avec un glissement d'une étape à l'autre
               inlineLabels
@@ -548,6 +554,8 @@ export default function BuildTheTradePage() {
             >
               {isFeedback && result && (
                 <VerdictOverlay
+                  compact
+                  bottom
                   state={VERDICT_STATE[G.setupVerdict(result).color]}
                   headline={G.setupVerdict(result).label}
                   points={result.points}
@@ -753,7 +761,8 @@ function RrPreview({ T, chart, entry, stop, tp, asset }: { T: { [k: string]: str
   const t = chart.tps[tp];
   const risk = Math.abs(e - s);
   const reward = Math.abs(t - e);
-  const rr = risk > 0.001 ? reward / risk : 0;
+  // Seuil relatif à l'échelle de prix de l'actif (planRR)
+  const rr = planRR(chart, { entry, stop, tp });
   const rrColor = rr >= 2 ? "text-emerald-400" : rr >= 1 ? "text-amber-300" : "text-red-400";
   return (
     <div className="grid grid-cols-3 gap-2 sm:gap-3">
