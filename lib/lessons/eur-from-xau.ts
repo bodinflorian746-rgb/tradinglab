@@ -17,7 +17,7 @@ export const eurToXau = (p: number) => Number((XAU_BASE + (p - EUR_BASE) / EUR_P
 export const EUR_FROM_XAU_KEYS = [
   "pinbar-setup", "pin-location", "pinbar-failure", "pin-case-valide", "pin-case-ratio", "pin-case-cloture", "pin-case-niveau",
   "engulfing-setup", "eng-case-valide", "eng-case-partiel", "eng-case-contraste", "eng-case-amplitude", "eng-isolated",
-  "hs-execution", "ihs-xau", "divergence-no-break", "rsi-div",
+  "hs-execution", "hs-retest", "ihs-xau", "divergence-no-break", "rsi-div",
   "breakout-real", "breakout-fake", "hunt-sr4",
   "tf3-pullback", "fib-tp", "ote", "pb-conf",
 ];

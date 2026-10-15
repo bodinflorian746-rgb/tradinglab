@@ -152,7 +152,7 @@ export default function ContentFr() {
               <li>- Un breakout confirmé de la ligne de cou (clôture, pas mèche)</li>
             </ul>
 
-            <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur XAU/USD. Le marché est haussier depuis plusieurs séances. Il monte vers 4 620$ pour former l&apos;épaule gauche, redescend à 4 580$, repart vers 4 660$ pour former la tête, puis redescend à 4 575$. Ensuite, il remonte vers 4 625$ pour former l&apos;épaule droite, au même niveau que l&apos;épaule gauche. La ligne de cou relie les deux creux autour de 4 578$. Quand le prix clôture sous 4 575$, l&apos;ETE est confirmé.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur EUR/USD. Le marché est haussier depuis plusieurs séances. Il monte vers 1.0920 pour former l&apos;épaule gauche, redescend à 1.0880, repart vers 1.0960 pour former la tête, puis redescend à 1.0875. Ensuite, il remonte vers 1.0925 pour former l&apos;épaule droite, au même niveau que l&apos;épaule gauche. La ligne de cou relie les deux creux autour de 1.0878. Quand le prix clôture sous 1.0875, l&apos;ETE est confirmé.</p>
           </section>
 
           {/* Bloc 5 — VARIANTES DE NECKLINE */}
@@ -181,7 +181,7 @@ export default function ContentFr() {
               <li>- Un breakout confirmé de la ligne de cou vers le haut (clôture)</li>
             </ul>
 
-            <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur XAU/USD. Le marché est baissier depuis plusieurs séances. Il descend vers 4 470$ pour former l&apos;épaule gauche, remonte à 4 510$, repart vers 4 430$ pour former la tête, puis remonte à 4 515$. Ensuite, il redescend vers 4 475$ pour former l&apos;épaule droite. La ligne de cou relie les deux sommets autour de 4 512$. Quand le prix clôture au-dessus de 4 515$, l&apos;ETE inversé est confirmé.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Exemple sur EUR/USD. Le marché est baissier depuis plusieurs séances. Il descend vers 1.0770 pour former l&apos;épaule gauche, remonte à 1.0810, repart vers 1.0730 pour former la tête, puis remonte à 1.0815. Ensuite, il redescend vers 1.0775 pour former l&apos;épaule droite. La ligne de cou relie les deux sommets autour de 1.0812. Quand le prix clôture au-dessus de 1.0815, l&apos;ETE inversé est confirmé.</p>
           </section>
 
           {/* Bloc 7 — PLAN D'EXÉCUTION DU TRADE */}
@@ -190,31 +190,31 @@ export default function ContentFr() {
             <div className="my-8">
               <HSTradeExecutionDiagram />
             </div>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">L&apos;entrée se fait short juste sous la ligne de cou pour saisir le breakdown. Le prix ne se chasse pas pendant la chute. Une clôture propre sous la ligne de cou est requise.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm">Le SL classique se place au-dessus de la tête pour une invalidation maximale, mais ça donne souvent un R/R trop faible. Le SL tactique plus serré se place au-dessus de l&apos;épaule droite : moins sécurisé, mais plus exploitable. Le TP suit la measured move : hauteur du pattern entre la tête et la ligne de cou, projetée sous la ligne de cou.</p>
+                        <p className="text-zinc-300 leading-relaxed text-sm mb-3">La clôture sous la ligne de cou confirme le pattern. Le prix ne se chasse pas pendant la chute.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">L&apos;objectif est la measured move : la hauteur du pattern, de la tête à la ligne de cou, projetée sous la ligne de cou, et pas plus loin. Avec un SL au-dessus de l&apos;épaule droite (au-dessus de la tête, il serait encore plus loin), l&apos;entrée sur le breakout donne souvent un R/R trop faible. Dans ce cas, pas d&apos;entrée sur le breakout : on attend que le prix revienne tester la ligne de cou par en dessous et la rejette, puis on entre à la clôture de la bougie de rejet, SL juste au-dessus de sa mèche.</p>
           </section>
 
-          {/* Bloc 8 — PLAN DE TRADE XAU/USD H1 */}
+          {/* Bloc 8 — PLAN DE TRADE EUR/USD H1 */}
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : ETE XAU/USD H1</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte de l&apos;ETE classique du Bloc 4 est repris. La tendance haussière était déjà en place. L&apos;épaule gauche se forme à 4 620$, la tête à 4 660$, l&apos;épaule droite à 4 625$, avec une ligne de cou autour de 4 578$. Le prix vient de clôturer une bougie H1 à 4 570$, sous la ligne de cou. Le pattern est confirmé.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le SL tactique est placé juste au-dessus de l&apos;épaule droite à 4 630$. Le SL classique au-dessus de la tête à 4 670$ donnerait un R/R trop faible : l&apos;option tactique reste retenue pour ce setup.</p>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Le TP suit la measured move : hauteur du pattern entre la tête à 4 660$ et la ligne de cou à 4 578$, soit 82$. Cette hauteur est projetée sous la ligne de cou vers 4 496$. La cible est placée à 4 480$, un peu au-delà de la projection (4 496$), pour obtenir un R/R de 1:1,5 : c'est moins prudent que le TP placé avant la projection au double top (leçon 1), à réserver aux ETE très propres.</p>
+            <h2 className="text-lg font-semibold text-white mb-3">Plan de trade : ETE EUR/USD H1</h2>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le contexte de l&apos;ETE classique du Bloc 4 est repris. La tendance haussière était déjà en place. L&apos;épaule gauche se forme à 1.0920, la tête à 1.0960, l&apos;épaule droite à 1.0925, avec une ligne de cou autour de 1.0878. Le prix vient de clôturer une bougie H1 à 1.0870, sous la ligne de cou. Le pattern est confirmé.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le TP suit la measured move : hauteur entre la tête à 1.0960 et la ligne de cou à 1.0878, soit 82 pips, projetée sous la ligne de cou : 1.0796. La cible reste à la projection, sans l&apos;étendre.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-4">Pris sur le breakout à 1.0870 avec un SL au-dessus de l&apos;épaule droite (1.0930), le trade risquerait 60 pips pour 74 pips de gain : R/R 1:1,23, sous le repère de 1:2. Pas d&apos;entrée à ce moment-là. Deux bougies plus tard, le prix remonte tester la ligne de cou : mèche jusqu&apos;à 1.0886, clôture à 1.0866, de nouveau sous la ligne. C&apos;est le signal d&apos;entrée.</p>
 
             <div className="border border-zinc-800 rounded-xl p-4 md:p-6 my-6 bg-zinc-950/60">
               <p className="text-white font-semibold text-sm mb-2">Setup</p>
               <ul className="space-y-1 text-sm text-zinc-300 mb-4">
-                <li>- Entrée short : 4 570$ (clôture sous ligne de cou)</li>
-                <li>- Stop loss : 4 630$ (5$ au-dessus de l&apos;épaule droite à 4 625$, soit 60$ au-dessus de l&apos;entrée)</li>
-                <li>- Take profit : 4 480$ (90$, measured move étendu)</li>
+                <li>- Entrée short : 1.0866 (clôture de la bougie de rejet du retest)</li>
+                <li>- Stop loss : 1.0892 (6 pips au-dessus de la mèche du retest à 1.0886)</li>
+                <li>- Take profit : 1.0796 (projection de la measured move)</li>
               </ul>
 
               <p className="text-white font-semibold text-sm mb-2">Calcul du R/R</p>
               <ul className="space-y-1 text-sm text-zinc-300">
-                <li>- Risque : 4 630 - 4 570 = 60$</li>
-                <li>- Gain potentiel : 4 570 - 4 480 = 90$</li>
-                <li>- R/R : 90 / 60 = 1,5, soit 1:1,5</li>
-                <li>- Sous le repère de 1:2 vu en Débutant : setup exploitable seulement si le winrate dépasse nettement 40 % (seuil de rentabilité à 1:1,5, avant frais).</li>
+                <li>- Risque : 1.0892 - 1.0866 = 26 pips</li>
+                <li>- Gain potentiel : 1.0866 - 1.0796 = 70 pips</li>
+                <li>- R/R : 70 / 26 = 2,69, soit 1:2,69</li>
+                <li>- Sur le breakout, le même TP donnait 74 / 60 = 1:1,23 : setup refusé. S&apos;il n&apos;y a pas de retest, le trade n&apos;est pas pris, c&apos;est un setup manqué, pas une perte.</li>
               </ul>
             </div>
           </section>
@@ -222,20 +222,22 @@ export default function ContentFr() {
           {/* Bloc 9 — CALCUL RETAIL */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Calcul retail</h2>
-            <p className="text-zinc-300 leading-relaxed text-sm mb-3">Le risque par trade s&apos;adapte au capital. Sur ce setup R/R 1:1,5, voici la répartition selon la taille du compte.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm mb-3">La règle de risque (2% du capital au maximum) appliquée à l&apos;entrée au retest, au lot près.</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Au lot minimum (0,01 lot), ce stop de 60$ représente déjà environ 51€ de risque (1$ ≈ 0,85€)</li>
-              <li>- Compte 300€ (15€ max), 500€ (15€ max), 1 000€ (20€ max), 2 500€ (50€ max) : setup pas faisable sur l'or, même au lot minimum ; tu passes, ou tu attends un setup au stop plus court</li>
-              <li>- Compte 5 000€ → 2% = 100€ maximum : 0,01 lot, risque environ 51€, gain potentiel environ 77€</li>
+              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,085€ : ce stop de 26 pips représente environ 2€ de risque</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,02 lot, risque environ 4€, gain potentiel environ 12€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,04 lot, risque environ 9€, gain potentiel environ 24€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,09 lot, risque environ 20€, gain potentiel environ 54€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,22 lot, risque environ 49€, gain potentiel environ 131€</li>
             </ul>
-            <p className="text-zinc-300 leading-relaxed text-sm">Le R/R 1:1,5 reste modeste comparé à un Pin bar ou un pullback de tendance, mais l&apos;ETE a un winrate plus élevé quand le pattern est propre. À 1:1,5, la rentabilité est atteinte dès que le winrate dépasse 40 % (avant frais) : avec un ETE propre, cette marge est réaliste.</p>
+            <p className="text-zinc-300 leading-relaxed text-sm">Pris au retest, l&apos;ETE offre un R/R de 1:2,69 avec un stop court. Le prix ne revient pas toujours tester la ligne de cou : c&apos;est le prix de ce R/R, quelques setups manqués plutôt que des trades au R/R trop faible.</p>
           </section>
 
           {/* Bloc 10 — FILTRES : QUAND NE PAS PRENDRE LE SETUP */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-3">Filtres : quand ne pas prendre le setup</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Tête pas assez marquée.</span> <span className="text-zinc-300">Si la tête dépasse à peine les épaules, moins de 0,3% au-dessus, le pattern devient faible. Le marché hésite sans cassure structurelle franche. Setup à ignorer.</span></div>
+              <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">1. Tête pas assez marquée.</span> <span className="text-zinc-300">Si la tête dépasse à peine les épaules, moins de 0,3% au-dessus, le pattern devient faible. Le marché hésite sans breakout structurelle franche. Setup à ignorer.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">2. Épaules trop asymétriques.</span> <span className="text-zinc-300">Si l&apos;épaule droite est beaucoup plus haute ou plus basse que la gauche, avec plus de 0,5% d&apos;écart, le pattern perd sa logique classique. La structure devient moins fiable.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">3. Breakout sur mèche, sans clôture.</span> <span className="text-zinc-300">Une mèche qui casse brièvement la ligne de cou puis remonte ne valide rien. Une vraie clôture franche est attendue. Sur ETE, la patience reste critique.</span></div>
               <div className="border border-zinc-800 bg-zinc-950/60 rounded-xl p-4 text-sm"><span className="text-red-400 font-semibold">4. News majeure dans la fenêtre.</span> <span className="text-zinc-300">Si FOMC, NFP ou CPI arrive dans les 30 minutes, le setup n&apos;est pas pris. Une news peut invalider le pattern immédiatement.</span></div>
@@ -246,19 +248,20 @@ export default function ContentFr() {
             points={[
               "Épaule-tête-épaule = 3 sommets après une tendance haussière. La tête est plus haute que les 2 épaules. ETE inversé = miroir sur tendance baissière.",
               "Confirmation = clôture franche sous ou au-dessus de la ligne de cou. Pas de mèche.",
-              "SL classique au-dessus de la tête, SL tactique au-dessus de l’épaule droite pour un R/R plus exploitable. TP = measured move (hauteur tête → ligne de cou projetée).",
-              "Le R/R de l'ETE est modeste, souvent autour de 1:1,5, mais le winrate reste élevé quand le pattern est propre.",
+              "TP = measured move : hauteur tête → ligne de cou, projetée sous la ligne de cou, sans l’étendre. Si le R/R est trop faible sur le breakout, l’entrée se fait au retest de la ligne de cou, SL au-dessus de la mèche du retest.",
+              "Pris sur le breakout, le R/R de l'ETE est souvent sous 1:2 : l'entrée au retest le rend exploitable, au prix de quelques setups manqués.",
             ]}
           />
 
           <LessonExercice
-            description="Sur XAU/USD H1, tu vois un ETE avec épaule gauche à 4 650$, tête à 4 680$, épaule droite à 4 658$. Ligne de cou à 4 620$. La tête est 30 pips au-dessus des épaules (0,65%). Le prix vient de clôturer à 4 615$. Tu prends le setup ?"
+            description="Sur EUR/USD H1, tu vois un ETE avec épaule gauche à 1.0950, tête à 1.0995, épaule droite à 1.0958. Ligne de cou à 1.0920. La tête est 37 pips au-dessus de l’épaule droite (0,34%). Le prix vient de clôturer à 1.0915. Tu prends le setup ?"
             steps={[
-              "Vérifier que la tête (4 680$) est strictement plus haute que les 2 épaules : 30 pips au-dessus, soit 0,65%, supérieur au seuil de 0,3%, OK",
-              "Confirmer que les épaules sont symétriques : 4 650$ vs 4 658$, écart de 8 pips (0,17%), sous le seuil de 0,5%, OK",
-              "Confirmer le breakout : clôture à 4 615$ sous la ligne de cou à 4 620$, pas une simple mèche",
+              "Vérifier que la tête (1.0995) est strictement plus haute que les 2 épaules : 37 pips au-dessus de l’épaule droite, soit 0,34%, au-dessus du seuil de 0,3%, OK",
+              "Confirmer que les épaules sont symétriques : 1.0950 vs 1.0958, écart de 8 pips (0,07%), sous le seuil de 0,5%, OK",
+              "Confirmer le breakout : clôture à 1.0915 sous la ligne de cou à 1.0920, pas une simple mèche",
               "Vérifier qu’aucune news majeure n’est prévue dans les 30 prochaines minutes",
-              "Prendre l’entrée short à 4 615$, SL au-dessus de l’épaule droite à 4 668$, TP measured move étendu à 4 540$ pour un R/R rond de 1:1,5",
+              "Calculer la cible : hauteur tête → ligne de cou de 75 pips, projetée sous 1.0920, TP 1.0845. Sur le breakout, avec un SL au-dessus de l’épaule droite (1.0968) : 53 pips de risque pour 70 pips de gain, R/R 1:1,32, pas d’entrée",
+              "Attendre le retest : si le prix remonte vers 1.0920 et la rejette (par exemple mèche à 1.0928, clôture à 1.0914), entrée short à 1.0914, SL 1.0934 au-dessus de la mèche, TP 1.0845 : 20 pips de risque pour 69 pips de gain, R/R 1:3,45",
             ]}
           />
 

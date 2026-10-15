@@ -1391,6 +1391,20 @@ Object.assign(SCENARIOS, {
   "pb-conf": authored(4530, PB_CONF, 29401, 0, "XAU/USD"),
 });
 
+// Décision PO 8 (Reversal 2) : la cible reste à la projection ; prise sur la cassure, le R/R est trop faible.
+// Même ETE que « hs-execution », puis retour sous la ligne de cou, retest par en dessous (mèche jusqu'à
+// 4 586, clôture 4 566) : entrée short sur cette bougie de rejet.
+const hsRetest = () => buildCandles(4545, [
+  ...c(4556, 4568, 4583, 4597, 4609), { c: 4616, h: 4620 },
+  ...c(4607, 4596), { c: 4584, l: 4580 },
+  ...c(4597, 4612, 4628, 4643), { c: 4655, h: 4660 },
+  ...c(4646, 4630, 4614, 4597), { c: 4581, l: 4575 },
+  ...c(4592, 4606), { c: 4619, h: 4625 },
+  ...c(4611, 4599, 4588), { c: 4570 },
+  { c: 4561, l: 4556 }, { c: 4569 }, { c: 4566, h: 4586 },
+], { seed: 2401, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4578], pins: [4620, 4580, 4660, 4575, 4625, 4556, 4586] });
+Object.assign(SCENARIOS, { "hs-retest": hsRetest });
+
 // Décision PO 9 : exemples de 7 stratégies passés de XAU/USD à EUR/USD (lib/lessons/eur-from-xau.ts).
 for (const key of EUR_FROM_XAU_KEYS) {
   const build = SCENARIOS[key];

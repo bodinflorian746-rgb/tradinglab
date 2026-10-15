@@ -46,7 +46,11 @@ export function checkLots(check: Check) {
     const ph = pivots(cs).filter((q) => q.side === "h").map((q) => q.price);
     check([4620, 4660, 4625].every((p) => ph.includes(p)), "ETE (Reversal 2) : épaules / tête ≠ 4 620 / 4 660 / 4 625");
     check(cs[cs.length - 1].c === 4570 && cs.slice(-7, -1).every((k) => k.c > 4578), "ETE (Reversal 2) : la clôture 4 570 n'est pas la 1re sous la ligne de cou");
-    check(near(rrOf(4570, 4630, 4480), 1.5, 1e-9) && rrOf(4570, 4670, 4480) < 1, "ETE (Reversal 2) : R/R tactique 1,5 / classique < 1");
+    // Décision PO 8 : cible à la projection (4 496), cassure refusée (R/R < 1:2), entrée au retest rejeté
+    const rt = CS["hs-retest"], k = rt[rt.length - 1];
+    check(rt.slice(0, cs.length).every((x, i) => x.c === cs[i].c), "ETE (Reversal 2) : « hs-retest » ne prolonge pas « hs-execution »");
+    check(k.h > 4578 && k.c < 4578 && rt.slice(cs.length, -1).every((x) => x.c < 4578), "ETE (Reversal 2) : le retest ne repasse pas sous la ligne de cou à la clôture");
+    check(near(4578 - (4660 - 4578), 4496, 1e-9) && rrOf(4570, 4630, 4496) < 2 && rrOf(k.c, k.h + 6, 4496) >= 2, "ETE (Reversal 2) : projection 4 496, cassure < 1:2, retest ≥ 1:2");
   }
   // ─── Lot 3 ─────────────────────────────────────────────────────────────────
   {

@@ -1,57 +1,65 @@
-// Reversal 2 — plan d'exécution de l'ETE XAU/USD H1 (épaule gauche 4 620$, tête
-// 4 660$, épaule droite 4 625$, ligne de cou ≈ 4 578$). Entrée short à la clôture
-// sous la ligne de cou (4 570$) ; SL tactique au-dessus de l'épaule droite
-// (4 630$) ou SL classique au-dessus de la tête (4 670$) ; measured move 82$ →
-// 4 496$, TP étendu 4 480$. R/R calculés pour les deux SL.
+// Reversal 2 — plan d'exécution de l'ETE EUR/USD H1 (épaule gauche 1.0920, tête 1.0960, épaule droite
+// 1.0925, ligne de cou ≈ 1.0878 ; exemple passé de l'or à EUR/USD, décision PO 9). Décision PO 8 : la cible
+// reste à la projection (measured move 82 pips → 1.0796). Prise sur le breakout (clôture 1.0870, SL au-dessus
+// de l'épaule droite), le R/R est trop faible (≈ 1:1,2) : pas d'entrée. Le prix revient tester la ligne de
+// cou par en dessous et la rejette : entrée short à la clôture de la bougie de rejet, SL 6 pips au-dessus
+// de sa mèche. Swings, ligne de cou, projection et R/R calculés. Bougies : scenarios.ts (« hs-retest »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
-import { usd } from "@/app/components/lessons/trade";
-import { fmtRR, lineAt, pivots, tradeMath } from "@/lib/lessons/chart-analysis";
+import { tradeSetup } from "@/app/components/lessons/trade";
+import { fmtRR, fmtPrice, lineAt, pips, pivots, tradeMath } from "@/lib/lessons/chart-analysis";
+import { EUR_PIP, eurToXau, xauToEur } from "@/lib/lessons/eur-from-xau";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
-const SL_TACTIQUE = 4630, SL_CLASSIQUE = 4670, TP = 4480;
+const p = (x: number) => fmtPrice(x, 4);
+/** SL de l'entrée sur breakout : 5 pips au-dessus de l'épaule droite */
+const SL_SHOULDER_MARGIN = 5;
+/** SL de l'entrée au retest : 6 pips au-dessus de la mèche du retest */
+const SL_RETEST_MARGIN = 6;
 
 export default function HSTradeExecutionDiagram(_props: { className?: string; locale?: "fr" | "es" | "en" }) {
-  const candles = CANDLES["hs-execution"];
+  const candles = CANDLES["hs-retest"];
   const n = candles.length;
-  const piv = pivots(candles, 2);
+  const piv = pivots(candles.slice(0, n - 3), 2);
   const head = piv.filter((q) => q.side === "h").reduce((a, b) => (b.price > a.price ? b : a));
   const ls = piv.filter((q) => q.side === "h" && q.index < head.index).at(-1)!;
   const rs = piv.filter((q) => q.side === "h" && q.index > head.index)[0];
   const t1 = piv.filter((q) => q.side === "l" && q.index > ls.index && q.index < head.index).at(-1)!;
   const t2 = piv.filter((q) => q.side === "l" && q.index > head.index && q.index < rs.index)[0];
-  const neck = Math.round((t1.price + t2.price) / 2);
+  // ligne de cou arrondie au pip (calcul en dollars, comme le scénario d'origine)
+  const neck = xauToEur(Math.round(eurToXau((t1.price + t2.price) / 2)));
   const neckAt = (i: number) => lineAt(t1.index, t1.price, t2.index, t2.price, i);
-  const mm = neck - (head.price - neck);
-  const entry = candles[n - 1].c;
-  const rr = (sl: number) => tradeMath(entry, sl, TP).rr;
-  const chip = (name: string, sl: number, expect?: string) => ({
-    label: `${name} : risque ${usd(sl - entry)}, R/R ${fmtRR(rr(sl))}`, tone: rr(sl) >= 1.5 ? "bull" as const : "bear" as const,
-    data: { rr: fmtRR(rr(sl)), entry, sl, tp: TP, ...(expect ? { expect } : {}) },
+  const mm = Number((neck - (head.price - neck)).toFixed(5));
+  const bo = candles.findIndex((k, i) => i > rs.index && k.c < neck);
+  const breakEntry = candles[bo].c, breakSl = Number((rs.price + SL_SHOULDER_MARGIN * EUR_PIP).toFixed(5));
+  const breakRR = tradeMath(breakEntry, breakSl, mm).rr;
+  const last = n - 1, retest = candles[last];
+  const t = tradeSetup({
+    entry: retest.c, sl: Number((retest.h + SL_RETEST_MARGIN * EUR_PIP).toFixed(5)), tp: mm, from: last, expect: ">2",
+    names: { entry: "Entrée au retest", tp: "TP projection" },
   });
   return (
     <LessonChart
       id="HSTradeExecutionDiagram"
-      title="Exécuter un ETE : entrée, deux SL possibles, measured move"
+      title="Exécuter un ETE : cible à la projection, entrée au retest"
       panels={[{
-        key: "h1", subtitle: "XAU/USD H1 — clôture sous la ligne de cou, entrée short",
-        decimals: 1, height: 340, candles,
-        segments: [{ key: "neck", i1: t1.index, p1: neckAt(t1.index), i2: n - 1, p2: neckAt(n - 1), tone: "neutral", dashed: true, label: `Ligne de cou ≈ ${usd(neck)}`, short: "Ligne de cou" }],
-        levels: [
-          { key: "sl-c", price: SL_CLASSIQUE, from: head.index, label: `SL classique ${usd(SL_CLASSIQUE)}`, short: "SL classique", tone: "bear", dashed: true, faint: true },
-          { key: "sl-t", price: SL_TACTIQUE, from: rs.index, label: `SL tactique ${usd(SL_TACTIQUE)}`, short: "SL tactique", tone: "bear", dashed: true },
-          { key: "entry", price: entry, from: n - 1, label: `Entrée ${usd(entry)}`, short: "Entrée", tone: "entry" },
-          { key: "mm", price: mm, from: n - 1, label: `Measured move ${usd(mm)}`, short: "Measured move", tone: "zone", dashed: true, faint: true },
-          { key: "tp", price: TP, from: n - 1, label: `TP ${usd(TP)}`, short: "TP", tone: "bull", dashed: true },
-        ],
+        key: "h1", subtitle: "EUR/USD H1 — breakout de la ligne de cou, puis retest rejeté",
+        decimals: 5, height: 340, candles,
+        segments: [{ key: "neck", i1: t1.index, p1: neckAt(t1.index), i2: last, p2: neckAt(last), tone: "neutral", dashed: true, label: `Ligne de cou ≈ ${p(neck)}`, short: "Ligne de cou" }],
+        levels: t.levels,
         markers: [
           { key: "ls", i: ls.index, price: ls.price, label: "Épaule G.", tone: "neutral", side: "above" },
           { key: "head", i: head.index, price: head.price, label: "Tête", tone: "neutral", side: "above" },
           { key: "rs", i: rs.index, price: rs.price, label: "Épaule D.", tone: "neutral", side: "above" },
+          { key: "bo", i: bo, price: breakEntry, label: `Breakout ${p(breakEntry)} : R/R trop faible`, short: "Breakout", tone: "bear", side: "below", role: "close" },
+          { key: "retest", i: last, price: retest.h, label: "Retest rejeté", short: "Retest", tone: "bear", side: "above" },
         ],
-        chips: [chip("SL tactique", SL_TACTIQUE), chip("SL classique", SL_CLASSIQUE, "<1")],
+        chips: [
+          { label: `Sur le breakout, SL ${p(breakSl)} : R/R ${fmtRR(breakRR)}, pas d'entrée`, tone: "bear", data: { rr: fmtRR(breakRR), entry: breakEntry, sl: breakSl, tp: mm, expect: "<2" } },
+          ...t.chips,
+        ],
       }]}
-      caption={`Hauteur tête → ligne de cou : ${usd(head.price - neck)}, reportée sous la ligne de cou (${usd(mm)}) ; TP étendu à ${usd(TP)}.`}
+      caption={`Hauteur tête → ligne de cou : ${pips(head.price, neck, EUR_PIP)} pips, reportée sous la ligne de cou (${p(mm)}). La cible reste à la projection ; c'est l'entrée au retest qui rend le R/R exploitable.`}
     />
   );
 }
