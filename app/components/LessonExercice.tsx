@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLocale } from "./LocaleProvider";
+import { LESSON_EXERCISES_ENABLED } from "@/lib/lessons/exercises";
 
 interface Props {
   description: string;
@@ -9,7 +10,12 @@ interface Props {
   locale?: "fr" | "es" | "en";
 }
 
-export function LessonExercice({ description, steps, locale }: Props) {
+/** Exercice pratique d'une leçon ; masqué tant que l'étape « Exercice » est désactivée (lib/lessons/exercises.ts) */
+export function LessonExercice(props: Props) {
+  return LESSON_EXERCISES_ENABLED ? <LessonExerciceCard {...props} /> : null;
+}
+
+function LessonExerciceCard({ description, steps, locale }: Props) {
   const contextLocale = useLocale();
   const resolvedLocale: "fr" | "es" | "en" = locale ?? contextLocale;
   const L =

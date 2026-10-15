@@ -7,6 +7,7 @@ import { LESSONS } from "@/lib/lessons";
 import { FORMATIONS } from "@/lib/formations";
 import type { LessonContent } from "@/lib/lessons";
 import { getStoredProgress, markLessonComplete, isLessonComplete } from "@/lib/progress";
+import { LESSON_EXERCISES_ENABLED } from "@/lib/lessons/exercises";
 
 // Nombre de leçons du niveau Débutant (catalogue des formations), jamais écrit en dur
 const DEBUTANT_TOTAL = FORMATIONS.find((f) => f.id === "debutant")?.lessons.length ?? 0;
@@ -15,9 +16,20 @@ type Section = LessonContent["sections"][number];
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const PHASE_LABELS  = ["Lecture", "À retenir", "Exercice", "Quiz"];
-const PHASE_XP      = [0, 5, 10, 5];
-const SECTION_IDS   = ["lesson-content", "lesson-keypoints", "lesson-exercice", "lesson-quiz"];
+// Phases de la leçon ; l'étape « Exercice » suit l'interrupteur unique (lib/lessons/exercises.ts) : coupée, elle
+// n'est ni affichée ni attendue pour terminer la leçon
+const ALL_PHASES = [
+  { id: "lesson-content",   label: "Lecture",   xp: 0,  toast: null },
+  { id: "lesson-keypoints", label: "À retenir", xp: 5,  toast: { message: "Bien joué !", sub: "Points clés assimilés" } },
+  { id: "lesson-exercice",  label: "Exercice",  xp: 10, toast: { message: "Tu progresses !", sub: "Exercice complété" } },
+  { id: "lesson-quiz",      label: "Quiz",      xp: 5,  toast: { message: "Continue comme ça !", sub: "Quiz validé, leçon terminée" } },
+];
+const PHASES = LESSON_EXERCISES_ENABLED ? ALL_PHASES : ALL_PHASES.filter((p) => p.id !== "lesson-exercice");
+const PHASE_LABELS  = PHASES.map((p) => p.label);
+const PHASE_XP      = PHASES.map((p) => p.xp);
+const SECTION_IDS   = PHASES.map((p) => p.id);
+/** Indice de la phase d'une section */
+const phaseOf = (id: string) => SECTION_IDS.indexOf(id);
 
 const CONFETTI_COLORS = [
   "#10b981", "#34d399", "#6ee7b7",
@@ -25,12 +37,7 @@ const CONFETTI_COLORS = [
   "#60a5fa", "#a78bfa", "#f472b6",
 ];
 
-const PHASE_TOASTS = [
-  null,
-  { message: "Bien joué !", sub: "Points clés assimilés" },
-  { message: "Tu progresses !", sub: "Exercice complété" },
-  { message: "Continue comme ça !", sub: "Quiz validé, leçon terminée" },
-];
+const PHASE_TOASTS = PHASES.map((p) => p.toast);
 
 const MOTIVATIONAL_PHRASES = [
   "Bravo, tu progresses !",
@@ -902,7 +909,7 @@ function CompletionScreen() {
       <p className="text-[11px] font-semibold tracking-widest uppercase text-emerald-500/70 mb-2">Leçon terminée</p>
       <h2 className="text-xl font-bold text-white mb-2">{phrase}</h2>
       <p className="text-zinc-400 text-sm leading-relaxed mb-6 max-w-xs mx-auto">
-        Contenu lu · Points assimilés · Exercice complété · Quiz validé
+        {LESSON_EXERCISES_ENABLED ? "Contenu lu · Points assimilés · Exercice complété · Quiz validé" : "Contenu lu · Points assimilés · Quiz validé"}
       </p>
 
       <div
@@ -955,7 +962,7 @@ export default function ContentFr() {
   const level  = LESSONS.find((l) => l.level === "debutant")!;
   const lesson = level.lessons.find((l) => l.slug === "lecon1")!;
 
-  const [phases,         setPhases]         = useState([true, false, false, false]);
+  const [phases,         setPhases]         = useState(() => PHASES.map((_, i) => i === 0));
   const [showCompletion, setShowCompletion] = useState(false);
   const [showConfetti,   setShowConfetti]   = useState(false);
   const [toasts,         setToasts]         = useState<ToastData[]>([]);
@@ -1111,19 +1118,21 @@ export default function ContentFr() {
 
               <div id="lesson-keypoints">
                 <FadeIn delay={120 + sc * 90 + 160}>
-                  <KeyPointsCard points={lesson.keyPoints} onComplete={() => completePhase(1)} />
+                  <KeyPointsCard points={lesson.keyPoints} onComplete={() => completePhase(phaseOf("lesson-keypoints"))} />
                 </FadeIn>
               </div>
 
-              <div id="lesson-exercice">
-                <FadeIn delay={120 + sc * 90 + 240}>
-                  <ExerciceCard exercise={lesson.exercise} onComplete={() => completePhase(2)} />
-                </FadeIn>
-              </div>
+              {LESSON_EXERCISES_ENABLED && (
+                <div id="lesson-exercice">
+                  <FadeIn delay={120 + sc * 90 + 240}>
+                    <ExerciceCard exercise={lesson.exercise} onComplete={() => completePhase(phaseOf("lesson-exercice"))} />
+                  </FadeIn>
+                </div>
+              )}
 
               <div id="lesson-quiz">
                 <FadeIn delay={120 + sc * 90 + 320}>
-                  <QuizCard quiz={lesson.quiz} onComplete={() => completePhase(3)} />
+                  <QuizCard quiz={lesson.quiz} onComplete={() => completePhase(phaseOf("lesson-quiz"))} />
                 </FadeIn>
               </div>
 

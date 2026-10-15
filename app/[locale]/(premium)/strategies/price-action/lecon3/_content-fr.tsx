@@ -10,6 +10,7 @@ import EngulfingContextDiagram from "@/app/components/charts/EngulfingContextDia
 import { LessonKeyPoints } from "@/app/components/LessonKeyPoints";
 import { LessonExercice } from "@/app/components/LessonExercice";
 import { LessonQuiz } from "@/app/components/LessonQuiz";
+import { LESSON_STEPS_FR } from "@/lib/lessons/exercises";
 
 const LESSONS = [
   { id: "lecon1", title: "Lire une bougie", disabled: false },
@@ -67,7 +68,7 @@ export default function ContentFr() {
           </div>
 
           <div className="mt-5 flex items-center gap-2 text-xs text-zinc-600">
-            {["Lecture", "À retenir", "Exercice", "Quiz"].map((step, i, arr) => (
+            {LESSON_STEPS_FR.map((step, i, arr) => (
               <span key={step} className="flex items-center gap-2">
                 <span>{step}</span>
                 {i < arr.length - 1 && (

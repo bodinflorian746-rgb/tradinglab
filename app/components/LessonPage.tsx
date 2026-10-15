@@ -15,6 +15,7 @@ import { LessonCelebration } from "@/app/components/LessonCelebration";
 import { MicroFeedback } from "@/app/components/MicroFeedback";
 import { useLocale, useDict } from "@/app/components/LocaleProvider";
 import { localizedHref } from "@/lib/i18n/href";
+import { LESSON_EXERCISES_ENABLED } from "@/lib/lessons/exercises";
 // StickyLessonNav est monté GLOBALEMENT dans app/layout.tsx et se détecte
 // automatiquement via pathname — pas besoin d'intégration ici.
 
@@ -151,7 +152,7 @@ export function LessonPage({
 
           {/* Indicateur de structure */}
           <div className="mt-5 flex items-center gap-2 text-xs text-zinc-600">
-            {[t.structureSteps.read, t.structureSteps.remember, t.structureSteps.exercise, t.structureSteps.quiz].map((step, i, arr) => (
+            {[t.structureSteps.read, t.structureSteps.remember, ...(LESSON_EXERCISES_ENABLED ? [t.structureSteps.exercise] : []), t.structureSteps.quiz].map((step, i, arr) => (
               <span key={step} className="flex items-center gap-2">
                 <span>{step}</span>
                 {i < arr.length - 1 && (

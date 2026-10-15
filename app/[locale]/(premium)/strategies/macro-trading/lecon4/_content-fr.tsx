@@ -9,6 +9,7 @@ import { LessonQuiz } from "@/app/components/LessonQuiz";
 import { MacroFilterCalendarDiagram } from "@/app/components/charts/MacroFilterCalendarDiagram";
 import { MacroFilterRegimeDiagram } from "@/app/components/charts/MacroFilterRegimeDiagram";
 import { MacroFilterFlowchartDiagram } from "@/app/components/charts/MacroFilterFlowchartDiagram";
+import { LESSON_STEPS_FR } from "@/lib/lessons/exercises";
 
 const LESSONS = [
   { id: "lecon1", title: "FOMC Fade", disabled: false },
@@ -66,7 +67,7 @@ export default function ContentFr() {
           </div>
 
           <div className="mt-5 flex items-center gap-2 text-xs text-zinc-600">
-            {["Lecture", "À retenir", "Exercice", "Quiz"].map((step, i, arr) => (
+            {LESSON_STEPS_FR.map((step, i, arr) => (
               <span key={step} className="flex items-center gap-2">
                 <span>{step}</span>
                 {i < arr.length - 1 && (
