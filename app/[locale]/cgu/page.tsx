@@ -261,7 +261,7 @@ export default async function CguPage({
   const c = CONTENT[locale];
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white px-6 py-16 md:py-20">
+    <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white px-6 py-16 md:py-20">
       <div className="max-w-3xl mx-auto">
         <h1 className={`text-3xl md:text-4xl font-bold ${c.updated ? "mb-3" : "mb-10"}`}>{c.title}</h1>
         {c.updated && <p className="text-sm text-zinc-500 mb-10">{c.updated}</p>}

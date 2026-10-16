@@ -114,7 +114,7 @@ export default function ContactPage() {
   const showError = state && !state.ok;
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white px-6 py-16 md:py-20">
+    <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white px-6 py-16 md:py-20">
       <div className="max-w-xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold mb-3">{t.title}</h1>
         <p className="text-[15px] text-zinc-400 leading-relaxed mb-10">{t.intro}</p>
