@@ -173,7 +173,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Un piège classique : le breakout peut servir à aspirer la liquidité des stops placés au-dessus de la résistance, avant une reprise dans le sens de l'UT supérieure.",
       advanced:     "Ici, tu n'as pas encore la confirmation par la mèche de rejet : tu décides AVANT. Si l'UT supérieure et la macro le permettent, anticiper le faux breakout peut être un vrai avantage. Sinon, NO TRADE se défend.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["piège", "fakeout", "liquidité"],
   },
   {
@@ -194,7 +194,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Ici, la chasse aux stops sous le support peut signaler un retournement haussier si l'UT supérieure est alignée, à confirmer avant d'agir. Le marché vient peut-être de récupérer du carburant pour monter.",
       advanced:     "Ici, tu décides AVANT le retour du prix au-dessus du support. Si l'UT supérieure et la structure sont alignés, un BUY se défend. En cas de doute, NO TRADE reste une option logique.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tags: ["piège", "fakeout", "liquidité"],
   },
   {

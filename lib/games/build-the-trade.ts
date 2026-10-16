@@ -239,7 +239,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       advanced:     "Un range se prête plutôt au contre-mouvement. Une confirmation et un TP rapide augmentent souvent le winrate, avec un R/R qui reste sous 2.",
       beginner:     "Au haut du range d'un range, un objectif modeste est souvent plus réaliste : le prix évolue dans une boîte.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
   },
   {
     id: "range_bottom_long",
@@ -256,7 +256,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       advanced:     "Mêmes principes que le SELL au haut du range : une confirmation et un TP serré aident souvent à augmenter le winrate.",
       beginner:     "Dans un range, viser l'autre borne est souvent suffisant. Ici, un objectif modeste se défend.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
   },
   {
     id: "fake_breakout_short",

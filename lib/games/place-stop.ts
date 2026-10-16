@@ -201,7 +201,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       advanced:     "Un stop AU-DESSUS du high de la mèche, avec une marge à la mesure de la volatilité du jour (ATR, l'amplitude moyenne d'une journée), se défend. Coller le high expose au retest du faux breakout ; dans le piège, le stop coûte cher.",
       beginner:     "Ici, le stop gagne à couvrir la mèche du faux breakout. Un stop placé dans la zone du piège risque fort d'être touché.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "piège",
   },
   {
@@ -377,7 +377,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Quand 2 swing lows sont proches, la structure n'est vraiment invalidée que si le PLUS BAS casse. Un SL sous le premier risque d'être touché sur une fluctuation normale.",
       advanced:     "Dans une séquence de lows, tant que le plus bas tient, la structure haussière reste intacte. Un SL sous le 1er swing ignore ici cette mécanique.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["beginner", "intermediate", "advanced"],
     tag: "structure",
   },
   {

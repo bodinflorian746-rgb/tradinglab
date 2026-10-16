@@ -53,6 +53,18 @@ export function pickRotation<T extends { id: string }>(
     const taken = new Set(out.map((t) => t.id));
     out.push(...shuffle(byAge(shuffled.filter((t) => !taken.has(t.id))).slice(0, rounds - out.length), rng));
   }
+  // Jamais deux fois de suite d'une partie à l'autre : la fin de la partie précédente (son
+  // dernier tiers) passe en fin de segment (pas encore joués, puis nouveau cycle)
+  if (last.size) {
+    const tail = new Set(history.last.slice(-Math.ceil(rounds / 3)));
+    const settle = (a: number, b: number) => {
+      const seg = out.slice(a, b);
+      out.splice(a, b - a, ...seg.filter((t) => !tail.has(t.id)), ...seg.filter((t) => tail.has(t.id)));
+    };
+    const nFresh = Math.min(fresh.length, rounds);
+    settle(0, nFresh);
+    settle(nFresh, out.length);
+  }
   return out;
 }
 

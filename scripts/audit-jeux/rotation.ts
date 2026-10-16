@@ -5,7 +5,8 @@
 //  - les doublons dans une partie ;
 //  - les retours trop tôt : un scénario rejoué alors qu'un autre du niveau n'est pas encore passé
 //    depuis le début du cycle (le cycle repart, mélangé, une fois tout le niveau passé) ;
-//  - les parties plus courtes que prévu (pool du niveau < nombre de manches).
+//  - les parties plus courtes que prévu (pool du niveau < nombre de manches) ;
+//  - un scénario rejoué deux fois de suite d'une partie à l'autre (écart minimal < 2 manches).
 // Usage : npx vite-node scripts/audit-jeux/rotation.ts [--autotest] [--parties=20] (lancé par run.mjs)
 import * as BS from "../../lib/games/buy-sell-no-trade";
 import * as FTM from "../../lib/games/find-the-mistake";
@@ -71,6 +72,7 @@ if (process.argv.includes("--autotest")) {
   const cases: [string, () => boolean][] = [
     ["doublon dans une partie (pool répété)", () => simulate((s, d) => [...BS.generateScenarios(s, d).slice(0, 9), BS.generateScenarios(s, d)[0]], pool, 10, "intermediate", 3).doublons > 0],
     ["historique ignoré (scénario rejoué trop tôt)", () => simulate(oldGen, pool, 10, "intermediate", 6).tropTot > 0],
+    ["même scénario deux fois de suite d'une partie à l'autre (ordre inversé)", () => { let k = 0; const beg = BS.scenarioPool("beginner"); return simulate(() => (k++ % 2 ? [...beg].reverse() : beg), beg.map((t) => t.id), beg.length, "beginner", 4).ecartMin < 2; }],
     ["pool plus petit que le nombre de manches", () => simulate((s, d, h) => BS.generateScenarios(s, d, h).slice(0, 7), pool.slice(0, 7), 10, "intermediate", 2).courtes > 0],
   ];
   for (const [name, run] of cases) {
@@ -87,7 +89,8 @@ if (process.argv.includes("--autotest")) {
   for (const [name, gen, pool, rounds] of GAMES) for (const d of DIFFS) {
     const ids = pool(d).map((t) => t.id);
     const st = simulate(gen, ids, rounds, d, PARTIES);
-    const e = st.doublons + st.tropTot + st.courtes;
+    // Jamais deux fois de suite, même d'une partie à l'autre (écart minimal ≥ 2 manches)
+    const e = st.doublons + st.tropTot + st.courtes + (st.ecartMin < 2 ? 1 : 0);
     errors += e;
     lines.push(`${e ? "  ERREUR" : "  ok    "} ${name.padEnd(16)} ${d.padEnd(12)} ${String(ids.length).padStart(2)} scénarios, ${rounds} manches : doublons ${st.doublons}, retours trop tôt ${st.tropTot}, parties courtes ${st.courtes} (${PARTIES} parties ; écart minimal entre deux passages : ${st.ecartMin} manches)`);
     for (const x of st.detail.slice(0, 3)) lines.push(`           ${x}`);
