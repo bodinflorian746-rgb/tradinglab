@@ -350,6 +350,8 @@ async function hardRounds(browser) {
       try {
         await page.goto(`${BASE}/fr/jeux/${slug}`, { waitUntil: "networkidle", timeout: 180000 });
         await page.waitForTimeout(600);
+        // Graine fixe : historique de rotation vidé (sinon le 1er round n'est plus celui de la graine)
+        await page.evaluate(() => { for (const k of Object.keys(localStorage)) if (k.startsWith("tsx-jeux-rotation:")) localStorage.removeItem(k); });
         await page.evaluate((v) => { let first = true, x = 0x2f6b9e1d; Math.random = () => { if (first) { first = false; return v; } x |= 0; x = (x + 0x6d2b79f5) | 0; let t = Math.imul(x ^ (x >>> 15), 1 | x); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }, (seed + 0.5) / 1e9);
         await page.getByText(level, { exact: true }).first().click({ timeout: 60000 });
         if (slug === "build-the-trade") {
