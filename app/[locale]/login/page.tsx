@@ -27,7 +27,7 @@ export default async function LoginPage({
   const t = (await getDictionary(locale, "common")).login;
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-12">
+    <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8">
         <h1 className="text-3xl font-bold mb-2 text-center">{t.title}</h1>
         <p className="text-sm text-zinc-400 text-center mb-6">{t.subtitle}</p>

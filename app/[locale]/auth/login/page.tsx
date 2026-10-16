@@ -52,7 +52,7 @@ function LoginForm() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-16">
+    <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-sm">
 
         {/* En-tête */}
@@ -138,7 +138,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-zinc-950" />}>
+    <Suspense fallback={<div className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950" />}>
       <LoginForm />
     </Suspense>
   );

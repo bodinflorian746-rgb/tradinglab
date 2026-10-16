@@ -21,7 +21,7 @@ export default async function CodeSentPage({
   const t = (await getDictionary(locale, "common")).codeSent;
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-12">
+    <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8 text-center">
         <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">

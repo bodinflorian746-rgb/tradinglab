@@ -24,7 +24,7 @@ export default async function ForgotPasswordPage({
   const isSent = sent === "1";
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-12">
+    <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8">
         {isSent ? (
           <>

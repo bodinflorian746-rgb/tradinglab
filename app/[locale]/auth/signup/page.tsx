@@ -51,7 +51,7 @@ export default function SignupPage() {
 
   if (done) {
     return (
-      <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-16">
+      <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-16">
         <div className="w-full max-w-sm text-center">
           <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-5">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-emerald-400">
@@ -76,7 +76,7 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-16">
+    <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-sm">
 
         {/* En-tête */}
