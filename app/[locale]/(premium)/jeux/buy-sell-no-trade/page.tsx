@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as FrGame from "@/lib/games/buy-sell-no-trade";
 import * as EsGame from "@/lib/games/buy-sell-no-trade-es";
 import * as EnGame from "@/lib/games/buy-sell-no-trade-en";
+import { startRotation, markPlayed } from "@/lib/games/rotation";
 import {
   scoreChoice,
   ROUNDS_PER_SESSION,
@@ -247,6 +248,10 @@ export default function BuySellNoTradePage() {
   const animRef = useRef<NodeJS.Timeout | null>(null);
 
   const current = scenarios[idx];
+  // Scénario affiché = joué : il ne revient qu'une fois tous les autres du niveau passés
+  useEffect(() => {
+    if (current && difficulty && G === FrGame) markPlayed("bsnt", difficulty, current.id, FrGame.scenarioPool(difficulty).map((t) => t.id));
+  }, [current, difficulty, G]);
   const chart: BuySellChart | null = useMemo(
     () => (current && difficulty ? G.withAssetPrices(G.buildChart(current.id, current.seed, current.volatility, difficulty, { asset: current.asset, session: current.session }), current) : null),
     [current, difficulty, G],
@@ -280,7 +285,7 @@ export default function BuySellNoTradePage() {
       const s = Math.floor(Math.random() * 1e9) >>> 0;
       setDifficulty(d);
       setSeed(s);
-      setScenarios(G.generateScenarios(s, d));
+      setScenarios(G === FrGame ? startRotation("bsnt", d, (h) => FrGame.generateScenarios(s, d, h)) : G.generateScenarios(s, d));
     }} />;
   }
 
@@ -299,7 +304,7 @@ export default function BuySellNoTradePage() {
         onReplay={() => {
           const s = Math.floor(Math.random() * 1e9) >>> 0;
           setSeed(s);
-          setScenarios(G.generateScenarios(s, difficulty));
+          setScenarios(G === FrGame ? startRotation("bsnt", difficulty, (h) => FrGame.generateScenarios(s, difficulty, h)) : G.generateScenarios(s, difficulty));
           setIdx(0);
           setScore(0);
           setStreak(0);

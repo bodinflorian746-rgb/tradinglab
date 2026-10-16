@@ -14,6 +14,7 @@ import {
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
+import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone, priceEpsilon } from "./price-scale";
 
@@ -379,21 +380,19 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
 
 // ─── Generate scenarios ───────────────────────────────────────────────────────
 
-export function generateBuildTradeScenarios(seed: number, difficulty: Difficulty): BuildTradeInstance[] {
+/** Scénarios du niveau (rotation, historique local). */
+export function scenarioPool(difficulty: Difficulty) {
+  return BUILD_TRADE_TEMPLATES.filter((t) => t.difficulties.includes(difficulty));
+}
+
+export function generateBuildTradeScenarios(seed: number, difficulty: Difficulty, history?: RotationHistory): BuildTradeInstance[] {
   const rng = mulberry32(seed);
-  const pool = BUILD_TRADE_TEMPLATES.filter((t) => t.difficulties.includes(difficulty));
-  const shuffled = [...pool];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
+  const pool = scenarioPool(difficulty);
+  // Jamais deux fois le même scénario dans une partie (lib/games/rotation.ts)
+  const picked = pickRotation(pool, ROUNDS_PER_SESSION, rng, history);
   const out: BuildTradeInstance[] = [];
-  let lastId: string | null = null;
-  for (let i = 0; i < ROUNDS_PER_SESSION; i++) {
-    let cand = shuffled[i % shuffled.length];
-    if (cand.id === lastId && shuffled.length > 1) {
-      cand = shuffled[(i + 1) % shuffled.length];
-    }
+  for (let i = 0; i < picked.length; i++) {
+    const cand = picked[i];
     out.push({
       ...cand,
       // Contexte cohérent : session, actif tradé dans la session, volatilité et spread de la session
@@ -401,7 +400,6 @@ export function generateBuildTradeScenarios(seed: number, difficulty: Difficulty
       seed:       (seed + i * 9973) >>> 0,
       difficulty,
     });
-    lastId = cand.id;
   }
   return out;
 }

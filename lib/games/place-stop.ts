@@ -21,6 +21,7 @@ import {
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
+import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
@@ -629,21 +630,19 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
 // qui contredit la règle « une bonne réponse n'a jamais un R/R faible ».
 const DISABLED_SETUPS: ReadonlySet<PlaceStopSetupKey> = new Set<PlaceStopSetupKey>(["tight_consolidation"]);
 
-export function generatePlaceStopScenarios(seed: number, difficulty: Difficulty = "intermediate"): PlaceStopInstance[] {
+/** Scénarios du niveau (rotation, historique local). */
+export function scenarioPool(difficulty: Difficulty) {
+  return PLACE_STOP_TEMPLATES.filter((t) => t.difficulties.includes(difficulty) && !DISABLED_SETUPS.has(t.id));
+}
+
+export function generatePlaceStopScenarios(seed: number, difficulty: Difficulty = "intermediate", history?: RotationHistory): PlaceStopInstance[] {
   const rng = mulberry32(seed);
-  const pool = PLACE_STOP_TEMPLATES.filter((t) => t.difficulties.includes(difficulty) && !DISABLED_SETUPS.has(t.id));
-  const shuffled = [...pool];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
+  const pool = scenarioPool(difficulty);
+  // Jamais deux fois le même scénario dans une partie (lib/games/rotation.ts)
+  const picked = pickRotation(pool, ROUNDS_PER_SESSION, rng, history);
   const out: PlaceStopInstance[] = [];
-  let lastId: PlaceStopSetupKey | null = null;
-  for (let i = 0; i < ROUNDS_PER_SESSION; i++) {
-    let candidate = shuffled[i % shuffled.length];
-    if (candidate.id === lastId && shuffled.length > 1) {
-      candidate = shuffled[(i + 1) % shuffled.length];
-    }
+  for (let i = 0; i < picked.length; i++) {
+    const candidate = picked[i];
     const isHighVol = candidate.id === "high_vol_pullback";
     out.push({
       ...candidate,
@@ -652,7 +651,6 @@ export function generatePlaceStopScenarios(seed: number, difficulty: Difficulty 
       seed:       (seed + i * 9973) >>> 0,
       difficulty,
     });
-    lastId = candidate.id;
   }
   return out;
 }

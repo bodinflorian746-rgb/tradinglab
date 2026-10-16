@@ -19,6 +19,7 @@ import {
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
+import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
@@ -486,23 +487,20 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
 const ASSETS: readonly Asset[] = ["XAU/USD", "EUR/USD", "NASDAQ"];
 const SESSIONS: readonly Session[] = ["Asie", "Londres", "New York"];
 
-export function generateScenarios(seed: number, difficulty: Difficulty = "intermediate"): ScenarioInstance[] {
+/** Scénarios du niveau (rotation, historique local). */
+export function scenarioPool(difficulty: Difficulty) {
+  return SCENARIO_TEMPLATES.filter((t) => t.difficulties.includes(difficulty));
+}
+
+export function generateScenarios(seed: number, difficulty: Difficulty = "intermediate", history?: RotationHistory): ScenarioInstance[] {
   const rng = mulberry32(seed);
-  const pool = SCENARIO_TEMPLATES.filter((t) => t.difficulties.includes(difficulty));
-  const shuffled = [...pool];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  // Si le pool est plus petit que ROUNDS_PER_SESSION, on répète sans
-  // refaire deux fois consécutivement le même setup.
+  const pool = scenarioPool(difficulty);
+  // Jamais deux fois le même scénario dans une partie ; d'une partie à l'autre,
+  // les scénarios pas encore joués du niveau passent d'abord (lib/games/rotation.ts).
+  const picked = pickRotation(pool, ROUNDS_PER_SESSION, rng, history);
   const out: ScenarioInstance[] = [];
-  let lastId: SetupKey | null = null;
-  for (let i = 0; i < ROUNDS_PER_SESSION; i++) {
-    let candidate = shuffled[i % shuffled.length];
-    if (candidate.id === lastId && shuffled.length > 1) {
-      candidate = shuffled[(i + 1) % shuffled.length];
-    }
+  for (let i = 0; i < picked.length; i++) {
+    const candidate = picked[i];
     const ov = candidate.metaOverride ?? {};
     out.push({
       ...candidate,
@@ -514,7 +512,6 @@ export function generateScenarios(seed: number, difficulty: Difficulty = "interm
       seed:       (seed + i * 9973) >>> 0,
       difficulty,
     });
-    lastId = candidate.id;
   }
   return out;
 }

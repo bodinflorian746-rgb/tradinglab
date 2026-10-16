@@ -12,6 +12,7 @@ import {
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
 import { pickMarketContext, contextRule } from "./market-context";
+import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { anchorPrice, assetPriceMap, linearPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
@@ -566,21 +567,19 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
 
 // ─── Génération scénarios ─────────────────────────────────────────────────────
 
-export function generateMistakeScenarios(seed: number, difficulty: Difficulty): MistakeInstance[] {
+/** Scénarios du niveau (rotation, historique local). */
+export function scenarioPool(difficulty: Difficulty) {
+  return MISTAKE_TEMPLATES.filter((t) => t.difficulties.includes(difficulty));
+}
+
+export function generateMistakeScenarios(seed: number, difficulty: Difficulty, history?: RotationHistory): MistakeInstance[] {
   const rng = mulberry32(seed);
-  const pool = MISTAKE_TEMPLATES.filter((t) => t.difficulties.includes(difficulty));
-  const shuffled = [...pool];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
+  const pool = scenarioPool(difficulty);
+  // Jamais deux fois le même scénario dans une partie (lib/games/rotation.ts)
+  const picked = pickRotation(pool, ROUNDS_PER_SESSION, rng, history);
   const out: MistakeInstance[] = [];
-  let lastId: string | null = null;
-  for (let i = 0; i < ROUNDS_PER_SESSION; i++) {
-    let cand = shuffled[i % shuffled.length];
-    if (cand.id === lastId && shuffled.length > 1) {
-      cand = shuffled[(i + 1) % shuffled.length];
-    }
+  for (let i = 0; i < picked.length; i++) {
+    const cand = picked[i];
     const ov = cand.metaOverride ?? {};
     // Shuffle des choix
     const allChoices: MistakeId[] = [cand.correctMistake, ...cand.decoyMistakes];
@@ -599,7 +598,6 @@ export function generateMistakeScenarios(seed: number, difficulty: Difficulty): 
       difficulty,
       shuffledChoices: allChoices,
     });
-    lastId = cand.id;
   }
   return out;
 }

@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import * as FrGame from "@/lib/games/find-the-mistake";
 import * as EsGame from "@/lib/games/find-the-mistake-es";
 import * as EnGame from "@/lib/games/find-the-mistake-en";
+import { startRotation, markPlayed } from "@/lib/games/rotation";
 import {
   scoreMistakeChoice,
   ROUNDS_PER_SESSION,
@@ -196,6 +197,10 @@ export default function FindTheMistakePage() {
   const [showSummary, setShowSummary] = useState(false);
 
   const current = scenarios[idx];
+  // Scénario affiché = joué : il ne revient qu'une fois tous les autres du niveau passés
+  useEffect(() => {
+    if (current && difficulty && G === FrGame) markPlayed("ftm", difficulty, current.id, FrGame.scenarioPool(difficulty).map((t) => t.id));
+  }, [current, difficulty, G]);
   const chart: ScenarioChart | null = useMemo(
     () => (current ? G.withAssetPrices(G.buildScenarioChart(current, current.seed, current.volatility, { asset: current.asset, session: current.session }), current) : null),
     [current, G],
@@ -213,7 +218,7 @@ export default function FindTheMistakePage() {
       const s = Math.floor(Math.random() * 1e9) >>> 0;
       setDifficulty(d);
       setSeed(s);
-      setScenarios(G.generateMistakeScenarios(s, d));
+      setScenarios(G === FrGame ? startRotation("ftm", d, (h) => FrGame.generateMistakeScenarios(s, d, h)) : G.generateMistakeScenarios(s, d));
     }} />;
   }
 
@@ -231,7 +236,7 @@ export default function FindTheMistakePage() {
         onReplay={() => {
           const s = Math.floor(Math.random() * 1e9) >>> 0;
           setSeed(s);
-          setScenarios(G.generateMistakeScenarios(s, difficulty));
+          setScenarios(G === FrGame ? startRotation("ftm", difficulty, (h) => FrGame.generateMistakeScenarios(s, difficulty, h)) : G.generateMistakeScenarios(s, difficulty));
           setIdx(0);
           setScore(0);
           setStreak(0);

@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as FrGame from "@/lib/games/build-the-trade";
 import * as EsGame from "@/lib/games/build-the-trade-es";
 import * as EnGame from "@/lib/games/build-the-trade-en";
+import { startRotation, markPlayed } from "@/lib/games/rotation";
 import {
   evaluateTrade,
   planRR,
@@ -260,6 +261,10 @@ export default function BuildTheTradePage() {
   const animRef = useRef<NodeJS.Timeout | null>(null);
 
   const current = scenarios[idx];
+  // Scénario affiché = joué : il ne revient qu'une fois tous les autres du niveau passés
+  useEffect(() => {
+    if (current && difficulty && G === FrGame) markPlayed("btt", difficulty, current.id, FrGame.scenarioPool(difficulty).map((t) => t.id));
+  }, [current, difficulty, G]);
   const chart: BuildTradeChart | null = useMemo(
     () => (current ? G.withAssetPrices(G.buildBuildTradeChart(current, current.seed, current.volatility, { asset: current.asset, session: current.session }), current) : null),
     [current, G],
@@ -308,7 +313,7 @@ export default function BuildTheTradePage() {
       const s = Math.floor(Math.random() * 1e9) >>> 0;
       setDifficulty(d);
       setSeed(s);
-      setScenarios(G.generateBuildTradeScenarios(s, d));
+      setScenarios(G === FrGame ? startRotation("btt", d, (h) => FrGame.generateBuildTradeScenarios(s, d, h)) : G.generateBuildTradeScenarios(s, d));
     }} />;
   }
 
@@ -325,7 +330,7 @@ export default function BuildTheTradePage() {
         onReplay={() => {
           const s = Math.floor(Math.random() * 1e9) >>> 0;
           setSeed(s);
-          setScenarios(G.generateBuildTradeScenarios(s, difficulty));
+          setScenarios(G === FrGame ? startRotation("btt", difficulty, (h) => FrGame.generateBuildTradeScenarios(s, difficulty, h)) : G.generateBuildTradeScenarios(s, difficulty));
           setIdx(0);
           setScore(0);
           setStreak(0);
