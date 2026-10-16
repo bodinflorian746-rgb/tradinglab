@@ -131,7 +131,7 @@ export default function FormationLevelIndex({ formationId }: Props) {
       : common.buttons.resume;
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white px-6 py-12 md:py-16">
+    <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white px-6 py-12 md:py-16">
       <div className="max-w-4xl mx-auto">
 
         {/* Breadcrumb */}

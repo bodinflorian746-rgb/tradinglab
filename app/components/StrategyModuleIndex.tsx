@@ -25,7 +25,7 @@ export async function StrategyModuleIndex({
   const meta = STRATEGY_MODULES.find((m) => m.id === moduleId);
   if (!meta) {
     return (
-      <main className="min-h-screen bg-zinc-950 text-white px-6 py-12">
+      <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white px-6 py-12">
         <p className="text-zinc-400">Unknown module: {moduleId}</p>
       </main>
     );
@@ -40,7 +40,7 @@ export async function StrategyModuleIndex({
   const lessonIds = Array.from({ length: meta.lessonCount }, (_, i) => `lecon${i + 1}` as const);
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white px-6 py-12 md:py-20">
+    <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white px-6 py-12 md:py-20">
       <div className="max-w-4xl mx-auto">
 
         <nav className="flex items-center gap-2 text-sm text-zinc-600 mb-8">

@@ -125,7 +125,7 @@ export default async function MacroPage({
   const macro = fdict.macro;
 
   return (
-    <main className="relative min-h-screen bg-zinc-950 text-white overflow-hidden">
+    <main className="relative tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white overflow-hidden">
       {/* Halo blue radial diffus en haut */}
       <div
         className="absolute inset-x-0 top-0 -z-10 h-[500px] pointer-events-none"

@@ -204,7 +204,7 @@ export default function FormationsPage() {
     : "Maîtrise les bases et construis des setups solides à chaque étape de ta progression.");
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
+    <main className="tsx-v2 tsx-v2--soft page-v2 min-h-screen bg-zinc-950 text-white">
       {/* Halo emerald radial diffus en haut */}
       <div
         className="absolute inset-x-0 top-0 -z-10 h-[500px] pointer-events-none"
