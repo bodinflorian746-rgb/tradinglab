@@ -20,6 +20,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
+import { breakStrayLevels } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -1645,23 +1646,24 @@ function scnPrevDayLowTrap(rng: () => number, m: number, d: Difficulty, mode: Pl
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 5 + rng() * 0.3;
-  // Quelques bougies oscillantes
+  // « Le prix s'approche du PDL » : quelques bougies qui glissent vers le bas (creux de plus en plus bas)
   for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o + (rng() - 0.5) * 0.5 * m;
+    const c = o + (rng() - 0.7) * 0.5 * m;
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
-  // Quelques bougies de range plus serré (le prix flotte au-dessus du PDL implicite)
+  // Quelques bougies plus serrées, toujours en glissement (le prix flotte au-dessus du PDL implicite)
   for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o + (rng() - 0.5) * 0.35 * m;
+    const c = o + (rng() - 0.65) * 0.35 * m;
     past.push(candle(o, c, (0.15 + rng() * 0.12) * m, (0.2 + rng() * 0.15) * m));
     p = c;
   }
   const entry = p;
-  // Le PDL n'a pas encore été touché : il se situe sous tous les lows du passé
-  const PDL = Math.min(entry - 0.6 * m, Math.min(...past.map((k) => k.l)) - 0.08 * m);
+  // Le PDL n'a pas encore été touché : il se situe sous tous les lows du passé, assez loin pour que
+  // les creux du jour ne se confondent pas avec lui (aucun niveau visible sans nom juste au-dessus)
+  const PDL = Math.min(entry - 0.6 * m, Math.min(...past.map((k) => k.l)) - 0.45 * m);
   const liquidityPrice = PDL - 0.1 * m;
   const logicalPrice   = PDL - trapMarginFor(d, mode) * m - 0.5 * m;
   // Le stop large reste plus loin que le logique même si le PDL descend
@@ -2881,7 +2883,8 @@ export function buildPlaceStopChart(
   const stopPrices = withTarget.stops.map((st) => st.price);
   const outcome = [...(withTarget.tp !== null ? [withTarget.tp] : []), ...stopPrices];
   // passé : les stops aussi (un stop « sous le swing low » reste sous la mèche du swing)
-  return withRoleChanges(withTracedZones(keepPricesPositive(realizeChart(withTarget, { past: [...zones, ...stopPrices], future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility }))));
+  // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
+  return breakStrayLevels(withRoleChanges(withTracedZones(keepPricesPositive(realizeChart(withTarget, { past: [...zones, ...stopPrices], future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility })))), stopPrices);
 }
 
 // Le bon stop ne doit jamais avoir un R/R faible : l'objectif (TP) est au moins

@@ -18,6 +18,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
+import { breakStrayLevels } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -1388,7 +1389,8 @@ export function buildChart(
 ): BuySellChart {
   const ch = buildChartRaw(setup, seed, volatility, difficulty);
   const calm = setup === "trade_before_news";
-  return withRoleChanges(withTracedZones(realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm })));
+  // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
+  return breakStrayLevels(withRoleChanges(withTracedZones(realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm }))));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

@@ -11,6 +11,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
+import { breakStrayLevels } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -973,7 +974,8 @@ export function buildScenarioChart(template: MistakeTemplate, seed: number, vol:
   const calm = template.chartShape === "calm_before_news";
   // le stop aussi sur le passé : un stop « pile au-dessus du swing low » le reste (seulement lui :
   // l'entrée et le TP en plus raidissaient les corps, réalisme EUR/USD au bord du seuil)
-  return withRoleChanges(withTracedZones(realizeChart(ch, { past: [...zones, ...(ch.stop !== undefined ? [ch.stop] : [])], future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm })));
+  // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
+  return breakStrayLevels(withRoleChanges(withTracedZones(realizeChart(ch, { past: [...zones, ...(ch.stop !== undefined ? [ch.stop] : [])], future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm }))), ch.stop !== undefined ? [ch.stop] : []);
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

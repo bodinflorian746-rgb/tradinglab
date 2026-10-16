@@ -13,6 +13,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
+import { breakStrayLevels } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -1187,7 +1188,8 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
   const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol], ch.past)];
   const plan = [...Object.values(ch.entries), ...Object.values(ch.stops), ...Object.values(ch.tps)];
-  return withRoleChanges(withTracedZones(realizeChart(ch, { past: zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol })));
+  // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
+  return breakStrayLevels(withRoleChanges(withTracedZones(realizeChart(ch, { past: zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol }))), Object.values(ch.stops), { positive: true });
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */
