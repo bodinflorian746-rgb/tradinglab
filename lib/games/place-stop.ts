@@ -158,11 +158,11 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
   },
   {
     id: "bounce_support",
-    title: "Rebond sur support majeur",
+    title: "Rebond sur un support de l'UT supérieure",
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de rebondir sur un support majeur de l'UT supérieure.",
+    context: "Le prix vient de rebondir sur un support de l'UT supérieure.",
     shortContext: "BUY sur support de l'UT supérieure.",
     lessons: {
       beginner:     "Un stop sous le support, avec une marge réaliste, se défend. Pile sur le support, il risque d'être ramassé par la chasse à la liquidité.",
@@ -174,11 +174,11 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
   },
   {
     id: "rejection_resistance",
-    title: "Rejet sur résistance majeure",
+    title: "Rejet sur une résistance de l'UT supérieure",
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Le prix vient de rejeter une résistance majeure de l'UT supérieure avec mèches.",
+    context: "Le prix vient de rejeter une résistance de l'UT supérieure avec mèches.",
     shortContext: "SELL sur résistance de l'UT supérieure.",
     lessons: {
       beginner:     "Un stop au-dessus de la mèche la plus haute, avec une marge, est une option logique. Coller le niveau expose fortement à une chasse aux stops.",
@@ -290,7 +290,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Session asiatique terminée, range bien défini. Ouverture de Londres dans 10 minutes. Tu vends (SELL) au haut du range asiatique.",
+    context: "Session asiatique terminée, son plus haut est bien défini. Ouverture de Londres dans 10 minutes. Tu vends (SELL) au haut de la session asiatique.",
     shortContext: "Avant l'ouverture de Londres",
     lessons: {
       beginner:     "L'haut de la session asiatique est souvent balayé à l'ouverture de Londres. Ici, un SL au-dessus du sweep attendu tient mieux qu'un SL pile au high.",

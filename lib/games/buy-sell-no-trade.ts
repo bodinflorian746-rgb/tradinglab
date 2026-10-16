@@ -120,7 +120,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Le prix consolide sous une résistance majeure puis vient de la casser avec une bougie de displacement.",
+    context: "Le prix consolide sous une résistance puis vient de la casser avec une bougie de displacement.",
     rationales: {
       BUY: "✓ Ici, l'UT supérieure est haussière et le breakout va dans son sens. La résistance vient d'être franchie avec une bougie de displacement : c'est un scénario de continuation typique. Dans ce cas, un BUY est la lecture la plus logique.",
       SELL: "✗ Vendre face à un breakout haussier, sur une UT supérieure haussière, revient ici à se placer à contre-courant sans signal de retournement. Ce type de trade est souvent émotionnel.",
@@ -141,7 +141,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Le prix consolide au-dessus d'un support majeur puis vient de le casser avec une bougie de displacement.",
+    context: "Le prix consolide au-dessus d'un support puis vient de le casser avec une bougie de displacement.",
     rationales: {
       BUY: "✗ Acheter un breakout de support sur une UT supérieure baissière revient ici à aller contre le marché. Aucun signal de retournement n'apparaît, seulement une accélération baissière.",
       SELL: "✓ Breakout propre dans le sens baissier de l'UT supérieure, avec un momentum côté vendeur. Ici, un SELL est la lecture la plus cohérente.",
@@ -241,20 +241,20 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
   },
   {
     id: "rejection_resistance",
-    title: "Test de résistance majeure",
+    title: "Test d'une résistance de l'UT supérieure",
     correctAnswer: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Le prix vient d'arriver sur une résistance majeure après une forte hausse. La zone a déjà rejeté plusieurs fois.",
+    context: "Le prix vient d'arriver sur une résistance de l'UT supérieure après une forte hausse. La zone a déjà rejeté plusieurs fois.",
     rationales: {
-      BUY: "✗ Acheter sous une résistance majeure, sur une UT supérieure baissière, revient ici à espérer que le niveau qui a rejeté le prix jusqu'ici ne le rejette pas cette fois.",
+      BUY: "✗ Acheter sous une résistance de l'UT supérieure, sur une UT supérieure baissière, revient ici à espérer que le niveau qui a rejeté le prix jusqu'ici ne le rejette pas cette fois.",
       SELL: "✓ Ici, une zone défendue par les vendeurs et une UT supérieure baissière peuvent signaler un retournement. Un SELL avec un stop au-dessus de la zone est une option logique.",
       NO_TRADE: "≈ Attendre une confirmation supplémentaire se comprend. Mais ici, une UT supérieure et une zone alignées suffisent souvent.",
     },
     lessons: {
-      beginner:     "Résistance majeure et UT supérieure baissière : un SELL reste cohérent avec le scénario, si ça correspond à ton plan. Le marché te donne ici deux raisons d'aller dans le même sens.",
-      intermediate: "Les zones de l'UT supérieure tiennent souvent mieux que les zones de l'UT inférieure. Au premier test d'une résistance majeure de l'UT supérieure, un rejet est fréquent, sans être systématique.",
+      beginner:     "Résistance de l'UT supérieure et UT supérieure baissière : un SELL reste cohérent avec le scénario, si ça correspond à ton plan. Le marché te donne ici deux raisons d'aller dans le même sens.",
+      intermediate: "Les zones de l'UT supérieure tiennent souvent mieux que les zones de l'UT inférieure. Au premier test d'une résistance de l'UT supérieure, un rejet est fréquent, sans être systématique.",
       advanced:     "Si la zone a déjà été testée 3 fois ou plus, méfie-toi du breakout (chaque test peut affaiblir le niveau). À 1 ou 2 tests dans le sens de l'UT supérieure, la taille dépend de ton plan de gestion du risque.",
     },
     difficulties: ["beginner", "intermediate", "advanced"],
@@ -262,19 +262,19 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
   },
   {
     id: "bounce_support",
-    title: "Test de support majeur",
+    title: "Test d'un support de l'UT supérieure",
     correctAnswer: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
     metric: "lecture",
-    context: "Le prix vient d'arriver sur un support majeur après une correction. La zone a déjà tenu plusieurs fois.",
+    context: "Le prix revient sur un support de l'UT supérieure après une correction. La zone a déjà tenu plusieurs fois.",
     rationales: {
-      BUY: "✓ Ici, un support majeur et une UT supérieure haussière dessinent une zone d'achat. Les acheteurs défendent le niveau et le contexte est aligné. Un BUY avec un stop sous la zone est une option logique.",
-      SELL: "✗ Vendre sous un support majeur défendu, sur une UT supérieure haussière, revient ici à se positionner contre l'avantage statistique. Dans ce cas, mieux vaut s'abstenir.",
+      BUY: "✓ Ici, un support de l'UT supérieure et une UT supérieure haussière dessinent une zone d'achat. Les acheteurs défendent le niveau et le contexte est aligné. Un BUY avec un stop sous la zone est une option logique.",
+      SELL: "✗ Vendre sur un support de l'UT supérieure défendu, sur une UT supérieure haussière, revient ici à se positionner contre l'avantage statistique. Dans ce cas, mieux vaut s'abstenir.",
       NO_TRADE: "≈ Attendre une confirmation n'est pas faux, mais ici l'UT supérieure et la zone donnent souvent déjà le signal.",
     },
     lessons: {
-      beginner:     "Support majeur et UT supérieure haussière : un BUY reste cohérent avec le scénario, si ça correspond à ton plan. C'est le symétrique du rejet de résistance.",
+      beginner:     "Support de l'UT supérieure et UT supérieure haussière : un BUY reste cohérent avec le scénario, si ça correspond à ton plan. C'est le symétrique du rejet de résistance.",
       intermediate: "Au premier test, les zones de l'UT supérieure tiennent souvent plus qu'elles ne cassent. C'est cette asymétrie qui peut créer un avantage.",
       advanced:     "Les supports de l'UT supérieure testés 1 ou 2 fois sont souvent les plus fiables. Au-delà, le niveau peut s'affaiblir et le scénario breakout puis retest devient plus probable.",
     },
@@ -427,7 +427,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     lessons: {
       beginner:     "Avec une UT supérieure baissière, on cherche plutôt les SELL ; les BUY contre la tendance restent des paris risqués.",
       intermediate: "Un setup local n'efface pas la tendance de l'UT supérieure. Si l'UT supérieure va contre toi, il vaut souvent mieux s'abstenir, même si la zone locale tient.",
-      advanced:     "Dans une tendance baissière, les rebonds offrent plutôt des opportunités de SELL que de BUY. Mais le timing compte : ici, c'est trop tôt, sans mèche de rejet sur une résistance de l'UT supérieure.",
+      advanced:     "Dans une tendance baissière, les rebonds offrent plutôt des opportunités de SELL que de BUY. Mais le timing compte : ici, c'est trop tôt, aucune mèche de rejet ne montre encore les vendeurs.",
     },
     difficulties: ["intermediate", "advanced"],
     tags: ["discipline", "UT supérieure", "contre-tendance"],
@@ -591,7 +591,7 @@ function genBreakoutBull(rng: () => number, m: number, d: Difficulty): BuySellCh
   }
   return finalize({
     past, future: fut,
-    zones: [{ kind: "resistance", y1: R - 0.15, y2: R + 0.15, label: "Résistance" }],
+    zones: [{ kind: "resistance", y1: R - 0.15, y2: R + 0.15, label: "Résistance cassée" }],
   });
 }
 
@@ -627,7 +627,7 @@ function genBreakoutBear(rng: () => number, m: number, d: Difficulty): BuySellCh
   }
   return finalize({
     past, future: fut,
-    zones: [{ kind: "support", y1: S - 0.15, y2: S + 0.15, label: "Support" }],
+    zones: [{ kind: "support", y1: S - 0.15, y2: S + 0.15, label: "Support cassé" }],
   });
 }
 

@@ -163,7 +163,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de casser une résistance de l'UT supérieure avec une bougie de displacement.",
+    context: "Le prix vient de casser une résistance avec une bougie de displacement.",
     optimal: { entry: "aggressive", stop: "logical", tp: "ambitious" },
     optimalExplain: "Ici, le breakout aligné avec l'UT supérieure peut signaler un momentum immédiat. Attendre un pullback profond risque de faire rater le mouvement. Une entrée agressive, un stop sous le niveau cassé et un TP ambitieux forment une option logique.",
     lessons: {
@@ -180,7 +180,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Le prix vient de casser un support de l'UT supérieure avec une bougie de displacement.",
+    context: "Le prix vient de casser un support avec une bougie de displacement.",
     optimal: { entry: "aggressive", stop: "logical", tp: "ambitious" },
     optimalExplain: "Ici, le breakout aligné avec l'UT supérieure peut signaler un momentum vendeur. Une entrée rapide avec un stop au-dessus du support cassé est une option logique.",
     lessons: {
@@ -192,7 +192,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
   },
   {
     id: "bounce_support_clean",
-    title: "Rebond sur support majeur",
+    title: "Rebond sur un support de l'UT supérieure",
     chartShape: "bounce_support",
     direction: "BUY",
     htfBias: "bullish",
@@ -209,7 +209,7 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
   },
   {
     id: "rejection_resistance_clean",
-    title: "Rejet sur résistance majeure",
+    title: "Rejet sur une résistance de l'UT supérieure",
     chartShape: "rejection_resistance",
     direction: "SELL",
     htfBias: "bearish",
