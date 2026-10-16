@@ -2,6 +2,8 @@ import "../globals.css";
 // Charte v2 (opt-in, scopée sous .tsx-v2) : après globals.css, comme quand elle
 // était importée par les layouts des jeux
 import "@/app/styles/tsx-v2.css";
+// Coque v2 des pages de site (accès, broker, listes, compte, légal, connexion…), scopée sous .page-v2
+import "@/app/styles/page-shell.css";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
