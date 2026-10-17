@@ -99,3 +99,20 @@ export interface Pedagogy {
   /** Avancé : le conflit à trancher (UT supérieure contre inférieure, news, sweep, clôture contre mèche…) */
   conflict?: string;
 }
+
+/** Trouve l'erreur : notion de chaque erreur proposée (un choix reste dans les notions du niveau) */
+// (identifiants de notions écrits n.xxx : pas de chaîne, rien à corriger pour l'orthographe)
+const n = Object.fromEntries(Object.keys(NOTIONS).map((k) => [k, k])) as { [K in NotionId]: K };
+export const MISTAKE_NOTION: Record<string, NotionId> = {
+  stop_too_tight: n.stop_loss, stop_in_liquidity: n.chasse_aux_stops, trade_against_htf: n.multi_ut, trade_before_news: n.news,
+  buy_in_resistance: n.take_profit, sell_in_support: n.take_profit, bad_rr: n.rr, no_confirmation: n.breakout,
+  oversized_position: n.money_management, bad_spread: n.spread, volatility_ignored: n.volatilite, fomo_after_pump: n.fomo,
+  revenge_trade: n.revenge, range_middle: n.range, sweep_ignored: n.sweep, mitigation_misread: n.fvg, bad_timing: n.killzones,
+  ignored_zone: n.multi_ut, risk_not_reduced_news: n.news, position_held_through_event: n.news, size_not_adapted_to_vol: n.volatilite,
+  weekend_gap_exposure: n.macro,
+  no_stop: n.sans_stop, tp_beyond_level: n.take_profit, stop_moved: n.plan_non_respecte, overtrading: n.surtrading, loss_not_cut: n.ancrage,
+  size_after_wins: n.overconfidence, pattern_without_level: n.pattern_sans_niveau, fakeout_bought: n.faux_breakout, structure_ignored: n.structure,
+  broken_level_bought: n.changement_role, stop_inside_zone: n.zones_cles, breakout_chased: n.breakout, fib_misread: n.fibonacci,
+  range_top_bought: n.range, weak_level: n.zones_cles, dead_ob_bought: n.order_block, dead_session_breakout: n.killzones,
+  ote_ignored: n.ote, fake_sweep_bought: n.sweep, news_market_order: n.news,
+};

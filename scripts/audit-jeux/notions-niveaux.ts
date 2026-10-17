@@ -12,9 +12,10 @@ import * as BS from "../../lib/games/buy-sell-no-trade";
 import * as FTM from "../../lib/games/find-the-mistake";
 import * as PS from "../../lib/games/place-stop";
 import * as BT from "../../lib/games/build-the-trade";
+import { MISTAKE_NOTION } from "../../lib/games/ftm-scenarios";
 import { ALLOWED_LEVELS, NOTIONS, roundNotions, type Difficulty, type NotionId } from "../../lib/games/notions";
 
-export interface Tpl { id: string; difficulties: readonly string[]; notions?: readonly string[]; trap?: string; conflict?: string }
+export interface Tpl { id: string; difficulties: readonly string[]; notions?: readonly string[]; trap?: string; conflict?: string; correctMistake?: string; decoyMistakes?: readonly string[] }
 
 export function notionErrors(t: Tpl): string[] {
   const e: string[] = [];
@@ -33,6 +34,12 @@ export function notionErrors(t: Tpl): string[] {
     if (!t.trap?.trim()) e.push("Intermédiaire : piège à écarter non décrit");
   }
   if (d === "advanced" && !t.conflict?.trim()) e.push("Avancé : conflit à trancher non décrit");
+  // Trouve l'erreur : chaque choix proposé (bonne réponse et leurres) relève d'une notion du niveau
+  for (const c of t.correctMistake ? [t.correctMistake, ...(t.decoyMistakes ?? [])] : []) {
+    const n = MISTAKE_NOTION[c] as NotionId | undefined;
+    if (!n) e.push(`choix « ${c} » sans notion`);
+    else if (!allowed.includes(NOTIONS[n].level)) e.push(`choix « ${c} » (${NOTIONS[n].lesson}) au-dessus du niveau ${d}`);
+  }
   return e;
 }
 
@@ -55,6 +62,7 @@ if (process.argv.includes("--autotest")) {
     ["scénario sur trois niveaux", { id: "x", difficulties: ["beginner", "intermediate", "advanced"], notions: ["marteau"] }],
     ["scénario sans notion", { id: "x", difficulties: ["beginner"] }],
     ["notion inconnue", { id: "x", difficulties: ["beginner"], notions: ["notion_inventee"] }],
+    ["Trouve l'erreur : leurre Intermédiaire en Débutant", { id: "x", difficulties: ["beginner"], notions: ["fomo"], correctMistake: "fomo_after_pump", decoyMistakes: ["trade_against_htf", "no_stop", "bad_rr"] }],
   ];
   for (const [name, t] of cases) { const ok = notionErrors(t).length > 0; lines.push(`${ok ? "détecté" : "MANQUÉ "}  ${name}`); if (!ok) errors++; }
   const fine: Tpl[] = [

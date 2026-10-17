@@ -47,7 +47,24 @@ function realFvg(ch: ScenarioChart): { i: number } | null {
   return null;
 }
 
+// Forme partagée : tendance haussière puis repli (entrée au repli)
+const upThenPullback: Check = (ch) => {
+  const t = ch.past.slice(0, 8), r = ch.past.slice(-4);
+  if (!(last(t).c > t[0].o)) return "pas de hausse avant le repli";
+  return last(r).c < r[0].o ? null : "les 4 dernières bougies ne forment pas un repli";
+};
+const entryNow: Check = (ch) => (ch.entry !== undefined && Math.abs(ch.entry - last(ch.past).c) <= E ? null : "pas d'entrée au dernier cours");
+
 const SPECIFIC: Record<string, Check> = {
+  oversized_position: upThenPullback,
+  bad_spread: upThenPullback,
+  revenge_trade: upThenPullback,
+  weekend_gap_exposure: upThenPullback,
+  size_not_adapted_to_vol: upThenPullback,
+  // (texte : l'heure de la news, vérifiée par le contexte de marché ; graphique : entrée au dernier cours)
+  trade_before_news: entryNow,
+  risk_not_reduced_news: entryNow,
+  position_held_through_event: entryNow,
   buy_in_resistance: (ch) => {
     const z = kindZone(ch, "resistance")!; const k = last(ch.past);
     if (!(k.c < lo(z))) return "l'entrée n'est pas sous la résistance";
@@ -134,6 +151,9 @@ for (const t of G.MISTAKE_TEMPLATES) {
         if (strip(ch) !== strip(frCh)) reasons.push(`[${LOC}] données différentes du FR`);
       }
       const sp = SPECIFIC[t.id]?.(frCh, frT); if (sp) reasons.push(sp);
+      // Scénarios construits sur les scènes partagées : leurs affirmations, vérifiées sur le graphique
+      for (const [name, fn] of Object.entries(frT.claims ?? {})) { const r = fn(frCh); if (r) reasons.push(`${name} → ${r}`); }
+      if (!SPECIFIC[t.id] && !frT.claims) reasons.push("aucune affirmation vérifiée pour ce scénario");
       dojis += ch.past.filter((k) => k.c === k.o).length;
       if (reasons.length) { bad++; reasons.forEach((r) => (fails[r] = (fails[r] ?? 0) + 1)); }
     }

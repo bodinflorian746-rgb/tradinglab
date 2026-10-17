@@ -44,6 +44,36 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "déséquilibre laissé par une bougie de displacement.", es: "desequilibrio dejado por una vela impulsiva." },
   },
   {
+    id: "choch", source: "Intermédiaire · leçon 1 (Structure de marché : BOS & CHoCH)",
+    term: { fr: "CHoCH", es: "CHoCH" },
+    match: { fr: /\bCHoCH\b/, es: /\bCHoCH\b/ },
+    def: {
+      fr: "Change of Character : la première clôture qui casse la structure (sous le dernier plus bas d'une tendance haussière, au-dessus du dernier plus haut d'une tendance baissière).",
+      es: "Change of Character: el primer cierre que rompe la estructura (bajo el último mínimo de una tendencia alcista, sobre el último máximo de una bajista).",
+    },
+    short: { fr: "première clôture qui casse la structure.", es: "primer cierre que rompe la estructura." },
+  },
+  {
+    id: "killzones", source: "Avancé · leçon 4 (Killzones)",
+    term: { fr: "Killzones", es: "Killzones" },
+    match: { fr: /\bkillzones?\b/i, es: /\bkillzones?\b/i },
+    def: {
+      fr: "Les heures où le marché bouge le plus (ouvertures de Londres et de New York) : les mouvements qui comptent y naissent le plus souvent.",
+      es: "Las horas en que el mercado más se mueve (aperturas de Londres y Nueva York): ahí nacen la mayoría de los movimientos importantes.",
+    },
+    short: { fr: "heures où le marché bouge le plus.", es: "horas en que el mercado más se mueve." },
+  },
+  {
+    id: "ote", source: "Avancé · leçon 5 (OTE)",
+    term: { fr: "OTE", es: "OTE" },
+    match: { fr: /\bOTE\b/, es: /\bOTE\b/ },
+    def: {
+      fr: "Optimal Trade Entry : la zone de 62 à 79 % du retracement d'une impulsion, où l'entrée offre le meilleur R/R.",
+      es: "Optimal Trade Entry: la zona del 62 al 79 % del retroceso de un impulso, donde la entrada ofrece el mejor R/R.",
+    },
+    short: { fr: "zone 62 à 79 % du retracement.", es: "zona 62 a 79 % del retroceso." },
+  },
+  {
     id: "liquidity", source: "Avancé · leçon 1 (Liquidité)",
     term: { fr: "Liquidité", es: "Liquidez" },
     match: { fr: /liquidit[ée]/i, es: /\bliquidez\b/i },

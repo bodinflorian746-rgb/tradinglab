@@ -234,6 +234,7 @@ affecte
 affectées
 affichait
 affiche
+affiché
 affichée
 affichent
 afficher
@@ -573,6 +574,7 @@ anticipadas
 anticipado
 anticipan
 anticipando
+anticipant
 anticipar
 anticiparlo
 anticiparse
@@ -734,6 +736,7 @@ arrêt
 arrête
 arrêté
 arrête-toi
+arrêtent
 arrêter
 arrêtes
 arriba
@@ -855,6 +858,7 @@ attente
 attentes
 attention
 attentiste
+attirante
 attire
 attirent
 attirer
@@ -1435,6 +1439,7 @@ cazar
 ce
 cebo
 ceci
+cédé
 cède
 ceder
 céder
@@ -1634,6 +1639,7 @@ clôture
 clôturé
 clôturée
 clôturées
+clôturent
 clôturer
 clôtures
 clôturés
@@ -2438,6 +2444,7 @@ croisement
 croisent
 croiser
 croissance
+croissants
 croit
 cross
 croyaient
@@ -2539,6 +2546,7 @@ d'anticipations
 d'anticiper
 d'appât
 d'application
+d'appui
 d'après
 d'argent
 d'argument
@@ -2627,6 +2635,7 @@ d'interpréter
 d'invalidation
 d'inversion
 d'investissement
+d'invincibilité
 d'ob
 d'observation
 d'observer
@@ -2874,6 +2883,7 @@ demasiada
 demasiadas
 demasiado
 demasiados
+demi-bougie
 demi-tour
 demo
 démonstration
@@ -3102,6 +3112,7 @@ devant
 développe
 développement
 développer
+devenait
 devenir
 devenu
 devenue
@@ -3349,6 +3360,7 @@ dont
 dorment
 dormido
 dormir
+dort
 dos
 double
 doublée
@@ -3465,6 +3477,7 @@ effondrement
 eficacia
 eficaz
 égal
+égale
 également
 égaux
 ej
@@ -3640,6 +3653,7 @@ enlace
 enlaza
 enlever
 ennemie
+ennui
 enorme
 énorme
 énormément
@@ -4613,6 +4627,7 @@ garantiza
 garantizado
 gardant
 garde
+gardée
 gardent
 garder
 gardes
@@ -4686,6 +4701,7 @@ golden
 golpe
 golpean
 golpear
+gonflée
 good
 google
 gourou
@@ -4702,6 +4718,7 @@ grand
 grand-chose
 grande
 grandes
+grandir
 grandit
 grands
 graphique
@@ -4727,6 +4744,7 @@ grosor
 grosse
 grosses
 grossir
+grossit
 groupe
 groupes
 grupo
@@ -5518,6 +5536,7 @@ justamente
 juste
 justement
 justes
+justifiait
 justifica
 justificación
 justifican
@@ -5560,6 +5579,7 @@ l'analyse
 l'anatomie
 l'ancien
 l'ancienne
+l'ancrage
 l'année
 l'anticiper
 l'anticipes
@@ -5615,6 +5635,7 @@ l'enchaînement
 l'endroit
 l'énergie
 l'engulfing
+l'ennui
 l'enregistrement
 l'ensemble
 l'entrée
@@ -5671,11 +5692,13 @@ l'expression
 l'extension
 l'extrême
 l'extrémité
+l'habitude
 l'haut
 l'hésitation
 l'heure
 l'histoire
 l'historique
+l'humeur
 l'hypothèse
 l'ia
 l'ict
@@ -5712,6 +5735,7 @@ l'intérieur
 l'interprétation
 l'intrabar
 l'invalidation
+l'invalide
 l'inverse
 l'inversion
 l'isolation
@@ -5726,6 +5750,7 @@ l'on
 l'ont
 l'opportunité
 l'opposé
+l'optimal
 l'option
 l'or
 l'order
@@ -6151,6 +6176,7 @@ marginaux
 markdown
 market
 markup
+marquait
 marquant
 marque
 marqué
@@ -6248,6 +6274,7 @@ médiocres
 medios
 medir
 méfiance
+méfie
 méfie-toi
 meilleur
 meilleure
@@ -6469,6 +6496,7 @@ money
 monitorean
 monitorear
 monnaie
+montait
 montant
 montants
 monte
@@ -6576,6 +6604,7 @@ n'anticipe
 n'apparaît
 n'appartient
 n'applique
+n'appuie
 n'arrive
 n'arrivent
 n'arrivera
@@ -6612,6 +6641,7 @@ n'invalideront
 n'offre
 n'ont
 n'y
+nacen
 nacido
 nacidos
 naciente
@@ -6623,6 +6653,7 @@ nager
 nages
 naïf
 naissant
+naissent
 naive
 naïve
 name
@@ -6811,6 +6842,7 @@ obligatoria
 obligatoriamente
 obligatorio
 obligatorios
+oblige
 obligue
 observa
 observación
@@ -7387,6 +7419,7 @@ plaçant
 place
 placé
 place-stop
+placée
 placement
 placements
 placent
@@ -7399,6 +7432,7 @@ plafonné
 plafonnée
 plage
 plaide
+plaident
 plan
 plana
 planas
@@ -7502,6 +7536,7 @@ pose-toi
 posée
 posees
 poser
+poses
 posibilidad
 posibilidades
 posible
@@ -7669,6 +7704,7 @@ preferencia
 préfèrent
 preferentemente
 préférentiellement
+préfères
 preferiblemente
 preferida
 preferido
@@ -7731,6 +7767,7 @@ présentées
 présentent
 presentes
 présentes
+présents
 preserva
 preservado
 preservar
@@ -8110,6 +8147,7 @@ qu'avec
 qu'elle
 qu'elles
 qu'en
+qu'environ
 qu'est
 qu'est-ce
 qu'est-il
@@ -8133,6 +8171,7 @@ qualité
 quality
 quand
 quantité
+quart
 quasi
 quasi-systématique
 quasi-totalité
@@ -8246,6 +8285,7 @@ rarement
 rares
 raro
 raros
+rassure
 rastro
 rate
 raté
@@ -9169,11 +9209,13 @@ s'éloigner
 s'empilent
 s'en
 s'enclenche
+s'ennuie
 s'entassent
 s'entraîner
 s'épuise
 s'épuiser
 s'éroder
+s'espère
 s'essouffle
 s'est
 s'est-il
@@ -9636,6 +9678,7 @@ sorte
 sortent
 sorti
 sortie
+sorties
 sortir
 sortirais
 sortirait
@@ -9875,6 +9918,7 @@ sur-réaction
 sur-risque
 sur-risquer
 sur-trader
+sur-trading
 surachat
 surconfiance
 sûrement

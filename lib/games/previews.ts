@@ -83,7 +83,7 @@ function placeStopPreview(locale: Locale): GamePreview {
 }
 
 function findMistakePreview(locale: Locale): GamePreview {
-  const G = pick<Pick<typeof FtmFr, "MISTAKE_TEMPLATES" | "MISTAKE_LABELS" | "buildScenarioChart">>(locale, FtmFr, FtmEs, FtmEn);
+  const G = pick<Pick<typeof FtmFr, "MISTAKE_TEMPLATES" | "buildScenarioChart"> & { MISTAKE_LABELS: Pick<typeof FtmFr.MISTAKE_LABELS, "stop_too_tight"> }>(locale, FtmFr, FtmEs, FtmEn);
   const template = G.MISTAKE_TEMPLATES.find((t) => t.id === "stop_too_tight")!;
   const chart = G.buildScenarioChart(template, SEED.ftm, "normale", CTX);
   const entry = chart.entry ?? chart.past[chart.past.length - 1].c;

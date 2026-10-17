@@ -69,7 +69,7 @@ const inZone = (l: number, z: ChartZone, t: number) => l >= lo(z) - t && l <= hi
 // ─── Scènes Débutant (sens haussier) ─────────────────────────────────────────
 
 /** Support prouvé (deux touches), puis le prix redescend vers lui */
-function supportScene(rng: Rng, m: number): { past: Candle[]; p: number } {
+export function supportScene(rng: Rng, m: number): { past: Candle[]; p: number } {
   const b = band(m);
   const t = provenSupport(rng, m, b.lo, b.hi);
   const a = legTo(rng, m, t.p, b.hi + (0.9 + rng() * 0.25) * m);
@@ -91,7 +91,7 @@ function patternOnSupport(kind: "marteau" | "engulfing" | "doji" | "doji_confirm
 }
 
 /** Marteau à un plus bas tout neuf, après une longue baisse, sans aucun niveau autour */
-const hammerNowhere: NewScenario["build"] = (rng, m) => {
+export const hammerNowhere: NewScenario["build"] = (rng, m) => {
   const base = chop(rng, m, 0, 3, 0.02);
   const leg = legTo(rng, m, base.p, base.p - (3.8 + rng() * 0.8) * m, { retrace: 0.3 });
   const p = leg.p;
@@ -101,7 +101,7 @@ const hammerNowhere: NewScenario["build"] = (rng, m) => {
 };
 
 /** Le prix rebondit sur un support : bougie verte depuis la zone, puis une petite bougie rouge */
-function rebound(rng: Rng, m: number, p: number, b: { lo: number; hi: number }): { candles: Candle[]; p: number } {
+export function rebound(rng: Rng, m: number, p: number, b: { lo: number; hi: number }): { candles: Candle[]; p: number } {
   const out: Candle[] = [];
   const tip = b.lo + (b.hi - b.lo) * (0.3 + rng() * 0.4);
   const o1 = p, c1 = o1 - (0.25 + rng() * 0.1) * m;
@@ -463,7 +463,7 @@ export const BSNT_BEGINNER: NewScenario[] = [
 // ─── Scènes Intermédiaire et Avancé (sens haussier) ─────────────────────────
 
 /** Range prouvé (bornes touchées au moins deux fois), fin au bas du range */
-function rangeScene(rng: Rng, m: number, R: number, legs: number): { past: Candle[]; p: number } {
+export function rangeScene(rng: Rng, m: number, R: number, legs: number): { past: Candle[]; p: number } {
   const r = rangeLegs(rng, R * (0.45 + rng() * 0.1), 0, R, legs, 3, m, true, 0.3 * m, 0.1 * m);
   return { past: r.candles, p: r.p };
 }
@@ -557,7 +557,7 @@ const sweepNoRoom: NewScenario["build"] = (rng, m) => {
 };
 
 /** Impulsion haussière depuis un Order Block (dernière bougie rouge, nette, avant une grande bougie d'impulsion), puis retour */
-function obScene(rng: Rng, m: number): { past: Candle[]; p: number; ob: { lo: number; hi: number }; zone: ChartZone } {
+export function obScene(rng: Rng, m: number): { past: Candle[]; p: number; ob: { lo: number; hi: number }; zone: ChartZone } {
   const d = legTo(rng, m, 2.2 * m, 0.9 * m, { retrace: 0.3 });
   const past = [...d.candles];
   let p = d.p;
@@ -574,7 +574,7 @@ function obScene(rng: Rng, m: number): { past: Candle[]; p: number; ob: { lo: nu
   past.push(...back.candles); p = back.p;
   return { past, p, ob: { lo: oC, hi: oO }, zone: { kind: "support", y1: obk.l, y2: obk.h, label: "Order Block" } };
 }
-function bullImpulse3Local(rng: Rng, m: number, p: number): { candles: Candle[]; p: number } {
+export function bullImpulse3Local(rng: Rng, m: number, p: number): { candles: Candle[]; p: number } {
   const a = candle(p, p + (0.55 + rng() * 0.2) * m, 0.06 * m, (0.05 + rng() * 0.04) * m);
   const b = candle(a.c, a.c + (0.7 + rng() * 0.2) * m, 0.05 * m, 0.04 * m);
   const c = candle(b.c, b.c + (0.5 + rng() * 0.2) * m, (0.08 + rng() * 0.06) * m, 0.05 * m);

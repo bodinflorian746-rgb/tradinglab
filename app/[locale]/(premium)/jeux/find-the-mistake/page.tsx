@@ -11,7 +11,7 @@ import {
   scoreMistakeChoice,
   ROUNDS_PER_SESSION,
   type Difficulty,
-  type MistakeId,
+  type AnyMistakeId as MistakeId,
   type MistakeInstance,
   type MistakeScoreResult,
   type ScenarioChart,
@@ -51,6 +51,8 @@ export default function FindTheMistakePage() {
   const params = useParams<{ locale: string }>();
   const locale = params?.locale;
   const G = locale === "es" ? EsGame : locale === "en" ? EnGame : FrGame;
+  // libellés des erreurs (EN / ES, désactivés : vocabulaire d'origine seulement)
+  const LABELS = G.MISTAKE_LABELS as typeof FrGame.MISTAKE_LABELS;
   const BIAS_LABEL = locale === "es" ? BIAS_LABEL_ES : locale === "en" ? BIAS_LABEL_EN : BIAS_LABEL_FR;
   const MACRO_LABEL = locale === "es" ? MACRO_LABEL_ES : locale === "en" ? MACRO_LABEL_EN : MACRO_LABEL_FR;
   const T = locale === "es"
@@ -390,7 +392,7 @@ export default function FindTheMistakePage() {
               overlay={{ entry: chart.entry !== undefined ? { price: chart.entry, direction: dir } : undefined, candidateLines: labelledLines }}
               mode={isFeedback ? "verdict" : "question"}
               keepCandlesBright={chart.zones.length === 0}
-              mark={isFeedback ? mistakeMark(current.correctMistake, chart, G.MISTAKE_LABELS[current.correctMistake]) : undefined}
+              mark={isFeedback ? mistakeMark(current.correctMistake, chart, LABELS[current.correctMistake]) : undefined}
             >
               {isFeedback && result && (
                 <VerdictOverlay
@@ -407,14 +409,14 @@ export default function FindTheMistakePage() {
             <p className="v2-eyebrow">{T.question}</p>
             <MistakeChoices
               choices={current.shuffledChoices}
-              labels={G.MISTAKE_LABELS}
+              labels={LABELS}
               picked={chosen}
               correct={isFeedback ? current.correctMistake : null}
               onPick={isFeedback ? undefined : handlePick}
             />
 
             {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) */}
-            <JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:q`, [T.spread, current.extraInfo, current.context, ...chart.zones.map((z) => z.label), ...current.shuffledChoices.map((c) => G.MISTAKE_LABELS[c])])} />
+            <JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:q`, [T.spread, current.extraInfo, current.context, ...chart.zones.map((z) => z.label), ...current.shuffledChoices.map((c) => LABELS[c])])} />
 
             {isFeedback && result && chosen && (
               <Feedback
@@ -429,7 +431,7 @@ export default function FindTheMistakePage() {
                 difficulty={difficulty}
                 difficultyMeta={G.DIFFICULTY_META}
                 categoryMeta={G.CATEGORY_META}
-                mistakeLabels={G.MISTAKE_LABELS}
+                mistakeLabels={LABELS}
                 onNext={handleNext}
                 isLast={idx + 1 >= ROUNDS_PER_SESSION}
                 jargon={<JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:f`, [current.title, current.explanation, current.lessons[difficulty]])} />}
@@ -437,9 +439,10 @@ export default function FindTheMistakePage() {
             )}
 
             {/* Contexte */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-3">
-              <InfoTile label={T.htf}        value={BIAS_LABEL[current.htfBias]}       valueClass={biasClass(current.htfBias)} />
-              <InfoTile label={T.macro}      value={MACRO_LABEL[current.macroContext]} valueClass={current.macroContext === "dangereux" ? "text-red-300" : ""} />
+            {/* UT supérieure : notion Intermédiaire (pas en Débutant) ; macro : notion Avancé */}
+            <div className={`grid gap-2 sm:gap-3 ${difficulty === "beginner" ? "grid-cols-1" : difficulty === "intermediate" ? "grid-cols-2" : "grid-cols-3"}`}>
+              {difficulty !== "beginner" && <InfoTile label={T.htf}        value={BIAS_LABEL[current.htfBias]}       valueClass={biasClass(current.htfBias)} />}
+              {difficulty === "advanced" && <InfoTile label={T.macro}      value={MACRO_LABEL[current.macroContext]} valueClass={current.macroContext === "dangereux" ? "text-red-300" : ""} />}
               <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} valueClass="" />
             </div>
           </div>

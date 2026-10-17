@@ -11,6 +11,8 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
+import type { NotionId } from "./notions";
+import { FTM_NEW } from "./ftm-scenarios";
 import { breakStrayLevels } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
@@ -49,7 +51,36 @@ export type MistakeId =
   | "size_not_adapted_to_vol"
   | "weekend_gap_exposure";
 
-export const MISTAKE_LABELS: Record<MistakeId, string> = {
+// Erreurs ajoutées avec les trois niveaux (lib/games/ftm-scenarios.ts). Les fichiers EN / ES, désactivés,
+// gardent le vocabulaire d'origine (MistakeId).
+export type ExtraMistakeId =
+  | "no_stop" | "tp_beyond_level" | "stop_moved" | "overtrading" | "loss_not_cut" | "size_after_wins"
+  | "pattern_without_level" | "fakeout_bought" | "structure_ignored" | "broken_level_bought" | "stop_inside_zone"
+  | "breakout_chased" | "fib_misread" | "range_top_bought" | "weak_level" | "dead_ob_bought"
+  | "dead_session_breakout" | "ote_ignored" | "fake_sweep_bought" | "news_market_order";
+export type AnyMistakeId = MistakeId | ExtraMistakeId;
+
+export const MISTAKE_LABELS: Record<AnyMistakeId, string> = {
+  no_stop:                     "Pas de stop loss",
+  tp_beyond_level:             "Take profit au-delà de la résistance",
+  stop_moved:                  "Stop déplacé",
+  overtrading:                 "Sur-trading",
+  loss_not_cut:                "Perte non coupée",
+  size_after_wins:             "Taille gonflée après des gains",
+  pattern_without_level:       "Pattern sans niveau clé",
+  fakeout_bought:              "Achat d'un faux breakout",
+  structure_ignored:           "Structure ignorée",
+  broken_level_bought:         "Achat sous un niveau cassé",
+  stop_inside_zone:            "Stop dans la zone",
+  breakout_chased:             "Breakout acheté trop loin",
+  fib_misread:                 "Entrée trop haute dans le retracement",
+  range_top_bought:            "Achat au haut du range",
+  weak_level:                  "Niveau non prouvé",
+  dead_ob_bought:              "Order Block invalidé",
+  dead_session_breakout:       "Session ignorée",
+  ote_ignored:                 "Entrée hors OTE",
+  fake_sweep_bought:           "Sweep mal lu",
+  news_market_order:           "Ordre au marché pendant la news",
   stop_too_tight:              "Stop trop serré",
   stop_in_liquidity:           "Stop dans liquidité",
   trade_against_htf:           "Trade contre l'UT supérieure",
@@ -99,17 +130,24 @@ export interface MistakeTemplate {
   macroContext:  MacroContext;
   context:       string;        // ~1 phrase de contexte
   // Choix : correct + 3 leurres (chacun est un MistakeId du vocab partagé).
-  correctMistake: MistakeId;
-  decoyMistakes:  readonly [MistakeId, MistakeId, MistakeId];
+  correctMistake: AnyMistakeId;
+  decoyMistakes:  readonly [AnyMistakeId, AnyMistakeId, AnyMistakeId];
   explanation:   string;        // pourquoi correctMistake est l'erreur principale
   lessons:       DifficultyLessons;
   difficulties:  readonly Difficulty[];
   // Affichage optionnel sur le chart
-  showLines?:    "buy_entry" | "sell_entry" | "buy_with_bad_rr" | "sell_with_bad_rr" | "buy_with_tight_stop" | "sell_with_liquidity_stop" | null;
+  showLines?:    "buy_entry" | "sell_entry" | "buy_with_bad_rr" | "sell_with_bad_rr" | "buy_with_tight_stop" | "sell_with_liquidity_stop" | "buy_with_liquidity_stop" | null;
   // Info contextuelle bonus (levier, etc.)
   extraInfo?:    string;
   // Force certains paramètres environnement
   metaOverride?: { asset?: Asset; session?: Session; volatility?: Volatility; spread?: Spread };
+  // Pédagogie (lib/games/notions.ts) : notions utilisées, piège (intermédiaire), conflit (avancé)
+  notions?:  readonly NotionId[];
+  trap?:     string;
+  conflict?: string;
+  // Scénarios construits sur les scènes partagées : graphique (lignes comprises) et affirmations vérifiées
+  build?:    (rng: () => number, m: number) => { past: Candle[]; future: Candle[]; zones: ChartZone[]; entry?: number; stop?: number; tp?: number };
+  claims?:   Record<string, (ch: ScenarioChart) => string | null>;
 }
 
 export interface MistakeInstance extends MistakeTemplate {
@@ -120,7 +158,7 @@ export interface MistakeInstance extends MistakeTemplate {
   seed:       number;
   difficulty: Difficulty;
   // Ordre des choix shufflé par instance (pour éviter de mémoriser "le bon est en position 2")
-  shuffledChoices: MistakeId[];
+  shuffledChoices: AnyMistakeId[];
 }
 
 export type ChartShape =
@@ -172,7 +210,9 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       intermediate: "L'emplacement compte souvent plus que le pattern. Même un setup techniquement bon peut devenir mauvais si l'entrée se situe dans une zone hostile.",
       advanced:     "Une résistance de l'UT supérieure touchée 3 fois ou plus est souvent une résistance solide. Ici, l'avantage se trouve plutôt dans un SELL sur le retest que dans un BUY sur le pullback.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["zones_cles", "multi_ut", "support_resistance"],
+    trap: "La hausse vers la résistance donne envie d'acheter, mais l'UT supérieure a déjà rejeté le prix sur ce niveau.",
+    difficulties: ["intermediate"],
     showLines: "buy_entry",
   },
   {
@@ -192,7 +232,9 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       intermediate: "L'emplacement compte souvent plus que le pattern. Vendre sur un support de l'UT supérieure revient ici à se placer contre l'avantage.",
       advanced:     "Un support de l'UT supérieure avec 3 rebonds ou plus est souvent un support solide. Ici, l'avantage se trouve plutôt dans un BUY sur le rebond que dans un SELL.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["zones_cles", "multi_ut", "support_resistance"],
+    trap: "La baisse vers le support donne envie de vendre, mais l'UT supérieure a déjà fait tenir le prix sur ce niveau.",
+    difficulties: ["intermediate"],
     showLines: "sell_entry",
   },
   {
@@ -205,14 +247,16 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     macroContext: "normal",
     context: "UT supérieure clairement baissière. Tu prends ce BUY sur un rebond local.",
     correctMistake: "trade_against_htf",
-    decoyMistakes: ["bad_timing", "no_confirmation", "fomo_after_pump"],
+    decoyMistakes: ["range_middle", "no_confirmation", "fomo_after_pump"],
     explanation: "Dans une tendance baissière, les rebonds offrent plutôt des opportunités de SELL que de BUY. Prendre des achats contre l'UT supérieure réussit souvent moins d'une fois sur deux : l'avantage est inversé.",
     lessons: {
       beginner:     "Avec une UT supérieure baissière, on cherche plutôt les SELL, pas les BUY.",
       intermediate: "Un setup local n'efface pas la tendance de l'UT supérieure. Si l'UT supérieure va contre toi, il vaut souvent mieux s'abstenir.",
       advanced:     "Trader contre l'UT supérieure revient souvent à jouer une probabilité défavorable. Un setup local compense rarement cet écart statistique.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["multi_ut", "pullback", "tendance"],
+    trap: "Le rebond local ressemble à un départ haussier, dans une tendance baissière de l'UT supérieure.",
+    difficulties: ["intermediate"],
     showLines: "buy_entry",
   },
   {
@@ -232,7 +276,9 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       intermediate: "Le spread peut tripler et ton SL peut sauter à cause du bid-ask. Les statistiques du setup s'appliquent mal à un marché illiquide.",
       advanced:     "Même avec un avis tranché sur la news, l'exécution joue contre toi. Une option logique : diviser la taille par 3 et doubler le stop, ou NO TRADE.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["news", "killzones"],
+    conflict: "Un setup technique propre contre une news majeure dans les minutes qui viennent.",
+    difficulties: ["advanced"],
     showLines: "buy_entry",
   },
   {
@@ -243,16 +289,17 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Tu prends ce BUY au pullback avec stop juste au-dessus du swing low.",
+    context: "Tu achètes ce repli avec un stop juste au-dessus du swing low.",
     correctMistake: "stop_too_tight",
-    decoyMistakes: ["bad_rr", "trade_against_htf", "fomo_after_pump"],
+    decoyMistakes: ["bad_rr", "no_stop", "fomo_after_pump"],
     explanation: "Le swing low est très souvent retesté avant la continuation. Ici, un stop au-dessus du low risque d'être balayé par le bruit normal du retest. Le trade tiendrait mieux avec un stop sous le swing low.",
     lessons: {
       beginner:     "Un stop se place plutôt DERRIÈRE l'invalidation, avec une marge : le placer dedans ou au-dessus l'expose au bruit.",
       intermediate: "Le low est souvent retesté pendant un pullback, avant la continuation. Une marge anti-bruit derrière le low est donc une option logique.",
       advanced:     "Sans marge derrière la structure, à la mesure de la volatilité du jour (ATR, l'amplitude moyenne d'une journée), ton stop peut attirer la liquidité. Ces niveaux sont souvent visés avant la vraie direction.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["stop_loss", "bougie"],
+    difficulties: ["beginner"],
     showLines: "buy_with_tight_stop",
   },
   {
@@ -272,7 +319,9 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       intermediate: "Le milieu d'un range revient souvent à risquer 1 pour gagner environ 0,3 (un R/R d'environ 1:0,3). Sur la durée, ce calcul joue contre toi.",
       advanced:     "La discipline compte plus que l'activité. Forcer un trade au milieu du range profite souvent aux autres participants, pas à toi.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["range", "zones_cles"],
+    trap: "Les bornes du range attirent l'œil, mais l'entrée se fait au milieu, loin de chacune.",
+    difficulties: ["intermediate"],
     showLines: "buy_entry",
   },
   {
@@ -292,7 +341,9 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       advanced:     "Ces niveaux sont souvent visés pour récupérer de la liquidité. Un stop logique se place plutôt au-delà de la zone de liquidité, pas dedans.",
       beginner:     "Évite de placer ton stop pile sur un swing évident. Derrière la zone, avec une marge, il tient souvent mieux.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["chasse_aux_stops", "liquidite", "stop_loss"],
+    conflict: "Le stop est du bon côté du swing high, mais collé à lui, là où dort la liquidité que le marché vient souvent chercher.",
+    difficulties: ["advanced"],
     showLines: "sell_with_liquidity_stop",
   },
   {
@@ -305,14 +356,15 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     macroContext: "normal",
     context: "Setup techniquement valide. Stop large, TP très proche.",
     correctMistake: "bad_rr",
-    decoyMistakes: ["stop_too_tight", "trade_against_htf", "fomo_after_pump"],
+    decoyMistakes: ["no_stop", "fomo_after_pump", "revenge_trade"],
     explanation: "Avec un R/R inférieur à 1, même 60 % de trades gagnants peuvent laisser une espérance négative. Un setup valide avec un mauvais R/R reste ici un trade discutable.",
     lessons: {
       intermediate: "L'espérance d'un setup se calcule ainsi : (proba de gain × gain) - (proba de perte × risque). Avec un R/R sous 1, il faut plus de 50 % de réussite pour atteindre l'équilibre, et 67 % pour un R/R de 0,5.",
       advanced:     "Beaucoup de traders visent un R/R d'au moins 1:2 : cela laisse de la marge pour les frais et les séries de pertes. Avec un R/R plus faible, il faut un winrate plus élevé pour rester gagnant.",
       beginner:     "Si tu risques 100 € pour gagner 50 €, tu risques de perdre à long terme, même en gagnant souvent.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["rr"],
+    difficulties: ["beginner"],
     showLines: "buy_with_bad_rr",
   },
   {
@@ -332,7 +384,9 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       advanced:     "Les breakouts faibles servent souvent à aspirer les stops placés au-dessus de la résistance, avant une reprise dans le sens de l'UT supérieure.",
       beginner:     "Un vrai breakout s'accompagne souvent d'une bougie de displacement visible. Sinon, attendre se défend.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["breakout", "zones_cles", "bougie"],
+    trap: "La clôture au-dessus de la résistance ressemble à un breakout, mais la bougie n'a presque pas de corps.",
+    difficulties: ["intermediate"],
     showLines: "buy_entry",
   },
   {
@@ -345,14 +399,15 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     macroContext: "normal",
     context: "Tu prends ce BUY sur XAU/USD. Capital du compte : 500 €. Taille de position choisie : un lot qui fait perdre 250 € si le SL est touché. Le setup technique est correct.",
     correctMistake: "oversized_position",
-    decoyMistakes: ["stop_too_tight", "volatility_ignored", "bad_rr"],
+    decoyMistakes: ["fomo_after_pump", "revenge_trade", "tp_beyond_level"],
     explanation: "Risquer 50 % du capital sur un seul trade est extrêmement dangereux. Une seule perte coupe le compte en deux, et pour revenir à 500 €, il faudrait ensuite gagner 100 % sur le capital restant.",
     lessons: {
       advanced:     "Repère courant chez les pros : 0,5 à 2 % du capital par trade selon la taille du compte. Au-delà de 5 %, on s'éloigne du trading pour se rapprocher du pari.",
       intermediate: "La taille de position est une variable clé du money management. Un setup correct avec un lot trop gros peut suffire à vider un compte. Le repère souvent cité est de 1 à 2 % du capital, même sur un petit compte.",
       beginner:     "Repère souvent cité : 1 à 2 % du capital par trade, quelle que soit la taille du compte (soit 5 à 10 € sur 500 €). Le levier de ton broker compte peu ; ce qui compte, c'est combien tu perds en euros si ton SL est touché.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["money_management"],
+    difficulties: ["beginner"],
     extraInfo: "Risque par trade : 50 % du capital",
     showLines: "buy_entry",
   },
@@ -366,14 +421,15 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     macroContext: "normal",
     context: "Tu prends ce BUY à 3h du matin (heures mortes). Spread quadruplé.",
     correctMistake: "bad_spread",
-    decoyMistakes: ["bad_timing", "volatility_ignored", "trade_against_htf"],
+    decoyMistakes: ["fomo_after_pump", "revenge_trade", "sell_in_support"],
     explanation: "Avec un spread 4 fois plus large que d'habitude et une session illiquide, le R/R réel peut être divisé par deux même si le setup fonctionne. Ici, le stop peut sauter à cause du bid-ask, et le TP devient difficile à atteindre.",
     lessons: {
       advanced:     "Beaucoup de traders pros intègrent l'exécution dans leur edge. Avec un spread au moins 3 fois plus large que d'habitude et un volume faible, NO TRADE est souvent l'option logique.",
       intermediate: "Le R/R sur le papier peut différer du R/R réel : ici, le spread grignote ton avantage.",
       beginner:     "Vérifie la session et le spread avant de cliquer. En heures mortes, NO TRADE est souvent l'option logique.",
     },
-    difficulties: ["advanced"],
+    notions: ["spread"],
+    difficulties: ["beginner"],
     extraInfo: "Spread ×4",
     metaOverride: { session: "Heures mortes", spread: "élevé" },
     showLines: "buy_entry",
@@ -388,14 +444,16 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     macroContext: "normal",
     context: "Volatilité explosive sur BTC. Tu prends ce BUY avec un stop de taille standard.",
     correctMistake: "volatility_ignored",
-    decoyMistakes: ["stop_too_tight", "bad_rr", "oversized_position"],
+    decoyMistakes: ["sweep_ignored", "bad_rr", "oversized_position"],
     explanation: "En volatilité élevée, le bruit normal peut être 2 à 3 fois plus large. Ici, un stop « normal » se retrouve dans ce bruit amplifié et risque d'être balayé avant que le trade aboutisse.",
     lessons: {
       advanced:     "Le stop gagne à s'adapter à la volatilité du moment (ATR, l'amplitude moyenne d'une journée) plutôt qu'à une distance fixe. En volatilité élevée, élargir le stop ET le TP proportionnellement est une option logique.",
       intermediate: "Si la volatilité double, un stop deux fois plus large est souvent nécessaire. Sinon, ton stop peut devenir un piège.",
       beginner:     "Plus le marché bouge fort, plus ton stop a besoin d'espace.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["volatilite", "stop_loss"],
+    conflict: "Un stop logique en temps normal contre une volatilité qui a explosé : il se retrouve dans le bruit.",
+    difficulties: ["advanced"],
     metaOverride: { volatility: "élevée" },
     showLines: "buy_with_tight_stop",
   },
@@ -409,14 +467,15 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     macroContext: "normal",
     context: "Le prix vient de monter de 5 % en 3 bougies. Tu achètes (BUY) maintenant pour ne pas rater le mouvement.",
     correctMistake: "fomo_after_pump",
-    decoyMistakes: ["bad_rr", "trade_against_htf", "no_confirmation"],
+    decoyMistakes: ["revenge_trade", "sell_in_support", "tp_beyond_level"],
     explanation: "Acheter le sommet d'une hausse aussi rapide, c'est souvent entrer là où d'autres prennent leurs profits. Ici, le R/R est mauvais (TP lointain, stop court) et un retracement est probable à court terme.",
     lessons: {
       intermediate: "Les hausses verticales retracent souvent une bonne partie du mouvement (38 à 61 %). Un BUY au sommet peut vite se retrouver en perte.",
       advanced:     "Le FOMO peut signaler un excès. Ici, l'avantage consiste plutôt à ATTENDRE le retracement qu'à courir après le prix.",
       beginner:     "Si tu prends un trade par peur de « rater », c'est souvent le moment de NE PAS le prendre.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["fomo", "bougie"],
+    difficulties: ["beginner"],
     showLines: "buy_entry",
   },
   {
@@ -429,14 +488,15 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     macroContext: "normal",
     context: "Tu viens de prendre 2 stops d'affilée. Tu ré-entres immédiatement sur ce setup.",
     correctMistake: "revenge_trade",
-    decoyMistakes: ["fomo_after_pump", "bad_timing", "stop_too_tight"],
+    decoyMistakes: ["fomo_after_pump", "tp_beyond_level", "sell_in_support"],
     explanation: "Le setup peut être valide, mais ici ta décision semble guidée par l'envie de récupérer tes pertes plutôt que par l'analyse. C'est l'un des pièges émotionnels les plus fréquents.",
     lessons: {
       intermediate: "Après 2 stops, une pause (15-30 min) est une option logique. Sous le coup des pertes, les décisions ont tendance à être biaisées.",
       advanced:     "Les trades de revanche réussissent souvent moins bien que la moyenne du même trader. Une pause aide à retrouver de l'objectivité.",
       beginner:     "Si tu trades pour « récupérer », tu risques de parier plutôt que de trader.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["revenge"],
+    difficulties: ["beginner"],
     extraInfo: "2 stops récents",
     showLines: "buy_entry",
   },
@@ -457,6 +517,8 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       intermediate: "Une grosse mèche qui balaie un niveau puis revient peut signaler un retournement probable. Ici, vendre revient à lire le graphique à l'envers.",
       beginner:     "Évite de vendre un creux qui vient d'être « mangé » par une mèche. Chercher le rebond est souvent plus logique.",
     },
+    notions: ["sweep", "liquidite"],
+    conflict: "La mèche sous le plus bas ressemble à un breakout baissier, la clôture revenue au-dessus dit l'inverse.",
     difficulties: ["advanced"],
     showLines: "sell_entry",
   },
@@ -477,6 +539,8 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       intermediate: "Une zone testée en profondeur perd souvent de sa force. Les 1er et 2e tests offrent en général plus d'avantage qu'un test profond.",
       beginner:     "Si une zone tarde à réagir, elle perd souvent de sa force. Dans ce cas, mieux vaut attendre la suivante.",
     },
+    notions: ["fvg", "multi_ut"],
+    conflict: "Un FVG touché ressemble à un achat, mais il est presque entièrement comblé, sans réaction.",
     difficulties: ["advanced"],
     showLines: "buy_entry",
   },
@@ -497,7 +561,9 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       intermediate: "Une news majeure peut faire bouger une paire de plusieurs dizaines de pips en quelques secondes. Ton SL devient théorique si le slippage te fait sortir plusieurs pips plus loin. Réduire la taille protège ton compte.",
       beginner:     "Avant un NFP, un FOMC ou un CPI, une option logique : diviser ton lot par 2 ou 3, ou attendre que la news passe. Le marché peut s'agiter, et tes stops risquent de ne pas tenir comme d'habitude.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["news", "money_management"],
+    conflict: "Une position ouverte et bien placée contre une news majeure qui arrive : le risque doit baisser avant.",
+    difficulties: ["advanced"],
     extraInfo: "NFP à 14h30 · lot 1,00",
     showLines: "buy_entry",
   },
@@ -518,7 +584,9 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       intermediate: "Une position laissée ouverte pendant un événement macro devient un pari binaire. Face à un titre fort, le setup technique pèse peu. Sortir, ou accepter consciemment ce risque : c'est à toi de trancher selon ton plan.",
       beginner:     "Avant un FOMC ou une conférence de banque centrale, fermer ta position ou la réduire fortement sont deux options logiques. Le marché peut bouger bien plus que tes calculs techniques ne le prévoient.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["news", "plan_de_trade"],
+    conflict: "Un trade en gain contre un événement imminent qui peut effacer ce gain en quelques secondes.",
+    difficulties: ["advanced"],
     extraInfo: "FOMC à 20h00 · BUY ouvert depuis 19h55",
     showLines: "buy_entry",
   },
@@ -539,7 +607,9 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       intermediate: "Beaucoup de traders ajustent leur lot à la volatilité du jour. Quand le marché bouge deux fois plus que d'habitude (ATR), diviser le lot par 2 ou doubler le stop loss sont deux options. Sinon, le risque réel peut échapper à ton contrôle.",
       beginner:     "Quand le marché bouge plus que d'habitude, réduire ta taille de lot est une option logique. Sinon, ton stop risque de sauter trop facilement. L'idée : une taille adaptée à la volatilité, pas au ressenti.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["volatilite", "money_management"],
+    conflict: "Même setup qu'à l'habitude, mais une volatilité doublée : à taille égale, le risque réel double.",
+    difficulties: ["advanced"],
     extraInfo: "Volatilité ×2,3",
     showLines: "sell_entry",
   },
@@ -560,10 +630,14 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
       intermediate: "Avant un weekend, deux options logiques : sortir de tes positions, ou réduire fortement la taille. Le gap d'ouverture du dimanche peut être brutal, et ton SL ne te protège pas pendant la fermeture.",
       beginner:     "Le vendredi soir, fermer tes positions ou réduire leur taille est une option logique. Pendant le weekend, le marché est fermé mais le monde bouge. Lundi matin, le prix peut sauter directement de l'autre côté de ton stop.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["macro", "money_management"],
+    conflict: "Une position correcte en semaine contre le risque de gap à l'ouverture du lundi.",
+    difficulties: ["advanced"],
     extraInfo: "Vendredi 22h45 · clôture forex à 23h00",
     showLines: "buy_entry",
   },
+  // Scénarios construits sur les scènes partagées (lib/games/ftm-scenarios.ts)
+  ...(FTM_NEW as unknown as MistakeTemplate[]),
 ];
 
 // ─── Génération scénarios ─────────────────────────────────────────────────────
@@ -583,7 +657,7 @@ export function generateMistakeScenarios(seed: number, difficulty: Difficulty, h
     const cand = picked[i];
     const ov = cand.metaOverride ?? {};
     // Shuffle des choix
-    const allChoices: MistakeId[] = [cand.correctMistake, ...cand.decoyMistakes];
+    const allChoices: AnyMistakeId[] = [cand.correctMistake, ...cand.decoyMistakes];
     for (let k = allChoices.length - 1; k > 0; k--) {
       const j = Math.floor(rng() * (k + 1));
       [allChoices[k], allChoices[j]] = [allChoices[j], allChoices[k]];
@@ -982,6 +1056,11 @@ export function buildScenarioChart(template: MistakeTemplate, seed: number, vol:
 export function buildScenarioChartRaw(template: MistakeTemplate, seed: number, vol: Volatility): ScenarioChart {
   const rng = mulberry32(seed);
   const m = VOL_MULT[vol];
+  if (template.build) {
+    const r = template.build(rng, m);
+    const lines = [r.entry, r.stop, r.tp].filter((x): x is number => x !== undefined);
+    return { ...finishChart(r.past, r.future, r.zones, lines), ...(r.entry !== undefined ? { entry: r.entry } : {}), ...(r.stop !== undefined ? { stop: r.stop } : {}), ...(r.tp !== undefined ? { tp: r.tp } : {}) };
+  }
   switch (template.chartShape) {
     case "uptrend_pullback": {
       const r = shUptrendPullback(rng, m);
@@ -989,6 +1068,10 @@ export function buildScenarioChartRaw(template: MistakeTemplate, seed: number, v
       if (template.showLines === "buy_with_tight_stop") {
         ch.entry = r.entry;
         ch.stop = r.swingLow + Math.max(0.05 * m, 0.06);  // pile au-dessus du swing low (et de sa zone) = tight
+        ch.tp = r.entry + (r.entry - ch.stop) * 2.2;
+      } else if (template.showLines === "buy_with_liquidity_stop") {
+        ch.entry = r.entry;
+        ch.stop = r.swingLow - Math.max(0.05 * m, 0.06);  // pile sous le swing low (liquidité)
         ch.tp = r.entry + (r.entry - ch.stop) * 2.2;
       } else if (template.showLines === "buy_with_bad_rr") {
         ch.entry = r.entry;
@@ -1096,7 +1179,7 @@ export interface MistakeScoreResult {
 // Barème simple (décision PO) : bonne réponse +10, mauvaise 0, sans bonus ni malus.
 export const POINTS_PER_CORRECT = 10;
 
-export function scoreMistakeChoice(picked: MistakeId, correct: MistakeId, currentStreak: number): MistakeScoreResult {
+export function scoreMistakeChoice(picked: AnyMistakeId, correct: AnyMistakeId, currentStreak: number): MistakeScoreResult {
   void currentStreak;
   const ok = picked === correct;
   return { correct: ok, points: ok ? POINTS_PER_CORRECT : 0, streakBonus: 0 };
