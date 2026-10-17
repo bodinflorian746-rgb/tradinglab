@@ -34,6 +34,8 @@ export interface ChartZone {
   short?: string;
   /** Changement de rôle prouvé (ancienne résistance → support, ou l'inverse) : touches et cassure */
   flip?: RoleChange;
+  /** Borne de range percée par les deux dernières bougies (faux breakout, sweep) : elles ne la définissent pas */
+  trigger?: true;
   /** Extrême nommé (swing, HL…) : indice de la bougie du passé qui clôture au swing ; le tracé se
    *  pose sur la pointe de sa mèche ou de celle de la suivante */
   at?: number;

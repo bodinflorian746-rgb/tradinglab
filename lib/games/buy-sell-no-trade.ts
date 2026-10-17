@@ -18,6 +18,9 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
+import type { NotionId } from "./notions";
+import { BSNT_NEW } from "./bsnt-scenarios";
+import { mirrorCandles, mirrorZones } from "./scenes";
 import { breakStrayLevels } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
@@ -51,7 +54,9 @@ export type SetupKey =
   | "fvg_overmitigated"      // FVG bouffé à 85%+ sans réaction — NO TRADE
   | "counter_trend_bounce"   // rebond local contre HTF baissier — NO TRADE
   | "dirty_range_sweep"      // range avec sweeps des 2 côtés — NO TRADE
-  | "setup_toxic_execution"; // setup propre mais spread/session toxiques — NO TRADE
+  | "setup_toxic_execution"  // setup propre mais spread/session toxiques — NO TRADE
+  // Scénarios construits sur les scènes partagées (lib/games/bsnt-scenarios.ts)
+  | (string & {});
 
 export type Metric = "discipline" | "lecture" | "piege";
 
@@ -90,6 +95,15 @@ export interface ScenarioTemplate {
   // Contexte court pour les niveaux intermédiaire/avancé (max 1 phrase).
   // Si non fourni, on prend la 1re phrase de `context`.
   shortContext?: string;
+  // Pédagogie (lib/games/notions.ts) : notions utilisées, piège (intermédiaire), conflit (avancé)
+  notions?:  readonly NotionId[];
+  trap?:     string;
+  conflict?: string;
+  // Scénarios construits sur les scènes partagées : graphique et affirmations vérifiées
+  build?:    (rng: () => number, m: number, d: Difficulty) => RawScenario;
+  claims?:   Record<string, (ch: { past: Candle[]; future: Candle[]; zones: ChartZone[] }) => string | null>;
+  /** Variante de sens d'un scénario existant : contrôlée par les affirmations de l'original, graphique renversé */
+  mirrorOf?: SetupKey;
 }
 
 export interface ScenarioInstance extends ScenarioTemplate {
@@ -112,6 +126,96 @@ export const ROUNDS_PER_SESSION = 10;
 
 // ─── Templates ────────────────────────────────────────────────────────────────
 
+// ─── Variantes des scénarios existants (sens et issue) ───────────────────────
+// Bâties sur les générateurs ci-dessous : `mirrorOf` = même graphique renversé, contrôlé par les
+// affirmations du scénario d'origine (scripts/audit-jeux/coherence-bsnt.ts) ; textes propres.
+
+const MIRROR_AXIS = 10;
+const mirrorRaw = (r: RawScenario): RawScenario => ({ past: mirrorCandles(r.past, MIRROR_AXIS), future: mirrorCandles(r.future, MIRROR_AXIS), zones: mirrorZones(r.zones, MIRROR_AXIS) });
+const oneLesson = (text: string) => ({ beginner: text, intermediate: text, advanced: text });
+
+/** Pullback haussier dont la dernière bougie clôture sous l'ancienne résistance devenue support */
+function genPullbackBroken(rng: () => number, m: number): RawScenario {
+  const t = trendRetest(rng, m, true, 4);
+  const past = t.past;
+  let p = t.p;
+  const c = t.lo - (0.3 + rng() * 0.15) * m;
+  past.push({ o: p, c, h: p + (0.04 + rng() * 0.05) * m, l: c - (0.05 + rng() * 0.06) * m });
+  p = c;
+  const fut: Candle[] = [];
+  for (let i = 0; i < 5; i++) { const o = p; const cc = o - (0.3 + rng() * 0.4) * m; fut.push(candle(o, cc, (0.1 + rng() * 0.15) * m, (0.12 + rng() * 0.18) * m)); p = cc; }
+  return {
+    past, future: fut,
+    zones: [
+      { kind: "support", y1: t.lo, y2: t.hi, label: "Support" },
+      { kind: "liquidity_high", y1: t.peak - 0.15, y2: t.peak + 0.15, label: "Plus haut précédent" },
+    ],
+  };
+}
+
+const EXISTING_VARIANTS: ScenarioTemplate[] = [
+  {
+    id: "int_breakout_faible_baissier", title: "Breakout baissier faible", correctAnswer: "NO_TRADE", htfBias: "bearish", macroContext: "normal", metric: "piege",
+    context: "UT supérieure baissière. Le prix vient de passer sous le support, mais la bougie de breakout n'a presque pas de corps.",
+    shortContext: "Breakout du support sans corps.",
+    rationales: {
+      BUY: "✗ Le support vient d'être passé, dans le sens d'une UT supérieure baissière : acheter ici n'a pas d'argument.",
+      SELL: "≈ L'UT supérieure plaide pour la vente, mais un breakout presque sans corps est souvent repris. Vendre maintenant, c'est parier sur une bougie qui ne montre pas de vendeurs décidés.",
+      NO_TRADE: "✓ Un breakout se confirme par une clôture franche. Ici, la bougie n'a presque pas de corps : attendre une vraie clôture sous le support, ou un retest, est la décision logique.",
+    },
+    lessons: oneLesson("Un breakout valable clôture franchement au-delà du niveau, avec du corps. Une bougie de breakout sans corps, même dans le sens de l'UT supérieure, ne suffit pas (leçon Intermédiaire 6)."),
+    notions: ["breakout", "zones_cles", "bougie"], trap: "La clôture sous le support, dans le sens de l'UT supérieure, ressemble à un breakout, mais la bougie n'a presque pas de corps.",
+    difficulties: ["intermediate"], tags: ["breakout", "piège"], mirrorOf: "weak_breakout",
+    build: (rng, m, d) => mirrorRaw(genWeakBreakout(rng, m, d)),
+  },
+  {
+    id: "int_pullback_casse", title: "Pullback qui casse le support", correctAnswer: "NO_TRADE", htfBias: "bullish", macroContext: "normal", metric: "piege",
+    context: "Tendance haussière : le prix corrige vers l'ancienne résistance, cassée, qui servait de support. La dernière bougie clôture nettement sous ce support.",
+    shortContext: "Le pullback clôture sous le support.",
+    rationales: {
+      BUY: "✗ C'était l'endroit idéal pour acheter le pullback, mais la clôture sous le support invalide le scénario : l'ancienne résistance ne joue plus son rôle.",
+      SELL: "≈ La structure haussière vient d'être abîmée, mais vendre contre une UT supérieure haussière, sur une seule clôture, reste un pari.",
+      NO_TRADE: "✓ Le pullback devait tenir sur l'ancienne résistance. La clôture dessous casse le scénario d'achat sans offrir un vrai scénario de vente : attendre est la décision logique.",
+    },
+    lessons: oneLesson("Un pullback s'achète tant que le niveau tient. Une clôture sous l'ancienne résistance devenue support invalide le scénario : on ne force pas l'achat (leçons Intermédiaire 3 et 4)."),
+    notions: ["pullback", "changement_role", "tendance"], trap: "Le prix revient sur l'ancienne résistance, l'endroit idéal du pullback, mais la dernière bougie clôture dessous.",
+    difficulties: ["intermediate"], tags: ["pullback", "support cassé"],
+    build: (rng, m) => genPullbackBroken(rng, m),
+    claims: {
+      "tendance haussière établie (plus haut précédent au-dessus du support)": (ch) => { const s = ch.zones.find((z) => z.kind === "support")!; const pk = ch.zones.find((z) => z.label === "Plus haut précédent")!; return Math.min(pk.y1, pk.y2) > Math.max(s.y1, s.y2) + 1 ? null : "pas de tendance au-dessus du support"; },
+      "dernière bougie : clôture sous le support": (ch) => { const s = ch.zones.find((z) => z.kind === "support")!; const k = ch.past[ch.past.length - 1]; return k.c < Math.min(s.y1, s.y2) ? null : "la dernière bougie ne clôture pas sous le support"; },
+    },
+  },
+  {
+    id: "adv_sweep_haut", title: "Sweep du plus haut", correctAnswer: "SELL", htfBias: "bearish", macroContext: "normal", metric: "piege",
+    context: "Le prix vient de balayer la liquidité au-dessus du plus haut précédent avec une grosse mèche, puis a refermé en dessous.",
+    shortContext: "Sweep du plus haut, clôture revenue dessous.",
+    rationales: {
+      BUY: "✗ Acheter APRÈS le sweep revient à acheter là où les gros vendeurs entrent souvent : la mèche a pris les stops des vendeurs, la clôture est revenue sous le niveau.",
+      SELL: "✓ Le sweep a pris la liquidité au-dessus du plus haut, puis le prix est revenu dessous, dans le sens d'une UT supérieure baissière. Un SELL, stop au-dessus de la mèche, se défend.",
+      NO_TRADE: "≈ Sans confirmation, attendre reste défensif. Mais la mèche et la clôture sous le niveau forment déjà un signal crédible.",
+    },
+    lessons: oneLesson("Une grosse mèche qui balaie le plus haut précédent puis revient dessous prend la liquidité des acheteurs piégés. Dans le sens de l'UT supérieure, c'est un signal de retournement crédible (leçon Avancé 1)."),
+    notions: ["sweep", "liquidite", "multi_ut"], conflict: "Mèche contre clôture : la mèche au-dessus du plus haut ressemble à un breakout haussier, la clôture revenue dessous dit l'inverse.",
+    difficulties: ["advanced"], tags: ["sweep", "liquidité"], mirrorOf: "liquidity_sweep_reversal",
+    build: (rng, m, d) => mirrorRaw(genLiquiditySweep(rng, m, d)),
+  },
+  {
+    id: "adv_fvg_baissier", title: "Réaction sur un FVG baissier", correctAnswer: "SELL", htfBias: "bearish", macroContext: "normal", metric: "lecture",
+    context: "Un FVG baissier a été laissé par l'impulsion. Le prix remonte le tester pour la première fois.",
+    shortContext: "Premier test d'un FVG baissier.",
+    rationales: {
+      BUY: "✗ Acheter le rebond vers le FVG, contre une UT supérieure baissière, revient à acheter là où les vendeurs ont laissé un déséquilibre à défendre.",
+      SELL: "✓ Premier retour dans un FVG baissier, dans le sens de l'UT supérieure : les vendeurs y reviennent souvent. Un SELL, stop au-dessus du FVG, se défend.",
+      NO_TRADE: "≈ Attendre une réaction se comprend, mais un premier test du FVG dans le sens de l'UT supérieure est déjà le scénario de la leçon 2.",
+    },
+    lessons: oneLesson("Un FVG pas encore testé, dans le sens de l'UT supérieure, est une zone de continuation probable : on vend son premier retest, stop au-delà de la zone (leçon Avancé 2)."),
+    notions: ["fvg", "multi_ut", "pullback"], conflict: "Le rebond vers le FVG ressemble à un début de retournement ; l'UT supérieure baissière et le déséquilibre pas encore testé disent continuation.",
+    difficulties: ["advanced"], tags: ["FVG", "continuation"], mirrorOf: "fvg_reaction",
+    build: (rng, m, d) => mirrorRaw(genFvgReaction(rng, m, d)),
+  },
+];
+
 export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
   {
     id: "breakout_bullish_clean",
@@ -131,7 +235,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Quand l'UT supérieure, la structure et le contexte s'alignent, l'avantage devient statistique. Ce type de setup peut mériter une place dans ton plan de trading.",
       advanced:     "Les setups d'alignement aussi propres sont plutôt rares. Quand ils se présentent, la taille se décide selon ton plan de gestion du risque, pas à l'instinct.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["breakout", "multi_ut", "support_resistance"],
+    trap: "Les deux rejets passés sous la résistance font croire à un niveau qui tient : la clôture franche au-dessus les annule.",
+    difficulties: ["intermediate"],
     tags: ["lecture", "breakout", "alignement de l'UT supérieure"],
   },
   {
@@ -152,7 +258,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Après un breakout propre aligné avec l'UT supérieure, la continuation est souvent le scénario majoritaire. Bon raisonnement : ce setup coche les critères. En conditions réelles, la décision finale dépend de ton plan.",
       advanced:     "Si le breakout paraît trop évident, méfie-toi du retest. Sur une UT supérieure alignée avec une structure claire, la taille suit ton plan de gestion du risque, et un stop au-dessus du support cassé est une option logique.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["breakout", "multi_ut", "support_resistance"],
+    trap: "Les deux rebonds passés sur le support font croire à un niveau qui tient : la clôture franche en dessous les annule.",
+    difficulties: ["intermediate"],
     tags: ["lecture", "breakout", "alignement de l'UT supérieure"],
   },
   {
@@ -173,7 +281,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Un piège classique : le breakout peut servir à aspirer la liquidité des stops placés au-dessus de la résistance, avant une reprise dans le sens de l'UT supérieure.",
       advanced:     "Ici, tu n'as pas encore la confirmation par la mèche de rejet : tu décides AVANT. Si l'UT supérieure et la macro le permettent, anticiper le faux breakout peut être un vrai avantage. Sinon, NO TRADE se défend.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["faux_breakout", "multi_ut", "support_resistance"],
+    conflict: "Faux breakout contre UT supérieure : la clôture au-dessus de la résistance ressemble à un breakout, l'UT supérieure dit l'inverse.",
+    difficulties: ["advanced"],
     tags: ["piège", "fakeout", "liquidité"],
   },
   {
@@ -194,7 +304,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Ici, la chasse aux stops sous le support peut signaler un retournement haussier si l'UT supérieure est alignée, à confirmer avant d'agir. Le marché vient peut-être de récupérer du carburant pour monter.",
       advanced:     "Ici, tu décides AVANT le retour du prix au-dessus du support. Si l'UT supérieure et la structure sont alignés, un BUY se défend. En cas de doute, NO TRADE reste une option logique.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["faux_breakout", "multi_ut", "support_resistance"],
+    conflict: "Faux breakout contre UT supérieure : la clôture sous le support ressemble à un breakout, l'UT supérieure dit l'inverse.",
+    difficulties: ["advanced"],
     tags: ["piège", "fakeout", "liquidité"],
   },
   {
@@ -215,7 +327,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Un pullback dans le sens de l'UT supérieure, sur une ancienne résistance devenue support, compte souvent parmi les setups les plus solides.",
       advanced:     "Un pullback profond n'invalide pas forcément le scénario. Tant que l'UT supérieure tient et que la structure n'est pas cassée, le pullback peut rester une opportunité.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["pullback", "changement_role", "tendance"],
+    trap: "Les bougies rouges de la correction font croire à un retournement, alors que la structure reste haussière.",
+    difficulties: ["intermediate"],
     tags: ["lecture", "pullback", "trend"],
   },
   {
@@ -236,7 +350,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Ici, un pullback sur une résistance dans une tendance baissière peut constituer un setup à bonne probabilité, à considérer selon ton plan de trading.",
       advanced:     "Si l'ancien support est retesté proprement par en dessous et que l'UT supérieure reste intacte, le SELL se défend. Si la structure casse pendant le pullback, NO TRADE devient l'option logique.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["pullback", "changement_role", "tendance"],
+    trap: "Les bougies vertes du rebond font croire à un retournement, alors que la structure reste baissière.",
+    difficulties: ["intermediate"],
     tags: ["lecture", "pullback", "trend"],
   },
   {
@@ -257,7 +373,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Les zones de l'UT supérieure tiennent souvent mieux que les zones de l'UT inférieure. Au premier test d'une résistance de l'UT supérieure, un rejet est fréquent, sans être systématique.",
       advanced:     "Si la zone a déjà été testée 3 fois ou plus, méfie-toi du breakout (chaque test peut affaiblir le niveau). À 1 ou 2 tests dans le sens de l'UT supérieure, la taille dépend de ton plan de gestion du risque.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["zones_cles", "multi_ut", "support_resistance"],
+    trap: "La forte hausse qui précède pousse à acheter, sous une résistance de l'UT supérieure qui a déjà rejeté le prix.",
+    difficulties: ["intermediate"],
     tags: ["lecture", "rejet", "résistance"],
   },
   {
@@ -278,7 +396,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Au premier test, les zones de l'UT supérieure tiennent souvent plus qu'elles ne cassent. C'est cette asymétrie qui peut créer un avantage.",
       advanced:     "Les supports de l'UT supérieure testés 1 ou 2 fois sont souvent les plus fiables. Au-delà, le niveau peut s'affaiblir et le scénario breakout puis retest devient plus probable.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["zones_cles", "multi_ut", "support_resistance"],
+    trap: "La correction qui précède pousse à vendre, sur un support de l'UT supérieure qui a déjà tenu.",
+    difficulties: ["intermediate"],
     tags: ["lecture", "support", "rebond"],
   },
   {
@@ -299,7 +419,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Pattern ICT classique : prise de liquidité avant continuation de l'UT supérieure. Ici, le sweep est un argument fort en faveur d'une entrée, à confirmer selon ton plan.",
       advanced:     "Attendre la confirmation après le sweep (clôture au-dessus du niveau cassé, structure haussière) est souvent plus sûr. Sans confirmation, anticiper augmente le risque.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["sweep", "liquidite", "multi_ut"],
+    conflict: "Mèche contre clôture : la mèche sous le plus bas précédent ressemble à un breakout baissier, la clôture revenue au-dessus dit l'inverse.",
+    difficulties: ["advanced"],
     tags: ["piège", "liquidité", "sweep"],
   },
   {
@@ -320,14 +442,16 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Une zone entièrement remplie n'est pas forcément invalidée. Ici, c'est la réaction au retest qui compte. Avec une réaction visible et une UT supérieure alignée, un BUY se défend.",
       advanced:     "Fais la différence : une mitigation partielle (zone intacte) peut soutenir un BUY à bonne probabilité. Une mitigation profonde (plus de 75 %) sans réaction oriente plutôt vers NO TRADE ou un retournement.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["fvg", "multi_ut", "pullback"],
+    conflict: "Le repli vers le FVG ressemble à un début de retournement ; l'UT supérieure haussière et le déséquilibre pas encore testé disent continuation.",
+    difficulties: ["advanced"],
     tags: ["lecture", "FVG", "imbalance"],
   },
   {
     id: "trade_before_news",
     title: "News macro imminente",
     correctAnswer: "NO_TRADE",
-    htfBias: "range",
+    htfBias: "bullish",
     macroContext: "dangereux",
     metric: "discipline",
     context: "Une news macro majeure (NFP / FOMC / CPI) est attendue dans moins de 30 minutes. Le marché est nerveux : les prix peuvent bondir à tout moment.",
@@ -341,14 +465,16 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Le spread peut tripler, ton SL peut sauter à cause du bid-ask, et les statistiques du setup s'appliquent mal à un marché illiquide. Ici, attendre est souvent le meilleur choix.",
       advanced:     "Même avec un avis sur le résultat de la news, la volatilité d'exécution joue contre toi. Si tu tiens à trader, une option logique consiste à diviser la taille par 3 et doubler le stop. Sinon, NO TRADE.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["news", "killzones"],
+    conflict: "Un setup technique propre contre une news majeure dans moins de 30 minutes.",
+    difficulties: ["advanced"],
     tags: ["discipline", "macro", "news"],
   },
   {
     id: "range_no_opp",
     title: "Range sans signal",
     correctAnswer: "NO_TRADE",
-    htfBias: "range",
+    htfBias: "bullish",
     macroContext: "normal",
     metric: "discipline",
     context: "Le prix oscille au milieu d'un range, sans test de zone ni catalyseur visible.",
@@ -362,7 +488,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Trader le milieu d'un range revient souvent à risquer 1 pour gagner environ 0,3 (un R/R d'environ 1:0,3). Un range se trade plutôt à ses bornes.",
       advanced:     "La discipline compte plus que l'activité. Beaucoup de traders expérimentés filtrent fortement leurs entrées. Ne pas trader est aussi une décision à part entière.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["range", "zones_cles"],
+    trap: "Les bornes du range attirent l'œil, mais le prix est au milieu, loin de chacune.",
+    difficulties: ["intermediate"],
     tags: ["discipline", "range", "patience"],
   },
   // ─── V3 — setups réalistes piège mental ─────────────────────────────────────
@@ -370,7 +498,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     id: "weak_breakout",
     title: "Breakout sans conviction",
     correctAnswer: "NO_TRADE",
-    htfBias: "range",
+    htfBias: "bullish",
     macroContext: "normal",
     metric: "discipline",
     context: "Le prix vient de casser au-dessus de la résistance, mais la bougie de displacement manque cruellement de body.",
@@ -385,7 +513,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Le marché ne donne pas un signal propre à chaque breakout. Si la conviction manque, rien ne t'oblige à y aller.",
       advanced:     "Un breakout sans corps sert souvent d'appât à liquidité : ces breakouts faibles piègent régulièrement les traders impatients. Ici, NO TRADE puis observation est une option logique.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["breakout", "zones_cles", "bougie"],
+    trap: "La clôture au-dessus de la résistance ressemble à un breakout, mais la bougie n'a presque pas de corps.",
+    difficulties: ["intermediate"],
     tags: ["discipline", "breakout", "momentum"],
   },
   {
@@ -407,6 +537,8 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Une zone profondément mitigée perd souvent son avantage. Si la réaction n'arrive pas dans les 2-3 bougies, la zone peut être considérée comme épuisée.",
       advanced:     "Un FVG mitigé à plus de 80 % sans réaction peut orienter vers la recherche d'un breakout baissier pour un SELL. Sans ce breakout, NO TRADE reste l'option logique.",
     },
+    notions: ["fvg", "multi_ut"],
+    conflict: "UT supérieure haussière et FVG haussier, mais la zone est presque entièrement comblée sans réaction : elle ne défend plus.",
     difficulties: ["advanced"],
     tags: ["lecture", "FVG", "mitigation"],
   },
@@ -429,14 +561,16 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       intermediate: "Un setup local n'efface pas la tendance de l'UT supérieure. Si l'UT supérieure va contre toi, il vaut souvent mieux s'abstenir, même si la zone locale tient.",
       advanced:     "Dans une tendance baissière, les rebonds offrent plutôt des opportunités de SELL que de BUY. Mais le timing compte : ici, c'est trop tôt, aucune mèche de rejet ne montre encore les vendeurs.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["multi_ut", "pullback", "support_resistance"],
+    trap: "Le rebond local sur le support ressemble à un achat, contre une UT supérieure baissière.",
+    difficulties: ["intermediate"],
     tags: ["discipline", "UT supérieure", "contre-tendance"],
   },
   {
     id: "dirty_range_sweep",
     title: "Range avec sweeps des deux côtés",
     correctAnswer: "NO_TRADE",
-    htfBias: "range",
+    htfBias: "bearish",
     macroContext: "normal",
     metric: "discipline",
     context: "Le prix vient de balayer les liquidités des deux bords du range. Aucune direction claire, l'accumulation institutionnelle est invisible.",
@@ -451,6 +585,8 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       advanced:     "Un double sweep peut traduire une accumulation discrète. Dans ce cas, attendre la sortie du range se défend ; jouer le ping-pong à l'intérieur est souvent coûteux.",
       beginner:     "Si tu vois de grosses mèches en haut ET en bas, avec un prix au milieu, NO TRADE est souvent l'option logique.",
     },
+    notions: ["sweep", "range", "liquidite"],
+    conflict: "Deux sweeps opposés (haut puis bas du range) : chaque côté a été piégé, aucune direction ne domine.",
     difficulties: ["advanced"],
     tags: ["discipline", "range", "sweep"],
   },
@@ -473,7 +609,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       advanced:     "Avec un spread 3 fois plus large que d'habitude et un volume faible, ton R/R réel peut être divisé par deux même si le setup fonctionne. Beaucoup de traders pros intègrent l'exécution dans leur edge.",
       beginner:     "Vérifie la session et le spread AVANT de cliquer. En heures mortes, un setup mérite souvent un NO TRADE.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["killzones", "spread", "pullback"],
+    conflict: "Un pullback technique valide contre une exécution toxique : spread élevé, heures creuses, volatilité absente.",
+    difficulties: ["advanced"],
     tags: ["discipline", "execution", "spread"],
     metaOverride: {
       session:    "Heures mortes",
@@ -481,6 +619,9 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       spread:     "élevé",
     },
   },
+  // Scénarios construits sur les scènes partagées
+  ...EXISTING_VARIANTS,
+  ...(BSNT_NEW as ScenarioTemplate[]),
 ];
 
 // ─── Variations ───────────────────────────────────────────────────────────────
@@ -1402,6 +1543,8 @@ export function buildChartRaw(
 ): BuySellChart {
   const rng = mulberry32(seed);
   const m = VOL_MULT[volatility];
+  const tpl = SCENARIO_TEMPLATES.find((t) => t.id === setup);
+  if (tpl?.build) return finalize(tpl.build(rng, m, difficulty));
   switch (setup) {
     case "breakout_bullish_clean":     return genBreakoutBull(rng, m, difficulty);
     case "breakout_bearish_clean":     return genBreakoutBear(rng, m, difficulty);
@@ -1420,6 +1563,7 @@ export function buildChartRaw(
     case "counter_trend_bounce":       return genCounterTrendBounce(rng, m, difficulty);
     case "dirty_range_sweep":          return genDirtyRangeSweep(rng, m, difficulty);
     case "setup_toxic_execution":      return genToxicExecution(rng, m, difficulty);
+    default: throw new Error(`Buy/Sell : scénario inconnu « ${setup} »`);
   }
 }
 

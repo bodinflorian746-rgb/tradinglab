@@ -21,6 +21,8 @@ import { auditee } from "./langues";
 type Lang = "fr" | "en" | "es";
 // Champs internes (identifiants, énumérations en français côté code) : non affichés tels quels
 const INTERNAL = new Set(["id", "macroContext", "htfBias", "direction", "chartShape", "category", "correctMistake", "decoyMistakes",
+  // métadonnées pédagogiques et de construction (non affichées)
+  "notions", "trap", "conflict", "mirrorOf",
   "difficulties", "showLines", "metric", "correctAnswer", "kind", "optimal", "metaOverride", "tag", "dotClass", "textClass", "color", "type"]);
 const EXPLAIN = new Set(["beginner", "intermediate", "advanced", "explanation", "BUY", "SELL", "NO_TRADE", "optimalExplain", "rationale"]);
 const FRENCH: Record<Exclude<Lang, "fr">, RegExp> = {

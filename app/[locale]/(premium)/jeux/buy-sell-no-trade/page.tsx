@@ -248,6 +248,9 @@ export default function BuySellNoTradePage() {
   const animRef = useRef<NodeJS.Timeout | null>(null);
 
   const current = scenarios[idx];
+  // Pastilles de contexte selon les notions du niveau : UT supérieure dès l'Intermédiaire, macro en Avancé
+  const showHtf = difficulty !== "beginner";
+  const showMacro = difficulty === "advanced";
   // Scénario affiché = joué : il ne revient qu'une fois tous les autres du niveau passés
   useEffect(() => {
     if (current && difficulty && G === FrGame) markPlayed("bsnt", difficulty, current.id, FrGame.scenarioPool(difficulty).map((t) => t.id));
@@ -451,8 +454,9 @@ export default function BuySellNoTradePage() {
               <VolBadge volatility={current.volatility} T={T} />
               <SpreadBadge spread={current.spread} T={T} />
               {/* téléphone : les tuiles de contexte passent en chips */}
-              <span className="v2-chip sm:hidden">{locale === "fr" ? "UT sup." : T.htf}{"\u00a0"}: {BIAS_LABEL[current.htfBias].toLowerCase()}</span>
-              <span className={`v2-chip sm:hidden ${current.macroContext === "dangereux" ? "v2-chip--red" : ""}`}>{T.macro}{"\u00a0"}: {MACRO_LABEL[current.macroContext].toLowerCase()}</span>
+              {/* UT sup\u00e9rieure : notion Interm\u00e9diaire (pas de pastille en D\u00e9butant) ; macro : notion Avanc\u00e9 */}
+              {showHtf && <span className="v2-chip sm:hidden">{locale === "fr" ? "UT sup." : T.htf}{"\u00a0"}: {BIAS_LABEL[current.htfBias].toLowerCase()}</span>}
+              {showMacro && <span className={`v2-chip sm:hidden ${current.macroContext === "dangereux" ? "v2-chip--red" : ""}`}>{T.macro}{"\u00a0"}: {MACRO_LABEL[current.macroContext].toLowerCase()}</span>}
             </div>
 
             {/* News warning */}
@@ -500,9 +504,9 @@ export default function BuySellNoTradePage() {
 
             {/* Context infos — en avancé, on cache la volatilité pour forcer la
                 lecture du chart (mais on garde la news warning visible). */}
-            <div className={`grid gap-2 max-sm:hidden sm:gap-3 ${difficulty === "advanced" ? "grid-cols-2" : "grid-cols-3"}`}>
-              <InfoTile label={T.htf}   value={BIAS_LABEL[current.htfBias]}       valueClass={biasClass(current.htfBias)} />
-              <InfoTile label={T.macro} value={MACRO_LABEL[current.macroContext]} valueClass={current.macroContext === "dangereux" ? "text-red-300" : ""} />
+            <div className={`grid gap-2 max-sm:hidden sm:gap-3 ${difficulty === "beginner" ? "grid-cols-1" : "grid-cols-2"}`}>
+              {showHtf && <InfoTile label={T.htf}   value={BIAS_LABEL[current.htfBias]}       valueClass={biasClass(current.htfBias)} />}
+              {showMacro && <InfoTile label={T.macro} value={MACRO_LABEL[current.macroContext]} valueClass={current.macroContext === "dangereux" ? "text-red-300" : ""} />}
               {difficulty !== "advanced" && (
                 <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} valueClass="" />
               )}
@@ -514,7 +518,7 @@ export default function BuySellNoTradePage() {
               : <ChoiceRow options={CHOICE_OPTIONS} picked={chosen} />}
 
             {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) */}
-            <JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:q`, [T.htf, MACRO_LABEL[current.macroContext], difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context)), ...zones.map((z) => z.label)])} />
+            <JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:q`, [...(showHtf ? [T.htf] : []), ...(showMacro ? [MACRO_LABEL[current.macroContext]] : []), difficulty === "beginner" ? current.context : (current.shortContext ?? firstSentence(current.context)), ...zones.map((z) => z.label)])} />
 
             {isRevealing && (
               <div className="v2-well px-4 py-3 text-center">

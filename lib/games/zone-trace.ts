@@ -61,7 +61,8 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
   for (const z of out) {
     if (!/^(haut|bas) du range/i.test(z.label)) continue;
     const top = /^haut/i.test(z.label);
-    const ks = [...past].sort((x, y) => (top ? y.h - x.h : x.l - y.l)), ext = (k: Candle) => (top ? k.h : k.l);
+    // borne percée par les bougies déclencheuses (cassure, sweep : zone `trigger`) : elles ne la définissent pas
+    const ks = [...(z.trigger && past.length > 6 ? past.slice(0, -2) : past)].sort((x, y) => (top ? y.h - x.h : x.l - y.l)), ext = (k: Candle) => (top ? k.h : k.l);
     // (une mèche de sweep : très au-delà de l'extrême suivant, et la bougie referme à l'intérieur)
     // un sweep tracé de ce côté (« Sweep haut / bas ») : sa mèche n'est pas une borne, même courte
     const swept = out.some((x) => (top ? /^sweep haut/i : /^sweep bas/i).test(x.label));

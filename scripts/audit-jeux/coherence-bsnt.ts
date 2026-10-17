@@ -6,6 +6,7 @@
 // + règles dures (continuité, OHLC valide, couleur = mouvement / doji neutre).
 import * as FR from "../../lib/games/buy-sell-no-trade";
 import { auditCtx } from "./market-ctx";
+import { mirrorCandles, mirrorZones } from "../../lib/games/scenes";
 import * as EN from "../../lib/games/buy-sell-no-trade-en";
 import * as ES from "../../lib/games/buy-sell-no-trade-es";
 import type { BuySellChart, Candle, ChartZone, Difficulty, ScenarioTemplate, Volatility } from "../../lib/games/buy-sell-no-trade";
@@ -227,7 +228,13 @@ for (const t of G.SCENARIO_TEMPLATES) {
       const ch = G.buildChart(t.id, seed, vol, d, auditCtx(seed));
       const reasons: string[] = [];
       const hr = hardRules(ch); if (hr) reasons.push(`[dure] ${hr}`);
-      for (const [name, fn] of Object.entries(CHECKS[t.id] ?? {})) { const r = fn(ch, t, d); if (r) reasons.push(`${name} → ${r}`); }
+      // Variante de sens (mirrorOf) : affirmations de l'original, sur le graphique renversé
+      const src = t.mirrorOf ? G.SCENARIO_TEMPLATES.find((x) => x.id === t.mirrorOf)! : t;
+      const chk: BuySellChart = t.mirrorOf ? { past: mirrorCandles(ch.past, 0), future: mirrorCandles(ch.future, 0), zones: mirrorZones(ch.zones, 0), domain: { min: -ch.domain.max, max: -ch.domain.min } } : ch;
+      for (const [name, fn] of Object.entries(CHECKS[src.id] ?? {})) { const r = fn(chk, src, d); if (r) reasons.push(`${name} → ${r}`); }
+      // Scénarios construits sur les scènes partagées : leurs affirmations, vérifiées sur le graphique
+      for (const [name, fn] of Object.entries(t.claims ?? {})) { const r = fn(ch); if (r) reasons.push(`${name} → ${r}`); }
+      if (!CHECKS[src.id] && !t.claims) reasons.push("aucune affirmation vérifiée pour ce scénario");
       dojis += [...ch.past, ...ch.future].filter((k) => renderColor(k) === "neutre").length;
       if (reasons.length) { bad++; reasons.forEach((r) => (fails[r] = (fails[r] ?? 0) + 1)); if (examples.length < 1) examples.push(`seed ${seed} vol ${vol}`); }
     }

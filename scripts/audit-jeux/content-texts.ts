@@ -71,7 +71,9 @@ const CODE_KEYS = new Set(["className", "class", "href", "src", "d", "fill", "st
   "direction", "htfBias", "macroContext", "chartShape", "category", "correctMistake", "decoyMistakes", "difficulties", "showLines", "metric",
   "correctAnswer", "optimal", "metaOverride", "level", "duration", "session", "asset", "volatility", "spread", "outcome", "result", "state",
   "data-reveal", "data-pick", "data-choice", "data-line", "data-label-for", "aria-hidden", "transform", "transformOrigin", "fontSize", "opacity", "tags", "moduleId",
-  "side", "expect", "ref"]);
+  "side", "expect", "ref",
+  // métadonnées des scénarios des jeux (lib/games/notions.ts) : identifiants, non affichés
+  "notions", "mirrorOf"]);
 const looksLikeCode = (s: string) => {
   const t = s.trim();
   if (!/\p{L}{2}/u.test(t)) return true;
@@ -172,7 +174,8 @@ function extractTs(file: string): ContentText[] {
     for (;;) {
       const q = n.parent;
       if (!q) return n;
-      if ((ts.isConditionalExpression(q) && q.condition !== n) || ts.isParenthesizedExpression(q) || ts.isTemplateSpan(q) || ts.isAsExpression(q)
+      // (un tableau d'identifiants sous une clé de code : notions: ["rr", …])
+      if ((ts.isConditionalExpression(q) && q.condition !== n) || ts.isParenthesizedExpression(q) || ts.isTemplateSpan(q) || ts.isAsExpression(q) || ts.isArrayLiteralExpression(q)
         || (ts.isTemplateExpression(q) && q !== node)
         || (ts.isBinaryExpression(q) && /^(\|\||\?\?|&&)$/.test(q.operatorToken.getText(sf)))) n = q;
       else return n;
