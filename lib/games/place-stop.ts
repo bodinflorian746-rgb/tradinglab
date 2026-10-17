@@ -19,7 +19,7 @@ import {
   type Candle, type ChartZone,
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
 } from "./shared";
-import { withTracedZones } from "./zone-trace";
+import { withTracedZones, keepSwingTips } from "./zone-trace";
 import type { NotionId } from "./notions";
 import { PS_NEW, sweepFuture, type PsRaw } from "./ps-scenarios";
 import { breakStrayLevels } from "./stray-levels";
@@ -2984,25 +2984,6 @@ function ensureCorrectStopRR(chart: PlaceStopChart): PlaceStopChart {
     tp,
     domain: { min: Math.min(chart.domain.min, tp - span * 0.04), max: Math.max(chart.domain.max, tp + span * 0.04) },
   };
-}
-
-// Swing désigné (`at`) : la passe de réalisme peut allonger la mèche d'une voisine au-delà
-// de sa pointe ; elle est ramenée à la pointe (le swing reste l'extrême de ses voisines).
-function keepSwingTips(chart: PlaceStopChart): PlaceStopChart {
-  const past = [...chart.past];
-  for (const z of chart.zones) {
-    const sw = z.label.match(/^swing (high|low)\b/i);
-    if (!sw || z.at === undefined || z.at < 0 || z.at >= past.length) continue;
-    const high = sw[1].toLowerCase() === "high";
-    const pair = [z.at, Math.min(z.at + 1, past.length - 1)];
-    const tip = high ? Math.max(...pair.map((i) => past[i].h)) : Math.min(...pair.map((i) => past[i].l));
-    for (let i = Math.max(0, z.at - 2); i <= Math.min(past.length - 1, z.at + 3); i++) {
-      if (pair.includes(i)) continue;
-      const k = past[i];
-      past[i] = high ? { ...k, h: Math.max(Math.max(k.o, k.c), Math.min(k.h, tip)) } : { ...k, l: Math.min(Math.min(k.o, k.c), Math.max(k.l, tip)) };
-    }
-  }
-  return { ...chart, past };
 }
 
 // Les prix sont affichés au joueur (boutons de stop) : un graphique qui passe

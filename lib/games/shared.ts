@@ -234,6 +234,9 @@ export function rangeLegs(rng: () => number, p: number, S: number, R: number, le
 
 export function levelTouches(
   rng: () => number, p: number, lo: number, hi: number, from: "below" | "above", m: number, n = 2,
+  /** Hauteur de la dernière réaction (distance au bord) : la pointe de sa mèche l'atteint ; les
+   *  réactions d'avant restent plus courtes (plus haut précédent placé où le scénario le veut) */
+  cap?: number,
 ): { candles: Candle[]; p: number } {
   const dir = from === "below" ? 1 : -1;             // sens vers le niveau
   const edge = from === "below" ? lo : hi;           // bord de la bande côté prix
@@ -275,7 +278,8 @@ export function levelTouches(
     // Réaction jusqu'au sommet prévu H : deux bougies qui s'éloignent nettement, séparées par un
     // petit repli (couleur opposée : la jambe n'est pas d'un seul bloc)
     const c0 = dist(p);
-    const H = Math.max(t === 0 ? (2.1 + rng() * 0.4) * m : prevH + (0.6 + rng() * 0.3) * m, c0 + (0.9 + rng() * 0.2) * m);
+    let H = Math.max(t === 0 ? (2.1 + rng() * 0.4) * m : prevH + (0.6 + rng() * 0.3) * m, c0 + (0.9 + rng() * 0.2) * m);
+    if (cap !== undefined) H = t === n - 1 ? Math.max(cap, c0 + 0.7 * m, prevH + 0.35 * m) : Math.max(c0 + 0.7 * m, Math.min(H, cap - 0.6 * m));
     const span = H - c0;
     const c1 = c0 + span * (0.5 + rng() * 0.15);
     push(at(c1), (0.08 + rng() * 0.2) * m, far());

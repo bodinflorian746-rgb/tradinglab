@@ -231,6 +231,27 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
 }
 
 /** Zones du graphique recalées sur les bougies d'avant la réponse (après la passe de réalisme) */
+/**
+ * Swing désigné (`at`) : la passe de réalisme peut allonger la mèche d'une voisine au-delà de sa
+ * pointe ; elle est ramenée à la pointe (le swing reste l'extrême de ses voisines).
+ */
+export function keepSwingTips<T extends { past: Candle[]; zones: ChartZone[] }>(chart: T): T {
+  const past = [...chart.past];
+  for (const z of chart.zones) {
+    const sw = z.label.match(/^swing (high|low)\b/i);
+    if (!sw || z.at === undefined || z.at < 0 || z.at >= past.length) continue;
+    const high = sw[1].toLowerCase() === "high";
+    const pair = [z.at, Math.min(z.at + 1, past.length - 1)];
+    const tip = high ? Math.max(...pair.map((i) => past[i].h)) : Math.min(...pair.map((i) => past[i].l));
+    for (let i = Math.max(0, z.at - 2); i <= Math.min(past.length - 1, z.at + 3); i++) {
+      if (pair.includes(i)) continue;
+      const k = past[i];
+      past[i] = high ? { ...k, h: Math.max(Math.max(k.o, k.c), Math.min(k.h, tip)) } : { ...k, l: Math.min(Math.min(k.o, k.c), Math.max(k.l, tip)) };
+    }
+  }
+  return { ...chart, past };
+}
+
 export function withTracedZones<T extends { past: Candle[]; zones: ChartZone[] }>(ch: T): T {
   return { ...ch, zones: traceZones(ch.past, ch.zones) };
 }

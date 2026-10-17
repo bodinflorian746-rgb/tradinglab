@@ -12,12 +12,14 @@ import {
   type Candle, type ChartZone,
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
 } from "./shared";
-import { withTracedZones } from "./zone-trace";
+import { withTracedZones, keepSwingTips } from "./zone-trace";
 import { breakStrayLevels } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone, priceEpsilon } from "./price-scale";
+import type { NotionId } from "./notions";
+import { BTT_NEW, type BttRaw, type BttClaim } from "./btt-scenarios";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext, Candle, ChartZone };
 
@@ -35,10 +37,14 @@ export const ENTRY_LABELS: Record<EntryType, string> = {
   confirmation:  "Confirmation",
   deep_pullback: "Pullback profond",
 };
+// Stops nommés par leur place (du plus proche du prix au plus éloigné) : le bon stop est celui qui
+// se trouve derrière l'invalidation, à une place qui varie d'un scénario à l'autre (un bouton
+// « Logique » donnait la réponse). Les clés gardent leur nom d'origine : tight = le plus proche,
+// logical = le médian, wide = le plus éloigné.
 export const STOP_LABELS: Record<StopType, string> = {
-  tight:   "Serré",
-  logical: "Logique",
-  wide:    "Large",
+  tight:   "Proche",
+  logical: "Médian",
+  wide:    "Éloigné",
 };
 export const TP_LABELS: Record<TpType, string> = {
   fast:      "Rapide",
@@ -71,7 +77,8 @@ export interface DifficultyLessons {
 export interface BuildTradeTemplate {
   id:             string;
   title:          string;
-  chartShape:     ChartShape;
+  /** Forme du graphique (scénarios d'origine) ; les scénarios construits ont `build` */
+  chartShape?:    ChartShape;
   direction:      TradeDirection;
   htfBias:        HtfBias;
   macroContext:   MacroContext;
@@ -80,6 +87,14 @@ export interface BuildTradeTemplate {
   optimalExplain: string;
   lessons:        DifficultyLessons;
   difficulties:   readonly Difficulty[];
+  /** Notions du scénario (lib/games/notions.ts) ; piège (Intermédiaire) ou conflit (Avancé) */
+  notions?:       readonly NotionId[];
+  trap?:          string;
+  conflict?:      string;
+  /** Scénario construit (lib/games/btt-scenarios.ts) : plan et suite en unités abstraites */
+  build?:         (rng: () => number, m: number) => BttRaw;
+  /** Affirmations vérifiées sur le graphique (scripts/audit-jeux/coherence-btt.ts) */
+  claims?:        Record<string, BttClaim>;
 }
 
 export interface BuildTradeInstance extends BuildTradeTemplate {
@@ -106,6 +121,8 @@ export interface BuildTradeChart {
   tps:     Record<TpType,    number>;
   // Prix actuel = dernier close du past (pour l'entry market)
   currentPrice: number;
+  /** Scénarios construits : niveaux invisibles que les mèches du passé ne franchissent pas (réalisme) */
+  guards?: number[];
   /** Actif des prix (posé par withAssetPrices) ; absent en échelle abstraite */
   asset?: Asset;
 }
@@ -119,9 +136,9 @@ const AMBITIOUS_MAX_R = 5;
 const ASSETS:       readonly Asset[]      = ["EUR/USD", "XAU/USD", "BTC/USD", "NASDAQ"];
 const SESSIONS:     readonly Session[]    = ["Londres", "New York", "Overlap", "Heures mortes"];
 
-// ─── Templates (15) ───────────────────────────────────────────────────────────
+// ─── Templates d'origine (15), un niveau chacun ──────────────────────────────
 
-export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
+const ORIGINAL_TEMPLATES: BuildTradeTemplate[] = [
   {
     id: "trend_continuation_bull",
     title: "Continuation de tendance haussière",
@@ -131,13 +148,14 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Tendance haussière nette. Le prix vient de finir un pullback.",
     optimal: { entry: "deep_pullback", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Ici, la tendance de l'UT supérieure est claire : chercher le meilleur prix (pullback profond) se défend, avec un stop derrière la structure et un objectif large dans le sens du momentum.",
+    optimalExplain: "Dans une tendance nette, chercher le meilleur prix (pullback profond) se défend : le stop reste court derrière le swing low, et l'objectif peut être large dans le sens de la tendance.",
     lessons: {
-      beginner:     "Sur un setup dans le sens de l'UT supérieure, chercher le meilleur prix et viser large est une option logique. Ici, la patience peut payer.",
-      intermediate: "Le pullback profond améliore souvent le R/R. Associé à un stop derrière la structure, il offre ici le meilleur avantage.",
-      advanced:     "Une continuation de tendance alignée avec l'UT supérieure peut offrir un setup à haute probabilité, avec un R/R de 1:3 ou plus. La taille se décide selon ton plan de gestion du risque ; un TP ambitieux se justifie ici par le momentum probable.",
+      beginner:     "Dans une tendance, acheter au creux du pullback plutôt qu'au milieu de la hausse garde un stop court sous le swing low : le R/R s'améliore sans prendre plus de risque (leçon Débutant 6).",
+      intermediate: "Dans une tendance, acheter au creux du pullback plutôt qu'au milieu de la hausse garde un stop court sous le swing low : le R/R s'améliore sans prendre plus de risque (leçon Débutant 6).",
+      advanced:     "Dans une tendance, acheter au creux du pullback plutôt qu'au milieu de la hausse garde un stop court sous le swing low : le R/R s'améliore sans prendre plus de risque (leçon Débutant 6).",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    difficulties: ["beginner"],
+    notions: ["rr", "tendance"],
   },
   {
     id: "trend_continuation_bear",
@@ -148,13 +166,14 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Tendance baissière nette. Le prix vient de finir un rebond.",
     optimal: { entry: "deep_pullback", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Ici, avec une UT supérieure baissière et un rebond qui s'essouffle, une entrée au meilleur prix se défend, avec un stop au-dessus du swing high et un TP ambitieux dans le sens du momentum.",
+    optimalExplain: "Dans une tendance baissière nette, vendre au meilleur prix (pullback profond) se défend : le stop reste court au-dessus du swing high, et l'objectif peut être large dans le sens de la tendance.",
     lessons: {
-      beginner:     "Tendance baissière et rebond qui s'essouffle : un SELL reste cohérent avec le scénario, si ça correspond à ton plan, au meilleur prix possible avec un TP large.",
-      intermediate: "Ici, le rebond profond donne souvent le meilleur R/R. Un stop au-dessus de la structure permet d'absorber le bruit.",
-      advanced:     "C'est le symétrique de la continuation haussière. Un R/R de 1:3 ou plus reste un objectif logique ici.",
+      beginner:     "Dans une tendance baissière, vendre au sommet du rebond plutôt qu'au milieu de la baisse garde un stop court au-dessus du swing high : le R/R s'améliore sans prendre plus de risque (leçon Débutant 6).",
+      intermediate: "Dans une tendance baissière, vendre au sommet du rebond plutôt qu'au milieu de la baisse garde un stop court au-dessus du swing high : le R/R s'améliore sans prendre plus de risque (leçon Débutant 6).",
+      advanced:     "Dans une tendance baissière, vendre au sommet du rebond plutôt qu'au milieu de la baisse garde un stop court au-dessus du swing high : le R/R s'améliore sans prendre plus de risque (leçon Débutant 6).",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    difficulties: ["beginner"],
+    notions: ["rr", "tendance"],
   },
   {
     id: "breakout_bull_clean",
@@ -171,7 +190,9 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       intermediate: "Sur un breakout fort, attendre un pullback profond peut faire rater le mouvement. Dans ce cas, une entrée agressive se défend.",
       advanced:     "Un breakout de l'UT supérieure avec une bougie de displacement apporte une confirmation forte. Le pullback peut être léger, voire absent : à intégrer dans ton plan.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    difficulties: ["intermediate"],
+    notions: ["breakout", "multi_ut"],
+    trap: "Attendre un pullback profond paraît plus prudent, mais après un breakout franc le prix revient rarement aussi bas : l'ordre ne serait pas rempli.",
   },
   {
     id: "breakout_bear_clean",
@@ -188,41 +209,45 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       intermediate: "Un stop juste au-dessus du niveau cassé (devenu résistance) est une option logique. Ici, le momentum peut justifier une entrée agressive.",
       advanced:     "C'est le miroir du breakout haussier. Un stop technique au-dessus du support cassé, avec une marge, se défend.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    difficulties: ["intermediate"],
+    notions: ["breakout", "multi_ut"],
+    trap: "Attendre un pullback profond paraît plus prudent, mais après un breakout franc le prix remonte rarement aussi haut : l'ordre ne serait pas rempli.",
   },
   {
     id: "bounce_support_clean",
-    title: "Rebond sur un support de l'UT supérieure",
+    title: "Rebond sur un support",
     chartShape: "bounce_support",
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "Le prix vient de rebondir sur un support de l'UT supérieure avec une mèche claire.",
+    context: "Le prix vient de rebondir sur un support avec une mèche claire.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
-    optimalExplain: "Sur un support testé, attendre la confirmation du rebond avant d'entrer se défend. Un stop sous le support et un TP équilibré sont ici logiques, car la résistance suivante limite la course.",
+    optimalExplain: "Sur un support testé, attendre la bougie verte de confirmation avant d'entrer se défend. Stop médian : sous le support, avec une marge ; le proche reste au-dessus du swing low, dans le bruit. TP équilibré : un objectif à un peu plus de deux fois le risque, réaliste après un simple rebond.",
     lessons: {
-      beginner:     "Sur un support, attendre la bougie verte de confirmation est souvent plus sûr qu'une entrée à l'aveugle.",
-      intermediate: "La confirmation peut valider la zone. Ici, le TP équilibré tient compte de la résistance suivante.",
-      advanced:     "Sur un support de l'UT supérieure testé 2 ou 3 fois, la confirmation aide à préserver l'avantage. Un R/R autour de 1:2 à 1:2,5 est courant dans ce cas.",
+      beginner:     "Sur un support, une mèche claire montre un rejet ; attendre la bougie verte de confirmation est souvent plus sûr qu'une entrée à l'aveugle (leçon Débutant 3).",
+      intermediate: "Sur un support, une mèche claire montre un rejet ; attendre la bougie verte de confirmation est souvent plus sûr qu'une entrée à l'aveugle (leçon Débutant 3).",
+      advanced:     "Sur un support, une mèche claire montre un rejet ; attendre la bougie verte de confirmation est souvent plus sûr qu'une entrée à l'aveugle (leçon Débutant 3).",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    difficulties: ["beginner"],
+    notions: ["meches", "support_resistance"],
   },
   {
     id: "rejection_resistance_clean",
-    title: "Rejet sur une résistance de l'UT supérieure",
+    title: "Rejet sous une résistance",
     chartShape: "rejection_resistance",
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "Le prix vient de rejeter une résistance de l'UT supérieure avec une mèche.",
+    context: "Le prix vient de rejeter une résistance avec une mèche.",
     optimal: { entry: "confirmation", stop: "logical", tp: "balanced" },
-    optimalExplain: "Sur une résistance testée, attendre la confirmation du rejet avant d'entrer se défend. Un stop au-dessus du high et un TP équilibré (le support suivant) sont ici logiques.",
+    optimalExplain: "Sur une résistance testée, attendre la bougie rouge de confirmation avant d'entrer se défend. Stop médian : au-dessus de la résistance, avec une marge ; le proche reste sous le swing high, dans le bruit. TP équilibré : un objectif à un peu plus de deux fois le risque.",
     lessons: {
-      beginner:     "Sur une résistance, attendre la bougie rouge de confirmation est une option prudente. Le rejet gagne à s'imposer.",
-      intermediate: "Ici, la confirmation prend la forme d'une bougie de rejet visible. Sans elle, le retest peut se prolonger.",
-      advanced:     "C'est le miroir du rebond sur support. Un stop au-dessus du high, avec une marge à la mesure de la volatilité du jour (ATR, l'amplitude moyenne d'une journée), est une option logique.",
+      beginner:     "Sous une résistance, une mèche haute montre un rejet ; attendre la bougie rouge de confirmation est une option prudente (leçon Débutant 3).",
+      intermediate: "Sous une résistance, une mèche haute montre un rejet ; attendre la bougie rouge de confirmation est une option prudente (leçon Débutant 3).",
+      advanced:     "Sous une résistance, une mèche haute montre un rejet ; attendre la bougie rouge de confirmation est une option prudente (leçon Débutant 3).",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    difficulties: ["beginner"],
+    notions: ["meches", "support_resistance"],
   },
   {
     id: "range_top_short",
@@ -239,7 +264,9 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       advanced:     "Un range se prête plutôt au contre-mouvement. Une confirmation et un TP rapide augmentent souvent le winrate, avec un R/R qui reste sous 2.",
       beginner:     "Au haut du range d'un range, un objectif modeste est souvent plus réaliste : le prix évolue dans une boîte.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    difficulties: ["intermediate"],
+    notions: ["range", "take_profit"],
+    trap: "Un TP ambitieux est tentant, mais le bas du range arrête souvent le prix avant.",
   },
   {
     id: "range_bottom_long",
@@ -256,7 +283,9 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       advanced:     "Mêmes principes que le SELL au haut du range : une confirmation et un TP serré aident souvent à augmenter le winrate.",
       beginner:     "Dans un range, viser l'autre borne est souvent suffisant. Ici, un objectif modeste se défend.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    difficulties: ["intermediate"],
+    notions: ["range", "take_profit"],
+    trap: "Un TP ambitieux est tentant, mais le haut du range arrête souvent le prix avant.",
   },
   {
     id: "fake_breakout_short",
@@ -273,7 +302,9 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       advanced:     "Un stop au-dessus de la mèche du faux breakout correspond ici à la vraie invalidation, plutôt que dans la zone du piège.",
       beginner:     "Après un piège visible, attendre la suite est souvent plus sage que d'agir par FOMO.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["intermediate"],
+    notions: ["faux_breakout", "zones_cles"],
+    trap: "La piqûre au-dessus de la résistance ressemble à un breakout ; la clôture revenue dessous dit le contraire.",
   },
   {
     id: "sweep_reversal_bull",
@@ -290,7 +321,9 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       advanced:     "Ici, une entrée agressive se justifie par le pattern, pas par l'impatience. Un stop sous le low du sweep (la nouvelle invalidation) est une option logique.",
       beginner:     "Une grosse mèche qui balaie un low puis remonte peut apporter une confirmation forte pour un BUY.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["advanced"],
+    notions: ["sweep", "liquidite"],
+    conflict: "La mèche sous le plus bas précédent ressemble à un breakout baissier ; la clôture revenue au-dessus dit le contraire.",
   },
   {
     id: "fvg_continuation_bull",
@@ -307,7 +340,9 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       advanced:     "FVG haussier, UT supérieure alignée et premier retest : un setup de premier choix. Un R/R de 1:3 ou plus est ici logique.",
       beginner:     "Le FVG attire souvent le prix. Ici, la confirmation prend la forme d'une bougie verte qui défend la zone.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["advanced"],
+    notions: ["fvg", "multi_ut"],
+    conflict: "Le retour dans le FVG ressemble à un essoufflement ; l'UT supérieure haussière et la zone intacte disent continuation.",
   },
   {
     id: "weak_breakout_setup",
@@ -324,7 +359,9 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       advanced:     "Un breakout faible continue nettement moins souvent qu'un breakout franc. Dans ce cas, un TP ambitieux a peu de chances d'être atteint.",
       beginner:     "Si le breakout manque de corps, viser petit et attendre une confirmation est une option logique.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["intermediate"],
+    notions: ["breakout", "take_profit"],
+    trap: "Le breakout paraît valide, mais la bougie est petite : un TP ambitieux suppose une force qui manque.",
   },
   {
     id: "deep_pullback_risky",
@@ -342,6 +379,8 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       beginner:     "Un pullback trop profond peut casser la tendance. Attendre que la structure se reconfirme est ici une option logique.",
     },
     difficulties: ["advanced"],
+    notions: ["pullback", "structure"],
+    conflict: "Le pullback offre un meilleur prix, mais plus de 60 % de retracement menace la structure : c'est la confirmation qui tranche.",
   },
   {
     id: "high_vol_setup",
@@ -352,13 +391,15 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Volatilité élevée. Les bougies sont larges, les mèches profondes.",
     optimal: { entry: "confirmation", stop: "wide", tp: "balanced" },
-    optimalExplain: "En volatilité élevée, le bruit est amplifié et un stop standard risque d'être balayé. Ici, le « stop large » devient le stop LOGIQUE. Un TP équilibré se défend, car le mouvement potentiel est aussi plus étendu.",
+    optimalExplain: "En volatilité élevée, le bruit est amplifié et un stop à la distance habituelle risque d'être balayé. Ici, le stop éloigné est le stop logique. Un TP équilibré se défend, car le mouvement potentiel est aussi plus étendu.",
     lessons: {
-      advanced:     "Un stop ajusté à la volatilité du jour (ATR, l'amplitude moyenne d'une journée) est une option logique. En volatilité élevée, le « stop large » n'est pas excessif : il est simplement adapté.",
+      advanced:      "Un stop ajusté à la volatilité du jour (ATR, l'amplitude moyenne d'une journée) est une option logique. En volatilité élevée, le stop éloigné n'est pas excessif : il est simplement adapté.",
       intermediate: "Le stop gagne à s'adapter à la volatilité du moment plutôt qu'à une distance fixe.",
       beginner:     "Quand le marché bouge fort, le stop a besoin d'espace. Sinon, il risque de sauter pour rien.",
     },
-    difficulties: ["intermediate", "advanced"],
+    difficulties: ["advanced"],
+    notions: ["volatilite", "stop_loss"],
+    conflict: "Le stop habituel paraît raisonnable, mais en volatilité élevée il est dans le bruit : seul le stop éloigné laisse respirer le trade.",
   },
   {
     id: "counter_trend_local",
@@ -376,8 +417,12 @@ export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [
       beginner:     "Si tu trades contre la tendance, viser petit et sortir vite est souvent l'option la plus prudente.",
     },
     difficulties: ["advanced"],
+    notions: ["multi_ut", "take_profit"],
+    conflict: "Le setup local est propre, mais l'UT supérieure est baissière : viser loin contre elle est rarement payé.",
   },
 ];
+
+export const BUILD_TRADE_TEMPLATES: BuildTradeTemplate[] = [...ORIGINAL_TEMPLATES, ...BTT_NEW];
 
 // ─── Generate scenarios ───────────────────────────────────────────────────────
 
@@ -676,7 +721,7 @@ function shapeBounceSupport(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "support", y1: S - 0.1, y2: S + 0.1, label: "Support UT supérieure" },
+    { kind: "support", y1: S - 0.1, y2: S + 0.1, label: "Support" },
   ], ref: { swingLow: S, swingHigh: entryRef + 4 * m, entryRef } };
 }
 
@@ -721,7 +766,7 @@ function shapeRejectionResistance(rng: () => number, m: number): ShapeOutput {
     p = c;
   }
   return { past, future: fut, zones: [
-    { kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance UT supérieure" },
+    { kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance" },
   ], ref: { swingLow: entryRef - 4 * m, swingHigh: R, entryRef } };
 }
 
@@ -1189,13 +1234,22 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol], ch.past)];
   const plan = [...Object.values(ch.entries), ...Object.values(ch.stops), ...Object.values(ch.tps)];
   // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
-  return breakStrayLevels(withRoleChanges(withTracedZones(realizeChart(ch, { past: zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol }))), Object.values(ch.stops), { positive: true });
+  // (swing désigné : sa pointe reste l'extrême de ses voisines, avant et après le tracé)
+  // (scénarios construits : les stops aussi au passé, une mèche ne franchit pas le stop qu'elle justifie)
+  return keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(realizeChart(ch, { past: template.build ? [...zones, ...Object.values(ch.stops), ...(ch.guards ?? [])] : zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol })))), Object.values(ch.stops), { positive: true }));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */
 export function buildBuildTradeChartRaw(template: BuildTradeTemplate, seed: number, vol: Volatility): BuildTradeChart {
   const rng = mulberry32(seed);
   const m = VOL_MULT[vol];
+  if (template.build) {
+    const r = template.build(rng, m);
+    const { domain } = finalize(r.past, r.future, r.zones, [...Object.values(r.entries), ...Object.values(r.stops), ...Object.values(r.tps)]);
+    const cur = r.past[r.past.length - 1].c;
+    const out = keepPricesPositive({ past: r.past, future: r.future, zones: r.zones, domain, direction: template.direction, entries: r.entries, stops: r.stops, tps: r.tps, currentPrice: cur });
+    return r.guards ? { ...out, guards: r.guards.map((g) => g + out.currentPrice - cur) } : out;
+  }
   let shape: ShapeOutput;
   switch (template.chartShape) {
     case "uptrend_pullback":     shape = shapeUptrendPullback(rng, m); break;
@@ -1212,6 +1266,7 @@ export function buildBuildTradeChartRaw(template: BuildTradeTemplate, seed: numb
     case "high_vol_pullback":    shape = shapeHighVolPullback(rng, m); break;
     case "weak_breakout":        shape = shapeWeakBreakout(rng, m); break;
     case "counter_trend_local":  shape = shapeCounterTrendLocal(rng, m); break;
+    default: throw new Error(`Build the Trade : forme inconnue pour ${template.id}`);
   }
   const { swingLow, swingHigh, entryRef } = shape.ref;
   const direction = template.direction;

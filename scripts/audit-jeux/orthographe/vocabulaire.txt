@@ -21,6 +21,7 @@ abrir
 absence
 absent
 absente
+absents
 absolu
 absolue
 absolument
@@ -1233,6 +1234,7 @@ busco
 búsqueda
 but
 bute
+buter
 buy
 buy-side
 c'est
@@ -1408,6 +1410,7 @@ casse-t-elle
 cassée
 cassent
 casser
+casserait
 casseront
 cassés
 cassure
@@ -2007,6 +2010,7 @@ confirmée
 confirmées
 confirment
 confirmer
+confirmerait
 confirmés
 conflicto
 conflictuels
@@ -2517,7 +2521,6 @@ curvas
 cycle
 cycles
 d'abord
-d'absorber
 d'absorption
 d'accélération
 d'accès
@@ -2567,6 +2570,7 @@ d'aujourd'hui
 d'autant
 d'autre
 d'autres
+d'avaler
 d'avance
 d'avant
 d'avantage
@@ -3442,6 +3446,7 @@ ecb
 échouées
 échouent
 échouer
+échouerait
 economía
 económica
 económicas
@@ -3957,6 +3962,7 @@ etapas
 étendu
 étendues
 etiqueta
+étiré
 étoile
 étoiles
 étrangers
@@ -4420,6 +4426,7 @@ following
 fonction
 fonctionnait
 fonctionne
+fonctionné
 fonctionnement
 fonctionnent
 fonctionner
@@ -5538,6 +5545,7 @@ juntos
 jusqu'à
 jusqu'au
 jusqu'ici
+jusqu'où
 justamente
 juste
 justement
@@ -5631,6 +5639,7 @@ l'effet
 l'élan
 l'élément
 l'éloigne
+l'éloigné
 l'émotion
 l'empilement
 l'emplacement
@@ -5718,6 +5727,7 @@ l'imagines
 l'impact
 l'impatience
 l'important
+l'impression
 l'improvisation
 l'impulsion
 l'impulsivité
@@ -5744,6 +5754,7 @@ l'intrabar
 l'invalidation
 l'invalide
 l'invalider
+l'invaliderait
 l'inverse
 l'inversion
 l'isolation
@@ -6266,6 +6277,8 @@ mèche
 mèches
 media
 mediados
+médian
+médiane
 médianes
 medianoche
 mediante
@@ -6303,6 +6316,7 @@ mémoire
 memoria
 mémoriser
 memorizar
+menace
 mención
 mène
 mener
@@ -6866,6 +6880,7 @@ observé
 observer
 observes
 observo
+obstacle
 obtener
 obtenir
 obtienen
@@ -7416,6 +7431,7 @@ pips
 pique
 piqué
 piquer
+piqûre
 pire
 pires
 piso
@@ -7478,6 +7494,7 @@ pleut
 plonge
 plongé
 plongent
+plonger
 pluie
 plupart
 plus
@@ -7535,6 +7552,7 @@ porcentaje
 porque
 portail
 portal
+porte
 porté
 portée
 porteur
@@ -8284,6 +8302,7 @@ rapport
 rapporte
 rapportent
 rapporter
+rapporterait
 rapproche
 rapprocher
 rapprochés
@@ -8789,6 +8808,7 @@ repite
 repites
 replay
 repli
+replie
 replis
 replonge
 repointées
@@ -9195,6 +9215,7 @@ s'alignent
 s'allongent
 s'allume
 s'allument
+s'améliore
 s'améliorent
 s'amplifier
 s'annule

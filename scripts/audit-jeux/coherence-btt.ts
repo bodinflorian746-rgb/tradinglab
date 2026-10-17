@@ -47,6 +47,30 @@ function generic(ch: BuildTradeChart, t: BuildTradeTemplate): string[] {
   return out;
 }
 
+// Stops nommés par leur place (Proche, Médian, Éloigné) : du plus proche du prix actuel au plus éloigné
+function stopOrder(ch: BuildTradeChart): string | null {
+  const d = (v: number) => Math.abs(v - ch.currentPrice);
+  return d(ch.stops.tight) < d(ch.stops.logical) && d(ch.stops.logical) < d(ch.stops.wide) ? null : "stops pas dans l'ordre de leur nom (proche < médian < éloigné)";
+}
+// Scénarios construits (lib/games/btt-scenarios.ts) : la suite donne raison au plan optimal
+const RR_OF: Record<string, [number, number]> = { fast: [1.5, 2.15], balanced: [2, 3.2], ambitious: [3, 5] };
+const NEXT_TP: Record<string, "balanced" | "ambitious" | null> = { fast: "balanced", balanced: "ambitious", ambitious: null };
+function builtChecks(ch: BuildTradeChart, t: BuildTradeTemplate): string[] {
+  const out: string[] = [];
+  const buy = t.direction === "BUY", o = t.optimal;
+  if (FR.evaluateTrade(o, ch, o, 0).outcome !== "tp_hit") out.push("plan optimal : TP non atteint");
+  const deepFilled = FR.evaluateTrade({ ...o, entry: "deep_pullback" }, ch, o, 0).entryFilled;
+  if (deepFilled !== (o.entry === "deep_pullback")) out.push(o.entry === "deep_pullback" ? "pullback profond attendu mais jamais rempli" : "pullback profond rempli alors qu'il n'est pas la bonne entrée");
+  const next = NEXT_TP[o.tp];
+  if (next) {
+    const ext = buy ? Math.max(...ch.future.map((k) => k.h)) : Math.min(...ch.future.map((k) => k.l));
+    if (buy ? ext >= ch.tps[next] : ext <= ch.tps[next]) out.push(`TP ${next === "balanced" ? "équilibré" : "ambitieux"} atteint alors que le niveau doit tenir`);
+  }
+  const e = ch.entries[o.entry], rr = Math.abs(ch.tps[o.tp] - e) / Math.abs(e - ch.stops[o.stop]);
+  const [a, b] = RR_OF[o.tp];
+  if (rr < a - 1e-6 || rr > b + 1e-6) out.push(`R/R du plan optimal ${rr.toFixed(2)} hors de sa catégorie (${a} à ${b})`);
+  return out;
+}
 // La direction est-elle poursuivie après l'entrée ? (dernière clôture future vs prix actuel)
 const continues = (ch: BuildTradeChart, buy: boolean) => (buy ? last(ch.future).c > ch.currentPrice : last(ch.future).c < ch.currentPrice);
 
@@ -224,6 +248,10 @@ for (const t of G.BUILD_TRADE_TEMPLATES as BuildTradeTemplate[]) {
         if (strip(ch) !== strip(frCh)) reasons.push(`[${LOC}] données différentes du FR`);
       }
       const sp = SPECIFIC[t.id]?.(frCh, frT); if (sp) reasons.push(sp);
+      for (const [name, fn] of Object.entries(frT.claims ?? {})) { const r = fn(frCh); if (r) reasons.push(`${name} → ${r}`); }
+      if (frT.build) reasons.push(...builtChecks(frCh, frT));
+      if (!SPECIFIC[t.id] && !frT.claims) reasons.push("aucune affirmation vérifiée pour ce scénario");
+      const so = stopOrder(frCh); if (so) reasons.push(so);
       dojis += [...ch.past, ...ch.future].filter((k) => k.c === k.o).length;
       oc[FR.evaluateTrade(t.optimal, frCh, t.optimal, 0).outcome]++;
       if (reasons.length) { bad++; reasons.forEach((r) => (fails[r] = (fails[r] ?? 0) + 1)); }

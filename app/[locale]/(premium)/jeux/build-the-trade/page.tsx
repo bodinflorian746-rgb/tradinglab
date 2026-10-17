@@ -453,7 +453,7 @@ export default function BuildTheTradePage() {
   const tpLive = !!result?.tpHit && result.tpIdx !== null && result.tpIdx < revealed;
 
   // Lignes du graphique. Construction : les 3 candidats de l'étape active,
-  // nommés comme leurs boutons (« Serré », « Logique »…), et l'entrée choisie ;
+  // nommés comme leurs boutons (« Proche », « Médian »…), et l'entrée choisie ;
   // les autres niveaux déjà choisis restent des traits discrets, sans
   // étiquette (4 étiquettes au plus). Révélation / verdict : Entrée, Stop, TP.
   const chosenLines = (["entry", "stop", "tp"] as BuildStep[]).flatMap((s) => {
@@ -684,9 +684,9 @@ export default function BuildTheTradePage() {
             )}
 
             {/* Contexte */}
-            <div className={`grid gap-2 sm:gap-3 ${difficulty === "advanced" ? "grid-cols-2" : "grid-cols-3"}`}>
-              <InfoTile label={T.htf}   value={BIAS_LABEL[current.htfBias]}       valueClass={biasClass(current.htfBias)} />
-              <InfoTile label={T.macro} value={MACRO_LABEL[current.macroContext]} valueClass={current.macroContext === "dangereux" ? "text-red-300" : ""} />
+            <div className={`grid gap-2 sm:gap-3 ${difficulty === "beginner" ? "grid-cols-1" : "grid-cols-2"}`}>
+              {difficulty !== "beginner" && <InfoTile label={T.htf}   value={BIAS_LABEL[current.htfBias]}       valueClass={biasClass(current.htfBias)} />}
+              {difficulty === "advanced" && <InfoTile label={T.macro} value={MACRO_LABEL[current.macroContext]} valueClass={current.macroContext === "dangereux" ? "text-red-300" : ""} />}
               {difficulty !== "advanced" && (
                 <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} valueClass="" />
               )}

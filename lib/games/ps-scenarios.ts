@@ -131,7 +131,7 @@ function engulfOnSupport(rng: Rng, m: number, pierce: boolean) {
   return { past, entry: sig.p, low, b };
 }
 /** Tendance haussière, repli au-dessus du dernier creux, reprise : le dernier creux est le swing low */
-function swingSetup(rng: Rng, m: number) {
+export function swingSetup(rng: Rng, m: number) {
   const past: Candle[] = [];
   let p = 0;
   for (let leg = 0; leg < 2; leg++) {
