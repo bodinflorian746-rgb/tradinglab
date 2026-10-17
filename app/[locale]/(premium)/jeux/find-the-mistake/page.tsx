@@ -312,6 +312,13 @@ export default function FindTheMistakePage() {
     ...(chart.stop !== undefined ? [{ price: chart.stop, color: "#ef4444", label: T.lineStop }] : []),
     ...(chart.tp !== undefined ? [{ price: chart.tp, color: "#10b981", label: T.lineTp }] : []),
   ];
+  // Au plus 4 étiquettes sur le graphique (390) : les zones en trop passent en légende sous lui
+  // (la zone visée par l'erreur, au verdict, garde son étiquette)
+  const markNow = isFeedback ? mistakeMark(current.correctMistake, chart, LABELS[current.correctMistake]) : undefined;
+  const markZone = markNow?.kind === "zone" ? markNow.index : -1;
+  const zoneBudget = Math.max(0, 4 - labelledLines.length - (markNow?.kind === "point" ? 1 : 0));
+  const labeledZones = chart.zones.map((_, i) => i).sort((a, b) => Number(b === markZone) - Number(a === markZone)).slice(0, zoneBudget);
+  const legendZones = chart.zones.filter((_, i) => !labeledZones.includes(i));
 
   return (
     <main className="v2-page mx-auto flex w-full max-w-[880px] flex-col">
@@ -389,10 +396,11 @@ export default function FindTheMistakePage() {
             <GameChartV2
               data={{ candles: [...chart.past, ...chart.future], zones: chart.zones, domain: chart.domain }}
               inlineLabels
+              labeledZones={labeledZones}
               overlay={{ entry: chart.entry !== undefined ? { price: chart.entry, direction: dir } : undefined, candidateLines: labelledLines }}
               mode={isFeedback ? "verdict" : "question"}
               keepCandlesBright={chart.zones.length === 0}
-              mark={isFeedback ? mistakeMark(current.correctMistake, chart, LABELS[current.correctMistake]) : undefined}
+              mark={markNow}
             >
               {isFeedback && result && (
                 <VerdictOverlay
@@ -404,6 +412,12 @@ export default function FindTheMistakePage() {
                 />
               )}
             </GameChartV2>
+
+            {legendZones.length > 0 && (
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+                {legendZones.map((z, i) => <ZoneLegendChip key={i} zone={z} />)}
+              </div>
+            )}
 
             {/* Question + 4 choix : interactifs, puis figés avec le résultat */}
             <p className="v2-eyebrow">{T.question}</p>
@@ -465,15 +479,30 @@ export default function FindTheMistakePage() {
 function mistakeMark(mistake: MistakeId, chart: ScenarioChart, label: string): GameChartMark | undefined {
   const entry = chart.entry ?? chart.past[chart.past.length - 1]?.c;
   const zoneIdx = (kinds: string[]) => chart.zones.findIndex((z) => kinds.includes(z.kind));
-  switch (mistake) {
+  // (scénarios construits : erreurs supplémentaires, posées sur la ligne ou la zone qu'elles visent,
+  // sans étiquette de plus que les erreurs d'origine)
+  switch (mistake as string) {
     case "stop_too_tight":
     case "stop_in_liquidity":
     case "volatility_ignored":
+    case "stop_inside_zone":
+    case "stop_moved":
       if (chart.stop !== undefined) return { kind: "line", price: chart.stop, label };
       break;
     case "bad_rr":
+    case "tp_beyond_level":
       if (chart.tp !== undefined) return { kind: "line", price: chart.tp, label };
       break;
+    case "range_top_bought":
+    case "ignored_zone": {
+      const i = zoneIdx(["resistance"]); if (i >= 0) return { kind: "zone", index: i, label };
+      break;
+    }
+    case "broken_level_bought":
+    case "weak_level": {
+      const i = zoneIdx(["support", "resistance"]); if (i >= 0) return { kind: "zone", index: i, label };
+      break;
+    }
     case "buy_in_resistance": {
       const i = zoneIdx(["resistance"]); if (i >= 0) return { kind: "zone", index: i, label };
       break;
@@ -492,6 +521,19 @@ function mistakeMark(mistake: MistakeId, chart: ScenarioChart, label: string): G
     }
   }
   return entry !== undefined ? { kind: "point", price: entry, label } : undefined;
+}
+
+function ZoneLegendChip({ zone }: { zone: { kind: string; label: string } }) {
+  const color =
+    zone.kind === "support"    ? "#10b981"
+  : zone.kind === "resistance" ? "#ef4444"
+  :                              "#f59e0b";
+  return (
+    <div className="flex items-center gap-1.5" data-legend={zone.label}>
+      <span className="h-2.5 w-2.5 rounded-[3px]" style={{ background: color }} />
+      <span className="text-[12px] font-medium text-[color:var(--v2-text-2)]">{zone.label}</span>
+    </div>
+  );
 }
 
 // ─── Difficulty picker ────────────────────────────────────────────────────────

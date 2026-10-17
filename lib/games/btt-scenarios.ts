@@ -287,15 +287,18 @@ function onRetest(kind: "marteau" | "engulfing", stopsFor: StopsFor, pierce = fa
     const deep = b.hi + (0.1 + rng() * 0.04) * m;
     const stops = stopsFor({ E0: sig.p, low, deep, lo: b.lo, hi: b.hi }, rng, m);
     const L = levelFor(rng, m, o, sig.p, deep, stops);
-    const t = provenResistance(rng, m, b.lo, b.hi);
-    const a = legTo(rng, m, t.p, b.lo - 0.4 * m, { retrace: 0.3 });
+    // résistance touchée deux fois
+    const t = levelTouches(rng, b.lo - (2.4 + rng() * 0.3) * m, b.lo, b.hi, "below", m, 2, 1.9 * m);
+    const a = legTo(rng, m, t.p, b.lo - 0.4 * m, { retrace: 0.1, step: [0.6, 0.95] });
     const left = [...t.candles, ...a.candles];
     let p = a.p;
     const c0 = b.hi + (0.5 + rng() * 0.1) * m; left.push({ o: p, c: c0, h: c0 + 0.05 * m, l: p - 0.04 * m }); p = c0;
-    const up = legTo(rng, m, p, L - 0.08 * m, { retrace: 0.2 }); left.push(...up.candles); p = up.p;
+    const up = legTo(rng, m, p, L - 0.08 * m, { retrace: 0.1, step: [0.6, 0.95] }); left.push(...up.candles); p = up.p;
     left[left.length - 1] = { ...left[left.length - 1], h: L };
-    const back = legExact(rng, m, p, pB, { retrace: 0 });
-    return { past: [...left, ...back.candles, ...right], zones: [{ kind: "support", y1: b.lo, y2: b.hi, label: "Ancienne résistance → support" }, pivotHigh(L)], deep, stops, level: L };
+    const back = legExact(rng, m, p, pB, { retrace: 0, step: [0.6, 0.95] });
+    return { past: [...left, ...back.candles, ...right], zones: [{ kind: "support", y1: b.lo, y2: b.hi, label: "Ancienne résistance → support", short: "Résistance → support" }, pivotHigh(L)], deep, stops, level: L,
+      // (les bougies qui viennent au contact par en dessous, puis par au-dessus, n'y entrent pas d'une mèche ajoutée)
+      guards: [b.lo - 0.45 * m, b.hi + 0.45 * m] };
   };
 }
 
@@ -313,20 +316,20 @@ const obHammer = (rng: Rng, m: number): Scene => {
 function sweepLow(strong: boolean) {
   return (rng: Rng, m: number, o: BttOptimal): Scene => {
     const L0 = 0;
-    const tip = L0 - (strong ? 0.5 + rng() * 0.1 : 0.55 + rng() * 0.1) * m;
+    const tip = L0 - (strong ? 0.5 + rng() * 0.1 : 0.62 + rng() * 0.1) * m;
     const E0 = L0 + (strong ? 0.96 + rng() * 0.08 : 0.3 + rng() * 0.06) * m;
     const deep = L0 + (strong ? 0.01 + rng() * 0.02 : 0.05 + rng() * 0.03) * m;
     const stops: [number, number, number] = strong
       ? [L0 - (0.08 + rng() * 0.04) * m, tip + (L0 - tip) * (0.3 + rng() * 0.15), tip - (0.2 + rng() * 0.06) * m]
       : [L0 - (0.1 + rng() * 0.04) * m, tip - (0.2 + rng() * 0.06) * m, tip - (1.3 + rng() * 0.2) * m];
     const L = levelFor(rng, m, o, E0, deep, stops);
-    const d1 = legTo(rng, m, L - (0.3 + rng() * 0.2) * m, L0 + 0.3 * m, { retrace: 0.3 });
+    const d1 = legTo(rng, m, L - (0.3 + rng() * 0.2) * m, L0 + 0.3 * m, { retrace: 0.15, step: [0.6, 0.95] });
     const past = [...d1.candles];
     let p = d1.p;
     past.push({ o: p, c: L0 + 0.4 * m, h: p + 0.05 * m, l: L0 }); p = L0 + 0.4 * m;
-    const up = legTo(rng, m, p, L - 0.07 * m, { retrace: 0.2 }); past.push(...up.candles); p = up.p;
+    const up = legTo(rng, m, p, L - 0.07 * m, { retrace: 0.1, step: [0.6, 0.95] }); past.push(...up.candles); p = up.p;
     past[past.length - 1] = { ...past[past.length - 1], h: L };
-    const dn = legExact(rng, m, p, L0 + (strong ? 0.45 + rng() * 0.04 : 0.6) * m, { retrace: 0.2 });
+    const dn = legExact(rng, m, p, L0 + (strong ? 0.45 + rng() * 0.04 : 0.6) * m, { retrace: 0.1, step: [0.55, 0.9] });
     // (la jambe ne descend pas au plus bas précédent : le creux d'avant reste le plus bas, puis la mèche le balaie)
     past.push(...dn.candles.map((k) => ({ ...k, l: Math.min(Math.min(k.o, k.c), Math.max(k.l, L0 + 0.28 * m)) }))); p = dn.p;
     // la bougie du sweep : forte (grand corps vert) ou hésitante (petit corps, clôture juste au-dessus)

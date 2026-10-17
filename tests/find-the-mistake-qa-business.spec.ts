@@ -119,15 +119,15 @@ test.describe("QA métier 'Trouve l'erreur'", () => {
   const QA_PLAN: { difficulty: Difficulty; setupIds: string[] }[] = [
     {
       difficulty: "beginner",
-      setupIds: ["buy_in_resistance", "trade_against_htf", "trade_before_news"],
-    },
-    {
-      difficulty: "intermediate",
       setupIds: ["stop_too_tight", "bad_rr", "fomo_after_pump"],
     },
     {
+      difficulty: "intermediate",
+      setupIds: ["buy_in_resistance", "trade_against_htf", "sell_in_support"],
+    },
+    {
       difficulty: "advanced",
-      setupIds: ["sweep_ignored", "mitigation_misread", "oversized_position"],
+      setupIds: ["sweep_ignored", "mitigation_misread", "trade_before_news"],
     },
   ];
 

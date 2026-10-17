@@ -105,11 +105,11 @@ test.describe("QA métier Build the Trade", () => {
   const QA_PLAN: { difficulty: Difficulty; templateIds: string[] }[] = [
     {
       difficulty: "beginner",
-      templateIds: ["trend_continuation_bull", "breakout_bull_clean", "bounce_support_clean"],
+      templateIds: ["trend_continuation_bull", "bounce_support_clean", "deb_btt_meche_longue"],
     },
     {
       difficulty: "intermediate",
-      templateIds: ["range_top_short", "fake_breakout_short", "fvg_continuation_bull"],
+      templateIds: ["range_top_short", "fake_breakout_short", "breakout_bull_clean"],
     },
     {
       difficulty: "advanced",
