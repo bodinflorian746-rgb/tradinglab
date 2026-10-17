@@ -340,6 +340,9 @@ const HARD = [
   ["build-the-trade", "Avancé", 1084], ["build-the-trade", "Avancé", 1483], ["build-the-trade", "Avancé", 1833], ["build-the-trade", "Avancé", 1931],
   // Trouve l'erreur : marque d'erreur à libellé long qui écrasait les bougies au verdict (retracement trop court)
   ["find-the-mistake", "Intermédiaire", 5154],
+  // colonne d'étiquettes qui écrasait les bougies, étiquettes de zone éloignées (parties jouées en 390, 2026-10-17)
+  ["place-stop", "Avancé", 5042], ["place-stop", "Intermédiaire", 5210],
+  ["build-the-trade", "Débutant", 5028], ["build-the-trade", "Avancé", 5413],
 ];
 async function hardRounds(browser) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: MOBILE_H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
@@ -361,6 +364,7 @@ async function hardRounds(browser) {
           for (const step of ["entry", "stop", "tp"]) {
             await page.waitForTimeout(step === "entry" ? 4500 : 1400);
             add(`étape ${step}`, await probeLabels(page, { mobile: true, buttons: stepButtons(step) }));
+            if (step === "entry") add("question graphique", await measureChart(page, { mobile: true }));
             await page.locator(`[data-pick^="${step}:"]`).first().click();
           }
           await page.waitForTimeout(400);
@@ -374,6 +378,7 @@ async function hardRounds(browser) {
           await page.getByRole("button", { name: "Stop 1", exact: true }).waitFor({ timeout: 60000 });
           await page.waitForTimeout(4500);
           add("question", await probeLabels(page, { mobile: true, buttons: STOP_BUTTONS, ps: true }));
+          add("question graphique", await measureChart(page, { mobile: true }));
           await page.getByRole("button", { name: "Stop 1", exact: true }).click();
         }
         await page.locator(".v2-verdict").first().waitFor({ timeout: 20000 });

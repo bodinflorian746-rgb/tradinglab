@@ -166,7 +166,8 @@ export function sweepFuture(rng: Rng, m: number, raw: PsRaw): PsRaw {
   const dip = worst - (0.25 + rng() * 0.2) * (worst - good);
   const c = raw.entry + (buy ? 1 : -1) * (0.05 + rng() * 0.08) * m;
   const k: Candle = buy ? { o: raw.entry, c, h: c + (0.04 + rng() * 0.04) * m, l: dip } : { o: raw.entry, c, l: c - (0.04 + rng() * 0.04) * m, h: dip };
-  const rest = buy ? rally(rng, m, c, 4).candles : drop(rng, m, c, 4).candles;
+  // (reprise courte : l'échelle du verdict reste lisible en 390, la zone garde sa place pour son nom)
+  const rest = buy ? rally(rng, m, c, 3).candles : drop(rng, m, c, 3).candles;
   return { ...raw, fut: [k, ...rest] };
 }
 
@@ -260,8 +261,8 @@ function retestSetup(rng: Rng, m: number) {
 const inter = {
   retest: (rng: Rng, m: number): PsRaw => {
     const s = retestSetup(rng, m);
-    const logical = s.b.lo - (0.2 + rng() * 0.08) * m;
-    const tight = s.b.hi + (s.entry - s.b.hi) * (0.35 + rng() * 0.15);
+    const logical = s.b.lo - (0.28 + rng() * 0.08) * m;
+    const tight = s.b.hi + (s.entry - s.b.hi) * (0.5 + rng() * 0.15);
     const wide = logical - (1.4 + rng() * 0.3) * m;
     return { past: s.past, fut: rally(rng, m, s.entry, 5).candles, zones: [supportZone(m)], entry: s.entry, tp: tpFor(s.entry, logical), direction: "BUY",
       stops: [

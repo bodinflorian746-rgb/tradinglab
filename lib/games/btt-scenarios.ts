@@ -338,7 +338,8 @@ function sweepLow(strong: boolean) {
     past.push({ o: p, c: E0, h: Math.max(p, E0) + (strong ? 0.04 : 0.1) * m, l: tip });
     return {
       past, deep, stops, level: L, guards: [L0 + 0.18 * m],
-      zones: [pivotLow(L0, "Plus bas précédent"), { kind: "liquidity_low", y1: tip, y2: L0 - 0.05 * m, label: "Liquidité balayée" }, pivotHigh(L)],
+      // (la liquidité balayée en premier : c'est elle que le graphique nomme, le plus bas précédent passe en légende)
+      zones: [{ kind: "liquidity_low", y1: tip, y2: L0 - 0.05 * m, label: "Liquidité balayée" }, pivotLow(L0, "Plus bas précédent"), pivotHigh(L)],
     };
   };
 }

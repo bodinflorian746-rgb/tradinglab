@@ -266,6 +266,8 @@ const inlineTagW = (label: string) => textWidth(label, INLINE_TAG_FS) + 14;
 const FLIP_R = 3, FLIP_GAP = 4;
 /** Largeur de graphique (px) en dessous de laquelle la marge d'étiquettes ne sert qu'aux lignes */
 const NARROW_CHART_W = 480;
+/** Pas minimal d'une bougie : corps (78 % du pas) d'au moins 3 px, trois fois la mèche */
+const MIN_READABLE_SLOT = 3 / 0.78 + 0.05;
 /** Écart maximal (px) entre une étiquette de ligne empilée et sa ligne : la ligne la traverse toujours */
 const PACK_SHIFT = INLINE_TAG_H / 2 - 2;
 /** Écart vertical (px) entre deux étiquettes empilées : leur contour sombre les sépare */
@@ -478,12 +480,17 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
     bottom: m.some((x) => bandSide(x) === "bottom") ? LABEL_BAND : 0,
   });
   // Marge élargie, d'une étiquette à la fois, tant qu'une étiquette de ligne n'a pas de place
+  // (jamais au point d'écraser les bougies : le corps garde au moins 3 fois la largeur de la mèche,
+  // les étiquettes restantes s'empilent sur leur ligne)
+  const maxCol = W - 2 * padX - MIN_READABLE_SLOT * nSlots;
   const widened = (l: { col: number; top: number; bottom: number }) => {
     let col = l.col;
     for (let k = 0; k < linePills.length; k++) {
       const m = lineMisfits(col, l.top, l.bottom);
       if (!m.length || col + 10 > W / 2) break;
-      col += Math.max(...m.map(([label]) => inlineTagW(label))) + INLINE_TAG_GAP;
+      const next = col + Math.max(...m.map(([label]) => inlineTagW(label))) + INLINE_TAG_GAP;
+      if (next > maxCol) break;
+      col = next;
     }
     return { ...l, col };
   };
@@ -495,7 +502,10 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
       const b = bandsFor(m);
       if ((b.top || b.bottom) && !misfits(lineColW, b.top, b.bottom).length) return widened({ col: lineColW, ...b });
     }
-    return widened({ col: fullColW, ...bandsFor(misfits(fullColW, 0, 0)) });
+    // (colonne pleine plafonnée aussi : une étiquette de zone trop longue se pose sur les bougies
+    // plutôt que de les écraser)
+    const full = Math.max(lineColW, Math.min(fullColW, maxCol));
+    return widened({ col: full, ...bandsFor(misfits(full, 0, 0)) });
   })();
   const tagColW = inline
     ? labelLayout.col
