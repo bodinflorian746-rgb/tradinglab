@@ -73,7 +73,7 @@ export const MISTAKE_LABELS: Record<AnyMistakeId, string> = {
   broken_level_bought:         "Achat sous un niveau cassé",
   stop_inside_zone:            "Stop dans la zone",
   breakout_chased:             "Breakout acheté trop loin",
-  fib_misread:                 "Entrée trop haute dans le retracement",
+  fib_misread:                 "Entrée trop tôt dans le repli",
   range_top_bought:            "Achat au haut du range",
   weak_level:                  "Niveau non prouvé",
   dead_ob_bought:              "Order Block invalidé",

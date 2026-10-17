@@ -338,6 +338,8 @@ const HARD = [
   ["place-stop", "Avancé", 1091], ["place-stop", "Avancé", 1112], ["place-stop", "Avancé", 1182],
   ["place-stop", "Avancé", 2008], ["place-stop", "Avancé", 2029],
   ["build-the-trade", "Avancé", 1084], ["build-the-trade", "Avancé", 1483], ["build-the-trade", "Avancé", 1833], ["build-the-trade", "Avancé", 1931],
+  // Trouve l'erreur : marque d'erreur à libellé long qui écrasait les bougies au verdict (retracement trop court)
+  ["find-the-mistake", "Intermédiaire", 5154],
 ];
 async function hardRounds(browser) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: MOBILE_H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
@@ -363,6 +365,11 @@ async function hardRounds(browser) {
           }
           await page.waitForTimeout(400);
           await page.getByRole("button", { name: VALIDATE.fr }).click();
+        } else if (slug === "find-the-mistake") {
+          await page.locator("[data-choice]").first().waitFor({ timeout: 60000 });
+          await page.waitForTimeout(4500);
+          add("question", await probeLabels(page, { mobile: true, buttons: null }));
+          await page.locator("[data-choice]").first().click();
         } else {
           await page.getByRole("button", { name: "Stop 1", exact: true }).waitFor({ timeout: 60000 });
           await page.waitForTimeout(4500);
@@ -372,6 +379,7 @@ async function hardRounds(browser) {
         await page.locator(".v2-verdict").first().waitFor({ timeout: 20000 });
         await page.waitForTimeout(1500);
         add("verdict", await probeLabels(page, { mobile: true, buttons: null, ps: slug === "place-stop" }));
+        add("verdict graphique", await measureChart(page, { mobile: true }));
       } catch (e) { add("", [`round interrompu : ${e.message.split("\n")[0].slice(0, 100)}`]); }
     }
   } finally { await ctx.close(); }
