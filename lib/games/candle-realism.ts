@@ -145,14 +145,21 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
   // marché calme : les corps du passé restent sous l'enveloppe d'amplitude (mèches comprises)
   const pastMaxR = Math.max(0, ...orig.slice(0, np).map((k) => k.h - k.l));
   const calmCap = opts.calmPast ? 0.75 * RANGE_GROWTH * pastMaxR : Infinity;
-  const bodyCap = (i: number) => (i === np - 1 ? Infinity : i < np ? Math.min(bigBody[i] ? Infinity : capPast, calmCap) : bigBody[i] ? Infinity : capFut);
+  // plafond absolu d'une bougie ordinaire : une vraie bougie hors norme (séquences réelles BTC en Asie…)
+  // ne devient jamais un corps géant que la bougie suivante efface (3,5 × le corps médian du graphique)
+  const hardCap = 3.5 * medBody;
+  const bodyCap = (i: number) => (i === np - 1 ? Infinity : i < np ? Math.min(bigBody[i] ? Infinity : Math.min(capPast, hardCap), calmCap) : bigBody[i] ? Infinity : Math.min(capFut, hardCap));
 
   const grows = (j: number, next: number, cur: number) => next > cur + eps && next > bodyCap(j);
+  // une clôture du passé déplacée reste dans les extrêmes d'origine du passé : le plus haut
+  // (plus bas) voulu par le scénario le reste (étoile filante sur un plus haut tout neuf)
+  const origMaxH = Math.max(...orig.slice(0, np).map((k) => k.h)), origMinL = Math.min(...orig.slice(0, np).map((k) => k.l));
+  const inside = (i: number, v: number) => i >= np - 1 || (v <= origMaxH + eps && v >= origMinL - eps);
   // Déplace la clôture i (et l'ouverture i + 1) si la clôture ne change de côté
   // d'aucun niveau et qu'aucune couleur ne change ; renvoie true si appliqué.
   const setClose = (i: number, c2: number): boolean => {
     const k = all[i], nx = all[i + 1];
-    if (!sameSide(i, k.c, c2)) return false;
+    if (!sameSide(i, k.c, c2) || !inside(i, c2)) return false;
     if (!colorOk(i, Math.sign(c2 - k.o))) return false;
     if (nx && !colorOk(i + 1, Math.sign(nx.c - c2))) return false;
     // le corps d'une bougie déclencheuse (cassure, rejet, sweep) reste celui du scénario
@@ -166,7 +173,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
   // Déplace l'ouverture i (et la clôture i − 1), pour la bougie dont la clôture est verrouillée
   const setOpen = (i: number, o2: number): boolean => {
     const k = all[i], p = all[i - 1];
-    if (!p || !sameSide(i - 1, p.c, o2)) return false;
+    if (!p || !sameSide(i - 1, p.c, o2) || !inside(i - 1, o2)) return false;
     if (!colorOk(i, Math.sign(k.c - o2)) || !colorOk(i - 1, Math.sign(o2 - p.o))) return false;
     if (grows(i, Math.abs(k.c - o2), Math.abs(k.c - k.o)) || grows(i - 1, Math.abs(o2 - p.o), Math.abs(p.c - p.o))) return false;
     p.c = o2; k.o = o2;

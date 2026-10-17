@@ -20,6 +20,8 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
+import type { NotionId } from "./notions";
+import { PS_NEW, sweepFuture, type PsRaw } from "./ps-scenarios";
 import { breakStrayLevels } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
@@ -65,7 +67,9 @@ export type PlaceStopSetupKey =
   | "liquidity_hunt_zone_sell"
   | "multi_swing_high_deep"
   | "weekly_open_volatility_sell"
-  | "key_level_magnet_sell";
+  | "key_level_magnet_sell"
+  // Scénarios construits sur les scènes partagées (lib/games/ps-scenarios.ts)
+  | (string & {});
 
 export type StopType = "tight" | "logical" | "wide" | "liquidity";
 export type StopId = "A" | "B" | "C";
@@ -94,6 +98,15 @@ export interface PlaceStopTemplate {
   lessons:       DifficultyLessons;
   difficulties:  readonly Difficulty[];
   tag:           string;
+  // Pédagogie (lib/games/notions.ts) : notions utilisées, piège (intermédiaire), conflit (avancé)
+  notions?:  readonly NotionId[];
+  trap?:     string;
+  conflict?: string;
+  // Scénarios construits sur les scènes partagées : graphique, trois stops justifiés, affirmations vérifiées
+  build?:    (rng: () => number, m: number) => PsRaw;
+  claims?:   Record<string, (ch: PlaceStopChart) => string | null>;
+  /** Place du bon stop par distance à l'entrée (scénarios construits) */
+  rank?:     "proche" | "milieu" | "loin";
 }
 
 export interface PlaceStopInstance extends PlaceStopTemplate {
@@ -137,7 +150,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Pendant un pullback, le prix revient souvent tester le low avant la continuation. Ici, une marge derrière le low protège contre ce sweep classique.",
       advanced:     "Ici, le stop logique respecte 3 contraintes : derrière le low, hors du bruit du marché (au-delà de la volatilité du jour, mesurée par l'ATR, l'amplitude moyenne d'une journée), et un R/R d'au moins 2. C'est le seul des trois qui les remplit toutes.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["pullback", "stop_loss", "tendance"],
+    trap: "Le stop serré, au-dessus du creux du pullback, améliore le R/R affiché mais reste dans le bruit du retest.",
+    difficulties: ["intermediate"],
     tag: "structure",
   },
   {
@@ -153,7 +168,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Le rebond peut retester son high avant de retomber. Coller le stop au high expose ici fortement à une chasse aux stops.",
       advanced:     "Un stop qui couvre la mèche du high, avec une marge à la mesure de la volatilité du jour (ATR, l'amplitude moyenne d'une journée), est une option logique. Pile au niveau, il risque d'être piégé ; trop loin, il dégrade le R/R.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["pullback", "stop_loss", "tendance"],
+    trap: "Le stop serré, sous le sommet du rebond, améliore le R/R affiché mais reste dans le bruit du retest.",
+    difficulties: ["intermediate"],
     tag: "structure",
   },
   {
@@ -169,7 +186,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Un support de l'UT supérieure attire souvent un test profond avant la vraie réaction. Ici, la marge protège contre cette chasse aux stops.",
       advanced:     "Une distance de 1 à 1,5 fois l'amplitude moyenne d'une journée (ATR) sous le niveau est souvent un bon repère. Plus court, le stop reste dans le bruit ; plus loin, il immobilise du capital.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["zones_cles", "multi_ut", "stop_loss"],
+    trap: "Un support de l'UT supérieure est souvent testé en profondeur : le stop collé à la zone paraît suffisant, il ne l'est pas.",
+    difficulties: ["intermediate"],
     tag: "lecture",
   },
   {
@@ -185,7 +204,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Les retests de résistance de l'UT supérieure sont souvent piégeux. Une marge derrière la mèche est ici fortement recommandée.",
       advanced:     "Ici, la mèche du rejet plus une amplitude moyenne d'une journée (1 ATR) dessine une zone propre. Coller la mèche expose au 2e test ; trop loin, le R/R se dégrade.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["zones_cles", "multi_ut", "stop_loss"],
+    trap: "Une résistance de l'UT supérieure est souvent retestée par une mèche : le stop collé à la zone paraît suffisant, il ne l'est pas.",
+    difficulties: ["intermediate"],
     tag: "lecture",
   },
   {
@@ -201,7 +222,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       advanced:     "Un stop AU-DESSUS du high de la mèche, avec une marge à la mesure de la volatilité du jour (ATR, l'amplitude moyenne d'une journée), se défend. Coller le high expose au retest du faux breakout ; dans le piège, le stop coûte cher.",
       beginner:     "Ici, le stop gagne à couvrir la mèche du faux breakout. Un stop placé dans la zone du piège risque fort d'être touché.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["faux_breakout", "stop_loss", "support_resistance"],
+    trap: "Le stop juste au-dessus de la résistance paraît logique, mais il est dans la mèche du faux breakout.",
+    difficulties: ["intermediate"],
     tag: "piège",
   },
   {
@@ -217,7 +240,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       advanced:     "Un stop sous la mèche du sweep, avec une marge, se défend. Pile sur le low du sweep, un retest est probable ; dans la zone de liquidité, le piège est complet.",
       beginner:     "Ici, le marché vient de piquer une zone : ton stop a plus de chances de tenir SOUS cette zone que dedans.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["sweep", "liquidite", "stop_loss"],
+    conflict: "Le stop sous le plus bas balayé paraît logique, mais la mèche du sweep marque l'invalidation : il va sous elle.",
+    difficulties: ["advanced"],
     tag: "piège",
   },
   {
@@ -233,7 +258,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       advanced:     "Ici, le FVG sert de zone d'invalidation. Un stop environ une amplitude moyenne d'une journée (1 ATR) sous son bas se défend : plus serré, il reste dans le bruit ; plus loin, il immobilise du capital.",
       beginner:     "Ici, le FVG est ta zone d'achat. Le stop a plus de chances de tenir SOUS la zone que dedans.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["fvg", "stop_loss"],
+    conflict: "Le FVG se défend tant qu'il tient : stop dans la zone (trop serré) ou sous elle, avec une marge.",
+    difficulties: ["advanced"],
     tag: "lecture",
   },
   {
@@ -249,6 +276,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "La volatilité élargit le bruit normal. Ici, un stop « standard » risque d'être trop serré.",
       beginner:     "Plus le marché bouge fort, plus ton stop a besoin d'espace pour respirer.",
     },
+    notions: ["volatilite", "stop_loss", "pullback"],
+    conflict: "Un stop logique en temps normal contre des bougies deux fois plus larges : la marge doit suivre la volatilité.",
     difficulties: ["advanced"],
     tag: "volatilité",
   },
@@ -265,7 +294,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Quand 2 lows sont presque égaux, ils créent une zone de liquidité visible par tous, souvent visitée avant un retournement. Un SL dessous, avec une marge anti-sweep, est une option logique.",
       advanced:     "Des equal lows forment souvent un réservoir de liquidité. Ici, l'invalidation réelle se situe plutôt plusieurs amplitudes moyennes d'une journée plus bas (plusieurs ATR), après le sweep, que juste sous les lows.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["liquidite", "chasse_aux_stops", "stop_loss"],
+    conflict: "Les equal lows ressemblent à un double bottom solide, mais ils attirent la liquidité : le stop juste dessous sera chassé.",
+    difficulties: ["advanced"],
     tag: "piège",
   },
   {
@@ -281,7 +312,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Les chiffres ronds sont des chiffres ronds où la liquidité se concentre : beaucoup de traders y placent SL et TP. Ces niveaux sont souvent balayés.",
       advanced:     "1.1000, 4 300, 100 000… ces niveaux attirent les stops. Un SL juste en dessous risque fort d'être chassé. Un SL plus loin, ou pas de trade, sont deux options logiques.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["liquidite", "chasse_aux_stops", "stop_loss"],
+    conflict: "Le chiffre rond paraît un bon appui, mais tous les stops sont pile dessous : la chasse est probable.",
+    difficulties: ["advanced"],
     tag: "piège",
   },
   {
@@ -297,7 +330,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "L'haut de la session asiatique est souvent balayé à l'ouverture de Londres. Vendre avec un stop pile au high, sans anticiper ce sweep, expose fortement à une sortie prématurée.",
       advanced:     "Le sweep du haut de la session asiatique est une mécanique de marché bien connue. Un SL au-dessus du sweep attendu, plutôt qu'au-dessus du high, est ici une option logique.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["killzones", "liquidite", "stop_loss"],
+    conflict: "Le haut de la session asiatique paraît une résistance, mais l'ouverture de Londres vient souvent le balayer.",
+    difficulties: ["advanced"],
     tag: "piège",
   },
   {
@@ -313,6 +348,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Le bas de l'Order Block définit ici l'invalidation du concept, davantage que le dernier swing. Un SL sous le bas de l'OB, avec une marge, se défend.",
       advanced:     "L'invalidation d'un Order Block se situe plutôt sous son bas que sous le dernier swing low. Confondre les deux peut te sortir sur la mèche de mitigation alors que le setup reste valide.",
     },
+    notions: ["order_block", "stop_loss"],
+    conflict: "Le swing low juste au-dessus du bas de l'OB attire le stop ; l'invalidation est le bas de l'Order Block.",
     difficulties: ["advanced"],
     tag: "lecture",
   },
@@ -329,7 +366,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Le PDL (Previous Day Low) est un niveau de liquidité quotidien, souvent visé par les chasses aux stops. Un SL pile en dessous risque fort d'être capturé.",
       advanced:     "Le PDL fait partie des niveaux clés, avec le PDH et les plus hauts et plus bas de la semaine ou du mois précédents. Un SL placé à moins de 5 pips au-delà de l'un d'eux a de fortes chances d'être chassé avant le vrai mouvement.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["liquidite", "chasse_aux_stops", "stop_loss"],
+    conflict: "Le PDL paraît un support évident, mais c'est une liquidité quotidienne souvent chassée : le stop pile dessous sera pris.",
+    difficulties: ["advanced"],
     tag: "piège",
   },
   {
@@ -345,6 +384,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Un jour où le marché bouge deux fois plus que d'habitude (ATR, l'amplitude moyenne d'une journée), le SL « standard » devient en pratique trop serré. Ici, une marge ajustée à la volatilité réelle évite une sortie très probable.",
       advanced:     "La taille du SL n'est pas un nombre fixe de pips : elle suit plutôt la volatilité du jour (ATR, l'amplitude moyenne d'une journée). Quand l'ATR double, doubler la marge se défend, sinon ton SL devient trop serré.",
     },
+    notions: ["news", "volatilite", "stop_loss"],
+    conflict: "Un setup habituel contre une volatilité doublée après une news : la marge standard devient trop serrée.",
     difficulties: ["advanced"],
     tag: "volatilité",
   },
@@ -361,7 +402,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Le SL se place plutôt à l'échelle de l'unité de temps d'invalidation que de l'unité de temps d'entrée. Ici (setup H1, biais H4), un SL sous le HL H4 est une option logique.",
       advanced:     "Le SL gagne à être placé à l'échelle du setup. Ici (setup H1, biais H4), un SL au moins sous le HL H4 pertinent se défend ; sinon, une fluctuation H1 normale peut te sortir avant le vrai mouvement.",
     },
-    difficulties: ["advanced"],
+    notions: ["multi_ut", "structure", "stop_loss"],
+    trap: "Le swing low de l'UT inférieure, tout proche, attire le stop ; la structure de l'UT supérieure se lit au HL H4.",
+    difficulties: ["intermediate"],
     tag: "lecture",
   },
   {
@@ -377,7 +420,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Quand 2 swing lows sont proches, la structure n'est vraiment invalidée que si le PLUS BAS casse. Un SL sous le premier risque d'être touché sur une fluctuation normale.",
       advanced:     "Dans une séquence de lows, tant que le plus bas tient, la structure haussière reste intacte. Un SL sous le 1er swing ignore ici cette mécanique.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["stop_loss", "tendance"],
+    difficulties: ["beginner"],
     tag: "structure",
   },
   {
@@ -393,7 +437,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Le retest naturel après un faux breakout va souvent chercher la mèche. Un SL au-dessus de la mèche, avec une marge, tient mieux qu'un SL au-dessus du corps.",
       advanced:     "Quand un faux breakout a déjà eu lieu, le vrai high à invalider est plutôt la pointe de la mèche que le swing high du corps. Un SL sous la mèche risque d'être touché sur le retest naturel.",
     },
-    difficulties: ["advanced"],
+    notions: ["faux_breakout", "changement_role", "stop_loss"],
+    trap: "Le retest sous la résistance donne envie d'un stop serré, alors que la mèche du faux breakout marque l'invalidation.",
+    difficulties: ["intermediate"],
     tag: "piège",
   },
   {
@@ -409,7 +455,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Dans un range serré, un SL standard dégrade le R/R, et un SL trop court risque d'être touché. Une option logique : attendre une expansion, ou réduire la taille de lot.",
       advanced:     "Dans un range étroit, l'arbitrage entre SL et R/R demande un compromis sur la taille. Attendre une expansion, ou accepter un R/R sous 1:2 compensé par le winrate : à toi de trancher.",
     },
-    difficulties: ["intermediate", "advanced"],
+    notions: ["range", "rr", "stop_loss"],
+    trap: "Le stop standard paraît prudent, mais dans un range serré il ruine le R/R.",
+    difficulties: ["intermediate"],
     tag: "structure",
   },
   // ─── Scénarios où "wide" devient la bonne réponse (vol extrême, news, hunt) ──
@@ -426,6 +474,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Quand le marché bouge trois fois plus que d'habitude (ATR, l'amplitude moyenne d'une journée), un SL standard devient souvent inadapté. Adapter la marge ou passer ton tour sont deux options logiques.",
       advanced:     "Quand la volatilité du jour triple (ATR, l'amplitude moyenne d'une journée), un SL standard de 1,2 fois l'ATR devient en réalité trop serré. Mieux vaut adapter le SL à la volatilité du jour qu'à un nombre fixe de pips. En volatilité extrême, un SL de 3-4 fois l'ATR, ou pas de trade, se défendent.",
     },
+    notions: ["volatilite", "stop_loss"],
+    conflict: "Un stop logique en temps normal contre un marché qui bouge trois fois plus que d'habitude.",
     difficulties: ["advanced"],
     tag: "volatilité",
   },
@@ -442,6 +492,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Quand le marché bouge trois fois plus que d'habitude (ATR, l'amplitude moyenne d'une journée), un SL standard au-dessus du high devient souvent inadapté. Adapter la marge ou passer ton tour sont deux options logiques.",
       advanced:     "En SELL aussi, le SL suit plutôt la volatilité du jour (ATR, l'amplitude moyenne d'une journée) qu'une marge fixe. Avec un ATR triplé, tripler la marge, ou ne pas trader, se défendent.",
     },
+    notions: ["volatilite", "stop_loss"],
+    conflict: "Un stop logique en temps normal contre un marché qui bouge trois fois plus que d'habitude.",
     difficulties: ["advanced"],
     tag: "volatilité",
   },
@@ -458,6 +510,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Une bougie de news trois fois plus ample risque de balayer ton SL « standard » avant que tu aies le temps de réagir. Ici, une marge large est fortement recommandée.",
       advanced:     "Avant une news majeure, l'amplitude des bougies peut doubler ou tripler. Ne pas trader, ou adapter ton SL en conséquence, sont deux options logiques ; un SL standard risque d'être emporté par le mouvement.",
     },
+    notions: ["news", "volatilite", "stop_loss"],
+    conflict: "Entrer quand même avant une news majeure : le stop standard sera balayé par le spike.",
     difficulties: ["advanced"],
     tag: "macro",
   },
@@ -474,6 +528,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Plus une zone paraît « évidente », plus elle risque d'être chassée. Un SL pile en dessous a de fortes chances d'être capturé.",
       advanced:     "Les swing lows trop « évidents » sont des zones de chasse fréquentes. Un SL pile en dessous a de fortes chances d'être capturé. Attendre que la chasse soit faite pour entrer, ou placer ton SL bien au-delà, se défendent.",
     },
+    notions: ["chasse_aux_stops", "liquidite", "stop_loss"],
+    conflict: "Le swing low évident ressemble à une invalidation, mais c'est une zone de chasse aux stops connue.",
     difficulties: ["advanced"],
     tag: "piège",
   },
@@ -490,7 +546,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Quand plusieurs swing lows s'alignent, l'invalidation structurelle se situe plutôt sous le plus bas. Un SL sous les autres risque d'être touché sur une fluctuation normale.",
       advanced:     "Ici, la séquence de lower lows fait partie du pullback. Le SL gagne à respecter la profondeur maximale attendue du pullback plutôt qu'à s'arrêter au 1er swing.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["stop_loss", "tendance"],
+    difficulties: ["beginner"],
     tag: "structure",
   },
   {
@@ -506,6 +563,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Des faux breakouts répétés forment souvent un schéma. Ici, anticiper une amplitude supérieure aux mèches précédentes se défend.",
       advanced:     "Une zone qui a déjà produit 2 faux breakouts en produit souvent un 3e. Le SL gagne à anticiper cette amplitude maximale plutôt qu'à s'arrêter aux mèches précédentes.",
     },
+    notions: ["faux_breakout", "chasse_aux_stops", "stop_loss"],
+    conflict: "Deux faux breakouts récents sur la même résistance : un troisième est probable, le stop serré sera capté.",
     difficulties: ["advanced"],
     tag: "piège",
   },
@@ -522,6 +581,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Un gap d'ouverture le lundi peut atteindre 1 à 2 fois l'amplitude moyenne d'une journée (ATR). Placer ton SL au-delà, ou attendre que le prix se stabilise, se défendent.",
       advanced:     "Le gap d'ouverture du lundi peut être brutal selon l'actualité du weekend. Attendre que l'ouverture soit digérée, ou placer un SL large pour absorber l'amplitude, sont deux options logiques.",
     },
+    notions: ["macro", "volatilite", "stop_loss"],
+    conflict: "Un stop de semaine contre l'amplitude exceptionnelle de l'ouverture du lundi (gap possible).",
     difficulties: ["advanced"],
     tag: "macro",
   },
@@ -538,7 +599,9 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Les chiffres ronds agissent souvent comme des aimants : le prix les teste très fréquemment. Un SL pile au-dessus risque fort d'être balayé.",
       advanced:     "Pour anticiper le test d'un niveau clé, placer le SL au-delà de l'amplitude probable du sweep, plutôt que juste au-dessus du niveau, se défend.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["liquidite", "chasse_aux_stops", "stop_loss"],
+    conflict: "Le niveau clé juste sous l'entrée paraît un appui, mais le prix va souvent le tester : le stop juste dessous sera pris.",
+    difficulties: ["advanced"],
     tag: "lecture",
   },
   // ─── V2.3 : 5 miroirs SELL pour rééquilibrer la distribution spatiale ────────
@@ -555,6 +618,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Une bougie d'impact FOMC risque de balayer ton SL « standard » au-dessus du high avant que le mouvement directionnel ne démarre.",
       advanced:     "Avant un FOMC, l'amplitude des bougies peut doubler ou tripler. Un SL standard de 1,2 fois l'amplitude moyenne d'une journée (ATR) risque d'être balayé par le premier mouvement. Ne pas trader, ou prévoir un SL d'au moins 3 fois l'ATR, se défendent.",
     },
+    notions: ["news", "volatilite", "stop_loss"],
+    conflict: "Vendre quand même avant le FOMC : le stop standard sera balayé par le spike.",
     difficulties: ["advanced"],
     tag: "macro",
   },
@@ -571,6 +636,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Plus une zone paraît « évidente », plus elle risque d'être chassée. Un SL pile au-dessus du swing high a de fortes chances d'être capturé.",
       advanced:     "Les swing highs trop évidents sont des zones de chasse fréquentes, et un SL pile au-dessus a de fortes chances d'être capturé. Attendre la chasse, ou placer ton SL bien au-delà, se défendent.",
     },
+    notions: ["chasse_aux_stops", "liquidite", "stop_loss"],
+    conflict: "Le swing high évident ressemble à une invalidation, mais c'est une zone de chasse aux stops connue.",
     difficulties: ["advanced"],
     tag: "piège",
   },
@@ -587,7 +654,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Quand plusieurs swing highs s'alignent, l'invalidation structurelle se situe plutôt au-dessus du plus haut. Un SL au-dessus des autres risque d'être touché sur une fluctuation normale.",
       advanced:     "Ici, la séquence de higher highs fait partie du pullback baissier. Le SL gagne à respecter la profondeur maximale attendue du pullback.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["stop_loss", "tendance"],
+    difficulties: ["beginner"],
     tag: "structure",
   },
   {
@@ -603,6 +671,8 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Un gap d'ouverture le lundi peut atteindre 1 à 2 fois l'amplitude moyenne d'une journée (ATR) vers le haut. Placer ton SL de SELL au-delà, ou attendre que le prix se stabilise, se défendent.",
       advanced:     "Le gap d'ouverture du lundi peut être brutal selon l'actualité du weekend. Ici, le SL du SELL gagne à absorber l'amplitude du gap.",
     },
+    notions: ["macro", "volatilite", "stop_loss"],
+    conflict: "Un stop de semaine contre l'amplitude exceptionnelle de l'ouverture du lundi (gap possible).",
     difficulties: ["advanced"],
     tag: "macro",
   },
@@ -619,9 +689,13 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
       intermediate: "Les chiffres ronds agissent souvent comme des aimants : le prix les teste très fréquemment. Un SL pile au-dessus risque fort d'être balayé.",
       advanced:     "Pour anticiper le test d'un niveau clé, placer le SL au-delà de l'amplitude probable du sweep se défend.",
     },
-    difficulties: ["beginner", "intermediate", "advanced"],
+    notions: ["liquidite", "chasse_aux_stops", "stop_loss"],
+    conflict: "Le niveau clé juste au-dessus de l'entrée paraît une résistance, mais le prix va souvent le tester : le stop juste au-dessus sera pris.",
+    difficulties: ["advanced"],
     tag: "lecture",
   },
+  // Scénarios construits sur les scènes partagées (lib/games/ps-scenarios.ts)
+  ...(PS_NEW as unknown as PlaceStopTemplate[]),
 ];
 
 // ─── Variations ───────────────────────────────────────────────────────────────
@@ -1305,7 +1379,8 @@ function scnFvgContinuation(rng: () => number, m: number, d: Difficulty, mode: P
   p = past[past.length - 1].c;
   const entry = p;
   const tightPrice   = fvgLow + (fvgHigh - fvgLow) * 0.3;
-  const logicalPrice = fvgLow - trapMarginFor(d, mode) * m;  // sous bas FVG, marge selon difficulté
+  // sous bas FVG, marge selon difficulté (au moins 0,15 bougie : « avec une marge »)
+  const logicalPrice = fvgLow - Math.max(trapMarginFor(d, mode), 0.15) * m;
   const widePrice    = fvgLow - 2.0 * m - widePushFor(mode) * m;
   // Future : dip qui descend juste dans la zone tight (touch tight, pas logical)
   const dipLow = tightPrice - 0.1 * m;
@@ -2874,7 +2949,9 @@ export function buildPlaceStopChart(
   difficulty: Difficulty,
   ctx: MarketCtx = {},
 ): PlaceStopChart {
-  const chart = rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed);
+  // (scénarios construits : la place du bon stop est voulue, pas de rééquilibrage)
+  const built = PLACE_STOP_TEMPLATES.find((t) => t.id === setup)?.build;
+  const chart = built ? buildScenarioChart(setup, seed, volatility, difficulty) : rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed);
   const withTarget = setup === "tight_consolidation" ? chart : ensureCorrectStopRR(chart);
   // Passe de réalisme des bougies (niveaux clés : zones, entrée, TP, les 3 stops)
   // (passé : zones ; futur : aussi entrée, TP et stops, qui décident de l'issue)
@@ -2884,7 +2961,7 @@ export function buildPlaceStopChart(
   const outcome = [...(withTarget.tp !== null ? [withTarget.tp] : []), ...stopPrices];
   // passé : les stops aussi (un stop « sous le swing low » reste sous la mèche du swing)
   // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
-  return breakStrayLevels(withRoleChanges(withTracedZones(keepPricesPositive(realizeChart(withTarget, { past: [...zones, ...stopPrices], future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility })))), stopPrices);
+  return keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(keepPricesPositive(realizeChart(withTarget, { past: [...zones, ...stopPrices], future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility }))))), stopPrices));
 }
 
 // Le bon stop ne doit jamais avoir un R/R faible : l'objectif (TP) est au moins
@@ -2907,6 +2984,25 @@ function ensureCorrectStopRR(chart: PlaceStopChart): PlaceStopChart {
     tp,
     domain: { min: Math.min(chart.domain.min, tp - span * 0.04), max: Math.max(chart.domain.max, tp + span * 0.04) },
   };
+}
+
+// Swing désigné (`at`) : la passe de réalisme peut allonger la mèche d'une voisine au-delà
+// de sa pointe ; elle est ramenée à la pointe (le swing reste l'extrême de ses voisines).
+function keepSwingTips(chart: PlaceStopChart): PlaceStopChart {
+  const past = [...chart.past];
+  for (const z of chart.zones) {
+    const sw = z.label.match(/^swing (high|low)\b/i);
+    if (!sw || z.at === undefined || z.at < 0 || z.at >= past.length) continue;
+    const high = sw[1].toLowerCase() === "high";
+    const pair = [z.at, Math.min(z.at + 1, past.length - 1)];
+    const tip = high ? Math.max(...pair.map((i) => past[i].h)) : Math.min(...pair.map((i) => past[i].l));
+    for (let i = Math.max(0, z.at - 2); i <= Math.min(past.length - 1, z.at + 3); i++) {
+      if (pair.includes(i)) continue;
+      const k = past[i];
+      past[i] = high ? { ...k, h: Math.max(Math.max(k.o, k.c), Math.min(k.h, tip)) } : { ...k, l: Math.min(Math.min(k.o, k.c), Math.max(k.l, tip)) };
+    }
+  }
+  return { ...chart, past };
 }
 
 // Les prix sont affichés au joueur (boutons de stop) : un graphique qui passe
@@ -2981,6 +3077,8 @@ function buildScenarioChart(
   difficulty: Difficulty,
 ): PlaceStopChart {
   const rng = mulberry32(seed);
+  const tpl = PLACE_STOP_TEMPLATES.find((t) => t.id === setup);
+  if (tpl?.build) { const m0 = VOL_MULT[volatility]; return finalizeStops({ ...sweepFuture(rng, m0, tpl.build(rng, m0)), seed }); }
   // Mode de placement dérivé d'un seed décorrélé (constante 2^32 / φ) pour
   // que la distribution des modes soit indépendante de la trajectoire du chart.
   const mode = pickPlacementMode((seed ^ 0x9E3779B9) >>> 0);
@@ -3017,6 +3115,7 @@ function buildScenarioChart(
     case "multi_swing_high_deep":     return scnMultiSwingHighDeep(rng, m, difficulty, mode, seed);
     case "weekly_open_volatility_sell": return scnWeeklyOpenVolatilitySell(rng, m, difficulty, mode, seed);
     case "key_level_magnet_sell":     return scnKeyLevelMagnetSell(rng, m, difficulty, mode, seed);
+    default: throw new Error(`Place ton Stop : scénario inconnu « ${setup} »`);
   }
 }
 

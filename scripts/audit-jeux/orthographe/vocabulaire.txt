@@ -669,6 +669,7 @@ approfondies
 approfondis
 approprié
 approximation
+appui
 aprecia
 aprende
 apréndelos
@@ -2542,6 +2543,7 @@ d'aller
 d'amplitude
 d'analyse
 d'analyser
+d'ancienne
 d'anticipations
 d'anticiper
 d'appât
@@ -2786,6 +2788,7 @@ décris
 décrit
 décrite
 décrivent
+décroissants
 décryptés
 déçu
 décuplée
@@ -2980,6 +2983,7 @@ descendentes
 descendre
 descends
 descendu
+descendue
 descente
 descifrados
 descifrar
@@ -5130,6 +5134,7 @@ incluido
 incluse
 incluses
 incluso
+inclut
 incluye
 inclúyelos
 incluyendo
@@ -5339,6 +5344,7 @@ interés
 interesante
 interesarse
 intéressant
+intéressante
 intéresser
 intérêt
 interface
@@ -5678,6 +5684,7 @@ l'excès
 l'exécuter
 l'exécution
 l'exercice
+l'exige
 l'existence
 l'expansion
 l'expérience
@@ -5736,6 +5743,7 @@ l'interprétation
 l'intrabar
 l'invalidation
 l'invalide
+l'invalider
 l'inverse
 l'inversion
 l'isolation
@@ -8064,6 +8072,7 @@ prudence
 prudencia
 prudent
 prudente
+prudents
 prueba
 pruebas
 pruebes
@@ -8510,6 +8519,7 @@ red
 redacción
 redemande
 redescend
+redescende
 redescendre
 redevient
 rédige
@@ -9200,6 +9210,7 @@ s'arrête
 s'arrête-t-il
 s'arrêtent
 s'arrêter
+s'écroule
 s'effondre
 s'élargir
 s'élargissent

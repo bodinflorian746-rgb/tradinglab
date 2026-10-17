@@ -112,6 +112,9 @@ const SPECIFIC: Record<string, Check> = {
   tight_consolidation: (ch) => { const s = zone(ch, /support|bas|bottom|plancher/i), r = zone(ch, /sist|haut|top|plafond/i); if (!s || !r) return null; const w = lo(r) - hi(s); const legs = ch.past.slice(-8); return legs.every((k) => k.c >= lo(s) - 1e-6 && k.c <= hi(r) + 1e-6) && w > 0 ? null : "le prix sort du range serré"; },
 };
 
+// Scénarios d'origine contrôlés par les règles communes (stops, R/R, tracé : scripts/audit-jeux/stops.ts)
+const GENERIC_OK = new Set(FR.PLACE_STOP_TEMPLATES.filter((t) => !t.build).map((t) => t.id));
+
 let total = 0;
 const rows: string[] = [];
 const distLabel: Record<string, Record<string, number>> = {};
@@ -133,6 +136,9 @@ for (const t of G.PLACE_STOP_TEMPLATES) {
         if (strip(ch) !== strip(frCh)) reasons.push("[" + LOC + "] données différentes du FR");
       }
       const sp = SPECIFIC[t.id]?.(frCh, t); if (sp) reasons.push(sp);
+      // Scénarios construits sur les scènes partagées : leurs affirmations, vérifiées sur le graphique
+      for (const [name, fn] of Object.entries(t.claims ?? {})) { const r = fn(frCh); if (r) reasons.push(`${name} → ${r}`); }
+      if (!SPECIFIC[t.id] && !t.claims && !GENERIC_OK.has(t.id)) reasons.push("aucune affirmation vérifiée pour ce scénario");
       dojis += [...ch.past, ...ch.future].filter((k) => k.c === k.o).length;
       if (reasons.length) { bad++; reasons.forEach((r) => (fails[r] = (fails[r] ?? 0) + 1)); }
       const good = ch.stops.find((s) => s.type === correctType(ch));

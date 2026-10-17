@@ -95,7 +95,7 @@ export const hammerNowhere: NewScenario["build"] = (rng, m) => {
   const base = chop(rng, m, 0, 3, 0.02);
   const leg = legTo(rng, m, base.p, base.p - (3.8 + rng() * 0.8) * m, { retrace: 0.3 });
   const p = leg.p;
-  const sig = bullSignal(rng, m, p, p - 0.62 * m, p - 0.5 * m, "marteau", rng() < 0.7 ? "rouge" : "verte");
+  const sig = bullSignal(rng, m, p, p - 0.9 * m, p - 0.75 * m, "marteau", rng() < 0.7 ? "rouge" : "verte");
   const past = [...base.candles, ...leg.candles, ...sig.candles];
   return { past, future: drop(rng, m, sig.p, 4).candles, zones: [] };
 };

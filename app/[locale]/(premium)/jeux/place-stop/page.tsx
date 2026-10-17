@@ -498,7 +498,7 @@ export default function PlaceStopPage() {
                 {T.volatility} {translateVolatility(current.volatility, locale)}
               </span>
               {/* téléphone : la tuile « UT supérieure » passe en chip */}
-              <span className="v2-chip sm:hidden">{locale === "fr" ? "UT sup." : T.htf}{"\u00a0"}: {BIAS_LABEL[current.htfBias].toLowerCase()}</span>
+              {difficulty !== "beginner" && <span className="v2-chip sm:hidden">{locale === "fr" ? "UT sup." : T.htf}{"\u00a0"}: {BIAS_LABEL[current.htfBias].toLowerCase()}</span>}
             </div>
 
             {/* News warning (présent dès la question : aucun saut au clic) */}
@@ -557,7 +557,7 @@ export default function PlaceStopPage() {
 
             {/* Contexte (téléphone : en chips, au-dessus) */}
             <div className="grid grid-cols-2 gap-2 max-sm:hidden sm:gap-3">
-              <InfoTile label={T.htf} value={BIAS_LABEL[current.htfBias]} valueClass={biasClass(current.htfBias)} />
+              {difficulty !== "beginner" && <InfoTile label={T.htf} value={BIAS_LABEL[current.htfBias]} valueClass={biasClass(current.htfBias)} />}
               <InfoTile label={T.volatility} value={cap(translateVolatility(current.volatility, locale))} valueClass="" />
             </div>
 
@@ -577,7 +577,7 @@ export default function PlaceStopPage() {
 
             {/* Lexique : jargon expliqué à sa première apparition (débutant, intermédiaire) ;
                 « R/R » est affiché dans chaque bouton de stop */}
-            <JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:q`, [T.htf, shownContext, "R/R"])} />
+            <JargonHints locale={locale} brief={difficulty === "advanced"} entries={jargon(`${idx}:q`, [...(difficulty !== "beginner" ? [T.htf] : []), shownContext, "R/R"])} />
 
             {isRevealing && (
               <div className="v2-well px-4 py-3 text-center">

@@ -613,7 +613,7 @@ export const REPLACED: Record<GlossaryLocale, { from: RegExp; to: string; source
  *  un support ou une résistance s'appelle ainsi et se prouve sur le graphique (scripts/audit-jeux/sr.ts). */
 export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
   fr: [
-    "FVG haussier", "FVG baissier", "Equal highs", "PDH", "Bas de la session asiatique", "LH H4", "Swing high H1", "Order Block", "Liquidité au-dessus", "Liquidité en-dessous", "Liquidité balayée",
+    "FVG haussier", "FVG baissier", "Equal highs", "PDH", "Bas de la session asiatique", "LH H4", "Swing high H1", "Order Block", "Order Block baissier", "Liquidité au-dessus", "Liquidité en-dessous", "Liquidité balayée",
     "Plus haut précédent", "Plus bas précédent", "Sweep haut", "Sweep bas", "Haut du range", "Bas du range",
     "Résistance", "Résistance UT supérieure", "Résistance cassée", "Support", "Support UT supérieure", "Support cassé",
     "Mèche du faux breakout", "Swing high", "Swing low",

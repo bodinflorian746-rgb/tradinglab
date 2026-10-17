@@ -139,7 +139,12 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
       .map((p) => (low ? Math.min(p.y1, p.y2) : Math.max(p.y1, p.y2)))
       .filter((v) => Math.abs(v - (low ? hi : lo)) <= TRACE.SNAP * MR);
     const level = ref.length ? (low ? Math.min(...ref) : Math.max(...ref)) : (low ? hi : lo);
-    const near = level + (low ? -1 : 1) * TRACE.LIQ_GAP * MR;
+    let near = level + (low ? -1 : 1) * TRACE.LIQ_GAP * MR;
+    // la mèche du faux breakout commence où finit le corps de sa bougie (clôture au-delà du niveau)
+    if (/^mèche/i.test(z.label) && sweepIdx >= 0) {
+      const k = past[sweepIdx], body = low ? Math.min(k.o, k.c) : Math.max(k.o, k.c);
+      near = low ? Math.min(near, body - 0.02 * MR) : Math.max(near, body + 0.02 * MR);
+    }
     let far = near + (low ? -1 : 1) * TRACE.LIQ_W * MR;
     if (SWEPT_LABEL.test(z.label) && sweepIdx >= 0) {
       const tip = low ? past[sweepIdx].l : past[sweepIdx].h;

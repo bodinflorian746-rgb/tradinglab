@@ -50,6 +50,14 @@ const NAMES: [RegExp, (zs: ChartZone[]) => Span | null][] = [
   [/niveau clé/i, (zs) => span(zs.find((z) => /^(support|résistance)$/i.test(z.label)), "niveau clé")],
   [/equal lows|2 lows/i, (zs) => span(byLabel(zs, "Equal lows"), "equal lows")],
   [/swing low/i, (zs) => span(byLabel(zs, "Swing low"), "swing low")],
+  [/swing high/i, (zs) => span(byLabel(zs, "Swing high"), "swing high")],
+  [/plus bas précédent/i, (zs) => span(byLabel(zs, "Plus bas précédent"), "plus bas précédent")],
+  [/plus haut précédent/i, (zs) => span(byLabel(zs, "Plus haut précédent"), "plus haut précédent")],
+  [/haut du range/i, (zs) => span(byLabel(zs, "Haut du range"), "haut du range")],
+  [/haut de l'Order Block/i, (zs) => { const z = zs.find((x) => /order block/i.test(x.label)); return z ? { lo: Math.max(z.y1, z.y2), hi: Math.max(z.y1, z.y2), name: "haut de l'Order Block" } : null; }],
+  [/FVG/, (zs) => span(zs.find((z) => z.kind === "fvg"), "FVG")],
+  [/(?<!\p{L})support/iu, (zs) => span(zs.find((z) => /support$/i.test(z.label)), "support")],
+  [/(?<!\p{L})résistance/iu, (zs) => span(zs.find((z) => /résistance$/i.test(z.label)), "résistance")],
 ];
 const ORD: Record<string, string> = { "1er": "1", "2e": "2", "3e": "3" };
 function resolve(phrase: string, zs: ChartZone[]): Span | null {
@@ -119,7 +127,7 @@ if (!process.env.STOPS_NO_MAIN) {
   const lines: string[] = [];
   if (process.argv.includes("--autotest")) {
     // Défauts injectés sur de vrais graphiques : chacun doit être détecté
-    const all = [...psCharts(2)].map((x) => x.c).filter((c) => !stopErrors(c).length);
+    const all = [...psCharts(8)].map((x) => x.c).filter((c) => !stopErrors(c).length);
     const pick = (re: RegExp) => all.find((c) => c.stops.some((s) => re.test(s.rationale)));
     const shift = (c: PSChart, re: RegExp, by: (s: Stop, MR: number) => number): PSChart => ({ ...c, stops: c.stops.map((s) => (re.test(s.rationale) ? { ...s, price: by(s, medRange(c.past)) } : s)) });
     const cases: [string, RegExp, () => PSChart | undefined][] = [

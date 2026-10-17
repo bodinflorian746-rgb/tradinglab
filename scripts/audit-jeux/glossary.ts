@@ -40,7 +40,8 @@ const zoneLabels: Record<Lang, Map<string, string>> = { fr: new Map(), es: new M
 const addZones = (lang: Lang, where: string, zones: { label?: string }[]) => {
   for (const z of zones) if (z.label && !zoneLabels[lang].has(z.label)) zoneLabels[lang].set(z.label, where);
 };
-for (const [lang, B, F, P, T] of [["fr", BS, FTM, PS, BT], ["es", BSES, FTMES, PSES, BTES]] as const) {
+// langues actives seulement (site FR : l'espagnol désactivé n'est plus audité)
+for (const [lang, B, F, P, T] of ([["fr", BS, FTM, PS, BT], ["es", BSES, FTMES, PSES, BTES]] as const).filter(([l]) => auditee(l))) {
   for (let n = 0; n < SEEDS; n++) for (const vol of VOLS) {
     const seed = (n * 2654435761 + 17) >>> 0;
     for (const t of B.SCENARIO_TEMPLATES) for (const d of t.difficulties) addZones(lang, `Buy/Sell ${t.id}`, B.buildChart(t.id, seed, vol, d, auditCtx(seed)).zones);
@@ -75,7 +76,7 @@ for (const [game, mods, names] of MODULES) for (const lang of (["fr", "es"] as c
   const mod = mods[lang] as unknown as Record<string, unknown>;
   for (const n of names) collect(lang, `${game} ${n}`, mod[n]);
 }
-for (const [lang, G] of [["fr", PS], ["es", PSES]] as const) for (const d of DIFFS) for (let s = 1; s <= 20; s++) for (const inst of G.generatePlaceStopScenarios(s * 7919, d)) {
+for (const [lang, G] of ([["fr", PS], ["es", PSES]] as const).filter(([l]) => auditee(l))) for (const d of DIFFS) for (let s = 1; s <= 20; s++) for (const inst of G.generatePlaceStopScenarios(s * 7919, d)) {
   for (const st of G.buildPlaceStopChart(inst.id, inst.seed, inst.volatility, d).stops) texts.push({ lang, where: `Place ton Stop ${inst.id} (justification)`, text: st.rationale });
 }
 for (const [lang, labels] of Object.entries(zoneLabels) as [Lang, Map<string, string>][]) for (const [label, where] of labels) texts.push({ lang, where: `${where} (zone)`, text: label });

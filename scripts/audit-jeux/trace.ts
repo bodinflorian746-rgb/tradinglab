@@ -196,7 +196,7 @@ if (!process.env.TRACE_NO_MAIN) {
   const lines: string[] = [];
   if (process.argv.includes("--autotest")) {
     // Défauts injectés sur de vrais graphiques : chacun doit être détecté
-    const all = [...charts(2)];
+    const all = [...charts(8)];
     const find = (re: RegExp) => { for (const c of all) { const z = c.zones.find((x) => re.test(x.label) && !zoneTraceError(c.past, x)); if (z) return { c, z }; } return null; };
     const MRof = (c: Chart) => medRange(c.past);
     const cases: [string, RegExp, () => [Candle[], ChartZone, ChartZone[]?] | null][] = [
