@@ -821,7 +821,7 @@ function genRejectionResistance(rng: () => number, m: number, d: Difficulty): Bu
   while (p < R - 1.4 * m) {
     const o = p;
     const c = Math.min(o + (0.5 + rng() * 0.4) * m, R - 0.9 * m);
-    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.12 + rng() * 0.12) * m));
+    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.15 + rng() * 0.15) * m));
     p = c;
   }
   // Test résistance : wicks (intensité selon difficulté)

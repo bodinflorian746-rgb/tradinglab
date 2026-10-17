@@ -691,7 +691,7 @@ function shapeRejectionResistance(rng: () => number, m: number): ShapeOutput {
   while (p < R - 1.4 * m) {
     const o = p;
     const c = Math.min(o + (0.5 + rng() * 0.4) * m, R - 0.9 * m);
-    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.12 + rng() * 0.12) * m));
+    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.15 + rng() * 0.15) * m));
     p = c;
   }
   // 3 bougies testant la résistance (sans la percer), les 2 dernières la
@@ -824,7 +824,7 @@ function shapeFakeoutAbove(rng: () => number, m: number): ShapeOutput {
   while (p < R - 1.2 * m) {
     const o = p;
     const c = Math.min(o + (0.4 + rng() * 0.3) * m, R - 0.6 * m);
-    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.12 + rng() * 0.12) * m));
+    past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.15 + rng() * 0.15) * m));
     p = c;
   }
   // Fakeout candle

@@ -246,45 +246,41 @@ export function levelTouches(
   const small = () => (0.08 + rng() * 0.08) * m;
   // mèche opposée au niveau : libre (proportions réelles), sans effet sur les touches
   const far = () => (0.15 + rng() * 0.3) * m;
-  // Extrêmes côté opposé au niveau (départ, sommet de chaque réaction) : jamais alignés entre
-  // eux, sinon le graphique dessine un range dont l'autre borne n'est ni tracée ni citée
-  // (règle « niveaux visibles », scripts/audit-jeux/niveaux-visibles.ts)
-  const farDist = (k: Candle) => (dir > 0 ? edge - k.l : k.h - edge);
-  const exts: number[] = [];
-  const APART = 0.8 * m;
+  // Sommets des réactions (côté opposé au niveau) jamais alignés entre eux ni avec le départ, sinon
+  // le graphique dessine un range dont l'autre borne n'est ni tracée ni citée (règle « niveaux
+  // visibles », scripts/audit-jeux/niveaux-visibles.ts). Hauteurs planifiées : premier rebond court,
+  // chaque rebond suivant plus ample (plus haut plus haut côté support, plus bas plus bas côté
+  // résistance), sans bougie de plus.
+  let prevH = 0;
   for (let t = 0; t < n; t++) {
     // Approche, mèches courtes qui restent hors de la bande
     const a0 = (0.3 + rng() * 0.2) * m;
-    const approach = out.length;
-    let firstLeg = t > 0;
+    let firstLeg = true;
     while (dist(p) > a0 + 0.9 * m) {
-      // Première bougie après une réaction : mèche opposée courte (le sommet reste celui de la réaction)
-      push(at(dist(p) - (0.45 + rng() * 0.3) * m), small(), firstLeg ? small() : far());
+      // Première bougie de l'approche : mèche opposée courte (le sommet reste celui d'avant)
+      push(at(dist(p) - (0.45 + rng() * 0.3) * m), (0.08 + rng() * 0.15) * m, firstLeg ? small() : far());
       firstLeg = false;
-      // petit repli intercalé (une fois sur deux) : une approche n'est pas d'un seul bloc
+      // petit repli intercalé (une fois sur deux, pas avant la 1re touche : aucun sommet parasite
+      // près du départ) : une approche n'est pas d'un seul bloc
       if (dist(p) > a0 + 0.9 * m && rng() < 0.5) push(at(dist(p) + (0.05 + rng() * 0.1) * m), small(), far());
     }
     push(at(a0 + (0.08 + rng() * 0.08) * m), Math.min(small(), 0.4 * a0), far());
     // Hésitation à l'approche : petit corps, mèches des deux côtés (hors de la bande)
     push(at(a0), Math.min((0.1 + rng() * 0.1) * m, 0.5 * a0), (0.15 + rng() * 0.2) * m);
-    if (t === 0) exts.push(Math.max(...out.slice(approach).map(farDist)));
     // Contact : mèche dans la bande, clôture qui s'en écarte
     const tip = edge + dir * (0.25 + rng() * 0.5) * (hi - lo);
     push(at(a0 + (0.25 + rng() * 0.25) * m), dir * (tip - p), far());
-    const reaction = out.length;
-    // Réaction : deux bougies qui s'éloignent nettement, séparées par un petit repli (couleur
-    // opposée, comme sur un vrai graphique : la jambe n'est pas d'un seul bloc)
-    push(at(dist(p) + (0.6 + rng() * 0.4) * m), small(), far());
+    // Réaction jusqu'au sommet prévu H : deux bougies qui s'éloignent nettement, séparées par un
+    // petit repli (couleur opposée : la jambe n'est pas d'un seul bloc)
+    const c0 = dist(p);
+    const H = Math.max(t === 0 ? (2.1 + rng() * 0.4) * m : prevH + (0.6 + rng() * 0.3) * m, c0 + (0.9 + rng() * 0.2) * m);
+    const span = H - c0;
+    const c1 = c0 + span * (0.5 + rng() * 0.15);
+    push(at(c1), (0.08 + rng() * 0.2) * m, far());
     push(at(dist(p) - (0.06 + rng() * 0.1) * m), small(), far());
-    push(at(dist(p) + (0.7 + rng() * 0.4) * m), small(), far());
-    // Sommet trop proche d'un extrême précédent : la réaction va plus loin (plus haut plus haut
-    // côté support, plus bas plus bas côté résistance), au-delà de tous les extrêmes précédents
-    const top = () => Math.max(...out.slice(reaction).map(farDist));
-    if (exts.some((e) => Math.abs(top() - e) < APART)) {
-      const goal = Math.max(...exts) + APART + rng() * 0.3 * m;
-      for (let g = 0; g < 4 && top() < goal; g++) push(at(dist(p) + (0.5 + rng() * 0.3) * m), small(), far());
-    }
-    exts.push(top());
+    const fw = far();
+    push(at(H - fw), (0.08 + rng() * 0.2) * m, fw);
+    prevH = H;
   }
   return { candles: out, p };
 }

@@ -785,7 +785,7 @@ function shFastRally(rng: () => number, m: number): { chart: ScenarioChart; entr
   for (let i = 0; i < 6; i++) {
     const o = p;
     const c = o + (0.8 + rng() * 0.5) * m;
-    past.push(candle(o, c, (0.3 + rng() * 0.2) * m, 0.08));
+    past.push(candle(o, c, (0.3 + rng() * 0.2) * m, (0.06 + rng() * 0.14) * m));
     p = c;
   }
   const entry = p;  // entry au top du pump
