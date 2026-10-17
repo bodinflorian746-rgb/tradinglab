@@ -501,8 +501,8 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "discipline",
-    context: "Le prix vient de casser au-dessus de la résistance, mais la bougie de displacement manque cruellement de body.",
-    shortContext: "Breakout haussier, body très faible.",
+    context: "Le prix vient de casser au-dessus de la résistance, mais la bougie de displacement a très peu de corps.",
+    shortContext: "Breakout haussier, corps très faible.",
     rationales: {
       BUY: "✗ Ici, tu poursuis un breakout faible. Sans bougie de momentum nette, la continuation devient nettement moins probable, et le R/R espéré se dégrade.",
       SELL: "✗ Vendre un breakout haussier sans signal de retournement paraît ici prématuré : il n'y a ni bougie de retournement ni structure baissière.",
@@ -1478,11 +1478,15 @@ function genToxicExecution(rng: () => number, m: number, d: Difficulty): BuySell
 /**
  * Niveau avancé : les zones perdent leurs qualificatifs (« UT supérieure », « majeure »,
  * « haussier ») pour que le joueur lise le marché plutôt que les noms. Un support reste
- * « Support » et une résistance « Résistance » : on ne les renomme jamais.
+ * « Support » et une résistance « Résistance » : on ne les renomme jamais. Un nom cité par
+ * l'énoncé ou l'explication (`texts`) reste affiché tel quel : même nom partout.
  */
-export function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, locale: string | undefined): BuySellChart["zones"] {
+export function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficulty, locale: string | undefined, texts: readonly string[] = []): BuySellChart["zones"] {
   if (d !== "advanced") return zones;
+  const said = texts.join(" ").toLowerCase();
+  const cited = (label: string) => { const l = label.toLowerCase(); return said.includes(l) || said.includes(l.replace(/ (ut supérieure|ut superior|htf)$/, " de l'ut supérieure")); };
   return zones.map((z) => {
+    if (cited(z.label)) return z;
     // Changement de rôle : il fait partie de la preuve du niveau, il reste dit en avancé aussi
     if (z.flip) return z;
     // Seuls les supports / résistances et les FVG / liquidités deviennent génériques : un plus bas
@@ -1503,10 +1507,15 @@ export function maskZonesForDifficulty(zones: BuySellChart["zones"], d: Difficul
        :                                "Liquidity")
       : (z.kind === "support"        ? "Support"
        : z.kind === "resistance"     ? "Résistance"
-       : z.kind === "fvg"            ? "Déséquilibre"
+       : z.kind === "fvg"            ? "FVG"
        :                                "Liquidité");
     return { ...z, label: generic };
   });
+}
+
+/** Textes affichés d'un scénario (énoncé, explications, leçon) : les noms qu'ils citent restent sur le graphique */
+export function scenarioTexts(t: { context: string; shortContext?: string; rationales: ChoiceRationales; lessons: DifficultyLessons }, d: Difficulty): string[] {
+  return [t.context, t.shortContext ?? "", t.rationales.BUY, t.rationales.SELL, t.rationales.NO_TRADE, t.lessons[d]];
 }
 
 export function withAssetPrices(chart: BuySellChart, inst: { asset: Asset; seed: number }): BuySellChart {

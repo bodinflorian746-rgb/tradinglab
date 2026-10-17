@@ -34,6 +34,8 @@ const ABSOLUTE: Record<Lang, RegExp[]> = {
   en: [/(^|\s)=(\s|$)/, /\bnever\b/i, /\balways\b/i, /\bguarantee/i, /no exceptions?/i, /absolute rule/i, /golden rule/i, /non-negotiable/i, /systematically/i],
   es: [/(^|\s)=(\s|$)/, /\bnunca\b/i, /\bsiempre\b/i, /\bgarantiz/i, /sin excepci/i, /regla absoluta/i, /regla de oro/i, /no negociable/i, /jamás/i, /sistemáticamente/i],
 };
+// Mots anglais sans raison d'être dans un texte français des jeux (corps de bougie, mèche)
+const ANGLICISMS = /(?<!\p{L})(body|bodies|wicks?|candles?)(?!\p{L})/iu;
 // Termes de trading et noms propres partagés, retirés avant la détection du français
 const SHARED = /NO TRADE|Stop \d|London|Londres|New York|Overlap|FOMC|NFP|CPI|Powell|XAU\/USD|EUR\/USD|BTC\/USD|NASDAQ/g;
 
@@ -89,6 +91,11 @@ for (const t of texts) {
   if (t.lang !== "fr") {
     const m = t.text.replace(SHARED, "").match(FRENCH[t.lang]);
     if (m) { errors++; if (errors <= 20) lines.push(`  ERREUR français en ${t.lang.toUpperCase()} (« ${m[0]} ») ${t.where} : ${t.text.slice(0, 90)}`); }
+  }
+  // Anglicismes relevés à l'audit visuel (« body très faible ») : le français a son mot
+  if (t.lang === "fr") {
+    const m = t.text.match(ANGLICISMS);
+    if (m) { errors++; if (errors <= 20) lines.push(`  ERREUR anglicisme FR (« ${m[0]} ») ${t.where}.${t.key} : ${t.text.slice(0, 90)}`); }
   }
   if (EXPLAIN.has(t.key) && t.text.length > 1) {
     const re = ABSOLUTE[t.lang].find((r) => r.test(t.text));

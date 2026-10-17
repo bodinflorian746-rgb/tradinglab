@@ -31,7 +31,7 @@ function* charts(): Generator<[string, Chart]> {
     const seed = seedOf(t.id + d, n), ctx = auditCtx(seed);
     // libellés tels qu'affichés (niveau avancé : zones sans qualificatif)
     const ch = BS.withAssetPrices(BS.buildChart(t.id, seed, VOLS[n % 3], d, ctx), { ...ctx, seed });
-    yield [`Buy/Sell/No Trade|${t.id}|${d}`, { ...ch, zones: BS.maskZonesForDifficulty(ch.zones, d, "fr") }];
+    yield [`Buy/Sell/No Trade|${t.id}|${d}`, { ...ch, zones: BS.maskZonesForDifficulty(ch.zones, d, "fr", BS.scenarioTexts(t, d)) }];
   }
   for (const t of FTM.MISTAKE_TEMPLATES) for (let n = 0; n < ROUNDS; n++) {
     const seed = seedOf(t.id, n), ctx = auditCtx(seed);

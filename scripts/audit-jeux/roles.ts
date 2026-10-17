@@ -63,7 +63,7 @@ function* charts(rounds = ROUNDS): Generator<Chart> {
     for (const t of B.SCENARIO_TEMPLATES) for (const d of t.difficulties) for (let n = 0; n < rounds; n++) {
       const seed = seedOf(t.id + d, n), ctx = auditCtx(seed);
       const ch = B.buildChart(t.id, seed, VOLS[n % 3], d, ctx);
-      yield { key: `Buy/Sell/No Trade|${t.id}|${d}|${lang}`, past: ch.past, zones: BS.maskZonesForDifficulty(ch.zones, d, lang) };
+      yield { key: `Buy/Sell/No Trade|${t.id}|${d}|${lang}`, past: ch.past, zones: BS.maskZonesForDifficulty(ch.zones, d, lang, BS.scenarioTexts(t, d)) };
     }
     for (const t of F.MISTAKE_TEMPLATES) for (let n = 0; n < rounds; n++) {
       const seed = seedOf(t.id, n), ctx = auditCtx(seed);

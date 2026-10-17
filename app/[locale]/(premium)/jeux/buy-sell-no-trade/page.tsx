@@ -16,6 +16,7 @@ import {
   type Metric,
   type ScenarioInstance,
   maskZonesForDifficulty,
+  scenarioTexts,
 } from "@/lib/games/buy-sell-no-trade";
 import { GameChartV2, V2_REVEAL_DELAY_MS } from "@/app/components/games/v2/GameChartV2";
 import { ChoiceRow, StepBadge, VerdictOverlay, type ChoiceOption, GeneralCasesNote, JargonHints, useJargon, useChartInView } from "@/app/components/games/v2/ui";
@@ -389,7 +390,7 @@ export default function BuySellNoTradePage() {
   const isPlacing = phase === "placing";
   const isRevealing = phase === "revealing";
   const isFeedback = phase === "feedback";
-  const zones = maskZonesForDifficulty(chart.zones, difficulty, locale);
+  const zones = maskZonesForDifficulty(chart.zones, difficulty, locale, scenarioTexts(current, difficulty));
   const correct = chosen !== null && chosen === current.correctAnswer;
   const headline = correct
     ? current.correctAnswer === "NO_TRADE" ? T.disciplinePerfect : T.goodRead

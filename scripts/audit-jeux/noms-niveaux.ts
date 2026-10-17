@@ -21,6 +21,8 @@ export const LEVEL_NAMES: { name: string; text: RegExp; label: RegExp }[] = [
   { name: "bas du range", text: /(?<!\p{L})bas du range/iu, label: /^bas du range/i },
   { name: "plus haut précédent", text: /(?<!\p{L})plus haut précédent/iu, label: /^plus haut précédent/i },
   { name: "plus bas précédent", text: /(?<!\p{L})plus bas précédent/iu, label: /^plus bas précédent/i },
+  { name: "FVG haussier", text: /(?<!\p{L})FVG haussiers?(?!\p{L})/iu, label: /^FVG haussier/i },
+  { name: "FVG baissier", text: /(?<!\p{L})FVG baissiers?(?!\p{L})/iu, label: /^FVG baissier/i },
   { name: "support cassé", text: /(?<!\p{L})support cassé/iu, label: /^(support cassé|ancien support)/i },
   { name: "résistance cassée", text: /(?<!\p{L})résistance cassée/iu, label: /^(résistance cassée|ancienne résistance)/i },
 ];
@@ -55,7 +57,8 @@ function collect(): Item[] {
   };
   for (const t of BS.SCENARIO_TEMPLATES) for (const d of t.difficulties) for (let n = 0; n < SEEDS; n++) {
     const seed = 1000 + n * 7919; const ch = BS.buildChart(t.id, seed, VOLS[n % 3], d, auditCtx(seed));
-    add("Buy/Sell", t.id, n ? [] : strings(t), ch.zones.map((z) => z.label));
+    // libellés tels qu'affichés (niveau avancé : qualificatifs retirés, sauf les noms que les textes citent)
+    add("Buy/Sell", t.id, n ? [] : strings(t), BS.maskZonesForDifficulty(ch.zones, d, "fr", BS.scenarioTexts(t, d)).map((z) => z.label));
   }
   for (const t of FTM.MISTAKE_TEMPLATES) for (let n = 0; n < SEEDS; n++) {
     const seed = 1000 + n * 7919; const ch = FTM.buildScenarioChart(t, seed, VOLS[n % 3], auditCtx(seed));
@@ -81,6 +84,7 @@ if (process.argv.includes("--autotest")) {
     ["énoncé « support majeur », zone « Support UT supérieure »", ["Le prix vient d'arriver sur un support majeur après une correction."], ["Support UT supérieure"], true],
     ["« haut du range » cité, aucune zone de ce nom", ["L'objectif naturel est le haut du range."], ["Bas du range"], true],
     ["« plus bas précédent » cité, zone « Swing low »", ["Le stop se place sous le plus bas précédent."], ["Swing low"], true],
+    ["énoncé « FVG baissier », zone affichée « Déséquilibre » (avancé masqué)", ["Premier test d'un FVG baissier."], ["Déséquilibre"], true],
     ["témoin : « support de l'UT supérieure » et sa zone", ["Le prix revient sur un support de l'UT supérieure."], ["Support UT supérieure"], false],
     ["témoin : « haut du range » et sa zone", ["Le prix rejette le haut du range."], ["Haut du range", "Bas du range"], false],
   ];
