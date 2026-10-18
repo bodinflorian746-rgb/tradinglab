@@ -62,7 +62,9 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
     if (!/^(haut|bas) du range/i.test(z.label)) continue;
     const top = /^haut/i.test(z.label);
     // borne percée par les bougies déclencheuses (cassure, sweep : zone `trigger`) : elles ne la définissent pas
-    const ks = [...(z.trigger && past.length > 6 ? past.slice(0, -2) : past)].sort((x, y) => (top ? y.h - x.h : x.l - y.l)), ext = (k: Candle) => (top ? k.h : k.l);
+    // (borne cassée puis retestée : zone `until`, les dernières bougies ne la définissent pas non plus)
+    const cut = z.until ?? (z.trigger ? 2 : 0);
+    const ks = [...(cut && past.length > cut + 4 ? past.slice(0, -cut) : past)].sort((x, y) => (top ? y.h - x.h : x.l - y.l)), ext = (k: Candle) => (top ? k.h : k.l);
     // (une mèche de sweep : très au-delà de l'extrême suivant, et la bougie referme à l'intérieur)
     // un sweep tracé de ce côté (« Sweep haut / bas ») : sa mèche n'est pas une borne, même courte
     const swept = out.some((x) => (top ? /^sweep haut/i : /^sweep bas/i).test(x.label));
@@ -73,7 +75,7 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
     let a = Math.min(e[0], e[1]) - TRACE.SR_PAD * MR, b = Math.max(e[0], e[1]) + TRACE.SR_PAD * MR;
     if (b - a < TRACE.SR_MIN * MR) { const c = (a + b) / 2; a = c - (TRACE.SR_MIN * MR) / 2; b = c + (TRACE.SR_MIN * MR) / 2; }
     // aucune clôture du range au-delà de sa borne (hors bougies déclencheuses : cassure, sweep)
-    const closes = past.slice(0, -2).map((k) => k.c);
+    const closes = past.slice(0, -Math.max(2, cut)).map((k) => k.c);
     if (closes.length) { if (top) b = Math.max(b, Math.max(...closes)); else a = Math.min(a, Math.min(...closes)); }
     z.y1 = a; z.y2 = b;
   }

@@ -93,10 +93,13 @@ const CHECKS: Record<string, Record<string, Check>> = {
   breakout_bearish_clean: { "cassure nette (au-dessus du support puis bougie impulsive en dessous)": (ch) => cleanBreak(ch, "support"), direction },
   false_breakout_bullish: {
     "vient de casser au-dessus de la résistance": (ch) => last(ch.past).c > hi(zoneOf(ch, "resistance")) ? null : "dernière clôture pas au-dessus de la résistance",
+    // (Avancé : le piège se lit sur le graphique, pas seulement sur la pastille)
+    "longue mèche haute dans la liquidité, clôture juste au-dessus": (ch) => { const k = last(ch.past), z = zoneOf(ch, "resistance"); const wick = k.h - Math.max(k.o, k.c), over = k.c - hi(z); return wick >= 2 * over && wick >= Math.abs(k.c - k.o) * 0.8 ? null : `mèche haute ${wick.toFixed(2)} pour un dépassement ${over.toFixed(2)} (mèche ≥ 2 × le dépassement attendue)`; },
     direction,
   },
   false_breakout_bearish: {
     "vient de casser sous le support": (ch) => last(ch.past).c < lo(zoneOf(ch, "support")) ? null : "dernière clôture pas sous le support",
+    "longue mèche basse dans la liquidité, clôture juste sous": (ch) => { const k = last(ch.past), z = zoneOf(ch, "support"); const wick = Math.min(k.o, k.c) - k.l, over = lo(z) - k.c; return wick >= 2 * over && wick >= Math.abs(k.c - k.o) * 0.8 ? null : `mèche basse ${wick.toFixed(2)} pour un dépassement ${over.toFixed(2)} (mèche ≥ 2 × le dépassement attendue)`; },
     direction,
   },
   pullback_bullish_trend: {

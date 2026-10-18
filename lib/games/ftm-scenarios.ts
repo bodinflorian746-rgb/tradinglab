@@ -316,6 +316,42 @@ const closesBelowPrevLow: Claim = (ch) => { const z = byLabel(ch, /^Plus bas pr�
 const stopJustBelowSwing: Claim = (ch) => { const z = byLabel(ch, /^Swing low$/); if (!z || ch.stop === undefined) return "pas de swing low ou de stop"; return ch.stop < lo(z) && lo(z) - ch.stop <= 0.5 * mr(ch.past) ? null : "le stop n'est pas « juste sous » le swing low (à plus d'une demi-bougie)"; };
 const sweepLowBack: Claim = (ch) => { const z = byLabel(ch, /^Plus bas précédent$/); const k = last(ch.past); return z && k.l < lo(z) - 0.25 * mr(ch.past) && k.c > hi(z) ? null : "pas de sweep (mèche sous le plus bas, clôture au-dessus)"; };
 
+/** Equal lows au bas d'un range ; achat du rebond, stop collé sous eux ; la suite les balaie d'une mèche puis
+ *  repart (graphique propre à l'Avancé : le stop trop serré du Débutant, lui, reste au-dessus du swing low) */
+const aEqualLowsStop: NonNullable<FtmScenario["build"]> = (rng, m) => {
+  const Rt = (4.4 + rng() * 0.5) * m, b = band(m);
+  const s = rangeScene(rng, m, Rt, 4);
+  const past = [...s.past];
+  // les deux creux les plus bas du range, à la même pointe : de vrais equal lows
+  const lows = past.map((k, i) => ({ i, l: k.l })).filter(({ i }) => i > 0 && i < past.length - 1 && past[i - 1].l > past[i].l && past[i + 1].l >= past[i].l).sort((x, y) => x.l - y.l).slice(0, 2);
+  const eq = Math.min(...lows.map((x) => x.l));
+  for (const { i } of lows) past[i] = { ...past[i], l: Math.min(eq, Math.min(past[i].o, past[i].c)) };
+  let p = s.p;
+  const up = candle(p, b.hi + (0.45 + rng() * 0.1) * m, (0.05 + rng() * 0.05) * m, (0.03 + rng() * 0.03) * m);
+  past.push(up); p = up.c;
+  // (collé sous la pointe la plus basse des equal lows : c'est elle que le tracé de la zone suit)
+  const stop = eq - (0.04 + rng() * 0.03) * m;
+  // suite : une mèche passe sous les equal lows (le stop saute), clôture revenue dans le range, puis reprise
+  const d = drop(rng, m, p, 1).candles[0];
+  const dip = { o: p, c: b.hi + (0.08 + rng() * 0.08) * m, h: p + 0.04 * m, l: b.lo - (0.4 + rng() * 0.12) * m };
+  const r = rally(rng, m, dip.c, 4, Rt - 0.4 * m);
+  void d;
+  return {
+    past, future: [dip, ...r.candles],
+    zones: [pivot("bas", eq, "Equal lows"), { kind: "resistance", y1: Rt - 0.13 * m, y2: Rt + 0.13 * m, label: "Haut du range" }],
+    entry: p, stop,
+  };
+};
+const stopJustBelowEqualLows: Claim = (ch) => {
+  const z = byLabel(ch, /^Equal lows$/);
+  if (!z || ch.stop === undefined) return "pas d'equal lows ou de stop";
+  // sous la pointe des equal lows, dans la liquidité que la zone trace juste dessous
+  const tip = Math.min(...ch.past.map((k) => k.l));
+  if (!(ch.stop < tip && ch.stop >= lo(z) - 0.1 * mr(ch.past))) return "le stop n'est pas collé sous les equal lows (dans leur liquidité)";
+  const i = ch.future.findIndex((k) => k.l <= ch.stop!);
+  return i >= 0 && ch.future.slice(i).some((k) => k.c > hi(z)) ? null : "la suite ne balaie pas le stop avant de repartir";
+};
+
 // ─── Scénarios ────────────────────────────────────────────────────────────────
 
 const DEB = { difficulties: ["beginner"] as const, macroContext: "normal" as const, htfBias: "range" as const };
@@ -551,14 +587,14 @@ export const FTM_NEW: FtmScenario[] = [
     build: aFakeSweep, claims: { "deux clôtures sous le plus bas précédent": closesBelowPrevLow },
   },
   {
-    ...ADV, id: "adv_stop_liquidite_achat", title: "Stop juste sous le swing low", category: "liquidite", chartShape: "uptrend_pullback", direction: "BUY", htfBias: "bullish", macroContext: "normal",
+    ...ADV, id: "adv_stop_liquidite_achat", title: "Stop collé sous des equal lows", category: "liquidite", chartShape: "range_oscillation", direction: "BUY", htfBias: "range", macroContext: "normal",
     notions: ["chasse_aux_stops", "liquidite", "stop_loss"],
-    conflict: "Le stop est bien du bon côté du swing low, mais collé à lui : exactement là où dort la liquidité que le marché vient souvent chercher.",
-    context: "Tu achètes ce rebond dans une tendance haussière, stop juste sous le swing low, sans marge.",
+    conflict: "Deux creux presque égaux donnent l'impression d'un support solide ; ils concentrent aussi les stops de tous les acheteurs, que le marché vient souvent chercher.",
+    context: "Au bas d'un range, deux creux presque égaux forment des equal lows. Tu achètes le rebond, stop juste sous eux, sans marge.",
     correctMistake: "stop_in_liquidity", decoyMistakes: ["sweep_ignored", "mitigation_misread", "dead_ob_bought"],
-    explanation: "Les stops des acheteurs s'accumulent juste sous les swing lows évidents. Un stop collé au niveau se fait souvent prendre par une mèche avant la vraie hausse.",
-    lessons: one("La chasse aux stops vise les niveaux évidents. Un stop se place au-delà, avec une marge mesurée en bougies, pas collé au swing low (leçon Avancé 6)."),
-    showLines: "buy_with_liquidity_stop", claims: { "stop collé sous le swing low": stopJustBelowSwing },
+    explanation: "Les stops des acheteurs s'accumulent juste sous des equal lows : c'est la liquidité la plus évidente du graphique. Un stop collé dessous se fait souvent prendre par une mèche avant la vraie hausse.",
+    lessons: one("La chasse aux stops vise les niveaux évidents, et des equal lows le sont plus que tout. Un stop se place au-delà, avec une marge mesurée en bougies, pas collé dessous (leçon Avancé 6)."),
+    build: aEqualLowsStop, claims: { "stop collé sous les equal lows, balayé puis reprise": stopJustBelowEqualLows },
   },
   {
     ...ADV, id: "adv_vente_apres_sweep", title: "Vente juste après un sweep", category: "liquidite", chartShape: "sweep_low_done", direction: "SELL", htfBias: "bullish", macroContext: "normal",

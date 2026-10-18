@@ -54,6 +54,16 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "première clôture qui casse la structure.", es: "primer cierre que rompe la estructura." },
   },
   {
+    id: "bos", source: "Intermédiaire · leçon 1 (Structure de marché : BOS & CHoCH)",
+    term: { fr: "BOS", es: "BOS" },
+    match: { fr: /\bBOS\b/, es: /\bBOS\b/ },
+    def: {
+      fr: "Break of Structure : une clôture au-delà du dernier sommet (ou creux) dans le sens de la tendance, qui la prolonge.",
+      es: "Break of Structure: un cierre más allá del último máximo (o mínimo) en el sentido de la tendencia, que la prolonga.",
+    },
+    short: { fr: "clôture au-delà du dernier sommet, dans le sens de la tendance.", es: "cierre más allá del último máximo, en el sentido de la tendencia." },
+  },
+  {
     id: "killzones", source: "Avancé · leçon 4 (Killzones)",
     term: { fr: "Killzones", es: "Killzones" },
     match: { fr: /\bkillzones?\b/i, es: /\bkillzones?\b/i },

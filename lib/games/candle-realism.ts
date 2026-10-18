@@ -92,6 +92,9 @@ export type RealismOptions = {
   calmPast?: boolean; asset?: Asset; session?: Session; volatility?: Volatility; preNews?: boolean;
   /** Pas de série de corps minuscules sous des mèches immenses (jeux : activé par realizeChart ; leçons : inchangé) */
   noWickRuns?: boolean;
+  /** Garde-fous des jeux (activés par realizeChart ; leçons : inchangé) : corps ordinaire plafonné à 3,5 × le
+   *  corps médian, clôture du passé déplacée jamais au-delà des extrêmes d'origine */
+  gameGuards?: boolean;
 };
 
 /** Contexte de marché d'un round : choisit la classe des séquences réelles. */
@@ -147,14 +150,14 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
   const calmCap = opts.calmPast ? 0.75 * RANGE_GROWTH * pastMaxR : Infinity;
   // plafond absolu d'une bougie ordinaire : une vraie bougie hors norme (séquences réelles BTC en Asie…)
   // ne devient jamais un corps géant que la bougie suivante efface (3,5 × le corps médian du graphique)
-  const hardCap = 3.5 * medBody;
+  const hardCap = opts.gameGuards ? 3.5 * medBody : Infinity;
   const bodyCap = (i: number) => (i === np - 1 ? Infinity : i < np ? Math.min(bigBody[i] ? Infinity : Math.min(capPast, hardCap), calmCap) : bigBody[i] ? Infinity : Math.min(capFut, hardCap));
 
   const grows = (j: number, next: number, cur: number) => next > cur + eps && next > bodyCap(j);
   // une clôture du passé déplacée reste dans les extrêmes d'origine du passé : le plus haut
   // (plus bas) voulu par le scénario le reste (étoile filante sur un plus haut tout neuf)
   const origMaxH = Math.max(...orig.slice(0, np).map((k) => k.h)), origMinL = Math.min(...orig.slice(0, np).map((k) => k.l));
-  const inside = (i: number, v: number) => i >= np - 1 || (v <= origMaxH + eps && v >= origMinL - eps);
+  const inside = (i: number, v: number) => !opts.gameGuards || i >= np - 1 || (v <= origMaxH + eps && v >= origMinL - eps);
   // Déplace la clôture i (et l'ouverture i + 1) si la clôture ne change de côté
   // d'aucun niveau et qu'aucune couleur ne change ; renvoie true si appliqué.
   const setClose = (i: number, c2: number): boolean => {
@@ -439,7 +442,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
 
 /** Applique la passe de réalisme à un graphique (passé + futur) et élargit son domaine. */
 export function realizeChart<T extends { past: Candle[]; future: Candle[]; domain: { min: number; max: number } }>(chart: T, levels: RealismLevels, seed: number, opts: RealismOptions = {}): T {
-  const { past, future } = realizeCandles(chart.past, chart.future, levels, seed, { noWickRuns: true, ...opts });
+  const { past, future } = realizeCandles(chart.past, chart.future, levels, seed, { noWickRuns: true, gameGuards: true, ...opts });
   const vals = [...past, ...future].flatMap((k) => [k.h, k.l]);
   return {
     ...chart,

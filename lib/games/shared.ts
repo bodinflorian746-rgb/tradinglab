@@ -36,6 +36,8 @@ export interface ChartZone {
   flip?: RoleChange;
   /** Borne de range percée par les deux dernières bougies (faux breakout, sweep) : elles ne la définissent pas */
   trigger?: true;
+  /** Borne de range cassée puis retestée : les `until` dernières bougies (cassure, retest) ne la définissent pas */
+  until?: number;
   /** Extrême nommé (swing, HL…) : indice de la bougie du passé qui clôture au swing ; le tracé se
    *  pose sur la pointe de sa mèche ou de celle de la suivante */
   at?: number;
@@ -279,9 +281,10 @@ export function levelTouches(
     // petit repli (couleur opposée : la jambe n'est pas d'un seul bloc)
     const c0 = dist(p);
     let H = Math.max(t === 0 ? (2.1 + rng() * 0.4) * m : prevH + (0.6 + rng() * 0.3) * m, c0 + (0.9 + rng() * 0.2) * m);
-    if (cap !== undefined) H = t === n - 1 ? Math.max(cap, c0 + 0.7 * m, prevH + 0.35 * m) : Math.max(c0 + 0.7 * m, Math.min(H, cap - 0.6 * m));
+    if (cap !== undefined) H = t === n - 1 ? Math.max(cap, c0 + 0.7 * m, prevH + 0.35 * m) : Math.max(c0 + 0.7 * m, Math.min(H, cap - 0.9 * m));
     const span = H - c0;
-    const c1 = c0 + span * (0.5 + rng() * 0.15);
+    // (plafond : la bougie intermédiaire de la dernière réaction passe nettement au-dessus du premier rebond)
+    const c1 = c0 + span * (cap !== undefined && t === n - 1 ? 0.74 + rng() * 0.1 : 0.5 + rng() * 0.15);
     push(at(c1), (0.08 + rng() * 0.2) * m, far());
     push(at(dist(p) - (0.06 + rng() * 0.1) * m), small(), far());
     const fw = far();
@@ -330,4 +333,29 @@ export function chartDomain(
   const max = Math.max(...vals);
   const padding = (max - min) * pad || 1;
   return { min: min - padding, max: max + padding };
+}
+
+/**
+ * Suite naturelle (règle « pas d'escalier », scripts/audit-jeux/suites.ts, marge comprise) : une série de 6 bougies de même
+ * couleur aux corps presque identiques, ou de 9 bougies de même couleur, reçoit une petite bougie contraire
+ * en son milieu ; les bougies suivantes sont décalées d'autant (continuité exacte). À partir de `from`.
+ */
+export function naturalFuture(fut: Candle[], rng: () => number, m: number, from = 0, longRun = 8): Candle[] {
+  const out = [...fut];
+  let i = Math.max(1, from);
+  while (i < out.length) {
+    const d = Math.sign(out[i].c - out[i].o);
+    let j = i; while (j < out.length && Math.sign(out[j].c - out[j].o) === d) j++;
+    const run = out.slice(i, j), b = run.map((k) => Math.abs(k.c - k.o));
+    const mu = b.reduce((a, x) => a + x, 0) / (b.length || 1);
+    const cv = mu ? Math.sqrt(b.reduce((a, x) => a + (x - mu) ** 2, 0) / b.length) / mu : 0;
+    if (d !== 0 && ((run.length >= 6 && cv < 0.5) || run.length >= longRun)) {
+      const at = i + Math.floor(run.length / 2), k = out[at];
+      const nc = k.o - d * (0.06 + rng() * 0.1) * m, shift = nc - k.c;
+      out[at] = { o: k.o, c: nc, h: Math.max(k.o, nc) + (0.04 + rng() * 0.06) * m, l: Math.min(k.o, nc) - (0.04 + rng() * 0.06) * m };
+      for (let n = at + 1; n < out.length; n++) out[n] = { o: out[n].o + shift, h: out[n].h + shift, l: out[n].l + shift, c: out[n].c + shift };
+      i = at + 1;
+    } else i = j;
+  }
+  return out;
 }

@@ -665,10 +665,119 @@ const fvgClosedBelow: Claim = (ch) => {
 
 // ─── Intermédiaire ────────────────────────────────────────────────────────────
 
+/** Jambe qui finit exactement au prix voulu (la bougie suivante en part) */
+function legExact(rng: Rng, m: number, from: number, to: number, o?: Parameters<typeof legTo>[4]): { candles: Candle[]; p: number } {
+  const r = legTo(rng, m, from, to, o);
+  const cs = r.candles.length ? [...r.candles] : [candle(from, to, 0.03 * m, 0.03 * m)];
+  const k = cs[cs.length - 1];
+  cs[cs.length - 1] = { ...k, c: to, h: Math.max(k.h, k.o, to), l: Math.min(k.l, k.o, to) };
+  return { candles: cs, p: to };
+}
+/** Range en UT supérieure : le haut du range est cassé par une clôture franche, retesté par au-dessus, et tient */
+const rangeBreakRetest: NewScenario["build"] = (rng, m) => {
+  const Rt = (3.6 + rng() * 0.4) * m;
+  const s = rangeScene(rng, m, Rt, 4);
+  const past = [...s.past];
+  let p = s.p;
+  // (le haut du range se lit sur ses pointes réelles : cassure et retest se calent dessus)
+  const top = Math.max(Rt + 0.13 * m, ...past.map((k) => k.h));
+  const up = legExact(rng, m, p, Rt - (0.4 + rng() * 0.1) * m, { retrace: 0.1, step: [0.5, 0.8] }); past.push(...up.candles); p = up.p;
+  const brk = past.length;
+  const c0 = top + (0.6 + rng() * 0.15) * m; past.push({ o: p, c: c0, h: c0 + 0.05 * m, l: p - 0.04 * m }); p = c0;
+  const r1 = rally(rng, m, p, 1); past.push(...r1.candles); p = r1.p;
+  const back = legExact(rng, m, p, top + (0.4 + rng() * 0.08) * m, { retrace: 0, step: [0.4, 0.6] }); past.push(...back.candles); p = back.p;
+  // bougie du retest : sa mèche vient au contact du haut du range et elle est rejetée, la clôture reste au-dessus
+  const rc = p - (0.04 + rng() * 0.04) * m; past.push({ o: p, c: rc, h: p + 0.04 * m, l: top - (0.06 + rng() * 0.06) * m }); p = rc;
+  // (cassure et retest ne définissent pas les bornes du range)
+  return { past, future: rally(rng, m, p, 5).candles, zones: rangeZones(m, Rt).map((z) => ({ ...z, until: past.length - brk })) };
+};
+/** Range en UT supérieure : sweep du bas du range, puis CHoCH (cassure du dernier swing high) et retest de ce swing */
+const rangeSweepChoch: NewScenario["build"] = (rng, m) => {
+  const Rt = (4.2 + rng() * 0.4) * m, b = band(m);
+  const s = rangeScene(rng, m, Rt, 4);
+  const past = [...s.past];
+  let p = s.p;
+  const LHc = b.hi + (1.5 + rng() * 0.2) * m;
+  // le swing high est un sommet : le prix y monte (s'il finit le range plus haut, il redescend d'abord)
+  if (p > LHc - 0.6 * m) { const dn0 = legExact(rng, m, p, LHc - (0.9 + rng() * 0.2) * m, { retrace: 0, step: [0.45, 0.7] }); past.push(...dn0.candles); p = dn0.p; }
+  const toLH = legExact(rng, m, p, LHc, { retrace: 0, step: [0.3, 0.45] });
+  past.push(...toLH.candles.map((k) => ({ ...k, h: Math.min(k.h, LHc + 0.02 * m) }))); p = toLH.p;
+  const at = past.length - 1;
+  const LH = Math.max(past[at].h, p + 0.05 * m); past[at] = { ...past[at], h: LH };
+  const d2 = legExact(rng, m, p, b.hi + (0.35 + rng() * 0.08) * m, { retrace: 0, step: [0.35, 0.5] });
+  past.push(...d2.candles.map((k) => ({ ...k, h: Math.max(k.o, k.c, Math.min(k.h, LH - 0.08 * m)) }))); p = d2.p;
+  const tip = Math.min(b.lo, ...past.map((k) => k.l)) - (0.65 + rng() * 0.1) * m;
+  const sw = past.length;
+  const sc = p + (0.12 + rng() * 0.08) * m; past.push({ o: p, c: sc, h: sc + 0.04 * m, l: tip }); p = sc;
+  const brk = legExact(rng, m, p, LH + (0.4 + rng() * 0.1) * m, { retrace: 0, step: [0.45, 0.7] }); past.push(...brk.candles); p = brk.p;
+  const back = legExact(rng, m, p, LH + (0.24 + rng() * 0.06) * m, { retrace: 0 }); past.push(...back.candles); p = back.p;
+  // bougie du retest : mèche au contact du swing high cassé, rejetée ; la clôture reste au-dessus
+  const rc = p - (0.04 + rng() * 0.04) * m; past.push({ o: p, c: rc, h: p + 0.04 * m, l: LH + (0.03 + rng() * 0.04) * m }); p = rc;
+  // (le sweep, le CHoCH et le retest ne définissent pas les bornes du range)
+  return {
+    past, future: rally(rng, m, p, 5, Rt - 0.4 * m).candles,
+    zones: [...rangeZones(m, Rt, "Bas du range").map((z) => ({ ...z, until: past.length - sw })), { kind: "liquidity_low", y1: tip, y2: b.lo - 0.05 * m, label: "Liquidité balayée" }, { kind: "resistance", y1: LH + 0.01, y2: LH + 0.03, label: "Swing high", at }],
+  };
+};
+/** Borne cassée en clôture, puis retest qui tient (sens haussier : haut du range) */
+const breakRetest = (sell: boolean): Claim => (c) => {
+  const ch = asBull(c, sell), z = ch.zones.find((x) => x.label === "Haut du range");
+  if (!z) return "pas de haut du range";
+  const i = ch.past.findIndex((k) => k.c > hi(z));
+  if (i < 0) return "pas de clôture au-dessus du haut du range";
+  const after = ch.past.slice(i + 1);
+  if (after.some((k) => k.c < lo(z))) return "clôture revenue dans le range après le breakout";
+  if (!(Math.min(...after.map((k) => k.l)) <= hi(z) + 0.3 * mr(ch.past))) return "pas de retest du haut du range";
+  return last(ch.past).c > hi(z) ? null : "la dernière bougie n'est pas au-dessus du haut du range";
+};
+/** Sweep du bas du range, puis clôture au-dessus du swing high (CHoCH) et retour sur lui, sans clôture dessous */
+const sweepThenChoch = (sell: boolean): Claim => (c) => {
+  const ch = asBull(c, sell), low = ch.zones.find((x) => x.label === "Bas du range"), sw = ch.zones.find((x) => x.label === "Swing high");
+  if (!low || !sw) return "bas du range / swing high absents";
+  const t = mr(ch.past);
+  const k = ch.past.findIndex((x) => x.l < lo(low) - 0.25 * t && x.c > lo(low));
+  if (k < 0) return "pas de sweep du bas du range (mèche dessous, clôture revenue)";
+  const j = ch.past.findIndex((x, n) => n > k && x.c > hi(sw));
+  if (j < 0) return "pas de clôture au-dessus du swing high (CHoCH)";
+  const after = ch.past.slice(j + 1);
+  if (after.some((x) => x.c < lo(sw))) return "clôture sous le swing high après le CHoCH";
+  return Math.min(...after.map((x) => x.l)) <= hi(sw) + 0.3 * t ? null : "pas de retest du swing high";
+};
+
 const INT: Pick<NewScenario, "macroContext" | "difficulties"> = { macroContext: "normal", difficulties: ["intermediate"] };
 const ADV: Pick<NewScenario, "macroContext" | "difficulties"> = { macroContext: "normal", difficulties: ["advanced"] };
 
 export const BSNT_INTERMEDIATE: NewScenario[] = [
+  {
+    ...INT, id: "int_range_casse_haut", title: "Haut du range cassé, retest tenu", correctAnswer: "BUY", htfBias: "range", metric: "lecture",
+    notions: ["range", "changement_role", "breakout"],
+    trap: "La pastille dit range : vendre le haut du range est le réflexe, mais il vient d'être cassé en clôture et retesté par au-dessus.",
+    context: "L'UT supérieure est en range. Le haut du range vient d'être cassé par une clôture franche, puis retesté par au-dessus : la mèche du retest est rejetée, la clôture reste au-dessus.",
+    shortContext: "Haut du range cassé puis retesté.",
+    rationales: {
+      BUY: "✓ Le haut du range, cassé en clôture puis retesté, tient : l'ancienne résistance sert de support. Un BUY sur ce retest, stop sous la zone, se défend.",
+      SELL: "✗ Vendre le haut du range suppose qu'il tienne comme résistance. Il vient d'être cassé et retesté par au-dessus : le rôle a changé.",
+      NO_TRADE: "≈ Attendre est prudent, mais le retest qui tient est justement la confirmation qu'on attend après un breakout.",
+    },
+    lessons: one("Une borne de range cassée puis retestée change de rôle : le haut du range devient support. Un range de l'UT supérieure n'empêche pas de suivre un breakout confirmé (leçons Intermédiaire 1 et 3)."),
+    tags: ["range", "breakout", "retest"], build: rangeBreakRetest,
+    claims: { "haut du range cassé, retest qui tient": breakRetest(false), "la suite monte": goesUp },
+  },
+  {
+    ...INT, id: "int_range_casse_bas", title: "Bas du range cassé, retest tenu", correctAnswer: "SELL", htfBias: "range", metric: "lecture",
+    notions: ["range", "changement_role", "breakout"],
+    trap: "La pastille dit range : acheter le bas du range est le réflexe, mais il vient d'être cassé en clôture et retesté par en dessous.",
+    context: "L'UT supérieure est en range. Le bas du range vient d'être cassé par une clôture franche, puis retesté par en dessous : la mèche du retest est rejetée, la clôture reste en dessous.",
+    shortContext: "Bas du range cassé puis retesté.",
+    rationales: {
+      BUY: "✗ Acheter le bas du range suppose qu'il tienne comme support. Il vient d'être cassé et retesté par en dessous : le rôle a changé.",
+      SELL: "✓ Le bas du range, cassé en clôture puis retesté, tient : l'ancien support sert de résistance. Un SELL sur ce retest, stop au-dessus de la zone, se défend.",
+      NO_TRADE: "≈ Attendre est prudent, mais le retest qui tient est justement la confirmation qu'on attend après un breakout.",
+    },
+    lessons: one("Une borne de range cassée puis retestée change de rôle : le bas du range devient résistance. Un range de l'UT supérieure n'empêche pas de suivre un breakout confirmé (leçons Intermédiaire 1 et 3)."),
+    tags: ["range", "breakout", "retest"], build: mirrored(rangeBreakRetest),
+    claims: { "bas du range cassé, retest qui tient": breakRetest(true), "la suite baisse": goesDown },
+  },
   {
     ...INT, id: "int_range_bas_marteau", title: "Marteau au bas du range", correctAnswer: "BUY", htfBias: "range", metric: "lecture",
     notions: ["range", "marteau", "support_resistance"],
@@ -734,6 +843,36 @@ export const BSNT_INTERMEDIATE: NewScenario[] = [
 // ─── Avancé ───────────────────────────────────────────────────────────────────
 
 export const BSNT_ADVANCED: NewScenario[] = [
+  {
+    ...ADV, id: "adv_choch_bas_range", title: "Sweep du bas du range, puis CHoCH", correctAnswer: "BUY", htfBias: "range", metric: "lecture",
+    notions: ["sweep", "structure", "entree_precision"],
+    conflict: "La pastille dit range et un sweep seul ne prouve rien ; le CHoCH qui suit, puis son retest qui tient, donnent la direction.",
+    context: "L'UT supérieure est en range. Le prix a balayé le bas du range d'une mèche, puis il a cassé le dernier swing high (CHoCH) et revient le tester par au-dessus.",
+    shortContext: "Sweep du bas du range, CHoCH puis retest.",
+    rationales: {
+      BUY: "✓ La liquidité sous le bas du range a été prise, puis le CHoCH au-dessus du swing high a changé la structure. Le retest qui tient donne l'entrée, stop sous la mèche du sweep.",
+      SELL: "✗ Vendre ici, c'est vendre après un sweep réussi et un CHoCH haussier : le graphique dit le contraire.",
+      NO_TRADE: "≈ Le range de l'UT supérieure invite à la prudence, mais sweep, CHoCH et retest forment justement la séquence qu'on attend pour entrer.",
+    },
+    lessons: one("Un sweep laisse entrevoir un retournement ; le CHoCH le confirme en cassant le dernier swing. Le retest de ce swing donne l'entrée de précision (leçons Avancé 1 et 7)."),
+    tags: ["sweep", "choch", "range"], build: rangeSweepChoch,
+    claims: { "sweep du bas du range, CHoCH puis retest": sweepThenChoch(false), "la suite monte": goesUp },
+  },
+  {
+    ...ADV, id: "adv_choch_haut_range", title: "Sweep du haut du range, puis CHoCH", correctAnswer: "SELL", htfBias: "range", metric: "lecture",
+    notions: ["sweep", "structure", "entree_precision"],
+    conflict: "La pastille dit range et un sweep seul ne prouve rien ; le CHoCH qui suit, puis son retest qui tient, donnent la direction.",
+    context: "L'UT supérieure est en range. Le prix a balayé le haut du range d'une mèche, puis il a cassé le dernier swing low (CHoCH) et revient le tester par en dessous.",
+    shortContext: "Sweep du haut du range, CHoCH puis retest.",
+    rationales: {
+      BUY: "✗ Acheter ici, c'est acheter après un sweep réussi et un CHoCH baissier : le graphique dit le contraire.",
+      SELL: "✓ La liquidité au-dessus du haut du range a été prise, puis le CHoCH sous le swing low a changé la structure. Le retest qui tient donne l'entrée, stop au-dessus de la mèche du sweep.",
+      NO_TRADE: "≈ Le range de l'UT supérieure invite à la prudence, mais sweep, CHoCH et retest forment justement la séquence qu'on attend pour entrer.",
+    },
+    lessons: one("Un sweep laisse entrevoir un retournement ; le CHoCH le confirme en cassant le dernier swing. Le retest de ce swing donne l'entrée de précision (leçons Avancé 1 et 7)."),
+    tags: ["sweep", "choch", "range"], build: mirrored(rangeSweepChoch),
+    claims: { "sweep du haut du range, CHoCH puis retest": sweepThenChoch(true), "la suite baisse": goesDown },
+  },
   {
     ...ADV, id: "adv_sweep_continuation", title: "Plus bas balayé… et cassé", correctAnswer: "SELL", htfBias: "range", metric: "piege",
     notions: ["sweep", "liquidite", "breakout"],

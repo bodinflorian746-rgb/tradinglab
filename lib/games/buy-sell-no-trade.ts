@@ -15,9 +15,9 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone, type ChartData, type ZoneKind,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges, naturalFuture,
 } from "./shared";
-import { withTracedZones } from "./zone-trace";
+import { withTracedZones, keepSwingTips } from "./zone-trace";
 import type { NotionId } from "./notions";
 import { BSNT_NEW } from "./bsnt-scenarios";
 import { mirrorCandles, mirrorZones } from "./scenes";
@@ -136,7 +136,8 @@ const oneLesson = (text: string) => ({ beginner: text, intermediate: text, advan
 
 /** Pullback haussier dont la dernière bougie clôture sous l'ancienne résistance devenue support */
 function genPullbackBroken(rng: () => number, m: number): RawScenario {
-  const t = trendRetest(rng, m, true, 4);
+  // (tendance moins haute : l'impulsion n'écrase pas le reste du graphique)
+  const t = trendRetest(rng, m, true, 4, 1.7);
   const past = t.past;
   let p = t.p;
   const c = t.lo - (0.3 + rng() * 0.15) * m;
@@ -270,7 +271,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bearish",
     macroContext: "normal",
     metric: "piege",
-    context: "Le prix vient de casser au-dessus d'une résistance, mais l'UT supérieure reste baissière. Le breakout paraît suspect.",
+    context: "Le prix vient de clôturer juste au-dessus d'une résistance, mais la bougie laisse une longue mèche haute dans la liquidité, et l'UT supérieure reste baissière.",
     rationales: {
       BUY: "✗ Ici, tu suis le breakout sans regarder l'UT supérieure. Un breakout haussier sur une UT supérieure baissière peut souvent être un piège à liquidité : c'est un scénario où beaucoup de traders se font piéger.",
       SELL: "✓ Ici, UT supérieure baissière et breakout contre-tendance peuvent signaler un faux breakout. La liquidité au-dessus de la résistance sert souvent de carburant aux vendeurs. Un SELL après le piège se défend.",
@@ -282,7 +283,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       advanced:     "Ici, tu n'as pas encore la confirmation par la mèche de rejet : tu décides AVANT. Si l'UT supérieure et la macro le permettent, anticiper le faux breakout peut être un vrai avantage. Sinon, NO TRADE se défend.",
     },
     notions: ["faux_breakout", "multi_ut", "support_resistance"],
-    conflict: "Faux breakout contre UT supérieure : la clôture au-dessus de la résistance ressemble à un breakout, l'UT supérieure dit l'inverse.",
+    conflict: "La clôture au-dessus de la résistance ressemble à un breakout ; la longue mèche dans la liquidité et l'UT supérieure baissière disent piège.",
     difficulties: ["advanced"],
     tags: ["piège", "fakeout", "liquidité"],
   },
@@ -293,7 +294,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "piege",
-    context: "Le prix vient de casser sous un support, mais l'UT supérieure reste haussière. Le breakout semble piégé.",
+    context: "Le prix vient de clôturer juste sous un support, mais la bougie laisse une longue mèche basse dans la liquidité, et l'UT supérieure reste haussière.",
     rationales: {
       BUY: "✓ Ici, UT supérieure haussière et breakout baissier contre-tendance peuvent signaler un piège. La liquidité sous le support est souvent ramassée avant le mouvement haussier. Un BUY sur le retour se défend.",
       SELL: "✗ Vendre un breakout contre l'UT supérieure revient ici à rejoindre les vendeurs piégés. Ces faux breakouts repartent souvent dans le sens de l'UT supérieure.",
@@ -305,7 +306,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       advanced:     "Ici, tu décides AVANT le retour du prix au-dessus du support. Si l'UT supérieure et la structure sont alignés, un BUY se défend. En cas de doute, NO TRADE reste une option logique.",
     },
     notions: ["faux_breakout", "multi_ut", "support_resistance"],
-    conflict: "Faux breakout contre UT supérieure : la clôture sous le support ressemble à un breakout, l'UT supérieure dit l'inverse.",
+    conflict: "La clôture sous le support ressemble à un breakout ; la longue mèche dans la liquidité et l'UT supérieure haussière disent piège.",
     difficulties: ["advanced"],
     tags: ["piège", "fakeout", "liquidité"],
   },
@@ -454,9 +455,10 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "dangereux",
     metric: "discipline",
-    context: "Une news macro majeure (NFP / FOMC / CPI) est attendue dans moins de 30 minutes. Le marché est nerveux : les prix peuvent bondir à tout moment.",
+    context: "L'UT supérieure est haussière et le repli vient de reprendre : le setup d'achat paraît propre. Mais une news macro majeure (NFP / FOMC / CPI) est attendue dans moins de 30 minutes.",
+    shortContext: "Setup d'achat propre, news majeure dans moins de 30 minutes.",
     rationales: {
-      BUY: "✗ Trader 30 min avant un NFP expose ici ton edge à un risque élevé : spread 3 à 5 fois plus large que d'habitude, slippage important, stop qui peut sauter quelle que soit la direction. Dans ce cas, le setup pèse peu.",
+      BUY: "✗ Le setup est propre et dans le sens de l'UT supérieure, mais trader 30 min avant un NFP expose ici ton edge à un risque élevé : spread 3 à 5 fois plus large que d'habitude, slippage important, stop qui peut sauter quelle que soit la direction. Dans ce cas, le setup pèse peu.",
       SELL: "✗ Même problème : ici, le sens compte moins que la VOLATILITÉ et le SPREAD. Ton TP peut être valide, mais ton stop risque fort d'être dépassé.",
       NO_TRADE: "✓ Décision de pro. Sans trade, pas de perte. Une fois la news passée, le marché retrouve souvent sa structure, et tu peux revenir dans 1h sur un graphique lisible.",
     },
@@ -474,7 +476,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     id: "range_no_opp",
     title: "Range sans signal",
     correctAnswer: "NO_TRADE",
-    htfBias: "bullish",
+    htfBias: "range",
     macroContext: "normal",
     metric: "discipline",
     context: "Le prix oscille au milieu d'un range, sans test de zone ni catalyseur visible.",
@@ -501,12 +503,12 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     metric: "discipline",
-    context: "Le prix vient de casser au-dessus de la résistance, mais la bougie de displacement a très peu de corps.",
-    shortContext: "Breakout haussier, corps très faible.",
+    context: "UT supérieure haussière. Le prix vient de casser au-dessus de la résistance, mais la bougie de breakout a très peu de corps.",
+    shortContext: "Breakout dans le sens de l'UT supérieure, corps très faible.",
     rationales: {
       BUY: "✗ Ici, tu poursuis un breakout faible. Sans bougie de momentum nette, la continuation devient nettement moins probable, et le R/R espéré se dégrade.",
       SELL: "✗ Vendre un breakout haussier sans signal de retournement paraît ici prématuré : il n'y a ni bougie de retournement ni structure baissière.",
-      NO_TRADE: "✓ Un breakout gagne à s'imposer pour être tradable. Sans bougie de displacement, une option logique consiste à attendre un retest propre ou une continuation claire. Patience.",
+      NO_TRADE: "✓ Même dans le sens de l'UT supérieure, un breakout gagne à s'imposer pour être tradable. Sans bougie de displacement, une option logique consiste à attendre un retest propre ou une continuation claire. Patience.",
     },
     lessons: {
       beginner:     "Une grande bougie qui casse une zone apporte une confirmation forte. Une petite bougie qui casse à peine reste une confirmation faible, souvent insuffisante pour agir.",
@@ -570,7 +572,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     id: "dirty_range_sweep",
     title: "Range avec sweeps des deux côtés",
     correctAnswer: "NO_TRADE",
-    htfBias: "bearish",
+    htfBias: "range",
     macroContext: "normal",
     metric: "discipline",
     context: "Le prix vient de balayer les liquidités des deux bords du range. Aucune direction claire, l'accumulation institutionnelle est invisible.",
@@ -791,15 +793,15 @@ function genFalseBreakoutBull(rng: () => number, m: number, d: Difficulty): BuyS
     past.push(candle(o, c, (0.3 + rng() * 0.3) * m, (0.3 + rng() * 0.3) * m));
     p = c;
   }
+  // approche jusque sous la résistance : la bougie de cassure garde un corps plus court que sa mèche
+  if (p < R - 0.55 * m) { const c = R - (0.3 + rng() * 0.15) * m; past.push(candle(p, c, (0.1 + rng() * 0.1) * m, (0.15 + rng() * 0.15) * m)); p = c; }
   // Trigger candle : breakout au-dessus de la résistance
   const bO = p;
-  const wickHigh =
-    d === "beginner"     ? (1.1 + rng() * 0.4) * m
-  : d === "intermediate" ? (0.5 + rng() * 0.3) * m
-  :                        (0.25 + rng() * 0.2) * m;  // advanced : wick à peine visible
-  const bC = d === "beginner"
-    ? R + 0.2 + rng() * 0.2          // beginner : clôture juste au-dessus (rejet déjà en cours)
-    : R + 0.5 + rng() * 0.4;          // inter/adv : clôture nettement au-dessus
+  // Scénario Avancé : clôture juste au-dessus de la résistance, longue mèche haute dans la liquidité
+  // (le conflit se lit : clôture de breakout contre mèche de rejet, et UT supérieure baissière)
+  void d;
+  const wickHigh = (0.95 + rng() * 0.3) * m;
+  const bC = R + 0.27 + rng() * 0.12;
   past.push({ o: bO, c: bC, h: bC + wickHigh, l: bO - 0.2 });
   p = bC;
   // Future : drop confirmant le piège
@@ -835,14 +837,11 @@ function genFalseBreakoutBear(rng: () => number, m: number, d: Difficulty): BuyS
     past.push(candle(o, c, (0.3 + rng() * 0.3) * m, (0.3 + rng() * 0.3) * m));
     p = c;
   }
+  if (p > S + 0.55 * m) { const c = S + (0.3 + rng() * 0.15) * m; past.push(candle(p, c, (0.15 + rng() * 0.15) * m, (0.1 + rng() * 0.1) * m)); p = c; }
   const bO = p;
-  const wickLow =
-    d === "beginner"     ? (1.1 + rng() * 0.4) * m
-  : d === "intermediate" ? (0.5 + rng() * 0.3) * m
-  :                        (0.25 + rng() * 0.2) * m;
-  const bC = d === "beginner"
-    ? S - 0.2 - rng() * 0.2
-    : S - 0.5 - rng() * 0.4;
+  // (miroir du faux breakout haussier : clôture juste sous le support, longue mèche basse dans la liquidité)
+  const wickLow = (0.95 + rng() * 0.3) * m;
+  const bC = S - 0.27 - rng() * 0.12;
   past.push({ o: bO, c: bC, h: bO + 0.2, l: bC - wickLow });
   p = bC;
   const flop = candle(p, S + 0.4 + rng() * 0.3, (0.4 + rng() * 0.3) * m, 0.15);
@@ -866,7 +865,7 @@ function genFalseBreakoutBear(rng: () => number, m: number, d: Difficulty): BuyS
 // ancien support en tendance baissière) rejette deux fois, cède, la tendance repart, puis
 // le pullback revient la tester par l'autre côté : c'est le support (la résistance)
 // affiché. La dernière bougie du pullback entre dans la bande et clôture juste au-delà.
-function trendRetest(rng: () => number, m: number, up: boolean, depth: number): { past: Candle[]; p: number; peak: number; lo: number; hi: number } {
+function trendRetest(rng: () => number, m: number, up: boolean, depth: number, rise = 2.6): { past: Candle[]; p: number; peak: number; lo: number; hi: number } {
   const s = up ? 1 : -1;
   const past: Candle[] = [];
   const push = (c: number, wWith: number, wAgainst: number) => {
@@ -881,7 +880,7 @@ function trendRetest(rng: () => number, m: number, up: boolean, depth: number): 
   const h = levelTouches(rng, p, lo, hi, up ? "below" : "above", m);
   past.push(...h.candles); p = h.p;
   // Cassure, puis tendance jusqu'au plus haut (plus bas)
-  const top = (up ? hi : lo) + s * (2.6 + rng() * 0.6) * m;
+  const top = (up ? hi : lo) + s * (rise + rng() * 0.6) * m;
   while (s * (top - p) > 0) push(p + s * (0.55 + rng() * 0.5) * m, (0.2 + rng() * 0.25) * m, (0.15 + rng() * 0.18) * m);
   const peak = p;
   // Pullback : `depth` bougies, la dernière entre dans la bande et clôture juste au-delà
@@ -1168,12 +1167,15 @@ function genTradeBeforeNews(rng: () => number, m: number, d: Difficulty): BuySel
   // vient du contexte macro affiché en HTML). Future = spike chaotique.
   const past: Candle[] = [];
   const fut: Candle[] = [];
+  // Setup technique propre dans le sens de l'UT supérieure haussière : hausse, repli, reprise (bougies
+  // de plus en plus serrées avant la news)
   let p = 4 + rng() * 0.5;
+  const path = [0.32, 0.26, -0.12, 0.3, 0.24, 0.18, -0.16, -0.14, -0.1, 0.12, 0.14, 0.1, 0.08, 0.07];
   for (let i = 0; i < 14; i++) {
     const tight = 1 - i / 26;
     const o = p;
-    const c = o + (rng() - 0.5) * 0.9 * tight * m;
-    past.push(candle(o, c, (0.2 + rng() * 0.22) * tight * m, (0.2 + rng() * 0.22) * tight * m));
+    const c = o + (path[i] + (rng() - 0.5) * 0.08) * m;
+    past.push(candle(o, c, (0.1 + rng() * 0.12) * tight * m, (0.1 + rng() * 0.12) * tight * m));
     p = c;
   }
   // Future : spike puis crash (news classique)
@@ -1540,7 +1542,8 @@ export function buildChart(
   const ch = buildChartRaw(setup, seed, volatility, difficulty);
   const calm = setup === "trade_before_news";
   // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
-  return breakStrayLevels(withRoleChanges(withTracedZones(realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm }))));
+  // (swing désigné : sa pointe reste l'extrême de ses voisines, avant et après le tracé)
+  return keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm }))))));
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */
@@ -1549,6 +1552,16 @@ export function buildChartRaw(
   seed: number,
   volatility: Volatility = "normale",
   difficulty: Difficulty = "intermediate",
+): BuySellChart {
+  // suite naturelle : pas d'escalier (série de bougies de même couleur aux corps identiques)
+  const ch = buildChartRaw0(setup, seed, volatility, difficulty);
+  return { ...ch, future: naturalFuture(ch.future, mulberry32((seed ^ 0x27D4EB2F) >>> 0), VOL_MULT[volatility]) };
+}
+function buildChartRaw0(
+  setup: SetupKey,
+  seed: number,
+  volatility: Volatility,
+  difficulty: Difficulty,
 ): BuySellChart {
   const rng = mulberry32(seed);
   const m = VOL_MULT[volatility];

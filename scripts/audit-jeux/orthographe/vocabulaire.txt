@@ -2791,7 +2791,6 @@ décris
 décrit
 décrite
 décrivent
-décroissants
 décryptés
 déçu
 décuplée
@@ -3730,6 +3729,7 @@ entrer
 entres
 entres-tu
 entrever
+entrevoir
 entro
 entry
 envía
@@ -5447,6 +5447,7 @@ invirtió
 invisible
 invita
 invitan
+invite
 invitent
 involucrado
 involucrados
@@ -7212,6 +7213,7 @@ passera
 passes
 passés
 passif
+pastille
 patience
 patient
 patiente
@@ -8135,6 +8137,7 @@ puedes
 puedo
 puesto
 puis
+puisqu'il
 puisqu'on
 puissance
 puissant
@@ -9033,6 +9036,7 @@ reuniones
 réunions
 réunis
 réunit
+réussi
 réussir
 réussis
 réussissent

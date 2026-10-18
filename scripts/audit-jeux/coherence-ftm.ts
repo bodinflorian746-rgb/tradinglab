@@ -59,7 +59,12 @@ const SPECIFIC: Record<string, Check> = {
   oversized_position: upThenPullback,
   bad_spread: upThenPullback,
   revenge_trade: upThenPullback,
-  weekend_gap_exposure: upThenPullback,
+  // (vendredi soir : achat sur un support, graphique distinct de l'exposition excessive du Débutant)
+  weekend_gap_exposure: (ch) => {
+    const z = kindZone(ch, "support"); if (!z) return "pas de support";
+    if (testsSup(ch.past, z) < 2) return "support pas « testé plusieurs fois »";
+    return entryNow(ch, undefined as never);
+  },
   size_not_adapted_to_vol: upThenPullback,
   // (texte : l'heure de la news, vérifiée par le contexte de marché ; graphique : entrée au dernier cours)
   trade_before_news: entryNow,

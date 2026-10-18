@@ -488,14 +488,43 @@ type Continuation =
 // au plus tard à la dernière bougie), puis poursuit mollement (ou s'essouffle
 // si fade). « range » : va toucher le niveau visé (près de la borne opposée,
 // par une mèche si besoin), puis oscille dans le range.
+/** Début de suite sans escalier : au milieu d'une série de 5 bougies de même couleur, une petite bougie
+ *  contraire (les bougies suivantes sont décalées d'autant, la continuité reste exacte) */
+function breakStairs(fut: Candle[], rng: () => number, m: number): void {
+  let run = 0, dir = 0;
+  for (let i = 1; i < fut.length; i++) {
+    const d = Math.sign(fut[i].c - fut[i].o);
+    run = d === dir ? run + 1 : 1; dir = d;
+    if (run < 4 || i + 1 >= fut.length) continue;
+    const k = fut[i], nc = k.o - d * (0.06 + rng() * 0.1) * m, shift = nc - k.c;
+    fut[i] = { o: k.o, c: nc, h: Math.max(k.o, nc) + (0.04 + rng() * 0.06) * m, l: Math.min(k.o, nc) - (0.04 + rng() * 0.06) * m };
+    for (let j = i + 1; j < fut.length; j++) fut[j] = { o: fut[j].o + shift, h: fut[j].h + shift, l: fut[j].l + shift, c: fut[j].c + shift };
+    run = 0; dir = -d;
+  }
+}
+
 function extendFuture(fut: Candle[], rng: () => number, m: number, mode: Continuation): void {
   let p = fut[fut.length - 1].c;
   let reached = mode.kind === "drift"
     || fut.some((k) => (mode.dir > 0 ? k.h >= mode.target : k.l <= mode.target));
+  // Une suite n'avance pas en escalier : une petite bougie contraire toutes les 3 à 4 bougies, des corps
+  // de tailles variées (règle « suite naturelle », scripts/audit-jeux/suites.ts)
+  // (le compteur part de la série de même couleur qui termine déjà la suite)
+  let sincePause = 0;
+  for (let i = fut.length - 1; i > 0 && Math.sign(fut[i].c - fut[i].o) === Math.sign(fut[fut.length - 1].c - fut[fut.length - 1].o); i--) sincePause++;
+  const pauseDue = () => sincePause >= 3;
   while (fut.length < FUTURE_LENGTH) {
     const o = p;
     const left = FUTURE_LENGTH - fut.length;
     let c: number;
+    const dirNow = mode.kind === "target" && reached && mode.fade ? -mode.dir : mode.kind === "range" ? 0 : mode.dir;
+    if (dirNow !== 0 && (mode.kind !== "target" || reached || left > 3) && pauseDue()) {
+      c = o - dirNow * (0.08 + rng() * 0.14) * m;
+      const k = candle(o, c, (0.1 + rng() * 0.12) * m, (0.1 + rng() * 0.12) * m);
+      fut.push(k); p = c; sincePause = 0;
+      continue;
+    }
+    sincePause++;
     if (mode.kind === "range" && !reached) {
       const need = Math.max(0, (mode.target - o) * mode.dir);
       c = clamp(o + mode.dir * Math.max(need / left, 0.3 * m) * (1 + rng() * 0.4), mode.S + 0.4, mode.R - 0.4);
@@ -504,11 +533,12 @@ function extendFuture(fut: Candle[], rng: () => number, m: number, mode: Continu
       c = clamp(o + (mid - o) * 0.3 + (rng() - 0.5) * 0.8 * m, mode.S + 0.4, mode.R - 0.4);
     } else if (mode.kind === "target" && !reached) {
       const need = Math.max(0, (mode.target - o) * mode.dir);
-      c = o + mode.dir * Math.max(need / left, 0.3 * m) * (1 + rng() * 0.4);
+      c = o + mode.dir * Math.max(need / left, 0.3 * m) * (0.75 + rng() * 0.8);
     } else if (mode.kind === "target" && mode.fade) {
       c = o - mode.dir * (0.1 + rng() * 0.25) * m;
     } else {
-      c = o + mode.dir * (0.1 + rng() * 0.3) * m;
+      // (dérive de l'échec du rebond : plus ample, les petites pauses ne l'annulent pas)
+      c = o + mode.dir * (mode.kind === "drift" ? 0.16 + rng() * 0.36 : 0.1 + rng() * 0.3) * m;
     }
     const k = candle(o, c, (0.12 + rng() * 0.15) * m, (0.12 + rng() * 0.15) * m);
     if (mode.kind === "range") {
@@ -1335,6 +1365,7 @@ export function buildBuildTradeChartRaw(template: BuildTradeTemplate, seed: numb
   // la suite ne change pas) : le marché va au bout du plan optimal au lieu de
   // s'arrêter en cours de route.
   const shapeKind = template.chartShape;
+  breakStairs(shape.future, mulberry32((seed ^ 0x9E3779B9) >>> 0), effM);
   extendFuture(shape.future, mulberry32((seed ^ 0xC2B2AE35) >>> 0), effM,
     shapeKind === "range_oscillation"
       ? { kind: "range", S: swingLow, R: swingHigh, dir: direction === "BUY" ? 1 : -1, target: tps[template.optimal.tp] }
@@ -1369,8 +1400,9 @@ function keepPricesPositive(ch: BuildTradeChart): BuildTradeChart {
     ...[...ch.past, ...ch.future].map((k) => k.l),
     ...ch.zones.map((z) => Math.min(z.y1, z.y2)),
   );
-  if (low >= 0.5) return ch;
-  const d = Math.ceil(1 - low);
+  // (marge d'une unité : la passe de réalisme peut encore allonger une mèche vers le bas)
+  if (low >= 1.5) return ch;
+  const d = Math.ceil(2 - low);
   const k = (c: Candle): Candle => ({ o: c.o + d, h: c.h + d, l: c.l + d, c: c.c + d });
   const add = <T extends string>(r: Record<T, number>) =>
     Object.fromEntries(Object.entries(r).map(([key, v]) => [key, (v as number) + d])) as Record<T, number>;

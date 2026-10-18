@@ -47,6 +47,9 @@ const mirrored = (b: PsScenario["build"]): PsScenario["build"] => (rng, m) => {
 };
 /** Justification renversée (vente) : phrases complètes, du plus long au plus court */
 const PHRASES: [string, string][] = [
+  ["Pile sous le swing high cassé : le retest peut y plonger d'une mèche, alors que la structure n'est pas cassée.", "Pile au-dessus du swing low cassé : le retest peut y monter d'une mèche, alors que la structure n'est pas cassée."],
+  ["Entre le swing high cassé et le swing low : un repli plus profond le touche sans que la structure soit cassée.", "Entre le swing low cassé et le swing high : un rebond plus ample le touche sans que la structure soit cassée."],
+  ["Sous le swing low, avec une marge : c'est le dernier plus bas de la structure haussière ; tant qu'il tient, le BOS reste valable.", "Au-dessus du swing high, avec une marge : c'est le dernier plus haut de la structure baissière ; tant qu'il tient, le BOS reste valable."],
   ["Sous le plus bas précédent, avec une marge : sous le départ de la hausse (100 % du retracement), là où le scénario de pullback est faux.", "Au-dessus du plus haut précédent, avec une marge : au-dessus du départ de la baisse (100 % du retracement), là où le scénario de pullback est faux."],
   ["Pile sous le plus bas précédent : le départ de la hausse attire les stops, une mèche peut le balayer avant la reprise.", "Pile au-dessus du plus haut précédent : le départ de la baisse attire les stops, une mèche peut le balayer avant la reprise."],
   ["Juste sous la bougie d'entrée, dans le bruit normal : le retracement peut s'étendre un peu sans que la hausse soit annulée.", "Juste au-dessus de la bougie d'entrée, dans le bruit normal : le retracement peut s'étendre un peu sans que la baisse soit annulée."],
@@ -334,6 +337,39 @@ const inter = {
         { type: "wide", price: wide, rationale: "≈ Très loin sous la mèche du faux breakout : il tient, mais la protection n'est pas meilleure et le R/R s'effondre." },
       ] };
   },
+  /** BOS : le prix casse le swing high, revient le tester par au-dessus et repart ; le bon stop est sous le
+   *  swing low (le plus loin), pas sous le swing high cassé ni entre les deux */
+  structureBreak: (rng: Rng, m: number): PsRaw => {
+    const past: Candle[] = [];
+    let p = 0;
+    const up1 = legTo(rng, m, p, (1.6 + rng() * 0.3) * m, { retrace: 0.2 }); past.push(...up1.candles); p = up1.p;
+    const atH = past.length - 1;
+    const H1 = p + (0.05 + rng() * 0.03) * m; past[atH] = { ...past[atH], h: H1 };
+    const dn = legTo(rng, m, p, H1 - (1.05 + rng() * 0.2) * m, { retrace: 0, step: [0.28, 0.4] });
+    // (le repli part sous le sommet : aucune mèche ne dépasse le swing high)
+    past.push(...dn.candles.map((k) => ({ ...k, h: Math.max(k.o, k.c, Math.min(k.h, H1 - 0.03 * m)) }))); p = dn.p;
+    const at = past.length - 1;
+    const SL = Math.min(past[at].l, past[at].c - 0.02 * m); past[at] = { ...past[at], l: SL };
+    for (let i = Math.max(atH + 1, at - 3); i < at; i++) { const k = past[i]; past[i] = { ...k, l: Math.max(k.l, Math.min(Math.min(k.o, k.c), SL + 0.3 * m)) }; }
+    const c1 = candle(p, p + (0.3 + rng() * 0.1) * m, 0.05 * m, 0); past.push(c1); p = c1.c;
+    const up2 = legTo(rng, m, p, H1 + (0.95 + rng() * 0.2) * m, { retrace: 0, step: [0.5, 0.8] }); past.push(...up2.candles); p = up2.p;
+    // retour sur le swing high cassé, par au-dessus (la mèche vient au contact sans clôturer dessous)
+    const back = legTo(rng, m, p, H1 + (0.24 + rng() * 0.06) * m, { retrace: 0 }); past.push(...back.candles); p = back.p;
+    const kb = past[past.length - 1]; past[past.length - 1] = { ...kb, l: Math.min(kb.l, H1 + (0.02 + rng() * 0.04) * m) };
+    const g = candle(p, p + (0.3 + rng() * 0.08) * m, 0.05 * m, 0.03 * m); past.push(g);
+    const entry = g.c;
+    const logical = SL - (0.2 + rng() * 0.08) * m;
+    const near = H1 - (0.08 + rng() * 0.04) * m;
+    const mid = SL + (H1 - SL) * (0.35 + rng() * 0.15);
+    return { past, fut: rally(rng, m, entry, 5).candles,
+      zones: [pivotLow(SL, "Swing low", at), { kind: "resistance", y1: H1 + 0.01, y2: H1 + 0.03, label: "Swing high", at: atH }],
+      entry, tp: tpFor(entry, logical), direction: "BUY",
+      stops: [
+        { type: "tight", price: near, rationale: "✗ Pile sous le swing high cassé : le retest peut y plonger d'une mèche, alors que la structure n'est pas cassée." },
+        { type: "liquidity", price: mid, rationale: "✗ Entre le swing high cassé et le swing low : un repli plus profond le touche sans que la structure soit cassée." },
+        { type: "logical", price: logical, rationale: "✓ Sous le swing low, avec une marge : c'est le dernier plus bas de la structure haussière ; tant qu'il tient, le BOS reste valable." },
+      ] };
+  },
   structureBos: (rng: Rng, m: number): PsRaw => {
     const s = swingSetup(rng, m);
     const logical = s.sl - (0.18 + rng() * 0.08) * m;
@@ -439,14 +475,23 @@ const adv: Record<"obProche" | "fvgMilieu" | "sweepProche" | "sweepMilieu" | "ot
     const up = legTo(rng, m, base.p, base.p + (3.6 + rng() * 0.4) * m, { retrace: 0.15 });
     const A = Math.min(...base.candles.map((k) => k.l), ...up.candles.map((k) => k.l));
     const B = Math.max(...up.candles.map((k) => k.h));
-    const dn = legTo(rng, m, up.p, B - (0.68 + rng() * 0.04) * (B - A), { retrace: 0 });
+    // repli en deux temps : un swing high plus bas en UT inférieure, puis la zone OTE
+    const d1 = legTo(rng, m, up.p, B - (0.36 + rng() * 0.04) * (B - A), { retrace: 0 });
+    // (rebond en 3 bougies au moins : le swing high plus bas domine ses voisines)
+    const b1 = legTo(rng, m, d1.p, d1.p + (0.13 + rng() * 0.03) * (B - A), { retrace: 0, step: [0.14, 0.2] });
+    const lhAt = base.candles.length + up.candles.length + d1.candles.length + b1.candles.length - 1;
+    const d2r = legTo(rng, m, b1.p, B - (0.68 + rng() * 0.04) * (B - A), { retrace: 0 });
+    const LH = Math.max(...b1.candles.map((k) => k.h));
+    // (le repli repart sous le swing high : aucune mèche voisine ne le dépasse)
+    const d2 = { ...d2r, candles: d2r.candles.map((k) => ({ ...k, h: Math.max(k.o, k.c, Math.min(k.h, LH - 0.05 * m)) })) };
+    const dn = { candles: [...d1.candles, ...b1.candles, ...d2.candles], p: d2.p };
     const g = candle(dn.p, dn.p + (0.25 + rng() * 0.1) * m, 0.05 * m, 0.04 * m);
     const past = [...base.candles, ...up.candles, ...dn.candles, g];
     const entry = g.c;
     const logical = A - (0.25 + rng() * 0.08) * m;
     const tight = entry - (0.35 + rng() * 0.1) * m;
     const wide = logical - (1.4 + rng() * 0.3) * m;
-    return { past, fut: rally(rng, m, entry, 5).candles, zones: [pivotLow(A, "Plus bas précédent")], entry, tp: B - 0.1 * m, direction: "BUY",
+    return { past, fut: rally(rng, m, entry, 5).candles, zones: [pivotLow(A, "Plus bas précédent"), { kind: "resistance", y1: LH + 0.01, y2: LH + 0.03, label: "Swing high", at: lhAt }], entry, tp: B - 0.1 * m, direction: "BUY",
       stops: [
         { type: "tight", price: tight, rationale: "✗ Juste sous la bougie d'entrée, dans le bruit normal : la zone OTE va jusqu'à 79 %, le prix peut y descendre encore." },
         { type: "logical", price: logical, rationale: "✓ Sous le plus bas précédent, avec une marge : sous le départ de l'impulsion, là où l'OTE est invalidée." },
@@ -457,6 +502,17 @@ const adv: Record<"obProche" | "fvgMilieu" | "sweepProche" | "sweepMilieu" | "ot
 
 // ─── Affirmations ─────────────────────────────────────────────────────────────
 
+/** BOS : une clôture au-dessus du swing high, puis un retour au contact par au-dessus, sans clôture dessous */
+const bosRetest: Claim = (c) => {
+  const ch = asBull(c), z = ch.zones.find((x) => x.label === "Swing high"), s = ch.zones.find((x) => x.label === "Swing low");
+  if (!z || !s) return "swing high / swing low absents";
+  if (!(lo(s) < lo(z))) return "le swing low n'est pas sous le swing high";
+  const i = ch.past.findIndex((k, j) => j > (s.at ?? 0) && k.c > hi(z));
+  if (i < 0) return "pas de clôture au-dessus du swing high (BOS)";
+  const after = ch.past.slice(i + 1), t = mr(ch.past);
+  if (after.some((k) => k.c < lo(z))) return "clôture sous le swing high cassé après le BOS";
+  return Math.min(...after.map((k) => k.l)) <= hi(z) + 0.3 * t ? null : "pas de retour sur le swing high cassé";
+};
 const hammerOnZone: Claim = (c) => { const ch = asBull(c); const z = ch.zones.find((x) => /^(Support|Bas du range)$/.test(x.label)); const k = last(ch.past); if (!z) return "pas de support"; return isHammer(k) && k.l <= hi(z) + 0.25 * mr(ch.past) ? null : "pas de marteau sur le niveau"; };
 const hammerPierces: Claim = (c) => { const ch = asBull(c); const z = ch.zones.find((x) => x.label === "Support"); const k = last(ch.past); if (!z) return "pas de support"; return isHammer(k) && k.l < lo(z) - 0.25 * mr(ch.past) && Math.min(k.o, k.c) > hi(z) ? null : "pas de marteau dont la mèche traverse le support"; };
 const engulfOnZone = (pierce: boolean): Claim => (c) => { const ch = asBull(c); const z = ch.zones.find((x) => x.label === "Support"); const [a, b] = ch.past.slice(-2); if (!z) return "pas de support"; if (!isBullEngulfing(a, b)) return "pas d'engulfing haussier"; return pierce ? (a.l < lo(z) - 0.25 * mr(ch.past) ? null : "la mèche de la bougie rouge ne traverse pas le support") : (a.l <= hi(z) + 0.25 * mr(ch.past) ? null : "l'engulfing ne touche pas le support"); };
@@ -530,11 +586,11 @@ export const PS_NEW: PsScenario[] = [
     context: "Le prix a cassé une résistance, l'a retestée par au-dessus, et repart. Tu achètes. Où placer ton stop ?", shortContext: "BUY après retest de l'ancienne résistance.",
     lessons: one("Après un breakout, l'ancienne résistance devient support : le stop se place juste sous elle, avec une marge. Plus bas, il ne protège pas mieux et dégrade le R/R (leçon Intermédiaire 3)."), build: inter.retestProche,
     claims: { "retest tenu au-dessus de l'ancienne résistance": retestHolds, "bon stop : le plus proche": rankIs("proche") } },
-  { ...INT, id: "int_stop_retest_vente", title: "Stop après le retest d'un support cassé", direction: "SELL", htfBias: "bearish", tag: "structure", rank: "milieu",
-    notions: ["changement_role", "breakout", "stop_loss"], trap: "Le stop au-dessus du départ du breakout paraît plus « sûr », mais le changement de rôle se lit sur l'ancien support.",
+  { ...INT, id: "int_stop_retest_vente", title: "Stop après le retest d'un support cassé", direction: "SELL", htfBias: "bearish", tag: "structure", rank: "proche",
+    notions: ["changement_role", "breakout", "stop_loss"], trap: "Les stops bien plus haut paraissent plus « sûrs », mais le changement de rôle se lit sur l'ancien support.",
     context: "Le prix a cassé un support, l'a retesté par en dessous, et repart à la baisse. Tu vends. Où placer ton stop ?", shortContext: "SELL après retest de l'ancien support.",
-    lessons: one("Après un breakout baissier, l'ancien support devient résistance : le stop se place juste au-dessus, avec une marge. S'il est touché, le changement de rôle a échoué (leçon Intermédiaire 3)."), build: mirrored(inter.retest),
-    claims: { "retest tenu sous l'ancien support": retestHolds, "bon stop : celui du milieu": rankIs("milieu") } },
+    lessons: one("Après un breakout baissier, l'ancien support devient résistance : le stop se place juste au-dessus, avec une marge. S'il est touché, le changement de rôle a échoué (leçon Intermédiaire 3)."), build: mirrored(inter.retestProche),
+    claims: { "retest tenu sous l'ancien support": retestHolds, "bon stop : le plus proche": rankIs("proche") } },
   { ...INT, id: "int_stop_bas_range", title: "Stop au bas du range", direction: "BUY", htfBias: "range", tag: "liquidité", rank: "loin",
     notions: ["range", "zones_cles", "stop_loss"], trap: "Le stop « pile sous le bas du range » paraît logique, mais c'est là que tous les stops dorment.",
     context: "Tu achètes un marteau au bas d'un range touché deux fois. Où placer ton stop ?", shortContext: "BUY au bas du range.",
@@ -550,16 +606,16 @@ export const PS_NEW: PsScenario[] = [
     context: "Une bougie a clôturé sous le bas du range, puis la suivante l'a réintégré. Tu achètes ce faux breakout. Où placer ton stop ?", shortContext: "BUY après faux breakout sous le range.",
     lessons: one("Sur un faux breakout, la pointe de la mèche marque l'invalidation : le stop se place sous elle, avec une marge, pas dans la mèche (leçon Intermédiaire 6)."), build: inter.fauxBreakoutBas,
     claims: { "clôture sous le range, puis réintégration": fakeoutBack, "bon stop : celui du milieu": rankIs("milieu") } },
-  { ...INT, id: "int_stop_structure", title: "Stop sous le dernier plus bas de la structure", direction: "BUY", htfBias: "bullish", tag: "structure", rank: "proche",
-    notions: ["structure", "tendance", "stop_loss"], trap: "Les stops sous des creux plus anciens paraissent plus prudents, mais la structure actuelle se lit au dernier plus bas.",
-    context: "La tendance haussière fait des plus hauts et des plus bas croissants. Le prix repart au-dessus du dernier plus bas. Tu achètes. Où placer ton stop ?", shortContext: "BUY dans une structure haussière.",
-    lessons: one("Dans une tendance haussière, c'est le dernier plus bas qui la tient : le stop se place juste sous lui. Plus loin, il protège une structure déjà dépassée (leçon Intermédiaire 1)."), build: inter.structureBos,
-    claims: { "reprise au-dessus du dernier plus bas": swingThenResume, "bon stop : le plus proche": rankIs("proche") } },
-  { ...INT, id: "int_stop_structure_vente", title: "Stop au-dessus du dernier plus haut de la structure", direction: "SELL", htfBias: "bearish", tag: "structure", rank: "proche",
-    notions: ["structure", "tendance", "stop_loss"], trap: "Les stops au-dessus de sommets plus anciens paraissent plus prudents, mais la structure actuelle se lit au dernier plus haut.",
-    context: "La tendance baissière fait des plus hauts et des plus bas décroissants. Le prix repart sous le dernier plus haut. Tu vends. Où placer ton stop ?", shortContext: "SELL dans une structure baissière.",
-    lessons: one("Dans une tendance baissière, c'est le dernier plus haut qui la tient : le stop se place juste au-dessus. Plus loin, il protège une structure déjà dépassée (leçon Intermédiaire 1)."), build: mirrored(inter.structureBos),
-    claims: { "reprise sous le dernier plus haut": swingThenResume, "bon stop : le plus proche": rankIs("proche") } },
+  { ...INT, id: "int_stop_structure", title: "Stop après un BOS et son retest", direction: "BUY", htfBias: "bullish", tag: "structure", rank: "loin",
+    notions: ["structure", "changement_role", "stop_loss"], trap: "Le stop pile sous le swing high cassé paraît logique, puisqu'il a changé de rôle, mais la structure n'est invalidée que sous le swing low.",
+    context: "La structure haussière vient de faire un BOS : le prix a cassé le swing high, l'a retesté par au-dessus et repart. Tu achètes. Où placer ton stop ?", shortContext: "BUY après BOS et retest.",
+    lessons: one("Après un BOS, c'est le dernier plus bas de la structure qui la tient : le stop se place sous le swing low, avec une marge. Le swing high cassé n'est qu'un premier appui (leçon Intermédiaire 1)."), build: inter.structureBreak,
+    claims: { "BOS puis retest du swing high cassé": bosRetest, "bon stop : le plus loin": rankIs("loin") } },
+  { ...INT, id: "int_stop_structure_vente", title: "Stop après un BOS baissier et son retest", direction: "SELL", htfBias: "bearish", tag: "structure", rank: "loin",
+    notions: ["structure", "changement_role", "stop_loss"], trap: "Le stop pile au-dessus du swing low cassé paraît logique, puisqu'il a changé de rôle, mais la structure n'est invalidée qu'au-dessus du swing high.",
+    context: "La structure baissière vient de faire un BOS : le prix a cassé le swing low, l'a retesté par en dessous et repart à la baisse. Tu vends. Où placer ton stop ?", shortContext: "SELL après BOS et retest.",
+    lessons: one("Après un BOS baissier, c'est le dernier plus haut de la structure qui la tient : le stop se place au-dessus du swing high, avec une marge. Le swing low cassé n'est qu'une première résistance (leçon Intermédiaire 1)."), build: mirrored(inter.structureBreak),
+    claims: { "BOS puis retest du swing high cassé": bosRetest, "bon stop : le plus loin": rankIs("loin") } },
   { ...INT, id: "int_stop_fibonacci", title: "Stop d'un pullback à 61,8 % (vente)", direction: "SELL", htfBias: "bearish", tag: "structure", rank: "loin",
     notions: ["fibonacci", "pullback", "stop_loss"], trap: "Le stop serré au-dessus de la bougie d'entrée améliore le R/R affiché, mais il reste dans le bruit du retracement.",
     context: "Après une forte baisse, le prix remonte d'environ 60 % puis repart à la baisse. Tu vends. Où placer ton stop ?", shortContext: "SELL à 61,8 % du retracement.",
@@ -598,12 +654,12 @@ export const PS_NEW: PsScenario[] = [
     claims: { "mèche au-dessus du plus haut, clôture en dessous": sweepBack, "bon stop : le plus proche": rankIs("proche") } },
   { ...ADV, id: "adv_stop_ote", title: "Stop d'une entrée OTE", direction: "BUY", htfBias: "bullish", tag: "structure", rank: "milieu",
     notions: ["ote", "fibonacci", "stop_loss"], conflict: "Le stop serré sous la bougie d'entrée améliore le R/R, mais la zone OTE s'étend jusqu'à 79 % : il serait balayé.",
-    context: "Après une forte impulsion haussière, le prix corrige dans la zone OTE puis repart. Tu achètes. Où placer ton stop ?", shortContext: "BUY dans la zone OTE.",
+    context: "Après une forte impulsion haussière, le prix corrige : en UT inférieure, il fait même un swing high plus bas, puis descend dans la zone OTE et repart. Tu achètes. Où placer ton stop ?", shortContext: "BUY dans la zone OTE.",
     lessons: one("Une entrée OTE se protège sous le départ de l'impulsion, avec une marge : la zone 62 à 79 % peut être entièrement visitée avant la reprise (leçon Avancé 5)."), build: adv.oteMilieu,
     claims: { "repli dans la zone OTE": retraceOte, "bon stop : celui du milieu": rankIs("milieu") } },
   { ...ADV, id: "adv_stop_ote_vente", title: "Stop d'une vente OTE", direction: "SELL", htfBias: "bearish", tag: "structure", rank: "milieu",
     notions: ["ote", "fibonacci", "stop_loss"], conflict: "Le stop serré au-dessus de la bougie d'entrée améliore le R/R, mais la zone OTE s'étend jusqu'à 79 % : il serait balayé.",
-    context: "Après une forte impulsion baissière, le prix remonte dans la zone OTE puis repart à la baisse. Tu vends. Où placer ton stop ?", shortContext: "SELL dans la zone OTE.",
+    context: "Après une forte impulsion baissière, le prix remonte : en UT inférieure, il fait même un swing low plus haut, puis monte dans la zone OTE et repart à la baisse. Tu vends. Où placer ton stop ?", shortContext: "SELL dans la zone OTE.",
     lessons: one("Une entrée OTE se protège au-dessus du départ de l'impulsion, avec une marge : la zone 62 à 79 % peut être entièrement visitée avant la reprise (leçon Avancé 5)."), build: mirrored(adv.oteMilieu),
     claims: { "rebond dans la zone OTE": retraceOte, "bon stop : celui du milieu": rankIs("milieu") } },
 ];

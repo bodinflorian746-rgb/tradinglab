@@ -16,7 +16,8 @@ export function rangeError(past: Candle[], z: ChartZone): string | null {
   const top = /^haut du range/i.test(z.label), bot = /^bas du range/i.test(z.label);
   if (!top && !bot) return null;
   const MR = medRange(past), lo = Math.min(z.y1, z.y2), hi = Math.max(z.y1, z.y2);
-  const body = past.slice(0, -2);
+  // (borne cassée puis retestée, zone `until` : la cassure et le retest viennent après le range)
+  const body = past.slice(0, -Math.max(2, z.until ?? 0));
   const out = body.filter((k) => (top ? k.c > hi + RANGE_TOL * MR : k.c < lo - RANGE_TOL * MR));
   if (out.length) return `« ${z.label} » franchi par ${out.length} clôture(s) avant la bougie déclencheuse`;
   // touche : la pointe de mèche atteint la bande (à TOUCH × MR près) depuis l'intérieur du range

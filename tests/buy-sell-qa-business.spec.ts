@@ -297,8 +297,9 @@ test.describe("QA métier BUY/SELL/NO TRADE V2", () => {
     const noTrades = pool.filter((t) => t.correctAnswer === "NO_TRADE");
     console.log(`Pool avancé : ${pool.length} setups, ${noTrades.length} NO_TRADE (${Math.round(noTrades.length / pool.length * 100)}%)`);
     expect(noTrades.length, `pool advanced doit contenir >= 5 NO_TRADE`).toBeGreaterThanOrEqual(5);
-    // Taux NO_TRADE >= 35%
-    expect(noTrades.length / pool.length).toBeGreaterThanOrEqual(0.35);
+    // Taux NO_TRADE entre 30 % et 40 % : assez de discipline, jamais une réponse réflexe (règle « joueur triche »)
+    expect(noTrades.length / pool.length).toBeGreaterThanOrEqual(0.3);
+    expect(noTrades.length / pool.length).toBeLessThanOrEqual(0.4);
   });
 
   test("V3 — les 5 nouveaux templates existent avec rationales complètes", () => {

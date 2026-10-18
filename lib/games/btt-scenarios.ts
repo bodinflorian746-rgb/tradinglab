@@ -7,7 +7,7 @@
 // l'entrée et le TP : aucune recette « toujours le même choix » ne gagne.
 
 import type { Candle, ChartZone } from "./shared";
-import { candle, levelTouches } from "./shared";
+import { candle, levelTouches, naturalFuture } from "./shared";
 import type { NotionId } from "./notions";
 import { bullSignal, legTo, mirrorCandles, mirrorZones, provenResistance, rally, range, isHammer, isBullEngulfing, isDoji, type Rng } from "./scenes";
 import { rangeScene, obScene, bullImpulse3Local } from "./bsnt-scenarios";
@@ -138,20 +138,29 @@ function futureFor(rng: Rng, m: number, s: Scene, o: BttOptimal, tps: Record<Tp,
   const holds = o.tp !== "ambitious" || s.level !== undefined;
   const reach = !holds ? T + (0.08 + rng() * 0.06) * m : T - (0.12 + rng() * 0.08) * m;
   const n = Math.max(2, Math.min(15 - out.length - 3, Math.ceil((reach - p) / (0.45 * m))));
-  const step = (reach - p) / n;
+  // (corps de tailles variées, une petite bougie contraire au milieu d'une longue montée : pas d'escalier)
+  let since = 0;
   for (let i = 0; i < n; i++) {
-    const c = i === n - 1 ? reach : p + step * (0.8 + rng() * 0.4);
+    const step = (reach - p) / (n - i);
+    const pause = i < n - 1 && since >= 3;
+    since = pause ? 0 : since + 1;
+    const c = i === n - 1 ? reach : pause ? Math.max(floor + 0.05 * m, p - (0.08 + rng() * 0.12) * m) : p + step * (0.55 + rng() * 0.9);
     const h = i === n - 1 && holds ? T + 0.06 * m : c + (0.05 + rng() * 0.16) * m;
     push({ o: p, c, h: Math.max(h, c, p), l: Math.min(p, c, Math.max(floor, Math.min(p, c) - (0.18 + rng() * 0.4) * m)) });
   }
   // ensuite : le niveau tient (le prix s'en écarte sans atteindre le TP suivant) ou la hausse continue
+  const after = out.length;
   while (out.length < 15) {
     const base = Math.max(floor, T - 0.45 * (T - last(s.past).c));
-    const c = !holds ? p + (0.1 + rng() * 0.25) * m : Math.max(base + 0.05 * m, p - (0.08 + rng() * 0.22) * m);
+    // (le niveau tient : le prix oscille sous lui, sans bougie plate collée au plancher)
+    let c = !holds ? p + (out.length === after || rng() < 0.35 ? -(0.06 + rng() * 0.1) : 0.1 + rng() * 0.25) * m : p + (rng() < 0.45 ? 0.04 + rng() * 0.1 : -(0.06 + rng() * 0.18)) * m;
+    if (holds) { c = Math.min(T - 0.15 * m, Math.max(base + 0.05 * m, c)); if (Math.abs(c - p) < 0.03 * m) c = p + (p - base > 0.2 * m ? -1 : 1) * (0.05 + rng() * 0.05) * m; }
     const top = !holds ? Infinity : T - 0.05 * m;
     push({ o: p, c, h: Math.min(Math.max(p, c) + (0.05 + rng() * 0.16) * m, Math.max(top, p, c)), l: Math.min(p, c, Math.max(base, Math.min(p, c) - (0.12 + rng() * 0.28) * m)) });
   }
-  return out;
+  // (après le TP seulement : la suite ne monte pas en escalier, sans toucher au trajet du plan)
+  // (après le TP seulement : le trajet du plan n'est jamais décalé ; la montée fait déjà une pause toutes les 4 bougies)
+  return naturalFuture(out, rng, m, after, 6);
 }
 
 function assemble(rng: Rng, m: number, s: Scene, o: BttOptimal): BttRaw {
@@ -316,7 +325,7 @@ const obHammer = (rng: Rng, m: number): Scene => {
 function sweepLow(strong: boolean) {
   return (rng: Rng, m: number, o: BttOptimal): Scene => {
     const L0 = 0;
-    const tip = L0 - (strong ? 0.5 + rng() * 0.1 : 0.62 + rng() * 0.1) * m;
+    const tip = L0 - (strong ? 0.5 + rng() * 0.1 : 0.7 + rng() * 0.1) * m;
     const E0 = L0 + (strong ? 0.96 + rng() * 0.08 : 0.3 + rng() * 0.06) * m;
     const deep = L0 + (strong ? 0.01 + rng() * 0.02 : 0.05 + rng() * 0.03) * m;
     const stops: [number, number, number] = strong

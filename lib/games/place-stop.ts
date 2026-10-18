@@ -17,7 +17,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges, naturalFuture,
 } from "./shared";
 import { withTracedZones, keepSwingTips } from "./zone-trace";
 import type { NotionId } from "./notions";
@@ -2225,7 +2225,8 @@ function scnNewsImminentWide(rng: () => number, m: number, d: Difficulty, mode: 
   p = newsClose;
   for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o + (0.5 + rng() * 0.5) * m;
+    // (reprise irrégulière : une petite bougie contraire, des corps variés, pas d'escalier)
+    const c = o + (i === 2 ? -(0.1 + rng() * 0.12) : 0.35 + rng() * 0.75) * m;
     fut.push(candle(o, c, (0.2 + rng() * 0.18) * m, (0.15 + rng() * 0.12) * m));
     p = c;
   }
@@ -2626,7 +2627,7 @@ function scnNewsImminentWideSell(rng: () => number, m: number, d: Difficulty, mo
   p = newsClose;
   for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o - (0.5 + rng() * 0.5) * m;
+    const c = o - (i === 2 ? -(0.1 + rng() * 0.12) : 0.35 + rng() * 0.75) * m;
     fut.push(candle(o, c, (0.15 + rng() * 0.12) * m, (0.2 + rng() * 0.18) * m));
     p = c;
   }
@@ -2951,7 +2952,9 @@ export function buildPlaceStopChart(
 ): PlaceStopChart {
   // (scénarios construits : la place du bon stop est voulue, pas de rééquilibrage)
   const built = PLACE_STOP_TEMPLATES.find((t) => t.id === setup)?.build;
-  const chart = built ? buildScenarioChart(setup, seed, volatility, difficulty) : rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed);
+  const chart0 = built ? buildScenarioChart(setup, seed, volatility, difficulty) : rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed);
+  // suite naturelle : pas d'escalier (série de bougies de même couleur aux corps identiques)
+  const chart = { ...chart0, future: naturalFuture(chart0.future, mulberry32((seed ^ 0x165667B1) >>> 0), VOL_MULT[volatility]) };
   const withTarget = setup === "tight_consolidation" ? chart : ensureCorrectStopRR(chart);
   // Passe de réalisme des bougies (niveaux clés : zones, entrée, TP, les 3 stops)
   // (passé : zones ; futur : aussi entrée, TP et stops, qui décident de l'issue)
