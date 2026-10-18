@@ -329,7 +329,7 @@ const inter = {
     const tight = cA - (cA - tipA) * (0.35 + rng() * 0.15);
     const wide = logical - (1.4 + rng() * 0.3) * m;
     return { past, fut: rally(rng, m, p, 5, R - 0.3 * m).candles,
-      zones: [{ kind: "support", y1: b.lo, y2: b.hi, label: "Bas du range", trigger: true }, { kind: "resistance", y1: R - 0.13 * m, y2: R + 0.13 * m, label: "Haut du range" }, { kind: "liquidity_low", y1: tipA, y2: cA - 0.03 * m, label: "Mèche du faux breakout" }],
+      zones: [{ kind: "support", y1: b.lo, y2: b.hi, label: "Bas du range", trigger: true }, { kind: "resistance", y1: R - 0.13 * m, y2: R + 0.13 * m, label: "Haut du range" }, { kind: "liquidity_low", y1: tipA, y2: cA - 0.03 * m, label: "Mèche du faux breakout", short: "Faux breakout" }],
       entry: p, tp: R - 0.3 * m, direction: "BUY",
       stops: [
         { type: "tight", price: tight, rationale: "✗ Dans la mèche du faux breakout, sous le bas du range : le prix y est déjà allé, il peut y retourner sans invalider le setup." },

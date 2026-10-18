@@ -69,6 +69,8 @@ export const CONTEXT_RULES: Record<string, ContextRule> = {
   "ps/news_vol_expansion":             { sessions: ["New York"], news: true },           // après FOMC
   "ps/news_imminent_wide":             { sessions: NY_OR_OVERLAP, news: true },          // NFP dans 5 min
   "ps/news_imminent_wide_sell":        { assets: ["EUR/USD"], sessions: ["New York"], news: true },  // FOMC, EUR/USD
+  "ps/extreme_volatility_buy":         { sessions: ["Londres", "Overlap", "New York"], volatility: "élevée", news: true }, // marché trois fois plus agité
+  "ps/extreme_volatility_sell":        { sessions: ["Londres", "Overlap", "New York"], volatility: "élevée", news: true },
   "ps/weekly_open_volatility":         { assets: ["EUR/USD", "XAU/USD"], sessions: ["Asie"] },      // lundi, marchés FX
   "ps/weekly_open_volatility_sell":    { assets: ["EUR/USD", "XAU/USD"], sessions: ["Asie"] },
   "ps/equal_lows_trap":                { assets: ["EUR/USD"] },                          // « à quelques pips près »

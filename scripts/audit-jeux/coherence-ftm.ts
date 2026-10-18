@@ -28,6 +28,11 @@ function generic(ch: ScenarioChart, t: MistakeTemplate): string[] {
   if (all.some((k) => k.h < Math.max(k.o, k.c) - E || k.l > Math.min(k.o, k.c) + E)) out.push("[dure] OHLC invalide");
   if (t.showLines && ch.entry === undefined) out.push("ligne d'entrée annoncée mais absente");
   if (ch.entry !== undefined && Math.abs(ch.entry - last(ch.past).c) > E) out.push("entrée ≠ dernière clôture (« tu prends ce trade maintenant »)");
+  // Règle PO : le bandeau « News macro majeure dans < 30 min » (macro dangereux) rend juste tout choix lié à la news ;
+  // un tel choix ne peut donc pas être un leurre (ex. refusé : Trouve l’erreur, weekend_gap_exposure)
+  const NEWS_MISTAKES = ["trade_before_news", "risk_not_reduced_news", "news_market_order"];
+  if (t.macroContext === "dangereux" && !NEWS_MISTAKES.includes(t.correctMistake) && t.decoyMistakes.some((m) => NEWS_MISTAKES.includes(m)))
+    out.push("bandeau news affiché mais un choix lié à la news est un leurre");
   const buy = t.direction === "BUY";
   if (ch.stop !== undefined && ch.entry !== undefined && (buy ? ch.stop >= ch.entry : ch.stop <= ch.entry)) out.push("stop du mauvais côté de l'entrée");
   if (ch.tp !== undefined && ch.entry !== undefined && (buy ? ch.tp <= ch.entry : ch.tp >= ch.entry)) out.push("TP du mauvais côté de l'entrée");

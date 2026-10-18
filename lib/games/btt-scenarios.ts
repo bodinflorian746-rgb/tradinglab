@@ -279,7 +279,7 @@ const rangeFakeout = (rng: Rng, m: number): Scene => {
   return {
     past,
     zones: [{ kind: "support", y1: b.lo, y2: b.hi, label: "Bas du range", trigger: true }, { kind: "resistance", y1: R - 0.13 * m, y2: R + 0.13 * m, label: "Haut du range" },
-      { kind: "liquidity_low", y1: tipA, y2: cA - 0.03 * m, label: "Mèche du faux breakout" }],
+      { kind: "liquidity_low", y1: tipA, y2: cA - 0.03 * m, label: "Mèche du faux breakout", short: "Faux breakout" }],
     deep: (b.lo + b.hi) / 2, stops: [b.lo - (0.1 + rng() * 0.04) * m, cA - (cA - tipA) * (0.35 + rng() * 0.15), tipA - (0.2 + rng() * 0.08) * m], level: R - 0.13 * m, tpGap: 0.45,
   };
 };

@@ -929,7 +929,7 @@ function shapeFakeoutAbove(rng: () => number, m: number): ShapeOutput {
   }
   return { past, future: fut, zones: [
     { kind: "resistance",     y1: R - 0.1, y2: R + 0.1, label: "Résistance" },
-    { kind: "liquidity_high", y1: R + 0.15, y2: fakeoutHigh, label: "Mèche du faux breakout" },
+    { kind: "liquidity_high", y1: R + 0.15, y2: fakeoutHigh, label: "Mèche du faux breakout", short: "Faux breakout" },
   ], ref: { swingLow: entryRef - 4 * m, swingHigh: fakeoutHigh, entryRef } };
 }
 

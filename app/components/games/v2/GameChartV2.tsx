@@ -272,6 +272,48 @@ const MIN_READABLE_SLOT = 3 / 0.78 + 0.05;
 const PACK_SHIFT = INLINE_TAG_H / 2 - 2;
 /** Écart vertical (px) entre deux étiquettes empilées : leur contour sombre les sépare */
 const PACK_GAP = 1;
+
+/**
+ * Étiquettes de lignes rapprochées (moins d'une hauteur de pastille) : empilées au bord droit,
+ * centrées sur leur groupe, chacune à au plus PACK_SHIFT px de sa ligne. Groupes : deux groupes
+ * voisins fusionnent tant que leurs piles se recouvrent, chaque pile recentrée (écart maximal
+ * minimal entre une pastille et sa ligne) ; une fusion qui éloignerait une pastille de sa ligne est
+ * refusée (ces pastilles se rangent alors côte à côte). Hauteur de chaque pastille empilée (clé →
+ * y), pour le placement réel comme pour le calcul de la marge d'étiquettes.
+ */
+function packLines(ls: { k: string; l: number }[], H: number): Map<string, number> {
+  const EPS = 0.01, STEP = INLINE_TAG_H + PACK_GAP, MAX_SHIFT = PACK_SHIFT;
+  const packed = new Map<string, number>();
+  type Pile = { m: { k: string; l: number }[]; top: number };
+  const recenter = (g: Pile) => {
+    const dev = g.m.map((x, q) => q * STEP - x.l);
+    g.top = -(Math.max(...dev) + Math.min(...dev)) / 2;
+  };
+  const valid = (g: Pile) => g.m.every((x, q) => Math.abs(g.top + q * STEP - x.l) <= MAX_SHIFT);
+  let piles: Pile[] = [...ls].sort((a, b) => a.l - b.l).map((x) => ({ m: [x], top: x.l }));
+  // Les lignes les plus proches d'abord : ce sont elles qui ne peuvent pas se partager la place
+  for (let merged = true; merged;) {
+    merged = false;
+    let pick: { q: number; g: Pile; d: number } | null = null;
+    for (let q = 0; q + 1 < piles.length; q++) {
+      const a = piles[q], b = piles[q + 1];
+      if (a.top + (a.m.length - 1) * STEP + STEP <= b.top + EPS) continue;
+      const g: Pile = { m: [...a.m, ...b.m], top: 0 };
+      recenter(g);
+      const d = b.m[0].l - a.m[a.m.length - 1].l;
+      if (valid(g) && (!pick || d < pick.d)) pick = { q, g, d };
+    }
+    if (pick) {
+      piles = [...piles.slice(0, pick.q), pick.g, ...piles.slice(pick.q + 2)];
+      merged = true;
+    }
+  }
+  for (const g of piles) {
+    if (g.m.length < 2 || !valid(g)) continue;
+    g.m.forEach((x, q) => packed.set(x.k, clamp(g.top + q * STEP, INLINE_TAG_H / 2 + 1, H - INLINE_TAG_H / 2 - 1)));
+  }
+  return packed;
+}
 /** Une étiquette de zone « touche » sa zone quand son bord en est à au plus ZONE_TOUCH px (même seuil
  *  que audit:jeux) : au-delà, elle peut se lire comme celle d’une zone voisine */
 const ZONE_TOUCH = 4;
@@ -376,6 +418,10 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
   // une bande lui est réservée au-dessus (ou au-dessous) des bougies.
   const fullColW = tagLabels.length ? Math.max(...tagLabels.map(inlineTagW)) + 10 : 0;
   const lineColW = lineLabels.length ? Math.max(...lineLabels.map(inlineTagW)) + 10 : 0;
+  // Sans l’étiquette de l’erreur marquée : elle peut quitter sa marque pour une bande (même couleur),
+  // elle n’élargit donc jamais la marge (son libellé long tassait les bougies sur 30 % du cadre)
+  const markFree = tagLabels.filter((l, i) => !(mark && showMark && l === mark.label && i === tagLabels.length - 1));
+  const colNoMarkW = markFree.length ? Math.max(...markFree.map(inlineTagW)) + 10 : 0;
   const LABEL_BAND = INLINE_TAG_H + 8;
   // Verdict en bandeau (élément marqué) : hauteur réservée en haut, 12 px sous le bandeau
   const bannerBottom = mark && mode === "verdict" ? (desktop ? BANNER_BOTTOM.desktop : BANNER_BOTTOM.mobile) : 0;
@@ -427,10 +473,12 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
     if (!linePills.length || W <= 0 || H <= 0) return [];
     const { ty, boxes } = frame(colW, bandTop, bandBottom);
     const shifts = [0, 2, -2, 4, -4, 6, -6, 8, -8].filter((d) => Math.abs(d) <= PACK_SHIFT);
-    return [...linePills].sort((a, b) => inlineTagW(b[0]) - inlineTagW(a[0])).filter(([label, price]) => {
+    // lignes rapprochées : d'abord la hauteur que leur donne la pile, comme au placement réel
+    const packed = packLines(linePills.map(([, price], i) => ({ k: String(i), l: ty(price) })), H);
+    return linePills.map((lp, i) => [lp, i] as const).sort((a, b) => inlineTagW(b[0][0]) - inlineTagW(a[0][0])).filter(([[label, price], i]) => {
       const w = inlineTagW(label);
-      for (const d of shifts) {
-        const y = ty(price) + d;
+      const ys = [...(packed.has(String(i)) ? [packed.get(String(i))!] : []), ...shifts.map((d) => ty(price) + d)];
+      for (const y of ys) {
         if (y < INLINE_TAG_H / 2 + 1 || y > H - INLINE_TAG_H / 2 - 1) continue;
         for (let x = W - padX - w; x >= 2; x -= 2) if (!boxes.some((c) => x < c.x2 && x + w > c.x1 && y - INLINE_TAG_H / 2 < c.y2 && y + INLINE_TAG_H / 2 > c.y1)) {
           boxes.push({ x1: x - INLINE_TAG_GAP, x2: x + w + INLINE_TAG_GAP, y1: y - INLINE_TAG_H / 2 - PACK_GAP, y2: y + INLINE_TAG_H / 2 + PACK_GAP });
@@ -438,7 +486,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
         }
       }
       return true;
-    });
+    }).map(([lp]) => lp);
   };
   // Étiquettes flottantes sans place libre (ni bougie ni étiquette de ligne) dans un cadrage donné
   const misfits = (colW: number, bandTop: number, bandBottom: number) => {
@@ -447,9 +495,10 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
     // les étiquettes de lignes, posées d'abord au bord droit sur leur ligne, sont aussi des obstacles ;
     // empilées si leurs lignes sont proches, elles s'en écartent d'au plus PACK_SHIFT px
     for (const [l, p] of linePills) boxes.push({ x1: W - padX - inlineTagW(l) - INLINE_TAG_GAP, x2: W, y1: ty(p) - INLINE_TAG_H / 2 - 2 - PACK_SHIFT, y2: ty(p) + INLINE_TAG_H / 2 + 2 + PACK_SHIFT });
-    // Posées une à une dans l'ordre du placement réel (celle de l'erreur sur sa ligne d'abord, puis
-    // la plus longue) : chacune devient un obstacle pour les suivantes
-    return [...floating].sort((a, b) => Number(b.line) - Number(a.line) || inlineTagW(b.label) - inlineTagW(a.label)).filter(({ label, price, line, isMark, zone }) => {
+    // Posées une à une dans l'ordre du placement réel (celle de l'erreur sur sa ligne d'abord, les
+    // zones avant l'erreur hors ligne, qui peut s'éloigner de sa marque, puis la plus longue) :
+    // chacune devient un obstacle pour les suivantes
+    return [...floating].sort((a, b) => Number(b.line) - Number(a.line) || Number(a.isMark && !a.line) - Number(b.isMark && !b.line) || inlineTagW(b.label) - inlineTagW(a.label)).filter(({ label, price, line, isMark, zone }) => {
       const w = inlineTagW(label);
       // zone : d'abord les places qui touchent la zone (comme au placement réel)
       const touch: number[] = [];
@@ -475,9 +524,10 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
   const bandSide = (x: { price: number; line: boolean; isMark: boolean }) => x.line ? null
     : x.isMark ? (x.price >= (min + max) / 2 ? "top" : "bottom")
     : x.price >= max - 0.2 * range ? "top" : x.price <= min + 0.2 * range ? "bottom" : null;
+  // (deux rangées quand deux étiquettes en demandent une du même côté : zone et erreur marquée)
   const bandsFor = (m: { price: number; line: boolean; isMark: boolean }[]) => ({
-    top: m.some((x) => bandSide(x) === "top") ? LABEL_BAND : 0,
-    bottom: m.some((x) => bandSide(x) === "bottom") ? LABEL_BAND : 0,
+    top: Math.min(2, m.filter((x) => bandSide(x) === "top").length) * LABEL_BAND,
+    bottom: Math.min(2, m.filter((x) => bandSide(x) === "bottom").length) * LABEL_BAND,
   });
   // Marge élargie, d'une étiquette à la fois, tant qu'une étiquette de ligne n'a pas de place
   // (jamais au point d'écraser les bougies : le corps garde au moins 3 fois la largeur de la mèche,
@@ -504,8 +554,17 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
     }
     // (colonne pleine plafonnée aussi : une étiquette de zone trop longue se pose sur les bougies
     // plutôt que de les écraser)
-    const full = Math.max(lineColW, Math.min(fullColW, maxCol));
-    return widened({ col: full, ...bandsFor(misfits(full, 0, 0)) });
+    const full = Math.max(lineColW, Math.min(colNoMarkW, maxCol));
+    // La plus petite marge (à 8 px près) où chaque étiquette trouve sa place : une étiquette de zone
+    // peut déborder sur les emplacements libres de la suite (la marge pleine laissait la moitié droite
+    // du cadre vide en 390)
+    const fits = (c: number) => { const b = bandsFor(misfits(c, 0, 0)); return misfits(c, b.top, b.bottom).length ? null : { col: c, ...b }; };
+    let best: { col: number; top: number; bottom: number } | null = null;
+    for (let lo = lineColW, hi = full; hi - lo > 8;) {
+      const mid = (lo + hi) / 2, f = fits(mid);
+      if (f) { best = f; hi = mid; } else lo = mid;
+    }
+    return widened(best ?? { col: full, ...bandsFor(misfits(full, 0, 0)) });
   })();
   const tagColW = inline
     ? labelLayout.col
@@ -709,45 +768,19 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
       const onLine = (k: string) => !k.startsWith("zone") && (k !== "markTag" || mark?.kind === "line");
       // Lignes d'abord, et la plus longue étiquette d'abord : les courtes (TP, Entrée) trouvent
       // leur place dans les trous, la longue (libellé de l'erreur) garde le bord libre
-      const placeOrder = [...specs].sort((a, b) => Number(onLine(b.key)) - Number(onLine(a.key)) || inlineTagW(b.label) - inlineTagW(a.label) || toY(a.price) - toY(b.price));
+      // (l'erreur hors ligne après les zones : elle peut s'éloigner de sa marque, une zone non)
+      const roams = (k: string) => k === "markTag" && !onLine(k);
+      const placeOrder = [...specs].sort((a, b) => Number(onLine(b.key)) - Number(onLine(a.key)) || Number(roams(a.key)) - Number(roams(b.key)) || inlineTagW(b.label) - inlineTagW(a.label) || toY(a.price) - toY(b.price));
       // Lignes rapprochées (moins d'une hauteur de pastille) : leurs pastilles sont empilées
       // au bord droit, centrées sur le groupe, chacune décalée d'au plus 8 px pour rester
       // traversée par sa ligne ; sinon elles glissaient à gauche, sur les bougies.
-      const STEP = INLINE_TAG_H + PACK_GAP, MAX_SHIFT = PACK_SHIFT;
-      const packed = new Map<string, number>();
+      const MAX_SHIFT = PACK_SHIFT;
       const ls = placeOrder.filter((s) => onLine(s.key)).map((s) => ({ k: s.key, l: toY(s.price) })).sort((a, b) => a.l - b.l);
       // Groupes : on fusionne deux groupes voisins tant que leurs piles se recouvrent ; chaque
       // pile est recentrée (écart maximal minimal entre une pastille et sa ligne). Une fusion
       // qui éloignerait une pastille de sa ligne est refusée : ces pastilles se rangent alors
       // côte à côte, à la première place libre le long de leur ligne.
-      type Pile = { m: { k: string; l: number }[]; top: number };
-      const recenter = (g: Pile) => {
-        const dev = g.m.map((x, q) => q * STEP - x.l);
-        g.top = -(Math.max(...dev) + Math.min(...dev)) / 2;
-      };
-      const valid = (g: Pile) => g.m.every((x, q) => Math.abs(g.top + q * STEP - x.l) <= MAX_SHIFT);
-      let piles: Pile[] = ls.map((x) => ({ m: [x], top: x.l }));
-      // Les lignes les plus proches d'abord : ce sont elles qui ne peuvent pas se partager la place
-      for (let merged = true; merged;) {
-        merged = false;
-        let pick: { q: number; g: Pile; d: number } | null = null;
-        for (let q = 0; q + 1 < piles.length; q++) {
-          const a = piles[q], b = piles[q + 1];
-          if (a.top + (a.m.length - 1) * STEP + STEP <= b.top + EPS) continue;
-          const g: Pile = { m: [...a.m, ...b.m], top: 0 };
-          recenter(g);
-          const d = b.m[0].l - a.m[a.m.length - 1].l;
-          if (valid(g) && (!pick || d < pick.d)) pick = { q, g, d };
-        }
-        if (pick) {
-          piles = [...piles.slice(0, pick.q), pick.g, ...piles.slice(pick.q + 2)];
-          merged = true;
-        }
-      }
-      for (const g of piles) {
-        if (g.m.length < 2 || !valid(g)) continue;
-        g.m.forEach((x, q) => packed.set(x.k, clamp(g.top + q * STEP, INLINE_TAG_H / 2 + 1, H - INLINE_TAG_H / 2 - 1)));
-      }
+      const packed = packLines(ls, H);
       for (const s of placeOrder) {
         const w = inlineTagW(s.label);
         const y0 = clamp(packed.get(s.key) ?? toY(s.price), INLINE_TAG_H / 2 + 1, H - INLINE_TAG_H / 2 - 1);
@@ -881,6 +914,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
         height={H}
         viewBox={`0 0 ${W} ${H}`}
         role="img"
+        data-plot-w={Math.round(slot * nSlots)}
         aria-label={zones[0] ? `${zones[0].label} — ${visible.length} bougies` : `${visible.length} bougies`}
         style={cssVars({ "--spot": `${spotMs}ms`, "--v2-candle-step": `${stepMs}ms` })}
       >

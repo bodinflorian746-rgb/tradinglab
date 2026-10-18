@@ -203,7 +203,7 @@ const iFibMisread: NonNullable<FtmScenario["build"]> = (rng, m) => {
 /** Rebond sur un support, TP posé au-delà d'une résistance de l'UT supérieure */
 const iTpBeyondHtf: NonNullable<FtmScenario["build"]> = (rng, m) => {
   const r = bTpBeyond(rng, m);
-  return { ...r, zones: [r.zones[0], { ...r.zones[1], label: "Résistance UT supérieure" }] };
+  return { ...r, zones: [r.zones[0], { ...r.zones[1], label: "Résistance UT supérieure", short: "Résistance UT sup." }] };
 };
 /** Range : achat au haut du range, sans clôture au-delà */
 const iRangeTopBought: NonNullable<FtmScenario["build"]> = (rng, m) => {

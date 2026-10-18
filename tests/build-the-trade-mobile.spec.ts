@@ -65,8 +65,8 @@ test("gameplay débutant — 3-step build + valider + reveal", async ({ page }) 
 
   // Step 1 : Entry → cliquer "Confirmation"
   await page.getByRole("button", { name: /Confirmation/i }).click();
-  // Step 2 : Stop → cliquer "Logique"
-  await page.getByRole("button", { name: /^Logique$/i }).click();
+  // Step 2 : Stop → cliquer "Médian" (stops nommés par leur place : Proche / Médian / Éloigné)
+  await page.getByRole("button", { name: /^Médian$/i }).click();
   // Step 3 : TP → cliquer "Équilibré"
   await page.getByRole("button", { name: /Équilibré/i }).click();
 
@@ -91,7 +91,7 @@ test("gameplay avancé — 0 erreur console", async ({ page }) => {
 
   await page.getByRole("button", { name: /Avancé/ }).click();
   await page.getByRole("button", { name: /Confirmation/i }).click();
-  await page.getByRole("button", { name: /^Logique$/i }).click();
+  await page.getByRole("button", { name: /^Médian$/i }).click();
   await page.getByRole("button", { name: /Équilibré/i }).click();
   await page.getByRole("button", { name: /Valider le trade/i }).click();
   await expect(page.getByRole("button", { name: /Scénario suivant|Voir le bilan/i })).toBeVisible({ timeout: 8000 });
@@ -110,7 +110,7 @@ test("screenshots — picker + build + feedback", async ({ page }) => {
   await page.screenshot({ path: "test-results/btt-build.png", fullPage: false });
 
   await page.getByRole("button", { name: /Confirmation/i }).click();
-  await page.getByRole("button", { name: /^Logique$/i }).click();
+  await page.getByRole("button", { name: /^Médian$/i }).click();
   await page.getByRole("button", { name: /Équilibré/i }).click();
   await page.screenshot({ path: "test-results/btt-build-complete.png", fullPage: false });
 

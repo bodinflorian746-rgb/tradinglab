@@ -577,7 +577,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     macroContext: "dangereux",
     context: "Tu as un BUY ouvert sur XAU/USD depuis 19h55. FOMC dans 5 minutes (news + conférence Powell pendant 1h). Tu décides de laisser courir avec ton lot et ton SL habituels.",
     correctMistake: "position_held_through_event",
-    decoyMistakes: ["stop_too_tight", "oversized_position", "trade_before_news"],
+    decoyMistakes: ["stop_too_tight", "oversized_position", "trade_against_htf"],
     explanation: "Sur un FOMC suivi de la conférence de Powell, l'or (XAU/USD) peut bouger de 50 à 100 $ en quelques minutes. Ton SL standard risque d'être traversé avec du slippage. Couper la position, réduire le lot ou élargir fortement le SL sont trois options logiques.",
     lessons: {
       advanced:     "Les gestionnaires de risque réduisent souvent l'exposition avant un événement capable de faire bouger les prix. Pendant Powell, même un bon setup peut être balayé par une phrase mal interprétée.",
@@ -620,7 +620,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     chartShape: "approach_support",
     direction: "BUY",
     htfBias: "bullish",
-    macroContext: "dangereux",
+    macroContext: "normal",
     context: "Vendredi 22h45, fermeture du forex dans 15 minutes. Tu ouvres un BUY sur EUR/USD, sur un support de l'UT supérieure testé plusieurs fois, avec ta taille de lot habituelle. Le setup est valide.",
     correctMistake: "weekend_gap_exposure",
     decoyMistakes: ["stop_too_tight", "oversized_position", "trade_before_news"],
@@ -773,7 +773,7 @@ function shApproachResistance(rng: () => number, m: number): { chart: ScenarioCh
   }
   const entry = p;
   return { chart: finishChart(past, [], [
-    { kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance UT supérieure" },
+    { kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance UT supérieure", short: "Résistance UT sup." },
   ], [entry]), R, entry };
 }
 
@@ -812,7 +812,7 @@ function shApproachSupport(rng: () => number, m: number): { chart: ScenarioChart
   }
   const entry = p;
   return { chart: finishChart(past, [], [
-    { kind: "support", y1: S - 0.1, y2: S + 0.1, label: "Support UT supérieure" },
+    { kind: "support", y1: S - 0.1, y2: S + 0.1, label: "Support UT supérieure", short: "Support UT sup." },
   ], [entry]), S, entry };
 }
 

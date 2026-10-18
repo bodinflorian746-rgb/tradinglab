@@ -995,7 +995,7 @@ function genRejectionResistance(rng: () => number, m: number, d: Difficulty): Bu
   }
   return finalize({
     past, future: fut,
-    zones: [{ kind: "resistance", y1: R - 0.2, y2: R + 0.2, label: "Résistance UT supérieure" }],
+    zones: [{ kind: "resistance", y1: R - 0.2, y2: R + 0.2, label: "Résistance UT supérieure", short: "Résistance UT sup." }],
   });
 }
 
@@ -1042,7 +1042,7 @@ function genBounceSupport(rng: () => number, m: number, d: Difficulty): BuySellC
   }
   return finalize({
     past, future: fut,
-    zones: [{ kind: "support", y1: S - 0.2, y2: S + 0.2, label: "Support UT supérieure" }],
+    zones: [{ kind: "support", y1: S - 0.2, y2: S + 0.2, label: "Support UT supérieure", short: "Support UT sup." }],
   });
 }
 

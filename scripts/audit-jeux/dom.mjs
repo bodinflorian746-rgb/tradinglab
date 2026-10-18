@@ -16,7 +16,7 @@
 //    bougie (corps ou mèche), aucune hors du graphique, au plus 4 en 390,
 //    mêmes noms que les boutons, aucun doublon avec une légende ;
 //  - graphique (question et verdict) : zones derrière les bougies, corps au moins 3 fois plus
-//    large que la mèche, graphique entier dans l'écran en 390 × 844 sans défiler (sous le
+//    large que la mèche, bougies (suite comprise) sur au moins 45 % du cadre, graphique entier dans l'écran en 390 × 844 sans défiler (sous le
 //    bandeau du site, au-dessus de la barre du navigateur) ;
 //  - verdict : état (bon / partiel / faux), couleurs du titre et des points
 //    cohérentes, maximum affiché ; barème simple : bon > 0, faux = 0 (sans signe) ;
@@ -166,7 +166,7 @@ const measureLabels = (page, { mobile, buttons, ps }) => page.evaluate(({ mobile
 // est au moins 3 fois plus large que sa mèche ; en mobile (390), le graphique tient en entier dans
 // l'écran tel que le joueur le voit, sans défiler : sous le bandeau du site, au-dessus de la barre
 // du navigateur.
-const measureChart = (page, { mobile }) => page.evaluate(({ mobile }) => {
+const measureChart = (page, { mobile }) => page.evaluate(({ mobile, MIN_PLOT_SHARE }) => {
   const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
   if (!svg) return ["graphique absent"];
   const errs = [];
@@ -180,6 +180,11 @@ const measureChart = (page, { mobile }) => page.evaluate(({ mobile }) => {
     const wick = parseFloat(l.getAttribute("stroke-width")), body = parseFloat(r.getAttribute("width"));
     if (body < 3 * wick - 1e-6) { errs.push(`corps trop étroit : ${body.toFixed(1)} px pour une mèche de ${wick.toFixed(1)} px (au moins 3 fois)`); break; }
   }
+  // Place des bougies (emplacements de la suite compris) : au moins 45 % du cadre, la colonne
+  // d’étiquettes ne les tasse jamais dans un coin (ex. refusé : Trouve l’erreur, weekend_gap_exposure,
+  // verdict en 390 avec les bougies sur 30 % de la largeur)
+  const plotW = +svg.getAttribute("data-plot-w"), svgW = svg.getBoundingClientRect().width;
+  if (svgW > 0 && plotW / svgW < MIN_PLOT_SHARE) errs.push(`bougies tassées par les étiquettes : ${Math.round((100 * plotW) / svgW)} % du cadre (au moins ${100 * MIN_PLOT_SHARE} %)`);
   if (mobile) {
     // Zone visible : sous le bandeau collant du site, au-dessus de la barre du navigateur
     // (fenêtre de MOBILE_H px : 844 moins les barres de Safari)
@@ -188,7 +193,7 @@ const measureChart = (page, { mobile }) => page.evaluate(({ mobile }) => {
     if (r.top < top - 1 || r.bottom > bottom + 1) errs.push(`graphique hors de l'écran : de ${Math.round(r.top)} à ${Math.round(r.bottom)} px pour une zone visible de ${Math.round(top)} à ${bottom} px`);
   }
   return errs;
-}, { mobile });
+}, { mobile, MIN_PLOT_SHARE: 0.45 });
 
 const STOP_BUTTONS = { selector: ".tsx-v2 button.v2-stop-choice", keys: "^stop\\d" };
 const stepButtons = (step) => ({ selector: `.tsx-v2 [data-pick^="${step}:"]`, keys: "^cand\\d" });
@@ -310,7 +315,9 @@ async function session(browser, slug, loc, w) {
       await page.waitForTimeout(1500);
       add(`verdict ${round + 1}`, await probeVerdict(page));
       add(`verdict ${round + 1} étiquettes`, await probeLabels(page, { mobile, buttons: null, ps: slug === "place-stop" }));
-      add(`verdict ${round + 1} graphique`, await measureChart(page, { mobile }));
+      // (énoncé du round dans le message : le round fautif se retrouve sans rejouer la partie)
+      const lead = (await page.locator(".tsx-v2 .v2-lead").first().innerText().catch(() => "")).slice(0, 50);
+      add(`verdict ${round + 1} graphique « ${lead} »`, await measureChart(page, { mobile }));
       const pl = await probeLines(page);
       add(`verdict ${round + 1} lignes`, pl.errs);
       lineCount += pl.n; markCount += pl.marks;
@@ -343,6 +350,8 @@ const HARD = [
   // colonne d'étiquettes qui écrasait les bougies, étiquettes de zone éloignées (parties jouées en 390, 2026-10-17)
   ["place-stop", "Avancé", 5042], ["place-stop", "Intermédiaire", 5210],
   ["build-the-trade", "Débutant", 5028], ["build-the-trade", "Avancé", 5413],
+  // marque d’erreur longue qui tassait les bougies sur 30 % du cadre au verdict (parties jouées en 390, 2026-10-18)
+  ["find-the-mistake", "Avancé", 5056],
 ];
 async function hardRounds(browser) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: MOBILE_H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
@@ -445,6 +454,10 @@ const MUTATIONS = {
   "corps trop étroit": [/corps trop étroit/, () => {
     const g = [...document.querySelectorAll(".tsx-v2 .v2-chart svg.v2-svg .v2-candle")].at(-1);
     g.querySelector("line").setAttribute("stroke-width", g.querySelector("rect").getAttribute("width"));
+  }],
+  "bougies tassées par les étiquettes": [/bougies tassées/, () => {
+    const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
+    svg.setAttribute("data-plot-w", String(Math.round(0.3 * svg.getBoundingClientRect().width)));
   }],
   "graphique hors de l'écran": [/graphique hors de l'écran/, () => {
     document.querySelector(".tsx-v2 .v2-chart").style.marginTop = "900px";

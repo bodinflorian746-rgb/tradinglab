@@ -33,6 +33,9 @@ for (const [g, gen, build] of games) for (const d of ["beginner", "intermediate"
     if (/après FOMC/.test(i.context) && i.session !== "New York") err(`${g} après FOMC hors New York`, tag);
     if (!SESSION_ASSETS[i.session as keyof typeof SESSION_ASSETS].includes(i.asset)) err(`${g} actif non tradé dans la session`, tag);
     if (i.volatility === "élevée" && CALM_SESSIONS.has(i.session) && !news) err(`${g} vol. élevée en session calme sans news`, tag);
+    // Texte qui annonce un marché très agité (au présent ; « peut bouger 2 à 3 fois plus » avant une news reste calme) : la volatilité affichée le dit aussi (ex. refusé : Place ton Stop,
+    // extreme_volatility_buy, « trois fois plus que sa moyenne » avec « Volatilité faible »)
+    if (/bouge (trois|3) fois plus|expansion violente|volatilité explosive/i.test(i.context) && i.volatility !== "élevée") err(`${g} marché très agité annoncé, volatilité affichée ${i.volatility}`, tag);
     if (i.spread === "faible" && i.session === "Heures mortes") err(`${g} spread faible en heures mortes`, tag);
     if (i.spread === "élevé" && i.session === "Overlap" && !news) err(`${g} spread élevé en Overlap sans news`, tag);
     const named = ["EUR/USD", "XAU/USD", "BTC/USD", "NASDAQ"].filter((a) => i.context.includes(a)).concat(/\bBTC\b/.test(i.context) && !i.context.includes("BTC/USD") ? ["BTC/USD"] : []);

@@ -1071,6 +1071,10 @@ function scnPullbackBull(rng: () => number, m: number, d: Difficulty, mode: Plac
     past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.2 + rng() * 0.2) * m));
     p = c;
   }
+  // Mèche de rejet d’au moins 0,5 m sous la clôture du repli : sans elle, le swing low collait à
+  // l’entrée et le stop « trop serré » tombait à quelques points (R/R 1:34, étiquettes empilées)
+  const lastK = past[past.length - 1];
+  lastK.l = Math.min(lastK.l, lastK.c - 0.5 * m);
   const swingLow = Math.min(...past.slice(-5).map((k) => k.l));
   const entry = p;
   const sp = levelSpread(getSpread(d, mode), entry, swingLow + 0.04, swingLow - 0.04, m);
@@ -1104,6 +1108,9 @@ function scnPullbackBear(rng: () => number, m: number, d: Difficulty, mode: Plac
     past.push(candle(o, c, (0.2 + rng() * 0.2) * m, (0.15 + rng() * 0.15) * m));
     p = c;
   }
+  // (miroir : mèche de rejet d’au moins 0,5 m au-dessus de la clôture du repli)
+  const lastK = past[past.length - 1];
+  lastK.h = Math.max(lastK.h, lastK.c + 0.5 * m);
   const swingHigh = Math.max(...past.slice(-5).map((k) => k.h));
   const entry = p;
   const sp = levelSpread(getSpread(d, mode), entry, swingHigh - 0.04, swingHigh + 0.04, m);
@@ -1152,7 +1159,7 @@ function scnBounceSupport(rng: () => number, m: number, d: Difficulty, mode: Pla
   buildBuyFuture(rng, m, entry, sp, fut);
   return finalize({
     past, fut,
-    zones: [{ kind: "support", y1: S - 0.1, y2: S + 0.1, label: "Support UT supérieure" }],
+    zones: [{ kind: "support", y1: S - 0.1, y2: S + 0.1, label: "Support UT supérieure", short: "Support UT sup." }],
     entry,
     tp: entry + 3.5 * m,
     direction: "BUY",
@@ -1194,7 +1201,7 @@ function scnRejectionResistance(rng: () => number, m: number, d: Difficulty, mod
   buildSellFuture(rng, m, entry, sp, fut);
   return finalize({
     past, fut,
-    zones: [{ kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance UT supérieure" }],
+    zones: [{ kind: "resistance", y1: R - 0.1, y2: R + 0.1, label: "Résistance UT supérieure", short: "Résistance UT sup." }],
     entry,
     tp: entry - 3.5 * m,
     direction: "SELL",
@@ -1258,7 +1265,7 @@ function scnFakeoutAboveResistance(rng: () => number, m: number, d: Difficulty, 
     past, fut,
     zones: [
       { kind: "resistance",     y1: R - 0.1,            y2: R + 0.1,            label: "Résistance" },
-      { kind: "liquidity_high", y1: R + 0.15,           y2: fakeoutHigh,        label: "Mèche du faux breakout" },
+      { kind: "liquidity_high", y1: R + 0.15,           y2: fakeoutHigh,        label: "Mèche du faux breakout", short: "Faux breakout" },
     ],
     entry,
     // TP étendu pour garantir RR_logical >= 2 sur ce setup où la structure
@@ -2024,7 +2031,7 @@ function scnFakeoutThenRetest(rng: () => number, m: number, d: Difficulty, mode:
     past, fut,
     zones: [
       { kind: "resistance",     y1: swingHigh - 0.05 * m, y2: swingHigh + 0.05 * m, label: "Swing high" },
-      { kind: "liquidity_high", y1: swingHigh + 0.05 * m, y2: fakeoutWick,          label: "Mèche du faux breakout" },
+      { kind: "liquidity_high", y1: swingHigh + 0.05 * m, y2: fakeoutWick,          label: "Mèche du faux breakout", short: "Faux breakout" },
     ],
     entry,
     tp: entry - Math.max(3.5 * m, Math.abs(entry - logicalPrice) * 2.2),
@@ -2119,17 +2126,20 @@ function scnExtremeVolatilityBuy(rng: () => number, m: number, d: Difficulty, mo
   }
   const entry = p;
   // Stops en unités de m (NON-effM) : c'est ça le piège
-  const tightPrice = entry - 0.4 * m;
-  const lttPrice   = entry - 1.2 * m;  // SL "standard" inadapté à la vol ×3
+  // (écartés d’au moins 0,7 m : à 0,4 m, leurs étiquettes et celle de l’entrée se rangeaient côte à
+  // côte et tassaient les bougies en 390)
+  const tightPrice = entry - 0.7 * m;
+  const lttPrice   = entry - 1.6 * m;  // SL "standard" inadapté à la vol ×3
   const widePrice  = entry - 3.5 * m;  // BONNE RÉPONSE
   // Future : 1 dip large qui balaye tight ET ltt, mais pas wide
   const dipLow = entry - 2.2 * m;
   const dipClose = entry - 0.3 * m;
   fut.push(explicitCandle(p, dipClose, p + 0.3 * effM, dipLow));
   p = dipClose;
+  // reprise jusqu’au TP sans le dépasser de beaucoup (l’échelle du verdict reste celle de la question)
   for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o + (0.4 + rng() * 0.5) * effM;
+    const c = o + (0.36 + rng() * 0.24) * effM;
     fut.push(candle(o, c, (0.25 + rng() * 0.22) * effM, (0.2 + rng() * 0.18) * effM));
     p = c;
   }
@@ -2167,8 +2177,8 @@ function scnExtremeVolatilitySell(rng: () => number, m: number, d: Difficulty, m
     p = c;
   }
   const entry = p;
-  const tightPrice = entry + 0.4 * m;
-  const lttPrice   = entry + 1.2 * m;
+  const tightPrice = entry + 0.7 * m;
+  const lttPrice   = entry + 1.6 * m;
   const widePrice  = entry + 3.5 * m;
   // Future : 1 bump large qui touche tight + ltt, pas wide
   const bumpHigh = entry + 2.2 * m;
@@ -2177,7 +2187,7 @@ function scnExtremeVolatilitySell(rng: () => number, m: number, d: Difficulty, m
   p = bumpClose;
   for (let i = 0; i < 5; i++) {
     const o = p;
-    const c = o - (0.4 + rng() * 0.5) * effM;
+    const c = o - (0.36 + rng() * 0.24) * effM;
     fut.push(candle(o, c, (0.2 + rng() * 0.18) * effM, (0.25 + rng() * 0.22) * effM));
     p = c;
   }
@@ -2295,7 +2305,7 @@ function scnLiquidityHuntZone(rng: () => number, m: number, d: Difficulty, mode:
     past, fut,
     zones: [
       { kind: "support",       y1: swingLowTip - 0.05 * m, y2: swingLowTip + 0.05 * m, label: "Swing low évident", at: i_swingLow },
-      { kind: "liquidity_low", y1: dipLow - 0.05 * m,   y2: swingLowTip - 0.1 * m,  label: "Zone de chasse aux stops" },
+      { kind: "liquidity_low", y1: dipLow - 0.05 * m,   y2: swingLowTip - 0.1 * m,  label: "Zone de chasse aux stops", short: "Chasse aux stops" },
     ],
     entry,
     tp: entry + 4.5 * m,
@@ -2477,7 +2487,7 @@ function scnFakeoutZoneWide(rng: () => number, m: number, d: Difficulty, mode: P
     past, fut,
     zones: [
       { kind: "resistance",     y1: R - 0.05 * m, y2: R + 0.05 * m,    label: "Résistance" },
-      { kind: "liquidity_high", y1: R + 0.1 * m,  y2: Math.max(fake1High, fake2High), label: "Faux breakouts précédents" },
+      { kind: "liquidity_high", y1: R + 0.1 * m,  y2: Math.max(fake1High, fake2High), label: "Faux breakouts précédents", short: "Faux breakouts" },
     ],
     entry,
     tp: entry - 5.0 * m,
@@ -2698,7 +2708,7 @@ function scnLiquidityHuntZoneSell(rng: () => number, m: number, d: Difficulty, m
     past, fut,
     zones: [
       { kind: "resistance",     y1: swingHighTip - 0.05 * m, y2: swingHighTip + 0.05 * m, label: "Swing high évident", at: i_swingHigh },
-      { kind: "liquidity_high", y1: swingHighTip + 0.1 * m,  y2: bumpHigh + 0.05 * m,  label: "Zone de chasse aux stops" },
+      { kind: "liquidity_high", y1: swingHighTip + 0.1 * m,  y2: bumpHigh + 0.05 * m,  label: "Zone de chasse aux stops", short: "Chasse aux stops" },
     ],
     entry,
     tp: entry - 4.5 * m,
