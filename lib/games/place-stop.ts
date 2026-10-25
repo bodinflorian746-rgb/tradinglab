@@ -2206,28 +2206,32 @@ function scnExtremeVolatilitySell(rng: () => number, m: number, d: Difficulty, m
   });
 }
 
+/** Passé d'avant news : jambe dans le sens du trade (6 bougies, un léger repli), consolidation calme
+ *  (8 bougies), puis une petite poussée vers l'entrée (2 bougies). dir = 1 achat, -1 vente. */
+function newsLeg(past: Candle[], rng: () => number, m: number, dir: 1 | -1, get: () => number, set: (v: number) => void) {
+  const push = (body: number, up: number, down: number) => {
+    const o = get(), c = o + dir * body;
+    past.push(dir > 0 ? candle(o, c, up, down) : candle(o, c, down, up));
+    set(c);
+  };
+  for (let i = 0; i < 6; i++) push(i === 3 ? -(0.12 + rng() * 0.1) * m : (0.42 + rng() * 0.25) * m, (0.1 + rng() * 0.1) * m, (0.08 + rng() * 0.08) * m);
+  for (let i = 0; i < 8; i++) push((rng() - 0.45) * 0.3 * m, (0.1 + rng() * 0.1) * m, (0.1 + rng() * 0.1) * m);
+  for (let i = 0; i < 2; i++) push((0.15 + rng() * 0.15) * m, (0.1 + rng() * 0.08) * m, (0.08 + rng() * 0.06) * m);
+}
+
 function scnNewsImminentWide(rng: () => number, m: number, d: Difficulty, mode: PlacementMode, seed: number): PlaceStopChart {
   void d; void mode;
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 5 + rng() * 0.3;
-  // Pré-news : structure calme avec léger uptrend
-  for (let i = 0; i < 10; i++) {
-    const o = p;
-    const c = o + (rng() - 0.35) * 0.4 * m;
-    past.push(candle(o, c, (0.13 + rng() * 0.12) * m, (0.13 + rng() * 0.12) * m));
-    p = c;
-  }
-  for (let i = 0; i < 2; i++) {
-    const o = p;
-    const c = o + (0.2 + rng() * 0.2) * m;
-    past.push(candle(o, c, (0.13 + rng() * 0.1) * m, (0.1 + rng() * 0.08) * m));
-    p = c;
-  }
+  // Pré-news : jambe haussière depuis un creux visible, puis consolidation calme avant l'annonce
+  // (sans la jambe, le stop large fixait seul l'échelle : bougies tassées dans le quart haut)
+  newsLeg(past, rng, m, 1, () => p, (v) => { p = v; });
   const entry = p;
   const tightPrice = entry - 0.4 * m;
   const lttPrice   = entry - 1.2 * m;
-  const widePrice  = entry - 3.8 * m;
+  // sous le départ de la jambe, avec une marge (jamais au-dessus du creux visible)
+  const widePrice  = Math.min(entry - 3.8 * m, Math.min(...past.map((k) => k.l)) - 0.3 * m);
   // Future : 1 bougie d'impact news (amplitude ×3) qui balaye tight et ltt
   const newsLow = entry - 2.4 * m;
   const newsClose = entry + 0.5 * m;  // recovery au-dessus d'entry
@@ -2613,23 +2617,12 @@ function scnNewsImminentWideSell(rng: () => number, m: number, d: Difficulty, mo
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 10 - rng() * 0.3;
-  // Pré-news : structure calme avec léger downtrend
-  for (let i = 0; i < 10; i++) {
-    const o = p;
-    const c = o - (rng() - 0.35) * 0.4 * m;
-    past.push(candle(o, c, (0.13 + rng() * 0.12) * m, (0.13 + rng() * 0.12) * m));
-    p = c;
-  }
-  for (let i = 0; i < 2; i++) {
-    const o = p;
-    const c = o - (0.2 + rng() * 0.2) * m;
-    past.push(candle(o, c, (0.1 + rng() * 0.08) * m, (0.13 + rng() * 0.1) * m));
-    p = c;
-  }
+  // Pré-news : jambe baissière depuis un sommet visible, puis consolidation calme (miroir du BUY)
+  newsLeg(past, rng, m, -1, () => p, (v) => { p = v; });
   const entry = p;
   const tightPrice = entry + 0.4 * m;
   const lttPrice   = entry + 1.2 * m;
-  const widePrice  = entry + 3.8 * m;
+  const widePrice  = Math.max(entry + 3.8 * m, Math.max(...past.map((k) => k.h)) + 0.3 * m);
   // Future : 1 bougie d'impact news vers le haut, balaye tight + LTT, pas wide
   const newsHigh = entry + 2.4 * m;
   const newsClose = entry - 0.5 * m;  // recovery sous l'entry
