@@ -1546,21 +1546,42 @@ function scnEqualLowsTrap(rng: () => number, m: number, d: Difficulty, mode: Pla
   });
 }
 
+/**
+ * Jambe d'arrivée (n bougies de from à to, corps variés, une petite bougie contraire) posée avant la
+ * scène : sans elle, la scène était une consolidation plate et les stops lointains fixaient seuls
+ * l'échelle de la question (bougies dans le quart haut du graphique, en 390).
+ */
+function leadIn(rng: () => number, m: number, from: number, to: number, n: number): Candle[] {
+  const out: Candle[] = [];
+  const dir = Math.sign(to - from), step = Math.abs(to - from) / (n - 1);
+  let p = from;
+  for (let i = 0; i < n; i++) {
+    const o = p;
+    const c = i === n - 1 ? to : i === 2 ? o - dir * (0.1 + rng() * 0.1) * m : o + dir * step * (0.8 + rng() * 0.5);
+    out.push(candle(o, c, (0.1 + rng() * 0.12) * m, (0.1 + rng() * 0.12) * m));
+    p = c;
+  }
+  return out;
+}
+
 function scnRoundNumberSweep(rng: () => number, m: number, d: Difficulty, mode: PlacementMode, seed: number): PlaceStopChart {
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 5 + rng() * 0.3;
-  // Approche
+  past.push(...leadIn(rng, m, p + 2.3 * m, p, 7));
+  // Approche : la baisse se poursuit (un rebond ici formait un creux que la consolidation retestait,
+  // un support visible sans zone)
   for (let i = 0; i < 4; i++) {
     const o = p;
-    const c = o + (rng() - 0.3) * 0.5 * m;
+    const c = o + (rng() - 0.75) * 0.5 * m;
     past.push(candle(o, c, (0.15 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
     p = c;
   }
   // Le niveau psychologique est 0.8m sous le prix courant
   const roundNumber = p - 0.8 * m;
-  // Consolidation au-dessus du niveau psychologique
-  for (let i = 0; i < 6; i++) {
+  // Consolidation au-dessus du niveau psychologique (4 bougies : plus longue, ses creux s'alignaient en
+  // un support visible sans zone, au-dessus du chiffre rond)
+  for (let i = 0; i < 4; i++) {
     const o = p;
     const c = clamp(o + (rng() - 0.5) * 0.4 * m, roundNumber + 0.5 * m, roundNumber + 1.4 * m);
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.18 + rng() * 0.15) * m));
@@ -1602,6 +1623,7 @@ function scnAsiaHighSweep(rng: () => number, m: number, d: Difficulty, mode: Pla
   const asiaLow = 5;
   const asiaHigh = asiaLow + 1.2 * m;
   let p = asiaLow + 0.6 * m;
+  for (const k of leadIn(rng, m, asiaLow - 2.3 * m, p, 7)) { k.h = Math.min(k.h, asiaHigh - 0.15 * m); past.push(k); }
   // Range Asia : oscillation entre les bornes
   for (let i = 0; i < 10; i++) {
     const o = p;
@@ -1728,6 +1750,7 @@ function scnPrevDayLowTrap(rng: () => number, m: number, d: Difficulty, mode: Pl
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 5 + rng() * 0.3;
+  past.push(...leadIn(rng, m, p + 2.3 * m, p, 7));
   // « Le prix s'approche du PDL » : quelques bougies qui glissent vers le bas (creux de plus en plus bas)
   for (let i = 0; i < 5; i++) {
     const o = p;
@@ -1910,8 +1933,8 @@ function scnMultiSwingLow(rng: () => number, m: number, d: Difficulty, mode: Pla
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 4 + rng() * 0.3;
-  // Tendance haussière
-  for (let i = 0; i < 4; i++) {
+  // Tendance haussière (6 bougies : sinon les stops lointains fixaient seuls l'échelle de la question)
+  for (let i = 0; i < 6; i++) {
     const o = p;
     const c = o + (0.3 + rng() * 0.3) * m;
     past.push(candle(o, c, (0.18 + rng() * 0.15) * m, (0.13 + rng() * 0.12) * m));
