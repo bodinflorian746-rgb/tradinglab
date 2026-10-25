@@ -12,7 +12,7 @@
       "Module Macro-économie (FOMC, NFP, indicateurs clés)",
       "Stratégies institutionnelles (SMC, ICT, Price Action)",
       "Jeux et simulateurs (Place ton Stop, Trouve l'erreur...)",
-      "Quiz sur graphiques réels",
+      "Un quiz à la fin des leçons",
       "Contenu régulièrement mis à jour"
     ],
     "cta": "Accéder via le broker partenaire",
@@ -20,15 +20,15 @@
     "trialBadge": "48h d'essai gratuit",
     "deposit": {
       "lineTitle": "Dépôt minimum : 200 €",
-      "lineSubtitle": "Les 200 € restent votre argent et peuvent être récupérés à tout moment.",
+      "lineSubtitle": "Les 200 € restent ton argent : tu peux les récupérer à tout moment.",
       "modal": {
         "title": "Avant de continuer",
         "bullets": [
           "Dépôt minimum requis : 200 €",
           "Ce dépôt n'est pas un paiement à TradeScaleX",
-          "Les fonds sont déposés sur votre propre compte broker",
-          "Les 200 € restent votre argent",
-          "Vous pouvez récupérer vos fonds à tout moment depuis votre espace client broker",
+          "Les fonds sont déposés sur ton propre compte broker",
+          "Les 200 € restent ton argent",
+          "Tu peux récupérer tes fonds à tout moment depuis ton espace client broker",
           "200 € représente le minimum recommandé pour démarrer dans de bonnes conditions"
         ],
         "continueLabel": "Je comprends et je continue",

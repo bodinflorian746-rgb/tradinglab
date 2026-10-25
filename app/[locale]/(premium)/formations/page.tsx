@@ -191,7 +191,8 @@ export default function FormationsPage() {
 
   const global = mounted
     ? getGlobalStats(progress, PUBLISHED_FORMATIONS)
-    : { completedLessons: 0, totalFreeLessons: 0, pct: 0 };
+    // (avant lecture de la progression locale : 0 leçon faite, mais le vrai total, jamais « 0 / 0 »)
+    : { completedLessons: 0, totalFreeLessons: PUBLISHED_FORMATIONS.reduce((a, f) => a + f.lessons.length, 0), pct: 0 };
 
   const activeLessonKey = mounted ? getActiveLessonKey(progress) : null;
 

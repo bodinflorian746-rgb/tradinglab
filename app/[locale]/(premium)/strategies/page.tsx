@@ -251,10 +251,11 @@ export default async function StrategiesPage({
           {/* Stats row */}
           <div className="grid grid-cols-2 sm:inline-flex sm:items-center sm:divide-x divide-zinc-800 bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden">
             {[
-              { value: "8",                    label: t.page.stats.strategies },
-              { value: "8",                    label: t.page.stats.free       },
-              { value: t.page.stats.premiumTBD, label: t.page.stats.premium    },
-              { value: "3",                    label: t.page.stats.levels     },
+              // (calculés ; plus de case « Premium · À venir » : aucun abonnement, accès gratuit via le broker)
+              { value: String(STRATEGY_MODULES.length), label: t.page.stats.strategies },
+              { value: String(STRATEGY_MODULES.filter((m) => m.isFree).length), label: t.page.stats.free },
+              { value: String(STRATEGY_MODULES.reduce((a, m) => a + m.lessonCount, 0)), label: t.page.stats.lessons ?? "" },
+              { value: String(new Set(STRATEGY_MODULES.map((m) => m.level)).size), label: t.page.stats.levels },
             ].map((s, i) => (
               <div
                 key={s.label}
