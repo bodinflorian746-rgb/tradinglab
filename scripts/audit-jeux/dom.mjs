@@ -16,7 +16,7 @@
 //    bougie (corps ou mèche), aucune hors du graphique, au plus 4 en 390,
 //    mêmes noms que les boutons, aucun doublon avec une légende ;
 //  - graphique (question et verdict) : zones derrière les bougies, corps au moins 3 fois plus
-//    large que la mèche, bougies (suite comprise) sur au moins 45 % du cadre, graphique entier dans l'écran en 390 × 844 sans défiler (sous le
+//    large que la mèche, bougies (suite comprise) sur au moins 45 % de la largeur et 50 % de la hauteur du cadre, graphique entier dans l'écran en 390 × 844 sans défiler (sous le
 //    bandeau du site, au-dessus de la barre du navigateur) ;
 //  - verdict : état (bon / partiel / faux), couleurs du titre et des points
 //    cohérentes, maximum affiché ; barème simple : bon > 0, faux = 0 (sans signe) ;
@@ -166,7 +166,7 @@ const measureLabels = (page, { mobile, buttons, ps }) => page.evaluate(({ mobile
 // est au moins 3 fois plus large que sa mèche ; en mobile (390), le graphique tient en entier dans
 // l'écran tel que le joueur le voit, sans défiler : sous le bandeau du site, au-dessus de la barre
 // du navigateur.
-const measureChart = (page, { mobile }) => page.evaluate(({ mobile, MIN_PLOT_SHARE }) => {
+const measureChart = (page, { mobile }) => page.evaluate(({ mobile, MIN_PLOT_SHARE, MIN_CANDLE_HEIGHT }) => {
   const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
   if (!svg) return ["graphique absent"];
   const errs = [];
@@ -185,6 +185,14 @@ const measureChart = (page, { mobile }) => page.evaluate(({ mobile, MIN_PLOT_SHA
   // verdict en 390 avec les bougies sur 30 % de la largeur)
   const plotW = +svg.getAttribute("data-plot-w"), svgW = svg.getBoundingClientRect().width;
   if (svgW > 0 && plotW / svgW < MIN_PLOT_SHARE) errs.push(`bougies tassées par les étiquettes : ${Math.round((100 * plotW) / svgW)} % du cadre (au moins ${100 * MIN_PLOT_SHARE} %)`);
+  // Hauteur des bougies : au moins la moitié du cadre ; un niveau lointain (stop large, objectif) ne les
+  // écrase jamais dans une bande (ex. refusé : Place ton Stop, news_imminent_wide, bougies dans le quart haut)
+  const boxes = candles.map((g) => g.getBoundingClientRect()).filter((b) => b.height > 0);
+  const svgH = svg.getBoundingClientRect().height;
+  if (boxes.length && svgH > 0) {
+    const span = Math.max(...boxes.map((b) => b.bottom)) - Math.min(...boxes.map((b) => b.top));
+    if (span / svgH < MIN_CANDLE_HEIGHT) errs.push(`bougies écrasées en hauteur : ${Math.round((100 * span) / svgH)} % du cadre (au moins ${100 * MIN_CANDLE_HEIGHT} %)`);
+  }
   if (mobile) {
     // Zone visible : sous le bandeau collant du site, au-dessus de la barre du navigateur
     // (fenêtre de MOBILE_H px : 844 moins les barres de Safari)
@@ -193,7 +201,7 @@ const measureChart = (page, { mobile }) => page.evaluate(({ mobile, MIN_PLOT_SHA
     if (r.top < top - 1 || r.bottom > bottom + 1) errs.push(`graphique hors de l'écran : de ${Math.round(r.top)} à ${Math.round(r.bottom)} px pour une zone visible de ${Math.round(top)} à ${bottom} px`);
   }
   return errs;
-}, { mobile, MIN_PLOT_SHARE: 0.45 });
+}, { mobile, MIN_PLOT_SHARE: 0.45, MIN_CANDLE_HEIGHT: 0.5 });
 
 const STOP_BUTTONS = { selector: ".tsx-v2 button.v2-stop-choice", keys: "^stop\\d" };
 const stepButtons = (step) => ({ selector: `.tsx-v2 [data-pick^="${step}:"]`, keys: "^cand\\d" });
@@ -352,6 +360,8 @@ const HARD = [
   ["build-the-trade", "Débutant", 5028], ["build-the-trade", "Avancé", 5413],
   // marque d’erreur longue qui tassait les bougies sur 30 % du cadre au verdict (parties jouées en 390, 2026-10-18)
   ["find-the-mistake", "Avancé", 5056],
+  // stop large qui écrasait les bougies dans le quart haut de la question (news imminente, 2026-10-25)
+  ["place-stop", "Avancé", 10072], ["place-stop", "Avancé", 10029],
 ];
 async function hardRounds(browser) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: MOBILE_H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
@@ -454,6 +464,10 @@ const MUTATIONS = {
   "corps trop étroit": [/corps trop étroit/, () => {
     const g = [...document.querySelectorAll(".tsx-v2 .v2-chart svg.v2-svg .v2-candle")].at(-1);
     g.querySelector("line").setAttribute("stroke-width", g.querySelector("rect").getAttribute("width"));
+  }],
+  "bougies écrasées en hauteur": [/bougies écrasées en hauteur/, () => {
+    // toutes les bougies ramenées dans le tiers haut du cadre (comme un stop lointain qui fixerait l’échelle)
+    for (const g of document.querySelectorAll(".tsx-v2 .v2-chart svg.v2-svg .v2-candle")) g.setAttribute("transform", "scale(1 0.3)");
   }],
   "bougies tassées par les étiquettes": [/bougies tassées/, () => {
     const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
