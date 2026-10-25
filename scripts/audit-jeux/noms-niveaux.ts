@@ -19,6 +19,9 @@ export const LEVEL_NAMES: { name: string; text: RegExp; label: RegExp }[] = [
   { name: "résistance de l'UT supérieure", text: /(?<!\p{L})résistances? (de l'|d'|)UT supérieure/iu, label: /^résistance (de l'|)UT supérieure/i },
   { name: "haut du range", text: /(?<!\p{L})haut du range/iu, label: /^haut du range/i },
   { name: "bas du range", text: /(?<!\p{L})bas du range/iu, label: /^bas du range/i },
+  // un range dont le prix « sort » : ses bornes sont tracées (ex. refusé : Trouve l'erreur adv_session_ignoree,
+  // « la dernière bougie sort d'un petit range » sans aucune zone)
+  { name: "sortie d'un range", text: /(?<!\p{L})sort(ie)? d'un (petit )?range/iu, label: /^(haut|bas) du range/i },
   { name: "plus haut précédent", text: /(?<!\p{L})plus haut précédent/iu, label: /^plus haut précédent/i },
   { name: "plus bas précédent", text: /(?<!\p{L})plus bas précédent/iu, label: /^plus bas précédent/i },
   { name: "FVG haussier", text: /(?<!\p{L})FVG haussiers?(?!\p{L})/iu, label: /^FVG haussier/i },
@@ -87,6 +90,7 @@ if (process.argv.includes("--autotest")) {
     ["énoncé « FVG baissier », zone affichée « Déséquilibre » (avancé masqué)", ["Premier test d'un FVG baissier."], ["Déséquilibre"], true],
     ["témoin : « support de l'UT supérieure » et sa zone", ["Le prix revient sur un support de l'UT supérieure."], ["Support UT supérieure"], false],
     ["témoin : « haut du range » et sa zone", ["Le prix rejette le haut du range."], ["Haut du range", "Bas du range"], false],
+    ["« sort d'un petit range », aucune zone", ["En heures creuses, la dernière bougie sort d'un petit range."], [], true],
   ];
   for (const [name, texts, labels, expect] of cases) {
     const got = missingNames(texts, labels).length > 0;

@@ -244,11 +244,24 @@ const aDeadOb: NonNullable<FtmScenario["build"]> = (rng, m) => {
 };
 const aDeadSession: NonNullable<FtmScenario["build"]> = (rng, m) => {
   const c = chop(rng, m, 0, 12, 0);
+  // bornes nettes du petit range : les mèches qui s'en approchent s'arrêtent dans une bande étroite
+  // (sinon le tracé des bornes, calé sur les mèches, devenait plus épais que 1,5 × la bougie médiane)
+  const hi0 = Math.max(...c.candles.map((k) => k.h)), lo0 = Math.min(...c.candles.map((k) => k.l));
+  for (const k of c.candles) {
+    if (k.h > hi0 - 0.3 * m) k.h = Math.max(k.o, k.c, hi0 - rng() * 0.08 * m);
+    if (k.l < lo0 + 0.3 * m) k.l = Math.min(k.o, k.c, lo0 + rng() * 0.08 * m);
+  }
   const top = Math.max(...c.candles.map((k) => k.h));
   const o = c.p, cc = top + (0.75 + rng() * 0.1) * m;
   const k: Candle = { o, c: cc, h: cc + 0.05 * m, l: o - 0.04 * m };
   const fc = chop(rng, m, cc, 2, -0.05);
-  return { past: [...c.candles, k], future: [...fc.candles, ...drop(rng, m, fc.p, 3).candles], zones: [], entry: cc };
+  // le petit range que cite l'énoncé, tracé et nommé (bornes prises avant la bougie de sortie)
+  const bot = Math.min(...c.candles.map((k) => k.l));
+  const zones: ChartZone[] = [
+    { kind: "support", y1: bot - 0.06 * m, y2: bot + 0.06 * m, label: "Bas du range", until: 1 },
+    { kind: "resistance", y1: top - 0.06 * m, y2: top + 0.06 * m, label: "Haut du range", until: 1 },
+  ];
+  return { past: [...c.candles, k], future: [...fc.candles, ...drop(rng, m, fc.p, 3).candles], zones, entry: cc };
 };
 const aOteMiss: NonNullable<FtmScenario["build"]> = (rng, m) => {
   const base = chop(rng, m, 0, 3, -0.03);
