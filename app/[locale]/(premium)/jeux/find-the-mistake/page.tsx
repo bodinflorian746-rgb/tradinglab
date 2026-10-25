@@ -315,9 +315,8 @@ export default function FindTheMistakePage() {
   // Au plus 4 étiquettes sur le graphique (390) : les zones en trop passent en légende sous lui
   // (la zone visée par l'erreur, au verdict, garde son étiquette)
   const markNow = isFeedback ? mistakeMark(current.correctMistake, chart, LABELS[current.correctMistake]) : undefined;
-  const markZone = markNow?.kind === "zone" ? markNow.index : -1;
-  const zoneBudget = Math.max(0, 4 - labelledLines.length - (markNow?.kind === "point" ? 1 : 0));
-  const labeledZones = chart.zones.map((_, i) => i).sort((a, b) => Number(b === markZone) - Number(a === markZone)).slice(0, zoneBudget);
+  // (puis la zone que nomme l'erreur : le niveau clé du scénario n'est jamais relégué en légende)
+  const labeledZones = FrGame.labeledZoneIndexes(chart.zones, labelledLines.length, current.correctMistake as FrGame.AnyMistakeId, markNow);
   const legendZones = chart.zones.filter((_, i) => !labeledZones.includes(i));
 
   return (

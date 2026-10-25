@@ -8015,6 +8015,7 @@ prolonge
 prolongée
 prolongement
 prolonger
+prolongés
 promediar
 promedio
 promesa
@@ -8917,6 +8918,7 @@ respira
 respirar
 respiration
 respire
+respiré
 respirer
 responde
 responsable
@@ -9800,6 +9802,7 @@ street
 strength
 stress
 stressé
+strict
 stricte
 strictement
 strictes

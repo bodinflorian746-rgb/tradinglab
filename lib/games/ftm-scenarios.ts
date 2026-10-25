@@ -83,7 +83,9 @@ const bTpBeyond: NonNullable<FtmScenario["build"]> = (rng, m) => {
   return {
     past: [...legs.candles, ...r.candles], future: [...f1.candles, ...f2.candles],
     zones: [zone("support", 0, m, "Support"), zone("resistance", R, m, "Résistance")],
-    entry: r.p, stop: b.lo - 0.25 * m, tp: R + (0.9 + rng() * 0.3) * m,
+    // (TP 0,75 à 0,95 × la bougie médiane au-delà : nettement derrière la résistance, sans écraser les
+    // bougies en hauteur au verdict)
+    entry: r.p, stop: b.lo - 0.25 * m, tp: R + (0.75 + rng() * 0.2) * m,
   };
 };
 const bBuyUnderRes: NonNullable<FtmScenario["build"]> = (rng, m) => {

@@ -1039,6 +1039,35 @@ export function withAssetPrices(chart: ScenarioChart, inst: { id: string; asset:
   };
 }
 
+/** Mots d'un niveau dans le libellé de l'erreur, et ceux qui les désignent dans le libellé des zones
+ *  (la liquidité est derrière un swing ou des sommets / creux égaux ; « UT supérieure » d'abord) */
+const LEVEL_WORDS: [string, string[]][] = [
+  ["Zone de l'UT supérieure", ["UT sup"]], ["résistance", ["résistance"]], ["support", ["support"]], ["range", ["range"]],
+  ["order block", ["order block"]], ["fvg", ["fvg"]], ["liquidité", ["liquidité", "equal", "swing"]], ["swing", ["swing"]],
+];
+/** Zone que nomme l'erreur (« Take profit au-delà de la résistance » → la zone « Résistance »), ou -1 */
+export function mistakeZoneIndex(zones: readonly { label: string }[], mistake: AnyMistakeId): number {
+  const lab = MISTAKE_LABELS[mistake].toLowerCase();
+  for (const [w, inZone] of LEVEL_WORDS) {
+    if (!lab.includes(w.toLowerCase())) continue;
+    const i = zones.findIndex((z) => inZone.some((x) => z.label.toLowerCase().includes(x.toLowerCase())));
+    if (i >= 0) return i;
+  }
+  return -1;
+}
+/**
+ * Zones nommées sur le graphique : au plus 4 étiquettes en 390 (lignes comprises), les autres en légende
+ * sous lui. D'abord la zone marquée au verdict, puis celle que nomme l'erreur (règle PO : le niveau clé
+ * du scénario est toujours nommé sur le graphique), puis l'ordre des données.
+ */
+export function labeledZoneIndexes(zones: readonly { label: string }[], lineCount: number, mistake: AnyMistakeId, mark?: { kind: string; index?: number }): number[] {
+  const markZone = mark?.kind === "zone" ? mark.index ?? -1 : -1;
+  const key = mistakeZoneIndex(zones, mistake);
+  const budget = Math.max(0, 4 - lineCount - (mark?.kind === "point" ? 1 : 0));
+  const rank = (i: number) => (i === markZone ? 0 : i === key ? 1 : 2);
+  return zones.map((_, i) => i).sort((a, b) => rank(a) - rank(b) || a - b).slice(0, budget);
+}
+
 /** Graphique du scénario, avec la passe de réalisme des bougies (niveaux clés : zones, entrée, stop, TP). */
 export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): ScenarioChart {
   const ch = buildScenarioChartRaw(template, seed, vol);

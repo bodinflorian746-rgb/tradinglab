@@ -21,8 +21,21 @@ const kindZone = (ch: ScenarioChart, kind: ChartZone["kind"]) => ch.zones.find((
 
 type Check = (ch: ScenarioChart, t: MistakeTemplate) => string | null;
 
+// Règle PO : le niveau que nomme l'erreur (« … au-delà de la résistance », « Zone de l'UT supérieure
+// ignorée ») est tracé et nommé sur le graphique, jamais relégué en légende sous lui (ex. refusé :
+// deb_tp_derriere_resistance, la résistance en légende et le support sur le graphique, en 390)
+const LEVEL_IN_LABEL = /résistance|support|range|order block|liquidité|fvg|swing|zone de l.ut supérieure/i;
+export function keyLevelError(ch: Pick<ScenarioChart, "zones" | "entry" | "stop" | "tp">, mistake: MistakeTemplate["correctMistake"]): string | null {
+  if (!LEVEL_IN_LABEL.test(FR.MISTAKE_LABELS[mistake])) return null;
+  const k = FR.mistakeZoneIndex(ch.zones, mistake);
+  if (k < 0) return `niveau nommé par l'erreur (« ${FR.MISTAKE_LABELS[mistake]} ») absent du graphique`;
+  const lines = [ch.entry, ch.stop, ch.tp].filter((x) => x !== undefined).length;
+  return FR.labeledZoneIndexes(ch.zones, lines, mistake).includes(k) ? null : `« ${ch.zones[k].label} » (niveau de l'erreur) relégué en légende`;
+}
+
 function generic(ch: ScenarioChart, t: MistakeTemplate): string[] {
   const out: string[] = [];
+  { const e = keyLevelError(ch, t.correctMistake); if (e) out.push(e); }
   const all = [...ch.past, ...ch.future];
   for (let i = 1; i < all.length; i++) if (Math.abs(all[i].o - all[i - 1].c) > E) { out.push("[dure] continuité rompue"); break; }
   if (all.some((k) => k.h < Math.max(k.o, k.c) - E || k.l > Math.min(k.o, k.c) + E)) out.push("[dure] OHLC invalide");
@@ -174,4 +187,19 @@ for (const t of G.MISTAKE_TEMPLATES) {
 }
 console.log(`=== Audit Trouve l'erreur ${LOC.toUpperCase()} — ${N} rounds par scénario × difficulté ===`);
 console.log(rows.join("\n"));
+// Autotest de la règle du niveau clé : défauts injectés, chacun détecté ; témoin sans faux positif
+{
+  const z = (label: string) => ({ kind: "support" as const, y1: 0, y2: 1, label });
+  const cases: [string, Parameters<typeof keyLevelError>[0], MistakeTemplate["correctMistake"], boolean][] = [
+    ["résistance absente", { zones: [z("Support")], entry: 1, stop: 0, tp: 3 }, "tp_beyond_level", true],
+    ["UT supérieure absente", { zones: [z("Support"), z("Résistance")], entry: 1 }, "ignored_zone", true],
+    ["témoin : résistance nommée", { zones: [z("Support"), z("Résistance")], entry: 1, stop: 0, tp: 3 }, "tp_beyond_level", false],
+  ];
+  for (const [name, ch, m, bad] of cases) {
+    const e = keyLevelError(ch, m);
+    const ok = bad ? !!e : !e;
+    console.log(`${ok ? (bad ? "détecté" : "aucun faux positif") : bad ? "MANQUÉ" : "FAUX POSITIF"}  autotest niveau clé : ${name}`);
+    if (!ok) total++;
+  }
+}
 console.log(`TOTAL rounds incohérents : ${total}`);
