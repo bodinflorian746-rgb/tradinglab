@@ -117,8 +117,22 @@ const measureLabels = (page, { mobile, buttons, ps }) => page.evaluate(({ mobile
   // la faisait passer pour étiquetée (« Agressive » à 28 px de sa ligne, sous « Pullback profond »)
   for (const l of lines) {
     const own = labels.find((t) => t.key === l.key);
-    if (own && !(l.y >= own.r.top - 1 && l.y <= own.r.bottom + 1)) errs.push(`étiquette « ${own.txt} » loin de sa ligne (${Math.round(Math.min(Math.abs(l.y - own.r.top), Math.abs(l.y - own.r.bottom)))} px)`);
+    // (écartée faute de place, elle est reliée à sa ligne par un trait qui va de son bord jusqu'à elle ;
+    // l'erreur marquée sur une ligne compte aussi : « Stop dans la zone » flottait 120 px au-dessus de son stop)
+    const leader = own && svg.querySelector(`[data-leader-for="${CSS.escape(l.key)}"]`)?.getBoundingClientRect();
+    const linked = leader && leader.height > 0 && leader.top <= Math.min(l.y, own.r.bottom) + 1.5 && leader.bottom >= Math.max(l.y, own.r.top) - 1.5;
+    if (own && !(l.y >= own.r.top - 1 && l.y <= own.r.bottom + 1) && !linked) errs.push(`étiquette « ${own.txt} » loin de sa ligne (${Math.round(Math.min(Math.abs(l.y - own.r.top), Math.abs(l.y - own.r.bottom)))} px)`);
     else if (!own && !labels.some((t) => l.y >= t.r.top - 1 && l.y <= t.r.bottom + 1)) errs.push(`ligne « ${l.key} » sans étiquette à sa hauteur`);
+  }
+  // Erreur marquée sur une zone : son étiquette touche la zone, ou un trait la relie à son bord
+  // (« Vente dans support » flottait 70 px au-dessus du support marqué, Trouve l'erreur sell_in_support)
+  {
+    const mz = svg.querySelector("[data-mark-zone] rect")?.getBoundingClientRect(), own = labels.find((t) => t.key === "markTag");
+    if (mz && own && (own.r.bottom < mz.top - 1 || own.r.top > mz.bottom + 1)) {
+      const ld = svg.querySelector('[data-leader-for="markTag"]')?.getBoundingClientRect();
+      const edge = own.r.bottom < mz.top ? mz.top : mz.bottom;
+      if (!(ld && ld.height > 0 && ld.top <= Math.min(edge, own.r.bottom) + 1.5 && ld.bottom >= Math.max(edge, own.r.top) - 1.5)) errs.push(`étiquette « ${own.txt} » loin de sa zone marquée, sans trait de rappel`);
+    }
   }
   for (const t of labels) {
     if (!t.txt) errs.push(`étiquette « ${t.key} » vide`);
@@ -360,6 +374,8 @@ const HARD = [
   ["build-the-trade", "Débutant", 5028], ["build-the-trade", "Avancé", 5413],
   // marque d’erreur longue qui tassait les bougies sur 30 % du cadre au verdict (parties jouées en 390, 2026-10-18)
   ["find-the-mistake", "Avancé", 5056],
+  // étiquette de l'erreur marquée loin de son stop, sans lien (Trouve l'erreur, int_stop_dans_zone, 2026-10-25)
+  ["find-the-mistake", "Intermédiaire", 10011], ["find-the-mistake", "Intermédiaire", 10000],
   // stop large qui écrasait les bougies dans le quart haut de la question (news imminente, 2026-10-25)
   ["place-stop", "Avancé", 10072], ["place-stop", "Avancé", 10029],
 ];
@@ -464,6 +480,18 @@ const MUTATIONS = {
   "corps trop étroit": [/corps trop étroit/, () => {
     const g = [...document.querySelectorAll(".tsx-v2 .v2-chart svg.v2-svg .v2-candle")].at(-1);
     g.querySelector("line").setAttribute("stroke-width", g.querySelector("rect").getAttribute("width"));
+  }],
+  "erreur loin de sa zone marquée": [/loin de sa zone marquée/, () => {
+    // une zone marquée en bas du cadre, et l’étiquette de l’erreur 120 px au-dessus, sans trait
+    const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg"), H = svg.getBoundingClientRect().height;
+    const ns = "http://www.w3.org/2000/svg", g = document.createElementNS(ns, "g"), r = document.createElementNS(ns, "rect");
+    g.setAttribute("data-mark-zone", "");
+    for (const [k, v] of Object.entries({ x: 10, y: H - 30, width: 200, height: 16 })) r.setAttribute(k, String(v));
+    g.appendChild(r); svg.appendChild(g);
+    const lab = svg.querySelector("[data-label-for]").cloneNode(true), lr = lab.querySelector("rect");
+    lab.setAttribute("data-label-for", "markTag");
+    lab.setAttribute("transform", `translate(0 ${H - 150 - +lr.getAttribute("y")})`);
+    svg.appendChild(lab);
   }],
   "bougies écrasées en hauteur": [/bougies écrasées en hauteur/, () => {
     // toutes les bougies ramenées dans le tiers haut du cadre (comme un stop lointain qui fixerait l’échelle)

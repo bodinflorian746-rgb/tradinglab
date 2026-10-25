@@ -710,7 +710,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
     // la ligne mise en avant reste vive, les autres s'estompent.
     const family = (k: string) => k.replace(/\d+$/, "");
     const dimmed = (k: string) => !!emphasis && family(k) === family(emphasis) && k !== emphasis;
-    type InlineTag = { key: string; label: string; color: string; y: number; w: number; x: number; dim: boolean; hit: boolean; lineY?: number };
+    type InlineTag = { key: string; label: string; color: string; y: number; w: number; x: number; dim: boolean; hit: boolean; lineY?: number; anchorY?: number };
     const inlineTags: InlineTag[] = [];
     if (inline) {
       // Au verdict, l'étiquette de l'erreur remplace celle de l'élément marqué
@@ -866,11 +866,23 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
           const xx = slotX(yy, w);
           if (xx !== null) { x = xx; y = yy; break; }
         }
-        inlineTags.push({ key: s.key, label: s.label, color: s.color, y, w, x: x ?? Math.max(minX, lineX1 - w), dim: dimmed(s.key), hit: !!s.hit, lineY: onLine(s.key) ? toY(s.price) : undefined });
+        // Erreur marquée sur une zone, posée hors de la zone faute de place : le trait de rappel va au bord de la zone
+        const mz = s.key === "markTag" && mark?.kind === "zone" && zones[mark.index] ? zoneRect(zones[mark.index]) : null;
+        const anchorY = mz && (y + INLINE_TAG_H / 2 < mz.y || y - INLINE_TAG_H / 2 > mz.y + mz.h) ? (y < mz.y ? mz.y : mz.y + mz.h) : undefined;
+        inlineTags.push({ key: s.key, label: s.label, color: s.color, y, w, x: x ?? Math.max(minX, lineX1 - w), dim: dimmed(s.key), hit: !!s.hit, lineY: onLine(s.key) ? toY(s.price) : undefined, anchorY });
       }
     }
     const inlineTag = (t: InlineTag) => (
       <g key={t.key} data-label-for={t.key} className={t.key === "markTag" ? markClass : undefined} opacity={t.dim ? 0.35 : 1}>
+        {/* Étiquette de ligne écartée de sa ligne (faute de place, ex. l'erreur marquée sur un stop
+            entouré de bougies) : un trait la relie à sa ligne, elle ne flotte jamais seule */}
+        {(() => {
+          const to = t.lineY ?? t.anchorY;
+          return to !== undefined && Math.abs(to - t.y) > INLINE_TAG_H / 2 && (
+            <line data-leader-for={t.key} x1={t.x + t.w / 2} x2={t.x + t.w / 2} y1={to < t.y ? t.y - INLINE_TAG_H / 2 : t.y + INLINE_TAG_H / 2} y2={to}
+              stroke={t.color} strokeWidth={1.5} strokeDasharray="3 3" vectorEffect="non-scaling-stroke" />
+          );
+        })()}
         <rect x={t.x} y={t.y - INLINE_TAG_H / 2} width={t.w} height={INLINE_TAG_H} rx={INLINE_TAG_H / 2} fill={t.color}
           stroke={t.hit ? "#fff7ed" : "rgba(4,6,10,0.9)"} strokeWidth={t.hit ? 2 : 1.5} />
         <text x={t.x + t.w / 2} y={t.y + INLINE_TAG_FS * 0.36} textAnchor="middle" fontSize={INLINE_TAG_FS} fontWeight={700} fill="#04060a" className="v2-display">
@@ -1064,7 +1076,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
           let pillY = 0;
           if (mark.kind === "line") {
             top = bottom = toY(mark.price);
-            body = <line x1={padX} x2={lineX1} y1={top} y2={top} stroke={RED} strokeWidth={3.5} filter="url(#v2-line-glow)" strokeLinecap="round" />;
+            body = <line data-line={inline ? "markTag" : undefined} x1={padX} x2={lineX1} y1={top} y2={top} stroke={RED} strokeWidth={3.5} filter="url(#v2-line-glow)" strokeLinecap="round" />;
           } else if (mark.kind === "zone" && zones[mark.index]) {
             // Zone marquée : dessinée derrière les bougies (calque des zones) ; ici, seulement sa pastille
             const r = zoneRect(zones[mark.index]);
