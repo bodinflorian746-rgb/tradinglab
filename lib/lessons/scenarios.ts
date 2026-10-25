@@ -85,8 +85,9 @@ const pinbarSetup = () => buildCandles(4470, [
 // ─── Price action 3 — engulfing haussier sur la zone Fibonacci, XAU/USD H4 ──
 // Rebond 4 500 → 4 720, correction dans la zone 0.5 / 0.618 (4 610 / 4 584) ;
 // 1re bougie : 4 615 → 4 600 ; 2e : 4 600 → 4 628 (haut 4 630, bas 4 595).
-const engulfingSetup = () => buildCandles(4530, [
-  ...c(4516), { c: 4507, l: 4500 }, ...c(4524, 4548, 4571, 4596, 4619, 4644, 4667, 4690), { c: 4708, h: 4720 },
+// (deux bougies de plus avant le creux 4 500 : un vrai swing low, jamais au bord du graphique)
+const engulfingSetup = () => buildCandles(4550, [
+  ...c(4541, 4530, 4516), { c: 4507, l: 4500 }, ...c(4524, 4548, 4571, 4596, 4619, 4644, 4667, 4690), { c: 4708, h: 4720 },
   ...c(4697, 4683, 4671, 4662, 4648, 4636, 4627, 4615),
   { c: 4600, h: 4617, l: 4596 }, { c: 4628, h: 4630, l: 4595 },
 ], { seed: 2301, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", pins: [4500, 4720, 4615] });
@@ -1362,7 +1363,9 @@ const STR_WEAK = strength(50), STR_MID = strength(100), STR_STRONG = strength(20
 // 1.0868-1.0876 rejette deux fois (mèches à 1.0875 et 1.0876, replis à 1.0834 puis 1.0844 : creux
 // montants), cède en clôture, puis le retracement revient la tester par le haut jusqu'à 1.0870
 // (61.8 % = 1.0869) : ancienne résistance devenue support historique, respectée deux fois.
-const FIB_INT9 = bars(1.0815, [
+// (le creux 1.0800 est un vrai swing low : une baisse le précède, il n'est jamais la 1re bougie du graphique)
+const FIB_INT9 = bars(1.0850, [
+  1.0841, 1.0833, { c: 1.0826, h: 1.0838 }, 1.0815,
   { c: 1.0806, l: 1.0800 }, { c: 1.0826, l: 1.0803 }, 1.0846, { c: 1.0862, h: 1.0866 }, { c: 1.0858, h: 1.0875 }, 1.0846, { c: 1.0838, l: 1.0834 },
   1.0852, { c: 1.0864, h: 1.0867 }, { c: 1.0859, h: 1.0876 }, { c: 1.0848, l: 1.0844 }, 1.0862,
   1.0884, 1.0906, 1.0930, 1.0954, { c: 1.0972, h: 1.0980 },
@@ -1387,7 +1390,7 @@ Object.assign(SCENARIOS, {
   "str-weak": authored(1.1700, STR_WEAK, 29201, 5, "EUR/USD"),
   "str-mid": authored(1.1700, STR_MID, 29202, 5, "EUR/USD"),
   "str-strong": authored(1.1700, STR_STRONG, 29203, 5, "EUR/USD"),
-  "fib-int9": authored(1.0815, FIB_INT9, 29301, 5, "EUR/USD"),
+  "fib-int9": authored(1.0850, FIB_INT9, 29301, 5, "EUR/USD"),
   "pb-conf": authored(4530, PB_CONF, 29401, 0, "XAU/USD"),
 });
 

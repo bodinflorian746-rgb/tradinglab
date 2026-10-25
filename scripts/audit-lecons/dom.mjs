@@ -233,6 +233,8 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
         const lo = bullSwing ? cs[i1].l : cs[i2].l, hi = bullSwing ? cs[i2].h : cs[i1].h;
         const seg = cs.slice(Math.min(i1, i2), Math.max(i1, i2) + 1);
         if (Math.min(...seg.map((q) => q.l)) < lo - 1e-9 || Math.max(...seg.map((q) => q.h)) > hi + 1e-9) E(`${name} : le swing ${i1}→${i2} ne part pas de ses extrêmes`);
+        // règle PO : le tracé part d'un vrai creux (sommet), deux bougies visibles de chaque côté, jamais au bord
+        if (!(bullSwing ? pivL(i1) : pivH(i1))) E(`${name} : le tracé ne part pas d'un vrai ${bullSwing ? "creux" : "sommet"} (bougie ${i1} : deux bougies de chaque côté, jamais au bord du graphique)`);
         const want = bullSwing ? hi - r * (hi - lo) : lo + r * (hi - lo);
         if (Math.abs(want - v) > unit / 2 + 1e-9) E(`${name} : ${fmt(v)} au lieu de ${fmt(want)} (${r} du swing ${fmt(lo)} → ${fmt(hi)})`);
       }
@@ -544,6 +546,12 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
           const lab = g.textContent.trim();
           if (lab && !dtext.includes(lab)) E(id, `${P} : « ${lab} » absent de la description accessible`);
         }
+        // Fibonacci (règle PO) : un panneau qui trace un Fibonacci affiche ses repères 0 % et 100 %
+        {
+          const tags = [...svg.querySelectorAll("g[data-label-for]")].map((g) => g.textContent.trim());
+          const fib = svg.querySelector('[data-role="fib"]') || tags.some((t) => /fibo|fibonacci|\bOTE\b/i.test(t));
+          if (fib && !(tags.some((t) => /(^|[^\d.,])0\s?%/.test(t)) && tags.some((t) => /\b100\s?%/.test(t)))) E(id, `${P} : Fibonacci tracé sans ses repères 0 % et 100 %`);
+        }
         // Bougies
         if (svg.dataset.candles) {
           const cs = JSON.parse(svg.dataset.candles);
@@ -774,9 +782,12 @@ const EXPECT = {
   "FVG décalé": /écart mèche à mèche|≠ gap des bougies/, "liquidité épaisse": /bande de liquidité de/, "sommet hors d'une mèche": /pas sur la pointe de mèche d'un vrai/,
   "OB qui déborde de sa bougie": /ne couvre exactement aucune bougie/, "support trop épais": /MR \(au plus 1,5\)/, "résistance appelée support": /touché seulement par-dessous|changement de rôle n'est pas annoncé/,
   "swing nommé sur la dernière bougie": /au bord du graphique, swing pas encore confirmé/, "étiquette vague": /nom vague/, "zone sans étiquette": /sans étiquette/, "SL du côté du TP": /du même côté de l'entrée/, "mèche aussi épaisse que le corps": /mèches presque aussi épaisses/, "décimale avec un point": /décimale avec un point/, "mots collés": /mots collés/,
+  "Fibonacci sans repères 0 % et 100 %": /sans ses repères 0 % et 100 %/, "tracé Fibonacci au bord": /le tracé ne part pas d'un vrai/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
+  "Fibonacci sans repères 0 % et 100 %": () => { for (const g of document.querySelectorAll("svg[data-panel] g[data-label-for]")) if (/\b100\s?%|(^|[^\d.,])0\s?%/.test(g.textContent)) g.remove(); },
+  "tracé Fibonacci au bord": () => { const l = document.querySelector('line[data-role="fib"]'); const [, b, r] = l.dataset.ref.split(":"); l.dataset.ref = `0:${b}:${r}`; },
   "mots collés": () => { const m = document.querySelector("main"); const s = document.createElement("strong"); s.textContent = "5,5 %"; m.append(s, document.createTextNode("en moins de 18 mois")); },
   "décimale avec un point": () => { const c = document.querySelector("[data-chip]:not([data-rr])") || document.querySelector("[data-chip]"); c.textContent = "Corps de 9.1, 10 et 10 pips"; },
   "corps de bougie déplacé": () => { const r = document.querySelector("[data-candle='3'] rect"); r.setAttribute("y", +r.getAttribute("y") + 4); },
@@ -906,7 +917,7 @@ if (AUTOTEST) {
   // Chaque défaut est injecté dans la 1re page où il s'applique (R/R et OB : Avancé 7 ; pivots : Intermédiaire 5 ;
   // schéma à plusieurs panneaux : Trend Following 2 ; tableau : Débutant 1 ; liquidité, FVG, OB, support :
   // Avancé 1, 2, 3, Support / Résistance 1)
-  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon[1237]$|intermediaire\/lecon5|trend-following\/lecon2|support-resistance\/lecon[14]|debutant\/lecon1$/.test(p.url));
+  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon[1237]$|intermediaire\/lecon[59]$|trend-following\/lecon2|support-resistance\/lecon[14]|debutant\/lecon1$/.test(p.url));
   let missed = 0;
   for (const [name, fn] of Object.entries(MUTATIONS).filter(([n]) => !process.env.MUT_ONLY || new RegExp(process.env.MUT_ONLY).test(n))) {
     let errs = null;

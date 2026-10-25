@@ -33,7 +33,11 @@ export default function PullbackContinuationDiagram(_props: { className?: string
           { key: "ob", ...ob, from: obI, label: `OB ${px(ob.y1)}-${px(ob.y2)}`, short: "OB", tone: "zone", kind: "ob", src: `pb-conf:${obI}`, role: "ob", dir: "bull" },
           { key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG cible ${px(fvg.y1)}-${px(fvg.y2)}`, short: "FVG cible", tone: "bear", kind: "fvg", src: `pb-conf:${fvg.i}`, role: "fvg" },
         ],
-        markers: [{ key: "rej", i: rej, price: cs[rej].l, label: "Rejet sur l'OB", short: "Rejet", tone: "bull", side: "below", role: "rejet", ref: "ob", dir: "bull" }],
+        markers: [
+          { key: "f100", i: loAt, price: lo, label: "100 %", tone: "fib", side: "below", role: "swing-low" },
+          { key: "f0", i: hiAt, price: hi, label: "0 %", tone: "fib", side: "above", role: "swing-high" },
+          { key: "rej", i: rej, price: cs[rej].l, label: "Rejet sur l'OB", short: "Rejet", tone: "bull", side: "below", role: "rejet", ref: "ob", dir: "bull" },
+        ],
       }]}
     />
   );

@@ -37,8 +37,8 @@ export function OTEDiagram(_props: { className?: string; locale?: "fr" | "es" | 
         ],
         segments: [{ key: "fib", i1: A.index, p1: A.price, i2: B.index, p2: B.price, tone: "fib", dashed: true }],
         markers: [
-          { key: "a", i: A.index, price: A.price, label: "A : swing low", short: "A", tone: "fib", side: "below", role: "swing-low" },
-          { key: "b", i: B.index, price: B.price, label: "B : swing high", short: "B", tone: "fib", side: "above", role: "swing-high" },
+          { key: "a", i: A.index, price: A.price, label: "A : swing low (100 %)", short: "A · 100 %", tone: "fib", side: "below", role: "swing-low" },
+          { key: "b", i: B.index, price: B.price, label: "B : swing high (0 %)", short: "B · 0 %", tone: "fib", side: "above", role: "swing-high" },
           { key: "bos", i: bos, price: cs[bos].c, label: "BOS : clôture au-dessus", short: "BOS", tone: "bull", side: "above" },
           { key: "rej", i: last, price: cs[last].l, label: "Rejet dans l'OTE", short: "Rejet", tone: "bull", side: "below", role: "rejet", ref: "ote", dir: "bull" },
         ],

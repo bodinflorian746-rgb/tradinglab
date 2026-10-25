@@ -27,7 +27,7 @@ function ContentFr() {
           <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3">
             <p className="text-sm font-semibold text-emerald-400 mb-2">Le mouvement impulsif (point de départ)</p>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              EUR/USD monte de 1.0800 (swing low) à 1.0980 (swing high) en tendance haussière. Tu traces Fibonacci de 1.0800 à 1.0980. Les niveaux apparaissent sur le graphique : 23.6% = 1.0938, 38.2% = 1.0911, 50% = 1.0890, <strong className="text-white">61.8% = 1.0869.</strong>
+              EUR/USD monte de 1.0800 (swing low) à 1.0980 (swing high) en tendance haussière. Tu traces Fibonacci de 1.0800 (le 100 %) à 1.0980 (le 0 %). Les niveaux apparaissent entre les deux : 23.6% = 1.0938, 38.2% = 1.0911, 50% = 1.0890, <strong className="text-white">61.8% = 1.0869.</strong>
             </p>
           </div>
           <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl px-4 py-3">
@@ -54,9 +54,9 @@ function ContentFr() {
         <div className="space-y-2.5">
           {[
             { level: "23.6%", desc: "Retracement superficiel, tendance très forte, peu de correction. Rare.", color: "text-zinc-400" },
-            { level: "38.2%", desc: "Retracement modéré, courant en tendance solide. Bon ratio risque/rendement.", color: "text-blue-400" },
-            { level: "50%", desc: "Chiffre rond fort, pas un Fibonacci pur, mais très respecté par les traders.", color: "text-blue-400" },
-            { level: "61.8%", desc: "Le 'golden ratio', zone de retracement la plus utilisée et la plus puissante. À surveiller en priorité.", color: "text-emerald-400" },
+            { level: "38.2%", desc: "Le repli d'une tendance forte : les acheteurs reviennent vite et le prix ne rend qu'un gros tiers du mouvement. Exemple : sur le swing 1.0800 → 1.0980, le 38.2% est à 1.0911. Un rebond net à ce niveau montre une tendance très solide.", color: "text-blue-400" },
+            { level: "50%", desc: "Le milieu du mouvement (1.0890 sur ce swing). Ce n'est pas un ratio de Fibonacci au sens strict, mais beaucoup de traders le surveillent : le prix y réagit souvent.", color: "text-blue-400" },
+            { level: "61.8%", desc: "Un retracement plus profond, le plus surveillé (le « nombre d'or ») : la tendance a davantage respiré, mais elle reste souvent intacte. Exemple : ici, le prix redescend jusqu'à 1.0870, juste au 61.8% (1.0869), sur un ancien support. C'est là qu'on attend un signal.", color: "text-emerald-400" },
             { level: "78.6%", desc: "Retracement profond, utile pour les entrées agressives près du swing low. Risqué sans confluence.", color: "text-red-400" },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-4 bg-zinc-800/40 rounded-xl px-4 py-3">
@@ -79,8 +79,8 @@ function ContentFr() {
         </p>
         <div className="space-y-2">
           {[
-            { step: "1", text: "Identifie un mouvement impulsif clair : un swing low et un swing high nets sur le graphique." },
-            { step: "2", text: "En tendance haussière : clique d'abord sur le swing low, puis sur le swing high. Les niveaux s'affichent entre les deux." },
+            { step: "1", text: "Identifie un mouvement impulsif clair : un swing low et un swing high nets, c'est-à-dire un vrai creux et un vrai sommet, avec des bougies de chaque côté." },
+            { step: "2", text: "En tendance haussière : clique d'abord sur le swing low, puis sur le swing high. Le 100 % se place sur le creux, le 0 % sur le sommet, et les niveaux s'affichent entre les deux, prolongés vers la droite, là où le prix va revenir." },
             { step: "3", text: "Le prix retrace depuis le swing high → surveille les zones 38.2%, 50% et 61.8% en priorité." },
             { step: "4", text: "Cherche une confluence sur ces zones : support ou résistance historique, chiffre rond (1.0850, 1.0900…). C'est là que tu prépares ton entrée." },
           ].map((item) => (
@@ -192,7 +192,7 @@ function ContentFr() {
         points={[
           "Fibonacci identifie les zones de retracement probabilistes : 38.2%, 50%, 61.8% sont les plus utilisées.",
           "Trace Fibonacci sur un mouvement impulsif complet : swing low → swing high (tendance haussière).",
-          "Le 61.8% (golden ratio) est le niveau le plus respecté, mais jamais infaillible.",
+          "Le 61.8% (le nombre d'or) est le niveau le plus surveillé, mais jamais infaillible.",
           "Fibonacci seul n'est pas un signal, attends une confluence (support ou résistance) ET un signal de bougie.",
           "Les 'zones d'or' = intersection de plusieurs confluences incluant un niveau Fib clé.",
         ]}
@@ -211,7 +211,7 @@ function ContentFr() {
       <LessonQuiz
         question="Tu traces Fibonacci sur un mouvement haussier EUR/USD (1.0800 → 1.0980). Le prix retrace jusqu'au 61.8% à 1.0869. Ce niveau coïncide avec un support historique respecté 2×. Que fais-tu ?"
         options={[
-          "Tu entres immédiatement en achat, le golden ratio + support, c'est assez",
+          "Tu entres immédiatement en achat, le nombre d'or + support, c'est assez",
           "Tu attends un signal de bougie (pin bar ou engulfing haussier) sur la zone avant d'entrer",
           "Tu passes un ordre de vente, le retracement va probablement continuer jusqu'au 78.6%",
           "Tu ignores le 61.8%, le support a déjà été touché 2×, il est affaibli",

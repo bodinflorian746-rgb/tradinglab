@@ -30,8 +30,8 @@ export default function FibPullbackChecklistDiagram(_props: { className?: string
         zones: [{ key: "ote", y1: f786, y2: f618, from: B.index, label: "OTE 0.618-0.786", short: "OTE", tone: "fib", kind: "fib" }],
         segments: [{ key: "trace", i1: A.index, p1: A.price, i2: B.index, p2: B.price, tone: "fib", dashed: true }],
         markers: [
-          { key: "hl", i: A.index, price: A.price, label: "HL", tone: "sky", side: "below", role: "swing-low" },
-          { key: "hh", i: B.index, price: B.price, label: "HH", tone: "neutral", side: "above", role: "swing-high" },
+          { key: "hl", i: A.index, price: A.price, label: "HL · 100 %", tone: "sky", side: "below", role: "swing-low" },
+          { key: "hh", i: B.index, price: B.price, label: "HH · 0 %", tone: "neutral", side: "above", role: "swing-high" },
           { key: "pin", i: last, price: low, label: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" },
         ],
       }]}

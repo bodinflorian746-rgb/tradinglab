@@ -133,7 +133,7 @@ function ContentFr() {
       <LessonQuiz
         question="Tu identifies un BOS haussier sur H1. Le prix retrace à 65% du swing A→B et forme une pin bar haussière dans un Bullish OB. Que fais-tu ?"
         options={[
-          "Tu n'entres pas, 65% n'est pas exactement le golden ratio à 61.8%",
+          "Tu n'entres pas, 65% n'est pas exactement le nombre d'or (61.8%)",
           "Tu entres en achat. BOS confirmé, retracement dans la zone OTE, confluence OB, signal de bougie",
           "Tu attends que le prix revienne à 78.6% pour être dans la zone OTE exacte",
           "Tu entres en vente, le retracement de 65% suggère une faiblesse des acheteurs",
