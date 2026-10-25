@@ -59,7 +59,7 @@ export const CONTEXT_RULES: Record<string, ContextRule> = {
   "ftm/risk_not_reduced_news":         { assets: ["EUR/USD"], sessions: ["Overlap"], news: true },   // 14h20, NFP, EUR/USD
   "ftm/position_held_through_event":   { assets: ["XAU/USD"], sessions: ["New York"], news: true },  // 19h55, FOMC, XAU/USD
   "ftm/oversized_position":            { assets: ["XAU/USD"] },
-  "ftm/size_not_adapted_to_vol":       { assets: ["XAU/USD"] },
+  "ftm/size_not_adapted_to_vol":       { assets: ["XAU/USD"], sessions: ["Londres", "Overlap", "New York"], volatility: "élevée" }, // volatilité ×2,3
   "ftm/volatility_ignored":            { assets: ["BTC/USD"] },                          // « volatilité explosive sur BTC »
   "ftm/fomo_after_pump":               { assets: ["BTC/USD"] },                          // « pomper 5 % en 3 bougies »
   "ftm/weekend_gap_exposure":          { assets: ["EUR/USD"], sessions: ["New York"], spread: "élevé" }, // vendredi 22h45, clôture
@@ -69,7 +69,8 @@ export const CONTEXT_RULES: Record<string, ContextRule> = {
   "ps/news_vol_expansion":             { sessions: ["New York"], news: true },           // après FOMC
   "ps/news_imminent_wide":             { sessions: NY_OR_OVERLAP, news: true },          // NFP dans 5 min
   "ps/news_imminent_wide_sell":        { assets: ["EUR/USD"], sessions: ["New York"], news: true },  // FOMC, EUR/USD
-  "ps/extreme_volatility_buy":         { sessions: ["Londres", "Overlap", "New York"], volatility: "élevée", news: true }, // marché trois fois plus agité
+  // marché trois fois plus agité : volatilité élevée (et spread hors norme permis), sans bandeau de news
+  "ps/extreme_volatility_buy":         { sessions: ["Londres", "Overlap", "New York"], volatility: "élevée", news: true },
   "ps/extreme_volatility_sell":        { sessions: ["Londres", "Overlap", "New York"], volatility: "élevée", news: true },
   "ps/weekly_open_volatility":         { assets: ["EUR/USD", "XAU/USD"], sessions: ["Asie"] },      // lundi, marchés FX
   "ps/weekly_open_volatility_sell":    { assets: ["EUR/USD", "XAU/USD"], sessions: ["Asie"] },

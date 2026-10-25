@@ -10,7 +10,7 @@ import * as BT from "../../lib/games/build-the-trade";
 import { ASSET_SCALE, formatPrice } from "../../lib/games/price-scale";
 import { SESSION_ASSETS, CALM_SESSIONS } from "../../lib/games/market-context";
 
-type Inst = { id: string; asset: any; session: any; volatility: any; spread: any; context: string; seed: number; difficulty: any };
+type Inst = { id: string; asset: any; session: any; volatility: any; spread: any; context: string; seed: number; macroContext?: string; difficulty: any };
 const NEWS = /NFP|FOMC|CPI|BCE|ECB|[Nn]ews|annonce|macro majeure/;
 const hourSessions = (h: number) => h >= 1 && h < 8 ? ["Asie", "Heures mortes"] : h >= 8 && h < 14 ? ["Londres"] : h >= 14 && h < 17.5 ? ["Overlap", "New York"] : h >= 17.5 && h < 23 ? ["New York"] : ["Heures mortes", "Asie"];
 const errors: Record<string, number> = {}; const ex: Record<string, string> = {}; let n = 0;
@@ -36,6 +36,9 @@ for (const [g, gen, build] of games) for (const d of ["beginner", "intermediate"
     // Texte qui annonce un marché très agité (au présent ; « peut bouger 2 à 3 fois plus » avant une news reste calme) : la volatilité affichée le dit aussi (ex. refusé : Place ton Stop,
     // extreme_volatility_buy, « trois fois plus que sa moyenne » avec « Volatilité faible »)
     if (/bouge (trois|3) fois plus|expansion violente|volatilité explosive/i.test(i.context) && i.volatility !== "élevée") err(`${g} marché très agité annoncé, volatilité affichée ${i.volatility}`, tag);
+    // Bandeau « News macro majeure dans < 30 min » (macro dangereux) : l'énoncé annonce bien une news
+    // (ex. refusé : size_not_adapted_to_vol, extreme_volatility, weekly_open_volatility, bandeau sans news)
+    if (i.macroContext === "dangereux" && !news) err(`${g} bandeau news sans news dans l'énoncé`, tag);
     if (i.spread === "faible" && i.session === "Heures mortes") err(`${g} spread faible en heures mortes`, tag);
     if (i.spread === "élevé" && i.session === "Overlap" && !news) err(`${g} spread élevé en Overlap sans news`, tag);
     const named = ["EUR/USD", "XAU/USD", "BTC/USD", "NASDAQ"].filter((a) => i.context.includes(a)).concat(/\bBTC\b/.test(i.context) && !i.context.includes("BTC/USD") ? ["BTC/USD"] : []);

@@ -466,7 +466,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     title: "Volatilité extrême — SL standard balayé",
     direction: "BUY",
     htfBias: "bullish",
-    macroContext: "dangereux",
+    macroContext: "normal",
     context: "Aujourd'hui, le marché bouge trois fois plus que sa moyenne des 20 derniers jours (ATR, l'amplitude moyenne d'une journée). Marché en mode expansion violente. Tu prends ton setup BUY classique. Le SL « standard » ne tiendra pas.",
     shortContext: "Le marché bouge 3 fois plus que d'habitude (ATR, l'amplitude moyenne d'une journée) : expansion violente",
     lessons: {
@@ -484,7 +484,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     title: "Volatilité extrême — SL standard balayé (SELL)",
     direction: "SELL",
     htfBias: "bearish",
-    macroContext: "dangereux",
+    macroContext: "normal",
     context: "Aujourd'hui, le marché bouge trois fois plus que sa moyenne des 20 derniers jours (ATR, l'amplitude moyenne d'une journée). Marché en expansion violente. Tu vends (SELL) sur un rejet. Le SL « standard » au-dessus de la mèche ne tiendra pas.",
     shortContext: "Le marché bouge 3 fois plus que d'habitude (ATR, l'amplitude moyenne d'une journée) : short en volatilité extrême",
     lessons: {
@@ -573,7 +573,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     title: "Lundi open — gap weekend possible",
     direction: "BUY",
     htfBias: "bullish",
-    macroContext: "dangereux",
+    macroContext: "normal",
     context: "Lundi matin, ouverture du marché des devises (forex). Un gap de weekend est possible. Le SL doit absorber cette amplitude exceptionnelle.",
     shortContext: "Open lundi, gap possible",
     lessons: {
@@ -663,7 +663,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     title: "Lundi open SELL — gap weekend possible",
     direction: "SELL",
     htfBias: "bearish",
-    macroContext: "dangereux",
+    macroContext: "normal",
     context: "Lundi matin, ouverture du marché des devises (forex). Un gap haussier weekend est possible. Le SL SELL doit absorber cette amplitude.",
     shortContext: "Open lundi, gap possible",
     lessons: {

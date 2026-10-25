@@ -597,7 +597,7 @@ export const MISTAKE_TEMPLATES: MistakeTemplate[] = [
     chartShape: "high_vol_pullback",
     direction: "SELL",
     htfBias: "bearish",
-    macroContext: "dangereux",
+    macroContext: "normal",
     context: "En ce moment, l'or (XAU/USD) bouge en moyenne de 80 $ par jour (ATR, l'amplitude moyenne d'une journée), contre 35 $ d'habitude : la volatilité est multipliée par 2,3. Tu prends ce SELL avec ta taille de lot habituelle (1,00) et ton stop loss standard de 30 $.",
     correctMistake: "size_not_adapted_to_vol",
     decoyMistakes: ["stop_too_tight", "oversized_position", "bad_rr"],
