@@ -122,3 +122,12 @@ export function breakStrayLevels<T extends { past: Candle[]; zones: ChartZone[] 
   if (!dom) return { ...ch, past };
   return { ...ch, past, domain: { min: Math.min(dom.min, ...past.map((k) => k.l)), max: Math.max(dom.max, ...past.map((k) => k.h)) } };
 }
+
+/** Un alignement fortuit (sommets ou creux alignés, prouvés, sans zone) reste-t-il dans le passé ? */
+export function hasStrayLevel(ch: { past: Candle[]; zones: ChartZone[] }): boolean {
+  const mr = median(ch.past.map((k) => k.h - k.l));
+  if (!mr) return false;
+  const tol = 0.25 * mr;
+  const inZone = (y: number) => ch.zones.some((z) => Math.min(z.y1, z.y2) - tol <= y && y <= Math.max(z.y1, z.y2) + tol);
+  return strays(ch.past, inZone, mr).length > 0;
+}

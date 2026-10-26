@@ -22,7 +22,7 @@ import {
 import { withTracedZones, keepSwingTips } from "./zone-trace";
 import type { NotionId } from "./notions";
 import { PS_NEW, sweepFuture, type PsRaw } from "./ps-scenarios";
-import { breakStrayLevels } from "./stray-levels";
+import { breakStrayLevels, hasStrayLevel } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
@@ -1558,7 +1558,14 @@ function leadIn(rng: () => number, m: number, from: number, to: number, n: numbe
   for (let i = 0; i < n; i++) {
     const o = p;
     const c = i === n - 1 ? to : i === 2 ? o - dir * (0.1 + rng() * 0.1) * m : o + dir * step * (0.8 + rng() * 0.5);
-    out.push(candle(o, c, (0.1 + rng() * 0.12) * m, (0.1 + rng() * 0.12) * m));
+    // mèches proportionnelles au corps (proportions des vraies données M15)
+    const b = Math.abs(c - o);
+    let wTravel = (0.3 + rng() * 0.7) * b + 0.06 * m, wBack = (0.6 + rng() * 1.0) * b + 0.08 * m;
+    // bougie contraire : sa mèche dépasse l'extrême de la précédente (aucun creux / sommet isolé dans la
+    // jambe) ; dernière bougie : pas de mèche au-delà de l'arrivée (aucun pivot à la jonction)
+    if (i === 2 && out.length) { const prev = out[out.length - 1]; wTravel = Math.abs((dir > 0 ? prev.h : prev.l) - o) + 0.05 * m; }
+    if (i === n - 1) wTravel = 0.02 * m;
+    out.push(dir > 0 ? candle(o, c, wTravel, wBack) : candle(o, c, wBack, wTravel));
     p = c;
   }
   return out;
@@ -1568,7 +1575,6 @@ function scnRoundNumberSweep(rng: () => number, m: number, d: Difficulty, mode: 
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 5 + rng() * 0.3;
-  past.push(...leadIn(rng, m, p + 2.3 * m, p, 7));
   // Approche : la baisse se poursuit (un rebond ici formait un creux que la consolidation retestait,
   // un support visible sans zone)
   for (let i = 0; i < 4; i++) {
@@ -1623,11 +1629,11 @@ function scnAsiaHighSweep(rng: () => number, m: number, d: Difficulty, mode: Pla
   const asiaLow = 5;
   const asiaHigh = asiaLow + 1.2 * m;
   let p = asiaLow + 0.6 * m;
-  for (const k of leadIn(rng, m, asiaLow - 2.3 * m, p, 7)) { k.h = Math.min(k.h, asiaHigh - 0.15 * m); past.push(k); }
   // Range Asia : oscillation entre les bornes
   for (let i = 0; i < 10; i++) {
     const o = p;
-    const target = i % 2 === 0 ? asiaHigh - 0.1 * m : asiaLow + 0.2 * m;
+    // (creux variés : des creux au même prix formaient un « bas du range » visible sans zone)
+    const target = i % 2 === 0 ? asiaHigh - 0.1 * m : asiaLow + (0.15 + rng() * 0.35) * m;
     const c = o + (target - o) * (0.5 + rng() * 0.3);
     const k = candle(o, c, (0.12 + rng() * 0.12) * m, (0.12 + rng() * 0.12) * m);
     k.h = Math.min(k.h, asiaHigh + 0.04 * m); // le high du range Asia n'est pas dépassé avant London
@@ -1646,7 +1652,9 @@ function scnAsiaHighSweep(rng: () => number, m: number, d: Difficulty, mode: Pla
   const entry = p;
   const liquidityPrice = asiaHigh + 0.1 * m;
   const logicalPrice   = asiaHigh + trapMarginFor(d, mode) * m + 0.4 * m;
-  const widePrice      = entry + 2.8 * m + widePushFor(mode) * m;
+  // (au-delà du logique du même écart que les autres scénarios Avancé : à 2,8 au-dessus de l'entrée, il fixait
+  // seul l'échelle et le range asiatique tenait dans le quart du graphique)
+  const widePrice      = Math.max(entry + 2.0 * m, logicalPrice + 1.2 * m) + widePushFor(mode) * m;
   // Future : sweep d'haut de la session asiatique (1 bougie qui dépasse), puis drop
   const bumpHigh = asiaHigh + 0.4 * m;
   const bumpClose = asiaHigh - 0.4 * m;
@@ -1750,7 +1758,6 @@ function scnPrevDayLowTrap(rng: () => number, m: number, d: Difficulty, mode: Pl
   const past: Candle[] = [];
   const fut: Candle[] = [];
   let p = 5 + rng() * 0.3;
-  past.push(...leadIn(rng, m, p + 2.3 * m, p, 7));
   // « Le prix s'approche du PDL » : quelques bougies qui glissent vers le bas (creux de plus en plus bas)
   for (let i = 0; i < 5; i++) {
     const o = p;
@@ -1768,7 +1775,9 @@ function scnPrevDayLowTrap(rng: () => number, m: number, d: Difficulty, mode: Pl
   const entry = p;
   // Le PDL n'a pas encore été touché : il se situe sous tous les lows du passé, assez loin pour que
   // les creux du jour ne se confondent pas avec lui (aucun niveau visible sans nom juste au-dessus)
-  const PDL = Math.min(entry - 0.6 * m, Math.min(...past.map((k) => k.l)) - 0.45 * m);
+  // (0,7 × la bougie médiane sous les creux : plus près, la passe de réalisme ramenait plusieurs creux sur
+  // la même garde au-dessus du PDL, deux creux égaux formaient un support visible sans zone)
+  const PDL = Math.min(entry - 0.6 * m, Math.min(...past.map((k) => k.l)) - 0.7 * m);
   const liquidityPrice = PDL - 0.1 * m;
   const logicalPrice   = PDL - trapMarginFor(d, mode) * m - 0.5 * m;
   // Le stop large reste plus loin que le logique même si le PDL descend
@@ -2980,7 +2989,24 @@ export function buildPlaceStopChart(
   const built = PLACE_STOP_TEMPLATES.find((t) => t.id === setup)?.build;
   const chart0 = built ? buildScenarioChart(setup, seed, volatility, difficulty) : rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed);
   // suite naturelle : pas d'escalier (série de bougies de même couleur aux corps identiques)
-  const chart = { ...chart0, future: naturalFuture(chart0.future, mulberry32((seed ^ 0x165667B1) >>> 0), VOL_MULT[volatility]) };
+  const natural = { ...chart0, future: naturalFuture(chart0.future, mulberry32((seed ^ 0x165667B1) >>> 0), VOL_MULT[volatility]) };
+  // Échelle lisible (stops lointains) ; la passe de réalisme resserre parfois les bougies : si le résultat
+  // reste sous MIN_FINAL_SHARE, la jambe d'arrivée est recalculée avec une cible plus haute
+  const once = (target: number) => finishChart(setup, withReadableScale(natural, mulberry32((seed ^ 0x2C1B3C6D) >>> 0), VOL_MULT[volatility], target), seed, volatility, ctx);
+  let out = once(MIN_QUESTION_SHARE);
+  for (const t of [0.74, 0.82]) { if (finalShare(out) >= MIN_FINAL_SHARE) break; out = once(t); }
+  return out;
+}
+
+/** Part de l'échelle couverte par les bougies, à la question et au verdict (la plus petite des deux) */
+export function finalShare(c: PlaceStopChart): number {
+  const levels = [c.entry, ...c.stops.map((x) => x.price), ...c.zones.flatMap((z) => [z.y1, z.y2])];
+  return Math.min(candleShare(c.past, levels), candleShare([...c.past, ...c.future], levels));
+}
+/** Part minimale après la passe de réalisme (règle d'audit : scripts/audit-jeux/echelle-ps.ts) */
+export const MIN_FINAL_SHARE = 0.62;
+
+function finishChart(setup: PlaceStopSetupKey, chart: PlaceStopChart, seed: number, volatility: Volatility, ctx: MarketCtx): PlaceStopChart {
   const withTarget = setup === "tight_consolidation" ? chart : ensureCorrectStopRR(chart);
   // Passe de réalisme des bougies (niveaux clés : zones, entrée, TP, les 3 stops)
   // (passé : zones ; futur : aussi entrée, TP et stops, qui décident de l'issue)
@@ -2990,7 +3016,68 @@ export function buildPlaceStopChart(
   const outcome = [...(withTarget.tp !== null ? [withTarget.tp] : []), ...stopPrices];
   // passé : les stops aussi (un stop « sous le swing low » reste sous la mèche du swing)
   // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
-  return keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(keepPricesPositive(realizeChart(withTarget, { past: [...zones, ...stopPrices], future: [...zones, withTarget.entry, ...outcome] }, seed, { ...ctx, volatility }))))), stopPrices));
+  const finish = (rs: number) => keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(keepPricesPositive(realizeChart(withTarget, { past: [...zones, ...stopPrices], future: [...zones, withTarget.entry, ...outcome] }, rs, { ...ctx, volatility }))))), stopPrices));
+  // Rare : la passe de réalisme ramène deux creux (sommets) sur la même garde et la passe finale ne
+  // peut pas les séparer sans toucher une zone ou un stop : autre tirage de réalisme (3 essais au plus)
+  let out = finish(seed);
+  for (let k = 1; k <= 3 && hasStrayLevel(out); k++) out = finish((seed + k * 0x9E3779B1) >>> 0);
+  return out;
+}
+
+/** Part minimale de l'échelle (bougies, zones, entrée, 3 stops) couverte par les bougies de la question */
+export const MIN_QUESTION_SHARE = 0.66;
+/** Part de l'échelle couverte par des bougies, au milieu des niveaux tracés */
+export function candleShare(candles: Candle[], levels: number[]): number {
+  const lo = Math.min(...candles.map((k) => k.l)), hi = Math.max(...candles.map((k) => k.h));
+  const all = [lo, hi, ...levels];
+  return (hi - lo) / (Math.max(...all) - Math.min(...all) || 1);
+}
+/**
+ * Règle PO : les stops lointains n'écrasent jamais les bougies (au moins la moitié de la hauteur du
+ * graphique, à la question comme au verdict). Si les bougies de la question couvrent moins de
+ * MIN_QUESTION_SHARE de l'échelle, une jambe d'arrivée précède la scène : le prix arrive sur la scène,
+ * puis la scène se déroule. Des deux côtés possibles, la jambe la plus courte qui ne traverse aucune
+ * zone tracée (un support franchi changerait l'histoire du niveau). Indices des zones décalés d'autant.
+ */
+function withReadableScale(chart: PlaceStopChart, rng: () => number, m: number, target = MIN_QUESTION_SHARE): PlaceStopChart {
+  const levels = [chart.entry, ...chart.stops.map((s) => s.price), ...chart.zones.flatMap((z) => [z.y1, z.y2])];
+  if (candleShare(chart.past, levels) >= target) return chart;
+  const start = chart.past[0].o;
+  const tol = 0.15 * m;
+  // (un swing, un Order Block ou un FVG se forment plus tard dans la scène : le prix d'avant ne les
+  // change pas ; un support, une résistance, une borne ou une liquidité se lisent sur tout le passé)
+  const PIVOT = /^(swing|hh|hl|lh|ll|order block|fvg)\b/i;
+  // (du côté de la jambe seulement : une zone juste de l'autre côté du départ de la scène n'est pas traversée)
+  const crossesZone = (from: number, to: number) => chart.zones.some((z) => {
+    if (PIVOT.test(z.label)) return false;
+    const lo = Math.min(z.y1, z.y2), hi = Math.max(z.y1, z.y2);
+    return from > to ? hi > to + 0.05 * m && lo < from + tol : lo < to - 0.05 * m && hi > from - tol;
+  });
+  const shareWith = (from: number) => candleShare([...chart.past, { o: from, c: start, h: Math.max(start, from), l: Math.min(start, from) }], levels);
+  // côté opposé aux stops d'abord (une jambe qui traverse les stops verrait ses mèches rognées à leur prix
+  // par la passe de réalisme) ; côté des stops seulement si la jambe y est nettement plus courte
+  const stopsBelow = chart.stops.every((st) => st.price < chart.entry);
+  const legFor = (dir: number) => {
+    for (let h = 0.5 * m; h <= 8 * m; h += 0.25 * m) {
+      const from = start + dir * h;
+      if (crossesZone(from, start)) return null;
+      if (shareWith(from) >= target + 0.03) return { from, h };
+    }
+    return null;
+  };
+  const away = legFor(stopsBelow ? 1 : -1), toward = legFor(stopsBelow ? -1 : 1);
+  const best = away && (!toward || away.h <= 1.6 * toward.h) ? away : toward;
+  if (!best) return chart;
+  // (bougies de la taille de celles de la scène : de plus grandes relevaient la bougie médiane, et les marges
+  // des stops, mesurées en bougies médianes, rétrécissaient)
+  const n = Math.max(4, Math.min(12, Math.round(best.h / (0.5 * m)) + 1));
+  const lead = leadIn(rng, m, best.from, start, n);
+  return {
+    ...chart,
+    past: [...lead, ...chart.past],
+    zones: chart.zones.map((z) => (z.at !== undefined ? { ...z, at: z.at + lead.length } : z)),
+    domain: { min: Math.min(chart.domain.min, ...lead.map((k) => k.l)), max: Math.max(chart.domain.max, ...lead.map((k) => k.h)) },
+  };
 }
 
 // Le bon stop ne doit jamais avoir un R/R faible : l'objectif (TP) est au moins
