@@ -282,7 +282,10 @@ const PACK_GAP = 1;
  * y), pour le placement réel comme pour le calcul de la marge d'étiquettes.
  */
 function packLines(ls: { k: string; l: number }[], H: number): Map<string, number> {
-  const EPS = 0.01, STEP = INLINE_TAG_H + PACK_GAP, MAX_SHIFT = PACK_SHIFT;
+  // (jusqu'à une hauteur de pastille de sa ligne : deux lignes presque confondues s'empilent, la plus
+  // écartée reliée à sa ligne par un trait ; côte à côte, elles élargissaient la marge et tassaient les
+  // bougies sur 30 % du cadre, ex. Build the Trade trend_continuation_bull, entrées à 0,7 pip)
+  const EPS = 0.01, STEP = INLINE_TAG_H + PACK_GAP, MAX_SHIFT = INLINE_TAG_H + PACK_GAP;
   const packed = new Map<string, number>();
   type Pile = { m: { k: string; l: number }[]; top: number };
   const recenter = (g: Pile) => {

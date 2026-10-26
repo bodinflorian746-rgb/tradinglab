@@ -495,7 +495,12 @@ const MUTATIONS = {
   }],
   "bougies écrasées en hauteur": [/bougies écrasées en hauteur/, () => {
     // toutes les bougies ramenées dans le tiers haut du cadre (comme un stop lointain qui fixerait l’échelle)
-    for (const g of document.querySelectorAll(".tsx-v2 .v2-chart svg.v2-svg .v2-candle")) g.setAttribute("transform", "scale(1 0.3)");
+    // (groupe parent mis à l’échelle : la transformation CSS animée des bougies ne l’annule pas)
+    const cs = [...document.querySelectorAll(".tsx-v2 .v2-chart svg.v2-svg .v2-candle")];
+    const wrap = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    wrap.setAttribute("transform", "scale(1 0.3)");
+    cs[0].parentNode.insertBefore(wrap, cs[0]);
+    for (const g of cs) wrap.appendChild(g);
   }],
   "bougies tassées par les étiquettes": [/bougies tassées/, () => {
     const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
