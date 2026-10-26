@@ -23,9 +23,9 @@ const S = {
   fr: {
     hero: {
       titleJournal: [{ t: "De ta " }, { t: "première leçon", hl: true }, { t: " à ton " }, { t: "journal de trading", hl: true }, { t: "\u00a0:" }, { t: "tout pour te former et progresser.", tail: true }] as TitlePart[],
-      subtitleJournal: "Leçons, stratégies et jeux sur de vrais graphiques, puis un journal de trading pour analyser chacun de tes trades.",
+      subtitleJournal: "Leçons, stratégies et jeux sur des graphiques réalistes, puis un journal de trading pour analyser chacun de tes trades.",
       title: [{ t: "De ta " }, { t: "première leçon", hl: true }, { t: " à ton " }, { t: "premier trade structuré", hl: true }, { t: "\u00a0:" }, { t: "tout pour te former et progresser.", tail: true }] as TitlePart[],
-      subtitle: "Leçons, stratégies et jeux sur de vrais graphiques, à ton rythme.",
+      subtitle: "Leçons, stratégies et jeux sur des graphiques réalistes, à ton rythme.",
       audience: "Pour débuter comme pour structurer tes décisions : le parcours va du débutant à l'avancé.",
     },
     // Fil explicatif de la page (refonte r4) : une phrase par section, contenu réel du site
@@ -34,7 +34,7 @@ const S = {
       title: "Comprendre, s'entraîner, appliquer",
       steps: [
         { verb: "Comprendre", name: "Les leçons", text: "Tu apprends à lire un graphique, à gérer ton risque et à suivre la macro, avec des schémas, des exemples et des quiz." },
-        { verb: "S'entraîner", name: "Les jeux", text: "Sur de vrais graphiques, tu décides : acheter, vendre ou attendre, où placer ton stop, où est l'erreur. Chaque réponse est expliquée." },
+        { verb: "S'entraîner", name: "Les jeux", text: "Sur des graphiques réalistes, tu décides : acheter, vendre ou attendre, où placer ton stop, où est l'erreur. Chaque réponse est expliquée." },
         { verb: "Appliquer", name: "Les stratégies", text: "Tu suis une méthode complète, de l'analyse à l'entrée : price action, SMC, ICT, macro…" },
       ],
       lessonsMeta: "Voir les leçons",
@@ -83,7 +83,7 @@ const S = {
       strategiesValue: (strategies: number, lessons: number) => [{ n: strategies }, { t: " stratégies," }, { br: true as const }, { t: " en " }, { n: lessons }, { t: " leçons" }],
     },
     games: {
-      sub: "4 jeux sur de vrais graphiques : décider, placer ton stop, repérer l'erreur, construire un trade complet.",
+      sub: "4 jeux sur des graphiques réalistes : décider, placer ton stop, repérer l'erreur, construire un trade complet.",
       lines: {
         "buy-sell-no-trade": "Mini graphique, contexte, news : tu prends ta décision.",
         "place-stop": "Quel stop va survivre ? Stop 1, 2 ou 3.",
