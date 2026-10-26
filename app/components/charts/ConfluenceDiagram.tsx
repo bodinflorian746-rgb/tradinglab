@@ -22,13 +22,13 @@ export function ConfluenceDiagram({ className = "", variant = "structure" }: { c
     { key: "fib", price: m.fib, from: m.A.index, label: "Fibonacci 61.8%", short: "Fibo 61.8%", tone: "fib", dashed: true },
   ];
   // repères du tracé Fibonacci : 100 % sur le départ A, 0 % sur le sommet B
-  const fibEnds: LCMarker[] = [{ key: "f100", i: m.A.index, price: m.A.price, label: "100 %", tone: "fib", side: "below", dot: true }];
+  const fibEnds: LCMarker[] = [{ key: "f100", i: m.A.index, price: m.A.price, label: "Fibo 100 %", tone: "fib", side: "below", dot: true }];
   const markers: LCMarker[] = variant === "structure"
     ? [...fibEnds, ...m.piv.filter((q) => q.name && q.index > m.A.index).map((q) => ({
       key: `p${q.index}`, i: q.index, price: q.price, label: q.index === m.B.index ? `${q.name} · 0 %` : q.name!, pivot: q.name, tone: q.side === "h" ? "neutral" as const : "sky" as const,
       side: q.side === "h" ? "above" as const : "below" as const, dot: q.side === "l",
     }))]
-    : [...fibEnds, { key: "f0", i: m.B.index, price: m.B.price, label: "0 %", tone: "fib", side: "above", dot: true },
+    : [...fibEnds, { key: "f0", i: m.B.index, price: m.B.price, label: "Fibo 0 %", tone: "fib", side: "above", dot: true },
       ...[m.L1, m.L2].map((q, k) => ({ key: `r${k}`, i: q.index, price: q.price, label: `Rebond ${k + 1}`, tone: "bull" as const, side: "below" as const, dot: true }))];
 
   const panel: LCPanel = {

@@ -24,8 +24,8 @@ export default function EngulfingContextDiagram(_props: { className?: string; lo
           key: "fibo", title: "✓ Sur la zone Fibonacci : tradable", decimals: 5, height: 220, candles: a,
           zones: [{ key: "fib", y1: f618, y2: f50, from: hiAt, label: `Fibo 0.5 / 0.618 (${fmtPrice(f50, 4)}-${fmtPrice(f618, 4)})`, short: "Fibo 0.5-0.618", tone: "fib" }],
           markers: [
-            { key: "f100", i: loAt, price: lo, label: "100 %", tone: "fib", side: "below", role: "swing-low" },
-            { key: "f0", i: hiAt, price: hi, label: "0 %", tone: "fib", side: "above", role: "swing-high" },
+            { key: "f100", i: loAt, price: lo, label: "Fibo 100 %", tone: "fib", side: "below", role: "swing-low" },
+            { key: "f0", i: hiAt, price: hi, label: "Fibo 0 %", tone: "fib", side: "above", role: "swing-high" },
             { key: "eng", i: a.length - 1, price: a[a.length - 1].l, label: "Engulfing", tone: "bull", side: "below", role: "engulfing" },
           ],
         },

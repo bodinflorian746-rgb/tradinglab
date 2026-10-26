@@ -44,8 +44,8 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
           offscale: t.offscale,
           markers: [
             // repères du tracé Fibonacci : 100 % sur le HL, 0 % sur le HH
-            { key: "f100", i: loAt, price: lo, label: `100 % · HL ${px(lo)}`, short: "100 %", tone: "fib", side: "below", role: "swing-low" },
-            { key: "f0", i: hiAt, price: hi, label: `0 % · HH ${px(hi)}`, short: "0 %", tone: "fib", side: "above", role: "swing-high" },
+            { key: "f100", i: loAt, price: lo, label: `Fibo 100 % · HL ${px(lo)}`, short: "Fibo 100 %", tone: "fib", side: "below", role: "swing-low" },
+            { key: "f0", i: hiAt, price: hi, label: `Fibo 0 % · HH ${px(hi)}`, short: "Fibo 0 %", tone: "fib", side: "above", role: "swing-high" },
             { key: "pin", i: pin, price: cs[pin].l, label: `Pin bar sur ${px(cs[pin].l)}`, short: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" },
           ],
           chips: [...t.chips, { label: `R/R TP 1 : ${fmtRR(tradeMath(xauToEur(4565), xauToEur(4510), hi).rr)}`, tone: "entry" }],

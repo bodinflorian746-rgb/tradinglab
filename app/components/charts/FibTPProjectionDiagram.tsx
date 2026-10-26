@@ -37,8 +37,8 @@ export default function FibTPProjectionDiagram(_props: { className?: string; loc
           { key: "sl", price: SL, from: entryI, label: `SL ${px(SL)}`, short: "SL", tone: "bear", dashed: true },
         ],
         markers: [
-          { key: "f100", i: hh.index, price: hh.price, label: "100 % · HH", short: "100 %", tone: "fib", side: "above", role: "swing-high" },
-          { key: "f0", i: c, price: cs[c].l, label: "0 % · creux du repli", short: "0 %", tone: "fib", side: "below", role: "swing-low" },
+          { key: "f100", i: hh.index, price: hh.price, label: "Fibo 100 % · HH", short: "Fibo 100 %", tone: "fib", side: "above", role: "swing-high" },
+          { key: "f0", i: c, price: cs[c].l, label: "Fibo 0 % · creux du repli", short: "Fibo 0 %", tone: "fib", side: "below", role: "swing-low" },
           { key: "pin", i: entryI, price: cs[entryI].l, label: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" },
         ],
         chips: [chip("TP 1", hh.price), chip("TP 2", xauToEur(Math.round(eurToXau(e1618))))],
