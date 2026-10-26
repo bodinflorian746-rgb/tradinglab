@@ -97,6 +97,12 @@ for (const t of texts) {
     const m = t.text.match(ANGLICISMS);
     if (m) { errors++; if (errors <= 20) lines.push(`  ERREUR anglicisme FR (« ${m[0]} ») ${t.where}.${t.key} : ${t.text.slice(0, 90)}`); }
   }
+  // Énoncé qui donne la réponse (ex. refusé : Place ton Stop multi_swing_deep, « La vraie invalidation
+  // est sous le 3e ») : l'énoncé décrit la scène, l'explication donne la solution
+  if (t.lang === "fr" && (t.key === "context" || t.key === "shortContext")) {
+    const m = t.text.match(/la (vraie|bonne) (invalidation|réponse|entrée) est|le bon (stop|choix) est|(?<!\p{L})= balayé/iu);
+    if (m) { errors++; if (errors <= 20) lines.push(`  ERREUR énoncé qui donne la réponse (« ${m[0]} ») ${t.where} : ${t.text.slice(0, 90)}`); }
+  }
   if (EXPLAIN.has(t.key) && t.text.length > 1) {
     const re = ABSOLUTE[t.lang].find((r) => r.test(t.text));
     if (re) { errors++; if (errors <= 20) lines.push(`  ERREUR ton ${t.lang.toUpperCase()} (${re}) ${t.where}.${t.key} : ${t.text.slice(0, 90)}`); }

@@ -539,7 +539,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "BUY",
     htfBias: "bullish",
     macroContext: "normal",
-    context: "3 swing lows visibles dans les dernières 15 bougies, chacun plus bas que le précédent. SL sous le 1er ou le 2e = balayé. La vraie invalidation est sous le 3e (le plus bas).",
+    context: "3 swing lows visibles dans les dernières 15 bougies, chacun plus bas que le précédent. Tu achètes : sous lequel places-tu ton stop ?",
     shortContext: "3 swings empilés",
     lessons: {
       beginner:     "Quand 3 swing lows s'alignent en descente, la vraie invalidation se situe plutôt sous le plus bas. Un SL sous le 1er risque fort d'être touché.",
@@ -647,7 +647,7 @@ export const PLACE_STOP_TEMPLATES: PlaceStopTemplate[] = [
     direction: "SELL",
     htfBias: "bearish",
     macroContext: "normal",
-    context: "3 swing highs visibles dans les dernières 15 bougies, chacun plus haut que le précédent. SL au-dessus du 1er ou 2e = balayé. La vraie invalidation est au-dessus du 3e.",
+    context: "3 swing highs visibles dans les dernières 15 bougies, chacun plus haut que le précédent. Tu vends : au-dessus duquel places-tu ton stop ?",
     shortContext: "3 swings empilés",
     lessons: {
       beginner:     "Quand 3 swing highs s'alignent en montée, la vraie invalidation se situe plutôt au-dessus du plus haut. Un SL au-dessus du 1er risque fort d'être touché.",
