@@ -127,6 +127,8 @@ export interface PlaceStopChart {
   tp:        number | null;
   direction: TradeDirection;
   stops:     StopOption[];   // 3 stops, ordonnés visuellement top→bottom (A en haut)
+  /** Bougies de la jambe d'arrivée en tête du passé (échelle lisible) : affichées d'un coup */
+  lead?:     number;
 }
 
 export const ROUNDS_PER_SESSION = 10;
@@ -3075,6 +3077,7 @@ function withReadableScale(chart: PlaceStopChart, rng: () => number, m: number, 
   return {
     ...chart,
     past: [...lead, ...chart.past],
+    lead: lead.length,
     zones: chart.zones.map((z) => (z.at !== undefined ? { ...z, at: z.at + lead.length } : z)),
     domain: { min: Math.min(chart.domain.min, ...lead.map((k) => k.l)), max: Math.max(chart.domain.max, ...lead.map((k) => k.h)) },
   };

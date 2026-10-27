@@ -539,6 +539,7 @@ export default function PlaceStopPage() {
                 visibleFutureCount: isPlacing ? 0 : revealed,
               }}
               mode={isPlacing ? "question" : isRevealing ? "reveal" : "verdict"}
+              leadCandles={chart.lead ?? 0}
               pin={chosenStop ? { label: `Stop ${spatialLabels[chosenStop.id]}`, sub: T.yourChoicePin, color: STOP_COLORS[chosenStop.id].hex } : undefined}
             >
             </GameChartV2>

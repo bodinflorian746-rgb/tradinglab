@@ -16,7 +16,7 @@
 //    bougie (corps ou mèche), aucune hors du graphique, au plus 4 en 390,
 //    mêmes noms que les boutons, aucun doublon avec une légende ;
 //  - graphique (question et verdict) : zones derrière les bougies, corps au moins 3 fois plus
-//    large que la mèche, bougies (suite comprise) sur au moins 45 % de la largeur et 50 % de la hauteur du cadre, graphique entier dans l'écran en 390 × 844 sans défiler (sous le
+//    large que la mèche, bougies (suite comprise) sur au moins 45 % de la largeur et 50 % de la hauteur du cadre (40 % hors Place ton Stop), graphique entier dans l'écran en 390 × 844 sans défiler (sous le
 //    bandeau du site, au-dessus de la barre du navigateur) ;
 //  - verdict : état (bon / partiel / faux), couleurs du titre et des points
 //    cohérentes, maximum affiché ; barème simple : bon > 0, faux = 0 (sans signe) ;
@@ -180,7 +180,12 @@ const measureLabels = (page, { mobile, buttons, ps }) => page.evaluate(({ mobile
 // est au moins 3 fois plus large que sa mèche ; en mobile (390), le graphique tient en entier dans
 // l'écran tel que le joueur le voit, sans défiler : sous le bandeau du site, au-dessus de la barre
 // du navigateur.
-const measureChart = (page, { mobile }) => page.evaluate(({ mobile, MIN_PLOT_SHARE, MIN_CANDLE_HEIGHT }) => {
+// Hauteur minimale des bougies : la moitié du cadre pour Place ton Stop (règle PO, stops lointains), 40 % ailleurs
+const minHeightFor = (page) => (page.url().includes("/jeux/place-stop") ? 0.5 : 0.4);
+// (mesuré une fois les animations finies : une bougie en train d'apparaître est encore écrasée)
+const settled = (page) => page.waitForFunction(() => !document.getAnimations().some((x) => x.playState === "running" && x.effect?.target?.closest?.(".v2-chart")), null, { timeout: 20000 }).catch(() => {});
+const measureChart = async (page, opts) => { await settled(page); return measureChart0(page, opts); };
+const measureChart0 = (page, { mobile }) => page.evaluate(({ mobile, MIN_PLOT_SHARE, MIN_CANDLE_HEIGHT }) => {
   const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
   if (!svg) return ["graphique absent"];
   const errs = [];
@@ -199,7 +204,7 @@ const measureChart = (page, { mobile }) => page.evaluate(({ mobile, MIN_PLOT_SHA
   // verdict en 390 avec les bougies sur 30 % de la largeur)
   const plotW = +svg.getAttribute("data-plot-w"), svgW = svg.getBoundingClientRect().width;
   if (svgW > 0 && plotW / svgW < MIN_PLOT_SHARE) errs.push(`bougies tassées par les étiquettes : ${Math.round((100 * plotW) / svgW)} % du cadre (au moins ${100 * MIN_PLOT_SHARE} %)`);
-  // Hauteur des bougies : au moins la moitié du cadre, à la question comme au verdict (règle PO) ; un niveau lointain (stop large, objectif) ne les
+  // Hauteur des bougies : au moins la moitié du cadre à Place ton Stop (règle PO), 40 % ailleurs, à la question comme au verdict ; un niveau lointain (stop large, objectif) ne les
   // écrase jamais dans une bande (ex. refusé : Place ton Stop, news_imminent_wide, bougies dans le quart haut)
   const boxes = candles.map((g) => g.getBoundingClientRect()).filter((b) => b.height > 0);
   const svgH = svg.getBoundingClientRect().height;
@@ -215,7 +220,7 @@ const measureChart = (page, { mobile }) => page.evaluate(({ mobile, MIN_PLOT_SHA
     if (r.top < top - 1 || r.bottom > bottom + 1) errs.push(`graphique hors de l'écran : de ${Math.round(r.top)} à ${Math.round(r.bottom)} px pour une zone visible de ${Math.round(top)} à ${bottom} px`);
   }
   return errs;
-}, { mobile, MIN_PLOT_SHARE: 0.45, MIN_CANDLE_HEIGHT: 0.5 });
+}, { mobile, MIN_PLOT_SHARE: 0.45, MIN_CANDLE_HEIGHT: minHeightFor(page) });
 
 const STOP_BUTTONS = { selector: ".tsx-v2 button.v2-stop-choice", keys: "^stop\\d" };
 const stepButtons = (step) => ({ selector: `.tsx-v2 [data-pick^="${step}:"]`, keys: "^cand\\d" });

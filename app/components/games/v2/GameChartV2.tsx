@@ -204,6 +204,9 @@ export interface GameChartV2Props {
   emphasis?: string | null;
   /** Échelle animée aussi d'un état question à l'autre (ex. étapes de Build the Trade). */
   glideScale?: boolean;
+  /** Bougies de contexte en tête du graphique (jambe d'arrivée) : elles apparaissent d'un coup, avec la
+   *  1re bougie de la scène ; seule la scène se dessine bougie par bougie (durée d'apparition inchangée). */
+  leadCandles?: number;
   /** Calque superposé au graphique (ex. VerdictOverlay). */
   children?: ReactNode;
 }
@@ -323,7 +326,7 @@ const ZONE_TOUCH = 4;
 /** Étiquette de l'erreur marquée (point, zone) : demi-pas verticaux explorés pour lui trouver une place */
 const MARK_TAG_STEPS = 40;
 
-export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictBanner, reserve, tpOffscale, preview, inlineLabels, labeledZones, emphasis, glideScale, children }: GameChartV2Props) {
+export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictBanner, reserve, tpOffscale, preview, inlineLabels, labeledZones, emphasis, glideScale, leadCandles = 0, children }: GameChartV2Props) {
   const inline = !!inlineLabels;
   const { ref: sizeRef, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const { ref: playRef, playing } = usePlayOnView<HTMLDivElement>(0.4);
@@ -350,7 +353,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
   const ext = (i: number) => flipExt.get(i) ?? { up: 0, down: 0 };
   const hero = question ? zones[0] : undefined;
   const stepMs = preview ? PREVIEW_STEP_MS : STEP_MS;
-  const spotMs = question ? visibleCount * stepMs + 250 : 0;
+  const spotMs = question ? Math.max(1, visibleCount - leadCandles) * stepMs + 250 : 0;
   // Marquage : au verdict dans les jeux ; dès la question dans un aperçu
   const showMark = !!mark && (mode === "verdict" || !!preview);
 
@@ -1019,7 +1022,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
           const isFuture = sep !== undefined && i >= sep;
           // Avant la réponse, les bougies restent nettes, aux couleurs de la charte (plus d'estompage
           // quand la zone s'allume : la zone est derrière elles et se voit à travers)
-          if (question) return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={i} dim="full" />;
+          if (question) return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={Math.max(0, i - leadCandles)} dim="full" />;
           if (mode === "reveal" && isFuture) {
             // Montée par la page toutes les 420ms : apparaît à son arrivée
             return <V2Candle key={i} {...k} prevClose={visible[i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} thinWick index={0} dim="full" />;
