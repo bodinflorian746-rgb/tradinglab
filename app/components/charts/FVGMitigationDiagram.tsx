@@ -4,6 +4,7 @@
 // FVG et pivots calculés. Bougies : scenarios.ts (« fvg-mitigation-xau »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
+import type { LCStep } from "@/app/components/lessons/lesson-anim";
 import { usd } from "@/app/components/lessons/trade";
 import { largestFvg } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
@@ -21,13 +22,20 @@ export function FVGMitigationDiagram(_props: { className?: string; locale?: "fr"
   const rej = back + 1;
   const end = Math.min(...cs.slice(rej + 1).map((k) => k.l));
   const endAt = cs.findIndex((k, i) => i > rej && k.l === end);
+  // Animation : l'impulsion (les 3 bougies qui laissent le gap), le FVG qui s'allume, la descente jusqu'au
+  // plus bas, le retour dans le FVG, la bougie de rejet, puis la reprise de la baisse
+  const anim: LCStep[] = [
+    { candles: fvg.i + 1 }, { show: "imp" }, { show: "fvg" },
+    { candles: low1At }, { show: "low" }, { candles: back }, { show: "back" },
+    { candles: rej }, { show: "rej" }, { candles: endAt }, { show: "end" },
+  ];
   return (
     <LessonChart
       id="FVGMitigationDiagram"
       title="Le retour dans le FVG est l'entrée"
       caption="La mitigation a été le signal d'entrée, pas l'impulsion initiale, déjà passée."
       panels={[{
-        key: "h1", title: "XAU/USD H1", decimals: 0, height: 290, candles: cs,
+        key: "h1", title: "XAU/USD H1", decimals: 0, height: 290, candles: cs, anim,
         zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `fvg-mitigation-xau:${fvg.i}`, role: "fvg" }],
         markers: [
           { key: "imp", i: fvg.i, price: cs[fvg.i].l, label: "Impulsion", tone: "bear", side: "below", role: "impulse", span: [fvg.i, fvg.i] },

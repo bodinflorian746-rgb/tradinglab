@@ -5,6 +5,7 @@
 // TP 1.1695 (liquidité basse). FVG et R/R calculés. Bougies : scenarios.ts (« disp-eur »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
+import type { LCStep } from "@/app/components/lessons/lesson-anim";
 import { tradeSetup } from "@/app/components/lessons/trade";
 import { fmtPrice, fvgAt } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
@@ -20,6 +21,12 @@ export function DisplacementSetupDiagram(_props: { className?: string; locale?: 
   const back = cs.findIndex((k, i) => i > DISP.last && k.c >= fvg.y1);
   const rej = cs.reduce((b, k, i) => (i > back && i < back + 3 && k.h > cs[b].h ? i : b), back + 1);
   const entryAt = cs.findIndex((k, i) => i > rej && k.l <= ENTRY);
+  // Animation : le sweep, le displacement (3 bougies), le FVG qui s'allume, le retour dans le FVG et le
+  // rejet, puis la bougie d'entrée et le plan du trade
+  const anim: LCStep[] = [
+    { candles: DISP.sweep }, { show: "sweep" }, { candles: DISP.last }, { show: "disp" }, { show: "fvg" },
+    { candles: rej }, { show: "rej" }, { candles: entryAt },
+  ];
   const t = tradeSetup({ entry: ENTRY, sl: 1.1798, tp: 1.1695, from: entryAt, tpOffscale: true, names: { tp: "TP liquidité basse" } });
   return (
     <LessonChart
@@ -27,7 +34,7 @@ export function DisplacementSetupDiagram(_props: { className?: string; locale?: 
       title="Displacement → FVG → entrée au retour"
       caption="L'entrée se prend au retour dans le FVG, jamais pendant le displacement."
       panels={[{
-        key: "m15", title: "EUR/USD M15", decimals: 5, height: 300, candles: cs,
+        key: "m15", title: "EUR/USD M15", decimals: 5, height: 300, candles: cs, anim,
         zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: DISP.first - 1, label: `FVG ${p(fvg.y1)}-${p(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `disp-eur:${DISP.first}`, role: "fvg" }],
         levels: t.levels,
         offscale: t.offscale,
