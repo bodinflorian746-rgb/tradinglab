@@ -4,6 +4,7 @@
 // bougies : scenarios.ts (« smc-phases ») ; range, sweep et pivots vérifiés par l'audit (rôles).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
+import type { LCStep } from "@/app/components/lessons/lesson-anim";
 import { pivots } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
@@ -15,13 +16,19 @@ export default function SMCPhasesDiagram(_props: { className?: string }) {
   const sweep = cs.reduce((b, k, i) => (k.l < cs[b].l ? i : b), 0);
   const out = cs.findIndex((k, i) => i > sweep && k.c > RANGE.y2);
   const trend = pivots(cs, 2).filter((q) => q.index > sweep && (q.name === "HH" || q.name === "HL"));
+  // Animation : chaque phase nommée à son tour — la baisse puis le range (1 · Accumulation), le sweep du bas
+  // (2 · Manipulation), puis l'expansion, HH / HL un par un (3 · Expansion)
+  const anim: LCStep[] = [
+    { candles: sweep - 1 }, { show: "range" }, { candles: sweep }, { show: "sweep" },
+    ...trend.flatMap((q) => [{ candles: q.index + 1 }, { show: `p${q.index}` }]),
+  ];
   return (
     <LessonChart
       id="SMCPhasesDiagram"
       title="Accumulation, manipulation, expansion"
       panels={[{
         key: "h4", subtitle: "EUR/USD H4 — range après une baisse, sweep du bas, expansion haussière",
-        decimals: 5, height: 300, candles: cs,
+        decimals: 5, height: 300, candles: cs, anim,
         zones: [{ key: "range", ...RANGE, from: start, to: out, label: "1 · Accumulation : range", short: "1 · Range", tone: "neutral", kind: "range", role: "range" }],
         markers: [
           { key: "sweep", i: sweep, price: cs[sweep].l, label: "2 · Manipulation : sweep du bas", short: "2 · Sweep", tone: "zone", side: "below", role: "sweep", ref: RANGE.y1, dir: "bull" },

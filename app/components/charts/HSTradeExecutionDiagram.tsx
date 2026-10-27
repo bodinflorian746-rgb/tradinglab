@@ -6,6 +6,7 @@
 // de sa mèche. Swings, ligne de cou, projection et R/R calculés. Bougies : scenarios.ts (« hs-retest »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
+import type { LCStep } from "@/app/components/lessons/lesson-anim";
 import { tradeSetup } from "@/app/components/lessons/trade";
 import { fmtRR, fmtPrice, lineAt, pips, pivots, tradeMath } from "@/lib/lessons/chart-analysis";
 import { EUR_PIP, eurToXau, xauToEur } from "@/lib/lessons/eur-from-xau";
@@ -34,6 +35,12 @@ export default function HSTradeExecutionDiagram(_props: { className?: string; lo
   const breakEntry = candles[bo].c, breakSl = Number((rs.price + SL_SHOULDER_MARGIN * EUR_PIP).toFixed(5));
   const breakRR = tradeMath(breakEntry, breakSl, mm).rr;
   const last = n - 1, retest = candles[last];
+  // Animation : épaule gauche, tête, épaule droite, la ligne de cou, le breakout (refusé : R/R trop faible),
+  // puis le retest rejeté et le plan de l'entrée au retest
+  const anim: LCStep[] = [
+    { candles: ls.index + 1 }, { show: "ls" }, { candles: head.index + 1 }, { show: "head" }, { candles: rs.index + 1 }, { show: ["rs", "neck"] },
+    { candles: bo }, { show: "bo" }, { candles: last }, { show: "retest" },
+  ];
   const t = tradeSetup({
     entry: retest.c, sl: Number((retest.h + SL_RETEST_MARGIN * EUR_PIP).toFixed(5)), tp: mm, from: last, expect: ">2",
     names: { entry: "Entrée au retest", tp: "TP projection" },
@@ -44,7 +51,7 @@ export default function HSTradeExecutionDiagram(_props: { className?: string; lo
       title="Exécuter un ETE : cible à la projection, entrée au retest"
       panels={[{
         key: "h1", subtitle: "EUR/USD H1 — breakout de la ligne de cou, puis retest rejeté",
-        decimals: 5, height: 340, candles,
+        decimals: 5, height: 340, candles, anim,
         segments: [{ key: "neck", i1: t1.index, p1: neckAt(t1.index), i2: last, p2: neckAt(last), tone: "neutral", dashed: true, label: `Ligne de cou ≈ ${p(neck)}`, short: "Ligne de cou" }],
         levels: t.levels,
         markers: [
