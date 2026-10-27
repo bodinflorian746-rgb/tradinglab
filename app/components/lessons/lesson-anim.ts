@@ -32,23 +32,26 @@ export interface AnimPlan {
   end: number;
 }
 
-/** Délais de chaque bougie et de chaque élément, à partir de la séquence (indices d'origine). */
-export function planOf(steps: LCStep[], nCandles: number): AnimPlan {
+/** Délais de chaque bougie et de chaque élément, à partir de la séquence (indices d'origine).
+ *  `skip` : bougies rognées à gauche (téléphone), non dessinées : elles ne prennent pas de temps,
+ *  sinon le graphique resterait vide au début. */
+export function planOf(steps: LCStep[], nCandles: number, skip = 0): AnimPlan {
   const candleAt: number[] = [];
   const itemAt = new Map<string, number>();
   let t = 0, next = 0;
   for (const s of steps) {
     if ("candles" in s) {
-      for (let i = next; i <= Math.min(s.candles, nCandles - 1); i++) { candleAt[i] = t; t += CANDLE_MS; }
+      let shown = false;
+      for (let i = next; i <= Math.min(s.candles, nCandles - 1); i++) { candleAt[i] = t; if (i >= skip) { t += CANDLE_MS; shown = true; } }
       next = Math.max(next, s.candles + 1);
-      t += 120;
+      if (shown) t += 120;
     } else if ("show" in s) {
       for (const k of Array.isArray(s.show) ? s.show : [s.show]) if (!itemAt.has(k)) itemAt.set(k, t);
       t += SHOW_MS;
     } else t += s.pause;
   }
   // Bougies restantes, puis éléments non nommés : à la fin
-  for (let i = next; i < nCandles; i++) { candleAt[i] = t; t += CANDLE_MS; }
+  for (let i = next; i < nCandles; i++) { candleAt[i] = t; if (i >= skip) t += CANDLE_MS; }
   const end = t;
   const item = (k: string) => itemAt.get(k) ?? end;
   return { candle: (i) => candleAt[i] ?? end, item, label: (k) => itemAt.get(`@${k}`) ?? item(k) + LABEL_LAG, end };

@@ -384,7 +384,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
   const { ref, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const uid = useId().replace(/:/g, "");
   const play = usePlayOnce<HTMLDivElement>(!!panel.anim?.length);
-  const plan = panel.anim?.length ? planOf(panel.anim, panel.candles?.length ?? panel.line?.length ?? 0) : null;
+  const plan = panel.anim?.length ? planOf(panel.anim, panel.candles?.length ?? panel.line?.length ?? 0, W > 0 ? cropStart(panel, W, single).s : 0) : null;
   // Élément animé : classe et délai (rien sans séquence)
   const a = (d: number | null) => (plan && d !== null ? { className: "lc-a", style: { "--d": `${Math.round(d)}ms` } as CSSProperties } : {});
   const aItem = (key: string) => a(plan ? plan.item(key) : null);
@@ -628,8 +628,15 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
           return <polyline key={s.key} data-ma={s.key} {...aItem(s.key)} points={pts} fill="none" stroke={TONE[s.tone]} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />;
         })}
 
-        {/* Prix en ligne (schéma) */}
-        {p.line && (
+        {/* Prix en ligne (schéma). Animée : un tronçon par point, révélé comme une bougie */}
+        {p.line && plan && play.armed ? (
+          <g data-price-line="">
+            {p.line.slice(1).map((v, k) => (
+              <line key={k} {...a(plan.candle(k + 1 + crop.s))} x1={xOf(k)} y1={toY(p.line![k])} x2={xOf(k + 1)} y2={toY(v)}
+                stroke="#c7c9d1" strokeWidth={2.5} strokeLinecap="round" />
+            ))}
+          </g>
+        ) : p.line && (
           <polyline data-price-line="" {...a(plan ? plan.candle(0) : null)} points={p.line.map((v, i) => `${xOf(i)},${toY(v)}`).join(" ")}
             fill="none" stroke="#c7c9d1" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
         )}
