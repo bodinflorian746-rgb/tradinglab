@@ -119,11 +119,20 @@ export function checkVolumes(svg, E) {
         const bad = cum.findIndex((v, i) => !pts[i] || !near(pts[i][1], cy(v), 0.6) || !near(pts[i][0], xOf(i), 0.6));
         if (bad >= 0) E(`CVD : point ${bad} ≠ somme des deltas (${cum[bad]})`);
       }
-      const marks = [...g.querySelectorAll("[data-cvd-mark]")].map((m) => ({ i: +m.dataset.cvdMark, t: m.textContent.trim(), bear: /ef4444/i.test(m.querySelector("circle")?.getAttribute("fill") ?? "") }));
-      for (const m of marks) if (!(m.i >= 1 && m.i < cs.length - 1 && cum[m.i] >= cum[m.i - 1] && cum[m.i] >= cum[m.i + 1])) E(`CVD : repère « ${m.t} » (bougie ${m.i}) pas sur un sommet du CVD`);
+      const marks = [...g.querySelectorAll("[data-cvd-mark]")].map((m) => {
+        const fill = m.querySelector("circle")?.getAttribute("fill") ?? "";
+        return { i: +m.dataset.cvdMark, t: m.textContent.trim(), bear: /ef4444/i.test(fill), bull: /10b981/i.test(fill) };
+      });
+      // un repère du CVD se pose sur un extrême local : sommet (divergence baissière) ou creux (divergence haussière)
+      const peak = (i) => cum[i] >= cum[i - 1] && cum[i] >= cum[i + 1], trough = (i) => cum[i] <= cum[i - 1] && cum[i] <= cum[i + 1];
+      for (const m of marks) if (!(m.i >= 1 && m.i < cs.length - 1 && (peak(m.i) || trough(m.i)))) E(`CVD : repère « ${m.t} » (bougie ${m.i}) pas sur un sommet ni un creux du CVD`);
       if (marks.length === 2 && marks[1].bear) {
         const [a, b] = marks;
         if (!(cs[b.i].h > cs[a.i].h && cum[b.i] < cum[a.i])) E(`CVD : divergence nommée sans nouveau sommet du prix (${cs[a.i].h} → ${cs[b.i].h}) ni sommet plus bas du CVD (${cum[a.i]} → ${cum[b.i]})`);
+      }
+      if (marks.length === 2 && marks[1].bull) {
+        const [a, b] = marks;
+        if (!(trough(a.i) && trough(b.i) && cs[b.i].l < cs[a.i].l && cum[b.i] > cum[a.i])) E(`CVD : divergence haussière sans nouveau creux du prix (${cs[a.i].l} → ${cs[b.i].l}) ni creux plus haut du CVD (${cum[a.i]} → ${cum[b.i]})`);
       }
     }
   }

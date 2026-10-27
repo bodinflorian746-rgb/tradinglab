@@ -24,7 +24,7 @@ const DEFECTS: Record<string, (d: Data) => void> = {
   "clôture hors Value Area trop tôt": (d) => { d["va-rejet"][39].c = 1.0868; },
   "stop au-dessus du creux technique": (d) => { d["vpt-m15"][5].l = 1.0834; },
   "stratégie : volume du profil déplacé (POC, Value Area)": (d) => { d["vsv-h1"].slice(28, 36).forEach((k) => { k.v *= 4; }); },
-  "stratégie : volume ajouté dans la LVN": (d) => { d["vsv-h1"][48].v *= 6; },
+  "stratégie : volume ajouté dans la LVN": (d) => { d["vsv-h1"][45].v *= 6; },
   "stratégie : VWAP de séance loin de 1.0862": (d) => { d["vsv-m15"].slice(6, 12).forEach((k) => { k.v *= 5; }); },
   "stratégie : creux d'invalidation cassé avant la confirmation": (d) => { d["vsv-m15"][21].l = 1.0844; },
   "stratégie : pas de divergence CVD": (d) => { d["vsv-fut"][9].d = -900; },

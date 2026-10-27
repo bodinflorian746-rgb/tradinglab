@@ -789,7 +789,7 @@ const EXPECT = {
   "Fibonacci sans repères 0 % et 100 %": /sans ses repères 0 % et 100 %/, "tracé Fibonacci au bord": /le tracé ne part pas d'un vrai/,
   "POC déplacé": /POC recalculé/, "barre du profil étirée": /la plus longue barre|non proportionnelle/, "Value Area trop étroite": /contient .* % du volume/,
   "volume d'une bougie modifié": /recalculé|la bougie dit/, "VWAP décalé": /VWAP recalculé/, "VWAP ancré hors du graphique": /ancré hors du graphique/,
-  "delta modifié": /la bougie dit|somme des deltas/, "CVD faux": /somme des deltas/, "LVN décalée": /n'est pas une LVN/, "divergence CVD inventée": /divergence nommée/,
+  "delta modifié": /la bougie dit|somme des deltas/, "CVD faux": /somme des deltas/, "LVN décalée": /n'est pas une LVN/, "divergence CVD inventée": /divergence nommée/, "divergence haussière inventée": /divergence haussière/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
@@ -804,6 +804,7 @@ const MUTATIONS = {
   "CVD faux": () => { const p = document.querySelector("polyline[data-cvd]"); p.setAttribute("points", p.getAttribute("points").trim().split(/\s+/).map((q, i) => { const [x, y] = q.split(",").map(Number); return `${x},${i === 5 ? y - 9 : y}`; }).join(" ")); },
   "LVN décalée": () => { const z = document.querySelector('rect[data-role="lvn"]'); const g = z.closest("svg").querySelector("g[data-profile]"); z.dataset.y1 = String(Number((+z.dataset.y1 - +g.dataset.row).toFixed(9))); },
   "divergence CVD inventée": () => { const m = [...document.querySelectorAll("[data-cvd-mark]")]; const s = m[0].closest("svg"); const c = JSON.parse(s.dataset.candles); c[+m[1].dataset.cvdMark].h = c[+m[0].dataset.cvdMark].h - 5; s.dataset.candles = JSON.stringify(c); },
+  "divergence haussière inventée": () => { const m = [...document.querySelectorAll("[data-cvd-mark]")]; if (m.length < 2 || !/10b981/i.test(m[1].querySelector("circle")?.getAttribute("fill") ?? "")) throw new Error("pas de divergence haussière"); const s = m[0].closest("svg"); const c = JSON.parse(s.dataset.candles); c[+m[1].dataset.cvdMark].l = c[+m[0].dataset.cvdMark].l + 0.0005; s.dataset.candles = JSON.stringify(c); },
   "Fibonacci sans repères 0 % et 100 %": () => { for (const g of document.querySelectorAll("svg[data-panel] g[data-label-for]")) if (/\b100\s?%|(^|[^\d.,])0\s?%/.test(g.textContent)) g.remove(); },
   "tracé Fibonacci au bord": () => { const l = document.querySelector('line[data-role="fib"]'); const [, b, r] = l.dataset.ref.split(":"); l.dataset.ref = `0:${b}:${r}`; },
   "mots collés": () => { const m = document.querySelector("main"); const s = document.createElement("strong"); s.textContent = "5,5 %"; m.append(s, document.createTextNode("en moins de 18 mois")); },
@@ -935,8 +936,8 @@ if (AUTOTEST) {
   const page = await ctx.newPage();
   // Chaque défaut est injecté dans la 1re page où il s'applique (R/R et OB : Avancé 7 ; pivots : Intermédiaire 5 ;
   // schéma à plusieurs panneaux : Trend Following 2 ; tableau : Débutant 1 ; liquidité, FVG, OB, support :
-  // Avancé 1, 2, 3, Support / Résistance 1)
-  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon(?:[1237]|1[0-2])$|intermediaire\/lecon[59]$|trend-following\/lecon2|support-resistance\/lecon[14]|debutant\/lecon1$/.test(p.url));
+  // Avancé 1, 2, 3, Support / Résistance 1 ; divergence haussière du CVD : stratégie Volume Profile + VWAP 3)
+  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon(?:[1237]|1[0-2])$|intermediaire\/lecon[59]$|trend-following\/lecon2|support-resistance\/lecon[14]|debutant\/lecon1$|volume-profile-vwap\/lecon3$/.test(p.url));
   let missed = 0;
   for (const [name, fn] of Object.entries(MUTATIONS).filter(([n]) => !process.env.MUT_ONLY || new RegExp(process.env.MUT_ONLY).test(n))) {
     let errs = null;

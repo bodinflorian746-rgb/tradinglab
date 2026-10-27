@@ -5,9 +5,9 @@
 
 /** Profil : rangées de 1 pip (les niveaux du texte tombent sur des rangées), plage fixe de la consolidation H1 */
 export const VSV_ROW = 0.0001;
-export const VSV_PROFILE: [number, number] = [14, 53];
+export const VSV_PROFILE: [number, number] = [11, 48];
 /** H1 : creux 1.0800, sommet 1.0860 (deux rejets), creux 1.0830, cassure, sommet 1.0910 (deux touches) */
-export const VSV_H1 = { low0: 2, res1: 7, res2: 11, low1: 14, brk: 22, back1: 24, back2: 38, top1: 49, top2: 52 };
+export const VSV_H1 = { low0: 2, res1: 6, res2: 9, low1: 11, brk: 19, back1: 21, back2: 35, top1: 46, top2: 50 };
 export const VSV_ZONE: [number, number] = [1.0855, 1.0865];
 export const VSV_RES = 1.091;
 /** M15 : ouverture de la séance (ancrage du VWAP), retour dans la zone, creux d'invalidation, sommet

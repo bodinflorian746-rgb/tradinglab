@@ -21,11 +21,16 @@ const C = CANDLES as unknown as Record<string, VCandle[]>;
 const vol = { key: "vol", kind: "volume" as const, label: "Volume" };
 const M = VSV_M15;
 
-/** Zone d'intérêt : ancienne résistance cassée, au même endroit que le POC */
-const zone = (from: number, label = `Zone d'intérêt ${p(VSV_ZONE[0])} – ${p(VSV_ZONE[1])}`): LCZone =>
-  ({ key: "zone", y1: VSV_ZONE[0], y2: VSV_ZONE[1], from, label, short: "Zone", tone: "zone", role: "support" });
+/** Zone d'intérêt : ancienne résistance cassée, au même endroit que le POC. Support prouvé sur le H1 ;
+ *  reportée sur le M15, elle garde son nom H1 (sa largeur se juge à l'échelle H1) */
+const zone = (from: number): LCZone =>
+  ({ key: "zone", y1: VSV_ZONE[0], y2: VSV_ZONE[1], from, label: `Zone d'intérêt ${p(VSV_ZONE[0])} – ${p(VSV_ZONE[1])}`, short: "Zone d'achat", tone: "zone", role: "support" });
+const zoneH1 = (from: number): LCZone =>
+  ({ key: "zone", y1: VSV_ZONE[0], y2: VSV_ZONE[1], from, label: `Zone d'intérêt H1 ${p(VSV_ZONE[0])} – ${p(VSV_ZONE[1])}`, short: "Zone d'achat", tone: "zone" });
 /** VWAP de séance, ancré à l'ouverture de la séance */
 const seance = (cs: VCandle[]) => ({ key: "vwap", values: vwap(cs, M.session), tone: "fib" as const, label: "VWAP de séance", short: "VWAP", vwap: M.session });
+/** Résistance H1 (dernier sommet, hors du cadre M15) : l'objectif 1.0906 est juste avant */
+const resChip = { label: `Résistance H1 ${p(VSV_RES)}, ${Math.round((VSV_RES - VSV_PLAN.tp) * 1e4)} pips au-dessus du TP`, tone: "bear" as const };
 /** Creux d'invalidation (1.0845) */
 const invalidation = (from: number): LCLevel =>
   ({ key: "inval", price: C["vsv-m15"][M.low].l, from, label: `Invalidation ${p(C["vsv-m15"][M.low].l)}`, short: "Invalidation", tone: "bear", dashed: true });
@@ -39,7 +44,7 @@ export function VSVStructureDiagram() {
     <LessonChart
       id="VSVStructureDiagram"
       title="EUR/USD H1 : une structure haussière"
-      caption="Creux 1.0800, sommet 1.0860 rejeté deux fois, creux plus haut à 1.0830, clôture au-dessus de 1.0860, puis sommet plus haut à 1.0910. Le prix corrige maintenant : on cherche un achat pendant la correction."
+      caption="Creux 1.0800, sommet 1.0860 rejeté deux fois, creux à 1.0830 au-dessus du précédent, clôture au-dessus de 1.0860, puis nouveau sommet à 1.0910. Le prix corrige maintenant : on cherche un achat pendant la correction."
       panels={[{
         key: "h1", title: "EUR/USD H1 · structure", decimals: 5, height: 280, candles: cs,
         levels: [
@@ -48,7 +53,7 @@ export function VSVStructureDiagram() {
         ],
         markers: [
           { key: "creux0", i: H.low0, price: cs[H.low0].l, label: `Creux ${p(cs[H.low0].l)}`, short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
-          { key: "creux1", i: H.low1, price: cs[H.low1].l, label: `Creux plus haut ${p(cs[H.low1].l)}`, short: "Creux", tone: "bull", side: "below", role: "swing-low" },
+          { key: "creux1", i: H.low1, price: cs[H.low1].l, label: `Higher low ${p(cs[H.low1].l)}`, short: "Creux", tone: "bull", side: "below", role: "swing-low" },
           { key: "brk", i: H.brk, price: cs[H.brk].c, label: `Clôture au-dessus de ${p(1.086)}`, short: "Breakout", tone: "bull", side: "above", role: "close" },
         ],
       }]}
@@ -88,7 +93,7 @@ export function VSVVwapZoneDiagram() {
       panels={[{
         key: "m15", title: "EUR/USD M15 · retour vers le support", decimals: 5, height: 260, candles: cs, slots: cs.length + 3,
         series: [seance(cs)],
-        zones: [zone(0)],
+        zones: [zoneH1(0)],
         levels: [{ key: "poc", price: 1.086, label: `POC H1 ${p(1.086)}`, short: "POC", tone: "zone", dashed: true }],
         markers: [
           { key: "ouverture", i: M.session, price: cs[M.session].h, label: "Ouverture de la séance", short: "Séance", tone: "neutral", side: "above", role: "high" },
@@ -137,7 +142,7 @@ export function VSVConfirmationDiagram() {
       panels={[{
         key: "m15", title: "EUR/USD M15 · réaction dans la zone", decimals: 5, height: 270, candles: cs, slots: cs.length + 3,
         series: [seance(cs)],
-        zones: [zone(0)],
+        zones: [zoneH1(0)],
         levels: [invalidation(M.low)],
         markers: [
           { key: "creux", i: M.low, price: cs[M.low].l, label: `Creux ${p(cs[M.low].l)}`, short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
@@ -160,18 +165,18 @@ export function VSVAbsorptionDiagram() {
     <LessonChart
       id="VSVAbsorptionDiagram"
       title="Sur le contrat future : absorption et CVD"
-      caption={`Même séance sur le contrat future EUR/USD, qui cote ici environ ${Math.round(VSV_FUT_BASIS * 1e4)} pips au-dessus de la paire au comptant. Au contact de la zone, de fortes ventes agressives ne font plus baisser le prix : absorption possible. Le creux suivant, plus bas, se fait avec moins de ventes : le CVD forme un creux plus haut.`}
+      caption={`Même séance sur le contrat future EUR/USD, qui cote ici environ ${Math.round(VSV_FUT_BASIS * 1e4)} pips au-dessus de la paire au comptant. Au contact de la zone, de fortes ventes agressives ne font plus baisser le prix : absorption possible. Le creux suivant, plus bas, se fait avec moins de ventes : le CVD reste au-dessus de son creux précédent (divergence).`}
       panels={[{
         key: "fut", title: "Future EUR/USD M15 · Order Flow", decimals: 5, height: 230, candles: cs, slots: cs.length + 3,
         markers: [
           { key: "absorption", i: F.absorb, price: cs[F.absorb].l, label: "Fortes ventes, pas de nouvelle baisse", short: "Absorption", tone: "bull", side: "below", role: "low" },
-          { key: "creux", i: F.low, price: cs[F.low].l, label: "Creux plus bas du prix", short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
+          { key: "creux", i: F.low, price: cs[F.low].l, label: "Nouveau creux du prix", short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
         ],
         subs: [
           { key: "delta", kind: "delta", label: "Delta" },
           { key: "cvd", kind: "cvd", label: "CVD", marks: [
             { key: "cvd1", i: F.absorb, label: "Creux du CVD", short: "Creux", tone: "neutral" },
-            { key: "cvd2", i: F.low, label: "Creux plus haut", short: "Plus haut", tone: "bull" },
+            { key: "cvd2", i: F.low, label: "Higher low du CVD", short: "Higher low", tone: "bull" },
           ] },
         ],
         anim: [{ candles: F.absorb - 2 }, { candles: F.absorb }, { show: ["absorption", "cvd1"] }, { candles: F.low }, { show: ["creux", "cvd2"] }, { candles: F.confirm }],
@@ -192,12 +197,12 @@ export function VSVRefusedPlanDiagram() {
       caption="Entrée 1.0872 après la confirmation, stop 1.0842 sous le creux d'invalidation, objectif 1.0906 avant la résistance 1.0910 : 30 pips de risque pour 34 pips de gain. Sous le R/R minimum de 1:2, le trade n'est pas pris."
       panels={[{
         key: "m15", title: "EUR/USD M15 · plan après la confirmation", decimals: 5, height: 280, candles: cs, slots: cs.length + 4,
-        zones: [zone(0)],
-        levels: [{ key: "res", price: VSV_RES, label: `Résistance H1 ${p(VSV_RES)}`, short: "Résistance", tone: "bear", dashed: true }, ...t.levels],
+        zones: [zoneH1(0)],
+        levels: t.levels,
         markers: [
           { key: "signal", i: M.confirm, price: cs[M.confirm].c, label: "Confirmation", short: "Signal", tone: "bull", side: "below", role: "close" },
         ],
-        chips: t.chips,
+        chips: [...t.chips, resChip],
       }]}
     />
   );
@@ -213,15 +218,15 @@ export function VSVRetainedPlanDiagram() {
       caption="Le prix revient dans la zone, forme un creux à 1.0848 au-dessus de l'invalidation, un sommet local à 1.0856, puis clôture au-dessus. Entrée 1.0858, stop 1.0842 sous 1.0845, objectif 1.0906 : 16 pips de risque pour 48 pips de gain."
       panels={[{
         key: "m15", title: "EUR/USD M15 · second retour", decimals: 5, height: 300, candles: cs, slots: cs.length + 4,
-        zones: [zone(0)],
-        levels: [{ key: "res", price: VSV_RES, label: `Résistance H1 ${p(VSV_RES)}`, short: "Résistance", tone: "bear", dashed: true }, invalidation(M.low), ...t.levels],
+        zones: [zoneH1(0)],
+        levels: [invalidation(M.low), ...t.levels],
         markers: [
           { key: "creux2", i: M.low2, price: cs[M.low2].l, label: `Creux ${p(cs[M.low2].l)}`, short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
           { key: "sommet2", i: M.high2, price: cs[M.high2].h, label: `Sommet local ${p(cs[M.high2].h)}`, short: "Sommet", tone: "neutral", side: "above", role: "swing-high" },
           { key: "signal", i: M.entry2, price: cs[M.entry2].c, label: `Clôture au-dessus de ${p(cs[M.high2].h)}`, short: "Sommet cassé", tone: "bull", side: "above", role: "bos", ref: M.high2, dir: "bull" },
         ],
-        chips: t.chips,
-        anim: [{ candles: M.confirm }, { show: ["zone", "res", "inval"] }, { candles: M.low2 + 1 }, { show: "creux2" }, { candles: M.high2 + 2 }, { show: "sommet2" }, { candles: M.entry2 }, { show: "signal" }, { show: ["entry", "sl", "tp"] }],
+        chips: [...t.chips, resChip],
+        anim: [{ candles: M.confirm }, { show: ["zone", "inval"] }, { candles: M.low2 + 1 }, { show: "creux2" }, { candles: M.high2 + 2 }, { show: "sommet2" }, { candles: M.entry2 }, { show: "signal" }, { show: ["entry", "sl", "tp"] }],
       }]}
     />
   );
