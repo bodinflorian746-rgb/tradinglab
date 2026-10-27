@@ -9,7 +9,7 @@
 import { buildCandles, type Step } from "./chart-build";
 import type { Candle } from "./chart-analysis";
 import type { VCandle } from "./volume";
-import { AVW_ANCHOR, LVN_PROFILE, VPT_PROFILE } from "./volume-meta";
+import { AVW_ANCHOR } from "./volume-meta";
 
 export { AVW_ANCHOR, AVW_TOUCH, LVN_BREAK, LVN_PROFILE, LVN_ROW, VP_ROW, VPT_PROFILE, VPT_ROW, VPT_TRADE, VWN_TRADE, VWX_TRADE, aggregateV } from "./volume-meta";
 

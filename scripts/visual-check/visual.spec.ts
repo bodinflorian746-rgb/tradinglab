@@ -17,6 +17,10 @@ const PAGES: { name: string; url: string; mask?: string[] }[] = [
   { name: "lecon-intermediaire-5", url: "/fr/formations/intermediaire/lecon5" },
   { name: "lecon-avance-7", url: "/fr/formations/avance/lecon7" },
   { name: "lecon-avance-9", url: "/fr/formations/avance/lecon9" },
+  // Volume Profile, VWAP, Order Flow (profil, VWAP, volume, delta, CVD)
+  { name: "lecon-avance-10", url: "/fr/formations/avance/lecon10" },
+  { name: "lecon-avance-11", url: "/fr/formations/avance/lecon11" },
+  { name: "lecon-avance-12", url: "/fr/formations/avance/lecon12" },
   { name: "lecon-macro-debutant-3", url: "/fr/formations/macro/debutant/lecon3" },
   { name: "lecon-macro-avance-4", url: "/fr/formations/macro/avance/lecon4" },
   { name: "lecon-strategie-price-action-1", url: "/fr/strategies/price-action/lecon1" },
