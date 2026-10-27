@@ -93,11 +93,11 @@ export function VWAPNasdaqPlanDiagram() {
         levels: [{ key: "sommet", price: cs[top].h, from: top, label: `Sommet ${pts(cs[top].h)}`, short: "Sommet", tone: "neutral", dashed: true }, ...plan.levels],
         markers: [
           { key: "creux", i: creux, price: cs[creux].l, label: "Creux local", short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
-          { key: "cassure", i: last, price: cs[last].h, label: "Cassure du sommet local", short: "Sommet cassé", tone: "entry", side: "above" },
+          { key: "signal", i: last, price: cs[last].h, label: "Cassure du sommet local", short: "Sommet cassé", tone: "entry", side: "above" },
         ],
         chips: plan.chips,
         subs: [vol],
-        anim: [{ candles: top }, { show: "sommet" }, { candles: creux }, { show: ["support", "vwap"] }, { show: "creux" }, { candles: last }, { show: "cassure" }, { show: ["entry", "sl", "tp"] }],
+        anim: [{ candles: top }, { show: "sommet" }, { candles: creux }, { show: ["support", "vwap"] }, { show: "creux" }, { candles: last }, { show: "signal" }, { show: ["entry", "sl", "tp"] }],
       }]}
     />
   );
@@ -122,11 +122,11 @@ export function VWAPGoldPlanDiagram() {
         levels,
         markers: [
           { key: "echec", i: retest, price: cs[retest].h, label: "Échec sous 3 900$", short: "Échec", tone: "bear", side: "above", role: "high" },
-          { key: "cassure", i: last, price: cs[last].l, label: "Cassure du creux local", short: "Creux cassé", tone: "entry", side: "below" },
+          { key: "signal", i: last, price: cs[last].l, label: "Cassure du creux local", short: "Creux cassé", tone: "entry", side: "below" },
         ],
         chips: t.chips,
         subs: [vol],
-        anim: [{ candles: 9 }, { show: "res" }, { candles: retest }, { show: ["vwap", "echec"] }, { candles: last }, { show: "cassure" }, { show: ["entry", "sl", "tp"] }],
+        anim: [{ candles: 9 }, { show: "res" }, { candles: retest }, { show: ["vwap", "echec"] }, { candles: last }, { show: "signal" }, { show: ["entry", "sl", "tp"] }],
       }]}
     />
   );

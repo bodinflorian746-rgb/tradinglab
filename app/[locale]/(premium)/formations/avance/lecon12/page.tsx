@@ -6,8 +6,6 @@ import { AbsorptionDivergenceDiagram, DeltaCVDDiagram, FootprintDiagram, OrderBo
 // Trading Avancé 12 — Order Flow, Footprint, Delta et CVD. Leçon en français seulement (site FR) :
 // toutes les locales affichent ce contenu. NASDAQ : niveaux du texte d'origine décalés de +7 000 points.
 
-const box = "bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3";
-
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -38,7 +36,7 @@ export default function Page() {
         <P>
           Une bougie haussière montre que le prix a progressé entre l&apos;ouverture et la clôture, une bougie baissière l&apos;inverse. Mais elle ne dit pas comment les transactions se sont déroulées. Pour le voir, certains traders utilisent l&apos;Order Flow : l&apos;étude des transactions exécutées, de leur volume et des échanges entre acheteurs et vendeurs. Elle s&apos;appuie sur trois outils, le footprint, le delta et le CVD (Cumulative Volume Delta), surtout intéressants quand on dispose des données détaillées d&apos;un marché centralisé, comme les contrats futures.
         </P>
-        <div className={box}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Pour ton parcours :</span>{" "}si tu trades surtout des CFD chez RaiseFX, tu n&apos;as pas forcément accès aux données complètes qu&apos;utilise un trader de futures. Cette leçon a donc un autre but que les précédentes : comprendre ce que ces outils mesurent, comment certains professionnels les lisent et pourquoi les données comptent. Tu n&apos;as pas besoin de maîtriser l&apos;Order Flow pour appliquer les stratégies techniques vues jusqu&apos;ici.
           </p>
@@ -81,7 +79,7 @@ export default function Page() {
         <P>
           Le footprint détaille les échanges à chaque niveau de prix : à l&apos;intérieur de chaque bougie, il affiche les volumes exécutés au Bid et à l&apos;Ask. Exemple simplifié sur un contrat future lié au NASDAQ : en haut de la bougie, le volume des achats agressifs l&apos;emporte sur celui des ventes agressives ; en bas, c&apos;est l&apos;inverse. Le footprint montre ainsi les déséquilibres à l&apos;intérieur d&apos;une bougie.
         </P>
-        <div className={box}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Les imbalances :</span>{" "}un déséquilibre important entre achats et ventes agressifs, repéré par une règle de comparaison. Certaines plateformes signalent un rapport de 3 pour 1, mais les méthodes et les seuils changent d&apos;un indicateur à l&apos;autre. Une concentration d&apos;achats agressifs peut accompagner une hausse, sans suffire à prévoir le mouvement suivant.
           </p>
@@ -99,7 +97,7 @@ export default function Page() {
         <P>
           L&apos;inverse existe : sur un support, de nombreuses ventes agressives peuvent s&apos;exécuter sans que le prix poursuive sa baisse, ce qui peut suggérer une absorption par des acheteurs passifs.
         </P>
-        <div className={box}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">À comprendre :</span>{" "}un gros volume d&apos;achats agressifs ne signifie pas que le prix va monter. Ce qui compte aussi, c&apos;est la capacité de ces transactions à déplacer le prix. C&apos;est précisément ce qu&apos;étudient les traders d&apos;Order Flow.
           </p>

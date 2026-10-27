@@ -91,10 +91,10 @@ export function VolumeProfileTradeDiagram() {
       offscale: t.offscale,
       markers: [
         { key: "creux", i: creux, price: m15[creux].l, label: "Creux technique", short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
-        { key: "cassure", i: m15.length - 1, price: m15[m15.length - 1].c, label: "Cassure du sommet local", short: "Sommet cassé", tone: "entry", side: "above", role: "bos", ref: sommet, dir: "bull" },
+        { key: "signal", i: m15.length - 1, price: m15[m15.length - 1].c, label: "Cassure du sommet local", short: "Sommet cassé", tone: "entry", side: "above", role: "bos", ref: sommet, dir: "bull" },
       ],
       chips: t.chips,
-      anim: [{ candles: 4 }, { show: "support" }, { candles: creux }, { show: "creux" }, { candles: m15.length - 1 }, { show: "cassure" }, { show: ["entry", "sl", "tp"] }],
+      anim: [{ candles: 4 }, { show: "support" }, { candles: creux }, { show: "creux" }, { candles: m15.length - 1 }, { show: "signal" }, { show: ["entry", "sl", "tp"] }],
     },
   ];
   return (

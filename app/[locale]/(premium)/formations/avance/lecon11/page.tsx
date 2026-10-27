@@ -6,8 +6,6 @@ import { AnchoredVWAPDiagram, VWAPCalcDiagram, VWAPGoldPlanDiagram, VWAPNasdaqPl
 // Trading Avancé 11 — VWAP. Leçon en français seulement (site FR) : toutes les locales affichent ce
 // contenu. NASDAQ : niveaux du texte d'origine décalés de +7 000 points (20 000 → 27 000).
 
-const box = "bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3";
-
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -58,7 +56,7 @@ export default function Page() {
     >
 
       <Section title="Qu'est-ce que le VWAP ?">
-        <div className={`${box} mb-4`}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Dans cette leçon :</span>{" "}comprendre le VWAP, lire la position du prix par rapport à lui, repérer un retour vers le VWAP dans une tendance, découvrir le VWAP ancré, puis construire un plan chiffré sur le NASDAQ et sur l&apos;or.
           </p>
@@ -66,7 +64,7 @@ export default function Page() {
         <P>
           Le VWAP (Volume Weighted Average Price) est le prix moyen d&apos;un actif pondéré par les volumes échangés, depuis un point de départ choisi. À la différence d&apos;une moyenne mobile simple, il donne plus de poids aux périodes où beaucoup de volume a été échangé. Il sert de référence pour situer le prix et observer certaines corrections dans une tendance.
         </P>
-        <div className={`${box} mb-4`}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Formule :</span>{" "}VWAP = somme (prix × volume) ÷ somme des volumes. Trois périodes : 100 € avec un volume de 100, 102 € avec 200, 104 € avec 500. VWAP = (100 × 100 + 102 × 200 + 104 × 500) ÷ 800 = 103 €. La moyenne simple des trois prix vaut 102 € : le VWAP est tiré vers 104 €, le prix qui a concentré la majorité du volume.
           </p>
@@ -94,7 +92,7 @@ export default function Page() {
             <p className="text-xs text-zinc-400 leading-relaxed">Le prix est sous le prix moyen pondéré. Dans une tendance baissière, le marché peut rebondir vers cette zone avant de reprendre sa baisse.</p>
           </div>
         </div>
-        <div className={box}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Attention :</span>{" "}le VWAP ne fixe pas la tendance à lui seul. Tu l&apos;étudies d&apos;abord avec les sommets, les creux, les impulsions et les corrections ; le VWAP vient ensuite compléter cette lecture.
           </p>
@@ -190,7 +188,7 @@ export default function Page() {
         <P>
           Exemple sur l&apos;or : une publication économique déclenche une forte impulsion haussière. Tu ancres un VWAP au début de cette impulsion : la ligne montre le prix moyen pondéré depuis l&apos;événement. Si le marché corrige quelques heures plus tard, tu compares le prix à cette référence pour situer la correction.
         </P>
-        <div className={box}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             Un VWAP ancré n&apos;est pas plus pertinent par nature qu&apos;un VWAP de séance : son utilité dépend du point d&apos;ancrage et de la structure analysée.
           </p>
@@ -205,12 +203,12 @@ export default function Page() {
         <P>
           Ouvre un graphique qui dispose de données de volume adaptées, puis cherche « VWAP » dans les indicateurs. Pour le VWAP classique, regarde d&apos;abord à quel moment le calcul repart à zéro : sur les marchés qui ont des séances régulières, le VWAP de séance est particulièrement utile en intraday. Pour un VWAP ancré, utilise l&apos;outil ou l&apos;indicateur prévu à cet effet dans ton interface.
         </P>
-        <div className={`${box} mb-4`}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Remise à zéro sur le Forex et les CFD :</span>{" "}avec le réglage par défaut (période d&apos;ancrage « Session »), le VWAP de TradingView repart à zéro à l&apos;ouverture de chaque nouvelle séance. Sur le Forex et la plupart des CFD, elle commence à 17 h, heure de New York, soit 23 h à Paris la plus grande partie de l&apos;année (22 h pendant les quelques semaines où les changements d&apos;heure américain et européen sont décalés). L&apos;heure exacte dépend du fournisseur de données du symbole : vérifie-la sur ton graphique.
           </p>
         </div>
-        <div className={box}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">RaiseFX et les CFD :</span>{" "}le VWAP repose sur les prix et les volumes du graphique utilisé. Sur le Forex spot et certains CFD, ces volumes ne sont pas forcément ceux de l&apos;ensemble du marché : la ligne peut varier selon le flux de données. Tu peux t&apos;en servir comme repère complémentaire, en gardant cette limite en tête, après avoir vérifié que ton graphique dispose bien des volumes nécessaires au calcul.
           </p>

@@ -6,8 +6,6 @@ import { LVNTargetDiagram, ValueAreaExitDiagram, VolumeProfileDiagram, VolumePro
 // Trading Avancé 10 — Volume Profile. Leçon en français seulement (site FR) : toutes les locales
 // affichent ce contenu.
 
-const box = "bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3";
-
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
@@ -51,7 +49,7 @@ export default function Page() {
     >
 
       <Section title="Comprendre le Volume Profile">
-        <div className={`${box} mb-4`}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3 mb-4">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Dans cette leçon :</span>{" "}lire un Volume Profile (POC, Value Area, HVN, LVN), le relier aux supports et résistances, construire un plan avec une entrée, un stop loss et un take profit, et savoir quand cet outil apporte vraiment quelque chose à ton analyse.
           </p>
@@ -62,7 +60,7 @@ export default function Page() {
         <P>
           Plus une barre horizontale est longue, plus le volume échangé à ce niveau a été important. Une barre courte signale une zone où relativement peu de volume a été observé.
         </P>
-        <div className={box}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Exemple :</span>{" "}l&apos;EUR/USD évolue entre 1.0800 et 1.0900. Le profil montre une forte concentration de volume autour de 1.0850, une concentration secondaire autour de 1.0820 et une zone de faible volume entre 1.0870 et 1.0885. Le marché n&apos;a donc pas réparti son activité uniformément : certaines zones ont concentré plus d&apos;échanges que d&apos;autres, et ce sont elles que tu peux choisir de surveiller.
           </p>
@@ -98,7 +96,7 @@ export default function Page() {
         <P>
           Sur l&apos;EUR/USD en H1, tu repères un support à 1.0850 parce que le prix y a réagi plusieurs fois. Tu ajoutes un Volume Profile sur la consolidation précédente : le POC apparaît lui aussi près de 1.0850. Tu as maintenant deux observations : la structure montre que cette zone a déjà provoqué des réactions, et le profil montre qu&apos;elle a concentré beaucoup d&apos;activité. Cette convergence rend le niveau plus intéressant à surveiller.
         </P>
-        <div className={box}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">La structure reste prioritaire :</span>{" "}si le prix casse le support et commence à construire une structure baissière, tu n&apos;achètes pas parce que le POC se trouve là. Le Volume Profile apporte un contexte, pas une décision.
           </p>
@@ -153,7 +151,7 @@ export default function Page() {
         <P>
           Le marché a donc peu échangé entre 27 120 et 27 180 : cette LVN peut devenir une zone à surveiller pour une continuation. L&apos;HVN vers 27 200 peut servir de repère pour étudier une zone d&apos;objectif, à condition qu&apos;elle corresponde aussi à la structure du graphique.
         </P>
-        <div className={box}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Attention :</span>{" "}une LVN ne veut pas dire qu&apos;il n&apos;y a aucun ordre dans cette zone aujourd&apos;hui. Elle décrit seulement la répartition passée des volumes utilisée par le profil.
           </p>
@@ -175,7 +173,7 @@ export default function Page() {
         <p className="text-zinc-300 leading-relaxed text-sm mt-4 mb-4">
           La disponibilité exacte de ces outils dépend de ta plateforme et de ton abonnement.
         </p>
-        <div className={box}>
+        <div className="bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-3">
           <p className="text-sm text-zinc-400 leading-relaxed">
             <span className="text-white font-medium">Forex et CFD :</span>{" "}sur le Forex spot, il n&apos;existe pas de volume consolidé unique qui regroupe toutes les transactions mondiales. Les indicateurs utilisent des volumes de ticks ou les données d&apos;un fournisseur : un profil construit sur ces données décrit l&apos;activité de cette source, pas forcément celle de tout le marché. Les volumes de TradingView ne sont pas non plus forcément ceux du flux de cotation de ton broker RaiseFX. Utilise donc le Volume Profile comme une confirmation complémentaire, jamais comme la seule raison d&apos;ouvrir une position.
           </p>

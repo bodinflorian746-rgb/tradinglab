@@ -72,6 +72,8 @@ const CODE_KEYS = new Set(["className", "class", "href", "src", "d", "fill", "st
   "correctAnswer", "optimal", "metaOverride", "level", "duration", "session", "asset", "volatility", "spread", "outcome", "result", "state",
   "data-reveal", "data-pick", "data-choice", "data-line", "data-label-for", "aria-hidden", "transform", "transformOrigin", "fontSize", "opacity", "tags", "moduleId",
   "side", "expect", "ref",
+  // animation des graphiques de leçons (lesson-anim.ts) : clés des éléments à allumer, non affichées
+  "show",
   // métadonnées des scénarios des jeux (lib/games/notions.ts) : identifiants, non affichés
   "notions", "mirrorOf"]);
 const looksLikeCode = (s: string) => {
