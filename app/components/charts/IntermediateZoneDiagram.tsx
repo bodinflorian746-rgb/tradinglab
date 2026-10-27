@@ -22,6 +22,8 @@ export function IntermediateZoneDiagram(_props: { className?: string; locale?: "
       caption="On attend le retour du prix dans la zone, jamais d'entrée « au milieu du vide »."
       panels={[{
         key: "h1", title: "EUR/USD H1", decimals: 5, height: 280, candles: cs,
+        // Animation : la zone (encore support), la clôture dessous, le rejet au retest, puis le retour dans la zone
+        anim: [{ candles: brk - 1 }, { show: "zone" }, { candles: brk }, { show: "brk" }, { candles: rej }, { show: "rej" }, { candles: last }, { show: "back" }],
         zones: [{ key: "zone", ...Z, label: `Résistance (ancien support) ${p(Z.y1)}-${p(Z.y2)}`, short: "Résistance", tone: "zone" }],
         markers: [
           { key: "brk", i: brk, price: cs[brk].c, label: "Clôture sous la zone : support cassé", short: "Support cassé", tone: "bear", side: "below", role: "close" },

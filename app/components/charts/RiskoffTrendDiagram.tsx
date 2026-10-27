@@ -27,6 +27,8 @@ export function RiskoffTrendDiagram(_props: { className?: string; locale?: "fr" 
       caption="Structure HH/HL intacte = régime intact. On entre sur le pullback, pas sur le breakout."
       panels={[{
         key: "h4", title: "XAU/USD H4, régime risk-off établi", decimals: 0, height: 290, candles: cs,
+        // Animation : l'impulsion jusqu'au HH (l'ancien sommet devient support), le pullback (HL), puis l'entrée sur la reprise
+        anim: [{ candles: hh.index }, { show: ["old", "hh"] }, { candles: hl.index }, { show: "hl" }, { candles: entryAt }, { show: ["entry", "sl", "tp"] }],
         levels: [{ key: "old", price: old.price, from: old.index, to: entryAt + 1, label: `Ancien sommet ${usd(old.price)} = support`, short: "Ex-sommet → support", tone: "zone", dashed: true }, ...t.levels],
         markers: [
           { key: "hh", i: hh.index, price: hh.price, label: `HH ${usd(hh.price)}`, pivot: "HH", tone: "bull", side: "above" },

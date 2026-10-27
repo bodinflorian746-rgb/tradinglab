@@ -26,6 +26,8 @@ export function RiskoffExhaustionDiagram(_props: { className?: string; locale?: 
       caption="Le régime perd en force : on resserre les SL, on réduit la taille, avant la cassure structurelle."
       panels={[{
         key: "h4", title: "XAU/USD H4", decimals: 0, height: 290, candles: cs,
+        // Animation : chaque sommet puis son repli, l'un après l'autre (sommets plus bas, replis plus profonds)
+        anim: tops.flatMap((t, n) => [{ candles: t.index }, { show: `t${n}` }, { candles: lows[n].i }, { show: `l${n}` }]),
         markers: [
           ...tops.map((t, n) => ({ key: `t${n}`, i: t.index, price: t.price, label: `${t.name} ${usd(t.price)}`, short: t.name!, pivot: t.name!, tone: n ? "bear" as const : "bull" as const, side: "above" as const })),
           ...lows.map((l, n) => ({ key: `l${n}`, i: l.i, price: l.price, label: `Repli −${usd(l.depth)}`, tone: "bear" as const, side: "below" as const, role: "low" as const })),

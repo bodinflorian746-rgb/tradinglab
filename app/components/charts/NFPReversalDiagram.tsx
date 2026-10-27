@@ -21,6 +21,8 @@ export function NFPReversalDiagram(_props: { className?: string; locale?: "fr" |
       caption="Le retour ne s'arrête pas au niveau pré-NFP, il le dépasse : ce n'est plus un fade, c'est un retournement."
       panels={[{
         key: "m15", title: "XAU/USD M15, après le NFP", decimals: 0, height: 280, candles: cs,
+        // Animation : le niveau pré-NFP, la chute du headline, la base, la clôture au-dessus, puis l'accélération
+        anim: [{ candles: NFP.impulse - 1 }, { show: "pre" }, { candles: NFP.impulse }, { show: "low" }, { candles: brk }, { show: "brk" }, { candles: end }, { show: "end" }],
         levels: [
           { key: "pre", price: pre, label: `Niveau pré-NFP ${usd(pre)}`, short: "Pré-NFP", tone: "neutral", dashed: true },
         ],

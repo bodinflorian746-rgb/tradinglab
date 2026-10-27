@@ -20,6 +20,8 @@ export function NFPStabilizationDiagram(_props: { className?: string; locale?: "
       caption="Pas de stabilisation visible = pas de setup, quelle que soit l'amplitude initiale."
       panels={[{
         key: "m15", title: "XAU/USD M15, après le NFP", decimals: 0, height: 280, candles: cs,
+        // Animation : la chute, les mèches basses de la base, la 1re reprise franche, puis le plus haut atteint
+        anim: [{ candles: NFP.stabEnd }, { show: ["base", "stab"] }, { candles: NFP.stabEnd + 1 }, { show: "go" }, { candles: end }, { show: "end" }],
         // la reprise finale se lit dans la colonne (à droite, au niveau du plus haut atteint)
         levels: [{ key: "end", price: cs[end].h, from: end, label: `Reprise : ${usd(cs[end].h)}`, short: "Reprise", tone: "bull", dashed: true }],
         zones: [{ key: "base", y1: 4580, y2: 4585, from: NFP.impulse + 1, to: NFP.stabEnd, label: `Base ${usd(4580)}-${usd(4585)}`, short: "Base", tone: "zone" }],

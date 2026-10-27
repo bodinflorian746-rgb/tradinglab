@@ -35,6 +35,8 @@ export function ConfirmationM5Diagram({ tf = "M5" }: { tf?: "M5" | "M15"; classN
           zones: [{ key: "zh1", ...Z, label: `Résistance H1 (ancien support) ${p(Z.y1)}-${p(Z.y2)}`, short: "Ex-support", tone: "zone" as const }],
         }] : []), {
         key: "ltf", title: `EUR/USD ${tf}, dans la zone H1`, decimals: 5, height: 290, candles: cs,
+        // Animation : la zone, les mèches de rejet, le creux local, la clôture dessous, puis l'entrée au retour
+        anim: [{ show: "zone" }, { candles: wicks[wicks.length - 1] }, { show: "wicks" }, { candles: brk - 1 }, { show: "low" }, { candles: brk }, { show: "brk" }, { candles: entryAt }, { show: ["entry", "sl", "tp"] }],
         zones: [{ key: "zone", ...Z, label: `Résistance H1 ${p(Z.y1)}-${p(Z.y2)}`, short: "Résistance H1", tone: "zone" }],
         levels: [
           { key: "low", price: LOCAL_LOW, from: lowAt, to: brk, label: `Creux local ${p(LOCAL_LOW)}`, short: "Creux local", tone: "neutral", dashed: true, role: "bos", ref: lowAt, dir: "bear" },

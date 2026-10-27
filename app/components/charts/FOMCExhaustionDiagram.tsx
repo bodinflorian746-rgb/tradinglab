@@ -21,6 +21,8 @@ export function FOMCExhaustionDiagram(_props: { className?: string; locale?: "fr
       panels={[{
         key: "m15", subtitle: `XAU/USD M15 — impulsion ${usd(cs[fomc].o)} → ${usd(TOP)}`,
         decimals: 1, height: 300, candles: cs,
+        // Animation : l'impulsion FOMC, les mèches de rejet (sans clôture au-dessus), puis la correction
+        anim: [{ candles: fomc }, { show: "fomc" }, { candles: wicks[wicks.length - 1].i }, { show: ["top", "wicks"] }, { candles: last }, { show: "fade" }],
         levels: [{ key: "top", price: TOP, from: fomc, label: `Aucune clôture au-dessus de ${usd(TOP)}`, short: "Aucune clôture au-dessus", tone: "zone", dashed: true }],
         markers: [
           { key: "fomc", i: fomc, price: cs[fomc].l, label: "FOMC", tone: "entry", side: "below" },

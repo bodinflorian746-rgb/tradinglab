@@ -24,6 +24,8 @@ export function ICTTimingDiagram(_props: { className?: string; locale?: "fr" | "
       caption="La même séquence à 03h UTC aurait probablement échoué : le volume manquait pour soutenir le displacement."
       panels={[{
         key: "m15", title: "XAU/USD M15, ouverture de London", decimals: 0, height: 280, candles: cs,
+        // Animation : le range Asia, le sweep à l'ouverture de London, le FVG, puis le displacement
+        anim: [{ candles: SWEEP - 1 }, { show: "asia" }, { candles: SWEEP }, { show: "sweep" }, { candles: fvg.i + 1 }, { show: "fvg" }, { candles: last }, { show: "disp" }],
         zones: [
           { key: "asia", y1: lo, y2: hi, from: 0, to: SWEEP - 1, label: `Range Asia ${usd(lo)}-${usd(hi)}`, short: "Range Asia", tone: "sky" },
           { key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `ict-timing-bear:${fvg.i}`, role: "fvg" },

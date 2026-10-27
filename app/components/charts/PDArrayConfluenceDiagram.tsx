@@ -24,6 +24,8 @@ export function PDArrayConfluenceDiagram(_props: { className?: string; locale?: 
       panels={[{
         key: "h1", subtitle: "EUR/USD H1 — ancien support cassé, FVG bearish, sweep au-dessus",
         decimals: 5, height: 300, candles: cs,
+        // Animation : le support tenu, la clôture dessous, le FVG laissé par l'impulsion, puis le sweep au retour
+        anim: [{ candles: swing }, { show: "support" }, { candles: bo }, { show: "bo" }, { candles: bo + 1 }, { show: "fvg" }, { candles: sweep }, { show: "sweep" }],
         zones: [{ key: "fvg", y1: g.y1, y2: g.y2, from: bo - 1, label: `FVG bearish ${p(g.y1)}-${p(g.y2)}`, short: "FVG bearish", tone: "bear", kind: "fvg", src: `pd-confluence:${bo}`, role: "confluence", ref: "support" }],
         levels: [{ key: "support", price: SUPPORT, to: bo, label: `Ancien support ${p(SUPPORT)}`, short: "Ancien support", tone: "bull", dashed: true, role: "support" }],
         markers: [
