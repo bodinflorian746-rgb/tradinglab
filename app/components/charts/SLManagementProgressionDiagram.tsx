@@ -29,6 +29,7 @@ export default function SLManagementProgressionDiagram({ className = "" }: { cla
     {
       key: "cut", title: "Couper à la clôture", subtitle: "La bougie H1 clôture à 1.1810, au-dessus de la ligne de cou : sortie à cette clôture",
       decimals: 4, height: 210, line: cut, slots: SLOTS,
+      anim: [{ show: "neck" }, { candles: ENTRY_I }, { show: ["entry", "sl"] }, { candles: CUT_I }, { show: "cut" }],
       levels: [neck, entry, { key: "sl", price: SL, from: ENTRY_I, label: `SL ${p(SL)}`, tone: "bear", dashed: true }],
       markers: [{ key: "cut", i: CUT_I, price: CLOSES[CUT_I], label: `Coupe ${p(CLOSES[CUT_I])}`, tone: "zone", side: "above", dot: true }],
       chips: [{ label: loss(CLOSES[CUT_I]), tone: "zone", data: { entry: ENTRY, exit: CLOSES[CUT_I], sl: SL } }],
@@ -36,6 +37,8 @@ export default function SLManagementProgressionDiagram({ className = "" }: { cla
     {
       key: "wait", title: "Attendre une bougie de plus", subtitle: "Le prix continue de monter jusqu'au SL",
       decimals: 4, height: 210, line: CLOSES, slots: SLOTS,
+      // même rythme que le panneau du haut jusqu'à la clôture d'invalidation (pause = durée d'un élément allumé), puis la montée au SL
+      anim: [{ show: "neck" }, { candles: ENTRY_I }, { show: ["entry", "sl"] }, { candles: CUT_I }, { pause: 720 }, { candles: SLOTS - 1 }, { show: "hit" }],
       levels: [neck, entry, { key: "sl", price: SL, from: ENTRY_I, label: `SL ${p(SL)}`, tone: "bear", dashed: true }],
       markers: [{ key: "hit", i: hitSL.i, price: SL, label: "SL touché", tone: "bear", side: "above", dot: true }],
       chips: [{ label: loss(SL), tone: "bear", data: { entry: ENTRY, exit: SL, sl: SL } }],

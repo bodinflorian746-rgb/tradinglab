@@ -18,6 +18,8 @@ export function BreakEvenDiagram() {
     return {
       key: be ? "avec" : "sans", title: be ? "Avec Break Even ✓" : "Sans Break Even ✗",
       decimals: 0, height: 220, line: PATH.slice(0, Math.ceil(hit.i) + 1), slots: PATH.length,
+      // l'entrée et le SL initial, la montée jusqu'à +1R (le SL monte alors à l'entrée), puis la rechute
+      anim: [{ show: ["entry", "sl0"] }, { candles: oneR }, { show: be ? ["1r", "be"] : "1r" }, { candles: Math.ceil(hit.i) }, { show: "exit" }],
       levels: [
         { key: "entry", price: ENTRY, label: `Entrée ${usdSp(ENTRY)}`, short: "Entrée", tone: "entry", dashed: true },
         { key: "sl0", price: SL0, to: be ? oneR : undefined, label: `SL initial ${usdSp(SL0)}`, short: "SL initial", tone: "bear", dashed: true, faint: be },

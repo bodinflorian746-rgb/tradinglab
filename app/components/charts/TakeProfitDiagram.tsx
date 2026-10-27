@@ -9,21 +9,26 @@ import { usdSp } from "@/app/components/lessons/trade";
 const ENTRY = 78000, TP = 84000;
 const PATH = [78000, 78900, 79800, 80600, 81900, 82700, 84000, 82600, 80900, 79100, 77200, 75000];
 
+// Animation : l'entrée, la montée jusqu'à 84 000 $ ; à gauche le TP sort, à droite le sommet est
+// ignoré et le prix redescend jusqu'à la sortie en panique
 export function TakeProfitDiagram() {
   const top = PATH.indexOf(TP);
   const exit = PATH[PATH.length - 1];
   const panels: LCPanel[] = [
     {
       key: "avec", title: "Avec Take Profit ✓", decimals: 0, height: 220, line: PATH.slice(0, top + 1), slots: PATH.length,
+      anim: [{ show: ["entry", "tp"] }, { candles: top }, { show: "sortie" }],
       levels: [
         { key: "tp", price: TP, label: `TP ${usdSp(TP)}`, short: "TP", tone: "bull", dashed: true },
         { key: "entry", price: ENTRY, label: `Entrée ${usdSp(ENTRY)}`, short: "Entrée", tone: "entry", dashed: true },
       ],
-      markers: [{ key: "tp", i: top, price: TP, label: "Sortie à l'objectif", short: "Sortie", tone: "bull", side: "below", dot: true }],
+      markers: [{ key: "sortie", i: top, price: TP, label: "Sortie à l'objectif", short: "Sortie", tone: "bull", side: "below", dot: true }],
       chips: [{ label: `+${usdSp(TP - ENTRY)} sécurisés`, tone: "bull" }],
     },
     {
       key: "sans", title: "Sans Take Profit ✗", decimals: 0, height: 220, line: PATH,
+      // même rythme que le panneau de gauche jusqu'au sommet, puis la rechute
+      anim: [{ show: "entry" }, { candles: top }, { show: "top" }, { candles: PATH.length - 1 }, { show: "exit" }],
       levels: [{ key: "entry", price: ENTRY, label: `Entrée ${usdSp(ENTRY)}`, short: "Entrée", tone: "entry", dashed: true }],
       markers: [
         { key: "top", i: top, price: TP, label: `${usdSp(TP)} ignoré`, short: "Ignoré", tone: "neutral", side: "above", dot: true },
