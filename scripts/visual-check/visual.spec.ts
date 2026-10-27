@@ -21,6 +21,12 @@ const PAGES: { name: string; url: string; mask?: string[] }[] = [
   { name: "lecon-avance-10", url: "/fr/formations/avance/lecon10" },
   { name: "lecon-avance-11", url: "/fr/formations/avance/lecon11" },
   { name: "lecon-avance-12", url: "/fr/formations/avance/lecon12" },
+  // Stratégie Volume Profile + VWAP (module et 4 leçons)
+  { name: "strategie-volume-profile-vwap", url: "/fr/strategies/volume-profile-vwap" },
+  { name: "lecon-strategie-volume-profile-vwap-1", url: "/fr/strategies/volume-profile-vwap/lecon1" },
+  { name: "lecon-strategie-volume-profile-vwap-2", url: "/fr/strategies/volume-profile-vwap/lecon2" },
+  { name: "lecon-strategie-volume-profile-vwap-3", url: "/fr/strategies/volume-profile-vwap/lecon3" },
+  { name: "lecon-strategie-volume-profile-vwap-4", url: "/fr/strategies/volume-profile-vwap/lecon4" },
   { name: "lecon-macro-debutant-3", url: "/fr/formations/macro/debutant/lecon3" },
   { name: "lecon-macro-avance-4", url: "/fr/formations/macro/avance/lecon4" },
   { name: "lecon-strategie-price-action-1", url: "/fr/strategies/price-action/lecon1" },

@@ -85,14 +85,14 @@ function SectionHead({ eyebrow, title, sub, center }: { eyebrow?: string; title:
 }
 
 // ─── Nombre de leçons (vérifié contre les pages du dépôt) ───────────────────
-// Chiffres de la home : seuls ceux validés par le PO (82 leçons ; Trading 31,
-// Macro 16, « 8 stratégies, en 35 leçons » ; 4 jeux ; 48h ; note, avis et prix
+// Chiffres de la home : seuls ceux validés par le PO (86 leçons ; Trading 31,
+// Macro 16, « 9 stratégies, en 39 leçons » ; 4 jeux ; 48h ; note, avis et prix
 // tels qu'ils existent). Aucun autre chiffre, pas de répartition par niveau.
 // Trading : FORMATIONS (débutant + intermédiaire + avancé = 31, depuis Volume Profile, VWAP et Order Flow).
 // Macro : 16 (6 + 6 + 4), non modélisé dans FORMATIONS : mêmes comptes que
-// app/sitemap.ts et StickyLessonNav. Stratégies : 35 pages de leçons, 8 modules.
+// app/sitemap.ts et StickyLessonNav. Stratégies : STRATEGY_MODULES (9 modules, 39 leçons depuis Volume Profile + VWAP).
 const MACRO_LESSONS = 16;
-const STRATEGY_LESSONS = 35;
+const STRATEGY_LESSONS = STRATEGY_MODULES.reduce((a, m) => a + m.lessonCount, 0);
 
 type LessonsStrings = ReturnType<typeof homeStrings>["lessons"];
 type ValuePart = { n: number } | { t: string } | { br: true };
@@ -125,7 +125,7 @@ const PICTO: Record<string, ReactNode> = {
 };
 
 /**
- * Bloc des leçons : « 82 leçons » en très grand, « Du débutant à l'avancé »,
+ * Bloc des leçons : « 86 leçons » en très grand, « Du débutant à l'avancé »,
  * puis 3 blocs (noms du menu) qui mènent chacun à sa page, un nombre chacun.
  */
 function LessonsBlock({ l, names, hrefs, trading }: {
@@ -326,7 +326,7 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         </div>
       </section>
 
-      {/* ═══ 3. ÉTAPE 1, LES LEÇONS : 82 leçons, les niveaux, l'aperçu d'une leçon ═══ */}
+      {/* ═══ 3. ÉTAPE 1, LES LEÇONS : 86 leçons, les niveaux, l'aperçu d'une leçon ═══ */}
       <section id="hv2-lecons" className="hv2-section hv2-anchor">
         <div className="hv2-wrap flex flex-col hv2-stack">
           <SectionHead eyebrow={s.lessonsSection.eyebrow} title={s.lessonsSection.title} sub={s.lessonsSection.sub} />
@@ -403,7 +403,7 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
             {STRATEGY_MODULES.map((m, i) => {
               const d = sd.modules[m.id as keyof typeof sd.modules] as { title: string } | undefined;
               return (
-                <Link key={m.id} href={h(`/strategies/${m.id}`)} data-reveal className="hv2-strat" style={css({ "--d": `${(i % 4) * 70}ms`, "--c": LEVEL_COLOR[m.level] })}>
+                <Link key={m.id} href={h(`/strategies/${m.id}`)} data-reveal className="hv2-strat" style={css({ "--d": `${(i % 3) * 70}ms`, "--c": LEVEL_COLOR[m.level] })}>
                   <span className="hv2-strat-level">{s.strategiesSection.levels[m.level]}</span>
                   <span className="v2-display text-[18px] font-bold leading-snug">{d?.title ?? m.title}</span>
                 </Link>

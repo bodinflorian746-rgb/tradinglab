@@ -1,8 +1,8 @@
 {
   "page": {
     "hero": {
-      "badgeShort":   "8 stratégies · 3 niveaux · Niveau pro",
-      "badgeLong":    "8 stratégies · 3 niveaux · Du retail au niveau institutionnel",
+      "badgeShort":   "9 stratégies · 3 niveaux · Niveau pro",
+      "badgeLong":    "9 stratégies · 3 niveaux · Du retail au niveau institutionnel",
       "titleLine1":   "Apprends à trader",
       "titleLine2":   "avec une vraie méthode.",
       "subtitle":     "Un parcours structuré, des fondations aux techniques institutionnelles, pour construire une approche solide et reproductible."
@@ -122,6 +122,16 @@
         "lecon2": { "title": "NFP Overreaction : trader la sur-réaction au rapport sur l'emploi US", "description": "Exploiter la sur-réaction au chiffre headline NFP, entrer après la réévaluation, pas dans le mouvement initial.",   "duration": "18 min" },
         "lecon3": { "title": "Régime Risk-off : trader quand le marché fuit le risque",          "description": "Identifier l'installation d'un régime risk-off via les signaux concordants et trader dans son sens.",                  "duration": "18 min" },
         "lecon4": { "title": "Le filtre macro pré-trade : valider le contexte avant d'exécuter",  "description": "Construire un filtre macro systématique (calendrier + régime + setup) pour éviter les mauvais trades.",               "duration": "20 min" }
+      }
+    },
+    "volume-profile-vwap": {
+      "title":    "Volume Profile + VWAP",
+      "subtitle": "Construis ton plan sur les zones de volume, filtre avec le VWAP, confirme par la structure du prix (Order Flow en option) et gère le trade jusqu’à la clôture.",
+      "lessons": {
+        "lecon1": { "title": "Construire son plan avec le Volume Profile", "description": "Tendance H1, profil de la consolidation, zone d’intérêt où le POC rejoint un support, objectifs avant la résistance.", "duration": "18 min" },
+        "lecon2": { "title": "Filtrer les opportunités avec le VWAP", "description": "Le VWAP de séance comme filtre du retour dans la zone, quand abandonner, une vente sur l’or, limites du VWAP sur Forex et CFD.", "duration": "16 min" },
+        "lecon3": { "title": "Confirmer son entrée avec la structure du prix et l’Order Flow", "description": "Confirmation M15 et invalidation, absorption, delta et CVD sur les futures en complément, quand ne pas entrer.", "duration": "20 min" },
+        "lecon4": { "title": "Exécuter et gérer un trade complet", "description": "Un plan refusé (R/R 1:1,1), un plan retenu (1:3), taille de position, issues A et B, règles et checklist.", "duration": "24 min" }
       }
     }
   }

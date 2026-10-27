@@ -19,6 +19,10 @@ const PAGES = [
   "/strategies/macro-trading/lecon2",
   "/strategies/macro-trading/lecon3",
   "/strategies/macro-trading/lecon4",
+  "/strategies/volume-profile-vwap/lecon1",
+  "/strategies/volume-profile-vwap/lecon2",
+  "/strategies/volume-profile-vwap/lecon3",
+  "/strategies/volume-profile-vwap/lecon4",
 ];
 
 for (const url of PAGES) {

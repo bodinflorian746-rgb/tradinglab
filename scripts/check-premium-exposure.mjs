@@ -121,6 +121,10 @@ const ROUTES = [
   { path: "/fr/strategies/trend-following/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/trend-following/lecon2/_content-fr.tsx", marker: "Une trendline tradable s’appuie sur 2 points minimum (3 idéalement)" },
   { path: "/fr/strategies/trend-following/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/trend-following/lecon3/_content-fr.tsx", marker: "Pullback Fibonacci 0.618/0.786 : entrée optimale" },
   { path: "/fr/strategies/trend-following/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/trend-following/lecon4/_content-fr.tsx", marker: "BOS = cassure du dernier extrême structurel dans le sens de la" },
+  { path: "/fr/strategies/volume-profile-vwap/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/volume-profile-vwap/lecon1/_content-fr.tsx", marker: "On recherche une convergence entre une zone technique prouvée et une concentration de volume" },
+  { path: "/fr/strategies/volume-profile-vwap/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/volume-profile-vwap/lecon2/_content-fr.tsx", marker: "Le VWAP filtre les zones identifiées avec le Volume Profile" },
+  { path: "/fr/strategies/volume-profile-vwap/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/volume-profile-vwap/lecon3/_content-fr.tsx", marker: "Sur Forex et CFD, la confirmation repose principalement sur la structure du prix" },
+  { path: "/fr/strategies/volume-profile-vwap/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/volume-profile-vwap/lecon4/_content-fr.tsx", marker: "La stratégie consiste à attendre que toutes les conditions soient réunies" },
 ];
 
 // Phrase de l'écran de verrouillage FR (app/components/premium/paywall-strings.ts,

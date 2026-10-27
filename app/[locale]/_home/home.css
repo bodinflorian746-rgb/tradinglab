@@ -387,11 +387,12 @@
 .tsx-v2 .hv2-levels .hv2-steps { gap: 12px; }
 .tsx-v2 .hv2-levels .hv2-step { padding: 14px 16px; }
 
-/* ─── Étape 3 : les 8 stratégies ─────────────────────────────────────── */
+/* ─── Étape 3 : les stratégies ───────────────────────────────────────── */
 
 .tsx-v2 .hv2-strats { display: grid; gap: 16px; }
-@media (min-width: 640px) { .tsx-v2 .hv2-strats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
-@media (min-width: 1024px) { .tsx-v2 .hv2-strats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* 9 stratégies : 3 × 3 sur grand écran ; en 2 colonnes, la dernière carte (impaire) prend toute la largeur */
+@media (min-width: 640px) { .tsx-v2 .hv2-strats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } .tsx-v2 .hv2-strat:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+@media (min-width: 1024px) { .tsx-v2 .hv2-strats { grid-template-columns: repeat(3, minmax(0, 1fr)); } .tsx-v2 .hv2-strat:last-child:nth-child(odd) { grid-column: auto; } }
 .tsx-v2 .hv2-strat {
   display: flex;
   flex-direction: column;

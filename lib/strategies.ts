@@ -83,4 +83,13 @@ export const STRATEGY_MODULES: StrategyModule[] = [
     lessonCount: 4,
     isFree:      true,
   },
+  {
+    id:          "volume-profile-vwap",
+    title:       "Volume Profile + VWAP",
+    subtitle:    "Construis ton plan sur les zones de volume, filtre avec le VWAP, confirme par la structure (Order Flow en option) et gère le trade jusqu’à la clôture.",
+    level:       "avance",
+    order:       9,
+    lessonCount: 4,
+    isFree:      true,
+  },
 ];
