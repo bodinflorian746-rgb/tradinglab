@@ -11,7 +11,8 @@
 import { useEffect, useRef, useState } from "react";
 
 /** Étape d'une séquence : bougies jusqu'à un indice (incluses, une par une), éléments allumés (clés de
- *  zones, niveaux, segments, repères), ou pause. */
+ *  zones, niveaux, segments, repères ; « @clé » : l'étiquette seule, plus tard que son élément, quand
+ *  elle donne la conclusion), ou pause. */
 export type LCStep = { candles: number } | { show: string | string[] } | { pause: number };
 
 /** Délai entre deux bougies révélées */
@@ -24,8 +25,10 @@ export const SHOW_MS = 720;
 
 export interface AnimPlan {
   candle: (i: number) => number;
-  /** Délai d'un élément (clé) ; son étiquette : + LABEL_LAG */
+  /** Délai d'un élément (clé) */
   item: (key: string) => number;
+  /** Délai de son étiquette : « @clé » si la séquence la nomme, sinon l'élément + LABEL_LAG */
+  label: (key: string) => number;
   end: number;
 }
 
@@ -47,7 +50,8 @@ export function planOf(steps: LCStep[], nCandles: number): AnimPlan {
   // Bougies restantes, puis éléments non nommés : à la fin
   for (let i = next; i < nCandles; i++) { candleAt[i] = t; t += CANDLE_MS; }
   const end = t;
-  return { candle: (i) => candleAt[i] ?? end, item: (k) => itemAt.get(k) ?? end, end };
+  const item = (k: string) => itemAt.get(k) ?? end;
+  return { candle: (i) => candleAt[i] ?? end, item, label: (k) => itemAt.get(`@${k}`) ?? item(k) + LABEL_LAG, end };
 }
 
 /** Animation permise ici (navigateur, mouvement non réduit, interrupteur non coupé) */

@@ -4,6 +4,7 @@
 // clôture lus sur les bougies. Bougies : scenarios.ts (« smc4-sweep », jusqu'à l'impulsion opposée).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
+import type { LCStep } from "@/app/components/lessons/lesson-anim";
 import { fmtPrice } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
@@ -15,13 +16,19 @@ export function LiquidityGrabDiagram(_props: { className?: string; locale?: "fr"
   const sweep = all.findIndex((k) => k.h > EQH);
   const cs = all.slice(0, sweep + 3);
   const tops = cs.map((k, i) => (k.h === EQH ? i : -1)).filter((i) => i >= 0);
+  // Animation : l'accumulation, chaque sommet égal (puis le niveau des equal highs, la liquidité), le
+  // sweep (mèche au-dessus, clôture dessous), puis l'impulsion opposée
+  const anim: LCStep[] = [
+    ...tops.flatMap((i, n) => [{ candles: i + 1 }, { show: n === 0 ? ["acc", "t0"] : n === tops.length - 1 ? [`t${n}`, "eqh"] : `t${n}` }]),
+    { candles: sweep }, { show: "sweep" }, { candles: sweep + 1 }, { show: "imp" },
+  ];
   return (
     <LessonChart
       id="LiquidityGrabDiagram"
       title="Le sweep : la mèche prend les stops, la clôture rejette"
       caption="Perçage rapide, mèche agressive, clôture réintégrée sous le niveau : ce n'est pas un breakout, c'est un sweep."
       panels={[{
-        key: "h4", title: "EUR/USD H4", decimals: 5, height: 280, candles: cs,
+        key: "h4", title: "EUR/USD H4", decimals: 5, height: 280, candles: cs, anim,
         zones: [{ key: "acc", y1: 1.17, y2: 1.175, to: sweep - 1, label: `Accumulation ${p(1.17)}-${p(1.175)}`, short: "Accumulation", tone: "neutral" }],
         levels: [{ key: "eqh", price: EQH, from: tops[0], label: `Equal highs ${p(EQH)} (BSL)`, short: "BSL", tone: "zone", dashed: true }],
         markers: [

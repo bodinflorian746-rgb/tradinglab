@@ -22,7 +22,7 @@ import { useId, type CSSProperties, type ReactNode } from "react";
 import { clamp, cssVars, textWidth, useBoxSize } from "@/app/components/games/v2/GameChartV2";
 import { candleBody } from "@/app/components/games/candle-geometry";
 import { fmtNum, fmtPrice, type Candle, type PivotName } from "@/lib/lessons/chart-analysis";
-import { LABEL_LAG, planOf, usePlayOnce, type LCStep } from "./lesson-anim";
+import { planOf, usePlayOnce, type LCStep } from "./lesson-anim";
 
 // Bougie des leçons : rendu des jeux (couleurs, corps exact, jamais neutre), mais mèche proportionnée
 // au corps. Le trait fixe de 3 px des jeux paraît aussi épais qu'un corps étroit sur téléphone : ici la
@@ -387,7 +387,8 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
   const plan = panel.anim?.length ? planOf(panel.anim, panel.candles?.length ?? panel.line?.length ?? 0) : null;
   // Élément animé : classe et délai (rien sans séquence)
   const a = (d: number | null) => (plan && d !== null ? { className: "lc-a", style: { "--d": `${Math.round(d)}ms` } as CSSProperties } : {});
-  const aItem = (key: string, lag = 0) => a(plan ? plan.item(key) + lag : null);
+  const aItem = (key: string) => a(plan ? plan.item(key) : null);
+  const aLabel = (key: string) => a(plan ? plan.label(key) : null);
   const narrow = W > 0 && W < NARROW;
   const txt = (o: { label?: string; short?: string }) => (narrow && o.short ? o.short : o.label ?? "");
 
@@ -654,7 +655,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
             {m.lead && (
               <line data-leader={m.key} x1={m.lead.x1} x2={m.lead.x2} y1={m.lead.y1} y2={m.lead.y2} stroke={TONE[m.tone]} strokeWidth={1.5} strokeOpacity={0.8} />
             )}
-            <g data-label-for={m.key} {...aItem(m.key, LABEL_LAG)}>
+            <g data-label-for={m.key} {...aLabel(m.key)}>
               <rect x={m.x} y={m.y - MARK_H / 2} width={m.w} height={MARK_H} rx={MARK_H / 2} fill="#06090d" stroke={TONE[m.tone]} strokeWidth={1.5} />
               <text x={m.x + m.w / 2} y={m.y + FS * 0.36} textAnchor="middle" fontSize={FS} fontWeight={700} fill={TONE[m.tone]}>{m.label}</text>
             </g>
@@ -709,7 +710,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
 
         {/* Colonne des étiquettes (au-dessus de tout) */}
         {tags.map((t) => (
-          <g key={t.key} data-label-for={t.key} {...aItem(t.key, LABEL_LAG)}>
+          <g key={t.key} data-label-for={t.key} {...aLabel(t.key)}>
             {linked(t) && (
               // objet arrêté avant la colonne : lien en pointillé fin, distinct d'un niveau
               <line data-leader={t.key} x1={t.lineEnd} y1={t.lineY} x2={tagX} y2={t.y} stroke={t.color} strokeWidth={1.5}

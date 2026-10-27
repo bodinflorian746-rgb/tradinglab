@@ -4,6 +4,7 @@
 // TP 1.1950. Breakout, distance et R/R calculés. Bougies : scenarios.ts (« flip-pin »).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
+import type { LCStep } from "@/app/components/lessons/lesson-anim";
 import { tradeSetup } from "@/app/components/lessons/trade";
 import { fmtPrice, pips } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
@@ -15,6 +16,9 @@ export default function FlipDiagram(_props: { className?: string; locale?: "fr" 
   const cs = CANDLES["flip-pin"];
   const brk = cs.findIndex((k) => k.c > LEVEL + 0.0015);
   const pin = cs.length - 1;
+  // Animation : les 3 touches sous la résistance (le niveau s'allume, sans son nom), le breakout clôturé,
+  // les bougies sans réintégration, le retest et la pin bar, puis « Résistance → support », puis le plan
+  const anim: LCStep[] = [{ candles: brk - 1 }, { show: "lvl" }, { candles: brk }, { show: "brk" }, { candles: pin }, { show: "pin" }, { show: "@lvl" }];
   const t = tradeSetup({ entry: cs[pin].c, sl: 1.183, tp: 1.195, from: pin, tpOffscale: true, expect: ">3.2", names: { entry: "Entrée long", tp: "TP (R/R)" } });
   return (
     <LessonChart
@@ -22,7 +26,7 @@ export default function FlipDiagram(_props: { className?: string; locale?: "fr" 
       title="Résistance cassée, support au retest"
       caption="Breakout franc, pas de réintégration, retest avec signal de rejet : la zone a inversé son rôle."
       panels={[{
-        key: "h4", title: "EUR/USD H4", decimals: 5, height: 290, candles: cs,
+        key: "h4", title: "EUR/USD H4", decimals: 5, height: 290, candles: cs, anim,
         levels: [{ key: "lvl", price: LEVEL, label: `Résistance → support ${p(LEVEL)}`, short: "Ex-résistance", tone: "zone" }, ...t.levels],
         offscale: t.offscale,
         markers: [
