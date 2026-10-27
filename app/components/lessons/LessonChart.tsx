@@ -22,6 +22,7 @@ import { useId, type CSSProperties, type ReactNode } from "react";
 import { clamp, cssVars, textWidth, useBoxSize } from "@/app/components/games/v2/GameChartV2";
 import { candleBody } from "@/app/components/games/candle-geometry";
 import { fmtNum, fmtPrice, type Candle, type PivotName } from "@/lib/lessons/chart-analysis";
+import { LABEL_LAG, planOf, usePlayOnce, type LCStep } from "./lesson-anim";
 
 // Bougie des leçons : rendu des jeux (couleurs, corps exact, jamais neutre), mais mèche proportionnée
 // au corps. Le trait fixe de 3 px des jeux paraît aussi épais qu'un corps étroit sur téléphone : ici la
@@ -188,6 +189,9 @@ export interface LCPanel {
   /** Série qui n'est pas un prix (courbe de capital, résultats cumulés) : nom et unité pour la
    *  description accessible, ex. { name: "Capital", unit: "% du capital de départ" } */
   measure?: { name: string; unit: string };
+  /** Animation (lesson-anim.ts) : séquence dans l'ordre de ce que raconte la leçon ; indices d'origine
+   *  (avant rognage mobile), clés des zones, niveaux, segments, repères ; « rsi » pour le sous-panneau */
+  anim?: LCStep[];
 }
 
 export interface LessonChartProps {
@@ -379,6 +383,11 @@ const overlaps = (a: Box, b: Box) => a.x < b.x + b.w && b.x < a.x + a.w && a.y <
 function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel; domain?: [number, number]; single: boolean }) {
   const { ref, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const uid = useId().replace(/:/g, "");
+  const play = usePlayOnce<HTMLDivElement>(!!panel.anim?.length);
+  const plan = panel.anim?.length ? planOf(panel.anim, panel.candles?.length ?? panel.line?.length ?? 0) : null;
+  // Élément animé : classe et délai (rien sans séquence)
+  const a = (d: number | null) => (plan && d !== null ? { className: "lc-a", style: { "--d": `${Math.round(d)}ms` } as CSSProperties } : {});
+  const aItem = (key: string, lag = 0) => a(plan ? plan.item(key) + lag : null);
   const narrow = W > 0 && W < NARROW;
   const txt = (o: { label?: string; short?: string }) => (narrow && o.short ? o.short : o.label ?? "");
 
@@ -575,6 +584,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
         data-nocrop={crop.noCrop}
         data-candles={p.candles ? JSON.stringify(p.candles) : undefined}
         data-series={p.line ? JSON.stringify(p.line) : undefined}
+        className={play.armed ? `lc-anim${play.playing ? " lc-play" : ""}` : undefined}
       >
         <desc id={`${uid}-desc`}>{describePanel(p)}</desc>
         <defs>
@@ -591,7 +601,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
           const h = Math.max(toY(Math.min(z.y1, z.y2)) - y, 3);
           const x = levelX1(z);
           return (
-            <rect key={z.key} data-zone={z.key} data-y1={Math.min(z.y1, z.y2)} data-y2={Math.max(z.y1, z.y2)} data-kind={z.kind} data-src={z.src} data-from={z.from} data-to={z.to} {...sem(z)}
+            <rect key={z.key} data-zone={z.key} data-y1={Math.min(z.y1, z.y2)} data-y2={Math.max(z.y1, z.y2)} data-kind={z.kind} data-src={z.src} data-from={z.from} data-to={z.to} {...sem(z)} {...aItem(z.key)}
               x={x} y={y} width={levelX2(z) - x} height={h} rx={4}
               fill={TONE[z.tone]} fillOpacity={0.16} stroke={TONE[z.tone]} strokeOpacity={0.75} strokeWidth={1.5} strokeDasharray="5 4" />
           );
@@ -599,7 +609,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
 
         {/* Niveaux */}
         {(p.levels ?? []).map((l) => (
-          <line key={l.key} data-level={l.key} data-price={l.price} data-from={l.from} data-to={l.to} {...sem(l)}
+          <line key={l.key} data-level={l.key} data-price={l.price} data-from={l.from} data-to={l.to} {...sem(l)} {...aItem(l.key)}
             x1={levelX1(l)} x2={levelX2(l)} y1={toY(l.price)} y2={toY(l.price)}
             stroke={TONE[l.tone]} strokeWidth={l.faint ? 1.5 : 2} strokeOpacity={l.faint ? 0.5 : 1}
             strokeDasharray={l.dashed ? "6 5" : undefined} strokeLinecap="round" />
@@ -608,43 +618,43 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
         {/* Objectifs hors cadre : trait au bord */}
         {offTags.map((o) => {
           const y = o.price > dMax ? top - MARK_H : bottom + MARK_H;
-          return <line key={o.key} data-level={o.key} data-price={o.price} data-offscale="" x1={plotL} x2={plotR} y1={y} y2={y} stroke={o.color} strokeWidth={2} strokeDasharray="2 6" strokeLinecap="round" />;
+          return <line key={o.key} data-level={o.key} data-price={o.price} data-offscale="" {...aItem(o.key)} x1={plotL} x2={plotR} y1={y} y2={y} stroke={o.color} strokeWidth={2} strokeDasharray="2 6" strokeLinecap="round" />;
         })}
 
         {/* Moyennes mobiles */}
         {(p.series ?? []).map((s) => {
           const pts = s.values.map((v, i) => (v === null ? null : `${xOf(i)},${toY(v)}`)).filter(Boolean).join(" ");
-          return <polyline key={s.key} data-ma={s.key} points={pts} fill="none" stroke={TONE[s.tone]} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />;
+          return <polyline key={s.key} data-ma={s.key} {...aItem(s.key)} points={pts} fill="none" stroke={TONE[s.tone]} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />;
         })}
 
         {/* Prix en ligne (schéma) */}
         {p.line && (
-          <polyline data-price-line="" points={p.line.map((v, i) => `${xOf(i)},${toY(v)}`).join(" ")}
+          <polyline data-price-line="" {...a(plan ? plan.candle(0) : null)} points={p.line.map((v, i) => `${xOf(i)},${toY(v)}`).join(" ")}
             fill="none" stroke="#c7c9d1" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
         )}
 
         {/* Bougies */}
         {p.candles?.map((c, i) => (
-          <g key={i} data-candle={i}>
+          <g key={i} data-candle={i} {...a(plan ? plan.candle(i + crop.s) : null)}>
             <LessonCandle {...c} prevClose={p.candles![i - 1]?.c} x={xOf(i)} width={bodyW} toY={toY} index={i} />
           </g>
         ))}
 
         {/* Segments (ligne de cou, mesures) */}
         {(p.segments ?? []).map((s) => (
-          <line key={s.key} data-segment={s.key} data-p1={s.p1} data-p2={s.p2} {...sem(s)} x1={xOf(s.i1)} y1={toY(s.p1)} x2={xOf(s.i2)} y2={toY(s.p2)}
+          <line key={s.key} data-segment={s.key} data-p1={s.p1} data-p2={s.p2} {...sem(s)} {...aItem(s.key)} x1={xOf(s.i1)} y1={toY(s.p1)} x2={xOf(s.i2)} y2={toY(s.p2)}
             stroke={TONE[s.tone]} strokeWidth={2} strokeDasharray={s.dashed ? "6 5" : undefined} strokeLinecap="round"
             markerEnd={s.arrow ? `url(#${uid}-arrow-${s.tone})` : undefined} />
         ))}
 
         {/* Repères */}
         {marks.map((m) => (
-          <g key={m.key} data-marker={m.key} data-i={m.i} data-price={m.price} data-pivot={m.pivot} {...sem(m)}>
+          <g key={m.key} data-marker={m.key} data-i={m.i} data-price={m.price} data-pivot={m.pivot} {...sem(m)} {...aItem(m.key)}>
             {m.dot && <circle cx={xOf(m.i)} cy={m.py} r={4.5} fill={TONE[m.tone]} stroke="#06090d" strokeWidth={1.5} />}
             {m.lead && (
               <line data-leader={m.key} x1={m.lead.x1} x2={m.lead.x2} y1={m.lead.y1} y2={m.lead.y2} stroke={TONE[m.tone]} strokeWidth={1.5} strokeOpacity={0.8} />
             )}
-            <g data-label-for={m.key}>
+            <g data-label-for={m.key} {...aItem(m.key, LABEL_LAG)}>
               <rect x={m.x} y={m.y - MARK_H / 2} width={m.w} height={MARK_H} rx={MARK_H / 2} fill="#06090d" stroke={TONE[m.tone]} strokeWidth={1.5} />
               <text x={m.x + m.w / 2} y={m.y + FS * 0.36} textAnchor="middle" fontSize={FS} fontWeight={700} fill={TONE[m.tone]}>{m.label}</text>
             </g>
@@ -658,7 +668,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
           const ry = (v: number) => r0 + ((100 - v) / 100) * (r1 - r0);
           const pts = p.rsi.values.map((v, i) => (v === null ? null : `${xOf(i)},${ry(v)}`)).filter(Boolean).join(" ");
           return (
-            <g data-rsi="">
+            <g data-rsi="" {...aItem("rsi")}>
               <line x1={plotL} x2={plotR} y1={plotH + 2} y2={plotH + 2} stroke="rgba(255,255,255,0.08)" strokeWidth={1} />
               {[70, 30].map((v) => (
                 <line key={v} data-level={`rsi${v}`} data-price={v} x1={plotL} x2={plotR} y1={ry(v)} y2={ry(v)} stroke="#9ca0ab" strokeOpacity={0.6} strokeWidth={1.5} strokeDasharray="4 5" />
@@ -699,7 +709,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
 
         {/* Colonne des étiquettes (au-dessus de tout) */}
         {tags.map((t) => (
-          <g key={t.key} data-label-for={t.key}>
+          <g key={t.key} data-label-for={t.key} {...aItem(t.key, LABEL_LAG)}>
             {linked(t) && (
               // objet arrêté avant la colonne : lien en pointillé fin, distinct d'un niveau
               <line data-leader={t.key} x1={t.lineEnd} y1={t.lineY} x2={tagX} y2={t.y} stroke={t.color} strokeWidth={1.5}
@@ -714,7 +724,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
   }
 
   return (
-    <div className="lc-panel" data-panel-box={panel.key}>
+    <div ref={play.ref} className="lc-panel" data-panel-box={panel.key}>
       {(panel.title || panel.subtitle) && (
         <div className="lc-panel-head">
           {panel.title && <div className="lc-panel-title">{panel.title}</div>}

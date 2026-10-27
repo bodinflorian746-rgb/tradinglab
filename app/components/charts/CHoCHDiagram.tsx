@@ -4,6 +4,7 @@
 // Bougies : scenarios.ts (« choch-eur »). Version haussière seule (prop trend gardée).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
+import type { LCStep } from "@/app/components/lessons/lesson-anim";
 import { fmtPrice, pivots } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
@@ -16,13 +17,19 @@ export function CHoCHDiagram(_props: { trend?: "bullish" | "bearish"; className?
   const hl = piv.filter((q) => q.name === "HL" && q.index < hh.index).at(-1)!;
   const named = piv.filter((q) => (q.name === "HH" || q.name === "HL") && q.index <= hh.index);
   const choch = cs.findIndex((k, i) => i > hh.index && k.c < hl.price);
+  // Animation : la tendance haussière (HH / HL un par un, le dernier HL et son niveau), le recul, puis la
+  // clôture sous le dernier HL et l'étiquette « CHoCH »
+  const anim: LCStep[] = [
+    ...named.flatMap((q) => [{ candles: q.index + 1 }, { show: q.index === hl.index ? [`p${q.index}`, "hl"] : `p${q.index}` }]),
+    { candles: choch - 1 }, { candles: choch }, { show: "choch" },
+  ];
   return (
     <LessonChart
       id="CHoCHDiagram"
       title="CHoCH : la tendance craque"
       caption="Un CHoCH seul est une alerte : on n'achète plus, on attend un BOS baissier pour confirmer le retournement."
       panels={[{
-        key: "h4", title: "EUR/USD H4, tendance haussière", decimals: 5, height: 260, candles: cs,
+        key: "h4", title: "EUR/USD H4, tendance haussière", decimals: 5, height: 260, candles: cs, anim,
         levels: [{ key: "hl", price: hl.price, from: hl.index, label: `Dernier HL ${p(hl.price)}`, short: "Dernier HL", tone: "zone", dashed: true }],
         markers: [
           ...named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name!, tone: "bull" as const, side: q.side === "h" ? "above" as const : "below" as const })),

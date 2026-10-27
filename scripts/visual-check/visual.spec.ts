@@ -122,7 +122,8 @@ for (const p of PAGES) {
   test(p.name, async ({ page }) => {
     await page.clock.setFixedTime(new Date("2026-06-15T10:00:00+02:00"));
     await page.addInitScript(() => {
-      try { localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch { /* stockage indisponible */ }
+      // graphiques des leçons animés : état final (interrupteur de app/components/lessons/lesson-anim.ts)
+      try { localStorage.setItem("tradinglab_onboarding_v1", "done"); localStorage.setItem("tsx-lc-anim", "off"); } catch { /* stockage indisponible */ }
       // Math.random déterministe (mulberry32, graine fixe)
       let a = 0x2f6b9e1d;
       Math.random = () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };

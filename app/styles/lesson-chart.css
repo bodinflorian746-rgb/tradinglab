@@ -235,3 +235,9 @@
   .tsx-v2 .ls-matrix th { padding: 4px 2px; }
 }
 .tsx-v2 .ls-matrix abbr { text-decoration: none; }
+
+/* Animation des graphiques (app/components/lessons/lesson-anim.ts) : éléments masqués tant que la
+   séquence n'est pas lancée, puis allumés à leur délai. Opacité seulement : aucun décalage. */
+.tsx-v2 .lc-anim .lc-a { opacity: 0; }
+.tsx-v2 .lc-anim.lc-play .lc-a { animation: lc-in 380ms ease-out both; animation-delay: var(--d, 0ms); }
+@keyframes lc-in { from { opacity: 0; } to { opacity: 1; } }

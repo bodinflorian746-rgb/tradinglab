@@ -5,6 +5,7 @@
 // version haussière (prop trend gardée pour compatibilité).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
+import type { LCStep } from "@/app/components/lessons/lesson-anim";
 import { fmtPrice, pips, pivots } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
@@ -16,13 +17,21 @@ export function BOSDiagram(_props: { trend?: "bullish" | "bearish"; className?: 
   const hh = named.filter((q) => q.name === "HH").at(-1)!;
   const bos = cs.findIndex((k, i) => i > hh.index && k.c > hh.price);
   const dist = pips(cs[bos].c, hh.price, 0.0001);
+  // Animation : les swings HH / HL un par un (bougie suivante comprise : le pivot se confirme), le dernier
+  // HH et son niveau, le repli, puis la clôture au-dessus et l'étiquette « BOS »
+  const anim: LCStep[] = [
+    ...named.filter((q) => q.index <= hh.index).flatMap((q) => [{ candles: q.index + 1 }, { show: q.index === hh.index ? [`p${q.index}`, "hh"] : `p${q.index}` }]),
+    { candles: bos - 1 },
+    ...named.filter((q) => q.index > hh.index && q.index < bos).map((q) => ({ show: `p${q.index}` })),
+    { candles: bos }, { show: "bos" },
+  ];
   return (
     <LessonChart
       id="BOSDiagram"
       title="BOS : la tendance confirme"
       caption="Un BOS est une information, pas un signal d'entrée : on continue à chercher des achats sur les retracements."
       panels={[{
-        key: "h4", title: "EUR/USD H4, tendance haussière", decimals: 5, height: 260, candles: cs,
+        key: "h4", title: "EUR/USD H4, tendance haussière", decimals: 5, height: 260, candles: cs, anim,
         levels: [{ key: "hh", price: hh.price, from: hh.index, label: `Dernier HH ${p(hh.price)}`, short: "Dernier HH", tone: "zone", dashed: true }],
         markers: [
           ...named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name!, tone: "bull" as const, side: q.side === "h" ? "above" as const : "below" as const })),

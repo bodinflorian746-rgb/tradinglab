@@ -912,7 +912,8 @@ const browser = await chromium.launch();
 let errors = 0, warnings = 0;
 if (AUTOTEST) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, storageState: STORAGE_STATE, locale: "fr-FR" });
-  await ctx.addInitScript(() => { try { window.localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch {} });
+  // graphiques animés : l'audit mesure l'état final (interrupteur de lesson-anim.ts)
+  await ctx.addInitScript(() => { try { window.localStorage.setItem("tradinglab_onboarding_v1", "done"); window.localStorage.setItem("tsx-lc-anim", "off"); } catch {} });
   const page = await ctx.newPage();
   // Chaque défaut est injecté dans la 1re page où il s'applique (R/R et OB : Avancé 7 ; pivots : Intermédiaire 5 ;
   // schéma à plusieurs panneaux : Trend Following 2 ; tableau : Débutant 1 ; liquidité, FVG, OB, support :
@@ -944,7 +945,8 @@ if (AUTOTEST) {
 for (const w of FORMATS) {
   const ctx = await browser.newContext({ viewport: { width: w, height: w < 800 ? 844 : 900 }, storageState: STORAGE_STATE, locale: "fr-FR" });
   // Fenêtre d'accueil (1re visite) fermée d'office : elle recouvrirait les schémas
-  await ctx.addInitScript(() => { try { window.localStorage.setItem("tradinglab_onboarding_v1", "done"); } catch {} });
+  // graphiques animés : l'audit mesure l'état final (interrupteur de lesson-anim.ts)
+  await ctx.addInitScript(() => { try { window.localStorage.setItem("tradinglab_onboarding_v1", "done"); window.localStorage.setItem("tsx-lc-anim", "off"); } catch {} });
   const page = await ctx.newPage();
   for (const p of pages) {
     await page.goto(`${BASE}${p.url}`, { waitUntil: "load", timeout: 120000 });
