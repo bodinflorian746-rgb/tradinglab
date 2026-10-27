@@ -23,6 +23,9 @@ export function AsiaRangeSweepDiagram(_props: { className?: string; locale?: "fr
       caption="La cible n'était pas le breakout baissier, c'était la liquidité sous le range Asia."
       panels={[{
         key: "m15", title: "EUR/USD M15", decimals: 5, height: 280, candles: cs,
+        // Animation : la session asiatique calme et son range, le sweep de Londres sous le bas, la
+        // réintégration et l'impulsion, puis l'expansion
+        anim: [{ candles: ASIA_END }, { show: ["asia", "asiaH", "asialow"] }, { candles: SWEEP }, { show: "sweep" }, { candles: REIN + 2 }, { show: "imp" }, { candles: peakAt }, { show: "peak" }],
         zones: [
           { key: "asia", y1: 1.171, y2: 1.1725, from: 0, to: ASIA_END, label: "Range Asia", short: "Range Asia", tone: "sky" },
         ],

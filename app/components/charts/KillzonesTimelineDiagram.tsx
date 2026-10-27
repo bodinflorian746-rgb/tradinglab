@@ -22,6 +22,8 @@ export function KillzonesTimelineDiagram(_props: { className?: string; locale?: 
       caption="Le range d'Asie est étroit ; les mouvements significatifs arrivent le plus souvent à l'ouverture de Londres puis de New York."
       panels={[{
         key: "m15", title: "EUR/USD M15", decimals: 5, height: 280, candles: cs,
+        // Animation, session par session : Asia et son range, Londres (sweep du bas Asia), puis New York
+        anim: [{ candles: ASIA_END }, { show: ["asia", "asialow"] }, { candles: LONDON_START }, { show: "london" }, { candles: NY_START }, { show: "ny" }, { candles: peakAt }, { show: "peak" }],
         zones: [
           { key: "asia", y1: ASIA_LOW, y2: ASIA_HIGH, from: 0, to: ASIA_END, label: "Range Asia", short: "Asia", tone: "sky" },
         ],

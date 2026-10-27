@@ -23,6 +23,9 @@ export function NYOpenExpansionDiagram(_props: { className?: string; locale?: "f
       caption="NY Open = superposition London + flux US. Amplitude souvent supérieure à la veille entière."
       panels={[{
         key: "m15", title: "XAU/USD M15", decimals: 0, height: 280, candles: cs,
+        // Animation : la consolidation calme, la bougie explosive de l'ouverture de New York (mèche de
+        // sweep), puis la cascade
+        anim: [{ candles: CALM_END }, { show: "cons" }, { candles: EXP }, { show: "exp" }, { candles: peakAt }, { show: "peak" }, { candles: lowAt }, { show: "low" }],
         zones: [
           { key: "cons", y1: calLow, y2: calHigh, from: 0, to: CALM_END, label: "Consolidation calme", short: "Calme", tone: "neutral" },
         ],

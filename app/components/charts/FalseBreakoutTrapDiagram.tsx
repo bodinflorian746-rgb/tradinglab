@@ -24,6 +24,8 @@ export function FalseBreakoutTrapDiagram(_props: { className?: string; locale?: 
       caption={`Les SL des acheteurs du breakout, sous ${usd(RES)}, sont déclenchés : réintégration sous le niveau cassé = piège. L'ICT trade ce qui se passe après.`}
       panels={[{
         key: "m15", title: "XAU/USD M15", decimals: 0, height: 280, candles: cs,
+        // Animation : les tests répétés de la résistance, la bougie de breakout, la réintégration, puis la chute
+        anim: [{ candles: brk - 1 }, { show: ["res", "tests"] }, { candles: brk }, { show: "brk" }, { candles: back }, { show: "back" }, { candles: lowAt }, { show: "low" }],
         levels: [{ key: "res", price: RES, label: `Résistance ${usd(RES)}`, short: "Résistance", tone: "zone", role: "resistance" }],
         markers: [
           { key: "tests", i: mid, price: RES, label: `${tests.length} tests`, tone: "zone", side: "above", dot: true },

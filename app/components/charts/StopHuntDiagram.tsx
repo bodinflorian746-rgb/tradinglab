@@ -23,6 +23,8 @@ export default function StopHuntDiagram(_props: { className?: string; locale?: "
       caption="Le trade se prend dans le sens opposé au breakout rejeté."
       panels={[{
         key: "h1", title: "EUR/USD H1", decimals: 5, height: 280, candles: cs,
+        // Animation : la résistance et les stops au-dessus, la mèche qui les chasse, puis la continuation
+        anim: [{ candles: k - 1 }, { show: ["res", "stops"] }, { candles: k }, { show: "k" }, { candles: end }, { show: "end" }],
         zones: [{ key: "stops", y1: RES, y2: xauToEur(4730), from: k - 4, label: `Stops ${px(RES)} → ${px(xauToEur(4730))}`, short: "Stops", tone: "bear" }],
         levels: [{ key: "res", price: RES, to: k, label: `Résistance ${px(RES)}`, short: "Résistance", tone: "zone", role: "resistance" }],
         markers: [

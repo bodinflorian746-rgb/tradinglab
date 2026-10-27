@@ -26,6 +26,9 @@ export function PostSweepReactionDiagram(_props: { className?: string; locale?: 
       caption="Le sweep seul ne déclenche rien : c'est la réaction qui autorise le short."
       panels={[{
         key: "m15", title: "EUR/USD M15", decimals: 5, height: 300, candles: cs,
+        // Animation : les equal highs, le sweep (clôture revenue dessous), puis l'impulsion qui casse le creux
+        // local : le signal ; le plan du trade ensuite
+        anim: [{ candles: local.index + 1 }, { show: "eqh" }, { candles: sweep }, { show: "sweep" }, { candles: imp }, { show: ["imp", "local"] }],
         levels: [
           { key: "eqh", price: EQH, to: sweep, label: `Equal highs ${p(EQH)}`, short: "Equal highs", tone: "zone" },
           { key: "local", price: local.price, from: local.index, to: imp, label: `Creux local ${p(local.price)} cassé`, short: "Creux local", tone: "neutral", dashed: true, role: "bos", ref: local.index, dir: "bear" },

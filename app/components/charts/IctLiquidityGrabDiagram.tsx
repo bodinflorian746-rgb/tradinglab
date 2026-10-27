@@ -39,6 +39,8 @@ export function IctLiquidityGrabDiagram({ variant = "prise" }: { variant?: "pris
         caption="Pas de mèche au-dessus de 1.1780 = pas de séquence. On n'anticipe pas la prise."
         panels={[{
           key: "h1", title: "EUR/USD H1, biais Daily baissier", decimals: 5, height: 280, candles: cs, ...common,
+          // Animation : les deux sommets égaux, le niveau, les stops au-dessus, puis le prix actuel
+          anim: [{ candles: tops[0].index + 1 }, { show: "t1" }, { candles: tops[1].index + 1 }, { show: ["t2", "eqh"] }, { show: "stops" }, { candles: now }, { show: "now" }],
           markers: [...markers, { key: "now", i: now, price: cs[now].c, label: `Prix actuel ${p(cs[now].c)}`, short: "Prix actuel", tone: "entry", side: "below" }],
           chips: [{ label: "Sans sweep, on patiente", tone: "zone" }],
         }]}
@@ -52,6 +54,8 @@ export function IctLiquidityGrabDiagram({ variant = "prise" }: { variant?: "pris
       caption="La liquidité a été prise : le mouvement réel commence après."
       panels={[{
         key: "h1", title: "EUR/USD H1", decimals: 5, height: 280, candles: cs, ...common,
+        // Animation : les equal highs, la liquidité au-dessus, la mèche du sweep, puis la chute
+        anim: [{ candles: tops[0].index + 1 }, { show: "t1" }, { candles: tops[1].index + 1 }, { show: ["t2", "eqh"] }, { show: "stops" }, { candles: sweep }, { show: "sweep" }, { candles: lowAt }, { show: "low" }],
         markers: [
           ...markers,
           { key: "sweep", i: sweep, price: all[sweep].h, label: `Sweep ${p(all[sweep].h)} : stops déclenchés`, short: `Sweep ${p(all[sweep].h)}`, tone: "bear", side: "above", role: "sweep", ref: EQH, dir: "bear" },
