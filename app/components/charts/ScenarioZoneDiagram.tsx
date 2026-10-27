@@ -30,6 +30,9 @@ export function ScenarioZoneDiagram(_props: { className?: string; locale?: "fr" 
       caption="Le ralentissement à l'approche est un signe d'intérêt, pas un signal d'entrée : on attend l'UT inférieure."
       panels={[{
         key: "h1", title: "EUR/USD H1, biais baissier", decimals: 5, height: 280, candles: cs,
+        // Animation : le support, sa cassure (le FVG laissé s'allume : la zone est tracée avant que le prix
+        // y revienne), puis la remontée qui ralentit
+        anim: [{ candles: fvg.i - 1 }, { show: "sup" }, { candles: fvg.i + 1 }, { show: ["brk", "fvg"] }, { candles: cs.length - 1 }, { show: "slow" }],
         levels: [{ key: "sup", price: fvg.y2, to: fvg.i, label: `Ancien support ${p(fvg.y2)}`, short: "Ancien support", tone: "neutral", dashed: true, role: "support" }],
         zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG bearish ${p(fvg.y1)}-${p(fvg.y2)}`, short: "FVG bearish", tone: "zone", kind: "fvg", src: `zone-prep-h1:${fvg.i}`, role: "fvg" }],
         markers: [

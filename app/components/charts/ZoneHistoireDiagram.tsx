@@ -23,6 +23,11 @@ export function ZoneHistoireDiagram(_props: { className?: string; locale?: "fr" 
       panels={[{
         key: "h1", subtitle: "EUR/USD H1 — ancien support devenu résistance + FVG non mitigé",
         decimals: 5, height: 280, candles: cs,
+        // Animation : la zone raconte son histoire — les touches du support, la cassure (le FVG laissé), le retour
+        anim: [
+          ...touches.flatMap((i, n) => [{ candles: i + 1 }, { show: n === touches.length - 1 ? [`t${n + 1}`, "support"] : `t${n + 1}` }]),
+          { candles: g.i + 1 }, { show: ["bo", "fvg"] }, { candles: last }, { show: "now" },
+        ],
         zones: [{ key: "fvg", y1: g.y1, y2: g.y2, from: g.i - 1, label: `FVG bearish ${p(g.y1)}-${p(g.y2)}`, short: "FVG bearish", tone: "bear", kind: "fvg", src: `zone-histoire:${g.i}`, role: "fvg" }],
         levels: [{ key: "support", price: g.y2, label: `Ancien support ${p(g.y2)}`, short: "Ancien support", tone: "bull", dashed: true, role: "support" }],
         markers: [

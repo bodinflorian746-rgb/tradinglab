@@ -19,6 +19,8 @@ export function RetourDesequilibreDiagram(_props: { className?: string; locale?:
       caption="Le retour dans le déséquilibre a précédé la continuation baissière : c'est une mitigation."
       panels={[{
         key: "h1", title: "XAU/USD H1", decimals: 0, height: 280, candles: cs,
+        // Animation : le départ, l'impulsion qui laisse le FVG, puis le retour dans la zone et le rejet
+        anim: [{ candles: fvg.i - 1 }, { show: "start" }, { candles: fvg.i + 1 }, { show: "fvg" }, { candles: touch }, { show: "touch" }],
         zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${usd(fvg.y1)}-${usd(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `retour-deseq-xau:${fvg.i}`, role: "fvg" }],
         markers: [
           { key: "start", i: fvg.i - 1, price: cs[fvg.i - 1].h, label: `Impulsion depuis ${usd(cs[fvg.i - 1].h)}`, short: "Départ", tone: "bear", side: "above", role: "high" },

@@ -25,6 +25,8 @@ export function DisplacementControlDiagram(_props: { className?: string; locale?
       caption="Le biais des heures suivantes est défini : on ne cherche plus de longs jusqu'à preuve du contraire."
       panels={[{
         key: "m15", title: "XAU/USD M15", decimals: 0, height: 290, candles: cs,
+        // Animation : 3 heures d'équilibre, le sweep, puis les bougies du displacement et leur étiquette
+        anim: [{ candles: CALM - 1 }, { show: "eq" }, { candles: sweep }, { show: "sweep" }, { candles: cs.length - 1 }, { show: "disp" }],
         zones: [{ key: "eq", y1: lo, y2: hi, from: 0, to: CALM - 1, label: `Équilibre 3 h (${usd(lo)}-${usd(hi)})`, short: "Équilibre 3 h", tone: "neutral" }],
         markers: [
           { key: "sweep", i: sweep, price: cs[sweep].h, label: `14h UTC : sweep ${usd(cs[sweep].h)}`, short: `Sweep ${usd(cs[sweep].h)}`, tone: "zone", side: "above", role: "sweep", ref: hi, dir: "bear" },

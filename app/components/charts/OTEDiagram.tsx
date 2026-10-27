@@ -28,6 +28,9 @@ export function OTEDiagram(_props: { className?: string; locale?: "fr" | "es" | 
       panels={[{
         key: "h1", subtitle: `EUR/USD H1 — Fibonacci de A (${px(A.price)}) à B (${px(B.price)})`,
         decimals: 5, height: 320, candles: cs,
+        // Animation : le sommet cassé, A, l'impulsion et le BOS jusqu'à B, le tracé Fibonacci, la zone OTE,
+        // puis le repli dans la zone et le rejet ; le plan ensuite
+        anim: [{ candles: A.index + 1 }, { show: "a" }, { candles: B.index + 1 }, { show: ["h0", "bos", "b"] }, { show: ["fib", "f618", "f786"] }, { show: "ote" }, { candles: last }, { show: "rej" }],
         zones: [{ key: "ote", y1: f786, y2: f618, from: B.index, label: `OTE ${px(f786)}-${px(f618)}`, short: "OTE", tone: "fib", kind: "fib", role: "confluence", ref: "f618,f786" }],
         levels: [
           { key: "h0", price: h0.price, from: h0.index, to: bos, label: `Sommet cassé ${px(h0.price)}`, short: "Sommet cassé", tone: "neutral", dashed: true, faint: true, role: "bos", ref: h0.index, dir: "bull" },

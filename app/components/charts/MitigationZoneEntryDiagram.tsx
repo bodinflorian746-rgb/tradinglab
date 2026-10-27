@@ -32,6 +32,8 @@ function ExHLVariant() {
       panels={[{
         key: "h1", subtitle: `EUR/USD H1 — ex-HL ${p(hl.price)} retesté par en dessous`,
         decimals: 5, height: 300, candles: cs,
+        // Animation : la structure (HL, HH), le CHoCH sous le HL, la zone de mitigation, puis le retour et le rejet
+        anim: [{ candles: hl.index + 1 }, { show: "hl" }, { candles: hh.index + 1 }, { show: "hh" }, { candles: choch }, { show: "choch" }, { show: "mitig" }, { candles: retest }, { show: "rej" }],
         zones: [{ key: "mitig", ...zone, from: hl.index, label: "Zone de mitigation", short: "Mitigation", tone: "zone", kind: "zone" }],
         levels: [
           { key: "choch", price: hl.price, from: hl.index, to: choch, label: `CHoCH : clôture sous ${p(hl.price)}`, short: "CHoCH", tone: "bear", dashed: true, faint: true, role: "choch", ref: hl.index, dir: "bear" },
@@ -70,6 +72,8 @@ function FvgVariant() {
       panels={[{
         key: "h4", subtitle: "EUR/USD H4 — plan chiffré du bloc suivant",
         decimals: 5, height: 320, candles: cs,
+        // Animation : les equal highs, le sweep, le displacement et le CHoCH, le FVG, puis le retour et le rejet
+        anim: [{ candles: sweep - 1 }, { show: "eqh" }, { candles: sweep }, { show: "sweep" }, { candles: Math.max(dEnd, choch) }, { show: ["disp", "choch"] }, { show: "fvg" }, { candles: retest }, { show: "rej" }],
         zones: [{ key: "fvg", y1: fvg.y1, y2: fvg.y2, from: fvg.i - 1, label: `FVG ${p(fvg.y1)}-${p(fvg.y2)}`, short: "FVG", tone: "bear", kind: "fvg", src: `smc5-exec:${fvg.i}`, role: "fvg" }],
         levels: [
           { key: "eqh", price: EQH, from: tops[0], to: sweep, label: `Equal highs ${p(EQH)} (BSL)`, short: "BSL", tone: "zone", dashed: true },

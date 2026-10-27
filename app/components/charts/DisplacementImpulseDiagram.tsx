@@ -27,6 +27,8 @@ export function DisplacementImpulseDiagram(_props: { className?: string; locale?
       caption={`${seq.length} bougies baissières aux corps de ${bodies.slice(0, -1).join(", ")} et ${bodies.at(-1)} pips, sans mèche haute : le marché ne reprend pas son souffle.`}
       panels={[{
         key: "m15", title: "EUR/USD M15", decimals: 5, height: 290, candles: cs,
+        // Animation : les equal highs, la mèche du sweep, les 3 bougies du displacement, puis les FVG laissés
+        anim: [{ candles: DISP.sweep - 1 }, { show: "eqh" }, { candles: DISP.sweep }, { show: "sweep" }, { candles: DISP.last }, { show: "disp" }, { show: ["fvg0", "fvg1"] }],
         levels: [{ key: "eqh", price: EQH, to: DISP.sweep, label: `Equal highs ${p(EQH)}`, short: "EQH", tone: "zone", dashed: true }],
         zones: fvgs.map((g, n) => ({ key: `fvg${n}`, y1: g.y1, y2: g.y2, from: g.i - 1, label: `FVG ${n + 1} : ${p(g.y1)}-${p(g.y2)}`, short: `FVG ${n + 1}`, tone: "bear" as const, kind: "fvg", src: `disp-eur:${g.i}`, role: "fvg" as const })),
         markers: [

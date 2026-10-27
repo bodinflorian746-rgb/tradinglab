@@ -33,6 +33,13 @@ export default function BOSCHoCHSequenceDiagram(_props: { className?: string; lo
       panels={[{
         key: "h4", subtitle: "EUR/USD H4 — de la tendance baissière (LH / LL) au retournement confirmé",
         decimals: 5, height: 360, candles,
+        // Animation, dans l'ordre numéroté du texte : la tendance baissière (LH / LL), 1 · CHoCH, 2 · HL,
+        // 3 · BOS, puis 4 · la zone d'entrée (ex-LH) et le rejet
+        anim: [
+          { candles: lastLH.index + 1 }, { show: [...structure.map((m) => m.key), "lh"] },
+          { candles: chochI }, { show: "choch" }, { candles: hl.index + 1 }, { show: ["hl", "hh"] },
+          { candles: bosI }, { show: "bos" }, { show: "exlh" }, { candles: mitig }, { show: "mitig" },
+        ],
         zones: [{ key: "exlh", ...zone, from: lastLH.index, label: `4 · Entrée : ex-LH ${p(lastLH.price)} devenu support`, short: "4 · Ex-LH", tone: "sky" }],
         levels: [
           { key: "lh", price: lastLH.price, from: lastLH.index, to: chochI, tone: "zone", dashed: true, role: "choch", ref: lastLH.index, dir: "bull" },

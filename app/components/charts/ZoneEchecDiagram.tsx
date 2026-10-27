@@ -26,6 +26,11 @@ export function ZoneEchecDiagram(_props: { className?: string; locale?: "fr" | "
       caption="L'absence de réaction est elle-même un signal : pas d'entrée, on attend la zone suivante."
       panels={[{
         key: "m5", title: "XAU/USD M5", decimals: 0, height: 260, candles: cs,
+        // Animation : les rebonds sur le support, puis le passage sans rejet qui le casse, et la continuation
+        anim: [
+          ...bounces.flatMap((i, n) => [{ candles: i + 1 }, { show: n === 0 ? ["sup", "b1"] : `b${n + 1}` }]),
+          { candles: inZone[1] }, { show: "cross" }, { candles: last }, { show: "end" },
+        ],
         zones: [{ key: "sup", ...Z, label: `Support H1 ${usd(4545)}`, short: "Support H1", tone: "zone" }],
         markers: [
           ...bounces.map((i, n) => ({ key: `b${n + 1}`, i, price: cs[i].l, label: `Rebond ${n + 1}`, tone: "bull" as const, side: "below" as const, role: "low" as const })),

@@ -25,6 +25,9 @@ export function LTFExecutionDiagram(_props: { className?: string; locale?: "fr" 
       caption="L'UT inférieure donne le timing, jamais le contexte : on exécute dans le sens préparé au-dessus."
       panels={[{
         key: "m5", title: "EUR/USD M5, dans la zone H1", decimals: 5, height: 280, candles: cs,
+        // Animation : la zone H1 d'abord, le sweep dans la zone, le dernier creux, la bougie qui le casse
+        // (CHoCH, entrée), puis le SL
+        anim: [{ show: "zone" }, { candles: sweep }, { show: "sweep" }, { candles: choch - 1 }, { show: "low" }, { candles: choch }, { show: "choch" }, { show: "sl" }],
         zones: [{ key: "zone", ...Z, label: `Résistance H1 ${p(Z.y1)}-${p(Z.y2)}`, short: "Résistance H1", tone: "zone" }],
         levels: [
           { key: "low", price: lastLow, from: lowAt, to: choch, label: `Dernier creux ${p(lastLow)}`, short: "Dernier creux", tone: "neutral", dashed: true, role: "choch", ref: lowAt, dir: "bear" },

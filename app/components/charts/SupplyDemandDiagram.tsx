@@ -24,6 +24,8 @@ function panel(key: "sd-support" | "sd-resistance"): LCPanel {
     key, title: sup ? "Support (achat)" : "Résistance (vente)",
     subtitle: sup ? "Descente lente, base, départ impulsif haussier" : "Montée lente, base, départ impulsif baissier",
     decimals: 5, height: 250, candles: cs,
+    // Animation : l'arrivée lente, la base, le départ impulsif, la zone qui s'allume, puis le retour et le rejet
+    anim: [{ candles: imp - 4 }, { candles: imp - 1 }, { candles: imp + 1 }, { show: "imp" }, { show: "zone" }, { candles: rt }, { show: "retest" }],
     zones: [{ key: "zone", ...zone, from: imp - 3, label: sup ? "Support" : "Résistance", tone: sup ? "bull" : "bear", kind: "zone" }],
     markers: [
       { key: "imp", i: imp, price: sup ? cs[imp].h : cs[imp].l, label: "Départ impulsif (2 bougies)", short: "Départ", tone: sup ? "bull" : "bear", side: sup ? "above" : "below", role: "impulse", span: [imp, imp + 1] },
