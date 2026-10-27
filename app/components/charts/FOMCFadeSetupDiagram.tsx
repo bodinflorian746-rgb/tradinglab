@@ -23,6 +23,8 @@ export function FOMCFadeSetupDiagram(_props: { className?: string; locale?: "fr"
       caption="Entrée après stabilisation, SL juste au-delà de l'extrémité, objectif : un retour partiel vers le niveau d'avant la news (4 638 $, sous les 4 660 $ de départ)."
       panels={[{
         key: "m15", title: "XAU/USD M15, après le FOMC", decimals: 0, height: 290, candles: cs,
+        // Animation : la chute du FOMC, la stabilisation, le retour progressif, puis l'entrée et le plan
+        anim: [{ candles: FOMC_IMPULSE }, { show: "low" }, { candles: entryAt - 1 }, { show: "stab" }, { candles: entryAt }],
         zones: [{ key: "stab", ...stabZone, from: FOMC_IMPULSE + 1, to: entryAt - 1, label: `Stabilisation ${usd(stabZone.y1)}-${usd(stabZone.y2)}`, short: "Stabilisation", tone: "zone" }],
         levels: t.levels,
         markers: [{ key: "low", i: FOMC_IMPULSE, price: cs[FOMC_IMPULSE].l, label: `Extrémité ${usd(cs[FOMC_IMPULSE].l)}`, short: "Extrémité", tone: "bear", side: "below", role: "low" }],

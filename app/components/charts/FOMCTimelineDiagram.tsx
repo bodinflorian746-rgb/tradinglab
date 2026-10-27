@@ -27,6 +27,9 @@ export function FOMCTimelineDiagram(_props: { locale?: "fr" | "es" | "en" } = {}
       caption="Tu n'entres pas entre 20h00 et 21h00 : tu attends une clôture M5 ou M15 confirmée après 21h00."
       panels={[{
         key: "m5", title: "EUR/USD M5, de 19h45 à 21h40 (heure de Paris)", decimals: 5, height: 300, candles: cs,
+        // Animation, heure par heure : avant 20h00, la décision (impulsion), le discours de Powell, le
+        // retournement, puis 21h00 et la direction réelle
+        anim: [{ candles: decision - 1 }, { candles: decision }, { show: ["fed", "chaos"] }, { candles: powell }, { show: "powell" }, { candles: real }, { show: ["real", "reel"] }],
         zones: [
           { key: "chaos", ...band, from: decision, to: real - 1, tone: "bear", kind: "fenetre", label: "20h00-21h00 : zone instable", short: "Zone instable" },
           { key: "reel", ...band, from: real, to: cs.length - 1, tone: "bull", kind: "fenetre", label: "21h00+ : direction réelle", short: "Direction réelle" },

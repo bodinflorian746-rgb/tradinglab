@@ -22,6 +22,9 @@ export function MacroFilterCalendarDiagram(_props: { className?: string; locale?
       caption="On attend que la publication soit digérée (30 à 60 minutes) avant de réévaluer."
       panels={[{
         key: "m5", title: "XAU/USD M5, de 12h55 à 13h55 UTC", decimals: 0, height: 260, candles: cs,
+        // Animation : la résistance, le setup short « parfait » de 13h25 et son SL, puis la bougie du CPI qui
+        // l'efface
+        anim: [{ candles: SETUP - 1 }, { show: "res" }, { candles: SETUP }, { show: ["setup", "sl"] }, { candles: CPI }, { show: "cpi" }],
         levels: [
           { key: "res", price: RES, to: CPI, label: `Résistance ${usd(RES)}`, short: "Résistance", tone: "zone" },
           { key: "sl", price: SL, from: SETUP, label: `SL du short ${usd(SL)}`, short: "SL du short", tone: "bear", dashed: true },

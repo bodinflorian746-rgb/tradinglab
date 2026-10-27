@@ -22,6 +22,8 @@ export function FOMCImpulseExcessDiagram(_props: { className?: string; locale?: 
       caption="Trader l'impulsion, c'est trader le bruit. Le vrai mouvement arrive après."
       panels={[{
         key: "m15", title: "XAU/USD M15", decimals: 0, height: 280, candles: cs,
+        // Animation : le calme avant (niveau d'avant FOMC), l'impulsion excessive, puis le retracement
+        anim: [{ candles: FOMC_IMPULSE - 1 }, { show: "pre" }, { candles: FOMC_IMPULSE }, { show: "fomc" }, { candles: topAt }, { show: "back" }],
         levels: [{ key: "pre", price: pre, label: `Avant FOMC ${usd(pre)}`, short: "Avant FOMC", tone: "neutral", dashed: true }],
         markers: [
           { key: "fomc", i: FOMC_IMPULSE, price: low, label: `FOMC : ${usd(low)}`, short: "FOMC", tone: "bear", side: "below", role: "low" },
