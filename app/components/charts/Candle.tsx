@@ -43,6 +43,8 @@ export function Candle({ type = "bullish", label, caption }: { type?: CandleType
       title={label}
       panels={[{
         key: type, decimals: 2, height: 220, candleWidth: 16, candles: cs, slots: cs.length + 1,
+        // Animation : le niveau après ses deux touches, puis les deux bougies d'approche et le signal au contact
+        anim: [{ candles: 7 }, { show: "lvl" }, { candles: cs.length - 1 }, { show: "sig" }],
         levels: [{ key: "lvl", price: s.level, label: s.side === "support" ? "Support" : "Résistance", tone: s.side === "support" ? "bull" : "bear", dashed: true }],
         markers: [{ key: "sig", i: cs.length - 1, price: s.side === "support" ? sig.h : sig.l, label: "Signal", tone: "entry", side: s.side === "support" ? "above" : "below", ...(type.startsWith("pin") ? { role: "pinbar" as const, dir: s.side === "support" ? "bull" as const : "bear" as const } : {}) }],
       }]}

@@ -22,6 +22,8 @@ export default function RSIDivergenceDiagram(_props: { className?: string; local
       caption="Divergence baissière : la tendance continue visuellement mais perd de la force. Ce n'est pas encore un retournement."
       panels={[{
         key: "h1", title: "EUR/USD H1", decimals: 5, height: 300, candles: cs,
+        // Animation : le 1er sommet, le creux, le nouveau sommet (HH), puis le RSI qui ne suit pas
+        anim: [{ candles: t1.index }, { show: "t1" }, { candles: low.index }, { show: "low" }, { candles: t2.index }, { show: "t2" }, { show: ["div", "rsi"] }],
         segments: [{ key: "div", i1: t1.index, p1: t1.price, i2: t2.index, p2: t2.price, tone: "bear", dashed: true }],
         markers: [
           { key: "t1", i: t1.index, price: t1.price, label: `Sommet ${px(t1.price)}`, short: "Sommet", tone: "neutral", side: "above", role: "swing-high" },

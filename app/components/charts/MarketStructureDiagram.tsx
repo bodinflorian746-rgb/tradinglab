@@ -14,6 +14,8 @@ function panel(trend: "bullish" | "bearish"): LCPanel {
     key: trend, title: trend === "bullish" ? "Tendance haussière ↗" : "Tendance baissière ↘",
     subtitle: trend === "bullish" ? "Chaque sommet et chaque creux plus haut que le précédent" : "Chaque sommet et chaque creux plus bas que le précédent",
     decimals: 5, height: 240, candles: cs,
+    // Animation : chaque swing à son tour (bougie suivante comprise), relié au précédent et nommé par comparaison
+    anim: piv.flatMap((q, k) => [{ candles: q.index + 1 }, { show: k ? [`p${q.index}`, `s${k - 1}`] : `p${q.index}` }]),
     segments: piv.slice(1).map((q, k) => ({ key: `s${k}`, i1: piv[k].index, p1: piv[k].price, i2: q.index, p2: q.price, tone: trend === "bullish" ? "bull" as const : "bear" as const, dashed: true })),
     markers: piv.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: q.name!, pivot: q.name, tone: q.side === "h" ? "neutral" as const : "sky" as const, side: q.side === "h" ? "above" as const : "below" as const })),
   };

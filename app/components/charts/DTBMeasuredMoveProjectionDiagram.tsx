@@ -30,6 +30,8 @@ export default function DTBMeasuredMoveProjectionDiagram(_props: { className?: s
       caption="Hauteur mesurée depuis le sommet le plus haut. TP prudent placé juste avant la projection théorique."
       panels={[{
         key: "h1", title: "EUR/USD H1", decimals: 5, height: 300, candles: cs, slots: end + 1,
+        // Animation : les deux sommets et la ligne de cou, la clôture dessous, la hauteur mesurée, sa projection, puis le plan
+        anim: [{ candles: brk - 1 }, { show: "neck" }, { candles: brk }, { show: ["h", "hgt"] }, { show: ["m", "proj"] }, { show: ["bounce", "entry", "sl", "tp"] }],
         levels: [
           { key: "neck", price: neck.price, from: a.index, label: `Ligne de cou ${p(neck.price)}`, short: "Ligne de cou", tone: "zone" },
           { key: "proj", price: proj, from: brk, label: `Projection théorique ${p(proj)}`, short: "Projection", tone: "fib", dashed: true },

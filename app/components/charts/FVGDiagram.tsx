@@ -16,6 +16,8 @@ function panel(key: "fvg-bull" | "fvg-bear", side: "bull" | "bear", title: strin
   const back = cs.findIndex((k, i) => i > g.i + 2 && (up ? k.l <= g.y2 : k.h >= g.y1));
   return {
     key, title, decimals: 5, height: 220, candles: cs,
+    // Animation : B1, B2 (impulsion), B3, puis le gap entre B1 et B3, puis le retour dans le gap
+    anim: [{ candles: g.i - 1 }, { show: "b1" }, { candles: g.i }, { show: "b2" }, { candles: g.i + 1 }, { show: "b3" }, { show: "fvg" }, { candles: back }, { show: "back" }],
     zones: [{ key: "fvg", y1: g.y1, y2: g.y2, from: g.i - 1, label: `FVG ${p(g.y1)}-${p(g.y2)}`, short: "FVG", tone: up ? "bull" : "bear", kind: "fvg", src: `${key}:${g.i}`, role: "fvg" }],
     markers: [
       { key: "b1", i: g.i - 1, price: up ? cs[g.i - 1].l : cs[g.i - 1].h, label: "B1", tone: "neutral", side: up ? "below" : "above" },

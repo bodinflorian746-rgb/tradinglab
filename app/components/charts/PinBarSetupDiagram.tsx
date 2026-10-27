@@ -25,6 +25,8 @@ export default function PinBarSetupDiagram(_props: { locale?: "fr" | "es" | "en"
       panels={[{
         key: "h4", subtitle: "EUR/USD H4 — tendance haussière, support touché 3 fois en 6 semaines",
         decimals: 5, height: 320, candles,
+        // Animation : le support et ses touches, la pin bar au contact, puis le plan
+        anim: [{ candles: pin - 1 }, { show: "support" }, { candles: pin }, { show: "pin" }, { show: ["entry", "sl", "tp"] }],
         levels: [{ key: "support", price: SUPPORT, label: `Support ${p(SUPPORT)}`, short: "Support", tone: "bull", dashed: true, faint: true, role: "support" }, ...t.levels],
         markers: [{ key: "pin", i: pin, price: k.l, label: "Pin bar", tone: "bull", side: "below", role: "pinbar", dir: "bull" }],
         chips: t.chips,

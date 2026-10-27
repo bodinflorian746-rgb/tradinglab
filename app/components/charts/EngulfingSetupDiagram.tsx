@@ -26,6 +26,8 @@ export default function EngulfingSetupDiagram(_props: { locale?: "fr" | "es" | "
       panels={[{
         key: "h4", subtitle: `EUR/USD H4 — rebond ${fmtPrice(A, 4)} → ${fmtPrice(B, 4)}, correction dans la zone 0.5 / 0.618`,
         decimals: 5, height: 320, candles,
+        // Animation : le rebond (100 % puis 0 %), la zone 0.5-0.618, la correction jusqu'à l'engulfing, puis le plan
+        anim: [{ candles: lowI }, { show: "f100" }, { candles: highI }, { show: "f0" }, { show: "fib" }, { candles: n - 1 }, { show: "eng" }, { show: ["entry", "sl", "tp"] }],
         zones: [{ key: "fib", y1: f618, y2: f50, from: highI, label: "Fibonacci 0.5-0.618", short: "Fibo 0.5-0.618", tone: "fib", kind: "fib" }],
         levels: t.levels,
         markers: [

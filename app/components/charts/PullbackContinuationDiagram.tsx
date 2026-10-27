@@ -27,6 +27,8 @@ export default function PullbackContinuationDiagram(_props: { className?: string
       caption="Ancrage en bas, retracement dans l'OTE, trace institutionnelle à l'entrée, déséquilibre à combler en cible."
       panels={[{
         key: "h4", title: "EUR/USD H4", decimals: 5, height: 300, candles: cs,
+        // Animation : le support de l'UT supérieure, l'impulsion (100 % puis 0 %) et son OB, l'OTE, la chute et son FVG, puis le rejet sur l'OB
+        anim: [{ show: "htf" }, { candles: loAt }, { show: "f100" }, { candles: hiAt }, { show: ["f0", "ob"] }, { show: "ote" }, { candles: fvg.i + 1 }, { show: "fvg" }, { candles: rej }, { show: "rej" }],
         zones: [
           { key: "htf", y1: xauToEur(4470), y2: xauToEur(4485), label: "Support UT supérieure", short: "Support", tone: "bull" },
           { key: "ote", ...ote, from: hiAt, label: `OTE ${px(ote.y1)}-${px(ote.y2)}`, short: "OTE", tone: "fib" },

@@ -35,6 +35,8 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
         caption="SL sous le 0.786 avec marge ; TP 1 sur le HH précédent, TP 2 sur l'extension 1.618 du repli."
         panels={[{
           key: "h4", title: "EUR/USD H4", decimals: 5, height: 300, candles: cs,
+          // Animation : le HL, le HH, les niveaux 0.618 / 0.786, le repli jusqu'à la pin bar, puis le plan
+          anim: [{ candles: loAt }, { show: "f100" }, { candles: hiAt }, { show: "f0" }, { show: ["f618", "f786"] }, { candles: pin }, { show: "pin" }, { show: ["entry", "sl", "tp", "tp1"] }],
           levels: [
             { key: "f618", price: f618, from: hiAt, label: `Fibo 0.618 = ${px(f618)}`, short: "Fibo 0.618", tone: "fib", dashed: true, role: "fib", ref: `${loAt}:${hiAt}:0.618` },
             { key: "f786", price: f786, from: hiAt, label: `Fibo 0.786 = ${px(f786)}`, short: "Fibo 0.786", tone: "fib", dashed: true, role: "fib", ref: `${loAt}:${hiAt}:0.786` },
@@ -70,6 +72,8 @@ export function FibonacciDiagram({ variant = "int9" }: { variant?: "int9" | "tf3
       caption="Fibonacci identifie la zone d'attention, pas l'entrée automatique : on attend un signal de bougie."
       panels={[{
         key: "h1", title: `EUR/USD, swing ${p(lo)} → ${p(hi)}`, decimals: 5, height: 300, candles: cs,
+        // Animation : le swing jusqu'au sommet, l'ancienne résistance, les niveaux, puis le retracement qui s'arrête sur 61.8 %
+        anim: [{ candles: hiAt + 1 }, { show: "sup" }, { show: RATIOS.map((r) => `f${r}`) }, { candles: stop }, { show: "stop" }],
         zones: [{ key: "sup", ...SUPPORT, from: supFrom, label: `Ancienne résistance → support ${p(SUPPORT.y1)}-${p(SUPPORT.y2)}`, short: "Ex-résistance", tone: "bull", role: "support" }],
         // niveaux prolongés vers la droite depuis le swing high (le 100 % depuis le swing low)
         levels: RATIOS.map((r) => ({ key: `f${r}`, price: Number(fibLevel(lo, hi, r).toFixed(5)), from: r === 1 ? loAt : hiAt, label: `Fibo ${pct(r)} = ${p(fibLevel(lo, hi, r))}`, short: `Fibo ${pct(r)}`, tone: r === 0.618 ? "fib" as const : "neutral" as const, dashed: r !== 0.618, role: "fib" as const, ref: `${loAt}:${hiAt}:${r}` })),

@@ -22,6 +22,8 @@ export default function TrendIdentificationStepsDiagram(_props: { className?: st
       panels={[{
         key: "h4", subtitle: "EUR/USD H4",
         decimals: 5, height: 300, candles: cs,
+        // Animation : les pivots un par un (étapes 1 et 2), puis l'amplitude du 1er HL au dernier HH (étape 3)
+        anim: [...named.flatMap((q) => [{ candles: q.index }, { show: `p${q.index}` }]), { show: ["hl1", "amp"] }],
         segments: [{ key: "amp", i1: hhs[hhs.length - 1].index, p1: hls[0].price, i2: hhs[hhs.length - 1].index, p2: hhs[hhs.length - 1].price, tone: "fib", arrow: true }],
         levels: [{ key: "hl1", price: hls[0].price, from: hls[0].index, to: hhs[hhs.length - 1].index, label: `HL ${p(hls[0].price)}`, short: "1er HL", tone: "fib", dashed: true, faint: true }],
         markers: named.map((q) => ({ key: `p${q.index}`, i: q.index, price: q.price, label: `${q.name} ${p(q.price)}`, short: q.name, pivot: q.name, tone: q.side === "h" ? "neutral" as const : "sky" as const, side: q.side === "h" ? "above" as const : "below" as const })),

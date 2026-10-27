@@ -24,6 +24,8 @@ export default function TrendlineMADiagram(_props: { className?: string; locale?
       panels={[{
         key: "h4", subtitle: "EUR/USD H4 — trendline sur 3 HL, MM20 et MM50",
         decimals: 5, height: 300, candles: cs,
+        // Animation : les 3 HL un par un, la trendline qui les relie, puis les moyennes mobiles
+        anim: [...hls.flatMap((q) => [{ candles: q.index }, { show: `hl${q.index}` }]), { candles: last }, { show: "trend" }, { show: ["mm50", "mm20"] }],
         series: [
           { key: "mm50", values: m50, tone: "zone", label: "MM50" },
           { key: "mm20", values: m20, tone: "sky", label: "MM20" },
