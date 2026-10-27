@@ -959,6 +959,8 @@ function ZoneLegendChip({ zone }: { zone: { kind: string; label: string } }) {
   const color =
     zone.kind === "support"    ? "#10b981"
   : zone.kind === "resistance" ? "#ef4444"
+  // niveaux du profil de volume : couleur de leur tracé (GameChartV2) ; le POC en ambre
+  : zone.kind === "volume"     ? (zone.label === "POC" ? "#f59e0b" : "#38bdf8")
   :                              "#f59e0b";
   return (
     <div className="flex items-center gap-1.5" data-legend={zone.label}>
