@@ -9,6 +9,7 @@ import { EUR_FROM_XAU_KEYS, xauToEur } from "./eur-from-xau";
 import { RETRACE_DECISION } from "./scenarios-meta";
 import { mulberry32 } from "@/lib/games/shared";
 import { VOLUME_SCENARIOS } from "./scenarios-volume";
+import { STRAT_VOLUME_SCENARIOS } from "./scenarios-strat-volume";
 
 const c = (...closes: number[]): Step[] => closes.map((x) => ({ c: x }));
 
@@ -1411,6 +1412,9 @@ Object.assign(SCENARIOS, { "hs-retest": hsRetest });
 
 // Trading Avancé 10 à 12 : Volume Profile, VWAP, Order Flow (bougies avec volumes)
 Object.assign(SCENARIOS, VOLUME_SCENARIOS);
+
+// Stratégie Volume Profile + VWAP (4 leçons) : un trade EUR/USD suivi de leçon en leçon
+Object.assign(SCENARIOS, STRAT_VOLUME_SCENARIOS);
 
 // Décision PO 9 : exemples de 7 stratégies passés de XAU/USD à EUR/USD (lib/lessons/eur-from-xau.ts).
 for (const key of EUR_FROM_XAU_KEYS) {
