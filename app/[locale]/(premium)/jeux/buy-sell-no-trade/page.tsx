@@ -480,7 +480,7 @@ export default function BuySellNoTradePage() {
             {/* Graphique : passé, puis futur révélé bougie par bougie, puis verdict */}
             {/* Chaque zone est nommée sur le graphique (étiquette posée sur la zone) */}
             <GameChartV2
-              data={{ candles: [...chart.past, ...chart.future], zones, domain: chart.domain }}
+              data={{ candles: [...chart.past, ...chart.future], zones, domain: chart.domain, study: chart.study }}
               inlineLabels
               overlay={{
                 separatorIndex:     chart.past.length,

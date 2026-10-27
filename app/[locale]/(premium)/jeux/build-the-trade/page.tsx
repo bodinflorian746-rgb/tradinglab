@@ -540,7 +540,7 @@ export default function BuildTheTradePage() {
             <p className="v2-lead text-[color:var(--v2-text)]">{current.context}</p>
 
             <GameChartV2
-              data={{ candles: [...chart.past, ...chart.future.slice(0, revealCount)], zones: chart.zones, domain: chart.domain }}
+              data={{ candles: [...chart.past, ...chart.future.slice(0, revealCount)], zones: chart.zones, domain: chart.domain, study: chart.study }}
               overlay={{
                 separatorIndex:     chart.past.length,
                 visibleFutureCount: isBuild ? 0 : revealed,

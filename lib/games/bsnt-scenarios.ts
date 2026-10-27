@@ -12,11 +12,12 @@ import {
   body, range, upperWick, lowerWick, isHammer, isShootingStar, isDoji, isBullEngulfing, isBearEngulfing,
   type Rng,
 } from "./scenes";
+import { studyProfile, type GameStudy, type StudySpec } from "./volume-study";
 
 type Difficulty = "beginner" | "intermediate" | "advanced";
 type GameChoice = "BUY" | "SELL" | "NO_TRADE";
-export interface Raw { past: Candle[]; future: Candle[]; zones: ChartZone[] }
-interface ChartLike { past: Candle[]; future: Candle[]; zones: ChartZone[] }
+export interface Raw { past: Candle[]; future: Candle[]; zones: ChartZone[]; studySpec?: StudySpec; guards?: number[] }
+interface ChartLike { past: Candle[]; future: Candle[]; zones: ChartZone[]; study?: GameStudy }
 type Claim = (ch: ChartLike) => string | null;
 
 export interface NewScenario {
@@ -45,7 +46,13 @@ const AXIS = 10;
 /** Variante de sens : même graphique, renversé */
 const mirrored = (b: NewScenario["build"]): NewScenario["build"] => (rng, m, d) => {
   const r = b(rng, m, d);
-  return { past: mirrorCandles(r.past, AXIS), future: mirrorCandles(r.future, AXIS), zones: mirrorZones(r.zones, AXIS) };
+  const t = r.studySpec?.vwap?.target;
+  return {
+    past: mirrorCandles(r.past, AXIS), future: mirrorCandles(r.future, AXIS), zones: mirrorZones(r.zones, AXIS),
+    // volumes : mêmes bougies renversées ; la cible du VWAP se renverse avec les prix
+    ...(r.guards ? { guards: r.guards.map((g) => AXIS - g) } : {}),
+    ...(r.studySpec ? { studySpec: { ...r.studySpec, ...(r.studySpec.vwap ? { vwap: { ...r.studySpec.vwap, ...(t ? { target: { ...t, price: AXIS - t.price } } : {}) } } : {}) } } : {}),
+  };
 };
 const one = (text: string) => ({ beginner: text, intermediate: text, advanced: text });
 const last = <T,>(a: T[]) => a[a.length - 1];
@@ -980,4 +987,224 @@ export const BSNT_ADVANCED: NewScenario[] = [
   },
 ];
 
-export const BSNT_NEW: NewScenario[] = [...BSNT_BEGINNER, ...BSNT_INTERMEDIATE, ...BSNT_ADVANCED];
+// ─── Volume Profile et VWAP (Avancé 10 et 11, sens haussier) ─────────────────
+// Volumes, profil (POC, VAH, VAL) et VWAP calculés sur le graphique final (lib/games/volume-study.ts).
+
+/** Range de valeur (phase d'échanges), approche du haut, clôture franche au-dessus du range (donc de la
+ *  VAH), puis retest tenu au-dessus (acceptation) ou retour au milieu de la zone de valeur (rejet) */
+function valueAreaExit(outcome: "acceptation" | "rejet"): NewScenario["build"] {
+  return (rng, m) => {
+    const pre = legTo(rng, m, -2.4 * m, -0.4 * m, { retrace: 0.2 });
+    const past = [...pre.candles];
+    let p = pre.p;
+    const from = past.length;
+    for (const t of [0.55, -0.5, 0.4, -0.75, 0.6, -0.35, 0.7, -0.45, 0.1]) {
+      const l = legTo(rng, m, p, (t + (rng() - 0.5) * 0.24) * m, { retrace: 0.3 });
+      past.push(...l.candles); p = l.p;
+    }
+    const to = past.length - 1;
+    const rg = past.slice(from);
+    const top = Math.max(...rg.map((k) => k.h)), bot = Math.min(...rg.map((k) => k.l));
+    // (approche sous le haut du range, sans le toucher : aucun sommet aligné sur lui)
+    const a = legTo(rng, m, p, top - (0.32 + rng() * 0.06) * m, { retrace: 0 }); past.push(...a.candles); p = a.p;
+    const c1 = top + (0.5 + rng() * 0.1) * m;
+    past.push({ o: p, c: c1, h: c1 + (0.05 + rng() * 0.05) * m, l: p - (0.03 + rng() * 0.03) * m }); p = c1;
+    let future: Candle[];
+    if (outcome === "acceptation") {
+      const c2 = c1 + (0.15 + rng() * 0.1) * m;
+      past.push({ o: p, c: c2, h: c2 + (0.04 + rng() * 0.04) * m, l: top + (0.03 + rng() * 0.05) * m });
+      future = rally(rng, m, c2, 5).candles;
+    } else {
+      // retour vers le cœur de la zone de valeur : la clôture médiane du range (là où il a le plus échangé)
+      const c2 = [...rg.map((k) => k.c)].sort((x, y) => x - y)[rg.length >> 1] + (rng() - 0.5) * 0.06 * m;
+      past.push({ o: p, c: c2, h: p + (0.04 + rng() * 0.04) * m, l: c2 - (0.04 + rng() * 0.05) * m });
+      const ch = chop(rng, m, c2, 2, -0.06);
+      future = [...ch.candles, ...drop(rng, m, ch.p, 2).candles];
+    }
+    // (garde-fous : les mèches du range ne dépassent pas ses bornes)
+    return { past, future, zones: [], guards: [top + 0.12 * m, bot - 0.12 * m], studySpec: { heavy: [[from, to, 1.5]], profile: { from, to, show: ["vah", "poc", "val"] } } };
+  };
+}
+
+/** Séance : base, résistance touchée deux fois, cassure, sommet, retour sur l'ancienne résistance où
+ *  passe le VWAP de séance ; le retour tient (rejet dans la zone, reprise) ou casse (clôture franche
+ *  sous la zone et sous le VWAP) */
+function vwapRetest(outcome: "tient" | "casse"): NewScenario["build"] {
+  return (rng, m) => {
+    const R = (1.6 + rng() * 0.2) * m, z = { lo: R - 0.13 * m, hi: R + 0.13 * m };
+    const base = chop(rng, m, 0, 2, 0.02);
+    const r = provenResistance(rng, m, z.lo, z.hi, base.p);
+    const past = [...base.candles, ...r.candles];
+    let p = r.p;
+    const b0 = past.length;
+    const brk = legTo(rng, m, p, z.hi + (1.6 + rng() * 0.3) * m, { retrace: 0.2 }); past.push(...brk.candles); p = brk.p;
+    const b1 = past.length - 1;
+    const back = legTo(rng, m, p, z.hi + (0.35 + rng() * 0.1) * m, { retrace: 0.2 }); past.push(...back.candles); p = back.p;
+    let at: number, future: Candle[];
+    if (outcome === "tient") {
+      const c = p + (0.06 + rng() * 0.05) * m;
+      past.push({ o: p, c, h: Math.max(p, c) + (0.03 + rng() * 0.03) * m, l: z.lo + (0.3 + rng() * 0.3) * (z.hi - z.lo) });
+      at = past.length - 1;
+      const c2 = c + (0.35 + rng() * 0.1) * m;
+      past.push({ o: c, c: c2, h: c2 + (0.04 + rng() * 0.04) * m, l: c - (0.03 + rng() * 0.03) * m });
+      future = rally(rng, m, c2, 5).candles;
+    } else {
+      at = past.length - 1;
+      const c = z.lo - (0.4 + rng() * 0.1) * m;
+      past.push({ o: p, c, h: p + (0.03 + rng() * 0.03) * m, l: c - (0.04 + rng() * 0.04) * m });
+      const ch = chop(rng, m, c, 2, -0.04);
+      future = [...ch.candles, ...drop(rng, m, ch.p, 2).candles];
+    }
+    return {
+      past, future, zones: [{ kind: "support", y1: z.lo, y2: z.hi, label: "Ancienne résistance → support", short: "Résistance → support" }],
+      studySpec: { heavy: [[b0, b1, 1.6]], vwap: { anchor: 0, target: { at, price: R } } },
+    };
+  };
+}
+
+/** Clôture hors de la Value Area (au-dessus de la VAH ; vente : sous la VAL), puis retest tenu ou retour dedans */
+const vaExitClaim = (outcome: "acceptation" | "rejet", s: 1 | -1): Claim => (ch) => {
+  const pr = studyProfile(ch);
+  if (!pr) return "pas de profil de volume";
+  if (pr.vaShare < 0.68 || pr.vaShare > 0.8) return `Value Area = ${(100 * pr.vaShare).toFixed(0)} % du volume`;
+  const edge = s > 0 ? pr.vah : pr.val, other = s > 0 ? pr.val : pr.vah;
+  const [a, b] = ch.past.slice(-2), t = 0.15 * mr(ch.past);
+  if (!(s * (a.c - edge) > t)) return `pas de clôture nette ${s > 0 ? "au-dessus de la VAH" : "sous la VAL"}`;
+  if (outcome === "acceptation") return s * (b.c - edge) > 0 && s * ((s > 0 ? b.l : b.h) - edge) >= -t ? null : "le retest ne tient pas hors de la Value Area";
+  // retour : clôture dans la Value Area, nettement en deçà du bord franchi (au moins 0,075 bougie médiane)
+  return s * (b.c - edge) < -t / 2 && s * (b.c - other) > 0 ? null : "pas de retour net dans la Value Area";
+};
+/** Retour sur l'ancienne résistance (support) où passe le VWAP ; puis reprise ou clôture sous les deux */
+const vwapClaim = (outcome: "tient" | "casse", s: 1 | -1): Claim => (ch) => {
+  const z = ch.zones.find((x) => x.kind === "support" || x.kind === "resistance"), w = ch.study?.vwap;
+  if (!z || !w) return "pas de zone ou pas de VWAP";
+  const n = ch.past.length, t = 0.35 * mr(ch.past), v = w[n - 2];
+  if (v === null || v === undefined || v < lo(z) - t || v > hi(z) + t) return `VWAP au retour (${v?.toFixed(3)}) loin de la zone`;
+  const k = ch.past[n - 1], vk = w[n - 1]!;
+  const near = s > 0 ? hi(z) : lo(z), far = s > 0 ? lo(z) : hi(z);
+  if (outcome === "tient") {
+    const r = ch.past[n - 2];
+    return s * ((s > 0 ? r.l : r.h) - near) <= t && s * (k.c - near) > 0 && s * (k.c - vk) > 0 ? null : "pas de rejet dans la zone puis de reprise au-delà de la zone et du VWAP";
+  }
+  return s * (k.c - far) < 0 && s * (k.c - vk) < 0 ? null : "pas de clôture au-delà de la zone et du VWAP";
+};
+
+const VOL_LESSON = "Sortie de la Value Area : regarde si le prix reste à l'extérieur ou s'il réintègre vite la zone de valeur. Une sortie acceptée peut lancer un trade ; une sortie rejetée n'en est pas un (leçon Avancé 10).";
+const VWAP_LESSON = "Le VWAP ne décide pas seul : dans une tendance, un retour sur un support qui coïncide avec le VWAP devient intéressant quand le prix réagit et repart. S'il clôture franchement de l'autre côté, la zone n'est plus défendue (leçon Avancé 11).";
+
+export const BSNT_VOLUME: NewScenario[] = [
+  {
+    ...ADV, id: "adv_va_acceptation", title: "Sortie de la Value Area acceptée", correctAnswer: "BUY", htfBias: "range", metric: "lecture",
+    notions: ["volume_profile", "breakout", "changement_role"],
+    conflict: "L'UT supérieure est en range et une clôture au-dessus de la VAH peut être un faux départ ; le retest qui tient au-dessus de la Value Area dit que le marché accepte ces prix.",
+    context: "Le prix a longtemps échangé dans un range : son profil de volume donne la Value Area (VAH, POC, VAL). Une bougie a clôturé franchement au-dessus de la VAH, et la suivante a testé ce départ sans revenir dans la Value Area.",
+    shortContext: "Clôture au-dessus de la VAH, retest tenu.",
+    rationales: {
+      BUY: "✓ Le prix sort de la Value Area et y reste : le retest tient au-dessus, la clôture est encore plus haut. Un BUY, stop sous le retest, se défend : le marché accepte des prix plus hauts, même si l'UT supérieure était en range.",
+      SELL: "✗ Vendre ici, c'est parier sur un retour dans la zone de valeur alors que le retest vient de tenir au-dessus.",
+      NO_TRADE: "≈ Attendre se comprend devant une sortie de range, mais le retest tenu au-dessus de la VAH est déjà la confirmation qu'on attend.",
+    },
+    lessons: one(VOL_LESSON), tags: ["volume profile", "value area"], build: valueAreaExit("acceptation"),
+    claims: { "clôture au-dessus de la VAH, retest tenu": vaExitClaim("acceptation", 1), "la suite monte": goesUp },
+  },
+  {
+    ...ADV, id: "adv_va_acceptation_vente", title: "Sortie de la Value Area acceptée (vers le bas)", correctAnswer: "SELL", htfBias: "range", metric: "lecture",
+    notions: ["volume_profile", "breakout", "changement_role"],
+    conflict: "L'UT supérieure est en range et une clôture sous la VAL peut être un faux départ ; le retest qui tient sous la Value Area dit que le marché accepte ces prix.",
+    context: "Le prix a longtemps échangé dans un range : son profil de volume donne la Value Area (VAH, POC, VAL). Une bougie a clôturé franchement sous la VAL, et la suivante a testé ce départ sans revenir dans la Value Area.",
+    shortContext: "Clôture sous la VAL, retest tenu.",
+    rationales: {
+      BUY: "✗ Acheter ici, c'est parier sur un retour dans la zone de valeur alors que le retest vient de tenir en dessous.",
+      SELL: "✓ Le prix sort de la Value Area et y reste : le retest tient en dessous, la clôture est encore plus bas. Un SELL, stop au-dessus du retest, se défend : le marché accepte des prix plus bas, même si l'UT supérieure était en range.",
+      NO_TRADE: "≈ Attendre se comprend devant une sortie de range, mais le retest tenu sous la VAL est déjà la confirmation qu'on attend.",
+    },
+    lessons: one(VOL_LESSON), tags: ["volume profile", "value area"], build: mirrored(valueAreaExit("acceptation")),
+    claims: { "clôture sous la VAL, retest tenu": vaExitClaim("acceptation", -1), "la suite baisse": goesDown },
+  },
+  {
+    ...ADV, id: "adv_va_rejet", title: "Sortie de la Value Area rejetée", correctAnswer: "NO_TRADE", htfBias: "bullish", metric: "piege",
+    notions: ["volume_profile", "faux_breakout", "range"],
+    conflict: "UT supérieure haussière et clôture au-dessus de la VAH : tout invite à acheter, mais la bougie suivante revient au milieu de la Value Area : la sortie est rejetée.",
+    context: "Le prix a longtemps échangé dans un range : son profil de volume donne la Value Area (VAH, POC, VAL). Une bougie a clôturé au-dessus de la VAH, mais la suivante est revenue au milieu de la zone de valeur.",
+    shortContext: "Clôture au-dessus de la VAH, puis retour dans la zone.",
+    rationales: {
+      BUY: "✗ Acheter maintenant, c'est acheter une sortie que le marché vient de refuser : le prix est revenu dans la Value Area dès la bougie suivante.",
+      SELL: "≈ Le retour dans la zone de valeur peut ramener le prix vers le POC, mais en plein milieu du range, sans setup ni niveau pour le stop, ce n'est pas un trade.",
+      NO_TRADE: "✓ La sortie est rejetée : le prix réintègre la Value Area. Le range reprend, et le milieu de la zone de valeur n'offre pas de trade propre.",
+    },
+    lessons: one(VOL_LESSON), tags: ["volume profile", "value area", "faux breakout"], build: valueAreaExit("rejet"),
+    claims: { "clôture au-dessus de la VAH, puis retour dans la Value Area": vaExitClaim("rejet", 1) },
+  },
+  {
+    ...ADV, id: "adv_va_rejet_vente", title: "Sortie de la Value Area rejetée (vers le bas)", correctAnswer: "NO_TRADE", htfBias: "bearish", metric: "piege",
+    notions: ["volume_profile", "faux_breakout", "range"],
+    conflict: "UT supérieure baissière et clôture sous la VAL : tout invite à vendre, mais la bougie suivante revient au milieu de la Value Area : la sortie est rejetée.",
+    context: "Le prix a longtemps échangé dans un range : son profil de volume donne la Value Area (VAH, POC, VAL). Une bougie a clôturé sous la VAL, mais la suivante est remontée au milieu de la zone de valeur.",
+    shortContext: "Clôture sous la VAL, puis retour dans la zone.",
+    rationales: {
+      BUY: "≈ Le retour dans la zone de valeur peut ramener le prix vers le POC, mais en plein milieu du range, sans setup ni niveau pour le stop, ce n'est pas un trade.",
+      SELL: "✗ Vendre maintenant, c'est vendre une sortie que le marché vient de refuser : le prix est revenu dans la Value Area dès la bougie suivante.",
+      NO_TRADE: "✓ La sortie est rejetée : le prix réintègre la Value Area. Le range reprend, et le milieu de la zone de valeur n'offre pas de trade propre.",
+    },
+    lessons: one(VOL_LESSON), tags: ["volume profile", "value area", "faux breakout"], build: mirrored(valueAreaExit("rejet")),
+    claims: { "clôture sous la VAL, puis retour dans la Value Area": vaExitClaim("rejet", -1) },
+  },
+  {
+    ...ADV, id: "adv_vwap_tient", title: "Retour sur le VWAP : ça tient", correctAnswer: "BUY", htfBias: "bullish", metric: "lecture",
+    notions: ["vwap", "changement_role", "pullback"],
+    conflict: "Le prix revient sous ses derniers sommets, ce qui peut inquiéter ; mais il rebondit sur l'ancienne résistance, là où passe le VWAP de séance, et repart.",
+    context: "Tendance haussière : une résistance touchée deux fois a été cassée. Le prix revient dessus, là où passe aussi le VWAP de séance : une mèche entre dans la zone, puis la bougie suivante repart nettement.",
+    shortContext: "Retour sur le support et le VWAP, puis reprise.",
+    rationales: {
+      BUY: "✓ Tendance haussière, ancienne résistance devenue support, VWAP de séance dans la même zone, et une réaction nette : c'est la convergence attendue, stop sous le creux du retour.",
+      SELL: "✗ Vendre le retour sur le VWAP, c'est vendre contre la tendance au moment où le support vient de tenir.",
+      NO_TRADE: "≈ Attendre se comprend, mais le rejet dans la zone et la reprise au-dessus du VWAP sont déjà la confirmation de la leçon.",
+    },
+    lessons: one(VWAP_LESSON), tags: ["VWAP", "retest"], build: vwapRetest("tient"),
+    claims: { "retour sur la zone et le VWAP, puis reprise": vwapClaim("tient", 1), "la suite monte": goesUp },
+  },
+  {
+    ...ADV, id: "adv_vwap_tient_vente", title: "Retour sur le VWAP : ça tient (vente)", correctAnswer: "SELL", htfBias: "bearish", metric: "lecture",
+    notions: ["vwap", "changement_role", "pullback"],
+    conflict: "Le prix remonte au-dessus de ses derniers creux, ce qui peut inquiéter ; mais il bute sur l'ancien support, là où passe le VWAP de séance, et repart à la baisse.",
+    context: "Tendance baissière : un support touché deux fois a été cassé. Le prix remonte dessus, là où passe aussi le VWAP de séance : une mèche entre dans la zone, puis la bougie suivante repart nettement à la baisse.",
+    shortContext: "Retour sur la résistance et le VWAP, puis reprise baissière.",
+    rationales: {
+      BUY: "✗ Acheter le retour sur le VWAP, c'est acheter contre la tendance au moment où la résistance vient de tenir.",
+      SELL: "✓ Tendance baissière, ancien support devenu résistance, VWAP de séance dans la même zone, et une réaction nette : c'est la convergence attendue, stop au-dessus du sommet du retour.",
+      NO_TRADE: "≈ Attendre se comprend, mais le rejet dans la zone et la reprise sous le VWAP sont déjà la confirmation de la leçon.",
+    },
+    lessons: one(VWAP_LESSON), tags: ["VWAP", "retest"], build: mirrored(vwapRetest("tient")),
+    claims: { "retour sur la zone et le VWAP, puis reprise baissière": vwapClaim("tient", -1), "la suite baisse": goesDown },
+  },
+  {
+    ...ADV, id: "adv_vwap_casse", title: "Retour sur le VWAP : ça casse", correctAnswer: "NO_TRADE", htfBias: "bullish", metric: "piege",
+    notions: ["vwap", "changement_role", "pullback"],
+    conflict: "UT supérieure haussière et support sur le VWAP : tout invite à acheter, mais la dernière bougie clôture franchement sous la zone et sous le VWAP.",
+    context: "Tendance haussière : une résistance touchée deux fois a été cassée. Le prix revient dessus, là où passe le VWAP de séance, et la dernière bougie clôture franchement sous la zone et sous le VWAP.",
+    shortContext: "Clôture sous le support et sous le VWAP.",
+    rationales: {
+      BUY: "✗ Acheter ici, c'est acheter un support qui vient de céder en clôture, sous le VWAP : la convergence qui justifiait l'achat a disparu.",
+      SELL: "≈ La clôture sous le VWAP est un signal baissier local, mais la tendance reste haussière : un passage sous le VWAP peut n'être qu'une correction plus profonde.",
+      NO_TRADE: "✓ Le support et le VWAP ont lâché, la tendance reste haussière : aucun camp n'offre un trade propre. Attendre une nouvelle structure est la décision logique.",
+    },
+    lessons: one(VWAP_LESSON), tags: ["VWAP", "invalidation"], build: vwapRetest("casse"),
+    claims: { "clôture sous la zone et sous le VWAP": vwapClaim("casse", 1) },
+  },
+  {
+    ...ADV, id: "adv_vwap_casse_vente", title: "Retour sur le VWAP : ça casse (vente)", correctAnswer: "NO_TRADE", htfBias: "bearish", metric: "piege",
+    notions: ["vwap", "changement_role", "pullback"],
+    conflict: "UT supérieure baissière et résistance sur le VWAP : tout invite à vendre, mais la dernière bougie clôture franchement au-dessus de la zone et du VWAP.",
+    context: "Tendance baissière : un support touché deux fois a été cassé. Le prix remonte dessus, là où passe le VWAP de séance, et la dernière bougie clôture franchement au-dessus de la zone et du VWAP.",
+    shortContext: "Clôture au-dessus de la résistance et du VWAP.",
+    rationales: {
+      BUY: "≈ La clôture au-dessus du VWAP est un signal haussier local, mais la tendance reste baissière : un passage au-dessus du VWAP peut n'être qu'un rebond plus profond.",
+      SELL: "✗ Vendre ici, c'est vendre une résistance qui vient de céder en clôture, au-dessus du VWAP : la convergence qui justifiait la vente a disparu.",
+      NO_TRADE: "✓ La résistance et le VWAP ont lâché, la tendance reste baissière : aucun camp n'offre un trade propre. Attendre une nouvelle structure est la décision logique.",
+    },
+    lessons: one(VWAP_LESSON), tags: ["VWAP", "invalidation"], build: mirrored(vwapRetest("casse")),
+    claims: { "clôture au-dessus de la zone et du VWAP": vwapClaim("casse", -1) },
+  },
+];
+
+export const BSNT_NEW: NewScenario[] = [...BSNT_BEGINNER, ...BSNT_INTERMEDIATE, ...BSNT_ADVANCED, ...BSNT_VOLUME];

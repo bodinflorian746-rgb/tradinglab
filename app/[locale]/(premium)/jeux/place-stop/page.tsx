@@ -522,7 +522,7 @@ export default function PlaceStopPage() {
                 3 stops, chacun étiqueté sur sa ligne ; le TP n'est pas tracé : le R/R de chaque
                 stop est dans son bouton. Puis impact du stop touché. */}
             <GameChartV2
-              data={{ candles: [...chart.past, ...chart.future], zones: chart.zones, domain: chart.domain }}
+              data={{ candles: [...chart.past, ...chart.future], zones: chart.zones, domain: chart.domain, study: chart.study }}
               inlineLabels
               overlay={{
                 // Étiquette d'entrée avec son prix (le seul endroit où il apparaît)

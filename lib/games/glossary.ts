@@ -504,6 +504,131 @@ export const GLOSSARY: GlossaryEntry[] = [
     },
     short: { fr: "exécution à un prix moins bon que prévu.", es: "ejecución a un precio peor del previsto." },
   },
+  // ─── Volume Profile, VWAP, Order Flow (Avancé 10 à 12) ───
+  {
+    id: "volume-profile", source: "Avancé · leçon 10 (Volume Profile)",
+    term: { fr: "Volume Profile", es: "Volume Profile" },
+    match: { fr: /\bvolume profile\b|profil de volume/i, es: /\bvolume profile\b|perfil de volumen/i },
+    def: {
+      fr: "histogramme horizontal du volume échangé à chaque zone de prix sur une période : il montre où le marché a concentré ses échanges.",
+      es: "histograma horizontal del volumen negociado en cada zona de precio durante un período: muestra dónde se concentraron los intercambios.",
+    },
+    short: { fr: "volume échangé à chaque zone de prix.", es: "volumen negociado en cada zona de precio." },
+  },
+  {
+    id: "poc", source: "Avancé · leçon 10 (Volume Profile)",
+    term: { fr: "POC", es: "POC" },
+    match: { fr: /\bPOC\b/, es: /\bPOC\b/ },
+    def: {
+      fr: "Point of Control : le niveau de prix qui a concentré le plus de volume sur la période du profil. Une activité passée, pas un support à lui seul.",
+      es: "Point of Control: el nivel de precio que concentró más volumen en el período del perfil. Una actividad pasada, no un soporte por sí solo.",
+    },
+    short: { fr: "niveau au plus fort volume du profil.", es: "nivel con más volumen del perfil." },
+  },
+  {
+    id: "value-area", source: "Avancé · leçon 10 (Volume Profile)",
+    term: { fr: "Value Area", es: "Value Area" },
+    match: { fr: /\bvalue area\b|zone de valeur/i, es: /\bvalue area\b|zona de valor/i },
+    def: {
+      fr: "zone qui regroupe environ 70 % du volume du profil, entre la VAH (limite haute) et la VAL (limite basse).",
+      es: "zona que agrupa cerca del 70 % del volumen del perfil, entre el VAH (límite alto) y el VAL (límite bajo).",
+    },
+    short: { fr: "environ 70 % du volume, entre VAH et VAL.", es: "cerca del 70 % del volumen, entre VAH y VAL." },
+  },
+  {
+    id: "vah", source: "Avancé · leçon 10 (Volume Profile)",
+    term: { fr: "VAH", es: "VAH" },
+    match: { fr: /\bVAH\b/, es: /\bVAH\b/ },
+    def: { fr: "Value Area High : la limite haute de la Value Area.", es: "Value Area High: el límite alto de la Value Area." },
+    short: { fr: "limite haute de la Value Area.", es: "límite alto de la Value Area." },
+  },
+  {
+    id: "val", source: "Avancé · leçon 10 (Volume Profile)",
+    term: { fr: "VAL", es: "VAL" },
+    match: { fr: /\bVAL\b/, es: /\bVAL\b/ },
+    def: { fr: "Value Area Low : la limite basse de la Value Area.", es: "Value Area Low: el límite bajo de la Value Area." },
+    short: { fr: "limite basse de la Value Area.", es: "límite bajo de la Value Area." },
+  },
+  {
+    id: "hvn", source: "Avancé · leçon 10 (Volume Profile)",
+    term: { fr: "HVN", es: "HVN" },
+    match: { fr: /\bHVN\b/, es: /\bHVN\b/ },
+    def: {
+      fr: "High Volume Node : une forte concentration de volume dans le profil, souvent un niveau autour duquel le prix a longtemps évolué.",
+      es: "High Volume Node: una fuerte concentración de volumen en el perfil, a menudo un nivel en torno al cual el precio se movió mucho tiempo.",
+    },
+    short: { fr: "forte concentration de volume.", es: "fuerte concentración de volumen." },
+  },
+  {
+    id: "lvn", source: "Avancé · leçon 10 (Volume Profile)",
+    term: { fr: "LVN", es: "LVN" },
+    match: { fr: /\bLVN\b/, es: /\bLVN\b/ },
+    def: {
+      fr: "Low Volume Node : une zone de faible volume dans le profil, que le prix a souvent traversée vite. Elle décrit le passé, pas les ordres d'aujourd'hui.",
+      es: "Low Volume Node: una zona de poco volumen en el perfil, que el precio cruzó a menudo con rapidez. Describe el pasado, no las órdenes de hoy.",
+    },
+    short: { fr: "zone de faible volume du profil.", es: "zona de poco volumen del perfil." },
+  },
+  {
+    id: "vwap", source: "Avancé · leçon 11 (VWAP)",
+    term: { fr: "VWAP", es: "VWAP" },
+    match: { fr: /\bVWAP\b/, es: /\bVWAP\b/ },
+    def: {
+      fr: "Volume Weighted Average Price : le prix moyen pondéré par les volumes depuis un point de départ (le début de la séance, ou un point choisi pour le VWAP ancré).",
+      es: "Volume Weighted Average Price: el precio medio ponderado por los volúmenes desde un punto de partida (el inicio de la sesión, o un punto elegido para el VWAP anclado).",
+    },
+    short: { fr: "prix moyen pondéré par les volumes.", es: "precio medio ponderado por los volúmenes." },
+  },
+  {
+    id: "vwap-ancre", source: "Avancé · leçon 11 (VWAP)",
+    term: { fr: "VWAP ancré", es: "VWAP anclado" },
+    match: { fr: /\bVWAP ancré\b|\banchored VWAP\b/i, es: /\bVWAP anclado\b|\banchored VWAP\b/i },
+    def: {
+      fr: "un VWAP dont tu choisis le point de départ (sommet, creux, début d'impulsion, publication économique) pour suivre le prix moyen pondéré depuis cet événement.",
+      es: "un VWAP cuyo punto de partida eliges (máximo, mínimo, inicio de impulso, publicación económica) para seguir el precio medio ponderado desde ese evento.",
+    },
+    short: { fr: "VWAP calculé depuis un point choisi.", es: "VWAP calculado desde un punto elegido." },
+  },
+  {
+    id: "footprint", source: "Avancé · leçon 12 (Order Flow)",
+    term: { fr: "footprint", es: "footprint" },
+    match: { fr: /\bfootprint\b/i, es: /\bfootprint\b/i },
+    def: {
+      fr: "graphique qui détaille, à chaque niveau de prix d'une bougie, le volume exécuté au Bid (ventes agressives) et à l'Ask (achats agressifs).",
+      es: "gráfico que detalla, en cada nivel de precio de una vela, el volumen ejecutado en el Bid (ventas agresivas) y en el Ask (compras agresivas).",
+    },
+    short: { fr: "volumes au Bid et à l'Ask par niveau de prix.", es: "volúmenes en el Bid y en el Ask por nivel de precio." },
+  },
+  {
+    id: "delta", source: "Avancé · leçon 12 (Order Flow)",
+    term: { fr: "delta", es: "delta" },
+    match: { fr: /\bdelta\b/i, es: /\bdelta\b/i },
+    def: {
+      fr: "volume exécuté à l'Ask moins volume exécuté au Bid sur une période : l'excédent d'achats (positif) ou de ventes (négatif) agressifs.",
+      es: "volumen ejecutado en el Ask menos volumen ejecutado en el Bid en un período: el exceso de compras (positivo) o de ventas (negativo) agresivas.",
+    },
+    short: { fr: "achats agressifs moins ventes agressives.", es: "compras agresivas menos ventas agresivas." },
+  },
+  {
+    id: "cvd", source: "Avancé · leçon 12 (Order Flow)",
+    term: { fr: "CVD", es: "CVD" },
+    match: { fr: /\bCVD\b/, es: /\bCVD\b/ },
+    def: {
+      fr: "Cumulative Volume Delta : la somme des deltas successifs, pour suivre dans le temps le déséquilibre des échanges agressifs.",
+      es: "Cumulative Volume Delta: la suma de los deltas sucesivos, para seguir en el tiempo el desequilibrio de los intercambios agresivos.",
+    },
+    short: { fr: "somme des deltas successifs.", es: "suma de los deltas sucesivos." },
+  },
+  {
+    id: "absorption", source: "Avancé · leçon 12 (Order Flow)",
+    term: { fr: "absorption", es: "absorción" },
+    match: { fr: /\babsorption\b/i, es: /\babsorci[óo]n\b/i },
+    def: {
+      fr: "de nombreux ordres agressifs exécutés sans faire avancer le prix : des ordres passifs en face les absorbent.",
+      es: "muchas órdenes agresivas ejecutadas sin que el precio avance: órdenes pasivas enfrente las absorben.",
+    },
+    short: { fr: "ordres agressifs qui ne font pas avancer le prix.", es: "órdenes agresivas que no hacen avanzar el precio." },
+  },
 ];
 
 /** Termes du glossaire présents dans des textes affichés, dans l'ordre d'apparition. */
@@ -530,7 +655,7 @@ export const BASIC_TERMS = /^(?:BUY|SELL|NO TRADE|NO|TRADE|trades?|trader|stops?
  */
 export const JARGON_DETECT: RegExp[] = [
   // Sigles (casse exacte)
-  /(?<![\p{L}\d])(?:SL|TP|HTF|LTF|FVG|OB|HL|HH|LH|LL|BOS|CHoCH|ATR|PDL|PDH|PWL|PWH|PML|NFP|FOMC|CPI|ICT|OTE|FOMO|RR|FX|EMA|SMA|RSI|MACD|ADR|VWAP|POI|SMC)(?![\p{L}\d])/gu,
+  /(?<![\p{L}\d])(?:SL|TP|HTF|LTF|FVG|OB|HL|HH|LH|LL|BOS|CHoCH|ATR|PDL|PDH|PWL|PWH|PML|NFP|FOMC|CPI|ICT|OTE|FOMO|RR|FX|EMA|SMA|RSI|MACD|ADR|VWAP|POI|SMC|POC|VAH|VAL|HVN|LVN|CVD)(?![\p{L}\d])/gu,
   // Mots techniques (toute casse)
   /(?<![\p{L}\d])(?:edge|slippage|pumps?|setups?|range|swings?|sweeps?|retests?|pullbacks?|breakouts?|fakeouts?|spread|lots?|lotes?|pips?|news|bias|impulse|displacement|killzones?|overlap|scalp\w*|stop hunts?|equal (?:lows|highs)|liquidity|mitigation|order blocks?|drawdown|momentum|leverage|levier|apalancamiento|risk management|target|backtest\w*|round number|weekly|daily|intraday|gaps?|rally|dump|squeeze|chop\w*|forex|bid|ask)(?![\p{L}\d])/giu,
 ];
@@ -634,6 +759,8 @@ export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
     "Ancienne résistance → support", "Ancien support → résistance", "Résistance → support", "Support → résistance",
     // niveau avancé : libellés génériques
     "Déséquilibre", "Liquidité",
+    // profil de volume (Avancé 10, lib/games/volume-study.ts)
+    "POC", "VAH", "VAL", "HVN", "LVN",
   ],
   es: [
     "FVG alcista", "Order Block", "Liquidez arriba", "Liquidez abajo", "Liquidez barrida",
@@ -645,5 +772,6 @@ export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
     "Swing low 2", "Swing low 3", "Swing high evidente", "Swing low evidente", "Swing low H1",
     "Antigua resistencia → soporte", "Antiguo soporte → resistencia", "Resistencia → soporte", "Soporte → resistencia",
     "Desequilibrio", "Liquidez",
+    "POC", "VAH", "VAL", "HVN", "LVN",
   ],
 };

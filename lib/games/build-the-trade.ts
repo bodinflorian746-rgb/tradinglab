@@ -17,6 +17,7 @@ import { breakStrayLevels } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
+import { mapStudy, withVolumeStudy, type GameStudy, type StudySpec } from "./volume-study";
 import { assetPriceMap, mapCandle, mapDomain, mapZone, priceEpsilon } from "./price-scale";
 import type { NotionId } from "./notions";
 import { BTT_NEW, type BttRaw, type BttClaim } from "./btt-scenarios";
@@ -125,6 +126,9 @@ export interface BuildTradeChart {
   guards?: number[];
   /** Actif des prix (posé par withAssetPrices) ; absent en échelle abstraite */
   asset?: Asset;
+  /** Scénarios Volume Profile : ce que le scénario demande, puis volumes et profil calculés */
+  studySpec?: StudySpec;
+  study?:     GameStudy;
 }
 
 export const ROUNDS_PER_SESSION = 8;
@@ -1243,6 +1247,7 @@ export function withAssetPrices(chart: BuildTradeChart, inst: { asset: Asset; se
     tps:     map(chart.tps),
     currentPrice: f(chart.currentPrice),
     asset:   inst.asset,
+    ...(chart.study ? { study: mapStudy(f, chart.study) } : {}),
   };
 }
 
@@ -1266,7 +1271,9 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
   // (swing désigné : sa pointe reste l'extrême de ses voisines, avant et après le tracé)
   // (scénarios construits : les stops aussi au passé, une mèche ne franchit pas le stop qu'elle justifie)
-  return keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(realizeChart(ch, { past: template.build ? [...zones, ...Object.values(ch.stops), ...(ch.guards ?? [])] : zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol })))), Object.values(ch.stops), { positive: true }));
+  const out = keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(realizeChart(ch, { past: template.build ? [...zones, ...Object.values(ch.stops), ...(ch.guards ?? [])] : zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol })))), Object.values(ch.stops), { positive: true }));
+  // Volumes et profil (scénarios Volume Profile) : calculés sur les bougies finales
+  return ch.studySpec ? withVolumeStudy(out, ch.studySpec, seed) : out;
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */
@@ -1277,7 +1284,7 @@ export function buildBuildTradeChartRaw(template: BuildTradeTemplate, seed: numb
     const r = template.build(rng, m);
     const { domain } = finalize(r.past, r.future, r.zones, [...Object.values(r.entries), ...Object.values(r.stops), ...Object.values(r.tps)]);
     const cur = r.past[r.past.length - 1].c;
-    const out = keepPricesPositive({ past: r.past, future: r.future, zones: r.zones, domain, direction: template.direction, entries: r.entries, stops: r.stops, tps: r.tps, currentPrice: cur });
+    const out = keepPricesPositive({ past: r.past, future: r.future, zones: r.zones, domain, direction: template.direction, entries: r.entries, stops: r.stops, tps: r.tps, currentPrice: cur, ...(r.studySpec ? { studySpec: r.studySpec } : {}) });
     return r.guards ? { ...out, guards: r.guards.map((g) => g + out.currentPrice - cur) } : out;
   }
   let shape: ShapeOutput;

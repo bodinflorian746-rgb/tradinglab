@@ -12,6 +12,7 @@ import type { NotionId } from "./notions";
 import { bullSignal, legTo, mirrorCandles, mirrorZones, provenResistance, rally, range, isHammer, isBullEngulfing, isDoji, type Rng } from "./scenes";
 import { rangeScene, obScene, bullImpulse3Local } from "./bsnt-scenarios";
 import { swingSetup } from "./ps-scenarios";
+import type { GameStudy, StudySpec } from "./volume-study";
 
 type Difficulty = "beginner" | "intermediate" | "advanced";
 type Entry = "aggressive" | "confirmation" | "deep_pullback";
@@ -25,11 +26,14 @@ export interface BttRaw {
   entries: Record<Entry, number>; stops: Record<Stop, number>; tps: Record<Tp, number>;
   /** Niveaux invisibles que la passe de réalisme ne laisse pas franchir aux mèches du passé */
   guards?: number[];
+  /** Volume Profile : phases d'échanges et profil demandés (lib/games/volume-study.ts) */
+  studySpec?: StudySpec;
 }
 /** Graphique tel que le jeu le montre (affirmations) */
 export interface BttChartLike {
   past: Candle[]; future: Candle[]; zones: ChartZone[]; direction: "BUY" | "SELL";
   entries: Record<Entry, number>; stops: Record<Stop, number>; tps: Record<Tp, number>; currentPrice: number;
+  study?: GameStudy;
 }
 export type BttClaim = (ch: BttChartLike) => string | null;
 
@@ -76,12 +80,13 @@ const mirrored = (b: BttScenario["build"]): BttScenario["build"] => (rng, m) => 
     zones: mirrorZones(r.zones, AXIS).map((z) => (z.label === "Order Block" ? { ...z, label: "Order Block baissier" } : z)),
     entries: mapPrices(r.entries, f), stops: mapPrices(r.stops, f), tps: mapPrices(r.tps, f),
     ...(r.guards ? { guards: r.guards.map(f) } : {}),
+    ...(r.studySpec ? { studySpec: { ...r.studySpec, ...(r.studySpec.profile?.side ? { profile: { ...r.studySpec.profile, side: (-r.studySpec.profile.side) as 1 | -1 } } : {}) } } : {}),
   };
 };
 
 /** Scène (sens haussier) : passé, zones, pullback profond, stops du plus proche au plus éloigné,
  *  niveau opposé éventuel (le TP optimal se place juste avant) */
-interface Scene { past: Candle[]; zones: ChartZone[]; deep: number; stops: [number, number, number]; level?: number; tpGap?: number; guards?: number[] }
+interface Scene { past: Candle[]; zones: ChartZone[]; deep: number; stops: [number, number, number]; level?: number; tpGap?: number; guards?: number[]; studySpec?: StudySpec }
 /** Écart entre le TP optimal et le niveau opposé (bougie médiane abstraite) */
 const GAP = 0.2;
 
@@ -169,8 +174,72 @@ function assemble(rng: Rng, m: number, s: Scene, o: BttOptimal): BttRaw {
   const stops = { tight: s.stops[0], logical: s.stops[1], wide: s.stops[2] };
   const E = entries[o.entry], R = E - stops[o.stop];
   const tps = tpsFor(rng, m, o, E, R, entries.confirmation, s.level, s.tpGap);
-  return { past: s.past, future: futureFor(rng, m, s, o, tps), zones: s.zones, entries, stops, tps, ...(s.guards ? { guards: s.guards } : {}) };
+  return { past: s.past, future: futureFor(rng, m, s, o, tps), zones: s.zones, entries, stops, tps, ...(s.guards ? { guards: s.guards } : {}), ...(s.studySpec ? { studySpec: s.studySpec } : {}) };
 }
+
+// ─── Volume Profile (Avancé 10, sens haussier) ───────────────────────────────
+
+/** Le marché a longtemps échangé haut (HVN), est descendu vite (LVN), a construit une base sous une
+ *  résistance touchée deux fois, puis la casse : achat au breakout, objectif juste avant l'HVN */
+const hvnBeyondLvn = (rng: Rng, m: number, o: BttOptimal): Scene => {
+  const b = band(m);
+  // breakout : clôture franche au-dessus de la résistance
+  const E0 = b.hi + (0.38 + rng() * 0.08) * m;
+  const deep = b.hi + (0.06 + rng() * 0.04) * m;
+  // stop derrière la résistance, avec une marge : le médian (proche dans la zone) ou le proche (puis sous la base)
+  const behind = b.lo - (0.2 + rng() * 0.08) * m;
+  const stops: [number, number, number] = o.stop === "tight"
+    ? [behind, behind - (1.15 + rng() * 0.1) * m, behind - (2.1 + rng() * 0.2) * m]
+    : [b.lo + (0.3 + rng() * 0.3) * (b.hi - b.lo), behind, behind - (1.1 + rng() * 0.2) * m];
+  const H = levelFor(rng, m, o, E0, deep, stops);
+  // HVN : longue phase d'échanges autour de H (après une arrivée), puis descente rapide sous la future résistance
+  const arrive = legTo(rng, m, H - 1.1 * m, H - 0.05 * m, { retrace: 0.2 });
+  const past = [...arrive.candles];
+  let p = arrive.p;
+  const h0 = past.length;
+  for (const t of [0.05, -0.04, 0.06, -0.05, 0.03, -0.06, 0.02]) { const c = H + (0.22 + t + (rng() - 0.5) * 0.02) * m; past.push(candle(p, c, (0.04 + rng() * 0.05) * m, (0.04 + rng() * 0.05) * m)); p = c; }
+  const h1 = past.length - 1;
+  const d0 = past.length;
+  // (fin de la descente nettement sous les réactions de la base : aucun creux aligné)
+  const dn = legTo(rng, m, p, b.lo - (1.35 + rng() * 0.06) * m, { retrace: 0, step: [0.7, 0.95] }); past.push(...dn.candles); p = dn.p;
+  const d1 = past.length - 1;
+  // base sous la résistance : deux touches par en dessous (dernière réaction courte, bien au-dessus de la fin de la descente)
+  // (réactions en V, creux de plus en plus hauts : aucun fond plat, aucun creux aligné)
+  const lastReaction = (0.58 + rng() * 0.05) * m;
+  for (const depth of [(0.95 + rng() * 0.05) * m, lastReaction]) {
+    const up1 = legTo(rng, m, p, b.lo - (0.5 + rng() * 0.05) * m, { retrace: 0 }); past.push(...up1.candles); p = up1.p;
+    const c = b.lo - (0.58 + rng() * 0.05) * m;
+    past.push({ o: p, c, h: b.lo + (0.5 + rng() * 0.3) * (b.hi - b.lo), l: Math.min(p, c) - (0.03 + rng() * 0.03) * m }); p = c;   // touche
+    const dn1 = legTo(rng, m, p, b.lo - depth, { retrace: 0 }); past.push(...dn1.candles); p = dn1.p;
+  }
+  // remontée sous la résistance, puis la bougie de breakout
+  const u = legTo(rng, m, p, b.lo - (0.08 + rng() * 0.06) * m, { retrace: 0.2 }); past.push(...u.candles); p = u.p;
+  const s0 = d1 + 1, s1 = past.length - 1;
+  past.push({ o: p, c: E0, h: E0 + (0.04 + rng() * 0.04) * m, l: p - (0.03 + rng() * 0.03) * m });
+  return {
+    past, zones: [{ kind: "resistance", y1: b.lo, y2: b.hi, label: "Résistance" }], deep, stops, level: H, tpGap: 0.3,
+    // (garde-fou entre les deux réactions : la passe de réalisme n'aligne pas leurs creux)
+    guards: [b.hi + 0.3 * m, b.lo - 0.55 * lastReaction],
+    studySpec: { heavy: [[d0, d1, 0.5], [s0, s1, 1.8]], node: { from: h0, to: h1, ratio: 0.65 }, profile: { from: 0, to: past.length - 2, show: ["hvn", "lvn"], side: 1 } },
+  };
+};
+
+/** HVN tracée juste au-delà du TP optimal, LVN entre la base et elle ; les TP plus courts dans la LVN, les plus longs au-delà de l'HVN */
+const tpOnHvn = (key: Tp): BttClaim => (c) => {
+  const ch = asBull(c);
+  const hv = ch.zones.filter((z) => z.kind === "volume" && z.label === "HVN").sort((a, b) => b.y1 - a.y1)[0], lv = ch.zones.find((z) => z.kind === "volume" && z.label === "LVN");
+  if (!hv || !lv) return "HVN ou LVN absente du profil";
+  const H = (hv.y1 + hv.y2) / 2, t = mr(ch.past);
+  const res = ch.zones.find((z) => z.kind === "resistance" || z.kind === "support");
+  // (la LVN part de la résistance : au-dessus, le marché a peu échangé ; jamais de l'intérieur de la base)
+  if (!res || !(lo(lv) >= lo(res) - 0.8 * t && hi(lv) < H && ch.entries.aggressive < hi(lv))) return "la LVN n'est pas entre la base et l'HVN, au-dessus de l'entrée";
+  // objectif sur l'HVN : juste avant elle, ou sur sa rangée
+  if (!(ch.tps[key] < H + 0.5 * t && H - ch.tps[key] <= 2 * t)) return "le TP optimal n'est pas juste avant l'HVN ou sur elle";
+  const order: Tp[] = ["fast", "balanced", "ambitious"], k = order.indexOf(key);
+  if (order.slice(0, k).some((x) => !(ch.tps[x] < hi(lv)))) return "un TP plus court n'est pas dans la LVN";
+  if (order.slice(k + 1).some((x) => !(ch.tps[x] > H))) return "un TP plus long n'est pas au-delà de l'HVN";
+  return null;
+};
 const plan = (o: BttOptimal, scene: (rng: Rng, m: number, o: BttOptimal) => Scene): BttScenario["build"] => (rng, m) => assemble(rng, m, scene(rng, m, o), o);
 
 // ─── Scènes (sens haussier) ─────────────────────────────────────────────────
@@ -654,6 +723,22 @@ export const BTT_NEW: BttScenario[] = [
     claims: { "marteau dont la mèche traverse l'ancienne résistance": hammerOn(/^Ancienne résistance → support$/, true), "TP équilibré juste avant le plus haut précédent": tpBeforeLevel("balanced") } },
 
   // ─── Avancé : conflit à trancher ────────────────────────────────────────────
+  { ...ADV, id: "adv_btt_hvn", title: "Breakout : viser l'HVN au-delà de la LVN", direction: "BUY", htfBias: "bullish", notions: ["volume_profile", "breakout"],
+    conflict: "Le TP rapide paraît prudent, mais il s'arrête au milieu d'une LVN que le prix traverse souvent vite ; le TP ambitieux dépasse l'HVN, où le marché a longtemps échangé.",
+    context: "Le marché a longtemps échangé plus haut (HVN), puis il est descendu vite (LVN). Il vient de casser la résistance de sa base, touchée deux fois.",
+    optimal: O("aggressive", "logical", "balanced"),
+    optimalExplain: "Entrée agressive : la clôture franche au-dessus de la résistance est le signal. Stop médian : sous la résistance, avec une marge, là où le breakout échouerait. TP équilibré : juste avant l'HVN, au bout de la LVN que le prix peut traverser vite.",
+    lessons: one("Une LVN peut être traversée rapidement jusqu'à la zone de volume suivante : l'HVN au-delà sert de repère d'objectif, si la structure le confirme. Une LVN décrit le passé : le prix peut aussi y ralentir (leçon Avancé 10)."),
+    build: plan(O("aggressive", "logical", "balanced"), hvnBeyondLvn),
+    claims: { "TP équilibré juste avant l'HVN, au-delà de la LVN": tpOnHvn("balanced") } },
+  { ...ADV, id: "adv_btt_hvn_vente", title: "Breakout baissier : viser l'HVN au-delà de la LVN", direction: "SELL", htfBias: "bearish", notions: ["volume_profile", "breakout"],
+    conflict: "Les TP équilibré et ambitieux visent plus loin, mais ils dépassent l'HVN, où le marché a longtemps échangé et risque de ralentir ; l'objectif se lit au bout de la LVN.",
+    context: "Le marché a longtemps échangé plus bas (HVN), puis il est monté vite (LVN). Il vient de casser le support de sa base, touché deux fois.",
+    optimal: O("confirmation", "tight", "fast"),
+    optimalExplain: "Entrée confirmation : la bougie suivante doit clôturer encore plus bas avant d'entrer. Stop proche : au-dessus du support, avec une marge, là où le breakout échouerait ; les deux autres sont au-dessus de toute la base. TP rapide : juste avant l'HVN, au bout de la LVN que le prix peut traverser vite.",
+    lessons: one("Une LVN peut être traversée rapidement jusqu'à la zone de volume suivante : l'HVN au-delà sert de repère d'objectif, si la structure le confirme. Une LVN décrit le passé : le prix peut aussi y ralentir (leçon Avancé 10)."),
+    build: mirrored(plan(O("confirmation", "tight", "fast"), hvnBeyondLvn)),
+    claims: { "TP rapide juste avant l'HVN, au-delà de la LVN": tpOnHvn("fast") } },
   { ...ADV, id: "adv_btt_order_block", title: "Marteau dans un Order Block", direction: "BUY", htfBias: "bullish", notions: ["order_block", "liquidite"],
     conflict: "Le prix vient de perdre une partie de l'impulsion : la lecture locale paraît baissière, mais l'Order Block d'origine tient et la liquidité est au-dessus.",
     context: "Le prix revient dans l'Order Block qui a lancé l'impulsion. Un marteau vient de clôturer, sa mèche dans la zone.",

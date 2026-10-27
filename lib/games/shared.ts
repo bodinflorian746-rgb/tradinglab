@@ -23,7 +23,9 @@ export function sessionLabel(session: Session, locale: string | undefined): stri
 
 export interface Candle { o: number; h: number; l: number; c: number }
 
-export type ZoneKind = "support" | "resistance" | "fvg" | "liquidity_low" | "liquidity_high";
+/** « volume » : niveaux du profil de volume (POC, VAH, VAL, HVN, LVN), calculés sur les bougies et leurs
+ *  volumes (lib/games/volume-study.ts) ; ni support ni résistance, aucune règle de touche */
+export type ZoneKind = "support" | "resistance" | "fvg" | "liquidity_low" | "liquidity_high" | "volume";
 
 export interface ChartZone {
   kind:  ZoneKind;
@@ -125,6 +127,8 @@ export interface ChartData {
   candles: Candle[];
   zones:   ChartZone[];
   domain:  { min: number; max: number };
+  /** Volumes, VWAP et profil de volume (scénarios Volume Profile / VWAP, lib/games/volume-study.ts) */
+  study?:  import("./volume-study").GameStudy;
 }
 
 // ─── Constantes ───────────────────────────────────────────────────────────────

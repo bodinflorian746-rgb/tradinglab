@@ -11,11 +11,12 @@ import { candle, rangeLegs } from "./shared";
 import type { NotionId } from "./notions";
 import { bullSignal, drop, legTo, mirrorCandles, mirrorZones, provenResistance, rally, isHammer, isBullEngulfing, range, type Rng } from "./scenes";
 import { supportScene, rangeScene, obScene, bullImpulse3Local } from "./bsnt-scenarios";
+import { studyProfile, type StudySpec } from "./volume-study";
 
 type Difficulty = "beginner" | "intermediate" | "advanced";
 type StopType = "tight" | "logical" | "wide" | "liquidity";
 export interface PsRaw {
-  past: Candle[]; fut: Candle[]; zones: ChartZone[]; entry: number; tp: number | null; direction: "BUY" | "SELL";
+  past: Candle[]; fut: Candle[]; zones: ChartZone[]; entry: number; tp: number | null; direction: "BUY" | "SELL"; studySpec?: StudySpec;
   stops: { type: StopType; price: number; rationale: string }[];
 }
 interface PsChartLike { past: Candle[]; future: Candle[]; zones: ChartZone[]; entry: number; tp: number | null; direction: "BUY" | "SELL"; stops: { price: number; type: StopType; rationale: string }[] }
@@ -43,10 +44,15 @@ const mirrored = (b: PsScenario["build"]): PsScenario["build"] => (rng, m) => {
     // (un Order Block renversé est baissier : son tracé se lit de l'autre côté)
     ...{ zones: mirrorZones(r.zones, AXIS).map((z) => (z.label === "Order Block" ? { ...z, label: "Order Block baissier" } : z)) },
     stops: r.stops.map((s) => ({ ...s, price: AXIS - s.price, rationale: flipWords(s.rationale) })),
+    // profil de volume : mêmes bougies renversées, mêmes indices
+    ...(r.studySpec ? { studySpec: r.studySpec } : {}),
   };
 };
 /** Justification renversée (vente) : phrases complètes, du plus long au plus court */
 const PHRASES: [string, string][] = [
+  ["Pile sous le swing low : une mèche du retour peut le balayer avant la reprise.", "Pile au-dessus du swing high : une mèche du retour peut le balayer avant la reprise."],
+  ["Pile sous le POC : le repli est déjà passé dessous d'une mèche ; le POC est une zone d'échanges, pas l'invalidation.", "Pile au-dessus du POC : le rebond est déjà passé dessus d'une mèche ; le POC est une zone d'échanges, pas l'invalidation."],
+  ["Sous le swing low, avec une marge : c'est le creux technique du retour sur le POC, le niveau qui invalide la reprise.", "Au-dessus du swing high, avec une marge : c'est le sommet technique du retour sur le POC, le niveau qui invalide la reprise."],
   ["Pile sous le swing high cassé : le retest peut y plonger d'une mèche, alors que la structure n'est pas cassée.", "Pile au-dessus du swing low cassé : le retest peut y monter d'une mèche, alors que la structure n'est pas cassée."],
   ["Entre le swing high cassé et le swing low : un repli plus profond le touche sans que la structure soit cassée.", "Entre le swing low cassé et le swing high : un rebond plus ample le touche sans que la structure soit cassée."],
   ["Sous le swing low, avec une marge : c'est le dernier plus bas de la structure haussière ; tant qu'il tient, le BOS reste valable.", "Au-dessus du swing high, avec une marge : c'est le dernier plus haut de la structure baissière ; tant qu'il tient, le BOS reste valable."],
@@ -500,6 +506,66 @@ const adv: Record<"obProche" | "fvgMilieu" | "sweepProche" | "sweepMilieu" | "ot
   },
 };
 
+// ─── Volume Profile (Avancé 10, sens haussier) ───────────────────────────────
+
+/** Consolidation (phase d'échanges : le POC), départ à la hausse, retour sur le POC avec une mèche
+ *  dessous (swing low, creux technique), une bougie de reprise : achat. Stops : pile sous le POC
+ *  (dans le bruit), sous le swing low avec une marge (le bon), beaucoup plus bas. */
+const pocScene = (far: boolean) => (rng: Rng, m: number): PsRaw => {
+  const C = 1.4 * m;
+  const a = legTo(rng, m, 0, C - 0.08 * m, { retrace: 0.2 });
+  const past = [...a.candles];
+  let p = a.p;
+  const from = past.length;
+  for (const t of [0.12, -0.1, 0.08, -0.12, 0.1, -0.06, 0.04, -0.02]) {
+    const c = C + (t + (rng() - 0.5) * 0.04) * m;
+    past.push(candle(p, c, (0.04 + rng() * 0.05) * m, (0.04 + rng() * 0.05) * m)); p = c;
+  }
+  const to = past.length - 1;
+  const up = legTo(rng, m, p, C + (1.9 + rng() * 0.3) * m, { retrace: 0.2 }); past.push(...up.candles); p = up.p;
+  const back = legTo(rng, m, p, C + (0.5 + rng() * 0.08) * m, { retrace: 0.15 }); past.push(...back.candles); p = back.p;
+  // mèche sous le POC (creux technique), puis deux bougies de reprise
+  const L = C - (0.5 + rng() * 0.06) * m;
+  const c0 = C + (0.08 + rng() * 0.05) * m;
+  past.push({ o: p, c: c0, h: Math.max(p, c0) + (0.03 + rng() * 0.03) * m, l: L });
+  const at = past.length - 1;
+  // (une seule bougie de reprise : la mèche reste une bougie déclencheuse, jamais retaillée par la passe de réalisme)
+  const c1 = c0 + (0.32 + rng() * 0.1) * m;
+  past.push({ o: c0, c: c1, h: c1 + (0.04 + rng() * 0.03) * m, l: c0 - (0.03 + rng() * 0.03) * m });
+  const entry = c1;
+  const tight = C - (0.17 + rng() * 0.03) * m;
+  const logical = L - (0.2 + rng() * 0.08) * m;
+  const wide = logical - (1.3 + rng() * 0.3) * m;
+  // variante : le bon stop est le plus loin (un stop pile sous le swing low entre les deux)
+  const third = far
+    ? { type: "liquidity" as const, price: L - (0.04 + rng() * 0.02) * m, rationale: "✗ Pile sous le swing low : une mèche du retour peut le balayer avant la reprise." }
+    : { type: "wide" as const, price: wide, rationale: "≈ Beaucoup plus bas que le swing low : il tient, mais la perte possible grossit sans protéger mieux, le R/R s'écroule." };
+  return {
+    past, fut: rally(rng, m, entry, 5).candles, entry, tp: tpFor(entry, logical), direction: "BUY",
+    zones: [{ kind: "support", y1: L - 0.03, y2: L - 0.01, label: "Swing low", at }],
+    stops: [
+      { type: "tight", price: tight, rationale: "✗ Pile sous le POC : le repli est déjà passé dessous d'une mèche ; le POC est une zone d'échanges, pas l'invalidation." },
+      { type: "logical", price: logical, rationale: "✓ Sous le swing low, avec une marge : c'est le creux technique du retour sur le POC, le niveau qui invalide la reprise." },
+      third,
+    ],
+    studySpec: { heavy: [[from, to, 1.8]], profile: { from, to, show: ["poc"] } },
+  };
+};
+
+/** Le repli revient sur le POC de la consolidation et passe dessous d'une mèche ; le stop proche est pile sous le POC */
+const pocWickBelow: Claim = (c) => {
+  const pr = studyProfile(c as PsChartLike & { study?: import("./volume-study").GameStudy });
+  if (!pr) return "pas de profil de volume";
+  const buy = c.direction === "BUY", s = buy ? 1 : -1;
+  const z = c.zones.find((x) => /^Swing (low|high)$/.test(x.label));
+  if (!z) return "pas de swing low";
+  const tip = buy ? lo(z) : hi(z);
+  if (!(s * (pr.poc - tip) > 0.15 * mr(c.past))) return "le swing low n'est pas nettement sous le POC";
+  const tight = c.stops.find((x) => x.type === "tight");
+  if (!tight || !(s * (pr.poc - tight.price) > 0 && s * (tight.price - tip) > 0)) return "le stop proche n'est pas entre le POC et le swing low";
+  return s * (last(c.past).c - pr.poc) > 0 ? null : "la reprise ne clôture pas au-delà du POC";
+};
+
 // ─── Affirmations ─────────────────────────────────────────────────────────────
 
 /** BOS : une clôture au-dessus du swing high, puis un retour au contact par au-dessus, sans clôture dessous */
@@ -652,6 +718,16 @@ export const PS_NEW: PsScenario[] = [
     context: "Une bougie vient de balayer le plus haut précédent avec une très longue mèche, puis a clôturé en dessous. Tu vends. Où placer ton stop ?", shortContext: "SELL après sweep du plus haut.",
     lessons: one("Après un sweep, la pointe de la mèche marque l'invalidation : le stop se place juste derrière, avec une marge. Plus loin, il ne protège rien de plus (leçon Avancé 1)."), build: mirrored(adv.sweepProche),
     claims: { "mèche au-dessus du plus haut, clôture en dessous": sweepBack, "bon stop : le plus proche": rankIs("proche") } },
+  { ...ADV, id: "adv_stop_poc", title: "Stop sous la structure, pas sous le POC", direction: "BUY", htfBias: "bullish", tag: "structure", rank: "milieu",
+    notions: ["volume_profile", "structure", "stop_loss"], conflict: "Le POC attire l'œil comme niveau de stop, mais le repli l'a déjà traversé d'une mèche : l'invalidation est le swing low, plus bas.",
+    context: "Après une consolidation, le prix est parti à la hausse. Il revient sur le POC de cette consolidation, passe un peu dessous d'une mèche (swing low), puis repart. Tu achètes. Où placer ton stop ?", shortContext: "BUY au retour sur le POC.",
+    lessons: one("Le POC est une concentration d'échanges passés, pas une invalidation : le stop se place sous le creux technique (le swing low), avec une marge. Un stop collé au POC est dans le bruit du retour (leçons Avancé 10 et 11)."), build: pocScene(false),
+    claims: { "mèche sous le POC, stop proche entre le POC et le swing low": pocWickBelow, "bon stop : celui du milieu": rankIs("milieu") } },
+  { ...ADV, id: "adv_stop_poc_vente", title: "Stop au-dessus de la structure, pas du POC", direction: "SELL", htfBias: "bearish", tag: "structure", rank: "loin",
+    notions: ["volume_profile", "structure", "stop_loss"], conflict: "Le POC attire l'œil comme niveau de stop, mais le rebond l'a déjà traversé d'une mèche : l'invalidation est le swing high, plus haut.",
+    context: "Après une consolidation, le prix est parti à la baisse. Il remonte sur le POC de cette consolidation, passe un peu dessus d'une mèche (swing high), puis repart à la baisse. Tu vends. Où placer ton stop ?", shortContext: "SELL au retour sur le POC.",
+    lessons: one("Le POC est une concentration d'échanges passés, pas une invalidation : le stop se place au-dessus du sommet technique (le swing high), avec une marge. Un stop collé au POC est dans le bruit du retour (leçons Avancé 10 et 11)."), build: mirrored(pocScene(true)),
+    claims: { "mèche au-dessus du POC, stop proche entre le POC et le swing high": pocWickBelow, "bon stop : le plus loin": rankIs("loin") } },
   { ...ADV, id: "adv_stop_ote", title: "Stop d'une entrée OTE", direction: "BUY", htfBias: "bullish", tag: "structure", rank: "milieu",
     notions: ["ote", "fibonacci", "stop_loss"], conflict: "Le stop serré sous la bougie d'entrée améliore le R/R, mais la zone OTE s'étend jusqu'à 79 % : il serait balayé.",
     context: "Après une forte impulsion haussière, le prix corrige : en UT inférieure, il fait même un swing high plus bas, puis descend dans la zone OTE et repart. Tu achètes. Où placer ton stop ?", shortContext: "BUY dans la zone OTE.",

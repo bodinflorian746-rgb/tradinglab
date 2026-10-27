@@ -33,6 +33,8 @@ const byLabel = (zs: ChartZone[], label: string) => zs.find((z) => z.label.toLow
 const NAMES: [RegExp, (zs: ChartZone[]) => Span | null][] = [
   [/plus bas des 2 swing lows/i, (zs) => { const a = [byLabel(zs, "Swing low 1"), byLabel(zs, "Swing low 2")].filter(Boolean) as ChartZone[]; return a.length ? span(a.reduce((x, y) => (Math.min(x.y1, x.y2) < Math.min(y.y1, y.y2) ? x : y)), "plus bas des 2 swing lows") : null; }],
   [/(1er|2e|3e) swing (low|high)/i, () => null], // résolu plus bas (numéro)
+  // profil de volume (Avancé 10) : le POC, tracé comme un niveau
+  [/POC/, (zs) => span(byLabel(zs, "POC"), "POC")],
   [/swing low évident/i, (zs) => span(byLabel(zs, "Swing low évident"), "swing low évident")],
   [/swing high évident/i, (zs) => span(byLabel(zs, "Swing high évident"), "swing high évident")],
   [/swing low H1/i, (zs) => span(byLabel(zs, "Swing low H1"), "swing low H1")],

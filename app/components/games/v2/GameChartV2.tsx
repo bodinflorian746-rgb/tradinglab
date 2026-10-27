@@ -243,6 +243,7 @@ const ZONE_COLOR: Record<ZoneKind, { stroke: string; fill: string; dashed: boole
   fvg:            { stroke: "var(--v2-zone)", fill: "rgba(245,158,11,0.18)", dashed: false },
   liquidity_low:  { stroke: "var(--v2-zone)", fill: "rgba(245,158,11,0.12)", dashed: true },
   liquidity_high: { stroke: "var(--v2-zone)", fill: "rgba(245,158,11,0.12)", dashed: true },
+  volume:         { stroke: "#38bdf8",        fill: "rgba(56,189,248,0.14)", dashed: true },
 };
 const HERO_GRADIENT: Record<ZoneKind, string> = {
   support: "#10b981",
@@ -250,6 +251,7 @@ const HERO_GRADIENT: Record<ZoneKind, string> = {
   fvg: "#f59e0b",
   liquidity_low: "#f59e0b",
   liquidity_high: "#f59e0b",
+  volume: "#38bdf8",
 };
 
 /** Début horizontal d'une zone FVG : la bougie d'impulsion dont le corps couvre toute la zone. */
@@ -978,6 +980,15 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
               </g>
             );
           }
+          // Niveau du profil de volume (POC, VAH, VAL, HVN) : un trait, pas une bande
+          if (z.kind === "volume" && z.label !== "LVN") {
+            const y = toY((z.y1 + z.y2) / 2);
+            return (
+              <g key={`z${i}`} data-zone={i} className={question ? "v2-dim" : "v2-dim--now"}>
+                <line x1={r.x} x2={r.x + r.w} y1={y} y2={y} stroke={z.label === "POC" ? "#f59e0b" : style.stroke} strokeWidth={2.5} strokeDasharray={z.label === "POC" ? undefined : "6 5"} vectorEffect="non-scaling-stroke" />
+              </g>
+            );
+          }
           return (
             <g key={`z${i}`} data-zone={i} className={question ? "v2-dim" : "v2-dim--now"}>
               <rect x={r.x} y={r.y} width={r.w} height={r.h} rx={6} fill={style.fill} stroke={style.stroke}
@@ -1016,6 +1027,34 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
             dashed: s.dashed !== false && !s.hit, width: s.hit || s.selected || emphasis === `stop${i}` ? 3 : 2,
             opacity: dimmed(`stop${i}`) ? 0.3 : 1, x2: s.label ? lineEnd : lineX1,
           })))}
+
+        {/* Profil de volume (scénarios Volume Profile) : barres horizontales depuis le début de sa plage,
+            sous les bougies ; Value Area en bleu, POC en ambre (lib/games/volume-study.ts) */}
+        {data.study?.profile && (() => {
+          const pr = data.study.profile;
+          const vah = zones.find((z) => z.kind === "volume" && z.label === "VAH"), val = zones.find((z) => z.kind === "volume" && z.label === "VAL");
+          const mid = (z?: ChartZone) => (z ? (z.y1 + z.y2) / 2 : undefined);
+          const top = mid(vah), bot = mid(val);
+          const x0 = xOf(pr.from) - slot / 2;
+          const maxW = Math.min(Math.max((pr.to - pr.from + 1) * slot, 0.22 * slot * nSlots), 0.45 * slot * nSlots);
+          const vmax = Math.max(...pr.rows.map((r) => r.v)) || 1;
+          return (
+            <g data-profile="" className={question ? undefined : "v2-dim--now"}>
+              {pr.rows.map((r) => {
+                const y = toY(r.p + pr.row / 2), h = Math.max(toY(r.p - pr.row / 2) - y - 1, 1);
+                const poc = r.v === vmax, va = top !== undefined && bot !== undefined && r.p <= top + pr.row / 4 && r.p >= bot - pr.row / 4;
+                return <rect key={r.p} data-row-p={r.p} data-v={r.v} x={x0} y={y + 0.5} width={Math.max((r.v / vmax) * maxW, 0.5)} height={h} rx={1.5}
+                  fill={poc ? "#f59e0b" : va ? "#38bdf8" : "#9ca0ab"} fillOpacity={poc ? 0.5 : va ? 0.28 : 0.16} />;
+              })}
+            </g>
+          );
+        })()}
+
+        {/* VWAP (scénarios VWAP) : calculé sur les bougies et leurs volumes, tracé jusqu'à la dernière bougie affichée */}
+        {data.study?.vwap && (() => {
+          const pts = data.study.vwap.slice(0, visibleCount).map((v, i) => (v === null ? null : `${xOf(i)},${toY(v)}`)).filter(Boolean).join(" ");
+          return pts ? <polyline data-vwap="" points={pts} fill="none" stroke="#a78bfa" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" /> : null;
+        })()}
 
         {/* Bougies */}
         {visible.map((k, i) => {
@@ -1165,6 +1204,13 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
 
         {children}
       </div>
+      {/* Légende du VWAP (courbe sans étiquette sur le graphique) */}
+      {data.study?.vwap && (
+        <p className="v2-legend mt-1.5 flex items-center gap-2 text-[13px] text-[color:var(--v2-text-2)]" data-vwap-legend="">
+          <span aria-hidden className="inline-block h-[3px] w-5 rounded-full" style={{ background: "#a78bfa" }} />
+          VWAP
+        </p>
+      )}
     </div>
   );
 }

@@ -24,7 +24,7 @@ const MIRROR = new Map<string, string>(PAIRS.flatMap(([a, b]) => [[a, b], [b, a]
 /** Libellé de la zone miroir (un libellé sans sens, « Order Block », « Chiffre rond », reste tel quel) */
 export const mirrorLabel = (l: string): string => MIRROR.get(l) ?? l;
 
-const KIND: Record<ZoneKind, ZoneKind> = { support: "resistance", resistance: "support", fvg: "fvg", liquidity_low: "liquidity_high", liquidity_high: "liquidity_low" };
+const KIND: Record<ZoneKind, ZoneKind> = { support: "resistance", resistance: "support", fvg: "fvg", liquidity_low: "liquidity_high", liquidity_high: "liquidity_low", volume: "volume" };
 
 export const mirrorCandles = (cs: Candle[], A: number): Candle[] => cs.map((k) => ({ o: A - k.o, c: A - k.c, h: A - k.l, l: A - k.h }));
 export const mirrorZones = (zs: ChartZone[], A: number): ChartZone[] => zs.map((z) => ({

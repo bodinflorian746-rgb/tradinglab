@@ -54,6 +54,12 @@ const NY_OR_OVERLAP: readonly Session[] = ["New York", "Overlap"];
 export const CONTEXT_RULES: Record<string, ContextRule> = {
   // BUY / SELL / NO TRADE
   "bsnt/trade_before_news":            { sessions: ["New York"], news: true },           // NFP / FOMC / CPI
+  // Volume Profile et VWAP (leçons Avancé 10 et 11) : actifs des leçons, séances où les volumes ont un sens
+  ...Object.fromEntries([
+    "bsnt/adv_va_acceptation", "bsnt/adv_va_acceptation_vente", "bsnt/adv_va_rejet", "bsnt/adv_va_rejet_vente",
+    "bsnt/adv_vwap_tient", "bsnt/adv_vwap_tient_vente", "bsnt/adv_vwap_casse", "bsnt/adv_vwap_casse_vente",
+    "ps/adv_stop_poc", "ps/adv_stop_poc_vente", "btt/adv_btt_hvn", "btt/adv_btt_hvn_vente",
+  ].map((k) => [k, { assets: ["EUR/USD", "XAU/USD", "NASDAQ"], sessions: ["Londres", "Overlap", "New York"] } satisfies ContextRule])),
   // Trouve l'erreur
   "ftm/trade_before_news":             { sessions: NY_OR_OVERLAP, news: true },          // NFP dans 18 min
   "ftm/risk_not_reduced_news":         { assets: ["EUR/USD"], sessions: ["Overlap"], news: true },   // 14h20, NFP, EUR/USD

@@ -26,6 +26,7 @@ import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
+import { mapStudy, withVolumeStudy, type GameStudy, type StudySpec } from "./volume-study";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext };
 export type { Candle, ChartZone, ChartData, ZoneKind };
@@ -120,6 +121,10 @@ export interface BuySellChart {
   future: Candle[];
   zones:  ChartZone[];
   domain: { min: number; max: number };
+  /** Scénarios Volume Profile / VWAP : ce que le scénario demande, puis volumes, VWAP et profil calculés */
+  studySpec?: StudySpec;
+  study?:     GameStudy;
+  guards?:    number[];
 }
 
 export const ROUNDS_PER_SESSION = 10;
@@ -676,6 +681,9 @@ interface RawScenario {
   past:   Candle[];
   future: Candle[];
   zones:  ChartZone[];
+  studySpec?: StudySpec;
+  /** Niveaux invisibles que la passe de réalisme ne laisse pas franchir aux mèches */
+  guards?: number[];
 }
 
 function finalize(raw: RawScenario): BuySellChart {
@@ -1528,6 +1536,7 @@ export function withAssetPrices(chart: BuySellChart, inst: { asset: Asset; seed:
     future: chart.future.map(mapCandle(f)),
     zones:  chart.zones.map(mapZone(f)),
     domain: mapDomain(f, chart.domain),
+    ...(chart.study ? { study: mapStudy(f, chart.study) } : {}),
   };
 }
 
@@ -1543,7 +1552,10 @@ export function buildChart(
   const calm = setup === "trade_before_news";
   // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
   // (swing désigné : sa pointe reste l'extrême de ses voisines, avant et après le tracé)
-  return keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past)], seed, { ...ctx, volatility, calmPast: calm, preNews: calm }))))));
+  const out = keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(realizeChart(ch, [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[volatility], ch.past), ...(ch.guards ?? [])], seed, { ...ctx, volatility, calmPast: calm, preNews: calm }))))));
+  // Volumes, VWAP et profil (scénarios Volume Profile / VWAP) : calculés sur les bougies finales
+  const withStudy = withVolumeStudy(out, ch.studySpec, seed);
+  return withStudy.study ? { ...withStudy, domain: chartDomain([...withStudy.past, ...withStudy.future], withStudy.zones) } : withStudy;
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

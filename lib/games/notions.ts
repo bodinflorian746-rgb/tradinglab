@@ -70,6 +70,8 @@ export const NOTIONS = {
   ote:                { label: "OTE (Optimal Trade Entry)", level: "avance", lesson: "avance/lecon5" },
   chasse_aux_stops:   { label: "Chasse aux stops", level: "avance", lesson: "avance/lecon6" },
   entree_precision:   { label: "Entrées de précision (rejet, retest, sweep et retournement)", level: "avance", lesson: "avance/lecon7" },
+  volume_profile:     { label: "Volume Profile (POC, Value Area, HVN, LVN)", level: "avance", lesson: "avance/lecon10" },
+  vwap:               { label: "VWAP (prix moyen pondéré par les volumes)", level: "avance", lesson: "avance/lecon11" },
   // ─── Stratégies (Avancé seulement) ───────────────────────────────────────────
   macro:              { label: "Macro trading (régime de marché, filtre avant une news)", level: "strategies", lesson: "strategies/macro-trading" },
   volatilite:         { label: "Volatilité (amplitude moyenne, ATR)", level: "strategies", lesson: "strategies/macro-trading" },

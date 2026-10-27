@@ -39,6 +39,7 @@ const ZONE_STYLES: Record<ZoneKind, { fill: string; stroke: string; dotClass: st
   fvg:            { fill: "rgba(245,158,11,0.14)", stroke: "#f59e0b", dotClass: "bg-amber-400",   dashed: false },
   liquidity_low:  { fill: "rgba(245,158,11,0.07)", stroke: "#f59e0b", dotClass: "bg-amber-400",   dashed: true  },
   liquidity_high: { fill: "rgba(245,158,11,0.07)", stroke: "#f59e0b", dotClass: "bg-amber-400",   dashed: true  },
+  volume:         { fill: "rgba(56,189,248,0.10)", stroke: "#38bdf8", dotClass: "bg-sky-400",     dashed: true  },
 };
 
 export function MiniChart({ data, overlay, height = 170 }: MiniChartProps) {

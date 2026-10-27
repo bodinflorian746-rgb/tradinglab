@@ -26,6 +26,7 @@ import { breakStrayLevels, hasStrayLevel } from "./stray-levels";
 import { pickMarketContext, contextRule } from "./market-context";
 import { pickRotation, type RotationHistory } from "./rotation";
 import { realizeChart, type MarketCtx } from "./candle-realism";
+import { mapStudy, shiftSpec, withVolumeStudy, type GameStudy, type StudySpec } from "./volume-study";
 import { assetPriceMap, mapCandle, mapDomain, mapZone } from "./price-scale";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext };
@@ -129,6 +130,9 @@ export interface PlaceStopChart {
   stops:     StopOption[];   // 3 stops, ordonnés visuellement top→bottom (A en haut)
   /** Bougies de la jambe d'arrivée en tête du passé (échelle lisible) : affichées d'un coup */
   lead?:     number;
+  /** Scénarios Volume Profile : ce que le scénario demande (indices de la scène), puis le calcul */
+  studySpec?: StudySpec;
+  study?:     GameStudy;
 }
 
 export const ROUNDS_PER_SESSION = 10;
@@ -989,6 +993,7 @@ function finalizeStops(raw: {
   direction: TradeDirection;
   seed:      number;  // pour shuffle des labels A/B/C
   stops:     Array<{ type: StopType; price: number; rationale: string }>;
+  studySpec?: StudySpec;
 }): PlaceStopChart {
   const sorted = [...raw.stops].sort((a, b) => b.price - a.price);
   const labels = shuffleSeeded(["A", "B", "C"] as StopId[], raw.seed);
@@ -1006,6 +1011,7 @@ function finalizeStops(raw: {
   const max = Math.max(...vals);
   const pad = (max - min) * 0.08 || 1;
   return {
+    ...(raw.studySpec ? { studySpec: raw.studySpec } : {}),
     past: raw.past,
     future: raw.fut,
     zones: raw.zones,
@@ -2974,6 +2980,7 @@ export function withAssetPrices(chart: PlaceStopChart, inst: { id: string; asset
     future: chart.future.map(mapCandle(f)),
     zones:  chart.zones.map(mapZone(f)),
     domain: mapDomain(f, chart.domain),
+    ...(chart.study ? { study: mapStudy(f, chart.study) } : {}),
     entry:  f(chart.entry),
     tp:     chart.tp === null ? null : f(chart.tp),
     stops:  chart.stops.map((st) => ({ ...st, price: f(st.price) })),
@@ -3023,7 +3030,8 @@ function finishChart(setup: PlaceStopSetupKey, chart: PlaceStopChart, seed: numb
   // peut pas les séparer sans toucher une zone ou un stop : autre tirage de réalisme (3 essais au plus)
   let out = finish(seed);
   for (let k = 1; k <= 3 && hasStrayLevel(out); k++) out = finish((seed + k * 0x9E3779B1) >>> 0);
-  return out;
+  // Volumes et profil (scénarios Volume Profile) : sur les bougies finales, indices décalés de la jambe d'arrivée
+  return chart.studySpec ? withVolumeStudy(out, shiftSpec(chart.studySpec, out.lead ?? 0), seed) : out;
 }
 
 /** Part minimale de l'échelle (bougies, zones, entrée, 3 stops) couverte par les bougies de la question */
