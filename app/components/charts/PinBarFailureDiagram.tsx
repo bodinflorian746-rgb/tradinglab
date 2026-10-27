@@ -22,6 +22,9 @@ export default function PinBarFailureDiagram(_props: { className?: string; local
       panels={[{
         key: "h4", subtitle: "EUR/USD H4 — la même pin bar valide, puis breakout du support",
         decimals: 5, height: 300, candles: cs,
+        // Animation : la pin bar sur le support, l'entrée et le SL, puis la clôture sous le support et la chute
+        // jusqu'au SL
+        anim: [{ candles: pin - 1 }, { show: "support" }, { candles: pin }, { show: "pin" }, { show: ["entry", "sl"] }, { candles: bo }, { show: "bo" }, { candles: hit }],
         levels: [
           { key: "support", price: SUP, to: bo, label: `Support ${p(SUP)}`, short: "Support", tone: "bull", dashed: true, faint: true },
           { key: "entry", price: ENTRY, from: pin, label: `Entrée ${p(ENTRY)}`, short: "Entrée", tone: "entry" },

@@ -32,6 +32,8 @@ export default function DoubleTopBottomDiagram(_props: { className?: string; loc
       panels={[
         {
           key: "top", title: "Double top · EUR/USD H1", decimals: 5, height: 230, candles: top,
+          // Animation : sommet 1, sommet 2, la ligne de cou, puis la clôture dessous
+          anim: [{ candles: t.a.index + 1 }, { show: "a" }, { candles: t.b.index + 1 }, { show: "b" }, { show: "neck" }, { candles: t.brk }, { show: "brk" }],
           levels: [{ key: "neck", price: t.neck.price, from: t.a.index, label: `Ligne de cou ${p(t.neck.price)}`, short: "Ligne de cou", tone: "zone" }],
           markers: [
             { key: "a", i: t.a.index, price: t.a.price, label: `Sommet 1 ${p(t.a.price)}`, short: "Sommet 1", tone: "bear", side: "above", role: "swing-high" },
@@ -42,6 +44,7 @@ export default function DoubleTopBottomDiagram(_props: { className?: string; loc
         },
         {
           key: "bottom", title: "Double bottom · XAU/USD H1", decimals: 0, height: 230, candles: bot,
+          anim: [{ candles: b.a.index + 1 }, { show: "a" }, { candles: b.b.index + 1 }, { show: "b" }, { show: "neck" }, { candles: b.brk }, { show: "brk" }],
           levels: [{ key: "neck", price: b.neck.price, from: b.a.index, label: `Ligne de cou ${usd(b.neck.price)}`, short: "Ligne de cou", tone: "zone" }],
           markers: [
             { key: "a", i: b.a.index, price: b.a.price, label: `Creux 1 ${usd(b.a.price)}`, short: "Creux 1", tone: "bull", side: "below", role: "swing-low" },

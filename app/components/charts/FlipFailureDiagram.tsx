@@ -23,6 +23,8 @@ export default function FlipFailureDiagram(_props: { className?: string; locale?
       caption="Retour rapide sous le niveau cassé dans les 3 à 5 bougies = flip invalidé. On ne déplace jamais le SL contre soi."
       panels={[{
         key: "h4", title: "EUR/USD H4", decimals: 5, height: 280, candles: cs,
+        // Animation : le breakout, le retest acheté (entrée, SL), puis le retour sous le niveau et le SL touché
+        anim: [{ candles: brk - 1 }, { show: "lvl" }, { candles: brk }, { show: "brk" }, { candles: entryAt }, { show: ["entry", "sl"] }, { candles: back }, { show: "back" }, { candles: stop }, { show: "stop" }],
         levels: [
           { key: "lvl", price: LEVEL, label: `Résistance cassée ${p(LEVEL)}`, short: "Résistance", tone: "zone" },
           { key: "entry", price: ENTRY, from: entryAt, label: `Entrée long ${p(ENTRY)}`, short: "Entrée", tone: "entry" },

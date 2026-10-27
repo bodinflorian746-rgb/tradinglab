@@ -24,6 +24,8 @@ export default function DivergenceWithoutBreakoutDiagram(_props: { className?: s
       panels={[{
         key: "h1", subtitle: "EUR/USD H1 — prix en HH, RSI en LH, creux structurel intact",
         decimals: 5, height: 360, candles,
+        // Animation : le 1er HH, le 2e HH avec le RSI plus bas (divergence), le creux qui tient, puis le nouveau HH
+        anim: [{ candles: t1.index + 1 }, { show: `hh${t1.index}` }, { candles: t2.index + 1 }, { show: [`hh${t2.index}`, "div", "rsi"] }, { show: "creux" }, { candles: last }, { show: "suite" }],
         segments: [{ key: "div", i1: t1.index, p1: t1.price, i2: t2.index, p2: t2.price, tone: "bear", dashed: true }],
         levels: [{ key: "creux", price: trough.price, from: trough.index, label: `Creux ${px(trough.price)} jamais cassé`, short: `Creux ${px(trough.price)}`, tone: "bull", dashed: true }],
         markers: [

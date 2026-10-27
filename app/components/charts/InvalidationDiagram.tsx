@@ -23,6 +23,8 @@ export default function InvalidationDiagram(_props: { className?: string; locale
       caption="Un seul critère allumé suffit : sortie à la clôture de la bougie, sans attendre le SL."
       panels={[{
         key: "h1", title: "EUR/USD H1, short sur double top", decimals: 5, height: 280, candles: cs,
+        // Animation : la ligne de cou, l'entrée short et le SL, la baisse, puis la re-clôture au-dessus : on coupe
+        anim: [{ candles: entryAt - 1 }, { show: "neck" }, { candles: entryAt }, { show: ["entry", "sl"] }, { candles: cs.findIndex((k, i) => i >= entryAt && k.l === low) }, { show: "low" }, { candles: last }, { show: "cut" }],
         levels: [
           { key: "neck", price: NECK, label: `Ligne de cou ${p(NECK)}`, short: "Ligne de cou", tone: "zone" },
           { key: "entry", price: ENTRY, from: entryAt, label: `Entrée short ${p(ENTRY)}`, short: "Entrée", tone: "entry" },

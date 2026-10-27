@@ -21,6 +21,8 @@ function hs(cs: Candle[], side: "h" | "l", key: string, title: string, decimals:
   const tone = side === "h" ? "bear" as const : "bull" as const, at = side === "h" ? "above" as const : "below" as const;
   return {
     key, title, decimals, height: 230, candles: cs,
+    // Animation : épaule, tête, épaule et la ligne de cou, puis la clôture qui la casse
+    anim: [{ candles: ls.index + 1 }, { show: "ls" }, { candles: head.index + 1 }, { show: "head" }, { candles: rs.index + 1 }, { show: ["rs", "neck"] }, { candles: last }, { show: "brk" }],
     levels: [{ key: "neck", price: neckR, from: necks[0].index, label: `Ligne de cou ≈ ${px(neckR)}`, short: "Ligne de cou", tone: "zone" }],
     markers: [
       { key: "ls", i: ls.index, price: ls.price, label: `Épaule ${px(ls.price)}`, short: "Épaule", tone, side: at, role: side === "h" ? "swing-high" as const : "swing-low" as const },
