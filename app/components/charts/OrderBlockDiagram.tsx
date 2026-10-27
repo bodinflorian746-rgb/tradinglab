@@ -5,6 +5,7 @@
 // Bougies : scenarios.ts (« smc-ob », comme le plan d'exécution).
 
 import { LessonChart } from "@/app/components/lessons/LessonChart";
+import type { LCStep } from "@/app/components/lessons/lesson-anim";
 import { fmtPrice, lastOpposite, orderBlock, pivots, type Candle } from "@/lib/lessons/chart-analysis";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
@@ -28,13 +29,21 @@ export function OrderBlockDiagram(_props: { className?: string; locale?: "fr" | 
   // identification seulement : jusqu'à deux bougies après l'impulsion (le retour dans l'OB est montré plus loin)
   const all = CANDLES["smc-ob"], { impulse: imp } = obLayout(all), cs = all.slice(0, imp[1] + 3);
   const { obI, impulse, ob, prevHigh, bos } = obLayout(cs);
+  // Animation, dans l'ordre des 4 étapes du texte : le sommet précédent, la bougie opposée, l'impulsion,
+  // la clôture au-dessus du sommet (BOS), puis la zone OB qui s'allume
+  const anim: LCStep[] = [
+    { candles: prevHigh.index + 1 }, { show: "prev" },
+    { candles: obI }, { show: "opp" },
+    { candles: Math.max(impulse[1], bos) }, { show: "imp" }, { show: "bos" },
+    { show: "ob" },
+  ];
   return (
     <LessonChart
       id="OrderBlockDiagram"
       title="Identifier un Order Block en 4 étapes"
       caption="Sans BOS, la bougie opposée n'est qu'une zone de réaction, pas un Order Block."
       panels={[{
-        key: "h4", title: "EUR/USD H4, Order Block haussier", decimals: 5, height: 300, candles: cs,
+        key: "h4", title: "EUR/USD H4, Order Block haussier", decimals: 5, height: 300, candles: cs, anim,
         zones: [{ key: "ob", ...ob, from: obI, label: `4 · Zone OB ${p(ob.y1)}-${p(ob.y2)}`, short: "4 · Zone OB", tone: "zone", kind: "ob", src: `smc-ob:${obI}`, role: "ob", dir: "bull" }],
         levels: [{ key: "bos", price: prevHigh.price, from: prevHigh.index, to: bos, label: `3 · BOS : clôture au-dessus de ${p(prevHigh.price)}`, short: "3 · BOS", tone: "bull", dashed: true, role: "bos", ref: prevHigh.index, dir: "bull" }],
         markers: [

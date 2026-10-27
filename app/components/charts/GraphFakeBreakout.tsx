@@ -18,6 +18,9 @@ function trap(key: "fake-up-eur" | "fake-down-eur", level: number, up: boolean, 
   const k = cs.findIndex((x) => (up ? x.h > level : x.l < level));
   return {
     key, title, decimals: 5, height: 220, candles: cs,
+    // Animation : les touches du niveau, puis le niveau, la mèche au-delà et la clôture de l'autre côté,
+    // puis l'étiquette du piège
+    anim: [{ candles: k - 1 }, { show: "lvl" }, { candles: k }, { show: "k" }],
     subtitle: up ? `Mèche ${p(cs[k].h)}, clôture ${p(cs[k].c)}` : `Mèche ${p(cs[k].l)}, clôture ${p(cs[k].c)}`,
     levels: [{ key: "lvl", price: level, label: `${up ? "Résistance" : "Support"} ${p(level)}`, short: up ? "Résistance" : "Support", tone: "zone" }],
     markers: [{ key: "k", i: k, price: up ? cs[k].h : cs[k].l, label: up ? "Acheteurs piégés" : "Vendeurs piégés", short: "Piège", tone: up ? "bear" : "bull", side: up ? "above" : "below", role: "sweep", ref: level, dir: up ? "bear" : "bull" }],
@@ -36,6 +39,9 @@ export function GraphFakeBreakout({ variant = "int6" }: { variant?: "int6" | "sr
         caption="Bougie 1 : mèche au-dessus, clôture à la limite. Bougie 2 : réintégration franche. Le trade se prend dans le sens opposé."
         panels={[{
           key: "h1", title: "XAU/USD H1, résistance 4 650 $", decimals: 0, height: 280, candles: cs,
+          // Animation : les 3 touches et la résistance, la bougie 1 (mèche au-dessus), la bougie 2
+          // (réintégration), puis le plan du short
+          anim: [{ candles: b1 - 1 }, { show: "lvl" }, { candles: b1 }, { show: "b1" }, { candles: b2 }, { show: "b2" }],
           levels: [{ key: "lvl", price: 4650, label: `Résistance ${usd(4650)} (3 touches)`, short: "Résistance", tone: "zone" }, ...t.levels],
           offscale: t.offscale,
           markers: [
