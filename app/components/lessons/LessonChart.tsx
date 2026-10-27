@@ -23,6 +23,7 @@ import { clamp, cssVars, textWidth, useBoxSize } from "@/app/components/games/v2
 import { candleBody } from "@/app/components/games/candle-geometry";
 import { fmtNum, fmtPrice, type Candle, type PivotName } from "@/lib/lessons/chart-analysis";
 import { planOf, usePlayOnce, type LCStep } from "./lesson-anim";
+import { cvd as cvdOf, volumeProfile, type VCandle, type VolumeProfile } from "@/lib/lessons/volume";
 
 // Bougie des leçons : rendu des jeux (couleurs, corps exact, jamais neutre), mais mèche proportionnée
 // au corps. Le trait fixe de 3 px des jeux paraît aussi épais qu'un corps étroit sur téléphone : ici la
@@ -54,7 +55,9 @@ export type LCTone = "bull" | "bear" | "entry" | "zone" | "fib" | "neutral" | "s
 export type LCRole =
   | "close" | "high" | "low" | "swing-high" | "swing-low" | "bos" | "choch" | "sweep" | "rejet"
   | "engulfing" | "pinbar" | "impulse" | "displacement" | "ob" | "fvg" | "support" | "resistance"
-  | "range" | "range-high" | "range-low" | "confluence" | "fib" | "dt-height" | "db-height";
+  | "range" | "range-high" | "range-low" | "confluence" | "fib" | "dt-height" | "db-height"
+  // volumes (lib/lessons/volume.ts, recalculés par l'audit) : POC, bornes de la Value Area, nœuds du profil
+  | "poc" | "vah" | "val" | "hvn" | "lvn";
 
 /** Attributs d'audit d'une notion */
 export interface LCSemantic {
@@ -145,13 +148,39 @@ export interface LCSegment extends LCSemantic {
   short?: string;
 }
 
-/** Série superposée (moyenne mobile). */
+/** Série superposée (moyenne mobile, VWAP). */
 export interface LCSeries {
   key: string;
   values: (number | null)[];
   tone: LCTone;
   label?: string;
   short?: string;
+  /** VWAP : indice de la bougie d'ancrage (audit : recalculé depuis les bougies et leurs volumes) */
+  vwap?: number;
+}
+
+/** Profil de volume à plage fixe (Fixed Range Volume Profile), calculé sur les bougies `from` à `to`
+ *  (lib/lessons/volume.ts) : histogramme horizontal ancré au début de la plage, POC, VAH, VAL, HVN et
+ *  LVN tracés et nommés dans la colonne. Les bougies du panneau portent leur volume (`v`). */
+export interface LCProfile {
+  key: string;
+  from: number;
+  to: number;
+  /** Hauteur d'une rangée (prix) */
+  row: number;
+  /** Prix : « $ » (or), « pts » (indices), sinon forex (4 décimales) */
+  unit?: "$" | "pts";
+  /** Notions nommées (défaut : toutes) */
+  show?: ("poc" | "vah" | "val" | "hvn" | "lvn")[];
+}
+
+/** Sous-panneau sous les bougies : volume, delta (barres) ou CVD (somme des deltas, en ligne). */
+export interface LCSub {
+  key: string;
+  kind: "volume" | "delta" | "cvd";
+  label: string;
+  /** Repères sur la courbe (CVD) : reliés deux à deux par un trait (divergence) */
+  marks?: { key: string; i: number; label: string; short?: string; tone?: LCTone }[];
 }
 
 export interface LCChip {
@@ -192,6 +221,41 @@ export interface LCPanel {
   /** Animation (lesson-anim.ts) : séquence dans l'ordre de ce que raconte la leçon ; indices d'origine
    *  (avant rognage mobile), clés des zones, niveaux, segments, repères ; « rsi » pour le sous-panneau */
   anim?: LCStep[];
+  /** Profil de volume (bougies avec volume `v`) */
+  profile?: LCProfile;
+  /** Sous-panneaux de volumes (bougies avec volume `v`, delta `d`) */
+  subs?: LCSub[];
+}
+
+/** Prix d'un niveau de volume : forex « 1.0850 », or « 3 900$ », indice « 27 200 ». */
+export function volPrice(x: number, unit?: "$" | "pts") {
+  if (unit === "$") return fmtPrice(x, 0, "$");
+  if (unit === "pts") return fmtPrice(x, 0, "$").replace("$", "");
+  return fmtPrice(x, 4);
+}
+
+/** Niveaux et zones nommés d'un profil de volume (POC, VAH, VAL, HVN, LVN), calculés sur les bougies. */
+export function profileMarks(pr: LCProfile, cs: VCandle[]): { prof: VolumeProfile; levels: LCLevel[]; zones: LCZone[] } {
+  const prof = volumeProfile(cs, pr.row, pr.from, pr.to);
+  const show = new Set(pr.show ?? ["poc", "vah", "val", "hvn", "lvn"]);
+  const f = (x: number) => volPrice(x, pr.unit);
+  const levels: LCLevel[] = [];
+  if (show.has("vah")) levels.push({ key: "vah", price: prof.vah, from: pr.from, label: `VAH ${f(prof.vah)}`, short: "VAH", tone: "sky", dashed: true, role: "vah", ref: pr.key });
+  if (show.has("poc")) levels.push({ key: "poc", price: prof.poc, from: pr.from, label: `POC ${f(prof.poc)}`, short: "POC", tone: "zone", role: "poc", ref: pr.key });
+  if (show.has("val")) levels.push({ key: "val", price: prof.val, from: pr.from, label: `VAL ${f(prof.val)}`, short: "VAL", tone: "sky", dashed: true, role: "val", ref: pr.key });
+  if (show.has("hvn")) prof.hvn.forEach((h, i) => levels.push({ key: `hvn${i}`, price: h, from: pr.from, label: `HVN ${f(h)}`, short: "HVN", tone: "neutral", dashed: true, role: "hvn", ref: pr.key }));
+  const zones: LCZone[] = show.has("lvn")
+    ? prof.lvn.map((z, i) => ({ key: `lvn${i}`, y1: z.lo, y2: z.hi, from: pr.from, label: `LVN ${f(z.lo)}-${f(z.hi)}`, short: "LVN", tone: "fib" as const, role: "lvn" as const, ref: pr.key }))
+    : [];
+  return { prof, levels, zones };
+}
+
+/** Panneau complété par les niveaux nommés de son profil de volume */
+function withProfile(p: LCPanel): LCPanel {
+  if (!p.profile || !p.candles) return p;
+  const { levels, zones } = profileMarks(p.profile, p.candles as VCandle[]);
+  const own = new Set([...(p.levels ?? []).map((l) => l.key), ...(p.zones ?? []).map((z) => z.key)]);
+  return { ...p, levels: [...levels.filter((l) => !own.has(l.key)), ...(p.levels ?? [])], zones: [...zones.filter((z) => !own.has(z.key)), ...(p.zones ?? [])] };
 }
 
 export interface LessonChartProps {
@@ -213,6 +277,10 @@ const TAG_H = 20;
 const TAG_GAP = 4;
 const MARK_H = 20;
 const RSI_H = 86;
+/** Hauteur d'un sous-panneau de volumes (volume, delta) ; CVD plus haut (repères de divergence) */
+const SUB_H = 74;
+const subH = (s: LCSub) => (s.kind === "cvd" ? 104 : SUB_H);
+const subsHeight = (p: LCPanel) => (p.subs ?? []).reduce((a, s) => a + subH(s), 0);
 const NARROW = 480;
 /** Largeur d'un libellé en gras (Space Grotesk 12 px), par caractère : une estimation uniforme
  *  (0,6 em) sous-estimait les chiffres et les capitales (« 1er HL » débordait de sa pastille). */
@@ -249,6 +317,11 @@ export function describePanel(p: LCPanel): string {
   list("Hors cadre", (p.offscale ?? []).map((o) => o.label));
   list("Courbes", [...(p.series ?? []).map((s) => s.label), ...(p.segments ?? []).map((s) => s.label)]);
   if (p.rsi) list(p.rsi.label, (p.rsi.marks ?? []).map((m) => m.label));
+  if (p.profile) parts.push(`Profil de volume des bougies ${p.profile.from + 1} à ${p.profile.to + 1}, en histogramme horizontal.`);
+  for (const s of p.subs ?? []) {
+    parts.push(`Sous-panneau ${s.label}${s.kind === "cvd" ? " (somme des deltas)" : ""}.`);
+    list(s.label, (s.marks ?? []).map((m) => m.label));
+  }
   list("Ratio", (p.chips ?? []).map((c) => (c.data && "rr" in c.data ? `R/R ${c.data.rr}` : undefined)));
   return parts.join(" ");
 }
@@ -314,6 +387,8 @@ export function cropStart(p: LCPanel, W: number, single: boolean): { s: number; 
   if (n <= fit) return { s: 0 };
   if (!single) return { s: 0, noCrop: "schéma de comparaison (plusieurs panneaux)" };
   if (p.measure) return { s: 0, noCrop: `courbe « ${p.measure.name} » (part de son point de départ)` };
+  // volumes cumulés (profil, VWAP, CVD) : calculés depuis leur première bougie, qui reste visible
+  if (p.profile || p.subs?.length || p.series?.some((s) => s.vwap !== undefined)) return { s: 0, noCrop: "volumes cumulés depuis la première bougie" };
   const refs = [
     ...(p.markers ?? []).map((m) => m.i), ...(p.levels ?? []).map((l) => l.from), ...(p.zones ?? []).map((z) => z.from),
     ...(p.segments ?? []).flatMap((s) => [s.i1, s.i2]), ...(p.rsi?.marks ?? []).map((m) => m.i),
@@ -380,7 +455,8 @@ const segBoxes = (s: Seg): Box[] => {
 };
 const overlaps = (a: Box, b: Box) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 
-function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel; domain?: [number, number]; single: boolean }) {
+function Panel({ chart, panel: panel0, domain, single }: { chart: string; panel: LCPanel; domain?: [number, number]; single: boolean }) {
+  const panel = withProfile(panel0);
   const { ref, w: W, h: H } = useBoxSize<HTMLDivElement>();
   const uid = useId().replace(/:/g, "");
   const play = usePlayOnce<HTMLDivElement>(!!panel.anim?.length);
@@ -399,7 +475,8 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
     const nPts = p.candles?.length ?? p.line?.length ?? 0;
     const n = p.slots ?? nPts;
     const rsiH = p.rsi ? RSI_H : 0;
-    const plotH = H - rsiH;
+    const subsH = subsHeight(p);
+    const plotH = H - rsiH - subsH;
 
     // Étiquettes de la colonne de droite
     const colItems = [
@@ -459,6 +536,21 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
       drawn.push({ x: levelX1(z) - 1, y: y - 1, w: levelX2(z) - levelX1(z) + 2, h: Math.max(toY(Math.min(z.y1, z.y2)) - y, 3) + 2 });
     });
     (p.levels ?? []).forEach((l) => drawn.push({ x: levelX1(l), y: toY(l.price) - 2, w: levelX2(l) - levelX1(l), h: 4 }));
+    // Profil de volume : barres horizontales depuis le début de sa plage (au plus 45 % de la largeur des bougies)
+    const prof = p.profile && p.candles ? (() => {
+      const pr = p.profile;
+      const vp = volumeProfile(p.candles as VCandle[], pr.row, pr.from, pr.to);
+      const x0 = xOf(pr.from) - slot / 2;
+      // largeur de la plage, au moins 22 % du graphique (plage courte : histogramme lisible), au plus 45 %
+      const maxW = Math.min(Math.max((pr.to - pr.from + 1) * slot, (plotR - plotL) * 0.22), (plotR - plotL) * 0.45);
+      const vmax = Math.max(...vp.rows.map((r) => r.v));
+      const bars = vp.rows.map((r) => {
+        const y = toY(r.p + pr.row / 2), h = toY(r.p - pr.row / 2) - y;
+        return { ...r, x: x0, y: y + (h > 3 ? 0.5 : 0), w: (r.v / vmax) * maxW, h: Math.max(h - (h > 3 ? 1 : 0), 0.5), va: r.p >= vp.val - 1e-9 && r.p <= vp.vah + 1e-9, poc: Math.abs(r.p - vp.poc) < 1e-9 };
+      });
+      // (fond translucide sous les bougies, comme sur TradingView : pas un obstacle pour les repères)
+      return { vp, bars, maxW };
+    })() : null;
     offTags.forEach((o) => drawn.push({ x: plotL, y: (o.price > dMax ? top - MARK_H : bottom + MARK_H) - 2, w: plotR - plotL, h: 4 }));
     (p.segments ?? []).forEach((s) => trace(xOf(s.i1), toY(s.p1), xOf(s.i2), toY(s.p2)));
     (p.series ?? []).forEach((s) => s.values.forEach((v, i) => {
@@ -608,6 +700,16 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
           );
         })}
 
+        {/* Profil de volume (sous les bougies) : Value Area plus soutenue, POC en couleur */}
+        {prof && (
+          <g data-profile={p.profile!.key} data-row={p.profile!.row} data-from={p.profile!.from} data-to={p.profile!.to} data-maxw={prof.maxW} {...aItem(p.profile!.key)}>
+            {prof.bars.map((b) => (
+              <rect key={b.p} data-row-p={b.p} data-v={b.v} x={b.x} y={b.y} width={Math.max(b.w, 0.5)} height={b.h}
+                fill={b.poc ? TONE.zone : b.va ? TONE.sky : TONE.neutral} fillOpacity={b.poc ? 0.55 : b.va ? 0.3 : 0.18} />
+            ))}
+          </g>
+        )}
+
         {/* Niveaux */}
         {(p.levels ?? []).map((l) => (
           <line key={l.key} data-level={l.key} data-price={l.price} data-from={l.from} data-to={l.to} {...sem(l)} {...aItem(l.key)}
@@ -624,8 +726,19 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
 
         {/* Moyennes mobiles */}
         {(p.series ?? []).map((s) => {
+          // VWAP animé : un tronçon par bougie, révélé avec elle (la moyenne se construit au fil des bougies)
+          if (s.vwap !== undefined && plan && play.armed) return (
+            <g key={s.key} data-ma={s.key} data-vwap-anchor={s.vwap}>
+              {s.values.map((v, i) => {
+                const prev = s.values[i - 1];
+                return v !== null && prev !== null && prev !== undefined
+                  ? <line key={i} {...a(plan.candle(i + crop.s))} x1={xOf(i - 1)} y1={toY(prev)} x2={xOf(i)} y2={toY(v)} stroke={TONE[s.tone]} strokeWidth={2} strokeLinecap="round" />
+                  : null;
+              })}
+            </g>
+          );
           const pts = s.values.map((v, i) => (v === null ? null : `${xOf(i)},${toY(v)}`)).filter(Boolean).join(" ");
-          return <polyline key={s.key} data-ma={s.key} {...aItem(s.key)} points={pts} fill="none" stroke={TONE[s.tone]} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />;
+          return <polyline key={s.key} data-ma={s.key} data-vwap-anchor={s.vwap} {...aItem(s.key)} points={pts} fill="none" stroke={TONE[s.tone]} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />;
         })}
 
         {/* Prix en ligne (schéma). Animée : un tronçon par point, révélé comme une bougie */}
@@ -672,12 +785,12 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
         {/* RSI */}
         {p.rsi && (() => {
           const rsiPlaced: { x: number; y: number; w: number }[] = [];
-          const r0 = plotH + 10, r1 = H - 8;
+          const r0 = plotH + subsH + 10, r1 = H - 8;
           const ry = (v: number) => r0 + ((100 - v) / 100) * (r1 - r0);
           const pts = p.rsi.values.map((v, i) => (v === null ? null : `${xOf(i)},${ry(v)}`)).filter(Boolean).join(" ");
           return (
             <g data-rsi="" {...aItem("rsi")}>
-              <line x1={plotL} x2={plotR} y1={plotH + 2} y2={plotH + 2} stroke="rgba(255,255,255,0.08)" strokeWidth={1} />
+              <line x1={plotL} x2={plotR} y1={plotH + subsH + 2} y2={plotH + subsH + 2} stroke="rgba(255,255,255,0.08)" strokeWidth={1} />
               {[70, 30].map((v) => (
                 <line key={v} data-level={`rsi${v}`} data-price={v} x1={plotL} x2={plotR} y1={ry(v)} y2={ry(v)} stroke="#9ca0ab" strokeOpacity={0.6} strokeWidth={1.5} strokeDasharray="4 5" />
               ))}
@@ -715,6 +828,80 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
           );
         })()}
 
+        {/* Sous-panneaux de volumes : volume et delta en barres (une par bougie), CVD en ligne (somme des deltas) */}
+        {(p.subs ?? []).map((sb, si) => {
+          const cs = (p.candles ?? []) as VCandle[];
+          const y0 = plotH + (p.subs ?? []).slice(0, si).reduce((a, s) => a + subH(s), 0), top = y0 + 22, bottom = y0 + subH(sb) - 6;
+          const head = (
+            <>
+              <line x1={plotL} x2={plotR} y1={y0 + 2} y2={y0 + 2} stroke="rgba(255,255,255,0.08)" strokeWidth={1} />
+              <text x={plotL + 4} y={y0 + 6 + FS} fontSize={FS} fontWeight={600} fill="#c7c9d1">{sb.label}</text>
+            </>
+          );
+          const upK = (k: VCandle, i: number) => k.c > k.o || (k.c === k.o && i > 0 && k.c >= cs[i - 1].c);
+          if (sb.kind === "volume" || sb.kind === "delta") {
+            const vals = cs.map((k) => (sb.kind === "volume" ? k.v : k.d ?? 0));
+            const m = Math.max(...vals.map(Math.abs)) || 1;
+            const zero = sb.kind === "volume" ? bottom : (top + bottom) / 2;
+            const span = sb.kind === "volume" ? bottom - top : (bottom - top) / 2;
+            return (
+              <g key={sb.key} data-sub={sb.kind} data-sub-key={sb.key} data-zero={zero} data-span={span} data-max={m}>
+                {head}
+                {sb.kind === "delta" && <line x1={plotL} x2={plotR} y1={zero} y2={zero} stroke="#9ca0ab" strokeOpacity={0.5} strokeWidth={1} strokeDasharray="3 4" />}
+                {vals.map((v, i) => {
+                  const h = Math.max((Math.abs(v) / m) * span, 0.5);
+                  const pos = sb.kind === "volume" ? upK(cs[i], i) : v >= 0;
+                  return <rect key={i} data-bar={i} data-value={v} {...a(plan ? plan.candle(i + crop.s) : null)} x={xOf(i) - bodyW / 2} y={v >= 0 ? zero - h : zero} width={bodyW} height={h} rx={1}
+                    fill={pos ? TONE.bull : TONE.bear} fillOpacity={sb.kind === "volume" ? 0.5 : 0.8} />;
+                })}
+              </g>
+            );
+          }
+          const vals = cvdOf(cs);
+          const lo = Math.min(...vals), hi = Math.max(...vals), rg = hi - lo || 1;
+          const cy = (v: number) => top + ((hi - v) / rg) * (bottom - top);
+          const marks = sb.marks ?? [];
+          const placed: { x: number; y: number; w: number }[] = [];
+          return (
+            <g key={sb.key} data-sub="cvd" data-sub-key={sb.key} data-scale={JSON.stringify({ min: lo, max: hi, top, bottom })}>
+              {head}
+              {lo < 0 && hi > 0 && <line x1={plotL} x2={plotR} y1={cy(0)} y2={cy(0)} stroke="#9ca0ab" strokeOpacity={0.5} strokeWidth={1} strokeDasharray="3 4" />}
+              {plan && play.armed
+                ? vals.slice(1).map((v, k) => <line key={k} {...a(plan.candle(k + 1 + crop.s))} x1={xOf(k)} y1={cy(vals[k])} x2={xOf(k + 1)} y2={cy(v)} stroke={TONE.sky} strokeWidth={2} strokeLinecap="round" />)
+                : <polyline data-cvd="" points={vals.map((v, i) => `${xOf(i)},${cy(v)}`).join(" ")} fill="none" stroke={TONE.sky} strokeWidth={2} strokeLinejoin="round" />}
+              {marks.length > 1 && (
+                <polyline data-cvd-link="" {...aItem(marks[1].key)} points={marks.map((mk) => `${xOf(mk.i)},${cy(vals[mk.i])}`).join(" ")} fill="none" stroke={TONE[marks[1].tone ?? "bear"]} strokeWidth={2} strokeDasharray="5 4" />
+              )}
+              {marks.map((mk) => {
+                const v = vals[mk.i], label = txt(mk), w = tagW(label), t = TONE[mk.tone ?? "sky"];
+                // Position : au-dessus du point, sinon en dessous, puis décalée sur le côté ; jamais sur une autre
+                // étiquette, sur le nom du sous-panneau ni hors du sous-panneau (trait vers le point si décalée)
+                const yLo = y0 + 4 + MARK_H / 2, yHi = y0 + subH(sb) - 2 - MARK_H / 2;
+                const name = { x: plotL, y: y0 + 4, w: tagW(sb.label), h: FS + 6 };
+                const free = (x: number, y: number) => [...placed.map((q) => ({ x: q.x - 4, y: q.y - MARK_H / 2 - 2, w: q.w + 8, h: MARK_H + 4 })), name]
+                  .every((o) => !(x < o.x + o.w && o.x < x + w && y - MARK_H / 2 < o.y + o.h && o.y < y + MARK_H / 2));
+                const cands: { x: number; y: number }[] = [];
+                for (const yy of [cy(v) - 8 - MARK_H / 2, cy(v) + 8 + MARK_H / 2]) for (const dx of [0, -0.6, 0.6, -1.2, 1.2]) cands.push({ x: clamp(xOf(mk.i) - w / 2 + dx * w, plotL, plotR - w), y: clamp(yy, yLo, yHi) });
+                const clear = (q: { x: number; y: number }) => Math.abs(q.y - cy(v)) >= MARK_H / 2 + 4 || xOf(mk.i) < q.x - 4 || xOf(mk.i) > q.x + w + 4;
+                const at = cands.find((q) => free(q.x, q.y) && clear(q)) ?? cands.find((q) => free(q.x, q.y)) ?? cands[0];
+                placed.push({ x: at.x, y: at.y, w });
+                const over = xOf(mk.i) >= at.x + 4 && xOf(mk.i) <= at.x + w - 4;
+                const lead = over ? null : { x2: clamp(xOf(mk.i), at.x + 8, at.x + w - 8), y2: at.y + (at.y < cy(v) ? MARK_H / 2 : -MARK_H / 2) };
+                return (
+                  <g key={mk.key} data-marker={mk.key} data-cvd-mark={mk.i} {...aItem(mk.key)}>
+                    {lead && <line data-leader={mk.key} x1={xOf(mk.i)} y1={cy(v)} x2={lead.x2} y2={lead.y2} stroke={t} strokeWidth={1.5} strokeOpacity={0.8} />}
+                    <circle cx={xOf(mk.i)} cy={cy(v)} r={4} fill={t} stroke="#06090d" strokeWidth={1.5} />
+                    <g data-label-for={mk.key}>
+                      <rect x={at.x} y={at.y - MARK_H / 2} width={w} height={MARK_H} rx={MARK_H / 2} fill="#06090d" stroke={t} strokeWidth={1.5} />
+                      <text x={at.x + w / 2} y={at.y + FS * 0.36} textAnchor="middle" fontSize={FS} fontWeight={700} fill={t}>{label}</text>
+                    </g>
+                  </g>
+                );
+              })}
+            </g>
+          );
+        })}
+
         {/* Colonne des étiquettes (au-dessus de tout) */}
         {tags.map((t) => (
           <g key={t.key} data-label-for={t.key} {...aLabel(t.key)}>
@@ -739,7 +926,7 @@ function Panel({ chart, panel, domain, single }: { chart: string; panel: LCPanel
           {panel.subtitle && <div className="lc-panel-sub">{panel.subtitle}</div>}
         </div>
       )}
-      <div ref={ref} className="lc-frame" data-dense={(panel.markers?.length ?? 0) + (panel.zones ?? []).filter((z) => z.label).length + (panel.rsi?.marks?.length ?? 0) >= 5 ? "" : undefined} style={{ "--lc-h": `${panel.height ?? 280}px`, ...(panel.rsi ? { "--lc-extra": `${RSI_H}px` } : {}) } as CSSProperties}>{svg}</div>
+      <div ref={ref} className="lc-frame" data-dense={(panel.markers?.length ?? 0) + (panel.zones ?? []).filter((z) => z.label).length + (panel.rsi?.marks?.length ?? 0) >= 5 ? "" : undefined} style={{ "--lc-h": `${panel.height ?? 280}px`, ...(panel.rsi || panel.subs?.length ? { "--lc-extra": `${(panel.rsi ? RSI_H : 0) + subsHeight(panel)}px` } : {}) } as CSSProperties}>{svg}</div>
       {panel.chips && panel.chips.length > 0 && (
         <ul className="lc-chips">
           {panel.chips.map((c, i) => (

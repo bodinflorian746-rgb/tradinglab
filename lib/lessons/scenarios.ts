@@ -8,6 +8,7 @@ import type { Candle } from "./chart-analysis";
 import { EUR_FROM_XAU_KEYS, xauToEur } from "./eur-from-xau";
 import { RETRACE_DECISION } from "./scenarios-meta";
 import { mulberry32 } from "@/lib/games/shared";
+import { VOLUME_SCENARIOS } from "./scenarios-volume";
 
 const c = (...closes: number[]): Step[] => closes.map((x) => ({ c: x }));
 
@@ -1407,6 +1408,9 @@ const hsRetest = () => buildCandles(4545, [
   { c: 4561, l: 4556 }, { c: 4569 }, { c: 4566, h: 4586 },
 ], { seed: 2401, decimals: 1, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [4578], pins: [4620, 4580, 4660, 4575, 4625, 4556, 4586] });
 Object.assign(SCENARIOS, { "hs-retest": hsRetest });
+
+// Trading Avancé 10 à 12 : Volume Profile, VWAP, Order Flow (bougies avec volumes)
+Object.assign(SCENARIOS, VOLUME_SCENARIOS);
 
 // Décision PO 9 : exemples de 7 stratégies passés de XAU/USD à EUR/USD (lib/lessons/eur-from-xau.ts).
 for (const key of EUR_FROM_XAU_KEYS) {

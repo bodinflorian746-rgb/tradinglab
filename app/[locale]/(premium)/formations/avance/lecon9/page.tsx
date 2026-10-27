@@ -16,7 +16,7 @@ function ContentFr() {
       duration="22 min"
       lessonNumber={9}
       prev={{ href: "/formations/avance/lecon8", label: "Leçon 8 : Journaling" }}
-      next={null}
+      next={{ href: "/formations/avance/lecon10", label: "Leçon 10 : Volume Profile" }}
     >
 
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

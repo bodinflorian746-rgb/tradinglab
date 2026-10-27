@@ -40,7 +40,7 @@
   },
   "avance": {
     "title": "Avancé",
-    "description": "Liquidité institutionnelle, Smart Money et techniques de trading de précision.",
+    "description": "Liquidité institutionnelle, Smart Money, techniques de trading de précision et lecture des volumes.",
     "badge": "Avancé",
     "lessons": {
       "lecon1": { "title": "Liquidité, comprendre les pools d'ordres",  "duration": "25 min" },
@@ -51,7 +51,10 @@
       "lecon6": { "title": "La chasse aux stops",           "duration": "22 min" },
       "lecon7": { "title": "Entrées de précision",                       "duration": "25 min" },
       "lecon8": { "title": "Journaling, analyser pour progresser",      "duration": "18 min" },
-      "lecon9": { "title": "Backtesting, valider sa stratégie",         "duration": "22 min" }
+      "lecon9": { "title": "Backtesting, valider sa stratégie",         "duration": "22 min" },
+      "lecon10": { "title": "Volume Profile, où se concentrent les échanges", "duration": "22 min" },
+      "lecon11": { "title": "VWAP, les retours du prix dans une tendance", "duration": "22 min" },
+      "lecon12": { "title": "Order Flow, footprint, delta et CVD",       "duration": "24 min" }
     }
   },
   "mt5": {

@@ -13,6 +13,19 @@ interface Props {
   locale?: "fr" | "es" | "en";
 }
 
+/** Question d'un quiz en plusieurs questions : une explication par réponse */
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctIndex: number;
+  answerExplanations: string[];
+}
+
+interface SeriesProps {
+  questions: QuizQuestion[];
+  locale?: "fr" | "es" | "en";
+}
+
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
 function CheckIcon() {
@@ -117,7 +130,12 @@ function OptionRow({
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
-export function LessonQuiz({
+/** Quiz de validation : une question (props d'origine, rendu inchangé) ou plusieurs (`questions`). */
+export function LessonQuiz(props: Props | SeriesProps) {
+  return "questions" in props ? <QuizSeries {...props} /> : <SingleQuiz {...props} />;
+}
+
+function SingleQuiz({
   question,
   options,
   correctIndex,
@@ -297,6 +315,169 @@ export function LessonQuiz({
             </div>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Quiz en plusieurs questions ─────────────────────────────────────────────
+// Même carte et mêmes options que le quiz d'une question ; chaque question se valide à part, avec
+// l'explication de chaque réponse. Le score s'affiche quand toutes les questions ont une réponse.
+
+function SeriesQuestion({
+  q,
+  index,
+  total,
+  onDone,
+  L,
+}: {
+  q: QuizQuestion;
+  index: number;
+  total: number;
+  onDone: (correct: boolean) => void;
+  L: { submit: string; pick: string; correct: string; wrong: string; questionOf: string };
+}) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [shaking, setShaking] = useState(false);
+
+  function handleSubmit() {
+    if (selected === null || submitted) return;
+    setSubmitted(true);
+    if (selected !== q.correctIndex) {
+      setShaking(true);
+      setTimeout(() => setShaking(false), 500);
+    }
+    onDone(selected === q.correctIndex);
+  }
+
+  function getState(i: number): "idle" | "selected" | "correct" | "wrong" | "dimmed" {
+    if (!submitted) return selected === i ? "selected" : "idle";
+    if (i === q.correctIndex) return "correct";
+    if (i === selected) return "wrong";
+    return "dimmed";
+  }
+
+  const ok = submitted && selected === q.correctIndex;
+  return (
+    <div className={index ? "pt-6 mt-6 border-t border-zinc-800" : ""}>
+      <div className="flex items-center justify-between gap-3 mb-2">
+        <p className="text-xs font-semibold text-zinc-500">
+          {L.questionOf.replace("{n}", String(index + 1)).replace("{total}", String(total))}
+        </p>
+        {submitted && (
+          <span
+            className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full border ${
+              ok ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/25" : "bg-red-500/10 text-red-400 border-red-500/20"
+            }`}
+            style={{ animation: "fadeExplain 0.3s ease both" }}
+          >
+            {ok ? <><CheckIcon />{L.correct}</> : <><CrossIcon />{L.wrong}</>}
+          </span>
+        )}
+      </div>
+      <p className="text-[15px] font-medium text-white leading-snug mb-5">{q.question}</p>
+      <div className="space-y-2.5 mb-5" style={shaking ? { animation: "shakeOptions 0.45s ease" } : undefined}>
+        {q.options.map((opt, i) => (
+          <OptionRow
+            key={i}
+            index={i}
+            text={opt}
+            explanation={q.answerExplanations[i]}
+            state={getState(i)}
+            onClick={!submitted ? () => setSelected(i) : undefined}
+          />
+        ))}
+      </div>
+      {!submitted && (
+        <button
+          onClick={handleSubmit}
+          disabled={selected === null}
+          className={`w-full py-3 rounded-xl text-sm font-semibold transition-all duration-200 active:scale-[0.99] ${
+            selected !== null
+              ? "bg-emerald-500 hover:bg-emerald-400 text-zinc-950"
+              : "bg-zinc-900 border border-zinc-800 text-zinc-700 cursor-not-allowed"
+          }`}
+        >
+          {selected !== null ? L.submit : L.pick}
+        </button>
+      )}
+    </div>
+  );
+}
+
+function QuizSeries({ questions, locale }: SeriesProps) {
+  const contextLocale = useLocale();
+  const resolvedLocale: "fr" | "es" | "en" = locale ?? contextLocale;
+  const L =
+    resolvedLocale === "es"
+      ? { validationQuiz: "Quiz de validación", correct: "Respuesta correcta", wrong: "Respuesta incorrecta", submit: "Validar mi respuesta", pick: "Elige una respuesta", questionOf: "Pregunta {n} de {total}", score: "{ok} respuestas correctas de {total}" }
+      : resolvedLocale === "en"
+        ? { validationQuiz: "Validation quiz", correct: "Correct answer", wrong: "Wrong answer", submit: "Submit my answer", pick: "Pick an answer", questionOf: "Question {n} of {total}", score: "{ok} correct answers out of {total}" }
+        : { validationQuiz: "Quiz de validation", correct: "Bonne réponse", wrong: "Mauvaise réponse", submit: "Valider ma réponse", pick: "Choisis une réponse", questionOf: "Question {n} sur {total}", score: "{ok} bonnes réponses sur {total}" };
+
+  const [results, setResults] = useState<(boolean | null)[]>(() => questions.map(() => null));
+  const firedRef = useRef(false);
+  const { onAnswered } = useQuizAnswered();
+  const done = results.every((r) => r !== null);
+  const okCount = results.filter(Boolean).length;
+
+  function record(i: number, correct: boolean) {
+    setResults((r) => {
+      const next = [...r];
+      next[i] = correct;
+      if (next.every((x) => x !== null) && !firedRef.current) {
+        firedRef.current = true;
+        onAnswered();
+      }
+      return next;
+    });
+  }
+
+  return (
+    <div>
+      <style>{`
+        @keyframes fadeExplain {
+          from { opacity: 0; transform: translateY(-4px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shakeOptions {
+          0%, 100% { transform: translateX(0); }
+          20%      { transform: translateX(-5px); }
+          40%      { transform: translateX(5px); }
+          60%      { transform: translateX(-3px); }
+          80%      { transform: translateX(3px); }
+        }
+      `}</style>
+
+      <p className="text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-2 px-1">Quiz</p>
+
+      <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6" data-quiz-series={questions.length}>
+        <div className="flex items-center justify-between gap-3 mb-5">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-zinc-800 border border-zinc-700/80 flex items-center justify-center shrink-0">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" className="text-zinc-400">
+                <path d="M6.5 2.5c-1.6 0-2.8 1-2.8 2.3 0 .6.3 1.1.7 1.5L5 7.5h3l.6-1.2c.4-.4.7-.9.7-1.5C9.3 3.5 8.1 2.5 6.5 2.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+                <path d="M5 7.5v.5a1.5 1.5 0 003 0v-.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+              </svg>
+            </div>
+            <span className="text-sm font-semibold text-white">{L.validationQuiz}</span>
+          </div>
+          {done && (
+            <span
+              className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${
+                okCount === questions.length ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/25" : "bg-zinc-800 text-zinc-300 border-zinc-700"
+              }`}
+              style={{ animation: "fadeExplain 0.3s ease both" }}
+            >
+              {L.score.replace("{ok}", String(okCount)).replace("{total}", String(questions.length))}
+            </span>
+          )}
+        </div>
+
+        {questions.map((q, i) => (
+          <SeriesQuestion key={i} q={q} index={i} total={questions.length} onDone={(c) => record(i, c)} L={L} />
+        ))}
       </div>
     </div>
   );

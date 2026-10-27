@@ -59,7 +59,7 @@ export const FORMATIONS: Formation[] = [
   {
     id: "avance",
     title: "Avancé",
-    description: "Liquidité institutionnelle, Smart Money et techniques de trading de précision.",
+    description: "Liquidité institutionnelle, Smart Money, techniques de trading de précision et lecture des volumes.",
     badge: "Avancé",
     badgeStyle: "bg-amber-400/10 text-amber-400 border border-amber-400/20",
     premium: false,
@@ -73,6 +73,9 @@ export const FORMATIONS: Formation[] = [
       { id: "lecon7", title: "Entrées de précision",                   duration: "25 min", href: "/formations/avance/lecon7" },
       { id: "lecon8", title: "Journaling : analyser pour progresser",  duration: "18 min", href: "/formations/avance/lecon8" },
       { id: "lecon9", title: "Backtesting : valider sa stratégie",     duration: "22 min", href: "/formations/avance/lecon9" },
+      { id: "lecon10", title: "Volume Profile : où se concentrent les échanges", duration: "22 min", href: "/formations/avance/lecon10" },
+      { id: "lecon11", title: "VWAP : les retours du prix dans une tendance", duration: "22 min", href: "/formations/avance/lecon11" },
+      { id: "lecon12", title: "Order Flow : footprint, delta et CVD", duration: "24 min", href: "/formations/avance/lecon12" },
     ],
   },
   {
