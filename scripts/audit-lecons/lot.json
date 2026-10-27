@@ -77,5 +77,8 @@
   {"url":"/fr/strategies/smc/lecon4","charts":["LiquidityPoolsDiagram","LiquidityGrabDiagram","FVGDiagram"]},
   {"url":"/fr/formations/avance/lecon2","charts":["FVGDiagram"]},
   {"url":"/fr/strategies/support-resistance/lecon1","charts":["SupportResistance","StrongVsWeakLevelDiagram","ZoneVsLineDiagram"]},
-  {"url":"/fr/formations/intermediaire/lecon9","charts":["FibonacciDiagram"]}
+  {"url":"/fr/formations/intermediaire/lecon9","charts":["FibonacciDiagram"]},
+  {"url":"/fr/formations/avance/lecon10","charts":["VolumeProfileDiagram","ValueAreaExitDiagram","VolumeProfileTradeDiagram","LVNTargetDiagram"]},
+  {"url":"/fr/formations/avance/lecon11","charts":["VWAPCalcDiagram","VWAPNasdaqPlanDiagram","VWAPGoldPlanDiagram","AnchoredVWAPDiagram"]},
+  {"url":"/fr/formations/avance/lecon12","charts":["OrderBookDiagram","FootprintDiagram","DeltaCVDDiagram","AbsorptionDivergenceDiagram"]}
 ]

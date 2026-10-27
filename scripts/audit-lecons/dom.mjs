@@ -21,6 +21,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { srTouches, srProofError } from "./sr-proof.mjs";
+import { checkVolumes } from "./volume-check.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, "..", "..");
@@ -42,12 +43,13 @@ const pages = PAGES.length ? PAGES.map((url) => ({ url, charts: LOT.find((l) => 
 
 const terms = JSON.parse(fs.readFileSync(path.join(ROOT, "lib", "vocabulary", "trading-terms.json"), "utf8"));
 const VOCAB = terms.termes.fr.flatMap((t) => t.interdit.map((src) => ({ src, flags: t.casse ? "u" : "iu", retenu: t.retenu })));
-const SR_SRC = `${srTouches.toString()}\n${srProofError.toString()}`;
+// fonctions passées en texte au navigateur : preuve des supports / résistances, volumes recalculés
+const SR_SRC = `${srTouches.toString()}\n${srProofError.toString()}\n${checkVolumes.toString()}`;
 
 // ─── Contrôles exécutés dans la page ─────────────────────────────────────────
 function checkCharts({ ids, vocab, sr, chrome = true }) {
   // Preuve des supports / résistances (sr-proof.mjs, passé en texte au navigateur)
-  const [, srProofError] = new Function(`${sr}; return [srTouches, srProofError];`)();
+  const [, srProofError, checkVolumes] = new Function(`${sr}; return [srTouches, srProofError, checkVolumes];`)();
   const errs = [];
   const E = (id, m) => errs.push(`${id} : ${m}`);
   const near = (a, b, t) => Math.abs(a - b) <= t;
@@ -639,6 +641,8 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
           }
         }
         checkLegibility(svg, r0.width, (m) => E(id, `${P} ${m}`));
+        // Volumes (profil, VWAP, volume, delta, CVD) recalculés depuis les bougies du panneau
+        checkVolumes(svg, (m) => E(id, `${P} ${m}`));
       }
       // Pastilles et légende qui répètent le graphique (mêmes chiffres, même texte)
       {
@@ -783,9 +787,23 @@ const EXPECT = {
   "OB qui déborde de sa bougie": /ne couvre exactement aucune bougie/, "support trop épais": /MR \(au plus 1,5\)/, "résistance appelée support": /touché seulement par-dessous|changement de rôle n'est pas annoncé/,
   "swing nommé sur la dernière bougie": /au bord du graphique, swing pas encore confirmé/, "étiquette vague": /nom vague/, "zone sans étiquette": /sans étiquette/, "SL du côté du TP": /du même côté de l'entrée/, "mèche aussi épaisse que le corps": /mèches presque aussi épaisses/, "décimale avec un point": /décimale avec un point/, "mots collés": /mots collés/,
   "Fibonacci sans repères 0 % et 100 %": /sans ses repères 0 % et 100 %/, "tracé Fibonacci au bord": /le tracé ne part pas d'un vrai/,
+  "POC déplacé": /POC recalculé/, "barre du profil étirée": /la plus longue barre|non proportionnelle/, "Value Area trop étroite": /contient .* % du volume/,
+  "volume d'une bougie modifié": /recalculé|la bougie dit/, "VWAP décalé": /VWAP recalculé/, "VWAP ancré hors du graphique": /ancré hors du graphique/,
+  "delta modifié": /la bougie dit|somme des deltas/, "CVD faux": /somme des deltas/, "LVN décalée": /n'est pas une LVN/, "divergence CVD inventée": /divergence nommée/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
+  // Volumes (volume-check.mjs) : profil, Value Area, VWAP, volume, delta, CVD
+  "POC déplacé": () => { const l = document.querySelector('line[data-role="poc"]'); const g = l.closest("svg").querySelector("g[data-profile]"); l.dataset.price = String(Number((+l.dataset.price + +g.dataset.row).toFixed(9))); },
+  "barre du profil étirée": () => { const g = document.querySelector("g[data-profile]"); const bars = [...g.querySelectorAll("rect[data-row-p]")]; const w = Math.max(...bars.map((b) => +b.getAttribute("width"))); const b = bars.find((q) => +q.getAttribute("width") < w * 0.6); b.setAttribute("width", String(w + 6)); },
+  "Value Area trop étroite": () => { const s = document.querySelector('line[data-role="vah"]').closest("svg"); const poc = s.querySelector('line[data-role="poc"]'); for (const r of ["vah", "val"]) s.querySelector(`line[data-role="${r}"]`).dataset.price = poc.dataset.price; },
+  "volume d'une bougie modifié": () => { const s = document.querySelector("svg g[data-profile]").closest("svg"); const c = JSON.parse(s.dataset.candles); c[3].v *= 3; s.dataset.candles = JSON.stringify(c); },
+  "VWAP décalé": () => { const p = document.querySelector("polyline[data-vwap-anchor]"); p.setAttribute("points", p.getAttribute("points").trim().split(/\s+/).map((q, i) => { const [x, y] = q.split(",").map(Number); return `${x},${i > 3 ? y + 4 : y}`; }).join(" ")); },
+  "VWAP ancré hors du graphique": () => { const p = document.querySelector("polyline[data-vwap-anchor]"); p.dataset.vwapAnchor = "999"; },
+  "delta modifié": () => { const s = document.querySelector("svg g[data-sub='delta']").closest("svg"); const c = JSON.parse(s.dataset.candles); c[2].d = -(c[2].d ?? 0) - 500; s.dataset.candles = JSON.stringify(c); },
+  "CVD faux": () => { const p = document.querySelector("polyline[data-cvd]"); p.setAttribute("points", p.getAttribute("points").trim().split(/\s+/).map((q, i) => { const [x, y] = q.split(",").map(Number); return `${x},${i === 5 ? y - 9 : y}`; }).join(" ")); },
+  "LVN décalée": () => { const z = document.querySelector('rect[data-role="lvn"]'); const g = z.closest("svg").querySelector("g[data-profile]"); z.dataset.y1 = String(Number((+z.dataset.y1 - +g.dataset.row).toFixed(9))); },
+  "divergence CVD inventée": () => { const m = [...document.querySelectorAll("[data-cvd-mark]")]; const s = m[0].closest("svg"); const c = JSON.parse(s.dataset.candles); c[+m[1].dataset.cvdMark].h = c[+m[0].dataset.cvdMark].h - 5; s.dataset.candles = JSON.stringify(c); },
   "Fibonacci sans repères 0 % et 100 %": () => { for (const g of document.querySelectorAll("svg[data-panel] g[data-label-for]")) if (/\b100\s?%|(^|[^\d.,])0\s?%/.test(g.textContent)) g.remove(); },
   "tracé Fibonacci au bord": () => { const l = document.querySelector('line[data-role="fib"]'); const [, b, r] = l.dataset.ref.split(":"); l.dataset.ref = `0:${b}:${r}`; },
   "mots collés": () => { const m = document.querySelector("main"); const s = document.createElement("strong"); s.textContent = "5,5 %"; m.append(s, document.createTextNode("en moins de 18 mois")); },
@@ -918,7 +936,7 @@ if (AUTOTEST) {
   // Chaque défaut est injecté dans la 1re page où il s'applique (R/R et OB : Avancé 7 ; pivots : Intermédiaire 5 ;
   // schéma à plusieurs panneaux : Trend Following 2 ; tableau : Débutant 1 ; liquidité, FVG, OB, support :
   // Avancé 1, 2, 3, Support / Résistance 1)
-  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon[1237]$|intermediaire\/lecon[59]$|trend-following\/lecon2|support-resistance\/lecon[14]|debutant\/lecon1$/.test(p.url));
+  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon(?:[1237]|1[0-2])$|intermediaire\/lecon[59]$|trend-following\/lecon2|support-resistance\/lecon[14]|debutant\/lecon1$/.test(p.url));
   let missed = 0;
   for (const [name, fn] of Object.entries(MUTATIONS).filter(([n]) => !process.env.MUT_ONLY || new RegExp(process.env.MUT_ONLY).test(n))) {
     let errs = null;

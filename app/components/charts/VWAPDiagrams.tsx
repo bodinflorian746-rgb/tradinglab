@@ -89,7 +89,7 @@ export function VWAPNasdaqPlanDiagram() {
       panels={[{
         key: "nas", title: "NASDAQ M15 · depuis l'ouverture de la séance", decimals: 0, height: 300, candles: cs, slots: n + 4,
         series: [{ key: "vwap", values: vwap(cs, 0), tone: "fib", label: "VWAP de séance", short: "VWAP", vwap: 0 }],
-        zones: [{ key: "support", y1: 27133, y2: 27140, from: 6, label: "Ancienne résistance → support", short: "Support", tone: "bull" }],
+        zones: [{ key: "support", y1: 27133, y2: 27140, from: 6, label: "Ancienne résistance → support", short: "Ex-résistance", tone: "bull" }],
         levels: [{ key: "sommet", price: cs[top].h, from: top, label: `Sommet ${pts(cs[top].h)}`, short: "Sommet", tone: "neutral", dashed: true }, ...plan.levels],
         markers: [
           { key: "creux", i: creux, price: cs[creux].l, label: "Creux local", short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
@@ -118,7 +118,7 @@ export function VWAPGoldPlanDiagram() {
       panels={[{
         key: "xau", title: "XAU/USD M15 · depuis l'ouverture de la séance", decimals: 0, height: 300, candles: cs, slots: n + 4,
         series: [{ key: "vwap", values: vwap(cs, 0), tone: "fib", label: "VWAP de séance", short: "VWAP", vwap: 0 }],
-        zones: [{ key: "res", y1: 3899, y2: 3902, from: 3, label: "Ancien support → résistance", short: "Résistance", tone: "bear" }],
+        zones: [{ key: "res", y1: 3899, y2: 3902, from: 3, label: "Ancien support → résistance", short: "Ex-support", tone: "bear" }],
         levels,
         markers: [
           { key: "echec", i: retest, price: cs[retest].h, label: "Échec sous 3 900$", short: "Échec", tone: "bear", side: "above", role: "high" },

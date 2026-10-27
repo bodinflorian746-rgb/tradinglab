@@ -50,11 +50,11 @@ const vpRangeCandles = () => buildCandles(1.0846, VP_RANGE, { seed: 10101, decim
 // de la VAH par-dessus, puis continuation)
 export const VA_EXIT: Record<"rejet" | "acceptation", { steps: Step[]; v: number[] }> = {
   rejet: {
-    steps: [eu(58, 59, 50), eu(66, 67, 57), eu(72, 76, 65), eu(61, 73, 60), eu(55, 62, 53), eu(49, 57, 47), eu(45, 51, 43), eu(50, 52, 44)],
+    steps: [eu(58, 59, 50), eu(64, 66, 57), eu(72, 76, 63), eu(61, 73, 60), eu(55, 62, 53), eu(49, 57, 47), eu(45, 51, 43), eu(50, 52, 44)],
     v: [2300, 2600, 3000, 2900, 2500, 2400, 2200, 2100],
   },
   acceptation: {
-    steps: [eu(58, 59, 50), eu(66, 67, 57), eu(73, 76, 65), eu(70, 74, 66), eu(77, 78, 68), eu(84, 85, 76), eu(91, 92, 83), eu(88, 93, 86)],
+    steps: [eu(58, 59, 50), eu(64, 66, 57), eu(73, 76, 63), eu(70, 74, 66), eu(77, 78, 68), eu(84, 85, 76), eu(91, 92, 83), eu(88, 93, 86)],
     v: [2300, 2600, 3200, 2400, 2800, 3000, 3100, 2500],
   },
 };
@@ -126,7 +126,7 @@ export const VWN_STEPS: Step[] = [
   ...c(27008), { c: 27004, l: 27000 }, ...c(27031, 27058, 27089, 27112), { c: 27134, h: 27140 },          // creux 27 000, sommet 27 140 (indice 6)
   ...c(27118, 27101), { c: 27086, l: 27080 }, ...c(27102, 27121), { c: 27133, h: 27139 },                 // creux 27 080 (9), 2e touche (12)
   ...c(27158, 27179, 27201, 27217), { c: 27224, h: 27230 },                                               // cassure, sommet 27 230 (17)
-  { c: 27205, h: 27226 }, ...c(27182, 27160), { c: 27148, l: 27142 }, { c: 27151, h: 27153 }, ...c(27144), // correction, sommet local (22)
+  { c: 27205, h: 27226 }, ...c(27182, 27160), { c: 27148, l: 27142 }, { c: 27151, h: 27153 }, { c: 27144, h: 27151 }, // correction, sommet local (22)
   { c: 27140, l: 27133 },                                                                                 // creux local (24)
   ...c(27149), { c: 27158, h: 27160 },                                                                    // cassure : entrée 27 155 (26)
 ];
@@ -180,10 +180,10 @@ export const OF_STEPS: Step[] = [
   ...c(26912, 26935, 26958, 26990, 27030, 27064), { c: 27088, h: 27100 },   // 1er sommet (6)
   ...c(27061), { c: 27040, l: 27033 }, ...c(27058, 27079, 27094),
   { c: 27099, h: 27104 },                                                // nouveau sommet, absorption possible (12)
-  { c: 27097, h: 27102 }, { c: 27090, h: 27096 }, ...c(27093),
+  { c: 27097, h: 27102 }, { c: 27086, h: 27096 }, { c: 27080, h: 27089 },
 ];
 export const OF_V = [21000, 23000, 24000, 26000, 28000, 29000, 31000, 27000, 26000, 22000, 23000, 24000, 30000, 25000, 22000, 20000];
-export const OF_D = [600, 800, 900, 1100, 1300, 1200, 700, -1300, -1100, 500, 400, 300, 900, -200, -400, 100];
+export const OF_D = [600, 800, 900, 1100, 1300, 1200, 700, -1800, -1500, 500, 400, 300, 1600, -200, -400, 100];
 const ofAbs = () => withVol(buildCandles(26900, OF_STEPS, { seed: 10701, decimals: 0, asset: "NASDAQ", session: "New York", volatility: "normale", levels: [27100], pins: pinAll(OF_STEPS) }), OF_V, OF_D);
 
 export const VOLUME_SCENARIOS: Record<string, () => Candle[]> = {

@@ -37,6 +37,14 @@ record("Données générées à jour (scenarios.ts → candles.json)", viteNode(
 process.stdout.write("… données des schémas (continuité, niveaux, R/R)\n");
 record("Données : continuité, pivots, zones, R/R", viteNode("data.ts"));
 
+{
+  process.stdout.write("… autotest des données de volumes (défauts injectés)\n");
+  const av = viteNode("autotest-volume.ts");
+  const r = resultOf(av);
+  if (!r || r.e) failed = true;
+  table.push(["Autotest des données de volumes (défauts injectés)", r ? (r.e ? `${r.e} défaut(s) non détecté(s)` : "tous détectés") : "ÉCHEC D'EXÉCUTION", av.split("\n").filter((l) => /NON DÉTECTÉ|ERREUR/.test(l)).join("\n    ")]);
+}
+
 process.stdout.write("… rognage mobile des schémas (360 et 390)\n");
 record("Rognage mobile : rien de ce que montre le schéma n'est retiré", viteNode("crop.tsx"));
 {

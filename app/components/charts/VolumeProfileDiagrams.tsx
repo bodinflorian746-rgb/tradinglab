@@ -72,7 +72,7 @@ export function VolumeProfileTradeDiagram() {
   const t = tradeSetup({ ...VPT_TRADE, decimals: 4, from: m15.length - 1, tpOffscale: true });
   const creux = m15.reduce((b, k, i) => (k.l < m15[b].l ? i : b), 0);
   const sommet = VPT_LOCAL_HIGH;
-  const flip = { key: "support", price: 1.085, label: `Ancienne résistance → support ${p(1.085)}`, short: "Support", tone: "bull" as const, dashed: true };
+  const flip = { key: "support", price: 1.085, label: `Ancienne résistance → support ${p(1.085)}`, short: "Ex-résistance", tone: "bull" as const, dashed: true };
   const panels: LCPanel[] = [
     {
       key: "h1", title: "H1 · tendance haussière, correction vers 1.0850",
