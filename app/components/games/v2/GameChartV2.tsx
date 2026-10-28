@@ -454,6 +454,10 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
     ...(overlay?.stops ?? []).flatMap((st) => (st.label ? [[st.label, st.price] as [string, number]] : [])),
     ...(overlay?.candidateLines ?? []).map((c) => [c.label, c.price] as [string, number]),
   ];
+  // Erreur marquée sur une ligne (stop, TP) : son étiquette reste sur la ligne, sans bande où se
+  // replier ; la marge s'élargit donc aussi pour elle (« Stop dans la zone », entourée des mèches
+  // qui plongent dans le support, retombait au bord droit, sur les bougies)
+  const widenPills: [string, number][] = [...linePills, ...(inline && mark && showMark && mark.kind === "line" ? [[mark.label, mark.price] as [string, number]] : [])];
   // Cadrage approché pour une marge d'étiquettes et des bandes données (sans la pastille « ton
   // choix ») : échelle des prix et obstacles (bougies, pastille, bandeau). Marge de 3 px autour
   // des bougies, comme au placement réel : une marge plus prudente déplaçait une étiquette et
@@ -478,12 +482,12 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
   // à au plus PACK_SHIFT px de leur ligne. Lignes très proches (stops et entrée à quelques
   // pixels) : leurs étiquettes, côte à côte, glissaient sur les bougies faute de marge.
   const lineMisfits = (colW: number, bandTop: number, bandBottom: number) => {
-    if (!linePills.length || W <= 0 || H <= 0) return [];
+    if (!widenPills.length || W <= 0 || H <= 0) return [];
     const { ty, boxes } = frame(colW, bandTop, bandBottom);
     const shifts = [0, 2, -2, 4, -4, 6, -6, 8, -8].filter((d) => Math.abs(d) <= PACK_SHIFT);
     // lignes rapprochées : d'abord la hauteur que leur donne la pile, comme au placement réel
-    const packed = packLines(linePills.map(([, price], i) => ({ k: String(i), l: ty(price) })), H);
-    return linePills.map((lp, i) => [lp, i] as const).sort((a, b) => inlineTagW(b[0][0]) - inlineTagW(a[0][0])).filter(([[label, price], i]) => {
+    const packed = packLines(widenPills.map(([, price], i) => ({ k: String(i), l: ty(price) })), H);
+    return widenPills.map((lp, i) => [lp, i] as const).sort((a, b) => inlineTagW(b[0][0]) - inlineTagW(a[0][0])).filter(([[label, price], i]) => {
       const w = inlineTagW(label);
       const ys = [...(packed.has(String(i)) ? [packed.get(String(i))!] : []), ...shifts.map((d) => ty(price) + d)];
       for (const y of ys) {
@@ -543,10 +547,15 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
   const maxCol = W - 2 * padX - MIN_READABLE_SLOT * nSlots;
   const widened = (l: { col: number; top: number; bottom: number }) => {
     let col = l.col;
-    for (let k = 0; k < linePills.length; k++) {
+    for (let k = 0; k < widenPills.length; k++) {
       const m = lineMisfits(col, l.top, l.bottom);
       if (!m.length || col + 10 > W / 2) break;
-      const next = col + Math.max(...m.map(([label]) => inlineTagW(label))) + INLINE_TAG_GAP;
+      const need = Math.max(...m.map(([label]) => inlineTagW(label))) + INLINE_TAG_GAP;
+      // d'abord une marge à la largeur de l'étiquette (seule à sa hauteur, elle n'a pas à se ranger
+      // à côté des autres) ; sinon côte à côte (le saut entier dépassait le plafond : « Stop dans la
+      // zone » restait sur les bougies alors que sa seule largeur suffisait)
+      const alone = need + 4;
+      const next = alone > col && !lineMisfits(alone, l.top, l.bottom).length ? alone : col + need;
       if (next > maxCol) break;
       col = next;
     }

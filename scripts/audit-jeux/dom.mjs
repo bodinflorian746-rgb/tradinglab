@@ -381,6 +381,9 @@ const HARD = [
   ["find-the-mistake", "Avancé", 5056],
   // étiquette de l'erreur marquée loin de son stop, sans lien (Trouve l'erreur, int_stop_dans_zone, 2026-10-25)
   ["find-the-mistake", "Intermédiaire", 10011], ["find-the-mistake", "Intermédiaire", 10000],
+  // « Stop dans la zone » posée sur les mèches qui plongent dans le support, faute de marge (2026-10-28)
+  ["find-the-mistake", "Intermédiaire", 10051], ["find-the-mistake", "Intermédiaire", 10063],
+  ["find-the-mistake", "Intermédiaire", 10139], ["find-the-mistake", "Intermédiaire", 10228],
   // stop large qui écrasait les bougies dans le quart haut de la question (news imminente, 2026-10-25)
   ["place-stop", "Avancé", 10072], ["place-stop", "Avancé", 10029],
 ];
@@ -440,6 +443,19 @@ const MUTATIONS = {
     const c = [...svg.querySelectorAll(".v2-candle")].filter((k) => getComputedStyle(k).opacity !== "0").at(-3).querySelector("rect");
     const dx = +c.getAttribute("x") - +r.getAttribute("x"), dy = +c.getAttribute("y") - +r.getAttribute("y");
     g.setAttribute("transform", `translate(${dx} ${dy})`);
+  }],
+  // l'erreur marquée sur un stop, posée sur sa ligne mais sur la mèche basse d'une bougie
+  // (Trouve l'erreur, « Stop dans la zone », 2026-10-28)
+  "erreur marquée posée sur une mèche": [/« Stop dans la zone » sur une bougie/, () => {
+    const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
+    const g = svg.querySelector("[data-label-for]").cloneNode(true), r = g.querySelector("rect");
+    g.setAttribute("data-label-for", "markTag");
+    g.querySelector("text").textContent = "Stop dans la zone";
+    svg.appendChild(g);
+    const wick = [...svg.querySelectorAll(".v2-candle line")].filter((l) => getComputedStyle(l.parentElement).opacity !== "0")
+      .sort((a, b) => Math.max(+b.getAttribute("y1"), +b.getAttribute("y2")) - Math.max(+a.getAttribute("y1"), +a.getAttribute("y2")))[0];
+    const x = +wick.getAttribute("x1"), y = Math.max(+wick.getAttribute("y1"), +wick.getAttribute("y2"));
+    g.setAttribute("transform", `translate(${x - +r.getAttribute("x") - +r.getAttribute("width") / 2} ${y - 6 - +r.getAttribute("y")})`);
   }],
   "étiquette de zone loin de sa zone": [/loin de sa zone/, () => {
     const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
