@@ -1475,11 +1475,12 @@ const inducementTrap: NewScenario["build"] = (rng, m) => {
   const major = levelTouches(rng, b.hi + (1.6 + rng() * 0.2) * m, b.lo, b.hi, "above", m, 3, 1.5 * m);
   const past = [...major.candles];
   let p = major.p;
-  const lift = legExact(rng, m, p, I + (2.4 + rng() * 0.3) * m, { retrace: 0.25 });
+  // montée et preuve du support intermédiaire courtes : le graphique reste lisible sur téléphone
+  const lift = legExact(rng, m, p, I + (1.6 + rng() * 0.2) * m, { retrace: 0, step: [0.6, 0.9] });
   past.push(...lift.candles); p = lift.p;
-  const inter = provenSupport(rng, m, I - 0.12 * m, I + 0.12 * m, p);
+  const inter = levelTouches(rng, p, I - 0.12 * m, I + 0.12 * m, "above", m, 2, 1.1 * m);
   past.push(...inter.candles); p = inter.p;
-  const back = legExact(rng, m, p, I + (0.3 + rng() * 0.1) * m, { retrace: 0.2 });
+  const back = legExact(rng, m, p, I + (0.3 + rng() * 0.1) * m, { retrace: 0, step: [0.5, 0.75] });
   past.push(...back.candles); p = back.p;
   const g = p + (0.08 + rng() * 0.06) * m;
   past.push({ o: p, c: g, h: g + 0.04 * m, l: I - (0.02 + rng() * 0.06) * m });
