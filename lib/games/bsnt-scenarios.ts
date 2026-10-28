@@ -1493,7 +1493,7 @@ const inducementTrap: NewScenario["build"] = (rng, m) => {
     guards: [b.hi + 0.4 * m],
     zones: [
       { kind: "support", y1: b.lo, y2: b.hi, label: "Support majeur" },
-      { kind: "support", y1: I - 0.12 * m, y2: I + 0.12 * m, label: "Support intermédiaire" },
+      { kind: "support", y1: I - 0.12 * m, y2: I + 0.12 * m, label: "Support intermédiaire", short: "Petit support" },
     ],
   };
 };

@@ -854,7 +854,7 @@ export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
     "POC", "VAH", "VAL", "HVN", "LVN",
     // figures chartistes, Opening Range, Wyckoff, zones ICT/SMC (Intermédiaire 10, stratégie ORB, Avancé 13 à 15)
     "Ligne de cou", "Haut de l'Opening Range", "Bas de l'Opening Range", "Haut de l'OR", "Bas de l'OR",
-    "Spring", "UTAD", "Sommet local", "Creux local", "Breaker", "Support majeur", "Support intermédiaire",
+    "Spring", "UTAD", "Sommet local", "Creux local", "Breaker", "Support majeur", "Support intermédiaire", "Petit support",
   ],
   es: [
     "FVG alcista", "Order Block", "Liquidez arriba", "Liquidez abajo", "Liquidez barrida",
