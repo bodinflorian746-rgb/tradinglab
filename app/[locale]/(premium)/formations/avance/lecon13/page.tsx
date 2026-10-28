@@ -88,10 +88,10 @@ export default function Page() {
         </P>
         <Items
           items={[
-            { label: "Phase A", detail: "PSY (Preliminary Supply) : premiers signes d'une offre importante. BC (Buying Climax) : achats intenses en fin de hausse. AR (Automatic Reaction) : réaction baissière après le sommet. ST (Secondary Test) : retour vers la zone haute." },
+            { label: "Phase A", detail: "PSY (offre préliminaire) : premiers signes d'une offre importante. BC (Buying Climax) : achats intenses en fin de hausse. AR (Automatic Reaction) : réaction baissière après le sommet. ST (Secondary Test) : retour vers la zone haute." },
             { label: "Phase B", detail: "Le prix construit un range de distribution potentiel ; la structure reste souvent hésitante." },
             { label: "Phase C", detail: "L'UTAD (Upthrust After Distribution) : le prix dépasse brièvement la résistance, puis revient dans le range. Cette fausse sortie peut révéler que le marché ne parvient pas à tenir des prix plus élevés. Un UTAD n'est pas indispensable à une distribution." },
-            { label: "Phase D", detail: "SOW (Sign of Weakness) : baisse qui révèle une pression vendeuse importante. LPSY (Last Point of Supply) : rebond faible après le SOW." },
+            { label: "Phase D", detail: "SOW (Sign of Weakness) : baisse qui révèle une pression vendeuse importante. LPSY (dernier point d'offre) : rebond faible après le SOW." },
             { label: "Phase E", detail: "Le marché sort du range par le bas et une tendance baissière peut se développer : c'est le Markdown." },
           ]}
         />

@@ -146,7 +146,7 @@ export default function ContentFr() {
             options: ["Pour entrer après un signe de force et une correction structurée.", "Parce qu'un LPS garantit une hausse.", "Parce que le marché ne peut plus revenir dans le range."],
             correctIndex: 0,
             answerExplanations: [
-              "Correct. La stratégie préfère une confirmation à l'anticipation du point bas.",
+              "Correct. La stratégie préfère une confirmation à l'anticipation du creux.",
               "Faux. Un LPS potentiel peut échouer.",
               "Faux. Le marché peut réintégrer le range.",
             ],

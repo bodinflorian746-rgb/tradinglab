@@ -125,7 +125,7 @@ export default function ContentFr() {
             options: ["Acheter le creux le plus bas du range.", "Un range après une baisse, un test de la borne basse, un signe de force, puis une correction confirmée.", "Acheter dès que le prix touche la résistance."],
             correctIndex: 1,
             answerExplanations: [
-              "Faux. La stratégie n'essaie pas de capter le point bas.",
+              "Faux. La stratégie n'essaie pas d'acheter le creux exact.",
               "Correct. C'est la séquence d'accumulation que la stratégie attend.",
               "Faux. La résistance n'est pas une zone d'achat.",
             ],

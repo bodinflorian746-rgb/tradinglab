@@ -60,6 +60,8 @@ export const NOTIONS = {
   multi_ut:           { label: "UT supérieure (analyse multi-unités de temps)", level: "intermediaire", lesson: "intermediaire/lecon7" },
   plan_de_trade:      { label: "Plan de trade", level: "intermediaire", lesson: "intermediaire/lecon8" },
   fibonacci:          { label: "Fibonacci (retracement 50 à 61,8 %)", level: "intermediaire", lesson: "intermediaire/lecon9" },
+  figures_chartistes: { label: "Figures chartistes (double sommet, double creux, drapeau)", level: "intermediaire", lesson: "intermediaire/lecon10" },
+  volatilite:         { label: "Volatilité (amplitude moyenne, ATR)", level: "intermediaire", lesson: "intermediaire/lecon11" },
   // ─── Avancé ───────────────────────────────────────────────────────────────────
   liquidite:          { label: "Liquidité (equal highs / lows, plus hauts et plus bas évidents)", level: "avance", lesson: "avance/lecon1" },
   sweep:              { label: "Sweep de liquidité", level: "avance", lesson: "avance/lecon1" },
@@ -72,9 +74,13 @@ export const NOTIONS = {
   entree_precision:   { label: "Entrées de précision (rejet, retest, sweep et retournement)", level: "avance", lesson: "avance/lecon7" },
   volume_profile:     { label: "Volume Profile (POC, Value Area, HVN, LVN)", level: "avance", lesson: "avance/lecon10" },
   vwap:               { label: "VWAP (prix moyen pondéré par les volumes)", level: "avance", lesson: "avance/lecon11" },
+  wyckoff:            { label: "Wyckoff (Spring, UTAD, SOS, SOW, LPS, LPSY)", level: "avance", lesson: "avance/lecon13" },
+  breaker_block:      { label: "Breaker Block (Order Block invalidé)", level: "avance", lesson: "avance/lecon14" },
+  inducement:         { label: "Inducement (niveau intermédiaire qui attire les ordres)", level: "avance", lesson: "avance/lecon15" },
+  turtle_soup:        { label: "Turtle soup (fausse sortie d'un plus haut ou d'un plus bas de référence)", level: "avance", lesson: "avance/lecon15" },
   // ─── Stratégies (Avancé seulement) ───────────────────────────────────────────
   macro:              { label: "Macro trading (régime de marché, filtre avant une news)", level: "strategies", lesson: "strategies/macro-trading" },
-  volatilite:         { label: "Volatilité (amplitude moyenne, ATR)", level: "strategies", lesson: "strategies/macro-trading" },
+  orb:                { label: "Opening Range Breakout (range d'ouverture, clôture, retest)", level: "strategies", lesson: "strategies/opening-range-breakout" },
 } as const satisfies Record<string, Notion>;
 
 export type NotionId = keyof typeof NOTIONS;

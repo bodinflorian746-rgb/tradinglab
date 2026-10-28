@@ -1207,4 +1207,521 @@ export const BSNT_VOLUME: NewScenario[] = [
   },
 ];
 
-export const BSNT_NEW: NewScenario[] = [...BSNT_BEGINNER, ...BSNT_INTERMEDIATE, ...BSNT_ADVANCED, ...BSNT_VOLUME];
+// ─── Figures chartistes (Intermédiaire 10), sens haussier ─────────────────────
+
+/** Double creux (le double sommet en est le miroir) : baisse, 1er creux, rebond jusqu'à la ligne de cou,
+ *  2e creux au même niveau ; « confirme » : clôture au-dessus de la ligne de cou, puis retest qui tient ;
+ *  « anticipe » : la dernière bougie remonte vers la ligne de cou sans la franchir */
+function doubleBottom(outcome: "confirme" | "anticipe"): NewScenario["build"] {
+  return (rng, m) => {
+    const b = band(m);
+    const pre = legTo(rng, m, (3.2 + rng() * 0.4) * m, b.hi + 0.45 * m, { retrace: 0.25 });
+    const past = [...pre.candles];
+    let p = pre.p;
+    const c1 = b.hi + (0.12 + rng() * 0.1) * m;
+    past.push({ o: p, c: c1, h: Math.max(p, c1) + 0.05 * m, l: b.lo + rng() * 0.1 * m });
+    p = c1;
+    const N = (1.8 + rng() * 0.3) * m;
+    const up = legExact(rng, m, p, N - (0.15 + rng() * 0.1) * m, { retrace: 0.2 });
+    past.push(...up.candles); p = up.p;
+    const cn = p - (0.14 + rng() * 0.08) * m;
+    past.push({ o: p, c: cn, h: N, l: cn - 0.05 * m });
+    p = cn;
+    const down = legExact(rng, m, p, b.hi + (0.4 + rng() * 0.1) * m, { retrace: 0.2 });
+    past.push(...down.candles); p = down.p;
+    const c2 = b.hi + (0.14 + rng() * 0.1) * m;
+    past.push({ o: p, c: c2, h: Math.max(p, c2) + 0.04 * m, l: b.lo + (0.02 + rng() * 0.1) * m });
+    p = c2;
+    const support: ChartZone = { kind: "support", y1: b.lo, y2: b.hi, label: "Support" };
+    if (outcome === "confirme") {
+      const up2 = legExact(rng, m, p, N - (0.3 + rng() * 0.1) * m, { retrace: 0.2 });
+      past.push(...up2.candles); p = up2.p;
+      const brk = past.length;
+      const cb = N + (0.5 + rng() * 0.15) * m;
+      past.push({ o: p, c: cb, h: cb + 0.05 * m, l: p - 0.04 * m });
+      p = cb;
+      const r1 = rally(rng, m, p, 1); past.push(...r1.candles); p = r1.p;
+      const back = legExact(rng, m, p, N + (0.32 + rng() * 0.08) * m, { retrace: 0 });
+      past.push(...back.candles); p = back.p;
+      // retest : la mèche revient sur la ligne de cou, la clôture reste au-dessus
+      const rc = p - (0.04 + rng() * 0.04) * m;
+      past.push({ o: p, c: rc, h: p + 0.04 * m, l: N - (0.04 + rng() * 0.06) * m });
+      p = rc;
+      return { past, future: rally(rng, m, p, 5).candles, zones: [support, { kind: "resistance", y1: N - 0.12 * m, y2: N + 0.04 * m, label: "Ligne de cou", until: past.length - brk }] };
+    }
+    const up2 = legExact(rng, m, p, N - (0.45 + rng() * 0.15) * m, { retrace: 0.15 });
+    past.push(...up2.candles); p = up2.p;
+    const f1 = rally(rng, m, p, 1, N - 0.1 * m), f2 = drop(rng, m, f1.p, 4);
+    return { past, future: [...f1.candles, ...f2.candles], zones: [support, { kind: "resistance", y1: N - 0.12 * m, y2: N + 0.04 * m, label: "Ligne de cou" }] };
+  };
+}
+/** Drapeau haussier (le drapeau baissier en est le miroir) : mât de 4 à 5 bougies franches, correction en
+ *  canal descendant (6 bougies, moins de la moitié du mât), puis clôture au-dessus du canal */
+const bullFlag: NewScenario["build"] = (rng, m) => {
+  const pre = chop(rng, m, 0, 5, 0.04);
+  const past = [...pre.candles];
+  let p = pre.p;
+  const n = 4 + (rng() < 0.5 ? 1 : 0);
+  for (let i = 0; i < n; i++) {
+    const c = p + (0.7 + rng() * 0.25) * m;
+    past.push(candle(p, c, (0.05 + rng() * 0.06) * m, (0.04 + rng() * 0.05) * m));
+    p = c;
+  }
+  const flagFrom = past.length;
+  // canal : baisse, petit rebond, baisse, petit rebond, baisse, rebond
+  for (const d of [-0.32, 0.22, -0.3, 0.2, -0.26, 0.22]) {
+    const c = p + (d + (rng() - 0.5) * 0.06) * m;
+    past.push(candle(p, c, (0.06 + rng() * 0.06) * m, (0.06 + rng() * 0.06) * m));
+    p = c;
+  }
+  const flagTop = Math.max(...past.slice(flagFrom + 2).map((k) => k.h)), flagLow = Math.min(...past.slice(flagFrom).map((k) => k.l));
+  const cb = flagTop + (0.6 + rng() * 0.15) * m;
+  past.push({ o: p, c: cb, h: cb + 0.05 * m, l: p - 0.04 * m });
+  p = cb;
+  // gardes : la passe de réalisme ne pousse ni les sommets du drapeau au-dessus de la clôture du breakout,
+  // ni ses creux plus bas (la correction reste sous la moitié du mât)
+  return { past, future: rally(rng, m, p, 5).candles, zones: [], guards: [flagTop + 0.08 * m, flagLow - 0.04 * m] };
+};
+
+const dbConfirmed = (sell: boolean): Claim => (c) => {
+  const ch = asBull(c, sell), s = zoneOf(ch, "support"), n = ch.zones.find((z) => z.label === "Ligne de cou");
+  if (!s || !n) return "support et ligne de cou attendus";
+  const t = mr(ch.past);
+  const lows = ch.past.map((k, i) => ({ i, l: k.l })).filter((q) => q.l <= hi(s) + 0.05 * t);
+  if (lows.length < 2 || lows[lows.length - 1].i - lows[0].i < 4) return "pas deux creux distincts sur le support";
+  const brk = ch.past.findIndex((k, i) => i > lows[lows.length - 1].i && k.c > hi(n));
+  if (brk < 0) return "pas de clôture au-dessus de la ligne de cou";
+  const after = ch.past.slice(brk + 1);
+  if (after.some((k) => k.c < lo(n))) return "clôture revenue sous la ligne de cou";
+  if (!(Math.min(...after.map((k) => k.l)) <= hi(n) + 0.3 * t)) return "pas de retest de la ligne de cou";
+  return last(ch.past).c > hi(n) ? null : "la dernière bougie n'est pas au-dessus de la ligne de cou";
+};
+const dbAnticipated: Claim = (ch) => {
+  const s = zoneOf(ch, "support"), n = ch.zones.find((z) => z.label === "Ligne de cou");
+  if (!s || !n) return "support et ligne de cou attendus";
+  const lows = ch.past.map((k, i) => ({ i, l: k.l })).filter((q) => q.l <= hi(s) + 0.05 * mr(ch.past));
+  if (lows.length < 2) return "pas deux creux sur le support";
+  if (ch.past.slice(lows[lows.length - 1].i).some((k) => k.c > lo(n))) return "une clôture a déjà franchi la ligne de cou";
+  return last(ch.past).c > hi(s) ? null : "la dernière bougie n'est pas au-dessus du support";
+};
+const flagBreakout = (sell: boolean): Claim => (c) => {
+  const ch = asBull(c, sell), cs = ch.past, t = mr(cs);
+  const n = cs.length;
+  const flag = cs.slice(n - 7, n - 1), mast = cs.slice(0, n - 7);
+  const mastLow = Math.min(...mast.slice(-6).map((k) => k.l)), mastTop = Math.max(...mast.map((k) => k.h));
+  if (mastTop - mastLow < 2.6 * t) return `mât de ${((mastTop - mastLow) / t).toFixed(1)} bougies (au moins 2,6)`;
+  const flagLow = Math.min(...flag.map((k) => k.l));
+  if ((mastTop - flagLow) / (mastTop - mastLow) > 0.5) return "le drapeau corrige plus de la moitié du mât";
+  if (!(flag[flag.length - 1].h < flag[0].h)) return "le drapeau ne descend pas";
+  return last(cs).c > Math.max(...flag.slice(2).map((k) => k.h)) ? null : "la dernière bougie ne clôture pas au-dessus du drapeau";
+};
+
+export const BSNT_FIGURES: NewScenario[] = [
+  {
+    ...INT, id: "int_double_creux", title: "Double creux confirmé", correctAnswer: "BUY", htfBias: "bearish", metric: "lecture",
+    notions: ["figures_chartistes", "zones_cles", "changement_role"],
+    trap: "La tendance précédente était baissière : vendre paraît naturel, mais le double creux est confirmé par la clôture au-dessus de la ligne de cou, puis par son retest.",
+    context: "Après une baisse, le prix teste deux fois le même support. Il clôture ensuite au-dessus du sommet intermédiaire (la ligne de cou), puis revient la tester par au-dessus : la mèche est rejetée.",
+    shortContext: "Double creux, ligne de cou cassée puis retestée.",
+    rationales: {
+      BUY: "✓ Deux creux au même niveau, puis une clôture au-dessus de la ligne de cou : le double creux est confirmé. Le retest qui tient donne l'entrée, stop sous la ligne de cou.",
+      SELL: "✗ Vendre maintenant, c'est vendre une figure de retournement haussière qui vient d'être confirmée et retestée.",
+      NO_TRADE: "≈ La prudence se comprend après une baisse, mais la clôture au-dessus de la ligne de cou puis le retest qui tient sont justement la confirmation qu'on attend.",
+    },
+    lessons: one("Un double creux se confirme par une clôture au-dessus de la ligne de cou, pas par le deuxième contact avec le support. Le retest de la ligne de cou offre souvent une meilleure entrée (leçon Intermédiaire 10)."),
+    tags: ["figure chartiste", "double creux", "retest"], build: doubleBottom("confirme"),
+    claims: { "deux creux, clôture au-dessus de la ligne de cou, retest qui tient": dbConfirmed(false), "la suite monte": goesUp },
+  },
+  {
+    ...INT, id: "int_double_sommet", title: "Double sommet confirmé", correctAnswer: "SELL", htfBias: "bullish", metric: "lecture",
+    notions: ["figures_chartistes", "zones_cles", "changement_role"],
+    trap: "La tendance précédente était haussière : acheter paraît naturel, mais le double sommet est confirmé par la clôture sous la ligne de cou, puis par son retest.",
+    context: "Après une hausse, le prix bute deux fois sur la même résistance. Il clôture ensuite sous le creux intermédiaire (la ligne de cou), puis remonte la tester par en dessous : la mèche est rejetée.",
+    shortContext: "Double sommet, ligne de cou cassée puis retestée.",
+    rationales: {
+      BUY: "✗ Acheter maintenant, c'est acheter une figure de retournement baissière qui vient d'être confirmée et retestée.",
+      SELL: "✓ Deux sommets au même niveau, puis une clôture sous la ligne de cou : le double sommet est confirmé. Le retest qui tient donne l'entrée, stop au-dessus de la ligne de cou.",
+      NO_TRADE: "≈ La prudence se comprend après une hausse, mais la clôture sous la ligne de cou puis le retest qui tient sont justement la confirmation qu'on attend.",
+    },
+    lessons: one("Un double sommet se confirme par une clôture sous la ligne de cou, pas par le deuxième contact avec la résistance. Le retest de la ligne de cou offre souvent une meilleure entrée (leçon Intermédiaire 10)."),
+    tags: ["figure chartiste", "double sommet", "retest"], build: mirrored(doubleBottom("confirme")),
+    claims: { "deux sommets, clôture sous la ligne de cou, retest qui tient": dbConfirmed(true), "la suite baisse": goesDown },
+  },
+  {
+    ...INT, id: "int_double_creux_anticipe", title: "Double creux pas encore confirmé", correctAnswer: "NO_TRADE", htfBias: "bearish", metric: "piege",
+    notions: ["figures_chartistes", "zones_cles", "breakout"],
+    trap: "Deux creux au même niveau ressemblent déjà à un double creux, mais aucune bougie n'a clôturé au-dessus de la ligne de cou.",
+    context: "Après une baisse, le prix a testé deux fois le même support et remonte vers le sommet intermédiaire (la ligne de cou), sans l'avoir franchi.",
+    shortContext: "Deux creux, ligne de cou pas encore franchie.",
+    rationales: {
+      BUY: "✗ Acheter avant la clôture au-dessus de la ligne de cou, c'est anticiper une figure qui peut encore échouer : la tendance de fond reste baissière.",
+      SELL: "≈ Le support vient de tenir deux fois : vendre juste au-dessus, sans cassure de structure, n'a pas plus de logique.",
+      NO_TRADE: "✓ La figure n'est pas confirmée : on attend la clôture au-dessus de la ligne de cou (ou la perte du support) avant d'agir.",
+    },
+    lessons: one("Une figure non confirmée peut évoluer dans l'autre direction : on attend la clôture au-delà de la ligne de cou avant d'entrer (leçon Intermédiaire 10)."),
+    tags: ["figure chartiste", "anticipation"], build: doubleBottom("anticipe"),
+    claims: { "deux creux, ligne de cou pas encore franchie": dbAnticipated },
+  },
+  {
+    ...INT, id: "int_drapeau_haussier", title: "Drapeau haussier", correctAnswer: "BUY", htfBias: "bullish", metric: "lecture",
+    notions: ["figures_chartistes", "pullback", "breakout"],
+    trap: "Le prix vient de corriger plusieurs bougies : on peut croire à un retournement, mais la correction reste courte et organisée après une forte impulsion.",
+    context: "Une impulsion haussière de plusieurs bougies franches (le mât), puis une correction organisée en petit canal descendant. La dernière bougie clôture au-dessus du canal.",
+    shortContext: "Mât, drapeau, clôture au-dessus du canal.",
+    rationales: {
+      BUY: "✓ Mât puissant, correction courte en canal, clôture au-dessus du drapeau : la tentative de continuation est confirmée, stop sous le dernier creux du drapeau.",
+      SELL: "✗ Vendre la sortie d'un drapeau haussier, c'est parier contre la tendance au moment où elle reprend.",
+      NO_TRADE: "≈ Attendre se défend, mais la clôture au-dessus du canal est le signal décrit dans la leçon.",
+    },
+    lessons: one("Le drapeau haussier : une forte impulsion, puis une correction organisée. Une clôture au-dessus du drapeau signale une tentative de continuation ; l'invalidation se place sous un creux de la correction (leçon Intermédiaire 10)."),
+    tags: ["figure chartiste", "drapeau", "continuation"], build: bullFlag,
+    claims: { "mât, drapeau et clôture au-dessus du canal": flagBreakout(false), "la suite monte": goesUp },
+  },
+  {
+    ...INT, id: "int_drapeau_baissier", title: "Drapeau baissier", correctAnswer: "SELL", htfBias: "bearish", metric: "lecture",
+    notions: ["figures_chartistes", "pullback", "breakout"],
+    trap: "Le prix vient de rebondir plusieurs bougies : on peut croire à un retournement, mais le rebond reste court et organisé après une forte impulsion baissière.",
+    context: "Une impulsion baissière de plusieurs bougies franches (le mât), puis un rebond organisé en petit canal ascendant. La dernière bougie clôture sous le canal.",
+    shortContext: "Mât, drapeau, clôture sous le canal.",
+    rationales: {
+      BUY: "✗ Acheter la sortie d'un drapeau baissier, c'est parier contre la tendance au moment où elle reprend.",
+      SELL: "✓ Mât puissant, rebond court en canal, clôture sous le drapeau : la tentative de continuation baissière est confirmée, stop au-dessus du dernier sommet du drapeau.",
+      NO_TRADE: "≈ Attendre se défend, mais la clôture sous le canal est le signal décrit dans la leçon.",
+    },
+    lessons: one("Le drapeau baissier : une forte impulsion baissière, puis un rebond organisé. Une clôture sous le drapeau signale une tentative de reprise baissière (leçon Intermédiaire 10)."),
+    tags: ["figure chartiste", "drapeau", "continuation"], build: mirrored(bullFlag),
+    claims: { "mât, drapeau et clôture sous le canal": flagBreakout(true), "la suite baisse": goesDown },
+  },
+];
+
+// ─── ORB, Wyckoff, Breaker, inducement, turtle soup (Avancé), sens haussier ──
+
+/** Opening Range Breakout : séance calme, range des trois premières bougies de l'ouverture, clôture au-dessus ;
+ *  « retest » : retour sur le haut du range qui tient ; « sans_retest » : le prix file sans revenir */
+function openingRange(outcome: "retest" | "sans_retest"): NewScenario["build"] {
+  return (rng, m) => {
+    const pre = chop(rng, m, 0, 5, 0);
+    const past = [...pre.candles];
+    let p = pre.p;
+    const W = (2.0 + rng() * 0.4) * m, lo0 = p - (0.9 + rng() * 0.2) * m, hi0 = lo0 + W;
+    const k1 = { o: p, c: hi0 - (0.2 + rng() * 0.1) * m, h: hi0, l: p - (0.08 + rng() * 0.06) * m };
+    const k2 = { o: k1.c, c: lo0 + (0.25 + rng() * 0.1) * m, h: k1.c + (0.06 + rng() * 0.05) * m, l: lo0 };
+    const k3 = { o: k2.c, c: lo0 + (0.55 + rng() * 0.1) * W, h: lo0 + 0.7 * W, l: k2.c - (0.05 + rng() * 0.05) * m };
+    past.push(k1, k2, k3);
+    p = k3.c;
+    const zones: ChartZone[] = [
+      { kind: "resistance", y1: hi0 - 0.08 * m, y2: hi0 + 0.08 * m, label: "Haut de l'Opening Range", short: "Haut de l'OR" },
+      { kind: "support", y1: lo0 - 0.08 * m, y2: lo0 + 0.08 * m, label: "Bas de l'Opening Range", short: "Bas de l'OR" },
+    ];
+    const inside = legExact(rng, m, p, hi0 - (0.35 + rng() * 0.1) * m, { retrace: 0.3, step: [0.2, 0.35] });
+    past.push(...inside.candles); p = inside.p;
+    const brk = past.length;
+    const cb = hi0 + (outcome === "retest" ? 0.45 + rng() * 0.12 : 0.75 + rng() * 0.12) * m;
+    past.push({ o: p, c: cb, h: cb + 0.05 * m, l: p - 0.04 * m });
+    p = cb;
+    if (outcome === "retest") {
+      const r1 = rally(rng, m, p, 1); past.push(...r1.candles); p = r1.p;
+      const back = legExact(rng, m, p, hi0 + (0.32 + rng() * 0.08) * m, { retrace: 0 });
+      past.push(...back.candles); p = back.p;
+      const rc = p - (0.04 + rng() * 0.04) * m;
+      past.push({ o: p, c: rc, h: p + 0.04 * m, l: hi0 - (0.04 + rng() * 0.05) * m });
+      p = rc;
+      return { past, future: rally(rng, m, p, 5).candles, zones: zones.map((z, i) => (i === 0 ? { ...z, until: past.length - brk } : z)) };
+    }
+    const run = rally(rng, m, p, 5);
+    past.push(...run.candles.map((k) => ({ ...k, l: Math.max(k.l, Math.min(k.o, k.c) - 0.06 * m) }))); p = run.p;
+    // garde : la passe de réalisme ne ramène aucune mèche sur le range après le breakout
+    return { past, future: drop(rng, m, p, 5).candles, zones: zones.map((z, i) => (i === 0 ? { ...z, until: past.length - brk } : z)), guards: [hi0 + 0.35 * m] };
+  };
+}
+/** Wyckoff (accumulation) : baisse, range, Spring sous le bas du range, SOS au-dessus du sommet local, LPS
+ *  qui tient au-dessus de lui (construit sur rangeSweepChoch, précédé de la baisse) */
+const wyckoffSpring: NewScenario["build"] = (rng, m, d) => {
+  const r = rangeSweepChoch(rng, m, d);
+  const top = Math.max(...r.past.map((k) => k.h));
+  const pre = legExact(rng, m, top + (1.6 + rng() * 0.4) * m, r.past[0].o, { retrace: 0 });
+  const n = pre.candles.length;
+  return {
+    ...r, past: [...pre.candles, ...r.past],
+    // la borne haute devient « Résistance » : tracée sur ses touches, pas sur les plus hauts de la baisse qui précède
+    zones: r.zones.map((z) => (z.label === "Liquidité balayée" ? { ...z, label: "Spring" } : z.label === "Swing high" ? { ...z, label: "Sommet local", ...(z.at !== undefined ? { at: z.at + n } : {}) } : z.label === "Haut du range" ? { ...z, label: "Résistance" } : z)),
+  };
+};
+/** Breaker : Order Block haussier dont l'impulsion dépasse le sommet précédent, cassé en clôture, puis retour
+ *  par en dessous dans la zone et rejet (vente ; le Breaker haussier en est le miroir) */
+const breakerBlock: NewScenario["build"] = (rng, m) => {
+  const s = obScene(rng, m);
+  const past = [...s.past];
+  let p = s.p;
+  const z = s.zone;
+  const c1 = z.y1 - (0.45 + rng() * 0.15) * m;
+  past.push({ o: p, c: c1, h: p + 0.04 * m, l: c1 - 0.06 * m });
+  p = c1;
+  const d2 = drop(rng, m, p, 2); past.push(...d2.candles); p = d2.p;
+  const up = legExact(rng, m, p, z.y1 - (0.22 + rng() * 0.08) * m, { retrace: 0 });
+  past.push(...up.candles); p = up.p;
+  const rc = p - (0.18 + rng() * 0.1) * m;
+  past.push({ o: p, c: rc, h: z.y1 + (0.3 + rng() * 0.3) * (z.y2 - z.y1), l: rc - 0.04 * m });
+  p = rc;
+  return { past, future: drop(rng, m, p, 5).candles, zones: [{ ...z, kind: "resistance", label: "Breaker" }] };
+};
+/** Inducement : support majeur prouvé, hausse, support intermédiaire prouvé plus haut ; le prix revient sur
+ *  le support intermédiaire (petite bougie verte) ; la suite le traverse jusqu'au support majeur, puis rebondit */
+const inducementTrap: NewScenario["build"] = (rng, m) => {
+  const b = band(m);
+  const major = provenSupport(rng, m, b.lo, b.hi);
+  const past = [...major.candles];
+  let p = major.p;
+  const I = (1.7 + rng() * 0.3) * m;
+  const lift = legExact(rng, m, p, I + (2.4 + rng() * 0.3) * m, { retrace: 0.25 });
+  past.push(...lift.candles); p = lift.p;
+  const inter = provenSupport(rng, m, I - 0.12 * m, I + 0.12 * m, p);
+  past.push(...inter.candles); p = inter.p;
+  const back = legExact(rng, m, p, I + (0.3 + rng() * 0.1) * m, { retrace: 0.2 });
+  past.push(...back.candles); p = back.p;
+  const g = p + (0.08 + rng() * 0.06) * m;
+  past.push({ o: p, c: g, h: g + 0.04 * m, l: I - (0.02 + rng() * 0.06) * m });
+  p = g;
+  const fall = legExact(rng, m, p, b.hi + (0.05 + rng() * 0.1) * m, { retrace: 0, step: [0.5, 0.75] });
+  const bounce = rally(rng, m, fall.p, 3);
+  return {
+    past, future: [...fall.candles, ...bounce.candles],
+    zones: [
+      { kind: "support", y1: b.lo, y2: b.hi, label: "Support majeur" },
+      { kind: "support", y1: I - 0.12 * m, y2: I + 0.12 * m, label: "Support intermédiaire" },
+    ],
+  };
+};
+/** Turtle soup (vente ; le turtle soup haussier en est le miroir) : plus haut de la veille (PDH) net, repli,
+ *  remontée, mèche au-dessus du PDH et clôture revenue dessous, puis bougie de confirmation baissière */
+const turtleSoup: NewScenario["build"] = (rng, m) => {
+  const H = 0;
+  const base = legTo(rng, m, H - (2.4 + rng() * 0.4) * m, H - 0.9 * m, { retrace: 0.3 });
+  const past = [...base.candles];
+  let p = base.p;
+  past.push({ ...candle(p, H - 0.35 * m, 0.35 * m, (0.06 + rng() * 0.06) * m), h: H });
+  p = H - 0.35 * m;
+  const back = legTo(rng, m, p, H - (1.5 + rng() * 0.3) * m, { retrace: 0 });
+  past.push(...back.candles); p = back.p;
+  const up = legExact(rng, m, p, H - (0.35 + rng() * 0.1) * m, { retrace: 0.3 });
+  past.push(...up.candles); p = up.p;
+  const sc = H - (0.18 + rng() * 0.08) * m;
+  const sweep = { o: p, c: sc, h: H + (0.5 + rng() * 0.15) * m, l: Math.min(p, sc) - (0.04 + rng() * 0.04) * m };
+  past.push(sweep); p = sc;
+  const cc = sweep.l - (0.12 + rng() * 0.08) * m;
+  past.push({ o: p, c: cc, h: p + 0.04 * m, l: cc - 0.05 * m });
+  p = cc;
+  return { past, future: drop(rng, m, p, 5).candles, zones: [{ kind: "resistance", y1: H - 0.06 * m, y2: H + 0.06 * m, label: "PDH" }] };
+};
+
+const orbRetest = (sell: boolean): Claim => (c) => {
+  const ch = asBull(c, sell), z = ch.zones.find((x) => x.label === "Haut de l'Opening Range");
+  if (!z) return "pas de haut de l'Opening Range";
+  const i = ch.past.findIndex((k) => k.c > hi(z));
+  if (i < 0) return "pas de clôture au-dessus de l'Opening Range";
+  const after = ch.past.slice(i + 1);
+  if (after.some((k) => k.c < lo(z))) return "clôture revenue dans le range après le breakout";
+  if (!(Math.min(...after.map((k) => k.l)) <= hi(z) + 0.3 * mr(ch.past))) return "pas de retest du haut de l'Opening Range";
+  return last(ch.past).c > hi(z) ? null : "la dernière bougie n'est pas au-dessus du range";
+};
+const orbNoRetest: Claim = (ch) => {
+  const z = ch.zones.find((x) => x.label === "Haut de l'Opening Range"), t = mr(ch.past);
+  if (!z) return "pas de haut de l'Opening Range";
+  const i = ch.past.findIndex((k) => k.c > hi(z));
+  if (i < 0) return "pas de clôture au-dessus de l'Opening Range";
+  if (ch.past.slice(i + 1).some((k) => k.l <= hi(z) + 0.15 * t)) return "le prix est revenu sur le range (retest)";
+  return last(ch.past).c > hi(z) + 2 * t ? null : "la dernière clôture n'est pas loin du range";
+};
+const springSosLps = (sell: boolean): Claim => (c) => {
+  const ch = asBull(c, sell), low = ch.zones.find((x) => x.label === "Bas du range"), sw = ch.zones.find((x) => x.label === "Sommet local");
+  if (!low || !sw) return "bas du range / sommet local absents";
+  const t = mr(ch.past);
+  const first = ch.past.findIndex((k) => k.l <= hi(low) + 0.3 * t);
+  if (first < 2 || !(ch.past[0].o > ch.past[first].o + 1.5 * t)) return "pas de baisse avant le range";
+  const k = ch.past.findIndex((x) => x.l < lo(low) - 0.25 * t && x.c > lo(low));
+  if (k < 0) return "pas de Spring (mèche sous le bas du range, clôture revenue)";
+  const j = ch.past.findIndex((x, n) => n > k && x.c > hi(sw));
+  if (j < 0) return "pas de clôture au-dessus du sommet local (SOS)";
+  const after = ch.past.slice(j + 1);
+  if (after.some((x) => x.c < lo(sw))) return "clôture sous le sommet local après le SOS";
+  return Math.min(...after.map((x) => x.l)) <= hi(sw) + 0.3 * t ? null : "pas de retour sur le sommet local (LPS)";
+};
+const breakerReject = (sell: boolean): Claim => (c) => {
+  // vente : construit en vente (Breaker baissier) ; l'achat est le miroir
+  const ch = sell ? c : asBull(c, true), z = ch.zones.find((x) => x.label === "Breaker"), k = last(ch.past), t = mr(ch.past);
+  if (!z) return "pas de Breaker";
+  const brk = ch.past.findIndex((x) => x.c < lo(z) - 0.2 * t);
+  if (brk < 0) return "l'Order Block n'a pas été cassé en clôture";
+  if (!(k.h >= lo(z) && k.c < lo(z) && k.c < k.o)) return "la dernière bougie n'entre pas dans le Breaker ou ne le rejette pas";
+  return ch.past.slice(brk + 1, -1).every((x) => x.c < lo(z)) ? null : "une clôture est revenue dans la zone avant le rejet";
+};
+const inducementClaim: Claim = (ch) => {
+  const M = ch.zones.find((x) => x.label === "Support majeur"), I = ch.zones.find((x) => x.label === "Support intermédiaire"), k = last(ch.past), t = mr(ch.past);
+  if (!M || !I) return "supports majeur et intermédiaire attendus";
+  if (!(k.l <= hi(I) + 0.1 * t && k.c > hi(I))) return "la dernière bougie n'est pas posée sur le support intermédiaire";
+  const fl = Math.min(...ch.future.map((x) => x.l));
+  if (!(fl < lo(I) - 0.5 * t)) return "la suite ne passe pas sous le support intermédiaire";
+  return fl >= lo(M) - 0.3 * t && last(ch.future).c > hi(M) ? null : "la suite ne réagit pas sur le support majeur";
+};
+const turtleClaim = (sell: boolean): Claim => (c) => {
+  const ch = sell ? c : asBull(c, true), z = ch.zones.find((x) => x.label === "PDH"), t = mr(ch.past);
+  if (!z) return "pas de PDH";
+  const [s, k] = ch.past.slice(-2);
+  if (!(s.h > hi(z) + 0.2 * t && s.c < lo(z))) return "pas de mèche au-dessus du PDH avec clôture revenue dessous";
+  return k.c < s.l && k.c < k.o ? null : "pas de confirmation baissière sous la bougie du turtle soup";
+};
+
+export const BSNT_NOUV_ADVANCED: NewScenario[] = [
+  {
+    ...ADV, id: "adv_orb_retest", title: "Opening Range cassé, retest tenu", correctAnswer: "BUY", htfBias: "bullish", metric: "lecture",
+    notions: ["orb", "breakout", "changement_role"],
+    conflict: "L'ouverture américaine est agitée et le prix a déjà monté : on hésite à acheter si tard, mais le retest du haut de l'Opening Range vient de tenir, comme le demande la stratégie.",
+    context: "Ouverture de New York : les trois premières bougies forment l'Opening Range. Une bougie clôture au-dessus de son plus haut, puis le prix revient le tester par au-dessus : la mèche est rejetée.",
+    shortContext: "Opening Range cassé puis retesté.",
+    rationales: {
+      BUY: "✓ Clôture au-dessus de l'Opening Range, retest qui tient, structure haussière : c'est le setup ORB complet, stop sous le creux du retest.",
+      SELL: "✗ Vendre après un breakout confirmé et un retest qui tient, c'est vendre contre la seule information nouvelle de la séance.",
+      NO_TRADE: "≈ Attendre se comprend à l'ouverture, mais le retest qui tient est justement la condition d'entrée de la stratégie.",
+    },
+    lessons: one("Stratégie Opening Range Breakout : on trace le range des 15 premières minutes, on attend une clôture au-delà, puis un retest qui tient avant d'entrer (leçons 1 à 3)."),
+    tags: ["ORB", "breakout", "retest"], build: openingRange("retest"),
+    claims: { "clôture au-dessus de l'Opening Range, retest qui tient": orbRetest(false), "la suite monte": goesUp },
+  },
+  {
+    ...ADV, id: "adv_orb_retest_vente", title: "Opening Range cassé par le bas, retest tenu", correctAnswer: "SELL", htfBias: "bearish", metric: "lecture",
+    notions: ["orb", "breakout", "changement_role"],
+    conflict: "L'ouverture américaine est agitée et le prix a déjà baissé : on hésite à vendre si tard, mais le retest du bas de l'Opening Range vient de tenir, comme le demande la stratégie.",
+    context: "Ouverture de New York : les trois premières bougies forment l'Opening Range. Une bougie clôture sous son plus bas, puis le prix remonte le tester par en dessous : la mèche est rejetée.",
+    shortContext: "Opening Range cassé par le bas puis retesté.",
+    rationales: {
+      BUY: "✗ Acheter après un breakout baissier confirmé et un retest qui tient, c'est acheter contre la seule information nouvelle de la séance.",
+      SELL: "✓ Clôture sous l'Opening Range, retest qui tient, structure baissière : c'est le setup ORB complet, stop au-dessus du sommet du retest.",
+      NO_TRADE: "≈ Attendre se comprend à l'ouverture, mais le retest qui tient est justement la condition d'entrée de la stratégie.",
+    },
+    lessons: one("Stratégie Opening Range Breakout : on trace le range des 15 premières minutes, on attend une clôture au-delà, puis un retest qui tient avant d'entrer (leçons 1 à 3)."),
+    tags: ["ORB", "breakout", "retest"], build: mirrored(openingRange("retest")),
+    claims: { "clôture sous l'Opening Range, retest qui tient": orbRetest(true), "la suite baisse": goesDown },
+  },
+  {
+    ...ADV, id: "adv_orb_sans_retest", title: "Opening Range cassé, pas de retest", correctAnswer: "NO_TRADE", htfBias: "bullish", metric: "discipline",
+    notions: ["orb", "breakout", "rr"],
+    conflict: "Le breakout est spectaculaire et l'UT supérieure haussière : tout pousse à acheter, mais le prix n'est jamais revenu tester le range et s'en est éloigné.",
+    context: "Ouverture de New York : le prix a clôturé au-dessus de l'Opening Range, puis a enchaîné plusieurs bougies haussières sans jamais revenir sur le range.",
+    shortContext: "Breakout de l'Opening Range sans retest.",
+    rationales: {
+      BUY: "✗ Acheter maintenant, c'est courir après le prix : sans retest, le stop logique est loin, sous le range, et le R/R se dégrade. La stratégie exige le retour sur la borne cassée.",
+      SELL: "✗ Vendre un breakout qui n'a montré aucun signe de faiblesse n'a pas de logique.",
+      NO_TRADE: "✓ Pas de retest, pas de trade : la règle de la stratégie évite d'acheter loin de l'invalidation, même si la hausse continue sans toi.",
+    },
+    lessons: one("Stratégie Opening Range Breakout : si le retest exigé ne se produit pas, on ne prend pas le trade. Un breakout spectaculaire n'est pas forcément un trade conforme (leçon 4)."),
+    tags: ["ORB", "discipline"], build: openingRange("sans_retest"),
+    claims: { "breakout sans retest, prix loin du range": orbNoRetest },
+  },
+  {
+    ...ADV, id: "adv_wyckoff_spring", title: "Spring, SOS puis LPS", correctAnswer: "BUY", htfBias: "bearish", metric: "lecture",
+    notions: ["wyckoff", "sweep", "structure"],
+    conflict: "La tendance précédente est baissière et le prix vient de passer sous le range : tout semble négatif, mais le Spring a été réintégré, le sommet local cassé (SOS), et le retour (LPS) tient.",
+    context: "Après une baisse, le prix construit un range. Il passe brièvement sous le bas du range et le réintègre (Spring), clôture au-dessus du sommet local (SOS), puis revient le tester sans clôturer dessous (LPS).",
+    shortContext: "Spring, SOS, puis LPS qui tient.",
+    rationales: {
+      BUY: "✓ Spring réintégré, signe de force au-dessus du sommet local, LPS qui tient : c'est la séquence d'accumulation que la stratégie Wyckoff appliqué attend, stop sous le LPS.",
+      SELL: "✗ Vendre ici, c'est vendre une accumulation qui vient de montrer sa force : le passage sous le range a été réintégré et le sommet local cassé.",
+      NO_TRADE: "≈ Attendre se comprend après une baisse, mais Spring, SOS et LPS forment justement la confirmation qu'on attend.",
+    },
+    lessons: one("Wyckoff : le Spring seul n'est pas un signal. On attend le signe de force (SOS), puis un retour qui tient (LPS) et une confirmation (leçon Avancé 13, stratégie Wyckoff appliqué)."),
+    tags: ["Wyckoff", "Spring", "LPS"], build: wyckoffSpring,
+    claims: { "baisse, Spring, SOS puis LPS": springSosLps(false), "la suite monte": goesUp },
+  },
+  {
+    ...ADV, id: "adv_wyckoff_utad", title: "UTAD, SOW puis LPSY", correctAnswer: "SELL", htfBias: "bullish", metric: "lecture",
+    notions: ["wyckoff", "sweep", "structure"],
+    conflict: "La tendance précédente est haussière et le prix vient de passer au-dessus du range : tout semble positif, mais l'UTAD a été réintégré, le creux local cassé (SOW), et le rebond (LPSY) bute dessous.",
+    context: "Après une hausse, le prix construit un range. Il passe brièvement au-dessus du haut du range et le réintègre (UTAD), clôture sous le creux local (SOW), puis remonte le tester sans clôturer au-dessus (LPSY).",
+    shortContext: "UTAD, SOW, puis LPSY qui tient.",
+    rationales: {
+      BUY: "✗ Acheter ici, c'est acheter une distribution qui vient de montrer sa faiblesse : le passage au-dessus du range a été réintégré et le creux local cassé.",
+      SELL: "✓ UTAD réintégré, signe de faiblesse sous le creux local, LPSY qui tient : c'est la séquence de distribution que la stratégie Wyckoff appliqué attend, stop au-dessus du LPSY.",
+      NO_TRADE: "≈ Attendre se comprend après une hausse, mais UTAD, SOW et LPSY forment justement la confirmation qu'on attend.",
+    },
+    lessons: one("Wyckoff : l'UTAD seul n'est pas un signal. On attend le signe de faiblesse (SOW), puis un rebond qui échoue (LPSY) et une confirmation (leçon Avancé 13, stratégie Wyckoff appliqué)."),
+    tags: ["Wyckoff", "UTAD", "LPSY"], build: mirrored(wyckoffSpring),
+    claims: { "hausse, UTAD, SOW puis LPSY": springSosLps(true), "la suite baisse": goesDown },
+  },
+  {
+    ...ADV, id: "adv_breaker", title: "Breaker baissier", correctAnswer: "SELL", htfBias: "bullish", metric: "lecture",
+    notions: ["breaker_block", "order_block", "structure"],
+    conflict: "UT supérieure haussière et prix revenu dans un ancien Order Block haussier : acheter est le réflexe, mais l'OB a été cassé en clôture et la zone rejette maintenant le prix par en dessous.",
+    context: "Un Order Block haussier a lancé une impulsion au-dessus du sommet précédent. Le prix est ensuite repassé sous l'OB en clôture, puis il est remonté dans la zone par en dessous : la bougie est rejetée et clôture dessous.",
+    shortContext: "OB cassé, retour par en dessous et rejet.",
+    rationales: {
+      BUY: "✗ Acheter dans un OB qui a été cassé en clôture, c'est acheter une zone qui a changé de rôle : elle rejette maintenant le prix.",
+      SELL: "✓ La liquidité au-dessus du sommet a été prise, l'OB a été cassé, et le retour par en dessous est rejeté : c'est un Breaker baissier, stop au-dessus de la zone.",
+      NO_TRADE: "≈ La prudence se comprend face à l'UT supérieure, mais l'OB cassé puis rejeté au retour est précisément le setup du Breaker.",
+    },
+    lessons: one("Un Breaker Block est un Order Block invalidé, surveillé dans le rôle opposé : un OB haussier cassé peut rejeter le prix par en dessous lors du retour (leçon Avancé 14)."),
+    tags: ["Breaker", "Order Block"], build: breakerBlock,
+    claims: { "OB cassé, retour par en dessous et rejet": breakerReject(true), "la suite baisse": goesDown },
+  },
+  {
+    ...ADV, id: "adv_breaker_achat", title: "Breaker haussier", correctAnswer: "BUY", htfBias: "bearish", metric: "lecture",
+    notions: ["breaker_block", "order_block", "structure"],
+    conflict: "UT supérieure baissière et prix revenu dans un ancien Order Block baissier : vendre est le réflexe, mais l'OB a été cassé en clôture et la zone soutient maintenant le prix par au-dessus.",
+    context: "Un Order Block baissier a lancé une impulsion sous le creux précédent. Le prix est ensuite repassé au-dessus de l'OB en clôture, puis il est redescendu dans la zone par au-dessus : la bougie est rejetée et clôture dessus.",
+    shortContext: "OB cassé, retour par au-dessus et rejet.",
+    rationales: {
+      BUY: "✓ La liquidité sous le creux a été prise, l'OB a été cassé, et le retour par au-dessus est rejeté : c'est un Breaker haussier, stop sous la zone.",
+      SELL: "✗ Vendre dans un OB qui a été cassé en clôture, c'est vendre une zone qui a changé de rôle : elle soutient maintenant le prix.",
+      NO_TRADE: "≈ La prudence se comprend face à l'UT supérieure, mais l'OB cassé puis rejeté au retour est précisément le setup du Breaker.",
+    },
+    lessons: one("Un Breaker Block est un Order Block invalidé, surveillé dans le rôle opposé : un OB baissier cassé peut soutenir le prix par au-dessus lors du retour (leçon Avancé 14)."),
+    tags: ["Breaker", "Order Block"], build: mirrored(breakerBlock),
+    claims: { "OB cassé, retour par au-dessus et rejet": breakerReject(false), "la suite monte": goesUp },
+  },
+  {
+    ...ADV, id: "adv_inducement", title: "Le support intermédiaire", correctAnswer: "NO_TRADE", htfBias: "bullish", metric: "piege",
+    notions: ["inducement", "liquidite", "zones_cles"],
+    conflict: "Tendance haussière, support touché deux fois, petite bougie verte : tout invite à acheter, mais un support majeur bien plus solide se trouve juste en dessous, et ce petit niveau attire les stops.",
+    context: "Tendance haussière. Le prix revient sur un support intermédiaire touché deux fois ; un support majeur, plus bas, a lui aussi été touché deux fois. La dernière bougie est une petite verte posée sur le support intermédiaire.",
+    shortContext: "Retour sur le support intermédiaire, support majeur plus bas.",
+    rationales: {
+      BUY: "✗ Acheter le premier petit support, avec le stop juste dessous, c'est placer son stop là où le prix va chercher la liquidité avant de rejoindre la vraie zone.",
+      SELL: "✗ Vendre contre la tendance, au-dessus d'un support majeur, n'a pas de logique.",
+      NO_TRADE: "✓ Le support intermédiaire peut servir d'inducement : on attend que le prix rejoigne le support majeur et y montre une réaction avant d'envisager un achat.",
+    },
+    lessons: one("L'inducement : un petit niveau visible attire les ordres avant que le prix rejoigne une zone plus importante. Hiérarchise tes niveaux avant de choisir où acheter (leçon Avancé 15)."),
+    tags: ["inducement", "liquidité"], build: inducementTrap,
+    claims: { "retour sur le support intermédiaire, puis passage jusqu'au support majeur": inducementClaim },
+  },
+  {
+    ...ADV, id: "adv_turtle_soup", title: "Turtle soup sur le plus haut de la veille", correctAnswer: "SELL", htfBias: "bullish", metric: "lecture",
+    notions: ["turtle_soup", "sweep", "liquidite"],
+    conflict: "UT supérieure haussière et nouveau plus haut au-dessus du PDH : acheter le breakout est tentant, mais la bougie a clôturé de nouveau sous le PDH et la suivante confirme la baisse.",
+    context: "Le prix monte au-dessus du plus haut de la veille (PDH) d'une mèche, puis la bougie clôture de nouveau dessous. La bougie suivante clôture sous le plus bas de cette bougie.",
+    shortContext: "Mèche au-dessus du PDH, clôture dessous, confirmation.",
+    rationales: {
+      BUY: "✗ Acheter ici, c'est acheter un breakout qui n'a pas tenu : la clôture est revenue sous le PDH et la confirmation baissière a suivi.",
+      SELL: "✓ La fausse sortie au-dessus du PDH, réintégrée en clôture, puis confirmée par la bougie suivante, est le setup du turtle soup, stop au-dessus de la mèche.",
+      NO_TRADE: "≈ Attendre se comprend face à l'UT supérieure, mais la réintégration et la confirmation sont justement ce qui distingue un vrai setup d'une simple mèche.",
+    },
+    lessons: one("Le turtle soup : une fausse sortie d'un plus haut ou d'un plus bas de référence (veille, semaine), réintégrée en clôture puis confirmée (leçon Avancé 15, et la chasse aux stops de l'Avancé 6)."),
+    tags: ["turtle soup", "sweep", "PDH"], build: turtleSoup,
+    claims: { "mèche au-dessus du PDH, clôture dessous, confirmation": turtleClaim(true), "la suite baisse": goesDown },
+  },
+  {
+    ...ADV, id: "adv_turtle_soup_achat", title: "Turtle soup sur le plus bas de la veille", correctAnswer: "BUY", htfBias: "bearish", metric: "lecture",
+    notions: ["turtle_soup", "sweep", "liquidite"],
+    conflict: "UT supérieure baissière et nouveau plus bas sous le PDL : vendre le breakout est tentant, mais la bougie a clôturé de nouveau au-dessus du PDL et la suivante confirme la hausse.",
+    context: "Le prix descend sous le plus bas de la veille (PDL) d'une mèche, puis la bougie clôture de nouveau au-dessus. La bougie suivante clôture au-dessus du plus haut de cette bougie.",
+    shortContext: "Mèche sous le PDL, clôture dessus, confirmation.",
+    rationales: {
+      BUY: "✓ La fausse sortie sous le PDL, réintégrée en clôture, puis confirmée par la bougie suivante, est le setup du turtle soup, stop sous la mèche.",
+      SELL: "✗ Vendre ici, c'est vendre un breakout qui n'a pas tenu : la clôture est revenue au-dessus du PDL et la confirmation haussière a suivi.",
+      NO_TRADE: "≈ Attendre se comprend face à l'UT supérieure, mais la réintégration et la confirmation sont justement ce qui distingue un vrai setup d'une simple mèche.",
+    },
+    lessons: one("Le turtle soup : une fausse sortie d'un plus haut ou d'un plus bas de référence (veille, semaine), réintégrée en clôture puis confirmée (leçon Avancé 15, et la chasse aux stops de l'Avancé 6)."),
+    tags: ["turtle soup", "sweep", "PDL"], build: mirrored(turtleSoup),
+    claims: { "mèche sous le PDL, clôture dessus, confirmation": turtleClaim(false), "la suite monte": goesUp },
+  },
+];
+
+export const BSNT_NEW: NewScenario[] = [...BSNT_BEGINNER, ...BSNT_INTERMEDIATE, ...BSNT_FIGURES, ...BSNT_ADVANCED, ...BSNT_VOLUME, ...BSNT_NOUV_ADVANCED];

@@ -36,7 +36,7 @@ export default function ContentFr() {
 
       <Block title="Pourquoi privilégier le LPS ?">
         <P>
-          Acheter pendant le Spring est plus anticipatif : le marché peut continuer à baisser ou ne pas réintégrer durablement le range. Attendre le SOS puis le LPS donne plus d&apos;informations sur la structure. En contrepartie, le prix d&apos;entrée est moins avantageux : nous préférons une confirmation plus avancée à la capture du point bas exact.
+          Acheter pendant le Spring est plus anticipatif : le marché peut continuer à baisser ou ne pas réintégrer durablement le range. Attendre le SOS puis le LPS donne plus d&apos;informations sur la structure. En contrepartie, le prix d&apos;entrée est moins avantageux : nous préférons une confirmation plus avancée à la capture du creux exact.
         </P>
       </Block>
 
@@ -117,7 +117,7 @@ export default function ContentFr() {
             answerExplanations: [
               "Faux. Le SOW est un signe de faiblesse.",
               "Correct. Le LPSY est la zone où surveiller la reprise baissière.",
-              "Faux. Un nouveau sommet plus haut n'est pas une condition du LPSY.",
+              "Faux. Un nouveau higher high n'est pas une condition du LPSY.",
             ],
           },
           {

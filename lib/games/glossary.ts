@@ -8,8 +8,8 @@
 //   même notion) → terme retenu. L'audit vérifie qu'ils ne réapparaissent pas.
 // - ZONE_LABELS : seuls libellés de zones autorisés sur les graphiques.
 //
-// Termes absents des leçons, gardés car courants chez les traders : ATR,
-// PDL / PDH, « Piso del rango » (ES). Signalés « hors leçons ».
+// Termes absents des leçons, gardés car courants chez les traders : PDL / PDH,
+// « Piso del rango » (ES). Signalés « hors leçons ».
 
 export type GlossaryLocale = "fr" | "es";
 
@@ -164,7 +164,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     short: { fr: "écart entre prix d'achat et prix de vente.", es: "diferencia entre precio de compra y de venta." },
   },
   {
-    id: "atr", source: "hors leçons (terme courant)", outsideLessons: true,
+    id: "atr", source: "Intermédiaire · leçon 11 (L'ATR)",
     term: { fr: "ATR", es: "ATR" },
     inlineDef: { fr: "(ATR, l'amplitude moyenne d'une journée)", es: "(ATR, la amplitud media de una jornada)" },
     match: { fr: /\bATR\b/, es: /\bATR\b/ },
@@ -629,6 +629,97 @@ export const GLOSSARY: GlossaryEntry[] = [
     },
     short: { fr: "ordres agressifs qui ne font pas avancer le prix.", es: "órdenes agresivas que no hacen avanzar el precio." },
   },
+  // ─── Figures chartistes, Opening Range, Wyckoff, notions ICT/SMC complémentaires ───
+  {
+    id: "neckline", source: "Intermédiaire · leçon 10 (Les figures chartistes)",
+    term: { fr: "Ligne de cou", es: "Línea de cuello" },
+    match: { fr: /\blignes? de cou\b/i, es: /\blíneas? de cuello\b/i },
+    def: {
+      fr: "le creux entre les deux sommets d'un double sommet (ou le sommet entre les deux creux d'un double creux) : la figure se confirme quand le prix clôture au-delà.",
+      es: "el mínimo entre los dos techos de un doble techo (o el máximo entre los dos suelos de un doble suelo): la figura se confirma cuando el precio cierra más allá.",
+    },
+    short: { fr: "niveau dont le franchissement en clôture confirme la figure.", es: "nivel cuyo cruce al cierre confirma la figura." },
+  },
+  {
+    id: "flag", source: "Intermédiaire · leçon 10 (Les figures chartistes)",
+    term: { fr: "Drapeau", es: "Bandera" },
+    match: { fr: /\bdrapeaux?\b/i, es: /\bbanderas?\b/i },
+    def: {
+      fr: "une forte impulsion (le mât), puis une correction courte et organisée dans un petit canal : une clôture au-delà du canal signale une tentative de continuation.",
+      es: "un fuerte impulso (el mástil) y luego una corrección corta y ordenada en un pequeño canal: un cierre fuera del canal señala un intento de continuación.",
+    },
+    short: { fr: "impulsion puis courte correction en canal.", es: "impulso y luego corta corrección en canal." },
+  },
+  {
+    id: "opening_range", source: "Stratégie Opening Range Breakout (leçon 1)",
+    term: { fr: "Opening Range", es: "Opening Range" },
+    match: { fr: /\bopening range\b/i, es: /\bopening range\b/i },
+    def: {
+      fr: "le plus haut et le plus bas des 15 premières minutes de la séance américaine : on attend une clôture au-delà, puis un retest qui tient.",
+      es: "el máximo y el mínimo de los 15 primeros minutos de la sesión estadounidense: se espera un cierre más allá y luego un retest que aguante.",
+    },
+    short: { fr: "range des 15 premières minutes de la séance.", es: "rango de los 15 primeros minutos de la sesión." },
+  },
+  {
+    id: "spring", source: "Avancé · leçon 13 (La méthode Wyckoff)",
+    term: { fr: "Spring / UTAD", es: "Spring / UTAD" },
+    match: { fr: /\b(spring|utad)\b/i, es: /\b(spring|utad)\b/i },
+    def: {
+      fr: "passage bref sous le support d'un range (Spring) ou au-dessus de sa résistance (UTAD), suivi d'une réintégration : un test, pas encore un signal.",
+      es: "paso breve bajo el soporte de un rango (Spring) o por encima de su resistencia (UTAD), seguido de una reintegración: una prueba, todavía no una señal.",
+    },
+    short: { fr: "fausse sortie du range, réintégrée.", es: "falsa salida del rango, reintegrada." },
+  },
+  {
+    id: "sos", source: "Avancé · leçon 13 (La méthode Wyckoff)",
+    term: { fr: "SOS / SOW", es: "SOS / SOW" },
+    match: { fr: /\b(SOS|SOW)\b/, es: /\b(SOS|SOW)\b/ },
+    def: {
+      fr: "signe de force (SOS) ou de faiblesse (SOW) : une poussée qui casse un sommet local (ou un creux local) et change la structure du range.",
+      es: "señal de fuerza (SOS) o de debilidad (SOW): un impulso que rompe un máximo local (o un mínimo local) y cambia la estructura del rango.",
+    },
+    short: { fr: "poussée qui casse un extrême local du range.", es: "impulso que rompe un extremo local del rango." },
+  },
+  {
+    id: "lps", source: "Avancé · leçon 13 (La méthode Wyckoff)",
+    term: { fr: "LPS / LPSY", es: "LPS / LPSY" },
+    match: { fr: /\b(LPS|LPSY)\b/, es: /\b(LPS|LPSY)\b/ },
+    def: {
+      fr: "retour après le signe de force (LPS, sur un support) ou rebond faible après le signe de faiblesse (LPSY, sous une résistance) : la zone où la stratégie attend la confirmation.",
+      es: "retroceso tras la señal de fuerza (LPS, sobre un soporte) o rebote débil tras la señal de debilidad (LPSY, bajo una resistencia): la zona donde la estrategia espera la confirmación.",
+    },
+    short: { fr: "retour qui tient après le SOS ou le SOW.", es: "retroceso que aguanta tras el SOS o el SOW." },
+  },
+  {
+    id: "breaker", source: "Avancé · leçon 14 (ICT/SMC, les zones complémentaires)",
+    term: { fr: "Breaker", es: "Breaker" },
+    match: { fr: /\bbreaker\b/i, es: /\bbreaker\b/i },
+    def: {
+      fr: "un Order Block cassé en clôture après une prise de liquidité, surveillé ensuite dans le rôle opposé.",
+      es: "un Order Block roto al cierre tras una toma de liquidez, vigilado después en el rol opuesto.",
+    },
+    short: { fr: "Order Block invalidé, rôle inversé.", es: "Order Block invalidado, rol invertido." },
+  },
+  {
+    id: "inducement", source: "Avancé · leçon 15 (ICT/SMC, liquidité et timing)",
+    term: { fr: "Inducement", es: "Inducement" },
+    match: { fr: /\binducement\b/i, es: /\binducement\b/i },
+    def: {
+      fr: "un petit niveau visible qui attire les ordres (et les stops) avant que le prix rejoigne une zone plus importante.",
+      es: "un pequeño nivel visible que atrae las órdenes (y los stops) antes de que el precio alcance una zona más importante.",
+    },
+    short: { fr: "petit niveau qui attire les stops.", es: "pequeño nivel que atrae los stops." },
+  },
+  {
+    id: "turtle_soup", source: "Avancé · leçon 15 (ICT/SMC, liquidité et timing)",
+    term: { fr: "Turtle soup", es: "Turtle soup" },
+    match: { fr: /\bturtle soup\b/i, es: /\bturtle soup\b/i },
+    def: {
+      fr: "une fausse sortie d'un plus haut ou d'un plus bas de référence (veille, semaine), réintégrée en clôture puis confirmée.",
+      es: "una falsa salida de un máximo o mínimo de referencia (día anterior, semana), reintegrada al cierre y luego confirmada.",
+    },
+    short: { fr: "fausse sortie d'un extrême de référence.", es: "falsa salida de un extremo de referencia." },
+  },
 ];
 
 /** Termes du glossaire présents dans des textes affichés, dans l'ordre d'apparition. */
@@ -761,6 +852,9 @@ export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
     "Déséquilibre", "Liquidité",
     // profil de volume (Avancé 10, lib/games/volume-study.ts)
     "POC", "VAH", "VAL", "HVN", "LVN",
+    // figures chartistes, Opening Range, Wyckoff, zones ICT/SMC (Intermédiaire 10, stratégie ORB, Avancé 13 à 15)
+    "Ligne de cou", "Haut de l'Opening Range", "Bas de l'Opening Range", "Haut de l'OR", "Bas de l'OR",
+    "Spring", "UTAD", "Sommet local", "Creux local", "Breaker", "Support majeur", "Support intermédiaire",
   ],
   es: [
     "FVG alcista", "Order Block", "Liquidez arriba", "Liquidez abajo", "Liquidez barrida",
