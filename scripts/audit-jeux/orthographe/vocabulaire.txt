@@ -1,6 +1,9 @@
 a-t-elle
 a-t-il
 abajo
+abandonné
+abandonner
+abandonnes
 abandonnés
 abierta
 abiertas
@@ -64,6 +67,7 @@ acceptable
 acceptables
 acceptation
 accepte
+accepté
 acceptée
 acceptent
 accepter
@@ -83,6 +87,7 @@ accionables
 accionarios
 acciones
 accompagnée
+accompagnées
 accompagnent
 accompagner
 accomplis
@@ -243,6 +248,7 @@ affichait
 affiche
 affiché
 affichée
+affichées
 affichent
 afficher
 affichés
@@ -668,6 +674,7 @@ appliquée
 appliquer
 appliqués
 apporte
+apportent
 apporter
 apprend
 apprendre
@@ -680,6 +687,7 @@ approfondies
 approfondir
 approfondis
 approprié
+appropriées
 approximation
 appui
 aprecia
@@ -778,6 +786,7 @@ article
 articles
 artículo
 artículos
+artificiellement
 as
 as-tu
 ascendant
@@ -816,6 +825,7 @@ assembler
 assez
 assimilé
 assimilés
+associant
 associations
 associé
 assouplissement
@@ -861,6 +871,7 @@ attend
 attendais
 attendant
 attendent
+attendons
 attendra
 attendre
 attends
@@ -1589,6 +1600,7 @@ chutent
 chuter
 chutes
 ci-dessous
+ci-dessus
 cible
 ciblée
 ciblent
@@ -1642,6 +1654,7 @@ clasificar
 classe
 classées
 classement
+classés
 classifier
 classique
 classiques
@@ -1820,6 +1833,7 @@ comparée
 comparer
 compares
 comparten
+compatibles
 compensa
 compensado
 compensan
@@ -1835,6 +1849,7 @@ competencias
 competidores
 complejas
 complejo
+complément
 complementa
 complémentaire
 complémentaires
@@ -1916,6 +1931,7 @@ comprometido
 compromis
 compromise
 compromiso
+comptant
 compte
 comptent
 compter
@@ -1967,6 +1983,7 @@ concordance
 concordancia
 concordantes
 concordants
+concordent
 concret
 concreta
 concretamente
@@ -2059,6 +2076,7 @@ confunden
 confundida
 confundir
 confusa
+confuse
 confusion
 confusión
 confusiones
@@ -2111,6 +2129,7 @@ conservar
 conservas
 conservateur
 conserve
+conservent
 conserver
 considérablement
 considerablemente
@@ -2203,6 +2222,7 @@ contexte
 contextes
 contexto
 contextual
+contextualiser
 contextuelle
 contiene
 contient
@@ -2338,6 +2358,7 @@ correr
 correspond
 correspond-elle
 correspond-il
+correspondant
 correspondante
 correspondants
 corresponde
@@ -2376,6 +2397,7 @@ costoso
 costumbre
 cotation
 cotations
+cote
 côte
 côté
 cotées
@@ -2872,6 +2894,7 @@ definida
 definido
 definidos
 définie
+définies
 definir
 définir
 définis
@@ -2934,6 +2957,7 @@ demi-bougie
 demi-tour
 demo
 démonstration
+démontre
 demora
 demuestra
 denominados
@@ -3209,6 +3233,7 @@ différemment
 différence
 différences
 différent
+diffèrent
 différente
 différentes
 différentiel
@@ -3230,6 +3255,7 @@ dimanche
 dimensionada
 dimensiones
 dimensionnements
+dimensions
 diminue
 diminues
 dimmed
@@ -3293,6 +3319,7 @@ disparándose
 disparar
 disparará
 dispararse
+disparition
 disparo
 disparó
 disparu
@@ -3305,6 +3332,7 @@ disponibilité
 disponible
 disponibles
 dispose
+disposent
 disposer
 disposes
 disproportionné
@@ -3458,6 +3486,7 @@ dur
 dura
 durable
 durablement
+durables
 duración
 duradera
 durant
@@ -3480,6 +3509,7 @@ easing
 écart
 écarte
 écartée
+écarter
 ecb
 échange
 échangé
@@ -3582,10 +3612,12 @@ elevadas
 elevado
 elevan
 élevé
+élève
 élevée
 élevées
 élèvent
 élevés
+élèves
 elige
 eliges
 eligió
@@ -3727,6 +3759,7 @@ enregistrement
 enregistrer
 enregistres
 enregistrés
+enrichir
 enrichit
 ensamblar
 enseguida
@@ -3764,6 +3797,7 @@ entradas
 entrado
 entraîné
 entraîne-toi
+entraînent
 entran
 entrant
 entrar
@@ -3799,6 +3833,7 @@ environ
 environnement
 envisagé
 envisagée
+envisager
 envoie
 envolvente
 envolventes
@@ -4060,6 +4095,7 @@ evento
 eventos
 events
 éventuel
+éventuellement
 évidemment
 évidences
 evidencia
@@ -4091,6 +4127,7 @@ evoluciona
 évolue
 évolué
 évolue-t-il
+évoluer
 évolution
 ex
 ex-hl
@@ -4295,6 +4332,7 @@ factores
 factory
 factual
 factuel
+facultative
 fade
 faded
 faible
@@ -4353,6 +4391,7 @@ faux
 faveur
 favor
 favorable
+favorables
 favorece
 favorecida
 favorecido
@@ -4397,6 +4436,7 @@ fibo
 fibonacci
 fichier
 fictifs
+fictives
 fidélité
 fidelización
 fige
@@ -4416,6 +4456,7 @@ filtran
 filtrando
 filtrar
 filtre
+filtrée
 filtrent
 filtrer
 filtres
@@ -4508,6 +4549,7 @@ fondamentaux
 fondateur
 fondations
 fondement
+fondés
 fondo
 fondos
 fonds
@@ -4596,6 +4638,7 @@ franchement
 franches
 franchi
 franchie
+franchir
 franchissement
 franchit
 franco
@@ -4707,6 +4750,7 @@ ganó
 gap
 gaps
 garanti
+garantir
 garantit
 garantiza
 garantizado
@@ -5434,6 +5478,7 @@ interesante
 interesarse
 intéressant
 intéressante
+intéressantes
 intéressants
 intéresser
 intérêt
@@ -5464,6 +5509,7 @@ intersección
 intersection
 interviene
 intervienes
+interviennent
 intervient
 intrabar
 intraday
@@ -5479,6 +5525,7 @@ intuition
 intuitiva
 intuitive
 inundan
+inutile
 inutilement
 invalida
 inválida
@@ -5554,6 +5601,7 @@ irse
 isolé
 isolée
 isolés
+issue
 issues
 italic
 items
@@ -6811,6 +6859,7 @@ negociables
 negociación
 négociation
 négocie
+négociée
 nerveux
 nervioso
 nés
@@ -6973,6 +7022,7 @@ observation
 observations
 observe
 observé
+observée
 observer
 observes
 observo
@@ -7264,6 +7314,7 @@ participe
 participent
 particular
 particulares
+particularités
 particularmente
 particulier
 particulière
@@ -7275,6 +7326,7 @@ partiel
 partielle
 partiellement
 partielles
+partiels
 partió
 partir
 partition
@@ -7336,6 +7388,7 @@ pays
 paz
 pedagogía
 pédagogie
+pédagogique
 pedido
 pedidos
 pega
@@ -7700,6 +7753,7 @@ positive
 positivement
 positives
 positivo
+posséder
 possèdes
 possibilités
 possible
@@ -7740,13 +7794,16 @@ poulet
 pour
 pourcentage
 pourquoi
+pourra
 pourrais
 pourrait
 pourras
 pourri
 poursuis
 poursuit
+poursuite
 poursuive
+poursuivent
 poursuivre
 pourtant
 poussant
@@ -7918,6 +7975,7 @@ presta
 prestado
 prêt
 prête
+prétendre
 prêts
 preuve
 preuves
@@ -7998,6 +8056,7 @@ priver
 privilegia
 privilegiada
 privilegiar
+privilégie
 privilégiée
 privilégier
 privilégions
@@ -8179,6 +8238,8 @@ protèges
 protegido
 prouve
 prouvé
+prouvée
+prouvés
 provee
 provisional
 provisoire
@@ -8556,7 +8617,10 @@ rechazó
 rechazos
 recherche
 recherché
+recherchée
 rechercher
+recherches
+recherches-tu
 rechute
 recibe
 reciben
@@ -8854,6 +8918,7 @@ remonter
 remontera
 remords
 remplace
+remplacent
 remplacer
 rempli
 remplie
@@ -8863,6 +8928,7 @@ remplissage
 remplit
 rémunération
 rencontrent
+rencontrer
 rend
 rende
 rendement
@@ -8886,6 +8952,7 @@ renoncer
 renonces
 renouvelé
 renovará
+renseigne
 rentabilidad
 rentabilité
 rentable
@@ -8961,9 +9028,12 @@ reprendre
 reprends
 reprenne
 reprennent
+reprenons
 representa
 representan
 representar
+représentatif
+représentation
 représente
 représente-t-elle
 représentent
@@ -8996,6 +9066,7 @@ reservados
 reservas
 réserve
 réservé
+réservée
 réserver
 réserves
 réservés
@@ -9098,6 +9169,7 @@ retardataire
 retén
 retener
 retenir
+retenu
 retest
 retesté
 retestea
@@ -9332,6 +9404,7 @@ s'activent
 s'activer
 s'adapte
 s'adapter
+s'adresse
 s'affaiblir
 s'affaiblit
 s'affiche
@@ -9545,12 +9618,15 @@ seguramente
 seguridad
 seguro
 seguros
+sein
 seis
 selección
 selecciona
 selected
 sélection
 sélectionne
+sélectionnée
+sélectionner
 selectividad
 sélectivité
 sell
@@ -9613,6 +9689,7 @@ séries
 sérieusement
 serio
 serlo
+seront
 serre
 serré
 serrée
@@ -9885,6 +9962,7 @@ spam
 spams
 spécial
 spécialisation
+spécialisée
 spécialisés
 spécifique
 spécifiques
@@ -10080,6 +10158,7 @@ supposant
 suppose
 supposé
 supposent
+supposer
 suppression
 supprime
 supprimée
@@ -10206,6 +10285,7 @@ técnicamente
 técnicas
 técnico
 técnicos
+tel
 teléfono
 telegram
 téléphone
@@ -10707,6 +10787,7 @@ utilisées
 utilisent
 utiliser
 utilises
+utilisés
 utilité
 utilizables
 utilizada
@@ -10939,6 +11020,7 @@ violents
 virages
 virgen
 vis
+visant
 vise
 visé
 visée
