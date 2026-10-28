@@ -1471,8 +1471,8 @@ const inducementTrap: NewScenario["build"] = (rng, m) => {
   const b = band(m);
   // le support majeur se prouve sous le futur support intermédiaire : ses réactions n'atteignent pas I
   // (sinon le niveau intermédiaire aurait d'abord servi de résistance)
-  const I = (2.7 + rng() * 0.3) * m;
-  const major = levelTouches(rng, b.hi + (1.6 + rng() * 0.2) * m, b.lo, b.hi, "above", m, 3, 1.5 * m);
+  const I = (2.6 + rng() * 0.2) * m;
+  const major = levelTouches(rng, b.hi + (2.0 + rng() * 0.2) * m, b.lo, b.hi, "above", m, 2, 1.6 * m);
   const past = [...major.candles];
   let p = major.p;
   // montée et preuve du support intermédiaire courtes : le graphique reste lisible sur téléphone
@@ -1489,6 +1489,8 @@ const inducementTrap: NewScenario["build"] = (rng, m) => {
   const bounce = rally(rng, m, fall.p, 3);
   return {
     past, future: [...fall.candles, ...bounce.candles],
+    // garde : entre deux touches, la passe de réalisme ne rallonge pas les mèches jusqu'au support majeur
+    guards: [b.hi + 0.4 * m],
     zones: [
       { kind: "support", y1: b.lo, y2: b.hi, label: "Support majeur" },
       { kind: "support", y1: I - 0.12 * m, y2: I + 0.12 * m, label: "Support intermédiaire" },
