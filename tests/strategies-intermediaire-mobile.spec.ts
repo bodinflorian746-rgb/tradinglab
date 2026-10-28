@@ -24,6 +24,10 @@ const PAGES = [
   "/strategies/multi-timeframe/lecon3",
   "/strategies/multi-timeframe/lecon4",
   "/strategies/multi-timeframe/lecon5",
+  "/strategies/opening-range-breakout/lecon1",
+  "/strategies/opening-range-breakout/lecon2",
+  "/strategies/opening-range-breakout/lecon3",
+  "/strategies/opening-range-breakout/lecon4",
 ];
 
 for (const url of PAGES) {

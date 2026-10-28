@@ -22,6 +22,9 @@ const PAGES = [
   "/formations/avance/lecon10",
   "/formations/avance/lecon11",
   "/formations/avance/lecon12",
+  "/formations/avance/lecon13",
+  "/formations/avance/lecon14",
+  "/formations/avance/lecon15",
 ];
 
 // Quiz en plusieurs questions (Avancé 10 à 12) : chaque question se valide, le score s'affiche à la fin

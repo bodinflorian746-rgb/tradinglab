@@ -19,6 +19,9 @@ const PAGES = [
   "/formations/intermediaire/lecon7",
   "/formations/intermediaire/lecon8",
   "/formations/intermediaire/lecon9",
+  "/formations/intermediaire/lecon10",
+  "/formations/intermediaire/lecon11",
+  "/formations/intermediaire/lecon12",
 ];
 
 for (const url of PAGES) {

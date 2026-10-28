@@ -20,6 +20,7 @@ const PAGES = [
   "/formations/debutant/lecon7",
   "/formations/debutant/lecon8",
   "/formations/debutant/lecon9",
+  "/formations/debutant/lecon11",
 ];
 
 for (const url of PAGES) {

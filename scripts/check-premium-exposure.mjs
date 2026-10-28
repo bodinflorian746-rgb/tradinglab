@@ -125,6 +125,22 @@ const ROUTES = [
   { path: "/fr/strategies/volume-profile-vwap/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/volume-profile-vwap/lecon2/_content-fr.tsx", marker: "Le VWAP filtre les zones identifiées avec le Volume Profile" },
   { path: "/fr/strategies/volume-profile-vwap/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/volume-profile-vwap/lecon3/_content-fr.tsx", marker: "Sur Forex et CFD, la confirmation repose principalement sur la structure du prix" },
   { path: "/fr/strategies/volume-profile-vwap/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/volume-profile-vwap/lecon4/_content-fr.tsx", marker: "La stratégie consiste à attendre que toutes les conditions soient réunies" },
+  // Débutant 11, Intermédiaire 10 à 12, Avancé 13 à 15, stratégies Opening Range Breakout et Wyckoff appliqué
+  { path: "/fr/formations/debutant/lecon11", type: "serveur", source: "app/[locale]/(premium)/formations/debutant/lecon11/page.tsx", marker: "Un ordre Stop Limit combine un prix de déclenchement et une limite de prix" },
+  { path: "/fr/formations/intermediaire/lecon10", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon10/page.tsx", marker: "Une figure de continuation apparaît en général après un mouvement directionnel" },
+  { path: "/fr/formations/intermediaire/lecon11", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon11/page.tsx", marker: "Pour chaque bougie, le True Range est la plus grande de ces trois distances" },
+  { path: "/fr/formations/intermediaire/lecon12", type: "serveur", source: "app/[locale]/(premium)/formations/intermediaire/lecon12/page.tsx", marker: "Une stratégie de breakout souffre dans un marché qui réintègre sans cesse ses ranges" },
+  { path: "/fr/formations/avance/lecon13", type: "serveur", source: "app/[locale]/(premium)/formations/avance/lecon13/page.tsx", marker: "Ces quatre étapes forment un modèle de lecture, pas un cycle que chaque marché doit respecter" },
+  { path: "/fr/formations/avance/lecon14", type: "serveur", source: "app/[locale]/(premium)/formations/avance/lecon14/page.tsx", marker: "Un Breaker Block est un Order Block invalidé par le prix, qui peut ensuite changer de rôle" },
+  { path: "/fr/formations/avance/lecon15", type: "serveur", source: "app/[locale]/(premium)/formations/avance/lecon15/page.tsx", marker: "Le Judas swing est un faux mouvement initial" },
+  { path: "/fr/strategies/opening-range-breakout/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/opening-range-breakout/lecon1/_content-fr.tsx", marker: "Les fenêtres de 5, 15 ou 30 minutes donnent des setups différents" },
+  { path: "/fr/strategies/opening-range-breakout/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/opening-range-breakout/lecon2/_content-fr.tsx", marker: "Nous attendons une clôture M5 au-dessus du niveau" },
+  { path: "/fr/strategies/opening-range-breakout/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/opening-range-breakout/lecon3/_content-fr.tsx", marker: "Vérifie que ce stop reste cohérent avec la volatilité du moment" },
+  { path: "/fr/strategies/opening-range-breakout/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/opening-range-breakout/lecon4/_content-fr.tsx", marker: "Ces paramètres définissent une version précise de la stratégie à tester" },
+  { path: "/fr/strategies/wyckoff-applique/lecon1", type: "client", source: "app/[locale]/(premium)/strategies/wyckoff-applique/lecon1/_content-fr.tsx", marker: "Nous travaillons en H1 pour le contexte et en M15" },
+  { path: "/fr/strategies/wyckoff-applique/lecon2", type: "client", source: "app/[locale]/(premium)/strategies/wyckoff-applique/lecon2/_content-fr.tsx", marker: "Nous attendons un signe de force." },
+  { path: "/fr/strategies/wyckoff-applique/lecon3", type: "client", source: "app/[locale]/(premium)/strategies/wyckoff-applique/lecon3/_content-fr.tsx", marker: "Le stop se trouve sous le niveau qui remet en cause la reprise haussière" },
+  { path: "/fr/strategies/wyckoff-applique/lecon4", type: "client", source: "app/[locale]/(premium)/strategies/wyckoff-applique/lecon4/_content-fr.tsx", marker: "Utilise les données historiques de tes actifs habituels sur une période déterminée" },
 ];
 
 // Phrase de l'écran de verrouillage FR (app/components/premium/paywall-strings.ts,

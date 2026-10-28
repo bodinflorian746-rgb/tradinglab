@@ -23,6 +23,10 @@ const PAGES = [
   "/strategies/volume-profile-vwap/lecon2",
   "/strategies/volume-profile-vwap/lecon3",
   "/strategies/volume-profile-vwap/lecon4",
+  "/strategies/wyckoff-applique/lecon1",
+  "/strategies/wyckoff-applique/lecon2",
+  "/strategies/wyckoff-applique/lecon3",
+  "/strategies/wyckoff-applique/lecon4",
 ];
 
 for (const url of PAGES) {
