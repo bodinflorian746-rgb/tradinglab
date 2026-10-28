@@ -52,7 +52,7 @@ const S = {
       title: "Une méthode complète, de l'analyse à l'entrée",
       sub: "Chaque stratégie se suit leçon par leçon, des fondations (price action) aux techniques institutionnelles (ICT, macro trading).",
       levels: { debutant: "Débutant", intermediaire: "Intermédiaire", avance: "Avancé" } as Record<string, string>,
-      all: "Voir les 9 stratégies",
+      all: "Voir les 11 stratégies",
     },
     reviewsSub: "Avis de membres et de premiers utilisateurs.",
     game: {
@@ -79,7 +79,7 @@ const S = {
     lessons: {
       unit: "leçons",
       tagline: "Du débutant à l'avancé",
-      // « 9 stratégies, en 39 leçons » : jamais « 39 stratégies »
+      // « 11 stratégies, en 47 leçons » : jamais « 47 stratégies »
       strategiesValue: (strategies: number, lessons: number) => [{ n: strategies }, { t: " stratégies," }, { br: true as const }, { t: " en " }, { n: lessons }, { t: " leçons" }],
     },
     games: {

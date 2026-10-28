@@ -92,4 +92,22 @@ export const STRATEGY_MODULES: StrategyModule[] = [
     lessonCount: 4,
     isFree:      true,
   },
+  {
+    id:          "opening-range-breakout",
+    title:       "Opening Range Breakout",
+    subtitle:    "Trace le range des 15 premières minutes de la séance américaine, attends la clôture et le retest, et construis un plan intraday sur le NASDAQ.",
+    level:       "intermediaire",
+    order:       10,
+    lessonCount: 4,
+    isFree:      true,
+  },
+  {
+    id:          "wyckoff-applique",
+    title:       "Wyckoff appliqué",
+    subtitle:    "Trade l'accumulation et la distribution : range après une tendance, Spring ou UTAD, signe de force ou de faiblesse, puis LPS ou LPSY confirmé en M15.",
+    level:       "avance",
+    order:       11,
+    lessonCount: 4,
+    isFree:      true,
+  },
 ];

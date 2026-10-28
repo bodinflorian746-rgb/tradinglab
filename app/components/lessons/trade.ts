@@ -9,8 +9,8 @@ export interface TradeSpec {
   entry: number;
   sl: number;
   tp: number;
-  /** "$" : or, indices (écarts en $) ; sinon forex (écarts en pips) */
-  unit?: "$" | "pips";
+  /** "$" : or, indices (écarts en $) ; "pts" : indices en points ; sinon forex (écarts en pips) */
+  unit?: "$" | "pts" | "pips";
   decimals?: number;
   /** Libellés (défaut : « Entrée », « SL », « TP ») */
   names?: { entry?: string; sl?: string; tp?: string };
@@ -24,12 +24,15 @@ export interface TradeSpec {
 
 export const usd = (x: number) => fmtPrice(Math.round(x), 0, "$");
 
+/** Points d'indice : « 27 172 » (milliers séparés, sans unité) */
+export const pts = (x: number) => fmtPrice(Math.round(x), 0, "$").replace("$", "");
+
 export function priceText(x: number, s: Pick<TradeSpec, "unit" | "decimals">) {
-  return s.unit === "$" ? fmtPrice(x, s.decimals ?? 0, "$") : fmtPrice(x, s.decimals ?? 4);
+  return s.unit === "$" ? fmtPrice(x, s.decimals ?? 0, "$") : s.unit === "pts" ? pts(x) : fmtPrice(x, s.decimals ?? 4);
 }
 
 export function distText(a: number, b: number, s: Pick<TradeSpec, "unit">) {
-  return s.unit === "$" ? usd(Math.abs(a - b)) : `${pips(a, b, 0.0001)} pips`;
+  return s.unit === "$" ? usd(Math.abs(a - b)) : s.unit === "pts" ? `${pts(Math.abs(a - b))} pts` : `${pips(a, b, 0.0001)} pips`;
 }
 
 export function tradeSetup(s: TradeSpec): { levels: LCLevel[]; chips: LCChip[]; offscale: { key: string; price: number; label: string; short: string; tone: "bull" }[]; rr: number } {

@@ -10,6 +10,7 @@ import { RETRACE_DECISION } from "./scenarios-meta";
 import { mulberry32 } from "@/lib/games/shared";
 import { VOLUME_SCENARIOS } from "./scenarios-volume";
 import { STRAT_VOLUME_SCENARIOS } from "./scenarios-strat-volume";
+import { NOUVELLES_SCENARIOS } from "./scenarios-nouvelles";
 
 const c = (...closes: number[]): Step[] => closes.map((x) => ({ c: x }));
 
@@ -1415,6 +1416,9 @@ Object.assign(SCENARIOS, VOLUME_SCENARIOS);
 
 // Stratégie Volume Profile + VWAP (4 leçons) : un trade EUR/USD suivi de leçon en leçon
 Object.assign(SCENARIOS, STRAT_VOLUME_SCENARIOS);
+
+// Débutant 11, Intermédiaire 10 à 12, Avancé 13 à 15, stratégies Opening Range Breakout et Wyckoff appliqué
+Object.assign(SCENARIOS, NOUVELLES_SCENARIOS);
 
 // Décision PO 9 : exemples de 7 stratégies passés de XAU/USD à EUR/USD (lib/lessons/eur-from-xau.ts).
 for (const key of EUR_FROM_XAU_KEYS) {

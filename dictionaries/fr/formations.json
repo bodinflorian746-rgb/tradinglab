@@ -19,12 +19,13 @@
       "lecon7": { "title": "Le Break Even",                            "duration": "8 min"  },
       "lecon8": { "title": "Gestion du risque, le money management",  "duration": "12 min" },
       "lecon9": { "title": "Les erreurs des débutants",                "duration": "11 min" },
-      "lecon10": { "title": "Gestion du risque : pourquoi 70 à 89% des comptes CFD perdent", "duration": "13 min" }
+      "lecon10": { "title": "Gestion du risque : pourquoi 70 à 89% des comptes CFD perdent", "duration": "13 min" },
+      "lecon11": { "title": "Les types d'ordres, entrer et sortir du marché", "duration": "14 min" }
     }
   },
   "intermediaire": {
     "title": "Intermédiaire",
-    "description": "Structure de marché, zones institutionnelles et lecture avancée du prix.",
+    "description": "Structure de marché, zones institutionnelles, figures chartistes et volatilité.",
     "badge": "Intermédiaire",
     "lessons": {
       "lecon1": { "title": "Structure de marché. BOS & CHoCH",           "duration": "20 min" },
@@ -35,12 +36,15 @@
       "lecon6": { "title": "Faux breakout, ne pas se faire piéger",       "duration": "18 min" },
       "lecon7": { "title": "Analyse multi-unités de temps",                      "duration": "22 min" },
       "lecon8": { "title": "Plan de trade",                                "duration": "20 min" },
-      "lecon9": { "title": "Fibonacci, retracements et confluences",      "duration": "20 min" }
+      "lecon9": { "title": "Fibonacci, retracements et confluences",      "duration": "20 min" },
+      "lecon10": { "title": "Les figures chartistes, continuation et retournement", "duration": "20 min" },
+      "lecon11": { "title": "L'ATR, mesurer l'amplitude des mouvements", "duration": "18 min" },
+      "lecon12": { "title": "La volatilité, les changements de rythme du marché", "duration": "18 min" }
     }
   },
   "avance": {
     "title": "Avancé",
-    "description": "Liquidité institutionnelle, Smart Money, techniques de trading de précision et lecture des volumes.",
+    "description": "Liquidité institutionnelle, Smart Money, lecture des volumes, Wyckoff et notions ICT/SMC complémentaires.",
     "badge": "Avancé",
     "lessons": {
       "lecon1": { "title": "Liquidité, comprendre les pools d'ordres",  "duration": "25 min" },
@@ -54,7 +58,10 @@
       "lecon9": { "title": "Backtesting, valider sa stratégie",         "duration": "22 min" },
       "lecon10": { "title": "Volume Profile, où se concentrent les échanges", "duration": "22 min" },
       "lecon11": { "title": "VWAP, les retours du prix dans une tendance", "duration": "22 min" },
-      "lecon12": { "title": "Order Flow, footprint, delta et CVD",       "duration": "24 min" }
+      "lecon12": { "title": "Order Flow, footprint, delta et CVD",       "duration": "24 min" },
+      "lecon13": { "title": "La méthode Wyckoff, accumulation et distribution", "duration": "26 min" },
+      "lecon14": { "title": "ICT/SMC, les zones complémentaires", "duration": "24 min" },
+      "lecon15": { "title": "ICT/SMC, liquidité et timing", "duration": "24 min" }
     }
   },
   "mt5": {

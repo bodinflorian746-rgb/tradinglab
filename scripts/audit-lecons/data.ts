@@ -8,6 +8,7 @@ import { confluenceModel, headShouldersModel, PIP, precisionModel } from "@/lib/
 import { BACKTEST_COUNTS, backtestStats, backtestTrades } from "@/lib/lessons/backtest";
 import { checkVolumeLessons } from "./data-volume";
 import { checkStratVolume } from "./data-strat-volume";
+import { checkNouvelles } from "./data-nouvelles";
 import { checkLot14, checkLot15, checkLot16, checkLot17, checkLot18, checkLot19, checkLot20, checkLot21, checkLot22, checkLot23, checkLot24, checkLot25, checkLot26, checkLot27, checkLot28, checkLot29, checkLot9, checkLots } from "./data-lots";
 
 let errors = 0;
@@ -15,9 +16,12 @@ const lines: string[] = [];
 const check = (ok: boolean, what: string) => { if (!ok) { errors++; lines.push(`  ERREUR ${what}`); } };
 const near = (a: number, b: number, tol: number) => Math.abs(a - b) <= tol;
 
-// Bougies générées : continuité, mèches qui englobent le corps, jamais de corps nul
+// Bougies générées : continuité, mèches qui englobent le corps, jamais de corps nul. Seul écart voulu :
+// le gap d'ouverture de l'Avancé 15 (bougie 7 de « ict-gap »), continuité vérifiée de part et d'autre.
+const GAPS: Record<string, number> = { "ict-gap": 7 };
 for (const [key, cs] of Object.entries(CANDLES as Record<string, Candle[]>)) {
-  check(isContinuous(cs), `${key} : ouverture ≠ clôture précédente`);
+  const g = GAPS[key];
+  check(g === undefined ? isContinuous(cs) : isContinuous(cs.slice(0, g)) && isContinuous(cs.slice(g)) && cs[g].o !== cs[g - 1].c, `${key} : ouverture ≠ clôture précédente`);
   cs.forEach((k, i) => {
     check(k.h >= Math.max(k.o, k.c) && k.l <= Math.min(k.o, k.c), `${key} bougie ${i} : mèches`);
     check(k.c !== k.o, `${key} bougie ${i} : clôture = ouverture`);
@@ -115,6 +119,7 @@ checkLot28(check);
 checkLot29(check);
 checkVolumeLessons(check);
 checkStratVolume(check);
+checkNouvelles(check);
 
 lines.push(`Scénarios contrôlés : ${Object.keys(CANDLES).length} séries de bougies, ${HS_CASES.length + 6} schémas`);
 console.log(lines.join("\n"));

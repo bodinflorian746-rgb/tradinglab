@@ -1,8 +1,8 @@
 {
   "page": {
     "hero": {
-      "badgeShort":   "9 stratégies · 3 niveaux · Niveau pro",
-      "badgeLong":    "9 stratégies · 3 niveaux · Du retail au niveau institutionnel",
+      "badgeShort":   "11 stratégies · 3 niveaux · Niveau pro",
+      "badgeLong":    "11 stratégies · 3 niveaux · Du retail au niveau institutionnel",
       "titleLine1":   "Apprends à trader",
       "titleLine2":   "avec une vraie méthode.",
       "subtitle":     "Un parcours structuré, des fondations aux techniques institutionnelles, pour construire une approche solide et reproductible."
@@ -132,6 +132,26 @@
         "lecon2": { "title": "Filtrer les opportunités avec le VWAP", "description": "Le VWAP de séance comme filtre du retour dans la zone, quand abandonner, une vente sur l’or, limites du VWAP sur Forex et CFD.", "duration": "16 min" },
         "lecon3": { "title": "Confirmer son entrée avec la structure du prix et l’Order Flow", "description": "Confirmation M15 et invalidation, absorption, delta et CVD sur les futures en complément, quand ne pas entrer.", "duration": "20 min" },
         "lecon4": { "title": "Exécuter et gérer un trade complet", "description": "Un plan refusé (R/R 1:1,1), un plan retenu (1:3), taille de position, issues A et B, règles et checklist.", "duration": "24 min" }
+      }
+    },
+    "opening-range-breakout": {
+      "title":    "Opening Range Breakout",
+      "subtitle": "Trace le range des 15 premières minutes de la séance américaine, attends la clôture et le retest, et construis un plan intraday sur le NASDAQ.",
+      "lessons": {
+        "lecon1": { "title": "Identifier et tracer l’Opening Range", "description": "La fenêtre 9 h 30 – 9 h 45 à New York (15 h 30 à Paris), les deux bornes, la largeur du range et quand ne pas préparer de trade.", "duration": "14 min" },
+        "lecon2": { "title": "Identifier un breakout et filtrer les faux signaux", "description": "Clôture M5 plutôt que mèche, filtre de tendance H1, filtre de volatilité et entrée sur retest.", "duration": "16 min" },
+        "lecon3": { "title": "Construire le trade : entrée, stop et objectif", "description": "Entrée après le retest, stop sous son creux, objectif avant la résistance H1 (R/R 1:2) et taille de position au lot près.", "duration": "16 min" },
+        "lecon4": { "title": "Appliquer, contrôler et évaluer la stratégie", "description": "Les règles complètes, un trade refusé sans retest, un faux breakout abandonné, le backtest et la lecture des résultats.", "duration": "18 min" }
+      }
+    },
+    "wyckoff-applique": {
+      "title":    "Wyckoff appliqué",
+      "subtitle": "Trade l’accumulation et la distribution : range après une tendance, Spring ou UTAD, signe de force ou de faiblesse, puis LPS ou LPSY confirmé en M15.",
+      "lessons": {
+        "lecon1": { "title": "Identifier une accumulation ou une distribution exploitable", "description": "La tendance qui précède, les bornes du range sur l’or, les événements à surveiller et quand ne pas retenir le range.", "duration": "16 min" },
+        "lecon2": { "title": "Confirmer une accumulation ou une distribution", "description": "Spring, SOS et LPS sur l’or, UTAD, SOW et LPSY sur le NASDAQ, et la confirmation en M15.", "duration": "18 min" },
+        "lecon3": { "title": "Construire les trades : entrée, stop et objectif", "description": "Un achat sur l’or (1:2), une entrée trop tardive refusée (1:0,75), une vente sur le NASDAQ, la taille de position et le Spring qui échoue.", "duration": "22 min" },
+        "lecon4": { "title": "Les règles finales et le backtest", "description": "Règles d’achat et de vente, setups à refuser, journal de test, échantillon fictif et checklist.", "duration": "18 min" }
       }
     }
   }

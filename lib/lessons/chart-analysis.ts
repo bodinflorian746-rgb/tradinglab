@@ -160,6 +160,23 @@ export function rsi(closes: number[], n = 14): (number | null)[] {
 // ─── Lignes et bougies ──────────────────────────────────────────────────────
 
 /** Prix d'une droite passant par (i1, p1) et (i2, p2), à l'indice i. */
+/** True Range de chaque bougie : max(haut − bas, |haut − clôture précédente|, |bas − clôture précédente|). */
+export function trueRange(candles: Candle[]): number[] {
+  return candles.map((k, i) => (i === 0 ? k.h - k.l : Math.max(k.h - k.l, Math.abs(k.h - candles[i - 1].c), Math.abs(k.l - candles[i - 1].c))));
+}
+
+/** ATR de Wilder sur n périodes : moyenne simple des n premiers True Ranges, puis lissage (ATR × (n − 1) + TR) ÷ n. */
+export function atr(candles: Candle[], n = 14): (number | null)[] {
+  const tr = trueRange(candles);
+  const out: (number | null)[] = candles.map(() => null);
+  let a = 0;
+  for (let i = 0; i < tr.length; i++) {
+    if (i < n) { a += tr[i]; if (i === n - 1) { a /= n; out[i] = a; } }
+    else { a = (a * (n - 1) + tr[i]) / n; out[i] = a; }
+  }
+  return out;
+}
+
 export function lineAt(i1: number, p1: number, i2: number, p2: number, i: number): number {
   return p1 + ((p2 - p1) * (i - i1)) / (i2 - i1);
 }

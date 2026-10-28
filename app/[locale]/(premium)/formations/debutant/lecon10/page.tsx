@@ -21,7 +21,7 @@ export default async function Page({
       duration="13 min"
       lessonNumber={10}
       prev={{ href: "/formations/debutant/lecon9", label: "Leçon 9" }}
-      next={null}
+      next={{ href: "/formations/debutant/lecon11", label: "Leçon 11 : Les types d'ordres" }}
     >
       {/* ── Section 1 — Le plus grand mensonge du retail ─────────────────── */}
       <section className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">

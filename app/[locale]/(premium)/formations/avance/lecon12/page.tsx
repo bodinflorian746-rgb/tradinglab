@@ -29,7 +29,7 @@ export default function Page() {
       duration="24 min"
       lessonNumber={12}
       prev={{ href: "/formations/avance/lecon11", label: "Leçon 11 : VWAP" }}
-      next={null}
+      next={{ href: "/formations/avance/lecon13", label: "Leçon 13 : Wyckoff" }}
     >
 
       <Section title="Comprendre l'activité derrière les prix">

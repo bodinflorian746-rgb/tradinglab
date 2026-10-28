@@ -247,6 +247,47 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       const ext = top ? Math.max(cs[i1].h, cs[i2].h) : Math.min(cs[i1].l, cs[i2].l);
       if (!eq(+s.dataset.p1, ext) && !eq(+s.dataset.p2, ext)) E(`hauteur ${s.dataset.segment} : ne part pas de l'extrême du pattern (${fmt(ext)})`);
     }
+    // Milieu (CE) : au milieu de la zone citée (FVG, gap, range), ou des deux niveaux cités (bornes d'un range)
+    for (const l of svg.querySelectorAll('line[data-level][data-role="ce"]')) {
+      const refs = (l.dataset.ref || "").split(",").filter(Boolean);
+      const z = refs.length === 1 ? zoneOf(refs[0]) : null;
+      const ls = refs.map((k) => svg.querySelector(`line[data-level="${CSS.escape(k)}"]`));
+      const mid = z ? (+z.dataset.y1 + +z.dataset.y2) / 2 : ls.length === 2 && ls.every(Boolean) ? (+ls[0].dataset.price + +ls[1].dataset.price) / 2 : null;
+      if (mid === null) E(`milieu ${l.dataset.level} : zone ou niveaux « ${l.dataset.ref} » absents`);
+      else if (Math.abs(+l.dataset.price - mid) > unit / 2 + 1e-9) E(`milieu ${l.dataset.level} « ${labelOf(l.dataset.level)} » : ${fmt(+l.dataset.price)} au lieu de ${fmt(mid)} (milieu de « ${l.dataset.ref} »)`);
+    }
+    // BPR : exactement le chevauchement des deux FVG cités
+    for (const z of svg.querySelectorAll('rect[data-zone][data-role="bpr"]')) {
+      const [a, b] = (z.dataset.ref || "").split(",").map((k) => zoneOf(k));
+      if (!a || !b) { E(`BPR ${z.dataset.zone} : FVG « ${z.dataset.ref} » absents`); continue; }
+      const lo = Math.max(+a.dataset.y1, +b.dataset.y1), hi = Math.min(+a.dataset.y2, +b.dataset.y2);
+      if (!(hi > lo)) E(`BPR ${z.dataset.zone} : les deux FVG ne se chevauchent pas`);
+      else if (!eq(+z.dataset.y1, lo) || !eq(+z.dataset.y2, hi)) E(`BPR ${z.dataset.zone} : ${fmt(+z.dataset.y1)} – ${fmt(+z.dataset.y2)} au lieu du chevauchement ${fmt(lo)} – ${fmt(hi)}`);
+    }
+    // Objectif d'un double sommet / creux : la hauteur (extrême − ligne de cou) reportée depuis la ligne de cou
+    for (const l of svg.querySelectorAll('line[data-level][data-role="dt-target"], line[data-level][data-role="db-target"]')) {
+      const [i1, i2] = (l.dataset.ref || "").split(",").map(Number);
+      if (!cs[i1] || !cs[i2]) { E(`objectif ${l.dataset.level} : sommets « ${l.dataset.ref} » absents`); continue; }
+      const top = l.dataset.role === "dt-target", seg = cs.slice(Math.min(i1, i2), Math.max(i1, i2) + 1);
+      const ext = top ? Math.max(cs[i1].h, cs[i2].h) : Math.min(cs[i1].l, cs[i2].l);
+      const neck = top ? Math.min(...seg.map((k) => k.l)) : Math.max(...seg.map((k) => k.h));
+      const want = neck - (ext - neck);
+      if (Math.abs(+l.dataset.price - want) > unit / 2 + 1e-9) E(`objectif ${l.dataset.level} « ${labelOf(l.dataset.level)} » : ${fmt(+l.dataset.price)} au lieu de ${fmt(want)} (hauteur ${fmt(Math.abs(ext - neck))} reportée depuis la ligne de cou ${fmt(neck)})`);
+    }
+    // ATR 14 (Wilder) recalculé sur les bougies affichées : chaque valeur écrite sur la courbe doit le redonner
+    {
+      const tr = cs.map((k, i) => (i ? Math.max(k.h - k.l, Math.abs(k.h - cs[i - 1].c), Math.abs(k.l - cs[i - 1].c)) : k.h - k.l));
+      const atrv = []; let acc = 0;
+      tr.forEach((t, i) => { if (i < 14) { acc += t; atrv.push(i === 13 ? (acc /= 14) : null); } else { acc = (acc * 13 + t) / 14; atrv.push(acc); } });
+      for (const g of svg.querySelectorAll("[data-atr-mark]")) {
+        const i = +g.dataset.atrMark, lab = g.querySelector("text")?.textContent ?? "";
+        const mm = lab.match(/(\d+(?:[.,]\d+)?)\s*(pts|pips|\$)/);
+        if (!mm) { E(`ATR bougie ${i} : « ${lab} » sans valeur ni unité`); continue; }
+        const shown = +mm[1].replace(",", "."), real = atrv[i] === null || atrv[i] === undefined ? null : mm[2] === "pips" ? atrv[i] * 1e4 : atrv[i];
+        if (real === null) E(`ATR bougie ${i} : moins de 14 bougies avant, l'ATR n'existe pas encore`);
+        else if (Math.abs(real - shown) > 0.5 + 1e-9) E(`ATR bougie ${i} : « ${lab} » au lieu de ${real.toFixed(1)} (ATR 14 recalculé)`);
+      }
+    }
 
     // ─── Tracé mesuré en MR : amplitude médiane (haut − bas) des bougies affichées, comme les jeux ───
     const MR = [...cs].map((k) => k.h - k.l).sort((a, b) => a - b)[Math.floor(n / 2)];
@@ -559,7 +600,7 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
           const cs = JSON.parse(svg.dataset.candles);
           cs.forEach((k, i) => {
             if (!(k.h >= Math.max(k.o, k.c) && k.l <= Math.min(k.o, k.c))) E(id, `${P} bougie ${i} : mèches qui n'englobent pas le corps`);
-            if (i && Math.abs(k.o - cs[i - 1].c) > 1e-9) E(id, `${P} bougie ${i} : ouverture ${k.o} ≠ clôture précédente ${cs[i - 1].c}`);
+            if (i && Math.abs(k.o - cs[i - 1].c) > 1e-9 && !(svg.dataset.gaps || "").split(",").includes(String(i))) E(id, `${P} bougie ${i} : ouverture ${k.o} ≠ clôture précédente ${cs[i - 1].c}`);
             const g = svg.querySelector(`[data-candle="${i}"]`);
             if (!g) { E(id, `${P} bougie ${i} non dessinée`); return; }
             const wick = g.querySelector("line"), body = g.querySelector("rect");
@@ -682,7 +723,7 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
         if (!((s < e && t > e) || (s > e && t < e))) E(id, `SL ${s} et TP ${t} du même côté de l'entrée ${e}`);
         if (fmtRR(rr) !== c.dataset.rr || !c.textContent.includes(fmtRR(rr))) E(id, `R/R affiché ${c.textContent.trim()} ≠ calculé ${fmtRR(rr)}`);
         const x = c.dataset.expect;
-        if (x && !(x[0] === "<" ? rr < +x.slice(1) : rr > +x.slice(1))) E(id, `R/R ${fmtRR(rr)} contraire au texte (${x})`);
+        if (x && !(x.startsWith(">=") ? rr >= +x.slice(2) - 1e-9 : x[0] === "<" ? rr < +x.slice(1) : rr > +x.slice(1))) E(id, `R/R ${fmtRR(rr)} contraire au texte (${x})`);
       }
       // Étiquettes : chevauchements, débordements, doublons avec les puces / la légende
       const tags = [...fig.querySelectorAll("[data-label-for]")].map((g) => ({ k: g.dataset.labelFor, r: (g.querySelector("rect") || g).getBoundingClientRect(), t: g.textContent.trim(), svg: g.closest("svg").getBoundingClientRect() }));
@@ -789,10 +830,16 @@ const EXPECT = {
   "Fibonacci sans repères 0 % et 100 %": /sans ses repères 0 % et 100 %/, "tracé Fibonacci au bord": /le tracé ne part pas d'un vrai/,
   "POC déplacé": /POC recalculé/, "barre du profil étirée": /la plus longue barre|non proportionnelle/, "Value Area trop étroite": /contient .* % du volume/,
   "volume d'une bougie modifié": /recalculé|la bougie dit/, "VWAP décalé": /VWAP recalculé/, "VWAP ancré hors du graphique": /ancré hors du graphique/,
+  "ATR faux": /ATR 14 recalculé/, "CE décalé": /milieu de « /, "BPR débordant": /au lieu du chevauchement/, "objectif de figure faux": /reportée depuis la ligne de cou/,
   "delta modifié": /la bougie dit|somme des deltas/, "CVD faux": /somme des deltas/, "LVN décalée": /n'est pas une LVN/, "divergence CVD inventée": /divergence nommée/, "divergence haussière inventée": /divergence haussière/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
 const MUTATIONS = {
+  // ATR, milieu d'une zone, BPR, objectif de figure (leçons Intermédiaire 10 et 11, Avancé 14)
+  "ATR faux": () => { const t = document.querySelector("[data-atr-mark] text"); t.textContent = t.textContent.replace(/\d+/, (d) => String(+d + 4)); },
+  "CE décalé": () => { const l = document.querySelector('line[data-role="ce"]'); l.dataset.price = String(+l.dataset.price + 0.0004); },
+  "BPR débordant": () => { const z = document.querySelector('rect[data-role="bpr"]'); z.dataset.y2 = String(+z.dataset.y2 + 0.0005); },
+  "objectif de figure faux": () => { const l = document.querySelector('line[data-role="dt-target"]'); l.dataset.price = String(+l.dataset.price - 6); },
   // Volumes (volume-check.mjs) : profil, Value Area, VWAP, volume, delta, CVD
   "POC déplacé": () => { const l = document.querySelector('line[data-role="poc"]'); const g = l.closest("svg").querySelector("g[data-profile]"); l.dataset.price = String(Number((+l.dataset.price + +g.dataset.row).toFixed(9))); },
   "barre du profil étirée": () => { const g = document.querySelector("g[data-profile]"); const bars = [...g.querySelectorAll("rect[data-row-p]")]; const w = Math.max(...bars.map((b) => +b.getAttribute("width"))); const b = bars.find((q) => +q.getAttribute("width") < w * 0.6); b.setAttribute("width", String(w + 6)); },
@@ -937,7 +984,7 @@ if (AUTOTEST) {
   // Chaque défaut est injecté dans la 1re page où il s'applique (R/R et OB : Avancé 7 ; pivots : Intermédiaire 5 ;
   // schéma à plusieurs panneaux : Trend Following 2 ; tableau : Débutant 1 ; liquidité, FVG, OB, support :
   // Avancé 1, 2, 3, Support / Résistance 1 ; divergence haussière du CVD : stratégie Volume Profile + VWAP 3)
-  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon(?:[1237]|1[0-2])$|intermediaire\/lecon[59]$|trend-following\/lecon2|support-resistance\/lecon[14]|debutant\/lecon1$|volume-profile-vwap\/lecon3$/.test(p.url));
+  const candidates = PAGES.length ? pages : pages.filter((p) => /avance\/lecon(?:[1237]|1[0-2])$|intermediaire\/lecon[59]$|trend-following\/lecon2|support-resistance\/lecon[14]|debutant\/lecon1$|volume-profile-vwap\/lecon3$|intermediaire\/lecon1[01]$|avance\/lecon14$/.test(p.url));
   let missed = 0;
   for (const [name, fn] of Object.entries(MUTATIONS).filter(([n]) => !process.env.MUT_ONLY || new RegExp(process.env.MUT_ONLY).test(n))) {
     let errs = null;

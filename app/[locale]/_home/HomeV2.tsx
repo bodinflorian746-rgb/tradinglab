@@ -85,12 +85,12 @@ function SectionHead({ eyebrow, title, sub, center }: { eyebrow?: string; title:
 }
 
 // ─── Nombre de leçons (vérifié contre les pages du dépôt) ───────────────────
-// Chiffres de la home : seuls ceux validés par le PO (86 leçons ; Trading 31,
-// Macro 16, « 9 stratégies, en 39 leçons » ; 4 jeux ; 48h ; note, avis et prix
+// Chiffres de la home : seuls ceux validés par le PO (101 leçons ; Trading 38,
+// Macro 16, « 11 stratégies, en 47 leçons » ; 4 jeux ; 48h ; note, avis et prix
 // tels qu'ils existent). Aucun autre chiffre, pas de répartition par niveau.
 // Trading : FORMATIONS (débutant + intermédiaire + avancé = 31, depuis Volume Profile, VWAP et Order Flow).
 // Macro : 16 (6 + 6 + 4), non modélisé dans FORMATIONS : mêmes comptes que
-// app/sitemap.ts et StickyLessonNav. Stratégies : STRATEGY_MODULES (9 modules, 39 leçons depuis Volume Profile + VWAP).
+// app/sitemap.ts et StickyLessonNav. Stratégies : STRATEGY_MODULES (11 modules, 47 leçons depuis Opening Range Breakout et Wyckoff appliqué).
 const MACRO_LESSONS = 16;
 const STRATEGY_LESSONS = STRATEGY_MODULES.reduce((a, m) => a + m.lessonCount, 0);
 
@@ -125,7 +125,7 @@ const PICTO: Record<string, ReactNode> = {
 };
 
 /**
- * Bloc des leçons : « 86 leçons » en très grand, « Du débutant à l'avancé »,
+ * Bloc des leçons : « 101 leçons » en très grand, « Du débutant à l'avancé »,
  * puis 3 blocs (noms du menu) qui mènent chacun à sa page, un nombre chacun.
  */
 function LessonsBlock({ l, names, hrefs, trading }: {
@@ -326,7 +326,7 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
         </div>
       </section>
 
-      {/* ═══ 3. ÉTAPE 1, LES LEÇONS : 86 leçons, les niveaux, l'aperçu d'une leçon ═══ */}
+      {/* ═══ 3. ÉTAPE 1, LES LEÇONS : 101 leçons, les niveaux, l'aperçu d'une leçon ═══ */}
       <section id="hv2-lecons" className="hv2-section hv2-anchor">
         <div className="hv2-wrap flex flex-col hv2-stack">
           <SectionHead eyebrow={s.lessonsSection.eyebrow} title={s.lessonsSection.title} sub={s.lessonsSection.sub} />

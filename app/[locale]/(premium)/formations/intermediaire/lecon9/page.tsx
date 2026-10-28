@@ -16,7 +16,7 @@ function ContentFr() {
       duration="20 min"
       lessonNumber={9}
       prev={{ href: "/formations/intermediaire/lecon8", label: "Leçon 8 : Plan de trade" }}
-      next={null}
+      next={{ href: "/formations/intermediaire/lecon10", label: "Leçon 10 : Les figures chartistes" }}
     >
 
       {/* ── Ce que tu dois VOIR ── */}

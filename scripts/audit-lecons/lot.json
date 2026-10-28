@@ -84,5 +84,19 @@
   {"url":"/fr/strategies/volume-profile-vwap/lecon1","charts":["VSVStructureDiagram","VSVProfileZoneDiagram"]},
   {"url":"/fr/strategies/volume-profile-vwap/lecon2","charts":["VSVVwapZoneDiagram","VSVGoldSellDiagram"]},
   {"url":"/fr/strategies/volume-profile-vwap/lecon3","charts":["VSVConfirmationDiagram","VSVAbsorptionDiagram"]},
-  {"url":"/fr/strategies/volume-profile-vwap/lecon4","charts":["VSVProfileZoneDiagram","VSVVwapZoneDiagram","VSVRefusedPlanDiagram","VSVRetainedPlanDiagram","VSVOutcomesDiagram"]}
+  {"url":"/fr/strategies/volume-profile-vwap/lecon4","charts":["VSVProfileZoneDiagram","VSVVwapZoneDiagram","VSVRefusedPlanDiagram","VSVRetainedPlanDiagram","VSVOutcomesDiagram"]},
+  {"url":"/fr/formations/debutant/lecon11","charts":["MarketOrderDiagram","PendingOrdersDiagram","StopLossTakeProfitDiagram","BuyLimitPlanDiagram"]},
+  {"url":"/fr/formations/intermediaire/lecon10","charts":["BullFlagDiagram","TrianglesDiagram","DoubleTopDiagram","DoubleTopPlanDiagram"]},
+  {"url":"/fr/formations/intermediaire/lecon11","charts":["ATRReadingDiagram","ATRStopDiagram","ATRGoldPlanDiagram","ATRDailyTargetDiagram"]},
+  {"url":"/fr/formations/intermediaire/lecon12","charts":["VolatilityRegimesDiagram","ContractionExpansionDiagram","NewsSpikeDiagram","VolatilityRRDiagram"]},
+  {"url":"/fr/formations/avance/lecon13","charts":["WyckoffCycleDiagram","WyckoffAccumulationDiagram","WyckoffDistributionDiagram","WyckoffNasdaqDiagram"]},
+  {"url":"/fr/formations/avance/lecon14","charts":["BreakerBlockDiagram","MitigationBlockDiagram","IFVGDiagram","CEDiagram","BPRDiagram","PremiumDiscountDiagram"]},
+  {"url":"/fr/formations/avance/lecon15","charts":["InducementDiagram","SMTDiagram","JudasSwingDiagram","TurtleSoupDiagram","OpeningGapDiagram","ICTCombinedDiagram"]},
+  {"url":"/fr/strategies/opening-range-breakout/lecon1","charts":["ORBRangeDiagram"]},
+  {"url":"/fr/strategies/opening-range-breakout/lecon2","charts":["ORBBearishBreakDiagram","ORBH1TrendDiagram","ORBBreakoutRetestDiagram"]},
+  {"url":"/fr/strategies/opening-range-breakout/lecon3","charts":["ORBPlanDiagram"]},
+  {"url":"/fr/strategies/opening-range-breakout/lecon4","charts":["ORBNoRetestDiagram","ORBFakeBreakoutDiagram"]},
+  {"url":"/fr/strategies/wyckoff-applique/lecon1","charts":["WARangeDiagram"]},
+  {"url":"/fr/strategies/wyckoff-applique/lecon2","charts":["WASpringSequenceDiagram","WADistributionDiagram","WAConfirmationDiagram"]},
+  {"url":"/fr/strategies/wyckoff-applique/lecon3","charts":["WAGoldPlanDiagram","WARefusedDiagram","WANasdaqPlanDiagram","WAFailedSpringDiagram"]}
 ]
