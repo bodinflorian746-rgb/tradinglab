@@ -231,8 +231,9 @@ const tpOnHvn = (key: Tp): BttClaim => (c) => {
   if (!hv || !lv) return "HVN ou LVN absente du profil";
   const H = (hv.y1 + hv.y2) / 2, t = mr(ch.past);
   const res = ch.zones.find((z) => z.kind === "resistance" || z.kind === "support");
-  // (la LVN part de la résistance : au-dessus, le marché a peu échangé ; jamais de l'intérieur de la base)
-  if (!res || !(lo(lv) >= lo(res) - 0.8 * t && hi(lv) < H && ch.entries.aggressive < hi(lv))) return "la LVN n'est pas entre la base et l'HVN, au-dessus de l'entrée";
+  // (la LVN part de la résistance : au-dessus, le marché a peu échangé ; jamais sur la résistance
+  // cassée, où le prix a réagi et échangé, ni de l'intérieur de la base)
+  if (!res || !(lo(lv) >= hi(res) - 1e-9 && lo(lv) <= hi(res) + t && hi(lv) < H && ch.entries.aggressive < hi(lv))) return "la LVN n'est pas entre la résistance et l'HVN, au-dessus de l'entrée, hors de la résistance";
   // objectif sur l'HVN : juste avant elle, ou sur sa rangée
   if (!(ch.tps[key] < H + 0.5 * t && H - ch.tps[key] <= 2 * t)) return "le TP optimal n'est pas juste avant l'HVN ou sur elle";
   const order: Tp[] = ["fast", "balanced", "ambitious"], k = order.indexOf(key);

@@ -102,7 +102,14 @@ export function withVolumeStudy<T extends { past: Candle[]; future: Candle[]; zo
       const lv = p.lvn.filter((z) => !side || side * ((z.lo + z.hi) / 2 - ref) > 0).sort((a, b) => a.lo - b.lo);
       const merged: { lo: number; hi: number }[] = [];
       for (const z of lv) { const prev = merged[merged.length - 1]; if (prev && z.lo - prev.hi <= 2.5 * row) prev.hi = Math.max(prev.hi, z.hi); else merged.push({ ...z }); }
-      merged.forEach((z) => zones.push({ kind: "volume", y1: z.lo, y2: z.hi, label: LABEL.lvn }));
+      // jamais sur un support ou une résistance du graphique : le prix y a réagi et échangé, ce n'est
+      // pas une zone traversée vite (demande du PO : la LVN chevauchait la résistance cassée) ; la
+      // partie qui recouvre le niveau est retirée, le reste garde ses rangées sous le seuil
+      for (const sr of chart.zones.filter((k) => k.kind === "support" || k.kind === "resistance")) {
+        const a = Math.min(sr.y1, sr.y2), b = Math.max(sr.y1, sr.y2);
+        for (const z of merged) if (z.lo < b && z.hi > a) { if (z.hi - b >= a - z.lo) z.lo = b; else z.hi = a; }
+      }
+      merged.filter((z) => z.hi - z.lo >= row).forEach((z) => zones.push({ kind: "volume", y1: z.lo, y2: z.hi, label: LABEL.lvn }));
     }
   }
   return { ...chart, zones: [...chart.zones, ...zones], study };
