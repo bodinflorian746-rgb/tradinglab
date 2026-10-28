@@ -5,7 +5,7 @@
 // variantes d'achat, avec leurs propres textes.
 
 import type { Candle, ChartZone } from "./shared";
-import { candle, rangeLegs } from "./shared";
+import { candle, levelTouches, rangeLegs } from "./shared";
 import type { NotionId } from "./notions";
 import {
   bullSignal, chop, drop, legTo, mirrorCandles, mirrorZones, provenResistance, provenSupport, rally,
@@ -1469,10 +1469,12 @@ const breakerBlock: NewScenario["build"] = (rng, m) => {
  *  le support intermédiaire (petite bougie verte) ; la suite le traverse jusqu'au support majeur, puis rebondit */
 const inducementTrap: NewScenario["build"] = (rng, m) => {
   const b = band(m);
-  const major = provenSupport(rng, m, b.lo, b.hi);
+  // le support majeur se prouve sous le futur support intermédiaire : ses réactions n'atteignent pas I
+  // (sinon le niveau intermédiaire aurait d'abord servi de résistance)
+  const I = (2.7 + rng() * 0.3) * m;
+  const major = levelTouches(rng, b.hi + (1.6 + rng() * 0.2) * m, b.lo, b.hi, "above", m, 3, 1.5 * m);
   const past = [...major.candles];
   let p = major.p;
-  const I = (1.7 + rng() * 0.3) * m;
   const lift = legExact(rng, m, p, I + (2.4 + rng() * 0.3) * m, { retrace: 0.25 });
   past.push(...lift.candles); p = lift.p;
   const inter = provenSupport(rng, m, I - 0.12 * m, I + 0.12 * m, p);
