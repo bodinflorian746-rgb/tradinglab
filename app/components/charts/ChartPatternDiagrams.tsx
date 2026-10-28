@@ -51,9 +51,6 @@ export function TrianglesDiagram() {
           levels: [{ key: "res", price: 1.09, from: 2, to: 16, label: `Résistance ${p(1.09)}`, short: "Résistance", tone: "bear", dashed: true, role: "resistance" }],
           segments: [{ key: "pente", i1: 5, p1: asc[5].l, i2: 14, p2: asc[14].l, tone: "bull", dashed: true }],
           markers: [
-            { key: "c1", i: 5, price: asc[5].l, label: `Creux ${p(asc[5].l)}`, short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
-            { key: "c2", i: 10, price: asc[10].l, label: `Creux ${p(asc[10].l)}`, short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
-            { key: "c3", i: 14, price: asc[14].l, label: `Creux ${p(asc[14].l)}`, short: "Creux", tone: "neutral", side: "below", role: "swing-low" },
             { key: "out", i: 16, price: asc[16].c, label: "Clôture au-dessus", short: "Sortie", tone: "bull", side: "above", role: "close" },
           ],
         }),

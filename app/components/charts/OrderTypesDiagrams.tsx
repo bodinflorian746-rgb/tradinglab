@@ -28,18 +28,18 @@ export function MarketOrderDiagram() {
 }
 
 /** Un ordre en attente : prix actuel au moment de le poser, puis déclenchement */
-function pending(o: { key: string; title: string; cs: Candle[]; decimals: number; now: number; fill: number; fillPrice: number; fillRole?: "high" | "low";
+function pending(o: { key: string; title: string; cs: Candle[]; decimals: number; fmt: (x: number) => string; now: number; fill: number; fillPrice: number; fillRole?: "high" | "low";
   level: { price: number; label: string; short: string; role: "support" | "resistance" }; order?: { price: number; label: string; short: string }; nowLabel: string; fillLabel: string }): LCPanel {
   const { cs, now, fill } = o;
   return {
     key: o.key, title: o.title, decimals: o.decimals, height: 210, candles: cs, slots: cs.length + 2,
     levels: [
-      { key: "niveau", price: o.level.price, from: 0, label: o.level.label, short: o.level.short, tone: o.order ? "neutral" : "entry", dashed: !!o.order, role: o.level.role },
-      ...(o.order ? [{ key: "ordre", price: o.order.price, from: now, label: o.order.label, short: o.order.short, tone: "entry" as const }] : []),
+      { key: "niveau", price: o.level.price, from: 0, label: o.level.label, short: `${o.level.short} ${o.fmt(o.level.price)}`, tone: o.order ? "neutral" : "entry", dashed: !!o.order, role: o.level.role },
+      ...(o.order ? [{ key: "ordre", price: o.order.price, from: now, label: o.order.label, short: `${o.order.short} ${o.fmt(o.order.price)}`, tone: "entry" as const }] : []),
     ],
     markers: [
-      { key: "now", i: now, price: cs[now].c, label: o.nowLabel, short: "Prix actuel", tone: "neutral", side: o.level.role === "support" ? "above" : "below", role: "close" },
-      { key: "fill", i: fill, price: o.fillPrice, label: o.fillLabel, short: "Exécuté", tone: "entry", side: o.level.role === "support" ? "below" : "above", ...(o.fillRole ? { role: o.fillRole } : {}) },
+      { key: "now", i: now, price: cs[now].c, label: o.nowLabel, short: `Prix ${o.fmt(cs[now].c)}`, tone: "neutral", side: o.level.role === "support" ? "above" : "below", role: "close" },
+      { key: "fill", i: fill, price: o.fillPrice, label: o.fillLabel, short: o.fillLabel, tone: "entry", side: o.level.role === "support" ? "below" : "above", ...(o.fillRole ? { role: o.fillRole } : {}) },
     ],
     anim: [{ candles: now }, { show: ["now", "niveau", ...(o.order ? ["ordre"] : [])] }, { candles: fill }, { show: "fill" }, { candles: cs.length - 1 }],
   };
@@ -53,17 +53,17 @@ export function PendingOrdersDiagram() {
       caption="Limit : on attend un retour vers une zone (sous le prix pour acheter, au-dessus pour vendre). Stop : on attend que le prix franchisse un niveau (au-dessus pour acheter, en dessous pour vendre). L'ordre n'existe qu'à partir du moment où tu le poses."
       rows={[2, 2]}
       panels={[
-        pending({ key: "bl", title: "Buy Limit · or", cs: C["ord-buy-limit"], decimals: 0, now: 11, fill: 14, fillPrice: 3900, fillRole: "low",
+        pending({ key: "bl", title: "Buy Limit · or", cs: C["ord-buy-limit"], decimals: 0, fmt: usd, now: 11, fill: 14, fillPrice: 3900, fillRole: "low",
           level: { price: 3900, label: `Buy Limit sur le support ${usd(3900)}`, short: "Buy Limit", role: "support" },
           nowLabel: `Prix actuel ${usd(3920)}`, fillLabel: `Exécuté à ${usd(3900)}` }),
-        pending({ key: "sl", title: "Sell Limit · NASDAQ", cs: C["ord-sell-limit"], decimals: 0, now: 12, fill: 16, fillPrice: 27200, fillRole: "high",
+        pending({ key: "sl", title: "Sell Limit · NASDAQ", cs: C["ord-sell-limit"], decimals: 0, fmt: pts, now: 12, fill: 16, fillPrice: 27200, fillRole: "high",
           level: { price: 27200, label: `Sell Limit sur la résistance ${pts(27200)}`, short: "Sell Limit", role: "resistance" },
           nowLabel: `Prix actuel ${pts(27100)}`, fillLabel: `Exécuté à ${pts(27200)}` }),
-        pending({ key: "bs", title: "Buy Stop · NASDAQ", cs: C["ord-buy-stop"], decimals: 0, now: 10, fill: 14, fillPrice: 27185,
+        pending({ key: "bs", title: "Buy Stop · NASDAQ", cs: C["ord-buy-stop"], decimals: 0, fmt: pts, now: 10, fill: 14, fillPrice: 27185,
           level: { price: 27180, label: `Résistance ${pts(27180)}`, short: "Résistance", role: "resistance" },
           order: { price: 27185, label: `Buy Stop ${pts(27185)}`, short: "Buy Stop" },
           nowLabel: `Prix actuel ${pts(27100)}`, fillLabel: `Déclenché à ${pts(27185)}` }),
-        pending({ key: "ss", title: "Sell Stop · EUR/USD", cs: C["ord-sell-stop"], decimals: 5, now: 9, fill: 12, fillPrice: 1.0818,
+        pending({ key: "ss", title: "Sell Stop · EUR/USD", cs: C["ord-sell-stop"], decimals: 5, fmt: p, now: 9, fill: 12, fillPrice: 1.0818,
           level: { price: 1.082, label: `Support ${p(1.082)}`, short: "Support", role: "support" },
           order: { price: 1.0818, label: `Sell Stop ${p(1.0818)}`, short: "Sell Stop" },
           nowLabel: `Prix actuel ${p(1.085)}`, fillLabel: `Déclenché à ${p(1.0818)}` }),

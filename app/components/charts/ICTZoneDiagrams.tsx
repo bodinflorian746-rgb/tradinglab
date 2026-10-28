@@ -148,7 +148,7 @@ export function PremiumDiscountDiagram() {
           { key: "rl", price: 1.08, from: 0, label: `Bas du range ${p(1.08)}`, short: "Bas", tone: "bull", dashed: true, role: "range-low" },
           { key: "mid", price: 1.085, from: 0, label: `Milieu ${p(1.085)}`, short: "Milieu", tone: "zone", dashed: true, role: "ce", ref: "rh,rl" },
         ],
-        markers: [{ key: "now", i: NOW, price: cs[NOW].c, label: `Prix ${p(cs[NOW].c)} : zone Premium`, short: "Premium", tone: "bear", side: "above", role: "close" }],
+        markers: [{ key: "now", i: NOW, price: cs[NOW].c, label: `Prix ${p(cs[NOW].c)} : zone Premium`, short: `Prix ${p(cs[NOW].c)}`, tone: "bear", side: "above", role: "close" }],
       }]}
     />
   );

@@ -196,10 +196,11 @@ const regime = (kind: "calm" | "wild" | "range" | "chop") => {
   let p = 1.084;
   const closes: number[] = [];
   for (let i = 0; i < 24; i++) {
-    if (kind === "calm") p += 0.0004 + (i % 4 === 3 ? -0.0009 : 0) + (rng() - 0.5) * 0.0002;
-    if (kind === "wild") p += 0.0009 + (i % 3 === 2 ? -0.0022 : 0.0006) + (rng() - 0.5) * 0.0012;
-    if (kind === "range") p = 1.084 + 0.0011 * Math.sin(i * 0.8) + (rng() - 0.5) * 0.0004;
-    if (kind === "chop") p = 1.084 + 0.003 * Math.sin(i * 1.7) * (0.6 + rng() * 0.6);
+    // même pente pour les deux tendances (environ 3 pips par bougie) : seule l'amplitude des allers-retours change
+    if (kind === "calm") p += 0.0003 + (i % 4 === 3 ? -0.0006 : 0.0001) + (rng() - 0.5) * 0.0001;
+    if (kind === "wild") p += 0.0003 + (i % 3 === 2 ? -0.0016 : 0.0008) + (rng() - 0.5) * 0.0006;
+    if (kind === "range") p = 1.084 + 0.0009 * Math.sin(i * 0.8) + (rng() - 0.5) * 0.0003;
+    if (kind === "chop") p = 1.084 + 0.0028 * Math.sin(i * 1.7) * (0.6 + rng() * 0.6);
     closes.push(Number(p.toFixed(5)));
   }
   return buildCandles(1.084, c(...closes), { seed: 11405, ...EU, volatility: kind === "calm" || kind === "range" ? "faible" : "élevée" });
@@ -323,7 +324,7 @@ const premium = () => build(1.084, [
 // ─── Avancé 15 : liquidité et timing ────────────────────────────────────────
 // Inducement sur l'or (M15) : support majeur 3 890 – 3 900 $, support intermédiaire 3 910 $ (deux touches),
 // passage sous 3 910 $ (22), réaction sur le support majeur (23).
-const inducement = () => build(3880, [
+const inducement = () => build(3893, [
   ...c(3902, 3918), { c: 3930, l: 3917 }, { c: 3921, l: 3916 }, ...c(3902), { c: 3896, l: 3892 },   // support majeur (5)
   ...c(3908, 3920, 3931), { c: 3940, h: 3944 }, ...c(3930, 3920), { c: 3913, l: 3910 },   // support intermédiaire (12)
   { c: 3922, l: 3913 }, ...c(3934), { c: 3942, h: 3946 }, ...c(3932, 3920), { c: 3914, l: 3911 },   // 2e touche (18)

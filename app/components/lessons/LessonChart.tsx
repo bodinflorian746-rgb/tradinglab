@@ -873,9 +873,11 @@ function Panel({ chart, panel: panel0, domain, single }: { chart: string; panel:
           const raw = isAtr ? atrOf(cs) : cvdOf(cs);
           const known = raw.filter((v): v is number => v !== null);
           const lo0 = Math.min(...known), hi0 = Math.max(...known);
-          // ATR : échelle avec une marge, la courbe ne colle pas aux bords du sous-panneau
-          const pad = isAtr ? 0.15 * (hi0 - lo0 || hi0 || 1) : 0;
-          const lo = lo0 - pad, hi = hi0 + pad, rg = hi - lo || 1;
+          // ATR : échelle d'au moins la moitié de sa valeur haute (un ATR stable reste plat au lieu de grossir
+          // des variations d'un point), avec une marge : la courbe ne colle pas aux bords du sous-panneau
+          const span = isAtr ? Math.max(hi0 - lo0, 0.5 * hi0) : hi0 - lo0;
+          const mid0 = (hi0 + lo0) / 2, pad = isAtr ? 0.15 * span : 0;
+          const lo = isAtr ? mid0 - span / 2 - pad : lo0, hi = isAtr ? mid0 + span / 2 + pad : hi0, rg = hi - lo || 1;
           const vals = raw.map((v) => v ?? NaN);
           const first = raw.findIndex((v) => v !== null);
           const cy = (v: number) => top + ((hi - v) / rg) * (bottom - top);

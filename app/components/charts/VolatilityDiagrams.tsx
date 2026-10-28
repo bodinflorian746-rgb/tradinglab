@@ -24,6 +24,7 @@ export function VolatilityRegimesDiagram() {
       title="Quatre environnements de marché"
       caption="Même actif, même unité de temps : une tendance calme aux corrections lisibles, une tendance agitée aux corrections brutales, un range étroit sans élan, et un marché qui fait de grands mouvements dans les deux sens sans direction."
       rows={[2, 2]}
+      sharedScale
       panels={[
         panel("vol-calm", "Tendance, volatilité modérée"),
         panel("vol-wild", "Tendance, forte volatilité"),
