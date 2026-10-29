@@ -26,9 +26,11 @@ const v2Display = Space_Grotesk({ subsets: ["latin"], variable: "--font-v2-displ
 const v2Mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-v2-mono", display: "swap", preload: false });
 
 // Pré-rendu statique des langues actives (les autres redirigent vers le FR, cf. proxy.ts).
-export function generateStaticParams() {
-  return ACTIVE_LOCALES.map((locale) => ({ locale }));
-}
+// Build seulement : sous next dev, chaque première visite d'une page réécrit
+// .next/dev/prerender-manifest.json sans verrou, et deux premières visites
+// simultanées le corrompent (toutes les pages suivantes en erreur 500).
+export const generateStaticParams =
+  process.env.NODE_ENV === "development" ? undefined : () => ACTIVE_LOCALES.map((locale) => ({ locale }));
 
 // Hreflang + canonical + metadata + Open Graph par locale.
 // title/description sont localisés FR/ES, fallback FR pour toute locale
