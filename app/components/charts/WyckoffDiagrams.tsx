@@ -109,17 +109,18 @@ export function WyckoffNasdaqDiagram() {
       title="Une accumulation possible sur le NASDAQ"
       caption="Chute de 27 300 à 27 000, creux à 26 980, rebond vers 27 180, retour vers 27 020. Le prix passe brièvement à 26 960 puis réintègre 27 000 : Spring potentiel. Il dépasse ensuite le sommet local 27 100 et corrige vers 27 070 sans revenir sous le bas du range."
       panels={[{
-        key: "h1", title: "NASDAQ H1 · range après la baisse", decimals: 0, height: 300, candles: cs, slots: cs.length + 2,
+        key: "h1", title: "NASDAQ H1 · range après la baisse", decimals: 0, height: 340, candles: cs, slots: cs.length + 2,
         zones: [
           { key: "bas", y1: 26980, y2: 27020, from: N.sc, label: `Support du range ${pts(26980)} – ${pts(27020)}`, short: "Support", tone: "bull", role: "support" },
           { key: "haut", y1: 27170, y2: 27180, from: N.ar, label: `Résistance du range ${pts(27170)} – ${pts(27180)}`, short: "Résistance", tone: "bear", role: "resistance" },
         ],
+        // sommet local en ligne de niveau (étiquette dans la colonne) : la place au-dessus des bougies reste au SOS
+        levels: [{ key: "local", price: cs[N.local].h, from: N.local, to: N.sos, label: `Sommet local ${pts(cs[N.local].h)}`, short: "Sommet local", tone: "neutral", dashed: true }],
         markers: [
           { key: "sc", i: N.sc, price: cs[N.sc].l, label: `Creux ${pts(cs[N.sc].l)}`, short: "SC", tone: "bear", side: "below", role: "swing-low" },
           { key: "ar", i: N.ar, price: cs[N.ar].h, label: `Rebond ${pts(cs[N.ar].h)}`, short: "AR", tone: "neutral", side: "above", role: "swing-high" },
           { key: "st", i: N.st, price: cs[N.st].l, label: `Retour ${pts(cs[N.st].l)}`, short: "ST", tone: "neutral", side: "below", role: "swing-low" },
           { key: "spring", i: N.spring, price: cs[N.spring].l, label: `Spring ${pts(cs[N.spring].l)}`, short: "Spring", tone: "zone", side: "below", role: "sweep", ref: 26980, dir: "bull" },
-          { key: "local", i: N.local, price: cs[N.local].h, label: `Sommet local ${pts(cs[N.local].h)}`, short: "Sommet", tone: "neutral", side: "above", role: "swing-high" },
           { key: "sos", i: N.sos, price: cs[N.sos].c, label: `SOS : clôture au-dessus de ${pts(cs[N.local].h)}`, short: "SOS", tone: "bull", side: "above", role: "bos", ref: N.local, dir: "bull" },
           { key: "lps", i: N.lps, price: cs[N.lps].l, label: `LPS ${pts(cs[N.lps].l)}`, short: "LPS", tone: "bull", side: "below", role: "swing-low" },
         ],
