@@ -294,6 +294,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
   //    côté par rapport au sens de la bougie) ; impulsions : mèches d'une vraie
   //    bougie d'impulsion ; bornées par les niveaux clés et les extrêmes figés.
   const hB: [number, number][] = [], lB: [number, number][] = [];
+  const wantOf = { h: [] as number[], l: [] as number[] };   // extrêmes visés (bougie réelle), avant les bornes
   for (let i = 0; i < n; i++) {
     const k = all[i], o0 = orig[i];
     const T = Math.max(k.o, k.c), B = Math.min(k.o, k.c), b = T - B;
@@ -318,6 +319,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
     let hWant = T + wu;
     let lWant = B - wl;
     if (trigger(i)) { hWant = Math.max(o0.h, T); lWant = Math.min(o0.l, B); }
+    wantOf.h.push(hWant); wantOf.l.push(lWant);
     const inPast = i < np;
     let hLo = T, hHi = fixH.has(i) ? Infinity : (inPast ? pastMaxH : futMaxH) - eps;
     for (const K of Lof(i)) { if (K > T && K <= o0.h) hLo = Math.max(hLo, K); if (K > o0.h) hHi = Math.min(hHi, K - eps); }
@@ -356,6 +358,7 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
   // 5. Ordre des extrêmes de deux bougies voisines conservé : ajustement minimal
   //    (on monte l'une ou on descend l'autre dans ses bornes), retour aux
   //    extrêmes d'origine en dernier recours.
+  const medRange = median(all.map((k) => k.h - k.l));
   const fixPair = (side: "h" | "l", i: number): boolean => {
     const a = all[i - 1], c = all[i], want = Math.sign(orig[i - 1][side] - orig[i][side]);
     if (Math.sign(a[side] - c[side]) === want) return false;
@@ -363,21 +366,43 @@ export function realizeCandles(past: Candle[], future: Candle[], levels: Realism
     // indices « haut » et « bas » attendus pour ce côté
     const [up, down] = want > 0 ? [i - 1, i] : want < 0 ? [i, i - 1] : [-1, -1];
     if (up >= 0) {
+      // jeux : l'écart rétabli garde la moitié de l'écart d'origine (sinon une suite de
+      // corrections aligne les extrêmes à ε près : faux sommets ou creux égaux) ; ε s'il ne tient pas
+      const gaps = opts.noWickRuns ? [Math.max(eps, 0.5 * Math.abs(orig[i - 1][side] - orig[i][side])), eps] : [eps];
+      const tRaise = gaps.map((g) => all[down][side] + g).find((x) => x <= bounds[up][1]);
+      const tLower = gaps.map((g) => all[up][side] - g).find((x) => x >= bounds[down][0]);
+      // jeux : une mèche allongée ne vient pas se poser à la hauteur d'un autre sommet (creux)
+      // proche (pivot à ±2 bougies, à ¼ de bougie médiane, à 3 bougies ou plus) : ce serait un
+      // faux double sommet / creux, un niveau visible que le scénario ne trace pas
+      const pivot = (j: number) => all.slice(Math.max(0, j - 2), j + 3).every((k) => (side === "h" ? k.h <= all[j].h : k.l >= all[j].l));
+      const newLevel = (r: number, v: number) => opts.noWickRuns && all.some((k, j) => Math.abs(j - r) >= 3 && Math.abs(j - r) <= 20
+        && Math.abs(k[side] - v) <= 0.25 * medRange && Math.abs(k[side] - all[r][side]) > 0.25 * medRange && pivot(j));
       const raise = (force: boolean) => {
-        const t = all[down][side] + eps; if (t > bounds[up][1]) return false;
-        const k = all[up], v = Math.max(k[side], t);
+        if (tRaise === undefined) return false;
+        const k = all[up], v = Math.max(k[side], tRaise);
         // une mèche haute allongée qui rendrait le corps minuscule : l'autre ajustement d'abord
         // (sinon, cascade de mèches immenses sur une jambe de tendance)
         if (!force && side === "h" && Math.abs(k.c - k.o) < 0.15 * (v - k.l) && v - k[side] > Math.abs(k.c - k.o)) return false;
+        if (!force && side === "h" && v > k[side] && newLevel(up, v)) return false;
         k[side] = v; return true;
       };
       const lower = (force: boolean) => {
-        const t = all[up][side] - eps; if (t < bounds[down][0]) return false;
-        const k = all[down], v = Math.min(k[side], t);
+        if (tLower === undefined) return false;
+        const k = all[down], v = Math.min(k[side], tLower);
         if (!force && side === "l" && Math.abs(k.c - k.o) < 0.15 * (k.h - v) && k[side] - v > Math.abs(k.c - k.o)) return false;
+        if (!force && side === "l" && v < k[side] && newLevel(down, v)) return false;
         k[side] = v; return true;
       };
-      if (opts.noWickRuns ? raise(false) || lower(false) || raise(true) || lower(true) : raise(true) || lower(true)) return true;
+      // jeux : d'abord l'ajustement qui éloigne le moins les deux bougies des mèches de leur
+      // bougie réelle (même règle des deux côtés : préférer toujours monter, comme avant,
+      // raccourcissait les mèches basses et allongeait les hautes)
+      const cost = (r: number, v: number) => Math.abs(v - wantOf[side][r]) - Math.abs(all[r][side] - wantOf[side][r]);
+      // à coût égal, allonger (monter un sommet, descendre un creux)
+      const cR = tRaise === undefined ? Infinity : cost(up, Math.max(all[up][side], tRaise));
+      const cL = tLower === undefined ? Infinity : cost(down, Math.min(all[down][side], tLower));
+      const raiseFirst = side === "h" ? cR <= cL : cR < cL;
+      const [first, second] = raiseFirst ? [raise, lower] : [lower, raise];
+      if (opts.noWickRuns ? first(false) || second(false) || first(true) || second(true) : raise(true) || lower(true)) return true;
     }
     for (const r of [i - 1, i]) all[r][side] = side === "h" ? Math.max(orig[r].h, all[r].o, all[r].c) : Math.min(orig[r].l, all[r].o, all[r].c);
     return true;

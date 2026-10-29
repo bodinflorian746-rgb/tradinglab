@@ -2108,11 +2108,12 @@ function scnTightConsolidation(rng: () => number, m: number, d: Difficulty, mode
   }
   const entry = p;
   const tightPrice   = entry - 0.5 * m;
-  // « juste sous le bas du range, avec une marge » : au plus 0,75 m + la marge sous le bas du range
-  const logicalPrice = Math.max(entry - 1.0 * m, rangeLow - 0.75 * m) - trapMarginFor(d, mode) * m;
+  // « juste sous le bas du range, avec une marge » : 0,55 m + la marge sous le bas du range, 0,8 m au plus
+  // (≤ 2,5 bougies médianes, mèches réalistes comprises)
+  const logicalPrice = Math.max(Math.max(entry - 1.0 * m, rangeLow - 0.55 * m) - trapMarginFor(d, mode) * m, rangeLow - 0.8 * m);
   const widePrice    = entry - 2.0 * m - widePushFor(mode) * m;
-  // Future : sweep du SL tight, reverse haussier limité par le top du range
-  const dipLow = tightPrice - 0.2 * m;
+  // Future : sweep du SL tight (le stop logique, plus bas, survit), reverse haussier limité par le top du range
+  const dipLow = Math.max(tightPrice - 0.2 * m, logicalPrice + 0.08 * m);
   const dipClose = entry - 0.1 * m;
   fut.push(explicitCandle(p, dipClose, p + 0.1 * m, dipLow));
   p = dipClose;
