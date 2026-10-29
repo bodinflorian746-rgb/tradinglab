@@ -42,8 +42,8 @@ export default function ContentFr() {
 
       <Block title="Distribution : UTAD, SOW et LPSY" chart={<WADistributionDiagram />}>
         <Example>
-          <p>Le NASDAQ évolue dans un range après une hausse, avec une résistance à 27 300 points et un support à 27 100 points. Le prix dépasse brièvement 27 300 jusqu&apos;à 27 340, puis réintègre le range : UTAD potentiel.</p>
-          <p>Le marché baisse ensuite et casse un support local à 27 180 : signe de faiblesse (SOW). Puis il rebondit vers 27 230 sans retrouver ses sommets précédents : ce rebond peut constituer un LPSY.</p>
+          <p>Le NASDAQ évolue dans un range après une hausse, avec une résistance à 27 300 points et un support à 27 100 points. Le prix dépasse brièvement 27 300 jusqu&apos;à 27 340, puis réintègre le range : UTAD (Upthrust After Distribution) potentiel.</p>
+          <p>Le marché baisse ensuite et casse un support local à 27 180 : signe de faiblesse (SOW, Sign of Weakness). Puis il rebondit vers 27 230 sans retrouver ses sommets précédents : ce rebond peut constituer un LPSY (Last Point of Supply).</p>
           <p>Nous pouvons alors chercher une confirmation de reprise baissière.</p>
         </Example>
       </Block>

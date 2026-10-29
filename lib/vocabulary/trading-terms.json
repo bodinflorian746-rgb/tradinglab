@@ -34,6 +34,21 @@
       "decision": "PO"
     }
   ],
+  "exceptions": {
+    "note": "Noms propres de la méthode Wyckoff, employés en anglais par les traders (comme Spring, SOS ou UTAD) et expliqués en français à leur première apparition. Seule l'expression complète est admise : « supply » seul, « zone d'offre » et leurs variantes restent interdits (lib/games/glossary.ts, FORBIDDEN).",
+    "fr": [
+      {
+        "terme": "Preliminary Supply (PSY)",
+        "motif": "Preliminary\\s+Supply",
+        "decision": "PO (2026-10-29) : terminologie Wyckoff, pas une traduction mot à mot"
+      },
+      {
+        "terme": "Last Point of Supply (LPSY)",
+        "motif": "Last\\s+Point\\s+of\\s+Supply",
+        "decision": "PO (2026-10-29) : terminologie Wyckoff, pas une traduction mot à mot"
+      }
+    ]
+  },
   "termes": {
     "fr": [
       {

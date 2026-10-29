@@ -26,6 +26,9 @@ for (const lang of (["fr", "es"] as Lang[]).filter(auditee)) for (const t of ref
   for (const src of t.interdit) rules[lang].push({ re: new RegExp(`(?<![\\p{L}\\d])(?:${src})(?![\\p{L}\\d])`, t.casse ? "u" : "iu"), t });
 }
 
+// Exceptions (noms Wyckoff complets) : chacune tranchée par le PO
+for (const e of (JSON.parse(fs.readFileSync(REF, "utf8")).exceptions?.fr ?? []) as { terme: string; decision?: string }[]) if (!e.decision) fail(`exception « ${e.terme} » sans décision du PO`);
+
 // Langues actives seulement (texte de langue inconnue : contrôlé avec les langues actives)
 const texts = collectContentTexts().filter((t) => auditee(t.lang));
 const hit = (lang: Lang, text: string) => rules[lang].map((r) => ({ r, m: text.match(r.re) })).find((x) => x.m);

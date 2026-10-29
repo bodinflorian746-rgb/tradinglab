@@ -665,7 +665,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: { fr: "Spring / UTAD", es: "Spring / UTAD" },
     match: { fr: /\b(spring|utad)\b/i, es: /\b(spring|utad)\b/i },
     def: {
-      fr: "passage bref sous le support d'un range (Spring) ou au-dessus de sa résistance (UTAD), suivi d'une réintégration : un test, pas encore un signal.",
+      fr: "passage bref sous le support d'un range (Spring) ou au-dessus de sa résistance (UTAD, Upthrust After Distribution), suivi d'une réintégration : un test, pas encore un signal.",
       es: "paso breve bajo el soporte de un rango (Spring) o por encima de su resistencia (UTAD), seguido de una reintegración: una prueba, todavía no una señal.",
     },
     short: { fr: "fausse sortie du range, réintégrée.", es: "falsa salida del rango, reintegrada." },
@@ -675,7 +675,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: { fr: "SOS / SOW", es: "SOS / SOW" },
     match: { fr: /\b(SOS|SOW)\b/, es: /\b(SOS|SOW)\b/ },
     def: {
-      fr: "signe de force (SOS) ou de faiblesse (SOW) : une poussée qui casse un sommet local (ou un creux local) et change la structure du range.",
+      fr: "signe de force (SOS, Sign of Strength) ou de faiblesse (SOW, Sign of Weakness) : une poussée qui casse un sommet local (ou un creux local) et change la structure du range.",
       es: "señal de fuerza (SOS) o de debilidad (SOW): un impulso que rompe un máximo local (o un mínimo local) y cambia la estructura del rango.",
     },
     short: { fr: "poussée qui casse un extrême local du range.", es: "impulso que rompe un extremo local del rango." },
@@ -685,7 +685,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: { fr: "LPS / LPSY", es: "LPS / LPSY" },
     match: { fr: /\b(LPS|LPSY)\b/, es: /\b(LPS|LPSY)\b/ },
     def: {
-      fr: "retour après le signe de force (LPS, sur un support) ou rebond faible après le signe de faiblesse (LPSY, sous une résistance) : la zone où la stratégie attend la confirmation.",
+      fr: "retour après le signe de force (LPS, Last Point of Support, sur un support) ou rebond faible après le signe de faiblesse (LPSY, Last Point of Supply, sous une résistance) : la zone où la stratégie attend la confirmation.",
       es: "retroceso tras la señal de fuerza (LPS, sobre un soporte) o rebote débil tras la señal de debilidad (LPSY, bajo una resistencia): la zona donde la estrategia espera la confirmación.",
     },
     short: { fr: "retour qui tient après le SOS ou le SOW.", es: "retroceso que aguanta tras el SOS o el SOW." },

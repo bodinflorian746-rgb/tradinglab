@@ -16,6 +16,7 @@ import { auditCtx } from "./market-ctx";
 import fs from "node:fs";
 import path from "node:path";
 import { BASIC_TERMS, GLOSSARY, JARGON_DETECT, REPLACED, ZONE_LABELS } from "../../lib/games/glossary";
+import { interditHors } from "./exceptions";
 import * as BS from "../../lib/games/buy-sell-no-trade";
 import * as BSES from "../../lib/games/buy-sell-no-trade-es";
 import * as FTM from "../../lib/games/find-the-mistake";
@@ -87,8 +88,8 @@ for (const t of texts) {
   if (seen.has(id)) continue;
   seen.add(id);
   for (const r of REPLACED[t.lang]) {
-    const m = t.text.match(r.from);
-    if (m) fail(`terme retiré ${t.lang.toUpperCase()} « ${m[0]} » → « ${r.to} » (${t.where}) : ${t.text.slice(0, 80)}`);
+    const m = interditHors(t.lang, t.text, r.from);
+    if (m) fail(`terme retiré ${t.lang.toUpperCase()} « ${m} » → « ${r.to} » (${t.where}) : ${t.text.slice(0, 80)}`);
   }
 }
 
