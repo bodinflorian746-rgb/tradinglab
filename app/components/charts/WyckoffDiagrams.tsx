@@ -107,7 +107,7 @@ export function WyckoffNasdaqDiagram() {
     <LessonChart
       id="WyckoffNasdaqDiagram"
       title="Une accumulation possible sur le NASDAQ"
-      caption="Chute de 27 300 à 27 000, creux à 26 980, rebond vers 27 180, retour vers 27 020. Le prix passe brièvement à 26 960 puis réintègre 27 000 : Spring potentiel. Il dépasse ensuite le sommet local 27 100 et corrige vers 27 070 sans revenir sous le bas du range."
+      caption="Chute de 27 300 à 27 000, creux à 26 980, rebond vers 27 180, retour vers 27 020. Le prix passe brièvement à 26 960 puis réintègre 27 000 : Spring potentiel. Il dépasse ensuite le sommet local 27 100 (SOS) et corrige vers 27 070, un higher low, sans revenir sous le bas du range (LPS)."
       panels={[{
         key: "h1", title: "NASDAQ H1 · range après la baisse", decimals: 0, height: 340, candles: cs, slots: cs.length + 2,
         zones: [

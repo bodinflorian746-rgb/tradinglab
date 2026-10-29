@@ -31,7 +31,7 @@ export default function ContentFr() {
           L&apos;Opening Range est la zone comprise entre le plus haut et le plus bas atteints pendant une période définie après l&apos;ouverture. Nous retenons les 15 premières minutes de la séance américaine au comptant, qui commence à 9 h 30 heure de New York, soit 15 h 30 à Paris (14 h 30 certaines semaines de mars et d&apos;octobre, quand les changements d&apos;heure européen et américain ne tombent pas le même jour). Nous analysons donc la période de 9 h 30 à 9 h 45 à New York.
         </P>
         <P>
-          Les fenêtres de 5, 15 ou 30 minutes donnent des setups différents. La fenêtre de 15 minutes est un paramètre à tester, pas une durée meilleure que les autres.
+          Les fenêtres de 5, 15 ou 30 minutes donnent des setups différents. La fenêtre de 15 minutes est un paramètre à tester, pas une durée meilleure que les autres. L&apos;ouverture fait partie de la <Link href="/formations/avance/lecon4" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">killzone de New York</Link>{" "}: les mouvements y sont plus nets et les niveaux souvent mieux respectés qu&apos;aux heures creuses. Les toutes premières minutes restent pourtant agitées et certains breakouts du range échouent : c&apos;est pourquoi la méthode attend la fin de la fenêtre, puis une clôture de confirmation.
         </P>
         <Points
           title="À 9 h 45 (New York), tu traces deux lignes"

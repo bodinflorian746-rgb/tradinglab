@@ -282,6 +282,7 @@ agit
 agitarse
 agité
 agitée
+agitées
 agosto
 agota
 agotada
@@ -3169,6 +3170,7 @@ deslices
 desnudo
 desordenado
 désordonné
+désordonnées
 désorganisent
 desorganizan
 désormais
@@ -4502,6 +4504,7 @@ fausse
 fausses
 faut
 faut-il
+faute
 faux
 faveur
 favor
@@ -9422,6 +9425,7 @@ retestearlo
 retestée
 retester
 retests
+retiennent
 retiens
 retient
 retirar

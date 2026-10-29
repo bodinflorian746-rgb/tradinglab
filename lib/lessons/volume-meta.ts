@@ -18,6 +18,8 @@ export const LVN_BREAK = 22;
 export const VWN_TRADE = { entry: 27155, sl: 27125, tp: 27215 };
 /** VWAP or : plan (vente sur la cassure du creux local) */
 export const VWX_TRADE = { entry: 3897, sl: 3907, tp: 3877 };
+/** VWAP or : support précédent (deux touches), l'objectif se place juste avant lui */
+export const VWX_SUPPORT = 3875;
 /** VWAP ancré : bougie de la publication, retour sur le VWAP ancré */
 export const AVW_ANCHOR = 10;
 export const AVW_TOUCH = 19;

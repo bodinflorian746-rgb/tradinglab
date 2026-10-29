@@ -4,7 +4,7 @@
 //  - leçon 2 : WASpringSequenceDiagram (Spring, SOS, LPS, animé), WADistributionDiagram (UTAD, SOW, LPSY,
 //    animé), WAConfirmationDiagram (sommet local du LPS cassé en M15, animé) ;
 //  - leçon 3 : WAGoldPlanDiagram (3 914 / 3 902 / 3 938, objectif avant la résistance du range),
-//    WARefusedDiagram (entrée tardive 3 922 $, R/R 1:0,75), WANasdaqPlanDiagram (27 205 / 27 245 / 27 125),
+//    WARefusedDiagram (entrée tardive 3 922 $, R/R 1:0,8), WANasdaqPlanDiagram (27 205 / 27 245 / 27 125),
 //    WAFailedSpringDiagram (pas de réintégration : pas d'achat).
 
 import { LessonChart, type LCMarker, type LCZone } from "@/app/components/lessons/LessonChart";
@@ -134,12 +134,12 @@ export function WAGoldPlanDiagram() {
 
 export function WARefusedDiagram() {
   const cs = C["wa-m15"];
-  const t = tradeSetup({ entry: 3922, sl: 3902, tp: 3937, unit: "$", from: M.late, expect: "<2" });
+  const t = tradeSetup({ entry: 3922, sl: 3902, tp: 3938, unit: "$", from: M.late, expect: "<2" });
   return (
     <LessonChart
       id="WARefusedDiagram"
-      title="Entrée tardive : R/R de 1:0,75, refusée"
-      caption="Attendre que le prix casse le sommet 3 920 $ fait entrer à 3 922 $. Le stop reste sous le LPS (3 902 $, 20 $), mais la résistance du range commence 18 $ plus haut : objectif 3 937 $, 15 $ de gain. Sous 1:2, le trade est refusé."
+      title="Entrée tardive : R/R de 1:0,8, refusée"
+      caption="Attendre que le prix casse le sommet 3 920 $ fait entrer à 3 922 $. Le stop reste sous le LPS (3 902 $, 20 $), mais la résistance du range commence 18 $ plus haut : objectif 3 938 $, 16 $ de gain. Sous 1:2, le trade est refusé."
       panels={[{
         key: "m15", title: "XAU/USD M15 · plan refusé", decimals: 0, height: 270, candles: cs, slots: cs.length + 4,
         levels: t.levels,

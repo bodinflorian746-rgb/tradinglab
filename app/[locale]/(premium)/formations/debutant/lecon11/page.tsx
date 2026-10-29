@@ -176,12 +176,12 @@ export default function Page() {
       <LessonQuiz
         questions={[
           {
-            question: "Tu veux acheter de l'or à 3 900 $ alors qu'il cote 3 920 $. Quel ordre convient ?",
+            question: "L'or cote 3 920 $ et un support se trouve à 3 900 $. Tu veux acheter sur ce support. Quel ordre convient ?",
             options: ["Buy Stop", "Buy Limit", "Sell Limit"],
             correctIndex: 1,
             answerExplanations: [
               "Faux. Un Buy Stop déclenche un achat au-dessus du prix actuel.",
-              "Correct. Le Buy Limit achète à un prix inférieur au prix actuel, ici sur le support.",
+              "Correct. Le Buy Limit achète à un prix inférieur au prix actuel, ici sur le support à 3 900 $.",
               "Faux. Un Sell Limit ouvre une position vendeuse.",
             ],
           },

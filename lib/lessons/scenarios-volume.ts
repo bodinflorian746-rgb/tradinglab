@@ -11,7 +11,7 @@ import type { Candle } from "./chart-analysis";
 import type { VCandle } from "./volume";
 import { AVW_ANCHOR } from "./volume-meta";
 
-export { AVW_ANCHOR, AVW_TOUCH, LVN_BREAK, LVN_PROFILE, LVN_ROW, VP_ROW, VPT_PROFILE, VPT_ROW, VPT_TRADE, VWN_TRADE, VWX_TRADE, aggregateV } from "./volume-meta";
+export { AVW_ANCHOR, AVW_TOUCH, LVN_BREAK, LVN_PROFILE, LVN_ROW, VP_ROW, VPT_PROFILE, VPT_ROW, VPT_TRADE, VWN_TRADE, VWX_SUPPORT, VWX_TRADE, aggregateV } from "./volume-meta";
 
 const c = (...closes: number[]): Step[] => closes.map((x) => ({ c: x }));
 const pinAll = (s: Step[]) => s.flatMap((k) => [k.c, k.h, k.l].filter((x): x is number => x !== undefined));
@@ -66,12 +66,12 @@ const vaExit = (k: keyof typeof VA_EXIT) => () => {
 };
 
 // ─── Volume Profile — exemple pratique EUR/USD (H1, entrée M15) ─────────────
-// H1 : résistance 1.0895 (deux touches), baisse, tendance haussière (creux 1.0811, HL 1.0828), résistance
+// H1 : résistance 1.0900 (deux touches), baisse, tendance haussière (creux 1.0811, HL 1.0828), résistance
 // 1.0850 touchée deux fois puis cassée, consolidation juste au-dessus (POC 1.0852), impulsion jusqu'à
 // 1.0888, correction vers 1.0850. Les trois dernières heures sont détaillées en M15 : creux technique
-// 1.0841, sommet local 1.0854, cassure à 1.0855 (entrée), SL 1.0835, TP 1.0895.
+// 1.0841, sommet local 1.0854, cassure à 1.0855 (entrée), SL 1.0835, TP 1.0895 (avant la résistance 1.0900).
 export const VPT_H1: Step[] = [
-  eu(77, 78, 67), eu(86, 87, 75), eu(91, 96, 85), eu(82, 92, 80), eu(87, 89, 81), eu(90, 95, 86),   // résistance 1.0895 (2 et 5)
+  eu(77, 78, 67), eu(86, 87, 75), eu(91, 100, 85), eu(82, 92, 80), eu(87, 89, 81), eu(90, 101, 86),  // résistance 1.0900 (2 et 5)
   eu(79, 91, 78), eu(64, 80, 62), eu(50, 65, 49), eu(36, 52, 34), eu(24, 37, 23), eu(17, 26, 11),   // baisse, creux 1.0811 (11)
   eu(26, 27, 15), eu(38, 39, 25), eu(46, 51, 37), eu(38, 47, 36), eu(32, 39, 28), eu(41, 42, 31), eu(47, 50, 40), eu(43, 48, 41), // résistance 1.0850 (14 et 18)
   eu(59, 60, 42),                                                                                    // cassure de 1.0850 (20)
@@ -95,7 +95,7 @@ export const VPT_M15: Step[] = [
   eu(58, 60, 50),                                                        // cassure du sommet local : entrée 1.0855 (11)
 ];
 export const VPT_M15_V = [700, 650, 600, 750, 800, 1100, 900, 700, 650, 600, 700, 1000];
-const vptH1 = () => withVol(buildCandles(1.0868, VPT_H1, { seed: 10201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.0850], pins: [...pinAll(VPT_H1), 1.0895, 1.0896] }), VPT_H1_V);
+const vptH1 = () => withVol(buildCandles(1.0868, VPT_H1, { seed: 10201, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", levels: [1.0850], pins: [...pinAll(VPT_H1), 1.09, 1.0901] }), VPT_H1_V);
 const vptM15 = () => withVol(buildCandles(vptH1().at(-1)!.c, VPT_M15, { seed: 10202, decimals: 5, asset: "EUR/USD", session: "Londres", volatility: "normale", pins: pinAll(VPT_M15) }), VPT_M15_V);
 
 // ─── Volume Profile — LVN et objectif (NASDAQ M15) ──────────────────────────
@@ -141,12 +141,12 @@ export const VWN_V = [
 const vwapNas = () => withVol(buildCandles(27020, VWN_STEPS, { seed: 10401, decimals: 0, asset: "NASDAQ", session: "New York", volatility: "normale", levels: [27140], pins: pinAll(VWN_STEPS) }), VWN_V);
 
 // ─── VWAP — or (XAU/USD M15, scénario baissier) ─────────────────────────────
-// Support 3 900 touché deux fois par-dessus, cassé par une forte impulsion baissière, support 3 877
-// (deux touches), remontée vers 3 900 (VWAP de séance), échec, cassure du creux local : entrée 3 897,
-// SL 3 907, TP 3 877.
+// Support 3 900 touché deux fois par-dessus, cassé par une forte impulsion baissière, support 3 875
+// (deux touches), remontée vers 3 900 (VWAP de séance), échec sous 3 902, cassure du creux local : entrée 3 897,
+// SL 3 907, TP 3 877 (avant le support 3 875).
 export const VWX_STEPS: Step[] = [
   ...c(3931, 3924, 3916), { c: 3905, l: 3900 }, ...c(3913), { c: 3918, h: 3921 }, ...c(3909), { c: 3903, l: 3899 }, ...c(3910, 3906),
-  ...c(3893, 3884), { c: 3879, l: 3876 }, ...c(3886, 3883), { c: 3880, l: 3877 },                       // impulsion, support 3 877
+  ...c(3893, 3884), { c: 3879, l: 3875 }, ...c(3886, 3883), { c: 3880, l: 3875 },                       // impulsion, support 3 875
   ...c(3888, 3895), { c: 3900, h: 3902 }, { c: 3899, h: 3901, l: 3898 },                                // retour sur 3 900 (18), creux local (19)
   { c: 3893, h: 3900, l: 3891 },                                                                        // cassure du creux local : entrée 3 897 (20)
 ];

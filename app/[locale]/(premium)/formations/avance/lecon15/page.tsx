@@ -85,7 +85,7 @@ export default function Page() {
 
       <Section title="4. Le turtle soup">
         <P>
-          Le turtle soup est une approche de fausse sortie d&apos;un plus haut ou d&apos;un plus bas de référence. Le terme vient d&apos;une stratégie de contre-breakout popularisée par Linda Bradford Raschke et Larry Connors, reprise ensuite dans les enseignements ICT. C&apos;est le même phénomène que la <L href="/formations/avance/lecon6">chasse aux stops</L>{" "}et le <L href="/formations/intermediaire/lecon6">faux breakout</L>, appliqué à un niveau de référence (plus haut de la veille, de la semaine).
+          Le turtle soup est une approche de fausse sortie d&apos;un plus haut ou d&apos;un plus bas de référence. Le terme vient d&apos;une stratégie de contre-breakout popularisée par Linda Bradford Raschke et Larry Connors, reprise ensuite dans les enseignements ICT. C&apos;est le même phénomène que la <L href="/formations/avance/lecon6">chasse aux stops</L>{" "}et le <L href="/formations/intermediaire/lecon6">faux breakout</L>, appliqué à un niveau de référence (plus haut de la veille, de la semaine). La version d&apos;origine part d&apos;un plus haut ou d&apos;un plus bas de 20 jours et entre dès la réintégration, sur ordre stop. Dans notre version, adaptée au trading intraday, on attend une clôture de retour sous le niveau, puis une confirmation.
         </P>
         <Note label="Exemple sur EUR/USD" last>
           le plus haut de la veille est à 1.0900. Le prix monte à 1.0910, puis clôture de nouveau sous 1.0900. Cette réintégration attire l&apos;attention : le trader attend une confirmation baissière, avec une invalidation au-dessus du sommet de la mèche. Le point clé est de distinguer une simple mèche d&apos;un vrai setup.

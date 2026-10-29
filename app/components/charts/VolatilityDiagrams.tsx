@@ -3,7 +3,7 @@
 //  - VolatilityRegimesDiagram : les quatre environnements (EUR/USD H1, sans niveau) ;
 //  - ContractionExpansionDiagram : range 27 100 – 27 140 puis expansion à l'ouverture américaine (animé) ;
 //  - NewsSpikeDiagram : news sur EUR/USD, 1.0880 puis 1.0830, stop de 10 pips touché (animé) ;
-//  - VolatilityRRDiagram : journées A (ATR 5 $, R/R 1:2,5) et B (ATR 15 $, R/R 1:0,83, refusé).
+//  - VolatilityRRDiagram : journées A (ATR 5 $, R/R 1:2,08) et B (ATR 15 $, R/R 1:0,83, refusé).
 
 import { LessonChart, type LCPanel, type LCSub } from "@/app/components/lessons/LessonChart";
 import { pts, tradeSetup, usd } from "@/app/components/lessons/trade";
@@ -83,7 +83,7 @@ function dayPanel(k: "a" | "b"): LCPanel {
   const A = k === "a";
   const cs = C[`vol-day-${k}`];
   const E = cs.length - 1, LOW = A ? 26 : 17;
-  const t = tradeSetup({ entry: 3912, sl: A ? 3902 : 3882, tp: 3937, unit: "$", from: E, expect: A ? ">2" : "<2" });
+  const t = tradeSetup({ entry: 3910, sl: A ? 3898 : 3880, tp: 3935, unit: "$", from: E, expect: A ? ">2" : "<2" });
   return {
     key: k, title: A ? "Journée A · ATR M15 de 5 $" : "Journée B · ATR M15 de 15 $", decimals: 0, height: 230, candles: cs, slots: 34,
     levels: [
@@ -102,7 +102,7 @@ export function VolatilityRRDiagram() {
     <LessonChart
       id="VolatilityRRDiagram"
       title="Même support, même objectif, deux volatilités"
-      caption="Journée A : le creux de la réaction reste près du support, le stop fait 10 $ pour 25 $ d'objectif (1:2,5). Journée B : la réaction descend bien plus bas, le stop cohérent fait 30 $ pour le même objectif de 25 $ (environ 1:0,83) : trade refusé."
+      caption="Journée A : le creux de la réaction reste au-dessus du support, le stop sous le support fait 12 $ pour 25 $ d'objectif (environ 1:2,08). Journée B : la réaction descend bien plus bas, le stop cohérent fait 30 $ pour le même objectif de 25 $ (environ 1:0,83) : trade refusé."
       rows={[1, 1]}
       panels={[dayPanel("a"), dayPanel("b")]}
     />

@@ -5,7 +5,7 @@
 import CANDLES from "@/lib/lessons/generated/candles.json";
 import { tradeMath } from "@/lib/lessons/chart-analysis";
 import { cvd, deltaOf, volumeProfile, vwap, type VCandle } from "@/lib/lessons/volume";
-import { AVW_ANCHOR, AVW_TOUCH, LVN_BREAK, LVN_PROFILE, LVN_ROW, VP_ROW, VPT_LOCAL_HIGH, VPT_PROFILE, VPT_ROW, VPT_TRADE, VWN_TRADE, VWX_TRADE } from "@/lib/lessons/volume-meta";
+import { AVW_ANCHOR, AVW_TOUCH, LVN_BREAK, LVN_PROFILE, LVN_ROW, VP_ROW, VPT_LOCAL_HIGH, VPT_PROFILE, VPT_ROW, VPT_TRADE, VWN_TRADE, VWX_SUPPORT, VWX_TRADE } from "@/lib/lessons/volume-meta";
 import { BOOK, DELTA_EXAMPLE, FOOTPRINT } from "@/app/components/charts/OrderFlowDiagrams";
 import { VWAP_EXAMPLE } from "@/app/components/charts/VWAPDiagrams";
 
@@ -15,7 +15,7 @@ const pivH = (cs: VCandle[], i: number) => i >= 2 && i <= cs.length - 3 && [i - 
 const pivL = (cs: VCandle[], i: number) => i >= 2 && i <= cs.length - 3 && [i - 2, i - 1, i + 1, i + 2].every((j) => cs[j].l > cs[i].l);
 
 /** Lot minimum : valeur d'un pip / point / dollar au lot minimum (en €), règle des 2 % (leçons Débutant) */
-const MIN_LOT_EUR = { eurusdPip: 0.085, nasdaqPoint: 0.09, xauDollar: 0.85 };
+const MIN_LOT_EUR = { eurusdPip: 0.092, nasdaqPoint: 0.092, xauDollar: 0.92 };
 
 export function checkVolumeLessons(check: Check, C: Record<string, VCandle[]> = CANDLES as unknown as Record<string, VCandle[]>) {
   // Avancé 10 : le range EUR/USD (POC 1.0850, Value Area 1.0835 – 1.0865, HVN 1.0820, LVN 1.0870 – 1.0885)
@@ -39,14 +39,14 @@ export function checkVolumeLessons(check: Check, C: Record<string, VCandle[]> = 
     }
   }
 
-  // Avancé 10 : l'exemple pratique (support 1.0850, POC 1.0852, entrée M15 1.0855, SL 1.0835, TP 1.0895, R/R 1:2)
+  // Avancé 10 : l'exemple pratique (support 1.0850, POC 1.0852, entrée M15 1.0855, SL 1.0835, TP 1.0895 avant la résistance H1 1.0900, R/R 1:2)
   {
     const h1 = C["vpt-h1"], m15 = C["vpt-m15"];
     const p = volumeProfile(h1, VPT_ROW, VPT_PROFILE[0], VPT_PROFILE[1]);
     check(near(p.poc, 1.0852), `Exemple EUR/USD : POC de la consolidation ${p.poc} (le texte : 1.0852)`);
     check([14, 18].every((i) => h1[i].h >= 1.0850 && h1[i].h <= 1.0851 && h1[i].c < 1.085) && h1[20].c > 1.085, "Exemple EUR/USD : résistance 1.0850 pas touchée deux fois puis cassée");
     check(h1.slice(21).every((k) => k.l >= 1.0848), "Exemple EUR/USD : la consolidation ne tient pas au-dessus de l'ancienne résistance");
-    check([2, 5].every((i) => h1[i].h >= 1.0895 && h1[i].h <= 1.0896) && h1.slice(6).every((k) => k.h < 1.0895), "Exemple EUR/USD : l'objectif 1.0895 n'est pas une ancienne résistance H1 (deux touches)");
+    check([2, 5].every((i) => h1[i].h >= 1.09 && h1[i].h <= 1.0901) && h1.slice(6).every((k) => k.h < 1.0895) && VPT_TRADE.tp < 1.09, "Exemple EUR/USD : la résistance H1 1.0900 n'a pas deux touches, ou l'objectif 1.0895 n'est pas avant elle");
     const creux = m15.reduce((b, k, i) => (k.l < m15[b].l ? i : b), 0);
     check(pivL(m15, creux) && VPT_TRADE.sl < m15[creux].l, `Exemple EUR/USD : le SL ${VPT_TRADE.sl} n'est pas sous le creux technique`);
     const last = m15[m15.length - 1], top = m15[VPT_LOCAL_HIGH];
@@ -98,11 +98,11 @@ export function checkVolumeLessons(check: Check, C: Record<string, VCandle[]> = 
     const vw = vwap(cs, 0)[retest]!;
     check(Math.abs(vw - 3900) <= 2, `VWAP or : VWAP de séance ${vw.toFixed(1)} au retour sur 3 900 (le texte : autour de 3 900 $)`);
     check([3, 7].every((i) => cs[i].l >= 3899 && cs[i].l <= 3900) && cs[10].c < 3899 && cs[retest].h >= 3900 && cs[retest].h < VWX_TRADE.sl && pivH(cs, retest), "VWAP or : pas de support 3 900 touché deux fois, cassé, puis retesté par en dessous sous le SL");
-    check([12, 15].every((i) => Math.abs(cs[i].l - VWX_TRADE.tp) <= 1), "VWAP or : l'objectif 3 877 n'est pas un support du graphique (deux touches)");
+    check([12, 15].every((i) => Math.abs(cs[i].l - VWX_SUPPORT) <= 1) && VWX_TRADE.tp > VWX_SUPPORT && cs[retest].h === 3902, "VWAP or : support 3 875 sans deux touches, objectif 3 877 pas avant lui, ou sommet de l'échec ≠ 3 902");
     check(cs[last].l < cs[last - 1].l && cs[last - 1].l > VWX_TRADE.entry && cs[last].l <= VWX_TRADE.entry, "VWAP or : l'entrée n'est pas la cassure du creux local");
     const t = tradeMath(VWX_TRADE.entry, VWX_TRADE.sl, VWX_TRADE.tp);
     check(near(t.risk, 10) && near(t.reward, 20), `VWAP or : risque ${t.risk} $, gain ${t.reward} $ (le texte : 10 $ / 20 $)`);
-    check(t.risk * MIN_LOT_EUR.xauDollar <= 0.02 * 1500 && t.risk * MIN_LOT_EUR.xauDollar <= 0.02 * 450 + 0.5, "VWAP or : risque au lot minimum incompatible avec la règle des 2 % (1 500 €, au moins 450 €)");
+    check(t.risk * MIN_LOT_EUR.xauDollar <= 0.02 * 1500 && t.risk * MIN_LOT_EUR.xauDollar <= 0.02 * 460 + 0.01, "VWAP or : risque au lot minimum incompatible avec la règle des 2 % (1 500 €, au moins 460 €)");
   }
 
   // Avancé 11 : VWAP ancré sur la publication, touché par la correction

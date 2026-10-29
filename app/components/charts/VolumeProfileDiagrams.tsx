@@ -79,7 +79,7 @@ export function VolumeProfileTradeDiagram() {
       decimals: 5, height: 250, candles: h1All,
       profile: { key: "profil", from: VPT_PROFILE[0], to: VPT_PROFILE[1], row: VPT_ROW, show: ["poc"] },
       levels: [
-        { key: "res", price: 1.0895, from: 2, label: `Résistance H1 ${p(1.0895)}`, short: "Résistance", tone: "bear", dashed: true },
+        { key: "res", price: 1.09, from: 2, label: `Résistance H1 ${p(1.09)}`, short: "Résistance", tone: "bear", dashed: true },
         { ...flip, from: 14 },
       ],
       subs: [vol],

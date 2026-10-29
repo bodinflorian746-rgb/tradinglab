@@ -8,7 +8,7 @@ import { Block, Example, Mistakes, P, Points, StrategyLesson } from "../_shell";
 // Wyckoff appliqué, leçon 3. Plan sur l'or corrigé : l'objectif du texte d'origine (3 962 $) dépassait le
 // haut du range (3 960 $) ; il se place avant la résistance du range (3 940 $), et l'entrée se prend sur la
 // confirmation M15 du LPS (3 914 $) pour garder un R/R de 1:2. L'entrée plus tardive (3 922 $) devient
-// l'exemple du plan refusé (1:0,75). NASDAQ : niveaux du texte d'origine décalés de +7 000 points.
+// l'exemple du plan refusé (1:0,8). NASDAQ : niveaux du texte d'origine décalés de +7 000 points.
 
 export default function ContentFr() {
   return (
@@ -37,13 +37,13 @@ export default function ContentFr() {
           </ul>
         </Example>
         <P>
-          Le stop se trouve sous le niveau qui remet en cause la reprise haussière : si le LPS cède, le scénario tombe. L&apos;objectif reste sous la résistance du range : le prix y a déjà été rejeté deux fois, et rien ne dit qu&apos;il la franchira cette fois.
+          Le stop se trouve sous le niveau qui remet en cause la reprise haussière : si le LPS cède, le scénario tombe. L&apos;objectif reste sous la résistance du range : le prix y a déjà été rejeté deux fois, et rien ne dit qu&apos;il la franchira cette fois. Le sommet du signe de force, à 3 933 $, n&apos;a été atteint qu&apos;une fois : ce n&apos;est pas une résistance prouvée, il ne limite donc pas l&apos;objectif. Il peut freiner la hausse : surveille la réaction du prix à son passage.
         </P>
       </Block>
 
       <Block title="Le même LPS, une entrée trop tardive" chart={<WARefusedDiagram />}>
         <P>
-          Si tu attends que le prix casse le sommet suivant, à 3 920 $, l&apos;entrée se fait à 3 922 $. Le stop nécessaire reste sous le LPS, à 3 902 $ (20 $), mais la résistance du range n&apos;est plus qu&apos;à 15 $ : objectif 3 937 $, R/R 1:0,75.
+          Si tu attends que le prix casse le sommet suivant, à 3 920 $, l&apos;entrée se fait à 3 922 $. Le stop nécessaire reste sous le LPS, à 3 902 $ (20 $), mais la résistance du range n&apos;est plus qu&apos;à 18 $ : objectif 3 938 $ (16 $), R/R 1:0,8.
         </P>
         <P>
           Notre méthode exige au moins 1:2 : ce trade ne respecte pas le plan. N&apos;invente pas un objectif au-delà de la résistance pour améliorer le ratio affiché : tu renonces, ou tu attends un nouveau setup.
@@ -63,7 +63,7 @@ export default function ContentFr() {
           </ul>
         </Example>
         <P>
-          L&apos;objectif s&apos;arrête au-dessus du support du range, pour tenir compte d&apos;une éventuelle réaction avant lui.
+          L&apos;objectif s&apos;arrête au-dessus du support du range, pour tenir compte d&apos;une éventuelle réaction avant lui. Le creux du SOW, vers 27 140, n&apos;a été touché qu&apos;une fois : ce n&apos;est pas un support prouvé, il ne limite donc pas l&apos;objectif, mais le prix peut y marquer une pause.
         </P>
       </Block>
 
@@ -139,7 +139,7 @@ export default function ContentFr() {
           },
           {
             question: "Entrée à 3 922 $, stop à 3 902 $, résistance du range à 3 940 $ : que fais-tu ?",
-            options: ["Je vise 3 962 $ pour obtenir 1:2.", "Je renonce : l'objectif possible (3 937 $) donne un R/R de 1:0,75.", "Je rapproche le stop à 3 915 $."],
+            options: ["Je vise 3 962 $ pour obtenir 1:2.", "Je renonce : l'objectif possible (3 938 $) donne un R/R de 1:0,8.", "Je rapproche le stop à 3 915 $."],
             correctIndex: 1,
             answerExplanations: [
               "Faux. Viser au-delà de la résistance invente un objectif pour améliorer le ratio.",

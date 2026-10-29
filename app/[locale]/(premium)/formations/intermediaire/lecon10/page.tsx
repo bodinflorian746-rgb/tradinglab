@@ -95,7 +95,7 @@ export default function Page() {
           Certaines figures donnent un objectif théorique à partir de leur hauteur. Pour le double sommet de l&apos;or : sommets proches de 3 950 $, ligne de cou à 3 920 $, soit une hauteur de 30 $. Une projection classique reporte ces 30 $ sous la ligne de cou : objectif théorique 3 890 $.
         </P>
         <P last>
-          Avant de le retenir, vérifie les supports entre le prix et l&apos;objectif. Ici, un support se trouve à 3 888 $, juste sous la projection : l&apos;objectif à 3 890 $ reste avant lui. S&apos;il y avait un support plus haut, c&apos;est lui qui limiterait l&apos;objectif.
+          Avant de le retenir, vérifie les supports entre le prix et l&apos;objectif. Ici, un support se trouve à 3 888 $, juste sous la projection : l&apos;objectif à 3 890 $ reste avant lui. S&apos;il y avait un support plus haut, c&apos;est lui qui limiterait l&apos;objectif. Dans la <L href="/strategies/reversal/lecon1">stratégie Reversal</L>, le take profit se place un peu avant la projection, faute de niveau plus proche : les deux approches suivent la même idée, viser un prix que le marché peut atteindre avant de réagir.
         </P>
       </Section>
 
@@ -151,7 +151,7 @@ export default function Page() {
 
       <LessonKeyPoints
         points={[
-          "Les figures de continuation (drapeaux, fanions, triangles) marquent une consolidation après une impulsion.",
+          "Les figures de continuation (drapeaux, fanions, souvent les triangles) marquent une consolidation après une impulsion.",
           "Les figures de retournement (double sommet, double creux, épaule-tête-épaule) se confirment par une clôture au-delà de la ligne de cou.",
           "L'objectif théorique reporte la hauteur de la figure depuis la ligne de cou, à vérifier face aux supports et résistances.",
           "Si le R/R est trop faible au breakout, le retest de la ligne de cou peut offrir une meilleure entrée.",

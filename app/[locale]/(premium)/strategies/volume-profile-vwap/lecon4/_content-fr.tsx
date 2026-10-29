@@ -39,7 +39,7 @@ export default function ContentFr() {
 
       <Block title="Étape 5 : construire le plan d'entrée" chart={<VSVRefusedPlanDiagram />}>
         <P>
-          On retient une entrée à 1.0872, après la confirmation. Le stop-loss est à 1.0842, sous le creux d&apos;invalidation (1.0845). L&apos;objectif est juste avant la résistance de 1.0910, à 1.0906, car le prix peut réagir avant ce niveau.
+          On retient une entrée à 1.0872, après la confirmation. Le stop-loss est à 1.0842, sous le creux d&apos;invalidation (1.0845). L&apos;objectif est juste avant la résistance de 1.0910, à 1.0906, car le prix peut réagir avant ce niveau. Sur le chemin, la VAH (1.0890) peut ralentir le prix : c&apos;est une zone de réaction possible du profil, pas une résistance prouvée par le prix, donc elle ne limite pas l&apos;objectif ; on la surveille seulement.
         </P>
         <Example title="Paramètres du trade">
           <ul className="space-y-1">

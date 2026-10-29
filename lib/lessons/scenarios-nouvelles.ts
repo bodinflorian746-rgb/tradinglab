@@ -196,14 +196,15 @@ const regime = (kind: "calm" | "wild" | "range" | "chop") => {
   let p = 1.084;
   const closes: number[] = [];
   for (let i = 0; i < 24; i++) {
-    // même pente pour les deux tendances (environ 3 pips par bougie) : seule l'amplitude des allers-retours change
-    if (kind === "calm") p += 0.0003 + (i % 4 === 3 ? -0.0006 : 0.0001) + (rng() - 0.5) * 0.0001;
+    // même pente pour les deux tendances (environ 3 pips par bougie) : seule l'amplitude des allers-retours change ;
+    // bougies du range (faible volatilité) < tendance modérée < tendance agitée
+    if (kind === "calm") p += 0.0003 + (i % 4 === 3 ? -0.0012 : 0.0004) + (rng() - 0.5) * 0.0002;
     if (kind === "wild") p += 0.0003 + (i % 3 === 2 ? -0.0016 : 0.0008) + (rng() - 0.5) * 0.0006;
-    if (kind === "range") p = 1.084 + 0.0009 * Math.sin(i * 0.8) + (rng() - 0.5) * 0.0003;
+    if (kind === "range") p = 1.084 + 0.0005 * Math.sin(i * 0.8) + (rng() - 0.5) * 0.0002;
     if (kind === "chop") p = 1.084 + 0.0028 * Math.sin(i * 1.7) * (0.6 + rng() * 0.6);
     closes.push(Number(p.toFixed(5)));
   }
-  return buildCandles(1.084, c(...closes), { seed: 11405, ...EU, volatility: kind === "calm" || kind === "range" ? "faible" : "élevée" });
+  return buildCandles(1.084, c(...closes), { seed: 11405, ...EU, volatility: kind === "range" ? "faible" : kind === "calm" ? "normale" : "élevée" });
 };
 // Contraction puis expansion sur le NASDAQ M15 : range 27 100 – 27 140, puis breakout à l'ouverture américaine.
 const contraction = () => {
@@ -223,7 +224,7 @@ const newsSpike = () => buildCandles(1.085, [
   { c: 1.0872, h: 1.088, l: 1.0848 }, { c: 1.0846, h: 1.0874, l: 1.0838 }, { c: 1.0834, l: 1.083 },
   ...c(1.0841, 1.0838, 1.0843, 1.084),
 ], { seed: 11407, decimals: 5, asset: "EUR/USD", session: "New York", volatility: "élevée", preNews: true, split: NEWS_PRE, pins: [1.088, 1.083, 1.0838, 1.0848] });
-// Journées A et B sur l'or (M15) : support 3 900 $, résistance 3 940 $, entrée 3 912 $ ; ATR 5 puis ATR 15.
+// Journées A et B sur l'or (M15) : support 3 900 $, résistance 3 940 $, entrée 3 910 $ ; ATR 5 puis ATR 15.
 const volDay = (k: "a" | "b") => () => {
   const A = k === "a";
   const s: RStep[] = A ? [
@@ -231,13 +232,13 @@ const volDay = (k: "a" | "b") => () => {
     { c: 3926, r: 5 }, { c: 3931, r: 5 }, { c: 3936, r: 6 }, { c: 3937, r: 5, h: 3940 }, { c: 3933, r: 5 }, { c: 3929, r: 4 },
     { c: 3933, r: 5 }, { c: 3936, r: 5, h: 3939 }, { c: 3931, r: 5 }, { c: 3926, r: 6 }, { c: 3921, r: 5 }, { c: 3916, r: 5 },
     { c: 3911, r: 5 }, { c: 3906, r: 5 }, { c: 3902, r: 5, l: 3900 }, { c: 3907, r: 5 }, { c: 3912, r: 5 }, { c: 3915, r: 5 },
-    { c: 3910, r: 5 }, { c: 3906, r: 4, l: 3904 }, { c: 3909, r: 5 }, { c: 3912, r: 5 },          // entrée 3 912 $ (29)
+    { c: 3910, r: 5 }, { c: 3906, r: 4, l: 3904 }, { c: 3909, r: 5 }, { c: 3910, r: 5 },          // entrée 3 910 $ (29)
   ] : [
     { c: 3910, r: 14 }, { c: 3903, r: 14, l: 3900 }, { c: 3914, r: 13 }, { c: 3922, r: 14 },
     { c: 3924, r: 14 }, { c: 3933, r: 14 }, { c: 3929, r: 15, h: 3940 }, { c: 3914, r: 14 }, { c: 3925, r: 14 },
     { c: 3932, r: 14, h: 3939 }, { c: 3917, r: 15 }, { c: 3906, r: 14 }, { c: 3916, r: 14 }, { c: 3903, r: 14, l: 3900 },
     { c: 3919, r: 15 }, { c: 3929, r: 14 }, { c: 3905, r: 14 }, { c: 3897, r: 15, l: 3885 }, { c: 3902, r: 14 },
-    { c: 3912, r: 14 },                                                 // entrée 3 912 $ (19)
+    { c: 3910, r: 14 },                                                 // entrée 3 910 $ (19)
   ];
   return ranged(A ? 3910 : 3915, s, A ? 11408 : 11409, XAU);
 };

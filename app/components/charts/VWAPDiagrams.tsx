@@ -10,7 +10,7 @@ import { LessonChart, type LCChip, type LCLevel } from "@/app/components/lessons
 import { Cards, LessonSchema, Matrix } from "@/app/components/lessons/LessonSchema";
 import { tradeSetup } from "@/app/components/lessons/trade";
 import { fmtNum, fmtPrice, fmtRR, tradeMath } from "@/lib/lessons/chart-analysis";
-import { AVW_ANCHOR, AVW_TOUCH, VWN_TRADE, VWX_TRADE } from "@/lib/lessons/volume-meta";
+import { AVW_ANCHOR, AVW_TOUCH, VWN_TRADE, VWX_SUPPORT, VWX_TRADE } from "@/lib/lessons/volume-meta";
 import { vwap, type VCandle } from "@/lib/lessons/volume";
 import CANDLES from "@/lib/lessons/generated/candles.json";
 
@@ -107,14 +107,14 @@ export function VWAPGoldPlanDiagram() {
   const cs = C["vwap-xau"];
   const n = cs.length, last = n - 1, retest = last - 2;
   const t = tradeSetup({ ...VWX_TRADE, unit: "$", decimals: 0, from: last });
-  // support 3 877$ (deux touches pendant l'impulsion) jusqu'à l'entrée, puis l'objectif du plan au même prix
-  const sup = cs.findIndex((k) => Math.abs(k.l - VWX_TRADE.tp) <= 1);
-  const levels: LCLevel[] = [{ key: "support", price: VWX_TRADE.tp, from: sup - 1, to: last - 1, label: `Support ${usd(VWX_TRADE.tp)}`, short: "Support", tone: "bull", dashed: true }, ...t.levels];
+  // support 3 875$ (deux touches pendant l'impulsion) jusqu'à l'entrée ; l'objectif du plan juste avant lui
+  const sup = cs.findIndex((k) => Math.abs(k.l - VWX_SUPPORT) <= 1);
+  const levels: LCLevel[] = [{ key: "support", price: VWX_SUPPORT, from: sup - 1, to: last - 1, label: `Support ${usd(VWX_SUPPORT)}`, short: "Support", tone: "bull", dashed: true }, ...t.levels];
   return (
     <LessonChart
       id="VWAPGoldPlanDiagram"
       title="Or : rebond vers l'ancien support et le VWAP"
-      caption="Sommets et creux descendants. Le prix remonte sur l'ancien support 3 900$, où passe le VWAP de séance, échoue, puis casse son creux local : vente, objectif sur le support 3 877$."
+      caption="Sommets et creux descendants. Le prix remonte sur l'ancien support 3 900$, où passe le VWAP de séance, échoue sous 3 902$, puis casse son creux local : vente, objectif 3 877$, juste avant le support 3 875$."
       panels={[{
         key: "xau", title: "XAU/USD M15 · depuis l'ouverture de la séance", decimals: 0, height: 300, candles: cs, slots: n + 4,
         series: [{ key: "vwap", values: vwap(cs, 0), tone: "fib", label: "VWAP de séance", short: "VWAP", vwap: 0 }],

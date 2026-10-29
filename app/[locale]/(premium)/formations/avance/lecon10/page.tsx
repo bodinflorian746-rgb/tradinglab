@@ -118,12 +118,12 @@ export default function Page() {
           <ul className="space-y-1 text-sm text-zinc-300">
             <li>- Entrée à l&apos;achat : 1.0855</li>
             <li>- Stop loss : 1.0835, sous le creux technique qui confirme le support</li>
-            <li>- Take profit : 1.0895, près d&apos;une ancienne résistance H1</li>
+            <li>- Take profit : 1.0895, juste avant l&apos;ancienne résistance H1 à 1.0900</li>
             <li>- Risque 20 pips, gain potentiel 40 pips : R/R 1:2</li>
           </ul>
         </div>
         <P>
-          Pourquoi 1.0835 ? Ce niveau est sous le creux technique qui sert à confirmer le support : si le prix passe sous cette structure, l&apos;hypothèse de reprise haussière perd sa validité. Pourquoi 1.0895 ? C&apos;est une ancienne résistance repérée en H1 : l&apos;objectif n&apos;est pas choisi au hasard.
+          Pourquoi 1.0835 ? Ce niveau est sous le creux technique qui sert à confirmer le support : si le prix passe sous cette structure, l&apos;hypothèse de reprise haussière perd sa validité. Pourquoi 1.0895 ? L&apos;ancienne résistance repérée en H1 est à 1.0900 : l&apos;objectif se place juste avant elle, car le prix peut réagir un peu avant d&apos;atteindre le niveau.
         </P>
         <P last>
           Si le prix atteint l&apos;objectif, le gain théorique est de 2R avant les frais ; s&apos;il touche le stop, la perte théorique est de 1R, hors glissement éventuel et frais. Le Volume Profile n&apos;a pas décidé du trade à ta place : il t&apos;a aidé à repérer une zone, que tu as ensuite validée par l&apos;analyse technique.
@@ -140,7 +140,7 @@ export default function Page() {
           <span className="text-sm font-bold text-amber-400 tracking-wide">Réalité du retail</span>
         </div>
         <p className="text-base text-zinc-300 leading-relaxed">
-          Ce trade se prend au lot minimum avec la règle des 2 % (Débutant leçon 8). Au lot minimum (0,01 lot), chaque pip vaut environ 0,085 € : ce stop de 20 pips représente environ 2 € de risque, sous les 6 € autorisés sur un compte de 300 €. Tu peux gagner environ 3 €.
+          Ce trade se prend au lot minimum avec la règle des 2 % (Débutant leçon 8). Au lot minimum (0,01 lot), chaque pip vaut environ 0,092 € : ce stop de 20 pips représente environ 1,84 € de risque, sous les 6 € autorisés sur un compte de 300 €. Tu peux gagner environ 3,68 €.
         </p>
       </div>
 

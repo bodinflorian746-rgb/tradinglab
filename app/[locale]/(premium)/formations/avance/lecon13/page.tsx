@@ -72,7 +72,7 @@ export default function Page() {
             { label: "Phase A : arrêt de la tendance baissière", detail: "PS (Preliminary Support) : premiers signes d'une demande qui freine la baisse. SC (Selling Climax) : ventes intenses, souvent avec une forte amplitude et un volume en hausse. AR (Automatic Rally) : rebond quand la pression vendeuse retombe. ST (Secondary Test) : retour vers la zone basse pour tester à nouveau l'équilibre. Le SC et l'AR délimitent souvent le range." },
             { label: "Phase B : construction du range", detail: "Le prix oscille entre support et résistance, avec plusieurs tests. Cette phase peut durer longtemps : on observe si les mouvements se stabilisent." },
             { label: "Phase C : test de l'offre", detail: "Le Spring : le prix passe brièvement sous le support du range, puis le réintègre. Cette fausse sortie teste l'offre disponible sous la zone. Un Spring n'est pas obligatoire : certaines accumulations s'en passent." },
-            { label: "Phase D : signes de force", detail: "SOS (Sign of Strength) : mouvement haussier net, souvent vers ou au-delà de la résistance du range. LPS (Last Point of Support) : correction qui trouve un support après le SOS, et montre si une structure haussière se construit." },
+            { label: "Phase D : signes de force", detail: "SOS (Sign of Strength) : mouvement haussier net, souvent vers ou au-delà de la résistance du range. Dans notre version, la cassure d'un sommet local du range suffit à le signaler : c'est ce que retiennent l'exemple ci-dessous et la stratégie Wyckoff appliqué. LPS (Last Point of Support) : correction qui trouve un support après le SOS, et montre si une structure haussière se construit." },
             { label: "Phase E : sortie du range", detail: "Le prix quitte durablement la consolidation et développe une tendance haussière : c'est le Markup." },
           ]}
         />
@@ -125,7 +125,7 @@ export default function Page() {
           Le NASDAQ chute de 27 300 à 27 000 points, puis commence à consolider. Tu observes un creux à 26 980, un rebond vers 27 180, un retour vers 27 020, puis plusieurs mouvements dans le range.
         </P>
         <P>
-          Le prix descend ensuite brièvement à 26 960, sous le bas du range, avant de réintégrer 27 000 : la séquence ressemble à un Spring potentiel. Tu attends une confirmation. Le NASDAQ monte et dépasse un sommet local à 27 100, puis corrige vers 27 070 sans revenir sous le bas du range.
+          Le prix descend ensuite brièvement à 26 960, sous le bas du range, avant de réintégrer 27 000 : la séquence ressemble à un Spring potentiel. Tu attends une confirmation. Le NASDAQ monte et dépasse un sommet local à 27 100 (le SOS), puis corrige vers 27 070 sans revenir sous le bas du range. Ce LPS n&apos;est pas un retour exact sur le sommet cassé : c&apos;est un higher low, au-dessus du Spring et du bas du range.
         </P>
         <P last>
           Cette correction peut se lire comme un test de support dans une structure qui s&apos;améliore : l&apos;analyse devient compatible avec une transition vers une phase haussière. L&apos;accumulation ne se confirme pourtant qu&apos;après coup, quand le mouvement suivant se développe.

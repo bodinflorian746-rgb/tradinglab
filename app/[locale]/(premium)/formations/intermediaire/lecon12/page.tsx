@@ -39,7 +39,7 @@ export default function Page() {
       <Section title="Pourquoi la volatilité change">
         <Items
           items={[
-            { label: "Les sessions", detail: "L'EUR/USD ne se comporte pas de la même façon pendant la session asiatique, à l'ouverture européenne ou pendant le chevauchement Europe / États-Unis : l'activité varie selon l'heure (Avancé 4, Killzones)." },
+            { label: "Les sessions", detail: "L'EUR/USD ne se comporte pas de la même façon pendant la session asiatique, à l'ouverture européenne ou pendant le chevauchement Europe / États-Unis : l'activité varie selon l'heure. Les killzones (Avancé 4) concentrent l'activité et donnent des mouvements plus nets ; les toutes premières minutes d'une ouverture peuvent pourtant être désordonnées, d'où l'intérêt d'attendre une confirmation." },
             { label: "Les news économiques", detail: "Inflation, décisions des banques centrales, chiffres de l'emploi : une publication différente des attentes peut provoquer des ajustements rapides sur l'EUR/USD, l'or et les indices, dans un sens qui dépend du contexte." },
             { label: "La liquidité", detail: "Quand peu d'ordres sont disponibles aux meilleurs prix, une transaction importante déplace davantage le prix, et le spread peut s'élargir." },
             { label: "Les événements imprévus", detail: "Une nouvelle géopolitique, une intervention monétaire ou une information inattendue change brutalement les conditions de marché." },
@@ -95,21 +95,21 @@ export default function Page() {
 
       <Section title="Volatilité et ratio risque/rendement">
         <P>
-          Deux journées sur l&apos;or, même support à 3 900 $, même résistance à 3 940 $, même entrée à 3 912 $ après une réaction sur le support.
+          Deux journées sur l&apos;or, même support à 3 900 $, même résistance à 3 940 $, même entrée à 3 910 $ après une réaction sur le support.
         </P>
         <Plan
           title="Journée A : ATR M15 de 5 $"
           rows={[
-            ["Stop techniquement cohérent", "3 902 $, sous le creux de la réaction (10 $)"],
-            ["Objectif technique", "3 937 $, avant la résistance (25 $)"],
-            ["R/R", "1:2,5 : le trade respecte le plan"],
+            ["Stop techniquement cohérent", "3 898 $, sous le support et le creux de la réaction (12 $)"],
+            ["Objectif technique", "3 935 $, avant la résistance (25 $)"],
+            ["R/R", "environ 1:2,08 : le trade respecte le plan"],
           ]}
         />
         <Plan
           title="Journée B : ATR M15 de 15 $"
           rows={[
-            ["Stop techniquement cohérent", "3 882 $, sous le creux de la réaction, bien plus profond (30 $)"],
-            ["Objectif technique", "3 937 $, la même résistance (25 $)"],
+            ["Stop techniquement cohérent", "3 880 $, sous le creux de la réaction, bien plus profond (30 $)"],
+            ["Objectif technique", "3 935 $, avant la même résistance (25 $)"],
             ["R/R", "environ 1:0,83 : sous le minimum de 1:2, le trade est refusé"],
           ]}
         />
@@ -123,7 +123,7 @@ export default function Page() {
       </Charts>
 
       <Retail>
-        Journée A : au lot minimum (0,01 lot, soit 1 once), ce stop de 10 $ représente environ 9,20 € de risque, pour environ 23 € de gain visé. Avec la règle des 2 %, il faut au moins 460 € de capital. Journée B : le même lot minimum risquerait environ 27,60 € pour 23 € de gain, un trade que la règle du R/R refuse de toute façon.
+        Journée A : au lot minimum (0,01 lot, soit 1 once), ce stop de 12 $ représente environ 11,04 € de risque, pour environ 23 € de gain visé. Avec la règle des 2 %, il faut au moins 552 € de capital. Journée B : le même lot minimum risquerait environ 27,60 € pour 23 € de gain, un trade que la règle du R/R refuse de toute façon.
       </Retail>
 
       <Section title="Adapter ta stratégie aux conditions">

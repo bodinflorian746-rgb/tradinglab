@@ -163,8 +163,8 @@ export default function Page() {
           title="Le plan, XAU/USD"
           lines={[
             "Entrée à la vente : 3 897 $",
-            "Stop loss : 3 907 $, au-dessus de la zone d'invalidation",
-            "Take profit : 3 877 $, sur un support précédent du graphique",
+            "Stop loss : 3 907 $, au-dessus du sommet de l'échec à 3 902 $",
+            "Take profit : 3 877 $, juste avant le support précédent à 3 875 $",
             "Risque 10 $ par once, gain potentiel 20 $ par once : R/R 1:2",
           ]}
         />
@@ -178,7 +178,7 @@ export default function Page() {
       </div>
 
       <Retail>
-        Au lot minimum (0,01 lot, soit 1 once), ce stop de 10 $ représente environ 9 € de risque : sur un compte de 1 500 €, c&apos;est sous ton maximum de 30 € (2 %), pour un gain possible d&apos;environ 17 €. Avec la règle des 2 %, ce trade demande au moins 450 € de capital.
+        Au lot minimum (0,01 lot, soit 1 once), ce stop de 10 $ représente environ 9,20 € de risque : sur un compte de 1 500 €, c&apos;est sous ton maximum de 30 € (2 %), pour un gain possible d&apos;environ 18,40 €. Avec la règle des 2 %, ce trade demande au moins 460 € de capital.
       </Retail>
 
       <Section title="Le VWAP ancré (Anchored VWAP)">

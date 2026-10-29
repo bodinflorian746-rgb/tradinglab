@@ -85,8 +85,8 @@ export function checkNouvelles(check: Check, C: Record<string, Candle[]> = CANDL
     check(n.slice(0, 8).every((q) => q.h < 1.0856 && q.l > 1.0844) && n.slice(8, 10).some((q) => q.l <= 1.084), `${I} : calme avant la news, stop de 10 pips touché au premier aller-retour`);
     const A = C["vol-day-a"], B = C["vol-day-b"];
     check(Math.round(atrAt(A, A.length - 1)) === 5 && Math.round(atrAt(B, B.length - 1)) === 15, `${I} : ATR M15 de 5 $ (A) et 15 $ (B)`);
-    check([A, B].every((q) => proved(q, 3900, 3900) && proved(q, 3940, 3940) && near(q[q.length - 1].c, 3912)), `${I} : même support 3 900 $, même résistance 3 940 $, même entrée 3 912 $`);
-    check(pivL(A, 26) && near(A[26].l, 3904) && pivL(B, 17) && near(B[17].l, 3885) && near(rr(3912, 3902, 3937), 2.5) && near(Math.round(rr(3912, 3882, 3937) * 100) / 100, 0.83), `${I} : creux 3 904 $ / 3 885 $, R/R 1:2,5 et 1:0,83`);
+    check([A, B].every((q) => proved(q, 3900, 3900) && proved(q, 3940, 3940) && near(q[q.length - 1].c, 3910)), `${I} : même support 3 900 $, même résistance 3 940 $, même entrée 3 910 $`);
+    check(pivL(A, 26) && near(A[26].l, 3904) && pivL(B, 17) && near(B[17].l, 3885) && 3898 < 3900 && 3880 < B[17].l && 3935 < 3940 && near(Math.round(rr(3910, 3898, 3935) * 100) / 100, 2.08) && near(Math.round(rr(3910, 3880, 3935) * 100) / 100, 0.83), `${I} : creux 3 904 $ / 3 885 $, stops 3 898 $ (sous le support) / 3 880 $, R/R 1:2,08 et 1:0,83`);
   }
   // ─── Avancé 13 : Wyckoff ──────────────────────────────────────────────────
   {
@@ -155,7 +155,7 @@ export function checkNouvelles(check: Check, C: Record<string, Candle[]> = CANDL
     check(near(g[21].l, 3865) && g[21].c > 3880 && pivH(g, 24) && near(g[24].h, 3925) && firstClose(g, 24, (c) => c > 3925) === 28 && pivL(g, 31) && near(g[31].l, 3905), `${S} : Spring 3 865 $, SOS au-dessus de 3 925 $, LPS 3 905 $`);
     const m = C["wa-m15"];
     check(pivL(m, 4) && near(m[4].l, 3905) && pivH(m, 6) && near(m[6].h, 3912) && near(m[9].c, 3914) && pivH(m, 11) && near(m[11].h, 3920) && near(m[14].c, 3922), `${S} : M15 (LPS 3 905 $, sommet 3 912 $, entrée 3 914 $, sommet 3 920 $, entrée tardive 3 922 $)`);
-    check(3902 < 3905 && 3938 < 3940 && near(rr(3914, 3902, 3938), 2) && near(rr(3922, 3902, 3937), 0.75), `${S} : plan 3 914 / 3 902 / 3 938 (1:2), entrée tardive 1:0,75`);
+    check(3902 < 3905 && 3938 < 3940 && near(rr(3914, 3902, 3938), 2) && near(rr(3922, 3902, 3938), 0.8), `${S} : plan 3 914 / 3 902 / 3 938 (1:2), entrée tardive 1:0,8`);
     check(near(maxLot(30, 100 * USD_EUR, 12, 0.01), 0.02) && near(Math.round(12 * USD_EUR / 0.02 / 10) * 10, 550), `${S} : 0,02 lot pour 30 €, 550 € de capital minimum`);
     const n = C["wa-nq"];
     check(near(n[6].h, 27300) && near(n[10].l, 27100) && proved(n, 27100, 27104) && proved(n, 27296, 27300) && near(n[26].h, 27340) && n[26].c < 27300, `${S} : distribution 27 100 – 27 300, UTAD 27 340`);

@@ -150,7 +150,7 @@
       "lessons": {
         "lecon1": { "title": "Identifier une accumulation ou une distribution exploitable", "description": "La tendance qui précède, les bornes du range sur l’or, les événements à surveiller et quand ne pas retenir le range.", "duration": "16 min" },
         "lecon2": { "title": "Confirmer une accumulation ou une distribution", "description": "Spring, SOS et LPS sur l’or, UTAD, SOW et LPSY sur le NASDAQ, et la confirmation en M15.", "duration": "18 min" },
-        "lecon3": { "title": "Construire les trades : entrée, stop et objectif", "description": "Un achat sur l’or (1:2), une entrée trop tardive refusée (1:0,75), une vente sur le NASDAQ, la taille de position et le Spring qui échoue.", "duration": "22 min" },
+        "lecon3": { "title": "Construire les trades : entrée, stop et objectif", "description": "Un achat sur l’or (1:2), une entrée trop tardive refusée (1:0,8), une vente sur le NASDAQ, la taille de position et le Spring qui échoue.", "duration": "22 min" },
         "lecon4": { "title": "Les règles finales et le backtest", "description": "Règles d’achat et de vente, setups à refuser, journal de test, échantillon fictif et checklist.", "duration": "18 min" }
       }
     }
