@@ -31,7 +31,8 @@ test("pricing — lien discret 'J'ai déjà un code d'accès' vers /activer-code
 
   const link = page.getByRole("link", { name: /J'ai déjà un code d'accès/i });
   await expect(link).toBeVisible();
-  await expect(link).toHaveAttribute("href", "/activer-code");
+  // Liens préfixés par la langue (site en français)
+  await expect(link).toHaveAttribute("href", "/fr/activer-code");
 
   await link.click();
   await page.waitForURL("**/activer-code", { timeout: 5000 });

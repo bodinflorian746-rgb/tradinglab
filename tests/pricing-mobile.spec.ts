@@ -15,7 +15,9 @@ test.beforeEach(async ({ context }) => {
   });
 });
 
-test("pricing — nouveau modèle (broker partenaire / accès direct 19€)", async ({ page }) => {
+// Modèle actuel : une seule carte, 48h d'essai puis accès via un dépôt chez le
+// broker partenaire. Plus d'abonnement (ni 49 € ni accès direct à 19 €).
+test("pricing — accès via le broker partenaire, sans abonnement", async ({ page }) => {
   const consoleErrors: string[] = [];
   page.on("pageerror", (err) => consoleErrors.push(String(err)));
   page.on("console", (msg) => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
@@ -30,18 +32,17 @@ test("pricing — nouveau modèle (broker partenaire / accès direct 19€)", as
   }));
   expect(docW - viewW).toBeLessThanOrEqual(4);
 
-  // Plus aucune trace de l'ancien tarif
-  await expect(page.getByText("49€")).toHaveCount(0);
-  await expect(page.getByText(/Commencer avec Premium/i)).toHaveCount(0);
+  // Plus aucune trace des anciens tarifs ni de l'abonnement
+  await expect(page.getByText(/49\s?€|19\s?€/)).toHaveCount(0);
+  await expect(page.getByText(/Commencer avec Premium|Accès direct|abonnement/i)).toHaveCount(0);
 
-  // Nouveaux textes présents
-  await expect(page.getByText(/Accès gratuit via un partenaire broker TradeScaleX/i)).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Via partenaire broker" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Accès direct" })).toBeVisible();
-  await expect(page.getByText("0€").first()).toBeVisible();
-  await expect(page.getByText("19€").first()).toBeVisible();
-  await expect(page.getByText(/Accéder via un broker partenaire/i)).toBeVisible();
-  await expect(page.getByText(/Commencer l'accès direct/i)).toBeVisible();
+  // Une seule carte : essai 48h puis broker partenaire (le formulaire d'essai n'est pas soumis)
+  await expect(page.getByRole("heading", { level: 1, name: "Choisis ton accès" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Via broker partenaire" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "48h d'essai gratuit" })).toBeVisible();
+  await expect(page.getByText("Dépôt minimum : 200 €")).toBeVisible();
+  await expect(page.getByRole("button", { name: /Accéder via le broker partenaire/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /J'ai déjà un code d'accès/i })).toBeVisible();
 
   expect(consoleErrors, `Erreurs : ${consoleErrors.join("\n")}`).toHaveLength(0);
 });

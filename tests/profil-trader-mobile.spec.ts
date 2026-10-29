@@ -15,12 +15,21 @@ test.beforeEach(async ({ context }) => {
   });
 });
 
+// /profil-trader est premium (session requise, cf. PLAYWRIGHT_STORAGE_STATE) et le
+// profil vit dans le localStorage : on le vide avant les tests qui partent de zéro.
+const PROFILE_KEY = "tradinglab.profile.v1";
+async function clearProfile(page: import("@playwright/test").Page) {
+  await page.goto("/profil-trader", { waitUntil: "domcontentloaded" });
+  await page.evaluate((k) => window.localStorage.removeItem(k), PROFILE_KEY);
+}
+
 test("mobile — /profil-trader (état vide)", async ({ page }) => {
   const consoleErrors: string[] = [];
   page.on("pageerror", (err) => consoleErrors.push(String(err)));
   page.on("console", (msg) => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
 
-  await page.goto("/profil-trader", { waitUntil: "domcontentloaded" });
+  await clearProfile(page);
+  await page.reload({ waitUntil: "domcontentloaded" });
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
 
   const { docW, viewW } = await page.evaluate(() => ({
@@ -50,6 +59,8 @@ test("mobile — /profil-trader (état vide)", async ({ page }) => {
 // `locale: "fr-FR""), ce qui ferait atterrir un `goto("/")` sur /en et
 // invaliderait tout matching de texte français. Ce n'est pas lié au refactor
 // nav ; on le contourne ici en ciblant directement /fr.
+test.describe("visiteur non connecté", () => {
+test.use({ storageState: { cookies: [], origins: [] } });
 test("navbar — 'Mon profil' n'apparaît plus dans la nav pour un visiteur non connecté", async ({ page }) => {
   await page.goto("/fr", { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
@@ -64,9 +75,11 @@ test("navbar — 'Mon profil' n'apparaît plus dans la nav pour un visiteur non 
   // Le visiteur voit en revanche Connexion / Créer un compte.
   await expect(page.locator("nav").getByRole("link", { name: /Connexion/i })).toBeVisible();
 });
+});
 
 test("tracking — jouer un round BUY/SELL/NO TRADE alimente le profil", async ({ page }) => {
-  // 1. Joue 1 round dans BSNT pour générer un event
+  // 1. Profil vidé, puis 1 round dans BSNT pour générer un event (localStorage seulement)
+  await clearProfile(page);
   await page.goto("/jeux/buy-sell-no-trade", { waitUntil: "domcontentloaded" });
   await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
   await page.getByRole("button", { name: /Débutant/ }).click();
@@ -92,8 +105,8 @@ test("tracking — jouer un round BUY/SELL/NO TRADE alimente le profil", async (
 
   // Le profil affiche maintenant un profil principal (pas "Ton profil se construit")
   await expect(page.getByText(/Profil principal/i)).toBeVisible({ timeout: 5000 });
-  // Le compteur d'events trackés est >= 1
-  await expect(page.getByText("Events trackés")).toBeVisible();
+  // Le compteur d'événements suivis est affiché
+  await expect(page.getByText("Événements suivis")).toBeVisible();
 });
 
 test("tracking — 5 rounds alimentent les compétences", async ({ page }) => {
@@ -127,8 +140,8 @@ test("tracking — 5 rounds alimentent les compétences", async ({ page }) => {
   await expect(page.getByText("Compétences").first()).toBeVisible();
   await expect(page.getByText("Discipline").first()).toBeVisible();
 
-  // Le total events est affiché et non-nul (15 injectés)
-  await expect(page.getByText("15")).toBeVisible({ timeout: 3000 });
+  // Le total d'événements suivis est affiché (15 injectés)
+  await expect(page.getByText("15", { exact: true }).first()).toBeVisible({ timeout: 3000 });
 });
 
 test("screenshot — profil avec données", async ({ page }) => {

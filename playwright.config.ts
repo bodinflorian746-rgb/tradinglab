@@ -17,6 +17,9 @@ export default defineConfig({
   reporter: "list",
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000",
+    // Session premium des tests (leçons, jeux, profil), gardée hors du dépôt :
+    // PLAYWRIGHT_STORAGE_STATE=<chemin du fichier>. Les specs « visiteur » la retirent.
+    storageState: process.env.PLAYWRIGHT_STORAGE_STATE || undefined,
     viewport: { width: 1280, height: 800 },
     screenshot: "off",
     video: "off",

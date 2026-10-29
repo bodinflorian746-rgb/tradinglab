@@ -78,19 +78,18 @@ for (const { url, name } of PAGES) {
 // Test interaction : burger menu mobile s'ouvre + ferme
 test("[QA] burger menu mobile fonctionnel", async ({ page }) => {
   await page.goto("/", { waitUntil: "domcontentloaded" });
-  const burger = page.locator('button[aria-label*="menu"]').first();
+  const burger = page.getByTestId("nav-burger");
   await expect(burger).toBeVisible();
 
   // Ouverture
   await burger.click();
-  await expect(page.locator('a[href="/formations"]').last()).toBeVisible();
+  await expect(burger).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator('nav a[href="/fr/formations"]').last()).toBeVisible();
 
-  // Fermeture par clic sur lien
-  // (puis re-ouverture pour test fermeture par toggle)
+  // Fermeture par le même bouton : le panneau quitte le DOM (state isOpen)
   await burger.click();
-  // Vérifier qu'au moins l'un des liens du panneau est masqué (display:none) ou parent invisible
-  // (Le panneau disparaît via state isOpen, donc les liens du panneau ne sont plus dans le DOM)
-  const panelLinks = await page.locator('div.md\\:hidden a[href="/formations"]').count();
+  await expect(burger).toHaveAttribute("aria-expanded", "false");
+  const panelLinks = await page.locator('div.md\\:hidden a[href="/fr/formations"]').count();
   expect(panelLinks, "Le panneau mobile devrait être fermé").toBe(0);
 });
 
@@ -100,10 +99,10 @@ test("[QA] navigation prev/next entre lecons debutant", async ({ page }) => {
   await page.waitForLoadState("networkidle", { timeout: 10_000 }).catch(() => {});
 
   // Lien Leçon précédente
-  const prevLink = page.locator('a[href="/formations/debutant/lecon3"]').first();
+  const prevLink = page.locator('a[href="/fr/formations/debutant/lecon3"]').first();
   await expect(prevLink, "Lien Leçon 3 manquant depuis lecon4").toBeVisible();
 
   // Lien Leçon suivante
-  const nextLink = page.locator('a[href="/formations/debutant/lecon5"]').first();
+  const nextLink = page.locator('a[href="/fr/formations/debutant/lecon5"]').first();
   await expect(nextLink, "Lien Leçon 5 manquant depuis lecon4").toBeVisible();
 });
