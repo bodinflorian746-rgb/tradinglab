@@ -225,11 +225,11 @@ export default function ContentFr() {
             <h2 className="text-lg font-semibold text-white mb-3">Calcul retail</h2>
             <p className="text-zinc-300 leading-relaxed text-sm mb-3">La règle de risque (2% du capital au maximum) appliquée à l&apos;entrée au retest, au lot près.</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,085€ : ce stop de 26 pips représente environ 2€ de risque</li>
-              <li>- Compte 300€ → 2% = 6€ maximum : 0,02 lot, risque environ 4€, gain potentiel environ 12€</li>
-              <li>- Compte 500€ → 2% = 10€ maximum : 0,04 lot, risque environ 9€, gain potentiel environ 24€</li>
-              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,09 lot, risque environ 20€, gain potentiel environ 54€</li>
-              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,22 lot, risque environ 49€, gain potentiel environ 131€</li>
+              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,092€ : ce stop de 26 pips représente environ 2€ de risque</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,02 lot, risque environ 5€, gain potentiel environ 13€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,04 lot, risque environ 10€, gain potentiel environ 26€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,08 lot, risque environ 19€, gain potentiel environ 52€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,20 lot, risque environ 48€, gain potentiel environ 129€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">Pris au retest, l&apos;ETE offre un R/R de 1:2,69 avec un stop court. Le prix ne revient pas toujours tester la ligne de cou : c&apos;est le prix de ce R/R, quelques setups manqués plutôt que des trades au R/R trop faible.</p>
           </section>

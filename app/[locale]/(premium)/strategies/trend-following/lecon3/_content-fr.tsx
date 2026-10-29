@@ -230,11 +230,11 @@ export default function ContentFr() {
 
             <p className="text-white font-semibold text-sm mb-2">Calcul retail</p>
             <ul className="space-y-1 text-sm text-zinc-300 mb-3">
-              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,085€ : ce stop de 55 pips représente environ 5€ de risque</li>
-              <li>- Compte 300€ → 2% = 6€ maximum : 0,01 lot, risque environ 5€, gain potentiel environ 14€</li>
-              <li>- Compte 500€ → 2% = 10€ maximum : 0,02 lot, risque environ 9€, gain potentiel environ 28€</li>
-              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,04 lot, risque environ 19€, gain potentiel environ 55€</li>
-              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,1 lot, risque environ 47€, gain potentiel environ 138€</li>
+              <li>- Au lot minimum (0,01 lot), chaque pip vaut environ 0,092€ : ce stop de 55 pips représente environ 5€ de risque</li>
+              <li>- Compte 300€ → 2% = 6€ maximum : 0,01 lot, risque environ 5€, gain potentiel environ 15€</li>
+              <li>- Compte 500€ → 2% = 10€ maximum : 0,01 lot, risque environ 5€, gain potentiel environ 15€</li>
+              <li>- Compte 1 000€ → 2% = 20€ maximum : 0,03 lot, risque environ 15€, gain potentiel environ 45€</li>
+              <li>- Compte 2 500€ → 2% = 50€ maximum : 0,09 lot, risque environ 46€, gain potentiel environ 135€</li>
             </ul>
             <p className="text-zinc-300 leading-relaxed text-sm">
               Le R/R reste 1:2,96 peu importe la taille du compte.

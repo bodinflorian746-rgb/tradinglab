@@ -699,8 +699,8 @@ export const LESSONS: LevelData[] = [
             heading: "La règle : 1 à 2% par trade, quel que soit ton capital",
             body: "Le money management, c'est ce qui sépare les traders qui survivent de ceux qui grillent leur compte en 2 mois. La règle d'or : ne JAMAIS risquer plus que ce que ton capital permet. Le repère : 1% du capital par trade pour être prudent, 2% au maximum. Sur un compte de 300 €, cela fait 3 à 6 € de risque : avec le lot minimum, c'est faisable sur EUR/USD, rarement sur l'or ou les indices.",
             items: [
-              "Le lot minimum (0,01 lot chez la plupart des courtiers) vaut environ 0,10 € par point sur EUR/USD : avec 6 € de risque, ton Stop Loss peut aller jusqu'à 60 points",
-              "Sur l'or, 0,01 lot vaut environ 0,85 € par dollar de mouvement : avec 6 € de risque, le Stop Loss ne peut pas dépasser 7 $, souvent trop serré",
+              "Le lot minimum (0,01 lot chez la plupart des courtiers) vaut environ 0,10 $, soit environ 0,09 €, par point sur EUR/USD : avec 6 € de risque, ton Stop Loss peut aller jusqu'à 65 points",
+              "Sur l'or, 0,01 lot vaut environ 1 $, soit environ 0,92 €, par dollar de mouvement : avec 6 € de risque, le Stop Loss ne peut pas dépasser 6,50 $, souvent trop serré",
               "Si le Stop Loss logique ne rentre pas dans ton risque, tu ne montes pas le %, tu passes le trade ou tu cherches un setup au stop plus court",
               "Le risque = montant que tu perds si ton Stop Loss se déclenche",
             ],
@@ -731,13 +731,13 @@ export const LESSONS: LevelData[] = [
           },
           {
             heading: "Calculer ta taille de position",
-            body: "Le montant en euros ne suffit pas : il faut le traduire en taille de position (en lots), à partir de la distance de ton Stop Loss. La formule : taille = risque en euros ÷ (distance du Stop Loss en points × valeur d'un point pour 1 lot). Sur EUR/USD, un point (on dit aussi un pip) vaut 0,0001 : avec 0,1 lot, chaque point vaut environ 1 € (la valeur exacte varie avec le taux de change).",
+            body: "Le montant en euros ne suffit pas : il faut le traduire en taille de position (en lots), à partir de la distance de ton Stop Loss. La formule : taille = risque en euros ÷ (distance du Stop Loss en points × valeur d'un point pour 1 lot). Sur EUR/USD, un point (on dit aussi un pip) vaut 0,0001 : avec 0,1 lot, chaque point vaut environ 1 $, soit environ 0,92 € (la valeur exacte varie avec le taux de change).",
             items: [
               "Capital 700 € → 2% = 14 € de risque maximum",
               "Ton Stop Loss est à 30 points de ton entrée",
-              "Avec 0,1 lot (environ 1 € par point), 30 points = 30 € de perte : tu dépasses tes 14 €",
-              "Taille adaptée : 14 € ÷ 30 points = 0,47 € par point, soit 0,047 lot, arrondi vers le bas à 0,04 lot (12 € de risque)",
-              "Stop Loss à 60 points : 14 € ÷ 60 = 0,23 € par point, soit 0,02 lot (12 € de risque). La taille baisse, le risque en euros reste sous ton maximum.",
+              "Avec 0,1 lot (environ 0,92 € par point), 30 points = 27,60 € de perte : tu dépasses tes 14 €",
+              "Taille adaptée : 14 € ÷ 30 points = 0,47 € par point, soit 0,051 lot, arrondi vers le bas à 0,05 lot (13,80 € de risque)",
+              "Stop Loss à 60 points : 14 € ÷ 60 = 0,23 € par point, soit 0,025 lot, arrondi à 0,02 lot (11,04 € de risque). La taille baisse, le risque en euros reste sous ton maximum.",
             ],
             note: "Ta plateforme ou un calculateur de taille de position fait ce calcul pour toi. L'important : le faire AVANT d'entrer, à partir du Stop Loss logique, jamais l'inverse.",
           },
@@ -811,7 +811,7 @@ export const LESSONS: LevelData[] = [
           ],
           correct: 1,
           explanation:
-            "La règle ne dépend pas de la taille du compte : 1 à 2% du capital par trade, soit 7 à 14 € sur 700 €. Avec le lot minimum sur EUR/USD (0,01 lot ≈ 0,10 € par point), 14 € laissent jusqu'à 140 points de Stop Loss : largement de quoi placer un stop logique.",
+            "La règle ne dépend pas de la taille du compte : 1 à 2% du capital par trade, soit 7 à 14 € sur 700 €. Avec le lot minimum sur EUR/USD (0,01 lot ≈ 0,10 $, soit environ 0,09 € par point), 14 € laissent jusqu'à 152 points de Stop Loss : largement de quoi placer un stop logique.",
           answerExplanations: [
             "Faux. 5% par trade, c'est 40% du capital perdu en 10 pertes consécutives, une série qui arrive à tout le monde. Un petit compte ne justifie pas de risquer plus.",
             "Correct. 1 à 2% de 700 € = 7 à 14 € de risque maximum par trade. C'est la même règle pour un compte de 700 € que pour un compte de 10 000 €.",
