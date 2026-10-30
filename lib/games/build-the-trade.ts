@@ -21,6 +21,7 @@ import { mapStudy, withVolumeStudy, type GameStudy, type StudySpec } from "./vol
 import { assetPriceMap, mapCandle, mapDomain, mapZone, priceEpsilon } from "./price-scale";
 import type { NotionId } from "./notions";
 import { BTT_NEW, type BttRaw, type BttClaim } from "./btt-scenarios";
+import { levelsReadable } from "./level-proof";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext, Candle, ChartZone };
 
@@ -1264,6 +1265,13 @@ export function planRR(chart: BuildTradeChart, picks: ChoiceSet): number {
 
 /** Graphique du scénario, avec la passe de réalisme des bougies (niveaux clés : zones, entrées, stops, TP). */
 export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): BuildTradeChart {
+  // Niveaux lisibles (règle PO, lib/games/level-proof.ts) : sinon autre tirage (5 essais au plus)
+  let out = buildBuildTradeChart1(template, seed, vol, ctx);
+  for (let k = 1; k <= 5 && !levelsReadable(out.past, out.zones); k++) out = buildBuildTradeChart1(template, (seed + k * 0x3B9AC9FB) >>> 0, vol, ctx);
+  return out;
+}
+
+function buildBuildTradeChart1(template: BuildTradeTemplate, seed: number, vol: Volatility, ctx: MarketCtx): BuildTradeChart {
   const ch = buildBuildTradeChartRaw(template, seed, vol);
   // (passé : zones ; futur : aussi entrées, stops et TP, qui décident de l'issue)
   // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)

@@ -20,6 +20,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, srGuards, tpBeforeLevels, withRoleChanges, naturalFuture,
 } from "./shared";
 import { addReaction, entrySignal, reactionFloor } from "./confirmation";
+import { levelsReadable } from "./level-proof";
 import { withTracedZones, keepSwingTips } from "./zone-trace";
 import type { NotionId } from "./notions";
 import { PS_NEW, sweepFuture, type PsRaw } from "./ps-scenarios";
@@ -2998,9 +2999,9 @@ export function buildPlaceStopChart(
 ): PlaceStopChart {
   // Réaction visible avant l'entrée (règle PO) : la passe de réalisme retaille parfois la bougie qui
   // portait le signal (plancher des mèches en volatilité élevée : le marteau devient doji) ; autre tirage
-  // dans ce cas (10 essais au plus)
+  // dans ce cas (10 essais au plus). De même pour un niveau tracé illisible (lib/games/level-proof.ts)
   let out = buildPlaceStopChart1(setup, seed, volatility, difficulty, ctx);
-  for (let k = 1; k <= 10 && !entrySignal(out.past, out.direction === "BUY" ? 1 : -1, out.zones); k++) out = buildPlaceStopChart1(setup, (seed + k * 0x6C8E9CF5) >>> 0, volatility, difficulty, ctx);
+  for (let k = 1; k <= 10 && (!entrySignal(out.past, out.direction === "BUY" ? 1 : -1, out.zones) || !levelsReadable(out.past, out.zones)); k++) out = buildPlaceStopChart1(setup, (seed + k * 0x6C8E9CF5) >>> 0, volatility, difficulty, ctx);
   return out;
 }
 

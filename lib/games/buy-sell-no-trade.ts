@@ -19,6 +19,7 @@ import {
 } from "./shared";
 import { withTracedZones, keepSwingTips } from "./zone-trace";
 import { addReaction, entrySignal, reactionFloor } from "./confirmation";
+import { levelsReadable } from "./level-proof";
 import type { NotionId } from "./notions";
 import { BSNT_NEW } from "./bsnt-scenarios";
 import { mirrorCandles, mirrorZones } from "./scenes";
@@ -1551,6 +1552,13 @@ export function buildChart(
   difficulty: Difficulty = "intermediate",
   ctx: MarketCtx = {},
 ): BuySellChart {
+  // Niveaux lisibles (règle PO, lib/games/level-proof.ts) : sinon autre tirage (5 essais au plus)
+  let out = buildChart1(setup, seed, volatility, difficulty, ctx);
+  for (let k = 1; k <= 5 && !levelsReadable(out.past, out.zones); k++) out = buildChart1(setup, (seed + k * 0x3B9AC9FB) >>> 0, volatility, difficulty, ctx);
+  return out;
+}
+
+function buildChart1(setup: SetupKey, seed: number, volatility: Volatility, difficulty: Difficulty, ctx: MarketCtx): BuySellChart {
   const ch = buildChartRaw(setup, seed, volatility, difficulty);
   const calm = setup === "trade_before_news";
   // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)

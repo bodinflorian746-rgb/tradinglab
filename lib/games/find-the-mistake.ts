@@ -12,6 +12,7 @@ import {
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
 import { addReaction, entrySignal, reactionFloor } from "./confirmation";
+import { levelsReadable } from "./level-proof";
 import type { NotionId } from "./notions";
 import { FTM_NEW } from "./ftm-scenarios";
 import { breakStrayLevels } from "./stray-levels";
@@ -1083,11 +1084,11 @@ export const NON_ENTRY_MISTAKES: ReadonlySet<AnyMistakeId> = new Set<AnyMistakeI
 ]);
 
 export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): ScenarioChart {
-  // Erreur ailleurs que dans l'entrée : la réaction reste visible après la passe de réalisme (règle PO),
-  // sinon autre tirage (5 essais au plus)
+  // Erreur ailleurs que dans l'entrée : la réaction reste visible après la passe de réalisme (règle PO) ;
+  // niveaux tracés lisibles (lib/games/level-proof.ts) ; sinon autre tirage (5 essais au plus)
   let out = buildScenarioChart1(template, seed, vol, ctx);
   const dir = template.direction === "BUY" ? 1 : -1;
-  const ok = (c: ScenarioChart) => !NON_ENTRY_MISTAKES.has(template.correctMistake) || !!entrySignal(c.past, dir, c.zones);
+  const ok = (c: ScenarioChart) => levelsReadable(c.past, c.zones) && (!NON_ENTRY_MISTAKES.has(template.correctMistake) || !!entrySignal(c.past, dir, c.zones));
   for (let k = 1; k <= 5 && !ok(out); k++) out = buildScenarioChart1(template, (seed + k * 0x6C8E9CF5) >>> 0, vol, ctx);
   return out;
 }

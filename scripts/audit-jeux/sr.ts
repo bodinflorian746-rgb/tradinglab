@@ -3,7 +3,10 @@
 // AVANT de répondre (bougies passées) : au moins deux touches au niveau, ou une cassure
 // suivie d'un retest avec réaction (scripts/audit-lecons/sr-proof.mjs, même règle que
 // les leçons). Une zone que le prix a seulement traversée n'est jamais un support.
-// Usage : npx vite-node scripts/audit-jeux/sr.ts [--detail] (lancé par run.mjs)
+// Niveaux lisibles (règle PO, 2026-10-30) : chaque touche est nette, contact de 4 bougies au plus
+// puis départ franc d'au moins 0,8 bougie médiane (lib/games/level-proof.ts), jamais une mèche
+// perdue dans des bougies désordonnées.
+// Usage : npx vite-node scripts/audit-jeux/sr.ts [--detail] [--autotest] (lancé par run.mjs)
 //
 // 500 rounds par scénario et par difficulté (langues actives), aperçus du hub et
 // héros de la home. Aucun cas toléré.
@@ -19,7 +22,7 @@ import * as BTES from "../../lib/games/build-the-trade-es";
 import { buildGamePreviews } from "../../lib/games/previews";
 import { buildHeroRounds } from "../../app/[locale]/_home/hero-rounds";
 import type { Candle, ChartZone } from "../../lib/games/shared";
-import { srProofError } from "../audit-lecons/sr-proof.mjs";
+import { cleanProofError } from "../../lib/games/level-proof";
 import { auditee } from "./langues";
 
 const ROUNDS = 500;
@@ -30,13 +33,32 @@ const SR = /\b(support|r[ée]sistance|soporte|resistencia)/i;
 const counts = new Map<string, { rounds: number; bad: number; first?: string }>();
 let errors = 0;
 
+if (process.argv.includes("--autotest")) {
+  // Support 0 – 0,2, bougies d'amplitude 1 : touches construites à la main
+  const k = (o: number, c: number, h = Math.max(o, c) + 0.2, l = Math.min(o, c) - 0.2): Candle => ({ o, c, h, l });
+  const fall = [k(5, 4), k(4, 3), k(3, 2)];
+  const vTouch = [k(2, 1.1, 2.1, 0.05), k(1.1, 1.6, 1.7, 0.1), k(1.6, 2.6), k(2.6, 3.4)];
+  const clean = [...fall, ...vTouch, k(3.4, 2.6), k(2.6, 1.8), k(1.8, 1.0, 1.9, 0.08), k(1.0, 1.7, 1.8, 0.1), k(1.7, 2.7), k(2.7, 3.5)];
+  // la première touche : six bougies serrées sur le niveau, mèches dans la zone
+  const chop = [k(2, 0.9, 2.1, 0.1), k(0.9, 0.6, 1.0, 0.05), k(0.6, 0.8, 0.95, 0.1), k(0.8, 0.5, 0.9, 0.12), k(0.5, 0.7, 0.85, 0.06), k(0.7, 0.9, 1.0, 0.15), k(0.9, 2.0), k(2.0, 2.9)];
+  const messy = [...fall, ...chop, k(2.9, 2.2), k(2.2, 1.0, 2.3, 0.08), k(1.0, 1.7, 1.8, 0.1), k(1.7, 2.7), k(2.7, 3.5)];
+  // la première touche repart à peine (moins de 0,8 bougie dans les 4 suivantes) avant de revenir
+  const weak = [...fall, k(2, 1.1, 2.1, 0.05), k(1.1, 1.0, 1.15, 0.5), k(1.0, 1.05, 1.2, 0.56), k(1.05, 0.95, 1.2, 0.5), k(0.95, 1.0, 1.15, 0.48), k(1.0, 0.9, 1.1, 0.08), k(0.9, 1.7, 1.8, 0.1), k(1.7, 2.7), k(2.7, 3.5)];
+  const e1 = cleanProofError(messy, 0, 0.2), e2 = cleanProofError(weak, 0, 0.2), ok = cleanProofError(clean, 0, 0.2);
+  console.log(`${e1 ? "détecté" : "MANQUÉ "}  touche perdue dans six bougies serrées sur le niveau`);
+  console.log(`${e2 ? "détecté" : "MANQUÉ "}  touche sans départ franc`);
+  console.log(`${ok ? "FAUX POSITIF" : "aucun faux positif"}  deux touches en V${ok ? ` (${ok})` : ""}`);
+  console.log(`RESULTAT erreurs=${(e1 ? 0 : 1) + (e2 ? 0 : 1) + (ok ? 1 : 0)} avertissements=0`);
+  process.exit(0);
+}
+
 function record(key: string, past: Candle[], zones: ChartZone[] | undefined, where: string) {
   const c = counts.get(key) ?? { rounds: 0, bad: 0 };
   c.rounds++;
   let why: string | null = null;
   for (const z of zones ?? []) {
     if (!z.label || !SR.test(z.label)) continue;
-    const err = srProofError(past, Math.min(z.y1, z.y2), Math.max(z.y1, z.y2));
+    const err = cleanProofError(past, Math.min(z.y1, z.y2), Math.max(z.y1, z.y2));
     if (err) { why = `« ${z.label} » : ${err}`; break; }
   }
   if (why) { c.bad++; errors++; if (!c.first) c.first = `${where} ${why}`; }
