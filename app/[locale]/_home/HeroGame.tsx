@@ -26,7 +26,7 @@ export interface HeroGameStrings {
   next: string;
   seeScore: string;
   scoreTitle: string;
-  /** « {scenarios} scénarios dans les 4 jeux et {lessons} leçons t'attendent. » */
+  /** « {scénarios} scénarios dans les 4 jeux et {leçons} leçons t'attendent. » */
   catalog: string;
   trial: string;
   playGames: string;
@@ -35,7 +35,7 @@ export interface HeroGameStrings {
 
 type Phase = "question" | "reveal" | "verdict" | "end";
 
-const fill = (t: string, v: Record<string, number>) => t.replace(/\{(\w+)\}/g, (_, k: string) => String(v[k] ?? ""));
+const fill = (t: string, v: Record<string, number>) => t.replace(/\{([^}]+)\}/g, (_, k: string) => String(v[k] ?? ""));
 
 export function HeroGame({ rounds, s, scenarios, lessons, gamesHref, trialHref }: {
   rounds: HeroRound[]; s: HeroGameStrings; scenarios: number; lessons: number; gamesHref: string; trialHref: string;
@@ -99,7 +99,7 @@ export function HeroGame({ rounds, s, scenarios, lessons, gamesHref, trialHref }
             </li>
           ))}
         </ul>
-        <p className="text-[15px] leading-snug text-[color:var(--v2-text-2)]">{fill(s.catalog, { scenarios, lessons })}</p>
+        <p className="text-[15px] leading-snug text-[color:var(--v2-text-2)]">{fill(s.catalog, { scénarios: scenarios, leçons: lessons })}</p>
         <div className="hv2-actions hv2-actions--end">
           {/* Les jeux sont réservés aux membres : un visiteur passe par l'essai 48h */}
           <Link href={user ? gamesHref : trialHref} className="v2-btn v2-btn--accent">

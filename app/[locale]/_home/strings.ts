@@ -248,7 +248,7 @@ export const HERO_DEMO = {
   next: "Manche suivante",
   seeScore: "Voir mon score",
   scoreTitle: "Ton score",
-  catalog: "{scenarios} scénarios dans les 4 jeux et {lessons} leçons t'attendent.",
+  catalog: "{scénarios} scénarios dans les 4 jeux et {leçons} leçons t'attendent.",
   trial: "Essayer 48h gratuitement",
   playGames: "Aller aux jeux",
   replay: "Rejouer",
