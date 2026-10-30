@@ -318,6 +318,8 @@ export default function FindTheMistakePage() {
   // (puis la zone que nomme l'erreur : le niveau clé du scénario n'est jamais relégué en légende)
   const labeledZones = FrGame.labeledZoneIndexes(chart.zones, labelledLines.length, current.correctMistake as FrGame.AnyMistakeId, markNow);
   const legendZones = chart.zones.filter((_, i) => !labeledZones.includes(i));
+  // Choix dont le libellé passe sur deux lignes en 390 (plus de 22 caractères)
+  const twoLineChoices = current.shuffledChoices.filter((c) => (LABELS[c] ?? "").length > 22).length;
 
   return (
     <main className="v2-page mx-auto flex w-full max-w-[880px] flex-col">
@@ -360,7 +362,8 @@ export default function FindTheMistakePage() {
 
         {/* Scénario */}
         {/* énoncé de plus de 110 caractères : graphique moins haut (moyen jusqu'à 150, compact au-delà), pour que les choix (libellés sur deux lignes compris) tiennent dans l'écran 390 × 844 */}
-        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${current.context.length > 150 ? " v2-onescreen--long" : current.context.length > 110 ? " v2-onescreen--mid" : ""}`} aria-labelledby="ftm-title">
+        {/* énoncé moyen et 3 choix ou plus sur deux lignes : format compact (390 × 844, choix dans l'écran) */}
+        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${current.context.length > 150 || (current.context.length > 110 && twoLineChoices >= 3) ? " v2-onescreen--long" : current.context.length > 110 ? " v2-onescreen--mid" : ""}`} aria-labelledby="ftm-title">
           <h2 id="ftm-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">{T.title}</h2>
 
           <div className="v2-gap-s v2-onescreen-body mx-auto flex w-full max-w-3xl flex-col">

@@ -400,6 +400,11 @@ const HARD = [
   ["find-the-mistake", "Intermédiaire", 10139], ["find-the-mistake", "Intermédiaire", 10228],
   // stop large qui écrasait les bougies dans le quart haut de la question (news imminente, 2026-10-25)
   ["place-stop", "Avancé", 10072], ["place-stop", "Avancé", 10029],
+  // choix hors de l'écran 390 × 844 (850 px) : énoncé moyen et 3 ou 4 choix sur deux lignes (2026-10-30) ;
+  // scénarios « Entrée sans confirmation »
+  ["find-the-mistake", "Intermédiaire", 11011], ["find-the-mistake", "Intermédiaire", 11001],
+  ["find-the-mistake", "Intermédiaire", 11036], ["find-the-mistake", "Intermédiaire", 11008],
+  ["find-the-mistake", "Débutant", 11038], ["find-the-mistake", "Intermédiaire", 11038], ["find-the-mistake", "Avancé", 11038],
 ];
 async function hardRounds(browser) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: MOBILE_H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
@@ -407,7 +412,7 @@ async function hardRounds(browser) {
   const page = await ctx.newPage();
   const errs = [];
   try {
-    for (const [slug, level, seed] of HARD) {
+    for (const [slug, level, seed] of HARD.filter(([g]) => GAMES.includes(g))) {
       const add = (where, list) => list.forEach((e) => errs.push(`${slug} ${level} graine ${seed} ${where} : ${e}`));
       try {
         await page.goto(`${BASE}/fr/jeux/${slug}`, { waitUntil: "networkidle", timeout: 180000 });
@@ -430,6 +435,7 @@ async function hardRounds(browser) {
           await page.locator("[data-choice]").first().waitFor({ timeout: 60000 });
           await page.waitForTimeout(4500);
           add("question", await probeLabels(page, { mobile: true, buttons: null }));
+          add("question choix", await measureChoices(page));
           await page.locator("[data-choice]").first().click();
         } else {
           await page.getByRole("button", { name: "Stop 1", exact: true }).waitFor({ timeout: 60000 });
@@ -599,10 +605,10 @@ async function autotest(browser) {
     }
   };
   await Promise.all([worker(), worker(), worker(), worker()]);
-  if (GAMES.some((g) => g === "place-stop" || g === "build-the-trade") && FORMATS.includes("390")) {
+  if (HARD.some(([g]) => GAMES.includes(g)) && FORMATS.includes("390")) {
     const h = await hardRounds(browser);
     errors += h.length;
-    lines.push(`rounds difficiles (graines fixes, fr 390) : ${h.length} erreur(s), ${HARD.length} rounds`);
+    lines.push(`rounds difficiles (graines fixes, fr 390) : ${h.length} erreur(s), ${HARD.filter(([g]) => GAMES.includes(g)).length} rounds`);
     h.slice(0, 12).forEach((e) => lines.push(`    ${e}`));
   }
   await browser.close();
