@@ -9,6 +9,7 @@ import type { NotionId } from "./notions";
 export { MISTAKE_NOTION } from "./notions";
 import { chop, drop, legTo, mirrorCandles, mirrorZones, provenResistance, provenSupport, rally, isHammer, range, type Rng } from "./scenes";
 import { supportScene, rebound, hammerNowhere, rangeScene, obScene } from "./bsnt-scenarios";
+import { entrySignal } from "./confirmation";
 
 type Difficulty = "beginner" | "intermediate" | "advanced";
 type Category = "technique" | "psychologique" | "execution" | "rr" | "timing" | "liquidite" | "discipline";
@@ -301,6 +302,47 @@ const aSweepLowSold: NonNullable<FtmScenario["build"]> = (rng, m) => {
   return { past, future: rally(rng, m, p, 4).candles, zones: [pivot("bas", L, "Plus bas précédent"), { kind: "liquidity_low", y1: L - 0.6 * m, y2: L - 0.05 * m, label: "Liquidité balayée" }], entry: p };
 };
 
+// ─── Entrée sans confirmation (règle PO : on entre sur la réaction, pas au toucher) ─────
+
+/** Arrivée sur un niveau en bougies rouges qui clôturent près de leur plus bas : aucune réaction */
+function arrival(rng: Rng, m: number, p: number, target: number, n = 3): { candles: Candle[]; p: number } {
+  const out: Candle[] = [];
+  const step = (p - target) / n;
+  for (let i = 0; i < n; i++) {
+    const c = i === n - 1 ? target : p - step * (0.85 + rng() * 0.3);
+    out.push({ o: p, c, h: p + (0.03 + rng() * 0.05) * m, l: c - (0.01 + rng() * 0.02) * m });
+    p = c;
+  }
+  return { candles: out, p };
+}
+/** Support prouvé, retour sur lui en bougies rouges : achat au toucher */
+const bNoReaction: NonNullable<FtmScenario["build"]> = (rng, m) => {
+  const b = band(m);
+  const s = supportScene(rng, m);
+  const a = arrival(rng, m, s.p, b.hi - (0.03 + rng() * 0.04) * m);
+  return { past: [...s.past, ...a.candles], future: drop(rng, m, a.p, 5).candles, zones: [zone("support", 0, m, "Support")], entry: a.p, stop: b.lo - (0.22 + rng() * 0.06) * m };
+};
+/** Résistance cassée, retour sur elle en bougies rouges : achat au toucher (construit à l'achat, joué à la vente) */
+const iRetestNoReaction: NonNullable<FtmScenario["build"]> = (rng, m) => {
+  const b = band(m);
+  const t = provenResistance(rng, m, b.lo, b.hi);
+  const a = legTo(rng, m, t.p, b.lo - 0.4 * m, { retrace: 0.3 });
+  const past = [...t.candles, ...a.candles];
+  let p = a.p;
+  const c0 = b.hi + (0.45 + rng() * 0.1) * m;
+  past.push({ o: p, c: c0, h: c0 + 0.05 * m, l: p - 0.04 * m }); p = c0;
+  const up = rally(rng, m, p, 3); past.push(...up.candles); p = up.p;
+  const back = arrival(rng, m, p, b.hi - (0.02 + rng() * 0.04) * m, 4); past.push(...back.candles); p = back.p;
+  return { past, future: drop(rng, m, p, 5).candles, zones: [zone("support", 0, m, "Ancienne résistance → support")], entry: p, stop: b.lo - (0.22 + rng() * 0.06) * m };
+};
+/** Retour dans un Order Block intact en grandes bougies rouges : achat au toucher */
+const aObNoReaction: NonNullable<FtmScenario["build"]> = (rng, m) => {
+  const s = obScene(rng, m);
+  const top = Math.max(s.zone.y1, s.zone.y2), bot = Math.min(s.zone.y1, s.zone.y2);
+  const a = arrival(rng, m, s.p, top - (0.2 + rng() * 0.1) * (top - bot), 2);
+  return { past: [...s.past, ...a.candles], future: drop(rng, m, a.p, 5).candles, zones: [s.zone], entry: a.p, stop: bot - (0.2 + rng() * 0.06) * m };
+};
+
 // ─── Affirmations ─────────────────────────────────────────────────────────────
 
 const entryAbove = (re: RegExp, sell = false): Claim => (c) => { const ch = asBull(c, sell); const z = byLabel(ch, re); return z && ch.entry !== undefined && ch.entry > hi(z) ? null : "l'entrée n'est pas au-dessus du niveau"; };
@@ -330,6 +372,16 @@ const smallBreakout: Claim = (ch) => { const k = last(ch.past); const prev = ch.
 const closesBelowPrevLow: Claim = (ch) => { const z = byLabel(ch, /^Plus bas précédent$/); return z && ch.past.slice(-2).every((k) => k.c < lo(z)) ? null : "les 2 dernières clôtures ne sont pas sous le plus bas"; };
 const stopJustBelowSwing: Claim = (ch) => { const z = byLabel(ch, /^Swing low$/); if (!z || ch.stop === undefined) return "pas de swing low ou de stop"; return ch.stop < lo(z) && lo(z) - ch.stop <= 0.5 * mr(ch.past) ? null : "le stop n'est pas « juste sous » le swing low (à plus d'une demi-bougie)"; };
 const sweepLowBack: Claim = (ch) => { const z = byLabel(ch, /^Plus bas précédent$/); const k = last(ch.past); return z && k.l < lo(z) - 0.25 * mr(ch.past) && k.c > hi(z) ? null : "pas de sweep (mèche sous le plus bas, clôture au-dessus)"; };
+/** Dernière clôture sur le niveau, deux bougies qui descendent vers lui, aucun signal de réaction (lib/games/confirmation.ts) */
+const noReaction = (re: RegExp, sell = false): Claim => (c) => {
+  const ch = asBull(c, sell); const z = byLabel(ch, re); if (!z) return "pas de niveau";
+  const k = last(ch.past), t = mr(ch.past);
+  if (!(k.c >= lo(z) - 0.05 * t && k.c <= hi(z) + 0.25 * t)) return "la dernière clôture n'est pas sur le niveau";
+  if (!ch.past.slice(-2).every((x) => x.c < x.o)) return "les deux dernières bougies ne descendent pas vers le niveau";
+  return entrySignal(ch.past, 1, ch.zones) ? "une réaction est visible avant l'entrée" : null;
+};
+const stopBeyond = (re: RegExp, sell = false): Claim => (c) => stopUnder(re)(asBull(c, sell));
+const obIntact: Claim = (ch) => { const z = byLabel(ch, /Order Block/); return z && ch.past.every((k) => k.c >= lo(z)) ? null : "une clôture est passée sous l'OB"; };
 
 /** Equal lows au bas d'un range ; achat du rebond, stop collé sous eux ; la suite les balaie d'une mèche puis
  *  repart (graphique propre à l'Avancé : le stop trop serré du Débutant, lui, reste au-dessus du swing low) */
@@ -458,6 +510,15 @@ export const FTM_NEW: FtmScenario[] = [
     lessons: one("Entrer uniquement parce qu'une bougie ressemble à un marteau, sans niveau important, est une erreur de lecture classique (leçon Débutant 3)."),
     build: bPatternNowhere, claims: { "marteau sans niveau": hammerNoZone },
   },
+  {
+    ...DEB, id: "deb_achat_sans_reaction", title: "Achat au toucher du support", category: "technique", chartShape: "approach_support", direction: "BUY",
+    notions: ["reaction", "support_resistance"],
+    context: "Le prix redescend vers un support touché deux fois, en bougies rouges. Tu achètes au moment où la dernière bougie clôture dans la zone, stop sous le support.",
+    correctMistake: "entry_unconfirmed", decoyMistakes: ["no_stop", "tp_beyond_level", "sell_in_support"],
+    explanation: "Le support est prouvé et le stop bien placé, mais rien ne montre que les acheteurs défendent le niveau : la dernière bougie clôture près de son plus bas, sans mèche basse. On attend un rejet (marteau) ou un engulfing haussier avant d'acheter.",
+    lessons: one("Un support ne suffit pas pour acheter : on attend que le prix y réagisse (marteau, engulfing, clôture qui repart). Sans réaction, le niveau peut céder (leçon Débutant 3)."),
+    build: bNoReaction, claims: { "dernière clôture sur le support, sans réaction": noReaction(/^Support$/), "stop sous le support": stopUnder(/^Support$/) },
+  },
   // ── Intermédiaire ──
   {
     ...INT, id: "int_vente_contre_tendance", title: "SELL dans une tendance haussière de l'UT supérieure", category: "technique", chartShape: "uptrend_pullback", direction: "SELL", htfBias: "bullish",
@@ -559,6 +620,16 @@ export const FTM_NEW: FtmScenario[] = [
     lessons: one("Un niveau se prouve par plusieurs touches et gagne en force avec des confluences. Un plus bas touché une fois, seul, est un argument faible (leçons Intermédiaire 2 et 5)."),
     build: iWeakLevel, claims: { "entrée près d'un plus bas touché une fois": singleTouch },
   },
+  {
+    ...INT, id: "int_vente_retest_sans_reaction", title: "Vente au toucher de l'ancien support", category: "technique", chartShape: "approach_resistance", direction: "SELL", htfBias: "bearish",
+    notions: ["changement_role", "reaction", "support_resistance"],
+    trap: "Le niveau est le bon : l'ancien support cassé, devenu résistance. C'est le moment d'entrer qui manque, aucune bougie n'y a encore réagi.",
+    context: "Le prix a cassé un support, puis il remonte vers lui en grandes bougies vertes. Tu vends au moment où la dernière bougie clôture dans la zone, stop au-dessus.",
+    correctMistake: "entry_unconfirmed", decoyMistakes: ["trade_against_htf", "stop_inside_zone", "breakout_chased"],
+    explanation: "Un ancien support devenu résistance est un bon endroit pour vendre, à condition que les vendeurs s'y montrent : étoile filante, engulfing baissier. Ici, le prix arrive en grandes bougies vertes et clôture près de son plus haut : rien ne dit encore que le niveau va tenir.",
+    lessons: one("Au retest d'un niveau cassé, on vend la réaction, pas le toucher : une mèche de rejet ou un engulfing confirme que le niveau a changé de rôle (leçons Intermédiaire 3 et Débutant 3)."),
+    build: mirrored(iRetestNoReaction), claims: { "dernière clôture sur l'ancien support, sans réaction": noReaction(/^Ancienne résistance → support$/, true), "stop au-dessus du niveau": stopBeyond(/^Ancienne résistance → support$/, true) },
+  },
   // ── Avancé ──
   {
     ...ADV, id: "adv_ob_invalide", title: "Achat dans un Order Block déjà cassé", category: "technique", chartShape: "fvg_deep_pullback", direction: "BUY", htfBias: "bullish", macroContext: "normal",
@@ -620,5 +691,16 @@ export const FTM_NEW: FtmScenario[] = [
     explanation: "La mèche a pris les stops sous le plus bas, puis le prix est revenu au-dessus : c'est un sweep, souvent suivi d'un retournement à la hausse. Vendre ici, c'est vendre là où les vendeurs viennent d'être piégés.",
     lessons: one("Un sweep prend la liquidité puis revient : la clôture au-dessus du niveau balayé, dans le sens de l'UT supérieure, plaide pour le retournement (leçon Avancé 1)."),
     build: aSweepLowSold, claims: { "mèche sous le plus bas, clôture au-dessus": sweepLowBack },
+  },
+  {
+    ...ADV, id: "adv_ob_sans_reaction", title: "Achat au toucher d'un Order Block", category: "technique", chartShape: "fvg_deep_pullback", direction: "BUY", htfBias: "bullish", macroContext: "normal",
+    metaOverride: { volatility: "normale" },
+    notions: ["order_block", "entree_precision", "reaction"],
+    conflict: "L'Order Block est intact et l'UT supérieure haussière : tout plaide pour l'achat, sauf la façon dont le prix arrive, en grandes bougies rouges, sans le moindre rejet.",
+    context: "UT supérieure haussière. Le prix revient dans l'Order Block qui avait lancé l'impulsion, jamais cassé depuis. Tu achètes au moment où la dernière bougie rouge clôture dans la zone, stop sous l'OB.",
+    correctMistake: "entry_unconfirmed", decoyMistakes: ["dead_ob_bought", "sweep_ignored", "volatility_ignored"],
+    explanation: "Un Order Block intact est une zone d'intérêt, pas un signal : on entre quand le prix y réagit (rejet, engulfing, cassure d'un sommet local). Ici, le prix entre dans la zone en grandes bougies rouges et clôture près de son plus bas.",
+    lessons: one("Une entrée de précision attend la réaction dans la zone : rejet, retest, ou sweep puis retournement. Toucher l'Order Block ne suffit pas (leçons Avancé 3 et 7)."),
+    build: aObNoReaction, claims: { "OB intact, dernière clôture dedans, sans réaction": (ch) => obIntact(ch) ?? noReaction(/Order Block/)(ch), "stop sous l'OB": stopUnder(/Order Block/) },
   },
 ];

@@ -8,9 +8,10 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
+import { addReaction, entrySignal, reactionFloor } from "./confirmation";
 import type { NotionId } from "./notions";
 import { FTM_NEW } from "./ftm-scenarios";
 import { breakStrayLevels } from "./stray-levels";
@@ -57,7 +58,7 @@ export type ExtraMistakeId =
   | "no_stop" | "tp_beyond_level" | "stop_moved" | "overtrading" | "loss_not_cut" | "size_after_wins"
   | "pattern_without_level" | "fakeout_bought" | "structure_ignored" | "broken_level_bought" | "stop_inside_zone"
   | "breakout_chased" | "fib_misread" | "range_top_bought" | "weak_level" | "dead_ob_bought"
-  | "dead_session_breakout" | "ote_ignored" | "fake_sweep_bought" | "news_market_order";
+  | "dead_session_breakout" | "ote_ignored" | "fake_sweep_bought" | "news_market_order" | "entry_unconfirmed";
 export type AnyMistakeId = MistakeId | ExtraMistakeId;
 
 export const MISTAKE_LABELS: Record<AnyMistakeId, string> = {
@@ -81,6 +82,7 @@ export const MISTAKE_LABELS: Record<AnyMistakeId, string> = {
   ote_ignored:                 "Entrée hors OTE",
   fake_sweep_bought:           "Sweep mal lu",
   news_market_order:           "Ordre au marché pendant la news",
+  entry_unconfirmed:           "Entrée sans confirmation",
   stop_too_tight:              "Stop trop serré",
   stop_in_liquidity:           "Stop dans liquidité",
   trade_against_htf:           "Trade contre l'UT supérieure",
@@ -1069,8 +1071,29 @@ export function labeledZoneIndexes(zones: readonly { label: string }[], lineCoun
 }
 
 /** Graphique du scénario, avec la passe de réalisme des bougies (niveaux clés : zones, entrée, stop, TP). */
+/**
+ * Erreurs qui portent sur la gestion du trade (stop, taille, R/R, news…) et non sur l'entrée : l'entrée du
+ * scénario, elle, est correcte, donc jamais sans réaction visible (règle PO). Les autres erreurs portent sur
+ * l'entrée elle-même (achat dans une résistance, faux breakout acheté, entrée sans confirmation…).
+ */
+export const NON_ENTRY_MISTAKES: ReadonlySet<AnyMistakeId> = new Set<AnyMistakeId>([
+  "stop_too_tight", "stop_in_liquidity", "bad_rr", "oversized_position", "bad_spread", "volatility_ignored",
+  "risk_not_reduced_news", "position_held_through_event", "size_not_adapted_to_vol", "weekend_gap_exposure",
+  "no_stop", "tp_beyond_level", "stop_moved", "loss_not_cut", "size_after_wins", "stop_inside_zone", "ignored_zone",
+]);
+
 export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): ScenarioChart {
-  const ch = buildScenarioChartRaw(template, seed, vol);
+  // Erreur ailleurs que dans l'entrée : la réaction reste visible après la passe de réalisme (règle PO),
+  // sinon autre tirage (5 essais au plus)
+  let out = buildScenarioChart1(template, seed, vol, ctx);
+  const dir = template.direction === "BUY" ? 1 : -1;
+  const ok = (c: ScenarioChart) => !NON_ENTRY_MISTAKES.has(template.correctMistake) || !!entrySignal(c.past, dir, c.zones);
+  for (let k = 1; k <= 5 && !ok(out); k++) out = buildScenarioChart1(template, (seed + k * 0x6C8E9CF5) >>> 0, vol, ctx);
+  return out;
+}
+
+function buildScenarioChart1(template: MistakeTemplate, seed: number, vol: Volatility, ctx: MarketCtx): ScenarioChart {
+  const ch = withEntryReaction(template, buildScenarioChartRaw(template, seed, vol), VOL_MULT[vol]);
   // garde-fous : une bougie éloignée d'un support / d'une résistance le reste (preuve lisible)
   const zones = [...ch.zones.flatMap((z) => [z.y1, z.y2]), ...srGuards(ch.zones, VOL_MULT[vol], ch.past)];
   const lines = [ch.entry, ch.stop, ch.tp].filter((p): p is number => p !== undefined);
@@ -1079,6 +1102,18 @@ export function buildScenarioChart(template: MistakeTemplate, seed: number, vol:
   // l'entrée et le TP en plus raidissaient les corps, réalisme EUR/USD au bord du seuil)
   // Alignements fortuits cassés : aucun niveau visible sans zone (lib/games/stray-levels.ts)
   return breakStrayLevels(withRoleChanges(withTracedZones(realizeChart(ch, { past: [...zones, ...(ch.stop !== undefined ? [ch.stop] : [])], future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm }))), ch.stop !== undefined ? [ch.stop] : []);
+}
+
+/** Entrée correcte (erreur ailleurs) sans signal visible : bougie de rejet ajoutée avant l'entrée */
+function withEntryReaction(t: MistakeTemplate, ch: ScenarioChart, m: number): ScenarioChart {
+  if (!NON_ENTRY_MISTAKES.has(t.correctMistake)) return ch;
+  const dir = t.direction === "BUY" ? 1 : -1;
+  if (entrySignal(ch.past, dir, ch.zones)) return ch;
+  const r = addReaction(ch.past, ch.future, dir, m, reactionFloor(ch.past, ch.zones, dir, m, ch.stop !== undefined ? [ch.stop] : []));
+  // lignes posées à la dernière clôture (entrée) : elles suivent la nouvelle clôture
+  const shift = r.entry - ch.past[ch.past.length - 1].c;
+  return { ...ch, past: r.past, future: r.future, domain: chartDomain([...r.past, ...r.future], ch.zones),
+    ...(ch.entry !== undefined ? { entry: ch.entry + shift } : {}), ...(ch.tp !== undefined ? { tp: ch.tp + shift } : {}) };
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

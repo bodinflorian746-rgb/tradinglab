@@ -33,6 +33,7 @@ export const NOTIONS = {
   doji:               { label: "Doji (indécision)", level: "debutant", lesson: "debutant/lecon3" },
   engulfing:          { label: "Engulfing haussier / baissier", level: "debutant", lesson: "debutant/lecon3" },
   meches:             { label: "Lire les mèches (une longue mèche contredit la couleur)", level: "debutant", lesson: "debutant/lecon3" },
+  reaction:           { label: "Attendre la réaction du prix sur le niveau (rejet, engulfing) avant d'entrer", level: "debutant", lesson: "debutant/lecon3" },
   pattern_sans_niveau:{ label: "Un pattern hors d'un niveau clé ne compte pas", level: "debutant", lesson: "debutant/lecon3" },
   spread:             { label: "Spread (bid / ask)", level: "debutant", lesson: "debutant/lecon4" },
   stop_loss:          { label: "Stop loss sous le dernier swing low (au-dessus du swing high)", level: "debutant", lesson: "debutant/lecon5" },
@@ -122,5 +123,5 @@ export const MISTAKE_NOTION: Record<string, NotionId> = {
   size_after_wins: n.overconfidence, pattern_without_level: n.pattern_sans_niveau, fakeout_bought: n.faux_breakout, structure_ignored: n.structure,
   broken_level_bought: n.changement_role, stop_inside_zone: n.zones_cles, breakout_chased: n.breakout, fib_misread: n.fibonacci,
   range_top_bought: n.range, weak_level: n.zones_cles, dead_ob_bought: n.order_block, dead_session_breakout: n.killzones,
-  ote_ignored: n.ote, fake_sweep_bought: n.sweep, news_market_order: n.news,
+  ote_ignored: n.ote, fake_sweep_bought: n.sweep, news_market_order: n.news, entry_unconfirmed: n.reaction,
 };

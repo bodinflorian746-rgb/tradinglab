@@ -156,8 +156,9 @@ export function swingSetup(rng: Rng, m: number) {
     const k = past[i];
     past[i] = { ...k, l: Math.max(k.l, Math.min(Math.min(k.o, k.c), sl + 0.3 * m)) };
   }
-  // (bougie de reprise sans mèche basse : la pointe du swing low reste celle du creux)
-  const c1 = candle(p, p + (0.3 + rng() * 0.1) * m, 0.05 * m, 0); past.push(c1); p = c1.c;
+  // (bougie de reprise sans mèche basse : la pointe du swing low reste celle du creux ; elle avale la
+  // bougie du creux, engulfing : la réaction est visible avant l'entrée, règle PO)
+  const c1 = candle(p, Math.max(p + (0.3 + rng() * 0.1) * m, Math.max(past[at].o, past[at].c) + (0.05 + rng() * 0.04) * m), 0.05 * m, 0); past.push(c1); p = c1.c;
   const c2 = candle(p, p + (0.25 + rng() * 0.1) * m, 0.05 * m, 0.04 * m); past.push(c2); p = c2.c;
   return { past, entry: p, sl, at };
 }

@@ -17,8 +17,9 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, tpBeforeLevels, withRoleChanges, naturalFuture,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, srGuards, tpBeforeLevels, withRoleChanges, naturalFuture,
 } from "./shared";
+import { addReaction, entrySignal, reactionFloor } from "./confirmation";
 import { withTracedZones, keepSwingTips } from "./zone-trace";
 import type { NotionId } from "./notions";
 import { PS_NEW, sweepFuture, type PsRaw } from "./ps-scenarios";
@@ -2995,6 +2996,15 @@ export function buildPlaceStopChart(
   difficulty: Difficulty,
   ctx: MarketCtx = {},
 ): PlaceStopChart {
+  // Réaction visible avant l'entrée (règle PO) : la passe de réalisme retaille parfois la bougie qui
+  // portait le signal (plancher des mèches en volatilité élevée : le marteau devient doji) ; autre tirage
+  // dans ce cas (10 essais au plus)
+  let out = buildPlaceStopChart1(setup, seed, volatility, difficulty, ctx);
+  for (let k = 1; k <= 10 && !entrySignal(out.past, out.direction === "BUY" ? 1 : -1, out.zones); k++) out = buildPlaceStopChart1(setup, (seed + k * 0x6C8E9CF5) >>> 0, volatility, difficulty, ctx);
+  return out;
+}
+
+function buildPlaceStopChart1(setup: PlaceStopSetupKey, seed: number, volatility: Volatility, difficulty: Difficulty, ctx: MarketCtx): PlaceStopChart {
   // (scénarios construits : la place du bon stop est voulue, pas de rééquilibrage)
   const built = PLACE_STOP_TEMPLATES.find((t) => t.id === setup)?.build;
   const chart0 = built ? buildScenarioChart(setup, seed, volatility, difficulty) : rebalanceCorrectPosition(buildScenarioChart(setup, seed, volatility, difficulty), seed);
@@ -3181,7 +3191,17 @@ function rebalanceCorrectPosition(chart: PlaceStopChart, seed: number): PlaceSto
   };
 }
 
-function buildScenarioChart(
+/** Entrée donnée par le scénario : jamais sans réaction visible (règle PO). Sans signal, un autre tirage de la
+ *  scène (elle montre le plus souvent la réaction qu'elle décrit) ; après 5 essais, bougie de rejet ajoutée */
+function buildScenarioChart(setup: PlaceStopSetupKey, seed: number, volatility: Volatility, difficulty: Difficulty): PlaceStopChart {
+  const ch = buildScenarioChart0(setup, seed, volatility, difficulty), m = VOL_MULT[volatility];
+  const dir = ch.direction === "BUY" ? 1 : -1;
+  for (let k = 0; k <= 5; k++) { const c = k ? buildScenarioChart0(setup, (seed + k * 0x6C8E9CF5) >>> 0, volatility, difficulty) : ch; if (entrySignal(c.past, dir, c.zones)) return c; }
+  const r = addReaction(ch.past, ch.future, dir, m, reactionFloor(ch.past, ch.zones, dir, m, ch.stops.map((x) => x.price)));
+  return { ...ch, past: r.past, future: r.future, entry: r.entry, domain: chartDomain([...r.past, ...r.future], ch.zones) };
+}
+
+function buildScenarioChart0(
   setup: PlaceStopSetupKey,
   seed: number,
   volatility: Volatility,

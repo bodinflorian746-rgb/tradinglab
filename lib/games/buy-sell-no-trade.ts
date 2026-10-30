@@ -18,6 +18,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges, naturalFuture,
 } from "./shared";
 import { withTracedZones, keepSwingTips } from "./zone-trace";
+import { addReaction, entrySignal, reactionFloor } from "./confirmation";
 import type { NotionId } from "./notions";
 import { BSNT_NEW } from "./bsnt-scenarios";
 import { mirrorCandles, mirrorZones } from "./scenes";
@@ -1568,8 +1569,20 @@ export function buildChartRaw(
   difficulty: Difficulty = "intermediate",
 ): BuySellChart {
   // suite naturelle : pas d'escalier (série de bougies de même couleur aux corps identiques)
-  const ch = buildChartRaw0(setup, seed, volatility, difficulty);
+  const ch = withEntryReaction(setup, seed, (s) => buildChartRaw0(setup, s, volatility, difficulty), VOL_MULT[volatility]);
   return { ...ch, future: naturalFuture(ch.future, mulberry32((seed ^ 0x27D4EB2F) >>> 0), VOL_MULT[volatility]) };
+}
+/** BUY / SELL justes seulement après une réaction visible (règle PO). Sans signal, un autre tirage de la
+ *  scène (elle montre le plus souvent la réaction qu'elle décrit : rejet, mèche, clôture revenue) ; après
+ *  5 essais, bougie de rejet ajoutée au premier tirage */
+function withEntryReaction(setup: SetupKey, seed: number, build: (seed: number) => BuySellChart, m: number): BuySellChart {
+  const ch = build(seed);
+  const ans = SCENARIO_TEMPLATES.find((t) => t.id === setup)?.correctAnswer;
+  if (!ans || ans === "NO_TRADE") return ch;
+  const dir = ans === "BUY" ? 1 : -1;
+  for (let k = 0; k <= 5; k++) { const c = k ? build((seed + k * 0x6C8E9CF5) >>> 0) : ch; if (entrySignal(c.past, dir, c.zones)) return c; }
+  const r = addReaction(ch.past, ch.future, dir, m, reactionFloor(ch.past, ch.zones, dir, m, ch.guards ?? []));
+  return { ...ch, past: r.past, future: r.future, domain: chartDomain([...r.past, ...r.future], ch.zones) };
 }
 function buildChartRaw0(
   setup: SetupKey,
