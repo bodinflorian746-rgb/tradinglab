@@ -868,6 +868,7 @@ const MUTATIONS = {
       const lv = [...svg.querySelectorAll("line[data-level]")].find((l) => /support|r[ée]sistance/i.test(lab(l.dataset.level)) && (toUp ? +l.dataset.price > +en.dataset.price : +l.dataset.price < +en.dataset.price));
       if (lv) { tp.dataset.price = lv.dataset.price; return; }
     }
+    throw new Error("aucun plan avec un niveau au-delà de l'entrée sur cette page");
   },
   "objectif de figure faux": () => { const l = document.querySelector('line[data-role="dt-target"]'); l.dataset.price = String(+l.dataset.price - 6); },
   // Volumes (volume-check.mjs) : profil, Value Area, VWAP, volume, delta, CVD
