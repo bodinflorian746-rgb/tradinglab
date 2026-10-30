@@ -40,6 +40,8 @@ export interface ContextRule {
   assets?:     readonly Asset[];
   sessions?:   readonly Session[];
   volatility?: Volatility;
+  /** Volatilités permises (parmi celles de la session) quand une seule ne suffit pas */
+  volatilities?: readonly Volatility[];
   spread?:     Spread;
   /** Le texte annonce une news : la volatilité et le spread peuvent sortir des normes de la session. */
   news?:       boolean;
@@ -60,9 +62,10 @@ export const CONTEXT_RULES: Record<string, ContextRule> = {
     "bsnt/adv_vwap_tient", "bsnt/adv_vwap_tient_vente", "bsnt/adv_vwap_casse", "bsnt/adv_vwap_casse_vente",
     "ps/adv_stop_poc", "ps/adv_stop_poc_vente", "btt/adv_btt_hvn", "btt/adv_btt_hvn_vente",
   ].map((k) => [k, { assets: ["EUR/USD", "XAU/USD", "NASDAQ"], sessions: ["Londres", "Overlap", "New York"] } satisfies ContextRule])),
-  // Opening Range Breakout (stratégie) : NASDAQ, ouverture de New York
+  // Opening Range Breakout (stratégie) : NASDAQ, ouverture de New York ; spread faible et volatilité normale ou
+  // élevée (décision PO) : la stratégie renonce quand le spread est anormal, la réponse ne doit pas en dépendre
   ...Object.fromEntries(["bsnt/adv_orb_retest", "bsnt/adv_orb_retest_vente", "bsnt/adv_orb_sans_retest"]
-    .map((k) => [k, { assets: ["NASDAQ"], sessions: ["New York"] } satisfies ContextRule])),
+    .map((k) => [k, { assets: ["NASDAQ"], sessions: ["New York"], spread: "faible", volatilities: ["normale", "élevée"] } satisfies ContextRule])),
   // Trouve l'erreur
   "ftm/trade_before_news":             { sessions: NY_OR_OVERLAP, news: true },          // NFP dans 18 min
   "ftm/risk_not_reduced_news":         { assets: ["EUR/USD"], sessions: ["Overlap"], news: true },   // 14h20, NFP, EUR/USD
@@ -114,7 +117,8 @@ export function pickMarketContext(
   const session = pick(sessions.length ? sessions : rule.sessions ?? base.sessions, rng);
   const assets = assetsWanted.filter((a) => SESSION_ASSETS[session].includes(a));
   const asset = pick(assets.length ? assets : assetsWanted, rng);
-  const volatility = rule.volatility ?? pick(SESSION_VOLATILITY[session], rng);
+  const allowed = rule.volatilities && SESSION_VOLATILITY[session].filter((v) => rule.volatilities!.includes(v));
+  const volatility = rule.volatility ?? pick(allowed?.length ? allowed : rule.volatilities ?? SESSION_VOLATILITY[session], rng);
   const spread = rule.spread ?? pick(SESSION_SPREAD[session], rng);
   return { asset, session, volatility, spread };
 }

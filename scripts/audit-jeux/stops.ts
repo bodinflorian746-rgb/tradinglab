@@ -46,7 +46,7 @@ const NAMES: [RegExp, (zs: ChartZone[]) => Span | null][] = [
   // la mèche se lit à sa pointe (« sous la mèche » : entre le corps et la pointe)
   [/mèche du faux breakout/i, (zs) => { const z = span(byLabel(zs, "Mèche du faux breakout"), "mèche du faux breakout"); return z && { ...z, lo: z.hi }; }],
   [/2 faux breakouts précédents/i, (zs) => span(byLabel(zs, "Faux breakouts précédents"), "faux breakouts précédents")],
-  [/bas du range/i, (zs) => span(byLabel(zs, "Bas du range"), "bas du range")],
+  [/bas du range(?! d['’]ouverture)/i, (zs) => span(byLabel(zs, "Bas du range"), "bas du range")],
   [/chiffre rond/i, (zs) => span(byLabel(zs, "Chiffre rond"), "chiffre rond")],
   [/PDL/, (zs) => span(byLabel(zs, "PDL"), "PDL")],
   [/niveau clé/i, (zs) => span(zs.find((z) => /^(support|résistance)$/i.test(z.label)), "niveau clé")],
@@ -55,7 +55,7 @@ const NAMES: [RegExp, (zs: ChartZone[]) => Span | null][] = [
   [/swing high/i, (zs) => span(byLabel(zs, "Swing high"), "swing high")],
   [/plus bas précédent/i, (zs) => span(byLabel(zs, "Plus bas précédent"), "plus bas précédent")],
   [/plus haut précédent/i, (zs) => span(byLabel(zs, "Plus haut précédent"), "plus haut précédent")],
-  [/haut du range/i, (zs) => span(byLabel(zs, "Haut du range"), "haut du range")],
+  [/haut du range(?! d['’]ouverture)/i, (zs) => span(byLabel(zs, "Haut du range"), "haut du range")],
   [/haut de l'Order Block/i, (zs) => { const z = zs.find((x) => /order block/i.test(x.label)); return z ? { lo: Math.max(z.y1, z.y2), hi: Math.max(z.y1, z.y2), name: "haut de l'Order Block" } : null; }],
   [/FVG/, (zs) => span(zs.find((z) => z.kind === "fvg"), "FVG")],
   [/(?<!\p{L})support/iu, (zs) => span(zs.find((z) => /support$/i.test(z.label)), "support")],

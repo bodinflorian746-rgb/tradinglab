@@ -14,7 +14,7 @@
 import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
-  type Candle, type ChartZone, type ChartData, type ZoneKind,
+  type Candle, type ChartZone, type ChartData, type ZoneKind, type TimeWindow,
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges, naturalFuture,
 } from "./shared";
 import { withTracedZones, keepSwingTips } from "./zone-trace";
@@ -125,6 +125,8 @@ export interface BuySellChart {
   studySpec?: StudySpec;
   study?:     GameStudy;
   guards?:    number[];
+  /** Fenêtre horaire marquée (Opening Range) */
+  window?:    TimeWindow;
 }
 
 export const ROUNDS_PER_SESSION = 10;

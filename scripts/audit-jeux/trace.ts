@@ -39,7 +39,7 @@ export const medRange = (cs: Candle[]) => median(cs.map((k) => k.h - k.l)) || 1e
 const LIQ = /^(liquidit|sweep (haut|bas)|zone de chasse|mèche du faux breakout)/i;
 const SWEPT = /balay|^sweep|^mèche du faux breakout/i;
 const PIVOT = /^(plus (haut|bas) précédent|swing (high|low)|equal (lows|highs)|haut de la session|bas de la session)/i;
-const SR = /^(support|r[ée]sistance|haut du range|bas du range|ancien|ancienne)/i;
+const SR = /^(support|r[ée]sistance|haut du range(?! d['’]ouverture)|bas du range(?! d['’]ouverture)|ancien|ancienne)/i;
 
 /** Pointes de mèche qui sont de vrais creux / sommets : plus bas (haut) que la bougie d'avant et
  *  celle d'après (pas au milieu d'un mouvement) */
@@ -147,7 +147,7 @@ export function zoneTraceError(past: Candle[], z: ChartZone, zones: ChartZone[] 
     return ok ? null : `« ${z.label} » posé sur aucun ${high ? "sommet" : "creux"} visible`;
   }
   if (SR.test(z.label) && h > SR_MAX * MR) return `« ${z.label} » épais de ${r(h)} × la bougie médiane (max ${SR_MAX})`;
-  if (SR.test(z.label) && !/^(haut|bas) du range/i.test(z.label)) {
+  if (SR.test(z.label) && !/^(haut|bas) du range(?! d['’]ouverture)/i.test(z.label)) {
     // aussi épais que l'écart des touches : pas plus de SR_BEYOND × MR au-delà des pointes de mèche qui la touchent
     const tol = 0.25 * MR, tips: number[] = [];
     for (const k of past) {

@@ -4,7 +4,7 @@
 // scripts/audit-jeux/coherence-bsnt.ts). Les variantes de vente sont les miroirs exacts des
 // variantes d'achat, avec leurs propres textes.
 
-import type { Candle, ChartZone } from "./shared";
+import type { Candle, ChartZone, TimeWindow } from "./shared";
 import { candle, levelTouches, rangeLegs } from "./shared";
 import type { NotionId } from "./notions";
 import {
@@ -16,7 +16,7 @@ import { studyProfile, type GameStudy, type StudySpec } from "./volume-study";
 
 type Difficulty = "beginner" | "intermediate" | "advanced";
 type GameChoice = "BUY" | "SELL" | "NO_TRADE";
-export interface Raw { past: Candle[]; future: Candle[]; zones: ChartZone[]; studySpec?: StudySpec; guards?: number[] }
+export interface Raw { past: Candle[]; future: Candle[]; zones: ChartZone[]; studySpec?: StudySpec; guards?: number[]; window?: TimeWindow }
 interface ChartLike { past: Candle[]; future: Candle[]; zones: ChartZone[]; study?: GameStudy }
 type Claim = (ch: ChartLike) => string | null;
 
@@ -51,6 +51,7 @@ const mirrored = (b: NewScenario["build"]): NewScenario["build"] => (rng, m, d) 
     past: mirrorCandles(r.past, AXIS), future: mirrorCandles(r.future, AXIS), zones: mirrorZones(r.zones, AXIS),
     // volumes : mêmes bougies renversées ; la cible du VWAP se renverse avec les prix
     ...(r.guards ? { guards: r.guards.map((g) => AXIS - g) } : {}),
+    ...(r.window ? { window: r.window } : {}),
     ...(r.studySpec ? { studySpec: { ...r.studySpec, ...(r.studySpec.vwap ? { vwap: { ...r.studySpec.vwap, ...(t ? { target: { ...t, price: AXIS - t.price } } : {}) } } : {}) } } : {}),
   };
 };
@@ -1324,7 +1325,7 @@ export const BSNT_FIGURES: NewScenario[] = [
     context: "Après une baisse, le prix teste deux fois le même support. Il clôture ensuite au-dessus du sommet intermédiaire (la ligne de cou), puis revient la tester par au-dessus : la mèche est rejetée.",
     shortContext: "Double creux, ligne de cou cassée puis retestée.",
     rationales: {
-      BUY: "✓ Deux creux au même niveau, puis une clôture au-dessus de la ligne de cou : le double creux est confirmé. Le retest qui tient donne l'entrée, stop sous la ligne de cou.",
+      BUY: "✓ Deux creux au même niveau, puis une clôture au-dessus de la ligne de cou : le double creux est confirmé. Le retest qui tient donne l'entrée, stop sous le creux du retest.",
       SELL: "✗ Vendre maintenant, c'est vendre une figure de retournement haussière qui vient d'être confirmée et retestée.",
       NO_TRADE: "≈ La prudence se comprend après une baisse, mais la clôture au-dessus de la ligne de cou puis le retest qui tient sont justement la confirmation qu'on attend.",
     },
@@ -1340,7 +1341,7 @@ export const BSNT_FIGURES: NewScenario[] = [
     shortContext: "Double sommet, ligne de cou cassée puis retestée.",
     rationales: {
       BUY: "✗ Acheter maintenant, c'est acheter une figure de retournement baissière qui vient d'être confirmée et retestée.",
-      SELL: "✓ Deux sommets au même niveau, puis une clôture sous la ligne de cou : le double sommet est confirmé. Le retest qui tient donne l'entrée, stop au-dessus de la ligne de cou.",
+      SELL: "✓ Deux sommets au même niveau, puis une clôture sous la ligne de cou : le double sommet est confirmé. Le retest qui tient donne l'entrée, stop au-dessus du sommet du retest.",
       NO_TRADE: "≈ La prudence se comprend après une hausse, mais la clôture sous la ligne de cou puis le retest qui tient sont justement la confirmation qu'on attend.",
     },
     lessons: one("Un double sommet se confirme par une clôture sous la ligne de cou, pas par le deuxième contact avec la résistance. Le retest de la ligne de cou offre souvent une meilleure entrée (leçon Intermédiaire 10)."),
@@ -1407,11 +1408,12 @@ function openingRange(outcome: "retest" | "sans_retest"): NewScenario["build"] {
     const k1 = { o: p, c: hi0 - (0.2 + rng() * 0.1) * m, h: hi0, l: p - (0.08 + rng() * 0.06) * m };
     const k2 = { o: k1.c, c: lo0 + (0.25 + rng() * 0.1) * m, h: k1.c + (0.06 + rng() * 0.05) * m, l: lo0 };
     const k3 = { o: k2.c, c: lo0 + (0.55 + rng() * 0.1) * W, h: lo0 + 0.7 * W, l: k2.c - (0.05 + rng() * 0.05) * m };
+    const window = { from: past.length, to: past.length + 2, label: "9 h 30 – 9 h 45" };
     past.push(k1, k2, k3);
     p = k3.c;
     const zones: ChartZone[] = [
-      { kind: "resistance", y1: hi0 - 0.08 * m, y2: hi0 + 0.08 * m, label: "Haut de l'Opening Range", short: "Haut de l'OR" },
-      { kind: "support", y1: lo0 - 0.08 * m, y2: lo0 + 0.08 * m, label: "Bas de l'Opening Range", short: "Bas de l'OR" },
+      { kind: "resistance", y1: hi0 - 0.08 * m, y2: hi0 + 0.08 * m, label: "Haut du range d'ouverture" },
+      { kind: "support", y1: lo0 - 0.08 * m, y2: lo0 + 0.08 * m, label: "Bas du range d'ouverture" },
     ];
     const inside = legExact(rng, m, p, hi0 - (0.35 + rng() * 0.1) * m, { retrace: 0.3, step: [0.2, 0.35] });
     past.push(...inside.candles); p = inside.p;
@@ -1426,12 +1428,12 @@ function openingRange(outcome: "retest" | "sans_retest"): NewScenario["build"] {
       const rc = p - (0.04 + rng() * 0.04) * m;
       past.push({ o: p, c: rc, h: p + 0.04 * m, l: hi0 - (0.04 + rng() * 0.05) * m });
       p = rc;
-      return { past, future: rally(rng, m, p, 5).candles, zones: zones.map((z, i) => (i === 0 ? { ...z, until: past.length - brk } : z)) };
+      return { past, future: rally(rng, m, p, 5).candles, zones: zones.map((z, i) => (i === 0 ? { ...z, until: past.length - brk } : z)), window };
     }
     const run = rally(rng, m, p, 5);
     past.push(...run.candles.map((k) => ({ ...k, l: Math.max(k.l, Math.min(k.o, k.c) - 0.06 * m) }))); p = run.p;
     // garde : la passe de réalisme ne ramène aucune mèche sur le range après le breakout
-    return { past, future: drop(rng, m, p, 5).candles, zones: zones.map((z, i) => (i === 0 ? { ...z, until: past.length - brk } : z)), guards: [hi0 + 0.35 * m] };
+    return { past, future: drop(rng, m, p, 5).candles, zones: zones.map((z, i) => (i === 0 ? { ...z, until: past.length - brk } : z)), guards: [hi0 + 0.35 * m], window };
   };
 }
 /** Wyckoff (accumulation) : baisse, range, Spring sous le bas du range, SOS au-dessus du sommet local, LPS
@@ -1520,7 +1522,7 @@ const turtleSoup: NewScenario["build"] = (rng, m) => {
 };
 
 const orbRetest = (sell: boolean): Claim => (c) => {
-  const ch = asBull(c, sell), z = ch.zones.find((x) => x.label === "Haut de l'Opening Range");
+  const ch = asBull(c, sell), z = ch.zones.find((x) => x.label === "Haut du range d'ouverture");
   if (!z) return "pas de haut de l'Opening Range";
   const i = ch.past.findIndex((k) => k.c > hi(z));
   if (i < 0) return "pas de clôture au-dessus de l'Opening Range";
@@ -1530,7 +1532,7 @@ const orbRetest = (sell: boolean): Claim => (c) => {
   return last(ch.past).c > hi(z) ? null : "la dernière bougie n'est pas au-dessus du range";
 };
 const orbNoRetest: Claim = (ch) => {
-  const z = ch.zones.find((x) => x.label === "Haut de l'Opening Range"), t = mr(ch.past);
+  const z = ch.zones.find((x) => x.label === "Haut du range d'ouverture"), t = mr(ch.past);
   if (!z) return "pas de haut de l'Opening Range";
   const i = ch.past.findIndex((k) => k.c > hi(z));
   if (i < 0) return "pas de clôture au-dessus de l'Opening Range";
@@ -1581,7 +1583,7 @@ export const BSNT_NOUV_ADVANCED: NewScenario[] = [
     ...ADV, id: "adv_orb_retest", title: "Opening Range cassé, retest tenu", correctAnswer: "BUY", htfBias: "bullish", metric: "lecture",
     notions: ["orb", "breakout", "changement_role"],
     conflict: "L'ouverture américaine est agitée et le prix a déjà monté : on hésite à acheter si tard, mais le retest du haut de l'Opening Range vient de tenir, comme le demande la stratégie.",
-    context: "Ouverture de New York : les trois premières bougies forment l'Opening Range. Une bougie clôture au-dessus de son plus haut, puis le prix revient le tester par au-dessus : la mèche est rejetée.",
+    context: "Ouverture de New York : les trois premières bougies (9 h 30 – 9 h 45) forment le range d'ouverture, l'Opening Range. Une bougie clôture au-dessus de son plus haut, puis le prix revient le tester par au-dessus : la mèche est rejetée.",
     shortContext: "Opening Range cassé puis retesté.",
     rationales: {
       BUY: "✓ Clôture au-dessus de l'Opening Range, retest qui tient, structure haussière : c'est le setup ORB complet, stop sous le creux du retest.",
@@ -1596,7 +1598,7 @@ export const BSNT_NOUV_ADVANCED: NewScenario[] = [
     ...ADV, id: "adv_orb_retest_vente", title: "Opening Range cassé par le bas, retest tenu", correctAnswer: "SELL", htfBias: "bearish", metric: "lecture",
     notions: ["orb", "breakout", "changement_role"],
     conflict: "L'ouverture américaine est agitée et le prix a déjà baissé : on hésite à vendre si tard, mais le retest du bas de l'Opening Range vient de tenir, comme le demande la stratégie.",
-    context: "Ouverture de New York : les trois premières bougies forment l'Opening Range. Une bougie clôture sous son plus bas, puis le prix remonte le tester par en dessous : la mèche est rejetée.",
+    context: "Ouverture de New York : les trois premières bougies (9 h 30 – 9 h 45) forment le range d'ouverture, l'Opening Range. Une bougie clôture sous son plus bas, puis le prix remonte le tester par en dessous : la mèche est rejetée.",
     shortContext: "Opening Range cassé par le bas puis retesté.",
     rationales: {
       BUY: "✗ Acheter après un breakout baissier confirmé et un retest qui tient, c'est acheter contre la seule information nouvelle de la séance.",
@@ -1611,7 +1613,7 @@ export const BSNT_NOUV_ADVANCED: NewScenario[] = [
     ...ADV, id: "adv_orb_sans_retest", title: "Opening Range cassé, pas de retest", correctAnswer: "NO_TRADE", htfBias: "bullish", metric: "discipline",
     notions: ["orb", "breakout", "rr"],
     conflict: "Le breakout est spectaculaire et l'UT supérieure haussière : tout pousse à acheter, mais le prix n'est jamais revenu tester le range et s'en est éloigné.",
-    context: "Ouverture de New York : le prix a clôturé au-dessus de l'Opening Range, puis a enchaîné plusieurs bougies haussières sans jamais revenir sur le range.",
+    context: "Ouverture de New York : le prix a clôturé au-dessus du range d'ouverture (9 h 30 – 9 h 45, l'Opening Range), puis a enchaîné plusieurs bougies haussières sans jamais revenir sur le range.",
     shortContext: "Breakout de l'Opening Range sans retest.",
     rationales: {
       BUY: "✗ Acheter maintenant, c'est courir après le prix : sans retest, le stop logique est loin, sous le range, et le R/R se dégrade. La stratégie exige le retour sur la borne cassée.",

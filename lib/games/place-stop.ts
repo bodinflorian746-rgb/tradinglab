@@ -17,7 +17,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges, naturalFuture,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, tpBeforeLevels, withRoleChanges, naturalFuture,
 } from "./shared";
 import { withTracedZones, keepSwingTips } from "./zone-trace";
 import type { NotionId } from "./notions";
@@ -3031,6 +3031,8 @@ function finishChart(setup: PlaceStopSetupKey, chart: PlaceStopChart, seed: numb
   // peut pas les séparer sans toucher une zone ou un stop : autre tirage de réalisme (3 essais au plus)
   let out = finish(seed);
   for (let k = 1; k <= 3 && hasStrayLevel(out); k++) out = finish((seed + k * 0x9E3779B1) >>> 0);
+  // Objectif jamais posé sur un niveau tracé (règle PO) : avant la bande, une fois les zones calées
+  if (out.tp !== null) { const tp = tpBeforeLevels(out.tp, out.entry, out.zones, out.past); if (tp !== out.tp) out = { ...out, tp }; }
   // Volumes et profil (scénarios Volume Profile) : sur les bougies finales, indices décalés de la jambe d'arrivée
   return chart.studySpec ? withVolumeStudy(out, shiftSpec(chart.studySpec, out.lead ?? 0), seed) : out;
 }

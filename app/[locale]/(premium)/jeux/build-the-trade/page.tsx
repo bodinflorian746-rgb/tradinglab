@@ -520,8 +520,8 @@ export default function BuildTheTradePage() {
         </div>
 
         {/* Scénario */}
-        {/* énoncé long : graphique un peu plus bas sur téléphone, pour tenir sur un écran */}
-        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${current.context.length > 150 ? " v2-onescreen--long" : ""}`} aria-labelledby="btt-title">
+        {/* énoncé de plus de 95 caractères (3 lignes et plus en 390, légende du profil comprise) : graphique compact, pour que les choix tiennent dans l'écran 390 × 844 */}
+        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${current.context.length > 95 ? " v2-onescreen--long" : ""}`} aria-labelledby="btt-title">
           <h2 id="btt-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">{T.buildTitle}</h2>
 
           <div className="v2-gap-s v2-onescreen-body mx-auto flex w-full max-w-3xl flex-col">
@@ -959,8 +959,8 @@ function ZoneLegendChip({ zone }: { zone: { kind: string; label: string } }) {
   const color =
     zone.kind === "support"    ? "#10b981"
   : zone.kind === "resistance" ? "#ef4444"
-  // niveaux du profil de volume : couleur de leur tracé (GameChartV2) ; le POC en ambre
-  : zone.kind === "volume"     ? (zone.label === "POC" ? "#f59e0b" : "#38bdf8")
+  // niveaux du profil de volume : couleur de leur tracé (GameChartV2) ; le POC en ambre, la LVN en violet
+  : zone.kind === "volume"     ? (zone.label === "POC" ? "#f59e0b" : zone.label === "LVN" ? "#a78bfa" : "#38bdf8")
   :                              "#f59e0b";
   return (
     <div className="flex items-center gap-1.5" data-legend={zone.label}>

@@ -25,7 +25,7 @@ export const medianRange = (cs: Candle[]) => median(cs.map((k) => k.h - k.l)) ||
 export const LIQ_LABEL = /^(liquidit|sweep (haut|bas)|zone de chasse|mèche du faux breakout)/i;
 export const SWEPT_LABEL = /balay|^sweep|^mèche du faux breakout/i;
 export const PIVOT_LABEL = /^(plus (haut|bas) précédent|swing (high|low)|equal (lows|highs)|haut de la session|bas de la session)/i;
-export const SR_LABEL = /^(support|r[ée]sistance|haut du range|bas du range)/i;
+export const SR_LABEL = /^(support|r[ée]sistance|haut du range(?! d['’]ouverture)|bas du range(?! d['’]ouverture))/i;
 const isHigh = (label: string) => /haut|high|lh|highs/i.test(label);
 // le type de la zone d’abord : « Zone de chasse aux stops » est au-dessus du prix dans une vente
 // (liquidity_high) ; lue « en dessous » d’après son libellé, elle était tracée par-dessus le swing high
@@ -59,7 +59,7 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
   //    range se lit à ses bornes testées ; posées au prix voulu par le générateur, elles flottaient
   //    loin des bougies quand le prix n'allait pas jusque-là.
   for (const z of out) {
-    if (!/^(haut|bas) du range/i.test(z.label)) continue;
+    if (!/^(haut|bas) du range(?! d['’]ouverture)/i.test(z.label)) continue;
     const top = /^haut/i.test(z.label);
     // borne percée par les bougies déclencheuses (cassure, sweep : zone `trigger`) : elles ne la définissent pas
     // (borne cassée puis retestée : zone `until`, les dernières bougies ne la définissent pas non plus)
@@ -185,7 +185,7 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
   }
   // 5. Support / résistance, bornes du range : bande resserrée sur les touches
   for (const z of out) {
-    if (!SR_LABEL.test(z.label) || /^(haut|bas) du range/i.test(z.label)) continue;
+    if (!SR_LABEL.test(z.label) || /^(haut|bas) du range(?! d['’]ouverture)/i.test(z.label)) continue;
     const lo = Math.min(z.y1, z.y2), hi = Math.max(z.y1, z.y2);
     // bande aussi épaisse que l'écart des touches : pointes des mèches qui viennent toucher la zone
     // depuis un côté (corps au-dessus pour un support touché par le haut, au-dessous sinon) ; resserrée
@@ -204,13 +204,13 @@ export function traceZones(past: Candle[], zones: ChartZone[]): ChartZone[] {
         if (tips.length < 2) break;
         // bornes d'un range (pas de preuve S/R) : la bande va sur ses touches, même un peu hors de la
         // bande d'origine ; support / résistance : jamais hors d'elle
-        const free = /^(haut|bas) du range/i.test(z.label), L = free ? -Infinity : lo, Hh = free ? Infinity : hi;
+        const free = /^(haut|bas) du range(?! d['’]ouverture)/i.test(z.label), L = free ? -Infinity : lo, Hh = free ? Infinity : hi;
         let a = Math.max(L, Math.min(...tips) - TRACE.SR_PAD * MR), b = Math.min(Hh, Math.max(...tips) + TRACE.SR_PAD * MR);
         if (b - a < TRACE.SR_MIN * MR) { const c = (a + b) / 2, w = free ? TRACE.SR_MIN * MR : Math.min(TRACE.SR_MIN * MR, hi - lo); a = Math.max(L, Math.min(c - w / 2, Hh - w)); b = a + w; }
         if (Math.abs(a - cl) < 1e-9 * MR && Math.abs(b - ch) < 1e-9 * MR) break;
         cl = a; ch = b; done = true;
       }
-      if (done && (ch - cl < hi - lo || /^(haut|bas) du range/i.test(z.label))) { z.y1 = cl; z.y2 = ch; continue; }
+      if (done && (ch - cl < hi - lo || /^(haut|bas) du range(?! d['’]ouverture)/i.test(z.label))) { z.y1 = cl; z.y2 = ch; continue; }
     }
     if (hi - lo <= TRACE.SR_W * MR) continue;
     const tol = 0.25 * MR;

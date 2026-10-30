@@ -853,7 +853,7 @@ export const ZONE_LABELS: Record<GlossaryLocale, string[]> = {
     // profil de volume (Avancé 10, lib/games/volume-study.ts)
     "POC", "VAH", "VAL", "HVN", "LVN",
     // figures chartistes, Opening Range, Wyckoff, zones ICT/SMC (Intermédiaire 10, stratégie ORB, Avancé 13 à 15)
-    "Ligne de cou", "Haut de l'Opening Range", "Bas de l'Opening Range", "Haut de l'OR", "Bas de l'OR",
+    "Ligne de cou", "Haut du range d'ouverture", "Bas du range d'ouverture",
     "Spring", "UTAD", "Sommet local", "Creux local", "Breaker", "Support majeur", "Support intermédiaire", "Petit support",
   ],
   es: [

@@ -18,6 +18,8 @@
 //  - graphique (question et verdict) : zones derrière les bougies, corps au moins 3 fois plus
 //    large que la mèche, bougies (suite comprise) sur au moins 45 % de la largeur et 50 % de la hauteur du cadre (40 % hors Place ton Stop), graphique entier dans l'écran en 390 × 844 sans défiler (sous le
 //    bandeau du site, au-dessus de la barre du navigateur) ;
+//  - choix de la question (390) : boutons BUY / SELL / NO TRADE, stops, erreurs ou entrées dans
+//    l'écran 390 × 844 sans défiler, sous le graphique ;
 //  - verdict : état (bon / partiel / faux), couleurs du titre et des points
 //    cohérentes, maximum affiché ; barème simple : bon > 0, faux = 0 (sans signe) ;
 //  - lignes au verdict (entrée, TP, stops, erreur marquée) : chacune a un rendu
@@ -222,6 +224,17 @@ const measureChart0 = (page, { mobile }) => page.evaluate(({ mobile, MIN_PLOT_SH
   return errs;
 }, { mobile, MIN_PLOT_SHARE: 0.45, MIN_CANDLE_HEIGHT: minHeightFor(page) });
 
+// Choix de la question (BUY / SELL / NO TRADE, stops, erreurs, entrées) : sur téléphone, ils tiennent dans
+// l'écran 390 × 844 sans défiler, sous le graphique (règle PO, après l'audit de fond : Build the Trade,
+// énoncés de 4 lignes, choix 2 à 22 px plus bas que l'écran)
+const SCREEN_H = 844;
+const measureChoices = (page) => page.evaluate((H) => {
+  const els = [...document.querySelectorAll(".tsx-v2 button.v2-choice, .tsx-v2 button.v2-stop-choice, .tsx-v2 [data-choice], .tsx-v2 [data-pick^=\"entry:\"]")].filter((e) => e.getBoundingClientRect().height > 0);
+  if (!els.length) return ["choix de la question absents"];
+  const bottom = Math.max(...els.map((e) => e.getBoundingClientRect().bottom)) + scrollY;
+  return bottom > H + 1 ? [`choix hors de l'écran 390 × ${H} : ils finissent à ${Math.round(bottom)} px`] : [];
+}, SCREEN_H);
+
 const STOP_BUTTONS = { selector: ".tsx-v2 button.v2-stop-choice", keys: "^stop\\d" };
 const stepButtons = (step) => ({ selector: `.tsx-v2 [data-pick^="${step}:"]`, keys: "^cand\\d" });
 
@@ -326,6 +339,7 @@ async function session(browser, slug, loc, w) {
       if (slug === "place-stop") add(`round ${round + 1}`, await probeStops(page));
       if (slug !== "build-the-trade") add(`round ${round + 1} étiquettes`, await probeLabels(page, { mobile, buttons: slug === "place-stop" ? STOP_BUTTONS : null, ps: slug === "place-stop" }));
       add(`round ${round + 1} graphique`, await measureChart(page, { mobile }));
+      if (mobile) add(`round ${round + 1} choix`, await measureChoices(page));
       if (slug === "build-the-trade") {
         // Étiquettes à chaque étape (le choix reste affiché 600 ms, puis le cadrage glisse)
         for (const step of ["entry", "stop", "tp"]) {
@@ -530,6 +544,9 @@ const MUTATIONS = {
   "graphique hors de l'écran": [/graphique hors de l'écran/, () => {
     document.querySelector(".tsx-v2 .v2-chart").style.marginTop = "900px";
   }],
+  "choix sous l'écran": [/choix hors de l'écran/, () => {
+    document.querySelector(".tsx-v2 .v2-chart").style.marginBottom = "300px";
+  }],
 };
 async function autotest(browser) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: MOBILE_H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
@@ -546,9 +563,9 @@ async function autotest(browser) {
           await page.getByRole("button", { name: /Interm/ }).first().click();
           await page.getByRole("button", { name: "NO TRADE" }).first().waitFor({ timeout: 30000 });
           await page.waitForTimeout(4500);
-          before = [...await probeLabels(page, { mobile: true, buttons: null }), ...await measureChart(page, { mobile: true })];
+          before = [...await probeLabels(page, { mobile: true, buttons: null }), ...await measureChart(page, { mobile: true }), ...await measureChoices(page)];
           await page.evaluate(inject);
-          after = [...await measureLabels(page, { mobile: true, buttons: null }), ...await measureChart(page, { mobile: true })];
+          after = [...await measureLabels(page, { mobile: true, buttons: null }), ...await measureChart(page, { mobile: true }), ...await measureChoices(page)];
           hit = after.filter((e) => !before.includes(e) && expect.test(e));
           err = "";
         } catch (e) { err = e.message.split("\n")[0].slice(0, 100); }

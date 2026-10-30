@@ -123,12 +123,16 @@ export function withRoleChanges<T extends { past: Candle[]; zones: ChartZone[] }
   };
 }
 
+/** Fenêtre horaire marquée sur le graphique (ex. Opening Range : 9 h 30 – 9 h 45) : bougies from à to du passé */
+export interface TimeWindow { from: number; to: number; label: string }
+
 export interface ChartData {
   candles: Candle[];
   zones:   ChartZone[];
   domain:  { min: number; max: number };
   /** Volumes, VWAP et profil de volume (scénarios Volume Profile / VWAP, lib/games/volume-study.ts) */
   study?:  import("./volume-study").GameStudy;
+  window?: TimeWindow;
 }
 
 // ─── Constantes ───────────────────────────────────────────────────────────────
@@ -296,6 +300,26 @@ export function levelTouches(
     prevH = H;
   }
   return { candles: out, p };
+}
+
+/**
+ * Objectif jamais posé sur un niveau tracé (règle PO) : un TP qui tombe dans la bande d'un support ou
+ * d'une résistance du côté de l'objectif (à 0,1 bougie médiane près), une fois les zones calées sur les
+ * bougies, recule juste avant elle (0,15 bougie médiane avant son bord). Il ne fait que se rapprocher de
+ * l'entrée : l'issue du plan ne change pas.
+ */
+export function tpBeforeLevels(tp: number, entry: number, zones: ChartZone[], past: Candle[]): number {
+  const rs = past.map((k) => k.h - k.l).sort((a, b) => a - b), mr = rs[rs.length >> 1] || 0;
+  const up = tp > entry;
+  let out = tp;
+  for (const z of zones) {
+    if (z.kind !== "support" && z.kind !== "resistance") continue;
+    const lo = Math.min(z.y1, z.y2), hi = Math.max(z.y1, z.y2);
+    if (!(up ? lo > entry && out >= lo - 0.1 * mr && out <= hi + 0.1 * mr : hi < entry && out <= hi + 0.1 * mr && out >= lo - 0.1 * mr)) continue;
+    const before = up ? lo - 0.15 * mr : hi + 0.15 * mr;
+    if (up ? before > entry : before < entry) out = before;
+  }
+  return out;
 }
 
 /**

@@ -245,6 +245,9 @@ const ZONE_COLOR: Record<ZoneKind, { stroke: string; fill: string; dashed: boole
   liquidity_high: { stroke: "var(--v2-zone)", fill: "rgba(245,158,11,0.12)", dashed: true },
   volume:         { stroke: "#38bdf8",        fill: "rgba(56,189,248,0.14)", dashed: true },
 };
+/** LVN du profil de volume : violet, distinct des niveaux (POC ambre, VAH, VAL et HVN bleu ciel) */
+const LVN_COLOR = { stroke: "#a78bfa", fill: "rgba(167,139,250,0.16)" };
+const zoneColor = (z: ChartZone) => (z.kind === "volume" && z.label === "LVN" ? LVN_COLOR.stroke : HERO_GRADIENT[z.kind]);
 const HERO_GRADIENT: Record<ZoneKind, string> = {
   support: "#10b981",
   resistance: "#ef4444",
@@ -745,7 +748,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
       zoneLabelIdx.forEach((i) => {
         if (showMark && mark?.kind === "zone" && mark.index === i) return;
         const z = zones[i];
-        specs.push({ key: `zone${i}`, price: (z.y1 + z.y2) / 2, label: z.label, color: HERO_GRADIENT[z.kind] });
+        specs.push({ key: `zone${i}`, price: (z.y1 + z.y2) / 2, label: z.label, color: zoneColor(z) });
       });
       if (mark && showMark && markPrice !== undefined) specs.push({ key: "markTag", price: markPrice, label: mark.label, color: "#f87171" });
       // Au bord droit, sur la ligne ; si une pastille déjà posée gêne, glisse à sa
@@ -977,10 +980,21 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
         {/* Tracé (zones, lignes, bougies) : c'est ce groupe qui glisse au clic */}
         <g ref={plotRef} className="v2-plot" style={{ transformOrigin: "0 0", transformBox: "view-box" }}>
 
+        {/* Fenêtre horaire (Opening Range) : bande claire derrière ses bougies, heure sous le tracé */}
+        {data.window && data.window.from < visibleCount && (() => {
+          const w = data.window, x0 = padX + slot * w.from, x1 = padX + slot * Math.min(w.to + 1, visibleCount);
+          return (
+            <g data-window="">
+              <rect x={x0} y={topPad - 6} width={x1 - x0} height={H - bottomPad + 4 - (topPad - 6)} rx={4} fill="rgba(148,163,184,0.10)" stroke="rgba(148,163,184,0.35)" strokeDasharray="3 4" vectorEffect="non-scaling-stroke" />
+              <text x={x0} y={H - 2} fontSize={12} fill="var(--v2-text-3)" className="v2-mono">{w.label}</text>
+            </g>
+          );
+        })()}
+
         {/* Zones : la 1re est le héros en état question, le reste est estompé */}
         {zones.map((z, i) => {
           const r = zoneRect(z);
-          const style = ZONE_COLOR[z.kind];
+          const style = z.kind === "volume" && z.label === "LVN" ? { ...ZONE_COLOR.volume, ...LVN_COLOR } : ZONE_COLOR[z.kind];
           if (hero && i === 0) {
             return (
               <g key={`z${i}`} className="v2-hero" data-zone={i}>

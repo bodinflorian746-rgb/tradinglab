@@ -10,7 +10,7 @@ import {
   type Asset, type Session, type Volatility, type Spread,
   type HtfBias, type MacroContext,
   type Candle, type ChartZone,
-  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, withRoleChanges,
+  VOL_MULT, mulberry32, clamp, candle, bullImpulse3, levelTouches, markPrevLow, srGuards, tpBeforeLevels, withRoleChanges,
 } from "./shared";
 import { withTracedZones, keepSwingTips } from "./zone-trace";
 import { breakStrayLevels } from "./stray-levels";
@@ -394,8 +394,8 @@ const ORIGINAL_TEMPLATES: BuildTradeTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     context: "Volatilité élevée. Les bougies sont larges, les mèches profondes.",
-    optimal: { entry: "confirmation", stop: "wide", tp: "balanced" },
-    optimalExplain: "En volatilité élevée, le bruit est amplifié et un stop à la distance habituelle risque d'être balayé. Ici, le stop éloigné est le stop logique. Un TP équilibré se défend, car le mouvement potentiel est aussi plus étendu.",
+    optimal: { entry: "deep_pullback", stop: "wide", tp: "balanced" },
+    optimalExplain: "En volatilité élevée, les mèches profondes ramènent souvent le prix plus bas : un ordre posé sur un pullback profond entre à meilleur prix, ce qui compense le stop plus large. Le bruit est amplifié et un stop à la distance habituelle risque d'être balayé. Ici, le stop éloigné est le stop logique. Un TP équilibré se défend, car le mouvement potentiel est aussi plus étendu.",
     lessons: {
       advanced:      "Un stop ajusté à la volatilité du jour (ATR, l'amplitude moyenne d'une journée) est une option logique. En volatilité élevée, le stop éloigné n'est pas excessif : il est simplement adapté.",
       intermediate: "Le stop gagne à s'adapter à la volatilité du moment plutôt qu'à une distance fixe.",
@@ -816,7 +816,8 @@ function inRange(k: Candle, S: number, R: number): Candle {
 function shapeRangeOscillation(rng: () => number, m: number, direction: TradeDirection): ShapeOutput {
   const past: Candle[] = [];
   const S = 2;
-  const R = 6;
+  // range assez haut pour un objectif avant la borne opposée (bande calée sur ses touches) au R/R voulu
+  const R = 6.6;
   const mid = (S + R) / 2;
   let p = mid + (rng() - 0.5);
   // 12 bougies d'oscillation : le prix va d'une borne à l'autre (cible alternée toutes les 3
@@ -1272,8 +1273,11 @@ export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number,
   // (swing désigné : sa pointe reste l'extrême de ses voisines, avant et après le tracé)
   // (scénarios construits : les stops aussi au passé, une mèche ne franchit pas le stop qu'elle justifie)
   const out = keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(realizeChart(ch, { past: template.build ? [...zones, ...Object.values(ch.stops), ...(ch.guards ?? [])] : zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol })))), Object.values(ch.stops), { positive: true }));
+  // Objectif du bon plan jamais posé sur un niveau tracé (règle PO) : avant la bande, une fois les zones calées
+  const opt = template.optimal.tp, tpOpt = tpBeforeLevels(out.tps[opt], out.entries[template.optimal.entry], out.zones, out.past);
+  const done = tpOpt === out.tps[opt] ? out : { ...out, tps: { ...out.tps, [opt]: tpOpt } };
   // Volumes et profil (scénarios Volume Profile) : calculés sur les bougies finales
-  return ch.studySpec ? withVolumeStudy(out, ch.studySpec, seed) : out;
+  return ch.studySpec ? withVolumeStudy(done, ch.studySpec, seed) : done;
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

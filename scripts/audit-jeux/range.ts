@@ -13,7 +13,7 @@ const DETAIL = process.argv.includes("--detail");
 const ROUNDS = +(process.argv.find((a) => a.startsWith("--rounds="))?.split("=")[1] ?? 200);
 
 export function rangeError(past: Candle[], z: ChartZone): string | null {
-  const top = /^haut du range/i.test(z.label), bot = /^bas du range/i.test(z.label);
+  const top = /^haut du range(?! d['’]ouverture)/i.test(z.label), bot = /^bas du range(?! d['’]ouverture)/i.test(z.label);
   if (!top && !bot) return null;
   const MR = medRange(past), lo = Math.min(z.y1, z.y2), hi = Math.max(z.y1, z.y2);
   // (borne cassée puis retestée, zone `until` : la cassure et le retest viennent après le range)
@@ -41,7 +41,7 @@ if (!process.env.RANGE_NO_MAIN) {
   } else {
     const counts = new Map<string, { n: number; bad: number; first?: string }>();
     for (const c of charts(ROUNDS)) for (const z of c.zones) {
-      if (!/^(haut|bas) du range/i.test(z.label)) continue;
+      if (!/^(haut|bas) du range(?! d['’]ouverture)/i.test(z.label)) continue;
       const k = `${c.key}|${z.label}`, s = counts.get(k) ?? { n: 0, bad: 0 };
       s.n++; const e = rangeError(c.past, z); if (e) { s.bad++; errors++; s.first ??= e; }
       counts.set(k, s);

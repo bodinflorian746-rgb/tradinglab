@@ -304,13 +304,14 @@ const inter = {
       ] };
   },
   rangeBas: (rng: Rng, m: number): PsRaw => {
-    const R = (4.6 + rng() * 0.5) * m, b = band(m);
+    // range assez haut pour un objectif avant le haut du range (bande calée sur ses touches) à 1:2 au moins
+    const R = (5.3 + rng() * 0.5) * m, b = band(m);
     const s = rangeScene(rng, m, R, 4);
     const sig = bullSignal(rng, m, s.p, b.lo, b.hi, "marteau", rng() < 0.7 ? "rouge" : "verte");
     const past = [...s.past, ...sig.candles], entry = sig.p;
     // sous toutes les pointes qui dessinent le bas du range (le tracé se cale sur elles)
     const floor = Math.min(sig.low, b.lo, ...past.map((k) => k.l));
-    const liq = floor - (0.3 + rng() * 0.05) * m;
+    const liq = floor - (0.4 + rng() * 0.05) * m;
     const logical = liq - (0.35 + rng() * 0.1) * m;
     const tight = b.hi + (entry - b.hi) * (0.35 + rng() * 0.15);
     return { past, fut: rally(rng, m, entry, 5, R - 0.3 * m).candles, zones: [{ kind: "support", y1: b.lo, y2: b.hi, label: "Bas du range" }, { kind: "resistance", y1: R - 0.13 * m, y2: R + 0.13 * m, label: "Haut du range" }],
@@ -322,7 +323,8 @@ const inter = {
       ] };
   },
   fauxBreakoutBas: (rng: Rng, m: number): PsRaw => {
-    const R = (4.6 + rng() * 0.5) * m, b = band(m);
+    // range assez haut pour un objectif avant le haut du range (bande calée sur ses touches) à 1:2 au moins
+    const R = (5.3 + rng() * 0.5) * m, b = band(m);
     const s = rangeScene(rng, m, R, 6);
     const past = [...s.past];
     let p = s.p;

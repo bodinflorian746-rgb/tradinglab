@@ -8,7 +8,7 @@ import * as FTM from "../../lib/games/find-the-mistake";
 import * as PS from "../../lib/games/place-stop";
 import * as BT from "../../lib/games/build-the-trade";
 import { ASSET_SCALE, formatPrice } from "../../lib/games/price-scale";
-import { SESSION_ASSETS, CALM_SESSIONS } from "../../lib/games/market-context";
+import { SESSION_ASSETS, CALM_SESSIONS, CONTEXT_RULES } from "../../lib/games/market-context";
 
 type Inst = { id: string; asset: any; session: any; volatility: any; spread: any; context: string; seed: number; macroContext?: string; difficulty: any };
 const NEWS = /NFP|FOMC|CPI|BCE|ECB|[Nn]ews|annonce|macro majeure/;
@@ -32,6 +32,10 @@ for (const [g, gen, build] of games) for (const d of ["beginner", "intermediate"
     if (/FOMC/.test(i.context) && !/après FOMC/.test(i.context) && i.session !== "New York") err(`${g} FOMC hors New York`, tag);
     if (/après FOMC/.test(i.context) && i.session !== "New York") err(`${g} après FOMC hors New York`, tag);
     if (!SESSION_ASSETS[i.session as keyof typeof SESSION_ASSETS].includes(i.asset)) err(`${g} actif non tradé dans la session`, tag);
+    // Spread et volatilités imposés par la règle du scénario (ex. ORB : spread faible, volatilité normale ou élevée, décision PO)
+    const rule = CONTEXT_RULES[`${({ BSNT: "bsnt", FTM: "ftm", PS: "ps", BTT: "btt" } as Record<string, string>)[g]}/${i.id}`];
+    if (rule?.volatilities && !rule.volatilities.includes(i.volatility)) err(`${g} volatilité hors de celles permises par le scénario`, tag);
+    if (rule?.spread && !rule.news && i.spread !== rule.spread) err(`${g} spread différent de celui imposé par le scénario`, tag);
     if (i.volatility === "élevée" && CALM_SESSIONS.has(i.session) && !news) err(`${g} vol. élevée en session calme sans news`, tag);
     // Texte qui annonce un marché très agité (au présent ; « peut bouger 2 à 3 fois plus » avant une news reste calme) : la volatilité affichée le dit aussi (ex. refusé : Place ton Stop,
     // extreme_volatility_buy, « trois fois plus que sa moyenne » avec « Volatilité faible »)
