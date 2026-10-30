@@ -236,6 +236,24 @@ const S = {
   },
 } as const;
 
+/** Démo du héros (site en français seulement ; les noms des jeux viennent du dictionnaire des jeux).
+ *  Chiffres : nombre de scénarios des 4 jeux et nombre de leçons, calculés (demande du PO, 2026-10-30). */
+export const HERO_DEMO = {
+  // (modèles remplis côté client : une fonction ne passe pas d'un composant serveur à un composant client)
+  round: "Manche {n}/{total}",
+  good: "Bien vu",
+  wrong: "Pas la bonne réponse",
+  correctAnswer: "· bonne réponse",
+  yourChoice: "· ton choix",
+  next: "Manche suivante",
+  seeScore: "Voir mon score",
+  scoreTitle: "Ton score",
+  catalog: "{scenarios} scénarios dans les 4 jeux et {lessons} leçons t'attendent.",
+  trial: "Essayer 48h gratuitement",
+  playGames: "Aller aux jeux",
+  replay: "Rejouer",
+};
+
 export function homeStrings(locale: HomeLocale) {
   return S[locale];
 }

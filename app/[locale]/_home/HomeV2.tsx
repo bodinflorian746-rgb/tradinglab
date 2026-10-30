@@ -18,8 +18,8 @@ import { RevealOnView } from "./RevealOnView";
 import { HeroGame } from "./HeroGame";
 import { TrialCta } from "./TrialCta";
 import { LessonPreview } from "./LessonPreview";
-import { buildHeroRounds } from "./hero-rounds";
-import { homeStrings, JOURNAL_OPEN, type HomeLocale } from "./strings";
+import { buildHeroRounds, SCENARIO_COUNT } from "./hero-rounds";
+import { HERO_DEMO, homeStrings, JOURNAL_OPEN, type HomeLocale } from "./strings";
 import "./home.css";
 
 const css = (vars: Record<string, string | number>) => vars as CSSProperties;
@@ -215,13 +215,13 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
   const s = homeStrings(locale);
   // Checkout Stripe désactivé côté serveur → pas de prix ni d'offre payante.
   const previews = buildGamePreviews(locale);
-  const rounds = buildHeroRounds(locale);
-  // Aperçu BUY / SELL / NO TRADE de la rangée des jeux : un round lisible du
-  // héros (rejet de résistance, zone proportionnée) plutôt que l'aperçu FVG du
-  // hub, dont la zone occupe un tiers du cadre.
+  const rounds = buildHeroRounds();
+  // Aperçu BUY / SELL / NO TRADE de la rangée des jeux : la manche Buy/Sell de la
+  // démo (étoile filante sous une résistance, zone proportionnée) plutôt que
+  // l'aperçu FVG du hub, dont la zone occupe un tiers du cadre.
   const railPreviews = {
     ...previews,
-    "buy-sell-no-trade": { data: { candles: rounds[1].past, zones: rounds[1].zones, domain: { min: 0, max: 1 } }, keepCandlesBright: true as const },
+    "buy-sell-no-trade": { data: { candles: rounds[0].past, zones: rounds[0].zones, domain: { min: 0, max: 1 } }, keepCandlesBright: true as const },
   };
   const title = JOURNAL_OPEN ? s.hero.titleJournal : s.hero.title;
   const subtitle = JOURNAL_OPEN ? s.hero.subtitleJournal : s.hero.subtitle;
@@ -278,8 +278,10 @@ export async function HomeV2({ locale }: { locale: HomeLocale }) {
 
         <HeroGame
           rounds={rounds}
-          s={{ ...s.game, duration: g.available["buy-sell-no-trade"].duration }}
-          gameHref={h("/jeux/buy-sell-no-trade")}
+          s={{ ...HERO_DEMO, games: { "buy-sell-no-trade": g.available["buy-sell-no-trade"].title, "place-stop": g.available["place-stop"].title, "find-the-mistake": g.available["find-the-mistake"].title } }}
+          scenarios={SCENARIO_COUNT}
+          lessons={tradingLessons + MACRO_LESSONS + STRATEGY_LESSONS}
+          gamesHref={h("/jeux")}
           trialHref={trialHref}
         />
       </section>

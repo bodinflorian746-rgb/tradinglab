@@ -154,14 +154,24 @@
 .tsx-v2 .hv2-choices .v2-choice { text-align: center; height: 46px; padding-block: 0; font-size: 15px; }
 
 /* Jeu jouable du héros : cadre du graphique et emplacement texte de hauteur fixe */
-.tsx-v2 .hv2-game .v2-chart--preview { height: clamp(176px, 48vw, 200px); }
+.tsx-v2 .hv2-game .v2-chart--preview { height: clamp(200px, 60vw, 240px); }
 .tsx-v2 .hv2-game-slot { min-height: 138px; }
 .tsx-v2 .hv2-actions { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 8px; }
 .tsx-v2 .hv2-actions .v2-btn { width: 100%; height: 46px; padding-block: 0; padding-inline: 10px; }
 .tsx-v2 .hv2-verdict { animation: hv2-rise 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+/* Démo : 4 choix de Trouve l'erreur en 2 × 2, texte sur deux lignes au plus ; pastille de couleur des stops */
+.tsx-v2 .hv2-choices--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tsx-v2 .hv2-choices .hv2-choice-text { height: 52px; padding-inline: 10px; font-size: 14px; line-height: 1.2; white-space: normal; }
+.tsx-v2 .hv2-stop-dot { display: inline-block; width: 9px; height: 9px; margin-right: 7px; border-radius: 999px; vertical-align: 1px; }
+.tsx-v2 .hv2-actions--one { grid-template-columns: minmax(0, 1fr); }
+/* (manche à 4 choix : le bouton garde la hauteur des deux rangées, la carte ne bouge pas au verdict) */
+.tsx-v2 .hv2-actions--tall { min-height: 112px; align-content: end; }
+/* Fin de la démo : l'essai en pleine largeur (texte sur une ligne), « Rejouer » dessous */
+.tsx-v2 .hv2-actions--end { grid-template-columns: minmax(0, 1fr); }
+.tsx-v2 .hv2-demo-score { font-size: clamp(48px, 9vw, 64px); font-weight: 700; line-height: 1; }
 @media (min-width: 1024px) {
   .tsx-v2 .hv2-game .v2-chart--preview { height: clamp(168px, 25vh, 240px); }
-  .tsx-v2 .hv2-game-slot { min-height: 100px; }
+  .tsx-v2 .hv2-game-slot { min-height: 124px; }
 }
 
 /* Bandeau d'offre 48h */

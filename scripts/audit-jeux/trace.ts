@@ -188,7 +188,7 @@ export function* charts(rounds = ROUNDS): Generator<Chart> {
     yield { key: `Build the Trade|${t.id}|toutes`, past: ch.past, zones: ch.zones };
   }
   for (const [id, p] of Object.entries(buildGamePreviews("fr"))) yield { key: `Aperçus du hub|${id}|—`, past: p.data.candles, zones: p.data.zones };
-  for (const r of buildHeroRounds("fr")) yield { key: `Héros de la home|${r.key}|—`, past: r.past, zones: r.zones };
+  for (const r of buildHeroRounds()) yield { key: `Héros de la home|${r.key}|—`, past: r.past, zones: r.zones };
 }
 
 if (!process.env.TRACE_NO_MAIN) {

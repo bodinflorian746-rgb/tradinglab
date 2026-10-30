@@ -98,7 +98,7 @@ for (const [lang, B, F, P, T] of GAMES.filter(([l]) => auditee(l))) {
 // Aperçus du hub (une seule série) et héros de la home (passé, avant le clic)
 for (const lang of (["fr", "es"] as const).filter(auditee)) {
   for (const [id, p] of Object.entries(buildGamePreviews(lang))) record(`Aperçus du hub|${id}|—|${lang}`, p.data.candles, p.data.zones, "aperçu");
-  for (const r of buildHeroRounds(lang)) record(`Héros de la home|${r.key}|—|${lang}`, r.past, r.zones, "héros");
+  for (const r of (lang === "fr" ? buildHeroRounds() : [])) record(`Héros de la home|${r.key}|—|${lang}`, r.past, r.zones, "héros");
 }
 
 const lines: string[] = [];

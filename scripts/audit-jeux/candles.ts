@@ -114,7 +114,7 @@ record("Aperçu de leçon|order-block|—|—", LESSON_PREVIEW_CANDLES, "EUR/USD
 // Aperçus du hub et jeu du héros de la home (passé puis futur révélé)
 for (const lang of (["fr", "es"] as const).filter(auditee)) {
   for (const [id, p] of Object.entries(buildGamePreviews(lang))) record(`Aperçus du hub|${id}|—|${lang}`, p.data.candles, "EUR/USD", "aperçu", p.data.zones, [164, 180]);
-  for (const r of buildHeroRounds(lang)) record(`Héros de la home|${r.key}|—|${lang}`, [...r.past, ...r.future], "EUR/USD", "héros", r.zones, [164, 327, 440]);
+  for (const r of (lang === "fr" ? buildHeroRounds() : [])) record(`Héros de la home|${r.key}|—|${lang}`, [...r.past, ...r.future], "EUR/USD", "héros", r.zones, [164, 327, 440]);
 }
 
 const lines: string[] = [];

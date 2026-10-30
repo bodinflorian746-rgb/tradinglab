@@ -52,7 +52,7 @@ function* charts(): Generator<[string, Chart]> {
     yield [`Build the Trade|${t.id}|toutes`, BT.withAssetPrices(BT.buildBuildTradeChart(t, seed, VOLS[n % 3], ctx), { ...ctx, seed })];
   }
   for (const [id, p] of Object.entries(buildGamePreviews("fr"))) yield [`Aperçus du hub|${id}|—`, { past: p.data.candles, future: [], zones: p.data.zones }];
-  for (const r of buildHeroRounds("fr")) yield [`Héros de la home|${r.key}|—`, { past: r.past, future: r.future, zones: r.zones }];
+  for (const r of buildHeroRounds()) yield [`Héros de la home|${r.key}|—`, { past: r.past, future: r.future, zones: r.zones }];
 }
 
 let errors = 0;

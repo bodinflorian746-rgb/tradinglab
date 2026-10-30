@@ -9,6 +9,7 @@
 //  - Trouve l'erreur : l'entrée des scénarios dont l'erreur est ailleurs (stop, taille, objectif…) ;
 //    « Entrée sans confirmation » n'est jamais un leurre (elle serait une deuxième bonne réponse là où
 //    l'entrée n'a pas de signal), et ses scénarios n'en montrent aucun ;
+//  - Démo de la home : les manches Buy/Sell/No Trade et Place ton Stop.
 // Usage : npx vite-node -c vitest.config.ts scripts/audit-jeux/confirmation.ts [--autotest] (lancé par run.mjs)
 import * as BS from "../../lib/games/buy-sell-no-trade";
 import * as PS from "../../lib/games/place-stop";
@@ -16,6 +17,7 @@ import * as BT from "../../lib/games/build-the-trade";
 import * as FTM from "../../lib/games/find-the-mistake";
 import { entrySignal } from "../../lib/games/confirmation";
 import type { Candle, ChartZone } from "../../lib/games/shared";
+import { buildHeroRounds } from "../../app/[locale]/_home/hero-rounds";
 import { auditCtx } from "./market-ctx";
 
 const N = 60;
@@ -67,6 +69,10 @@ function scan(): string[] {
       add(`Trouve l'erreur · ${t.id}`, unconfirmed ? (miss ? null : "« Entrée sans confirmation » alors que le graphique montre une réaction") : miss);
     }
   }
+  for (const r of buildHeroRounds()) {
+    const dir = r.game === "place-stop" ? r.entry?.direction : r.game === "buy-sell-no-trade" && r.correct !== "NO_TRADE" ? (r.correct as "BUY" | "SELL") : undefined;
+    if (dir) add(`Démo de la home · ${r.key}`, missingSignal(r.past, dir, r.zones));
+  }
   return [...errs].map(([k, e]) => `${k} : ${e}`);
 }
 
@@ -96,7 +102,7 @@ if (process.argv.includes("--autotest")) {
   const errs = scan();
   errors = errs.length;
   for (const e of errs.slice(0, 30)) lines.push(`  ERREUR ${e}`);
-  lines.push(`Entrées contrôlées : Buy/Sell/No Trade, Place ton Stop, Build the Trade (agressive), Trouve l'erreur, ${N} graines chacune`);
+  lines.push(`Entrées contrôlées : Buy/Sell/No Trade, Place ton Stop, Build the Trade (agressive), Trouve l'erreur, ${N} graines chacune ; démo de la home`);
 }
 console.log(lines.join("\n"));
 console.log(`RESULTAT erreurs=${errors} avertissements=0`);

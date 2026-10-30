@@ -83,7 +83,7 @@ function* charts(rounds = ROUNDS): Generator<Chart> {
   }
   for (const lang of (["fr", "es"] as const).filter(auditee)) {
     for (const [id, p] of Object.entries(buildGamePreviews(lang))) yield { key: `Aperçus du hub|${id}|—|${lang}`, past: p.data.candles, zones: p.data.zones };
-    for (const r of buildHeroRounds(lang)) yield { key: `Héros de la home|${r.key}|—|${lang}`, past: r.past, zones: r.zones };
+    for (const r of (lang === "fr" ? buildHeroRounds() : [])) yield { key: `Héros de la home|${r.key}|—|${lang}`, past: r.past, zones: r.zones };
   }
 }
 
