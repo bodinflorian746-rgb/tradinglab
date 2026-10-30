@@ -113,12 +113,13 @@ const CHECKS: Record<string, Record<string, Check>> = {
     direction,
   },
   rejection_resistance: {
-    "arrive sur la résistance": (ch) => last(ch.past).h >= lo(zoneOf(ch, "resistance")) ? null : "la dernière bougie n'atteint pas la résistance",
+    // (la touche, puis la réaction : l'une des deux dernières bougies vient sur la zone)
+    "arrive sur la résistance": (ch) => Math.max(...ch.past.slice(-2).map((k) => k.h)) >= lo(zoneOf(ch, "resistance")) ? null : "aucune des deux dernières bougies n'atteint la résistance",
     "la zone a déjà rejeté plusieurs fois (≥ 2)": (ch) => rejections(ch, "resistance", 6) >= 2 ? null : "moins de 2 rejets dans la zone",
     direction,
   },
   bounce_support: {
-    "arrive sur le support": (ch) => last(ch.past).l <= hi(zoneOf(ch, "support")) ? null : "la dernière bougie n'atteint pas le support",
+    "arrive sur le support": (ch) => Math.min(...ch.past.slice(-2).map((k) => k.l)) <= hi(zoneOf(ch, "support")) ? null : "aucune des deux dernières bougies n'atteint le support",
     "la zone a déjà tenu plusieurs fois (≥ 2)": (ch) => rejections(ch, "support", 6) >= 2 ? null : "moins de 2 rebonds dans la zone",
     direction,
   },

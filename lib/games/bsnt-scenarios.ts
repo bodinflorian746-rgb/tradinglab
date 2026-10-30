@@ -62,6 +62,9 @@ const hi = (z: ChartZone) => Math.max(z.y1, z.y2);
 const mr = (cs: Candle[]) => { const s = cs.map(range).sort((a, b) => a - b); return s[s.length >> 1] || 1; };
 const zoneOf = (ch: ChartLike, kind: ChartZone["kind"]) => ch.zones.find((z) => z.kind === kind);
 const band = (m: number) => ({ lo: -0.13 * m, hi: 0.13 * m });
+/** Échelle d'un signal : l'amplitude médiane des 10 dernières bougies rapportée à 0,75 bougie de base (1 à 2,5).
+ *  Une réaction se voit au premier coup d'œil (règle PO) : ses distances grandissent avec les voisines. */
+const scaleOf = (past: Candle[], m: number) => Math.min(2.5, Math.max(1, mr(past.slice(-10)) / (0.75 * m)));
 const supportZone = (m: number, label = "Support"): ChartZone => ({ kind: "support", y1: -0.13 * m, y2: 0.13 * m, label });
 
 // Affirmations communes (sens haussier ; `sell` lit le graphique renversé)
@@ -89,7 +92,7 @@ function patternOnSupport(kind: "marteau" | "engulfing" | "doji" | "doji_confirm
     const b = band(m);
     const s = supportScene(rng, m);
     const color = kind === "marteau" ? (rng() < 0.8 ? "rouge" : "verte") : kind === "double_meche" ? "rouge" : undefined;
-    const sig = bullSignal(rng, m, s.p, b.lo, b.hi, kind, color);
+    const sig = bullSignal(rng, m, s.p, b.lo, b.hi, kind, color, s.past);
     const past = [...s.past, ...sig.candles];
     const future = outcome === "up"
       ? rally(rng, m, sig.p, 5).candles
@@ -103,7 +106,7 @@ export const hammerNowhere: NewScenario["build"] = (rng, m) => {
   const base = chop(rng, m, 0, 3, 0.02);
   const leg = legTo(rng, m, base.p, base.p - (3.8 + rng() * 0.8) * m, { retrace: 0.3 });
   const p = leg.p;
-  const sig = bullSignal(rng, m, p, p - 0.9 * m, p - 0.75 * m, "marteau", rng() < 0.7 ? "rouge" : "verte");
+  const sig = bullSignal(rng, m, p, p - 0.9 * m, p - 0.75 * m, "marteau", rng() < 0.7 ? "rouge" : "verte", [...base.candles, ...leg.candles]);
   const past = [...base.candles, ...leg.candles, ...sig.candles];
   return { past, future: drop(rng, m, sig.p, 4).candles, zones: [] };
 };
@@ -114,7 +117,7 @@ export function rebound(rng: Rng, m: number, p: number, b: { lo: number; hi: num
   const tip = b.lo + (b.hi - b.lo) * (0.3 + rng() * 0.4);
   const o1 = p, c1 = o1 - (0.25 + rng() * 0.1) * m;
   out.push({ o: o1, c: c1, h: o1 + (0.04 + rng() * 0.05) * m, l: Math.min(tip, c1 - 0.02 * m) });
-  const c2 = Math.max(c1, b.hi) + (0.5 + rng() * 0.1) * m;
+  const c2 = Math.max(c1, b.hi) + (0.62 + rng() * 0.12) * m;
   out.push({ o: c1, c: c2, h: c2 + (0.04 + rng() * 0.06) * m, l: c1 - (0.02 + rng() * 0.03) * m });
   const c3 = c2 - (0.06 + rng() * 0.05) * m;
   out.push({ o: c2, c: c3, h: c2 + (0.03 + rng() * 0.04) * m, l: c3 - (0.03 + rng() * 0.04) * m });
@@ -484,7 +487,7 @@ const rangeZones = (m: number, R: number, low = "Bas du range", trigger = false)
 const rangeLowHammer: NewScenario["build"] = (rng, m) => {
   const R = (4.6 + rng() * 0.6) * m, b = band(m);
   const s = rangeScene(rng, m, R, 4);
-  const sig = bullSignal(rng, m, s.p, b.lo, b.hi, "marteau", rng() < 0.8 ? "rouge" : "verte");
+  const sig = bullSignal(rng, m, s.p, b.lo, b.hi, "marteau", rng() < 0.8 ? "rouge" : "verte", s.past);
   return { past: [...s.past, ...sig.candles], future: rally(rng, m, sig.p, 5, R - 0.4 * m).candles, zones: rangeZones(m, R) };
 };
 
@@ -497,7 +500,8 @@ const rangeLowFakeout: NewScenario["build"] = (rng, m) => {
   const cA = b.lo - (0.5 + rng() * 0.15) * m;
   past.push({ o: p, c: cA, h: p + (0.04 + rng() * 0.05) * m, l: cA - (0.1 + rng() * 0.1) * m });
   p = cA;
-  const cB = b.hi + (0.3 + rng() * 0.12) * m;
+  // (bougie de réintégration franche, à l'échelle des voisines : la réaction se voit)
+  const cB = b.hi + (0.45 + rng() * 0.15) * m * scaleOf(past, m);
   past.push({ o: p, c: cB, h: cB + (0.04 + rng() * 0.06) * m, l: p - (0.03 + rng() * 0.04) * m });
   return { past, future: rally(rng, m, cB, 5, R - 0.4 * m).candles, zones: rangeZones(m, R, "Bas du range", true) };
 };
@@ -522,10 +526,11 @@ const sweepContinuation: NewScenario["build"] = (rng, m) => {
   const up = legTo(rng, m, p, H - 0.45 * m, { retrace: 0.3 });
   past.push(...up.candles); p = up.p;
   // cassure : la bougie dépasse le plus haut et CLÔTURE au-dessus (pas de réintégration)
-  const c1 = H + (0.3 + rng() * 0.15) * m;
+  const sc = scaleOf(past, m);
+  const c1 = H + (0.3 + rng() * 0.15) * m * sc;
   past.push({ o: p, c: c1, h: c1 + (0.08 + rng() * 0.08) * m, l: p - (0.04 + rng() * 0.04) * m });
   p = c1;
-  const c2 = p + (0.3 + rng() * 0.15) * m;
+  const c2 = p + (0.5 + rng() * 0.2) * m * sc;
   past.push({ o: p, c: c2, h: c2 + (0.05 + rng() * 0.06) * m, l: p - (0.08 + rng() * 0.05) * m });
   return {
     past, future: rally(rng, m, c2, 5).candles,
@@ -592,7 +597,7 @@ export function bullImpulse3Local(rng: Rng, m: number, p: number): { candles: Ca
 /** Retour dans l'Order Block : marteau dont la mèche entre dans l'OB */
 const obHolds: NewScenario["build"] = (rng, m) => {
   const s = obScene(rng, m);
-  const sig = bullSignal(rng, m, s.p, s.ob.lo, s.zone.y2, "marteau");
+  const sig = bullSignal(rng, m, s.p, s.ob.lo, s.zone.y2, "marteau", undefined, s.past);
   return { past: [...s.past, ...sig.candles], future: rally(rng, m, sig.p, 5).candles, zones: [s.zone] };
 };
 /** Retour dans l'Order Block : grande bougie rouge qui clôture sous l'OB (sens haussier : OB baissier lâché à la hausse) */
@@ -693,9 +698,10 @@ const rangeBreakRetest: NewScenario["build"] = (rng, m) => {
   const brk = past.length;
   const c0 = top + (0.6 + rng() * 0.15) * m; past.push({ o: p, c: c0, h: c0 + 0.05 * m, l: p - 0.04 * m }); p = c0;
   const r1 = rally(rng, m, p, 1); past.push(...r1.candles); p = r1.p;
-  const back = legExact(rng, m, p, top + (0.4 + rng() * 0.08) * m, { retrace: 0, step: [0.4, 0.6] }); past.push(...back.candles); p = back.p;
+  const sc = scaleOf(past, m);
+  const back = legExact(rng, m, p, top + (0.55 + rng() * 0.1) * m * sc, { retrace: 0, step: [0.4, 0.6] }); past.push(...back.candles); p = back.p;
   // bougie du retest : sa mèche vient au contact du haut du range et elle est rejetée, la clôture reste au-dessus
-  const rc = p - (0.04 + rng() * 0.04) * m; past.push({ o: p, c: rc, h: p + 0.04 * m, l: top - (0.06 + rng() * 0.06) * m }); p = rc;
+  const rc = p - (0.06 + rng() * 0.04) * m * sc; past.push({ o: p, c: rc, h: p + 0.04 * m * sc, l: top - (0.06 + rng() * 0.06) * m }); p = rc;
   // (cassure et retest ne définissent pas les bornes du range)
   return { past, future: rally(rng, m, p, 5).candles, zones: rangeZones(m, Rt).map((z) => ({ ...z, until: past.length - brk })) };
 };
@@ -718,9 +724,10 @@ const rangeSweepChoch: NewScenario["build"] = (rng, m) => {
   const sw = past.length;
   const sc = p + (0.12 + rng() * 0.08) * m; past.push({ o: p, c: sc, h: sc + 0.04 * m, l: tip }); p = sc;
   const brk = legExact(rng, m, p, LH + (0.4 + rng() * 0.1) * m, { retrace: 0, step: [0.45, 0.7] }); past.push(...brk.candles); p = brk.p;
-  const back = legExact(rng, m, p, LH + (0.24 + rng() * 0.06) * m, { retrace: 0 }); past.push(...back.candles); p = back.p;
+  const sz = scaleOf(past, m);
+  const back = legExact(rng, m, p, LH + (0.55 + rng() * 0.1) * m * sz, { retrace: 0 }); past.push(...back.candles); p = back.p;
   // bougie du retest : mèche au contact du swing high cassé, rejetée ; la clôture reste au-dessus
-  const rc = p - (0.04 + rng() * 0.04) * m; past.push({ o: p, c: rc, h: p + 0.04 * m, l: LH + (0.03 + rng() * 0.04) * m }); p = rc;
+  const rc = p - (0.06 + rng() * 0.04) * m * sz; past.push({ o: p, c: rc, h: p + 0.04 * m * sz, l: LH + (0.03 + rng() * 0.04) * m }); p = rc;
   // (le sweep, le CHoCH et le retest ne définissent pas les bornes du range)
   return {
     past, future: rally(rng, m, p, 5, Rt - 0.4 * m).candles,
@@ -1242,11 +1249,12 @@ function doubleBottom(outcome: "confirme" | "anticipe"): NewScenario["build"] {
       past.push({ o: p, c: cb, h: cb + 0.05 * m, l: p - 0.04 * m });
       p = cb;
       const r1 = rally(rng, m, p, 1); past.push(...r1.candles); p = r1.p;
-      const back = legExact(rng, m, p, N + (0.32 + rng() * 0.08) * m, { retrace: 0 });
+      const sc = scaleOf(past, m);
+      const back = legExact(rng, m, p, N + (0.55 + rng() * 0.1) * m * sc, { retrace: 0 });
       past.push(...back.candles); p = back.p;
       // retest : la mèche revient sur la ligne de cou, la clôture reste au-dessus
-      const rc = p - (0.04 + rng() * 0.04) * m;
-      past.push({ o: p, c: rc, h: p + 0.04 * m, l: N - (0.04 + rng() * 0.06) * m });
+      const rc = p - (0.06 + rng() * 0.04) * m * sc;
+      past.push({ o: p, c: rc, h: p + 0.04 * m * sc, l: N - (0.04 + rng() * 0.06) * m });
       p = rc;
       return { past, future: rally(rng, m, p, 5).candles, zones: [support, { kind: "resistance", y1: N - 0.12 * m, y2: N + 0.04 * m, label: "Ligne de cou", until: past.length - brk }] };
     }
@@ -1423,10 +1431,11 @@ function openingRange(outcome: "retest" | "sans_retest"): NewScenario["build"] {
     p = cb;
     if (outcome === "retest") {
       const r1 = rally(rng, m, p, 1); past.push(...r1.candles); p = r1.p;
-      const back = legExact(rng, m, p, hi0 + (0.32 + rng() * 0.08) * m, { retrace: 0 });
+      const sc = scaleOf(past, m);
+      const back = legExact(rng, m, p, hi0 + (0.55 + rng() * 0.1) * m * sc, { retrace: 0 });
       past.push(...back.candles); p = back.p;
-      const rc = p - (0.04 + rng() * 0.04) * m;
-      past.push({ o: p, c: rc, h: p + 0.04 * m, l: hi0 - (0.04 + rng() * 0.05) * m });
+      const rc = p - (0.06 + rng() * 0.04) * m * sc;
+      past.push({ o: p, c: rc, h: p + 0.04 * m * sc, l: hi0 - (0.04 + rng() * 0.05) * m });
       p = rc;
       return { past, future: rally(rng, m, p, 5).candles, zones: zones.map((z, i) => (i === 0 ? { ...z, until: past.length - brk } : z)), window };
     }
@@ -1515,7 +1524,7 @@ const turtleSoup: NewScenario["build"] = (rng, m) => {
   const sc = H - (0.18 + rng() * 0.08) * m;
   const sweep = { o: p, c: sc, h: H + (0.5 + rng() * 0.15) * m, l: Math.min(p, sc) - (0.04 + rng() * 0.04) * m };
   past.push(sweep); p = sc;
-  const cc = sweep.l - (0.12 + rng() * 0.08) * m;
+  const cc = sweep.l - (0.3 + rng() * 0.15) * m * scaleOf(past, m);
   past.push({ o: p, c: cc, h: p + 0.04 * m, l: cc - 0.05 * m });
   p = cc;
   return { past, future: drop(rng, m, p, 5).candles, zones: [{ kind: "resistance", y1: H - 0.06 * m, y2: H + 0.06 * m, label: "PDH" }] };

@@ -8,6 +8,8 @@
 //  - retour dans le range : clôture au-dessus d'un niveau après une mèche sous lui (sweep, faux breakout) ;
 //  - breakout confirmé : clôture franche (corps au moins égal au corps médian) au-delà d'une résistance.
 // Les bougies suivantes ne contredisent jamais le signal (aucune clôture sous le plus bas du signal à l'achat).
+// Le signal se voit au premier coup d'œil : amplitude d'au moins MIN_SIGNAL_SIZE fois l'amplitude médiane des
+// 10 bougies d'avant (règle PO, 2026-10-30).
 import type { Candle, ChartZone } from "./shared";
 
 export type SignalKind = "rejet" | "engulfing" | "sommet local dépassé" | "retour dans le range" | "breakout confirmé";
@@ -15,29 +17,79 @@ export type SignalKind = "rejet" | "engulfing" | "sommet local dépassé" | "ret
 const body = (k: Candle) => Math.abs(k.c - k.o);
 const med = (a: number[]) => { const s = [...a].sort((x, y) => x - y); return s.length ? s[s.length >> 1] : 0; };
 
+export type ReactionKind = "rejet" | "engulfing";
+
+/** Taille minimale d'un signal visible (règle PO, 2026-10-30) : son amplitude atteint 0,6 fois l'amplitude
+ *  médiane des 10 bougies d'avant ; plus petit, il ne se voit pas au premier coup d'œil. */
+export const MIN_SIGNAL_SIZE = 0.6;
+
+/** Réaction d'un scénario : marteaux (étoiles filantes) et engulfings alternent d'un scénario à l'autre */
+export function reactionKindOf(id: string): ReactionKind {
+  let h = 0;
+  for (const ch of id) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return h % 2 ? "engulfing" : "rejet";
+}
+
+const flip = (k: Candle): Candle => ({ o: -k.o, c: -k.c, h: -k.l, l: -k.h });
+
 /**
- * Réaction ajoutée avant l'entrée quand le scénario n'en montre pas (règle PO) : une bougie de rejet
- * (marteau à l'achat, étoile filante à la vente) partie de la dernière clôture. Sa mèche va vers le
- * niveau sans dépasser `floor` (stops, plus bas de la structure, bas de la zone touchée) ; son corps
- * fait 40 % de la mèche. La suite reste la même (sa première bougie repart de la nouvelle clôture) :
- * stops et objectifs gardent leur issue. Sans place pour une mèche lisible (moins de 0,08 m), la
- * réaction est une clôture au-dessus du plus haut des trois bougies précédentes (sommet local dépassé).
+ * Réaction ajoutée avant l'entrée quand le scénario n'en montre pas (règle PO), partie de la dernière
+ * clôture et dimensionnée sur les bougies voisines (amplitude : l'amplitude médiane des 10 dernières) :
+ *  - rejet : marteau à l'achat (étoile filante à la vente), mèche de 60 % vers le niveau, corps de 30 % ;
+ *  - engulfing : bougie qui avale le corps de la précédente (ou clôture au-dessus du plus haut des trois
+ *    précédentes quand celle-ci va déjà dans le sens du trade), corps d'au moins 85 % de l'amplitude.
+ * La mèche ne dépasse jamais `floor` (stops, plus bas de la structure, bas de la zone touchée) : sans place
+ * pour elle, la réaction est un engulfing. La suite reste la même (sa première bougie repart de la nouvelle
+ * clôture) : stops et objectifs gardent leur issue.
  */
-export function addReaction(past: Candle[], future: Candle[], dir: 1 | -1, m: number, floor: number): { past: Candle[]; future: Candle[]; entry: number } {
-  const p = past[past.length - 1].c;
-  const room = dir * (p - floor);
+export function addReaction(past: Candle[], future: Candle[], dir: 1 | -1, m: number, floor: number, prefer: ReactionKind = "rejet", touch?: number): { past: Candle[]; future: Candle[]; entry: number } {
+  // lecture à l'achat : à la vente, graphique renversé
+  const cs = dir === 1 ? past : past.map(flip);
+  const f = dir === 1 ? floor : -floor;
+  const n = cs.length, prev = cs[n - 1], p = prev.c;
+  const T = Math.max(med(cs.slice(-10).map((k) => k.h - k.l)), 0.3 * m);
+  const room = p - f;
+  // mèche du marteau : au moins 0,6 bougie médiane ; jusqu'au niveau (le plancher) quand il est à portée
+  // (un niveau tracé à portée, `touch` : la mèche vient au contact)
+  const t = touch === undefined ? undefined : dir === 1 ? touch : -touch;
+  const w = t !== undefined && p - t <= 2 * T
+    ? Math.min(Math.max(0.6 * T, p - t + 0.05 * T), Math.max(0.6 * T, room - 0.02 * T))
+    : Math.min(Math.max(0.6 * T, room - 0.02 * T), 1.4 * T);
+  const hammer = (): Candle => Math.round(p * 1e4) % 2
+    // marteau vert ou rouge (selon la dernière clôture) : la couleur de la dernière bougie ne donne pas la réponse
+    ? { o: p, l: p - w, c: p + 0.35 * w, h: p + 0.45 * w }
+    : { o: p, l: p - w, c: p - 0.15 * w, h: p + 0.07 * w };
+  const engulf = (): Candle => {
+    const top = prev.c < prev.o ? prev.o : Math.max(...cs.slice(-3).map((x) => x.h));
+    const c = Math.max(top + 0.1 * T, p + 0.85 * T);
+    return { o: p, c, l: Math.max(p - 0.06 * T, Math.min(p, f)), h: c + 0.08 * T };
+  };
+  const fut = dir === 1 ? future : future.map(flip);
   let k: Candle;
-  if (room >= 0.08 * m) {
-    const wick = Math.min(0.45 * m, 0.9 * room), b = 0.4 * wick, top = 0.05 * wick;
-    k = { o: p, c: p + dir * b, h: dir === 1 ? p + b + top : p + wick, l: dir === 1 ? p - wick : p - b - top };
-  } else {
-    const prior = past.slice(-3);
-    const c = dir === 1 ? Math.max(...prior.map((x) => x.h)) + 0.08 * m : Math.min(...prior.map((x) => x.l)) - 0.08 * m;
-    k = { o: p, c, h: dir === 1 ? c + 0.04 * m : p + 0.03 * m, l: dir === 1 ? p - 0.03 * m : c - 0.04 * m };
+  if (room >= 0.6 * T && (prefer === "rejet" || room <= 1.6 * T || (t !== undefined && p - t <= 2 * T))) k = hammer();
+  else {
+    k = engulf();
+    // l'engulfing monte l'entrée : la suite doit finir au-delà, sinon marteau
+    if (fut.length && fut[fut.length - 1].c - k.c < 0.3 * T && room >= 0.6 * T) k = hammer();
   }
+  const kk = dir === 1 ? k : flip(k);
   const f0 = future[0];
-  const next = f0 ? [{ ...f0, o: k.c, h: Math.max(f0.h, k.c), l: Math.min(f0.l, k.c) }, ...future.slice(1)] : future;
-  return { past: [...past, k], future: next, entry: k.c };
+  const next = f0 ? [{ ...f0, o: kk.c, h: Math.max(f0.h, kk.c), l: Math.min(f0.l, kk.c) }, ...future.slice(1)] : future;
+  return { past: [...past, kk], future: next, entry: kk.c };
+}
+
+/**
+ * Signal visible avant l'entrée (graphique brut) : le signal que la scène a dessiné (marteau, engulfing, doji
+ * confirmé…) reste tel quel, ses affirmations en dépendent ; le constructeur choisit ensuite un tirage où il se voit
+ * (taille vérifiée sur le graphique final). Sans signal, une réaction dimensionnée est ajoutée (addReaction).
+ */
+export function ensureVisibleSignal(past: Candle[], future: Candle[], dir: 1 | -1, zones: ChartZone[], m: number, floor: number, prefer: ReactionKind = "rejet"): { past: Candle[]; future: Candle[]; entry: number } {
+  if (findSignal(past, dir, zones)) return { past, future, entry: past[past.length - 1].c };
+  // niveau tracé le plus proche du côté de la réaction (bord tourné vers le prix)
+  const p = past[past.length - 1].c;
+  const edges = zones.map((z) => (dir === 1 ? Math.max(z.y1, z.y2) : Math.min(z.y1, z.y2))).filter((e) => dir * (p - e) > 0);
+  const touch = edges.length ? edges.reduce((a, b) => (dir * (p - b) < dir * (p - a) ? b : a)) : undefined;
+  return addReaction(past, future, dir, m, floor, prefer, touch);
 }
 
 /** Limite de la mèche de réaction : au plus 0,3 m sous le plus bas des 8 dernières bougies (un marteau peut
@@ -53,8 +105,15 @@ export function reactionFloor(past: Candle[], zones: ChartZone[], dir: 1 | -1, m
 
 /** Signal de réaction ou de confirmation visible à l'entrée (dernière clôture du passé), ou null.
  *  Le signal est porté par l'une des trois dernières bougies ; les bougies suivantes le tiennent
- *  (aucune clôture sous son plus bas à l'achat, dernière clôture au-dessus du bas de son corps). */
+ *  (aucune clôture sous son plus bas à l'achat, dernière clôture au-dessus du bas de son corps), et il est
+ *  assez grand pour se voir (MIN_SIGNAL_SIZE). */
 export function entrySignal(past: Candle[], dir: 1 | -1, zones: ChartZone[] = []): SignalKind | null {
+  const sig = findSignal(past, dir, zones);
+  return sig && sig.size >= MIN_SIGNAL_SIZE ? sig.kind : null;
+}
+
+/** Signal, bougie qui le porte et sa taille : amplitude rapportée à l'amplitude médiane des 10 bougies d'avant */
+export function findSignal(past: Candle[], dir: 1 | -1, zones: ChartZone[] = []): { kind: SignalKind; at: number; size: number } | null {
   const n = past.length;
   if (n < 5) return null;
   // à la vente, on lit le graphique renversé : mêmes règles qu'à l'achat
@@ -65,7 +124,10 @@ export function entrySignal(past: Candle[], dir: 1 | -1, zones: ChartZone[] = []
     const s = signalAt(cs, j, zs, mb);
     if (!s) continue;
     const k = cs[j];
-    if (cs.slice(j + 1).every((x) => x.c > k.l) && cs[n - 1].c >= Math.min(k.o, k.c)) return s;
+    if (cs.slice(j + 1).every((x) => x.c > k.l) && cs[n - 1].c >= Math.min(k.o, k.c)) {
+      const mr = med(cs.slice(Math.max(0, j - 10), j).map((x) => x.h - x.l)) || 1e-9;
+      return { kind: s, at: j, size: (k.h - k.l) / mr };
+    }
   }
   return null;
 }

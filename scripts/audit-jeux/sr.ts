@@ -79,7 +79,8 @@ for (const [lang, B, F, P, T] of GAMES.filter(([l]) => auditee(l))) {
     record(`Buy/Sell/No Trade|${t.id}|${d}|${lang}`, ch.past, ch.zones, `seed ${seed} ${vol}`);
   }
   for (const t of F.MISTAKE_TEMPLATES) for (let n = 0; n < ROUNDS; n++) {
-    const seed = seedOf(t.id, n); const ctx = auditCtx(seed); const vol = VOLS[n % 3];
+    // (volatilité imposée par le scénario, comme dans le jeu)
+    const seed = seedOf(t.id, n); const ctx = auditCtx(seed); const vol = t.metaOverride?.volatility ?? VOLS[n % 3];
     const ch = F.withAssetPrices(F.buildScenarioChart(t, seed, vol, ctx), { id: t.id, ...ctx, seed });
     record(`Trouve l'erreur|${t.id}|toutes|${lang}`, ch.past, ch.zones, `seed ${seed} ${vol}`);
   }

@@ -19,7 +19,7 @@ import {
   type Candle, type ChartZone,
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, srGuards, tpBeforeLevels, withRoleChanges, naturalFuture,
 } from "./shared";
-import { addReaction, entrySignal, reactionFloor } from "./confirmation";
+import { ensureVisibleSignal, entrySignal, reactionFloor, reactionKindOf } from "./confirmation";
 import { levelsReadable } from "./level-proof";
 import { withTracedZones, keepSwingTips } from "./zone-trace";
 import type { NotionId } from "./notions";
@@ -2999,9 +2999,18 @@ export function buildPlaceStopChart(
 ): PlaceStopChart {
   // Réaction visible avant l'entrée (règle PO) : la passe de réalisme retaille parfois la bougie qui
   // portait le signal (plancher des mèches en volatilité élevée : le marteau devient doji) ; autre tirage
-  // dans ce cas (10 essais au plus). De même pour un niveau tracé illisible (lib/games/level-proof.ts)
+  // dans ce cas (80 essais au plus). De même pour un niveau tracé illisible (lib/games/level-proof.ts)
   let out = buildPlaceStopChart1(setup, seed, volatility, difficulty, ctx);
-  for (let k = 1; k <= 10 && (!entrySignal(out.past, out.direction === "BUY" ? 1 : -1, out.zones) || !levelsReadable(out.past, out.zones)); k++) out = buildPlaceStopChart1(setup, (seed + k * 0x6C8E9CF5) >>> 0, volatility, difficulty, ctx);
+  // (et invariants du jeu après la réaction : suite dans le sens du trade, R/R d'au moins 2 pour le bon stop)
+  const ok = (c: PlaceStopChart) => {
+    const sg = c.direction === "BUY" ? 1 : -1, good = c.stops.find((x) => x.type === "logical") ?? c.stops.find((x) => x.type === "wide");
+    const rr = c.tp === null || !good ? 2 : Math.abs(c.tp - c.entry) / Math.abs(c.entry - good.price);
+    return !!entrySignal(c.past, sg, c.zones) && levelsReadable(c.past, c.zones) && sg * (c.future[c.future.length - 1].c - c.entry) > 0 && (setup === "tight_consolidation" || rr >= 2.05)
+      && Object.values(claims).every((f) => f(c) === null);
+  };
+  // (affirmations du scénario : un graphique ne contredit jamais son énoncé)
+  const claims = PLACE_STOP_TEMPLATES.find((t) => t.id === setup)?.claims ?? {};
+  for (let k = 1; k <= 80 && !ok(out); k++) out = buildPlaceStopChart1(setup, (seed + k * 0x6C8E9CF5) >>> 0, volatility, difficulty, ctx);
   return out;
 }
 
@@ -3192,14 +3201,13 @@ function rebalanceCorrectPosition(chart: PlaceStopChart, seed: number): PlaceSto
   };
 }
 
-/** Entrée donnée par le scénario : jamais sans réaction visible (règle PO). Sans signal, un autre tirage de la
- *  scène (elle montre le plus souvent la réaction qu'elle décrit) ; après 5 essais, bougie de rejet ajoutée */
+/** Entrée donnée par le scénario : jamais sans réaction visible (règle PO) : le signal de la scène, agrandi
+ *  s'il est trop petit, sinon une réaction dimensionnée (marteau ou engulfing selon le scénario) */
 function buildScenarioChart(setup: PlaceStopSetupKey, seed: number, volatility: Volatility, difficulty: Difficulty): PlaceStopChart {
   const ch = buildScenarioChart0(setup, seed, volatility, difficulty), m = VOL_MULT[volatility];
   const dir = ch.direction === "BUY" ? 1 : -1;
-  for (let k = 0; k <= 5; k++) { const c = k ? buildScenarioChart0(setup, (seed + k * 0x6C8E9CF5) >>> 0, volatility, difficulty) : ch; if (entrySignal(c.past, dir, c.zones)) return c; }
-  const r = addReaction(ch.past, ch.future, dir, m, reactionFloor(ch.past, ch.zones, dir, m, ch.stops.map((x) => x.price)));
-  return { ...ch, past: r.past, future: r.future, entry: r.entry, domain: chartDomain([...r.past, ...r.future], ch.zones) };
+  const r = ensureVisibleSignal(ch.past, ch.future, dir, ch.zones, m, reactionFloor(ch.past, ch.zones, dir, m, ch.stops.map((x) => x.price)), reactionKindOf(setup));
+  return r.past === ch.past ? ch : { ...ch, past: r.past, future: r.future, entry: r.entry, domain: chartDomain([...r.past, ...r.future], ch.zones) };
 }
 
 function buildScenarioChart0(

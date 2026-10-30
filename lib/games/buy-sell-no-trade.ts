@@ -18,7 +18,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges, naturalFuture,
 } from "./shared";
 import { withTracedZones, keepSwingTips } from "./zone-trace";
-import { addReaction, entrySignal, reactionFloor } from "./confirmation";
+import { ensureVisibleSignal, entrySignal, reactionFloor, reactionKindOf } from "./confirmation";
 import { levelsReadable } from "./level-proof";
 import type { NotionId } from "./notions";
 import { BSNT_NEW } from "./bsnt-scenarios";
@@ -1617,9 +1617,15 @@ export function buildChart(
   difficulty: Difficulty = "intermediate",
   ctx: MarketCtx = {},
 ): BuySellChart {
-  // Niveaux lisibles (règle PO, lib/games/level-proof.ts) : sinon autre tirage (5 essais au plus)
+  // Niveaux lisibles (règle PO, lib/games/level-proof.ts) et réaction visible avant un BUY / SELL juste
+  // (la passe de réalisme élargit les bougies voisines) : sinon autre tirage (16 essais au plus)
+  const ans = SCENARIO_TEMPLATES.find((t) => t.id === setup)?.correctAnswer;
+  // (affirmations du scénario : un graphique ne contredit jamais son énoncé)
+  const claims = SCENARIO_TEMPLATES.find((t) => t.id === setup)?.claims ?? {};
+  const ok = (c: BuySellChart) => levelsReadable(c.past, c.zones) && (!ans || ans === "NO_TRADE" || !!entrySignal(c.past, ans === "BUY" ? 1 : -1, c.zones))
+    && Object.values(claims).every((f) => f(c) === null);
   let out = buildChart1(setup, seed, volatility, difficulty, ctx);
-  for (let k = 1; k <= 5 && !levelsReadable(out.past, out.zones); k++) out = buildChart1(setup, (seed + k * 0x3B9AC9FB) >>> 0, volatility, difficulty, ctx);
+  for (let k = 1; k <= 16 && !ok(out); k++) out = buildChart1(setup, (seed + k * 0x3B9AC9FB) >>> 0, volatility, difficulty, ctx);
   return out;
 }
 
@@ -1645,17 +1651,18 @@ export function buildChartRaw(
   const ch = withEntryReaction(setup, seed, (s) => buildChartRaw0(setup, s, volatility, difficulty), VOL_MULT[volatility]);
   return { ...ch, future: naturalFuture(ch.future, mulberry32((seed ^ 0x27D4EB2F) >>> 0), VOL_MULT[volatility]) };
 }
-/** BUY / SELL justes seulement après une réaction visible (règle PO). Sans signal, un autre tirage de la
- *  scène (elle montre le plus souvent la réaction qu'elle décrit : rejet, mèche, clôture revenue) ; après
- *  5 essais, bougie de rejet ajoutée au premier tirage */
+/** Scénarios dont la dernière bougie est le déclencheur dessiné (fausse cassure à longue mèche) : aucune réaction
+ *  ajoutée après lui, le constructeur choisit un tirage où il se voit */
+const DESIGNED_TRIGGER: ReadonlySet<string> = new Set(["false_breakout_bullish", "false_breakout_bearish"]);
+/** BUY / SELL justes seulement après une réaction visible (règle PO) : le signal de la scène tel quel, sinon une
+ *  réaction dimensionnée (marteau ou engulfing selon le scénario) */
 function withEntryReaction(setup: SetupKey, seed: number, build: (seed: number) => BuySellChart, m: number): BuySellChart {
   const ch = build(seed);
   const ans = SCENARIO_TEMPLATES.find((t) => t.id === setup)?.correctAnswer;
-  if (!ans || ans === "NO_TRADE") return ch;
+  if (!ans || ans === "NO_TRADE" || DESIGNED_TRIGGER.has(setup)) return ch;
   const dir = ans === "BUY" ? 1 : -1;
-  for (let k = 0; k <= 5; k++) { const c = k ? build((seed + k * 0x6C8E9CF5) >>> 0) : ch; if (entrySignal(c.past, dir, c.zones)) return c; }
-  const r = addReaction(ch.past, ch.future, dir, m, reactionFloor(ch.past, ch.zones, dir, m, ch.guards ?? []));
-  return { ...ch, past: r.past, future: r.future, domain: chartDomain([...r.past, ...r.future], ch.zones) };
+  const r = ensureVisibleSignal(ch.past, ch.future, dir, ch.zones, m, reactionFloor(ch.past, ch.zones, dir, m, ch.guards ?? []), reactionKindOf(setup));
+  return r.past === ch.past ? ch : { ...ch, past: r.past, future: r.future, domain: chartDomain([...r.past, ...r.future], ch.zones) };
 }
 function buildChartRaw0(
   setup: SetupKey,

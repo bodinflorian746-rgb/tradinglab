@@ -20,8 +20,9 @@ import { realizeChart, type MarketCtx } from "./candle-realism";
 import { mapStudy, withVolumeStudy, type GameStudy, type StudySpec } from "./volume-study";
 import { assetPriceMap, mapCandle, mapDomain, mapZone, priceEpsilon } from "./price-scale";
 import type { NotionId } from "./notions";
-import { BTT_NEW, type BttRaw, type BttClaim } from "./btt-scenarios";
+import { BTT_NEW, REACT, type BttRaw, type BttClaim } from "./btt-scenarios";
 import { levelsReadable } from "./level-proof";
+import { ensureVisibleSignal, entrySignal, reactionFloor, reactionKindOf } from "./confirmation";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext, Candle, ChartZone };
 
@@ -97,6 +98,9 @@ export interface BuildTradeTemplate {
   build?:         (rng: () => number, m: number) => BttRaw;
   /** Affirmations vérifiées sur le graphique (scripts/audit-jeux/coherence-btt.ts) */
   claims?:        Record<string, BttClaim>;
+  /** Pullback profond en ordre limite anticipé, sans réaction : Avancé seulement, stop serré sous la zone,
+   *  explication qui le dit (règle PO, 2026-10-30). Sinon, l'ordre attend une réaction au niveau. */
+  anticipated?:   true;
 }
 
 export interface BuildTradeInstance extends BuildTradeTemplate {
@@ -123,6 +127,8 @@ export interface BuildTradeChart {
   tps:     Record<TpType,    number>;
   // Prix actuel = dernier close du past (pour l'entry market)
   currentPrice: number;
+  /** Pullback profond sur réaction : niveau où l'ordre attend la réaction ; l'entrée est à sa clôture */
+  orderLevel?: number;
   /** Scénarios construits : niveaux invisibles que les mèches du passé ne franchissent pas (réalisme) */
   guards?: number[];
   /** Actif des prix (posé par withAssetPrices) ; absent en échelle abstraite */
@@ -153,7 +159,7 @@ const ORIGINAL_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Tendance haussière nette. Le prix vient de finir un pullback.",
     optimal: { entry: "deep_pullback", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Dans une tendance nette, chercher le meilleur prix (pullback profond) se défend : le stop reste court derrière le swing low, et l'objectif peut être large dans le sens de la tendance.",
+    optimalExplain: "Dans une tendance nette, chercher le meilleur prix (pullback profond) se défend : on attend le retour près du swing low et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture ; le stop reste court derrière le swing low, et l'objectif peut être large dans le sens de la tendance.",
     lessons: {
       beginner:     "Dans une tendance, acheter au creux du pullback plutôt qu'au milieu de la hausse garde un stop court sous le swing low : le R/R s'améliore sans prendre plus de risque (leçon Débutant 6).",
       intermediate: "Dans une tendance, acheter au creux du pullback plutôt qu'au milieu de la hausse garde un stop court sous le swing low : le R/R s'améliore sans prendre plus de risque (leçon Débutant 6).",
@@ -171,7 +177,7 @@ const ORIGINAL_TEMPLATES: BuildTradeTemplate[] = [
     macroContext: "normal",
     context: "Tendance baissière nette. Le prix vient de finir un rebond.",
     optimal: { entry: "deep_pullback", stop: "logical", tp: "ambitious" },
-    optimalExplain: "Dans une tendance baissière nette, vendre au meilleur prix (pullback profond) se défend : le stop reste court au-dessus du swing high, et l'objectif peut être large dans le sens de la tendance.",
+    optimalExplain: "Dans une tendance baissière nette, vendre au meilleur prix (pullback profond) se défend : on attend le retour près du swing high et une bougie de réaction (étoile filante ou engulfing), puis on entre à sa clôture ; le stop reste court au-dessus du swing high, et l'objectif peut être large dans le sens de la tendance.",
     lessons: {
       beginner:     "Dans une tendance baissière, vendre au sommet du rebond plutôt qu'au milieu de la baisse garde un stop court au-dessus du swing high : le R/R s'améliore sans prendre plus de risque (leçon Débutant 6).",
       intermediate: "Dans une tendance baissière, vendre au sommet du rebond plutôt qu'au milieu de la baisse garde un stop court au-dessus du swing high : le R/R s'améliore sans prendre plus de risque (leçon Débutant 6).",
@@ -1249,6 +1255,7 @@ export function withAssetPrices(chart: BuildTradeChart, inst: { asset: Asset; se
     tps:     map(chart.tps),
     currentPrice: f(chart.currentPrice),
     asset:   inst.asset,
+    ...(chart.orderLevel !== undefined ? { orderLevel: f(chart.orderLevel) } : {}),
     ...(chart.study ? { study: mapStudy(f, chart.study) } : {}),
   };
 }
@@ -1265,9 +1272,15 @@ export function planRR(chart: BuildTradeChart, picks: ChoiceSet): number {
 
 /** Graphique du scénario, avec la passe de réalisme des bougies (niveaux clés : zones, entrées, stops, TP). */
 export function buildBuildTradeChart(template: BuildTradeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): BuildTradeChart {
-  // Niveaux lisibles (règle PO, lib/games/level-proof.ts) : sinon autre tirage (5 essais au plus)
+  // Niveaux lisibles (règle PO, lib/games/level-proof.ts) ; entrée agressive ou pullback profond sur réaction
+  // justes : réaction visible
+  // (la passe de réalisme élargit les bougies voisines) ; sinon autre tirage (30 essais au plus)
+  const dir = template.direction === "BUY" ? 1 : -1;
+  const reacts = (c: BuildTradeChart) => { const j = c.future.findIndex((k) => Math.abs(k.c - c.entries.deep_pullback) < 1e-9); return j >= 0 && !!entrySignal([...c.past, ...c.future.slice(0, j + 1)], dir, c.zones); };
+  const ok = (c: BuildTradeChart) => levelsReadable(c.past, c.zones) && (template.optimal.entry !== "aggressive" || !!entrySignal(c.past, dir, c.zones))
+    && (template.optimal.entry !== "deep_pullback" || !!template.anticipated || reacts(c));
   let out = buildBuildTradeChart1(template, seed, vol, ctx);
-  for (let k = 1; k <= 5 && !levelsReadable(out.past, out.zones); k++) out = buildBuildTradeChart1(template, (seed + k * 0x3B9AC9FB) >>> 0, vol, ctx);
+  for (let k = 1; k <= 30 && !ok(out); k++) out = buildBuildTradeChart1(template, (seed + k * 0x3B9AC9FB) >>> 0, vol, ctx);
   return out;
 }
 
@@ -1283,9 +1296,58 @@ function buildBuildTradeChart1(template: BuildTradeTemplate, seed: number, vol: 
   const out = keepSwingTips(breakStrayLevels(withRoleChanges(withTracedZones(keepSwingTips(realizeChart(ch, { past: template.build ? [...zones, ...Object.values(ch.stops), ...(ch.guards ?? [])] : zones, future: [...zones, ...plan] }, seed, { ...ctx, volatility: vol })))), Object.values(ch.stops), { positive: true }));
   // Objectif du bon plan jamais posé sur un niveau tracé (règle PO) : avant la bande, une fois les zones calées
   const opt = template.optimal.tp, tpOpt = tpBeforeLevels(out.tps[opt], out.entries[template.optimal.entry], out.zones, out.past);
-  const done = tpOpt === out.tps[opt] ? out : { ...out, tps: { ...out.tps, [opt]: tpOpt } };
+  const done = withReactionFill(tpOpt === out.tps[opt] ? out : { ...out, tps: { ...out.tps, [opt]: tpOpt } }, template, vol);
   // Volumes et profil (scénarios Volume Profile) : calculés sur les bougies finales
   return ch.studySpec ? withVolumeStudy(done, ch.studySpec, seed) : done;
+}
+
+/**
+ * Pullback profond sans anticipation (règle PO, 2026-10-30 : Débutant et Intermédiaire, et FVG Avancé) :
+ * l'ordre attend le retour au niveau ET une réaction ; l'entrée (calculée au plan) est la clôture de la bougie
+ * de réaction, juste au-delà du niveau. Après la passe de réalisme, la bougie qui vient à l'entrée devient un
+ * marteau (étoile filante à la vente) : mèche dans le niveau, sans toucher le stop du plan, clôture pile à
+ * l'entrée, amplitude d'au moins 0,65 bougie médiane voisine (la bougie d'avant clôture plus haut s'il le faut).
+ */
+function withReactionFill(ch: BuildTradeChart, t: BuildTradeTemplate, vol: Volatility): BuildTradeChart {
+  if (t.optimal.entry !== "deep_pullback" || t.anticipated || ch.orderLevel === undefined) return ch;
+  const sg = ch.direction === "BUY" ? 1 : -1;
+  const fl = (k: Candle): Candle => (sg === 1 ? k : { o: -k.o, c: -k.c, h: -k.l, l: -k.h });
+  const P = ch.past.map(fl), F = ch.future.map(fl);
+  const E = sg * ch.entries.deep_pullback, L = sg * ch.orderLevel, keep = sg * ch.stops[t.optimal.stop];
+  const i = F.findIndex((k) => k.l <= E);
+  if (i < 0) return ch;
+  const before = [...P, ...F.slice(0, i)].slice(-10).map((k) => k.h - k.l).sort((a, b) => a - b);
+  const T = Math.max(before[before.length >> 1] ?? 0, 0.3 * VOL_MULT[vol]);
+  const out = [...F];
+  const prevC = i > 0 ? out[i - 1].c : P[P.length - 1].c;
+  // mèche : dans le niveau, jamais jusqu'au stop ; corps (ouverture - clôture) plus court que la mèche
+  const low = Math.max(keep + 0.12 * T, Math.min(F[i].l, L - 0.1 * T, E - 0.55 * T));
+  const wick = E - low;
+  // (stop trop près de l'entrée : pas de place pour une mèche lisible, autre tirage)
+  if (wick < 0.3 * T) return ch;
+  let o = prevC, at = i;
+  if (o - E > 0.9 * wick || (o - low) + 0.04 * T < 0.65 * T) {
+    o = Math.min(Math.max(E + 0.5 * wick, low + 0.65 * T), E + 0.9 * wick);
+    if (i > 0) out[i - 1] = { ...out[i - 1], c: o, h: Math.max(out[i - 1].h, o), l: Math.min(out[i - 1].l, o) };
+    else {
+      // la 1re bougie part du prix actuel (fixe) : elle s'arrête avant l'entrée, la réaction vient juste après
+      if (out.length < 3) return ch;
+      at = 1;
+      const b0 = Math.min(prevC, o);
+      out[0] = { o: prevC, c: o, h: Math.max(prevC, o) + 0.03 * T, l: Math.min(b0, Math.max(b0 - 0.03 * T, E + 0.01 * T)) };
+    }
+  }
+  // (jamais de bougie blanche : ouverture et clôture distinctes)
+  if (Math.abs(o - E) < 0.03 * T && at > 0) { o = E + 0.03 * T; out[at - 1] = { ...out[at - 1], c: o, h: Math.max(out[at - 1].h, o), l: Math.min(out[at - 1].l, o) }; }
+  out[at] = { o, l: low, c: E, h: Math.max(o, E) + 0.04 * T };
+  if (at + 1 < out.length) {
+    const n1 = out[at + 1];
+    // (la bougie suivante repart de l'entrée ; si elle y clôturait déjà, elle prolonge un peu la reprise)
+    const c1 = Math.abs(n1.c - E) < 0.03 * T ? E + 0.12 * T : n1.c;
+    out[at + 1] = { o: E, c: c1, h: Math.max(n1.h, E, c1), l: Math.min(n1.l, E, c1) };
+    if (c1 !== n1.c && at + 2 < out.length) { const n2 = out[at + 2]; out[at + 2] = { ...n2, o: c1, h: Math.max(n2.h, c1), l: Math.min(n2.l, c1) }; }
+  }
+  return { ...ch, future: out.map(fl) };
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */
@@ -1293,10 +1355,16 @@ export function buildBuildTradeChartRaw(template: BuildTradeTemplate, seed: numb
   const rng = mulberry32(seed);
   const m = VOL_MULT[vol];
   if (template.build) {
-    const r = template.build(rng, m);
+    let r = template.build(rng, m);
+    // Entrée agressive juste : signal de la scène agrandi s'il est trop petit, tant que l'entrée ne bouge pas
+    if (template.optimal.entry === "aggressive") {
+      const dir = template.direction === "BUY" ? 1 : -1;
+      const v = ensureVisibleSignal(r.past, r.future, dir, r.zones, m, reactionFloor(r.past, r.zones, dir, m, Object.values(r.stops)), reactionKindOf(template.id));
+      if (Math.abs(v.entry - r.past[r.past.length - 1].c) < 1e-9) r = { ...r, past: v.past, future: v.future };
+    }
     const { domain } = finalize(r.past, r.future, r.zones, [...Object.values(r.entries), ...Object.values(r.stops), ...Object.values(r.tps)]);
     const cur = r.past[r.past.length - 1].c;
-    const out = keepPricesPositive({ past: r.past, future: r.future, zones: r.zones, domain, direction: template.direction, entries: r.entries, stops: r.stops, tps: r.tps, currentPrice: cur, ...(r.studySpec ? { studySpec: r.studySpec } : {}) });
+    const out = keepPricesPositive({ past: r.past, future: r.future, zones: r.zones, domain, direction: template.direction, entries: r.entries, stops: r.stops, tps: r.tps, currentPrice: cur, ...(r.studySpec ? { studySpec: r.studySpec } : {}), ...(r.orderLevel !== undefined ? { orderLevel: r.orderLevel } : {}) });
     return r.guards ? { ...out, guards: r.guards.map((g) => g + out.currentPrice - cur) } : out;
   }
   let shape: ShapeOutput;
@@ -1345,6 +1413,13 @@ export function buildBuildTradeChartRaw(template: BuildTradeTemplate, seed: numb
         logical: swingHigh + 0.4 * effM,
         wide:    swingHigh + (shape.ref.wideM ?? 1.2) * effM,
       };
+  // Pullback profond sur réaction (règle PO) : entrée à la clôture de la réaction, juste au-delà du niveau
+  const orderLevel = template.optimal.entry === "deep_pullback" && !template.anticipated ? entries.deep_pullback : undefined;
+  if (orderLevel !== undefined) {
+    const sg = direction === "BUY" ? 1 : -1;
+    // (jamais au prix de l'entrée agressive : au moins 0,25 bougie en dessous à l'achat)
+    entries.deep_pullback = sg * Math.min(sg * (orderLevel + sg * REACT * effM), sg * entryRef - 0.25 * effM);
+  }
   // TPs (depuis entry, multiples de risque)
   // On utilise l'entry "confirmation" comme référence pour le risque
   const ref = direction === "BUY" ? entries.confirmation : entries.confirmation;
@@ -1379,6 +1454,9 @@ export function buildBuildTradeChartRaw(template: BuildTradeTemplate, seed: numb
     const dFast = dist(tps.fast);
     const lo = dFast + 0.25 * (dAmb - dFast), hi = dAmb - 0.25 * (dAmb - dFast);
     if (dFast < dAmb) tps.balanced = E + dir * Math.min(hi, Math.max(lo, dist(tps.balanced)));
+    // (trois objectifs distincts, l'ambitieux entre 3 et 5R : au moins une demi-unité de risque entre eux, en descendant)
+    if (dist(tps.balanced) > dist(tps.ambitious) - 0.5 * R) tps.balanced = tps.ambitious - dir * 0.5 * R;
+    if (dist(tps.fast) > dist(tps.balanced) - 0.5 * R) tps.fast = tps.balanced - dir * 0.5 * R;
   }
   // Suite prolongée jusqu'à FUTURE_LENGTH bougies, tirage séparé (le début de
   // la suite ne change pas) : le marché va au bout du plan optimal au lieu de
@@ -1408,6 +1486,7 @@ export function buildBuildTradeChartRaw(template: BuildTradeTemplate, seed: numb
     stops,
     tps,
     currentPrice: entryRef,
+    ...(orderLevel !== undefined ? { orderLevel } : {}),
   });
 }
 
@@ -1434,6 +1513,7 @@ function keepPricesPositive(ch: BuildTradeChart): BuildTradeChart {
     entries: add(ch.entries),
     stops:   add(ch.stops),
     tps:     add(ch.tps),
+    ...(ch.orderLevel !== undefined ? { orderLevel: ch.orderLevel + d } : {}),
     currentPrice: ch.currentPrice + d,
   };
 }

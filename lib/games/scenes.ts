@@ -76,44 +76,49 @@ export type BullSignal = "marteau" | "engulfing" | "doji" | "doji_confirme" | "d
  * (corps quasi nul, mèches des deux côtés), doji confirmé (doji puis bougie verte qui clôture
  * au-dessus de son plus haut), double mèche (deux mèches basses de suite dans la zone).
  * Renvoie aussi l'indice (dans `candles`) de la bougie signal et le plus bas du signal.
+ * `ref` (bougies d'avant) : le signal se dimensionne sur elles (règle PO, une réaction se voit au premier coup
+ * d'œil) ; ses distances grandissent avec l'amplitude médiane des 10 dernières (jamais en dessous des valeurs de base).
  */
-export function bullSignal(rng: Rng, m: number, p: number, lo: number, hi: number, kind: BullSignal, color: "verte" | "rouge" = rng() < 0.6 ? "rouge" : "verte"): { candles: Candle[]; p: number; at: number; low: number } {
+export function bullSignal(rng: Rng, m: number, p: number, lo: number, hi: number, kind: BullSignal, color: "verte" | "rouge" = rng() < 0.6 ? "rouge" : "verte", ref?: Candle[], maxScale = 1.8): { candles: Candle[]; p: number; at: number; low: number } {
   const out: Candle[] = [];
+  const rs = (ref ?? []).slice(-10).map((k) => k.h - k.l).sort((a, b) => a - b);
+  const sc = Math.min(maxScale, Math.max(1, (rs[rs.length >> 1] ?? 0) / (0.75 * m)));
   const tip = () => lo + (hi - lo) * (0.25 + rng() * 0.5);
   const push = (k: Candle) => { out.push(k); p = k.c; };
   const reach = (target: number) => { if (Math.abs(p - target) > 0.04 * m) push(candle(p, target, (0.05 + rng() * 0.08) * m, (0.04 + rng() * 0.05) * m)); };
   switch (kind) {
     case "marteau": {
-      reach(hi + (0.5 + rng() * 0.15) * m);
-      const b = (0.07 + rng() * 0.05) * m;
+      reach(hi + (0.5 + rng() * 0.15) * m * sc);
+      const b = (0.07 + rng() * 0.05) * m * sc;
       const o = p, c = color === "verte" ? o + b : o - b;
-      push({ o, c, h: Math.max(o, c) + (0.01 + rng() * 0.025) * m, l: tip() });
+      push({ o, c, h: Math.max(o, c) + (0.01 + rng() * 0.025) * m * sc, l: tip() });
       break;
     }
     case "engulfing": {
-      reach(hi + (0.5 + rng() * 0.12) * m);
-      const o1 = p, c1 = o1 - (0.28 + rng() * 0.1) * m;
+      reach(hi + (0.5 + rng() * 0.12) * m * sc);
+      const o1 = p, c1 = o1 - (0.28 + rng() * 0.1) * m * sc;
       push({ o: o1, c: c1, h: o1 + (0.03 + rng() * 0.05) * m, l: tip() });
-      const c2 = o1 + (0.12 + rng() * 0.12) * m;
+      // (la verte avale la rouge et la dépasse franchement : la réaction se voit)
+      const c2 = o1 + (0.22 + rng() * 0.12) * m * sc;
       push({ o: c1, c: c2, h: c2 + (0.03 + rng() * 0.06) * m, l: c1 - (0.02 + rng() * 0.04) * m });
       break;
     }
     case "doji":
     case "doji_confirme": {
-      reach(hi + (0.28 + rng() * 0.08) * m);
+      reach(hi + (0.28 + rng() * 0.08) * m * sc);
       const o = p, c = o + (rng() < 0.5 ? 1 : -1) * (0.006 + rng() * 0.012) * m;
-      push({ o, c, h: Math.max(o, c) + (0.2 + rng() * 0.1) * m, l: tip() });
+      push({ o, c, h: Math.max(o, c) + (0.2 + rng() * 0.1) * m * sc, l: tip() });
       if (kind === "doji_confirme") {
         const d = out[out.length - 1];
-        const c2 = d.h + (0.08 + rng() * 0.1) * m;
+        const c2 = d.h + (0.18 + rng() * 0.1) * m * sc;
         push({ o: p, c: c2, h: c2 + (0.03 + rng() * 0.05) * m, l: p - (0.02 + rng() * 0.04) * m });
         return { candles: out, p, at: out.length - 2, low: d.l };
       }
       break;
     }
     case "double_meche": {
-      reach(hi + (0.45 + rng() * 0.1) * m);
-      const o1 = p, c1 = o1 - (0.06 + rng() * 0.05) * m;
+      reach(hi + (0.55 + rng() * 0.1) * m * sc);
+      const o1 = p, c1 = o1 - (0.06 + rng() * 0.05) * m * sc;
       push({ o: o1, c: c1, h: o1 + (0.03 + rng() * 0.04) * m, l: tip() });
       // seconde mèche : bougie verte, ou rouge (la couleur ne fait pas le signal, la mèche si)
       const c2 = color === "verte" ? c1 + (0.08 + rng() * 0.06) * m : c1 - (0.04 + rng() * 0.03) * m;

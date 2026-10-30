@@ -18,7 +18,11 @@ type Difficulty = "beginner" | "intermediate" | "advanced";
 type Entry = "aggressive" | "confirmation" | "deep_pullback";
 type Stop = "tight" | "logical" | "wide";
 type Tp = "fast" | "balanced" | "ambitious";
-export interface BttOptimal { entry: Entry; stop: Stop; tp: Tp }
+/** limit : pullback profond en ordre limite anticipé (Avancé, stop serré) ; sinon il attend une réaction au niveau */
+export interface BttOptimal { entry: Entry; stop: Stop; tp: Tp; limit?: true }
+/** Pullback profond sur réaction : l'entrée est la clôture de la bougie de réaction, juste au-delà du niveau
+ *  (en bougie médiane abstraite) ; plan, objectifs et R/R se calculent sur elle */
+export const REACT = 0.15;
 
 /** Graphique construit, avant prix d'actif et passe de réalisme */
 export interface BttRaw {
@@ -26,6 +30,8 @@ export interface BttRaw {
   entries: Record<Entry, number>; stops: Record<Stop, number>; tps: Record<Tp, number>;
   /** Niveaux invisibles que la passe de réalisme ne laisse pas franchir aux mèches du passé */
   guards?: number[];
+  /** Pullback profond sur réaction : niveau où l'ordre attend la réaction */
+  orderLevel?: number;
   /** Volume Profile : phases d'échanges et profil demandés (lib/games/volume-study.ts) */
   studySpec?: StudySpec;
 }
@@ -34,6 +40,8 @@ export interface BttChartLike {
   past: Candle[]; future: Candle[]; zones: ChartZone[]; direction: "BUY" | "SELL";
   entries: Record<Entry, number>; stops: Record<Stop, number>; tps: Record<Tp, number>; currentPrice: number;
   study?: GameStudy;
+  /** Pullback profond sur réaction : niveau où l'ordre attend la réaction (l'entrée est à sa clôture) */
+  orderLevel?: number;
 }
 export type BttClaim = (ch: BttChartLike) => string | null;
 
@@ -45,6 +53,8 @@ export interface BttScenario {
   notions: readonly NotionId[]; trap?: string; conflict?: string;
   build: (rng: Rng, m: number) => BttRaw;
   claims: Record<string, BttClaim>;
+  /** Pullback profond en ordre limite anticipé, sans réaction (Avancé seulement, stop serré sous la zone) */
+  anticipated?: true;
 }
 
 // ─── Aides ────────────────────────────────────────────────────────────────────
@@ -80,6 +90,7 @@ const mirrored = (b: BttScenario["build"]): BttScenario["build"] => (rng, m) => 
     zones: mirrorZones(r.zones, AXIS).map((z) => (z.label === "Order Block" ? { ...z, label: "Order Block baissier" } : z)),
     entries: mapPrices(r.entries, f), stops: mapPrices(r.stops, f), tps: mapPrices(r.tps, f),
     ...(r.guards ? { guards: r.guards.map(f) } : {}),
+    ...(r.orderLevel !== undefined ? { orderLevel: f(r.orderLevel) } : {}),
     ...(r.studySpec ? { studySpec: { ...r.studySpec, ...(r.studySpec.profile?.side ? { profile: { ...r.studySpec.profile, side: (-r.studySpec.profile.side) as 1 | -1 } } : {}) } } : {}),
   };
 };
@@ -91,7 +102,7 @@ interface Scene { past: Candle[]; zones: ChartZone[]; deep: number; stops: [numb
 const GAP = 0.2;
 
 const STOP_AT: Record<Stop, number> = { tight: 0, logical: 1, wide: 2 };
-const entryOf = (o: BttOptimal, E0: number, deep: number, m: number) => (o.entry === "aggressive" ? E0 : o.entry === "confirmation" ? E0 + CONF * m : deep);
+const entryOf = (o: BttOptimal, E0: number, deep: number, m: number) => (o.entry === "aggressive" ? E0 : o.entry === "confirmation" ? E0 + CONF * m : o.limit ? deep : deep + REACT * m);
 /** R/R du TP optimal, par catégorie */
 const K: Record<Tp, [number, number]> = { fast: [1.65, 1.9], balanced: [2.35, 2.75], ambitious: [3.6, 4.2] };
 /** Niveau opposé à k × R de l'entrée optimale (R : risque du plan optimal) */
@@ -133,8 +144,9 @@ function futureFor(rng: Rng, m: number, s: Scene, o: BttOptimal, tps: Record<Tp,
     const stop1 = s.deep + (0.12 + rng() * 0.08) * m;
     while (p - stop1 > 0.6 * m) push(candle(p, p - (0.35 + rng() * 0.2) * m, (0.03 + rng() * 0.05) * m, (0.03 + rng() * 0.04) * m));
     if (p - stop1 > 0.02 * m) push(candle(p, stop1, (0.03 + rng() * 0.04) * m, 0.02 * m));
-    // rejet : la mèche va chercher le plus bas prévu, la clôture repart au-dessus du pullback
-    const c = Math.max(p, s.deep) + (0.2 + rng() * 0.12) * m;
+    // rejet : la mèche va chercher le plus bas prévu, la clôture repart au-dessus du pullback (sur réaction :
+    // exactement à l'entrée, la bougie est redessinée après la passe de réalisme)
+    const c = o.limit ? Math.max(p, s.deep) + (0.2 + rng() * 0.12) * m : s.deep + REACT * m;
     push({ o: p, c, h: c + (0.03 + rng() * 0.04) * m, l: low });
   }
   // plus bas permis pendant la montée : jamais le bon stop, jamais le pullback profond s'il n'est pas attendu
@@ -170,11 +182,13 @@ function futureFor(rng: Rng, m: number, s: Scene, o: BttOptimal, tps: Record<Tp,
 
 function assemble(rng: Rng, m: number, s: Scene, o: BttOptimal): BttRaw {
   const E0 = last(s.past).c;
-  const entries = { aggressive: E0, confirmation: E0 + CONF * m, deep_pullback: s.deep };
+  // (pullback profond sur réaction seulement quand il est la bonne entrée : sinon le prix ne revient pas au niveau)
+  const react = o.entry === "deep_pullback" && !o.limit;
+  const entries = { aggressive: E0, confirmation: E0 + CONF * m, deep_pullback: react ? s.deep + REACT * m : s.deep };
   const stops = { tight: s.stops[0], logical: s.stops[1], wide: s.stops[2] };
   const E = entries[o.entry], R = E - stops[o.stop];
   const tps = tpsFor(rng, m, o, E, R, entries.confirmation, s.level, s.tpGap);
-  return { past: s.past, future: futureFor(rng, m, s, o, tps), zones: s.zones, entries, stops, tps, ...(s.guards ? { guards: s.guards } : {}), ...(s.studySpec ? { studySpec: s.studySpec } : {}) };
+  return { past: s.past, future: futureFor(rng, m, s, o, tps), zones: s.zones, entries, stops, tps, ...(s.guards ? { guards: s.guards } : {}), ...(s.studySpec ? { studySpec: s.studySpec } : {}), ...(react ? { orderLevel: s.deep } : {}) };
 }
 
 // ─── Volume Profile (Avancé 10, sens haussier) ───────────────────────────────
@@ -456,7 +470,7 @@ const fvgPending = (rng: Rng, m: number, o: BttOptimal): Scene => {
 const flip = (k: Candle): Candle => ({ o: -k.o, c: -k.c, h: -k.l, l: -k.h });
 const neg = <K extends string>(r: Record<K, number>) => mapPrices(r, (v) => -v);
 export const asBull = (ch: BttChartLike): BttChartLike => ch.direction === "SELL"
-  ? { ...ch, past: ch.past.map(flip), future: ch.future.map(flip), zones: mirrorZones(ch.zones, 0), direction: "BUY", entries: neg(ch.entries), stops: neg(ch.stops), tps: neg(ch.tps), currentPrice: -ch.currentPrice }
+  ? { ...ch, past: ch.past.map(flip), future: ch.future.map(flip), zones: mirrorZones(ch.zones, 0), direction: "BUY", entries: neg(ch.entries), stops: neg(ch.stops), tps: neg(ch.tps), currentPrice: -ch.currentPrice, ...(ch.orderLevel !== undefined ? { orderLevel: -ch.orderLevel } : {}) }
   : ch;
 const zoneNamed = (ch: BttChartLike, re: RegExp) => ch.zones.find((z) => re.test(z.label));
 
@@ -515,7 +529,7 @@ const retraceNow = (min: number, max: number): BttClaim => (c) => {
 const deepAtRetrace = (min: number, max: number): BttClaim => (c) => {
   const ch = asBull(c), A = zoneNamed(ch, /^Plus bas précédent$/), B = zoneNamed(ch, /^Plus haut précédent$/);
   if (!A || !B) return "plus bas / plus haut précédent absents";
-  const r = (lo(B) - ch.entries.deep_pullback) / (lo(B) - hi(A));
+  const r = (lo(B) - (ch.orderLevel ?? ch.entries.deep_pullback)) / (lo(B) - hi(A));
   return r >= min && r <= max ? null : `pullback profond à ${(100 * r).toFixed(0)} % du mouvement (attendu ${100 * min} à ${100 * max} %)`;
 };
 const retestPending: BttClaim = (c) => {
@@ -559,7 +573,7 @@ const O = (entry: Entry, stop: Stop, tp: Tp): BttOptimal => ({ entry, stop, tp }
 const meche = O("aggressive", "wide", "fast"), engulf = O("aggressive", "tight", "balanced"), dojiPierce = O("confirmation", "wide", "fast");
 const extended = O("deep_pullback", "tight", "ambitious"), retest = O("deep_pullback", "tight", "ambitious"), fibo = O("deep_pullback", "wide", "ambitious");
 const structure = O("deep_pullback", "tight", "fast"), fakeout = O("aggressive", "wide", "balanced");
-const ob = O("aggressive", "tight", "ambitious"), sweep = O("aggressive", "wide", "fast"), sweepFar = O("aggressive", "wide", "ambitious"), ote = O("deep_pullback", "tight", "ambitious"), fvg = O("deep_pullback", "wide", "fast");
+const ob = O("aggressive", "tight", "ambitious"), sweep = O("aggressive", "wide", "fast"), sweepFar = O("aggressive", "wide", "ambitious"), ote: BttOptimal = { ...O("deep_pullback", "tight", "ambitious"), limit: true }, fvg = O("deep_pullback", "wide", "fast");
 
 export const BTT_NEW: BttScenario[] = [
   // ─── Débutant : une notion, un graphique propre ────────────────────────────
@@ -615,21 +629,21 @@ export const BTT_NEW: BttScenario[] = [
   { ...DEB, id: "deb_btt_rebond_loin", title: "Rebond déjà loin du support", direction: "BUY", htfBias: "bullish", notions: ["rr", "support_resistance"],
     context: "Un marteau a rebondi sur un support touché deux fois, et une bougie verte a suivi : le prix s'est déjà éloigné de la zone. Le plus haut précédent est loin au-dessus.",
     optimal: extended,
-    optimalExplain: "Entrée pullback profond : au prix actuel, le stop logique est loin et le R/R fond ; un ordre au retour vers le support garde un stop court. Stop proche : sous le support, avec une marge. TP ambitieux : juste avant le plus haut précédent, à près de quatre fois le risque depuis le support.",
+    optimalExplain: "Entrée pullback profond : au prix actuel, le stop logique est loin et le R/R fond ; on attend le retour vers le support et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture : le stop reste court. Stop proche : sous le support, avec une marge. TP ambitieux : juste avant le plus haut précédent, à près de quatre fois le risque depuis le support.",
     lessons: one("Le même trade peut avoir un bon ou un mauvais R/R selon le prix d'entrée : acheter près du support, avec un stop juste dessous, rapporte bien plus par unité de risque que d'acheter loin (leçon Débutant 6)."),
     build: plan(extended, onSupport("marteau", nearX(underZone, "deep"), { extend: 1 })),
     claims: { "prix déjà éloigné du support": awayFrom(/^Support$/, 0.7), "TP ambitieux juste avant le plus haut précédent": tpBeforeLevel("ambitious") } },
   { ...DEB, id: "deb_btt_rebond_loin_vente", title: "Rejet déjà loin de la résistance", direction: "SELL", htfBias: "bearish", notions: ["rr", "support_resistance"],
     context: "Une étoile filante a rejeté une résistance touchée deux fois, et une bougie rouge a suivi : le prix s'est déjà éloigné de la zone. Le plus bas précédent est loin en dessous.",
     optimal: extended,
-    optimalExplain: "Entrée pullback profond : au prix actuel, le stop logique est loin et le R/R fond ; un ordre au retour vers la résistance garde un stop court. Stop proche : au-dessus de la résistance, avec une marge. TP ambitieux : juste avant le plus bas précédent, à près de quatre fois le risque depuis la résistance.",
+    optimalExplain: "Entrée pullback profond : au prix actuel, le stop logique est loin et le R/R fond ; on attend le retour vers la résistance et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture : le stop reste court. Stop proche : au-dessus de la résistance, avec une marge. TP ambitieux : juste avant le plus bas précédent, à près de quatre fois le risque depuis la résistance.",
     lessons: one("Le même trade peut avoir un bon ou un mauvais R/R selon le prix d'entrée : vendre près de la résistance, avec un stop juste au-dessus, rapporte bien plus par unité de risque que de vendre loin (leçon Débutant 6)."),
     build: mirrored(plan(extended, onSupport("marteau", nearX(underZone, "deep"), { extend: 1 }))),
     claims: { "prix déjà éloigné du support": awayFrom(/^Support$/, 0.7), "TP ambitieux juste avant le plus haut précédent": tpBeforeLevel("ambitious") } },
   { ...DEB, id: "deb_btt_rr_trop_faible", title: "Au prix actuel, le R/R ne suffit pas", direction: "BUY", htfBias: "bullish", notions: ["rr", "support_resistance"],
     context: "Sur un support touché deux fois, un engulfing haussier vient de clôturer ; la mèche de sa bougie rouge a traversé la zone. Le plus haut précédent est proche.",
     optimal: O("deep_pullback", "wide", "fast"),
-    optimalExplain: "Entrée pullback profond : avec le stop sous la mèche de la bougie rouge, acheter maintenant donne un R/R sous 1 jusqu'au plus haut précédent ; au retour vers le support, il dépasse 1,5. Stop éloigné : sous la pointe de cette mèche, avec une marge. TP rapide : juste avant le plus haut précédent.",
+    optimalExplain: "Entrée pullback profond : avec le stop sous la mèche de la bougie rouge, acheter maintenant donne un R/R sous 1 jusqu'au plus haut précédent ; on attend le retour vers le support et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture, et le R/R dépasse 1,5. Stop éloigné : sous la pointe de cette mèche, avec une marge. TP rapide : juste avant le plus haut précédent.",
     lessons: one("Avant d'entrer, on mesure le R/R : distance jusqu'à l'objectif divisée par la distance jusqu'au stop. S'il est trop faible au prix actuel, on attend un meilleur prix, ou on passe (leçon Débutant 6)."),
     build: plan(O("deep_pullback", "wide", "fast"), onSupport("engulfing", pierceStops, { pierce: true })),
     claims: { "engulfing dont la bougie rouge traverse le support": engulfOn(/^Support$/, true), "TP rapide juste avant le plus haut précédent": tpBeforeLevel("fast"),
@@ -647,7 +661,7 @@ export const BTT_NEW: BttScenario[] = [
     trap: "Acheter tout de suite paraît éviter de rater le mouvement, mais le prix est loin du niveau cassé : le stop logique est loin et le R/R faible.",
     context: "Une résistance touchée deux fois vient d'être cassée par une bougie franche, et le prix a continué. Il n'est pas encore revenu tester la résistance cassée.",
     optimal: retest,
-    optimalExplain: "Entrée pullback profond : après un breakout, le prix revient souvent tester le niveau cassé, devenu support ; l'ordre s'y place. Stop proche : sous la résistance cassée, avec une marge, là où le changement de rôle échouerait. TP ambitieux : au-dessus, plus aucun niveau ne bloque.",
+    optimalExplain: "Entrée pullback profond : après un breakout, le prix revient souvent tester le niveau cassé, devenu support ; on attend le retour sur lui et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture. Stop proche : sous la résistance cassée, avec une marge, là où le changement de rôle échouerait. TP ambitieux : au-dessus, plus aucun niveau ne bloque.",
     lessons: one("Après un breakout, l'ancienne résistance devient support : l'entrée au retest donne un stop court juste sous elle, et un R/R large dans le sens du breakout (leçon Intermédiaire 3)."),
     build: plan(retest, (rng, m) => breakoutAway(rng, m)),
     claims: { "retest pas encore fait, puis fait dans la suite": retestPending } },
@@ -655,7 +669,7 @@ export const BTT_NEW: BttScenario[] = [
     trap: "Vendre tout de suite paraît éviter de rater le mouvement, mais le prix est loin du niveau cassé : le stop logique est loin et le R/R faible.",
     context: "Un support touché deux fois vient d'être cassé par une bougie franche, et le prix a continué. Il n'est pas encore revenu tester le support cassé.",
     optimal: retest,
-    optimalExplain: "Entrée pullback profond : après un breakout, le prix revient souvent tester le niveau cassé, devenu résistance ; l'ordre s'y place. Stop proche : au-dessus du support cassé, avec une marge. TP ambitieux : en dessous, plus aucun niveau ne bloque.",
+    optimalExplain: "Entrée pullback profond : après un breakout, le prix revient souvent tester le niveau cassé, devenu résistance ; on attend le retour sur lui et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture. Stop proche : au-dessus du support cassé, avec une marge. TP ambitieux : en dessous, plus aucun niveau ne bloque.",
     lessons: one("Après un breakout baissier, l'ancien support devient résistance : l'entrée au retest donne un stop court juste au-dessus, et un R/R large dans le sens du breakout (leçon Intermédiaire 3)."),
     build: mirrored(plan(retest, (rng, m) => breakoutAway(rng, m))),
     claims: { "retest pas encore fait, puis fait dans la suite": retestPending } },
@@ -663,7 +677,7 @@ export const BTT_NEW: BttScenario[] = [
     trap: "Le TP rapide sous le plus haut précédent paraît prudent, mais avec un stop sous le plus bas précédent, il rapporte à peine plus que le risque.",
     context: "Après une forte hausse, le prix corrige et n'a retracé qu'environ 40 % du mouvement. Le 61,8 % est plus bas, au-dessus du plus bas précédent.",
     optimal: fibo,
-    optimalExplain: "Entrée pullback profond : l'ordre attend le 61,8 % au lieu d'acheter le milieu du repli. Stop éloigné : sous le plus bas précédent, avec une marge ; pile dessous, une mèche peut le balayer, et le proche est dans le bruit du repli. TP ambitieux : le plus haut précédent rapporterait trop peu pour ce risque, la tendance vise plus loin.",
+    optimalExplain: "Entrée pullback profond : au lieu d'acheter le milieu du repli, on attend le retour au 61,8 % et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture. Stop éloigné : sous le plus bas précédent, avec une marge ; pile dessous, une mèche peut le balayer, et le proche est dans le bruit du repli. TP ambitieux : le plus haut précédent rapporterait trop peu pour ce risque, la tendance vise plus loin.",
     lessons: one("Un pullback à 61,8 % reste valable tant que le départ de la hausse tient : le stop va sous ce plus bas, avec une marge. Avec un stop aussi large, seul un objectif au-delà du plus haut précédent paie le risque (leçon Intermédiaire 9)."),
     build: plan(fibo, (rng, m) => fiboPending(rng, m)),
     claims: { "repli actuel de 30 à 50 %": retraceNow(0.3, 0.5), "pullback profond au 61,8 %": deepAtRetrace(0.6, 0.64) } },
@@ -671,7 +685,7 @@ export const BTT_NEW: BttScenario[] = [
     trap: "Le TP rapide au-dessus du plus bas précédent paraît prudent, mais avec un stop au-dessus du plus haut précédent, il rapporte à peine plus que le risque.",
     context: "Après une forte baisse, le prix rebondit et n'a retracé qu'environ 40 % du mouvement. Le 61,8 % est plus haut, sous le plus haut précédent.",
     optimal: fibo,
-    optimalExplain: "Entrée pullback profond : l'ordre attend le 61,8 % au lieu de vendre le milieu du rebond. Stop éloigné : au-dessus du plus haut précédent, avec une marge ; pile au-dessus, une mèche peut le balayer. TP ambitieux : le plus bas précédent rapporterait trop peu pour ce risque, la tendance vise plus loin.",
+    optimalExplain: "Entrée pullback profond : au lieu de vendre le milieu du rebond, on attend le retour au 61,8 % et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture. Stop éloigné : au-dessus du plus haut précédent, avec une marge ; pile au-dessus, une mèche peut le balayer. TP ambitieux : le plus bas précédent rapporterait trop peu pour ce risque, la tendance vise plus loin.",
     lessons: one("Un pullback à 61,8 % reste valable tant que le départ de la baisse tient : le stop va au-dessus de ce plus haut, avec une marge. Avec un stop aussi large, seul un objectif au-delà du plus bas précédent paie le risque (leçon Intermédiaire 9)."),
     build: mirrored(plan(fibo, (rng, m) => fiboPending(rng, m))),
     claims: { "repli actuel de 30 à 50 %": retraceNow(0.3, 0.5), "pullback profond au 61,8 %": deepAtRetrace(0.6, 0.64) } },
@@ -679,7 +693,7 @@ export const BTT_NEW: BttScenario[] = [
     trap: "Le TP ambitieux est tentant en tendance, mais le plus haut précédent est proche : le prix y bute souvent avant d'aller plus loin.",
     context: "La structure est haussière : un swing low plus haut, puis le plus haut précédent. Le prix se replie et descend vers le swing low.",
     optimal: structure,
-    optimalExplain: "Entrée pullback profond : l'ordre attend le prix près du swing low, au lieu d'acheter le milieu du repli. Stop proche : sous le swing low, avec une marge, là où la structure casserait. TP rapide : juste avant le plus haut précédent, premier obstacle.",
+    optimalExplain: "Entrée pullback profond : au lieu d'acheter le milieu du repli, on attend le retour près du swing low et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture. Stop proche : sous le swing low, avec une marge, là où la structure casserait. TP rapide : juste avant le plus haut précédent, premier obstacle.",
     lessons: one("Dans une structure haussière, le dernier plus bas porte la tendance : on achète près de lui, stop juste dessous, et on vise d'abord le plus haut précédent (leçon Intermédiaire 1)."),
     build: plan(structure, structurePullback),
     claims: { "structure haussière, prix entre le swing low et le plus haut précédent": structureUp, "TP rapide juste avant le plus haut précédent": tpBeforeLevel("fast") } },
@@ -687,7 +701,7 @@ export const BTT_NEW: BttScenario[] = [
     trap: "Le TP ambitieux est tentant en tendance, mais le plus bas précédent est proche : le prix y rebondit souvent avant d'aller plus loin.",
     context: "La structure est baissière : un swing high plus bas, puis le plus bas précédent. Le prix rebondit et remonte vers le swing high.",
     optimal: structure,
-    optimalExplain: "Entrée pullback profond : l'ordre attend le prix près du swing high, au lieu de vendre le milieu du rebond. Stop proche : au-dessus du swing high, avec une marge. TP rapide : juste avant le plus bas précédent, premier obstacle.",
+    optimalExplain: "Entrée pullback profond : au lieu de vendre le milieu du rebond, on attend le retour près du swing high et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture. Stop proche : au-dessus du swing high, avec une marge. TP rapide : juste avant le plus bas précédent, premier obstacle.",
     lessons: one("Dans une structure baissière, le dernier plus haut porte la tendance : on vend près de lui, stop juste au-dessus, et on vise d'abord le plus bas précédent (leçon Intermédiaire 1)."),
     build: mirrored(plan(structure, structurePullback)),
     claims: { "structure haussière, prix entre le swing low et le plus haut précédent": structureUp, "TP rapide juste avant le plus haut précédent": tpBeforeLevel("fast") } },
@@ -785,23 +799,23 @@ export const BTT_NEW: BttScenario[] = [
     conflict: "En UT inférieure, le repli rapide ressemble à un retournement ; l'UT supérieure reste haussière, et l'OTE achète justement ce repli.",
     context: "Après une forte impulsion, le prix se replie vite et a retracé environ la moitié du mouvement. La zone OTE (62 à 79 %) est plus bas, au-dessus du plus bas précédent.",
     optimal: ote,
-    optimalExplain: "Entrée pullback profond : l'ordre attend la zone OTE, vers 70 %. Stop proche : sous le plus bas précédent, avec une marge, là où l'OTE est invalidée. TP ambitieux : au-delà du plus haut précédent, dans le sens de l'UT supérieure.",
+    optimalExplain: "Entrée pullback profond, anticipée et assumée : l'ordre limite attend la zone OTE, vers 70 %, sans attendre de réaction ; en contrepartie, le stop est serré. Stop proche : sous le plus bas précédent, juste sous la zone, avec une marge, là où l'OTE est invalidée. TP ambitieux : au-delà du plus haut précédent, dans le sens de l'UT supérieure.",
     lessons: one("L'OTE place l'entrée entre 62 et 79 % du retracement, avec le stop sous le départ de l'impulsion : le risque est court, l'objectif au-delà du plus haut précédent (leçon Avancé 5)."),
-    build: plan(ote, (rng, m) => otePending(rng, m)),
+    build: plan(ote, (rng, m) => otePending(rng, m)), anticipated: true,
     claims: { "repli actuel de 40 à 58 %": retraceNow(0.4, 0.58), "pullback profond dans la zone OTE": deepAtRetrace(0.62, 0.79) } },
   { ...ADV, id: "adv_btt_ote_vente", title: "Rebond rapide, zone OTE plus haut", direction: "SELL", htfBias: "bearish", notions: ["ote", "multi_ut"],
     conflict: "En UT inférieure, le rebond rapide ressemble à un retournement ; l'UT supérieure reste baissière, et l'OTE vend justement ce rebond.",
     context: "Après une forte baisse, le prix rebondit vite et a retracé environ la moitié du mouvement. La zone OTE (62 à 79 %) est plus haut, sous le plus haut précédent.",
     optimal: ote,
-    optimalExplain: "Entrée pullback profond : l'ordre attend la zone OTE, vers 70 %. Stop proche : au-dessus du plus haut précédent, avec une marge. TP ambitieux : au-delà du plus bas précédent, dans le sens de l'UT supérieure.",
+    optimalExplain: "Entrée pullback profond, anticipée et assumée : l'ordre limite attend la zone OTE, vers 70 %, sans attendre de réaction ; en contrepartie, le stop est serré. Stop proche : au-dessus du plus haut précédent, juste au-dessus de la zone, avec une marge. TP ambitieux : au-delà du plus bas précédent, dans le sens de l'UT supérieure.",
     lessons: one("L'OTE place l'entrée entre 62 et 79 % du retracement, avec le stop au-dessus du départ de la baisse : le risque est court, l'objectif au-delà du plus bas précédent (leçon Avancé 5)."),
-    build: mirrored(plan(ote, (rng, m) => otePending(rng, m))),
+    build: mirrored(plan(ote, (rng, m) => otePending(rng, m))), anticipated: true,
     claims: { "repli actuel de 40 à 58 %": retraceNow(0.4, 0.58), "pullback profond dans la zone OTE": deepAtRetrace(0.62, 0.79) } },
   { ...ADV, id: "adv_btt_fvg", title: "Retour attendu dans un FVG haussier", direction: "BUY", htfBias: "bullish", notions: ["fvg", "entree_precision"],
     conflict: "Une mèche qui traverse le FVG donne l'impression qu'il est cassé ; seule une clôture dessous l'invaliderait.",
     context: "Une impulsion a laissé un FVG haussier, puis le prix a atteint le plus haut précédent. Il redescend vers le FVG.",
     optimal: fvg,
-    optimalExplain: "Entrée pullback profond : l'ordre attend le milieu du FVG. Stop éloigné : sous la bougie qui a créé le FVG, avec une marge ; dans le FVG ou pile dessous, une mèche peut le toucher sans invalider la zone. TP rapide : juste avant le plus haut précédent.",
+    optimalExplain: "Entrée pullback profond : on attend le retour dans le FVG et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture. Stop éloigné : sous la bougie qui a créé le FVG, avec une marge ; dans le FVG ou pile dessous, une mèche peut le toucher sans invalider la zone. TP rapide : juste avant le plus haut précédent.",
     lessons: one("Un FVG est une zone, pas une ligne : le prix peut la traverser d'une mèche. Le stop va sous la bougie d'origine du FVG, et l'entrée au milieu de la zone garde un R/R correct (leçon Avancé 2)."),
     build: plan(fvg, fvgPending),
     claims: { "FVG touché d'une mèche, jamais cassé en clôture": fvgHoldsOnClose, "TP rapide juste avant le plus haut précédent": tpBeforeLevel("fast") } },
@@ -809,17 +823,17 @@ export const BTT_NEW: BttScenario[] = [
     conflict: "Une mèche qui traverse le FVG donne l'impression qu'il est cassé ; seule une clôture au-dessus l'invaliderait.",
     context: "Une baisse a laissé un FVG baissier, puis le prix a atteint le plus bas précédent. Il remonte vers le FVG.",
     optimal: fvg,
-    optimalExplain: "Entrée pullback profond : l'ordre attend le milieu du FVG. Stop éloigné : au-dessus de la bougie qui a créé le FVG, avec une marge. TP rapide : juste avant le plus bas précédent.",
+    optimalExplain: "Entrée pullback profond : on attend le retour dans le FVG et une bougie de réaction (marteau ou engulfing), puis on entre à sa clôture. Stop éloigné : au-dessus de la bougie qui a créé le FVG, avec une marge. TP rapide : juste avant le plus bas précédent.",
     lessons: one("Un FVG est une zone, pas une ligne : le prix peut la traverser d'une mèche. Le stop va au-dessus de la bougie d'origine du FVG, et l'entrée au milieu de la zone garde un R/R correct (leçon Avancé 2)."),
     build: mirrored(plan(fvg, fvgPending)),
     claims: { "FVG touché d'une mèche, jamais cassé en clôture": fvgHoldsOnClose, "TP rapide juste avant le plus haut précédent": tpBeforeLevel("fast") } },
   { ...ADV, id: "adv_btt_bougie_force", title: "Bougie de displacement loin du support", direction: "BUY", htfBias: "bullish", notions: ["entree_precision", "volatilite"],
     conflict: "La bougie de displacement donne envie d'acheter tout de suite ; mais elle a étiré le prix loin du support, et au marché le stop logique est loin.",
     context: "Le prix a touché un support défendu deux fois, puis une grande bougie verte l'a envoyé loin au-dessus de la zone. Le plus haut précédent est plus haut.",
-    optimal: O("deep_pullback", "tight", "balanced"),
-    optimalExplain: "Entrée pullback profond : après une bougie aussi ample, le prix revient souvent vers la zone ; l'ordre y attend. Stop proche : sous le support, avec une marge. TP équilibré : juste avant le plus haut précédent.",
+    optimal: { ...O("deep_pullback", "tight", "balanced"), limit: true },
+    optimalExplain: "Entrée pullback profond, anticipée et assumée : après une bougie aussi ample, le prix revient souvent vers la zone ; l'ordre limite y attend, sans attendre de réaction, et en contrepartie le stop est serré. Stop proche : juste sous le support, avec une marge. TP équilibré : juste avant le plus haut précédent.",
     lessons: one("Une entrée de précision attend le retour au niveau plutôt que de courir après une bougie de displacement : le stop reste court, le R/R reste bon (leçon Avancé 7)."),
-    build: plan(O("deep_pullback", "tight", "balanced"), (rng, m, o) => onSupport("marteau", nearX(underZone, "deep"), { deepAt: 0.3 + rng() * 0.06, force: true })(rng, m, o)),
+    build: plan({ ...O("deep_pullback", "tight", "balanced"), limit: true }, (rng, m, o) => onSupport("marteau", nearX(underZone, "deep"), { deepAt: 0.3 + rng() * 0.06, force: true })(rng, m, o)), anticipated: true,
     claims: { "bougie de displacement en dernière bougie": forceAway, "prix déjà éloigné du support": awayFrom(/^Support$/, 1), "TP équilibré juste avant le plus haut précédent": tpBeforeLevel("balanced") } },
   { ...ADV, id: "adv_btt_sweep_hesitant", title: "Sweep sans clôture franche", direction: "BUY", htfBias: "bullish", notions: ["chasse_aux_stops", "liquidite"],
     conflict: "La mèche sous le plus bas précédent peut être un sweep ou le début d'un vrai breakout : la petite clôture juste au-dessus n'a pas encore tranché.",

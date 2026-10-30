@@ -16,7 +16,7 @@ export const MIN_DEPARTURE = 0.8;
 const med = (a: number[]) => [...a].sort((x, y) => x - y)[Math.floor(a.length / 2)] || 0;
 
 /** Touches nettes d'un niveau [lo, hi], touches confuses (contact trop long ou départ trop court), cassures */
-export function cleanTouches(cs: Candle[], lo: number, hi: number, from = 0, to = cs.length - 1) {
+export function cleanTouches(cs: Candle[], lo: number, hi: number, from = 0, to = cs.length - 1, departure = MIN_DEPARTURE) {
   const a = Math.max(0, from), b = Math.min(cs.length - 1, to);
   const mr = med(cs.map((k) => k.h - k.l)) || med(cs.slice(1).map((k, i) => Math.abs(k.c - cs[i].c)));
   const tol = 0.25 * mr;
@@ -29,7 +29,7 @@ export function cleanTouches(cs: Candle[], lo: number, hi: number, from = 0, to 
       if (start >= 0 && last === side) {
         const ahead = cs.slice(i, Math.min(b + 1, i + 4));
         const away = side === "above" ? Math.max(...ahead.map((x) => x.h)) - hi : lo - Math.min(...ahead.map((x) => x.l));
-        if (i - start <= MAX_CONTACT && away >= MIN_DEPARTURE * mr) { touches++; if (breaks) retest = true; } else messy++;
+        if (i - start <= MAX_CONTACT && away >= departure * mr) { touches++; if (breaks) retest = true; } else messy++;
       } else if (last && last !== side) breaks++;
       start = -1; last = side;
     } else if (last && start < 0) start = i;
@@ -45,7 +45,12 @@ export function cleanProofError(cs: Candle[], lo: number, hi: number, from?: num
   return `${touches} touche${touches > 1 ? "s" : ""} nette${touches > 1 ? "s" : ""}${confuse}${breaks ? ", breakout sans retest net" : ""} (au moins 2 touches nettes, ou un breakout suivi d'un retest net)`;
 }
 
-/** Tous les supports et résistances tracés sont prouvés par des touches nettes avant la question */
+/** Tous les supports et résistances tracés sont prouvés par des touches nettes avant la question (les constructeurs
+ *  gardent une marge sur le départ : les prix d'actif, arrondis, ne font pas basculer une touche limite) */
 export function levelsReadable(past: Candle[], zones: ChartZone[]): boolean {
-  return zones.every((z) => !z.label || !SR_LABEL.test(z.label) || !cleanProofError(past, Math.min(z.y1, z.y2), Math.max(z.y1, z.y2)));
+  return zones.every((z) => {
+    if (!z.label || !SR_LABEL.test(z.label)) return true;
+    const t = cleanTouches(past, Math.min(z.y1, z.y2), Math.max(z.y1, z.y2), 0, past.length - 1, MIN_DEPARTURE + 0.1);
+    return t.touches >= 2 || t.retest;
+  });
 }

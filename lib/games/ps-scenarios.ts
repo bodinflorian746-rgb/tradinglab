@@ -126,14 +126,14 @@ function hammerOnSupport(rng: Rng, m: number, pierce: boolean) {
   const s = supportScene(rng, m);
   const sig = pierce
     ? (() => { const out: Candle[] = []; let p = s.p; const t = b.hi + (0.55 + rng() * 0.1) * m; out.push(candle(p, t, 0.05 * m, 0.04 * m)); p = t; const c = p - (0.07 + rng() * 0.04) * m; out.push({ o: p, c, h: p + 0.02 * m, l: b.lo - (0.38 + rng() * 0.1) * m }); return { candles: out, p: c, low: out[1].l }; })()
-    : bullSignal(rng, m, s.p, b.lo, b.hi, "marteau", rng() < 0.7 ? "rouge" : "verte");
+    : bullSignal(rng, m, s.p, b.lo, b.hi, "marteau", rng() < 0.7 ? "rouge" : "verte", s.past);
   return { past: [...s.past, ...sig.candles], entry: sig.p, low: sig.low, b };
 }
 /** Engulfing haussier sur un support, mèche de la bougie rouge à travers la zone (« perce ») ou dedans */
 function engulfOnSupport(rng: Rng, m: number, pierce: boolean) {
   const b = band(m);
   const s = supportScene(rng, m);
-  const sig = bullSignal(rng, m, s.p, b.lo, b.hi, "engulfing");
+  const sig = bullSignal(rng, m, s.p, b.lo, b.hi, "engulfing", undefined, s.past);
   const past = [...s.past, ...sig.candles];
   if (pierce) past[past.length - 2] = { ...past[past.length - 2], l: b.lo - (0.38 + rng() * 0.1) * m };
   const low = Math.min(past[past.length - 2].l, past[past.length - 1].l);
@@ -158,7 +158,7 @@ export function swingSetup(rng: Rng, m: number) {
   }
   // (bougie de reprise sans mèche basse : la pointe du swing low reste celle du creux ; elle avale la
   // bougie du creux, engulfing : la réaction est visible avant l'entrée, règle PO)
-  const c1 = candle(p, Math.max(p + (0.3 + rng() * 0.1) * m, Math.max(past[at].o, past[at].c) + (0.05 + rng() * 0.04) * m), 0.05 * m, 0); past.push(c1); p = c1.c;
+  const c1 = candle(p, Math.max(p + (0.45 + rng() * 0.12) * m, Math.max(past[at].o, past[at].c) + (0.08 + rng() * 0.05) * m), 0.05 * m, 0); past.push(c1); p = c1.c;
   const c2 = candle(p, p + (0.25 + rng() * 0.1) * m, 0.05 * m, 0.04 * m); past.push(c2); p = c2.c;
   return { past, entry: p, sl, at };
 }
@@ -308,7 +308,7 @@ const inter = {
     // range assez haut pour un objectif avant le haut du range (bande calée sur ses touches) à 1:2 au moins
     const R = (5.3 + rng() * 0.5) * m, b = band(m);
     const s = rangeScene(rng, m, R, 4);
-    const sig = bullSignal(rng, m, s.p, b.lo, b.hi, "marteau", rng() < 0.7 ? "rouge" : "verte");
+    const sig = bullSignal(rng, m, s.p, b.lo, b.hi, "marteau", rng() < 0.7 ? "rouge" : "verte", s.past);
     const past = [...s.past, ...sig.candles], entry = sig.p;
     // sous toutes les pointes qui dessinent le bas du range (le tracé se cale sur elles)
     const floor = Math.min(sig.low, b.lo, ...past.map((k) => k.l));
@@ -332,7 +332,10 @@ const inter = {
     // clôture sous la pointe la plus basse du range (le tracé de la borne se cale sur elle)
     const cA = Math.min(b.lo, ...past.map((k) => k.l)) - (0.55 + rng() * 0.08) * m; const tipA = cA - (0.35 + rng() * 0.1) * m;
     past.push({ o: p, c: cA, h: p + 0.04 * m, l: tipA }); p = cA;
-    const cB = b.hi + (0.3 + rng() * 0.1) * m; past.push({ o: p, c: cB, h: cB + 0.05 * m, l: p - 0.03 * m }); p = cB;
+    // (bougie de réintégration franche : la réaction se voit au premier coup d'œil)
+    // (à l'échelle des bougies du range : amplitude médiane des 10 dernières, rapportée à 0,75 bougie de base)
+    const rs = past.slice(-10).map((k) => k.h - k.l).sort((x, y) => x - y), sc = Math.min(1.8, Math.max(1, rs[rs.length >> 1] / (0.75 * m)));
+    const cB = b.hi + (0.5 + rng() * 0.15) * m * sc; past.push({ o: p, c: cB, h: cB + 0.05 * m, l: p - 0.03 * m }); p = cB;
     const logical = tipA - (0.2 + rng() * 0.08) * m;
     // dans la mèche du faux breakout (entre son corps et sa pointe)
     const tight = cA - (cA - tipA) * (0.35 + rng() * 0.15);
@@ -417,7 +420,7 @@ const inter = {
 const adv: Record<"obProche" | "fvgMilieu" | "sweepProche" | "sweepMilieu" | "oteMilieu", (rng: Rng, m: number) => PsRaw> = {
   obProche: (rng: Rng, m: number): PsRaw => {
     const s = obScene(rng, m);
-    const sig = bullSignal(rng, m, s.p, s.ob.lo, s.zone.y2, "marteau");
+    const sig = bullSignal(rng, m, s.p, s.ob.lo, s.zone.y2, "marteau", undefined, s.past);
     const past = [...s.past, ...sig.candles], entry = sig.p;
     const logical = Math.min(s.zone.y1, sig.low) - (0.2 + rng() * 0.08) * m;
     const d = entry - logical;
@@ -435,7 +438,7 @@ const adv: Record<"obProche" | "fvgMilieu" | "sweepProche" | "sweepMilieu" | "ot
     const fvg = { lo: imp.candles[0].h, hi: imp.candles[2].l };
     const more = rally(rng, m, p, 2); past.push(...more.candles); p = more.p;
     const back = legTo(rng, m, p, fvg.hi + (0.35 + rng() * 0.1) * m, { retrace: 0.3 }); past.push(...back.candles); p = back.p;
-    const sig = bullSignal(rng, m, p, fvg.lo + 0.3 * (fvg.hi - fvg.lo), fvg.hi, "marteau"); past.push(...sig.candles);
+    const sig = bullSignal(rng, m, p, fvg.lo + 0.3 * (fvg.hi - fvg.lo), fvg.hi, "marteau", undefined, past); past.push(...sig.candles);
     const entry = sig.p;
     const logical = fvg.lo - (0.2 + rng() * 0.08) * m;
     const tight = fvg.hi + (entry - fvg.hi) * (0.4 + rng() * 0.15);
@@ -533,7 +536,7 @@ const pocScene = (far: boolean) => (rng: Rng, m: number): PsRaw => {
   past.push({ o: p, c: c0, h: Math.max(p, c0) + (0.03 + rng() * 0.03) * m, l: L });
   const at = past.length - 1;
   // (une seule bougie de reprise : la mèche reste une bougie déclencheuse, jamais retaillée par la passe de réalisme)
-  const c1 = c0 + (0.32 + rng() * 0.1) * m;
+  const c1 = c0 + (0.45 + rng() * 0.12) * m;
   past.push({ o: c0, c: c1, h: c1 + (0.04 + rng() * 0.03) * m, l: c0 - (0.03 + rng() * 0.03) * m });
   const entry = c1;
   const tight = C - (0.17 + rng() * 0.03) * m;

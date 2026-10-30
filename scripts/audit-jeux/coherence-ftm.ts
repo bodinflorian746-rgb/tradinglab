@@ -65,11 +65,11 @@ function realFvg(ch: ScenarioChart): { i: number } | null {
   return null;
 }
 
-// Forme partagée : tendance haussière puis repli (entrée au repli)
+// Forme partagée : tendance haussière puis repli (entrée au repli, sur la réaction qui peut le terminer)
 const upThenPullback: Check = (ch) => {
-  const t = ch.past.slice(0, 8), r = ch.past.slice(-4);
+  const t = ch.past.slice(0, 8), r = ch.past.slice(-4), r5 = ch.past.slice(-5, -1);
   if (!(last(t).c > t[0].o)) return "pas de hausse avant le repli";
-  return last(r).c < r[0].o ? null : "les 4 dernières bougies ne forment pas un repli";
+  return last(r).c < r[0].o || last(r5).c < r5[0].o ? null : "les 4 dernières bougies ne forment pas un repli";
 };
 const entryNow: Check = (ch) => (ch.entry !== undefined && Math.abs(ch.entry - last(ch.past).c) <= E ? null : "pas d'entrée au dernier cours");
 

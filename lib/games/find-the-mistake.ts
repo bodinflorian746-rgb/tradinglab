@@ -11,7 +11,7 @@ import {
   VOL_MULT, mulberry32, clamp, candle, bullImpulse3, chartDomain, levelTouches, markPrevLow, rangeLegs, srGuards, withRoleChanges,
 } from "./shared";
 import { withTracedZones } from "./zone-trace";
-import { addReaction, entrySignal, reactionFloor } from "./confirmation";
+import { ensureVisibleSignal, entrySignal, reactionFloor, reactionKindOf } from "./confirmation";
 import { levelsReadable } from "./level-proof";
 import type { NotionId } from "./notions";
 import { FTM_NEW } from "./ftm-scenarios";
@@ -1085,11 +1085,14 @@ export const NON_ENTRY_MISTAKES: ReadonlySet<AnyMistakeId> = new Set<AnyMistakeI
 
 export function buildScenarioChart(template: MistakeTemplate, seed: number, vol: Volatility, ctx: MarketCtx = {}): ScenarioChart {
   // Erreur ailleurs que dans l'entrée : la réaction reste visible après la passe de réalisme (règle PO) ;
-  // niveaux tracés lisibles (lib/games/level-proof.ts) ; sinon autre tirage (5 essais au plus)
+  // niveaux tracés lisibles (lib/games/level-proof.ts) ; sinon autre tirage (40 essais au plus)
   let out = buildScenarioChart1(template, seed, vol, ctx);
   const dir = template.direction === "BUY" ? 1 : -1;
-  const ok = (c: ScenarioChart) => levelsReadable(c.past, c.zones) && (!NON_ENTRY_MISTAKES.has(template.correctMistake) || !!entrySignal(c.past, dir, c.zones));
-  for (let k = 1; k <= 5 && !ok(out); k++) out = buildScenarioChart1(template, (seed + k * 0x6C8E9CF5) >>> 0, vol, ctx);
+  // (affirmations du scénario : un graphique ne contredit jamais son énoncé)
+  const claims = template.claims ?? {};
+  const ok = (c: ScenarioChart) => levelsReadable(c.past, c.zones) && (!NON_ENTRY_MISTAKES.has(template.correctMistake) || c.entry === undefined || !!entrySignal(c.past, dir, c.zones))
+    && Object.values(claims).every((f) => f(c) === null);
+  for (let k = 1; k <= 40 && !ok(out); k++) out = buildScenarioChart1(template, (seed + k * 0x6C8E9CF5) >>> 0, vol, ctx);
   return out;
 }
 
@@ -1105,16 +1108,20 @@ function buildScenarioChart1(template: MistakeTemplate, seed: number, vol: Volat
   return breakStrayLevels(withRoleChanges(withTracedZones(realizeChart(ch, { past: [...zones, ...(ch.stop !== undefined ? [ch.stop] : [])], future: [...zones, ...lines] }, seed, { ...ctx, volatility: vol, calmPast: calm, preNews: calm }))), ch.stop !== undefined ? [ch.stop] : []);
 }
 
-/** Entrée correcte (erreur ailleurs) sans signal visible : bougie de rejet ajoutée avant l'entrée */
+/** Erreurs qui portent sur la distance du stop à l'entrée */
+const STOP_DISTANCE_MISTAKES: ReadonlySet<string> = new Set(["volatility_ignored"]);
+/** Entrée correcte (erreur ailleurs) : le signal de la scène tel quel, sinon une réaction ajoutée avant l'entrée */
 function withEntryReaction(t: MistakeTemplate, ch: ScenarioChart, m: number): ScenarioChart {
-  if (!NON_ENTRY_MISTAKES.has(t.correctMistake)) return ch;
+  if (!NON_ENTRY_MISTAKES.has(t.correctMistake) || ch.entry === undefined) return ch;
   const dir = t.direction === "BUY" ? 1 : -1;
-  if (entrySignal(ch.past, dir, ch.zones)) return ch;
-  const r = addReaction(ch.past, ch.future, dir, m, reactionFloor(ch.past, ch.zones, dir, m, ch.stop !== undefined ? [ch.stop] : []));
+  const r = ensureVisibleSignal(ch.past, ch.future, dir, ch.zones, m, reactionFloor(ch.past, ch.zones, dir, m, ch.stop !== undefined ? [ch.stop] : []), reactionKindOf(t.id));
+  if (r.past === ch.past) return ch;
   // lignes posées à la dernière clôture (entrée) : elles suivent la nouvelle clôture
   const shift = r.entry - ch.past[ch.past.length - 1].c;
   return { ...ch, past: r.past, future: r.future, domain: chartDomain([...r.past, ...r.future], ch.zones),
-    ...(ch.entry !== undefined ? { entry: ch.entry + shift } : {}), ...(ch.tp !== undefined ? { tp: ch.tp + shift } : {}) };
+    ...(ch.entry !== undefined ? { entry: ch.entry + shift } : {}), ...(ch.tp !== undefined ? { tp: ch.tp + shift } : {}),
+    // (erreur sur la distance du stop : il garde sa distance à l'entrée)
+    ...(ch.stop !== undefined && STOP_DISTANCE_MISTAKES.has(t.correctMistake) ? { stop: ch.stop + shift } : {}) };
 }
 
 /** Graphique brut du scénario, avant la passe de réalisme (audits). */

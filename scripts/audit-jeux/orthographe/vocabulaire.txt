@@ -851,6 +851,7 @@ associant
 associations
 associé
 assouplissement
+assumée
 assumes
 assure-toi
 asume
