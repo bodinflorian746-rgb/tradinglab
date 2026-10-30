@@ -775,7 +775,7 @@ export const BTT_NEW: BttScenario[] = [
     claims: { "sweep avec clôture franche au-dessus": sweepBack(true), "TP rapide juste avant le plus haut précédent": tpBeforeLevel("fast") } },
   { ...ADV, id: "adv_btt_sweep_loin", title: "Sweep du plus bas précédent, plus haut lointain", direction: "BUY", htfBias: "bullish", notions: ["sweep", "chasse_aux_stops"],
     conflict: "Après un sweep, on a envie de prendre vite ses gains ; mais le plus haut précédent est loin au-dessus, et aucun niveau ne bloque le prix avant lui.",
-    context: "Le prix vient de passer sous le plus bas précédent d'une mèche, puis une grande bougie verte a clôturé nettement au-dessus. Le plus haut précédent est loin au-dessus, sans niveau entre les deux.",
+    context: "Une mèche vient de passer sous le plus bas précédent, puis une grande bougie verte a clôturé nettement au-dessus. Le plus haut précédent est loin, sans niveau entre les deux.",
     optimal: sweepFar,
     optimalExplain: "Entrée agressive : la clôture franche au-dessus du plus bas précédent confirme le sweep. Stop éloigné : sous la pointe de la mèche, avec une marge ; pile sous le plus bas précédent ou dans la mèche, il serait dans la zone de chasse aux stops. TP ambitieux : juste avant le plus haut précédent, premier niveau opposé, où attend la liquidité des vendeurs.",
     lessons: one("Après un sweep, l'objectif est le premier niveau opposé. Quand il est loin et que rien ne bloque avant, le TP ambitieux juste avant lui se défend (leçon Avancé 1)."),

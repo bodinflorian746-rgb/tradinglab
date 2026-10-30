@@ -405,6 +405,8 @@ const HARD = [
   ["find-the-mistake", "Intermédiaire", 11011], ["find-the-mistake", "Intermédiaire", 11001],
   ["find-the-mistake", "Intermédiaire", 11036], ["find-the-mistake", "Intermédiaire", 11008],
   ["find-the-mistake", "Débutant", 11038], ["find-the-mistake", "Intermédiaire", 11038], ["find-the-mistake", "Avancé", 11038],
+  // Build the Trade : choix hors de l'écran 390 × 844 (869 px), énoncé de 194 caractères (adv_btt_sweep_loin, 2026-10-30)
+  ["build-the-trade", "Avancé", 11017],
 ];
 async function hardRounds(browser) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: MOBILE_H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
@@ -426,7 +428,7 @@ async function hardRounds(browser) {
           for (const step of ["entry", "stop", "tp"]) {
             await page.waitForTimeout(step === "entry" ? 4500 : 1400);
             add(`étape ${step}`, await probeLabels(page, { mobile: true, buttons: stepButtons(step) }));
-            if (step === "entry") add("question graphique", await measureChart(page, { mobile: true }));
+            if (step === "entry") { add("question graphique", await measureChart(page, { mobile: true })); add("question choix", await measureChoices(page)); }
             await page.locator(`[data-pick^="${step}:"]`).first().click();
           }
           await page.waitForTimeout(400);
