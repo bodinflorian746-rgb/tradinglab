@@ -559,7 +559,9 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
       // zone » restait sur les bougies alors que sa seule largeur suffisait)
       const alone = need + 4;
       const next = alone > col && !lineMisfits(alone, l.top, l.bottom).length ? alone : col + need;
-      if (next > maxCol) break;
+      // la marge ne prend jamais plus de la moitié du cadre : deux étiquettes côte à côte serraient les
+      // bougies sur 31 % de la largeur (Build the Trade, 390) ; les suivantes s'empilent sur leur ligne
+      if (next > maxCol || next > 0.5 * (W - 2 * padX)) break;
       col = next;
     }
     return { ...l, col };

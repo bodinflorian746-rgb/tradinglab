@@ -359,8 +359,8 @@ export default function FindTheMistakePage() {
         </div>
 
         {/* Scénario */}
-        {/* énoncé de plus de 140 caractères : graphique moins haut (moyen jusqu'à 150, compact au-delà), pour que les choix tiennent dans l'écran 390 × 844 */}
-        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${current.context.length > 150 ? " v2-onescreen--long" : current.context.length > 140 ? " v2-onescreen--mid" : ""}`} aria-labelledby="ftm-title">
+        {/* énoncé de plus de 110 caractères : graphique moins haut (moyen jusqu'à 150, compact au-delà), pour que les choix (libellés sur deux lignes compris) tiennent dans l'écran 390 × 844 */}
+        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${current.context.length > 150 ? " v2-onescreen--long" : current.context.length > 110 ? " v2-onescreen--mid" : ""}`} aria-labelledby="ftm-title">
           <h2 id="ftm-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">{T.title}</h2>
 
           <div className="v2-gap-s v2-onescreen-body mx-auto flex w-full max-w-3xl flex-col">
