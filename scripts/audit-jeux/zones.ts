@@ -2,7 +2,9 @@
 // se jugent par rapport aux bougies (scripts/audit-jeux/trace.ts), plus par rapport à la hauteur
 // du graphique.
 //  - libellé hors vocabulaire : seuls les libellés de lib/games/glossary.ts (ZONE_LABELS) ; aucun
-//    libellé qui désigne un niveau sans le nommer (« Niveau secondaire », « Niveau clé »…).
+//    libellé qui désigne un niveau sans le nommer (« Niveau secondaire », « Niveau clé »…) ;
+//  - libellé long (plus de 24 caractères) sans libellé court : en 390, sa colonne d'étiquette prend la
+//    moitié du cadre et écrase les bougies (défaut vu sur « Ancienne résistance → support », 2026-10-30).
 // Usage : npx vite-node scripts/audit-jeux/zones.ts [--autotest] (lancé par run.mjs)
 import { auditCtx } from "./market-ctx";
 import * as BS from "../../lib/games/buy-sell-no-trade";
@@ -18,9 +20,13 @@ const ROUNDS = 200;
 const VOLS = ["faible", "normale", "élevée"] as const;
 const ALLOWED = new Set(ZONE_LABELS.fr);
 
-/** Erreur d'un graphique (ou null) : libellé hors vocabulaire. */
+/** Libellé au-delà duquel un libellé court est obligatoire (graphique étroit, 390) */
+export const MAX_LABEL = 24;
+
+/** Erreur d'un graphique (ou null) : libellé hors vocabulaire, libellé long sans libellé court. */
 export function zoneErrors(_past: Candle[], _future: Candle[], zones: ChartZone[]): string | null {
   for (const z of zones) if (z.label && !ALLOWED.has(z.label)) return `libellé de zone hors vocabulaire validé « ${z.label} »`;
+  for (const z of zones) if (z.label && z.label.length > MAX_LABEL && !z.short) return `libellé long sans libellé court « ${z.label} » (en 390, l'étiquette écrase les bougies)`;
   return null;
 }
 
@@ -57,6 +63,7 @@ if (process.argv.includes("--autotest")) {
   const any = all.find((c) => c.zones.some((z) => z.kind !== "fvg" && z.label))!;
   const cases: [string, RegExp, Chart][] = [
     ["libellé « Niveau secondaire »", /hors vocabulaire/, { ...any, zones: any.zones.map((z, i) => (i === 0 ? { ...z, label: "Niveau secondaire" } : z)) }],
+    ["« Ancienne résistance → support » sans libellé court", /sans libellé court/, { ...any, zones: any.zones.map((z, i) => (i === 0 ? { ...z, label: "Ancienne résistance → support", short: undefined } : z)) }],
   ];
   for (const [name, expect, c] of cases) {
     const e = zoneErrors(c.past, c.future, c.zones);

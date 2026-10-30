@@ -179,7 +179,7 @@ function genPullbackNoReaction(rng: () => number, m: number): RawScenario {
   return {
     past, future: fut,
     zones: [
-      { kind: "support", y1: t.lo, y2: t.hi, label: "Ancienne résistance → support" },
+      { kind: "support", y1: t.lo, y2: t.hi, label: "Ancienne résistance → support", short: "Résistance → support" },
       { kind: "liquidity_high", y1: t.peak - 0.15, y2: t.peak + 0.15, label: "Plus haut précédent" },
     ],
   };

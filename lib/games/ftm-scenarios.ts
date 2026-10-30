@@ -333,7 +333,7 @@ const iRetestNoReaction: NonNullable<FtmScenario["build"]> = (rng, m) => {
   past.push({ o: p, c: c0, h: c0 + 0.05 * m, l: p - 0.04 * m }); p = c0;
   const up = rally(rng, m, p, 3); past.push(...up.candles); p = up.p;
   const back = arrival(rng, m, p, b.hi - (0.02 + rng() * 0.04) * m, 4); past.push(...back.candles); p = back.p;
-  return { past, future: drop(rng, m, p, 5).candles, zones: [zone("support", 0, m, "Ancienne résistance → support")], entry: p, stop: b.lo - (0.22 + rng() * 0.06) * m };
+  return { past, future: drop(rng, m, p, 5).candles, zones: [{ ...zone("support", 0, m, "Ancienne résistance → support"), short: "Résistance → support" }], entry: p, stop: b.lo - (0.22 + rng() * 0.06) * m };
 };
 /** Retour dans un Order Block intact en grandes bougies rouges : achat au toucher */
 const aObNoReaction: NonNullable<FtmScenario["build"]> = (rng, m) => {

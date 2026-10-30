@@ -19,7 +19,7 @@ const PAIRS: [string, string][] = [
   ["FVG haussier", "FVG baissier"], ["Equal lows", "Equal highs"], ["PDL", "PDH"],
   ["Ancienne résistance → support", "Ancien support → résistance"], ["Résistance → support", "Support → résistance"],
   ["Haut de la session asiatique", "Bas de la session asiatique"], ["Swing low H1", "Swing high H1"], ["HL H4", "LH H4"],
-  ["Bas du range d'ouverture", "Haut du range d'ouverture"], ["Spring", "UTAD"], ["Sommet local", "Creux local"],
+  ["Bas du range d'ouverture", "Haut du range d'ouverture"], ["Bas du range ORB", "Haut du range ORB"], ["Spring", "UTAD"], ["Sommet local", "Creux local"],
 ];
 const MIRROR = new Map<string, string>(PAIRS.flatMap(([a, b]) => [[a, b], [b, a]] as [string, string][]));
 /** Libellé de la zone miroir (un libellé sans sens, « Order Block », « Chiffre rond », reste tel quel) */

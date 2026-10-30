@@ -1412,8 +1412,8 @@ function openingRange(outcome: "retest" | "sans_retest"): NewScenario["build"] {
     past.push(k1, k2, k3);
     p = k3.c;
     const zones: ChartZone[] = [
-      { kind: "resistance", y1: hi0 - 0.08 * m, y2: hi0 + 0.08 * m, label: "Haut du range d'ouverture" },
-      { kind: "support", y1: lo0 - 0.08 * m, y2: lo0 + 0.08 * m, label: "Bas du range d'ouverture" },
+      { kind: "resistance", y1: hi0 - 0.08 * m, y2: hi0 + 0.08 * m, label: "Haut du range d'ouverture", short: "Haut du range ORB" },
+      { kind: "support", y1: lo0 - 0.08 * m, y2: lo0 + 0.08 * m, label: "Bas du range d'ouverture", short: "Bas du range ORB" },
     ];
     const inside = legExact(rng, m, p, hi0 - (0.35 + rng() * 0.1) * m, { retrace: 0.3, step: [0.2, 0.35] });
     past.push(...inside.candles); p = inside.p;
