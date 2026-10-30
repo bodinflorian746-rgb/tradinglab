@@ -223,6 +223,25 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       const err = proof(v, v, l.dataset.to ? +l.dataset.to : n - 1);
       if (err) E(`${name} : ${err}`);
     }
+    // Objectif (règle PO, audit de fond) : jamais posé sur un support, une résistance ou une borne de range tracés,
+    // ni au-delà : il se place avant le niveau (à moins de 0,1 bougie médiane du niveau = posé dessus)
+    {
+      const tpL = svg.querySelector('line[data-level="tp"]'), enL = svg.querySelector('line[data-level="entry"]');
+      if (tpL && enL) {
+        const tp = +tpL.dataset.price, en = +enL.dataset.price, toUp = tp > en;
+        const tol = 0.1 * [...cs].map((k) => k.h - k.l).sort((a, b) => a - b)[Math.floor(n / 2)];
+        const blocks = (lo, hi) => (toUp ? lo > en && lo <= tp + tol : hi < en && hi >= tp - tol);
+        const sr = (el, key) => isSR(el, key) || /^range-(high|low)$/.test(el.dataset.role || "");
+        for (const l of svg.querySelectorAll("line[data-level]")) {
+          const k = l.dataset.level, v = +l.dataset.price;
+          if (!/^(entry|sl|tp)$/.test(k) && sr(l, k) && blocks(v, v)) E(`TP ${fmt(tp)} posé sur ou au-delà de « ${labelOf(k) || k} » (${fmt(v)}) : l'objectif se place avant le niveau`);
+        }
+        for (const z of svg.querySelectorAll("rect[data-zone]")) {
+          const k = z.dataset.zone;
+          if (sr(z, k) && blocks(+z.dataset.y1, +z.dataset.y2)) E(`TP ${fmt(tp)} posé sur ou au-delà de la zone « ${labelOf(k) || k} » : l'objectif se place avant le niveau`);
+        }
+      }
+    }
     for (const l of svg.querySelectorAll("line[data-level][data-role]")) {
       const role = l.dataset.role, v = +l.dataset.price, name = `niveau ${l.dataset.level} (${role})`;
       if (/^(range-high|range-low)$/.test(role)) {
@@ -830,7 +849,7 @@ const EXPECT = {
   "Fibonacci sans repères 0 % et 100 %": /sans ses repères 0 % et 100 %/, "tracé Fibonacci au bord": /le tracé ne part pas d'un vrai/,
   "POC déplacé": /POC recalculé/, "barre du profil étirée": /la plus longue barre|non proportionnelle/, "Value Area trop étroite": /contient .* % du volume/,
   "volume d'une bougie modifié": /recalculé|la bougie dit/, "VWAP décalé": /VWAP recalculé/, "VWAP ancré hors du graphique": /ancré hors du graphique/,
-  "ATR faux": /ATR 14 recalculé/, "CE décalé": /milieu de « /, "BPR débordant": /au lieu du chevauchement/, "objectif de figure faux": /reportée depuis la ligne de cou/,
+  "ATR faux": /ATR 14 recalculé/, "CE décalé": /milieu de « /, "BPR débordant": /au lieu du chevauchement/, "objectif de figure faux": /reportée depuis la ligne de cou/, "TP posé sur la résistance": /posé sur ou au-delà de/,
   "delta modifié": /la bougie dit|somme des deltas/, "CVD faux": /somme des deltas/, "LVN décalée": /n'est pas une LVN/, "divergence CVD inventée": /divergence nommée/, "divergence haussière inventée": /divergence haussière/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
@@ -839,6 +858,17 @@ const MUTATIONS = {
   "ATR faux": () => { const t = document.querySelector("[data-atr-mark] text"); t.textContent = t.textContent.replace(/\d+/, (d) => String(+d + 4)); },
   "CE décalé": () => { const l = document.querySelector('line[data-role="ce"]'); l.dataset.price = String(+l.dataset.price + 0.0004); },
   "BPR débordant": () => { const z = document.querySelector('rect[data-role="bpr"]'); z.dataset.y2 = String(+z.dataset.y2 + 0.0005); },
+  // TP posé pile sur le support ou la résistance suivants (Avancé 10 et 11 avant l'audit de fond)
+  "TP posé sur la résistance": () => {
+    for (const svg of document.querySelectorAll("svg[data-candles]")) {
+      const tp = svg.querySelector('line[data-level="tp"]'), en = svg.querySelector('line[data-level="entry"]');
+      if (!tp || !en) continue;
+      const toUp = +tp.dataset.price > +en.dataset.price;
+      const lab = (k) => svg.querySelector(`g[data-label-for="${CSS.escape(k)}"]`)?.textContent ?? "";
+      const lv = [...svg.querySelectorAll("line[data-level]")].find((l) => /support|r[ée]sistance/i.test(lab(l.dataset.level)) && (toUp ? +l.dataset.price > +en.dataset.price : +l.dataset.price < +en.dataset.price));
+      if (lv) { tp.dataset.price = lv.dataset.price; return; }
+    }
+  },
   "objectif de figure faux": () => { const l = document.querySelector('line[data-role="dt-target"]'); l.dataset.price = String(+l.dataset.price - 6); },
   // Volumes (volume-check.mjs) : profil, Value Area, VWAP, volume, delta, CVD
   "POC déplacé": () => { const l = document.querySelector('line[data-role="poc"]'); const g = l.closest("svg").querySelector("g[data-profile]"); l.dataset.price = String(Number((+l.dataset.price + +g.dataset.row).toFixed(9))); },
