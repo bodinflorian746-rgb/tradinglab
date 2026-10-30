@@ -392,10 +392,11 @@ const obHammer = (rng: Rng, m: number): Scene => {
 };
 
 /** Plus bas précédent balayé par une mèche, clôture nettement revenue au-dessus (ou juste au-dessus) */
-function sweepLow(strong: boolean) {
+// (deeper : mèche plus profonde, pour les jambes longues d'un objectif lointain, aux bougies plus grandes)
+function sweepLow(strong: boolean, deeper = 0) {
   return (rng: Rng, m: number, o: BttOptimal): Scene => {
     const L0 = 0;
-    const tip = L0 - (strong ? 0.5 + rng() * 0.1 : 0.7 + rng() * 0.1) * m;
+    const tip = L0 - (strong ? 0.5 + deeper + rng() * 0.1 : 0.7 + rng() * 0.1) * m;
     const E0 = L0 + (strong ? 0.96 + rng() * 0.08 : 0.3 + rng() * 0.06) * m;
     const deep = L0 + (strong ? 0.01 + rng() * 0.02 : 0.05 + rng() * 0.03) * m;
     const stops: [number, number, number] = strong
@@ -558,7 +559,7 @@ const O = (entry: Entry, stop: Stop, tp: Tp): BttOptimal => ({ entry, stop, tp }
 const meche = O("aggressive", "wide", "fast"), engulf = O("aggressive", "tight", "balanced"), dojiPierce = O("confirmation", "wide", "fast");
 const extended = O("deep_pullback", "tight", "ambitious"), retest = O("deep_pullback", "tight", "ambitious"), fibo = O("deep_pullback", "wide", "ambitious");
 const structure = O("deep_pullback", "tight", "fast"), fakeout = O("aggressive", "wide", "balanced");
-const ob = O("aggressive", "tight", "ambitious"), sweep = O("aggressive", "wide", "fast"), ote = O("deep_pullback", "tight", "ambitious"), fvg = O("deep_pullback", "wide", "fast");
+const ob = O("aggressive", "tight", "ambitious"), sweep = O("aggressive", "wide", "fast"), sweepFar = O("aggressive", "wide", "ambitious"), ote = O("deep_pullback", "tight", "ambitious"), fvg = O("deep_pullback", "wide", "fast");
 
 export const BTT_NEW: BttScenario[] = [
   // ─── Débutant : une notion, un graphique propre ────────────────────────────
@@ -772,6 +773,14 @@ export const BTT_NEW: BttScenario[] = [
     lessons: one("Un sweep va chercher les stops au-dessus d'un plus haut évident puis repart : l'invalidation est la pointe de la mèche, et l'objectif le premier niveau opposé (leçon Avancé 1)."),
     build: mirrored(plan(sweep, sweepLow(true))),
     claims: { "sweep avec clôture franche au-dessus": sweepBack(true), "TP rapide juste avant le plus haut précédent": tpBeforeLevel("fast") } },
+  { ...ADV, id: "adv_btt_sweep_loin", title: "Sweep du plus bas précédent, plus haut lointain", direction: "BUY", htfBias: "bullish", notions: ["sweep", "chasse_aux_stops"],
+    conflict: "Après un sweep, on a envie de prendre vite ses gains ; mais le plus haut précédent est loin au-dessus, et aucun niveau ne bloque le prix avant lui.",
+    context: "Le prix vient de passer sous le plus bas précédent d'une mèche, puis une grande bougie verte a clôturé nettement au-dessus. Le plus haut précédent est loin au-dessus, sans niveau entre les deux.",
+    optimal: sweepFar,
+    optimalExplain: "Entrée agressive : la clôture franche au-dessus du plus bas précédent confirme le sweep. Stop éloigné : sous la pointe de la mèche, avec une marge ; pile sous le plus bas précédent ou dans la mèche, il serait dans la zone de chasse aux stops. TP ambitieux : juste avant le plus haut précédent, premier niveau opposé, où attend la liquidité des vendeurs.",
+    lessons: one("Après un sweep, l'objectif est le premier niveau opposé. Quand il est loin et que rien ne bloque avant, le TP ambitieux juste avant lui se défend (leçon Avancé 1)."),
+    build: plan(sweepFar, sweepLow(true, 0.15)),
+    claims: { "sweep avec clôture franche au-dessus": sweepBack(true), "TP ambitieux juste avant le plus haut précédent": tpBeforeLevel("ambitious") } },
   { ...ADV, id: "adv_btt_ote", title: "Repli rapide, zone OTE plus bas", direction: "BUY", htfBias: "bullish", notions: ["ote", "multi_ut"],
     conflict: "En UT inférieure, le repli rapide ressemble à un retournement ; l'UT supérieure reste haussière, et l'OTE achète justement ce repli.",
     context: "Après une forte impulsion, le prix se replie vite et a retracé environ la moitié du mouvement. La zone OTE (62 à 79 %) est plus bas, au-dessus du plus bas précédent.",

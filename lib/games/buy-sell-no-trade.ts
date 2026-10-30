@@ -163,6 +163,40 @@ function genPullbackBroken(rng: () => number, m: number): RawScenario {
   };
 }
 
+/** Pullback haussier qui arrive sur l'ancienne résistance devenue support en deux grandes bougies rouges,
+ *  la dernière clôture sur le haut de la zone, près de son plus bas : aucune réaction (règle PO : on attend) */
+function genPullbackNoReaction(rng: () => number, m: number): RawScenario {
+  const t = trendRetest(rng, m, true, 3, 1.7);
+  // (la dernière bougie du repli, mèche dans la bande, est remplacée par l'arrivée sans réaction)
+  const past = t.past.slice(0, -1);
+  let p = past[past.length - 1].c;
+  // (clôture sur le bord haut de la bande, mèche à peine dedans : la bande reste calée sur ses touches)
+  const end = t.hi + (0.02 + rng() * 0.04) * m;
+  const mid = p - (p - end) * (0.45 + rng() * 0.1);
+  for (const c of [mid, end]) { past.push({ o: p, c, h: p + (0.03 + rng() * 0.04) * m, l: c - (0.01 + rng() * 0.02) * m }); p = c; }
+  const fut: Candle[] = [];
+  for (let i = 0; i < 5; i++) { const o = p; const cc = o - (0.25 + rng() * 0.35) * m; fut.push(candle(o, cc, (0.1 + rng() * 0.12) * m, (0.1 + rng() * 0.15) * m)); p = cc; }
+  return {
+    past, future: fut,
+    zones: [
+      { kind: "support", y1: t.lo, y2: t.hi, label: "Ancienne résistance → support" },
+      { kind: "liquidity_high", y1: t.peak - 0.15, y2: t.peak + 0.15, label: "Plus haut précédent" },
+    ],
+  };
+}
+
+type ClaimChart = { past: Candle[]; future: Candle[]; zones: ChartZone[] };
+const PULLBACK_NO_REACTION_CLAIMS: Record<string, (ch: ClaimChart) => string | null> = {
+  "tendance haussière établie (plus haut précédent au-dessus du support)": (ch) => { const s = ch.zones.find((z) => z.kind === "support")!; const pk = ch.zones.find((z) => z.label === "Plus haut précédent")!; return Math.min(pk.y1, pk.y2) > Math.max(s.y1, s.y2) + 1 ? null : "pas de tendance au-dessus du support"; },
+  "arrivée sur l'ancienne résistance en deux bougies rouges, sans réaction": (ch) => {
+    const s = ch.zones.find((z) => z.kind === "support")!, k = ch.past[ch.past.length - 1];
+    const rs = ch.past.map((x) => x.h - x.l).sort((a, b) => a - b), mr = rs[rs.length >> 1];
+    if (!(k.c >= Math.min(s.y1, s.y2) && k.c <= Math.max(s.y1, s.y2) + 0.25 * mr && k.l <= Math.max(s.y1, s.y2) + 0.1 * mr)) return "la dernière bougie ne clôture pas sur la zone";
+    if (!ch.past.slice(-2).every((x) => x.c < x.o)) return "les deux dernières bougies ne sont pas rouges";
+    return entrySignal(ch.past, 1, ch.zones) ? "une réaction est visible" : null;
+  },
+};
+
 const EXISTING_VARIANTS: ScenarioTemplate[] = [
   {
     id: "int_breakout_faible_baissier", title: "Breakout baissier faible", correctAnswer: "NO_TRADE", htfBias: "bearish", macroContext: "normal", metric: "piege",
@@ -195,6 +229,37 @@ const EXISTING_VARIANTS: ScenarioTemplate[] = [
       "tendance haussière établie (plus haut précédent au-dessus du support)": (ch) => { const s = ch.zones.find((z) => z.kind === "support")!; const pk = ch.zones.find((z) => z.label === "Plus haut précédent")!; return Math.min(pk.y1, pk.y2) > Math.max(s.y1, s.y2) + 1 ? null : "pas de tendance au-dessus du support"; },
       "dernière bougie : clôture sous le support": (ch) => { const s = ch.zones.find((z) => z.kind === "support")!; const k = ch.past[ch.past.length - 1]; return k.c < Math.min(s.y1, s.y2) ? null : "la dernière bougie ne clôture pas sous le support"; },
     },
+  },
+  {
+    id: "int_pullback_sans_reaction", title: "Pullback sur l'ancien niveau, sans réaction", correctAnswer: "NO_TRADE", htfBias: "bullish", macroContext: "normal", metric: "discipline",
+    context: "Tendance haussière : le prix corrige vers l'ancienne résistance, cassée, qui sert de support. Les deux dernières bougies sont de grandes bougies rouges ; la dernière clôture sur la zone, près de son plus bas.",
+    shortContext: "Le pullback arrive sur l'ancienne résistance.",
+    rationales: {
+      BUY: "✗ C'est le bon endroit pour acheter le pullback, mais pas encore le bon moment : le prix arrive en grandes bougies rouges, sans mèche de rejet ni engulfing. Acheter maintenant, c'est parier que le niveau tient sans aucune preuve.",
+      SELL: "✗ La tendance est haussière et le prix est sur un support : vendre ici, c'est vendre au pire endroit, contre le marché.",
+      NO_TRADE: "✓ Le niveau est le bon, mais aucune réaction n'est visible : on attend un rejet, un engulfing ou une clôture qui repart avant d'acheter.",
+    },
+    lessons: oneLesson("Un pullback s'achète sur la réaction du niveau, pas au toucher : une mèche de rejet ou un engulfing haussier montre que les acheteurs défendent l'ancienne résistance (leçons Intermédiaire 3 et 4)."),
+    notions: ["pullback", "changement_role", "reaction", "tendance"], trap: "Le prix revient sur l'ancienne résistance, l'endroit idéal du pullback, dans le sens de la tendance ; mais aucune bougie n'y a encore réagi.",
+    difficulties: ["intermediate"], tags: ["pullback", "réaction"],
+    build: (rng, m) => genPullbackNoReaction(rng, m),
+    claims: PULLBACK_NO_REACTION_CLAIMS,
+  },
+  {
+    id: "int_pullback_sans_reaction_vente", title: "Rebond sur l'ancien niveau, sans réaction", correctAnswer: "NO_TRADE", htfBias: "bearish", macroContext: "normal", metric: "discipline",
+    context: "Tendance baissière : le prix rebondit vers l'ancien support, cassé, qui sert de résistance. Les deux dernières bougies sont de grandes bougies vertes ; la dernière clôture sur la zone, près de son plus haut.",
+    shortContext: "Le rebond arrive sur l'ancien support.",
+    rationales: {
+      BUY: "✗ La tendance est baissière et le prix est sur une résistance : acheter ici, c'est acheter au pire endroit, contre le marché.",
+      SELL: "✗ C'est le bon endroit pour vendre le rebond, mais pas encore le bon moment : le prix arrive en grandes bougies vertes, sans mèche de rejet ni engulfing. Vendre maintenant, c'est parier que le niveau tient sans aucune preuve.",
+      NO_TRADE: "✓ Le niveau est le bon, mais aucune réaction n'est visible : on attend un rejet, un engulfing ou une clôture qui repart avant de vendre.",
+    },
+    lessons: oneLesson("Un rebond se vend sur la réaction du niveau, pas au toucher : une mèche de rejet ou un engulfing baissier montre que les vendeurs défendent l'ancien support (leçons Intermédiaire 3 et 4)."),
+    notions: ["pullback", "changement_role", "reaction", "tendance"], trap: "Le prix revient sur l'ancien support, l'endroit idéal pour vendre le rebond, dans le sens de la tendance ; mais aucune bougie n'y a encore réagi.",
+    difficulties: ["intermediate"], tags: ["pullback", "réaction"], mirrorOf: "int_pullback_sans_reaction",
+    build: (rng, m) => mirrorRaw(genPullbackNoReaction(rng, m)),
+    // (affirmations de l'original, sur le graphique renversé)
+    claims: Object.fromEntries(Object.entries(PULLBACK_NO_REACTION_CLAIMS).map(([k, f]) => [k, (ch: ClaimChart) => f({ past: mirrorCandles(ch.past, 0), future: mirrorCandles(ch.future, 0), zones: mirrorZones(ch.zones, 0) })])),
   },
   {
     id: "adv_sweep_haut", title: "Sweep du plus haut", correctAnswer: "SELL", htfBias: "bearish", macroContext: "normal", metric: "piege",

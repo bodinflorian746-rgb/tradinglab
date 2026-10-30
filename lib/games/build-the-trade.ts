@@ -395,8 +395,8 @@ const ORIGINAL_TEMPLATES: BuildTradeTemplate[] = [
     htfBias: "bullish",
     macroContext: "normal",
     context: "Volatilité élevée. Les bougies sont larges, les mèches profondes.",
-    optimal: { entry: "deep_pullback", stop: "wide", tp: "balanced" },
-    optimalExplain: "En volatilité élevée, les mèches profondes ramènent souvent le prix plus bas : un ordre posé sur un pullback profond entre à meilleur prix, ce qui compense le stop plus large. Le bruit est amplifié et un stop à la distance habituelle risque d'être balayé. Ici, le stop éloigné est le stop logique. Un TP équilibré se défend, car le mouvement potentiel est aussi plus étendu.",
+    optimal: { entry: "confirmation", stop: "wide", tp: "balanced" },
+    optimalExplain: "En volatilité élevée, une mèche profonde peut ramener le prix bien plus bas : on attend qu'une bougie confirme la reprise avant d'entrer. Le bruit est amplifié et un stop à la distance habituelle risque d'être balayé. Ici, le stop éloigné est le stop logique. Un TP équilibré se défend, car le mouvement potentiel est aussi plus étendu.",
     lessons: {
       advanced:      "Un stop ajusté à la volatilité du jour (ATR, l'amplitude moyenne d'une journée) est une option logique. En volatilité élevée, le stop éloigné n'est pas excessif : il est simplement adapté.",
       intermediate: "Le stop gagne à s'adapter à la volatilité du moment plutôt qu'à une distance fixe.",
